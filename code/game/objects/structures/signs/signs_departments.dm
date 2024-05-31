@@ -12,7 +12,7 @@
 	icon_state = "med"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/med, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/med, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/med, 32)
 #endif
@@ -23,7 +23,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/med, 3
 	icon_state = "medbay"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/med_alt, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/med_alt, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/med_alt, 32)
 #endif
@@ -35,7 +35,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/med_al
 	icon_state = "bluecross"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/medbay, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/medbay, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/medbay, 32)
 #endif
@@ -46,7 +46,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/medbay
 	icon_state = "bluecross2"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/medbay/alt, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/medbay/alt, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/medbay/alt, 32)
 #endif
@@ -58,7 +58,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/medbay
 	icon_state = "examroom"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/exam_room, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/exam_room, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/exam_room, 32)
 #endif
@@ -70,7 +70,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/exam_r
 	icon_state = "chemistry1"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/chemistry, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/chemistry, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/chemistry, 32)
 #endif
@@ -80,7 +80,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/chemis
 	icon_state = "chemistry2"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/chemistry/alt, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/chemistry/alt, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/chemistry/alt, 32)
 #endif
@@ -92,7 +92,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/chemis
 	icon_state = "pharmacy"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/chemistry/pharmacy, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/chemistry/pharmacy, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/chemistry/pharmacy, 32)
 #endif
@@ -104,7 +104,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/chemis
 	icon_state = "psychology"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/psychology, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/psychology, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/psychology, 32)
 #endif
@@ -116,7 +116,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/psycho
 	icon_state = "pharmacy"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/virology, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/virology, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/virology, 32)
 #endif
@@ -128,7 +128,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/virolo
 	icon_state = "morgue"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/morgue, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/morgue, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/morgue, 32)
 #endif
@@ -142,7 +142,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/morgue
 	icon_state = "engine"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/engineering, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/engineering, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/engineering, 32)
 #endif
@@ -156,7 +156,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/engine
 	icon_state = "science1"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/science, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/science, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/science, 32)
 #endif
@@ -166,7 +166,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/scienc
 	icon_state = "science2"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/science/alt, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/science/alt, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/science/alt, 32)
 #endif
@@ -178,7 +178,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/scienc
 	icon_state = "xenobio1"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/xenobio, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/xenobio, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/xenobio, 32)
 #endif
@@ -188,7 +188,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/xenobi
 	icon_state = "xenobio2"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/xenobio/alt, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/xenobio/alt, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/xenobio/alt, 32)
 #endif
@@ -200,7 +200,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/xenobi
 	icon_state = "gene"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/genetics, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/genetics, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/genetics, 32)
 #endif
@@ -212,7 +212,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/geneti
 	icon_state = "rndserver"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/rndserver, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/rndserver, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/rndserver, 32)
 #endif
@@ -226,7 +226,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/rndser
 	icon_state = "hydro1"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/botany, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/botany, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/botany, 32)
 #endif
@@ -236,7 +236,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/botany
 	icon_state = "hydro2"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/botany/alt1, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/botany/alt1, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/botany/alt1, 32)
 #endif
@@ -246,7 +246,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/botany
 	icon_state = "hydro3"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/botany/alt2, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/botany/alt2, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/botany/alt2, 32)
 #endif
@@ -256,7 +256,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/botany
 	icon_state = "botany"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/botany/alt3, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/botany/alt3, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/botany/alt3, 32)
 #endif
@@ -268,7 +268,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/botany
 	icon_state = "custodian"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/custodian, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/custodian, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/custodian, 32)
 #endif
@@ -280,7 +280,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/custod
 	icon_state = "holy"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/holy, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/holy, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/holy, 32)
 #endif
@@ -292,7 +292,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/holy, 
 	icon_state = "chapel"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/holy, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/holy, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/holy, 32)
 #endif
@@ -304,7 +304,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/holy, 
 	icon_state = "lawyer"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/lawyer, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/lawyer, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/lawyer, 32)
 #endif
@@ -318,7 +318,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/lawyer
 	icon_state = "cargo"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/cargo, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/cargo, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/cargo, 32)
 #endif
@@ -332,7 +332,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/cargo,
 	icon_state = "security"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/security, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/security, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/security, 32)
 #endif
@@ -346,7 +346,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/securi
 	icon_state = "restroom"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/restroom, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/restroom, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/restroom, 32)
 #endif
@@ -358,7 +358,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/restro
 	icon_state = "mait1"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/maint, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/maint, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/maint, 32)
 #endif
@@ -370,7 +370,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/maint,
 	icon_state = "mait2"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/maint/alt, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/maint/alt, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/maint/alt, 32)
 #endif
@@ -382,7 +382,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/maint/
 	icon_state = "evac"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/evac, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/evac, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/evac, 32)
 #endif
@@ -394,7 +394,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/evac, 
 	icon_state = "drop"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/drop, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/drop, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/drop, 32)
 #endif
@@ -406,7 +406,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/drop, 
 	icon_state = "court"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/court, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/court, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/court, 32)
 #endif
@@ -418,7 +418,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/court,
 	icon_state = "telecomms"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/telecomms, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/telecomms, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/telecomms, 32)
 #endif
@@ -428,7 +428,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/teleco
 	sign_change_name = "Location - Telecommunications Alt"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/telecomms/alt, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/telecomms/alt, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/telecomms/alt, 32)
 #endif
@@ -440,7 +440,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/teleco
 	icon_state = "aiupload"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/aiupload, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/aiupload, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/aiupload, 32)
 #endif
@@ -452,7 +452,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/aiuplo
 	icon_state = "aisat"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/aisat, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/aisat, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/aisat, 32)
 #endif
@@ -464,7 +464,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/aisat,
 	icon_state = "vault"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/departments/vault, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/departments/vault, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/departments/vault, 32)
 #endif

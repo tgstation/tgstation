@@ -30,10 +30,10 @@
 	random_basetype = /obj/structure/sign/poster/abductor
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/abductor/random, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/abductor/random, 32)
 #else
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/abductor/random, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/abductor/random, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/abductor/random, 32)
 #endif
@@ -45,10 +45,10 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/abductor/ra
 	icon_state = "ayylian"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/abductor/ayylian, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/abductor/ayylian, 32)
 #else
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/abductor/ayylian, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/abductor/ayylian, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/abductor/ayylian, 32)
 #endif
@@ -60,10 +60,10 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/abductor/ay
 	icon_state = "ayy"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/abductor/ayy, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/abductor/ayy, 32)
 #else
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/abductor/ayy, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/abductor/ayy, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/abductor/ayy, 32)
 #endif
@@ -75,10 +75,10 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/abductor/ay
 	icon_state = "ayy_over_tizira"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/abductor/ayy_over_tizira, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/abductor/ayy_over_tizira, 32)
 #else
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/abductor/ayy_over_tizira, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/abductor/ayy_over_tizira, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/abductor/ayy_over_tizira, 32)
 #endif
@@ -90,10 +90,10 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/abductor/ay
 	icon_state = "ayy_recruitment"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/abductor/ayy_recruitment, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/abductor/ayy_recruitment, 32)
 #else
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/abductor/ayy_recruitment, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/abductor/ayy_recruitment, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/abductor/ayy_recruitment, 32)
 #endif
@@ -105,10 +105,10 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/abductor/ay
 	icon_state = "ayyce_cops"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/abductor/ayy_cops, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/abductor/ayy_cops, 32)
 #else
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/abductor/ayy_cops, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/abductor/ayy_cops, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/abductor/ayy_cops, 32)
 #endif
@@ -120,10 +120,10 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/abductor/ay
 	icon_state = "ayy_no"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/abductor/ayy_no, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/abductor/ayy_no, 32)
 #else
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/abductor/ayy_no, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/abductor/ayy_no, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/abductor/ayy_no, 32)
 #endif
@@ -135,10 +135,10 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/abductor/ay
 	icon_state = "ayy_piping"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/abductor/ayy_piping, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/abductor/ayy_piping, 32)
 #else
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/abductor/ayy_piping, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/abductor/ayy_piping, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/abductor/ayy_piping, 32)
 #endif
@@ -150,10 +150,10 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/abductor/ay
 	icon_state = "ayy_fancy"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/abductor/ayy_fancy, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/abductor/ayy_fancy, 32)
 #else
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/abductor/ayy_fancy, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/abductor/ayy_fancy, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/abductor/ayy_fancy, 32)
 #endif

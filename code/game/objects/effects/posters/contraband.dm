@@ -16,7 +16,7 @@
 	random_basetype = /obj/structure/sign/poster/contraband
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/random, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/random, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/random, 32)
 #endif
@@ -27,7 +27,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "free_tonto"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/free_tonto, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/free_tonto, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/free_tonto, 32)
 #endif
@@ -38,7 +38,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "atmosia_independence"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/atmosia_independence, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/atmosia_independence, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/atmosia_independence, 32)
 #endif
@@ -49,7 +49,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "fun_police"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/fun_police, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/fun_police, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/fun_police, 32)
 #endif
@@ -60,7 +60,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "lusty_xenomorph"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/lusty_xenomorph, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/lusty_xenomorph, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/lusty_xenomorph, 32)
 #endif
@@ -71,7 +71,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "syndicate_recruitment"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/syndicate_recruitment, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/syndicate_recruitment, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/syndicate_recruitment, 32)
 #endif
@@ -82,7 +82,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "clown"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/clown, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/clown, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/clown, 32)
 #endif
@@ -93,7 +93,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "smoke"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/smoke, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/smoke, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/smoke, 32)
 #endif
@@ -104,7 +104,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "grey_tide"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/grey_tide, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/grey_tide, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/grey_tide, 32)
 #endif
@@ -115,7 +115,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "missing_gloves"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/missing_gloves, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/missing_gloves, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/missing_gloves, 32)
 #endif
@@ -126,7 +126,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "hacking_guide"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/hacking_guide, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/hacking_guide, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/hacking_guide, 32)
 #endif
@@ -137,7 +137,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "rip_badger"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/rip_badger, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/rip_badger, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/rip_badger, 32)
 #endif
@@ -148,7 +148,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "ambrosia_vulgaris"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/ambrosia_vulgaris, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/ambrosia_vulgaris, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/ambrosia_vulgaris, 32)
 #endif
@@ -159,7 +159,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "donut_corp"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/donut_corp, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/donut_corp, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/donut_corp, 32)
 #endif
@@ -170,7 +170,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "eat"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/eat, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/eat, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/eat, 32)
 #endif
@@ -181,7 +181,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "tools"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/tools, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/tools, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/tools, 32)
 #endif
@@ -192,7 +192,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "power"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/power, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/power, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/power, 32)
 #endif
@@ -203,7 +203,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "space_cube"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/space_cube, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/space_cube, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/space_cube, 32)
 #endif
@@ -214,7 +214,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "communist_state"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/communist_state, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/communist_state, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/communist_state, 32)
 #endif
@@ -225,7 +225,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "lamarr"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/lamarr, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/lamarr, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/lamarr, 32)
 #endif
@@ -236,7 +236,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "borg_fancy_1"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/borg_fancy_1, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/borg_fancy_1, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/borg_fancy_1, 32)
 #endif
@@ -247,7 +247,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "borg_fancy_2"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/borg_fancy_2, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/borg_fancy_2, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/borg_fancy_2, 32)
 #endif
@@ -258,7 +258,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "kss13"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/kss13, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/kss13, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/kss13, 32)
 #endif
@@ -269,7 +269,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "rebels_unite"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/rebels_unite, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/rebels_unite, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/rebels_unite, 32)
 #endif
@@ -281,7 +281,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "c20r"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/c20r, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/c20r, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/c20r, 32)
 #endif
@@ -292,7 +292,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "have_a_puff"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/have_a_puff, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/have_a_puff, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/have_a_puff, 32)
 #endif
@@ -303,7 +303,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "revolver"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/revolver, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/revolver, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/revolver, 32)
 #endif
@@ -314,7 +314,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "d_day_promo"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/d_day_promo, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/d_day_promo, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/d_day_promo, 32)
 #endif
@@ -325,7 +325,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "syndicate_pistol"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/syndicate_pistol, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/syndicate_pistol, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/syndicate_pistol, 32)
 #endif
@@ -336,7 +336,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "energy_swords"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/energy_swords, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/energy_swords, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/energy_swords, 32)
 #endif
@@ -347,7 +347,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "red_rum"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/red_rum, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/red_rum, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/red_rum, 32)
 #endif
@@ -358,7 +358,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "cc64k_ad"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/cc64k_ad, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/cc64k_ad, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/cc64k_ad, 32)
 #endif
@@ -369,7 +369,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "punch_shit"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/punch_shit, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/punch_shit, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/punch_shit, 32)
 #endif
@@ -380,7 +380,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "the_griffin"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/the_griffin, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/the_griffin, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/the_griffin, 32)
 #endif
@@ -391,7 +391,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "lizard"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/lizard, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/lizard, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/lizard, 32)
 #endif
@@ -402,7 +402,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "free_drone"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/free_drone, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/free_drone, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/free_drone, 32)
 #endif
@@ -413,7 +413,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "busty_backdoor_xeno_babes_6"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6, 32)
 #endif
@@ -424,7 +424,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "robust_softdrinks"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/robust_softdrinks, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/robust_softdrinks, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/robust_softdrinks, 32)
 #endif
@@ -435,7 +435,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "shamblers_juice"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/shamblers_juice, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/shamblers_juice, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/shamblers_juice, 32)
 #endif
@@ -446,7 +446,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "pwr_game"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/pwr_game, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/pwr_game, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/pwr_game, 32)
 #endif
@@ -457,7 +457,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "starkist"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/starkist, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/starkist, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/starkist, 32)
 #endif
@@ -468,7 +468,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "space_cola"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/space_cola, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/space_cola, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/space_cola, 32)
 #endif
@@ -479,7 +479,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "space_up"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/space_up, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/space_up, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/space_up, 32)
 #endif
@@ -490,7 +490,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "kudzu"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/kudzu, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/kudzu, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/kudzu, 32)
 #endif
@@ -501,7 +501,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "masked_men"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/masked_men, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/masked_men, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/masked_men, 32)
 #endif
@@ -514,7 +514,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "free_key"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/free_key, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/free_key, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/free_key, 32)
 #endif
@@ -525,7 +525,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "bountyhunters"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/bountyhunters, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/bountyhunters, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/bountyhunters, 32)
 #endif
@@ -536,7 +536,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "the_big_gas_giant_truth"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/the_big_gas_giant_truth, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/the_big_gas_giant_truth, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/the_big_gas_giant_truth, 32)
 #endif
@@ -547,7 +547,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "got_wood"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/got_wood, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/got_wood, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/got_wood, 32)
 #endif
@@ -558,7 +558,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "moffuchis_pizza"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/moffuchis_pizza, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/moffuchis_pizza, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/moffuchis_pizza, 32)
 #endif
@@ -577,7 +577,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	return .
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/donk_co, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/donk_co, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/donk_co, 32)
 #endif
@@ -588,7 +588,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "cybersun_six_hundred"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/cybersun_six_hundred, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/cybersun_six_hundred, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/cybersun_six_hundred, 32)
 #endif
@@ -599,7 +599,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "interdyne_gene_clinics"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/interdyne_gene_clinics, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/interdyne_gene_clinics, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/interdyne_gene_clinics, 32)
 #endif
@@ -610,7 +610,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "waffle_corp_rifles"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/waffle_corp_rifles, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/waffle_corp_rifles, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/waffle_corp_rifles, 32)
 #endif
@@ -621,7 +621,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "gorlex_recruitment"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/gorlex_recruitment, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/gorlex_recruitment, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/gorlex_recruitment, 32)
 #endif
@@ -632,7 +632,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "self_ai_liberation"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/self_ai_liberation, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/self_ai_liberation, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/self_ai_liberation, 32)
 #endif
@@ -643,7 +643,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "arc_slimes"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/arc_slimes, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/arc_slimes, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/arc_slimes, 32)
 #endif
@@ -654,7 +654,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "imperial_propaganda"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/imperial_propaganda, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/imperial_propaganda, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/imperial_propaganda, 32)
 #endif
@@ -665,7 +665,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "soviet_propaganda"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/soviet_propaganda, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/soviet_propaganda, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/soviet_propaganda, 32)
 #endif
@@ -676,7 +676,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "andromeda_bitters"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/andromeda_bitters, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/andromeda_bitters, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/andromeda_bitters, 32)
 #endif
@@ -687,7 +687,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "blasto_detergent"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/blasto_detergent, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/blasto_detergent, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/blasto_detergent, 32)
 #endif
@@ -706,7 +706,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	return .
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/eistee, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/eistee, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/eistee, 32)
 #endif
@@ -726,7 +726,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	return .
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/little_fruits, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/little_fruits, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/little_fruits, 32)
 #endif
@@ -737,7 +737,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "jumbo_bar"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/jumbo_bar, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/jumbo_bar, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/jumbo_bar, 32)
 #endif
@@ -748,7 +748,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "calada_jelly"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/calada_jelly, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/calada_jelly, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/calada_jelly, 32)
 #endif
@@ -759,7 +759,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "triumphal_arch"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/triumphal_arch, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/triumphal_arch, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/triumphal_arch, 32)
 #endif
@@ -784,7 +784,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	return .
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/mothic_rations, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/mothic_rations, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/mothic_rations, 32)
 #endif
@@ -795,7 +795,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "wildcat"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/wildcat, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/wildcat, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/wildcat, 32)
 #endif
@@ -806,7 +806,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "babel_device"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/babel_device, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/babel_device, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/babel_device, 32)
 #endif
@@ -817,7 +817,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "pizza_imperator"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/pizza_imperator, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/pizza_imperator, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/pizza_imperator, 32)
 #endif
@@ -828,7 +828,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "thunderdrome"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/thunderdrome, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/thunderdrome, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/thunderdrome, 32)
 #endif
@@ -848,7 +848,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	return .
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/rush_propaganda, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/rush_propaganda, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/rush_propaganda, 32)
 #endif
@@ -859,7 +859,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "tipper_cream_soda"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/tipper_cream_soda, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/tipper_cream_soda, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/tipper_cream_soda, 32)
 #endif
@@ -880,7 +880,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	return .
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/tea_over_tizira, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/tea_over_tizira, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/tea_over_tizira, 32)
 #endif
@@ -891,7 +891,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "aspev_syndie"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/syndiemoth, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/syndiemoth, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/syndiemoth, 32)
 #endif
@@ -902,7 +902,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "microwave"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/microwave, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/microwave, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/microwave, 32)
 #endif
@@ -922,7 +922,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	. += "\t[span_info("Rated M for mature. A Pangalactic Studios Picture.")]"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/blood_geometer, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/blood_geometer, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/blood_geometer, 32)
 #endif
@@ -933,7 +933,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 	icon_state = "singletank_bomb"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/singletank_bomb, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/singletank_bomb, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/singletank_bomb, 32)
 #endif
@@ -969,7 +969,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/
 
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/poster/contraband/fake_bombable, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/poster/contraband/fake_bombable, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/poster/contraband/fake_bombable, 32)
 #endif

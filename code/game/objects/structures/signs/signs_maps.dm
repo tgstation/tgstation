@@ -17,7 +17,7 @@
 	icon_state = "direction_sci"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/science, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/directions/science, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/science, 32)
 #endif
@@ -28,7 +28,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/science
 	icon_state = "direction_eng"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/engineering, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/directions/engineering, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/engineering, 32)
 #endif
@@ -39,7 +39,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/enginee
 	icon_state = "direction_sec"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/security, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/directions/security, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/security, 32)
 #endif
@@ -50,7 +50,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/securit
 	icon_state = "direction_med"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/medical, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/directions/medical, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/medical, 32)
 #endif
@@ -61,7 +61,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/medical
 	icon_state = "direction_evac"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/evac, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/directions/evac, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/evac, 32)
 #endif
@@ -72,7 +72,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/evac, 3
 	icon_state = "direction_supply"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/supply, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/directions/supply, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/supply, 32)
 #endif
@@ -83,7 +83,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/supply,
 	icon_state = "direction_bridge"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/command, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/directions/command, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/command, 32)
 #endif
@@ -94,7 +94,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/command
 	icon_state = "direction_vault"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/vault, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/directions/vault, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/vault, 32)
 #endif
@@ -105,7 +105,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/vault, 
 	icon_state = "direction_upload"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/upload, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/directions/upload, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/upload, 32)
 #endif
@@ -116,7 +116,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/upload,
 	icon_state = "direction_dorms"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/dorms, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/directions/dorms, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/dorms, 32)
 #endif
@@ -127,7 +127,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/dorms, 
 	icon_state = "direction_lavaland"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/lavaland, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/directions/lavaland, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/lavaland, 32)
 #endif
@@ -138,7 +138,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/lavalan
 	icon_state = "direction_arrival"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/directions/arrival, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/directions/arrival, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/directions/arrival, 32)
 #endif

@@ -4,7 +4,7 @@
 	icon_state = "clock"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/clock, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/clock, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/clock, 32)
 #endif
@@ -20,7 +20,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/clock, 32)
 	icon_state = "calendar"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/calendar, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/calendar, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/calendar, 32)
 #endif

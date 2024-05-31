@@ -11,7 +11,7 @@
 	is_editable = TRUE
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning, 32)
 #endif
@@ -22,7 +22,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning, 32)
 	desc = "A warning sign which reads 'SECURE AREA'."
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/secure_area, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/secure_area, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/secure_area, 32)
 #endif
@@ -33,7 +33,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/secure_are
 	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'."
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/docking, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/docking, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/docking, 32)
 #endif
@@ -45,7 +45,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/docking, 3
 	icon_state = "bio"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/biohazard, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/biohazard, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/biohazard, 32)
 #endif
@@ -57,7 +57,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/biohazard,
 	icon_state = "shock"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/electric_shock, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/electric_shock, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/electric_shock, 32)
 #endif
@@ -69,7 +69,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/electric_s
 	icon_state = "space"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/vacuum, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/vacuum, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/vacuum, 32)
 #endif
@@ -81,7 +81,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/vacuum, 32
 	layer = MOB_LAYER
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/vacuum/external, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/vacuum/external, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/vacuum/external, 32)
 #endif
@@ -93,7 +93,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/vacuum/ext
 	icon_state = "deathsposal"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/deathsposal, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/deathsposal, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/deathsposal, 32)
 #endif
@@ -105,7 +105,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/deathsposa
 	icon_state = "bodysposal"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/bodysposal, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/bodysposal, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/bodysposal, 32)
 #endif
@@ -118,7 +118,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/bodysposal
 	resistance_flags = FIRE_PROOF
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/fire, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/fire, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/fire, 32)
 #endif
@@ -131,7 +131,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/fire, 32)
 	resistance_flags = FLAMMABLE
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/no_smoking, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/no_smoking, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/no_smoking, 32)
 #endif
@@ -143,7 +143,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/no_smoking
 	icon_state = "nosmoking"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/no_smoking/circle, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/no_smoking/circle, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/no_smoking/circle, 32)
 #endif
@@ -155,7 +155,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/no_smoking
 	icon_state = "yessmoking"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/yes_smoking/circle, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/yes_smoking/circle, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/yes_smoking/circle, 32)
 #endif
@@ -167,7 +167,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/yes_smokin
 	icon_state = "radiation"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/radiation, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/radiation, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/radiation, 32)
 #endif
@@ -178,7 +178,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/radiation,
 	desc = "A warning sign which reads 'RADIOACTIVE AREA'."
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/radiation/rad_area, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/radiation/rad_area, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/radiation/rad_area, 32)
 #endif
@@ -191,7 +191,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/radiation/
 	icon_state = "xeno_warning"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/xeno_mining, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/xeno_mining, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/xeno_mining, 32)
 #endif
@@ -203,7 +203,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/xeno_minin
 	icon_state = "safety"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/engine_safety, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/engine_safety, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/engine_safety, 32)
 #endif
@@ -215,7 +215,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/engine_saf
 	icon_state = "explosives"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/explosives, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/explosives, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/explosives, 32)
 #endif
@@ -227,7 +227,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/explosives
 	icon_state = "explosives2"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/explosives/alt, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/explosives/alt, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/explosives/alt, 32)
 #endif
@@ -239,7 +239,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/explosives
 	icon_state = "testchamber"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/test_chamber, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/test_chamber, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/test_chamber, 32)
 #endif
@@ -251,7 +251,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/test_chamb
 	icon_state = "firingrange"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/firing_range, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/firing_range, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/firing_range, 32)
 #endif
@@ -263,7 +263,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/firing_ran
 	icon_state = "cold"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/cold_temp, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/cold_temp, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/cold_temp, 32)
 #endif
@@ -275,7 +275,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/cold_temp,
 	icon_state = "heat"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/hot_temp, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/hot_temp, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/hot_temp, 32)
 #endif
@@ -287,7 +287,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/hot_temp, 
 	icon_state = "gasmask"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/gas_mask, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/gas_mask, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/gas_mask, 32)
 #endif
@@ -299,7 +299,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/gas_mask, 
 	icon_state = "chemdiamond"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/chem_diamond, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/chem_diamond, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/chem_diamond, 32)
 #endif
@@ -311,7 +311,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/chem_diamo
 	icon_state = "doors"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/doors, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/doors, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/doors, 32)
 #endif
@@ -325,7 +325,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/doors, 32)
 	icon_state = "pods"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/pods, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/pods, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/pods, 32)
 #endif
@@ -337,7 +337,7 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/pods, 32)
 	icon_state = "radshelter"
 
 #ifdef EXPERIMENT_WALLENING_SIGNS
-MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/sign/warning/rad_shelter, 32)
+NORTH_MAPPING_DIRECTIONAL_HELPER(/obj/structure/sign/warning/rad_shelter, 32)
 #else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/sign/warning/rad_shelter, 32)
 #endif
