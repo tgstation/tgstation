@@ -316,20 +316,22 @@
 	end_processing()
 
 /obj/machinery/transport/crossing_signal/process()
-
+	// idle aspect is green or malf depending on the signal status
+	var/idle_aspect = operating_status == TRANSPORT_SYSTEM_NORMAL ? XING_STATE_GREEN : XING_STATE_MALF
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
 
-	// Check for stopped states.
-	if(!tram || !tram.controller_operational || !is_operational || !inbound || !outbound)
+	// Check for stopped states. Will kill the process since tram starting up will restart process.
+	if(!tram || !tram.controller_operational || !tram.controller_active || !is_operational || !inbound || !outbound)
 		// Tram missing, we lost power, or something isn't right
-		// Throw the error message (blue)
-		set_signal_state(XING_STATE_MALF, force = !is_operational)
+		// Set idle and sleep, since the tram won't be moving
+		set_signal_state(idle_aspect, force = !is_operational)
 		return PROCESS_KILL
 
 	var/obj/structure/transport/linear/tram_part = tram.return_closest_platform_to(src)
 
+	// The structure is gone, so we're done here.
 	if(QDELETED(tram_part))
-		set_signal_state(XING_STATE_MALF, force = !is_operational)
+		set_signal_state(idle_aspect, force = !is_operational)
 		return PROCESS_KILL
 
 	// Everything will be based on position and travel direction
@@ -349,39 +351,30 @@
 	// How far away are we? negative if already passed.
 	var/approach_distance = tram_velocity_sign * (signal_pos - (tram_pos + (DEFAULT_TRAM_LENGTH * 0.5)))
 
-	// Check for stopped state.
-	// Will kill the process since tram starting up will restart process.
-	if(!tram.controller_active)
-		set_signal_state(XING_STATE_GREEN)
-		return PROCESS_KILL
-
 	// Check if tram is driving away from us.
 	if(approach_distance < 0)
 		// driving away. Green. In fact, in order to reverse, it'll have to stop, so let's go ahead and kill.
-		set_signal_state(XING_STATE_GREEN)
+		set_signal_state(idle_aspect)
 		return PROCESS_KILL
 
 	// Check the tram's terminus station.
 	// INBOUND 1 < 2 < 3
 	// OUTBOUND 1 > 2 > 3
 	if(tram.travel_direction & WEST && inbound < tram.destination_platform.platform_code)
-		set_signal_state(XING_STATE_GREEN)
+		set_signal_state(idle_aspect)
 		return PROCESS_KILL
 	if(tram.travel_direction & EAST && outbound > tram.destination_platform.platform_code)
-		set_signal_state(XING_STATE_GREEN)
+		set_signal_state(idle_aspect)
 		return PROCESS_KILL
 
 	// Finally the interesting part where it's ACTUALLY approaching
 	if(approach_distance <= red_distance_threshold)
-		if(operating_status != TRANSPORT_SYSTEM_NORMAL)
-			set_signal_state(XING_STATE_MALF)
-		else
-			set_signal_state(XING_STATE_RED)
+		set_signal_state(XING_STATE_RED)
 		return
-	if(approach_distance <= amber_distance_threshold)
+	if(approach_distance <= amber_distance_threshold && operating_status == TRANSPORT_SYSTEM_NORMAL)
 		set_signal_state(XING_STATE_AMBER)
 		return
-	set_signal_state(XING_STATE_GREEN)
+	set_signal_state(idle_aspect)
 
 /**
  * Set the signal state and update appearance.
