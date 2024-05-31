@@ -2669,9 +2669,6 @@
 	pixel_x = 4
 	},
 /obj/machinery/duct,
-/obj/item/gun/ballistic/rifle/boltaction/pipegun/donk{
-	pixel_y = -8
-	},
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "xs" = (
