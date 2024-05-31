@@ -374,6 +374,16 @@
 #undef AQUARIUM_BORDERS_LAYER
 #undef AQUARIUM_BELOW_GLASS_LAYER
 
+/obj/structure/aquarium/lawyer/Initialize(mapload)
+	. = ..()
+
+	new /obj/item/aquarium_prop/sand(src)
+	new /obj/item/aquarium_prop/seaweed(src)
+
+	new /obj/item/fish/goldfish/gill(src)
+
+	reagents.add_reagent(/datum/reagent/consumable/nutriment, 2)
+
 /obj/structure/aquarium/prefilled/Initialize(mapload)
 	. = ..()
 
