@@ -11,7 +11,11 @@
 	/// Current number of a pinned notices
 	var/notices = 0
 
+#ifdef EXPERIMENT_WALLENING
+MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/structure/noticeboard, 32)
+#else
 MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/structure/noticeboard, 32)
+#endif
 
 /obj/structure/noticeboard/Initialize(mapload)
 	. = ..()
