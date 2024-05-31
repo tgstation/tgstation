@@ -710,7 +710,7 @@
 	desc = "A large duffel bag, packed to the brim with various exosuit ammo."
 
 /obj/item/storage/backpack/dufflebag/syndie/cyborg_support
-	desc = "A large duffle bag, packed to the brim of supplies to support cyborgs units"
+	desc = "A large duffle bag, packed to the brim with supplies to support cyborg units."
 
 /obj/item/storage/backpack/dufflebag/syndie/cyborg_support/PopulateContents()
 	new /obj/item/storage/belt/utility/syndicate(src)
