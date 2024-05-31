@@ -286,7 +286,7 @@
 		RegisterSignals(shell_parent, list(COMSIG_ORGAN_IMPLANTED, COMSIG_ORGAN_REMOVED), PROC_REF(on_organ_implanted))
 		var/obj/item/organ/internal/cyberimp/bci/bci = shell_parent
 		if(bci.owner) //If somehow the camera was added while shell is already installed inside a mob, assign signals
-			on_organ_implanted(null, bci.owner)
+			RegisterSignal(bci.owner, COMSIG_MOVABLE_MOVED, PROC_REF(update_camera_location))
 
 /obj/item/circuit_component/remotecam/bci/unregister_shell(atom/movable/shell)
 	if(shell_camera)
