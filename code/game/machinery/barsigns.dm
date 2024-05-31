@@ -534,9 +534,9 @@ MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/barsign, 32)
 	disassemble_result = /obj/item/wallframe/barsign/all_access
 
 #ifdef EXPERIMENT_WALLENING
-MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/barsign/all_access, 32)
-#else
 MAPPING_DIRECTIONAL_HELPERS_VISIBLE_CARDINALS(/obj/machinery/barsign/all_access, 32)
+#else
+MAPPING_DIRECTIONAL_HELPERS_ALL_CARDINALS(/obj/machinery/barsign/all_access, 32)
 #endif
 
 /obj/item/wallframe/barsign
