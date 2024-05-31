@@ -24,16 +24,16 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter)
 "d" = (
-/obj/structure/table/reinforced,
-/obj/item/book/manual/wiki/security_space_law{
-	pixel_y = 6;
-	pixel_x = -5
+/obj/structure/table,
+/obj/item/tape{
+	pixel_y = 17;
+	pixel_x = -12
 	},
-/obj/item/grenade/chem_grenade/cleaner{
-	pixel_x = 8;
-	pixel_y = 14
+/obj/item/reagent_containers/cup/glass/dry_ramen{
+	pixel_x = 4;
+	pixel_y = -4
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/pod/dark,
 /area/shuttle/hunter)
 "f" = (
 /obj/structure/table,
@@ -65,16 +65,16 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter)
 "k" = (
-/obj/structure/table,
-/obj/item/tape{
-	pixel_y = 17;
-	pixel_x = -12
+/obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_y = 6;
+	pixel_x = -5
 	},
-/obj/item/reagent_containers/cup/glass/dry_ramen{
-	pixel_x = 4;
-	pixel_y = -4
+/obj/item/grenade/chem_grenade/cleaner{
+	pixel_x = 8;
+	pixel_y = 14
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/pod/light,
 /area/shuttle/hunter)
 "l" = (
 /obj/machinery/power/shuttle_engine/propulsion{
@@ -97,6 +97,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/pod/dark,
+/area/shuttle/hunter)
+"q" = (
+/obj/structure/closet/crate/bin,
+/obj/item/grenade/chem_grenade/glitter/pink,
+/obj/item/trash/can,
+/obj/item/cigbutt,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter)
 "r" = (
@@ -160,23 +167,10 @@
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
 "A" = (
-/obj/structure/table/reinforced,
-/obj/item/paper{
-	pixel_y = 2;
-	pixel_x = 2
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
-/obj/item/paper{
-	pixel_y = 5;
-	pixel_x = -4
-	},
-/obj/item/stamp/centcom{
-	pixel_x = 6;
-	pixel_y = 5
-	},
-/obj/item/pen/fourcolor{
-	pixel_x = -4
-	},
-/turf/open/floor/pod/light,
+/turf/open/floor/pod/dark,
 /area/shuttle/hunter)
 "B" = (
 /obj/machinery/light/floor,
@@ -278,17 +272,26 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter)
 "S" = (
-/obj/structure/bookcase/random/reference,
+/obj/structure/table/reinforced,
+/obj/item/paper{
+	pixel_y = 2;
+	pixel_x = 2
+	},
+/obj/item/paper{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/obj/item/stamp/centcom{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/item/pen/fourcolor{
+	pixel_x = -4
+	},
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
 "T" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/pod/dark,
-/area/shuttle/hunter)
-"U" = (
-/obj/structure/closet/crate/bin,
-/obj/item/trash/can,
-/obj/item/cigbutt,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter)
 "V" = (
@@ -332,10 +335,8 @@
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
 "Z" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/pod/dark,
+/obj/structure/bookcase/random/reference,
+/turf/open/floor/pod/light,
 /area/shuttle/hunter)
 
 (1,1,1) = {"
@@ -419,9 +420,9 @@ n
 n
 n
 n
-Z
-Z
-Z
+A
+A
+A
 n
 n
 n
@@ -449,7 +450,7 @@ n
 h
 n
 n
-U
+q
 O
 O
 n
@@ -494,7 +495,7 @@ a
 a
 n
 Y
-k
+d
 R
 O
 t
@@ -538,11 +539,11 @@ a
 a
 a
 h
-S
+Z
 O
 B
 O
-d
+k
 h
 a
 a
@@ -553,7 +554,7 @@ a
 a
 a
 h
-A
+S
 u
 I
 u
