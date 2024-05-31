@@ -2,7 +2,7 @@
 	name = "laptop"
 	desc = "A portable laptop computer."
 
-	icon = 'icons/obj/modular_laptop.dmi'
+	icon = 'icons/obj/devices/modular_laptop.dmi'
 	icon_state = "laptop-closed"
 	icon_state_powered = "laptop"
 	icon_state_unpowered = "laptop-off"
