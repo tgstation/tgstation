@@ -325,3 +325,11 @@ rough example of the "cone" made by the 3 dirs checked
 		"x" = icon_width > world.icon_size && pixel_x != 0 ? (icon_width - world.icon_size) * 0.5 : 0,
 		"y" = icon_height > world.icon_size && pixel_y != 0 ? (icon_height - world.icon_size) * 0.5 : 0,
 	)
+
+/// Check to ensure that we are not placing a certain atom (like a sign or a poster) on something that is not a given face of that wall
+/// Source is "placer", Destination is the "wall", the linted_direction is a bitflag for the direction the item is allowed to be placed on.
+/// Returns true if the item can be placed on the wall face, false otherwise.
+/proc/check_wall_face(atom/source, atom/destination, linted_direction)
+	if(get_dir(source, destination) & linted_direction)
+		return TRUE
+	return FALSE

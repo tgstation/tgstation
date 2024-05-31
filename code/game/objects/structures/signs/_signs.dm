@@ -213,6 +213,14 @@
 	. = ..()
 	if(!iswallturf(target) || !proximity)
 		return
+
+#ifdef EXPERIMENT_WALLENING
+	// Deny placing signs if we are attempting to place it on something that is not the south face of a northern wall.
+	if(!check_wall_face(user, target, NORTH))
+		balloon_alert(user, "can't place it there!")
+		return
+#endif
+
 	var/turf/target_turf = target
 	var/turf/user_turf = get_turf(user)
 	var/obj/structure/sign/placed_sign = new sign_path(user_turf) //We place the sign on the turf the user is standing, and pixel shift it to the target wall, as below.

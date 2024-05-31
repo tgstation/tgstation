@@ -234,9 +234,8 @@
 				return
 
 #ifdef EXPERIMENT_WALLENING
-	// Deny placing posters if we are attempting to place it on something that is not the south face of a northern wall.
-	var/direction = get_dir(user, src)
-	if(direction & ~NORTH)
+	// Deny placing signs if we are attempting to place it on something that is not the south face of a northern wall.
+	if(!check_wall_face(user, src, NORTH))
 		balloon_alert(user, "can't place it there!")
 		return
 #endif
