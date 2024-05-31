@@ -57,6 +57,7 @@
 	var/sampleDNA
 	var/contains_sample = FALSE
 	var/being_harvested = FALSE
+	var/refused = FALSE
 
 /obj/item/seeds/replicapod/Initialize(mapload)
 	. = ..()
@@ -122,6 +123,14 @@
 	else
 		return null
 
+/obj/item/seeds/replicapod/proc/ghost_consent(mob/user)
+	var/prompt = tgui_alert(user, "Do you wish to become a pod person? You CANNOT return to your original body if you do this.", "WARNING", list("Yes", "No"))
+	if(prompt == "Yes")
+		return TRUE
+	else
+		refused = TRUE
+		return FALSE
+
 /obj/item/seeds/replicapod/harvest(mob/user) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc
 	var/make_podman = FALSE
@@ -133,11 +142,13 @@
 				if(isobserver(M))
 					var/mob/dead/observer/O = M
 					if(O.ckey == ckey && O.can_reenter_corpse)
-						make_podman = TRUE
+						if(ghost_consent(M))
+							make_podman = TRUE
 						break
 				else
 					if(M.ckey == ckey && M.stat == DEAD && !HAS_TRAIT(M, TRAIT_SUICIDED) && !HAS_TRAIT(M, TRAIT_MIND_TEMPORARILY_GONE))
-						make_podman = TRUE
+						if(ghost_consent(M))
+							make_podman = TRUE
 						break
 		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
 			for(var/mob/M in GLOB.player_list)
@@ -146,15 +157,17 @@
 						var/mob/dead/observer/O = M
 						if(!O.can_reenter_corpse)
 							break
-					make_podman = TRUE
-					ckey_holder = M.ckey
-					break
+					if(ghost_consent(M))
+						make_podman = TRUE
+						ckey_holder = M.ckey
+						break
 
 	// No podman player, give one or two seeds.
 	if(!make_podman)
 		// Prevent accidental harvesting. Make sure the user REALLY wants to do this if there's a chance of this coming from a living creature.
 		if(mind || ckey)
-			var/choice = tgui_alert(usr,"The pod is currently devoid of soul. There is a possibility that a soul could claim this creature, or you could harvest it for seeds.", "Harvest Seeds?", list("Harvest Seeds", "Cancel"))
+			var/choice = tgui_alert(usr,refused ? "This soul has declined to be reborn as a podperson. You can harvest the seeds or try again." : "The pod is currently devoid of soul. There is a possibility that a soul could claim this creature, or you could harvest it for seeds.", "Harvest Seeds?", list("Harvest Seeds", "Cancel"))
+			refused = FALSE //reset the value in case someone misclicked
 			if(choice != "Harvest Seeds")
 				return result
 
