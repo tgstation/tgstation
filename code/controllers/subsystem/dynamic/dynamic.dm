@@ -382,7 +382,7 @@ SUBSYSTEM_DEF(dynamic)
 
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_INTERN))
 			advisory_string += "Advisory Level: <b>(TITLE HERE)</b></center><BR>"
-			advisory_string += "(Copy/Paste the summary provided by the Threat Intelligence Office in this field. It's so easy even you won't be able to screw this up. Also, make sure there's coffee ready for the meeting at 06:00 when you're done.)"
+			advisory_string += "(Copy/Paste the summary provided by the Threat Intelligence Office in this field. You shouldn't have any trouble with this just make sure to replace this message before hitting the send button. Also, make sure there's coffee ready for the meeting at 06:00 when you're done.)"
 			return advisory_string
 
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_ION_STORMS))
