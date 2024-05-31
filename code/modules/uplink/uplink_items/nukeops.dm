@@ -542,7 +542,7 @@
 
 /datum/uplink_item/bundles_tc/cyborg_support
 	name = "Cyborg Support Kit"
-	desc = "A duffle bag containing a full toolbelt including a inducer an spare battery, with a emergency reboot module and a emagg."
+	desc = "A duffle bag containing a full toolbelt (inducer included), an extra bluespace cell, a reboot module, and a cryptographic sequencer, just in case your silicons get turned against you."
 	item = /obj/item/storage/backpack/dufflebag/syndie/cyborg_support
 	cost = 12
 	purchasable_from = UPLINK_NUKE_OPS
