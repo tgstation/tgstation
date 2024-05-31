@@ -4062,6 +4062,7 @@
 #include "code\modules\fishing\fishing_rod.dm"
 #include "code\modules\fishing\aquarium\aquarium.dm"
 #include "code\modules\fishing\aquarium\aquarium_kit.dm"
+#include "code\modules\fishing\aquarium\aquarium_upgrades.dm"
 #include "code\modules\fishing\aquarium\fish_analyzer.dm"
 #include "code\modules\fishing\fish\_fish.dm"
 #include "code\modules\fishing\fish\chasm_detritus.dm"
