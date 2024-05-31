@@ -1,6 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes:
-  - qol: "Grown logs no longer spam your chat when cut into planks, instead displaying balloon alerts informing you of how many planks were made!"
-  - qol: "Cotton and Durathread bundles no longer spam your chat either, and display a balloon alert instead."
-  - bugfix: "Cotton and Durathread bundles no longer runtime when creating raw cotton/durathread from the created stack having been merged with an existing one."
