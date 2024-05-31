@@ -323,7 +323,7 @@
 	// Check for stopped states. Will kill the process since tram starting up will restart process.
 	if(!tram || !tram.controller_operational || !tram.controller_active || !is_operational || !inbound || !outbound)
 		// Tram missing, we lost power, or something isn't right
-		// Set idle and sleep, since the tram won't be moving
+		// Set idle and stop processing, since the tram won't be moving
 		set_signal_state(idle_aspect, force = !is_operational)
 		return PROCESS_KILL
 
