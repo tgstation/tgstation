@@ -4764,6 +4764,7 @@
 /obj/item/reagent_containers/cup/glass/waterbottle{
 	pixel_y = 16
 	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "bGC" = (
@@ -7126,11 +7127,11 @@
 	},
 /area/station/science/lobby)
 "cyR" = (
-/obj/machinery/firealarm/directional/north,
 /obj/machinery/camera/directional/north,
 /obj/structure/chair/greyscale,
 /obj/effect/landmark/start/assistant,
 /obj/effect/turf_decal/trimline/brown/filled/corner,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "cyS" = (
@@ -9845,10 +9846,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
-"dCZ" = (
-/obj/machinery/status_display/supply,
-/turf/closed/wall,
-/area/station/cargo/sorting)
 "dDe" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
@@ -10364,7 +10361,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "dMv" = (
@@ -31547,6 +31543,7 @@
 	},
 /obj/item/stack/package_wrap,
 /obj/machinery/light/directional/south,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "ldJ" = (
@@ -52024,6 +52021,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "srP" = (
@@ -90470,7 +90468,7 @@ mkT
 sAb
 mgJ
 eUL
-dCZ
+bzH
 bGt
 uRu
 xwM
