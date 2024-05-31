@@ -243,7 +243,7 @@
 
 /turf/closed/mineral/attack_hulk(mob/living/carbon/human/H)
 	..()
-	if(do_after(H, 50, target = src))
+	if(do_after(H, 5 SECONDS, target = src))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 		H.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		gets_drilled(H)
@@ -650,6 +650,7 @@
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	turf_type = /turf/open/misc/ashplanet/rocky
 	defer_change = TRUE
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/closed/mineral/snowmountain
 	name = "snowy mountainside"

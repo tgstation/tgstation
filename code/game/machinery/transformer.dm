@@ -20,7 +20,7 @@
 	/// How long until the next mob can be processed
 	var/cooldown_timer
 	/// The created cyborg's cell chage
-	var/robot_cell_charge = 5000
+	var/robot_cell_charge = STANDARD_CELL_CHARGE * 5
 	/// The visual countdown effect
 	var/obj/effect/countdown/transformer/countdown
 	/// Who the master AI is that created this factory

@@ -409,7 +409,7 @@ DEFINE_BITFIELD(turret_flags, list(
 			spark_system.start()
 		if(on && !(turret_flags & TURRET_FLAG_SHOOT_ALL_REACT) && !(obj_flags & EMAGGED))
 			turret_flags |= TURRET_FLAG_SHOOT_ALL_REACT
-			addtimer(CALLBACK(src, PROC_REF(reset_attacked)), 60)
+			addtimer(CALLBACK(src, PROC_REF(reset_attacked)), 6 SECONDS)
 
 /obj/machinery/porta_turret/proc/reset_attacked()
 	turret_flags &= ~TURRET_FLAG_SHOOT_ALL_REACT
@@ -420,17 +420,23 @@ DEFINE_BITFIELD(turret_flags, list(
 		power_change()
 		SetInvisibility(INVISIBILITY_NONE, id=type)
 		spark_system.start() //creates some sparks because they look cool
+		has_cover = FALSE
 		qdel(cover) //deletes the cover - no need on keeping it there!
+
+/obj/machinery/porta_turret/atom_fix()
+	set_machine_stat(machine_stat & ~BROKEN)
+	has_cover = initial(has_cover)
+	check_should_process()
+	return ..()
+
 
 /obj/machinery/porta_turret/process()
 	//the main machinery process
-	if(cover == null && anchored) //if it has no cover and is anchored
-		if(machine_stat & BROKEN) //if the turret is borked
-			qdel(cover) //delete its cover, assuming it has one. Workaround for a pesky little bug
-		else
-			if(has_cover)
-				cover = new /obj/machinery/porta_turret_cover(loc) //if the turret has no cover and is anchored, give it a cover
-				cover.parent_turret = src //assign the cover its parent_turret, which would be this (src)
+	if(has_cover && cover == null && anchored && !(machine_stat & BROKEN)) //if it has no cover and is anchored
+		cover = new /obj/machinery/porta_turret_cover(loc) //if the turret has no cover and is anchored, give it a cover
+		cover.parent_turret = src //assign the cover its parent_turret, which would be this (src)
+		if(raised)
+			cover.icon_state = "openTurretCover"
 
 	if(!on || (machine_stat & (NOPOWER|BROKEN)))
 		return PROCESS_KILL
@@ -827,9 +833,9 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(target)
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
 		shootAt(target)
-		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 5)
-		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 10)
-		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 15)
+		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 0.5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 1 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(shootAt), target), 1.5 SECONDS)
 		return TRUE
 
 /obj/machinery/porta_turret/ai
@@ -910,6 +916,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	density = FALSE
 	req_access = list(ACCESS_AI_UPLOAD)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	interaction_flags_click = ALLOW_SILICON_REACH
 	/// Variable dictating if linked turrets are active and will shoot targets
 	var/enabled = TRUE
 	/// Variable dictating if linked turrets will shoot lethal projectiles
@@ -1066,7 +1073,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	shoot_cyborgs = !shoot_cyborgs
 	if (user)
 		var/status = shoot_cyborgs ? "Shooting Borgs" : "Not Shooting Borgs"
-		balloon_alert(user, lowertext(status))
+		balloon_alert(user, LOWER_TEXT(status))
 		add_hiddenprint(user)
 		log_combat(user, src, "[status]")
 	updateTurrets()

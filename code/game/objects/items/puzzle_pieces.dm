@@ -323,7 +323,7 @@
 		SSqueuelinks.add_to_queue(src, id, late_initialize_pop ? 0 : queue_size)
 		return late_initialize_pop ? INITIALIZE_HINT_LATELOAD : .
 
-/obj/machinery/puzzle/LateInitialize()
+/obj/machinery/puzzle/post_machine_initialize()
 	. = ..()
 	if(late_initialize_pop && id && SSqueuelinks.queues[id])
 		SSqueuelinks.pop_link(id)

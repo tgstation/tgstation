@@ -197,3 +197,15 @@
 		to_chat(user, span_notice("You gently let go of [rider]."))
 		return
 	return rider
+
+/obj/item/riding_offhand/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with) || !interacting_with.can_buckle)
+		return NONE
+	if(rider == user) // Piggyback user
+		return ITEM_INTERACT_BLOCKING
+
+	// Handles de-fireman carrying a mob and buckling them onto something (tables, etc)
+	var/mob/living/former_rider = rider
+	user.unbuckle_mob(former_rider)
+	former_rider.forceMove(get_turf(interacting_with))
+	return interacting_with.mouse_buckle_handling(former_rider, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING

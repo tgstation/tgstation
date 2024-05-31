@@ -61,7 +61,7 @@
 	core = ncore
 	icon_state = "core_container_loaded"
 	to_chat(user, span_warning("Container is sealing..."))
-	addtimer(CALLBACK(src, PROC_REF(seal)), 50)
+	addtimer(CALLBACK(src, PROC_REF(seal)), 5 SECONDS)
 	return TRUE
 
 /obj/item/nuke_core_container/proc/seal()
@@ -236,7 +236,7 @@
 	T.icon_state = "supermatter_tongs"
 	icon_state = "core_container_loaded"
 	to_chat(user, span_warning("Container is sealing..."))
-	addtimer(CALLBACK(src, PROC_REF(seal)), 50)
+	addtimer(CALLBACK(src, PROC_REF(seal)), 5 SECONDS)
 	return TRUE
 
 /obj/item/nuke_core_container/supermatter/seal()

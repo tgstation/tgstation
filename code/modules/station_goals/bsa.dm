@@ -258,7 +258,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 /obj/machinery/bsa/full/proc/reload()
 	ready = FALSE
 	use_energy(power_used_per_shot)
-	addtimer(CALLBACK(src,"ready_cannon"),600)
+	addtimer(CALLBACK(src,"ready_cannon"), 1 MINUTES)
 
 /obj/machinery/bsa/full/proc/ready_cannon()
 	ready = TRUE

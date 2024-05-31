@@ -76,7 +76,7 @@
 /obj/effect/meteor/proc/chase_target(atom/chasing, delay, home)
 	if(!isatom(chasing))
 		return
-	var/datum/move_loop/new_loop = SSmove_manager.move_towards(src, chasing, delay, home, lifetime)
+	var/datum/move_loop/new_loop = GLOB.move_manager.move_towards(src, chasing, delay, home, lifetime)
 	if(!new_loop)
 		return
 
@@ -150,7 +150,7 @@
  * Admin spawned meteors will not grant the user an achievement.
  *
  * Arguments:
- * * user - the person who will be recieving the examine award.
+ * * user - the person who will be receiving the examine award.
  */
 
 /obj/effect/meteor/proc/check_examine_award(mob/user)

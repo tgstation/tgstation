@@ -1,5 +1,4 @@
 import { sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useState } from 'react';
@@ -67,9 +66,10 @@ export const SeedExtractor = (props) => {
   const search = createSearch(searchText, (item: SeedData) => item.name);
   const seeds_filtered =
     searchText.length > 0 ? data.seeds.filter(search) : data.seeds;
-  const seeds = flow([
-    sortBy((item: SeedData) => item[sortField as keyof SeedData]),
-  ])(seeds_filtered || []);
+  const seeds = sortBy(
+    seeds_filtered || [],
+    (item: SeedData) => item[sortField as keyof SeedData],
+  );
   sortField !== 'name' && seeds.reverse();
 
   return (

@@ -1,10 +1,9 @@
 /datum/ai_behavior/perform_change_slime_face
 
 /datum/ai_behavior/perform_change_slime_face/perform(seconds_per_tick, datum/ai_controller/controller)
-	. = ..()
 	var/mob/living/basic/slime/slime_pawn = controller.pawn
 	if(!istype(slime_pawn))
-		return
+		return AI_BEHAVIOR_DELAY
 
 	var/current_mood = slime_pawn.current_mood
 
@@ -23,7 +22,7 @@
 		slime_pawn.current_mood = new_mood
 		slime_pawn.regenerate_icons()
 
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/find_hunt_target/find_slime_food
 
@@ -31,6 +30,10 @@
 /datum/ai_behavior/find_hunt_target/find_slime_food/valid_dinner(mob/living/basic/slime/hunter, mob/living/dinner, radius, datum/ai_controller/controller, seconds_per_tick)
 
 	if(REF(dinner) in hunter.faction) //Don't eat our friends...
+		return
+
+	var/static/list/slime_faction = list(FACTION_SLIME)
+	if(faction_check(slime_faction, dinner.faction)) //Don't try to eat slimy things, no matter how hungry we are. Anyone else can be betrayed.
 		return
 
 	if(!hunter.can_feed_on(dinner, check_adjacent = FALSE)) //Are they tasty to slimes?

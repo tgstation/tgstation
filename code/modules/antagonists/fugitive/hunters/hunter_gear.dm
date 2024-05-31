@@ -23,7 +23,7 @@
 	if(!fug_antag)
 		to_chat(fugitive_hunter, span_warning("This is not a wanted fugitive!"))
 		return
-	if(do_after(fugitive_hunter, 50, target = fugitive))
+	if(do_after(fugitive_hunter, 5 SECONDS, target = fugitive))
 		add_prisoner(fugitive, fug_antag)
 
 /obj/machinery/fugitive_capture/proc/add_prisoner(mob/living/carbon/human/fugitive, datum/antagonist/fugitive/antag)

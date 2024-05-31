@@ -116,8 +116,6 @@
 #define SPECIES_LIZARD_SILVER "silverscale"
 #define SPECIES_NIGHTMARE "nightmare"
 #define SPECIES_MONKEY "monkey"
-#define SPECIES_MONKEY_FREAK "monkey_freak"
-#define SPECIES_MONKEY_HUMAN_LEGGED "monkey_human_legged"
 #define SPECIES_MOTH "moth"
 #define SPECIES_MUSHROOM "mush"
 #define SPECIES_PLASMAMAN "plasmaman"
@@ -125,7 +123,6 @@
 #define SPECIES_SHADOW "shadow"
 #define SPECIES_SKELETON "skeleton"
 #define SPECIES_SNAIL "snail"
-#define SPECIES_TALLBOY "tallboy"
 #define SPECIES_VAMPIRE "vampire"
 #define SPECIES_ZOMBIE "zombie"
 #define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
@@ -282,6 +279,7 @@
 
 //Disgust levels for humans
 #define DISGUST_LEVEL_MAXEDOUT 150
+#define DISGUST_LEVEL_VERYDISGUSTED 100
 #define DISGUST_LEVEL_DISGUSTED 75
 #define DISGUST_LEVEL_VERYGROSS 50
 #define DISGUST_LEVEL_GROSS 25
@@ -291,12 +289,12 @@
 
 //Charge levels for Ethereals, in joules.
 #define ETHEREAL_CHARGE_NONE 0
-#define ETHEREAL_CHARGE_LOWPOWER (400 KILO JOULES)
-#define ETHEREAL_CHARGE_NORMAL (1 MEGA JOULES)
-#define ETHEREAL_CHARGE_ALMOSTFULL (1.5 MEGA JOULES)
-#define ETHEREAL_CHARGE_FULL (2 MEGA JOULES)
-#define ETHEREAL_CHARGE_OVERLOAD (2.5 MEGA JOULES)
-#define ETHEREAL_CHARGE_DANGEROUS (3 MEGA JOULES)
+#define ETHEREAL_CHARGE_LOWPOWER (0.4 * STANDARD_CELL_CHARGE)
+#define ETHEREAL_CHARGE_NORMAL (1 * STANDARD_CELL_CHARGE)
+#define ETHEREAL_CHARGE_ALMOSTFULL (1.5 * STANDARD_CELL_CHARGE)
+#define ETHEREAL_CHARGE_FULL (2 * STANDARD_CELL_CHARGE)
+#define ETHEREAL_CHARGE_OVERLOAD (2.5 * STANDARD_CELL_CHARGE)
+#define ETHEREAL_CHARGE_DANGEROUS (3 * STANDARD_CELL_CHARGE)
 
 
 #define CRYSTALIZE_COOLDOWN_LENGTH (120 SECONDS)
@@ -346,7 +344,6 @@
 #define AI_ON 1
 #define AI_IDLE 2
 #define AI_OFF 3
-#define AI_Z_OFF 4
 
 //The range at which a mob should wake up if you spawn into the z level near it
 #define MAX_SIMPLEMOB_WAKEUP_RANGE 5
@@ -441,7 +438,7 @@
 #define DOOR_CRUSH_DAMAGE 15 //the amount of damage that airlocks deal when they crush you
 
 #define HUNGER_FACTOR 0.05 //factor at which mob nutrition decreases
-#define ETHEREAL_DISCHARGE_RATE (0.8 KILO WATTS) // Rate at which ethereal stomach charge decreases
+#define ETHEREAL_DISCHARGE_RATE (8e-4 * STANDARD_CELL_CHARGE) // Rate at which ethereal stomach charge decreases
 /// How much nutrition eating clothes as moth gives and drains
 #define CLOTHING_NUTRITION_GAIN 15
 #define REAGENTS_METABOLISM 0.2 //How many units of reagent are consumed per second, by default.
@@ -641,18 +638,22 @@
 // - They do not start at 0 for futureproofing
 // - They skip numbers for futureproofing as well
 // Otherwise they are completely arbitrary
-#define HUMAN_HEIGHT_DWARF 2
-#define HUMAN_HEIGHT_SHORTEST 4
-#define HUMAN_HEIGHT_SHORT 6
-#define HUMAN_HEIGHT_MEDIUM 8
-#define HUMAN_HEIGHT_TALL 10
-#define HUMAN_HEIGHT_TALLER 12
-#define HUMAN_HEIGHT_TALLEST 14
+#define MONKEY_HEIGHT_DWARF 2
+#define MONKEY_HEIGHT_MEDIUM 4
+#define HUMAN_HEIGHT_DWARF 6
+#define HUMAN_HEIGHT_SHORTEST 8
+#define HUMAN_HEIGHT_SHORT 10
+#define HUMAN_HEIGHT_MEDIUM 12
+#define HUMAN_HEIGHT_TALL 14
+#define HUMAN_HEIGHT_TALLER 16
+#define HUMAN_HEIGHT_TALLEST 18
 
 /// Assoc list of all heights, cast to strings, to """"tuples"""""
 /// The first """tuple""" index is the upper body offset
 /// The second """tuple""" index is the lower body offset
 GLOBAL_LIST_INIT(human_heights_to_offsets, list(
+	"[MONKEY_HEIGHT_DWARF]" = list(-9, -3),
+	"[MONKEY_HEIGHT_MEDIUM]" = list(-7, -4),
 	"[HUMAN_HEIGHT_DWARF]" = list(-5, -4),
 	"[HUMAN_HEIGHT_SHORTEST]" = list(-2, -1),
 	"[HUMAN_HEIGHT_SHORT]" = list(-1, -1),
@@ -666,39 +667,41 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 /// Total number of layers for mob overlays
 /// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK
 /// Also consider updating layers_to_offset
-#define TOTAL_LAYERS 34
+#define TOTAL_LAYERS 35
 /// Mutations layer - Tk headglows, cold resistance glow, etc
-#define MUTATIONS_LAYER 34
+#define MUTATIONS_LAYER 35
 /// Mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODY_BEHIND_LAYER 33
+#define BODY_BEHIND_LAYER 34
 /// Layer for bodyparts that should appear behind every other bodypart - Mostly, legs when facing WEST or EAST
-#define BODYPARTS_LOW_LAYER 32
+#define BODYPARTS_LOW_LAYER 33
 /// Layer for most bodyparts, appears above BODYPARTS_LOW_LAYER and below BODYPARTS_HIGH_LAYER
-#define BODYPARTS_LAYER 31
+#define BODYPARTS_LAYER 32
 /// Mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_ADJ_LAYER 30
+#define BODY_ADJ_LAYER 31
 /// Underwear, undershirts, socks, eyes, lips(makeup)
-#define BODY_LAYER 29
+#define BODY_LAYER 30
 /// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define FRONT_MUTATIONS_LAYER 28
+#define FRONT_MUTATIONS_LAYER 29
 /// Damage indicators (cuts and burns)
-#define DAMAGE_LAYER 27
+#define DAMAGE_LAYER 28
 /// Jumpsuit clothing layer
-#define UNIFORM_LAYER 26
+#define UNIFORM_LAYER 27
 /// ID card layer
-#define ID_LAYER 25
+#define ID_LAYER 26
 /// ID card layer (might be deprecated)
-#define ID_CARD_LAYER 24
+#define ID_CARD_LAYER 25
 /// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
-#define BODYPARTS_HIGH_LAYER 23
+#define BODYPARTS_HIGH_LAYER 24
 /// Gloves layer
-#define GLOVES_LAYER 22
+#define GLOVES_LAYER 23
 /// Shoes layer
-#define SHOES_LAYER 21
+#define SHOES_LAYER 22
 /// Layer for masks that are worn below ears and eyes (like Balaclavas) (layers below hair, use flagsinv=HIDEHAIR as needed)
-#define LOW_FACEMASK_LAYER 20
+#define LOW_FACEMASK_LAYER 21
 /// Ears layer (Spessmen have ears? Wow)
-#define EARS_LAYER 19
+#define EARS_LAYER 20
+/// Layer for neck apperal that should appear below the suit slot (like neckties)
+#define LOW_NECK_LAYER 19
 /// Suit layer (armor, coats, etc.)
 #define SUIT_LAYER 18
 /// Glasses layer
@@ -707,7 +710,7 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 #define BELT_LAYER 16 //Possible make this an overlay of somethign required to wear a belt?
 /// Suit storage layer (tucking a gun or baton underneath your armor)
 #define SUIT_STORE_LAYER 15
-/// Neck layer (for wearing ties and bedsheets)
+/// Neck layer (for wearing capes and bedsheets)
 #define NECK_LAYER 14
 /// Back layer (for backpacks and equipment on your back)
 #define BACK_LAYER 13
@@ -754,7 +757,9 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	"[BELT_LAYER]" = LOWER_BODY,
 	// Everything below looks fine with or without a filter, so we can skip it and just offset
 	// (In practice they'd be fine if they got a filter but we can optimize a bit by not.)
+	"[NECK_LAYER]" = UPPER_BODY,
 	"[GLASSES_LAYER]" = UPPER_BODY,
+	"[LOW_NECK_LAYER]" = UPPER_BODY,
 	"[ABOVE_BODY_FRONT_GLASSES_LAYER]" = UPPER_BODY, // currently unused
 	"[ABOVE_BODY_FRONT_HEAD_LAYER]" = UPPER_BODY, // only used for head stuff
 	"[GLOVES_LAYER]" = LOWER_BODY,
@@ -771,6 +776,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	// to show how many filters are added at a glance
 	// BACK_LAYER (backpacks are big)
 	// BODYPARTS_HIGH_LAYER (arms)
+	// BODY_LAYER (body markings (full body), underwear (full body), eyes)
 	// BODY_ADJ_LAYER (external organs like wings)
 	// BODY_BEHIND_LAYER (external organs like wings)
 	// BODY_FRONT_LAYER (external organs like wings)
@@ -828,6 +834,10 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define ALLOW_SILICON_REACH (1<<6)
 /// If resting on the floor is allowed to perform action (pAIs can play music while resting)
 #define ALLOW_RESTING (1<<7)
+/// If this is accessible to creatures with ventcrawl capabilities
+#define NEED_VENTCRAWL (1<<8)
+/// Checks for base adjacency, but silences the error
+#define SILENT_ADJACENCY (1<<9)
 
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1
@@ -948,6 +958,9 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 
 /// Types of bullets that mining mobs take full damage from
 #define MINING_MOB_PROJECTILE_VULNERABILITY list(BRUTE)
+
+/// Helper macro that determines if the mob is at the threshold to start vomitting due to high toxin levels
+#define AT_TOXIN_VOMIT_THRESHOLD(mob) (mob.getToxLoss() > 45 && mob.nutrition > 20)
 
 /// The duration of the flip emote animation
 #define FLIP_EMOTE_DURATION 0.7 SECONDS

@@ -349,7 +349,7 @@
 	if(uplink_owned)
 		var/uplink_text = "(used [used_telecrystals] TC) [purchases]"
 		if((used_telecrystals == 0) && traitor_won)
-			var/static/icon/badass = icon('icons/ui_icons/antags/badass.dmi', "badass")
+			var/static/icon/badass = icon('icons/ui/antags/badass.dmi', "badass")
 			uplink_text += "<BIG>[icon2html(badass, world)]</BIG>"
 		result += uplink_text
 
@@ -360,7 +360,7 @@
 			result += contractor_round_end()
 		result += "<br>The traitor had a total of [DISPLAY_PROGRESSION(uplink_handler.progression_points)] Reputation and [uplink_handler.telecrystals] Unused Telecrystals."
 
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 
 	if(traitor_won)
 		result += span_greentext("The [special_role_text] was successful!")

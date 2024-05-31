@@ -147,6 +147,13 @@ EVENTS_MIN_TIME_MUL 1
 ## Set to 0 to make dangerous events avaliable for all populations.
 EVENTS_MIN_PLAYERS_MUL 1
 
+## The lower bound, in deciseconds, for how soon another random event can be scheduled.
+## Defaults to 1500 deciseconds or 2.5 minutes
+EVENTS_FREQUENCY_LOWER 1500
+
+## The upper bound, in deciseconds, for how soon another random event can be scheduled.
+## Defaults to 4200 deciseconds or 7 minutes
+EVENTS_FREQUENCY_UPPER 4200
 
 ## AI ###
 
@@ -265,6 +272,7 @@ RANDOM_LAWS corporate
 #RANDOM_LAWS reporter
 #RANDOM_LAWS hulkamania
 #RANDOM_LAWS ten_commandments
+#RANDOM_LAWS yesman
 
 ## Bad idea laws. Probably shouldn't enable these
 #RANDOM_LAWS syndie

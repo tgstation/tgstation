@@ -148,6 +148,7 @@
 		var/fraction = available_quantity
 		if(market_quantity != available_quantity) //to avoid division by zero error
 			fraction /= (market_quantity - available_quantity)
-		SSstock_market.materials_prices[material_type] += round(SSstock_market.materials_prices[material_type] * fraction)
+		SSstock_market.adjust_material_price(material_type, SSstock_market.materials_prices[material_type] * fraction)
+
 		//We decrease the quantity only after adjusting our prices for accurate values
-		SSstock_market.materials_quantity[material_type] -= available_quantity
+		SSstock_market.adjust_material_quantity(material_type, -available_quantity)

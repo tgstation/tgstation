@@ -83,7 +83,7 @@
 /datum/job/human_ai/announce_job(mob/living/joining_mob)
 	. = ..()
 	if(SSticker.HasRoundStarted())
-		minor_announce("Due to a research mishaps, [joining_mob] has been sent to be your replacement AI at [AREACOORD(joining_mob)]. Please treat them with respect.")
+		minor_announce("Due to a research mishap, [joining_mob] has been sent to be your replacement AI at [AREACOORD(joining_mob)]. Please treat them with respect.")
 
 /datum/job/human_ai/get_radio_information()
 	return "<b>Prefix your message with :b to speak with cyborgs.</b>"
@@ -148,8 +148,8 @@
 	return ..()
 
 /obj/item/secure_camera_console_pod
-	name = "advanced camera control pod"
-	desc = "Calls down a secure camera console to use for all your AI stuff, may only be activated in the SAT."
+	name = "pre-packaged advanced camera control"
+	desc = "A pre-packaged camera console used for all your AI stuff, programmed to only active in the SAT."
 	icon = 'icons/obj/devices/remote.dmi'
 	icon_state = "botpad_controller"
 	inhand_icon_state = "radio"
@@ -163,9 +163,9 @@
 	if(!is_type_in_typecache(current_area, allowed_areas))
 		user.balloon_alert(user, "not in the sat!")
 		return
-	podspawn(list(
-		"target" = get_turf(src),
-		"style" = STYLE_BLUESPACE,
-		"spawn" = /obj/machinery/computer/camera_advanced,
-	))
+	user.balloon_alert(user, "unpacking...")
+	if(!do_after(user, 5 SECONDS, src))
+		return
+	playsound(src, 'sound/items/drill_use.ogg', 40, TRUE)
+	new /obj/machinery/computer/camera_advanced/human_ai(get_turf(src))
 	qdel(src)

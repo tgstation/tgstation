@@ -20,8 +20,12 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT *2)
+	interaction_flags_click = NEED_LITERACY|NEED_LIGHT|ALLOW_RESTING
+	/// Verbose/condensed
 	var/mode = SCANNER_VERBOSE
+	/// HEALTH/WOUND
 	var/scanmode = SCANMODE_HEALTH
+	/// Advanced health analyzer
 	var/advanced = FALSE
 	custom_price = PAYCHECK_COMMAND
 	/// If this analyzer will give a bonus to wound treatments apon woundscan.
@@ -51,7 +55,7 @@
 		if(SCANMODE_WOUND)
 			to_chat(user, span_notice("You switch the health analyzer to report extra info on wounds."))
 
-/obj/item/healthanalyzer/interact_with_atom(atom/interacting_with, mob/living/user)
+/obj/item/healthanalyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
 		return NONE
 	if(!user.can_read(src) || user.is_blind())
@@ -89,7 +93,7 @@
 
 	add_fingerprint(user)
 
-/obj/item/healthanalyzer/interact_with_atom_secondary(atom/interacting_with, mob/living/user)
+/obj/item/healthanalyzer/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
 		return NONE
 	if(!user.can_read(src) || user.is_blind())
@@ -275,7 +279,7 @@
 				<td style='width:12em;'><font color='#ff0000'><b>Status</b></font></td>"
 
 			for(var/obj/item/organ/organ as anything in humantarget.organs)
-				var/status = organ.get_status_text()
+				var/status = organ.get_status_text(advanced)
 				if (status != "")
 					render = TRUE
 					toReport += "<tr><td><font color='#cc3333'>[organ.name]:</font></td>\
@@ -469,17 +473,13 @@
 		// we handled the last <br> so we don't need handholding
 		to_chat(user, examine_block(jointext(render_list, "")), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 
-/obj/item/healthanalyzer/AltClick(mob/user)
-	..()
-
-	if(!user.can_perform_action(src, NEED_LITERACY|NEED_LIGHT) || user.is_blind())
-		return
-
+/obj/item/healthanalyzer/click_alt(mob/user)
 	if(mode == SCANNER_NO_MODE)
-		return
+		return CLICK_ACTION_BLOCKING
 
 	mode = !mode
 	to_chat(user, mode == SCANNER_VERBOSE ? "The scanner now shows specific limb damage." : "The scanner no longer shows limb damage.")
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/healthanalyzer/advanced
 	name = "advanced health analyzer"
@@ -576,7 +576,7 @@
 /obj/item/healthanalyzer/simple/proc/violence_damage(mob/living/user)
 	user.adjustBruteLoss(4)
 
-/obj/item/healthanalyzer/simple/interact_with_atom(atom/interacting_with, mob/living/user)
+/obj/item/healthanalyzer/simple/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
 		return NONE
 	if(!user.can_read(src) || user.is_blind())

@@ -22,7 +22,6 @@
  * Cosmic Expansion
  * > Sidepaths:
  *   Eldritch Coin
- *   Rusted Ritual
  *
  * Creators's Gift
  */
@@ -118,6 +117,7 @@
 		/datum/heretic_knowledge/blade_upgrade/cosmic,
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/curse/corrosion,
+		/datum/heretic_knowledge/summon/rusty,
 		/datum/heretic_knowledge/spell/space_phase,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
@@ -229,7 +229,6 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/cosmic_final,
 		/datum/heretic_knowledge/eldritch_coin,
-		/datum/heretic_knowledge/summon/rusty,
 	)
 	spell_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion
 	cost = 1
@@ -271,7 +270,7 @@
 	priority_announce(
 		text = "[generate_heretic_text()] A Star Gazer has arrived into the station, [user.real_name] has ascended! This station is the domain of the Cosmos! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
-		sound = ANNOUNCER_SPANOMALIES,
+		sound = 'sound/ambience/antag/heretic/ascend_cosmic.ogg',
 		color_override = "pink",
 	)
 	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = new /mob/living/basic/heretic_summon/star_gazer(loc)

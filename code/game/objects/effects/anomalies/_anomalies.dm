@@ -21,8 +21,8 @@
 	var/drops_core = TRUE
 	///Do we keep on living forever?
 	var/immortal = FALSE
-	///Do we stay in one place?
-	var/immobile = FALSE
+	///Chance per second that we will move
+	var/move_chance = ANOMALY_MOVECHANCE
 
 /obj/effect/anomaly/Initialize(mapload, new_lifespan, drops_core = TRUE)
 	. = ..()
@@ -76,8 +76,12 @@
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect(seconds_per_tick)
-	if(!immobile && SPT_PROB(ANOMALY_MOVECHANCE, seconds_per_tick))
-		step(src,pick(GLOB.alldirs))
+	if(SPT_PROB(move_chance, seconds_per_tick))
+		move_anomaly()
+
+/// Move in a direction
+/obj/effect/anomaly/proc/move_anomaly()
+	step(src, pick(GLOB.alldirs))
 
 /obj/effect/anomaly/proc/detonate()
 	return
@@ -116,4 +120,5 @@
 	if(!has_core)
 		drops_core = FALSE
 		QDEL_NULL(aSignal)
-	immobile = anchor
+	if (anchor)
+		move_chance = 0

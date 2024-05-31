@@ -484,7 +484,7 @@
 		chem_splash(get_turf(src), reagents, spread_range, list(reactants), temp_boost)
 
 		// Detonate it again in one second, until it's out of juice.
-		addtimer(CALLBACK(src, PROC_REF(detonate)), 10)
+		addtimer(CALLBACK(src, PROC_REF(detonate)), 1 SECONDS)
 
 	// If it's not a time release bomb, do normal explosion
 

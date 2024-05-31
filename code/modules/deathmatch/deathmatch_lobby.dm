@@ -47,6 +47,7 @@
 		clear_reservation()
 	players = null
 	observers = null
+	map?.template_in_use = FALSE //just incase
 	map = null
 	location = null
 	loadouts = null
@@ -55,13 +56,18 @@
 /datum/deathmatch_lobby/proc/start_game()
 	if (playing)
 		return
+	if(map.template_in_use)
+		to_chat(get_mob_by_ckey(host), span_warning("This map is currently loading for another lobby. Please wait until that other map finishes loading. It would be a disaster if these two mixed up."))
+		return
 	playing = DEATHMATCH_PRE_PLAYING
 
+	map.template_in_use = TRUE
 	RegisterSignal(map, COMSIG_LAZY_TEMPLATE_LOADED, PROC_REF(find_spawns_and_start_delay))
 	location = map.lazy_load()
 	if (!location)
 		to_chat(get_mob_by_ckey(host), span_warning("Couldn't reserve/load a map location (all locations used?), try again later, or contact a coder."))
 		playing = FALSE
+		map.template_in_use = FALSE
 		UnregisterSignal(map, COMSIG_LAZY_TEMPLATE_LOADED)
 		return FALSE
 
@@ -72,6 +78,7 @@
 			player_spawns += thing
 
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
+	map.template_in_use = FALSE
 	addtimer(CALLBACK(src, PROC_REF(start_game_after_delay)), 8 SECONDS)
 
 /datum/deathmatch_lobby/proc/start_game_after_delay()
@@ -202,7 +209,7 @@
 
 	announce(span_reallybig("[player.real_name] HAS DIED.<br>[players.len] REMAIN."))
 
-	if(!gibbed && !QDELING(player)) // for some reason dusting or deleting in chasm storage messes up tgui bad
+	if(!gibbed && !QDELING(player))
 		if(!HAS_TRAIT(src, TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS))
 			player.dust(TRUE, TRUE, TRUE)
 	if (players.len <= 1)
@@ -334,70 +341,54 @@
 
 
 /datum/deathmatch_lobby/ui_data(mob/user)
-	. = list()
+	var/list/data = list()
+
 	var/is_player = !isnull(players[user.ckey])
 	var/is_host = (user.ckey == host)
 	var/is_admin = check_rights_for(user.client, R_ADMIN)
-	.["self"] = user.ckey
-	.["host"] = is_host
-	.["admin"] = is_admin
-	.["playing"] = playing
-	.["loadouts"] = list("Randomize")
-	for (var/datum/outfit/deathmatch_loadout/loadout as anything in loadouts)
-		.["loadouts"] += initial(loadout.display_name)
-	.["map"] = list()
-	.["map"]["name"] = map.name
-	.["map"]["desc"] = map.desc
-	.["map"]["time"] = map.automatic_gameend_time
-	.["map"]["min_players"] = map.min_players
-	.["map"]["max_players"] = map.max_players
+	var/has_auth = is_host || is_admin
 
-	.["mod_menu_open"] = FALSE
-	if((is_host || is_admin) && mod_menu_open)
-		.["mod_menu_open"] = TRUE
-		for(var/modpath in GLOB.deathmatch_game.modifiers)
-			var/datum/deathmatch_modifier/mod = GLOB.deathmatch_game.modifiers[modpath]
-			.["modifiers"] += list(list(
-				"name" = mod.name,
-				"desc" = mod.description,
-				"modpath" = "[modpath]",
-				"selected" = (modpath in modifiers),
-				"selectable" = is_host && mod.selectable(src),
-			))
-	.["active_mods"] = "No modifiers selected"
+	data["active_mods"] = "No modifiers selected"
+	data["admin"] = is_admin
+	data["host"] = is_host
+	data["loadouts"] = list("Randomize")
+
+	for (var/datum/outfit/deathmatch_loadout/loadout as anything in loadouts)
+		data["loadouts"] += loadout::display_name
+
+	data["map"] = list()
+	data["map"]["name"] = map.name
+	data["map"]["desc"] = map.desc
+	data["map"]["time"] = map.automatic_gameend_time
+	data["map"]["min_players"] = map.min_players
+	data["map"]["max_players"] = map.max_players
+
+	data["mod_menu_open"] = mod_menu_open
+	data["modifiers"] = has_auth ? get_modifier_list(is_host, mod_menu_open) : list()
+	data["observers"] = get_observer_list()
+	data["players"] = get_player_list()
+	data["playing"] = playing
+	data["self"] = user.ckey
+
 	if(length(modifiers))
 		var/list/mod_names = list()
 		for(var/datum/deathmatch_modifier/modpath as anything in modifiers)
-			mod_names += initial(modpath.name)
-		.["active_mods"] = "Selected modifiers: [english_list(mod_names)]"
+			mod_names += modpath::name
+		data["active_mods"] = "Selected modifiers: [english_list(mod_names)]"
 
 	if(is_player && !isnull(players[user.ckey]["loadout"]))
 		var/datum/outfit/deathmatch_loadout/loadout = players[user.ckey]["loadout"]
-		.["loadoutdesc"] = initial(loadout.desc)
+		data["loadoutdesc"] = loadout::desc
 	else
-		.["loadoutdesc"] = "You are an observer! As an observer, you can hear lobby announcements."
-	.["players"] = list()
-	for (var/player_key in players)
-		var/list/player_info = players[player_key]
-		var/mob/player_mob = player_info["mob"]
-		if (isnull(player_mob) || !player_mob.client)
-			leave(player_key)
-			continue
-		.["players"][player_key] = player_info.Copy()
-		var/datum/outfit/deathmatch_loadout/dm_loadout = player_info["loadout"]
-		.["players"][player_key]["loadout"] = initial(dm_loadout.display_name)
-	.["observers"] = list()
-	for (var/observer_key in observers)
-		var/mob/observer = observers[observer_key]["mob"]
-		if (isnull(observer) || !observer.client)
-			leave(observer_key)
-			continue
-		.["observers"][observer_key] = observers[observer_key]
+		data["loadoutdesc"] = "You are an observer! As an observer, you can hear lobby announcements."
+
+	return data
 
 /datum/deathmatch_lobby/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(. || !isobserver(usr))
 		return
+
 	switch(action)
 		if ("start_game")
 			if (usr.ckey != host)
@@ -407,6 +398,7 @@
 				return FALSE
 			start_game()
 			return TRUE
+
 		if ("leave_game")
 			if (playing)
 				return FALSE
@@ -414,6 +406,7 @@
 			ui.close()
 			GLOB.deathmatch_game.ui_interact(usr)
 			return TRUE
+
 		if ("change_loadout")
 			if (playing)
 				return FALSE
@@ -428,6 +421,7 @@
 				players[params["player"]]["loadout"] = possible_loadout
 				break
 			return TRUE
+
 		if ("observe")
 			if (playing)
 				return FALSE
@@ -439,16 +433,19 @@
 				remove_ckey_from_play(usr.ckey)
 				add_player(usr, loadouts[1], host == usr.ckey)
 				return TRUE
+
 		if ("ready")
 			players[usr.ckey]["ready"] ^= 1 // Toggle.
 			ready_count += (players[usr.ckey]["ready"] * 2) - 1 // scared?
 			if (ready_count >= players.len && players.len >= map.min_players)
 				start_game()
 			return TRUE
+
 		if ("host") // Host functions
 			if (playing || (usr.ckey != host && !check_rights(R_ADMIN)))
 				return FALSE
 			var/uckey = params["id"]
+
 			switch (params["func"])
 				if ("Kick")
 					leave(uckey)
@@ -477,12 +474,15 @@
 						return FALSE
 					change_map(params["map"])
 					return TRUE
+
 		if("open_mod_menu")
 			mod_menu_open = TRUE
 			return TRUE
+
 		if("exit_mod_menu")
 			mod_menu_open = FALSE
 			return TRUE
+
 		if("toggle_modifier")
 			var/datum/deathmatch_modifier/modpath = text2path(params["modpath"])
 			if(!ispath(modpath))
@@ -498,6 +498,7 @@
 				chosen_modifier.on_select(src)
 				modifiers += modpath
 				return TRUE
+
 		if ("admin") // Admin functions
 			if (!check_rights(R_ADMIN))
 				message_admins("[usr.key] has attempted to use admin functions in a deathmatch lobby!")
@@ -508,7 +509,73 @@
 					log_admin("[key_name(usr)] force started deathmatch lobby [host].")
 					start_game()
 
+	return FALSE
+
+
 /datum/deathmatch_lobby/ui_close(mob/user)
 	. = ..()
 	if(user.ckey == host)
 		mod_menu_open = FALSE
+
+/// Helper proc to get modifier data
+/datum/deathmatch_lobby/proc/get_modifier_list(is_host, mod_menu_open)
+	var/list/modifier_list = list()
+
+	if(!mod_menu_open)
+		return modifier_list
+
+	for(var/modpath in GLOB.deathmatch_game.modifiers)
+		var/datum/deathmatch_modifier/mod = GLOB.deathmatch_game.modifiers[modpath]
+
+		UNTYPED_LIST_ADD(modifier_list, list(
+			"name" = mod.name,
+			"desc" = mod.description,
+			"modpath" = "[modpath]",
+			"selected" = (modpath in modifiers),
+			"selectable" = is_host && mod.selectable(src),
+		))
+
+	return modifier_list
+
+
+/// Helper proc for getting observer data
+/datum/deathmatch_lobby/proc/get_observer_list()
+	var/list/observer_list = list()
+
+	for (var/observer_key in observers)
+		var/list/observer_info = observers[observer_key]
+		var/mob/observer_mob = observer_info["mob"]
+
+		if (isnull(observer_mob) || !observer_mob.client)
+			leave(observer_key)
+			continue
+
+		var/list/observer = observer_info.Copy()
+		observer["key"] = observer_key
+
+		UNTYPED_LIST_ADD(observer_list, observer)
+
+	return observer_list
+
+
+/// Helper proc for getting player data
+/datum/deathmatch_lobby/proc/get_player_list()
+	var/list/player_list = list()
+
+	for (var/player_key in players)
+		var/list/player_info = players[player_key]
+		var/mob/player_mob = player_info["mob"]
+
+		if (isnull(player_mob) || !player_mob.client)
+			leave(player_key)
+			continue
+
+		var/list/player = player_info.Copy()
+
+		var/datum/outfit/deathmatch_loadout/dm_loadout = player_info["loadout"]
+		player["loadout"] = dm_loadout::display_name
+		player["key"] = player_key
+
+		UNTYPED_LIST_ADD(player_list, player)
+
+	return player_list

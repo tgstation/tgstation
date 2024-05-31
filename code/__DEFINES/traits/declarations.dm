@@ -118,8 +118,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RESISTLOWPRESSURE "resist_low_pressure"
 /// This human is immune to the effects of being exploded. (ex_act)
 #define TRAIT_BOMBIMMUNE "bomb_immunity"
-/// Immune to being irradiated
-#define TRAIT_RADIMMUNE "rad_immunity"
 /// This mob won't get gibbed by nukes going off
 #define TRAIT_NUKEIMMUNE "nuke_immunity"
 /// Can't be given viruses
@@ -224,6 +222,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_REVEAL_FISH "reveal_fish"
 ///This trait gets you a list of fishes that can be caught when examining a fishing spot.
 #define TRAIT_EXAMINE_FISHING_SPOT "examine_fishing_spot"
+///Trait given to turfs or objects that can be fished from
+#define TRAIT_FISHING_SPOT "fishing_spot"
+///Trait given to mobs that can fish without a rod
+#define TRAIT_PROFOUND_FISHER "profound_fisher"
+/// This trait lets you evaluate someone's fitness level against your own
+#define TRAIT_EXAMINE_FITNESS "reveal_power_level"
 
 /// Added to a mob, allows that mob to experience flavour-based moodlets when examining food
 #define TRAIT_REMOTE_TASTING "remote_tasting"
@@ -286,6 +290,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GOOD_HEARING "good_hearing"
 /// Allows you to hear speech through walls
 #define TRAIT_XRAY_HEARING "xray_hearing"
+
+/// This mob can not enter or move on a shuttle
+#define TRAIT_BLOCK_SHUTTLE_MOVEMENT "block_shuttle_movement"
 
 /// Lets us scan reagents
 #define TRAIT_REAGENT_SCANNER "reagent_scanner"
@@ -520,6 +527,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Prevents you from twohanding weapons.
 #define TRAIT_NO_TWOHANDING "no_twohanding"
 
+/// Improves boxing damage against boxers and athletics experience gain
+#define TRAIT_STRENGTH "strength"
+
+/// Increases the duration of having exercised
+#define TRAIT_STIMMED "stimmed"
+
+/// Indicates that the target is able to be boxed at a boxer's full power.
+#define TRAIT_BOXING_READY "boxing_ready"
+
 /// Halves the time of tying a tie.
 #define TRAIT_FAST_TYING "fast_tying"
 
@@ -587,6 +603,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BRAINWASHING "brainwashing"
 /// Allows chef's to chefs kiss their food, to make them with love
 #define TRAIT_CHEF_KISS "chefs_kiss"
+/// Allows clowns to bend balloons into animals
+#define TRAIT_BALLOON_SUTRA "balloon_sutra"
 
 ///Movement type traits for movables. See elements/movetype_handler.dm
 #define TRAIT_MOVE_GROUND "move_ground"
@@ -733,6 +751,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
+#define TRAIT_ANOSMIA "anosmia"
 #define TRAIT_HEAVY_DRINKER "heavy_drinker"
 #define TRAIT_AGEUSIA "ageusia"
 #define TRAIT_HEAVY_SLEEPER "heavy_sleeper"
@@ -764,6 +783,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_POSTERBOY "poster_boy"
 #define TRAIT_THROWINGARM "throwing_arm"
 #define TRAIT_SETTLER "settler"
+#define TRAIT_STRONG_STOMACH "strong_stomach"
 
 /// This mob always lands on their feet when they fall, for better or for worse.
 #define TRAIT_CATLIKE_GRACE "catlike_grace"
@@ -809,6 +829,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Trait applied to turfs when an atmos holosign is placed on them. It will stop firedoors from closing.
 #define TRAIT_FIREDOOR_STOP "firedoor_stop"
+
+///Trait applied to turf blocked by a containment field
+#define TRAIT_CONTAINMENT_FIELD "containment_field"
 
 /// Trait applied when the MMI component is added to an [/obj/item/integrated_circuit]
 #define TRAIT_COMPONENT_MMI "component_mmi"
@@ -886,6 +909,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_NO_HUNGER "fish_no_hunger"
 ///It comes from a fish case. Relevant for bounties so far.
 #define TRAIT_FISH_FROM_CASE "fish_from_case"
+///Fish will also occasionally fire weak tesla zaps
+#define TRAIT_FISH_ELECTROGENESIS "fish_electrogenesis"
 
 /// Trait given to angelic constructs to let them purge cult runes
 #define TRAIT_ANGELIC "angelic"
@@ -934,6 +959,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_BIGGER_PODS "station_trait_bigger_pods"
 #define STATION_TRAIT_BIRTHDAY "station_trait_birthday"
 #define STATION_TRAIT_BOTS_GLITCHED "station_trait_bot_glitch"
+#define STATION_TRAIT_BRIGHT_DAY "station_trait_bright_day"
 #define STATION_TRAIT_CARP_INFESTATION "station_trait_carp_infestation"
 #define STATION_TRAIT_CYBERNETIC_REVOLUTION "station_trait_cybernetic_revolution"
 #define STATION_TRAIT_EMPTY_MAINT "station_trait_empty_maint"
@@ -983,6 +1009,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Marks that this object is irradiated
 #define TRAIT_IRRADIATED "iraddiated"
+
+/// Immune to being irradiated
+#define TRAIT_RADIMMUNE "rad_immunity"
 
 /// Harmful radiation effects, the toxin damage and the burns, will not occur while this trait is active
 #define TRAIT_HALT_RADIATION_EFFECTS "halt_radiation_effects"
@@ -1063,8 +1092,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to a dragon who fails to defend their rifts
 #define TRAIT_RIFT_FAILURE "fail_dragon_loser"
 
+///this mob is able to relay happiness, given by /datum/component/happiness
+#define TRAIT_MOB_RELAY_HAPPINESS "mob_relay_happiness"
 ///trait determines if this mob can breed given by /datum/component/breeding
 #define TRAIT_MOB_BREEDER "mob_breeder"
+///trait given to mobs that are hatched
+#define TRAIT_MOB_HATCHED "mob_hatched"
 /// Trait given to mobs that we do not want to mindswap
 #define TRAIT_NO_MINDSWAP "no_mindswap"
 ///trait given to food that can be baked by /datum/component/bakeable
@@ -1107,5 +1140,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
 #define TRAIT_BOULDER_BREAKER "boulder_breaker"
+
+/// Does this item bypass ranged armor checks?
+#define TRAIT_BYPASS_RANGED_ARMOR "bypass_ranged_armor"
 
 // END TRAIT DEFINES

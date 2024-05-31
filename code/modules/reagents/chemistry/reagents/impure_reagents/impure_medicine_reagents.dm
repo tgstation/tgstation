@@ -100,18 +100,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/helgrasp/proc/spawn_hands(mob/living/carbon/affected_mob)
 	if(!affected_mob && iscarbon(holder.my_atom))//Catch timer
 		affected_mob = holder.my_atom
-	//Adapted from the end of the curse - but lasts a short time
-	var/grab_dir = turn(affected_mob.dir, pick(-90, 90, 180, 180)) //grab them from a random direction other than the one faced, favoring grabbing from behind
-	var/turf/spawn_turf = get_ranged_target_turf(affected_mob, grab_dir, 8)//Larger range so you have more time to dodge
-	if(!spawn_turf)
-		return
-	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, affected_mob.dir)
-	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, TRUE, -1)
-	var/obj/projectile/curse_hand/hel/hand = new (spawn_turf)
-	hand.preparePixelProjectile(affected_mob, spawn_turf)
-	if(QDELETED(hand)) //safety check if above fails - above has a stack trace if it does fail
-		return
-	hand.fire()
+	fire_curse_hand(affected_mob)
 
 //At the end, we clear up any loose hanging timers just in case and spawn any remaining lag_remaining hands all at once.
 /datum/reagent/inverse/helgrasp/on_mob_delete(mob/living/affected_mob)

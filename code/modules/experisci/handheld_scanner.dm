@@ -18,7 +18,6 @@
 
 // Late initialize to allow for the rnd servers to initialize first
 /obj/item/experi_scanner/LateInitialize()
-	. = ..()
 	var/static/list/handheld_signals = list(
 		COMSIG_ITEM_PRE_ATTACK = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_handheld_experiment),
 		COMSIG_ITEM_AFTERATTACK = TYPE_PROC_REF(/datum/component/experiment_handler, ignored_handheld_experiment_attempt),

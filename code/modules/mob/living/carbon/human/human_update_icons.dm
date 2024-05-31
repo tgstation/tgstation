@@ -54,7 +54,7 @@ There are several things that need to be remembered:
 		update_worn_id()
 		update_worn_glasses()
 		update_worn_gloves()
-		update_inv_ears()
+		update_worn_ears()
 		update_worn_shoes()
 		update_suit_storage()
 		update_worn_mask()
@@ -70,10 +70,15 @@ There are several things that need to be remembered:
 		//damage overlays
 		update_damage_overlays()
 
+/mob/living/carbon/human/update_obscured_slots(obscured_flags)
+	..()
+	if(obscured_flags & HIDEFACE)
+		sec_hud_set_security_status()
+
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
-/mob/living/carbon/human/update_worn_undersuit()
+/mob/living/carbon/human/update_worn_undersuit(update_obscured = TRUE)
 	remove_overlay(UNIFORM_LAYER)
 
 	if(client && hud_used)
@@ -83,6 +88,9 @@ There are several things that need to be remembered:
 	if(istype(w_uniform, /obj/item/clothing/under))
 		var/obj/item/clothing/under/uniform = w_uniform
 		update_hud_uniform(uniform)
+
+		if(update_obscured)
+			update_obscured_slots(uniform.flags_inv)
 
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_ICLOTHING)
 			return
@@ -102,9 +110,7 @@ There are several things that need to be remembered:
 		var/icon_file
 		var/woman
 		//BEGIN SPECIES HANDLING
-		if((bodyshape & BODYSHAPE_MONKEY) && (uniform.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
-			icon_file = MONKEY_UNIFORM_FILE
-		else if((bodyshape & BODYSHAPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
+		if((bodyshape & BODYSHAPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
 			icon_file = DIGITIGRADE_UNIFORM_FILE
 		//Female sprites have lower priority than digitigrade sprites
 		else if(dna.species.sexes && (bodyshape & BODYSHAPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
@@ -131,7 +137,7 @@ There are several things that need to be remembered:
 
 	update_mutant_bodyparts()
 
-/mob/living/carbon/human/update_worn_id()
+/mob/living/carbon/human/update_worn_id(update_obscured = TRUE)
 	remove_overlay(ID_LAYER)
 
 	if(client && hud_used)
@@ -143,6 +149,10 @@ There are several things that need to be remembered:
 	if(wear_id)
 		var/obj/item/worn_item = wear_id
 		update_hud_id(worn_item)
+
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
 		var/icon_file = 'icons/mob/clothing/id.dmi'
 
 		id_overlay = wear_id.build_worn_icon(default_layer = ID_LAYER, default_icon_file = icon_file)
@@ -157,7 +167,7 @@ There are several things that need to be remembered:
 	apply_overlay(ID_LAYER)
 
 
-/mob/living/carbon/human/update_worn_gloves()
+/mob/living/carbon/human/update_worn_gloves(update_obscured = TRUE)
 	remove_overlay(GLOVES_LAYER)
 
 	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_GLOVES) + 1])
@@ -165,20 +175,25 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	//Bloody hands begin
-	var/mutable_appearance/bloody_lefthand_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_left", -GLOVES_LAYER)
-	var/mutable_appearance/bloody_righthand_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_right", -GLOVES_LAYER)
-	cut_overlay(bloody_lefthand_overlay)
-	cut_overlay(bloody_righthand_overlay)
-	if(!gloves && blood_in_hands && (num_hands > 0))
-		if(has_left_hand(check_disabled = FALSE))
-			add_overlay(bloody_lefthand_overlay)
-		if(has_right_hand(check_disabled = FALSE))
-			add_overlay(bloody_righthand_overlay)
+	if(isnull(gloves))
+		if(blood_in_hands && num_hands > 0)
+			// When byond gives us filters that respect dirs we can just use an alpha mask for this but until then, two icons weeeee
+			var/mutable_appearance/hands_combined = mutable_appearance(layer = -GLOVES_LAYER, appearance_flags = KEEP_TOGETHER)
+			if(has_left_hand(check_disabled = FALSE))
+				hands_combined.overlays += mutable_appearance('icons/effects/blood.dmi', "bloodyhands_left")
+			if(has_right_hand(check_disabled = FALSE))
+				hands_combined.overlays += mutable_appearance('icons/effects/blood.dmi', "bloodyhands_right")
+			overlays_standing[GLOVES_LAYER] = hands_combined
+			apply_overlay(GLOVES_LAYER)
+		return
 	// Bloody hands end
 
 	if(gloves)
 		var/obj/item/worn_item = gloves
 		update_hud_gloves(worn_item)
+
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
 
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_GLOVES)
 			return
@@ -199,7 +214,7 @@ There are several things that need to be remembered:
 	apply_overlay(GLOVES_LAYER)
 
 
-/mob/living/carbon/human/update_worn_glasses()
+/mob/living/carbon/human/update_worn_glasses(update_obscured = TRUE)
 	remove_overlay(GLASSES_LAYER)
 
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
@@ -214,6 +229,9 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = glasses
 		update_hud_glasses(worn_item)
 
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_EYES)
 			return
 
@@ -225,7 +243,7 @@ There are several things that need to be remembered:
 	apply_overlay(GLASSES_LAYER)
 
 
-/mob/living/carbon/human/update_inv_ears()
+/mob/living/carbon/human/update_worn_ears(update_obscured = TRUE)
 	remove_overlay(EARS_LAYER)
 
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
@@ -240,6 +258,9 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = ears
 		update_hud_ears(worn_item)
 
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_EARS)
 			return
 
@@ -250,7 +271,7 @@ There are several things that need to be remembered:
 		overlays_standing[EARS_LAYER] = ears_overlay
 	apply_overlay(EARS_LAYER)
 
-/mob/living/carbon/human/update_worn_neck()
+/mob/living/carbon/human/update_worn_neck(update_obscured = TRUE)
 	remove_overlay(NECK_LAYER)
 
 	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1])
@@ -260,6 +281,9 @@ There are several things that need to be remembered:
 	if(wear_neck)
 		var/obj/item/worn_item = wear_neck
 		update_hud_neck(wear_neck)
+
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
 
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_NECK)
 			return
@@ -273,7 +297,7 @@ There are several things that need to be remembered:
 
 	apply_overlay(NECK_LAYER)
 
-/mob/living/carbon/human/update_worn_shoes()
+/mob/living/carbon/human/update_worn_shoes(update_obscured = TRUE)
 	remove_overlay(SHOES_LAYER)
 
 	if(num_legs < 2)
@@ -286,6 +310,9 @@ There are several things that need to be remembered:
 	if(shoes)
 		var/obj/item/worn_item = shoes
 		update_hud_shoes(worn_item)
+
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
 
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_FEET)
 			return
@@ -313,7 +340,7 @@ There are several things that need to be remembered:
 	update_body_parts()
 
 
-/mob/living/carbon/human/update_suit_storage()
+/mob/living/carbon/human/update_suit_storage(update_obscured = TRUE)
 	remove_overlay(SUIT_STORE_LAYER)
 
 	if(client && hud_used)
@@ -324,6 +351,9 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = s_store
 		update_hud_s_store(worn_item)
 
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_SUITSTORE)
 			return
 
@@ -333,7 +363,7 @@ There are several things that need to be remembered:
 		overlays_standing[SUIT_STORE_LAYER] = s_store_overlay
 	apply_overlay(SUIT_STORE_LAYER)
 
-/mob/living/carbon/human/update_worn_head()
+/mob/living/carbon/human/update_worn_head(update_obscured = TRUE)
 	remove_overlay(HEAD_LAYER)
 	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_HEAD) + 1]
@@ -342,6 +372,9 @@ There are several things that need to be remembered:
 	if(head)
 		var/obj/item/worn_item = head
 		update_hud_head(worn_item)
+
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
 
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_HEAD)
 			return
@@ -353,10 +386,9 @@ There are several things that need to be remembered:
 		my_head?.worn_head_offset?.apply_offset(head_overlay)
 		overlays_standing[HEAD_LAYER] = head_overlay
 
-	update_mutant_bodyparts()
 	apply_overlay(HEAD_LAYER)
 
-/mob/living/carbon/human/update_worn_belt()
+/mob/living/carbon/human/update_worn_belt(update_obscured = TRUE)
 	remove_overlay(BELT_LAYER)
 
 	if(client && hud_used)
@@ -366,6 +398,9 @@ There are several things that need to be remembered:
 	if(belt)
 		var/obj/item/worn_item = belt
 		update_hud_belt(worn_item)
+
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
 
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_BELT)
 			return
@@ -379,7 +414,7 @@ There are several things that need to be remembered:
 
 	apply_overlay(BELT_LAYER)
 
-/mob/living/carbon/human/update_worn_oversuit()
+/mob/living/carbon/human/update_worn_oversuit(update_obscured = TRUE)
 	remove_overlay(SUIT_LAYER)
 
 	if(client && hud_used)
@@ -389,6 +424,10 @@ There are several things that need to be remembered:
 	if(wear_suit)
 		var/obj/item/worn_item = wear_suit
 		update_hud_wear_suit(worn_item)
+
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
 		var/icon_file = DEFAULT_SUIT_FILE
 
 		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file)
@@ -422,7 +461,7 @@ There are several things that need to be remembered:
 				client.screen += r_store
 			update_observer_view(r_store)
 
-/mob/living/carbon/human/update_worn_mask()
+/mob/living/carbon/human/update_worn_mask(update_obscured = TRUE)
 	remove_overlay(FACEMASK_LAYER)
 
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
@@ -437,6 +476,9 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = wear_mask
 		update_hud_wear_mask(worn_item)
 
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
 		if(check_obscured_slots(transparent_protection = TRUE) & ITEM_SLOT_MASK)
 			return
 
@@ -449,7 +491,7 @@ There are several things that need to be remembered:
 	apply_overlay(FACEMASK_LAYER)
 	update_mutant_bodyparts() //e.g. upgate needed because mask now hides lizard snout
 
-/mob/living/carbon/human/update_worn_back()
+/mob/living/carbon/human/update_worn_back(update_obscured = TRUE)
 	remove_overlay(BACK_LAYER)
 
 	if(client && hud_used && hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
@@ -460,6 +502,10 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = back
 		var/mutable_appearance/back_overlay
 		update_hud_back(worn_item)
+
+		if(update_obscured)
+			update_obscured_slots(worn_item.flags_inv)
+
 		var/icon_file = 'icons/mob/clothing/back.dmi'
 
 		back_overlay = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = icon_file)
@@ -634,24 +680,14 @@ generate/load female uniform sprites matching all previously decided variables
 	female_uniform = NO_FEMALE_UNIFORM,
 	override_state = null,
 	override_file = null,
-	use_height_offset = TRUE,
 )
 
 	//Find a valid icon_state from variables+arguments
-	var/t_state
-	if(override_state)
-		t_state = override_state
-	else
-		t_state = !isinhands ? (worn_icon_state ? worn_icon_state : icon_state) : (inhand_icon_state ? inhand_icon_state : icon_state)
-
+	var/t_state = override_state || (isinhands ? inhand_icon_state : worn_icon_state) || icon_state
 	//Find a valid icon file from variables+arguments
-	var/file2use
-	if(override_file)
-		file2use = override_file
-	else
-		file2use = !isinhands ? (worn_icon ? worn_icon : default_icon_file) : default_icon_file
+	var/file2use = override_file || (isinhands ? null : worn_icon) || default_icon_file
 	//Find a valid layer from variables+arguments
-	var/layer2use = alternate_worn_layer ? alternate_worn_layer : default_layer
+	var/layer2use = alternate_worn_layer || default_layer
 
 	var/mutable_appearance/standing
 	if(female_uniform)
@@ -662,27 +698,8 @@ generate/load female uniform sprites matching all previously decided variables
 	//Get the overlays for this item when it's being worn
 	//eg: ammo counters, primed grenade flashes, etc.
 	var/list/worn_overlays = worn_overlays(standing, isinhands, file2use)
-	if(worn_overlays?.len)
-		if(!isinhands && default_layer && ishuman(loc) && use_height_offset)
-			var/mob/living/carbon/human/human_loc = loc
-			if(human_loc.get_mob_height() != HUMAN_HEIGHT_MEDIUM)
-				var/string_form_layer = num2text(default_layer)
-				var/offset_amount = GLOB.layers_to_offset[string_form_layer]
-				if(isnull(offset_amount))
-					// Worn overlays don't get batched in with standing overlays because they are overlay overlays
-					// ...So we need to apply human height here as well
-					for(var/mutable_appearance/applied_appearance as anything in worn_overlays)
-						if(isnull(applied_appearance))
-							continue
-						human_loc.apply_height_filters(applied_appearance)
-
-				else
-					for(var/mutable_appearance/applied_appearance in worn_overlays)
-						if(isnull(applied_appearance))
-							continue
-						human_loc.apply_height_offsets(applied_appearance, offset_amount)
-
-		standing.overlays.Add(worn_overlays)
+	if(length(worn_overlays))
+		standing.overlays += worn_overlays
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
 
@@ -709,9 +726,6 @@ generate/load female uniform sprites matching all previously decided variables
 				.[2] = offsets["y"]
 	else
 		.[2] = worn_y_offset
-	if(ishuman(loc) && slot_flags != ITEM_SLOT_FEET) /// we adjust the human body for high given by body parts, execpt shoes, because they are always on the bottom
-		var/mob/living/carbon/human/human_holder = loc
-		.[2] += human_holder.get_top_offset()
 
 //Can't think of a better way to do this, sadly
 /mob/proc/get_item_offsets_for_index(i)
@@ -764,23 +778,19 @@ generate/load female uniform sprites matching all previously decided variables
 
 	var/raw_applied = overlays_standing[cache_index]
 	var/string_form_index = num2text(cache_index)
-	var/offset_amount = GLOB.layers_to_offset[string_form_index]
-	if(isnull(offset_amount))
+	var/offset_type = GLOB.layers_to_offset[string_form_index]
+	if(isnull(offset_type))
 		if(islist(raw_applied))
-			for(var/mutable_appearance/applied_appearance as anything in raw_applied)
-				if(isnull(applied_appearance))
-					continue
+			for(var/image/applied_appearance in raw_applied)
 				apply_height_filters(applied_appearance)
-		else if(!isnull(raw_applied))
+		else if(isimage(raw_applied))
 			apply_height_filters(raw_applied)
 	else
 		if(islist(raw_applied))
-			for(var/mutable_appearance/applied_appearance as anything in raw_applied)
-				if(isnull(applied_appearance))
-					continue
-				apply_height_offsets(applied_appearance, offset_amount)
-		else if(!isnull(raw_applied))
-			apply_height_offsets(raw_applied, offset_amount)
+			for(var/image/applied_appearance in raw_applied)
+				apply_height_offsets(applied_appearance, offset_type)
+		else if(isimage(raw_applied))
+			apply_height_offsets(raw_applied, offset_type)
 
 	return ..()
 
@@ -790,7 +800,7 @@ generate/load female uniform sprites matching all previously decided variables
  * upper_torso is to specify whether the appearance is locate in the upper half of the mob rather than the lower half,
  * higher up things (hats for example) need to be offset more due to the location of the filter displacement
  */
-/mob/living/carbon/human/proc/apply_height_offsets(mutable_appearance/appearance, upper_torso)
+/mob/living/carbon/human/proc/apply_height_offsets(image/appearance, upper_torso)
 	var/height_to_use = num2text(get_mob_height())
 	var/final_offset = 0
 	switch(upper_torso)
@@ -807,7 +817,7 @@ generate/load female uniform sprites matching all previously decided variables
 /**
  * Applies a filter to an appearance according to mob height
  */
-/mob/living/carbon/human/proc/apply_height_filters(mutable_appearance/appearance)
+/mob/living/carbon/human/proc/apply_height_filters(image/appearance)
 	var/static/icon/cut_torso_mask = icon('icons/effects/cut.dmi', "Cut1")
 	var/static/icon/cut_legs_mask = icon('icons/effects/cut.dmi', "Cut2")
 	var/static/icon/lenghten_torso_mask = icon('icons/effects/cut.dmi', "Cut3")
@@ -820,26 +830,103 @@ generate/load female uniform sprites matching all previously decided variables
 		"Lenghten_Torso",
 		"Gnome_Cut_Torso",
 		"Gnome_Cut_Legs",
+		"Monkey_Torso",
+		"Monkey_Legs",
+		"Monkey_Gnome_Cut_Torso",
+		"Monkey_Gnome_Cut_Legs",
 	))
 
 	switch(get_mob_height())
 		// Don't set this one directly, use TRAIT_DWARF
+		if(MONKEY_HEIGHT_DWARF)
+			appearance.add_filters(list(
+				list(
+					"name" = "Monkey_Gnome_Cut_Torso",
+					"priority" = 1,
+					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 3),
+				),
+				list(
+					"name" = "Monkey_Gnome_Cut_Legs",
+					"priority" = 1,
+					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 4),
+				),
+			))
+		if(MONKEY_HEIGHT_MEDIUM)
+			appearance.add_filters(list(
+				list(
+					"name" = "Monkey_Torso",
+					"priority" = 1,
+					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2),
+				),
+				list(
+					"name" = "Monkey_Legs",
+					"priority" = 1,
+					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 4),
+				),
+			))
+		// Don't set this one directly, use TRAIT_DWARF
 		if(HUMAN_HEIGHT_DWARF)
-			appearance.add_filter("Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2))
-			appearance.add_filter("Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3))
+			appearance.add_filters(list(
+				list(
+					"name" = "Gnome_Cut_Torso",
+					"priority" = 1,
+					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2),
+				),
+				list(
+					"name" = "Gnome_Cut_Legs",
+					"priority" = 1,
+					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3),
+				),
+			))
 		if(HUMAN_HEIGHT_SHORTEST)
-			appearance.add_filter("Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 1))
-			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
+			appearance.add_filters(list(
+				list(
+					"name" = "Cut_Torso",
+					"priority" = 1,
+					"params" = displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 1),
+				),
+				list(
+					"name" = "Cut_Legs",
+					"priority" = 1,
+					"params" = displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1),
+				),
+			))
 		if(HUMAN_HEIGHT_SHORT)
 			appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
 		if(HUMAN_HEIGHT_TALL)
 			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
 		if(HUMAN_HEIGHT_TALLER)
-			appearance.add_filter("Lenghten_Torso", 1, displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1))
-			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
+			appearance.add_filters(list(
+				list(
+					"name" = "Lenghten_Torso",
+					"priority" = 1,
+					"params" = displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1),
+				),
+				list(
+					"name" = "Lenghten_Legs",
+					"priority" = 1,
+					"params" = displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1),
+				),
+			))
 		if(HUMAN_HEIGHT_TALLEST)
-			appearance.add_filter("Lenghten_Torso", 1, displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1))
-			appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 2))
+			appearance.add_filters(list(
+				list(
+					"name" = "Lenghten_Torso",
+					"priority" = 1,
+					"params" = displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1),
+				),
+				list(
+					"name" = "Lenghten_Legs",
+					"priority" = 1,
+					"params" = displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 2),
+				),
+			))
+
+	// Kinda gross but because many humans overlays do not use KEEP_TOGETHER we need to manually propogate the filter
+	// Otherwise overlays, such as worn overlays on icons, won't have the filter "applied", and the effect kinda breaks
+	if(!(appearance.appearance_flags & KEEP_TOGETHER))
+		for(var/image/overlay in list() + appearance.underlays + appearance.overlays)
+			apply_height_filters(overlay)
 
 	return appearance
 

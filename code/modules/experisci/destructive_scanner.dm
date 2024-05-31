@@ -12,12 +12,8 @@
 	layer = MOB_LAYER
 	var/scanning = FALSE
 
-/obj/machinery/destructive_scanner/Initialize(mapload)
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
 // Late load to ensure the component initialization occurs after the machines are initialized
-/obj/machinery/destructive_scanner/LateInitialize()
+/obj/machinery/destructive_scanner/post_machine_initialize()
 	. = ..()
 
 	var/static/list/destructive_signals = list(

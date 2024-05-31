@@ -189,18 +189,18 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
 
   let maxmult = 0;
   if (design.customMaterials) {
-    const smallest_mat =
+    const largest_mat =
       Object.entries(availableMaterials).reduce(
         (accumulator: number, [material, amount]) => {
-          return Math.min(accumulator, amount);
+          return Math.max(accumulator, amount);
         },
-        Infinity,
+        0,
       ) || 0;
 
-    if (smallest_mat > 0) {
+    if (largest_mat > 0) {
       maxmult = Object.entries(design.cost).reduce(
         (accumulator: number, [material, required]) => {
-          return Math.min(accumulator, smallest_mat / required);
+          return Math.min(accumulator, largest_mat / required);
         },
         Infinity,
       );

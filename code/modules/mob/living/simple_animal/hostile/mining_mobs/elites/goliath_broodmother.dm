@@ -146,7 +146,7 @@
 	color = COLOR_RED
 	set_varspeed(0)
 	move_to_delay = 3
-	addtimer(CALLBACK(src, PROC_REF(reset_rage)), 65)
+	addtimer(CALLBACK(src, PROC_REF(reset_rage)), 6.5 SECONDS)
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/reset_rage()
 	color = COLOR_WHITE

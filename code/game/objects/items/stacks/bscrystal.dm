@@ -33,7 +33,7 @@
 /obj/item/stack/ore/bluespace_crystal/attack_self(mob/user)
 	user.visible_message(span_warning("[user] crushes [src]!"), span_danger("You crush [src]!"))
 	new /obj/effect/particle_effect/sparks(loc)
-	playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(loc, 'sound/effects/portal_travel.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	blink_mob(user)
 	use(1)
 
@@ -45,7 +45,7 @@
 		visible_message(span_notice("[src] fizzles and disappears upon impact!"))
 		var/turf/T = get_turf(hit_atom)
 		new /obj/effect/particle_effect/sparks(T)
-		playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(loc, 'sound/effects/portal_travel.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if(isliving(hit_atom))
 			blink_mob(hit_atom)
 		use(1)
@@ -67,6 +67,7 @@
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "polycrystal"
 	inhand_icon_state = null
+	gulag_valid = TRUE
 	singular_name = "bluespace polycrystal"
 	desc = "A stable polycrystal, made of fused-together bluespace crystals. You could probably break one off."
 	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT)
@@ -74,7 +75,6 @@
 	attack_verb_simple = list("bluespace polybash", "bluespace polybatter", "bluespace polybludgeon", "bluespace polythrash", "bluespace polysmash")
 	novariants = TRUE
 	grind_results = list(/datum/reagent/bluespace = 20)
-	point_value = 90
 	merge_type = /obj/item/stack/sheet/bluespace_crystal
 	material_type = /datum/material/bluespace
 	var/crystal_type = /obj/item/stack/ore/bluespace_crystal/refined

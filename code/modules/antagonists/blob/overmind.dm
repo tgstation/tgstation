@@ -12,7 +12,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	icon = 'icons/mob/silicon/cameramob.dmi'
 	icon_state = "marker"
 	mouse_opacity = MOUSE_OPACITY_ICON
-	move_on_shuttle = 1
+	move_on_shuttle = TRUE
 	invisibility = INVISIBILITY_OBSERVER
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -153,7 +153,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 		max_blob_points = INFINITY
 		blob_points = INFINITY
-		addtimer(CALLBACK(src, PROC_REF(victory)), 450)
+		addtimer(CALLBACK(src, PROC_REF(victory)), 45 SECONDS)
 	else if(!free_strain_rerolls && (last_reroll_time + BLOB_POWER_REROLL_FREE_TIME<world.time))
 		to_chat(src, span_boldnotice("You have gained another free strain re-roll."))
 		free_strain_rerolls = 1

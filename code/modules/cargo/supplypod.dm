@@ -99,6 +99,23 @@
 	delays = list(POD_TRANSIT = 20, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/obj/structure/closet/supplypod/centcompod/sisyphus
+	delays = list(POD_TRANSIT = 0, POD_FALLING = 0, POD_OPENING = 0, POD_LEAVING = 0.2)
+	reverse_delays = list(POD_TRANSIT = 0, POD_FALLING = 1.5 SECONDS, POD_OPENING = 0.6 SECONDS, POD_LEAVING = 0)
+	custom_rev_delay = TRUE
+	effectStealth = TRUE
+	reversing = TRUE
+	reverse_option_list = list(
+		"Mobs" = TRUE,
+		"Objects" = FALSE,
+		"Anchored" = FALSE,
+		"Underfloor" = FALSE,
+		"Wallmounted" = FALSE,
+		"Floors" = FALSE,
+		"Walls" = FALSE,
+		"Mecha" = TRUE,
+	)
+
 /obj/structure/closet/supplypod/back_to_station
 	name = "blood-red supply pod"
 	desc = "An intimidating supply pod, covered in the blood-red markings"
@@ -335,7 +352,7 @@
 		qdel(src)
 		return
 	if (style == STYLE_GONDOLA) //Checks if we are supposed to be a gondola pod. If so, create a gondolapod mob, and move this pod to nullspace. I'd like to give a shout out, to my man oranges
-		var/mob/living/simple_animal/pet/gondola/gondolapod/benis = new(turf_underneath, src)
+		var/mob/living/basic/pet/gondola/gondolapod/benis = new(turf_underneath, src)
 		benis.contents |= contents //Move the contents of this supplypod into the gondolapod mob.
 		for (var/mob/living/mob_in_pod in benis.contents)
 			mob_in_pod.reset_perspective(null)

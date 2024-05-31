@@ -60,8 +60,7 @@
 	inhand_icon_state = "sabre"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	obj_flags = CONDUCTS_ELECTRICITY
-	obj_flags = UNIQUE_RENAME
+	obj_flags = CONDUCTS_ELECTRICITY | UNIQUE_RENAME
 	force = 15
 	throwforce = 10
 	demolition_mod = 0.75 //but not metal
@@ -446,7 +445,7 @@
 	finish_roasting(user, target)
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
-	if(do_after(user, 100, target = user))
+	if(do_after(user, 10 SECONDS, target = user))
 		to_chat(user, span_notice("You finish roasting [held_sausage]."))
 		playsound(src, 'sound/items/welder2.ogg', 50, TRUE)
 		held_sausage.add_atom_colour(rgb(103, 63, 24), FIXED_COLOUR_PRIORITY)

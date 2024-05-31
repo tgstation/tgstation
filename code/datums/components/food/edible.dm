@@ -215,7 +215,7 @@ Behavior that's still missing from this component that original food items had t
 
 	if(foodtypes)
 		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
-		examine_list += span_notice("It is [lowertext(english_list(types))].")
+		examine_list += span_notice("It is [LOWER_TEXT(english_list(types))].")
 
 	var/quality = get_perceived_food_quality(user)
 	if(quality > 0)

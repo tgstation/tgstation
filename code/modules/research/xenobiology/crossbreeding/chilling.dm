@@ -174,7 +174,7 @@ Chilling extracts:
 	for(var/mob/living/M in allies)
 		var/datum/status_effect/slimerecall/S = M.apply_status_effect(/datum/status_effect/slimerecall)
 		S.target = user
-	if(do_after(user, 100, target=src))
+	if(do_after(user, 10 SECONDS, target=src))
 		to_chat(user, span_notice("[src] shatters as it tears a hole in reality, snatching the linked individuals from the void!"))
 		for(var/mob/living/M in allies)
 			var/datum/status_effect/slimerecall/S = M.has_status_effect(/datum/status_effect/slimerecall)
@@ -292,7 +292,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/oil/do_effect(mob/user)
 	user.visible_message(span_danger("[src] begins to shake with muted intensity!"))
-	addtimer(CALLBACK(src, PROC_REF(boom)), 50)
+	addtimer(CALLBACK(src, PROC_REF(boom)), 5 SECONDS)
 
 /obj/item/slimecross/chilling/oil/proc/boom()
 	explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 10, explosion_cause = src) //Large radius, but mostly light damage, and no flash.

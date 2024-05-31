@@ -184,11 +184,16 @@
 
 /obj/structure/sign/poster/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(.)
-		return
-	if(ruined)
+	if(. || !check_tearability())
 		return
 	tear_poster(user)
+
+/// Check to see if this poster is tearable and gives the user feedback if it is not.
+/obj/structure/sign/poster/proc/check_tearability(mob/user)
+	if(ruined)
+		balloon_alert(user, "already ruined!")
+		return FALSE
+	return TRUE
 
 /obj/structure/sign/poster/proc/spring_trap(mob/user)
 	var/obj/item/shard/payload = trap?.resolve()
@@ -264,10 +269,10 @@
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, TRUE)
 	spring_trap(user)
 
-	var/obj/structure/sign/poster/ripped/R = new(loc)
-	R.pixel_y = pixel_y
-	R.pixel_x = pixel_x
-	R.add_fingerprint(user)
+	var/obj/structure/sign/poster/ripped/torn_poster = new(loc)
+	torn_poster.pixel_y = pixel_y
+	torn_poster.pixel_x = pixel_x
+	torn_poster.add_fingerprint(user)
 	qdel(src)
 
 // Various possible posters follow

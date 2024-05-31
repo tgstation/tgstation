@@ -111,8 +111,6 @@
 	drydesc = "They look bloody and gruesome while some terrible smell fills the air."
 	decal_reagent = /datum/reagent/consumable/liquidgibs
 	reagent_amount = 5
-	///Information about the diseases our streaking spawns
-	var/list/streak_diseases
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
@@ -120,7 +118,6 @@
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, PROC_REF(on_pipe_eject))
 
 /obj/effect/decal/cleanable/blood/gibs/Destroy()
-	LAZYNULL(streak_diseases)
 	return ..()
 
 /obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
@@ -147,8 +144,7 @@
 	streak(dirs)
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions, mapload=FALSE)
-	LAZYINITLIST(streak_diseases)
-	SEND_SIGNAL(src, COMSIG_GIBS_STREAK, directions, streak_diseases)
+	SEND_SIGNAL(src, COMSIG_GIBS_STREAK, directions)
 	var/direction = pick(directions)
 	var/delay = 2
 	var/range = pick(0, 200; 1, 150; 2, 50; 3, 17; 50) //the 3% chance of 50 steps is intentional and played for laughs.
@@ -163,14 +159,14 @@
 				break
 		return
 
-	var/datum/move_loop/loop = SSmove_manager.move_to(src, get_step(src, direction), delay = delay, timeout = range * delay, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	var/datum/move_loop/loop = GLOB.move_manager.move_to(src, get_step(src, direction), delay = delay, timeout = range * delay, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(spread_movement_effects))
 
 /obj/effect/decal/cleanable/blood/gibs/proc/spread_movement_effects(datum/move_loop/has_target/source)
 	SIGNAL_HANDLER
 	if(NeverShouldHaveComeHere(loc))
 		return
-	new /obj/effect/decal/cleanable/blood/splatter(loc, streak_diseases)
+	new /obj/effect/decal/cleanable/blood/splatter(loc)
 
 /obj/effect/decal/cleanable/blood/gibs/up
 	icon_state = "gibup1"
@@ -376,7 +372,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 /// Set the splatter up to fly through the air until it rounds out of steam or hits something
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/fly_towards(turf/target_turf, range)
 	var/delay = 2
-	var/datum/move_loop/loop = SSmove_manager.move_towards(src, target_turf, delay, timeout = delay * range, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_START_FAST)
+	var/datum/move_loop/loop = GLOB.move_manager.move_towards(src, target_turf, delay, timeout = delay * range, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_START_FAST)
 	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_move))
 	RegisterSignal(loop, COMSIG_QDELETING, PROC_REF(loop_done))

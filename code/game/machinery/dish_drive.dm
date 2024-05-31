@@ -9,6 +9,7 @@
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/dish_drive
 	pass_flags = PASSTABLE
+	interaction_flags_click = ALLOW_SILICON_REACH
 	/// List of dishes the drive can hold
 	var/static/list/collectable_items = list(
 		/obj/item/trash/waffles,
@@ -141,9 +142,9 @@
 	balloon_alert(user, "disposal signal sent")
 	do_the_dishes(TRUE)
 
-/obj/machinery/dish_drive/AltClick(mob/living/user)
-	if(user.can_perform_action(src, ALLOW_SILICON_REACH))
-		do_the_dishes(TRUE)
+/obj/machinery/dish_drive/click_alt(mob/living/user)
+	do_the_dishes(TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/dish_drive/proc/do_the_dishes(manual)
 	if(!LAZYLEN(dish_drive_contents))

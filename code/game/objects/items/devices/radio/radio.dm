@@ -76,7 +76,7 @@
 
 	/// overlay when speaker is on
 	var/overlay_speaker_idle = "s_idle"
-	/// overlay when recieving a message
+	/// overlay when receiving a message
 	var/overlay_speaker_active = "s_active"
 
 	/// overlay when mic is on
@@ -363,7 +363,7 @@
 
 	// Non-subspace radios will check in a couple of seconds, and if the signal
 	// was never received, send a mundane broadcast (no headsets).
-	addtimer(CALLBACK(src, PROC_REF(backup_transmission), signal), 20)
+	addtimer(CALLBACK(src, PROC_REF(backup_transmission), signal), 2 SECONDS)
 
 /obj/item/radio/proc/backup_transmission(datum/signal/subspace/vocal/signal)
 	var/turf/T = get_turf(src)
@@ -543,7 +543,7 @@
 	for (var/ch_name in channels)
 		channels[ch_name] = 0
 	set_on(FALSE)
-	addtimer(CALLBACK(src, PROC_REF(end_emp_effect), curremp), 200)
+	addtimer(CALLBACK(src, PROC_REF(end_emp_effect), curremp), 20 SECONDS)
 
 /obj/item/radio/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts bouncing [src] off [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))

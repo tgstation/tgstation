@@ -63,11 +63,9 @@
 	sleep(det_time)//so you dont die instantly
 	return dud_flags ? SHAME : BRUTELOSS
 
-/obj/item/grenade/deconstruct(disassembled = TRUE)
+/obj/item/grenade/atom_deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		detonate()
-	if(!QDELETED(src))
-		qdel(src)
 
 /obj/item/grenade/apply_fantasy_bonuses(bonus)
 	. = ..()

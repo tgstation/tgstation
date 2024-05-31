@@ -1,6 +1,6 @@
 #define CELL_DRAIN_TIME 35
-#define CELL_POWER_GAIN 60
-#define CELL_POWER_DRAIN 750
+#define CELL_POWER_GAIN (0.06 * STANDARD_CELL_CHARGE)
+#define CELL_POWER_DRAIN (0.75 * STANDARD_CELL_CHARGE)
 
 /**
  * # Power cell
@@ -31,7 +31,7 @@
 	///If the power cell was damaged by an explosion, chance for it to become corrupted and function the same as rigged.
 	var/corrupted = FALSE
 	///How much power is given per second in a recharger.
-	var/chargerate = STANDARD_CELL_CHARGE * 0.05
+	var/chargerate = STANDARD_CELL_RATE * 0.05
 	///If true, the cell will state it's maximum charge in it's description
 	var/ratingdesc = TRUE
 	///If it's a grown that acts as a battery, add a wire overlay to it.
@@ -186,6 +186,19 @@
 		explode()
 	return power_used
 
+/**
+ * Changes the charge of the cell.
+ * Args:
+ * - amount: The energy to give to the cell (can be negative).
+ * Returns: The energy that was given to the cell (can be negative).
+ */
+/obj/item/stock_parts/cell/proc/change(amount)
+	var/energy_used = clamp(amount, -charge, maxcharge - charge)
+	charge += energy_used
+	if(rigged && energy_used)
+		explode()
+	return energy_used
+
 /obj/item/stock_parts/cell/examine(mob/user)
 	. = ..()
 	if(rigged)
@@ -259,18 +272,19 @@
 
 			var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - CELL_POWER_GAIN
 			var/obj/item/organ/internal/stomach/ethereal/stomach = maybe_stomach
+			var/obj/item/stock_parts/cell/stomach_cell = stomach.cell
 			if((stomach.drain_time > world.time) || !stomach)
 				return
 			if(charge < CELL_POWER_DRAIN)
 				to_chat(H, span_warning("[src] doesn't have enough power!"))
 				return
-			if(stomach.crystal_charge > charge_limit)
+			if(stomach_cell.charge() > charge_limit)
 				to_chat(H, span_warning("Your charge is full!"))
 				return
 			to_chat(H, span_notice("You begin clumsily channeling power from [src] into your body."))
 			stomach.drain_time = world.time + CELL_DRAIN_TIME
 			while(do_after(user, CELL_DRAIN_TIME, target = src))
-				if((charge < CELL_POWER_DRAIN) || (stomach.crystal_charge > charge_limit))
+				if((charge < CELL_POWER_DRAIN) || (stomach_cell.charge() > charge_limit))
 					return
 				if(istype(stomach))
 					to_chat(H, span_notice("You receive some charge from [src], wasting some in the process."))
@@ -285,7 +299,7 @@
 	SSexplosions.high_mov_atom += src
 
 /obj/item/stock_parts/cell/proc/get_electrocute_damage()
-	return ELECTROCUTE_DAMAGE(charge)
+	return ELECTROCUTE_DAMAGE(charge / max(0.001 * STANDARD_CELL_CHARGE, 1)) // Wouldn't want it to consider more energy than whatever is actually in the cell if for some strange reason someone set the STANDARD_CELL_CHARGE to below 1kJ.
 
 /obj/item/stock_parts/cell/get_part_rating()
 	return maxcharge * 10 + charge
@@ -312,7 +326,7 @@
 	desc = "A power cell with a slightly higher capacity than normal!"
 	maxcharge = STANDARD_CELL_CHARGE * 2.5
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
-	chargerate = STANDARD_CELL_CHARGE * 0.5
+	chargerate = STANDARD_CELL_RATE * 0.5
 
 /obj/item/stock_parts/cell/upgraded/plus
 	name = "upgraded power cell+"
@@ -338,7 +352,7 @@
 /obj/item/stock_parts/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"
 	maxcharge = STANDARD_CELL_CHARGE * 40
-	chargerate = STANDARD_CELL_CHARGE * 0.75
+	chargerate = STANDARD_CELL_RATE * 0.75
 
 /obj/item/stock_parts/cell/pulse/carbine //25 pulse shots
 	name = "pulse carbine power cell"
@@ -353,14 +367,14 @@
 	icon_state = "bscell"
 	maxcharge = STANDARD_CELL_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
-	chargerate = STANDARD_CELL_CHARGE
+	chargerate = STANDARD_CELL_RATE
 
 /obj/item/stock_parts/cell/high
 	name = "high-capacity power cell"
 	icon_state = "hcell"
 	maxcharge = STANDARD_CELL_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
-	chargerate = STANDARD_CELL_CHARGE * 0.75
+	chargerate = STANDARD_CELL_RATE * 0.75
 
 /obj/item/stock_parts/cell/high/empty
 	empty = TRUE
@@ -370,7 +384,7 @@
 	icon_state = "scell"
 	maxcharge = STANDARD_CELL_CHARGE * 20
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
-	chargerate = STANDARD_CELL_CHARGE
+	chargerate = STANDARD_CELL_RATE
 
 /obj/item/stock_parts/cell/super/empty
 	empty = TRUE
@@ -380,7 +394,7 @@
 	icon_state = "hpcell"
 	maxcharge = STANDARD_CELL_CHARGE * 30
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 4)
-	chargerate = STANDARD_CELL_CHARGE * 1.5
+	chargerate = STANDARD_CELL_RATE * 1.5
 
 /obj/item/stock_parts/cell/hyper/empty
 	empty = TRUE
@@ -391,7 +405,7 @@
 	icon_state = "bscell"
 	maxcharge = STANDARD_CELL_CHARGE * 40
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*6)
-	chargerate = STANDARD_CELL_CHARGE * 2
+	chargerate = STANDARD_CELL_RATE * 2
 
 /obj/item/stock_parts/cell/bluespace/empty
 	empty = TRUE
@@ -464,7 +478,7 @@
 	name = "beam rifle capacitor"
 	desc = "A high powered capacitor that can provide huge amounts of energy in an instant."
 	maxcharge = STANDARD_CELL_CHARGE * 50
-	chargerate = STANDARD_CELL_CHARGE * 2.5 //Extremely energy intensive
+	chargerate = STANDARD_CELL_RATE * 2.5 //Extremely energy intensive
 
 /obj/item/stock_parts/cell/beam_rifle/corrupt()
 	return
@@ -502,6 +516,21 @@
 
 /obj/item/stock_parts/cell/inducer_supply
 	maxcharge = STANDARD_CELL_CHARGE * 5
+
+/obj/item/stock_parts/cell/ethereal
+	name = "ahelp it"
+	desc = "you sohuldn't see this"
+	maxcharge = ETHEREAL_CHARGE_DANGEROUS
+	charge = ETHEREAL_CHARGE_FULL
+	icon_state = null
+	charge_light_type = null
+	connector_type = null
+	custom_materials = null
+	grind_results = null
+
+/obj/item/stock_parts/cell/ethereal/examine(mob/user)
+	. = ..()
+	CRASH("[src.type] got examined by [user]")
 
 #undef CELL_DRAIN_TIME
 #undef CELL_POWER_GAIN

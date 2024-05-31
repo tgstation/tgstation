@@ -35,6 +35,7 @@
 	RemoveInvisibility(type)
 	set_species(/datum/species/monkey)
 	name = "monkey"
+	regenerate_icons()
 	set_name()
 	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE)
 	uncuff()
@@ -279,6 +280,29 @@
 	to_chat(new_corgi, span_boldnotice("You are now a Corgi. Yap Yap!"))
 	qdel(src)
 	return new_corgi
+
+/**
+ * Turns the source atom into a crab crab, the peak of evolutionary design.
+ */
+/mob/living/carbon/human/proc/crabize()
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+		return
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
+	Paralyze(1, ignore_canstun = TRUE)
+	for(var/obj/item/objeto in src)
+		dropItemToGround(objeto)
+	regenerate_icons()
+	icon = null
+	SetInvisibility(INVISIBILITY_MAXIMUM)
+
+	var/mob/living/basic/crab/new_crab = new (loc)
+	new_crab.set_combat_mode(TRUE) // snip snip
+	if(mind)
+		mind.transfer_to(new_crab)
+
+	to_chat(new_crab, span_boldnotice("You have evolved into a crab!"))
+	qdel(src)
+	return new_crab
 
 /mob/living/carbon/proc/gorillize()
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
