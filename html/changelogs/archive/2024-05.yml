@@ -828,3 +828,15 @@
   tmyqlfpir:
   - bugfix: Drones stored inside objects will call the stored object's relaymove()
       and return upon move
+2024-05-31:
+  Capsandi:
+  - sound: Shuttle docking and undocking is quieter now
+  - sound: The volume of the gravity generator has been halved
+  Rhials:
+  - bugfix: You can no longer force NODE Drones off of ore vents. That includes using
+      fulton packs!
+  - bugfix: When a NODE Drone is forcibly separated from its vent, it will fly away.
+  grungussuss:
+  - balance: The DNA vault now requires less animal and plant DNA to be completed
+  oranges:
+  - spellcheck: Gripper gloves are now Enhanced Retrieval gloves

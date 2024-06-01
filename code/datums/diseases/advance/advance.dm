@@ -272,7 +272,7 @@
 /datum/disease/advance/proc/assign_properties()
 
 	if(properties?.len)
-		if(properties["stealth"] >= properties["severity"])
+		if(properties["stealth"] >= properties["severity"] && properties["severity"] > 0)
 			visibility_flags |= HIDDEN_SCANNER
 		else
 			visibility_flags &= ~HIDDEN_SCANNER
