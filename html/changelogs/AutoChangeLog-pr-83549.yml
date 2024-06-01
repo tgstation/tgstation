@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes:
-  - admin: "fix_air will also fix the turfs' temperatures."
