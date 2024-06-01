@@ -58,11 +58,11 @@
 
 	if(cult_converted)
 		for(var/mob/living/cultist as anything in invokers)
-			to_chat(cultist, span_cultitalic("[src] has already been sacrificed!"))
+			to_chat(cultist, span_cult_italic("[src] has already been sacrificed!"))
 		return STOP_SACRIFICE
 
 	for(var/mob/living/cultist as anything in invokers)
-		to_chat(cultist, span_cultitalic("This feels a bit too cliché, don't you think?"))
+		to_chat(cultist, span_cult_italic("This feels a bit too cliché, don't you think?"))
 
 	cult_converted = TRUE
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "BAAAAAAAAH!")

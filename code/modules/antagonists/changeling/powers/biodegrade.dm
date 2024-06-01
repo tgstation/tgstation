@@ -15,7 +15,7 @@
 		user.visible_message(span_warning("[user] vomits a glob of acid on [user.p_their()] [O]!"), \
 			span_warning("We vomit acidic ooze onto our restraints!"))
 
-		addtimer(CALLBACK(src, PROC_REF(dissolve_handcuffs), user, O), 30)
+		addtimer(CALLBACK(src, PROC_REF(dissolve_handcuffs), user, O), 3 SECONDS)
 		log_combat(user, user.handcuffed, "melted handcuffs", addition = "(biodegrade)")
 		..()
 		return TRUE
@@ -27,7 +27,7 @@
 		user.visible_message(span_warning("[user] vomits a glob of acid on [user.p_their()] [O]!"), \
 			span_warning("We vomit acidic ooze onto our restraints!"))
 
-		addtimer(CALLBACK(src, PROC_REF(dissolve_legcuffs), user, O), 30)
+		addtimer(CALLBACK(src, PROC_REF(dissolve_legcuffs), user, O), 3 SECONDS)
 		log_combat(user, user.legcuffed, "melted legcuffs", addition = "(biodegrade)")
 		..()
 		return TRUE
@@ -38,7 +38,7 @@
 			return FALSE
 		user.visible_message(span_warning("[user] vomits a glob of acid across the front of [user.p_their()] [S]!"), \
 			span_warning("We vomit acidic ooze onto our [user.wear_suit.name]!"))
-		addtimer(CALLBACK(src, PROC_REF(dissolve_straightjacket), user, S), 30)
+		addtimer(CALLBACK(src, PROC_REF(dissolve_straightjacket), user, S), 3 SECONDS)
 		log_combat(user, user.wear_suit, "melted [user.wear_suit]", addition = "(biodegrade)")
 		..()
 		return TRUE
@@ -49,7 +49,7 @@
 			return FALSE
 		C.visible_message(span_warning("[C]'s hinges suddenly begin to melt and run!"))
 		to_chat(user, span_warning("We vomit acidic goop onto the interior of [C]!"))
-		addtimer(CALLBACK(src, PROC_REF(open_closet), user, C), 70)
+		addtimer(CALLBACK(src, PROC_REF(open_closet), user, C), 7 SECONDS)
 		log_combat(user, user.loc, "melted locker", addition = "(biodegrade)")
 		..()
 		return TRUE

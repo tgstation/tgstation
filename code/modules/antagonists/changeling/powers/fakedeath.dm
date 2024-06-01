@@ -19,7 +19,6 @@
 	..()
 	if(revive_ready)
 		INVOKE_ASYNC(src, PROC_REF(revive), user)
-		disable_revive(user) // this should be already called via signal, but just incase something wacky happens
 		return TRUE
 
 	var/death_duration_mod = 1
@@ -47,17 +46,20 @@
 	RegisterSignal(changeling, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 	return TRUE
 
-/// Sets [revive_ready] to FALSE and updates the button icons.
-/// Can be called mid-revival if the process is being cancelled
-/datum/action/changeling/fakedeath/proc/disable_revive(mob/living/changeling)
-	if(revive_ready)
-		chemical_cost = 15
-		revive_ready = FALSE
-		build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
-
+/// Removes the signals for fakedeath and listening for hapless doctors
+/// healing a changeling who went into stasis after actually dying, and
+/// also removes changeling stasis
+/datum/action/changeling/fakedeath/proc/disable_stasis_and_fakedeath(mob/living/changeling)
 	REMOVE_TRAIT(changeling, TRAIT_STASIS, CHANGELING_TRAIT)
 	UnregisterSignal(changeling, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA))
 	UnregisterSignal(changeling, COMSIG_MOB_STATCHANGE)
+
+/// This proc is called to reset the chemical cost of the revival
+/// as well as the revive ready flag and button states.
+/datum/action/changeling/fakedeath/proc/reset_chemical_cost()
+	chemical_cost = 15
+	revive_ready = FALSE
+	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
 /// Sets [revive_ready] to TRUE and updates the button icons.
 /datum/action/changeling/fakedeath/proc/enable_revive(mob/living/changeling)
@@ -75,7 +77,7 @@
 	if(HAS_TRAIT_FROM(source, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
 		return
 
-	disable_revive(source)
+	disable_stasis_and_fakedeath(source)
 
 /// Signal proc to exit fakedeath early if we're revived from being previously dead
 /datum/action/changeling/fakedeath/proc/on_stat_change(mob/living/source, new_stat, old_stat)
@@ -86,6 +88,7 @@
 
 	source.cure_fakedeath(CHANGELING_TRAIT)
 	to_chat(source, span_changeling("We exit our stasis early."))
+	reset_chemical_cost()
 
 /datum/action/changeling/fakedeath/proc/revive(mob/living/carbon/user)
 	if(!istype(user))
@@ -141,6 +144,14 @@
 			return
 
 	return ..()
+
+/// We wait until after we actually deduct chemical cost (or don't deduct
+/// if it's the 0 cost we get for revival) before we reset the chemical cost
+/datum/action/changeling/fakedeath/try_to_sting(mob/living/user)
+	. = ..()
+	if (!. || !revive_ready)
+		return
+	reset_chemical_cost()
 
 /datum/action/changeling/fakedeath/proc/can_enter_stasis(mob/living/user)
 	if(HAS_TRAIT_FROM(user, TRAIT_DEATHCOMA, CHANGELING_TRAIT))

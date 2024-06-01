@@ -9,41 +9,7 @@
 	fire_sound_volume = 90
 	rack_sound = 'sound/weapons/gun/smg/smgrack.ogg'
 	suppressed_sound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
-	var/select = 1 ///fire selector position. 1 = semi, 2 = burst. anything past that can vary between guns.
-	var/selector_switch_icon = FALSE ///if it has an icon for a selector switch indicating current firemode.
-
-/obj/item/gun/ballistic/automatic/update_overlays()
-	. = ..()
-	if(!selector_switch_icon)
-		return
-
-	switch(select)
-		if(0)
-			. += "[initial(icon_state)]_semi"
-		if(1)
-			. += "[initial(icon_state)]_burst"
-
-/obj/item/gun/ballistic/automatic/ui_action_click(mob/user, actiontype)
-	if(istype(actiontype, /datum/action/item_action/toggle_firemode))
-		burst_select()
-	else
-		..()
-
-/obj/item/gun/ballistic/automatic/proc/burst_select()
-	var/mob/living/carbon/human/user = usr
-	select = !select
-	if(!select)
-		burst_size = 1
-		fire_delay = 0
-		balloon_alert(user, "switched to semi-automatic")
-	else
-		burst_size = initial(burst_size)
-		fire_delay = initial(fire_delay)
-		balloon_alert(user, "switched to [burst_size]-round burst")
-
-	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
-	update_appearance()
-	update_item_action_buttons()
+	burst_fire_selection = TRUE
 
 /obj/item/gun/ballistic/automatic/proto
 	name = "\improper Nanotrasen Saber SMG"
@@ -205,14 +171,6 @@
 	else
 		..()
 
-/obj/item/gun/ballistic/automatic/m90/update_overlays()
-	. = ..()
-	switch(select)
-		if(0)
-			. += "[initial(icon_state)]_semi"
-		if(1)
-			. += "[initial(icon_state)]_burst"
-
 /obj/item/gun/ballistic/automatic/tommygun
 	name = "\improper Thompson SMG"
 	desc = "Based on the classic 'Chicago Typewriter'."
@@ -302,13 +260,12 @@
 		. += span_notice("It seems like you could use an <b>empty hand</b> to remove the magazine.")
 
 
-/obj/item/gun/ballistic/automatic/l6_saw/AltClick(mob/user)
-	if(!user.can_perform_action(src))
-		return
+/obj/item/gun/ballistic/automatic/l6_saw/click_alt(mob/user)
 	cover_open = !cover_open
 	balloon_alert(user, "cover [cover_open ? "opened" : "closed"]")
 	playsound(src, 'sound/weapons/gun/l6/l6_door.ogg', 60, TRUE)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/gun/ballistic/automatic/l6_saw/update_icon_state()
 	. = ..()

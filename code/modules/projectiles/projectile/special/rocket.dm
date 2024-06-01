@@ -72,6 +72,7 @@ among other potential differences. This granularity is helpful for things like t
 /obj/projectile/bullet/rocket/weak
 	name = "low-yield rocket"
 	desc = "Boom, but less so."
+	icon_state = "low_yield_rocket"
 	damage = 30
 
 /obj/projectile/bullet/rocket/weak/do_boom(atom/target, blocked=0)
@@ -101,6 +102,7 @@ among other potential differences. This granularity is helpful for things like t
 /obj/projectile/bullet/rocket/pep
 	name = "precise explosive missile"
 	desc = "Human friendly, metal unfriendly."
+	icon_state = "low_yield_rocket"
 	damage = 30
 	anti_armour_damage = 80 //Doesn't (probably) kill borgs in one shot, but it will hurt
 	random_crits_enabled = FALSE //yeah, no

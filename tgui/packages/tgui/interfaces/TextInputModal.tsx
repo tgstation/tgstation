@@ -78,7 +78,7 @@ export const TextInputModal = (props) => {
               <Box color="label">{message}</Box>
             </Stack.Item>
             <Stack.Item grow>
-              <InputArea input={input} onType={onType} />
+              <InputArea key={title} input={input} onType={onType} />
             </Stack.Item>
             <Stack.Item>
               <InputButtons

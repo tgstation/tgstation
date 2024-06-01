@@ -338,7 +338,7 @@
 	name = "Space"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "blessed"
-	window_colour = "#000000"
+	window_colour = COLOR_BLACK
 	material = /datum/material/glass
 	replace_floors = list(/turf/open/floor/fakespace = 1)
 	replace_walls = /turf/closed/wall/rock/porous
@@ -362,31 +362,41 @@
 		/obj/structure/chair = list(/obj/structure/chair/comfy = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1, /obj/machinery/door/airlock/wood/glass = 1),
 	)
-	///cooldown for changing carpets, It's kinda dull to always use the same one, but we also can't make it too random.
+	/// Cooldown for changing carpets, It's kinda dull to always use the same one, but we also can't make it too random.
 	COOLDOWN_DECLARE(carpet_switch_cd)
+	/// List of carpets we can pick from, set up in New
+	var/list/valid_carpets
+	/// List of tables we can pick from, set up in New
+	var/list/valid_tables
 
-#define FANCY_CARPETS list(\
-	/turf/open/floor/eighties, \
-	/turf/open/floor/eighties/red, \
-	/turf/open/floor/carpet/lone/star, \
-	/turf/open/floor/carpet/black, \
-	/turf/open/floor/carpet/blue, \
-	/turf/open/floor/carpet/cyan, \
-	/turf/open/floor/carpet/green, \
-	/turf/open/floor/carpet/orange, \
-	/turf/open/floor/carpet/purple, \
-	/turf/open/floor/carpet/red, \
-	/turf/open/floor/carpet/royalblack, \
-	/turf/open/floor/carpet/royalblue,)
+/datum/dimension_theme/fancy/New()
+	. = ..()
+	valid_carpets = list(
+		/turf/open/floor/carpet/black,
+		/turf/open/floor/carpet/blue,
+		/turf/open/floor/carpet/cyan,
+		/turf/open/floor/carpet/green,
+		/turf/open/floor/carpet/lone/star,
+		/turf/open/floor/carpet/orange,
+		/turf/open/floor/carpet/purple,
+		/turf/open/floor/carpet/red,
+		/turf/open/floor/carpet/royalblack,
+		/turf/open/floor/carpet/royalblue,
+		/turf/open/floor/eighties,
+		/turf/open/floor/eighties/red,
+	)
+	valid_tables = subtypesof(/obj/structure/table/wood/fancy)
+	randomize_theme()
+
+/datum/dimension_theme/fancy/proc/randomize_theme()
+	replace_floors = list(pick(valid_carpets) = 1)
+	replace_objs[/obj/structure/table/wood] = list(pick(valid_tables) = 1)
 
 /datum/dimension_theme/fancy/apply_theme(turf/affected_turf, skip_sound = FALSE, show_effect = FALSE)
 	if(COOLDOWN_FINISHED(src, carpet_switch_cd))
-		replace_floors = list(pick(FANCY_CARPETS) = 1)
-		replace_objs[/obj/structure/table/wood] = list(pick(subtypesof(/obj/structure/table/wood/fancy)) = 1)
+		randomize_theme()
 		COOLDOWN_START(src, carpet_switch_cd, 90 SECONDS)
 	return ..()
-
-#undef FANCY_CARPETS
 
 /datum/dimension_theme/disco
 	name = "Disco"

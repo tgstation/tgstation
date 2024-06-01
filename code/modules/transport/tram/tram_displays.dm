@@ -51,7 +51,6 @@
 		TRAMSTATION_LINE_1,
 	)
 	set_light(l_dir = REVERSE_DIR(dir))
-	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/transport/destination_sign/Destroy()
 	SStransport.displays -= src
@@ -61,7 +60,7 @@
 	. = ..()
 	set_light(l_dir = REVERSE_DIR(dir))
 
-/obj/machinery/transport/destination_sign/indicator/LateInitialize(mapload)
+/obj/machinery/transport/destination_sign/indicator/post_machine_initialize()
 	. = ..()
 	link_tram()
 

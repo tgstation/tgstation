@@ -1,4 +1,4 @@
-//These procs handle putting s tuff in your hands
+//These procs handle putting stuff in your hands
 //as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
 
 ///Returns the thing we're currently holding
@@ -429,10 +429,10 @@
 	var/obscured = NONE
 	var/hidden_slots = NONE
 
-	for(var/obj/item/I in get_all_worn_items())
-		hidden_slots |= I.flags_inv
+	for(var/obj/item/equipped_item in get_equipped_items())
+		hidden_slots |= equipped_item.flags_inv
 		if(transparent_protection)
-			hidden_slots |= I.transparent_protection
+			hidden_slots |= equipped_item.transparent_protection
 
 	if(hidden_slots & HIDENECK)
 		obscured |= ITEM_SLOT_NECK
@@ -456,26 +456,32 @@
 	return obscured
 
 
-/obj/item/proc/equip_to_best_slot(mob/M)
-	if(M.equip_to_appropriate_slot(src))
-		M.update_held_items()
+/// Tries to equip an item, store it in open storage, or in next best storage
+/obj/item/proc/equip_to_best_slot(mob/user)
+	if(user.equip_to_appropriate_slot(src))
+		user.update_held_items()
 		return TRUE
 	else
 		if(equip_delay_self)
 			return
 
-	if(M.active_storage?.attempt_insert(src, M))
+	if(user.active_storage?.attempt_insert(src, user, messages = FALSE))
 		return TRUE
 
-	var/list/obj/item/possible = list(M.get_inactive_held_item(), M.get_item_by_slot(ITEM_SLOT_BELT), M.get_item_by_slot(ITEM_SLOT_DEX_STORAGE), M.get_item_by_slot(ITEM_SLOT_BACK))
-	for(var/i in possible)
-		if(!i)
+	var/list/obj/item/possible = list(
+		user.get_inactive_held_item(),
+		user.get_item_by_slot(ITEM_SLOT_BELT),
+		user.get_item_by_slot(ITEM_SLOT_DEX_STORAGE),
+		user.get_item_by_slot(ITEM_SLOT_BACK),
+	)
+	for(var/thing in possible)
+		if(isnull(thing))
 			continue
-		var/obj/item/I = i
-		if(I.atom_storage?.attempt_insert(src, M))
+		var/obj/item/gear = thing
+		if(gear.atom_storage?.attempt_insert(src, user, messages = FALSE))
 			return TRUE
 
-	to_chat(M, span_warning("You are unable to equip that!"))
+	to_chat(user, span_warning("You are unable to equip that!"))
 	return FALSE
 
 
@@ -504,12 +510,8 @@
 	if(!I)
 		to_chat(src, span_warning("You are not holding anything to equip!"))
 		return
-	if (temporarilyRemoveItemFromInventory(I) && !QDELETED(I))
-		if(I.equip_to_best_slot(src))
-			return
-		if(put_in_active_hand(I))
-			return
-		I.forceMove(drop_location())
+	if(!QDELETED(I))
+		I.equip_to_best_slot(src)
 
 //used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
 /mob/proc/getBackSlot()

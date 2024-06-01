@@ -9,7 +9,7 @@
 	filename = "nt_messenger"
 	filedesc = "Direct Messenger"
 	downloader_category = PROGRAM_CATEGORY_DEVICE
-	program_open_overlay = "command"
+	program_open_overlay = "text"
 	extended_desc = "This program allows old-school communication with other modular devices."
 	size = 0
 	undeletable = TRUE // It comes by default in tablets, can't be downloaded, takes no space and should obviously not be able to be deleted.
@@ -704,7 +704,6 @@
 		else
 			reply = "(<a href='byond://?src=[REF(src)];choice=[reply_href];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
 
-
 		if (isAI(messaged_mob))
 			sender_title = "<a href='?src=[REF(messaged_mob)];track=[html_encode(sender_name)]'>[sender_title]</a>"
 
@@ -714,7 +713,7 @@
 		var/photo_message = signal.data["photo"] ? " (<a href='byond://?src=[REF(src)];choice=[photo_href];skiprefresh=1;target=[REF(chat)]'>Photo Attached</a>)" : ""
 		to_chat(messaged_mob, span_infoplain("[icon2html(computer, messaged_mob)] <b>PDA message from [sender_title], </b>\"[inbound_message]\"[photo_message] [reply]"))
 
-		SEND_SIGNAL(computer, COMSIG_COMPUTER_RECIEVED_MESSAGE, sender_title, inbound_message, photo_message)
+		SEND_SIGNAL(computer, COMSIG_COMPUTER_RECEIVED_MESSAGE, sender_title, inbound_message, photo_message)
 
 	if (alert_able && (!alert_silenced || is_rigged))
 		computer.ring(ringtone)

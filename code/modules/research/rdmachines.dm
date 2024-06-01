@@ -24,7 +24,7 @@
 	set_wires(new /datum/wires/rnd(src))
 	register_context()
 
-/obj/machinery/rnd/LateInitialize()
+/obj/machinery/rnd/post_machine_initialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
@@ -107,7 +107,6 @@
 	return screwdriver_act(user, tool)
 
 /obj/machinery/rnd/multitool_act(mob/living/user, obj/item/multitool/tool)
-	. = ITEM_INTERACT_BLOCKING
 	if(panel_open)
 		wires.interact(user)
 		return ITEM_INTERACT_SUCCESS

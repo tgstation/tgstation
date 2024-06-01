@@ -52,7 +52,7 @@
 				return
 	if(isnull(expiry))
 		if(tgui_alert(usr, "Set an expiry time? Expired messages are hidden like deleted ones.", "Expiry time?", list("Yes", "No", "Cancel")) == "Yes")
-			var/expire_time = input("Set expiry time for [type] as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than current time for obvious reasons.", "Set expiry time", SQLtime()) as null|text
+			var/expire_time = input("Set expiry time for [type] as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than current time for obvious reasons.", "Set expiry time", ISOtime()) as null|text
 			if(!expire_time)
 				return
 			var/datum/db_query/query_validate_expire_time = SSdbcore.NewQuery(
@@ -183,7 +183,7 @@
 		if(!new_text)
 			qdel(query_find_edit_message)
 			return
-		var/edit_text = "Edited by [editor_key] on [SQLtime()] from<br>[old_text]<br>to<br>[new_text]<hr>"
+		var/edit_text = "Edited by [editor_key] on [ISOtime()] from<br>[old_text]<br>to<br>[new_text]<hr>"
 		var/datum/db_query/query_edit_message = SSdbcore.NewQuery({"
 			UPDATE [format_table_name("messages")]
 			SET text = :text, lasteditor = :lasteditor, edits = CONCAT(IFNULL(edits,''),:edit_text)
@@ -253,7 +253,7 @@
 					return
 				new_expiry = query_validate_expire_time_edit.item[1]
 			qdel(query_validate_expire_time_edit)
-		var/edit_text = "Expiration time edited by [editor_key] on [SQLtime()] from [(old_expiry ? old_expiry : "no expiration date")] to [new_expiry]<hr>"
+		var/edit_text = "Expiration time edited by [editor_key] on [ISOtime()] from [(old_expiry ? old_expiry : "no expiration date")] to [new_expiry]<hr>"
 		var/datum/db_query/query_edit_message_expiry = SSdbcore.NewQuery({"
 			UPDATE [format_table_name("messages")]
 			SET expire_timestamp = :expire_time, lasteditor = :lasteditor, edits = CONCAT(IFNULL(edits,''),:edit_text)
@@ -307,7 +307,7 @@
 			qdel(query_find_edit_note_severity)
 			return
 		new_severity = new_severity
-		var/edit_text = "Note severity edited by [editor_key] on [SQLtime()] from [old_severity] to [new_severity]<hr>"
+		var/edit_text = "Note severity edited by [editor_key] on [ISOtime()] from [old_severity] to [new_severity]<hr>"
 		var/datum/db_query/query_edit_note_severity = SSdbcore.NewQuery({"
 			UPDATE [format_table_name("messages")]
 			SET severity = :severity, lasteditor = :lasteditor, edits = CONCAT(IFNULL(edits,''),:edit_text)
@@ -351,7 +351,7 @@
 		var/target_key = query_find_message_secret.item[2]
 		var/admin_key = query_find_message_secret.item[3]
 		var/secret = text2num(query_find_message_secret.item[4])
-		var/edit_text = "Made [secret ? "not secret" : "secret"] by [editor_key] on [SQLtime()]<hr>"
+		var/edit_text = "Made [secret ? "not secret" : "secret"] by [editor_key] on [ISOtime()]<hr>"
 		var/datum/db_query/query_message_secret = SSdbcore.NewQuery({"
 			UPDATE [format_table_name("messages")]
 			SET secret = NOT secret, lasteditor = :lasteditor, edits = CONCAT(IFNULL(edits,''),:edit_text)
@@ -752,18 +752,4 @@
 	notesfile.cd = "/"
 	notesfile.dir.Remove(ckey)
 
-/*alternatively this proc can be run once to pass through every note and attempt to convert it before deleting the file, if done then AUTOCONVERT_NOTES should be turned off
-this proc can take several minutes to execute fully if converting and cause DD to hang if converting a lot of notes; it's not advised to do so while a server is live
-/proc/mass_convert_notes()
-	to_chat(world, "Beginning mass note conversion", confidential = TRUE)
-	var/savefile/notesfile = new(NOTESFILE)
-	if(!notesfile)
-		log_game("Error: Cannot access [NOTESFILE]")
-		return
-	notesfile.cd = "/"
-	for(var/ckey in notesfile.dir)
-		convert_notes_sql(ckey)
-	to_chat(world, "Deleting NOTESFILE", confidential = TRUE)
-	fdel(NOTESFILE)
-	to_chat(world, "Finished mass note conversion, remember to turn off AUTOCONVERT_NOTES", confidential = TRUE)*/
 #undef NOTESFILE

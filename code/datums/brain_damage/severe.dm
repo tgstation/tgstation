@@ -187,7 +187,7 @@
 	for(var/mob/M in oview(owner, check_radius))
 		if(!isliving(M)) //ghosts ain't people
 			continue
-		if(istype(M, /mob/living/simple_animal/pet) || istype(M, /mob/living/basic/pet) || M.ckey)
+		if(istype(M, /mob/living/basic/pet) || M.ckey)
 			return FALSE
 	return TRUE
 
@@ -202,7 +202,7 @@
 				to_chat(owner, span_warning("You feel really sick at the thought of being alone!"))
 			else
 				to_chat(owner, span_warning("You feel sick..."))
-			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon, vomit), high_stress), 50) //blood vomit if high stress
+			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon, vomit), high_stress), 5 SECONDS) //blood vomit if high stress
 		if(2)
 			if(high_stress)
 				to_chat(owner, span_warning("You feel weak and scared! If only you weren't alone..."))
@@ -309,7 +309,7 @@
 	var/regex/reg = new("(\\b[REGEX_QUOTE(trigger_phrase)]\\b)","ig")
 
 	if(findtext(hearing_args[HEARING_RAW_MESSAGE], reg))
-		addtimer(CALLBACK(src, PROC_REF(hypnotrigger)), 10) //to react AFTER the chat message
+		addtimer(CALLBACK(src, PROC_REF(hypnotrigger)), 1 SECONDS) //to react AFTER the chat message
 		hearing_args[HEARING_RAW_MESSAGE] = reg.Replace(hearing_args[HEARING_RAW_MESSAGE], span_hypnophrase("*********"))
 
 /datum/brain_trauma/severe/hypnotic_trigger/proc/hypnotrigger()
@@ -431,3 +431,66 @@
 	if(SPT_PROB(50, seconds_per_tick))
 		to_chat(owner, span_notice("You feel eldritch energies pulse from your body!"))
 		tile.rust_heretic_act()
+
+/datum/brain_trauma/severe/kleptomaniac
+	name = "Kleptomania"
+	desc = "Patient is prone to stealing things."
+	scan_desc = "kleptomania"
+	gain_text = span_warning("You feel a sudden urge to take that. Surely no one will notice.")
+	lose_text = span_notice("You no longer feel the urge to take things.")
+	/// Cooldown between allowing steal attempts
+	COOLDOWN_DECLARE(steal_cd)
+
+/datum/brain_trauma/severe/kleptomaniac/on_gain()
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_taken))
+
+/datum/brain_trauma/severe/kleptomaniac/on_lose()
+	. = ..()
+	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
+
+/datum/brain_trauma/severe/kleptomaniac/proc/damage_taken(datum/source, damage_amount, damage_type, ...)
+	SIGNAL_HANDLER
+	// While you're fighting someone (or dying horribly) your mind has more important things to focus on than pocketing stuff
+	if(damage_amount >= 5 && (damage_type == BRUTE || damage_type == BURN || damage_type == STAMINA))
+		COOLDOWN_START(src, steal_cd, 12 SECONDS)
+
+/datum/brain_trauma/severe/kleptomaniac/on_life(seconds_per_tick, times_fired)
+	if(owner.usable_hands <= 0)
+		return
+	if(!SPT_PROB(5, seconds_per_tick))
+		return
+	if(!COOLDOWN_FINISHED(src, steal_cd))
+		return
+	if(!owner.has_active_hand() || !owner.get_empty_held_indexes())
+		return
+
+	// If our main hand is full, that means our offhand is empty, so try stealing with that
+	var/steal_to_offhand = !!owner.get_active_held_item()
+	var/curr_index = owner.active_hand_index
+	var/pre_dir = owner.dir
+	if(steal_to_offhand)
+		owner.swap_hand(owner.get_inactive_hand_index())
+
+	var/list/stealables = list()
+	for(var/obj/item/potential_stealable in oview(1, owner))
+		if(potential_stealable.w_class >= WEIGHT_CLASS_BULKY)
+			continue
+		if(potential_stealable.anchored || !(potential_stealable.interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP))
+			continue
+		stealables += potential_stealable
+
+	for(var/obj/item/stealable as anything in shuffle(stealables))
+		if(!owner.CanReach(stealable, view_only = TRUE) || stealable.IsObscured())
+			continue
+		// Try to do a raw click on the item with one of our empty hands, to pick it up (duh)
+		owner.log_message("attempted to pick up (kleptomania)", LOG_ATTACK, color = "orange")
+		owner.ClickOn(stealable)
+		// No feedback message. Intentional, you may not even realize you picked up something
+		break
+
+	if(steal_to_offhand)
+		owner.swap_hand(curr_index)
+	owner.setDir(pre_dir)
+	// Gives you a small buffer - not to avoid spam, but to make it more subtle / less predictable
+	COOLDOWN_START(src, steal_cd, 8 SECONDS)

@@ -83,6 +83,17 @@
 	time = 5 SECONDS
 	category = CAT_EQUIPMENT
 
+/datum/crafting_recipe/barbeque_grill
+	name = "Barbeque grill"
+	result = /obj/machinery/grill
+	reqs = list(
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/rods = 5,
+		/obj/item/assembly/igniter = 1,
+	)
+	time = 7 SECONDS
+	category = CAT_EQUIPMENT
+
 /datum/crafting_recipe/secure_closet
 	name = "Secure Closet"
 	result = /obj/structure/closet/secure_closet

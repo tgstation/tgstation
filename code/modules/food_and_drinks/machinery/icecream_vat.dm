@@ -110,26 +110,27 @@
 	. = ..()
 	if(.)
 		return
-	if(!beaker || !istype(beaker) || !beaker.reagents || (beaker.item_flags & ABSTRACT) || !beaker.is_open_container())
+	if(!istype(beaker) || !beaker.reagents || (beaker.item_flags & ABSTRACT) || !beaker.is_open_container())
 		return
 
 	if(custom_ice_cream_beaker)
-		if(beaker.forceMove(src))
+		if(user.transferItemToLoc(beaker, src))
 			try_put_in_hand(custom_ice_cream_beaker, user)
 			balloon_alert(user, "beakers swapped")
 			custom_ice_cream_beaker = beaker
 		else
 			balloon_alert(user, "beaker slot full!")
 		return
-	if(beaker.forceMove(src))
-		balloon_alert(user, "beaker inserted")
-		custom_ice_cream_beaker = beaker
+	if(!user.transferItemToLoc(beaker, src))
+		return
+	balloon_alert(user, "beaker inserted")
+	custom_ice_cream_beaker = beaker
 
 /obj/machinery/icecream_vat/attackby_secondary(obj/item/reagent_containers/beaker, mob/user, params)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!beaker || !istype(beaker) || !beaker.reagents || (beaker.item_flags & ABSTRACT) || !beaker.is_open_container())
+	if(!istype(beaker) || !beaker.reagents || (beaker.item_flags & ABSTRACT) || !beaker.is_open_container())
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	var/added_reagents = FALSE
 	for(var/datum/reagent/beaker_reagents in beaker.reagents.reagent_list)
@@ -154,13 +155,12 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
-/obj/machinery/icecream_vat/AltClick(mob/user)
-	if(!user.can_interact_with(src))
-		return FALSE
-	if(custom_ice_cream_beaker)
-		balloon_alert(user, "removed beaker")
-		try_put_in_hand(custom_ice_cream_beaker, user)
-	return ..()
+/obj/machinery/icecream_vat/click_alt(mob/user)
+	if(!custom_ice_cream_beaker)
+		return CLICK_ACTION_BLOCKING
+	balloon_alert(user, "removed beaker")
+	try_put_in_hand(custom_ice_cream_beaker, user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/icecream_vat/interact(mob/living/user)
 	. = ..()
@@ -212,9 +212,10 @@
 	return ice_cream_icon
 
 /obj/machinery/icecream_vat/on_deconstruction(disassembled = TRUE)
-	new /obj/item/stack/sheet/iron(loc, 4)
-	if(custom_ice_cream_beaker)
-		custom_ice_cream_beaker.forceMove(loc)
+	var/atom/drop_location = drop_location()
+
+	new /obj/item/stack/sheet/iron(drop_location, 4)
+	custom_ice_cream_beaker?.forceMove(drop_location)
 
 ///Makes an ice cream cone of the make_type, using ingredients list as reagents used to make it. Puts in user's hand if possible.
 /obj/machinery/icecream_vat/proc/make_cone(mob/user, make_type, list/ingredients)
@@ -248,6 +249,12 @@
 		for(var/reagents_used in flavor.ingredients)
 			reagents.remove_reagent(reagents_used, CONE_REAGENET_NEEDED)
 		balloon_alert_to_viewers("scoops [selected_flavour]", "scoops [selected_flavour]")
+
+	if(istype(cone))
+		if(isnull(cone.crafted_food_buff))
+			cone.crafted_food_buff = /datum/status_effect/food/chilling
+		if(user.mind)
+			ADD_TRAIT(cone, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
 
 ///Swaps the mode to the next one meant to be selected, then tells the user who changed it.
 /obj/machinery/icecream_vat/proc/swap_modes(mob/user)

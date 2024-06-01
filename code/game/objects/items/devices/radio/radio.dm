@@ -76,7 +76,7 @@
 
 	/// overlay when speaker is on
 	var/overlay_speaker_idle = "s_idle"
-	/// overlay when recieving a message
+	/// overlay when receiving a message
 	var/overlay_speaker_active = "s_active"
 
 	/// overlay when mic is on
@@ -120,12 +120,20 @@
 		slapcraft_recipes = list(/datum/crafting_recipe/improv_explosive)\
 	)
 
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
+
 /obj/item/radio/Destroy()
 	remove_radio_all(src) //Just to be sure
 	QDEL_NULL(wires)
 	if(istype(keyslot))
 		QDEL_NULL(keyslot)
 	return ..()
+
+/obj/item/radio/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(broadcasting) //no broadcasting but it can still be used to send radio messages.
+		set_broadcasting(FALSE)
+		return COMSIG_SABOTEUR_SUCCESS
 
 /obj/item/radio/proc/set_frequency(new_frequency)
 	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, args)
@@ -262,17 +270,29 @@
 
 /obj/item/radio/talk_into(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
 	if(SEND_SIGNAL(talking_movable, COMSIG_MOVABLE_USING_RADIO, src) & COMPONENT_CANNOT_USE_RADIO)
-		return
+		return NONE
 	if(SEND_SIGNAL(src, COMSIG_RADIO_NEW_MESSAGE, talking_movable, message, channel) & COMPONENT_CANNOT_USE_RADIO)
-		return
+		return NONE
 
 	if(!spans)
 		spans = list(talking_movable.speech_span)
 	if(!language)
 		language = talking_movable.get_selected_language()
-	INVOKE_ASYNC(src, PROC_REF(talk_into_impl), talking_movable, message, channel, spans.Copy(), language, message_mods)
+	INVOKE_ASYNC(src, PROC_REF(talk_into_impl), talking_movable, message, channel, LAZYLISTDUPLICATE(spans), language, LAZYLISTDUPLICATE(message_mods))
 	return ITALICS | REDUCE_RANGE
 
+/**
+ * Handles talking into the radio
+ *
+ * Unlike most speech related procs, spans and message_mods are not guaranteed to be lists
+ *
+ * * talking_movable - the atom that is talking
+ * * message - the message to be spoken
+ * * channel - the channel to be spoken on
+ * * spans - the spans to be used, lazylist
+ * * language - the language to be spoken in. (Should) never be null
+ * * message_mods - the message mods to be used, lazylist
+ */
 /obj/item/radio/proc/talk_into_impl(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
 	if(!on)
 		return // the device has to be on
@@ -343,7 +363,7 @@
 
 	// Non-subspace radios will check in a couple of seconds, and if the signal
 	// was never received, send a mundane broadcast (no headsets).
-	addtimer(CALLBACK(src, PROC_REF(backup_transmission), signal), 20)
+	addtimer(CALLBACK(src, PROC_REF(backup_transmission), signal), 2 SECONDS)
 
 /obj/item/radio/proc/backup_transmission(datum/signal/subspace/vocal/signal)
 	var/turf/T = get_turf(src)
@@ -358,9 +378,9 @@
 
 /obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
-	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range)
+	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range || message_mods[MODE_RELAY])
 		return
-	var/filtered_mods = list()
+	var/list/filtered_mods = list()
 
 	if (message_mods[MODE_SING])
 		filtered_mods[MODE_SING] = message_mods[MODE_SING]
@@ -523,7 +543,7 @@
 	for (var/ch_name in channels)
 		channels[ch_name] = 0
 	set_on(FALSE)
-	addtimer(CALLBACK(src, PROC_REF(end_emp_effect), curremp), 200)
+	addtimer(CALLBACK(src, PROC_REF(end_emp_effect), curremp), 20 SECONDS)
 
 /obj/item/radio/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] starts bouncing [src] off [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))

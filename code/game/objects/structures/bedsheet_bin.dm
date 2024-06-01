@@ -20,6 +20,7 @@ LINEN BINS
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	dying_key = DYE_REGISTRY_BEDSHEET
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 
 	dog_fashion = /datum/dog_fashion/head/ghost
 	/// Custom nouns to act as the subject of dreams
@@ -133,11 +134,9 @@ LINEN BINS
 	else
 		return ..()
 
-/obj/item/bedsheet/AltClick(mob/living/user)
-	// double check the canUseTopic args to make sure it's correct
-	if(!istype(user) || !user.can_perform_action(src, NEED_DEXTERITY))
-		return
+/obj/item/bedsheet/click_alt(mob/living/user)
 	dir = REVERSE_DIR(dir)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/bedsheet/blue
 	icon_state = "sheetblue"
@@ -224,7 +223,7 @@ LINEN BINS
 
 /obj/item/bedsheet/medical
 	name = "medical blanket"
-	desc = "It's a sterilized* blanket commonly used in the Medbay.  *Sterilization is voided if a virologist is present onboard the station."
+	desc = "It's a 'sterilized' blanket commonly used in the Medbay."
 	icon_state = "sheetmedical"
 	inhand_icon_state = "sheetmedical"
 	dream_messages = list("healing", "life", "surgery", "a doctor")
@@ -609,8 +608,6 @@ LINEN BINS
 	..()
 
 /obj/structure/bedsheetbin/screwdriver_act(mob/living/user, obj/item/tool)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return FALSE
 	if(amount)
 		to_chat(user, span_warning("The [src] must be empty first!"))
 		return ITEM_INTERACT_SUCCESS

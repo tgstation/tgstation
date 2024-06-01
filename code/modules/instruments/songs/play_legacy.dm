@@ -9,7 +9,7 @@
 	var/list/octaves = list(3, 3, 3, 3, 3, 3, 3)
 	var/list/accents = list("n", "n", "n", "n", "n", "n", "n")
 	for(var/line in lines)
-		var/list/chords = splittext(lowertext(line), ",")
+		var/list/chords = splittext(LOWER_TEXT(line), ",")
 		for(var/chord in chords)
 			var/list/compiled_chord = list()
 			var/tempodiv = 1

@@ -1,7 +1,8 @@
 import { BooleanLike } from 'common/react';
 import { classes } from 'common/react';
+import { useState } from 'react';
 
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -59,8 +60,7 @@ export const Biogenerator = (props) => {
     efficiency,
     categories,
   } = data;
-  const [selectedCategory, setSelectedCategory] = useLocalState<string>(
-    'category',
+  const [selectedCategory, setSelectedCategory] = useState(
     data.categories[0]?.name,
   );
   const items =
@@ -184,8 +184,7 @@ export const Biogenerator = (props) => {
 const ItemList = (props) => {
   const { act } = useBackend();
   const items = props.items.map((item) => {
-    const [amount, setAmount] = useLocalState(
-      'amount' + item.name,
+    const [amount, setAmount] = useState(
       item.is_reagent ? Math.min(Math.max(props.space, 1), 10) : 1,
     );
     const disabled =
@@ -220,10 +219,11 @@ const ItemList = (props) => {
       <Table.Cell collapsing>
         <NumberInput
           value={item.amount}
+          step={1}
           width="35px"
           minValue={1}
           maxValue={item.max_amount}
-          onChange={(e, value) => item.setAmount(value)}
+          onChange={(value) => item.setAmount(value)}
         />
       </Table.Cell>
       <Table.Cell collapsing>

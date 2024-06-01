@@ -986,9 +986,7 @@
 /area/shuttle/abandoned/bar)
 "cX" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/smes/engineering{
-	charge = 1e+006
-	},
+/obj/machinery/power/smes/ship,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,

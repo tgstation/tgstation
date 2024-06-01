@@ -29,8 +29,8 @@
 	icon = 'icons/obj/maintenance_loot.dmi'
 	icon_state = "lead_battery"
 	throwforce = 10
-	maxcharge = 20000 //decent max charge
-	chargerate = 1400 //charging is about 30% less efficient than lithium batteries.
+	maxcharge = STANDARD_CELL_CHARGE * 20 //decent max charge
+	chargerate = STANDARD_CELL_RATE * 0.7 //charging is about 30% less efficient than lithium batteries.
 	charge_light_type = null
 	connector_type = "leadacid"
 	rating = 2 //Kind of a mid-tier battery

@@ -48,7 +48,7 @@
 	return rgb(255 - color[1], 255 - color[2], 255 - color[3])
 
 ///Flash a color on the passed mob
-/proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
+/proc/flash_color(mob_or_client, flash_color=COLOR_CULT_RED, flash_time=20)
 	var/mob/flashed_mob
 	if(ismob(mob_or_client))
 		flashed_mob = mob_or_client

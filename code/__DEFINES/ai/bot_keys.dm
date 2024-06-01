@@ -34,8 +34,6 @@ DEFINE_BITFIELD(honkbot_flags, list(
 #define BB_RADIO_CHANNEL "radio_channel"
 ///list of unreachable things we will temporarily ignore
 #define BB_TEMPORARY_IGNORE_LIST "temporary_ignore_list"
-///Last thing we attempted to reach
-#define BB_LAST_ATTEMPTED_PATHING "last_attempted_pathing"
 
 // medbot keys
 ///the patient we must heal

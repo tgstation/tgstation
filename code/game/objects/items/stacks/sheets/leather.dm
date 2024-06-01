@@ -14,8 +14,8 @@
 	merge_type = /obj/item/stack/sheet/animalhide/human
 
 GLOBAL_LIST_INIT(human_recipes, list( \
-	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("human skin hat", /obj/item/clothing/head/fedora/human_leather, 1, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("human skin hat", /obj/item/clothing/head/fedora/human_leather, 1, crafting_flags = NONE, category = CAT_CLOTHING), \
 	))
 
 /obj/item/stack/sheet/animalhide/human/get_main_recipes()
@@ -55,9 +55,9 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 	amount = 5
 
 GLOBAL_LIST_INIT(gondola_recipes, list ( \
-	new/datum/stack_recipe("gondola mask", /obj/item/clothing/mask/gondola, 1, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("gondola suit", /obj/item/clothing/under/costume/gondola, 2, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("gondola bedsheet", /obj/item/bedsheet/gondola, 1, check_density = FALSE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("gondola mask", /obj/item/clothing/mask/gondola, 1, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("gondola suit", /obj/item/clothing/under/costume/gondola, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("gondola bedsheet", /obj/item/bedsheet/gondola, 1, crafting_flags = NONE, category = CAT_FURNITURE), \
 	))
 
 /obj/item/stack/sheet/animalhide/gondola
@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(gondola_recipes, list ( \
 	. += GLOB.gondola_recipes
 
 GLOBAL_LIST_INIT(corgi_recipes, list ( \
-	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3, crafting_flags = NONE, category = CAT_CLOTHING), \
 	))
 
 /obj/item/stack/sheet/animalhide/corgi/get_main_recipes()
@@ -100,8 +100,8 @@ GLOBAL_LIST_INIT(corgi_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/animalhide/monkey
 
 GLOBAL_LIST_INIT(monkey_recipes, list ( \
-	new/datum/stack_recipe("monkey mask", /obj/item/clothing/mask/gas/monkeymask, 1, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("monkey suit", /obj/item/clothing/suit/costume/monkeysuit, 2, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("monkey mask", /obj/item/clothing/mask/gas/monkeymask, 1, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("monkey suit", /obj/item/clothing/suit/costume/monkeysuit, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
 	))
 
 /obj/item/stack/sheet/animalhide/monkey/get_main_recipes()
@@ -131,8 +131,8 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/animalhide/xeno
 
 GLOBAL_LIST_INIT(xeno_recipes, list ( \
-	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/costume/xenos, 1, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/costume/xenos, 2, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/costume/xenos, 1, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/costume/xenos, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
 	))
 
 /obj/item/stack/sheet/animalhide/xeno/get_main_recipes()
@@ -151,11 +151,11 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/animalhide/carp
 
 GLOBAL_LIST_INIT(carp_recipes, list ( \
-	new/datum/stack_recipe("carp costume", /obj/item/clothing/suit/hooded/carp_costume, 4, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("carp mask", /obj/item/clothing/mask/gas/carp, 1, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("carpskin chair", /obj/structure/chair/comfy/carp, 2, check_density = FALSE, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("carpskin suit", /obj/item/clothing/under/suit/carpskin, 3, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("carpskin fedora", /obj/item/clothing/head/fedora/carpskin, 2, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("carp costume", /obj/item/clothing/suit/hooded/carp_costume, 4, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("carp mask", /obj/item/clothing/mask/gas/carp, 1, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("carpskin chair", /obj/structure/chair/comfy/carp, 2, crafting_flags = NONE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("carpskin suit", /obj/item/clothing/under/suit/carpskin, 3, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("carpskin fedora", /obj/item/clothing/head/fedora/carpskin, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
 	))
 
 /obj/item/stack/sheet/animalhide/carp/get_main_recipes()
@@ -193,33 +193,33 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/leather
 
 GLOBAL_LIST_INIT(leather_recipes, list ( \
-	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1, check_density = FALSE, category = CAT_CONTAINERS), \
-	new/datum/stack_recipe("muzzle", /obj/item/clothing/mask/muzzle, 2, check_density = FALSE, category = CAT_ENTERTAINMENT), \
-	new/datum/stack_recipe("basketball", /obj/item/toy/basketball, 20, check_density = FALSE, category = CAT_ENTERTAINMENT), \
-	new/datum/stack_recipe("baseball", /obj/item/toy/beach_ball/baseball, 3, check_density = FALSE, category = CAT_ENTERTAINMENT), \
-	new/datum/stack_recipe("saddle", /obj/item/goliath_saddle, 5, check_density = FALSE, category = CAT_EQUIPMENT), \
-	new/datum/stack_recipe("leather shoes", /obj/item/clothing/shoes/laceup, 2, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("cowboy boots", /obj/item/clothing/shoes/cowboy, 2, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("botany gloves", /obj/item/clothing/gloves/botanic_leather, 3, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("leather satchel", /obj/item/storage/backpack/satchel/leather, 5, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("sheriff vest", /obj/item/clothing/accessory/vest_sheriff, 4, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("leather jacket", /obj/item/clothing/suit/jacket/leather, 7, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("biker jacket", /obj/item/clothing/suit/jacket/leather/biker, 7, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1, crafting_flags = NONE, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("muzzle", /obj/item/clothing/mask/muzzle, 2, crafting_flags = NONE, category = CAT_ENTERTAINMENT), \
+	new/datum/stack_recipe("basketball", /obj/item/toy/basketball, 20, crafting_flags = NONE, category = CAT_ENTERTAINMENT), \
+	new/datum/stack_recipe("baseball", /obj/item/toy/beach_ball/baseball, 3, crafting_flags = NONE, category = CAT_ENTERTAINMENT), \
+	new/datum/stack_recipe("saddle", /obj/item/goliath_saddle, 5, crafting_flags = NONE, category = CAT_EQUIPMENT), \
+	new/datum/stack_recipe("leather shoes", /obj/item/clothing/shoes/laceup, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("cowboy boots", /obj/item/clothing/shoes/cowboy, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("botany gloves", /obj/item/clothing/gloves/botanic_leather, 3, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("leather satchel", /obj/item/storage/backpack/satchel/leather, 5, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("sheriff vest", /obj/item/clothing/accessory/vest_sheriff, 4, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("leather jacket", /obj/item/clothing/suit/jacket/leather, 7, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("biker jacket", /obj/item/clothing/suit/jacket/leather/biker, 7, crafting_flags = NONE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe_list("belts", list( \
-		new/datum/stack_recipe("tool belt", /obj/item/storage/belt/utility, 4, check_density = FALSE, category = CAT_CONTAINERS), \
-		new/datum/stack_recipe("botanical belt", /obj/item/storage/belt/plant, 2, check_density = FALSE, category = CAT_CONTAINERS), \
-		new/datum/stack_recipe("janitorial belt", /obj/item/storage/belt/janitor, 2, check_density = FALSE, category = CAT_CONTAINERS), \
-		new/datum/stack_recipe("medical belt", /obj/item/storage/belt/medical, 2, check_density = FALSE, category = CAT_CONTAINERS), \
-		new/datum/stack_recipe("security belt", /obj/item/storage/belt/security, 2, check_density = FALSE, category = CAT_CONTAINERS), \
-		new/datum/stack_recipe("shoulder holster", /obj/item/storage/belt/holster, 3, check_density = FALSE, category = CAT_CONTAINERS), \
-		new/datum/stack_recipe("bandolier", /obj/item/storage/belt/bandolier, 5, check_density = FALSE, category = CAT_CONTAINERS), \
+		new/datum/stack_recipe("tool belt", /obj/item/storage/belt/utility, 4, crafting_flags = NONE, category = CAT_CONTAINERS), \
+		new/datum/stack_recipe("botanical belt", /obj/item/storage/belt/plant, 2, crafting_flags = NONE, category = CAT_CONTAINERS), \
+		new/datum/stack_recipe("janitorial belt", /obj/item/storage/belt/janitor, 2, crafting_flags = NONE, category = CAT_CONTAINERS), \
+		new/datum/stack_recipe("medical belt", /obj/item/storage/belt/medical, 2, crafting_flags = NONE, category = CAT_CONTAINERS), \
+		new/datum/stack_recipe("security belt", /obj/item/storage/belt/security, 2, crafting_flags = NONE, category = CAT_CONTAINERS), \
+		new/datum/stack_recipe("shoulder holster", /obj/item/storage/belt/holster, 3, crafting_flags = NONE, category = CAT_CONTAINERS), \
+		new/datum/stack_recipe("bandolier", /obj/item/storage/belt/bandolier, 5, crafting_flags = NONE, category = CAT_CONTAINERS), \
 	)),
 	new/datum/stack_recipe_list("cowboy hats", list( \
-		new/datum/stack_recipe("sheriff hat", /obj/item/clothing/head/cowboy/brown, 2, check_density = FALSE, category = CAT_CLOTHING), \
-		new/datum/stack_recipe("desperado hat", /obj/item/clothing/head/cowboy/black, 2, check_density = FALSE, category = CAT_CLOTHING), \
-		new/datum/stack_recipe("ten-gallon hat", /obj/item/clothing/head/cowboy/white, 2, check_density = FALSE, category = CAT_CLOTHING), \
-		new/datum/stack_recipe("deputy hat", /obj/item/clothing/head/cowboy/red, 2, check_density = FALSE, category = CAT_CLOTHING), \
-		new/datum/stack_recipe("drifter hat", /obj/item/clothing/head/cowboy/grey, 2, check_density = FALSE, category = CAT_CLOTHING), \
+		new/datum/stack_recipe("sheriff hat", /obj/item/clothing/head/cowboy/brown, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+		new/datum/stack_recipe("desperado hat", /obj/item/clothing/head/cowboy/black, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+		new/datum/stack_recipe("ten-gallon hat", /obj/item/clothing/head/cowboy/white, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+		new/datum/stack_recipe("deputy hat", /obj/item/clothing/head/cowboy/red, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+		new/datum/stack_recipe("drifter hat", /obj/item/clothing/head/cowboy/grey, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
 	)),
 ))
 
@@ -263,7 +263,7 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/sinew/wolf
 
 GLOBAL_LIST_INIT(sinew_recipes, list ( \
-	new/datum/stack_recipe("sinew restraints", /obj/item/restraints/handcuffs/cable/sinew, 1, check_density = FALSE, category = CAT_EQUIPMENT), \
+	new/datum/stack_recipe("sinew restraints", /obj/item/restraints/handcuffs/cable/sinew, 1, crafting_flags = NONE, category = CAT_EQUIPMENT), \
 ))
 
 /obj/item/stack/sheet/sinew/get_main_recipes()
@@ -322,7 +322,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	if(W.get_sharpness())
 		playsound(loc, 'sound/weapons/slice.ogg', 50, TRUE, -1)
 		user.visible_message(span_notice("[user] starts cutting hair off \the [src]."), span_notice("You start cutting the hair off \the [src]..."), span_hear("You hear the sound of a knife rubbing against flesh."))
-		if(do_after(user, 50, target = src))
+		if(do_after(user, 5 SECONDS, target = src))
 			to_chat(user, span_notice("You cut the hair from [src.name]."))
 			new /obj/item/stack/sheet/hairlesshide(user.drop_location(), amount)
 			use(amount)

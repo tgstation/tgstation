@@ -230,7 +230,7 @@
 		return
 
 	for(var/datum/action/action as anything in take_from.actions)
-		if(!action.show_to_observers)
+		if(!action.show_to_observers || !action.owner_has_control)
 			continue
 		action.GiveAction(src)
 	RegisterSignal(take_from, COMSIG_MOB_GRANTED_ACTION, PROC_REF(on_observing_action_granted))
@@ -251,7 +251,7 @@
 /mob/proc/on_observing_action_granted(mob/living/source, datum/action/action)
 	SIGNAL_HANDLER
 
-	if(!action.show_to_observers)
+	if(!action.show_to_observers || !action.owner_has_control)
 		return
 	action.GiveAction(src)
 

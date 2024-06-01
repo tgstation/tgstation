@@ -4,7 +4,7 @@
  */
 /obj/item/piggy_bank
 	name = "piggy bank"
-	desc = "A pig-shaped money container made of porkelain, oink. <i> Do not throw.</i>" //pun very intended.
+	desc = "A pig-shaped money container made of porkelain, oink. <i>Do not throw.</i>" //pun very intended.
 	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "piggy_bank"
 	max_integrity = 8
@@ -20,6 +20,8 @@
 	var/datum/callback/persistence_cb
 	///How much dosh can this piggy bank hold.
 	var/maximum_value = PAYCHECK_COMMAND * 20
+	///A limit to much dosh can you put inside this piggy bank each round. If 0, there's no limit. Only applies to persistent piggies.
+	var/maximum_savings_per_shift = 0
 	///How much dosh this piggy bank spawns with.
 	var/initial_value = 0
 
@@ -46,8 +48,11 @@
 	persistence_cb = CALLBACK(src, PROC_REF(save_cash))
 	SSticker.OnRoundend(persistence_cb)
 
-	if(initial_value & initial_value + calculate_dosh_amount() <= maximum_value)
+	if(initial_value && initial_value + calculate_dosh_amount() <= maximum_value)
 		new /obj/item/holochip(src, initial_value)
+
+	if(maximum_savings_per_shift)
+		maximum_value = calculate_dosh_amount() + maximum_savings_per_shift
 
 /obj/item/piggy_bank/proc/save_cash()
 	SSpersistence.save_piggy_bank(src)
@@ -58,7 +63,7 @@
 		persistence_cb = null
 	return ..()
 
-/obj/item/piggy_bank/deconstruct(disassembled = TRUE)
+/obj/item/piggy_bank/atom_deconstruct(disassembled = TRUE)
 	for(var/obj/item/thing as anything in contents)
 		thing.forceMove(loc)
 	//Smashing the piggy after the round is over doesn't count.
@@ -127,3 +132,17 @@
 /obj/item/piggy_bank/museum/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/areabound) //do not steal.
+
+/obj/item/piggy_bank/vault
+	name = "vault piggy bank"
+	desc = "A pig-shaped money container made of porkelain, containing the station's emergency funds carried between shifts, oink. <i>Do not throw.</i>"
+	persistence_id = "vault_piggy"
+	greyscale_colors = COLOR_LIGHT_ORANGE
+	maximum_value = PAYCHECK_COMMAND * 33
+	initial_value = PAYCHECK_CREW //it takes about 66 shifts for it to hit its max value on its own.
+	maximum_savings_per_shift = PAYCHECK_COMMAND * 16 //and 2 if you actively use it.
+
+/obj/item/piggy_bank/vault/Initialize(mapload)
+	. = ..()
+	//one piggy bank should exist, preferibly inside the vault's safe.
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)

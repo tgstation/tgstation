@@ -12,23 +12,15 @@
 /obj/structure/frame/machine/Initialize(mapload)
 	. = ..()
 	register_context()
-	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/frame/machine/Destroy()
 	QDEL_LIST(components)
 	return ..()
 
-/obj/structure/frame/machine/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(state >= FRAME_STATE_WIRED)
-			new /obj/item/stack/cable_coil(drop_location(), 5)
-		dump_contents()
-	return ..()
-
-/obj/structure/frame/machine/try_dissassemble(mob/living/user, obj/item/tool, disassemble_time)
-	if(anchored)
-		balloon_alert(user, "must be unsecured first!")
-		return FALSE
+/obj/structure/frame/machine/atom_deconstruct(disassembled = TRUE)
+	if(state >= FRAME_STATE_WIRED)
+		new /obj/item/stack/cable_coil(drop_location(), 5)
+	dump_contents()
 	return ..()
 
 /obj/structure/frame/machine/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -36,13 +28,14 @@
 	if(isnull(held_item))
 		return
 
+	if(held_item.tool_behaviour == TOOL_WRENCH && !circuit?.needs_anchored)
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]anchor"
+		return CONTEXTUAL_SCREENTIP_SET
+
 	switch(state)
 		if(FRAME_STATE_EMPTY)
 			if(istype(held_item, /obj/item/stack/cable_coil))
 				context[SCREENTIP_CONTEXT_LMB] = "Wire Frame"
-				return CONTEXTUAL_SCREENTIP_SET
-			else if(held_item.tool_behaviour == TOOL_WRENCH)
-				context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]anchor"
 				return CONTEXTUAL_SCREENTIP_SET
 			else if(held_item.tool_behaviour == TOOL_WELDER)
 				context[SCREENTIP_CONTEXT_LMB] = "Unweld frame"
@@ -61,11 +54,6 @@
 			if(held_item.tool_behaviour == TOOL_CROWBAR)
 				context[SCREENTIP_CONTEXT_LMB] = "Pry out components"
 				return CONTEXTUAL_SCREENTIP_SET
-			else if(held_item.tool_behaviour == TOOL_WRENCH)
-				if(!circuit.needs_anchored)
-					context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]anchor"
-					return CONTEXTUAL_SCREENTIP_SET
-				return NONE
 			else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 				var/needs_components = FALSE
 				for(var/component in req_components)
@@ -95,6 +83,8 @@
 	if(!circuit?.needs_anchored)
 		. += span_notice("It can be [EXAMINE_HINT("anchored")] [anchored ? "loose" : "in place"]")
 	if(state == FRAME_STATE_EMPTY)
+		if(!anchored)
+			. += span_notice("It can be [EXAMINE_HINT("welded")] or [EXAMINE_HINT("screwed")] apart.")
 		. += span_warning("It needs [EXAMINE_HINT("5 cable")] pieces to wire it.")
 		return
 	if(state == FRAME_STATE_WIRED)
@@ -399,7 +389,7 @@
 	balloon_alert(user, "can't add that!")
 	return FALSE
 
-/obj/structure/frame/machine/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+/obj/structure/frame/machine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
@@ -426,10 +416,17 @@
 			if(istype(tool, /obj/item/storage/part_replacer))
 				return install_parts_from_part_replacer(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
-			if(!user.combat_mode)
-				return add_part(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
-
 	return  .
+
+// Override of base_item_interaction so we only try to add parts to the frame AFTER running item_interaction and all the tool_acts
+/obj/structure/frame/machine/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(user.combat_mode)
+		return NONE
+
+	return add_part(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 /**
  * Attempt to finalize the construction of the frame into a machine
@@ -470,5 +467,6 @@
 	return TRUE
 
 /obj/structure/frame/machine/secured
+	icon_state = "box_1"
 	state = FRAME_STATE_WIRED
 	anchored = TRUE

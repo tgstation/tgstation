@@ -26,6 +26,16 @@
 	var/list/datum/mind/target_blacklist
 	/// An assoc list of [ref] to [timers] - a list of all the timers of people in the shadow realm currently
 	var/list/return_timers
+	/// Evil organs we can put in people
+	var/static/list/grantable_organs = list(
+		/obj/item/organ/internal/appendix/corrupt,
+		/obj/item/organ/internal/eyes/corrupt,
+		/obj/item/organ/internal/heart/corrupt,
+		/obj/item/organ/internal/liver/corrupt,
+		/obj/item/organ/internal/lungs/corrupt,
+		/obj/item/organ/internal/stomach/corrupt,
+		/obj/item/organ/internal/tongue/corrupt,
+	)
 
 /datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force)
 	heretic_mind = null
@@ -197,6 +207,8 @@
 	heretic_datum.total_sacrifices++
 	heretic_datum.knowledge_points += 2
 
+	sacrifice.apply_status_effect(/datum/status_effect/heretic_curse, user)
+
 	if(!begin_sacrifice(sacrifice))
 		disembowel_target(sacrifice)
 
@@ -278,6 +290,8 @@
 		disembowel_target(sac_target)
 		return
 
+	curse_organs(sac_target)
+
 	// Send 'em to the destination. If the teleport fails, just disembowel them and stop the chain
 	if(!destination || !do_teleport(sac_target, destination, asoundin = 'sound/magic/repulse.ogg', asoundout = 'sound/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
 		disembowel_target(sac_target)
@@ -298,6 +312,31 @@
 
 	RegisterSignal(sac_target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_target_escape)) // Cheese condition
 	RegisterSignal(sac_target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death)) // Loss condition
+
+/// Apply a sinister curse to some of the target's organs as an incentive to leave us alone
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/curse_organs(mob/living/carbon/human/sac_target)
+	var/usable_organs = grantable_organs.Copy()
+	if (isplasmaman(sac_target))
+		usable_organs -= /obj/item/organ/internal/lungs/corrupt // Their lungs are already more cursed than anything I could give them
+
+	var/total_implant = rand(2, 4)
+	var/gave_any = FALSE
+
+	for (var/i in 1 to total_implant)
+		if (!length(usable_organs))
+			break
+		var/organ_path = pick_n_take(usable_organs)
+		var/obj/item/organ/internal/to_give = new organ_path
+		if (!to_give.Insert(sac_target))
+			qdel(to_give)
+		else
+			gave_any = TRUE
+
+	if (!gave_any)
+		return
+
+	new /obj/effect/gibspawner/human/bodypartless(get_turf(sac_target))
+	sac_target.visible_message(span_boldwarning("Several organs force themselves out of [sac_target]!"))
 
 /**
  * This proc is called from [proc/after_target_sleeps] when the [sac_target] should be waking up.)
@@ -375,8 +414,7 @@
 	if(IS_HERETIC(sac_target))
 		var/datum/antagonist/heretic/victim_heretic = sac_target.mind?.has_antag_datum(/datum/antagonist/heretic)
 		victim_heretic.knowledge_points -= 3
-	else
-		sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/heresy, TRAUMA_RESILIENCE_MAGIC)
+
 	// Wherever we end up, we sure as hell won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
 	sac_target.adjust_stutter(40 SECONDS)

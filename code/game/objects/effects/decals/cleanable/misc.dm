@@ -124,11 +124,28 @@
 	desc = "You know who to call."
 	light_power = 2
 
+/obj/effect/decal/cleanable/greenglow/radioactive
+	name = "radioactive goo"
+	desc = "Holy crap, stop looking at this and move away immediately! It's radioactive!"
+	light_power = 5
+	light_range = 3
+	light_color = LIGHT_COLOR_NUCLEAR
+
+/obj/effect/decal/cleanable/greenglow/radioactive/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	AddComponent(
+		/datum/component/radioactive_emitter, \
+		cooldown_time = 5 SECONDS, \
+		range = 4, \
+		threshold = RAD_MEDIUM_INSULATION, \
+	)
+
 /obj/effect/decal/cleanable/cobweb
 	name = "cobweb"
 	desc = "Somebody should remove that."
 	gender = NEUTER
 	layer = WALL_OBJ_LAYER
+	icon = 'icons/effects/web.dmi'
 	icon_state = "cobweb1"
 	resistance_flags = FLAMMABLE
 	beauty = -100
@@ -201,6 +218,14 @@
 /obj/effect/decal/cleanable/vomit/nebula/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, icon_state, src, alpha = src.alpha)
+
+/// Nebula vomit with extra guests
+/obj/effect/decal/cleanable/vomit/nebula/worms
+
+/obj/effect/decal/cleanable/vomit/nebula/worms/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	for (var/i in 1 to rand(2, 3))
+		new /mob/living/basic/hivelord_brood(loc)
 
 /obj/effect/decal/cleanable/vomit/old
 	name = "crusty dried vomit"
@@ -395,9 +420,7 @@
 	. += emissive_appearance(icon, "[icon_state]_light", src, alpha = src.alpha)
 
 /obj/effect/decal/cleanable/ants/fire_act(exposed_temperature, exposed_volume)
-	var/obj/effect/decal/cleanable/ants/fire/fire_ants = new(loc)
-	fire_ants.reagents.clear_reagents()
-	reagents.trans_to(fire_ants, fire_ants.reagents.maximum_volume)
+	new /obj/effect/decal/cleanable/ants/fire(loc)
 	qdel(src)
 
 /obj/effect/decal/cleanable/ants/fire

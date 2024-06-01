@@ -1,6 +1,6 @@
 /obj/item/modular_computer/pda
 	name = "pda"
-	icon = 'icons/obj/modular_pda.dmi'
+	icon = 'icons/obj/devices/modular_pda.dmi'
 	icon_state = "pda"
 	worn_icon_state = "nothing"
 	base_icon_state = "tablet"
@@ -157,12 +157,6 @@
 	inserted_item = attacking_item
 	playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
-/obj/item/modular_computer/pda/AltClick(mob/user)
-	. = ..()
-	if(.)
-		return
-
-	remove_pen(user)
 
 /obj/item/modular_computer/pda/CtrlClick(mob/user)
 	. = ..()
@@ -382,7 +376,7 @@
 		return robotact
 	qdel(robotact)
 	robotact = null
-	CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
+	CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected receiving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
 
 //Makes the light settings reflect the borg's headlamp settings
 /obj/item/modular_computer/pda/silicon/cyborg/ui_data(mob/user)

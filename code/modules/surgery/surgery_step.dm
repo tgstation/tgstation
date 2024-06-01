@@ -51,7 +51,7 @@
 			if(get_location_accessible(target, target_zone) || (surgery.surgery_flags & SURGERY_IGNORE_CLOTHES))
 				initiate(user, target, target_zone, tool, surgery, try_to_fail)
 			else
-				to_chat(user, span_warning("You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!"))
+				to_chat(user, span_warning("You need to expose [target]'s [target.parse_zone_with_bodypart(target_zone)] to perform surgery on it!"))
 			return TRUE //returns TRUE so we don't stab the guy in the dick or wherever.
 
 	if(repeatable)
@@ -112,7 +112,7 @@
 	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)//also if that, then cap modded_time at time*modifier
 
 	if(iscyborg(user))//any immunities to surgery slowdown should go in this check.
-		modded_time = time
+		modded_time = time * tool.toolspeed
 
 	var/was_sleeping = (target.stat != DEAD && target.IsSleeping())
 

@@ -5,6 +5,8 @@
 	var/list/datum/lazy_template/deathmatch/maps = list()
 	/// All loadouts
 	var/list/datum/outfit/loadouts
+	/// All modifiers
+	var/list/datum/deathmatch_modifier/modifiers
 
 /datum/deathmatch_controller/New()
 	. = ..()
@@ -17,6 +19,7 @@
 		var/map_name = initial(template.name)
 		maps[map_name] = new template
 	loadouts = subtypesof(/datum/outfit/deathmatch_loadout)
+	modifiers = sortTim(init_subtypes_w_path_keys(/datum/deathmatch_modifier), GLOBAL_PROC_REF(cmp_deathmatch_mods), associative = TRUE)
 
 /datum/deathmatch_controller/proc/create_new_lobby(mob/host)
 	lobbies[host.ckey] = new /datum/deathmatch_lobby(host)
@@ -87,7 +90,7 @@
 			var/datum/deathmatch_lobby/chosen_lobby = lobbies[params["id"]]
 			if (!isnull(playing_lobby) && playing_lobby != chosen_lobby)
 				playing_lobby.leave(usr.ckey)
-			
+
 			if(isnull(playing_lobby))
 				log_game("[usr.ckey] joined deathmatch lobby [params["id"]] as a player.")
 				chosen_lobby.join(usr)

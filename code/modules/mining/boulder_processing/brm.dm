@@ -37,26 +37,23 @@
 	register_context()
 
 /obj/machinery/brm/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = CONTEXTUAL_SCREENTIP_SET
+	. = NONE
 
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Teleport single boulder"
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle [toggled_on ? "Off" : "On"] automatic boulder retrieval"
-		return
+		return CONTEXTUAL_SCREENTIP_SET
 
 	if(!isnull(held_item))
 		if(held_item.tool_behaviour == TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "" : "Un"] Anchor"
-			return
-		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
-			return
-
-		if(panel_open)
-			if(held_item.tool_behaviour == TOOL_CROWBAR)
-				context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
-
-	return CONTEXTUAL_SCREENTIP_SET
+			context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]Anchor"
+			return CONTEXTUAL_SCREENTIP_SET
+		else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+			return CONTEXTUAL_SCREENTIP_SET
+		else if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
+			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+			return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/brm/examine(mob/user)
 	. = ..()
@@ -104,7 +101,7 @@
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
-///To allow boulders on a conveyer belt to move unobstructed if multiple machines are made on a single line
+///To allow boulders on a conveyor belt to move unobstructed if multiple machines are made on a single line
 /obj/machinery/brm/CanAllowThrough(atom/movable/mover, border_dir)
 	if(!anchored)
 		return FALSE
@@ -131,8 +128,6 @@
 	var/result = pre_collect_boulder()
 	if(result == TURF_BLOCKED_BY_BOULDER)
 		balloon_alert(user, "no space")
-	else if(result)
-		balloon_alert(user, "teleporting")
 	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
 
 	return TRUE
@@ -273,7 +268,7 @@
 	random_boulder.pixel_x = rand(-2, 2)
 	random_boulder.pixel_y = rand(-2, 2)
 	balloon_alert_to_viewers("boulder appears!")
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 	//try again if we have more boulders to work with
 	boulders_remaining -= 1

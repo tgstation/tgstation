@@ -261,18 +261,14 @@
 
 	return
 
-/client/proc/summon_ert()
-	set category = "Admin.Fun"
-	set name = "Summon ERT"
-	set desc = "Summons an emergency response team"
-
-	message_admins("[key_name(usr)] is creating a CentCom response team...")
-	if(holder?.makeEmergencyresponseteam())
-		message_admins("[key_name(usr)] created a CentCom response team.")
-		log_admin("[key_name(usr)] created a CentCom response team.")
+ADMIN_VERB(summon_ert, R_FUN, "Summon ERT", "Summons an emergency response team.", ADMIN_CATEGORY_FUN)
+	message_admins("[key_name_admin(user)] is creating a CentCom response team...")
+	if(user.holder?.makeEmergencyresponseteam())
+		message_admins("[key_name_admin(user)] created a CentCom response team.")
+		log_admin("[key_name(user)] created a CentCom response team.")
 	else
-		message_admins("[key_name_admin(usr)] tried to create a CentCom response team. Unfortunately, there were not enough candidates available.")
-		log_admin("[key_name(usr)] failed to create a CentCom response team.")
+		message_admins("[key_name_admin(user)] tried to create a CentCom response team. Unfortunately, there were not enough candidates available.")
+		log_admin("[key_name(user)] failed to create a CentCom response team.")
 
 #undef ERT_EXPERIENCED_LEADER_CHOOSE_TOP
 #undef DUMMY_HUMAN_SLOT_ADMIN

@@ -49,7 +49,7 @@
 		for(var/datum/mind/mind as anything in members)
 			if(mind.current)
 				SEND_SOUND(mind.current, 'sound/ambience/antag/bloodcult/bloodcult_eyes.ogg')
-				to_chat(mind.current, span_cultlarge(span_warning("The veil weakens as your cult grows, your eyes begin to glow...")))
+				to_chat(mind.current, span_cult_large(span_warning("The veil weakens as your cult grows, your eyes begin to glow...")))
 				mind.current.AddElement(/datum/element/cult_eyes)
 		cult_risen = TRUE
 		log_game("The blood cult has risen with [cultplayers] players.")
@@ -58,7 +58,7 @@
 		for(var/datum/mind/mind as anything in members)
 			if(mind.current)
 				SEND_SOUND(mind.current, 'sound/ambience/antag/bloodcult/bloodcult_halos.ogg')
-				to_chat(mind.current, span_cultlarge(span_warning("Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")))
+				to_chat(mind.current, span_cult_large(span_warning("Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")))
 				mind.current.AddElement(/datum/element/cult_halo)
 		cult_ascendent = TRUE
 		log_game("The blood cult has ascended with [cultplayers] players.")
@@ -156,7 +156,7 @@
 		if(cultist.current.stat == DEAD || !cultist.current.client)
 			continue
 
-		to_chat(cultist.current, span_bold(span_cultlarge("[marker] has marked [blood_target] in the [target_area.name] as the cult's top priority, get there immediately!")))
+		to_chat(cultist.current, span_bold(span_cult_large("[marker] has marked [blood_target] in the [target_area.name] as the cult's top priority, get there immediately!")))
 		SEND_SOUND(cultist.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'), 0, 1, 75))
 		cultist.current.client.images += blood_target_image
 
@@ -175,9 +175,9 @@
 			continue
 
 		if(QDELETED(blood_target))
-			to_chat(cultist.current, span_bold(span_cultlarge("The blood mark's target is lost!")))
+			to_chat(cultist.current, span_bold(span_cult_large("The blood mark's target is lost!")))
 		else
-			to_chat(cultist.current, span_bold(span_cultlarge("The blood mark has expired!")))
+			to_chat(cultist.current, span_bold(span_cult_large("The blood mark has expired!")))
 		cultist.current.client.images -= blood_target_image
 
 	UnregisterSignal(blood_target, COMSIG_QDELETING)

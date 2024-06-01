@@ -1,7 +1,7 @@
 /obj/vehicle/ridden/wheelchair //ported from Hippiestation (by Jujumatic)
 	name = "wheelchair"
 	desc = "A chair with big wheels. It looks like you can move in this on your own."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "wheelchair"
 	layer = OBJ_LAYER
 	max_integrity = 100
@@ -63,8 +63,6 @@
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/vehicle/ridden/wheelchair/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/vehicle/ridden/wheelchair/update_overlays()
 	. = ..()
@@ -92,7 +90,7 @@
 /obj/item/wheelchair
 	name = "wheelchair"
 	desc = "A collapsed wheelchair that can be carried around."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "wheelchair_folded"
 	inhand_icon_state = "wheelchair_folded"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -107,7 +105,7 @@
 /obj/item/wheelchair/gold
 	name = "gold wheelchair"
 	desc = "A collapsed, shiny wheelchair that can be carried around."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "wheelchair_folded_gold"
 	inhand_icon_state = "wheelchair_folded_gold"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -128,7 +126,7 @@
 	. = ..()
 	if(over_object != usr || !Adjacent(usr) || !foldabletype)
 		return FALSE
-	if(!ishuman(usr) || !usr.can_perform_action(src))
+	if(!ishuman(usr) || !usr.can_perform_action(src, ALLOW_RESTING))
 		return FALSE
 	if(has_buckled_mobs())
 		return FALSE
@@ -139,6 +137,12 @@
 
 /obj/item/wheelchair/attack_self(mob/user)  //Deploys wheelchair on in-hand use
 	deploy_wheelchair(user, user.loc)
+
+/obj/item/wheelchair/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isopenturf(interacting_with))
+		deploy_wheelchair(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/wheelchair/proc/deploy_wheelchair(mob/user, atom/location)
 	var/obj/vehicle/ridden/wheelchair/wheelchair_unfolded = new unfolded_type(location)

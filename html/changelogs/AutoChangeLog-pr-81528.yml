@@ -1,4 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - bugfix: "Prevents polymorphing deleting items by consuming them when transformed then leaving the polymorph"

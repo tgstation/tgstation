@@ -15,7 +15,7 @@
 	engine_sound_length = 0.3 SECONDS
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_range = 4
-	light_power = 2
+	light_power = 1.5
 	light_on = FALSE
 	engine_sound = 'sound/effects/servostep.ogg'
 	///Maximum size of a mob trying to enter the mech

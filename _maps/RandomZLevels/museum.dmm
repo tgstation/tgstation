@@ -518,15 +518,11 @@
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "ek" = (
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "l";
+/obj/effect/decal/cleanable/crayon/l{
 	pixel_x = -10
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i"
-	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "e";
+/obj/effect/decal/cleanable/crayon/i,
+/obj/effect/decal/cleanable/crayon/e{
 	pixel_x = 12
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1001,15 +997,11 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "ix" = (
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "l";
+/obj/effect/decal/cleanable/crayon/l{
 	pixel_x = -10
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i"
-	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "e";
+/obj/effect/decal/cleanable/crayon/i,
+/obj/effect/decal/cleanable/crayon/e{
 	pixel_x = 12
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -4007,15 +3999,11 @@
 /turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "Gv" = (
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "l";
+/obj/effect/decal/cleanable/crayon/l{
 	pixel_x = -10
 	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "i"
-	},
-/obj/effect/decal/cleanable/crayon{
-	icon_state = "e";
+/obj/effect/decal/cleanable/crayon/i,
+/obj/effect/decal/cleanable/crayon/e{
 	pixel_x = 12
 	},
 /obj/effect/decal/cleanable/dirt/dust,

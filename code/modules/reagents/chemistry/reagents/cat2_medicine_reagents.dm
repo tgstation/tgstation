@@ -386,6 +386,8 @@
 		if(the_reagent2 == src)
 			continue
 		var/amount2purge = 3
+		if(holder.has_reagent(/datum/reagent/toxin/anacea))
+			amount2purge = 0
 		if(medibonus >= 3 && istype(the_reagent2, /datum/reagent/medicine)) //3 unique meds (2+multiver) | (1 + pure multiver) will make it not purge medicines
 			continue
 		affected_mob.reagents.remove_reagent(the_reagent2.type, amount2purge * REM * seconds_per_tick)
@@ -452,7 +454,7 @@
 	overdose_threshold = 25
 	ph = 9.1
 	var/datum/brain_trauma/mild/muscle_weakness/trauma
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/c2/musiver/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

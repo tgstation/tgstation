@@ -25,6 +25,7 @@
 			qdel(src)
 		return
 	..()
+
 /**
  * Empty terrariums are created when a preserved terrarium in a lavaland seed vault is activated.
  */
@@ -34,6 +35,7 @@
 	icon = 'icons/obj/mining_zones/spawners.dmi'
 	icon_state = "terrarium_open"
 	density = TRUE
+
 /**
  * Empty sleepers are created by a good few ghost roles in lavaland.
  */
@@ -51,6 +53,7 @@
 
 /obj/structure/fluff/empty_sleeper/syndicate
 	icon_state = "sleeper_s-open"
+
 /**
  * Empty cryostasis sleepers are created when a malfunctioning cryostasis sleeper in a lavaland shelter is activated.
  */
@@ -74,6 +77,17 @@
 	density = TRUE
 	deconstructible = FALSE
 	layer = EDGED_TURF_LAYER
+
+/**
+ * shower drain placed usually under showers just so it looks like something picks the water up.
+ */
+/obj/structure/fluff/shower_drain
+	name = "shower drain"
+	desc = "Ew, I think I see a hairball."
+	icon = 'icons/obj/mining_zones/survival_pod.dmi'
+	icon_state = "fan_tiny"
+	plane = FLOOR_PLANE
+	layer = LOW_OBJ_LAYER
 
 /**
  * A variety of statue in disrepair; parts are broken off and a gemstone is missing

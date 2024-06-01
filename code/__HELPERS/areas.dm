@@ -293,3 +293,51 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 				mobs_in_area += mob
 				break
 	return mobs_in_area
+
+/**
+ * rename_area
+ * Renames an area to the given new name, updating all machines' names and firedoors
+ * to properly ensure alarms and machines are named correctly at all times.
+ * Args:
+ * - area_to_rename: The area that's being renamed.
+ * - new_name: The name we're changing said area to.
+ */
+/proc/rename_area(area/area_to_rename, new_name)
+	var/prevname = "[area_to_rename.name]"
+	set_area_machinery_title(area_to_rename, new_name, prevname)
+	area_to_rename.name = new_name
+	require_area_resort() //area renamed so resort the names
+
+	if(LAZYLEN(area_to_rename.firedoors))
+		for(var/obj/machinery/door/firedoor/area_firedoors as anything in area_to_rename.firedoors)
+			area_firedoors.CalculateAffectingAreas()
+	area_to_rename.update_areasize()
+	return TRUE
+
+/**
+ * Renames all machines in a defined area from the old title to the new title.
+ * Used when renaming an area to ensure that all machiens are labeled the new area's machine.
+ * Args:
+ * - area_renaming: The area being renamed, which we'll check turfs from to rename machines in.
+ * - title: The new name of the area that we're swapping into.
+ * - oldtitle: The old name of the area that we're replacing text from.
+ */
+/proc/set_area_machinery_title(area/area_renaming, title, oldtitle)
+	if(!oldtitle) // or replacetext goes to infinite loop
+		return
+
+	//stuff tied to the area to rename
+	var/static/list/to_rename = typecacheof(list(
+		/obj/machinery/airalarm,
+		/obj/machinery/atmospherics/components/unary/vent_scrubber,
+		/obj/machinery/atmospherics/components/unary/vent_pump,
+		/obj/machinery/door,
+		/obj/machinery/firealarm,
+		/obj/machinery/light_switch,
+		/obj/machinery/power/apc,
+		/obj/machinery/camera,
+	))
+	for(var/list/zlevel_turfs as anything in area_renaming.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/machine as anything in typecache_filter_list(area_turf.contents, to_rename))
+				machine.name = replacetext(machine.name, oldtitle, title)

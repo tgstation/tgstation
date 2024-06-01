@@ -10,7 +10,7 @@
 	desc = "Equipment for engineering and combat exosuits. This is the drill that'll pierce the heavens!"
 	icon_state = "mecha_drill"
 	equip_cooldown = 15
-	energy_drain = 10
+	energy_drain = 0.01 * STANDARD_CELL_CHARGE
 	force = 15
 	harmful = TRUE
 	range = MECHA_MELEE
@@ -32,6 +32,29 @@
 	ADD_TRAIT(src, TRAIT_INSTANTLY_PROCESSES_BOULDERS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_BOULDER_BREAKER, INNATE_TRAIT)
 
+/obj/item/mecha_parts/mecha_equipment/drill/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
+	. = ..()
+	RegisterSignal(chassis, COMSIG_MOVABLE_BUMP, PROC_REF(bump_mine))
+
+/obj/item/mecha_parts/mecha_equipment/drill/detach(atom/moveto)
+	UnregisterSignal(chassis, COMSIG_MOVABLE_BUMP)
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/drill/Destroy()
+	if(chassis)
+		UnregisterSignal(chassis, COMSIG_MOVABLE_BUMP)
+	return ..()
+
+///Called whenever the mech bumps into something; action() handles checking if it is a mineable turf
+/obj/item/mecha_parts/mecha_equipment/drill/proc/bump_mine(obj/vehicle/sealed/mecha/bumper, atom/bumped_into)
+	SIGNAL_HANDLER
+	var/list/drivers = chassis.return_drivers()
+	if(!LAZYLEN(drivers))	//I don't know if this is possible but just in case
+		return
+
+	//Just use the first one /shrug
+	INVOKE_ASYNC(src, PROC_REF(action), drivers[1], bumped_into, null, TRUE)
+
 /obj/item/mecha_parts/mecha_equipment/drill/do_after_checks(atom/target)
 	// Gotta be close to the target
 	if(!loc.Adjacent(target))
@@ -41,55 +64,71 @@
 		return FALSE
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, list/modifiers)
-	// We can only drill non-space turfs, living mobs and objects.
-	if(isspaceturf(target) || !(isliving(target) || isobj(target) || isturf(target)))
-		return
-
-	// For whatever reason we can't drill things that acid won't even stick too, and probably
-	// shouldn't waste our time drilling indestructible things.
-	if(isobj(target))
-		var/obj/target_obj = target
-		if(target_obj.resistance_flags & (UNACIDABLE | INDESTRUCTIBLE))
+/obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, list/modifiers, bumped)
+	//If bumped, only bother drilling mineral turfs
+	if(bumped)
+		if(!ismineralturf(target))
 			return
 
-	// You can't drill harder by clicking more.
-	if(!DOING_INTERACTION_WITH_TARGET(source, target) && do_after_cooldown(target, source, DOAFTER_SOURCE_MECHADRILL))
-		target.visible_message(span_warning("[chassis] starts to drill [target]."), \
-					span_userdanger("[chassis] starts to drill [target]..."), \
-					span_hear("You hear drilling."))
-
-		log_message("Started drilling [target]", LOG_MECHA)
-
-		// Drilling a turf is a one-and-done procedure.
-		if(isturf(target))
-			// Check if we can even use the equipment to begin with.
-			if(!action_checks(target))
+		//Prevent drilling into gibtonite more than once; code mostly from MODsuit drill
+		if(istype(target, /turf/closed/mineral/gibtonite))
+			var/turf/closed/mineral/gibtonite/giberal_turf = target
+			if(giberal_turf.stage != GIBTONITE_UNSTRUCK)
+				playsound(chassis, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+				to_chat(source, span_warning("[icon2html(src, source)] Active gibtonite ore deposit detected! Safety protocols preventing continued drilling."))
 				return
 
-			var/turf/T = target
-			T.drill_act(src, source)
+	else
+		// We can only drill non-space turfs, living mobs and objects.
+		if(isspaceturf(target) || !(isliving(target) || isobj(target) || isturf(target)))
+			return
 
-			return ..()
+		// For whatever reason we can't drill things that acid won't even stick too, and probably
+		// shouldn't waste our time drilling indestructible things.
+		if(isobj(target))
+			var/obj/target_obj = target
+			if(target_obj.resistance_flags & (UNACIDABLE | INDESTRUCTIBLE))
+				return
 
-		// Drilling objects and mobs is a repeating procedure.
-		while(do_after_mecha(target, source, drill_delay))
-			if(isliving(target))
-				drill_mob(target, source)
-				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
-			else if(isobj(target))
-				var/obj/O = target
-				if(istype(O, /obj/item/boulder))
-					var/obj/item/boulder/nu_boulder = O
-					nu_boulder.manual_process(src, source)
-				else
-					O.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
-				playsound(src,'sound/weapons/drill.ogg', 40, TRUE)
+	// You can't drill harder by clicking more.
+	if(DOING_INTERACTION_WITH_TARGET(source, target) && do_after_cooldown(target, source, DOAFTER_SOURCE_MECHADRILL))
+		return
 
-			// If we caused a qdel drilling the target, we can stop drilling them.
-			// Prevents starting a do_after on a qdeleted target.
-			if(QDELETED(target))
-				break
+	target.visible_message(span_warning("[chassis] starts to drill [target]."), \
+				span_userdanger("[chassis] starts to drill [target]..."), \
+				span_hear("You hear drilling."))
+
+	log_message("Started drilling [target]", LOG_MECHA)
+
+	// Drilling a turf is a one-and-done procedure.
+	if(isturf(target))
+		// Check if we can even use the equipment to begin with.
+		if(!action_checks(target))
+			return
+
+		var/turf/T = target
+		T.drill_act(src, source)
+
+		return ..()
+
+	// Drilling objects and mobs is a repeating procedure.
+	while(do_after_mecha(target, source, drill_delay))
+		if(isliving(target))
+			drill_mob(target, source)
+			playsound(src,'sound/weapons/drill.ogg',40,TRUE)
+		else if(isobj(target))
+			var/obj/O = target
+			if(istype(O, /obj/item/boulder))
+				var/obj/item/boulder/nu_boulder = O
+				nu_boulder.manual_process(src, source)
+			else
+				O.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
+			playsound(src,'sound/weapons/drill.ogg', 40, TRUE)
+
+		// If we caused a qdel drilling the target, we can stop drilling them.
+		// Prevents starting a do_after on a qdeleted target.
+		if(QDELETED(target))
+			break
 
 	return ..()
 

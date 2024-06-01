@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		data["is_photo"] = TRUE
 		data["color_mode"] = color_mode
 
-	if(isAI(user))
+	if(HAS_AI_ACCESS(user))
 		data["isAI"] = TRUE
 		data["can_AI_print"] = toner_cartridge && (toner_cartridge.charges >= PHOTO_TONER_USE) && (get_paper_count() >= PHOTO_PAPER_USE)
 	else
@@ -547,7 +547,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		toner_cartridge = object
 		balloon_alert(user, "cartridge inserted")
 
-	else if(istype(object, /obj/item/areaeditor/blueprints))
+	else if(istype(object, /obj/item/blueprints))
 		to_chat(user, span_warning("\The [object] is too large to put into the copier. You need to find something else to record the document."))
 
 	else if(istype(object, /obj/item/paperwork))
@@ -595,7 +595,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	else
 		user.visible_message(span_warning("[user] starts putting [target] onto the photocopier!"), span_notice("You start putting [target] onto the photocopier..."))
 
-	if(do_after(user, 20, target = src))
+	if(do_after(user, 2 SECONDS, target = src))
 		if(!target || QDELETED(target) || QDELETED(src) || !Adjacent(target)) //check if the photocopier/target still exists.
 			return
 

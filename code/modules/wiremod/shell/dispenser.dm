@@ -18,10 +18,9 @@
 	var/list/obj/item/stored_items = list()
 	var/locked = FALSE
 
-/obj/structure/dispenser_bot/deconstruct(disassembled)
+/obj/structure/dispenser_bot/atom_deconstruct(disassembled = TRUE)
 	for(var/obj/item/stored_item as anything in stored_items)
 		remove_item(stored_item)
-	return ..()
 
 /obj/structure/dispenser_bot/Destroy()
 	QDEL_LIST(stored_items)

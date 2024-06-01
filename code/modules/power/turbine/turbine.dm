@@ -43,7 +43,7 @@
 	register_context()
 
 
-/obj/machinery/power/turbine/LateInitialize()
+/obj/machinery/power/turbine/post_machine_initialize()
 	. = ..()
 	activate_parts()
 
@@ -430,11 +430,11 @@
 	if(!all_parts_connected)
 		. += span_warning("The parts need to be linked via a [EXAMINE_HINT("multitool")]")
 
-/obj/machinery/power/turbine/core_rotor/cable_layer_change_checks(mob/living/user, obj/item/tool)
+/obj/machinery/power/turbine/core_rotor/cable_layer_act(mob/living/user, obj/item/tool)
 	if(!panel_open)
 		balloon_alert(user, "open panel first!")
-		return FALSE
-	return TRUE
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 /obj/machinery/power/turbine/core_rotor/multitool_act(mob/living/user, obj/item/tool)
 	//allow cable layer changing

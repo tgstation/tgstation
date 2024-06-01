@@ -44,6 +44,14 @@ As a Geneticist, T goes to A, and G goes to C.
 As a Ghost, you can both start and join capture the flag games through the minigames menu, or by clicking on one of the team spawners, which can be found under the "Misc" section of the orbit menu.
 As a Ghost, you can double click on just about anything to follow it. Or just warp around!
 As a Ghost, you can see the inside of a container on the ground by clicking on it.
+As a Heretic, the Path of Ash focuses on stealth and disorientation, but as you progress, sheds this playstyle in favor of a more aggressive, fiery finale.
+As a Heretic, the Path of Moon will literally drive people around you crazy - perhaps crazy enough to become your allies should you succeed.
+As a Heretic, the Path of Lock is an Assistant's best friend, and can open many pathways. Including ones beyond the veil...
+As a Heretic, the Path of Flesh allows you to raise an army by summoning ghouls and monsters from beyond the veil. Through ascension, you become a one-man army yourself.
+As a Heretic, the Path of Void makes people wish they could scream in the vast emptiness of space or have a chance at escaping from you. In the end, the storm takes all.
+As a Heretic, the Path of Blade rewards your ability to fight, by making you better and better at it. Though ascension, you can become an ultimate dueling juggernaut.
+As a Heretic, the Path of Rust is quite overt, but allows you to shrug of a lot of damage as everything around you slowly decays into nothing but rot and rust.
+As a Heretic, the Path of Cosmos allows you to take rightful ownership of the very space the crew treads on. And if they don't respect your status, calling in a friend from beyond should show them.
 As a Janitor Cyborg, you are the bane of all slaughter demons and even Bubblegum himself. Cleaning up blood stains will severely gimp them.
 As a Janitor, if someone steals your janicart, you can instead use your space cleaner spray, grenades, water sprayer, exact bloody revenge or order another from Cargo.
 As a Janitor, mousetraps can be used to create bombs or booby-trap containers.
@@ -60,6 +68,9 @@ As a Medical Doctor, you can extract implants by holding an empty implant case i
 As a Medical Doctor, you can point your penlight at people to create a medical hologram. This lets them know that you're coming to treat them.
 As a Medical Doctor, you can surgically implant or extract things from people's chests. This can range from putting in a bomb to pulling out an alien larva.
 As a Medical Doctor, you must target the correct limb and not be in combat mode when trying to perform surgery on someone. Right clicking your patient will intentionally fail the surgery step.
+As a Medical Doctor, when messing with viruses, remember that robotic organs can give immunity to disease effects and transmissibility. Make use of the inorganic biology symptom to bypass the protection.
+As a Medical Doctor, while there's an pandemic, you only require small amounts of vaccine to heal a sick patient. Work with the Chemist to distribute your cures more efficiently.
+As a Medical Doctor, try messing with the virology lab sometime! Viruses can range from healing powers so great that you can heal out of critical status, or diseases so dangerous they can kill the entire crew with airborne spontaneous combustion. Experiment!
 As a Monkey, you can crawl through air or scrubber vents by alt+left clicking them. You must drop everything you are wearing and holding to do this, however.
 As a Monkey, you can still wear a few human items, such as backpacks, gas masks and hats, and still have two free hands.
 As a Morph, you can talk while disguised, but your words have a chance of being slurred, giving you away!
@@ -149,6 +160,7 @@ As the AI, you can take pictures with your camera and upload them to newscasters
 As the AI, you can use CTRL + 1-9 to set a location hotkey for your camera, allowing you to save the location and jump to it at will. Tilde and zero will return you to the last spot you jumped from, and the numpad numbers act as aliases to the regular number keys.
 As the Bartender, the drinks you start with only give you the basics. If you want more advanced mixtures, look into working with chemistry, hydroponics, or even mining for things to grind up and throw in!
 As the Bartender, you can use a circular saw on your shotgun to make it easier to store.
+As the Bartender, remember to set up the bar sign by walking up to it and clicking it!
 As the Blob, don't neglect the creation of factories. These create spores that carry your reagent and can chase crew members far further than you. Spores can also be rallied to swarm the crew and cause panic, and can even take over corpses to create much more dangerous blob zombies!
 As the Blob, keep your core some distance from space, as it is both expensive to expand onto space, easy to be attacked from, and does not count towards your win condition. Emitter platforms built in space are especially dangerous.
 As the Blob, removing strong blobs, resource nodes, factories, and nodes will give you 4, 15, 25, and 25 resources back, respectively.
@@ -175,10 +187,13 @@ As the Clown, eating bananas heals you slightly. Honk!
 As the Clown, if you lose your banana peel, you can still slip people with your PDA! Honk!
 As the Clown, if you're a Traitor and get an emag on sale (or convince another traitor), you can emag your Clown Car to unlock a variety of new functions, including the Siege Mode, which will allow you to launch your passengers, preferably directly into the Supermatter! Or into space.
 As the Clown, spice your gimmicks up! Nobody likes a one-trick pony.
+As the Clown, click with one long balloon in hand onto another to create a balloon animal! Each combination of colours has its own unique result.
 As the Clown, you can use your stamp on a sheet of cardboard as the first step of making a honkbot. Fun for the whole crew!
 As the Clown, your Grail is the mineral bananium, which can be given to the Roboticist to build you a fun and robust mech beloved by everyone.
 As the Curator, be sure to keep the shelves stocked and the library clean for crew.
 As the Curator, you are not completely defenseless. Your whip easily disarms people, your laser pointer can blind humans and cyborgs, and you can hide items in wirecut books.
+As the Coroner, you are more comfortable working on cadavers. You can perform autopsies or harvest organs from corpses a lot faster than your Medical Doctor counterparts. Work in tandem with them by helping prepare bodies for revival.
+As the Coroner, you can perform autopsies on corpses recovered from strange circumstances with your handheld autopsy scanner to discover how they died. By teaming up with a Detective, you can solve several cases together!
 As the Detective, people leave fingerprints everywhere and on everything. With the exception of white latex, gloves will hide them. All is not lost, however, as gloves leave fibers specific to their kind such as black or nitrile, pointing to a general department.
 As the Detective, you can use your forensics scanner from a distance. Use this to scan boxes or other storage containers.
 As the Detective, your revolver can be loaded with .357 ammunition obtained from a hacked autolathe. Firing it has a decent chance to blow up your revolver.
@@ -198,9 +213,6 @@ As the Quartermaster, be sure to check the manifests on crates you receive to ma
 As the Quartermaster, you can construct an express supply console that instantly delivers crates by drop pod. The impact will cause a small explosion as well.
 As the Research Director, you can lock down cyborgs instead of blowing them up. Then you can have their laws reset or if that doesn't work, safely dismantled.
 As the Research Director, you can take AIs out of their cores by loading them into an intelliCard, which lets you see their laws, even ion/syndicate ones. It can then be placed into an AI system integrity restorer computer to revive and/or repair them.
-As the Virologist, robotic organs can give immunity to disease effects and transmissibility. Make use of the inorganic biology symptom to bypass the protection.
-As the Virologist, you only require small amounts of vaccine to heal a sick patient. Work with the Chemist to distribute your cures more efficiently.
-As the Virologist, your viruses can range from healing powers so great that you can heal out of critical status, or diseases so dangerous they can kill the entire crew with airborne spontaneous combustion. Experiment!
 As the Warden, if a prisoner's crimes are heinous enough you can put them in permabrig or the gulag. Make sure to check on them once in a while!
 As the Warden, keep a close eye on the armory at all times, as it is a favored strike point of nuclear operatives and cocky traitors.
 As the Warden, you can implant criminals you suspect might re-offend with devices that will track their location and allow you to remotely inject them with disabling chemicals.
@@ -240,7 +252,7 @@ Suit storage units not only remove blood and dirt from clothing, but also radiat
 The Chaplain can bless any container with water by hitting it with their bible. Holy water has a myriad of uses against both cults and large amounts of it are a great contributor to success against them.
 The P2P chat function found on tablet computers allows for a stealthy way to communicate with people.
 The resist button will allow you to resist out of handcuffs, being buckled to a chair or bed, out of locked lockers and more. Whenever you're stuck, try resisting!
-The station's self-destruct terminal is invincible. Go find the disk instead of trying to destroy it.
+The station's self-destruct terminal is indestructible. Go find the disk instead of trying to destroy it.
 There are many places around the station to hide contraband. A few for starters: linen boxes, toilet cisterns, body bags. Experiment to find more!
 To crack the safe in the vault, use a stethoscope or three plastic explosives on it.
 Using sticky tape on items can make them stick to people and walls! Be careful, grenades might stick to your hand during the moment of truth!
@@ -273,3 +285,4 @@ You can use an upgraded microwave to charge your PDA!
 You'll quickly lose your interest in the game if you play to win and kill. If you find yourself doing this, take a step back and talk to people - it's a much better experience!
 Some areas of the station use simple nautical directions to indicate their respective locations, like Fore (Front of the ship), Aft (Back), Port (Left side), Starboard (Right), Quarter and Bow (Either sides of Aft and Fore, respectively). You can review these terms on the Notepad App of your PDA.
 Modular computers are compatible with integrated circuits, but most of the program-dependent circuits require them to be open/backgrounded to work. To install circuits on stationary consoles, you need to toggle interaction with the frame with right-click first.
+You don't need to destroy a Spacecoin machine to make your funds stop draining. Swiping your ID on it will stop the withdrawal.

@@ -114,7 +114,7 @@
 		if("teleport")
 			if(!teleporter || !beacon)
 				return
-			addtimer(CALLBACK(src, PROC_REF(teleport), usr), 5)
+			addtimer(CALLBACK(src, PROC_REF(teleport), usr), 0.5 SECONDS)
 			return TRUE
 
 /obj/machinery/computer/prisoner/gulag_teleporter_computer/proc/scan_machinery()
@@ -149,7 +149,7 @@
 	prisoner.Paralyze(40) // small travel dizziness
 	to_chat(prisoner, span_warning("The teleportation makes you a little dizzy."))
 	new /obj/effect/particle_effect/sparks(get_turf(prisoner))
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, 'sound/effects/portal_travel.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(teleporter.locked)
 		teleporter.locked = FALSE
 	teleporter.toggle_open()

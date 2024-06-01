@@ -103,7 +103,7 @@
 			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Missing [english_list(missing_parts)].")]")
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
-	if(!use_power(step_energy_drain))
+	if(!use_energy(step_energy_drain))
 		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
 			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Insufficient power to move!")]")
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
@@ -142,7 +142,7 @@
 	//Otherwise just walk normally
 	. = try_step_multiz(direction)
 	if(phasing)
-		use_power(phasing_energy_drain)
+		use_energy(phasing_energy_drain)
 	if(strafe)
 		setDir(olddir)
 

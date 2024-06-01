@@ -36,6 +36,9 @@
 ///How long pirates will wait for a response before attacking
 #define RESPONSE_MAX_TIME 2 MINUTES
 
+/// How long till a spessman should come back after being captured and sent to the holding facility (which some antags use)
+#define COME_BACK_FROM_CAPTURE_TIME 6 MINUTES
+
 //ERT Types
 #define ERT_BLUE "Blue"
 #define ERT_RED  "Red"
@@ -216,6 +219,8 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a blood cultist
 #define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
 
+/// Checks if the mob is a sentient or non-sentient cultist
+#define IS_CULTIST_OR_CULTIST_MOB(mob) ((IS_CULTIST(mob)) || (mob.faction.Find(FACTION_CULT)))
 /// Checks if the given mob is a changeling
 #define IS_CHANGELING(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/changeling))
 
@@ -233,6 +238,8 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define IS_LUNATIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/lunatic))
 /// Checks if the given mob is either a heretic, heretic monster or a lunatic.
 #define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_HERETIC_MONSTER(mob) || IS_LUNATIC(mob))
+/// CHecks if the given mob is in the mansus realm
+#define IS_IN_MANSUS(mob) (istype(get_area(mob), /area/centcom/heretic_sacrifice))
 
 /// Checks if the given mob is a wizard
 #define IS_WIZARD(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/wizard))
@@ -245,6 +252,9 @@ GLOBAL_LIST_INIT(ai_employers, list(
 
 /// Checks if the given mob is a malf ai.
 #define IS_MALF_AI(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/malf_ai))
+
+/// Checks if the given mob is a spy!
+#define IS_SPY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/spy))
 
 /// List of human antagonist types which don't spawn directly on the space station
 GLOBAL_LIST_INIT(human_invader_antagonists, list(
@@ -392,3 +402,6 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define SPY_DIFFICULTY_MEDIUM "Medium"
 /// Very difficult to accomplish, almost guaranteed to require crew conflict
 #define SPY_DIFFICULTY_HARD "Hard"
+
+/// Camera net used by battle royale objective
+#define BATTLE_ROYALE_CAMERA_NET "battle_royale_camera_net"

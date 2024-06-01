@@ -1,5 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Alternate job titles such as chef and department security actually get injected to the manifest as their respective ID trims, instead of being assigned the job they're based off."
-  - bugfix: "Alternate job titles such as chef and department security actually show up under the right department on the manifest, instead of no department."

@@ -9,6 +9,7 @@
 	icon_living = "pug"
 	icon_dead = "pug_dead"
 	butcher_results = list(/obj/item/food/meat/slab/pug = 3)
+	cult_icon_state = "pug_cult"
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_icon_state = "pug"
 	held_state = "pug"
@@ -36,6 +37,13 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_icon_state = "bullterrier"
 	held_state = "bullterrier"
+
+/mob/living/basic/pet/dog/bullterrier/lavaland_party
+	name = "Saint Nick's Helpful Associate"
+	desc = "Undergraduate in 'Being a Good Boy'."
+	habitable_atmos = null
+	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
 
 /mob/living/basic/pet/dog/breaddog //Most of the code originates from Cak
 	name = "Kobun"

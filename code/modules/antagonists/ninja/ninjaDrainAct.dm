@@ -1,3 +1,8 @@
+/// Minimum amount of energy we can drain in a single drain action
+#define NINJA_MIN_DRAIN (0.2 * STANDARD_CELL_CHARGE)
+/// Maximum amount of energy we can drain in a single drain action
+#define NINJA_MAX_DRAIN (0.4 * STANDARD_CELL_CHARGE)
+
 /**
  * Atom level proc for space ninja's glove interactions.
  *
@@ -26,13 +31,13 @@
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 		while(cell.charge> 0 && !maxcapacity)
-			drain = rand(hacking_module.mindrain, hacking_module.maxdrain)
+			drain = rand(NINJA_MIN_DRAIN, NINJA_MAX_DRAIN)
 			if(cell.charge < drain)
 				drain = cell.charge
 			if(hacking_module.mod.get_charge() + drain > hacking_module.mod.get_max_charge())
 				drain = hacking_module.mod.get_max_charge() - hacking_module.mod.get_charge()
 				maxcapacity = TRUE//Reached maximum battery capacity.
-			if (do_after(ninja, 1 SECONDS, target = src))
+			if (do_after(ninja, 1 SECONDS, target = src, hidden = TRUE))
 				spark_system.start()
 				playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				cell.use(drain)
@@ -62,13 +67,13 @@
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, loc)
 	while(charge > 0 && !maxcapacity)
-		drain = rand(hacking_module.mindrain, hacking_module.maxdrain)
+		drain = rand(NINJA_MIN_DRAIN, NINJA_MAX_DRAIN)
 		if(charge < drain)
 			drain = charge
 		if(hacking_module.mod.get_charge() + drain > hacking_module.mod.get_max_charge())
 			drain = hacking_module.mod.get_max_charge() - hacking_module.mod.get_charge()
 			maxcapacity = TRUE
-		if (do_after(ninja, 1 SECONDS, target = src))
+		if (do_after(ninja, 1 SECONDS, target = src, hidden = TRUE))
 			spark_system.start()
 			playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			charge -= drain
@@ -88,7 +93,7 @@
 
 /obj/item/stock_parts/cell/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	var/drain_total = 0
-	if(charge && !do_after(ninja, 3 SECONDS, target = src))
+	if(charge && !do_after(ninja, 3 SECONDS, target = src, hidden = TRUE))
 		drain_total = charge
 		if(hacking_module.mod.get_charge() + charge > hacking_module.mod.get_max_charge())
 			drain_total = hacking_module.mod.get_max_charge() - hacking_module.mod.get_charge()
@@ -112,7 +117,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/rnd/server/master/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!do_after(ninja, 30 SECONDS, target = src))
+	if(!do_after(ninja, 30 SECONDS, target = src, hidden = TRUE))
 		return
 	overload_source_code_hdd()
 	to_chat(ninja, span_notice("Sabotage complete. Storage device overloaded."))
@@ -131,7 +136,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/rnd/server/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!do_after(ninja, 30 SECONDS, target = src))
+	if(!do_after(ninja, 30 SECONDS, target = src, hidden = TRUE))
 		return
 	stored_research.modify_points_all(0)
 	to_chat(ninja, span_notice("Sabotage complete. Research notes corrupted."))
@@ -154,7 +159,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/computer/records/security/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!do_after(ninja, 20 SECONDS, src, extra_checks = CALLBACK(src, PROC_REF(can_hack), ninja)))
+	if(!do_after(ninja, 20 SECONDS, src, extra_checks = CALLBACK(src, PROC_REF(can_hack), ninja), hidden = TRUE))
 		return
 	for(var/datum/record/crew/target in GLOB.manifest.general)
 		target.wanted_status = WANTED_ARREST
@@ -228,9 +233,9 @@
 	var/drain_total = 0
 	var/datum/powernet/wire_powernet = powernet
 	while(!maxcapacity && src)
-		drain = (round((rand(hacking_module.mindrain, hacking_module.maxdrain))/2))
+		drain = (round((rand(NINJA_MIN_DRAIN, NINJA_MAX_DRAIN))/2))
 		var/drained = 0
-		if(wire_powernet && do_after(ninja, 1 SECONDS, target = src))
+		if(wire_powernet && do_after(ninja, 1 SECONDS, target = src, hidden = TRUE))
 			drained = min(drain, delayed_surplus())
 			add_delayedload(drained)
 			if(drained < drain)//if no power on net, drain apcs
@@ -264,13 +269,13 @@
 	var/drain_total = 0
 	if(get_charge())
 		while(cell.charge > 0 && !maxcapacity)
-			drain = rand(hacking_module.mindrain, hacking_module.maxdrain)
+			drain = rand(NINJA_MIN_DRAIN, NINJA_MAX_DRAIN)
 			if(cell.charge < drain)
 				drain = cell.charge
 			if(hacking_module.mod.get_charge() + drain > hacking_module.mod.get_max_charge())
 				drain = hacking_module.mod.get_max_charge() - hacking_module.mod.get_charge()
 				maxcapacity = TRUE
-			if (do_after(ninja, 1 SECONDS, target = src))
+			if (do_after(ninja, 1 SECONDS, target = src, hidden = TRUE))
 				spark_system.start()
 				playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				cell.use(drain)
@@ -290,7 +295,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /mob/living/silicon/robot/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!do_after(ninja, 6 SECONDS, target = src))
+	if(!do_after(ninja, 6 SECONDS, target = src, hidden = TRUE))
 		return
 	spark_system.start()
 	playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -313,7 +318,7 @@
 /mob/living/carbon/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)
 		return NONE
-	//Default cell = 10,000 charge, 10,000/1000 = 10 uses without charging/upgrading
+	//20 uses for a standard cell. 200 for high capacity cells.
 	if(hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN*10))
 		//Got that electric touch
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
@@ -342,7 +347,7 @@
 //BOTS//
 /mob/living/simple_animal/bot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	to_chat(src, span_boldwarning("Your circutry suddenly begins heating up!"))
-	if(!do_after(ninja, 1.5 SECONDS, target = src))
+	if(!do_after(ninja, 1.5 SECONDS, target = src, hidden = TRUE))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 7))
@@ -368,7 +373,7 @@
 		balloon_alert(ninja, "no energy!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(!do_after(ninja, 1.5 SECONDS, target = src))
+	if(!do_after(ninja, 1.5 SECONDS, target = src, hidden = TRUE))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	hacking_module.mod.add_charge(cell.charge)
@@ -385,7 +390,7 @@
 		balloon_alert(ninja, "already hacked!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(!do_after(ninja, 2 SECONDS, target = src))
+	if(!do_after(ninja, 2 SECONDS, target = src, hidden = TRUE))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 5))
@@ -403,7 +408,7 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	AI_notify_hack()
-	if(!do_after(ninja, 30 SECONDS, target = src))
+	if(!do_after(ninja, 30 SECONDS, target = src, hidden = TRUE))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	do_sparks(3, cardinal_only = FALSE, source = src)
@@ -417,7 +422,7 @@
 		balloon_alert(ninja, "already hacked!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(!do_after(ninja, 2 SECONDS, target = src))
+	if(!do_after(ninja, 2 SECONDS, target = src, hidden = TRUE))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	do_sparks(3, cardinal_only = FALSE, source = src)
@@ -438,7 +443,7 @@
 
 	AI_notify_hack()
 
-	if(!do_after(ninja, 20 SECONDS, target = src)) //Shorter due to how incredibly easy it is for someone to (even accidentally) interrupt.
+	if(!do_after(ninja, 20 SECONDS, target = src, hidden = TRUE)) //Shorter due to how incredibly easy it is for someone to (even accidentally) interrupt.
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	force_event(/datum/round_event_control/tram_malfunction, "ninja interference")
@@ -466,3 +471,6 @@
 //FIRELOCKS//
 /obj/machinery/door/firedoor/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	crack_open()
+
+#undef NINJA_MIN_DRAIN
+#undef NINJA_MAX_DRAIN

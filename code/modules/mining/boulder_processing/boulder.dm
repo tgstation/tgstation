@@ -8,9 +8,10 @@
 	desc = "This rocks."
 	icon_state = "ore"
 	icon = 'icons/obj/ore.dmi'
-	item_flags = NO_MAT_REDEMPTION
+	item_flags = NO_MAT_REDEMPTION | SLOWS_WHILE_IN_HAND
 	throw_range = 2
 	throw_speed = 0.5
+	slowdown = 1.5
 	drag_slowdown = 1.5 // It's still a big rock.
 
 	///When a refinery machine is working on this boulder, we'll set this. Re reset when the process is finished, but the boulder may still be refined/operated on further.
@@ -26,6 +27,7 @@
 	. = ..()
 	register_context()
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = 0, force_wielded = 5) //Heavy as all hell, it's a boulder, dude.
+	AddComponent(/datum/component/sisyphus_awarder)
 
 /obj/item/boulder/Destroy(force)
 	SSore_generation.available_boulders -= src
@@ -108,6 +110,7 @@
 /obj/item/boulder/proc/manual_process(obj/item/weapon, mob/living/user, override_speed_multiplier, continued = FALSE)
 	var/process_speed = 0
 	//Handle weapon conditions.
+	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER) || 1
 	if(weapon)
 		if(HAS_TRAIT(weapon, TRAIT_INSTANTLY_PROCESSES_BOULDERS))
 			durability = 0
@@ -118,25 +121,24 @@
 
 	// Handle user conditions/override conditions.
 	else if (override_speed_multiplier || HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
-		if(user)
-			if(HAS_TRAIT(user, TRAIT_INSTANTLY_PROCESSES_BOULDERS))
-				durability = 0
+		if(HAS_TRAIT(user, TRAIT_INSTANTLY_PROCESSES_BOULDERS))
+			durability = 0
 		else if(override_speed_multiplier)
 			process_speed = override_speed_multiplier
 		else
 			process_speed = INATE_BOULDER_SPEED_MULTIPLIER
 		playsound(src, 'sound/effects/rocktap1.ogg', 50)
 		if(!continued)
-			to_chat(user, span_notice("You scrape away at \the [src]... speed is [process_speed]."))
+			to_chat(user, span_notice("You scrape away at \the [src]..."))
 	else
 		CRASH("No weapon, acceptable user, or override speed multiplier passed to manual_process()")
 	if(durability > 0)
-		if(!do_after(user, (2 * process_speed SECONDS), target = src))
+		if(!do_after(user, (2 * process_speed * skill_modifier SECONDS), target = src))
 			return
 		if(!user.Adjacent(src))
 			return
 		durability--
-		user.apply_damage(4, STAMINA)
+		user.apply_damage(4 * skill_modifier, STAMINA)
 	if(durability <= 0)
 		convert_to_ore()
 		to_chat(user, span_notice("You finish working on \the [src], and it crumbles into ore."))
@@ -162,7 +164,7 @@
 			stack_trace("boulder found containing material type [picked.type] with no set ore_type")
 			continue
 		cracked_ore = new cracked_ore_type (drop_location(), quantity)
-		SSblackbox.record_feedback("tally", "ore_mined", quantity, cracked_ore)
+		SSblackbox.record_feedback("tally", "ore_mined", quantity, cracked_ore.type)
 
 ///Moves boulder contents to the drop location, and then deletes the boulder.
 /obj/item/boulder/proc/break_apart()

@@ -82,7 +82,7 @@
 				/obj/item/clothing/under/costume/kilt = 1,
 				/obj/item/clothing/under/dress/striped = 1,
 				/obj/item/clothing/under/dress/sailor = 1,
-				/obj/item/clothing/under/dress/redeveninggown = 1,
+				/obj/item/clothing/under/dress/eveninggown = 1,
 				/obj/item/clothing/under/misc/pj/blue = 2,
 				/obj/item/clothing/under/misc/pj/red = 2,
 			),

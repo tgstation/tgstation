@@ -38,17 +38,65 @@
 			target_human.dna.features["tail_cat"] = "Cat"
 			if(target_human.dna.features["ears"] == "None")
 				target_human.dna.features["ears"] = "Cat"
-		if(target_human.dna.features["ears"] == "Cat")
-			var/obj/item/organ/internal/ears/cat/ears = new
-			ears.Insert(target_human, movement_flags = DELETE_IF_REPLACED)
-		else
+		if(target_human.dna.features["ears"] == "None")
 			mutantears = /obj/item/organ/internal/ears
+		else
+			var/obj/item/organ/internal/ears/cat/ears = new(FALSE, target_human.dna.features["ears"])
+			ears.Insert(target_human, movement_flags = DELETE_IF_REPLACED)
 	return ..()
 
 /datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
 	var/list/features = ..()
 	features["ears"] = pick("None", "Cat")
 	return features
+
+/datum/species/human/felinid/get_laugh_sound(mob/living/carbon/human/felinid)
+	if(felinid.physique == FEMALE)
+		return 'sound/voice/human/womanlaugh.ogg'
+	return pick(
+		'sound/voice/human/manlaugh1.ogg',
+		'sound/voice/human/manlaugh2.ogg',
+	)
+
+
+/datum/species/human/felinid/get_cough_sound(mob/living/carbon/human/felinid)
+	if(felinid.physique == FEMALE)
+		return pick(
+			'sound/voice/human/female_cough1.ogg',
+			'sound/voice/human/female_cough2.ogg',
+			'sound/voice/human/female_cough3.ogg',
+			'sound/voice/human/female_cough4.ogg',
+			'sound/voice/human/female_cough5.ogg',
+			'sound/voice/human/female_cough6.ogg',
+		)
+	return pick(
+		'sound/voice/human/male_cough1.ogg',
+		'sound/voice/human/male_cough2.ogg',
+		'sound/voice/human/male_cough3.ogg',
+		'sound/voice/human/male_cough4.ogg',
+		'sound/voice/human/male_cough5.ogg',
+		'sound/voice/human/male_cough6.ogg',
+	)
+
+
+/datum/species/human/felinid/get_cry_sound(mob/living/carbon/human/felinid)
+	if(felinid.physique == FEMALE)
+		return pick(
+			'sound/voice/human/female_cry1.ogg',
+			'sound/voice/human/female_cry2.ogg',
+		)
+	return pick(
+		'sound/voice/human/male_cry1.ogg',
+		'sound/voice/human/male_cry2.ogg',
+		'sound/voice/human/male_cry3.ogg',
+	)
+
+
+/datum/species/human/felinid/get_sneeze_sound(mob/living/carbon/human/felinid)
+	if(felinid.physique == FEMALE)
+		return 'sound/voice/human/female_sneeze1.ogg'
+	return 'sound/voice/human/male_sneeze1.ogg'
+
 
 /proc/mass_purrbation()
 	for(var/mob in GLOB.human_list)
@@ -78,9 +126,6 @@
 		var/datum/species/human/felinid/cat_species = soon_to_be_felinid.dna.species
 		cat_species.original_felinid = FALSE
 	else
-		var/obj/item/organ/internal/ears/cat/kitty_ears = new
-		var/obj/item/organ/external/tail/cat/kitty_tail = new
-
 		// This removes the spines if they exist
 		var/obj/item/organ/external/spines/current_spines = soon_to_be_felinid.get_organ_slot(ORGAN_SLOT_EXTERNAL_SPINES)
 		if(current_spines)
@@ -91,8 +136,12 @@
 		// Humans get converted directly to felinids, and the key is handled in on_species_gain.
 		// Now when we get mob.dna.features[feature_key], it returns None, which is why the tail is invisible.
 		// stored_feature_id is only set once (the first time an organ is inserted), so this should be safe.
+		var/obj/item/organ/internal/ears/cat/kitty_ears = new
 		kitty_ears.Insert(soon_to_be_felinid, special = TRUE, movement_flags = DELETE_IF_REPLACED)
-		kitty_tail.Insert(soon_to_be_felinid, special = TRUE, movement_flags = DELETE_IF_REPLACED)
+		if(should_external_organ_apply_to(/obj/item/organ/external/tail/cat, soon_to_be_felinid)) //only give them a tail if they actually have sprites for it / are a compatible subspecies.
+			var/obj/item/organ/external/tail/cat/kitty_tail = new
+			kitty_tail.Insert(soon_to_be_felinid, special = TRUE, movement_flags = DELETE_IF_REPLACED)
+
 	if(!silent)
 		to_chat(soon_to_be_felinid, span_boldnotice("Something is nya~t right."))
 		playsound(get_turf(soon_to_be_felinid), 'sound/effects/meow1.ogg', 50, TRUE, -1)
@@ -113,6 +162,8 @@
 			qdel(old_tail)
 			// Locate does not work on assoc lists, so we do it by hand
 			for(var/external_organ in target_species.external_organs)
+				if(!should_external_organ_apply_to(external_organ, purrbated_human))
+					continue
 				if(ispath(external_organ, /obj/item/organ/external/tail))
 					var/obj/item/organ/external/tail/new_tail = new external_organ()
 					new_tail.Insert(purrbated_human, special = TRUE, movement_flags = DELETE_IF_REPLACED)
@@ -177,7 +228,7 @@
 			SPECIES_PERK_ICON = FA_ICON_PERSON_FALLING,
 			SPECIES_PERK_NAME = "Catlike Grace",
 			SPECIES_PERK_DESC = "Felinids have catlike instincts allowing them to land upright on their feet.  \
-				Instead of being knocked down from falling, you only recieve a short slowdown. \
+				Instead of being knocked down from falling, you only receive a short slowdown. \
 				However, they do not have catlike legs, and the fall will deal additional damage.",
 		),
 		list(

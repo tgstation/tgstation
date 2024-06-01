@@ -370,7 +370,7 @@
 	if(!action_checks(target))
 		return
 	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT(type), equip_cooldown)
-	chassis.use_power(energy_drain)
+	chassis.use_energy(energy_drain)
 	var/newtonian_target = turn(chassis.dir,180)
 	var/obj/O = new projectile(chassis.loc)
 	playsound(chassis, fire_sound, 50, TRUE)
@@ -580,10 +580,10 @@
 		. = ..()
 		var/mob/living/mobtarget = target
 		if(mobtarget.move_resist == MOVE_FORCE_OVERPOWERING) //No megafauna or bolted AIs, please.
-			to_chat(source, "[span_warning("[src] is unable to lift [mobtarget].")]")
+			balloon_alert(source, "too strong!")
 			return
 		if(secmech.cargo_hold.contents.len >= secmech.cargo_hold.cargo_capacity)
-			to_chat(source, "[icon2html(src, source)][span_warning("Not enough room in cargo compartment!")]")
+			balloon_alert(source, "no room!")
 			return
 
 		playsound(chassis, clampsound, 50, FALSE, -6)

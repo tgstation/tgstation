@@ -218,20 +218,20 @@
 /proc/get_timestamp()
 	return time2text(world.time + 432000, ":ss")
 
-/obj/item/detective_scanner/AltClick(mob/living/user)
-	// Best way for checking if a player can use while not incapacitated, etc
-	if(!user.can_perform_action(src))
-		return
+/obj/item/detective_scanner/click_alt(mob/living/user)
 	if(!LAZYLEN(log))
 		balloon_alert(user, "no logs!")
-		return
+		return CLICK_ACTION_BLOCKING
 	if(scanner_busy)
 		balloon_alert(user, "scanner busy!")
-		return
+		return CLICK_ACTION_BLOCKING
 	balloon_alert(user, "deleting logs...")
-	if(do_after(user, 3 SECONDS, target = src))
-		balloon_alert(user, "logs cleared")
-		log = list()
+	if(!do_after(user, 3 SECONDS, target = src))
+		return CLICK_ACTION_BLOCKING
+	balloon_alert(user, "logs cleared")
+	log = list()
+	return CLICK_ACTION_SUCCESS
+
 
 /obj/item/detective_scanner/examine(mob/user)
 	. = ..()

@@ -147,7 +147,7 @@
 	return FALSE
 
 /obj/machinery/sleeper/default_pry_open(obj/item/I) //wew
-	. = !(state_open || panel_open || (obj_flags & NO_DECONSTRUCTION)) && I.tool_behaviour == TOOL_CROWBAR
+	. = !(state_open || panel_open) && I.tool_behaviour == TOOL_CROWBAR
 	if(.)
 		I.play_tool_sound(src, 50)
 		visible_message(span_notice("[usr] pries open [src]."), span_notice("You pry open [src]."))
@@ -164,21 +164,19 @@
 		ui = new(user, src, "Sleeper", name)
 		ui.open()
 
-/obj/machinery/sleeper/AltClick(mob/user)
-	. = ..()
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return
+/obj/machinery/sleeper/click_alt(mob/user)
 	if(state_open)
 		close_machine()
 	else
 		open_machine()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/sleeper/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click [src] to [state_open ? "close" : "open"] it.")
 
 /obj/machinery/sleeper/process()
-	use_power(idle_power_usage)
+	use_energy(idle_power_usage)
 
 /obj/machinery/sleeper/nap_violation(mob/violator)
 	. = ..()

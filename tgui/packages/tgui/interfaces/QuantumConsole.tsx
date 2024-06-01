@@ -29,6 +29,8 @@ type Data =
       ready: BooleanLike;
       retries_left: number;
       scanner_tier: number;
+      broadcasting: BooleanLike;
+      broadcasting_on_cd: BooleanLike;
     }
   | {
       connected: 0;
@@ -50,6 +52,7 @@ type Domain = {
   difficulty: number;
   id: string;
   is_modular: BooleanLike;
+  has_secondary_objectives: BooleanLike;
   name: string;
   reward: number | string;
 };
@@ -110,11 +113,13 @@ const AccessView = (props) => {
 
   const {
     available_domains = [],
+    broadcasting,
+    broadcasting_on_cd,
     generated_domain,
-    ready,
     occupants,
     points,
     randomized,
+    ready,
   } = data;
 
   const sorted = available_domains.sort((a, b) => a.cost - b.cost);
@@ -138,6 +143,15 @@ const AccessView = (props) => {
         <Section
           buttons={
             <>
+              <Button.Checkbox
+                checked={broadcasting}
+                disabled={broadcasting_on_cd}
+                onClick={() => act('broadcast')}
+                tooltip="Toggles whether you broadcast your
+                  bitrun to station Entertainment Monitors."
+              >
+                Broadcast
+              </Button.Checkbox>
               <Button
                 disabled={
                   !ready || occupants > 0 || points < 1 || !!generated_domain
@@ -145,7 +159,8 @@ const AccessView = (props) => {
                 icon="random"
                 onClick={() => act('random_domain')}
                 mr={1}
-                tooltip="Get a random domain for more rewards. Weighted towards your current points. Minimum: 1 point."
+                tooltip="Get a random domain for more rewards.
+                  Weighted towards your current points. Minimum: 1 point."
               >
                 Randomize
               </Button>
@@ -228,7 +243,16 @@ const AccessView = (props) => {
 
 const DomainEntry = (props: DomainEntryProps) => {
   const {
-    domain: { cost, desc, difficulty, id, is_modular, name, reward },
+    domain: {
+      cost,
+      desc,
+      difficulty,
+      id,
+      is_modular,
+      has_secondary_objectives,
+      name,
+      reward,
+    },
   } = props;
   const { act, data } = useBackend<Data>();
   if (!isConnected(data)) {
@@ -268,6 +292,9 @@ const DomainEntry = (props: DomainEntryProps) => {
         <>
           {name}
           {!!is_modular && name !== '???' && <Icon name="cubes" ml={1} />}
+          {!!has_secondary_objectives && name !== '???' && (
+            <Icon name="gem" ml={1} />
+          )}
         </>
       }
     >
@@ -275,6 +302,7 @@ const DomainEntry = (props: DomainEntryProps) => {
         <Stack.Item color="label" grow={4}>
           {desc}
           {!!is_modular && ' (Modular)'}
+          {!!has_secondary_objectives && ' (Secondary Objective Available)'}
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item grow>

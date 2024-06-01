@@ -68,7 +68,7 @@
 
 /datum/uplink_item/weapon_kits/low_cost/shotgun
 	name = "Bulldog Shotgun Case (Moderate)"
-	desc = "A fully-loaded semi-automatic drum-fed shotgun, complete with a secondary magazine you can hotswap. The gun has a handy label to explain how. \
+	desc = "A fully-loaded 2-round burst fire drum-fed shotgun, complete with a secondary magazine you can hotswap. The gun has a handy label to explain how. \
 		Compatible with all 12g rounds. Designed for close quarter anti-personnel engagements. Comes with three spare magazines."
 	item = /obj/item/storage/toolbox/guncase/bulldog
 
@@ -226,7 +226,7 @@
 // 'If god had wanted you to live, he would not have created ME!'
 
 /datum/uplink_item/weapon_kits/medium_cost/rawketlawnchair
-	name = "84mm Rocket Propelled Grenade Launcher (Hard)"
+	name = "Dardo-RE Rocket Propelled Grenade Launcher (Hard)"
 	desc = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm HE round. \
 		Guaranteed to send your target out with a bang or your money back! Comes with a bouquet of additional rockets!"
 	item = /obj/item/storage/toolbox/guncase/rocketlauncher
@@ -474,6 +474,14 @@
 		Aside from regular Engineering equipment, it comes with a special destination tagger that lets it traverse disposals networks. \
 		Its chameleon projector lets it disguise itself as a Nanotrasen cyborg, on top it has thermal vision and a pinpointer."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
+
+/datum/uplink_item/reinforcements/overwatch_agent
+	name = "Overwatch Intelligence Agent"
+	desc = "An Overwatch Intelligence Agent is assigned to your operation. They can view your progress and help coordinate using your \
+		operative team's body-cams. They can also pilot the shuttle remotely and view the station's camera net. \
+		If you're a meathead who's just here to kill people and don't care about strategising or intel, you'll still have someone to bear witness to your murder-spree!"
+	item = /obj/item/antag_spawner/nuke_ops/overwatch
+	cost = 12
 
 // ~~ Disposable Sentry Gun ~~
 // Technically not a spawn but it is a kind of reinforcement...I guess.
@@ -744,19 +752,17 @@
 	cost = 6
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_SPY
 
-/datum/uplink_item/implants/nuclear/reviverplus
+/datum/uplink_item/implants/nuclear/reviver
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive and heal you if you lose consciousness. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/reviver
 	cost = 8
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_SPY
 
 /datum/uplink_item/implants/nuclear/thermals
 	name = "Thermal Eyes"
 	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/thermal_eyes
 	cost = 8
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_SPY
 
 /datum/uplink_item/implants/nuclear/implants/xray
 	name = "X-ray Vision Implant"
@@ -769,7 +775,6 @@
 	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/anti_stun
 	cost = 8
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_SPY
 
 // Badass (meme items)
 

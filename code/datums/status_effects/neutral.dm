@@ -562,7 +562,7 @@
 	return ..()
 
 /datum/status_effect/tinlux_light/on_apply()
-	mob_light_obj = owner.mob_light(2)
+	mob_light_obj = owner.mob_light(2, 1.5, "#ccff33")
 	return TRUE
 
 /datum/status_effect/tinlux_light/on_remove()

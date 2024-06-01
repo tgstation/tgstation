@@ -1,5 +1,6 @@
 /datum/market_item/clothing
 	category = "Clothing"
+	abstract_path = /datum/market_item/clothing
 
 /datum/market_item/clothing/ninja_mask
 	name = "Space Ninja Mask"
@@ -93,5 +94,11 @@
 	stock_max = 3
 	availability_prob = 40
 
-
-
+/datum/market_item/clothing/collar_bomb
+	name = "Collar Bomb Kit"
+	desc = "An unpatented and questionably ethical kit consisting of a low-yield explosive collar and a remote to trigger it."
+	item = /obj/item/storage/box/collar_bomb
+	price_min = CARGO_CRATE_VALUE * 3.5
+	price_max = CARGO_CRATE_VALUE * 4.5
+	stock_max = 3
+	availability_prob = 60

@@ -74,6 +74,8 @@
 	icon_state = "ambrosia_gaia"
 	light_system = OVERLAY_LIGHT
 	light_range = 3
+	light_power = 1.2
+	light_color = "#ffff00"
 	seed = /obj/item/seeds/ambrosia/gaia
 	wine_power = 70
 	wine_flavor = "the earthmother's blessing"

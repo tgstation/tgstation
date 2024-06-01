@@ -69,7 +69,7 @@
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 
 /obj/item/ammo_casing/energy/shrink
-	projectile_type = /obj/projectile/beam/shrink
+	projectile_type = /obj/projectile/magic/shrink/alien
 	select_name = "shrink ray"
 	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE)
 

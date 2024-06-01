@@ -433,9 +433,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "qo" = (
-/obj/machinery/power/smes{
-	charge = 1e+600
-	},
+/obj/machinery/power/smes/magical,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -484,9 +482,7 @@
 /turf/open/floor/wood,
 /area/shuttle/pirate)
 "sh" = (
-/obj/machinery/power/smes{
-	charge = 1e+006
-	},
+/obj/machinery/power/smes/ship,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plating,

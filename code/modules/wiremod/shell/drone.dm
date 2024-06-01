@@ -74,11 +74,11 @@
 	UnregisterSignal(shell, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 	return ..()
 
-/obj/item/circuit_component/bot_circuit/proc/on_borg_charge(datum/source, amount)
+/obj/item/circuit_component/bot_circuit/proc/on_borg_charge(datum/source, datum/callback/charge_cell, seconds_per_tick)
 	SIGNAL_HANDLER
 	if (isnull(parent.cell))
 		return
-	parent.cell.give(amount)
+	charge_cell.Invoke(parent.cell, seconds_per_tick)
 
 /obj/item/circuit_component/bot_circuit/populate_ports()
 	north = add_input_port("Move North", PORT_TYPE_SIGNAL)
@@ -108,6 +108,11 @@
 		COOLDOWN_START(src, west_delay, move_delay)
 
 	if(!direction)
+		return
+
+	if(ismovable(shell.loc)) //Inside an object, tell it we moved
+		var/atom/loc_atom = shell.loc
+		loc_atom.relaymove(shell, direction)
 		return
 
 	if(shell.Process_Spacemove(direction))

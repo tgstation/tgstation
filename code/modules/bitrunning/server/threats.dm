@@ -2,6 +2,7 @@
 /obj/machinery/quantum_server/proc/add_threats(mob/living/threat)
 	spawned_threat_refs.Add(WEAKREF(threat))
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_THREAT_CREATED)
+	threat.AddComponent(/datum/component/virtual_entity, src)
 
 /// Choses which antagonist role is spawned based on threat
 /obj/machinery/quantum_server/proc/get_antagonist_role()
@@ -75,7 +76,7 @@
 		checked_target = mutation_target,
 		ignore_category = POLL_IGNORE_GLITCH,
 		alert_pic = mutation_target,
-		role_name_text = "Bitrunning Malfunction: [role_name]",
+		role_name_text = "Malfunction: [role_name]",
 	)
 	spawn_glitch(chosen_role, mutation_target, chosen_one)
 	return mutation_target

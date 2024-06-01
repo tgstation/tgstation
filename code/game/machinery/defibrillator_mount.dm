@@ -8,6 +8,7 @@
 	icon_state = "defibrillator_mount"
 	density = FALSE
 	use_power = NO_POWER_USE
+	active_power_usage = 40 * BASE_MACHINE_ACTIVE_CONSUMPTION
 	power_channel = AREA_USAGE_EQUIP
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_COMMAND, ACCESS_SECURITY) //used to control clamps
 	processing_flags = NONE
@@ -50,25 +51,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 
 /obj/machinery/defibrillator_mount/update_overlays()
 	. = ..()
-
-	if(!defib)
+	if(isnull(defib))
 		return
 
-	. += "defib"
+	var/mutable_appearance/defib_overlay = mutable_appearance(icon, "defib", layer = layer+0.01, offset_spokesman = src)
 
 	if(defib.powered)
-		var/obj/item/stock_parts/cell/C = get_cell()
-		. += (defib.safety ? "online" : "emagged")
-		var/ratio = C.charge / C.maxcharge
-		ratio = CEILING(ratio * 4, 1) * 25
-		. += "charge[ratio]"
+		var/obj/item/stock_parts/cell/cell = defib.cell
+		var/mutable_appearance/safety = mutable_appearance(icon, defib.safety ? "online" : "emagged", offset_spokesman = src)
+		var/mutable_appearance/charge_overlay = mutable_appearance(icon, "charge[CEILING((cell.charge / cell.maxcharge) * 4, 1) * 25]", offset_spokesman = src)
+
+		defib_overlay.overlays += list(safety, charge_overlay)
 
 	if(clamps_locked)
-		. += "clamps"
+		var/mutable_appearance/clamps = mutable_appearance(icon, "clamps", offset_spokesman = src)
+		defib_overlay.overlays += clamps
 
-/obj/machinery/defibrillator_mount/get_cell()
-	if(defib)
-		return defib.get_cell()
+	. += defib_overlay
 
 //defib interaction
 /obj/machinery/defibrillator_mount/attack_hand(mob/living/user, list/modifiers)
@@ -132,7 +131,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	user.visible_message(span_notice("[user] presses [multitool] into [src]'s ID slot..."), \
 	span_notice("You begin overriding the clamps on [src]..."))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-	if(!do_after(user, 100, target = src) || !clamps_locked)
+	if(!do_after(user, 10 SECONDS, target = src) || !clamps_locked)
 		return
 	user.visible_message(span_notice("[user] pulses [multitool], and [src]'s clamps slide up."), \
 	span_notice("You override the locking clamps on [src]!"))
@@ -156,15 +155,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	to_chat(user, span_notice("You remove [src] from the wall."))
 	return TRUE
 
-/obj/machinery/defibrillator_mount/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+/obj/machinery/defibrillator_mount/click_alt(mob/living/carbon/user)
 	if(!defib)
 		to_chat(user, span_warning("It'd be hard to remove a defib unit from a mount that has none."))
-		return
+		return CLICK_ACTION_BLOCKING
 	if(clamps_locked)
 		to_chat(user, span_warning("You try to tug out [defib], but the mount's clamps are locked tight!"))
-		return
+		return CLICK_ACTION_BLOCKING
 	if(!user.put_in_hands(defib))
 		to_chat(user, span_warning("You need a free hand!"))
 		user.visible_message(span_notice("[user] unhooks [defib] from [src], dropping it on the floor."), \
@@ -173,6 +170,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 		user.visible_message(span_notice("[user] unhooks [defib] from [src]."), \
 		span_notice("You slide out [defib] from [src] and unhook the charging cables."))
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/defibrillator_mount/charging
 	name = "PENLITE defibrillator mount"
@@ -196,12 +194,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 
 
 /obj/machinery/defibrillator_mount/charging/process(seconds_per_tick)
-	var/obj/item/stock_parts/cell/C = get_cell()
-	if(!C || !is_operational)
+	var/obj/item/stock_parts/cell/cell = get_cell()
+	if(!cell || !is_operational)
 		return PROCESS_KILL
-	if(C.charge < C.maxcharge)
-		use_power(active_power_usage * seconds_per_tick)
-		C.give(40 * seconds_per_tick)
+	if(cell.charge < cell.maxcharge)
+		charge_cell(active_power_usage * seconds_per_tick, cell)
 		defib.update_power()
 
 //wallframe, for attaching the mounts easily
@@ -221,3 +218,37 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	icon_state = "penlite_mount"
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 0.5)
 	result_path = /obj/machinery/defibrillator_mount/charging
+
+//mobile defib
+
+/obj/machinery/defibrillator_mount/mobile
+	name = "mobile defibrillator mount"
+	icon_state = "mobile"
+	anchored = FALSE
+	density = TRUE
+
+/obj/machinery/defibrillator_mount/mobile/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/noisy_movement)
+
+/obj/machinery/defibrillator_mount/mobile/wrench_act_secondary(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return ..()
+	if(defib)
+		to_chat(user, span_warning("The mount can't be deconstructed while a defibrillator unit is loaded!"))
+		..()
+		return TRUE
+	balloon_alert(user, "deconstructing...")
+	tool.play_tool_sound(src)
+	if(tool.use_tool(src, user, 5 SECONDS))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
+		deconstruct()
+	return TRUE
+
+/obj/machinery/defibrillator_mount/mobile/on_deconstruction(disassembled)
+	if(disassembled)
+		new /obj/item/stack/sheet/iron(drop_location(), 5)
+		new /obj/item/stack/sheet/mineral/silver(drop_location(), 1)
+		new /obj/item/stack/cable_coil(drop_location(), 15)
+	else
+		new /obj/item/stack/sheet/iron(drop_location(), 5)
