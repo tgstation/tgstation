@@ -132,6 +132,7 @@
 	name = "Sonic Tripwire"
 	desc = "An invisible trigger for some shutters."
 	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = null
 	max_integrity = 50
 	invisibility = INVISIBILITY_ABSTRACT
 	trigger_delay = 0
