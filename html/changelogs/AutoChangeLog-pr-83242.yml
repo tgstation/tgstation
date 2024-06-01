@@ -1,0 +1,5 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - rscadd: "Added crutches! Wooden ones can be made with wood. Medical ones can be bought from the medvendor."
+  - rscadd: "Crutches will reduce slowdown from missing a leg by 60%, and they will remove the limping from fractured bones. (canes do that now too) They're also a fairly decent bludgeon. However, they do nothing if both legs are cut off."
