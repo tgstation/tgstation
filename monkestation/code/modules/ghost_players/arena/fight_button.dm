@@ -1,6 +1,6 @@
 /obj/structure/fight_button
 	name = "duel requestor 3000"
-	desc = "A button that displays your intent to duel aswell as the weapon of choice and stakes of the duel."
+	desc = "A button that displays your intent to duel as well as the weapon of choice and stakes of the duel."
 
 	icon_state = "comp_button1"
 	icon = 'goon/icons/obj/mechcomp.dmi'
@@ -134,41 +134,37 @@
 		say("One or more of the players have left the area, match has been cancelled!")
 		return
 
-
 	if(!player_one.client.prefs.adjust_metacoins(player_one.ckey, -payout, "Added to the Payout"))
 		return
-	if(!player_two.client.prefs.adjust_metacoins(player_one.ckey, -payout, "Added to the Payout"))
+	if(!player_two.client.prefs.adjust_metacoins(player_two.ckey, -payout, "Added to the Payout"))
 		player_one.client.prefs.adjust_metacoins(player_one.ckey, payout, "Opponent left, reimbursed.")
 		return
 
+	var/turf/player_one_spot = locate(148, 34, SSmapping.levels_by_trait(ZTRAIT_CENTCOM)[1])
+	prep_player(player_one, player_one_spot)
+	var/turf/player_two_spot = locate(164, 34, SSmapping.levels_by_trait(ZTRAIT_CENTCOM)[1])
+	prep_player(player_two, player_two_spot)
 
-	player_one.unequip_everything()
-	player_one.fully_heal()
+/obj/structure/fight_button/proc/prep_player(mob/living/carbon/human/ghost/player, turf/move_to)
+	player.unequip_everything()
+	player.fully_heal()
 
-	player_two.unequip_everything()
-	player_two.fully_heal()
+	if(HAS_TRAIT(player, TRAIT_PACIFISM))
+		to_chat(player, span_notice("Your pacifism has been removed."))
+		// null will remove the trait from all sources
+		REMOVE_TRAIT(player, TRAIT_PACIFISM, null)
 
-	var/obj/item/one_weapon = new weapon_of_choice(src)
-	spawned_weapons += WEAKREF(one_weapon)
-	var/turf/one_spot = locate(148, 34, SSmapping.levels_by_trait(ZTRAIT_CENTCOM)[1])
-	player_one.forceMove(one_spot)
-	player_one.equipOutfit(/datum/outfit/ghost_player)
-	player_one.put_in_active_hand(one_weapon, TRUE)
-	player_one.dueling = TRUE
-	SEND_SIGNAL(player_one, COMSIG_HUMAN_BEGIN_DUEL)
-
-	var/obj/item/two_weapon = new weapon_of_choice(src)
-	spawned_weapons += WEAKREF(two_weapon)
-	var/turf/two_spot = locate(164, 34, SSmapping.levels_by_trait(ZTRAIT_CENTCOM)[1])
-	player_two.forceMove(two_spot)
-	player_two.equipOutfit(/datum/outfit/ghost_player)
-	player_two.put_in_active_hand(two_weapon, TRUE)
-	player_two.dueling = TRUE
-	SEND_SIGNAL(player_two, COMSIG_HUMAN_BEGIN_DUEL)
+	var/obj/item/weapon = new weapon_of_choice(src)
+	spawned_weapons += WEAKREF(weapon)
+	player.forceMove(move_to)
+	player.equipOutfit(/datum/outfit/ghost_player)
+	player.put_in_active_hand(weapon, TRUE)
+	player.dueling = TRUE
+	SEND_SIGNAL(player, COMSIG_HUMAN_BEGIN_DUEL)
 
 /obj/structure/fight_button/proc/end_duel(mob/living/carbon/human/ghost/loser)
 	if(loser == player_one)
-		player_two.client.prefs.adjust_metacoins(player_one.ckey, payout * 2, "Won Duel.", donator_multipler = FALSE)
+		player_two.client.prefs.adjust_metacoins(player_two.ckey, payout * 2, "Won Duel.", donator_multipler = FALSE)
 	else if(loser == player_two)
 		player_one.client.prefs.adjust_metacoins(player_one.ckey, payout * 2, "Won Duel.", donator_multipler = FALSE)
 	addtimer(CALLBACK(src, GLOBAL_PROC_REF(reset_arena_area)), 5 SECONDS)
