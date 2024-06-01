@@ -646,7 +646,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 /obj/structure/closet/proc/can_install_airlock_electronics(mob/user)
 	if(secure || !can_install_electronics)
 		return FALSE
-
+	if(welded)
+		balloon_alert(user, "unweld first!")
+		return FALSE
 	if(broken)
 		balloon_alert(user, "its broken!")
 		return FALSE
