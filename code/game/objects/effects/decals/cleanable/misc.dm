@@ -509,6 +509,18 @@
 		ignite()
 	return ..()
 
+/obj/effect/decal/cleanable/fuel_pool/on_entered(datum/source, atom/movable/AM)
+	. = ..()
+	if(isitem(AM))
+		var/obj/item/item = AM
+		if(item.get_temperature() > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			ignite()
+	else if(isliving(AM))
+		var/mob/living/L = AM
+		if(L.on_fire)
+			ignite()
+
+
 /obj/effect/decal/cleanable/fuel_pool/hivis
 	icon_state = "fuel_pool_hivis"
 

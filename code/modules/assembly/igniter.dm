@@ -37,6 +37,8 @@
 	var/turf/location = get_turf(loc)
 	if(location)
 		location.hotspot_expose(heat, EXPOSED_VOLUME)
+		for(var/obj/effect/decal/cleanable/scorched in location)
+			scorched.fire_act(heat, EXPOSED_VOLUME)
 	if(holder)
 		SEND_SIGNAL(holder.loc, COMSIG_IGNITER_ACTIVATE)
 	if(QDELETED(src))
@@ -50,8 +52,8 @@
 
 /obj/item/assembly/igniter/ignition_effect(atom/A, mob/user)
 	. = span_notice("[user] fiddles with [src], and manages to light [A].")
-	activate()
 	add_fingerprint(user)
+	activate()
 
 //For the Condenser, which functions like the igniter but makes things colder.
 /obj/item/assembly/igniter/condenser
