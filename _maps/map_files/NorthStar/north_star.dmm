@@ -28670,10 +28670,9 @@
 /area/station/command/bridge)
 "hwN" = (
 /obj/machinery/camera/autoname/directional/south,
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
-	name = "Antechamber Turret Control";
-	pixel_y = -32
+	name = "Antechamber Turret Control"
 	},
 /turf/open/openspace,
 /area/station/ai_monitored/turret_protected/aisat/service)
@@ -31867,11 +31866,9 @@
 "inl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	icon_state = "control_stun";
-	name = "AI Chamber turret control";
-	pixel_x = 3;
-	pixel_y = -23
+	name = "AI Chamber turret control"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/circuit,
@@ -72084,11 +72081,10 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner,
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
 	icon_state = "control_stun";
-	name = "AI Upload turret control";
-	pixel_y = 28
+	name = "AI Upload turret control"
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)

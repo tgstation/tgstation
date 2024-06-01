@@ -4044,7 +4044,7 @@
 /turf/open/indestructible/paper,
 /area/misc/testroom)
 "Rj" = (
-/obj/machinery/turretid,
+/obj/machinery/turretid/directional/south,
 /turf/closed/wall,
 /area/misc/testroom)
 "Rk" = (
@@ -4402,7 +4402,7 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "UI" = (
-/obj/machinery/turretid,
+/obj/machinery/turretid/directional/south,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "UM" = (

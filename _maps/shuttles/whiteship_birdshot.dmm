@@ -1395,11 +1395,10 @@
 /area/shuttle/abandoned/bridge)
 "UK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	icon_state = "control_kill";
 	lethal = 1;
 	locked = 0;
-	pixel_y = 28;
 	req_access = null
 	},
 /turf/open/floor/iron/dark/small,

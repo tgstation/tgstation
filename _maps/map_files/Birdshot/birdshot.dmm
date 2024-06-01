@@ -5631,11 +5631,9 @@
 /turf/open/floor/iron/diagonal,
 /area/station/engineering/lobby)
 "cze" = (
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	icon_state = "control_stun";
-	name = "AI Chamber turret control";
-	pixel_x = 3;
-	pixel_y = -23
+	name = "AI Chamber turret control"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured,
@@ -14021,10 +14019,9 @@
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "fUO" = (
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
 	name = "Antechamber Turret Control";
-	pixel_y = 30;
 	req_access = list("minisat")
 	},
 /obj/structure/showcase/cyborg/old{
@@ -39529,11 +39526,10 @@
 "oah" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/landmark/start/cyborg,
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
 	icon_state = "control_stun";
-	name = "AI Upload Turret Control";
-	pixel_y = -28
+	name = "AI Upload Turret Control"
 	},
 /obj/machinery/status_display/ai/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
