@@ -345,6 +345,9 @@
 
 /obj/item/gun/ballistic/shotgun/musket
 	name = "\improper Donk Co. Musket"
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	icon_state = "donk_musket"
 	inhand_icon_state = "donk_musket"
 	worn_icon_state = "donk_musket"
