@@ -272,7 +272,7 @@
 /datum/disease/advance/proc/assign_properties()
 
 	if(properties?.len)
-		if(properties["stealth"] >= properties["severity"])
+		if(properties["stealth"] >= properties["severity"] && properties["severity"] > 0)
 			visibility_flags |= HIDDEN_SCANNER
 		else
 			visibility_flags &= ~HIDDEN_SCANNER
@@ -405,7 +405,7 @@
 /datum/disease/advance/proc/AddSymptom(datum/symptom/S)
 	if(HasSymptom(S))
 		return
-	while(get_symptom_weights() > VIRUS_SYMPTOM_LIMIT + S.weight)
+	while(get_symptom_weights() + S.weight > VIRUS_SYMPTOM_LIMIT)
 		RemoveSymptom(pick(symptoms))
 	symptoms += S
 	S.OnAdd(src)
