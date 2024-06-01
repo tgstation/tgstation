@@ -587,8 +587,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	custom_materials = list(/datum/material/wood = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/cane/white
-	name = "probing cane"
-	desc = "Often called a white cane, it's traditionally used by the blind to help them see. Folds down to be easier to transport."
+	name = "white cane"
+	desc = "Traditionally used by the blind to help them see. Folds down to be easier to transport."
 	icon_state = "cane_white"
 	inhand_icon_state = "cane_white"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
