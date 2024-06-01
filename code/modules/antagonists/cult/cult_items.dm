@@ -126,7 +126,7 @@ Striking a noncultist, however, will tear their flesh."}
 	free_use = TRUE
 	light_color = COLOR_BLACK
 	light_system = OVERLAY_LIGHT
-	light_range = 4
+	light_range = 2
 	/// holder for the actual action when created.
 	var/datum/action/cooldown/spell/path_wielder_action
 	var/mob/living/trapped_entity

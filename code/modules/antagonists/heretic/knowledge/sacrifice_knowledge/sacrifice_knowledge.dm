@@ -97,7 +97,9 @@
 
 /datum/heretic_knowledge/hunt_and_sacrifice/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	if(!LAZYLEN(heretic_datum.sac_targets))
+	// Force it to work if the sacrifice is a cultist, even if there's no targets.
+	var/mob/living/carbon/human/sac = selected_atoms[1]
+	if(!LAZYLEN(heretic_datum.sac_targets) && !IS_CULTIST(sac))
 		if(obtain_targets(user, heretic_datum = heretic_datum))
 			return TRUE
 		else
@@ -210,7 +212,6 @@
 		feedback += " <i>graciously</i>"
 	else if(IS_CULTIST(sacrifice))
 		heretic_datum.knowledge_points += 1
-		feedback += " <i>rapturously</i>"
 		grant_reward(user, sacrifice, loc)
 		return
 	else
@@ -225,15 +226,25 @@
 
 
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/grant_reward(mob/living/user, mob/living/sacrifice, turf/loc)
-	to_chat(user, span_big(span_hypnophrase("A servant of the Sanguine Apostate!")))
-	to_chat(user, span_hierophant("Your patrons are elated! You feel the rotten energies of the infidel warp and twist, mixing with that of your own..."))
-	playsound(sacrifice, 'sound/magic/disintegrate.ogg', 75, TRUE)
-	sacrifice.gib()
-	addtimer(CALLBACK(src, PROC_REF(deposit_reward), user, loc), 5 SECONDS)
 
-/datum/heretic_knowledge/hunt_and_sacrifice/proc/deposit_reward(mob/user, turf/loc, loop = 0)
+	// Visible and audible encouragement!
+	to_chat(user, span_big(span_hypnophrase("A servant of the Sanguine Apostate!")))
+	to_chat(user, span_hierophant("Your patrons are rapturous! You feel the rotten energies of the infidel warp and twist, mixing with that of your own..."))
+	playsound(sacrifice, 'sound/magic/disintegrate.ogg', 75, TRUE)
+
+	// The loser is DUSTED. The rune shines until the reward is deposited.
+	sacrifice.dust(TRUE, TRUE)
+	var/obj/effect/heretic_rune/rune = locate() in range(2, user)
+	if(rune)
+		rune.add_filter("reward_outline", 3, list("type" = "outline", "color" = COLOR_CULT_RED, "size" = 1.5))
+
+	addtimer(CALLBACK(src, PROC_REF(deposit_reward), user, loc, null, rune), 5 SECONDS)
+
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/deposit_reward(mob/user, turf/loc, loop = 0, obj/rune)
 	if(loop > 5) // Max limit for retrying a reward
 		return
+	// Remove the rays, we don't need them anymore.
+	rune?.remove_filter("reward_outline")
 	playsound(loc, 'sound/magic/repulse.ogg', 75, TRUE)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	ASSERT(heretic_datum)
@@ -250,7 +261,7 @@
 	if(isliving(reward))
 		if(summon_ritual_mob(user, loc, reward) == FALSE)
 			qdel(reward)
-			deposit_reward(user, loc, loop++) // If no ghosts, try again until limit is hit
+			deposit_reward(user, loc, loop++, rune) // If no ghosts, try again until limit is hit
 		return
 
 	else if(isitem(reward))
