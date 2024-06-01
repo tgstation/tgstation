@@ -81,6 +81,9 @@
 	#define ACCESS_DISALLOWED (1<<1)
 	#define LOCKED_ATOM_INCOMPATIBLE (1<<2)
 
+///from the component /datum/component/simple_access
+#define	COMSIG_MOB_RETRIEVE_SIMPLE_ACCESS "retrieve_simple_access"
+
 ///from base of mob/can_cast_magic(): (mob/user, magic_flags, charge_cost)
 #define COMSIG_MOB_RESTRICT_MAGIC "mob_cast_magic"
 ///from base of mob/can_block_magic(): (mob/user, casted_magic_flags, charge_cost)

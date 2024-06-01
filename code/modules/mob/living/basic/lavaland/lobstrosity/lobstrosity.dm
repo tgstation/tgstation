@@ -29,10 +29,17 @@
 	/// Charging ability
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/charge
 	/// Things we will eat if we see them (arms, chiefly)
-	var/static/list/target_foods = list(/obj/item/bodypart/arm)
+	var/static/list/target_foods = list(/obj/item/bodypart/arm, /obj/item/fish/lavaloop)
 
 /mob/living/basic/mining/lobstrosity/Initialize(mapload)
 	. = ..()
+	var/static/list/food_types = list(/obj/item/fish/lavaloop)
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
+	var/static/list/fishing_preset = list(
+		/turf/open/lava = /datum/fish_source/lavaland,
+		/turf/open/lava/plasma = /datum/fish_source/lavaland/icemoon,
+	)
+	AddComponent(/datum/component/profound_fisher, npc_fishing_preset = fishing_preset)
 	AddElement(/datum/element/mob_grabber)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/basic_eating, food_types = target_foods)
