@@ -12,7 +12,8 @@
 	anchored = TRUE
 	opacity = FALSE
 	density = FALSE
-	var/icon_type = "bathroom"//used in making the icon state
+	/// used in making the icon state
+	var/icon_type = "bathroom"
 	var/open = TRUE
 	/// if it can be seen through when closed
 	var/opaque_closed = FALSE
