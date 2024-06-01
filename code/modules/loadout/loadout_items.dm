@@ -2,12 +2,27 @@
 /// Loadout datums are created by loadout categories.
 GLOBAL_LIST_EMPTY(all_loadout_datums)
 
+/// Global list of all loadout categories
+/// Doesn't really NEED to be a global but we need to init this early for preferences,
+/// as the categories instantiate all the loadout datums
+GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
+
+/// Inits the global list of loadout category singletons
+/// Also inits loadout item singletons
+/proc/init_loadout_categories()
+	var/list/loadout_categories = list()
+	for(var/category_type in subtypesof(/datum/loadout_category))
+		loadout_categories += new category_type()
+	return loadout_categories
+
 /**
  * # Loadout item datum
  *
  * Singleton that holds all the information about each loadout items, and how to equip them.
  */
 /datum/loadout_item
+	/// The category of the loadout item. Set automatically in New
+	VAR_FINAL/datum/loadout_category/category
 	/// Displayed name of the loadout item.
 	/// Defaults to the item's name if unset.
 	var/name
@@ -26,16 +41,14 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	var/abstract_type = /datum/loadout_item
 	/// The actual item path of the loadout item.
 	var/obj/item/item_path
-	/// Lazylist of additional "tooltips" to display about this item.
-	var/list/additional_tooltip_contents
+	/// Lazylist of additional "information" text to display about this item.
+	var/list/additional_displayed_text
 	/// Icon file (DMI) for the UI to use for preview icons.
 	/// Set automatically if null
 	var/ui_icon
 	/// Icon state for the UI to use for preview icons.
 	/// Set automatically if null
 	var/ui_icon_state
-	/// The category of the loadout item. Set automatically in New
-	VAR_FINAL/datum/loadout_category/category
 
 /datum/loadout_item/New(category)
 
@@ -47,9 +60,6 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	else if(item_path::flags_1 & IS_PLAYER_COLORABLE_1)
 		// Otherwise set this automatically to true if it is actually colorable
 		can_be_greyscale = TRUE
-		// This means that one can add a greyscale item that does not have player colorable set
-		// but is still modifyable as a greyscale item in the loadout menu by setting it to true manually
-		// Why? I HAVE NO IDEA why you would do that but you sure can
 
 	if(isnull(name))
 		name = item_path::name
@@ -77,7 +87,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
  *
  * Return TRUE to force an update to the UI / character preview
  */
-/datum/loadout_item/proc/handle_loadout_action(datum/preference_middleware/loadout/manager, mob/user, action)
+/datum/loadout_item/proc/handle_loadout_action(datum/preference_middleware/loadout/manager, mob/user, action, params)
 	SHOULD_CALL_PARENT(TRUE)
 
 	switch(action)
@@ -90,7 +100,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 				return set_name(manager, user)
 
 		if("set_skin")
-			return set_skin(manager, user)
+			return set_skin(manager, user, params)
 
 	return FALSE
 
@@ -276,47 +286,67 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	var/list/formatted_item = list()
 	formatted_item["name"] = name
 	formatted_item["path"] = item_path
+	formatted_item["information"] = get_item_information()
 	formatted_item["buttons"] = get_ui_buttons()
 	formatted_item["icon"] = ui_icon
 	formatted_item["icon_state"] = ui_icon_state
 	return formatted_item
 
-/**
- * Returns a list of UI buttons for this loadout item
- * These will automatically be turned into buttons in the UI, according to they icon you provide
- * act_key should match a key to handle in [handle_loadout_action] - this is how you react to the button being pressed
- */
+/datum/loadout_item/proc/get_item_information() as /list
+	SHOULD_CALL_PARENT(TRUE)
+
+	var/list/displayed_text = list()
+
+	displayed_text += (additional_displayed_text || list())
+
+	if(can_be_greyscale)
+		displayed_text += "Recolorable"
+
+	if(can_be_named)
+		displayed_text += "Renamable"
+
+	if(can_be_reskinned)
+		displayed_text += "Reskinable"
+
+	return displayed_text
+
 /datum/loadout_item/proc/get_ui_buttons() as /list
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/list/button_list = list()
 
-	for(var/tooltip in additional_tooltip_contents)
-		// Not real buttons - have no act - but just provides a "hey, this is special!" tip
-		UNTYPED_LIST_ADD(button_list, list(
-			"icon" = FA_ICON_INFO,
-			"tooltip" = tooltip,
-		))
-
 	if(can_be_greyscale)
 		UNTYPED_LIST_ADD(button_list, list(
-			"icon" = FA_ICON_PALETTE,
+			"label" = "Recolor",
 			"act_key" = "select_color",
-			"tooltip" = "Modify this item's color.",
+			"button_icon" = FA_ICON_PALETTE,
 		))
 
 	if(can_be_named)
 		UNTYPED_LIST_ADD(button_list, list(
-			"icon" = FA_ICON_PEN,
+			"label" = "Rename",
 			"act_key" = "set_name",
-			"tooltip" = "Modify the name this item will have.",
+			"button_icon" = FA_ICON_PEN,
 		))
 
 	if(can_be_reskinned)
+		var/list/subbuttons = list()
+		var/obj/item/dummy_item = new item_path()
+		for(var/i in 1 to length(dummy_item.unique_reskin))
+			var/skin = dummy_item.unique_reskin[i]
+			subbuttons[i] = list(
+				"tooltip" = skin,
+				"sub_icon" = dummy_item.icon,
+				"sub_icon_state" = dummy_item.unique_reskin[skin],
+				"act_key" = "set_skin",
+			)
+
 		UNTYPED_LIST_ADD(button_list, list(
-			"icon" = FA_ICON_THEATER_MASKS,
-			"act_key" = "set_skin",
-			"tooltip" = "Change the default skin of this item.",
+			"label" = "Styles",
+			"button_type" = ICON_BUTTON_LIST,
+			"button_icons" = subbuttons,
 		))
+
+		qdel(dummy_item)
 
 	return button_list

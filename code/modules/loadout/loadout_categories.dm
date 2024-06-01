@@ -6,8 +6,8 @@
 /datum/loadout_category
 	/// The name of the category, shown in the tabs
 	var/category_name
-	/// In the title section of this category, this text will be postfixed onto the section title
-	var/ui_title_postfix
+	/// FontAwesome icon for the category
+	var/category_ui_icon
 	/// What type of loadout items should be generated for this category?
 	var/type_to_generate
 	/// List of all loadout items in this category

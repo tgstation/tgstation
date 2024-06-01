@@ -135,4 +135,4 @@
 /datum/loadout_item/head/wig
 	name = "Wig"
 	item_path = /obj/item/clothing/head/wig/natural
-	additional_tooltip_contents = list("Matches your natural hair color.")
+	additional_displayed_text = list("Matches hair color")

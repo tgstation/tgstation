@@ -9,7 +9,7 @@
 
 /datum/loadout_category/pocket/New()
 	. = ..()
-	ui_title_postfix = "[max_allowed] max"
+	category_name = "[category_name] ([max_allowed] allowed)"
 
 /datum/loadout_category/pocket/handle_duplicate_entires(
 	datum/preference_middleware/loadout/manager,
@@ -91,7 +91,7 @@
 	name = "Plush (Lizard, Random)"
 	can_be_greyscale = DONT_GREYSCALE
 	item_path = /obj/item/toy/plush/lizard_plushie
-	additional_tooltip_contents = list(TOOLTIP_RANDOM_COLOR)
+	additional_displayed_text = list("Random color")
 
 /datum/loadout_item/pocket_items/plush/moth
 	name = "Plush (Moth)"

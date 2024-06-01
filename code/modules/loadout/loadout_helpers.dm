@@ -75,19 +75,3 @@
 		datums += actual_datum
 
 	return datums
-
-/// Used for very easily adding a new typepath with associated data to the loadout list of this preference
-/datum/preferences/proc/add_loadout_item(typepath, list/data = list())
-	PRIVATE_PROC(TRUE) // Yes this is private, I don't really want this used outside of preferences
-
-	var/list/loadout_list = read_preference(/datum/preference/loadout)
-	loadout_list[typepath] = data
-	write_preference(GLOB.preference_entries[/datum/preference/loadout], loadout_list)
-
-/// Used for very easily removing a typepath from the loadout list of this preference
-/datum/preferences/proc/remove_loadout_item(typepath)
-	PRIVATE_PROC(TRUE) // See above
-
-	var/list/loadout_list = read_preference(/datum/preference/loadout)
-	if(loadout_list.Remove(typepath))
-		write_preference(GLOB.preference_entries[/datum/preference/loadout], loadout_list)

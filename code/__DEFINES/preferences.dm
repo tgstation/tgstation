@@ -146,10 +146,6 @@
 // Loadout
 /// Used to make something not recolorable even if it's capable
 #define DONT_GREYSCALE -1
-// Defines for extra info blurbs, for loadout items.
-#define TOOLTIP_NO_ARMOR "This item has no armor and is entirely cosmetic."
-#define TOOLTIP_NO_DAMAGE "This item has very low force and is largely cosmetic."
-#define TOOLTIP_RANDOM_COLOR "This item has a random color and will change every round."
 // Loadout item info keys
 // Changing these will break existing loadouts
 /// Tracks GAGS color information
@@ -160,3 +156,8 @@
 #define INFO_RESKIN "reskin"
 /// Handles which layer the item will be on, for accessories
 #define INFO_LAYER "layer"
+// Used to determine what type of button to use in the UI
+/// Used for buttons that toggle a preference
+#define CHECKBOX_BUTTON "checkbox"
+/// Used to display a list of icons as buttons
+#define ICON_BUTTON_LIST "icon_button_list"

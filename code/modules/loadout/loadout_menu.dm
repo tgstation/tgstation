@@ -57,7 +57,7 @@
 		stack_trace("Failed to locate desired loadout item (path: [params["path"]]) in the global list of loadout datums!")
 		return TRUE // update
 
-	if(interacted_item.handle_loadout_action(src, user, params["subaction"]))
+	if(interacted_item.handle_loadout_action(src, user, params["subaction"], params))
 		preferences.character_preview_view.update_body()
 		return TRUE
 
@@ -101,18 +101,12 @@
 	return data
 
 /datum/preference_middleware/loadout/get_constant_data()
-	var/static/list/loadout_categories
-	if(!length(loadout_categories))
-		loadout_categories = list()
-		for(var/category_type in subtypesof(/datum/loadout_category))
-			loadout_categories += new category_type()
-
 	var/list/data = list()
 	var/list/loadout_tabs = list()
-	for(var/datum/loadout_category/category as anything in loadout_categories)
+	for(var/datum/loadout_category/category as anything in GLOB.all_loadout_categories)
 		UNTYPED_LIST_ADD(loadout_tabs, list(
 			"name" = category.category_name,
-			"title_postfix" = category.ui_title_postfix,
+			"category_icon" = category.category_ui_icon,
 			"contents" = category.items_to_ui_data(),
 		))
 

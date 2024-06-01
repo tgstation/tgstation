@@ -16,16 +16,22 @@
 		can_be_layer_adjusted = TRUE
 
 /datum/loadout_item/accessory/get_ui_buttons()
-	. = ..()
-	if(can_be_layer_adjusted)
-		UNTYPED_LIST_ADD(., list(
-			"icon" = FA_ICON_ARROW_DOWN,
-			"act_key" = "set_layer",
-			"tooltip" = "Modify this item to be above or below your over suit.",
-			"only_when_selected" = TRUE,
-		))
+	if(!can_be_layer_adjusted)
+		return ..()
 
-/datum/loadout_item/accessory/handle_loadout_action(datum/preference_middleware/loadout/manager, mob/user, action)
+	var/list/buttons = ..()
+
+	UNTYPED_LIST_ADD(buttons, list(
+		"label" = "Layer",
+		"act_key" = "set_layer",
+		"button_type" = CHECKBOX_BUTTON,
+		"enabled_text" = "Above Suit",
+		"disabled_text" = "Below Suit",
+	))
+
+	return buttons
+
+/datum/loadout_item/accessory/handle_loadout_action(datum/preference_middleware/loadout/manager, mob/user, action, params)
 	if(action == "set_layer")
 		return set_accessory_layer(manager, user)
 
@@ -79,7 +85,7 @@
 /datum/loadout_item/accessory/full_pocket_protector
 	name = "Pocket Protector (Filled)"
 	item_path = /obj/item/clothing/accessory/pocketprotector/full
-	additional_tooltip_contents = list("Contains multiple pens.")
+	additional_displayed_text = list("Contains pens")
 
 /datum/loadout_item/accessory/pride
 	name = "Pride Pin"
