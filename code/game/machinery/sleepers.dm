@@ -309,6 +309,12 @@
 /obj/machinery/sleeper/syndie/fullupgrade
 	circuit = /obj/item/circuitboard/machine/sleeper/fullupgrade
 
+///Fully upgraded, not deconstructable, while using the normal sprite.
+/obj/machinery/sleeper/syndie/fullupgrade/nt
+	icon_state = "sleeper"
+	base_icon_state = "sleeper"
+	deconstructable = FALSE
+
 /obj/machinery/sleeper/self_control
 	controls_inside = TRUE
 
