@@ -115,12 +115,12 @@
 	caster.Shake(1, 0.4, 0.3 SECONDS)
 
 /datum/action/cooldown/mob_cooldown/exenterate/Activate(atom/caster)
+	StartCooldown()
 	for(var/mob/living/living_mob in range(aoe_radius,caster))
-		if (living_mob.stat || living_mob.faction != owner.faction)
+		if (living_mob.stat || living_mob.faction == owner.faction)
 			return
 		to_chat(living_mob, span_warning("You are cut by the drone's blades!"))
 		living_mob.apply_damage(damage = damage_dealt, damagetype = BRUTE, def_zone = valid_targets, sharpness = SHARP_EDGED)
-	StartCooldown()
 	return TRUE
 
 #undef SPIN_SLASH_ABILITY_TYPEPATH
