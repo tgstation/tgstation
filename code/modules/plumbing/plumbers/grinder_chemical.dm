@@ -22,6 +22,8 @@
 
 	if(istype(tool, /obj/item/construction/plumbing))
 		return tool.interact_with_atom(src, user, modifiers)
+	else if(istype(tool, /obj/item/plunger))
+		return
 	else if(istype(tool, /obj/item/storage/bag))
 		if(!anchored)
 			to_chat(user, span_warning("Anchor first to star grinding."))
@@ -31,7 +33,7 @@
 		for(var/obj/item/obj_item in tool.contents)
 			grind(obj_item)
 		return ITEM_INTERACT_SUCCESS
-	else if(!tool.tool_behaviour || !istype(tool, /obj/item/plunger))
+	else if(!tool.tool_behaviour)
 		if(!anchored)
 			to_chat(user, span_warning("Anchor first to star grinding."))
 			return ITEM_INTERACT_BLOCKING
