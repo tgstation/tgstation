@@ -1,0 +1,25 @@
+2024-06-01:
+  JohnFulpWillard:
+  - rscadd: The Law office now has a pet goldfish.
+  - refactor: Gondolas (including gondola pods) are now basic mobs.
+  Time-Green:
+  - rscadd: 'Station-Wide Background Checks (station trait, rare): Disables crew antagonists,
+      but get a lot more non-crew antagonists'
+  - bugfix: Fixes railings being invisible
+  - bugfix: Snow walls dont spawn on railings anymore in icebox
+  carlarctg:
+  - balance: Reworks Adrenaline Glands into Repurposed Glands (Realingment). Lose
+      the use of your arms, but you can escape any situation!
+  tmyqlfpir:
+  - bugfix: '[Tramstation] Departures and under east tram distro/waste pipes now properly
+      connected'
+  tralezab:
+  - rscadd: New fish, the anxious zipzap
+  - rscadd: New syndicate fish, the monocloning jumpercable
+  - rscadd: New aquarium, the bioelectricity generator
+  - bugfix: Mixotrophic fish now properly lack food requirements
+  zxaber:
+  - bugfix: Minebots purchased via mining points are no longer stuck in idle mode.
+      Clicking on them will activate their AI.
+  - spellcheck: Removed the examine text about feeding ore to minebots; this functionality
+      was removed already.

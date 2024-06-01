@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Imaginary friend brain trauma works again."
+  - bugfix: "Imaginary friends can be heard by their hosts from more than a tile away again."
