@@ -10,17 +10,22 @@
 	dna_cost = 1
 	req_human = TRUE
 	var/stacks = 0 //Increments every 5 seconds; damage increases over time
+	var/maxstacks = 10 //The threshhold of stacks that paralyzes you when you disable the power
 	active = FALSE //Whether or not you are a hedgehog
 
 /datum/action/changeling/strained_muscles/sting_action(mob/living/carbon/user)
 	..()
+	var/datum/antagonist/changeling/ling = IS_CHANGELING(user)
+	if(ling && ling.specialization == "combat")
+		// combat lings can endure more strain
+		maxstacks = 15
 	active = !active
 	if(active)
 		to_chat(user, span_notice("Our muscles tense and strengthen."))
 	else
 		user.remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
 		to_chat(user, span_notice("Our muscles relax."))
-		if(stacks >= 10)
+		if(stacks >= maxstacks)
 			to_chat(user, span_danger("We collapse in exhaustion."))
 			user.Paralyze(60)
 			user.emote("gasp")
@@ -50,7 +55,7 @@
 
 		user.adjustStaminaLoss(stacks * 1.3) //At first the changeling may regenerate stamina fast enough to nullify fatigue, but it will stack
 
-		if(stacks == 11) //Warning message that the stacks are getting too high
+		if(stacks == maxstacks - 2) //10 second warning message that the stacks are getting too high
 			to_chat(user, span_warning("Our legs are really starting to hurt..."))
 
 		sleep(4 SECONDS)

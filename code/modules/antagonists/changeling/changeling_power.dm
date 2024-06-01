@@ -24,6 +24,8 @@
 	var/req_human = FALSE
 	/// Similar to req_dna, but only gained from absorbing, not DNA sting
 	var/req_absorbs = 0
+	/// requires a specialization?/what type?
+	var/req_spec = ""
 	/// Maximum stat before the ability is blocked.
 	/// For example, `UNCONSCIOUS` prevents it from being used when in hard crit or dead,
 	/// while `DEAD` allows the ability to be used on any stat values.
@@ -77,7 +79,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 /datum/action/changeling/proc/sting_feedback(mob/living/user, mob/living/target)
 	return FALSE
 
-// Fairly important to remember to return 1 on success >.< // Return TRUE not 1 >.<
+// Fairly important to remember to return TRUE on success
 /datum/action/changeling/proc/can_sting(mob/living/user, mob/living/target)
 	if(!can_be_used_by(user))
 		return FALSE

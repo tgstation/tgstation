@@ -3,9 +3,10 @@
 	desc = "Our skin pigmentation rapidly changes to suit our current environment. Costs 10 chemicals."
 	helptext = "Allows us to become invisible after a few seconds of standing still. Can be toggled on and off."
 	button_icon_state = "chameleon_skin"
-	dna_cost = 1
+	dna_cost = 0
 	chemical_cost = 10
 	req_human = TRUE
+	req_spec = "stealth"
 
 /datum/action/changeling/chameleon_skin/sting_action(mob/user)
 	var/mob/living/carbon/human/cling = user //SHOULD always be human, because req_human = TRUE

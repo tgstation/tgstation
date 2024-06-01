@@ -55,6 +55,10 @@
 	/// Associated list of all powers we have evolved / bought from the emporium. [path] = [instance of path]
 	var/list/purchased_powers = list()
 
+	/// What specialization are we?
+	var/specialization = ""
+	var/specializations = list("stealth", "combat")
+
 	/// The voice we're mimicing via the changeling voice ability.
 	var/mimicing = ""
 	/// Whether we can currently respec in the cellular emporium.
@@ -382,6 +386,10 @@
 		to_chat(owner.current, span_warning("We lack the absorbed DNA to evolve this ability!"))
 		return FALSE
 
+	if(initial(sting_path.req_spec) && specialization != initial(sting_path.req_spec))
+		to_chat(owner.current, span_warning("Our specialization restricts us from evolving this ability!"))
+		return FALSE
+
 	if(initial(sting_path.dna_cost) < 0)
 		to_chat(owner.current, span_warning("We cannot evolve this ability!"))
 		return FALSE
@@ -441,7 +449,20 @@
 	can_respec = FALSE
 	SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
 	log_changeling_power("[key_name(owner)] readapted their changeling powers")
+	specialization = ""
+	specialize()
 	return TRUE
+
+/*
+* Lets the user choose a changeling specialization
+*/
+/datum/antagonist/changeling/proc/specialize()
+	to_chat(owner, "Select a specialization. Certain powers are only available to certain types of changelings, and some powers can be stronger or weaker if they align with your type.")
+	specialization = tgui_input_list(owner.current, "Select your specialization", "Changeling Specialization", specializations)
+	if(specialization)
+		to_chat(owner, "You specialize in [specialization].")
+		return TRUE
+	return FALSE
 
 /*
  * Get the corresponding changeling profile for the passed name.

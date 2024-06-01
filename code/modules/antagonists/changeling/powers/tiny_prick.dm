@@ -220,6 +220,7 @@
 	button_icon_state = "sting_mute"
 	chemical_cost = 20
 	dna_cost = 2
+	req_spec = "stealth"
 
 /datum/action/changeling/sting/mute/sting_action(mob/user, mob/living/carbon/target)
 	..()

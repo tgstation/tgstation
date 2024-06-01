@@ -6,6 +6,7 @@
 		Shield
 		Armor
 		Tentacles
+		Release Bees
 */
 
 
@@ -179,6 +180,7 @@
 	chemical_cost = 20
 	dna_cost = 2
 	req_human = TRUE
+	req_spec = "combat"
 	weapon_type = /obj/item/melee/arm_blade
 	weapon_name_simple = "blade"
 
@@ -270,6 +272,7 @@
 	chemical_cost = 10
 	dna_cost = 2
 	req_human = TRUE
+	req_spec = "combat"
 	weapon_type = /obj/item/gun/magic/tentacle
 	weapon_name_simple = "tentacle"
 	silent = TRUE
@@ -480,6 +483,7 @@
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = TRUE
+	req_spec = "combat"
 
 	weapon_type = /obj/item/shield/changeling
 	weapon_name_simple = "shield"
@@ -533,6 +537,7 @@
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = TRUE
+	req_spec = "combat"
 	recharge_slowdown = 0.125
 
 	suit_type = /obj/item/clothing/suit/armor/changeling

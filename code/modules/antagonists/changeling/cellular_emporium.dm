@@ -71,7 +71,7 @@
 
 /datum/cellular_emporium/ui_act(action, params)
 	. = ..()
-	if(.)
+	if(. || !changeling.specialization)
 		return
 
 	switch(action)
@@ -102,5 +102,9 @@
 /datum/action/cellular_emporium/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
+		return
+	var/datum/antagonist/changeling/ling = IS_CHANGELING(owner)
+	if(!ling.specialization)
+		ling.specialize()
 		return
 	target.ui_interact(owner)

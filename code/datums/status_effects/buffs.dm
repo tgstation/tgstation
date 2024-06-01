@@ -112,7 +112,17 @@
 //Being on fire will suppress this healing
 /datum/status_effect/fleshmend
 	id = "fleshmend"
-	duration = 10 SECONDS
+	duration = 20 SECONDS
+	/// Healing multiplier
+	var/healfactor = 1
+	alert_type = /atom/movable/screen/alert/status_effect/fleshmend
+	show_duration = TRUE
+
+//Stealth lings need to make a quick getaway, so fleshmend faster for 40 HP
+/datum/status_effect/fleshmend/stealth
+	id = "fleshmend"
+	duration = 5 SECONDS
+	healfactor = 3
 	alert_type = /atom/movable/screen/alert/status_effect/fleshmend
 	show_duration = TRUE
 
@@ -140,9 +150,9 @@
 		return
 
 	var/need_mob_update = FALSE
-	need_mob_update += owner.adjustBruteLoss(-4 * seconds_between_ticks, updating_health = FALSE)
-	need_mob_update += owner.adjustFireLoss(-2 * seconds_between_ticks, updating_health = FALSE)
-	need_mob_update += owner.adjustOxyLoss(-4 * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjustBruteLoss(-4 * healfactor * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjustFireLoss(-2 * healfactor * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjustOxyLoss(-4 * healfactor * seconds_between_ticks, updating_health = FALSE)
 	if(need_mob_update)
 		owner.updatehealth()
 

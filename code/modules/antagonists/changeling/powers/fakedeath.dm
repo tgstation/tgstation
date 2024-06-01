@@ -17,6 +17,10 @@
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
 /datum/action/changeling/fakedeath/sting_action(mob/living/user)
 	..()
+	//Stealth lings go faster so they have a slightly more generous window for escape
+	var/datum/antagonist/changeling/ling = IS_CHANGELING(user)
+	if(ling && ling.specialization == "stealth")
+		fakedeath_duration = 30
 	if(revive_ready)
 		INVOKE_ASYNC(src, PROC_REF(revive), user)
 		return TRUE
