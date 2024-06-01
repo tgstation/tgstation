@@ -7,6 +7,9 @@
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 400
 
+	/// Are we grinding or juicing
+	var/grinding = TRUE
+
 /obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt, layer)
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
@@ -15,9 +18,49 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+/obj/machinery/plumbing/grinder_chemical/examine(mob/user)
+	. = ..()
+
+	. += span_notice("Use empty hand to change operation mode. Currently [grinding ? "Grinding" : "Juicing"]")
+
+/**
+ * Check if the user can interact with the grinder
+ * Arguments
+ *
+ * * mob/user - the player we are checking for
+ */
+/obj/machinery/plumbing/grinder_chemical/proc/check_interactable(mob/user)
+	PRIVATE_PROC(TRUE)
+
+	return can_interact(user)
+
+/obj/machinery/plumbing/grinder_chemical/attack_hand(mob/living/user, list/modifiers)
+	if(user.combat_mode || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
+		return FALSE
+
+	var/list/options = list()
+
+	var/static/radial_grind = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind")
+	options["grind"] = radial_grind
+
+	var/static/radial_juice = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_juice")
+	options["juice"] = radial_juice
+
+	var/choice = show_radial_menu(
+		user,
+		src,
+		options,
+		custom_check = CALLBACK(src, PROC_REF(check_interactable), user),
+	)
+	if(!choice)
+		return FALSE
+
+	grinding = (choice == "grind")
+	return TRUE
+
 /obj/machinery/plumbing/grinder_chemical/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
-	if(user.combat_mode)
+	if(user.combat_mode || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
 	if(istype(tool, /obj/item/construction/plumbing))
@@ -53,7 +96,7 @@
 /obj/machinery/plumbing/grinder_chemical/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 
-	grind(AM)
+	INVOKE_ASYNC(src, PROC_REF(grind), AM)
 
 /**
  * Grinds/Juices the atom
@@ -61,7 +104,9 @@
  * * [AM][atom] - the atom to grind or juice
  */
 /obj/machinery/plumbing/grinder_chemical/proc/grind(atom/AM)
-	if(!is_operational)
+	PRIVATE_PROC(TRUE)
+
+	if(!is_operational || !anchored)
 		return
 	if(reagents.holder_full())
 		return
@@ -73,10 +118,11 @@
 		return
 
 	var/result
-	if(I.grind_results)
-		result = I.grind(reagents, usr)
-	else
+	if(!grinding)
 		result = I.juice(reagents, usr)
+	else if(length(I.grind_results) || I.reagents?.total_volume)
+		result = I.grind(reagents, usr)
+
 	if(result)
 		use_energy(active_power_usage)
 		qdel(I)
