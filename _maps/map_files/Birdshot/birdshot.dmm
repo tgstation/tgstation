@@ -1117,7 +1117,7 @@
 /obj/effect/turf_decal/siding/wideplating/dark/corner{
 	dir = 1
 	},
-/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "azh" = (
@@ -1561,6 +1561,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "aHq" = (
@@ -5943,6 +5944,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/textured_half{
 	dir = 8
 	},
@@ -13163,7 +13165,6 @@
 /turf/open/floor/engine/airless,
 /area/station/maintenance/disposal/incinerator)
 "fuD" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
@@ -17815,6 +17816,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "had" = (
@@ -22595,7 +22597,6 @@
 /obj/effect/turf_decal/siding/wideplating/dark/corner{
 	dir = 4
 	},
-/obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "iCr" = (
@@ -22921,6 +22922,7 @@
 	name = "Dorms"
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/cable,
 /turf/open/floor/iron/textured_half,
 /area/station/commons/dorms)
 "iJb" = (
@@ -23446,6 +23448,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/white/small,
 /area/station/service/janitor)
 "iQU" = (
@@ -26696,6 +26699,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/station/commons)
 "jVe" = (
@@ -26935,6 +26939,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/white/small,
 /area/station/service/janitor)
 "jYU" = (
@@ -28730,6 +28735,7 @@
 	dir = 6
 	},
 /obj/machinery/camera/autoname/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "kEs" = (
@@ -39639,7 +39645,6 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/white/small,
 /area/station/service/janitor)
 "onX" = (
@@ -47582,7 +47587,6 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/machinery/computer/security/telescreen/entertainment/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation/entertainment)
 "qMb" = (
@@ -50309,6 +50313,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/textured_half{
 	dir = 8
 	},
@@ -65327,6 +65332,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/station/commons)
 "vPw" = (
@@ -70996,6 +71002,7 @@
 "xsC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron/herringbone,
 /area/station/commons/dorms)
 "xsF" = (
@@ -111210,8 +111217,8 @@ rnD
 rnD
 pzd
 iTN
-pzd
-pzd
+rnD
+rnD
 iTN
 pzd
 rnD
@@ -111719,7 +111726,7 @@ eVH
 eQF
 pfW
 oaK
-pzd
+rnD
 bqy
 bqy
 bqy
@@ -112233,7 +112240,7 @@ arH
 nUY
 nUY
 iCq
-pzd
+rnD
 bqy
 bqy
 bqy
@@ -112747,7 +112754,7 @@ rax
 uek
 pTZ
 ayZ
-pzd
+rnD
 bqy
 bqy
 bqy
