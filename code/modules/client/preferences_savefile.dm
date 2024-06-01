@@ -105,7 +105,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		migrate_legacy_sound_toggles(savefile)
 
 	if (current_version < 45) // Feel free to bump this version up if more quirks are added to this proc
-		migrate_quirks_to_loadout(save_data?["all_quirks"])
+		migrate_quirks_to_loadout(save_data)
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
