@@ -38,7 +38,8 @@
 
 /mob/living/basic/bot/dedbot/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/death_drops, obj/effect/gibspawner/robot)
+	var/death_loot = list(/obj/effect/gibspawner/robot)
+	AddElement(/datum/element/death_drops, death_loot)
 	AddComponent(/datum/component/connect_range, tracked = src, range = 1, works_in_containers = FALSE)
 	var/static/list/innate_actions = list(
 		SPIN_SLASH_ABILITY_TYPEPATH = BB_DEDBOT_SLASH,
