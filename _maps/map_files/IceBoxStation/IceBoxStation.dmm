@@ -21086,7 +21086,7 @@
 /area/station/command/meeting_room)
 "gnR" = (
 /obj/structure/toilet/greyscale{
-	cistern = 1;
+	cistern_open = 1;
 	dir = 1
 	},
 /obj/machinery/light/small/directional/south,
@@ -54761,7 +54761,7 @@
 /area/station/engineering/storage_shared)
 "qrq" = (
 /obj/structure/toilet/greyscale{
-	cistern = 1;
+	cistern_open = 1;
 	dir = 1
 	},
 /obj/effect/spawner/random/entertainment/cigar,
