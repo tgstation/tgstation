@@ -263,7 +263,7 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 				equipper.update_clothing(equipped_item.slot_flags)
 
 		else
-			// Not valid
+			// Not valid, update the preference
 			item_details -= INFO_RESKIN
 			preference_source.write_preference(GLOB.preference_entries[/datum/preference/loadout], preference_list)
 
