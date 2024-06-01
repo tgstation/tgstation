@@ -124,6 +124,6 @@
 	else if(length(I.grind_results) || I.reagents?.total_volume)
 		result = I.grind(reagents, usr)
 
+	use_energy(active_power_usage)
 	if(result)
-		use_energy(active_power_usage)
 		qdel(I)
