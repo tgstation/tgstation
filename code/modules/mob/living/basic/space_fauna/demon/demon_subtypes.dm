@@ -13,9 +13,11 @@
 	// slaughter demons are specifically intended to have low melee damage, but as they hit and build up their killstreak
 	// their wound bonuses grow and grow higher. this is how they're able to efficiently kill and slaughter their victims.
 	// consider this before you balance them.
-	obj_damage = 50
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	maxHealth = 300
+	health = 300
+	obj_damage = 100
+	melee_damage_lower = 20
+	melee_damage_upper = 30
 	wound_bonus = -10
 	bare_wound_bonus = 0
 	sharpness = SHARP_EDGED
@@ -57,7 +59,7 @@
 	// Grant us a speed boost if we're on the mortal plane
 	if(isturf(loc))
 		add_movespeed_modifier(/datum/movespeed_modifier/slaughter)
-		addtimer(CALLBACK(src, PROC_REF(remove_movespeed_modifier), /datum/movespeed_modifier/slaughter), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(remove_movespeed_modifier), /datum/movespeed_modifier/slaughter), 10 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 	// Reset our streaks
 	current_hitstreak = 0
@@ -125,6 +127,11 @@
 	response_help_continuous = "hugs"
 	attack_verb_continuous = "wildly tickles"
 	attack_verb_simple = "wildly tickle"
+
+	obj_damage = 50
+	melee_damage_lower = 10
+	melee_damage_upper = 20
+	melee_damage_type = STAMINA
 
 	attack_sound = 'sound/items/bikehorn.ogg'
 	attack_vis_effect = null
