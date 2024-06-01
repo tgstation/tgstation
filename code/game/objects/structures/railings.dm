@@ -62,24 +62,6 @@
 
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
 
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/structure/railing/LateInitialize()
-	RegisterSignal(get_turf(src), COMSIG_TURF_CHANGE, PROC_REF(on_turf_change))
-	turf_changed()
-
-/obj/structure/railing/proc/on_turf_change(turf/source, path, list/new_baseturfs, flags, list/post_change_callbacks)
-	SIGNAL_HANDLER
-	post_change_callbacks += CALLBACK(src, PROC_REF(turf_changed))
-
-///Updates visibility when turfs change so that mineral turfs w/ overlays don't visibly appear underneath the railing.
-/obj/structure/railing/proc/turf_changed()
-	var/turf/loc_turf = get_turf(src)
-	invisibility = 0
-	if(loc_turf.overlays.len > 0)
-		invisibility = 100
-
-
 /obj/structure/railing/examine(mob/user)
 	. = ..()
 	if(anchored == TRUE)

@@ -46,7 +46,7 @@
 ///from base of atom/setDir(): (old_dir, new_dir). Called before the direction changes.
 #define COMSIG_ATOM_DIR_CHANGE "atom_dir_change"
 ///from base of atom/setDir(): (old_dir, new_dir). Called after the direction changes.
-#define COMSIG_ATOM_POST_DIR_CHANGE "atom_dir_change"
+#define COMSIG_ATOM_POST_DIR_CHANGE "atom_post_dir_change"
 ///from base of atom/movable/keybind_face_direction(): (dir). Called before turning with the movement lock key.
 #define COMSIG_MOVABLE_KEYBIND_FACE_DIR "keybind_face_dir"
 	///ignores the movement lock key, used for turning while strafing in a mech
