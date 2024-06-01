@@ -111,7 +111,6 @@
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
 	cooldown_time = 0.5 SECONDS
-	spell_requirements = null
 	var/aoe_radius = 2
 	//how much damage this ability does
 	var/damage_dealt = 18
@@ -123,10 +122,10 @@
 		BODY_ZONE_R_LEG = 1,
 		BODY_ZONE_L_LEG = 1,
 	)
-
-/datum/action/cooldown/mob_cooldown/exenterate/activate(atom/victim, atom/caster)
-	.
+/datum/action/cooldown/mob_cooldown/exenterate/PreActivate(atom/caster)
 	caster.Shake(1, 0.2, 0.3 SECONDS)
+
+/datum/action/cooldown/mob_cooldown/exenterate/Activate(atom/victim, atom/caster)
 	for(var/mob/living/living_mob in range(aoe_radius,caster))
 		if(living_mob == caster)
 			return
