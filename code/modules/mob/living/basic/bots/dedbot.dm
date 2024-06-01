@@ -58,10 +58,11 @@
 		return
 	if (living.stat || check_faction(living)) //who arent in our faction
 		return
-	COOLDOWN_START(src, exenteration_cooldown_duration, 0.5 SECONDS)
+
 	var/datum/action/cooldown/using_action = controller.blackboard[BB_DEDBOT_SLASH]
 	if (using_action?.IsAvailable())
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+	COOLDOWN_START(src, exenteration_cooldown_duration, 0.5 SECONDS)
 
 /datum/ai_controller/basic_controller/bot/dedbot
 	max_target_distance = 1
@@ -112,12 +113,13 @@
 /datum/action/cooldown/mob_cooldown/exenterate/PreActivate(atom/caster)
 	caster.Shake(1, 0.2, 0.3 SECONDS)
 
-/datum/action/cooldown/mob_cooldown/exenterate/Activate(atom/victim, atom/caster)
+/datum/action/cooldown/mob_cooldown/exenterate/Activate(atom/caster)
 	for(var/mob/living/living_mob in range(aoe_radius,caster))
-		if(living_mob == caster)
+		if (living_mob.stat || caster.check_faction(living))
 			return
 		to_chat(living_mob, span_warning("You are cut by the drone's blades!"))
 		living_mob.apply_damage(damage = damage_dealt, damagetype = BRUTE, def_zone = valid_targets, sharpness = SHARP_EDGED)
 	StartCooldown()
 	return TRUE
+
 #undef SPIN_SLASH_ABILITY_TYPEPATH
