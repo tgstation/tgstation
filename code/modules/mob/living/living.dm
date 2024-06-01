@@ -2339,8 +2339,14 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 	. = usable_legs
 	usable_legs = new_value
+	update_usable_leg_status()
 
-	if(new_value > .) // Gained leg usage.
+/**
+ * Proc that updates the status of the mob's legs without setting its leg value to something else.
+ */
+/mob/living/proc/update_usable_leg_status()
+
+	if(usable_legs > 0) // Gained leg usage.
 		REMOVE_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 	else if(!(movement_type & (FLYING | FLOATING))) //Lost leg usage, not flying.
@@ -2353,6 +2359,13 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		var/limbless_slowdown = (default_num_legs - usable_legs) * 3
 		if(!usable_legs && usable_hands < default_num_hands)
 			limbless_slowdown += (default_num_hands - usable_hands) * 3
+		var/list/slowdown_mods = list()
+		SEND_SIGNAL(src, COMSIG_LIVING_LIMBLESS_SLOWDOWN, limbless_slowdown, slowdown_mods)
+		for(var/num in slowdown_mods)
+			limbless_slowdown *= num
+		if(limbless_slowdown == 0)
+			remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
+			return
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/limbless, multiplicative_slowdown = limbless_slowdown)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
