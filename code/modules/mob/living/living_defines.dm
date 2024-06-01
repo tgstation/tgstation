@@ -214,6 +214,9 @@
 	///what multiplicative slowdown we get from turfs currently.
 	var/current_turf_slowdown = 0
 
+	/// Is the mob looking vertically
+	var/looking_vertically = FALSE
+
 	/// Living mob's mood datum
 	var/datum/mood/mob_mood
 
