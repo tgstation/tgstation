@@ -67,6 +67,9 @@
 		return
 
 	var/obj/item/I = AM
+	if((I.item_flags && ABSTRACT) || (I.flags_1 & HOLOGRAM_1))
+		return
+
 	var/result
 	if(I.grind_results)
 		result = I.grind(reagents, usr)
