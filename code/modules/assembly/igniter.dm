@@ -52,8 +52,8 @@
 
 /obj/item/assembly/igniter/ignition_effect(atom/A, mob/user)
 	. = span_notice("[user] fiddles with [src], and manages to light [A].")
-	add_fingerprint(user)
 	activate()
+	add_fingerprint(user)
 
 //For the Condenser, which functions like the igniter but makes things colder.
 /obj/item/assembly/igniter/condenser
