@@ -34,10 +34,11 @@
 	switch(affected_mob.stat)
 		if(CONSCIOUS) //bad
 			thou_shall_heal = min(death_is_coming/20, 3)
-			need_mob_update += affected_mob.adjustOxyLoss(3 * REM * seconds_per_tick, TRUE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+			need_mob_update += affected_mob.adjustOxyLoss(2 * REM * seconds_per_tick, TRUE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		if(SOFT_CRIT) //meh convert
 			thou_shall_heal = round(death_is_coming/13,0.1)
-			need_mob_update += affected_mob.adjustOxyLoss(2 * REM * seconds_per_tick, TRUE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+			need_mob_update += affected_mob.adjustOxyLoss(1 * REM * seconds_per_tick, TRUE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+			good_kind_of_healing = TRUE
 		else //no convert
 			thou_shall_heal = round(death_is_coming/10, 0.1)
 			good_kind_of_healing = TRUE
@@ -45,7 +46,7 @@
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 
-	if(!good_kind_of_healing && !reaping && SPT_PROB(0.00005, seconds_per_tick)) //janken with the grim reaper!
+	if(good_kind_of_healing && !reaping && SPT_PROB(0.00005, seconds_per_tick)) //janken with the grim reaper!
 		notify_ghosts(
 			"[affected_mob] has entered a game of rock-paper-scissors with death!",
 			source = affected_mob,
@@ -90,6 +91,12 @@
 	. = ..()
 	if(helbent)
 		affected_mob.remove_status_effect(/datum/status_effect/necropolis_curse)
+
+/datum/reagent/medicine/c2/helbital/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	if(current_cycle >= 50) //greater than 10u in the system
+		affected_mob.AddComponent(/datum/component/omen, incidents_left = max(round(current_cycle/25), 3)) //no more than 3 bad incidents for dropping more than 10u
+		to_chat(affected_mob, span_hierophant_warning("You feel a sense of heavy dread and grave misfortune settle in as the substance leaves your body."))
 
 /datum/reagent/medicine/c2/libital //messes with your liber
 	name = "Libital"
