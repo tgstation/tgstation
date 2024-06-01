@@ -1,0 +1,4 @@
+author: "Wayland-Smithy"
+delete-after: True
+changes:
+  - balance: "When an AI is alive, on main power, and not SSD its bolts cannot be raised or lowered externally."
