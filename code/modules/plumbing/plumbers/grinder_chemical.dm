@@ -31,7 +31,7 @@
 		for(var/obj/item/obj_item in tool.contents)
 			grind(obj_item)
 		return ITEM_INTERACT_SUCCESS
-	else if(!tool.tool_behaviour)
+	else if(!tool.tool_behaviour || !istype(/obj/item/plunger))
 		if(!anchored)
 			to_chat(user, span_warning("Anchor first to star grinding."))
 			return ITEM_INTERACT_BLOCKING
