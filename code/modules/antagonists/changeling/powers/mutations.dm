@@ -187,7 +187,7 @@
 	if(!changeling)
 		return
 
-	var/obj/item/melee/arm_blade/blade = ..(user)
+	var/obj/item/melee/arm_blade/blade = ..()
 	blade.remaining_uses = round(changeling.absorbed_count * 3)
 	return TRUE
 
