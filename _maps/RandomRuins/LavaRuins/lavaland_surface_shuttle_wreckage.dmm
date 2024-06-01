@@ -262,12 +262,6 @@
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/lavaland_atmos,
 /area/ruin/unpowered)
-"Gx" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/mineral/titanium{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/ruin/unpowered)
 "GF" = (
 /obj/structure/window/reinforced/shuttle/unanchored,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -514,7 +508,7 @@ SV
 SV
 uh
 sZ
-Gx
+hT
 ky
 HM
 ih
