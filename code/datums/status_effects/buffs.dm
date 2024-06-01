@@ -99,10 +99,10 @@
 /datum/status_effect/blooddrunk/on_remove()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology.brute_mod *= 10
-		human_owner.physiology.burn_mod *= 10
-		human_owner.physiology.tox_mod *= 10
-		human_owner.physiology.oxy_mod *= 10
+		human_owner.physiology.brute_mod *= 2
+		human_owner.physiology.burn_mod *= 2
+		human_owner.physiology.tox_mod *= 2
+		human_owner.physiology.oxy_mod *= 2
 		human_owner.physiology.stamina_mod *= 10
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
 	owner.remove_stun_absorption(id)
