@@ -32,14 +32,14 @@
 	mob_size = MOB_SIZE_SMALL
 	robot_arm = /obj/item/hatchet/cutterblade
 	density = FALSE
-
+	COOLDOWN_DECLARE(trigger_cooldown)
+	//time between exenteration uses
+	var/exenteration_cooldown_duration = 0.5 SECONDS
 	//aoe slash ability
 	var/datum/action/cooldown/mob_cooldown/bot/exenterate
 
 /mob/living/basic/bot/dedbot/Initialize(mapload)
 	. = ..()
-	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(look_aggro), COMSIG_ATOM_EXITED = PROC_REF(look_deaggro))
-	AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = 1, works_in_containers = FALSE)
 	var/static/list/innate_actions = list(
 		SPIN_SLASH_ABILITY_TYPEPATH = BB_DEDBOT_SLASH,
 	)
@@ -51,30 +51,17 @@
 			return TRUE
 	return FALSE
 
-/mob/living/basic/bot/dedbot/HasProximity(mob/living)
+/mob/living/basic/bot/dedbot/HasProximity(mob/living, datum/ai_controller/controller)
 	if(!COOLDOWN_FINISHED(src, trigger_cooldown))
 		return
 	if (!isliving(living)) //we target living guys
 		return
 	if (living.stat || check_faction(living)) //who arent in our faction
 		return
-	COOLDOWN_START(src, trigger_cooldown, 0.5 SECONDS)
-	trap_alerted()
-
-
-/mob/living/basic/bot/dedbot/proc/aggro(datum/source, mob/living/victim, datum/ai_controller/controller)
-	SIGNAL_HANDLER
-	if(istype(victim) || istype(victim, /mob/living/carbon) || victim.stat != DEAD || !in_faction(victim))
-		var/datum/action/cooldown/using_action = controller.blackboard[BB_DEDBOT_SLASH]
-		if (using_action?.IsAvailable())
-			return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
-	return
-
-/mob/living/basic/bot/dedbot/proc/in_faction(mob/target)
-	for(var/faction1 in faction)
-		if(faction1 in target.faction)
-			return TRUE
-	return FALSE
+	COOLDOWN_START(src, exenteration_cooldown_duration, 0.5 SECONDS)
+	var/datum/action/cooldown/using_action = controller.blackboard[BB_DEDBOT_SLASH]
+	if (using_action?.IsAvailable())
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 /datum/ai_controller/basic_controller/bot/dedbot
 	max_target_distance = 1
