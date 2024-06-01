@@ -2,7 +2,8 @@
 
 /obj/item/fish/goldfish
 	name = "goldfish"
-	desc = "Despite common belief, goldfish do not have three-second memories. They can actually remember things that happened up to three months ago."
+	desc = "Despite common belief, goldfish do not have three-second memories. \
+		They can actually remember things that happened up to three months ago."
 	icon_state = "goldfish"
 	sprite_width = 8
 	sprite_height = 8
@@ -12,6 +13,12 @@
 	favorite_bait = list(/obj/item/food/bait/worm)
 	required_temperature_min = MIN_AQUARIUM_TEMP+18
 	required_temperature_max = MIN_AQUARIUM_TEMP+26
+
+/obj/item/fish/goldfish/gill
+	name = "McGill"
+	desc = "A great rubber duck tool for Lawyers who can't get a grasp over their case."
+	stable_population = 1
+	random_case_rarity = FISH_RARITY_NOPE
 
 /obj/item/fish/angelfish
 	name = "angelfish"

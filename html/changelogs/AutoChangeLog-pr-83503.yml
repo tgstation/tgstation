@@ -1,0 +1,4 @@
+author: "Echriser"
+delete-after: True
+changes:
+  - bugfix: "you are now able to cancel the look up/down verbs from anywhere"
