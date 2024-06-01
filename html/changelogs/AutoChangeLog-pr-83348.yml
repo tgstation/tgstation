@@ -1,4 +1,0 @@
-author: "Wayland-Smithy"
-delete-after: True
-changes:
-  - qol: "Crew Monitor UI now scrolls properly even after clicking the inner list."

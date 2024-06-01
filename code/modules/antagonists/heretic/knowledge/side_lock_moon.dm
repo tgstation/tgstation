@@ -5,7 +5,7 @@
 	desc = "Grants you Mind Gate, a spell \
 		which deals you 20 brain damage but the target suffers a hallucination,\
 		is left confused for 10 seconds, suffers oxygen loss and brain damage."
-	gain_text = "My mind swings open like a gate, and its insight will let me percieve the truth."
+	gain_text = "My mind swings open like a gate, and its insight will let me perceive the truth."
 	next_knowledge = list(
 		/datum/heretic_knowledge/key_ring,
 		/datum/heretic_knowledge/spell/moon_smile,

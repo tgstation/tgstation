@@ -110,5 +110,10 @@
 	if(!direction)
 		return
 
+	if(ismovable(shell.loc)) //Inside an object, tell it we moved
+		var/atom/loc_atom = shell.loc
+		loc_atom.relaymove(shell, direction)
+		return
+
 	if(shell.Process_Spacemove(direction))
 		shell.Move(get_step(shell, direction), direction)
