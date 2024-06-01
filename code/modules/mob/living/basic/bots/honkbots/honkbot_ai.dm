@@ -1,7 +1,8 @@
 /datum/ai_controller/basic_controller/bot/honkbot
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/bot,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_UNREACHABLE_LIST_COOLDOWN = 1 MINUTES,
+		BB_ALWAYS_IGNORE_FACTION = TRUE,
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/respond_to_summon,
@@ -55,13 +56,15 @@
 	if(!ishuman(my_target))
 		return FALSE
 	var/mob/living/carbon/human/human_target = my_target
-	if(human_target.handcuffed)
+	if(human_target.handcuffed || human_target.stat != CONSCIOUS)
 		return FALSE
 	if(locate(human_target) in controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
 		return TRUE
 	var/mob/living/basic/bot/honkbot/my_bot = controller.pawn
 	var/honkbot_flags = my_bot.honkbot_flags
 	var/assess_flags = NONE
+	if(human_target.IsParalyzed() && !(honkbot_flags & HONKBOT_HANDCUFF_TARGET))
+		return FALSE
 	if(my_bot.bot_access_flags & BOT_COVER_EMAGGED)
 		assess_flags |= JUDGE_EMAGGED
 	if(honkbot_flags & HONKBOT_CHECK_IDS)
@@ -74,39 +77,24 @@
 
 /datum/ai_planning_subtree/troll_target/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/carbon/my_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	if(QDELETED(my_target) || !istype(my_target))
-		return
-	if(my_target.handcuffed) //theyre already trolled
+	if(QDELETED(my_target) || !istype(my_target) || my_target.handcuffed)
 		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
 		return
+
 	var/mob/living/basic/bot/honkbot/my_bot = controller.pawn
-	if(my_target.IsParalyzed() && (my_bot.honkbot_flags & HONKBOT_HANDCUFF_TARGET))
-		var/datum/action/cuff_ability = controller.blackboard[BB_HONK_CUFF]
-		if(cuff_ability?.IsAvailable())
-			controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_clear_target/honkbot, BB_HONK_CUFF, BB_BASIC_MOB_CURRENT_TARGET)
-			return SUBTREE_RETURN_FINISH_PLANNING
+	if(my_target.IsParalyzed() && !(my_bot.honkbot_flags & HONKBOT_HANDCUFF_TARGET))
+		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
 		return
-	var/datum/action/honk_ability = controller.blackboard[BB_HONK_STUN]
-	if(honk_ability?.IsAvailable())
-		controller.queue_behavior(/datum/ai_behavior/targeted_mob_ability/and_clear_target/honkbot, BB_HONK_STUN, BB_BASIC_MOB_CURRENT_TARGET)
-		return SUBTREE_RETURN_FINISH_PLANNING
 
-/datum/ai_behavior/targeted_mob_ability/and_clear_target/honkbot
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
+	controller.queue_behavior(/datum/ai_behavior/basic_melee_attack/interact_once/honkbot, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY)
+	return SUBTREE_RETURN_FINISH_PLANNING
 
-/datum/ai_behavior/targeted_mob_ability/and_clear_target/honkbot/setup(datum/ai_controller/controller, ability_key, target_key)
-	. = ..()
-	var/atom/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		return FALSE
-	set_movement_target(controller, target)
+/datum/ai_behavior/basic_melee_attack/interact_once/honkbot
 
-/datum/ai_behavior/targeted_mob_ability/and_clear_target/honkbot
-
-/datum/ai_behavior/targeted_mob_ability/and_clear_target/honkbot/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
+/datum/ai_behavior/basic_melee_attack/interact_once/honkbot/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	var/mob/living/carbon/human/human_target = controller.blackboard[target_key]
 	if(!isnull(human_target))
-		controller.remove_thing_from_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST, human_target, lazylist = TRUE)
+		controller.remove_from_blackboard_lazylist_key(BB_BASIC_MOB_RETALIATE_LIST, human_target)
 	return ..()
 
 /datum/ai_planning_subtree/play_with_clowns/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
@@ -139,17 +127,15 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/play_with_clown/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/mob/living/living_target = controller.blackboard[target_key]
 	if(QDELETED(living_target))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/mob/living/living_pawn = controller.pawn
 	living_pawn.UnarmedAttack(living_target, proximity_flag = TRUE)
 	living_pawn.manual_emote("celebrates with [living_target]!")
 	living_pawn.emote("flip")
 	living_pawn.emote("beep")
-	finish_action(controller, TRUE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/play_with_clown/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
@@ -202,12 +188,10 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/drag_to_slip/perform(seconds_per_tick, datum/ai_controller/controller, slip_target, slippery_target)
-	. = ..()
 	var/mob/living/our_pawn = controller.pawn
 	var/atom/living_target = controller.blackboard[slip_target]
 	if(QDELETED(living_target))
-		finish_action(controller, FALSE, slip_target, slippery_target)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/list/possible_dirs = GLOB.alldirs.Copy()
 	possible_dirs -= get_dir(our_pawn, living_target)
 	for(var/direction in possible_dirs)
@@ -216,7 +200,7 @@
 			possible_dirs -= direction
 	step(our_pawn, pick(possible_dirs))
 	our_pawn.stop_pulling()
-	finish_action(controller, TRUE, slip_target, slippery_target)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/drag_to_slip/finish_action(datum/ai_controller/controller, success, slip_target, slippery_target)
 	. = ..()
@@ -243,11 +227,10 @@
 	. = ..()
 	var/atom/movable/target = controller.blackboard[target_key]
 	if(QDELETED(target) || target.anchored || target.pulledby)
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/mob/living/our_mob = controller.pawn
 	our_mob.start_pulling(target)
-	finish_action(controller, TRUE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/drag_target/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()

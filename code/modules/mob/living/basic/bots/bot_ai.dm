@@ -16,13 +16,14 @@
 		/datum/ai_planning_subtree/find_patrol_beacon,
 		/datum/ai_planning_subtree/manage_unreachable_list,
 	)
-	max_target_distance = AI_BOT_PATH_LENGTH
+	max_target_distance = 25
 	///keys to be reset when the bot is reseted
 	var/list/reset_keys = list(
 		BB_BEACON_TARGET,
 		BB_PREVIOUS_BEACON_TARGET,
 		BB_BOT_SUMMON_TARGET,
 	)
+	can_idle = FALSE
 
 /datum/targeting_strategy/basic/bot/can_attack(mob/living/living_mob, atom/the_target, vision_range)
 	var/datum/ai_controller/my_controller = living_mob.ai_controller
@@ -250,19 +251,19 @@
 	controller.clear_blackboard_key(target_key)
 
 /datum/ai_behavior/bot_search
+	action_cooldown = 2 SECONDS
+	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/bot_search/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, looking_for, radius = 5, pathing_distance = 10, bypass_add_blacklist = FALSE)
-	. = ..()
 	if(!istype(controller))
 		stack_trace("attempted to give [controller.pawn] the bot search behavior!")
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
 	var/mob/living/living_pawn = controller.pawn
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/atom/potential_target as anything in oview(radius, controller.pawn))
 		if(QDELETED(living_pawn))
-			finish_action(controller, FALSE)
-			return
+			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 		if(!is_type_in_typecache(potential_target, looking_for))
 			continue
 		if(LAZYACCESS(ignore_list, potential_target))
@@ -270,9 +271,8 @@
 		if(!valid_target(controller, potential_target))
 			continue
 		if(controller.set_if_can_reach(target_key, potential_target, distance = pathing_distance, bypass_add_to_blacklist = bypass_add_blacklist))
-			finish_action(controller, TRUE)
-			return
-	finish_action(controller, FALSE)
+			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 /datum/ai_behavior/bot_search/proc/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
 	return TRUE

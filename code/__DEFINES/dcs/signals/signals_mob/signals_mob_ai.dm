@@ -3,8 +3,7 @@
 
 ///Signal sent before a blackboard key is cleared
 #define COMSIG_AI_BLACKBOARD_KEY_PRECLEAR(blackboard_key) "ai_blackboard_key_pre_clear_[blackboard_key]"
-	///prevent key clearing
-	#define COMSIG_DONT_CLEAR (1<<0)
+
 /// Signal sent when a blackboard key is cleared
 #define COMSIG_AI_BLACKBOARD_KEY_CLEARED(blackboard_key) "ai_blackboard_key_clear_[blackboard_key]"
 

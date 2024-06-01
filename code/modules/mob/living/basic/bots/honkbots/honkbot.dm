@@ -4,7 +4,7 @@
 	icon_state = "honkbot"
 	base_icon_state = "honkbot"
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_THEATRE, ACCESS_JANITOR)
+	req_access = list(ACCESS_ROBOTICS, ACCESS_THEATRE, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	ai_controller = /datum/ai_controller/basic_controller/bot/honkbot
 	radio_channel = RADIO_CHANNEL_SERVICE
@@ -20,9 +20,6 @@
 		HONKBOT_VOICED_HONK_HAPPY = 'sound/items/bikehorn.ogg',
 		HONKBOT_VOICED_HONK_SAD = 'sound/misc/sadtrombone.ogg',
 	)
-	COOLDOWN_DECLARE(honk_cooldown)
-	///Sound played when HONKing someone
-	var/honksound = 'sound/items/bikehorn.ogg'
 	///Honkbot's flags
 	var/honkbot_flags = HONKBOT_CHECK_RECORDS | HONKBOT_HANDCUFF_TARGET | HONKBOT_MODE_SLIP
 
@@ -38,16 +35,22 @@
 		/obj/item/soap,
 	))
 	ai_controller.set_blackboard_key(BB_SLIPPERY_ITEMS, slippery_items)
-	var/static/list/innate_actions = list(
-		/datum/action/cooldown/mob_cooldown/bot/honk_stun = BB_HONK_STUN,
-		/datum/action/cooldown/mob_cooldown/bot/handcuff_target = BB_HONK_CUFF,
-	)
-	grant_actions_by_list(innate_actions)
+
+	var/datum/action/cooldown/mob_cooldown/bot/honk/bike_honk = new(src)
+	bike_honk.Grant(src)
+	bike_honk.post_honk_callback = CALLBACK(src, PROC_REF(set_attacking_state))
+
 	AddComponent(/datum/component/slippery,\
 		knockdown = 6 SECONDS,\
 		paralyze = 3 SECONDS,\
 		on_slip_callback = CALLBACK(src, PROC_REF(post_slip)),\
 		can_slip_callback = CALLBACK(src, PROC_REF(pre_slip)),\
+	)
+	AddComponent(/datum/component/stun_n_cuff,\
+		stun_sound = 'sound/items/AirHorn.ogg',\
+		post_stun_callback = CALLBACK(src, PROC_REF(post_stun)),\
+		post_arrest_callback = CALLBACK(src, PROC_REF(post_arrest)),\
+		handcuff_type = /obj/item/restraints/handcuffs/cable/zipties/fake,\
 	)
 
 /mob/living/basic/bot/honkbot/generate_speak_list()
@@ -64,27 +67,27 @@
 	icon_state = "[base_icon_state]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
 
-/mob/living/basic/bot/honkbot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	. = ..()
-	if(!.)
-		return FALSE
-	bike_horn()
-
-/mob/living/basic/bot/honkbot/proc/post_cuffing(mob/living/carbon/current_target)
-	playsound(src, (bot_access_flags & BOT_COVER_EMAGGED ? SFX_HONKBOT_E : honksound), 50, FALSE)
+/mob/living/basic/bot/honkbot/proc/post_arrest(mob/living/carbon/current_target)
+	playsound(src, (bot_access_flags & BOT_COVER_EMAGGED ? SFX_HONKBOT_E : 'sound/items/bikehorn.ogg'), 50, FALSE)
 	icon_state = bot_access_flags & BOT_COVER_EMAGGED ? "[base_icon_state]-e" : "[base_icon_state]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 3 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
-/mob/living/basic/bot/honkbot/proc/bike_horn()
-	if(!COOLDOWN_FINISHED(src, honk_cooldown))
+/mob/living/basic/bot/honkbot/proc/post_stun(mob/living/carbon/current_target)
+	if(!istype(current_target))
 		return
-	playsound(loc, honksound, 50, TRUE, -1)
+
+	current_target.set_stutter(40 SECONDS)
+	current_target.set_jitter_if_lower(100 SECONDS)
 	set_attacking_state()
-	COOLDOWN_START(src, honk_cooldown, 5 SECONDS)
+	if(HAS_TRAIT(current_target, TRAIT_DEAF))
+		return
+
+	var/obj/item/organ/internal/ears/target_ears = current_target.get_organ_slot(ORGAN_SLOT_EARS)
+	target_ears?.adjustEarDamage(0, 5)
 
 /mob/living/basic/bot/honkbot/ui_data(mob/user)
 	var/list/data = ..()
-	if((bot_access_flags & BOT_CONTROL_PANEL_OPEN) || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_access_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
 		data["custom_controls"]["slip_people"] = honkbot_flags & HONKBOT_MODE_SLIP
 		data["custom_controls"]["fake_cuff"] = honkbot_flags & HONKBOT_HANDCUFF_TARGET
 		data["custom_controls"]["check_ids"] = honkbot_flags & HONKBOT_CHECK_IDS
@@ -93,7 +96,7 @@
 
 /mob/living/basic/bot/honkbot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || !isliving(ui.user) || !(bot_access_flags & BOT_CONTROL_PANEL_OPEN) && !(ui.user.has_unlimited_silicon_privilege))
+	if(. || !isliving(ui.user) || (bot_access_flags & BOT_COVER_LOCKED) && !(ui.user.has_unlimited_silicon_privilege))
 		return
 	switch(action)
 		if("slip_people")
