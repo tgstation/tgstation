@@ -25,7 +25,7 @@
 	var/datum/port/input/network
 
 	/// Allow camera range to be set or not
-	var/camera_range_settable = 1
+	var/camera_range_settable = TRUE
 	/// Used only for the BCI shell type, as the COMSIG_MOVABLE_MOVED signal need to be assigned to the user mob, not the shell circuit
 	var/camera_signal_move_override = FALSE
 
@@ -272,8 +272,8 @@
 	desc = "A peephole camera that captures both sides of the airlock. Network field is used for camera network."
 	camera_prefix = "Airlock"
 
-	camera_range_settable = 0
-
+	/// Hardcode camera to near range
+	camera_range_settable = FALSE
 	current_camera_range = 0
 
 /obj/item/circuit_component/remotecam/polaroid
@@ -281,8 +281,8 @@
 	desc = "Relays a polaroid camera's feed as a digital stream for surveillance-on-the-go. Network field is used for camera network."
 	camera_prefix = "Polaroid"
 
-	camera_range_settable = 0
-
+	/// Hardcode camera to near range
+	camera_range_settable = FALSE
 	current_camera_range = 0
 
 /obj/item/circuit_component/remotecam/bci/register_shell(atom/movable/shell)
