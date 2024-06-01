@@ -2669,6 +2669,9 @@
 	pixel_x = 4
 	},
 /obj/machinery/duct,
+/obj/item/gun/ballistic/shotgun/musket{
+	pixel_y = -7
+	},
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "xs" = (
@@ -3984,6 +3987,18 @@
 	},
 /obj/effect/decal/cleanable/oil/slippery,
 /obj/item/trash/popcorn/salty,
+/obj/item/ammo_casing/shotgun/fletchette{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/item/ammo_casing/shotgun/fletchette{
+	pixel_x = -2;
+	pixel_y = -7
+	},
+/obj/item/ammo_casing/shotgun/fletchette{
+	pixel_x = -4;
+	pixel_y = 6
+	},
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "IT" = (
