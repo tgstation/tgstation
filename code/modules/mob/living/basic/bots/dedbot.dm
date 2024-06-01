@@ -1,11 +1,11 @@
 ///////////////Donk Exenteration Drone - DED////////////
 //A patrolling bot that cuts you up if you get close. Use ranged weapons or avoid it.
 
-#define SPIN_SLASH_ABILITY_TYPEPATH /datum/action/cooldown/spell/aoe/exenterate
+#define SPIN_SLASH_ABILITY_TYPEPATH /datum/action/cooldown/mob_cooldown/exenterate
 
 /mob/living/basic/bot/dedbot
 	name = "\improper Donk Exenteration Drone" //Exenteration means ripping entrails out, ouch!
-	desc = "A quad-bladed commercial defence drone, often called an 'Ex-Drone' or 'D.E.D.bot'. It follows a simple programmed patrol route, and slashes at anyone who doesn't have a syndicate identity implant."
+	desc = "A bladed commercial defence drone, often called an 'Ex-Drone' or 'D.E.D.bot'. It follows a simple programmed patrol route, and slashes at anyone who doesn't have an identity implant."
 	icon_state = "ded_drone0"
 	base_icon_state = "ded_drone"
 	req_one_access = list(ACCESS_SYNDICATE)
@@ -38,14 +38,29 @@
 
 /mob/living/basic/bot/dedbot/Initialize(mapload)
 	. = ..()
-	var/death_loot = list(/obj/effect/gibspawner/robot)
-	AddElement(/datum/element/death_drops, death_loot)
 	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(look_aggro), COMSIG_ATOM_EXITED = PROC_REF(look_deaggro))
 	AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = 1, works_in_containers = FALSE)
 	var/static/list/innate_actions = list(
 		SPIN_SLASH_ABILITY_TYPEPATH = BB_DEDBOT_SLASH,
 	)
 	grant_actions_by_list(innate_actions)
+
+/mob/living/basic/bot/dedbot/proc/check_faction(mob/target)
+	for(var/faction1 in faction)
+		if(faction1 in target.faction)
+			return TRUE
+	return FALSE
+
+/mob/living/basic/bot/dedbot/HasProximity(mob/living)
+	if(!COOLDOWN_FINISHED(src, trigger_cooldown))
+		return
+	if (!isliving(living)) //we target living guys
+		return
+	if (living.stat || check_faction(living)) //who arent in our faction
+		return
+	COOLDOWN_START(src, trigger_cooldown, 0.5 SECONDS)
+	trap_alerted()
+
 
 /mob/living/basic/bot/dedbot/proc/aggro(datum/source, mob/living/victim, datum/ai_controller/controller)
 	SIGNAL_HANDLER
@@ -87,7 +102,7 @@
 	finish_planning = FALSE
 
 
-/datum/action/cooldown/spell/aoe/exenterate
+/datum/action/cooldown/mob_cooldown/exenterate
 	name = "Exenterate"
 	desc = "Disembowel every living thing in range with your blades."
 	button_icon = 'icons/obj/weapons/stabby.dmi'
@@ -97,7 +112,7 @@
 	background_icon_state = "base"
 	cooldown_time = 0.5 SECONDS
 	spell_requirements = null
-	aoe_radius = 2
+	var/aoe_radius = 2
 	//how much damage this ability does
 	var/damage_dealt = 18
 	/// weighted list of body zones this can hit
@@ -109,7 +124,7 @@
 		BODY_ZONE_L_LEG = 1,
 	)
 
-/datum/action/cooldown/spell/aoe/exenterate/cast_on_thing_in_aoe(atom/victim, atom/caster)
+/datum/action/cooldown/mob_cooldown/exenterate/activate(atom/victim, atom/caster)
 	.
 	caster.Shake(1, 0.2, 0.3 SECONDS)
 	for(var/mob/living/living_mob in range(aoe_radius,caster))
@@ -117,5 +132,6 @@
 			return
 		to_chat(living_mob, span_warning("You are cut by the drone's blades!"))
 		living_mob.apply_damage(damage = damage_dealt, damagetype = BRUTE, def_zone = valid_targets, sharpness = SHARP_EDGED)
-
+	StartCooldown()
+	return TRUE
 #undef SPIN_SLASH_ABILITY_TYPEPATH
