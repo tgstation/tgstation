@@ -52,7 +52,7 @@
 	return FALSE
 
 /mob/living/basic/bot/dedbot/HasProximity(mob/living, datum/ai_controller/controller)
-	if(!COOLDOWN_FINISHED(src, trigger_cooldown))
+	if(!COOLDOWN_FINISHED(src, exenteration_cooldown_duration))
 		return
 	if (!isliving(living)) //we target living guys
 		return
