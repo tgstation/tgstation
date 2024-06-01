@@ -170,7 +170,7 @@
 	if(.)
 		name = "\improper Obrez Moderna" // wear it loud and proud
 
-obj/item/gun/ballistic/rifle/boltaction/donkrifle
+/obj/item/gun/ballistic/rifle/boltaction/donkrifle
 	name = "\improper Donk Co. Jezail"
 	desc = "A mass-manufactured bolt-action sporting rifle with a distinctively long barrel. Powerful enough to take down a space bear from a thousand paces. The lengthened barrel gives it good accuracy and power, even at range."
 	w_class = WEIGHT_CLASS_HUGE
