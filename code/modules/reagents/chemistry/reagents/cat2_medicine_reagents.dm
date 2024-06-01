@@ -95,7 +95,7 @@
 /datum/reagent/medicine/c2/helbital/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
 	if(current_cycle >= 50) //greater than 10u in the system
-		affected_mob.AddComponent(/datum/component/omen, incidents_left = max(round(current_cycle/25), 3)) //no more than 3 bad incidents for dropping more than 10u
+		affected_mob.AddComponent(/datum/component/omen, incidents_left = min(round(current_cycle/51), 3)) //no more than 3 bad incidents for dropping more than 10u
 		to_chat(affected_mob, span_hierophant_warning("You feel a sense of heavy dread and grave misfortune settle in as the substance leaves your body."))
 
 /datum/reagent/medicine/c2/libital //messes with your liber
