@@ -267,9 +267,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			return TRUE
 		return FALSE
 	. = ..()
-	if(vname == NAMEOF(src, welded) && welded && !can_weld_shut)
+	if(vname == NAMEOF(src, welded) && welded)
 		can_weld_shut = TRUE
-	else if(vname == NAMEOF(src, can_weld_shut) && !can_weld_shut && welded)
+	else if(vname == NAMEOF(src, can_weld_shut) && welded)
 		welded = FALSE
 		update_appearance()
 	if(vname in list(NAMEOF(src, locked), NAMEOF(src, welded), NAMEOF(src, secure), NAMEOF(src, icon_welded), NAMEOF(src, delivery_icon)))
@@ -382,7 +382,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		context[SCREENTIP_CONTEXT_RMB] = anchored ? "Unanchor" : "Anchor"
 		screentip_change = TRUE
 
-	if(!locked && (welded || !can_weld_shut))
+	if(!locked && !welded)
 		if(!secure)
 			if(!broken && can_install_electronics && istype(held_item, /obj/item/electronics/airlock))
 				context[SCREENTIP_CONTEXT_LMB] = "Install Electronics"
@@ -391,7 +391,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			if(istype(held_item) && held_item.tool_behaviour == TOOL_SCREWDRIVER)
 				context[SCREENTIP_CONTEXT_LMB] = "Remove Electronics"
 				screentip_change = TRUE
-			if(!card_reader_installed && length(access_choices) && !broken && can_install_electronics && istype(held_item, /obj/item/stock_parts/card_reader))
+			if(!card_reader_installed && length(access_choices) && !broken && can_install_electronics && can_weld_shut && istype(held_item, /obj/item/stock_parts/card_reader))
 				context[SCREENTIP_CONTEXT_LMB] = "Install Reader"
 				screentip_change = TRUE
 		if(card_reader_installed && istype(held_item) && held_item.tool_behaviour == TOOL_CROWBAR)
@@ -644,7 +644,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /// check if we can install airlock electronics in this closet
 /obj/structure/closet/proc/can_install_airlock_electronics(mob/user)
-	if(secure || !can_install_electronics || !(welded || !can_weld_shut))
+	if(secure || !can_install_electronics)
 		return FALSE
 
 	if(broken)
@@ -659,9 +659,14 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /// check if we can unscrew airlock electronics from this closet
 /obj/structure/closet/proc/can_unscrew_airlock_electronics(mob/user)
-	if(!secure || !(welded || !can_weld_shut))
+	if(!secure)
 		return FALSE
-
+	if(welded)
+		balloon_alert(user, "unweld first!")
+		return FALSE
+	if(card_reader_installed)
+		balloon_alert(user, "attached to card reader!")
+		return FALSE
 	if(locked)
 		balloon_alert(user, "unlock first!")
 		return FALSE
@@ -670,7 +675,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /// check if we can install card reader in this closet
 /obj/structure/closet/proc/can_install_card_reader(mob/user)
-	if(card_reader_installed || !can_install_electronics || !length(access_choices) || !(welded || !can_weld_shut))
+	if(card_reader_installed || !can_install_electronics || !length(access_choices) || welded || !can_weld_shut)
 		return FALSE
 
 	if(broken)
@@ -689,7 +694,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /// check if we can pry out the card reader from this closet
 /obj/structure/closet/proc/can_pryout_card_reader(mob/user)
-	if(!card_reader_installed || !(welded || !can_weld_shut))
+	if(!card_reader_installed || welded || !can_weld_shut)
 		return FALSE
 
 	if(locked)
