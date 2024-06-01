@@ -1,0 +1,4 @@
+author: "tmyqlfpir"
+delete-after: True
+changes:
+  - bugfix: "[Tramstation] Departures and under east tram distro/waste pipes now properly connected"
