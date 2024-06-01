@@ -241,10 +241,7 @@
 	if(SEND_SIGNAL(victim, COMSIG_LIVING_BLOOD_CRAWL_CONSUMED, src, jaunter) & COMPONENT_STOP_CONSUMPTION)
 		return FALSE
 
-	jaunter.adjustBruteLoss(-(jaunter.maxHealth*0.25))
-	jaunter.adjustFireLoss(-(jaunter.maxHealth*0.25))
-	jaunter.adjustToxLoss(-(jaunter.maxHealth*0.25))
-	jaunter.adjustOxyLoss(-(jaunter.maxHealth*0.25))
+	jaunter.revive(HEAL_ALL)
 
 	// No defib possible after laughter
 	victim.apply_damage(1000, BRUTE, wound_bonus = CANT_WOUND)
@@ -264,7 +261,7 @@
  * Called when a victim is successfully consumed.
  */
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/proc/on_victim_consumed(mob/living/victim, mob/living/jaunter)
-	to_chat(jaunter, span_danger("You devour [victim]. Your health a little restored."))
+	to_chat(jaunter, span_danger("You devour [victim]. Your health is fully restored."))
 	qdel(victim)
 
 /**
