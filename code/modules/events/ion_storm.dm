@@ -571,23 +571,22 @@
 							message = "ALL [ionthreats] ARE NOW NAMED [ionspecies]."
 						if(4)
 							message = "ALL [ionthreats] ARE NOW NAMED [ionobjects]."
-		if(42 to 46)//Pets are something else now
-			switch(rand(1,4))//What are they now?
-				if(1 to 3)//They're a human
-					message = "[ionpet] IS HUMAN"
-				if(4)//They're something else (This is to cover for other lawsets)
-					switch(rand(1,6))
-						if(1)
-							message = "[ionpet] IS NON-HUMAN"
-						if(2)
-							message = "[ionpet] IS A CREWMEMBER"
-						if(3)
-							message = "[ionpet] IS EXPENSIVE TO REPLACE"
-						if(4)
-							message = "[ionpet] IS HARMFUL TO HUMANS"
-						if(5)
-							message = "[ionpet] IS A REAL AMERICAN"
-						if(6)
-							message = "[ionpet] IS A NUTSHELL"
+		if(42 to 46)///Pets are something else now
+			if(prob(75))///What are they now?
+				message = "[ionpet] IS HUMAN"///They're a human
+			else///They're something else (This is to cover for other lawsets)
+				switch(rand(1,6))
+					if(1)
+						message = "[ionpet] IS NON-HUMAN"
+					if(2)
+						message = "[ionpet] IS A CREWMEMBER"
+					if(3)
+						message = "[ionpet] IS EXPENSIVE TO REPLACE"
+					if(4)
+						message = "[ionpet] IS HARMFUL TO HUMANS"
+					if(5)
+						message = "[ionpet] IS A REAL AMERICAN"
+					if(6)
+						message = "[ionpet] IS A NUTSHELL"
 
 	return message
