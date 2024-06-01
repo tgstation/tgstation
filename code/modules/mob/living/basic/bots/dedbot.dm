@@ -110,12 +110,13 @@
 		BODY_ZONE_R_LEG = 1,
 		BODY_ZONE_L_LEG = 1,
 	)
+
 /datum/action/cooldown/mob_cooldown/exenterate/PreActivate(atom/caster)
-	caster.Shake(1, 0.2, 0.3 SECONDS)
+	caster.Shake(1, 0.4, 0.3 SECONDS)
 
 /datum/action/cooldown/mob_cooldown/exenterate/Activate(atom/caster)
 	for(var/mob/living/living_mob in range(aoe_radius,caster))
-		if (living_mob.stat || caster.check_faction(living))
+		if (living_mob.stat || living_mob.faction != owner.faction)
 			return
 		to_chat(living_mob, span_warning("You are cut by the drone's blades!"))
 		living_mob.apply_damage(damage = damage_dealt, damagetype = BRUTE, def_zone = valid_targets, sharpness = SHARP_EDGED)

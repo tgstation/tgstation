@@ -196,7 +196,7 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 		lockon_zone = target
 	else
 		lockon_zone = target.loc
-	caster.Beam(lockon_zone, icon_state = "1-full", beam_color = COLOR_MEDIUM_DARK_RED, time = barrage_delay)
+	owner.Beam(lockon_zone, icon_state = "1-full", beam_color = COLOR_MEDIUM_DARK_RED, time = barrage_delay)
 	playsound(lockon_zone, 'sound/machines/terminal_prompt_deny.ogg', vol = 60, vary = TRUE)
 	. = ..()
 
