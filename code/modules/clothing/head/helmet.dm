@@ -424,25 +424,6 @@
 	armor_type = /datum/armor/knight_greyscale
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 
-/obj/item/clothing/head/helmet/skull
-	name = "skull helmet"
-	desc = "An intimidating tribal helmet, it doesn't look very comfortable."
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
-	flags_cover = HEADCOVERSEYES
-	armor_type = /datum/armor/helmet_skull
-	icon_state = "skull"
-	inhand_icon_state = null
-	strip_delay = 100
-
-/datum/armor/helmet_skull
-	melee = 35
-	bullet = 25
-	laser = 25
-	energy = 35
-	bomb = 25
-	fire = 50
-	acid = 50
-
 /obj/item/clothing/head/helmet/durathread
 	name = "durathread helmet"
 	desc = "A helmet made from durathread and leather."
