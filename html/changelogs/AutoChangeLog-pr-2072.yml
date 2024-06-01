@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Added a lot more sanity checking to liquid processing, which should make it much harder for liquid processing to completely break."

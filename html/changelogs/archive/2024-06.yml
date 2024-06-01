@@ -1,0 +1,22 @@
+2024-06-01:
+  Absolucy:
+  - bugfix: Fixed a runtime error (albeit a harmless one) relating to wooden barricades
+      being deconstructed.
+  - bugfix: Added a lot more sanity checking to liquid processing, which should make
+      it much harder for liquid processing to completely break.
+  Gboster-0:
+  - rscadd: the Rapid Pipe Dispenser was bumped up to modern TG, all fear the atmosian
+      powergame
+  KnigTheThrasher:
+  - rscadd: Reworked entire delta perma
+  - rscadd: Bitrunner dens in perma
+  - rscadd: Bitrunning is prisoners job now
+  - rscadd: Improved permabrig to actually fit 5 people (updated kitchen, botany and
+      stuff)
+  - rscdel: Removed bitrunners
+  - rscdel: Removed increased power consumption from upgrading parts
+  - config: bumped prisoner count to 5
+  Uristthedorf:
+  - bugfix: Speed related fixes from TG, including preventing adamantine armor slowdown
+      from being nullified.
+  - qol: Clones made in an experimental cloner that don't have a mind will be deleted.
