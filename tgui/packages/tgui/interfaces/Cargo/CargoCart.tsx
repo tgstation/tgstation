@@ -26,8 +26,8 @@ export function CargoCart(props) {
           <CheckoutItems />
         </Section>
       </Stack.Item>
-      <Stack.Item>
-        {cart.length > 0 && can_send && (
+      {cart.length > 0 && !!can_send && (
+        <Stack.Item>
           <Section align="right">
             <Stack fill align="center">
               <Stack.Item grow>
@@ -47,8 +47,8 @@ export function CargoCart(props) {
               </Stack.Item>
             </Stack>
           </Section>
-        )}
-      </Stack.Item>
+        </Stack.Item>
+      )}
     </Stack>
   );
 }
