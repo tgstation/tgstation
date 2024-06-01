@@ -148,6 +148,14 @@
 	var/start_time = REALTIMEOFDAY
 	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]") //Generate the raw CA data
 
+	var/humidity_gen = list()
+	humidity_gen[BIOME_HIGH_HUMIDITY] = rustg_dbp_generate("[humidity_seed]", "60", "75", "[world.maxx]", "-0.1", "1.1")
+	humidity_gen[BIOME_MEDIUM_HUMIDITY] = rustg_dbp_generate("[humidity_seed]", "60", "75", "[world.maxx]", "-0.3", "-0.1")
+
+	var/heat_gen = list()
+	heat_gen[BIOME_HIGH_HEAT] = rustg_dbp_generate("[heat_seed]", "60", "75", "[world.maxx]", "-0.1", "1.1")
+	heat_gen[BIOME_MEDIUM_HEAT] = rustg_dbp_generate("[heat_seed]", "60", "75", "[world.maxx]", "-0.3", "-0.1")
+
 	var/list/expanded_closed_turfs = src.closed_turf_types
 	var/list/expanded_open_turfs = src.open_turf_types
 
@@ -158,33 +166,18 @@
 		var/datum/biome/selected_biome
 
 		// Here comes the meat of the biome code.
-		var/drift_x = (gen_turf.x + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)) / perlin_zoom
-		var/drift_y = (gen_turf.y + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)) / perlin_zoom
+		var/drift_x = clamp((gen_turf.x + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)), 0, world.maxx) // / perlin_zoom
+		var/drift_y = clamp((gen_turf.y + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)), 1, world.maxy) // / perlin_zoom
 
-		var/humidity = text2num(rustg_noise_get_at_coordinates("[humidity_seed]", "[drift_x]", "[drift_y]"))
-		var/heat = text2num(rustg_noise_get_at_coordinates("[heat_seed]", "[drift_x]", "[drift_y]"))
-		var/heat_level //Type of heat zone we're in (LOW-LOWMEDIUM-HIGHMEDIUM-HIGH)
-		var/humidity_level  //Type of humidity zone we're in (LOW-LOWMEDIUM-HIGHMEDIUM-HIGH)
+		// Where we go in the generated string (generated outside of the loop for s p e e d)
+		var/coordinate = world.maxx * (drift_y - 1) + drift_x
 
-		switch(heat)
-			if(0 to 0.25)
-				heat_level = BIOME_LOW_HEAT
-			if(0.25 to 0.5)
-				heat_level = BIOME_LOWMEDIUM_HEAT
-			if(0.5 to 0.75)
-				heat_level = BIOME_HIGHMEDIUM_HEAT
-			if(0.75 to 1)
-				heat_level = BIOME_HIGH_HEAT
-
-		switch(humidity)
-			if(0 to 0.25)
-				humidity_level = BIOME_LOW_HUMIDITY
-			if(0.25 to 0.5)
-				humidity_level = BIOME_LOWMEDIUM_HUMIDITY
-			if(0.5 to 0.75)
-				humidity_level = BIOME_HIGHMEDIUM_HUMIDITY
-			if(0.75 to 1)
-				humidity_level = BIOME_HIGH_HUMIDITY
+		// Type of humidity zone we're in (LOW-MEDIUM-HIGH)
+		var/humidity_level = text2num(humidity_gen[BIOME_HIGH_HUMIDITY][coordinate]) ? \
+			BIOME_HIGH_HUMIDITY : text2num(humidity_gen[BIOME_MEDIUM_HUMIDITY][coordinate]) ? BIOME_MEDIUM_HUMIDITY : BIOME_LOW_HUMIDITY
+		// Type of heat zone we're in (LOW-MEDIUM-HIGH)
+		var/heat_level = text2num(heat_gen[BIOME_HIGH_HEAT][coordinate]) ? \
+			BIOME_HIGH_HEAT : text2num(heat_gen[BIOME_MEDIUM_HEAT][coordinate]) ? BIOME_MEDIUM_HEAT : BIOME_LOW_HEAT
 
 		selected_biome = possible_biomes[heat_level][humidity_level]
 
@@ -345,26 +338,17 @@
 	possible_biomes = list(
 		BIOME_LOW_HEAT = list(
 			BIOME_LOW_HUMIDITY = /datum/biome/plains,
-			BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mudlands,
-			BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mudlands,
+			BIOME_MEDIUM_HUMIDITY = /datum/biome/mudlands,
 			BIOME_HIGH_HUMIDITY = /datum/biome/water
 		),
-		BIOME_LOWMEDIUM_HEAT = list(
+		BIOME_MEDIUM_HEAT = list(
 			BIOME_LOW_HUMIDITY = /datum/biome/plains,
-			BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/jungle,
-			BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle,
-			BIOME_HIGH_HUMIDITY = /datum/biome/mudlands
-		),
-		BIOME_HIGHMEDIUM_HEAT = list(
-			BIOME_LOW_HUMIDITY = /datum/biome/plains,
-			BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/plains,
-			BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle/deep,
+			BIOME_MEDIUM_HUMIDITY = /datum/biome/jungle/deep,
 			BIOME_HIGH_HUMIDITY = /datum/biome/jungle
 		),
 		BIOME_HIGH_HEAT = list(
 			BIOME_LOW_HUMIDITY = /datum/biome/wasteland,
-			BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/plains,
-			BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle,
+			BIOME_MEDIUM_HUMIDITY = /datum/biome/plains,
 			BIOME_HIGH_HUMIDITY = /datum/biome/jungle/deep
 		)
 	)
