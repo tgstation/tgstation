@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - spellcheck: "Photo descriptions containing living entities no longer have a pile of unnecessary periods. .. Which they used to have between describing different entities. ..  Also removed that additional space they had too sometimes.."
+  - qol: "Photo descriptions containing living entities have these sub-descriptions split into newlines for ease of reading."
