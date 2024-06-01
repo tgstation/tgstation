@@ -69,7 +69,7 @@
 		return
 	else if(istype(tool, /obj/item/storage/bag))
 		if(!anchored)
-			to_chat(user, span_warning("Anchor first to star grinding."))
+			to_chat(user, span_warning("Anchor first to start [grinding ? "Grind" : "Juice"]."))
 			return ITEM_INTERACT_BLOCKING
 
 		to_chat(user, span_notice("You dump items from [tool] into the grinder."))
@@ -77,11 +77,12 @@
 			grind(obj_item)
 		return ITEM_INTERACT_SUCCESS
 	else if(!tool.tool_behaviour)
+		var/action = "[grinding ? "Grind" : "Juice"]"
 		if(!anchored)
-			to_chat(user, span_warning("Anchor first to star grinding."))
+			to_chat(user, span_warning("Anchor first to star [action]."))
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_notice("You attempt to grind [tool]."))
+		to_chat(user, span_notice("You attempt to [action] [tool]."))
 		grind(tool)
 		return ITEM_INTERACT_SUCCESS
 
