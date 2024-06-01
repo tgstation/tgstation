@@ -157,6 +157,7 @@
 		GLOB.selfdestructs_when_boss_dies += src
 
 /obj/item/pressure_plate/invisible_tripwire/on_entered(datum/source, atom/movable/target)
+	. = ..()
 	SIGNAL_HANDLER
 	if(!can_trigger || !active)
 		return
