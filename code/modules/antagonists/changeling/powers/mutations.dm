@@ -260,7 +260,7 @@
 		span_hear("You hear a metal screeching sound."))
 		opening.open(BYPASS_DOOR_CHECKS)
 
-	if(remaining_uses < 1)
+	if(remaining_uses <= 1)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/changeling = loc
 			changeling.visible_message(span_warning("With a sickening crunch, [changeling] reforms [changeling.p_their()] [src] into an arm!"), span_notice("We assimilate our armblade into our body."), "<span class='italics'>You hear organic matter ripping and tearing!</span>")
@@ -513,6 +513,9 @@
 	S.remaining_uses = round(changeling.absorbed_count * 3)
 	return TRUE
 
+/datum/armor/item_shield/changeling
+	fire = -100
+
 /obj/item/shield/changeling
 	name = "shield-like mass"
 	desc = "A mass of tough, boney tissue. You can still see the fingers as a twisted pattern in the shield."
@@ -522,6 +525,7 @@
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	block_chance = 50
+	armor_type = /datum/armor/item_shield/changeling
 	resistance_flags = FLAMMABLE
 
 	var/remaining_uses //Set by the changeling ability.
@@ -533,7 +537,7 @@
 		loc.visible_message(span_warning("The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!"), span_warning("We inflate our hand into a strong shield."), span_hear("You hear organic matter ripping and tearing!"))
 
 /obj/item/shield/changeling/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(remaining_uses < 1)
+	if(remaining_uses <= 1)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			H.visible_message(span_warning("With a sickening crunch, [H] reforms [H.p_their()] shield into an arm!"), span_notice("We assimilate our shield into our body"), "<span class='italics>You hear organic matter ripping and tearing!</span>")
