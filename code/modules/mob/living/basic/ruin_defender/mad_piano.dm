@@ -71,7 +71,6 @@
 		BB_TARGETLESS_TIME = 2 SECONDS,
 	)
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/sleep_with_no_target/mad_piano,
