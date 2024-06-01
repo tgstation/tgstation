@@ -1,0 +1,5 @@
+author: "Majkl-J"
+delete-after: True
+changes:
+  - bugfix: "Fixed some borg modules just being constantly eaten up by borgs even when they shouldn't allow duplicates"
+  - refactor: "Borg module code now has better handling for adding/removing items, and to prevent duplicate module usage (Unless one wishes to override the behaviour."
