@@ -408,8 +408,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "jy" = (
-/obj/machinery/sleeper/syndie/fullupgrade{
-	icon_state = "sleeper";
+/obj/machinery/sleeper/syndie/fullupgrade/nt{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/small,
