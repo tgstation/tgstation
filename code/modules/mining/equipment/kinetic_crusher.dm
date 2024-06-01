@@ -351,7 +351,7 @@
 	denied_type = /obj/item/crusher_trophy/miner_eye
 
 /obj/item/crusher_trophy/miner_eye/effect_desc()
-	return "mark detonation to grant stun immunity and <b>90%</b> damage reduction for <b>1</b> second"
+	return "mark detonation to grant stun immunity and <b>50%</b> damage reduction for <b>1</b> second"
 
 /obj/item/crusher_trophy/miner_eye/on_mark_detonation(mob/living/target, mob/living/user)
 	user.apply_status_effect(/datum/status_effect/blooddrunk)
