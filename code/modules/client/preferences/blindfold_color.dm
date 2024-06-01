@@ -1,8 +1,8 @@
 /// Preference for the roundstart color of the blindfold given by the Blindness quirk.
 /datum/preference/color/blindfold_color
+	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
 	savefile_key = "blindfold_color"
 	savefile_identifier = PREFERENCE_CHARACTER
-	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
 
 /datum/preference/color/blindfold_color/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
