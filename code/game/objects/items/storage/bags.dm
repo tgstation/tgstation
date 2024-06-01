@@ -536,6 +536,7 @@
 	worn_icon_state = "construction_bag"
 	desc = "A bag for storing small construction components."
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
+	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/construction/Initialize(mapload)
