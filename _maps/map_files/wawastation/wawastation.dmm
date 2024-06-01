@@ -3663,6 +3663,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "bnG" = (
@@ -5288,12 +5289,13 @@
 /area/station/maintenance/department/engine)
 "bTB" = (
 /obj/machinery/mineral/stacking_machine{
-	input_dir = 2
+	input_dir = 8;
+	output_dir = 2
 	},
 /obj/machinery/conveyor{
 	id = "garbage"
 	},
-/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "bTI" = (
@@ -9712,9 +9714,9 @@
 /obj/machinery/conveyor{
 	id = "garbage"
 	},
-/obj/machinery/door/window/left/directional/west{
-	name = "Danger: Conveyor Access";
-	req_access = list("maint_tunnels")
+/obj/machinery/door/window/left/directional/east{
+	req_access = list("maint_tunnels");
+	name = "Danger: Conveyor Access"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
@@ -27643,14 +27645,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
-"jSo" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "garbage"
-	},
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/plating,
-/area/station/maintenance/disposal)
 "jSs" = (
 /obj/machinery/door/airlock/command{
 	name = "Head of Personnel's Booth"
@@ -48663,6 +48657,7 @@
 /obj/machinery/mass_driver/trash{
 	dir = 8
 	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "rrZ" = (
@@ -65566,6 +65561,9 @@
 /area/station/hallway/primary/central)
 "xlB" = (
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/mineral/stacking_unit_console{
+	pixel_y = 28
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "xlD" = (
@@ -80777,7 +80775,7 @@ nIJ
 mxq
 rrR
 eeu
-jSo
+rQI
 hST
 rQI
 pTU
