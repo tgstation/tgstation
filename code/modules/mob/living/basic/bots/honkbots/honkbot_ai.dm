@@ -109,7 +109,7 @@
 /datum/ai_behavior/bot_search/clown_friends
 
 /datum/ai_behavior/bot_search/clown_friends/valid_target(datum/ai_controller/basic_controller/bot/controller, mob/living/my_target)
-	if(HAS_TRAIT(my_target, TRAIT_PERCIEVED_AS_CLOWN))
+	if(HAS_TRAIT(my_target, TRAIT_PERCEIVED_AS_CLOWN))
 		return TRUE
 	if(!istype(my_target, /mob/living/silicon/robot))
 		return FALSE

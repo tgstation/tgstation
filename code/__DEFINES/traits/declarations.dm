@@ -1142,7 +1142,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BOULDER_BREAKER "boulder_breaker"
 
 /// Trait given to mobs wearing the clown mask
-#define TRAIT_PERCIEVED_AS_CLOWN "percieved_as_clown"
+#define TRAIT_PERCEIVED_AS_CLOWN "perceived_as_clown"
 /// Does this item bypass ranged armor checks?
 #define TRAIT_BYPASS_RANGED_ARMOR "bypass_ranged_armor"
 
