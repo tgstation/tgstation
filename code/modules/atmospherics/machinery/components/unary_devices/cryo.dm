@@ -229,22 +229,23 @@
 		return
 	. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-[on && is_operational ? "on" : "off"]", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
 
-
 /obj/machinery/cryo_cell/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
 	if(user.combat_mode || (tool.item_flags & ABSTRACT) || (tool.flags_1 & HOLOGRAM_1) || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
-	if(istype(tool, /obj/item/reagent_containers/cup))
-		if(beaker)
-			balloon_alert(user, "beaker present!")
-			return ITEM_INTERACT_BLOCKING
-		if(!user.transferItemToLoc(tool, src))
-			return ITEM_INTERACT_BLOCKING
-		beaker = tool
-		balloon_alert(user, "beaker inserted")
-		user.log_message("added an [tool] to cryo containing [pretty_string_from_reagent_list(tool.reagents.reagent_list)].", LOG_GAME)
-		return ITEM_INTERACT_SUCCESS
+	if(!istype(tool, /obj/item/reagent_containers/cup))
+		return
+	if(!QDELETED(beaker))
+		balloon_alert(user, "beaker present!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+
+	beaker = tool
+	balloon_alert(user, "beaker inserted")
+	user.log_message("added an [tool] to cryo containing [pretty_string_from_reagent_list(tool.reagents.reagent_list)].", LOG_GAME)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cryo_cell/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
@@ -337,13 +338,13 @@
 /obj/machinery/cryo_cell/RefreshParts()
 	. = ..()
 
-	var/C
-	for(var/datum/stock_part/matter_bin/M in component_parts)
-		C += M.tier
+	var/max_tier = 0
+	for(var/datum/stock_part/matter_bin/bin in component_parts)
+		max_tier += bin.tier
 
-	efficiency = initial(efficiency) * C
-	heat_capacity = initial(heat_capacity) / C
-	conduction_coefficient = initial(conduction_coefficient) * C
+	efficiency = initial(efficiency) * max_tier
+	heat_capacity = initial(heat_capacity) / max_tier
+	conduction_coefficient = initial(conduction_coefficient) * max_tier
 
 /obj/machinery/cryo_cell/dump_inventory_contents(list/subset = list())
 	//only drop mobs when opening the machine
@@ -650,14 +651,16 @@
 /obj/machinery/cryo_cell/MouseDrop_T(mob/target, mob/user)
 	if(user.incapacitated() || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
 		return
+
 	if(isliving(target))
-		var/mob/living/L = target
-		if(L.incapacitated())
+		var/mob/living/living_mob = target
+		if(living_mob.incapacitated())
 			close_machine(target)
-	else
-		user.visible_message(span_notice("[user] starts shoving [target] inside [src]."), span_notice("You start shoving [target] inside [src]."))
-		if (do_after(user, 2.5 SECONDS, target=target))
-			close_machine(target)
+		return
+
+	user.visible_message(span_notice("[user] starts shoving [target] inside [src]."), span_notice("You start shoving [target] inside [src]."))
+	if (do_after(user, 2.5 SECONDS, target=target))
+		close_machine(target)
 
 /obj/machinery/cryo_cell/get_remote_view_fullscreens(mob/user)
 	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
