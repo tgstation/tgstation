@@ -1,0 +1,4 @@
+author: "Gaxeer"
+delete-after: True
+changes:
+  - bugfix: "ambush spider (should instantly agressive grab) and other giant spiders can now agressively grab"
