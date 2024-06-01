@@ -40,7 +40,8 @@
 	. = ..()
 	var/death_loot = list(/obj/effect/gibspawner/robot)
 	AddElement(/datum/element/death_drops, death_loot)
-	AddComponent(/datum/component/connect_range, tracked = src, range = 1, works_in_containers = FALSE)
+	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(look_aggro), COMSIG_ATOM_EXITED = PROC_REF(look_deaggro))
+	AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = 1, works_in_containers = FALSE)
 	var/static/list/innate_actions = list(
 		SPIN_SLASH_ABILITY_TYPEPATH = BB_DEDBOT_SLASH,
 	)
