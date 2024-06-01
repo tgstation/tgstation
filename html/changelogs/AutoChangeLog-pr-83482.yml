@@ -1,5 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes:
-  - bugfix: "Minebots purchased via mining points are no longer stuck in idle mode. Clicking on them will activate their AI."
-  - spellcheck: "Removed the examine text about feeding ore to minebots; this functionality was removed already."
