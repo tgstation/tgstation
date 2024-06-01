@@ -67,7 +67,7 @@
 		return
 
 	var/obj/item/I = AM
-	if((I.item_flags && ABSTRACT) || (I.flags_1 & HOLOGRAM_1))
+	if((I.item_flags & ABSTRACT) || (I.flags_1 & HOLOGRAM_1))
 		return
 
 	var/result
