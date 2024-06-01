@@ -15,16 +15,30 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/machinery/plumbing/grinder_chemical/attackby(obj/item/weapon, mob/user, params)
-	if(istype(weapon, /obj/item/storage/bag))
-		to_chat(user, span_notice("You dump items from [weapon] into the grinder."))
-		for(var/obj/item/obj_item in weapon.contents)
-			grind(obj_item)
-	else
-		to_chat(user, span_notice("You attempt to grind [weapon]."))
-		grind(weapon)
+/obj/machinery/plumbing/grinder_chemical/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
+	if(user.combat_mode)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
 
-	return TRUE
+	if(istype(tool, /obj/item/construction/plumbing))
+		return tool.interact_with_atom(src, user, modifiers)
+	else if(istype(tool, /obj/item/storage/bag))
+		if(!anchored)
+			to_chat(user, span_warning("Anchor first to star grinding."))
+			return ITEM_INTERACT_BLOCKING
+
+		to_chat(user, span_notice("You dump items from [tool] into the grinder."))
+		for(var/obj/item/obj_item in tool.contents)
+			grind(obj_item)
+		return ITEM_INTERACT_SUCCESS
+	else if(!tool.tool_behaviour)
+		if(!anchored)
+			to_chat(user, span_warning("Anchor first to star grinding."))
+			return ITEM_INTERACT_BLOCKING
+
+		to_chat(user, span_notice("You attempt to grind [tool]."))
+		grind(tool)
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/plumbing/grinder_chemical/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
