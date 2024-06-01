@@ -5,7 +5,9 @@
 /area/ruin/unpowered)
 "bw" = (
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "cB" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -17,7 +19,9 @@
 	name = "Emergency Shuttle Cockpit"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "dK" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -41,17 +45,23 @@
 "fz" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/ash,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/titanium/blue{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "gP" = (
 /turf/closed/mineral/titanium,
 /area/ruin/unpowered)
 "hT" = (
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/mineral/titanium{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "hY" = (
 /obj/effect/mob_spawn/corpse/human/charredskeleton,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "ih" = (
 /obj/structure/chair/comfy/shuttle{
@@ -74,19 +84,25 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "lu" = (
 /turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered)
 "mS" = (
 /obj/effect/spawner/random/structure/crate,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium/red{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "oE" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/ash,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium/yellow{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "py" = (
 /obj/effect/decal/cleanable/ash,
@@ -132,7 +148,9 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/ash,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "uh" = (
 /turf/closed/mineral/random,
@@ -143,7 +161,9 @@
 /area/ruin/unpowered)
 "vf" = (
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/titanium/blue{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "xz" = (
 /obj/machinery/computer,
@@ -163,7 +183,9 @@
 /area/ruin/unpowered)
 "BT" = (
 /obj/effect/mob_spawn/corpse/human/charredskeleton,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium/red{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "Cg" = (
 /obj/effect/decal/cleanable/glass,
@@ -172,7 +194,9 @@
 "CX" = (
 /obj/item/stack/sheet/mineral/titanium,
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium/yellow{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "Dq" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -192,7 +216,9 @@
 /area/ruin/unpowered)
 "DZ" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium/yellow{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "Ee" = (
 /obj/structure/extinguisher_cabinet/directional/east,
@@ -202,7 +228,9 @@
 "Er" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/ash,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "Fq" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -216,7 +244,9 @@
 /area/lavaland/surface)
 "FR" = (
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium/yellow{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "FY" = (
 /obj/item/stack/sheet/iron/five,
@@ -224,7 +254,9 @@
 	amount = 4
 	},
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "Ga" = (
 /obj/machinery/power/shuttle_engine/propulsion,
@@ -232,7 +264,9 @@
 /area/ruin/unpowered)
 "Gx" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/mineral/titanium{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "GF" = (
 /obj/structure/window/reinforced/shuttle/unanchored,
@@ -287,7 +321,9 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/titanium/blue{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "NS" = (
 /obj/item/stack/sheet/iron,
@@ -296,13 +332,17 @@
 /area/ruin/unpowered)
 "Om" = (
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "On" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/ash,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "OZ" = (
 /obj/structure/chair/comfy/shuttle{
@@ -321,7 +361,9 @@
 "Qq" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium/red{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "Rm" = (
 /obj/item/shard/titanium,
@@ -338,7 +380,9 @@
 "Tq" = (
 /mob/living/basic/mining/goliath,
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/titanium/blue{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "Tt" = (
 /obj/item/stack/sheet/iron,
@@ -352,7 +396,9 @@
 "TQ" = (
 /obj/item/stack/sheet/iron,
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium/red{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "Vs" = (
 /obj/item/stack/sheet/mineral/titanium,
@@ -361,7 +407,9 @@
 /area/ruin/unpowered)
 "VN" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "XT" = (
 /obj/item/stack/sheet/mineral/titanium,
@@ -372,13 +420,17 @@
 /obj/item/stack/sheet/mineral/titanium/fifty{
 	amount = 4
 	},
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/mineral/titanium/yellow{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "XZ" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium/red{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 "Zo" = (
 /obj/effect/mob_spawn/corpse/human/legioninfested,
@@ -387,7 +439,9 @@
 "Zq" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/ash,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/titanium/blue{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/ruin/unpowered)
 
 (1,1,1) = {"
