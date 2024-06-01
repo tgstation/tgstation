@@ -486,10 +486,8 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "rH" = (
-/obj/machinery/airalarm/syndicate{
-	dir = 1;
-	pixel_y = 20
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "rM" = (

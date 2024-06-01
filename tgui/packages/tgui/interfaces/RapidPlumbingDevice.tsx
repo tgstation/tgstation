@@ -2,8 +2,8 @@ import { useBackend, useLocalState } from '../backend';
 import { capitalizeAll } from 'common/string';
 import { BooleanLike, classes } from 'common/react';
 import { Window } from '../layouts';
-import { Section, Tabs, Button, Stack, Box } from '../components';
-import { ColorItem, LayerSelect } from './RapidPipeDispenser';
+import { Section, Tabs, Button, LabeledList, Stack, Box } from '../components';
+import { ColorItem } from './RapidPipeDispenser';
 import { SiloItem, MatterItem } from './RapidConstructionDevice';
 
 type Data = {
@@ -12,6 +12,7 @@ type Data = {
   categories: Category[];
   selected_category: string;
   selected_recipe: string;
+  piping_layer: number;
 };
 
 type Category = {
@@ -79,23 +80,25 @@ const PlumbingTypeSection = (props, context) => {
   );
 };
 
-const StaticSection = (props, context) => {
-  const { data } = useBackend<Data>(context);
-  const { silo_upgraded } = data;
+// MONKESTATION ADDITION -- added context to layer select and useBackend<Data>()
+export const LayerSelect = (props, context) => {
+  const { act, data } = useBackend<Data>(context);
+  const { piping_layer } = data;
   return (
-    <Section>
-      <MatterItem />
-      {silo_upgraded ? <SiloItem /> : ''}
-      <ColorItem space />
-    </Section>
-  );
-};
-
-const LayerSection = (props, context) => {
-  return (
-    <Section>
-      <LayerSelect />
-    </Section>
+    <LabeledList.Item label="Layer">
+      {[1, 2, 3, 4, 5].map((layer) => (
+        <Button.Checkbox
+          key={layer}
+          checked={layer === piping_layer}
+          content={layer}
+          onClick={() =>
+            act('piping_layer', {
+              piping_layer: layer,
+            })
+          }
+        />
+      ))}
+    </LabeledList.Item>
   );
 };
 
@@ -103,46 +106,40 @@ const LayerIconSection = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { layer_icon } = data;
   return (
-    <Section
-      backgroundColor="green"
+    <Box
+      m={1}
+      className={classes(['plumbing-tgui32x32', layer_icon])}
       style={{
-        width: '50px',
-        height: '50px',
-      }}>
-      <Box
-        className={classes(['plumbing-tgui32x32', layer_icon])}
-        style={{
-          transform: 'scale(1.5) translate(9%, 9.5%)',
-        }}
-      />
-    </Section>
+        transform: 'scale(2)',
+      }}
+    />
   );
 };
 
-export const PlumbingService = (props, context) => {
+export const RapidPlumbingDevice = (props, context) => {
+  const { data } = useBackend<Data>(context);
+  const { silo_upgraded } = data;
   return (
-    <Window width={450} height={575}>
+    <Window width={480} height={575}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            <StaticSection />
+            <Section>
+              <Stack>
+                <Stack.Item>
+                  <ColorItem />
+                  <LayerSelect />
+                  <MatterItem />
+                  {!!silo_upgraded && <SiloItem />}
+                </Stack.Item>
+                <Stack.Item>
+                  <LayerIconSection />
+                </Stack.Item>
+              </Stack>
+            </Section>
           </Stack.Item>
           <Stack.Item grow>
-            <Stack fill>
-              <Stack.Item>
-                <Stack vertical fill>
-                  <Stack.Item>
-                    <LayerSection />
-                  </Stack.Item>
-                  <Stack.Item grow>
-                    <LayerIconSection />
-                  </Stack.Item>
-                </Stack>
-              </Stack.Item>
-              <Stack.Item grow>
-                <PlumbingTypeSection />
-              </Stack.Item>
-            </Stack>
+            <PlumbingTypeSection />
           </Stack.Item>
         </Stack>
       </Window.Content>

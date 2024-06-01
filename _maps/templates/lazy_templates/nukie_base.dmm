@@ -90,19 +90,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
-"bz" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 1
-	},
-/obj/machinery/airalarm/unlocked{
-	dir = 8;
-	pixel_x = -24
-	},
-/turf/open/floor/mineral/titanium/tiled/yellow,
-/area/centcom/syndicate_mothership/expansion_bombthreat)
 "bB" = (
 /obj/structure/railing{
 	dir = 4
@@ -315,12 +302,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/titanium/yellow,
 /area/centcom/syndicate_mothership/control)
-"ej" = (
-/obj/effect/turf_decal/stripes/end{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/tiled/yellow,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "ek" = (
 /turf/closed/indestructible/syndicate,
 /area/centcom/syndicate_mothership/expansion_fridgerummage)
@@ -347,6 +328,12 @@
 	},
 /turf/open/floor/wood/tile,
 /area/centcom/syndicate_mothership/control)
+"ez" = (
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "eF" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/rag,
@@ -418,10 +405,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/control)
-"fK" = (
-/obj/machinery/growing/tray,
-/turf/open/floor/mineral/titanium/tiled,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "fR" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction,
@@ -733,6 +716,11 @@
 /obj/machinery/vending/boozeomat,
 /turf/closed/indestructible/syndicate,
 /area/centcom/syndicate_mothership/control)
+"jI" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/machinery/growing/tray,
+/turf/open/floor/mineral/titanium/tiled,
+/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "jO" = (
 /obj/machinery/camera/autoname/directional/south{
 	network = list("nukie")
@@ -1256,6 +1244,10 @@
 /obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/centcom/syndicate_mothership)
+"pm" = (
+/mob/living/basic/slime,
+/turf/open/floor/circuit/red/off,
+/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "pr" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -1324,11 +1316,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
-"pY" = (
-/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
-/obj/machinery/growing/tray,
-/turf/open/floor/mineral/titanium/tiled,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "qh" = (
 /obj/item/stack/spacecash/c20,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -1556,6 +1543,10 @@
 "sq" = (
 /turf/open/misc/asteroid/snow/airless,
 /area/centcom/syndicate_mothership/control)
+"su" = (
+/obj/machinery/growing/tray,
+/turf/open/floor/mineral/titanium/tiled,
+/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "sv" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
@@ -2039,10 +2030,6 @@
 /obj/machinery/atmospherics/components/tank/nitrogen,
 /turf/open/space/basic,
 /area/space/nearstation)
-"zR" = (
-/mob/living/basic/slime,
-/turf/open/floor/circuit/red/off,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "zT" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -2288,6 +2275,18 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/smooth_edge,
 /area/centcom/syndicate_mothership/control)
+"Cv" = (
+/obj/machinery/growing/tray,
+/obj/machinery/light/cold/directional/west,
+/obj/item/seeds/cannabis{
+	pixel_y = 8
+	},
+/obj/item/cultivator{
+	pixel_x = -6;
+	pixel_y = 11
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "CC" = (
 /obj/effect/turf_decal/siding/thinplating,
 /obj/machinery/door/window/survival_pod{
@@ -2736,6 +2735,17 @@
 /obj/machinery/shuttle_manipulator,
 /turf/open/floor/circuit/red,
 /area/centcom/syndicate_mothership/control)
+"Hw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/unlocked,
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/centcom/syndicate_mothership/expansion_bombthreat)
 "HD" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
@@ -3128,6 +3138,12 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
+"LT" = (
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "LY" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -3257,10 +3273,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/centcom/syndicate_mothership/control)
-"Mv" = (
-/obj/structure/noticeboard/directional/east,
-/turf/open/floor/mineral/plastitanium,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "MD" = (
 /obj/machinery/door/airlock/maintenance/external{
 	name = "Bunk Room 1"
@@ -3270,18 +3282,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/catwalk_floor/iron,
 /area/centcom/syndicate_mothership/control)
-"MH" = (
-/obj/machinery/growing/tray,
-/obj/machinery/light/cold/directional/west,
-/obj/item/seeds/cannabis{
-	pixel_y = 8
-	},
-/obj/item/cultivator{
-	pixel_x = -6;
-	pixel_y = 11
-	},
-/turf/open/floor/mineral/titanium/tiled,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "MP" = (
 /obj/machinery/camera/autoname/directional/west{
 	network = list("nukie")
@@ -3454,12 +3454,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/textured_large,
 /area/centcom/syndicate_mothership/control)
-"OX" = (
-/obj/effect/turf_decal/stripes/end{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/tiled/yellow,
-/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "Pc" = (
 /obj/structure/chair/greyscale{
 	dir = 4
@@ -4331,6 +4325,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/dark/textured_half,
 /area/centcom/syndicate_mothership/control)
+"YB" = (
+/obj/structure/noticeboard/directional/east,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/expansion_bioterrorism)
 "YF" = (
 /obj/item/kirbyplants/random,
 /obj/structure/cable,
@@ -4785,7 +4783,7 @@ yZ
 xu
 RT
 fk
-zR
+pm
 xu
 Ox
 sU
@@ -4884,7 +4882,7 @@ xu
 US
 HD
 oi
-MH
+Cv
 ZO
 fk
 fk
@@ -5088,7 +5086,7 @@ xu
 jW
 Ph
 KL
-fK
+su
 ZO
 fk
 jO
@@ -5292,7 +5290,7 @@ ZO
 XT
 xg
 Ce
-pY
+jI
 ZO
 ZO
 ZO
@@ -5395,7 +5393,7 @@ Wz
 KL
 JS
 JS
-OX
+LT
 ZO
 oT
 FP
@@ -5495,9 +5493,9 @@ lt
 ZO
 bg
 mb
-Mv
+YB
 nL
-ej
+ez
 ZO
 TD
 FP
@@ -5805,7 +5803,7 @@ yp
 CE
 VF
 If
-bz
+Hw
 lC
 yb
 Uq

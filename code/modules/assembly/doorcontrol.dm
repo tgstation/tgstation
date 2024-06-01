@@ -142,9 +142,7 @@
 
 	for(var/obj/machinery/igniter/M in GLOB.machines)
 		if(M.id == src.id)
-			M.use_power(50)
-			M.on = !M.on
-			M.icon_state = "igniter[M.on]"
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/igniter, toggle))
 
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 30)
 

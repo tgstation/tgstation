@@ -6,14 +6,6 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
-"ad" = (
-/obj/machinery/airalarm/syndicate{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/structure/closet/crate/secure/freezer/commsagent,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation)
 "ae" = (
 /obj/item/wallframe/button{
 	pixel_x = 7;
@@ -65,16 +57,6 @@
 	pixel_y = 1
 	},
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/listeningstation)
-"bC" = (
-/obj/structure/table/wood,
-/obj/item/paper/fluff/ruins/listeningstation/reports/november,
-/obj/item/crowbar/red,
-/obj/machinery/airalarm/syndicate{
-	dir = 8;
-	pixel_x = -24
-	},
-/turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
 "ca" = (
 /obj/effect/decal/cleanable/dirt,
@@ -207,11 +189,6 @@
 	},
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
-"hK" = (
-/obj/structure/extinguisher_cabinet/directional/south,
-/obj/machinery/growing/soil,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/listeningstation)
 "iU" = (
 /obj/structure/toilet{
 	pixel_y = 18
@@ -356,25 +333,11 @@
 /obj/structure/marker_beacon/cerulean,
 /turf/open/floor/plating/airless,
 /area/ruin/space)
-"tm" = (
-/obj/machinery/airalarm/syndicate{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/machinery/computer/message_monitor{
-	dir = 8
-	},
-/obj/item/paper/monitorkey,
-/obj/effect/turf_decal/tile/red/opposingcorners,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/listeningstation)
-"uI" = (
-/obj/machinery/airalarm/away{
-	dir = 1;
-	pixel_y = 23
-	},
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/iron,
+"us" = (
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/structure/closet/crate/secure/freezer/commsagent,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "vC" = (
 /obj/structure/cable,
@@ -395,6 +358,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
+/area/ruin/space/has_grav/listeningstation)
+"wj" = (
+/obj/structure/table/wood,
+/obj/item/paper/fluff/ruins/listeningstation/reports/november,
+/obj/item/crowbar/red,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
 "wk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -780,6 +751,12 @@
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
+"Oh" = (
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/away_general_access,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/listeningstation)
 "Om" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
@@ -803,6 +780,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/small,
+/area/ruin/space/has_grav/listeningstation)
+"OW" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/growing/soil,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
 "PZ" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
@@ -966,6 +948,16 @@
 "WW" = (
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/listeningstation)
+"XM" = (
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/computer/message_monitor{
+	dir = 8
+	},
+/obj/item/paper/monitorkey,
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "XQ" = (
 /obj/structure/sign/departments/medbay/alt/directional/north,
@@ -1180,7 +1172,7 @@ zp
 vI
 JB
 gJ
-bC
+wj
 Oo
 JB
 vI
@@ -1246,7 +1238,7 @@ vI
 JB
 Fy
 Dp
-hK
+OW
 JB
 vI
 Yz
@@ -1319,7 +1311,7 @@ vI
 vI
 vI
 JB
-uI
+Oh
 Eb
 xn
 kG
@@ -1352,7 +1344,7 @@ JB
 lE
 MS
 It
-ad
+us
 by
 cj
 db
@@ -1447,7 +1439,7 @@ JB
 xp
 SK
 lk
-tm
+XM
 TK
 rG
 Zj

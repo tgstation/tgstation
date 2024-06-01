@@ -100,9 +100,8 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/machinery/meter,
-/obj/machinery/airalarm/engine{
-	pixel_y = -24
-	},
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/engine_access,
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
 	dir = 1
 	},

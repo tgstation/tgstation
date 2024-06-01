@@ -216,7 +216,14 @@ const AirAlarmControl = (props, context) => {
 const AirAlarmControlHome = (props, context) => {
   const { act, data } = useBackend<AirAlarmData>(context);
   const [screen, setScreen] = useLocalState<Screen>(context, 'screen', 'home');
-  const { selectedModePath, panicSiphonPath, filteringPath, atmosAlarm } = data;
+  const {
+    selectedModePath,
+    panicSiphonPath,
+    filteringPath,
+    atmosAlarm,
+    sensor,
+    allowLinkChange,
+  } = data;
   const isPanicSiphoning = selectedModePath === panicSiphonPath;
   return (
     <>
@@ -267,6 +274,16 @@ const AirAlarmControlHome = (props, context) => {
         content="Alarm Thresholds"
         onClick={() => setScreen('thresholds')}
       />
+      {!!sensor && !!allowLinkChange && (
+        <Box mt={1}>
+          <Button.Confirm
+            icon="link-slash"
+            content="Disconnect Sensor"
+            color="danger"
+            onClick={() => act('disconnect_sensor')}
+          />
+        </Box>
+      )}
     </>
   );
 };
@@ -419,16 +436,16 @@ const AirAlarmControlThresholds = (props, context) => {
         <Table.Row>
           <Table.Cell bold>Threshold</Table.Cell>
           <Table.Cell bold color="bad">
-            Minimum Hazard
+            Danger Below
           </Table.Cell>
           <Table.Cell bold color="average">
-            Minimum Warning
+            Warning Below
           </Table.Cell>
           <Table.Cell bold color="average">
-            Maximum Warning
+            Warning Above
           </Table.Cell>
           <Table.Cell bold color="bad">
-            Maximum Hazard
+            Danger Above
           </Table.Cell>
           <Table.Cell bold>Actions</Table.Cell>
         </Table.Row>

@@ -102,7 +102,7 @@
 /obj/item/construction/plumbing/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "PlumbingService", name)
+		ui = new(user, src, "RapidPlumbingDevice", name)
 		ui.open()
 
 /obj/item/construction/plumbing/ui_assets(mob/user)

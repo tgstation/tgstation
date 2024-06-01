@@ -142,6 +142,24 @@
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/station/commons/lounge)
+"fI" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/airalarm/directional/east{
+	pixel_y = 32
+	},
+/obj/effect/mapping_helpers/airalarm/engine_access,
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/icebox_bar)
 "gg" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -668,6 +686,20 @@
 /obj/structure/cable,
 /turf/open/floor/pod/light,
 /area/station/commons/lounge)
+"xN" = (
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 5
+	},
+/obj/effect/mapping_helpers/mail_sorting/service/bar,
+/turf/open/floor/pod/dark,
+/area/station/commons/lounge)
 "xW" = (
 /obj/machinery/door/window{
 	dir = 1;
@@ -1153,25 +1185,6 @@
 "LN" = (
 /turf/closed/wall/r_wall,
 /area/station/service/bar)
-"Mz" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/airalarm/engine{
-	dir = 4;
-	pixel_x = 23;
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/trimline/yellow/filled/warning{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/icebox_bar)
 "ML" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -1374,20 +1387,6 @@
 	},
 /turf/open/floor/carpet/neon/simple/yellow/nodots,
 /area/station/service/bar/backroom)
-"UT" = (
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/trimline/yellow/filled/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 5
-	},
-/obj/effect/mapping_helpers/mail_sorting/service/bar,
-/turf/open/floor/pod/dark,
-/area/station/commons/lounge)
 "Vg" = (
 /turf/open/floor/iron/showroomfloor,
 /area/station/commons/lounge)
@@ -1558,7 +1557,7 @@ EK
 EK
 EK
 pH
-Mz
+fI
 oK
 Ys
 Oc
@@ -1590,7 +1589,7 @@ sR
 xd
 uo
 Yn
-UT
+xN
 qd
 EK
 EK

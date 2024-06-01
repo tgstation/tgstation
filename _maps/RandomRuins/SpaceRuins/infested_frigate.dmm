@@ -38,10 +38,8 @@
 /area/template_noop)
 "aI" = (
 /obj/structure/cable,
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 23
-	},
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/icecream_vat{
 	desc = "Waffle co. actually ordered these guys to steal one of these just to be sure."
 	},
@@ -426,9 +424,8 @@
 "gi" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/spawner/random/exotic/languagebook,
-/obj/machinery/airalarm/all_access{
-	pixel_y = -24
-	},
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "gib6-old"
 	},
@@ -1100,10 +1097,8 @@
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "si" = (
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/plastic,
 /turf/open/floor/mineral/plastitanium,
@@ -2415,10 +2410,8 @@
 "MB" = (
 /obj/machinery/iv_drip,
 /obj/item/clothing/mask/facehugger/dead,
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/turf_decal{
 	icon_state = "warningline_white";
 	dir = 1
@@ -3137,10 +3130,8 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
 "YT" = (
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "ltrails_1";
 	dir = 1
