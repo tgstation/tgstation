@@ -260,6 +260,10 @@
  */
 /datum/antagonist/changeling/proc/on_life(datum/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
+	if(isliving(owner))
+		var/mob/living/living_owner = owner
+		if(living_owner.fire_stacks && living_owner.on_fire)
+			return // No chemical regen while on fire.
 
 	var/delta_time = DELTA_WORLD_TIME(SSmobs)
 
