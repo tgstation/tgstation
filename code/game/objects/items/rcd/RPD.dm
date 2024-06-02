@@ -142,6 +142,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /datum/pipe_info/meter
 	icon_state = "meter"
 	dirtype = PIPE_ONEDIR
+	all_layers = TRUE // MONKESTATION ADDITION -- TG DOES NOT WANT YOU TO KNOW THIS ONE TRICK TO MAKE METERS WORK ON LAYERS 1 AND 5
 
 /datum/pipe_info/meter/New(label)
 	name = label
