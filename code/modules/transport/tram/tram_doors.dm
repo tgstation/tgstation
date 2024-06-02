@@ -9,7 +9,7 @@
 	overlays_file = 'icons/obj/doors/airlocks/tram/tram-overlays.dmi'
 	multi_tile = TRUE
 	opacity = FALSE
-	assemblytype = null
+	assemblytype = /obj/structure/door_assembly/multi_tile/door_assembly_tram
 	airlock_material = "glass"
 	air_tight = TRUE
 	req_access = list(ACCESS_TCOMMS)
