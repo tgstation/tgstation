@@ -27993,7 +27993,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/siding/yellow{
-	dir = 10
+	dir = 8
 	},
 /turf/open/floor/iron/diagonal,
 /area/station/cargo/storage)
