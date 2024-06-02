@@ -5,7 +5,7 @@
 
 /atom/movable/screen/alert/status_effect/slimed
 	name = "Covered in Slime"
-	desc = "You are covered in slime and it's eating away at you! Find a way to wash it off!"
+	desc = "You are covered in slime and it's eating away at you! Click to start shaking it off, or find a faster way to wash it away!"
 	icon_state = "slimed"
 
 /atom/movable/screen/alert/status_effect/slimed/Click()
@@ -30,13 +30,14 @@
 
 /// Try to get rid of it
 /atom/movable/screen/alert/status_effect/slimed/proc/remove_slime()
-	owner.balloon_alert(owner, "brushing off slime...")
+	owner.balloon_alert(owner, "cleaning off slime...")
 	var/datum/status_effect/slimed/slime_effect = owner.has_status_effect(/datum/status_effect/slimed)
 	while (!QDELETED(src) && !isnull(slime_effect))
 		if (!can_wash())
 			return
-		owner.Shake(2, 0, duration = 1 SECONDS, shake_interval = 0.05 SECONDS)
-		if (!do_after(owner, 1.5 SECONDS, owner))
+		var/clean_interval = HAS_TRAIT(owner, TRAIT_WOUND_LICKER) ? 1.2 SECONDS : 1.5 SECONDS
+		owner.Shake(2, 0, duration = clean_interval * 0.8, shake_interval = 0.05 SECONDS)
+		if (!do_after(owner, clean_interval, owner))
 			return
 		slime_effect.remove_stacks()
 
