@@ -12228,6 +12228,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
+"dep" = (
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
 "deq" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/plasticflaps/opaque{
@@ -17910,6 +17914,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
+"flv" = (
+/obj/structure/aquarium/lawyer,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
 "flP" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/line{
@@ -18829,9 +18839,7 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/station/commons/vacant_room)
 "fEZ" = (
-/obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/disposal/bin,
-/obj/structure/cable,
 /obj/structure/disposalpipe/trunk,
 /obj/structure/noticeboard/directional/north,
 /turf/open/floor/wood,
@@ -24672,7 +24680,6 @@
 /obj/structure/chair/office{
 	dir = 1
 	},
-/obj/machinery/newscaster/directional/west,
 /obj/effect/landmark/start/lawyer,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
@@ -35485,6 +35492,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
+"lxO" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/grimy,
+/area/station/service/lawoffice)
 "lxW" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/firealarm/directional/south,
@@ -36686,11 +36700,12 @@
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "lSI" = (
-/obj/structure/chair/office{
-	dir = 1
-	},
 /obj/machinery/newscaster/directional/east,
-/obj/effect/landmark/start/lawyer,
+/obj/machinery/conveyor_switch/oneway{
+	name = "Shipment Delivery Chute Activator";
+	pixel_x = 10;
+	id = "lawyerdropoff"
+	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "lSM" = (
@@ -46536,7 +46551,6 @@
 	},
 /area/station/service/chapel)
 "pxs" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "pxC" = (
@@ -48926,6 +48940,10 @@
 	dir = 8
 	},
 /area/station/medical/medbay/central)
+"qnk" = (
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
 "qnm" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/structure/table,
@@ -52015,6 +52033,8 @@
 	name = "Tunnel Access Hatch"
 	},
 /obj/effect/mapping_helpers/airlock/unres,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "rpq" = (
@@ -58388,6 +58408,8 @@
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "tEl" = (
@@ -62964,6 +62986,8 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "vcs" = (
@@ -64682,10 +64706,9 @@
 /area/station/medical/surgery/fore)
 "vGd" = (
 /obj/machinery/firealarm/directional/south,
-/obj/machinery/conveyor_switch/oneway{
-	name = "Shipment Delivery Chute Activator";
-	pixel_x = 10;
-	id = "lawyerdropoff"
+/obj/effect/landmark/start/lawyer,
+/obj/structure/chair/office{
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
@@ -68917,6 +68940,9 @@
 /area/station/service/hydroponics)
 "xmH" = (
 /obj/structure/sign/poster/official/report_crimes/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "xmJ" = (
@@ -99443,11 +99469,11 @@ hLr
 nCe
 udP
 hFr
-abM
-abM
-abM
-abM
-abM
+hFr
+hFr
+hFr
+hFr
+hFr
 abM
 abM
 abM
@@ -99699,11 +99725,11 @@ nzL
 jkM
 adC
 jmp
-hFr
-hFr
-hFr
-hFr
-hFr
+iTz
+flv
+qnk
+mrb
+dep
 hFr
 abM
 abM
@@ -99959,7 +99985,7 @@ vrG
 iTz
 fEZ
 qel
-mrb
+aGk
 hPA
 hFr
 abM
@@ -100216,7 +100242,7 @@ dVC
 kKB
 pxs
 jXY
-aGk
+lxO
 xmH
 hFr
 abM
