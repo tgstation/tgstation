@@ -17,7 +17,7 @@
 	interaction_flags_machine = INTERACT_MACHINE_OPEN
 	circuit = /obj/item/circuitboard/machine/crossing_signal
 	// pointless if it only takes 2 seconds to cross but updates every 2 seconds
-	subsystem_type = /datum/controller/subsystem/processing/fastprocess
+	subsystem_type = /datum/controller/subsystem/processing/transport
 	light_color = LIGHT_COLOR_BABY_BLUE
 	/// green, amber, or red for tram, blue if it's emag, tram missing, etc.
 	var/signal_state = XING_STATE_MALF
@@ -334,10 +334,10 @@
 		tram_velocity_sign = tram.travel_direction & EAST ? 1 : -1
 
 	// How far away are we? negative if already passed.
-	var/approach_distance = tram_velocity_sign * (signal_pos - (tram_pos + (DEFAULT_TRAM_LENGTH * 0.5)))
+	var/approach_distance = tram_velocity_sign * (signal_pos - (tram_pos + DEFAULT_TRAM_MIDPOINT))
 
 	// Check if tram is driving away from us.
-	if(approach_distance < 0)
+	if(approach_distance < -abs(DEFAULT_TRAM_MIDPOINT))
 		// driving away. Green. In fact, in order to reverse, it'll have to stop, so let's go ahead and kill.
 		set_signal_state(idle_aspect)
 		return PROCESS_KILL

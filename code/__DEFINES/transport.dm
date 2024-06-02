@@ -103,6 +103,7 @@ DEFINE_BITFIELD(request_flags, list(
 #define XING_THRESHOLD_RED 20
 
 #define DEFAULT_TRAM_LENGTH 10
+#define DEFAULT_TRAM_MIDPOINT 5
 
 // Tram machinery subtype
 #define TRANSPORT_SYSTEM_NORMAL 0
