@@ -216,7 +216,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				continue
 			check_area.color = blobstrain.color
 			check_area.name = "blob"
-			check_area.icon = 'icons/mob/nonhuman-player/blob.dmi'
+			check_area.icon = 'icons/mob/nonhuman-player/blob_tall.dmi'
 			check_area.icon_state = "blob_shield"
 			check_area.layer = BELOW_MOB_LAYER
 			check_area.SetInvisibility(INVISIBILITY_NONE)
