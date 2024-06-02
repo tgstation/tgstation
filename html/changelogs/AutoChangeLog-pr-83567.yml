@@ -1,0 +1,6 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - rscadd: "Shovels and entrenching tools can be used to dig graves on asteroid/dirt/etc. surfaces. Neat!"
+  - rscadd: "The Icebox Morgue has been given a fenced-off graveyard in the back."
+  - code_imp: "burn_tile() is no longer double-defined on asteroid turfs."
