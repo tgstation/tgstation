@@ -11,8 +11,9 @@
 		Nakamura Engineering swears up and down there's airbrakes."
 	icon_state = "pathfinder"
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/pathfinder)
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// The pathfinding implant.
 	var/obj/item/implant/mod/implant
 
@@ -68,7 +69,7 @@
 	human_user.update_action_buttons(TRUE)
 	balloon_alert(human_user, "[mod] attached")
 	playsound(mod, 'sound/machines/ping.ogg', 50, TRUE)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/item/implant/mod
 	name = "MOD pathfinder implant"

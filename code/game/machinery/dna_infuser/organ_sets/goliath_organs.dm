@@ -1,6 +1,6 @@
 #define GOLIATH_ORGAN_COLOR "#875652"
 #define GOLIATH_SCLERA_COLOR "#ac0f32"
-#define GOLIATH_PUPIL_COLOR "#FF0000"
+#define GOLIATH_PUPIL_COLOR COLOR_RED
 #define GOLIATH_COLORS GOLIATH_ORGAN_COLOR + GOLIATH_SCLERA_COLOR + GOLIATH_PUPIL_COLOR
 
 ///bonus of the goliath: you can swim through space!
@@ -21,8 +21,8 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GOLIATH_COLORS
 
-	eye_color_left = "#FF0000"
-	eye_color_right = "#FF0000"
+	eye_color_left = COLOR_RED
+	eye_color_right = COLOR_RED
 
 	low_light_cutoff = list(15, 0, 8)
 	medium_light_cutoff = list(35, 15, 25)
@@ -31,7 +31,7 @@
 
 /obj/item/organ/internal/eyes/night_vision/goliath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "eyes are blood red and stone-like.", BODY_ZONE_PRECISE_EYES)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes are blood red and stone-like.", BODY_ZONE_PRECISE_EYES)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
 ///goliath lungs! You can breathe lavaland air mix but can't breath pure O2 from a tank anymore.
@@ -46,7 +46,7 @@
 
 /obj/item/organ/internal/lungs/lavaland/goliath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "back is covered in small tendrils.", BODY_ZONE_CHEST)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their back is covered in small tendrils.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
 ///goliath brain. you can't use gloves but one of your arms becomes a tendril hammer that can be used to mine!
@@ -63,7 +63,7 @@
 
 /obj/item/organ/internal/brain/goliath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "arm is just a mass of plate and tendrils.", BODY_ZONE_CHEST)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their arm is just a mass of plate and tendrils.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
 /obj/item/organ/internal/brain/goliath/on_mob_insert(mob/living/carbon/brain_owner)
@@ -170,7 +170,7 @@
 
 /obj/item/organ/internal/heart/goliath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "skin has visible hard plates growing from within.", BODY_ZONE_CHEST)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their skin has visible hard plates growing from within.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 	AddElement(/datum/element/update_icon_blocker)
 

@@ -16,7 +16,7 @@
 	light_flags = LIGHT_ATTACHED
 	light_on = FALSE
 	light_range = 3
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	maxHealth = 500
 	mob_size = MOB_SIZE_TINY
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
@@ -119,6 +119,9 @@
 		"mouse" = TRUE,
 		"rabbit" = TRUE,
 		"repairbot" = TRUE,
+		"kitten" = TRUE,
+		"puppy" = TRUE,
+		"spider" = TRUE,
 	)
 	/// List of all available card overlays.
 	var/static/list/possible_overlays = list(
@@ -238,6 +241,7 @@
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
 	RegisterSignals(src, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE), PROC_REF(on_shell_damaged))
 	RegisterSignal(src, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, PROC_REF(on_shell_weakened))
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -351,6 +355,12 @@
 	to_chat(src, span_danger("WARN: Holochasis range restrictions disabled."))
 	return TRUE
 
+/mob/living/silicon/pai/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	set_silence_if_lower(disrupt_duration)
+	balloon_alert(src, "muted!")
+	return COMSIG_SABOTEUR_SUCCESS
+
 /**
  * Resets the pAI and any emagged status.
  *
@@ -459,7 +469,7 @@
 	SIGNAL_HANDLER
 
 	for(var/mob/living/cultist as anything in invokers)
-		to_chat(cultist, span_cultitalic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
+		to_chat(cultist, span_cult_italic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
 	return STOP_SACRIFICE
 
 /// Updates the distance we can be from our pai card

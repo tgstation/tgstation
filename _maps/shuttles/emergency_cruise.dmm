@@ -955,7 +955,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "uu" = (
-/mob/living/simple_animal/hostile/alien/maid/barmaid,
+/mob/living/basic/alien/maid/barmaid,
 /turf/open/floor/wood/parquet,
 /area/shuttle/escape)
 "uy" = (

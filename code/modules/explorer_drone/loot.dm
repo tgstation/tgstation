@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 /datum/adventure_loot_generator/pet/generate()
 	var/obj/item/pet_carrier/carrier = new carrier_type()
 	var/chosen_pet_type = pick(possible_pets)
-	var/mob/living/simple_animal/pet/pet = new chosen_pet_type()
+	var/mob/living/basic/pet/pet = new chosen_pet_type()
 	carrier.add_occupant(pet)
 	return carrier
 
@@ -152,7 +152,6 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	lefthand_file = 'icons/mob/inhands/items/firelance_lefthand.dmi'
 	var/windup_time = 10 SECONDS
 	var/melt_range = 3
-	var/charge_per_use = 200
 	var/obj/item/stock_parts/cell/cell
 
 /obj/item/firelance/Initialize(mapload)
@@ -176,7 +175,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 		return
 	if(LAZYACCESS(user.do_afters, "firelance"))
 		return
-	if(!cell.use(charge_per_use))
+	if(!cell.use(0.2 * STANDARD_CELL_CHARGE))
 		to_chat(user,span_warning("[src] battery ran dry!"))
 		return
 	ADD_TRAIT(user, TRAIT_IMMOBILIZED, REF(src))

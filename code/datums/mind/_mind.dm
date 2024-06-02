@@ -451,15 +451,20 @@
 					current.dropItemToGround(W, TRUE) //The TRUE forces all items to drop, since this is an admin undress.
 			if("takeuplink")
 				take_uplink()
-				wipe_memory()//Remove any memory they may have had.
+				wipe_memory_type(/datum/memory/key/traitor_uplink/implant)
 				log_admin("[key_name(usr)] removed [current]'s uplink.")
 			if("crystals")
 				if(check_rights(R_FUN))
 					var/datum/component/uplink/U = find_syndicate_uplink()
 					if(U)
-						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.uplink_handler.telecrystals) as null | num
-						if(!isnull(crystals))
-							U.uplink_handler.telecrystals = crystals
+						var/crystals = tgui_input_number(
+							user = usr,
+							message = "Amount of telecrystals for [key]",
+							title = "Syndicate uplink",
+							default = U.uplink_handler.telecrystals,
+						)
+						if(isnum(crystals))
+							U.uplink_handler.set_telecrystals(crystals)
 							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
 							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")
 			if("progression")
@@ -548,7 +553,7 @@
 
 /// Sets us to the passed job datum, then greets them to their new job.
 /// Use this one for when you're assigning this mind to a new job for the first time,
-/// or for when someone's recieving a job they'd really want to be greeted to.
+/// or for when someone's receiving a job they'd really want to be greeted to.
 /datum/mind/proc/set_assigned_role_with_greeting(datum/job/new_role, client/incoming_client)
 	. = set_assigned_role(new_role)
 	if(assigned_role != new_role)

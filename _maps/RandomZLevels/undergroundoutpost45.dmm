@@ -3802,7 +3802,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "ot" = (
 /obj/machinery/power/smes{
-	charge = 1.5e+006;
+	charge = 3e+007;
 	input_level = 10000;
 	inputting = 0;
 	output_level = 7000
@@ -3812,7 +3812,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "ou" = (
 /obj/machinery/power/smes{
-	charge = 1.5e+006;
+	charge = 3e+007;
 	input_level = 30000;
 	inputting = 0;
 	output_level = 7000

@@ -44,7 +44,7 @@
 /obj/effect/forcefield/cult
 	name = "glowing wall"
 	desc = "An unholy shield that blocks all attacks."
-	icon = 'icons/effects/cult/effects.dmi'
+	icon = 'icons/effects/cult.dmi'
 	icon_state = "cultshield"
 	can_atmos_pass = ATMOS_PASS_NO
 	initial_duration = 20 SECONDS
@@ -107,3 +107,6 @@
 
 /obj/effect/forcefield/cosmic_field/fast
 	initial_duration = 5 SECONDS
+
+/obj/effect/forcefield/cosmic_field/extrafast
+	initial_duration = 2.5 SECONDS

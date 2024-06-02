@@ -97,8 +97,6 @@
 		if((selected_reaction.reaction_flags & REACTION_INSTANT) || (flags & REAGENT_HOLDER_INSTANT_REACT)) //If we have instant reactions, we process them here
 			instant_react(selected_reaction)
 			.++
-			update_total()
-			continue
 		else
 			var/exists = FALSE
 			for(var/datum/equilibrium/E_exist as anything in reaction_list)

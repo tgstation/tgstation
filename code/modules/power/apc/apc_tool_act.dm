@@ -1,4 +1,238 @@
 //attack with an item - open/close cover, insert cell, or (un)lock interface
+
+/obj/machinery/power/apc/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
+	if(HAS_TRAIT(tool, TRAIT_APC_SHOCKING))
+		. = fork_outlet_act(user, tool)
+		if(.)
+			return .
+
+	if(tool.GetID())
+		togglelock(user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stock_parts/cell))
+		. = cell_act(user, tool)
+	else if(istype(tool, /obj/item/stack/cable_coil))
+		. = cable_act(user, tool, LAZYACCESS(modifiers, RIGHT_CLICK))
+	else if(istype(tool, /obj/item/electronics/apc))
+		. = electronics_act(user, tool)
+	else if(istype(tool, /obj/item/electroadaptive_pseudocircuit))
+		. = pseudocircuit_act(user, tool)
+	else if(istype(tool, /obj/item/wallframe/apc))
+		. = wallframe_act(user, tool)
+	if(.)
+		return .
+
+	if(panel_open && !opened && is_wire_tool(tool))
+		wires.interact(user)
+		return ITEM_INTERACT_SUCCESS
+
+	return .
+
+/// Called when we interact with the APC with an item with which we can get shocked when we stuff it into an APC
+/obj/machinery/power/apc/proc/fork_outlet_act(mob/living/user, obj/item/tool)
+	var/metal = 0
+	var/shock_source = null
+	metal += LAZYACCESS(tool.custom_materials, GET_MATERIAL_REF(/datum/material/iron))//This prevents wooden rolling pins from shocking the user
+
+	if(cell || terminal) //The mob gets shocked by whichever powersource has the most electricity
+		if(cell && terminal)
+			shock_source = cell.charge > terminal.powernet.avail ? cell : terminal.powernet
+		else
+			shock_source = terminal?.powernet || cell
+
+	if(shock_source && metal && (panel_open || opened)) //Now you're cooking with electricity
+		if(!electrocute_mob(user, shock_source, src, siemens_coeff = 1, dist_check = TRUE))//People with insulated gloves just attack the APC normally. They're just short of magical anyway
+			return NONE
+		do_sparks(5, TRUE, src)
+		user.visible_message(span_notice("[user.name] shoves [tool] into the internal components of [src], erupting into a cascade of sparks!"))
+		if(shock_source == cell)//If the shock is coming from the cell just fully discharge it, because it's funny
+			cell.use(cell.charge)
+		return ITEM_INTERACT_SUCCESS
+
+/// Called when we interact with the APC with a cell, attempts to insert it
+/obj/machinery/power/apc/proc/cell_act(mob/living/user, obj/item/stock_parts/cell/new_cell)
+	if(!opened)
+		return NONE
+
+	if(cell)
+		balloon_alert(user, "cell already installed!")
+		return ITEM_INTERACT_BLOCKING
+	if(machine_stat & MAINT)
+		balloon_alert(user, "no connector for a cell!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(new_cell, src))
+		return ITEM_INTERACT_BLOCKING
+	cell = new_cell
+	user.visible_message(span_notice("[user.name] inserts the power cell to [src.name]!"))
+	balloon_alert(user, "cell inserted")
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/// Checks if we can place a terminal on the APC
+/obj/machinery/power/apc/proc/can_place_terminal(mob/living/user, obj/item/stack/cable_coil/installing_cable, silent = TRUE)
+	if(!opened)
+		return FALSE
+	var/turf/host_turf = get_turf(src)
+	if(host_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
+		if(!silent && user)
+			balloon_alert(user, "remove the floor plating!")
+		return FALSE
+	if(!isnull(terminal))
+		if(!silent && user)
+			balloon_alert(user, "already wired!")
+		return FALSE
+	if(!has_electronics)
+		if(!silent && user)
+			balloon_alert(user, "no board to wire!")
+		return FALSE
+	if(panel_open)
+		if(!silent && user)
+			balloon_alert(user, "wires prevent placing a terminal!")
+		return FALSE
+	if(installing_cable.get_amount() < 10)
+		if(!silent && user)
+			balloon_alert(user, "need ten lengths of cable!")
+		return FALSE
+	return TRUE
+
+/// Called when we interact with the APC with a cable, attempts to wire the APC and create a terminal
+/obj/machinery/power/apc/proc/cable_act(mob/living/user, obj/item/stack/cable_coil/installing_cable, is_right_clicking)
+	if(!opened)
+		return NONE
+	if(!can_place_terminal(user, installing_cable, silent = FALSE))
+		return ITEM_INTERACT_BLOCKING
+
+	var/terminal_cable_layer = cable_layer // Default to machine's cable layer
+	if(is_right_clicking)
+		var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
+		if(isnull(choice) \
+			|| !user.is_holding(installing_cable) \
+			|| !user.Adjacent(src) \
+			|| user.incapacitated() \
+			|| !can_place_terminal(user, installing_cable, silent = TRUE) \
+		)
+			return ITEM_INTERACT_BLOCKING
+		terminal_cable_layer = GLOB.cable_name_to_layer[choice]
+
+	user.visible_message(span_notice("[user.name] starts addding cables to the APC frame."))
+	balloon_alert(user, "adding cables...")
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+
+	if(!do_after(user, 2 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+	if(!can_place_terminal(user, installing_cable, silent = TRUE))
+		return ITEM_INTERACT_BLOCKING
+	var/turf/our_turf = get_turf(src)
+	var/obj/structure/cable/cable_node = our_turf.get_cable_node(terminal_cable_layer)
+	if(prob(50) && electrocute_mob(usr, cable_node, cable_node, 1, TRUE))
+		do_sparks(5, TRUE, src)
+		return ITEM_INTERACT_BLOCKING
+	installing_cable.use(10)
+	user.visible_message(span_notice("[user.name] adds cables to the APC frame."))
+	balloon_alert(user, "cables added")
+	make_terminal(terminal_cable_layer)
+	terminal.connect_to_network()
+	return ITEM_INTERACT_SUCCESS
+
+/// Called when we interact with the APC with APC electronics, attempts to install the board
+/obj/machinery/power/apc/proc/electronics_act(mob/living/user, obj/item/electronics/apc/installing_board)
+	if(!opened)
+		return NONE
+
+	if(has_electronics)
+		balloon_alert(user, "there is already a board!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(machine_stat & BROKEN)
+		balloon_alert(user, "the frame is damaged!")
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(span_notice("[user.name] inserts the power control board into [src]."))
+	balloon_alert(user, "inserting the board...")
+	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+
+	if(!do_after(user, 1 SECONDS, target = src) || has_electronics)
+		return ITEM_INTERACT_BLOCKING
+
+	has_electronics = APC_ELECTRONICS_INSTALLED
+	locked = FALSE
+	balloon_alert(user, "board installed")
+	qdel(installing_board)
+	return ITEM_INTERACT_SUCCESS
+
+/// Called when we interact with the APC with an electroadaptive pseudocircuit, used by cyborgs to install a board or weak cell
+/obj/machinery/power/apc/proc/pseudocircuit_act(mob/living/user, obj/item/electroadaptive_pseudocircuit/pseudocircuit)
+	if(!has_electronics)
+		if(machine_stat & BROKEN)
+			balloon_alert(user, "frame is too damaged!")
+			return ITEM_INTERACT_BLOCKING
+		if(!pseudocircuit.adapt_circuit(user, circuit_cost = 0.05 * STANDARD_CELL_CHARGE))
+			return ITEM_INTERACT_BLOCKING
+		user.visible_message(
+			span_notice("[user] fabricates a circuit and places it into [src]."),
+			span_notice("You adapt a power control board and click it into place in [src]'s guts."),
+		)
+		has_electronics = APC_ELECTRONICS_INSTALLED
+		locked = FALSE
+		return ITEM_INTERACT_SUCCESS
+
+	if(!cell)
+		if(machine_stat & MAINT)
+			balloon_alert(user, "no board for a cell!")
+			return ITEM_INTERACT_BLOCKING
+		if(!pseudocircuit.adapt_circuit(user, circuit_cost = 0.5 * STANDARD_CELL_CHARGE))
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/stock_parts/cell/crap/empty/bad_cell = new(src)
+		bad_cell.forceMove(src)
+		cell = bad_cell
+		user.visible_message(
+			span_notice("[user] fabricates a weak power cell and places it into [src]."),
+			span_warning("Your [pseudocircuit.name] whirrs with strain as you create a weak power cell and place it into [src]!"),
+		)
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	balloon_alert(user, "has both board and cell!")
+	return ITEM_INTERACT_BLOCKING
+
+/// Called when we interact with the APC with and APC frame, used for replacing a damaged cover/frame
+/obj/machinery/power/apc/proc/wallframe_act(mob/living/user, obj/item/wallframe/apc/wallframe)
+	if(!opened)
+		return NONE
+
+	if(!(machine_stat & BROKEN || opened == APC_COVER_REMOVED || atom_integrity < max_integrity)) // There is nothing to repair
+		balloon_alert(user, "no reason for repairs!")
+		return ITEM_INTERACT_BLOCKING
+	if((machine_stat & BROKEN) && opened == APC_COVER_REMOVED && has_electronics && terminal) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
+		user.visible_message(span_notice("[user.name] replaces missing APC's cover."))
+		balloon_alert(user, "replacing APC's cover...")
+		if(!do_after(user, 2 SECONDS, target = src)) // replacing cover is quicker than replacing whole frame
+			return ITEM_INTERACT_BLOCKING
+		balloon_alert(user, "cover replaced")
+		qdel(wallframe)
+		update_integrity(30) //needs to be welded to fully repair but can work without
+		set_machine_stat(machine_stat & ~(BROKEN|MAINT))
+		opened = APC_COVER_OPENED
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+	if(has_electronics)
+		balloon_alert(user, "remove the board inside!")
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("[user.name] replaces the damaged APC frame with a new one."))
+	balloon_alert(user, "replacing damaged frame...")
+	if(!do_after(user, 5 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "replaced frame")
+	qdel(wallframe)
+	set_machine_stat(machine_stat & ~BROKEN)
+	atom_integrity = max_integrity
+	if(opened == APC_COVER_REMOVED)
+		opened = APC_COVER_OPENED
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/power/apc/crowbar_act(mob/user, obj/item/crowbar)
 	. = TRUE
 
@@ -193,7 +427,6 @@
 		var/obj/item/stock_parts/cell/crap/empty/C = new(src)
 		C.forceMove(src)
 		cell = C
-		chargecount = 0
 		balloon_alert(user, "power cell installed")
 		update_appearance()
 		return TRUE
@@ -239,7 +472,7 @@
 	environ = APC_CHANNEL_OFF
 	update_appearance()
 	update()
-	addtimer(CALLBACK(src, PROC_REF(reset), APC_RESET_EMP), 600)
+	addtimer(CALLBACK(src, PROC_REF(reset), APC_RESET_EMP), 60 SECONDS)
 
 /obj/machinery/power/apc/proc/togglelock(mob/living/user)
 	if(obj_flags & EMAGGED)
@@ -251,7 +484,7 @@
 	else if(machine_stat & (BROKEN|MAINT))
 		balloon_alert(user, "nothing happens!")
 	else
-		if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN) && !malfhack && !remote_control_user)
+		if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN) && ((!malfhack && !remote_control_user) || (malfhack && (malfai == user || (user in malfai.connected_robots)))))
 			locked = !locked
 			balloon_alert(user, locked ? "locked" : "unlocked")
 			update_appearance()

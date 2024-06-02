@@ -16,6 +16,7 @@
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
+#define ROLE_SPY "Spy"
 
 // Midround roles
 #define ROLE_ABDUCTOR "Abductor"
@@ -32,7 +33,6 @@
 #define ROLE_OPERATIVE_MIDROUND "Operative (Midround)"
 #define ROLE_PARADOX_CLONE "Paradox Clone"
 #define ROLE_REV_HEAD "Head Revolutionary"
-#define ROLE_SENTIENT_DISEASE "Sentient Disease"
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
 #define ROLE_SPACE_DRAGON "Space Dragon"
 #define ROLE_SPIDER "Spider"
@@ -77,6 +77,10 @@
 #define ROLE_WIZARD_APPRENTICE "apprentice"
 #define ROLE_SYNDICATE_MONKEY "Syndicate Monkey Agent"
 #define ROLE_CONTRACTOR_SUPPORT "Contractor Support Unit"
+#define ROLE_OPERATIVE_OVERWATCH "Operative Overwatch Agent"
+#define ROLE_SYNDICATE_SABOBORG "Syndicate Sabotage Cyborg"
+#define ROLE_SYNDICATE_MEDBORG "Syndicate Medical Cyborg"
+#define ROLE_SYNDICATE_ASSAULTBORG "Syndicate Assault Cyborg"
 
 //Spawner roles
 #define ROLE_ANCIENT_CREW "Ancient Crew"
@@ -128,6 +132,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_REV_HEAD = 14,
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
+	ROLE_SPY = 0,
 
 	// Midround
 	ROLE_ABDUCTOR = 0,
@@ -144,7 +149,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_OPERATIVE_MIDROUND = 14,
 	ROLE_PARADOX_CLONE = 0,
 	ROLE_REVENANT = 0,
-	ROLE_SENTIENT_DISEASE = 0,
 	ROLE_SLEEPER_AGENT = 0,
 	ROLE_SPACE_DRAGON = 0,
 	ROLE_SPIDER = 0,

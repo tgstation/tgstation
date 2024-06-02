@@ -119,19 +119,29 @@
 		//stop listening to this signal, as the static update is now handled by the eyeobj's setLoc
 		AI.eyeobj?.UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 		AI.eyeobj?.forceMove(newloc) //kick the eye out as well
-		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
+		if(forced)
+			AI.controlled_equipment = null
+			AI.remote_control = null
 			if(!AI.linked_core) //if the victim AI has no core
-				AI.investigate_log("has been gibbed by being forced out of their mech by another AI.", INVESTIGATE_DEATHS)
-				AI.gib(DROP_ALL_REMAINS)  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
-			AI = null
-			mecha_flags &= ~SILICON_PILOT
-			return
+				if (!AI.can_shunt || !length(AI.hacked_apcs))
+					AI.investigate_log("has been gibbed by being forced out of their mech.", INVESTIGATE_DEATHS)
+					/// If an AI with no core (and no shunting abilities) gets forced out of their mech
+					/// (in a way that isn't handled by the normal handling of their mech being destroyed)
+					/// we gib 'em here, too.
+					AI.gib(DROP_ALL_REMAINS)
+					AI = null
+					mecha_flags &= ~SILICON_PILOT
+					return
+				else
+					var/obj/machinery/power/apc/emergency_shunt_apc = pick(AI.hacked_apcs)
+					emergency_shunt_apc.malfoccupy(AI) //get shunted into a random APC (you don't get to choose which)
+					AI = null
+					mecha_flags &= ~SILICON_PILOT
+					return
+			newloc = get_turf(AI.linked_core)
+			qdel(AI.linked_core)
+			AI.forceMove(newloc)
 		else
-			if(!AI.linked_core)
-				if(!silent)
-					to_chat(AI, span_userdanger("Inactive core destroyed. Unable to return."))
-				AI.linked_core = null
-				return
 			if(!silent)
 				to_chat(AI, span_notice("Returning to core..."))
 			AI.controlled_equipment = null
@@ -139,6 +149,9 @@
 			mob_container = AI
 			newloc = get_turf(AI.linked_core)
 			qdel(AI.linked_core)
+			AI.forceMove(newloc)
+	else if(isliving(M))
+		mob_container = M
 	else
 		return ..()
 	var/mob/living/ejector = M
@@ -157,24 +170,26 @@
 	setDir(SOUTH)
 	return ..()
 
-/obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
-	RegisterSignal(M, COMSIG_MOB_CLICKON, PROC_REF(on_mouseclick), TRUE)
-	RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(display_speech_bubble), TRUE)
-	RegisterSignal(M, COMSIG_MOVABLE_KEYBIND_FACE_DIR, PROC_REF(on_turn), TRUE)
+/obj/vehicle/sealed/mecha/add_occupant(mob/driver, control_flags)
+	RegisterSignal(driver, COMSIG_MOB_CLICKON, PROC_REF(on_mouseclick), TRUE)
+	RegisterSignal(driver, COMSIG_MOB_SAY, PROC_REF(display_speech_bubble), TRUE)
+	RegisterSignal(driver, COMSIG_MOVABLE_KEYBIND_FACE_DIR, PROC_REF(on_turn), TRUE)
+	RegisterSignal(driver, COMSIG_MOB_ALTCLICKON, PROC_REF(on_click_alt))
 	. = ..()
 	update_appearance()
 
-/obj/vehicle/sealed/mecha/remove_occupant(mob/M)
-	UnregisterSignal(M, list(
+/obj/vehicle/sealed/mecha/remove_occupant(mob/driver)
+	UnregisterSignal(driver, list(
 		COMSIG_MOB_CLICKON,
 		COMSIG_MOB_SAY,
 		COMSIG_MOVABLE_KEYBIND_FACE_DIR,
+		COMSIG_MOB_ALTCLICKON,
 	))
-	M.clear_alert(ALERT_CHARGE)
-	M.clear_alert(ALERT_MECH_DAMAGE)
-	if(M.client)
-		M.update_mouse_pointer()
-		M.client.view_size.resetToDefault()
+	driver.clear_alert(ALERT_CHARGE)
+	driver.clear_alert(ALERT_MECH_DAMAGE)
+	if(driver.client)
+		driver.update_mouse_pointer()
+		driver.client.view_size.resetToDefault()
 		zoom_mode = FALSE
 	. = ..()
 	update_appearance()
@@ -182,9 +197,20 @@
 /obj/vehicle/sealed/mecha/container_resist_act(mob/living/user)
 	if(isAI(user))
 		var/mob/living/silicon/ai/AI = user
-		if(!AI.can_shunt)
-			to_chat(AI, span_notice("You can't leave a mech after dominating it!."))
-			return FALSE
+		if(!AI.linked_core)
+			to_chat(AI, span_userdanger("Inactive core destroyed. Unable to return."))
+			if(!AI.can_shunt || !AI.hacked_apcs.len)
+				to_chat(AI, span_warning("[AI.can_shunt ? "No hacked APCs available." : "No shunting capabilities."]"))
+				return
+			var/confirm = tgui_alert(AI, "Shunt to a random APC? You won't have anywhere else to go!", "Confirm Emergency Shunt", list("Yes", "No"))
+			if(confirm == "Yes")
+				/// Mechs with open cockpits can have the pilot shot by projectiles, or EMPs may destroy the AI inside
+				/// Alternatively, destroying the mech will shunt the AI if they can shunt, or a deadeye wizard can hit
+				/// them with a teleportation bolt
+				if (AI.stat == DEAD || AI.loc != src)
+					return
+				mob_exit(AI, forced = TRUE)
+			return
 	to_chat(user, span_notice("You begin the ejection procedure. Equipment is disabled during this process. Hold still to finish ejecting."))
 	is_currently_ejecting = TRUE
 	if(do_after(user, has_gravity() ? exit_delay : 0 , target = src))

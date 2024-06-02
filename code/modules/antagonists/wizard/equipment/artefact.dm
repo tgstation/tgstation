@@ -362,7 +362,7 @@
 		qdel(src)
 		return
 	RegisterSignal(src, COMSIG_MOVABLE_CROSS_OVER, PROC_REF(check_teleport))
-	SSmove_manager.move_towards(src, get_turf(whistle.whistler))
+	GLOB.move_manager.move_towards(src, get_turf(whistle.whistler))
 
 /// Check if anything the tornado crosses is the creator.
 /obj/effect/temp_visual/teleporting_tornado/proc/check_teleport(datum/source, atom/movable/crossed)

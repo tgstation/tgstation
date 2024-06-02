@@ -40,7 +40,7 @@
 	internal = new
 	register_context()
 
-/obj/machinery/atmospherics/components/binary/crystallizer/on_deconstruction()	
+/obj/machinery/atmospherics/components/binary/crystallizer/on_deconstruction(disassembled)
 	var/turf/local_turf = get_turf(loc)
 	if(internal.total_moles())
 		local_turf.assume_air(internal)
@@ -55,7 +55,7 @@
 		if(TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
 		if(TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
+			context[SCREENTIP_CONTEXT_RMB] = "Rotate"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, params)
@@ -67,7 +67,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/crystallizer/crowbar_act(mob/living/user, obj/item/tool)
-	return crowbar_deconstruction_act(user, tool, internal.return_pressure())	
+	return crowbar_deconstruction_act(user, tool, internal.return_pressure())
 
 /obj/machinery/atmospherics/components/binary/crystallizer/update_overlays()
 	. = ..()

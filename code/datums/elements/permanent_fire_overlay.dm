@@ -8,12 +8,10 @@
 
 	RegisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_fire_overlay))
 	target.update_appearance(UPDATE_OVERLAYS)
-	ADD_TRAIT(target, TRAIT_NO_EXTINGUISH, ELEMENT_TRAIT(type))
 
 /datum/element/perma_fire_overlay/Detach(atom/target)
 	. = ..()
 	UnregisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS)
-	REMOVE_TRAIT(target, TRAIT_NO_EXTINGUISH, ELEMENT_TRAIT(type))
 	target.update_appearance(UPDATE_OVERLAYS)
 
 /datum/element/perma_fire_overlay/proc/add_fire_overlay(mob/living/source, list/overlays)

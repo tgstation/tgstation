@@ -32,11 +32,11 @@ Burning extracts:
 	effect_desc = "Creates a hungry and speedy slime that will love you forever."
 
 /obj/item/slimecross/burning/grey/do_effect(mob/user)
-	var/mob/living/simple_animal/slime/new_slime = new(get_turf(user),/datum/slime_type/grey)
+	var/mob/living/basic/slime/new_slime = new(get_turf(user),/datum/slime_type/grey)
 	new_slime.visible_message(span_danger("A baby slime emerges from [src], and it nuzzles [user] before burbling hungrily!"))
-	new_slime.set_friendship(user, 20) //Gas, gas, gas
+	new_slime.befriend(user) //Gas, gas, gas
 	new_slime.bodytemperature = T0C + 400 //We gonna step on the gas.
-	new_slime.set_nutrition(new_slime.hunger_nutrition) //Tonight, we fight!
+	new_slime.set_nutrition(SLIME_HUNGER_NUTRITION) //Tonight, we fight!
 	..()
 
 /obj/item/slimecross/burning/orange
@@ -198,15 +198,12 @@ Burning extracts:
 
 /obj/item/slimecross/burning/red/do_effect(mob/user)
 	user.visible_message(span_danger("[src] pulses a hazy red aura for a moment, which wraps around [user]!"))
-	for(var/mob/living/simple_animal/slime/slimes_in_view in view(7, get_turf(user)))
-		if(user in slimes_in_view.Friends)
-			var/friendliness = slimes_in_view.Friends[user]
-			slimes_in_view.clear_friends()
-			slimes_in_view.set_friendship(user, friendliness)
-		else
-			slimes_in_view.clear_friends()
-		slimes_in_view.rabid = TRUE
-		slimes_in_view.visible_message(span_danger("The [slimes_in_view] is driven into a dangerous frenzy!"))
+	for(var/mob/living/basic/slime/slime_in_view in view(7, get_turf(user)))
+		var/list/mob/living/friends = slime_in_view.ai_controller?.blackboard[BB_FRIENDS_LIST] - user
+		for(var/list/mob/living/ex_friend in friends)
+			slime_in_view.unfriend(ex_friend)
+		slime_in_view.set_enraged_behaviour()
+		slime_in_view.visible_message(span_danger("The [slime_in_view] is driven into a dangerous frenzy!"))
 	..()
 
 /obj/item/slimecross/burning/green
@@ -261,7 +258,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/oil/do_effect(mob/user)
 	user.visible_message(span_warning("[user] activates [src]. It's going to explode!"), span_danger("You activate [src]. It crackles in anticipation"))
-	addtimer(CALLBACK(src, PROC_REF(boom)), 50)
+	addtimer(CALLBACK(src, PROC_REF(boom)), 5 SECONDS)
 
 /// Inflicts a blastwave upon every mob within a small radius.
 /obj/item/slimecross/burning/oil/proc/boom()

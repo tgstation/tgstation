@@ -181,11 +181,29 @@
 /datum/crafting_recipe/pipegun
 	name = "Pipegun"
 	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun
-	reqs = list(/obj/item/weaponcrafting/receiver = 1,
-		/obj/item/pipe = 1,
+	reqs = list(
+		/obj/item/weaponcrafting/receiver = 1,
+		/obj/item/pipe = 2,
 		/obj/item/weaponcrafting/stock = 1,
+		/obj/item/storage/toolbox = 1, // for the screws
 		/obj/item/stack/sticky_tape = 1,
 	)
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	time = 5 SECONDS
+	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/pipepistol
+	name = "Pipe Pistol"
+	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol
+	reqs = list(
+		/obj/item/weaponcrafting/receiver = 1,
+		/obj/item/pipe = 1,
+		/obj/item/stock_parts/servo = 2,
+		/obj/item/stack/sheet/mineral/wood = 4,
+		/obj/item/storage/toolbox = 1, // for the screws
+		/obj/item/stack/sticky_tape = 1,
+	)
+	tool_paths = list(/obj/item/hatchet)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 5 SECONDS
 	category = CAT_WEAPON_RANGED
@@ -222,7 +240,6 @@
 
 /datum/crafting_recipe/pipegun_prime
 	name = "Regal Pipegun"
-	always_available = FALSE
 	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun/prime
 	reqs = list(
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun = 1,
@@ -230,15 +247,16 @@
 		/datum/reagent/consumable/grey_bull = 20,
 		/obj/item/spear = 1,
 		/obj/item/storage/toolbox = 1,
+		/obj/item/clothing/head/costume/crown = 1, // Any ol' crown will do
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	tool_paths = list(/obj/item/clothing/gloves/color/yellow, /obj/item/clothing/mask/gas, /obj/item/melee/baton/security/cattleprod)
-	time = 30 SECONDS //contemplate for a bit
+	time = 15 SECONDS //contemplate for a bit
 	category = CAT_WEAPON_RANGED
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/deagle_prime //When you factor in the makarov (7 tc), the toolbox (1 tc), and the emag (3 tc), this comes to a total of 18 TC or thereabouts. Igorning the 20k pricetag, obviously.
 	name = "Regal Condor"
-	always_available = FALSE
 	result = /obj/item/gun/ballistic/automatic/pistol/deagle/regal
 	reqs = list(
 		/obj/item/gun/ballistic/automatic/pistol = 1,
@@ -258,6 +276,7 @@
 	)
 	time = 30 SECONDS
 	category = CAT_WEAPON_RANGED
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/deagle_prime/New()
 	..()
@@ -265,7 +284,6 @@
 
 /datum/crafting_recipe/deagle_prime_mag
 	name = "Regal Condor Magazine (10mm Reaper)"
-	always_available = FALSE
 	result = /obj/item/ammo_box/magazine/r10mm
 	reqs = list(
 		/obj/item/stack/sheet/iron = 10,
@@ -283,10 +301,10 @@
 	)
 	time = 5 SECONDS
 	category = CAT_WEAPON_RANGED
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/trash_cannon
 	name = "Trash Cannon"
-	always_available = FALSE
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER)
 	result = /obj/structure/cannon/trash
 	reqs = list(
@@ -297,6 +315,7 @@
 		/obj/item/storage/toolbox = 1,
 	)
 	category = CAT_WEAPON_RANGED
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/laser_musket
 	name = "Laser Musket"
@@ -316,7 +335,6 @@
 
 /datum/crafting_recipe/laser_musket_prime
 	name = "Heroic Laser Musket"
-	always_available = FALSE
 	result = /obj/item/gun/energy/laser/musket/prime
 	reqs = list(
 		/obj/item/gun/energy/laser/musket = 1,
@@ -329,6 +347,7 @@
 	tool_paths = list(/obj/item/clothing/head/cowboy, /obj/item/clothing/shoes/cowboy)
 	time = 30 SECONDS //contemplate for a bit
 	category = CAT_WEAPON_RANGED
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/smoothbore_disabler
 	name = "Smoothbore Disabler"
@@ -347,7 +366,6 @@
 
 /datum/crafting_recipe/smoothbore_disabler_prime
 	name = "Elite Smoothbore Disabler"
-	always_available = FALSE
 	result = /obj/item/gun/energy/disabler/smoothbore/prime
 	reqs = list(
 		/obj/item/gun/energy/disabler/smoothbore = 1,
@@ -358,3 +376,4 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 20 SECONDS
 	category = CAT_WEAPON_RANGED
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED

@@ -84,11 +84,8 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	//creates the timer that determines if another program can be manually loaded
 	COOLDOWN_DECLARE(holodeck_cooldown)
 
-/obj/machinery/computer/holodeck/Initialize(mapload)
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/computer/holodeck/LateInitialize()//from here linked is populated and the program list is generated. its also set to load the offline program
+/obj/machinery/computer/holodeck/post_machine_initialize() //from here linked is populated and the program list is generated. its also set to load the offline program
+	. = ..()
 	linked = GLOB.areas_by_type[mapped_start_area]
 	if(!linked)
 		log_mapping("[src] at [AREACOORD(src)] has no matching holodeck area.")
@@ -116,9 +113,9 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	linked.linked = src
 	var/area/my_area = get_area(src)
 	if(my_area)
-		linked.power_usage = my_area.power_usage
+		linked.energy_usage = my_area.energy_usage
 	else
-		linked.power_usage = list(AREA_USAGE_LEN)
+		linked.energy_usage = list(AREA_USAGE_LEN)
 
 	COOLDOWN_START(src, holodeck_cooldown, HOLODECK_CD)
 	generate_program_list()
@@ -295,12 +292,12 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 		holo_object.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 		if(isstructure(holo_object))
-			holo_object.obj_flags |= NO_DECONSTRUCTION
+			holo_object.obj_flags |= NO_DEBRIS_AFTER_DECONSTRUCTION
 			return
 
 		if(ismachinery(holo_object))
 			var/obj/machinery/holo_machine = holo_object
-			holo_machine.obj_flags |= NO_DECONSTRUCTION
+			holo_machine.obj_flags |= NO_DEBRIS_AFTER_DECONSTRUCTION
 			holo_machine.power_change()
 
 			if(istype(holo_machine, /obj/machinery/button))
@@ -372,7 +369,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 				derez(item)
 	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
 		holo_effect.tick()
-	update_mode_power_usage(ACTIVE_POWER_USE, active_power_usage + spawned.len * 3 + effects.len * 5)
+	update_mode_power_usage(ACTIVE_POWER_USE, initial(active_power_usage) + spawned.len * 3 + effects.len * 5)
 
 /obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)
 	if(active == toggleOn)
@@ -380,7 +377,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 
 	if(toggleOn)
 		if(last_program && (last_program != offline_program))
-			addtimer(CALLBACK(src, PROC_REF(load_program), last_program, TRUE), 25)
+			addtimer(CALLBACK(src, PROC_REF(load_program), last_program, TRUE), 2.5 SECONDS)
 		active = TRUE
 	else
 		last_program = program
@@ -446,7 +443,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	reset_to_default()
 	if(linked)
 		linked.linked = null
-		linked.power_usage = list(AREA_USAGE_LEN)
+		linked.energy_usage = list(AREA_USAGE_LEN)
 	return ..()
 
 /obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)

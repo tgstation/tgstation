@@ -17,6 +17,7 @@
 	icon_dead = "spacedragon_dead"
 	health_doll_icon = "spacedragon"
 	faction = list(FACTION_CARP)
+	mob_biotypes = MOB_SPECIAL
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	gender = NEUTER
 	maxHealth = 400
@@ -27,7 +28,6 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0.5, OXY = 1)
 	combat_mode = TRUE
 	speed = 0
-	movement_type = FLYING
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'

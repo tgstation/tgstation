@@ -5,6 +5,8 @@
 	var/can_be_driven = TRUE
 	/// If TRUE, this creature's abilities can be triggered by the rider while mounted
 	var/can_use_abilities = FALSE
+	/// shall we require riders to go through the riding minigame if they arent in our friends list
+	var/require_minigame = FALSE
 	/// list of blacklisted abilities that cant be shared
 	var/list/blacklist_abilities = list()
 
@@ -95,7 +97,7 @@
 	return ..()
 
 /datum/component/riding/creature/driver_move(atom/movable/movable_parent, mob/living/user, direction)
-	if(!COOLDOWN_FINISHED(src, vehicle_move_cooldown))
+	if(!COOLDOWN_FINISHED(src, vehicle_move_cooldown) || !Process_Spacemove())
 		return COMPONENT_DRIVER_BLOCK_MOVE
 	if(!keycheck(user))
 		if(ispath(keytype, /obj/item))
@@ -215,6 +217,14 @@
 		ADD_TRAIT(riding_mob, TRAIT_UNDENSE, VEHICLE_TRAIT)
 	else if(ride_check_flags & CARRIER_NEEDS_ARM) // fireman
 		human_parent.buckle_lying = 90
+
+/datum/component/riding/creature/post_vehicle_mob_buckle(mob/living/ridden, mob/living/rider)
+	if(!require_minigame || ridden.faction.Find(REF(rider)))
+		return
+	ridden.Shake(duration = 2 SECONDS)
+	ridden.balloon_alert(rider, "tries to shake you off!")
+	var/datum/riding_minigame/game = new(ridden, rider, FALSE)
+	game.commence_minigame()
 
 /datum/component/riding/creature/human/RegisterWithParent()
 	. = ..()
@@ -431,6 +441,10 @@
 /datum/component/riding/creature/goliath
 	keytype = /obj/item/key/lasso
 	vehicle_move_delay = 4
+	rider_traits = list(TRAIT_NO_FLOATING_ANIM, TRAIT_TENTACLE_IMMUNE)
+
+/datum/component/riding/creature/goliath/deathmatch
+	keytype = null
 
 /datum/component/riding/creature/goliath/Initialize(mob/living/riding_mob, force, ride_check_flags, potion_boost)
 	. = ..()
@@ -518,3 +532,127 @@
 /datum/component/riding/leaper/handle_unbuckle(mob/living/rider)
 	. = ..()
 	UnregisterSignal(rider,  COMSIG_MOB_POINTED)
+
+/datum/component/riding/creature/raptor
+	require_minigame = TRUE
+	ride_check_flags = RIDER_NEEDS_ARM
+
+/datum/component/riding/creature/raptor/handle_specials()
+	. = ..()
+	if(!SSmapping.is_planetary())
+		set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(7, 7), TEXT_SOUTH = list(2, 10), TEXT_EAST = list(12, 7), TEXT_WEST = list(10, 7)))
+	else
+		set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 7), TEXT_SOUTH = list(0, 10), TEXT_EAST = list(-3, 9), TEXT_WEST = list(3, 9)))
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/datum/component/riding/creature/raptor/fast
+	vehicle_move_delay = 1.5
+
+//a simple minigame players must win to mount and tame a mob
+/datum/riding_minigame
+	///our host mob
+	var/datum/weakref/host
+	///our current rider
+	var/datum/weakref/mounter
+	///the total amount of tries the rider gets
+	var/maximum_attempts = 6
+	///maximum number of failures before we fail
+	var/maximum_failures = 3
+	///cached directional icons of our host
+	var/list/cached_icons = list()
+
+/datum/riding_minigame/New(mob/living/ridden, mob/living/rider, use_mob_icons = TRUE)
+	. = ..()
+	RegisterSignal(rider, COMSIG_MOB_UNBUCKLED, PROC_REF(lose_game))
+	host = WEAKREF(ridden)
+	mounter = WEAKREF(rider)
+	var/used_icon = use_mob_icons ? initial(ridden.icon) : 'icons/testing/turf_analysis.dmi'
+	var/used_icon_state = use_mob_icons ? initial(ridden.icon_state) : "red_arrow"
+	for(var/direction in GLOB.cardinals)
+		var/icon/directional_icon = getFlatIcon(image(icon = used_icon, icon_state = used_icon_state, dir = direction))
+		var/string_icon = icon2base64(directional_icon)
+		var/opposite_direction = dir2text(REVERSE_DIR(direction))
+		cached_icons[opposite_direction] = string_icon
+
+/datum/riding_minigame/proc/commence_minigame()
+	set waitfor = FALSE
+	START_PROCESSING(SSprocessing, src)
+	var/mob/living/rider = mounter?.resolve()
+	if(isnull(rider))
+		lose_game()
+		return
+	ui_interact(rider)
+
+/datum/riding_minigame/process()
+	var/mob/living/living_host = host?.resolve()
+	if(isnull(living_host))
+		return PROCESS_KILL
+	if(prob(60)) //we shake and move uncontrollably!
+		living_host.Shake(duration = 2 SECONDS)
+		var/list/new_direction = GLOB.cardinals.Copy() - living_host.dir
+		living_host.setDir(pick(new_direction))
+
+/datum/riding_minigame/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "RideMinigame")
+		ui.open()
+
+/datum/riding_minigame/ui_static_data(mob/user)
+	var/list/data = list()
+	data["maximum_attempts"] = maximum_attempts
+	data["maximum_failures"] = maximum_failures
+	data["all_icons"] = list()
+	for(var/index in cached_icons)
+		data["all_icons"] += list(list(
+			"direction" = index,
+			"icon" = cached_icons[index],
+		))
+	return data
+
+/datum/riding_minigame/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/riding_minigame/ui_act(action, params, datum/tgui/ui)
+	. = ..()
+	switch(action)
+		if("lose_game")
+			lose_game()
+		if("win_game")
+			win_game()
+
+/datum/riding_minigame/proc/win_game()
+	var/mob/living/living_host = host?.resolve()
+	var/mob/living/living_rider = mounter?.resolve()
+	if(isnull(living_host) || isnull(living_rider))
+		qdel(src)
+		return
+	living_host.befriend(living_rider)
+	living_host.balloon_alert(living_rider, "calms down...")
+	qdel(src)
+
+/datum/riding_minigame/proc/lose_game()
+	var/mob/living/living_host = host?.resolve()
+	var/mob/living/living_rider = mounter?.resolve()
+	if(isnull(living_host) || isnull(living_rider))
+		qdel(src)
+		return
+	if(LAZYFIND(living_host.buckled_mobs, living_rider))
+		UnregisterSignal(living_rider, COMSIG_MOB_UNBUCKLED) //we're about to knock them down!
+		living_host.spin(spintime = 2 SECONDS, speed = 1)
+		living_rider.Knockdown(4 SECONDS)
+		living_host.unbuckle_mob(living_rider)
+		living_host.balloon_alert(living_rider, "knocks you down!")
+	qdel(src)
+
+/datum/riding_minigame/ui_close(mob/user)
+	lose_game()
+
+/datum/riding_minigame/Destroy()
+	STOP_PROCESSING(SSprocessing, src)
+	mounter = null
+	host = null
+	return ..()

@@ -38,11 +38,12 @@
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/clickbox, icon_state = "sphere", max_scale = 2)
+	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	addtimer(CALLBACK(src, PROC_REF(death)), 10 SECONDS)
 
 /mob/living/basic/legion_brood/death(gibbed)
 	if (!gibbed)
-		new /obj/effect/temp_visual/hive_spawn_wither(get_turf(src), /* copy_from = */ src)
+		new /obj/effect/temp_visual/despawn_effect(get_turf(src), /* copy_from = */ src)
 	return ..()
 
 /mob/living/basic/legion_brood/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)

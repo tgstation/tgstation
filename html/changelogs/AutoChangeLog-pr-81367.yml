@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Fire effects get added to mobs in a different way now. Maybe it will get stuck less. Report any oddities."

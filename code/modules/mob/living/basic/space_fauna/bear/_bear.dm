@@ -33,7 +33,7 @@
 
 	faction = list(FACTION_RUSSIAN)
 
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	minimum_survivable_temperature = TCMB
 	maximum_survivable_temperature = T0C + 1500
 	ai_controller = /datum/ai_controller/basic_controller/bear
@@ -81,6 +81,12 @@
 	icon_living = "snowbear"
 	icon_dead = "snowbear_dead"
 	desc = "It's a polar bear, in space, but not actually in space."
+
+/mob/living/basic/bear/snow/ancient
+	name = "ancient polar bear"
+	desc = "A grizzled old polar bear, its hide thick enough to make it impervious to almost all weapons."
+	status_flags = CANPUSH | GODMODE
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/basic/bear/snow/Initialize(mapload)
 	. = ..()

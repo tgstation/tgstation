@@ -96,7 +96,7 @@
 		obj_flags |= BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	SET_PLANE_IMPLICIT(src, ABOVE_LIGHTING_PLANE) //What matters it's one above openspace, so our animation is not dependant on what's there. Up to revision with 513
 	animate(src,alpha = talpha,time = 10)
-	addtimer(CALLBACK(src, PROC_REF(reset_plane)),10)
+	addtimer(CALLBACK(src, PROC_REF(reset_plane)), 1 SECONDS)
 	if(hidden)
 		update_openspace()
 	var/turf/T = get_turf(src)
@@ -118,3 +118,19 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	hidden = TRUE
+
+/// only player mobs (has ckey) may pass, reverse for the opposite
+/obj/effect/playeronly_barrier
+	name = "player-only barrier"
+	desc = "You shall pass."
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = "blocker"
+	anchored = TRUE
+	invisibility = INVISIBILITY_MAXIMUM
+	var/reverse = FALSE //Block if has ckey
+
+/obj/effect/playeronly_barrier/CanAllowThrough(mob/living/mover, border_dir)
+	. = ..()
+	if(!istype(mover))
+		return
+	return isnull(mover.ckey) == reverse

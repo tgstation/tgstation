@@ -102,4 +102,4 @@
 	cost = 7
 	surplus = 50
 	limited_stock = 1
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_INFILTRATORS)
+	purchasable_from = UPLINK_TRAITORS | UPLINK_SPY

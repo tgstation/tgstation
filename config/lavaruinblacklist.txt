@@ -28,6 +28,7 @@
 #_maps/RandomRuins/LavaRuins/lavaland_surface_cultaltar.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_elephant_graveyard.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_gaia.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_gas.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_hermit.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_hierophant.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_library.dmm

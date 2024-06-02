@@ -32,7 +32,6 @@
 //Mecha cooldowns
 #define COOLDOWN_MECHA_MESSAGE "mecha_message"
 #define COOLDOWN_MECHA_EQUIPMENT(type) ("mecha_equip_[type]")
-#define COOLDOWN_MECHA_ARMOR "mecha_armor"
 #define COOLDOWN_MECHA_MELEE_ATTACK "mecha_melee"
 #define COOLDOWN_MECHA_SMOKE "mecha_smoke"
 #define COOLDOWN_MECHA_SKYFALL "mecha_skyfall"
@@ -108,7 +107,7 @@
 #define COOLDOWN_START(cd_source, cd_index, cd_time) (cd_source.cd_index = world.time + (cd_time))
 
 //Returns true if the cooldown has run its course, false otherwise
-#define COOLDOWN_FINISHED(cd_source, cd_index) (cd_source.cd_index < world.time)
+#define COOLDOWN_FINISHED(cd_source, cd_index) (cd_source.cd_index <= world.time)
 
 #define COOLDOWN_RESET(cd_source, cd_index) cd_source.cd_index = 0
 

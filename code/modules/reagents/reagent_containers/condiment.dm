@@ -424,6 +424,7 @@
 		/datum/reagent/consumable/bbqsauce = list("condi_bbq", "BBQ sauce", "Hand wipes not included."),
 		/datum/reagent/consumable/peanut_butter = list("condi_peanutbutter", "Peanut Butter", "A creamy paste made from ground peanuts."),
 		/datum/reagent/consumable/cherryjelly = list("condi_cherryjelly", "Cherry Jelly", "A jar of super-sweet cherry jelly."),
+		/datum/reagent/consumable/mayonnaise = list("condi_mayo", "Mayonnaise", "Not an instrument."),
 	)
 	/// Can't use initial(name) for this. This stores the name set by condimasters.
 	var/originalname = "condiment"
@@ -516,3 +517,15 @@
 	originalname = "sugar"
 	volume = 5
 	list_reagents = list(/datum/reagent/consumable/sugar = 5)
+
+/obj/item/reagent_containers/condiment/pack/soysauce
+	name = "soy sauce pack"
+	originalname = "soy sauce"
+	volume = 5
+	list_reagents = list(/datum/reagent/consumable/soysauce = 5)
+
+/obj/item/reagent_containers/condiment/pack/mayonnaise
+	name = "mayonnaise pack"
+	originalname = "mayonnaise"
+	volume = 5
+	list_reagents = list(/datum/reagent/consumable/mayonnaise = 5)
