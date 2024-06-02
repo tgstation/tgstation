@@ -13266,6 +13266,7 @@
 /area/station/science/research)
 "eMY" = (
 /obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "eNb" = (
