@@ -336,7 +336,7 @@
 			else
 				say("Unable to continue production, power grid overload.")
 		else
-			say("Unable to continue production, no apc in area.")
+			say("Unable to continue production, no APC in area.")
 		finalize_build()
 		return
 
