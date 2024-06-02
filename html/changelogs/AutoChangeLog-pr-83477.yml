@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Cryo tube respects `NO_DEBRIS_AFTER_DECONSTRUCTION` for the occupants visual contents flags & traits & won't allow hologram/abstract item interactions"
-  - code_imp: "Cryo has improved attack chain & uses defines for reagent volume rounding"

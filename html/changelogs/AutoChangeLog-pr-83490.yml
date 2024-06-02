@@ -1,6 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - rscadd: "You can now flush toilets. You can also put fish in the toilet. And flush them."
-  - bugfix: "Urinals can no longer be used to delete items."
-  - bugfix: "Urinals no longer grant infinite urinal cakes."

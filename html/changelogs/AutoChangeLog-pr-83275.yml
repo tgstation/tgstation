@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - refactor: "ghetto chem separator has been reworked from scratch. See PR 83275 for details"
-  - qol: "adds examines & screentips for ghetto chem separator"

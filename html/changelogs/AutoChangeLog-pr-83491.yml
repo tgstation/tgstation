@@ -1,7 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes:
-  - qol: "Fermenting (wooden) barrels can now be emptied when opened by right-clicking with an empty hand!"
-  - qol: "Fermenting (wooden) barrels can now be anchored/unanchored using wrenches!"
-  - qol: "Fermenting (wooden) barrels now have contextual helpers, to show what you need to do at a glance to interact with them."
-  - code_imp: "Documented a few of the fermenting barrel's variables."

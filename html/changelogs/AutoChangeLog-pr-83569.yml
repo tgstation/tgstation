@@ -1,5 +1,0 @@
-author: "norsvenska"
-delete-after: True
-changes:
-  - bugfix: "The NTSS Independence cryogenics thermomachine is now properly hooked up to the cryo loop."
-  - qol: "The NTSS Independence's medical bay has received improvements. The medibot and the sleeper are upgraded, and advanced surgery equipment has been added."
