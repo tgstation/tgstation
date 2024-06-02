@@ -81,7 +81,7 @@
 		to_chat(user, span_info("You strengthen [mecha_for_upgrading], improving its resistance against attacks."))
 	else
 		SEND_SIGNAL(target_for_upgrading, COMSIG_ARMOR_PLATED, amount, maxamount)
-		if(upgrade_prefix)
+		if(upgrade_prefix && amount == 0)
 			target_for_upgrading.name = "[upgrade_prefix] [target_for_upgrading.name]"
 		to_chat(user, span_info("You strengthen [target_for_upgrading], improving its resistance against attacks."))
 
