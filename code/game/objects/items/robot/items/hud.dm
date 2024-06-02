@@ -2,8 +2,6 @@
 	var/sight_mode = null
 	icon = 'icons/obj/clothing/glasses.dmi'
 
-// Wallening todo: what the fuck is this item man
-// It uses the securearea sign as an icon, so it'll be broken... if it was ever actually used
 /obj/item/borg/sight/xray
 	name = "\proper X-ray vision"
 	icon_state = "securityhudnight"
