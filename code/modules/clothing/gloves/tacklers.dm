@@ -1,6 +1,6 @@
 /obj/item/clothing/gloves/tackler
-	name = "gripper gloves"
-	desc = "Special gloves that manipulate the blood vessels in the wearer's hands, granting them the ability to launch headfirst into walls."
+	name = "enhanced retrieval gloves"
+	desc = "Special gloves that manipulate the blood vessels in the wearer's hands, granting them the ability to launch headfirst into walls and tackle fleeing criminals in a single bound."
 	icon_state = "tackle"
 	inhand_icon_state = null
 	cold_protection = HANDS

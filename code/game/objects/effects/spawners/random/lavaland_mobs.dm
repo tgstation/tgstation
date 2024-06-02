@@ -56,10 +56,10 @@
 	icon = 'icons/mob/simple/lavaland/raptor_big.dmi'
 	icon_state = "raptor_red"
 	loot = list(
-		/mob/living/basic/mining/raptor/red = 20,
-		/mob/living/basic/mining/raptor/white = 20,
-		/mob/living/basic/mining/raptor/purple = 20,
-		/mob/living/basic/mining/raptor/green = 20,
-		/mob/living/basic/mining/raptor/yellow = 20,
-		/mob/living/basic/mining/raptor/black = 1,
+		/mob/living/basic/raptor/red = 20,
+		/mob/living/basic/raptor/white = 20,
+		/mob/living/basic/raptor/purple = 20,
+		/mob/living/basic/raptor/green = 20,
+		/mob/living/basic/raptor/yellow = 20,
+		/mob/living/basic/raptor/black = 1,
 	)

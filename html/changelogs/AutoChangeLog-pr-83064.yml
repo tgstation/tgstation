@@ -1,4 +1,0 @@
-author: "TiviPlus"
-delete-after: True
-changes:
-  - qol: "Added a \"Remind me later\" button for tutorials"

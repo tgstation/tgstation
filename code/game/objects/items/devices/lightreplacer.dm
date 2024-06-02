@@ -283,11 +283,14 @@
 		return TRUE
 	return FALSE
 
-/obj/item/lightreplacer/proc/Charge(mob/user)
-	charge += 1
-	if(charge > 3)
-		add_uses(1)
-		charge = 1
+#define LIGHT_CHARGE_COEFF 30000
+/obj/item/lightreplacer/proc/Charge(mob/user, coeff)
+	charge += coeff
+	if(charge > LIGHT_CHARGE_COEFF)
+		add_uses(floor(charge / LIGHT_CHARGE_COEFF))
+		charge = charge % LIGHT_CHARGE_COEFF
+
+#undef LIGHT_CHARGE_COEFF
 
 /obj/item/lightreplacer/proc/replace_light(obj/machinery/light/target, mob/living/user)
 	//Confirm that it's a light we're testing, because afterattack runs this for everything on a given turf and will runtime
