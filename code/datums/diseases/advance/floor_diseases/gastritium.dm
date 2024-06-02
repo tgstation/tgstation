@@ -4,7 +4,7 @@
 	desc = "If left untreated, may manifest in severe Tritium heartburn."
 	form = "Infection"
 	agent = "Atmobacter Polyri"
-	cures = list(/datum/reagent/firefighting_foam)
+	cures = list(/datum/reagent/consumable/milk)
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	severity = DISEASE_SEVERITY_HARMFUL

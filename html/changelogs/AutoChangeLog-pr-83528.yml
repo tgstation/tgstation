@@ -1,0 +1,6 @@
+author: "Zytolg"
+delete-after: True
+changes:
+  - qol: "Many Janitors have cleaned up Birdshot station. Permanently."
+  - qol: "Loose floortiles on Birdshot Station have been properly affixed to the floor by the Engineering and Atmospherics Teams."
+  - bugfix: "Birdshot Dorms have been reworked and incorporated the Holodeck Ship as an actual and permanent installment. Come visit our new and improved barber shop!"

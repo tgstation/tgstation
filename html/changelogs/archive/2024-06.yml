@@ -1,0 +1,149 @@
+2024-06-01:
+  JohnFulpWillard:
+  - rscadd: The Law office now has a pet goldfish.
+  - refactor: Gondolas (including gondola pods) are now basic mobs.
+  Time-Green:
+  - rscadd: 'Station-Wide Background Checks (station trait, rare): Disables crew antagonists,
+      but get a lot more non-crew antagonists'
+  - bugfix: Fixes railings being invisible
+  - bugfix: Snow walls dont spawn on railings anymore in icebox
+  carlarctg:
+  - balance: Reworks Adrenaline Glands into Repurposed Glands (Realingment). Lose
+      the use of your arms, but you can escape any situation!
+  tmyqlfpir:
+  - bugfix: '[Tramstation] Departures and under east tram distro/waste pipes now properly
+      connected'
+  tralezab:
+  - rscadd: New fish, the anxious zipzap
+  - rscadd: New syndicate fish, the monocloning jumpercable
+  - rscadd: New aquarium, the bioelectricity generator
+  - bugfix: Mixotrophic fish now properly lack food requirements
+  zxaber:
+  - bugfix: Minebots purchased via mining points are no longer stuck in idle mode.
+      Clicking on them will activate their AI.
+  - spellcheck: Removed the examine text about feeding ore to minebots; this functionality
+      was removed already.
+2024-06-02:
+  00-Steven:
+  - spellcheck: Photo descriptions containing living entities no longer have a pile
+      of unnecessary periods. .. Which they used to have between describing different
+      entities. ..  Also removed that additional space they had too sometimes..
+  - qol: Photo descriptions containing living entities have these sub-descriptions
+      split into newlines for ease of reading.
+  - bugfix: Imaginary friend brain trauma works again.
+  - bugfix: Imaginary friends can be heard by their hosts from more than a tile away
+      again.
+  Echriser:
+  - bugfix: you are now able to cancel the look up/down verbs from anywhere
+  Gaxeer:
+  - bugfix: ambush spider (should instantly agressive grab) and other giant spiders
+      can now agressively grab
+  GoldenAlpharex:
+  - qol: Fermenting (wooden) barrels can now be emptied when opened by right-clicking
+      with an empty hand!
+  - qol: Fermenting (wooden) barrels can now be anchored/unanchored using wrenches!
+  - qol: Fermenting (wooden) barrels now have contextual helpers, to show what you
+      need to do at a glance to interact with them.
+  - code_imp: Documented a few of the fermenting barrel's variables.
+  Higgin:
+  - bugfix: positive viruses are no longer hidden.
+  Jane:
+  - image: Central Command has cut funding to the Mining department, resulting in
+      leather sleeves for the Shaft Miner Explorer Suit rather than the metal plates
+      of before.
+  JohnFulpWillard:
+  - rscadd: You can now flush toilets. You can also put fish in the toilet. And flush
+      them.
+  - bugfix: Urinals can no longer be used to delete items.
+  - bugfix: Urinals no longer grant infinite urinal cakes.
+  LT3:
+  - bugfix: Fixed bug where players could be invisibly attached to the tram forever
+  Majkl-J:
+  - bugfix: Fixed some borg modules just being constantly eaten up by borgs even when
+      they shouldn't allow duplicates
+  - refactor: Borg module code now has better handling for adding/removing items,
+      and to prevent duplicate module usage (Unless one wishes to override the behaviour.
+  - bugfix: Fixes janitor borgs killing the machinery subsystem by charging light
+      replacers 200k times a tick.
+  Melbert:
+  - balance: Re-ups the cost of the new ling adrenal ability
+  - bugfix: Patches an exploit with new ling adrenal ability
+  - balance: Wearing a mask can now prevent you from being spread airborne diseases.
+      Prior, it only stopped you from spreading it yourself.
+  - balance: Wearing a mask no longer 100% guarantees you don't spread viruses to
+      others people - it now scales on the masks BIO armor. Get a sterile mask from
+      Medical for max safety.
+  - balance: Wearing a mask to stop you from spreading to other people is doubly effective
+      than wearing a mask to prevent spread to yourself - Mask up for the greater
+      good!
+  - balance: Passive airborne virus spread attempts are now done every time you breathe
+      (every eight seconds), rather than every two seconds. The chance of spread is
+      the same, though - it has been scaled up to accommodate.
+  - code_imp: Cleaned up a fair bid of airborne-transmission-code. Report any oddities.
+  Metekillot:
+  - qol: Sign language users can now sign in cuffs, but to a very limited degree.
+      They also have more descriptive emotes for questions, exclamations, and a combination
+      of the two.
+  Seven:
+  - bugfix: Paradox clones (and changelings) now properly copy hair gradients and
+      heterochromia eye colors.
+  - bugfix: Hardcore random no longer mistakenly makes your hair white, this was not
+      a feature.
+  SyncIt21:
+  - refactor: ghetto chem separator has been reworked from scratch. See PR 83275 for
+      details
+  - qol: adds examines & screentips for ghetto chem separator
+  - bugfix: Cryo tube respects `NO_DEBRIS_AFTER_DECONSTRUCTION` for the occupants
+      visual contents flags & traits & won't allow hologram/abstract item interactions
+  - code_imp: Cryo has improved attack chain & uses defines for reagent volume rounding
+  TheBoondock:
+  - balance: Attack with a pillow now consumes 5 stamina regardless of wielded or
+      not.
+  Vekter:
+  - rscadd: Adds an ion law possibility that changes the human status of station pets.
+  Wayland-Smithy:
+  - balance: When an AI is alive, on main power, and not SSD its bolts cannot be raised
+      or lowered externally.
+  carlarctg:
+  - rscadd: Added crutches! Wooden ones can be made with wood. Medical ones can be
+      bought from the medvendor.
+  - rscadd: Crutches will reduce slowdown from missing a leg by 60%, and they will
+      remove the limping from fractured bones. (canes do that now too) They're also
+      a fairly decent bludgeon. However, they do nothing if both legs are cut off.
+  grungussuss:
+  - qol: lathes will now print cables coils in packs of 5
+  - bugfix: added missing context tips for atmos canisters
+  jlsnow301:
+  - bugfix: Fixed the biogenerator's tabs
+  - bugfix: Orbit UI icons are no longer scrollable..
+  junkgle01:
+  - rscadd: Changes the layout of MetaStation's cargo to fit with new Nanotrasen guidelines.
+  mc-oofert:
+  - balance: you may not decap people with a plasma cutter
+  necromanceranne:
+  - balance: The various mining related suits now have consistent suit storage. Try
+      putting a knife into your explorer suit's suit storage today!
+  - balance: Bone armor work similarly to explorer suits, with similar armor values
+      and options to upgrade their parts. However, they use bone talismans instead
+      of goliath hides to upgrade. Magic? Just believing really strongly that the
+      drake is hitting you slightly less hard because of the talismans? You be the
+      judge.
+  - balance: Goliath cloaks come fully upgraded. However...
+  - balance: The recipes for bone armor and goliath cloaks are slightly different.
+      Particularly goliath cloaks, which need a lot more dead goliaths to make. Sorry.
+  - balance: Mining MODsuits achieve at maximum ash accretion the same amount of melee
+      armor as an upgraded explorer suit.
+  - balance: These various suits also consistently have wound armor.
+  - bugfix: Berserker armor properly hides underclothing and hair.
+  - balance: Berserker armor pieces can absorb drake armor to gain their enhanced
+      protection. Become the warrior of Khorne you've always wanted to be.
+  - balance: Berserker rage now halves brute damage rather than just adding Melee
+      Armor to you and your squishy body.
+  - qol: Berserker and H.E.C.K. helmets can be used for internals.
+  nikothedude:
+  - bugfix: COMSIG_ATOM_POST_DIR_CHANGE is now a functional signal
+  norsvenska:
+  - bugfix: The NTSS Independence cryogenics thermomachine is now properly hooked
+      up to the cryo loop.
+  - qol: The NTSS Independence's medical bay has received improvements. The medibot
+      and the sleeper are upgraded, and advanced surgery equipment has been added.
