@@ -1,5 +1,5 @@
-#define TRAM_DOOR_WARNING_TIME (1 SECONDS)
-#define TRAM_DOOR_CYCLE_TIME (0.4 SECONDS)
+#define TRAM_DOOR_WARNING_TIME (0.9 SECONDS)
+#define TRAM_DOOR_CYCLE_TIME (0.6 SECONDS)
 #define TRAM_DOOR_CRUSH_TIME (0.7 SECONDS)
 #define TRAM_DOOR_RECYCLE_TIME (3 SECONDS)
 
@@ -205,6 +205,9 @@
  * Tram doors can be opened with hands when unpowered
  */
 /obj/machinery/door/airlock/tram/try_safety_unlock(mob/user)
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return
+
 	if(!hasPower()  && density)
 		balloon_alert(user, "pulling emergency exit...")
 		if(do_after(user, 4 SECONDS, target = src))
@@ -215,10 +218,20 @@
  * If you pry (bump) the doors open midtravel, open quickly so you can jump out and make a daring escape.
  */
 /obj/machinery/door/airlock/tram/bumpopen(mob/user, forced = BYPASS_DOOR_CHECKS)
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return
+
 	if(operating || !density)
 		return
+
+	if(!hasPower())
+		try_safety_unlock(user)
+		return
+
 	var/datum/transport_controller/linear/tram/tram_part = transport_ref?.resolve()
 	add_fingerprint(user)
+	if(!tram_part.controller_active)
+		return
 	if((tram_part.travel_remaining < DEFAULT_TRAM_LENGTH || tram_part.travel_remaining > tram_part.travel_trip_length - DEFAULT_TRAM_LENGTH) && tram_part.controller_active)
 		return // we're already animating, don't reset that
 	open(forced = BYPASS_DOOR_CHECKS)
