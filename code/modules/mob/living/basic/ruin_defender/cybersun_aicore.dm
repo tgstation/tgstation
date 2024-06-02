@@ -31,6 +31,8 @@
 	var/datum/action/cooldown/mob_cooldown/targeted_mob_ability/donk_laser
 // list of stuff tagged to self destruct when this boss dies
 GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
+	//is this being used as part of the haunted trading post ruin? if true, will self destruct when boss dies
+	var/donk_ai_master = FALSE
 
 /mob/living/basic/cybersun_ai_core/Initialize(mapload)
 	. = ..()
@@ -43,13 +45,29 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 		BARRAGE_ABILITY_TYPEPATH = BB_CYBERSUN_CORE_BARRAGE,
 	)
 	grant_actions_by_list(innate_actions)
+
 /mob/living/basic/cybersun_ai_core/death(gibbed)
+	if(donk_ai_master = TRUE)
+		//disable all the tripwire traps
+		for (var/obj/item/pressure_plate/puzzle/invisible_tripwire as anything in GLOB.selfdestructs_when_boss_dies)
+			addtimer(CALLBACK(invisible_tripwire, TYPE_PROC_REF(/atom/, take_damage), invisible_tripwire.max_integrity), 0.1 SECONDS)
+		//and the electric overload traps
+		for (var/obj/effect/overloader_trap as anything in GLOB.selfdestructs_when_boss_dies)
+			addtimer(CALLBACK(overloader_trap, TYPE_PROC_REF(/atom/, take_damage), overloader_trap.max_integrity), 0.2 SECONDS)
+		//then disable the AI defence holograms
+		for (var/obj/structure/holosign/barrier/cyborg/cybersun_ai_shield as anything in GLOB.selfdestructs_when_boss_dies)
+			addtimer(CALLBACK(cybersun_ai_shield, TYPE_PROC_REF(/atom/, take_damage), cybersun_ai_shield.max_integrity), rand(0.2 SECONDS, 2 SECONDS))
+		//then the power generator
+		for (var/obj/machinery/power/smes/magical/cybersun as anything in GLOB.selfdestructs_when_boss_dies)
+			addtimer(CALLBACK(cybersun, TYPE_PROC_REF(/atom/, take_damage), cybersun.max_integrity), 2 SECONDS)
 	do_sparks(number = 5, source = src)
 	return ..()
+
 /obj/effect/temp_visual/cybersun_ai_core_death
 	icon = 'icons/mob/silicon/ai.dmi'
 	icon_state = "ai-red_dead"
 	duration = 2 SECONDS
+
 /obj/effect/temp_visual/cybersun_ai_core_death/Initialize(mapload)
 	. = ..()
 	playsound(src, 'sound/misc/metal_creak.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
@@ -61,18 +79,6 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 	playsound(loc, 'sound/effects/explosion2.ogg', vol = 75, vary = TRUE, pressure_affected = FALSE)
 	var/turf/my_turf = get_turf(src)
 	new /obj/effect/gibspawner/robot(my_turf)
-	//disable all the tripwire traps
-	for (var/obj/item/pressure_plate/puzzle/invisible_tripwire as anything in GLOB.selfdestructs_when_boss_dies)
-		addtimer(CALLBACK(invisible_tripwire, TYPE_PROC_REF(/atom/, take_damage), invisible_tripwire.max_integrity), 0.1 SECONDS)
-	//and the electric overload traps
-	for (var/obj/effect/overloader_trap as anything in GLOB.selfdestructs_when_boss_dies)
-		addtimer(CALLBACK(overloader_trap, TYPE_PROC_REF(/atom/, take_damage), overloader_trap.max_integrity), 0.2 SECONDS)
-	//then disable the AI defence holograms
-	for (var/obj/structure/holosign/barrier/cyborg/cybersun_ai_shield as anything in GLOB.selfdestructs_when_boss_dies)
-		addtimer(CALLBACK(cybersun_ai_shield, TYPE_PROC_REF(/atom/, take_damage), cybersun_ai_shield.max_integrity), rand(0.2 SECONDS, 1 SECONDS))
-	//then the power generator
-	for (var/obj/machinery/power/smes/magical/cybersun as anything in GLOB.selfdestructs_when_boss_dies)
-		addtimer(CALLBACK(cybersun, TYPE_PROC_REF(/atom/, take_damage), cybersun.max_integrity), 2 SECONDS)
 	for (var/mob/murderer in range(10, src))
 		if (!murderer.client || !isliving(murderer))
 			continue
