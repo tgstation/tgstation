@@ -153,7 +153,16 @@
 	mid_length = 0.3 SECONDS
 
 /datum/looping_sound/soup
-	mid_sounds = list('sound/effects/soup_boil.ogg' = 1)
-	mid_length = 18 SECONDS
-	volume = 15
+	mid_sounds = list(
+		'sound/effects/soup_boil1.ogg' = 1,
+		'sound/effects/soup_boil2.ogg' = 1,
+		'sound/effects/soup_boil3.ogg' = 1,
+		'sound/effects/soup_boil4.ogg' = 1,
+		'sound/effects/soup_boil5.ogg' = 1,
+	)
+	mid_length = 3 SECONDS
+	volume = 80
+	end_sound = 'sound/effects/soup_boil_end.ogg'
+	end_volume = 60
+	extra_range = MEDIUM_RANGE_SOUND_EXTRARANGE
 	falloff_exponent = 4

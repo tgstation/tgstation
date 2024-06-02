@@ -263,4 +263,4 @@
 		return
 
 	QDEL_NULL(soup_smoke)
-	soup_sound.stop()
+	soup_sound?.stop()
