@@ -419,7 +419,7 @@
 	var/datum/antagonist/cult/cultist = IS_CULTIST(user)
 	if(!isnull(cultist))
 		var/datum/team/cult/cult_team = cultist.get_team()
-		var/effect_coef = 1 - (cult_team.cult_risen ? 0.4 : 0) - (cult.team.cult_ascendent ? 0.5 : 0)
+		var/effect_coef = 1 - (cult_team.cult_risen ? 0.4 : 0) - (cult_team.cult_ascendent ? 0.5 : 0)
 		user.visible_message(span_warning("[user] holds up [user.p_their()] hand, which explodes in a flash of red light!"), \
 		span_cult_italic("You attempt to stun [target] with the spell!"))
 		user.mob_light(range = 1.1, power = 2, color = LIGHT_COLOR_BLOOD_MAGIC, duration = 0.2 SECONDS)
