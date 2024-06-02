@@ -162,7 +162,6 @@
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
-	grave_speed = 20 SECONDS
 
 /obj/item/shovel/serrated
 	name = "serrated bone shovel"
@@ -320,7 +319,6 @@
 	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 	slowdown = 3
 	attack_speed = 1.2 SECONDS
-	grave_speed = 3 SECONDS
 	/// The factor at which the recoil becomes less.
 	var/recoil_factor = 3
 	/// Wether we knock down and launch away out enemies when we attack.
