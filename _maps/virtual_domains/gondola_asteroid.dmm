@@ -53,7 +53,7 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "z" = (
-/mob/living/simple_animal/pet/gondola/virtual_domain,
+/mob/living/basic/pet/gondola/virtual_domain,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "A" = (
