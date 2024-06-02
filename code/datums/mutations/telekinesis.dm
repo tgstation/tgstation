@@ -41,33 +41,60 @@
 
 /datum/mutation/human/elastic_arms
 	name = "Elastic Arms"
-	desc = "Subject's arms have become elastic, allowing them to stretch up to a meter away. However, this elasticity makes it difficult to wear gloves or handle complex tasks."
+	desc = "Subject's arms have become elastic, allowing them to stretch up to a meter away. However, this elasticity makes it difficult to wear gloves, handle complex tasks, or grab large objects."
 	quality = POSITIVE
 	instability = 30
-	text_gain_indication = "<span class='warning'>You feel armstrong!.</span>"
+	text_gain_indication = "<span class='warning'>You feel armstrong!</span>"
 	text_lose_indication = "<span class='notice'>Your arms stop being so saggy all the time.</span>"
 	difficulty = 32
+	//mutation_traits = list(TRAIT_CHUNKYFINGERS)
 
 /datum/mutation/human/elastic_arms/on_acquiring(mob/living/carbon/human/H)
 	. = ..()
 	if(.)
 		return
 	RegisterSignal(H, COMSIG_ATOM_CANREACH, PROC_REF(on_canreach))
+	RegisterSignal(H, COMSIG_LIVING_TRY_PUT_IN_HAND, PROC_REF(on_owner_equipping_item))
+	RegisterSignal(H, COMSIG_LIVING_TRY_PULL, PROC_REF(on_owner_try_pull))
 
 /datum/mutation/human/elastic_arms/on_losing(mob/living/carbon/human/H)
 	. = ..()
 	if(.)
 		return
-	UnregisterSignal(H, COMSIG_ATOM_CANREACH)
+	UnregisterSignal(H, list(COMSIG_ATOM_CANREACH, COMSIG_LIVING_TRY_PUT_IN_HAND, COMSIG_LIVING_TRY_PULL))
 
+/// signal sent when prompting if an item can be equipped
+/datum/mutation/human/elastic_arms/proc/on_owner_equipping_item(mob/living/carbon/human/owner, obj/item/pick_item)
+	SIGNAL_HANDLER
+	if(pick_item.w_class > WEIGHT_CLASS_BULKY) // cant decide if i should limit to huge or bulky.
+		pick_item.balloon_alert(owner, "arms too floppy to wield!")
+		return COMPONENT_LIVING_CANT_PUT_IN_HAND
+
+/// signal sent when owner tries to pull
+/datum/mutation/human/elastic_arms/proc/on_owner_try_pull(mob/living/carbon/owner, atom/movable/target, force)
+	SIGNAL_HANDLER
+	if(isliving(target))
+		var/mob/living/living_target = target
+		if(living_target.mob_size > MOB_SIZE_HUMAN)
+			living_target.balloon_alert(owner, "arms too floppy  to pull this!")
+			return COMSIG_LIVING_CANCEL_PULL
+	if(isitem(target))
+		var/obj/item/item_target = target
+		if(item_target.w_class > WEIGHT_CLASS_BULKY)
+			item_target.balloon_alert(owner, "arms too floppy  to pull this!")
+			return COMSIG_LIVING_CANCEL_PULL
+
+// probably buggy. let's enlist our players as bug testers
 /datum/mutation/human/elastic_arms/proc/on_canreach(mob/source, atom/target)
 	SIGNAL_HANDLER
 
 	var/distance = get_dist(target, source)
 
+	// Too far, or on another zlevel? Dismiss.
 	if(distance > 2 || source.z != target.z)
 		return
 
+	// Too close? Just let it pass normaly.
 	if(distance < 2)
 		return COMPONENT_ALLOW_REACH
 
@@ -76,9 +103,11 @@
 		return
 	var/turf/open/adjacent_turf = get_step(source, direction)
 
+	// Make sure it's an open turf we're trying to pass over.
 	if(!istype(adjacent_turf))
 		return
 
+	// Check if there's something dense inbetween, then allow it.
 	for(var/atom/thing in adjacent_turf)
 		if(thing.density)
 			return

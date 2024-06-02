@@ -42,8 +42,8 @@
 	return ..()
 
 /obj/projectile/temp/pyro
-	name = "heat beam"
-	icon_state = "lava"
+	name = "hot beam"
+	icon_state = "firebeam" // sets on fire, diff sprite!
 	range = 9
 	temperature = 240
 

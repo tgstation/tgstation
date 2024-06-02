@@ -109,13 +109,14 @@
 	// More healing if powered up.
 	to_modify.heal_multiplier = GET_MUTATION_POWER(src)
 	// Less pain if synchronized.
-	to_modify.pain_divider = GET_MUTATION_SYNCHRONIZER(src)
+	to_modify.pain_multiplier = GET_MUTATION_SYNCHRONIZER(src)
 
 /datum/action/cooldown/spell/touch/lay_on_hands
 	name = "Mending Touch"
 	desc = "You can now lay your hands on other people to transfer a small amount of their physical injuries to yourself."
-	button_icon_state = "zap"
-	sound = 'sound/weapons/zapbang.ogg'
+	button_icon = 'icons/mob/actions/actions_genetic.dmi'
+	button_icon_state = "mending_touch"
+	sound = 'sound/magic/staff_healing.ogg'
 	cooldown_time = 12 SECONDS
 	school = SCHOOL_RESTORATION
 	invocation_type = INVOCATION_NONE
@@ -127,8 +128,10 @@
 	drop_message = span_notice("You lower your hand.")
 	/// Multiplies the amount healed, without increasing the recieved damage.
 	var/heal_multiplier = 1
-	/// Divides the incoming pain from healing.
-	var/pain_divider = 1
+	/// Multiplies the incoming pain from healing.
+	var/pain_multiplier = 1
+	/// Icon used for beaming effect
+	var/beam_icon = "blood"
 
 /datum/action/cooldown/spell/touch/lay_on_hands/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/mendicant)
 
@@ -138,36 +141,54 @@
 	var/mob/living/hurtguy = victim
 
 
-	// Heal potentially much more, but hurt more as well
+	// Heal more, hurt a bit more.
+	// If you crunch the numbers it sounds crazy good,
+	// but I think that's a fair reward for combining the efforts of Genetics, Medbay, and Mining to reach a hidden mechanic.
 	if(HAS_TRAIT_FROM(mendicant, TRAIT_PACIFISM, HIPPOCRATIC_OATH_TRAIT))
 		heal_multiplier *= 2
-		pain_divider /= 2
+		pain_multiplier /= 2
 		to_chat(mendicant, span_green("You can feel the magic of the Rod of Aesculapius aiding your efforts!"))
+		beam_icon = "sendbeam"
+		var/obj/item/rod_of_asclepius/rod = locate() in mendicant.contents
+		if(rod)
+			rod.add_filter("cool_glow", 2, list("type" = "outline", "color" = COLOR_VERY_PALE_LIME_GREEN, "size" = 1.5))
+			addtimer(CALLBACK(rod, TYPE_PROC_REF(/datum, remove_filter), "cool_glow"), 6 SECONDS)
 
-	// If a normal pacifist, just heal more
+
+	// If a normal pacifist, heal and hurt more!
 	else if(HAS_TRAIT(mendicant, TRAIT_PACIFISM))
-		heal_multiplier++
-		to_chat(mendicant, span_green("Your peaceful nature helps you guide the pain to yourself."))
+		heal_multiplier *= 1.75
+		pain_multiplier /= 1.75
+		to_chat(mendicant, span_green("Your peaceful nature helps you guide all the pain to yourself."))
 
 	var/success
 	if(iscarbon(hurtguy))
-		success = do_complicated_heal(mendicant, hurtguy, heal_multiplier, pain_divider)
+		success = do_complicated_heal(mendicant, hurtguy, heal_multiplier, pain_multiplier)
 	else
-		success = do_simple_heal(mendicant, hurtguy, heal_multiplier, pain_divider)
+		success = do_simple_heal(mendicant, hurtguy, heal_multiplier, pain_multiplier)
+
+	// Both types can be ignited (technically at least), so we can just do this here.
+	if(hurtguy.has_status_effect(/datum/status_effect/fire_handler/fire_stacks))
+		mendicant.set_fire_stacks(hurtguy.fire_stacks * pain_multiplier, remove_wet_stacks = TRUE)
+		mendicant.ignite_mob()
+		hurtguy.extinguish_mob()
 
 	// No healies in the end, cancel
 	if(!success)
 		return
 
+	mendicant.Beam(hurtguy, icon_state = beam_icon, time = 0.5 SECONDS)
+	beam_icon = initial(beam_icon)
+
 	hurtguy.update_damage_overlays()
 	mendicant.update_damage_overlays()
 
-	hurtguy.visible_message(span_notice("[mendicant] lays hands on [target]!"))
+	hurtguy.visible_message(span_notice("[mendicant] lays hands on [hurtguy]!"))
 	to_chat(target, span_boldnotice("[mendicant] lays hands on you, healing you!"))
-	playsound(mendicant, 'sound/magic/staff_healing.ogg', 25, vary = TRUE, extrarange = -1)
+	new /obj/effect/temp_visual/heal(get_turf(hurtguy), COLOR_VERY_PALE_LIME_GREEN)
 	return success
 
-/datum/action/cooldown/spell/touch/lay_on_hands/proc/do_simple_heal(mob/living/carbon/mendicant, mob/living/hurtguy, heal_multiplier, pain_divider)
+/datum/action/cooldown/spell/touch/lay_on_hands/proc/do_simple_heal(mob/living/carbon/mendicant, mob/living/hurtguy, heal_multiplier, pain_multiplier)
 	// Did the transfer work?
 	var/transferred = FALSE
 
@@ -200,7 +221,7 @@
 
 	return transferred
 
-/datum/action/cooldown/spell/touch/lay_on_hands/proc/do_complicated_heal(mob/living/carbon/mendicant, mob/living/carbon/hurtguy, heal_multiplier, pain_divider)
+/datum/action/cooldown/spell/touch/lay_on_hands/proc/do_complicated_heal(mob/living/carbon/mendicant, mob/living/carbon/hurtguy, heal_multiplier, pain_multiplier)
 
 	// Did the transfer work?
 	var/transferred = FALSE
@@ -234,7 +255,7 @@
 			// Heal!
 			affected_limb.heal_damage(brute_damage * heal_multiplier, burn_damage * heal_multiplier, required_bodytype = BODYTYPE_ORGANIC)
 			// Hurt!
-			mendicant_transfer_limb.receive_damage(brute_damage * pain_divider, burn_damage * pain_divider, forced = TRUE, wound_bonus = CANT_WOUND)
+			mendicant_transfer_limb.receive_damage(brute_damage * pain_multiplier, burn_damage * pain_multiplier, forced = TRUE, wound_bonus = CANT_WOUND)
 
 		// Force light wounds onto you.
 		for(var/datum/wound/iter_wound as anything in affected_limb.wounds)
@@ -248,8 +269,9 @@
 	return transferred
 
 /obj/item/melee/touch_attack/lay_on_hands
-	name = "\improper mending touch"
+	name = "mending touch"
 	desc = "Unlike in your favorite tabletop games, you sadly can't cast this on yourself, so you can't use that as a Scapegoat." // mayus is reference. if you get it youre cool
 	icon = 'icons/obj/weapons/hand.dmi'
-	icon_state = "zapper"
-	inhand_icon_state = "zapper"
+	icon_state = "greyscale"
+	color = COLOR_VERY_PALE_LIME_GREEN
+	inhand_icon_state = "greyscale"

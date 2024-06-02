@@ -67,6 +67,7 @@
 
 	if(!isitem(created))
 		created.forceMove(cast_on.loc)
+		return
 
 	if(istype(mob_caster))
 		mob_caster.put_in_hands(created, del_on_fail = delete_on_failure)
