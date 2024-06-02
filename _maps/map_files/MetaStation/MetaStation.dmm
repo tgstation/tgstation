@@ -4479,10 +4479,6 @@
 	pixel_y = 8;
 	req_access = list("cargo")
 	},
-/obj/item/reagent_containers/cup/soda_cans{
-	pixel_x = -5;
-	pixel_y = 15
-	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "bDm" = (
@@ -38649,7 +38645,7 @@
 /obj/effect/spawner/random/maintenance,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/stripes/corner,
-/obj/item/reagent_containers/cup/soda_cans,
+/obj/item/reagent_containers/cup/soda_cans/pwr_game,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "nGd" = (
@@ -39322,14 +39318,13 @@
 /obj/item/clothing/gloves/cargo_gauntlet{
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/cup/soda_cans{
-	pixel_x = -7;
-	pixel_y = 1
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /obj/structure/cable,
+/obj/item/reagent_containers/cup/soda_cans/random{
+	pixel_x = -9
+	},
 /turf/open/floor/catwalk_floor/iron,
 /area/station/cargo/storage)
 "nSB" = (
@@ -64895,21 +64890,21 @@
 	name = "Dud Rocket";
 	desc = "An 84mm High Explosive rocket. This one's a dud. Pretty sure."
 	},
-/obj/item/computer_disk/quartermaster{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/effect/spawner/random/entertainment/lighter{
-	pixel_x = -6;
-	pixel_y = 1
-	},
 /obj/item/clipboard{
 	pixel_x = -5;
 	pixel_y = 31
 	},
 /obj/item/folder/yellow{
-	pixel_x = 3;
-	pixel_y = 8
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/item/computer_disk/quartermaster{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/effect/spawner/random/entertainment/lighter{
+	pixel_x = -8;
+	pixel_y = 1
 	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/qm)
