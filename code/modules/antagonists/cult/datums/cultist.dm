@@ -15,8 +15,6 @@
 	var/give_equipment = FALSE
 	///Reference to the Blood cult team they are part of.
 	var/datum/team/cult/cult_team
-	///Can this mob contribute to invoking runes?
-	var/can_invoke = TRUE
 
 /datum/antagonist/cult/can_be_owned(datum/mind/new_owner)
 	if(!is_convertable_to_cult(new_owner.current, cult_team))
@@ -278,3 +276,7 @@
 	icon.Crop(17, 17, 48, 48)
 
 	return finish_preview_icon(icon)
+
+///Used to check if the owner is counted as a secondary invoker for runes.
+/datum/antagonist/cult/proc/check_invoke_validity()
+	return TRUE
