@@ -40,8 +40,8 @@
 	* Red: decent chance of getting hit, but if you're quick it's a decent gamble.
 	* Amber: slow people may be in danger.
 	*/
-	var/amber_distance_threshold = AMBER_THRESHOLD_NORMAL
-	var/red_distance_threshold = RED_THRESHOLD_NORMAL
+	var/amber_distance_threshold = XING_THRESHOLD_AMBER
+	var/red_distance_threshold = XING_THRESHOLD_RED
 
 /** Crossing signal subtypes
  *
@@ -203,34 +203,18 @@
 	sensor_ref = null
 	if(operating_status < TRANSPORT_REMOTE_WARNING)
 		operating_status = TRANSPORT_REMOTE_WARNING
-		degraded_response()
 	update_appearance()
 
 /obj/machinery/transport/crossing_signal/proc/wake_sensor()
-	if(operating_status > TRANSPORT_REMOTE_WARNING)
-		degraded_response()
-		return
-
 	var/obj/machinery/transport/guideway_sensor/linked_sensor = sensor_ref?.resolve()
 	if(isnull(linked_sensor))
 		operating_status = TRANSPORT_REMOTE_WARNING
-		degraded_response()
 
 	else if(linked_sensor.trigger_sensor())
 		operating_status = TRANSPORT_SYSTEM_NORMAL
-		normal_response()
 
 	else
 		operating_status = TRANSPORT_REMOTE_WARNING
-		degraded_response()
-
-/obj/machinery/transport/crossing_signal/proc/normal_response()
-	amber_distance_threshold = AMBER_THRESHOLD_NORMAL
-	red_distance_threshold = RED_THRESHOLD_NORMAL
-
-/obj/machinery/transport/crossing_signal/proc/degraded_response()
-	amber_distance_threshold = AMBER_THRESHOLD_DEGRADED
-	red_distance_threshold = RED_THRESHOLD_DEGRADED
 
 /obj/machinery/transport/crossing_signal/proc/clear_uplink()
 	inbound = null

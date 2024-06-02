@@ -106,7 +106,7 @@
 		return FALSE
 	if((tram.travel_direction & EAST) && outbound > tram.destination_platform.platform_code)
 		return FALSE
-	if(approach_distance >= AMBER_THRESHOLD_DEGRADED)
+	if(approach_distance >= XING_THRESHOLD_AMBER)
 		return FALSE
 
 	// Finally the interesting part where they ACTUALLY get hit!
