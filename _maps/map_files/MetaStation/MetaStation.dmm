@@ -37092,13 +37092,6 @@
 /obj/effect/spawner/random/entertainment/dice,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
-"ngS" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "QMLoad2"
-	},
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "ngT" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
@@ -86316,7 +86309,7 @@ hKg
 uvw
 yeq
 yeq
-ngS
+yeq
 cvv
 wcy
 bDj
