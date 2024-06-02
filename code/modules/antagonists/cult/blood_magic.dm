@@ -153,21 +153,10 @@
 //Cult Blood Spells
 /datum/action/innate/cult/blood_spell/stun
 	name = "Stun"
-	desc = "Empowers your hand to stun and mute a victim on contact."
+	desc = "Empowers your hand to stun and mute a victim on contact. Gets weaker depending on how many have joined the Cult."
 	button_icon_state = "hand"
 	magic_path = "/obj/item/melee/blood_magic/stun"
 	health_cost = 10
-
-/datum/action/innate/cult/blood_spell/IsAvailable(feedback = FALSE)
-	. = ..()
-	if(!.)
-		return .
-	var/datum/antagonist/cult/cultist = IS_CULTIST(owner)
-	var/datum/team/cult/team = cultist.get_team()
-	if(team.cult_ascendent)
-		qdel(src)
-		return FALSE
-	return ..()
 
 /datum/action/innate/cult/blood_spell/teleport
 	name = "Teleport"
