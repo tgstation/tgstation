@@ -98,6 +98,7 @@
 	instability = 35
 	energy_coeff = 1
 	power_coeff = 1
+	synchronizer_coeff = 1
 
 /datum/mutation/human/lay_on_hands/modify()
 	. = ..()
@@ -151,7 +152,7 @@
 		beam_icon = "sendbeam"
 		var/obj/item/rod_of_asclepius/rod = locate() in mendicant.contents
 		if(rod)
-			rod.add_filter("cool_glow", 2, list("type" = "outline", "color" = COLOR_VERY_PALE_LIME_GREEN, "size" = 1.5))
+			rod.add_filter("cool_glow", 2, list("type" = "outline", "color" = COLOR_VERY_PALE_LIME_GREEN, "size" = 1))
 			addtimer(CALLBACK(rod, TYPE_PROC_REF(/datum, remove_filter), "cool_glow"), 6 SECONDS)
 
 
@@ -170,8 +171,9 @@
 	// Both types can be ignited (technically at least), so we can just do this here.
 	if(hurtguy.has_status_effect(/datum/status_effect/fire_handler/fire_stacks))
 		mendicant.set_fire_stacks(hurtguy.fire_stacks * pain_multiplier, remove_wet_stacks = TRUE)
-		mendicant.ignite_mob()
-		hurtguy.extinguish_mob()
+		if(hurtguy.on_fire)
+			mendicant.ignite_mob()
+			hurtguy.extinguish_mob()
 
 	// No healies in the end, cancel
 	if(!success)
@@ -210,6 +212,7 @@
 	var/obj/item/bodypart/mendicant_transfer_limb = mendicant.get_active_hand()
 	if(!(mendicant_transfer_limb in mendicant_organic_limbs))
 		mendicant_transfer_limb = pick(mendicant_organic_limbs)
+		mendicant_transfer_limb.receive_damage(brute_damage * pain_multiplier, burn_damage * pain_multiplier, forced = TRUE, wound_bonus = CANT_WOUND)
 
 	if(brute_to_heal)
 		hurtguy.adjustBruteLoss(brute_to_heal)
