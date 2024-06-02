@@ -30517,27 +30517,31 @@
 	},
 /obj/structure/table/wood,
 /obj/item/stamp/head/qm{
-	pixel_x = 4;
+	pixel_x = 1;
 	pixel_y = 12
 	},
 /obj/item/stamp/granted{
-	pixel_x = -5;
+	pixel_x = -7;
 	pixel_y = 12
 	},
 /obj/item/stamp/denied{
-	pixel_x = -5;
+	pixel_x = -7;
 	pixel_y = 5
 	},
 /obj/item/stamp/void{
-	pixel_x = 4;
+	pixel_x = 1;
 	pixel_y = 5
 	},
 /obj/effect/spawner/random/entertainment/money_medium{
 	pixel_y = -6;
-	pixel_x = 3
+	pixel_x = -3
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
+	},
+/obj/item/clipboard{
+	pixel_x = 10;
+	pixel_y = 8
 	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/qm)
@@ -64885,14 +64889,10 @@
 	dir = 4
 	},
 /obj/item/ammo_casing/rocket{
-	pixel_x = -10;
-	pixel_y = 18;
+	pixel_x = -4;
+	pixel_y = 2;
 	name = "Dud Rocket";
 	desc = "An 84mm High Explosive rocket. This one's a dud. Pretty sure."
-	},
-/obj/item/clipboard{
-	pixel_x = -5;
-	pixel_y = 31
 	},
 /obj/item/folder/yellow{
 	pixel_x = 5;
