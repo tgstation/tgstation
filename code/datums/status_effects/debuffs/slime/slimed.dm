@@ -5,7 +5,7 @@
 
 /atom/movable/screen/alert/status_effect/slimed
 	name = "Covered in Slime"
-	desc = "You are covered in slime and it's eating away at you! Click to start shaking it off, or find a faster way to wash it away!"
+	desc = "You are covered in slime and it's eating away at you! Click to start cleaning it off, or find a faster way to wash it away!"
 	icon_state = "slimed"
 
 /atom/movable/screen/alert/status_effect/slimed/Click()
