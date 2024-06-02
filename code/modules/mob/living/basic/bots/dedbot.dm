@@ -89,7 +89,6 @@
 	ability_key = BB_DEDBOT_SLASH
 	finish_planning = FALSE
 
-
 /datum/action/cooldown/mob_cooldown/exenterate
 	name = "Exenterate"
 	desc = "Disembowel every living thing in range with your blades."
