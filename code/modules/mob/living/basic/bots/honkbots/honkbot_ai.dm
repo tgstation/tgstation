@@ -6,6 +6,7 @@
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/respond_to_summon,
+		/datum/ai_planning_subtree/use_mob_ability/random_honk,
 		/datum/ai_planning_subtree/manage_unreachable_list,
 		/datum/ai_planning_subtree/find_wanted_targets,
 		/datum/ai_planning_subtree/troll_target,
@@ -131,7 +132,8 @@
 	if(QDELETED(living_target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/mob/living/living_pawn = controller.pawn
-	living_pawn.UnarmedAttack(living_target, proximity_flag = TRUE)
+	var/datum/action/honk_ability = controller.blackboard[BB_HONK_ABILITY]
+	honk_ability?.Trigger()
 	living_pawn.manual_emote("celebrates with [living_target]!")
 	living_pawn.emote("flip")
 	living_pawn.emote("beep")
@@ -224,7 +226,6 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/drag_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/atom/movable/target = controller.blackboard[target_key]
 	if(QDELETED(target) || target.anchored || target.pulledby)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
@@ -236,3 +237,12 @@
 	. = ..()
 	if(!succeeded)
 		controller.clear_blackboard_key(target_key)
+
+/datum/ai_planning_subtree/use_mob_ability/random_honk
+	ability_key = BB_HONK_ABILITY
+
+/datum/ai_planning_subtree/use_mob_ability/random_honk/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(!SPT_PROB(5, seconds_per_tick))
+		return
+	return ..()
+

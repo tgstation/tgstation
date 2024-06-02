@@ -107,7 +107,7 @@
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 // only clear the target if they get healed
-/datum/ai_behavior/tend_to_patient/finish_action(datum/ai_controller/controller, succeeded, target_key, is_stationary, healed_target = FALSE)
+/datum/ai_behavior/tend_to_patient/finish_action(datum/ai_controller/controller, succeeded, target_key, threshold, damage_type_healer, access_flags, is_stationary)
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 	if(!succeeded)
@@ -118,7 +118,7 @@
 		controller.clear_blackboard_key(target_key)
 		return
 
-	if(QDELETED(target) || !healed_target)
+	if(QDELETED(target) || !check_if_healed(target, threshold, damage_type_healer, access_flags))
 		return
 
 	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[BB_ANNOUNCE_ABILITY]

@@ -5,8 +5,6 @@
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "cleanbot0"
-	density = FALSE
-	anchored = FALSE
 	health = 25
 	maxHealth = 25
 	light_color = "#99ccff"

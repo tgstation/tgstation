@@ -4,6 +4,7 @@
 	button_icon = 'icons/obj/art/horn.dmi'
 	button_icon_state = "bike_horn"
 	cooldown_time = 5 SECONDS
+	click_to_activate = FALSE
 	///callback after we have honked
 	var/datum/callback/post_honk_callback
 

@@ -16,7 +16,7 @@
 		/datum/ai_planning_subtree/find_patrol_beacon,
 		/datum/ai_planning_subtree/manage_unreachable_list,
 	)
-	max_target_distance = 25
+	max_target_distance = AI_BOT_PATH_LENGTH
 	///keys to be reset when the bot is reseted
 	var/list/reset_keys = list(
 		BB_BEACON_TARGET,

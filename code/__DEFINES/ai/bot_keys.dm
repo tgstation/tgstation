@@ -94,10 +94,6 @@ DEFINE_BITFIELD(honkbot_flags, list(
 #define BB_POST_CLEAN_COOLDOWN "post_clean_cooldown"
 
 //Honkbots
-///key that holds our honk ability
-#define BB_HONK_STUN "honk_stun"
-///key that holds our cuff ablity
-#define BB_HONK_CUFF "honk_cuff"
 ///key that holds all possible clown friends
 #define BB_CLOWNS_LIST "clowns_list"
 ///key that holds the clown we play with
@@ -110,4 +106,6 @@ DEFINE_BITFIELD(honkbot_flags, list(
 #define BB_SLIPPERY_TARGET "slippery_target"
 ///key that holds the victim we will slip
 #define BB_SLIP_TARGET "slip_target"
+///key that holds our honk ability
+#define BB_HONK_ABILITY "honk_ability"
 

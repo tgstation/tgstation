@@ -39,6 +39,7 @@
 	var/datum/action/cooldown/mob_cooldown/bot/honk/bike_honk = new(src)
 	bike_honk.Grant(src)
 	bike_honk.post_honk_callback = CALLBACK(src, PROC_REF(set_attacking_state))
+	ai_controller.set_blackboard_key(BB_HONK_ABILITY, bike_honk)
 
 	AddComponent(/datum/component/slippery,\
 		knockdown = 6 SECONDS,\
