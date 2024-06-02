@@ -1,4 +1,4 @@
-#define TRAM_DOOR_WARNING_TIME (1.4 SECONDS)
+#define TRAM_DOOR_WARNING_TIME (1 SECONDS)
 #define TRAM_DOOR_CYCLE_TIME (0.4 SECONDS)
 #define TRAM_DOOR_CRUSH_TIME (0.7 SECONDS)
 #define TRAM_DOOR_RECYCLE_TIME (3 SECONDS)
@@ -55,7 +55,7 @@
 	update_freelook_sight()
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, FALSE)
-	sleep(TRAM_DOOR_CYCLE_TIME)
+	sleep(TRAM_DOOR_WARNING_TIME)
 	layer = OPEN_DOOR_LAYER
 	update_icon(ALL, AIRLOCK_OPEN, TRUE)
 	operating = FALSE
@@ -116,7 +116,7 @@
 	air_update_turf(TRUE, TRUE)
 	crush()
 	crushing_in_progress = FALSE
-	sleep(TRAM_DOOR_CYCLE_TIME)
+	sleep(TRAM_DOOR_WARNING_TIME)
 	update_icon(ALL, AIRLOCK_CLOSED, 1)
 	operating = FALSE
 	retry_counter = 0
