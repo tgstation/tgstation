@@ -419,11 +419,11 @@
 	var/datum/antagonist/cult/cultist = IS_CULTIST(user)
 	if(!isnull(cultist))
 		var/datum/team/cult/cult_team = cultist.get_team()
-		var/effect_coef = 1 - (cult_team.cult_risen ? 0.4) - (cult.team.cult_ascendent ? 0.45)
+		var/effect_coef = 1 - (cult_team.cult_risen ? 0.4) - (cult.team.cult_ascendent ? 0.5)
 		user.visible_message(span_warning("[user] holds up [user.p_their()] hand, which explodes in a flash of red light!"), \
 		span_cult_italic("You attempt to stun [target] with the spell!"))
 		user.mob_light(range = 1.1, power = 2, color = LIGHT_COLOR_BLOOD_MAGIC, duration = 0.2 SECONDS)
-		else if(IS_HERETIC(target))
+		if(IS_HERETIC(target))
 			to_chat(user, span_warning("Some force greater than you intervenes! [target] is protected by the Forgotten Gods!"))
 			to_chat(target, span_warning("You are protected by your faith to the Forgotten Gods."))
 			var/old_color = target.color
