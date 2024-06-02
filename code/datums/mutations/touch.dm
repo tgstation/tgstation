@@ -127,7 +127,7 @@
 	hand_path = /obj/item/melee/touch_attack/lay_on_hands
 	draw_message = span_notice("You ready your hand to transfer injuries to yourself.")
 	drop_message = span_notice("You lower your hand.")
-	/// Multiplies the amount healed, without increasing the recieved damage.
+	/// Multiplies the amount healed, without increasing the received damage.
 	var/heal_multiplier = 1
 	/// Multiplies the incoming pain from healing.
 	var/pain_multiplier = 1
