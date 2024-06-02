@@ -24554,6 +24554,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/cargo_technician,
+/obj/effect/turf_decal/tile/brown/opposingcorners,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "iNB" = (
@@ -27276,9 +27277,6 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/effect/turf_decal/trimline/brown/filled/end{
-	dir = 1
-	},
 /obj/item/pen{
 	pixel_x = -7;
 	pixel_y = 10
@@ -27287,6 +27285,7 @@
 	pixel_y = 16
 	},
 /obj/machinery/digital_clock/directional/north,
+/obj/effect/turf_decal/tile/brown/opposingcorners,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "jHN" = (
@@ -31506,7 +31505,8 @@
 /obj/machinery/computer/cargo/request{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron,
 /area/station/cargo/sorting)
 "lfc" = (
 /obj/machinery/newscaster/directional/north,
@@ -46418,6 +46418,7 @@
 	dir = 4
 	},
 /obj/structure/window/spawner/directional/west,
+/obj/effect/turf_decal/tile/brown/opposingcorners,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "qyr" = (
@@ -46774,6 +46775,7 @@
 /obj/item/stamp/granted{
 	pixel_x = -7
 	},
+/obj/effect/turf_decal/tile/brown/opposingcorners,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "qDS" = (
@@ -50911,15 +50913,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/brown/filled/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/brown/filled/corner{
-	dir = 1
-	},
 /obj/item/reagent_containers/cup/glass/waterbottle{
 	pixel_y = 48;
 	pixel_x = 9
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
@@ -53153,10 +53152,7 @@
 /area/station/science/research)
 "sNr" = (
 /obj/structure/cable,
-/obj/effect/turf_decal/trimline/brown/filled/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/brown/filled/corner{
+/obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
 /turf/open/floor/iron,
