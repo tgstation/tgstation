@@ -18419,12 +18419,6 @@
 	dir = 1
 	},
 /area/station/security)
-"gDQ" = (
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "gDR" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
@@ -51643,6 +51637,7 @@
 /obj/machinery/camera/autoname/directional/north{
 	network = list("ss13","engine")
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "spw" = (
@@ -113205,7 +113200,7 @@ bBr
 dUc
 dUc
 jnY
-gDQ
+alX
 nPW
 oVs
 oVs
@@ -113463,7 +113458,7 @@ dUc
 vxX
 uFC
 spr
-ddO
+xcm
 jQs
 luq
 ddO
