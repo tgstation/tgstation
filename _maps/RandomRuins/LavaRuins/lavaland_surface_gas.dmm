@@ -813,7 +813,7 @@
 	},
 /area/ruin/thelizardsgas_lavaland)
 "HB" = (
-/obj/effect/spawner/random/trash/deluxe_garbage,
+/obj/effect/spawner/random/trash/cigbutt,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "HI" = (
@@ -1343,7 +1343,7 @@ DI
 (6,1,1) = {"
 DI
 DI
-Ao
+HB
 Gu
 Ao
 xw
@@ -1366,7 +1366,7 @@ DI
 (7,1,1) = {"
 DI
 DI
-HB
+Ao
 Ao
 Ao
 xw
@@ -1391,7 +1391,7 @@ DI
 DI
 fF
 Ao
-Ao
+HB
 FA
 Cs
 Bp
