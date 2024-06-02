@@ -22,7 +22,7 @@
 	COOLDOWN_DECLARE(stun_cooldown)
 
 /datum/component/stun_n_cuff/Initialize(list/blacklist_mobs = list(),
- 	stun_sound = 'sound/weapons/egloves.ogg',
+	stun_sound = 'sound/weapons/egloves.ogg',
 	stun_timer = 8 SECONDS,
 	handcuff_timer = 4 SECONDS,
 	stun_cooldown_timer = 10 SECONDS,
