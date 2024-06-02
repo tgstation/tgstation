@@ -2403,14 +2403,12 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/cargo)
 "vV" = (
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	ailock = 1;
 	control_area = "/area/ruin/syndicate_lava_base/main";
-	dir = 1;
 	icon_state = "control_kill";
 	lethal = 1;
 	name = "Base turret controls";
-	pixel_y = 30;
 	req_access = list("syndicate")
 	},
 /turf/open/floor/circuit/red,

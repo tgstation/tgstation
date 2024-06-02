@@ -13967,11 +13967,9 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
 "dLS" = (
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	name = "AI Chamber turret control";
-	icon_state = "control_stun";
-	pixel_x = 3;
-	pixel_y = -23
+	icon_state = "control_stun"
 	},
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -15666,9 +15664,8 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	name = "AI Upload Turret Control";
-	pixel_x = 25;
 	req_access = list("minisat");
 	control_area = "/area/station/ai_monitored/turret_protected/ai_upload"
 	},
@@ -35976,9 +35973,8 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	name = "AI Antechamber turret control";
-	pixel_y = -25;
 	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior"
 	},
 /turf/open/floor/iron/grimy,
@@ -65715,11 +65711,9 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 8
 	},
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	name = "AI Hallway turret control";
-	icon_state = "control_stun";
-	pixel_x = 3;
-	pixel_y = 28
+	icon_state = "control_stun"
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/hallway)

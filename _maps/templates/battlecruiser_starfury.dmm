@@ -5001,12 +5001,11 @@
 /area/shuttle/sbc_starfury)
 "KP" = (
 /obj/machinery/light/directional/south,
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	ailock = 1;
 	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
 	icon_state = "control_stun";
 	name = "Ship Turret Control";
-	pixel_y = -28;
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium,
