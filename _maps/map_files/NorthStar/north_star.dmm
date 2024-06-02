@@ -8859,7 +8859,8 @@
 	},
 /area/station/command/teleporter)
 "cix" = (
-/obj/machinery/restaurant_portal/restaurant,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/station/service/kitchen/diner)
 "ciz" = (
@@ -31356,6 +31357,7 @@
 	name = "Medbay Lockdown Shutters"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "ihQ" = (
@@ -50671,7 +50673,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
-/obj/machinery/disposal/bin/tagger,
+/obj/machinery/disposal/bin,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "mZT" = (
@@ -56091,11 +56093,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/floor4/starboard)
 "osX" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/structure/hedge,
-/turf/open/floor/carpet/green,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/restaurant_portal/bar,
+/turf/open/floor/wood,
 /area/station/service/kitchen/diner)
 "ote" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -62361,6 +62361,7 @@
 /area/station/science/auxlab)
 "qaY" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/service/kitchen/diner)
 "qbh" = (
@@ -65697,7 +65698,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "qSD" = (
-/obj/item/kirbyplants/organic/plant21,
+/obj/structure/aquarium/lawyer,
 /turf/open/floor/wood/parquet,
 /area/station/service/lawoffice)
 "qSJ" = (
@@ -81796,9 +81797,9 @@
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/port/fore)
 "ved" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/service/kitchen/diner)
 "veA" = (
@@ -91648,6 +91649,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/service/kitchen/diner)
 "xCR" = (
@@ -247096,11 +247098,11 @@ fjo
 mso
 dFd
 awt
-cix
+gjf
 gjf
 gjf
 qoa
-gjf
+jDe
 jDe
 qoW
 tTc
@@ -247354,7 +247356,6 @@ mso
 dFd
 awt
 gjf
-gjf
 ulB
 ulB
 ulB
@@ -247362,6 +247363,7 @@ jDe
 bMs
 kpa
 jzE
+gjf
 gjf
 ddx
 rBC
@@ -247611,7 +247613,6 @@ mso
 laJ
 jWT
 tRT
-gjf
 nXq
 xEL
 oAm
@@ -247619,6 +247620,7 @@ jDe
 dId
 jAl
 jHT
+gjf
 gjf
 ddx
 rBC
@@ -247868,13 +247870,13 @@ gWg
 iOh
 awt
 gjf
-gjf
 mQg
 rBC
 pzK
 jDe
 gjf
 wtg
+gjf
 gjf
 gjf
 uCW
@@ -248125,7 +248127,6 @@ qcd
 ccF
 awt
 gjf
-xCM
 mQg
 rBC
 pzK
@@ -248134,6 +248135,7 @@ gjf
 vXY
 vRj
 ldV
+osX
 jHJ
 hVt
 hVt
@@ -248382,7 +248384,6 @@ qcd
 nsn
 rSS
 xDS
-xDS
 sln
 jAl
 pWr
@@ -248390,6 +248391,7 @@ jDe
 bMs
 kpa
 jzE
+gjf
 vRj
 vWQ
 vWQ
@@ -248638,17 +248640,17 @@ fjo
 qcd
 ceh
 dMj
-gjf
-xDS
+cix
 ulB
 ulB
 ulB
-jDe
+xCM
 dId
 jAl
 jHT
+gjf
 xDS
-xna
+xDS
 xna
 xna
 xna
@@ -248895,9 +248897,8 @@ fjo
 qcd
 fOu
 awt
-gjf
-xDS
-xDS
+cix
+cix
 xDS
 xDS
 ved
@@ -248905,7 +248906,8 @@ xDS
 xDS
 xDS
 xDS
-osX
+xDS
+gjf
 vZg
 dIx
 dIx
@@ -249154,10 +249156,10 @@ dFd
 awt
 gjf
 gjf
-gjf
+vXY
 xDS
 qaY
-jDe
+gjf
 gjf
 wtg
 gjf
@@ -249413,11 +249415,11 @@ rZS
 nla
 mQF
 xDS
-gjf
 jDe
 bMs
 kpa
 jzE
+gjf
 tFS
 nNJ
 ycW
@@ -249670,11 +249672,11 @@ ubR
 mhE
 rwh
 xDS
-gjf
 jDe
 dId
 jAl
 jHT
+gjf
 gjf
 nNJ
 dxv
@@ -249928,7 +249930,7 @@ ubR
 nYE
 xDS
 jDe
-jDe
+gjf
 iwU
 psq
 eEr

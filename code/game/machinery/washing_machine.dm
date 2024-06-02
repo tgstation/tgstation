@@ -276,13 +276,9 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	new /obj/item/food/meat/slab/corgi(loc)
 	qdel(src)
 
-/mob/living/simple_animal/pet/machine_wash(obj/machinery/washing_machine/washer)
-	washer.bloody_mess = TRUE
-	investigate_log("has been gibbed by a washing machine.", INVESTIGATE_DEATHS)
-	gib()
-
 /mob/living/basic/pet/machine_wash(obj/machinery/washing_machine/washer)
 	washer.bloody_mess = TRUE
+	investigate_log("has been gibbed by a washing machine.", INVESTIGATE_DEATHS)
 	gib()
 
 /obj/item/machine_wash(obj/machinery/washing_machine/washer)
@@ -378,7 +374,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		if(L.buckled || L.has_buckled_mobs())
 			return
 		if(state_open)
-			if(istype(L, /mob/living/simple_animal/pet) || istype(L, /mob/living/basic/pet))
+			if(istype(L, /mob/living/basic/pet))
 				L.forceMove(src)
 				update_appearance()
 		return
