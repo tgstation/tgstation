@@ -731,10 +731,8 @@ multiple modular subtrees with behaviors
  * * key - A blackboard key
  * * thing - a value to set the blackboard key to.
  */
-/datum/ai_controller/proc/remove_thing_from_blackboard_key(key, thing, lazylist = FALSE)
+/datum/ai_controller/proc/remove_thing_from_blackboard_key(key, thing)
 	var/associated_value = blackboard[key]
-	if(lazylist && isnull(associated_value))
-		return
 	if(thing == associated_value)
 		stack_trace("remove_thing_from_blackboard_key was called un-necessarily in a situation where clear_blackboard_key would suffice. ")
 		clear_blackboard_key(key)
@@ -749,20 +747,17 @@ multiple modular subtrees with behaviors
 			// flat list
 			CLEAR_AI_DATUM_TARGET(thing, key)
 			associated_value -= thing
-			if(lazylist && !LAZYLEN(associated_value))
-				clear_blackboard_key(associated_value)
 			return
 		else if(associated_value[inner_key] == thing)
 			// assoc list
 			CLEAR_AI_DATUM_TARGET(thing, key)
 			associated_value -= inner_key
-			if(lazylist && !LAZYLEN(associated_value))
-				clear_blackboard_key(associated_value)
 			return
 
 	CRASH("remove_thing_from_blackboard_key called with an invalid \"thing\" argument ([thing]). \
 		(The passed value is not tracked in the passed list.)")
 
+///removes a tracked object from a lazylist
 /datum/ai_controller/proc/remove_from_blackboard_lazylist_key(key, thing)
 	var/lazylist = blackboard[key]
 	if(isnull(lazylist))
