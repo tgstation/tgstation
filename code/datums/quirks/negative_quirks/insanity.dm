@@ -1,7 +1,7 @@
 /datum/quirk/insanity
 	name = "Reality Dissociation Syndrome"
 	desc = "You suffer from a severe disorder that causes very vivid hallucinations. \
-		Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. \
+		Mindbreaker serum can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. \
 		THIS IS NOT A LICENSE TO GRIEF."
 	icon = FA_ICON_GRIN_TONGUE_WINK
 	value = -8

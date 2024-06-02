@@ -47,10 +47,10 @@
 	if(owner.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
-//Mindbreaker Toxin - Impure Version
+//Mindbreaker Serum - Impure Version
 /datum/reagent/impurity/rosenol
 	name = "Rosenol"
-	description = "A strange, blue liquid that is produced during impure mindbreaker toxin reactions. Historically it has been abused to write poetry."
+	description = "A strange, blue liquid that is produced during impure mindbreaker serum reactions. Historically it has been abused to write poetry."
 	reagent_state = LIQUID
 	color = "#0963ad"
 	ph = 7

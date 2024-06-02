@@ -635,7 +635,7 @@
 		new /obj/item/reagent_containers/pill/happinesspsych(src)
 
 /obj/item/storage/pill_bottle/lsdpsych
-	name = "mindbreaker toxin pills"
+	name = "mindbreaker serum pills"
 	desc = "!FOR THERAPEUTIC USE ONLY! Contains pills used to alleviate the symptoms of Reality Dissociation Syndrome."
 
 /obj/item/storage/pill_bottle/lsdpsych/PopulateContents()
