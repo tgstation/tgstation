@@ -1690,7 +1690,9 @@
 /obj/item/book/granter/crafting_recipe/donk_secret_recipe,
 /obj/item/ai_module/core/full/cybersun,
 /obj/item/reagent_containers/condiment/donksauce,
-/mob/living/basic/cybersun_ai_core,
+/mob/living/basic/cybersun_ai_core{
+	donk_ai_master = 1
+	},
 /turf/open/floor/plating/reinforced,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "pc" = (
