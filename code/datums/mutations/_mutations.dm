@@ -123,7 +123,8 @@
 		owner.overlays_standing[layer_used] = mut_overlay
 		owner.apply_overlay(layer_used)
 	grant_power() //we do checks here so nothing about hulk getting magic
-	owner.add_traits(mutation_traits, GENETIC_MUTATION)
+	if(mutation_traits)
+		owner.add_traits(mutation_traits, GENETIC_MUTATION)
 	if(!modified)
 		addtimer(CALLBACK(src, PROC_REF(modify), 0.5 SECONDS)) //gonna want children calling ..() to run first
 
