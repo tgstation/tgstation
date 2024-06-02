@@ -1,5 +1,0 @@
-author: "MichiRecRoom"
-delete-after: True
-changes:
-  - qol: "The Centcom Arena now accepts pacifists! Their pacifism will be removed for the purposes of the fight."
-  - bugfix: "The Arena will now properly take the wager from each person's pocket, rather than twice from the first person's pocket."

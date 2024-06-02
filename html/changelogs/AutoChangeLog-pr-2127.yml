@@ -1,4 +1,0 @@
-author: "Gboster-0"
-delete-after: True
-changes:
-  - rscadd: "Meters can now be again placed on layers 1 and 5, thanks TG for removing that originally"
