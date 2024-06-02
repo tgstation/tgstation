@@ -303,7 +303,7 @@
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/mindbreaker
-	name = "Mindbreaker Toxin"
+	name = "Mindbreaker Serum"
 	description = "A powerful hallucinogen. Not a thing to be messed with. For some mental patients. it counteracts their symptoms and anchors them to reality."
 	color = "#B31008" // rgb: 139, 166, 233
 	toxpwr = 0
@@ -318,7 +318,7 @@
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	// mindbreaker toxin assuages hallucinations in those plagued with it, mentally
+	// mindbreaker serum assuages hallucinations in those plagued with it, mentally
 	if(affected_mob.has_trauma_type(/datum/brain_trauma/mild/hallucinations))
 		affected_mob.remove_status_effect(/datum/status_effect/hallucination)
 
