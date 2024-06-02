@@ -134,9 +134,6 @@
 	/// What job does this mob have
 	var/job = null//Living
 
-	/// Can this mob enter shuttles
-	var/move_on_shuttle = 1
-
 	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH
 

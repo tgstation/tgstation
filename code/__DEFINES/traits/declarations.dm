@@ -291,6 +291,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Allows you to hear speech through walls
 #define TRAIT_XRAY_HEARING "xray_hearing"
 
+/// This mob can not enter or move on a shuttle
+#define TRAIT_BLOCK_SHUTTLE_MOVEMENT "block_shuttle_movement"
+
 /// Lets us scan reagents
 #define TRAIT_REAGENT_SCANNER "reagent_scanner"
 /// Lets us scan machine parts and tech unlocks
@@ -906,6 +909,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_NO_HUNGER "fish_no_hunger"
 ///It comes from a fish case. Relevant for bounties so far.
 #define TRAIT_FISH_FROM_CASE "fish_from_case"
+///Fish will also occasionally fire weak tesla zaps
+#define TRAIT_FISH_ELECTROGENESIS "fish_electrogenesis"
 
 /// Trait given to angelic constructs to let them purge cult runes
 #define TRAIT_ANGELIC "angelic"

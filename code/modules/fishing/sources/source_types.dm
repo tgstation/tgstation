@@ -97,6 +97,7 @@
 		FISHING_DUD = 5,
 		/obj/item/fish/donkfish = 5,
 		/obj/item/fish/emulsijack = 5,
+		/obj/item/fish/jumpercable = 5,
 	)
 	catalog_description = "Syndicate dimension (Fishing portal generator)"
 	radial_name = "Syndicate"
