@@ -388,14 +388,10 @@ SUBSYSTEM_DEF(dynamic)
 
 	switch(round(shown_threat))
 		//a white dwarf shift leads to a green security alert on report and special announcement, this prevents a meta check if the alert report is fake or not.
-		if(0)
-			if(round(threat_level) == 0)
-				advisory_string += "Advisory Level: <b>White Dwarf</b></center><BR>"
-				advisory_string += "Your sector's advisory level is White Dwarf. Our surveillance has ruled out any and all potential threats known in our database, eliminating most risks to our assets in the Spinward Sector. We advise a lower level of security, alongside distributing resources on potential profit."
-			else
-				advisory_string += "Advisory Level: <b>Green Star</b></center><BR>"
-				advisory_string += "Your sector's advisory level is Green Star. Surveillance information shows no credible threats to Nanotrasen assets within the Spinward Sector at this time. As always, the Department of Intelligence advises maintaining vigilance against potential threats, regardless of a lack of known threats."
-		if(1 to 19)
+		if(0 && round(threat_level) == 0)
+			advisory_string += "Advisory Level: <b>White Dwarf</b></center><BR>"
+			advisory_string += "Your sector's advisory level is White Dwarf. Our surveillance has ruled out any and all potential threats known in our database, eliminating most risks to our assets in the Spinward Sector. We advise a lower level of security, alongside distributing resources on potential profit."
+		if(0 to 19)
 			var/show_core_territory = (GLOB.current_living_antags.len > 0)
 			if (prob(FAKE_GREENSHIFT_FORM_CHANCE))
 				show_core_territory = !show_core_territory
