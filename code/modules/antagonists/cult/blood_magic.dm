@@ -426,6 +426,10 @@
 			var/old_color = target.color
 			target.color = rgb(0, 128, 0)
 			animate(target, color = old_color, time = 1 SECONDS, easing = EASE_IN)
+		if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
+			to_chat(user, span_warning("[target] is briefly staggered but quickly regains their senses! [target] is protected by a Mindshield!"))
+			to_chat(target, span_warning("You are protected by your mindshield."))
+			target.adjust_confusion(2 SECONDS)
 		else if(target.can_block_magic())
 			to_chat(user, span_warning("The spell had no effect!"))
 		else
