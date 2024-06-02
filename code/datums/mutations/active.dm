@@ -26,20 +26,21 @@
 	button_icon_state = "adrenaline"
 
 	cooldown_time = 2 MINUTES
+	check_flags = AB_CHECK_CONSCIOUS
 	/// How many units of each positive reagent injected during adrenaline.
 	var/adrenaline_amount = 10
 	/// How many units of each negative reagent injected after comedown.
 	var/comedown_amount = 7
 
+
 /datum/action/cooldown/adrenaline/Activate(mob/living/carbon/cast_on)
-	if(cast_on.stat)
-		return
-	..()
+	. = ..()
 	to_chat(cast_on, span_userdanger("You feel pumped up! It's time to GO!"))
 	cast_on.reagents.add_reagent(/datum/reagent/drug/pumpup, adrenaline_amount)
 	cast_on.reagents.add_reagent(/datum/reagent/medicine/synaptizine, adrenaline_amount)
 	cast_on.reagents.add_reagent(/datum/reagent/determination, adrenaline_amount)
 	addtimer(CALLBACK(src, PROC_REF(get_tired), cast_on), 25 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+	return TRUE
 
 /datum/action/cooldown/adrenaline/proc/get_tired(mob/living/carbon/cast_on)
 	to_chat(cast_on, span_danger("Your adrenaline rush makes way for a bout of nausea and a deep feeling of exhaustion in your muscles."))

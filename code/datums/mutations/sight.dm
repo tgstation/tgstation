@@ -196,20 +196,3 @@
 		return
 	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, GENETIC_MUTATION)
 
-/datum/mutation/human/night_vision
-	name = "Night Vision"
-	desc = "Allows the pupils to dilate to a much larger width, improving vision in the dark noticeably."
-	text_gain_indication = "<span class='danger'>The shadows seem a little less dark."
-	text_lose_indication = "<span class='danger'>Everything seems a little darker."
-
-/datum/mutation/human/night_vision/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
-	ADD_TRAIT(owner, TRAIT_NIGHT_VISION, GENETIC_MUTATION)
-	owner.update_sight()
-
-/datum/mutation/human/night_vision/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	REMOVE_TRAIT(owner, TRAIT_NIGHT_VISION, GENETIC_MUTATION)
-	owner.update_sight()

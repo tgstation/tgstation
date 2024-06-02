@@ -136,9 +136,6 @@
 
 /datum/action/cooldown/spell/touch/lay_on_hands/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/mendicant)
 
-	if(!iscarbon(victim))
-		return
-
 	var/mob/living/hurtguy = victim
 
 
@@ -177,7 +174,7 @@
 
 	// No healies in the end, cancel
 	if(!success)
-		return
+		return FALSE
 
 	mendicant.Beam(hurtguy, icon_state = beam_icon, time = 0.5 SECONDS)
 	beam_icon = initial(beam_icon)
@@ -212,7 +209,7 @@
 	var/obj/item/bodypart/mendicant_transfer_limb = mendicant.get_active_hand()
 	if(!(mendicant_transfer_limb in mendicant_organic_limbs))
 		mendicant_transfer_limb = pick(mendicant_organic_limbs)
-		mendicant_transfer_limb.receive_damage(brute_damage * pain_multiplier, burn_damage * pain_multiplier, forced = TRUE, wound_bonus = CANT_WOUND)
+		mendicant_transfer_limb.receive_damage(brute_to_heal * pain_multiplier, burn_to_heal * pain_multiplier, forced = TRUE, wound_bonus = CANT_WOUND)
 
 	if(brute_to_heal)
 		hurtguy.adjustBruteLoss(brute_to_heal)

@@ -66,7 +66,7 @@
 		CRASH("[type] tried to create an item, but failed. It's item type is [item_type].")
 
 	if(!isitem(created))
-		created.forceMove(cast_on.loc)
+		created.forceMove(cast_on.drop_location())
 		return
 
 	if(istype(mob_caster))

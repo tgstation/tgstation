@@ -223,9 +223,6 @@
 				if(Adjacent(target) || (tool && CheckToolReach(src, target, tool.reach))) //Adjacent or reaching attacks
 					return TRUE
 
-			if(SEND_SIGNAL(src, COMSIG_ATOM_CANREACH, ultimate_target) & COMPONENT_ALLOW_REACH)
-				return TRUE
-
 			closed[target] = TRUE
 
 			if (!target.loc)
@@ -235,6 +232,10 @@
 				next += target.loc
 
 		checking = next
+
+	if(SEND_SIGNAL(src, COMSIG_ATOM_CANREACH, ultimate_target) & COMPONENT_ALLOW_REACH)
+		return TRUE
+
 	return FALSE
 
 /atom/movable/proc/DirectAccess()

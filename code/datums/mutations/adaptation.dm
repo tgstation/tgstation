@@ -31,10 +31,10 @@
 
 /datum/mutation/human/adaptation/heat
 	name = "Heat Adaptation"
-	desc = "A strange mutation that renders the host immune to damage from high temperature environments. It also prevents the host from being ignited."
+	desc = "A strange mutation that renders the host immune to damage from high temperature environments. It also prevents the host from spreading their flames."
 	text_gain_indication = "<span class='notice'>Your body feels refreshingly warm.</span>"
 	instability = 20
-	mutation_traits = list(TRAIT_RESISTHEAT, TRAIT_NOFIRE)
+	mutation_traits = list(TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE)
 	adapt_icon = "fire"
 	locked = FALSE
 

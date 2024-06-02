@@ -44,10 +44,10 @@
 	desc = "Subject's arms have become elastic, allowing them to stretch up to a meter away. However, this elasticity makes it difficult to wear gloves, handle complex tasks, or grab large objects."
 	quality = POSITIVE
 	instability = 30
-	text_gain_indication = "<span class='warning'>You feel armstrong!</span>"
-	text_lose_indication = "<span class='notice'>Your arms stop being so saggy all the time.</span>"
+	text_gain_indication = span_warning("You feel armstrong!")
+	text_lose_indication = span_warning("Your arms stop feeling so saggy all the time.")
 	difficulty = 32
-	//mutation_traits = list(TRAIT_CHUNKYFINGERS)
+	mutation_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_NO_TWOHANDING)
 
 /datum/mutation/human/elastic_arms/on_acquiring(mob/living/carbon/human/H)
 	. = ..()
@@ -90,13 +90,10 @@
 
 	var/distance = get_dist(target, source)
 
-	// Too far, or on another zlevel? Dismiss.
-	if(distance > 2 || source.z != target.z)
+	// We only care about handling the reach distance, anything closer or further is handled normally.
+	// Also, no z-level shenanigans. Yet.
+	if((distance != 2) || source.z != target.z)
 		return
-
-	// Too close? Just let it pass normaly.
-	if(distance < 2)
-		return COMPONENT_ALLOW_REACH
 
 	var/direction = get_dir(source, target)
 	if(!direction)

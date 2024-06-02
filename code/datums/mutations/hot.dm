@@ -1,7 +1,7 @@
 /datum/mutation/human/geladikinesis/ash
 	name = "Cindikinesis"
 	desc = "Allows the user to concentrate nearby heat into a pile of ash. Wow. Very interesting."
-	text_gain_indication = "<span class='notice'>Your hand feels warm.</span>"
+	text_gain_indication = span_notice("Your hand feels warm.")
 	locked = TRUE
 	power_path = /datum/action/cooldown/spell/conjure_item/snow/ash
 
@@ -15,7 +15,7 @@
 /datum/mutation/human/cryokinesis/pyrokinesis
 	name = "Pyrokinesis"
 	desc = "Draws positive energy from the surroundings to heat surrounding temperatures at subject's will."
-	text_gain_indication = "<span class='notice'>Your hand feels hot!</span>"
+	text_gain_indication = span_notice("Your hand feels hot!")
 	locked = TRUE
 	power_path = /datum/action/cooldown/spell/pointed/projectile/cryo/pyro
 
