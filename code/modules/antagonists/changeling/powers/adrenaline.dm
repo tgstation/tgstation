@@ -1,19 +1,59 @@
 /datum/action/changeling/adrenaline
-	name = "Adrenaline Sacs"
-	desc = "We evolve additional sacs of adrenaline throughout our body. Costs 30 chemicals."
-	helptext = "Removes all stuns instantly and adds a short-term reduction in further stuns. Can be used while unconscious. Continued use poisons the body."
+	name = "Repurposed Glands"
+	desc = "We shift almost all available muscle mass from the arms to the legs, disabling the former but making us unable to be downed for 15 seconds. Costs 10 chemicals."
+	helptext = "Disables your arms and retracts bioweaponry, but regenerates your legs, grants you speed, and wakes you up from any stun."
 	button_icon_state = "adrenaline"
-	chemical_cost = 30
+	chemical_cost = 25 // similar cost to biodegrade, as they serve similar purposes
 	dna_cost = 2
-	req_human = TRUE
-	req_stat = UNCONSCIOUS
+	req_human = FALSE
+	req_stat = CONSCIOUS
+
+/datum/action/changeling/adrenaline/can_sting(mob/living/user, mob/living/target)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(HAS_TRAIT_FROM(user, TRAIT_IGNOREDAMAGESLOWDOWN, CHANGELING_TRAIT))
+		user.balloon_alert(user, "already boosted!")
+		return FALSE
+
+	return .
 
 //Recover from stuns.
-/datum/action/changeling/adrenaline/sting_action(mob/living/user)
+/datum/action/changeling/adrenaline/sting_action(mob/living/carbon/user)
 	..()
-	to_chat(user, span_notice("Energy rushes through us."))
-	user.SetKnockdown(0)
-	user.set_resting(FALSE)
+	to_chat(user, span_changeling("Our arms feel weak, but our legs become unstoppable!"))
+
+	for(var/datum/action/changeling/weapon/weapon_ability in user.actions)
+		weapon_ability.unequip_held(user)
+
+	// Destroy legcuffs with our IMMENSE LEG STRENGTH.
+	if(istype(user.legcuffed))
+		user.visible_message(
+			span_warning("[user]'s legs suddenly rip [user.legcuffed] apart!"),
+			span_warning("We rip apart our leg restraints!"),
+		)
+		qdel(user.legcuffed)
+
+	// Regenerate our legs only.
+	var/our_leg_zones = (GLOB.all_body_zones - GLOB.leg_zones)
+	user.regenerate_limbs(excluded_zones = our_leg_zones) // why is this exclusive rather than inclusive
+
+	user.add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_R_ARM), CHANGELING_TRAIT)
+
+	// Revert above mob changes.
+	addtimer(CALLBACK(src, PROC_REF(unsting_action), user), 20 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+
+	// Get us standing up.
+	user.SetAllImmobility(0)
+	user.setStaminaLoss(0)
+	user.set_resting(FALSE, instant = TRUE)
+
+	// Add fast reagents to go fast.
 	user.reagents.add_reagent(/datum/reagent/medicine/changelingadrenaline, 4) //20 seconds
-	user.reagents.add_reagent(/datum/reagent/medicine/changelinghaste, 3) //6 seconds, for a really quick burst of speed
+
 	return TRUE
+
+/datum/action/changeling/adrenaline/proc/unsting_action(mob/living/user)
+	to_chat(user, span_changeling("The muscles in our limbs shift back to their usual places."))
+	user.remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_R_ARM), CHANGELING_TRAIT)

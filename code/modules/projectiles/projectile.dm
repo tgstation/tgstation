@@ -632,7 +632,10 @@
 				return TRUE
 			if(buckled_to.density) // Will just be us if we're not buckled to another mob
 				return TRUE
-	return FALSE
+			return FALSE
+		else if(living_target.body_position == LYING_DOWN)
+			return FALSE
+	return TRUE
 
 /**
  * Scan if we should hit something and hit it if we need to
@@ -814,6 +817,8 @@
 	RegisterSignal(src, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attempt_parry))
 	if(hitscan)
 		process_hitscan()
+		if(QDELETED(src))
+			return
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
 	pixel_move(pixel_speed_multiplier, FALSE) //move it now!
@@ -908,6 +913,9 @@
 				qdel(src)
 			return //Kill!
 		pixel_move(1, TRUE)
+		// No kevinz I do not care that this is a hitscan weapon, it is not allowed to travel 100 turfs in a tick
+		if(CHECK_TICK && QDELETED(src))
+			return
 
 /obj/projectile/proc/pixel_move(trajectory_multiplier, hitscanning = FALSE)
 	if(!loc || !trajectory)
