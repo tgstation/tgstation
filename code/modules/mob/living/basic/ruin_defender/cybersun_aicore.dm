@@ -126,9 +126,6 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 		lightning_danger_zone = target.loc
 	new/obj/effect/temp_visual/lightning_strike(lightning_danger_zone)
 	playsound(owner, 'sound/effects/sparks1.ogg', vol = 120, vary = TRUE)
-//	if(do_after(owner, lightning_delay))
-//		new/obj/effect/temp_visual/lightning_strike_zap(lightning_danger_zone)
-//		return
 
 /obj/effect/temp_visual/lightning_strike
 	name = "lightning strike"
@@ -181,35 +178,33 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 	desc = "Charges up a cluster of lasers, then sends it towards a foe after a short delay."
 	button_icon = 'icons/obj/weapons/transforming_energy.dmi'
 	button_icon_state = "e_sword_on_red"
-	cooldown_time = 6 SECONDS
+	cooldown_time = 5.5 SECONDS
 	click_to_activate = TRUE
 	shared_cooldown = NONE
 	spell_requirements = null
 	projectile_type = /obj/projectile/beam/laser/cybersun/weaker
 	cast_range = 6
-	var/barrage_amount = 3
-	var/barrage_delay = 0.7 SECONDS
-
-/datum/action/cooldown/spell/pointed/projectile/cybersun_barrage/cast(obj/projectile/to_fire, atom/target, mob/user, atom/caster, iteration)
+	projectiles_per_fire = 3
+	var/barrage_delay = 0.8 SECONDS
 	var/turf/lockon_zone
+
+/datum/action/cooldown/spell/pointed/projectile/cybersun_barrage/cast(atom/target, atom/cast_on)
+	var/turf/my_turf = get_turf(owner)
 	if (isturf(target))
 		lockon_zone = target
 	else
 		lockon_zone = target.loc
-	owner.Beam(lockon_zone, icon_state = "1-full", beam_color = COLOR_MEDIUM_DARK_RED, time = barrage_delay)
+	if(lockon_zone == my_turf)
+		return
+	my_turf.Beam(lockon_zone, icon_state = "1-full", beam_color = COLOR_MEDIUM_DARK_RED, time = barrage_delay)
 	playsound(lockon_zone, 'sound/machines/terminal_prompt_deny.ogg', vol = 60, vary = TRUE)
+	StartCooldown(cooldown_time)
 	. = ..()
 
-/datum/action/cooldown/spell/pointed/projectile/cybersun_barrage/after_cast(atom/target)
-	. = ..()
+/datum/action/cooldown/spell/pointed/projectile/cybersun_barrage/fire_projectile(atom/target)
+	target = lockon_zone
 	if(do_after(owner, barrage_delay))
-		for(var/i in 1 to barrage_amount)
-			if(do_after(0.15 SECONDS))
-				var/obj/projectile/to_fire = new projectile_type()
-				ready_projectile(to_fire, target, owner, i)
-				SEND_SIGNAL(owner, COMSIG_MOB_SPELL_PROJECTILE, src, target, to_fire)
-				to_fire.fire()
-		return
+		. = ..()
 
 /obj/projectile/beam/laser/cybersun/weaker
 	damage = 11
