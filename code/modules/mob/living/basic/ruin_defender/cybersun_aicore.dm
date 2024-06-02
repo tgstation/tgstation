@@ -29,10 +29,10 @@
 	var/datum/action/cooldown/mob_cooldown/lightning_strike
 	/// Ability which fires da big laser
 	var/datum/action/cooldown/mob_cooldown/targeted_mob_ability/donk_laser
-// list of stuff tagged to self destruct when this boss dies
-GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 	//is this being used as part of the haunted trading post ruin? if true, will self destruct when boss dies
 	var/donk_ai_master = FALSE
+// list of stuff tagged to self destruct when this boss dies
+GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 
 /mob/living/basic/cybersun_ai_core/Initialize(mapload)
 	. = ..()
