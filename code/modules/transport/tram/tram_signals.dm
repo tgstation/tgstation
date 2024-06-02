@@ -300,7 +300,8 @@
 	end_processing()
 
 /obj/machinery/transport/crossing_signal/process()
-	// idle aspect is green or malf depending on the signal status
+	// idle aspect is green or blue depending on the signal status
+	// degraded signal operating conditions of any type show blue
 	var/idle_aspect = operating_status == TRANSPORT_SYSTEM_NORMAL ? XING_STATE_GREEN : XING_STATE_MALF
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
 
