@@ -135,8 +135,6 @@
 	attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
 	sharpness = SHARP_EDGED
-	///How quickly do we dig graves?
-	var/grave_speed = 8 SECONDS
 
 /obj/item/shovel/Initialize(mapload)
 	. = ..()
