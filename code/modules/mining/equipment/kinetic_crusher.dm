@@ -85,7 +85,7 @@
 
 /obj/item/kinetic_crusher/attack(mob/living/target, mob/living/carbon/user)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		to_chat(user, span_warning("[src] is too heavy to use with one hand!."))
+		user.balloon_alert(user, "must be wielded!")
 		return
 	var/datum/status_effect/crusher_damage/crusher_damage_effect = target.has_status_effect(/datum/status_effect/crusher_damage)
 	if(!crusher_damage_effect)
