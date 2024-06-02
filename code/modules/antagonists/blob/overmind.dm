@@ -72,6 +72,10 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	GLOB.blob_telepathy_mobs |= src
+	var/mutable_appearance/high_marker = mutable_appearance('icons/mob/silicon/cameramob.dmi', "marker", ABOVE_MOB_LAYER, src, ABOVE_GAME_PLANE)
+	high_marker.pixel_y -= 12
+	add_overlay(high_marker)
+	AddElement(/datum/element/elevation, pixel_shift = 10)
 
 /mob/camera/blob/proc/validate_location()
 	var/turf/T = get_turf(src)
