@@ -13,6 +13,9 @@
 	if(!wizard_datum)
 		stack_trace("Someone as not a wizard trying to get perks.")
 		return TRUE
+	for(var/spell in user.actions)
+		if(is_type_in_typecache(spell, no_coexistance_typecache))
+			return FALSE
 	if(is_type_in_list(src, wizard_datum.perks))
 		to_chat(user, span_warning("This perk already learned!"))
 		return FALSE
@@ -52,7 +55,8 @@
 /datum/spellbook_entry/perks/wormborn
 	name = "Worm Born"
 	desc = "A worm parasite grows in your body. When the host dies, he will turn into a large worm. \
-	When worm die then you will not be able to be reborn (probably)."
+	When worm die then you will not be able to be reborn (probably). Can't buy bind souls on this purchases."
+	no_coexistance_typecache = list(/datum/action/cooldown/spell/lichdom)
 
 /datum/spellbook_entry/perks/wormborn/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	. = ..()
@@ -71,58 +75,6 @@
 		addtimer(CALLBACK(src, PROC_REF(check_safe_location), user), 10 SECONDS)
 		return
 	user.AddComponent(/datum/component/dejavu/timeline, -1, 60 SECONDS)
-
-/datum/spellbook_entry/perks/eldritch_knowledge
-	name = "Eldritch Knowledge"
-	desc = "Forgotten Gods give you 2-4 random eldritch spells that you can use with out eldritch focus and other nonsense."
-	var/list/datum/action/cooldown/herertic_magic_allowed = list(
-		/datum/action/cooldown/spell/aoe/wave_of_desperation,
-		/datum/action/cooldown/spell/aoe/void_pull,
-		/datum/action/cooldown/spell/aoe/fiery_rebirth,
-		/datum/action/cooldown/spell/aoe/moon_ringleader,
-		/datum/action/cooldown/spell/aoe/rust_conversion,
-		/datum/action/cooldown/spell/cone/staggered/cone_of_cold/void,
-		/datum/action/cooldown/spell/cone/staggered/entropic_plume,
-		/datum/action/cooldown/spell/jaunt/space_crawl,
-		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
-		/datum/action/cooldown/spell/jaunt/mirror_walk,
-		/datum/action/cooldown/spell/touch/flesh_surgery,
-		/datum/action/cooldown/spell/touch/star_touch,
-		/datum/action/cooldown/spell/cosmic_rune,
-		/datum/action/cooldown/spell/pointed/apetra_vulnera,
-		/datum/action/cooldown/spell/pointed/ash_beams,
-		/datum/action/cooldown/spell/pointed/blood_siphon,
-		/datum/action/cooldown/spell/pointed/cleave,
-		/datum/action/cooldown/spell/pointed/moon_smile,
-		/datum/action/cooldown/spell/pointed/void_phase,
-		/datum/action/cooldown/spell/pointed/rust_construction,
-		/datum/action/cooldown/spell/pointed/mind_gate,
-		/datum/action/cooldown/spell/charged/beam/fire_blast,
-		/datum/action/cooldown/spell/pointed/projectile/star_blast,
-		/datum/action/cooldown/spell/conjure/cosmic_expansion,
-		/datum/action/cooldown/spell/realignment,
-		/datum/action/cooldown/spell/pointed/projectile/furious_steel,
-		/datum/action/cooldown/spell/pointed/burglar_finesse,
-		/datum/action/cooldown/spell/pointed/projectile/moon_parade,
-		/datum/action/cooldown/mob_cooldown/charge/rust,
-		/datum/action/cooldown/spell/caretaker
-	)
-	var/tries
-
-/datum/spellbook_entry/perks/eldritch_knowledge/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
-	. = ..()
-	var/list/eldritch_spells = herertic_magic_allowed.Copy()
-	eldritch_spells = shuffle(eldritch_spells)
-	while(tries < 4)
-		if(tries > 2)
-			if(prob(25*(tries-2)))
-				break
-		var/make_spell = pick(eldritch_spells)
-		var/datum/action/give_spell = new make_spell(user)
-		give_spell.Grant(user)
-		eldritch_spells -= make_spell
-		tries++
-
 /datum/spellbook_entry/perks/ecologist
 	name = "Ecologist"
 	desc = "your body becomes a vessel for rapidly growing vines. \

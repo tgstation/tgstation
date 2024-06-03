@@ -70,6 +70,12 @@
 	for(var/spell in user.actions)
 		if(is_type_in_typecache(spell, no_coexistance_typecache))
 			return FALSE
+	var/datum/antagonist/wizard/wizard_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
+	if(!wizard_datum)
+		return TRUE
+	for(var/perks in wizard_datum.perks)
+		if(is_type_in_typecache(perks, no_coexistance_typecache))
+			return FALSE
 	return TRUE
 
 /**
