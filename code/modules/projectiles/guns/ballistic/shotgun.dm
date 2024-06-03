@@ -356,4 +356,4 @@
 	bolt_wording = "bolt"
 	bolt_type = BOLT_TYPE_LOCKING
 	internal_magazine = TRUE
-	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/musket
