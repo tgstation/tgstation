@@ -55,10 +55,10 @@
 
 /obj/item/ammo_box/magazine/internal/shot/musket
 	name = "donk co musket internal magazine"
-	ammo_type = pick(list(
+	ammo_type = pick_weight(list(
 		/obj/item/ammo_casing/shotgun/fletchette = 4,
 		/obj/item/ammo_casing/shotgun/ion = 4,
 		/obj/item/ammo_casing/shotgun/scatterlaser,
 		/obj/item/ammo_casing/shotgun/buckshot/spent,
-		))
+	))
 	max_ammo = 1
