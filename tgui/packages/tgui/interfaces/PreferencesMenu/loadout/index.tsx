@@ -46,7 +46,9 @@ const LoadoutPageInner = (props: { loadout_tabs: LoadoutCategory[] }) => {
   const { loadout_tabs } = props;
   const [searchLoadout, setSearchLoadout] = useState('');
   const [selectedTabName, setSelectedTab] = useState(loadout_tabs[0].name);
-  const [modifyItemDimmer, setModifyItemDimmer] = useState(null);
+  const [modifyItemDimmer, setModifyItemDimmer] = useState<LoadoutItem | null>(
+    null,
+  );
 
   return (
     <Stack vertical fill>
