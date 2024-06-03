@@ -4458,8 +4458,14 @@
 /obj/machinery/camera/directional/north,
 /obj/structure/chair/greyscale,
 /obj/effect/landmark/start/assistant,
-/obj/effect/turf_decal/trimline/brown/filled/corner,
 /obj/machinery/airalarm/directional/north,
+/obj/effect/turf_decal/trimline/brown/filled/corner,
+/obj/effect/turf_decal/tile/brown/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "bDj" = (
@@ -12217,6 +12223,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "esd" = (
@@ -14922,6 +14929,7 @@
 	},
 /obj/structure/window/spawner/directional/south,
 /obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "foB" = (
@@ -16735,6 +16743,7 @@
 /obj/effect/turf_decal/arrows{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "gbG" = (
@@ -35206,6 +35215,7 @@
 /obj/machinery/light/directional/south,
 /obj/machinery/firealarm/directional/south,
 /obj/structure/table,
+/obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "mzm" = (
@@ -52808,6 +52818,7 @@
 /obj/structure/cable,
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/bot/left,
+/obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "sFY" = (
@@ -63170,11 +63181,15 @@
 /turf/open/floor/plating,
 /area/station/cargo/lobby)
 "wdY" = (
-/obj/effect/turf_decal/trimline/brown/filled/end{
-	dir = 1
-	},
 /obj/machinery/light/directional/south,
 /obj/effect/spawner/random/vending/colavend,
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "wem" = (
