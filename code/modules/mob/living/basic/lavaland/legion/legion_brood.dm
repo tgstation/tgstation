@@ -47,7 +47,7 @@
 	return ..()
 
 /mob/living/basic/legion_brood/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
-	if (ishuman(target) && target.stat > SOFT_CRIT)
+	if (ishuman(target) && target.stat > SOFT_CRIT && !ismonkey(target))
 		infest(target)
 		return
 
