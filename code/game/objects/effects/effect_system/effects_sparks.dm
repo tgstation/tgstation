@@ -26,24 +26,50 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/particle_effect/sparks/LateInitialize()
+	RegisterSignals(src, list(COMSIG_MOVABLE_CROSS, COMSIG_MOVABLE_CROSS_OVER), PROC_REF(sparks_touched))
 	flick(icon_state, src)
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/turf/T = loc
 	if(isturf(T))
-		T.hotspot_expose(1000,100)
+		affect_location(T, TRUE) // just_initialized set to TRUE
 	QDEL_IN(src, 20)
 
 /obj/effect/particle_effect/sparks/Destroy()
 	var/turf/T = loc
 	if(isturf(T))
-		T.hotspot_expose(1000,100)
+		affect_location(T)
+	UnregisterSignal(src, list(COMSIG_MOVABLE_CROSS, COMSIG_MOVABLE_CROSS_OVER))
 	return ..()
 
 /obj/effect/particle_effect/sparks/Move()
 	..()
 	var/turf/T = loc
 	if(isturf(T))
-		T.hotspot_expose(1000,100)
+		affect_location(T)
+
+/obj/effect/particle_effect/sparks/proc/affect_location(turf/T, just_initialized = 0)
+	T.hotspot_expose(1000,100)
+	if(just_initialized)
+		for(var/atom/movable/singed in T)
+			sparks_touched(src, singed)
+
+
+/obj/effect/particle_effect/sparks/proc/sparks_touched(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+
+	if(isobj(AM))
+		var/obj/singed = AM
+		if(singed.resistance_flags & FLAMMABLE) //only fire_act flammable objects instead of burning EVERYTHING
+			singed.fire_act(1000,100)
+		if(singed.reagents)
+			var/datum/reagents/reagents = singed.reagents
+			reagents.expose_temperature(1000)
+		return
+	if(isliving(AM))
+		var/mob/living/singed = AM
+		if(singed.fire_stacks)
+			singed.ignite_mob(FALSE) //ignite the mob, silent = FALSE (You're set on fire!)
+		return
 
 /datum/effect_system/spark_spread
 	effect_type = /obj/effect/particle_effect/sparks
