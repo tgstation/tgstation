@@ -163,7 +163,7 @@
 	if(airlock_state == AIRLOCK_CLOSED)
 		return
 
-	if(retry_counter < 3)
+	if(retry_counter < 2)
 		close()
 		return
 
