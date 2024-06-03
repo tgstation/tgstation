@@ -138,6 +138,8 @@
 
 	/// Flags to check for in can_perform_action. Used in alt-click checks
 	var/interaction_flags_click = NONE
+	/// Flags to check for in can_perform_action. Used in mouse drag & drop checks
+	var/interaction_flags_mouse_drop = NONE
 
 /**
  * Top level of the destroy chain for most atoms

@@ -5,6 +5,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 /mob/dead
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	move_resist = INFINITY
+	interaction_flags_mouse_drop = IGNORE_MOUSE_DROP_CHECKS
 	throwforce = 0
 
 /mob/dead/Initialize(mapload)

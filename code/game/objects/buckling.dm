@@ -1,4 +1,5 @@
 /atom/movable
+	interaction_flags_mouse_drop = NEED_VITALITY
 	/// Whether the atom allows mobs to be buckled to it. Can be ignored in [/atom/movable/proc/buckle_mob()] if force = TRUE
 	var/can_buckle = FALSE
 	/// Bed-like behaviour, forces mob.lying = buckle_lying if not set to [NO_BUCKLE_LYING].
@@ -42,8 +43,7 @@
 		else
 			return user_unbuckle_mob(buckled_mobs[1], user)
 
-/atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
-	. = ..()
+/atom/movable/mouse_drop_receive(mob/living/M, mob/user, params)
 	return mouse_buckle_handling(M, user)
 
 /**

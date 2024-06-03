@@ -15,6 +15,7 @@
 	force = 5
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
+	interaction_flags_mouse_drop = NEED_VITALITY
 	actions_types = list(/datum/action/item_action/toggle_paddles)
 	armor_type = /datum/armor/item_defibrillator
 
@@ -136,11 +137,10 @@
 		ui_action_click() //checks for this are handled in defibrillator.mount.dm
 	return ..()
 
-/obj/item/defibrillator/MouseDrop(obj/over_object)
-	. = ..()
+/obj/item/defibrillator/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
 	if(ismob(loc))
 		var/mob/M = loc
-		if(!M.incapacitated() && istype(over_object, /atom/movable/screen/inventory/hand))
+		if(istype(over_object, /atom/movable/screen/inventory/hand))
 			var/atom/movable/screen/inventory/hand/H = over_object
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 

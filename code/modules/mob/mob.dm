@@ -889,20 +889,6 @@
 	set category = null
 	return
 
-/**
- * Controls if a mouse drop succeeds (return null if it doesnt)
- */
-/mob/MouseDrop(mob/M)
-	. = ..()
-	if(M != usr)
-		return
-	if(usr == src)
-		return
-	if(!Adjacent(usr))
-		return
-	if(isAI(M))
-		return
-
 ///Is the mob muzzled (default false)
 /mob/proc/is_muzzled()
 	return FALSE
@@ -1168,6 +1154,7 @@
  * * NEED_LIGHT - If lighting must be present to perform action (can't heal someone in the dark)
  * * NEED_DEXTERITY - If other mobs (monkeys, aliens, etc) can perform action (can't use computers if you are a monkey)
  * * NEED_HANDS - If hands are required to perform action (can't pickup items if you are a cyborg)
+ * * NEED_VITALITY - Must not be incapaciated, unconsious or dead. optional standing up but can be bypassed by ALLOW_RESTING
  * * FORBID_TELEKINESIS_REACH - If telekinesis is forbidden to perform action from a distance (ex. canisters are blacklisted from telekinesis manipulation)
  * * ALLOW_SILICON_REACH - If silicons are allowed to perform action from a distance (silicons can operate airlocks from far away)
  * * ALLOW_RESTING - If resting on the floor is allowed to perform action ()

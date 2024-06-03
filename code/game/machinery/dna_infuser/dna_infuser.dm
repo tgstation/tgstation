@@ -11,7 +11,9 @@
 	base_icon_state = "infuser"
 	density = TRUE
 	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
+	interaction_flags_mouse_drop = NEED_VITALITY | NEED_DEXTERITY
 	circuit = /obj/item/circuitboard/machine/dna_infuser
+
 	/// maximum tier this will infuse
 	var/max_tier_allowed = DNA_MUTANT_TIER_ONE
 	///currently infusing a vict- subject
@@ -199,7 +201,7 @@
 	infusing_from = target
 
 // mostly good for dead mobs like corpses (drag to add).
-/obj/machinery/dna_infuser/MouseDrop_T(atom/movable/target, mob/user)
+/obj/machinery/dna_infuser/mouse_drop_receive(atom/target, mob/user, params)
 	// if the machine is closed, already has a infusion target, or the target is not valid then no mouse drop.
 	if(!is_valid_infusion(target, user))
 		return

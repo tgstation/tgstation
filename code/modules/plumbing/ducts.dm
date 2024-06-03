@@ -9,6 +9,7 @@ All the important duct code:
 	icon_state = "nduct"
 	layer = PLUMBING_PIPE_VISIBILE_LAYER
 	use_power = NO_POWER_USE
+	interaction_flags_mouse_drop = NEED_VITALITY
 
 	///bitfield with the directions we're connected in
 	var/connects
@@ -295,7 +296,7 @@ All the important duct code:
 	disconnect_duct()
 	return ..()
 
-/obj/machinery/duct/MouseDrop_T(atom/drag_source, mob/living/user)
+/obj/machinery/duct/mouse_drop_receive(atom/drag_source, mob/living/user, params)
 	if(!istype(drag_source, /obj/machinery/duct))
 		return
 	var/obj/machinery/duct/other = drag_source

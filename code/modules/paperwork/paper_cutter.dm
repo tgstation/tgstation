@@ -7,6 +7,7 @@
 	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	pass_flags = PASSTABLE
+	interaction_flags_mouse_drop = NEED_VITALITY
 
 	/// The paper currently loaded inside the cutter
 	var/obj/item/paper/stored_paper
@@ -177,12 +178,7 @@
 	new /obj/item/paper/paperslip(get_turf(src))
 	update_appearance()
 
-/obj/item/papercutter/MouseDrop(atom/over_object)
-	. = ..()
-	var/mob/user = usr
-	if(user.incapacitated() || !Adjacent(user))
-		return
-
+/obj/item/papercutter/mouse_drop_dragged(atom/over_object, mob/user)
 	if(over_object == user)
 		user.put_in_hands(src)
 

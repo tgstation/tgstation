@@ -15,6 +15,7 @@
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
 	appearance_flags = APPEARANCE_UI
+	interaction_flags_mouse_drop = IGNORE_MOUSE_DROP_CHECKS
 	/// A reference to the object in the slot. Grabs or items, generally, but any datum will do.
 	var/datum/weakref/master_ref = null
 	/// A reference to the owner HUD, if any.
@@ -57,6 +58,10 @@
 		SEND_SIGNAL(src, COMSIG_SCREEN_ELEMENT_CLICK, location, control, params, usr)
 	if(default_click)
 		return ..()
+
+///Screen elements are always on top of the players screen and don't move so yes they are adjacent
+/atom/movable/screen/Adjacent(atom/neighbor, atom/target, atom/movable/mover)
+	return TRUE
 
 /atom/movable/screen/examine(mob/user)
 	return list()

@@ -10,6 +10,7 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/sneakers/inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
 	flags_1 = IS_PLAYER_COLORABLE_1
+	interaction_flags_mouse_drop = NEED_VITALITY | NEED_HANDS
 
 /obj/item/clothing/shoes/sneakers/black
 	name = "black shoes"
@@ -146,8 +147,8 @@
 			return FALSE
 	return ..()
 
-/obj/item/clothing/shoes/sneakers/orange/MouseDrop(atom/over)
-	var/mob/m = usr
+/obj/item/clothing/shoes/sneakers/orange/mouse_drop_dragged(atom/over_object, mob/user)
+	var/mob/m = user
 	if(ishuman(m))
 		var/mob/living/carbon/human/c = m
 		if(c.shoes == src && attached_cuffs)

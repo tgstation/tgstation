@@ -6,3 +6,6 @@
 #define CLICK_ACTION_ANY (CLICK_ACTION_SUCCESS | CLICK_ACTION_BLOCKING)
 
 /// Use NONE for continue interaction
+
+///Bypass all adjacency & other checks for mouse drop
+#define IGNORE_MOUSE_DROP_CHECKS -1
