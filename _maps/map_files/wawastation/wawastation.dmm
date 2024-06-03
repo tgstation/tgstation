@@ -21833,6 +21833,7 @@
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/light_switch/directional/west,
+/obj/item/wrench/medical,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "hPs" = (
