@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 	grant_actions_by_list(innate_actions)
 
 /mob/living/basic/cybersun_ai_core/death(gibbed)
-	if(donk_ai_master = TRUE)
+	if(donk_ai_master == TRUE)
 		//disable all the tripwire traps
 		for (var/obj/item/pressure_plate/puzzle/invisible_tripwire as anything in GLOB.selfdestructs_when_boss_dies)
 			addtimer(CALLBACK(invisible_tripwire, TYPE_PROC_REF(/atom/, take_damage), invisible_tripwire.max_integrity), 0.1 SECONDS)
