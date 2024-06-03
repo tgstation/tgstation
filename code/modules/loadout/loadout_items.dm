@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	var/a_order = A::tab_order
 	var/b_order = B::tab_order
 	if(a_order == b_order)
-		return cmp_text_asc(A, B)
+		return cmp_text_asc(A::category_name, B::category_name)
 	return cmp_numeric_asc(a_order, b_order)
 
 /**
