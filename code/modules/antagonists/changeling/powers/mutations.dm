@@ -176,8 +176,8 @@
 	desc = "We reform one of our arms into a deadly blade that breaks after a number of hits, improvable by absorbing genomes. Costs 40 chemicals."
 	helptext = "We may retract our armblade in the same manner as we form it. Organic tissue is not perfect; the armblade will break after it is used too much. The more genomes we absorb, the stronger it is. Cannot be used while in lesser form."
 	button_icon_state = "armblade"
-	chemical_cost = 40
-	dna_cost = 4
+	chemical_cost = 30
+	dna_cost = 3
 	req_human = TRUE
 	weapon_type = /obj/item/melee/arm_blade
 	weapon_name_simple = "blade"
