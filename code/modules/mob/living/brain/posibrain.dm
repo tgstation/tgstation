@@ -248,22 +248,20 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(isspaceturf(loc) || !direction || mecha)
 		return
 
+	if(can_move >= world.time)
+		return
+	can_move = world.time + move_delay
+
 	// ESCAPE PRISON
 	if(ismovable(loc))
-		can_move = world.time + move_delay
 		if(prob(25))
 			var/obj/item/item = pick(loc.contents)
-			if(isliving(loc)) //so we're insides someones chest cavity and forcig all their organs out
-				var/mob/living/living = loc
-				living.dropItemToGround(item)
-			else
+			if(istype(loc, /obj/item/storage))
 				item.forceMove(get_turf(src)) //throw stuff out of the inventory till we free ourselves!
-
-	if(!isturf(loc))
-		return
+				playsound(src, SFX_RUSTLE, 30, TRUE)
 
 	// MOVE US
-	if(can_move < world.time)
+	if(isturf(loc))
 		can_move = world.time + move_delay
 		try_step_multiz(direction)
 		SpinAnimation(move_delay, 1, direction == NORTH || direction == EAST)
@@ -284,4 +282,5 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		return .
 	throw_at(get_edge_target_turf(src, get_dir(user, src)), 7, 1, user)
 	user.do_attack_animation(src)
+	can_move = world.time + move_delay //pweeze stawp
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

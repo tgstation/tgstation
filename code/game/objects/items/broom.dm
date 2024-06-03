@@ -73,7 +73,14 @@
 
 	do_sweep(src, user, atom, user.dir)
 
-/// Sweep objects in the direction we're facing towards our direction
+/**
+* Sweep objects in the direction we're facing towards our direction
+* Arguments
+* * broomer - The object being used for brooming
+* * user - The person who is brooming
+* * target - The object or tile that's target of a broom click or being moved into
+* * sweep_dir - The directions in which we sweep objects
+*/
 /proc/do_sweep(obj/broomer, mob/user, atom/target, sweep_dir)
 	var/turf/current_item_loc = isturf(target) ? target : target.loc
 	if (!isturf(current_item_loc))
