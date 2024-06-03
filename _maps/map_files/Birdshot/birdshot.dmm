@@ -3335,10 +3335,6 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
-"bxi" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/station/maintenance/starboard/aft)
 "bxk" = (
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/structure/rack,
@@ -5718,10 +5714,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/dock)
-"cxO" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/station/science/robotics/lab)
 "cxQ" = (
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
@@ -26146,7 +26138,7 @@
 "jQo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/research/glass{
-	name = "Cytology Lab"
+	name = "North Science"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/research,
 /obj/machinery/door/firedoor,
@@ -53703,8 +53695,8 @@
 	pixel_y = 5
 	},
 /obj/machinery/door/window/left/directional/south{
-	name = "Genetics Desk";
-	req_access = list("genetics")
+	name = "Robotics Front Desk";
+	req_access = list("Robotics")
 	},
 /obj/structure/desk_bell{
 	pixel_x = 6
@@ -61921,7 +61913,6 @@
 /turf/open/floor/iron/dark,
 /area/station/science/lower)
 "vnh" = (
-/obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/science/research,
 /obj/machinery/door/airlock{
 	name = "Cytology Maintenance"
@@ -72380,10 +72371,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "ycq" = (
-/obj/machinery/modular_computer/preset/cargochat/science{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/table/glass,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell,
 /turf/open/floor/iron/dark,
 /area/station/science/research)
 "ycx" = (
@@ -118453,9 +118444,9 @@ uHd
 uHd
 uHd
 uHd
-cxO
+uHd
 rxT
-cxO
+uHd
 uHd
 uHd
 uXC
@@ -122581,7 +122572,7 @@ hyE
 hyE
 hyE
 hyE
-bxi
+cRC
 dDB
 dDB
 cRC
@@ -122838,7 +122829,7 @@ kat
 dzE
 oTj
 hyE
-bxi
+cRC
 dDB
 dDB
 cRC
@@ -123095,7 +123086,7 @@ kQt
 fAP
 vWU
 hyE
-bxi
+cRC
 dDB
 dDB
 dDB
@@ -123352,7 +123343,7 @@ kQt
 xZX
 eBe
 hyE
-bxi
+cRC
 dDB
 dDB
 dDB
@@ -123609,7 +123600,7 @@ kQt
 xZX
 iix
 hyE
-bxi
+cRC
 cRC
 cRC
 cRC
