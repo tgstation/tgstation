@@ -1,4 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - bugfix: "added missing context tips for atmos canisters"

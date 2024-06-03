@@ -1,4 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - bugfix: "Fixes janitor borgs killing the machinery subsystem by charging light replacers 200k times a tick."
