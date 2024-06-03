@@ -11,7 +11,7 @@
 	base_icon_state = "infuser"
 	density = TRUE
 	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
-	interaction_flags_mouse_drop = NEED_VITALITY | NEED_DEXTERITY
+	interaction_flags_mouse_drop = NEED_VITALITY | NEED_HANDS | NEED_DEXTERITY
 	circuit = /obj/item/circuitboard/machine/dna_infuser
 
 	/// maximum tier this will infuse
@@ -210,8 +210,6 @@
 
 /// Verify that the given infusion source/mob is a dead creature.
 /obj/machinery/dna_infuser/proc/is_valid_infusion(atom/movable/target, mob/user)
-	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !ISADVANCEDTOOLUSER(user))
-		return FALSE
 	var/datum/component/edible/food_comp = IS_EDIBLE(target)
 	if(infusing_from)
 		balloon_alert(user, "empty the machine first!")
