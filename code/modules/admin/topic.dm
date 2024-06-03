@@ -212,18 +212,28 @@
 			if(!check_if_greater_rights_than(M.client))
 				to_chat(usr, span_danger("Error: They have more rights than you do."), confidential = TRUE)
 				return
+			/* //MONKESTATION EDIT START - Change this tgui alert to a regular alert
 			if(tgui_alert(usr, "Kick [key_name(M)]?", "Confirm", list("Yes", "No")) != "Yes")
 				return
+			*/ //MONKESTATION EDIT ORIGINAL
+			if(alert(usr, "Kick [key_name(M)]?", "Confirm", "Yes", "No") != "Yes")
+				return
+			//MONKESTATION EDIT END
 			if(!M)
 				to_chat(usr, span_danger("Error: [M] no longer exists!"), confidential = TRUE)
 				return
 			if(!M.client)
 				to_chat(usr, span_danger("Error: [M] no longer has a client!"), confidential = TRUE)
 				return
+			//MONKESTATION EDIT START - Kicking players has been moved to a proc
+			/*
 			to_chat(M, span_danger("You have been kicked from the server by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.key]"]."), confidential = TRUE)
 			log_admin("[key_name(usr)] kicked [key_name(M)].")
 			message_admins(span_adminnotice("[key_name_admin(usr)] kicked [key_name_admin(M)]."))
 			qdel(M.client)
+			*/ //MONKESTATION EDIT ORIGINAL
+			kick_client(M.client)
+			//MONKESTATION EDIT END
 
 	else if(href_list["addmessage"])
 		if(!check_rights(R_ADMIN))
