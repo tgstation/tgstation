@@ -1345,7 +1345,7 @@
 					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 		else // just a normal carbon mob
-			if((action_bitflags & FORBID_TELEKINESIS_REACH))
+			if(action_bitflags & FORBID_TELEKINESIS_REACH)
 				to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 
