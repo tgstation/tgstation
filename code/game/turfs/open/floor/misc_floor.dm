@@ -222,6 +222,16 @@
 	custom_materials = list(/datum/material/plastic=SMALL_MATERIAL_AMOUNT*5)
 	floor_tile = /obj/item/stack/tile/plastic
 
+/turf/open/floor/dilapitated_church
+	name = "church floor"
+	desc = "menacing and all worn-down"
+	icon_state = "church_floor"
+
+/turf/open/floor/dilapitated_church_alt
+	name = "church floor"
+	desc = "menacing and all worn-down"
+	icon_state = "church_floor2"
+
 /turf/open/floor/plastic/broken_states()
 	return list("plastic-damaged1","plastic-damaged2")
 
