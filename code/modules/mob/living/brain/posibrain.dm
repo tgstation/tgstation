@@ -222,3 +222,47 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/mmi/posibrain/display/is_occupied()
 	return TRUE
+
+/obj/item/mmi/posibrain/sphere
+	icon_state = "spheribrain"
+	base_icon_state = "spheribrain"
+
+	var/move_delay = 0.5 SECONDS
+
+	var/can_move
+
+
+/obj/item/mmi/posibrain/sphere/relaymove(mob/living/user, direction)
+	if(isspaceturf(loc) || !direction)
+		return
+
+	if(ismovable(loc))
+		can_move = world.time + move_delay
+		if(prob(25))
+			var/obj/item/item = pick(loc.contents)
+			if(isliving(loc))
+				var/mob/living/living = loc
+				living.dropItemToGround(item)
+			else
+				item.forceMove(get_turf(src))
+
+	if(!isturf(loc))
+		return
+
+	if(can_move < world.time)
+		can_move = world.time + move_delay
+		try_step_multiz(direction)
+		SpinAnimation(1)
+
+	return
+
+/obj/item/mmi/posibrain/sphere/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(brainmob)
+		do_sweep(src, brainmob, old_loc)
+
+/obj/item/mmi/posibrain/sphere/attack_hand(mob/user, list/modifiers)
+	if(!LAZYACCESS(modifiers, RIGHT_CLICK))
+		return ..()
+
+	throw_at(get_edge_target_turf(src, get_dir(user, src)), 7, 1, user)
