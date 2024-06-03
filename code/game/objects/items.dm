@@ -1177,9 +1177,9 @@
 		if(islist(operating_sound))
 			played_sound = pick(operating_sound)
 
-		if(!TIMER_COOLDOWN_FINISHED(src, COOLDOWN_TOOL_SOUND))
+		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_TOOL_SOUND))
 			playsound(target, played_sound, volume, TRUE)
-			TIMER_COOLDOWN_START(src, COOLDOWN_TOOL_SOUND, 4 SECONDS)//based on our longest sound clip
+			TIMER_COOLDOWN_START(src, COOLDOWN_TOOL_SOUND, 4 SECONDS) //based on our longest sound clip
 
 /// Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
 /obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
