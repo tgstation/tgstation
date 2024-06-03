@@ -38,6 +38,7 @@
 	var/turf/T = loc
 	if(isturf(T))
 		affect_location(T)
+	UnregisterSignal(src, list(COMSIG_MOVABLE_CROSS, COMSIG_MOVABLE_CROSS_OVER))
 	return ..()
 
 /obj/effect/particle_effect/sparks/Move()
@@ -69,21 +70,22 @@
 * datum/source - Can either be the spark itself or an object that just walked into it
 * mob/living/singed_mob - The mob that was touched by the spark
 */
-/obj/effect/particle_effect/sparks/proc/sparks_touched(datum/source, mob/living/singed_living)
+/obj/effect/particle_effect/sparks/proc/sparks_touched(datum/source, atom/movable/singed)
 	SIGNAL_HANDLER
 
-	if(singed_living.fire_stacks)
-		singed_living.ignite_mob(silent = FALSE) //ignite the mob, silent = FALSE (You're set on fire!)
-
-
-/obj/effect/particle_effect/sparks/sparks_touched(datum/source, obj/singed_obj) // as above, but for objects
-	. = ..()
-
-	if(singed_obj.resistance_flags & FLAMMABLE) //only fire_act flammable objects instead of burning EVERYTHING
-		singed_obj.fire_act(1000,100)
-	if(singed_obj.reagents)
-		var/datum/reagents/reagents = singed_obj.reagents
-		reagents?.expose_temperature(1000)
+	if(isobj(singed))
+		var/obj/singed_obj = singed
+		if(singed_obj.resistance_flags & FLAMMABLE) //only fire_act flammable objects instead of burning EVERYTHING
+			singed_obj.fire_act(1000,100)
+		if(singed_obj.reagents)
+			var/datum/reagents/reagents = singed_obj.reagents
+			reagents?.expose_temperature(1000)
+		return
+	if(isliving(singed))
+		var/mob/living/singed_living = singed
+		if(singed_living.fire_stacks)
+			singed_living.ignite_mob(FALSE) //ignite the mob, silent = FALSE (You're set on fire!)
+		return
 
 /datum/effect_system/spark_spread
 	effect_type = /obj/effect/particle_effect/sparks
