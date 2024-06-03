@@ -356,7 +356,7 @@
 /mob/living/simple_animal/bot/secbot/evil
 	desc = "An old securitron. Something about it seems a little evil."
 	baton_type = /obj/item/melee/baton/security/cattleprod
-	faction = list(Syndicate)
+	faction = list(ROLE_SYNDICATE)
 
 /mob/living/simple_animal/bot/secbot/evil/Initialize(mapload)
 	. = ..()
