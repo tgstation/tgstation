@@ -1325,7 +1325,7 @@
 		if(incapacitated())
 			to_chat(src, span_warning("You are in no condition to do this!"))
 			return FALSE
-		if(action_bitflags & NEED_VITALITY && (stat == DEAD || stat != CONSCIOUS))
+		if(stat == DEAD || stat != CONSCIOUS)
 			to_chat(src, span_warning("You are in no physical condition to do this!"))
 			return FALSE
 
