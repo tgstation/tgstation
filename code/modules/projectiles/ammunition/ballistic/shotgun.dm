@@ -107,7 +107,7 @@
 	name = "/improper Donk Co Flechette Shell"
 	desc = "."
 	icon_state = "improvshell"
-	projectile_type = /obj/projectile/bullet/pellet/shotgun_improvised
+	projectile_type = /obj/projectile/bullet/pellet/flechette
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2, /datum/material/glass=SMALL_MATERIAL_AMOUNT*1)
 	pellets = 8
 	variance = 35

@@ -119,10 +119,6 @@
 	demolition_mod = 10
 	weak_against_armour = TRUE
 
-/obj/projectile/bullet/pellet/shotgun_improvised/Initialize(mapload)
-	. = ..()
-	range = rand(3, 8)
-
 // Mech Scattershot
 
 /obj/projectile/bullet/scattershot
