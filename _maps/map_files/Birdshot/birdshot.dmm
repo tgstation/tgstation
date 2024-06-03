@@ -5021,10 +5021,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation/entertainment)
-"cip" = (
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plating,
-/area/station/security/checkpoint/science)
 "cis" = (
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible{
 	dir = 9
@@ -5770,7 +5766,7 @@
 "cyx" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
-/area/station/security/checkpoint/science)
+/area/station/maintenance/starboard/central)
 "cyy" = (
 /turf/open/floor/catwalk_floor/titanium,
 /area/station/command/heads_quarters/ce)
@@ -12547,7 +12543,7 @@
 /obj/effect/spawner/random/maintenance,
 /obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/plating,
-/area/station/security/checkpoint/science)
+/area/station/maintenance/starboard/central)
 "fnm" = (
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron/grimy,
@@ -58470,7 +58466,7 @@
 "ukV" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/plating,
-/area/station/security/checkpoint/science)
+/area/station/maintenance/starboard/central)
 "ulb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
@@ -61761,10 +61757,6 @@
 	},
 /turf/open/floor/grass,
 /area/station/service/chapel)
-"vkJ" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating,
-/area/station/security/checkpoint/science)
 "vkN" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -69857,7 +69849,7 @@
 "xvx" = (
 /obj/structure/showcase/machinery/cloning_pod,
 /turf/open/floor/plating,
-/area/station/security/checkpoint/science)
+/area/station/maintenance/starboard/central)
 "xvF" = (
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/science/xenobiology)
@@ -71847,7 +71839,7 @@
 "xVY" = (
 /obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/plating,
-/area/station/security/checkpoint/science)
+/area/station/maintenance/starboard/central)
 "xWd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -71892,9 +71884,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/science/robotics/mechbay)
-"xWw" = (
-/turf/open/floor/plating,
-/area/station/security/checkpoint/science)
 "xWz" = (
 /obj/structure/cable,
 /obj/machinery/power/solar_control{
@@ -119490,9 +119479,9 @@ bgg
 tfE
 vFG
 wMO
-uTO
-uTO
-uTO
+xok
+xok
+xok
 xok
 dXb
 xok
@@ -120005,8 +119994,8 @@ xaN
 fds
 xok
 fni
-xWw
-cip
+qNO
+vbp
 xok
 mYd
 xok
@@ -120262,8 +120251,8 @@ twi
 iBZ
 xok
 ukV
-xWw
-vkJ
+qNO
+sHV
 xok
 sZH
 xEq
