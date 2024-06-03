@@ -245,22 +245,24 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	brainmob.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 
 /obj/item/mmi/posibrain/sphere/relaymove(mob/living/user, direction)
-	if(isspaceturf(loc) || !direction)
+	if(isspaceturf(loc) || !direction || mecha)
 		return
 
+	// ESCAPE PRISON
 	if(ismovable(loc))
 		can_move = world.time + move_delay
 		if(prob(25))
 			var/obj/item/item = pick(loc.contents)
-			if(isliving(loc))
+			if(isliving(loc)) //so we're insides someones chest cavity and forcig all their organs out
 				var/mob/living/living = loc
 				living.dropItemToGround(item)
 			else
-				item.forceMove(get_turf(src))
+				item.forceMove(get_turf(src)) //throw stuff out of the inventory till we free ourselves!
 
 	if(!isturf(loc))
 		return
 
+	// MOVE US
 	if(can_move < world.time)
 		can_move = world.time + move_delay
 		try_step_multiz(direction)
@@ -271,10 +273,11 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/mmi/posibrain/sphere/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	if(brainmob && isturf(loc))
-		anchored = TRUE
+		anchored = TRUE //anchor so we dont broom ourselves.
 		do_sweep(src, brainmob, loc, get_dir(old_loc, loc)) //movement dir doesnt work on objects
 		anchored = FALSE
 
+/// Punt the shit across the room
 /obj/item/mmi/posibrain/sphere/attack_hand_secondary(mob/user, list/modifiers)
 	throw_at(get_edge_target_turf(src, get_dir(user, src)), 7, 1, user)
 	user.do_attack_animation(src)
