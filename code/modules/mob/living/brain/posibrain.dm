@@ -261,15 +261,16 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(can_move < world.time)
 		can_move = world.time + move_delay
 		try_step_multiz(direction)
-		SpinAnimation(1, 1, direction == SOUTH || direction == WEST)
+		SpinAnimation(move_delay, 1, direction == NORTH || direction == EAST)
 
 	return
 
 /obj/item/mmi/posibrain/sphere/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	if(brainmob && isturf(loc))
-		dir = movement_dir
-		do_sweep(src, brainmob, loc)
+		anchored = TRUE
+		do_sweep(src, brainmob, loc, get_dir(old_loc, loc)) //movement dir doesnt work on objects
+		anchored = FALSE
 
 /obj/item/mmi/posibrain/sphere/attack_hand(mob/user, list/modifiers)
 	if(!LAZYACCESS(modifiers, RIGHT_CLICK))

@@ -2605,3 +2605,20 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
 	)
+
+/datum/design/posisphere
+	name = "Positronic Sphere"
+	desc = "The latest in Artificial Pesterance."
+	id = "posisphere"
+	build_type = MECHFAB
+	materials = list(
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*1.7,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*1.35,
+		/datum/material/gold =SMALL_MATERIAL_AMOUNT*5
+	)
+	construction_time = 7.5 SECONDS
+	build_path = /obj/item/mmi/posibrain/sphere
+	category = list(
+		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE

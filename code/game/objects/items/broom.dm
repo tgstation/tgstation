@@ -71,9 +71,9 @@
 /obj/item/pushbroom/proc/sweep(mob/user, atom/atom)
 	SIGNAL_HANDLER
 
-	do_sweep(src, user, atom)
+	do_sweep(src, user, atom, user.dir)
 
-/proc/do_sweep(broomer, mob/user, atom/atom)
+/proc/do_sweep(broomer, mob/user, atom/atom, dir)
 	var/turf/current_item_loc = isturf(atom) ? atom : atom.loc
 	if (!isturf(current_item_loc))
 		return
@@ -95,7 +95,7 @@
 		return
 
 	for (var/obj/item/garbage in items_to_sweep)
-		garbage.Move(new_item_loc, user.dir)
+		garbage.Move(new_item_loc, dir)
 
 	playsound(current_item_loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
