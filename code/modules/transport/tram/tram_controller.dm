@@ -11,6 +11,7 @@
 	///whether all required parts of the tram are considered operational
 	var/controller_operational = TRUE
 	var/obj/machinery/transport/tram_controller/paired_cabinet
+	var/obj/machinery/transport/tram_controller/tcomms/home_controller
 	///if we're travelling, what direction are we going
 	var/travel_direction = NONE
 	///if we're travelling, how far do we have to go
@@ -537,11 +538,30 @@
 		set_status_code(SYSTEM_FAULT, FALSE)
 		reset_position()
 
+/datum/transport_controller/linear/tram/proc/set_home_controller(obj/machinery/transport/tram_controller/tcomms/tcomms_unit)
+	home_controller = tcomms_unit
+	RegisterSignal(tcomms_unit, COMSIG_MACHINERY_POWER_LOST, PROC_REF(home_power_lost))
+	RegisterSignal(tcomms_unit, COMSIG_MACHINERY_POWER_RESTORED, PROC_REF(home_power_restored))
+	RegisterSignal(tcomms_unit, COMSIG_QDELETING, PROC_REF(on_home_qdel))
+	log_transport("TC: [specific_transport_id] is now paired with home controller [tcomms_unit].")
+	if(controller_status & COMM_ERROR)
+		set_status_code(COMM_ERROR, FALSE)
+
 /datum/transport_controller/linear/tram/proc/on_cabinet_qdel()
 	paired_cabinet = null
 	log_transport("TC: [specific_transport_id] received QDEL from controller cabinet.")
 	set_status_code(SYSTEM_FAULT, TRUE)
-	send_transport_active_signal()
+
+/datum/transport_controller/linear/tram/proc/on_home_qdel()
+	home_controller = null
+	log_transport("TC: [specific_transport_id] received QDEL from controller cabinet.")
+	set_status_code(COMM_ERROR, TRUE)
+
+/datum/transport_controller/linear/tram/proc/home_power_lost()
+	set_status_code(COMM_ERROR, TRUE)
+
+/datum/transport_controller/linear/tram/proc/home_power_restored()
+	set_status_code(COMM_ERROR, FALSE)
 
 /**
  * Tram malfunction random event. Set comm error, requiring engineering or AI intervention.
@@ -925,7 +945,7 @@
 		. += mutable_appearance(icon, "active")
 		. += emissive_appearance(icon, "active", src, alpha = src.alpha)
 
-	else if(controller_datum.controller_status & COMM_ERROR)
+	if(controller_datum.controller_status & COMM_ERROR)
 		. += mutable_appearance(icon, "comms")
 		. += emissive_appearance(icon, "comms", src, alpha = src.alpha)
 
@@ -1065,6 +1085,42 @@
 				controller_datum.set_status_code(BYPASS_SENSORS, TRUE)
 
 	COOLDOWN_START(src, manual_command_cooldown, 2 SECONDS)
+
+/obj/machinery/transport/tram_controller/tcomms
+	name = "tram central controller"
+	icon = 'icons/obj/machines/telecomms.dmi'
+	icon_state = "bus"
+	density = TRUE
+	layer = BELOW_OBJ_LAYER
+	power_channel = AREA_USAGE_EQUIP
+
+/obj/machinery/transport/tram_controller/tcomms/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(prob(100/severity) && !(machine_stat & EMPED))
+		set_machine_stat(machine_stat | EMPED)
+		controller_datum.set_status_code(COMM_ERROR, TRUE)
+		var/duration = (300 SECONDS)/severity
+		addtimer(CALLBACK(src, PROC_REF(de_emp)), rand(duration - 2 SECONDS, duration + 2 SECONDS))
+
+/// Handles the machine stopping being affected by an EMP.
+/obj/machinery/transport/tram_controller/tcomms/proc/de_emp()
+	set_machine_stat(machine_stat & ~EMPED)
+	controller_datum.set_status_code(COMM_ERROR, FALSE)
+
+/obj/machinery/transport/tram_controller/tcomms/find_controller()
+	link_tram()
+	return
+
+/obj/machinery/transport/tram_controller/tcomms/link_tram()
+	. = ..()
+	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
+	controller_datum = tram
+	if(!controller_datum)
+		return
+	controller_datum.set_home_controller(src)
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(sync_controller))
 
 /obj/item/wallframe/tram/controller
 	name = "tram controller cabinet"
