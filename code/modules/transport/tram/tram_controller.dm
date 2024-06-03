@@ -912,6 +912,11 @@
 		. += emissive_appearance(icon, "estop", src, alpha = src.alpha)
 		return
 
+	if(controller_datum.controller_status & SYSTEM_FAULT || controller_datum.malf_active)
+		. += mutable_appearance(icon, "fault")
+		. += emissive_appearance(icon, "fault", src, alpha = src.alpha)
+		return
+
 	if(!(controller_datum.controller_status & DOORS_READY))
 		. += mutable_appearance(icon, "doors")
 		. += emissive_appearance(icon, "doors", src, alpha = src.alpha)
@@ -919,10 +924,6 @@
 	if(controller_datum.controller_active)
 		. += mutable_appearance(icon, "active")
 		. += emissive_appearance(icon, "active", src, alpha = src.alpha)
-
-	if(controller_datum.controller_status & SYSTEM_FAULT)
-		. += mutable_appearance(icon, "fault")
-		. += emissive_appearance(icon, "fault", src, alpha = src.alpha)
 
 	else if(controller_datum.controller_status & COMM_ERROR)
 		. += mutable_appearance(icon, "comms")
