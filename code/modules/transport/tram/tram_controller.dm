@@ -1088,6 +1088,7 @@
 
 /obj/machinery/transport/tram_controller/tcomms
 	name = "tram central controller"
+	desc = "This semi-conductor is half of the brains controlling the tram and its auxillary equipment."
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "bus"
 	density = TRUE
