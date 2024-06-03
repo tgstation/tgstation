@@ -148,9 +148,8 @@
 	return ..()
 
 /obj/item/clothing/shoes/sneakers/orange/mouse_drop_dragged(atom/over_object, mob/user)
-	var/mob/m = user
-	if(ishuman(m))
-		var/mob/living/carbon/human/c = m
+	if(ishuman(user))
+		var/mob/living/carbon/human/c = user
 		if(c.shoes == src && attached_cuffs)
 			to_chat(c, span_warning("You need help taking these off!"))
 			return

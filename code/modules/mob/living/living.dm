@@ -1322,13 +1322,13 @@
 		return FALSE
 
 	if((action_bitflags & NEED_VITALITY) && incapacitated())
-		to_chat(src, span_warning("You are in no physical condition to do this!"))
+		to_chat(src, span_warning("You are in no condition to do this!"))
 		return FALSE
 
 	// NEED_HANDS is already checked by MOBILITY_UI for humans so this is for silicons
 	if((action_bitflags & NEED_HANDS))
 		if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-			to_chat(src, span_warning("Your hands are blocked for this action!"))
+			to_chat(src, span_warning("You can't do that right now!"))
 			return FALSE
 		if(!can_hold_items(isitem(target) ? target : null)) // almost redundant if it weren't for mobs
 			to_chat(src, span_warning("You don't have the physical ability to do this!"))

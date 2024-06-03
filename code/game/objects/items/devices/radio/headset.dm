@@ -93,9 +93,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	.["headset"] = TRUE
 
 /obj/item/radio/headset/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
-	var/mob/headset_user = user
-	if((headset_user == over))
-		return attack_self(headset_user)
+	if(user == over)
+		return attack_self(user)
 
 /// Grants all the languages this headset allows the mob to understand via installed chips.
 /obj/item/radio/headset/proc/grant_headset_languages(mob/grant_to)

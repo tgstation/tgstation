@@ -70,10 +70,9 @@
 		return
 
 	if(iscarbon(user))
-		var/mob/M = user
 		if(istype(over_object, /atom/movable/screen/inventory/hand))
 			var/atom/movable/screen/inventory/hand/H = over_object
-			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
+			user.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 /obj/item/minigunpack/update_icon_state()
 	icon_state = armed ? "notholstered" : "holstered"
