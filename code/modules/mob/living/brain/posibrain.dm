@@ -225,6 +225,9 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /// Posibrains but spherical. They can roll around and you can kick them
 /obj/item/mmi/posibrain/sphere
+	name = "positronic sphere"
+	desc = description = "Recent developments on cost-cutting measures have allowed us to cut positronic brain cubes into twice-as-cheap spheres. \
+	Unfortunately, it also allows them to move around the lab via rolling maneuvers."
 	icon_state = "spheribrain"
 	base_icon_state = "spheribrain"
 	immobilize = FALSE
@@ -269,12 +272,11 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	. = ..()
 	if(brainmob && isturf(loc))
 		anchored = TRUE
-		do_sweep(src, brainmob, get_step(src, movement_dir), get_dir(old_loc, loc)) //movement dir doesnt work on objects
+		do_sweep(src, brainmob, loc, get_dir(old_loc, loc)) //movement dir doesnt work on objects
 		anchored = FALSE
 
-/obj/item/mmi/posibrain/sphere/attack_hand(mob/user, list/modifiers)
-	if(!LAZYACCESS(modifiers, RIGHT_CLICK))
-		return ..()
+/obj/item/mmi/posibrain/sphere/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
 
 	throw_at(get_edge_target_turf(src, get_dir(user, src)), 7, 1, user)
 	user.do_attack_animation(src)
