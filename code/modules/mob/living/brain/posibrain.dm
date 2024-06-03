@@ -223,14 +223,23 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/mmi/posibrain/display/is_occupied()
 	return TRUE
 
+/// Posibrains but spherical. They can roll around and you can kick them
 /obj/item/mmi/posibrain/sphere
 	icon_state = "spheribrain"
 	base_icon_state = "spheribrain"
-
+	immobilize = FALSE
+	/// Delay between movements
 	var/move_delay = 0.5 SECONDS
-
+	/// when can we move again?
 	var/can_move
 
+/obj/item/mmi/posibrain/sphere/Initialize(mapload, autoping)
+	. = ..()
+
+	var/matrix/matrix = matrix()
+	transform = matrix.Scale(0.8, 0.8)
+
+	brainmob.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 
 /obj/item/mmi/posibrain/sphere/relaymove(mob/living/user, direction)
 	if(isspaceturf(loc) || !direction)
@@ -252,17 +261,19 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(can_move < world.time)
 		can_move = world.time + move_delay
 		try_step_multiz(direction)
-		SpinAnimation(1)
+		SpinAnimation(1, 1, direction == SOUTH || direction == WEST)
 
 	return
 
 /obj/item/mmi/posibrain/sphere/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
-	if(brainmob)
-		do_sweep(src, brainmob, old_loc)
+	if(brainmob && isturf(loc))
+		dir = movement_dir
+		do_sweep(src, brainmob, loc)
 
 /obj/item/mmi/posibrain/sphere/attack_hand(mob/user, list/modifiers)
 	if(!LAZYACCESS(modifiers, RIGHT_CLICK))
 		return ..()
 
 	throw_at(get_edge_target_turf(src, get_dir(user, src)), 7, 1, user)
+	user.do_attack_animation(src)
