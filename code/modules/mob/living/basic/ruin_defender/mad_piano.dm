@@ -37,6 +37,7 @@
 	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(aggro_tantrum))
 	AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = 2, works_in_containers = FALSE)
 	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
 
 /mob/living/basic/mad_piano/proc/aggro_tantrum(datum/source, mob/living/victim)
 	SIGNAL_HANDLER
@@ -46,15 +47,14 @@
 	icon_state = icon_aggro
 	desc = desc_aggro
 	speed = speed_aggro
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
 
-/mob/living/basic/mad_piano/proc/calm_down(datum/source, mob/living/victim)
-	SIGNAL_HANDLER
-	if(!istype(victim) && !istype(victim, /mob/living/carbon) || victim.stat == DEAD)
-		return
+/mob/living/basic/mad_piano/proc/calm_down(datum/source)
 	icon_state = initial(icon_state)
 	desc = initial(desc)
 	name = initial(name)
 	speed = initial(speed)
+	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
 
 /mob/living/basic/mad_piano/med_hud_set_health() //sneaky sneaky sneaky
 	return
@@ -66,7 +66,7 @@
 	idle_behavior = /datum/idle_behavior/walk_near_target/mad_piano
 	max_target_distance = 2
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/mad_piano,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_TARGETLESS_TIME = 2 SECONDS,
 	)
@@ -75,7 +75,6 @@
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/sleep_with_no_target/mad_piano,
 	)
-/datum/targeting_strategy/basic/mad_piano
 
 /datum/idle_behavior/walk_near_target/mad_piano
 	walk_chance = 50
@@ -87,6 +86,7 @@
 /datum/ai_behavior/sleep_after_targetless_time/mad_piano
 
 /datum/ai_behavior/sleep_after_targetless_time/mad_piano/enter_sleep(datum/ai_controller/controller)
-	var/mob/living/basic/mad_piano = controller.pawn
-	if (!istype(mad_piano))
+	var/mob/living/basic/mad_piano/this_piano = controller.pawn
+	if (!istype(this_piano))
 		return ..()
+	this_piano.calm_down()

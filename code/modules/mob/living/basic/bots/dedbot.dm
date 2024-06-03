@@ -99,7 +99,6 @@
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
 	cooldown_time = 0.5 SECONDS
-	var/aoe_radius = 1
 	//how much damage this ability does
 	var/damage_dealt = 18
 	/// weighted list of body zones this can hit
@@ -113,7 +112,7 @@
 
 /datum/action/cooldown/mob_cooldown/exenterate/Activate(atom/caster)
 	caster.Shake(1.2, 0.6, 0.3 SECONDS)
-	for(var/mob/living/living_mob in range(1))
+	for(var/mob/living/living_mob in range(2))
 		if (living_mob.faction == owner.faction)
 			return
 		to_chat(caster, span_warning("You slice [living_mob]!"))

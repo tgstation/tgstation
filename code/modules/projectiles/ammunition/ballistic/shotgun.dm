@@ -105,10 +105,10 @@
 
 /obj/item/ammo_casing/shotgun/fletchette
 	name = "/improper Donk Co Flechette Shell"
-	desc = "."
+	desc = "A shotgun casing filled with small metal darts. Has poor armor penetration and velocity, but is good at destroying most electronic devices and unarmored humanoids."
 	icon_state = "improvshell"
 	projectile_type = /obj/projectile/bullet/pellet/flechette
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2, /datum/material/glass=SMALL_MATERIAL_AMOUNT*1)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2, /datum/material/glass=SMALL_MATERIAL_AMOUNT*1)
 	pellets = 8
 	variance = 35
 

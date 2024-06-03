@@ -351,3 +351,13 @@
 	light_color = COLOR_DARK_RED
 	damage = 30
 	wound_bonus = -50
+
+//secbot that starts emagged and in syndicate faction
+/mob/living/simple_animal/bot/secbot/evil
+	desc = "An old securitron. Something about it seems a little evil."
+	baton_type = /obj/item/melee/baton/security/cattleprod
+	faction = list(Syndicate)
+
+/mob/living/simple_animal/bot/secbot/evil/Initialize(mapload)
+	. = ..()
+	emag_act(src, null)
