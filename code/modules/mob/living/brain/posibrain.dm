@@ -269,7 +269,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	. = ..()
 	if(brainmob && isturf(loc))
 		anchored = TRUE
-		do_sweep(src, brainmob, loc, get_dir(old_loc, loc)) //movement dir doesnt work on objects
+		do_sweep(src, brainmob, get_step(src, movement_dir), get_dir(old_loc, loc)) //movement dir doesnt work on objects
 		anchored = FALSE
 
 /obj/item/mmi/posibrain/sphere/attack_hand(mob/user, list/modifiers)

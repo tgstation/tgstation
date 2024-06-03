@@ -73,11 +73,12 @@
 
 	do_sweep(src, user, atom, user.dir)
 
-/proc/do_sweep(broomer, mob/user, atom/atom, dir)
-	var/turf/current_item_loc = isturf(atom) ? atom : atom.loc
+/// Sweep objects in the direction we're facing towards our direction
+/proc/do_sweep(obj/broomer, mob/user, atom/target, sweep_dir)
+	var/turf/current_item_loc = isturf(target) ? target : target.loc
 	if (!isturf(current_item_loc))
 		return
-	var/turf/new_item_loc = get_step(current_item_loc, dir)
+	var/turf/new_item_loc = get_step(current_item_loc, sweep_dir)
 
 	var/list/items_to_sweep = list()
 	var/i = 1
@@ -95,7 +96,7 @@
 		return
 
 	for (var/obj/item/garbage in items_to_sweep)
-		garbage.Move(new_item_loc, dir)
+		garbage.Move(new_item_loc, sweep_dir)
 
 	playsound(current_item_loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
