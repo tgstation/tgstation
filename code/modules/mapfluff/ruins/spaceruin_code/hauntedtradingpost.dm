@@ -179,14 +179,14 @@
 /obj/item/pressure_plate/invisible_tripwire/airlock
 	desc = "An invisible trigger for some doors."
 
-/obj/item/pressure_plate/invisible_tripwire/airlock/trigger()
-	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE)
+/obj/item/pressure_plate/invisible_tripwire/airlock/trigger(datum/source, atom/movable/target)
+	SEND_SIGNAL(target, COMSIG_AIRLOCK_CLOSE)
 	if(!do_after(0.1 SECONDS))
-		SEND_SIGNAL(src, COMSIG_AIRLOCK_SET_BOLT)
+		SEND_SIGNAL(target, COMSIG_AIRLOCK_SET_BOLT)
 	if(!resets_self)
 		return
 	if(!do_after(15 SECONDS))
-		SEND_SIGNAL(src, COMSIG_AIRLOCK_SET_BOLT)
+		SEND_SIGNAL(target, COMSIG_AIRLOCK_SET_BOLT)
 
 //variant on invisible trip wire, this one triggers if you stay in the area too long
 /obj/item/pressure_plate/puzzle/invisible_tripwire/delay
@@ -352,12 +352,3 @@
 	damage = 30
 	wound_bonus = -50
 
-//secbot that starts emagged and in syndicate faction
-/mob/living/simple_animal/bot/secbot/evil
-	desc = "An old securitron. Something about it seems a little evil."
-	baton_type = /obj/item/melee/baton/security/cattleprod
-	faction = list(ROLE_SYNDICATE)
-
-/mob/living/simple_animal/bot/secbot/evil/Initialize(mapload)
-	. = ..()
-	emag_act(src, null)
