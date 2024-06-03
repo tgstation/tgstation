@@ -178,3 +178,7 @@ https://freesound.org/people/shw489/sounds/234389/
 
 soup_boil1.ogg through soup_boil5.ogg and soup_boil_end.ogg are taken from Boiling Soup from Freesoung.org (CC4) and converted to OGG / split apart (but is otherwise unchanged):
 https://freesound.org/people/jorickhoofd/sounds/632783/
+
+bluespace_artillery_fire.ogg made by grungussuss using:
+https://freesound.org/people/SANtoku02/sounds/724040/ , license: CC0 1.0 DEED
+https://freesound.org/people/deleted_user_1941307/sounds/152322/ , license: CC0 1.0 DEED

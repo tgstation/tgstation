@@ -237,7 +237,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 			break
 		else
 			SSexplosions.highturf += tile //also fucks everything else on the turf
-	point.Beam(target, icon_state = "bsa_beam", time = 5 SECONDS, maxdistance = world.maxx) //ZZZAP
+	point.Beam(target, icon_state = "bsa_beam", time = 3.2 SECONDS, maxdistance = world.maxx) //ZZZAP
 	new /obj/effect/temp_visual/bsa_splash(point, dir)
 
 	notify_ghosts(
@@ -371,6 +371,9 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 		return
 	notice = null
 	var/turf/target_turf = get_impact_turf()
+	playsound(cannon, 'sound/machines/bluespace_artillery_fire.ogg', 150, FALSE, 15)
+	//wait a little so it lines up with the firing sound
+	sleep(7.5)
 	cannon.fire(user, target_turf)
 
 /obj/machinery/computer/bsa_control/proc/deploy(force=FALSE)
