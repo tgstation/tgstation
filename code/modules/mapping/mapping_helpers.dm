@@ -586,6 +586,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/turf/T = get_turf(src)
 	T.turf_flags |= NO_LAVA_GEN
 
+INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
+/obj/effect/mapping_helpers/no_atoms_ontop
+	icon_state = "no_atoms_ontop"
+
+/obj/effect/mapping_helpers/no_atoms_ontop/Initialize(mapload)
+	. = ..()
+	var/turf/loc_turf = get_turf(src)
+	loc_turf.turf_flags |= TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES
+
 ///Helpers used for injecting stuff into atoms on the map.
 /obj/effect/mapping_helpers/atom_injector
 	name = "Atom Injector"
