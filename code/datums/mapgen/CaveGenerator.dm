@@ -166,8 +166,8 @@
 		var/datum/biome/selected_biome
 
 		// Here comes the meat of the biome code.
-		var/drift_x = clamp((gen_turf.x + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)), 0, world.maxx) // / perlin_zoom
-		var/drift_y = clamp((gen_turf.y + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)), 1, world.maxy) // / perlin_zoom
+		var/drift_x = clamp((gen_turf.x + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)), 1, world.maxx) // / perlin_zoom
+		var/drift_y = clamp((gen_turf.y + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)), 2, world.maxy) // / perlin_zoom
 
 		// Where we go in the generated string (generated outside of the loop for s p e e d)
 		var/coordinate = world.maxx * (drift_y - 1) + drift_x
