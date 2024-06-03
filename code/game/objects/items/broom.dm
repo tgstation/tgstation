@@ -77,7 +77,7 @@
 	var/turf/current_item_loc = isturf(atom) ? atom : atom.loc
 	if (!isturf(current_item_loc))
 		return
-	var/turf/new_item_loc = get_step(current_item_loc, user.dir)
+	var/turf/new_item_loc = get_step(current_item_loc, dir)
 
 	var/list/items_to_sweep = list()
 	var/i = 1

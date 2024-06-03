@@ -2612,9 +2612,9 @@
 	id = "posisphere"
 	build_type = MECHFAB
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*1.7,
-		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*1.35,
-		/datum/material/gold =SMALL_MATERIAL_AMOUNT*5
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT*1,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*1,
+		/datum/material/gold =SMALL_MATERIAL_AMOUNT*2
 	)
 	construction_time = 7.5 SECONDS
 	build_path = /obj/item/mmi/posibrain/sphere
