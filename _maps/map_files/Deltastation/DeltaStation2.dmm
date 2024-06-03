@@ -44973,8 +44973,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "lhp" = (
-/obj/item/kirbyplants/random,
 /obj/structure/sign/poster/official/report_crimes/directional/south,
+/obj/structure/aquarium/lawyer,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "lhC" = (
