@@ -60,5 +60,5 @@
 		/obj/item/ammo_casing/shotgun/ion = 4,
 		/obj/item/ammo_casing/shotgun/scatterlaser,
 		/obj/item/ammo_casing/shotgun/buckshot/spent, //they can't all be winners, kid
-	))
+		))
 	max_ammo = 1
