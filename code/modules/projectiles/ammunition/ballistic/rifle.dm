@@ -61,10 +61,10 @@
 /obj/item/ammo_casing/rebar/syndie
 	name = "Jagged Iron Rod"
 	desc = "An Iron rod, with notches cut into it. You really dont want this stuck in you."
-	caliber = CALIBER_REBAR_SYNDIE
+	caliber = CALIBER_REBAR
 	icon_state = "rod_jagged"
 	base_icon_state = "rod_jagged"
-	projectile_type = /obj/projectile/bullet/rebarsyndie
+	projectile_type = /obj/projectile/bullet/rebar/syndie
 
 /obj/item/ammo_casing/rebar/zaukerite
 	name = "Zaukerite Sliver"

@@ -249,10 +249,7 @@
 	inhand_icon_state = "rebarxbowsyndie"
 	worn_icon_state = "rebarxbowsyndie"
 	w_class = WEIGHT_CLASS_NORMAL
-	can_modify_ammo = TRUE
-	initial_caliber = CALIBER_REBAR_SYNDIE
-	alternative_caliber = CALIBER_REBAR_SYNDIE_NORMAL
-	alternative_ammo_misfires = FALSE
+	initial_caliber = CALIBER_REBAR
 	draw_time = 1
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/syndie
 

@@ -57,9 +57,7 @@
 /// The caliber used by the rebar crossbow when forced to hold 2 rods.
 #define CALIBER_REBAR_FORCED "sharpened rod"
 /// The caliber used by the syndicate rebar crossbow.
-#define CALIBER_REBAR_SYNDIE "jagged iron rod"
-/// The caliber used by the syndicate rebar crossbow.
-#define CALIBER_REBAR_SYNDIE_NORMAL "sharpened rod"
+#define CALIBER_REBAR_SYNDIE "sharpened rod"
 /// The caliber used by the meat hook.
 #define CALIBER_HOOK "hook"
 /// The caliber used by the changeling tentacle mutation.

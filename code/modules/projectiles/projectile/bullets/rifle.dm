@@ -65,7 +65,7 @@
 
 /obj/projectile/bullet/rebar/proc/handle_drop(datum/source, obj/item/ammo_casing/rebar/newcasing)
 
-/obj/projectile/bullet/rebarsyndie
+/obj/projectile/bullet/rebar/syndie
 	name = "rebar"
 	icon_state = "rebar"
 	damage = 55
@@ -82,15 +82,15 @@
 	name = "zaukerite shard"
 	icon_state = "rebar_zaukerite"
 	damage = 60
-	speed = 0.4
-	dismemberment = 2
+	speed = 0.6
+	dismemberment = 10
 	damage_type = TOX
 	eyeblur = 5
-	armour_penetration = 15 // not nearly as good, as its not as sharp.
-	wound_bonus = 0
-	bare_wound_bonus = 20
-	embedding = list(embed_chance=90, fall_chance=0, jostle_chance=5, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.8, pain_mult=6, jostle_pain_mult=2, rip_time=30)
-	embed_falloff_tile = -2 // very spiky.
+	armour_penetration = 20 // not nearly as good, as its not as sharp.
+	wound_bonus = 10
+	bare_wound_bonus = 40
+	embedding = list(embed_chance=100, fall_chance=0, jostle_chance=5, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.8, pain_mult=6, jostle_pain_mult=2, rip_time=30)
+	embed_falloff_tile = 0 // very spiky.
 	shrapnel_type = /obj/item/ammo_casing/rebar/zaukerite
 
 /obj/projectile/bullet/rebar/hydrogen
