@@ -40,8 +40,9 @@
 
 /mob/living/basic/bot/dedbot/Initialize(mapload)
 	. = ..()
+	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(slashem))
 	var/static/list/innate_actions = list(
-		SPIN_SLASH_ABILITY_TYPEPATH = BB_DEDBOT_SLASH,
+	SPIN_SLASH_ABILITY_TYPEPATH = BB_DEDBOT_SLASH,
 	)
 	grant_actions_by_list(innate_actions)
 
@@ -51,14 +52,14 @@
 			return TRUE
 	return FALSE
 
-/mob/living/basic/bot/dedbot/HasProximity(mob/living, datum/ai_controller/controller)
+/mob/living/basic/bot/dedbot/proc/slashem(datum/source, mob/living/victim, datum/ai_controller/basic_controller/bot/dedbot/controller)
+	SIGNAL_HANDLER
 	if(!COOLDOWN_FINISHED(src, exenteration_cooldown_duration))
 		return
-	if (!isliving(living)) //we target living guys
+	if (!isliving(victim)) //we target living guys
 		return
-	if (living.stat || check_faction(living)) //who arent in our faction
+	if (victim.stat || check_faction(victim)) //who arent in our faction
 		return
-
 	var/datum/action/cooldown/using_action = controller.blackboard[BB_DEDBOT_SLASH]
 	if (using_action?.IsAvailable())
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
@@ -98,7 +99,7 @@
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
 	cooldown_time = 0.5 SECONDS
-	var/aoe_radius = 2
+	var/aoe_radius = 1
 	//how much damage this ability does
 	var/damage_dealt = 18
 	/// weighted list of body zones this can hit
@@ -110,16 +111,14 @@
 		BODY_ZONE_L_LEG = 1,
 	)
 
-/datum/action/cooldown/mob_cooldown/exenterate/PreActivate(atom/caster)
-	caster.Shake(1, 0.4, 0.3 SECONDS)
-
 /datum/action/cooldown/mob_cooldown/exenterate/Activate(atom/caster)
-	StartCooldown()
-	for(var/mob/living/living_mob in range(aoe_radius,caster))
+	caster.Shake(1.2, 0.6, 0.3 SECONDS)
+	for(var/mob/living/living_mob in range(1))
 		if (living_mob.faction == owner.faction)
 			return
+		to_chat(living_mob, span_warning("You slice [living_mob]!"))
 		to_chat(living_mob, span_warning("You are cut by the drone's blades!"))
-		living_mob.apply_damage(damage = damage_dealt, damagetype = BRUTE, def_zone = valid_targets, sharpness = SHARP_EDGED)
-	return TRUE
+		living_mob.apply_damage(damage = damage_dealt, damagetype = BRUTE, def_zone = pick(valid_targets), sharpness = SHARP_EDGED)
+	StartCooldown(cooldown_time)
 
 #undef SPIN_SLASH_ABILITY_TYPEPATH

@@ -181,6 +181,7 @@
 	icon_state = "jezail"
 	inhand_icon_state = "jezail"
 	worn_icon_state = "jezail"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/jezail
 	can_be_sawn_off = TRUE
 	sawn_desc = "A mass-manufactured bolt-action sporting rifle with a distinctively long barrel. Powerful enough to take down a space bear from a thousand paces. Its barrel has been cut off, so its power and accuracy have been impaired."
 
