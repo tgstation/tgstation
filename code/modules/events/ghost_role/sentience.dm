@@ -17,7 +17,6 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/basic/spider/giant/sgt_araneus,
 	/mob/living/simple_animal/bot/secbot/beepsky,
 	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
-	/mob/living/simple_animal/pet,
 )))
 
 /datum/round_event_control/sentience

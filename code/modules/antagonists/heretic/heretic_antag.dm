@@ -46,8 +46,6 @@
 	var/high_value_sacrifices = 0
 	/// Lazy assoc list of [refs to humans] to [image previews of the human]. Humans that we have as sacrifice targets.
 	var/list/mob/living/carbon/human/sac_targets
-	/// List of all sickly blades linked with heretic mind.
-	var/list/obj/item/melee/sickly_blade/blades_list
 	/// List of all sacrifice target's names, used for end of round report
 	var/list/all_sac_targets = list()
 	/// Whether we're drawing a rune or not
@@ -86,9 +84,6 @@
 
 /datum/antagonist/heretic/Destroy()
 	LAZYNULL(sac_targets)
-	for(var/obj/item/melee/sickly_blade/blade as anything in blades_list)
-		blade.owner = null
-	LAZYNULL(blades_list)
 	return ..()
 
 /datum/antagonist/heretic/ui_data(mob/user)
