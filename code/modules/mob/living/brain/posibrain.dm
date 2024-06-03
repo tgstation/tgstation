@@ -226,7 +226,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /// Posibrains but spherical. They can roll around and you can kick them
 /obj/item/mmi/posibrain/sphere
 	name = "positronic sphere"
-	desc = description = "Recent developments on cost-cutting measures have allowed us to cut positronic brain cubes into twice-as-cheap spheres. \
+	desc = "Recent developments on cost-cutting measures have allowed us to cut positronic brain cubes into twice-as-cheap spheres. \
 	Unfortunately, it also allows them to move around the lab via rolling maneuvers."
 	icon_state = "spheribrain"
 	base_icon_state = "spheribrain"
