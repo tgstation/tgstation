@@ -99,7 +99,6 @@ export const NtosCardContent = (props) => {
         }
         {!hasTrim &&
           "Templates require a trim already applied to the card. Please use an ID Painter to apply a trim."
-		  
         }
         </Section>
       )}
