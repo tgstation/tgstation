@@ -195,7 +195,7 @@ export const LoadoutModifyDimmer = (props: {
               </Section>
             </Flex.Item>
             <Flex.Item width="310px">
-              <Section fluid fill>
+              <Section fill>
                 <LoadoutModifyButtons modifyItemDimmer={modifyItemDimmer} />
               </Section>
             </Flex.Item>
