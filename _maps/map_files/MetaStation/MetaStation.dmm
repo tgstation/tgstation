@@ -13266,6 +13266,7 @@
 /area/station/science/research)
 "eMY" = (
 /obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "eNb" = (
@@ -15201,6 +15202,7 @@
 	},
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "fvE" = (
@@ -59953,6 +59955,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "vbF" = (
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/circuit/green{
 	luminosity = 2
 	},
