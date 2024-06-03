@@ -1,0 +1,5 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - bugfix: "fixes touching a crutch permanently crippling you"
+  - bugfix: "fixes crutches giving permanent speedboosts even when dropped"
