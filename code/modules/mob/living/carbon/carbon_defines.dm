@@ -125,8 +125,3 @@
 
 	COOLDOWN_DECLARE(bleeding_message_cd)
 
-/mob/living/carbon/can_perform_action(atom/movable/target, action_bitflags)
-	if(action_bitflags & NEED_VITALITY && (stat == DEAD || stat != CONSCIOUS))
-		to_chat(src, span_warning("You are in no physical condition to do this!"))
-		return FALSE
-	return ..()

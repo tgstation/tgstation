@@ -1321,9 +1321,13 @@
 		to_chat(src, span_warning("You can't do that right now!"))
 		return FALSE
 
-	if((action_bitflags & NEED_VITALITY) && incapacitated())
-		to_chat(src, span_warning("You are in no condition to do this!"))
-		return FALSE
+	if(action_bitflags & NEED_VITALITY)
+		if(incapacitated())
+			to_chat(src, span_warning("You are in no condition to do this!"))
+			return FALSE
+		if(action_bitflags & NEED_VITALITY && (stat == DEAD || stat != CONSCIOUS))
+			to_chat(src, span_warning("You are in no physical condition to do this!"))
+			return FALSE
 
 	// NEED_HANDS is already checked by MOBILITY_UI for humans so this is for silicons
 	if((action_bitflags & NEED_HANDS))
