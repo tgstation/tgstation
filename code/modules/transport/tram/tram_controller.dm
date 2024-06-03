@@ -249,7 +249,7 @@
 		paired_cabinet.say("Controller reset.")
 
 	if(malf_active)
-		addtimer(CALLBACK(src, PROC_REF(announce_malf_event)), rand(1 SECONDS, 3 SECONDS))
+		addtimer(CALLBACK(src, PROC_REF(announce_malf_event)), 1 SECONDS)
 
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, idle_platform, destination_platform)
 
@@ -565,7 +565,7 @@
 	log_transport("TC: [specific_transport_id] ending Tram Malfunction event.")
 
 /datum/transport_controller/linear/tram/proc/announce_malf_event()
-	priority_announce("Our automated control system has lost contact with the tram's onboard computer. Please take extra care while engineers diagnose and resolve the issue.", "[command_name()] Engineering Division")
+	priority_announce("Our automated control system has lost contact with the tram's onboard computer. Please stand by, engineering has been dispatched to the tram to perform a reset.", "[command_name()] Engineering Division")
 
 /datum/transport_controller/linear/tram/proc/register_collision(points = 1)
 	tram_registration.collisions += points

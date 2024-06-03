@@ -42,9 +42,8 @@
 
 /datum/round_event/tram_malfunction/end()
 	for(var/datum/transport_controller/linear/tram/malfunctioning_controller as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
-		if(malfunctioning_controller.specific_transport_id == specific_transport_id && malfunctioning_controller.controller_status & COMM_ERROR)
+		if(malfunctioning_controller.specific_transport_id == specific_transport_id && malfunctioning_controller.malf_active)
 			malfunctioning_controller.end_malf_event()
-			priority_announce("The software on the tram has been reset, normal operations are now resuming. Sorry for any inconvienence this may have caused.", "[command_name()] Engineering Division")
 			return
 
 #undef TRAM_MALFUNCTION_TIME_UPPER
