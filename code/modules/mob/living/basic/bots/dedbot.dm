@@ -116,7 +116,7 @@
 	for(var/mob/living/living_mob in range(1))
 		if (living_mob.faction == owner.faction)
 			return
-		to_chat(living_mob, span_warning("You slice [living_mob]!"))
+		to_chat(caster, span_warning("You slice [living_mob]!"))
 		to_chat(living_mob, span_warning("You are cut by the drone's blades!"))
 		living_mob.apply_damage(damage = damage_dealt, damagetype = BRUTE, def_zone = pick(valid_targets), sharpness = SHARP_EDGED)
 	StartCooldown(cooldown_time)
