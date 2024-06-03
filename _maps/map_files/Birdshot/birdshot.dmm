@@ -39464,15 +39464,13 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/storage)
 "oxK" = (
-/obj/structure/window/reinforced/spawner{
-	dir = 8
-	},
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 5
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "oxS" = (
@@ -71580,13 +71578,11 @@
 	dir = 6
 	},
 /obj/machinery/camera/autoname/directional/north,
-/obj/structure/window/reinforced/spawner{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "xSw" = (
