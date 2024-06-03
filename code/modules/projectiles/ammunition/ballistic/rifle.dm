@@ -68,7 +68,7 @@
 
 /obj/item/ammo_casing/rebar/zaukerite
 	name = "Zaukerite Sliver"
-	desc = "A sliver of a zaukerite crystal. Do not ingest."
+	desc = "A sliver of a zaukerite crystal. Due to its irregular, jagged edges, removal of an embedded zaukerite sliver should only be done by trained surgeons."
 	caliber = CALIBER_REBAR
 	icon_state = "rod_zaukerite"
 	base_icon_state = "rod_zaukerite"

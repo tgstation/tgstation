@@ -579,7 +579,7 @@
 	icon_state = "rebar_quiver"
 	worn_icon_state = "rebar_quiver"
 	inhand_icon_state = "rebar_quiver"
-	desc = "A quiver for holding sharpened rods for the rebar crossbow."
+	desc = "A oxygen tank cut in half, used for holding sharpened rods for the rebar crossbow."
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE
 	resistance_flags = FLAMMABLE
 
