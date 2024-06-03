@@ -322,7 +322,7 @@
 	for(var/datum/quirk/original_quircks as anything in quirks)
 		clone.add_quirk(original_quircks.type, override_client = client)
 	for(var/datum/mutation/human/mutations in dna.mutations)
-		clone.dna.add_mutation(mutations)
+		clone.dna.add_mutation(mutations, MUT_NORMAL)
 
 	clone.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 	clone.domutcheck()
