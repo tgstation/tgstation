@@ -356,6 +356,7 @@
 		set_status_code(SYSTEM_FAULT, TRUE)
 		addtimer(CALLBACK(src, PROC_REF(cycle_doors), CYCLE_OPEN), 2 SECONDS)
 		malf_active = FALSE
+		throw_chance = initial(throw_chance)
 		playsound(paired_cabinet, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller error. Please contact your engineering department.")
 	idle_platform = destination_platform
@@ -557,11 +558,10 @@
  * automagically reset it remotely.
  */
 /datum/transport_controller/linear/tram/proc/end_malf_event()
-	if(!(controller_status & COMM_ERROR))
+	if(!(malf_active))
 		return
-	set_status_code(COMM_ERROR, FALSE)
+	malf_active = FALSE
 	throw_chance = initial(throw_chance)
-	SEND_TRANSPORT_SIGNAL(COMSIG_COMMS_STATUS, src, TRUE)
 	log_transport("TC: [specific_transport_id] ending Tram Malfunction event.")
 
 /datum/transport_controller/linear/tram/proc/announce_malf_event()
