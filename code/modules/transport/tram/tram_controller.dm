@@ -50,6 +50,9 @@
 	///how many times we moved while costing less than 0.5 * SStransport.max_time milliseconds per movement
 	var/recovery_clear_count = 0
 
+	///if the tram's next stop will be the tram malfunction event sequence
+	var/malf_active = FALSE
+
 	var/datum/tram_mfg_info/tram_registration
 
 	var/list/tram_history
@@ -245,6 +248,9 @@
 		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
 
+	if(malf_active)
+		addtimer(CALLBACK(src, PROC_REF(announce_malf_event)), rand(1 SECONDS, 3 SECONDS))
+
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, idle_platform, destination_platform)
 
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
@@ -279,11 +285,7 @@
 		return PROCESS_KILL
 
 	if(!travel_remaining)
-		if(!controller_operational)
-			degraded_stop()
-			return PROCESS_KILL
-
-		if((controller_status & COMM_ERROR) && prob(5)) // malfunctioning tram has a small chance to e-stop
+		if(!controller_operational || malf_active)
 			degraded_stop()
 		else
 			normal_stop()
@@ -350,6 +352,12 @@
 		paired_cabinet.say("Controller reset.")
 		log_transport("TC: [specific_transport_id] position data successfully reset. ")
 		speed_limiter = initial(speed_limiter)
+	if(malf_active)
+		set_status_code(SYSTEM_FAULT, TRUE)
+		addtimer(CALLBACK(src, PROC_REF(cycle_doors), CYCLE_OPEN), 2 SECONDS)
+		malf_active = FALSE
+		playsound(paired_cabinet, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		paired_cabinet.say("Controller error. Please contact your engineering department.")
 	idle_platform = destination_platform
 	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
@@ -535,13 +543,10 @@
 	send_transport_active_signal()
 
 /**
- * Tram malfunction random event. Set comm error, increase tram lethality.
+ * Tram malfunction random event. Set comm error, requiring engineering or AI intervention.
  */
 /datum/transport_controller/linear/tram/proc/start_malf_event()
-	set_status_code(COMM_ERROR, TRUE)
-	SEND_TRANSPORT_SIGNAL(COMSIG_COMMS_STATUS, src, FALSE)
-	paired_cabinet.generate_repair_signals()
-	collision_lethality *= 1.25
+	malf_active = TRUE
 	throw_chance *= 1.25
 	log_transport("TC: [specific_transport_id] starting Tram Malfunction event.")
 
@@ -555,11 +560,12 @@
 	if(!(controller_status & COMM_ERROR))
 		return
 	set_status_code(COMM_ERROR, FALSE)
-	paired_cabinet.clear_repair_signals()
-	collision_lethality = initial(collision_lethality)
 	throw_chance = initial(throw_chance)
 	SEND_TRANSPORT_SIGNAL(COMSIG_COMMS_STATUS, src, TRUE)
 	log_transport("TC: [specific_transport_id] ending Tram Malfunction event.")
+
+/datum/transport_controller/linear/tram/proc/announce_malf_event()
+	priority_announce("Our automated control system has lost contact with the tram's onboard computer. Please take extra care while engineers diagnose and resolve the issue.", "[command_name()] Engineering Division")
 
 /datum/transport_controller/linear/tram/proc/register_collision(points = 1)
 	tram_registration.collisions += points
@@ -971,25 +977,6 @@
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	balloon_alert(user, "access controller shorted")
 	return TRUE
-
-/**
- * Check if the tram was malfunctioning due to the random event, and if so end the event on repair.
- */
-/obj/machinery/transport/tram_controller/try_fix_machine(obj/machinery/transport/machine, mob/living/user, obj/item/tool)
-	. = ..()
-
-	if(. == FALSE)
-		return
-
-	if(!controller_datum)
-		return
-
-	var/datum/round_event/tram_malfunction/malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running
-	if(malfunction_event)
-		malfunction_event.end()
-
-	if(controller_datum.controller_status & COMM_ERROR)
-		controller_datum.set_status_code(COMM_ERROR, FALSE)
 
 /obj/machinery/transport/tram_controller/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
