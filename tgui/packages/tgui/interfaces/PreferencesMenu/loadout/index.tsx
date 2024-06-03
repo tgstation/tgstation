@@ -1,86 +1,28 @@
 import { useState } from 'react';
 
-import { BooleanLike } from '../../../common/react';
-import { useBackend } from '../../backend';
+import { useBackend } from '../../../backend';
 import {
   Box,
   Button,
-  Dimmer,
   Divider,
-  DmIcon,
-  Flex,
   Icon,
   Input,
   NoticeBox,
   Section,
   Stack,
   Tabs,
-} from '../../components';
-import { CharacterPreview } from '../common/CharacterPreview';
-import { PreferencesMenuData, ServerData } from './data';
-import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
-
-// Generic types
-type DmIconFile = string;
-type DmIconState = string;
-type FAIcon = string;
-type typePath = string;
-
-// Info about a loadout item (key to info, such as color, reskin, layer, etc)
-type LoadoutListInfo = Record<string, string> | [];
-// Typepath to info about the item
-export type LoadoutList = Record<typePath, LoadoutListInfo>;
-
-// Used in LoadoutButton to make non-standard buttons
-enum LoadoutButtonTypes {
-  Checkbox = 'checkbox',
-  IconList = 'icon_button_list',
-}
-
-type LoadoutCheckboxButton = LoadoutButton & {
-  enable_text?: string;
-  disable_text?: string;
-};
-
-type LoadoutIconListButton = LoadoutButton & {
-  button_icons: LoadoutIconListSubbutton[];
-};
-
-// Used in LoadoutIconListButton to make sub-buttons with icons
-type LoadoutIconListSubbutton = {
-  tooltip?: string;
-  sub_icon: DmIconFile;
-  sub_icon_state: DmIconState;
-};
-
-// Used in LoadoutItem to make buttons relating to how an item can be edited
-type LoadoutButton = {
-  label: string;
-  act_key?: string;
-  button_type?: LoadoutButtonTypes;
-  button_icon?: FAIcon;
-};
-
-// Actual item passed in from the loadout
-type LoadoutItem = {
-  name: string;
-  path: typePath;
-  icon: DmIconFile | null;
-  icon_state: DmIconState | null;
-  buttons: LoadoutButton[];
-  information: string[];
-};
-
-// Category of items in the loadout
-type LoadoutCategory = {
-  name: string;
-  category_icon: FAIcon | null;
-  contents: LoadoutItem[];
-};
-
-type LoadoutManagerData = PreferencesMenuData & {
-  job_clothes: BooleanLike;
-};
+} from '../../../components';
+import { CharacterPreview } from '../../common/CharacterPreview';
+import { ServerData } from '../data';
+import { ServerPreferencesFetcher } from '../ServerPreferencesFetcher';
+import {
+  LoadoutCategory,
+  LoadoutItem,
+  LoadoutManagerData,
+  typePath,
+} from './base';
+import { ItemIcon, LoadoutTabDisplay, SearchDisplay } from './item_display';
+import { LoadoutModifyDimmer } from './modify';
 
 export const LoadoutPage = () => {
   return (
@@ -104,24 +46,19 @@ const LoadoutPageInner = (props: { loadout_tabs: LoadoutCategory[] }) => {
   const { loadout_tabs } = props;
   const [searchLoadout, setSearchLoadout] = useState('');
   const [selectedTabName, setSelectedTab] = useState(loadout_tabs[0].name);
-  const [modifyItemDimmer, setModifyItemDimmer] = useState(false);
+  const [modifyItemDimmer, setModifyItemDimmer] = useState(null);
 
   return (
     <Stack vertical fill>
       <Stack.Item>
         {!!modifyItemDimmer && (
-          <Dimmer style={{ zIndex: '100' }}>
-            <Button
-              onClick={() => {
-                setModifyItemDimmer(false);
-              }}
-            >
-              Done
-            </Button>
-          </Dimmer>
+          <LoadoutModifyDimmer
+            modifyItemDimmer={modifyItemDimmer}
+            setModifyItemDimmer={setModifyItemDimmer}
+          />
         )}
         <Section
-          title="Loadout Categories"
+          title="&nbsp;"
           align="center"
           buttons={
             <Input
@@ -136,7 +73,6 @@ const LoadoutPageInner = (props: { loadout_tabs: LoadoutCategory[] }) => {
             {loadout_tabs.map((curTab) => (
               <Tabs.Tab
                 key={curTab.name}
-                icon={curTab.category_icon}
                 selected={
                   searchLoadout.length <= 1 && curTab.name === selectedTabName
                 }
@@ -145,7 +81,12 @@ const LoadoutPageInner = (props: { loadout_tabs: LoadoutCategory[] }) => {
                   setSearchLoadout('');
                 }}
               >
-                {curTab.name}
+                <Box>
+                  {curTab.category_icon && (
+                    <Icon name={curTab.category_icon} mr={1} />
+                  )}
+                  {curTab.name}
+                </Box>
               </Tabs.Tab>
             ))}
           </Tabs>
@@ -164,152 +105,12 @@ const LoadoutPageInner = (props: { loadout_tabs: LoadoutCategory[] }) => {
   );
 };
 
-const ItemIcon = (props: { item: LoadoutItem; scale?: number }) => {
-  const { item, scale = 3 } = props;
-  const icon_to_use = item.icon;
-  const icon_state_to_use = item.icon_state;
-
-  if (!icon_to_use || !icon_state_to_use) {
-    return (
-      <Icon
-        name="question"
-        size={Math.round(scale * 2.5)}
-        color="red"
-        style={{
-          transform: `translateX(${scale * 2}px) translateY(${scale * 2}px)`,
-        }}
-      />
-    );
-  }
-
-  return (
-    <DmIcon
-      fallback={<Icon name="spinner" spin color="gray" />}
-      icon={icon_to_use}
-      icon_state={icon_state_to_use}
-      style={{
-        transform: `scale(${scale}) translateX(${scale * 3}px) translateY(${scale * 3}px)`,
-      }}
-    />
-  );
-};
-
-const ItemDisplay = (props: {
-  active: boolean;
-  item: LoadoutItem | null;
-  scale?: number;
-}) => {
-  const { act } = useBackend<LoadoutItem>();
-  const { active, item, scale = 3 } = props;
-  if (!item) {
-    // This is an error
-    return null;
-  }
-
-  const box_size = `${scale * 32}px`;
-
-  return (
-    <Button
-      height={box_size}
-      width={box_size}
-      color={active ? 'green' : 'default'}
-      style={{ textTransform: 'capitalize', zIndex: '1' }}
-      tooltip={item.name}
-      tooltipPosition={'bottom'}
-      onClick={() =>
-        act('select_item', {
-          path: item.path,
-          deselect: active,
-        })
-      }
-    >
-      <Flex vertical>
-        <Flex.Item>
-          <ItemIcon item={item} scale={scale} />
-        </Flex.Item>
-        {item.information.length > 0 && (
-          <Flex.Item ml={-5.5} style={{ zIndex: '3' }}>
-            {item.information.map((info) => (
-              <Box
-                height="9px"
-                key={info}
-                fontSize="9px"
-                textColor={'darkgray'}
-              >
-                {info}
-              </Box>
-            ))}
-          </Flex.Item>
-        )}
-      </Flex>
-    </Button>
-  );
-};
-
-const ItemListDisplay = (props: { items: LoadoutItem[] }) => {
-  const { data } = useBackend<LoadoutManagerData>();
-  const loadout = data.character_preferences.misc.loadout_list;
-  return (
-    <Flex wrap>
-      {props.items.map((item) => (
-        <Flex.Item key={item.name} mr={2} mb={2}>
-          <ItemDisplay
-            item={item}
-            active={loadout && loadout[item.path] !== undefined}
-          />
-        </Flex.Item>
-      ))}
-    </Flex>
-  );
-};
-
-const LoadoutTabDisplay = (props: {
-  category: LoadoutCategory | undefined;
-}) => {
-  const { category } = props;
-  if (!category) {
-    return (
-      <NoticeBox>
-        Erroneous category detected! This is a bug, please report it.
-      </NoticeBox>
-    );
-  }
-
-  return <ItemListDisplay items={category.contents} />;
-};
-
-const SearchDisplay = (props: {
-  loadout_tabs: LoadoutCategory[];
-  currentSearch: string;
-}) => {
-  const { loadout_tabs, currentSearch } = props;
-
-  const allLoadoutItems = () => {
-    const concatItems: LoadoutItem[] = [];
-    for (const tab of loadout_tabs) {
-      for (const item of tab.contents) {
-        concatItems.push(item);
-      }
-    }
-    return concatItems.sort((a, b) => a.name.localeCompare(b.name));
-  };
-  const validLoadoutItems = allLoadoutItems().filter((item) =>
-    item.name.toLowerCase().includes(currentSearch.toLowerCase()),
-  );
-
-  if (validLoadoutItems.length === 0) {
-    return <NoticeBox>No items found!</NoticeBox>;
-  }
-
-  return <ItemListDisplay items={validLoadoutItems} />;
-};
-
 const LoadoutTabs = (props: {
   loadout_tabs: LoadoutCategory[];
   currentTab: string;
   currentSearch: string;
-  modifyItemDimmer: boolean;
-  setModifyItemDimmer: (dimmer: boolean) => void;
+  modifyItemDimmer: LoadoutItem | null;
+  setModifyItemDimmer: (dimmer: LoadoutItem | null) => void;
 }) => {
   const {
     loadout_tabs,
@@ -345,6 +146,13 @@ const LoadoutTabs = (props: {
             title={searching ? 'Searching...' : 'Catalog'}
             fill
             scrollable
+            buttons={
+              activeCategory?.category_info ? (
+                <Box italic mt={0.5}>
+                  {activeCategory.category_info}
+                </Box>
+              ) : null
+            }
           >
             <Stack vertical>
               <Stack.Item>
@@ -369,11 +177,11 @@ const LoadoutTabs = (props: {
   );
 };
 
-// Melbert todo : replace this with a hashmap
 const TypepathToLoadoutItem = (
   typepath: typePath,
   all_tabs: LoadoutCategory[],
 ) => {
+  // Maybe a bit inefficient, could be replaced with a hashmap?
   for (const tab of all_tabs) {
     for (const item of tab.contents) {
       if (item.path === typepath) {
@@ -388,11 +196,11 @@ const LoadoutSelectedItem = (props: {
   key: string;
   path: typePath;
   all_tabs: LoadoutCategory[];
-  modifyItemDimmer: boolean;
-  setModifyItemDimmer: (dimmer: boolean) => void;
+  modifyItemDimmer: LoadoutItem | null;
+  setModifyItemDimmer: (dimmer: LoadoutItem | null) => void;
 }) => {
   const { all_tabs, path, key, modifyItemDimmer, setModifyItemDimmer } = props;
-  const { act } = useBackend<LoadoutManagerData>();
+  const { act } = useBackend();
 
   const item = TypepathToLoadoutItem(path, all_tabs);
   if (!item) {
@@ -411,14 +219,14 @@ const LoadoutSelectedItem = (props: {
             color="none"
             width="32px"
             onClick={() => {
-              setModifyItemDimmer(true);
+              setModifyItemDimmer(item);
             }}
           >
             <Icon size={1.8} name="cogs" color="grey" />
           </Button>
         </Stack.Item>
       ) : (
-        <Stack.Item width="32px" />
+        <Stack.Item width="32px" /> // empty space
       )}
       <Stack.Item>
         <Button
@@ -435,8 +243,8 @@ const LoadoutSelectedItem = (props: {
 
 const LoadoutSelectedSection = (props: {
   all_tabs: LoadoutCategory[];
-  modifyItemDimmer: boolean;
-  setModifyItemDimmer: (dimmer: boolean) => void;
+  modifyItemDimmer: LoadoutItem | null;
+  setModifyItemDimmer: (dimmer: LoadoutItem | null) => void;
 }) => {
   const { act, data } = useBackend<LoadoutManagerData>();
   const { loadout_list } = data.character_preferences.misc;
@@ -444,7 +252,7 @@ const LoadoutSelectedSection = (props: {
 
   return (
     <Section
-      title="Selected"
+      title="&nbsp;"
       scrollable
       fill
       buttons={
@@ -483,7 +291,7 @@ const LoadoutPreviewSection = () => {
   return (
     <Section
       fill
-      title="Preview"
+      title="&nbsp;"
       buttons={
         <Button.Checkbox
           align="center"

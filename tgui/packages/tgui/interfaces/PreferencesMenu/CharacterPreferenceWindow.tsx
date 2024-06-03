@@ -7,7 +7,7 @@ import { Window } from '../../layouts';
 import { AntagsPage } from './AntagsPage';
 import { PreferencesMenuData } from './data';
 import { JobsPage } from './JobsPage';
-import { LoadoutPage } from './LoadoutManager';
+import { LoadoutPage } from './loadout/index';
 import { MainPage } from './MainPage';
 import { PageButton } from './PageButton';
 import { QuirksPage } from './QuirksPage';

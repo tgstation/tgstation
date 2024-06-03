@@ -156,8 +156,3 @@
 #define INFO_RESKIN "reskin"
 /// Handles which layer the item will be on, for accessories
 #define INFO_LAYER "layer"
-// Used to determine what type of button to use in the UI
-/// Used for buttons that toggle a preference
-#define CHECKBOX_BUTTON "checkbox"
-/// Used to display a list of icons as buttons
-#define ICON_BUTTON_LIST "icon_button_list"

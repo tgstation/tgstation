@@ -40,7 +40,7 @@
 	for(var/datum/loadout_item/item as anything in loadout_datums)
 		var/obj/item/equipped = locate(item.item_path) in new_contents
 		if(isnull(equipped))
-			return
+			continue
 		item.on_equip_item(
 			equipped,
 			preference_source,

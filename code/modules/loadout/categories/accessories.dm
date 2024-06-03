@@ -3,7 +3,9 @@
 /// Accessory Items (Moves overrided items to backpack)
 /datum/loadout_category/accessories
 	category_name = "Accessory"
+	category_ui_icon = FA_ICON_VEST
 	type_to_generate = /datum/loadout_item/accessory
+	tab_order = 4
 
 /datum/loadout_item/accessory
 	abstract_type = /datum/loadout_item/accessory
@@ -24,9 +26,9 @@
 	UNTYPED_LIST_ADD(buttons, list(
 		"label" = "Layer",
 		"act_key" = "set_layer",
-		"button_type" = CHECKBOX_BUTTON,
-		"enabled_text" = "Above Suit",
-		"disabled_text" = "Below Suit",
+		"active_key" = INFO_LAYER,
+		"active_text" = "Above Suit",
+		"inactive_text" = "Below Suit",
 	))
 
 	return buttons
@@ -43,7 +45,7 @@
 
 	var/list/loadout = manager.preferences.read_preference(/datum/preference/loadout)
 	if(!loadout?[item_path])
-		manager.select_item(src)
+		return FALSE
 
 	if(isnull(loadout[item_path][INFO_LAYER]))
 		loadout[item_path][INFO_LAYER] = FALSE

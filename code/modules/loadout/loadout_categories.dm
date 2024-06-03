@@ -8,6 +8,10 @@
 	var/category_name
 	/// FontAwesome icon for the category
 	var/category_ui_icon
+	/// String to display on the top-right of a category tab
+	var/category_info
+	/// Order which they appear in the tabs, ties go alphabetically
+	var/tab_order = -1
 	/// What type of loadout items should be generated for this category?
 	var/type_to_generate
 	/// List of all loadout items in this category

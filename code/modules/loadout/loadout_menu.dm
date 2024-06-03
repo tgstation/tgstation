@@ -5,6 +5,7 @@
 		"rotate_dummy" = PROC_REF(action_rotate_model_dir),
 		"select_item" = PROC_REF(action_select_item),
 		"toggle_job_clothes" = PROC_REF(action_toggle_job_outfit),
+		"close_greyscale_menu" = PROC_REF(force_close_greyscale_menu),
 	)
 	/// Our currently open greyscaling menu.
 	VAR_FINAL/datum/greyscale_modify_menu/menu
@@ -90,6 +91,9 @@
 	SIGNAL_HANDLER
 	menu = null
 
+/datum/preference_middleware/loadout/proc/force_close_greyscale_menu()
+	menu?.ui_close()
+
 /datum/preference_middleware/loadout/get_ui_data(mob/user)
 	var/list/data = list()
 	data["job_clothes"] = preferences.character_preview_view.show_job_clothes
@@ -107,6 +111,7 @@
 		UNTYPED_LIST_ADD(loadout_tabs, list(
 			"name" = category.category_name,
 			"category_icon" = category.category_ui_icon,
+			"category_info" = category.category_info,
 			"contents" = category.items_to_ui_data(),
 		))
 

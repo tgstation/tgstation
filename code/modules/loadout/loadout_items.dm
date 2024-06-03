@@ -13,7 +13,16 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	var/list/loadout_categories = list()
 	for(var/category_type in subtypesof(/datum/loadout_category))
 		loadout_categories += new category_type()
+
+	sortTim(loadout_categories, /proc/cmp_loadout_categories)
 	return loadout_categories
+
+/proc/cmp_loadout_categories(datum/loadout_category/A, datum/loadout_category/B)
+	var/a_order = A::tab_order
+	var/b_order = B::tab_order
+	if(a_order == b_order)
+		return cmp_text_asc(A, B)
+	return cmp_numeric_asc(a_order, b_order)
 
 /**
  * # Loadout item datum
@@ -49,6 +58,8 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	/// Icon state for the UI to use for preview icons.
 	/// Set automatically if null
 	var/ui_icon_state
+	/// Reskin options of this item if it can be reskinned.
+	VAR_FINAL/list/cached_reskin_options
 
 /datum/loadout_item/New(category)
 
@@ -71,6 +82,15 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	if(isnull(ui_icon) && isnull(ui_icon_state))
 		ui_icon = item_path::icon_preview || item_path::icon
 		ui_icon_state = item_path::icon_state_preview || item_path::icon_state
+
+	if(can_be_reskinned)
+		var/obj/item/dummy_item = new item_path()
+		if(!length(dummy_item.unique_reskin))
+			can_be_reskinned = FALSE
+			stack_trace("Loadout item [item_path] has can_be_reskinned set to TRUE but has no unique reskins.")
+		else
+			cached_reskin_options = dummy_item.unique_reskin.Copy()
+		qdel(dummy_item)
 
 /datum/loadout_item/Destroy(force, ...)
 	if(force)
@@ -111,9 +131,6 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 		return FALSE
 
 	var/list/loadout = manager.preferences.read_preference(/datum/preference/loadout)
-	if(!loadout?[item_path])
-		manager.select_item(src)
-
 	var/list/allowed_configs = list()
 	if(initial(item_path.greyscale_config))
 		allowed_configs += "[initial(item_path.greyscale_config)]"
@@ -145,7 +162,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 
 	var/list/loadout = manager.preferences.read_preference(/datum/preference/loadout)
 	if(!loadout?[item_path])
-		manager.select_item(src)
+		return FALSE
 
 	var/list/colors = open_menu.split_colors
 	if(!colors)
@@ -157,7 +174,6 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 
 /// Sets the name of the item in the loadout
 /datum/loadout_item/proc/set_name(datum/preference_middleware/loadout/manager, mob/user)
-	. = FALSE
 	var/list/loadout = manager.preferences.read_preference(/datum/preference/loadout)
 	var/input_name = tgui_input_text(
 		user = user,
@@ -167,11 +183,11 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 		max_length = MAX_NAME_LEN,
 	)
 	if(QDELETED(src) || QDELETED(user) || QDELETED(manager) || QDELETED(manager.preferences))
-		return .
+		return FALSE
 
-	if(!islist(loadout?[item_path]))
-		manager.select_item(src)
-		. = TRUE // update UI
+	loadout = manager.preferences.read_preference(/datum/preference/loadout) // Make sure no shenanigans happened
+	if(!loadout?[item_path])
+		return FALSE
 
 	if(input_name)
 		loadout[item_path][INFO_NAMED] = input_name
@@ -179,41 +195,22 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 		loadout[item_path] -= INFO_NAMED
 
 	manager.preferences.update_preference(GLOB.preference_entries[/datum/preference/loadout], loadout)
-	return .
+	return FALSE // no update needed
 
 /// Used for reskinning an item to an alt skin by default
-/datum/loadout_item/proc/set_skin(datum/preference_middleware/loadout/manager, mob/user)
+/datum/loadout_item/proc/set_skin(datum/preference_middleware/loadout/manager, mob/user, params)
 	if(!can_be_reskinned)
 		return FALSE
 
-	var/list/loadout = manager.preferences.read_preference(/datum/preference/loadout)
-	var/static/list/list/cached_reskins = list()
-	if(!islist(cached_reskins[item_path]))
-		var/obj/item/item_template = new item_path()
-		cached_reskins[item_path] = item_template.unique_reskin.Copy()
-		qdel(item_template)
-
-	var/list/choices = cached_reskins[item_path].Copy()
-	choices["Default"] = TRUE
-
-	var/input_skin = tgui_input_list(
-		user = user,
-		message = "What skin do you want this to be?",
-		title = "Reskin [name]",
-		items = choices,
-		default = loadout?[item_path]?[INFO_RESKIN],
-	)
-	if(QDELETED(src) || QDELETED(user) || QDELETED(manager) || QDELETED(manager.preferences))
+	var/reskin_to = params["skin"]
+	if(!cached_reskin_options[reskin_to])
 		return FALSE
 
-	if(!islist(loadout?[type]))
-		manager.select_item(src)
+	var/list/loadout = manager.preferences.read_preference(/datum/preference/loadout)
+	if(!loadout?[item_path])
+		return FALSE
 
-	if(!input_skin || input_skin == "Default")
-		loadout[item_path] -= INFO_RESKIN
-	else
-		loadout[item_path][INFO_RESKIN] = input_skin
-
+	loadout[item_path][INFO_RESKIN] = reskin_to
 	manager.preferences.update_preference(GLOB.preference_entries[/datum/preference/loadout], loadout)
 	return TRUE // always update UI
 
@@ -288,6 +285,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	formatted_item["path"] = item_path
 	formatted_item["information"] = get_item_information()
 	formatted_item["buttons"] = get_ui_buttons()
+	formatted_item["reskins"] = get_reskin_options()
 	formatted_item["icon"] = ui_icon
 	formatted_item["icon_state"] = ui_icon_state
 	return formatted_item
@@ -306,7 +304,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 		displayed_text += "Renamable"
 
 	if(can_be_reskinned)
-		displayed_text += "Reskinable"
+		displayed_text += "Reskinnable"
 
 	return displayed_text
 
@@ -320,6 +318,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 			"label" = "Recolor",
 			"act_key" = "select_color",
 			"button_icon" = FA_ICON_PALETTE,
+			"active_key" = INFO_GREYSCALE,
 		))
 
 	if(can_be_named)
@@ -327,26 +326,23 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 			"label" = "Rename",
 			"act_key" = "set_name",
 			"button_icon" = FA_ICON_PEN,
+			"active_key" = INFO_NAMED,
 		))
-
-	if(can_be_reskinned)
-		var/list/subbuttons = list()
-		var/obj/item/dummy_item = new item_path()
-		for(var/i in 1 to length(dummy_item.unique_reskin))
-			var/skin = dummy_item.unique_reskin[i]
-			subbuttons[i] = list(
-				"tooltip" = skin,
-				"sub_icon" = dummy_item.icon,
-				"sub_icon_state" = dummy_item.unique_reskin[skin],
-				"act_key" = "set_skin",
-			)
-
-		UNTYPED_LIST_ADD(button_list, list(
-			"label" = "Styles",
-			"button_type" = ICON_BUTTON_LIST,
-			"button_icons" = subbuttons,
-		))
-
-		qdel(dummy_item)
 
 	return button_list
+
+/datum/loadout_item/proc/get_reskin_options() as /list
+
+	if(!can_be_reskinned)
+		return null
+
+	var/list/reskins = list()
+
+	for(var/skin in cached_reskin_options)
+		UNTYPED_LIST_ADD(reskins, list(
+			"name" = skin,
+			"tooltip" = skin,
+			"skin_icon_state" = cached_reskin_options[skin],
+		))
+
+	return reskins
