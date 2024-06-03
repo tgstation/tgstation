@@ -1,7 +1,7 @@
 #define TRAM_DOOR_WARNING_TIME (0.9 SECONDS)
 #define TRAM_DOOR_CYCLE_TIME (0.6 SECONDS)
 #define TRAM_DOOR_CRUSH_TIME (0.7 SECONDS)
-#define TRAM_DOOR_RECYCLE_TIME (3 SECONDS)
+#define TRAM_DOOR_RECYCLE_TIME (2.7 SECONDS)
 
 /obj/machinery/door/airlock/tram
 	name = "tram door"
@@ -64,7 +64,7 @@
 
 /obj/machinery/door/airlock/tram/close(forced = DEFAULT_DOOR_CHECKS, force_crush = FALSE)
 	retry_counter++
-	if(retry_counter >= 4 || force_crush || forced == BYPASS_DOOR_CHECKS)
+	if(retry_counter >= 3 || force_crush || forced == BYPASS_DOOR_CHECKS)
 		try_to_close(forced = BYPASS_DOOR_CHECKS)
 		return
 
