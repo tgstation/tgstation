@@ -253,12 +253,11 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	can_move = world.time + move_delay
 
 	// ESCAPE PRISON
-	if(ismovable(loc))
-		if(prob(25))
-			var/obj/item/item = pick(loc.contents)
-			if(istype(loc, /obj/item/storage))
-				item.forceMove(get_turf(src)) //throw stuff out of the inventory till we free ourselves!
-				playsound(src, SFX_RUSTLE, 30, TRUE)
+	if(ismovable(loc) && prob(25))
+		var/obj/item/item = pick(loc.contents)
+		if(istype(loc, /obj/item/storage))
+			item.forceMove(get_turf(src)) //throw stuff out of the inventory till we free ourselves!
+			playsound(src, SFX_RUSTLE, 30, TRUE)
 
 	// MOVE US
 	if(isturf(loc))
