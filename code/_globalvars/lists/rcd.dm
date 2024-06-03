@@ -83,11 +83,6 @@ GLOBAL_LIST_INIT(rcd_designs, list(
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/hatch),
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/maintenance_hatch),
 		),
-		//Multi-tile Airlocks[airlock_glass = FALSE is implied,no fill_closed overlay]
-		"Multi-tile Airlocks" = list(
-			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/multi_tile/public/glass),
-			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/tram),
-		),
 	),
 
 	//3RD CATEGORY Airlock access,empty list cause airlock_electronics UI will be displayed  when this tab is selected
