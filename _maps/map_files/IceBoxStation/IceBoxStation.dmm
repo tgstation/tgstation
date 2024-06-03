@@ -46178,7 +46178,7 @@
 /obj/machinery/camera/directional/east{
 	c_tag = "Service - Hall"
 	},
-/obj/machinery/disposal/bin,
+/obj/machinery/disposal/bin/tagger,
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
