@@ -276,7 +276,5 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		anchored = FALSE
 
 /obj/item/mmi/posibrain/sphere/attack_hand_secondary(mob/user, list/modifiers)
-	. = ..()
-
 	throw_at(get_edge_target_turf(src, get_dir(user, src)), 7, 1, user)
 	user.do_attack_animation(src)
