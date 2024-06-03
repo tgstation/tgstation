@@ -2486,7 +2486,7 @@
 /datum/techweb_node/posisphere
 	id = "positronic_sphere"
 	display_name = "Experimental Spherical Positronic Brain"
-	description = "Compplaints of bitching posibrains have brought forward a new generation of pestering."
+	description = "Recent developments on cost-cutting measures have allowed us to cut positronic brain cubes into twice-as-cheap spheres. Unfortunately, it also allows them to move around the lab via rolling maneuvers."
 	prereq_ids = list("base")
 	design_ids = list(
 		"posisphere",
