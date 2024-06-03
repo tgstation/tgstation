@@ -147,3 +147,21 @@
       up to the cryo loop.
   - qol: The NTSS Independence's medical bay has received improvements. The medibot
       and the sleeper are upgraded, and advanced surgery equipment has been added.
+2024-06-03:
+  MTandi:
+  - balance: 'Floor diseases cures are now common chemicals: Milk, Chlorine, Space
+      Cleaner'
+  Rhials:
+  - rscadd: Shovels and entrenching tools can be used to dig graves on asteroid/dirt/etc.
+      surfaces. Neat!
+  - rscadd: The Icebox Morgue has been given a fenced-off graveyard in the back.
+  - code_imp: burn_tile() is no longer double-defined on asteroid turfs.
+  Zytolg:
+  - qol: Many Janitors have cleaned up Birdshot station. Permanently.
+  - qol: Loose floortiles on Birdshot Station have been properly affixed to the floor
+      by the Engineering and Atmospherics Teams.
+  - bugfix: Birdshot Dorms have been reworked and incorporated the Holodeck Ship as
+      an actual and permanent installment. Come visit our new and improved barber
+      shop!
+  jwc1015:
+  - bugfix: Made the anxious zipzap accessible.
