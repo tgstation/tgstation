@@ -249,27 +249,27 @@
 		"window" = list(
 			"key" = window_key,
 			"size" = window_size,
-			"fancy" = user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy),
-			"locked" = user.client.prefs.read_preference(/datum/preference/toggle/tgui_lock),
+			"fancy" = user.client?.prefs?.read_preference(/datum/preference/toggle/tgui_fancy),
+			"locked" = user.client?.prefs?.read_preference(/datum/preference/toggle/tgui_lock),
 		),
 		"client" = list(
-			"ckey" = user.client.ckey,
-			"address" = user.client.address,
-			"computer_id" = user.client.computer_id,
+			"ckey" = user.client?.ckey,
+			"address" = user.client?.address,
+			"computer_id" = user.client?.computer_id,
 		),
 		"user" = list(
 			"name" = "[user]",
 			"observer" = isobserver(user),
 		),
 	)
-	var/data = custom_data || with_data && src_object.ui_data(user)
+	var/data = custom_data || with_data && src_object?.ui_data(user)
 	if(data)
 		json_data["data"] = data
-	var/static_data = with_static_data && src_object.ui_static_data(user)
+	var/static_data = with_static_data && src_object?.ui_static_data(user)
 	if(static_data)
 		json_data["static_data"] = static_data
-	if(src_object.tgui_shared_states)
-		json_data["shared"] = src_object.tgui_shared_states
+	if(src_object?.tgui_shared_states)
+		json_data["shared"] = src_object?.tgui_shared_states
 	return json_data
 
 /**

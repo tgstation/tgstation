@@ -4,7 +4,6 @@
 
 
 /datum/world_topic/status_webhook/Run(list/input)
-	. = ..()
 	var/datum/discord_embed/embed = new()
 
 	embed.title = "Status"

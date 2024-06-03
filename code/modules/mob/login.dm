@@ -129,15 +129,6 @@
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_LOGGED_IN, src)
 
-	if(!client.patreon)
-		client.patreon = new(client)
-
-	if(!client.twitch)
-		client.twitch = new(client)
-
-	if(!client.client_token_holder)
-		client.client_token_holder = new(client)
-
 	return TRUE
 
 

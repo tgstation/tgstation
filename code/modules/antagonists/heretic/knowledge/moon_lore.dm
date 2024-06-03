@@ -67,7 +67,7 @@
 	var/mob/living/carbon/carbon_target = target
 	to_chat(carbon_target, span_danger("You hear echoing laughter from above"))
 	carbon_target.cause_hallucination(/datum/hallucination/delusion/preset/moon, "delusion/preset/moon hallucination caused by mansus grasp")
-	carbon_target.mob_mood.set_sanity(carbon_target.mob_mood.sanity-30)
+	carbon_target.mob_mood?.set_sanity(carbon_target.mob_mood.sanity - 30)
 
 /datum/heretic_knowledge/spell/moon_smile
 	name = "Smile of the moon"
@@ -104,7 +104,7 @@
 	// Also refunds 75% of charge!
 	var/datum/action/cooldown/spell/touch/mansus_grasp/grasp = locate() in source.actions
 	if(grasp)
-		grasp.next_use_time = min(round(grasp.next_use_time - grasp.cooldown_time * 0.75, 0), 0)
+		grasp.next_use_time = min(round(grasp.next_use_time - grasp.cooldown_time * 0.75), 0)
 		grasp.build_all_button_icons()
 
 /datum/heretic_knowledge/knowledge_ritual/moon

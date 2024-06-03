@@ -232,7 +232,8 @@
 		artifact_activate()
 
 /datum/component/artifact/proc/stimulate_from_turf_heat(turf/target)
-	process_stimuli(STIMULUS_HEAT, target.return_air().temperature, FALSE)
+	if(!QDELETED(target))
+		process_stimuli(STIMULUS_HEAT, target.return_air().temperature, FALSE)
 
 /datum/component/artifact/proc/stimulate_from_rad_act(intensity)
 	process_stimuli(STIMULUS_RADIATION, intensity)

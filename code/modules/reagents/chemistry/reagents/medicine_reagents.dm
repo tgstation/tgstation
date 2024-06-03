@@ -13,7 +13,7 @@
 	current_cycle++
 	if(length(reagent_removal_skip_list))
 		return
-	holder.remove_reagent(type, metabolization_rate * seconds_per_tick / affected_mob.metabolism_efficiency) //medicine reagents stay longer if you have a better metabolism
+	holder?.remove_reagent(type, metabolization_rate * seconds_per_tick / affected_mob.metabolism_efficiency) //medicine reagents stay longer if you have a better metabolism
 
 /datum/reagent/medicine/leporazine
 	name = "Leporazine"

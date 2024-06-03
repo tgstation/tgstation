@@ -2,8 +2,8 @@
 	///The key or list of keys that are valid to see this hud, if unset then it will display to everyone with the antag datum like normal
 	var/list/valid_keys
 
-/datum/atom_hud/alternate_appearance/basic/has_antagonist/mobShouldSee(mob/M)
-	var/datum/antagonist/antag_datum = M.mind?.has_antag_datum(antag_datum_type)
+/datum/atom_hud/alternate_appearance/basic/has_antagonist/mobShouldSee(mob/target)
+	var/datum/antagonist/antag_datum = target?.mind?.has_antag_datum(antag_datum_type)
 	if(!antag_datum)
 		return FALSE
 

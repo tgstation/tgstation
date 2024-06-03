@@ -215,13 +215,9 @@
 		var/leader_spawned = FALSE // just in case the earmarked leader disconnects or becomes unavailable, we can try giving leader to the last guy to get chosen
 
 		if(ertemplate.leader_experience)
-			var/list/candidate_living_exps = list()
-			for(var/i in candidates)
-				var/mob/dead/observer/potential_leader = i
-				candidate_living_exps[potential_leader] = potential_leader.client?.get_exp_living(TRUE)
-
-			candidate_living_exps = sort_list(candidate_living_exps, cmp=/proc/cmp_numeric_dsc)
-			if(candidate_living_exps.len > ERT_EXPERIENCED_LEADER_CHOOSE_TOP)
+			// monkestation edit: fix runtime with using wrong sort proc
+			var/list/candidate_living_exps = sort_list(candidates, cmp=/proc/cmp_mob_playtime_dsc)
+			if(length(candidate_living_exps) > ERT_EXPERIENCED_LEADER_CHOOSE_TOP)
 				candidate_living_exps = candidate_living_exps.Cut(ERT_EXPERIENCED_LEADER_CHOOSE_TOP+1) // pick from the top ERT_EXPERIENCED_LEADER_CHOOSE_TOP contenders in playtime
 			earmarked_leader = pick(candidate_living_exps)
 		else

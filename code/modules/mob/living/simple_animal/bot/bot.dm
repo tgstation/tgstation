@@ -714,6 +714,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	set_path(null)
 	summon_target = null
 	pathset = FALSE
+	if(QDELETED(access_card))
+		access_card = new /obj/item/card/id/advanced/simple_bot(src)
 	access_card.set_access(prev_access)
 	tries = 0
 	mode = BOT_IDLE

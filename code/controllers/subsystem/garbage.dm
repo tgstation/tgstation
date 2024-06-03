@@ -418,7 +418,7 @@ SUBSYSTEM_DEF(garbage)
 				SSgarbage.Queue(D)
 		//Monkestation Edit: REPLAYS
 		if(D)
-			SSdemo.mark_destroyed(D)
+			SSdemo?.mark_destroyed(D)
 		//Monkestation Edit: REPLAYS
 	else if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		CRASH("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")

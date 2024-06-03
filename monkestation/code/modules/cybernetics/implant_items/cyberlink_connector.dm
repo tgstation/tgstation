@@ -25,7 +25,7 @@
 /obj/item/cyberlink_connector/Destroy()
 	. = ..()
 	parent_cyberlink = null
-	if(linked_target)
+	if(!QDELETED(linked_target))
 		qdel(linked_target.GetComponent(/datum/component/leash))
 		linked_target = null
 	cleanup()
@@ -40,7 +40,7 @@
 		return
 
 	if(ishuman(target))
-		if(linked_target && (target != linked_target))
+		if(!QDELETED(linked_target) && (target != linked_target))
 			return
 		if(target != user)
 			return
@@ -66,9 +66,9 @@
 		if(!istype(target,/obj/item/organ/internal/cyberimp) || istype(target,/obj/item/organ/internal/cyberimp/cyberlink))
 			return
 
-	if(!parent_cyberlink)
+	if(QDELETED(parent_cyberlink))
 		var/obj/item/organ/internal/cyberimp/cyberlink/link = user.get_organ_slot(ORGAN_SLOT_LINK)
-		if(!link)
+		if(QDELETED(link))
 			to_chat(user, span_notice("NO CYBERLINK DETECTED") )
 			return
 		parent_cyberlink = link
@@ -104,7 +104,7 @@
 		size = max(4, size--)
 
 	diffrences = max(1, diffrences--)
-	if(!game_list.len)
+	if(!length(game_list))
 		for(var/i in 1 to diffrences)
 			var/datum/hacking_minigame/game = new/datum/hacking_minigame(size)
 			game.generate()
@@ -114,7 +114,7 @@
 
 /obj/item/cyberlink_connector/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!isliving(user))
+	if(!isliving(user) || !isliving(target))
 		return
 	var/mob/living/target_living = target
 	var/obj/item/organ/internal/cyberimp/cyberlink/link = target_living.get_organ_slot(ORGAN_SLOT_LINK)
@@ -130,12 +130,12 @@
 
 /obj/item/cyberlink_connector/AltClick(mob/user)
 	. = ..()
-	if(!linked_target)
+	if(QDELETED(linked_target))
 		return
 	clear_target_link()
 
 /obj/item/cyberlink_connector/proc/clear_target_link()
-	if(linked_target)
+	if(!QDELETED(linked_target))
 		qdel(linked_target.GetComponent(/datum/component/leash))
 		linked_target = null
 
@@ -148,7 +148,7 @@
 
 /obj/item/cyberlink_connector/proc/hack_success(success as num)
 	var/mob/living/to_display = current_user
-	if(linked_target)
+	if(!QDELETED(linked_target))
 		to_display = linked_target
 	for(var/info in cybernetic.encode_info)
 		if(cybernetic.encode_info[info] == NO_PROTOCOL)
@@ -166,7 +166,7 @@
 /obj/item/cyberlink_connector/proc/hack_failure(failed as num)
 	var/chance = rand(0, 40*failed)
 	var/mob/living/to_damage = current_user
-	if(linked_target)
+	if(!QDELETED(linked_target))
 		to_damage = linked_target
 	switch(chance)
 		if(0 to 25)
@@ -212,7 +212,7 @@
 			failed++
 
 	if(finished)
-		hack_success(game_list.len)
+		hack_success(length(game_list))
 
 	if(end_game)
 		hack_failure(failed)

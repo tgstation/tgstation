@@ -203,4 +203,5 @@
 			if(length(alarm_packet) < 2)
 				continue
 			var/list/cameras = alarm_packet[2]
-			cameras -= source // REF FOUND AND CLEARED BOYSSSS
+			if(cameras)
+				cameras -= source // REF FOUND AND CLEARED BOYSSSS

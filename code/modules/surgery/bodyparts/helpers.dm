@@ -14,12 +14,12 @@
 ///Replaces a single limb and deletes the old one if there was one
 /mob/living/carbon/proc/del_and_replace_bodypart(obj/item/bodypart/new_limb, special)
 	var/obj/item/bodypart/old_limb = get_bodypart(new_limb.body_zone)
-	if(old_limb)
+	if(!QDELETED(old_limb))
 		qdel(old_limb)
 	new_limb.try_attach_limb(src, special = special)
 
 /mob/living/carbon/has_hand_for_held_index(i)
-	if(!i)
+	if(!i || length(hand_bodyparts) < i)
 		return FALSE
 	var/obj/item/bodypart/hand_instance = hand_bodyparts[i]
 	if(hand_instance && !hand_instance.bodypart_disabled)

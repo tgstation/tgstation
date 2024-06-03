@@ -477,7 +477,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(. & EMP_PROTECT_SELF)
 		return
 	new /obj/effect/temp_visual/emp(loc)
-	if(paicard)
+	if(!QDELETED(paicard))
 		paicard.emp_act(severity)
 		src.visible_message(span_notice("[paicard] flies out of [initial(src.name)]!"), span_warning("You are forcefully ejected from [initial(src.name)]!"))
 		ejectpai()
@@ -549,6 +549,8 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/proc/bot_reset(bypass_ai_reset = FALSE)
 	SEND_SIGNAL(src, COMSIG_BOT_RESET)
 	if(length(initial_access))
+		if(QDELETED(access_card))
+			access_card = new /obj/item/card/id/advanced/simple_bot(src)
 		access_card.set_access(initial_access)
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
@@ -684,7 +686,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /// Places a pAI in control of this mob
 /mob/living/basic/bot/proc/insertpai(mob/user, obj/item/pai_card/card)
-	if(paicard)
+	if(!QDELETED(paicard))
 		balloon_alert(user, "slot occupied!")
 		return
 	if(key)
@@ -723,10 +725,10 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /// Ejects a pAI from this bot
 /mob/living/basic/bot/proc/ejectpai(mob/user = null, announce = TRUE)
-	if(isnull(paicard))
+	if(QDELETED(paicard))
 		return
 
-	if(paicard.pai)
+	if(!QDELETED(paicard.pai))
 		if(isnull(mind))
 			mind.transfer_to(paicard.pai)
 		else

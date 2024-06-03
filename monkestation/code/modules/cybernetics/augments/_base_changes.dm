@@ -16,17 +16,14 @@
 	///how many times we failed to hack this
 	var/failed_count = 0
 
-/obj/item/organ/internal/cyberimp/New(mob/M = null)
-	if(iscarbon(M))
-		src.Insert(M)
+/obj/item/organ/internal/cyberimp/Initialize(mapload)
+	. = ..()
+	if(iscarbon(loc))
+		Insert(loc)
 	if(implant_overlay) // <- this is old code that is better replaced with bodypart_overlays
 		var/mutable_appearance/overlay = mutable_appearance(icon, implant_overlay)
 		overlay.color = implant_color
 		add_overlay(overlay)
-	return ..()
-
-/obj/item/organ/internal/cyberimp/Initialize(mapload)
-	. = ..()
 	update_icon()
 
 /obj/item/organ/internal/cyberimp/Destroy()
@@ -37,44 +34,48 @@
 /obj/item/organ/internal/cyberimp/examine(mob/user)
 	. = ..()
 	if(hacked)
-		. += "It seems to have been tinkered with."
+		. += span_warning("It seems to have been tinkered with.")
 	if(HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD) || HAS_TRAIT(user, TRAIT_MEDICAL_HUD))
 		var/display = ""
 		var/list/check_list = encode_info[SECURITY_PROTOCOL]
-		if(check_list.len)
+		if(length(check_list))
 			for(var/security in check_list)
 				display += "[uppertext(security)], "
-			. += "It's security protocols are [display] for the implant to function it requires at least one of them to be shared with the cyberlink."
+			. += span_notice("Its security protocols are [display] for the implant to function it requires at least one of them to be shared with the cyberlink.")
+		else
+			. += span_notice("It does not require any security protocols.")
 		check_list = encode_info[ENCODE_PROTOCOL]
-		if(check_list.len)
+		if(length(check_list))
 			display = ""
 			for(var/encode in check_list)
 				display += "[uppertext(encode)], "
-			. += "It's encoding protocols are [display] for the implant to function it requires at least one of them to be shared with the cyberlink."
+			. += span_notice("Its encoding protocols are [display] for the implant to function it requires at least one of them to be shared with the cyberlink.")
+		else
+			. += "It does not require any encoding protocols."
 		check_list = encode_info[OPERATING_PROTOCOL]
-		if(check_list.len)
+		if(length(check_list))
 			display = ""
 			for(var/operating in check_list)
 				display += "[uppertext(operating)], "
-			. += "It's operating protocols are [display]for the implant to function it requires the operating protocols match the cyberlink's."
+			. += span_notice("Its operating protocols are [display]for the implant to function it requires the operating protocols match the cyberlink's.")
+		else
+			. += span_notice("It does not require any operating protocols.")
 	else
-		. += "You can see the encoding information of this implant by wearing a diagnostic hud or medical hud."
+		. += span_notice("You can see the encoding information of this implant by wearing a diagnostic hud or medical hud.")
 
 /obj/item/organ/internal/cyberimp/emp_act(severity)
 	. = ..()
-	if(severity == EMP_HEAVY && prob(5) && !owner)
-		to_chat(owner,"<span class = 'danger'> cyberlink beeps: ERR03 HEAVY ELECTROMAGNETIC MALFUNCTION DETECTED IN [uppertext(name)].DAMAGE DETECTED, INTERNAL MEMORY DAMAGED. </span>")
+	if(severity == EMP_HEAVY && prob(5) && QDELETED(owner))
+		to_chat(owner, span_danger("cyberlink beeps: ERR03 HEAVY ELECTROMAGNETIC MALFUNCTION DETECTED IN [uppertext(name)].DAMAGE DETECTED, INTERNAL MEMORY DAMAGED."))
 		random_encode()
 	else
-		to_chat(owner,"<span class = 'danger'> cyberlink beeps: ERR02 ELECTROMAGNETIC MALFUNCTION DETECTED IN [uppertext(name)] </span>")
+		to_chat(owner, span_danger("cyberlink beeps: ERR02 ELECTROMAGNETIC MALFUNCTION DETECTED IN [uppertext(name)]"))
 
 /obj/item/organ/internal/cyberimp/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
 	var/obj/item/bodypart/limb = receiver.get_bodypart(deprecise_zone(zone))
 	. = ..()
 	if(visual_implant)
-		if(!.)
-			return
-		if(!limb)
+		if(!. || QDELETED(limb))
 			return FALSE
 
 		ownerlimb = limb
@@ -159,12 +160,8 @@
 	var/obj/item/cyberlink_connector/connector
 	var/extended = FALSE
 
-/obj/item/organ/internal/cyberimp/cyberlink/Insert(mob/living/carbon/M, special, drop_if_replaced)
-	for(var/X in M.organs)
-		var/obj/item/organ/O = X
-		if(!istype(O,/obj/item/organ/internal/cyberimp))
-			continue
-		var/obj/item/organ/internal/cyberimp/cyber = O
+/obj/item/organ/internal/cyberimp/cyberlink/Insert(mob/living/carbon/user, special, drop_if_replaced)
+	for(var/obj/item/organ/internal/cyberimp/cyber in user.organs)
 		cyber.update_implants()
 	return ..()
 

@@ -103,7 +103,7 @@
 		INVOKE_ASYNC(chosen_dance, TYPE_PROC_REF(/datum/dance, trigger_dance), parent)
 	//ADD_TRAIT(target, TRAIT_IMMOBILIZED, trait_source)
 	ADD_TRAIT(parent, TRAIT_DANCING, trait_source)
-	RegisterSignal(parent, dancing_stop_signals, PROC_REF(stop_dancing))
+	RegisterSignals(parent, dancing_stop_signals, PROC_REF(stop_dancing))
 
 /datum/component/dancing/Destroy(force, silent)
 	REMOVE_TRAIT(parent, TRAIT_DANCING, trait_source)

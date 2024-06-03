@@ -780,6 +780,8 @@
 	SEND_SIGNAL(src, COMSIG_MACHINERY_REFRESH_PARTS)
 
 /obj/machinery/proc/default_pry_open(obj/item/crowbar, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE)
+	if(ismob(crowbar)) // monkestation edit: make certain issues clearer with an explicit runtime
+		CRASH("The user should not be passed to /obj/machinery/proc/default_pry_open, only the tool being used.")
 	. = !(state_open || panel_open || is_operational || (flags_1 & NODECONSTRUCT_1)) && crowbar.tool_behaviour == TOOL_CROWBAR
 	if(!.)
 		return
@@ -790,6 +792,8 @@
 		close_machine(density_to_set = closed_density)
 
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
+	if(ismob(crowbar)) // monkestation edit: make certain issues clearer with an explicit runtime
+		CRASH("The user should not be passed to /obj/machinery/proc/default_deconstruction_crowbar, only the tool being used.")
 	. = (panel_open || ignore_panel) && !(flags_1 & NODECONSTRUCT_1) && crowbar.tool_behaviour == TOOL_CROWBAR
 	if(!. || custom_deconstruct)
 		return

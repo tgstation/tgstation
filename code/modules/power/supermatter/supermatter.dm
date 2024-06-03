@@ -271,16 +271,19 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	// PART 3: POWER PROCESSING
 	internal_energy_factors = calculate_internal_energy()
 	zap_factors = calculate_zap_multiplier()
-	if(internal_energy && (last_power_zap + 4 SECONDS - (internal_energy * 0.001)) < world.time)
+	if(internal_energy && (last_power_zap + (4 - internal_energy * 0.001) SECONDS) < world.time)
 		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
 		hue_angle_shift = clamp(903 * log(10, (internal_energy + 8000)) - 3590, -50, 240)
 		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
+		//Scale the strength of the zap with the world's time elapsed between zaps in seconds.
+		//Capped at 16 seconds to prevent a crazy burst of energy if atmos was halted for a long time.
+		var/delta_time = min((world.time - last_power_zap) * 0.1, 16)
 		supermatter_zap(
 			zapstart = src,
 			range = 3,
-			zap_str = 5 * internal_energy * zap_multiplier,
+			zap_str = 1.25 * internal_energy * zap_multiplier * delta_time,
 			zap_flags = ZAP_SUPERMATTER_FLAGS,
-			zap_cutoff = 300,
+			zap_cutoff = 300 * delta_time,
 			power_level = internal_energy,
 			color = zap_color,
 		)

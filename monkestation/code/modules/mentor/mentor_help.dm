@@ -80,7 +80,7 @@
 
 	/// Send the Mhelp to all Mentors/Admins
 	for(var/client/honked_clients in GLOB.mentors | GLOB.admins)
-		if(honked_clients.mentor_datum.not_active)
+		if(QDELETED(honked_clients?.mentor_datum) || honked_clients?.mentor_datum?.not_active)
 			continue
 		honked_clients << 'sound/items/bikehorn.ogg'
 		to_chat(honked_clients,

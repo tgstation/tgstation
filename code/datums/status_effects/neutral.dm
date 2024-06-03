@@ -426,14 +426,10 @@
 				owner.Knockdown(10)
 
 			var/list/items = list()
-			var/max_loop
-			if (length(owner.get_contents()) >= 10)
-				max_loop = 10
-			else
-				max_loop = length(owner.get_contents())
+			var/max_loop  = min(length(owner.get_contents()), 10)
 			for (var/i in 1 to max_loop)
 				var/obj/item/item = owner.get_contents()[i]
-				if ((item.item_flags & DROPDEL) || HAS_TRAIT(item, TRAIT_NODROP)) // can't teleport these kinds of items
+				if (!istype(item) || (item.item_flags & DROPDEL) || HAS_TRAIT(item, TRAIT_NODROP)) // can't teleport these kinds of items
 					continue
 				items.Add(item)
 

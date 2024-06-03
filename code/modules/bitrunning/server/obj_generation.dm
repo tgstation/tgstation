@@ -19,7 +19,7 @@
 	if(istype(jumpsuit))
 		jumpsuit.set_armor(/datum/armor/clothing_under)
 
-	var/obj/item/clothing/head/hat = avatar.get_clothing_on_part(HEAD)
+	var/obj/item/clothing/head/hat = avatar.get_clothing_on_part(avatar.get_bodypart(BODY_ZONE_HEAD))
 
 	if(istype(hat))
 		hat.set_armor(null)

@@ -117,8 +117,8 @@
 
 /obj/structure/fight_button/proc/set_rules(mob/living/carbon/human/ghost/user)
 	var/max_amount = user.client.prefs.metacoins
-	var/choice = tgui_input_number(user, "How much would you like to wager?", "[src.name]", 100, max_amount, 0)
-	if(!choice)
+	var/choice = tgui_input_number(user, "How much would you like to wager?", "[src.name]", default = min(max_amount, 100), max_value = max_amount, min_value = 0)
+	if(!isnum(choice))
 		return FALSE
 	payout = choice
 

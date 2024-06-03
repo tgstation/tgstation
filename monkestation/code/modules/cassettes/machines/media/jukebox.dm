@@ -98,7 +98,7 @@
 
 	if(default_deconstruction_screwdriver(user, W))
 		return
-	if(default_deconstruction_crowbar(user, W))
+	if(default_deconstruction_crowbar(W))
 		return
 	if(W.tool_behaviour == TOOL_WRENCH)
 		if(playing)
@@ -220,7 +220,7 @@
 
 	if(default_deconstruction_screwdriver(user, W))
 		return
-	if(default_deconstruction_crowbar(user, W))
+	if(default_deconstruction_crowbar(W))
 		return
 	if(W.tool_behaviour == TOOL_WRENCH)
 		if(playing)

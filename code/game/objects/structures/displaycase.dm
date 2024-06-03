@@ -374,8 +374,10 @@
 	data["max_length"] = MAX_PLAQUE_LEN
 	data["has_showpiece"] = showpiece ? TRUE : FALSE
 	if(showpiece)
-		data["showpiece_name"] = capitalize(format_text(showpiece.name))
-		data["showpiece_description"] = trophy_message ? format_text(trophy_message) : null
+		// monkestation start: fix double-encoded trophy info
+		data["showpiece_name"] = capitalize(html_decode(format_text(showpiece.name)))
+		data["showpiece_description"] = trophy_message ? html_decode(format_text(trophy_message)) : null
+		// monkestation end
 	return data
 
 /obj/structure/displaycase/trophy/ui_static_data(mob/user)

@@ -30,40 +30,36 @@
 	set category = "Object"
 	set src in usr
 
-	if(!isliving(usr))
+	if(!isliving(usr) || !can_use(usr) || !length(contents))
 		return
-	if(!can_use(usr))
-		return
-	if(src.contents)
-		update_hats(REMOVE_HAT,usr)
+	update_hats(REMOVE_HAT, usr)
 
 /obj/item/clothing/head/proc/restore_initial() //Why can't initial() be called directly by something?
 	name = initial(name)
 	desc = initial(desc)
 
-/obj/item/clothing/head/proc/throw_hats(var/hat_count, var/turf/wearer_location, var/mob/user)
+/obj/item/clothing/head/proc/throw_hats(hat_count, turf/wearer_location, mob/user)
 	for(var/obj/item/clothing/head/throwing_hat in contents)
 		var/destination = get_edge_target_turf(wearer_location, pick(GLOB.alldirs))
 		if(!hat_count) //Only throw X number of hats
 			break
 		throwing_hat.forceMove(wearer_location)
-		throwing_hat.throw_at(destination, rand(1,4), 10)
+		throwing_hat.throw_at(destination, rand(1, 4), 10)
 		hat_count--
-	update_hats(0, user)
+	update_hats(NONE, user)
 	if(user)
-		user.visible_message("<span class='warning'>[user]'s hats go flying off!</span>")
+		user.visible_message(span_warning("[user]'s hats go flying off!"))
 
-/obj/item/clothing/head/proc/update_hats(var/hat_removal, var/mob/living/user)
-
+/obj/item/clothing/head/proc/update_hats(hat_removal, mob/living/user)
 	if(hat_removal)
-		var/obj/item/clothing/head/hat_to_remove = contents[contents.len] //Get the last item in the hat and hand it to the user.
+		var/obj/item/clothing/head/hat_to_remove = contents[length(contents)] //Get the last item in the hat and hand it to the user.
 		hat_to_remove.restore_initial()
-		remove_verb(hat_to_remove, /obj/item/clothing/head/verb/detach_stacked_hat)
+		remove_verb(user, /obj/item/clothing/head/verb/detach_stacked_hat)
 		user.put_in_hands(hat_to_remove)
 
 	cut_overlays()
 
-	if(contents)
+	if(length(contents))
 		//This section prepares the in-hand and on-ground icon states for the hats.
 		var/current_hat = 1
 		for(var/obj/item/clothing/head/selected_hat in contents)
@@ -79,7 +75,7 @@
 
 		add_verb(user, /obj/item/clothing/head/verb/detach_stacked_hat) //Verb for removing hats.
 
-		switch(contents.len) //Section for naming/description
+		switch(length(contents)) //Section for naming/description
 			if(0)
 				name = initial(name)
 				desc = initial(desc)

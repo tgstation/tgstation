@@ -125,7 +125,15 @@
 		*/ //MONKESTATION EDIT ORIGINAL
 		log_bomber_targeted(user, "planted", src, target, "with [det_time] second fuse")
 		//MONKESTATION EDIT END
-		notify_ghosts("[user] has planted \a [src] on [target] with a [det_time] second fuse!", source = bomb_target, action = (isturf(target) ? NOTIFY_JUMP : NOTIFY_ORBIT), flashwindow = FALSE, header = "Explosive Planted")
+		var/icon/target_icon = icon(bomb_target.icon, bomb_target.icon_state)
+		target_icon.Blend(icon(icon, icon_state), ICON_OVERLAY)
+		var/image/bomb_target_image = image(target_icon)
+		notify_ghosts(
+			"[user] has planted \a [src] on [target] with a [det_time] second fuse!",
+			source = bomb_target_image,
+			flashwindow = FALSE,
+			header = "Explosive Planted",
+		)
 
 		moveToNullspace() //Yep
 

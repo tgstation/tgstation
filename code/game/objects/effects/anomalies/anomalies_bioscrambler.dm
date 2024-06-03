@@ -16,10 +16,7 @@
 	var/range = 5
 
 /obj/effect/anomaly/bioscrambler/Initialize(mapload, new_lifespan, drops_core)
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/effect/anomaly/bioscrambler/LateInitialize()
+	. = ..()
 	pursuit_target = WEAKREF(find_nearest_target())
 
 /obj/effect/anomaly/bioscrambler/anomalyEffect(seconds_per_tick)
@@ -32,22 +29,29 @@
 		nearby.bioscramble(name)
 
 /obj/effect/anomaly/bioscrambler/move_anomaly()
+	update_target()
+	if (isnull(pursuit_target))
+		return ..()
+	var/turf/step_turf = get_step(src, get_dir(src, pursuit_target.resolve()))
+	if (!HAS_TRAIT(step_turf, TRAIT_CONTAINMENT_FIELD))
+		Move(step_turf)
+
+/// Select a new target if we need one
+/obj/effect/anomaly/bioscrambler/proc/update_target()
 	var/mob/living/current_target = pursuit_target?.resolve()
 	if (QDELETED(current_target))
 		pursuit_target = null
-	if (isnull(pursuit_target) || prob(20))
-		var/mob/living/new_target = find_nearest_target()
-		if (isnull(new_target))
-			pursuit_target = null
-		else if (new_target != current_target)
-			current_target = new_target
-			pursuit_target = WEAKREF(new_target)
-			new_target.ominous_nosebleed()
-	if (isnull(pursuit_target))
+	if (!isnull(pursuit_target) && prob(80))
 		return
-	var/turf/step_turf = get_step(src, get_dir(src, current_target))
-	if (!HAS_TRAIT(step_turf, TRAIT_CONTAINMENT_FIELD))
-		Move(step_turf)
+	var/mob/living/new_target = find_nearest_target()
+	if (isnull(new_target))
+		pursuit_target = null
+		return
+	if (new_target == current_target)
+		return
+	current_target = new_target
+	pursuit_target = WEAKREF(new_target)
+	new_target.ominous_nosebleed()
 
 /// Returns the closest conscious carbon on our z level or null if there somehow isn't one
 /obj/effect/anomaly/bioscrambler/proc/find_nearest_target()
@@ -56,12 +60,10 @@
 	for(var/mob/living/carbon/target in GLOB.player_list)
 		if (target.z != z)
 			continue
-		if (target.status_effects & GODMODE)
+		if (target.status_flags & GODMODE)
 			continue
 		if (target.stat >= UNCONSCIOUS)
 			continue // Don't just haunt a corpse
-		if (contained && get_area(target) != impact_area) // monkestation edit: fix "runaway" bioscramblers
-			continue
 		var/distance_from_target = get_dist(src, target)
 		if(distance_from_target >= closest_distance)
 			continue
@@ -69,3 +71,9 @@
 		closest_target = target
 
 	return closest_target
+
+/// A bioscrambler anomaly subtype which does not pursue people, for purposes of a space ruin
+/obj/effect/anomaly/bioscrambler/docile
+
+/obj/effect/anomaly/bioscrambler/docile/update_target()
+	return

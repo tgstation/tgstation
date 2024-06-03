@@ -189,6 +189,9 @@
 	return laws_to_return
 
 /mob/living/silicon/Topic(href, href_list)
+	// monkestation edit: extra sanity checks
+	if(QDELETED(usr) || QDELETED(usr.client))
+		return
 	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb
 		var/law_index = text2num(href_list["lawc"])
 		var/law = assemble_laws()[law_index + 1]
@@ -220,7 +223,7 @@
 		statelaws()
 
 	if (href_list["printlawtext"]) // this is kinda backwards
-		if (href_list["dead"] && (!isdead(usr) && !usr.client.holder)) // do not print deadchat law notice if the user is now alive
+		if (href_list["dead"] && (!isdead(usr) && !usr?.client?.holder)) // do not print deadchat law notice if the user is now alive
 			to_chat(usr, span_warning("You cannot view law changes that were made while you were dead."))
 			return
 		to_chat(usr, href_list["printlawtext"])

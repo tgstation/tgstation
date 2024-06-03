@@ -9,8 +9,7 @@
 	. = ..()
 	if (ishuman(quirk_holder))
 		var/mob/living/carbon/human/gojira = quirk_holder
-		if(gojira.dna)
-			gojira.dna.add_mutation(/datum/mutation/human/gigantism)
+		gojira.dna?.add_mutation(/datum/mutation/human/gigantism)
 
 /datum/quirk/anime
 	name = "Anime"
@@ -61,7 +60,7 @@
 
 /datum/quirk/clown_disbelief/add(client/client_source)
 	. = ..()
-	if(!quirk_holder)
+	if(QDELETED(quirk_holder))
 		return
 	RegisterSignal(quirk_holder, COMSIG_MOB_LOGIN, PROC_REF(enable))
 	RegisterSignal(quirk_holder, COMSIG_MOB_LOGOUT, PROC_REF(disable))
@@ -78,10 +77,14 @@
 
 /datum/quirk/clown_disbelief/proc/enable(datum/source)
 	for(var/image/image as anything in GLOB.hidden_image_holders["clown"])
+		if(QDELETED(quirk_holder?.client))
+			break
 		quirk_holder.client.images += image
 
 /datum/quirk/clown_disbelief/proc/disable(datum/source)
 	for(var/image/image as anything in GLOB.hidden_image_holders["clown"])
+		if(QDELETED(quirk_holder?.client))
+			break
 		quirk_holder.client.images -= image
 
 

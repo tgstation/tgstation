@@ -49,7 +49,7 @@
 
 	for(var/datum/reagent/reagent as anything in victim.reagents.reagent_list)
 		if(reagent.chemical_flags & REAGENT_AFFECTS_WOUNDS)
-			reagent.on_burn_wound_processing()
+			reagent.on_burn_wound_processing(src)
 
 	if(limb.current_gauze)
 		limb.seep_gauze(WOUND_BURN_SANITIZATION_RATE * seconds_per_tick)

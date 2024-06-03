@@ -16,7 +16,7 @@
 /datum/component/latch_feeding/Initialize(atom/movable/target, damage_type, damage_amount, hunger_restore, stops_at_crit, datum/callback/callback, checks_loc = TRUE)
 	. = ..()
 	src.target = target
-	if(!target)
+	if(QDELETED(target))
 		return COMPONENT_INCOMPATIBLE
 
 	src.damage_type = damage_type
@@ -74,7 +74,7 @@
 
 /datum/component/latch_feeding/proc/unlatch_target(living = TRUE, silent = FALSE)
 	var/mob/basic_mob = parent
-	if(!target)
+	if(QDELETED(target))
 		return
 	if(basic_mob.buckled)
 		if(!living)
@@ -92,7 +92,7 @@
 		basic_mob.buckled.unbuckle_mob(basic_mob, force=TRUE)
 
 /datum/component/latch_feeding/proc/check_buckled(mob/living/source, atom/movable/new_buckled)
-	if(!new_buckled && !unlatching)
+	if(QDELETED(new_buckled) && !unlatching)
 		unlatching = TRUE
 		unlatch_target()
 		qdel(src)
@@ -103,7 +103,7 @@
 	qdel(src)
 
 /datum/component/latch_feeding/process(seconds_per_tick)
-	if(!target)
+	if(QDELETED(target))
 		qdel(src)
 		return
 
@@ -118,6 +118,7 @@
 		else
 			living_target.apply_damage(damage_amount, BRUTE, spread_damage = TRUE)
 
-	if(parent) // ??? I was getting runtimes for no parent but IDK how
+	if(!QDELETED(parent)) // ??? I was getting runtimes for no parent but IDK how
 		SEND_SIGNAL(parent, COMSIG_MOB_FEED, target, hunger_restore)
+	if(!QDELETED(target)) // and I've also seen runtimes for this. i'm confused. ~lucy
 		SEND_SIGNAL(target, COMSIG_MOB_FED_ON, parent, hunger_restore)

@@ -177,7 +177,7 @@
 	return
 
 /obj/machinery/atmospherics/pipe/add_member(obj/machinery/atmospherics/considered_device)
-	parent.add_member(considered_device, src)
+	parent?.add_member(considered_device, src)
 
 /obj/machinery/atmospherics/components/add_member(obj/machinery/atmospherics/considered_device)
 	var/datum/pipeline/device_pipeline = return_pipenet(considered_device)

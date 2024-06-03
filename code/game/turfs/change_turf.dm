@@ -229,7 +229,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 				stashed_group.display_turf(new_turf)
 	else
 		for(var/turf/open/adjacent_turf as anything in atmos_adjacent_turfs)
-			if(QDELETED(adjacent_turf))
+			if(QDELETED(adjacent_turf) || !adjacent_turf.atmos_adjacent_turfs)
 				continue
 			adjacent_turf.atmos_adjacent_turfs -= src
 		atmos_adjacent_turfs = null
