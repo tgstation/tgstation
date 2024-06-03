@@ -5,7 +5,15 @@
 #define SIGN_ARMLESS 3
 #define SIGN_ARMS_DISABLED 4
 #define SIGN_TRAIT_BLOCKED 5
-#define SIGN_CUFFED 6
+#define SIGN_HANDS_COMPLETELY_RESTRAINED 6
+#define SIGN_SLOWLY_FROM_CUFFS 7
+
+// Defines to determine the tone of the signer's message.
+#define TONE_NEUTRAL 0 //! a statement
+#define TONE_INQUISITIVE 1 //! a question
+#define TONE_EMPHATIC 2 //! an exclamation
+#define TONE_INQUISITIVE_EMPHATIC 3 //! both a question and an exclamation (interrobang)
+
 
 /**
 * Reactive Sign Language Component for Carbons. Allows Carbons to speak with sign language if they have the relevant traits.
@@ -140,9 +148,14 @@
 			carbon_parent.visible_message("tries to sign, but can't with [carbon_parent.p_their()] hands full!", visible_message_flags = EMOTE_MESSAGE)
 			return COMPONENT_CANNOT_SPEAK
 
-		if(SIGN_CUFFED) // Restrained
+		if(SIGN_HANDS_COMPLETELY_RESTRAINED) // Restrained
 			carbon_parent.visible_message("tries to sign, but can't with [carbon_parent.p_their()] hands bound!", visible_message_flags = EMOTE_MESSAGE)
 			return COMPONENT_CANNOT_SPEAK
+
+		// If we're handcuffed, we can still sign, but it's slow
+		if(SIGN_SLOWLY_FROM_CUFFS)
+			carbon_parent.visible_message("struggles, signing slowly with [carbon_parent.p_their()] hands cuffed...", visible_message_flags = EMOTE_MESSAGE)
+			return COMPONENT_IGNORE_CAN_SPEAK
 
 		if(SIGN_ARMLESS) // No arms
 			to_chat(carbon_parent, span_warning("You can't sign with no hands!"))
@@ -181,9 +194,12 @@
 
 		busy_hands++
 
-	// Handcuffed or otherwise restrained - can't talk
+	// Handcuffed or otherwise restrained
 	if(HAS_TRAIT(carbon_parent, TRAIT_RESTRAINED))
-		return SIGN_CUFFED
+		if(HAS_TRAIT_FROM_ONLY(carbon_parent, TRAIT_RESTRAINED, HANDCUFFED_TRAIT))
+			return SIGN_SLOWLY_FROM_CUFFS
+		else
+			return SIGN_HANDS_COMPLETELY_RESTRAINED
 	// Some other trait preventing us from using our hands now
 	else if(HAS_TRAIT(carbon_parent, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(carbon_parent, TRAIT_EMOTEMUTE))
 		return SIGN_TRAIT_BLOCKED
@@ -222,12 +238,15 @@
 	return SPELL_INVOCATION_ALWAYS_SUCCEED
 
 /// Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
-/// Stars out our message if we only have 1 hand free.
+/// Changes our message based on conditions that limit or alter our ability to communicate 
 /datum/component/sign_language/proc/on_treat_living_message(atom/movable/source, list/message_args)
 	SIGNAL_HANDLER
 
 	if(check_signables_state() == SIGN_ONE_HAND)
 		message_args[TREAT_MESSAGE_ARG] = stars(message_args[TREAT_MESSAGE_ARG])
+
+	if(check_signables_state() == SIGN_SLOWLY_FROM_CUFFS)
+		message_args[TREAT_MESSAGE_ARG] = stifled(message_args[TREAT_MESSAGE_ARG])
 
 	message_args[TREAT_TTS_MESSAGE_ARG] = ""
 
@@ -245,7 +264,7 @@
 
 	return HAS_TRAIT(source, TRAIT_CAN_SIGN_ON_COMMS) ? NONE : COMPONENT_CANNOT_USE_RADIO
 
-/// Replaces emphatic punctuation with periods. Changes tonal indicator and emotes eyebrow movement based on what is typed.
+/// Replaces emphatic punctuation with periods. Changes tonal indicator and emotes based on what is typed.
 /datum/component/sign_language/proc/on_say(mob/living/carbon/carbon_parent, list/speech_args)
 	SIGNAL_HANDLER
 
@@ -255,28 +274,50 @@
 	var/exclamation_found = findtext(message, "!")
 	// Is there a ?
 	var/question_found = findtext(message, "?")
+	var/emote_tone = TONE_NEUTRAL
+	if (exclamation_found && question_found)
+		emote_tone = TONE_INQUISITIVE_EMPHATIC
+	else if (exclamation_found)
+		emote_tone = TONE_EMPHATIC
+	else if (question_found)
+		emote_tone = TONE_INQUISITIVE
 
 	// Cut our last overlay before we replace it
 	if(timeleft(tonal_timerid) > 0)
 		remove_tonal_indicator()
 		deltimer(tonal_timerid)
-	// Prioritize questions
-	if(question_found)
-		tonal_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "signlang1", TYPING_LAYER)
-		carbon_parent.visible_message(span_notice("[carbon_parent] lowers [carbon_parent.p_their()] eyebrows."))
-	else if(exclamation_found)
-		tonal_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "signlang2", TYPING_LAYER)
-		carbon_parent.visible_message(span_notice("[carbon_parent] raises [carbon_parent.p_their()] eyebrows."))
-	// If either an exclamation or question are found
+	switch(emote_tone)
+		if(TONE_INQUISITIVE)
+			tonal_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "signlang1", TYPING_LAYER)
+		if(TONE_EMPHATIC)
+			tonal_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "signlang2", TYPING_LAYER)
+		if(TONE_INQUISITIVE_EMPHATIC)
+			tonal_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "signlang2", TYPING_LAYER)
+	// If there's a tonal indicator
 	if(!isnull(tonal_indicator) && carbon_parent.client?.typing_indicators)
 		carbon_parent.add_overlay(tonal_indicator)
 		tonal_timerid = addtimer(CALLBACK(src, PROC_REF(remove_tonal_indicator)), 2.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE | TIMER_DELETE_ME)
 	else // If we're not gonna use it, just be sure we get rid of it
 		tonal_indicator = null
 
+	// Only emote the tone if we have one and aren't already emoting the handcuffed message
+	if(!carbon_parent.handcuffed && emote_tone)
+		emote_tone(carbon_parent, emote_tone)
+
 	// remove the ! and ? symbols from message at the end
 	message = sanitize_message(message)
 	speech_args[SPEECH_MESSAGE] = message
+
+/// Send a visible message depending on the tone of the message that the sender is trying to convey to the world.
+/datum/component/sign_language/proc/emote_tone(mob/living/carbon/carbon_parent, emote_tone)
+	switch(emote_tone)
+		if(TONE_INQUISITIVE)
+			carbon_parent.visible_message(span_bold("quirks [carbon_parent.p_their()] brows quizzically."), visible_message_flags = EMOTE_MESSAGE)
+		if(TONE_EMPHATIC)
+			carbon_parent.visible_message(span_bold("widens [carbon_parent.p_their()] eyes emphatically!"), visible_message_flags = EMOTE_MESSAGE)
+		if(TONE_INQUISITIVE_EMPHATIC)
+			carbon_parent.visible_message(span_bold("wears an intense, befuddled expression!"), visible_message_flags = EMOTE_MESSAGE)
+
 
 /// Removes the tonal indicator overlay completely
 /datum/component/sign_language/proc/remove_tonal_indicator()
@@ -292,4 +333,9 @@
 #undef SIGN_ARMLESS
 #undef SIGN_ARMS_DISABLED
 #undef SIGN_TRAIT_BLOCKED
-#undef SIGN_CUFFED
+#undef SIGN_HANDS_COMPLETELY_RESTRAINED
+#undef SIGN_SLOWLY_FROM_CUFFS
+#undef TONE_NEUTRAL
+#undef TONE_INQUISITIVE
+#undef TONE_EMPHATIC
+#undef TONE_INQUISITIVE_EMPHATIC
