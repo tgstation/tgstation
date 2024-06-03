@@ -15,9 +15,9 @@ import { CargoData } from './types';
 
 export function CargoCart(props) {
   const { act, data } = useBackend<CargoData>();
-  const { requestonly, away, cart = [], docked, location } = data;
+  const { can_send, away, cart = [], docked, location } = data;
 
-  const sendable = !away && !!docked;
+  const sendable = !!away && !!docked;
 
   return (
     <Stack fill vertical>
@@ -26,8 +26,8 @@ export function CargoCart(props) {
           <CheckoutItems />
         </Section>
       </Stack.Item>
-      <Stack.Item>
-        {cart.length > 0 && !requestonly && (
+      {cart.length > 0 && !!can_send && (
+        <Stack.Item>
           <Section align="right">
             <Stack fill align="center">
               <Stack.Item grow>
@@ -47,8 +47,8 @@ export function CargoCart(props) {
               </Stack.Item>
             </Stack>
           </Section>
-        )}
-      </Stack.Item>
+        </Stack.Item>
+      )}
     </Stack>
   );
 }

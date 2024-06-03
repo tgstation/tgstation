@@ -78,6 +78,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(!isturf(thing.loc)) // no extracting stuff inside other stuff
 		return
 	if(thing.anchored || (thing.move_resist > max_force_fulton))
+		balloon_alert(user, "too heavy!")
 		return
 
 	balloon_alert_to_viewers("attaching...")

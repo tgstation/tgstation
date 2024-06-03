@@ -235,9 +235,10 @@ multiple modular subtrees with behaviors
 ///Called when the AI controller pawn changes z levels, we check if there's any clients on the new one and wake up the AI if there is.
 /datum/ai_controller/proc/on_changed_z_level(atom/source, turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	SIGNAL_HANDLER
-	var/mob/mob_pawn = pawn
-	if((mob_pawn?.client && !continue_processing_when_client))
-		return
+	if (ismob(pawn))
+		var/mob/mob_pawn = pawn
+		if((mob_pawn?.client && !continue_processing_when_client))
+			return
 	if(old_turf)
 		SSai_controllers.ai_controllers_by_zlevel[old_turf.z] -= src
 	if(new_turf)
@@ -472,7 +473,10 @@ multiple modular subtrees with behaviors
 
 /// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding. Return the access list you want to use
 /datum/ai_controller/proc/get_access()
-	return
+	if(!isliving(pawn))
+		return
+	var/mob/living/living_pawn = pawn
+	return living_pawn.get_access()
 
 ///Returns the minimum required distance to preform one of our current behaviors. Honestly this should just be cached or something but fuck you
 /datum/ai_controller/proc/get_minimum_distance()

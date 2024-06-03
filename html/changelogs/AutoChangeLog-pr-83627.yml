@@ -1,0 +1,4 @@
+author: "Iajret"
+delete-after: True
+changes:
+  - bugfix: "fixed being able to confirm cargo orders from cargo request console (and, probably, from PDAs)"
