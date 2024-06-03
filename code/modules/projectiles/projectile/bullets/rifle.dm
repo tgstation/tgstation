@@ -80,7 +80,7 @@
 
 /obj/projectile/bullet/rebar/zaukerite
 	name = "zaukerite shard"
-	icon_state = "rebar"
+	icon_state = "rebar_zaukerite"
 	damage = 60
 	speed = 0.4
 	dismemberment = 2
@@ -95,7 +95,7 @@
 
 /obj/projectile/bullet/rebar/hydrogen
 	name = "metallic hydrogen bolt"
-	icon_state = "rebar"
+	icon_state = "rebar_hydrogen"
 	damage = 40
 	speed = 0.6
 	dismemberment = 0 //goes through clean.
@@ -110,7 +110,7 @@
 
 /obj/projectile/bullet/rebar/healium
 	name = "healium bolt"
-	icon_state = "rebar"
+	icon_state = "rebar_healium"
 	damage = 0
 	speed = 0.4
 	dismemberment = 0
@@ -138,7 +138,7 @@
 
 /obj/projectile/bullet/rebar/supermatter
 	name = "supermatter bolt"
-	icon_state = "rebar"
+	icon_state = "rebar_supermatter"
 	damage = 0
 	speed = 0.4
 	dismemberment = 0
@@ -167,13 +167,13 @@
 
 /obj/projectile/bullet/paperball
 	desc = "Doink!"
-	damage = 1 // It's a damn toy.
+	damage = 0 // It's a damn toy.
 	range = 10
 	shrapnel_type = null
 	embedding = null
 	name = "paper ball"
 	desc = "doink!"
 	damage_type = BRUTE
-	icon_state = "rebar"
+	icon_state = "paperball"
 
 
