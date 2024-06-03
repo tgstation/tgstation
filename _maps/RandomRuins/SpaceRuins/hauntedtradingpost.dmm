@@ -791,7 +791,9 @@
 "hf" = (
 /obj/structure/cable/layer1,
 /obj/structure/sign/poster/contraband/syndicate_pistol/directional/west,
-/mob/living/simple_animal/bot/secbot,
+/mob/living/simple_animal/bot/secbot{
+	faction = list("Syndicate")
+	},
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
 "hi" = (
@@ -1078,8 +1080,8 @@
 /obj/structure/cable/layer1,
 /obj/structure/rack,
 /obj/item/flashlight/seclite{
-	name = "syndicate torch";
-	desc = "A robust torch used by syndicate agents. 'Torch' is what syndicate agents call flashlights."
+	name = "syndicate flashlight";
+	desc = "A robust flashlight used by syndicate security."
 	},
 /obj/item/megaphone{
 	inhand_icon_state = "megaphone-cargo";
@@ -2473,7 +2475,6 @@
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "vH" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/camera/xray/directional/east,
 /obj/effect/mine/shrapnel/sting,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
@@ -4001,6 +4002,7 @@
 	pixel_x = -4;
 	pixel_y = 6
 	},
+/obj/machinery/camera/xray/directional/east,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "IT" = (
