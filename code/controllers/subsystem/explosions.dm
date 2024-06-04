@@ -556,7 +556,7 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 				listener.playsound_local(epicenter, null, far_volume, TRUE, frequency, sound_to_use = echo_sound, distance_multiplier = 0)
 
 			if(base_shake_amount || quake_factor)
-				base_shake_amount = max(base_shake_amount, quake_factor * 3, 0) // Devastating explosions rock the station and ground
+				base_shake_amount = max(base_shake_amount, quake_factor * 5, 0) // Devastating explosions rock the station and ground
 				shake_camera(listener, FAR_SHAKE_DURATION, min(base_shake_amount, FAR_SHAKE_CAP))
 
 		else if(!isspaceturf(listener_turf) && echo_factor) // Big enough explosions echo through the hull.
