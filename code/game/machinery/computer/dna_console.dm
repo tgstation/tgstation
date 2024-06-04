@@ -832,7 +832,7 @@
 				// If there's an operational connected scanner, we can use its upgrades
 				//  to improve our injector's genetic damage generation
 				var/cd_reduction_mult = 1 + ACTIVATOR_COOLDOWN_MULTIPLIER
-				var/base_cd_time = min(MIN_ACTIVATOR_TIMEOUT, abs(HM.instability))
+				var/base_cd_time = max(MIN_ACTIVATOR_TIMEOUT, abs(HM.instability))
 
 				if(scanner_operational())
 					I.damage_coeff = connected_scanner.damage_coeff*4
@@ -848,7 +848,7 @@
 				// If there's an operational connected scanner, we can use its upgrades
 				//  to improve our injector's genetic damage generation
 				var/cd_reduction_mult = 1 + INJECTOR_COOLDOWN_MULTIPLIER
-				var/base_cd_time = min(MIN_INJECTOR_TIMEOUT, abs(HM.instability))
+				var/base_cd_time = max(MIN_INJECTOR_TIMEOUT, abs(HM.instability))
 
 				if(scanner_operational())
 					I.damage_coeff = connected_scanner.damage_coeff*4
@@ -1578,7 +1578,7 @@
 			// If there's an operational connected scanner, we can use its upgrades
 			//  to improve our injector's genetic damage generation
 			var/cd_reduction_mult = 1 + ADVANCED_COOLDOWN_MULTIPLIER
-			var/base_cd_time = min(MIN_ADVANCED_TIMEOUT, abs(total_stability))
+			var/base_cd_time = max(MIN_ADVANCED_TIMEOUT, abs(total_stability))
 
 			if(scanner_operational())
 				I.damage_coeff = connected_scanner.damage_coeff*4

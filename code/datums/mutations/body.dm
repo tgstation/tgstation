@@ -164,7 +164,7 @@
 	to_chat(parent, span_danger("You hit your head on \the [whacked_by]'s header!"))
 	var/dmg = HAS_TRAIT(parent, TRAIT_HEAD_INJURY_BLOCKED) ? rand(1,4) : rand(2,9)
 	parent.apply_damage(dmg, BRUTE, BODY_ZONE_HEAD)
-	parent.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+	parent.do_attack_animation(whacked_by, ATTACK_EFFECT_PUNCH)
 	playsound(whacked_by, 'sound/effects/bang.ogg', 10, TRUE)
 	parent.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
 
