@@ -7777,8 +7777,27 @@
 /area/ruin/space/ks13/hallway/central)
 "XF" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/closet/crate/radiation,
+/obj/structure/closet/crate/radiation{
+	crate_climb_time = 5000;
+	can_install_electronics = 0;
+	divable = 0;
+	has_closed_overlay = 0
+	},
 /obj/machinery/power/supermatter_crystal/shard,
+/obj/effect/supplypod_rubble,
+/obj/structure/closet{
+	desc = "A Nanotrasen supply drop pod.";
+	name = "supply pod";
+	delivery_icon = null;
+	icon_state = "pod";
+	icon = 'icons/obj/supplypods.dmi';
+	pixel_x = -16;
+	anchorable = 0;
+	anchored = 1;
+	base_icon_state = "pod";
+	can_weld_shut = 0;
+	opened = 1
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/medical/medbay)
 "XG" = (
@@ -7954,7 +7973,6 @@
 /obj/item/stack/cable_coil/cut,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/effect/supplypod_rubble,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/medical/medbay)
 "Yy" = (
