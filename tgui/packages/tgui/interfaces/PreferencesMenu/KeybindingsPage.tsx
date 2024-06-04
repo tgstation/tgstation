@@ -117,6 +117,7 @@ const moveToBottom = (entries: [string, unknown][], findCategory: string) => {
 class KeybindingButton extends Component<{
   currentHotkey?: string;
   onClick?: () => void;
+  onContextMenu?: () => void;
   typingHotkey?: string;
 }> {
   shouldComponentUpdate(nextProps) {
@@ -127,7 +128,7 @@ class KeybindingButton extends Component<{
   }
 
   render() {
-    const { currentHotkey, onClick, typingHotkey } = this.props;
+    const { currentHotkey, onClick, onContextMenu, typingHotkey } = this.props;
 
     const child = (
       <Button
@@ -137,6 +138,10 @@ class KeybindingButton extends Component<{
         onClick={(event) => {
           event.stopPropagation();
           onClick?.();
+        }}
+        onContextMenu={(event) => {
+          event.preventDefault();
+          onContextMenu?.();
         }}
         selected={typingHotkey !== undefined}
       >
@@ -435,6 +440,11 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
                                         keybindingId,
                                         key,
                                       )}
+                                      onContextMenu={(e) => {
+                                        act('reset_keybinds_to_defaults', {
+                                          keybind_name: keybindingId,
+                                        });
+                                      }}
                                     />
                                   </Stack.Item>
                                 ))}
