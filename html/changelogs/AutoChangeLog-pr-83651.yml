@@ -1,0 +1,4 @@
+author: "vendingmachine24"
+delete-after: True
+changes:
+  - spellcheck: "Changed grammar in cat_house.dm"
