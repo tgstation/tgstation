@@ -289,7 +289,7 @@
 			continue
 		to_chat(living_mob, span_warning("You are struck by an arc of electricity!"))
 		src.Beam(living_mob, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
-		living_mob.electrocute_act(shock_damage, host_machine, SHOCK_NOGLOVES, stun_duration, jitter_time, stutter_time)
+		living_mob.electrocute_act(shock_damage, host_machine, 1, SHOCK_NOGLOVES, stun_duration, jitter_time, stutter_time)
 	for(var/obj/item/food/deadmouse in range(shock_range, src))
 		src.Beam(deadmouse, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
 	do_sparks(number = 1, source = host_machine)
