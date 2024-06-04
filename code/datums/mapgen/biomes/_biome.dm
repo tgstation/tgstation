@@ -76,7 +76,7 @@
 		if(gen_turf.turf_flags & NO_RUINS)
 			new_turf.turf_flags |= NO_RUINS
 
-		// CHECK_TICK
+		CHECK_TICK
 
 	return new_turfs
 

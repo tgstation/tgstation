@@ -31,10 +31,9 @@
 	var/list/weighted_feature_spawn_list
 	///Expanded list of extra features that can spawn in the area. Reads from the weighted list
 	var/list/feature_spawn_list
-	/// The turf types to replace with a biome-related turf, as an associative
-	/// list of type = TRUE. Leave empty for all open turfs (but not closed
-	/// turfs) to be hijacked.
-	var/list/turf/open/turfs_affected_by_biome = list()
+	/// The turf types to replace with a biome-related turf, as typecache.
+	/// Leave empty for all open turfs (but not closed turfs) to be hijacked.
+	var/list/biome_accepted_turfs = list()
 	/// An associative list of biome type to the list of turfs that were
 	/// generated of that biome specifically. Helps to improve the efficiency
 	/// of biome-related operations. Is populated through
@@ -161,7 +160,7 @@
 
 	for(var/turf/gen_turf as anything in turfs) //Go through all the turfs and generate them
 		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "0"
-		var/turf/new_turf = pick(closed ? expanded_closed_turfs : expanded_open_turfs)
+		var/new_turf_type = pick(closed ? expanded_closed_turfs : expanded_open_turfs)
 
 		var/datum/biome/selected_biome
 
@@ -183,13 +182,13 @@
 
 		// Currently, we only affect open turfs, because biomes don't currently
 		// have a definition for biome-specific closed turfs.
-		if((!length(turfs_affected_by_biome) && !closed) || turfs_affected_by_biome[new_turf])
+		if((!length(biome_accepted_turfs) && !closed) || biome_accepted_turfs[new_turf_type])
 			LAZYADD(generated_turfs_per_biome[selected_biome], gen_turf)
 
 		else
 			// The assumption is this will be faster then changeturf, and changeturf isn't required since by this point
 			// The old tile hasn't got the chance to init yet
-			new_turf = new new_turf(gen_turf)
+			var/turf/new_turf = new new_turf_type(gen_turf)
 
 			if(gen_turf.turf_flags & NO_RUINS)
 				new_turf.turf_flags |= NO_RUINS
