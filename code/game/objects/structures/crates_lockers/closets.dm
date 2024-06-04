@@ -382,7 +382,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		context[SCREENTIP_CONTEXT_RMB] = anchored ? "Unanchor" : "Anchor"
 		screentip_change = TRUE
 
-	if(!locked && (welded || !can_weld_shut))
+	if(!locked && !opened (welded || !can_weld_shut))
 		if(!secure)
 			if(!broken && can_install_electronics && istype(held_item, /obj/item/electronics/airlock))
 				context[SCREENTIP_CONTEXT_LMB] = "Install Electronics"
