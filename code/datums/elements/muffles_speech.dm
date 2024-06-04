@@ -15,7 +15,8 @@
 
 /datum/element/muffles_speech/proc/equipped(obj/item/source, mob/user, slot)
 	SIGNAL_HANDLER
-	RegisterSignal(user, COMSIG_MOB_SAY, PROC_REF(muzzle_talk))
+	if(source.slot_flags & slot)
+		RegisterSignal(user, COMSIG_MOB_SAY, PROC_REF(muzzle_talk))
 
 /datum/element/muffles_speech/proc/dropped(obj/item/source, mob/user)
 	SIGNAL_HANDLER
