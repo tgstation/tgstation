@@ -1,0 +1,5 @@
+author: "lmenvs"
+delete-after: True
+changes:
+  - rscadd: "Adds donator items for ellie. Thank you for your patronage!"
+  - rscadd: "Adds Pim, Glep and Mr. Frog plushes, complete with their own squeaks.  These are all available to donators in the loadout."
