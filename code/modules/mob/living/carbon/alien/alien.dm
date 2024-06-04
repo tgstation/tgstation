@@ -72,7 +72,10 @@
 		clear_alert(ALERT_XENO_FIRE)
 
 /mob/living/carbon/alien/getTrail()
-	return pick(list("xltrails_1", "xltrails2"))
+	if(getBruteLoss() < 200)
+		return pick (list("xltrails_1", "xltrails2"))
+	else
+		return pick (list("xttrails_1", "xttrails2"))
 
 /*----------------------------------------
 Proc: AddInfectionImages()
