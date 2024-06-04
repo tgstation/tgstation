@@ -762,13 +762,12 @@
 	..()
 
 /obj/machinery/transport/tram_controller/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER && has_cover)
 		context[SCREENTIP_CONTEXT_RMB] = panel_open ? "close panel" : "open panel"
 
-	if(!held_item)
+	if(!held_item && has_cover)
 		context[SCREENTIP_CONTEXT_LMB] = cover_open ? "access controls" : "open cabinet"
 		context[SCREENTIP_CONTEXT_RMB] = cover_open ? "close cabinet" : "toggle lock"
-
 
 	if(panel_open)
 		if(held_item?.tool_behaviour == TOOL_WRENCH)
@@ -789,14 +788,15 @@
 
 /obj/machinery/transport/tram_controller/examine(mob/user)
 	. = ..()
-	. += span_notice("The door appears to be [cover_locked ? "locked. Swipe an ID card to unlock" : "unlocked. Swipe an ID card to lock"].")
-	if(panel_open)
-		. += span_notice("It is secured to the tram wall with [EXAMINE_HINT("bolts.")]")
-		. += span_notice("The maintenance panel can be closed with a [EXAMINE_HINT("screwdriver.")]")
-	else
-		. += span_notice("The maintenance panel can be opened with a [EXAMINE_HINT("screwdriver.")]")
+	if(has_cover)
+		. += span_notice("The door appears to be [cover_locked ? "locked. Swipe an ID card to unlock" : "unlocked. Swipe an ID card to lock"].")
+		if(panel_open)
+			. += span_notice("It is secured to the tram wall with [EXAMINE_HINT("bolts.")]")
+			. += span_notice("The maintenance panel can be closed with a [EXAMINE_HINT("screwdriver.")]")
+		else
+			. += span_notice("The maintenance panel can be opened with a [EXAMINE_HINT("screwdriver.")]")
 
-	if(cover_open)
+	if(cover_open || !has_cover)
 		. += span_notice("The [EXAMINE_HINT("yellow reset button")] resets the tram controller if a problem occurs or needs to be restarted.")
 		. += span_notice("The [EXAMINE_HINT("red stop button")] immediately stops the tram, requiring a reset afterwards.")
 		. += span_notice("The cabinet can be closed with a [EXAMINE_HINT("Right-click.")]")
@@ -808,16 +808,17 @@
 	if(user.combat_mode || cover_open)
 		return ..()
 
-	var/obj/item/card/id/id_card = user.get_id_in_hand()
-	if(!isnull(id_card))
-		try_toggle_lock(user, id_card)
-		return
+	if(has_cover)
+		var/obj/item/card/id/id_card = user.get_id_in_hand()
+		if(!isnull(id_card))
+			try_toggle_lock(user, id_card)
+			return
 
 	return ..()
 
 /obj/machinery/transport/tram_controller/attack_hand(mob/living/user, params)
 	. = ..()
-	if(cover_open)
+	if(cover_open || !has_cover)
 		return
 
 	if(cover_locked)
@@ -833,6 +834,8 @@
 
 /obj/machinery/transport/tram_controller/attack_hand_secondary(mob/living/user, params)
 	. = ..()
+	if(!has_cover)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(!cover_open)
 		var/obj/item/card/id/id_card = user.get_idcard(TRUE)
@@ -872,6 +875,9 @@
 
 /obj/machinery/transport/tram_controller/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
+	if(!has_cover)
+		return
+
 	if(panel_open && cover_open)
 		balloon_alert(user, "unsecuring...")
 		tool.play_tool_sound(src)
@@ -1098,6 +1104,7 @@
 	density = TRUE
 	layer = BELOW_OBJ_LAYER
 	power_channel = AREA_USAGE_EQUIP
+	cover_open = TRUE
 	has_cover = FALSE
 
 /obj/machinery/transport/tram_controller/tcomms/emp_act(severity)
