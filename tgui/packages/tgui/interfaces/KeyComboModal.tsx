@@ -1,6 +1,7 @@
 import { KEY } from 'common/keys';
 import { useState } from 'react';
 
+import { isEscape } from '../../common/keys';
 import { useBackend, useLocalState } from '../backend';
 import { Autofocus, Box, Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -20,7 +21,7 @@ const isStandardKey = (event: React.KeyboardEvent<HTMLDivElement>): boolean => {
     event.key !== KEY.Alt &&
     event.key !== KEY.Control &&
     event.key !== KEY.Shift &&
-    event.key !== KEY.Escape
+    isEscape(event.key) !== true
   );
 };
 
@@ -97,7 +98,7 @@ export const KeyComboModal = (props) => {
             if (event.key === KEY.Enter) {
               act('submit', { entry: input });
             }
-            if (event.key === KEY.Escape) {
+            if (isEscape(event.key)) {
               act('cancel');
             }
             return;
@@ -109,7 +110,7 @@ export const KeyComboModal = (props) => {
             setValue(formatKeyboardEvent(event));
             setBinding(false);
             return;
-          } else if (event.key === KEY.Escape) {
+          } else if (isEscape(event.key)) {
             setValue(init_value);
             setBinding(false);
             return;
