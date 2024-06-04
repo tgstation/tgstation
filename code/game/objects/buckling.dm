@@ -309,7 +309,7 @@
 
 	// If the mob we're attempting to buckle is not stood on this atom's turf and it isn't the user buckling themselves,
 	// we'll try it with a 2 second do_after delay.
-	if(M != user && (get_turf(M) != get_turf(src)))
+	if(M != user && (get_turf(M) != get_turf(src)) && !iscyborg(user))
 		M.visible_message(span_warning("[user] starts buckling [M] to [src]!"),\
 			span_userdanger("[user] starts buckling you to [src]!"),\
 			span_hear("You hear metal clanking."))
