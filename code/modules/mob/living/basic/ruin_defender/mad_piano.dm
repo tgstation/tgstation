@@ -15,7 +15,7 @@
 	melee_damage_lower = 24
 	melee_damage_upper = 26
 	melee_attack_cooldown = 1 SECONDS
-	speed = 0
+	speed = 2
 	gender = NEUTER
 	basic_mob_flags = DEL_ON_DEATH
 	attack_sound = 'sound/effects/piano_hit.ogg'
@@ -28,7 +28,10 @@
 	var/name_aggro = "mad piano"
 	var/icon_aggro = "aggressive"
 	var/desc_aggro = "This instrument is aggressive! Better stay away from its big chomping teeth!"
-	var/speed_aggro = 2
+	//and when calm
+	var/name_calm
+	var/icon_calm
+	var/desc_calm
 
 /mob/living/basic/mad_piano/Initialize(mapload)
 	. = ..()
@@ -38,6 +41,9 @@
 	AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = 2, works_in_containers = FALSE)
 	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
+	name_calm = name
+	icon_calm = icon_state
+	desc_calm = desc
 
 /mob/living/basic/mad_piano/proc/aggro_tantrum(datum/source, mob/living/victim)
 	SIGNAL_HANDLER
@@ -46,15 +52,13 @@
 	name = name_aggro
 	icon_state = icon_aggro
 	desc = desc_aggro
-	speed = speed_aggro
-	ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
+	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
 
 /mob/living/basic/mad_piano/proc/calm_down(datum/source)
-	icon_state = initial(icon_state)
-	desc = initial(desc)
-	name = initial(name)
-	speed = initial(speed)
-	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
+	icon_state = icon_calm
+	desc = desc_calm
+	name = name_calm
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
 
 /mob/living/basic/mad_piano/med_hud_set_health() //sneaky sneaky sneaky
 	return

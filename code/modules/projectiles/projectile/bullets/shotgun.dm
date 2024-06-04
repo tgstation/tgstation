@@ -109,6 +109,8 @@
 	embedding = null
 
 /obj/projectile/bullet/pellet/flechette
+	name = "flechette"
+	icon_state = "pellet"
 	damage = 4
 	wound_bonus = -25
 	bare_wound_bonus = 50
