@@ -195,7 +195,7 @@
 	attached = 0
 
 /obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target)
-	if(!target  || target.stat == DEAD) //was taken off or something
+	if(!target || target.stat == DEAD) //was taken off or something
 		return
 
 	if(iscarbon(target))
