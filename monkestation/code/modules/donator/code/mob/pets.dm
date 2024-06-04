@@ -147,3 +147,48 @@
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 
+/mob/living/basic/pet/gumball_goblin
+	name = "Gumball Goblin"
+	desc = "AAAAAAAAAAAAAAAA"
+	icon = 'monkestation/code/modules/donator/icons/mob/pets.dmi'
+	icon_state = "gumball_goblin"
+	icon_living = "gumball_goblin"
+	icon_dead = "gumball_goblin_dead"
+	gold_core_spawnable = NO_SPAWN
+
+	///Ability
+	var/datum/action/cooldown/lay_gumball/gumball_ability
+
+
+/mob/living/basic/pet/gumball_goblin/Initialize(mapload)
+	. = ..()
+	gumball_ability = new()
+	gumball_ability.Grant(src)
+
+
+///drops peels around the mob when activated
+/datum/action/cooldown/lay_gumball
+	name = "Lay gumball"
+	desc = "Produce a gumball"
+	cooldown_time = 15 SECONDS
+	button_icon_state = "gumball"
+	button_icon = 'icons/obj/food/lollipop.dmi'
+	background_icon_state = "bg_nature"
+	overlay_icon_state = "bg_nature_border"
+	///which type of gumballs to spawn
+	var/gumball_type = /obj/item/food/gumball
+	///How many gumballs to spawn
+	var/gumball_amount = 1
+
+/datum/action/cooldown/lay_gumball/Activate(atom/target)
+	. = ..()
+	var/list/reachable_turfs = list()
+	for(var/turf/adjacent_turf in RANGE_TURFS(1, owner.loc))
+		if(adjacent_turf == owner.loc || !owner.CanReach(adjacent_turf) || !isopenturf(adjacent_turf))
+			continue
+		reachable_turfs += adjacent_turf
+
+	var/gumballs_to_spawn = min(gumball_amount, reachable_turfs.len)
+	for(var/i in 1 to gumballs_to_spawn)
+		new gumball_type(pick_n_take(reachable_turfs))
+	StartCooldown()

@@ -67,3 +67,35 @@
 	desc = "A plush of the Lizard Basil. ~Handcrafted lovingly for quilark"
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "quilark"
+
+/obj/item/toy/plush/gumball_goblin
+	name = "gumball goblin plush"
+	desc = "A plush of a Gumball Goblin. He was abducted while pondering his gumballs.  Help. ~Handcrafted lovingly for elliethedarksun"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "gumball_goblin"
+
+
+/obj/item/toy/plush/glep
+	name = "glep plush"
+	desc = "A plush of Glep."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "glep"
+	squeak_override = list('monkestation/code/modules/donator/sounds/glep1.ogg'=1,
+						'monkestation/code/modules/donator/sounds/glep2.ogg'=1,
+						'monkestation/code/modules/donator/sounds/glep3.ogg'=1)
+
+/obj/item/toy/plush/mr_frog
+	name = "mr frog plush"
+	desc = "A plush of a classic beloved television star, Mr. Frog."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "mr_frog"
+	squeak_override = list('monkestation/code/modules/donator/sounds/mr_frog1.ogg'=1,
+						'monkestation/code/modules/donator/sounds/mr_frog2.ogg'=1,
+						'monkestation/code/modules/donator/sounds/mr_frog3.ogg'=1)
+
+/obj/item/toy/plush/pim
+	name = "pim plush"
+	desc = "A plush of Pim."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "pim"
+	squeak_override = list('monkestation/code/modules/donator/sounds/pim.ogg'=1)

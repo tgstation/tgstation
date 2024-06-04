@@ -389,3 +389,21 @@
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "sechud_terminated"
+
+
+/obj/item/clothing/suit/costume/gumball_wizard_robe
+	name = "\improper Gumball Wizard Robe"
+	desc = "A robe adorned with brightly colored gumballs."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "gumball_wizard_robe"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|ARMS|LEGS
+
+/obj/item/clothing/head/costume/gumball_wizard_hat
+	name = "\improper Gumball Wizard Robe"
+	desc = "A hat adorned with a brightly colored jewel."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "gumball_wizard_hat"
+	inhand_icon_state = null

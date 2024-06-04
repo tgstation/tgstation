@@ -1,3 +1,23 @@
+//assorted plushes
+/datum/loadout_item/toys/pim
+	name = "Pim Plush"
+	item_path = /obj/item/toy/plush/pim
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/toys/glep
+	name = "Glep Plush"
+	item_path = /obj/item/toy/plush/glep
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/toys/mr_frog
+	name = "Mr. Frog Plush"
+	item_path = /obj/item/toy/plush/mr_frog
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+
 //bidlink
 
 /datum/loadout_item/suit/cirno_outfit
@@ -394,6 +414,7 @@
 	item_path = /obj/item/clothing/neck/bell
 	donator_only = TRUE
 	requires_purchase = FALSE
+
 //OLIVER ITEMS
 /datum/loadout_item/suit/jacket_oliver
 	name = "Scarved Jacket"
@@ -408,3 +429,36 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 	restricted_roles = list(JOB_SECURITY_OFFICER,JOB_SECURITY_ASSISTANT,JOB_HEAD_OF_SECURITY,JOB_WARDEN)
+
+
+//elliethedarksun
+/datum/loadout_item/pocket_items/donator/gumball_goblin
+	name = "Pet Delivery Beacon - Gumball Goblin"
+	item_path = /obj/item/choice_beacon/pet/donator/gumball_goblin
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("elliethedarksun")
+
+/datum/loadout_item/suit/gumball_wizard_robe
+	name = "Gumball Wizard Robe"
+	item_path = /obj/item/clothing/suit/costume/gumball_wizard_robe
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/gumball_wizard_hat
+	name = "Gumball Wizard Hat"
+	item_path = /obj/item/clothing/head/costume/gumball_wizard_hat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/effects/gumball_goblin
+	ckeywhitelist = list("elliethedarksun")
+	name = "Quil Maid Transformation"
+	item_path = /obj/item/effect_granter/donator/gumball_goblin
+	requires_purchase = FALSE
+
+/datum/loadout_item/toys/gumball_goblin
+	name = "Gumball Goblin Plush"
+	item_path = /obj/item/toy/plush/gumball_goblin
+	donator_only = TRUE
+	requires_purchase = FALSE
