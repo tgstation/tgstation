@@ -67,6 +67,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge)
+"at" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space/ks13/engineering/singulo)
 "av" = (
 /obj/effect/spawner/structure/window/hollow/end{
 	dir = 1
@@ -276,6 +280,15 @@
 /obj/effect/mapping_helpers/apc/unlocked,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/engineering/sb_bow_solars_control)
+"cY" = (
+/obj/structure/cable,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=delta-3";
+	location = "delta-2"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/ks13/hallway/starboard_bow)
 "de" = (
 /obj/structure/girder/reinforced,
 /turf/open/floor/plating/airless,
@@ -395,6 +408,15 @@
 /obj/item/paper/fluff/ruins/thederelict/syndie_mission,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/aft_solars_control)
+"em" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=delta-3";
+	location = "delta-2"
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/hallway/central)
 "eu" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/engineering/vending_restock,
@@ -881,6 +903,11 @@
 /obj/machinery/gravity_generator/main,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/grav_gen)
+"lK" = (
+/obj/structure/lattice,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space/ks13/engineering/singulo)
 "lM" = (
 /obj/machinery/door/window/right/directional/east{
 	name = "Med-Dorms Access"
@@ -912,6 +939,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ks13/medical/morgue)
+"ml" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=delta-3";
+	location = "delta-2"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/hallway/central)
 "mv" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/mapping_helpers/apc/no_charge,
@@ -1065,6 +1101,10 @@
 /area/ruin/space/ks13/engineering/singulo)
 "ow" = (
 /obj/item/stack/cable_coil/cut,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=delta-3";
+	location = "delta-2"
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/dorms)
 "ox" = (
@@ -1778,6 +1818,9 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/ks13/command/bridge_hall)
+"sj" = (
+/turf/template_noop,
+/area/ruin/space/ks13/engineering/singulo)
 "sk" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -2740,6 +2783,10 @@
 	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=delta-3";
+	location = "delta-2"
+	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
 "xE" = (
@@ -2766,8 +2813,13 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/aft_solars_control)
 "xJ" = (
-/turf/template_noop,
-/area/ruin/space/ks13/engineering/singulo)
+/obj/structure/cable,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=delta-3";
+	location = "delta-2"
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/hallway/central)
 "xL" = (
 /obj/structure/rack,
 /obj/item/circuitboard/machine/chem_dispenser/drinks{
@@ -2883,6 +2935,10 @@
 "yn" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/structure/cable,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=delta-3";
+	location = "delta-2"
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/medical/medbay)
 "yp" = (
@@ -2998,6 +3054,10 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/departments/security/directional/west,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=delta-3";
+	location = "delta-2"
+	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
 "yV" = (
@@ -3249,6 +3309,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/service/hydro)
+"Ah" = (
+/obj/structure/cable,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=delta-3";
+	location = "delta-2"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/ks13/hallway/starboard_bow)
 "Ai" = (
 /obj/item/shard{
 	icon_state = "small";
@@ -3683,6 +3751,15 @@
 "Cy" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/ks13/science/rnd)
+"Cz" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=delta-3";
+	location = "delta-2"
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/hallway/aft)
 "CC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -3973,6 +4050,10 @@
 	pixel_x = 6;
 	dir = 9;
 	pixel_y = -3
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=delta-3";
+	location = "delta-2"
 	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/central)
@@ -4441,7 +4522,6 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/tool_storage)
 "GF" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end,
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 10
 	},
@@ -4769,6 +4849,14 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/engine/air,
 /area/ruin/space/ks13/science/ordnance)
+"Ik" = (
+/obj/structure/cable,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=delta-3";
+	location = "delta-2"
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/hallway/aft)
 "Iq" = (
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron/airless,
@@ -4840,6 +4928,11 @@
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/security/court_hall)
+"IP" = (
+/obj/structure/table_frame,
+/obj/structure/fireaxecabinet/directional/east,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/engineering/atmos)
 "IQ" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 4
@@ -4876,6 +4969,15 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
+"Jb" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=delta-3";
+	location = "delta-2"
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/hallway/central)
 "Jc" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/mapping_helpers/broken_floor,
@@ -5706,6 +5808,10 @@
 "NG" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=delta-3";
+	location = "delta-2"
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/hallway/central)
 "NH" = (
@@ -7434,6 +7540,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge)
+"Wq" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=delta-3";
+	location = "delta-2"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/ks13/command/bridge_hall)
 "Wt" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/airless,
@@ -7665,6 +7780,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/central)
+"XF" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/closet/crate/radiation,
+/obj/machinery/power/supermatter_crystal/shard,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/medical/medbay)
 "XG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -7707,6 +7828,10 @@
 /obj/structure/chair/stool/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=delta-3";
+	location = "delta-2"
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/service/cafe)
 "XU" = (
@@ -7834,6 +7959,7 @@
 /obj/item/stack/cable_coil/cut,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/supplypod_rubble,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/medical/medbay)
 "Yy" = (
@@ -10599,7 +10725,7 @@ aa
 xx
 Os
 Co
-DS
+XF
 ty
 pO
 LN
@@ -11399,7 +11525,7 @@ NY
 XH
 pT
 pT
-Uw
+Jb
 QR
 FT
 pC
@@ -11758,7 +11884,7 @@ vj
 uH
 uH
 JI
-wq
+Ik
 gG
 ZK
 NW
@@ -11965,7 +12091,7 @@ zE
 yl
 GO
 yl
-pT
+xJ
 tY
 mb
 Qq
@@ -12056,9 +12182,9 @@ PI
 zv
 PI
 Jc
-xJ
-xJ
-xJ
+at
+sj
+sj
 Jc
 zv
 PI
@@ -12168,11 +12294,11 @@ zv
 ui
 PI
 zv
-xJ
-xJ
-xJ
-xJ
-xJ
+sj
+at
+at
+at
+sj
 PI
 PI
 Jc
@@ -12281,11 +12407,11 @@ te
 zv
 PI
 zv
-xJ
-xJ
-xJ
-xJ
-xJ
+at
+at
+sj
+at
+sj
 PI
 zv
 Jc
@@ -12394,11 +12520,11 @@ zv
 PI
 zv
 PI
-xJ
-xJ
-xJ
-xJ
-xJ
+sj
+at
+lK
+sj
+sj
 PI
 fg
 Jc
@@ -12508,9 +12634,9 @@ zv
 PI
 zv
 Jc
-xJ
-xJ
-xJ
+sj
+at
+sj
 PI
 PI
 fg
@@ -12988,7 +13114,7 @@ yj
 Aj
 tY
 zu
-TE
+IP
 MP
 TE
 vJ
@@ -14092,7 +14218,7 @@ rk
 rk
 Mj
 MT
-QR
+ml
 VJ
 AX
 mQ
@@ -14470,7 +14596,7 @@ QP
 ih
 Zi
 Cc
-xk
+Cz
 Gg
 xk
 yI
@@ -15003,7 +15129,7 @@ DM
 nf
 wv
 XV
-iF
+em
 cf
 wv
 rk
@@ -15094,7 +15220,7 @@ aa
 aa
 As
 OU
-wg
+Wq
 Ko
 Lw
 wg
@@ -15213,7 +15339,7 @@ DZ
 pW
 Na
 OU
-wg
+Wq
 FM
 Vm
 FM
@@ -15221,7 +15347,7 @@ FM
 wg
 dY
 qX
-QR
+ml
 yR
 xd
 wv
@@ -16204,7 +16330,7 @@ Uq
 zC
 PM
 sE
-Jd
+Ah
 HB
 wb
 uY
@@ -16215,7 +16341,7 @@ Hj
 On
 On
 Pt
-Pt
+cY
 Ey
 IT
 dT
@@ -16337,7 +16463,7 @@ wg
 wg
 sN
 wg
-wg
+Wq
 rl
 MV
 aJ
