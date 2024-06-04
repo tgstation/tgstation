@@ -10,7 +10,9 @@
 	var/controller_active = FALSE
 	///whether all required parts of the tram are considered operational
 	var/controller_operational = TRUE
+	///the controller cabinet located on the tram
 	var/obj/machinery/transport/tram_controller/paired_cabinet
+	///the home controller located in telecoms
 	var/obj/machinery/transport/tram_controller/tcomms/home_controller
 	///if we're travelling, what direction are we going
 	var/travel_direction = NONE
@@ -54,16 +56,24 @@
 	///if the tram's next stop will be the tram malfunction event sequence
 	var/malf_active = FALSE
 
+	///fluff information of the tram, such as ongoing kill count and age
 	var/datum/tram_mfg_info/tram_registration
 
+	///previous trams that have been destroyed
 	var/list/tram_history
 
 /datum/tram_mfg_info
+	///serial number of this tram (what round ID it first appeared in)
 	var/serial_number
+	///is it the active tram for the map
 	var/active = TRUE
+	///date the tram was created
 	var/mfg_date
+	///what map the tram is used on
 	var/install_location
+	///lifetime distance the tram has travelled
 	var/distance_travelled = 0
+	///lifetime number of players hit by the tram
 	var/collisions = 0
 
 /**
@@ -327,6 +337,9 @@
 
 		scheduled_move = world.time + speed_limiter
 
+/**
+ * Tram stops normally, performs post-trip actions and updates the tram registration.
+ */
 /datum/transport_controller/linear/tram/proc/normal_stop()
 	cycle_doors(CYCLE_OPEN)
 	log_transport("TC: [specific_transport_id] trip completed. Info: nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
@@ -344,6 +357,9 @@
 	current_load = 0
 	speed_limiter = initial(speed_limiter)
 
+/**
+ * Tram comes to an in-station degraded stop, throwing the players. Caused by power loss or tram malfunction event.
+ */
 /datum/transport_controller/linear/tram/proc/degraded_stop()
 	log_transport("TC: [specific_transport_id] trip completed with a degraded status. Info: [TC_TS_STATUS] nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
@@ -370,6 +386,9 @@
 	for(var/obj/structure/transport/linear/tram/module in transport_modules)
 		module.estop_throw(throw_direction)
 
+/**
+ * Tram comes to an emergency stop without completing its trip. Caused by emergency stop button or some catastrophic tram failure.
+ */
 /datum/transport_controller/linear/tram/proc/halt_and_catch_fire()
 	if(controller_status & SYSTEM_FAULT)
 		if(!isnull(paired_cabinet))
@@ -392,6 +411,9 @@
 	current_speed = 0
 	current_load = 0
 
+/**
+ * Performs a reset of the tram's position data by finding a predetermined reference landmark, then driving to it.
+ */
 /datum/transport_controller/linear/tram/proc/reset_position()
 	if(idle_platform)
 		if(get_turf(idle_platform) == get_turf(nav_beacon))
@@ -1096,6 +1118,8 @@
 
 	COOLDOWN_START(src, manual_command_cooldown, 2 SECONDS)
 
+
+/// Controller that sits in the telecoms room
 /obj/machinery/transport/tram_controller/tcomms
 	name = "tram central controller"
 	desc = "This semi-conductor is half of the brains controlling the tram and its auxillary equipment."
@@ -1107,6 +1131,7 @@
 	cover_open = TRUE
 	has_cover = FALSE
 
+/// Handles the machine being affected by an EMP, causing signal failure.
 /obj/machinery/transport/tram_controller/tcomms/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
