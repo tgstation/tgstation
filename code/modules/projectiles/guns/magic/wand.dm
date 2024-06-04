@@ -192,7 +192,7 @@
 
 /obj/item/gun/magic/wand/safety/zap_self(mob/living/user)
 	var/turf/origin = get_turf(user)
-	var/turf/destination = find_safe_turf(zlevel = user.z, extended_safety_checks = TRUE)
+	var/turf/destination = find_safe_turf(extended_safety_checks = TRUE)
 
 	if(do_teleport(user, destination, channel=TELEPORT_CHANNEL_MAGIC))
 		for(var/t in list(origin, destination))
