@@ -1,7 +1,6 @@
 /datum/element/muffles_speech
-	element_flags = ELEMENT_BESPOKE
 
-/datum/element/muffles_speech/Attach(datum/target, throw_amount, speed_amount)
+/datum/element/muffles_speech/Attach(datum/target)
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
