@@ -786,7 +786,7 @@
 	pipe_color = "#FF7B00";
 	color = "#FF7B00"
 	},
-/turf/open/floor/catwalk_floor/iron_dark,
+/turf/open/floor/wood/large,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
 "hf" = (
 /obj/structure/cable/layer1,
@@ -1345,6 +1345,7 @@
 /obj/machinery/duct,
 /obj/effect/mapping_helpers/broken_machine,
 /obj/effect/decal/cleanable/glass,
+/obj/structure/cable/layer1,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "lW" = (
@@ -2023,9 +2024,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "se" = (
-/obj/structure/chair/office{
-	dir = 8
-	},
+/obj/structure/sink/directional/south,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
 "sh" = (
@@ -3447,7 +3446,7 @@
 	pipe_color = "#FF7B00";
 	color = "#FF7B00"
 	},
-/turf/open/floor/catwalk_floor/iron_dark,
+/turf/open/floor/wood/large,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
 "EX" = (
 /obj/structure/cable/layer1,
@@ -5307,7 +5306,7 @@
 	pipe_color = "#FF7B00";
 	color = "#FF7B00"
 	},
-/turf/open/floor/catwalk_floor/iron_dark,
+/turf/open/floor/wood/large,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
 "UD" = (
 /obj/structure/cable/layer1,
@@ -5396,6 +5395,7 @@
 	pixel_y = -2;
 	pixel_x = -8
 	},
+/obj/machinery/duct,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
 "Vl" = (
@@ -5410,6 +5410,7 @@
 	name = "\improper Knight action figure";
 	toysay = "Upon my oath, Armoria will not fall!"
 	},
+/obj/machinery/duct,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
 "Vm" = (
@@ -5861,6 +5862,7 @@
 	pixel_x = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/duct,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
 "YM" = (
@@ -7085,7 +7087,7 @@ pj
 pz
 Vf
 Ep
-se
+Hw
 GA
 Hw
 uj
@@ -7129,7 +7131,7 @@ la
 oC
 pz
 pz
-Ep
+se
 YK
 Nt
 JG
