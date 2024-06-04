@@ -6,6 +6,7 @@
 		"reset_all_keybinds" = PROC_REF(reset_all_keybinds),
 		"reset_keybinds_to_defaults" = PROC_REF(reset_keybinds_to_defaults),
 		"set_keybindings" = PROC_REF(set_keybindings),
+		"unset_keybinding" = PROC_REF(unset_keybinding),
 	)
 
 /datum/preference_middleware/keybindings/get_ui_static_data(mob/user)
@@ -75,6 +76,23 @@
 	preferences.key_bindings[keybind_name] = hotkeys
 	preferences.key_bindings_by_key = preferences.get_key_bindings_by_key(preferences.key_bindings)
 
+	user.client.update_special_keybinds()
+
+	return TRUE
+
+/datum/preference_middleware/keybindings/proc/unset_keybinding(list/params, mob/user)
+	var/keybind_name = params["keybind_name"]
+
+	if (isnull(GLOB.keybindings_by_name[keybind_name]))
+		return FALSE
+
+	var/keybind_slot = params["slot"]
+	var/keybindings_list = preferences.key_bindings[keybind_name]
+
+	keybindings_list[keybind_slot] = "Unbound"
+	preferences.key_bindings_by_key = preferences.get_key_bindings_by_key(preferences.key_bindings)
+
+	preferences.update_static_data(user)
 	user.client.update_special_keybinds()
 
 	return TRUE

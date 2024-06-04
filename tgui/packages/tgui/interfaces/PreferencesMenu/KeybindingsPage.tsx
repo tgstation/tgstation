@@ -441,8 +441,9 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
                                         key,
                                       )}
                                       onContextMenu={(e) => {
-                                        act('reset_keybinds_to_defaults', {
+                                        act('unset_keybinding', {
                                           keybind_name: keybindingId,
+                                          slot: key,
                                         });
                                       }}
                                     />
