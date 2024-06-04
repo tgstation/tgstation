@@ -715,7 +715,8 @@
 	name = "tram controller"
 	desc = "Makes the tram go, or something. Holds the tram's electronics, controls, and maintenance panel. A sticker above the card reader says 'Engineering access only.'"
 	icon = 'icons/obj/tram/tram_controllers.dmi'
-	icon_state = "controller-panel"
+	icon_state = "tram-controller"
+	base_icon_state = "tram"
 	anchored = TRUE
 	density = FALSE
 	armor_type = /datum/armor/transport_module
@@ -727,6 +728,8 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.25
 	power_channel = AREA_USAGE_ENVIRON
 	var/datum/transport_controller/linear/tram/controller_datum
+	/// If this machine has a cover installed
+	var/has_cover = TRUE
 	/// If the cover is open
 	var/cover_open = FALSE
 	/// If the cover is locked
@@ -904,54 +907,55 @@
 /obj/machinery/transport/tram_controller/update_overlays()
 	. = ..()
 
-	if(!cover_open)
-		. += mutable_appearance(icon, "controller-closed")
-		if(cover_locked)
-			. += mutable_appearance(icon, "controller-locked")
+	if(has_cover)
+		if(!cover_open)
+			. += mutable_appearance(icon, "[base_icon_state]-closed")
+			if(cover_locked)
+				. += mutable_appearance(icon, "[base_icon_state]-locked")
 
-	else
-		var/mutable_appearance/controller_door = mutable_appearance(icon, "controller-open")
-		controller_door.pixel_w = -3
-		. += controller_door
+		else
+			var/mutable_appearance/controller_door = mutable_appearance(icon, "[base_icon_state]-controller-open")
+			controller_door.pixel_w = -3
+			. += controller_door
 
 	if(machine_stat & NOPOWER)
-		. += mutable_appearance(icon, "estop")
-		. += emissive_appearance(icon, "estop", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-estop")
+		. += emissive_appearance(icon, "[base_icon_state]-estop", src, alpha = src.alpha)
 		return
 
-	. += mutable_appearance(icon, "power")
-	. += emissive_appearance(icon, "power", src, alpha = src.alpha)
+	. += mutable_appearance(icon, "[base_icon_state]-power")
+	. += emissive_appearance(icon, "[base_icon_state]-power", src, alpha = src.alpha)
 
 	if(!controller_datum)
-		. += mutable_appearance(icon, "fatal")
-		. += emissive_appearance(icon, "fatal", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-fatal")
+		. += emissive_appearance(icon, "[base_icon_state]-fatal", src, alpha = src.alpha)
 		return
 
 	if(controller_datum.controller_status & EMERGENCY_STOP)
-		. += mutable_appearance(icon, "estop")
-		. += emissive_appearance(icon, "estop", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-estop")
+		. += emissive_appearance(icon, "[base_icon_state]-estop", src, alpha = src.alpha)
 		return
 
 	if(controller_datum.controller_status & SYSTEM_FAULT || controller_datum.malf_active)
-		. += mutable_appearance(icon, "fault")
-		. += emissive_appearance(icon, "fault", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-fault")
+		. += emissive_appearance(icon, "[base_icon_state]-fault", src, alpha = src.alpha)
 		return
 
 	if(!(controller_datum.controller_status & DOORS_READY))
-		. += mutable_appearance(icon, "doors")
-		. += emissive_appearance(icon, "doors", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-doors")
+		. += emissive_appearance(icon, "[base_icon_state]-doors", src, alpha = src.alpha)
 
 	if(controller_datum.controller_active)
-		. += mutable_appearance(icon, "active")
-		. += emissive_appearance(icon, "active", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-active")
+		. += emissive_appearance(icon, "[base_icon_state]-active", src, alpha = src.alpha)
 
 	if(controller_datum.controller_status & COMM_ERROR)
-		. += mutable_appearance(icon, "comms")
-		. += emissive_appearance(icon, "comms", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-comms")
+		. += emissive_appearance(icon, "[base_icon_state]-comms", src, alpha = src.alpha)
 
 	else
-		. += mutable_appearance(icon, "normal")
-		. += emissive_appearance(icon, "normal", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-normal")
+		. += emissive_appearance(icon, "[base_icon_state]-normal", src, alpha = src.alpha)
 
 /**
  * Find the controller associated with the transport module the cabinet is sitting on.
@@ -1089,11 +1093,12 @@
 /obj/machinery/transport/tram_controller/tcomms
 	name = "tram central controller"
 	desc = "This semi-conductor is half of the brains controlling the tram and its auxillary equipment."
-	icon = 'icons/obj/machines/telecomms.dmi'
-	icon_state = "bus"
+	icon_state = "home-controller"
+	base_icon_state = "home"
 	density = TRUE
 	layer = BELOW_OBJ_LAYER
 	power_channel = AREA_USAGE_EQUIP
+	has_cover = FALSE
 
 /obj/machinery/transport/tram_controller/tcomms/emp_act(severity)
 	. = ..()
