@@ -11,7 +11,8 @@
 #if DM_VERSION >= 516
 #warn We're on a new BYOND version that (hopefully) has Webview2.
 #warn Right now, it is quite likely that on the TGUI side, we are still parsing inputs from the 'ESC' key on a keyboard as "Esc" - likely a Internet Explorer oddity.
-#warn It is highly probably that now that this will change to "Escape" - this will break the ability to unbind a key.
+#warn It is highly probable that now that this will change to "Escape" - this will break the ability to unbind a key.
+#warn This is handled in the KEY Enum in tgui/packages/common/keys.ts
 #warn So, if you're working on moving the codebase to 516: ensure that the TGUI to unbind a keybinding with the 'ESC' key works. Thank you!
 #endif
 
