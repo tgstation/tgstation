@@ -255,6 +255,22 @@
 	// chest maybe because getting slammed in the chest would knock it off your face while dead
 	AddComponent(/datum/component/knockoff, knockoff_chance = 40, target_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST), slots_knockoffable = slot_flags)
 
+/obj/item/clothing/mask/facehugger/allow_attack_hand_drop(mob/living/carbon/human/user)
+	if(istype(user) && ishuman(loc) && stat != DEAD)
+		if(user == loc && user.get_item_by_slot(slot_flags) == src)
+			to_chat(user, span_warning("You need help taking these off!"))
+			return
+	return ..()
+
+/obj/item/clothing/mask/facehugger/MouseDrop(atom/over)
+	var/mob/living/user = usr
+	var/mob/living/carbon/human/wearer = loc
+	if(istype(user) && istype(wearer) && stat != DEAD)
+		if(wearer.get_item_by_slot(slot_flags) == src && user == wearer)
+			to_chat(user, span_warning("You need help taking these off!"))
+			return
+	return ..()
+
 /proc/CanHug(mob/living/M)
 	if(!istype(M))
 		return FALSE
