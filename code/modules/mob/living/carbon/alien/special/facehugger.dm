@@ -39,6 +39,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	AddElement(/datum/element/muffles_speech)
 
 	RegisterSignal(src, COMSIG_LIVING_TRYING_TO_PULL, PROC_REF(react_to_mob))
 
@@ -122,9 +123,6 @@
 
 /obj/item/clothing/mask/facehugger/proc/valid_to_attach(mob/living/hit_mob)
 	// valid targets: carbons except aliens and devils
-	// facehugger state early exit checks
-	if(stat != CONSCIOUS)
-		return FALSE
 	if(attached)
 		return FALSE
 	if(!iscarbon(hit_mob))
@@ -171,9 +169,12 @@
 	log_combat(target, src, "was facehugged by")
 	return TRUE // time for a smoke
 
-/obj/item/clothing/mask/facehugger/proc/Attach(mob/living/M)
-	if(!valid_to_attach(M))
+/obj/item/clothing/mask/facehugger/proc/Attach(mob/living/victim)
+	if(!valid_to_attach(victim))
 		return
+
+	if(victim.stat < UNCONSCIOUS) //sorry bro you gotta be awake
+		victim.say("AAAA!!") //triggers muffled speech and also visual feedback i guess
 	// early returns and validity checks done: attach.
 	attached++
 	//ensure we detach once we no longer need to be attached
@@ -181,18 +182,17 @@
 
 
 	if(!sterile)
-		M.take_bodypart_damage(strength,0) //done here so that humans in helmets take damage
-		M.Unconscious(MAX_IMPREGNATION_TIME/0.3) //something like 25 ticks = 20 seconds with the default settings
+		victim.take_bodypart_damage(strength,0) //done here so that humans in helmets take damage
 
 	GoIdle() //so it doesn't jump the people that tear it off
 
-	addtimer(CALLBACK(src, PROC_REF(Impregnate), M), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
+	addtimer(CALLBACK(src, PROC_REF(Impregnate), victim), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
 
 /obj/item/clothing/mask/facehugger/proc/detach()
 	attached = 0
 
 /obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target)
-	if(!target || target.stat == DEAD) //was taken off or something
+	if(!target) //was taken off or something
 		return
 
 	if(iscarbon(target))
@@ -249,10 +249,12 @@
 
 	visible_message(span_danger("[src] curls up into a ball!"))
 
+	if(isliving(loc))
+		var/mob/living/victim = loc
+		victim.dropItemToGround(src)
+
 /proc/CanHug(mob/living/M)
 	if(!istype(M))
-		return FALSE
-	if(M.stat == DEAD)
 		return FALSE
 	if(M.get_organ_by_type(/obj/item/organ/internal/alien/hivenode))
 		return FALSE

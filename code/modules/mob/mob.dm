@@ -903,10 +903,6 @@
 	if(isAI(M))
 		return
 
-///Is the mob muzzled (default false)
-/mob/proc/is_muzzled()
-	return FALSE
-
 /// Adds this list to the output to the stat browser
 /mob/proc/get_status_tab_items()
 	. = list("") //we want to offset unique stuff from standard stuff

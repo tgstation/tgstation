@@ -106,9 +106,6 @@
 	if(!allow_mimes && HAS_MIND_TRAIT(src, TRAIT_MIMING))
 		return FALSE
 
-	if(is_muzzled())
-		return FALSE
-
 	return ..()
 
 ///Speak as a dead person (ghost etc)

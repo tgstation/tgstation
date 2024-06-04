@@ -259,8 +259,6 @@
 		return .
 	var/mob/living/living_user = user
 
-	if(!muzzle_ignore && user.is_muzzled() && emote_type & EMOTE_AUDIBLE)
-		return "makes a [pick("strong ", "weak ", "")]noise."
 	if(HAS_MIND_TRAIT(user, TRAIT_MIMING) && message_mime)
 		. = message_mime
 	if(isalienadult(user) && message_alien)
@@ -339,8 +337,6 @@
  */
 /datum/emote/proc/should_play_sound(mob/user, intentional = FALSE)
 	if(emote_type & EMOTE_AUDIBLE && !muzzle_ignore)
-		if(user.is_muzzled())
-			return FALSE
 		if(HAS_TRAIT(user, TRAIT_MUTE))
 			return FALSE
 		if(ishuman(user))
