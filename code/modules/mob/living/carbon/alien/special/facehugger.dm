@@ -123,6 +123,9 @@
 
 /obj/item/clothing/mask/facehugger/proc/valid_to_attach(mob/living/hit_mob)
 	// valid targets: carbons except aliens and devils
+	// facehugger state early exit checks (Note: Melbert does not want dead people to be huggable)
+	if(stat != CONSCIOUS)
+		return FALSE
 	if(attached)
 		return FALSE
 	if(!iscarbon(hit_mob))
@@ -192,7 +195,7 @@
 	attached = 0
 
 /obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target)
-	if(!target) //was taken off or something
+	if(!target  || target.stat == DEAD) //was taken off or something
 		return
 
 	if(iscarbon(target))
@@ -254,6 +257,8 @@
 
 /proc/CanHug(mob/living/M)
 	if(!istype(M))
+		return FALSE
+	if(M.stat == DEAD)
 		return FALSE
 	if(M.get_organ_by_type(/obj/item/organ/internal/alien/hivenode))
 		return FALSE
