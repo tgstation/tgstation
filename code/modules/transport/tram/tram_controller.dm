@@ -943,7 +943,7 @@
 				. += mutable_appearance(icon, "[base_icon_state]-locked")
 
 		else
-			var/mutable_appearance/controller_door = mutable_appearance(icon, "[base_icon_state]-controller-open")
+			var/mutable_appearance/controller_door = mutable_appearance(icon, "[base_icon_state]-open")
 			controller_door.pixel_w = -3
 			. += controller_door
 
