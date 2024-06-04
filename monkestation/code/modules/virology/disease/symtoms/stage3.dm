@@ -492,52 +492,6 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 		mob.adjustBruteLoss(-get_damage)
 		mob.adjustToxLoss(max(1,get_damage * multiplier / 5))
 
-/datum/symptom/mommi_hallucination
-	name = "Supermatter Syndrome"
-	desc = "Causes the infected to experience engineering-related hallucinations."
-	stage = 3
-	badness = EFFECT_DANGER_ANNOYING
-
-/datum/symptom/mommi_hallucination/activate(mob/living/carbon/mob)
-	if(prob(50))
-		mob << sound('sound/effects/supermatter.ogg', volume = 25)
-
-	var/mob/living/silicon/robot/mommi = /mob/living/silicon/robot
-	for(var/mob/living/M in viewers(mob))
-		if(M == mob)
-			continue
-
-		var/image/crab = image(icon = null)
-		crab.appearance = initial(mommi.appearance)
-
-		crab.loc = M
-		crab.override = 1
-
-		var/client/client = mob.client
-		if(client)
-			client.images += crab
-		var/duration = rand(60 SECONDS, 120 SECONDS)
-
-		spawn(duration)
-			if(client)
-				client.images.Remove(crab)
-
-	var/list/turf_list = list()
-	for(var/turf/turf in spiral_block(get_turf(mob), 40))
-		if(prob(4))
-			turf_list += turf
-	if(turf_list.len)
-		for(var/turf/open/floor/turf in turf_list)
-			var/image/supermatter = image('icons/obj/engine/supermatter.dmi', turf ,"sm", ABOVE_MOB_LAYER)
-
-			var/client/client = mob.client
-			if(client)
-				client.images += supermatter
-			var/duration = rand(60 SECONDS, 120 SECONDS)
-
-			spawn(duration)
-				if(client)
-					client.images.Remove(supermatter)
 
 
 /datum/symptom/wendigo_hallucination
