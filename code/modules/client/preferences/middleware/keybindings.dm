@@ -80,6 +80,7 @@
 
 	return TRUE
 
+/// Sets the specific position of a keybinding's list to "Unbound" in order to help the user unset things they don't want.
 /datum/preference_middleware/keybindings/proc/unset_keybinding(list/params, mob/user)
 	var/keybind_name = params["keybind_name"]
 
