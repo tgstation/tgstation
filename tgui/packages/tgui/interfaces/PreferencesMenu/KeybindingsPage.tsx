@@ -443,6 +443,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
                                       onContextMenu={(e) => {
                                         act('unset_keybinding', {
                                           keybind_name: keybindingId,
+                                          current_binding: keys[key],
                                           slot: key,
                                         });
                                       }}

@@ -83,14 +83,15 @@
 /// Sets the specific position of a keybinding's list to "Unbound" in order to help the user unset things they don't want.
 /datum/preference_middleware/keybindings/proc/unset_keybinding(list/params, mob/user)
 	var/keybind_name = params["keybind_name"]
+	var/current_binding = params["current_binding"]
 
-	if (isnull(GLOB.keybindings_by_name[keybind_name]))
+	if (isnull(GLOB.keybindings_by_name[keybind_name]) || isnull(current_binding)) // no need to do any work if we're already unbound
 		return FALSE
 
 	var/keybind_slot = params["slot"] + 1 // fuck you byond
 	var/keybindings_list = preferences.key_bindings[keybind_name]
 
-	keybindings_list[keybind_slot] = "Unbound"
+	keybindings_list[keybind_slot] = null
 	preferences.key_bindings_by_key = preferences.get_key_bindings_by_key(preferences.key_bindings)
 
 	preferences.update_static_data(user)
