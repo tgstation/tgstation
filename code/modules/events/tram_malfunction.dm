@@ -4,11 +4,11 @@
 /datum/round_event_control/tram_malfunction
 	name = "Tram Malfunction"
 	typepath = /datum/round_event/tram_malfunction
-	weight = 40
-	max_occurrences = 4
+	weight = 30
+	max_occurrences = 3
 	earliest_start = 15 MINUTES
 	category = EVENT_CATEGORY_ENGINEERING
-	description = "Tram crossing signals malfunction, tram collision damage is increased."
+	description = "Tram comes to an emergency stop, requiring engineering to reset."
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 3
 
