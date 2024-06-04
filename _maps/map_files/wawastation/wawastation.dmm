@@ -22978,7 +22978,7 @@
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
+/turf/open/floor/plating/reinforced,
 /area/station/maintenance/port/greater)
 "ilb" = (
 /obj/effect/turf_decal/tile/red/diagonal_edge,
@@ -37590,7 +37590,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/dim/directional/north,
 /obj/item/restraints/handcuffs/cable/zipties/used,
-/turf/open/floor/plating,
+/turf/open/floor/iron/grimy,
 /area/station/maintenance/port/greater)
 "nqD" = (
 /obj/structure/flora/bush/sunny/style_random,
@@ -43101,6 +43101,10 @@
 	},
 /turf/open/openspace,
 /area/station/ai_monitored/turret_protected/aisat_interior)
+"puQ" = (
+/obj/effect/baseturf_helper/reinforced_plating/ceiling,
+/turf/open/floor/engine/vacuum,
+/area/station/engineering/atmos)
 "puS" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -54362,7 +54366,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating,
+/turf/open/floor/iron/grimy,
 /area/station/maintenance/port/greater)
 "tmT" = (
 /obj/structure/table,
@@ -107104,7 +107108,7 @@ bwC
 bwC
 nbu
 gxw
-gxw
+puQ
 gxw
 nbu
 bwC
