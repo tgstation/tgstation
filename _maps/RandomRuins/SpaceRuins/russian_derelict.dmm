@@ -903,11 +903,6 @@
 /obj/machinery/gravity_generator/main,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/grav_gen)
-"lK" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/template_noop,
-/area/ruin/space/ks13/engineering/singulo)
 "lM" = (
 /obj/machinery/door/window/right/directional/east{
 	name = "Med-Dorms Access"
@@ -12522,7 +12517,7 @@ zv
 PI
 sj
 at
-lK
+at
 sj
 sj
 PI
