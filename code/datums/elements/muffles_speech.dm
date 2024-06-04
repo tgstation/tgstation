@@ -16,10 +16,17 @@
 	SIGNAL_HANDLER
 	if(source.slot_flags & slot)
 		RegisterSignal(user, COMSIG_MOB_SAY, PROC_REF(muzzle_talk))
+		RegisterSignal(user, COMSIG_MOB_PRE_EMOTED, PROC_REF(emote_override))
 
 /datum/element/muffles_speech/proc/dropped(obj/item/source, mob/user)
 	SIGNAL_HANDLER
-	UnregisterSignal(user, COMSIG_MOB_SAY)
+	UnregisterSignal(user, list(COMSIG_MOB_PRE_EMOTED, COMSIG_MOB_SAY))
+
+/datum/element/muffles_speech/proc/emote_override(datum/source, key, params, type_override, intentional, datum/emote/emote)
+	SIGNAL_HANDLER
+	if(!emote.hands_use_check && emote.emote_type & EMOTE_AUDIBLE)
+		return "makes a [pick("strong ", "weak ", "")]noise."
+	return COMPONENT_CANT_EMOTE
 
 /datum/element/muffles_speech/proc/muzzle_talk(datum/source, list/speech_args)
 	SIGNAL_HANDLER
