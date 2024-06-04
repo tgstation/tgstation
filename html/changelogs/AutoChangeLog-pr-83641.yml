@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - qol: "Failing to hit someone with a proto-kinetic crusher one-handedly no longer force drops everything in your hands."
