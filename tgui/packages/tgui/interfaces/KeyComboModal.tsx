@@ -1,7 +1,6 @@
-import { KEY } from 'common/keys';
+import { isEscape, KEY } from 'common/keys';
 import { useState } from 'react';
 
-import { isEscape } from '../../common/keys';
 import { useBackend, useLocalState } from '../backend';
 import { Autofocus, Box, Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
