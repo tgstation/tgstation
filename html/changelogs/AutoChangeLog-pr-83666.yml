@@ -1,0 +1,4 @@
+author: "Goat"
+delete-after: True
+changes:
+  - bugfix: "meta's cargo lobby and mining maintenance APCs is now connected to the power line"
