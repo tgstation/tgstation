@@ -7048,13 +7048,8 @@
 "TG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/radiation{
-	crate_climb_time = 5000;
-	can_install_electronics = 0;
-	divable = 0;
-	has_closed_overlay = 0
-	},
 /obj/machinery/power/supermatter_crystal/shard,
+/obj/structure/closet/crate/radiation,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/ks13/medical/medbay)
 "TH" = (
