@@ -86,7 +86,7 @@
 	if (isnull(GLOB.keybindings_by_name[keybind_name]))
 		return FALSE
 
-	var/keybind_slot = params["slot"]
+	var/keybind_slot = params["slot"] + 1 // fuck you byond
 	var/keybindings_list = preferences.key_bindings[keybind_name]
 
 	keybindings_list[keybind_slot] = "Unbound"
