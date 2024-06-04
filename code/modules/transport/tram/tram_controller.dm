@@ -743,6 +743,7 @@
 	density = FALSE
 	armor_type = /datum/armor/transport_module
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_OFFLINE
 	max_integrity = 750
 	integrity_failure = 0.25
 	layer = SIGN_LAYER
@@ -1031,13 +1032,20 @@
 	balloon_alert(user, "access controller shorted")
 	return TRUE
 
+/obj/machinery/transport/tram_controller/ui_status(mob/user, datum/ui_state/state)
+	if(HAS_SILICON_ACCESS(user) && (controller_datum.controller_status & SYSTEM_FAULT || controller_datum.controller_status & COMM_ERROR || !is_operational))
+		to_chat(user, span_warning("An error code flashes: Communications fault! The [src] is not responding to remote inputs!"))
+		return UI_CLOSE
+
+	return ..()
+
 /obj/machinery/transport/tram_controller/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 
 	if(!cover_open && !HAS_SILICON_ACCESS(user) && !isobserver(user))
 		return
 
-	if(!is_operational)
+	if(machine_stat & BROKEN)
 		return
 
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -1081,6 +1089,10 @@
 		return
 
 	if(!COOLDOWN_FINISHED(src, manual_command_cooldown))
+		return
+
+	if(machine_stat & NOPOWER)
+		visible_message(span_warning("The button doesn't appear to do anything, the [src]'s power failure status is flashing!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		return
 
 	switch(action)
