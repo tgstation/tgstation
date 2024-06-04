@@ -1,7 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes:
-  - rscadd: "New fish, the anxious zipzap"
-  - rscadd: "New syndicate fish, the monocloning jumpercable"
-  - rscadd: "New aquarium, the bioelectricity generator"
-  - bugfix: "Mixotrophic fish now properly lack food requirements"
