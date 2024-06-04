@@ -42,7 +42,7 @@ const isStandardKey = (event: KeyboardEvent): boolean => {
     event.key !== KEY.Alt &&
     event.key !== KEY.Control &&
     event.key !== KEY.Shift &&
-    isEscape(event.key) === false
+    !isEscape(event.key)
   );
 };
 

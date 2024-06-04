@@ -20,7 +20,7 @@ const isStandardKey = (event: React.KeyboardEvent<HTMLDivElement>): boolean => {
     event.key !== KEY.Alt &&
     event.key !== KEY.Control &&
     event.key !== KEY.Shift &&
-    isEscape(event.key) !== true
+    !isEscape(event.key)
   );
 };
 
