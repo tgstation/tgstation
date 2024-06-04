@@ -38,8 +38,6 @@
 	var/emote_type = EMOTE_VISIBLE
 	/// Checks if the mob can use its hands before performing the emote.
 	var/hands_use_check = FALSE
-	/// Will only work if the emote is EMOTE_AUDIBLE.
-	var/muzzle_ignore = FALSE
 	/// Types that are allowed to use that emote.
 	var/list/mob_type_allowed_typecache = /mob
 	/// Types that are NOT allowed to use that emote.
@@ -336,7 +334,7 @@
  * Returns a bool about whether or not the user should play a sound when performing the emote.
  */
 /datum/emote/proc/should_play_sound(mob/user, intentional = FALSE)
-	if(emote_type & EMOTE_AUDIBLE && !muzzle_ignore)
+	if(emote_type & EMOTE_AUDIBLE && !hands_use_check)
 		if(HAS_TRAIT(user, TRAIT_MUTE))
 			return FALSE
 		if(ishuman(user))
