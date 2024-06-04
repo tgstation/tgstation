@@ -249,9 +249,8 @@
 
 	visible_message(span_danger("[src] curls up into a ball!"))
 
-	if(isliving(loc))
-		var/mob/living/victim = loc
-		victim.dropItemToGround(src)
+	// chest maybe because getting slammed in the chest would knock it off your face while dead
+	AddComponent(/datum/component/knockoff, knockoff_chance = 40, target_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST), slots_knockoffable = slot_flags)
 
 /proc/CanHug(mob/living/M)
 	if(!istype(M))
