@@ -87,7 +87,6 @@
 	can_alter_skin = FALSE
 	device_type = /obj/item/assembly/control/transport/call_button
 	req_access = list()
-	silicon_access_disabled = TRUE
 	id = 0
 	/// The ID of the tram we're linked to
 	var/specific_transport_id = TRAMSTATION_LINE_1
