@@ -720,7 +720,7 @@
 // Armour
 
 /datum/design/reactive_armour
-	name = "Reactive Armour Shell"
+	name = "Reactive Armor Shell"
 	desc = "An experimental suit of armour capable of utilizing an implanted anomaly core to protect the user."
 	id = "reactive_armour"
 	build_type = PROTOLATHE | AWAY_LATHE
