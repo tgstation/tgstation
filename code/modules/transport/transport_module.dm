@@ -760,6 +760,23 @@
 	if(direction == DOWN)
 		user.visible_message(span_notice("[user] moves the lift downwards."), span_notice("You move the lift downwards."))
 
+/obj/machinery/door/poddoor/lift
+	name = "elevator door"
+	desc = "Keeps idiots like you from walking into an open elevator shaft."
+	icon = 'icons/obj/doors/liftdoor.dmi'
+	opacity = FALSE
+	glass = TRUE
+
+/obj/machinery/door/poddoor/lift/Initialize(mapload)
+	if(!isnull(transport_linked_id)) //linter and stuff
+		elevator_mode = TRUE
+	return ..()
+
+/obj/machinery/door/poddoor/lift/preopen
+	icon_state = "open"
+	density = FALSE
+	opacity = FALSE
+
 // A subtype intended for "public use"
 /obj/structure/transport/linear/public
 	icon = 'icons/turf/floors.dmi'
