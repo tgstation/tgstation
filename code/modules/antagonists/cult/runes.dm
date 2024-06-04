@@ -329,10 +329,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(invoker, span_cult_italic("[sacrificial] is too greatly linked to the world! You need three acolytes!"))
 		return FALSE
 
-	var/signal_result = SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers, cult_team)
-	if(signal_result & STOP_SACRIFICE)
-		return FALSE
-
 	if(sacrificial.mind)
 		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial.mind))
 		for(var/datum/objective/sacrifice/sac_objective in cult_team.objectives)
@@ -346,7 +342,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	new /obj/effect/temp_visual/cult/sac(loc)
 
-	if(!(signal_result & SILENCE_SACRIFICE_MESSAGE))
+	var/signal_result = SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers, cult_team)
+
+	// big sac overrides it
+	if(!(signal_result & SILENCE_SACRIFICE_MESSAGE) || big_sac)
 		for(var/invoker in invokers)
 			if(big_sac)
 				to_chat(invoker, span_cult_large("\"Yes! This is the one I desire! You have done well.\""))
@@ -355,6 +354,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 				to_chat(invoker, span_cult_large("\"I accept this sacrifice.\""))
 			else
 				to_chat(invoker, span_cult_large("\"I accept this meager sacrifice.\""))
+
+	// post-message
+	if(signal_result & STOP_SACRIFICE)
+		return FALSE
 
 	if(iscyborg(sacrificial))
 		var/construct_class = show_radial_menu(invokers[1], sacrificial, GLOB.construct_radial_images, require_near = TRUE, tooltips = TRUE)
