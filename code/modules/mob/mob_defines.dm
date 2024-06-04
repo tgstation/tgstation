@@ -79,9 +79,6 @@
 	var/computer_id = null
 	var/list/logging = list()
 
-	/// The machine the mob is interacting with (this is very bad old code btw)
-	var/obj/machinery/machine = null
-
 	/// Tick time the mob can next move
 	var/next_move = null
 
@@ -136,9 +133,6 @@
 
 	/// What job does this mob have
 	var/job = null//Living
-
-	/// Can this mob enter shuttles
-	var/move_on_shuttle = 1
 
 	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH

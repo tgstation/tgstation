@@ -456,7 +456,7 @@
 	required_container = /obj/item/slime_extract/cerulean
 
 /datum/chemical_reaction/slime/slime_territory/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/areaeditor/blueprints/slime(get_turf(holder.my_atom))
+	new /obj/item/blueprints/slime(get_turf(holder.my_atom))
 	..()
 
 //Sepia

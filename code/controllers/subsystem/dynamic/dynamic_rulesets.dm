@@ -83,6 +83,8 @@
 
 	/// A list, or null, of templates that the ruleset depends on to function correctly
 	var/list/ruleset_lazy_templates
+	/// In what categories is this ruleset allowed to run? Used by station traits
+	var/ruleset_category = RULESET_CATEGORY_DEFAULT
 
 /datum/dynamic_ruleset/New()
 	// Rulesets can be instantiated more than once, such as when an admin clicks
@@ -140,27 +142,40 @@
 /// This function is here to ensure the antag ratio is kept under control while scaling up.
 /// Returns how much threat to actually spend in the end.
 /datum/dynamic_ruleset/proc/scale_up(population, max_scale)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	if (!scaling_cost)
 		return 0
 
 	var/antag_fraction = 0
-	for(var/_ruleset in (SSdynamic.executed_rules + list(src))) // we care about the antags we *will* assign, too
-		var/datum/dynamic_ruleset/ruleset = _ruleset
-		antag_fraction += ((1 + ruleset.scaled_times) * ruleset.get_antag_cap(population)) / SSdynamic.roundstart_pop_ready
+	for(var/datum/dynamic_ruleset/ruleset as anything in (SSdynamic.executed_rules + list(src))) // we care about the antags we *will* assign, too
+		antag_fraction += ruleset.get_antag_cap_scaling_included(population) / SSdynamic.roundstart_pop_ready
 
 	for(var/i in 1 to max_scale)
 		if(antag_fraction < 0.25)
 			scaled_times += 1
-			antag_fraction += get_antag_cap(population) / SSdynamic.roundstart_pop_ready // we added new antags, gotta update the %
+			antag_fraction += get_scaling_antag_cap(population) / SSdynamic.roundstart_pop_ready // we added new antags, gotta update the %
 
 	return scaled_times * scaling_cost
 
+/// Returns how many more antags to add while scaling with a given population.
+/// By default rulesets scale linearly, but you can override this to make them scale differently.
+/datum/dynamic_ruleset/proc/get_scaling_antag_cap(population)
+	return get_antag_cap(population)
+
 /// Returns what the antag cap with the given population is.
 /datum/dynamic_ruleset/proc/get_antag_cap(population)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	if (isnum(antag_cap))
 		return antag_cap
 
 	return CEILING(population / antag_cap["denominator"], 1) + (antag_cap["offset"] || 0)
+
+/// Gets the 'final' antag cap for this ruleset, which is the base cap plus the scaled cap.
+/datum/dynamic_ruleset/proc/get_antag_cap_scaling_included(population)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	var/base_cap = get_antag_cap(population)
+	var/modded_cap = scaled_times * get_scaling_antag_cap(population)
+	return base_cap + modded_cap
 
 /// This is called if persistent variable is true everytime SSTicker ticks.
 /datum/dynamic_ruleset/proc/rule_process()

@@ -12,7 +12,7 @@
 	///Ref to charge console for seeing charge for this port, cyclical reference
 	var/obj/machinery/computer/mech_bay_power_console/recharge_console
 	///Power unit per second to charge by
-	var/recharge_power = 25 KILO WATTS
+	var/recharge_power = 0.025 * STANDARD_CELL_RATE
 	///turf that will be checked when a mech wants to charge. directly one turf in the direction it is facing
 	var/turf/recharging_turf
 
@@ -46,7 +46,7 @@
 	var/total_rating = 0
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		total_rating += capacitor.tier
-	recharge_power = total_rating * 12.5 KILO WATTS
+	recharge_power = total_rating * 0.0125 * STANDARD_CELL_RATE
 
 /obj/machinery/mech_bay_recharge_port/examine(mob/user)
 	. = ..()
@@ -64,10 +64,11 @@
 			recharge_console.update_appearance()
 	if(!recharging_mech?.cell)
 		return
-	if(recharging_mech.cell.charge < recharging_mech.cell.maxcharge)
-		if(!use_energy(active_power_usage * seconds_per_tick))
-			return
-		charge_cell(recharge_power * seconds_per_tick, recharging_mech.cell, grid_only = TRUE)
+	if(recharging_mech.cell.used_charge())
+		//charge cell, account for heat loss given from work done
+		var/charge_given = charge_cell(recharge_power * seconds_per_tick, recharging_mech.cell, grid_only = TRUE)
+		if(charge_given)
+			use_energy((charge_given + active_power_usage) * 0.01)
 	else
 		recharge_console.update_appearance()
 	if(recharging_mech.loc != recharging_turf)

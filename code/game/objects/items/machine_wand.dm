@@ -63,14 +63,15 @@
 	if(controlling_machine_or_bot)
 		return controlling_machine_or_bot.ui_act(action, params, ui, state)
 
-/obj/item/machine_remote/AltClick(mob/user)
-	. = ..()
+/obj/item/machine_remote/click_alt(mob/user)
 	if(moving_bug) //we have a bug in transit, so let's kill it.
 		QDEL_NULL(moving_bug)
+		return CLICK_ACTION_BLOCKING
 	if(!controlling_machine_or_bot)
-		return
+		return CLICK_ACTION_BLOCKING
 	say("Remote control over [controlling_machine_or_bot] stopped.")
 	remove_old_machine()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/machine_remote/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -149,7 +150,7 @@
 		CRASH("a moving bug has been created but isn't moving towards anything!")
 	src.controller = controller
 	src.thing_moving_towards = thing_moving_towards
-	var/datum/move_loop/loop = SSmove_manager.home_onto(src, thing_moving_towards, delay = 5, flags = MOVEMENT_LOOP_NO_DIR_UPDATE)
+	var/datum/move_loop/loop = GLOB.move_manager.home_onto(src, thing_moving_towards, delay = 5, flags = MOVEMENT_LOOP_NO_DIR_UPDATE)
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(reached_destination_check))
 	RegisterSignal(thing_moving_towards, COMSIG_QDELETING, PROC_REF(on_machine_del))
 

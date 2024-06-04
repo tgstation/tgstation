@@ -211,9 +211,9 @@
 
 	return items_transfered
 
-/obj/machinery/reagentgrinder/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+/obj/machinery/reagentgrinder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode || (tool.item_flags & ABSTRACT) || (tool.flags_1 & HOLOGRAM_1) || !can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return ..()
+		return NONE
 
 	//add the beaker
 	if (is_reagent_container(tool) && tool.is_open_container())
@@ -262,7 +262,7 @@
 		to_chat(user, span_warning("You must drag & dump contents of [tool] into [src]."))
 		return ITEM_INTERACT_BLOCKING
 
-	return ..()
+	return NONE
 
 /obj/machinery/reagentgrinder/wrench_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)

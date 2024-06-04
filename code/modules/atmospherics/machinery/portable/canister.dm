@@ -103,12 +103,15 @@
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	. += span_notice("A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]; MAX SAFE TEMPERATURE: [siunit(temp_limit, "K", 0)]</b>.")
+	. += span_notice("The hull is <b>welded</b> together and can be cut apart.")
 	if(internal_cell)
 		. += span_notice("The internal cell has [internal_cell.percent()]% of its total charge.")
 	else
 		. += span_notice("Warning, no cell installed, use a screwdriver to open the hatch and insert one.")
 	if(panel_open)
 		. += span_notice("Hatch open, close it with a screwdriver.")
+	if(integrity_failure)
+		. += span_notice("Integrity compromised, repair hull with a welding tool.")
 
 // Please keep the canister types sorted
 // Basic canister per gas below here
@@ -483,7 +486,7 @@
 		var/energy_consumed = energy_factor * 250 * seconds_per_tick
 		if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
 			use_energy(energy_consumed, channel = AREA_USAGE_EQUIP)
-		else if(!internal_cell?.use(energy_consumed * 0.025 KILO JOULES))
+		else if(!internal_cell?.use(energy_consumed * 0.025))
 			shielding_powered = FALSE
 			SSair.start_processing_machine(src)
 			investigate_log("shielding turned off due to power loss")

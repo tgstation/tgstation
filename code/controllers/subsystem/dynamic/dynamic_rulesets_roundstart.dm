@@ -33,8 +33,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 
 /datum/dynamic_ruleset/roundstart/traitor/pre_execute(population)
 	. = ..()
-	var/num_traitors = get_antag_cap(population) * (scaled_times + 1)
-	for (var/i = 1 to num_traitors)
+	for (var/i in 1 to get_antag_cap_scaling_included(population))
 		if(candidates.len <= 0)
 			break
 		var/mob/M = pick_n_take(candidates)
@@ -121,7 +120,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/traitorbro/pre_execute(population)
 	. = ..()
 
-	for (var/_ in 1 to get_antag_cap(population) * (scaled_times + 1))
+	for (var/i in 1 to get_antag_cap_scaling_included(population))
 		var/mob/candidate = pick_n_take(candidates)
 		if (isnull(candidate))
 			break
@@ -135,10 +134,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 
 /datum/dynamic_ruleset/roundstart/traitorbro/execute()
 	for (var/datum/mind/mind in assigned)
-		var/datum/team/brother_team/team = new
-		team.add_member(mind)
-		team.forge_brother_objectives()
-		mind.add_antag_datum(/datum/antagonist/brother, team)
+		new /datum/team/brother_team(mind)
 		GLOB.pre_setup_antags -= mind
 
 	return TRUE
@@ -174,8 +170,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 
 /datum/dynamic_ruleset/roundstart/changeling/pre_execute(population)
 	. = ..()
-	var/num_changelings = get_antag_cap(population) * (scaled_times + 1)
-	for (var/i = 1 to num_changelings)
+	for (var/i in 1 to get_antag_cap_scaling_included(population))
 		if(candidates.len <= 0)
 			break
 		var/mob/M = pick_n_take(candidates)
@@ -259,6 +254,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	name = "Wizard"
 	antag_flag = ROLE_WIZARD
 	antag_datum = /datum/antagonist/wizard
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
 	flags = HIGH_IMPACT_RULESET
 	minimum_required_age = 14
 	restricted_roles = list(
@@ -400,6 +396,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 /datum/dynamic_ruleset/roundstart/nuclear
 	name = "Nuclear Emergency"
 	antag_flag = ROLE_OPERATIVE
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
 	antag_datum = /datum/antagonist/nukeop
 	var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
 	minimum_required_age = 14
@@ -623,6 +620,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	antag_datum = /datum/antagonist/nukeop/clownop
 	antag_flag = ROLE_CLOWN_OPERATIVE
 	antag_flag_override = ROLE_OPERATIVE
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	required_role = ROLE_CLOWN_OPERATIVE
@@ -720,13 +718,15 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	required_candidates = 3 // lives or dies by there being a few spies
 	weight = 5
 	cost = 8
-	scaling_cost = 101 // see below
-	minimum_players = 8
-	antag_cap = list("denominator" = 8, "offset" = 1) // should have quite a few spies to work against each other
+	scaling_cost = 4
+	minimum_players = 10
+	antag_cap = list("denominator" = 20, "offset" = 1)
 	requirements = list(8, 8, 8, 8, 8, 8, 8, 8, 8, 8)
+	/// What fraction is added to the antag cap for each additional scale
+	var/fraction_per_scale = 0.2
 
 /datum/dynamic_ruleset/roundstart/spies/pre_execute(population)
-	for(var/i in 1 to get_antag_cap(population) * (scaled_times + 1))
+	for(var/i in 1 to get_antag_cap_scaling_included(population))
 		if(length(candidates) <= 0)
 			break
 		var/mob/picked_player = pick_n_take(candidates)
@@ -736,7 +736,6 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 		GLOB.pre_setup_antags += picked_player.mind
 	return TRUE
 
-/datum/dynamic_ruleset/roundstart/spies/scale_up(population, max_scale)
-	// Disabled (at least until dynamic can handle scaling this better)
-	// Because spies have a very low demoninator, this can easily spawn like 30 of them
-	return 0
+// Scaling adds a fraction of the amount of additional spies rather than the full amount.
+/datum/dynamic_ruleset/roundstart/spies/get_scaling_antag_cap(population)
+	return ceil(..() * fraction_per_scale)

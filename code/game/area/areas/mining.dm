@@ -209,6 +209,11 @@
 	name = "Icemoon Wastes"
 	outdoors = TRUE
 
+/area/icemoon/surface/outdoors/Initialize(mapload)
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_BRIGHT_DAY))
+		base_lighting_alpha = 145
+	return ..()
+
 /area/icemoon/surface/outdoors/nospawn // this is the area you use for stuff to not spawn, but if you still want weather.
 
 /area/icemoon/surface/outdoors/nospawn/New() // unless you roll forested trait lol
@@ -282,3 +287,13 @@
 /area/icemoon/underground/explored // ruins can't spawn here
 	name = "Icemoon Underground"
 	area_flags = UNIQUE_AREA
+
+/area/icemoon/underground/explored/graveyard
+	name = "Graveyard"
+	area_flags = UNIQUE_AREA
+	ambience_index = AMBIENCE_SPOOKY
+	icon = 'icons/area/areas_station.dmi'
+	icon_state = "graveyard"
+
+/area/icemoon/underground/explored/graveyard/chapel
+	name = "Chapel Graveyard"

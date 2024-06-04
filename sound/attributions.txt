@@ -140,3 +140,41 @@ https://freesound.org/people/steaq/sounds/560124/
 refinery.ogg, smelter.ogg, and wooping_teleport.ogg are all original works by ArcaneMusic,
 with smelter.ogg using samples from rock_break alongside original sound effects from a warrior electric drill,
 where refinery and wooping_teleport are modifications of that same electric drill recording.
+
+paper_flip.ogg is made by gynation from Freesound.org, CC0
+https://freesound.org/people/gynation/sounds/82378/
+
+nightmare_poof.ogg and nightmare_reappear.ogg are comprised of breath_01.wav by Nightflame (CC0) and slide-click.wav by Qat (CC0)
+https://freesound.org/people/Qat/sounds/108332/
+https://freesound.org/people/Nightflame/sounds/368615/
+
+modified by grungussuss:
+male_sneeze1.ogg: https://freesound.org/people/InspectorJ/sounds/352177/ , license: CC BY 4.0 DEED
+male_cry1.ogg: https://freesound.org/people/jacobmathiassen/sounds/254869/ , license: CC BY 4.0 DEED
+male_cry2.ogg: https://freesound.org/people/scottemoil/sounds/263776/ , license: CC0 1.0 DEED
+male_cry3.ogg: https://freesound.org/people/qubodup/sounds/200428/ , license: CC BY 4.0 DEED
+female_cry1.ogg: https://freesound.org/people/Luzanne0/sounds/445299/ , license: CC BY-NC 3.0 DEED
+female_cry2.ogg: https://freesound.org/people/Idalize/sounds/408211/ , license: CC BY-NC 4.0 DEED
+female_cough1.ogg: https://freesound.org/people/OwlStorm/sounds/151213/ , license: CC0 1.0 DEED
+female_cough2.ogg: https://freesound.org/people/thatkellytrna/sounds/425777/ , license: CC0 1.0 DEED
+female_cough3.ogg: https://freesound.org/people/Luzanne0/sounds/445293/ , license: CC BY-NC 3.0 DEED
+female_cough4.ogg: https://freesound.org/people/Luzanne0/sounds/445293/ , license: CC BY-NC 3.0 DEED
+female_cough5.ogg: https://freesound.org/people/DarkNightPrincess/sounds/625322/ , license: CC0 1.0 DEED
+female_cough6.ogg: https://freesound.org/people/drotzruhn/sounds/405206/ , license: CC BY 4.0 DEED
+male_cough1.ogg: https://freesound.org/people/Harris85/sounds/208761/ , license: CC0 1.0 DEED
+male_cough2.ogg: https://freesound.org/people/midwestdocumentary/sounds/722622/ , license: CC0 1.0 DEED
+male_cough3.ogg: https://freesound.org/people/hadescolossus/sounds/701162/ , license: CC0 1.0 DEED
+male_cough4.ogg: https://freesound.org/people/SoundDesignForYou/sounds/646652/ , license: CC0 1.0 DEED
+male_cough5.ogg: https://freesound.org/people/SoundDesignForYou/sounds/646654/ , license: CC0 1.0 DEED
+male_cough6.ogg: https://freesound.org/people/SoundDesignForYou/sounds/646656/ , license: CC0 1.0 DEED
+lizard_laugh1.ogg: https://youtu.be/I7CX0AS8RNI , License: CC-BY-3.0
+moth_laugh1.ogg: https://github.com/BeeStation/BeeStation-Hornet/blob/11ba3fa04105c93dd96a63ad4afaef4b20c02d0d/sound/emotes/ , license: CC-BY-SA-3.0
+whistle1.ogg: https://freesound.org/people/taure/sounds/411638/ , license: CC0 1.0 DEED
+
+portal_close, portal_open_1 , portal_open_2 , portal_open_3 , portal_travel made by @virgilcore (discord IGN)
+
+toilet-flush.ogg is made by shw489 (CC0):
+https://freesound.org/people/shw489/sounds/234389/
+
+soup_boil1.ogg through soup_boil5.ogg and soup_boil_end.ogg are taken from Boiling Soup from Freesoung.org (CC4) and converted to OGG / split apart (but is otherwise unchanged):
+https://freesound.org/people/jorickhoofd/sounds/632783/

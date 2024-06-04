@@ -1,10 +1,8 @@
-import { filterMap, sortBy } from 'common/collections';
+import { filter, map, sortBy } from 'common/collections';
 import { classes } from 'common/react';
+import { createSearch } from 'common/string';
 import { useState } from 'react';
 
-import { filter } from '../../../common/collections';
-import { flow } from '../../../common/fp';
-import { createSearch } from '../../../common/string';
 import { sendAct, useBackend } from '../../backend';
 import {
   Autofocus,
@@ -202,8 +200,14 @@ const ChoicedSelection = (props: {
 };
 
 const searchInCatalog = (searchText = '', catalog: Record<string, string>) => {
-  const maybeSearch = createSearch(searchText, ([name, _icon]) => name);
-  return flow([searchText && filter(maybeSearch)])(Object.entries(catalog));
+  let items = Object.entries(catalog);
+  if (searchText) {
+    items = filter(
+      items,
+      createSearch(searchText, ([name, _icon]) => name),
+    );
+  }
+  return items;
 };
 
 const GenderButton = (props: {
@@ -368,10 +372,11 @@ const createSetRandomization =
     });
   };
 
-const sortPreferences = sortBy<[string, unknown]>(([featureId, _]) => {
-  const feature = features[featureId];
-  return feature?.name;
-});
+const sortPreferences = (array: [string, unknown][]) =>
+  sortBy(array, ([featureId, _]) => {
+    const feature = features[featureId];
+    return feature?.name;
+  });
 
 export const PreferenceList = (props: {
   act: typeof sendAct;
@@ -451,22 +456,20 @@ export const getRandomization = (
 
   const { data } = useBackend<PreferencesMenuData>();
 
+  if (!randomBodyEnabled) {
+    return {};
+  }
+
   return Object.fromEntries(
-    filterMap(Object.keys(preferences), (preferenceKey) => {
-      if (serverData.random.randomizable.indexOf(preferenceKey) === -1) {
-        return undefined;
-      }
-
-      if (!randomBodyEnabled) {
-        return undefined;
-      }
-
-      return [
-        preferenceKey,
-        data.character_preferences.randomization[preferenceKey] ||
-          RandomSetting.Disabled,
-      ];
-    }),
+    map(
+      filter(Object.keys(preferences), (key) =>
+        serverData.random.randomizable.includes(key),
+      ),
+      (key) => [
+        key,
+        data.character_preferences.randomization[key] || RandomSetting.Disabled,
+      ],
+    ),
   );
 };
 

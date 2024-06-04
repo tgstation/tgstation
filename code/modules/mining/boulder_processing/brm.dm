@@ -101,7 +101,7 @@
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
-///To allow boulders on a conveyer belt to move unobstructed if multiple machines are made on a single line
+///To allow boulders on a conveyor belt to move unobstructed if multiple machines are made on a single line
 /obj/machinery/brm/CanAllowThrough(atom/movable/mover, border_dir)
 	if(!anchored)
 		return FALSE

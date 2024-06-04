@@ -18,6 +18,7 @@
 #define COMSIG_ATOM_ATTACK_ANIMAL "attack_animal"
 //from base of atom/attack_basic_mob(): (/mob/user)
 #define COMSIG_ATOM_ATTACK_BASIC_MOB "attack_basic_mob"
+	#define COMSIG_BASIC_ATTACK_CANCEL_CHAIN (1<<0)
 /// from /atom/proc/atom_break: (damage_flag)
 #define COMSIG_ATOM_BREAK "atom_break"
 /// from base of [/atom/proc/atom_fix]: ()

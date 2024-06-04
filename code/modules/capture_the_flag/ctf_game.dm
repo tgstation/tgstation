@@ -463,7 +463,12 @@
 
 /obj/structure/table/reinforced/ctf
 	resistance_flags = INDESTRUCTIBLE
-	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
+
+/obj/structure/table/reinforced/ctf/wrench_act_secondary(mob/living/user, obj/item/tool)
+	return NONE
+
+/obj/structure/table/reinforced/ctf/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	return NONE
 
 #define CTF_LOADING_UNLOADED 0
 #define CTF_LOADING_LOADING 1

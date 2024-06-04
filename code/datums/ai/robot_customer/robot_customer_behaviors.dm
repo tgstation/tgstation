@@ -2,7 +2,6 @@
 	action_cooldown = 8 SECONDS
 
 /datum/ai_behavior/find_seat/perform(seconds_per_tick, datum/ai_controller/controller)
-	. = ..()
 	var/mob/living/basic/robot_customer/customer_pawn = controller.pawn
 	var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 	var/datum/venue/attending_venue = controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
@@ -28,22 +27,20 @@
 		customer_pawn.say(pick(customer_data.found_seat_lines))
 		controller.set_blackboard_key(BB_CUSTOMER_MY_SEAT, found_seat)
 		attending_venue.linked_seats[found_seat] = customer_pawn
-		finish_action(controller, TRUE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	// SPT_PROB 1.5 is about a 60% chance that the tourist will have vocalised at least once every minute.
 	if(!controller.blackboard[BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE] || SPT_PROB(1.5, seconds_per_tick))
 		customer_pawn.say(pick(customer_data.cant_find_seat_lines))
 		controller.set_blackboard_key(BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE, TRUE)
 
-	finish_action(controller, FALSE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 /datum/ai_behavior/order_food
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 	required_distance = 0
 
 /datum/ai_behavior/order_food/perform(seconds_per_tick, datum/ai_controller/controller)
-	. = ..()
 	var/mob/living/basic/robot_customer/customer_pawn = controller.pawn
 	var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 	var/obj/structure/holosign/robot_seat/seat_marker = controller.blackboard[BB_CUSTOMER_MY_SEAT]
@@ -55,23 +52,19 @@
 	var/datum/venue/attending_venue = controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 
 	controller.set_blackboard_key(BB_CUSTOMER_CURRENT_ORDER, attending_venue.order_food(customer_pawn, customer_data))
-
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/wait_for_food
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
 	required_distance = 0
 
 /datum/ai_behavior/wait_for_food/perform(seconds_per_tick, datum/ai_controller/controller)
-	. = ..()
 	if(controller.blackboard[BB_CUSTOMER_EATING])
-		finish_action(controller, TRUE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	controller.add_blackboard_key(BB_CUSTOMER_PATIENCE, seconds_per_tick * -1 SECONDS) // Convert seconds_per_tick to a SECONDS equivalent.
 	if(controller.blackboard[BB_CUSTOMER_PATIENCE] < 0 || controller.blackboard[BB_CUSTOMER_LEAVING]) // Check if we're leaving because sometthing mightve forced us to
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	// SPT_PROB 1.5 is about a 40% chance that the tourist will have vocalised at least once every minute.
 	if(SPT_PROB(0.85, seconds_per_tick))
@@ -95,6 +88,7 @@
 			customer.eat_order(I, attending_venue)
 			break
 
+	return AI_BEHAVIOR_DELAY
 
 /datum/ai_behavior/wait_for_food/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
@@ -121,6 +115,5 @@
 	set_movement_target(controller, attending_venue.restaurant_portal)
 
 /datum/ai_behavior/leave_venue/perform(seconds_per_tick, datum/ai_controller/controller, venue_key)
-	. = ..()
 	qdel(controller.pawn) //save the world, my final message, goodbye.
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

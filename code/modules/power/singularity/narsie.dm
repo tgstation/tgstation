@@ -72,7 +72,7 @@
 
 	var/area/area = get_area(src)
 	if(area)
-		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/cult/effects.dmi', "ghostalertsie")
+		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/cult.dmi', "ghostalertsie")
 		notify_ghosts(
 			"Nar'Sie has risen in [area]. Reach out to the Geometer to be given a new shell for your soul.",
 			source = src,
@@ -234,7 +234,7 @@
 	addtimer(CALLBACK(src, PROC_REF(narsie_spawn_animation_end)), 3.5 SECONDS)
 
 /obj/narsie/proc/narsie_spawn_animation_end()
-	var/datum/component/singularity/singularity_component = singularity.resolve()
+	var/datum/component/singularity/singularity_component = singularity?.resolve()
 	singularity_component?.roaming = TRUE
 
 /**

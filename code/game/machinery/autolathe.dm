@@ -4,8 +4,8 @@
 	icon = 'icons/obj/machines/lathes.dmi'
 	icon_state = "autolathe"
 	density = TRUE
-	//Energy cost per full stack of sheets worth of materials used. Material insertion is 40% of this.
-	active_power_usage = 25 * BASE_MACHINE_ACTIVE_CONSUMPTION
+	///Energy cost per full stack of sheets worth of materials used. Material insertion is 40% of this.
+	active_power_usage = 0.025 * STANDARD_CELL_RATE
 	circuit = /obj/item/circuitboard/machine/autolathe
 	layer = BELOW_OBJ_LAYER
 	processing_flags = NONE
@@ -353,6 +353,7 @@
 	created.pixel_x = created.base_pixel_x + rand(-6, 6)
 	created.pixel_y = created.base_pixel_y + rand(-6, 6)
 	created.forceMove(target)
+	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[created.type]"))
 
 	if(is_stack)
 		items_remaining = 0
@@ -388,15 +389,15 @@
 	drop_direction = direction
 	balloon_alert(usr, "dropping [dir2text(drop_direction)]")
 
-/obj/machinery/autolathe/AltClick(mob/user)
-	. = ..()
-	if(!drop_direction || !can_interact(user))
-		return
+/obj/machinery/autolathe/click_alt(mob/user)
+	if(!drop_direction)
+		return CLICK_ACTION_BLOCKING
 	if(busy)
 		balloon_alert(user, "busy printing!")
-		return
+		return CLICK_ACTION_SUCCESS
 	balloon_alert(user, "drop direction reset")
 	drop_direction = 0
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/autolathe/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(user.combat_mode) //so we can hit the machine

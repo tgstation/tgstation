@@ -14,6 +14,7 @@
 	throw_range = 7
 	attack_verb_continuous = list("attacks")
 	attack_verb_simple = list("attack")
+	interaction_flags_click = NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	/// Artistic style of the deck
 	var/deckstyle = "nanotrasen"
 	/// If the cards in the deck have different icon states (blank and CAS decks do not)
@@ -237,8 +238,7 @@
 	if(isturf(src.loc)) // only display tihs message when flipping in a visible spot like on a table
 		user.balloon_alert_to_viewers("flips a card")
 
-/obj/item/toy/singlecard/AltClick(mob/living/carbon/human/user)
-	if(user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
-		transform = turn(transform, 90)
+/obj/item/toy/singlecard/click_alt(mob/living/carbon/human/user)
+	transform = turn(transform, 90)
 		// use the simple_rotation component to make this turn with Alt+RMB & Alt+LMB at some point in the future - TimT
-	return ..()
+	return CLICK_ACTION_SUCCESS

@@ -679,7 +679,7 @@ world
 		if(uppercase == 1)
 			letter = uppertext(letter)
 		else if(uppercase == -1)
-			letter = lowertext(letter)
+			letter = LOWER_TEXT(letter)
 
 	var/image/text_image = new(loc = A)
 	text_image.maptext = MAPTEXT("<span style='font-size: 24pt'>[letter]</span>")

@@ -1,6 +1,0 @@
-author: "JohnFulpWillard, Tattax"
-delete-after: True
-changes:
-  - rscadd: "Monkeys can now wear all jumpsuits."
-  - rscadd: "Bioscrambler anomalies can now give monkey legs."
-  - bugfix: "Monkeys can have their tails removed, and tails are no longer invisible when implanted into another species."

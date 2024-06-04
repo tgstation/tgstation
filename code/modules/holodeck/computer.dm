@@ -292,12 +292,12 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 		holo_object.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 		if(isstructure(holo_object))
-			holo_object.obj_flags |= NO_DECONSTRUCTION
+			holo_object.obj_flags |= NO_DEBRIS_AFTER_DECONSTRUCTION
 			return
 
 		if(ismachinery(holo_object))
 			var/obj/machinery/holo_machine = holo_object
-			holo_machine.obj_flags |= NO_DECONSTRUCTION
+			holo_machine.obj_flags |= NO_DEBRIS_AFTER_DECONSTRUCTION
 			holo_machine.power_change()
 
 			if(istype(holo_machine, /obj/machinery/button))
@@ -369,7 +369,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 				derez(item)
 	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
 		holo_effect.tick()
-	update_mode_power_usage(ACTIVE_POWER_USE, active_power_usage + spawned.len * 3 + effects.len * 5)
+	update_mode_power_usage(ACTIVE_POWER_USE, initial(active_power_usage) + spawned.len * 3 + effects.len * 5)
 
 /obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)
 	if(active == toggleOn)

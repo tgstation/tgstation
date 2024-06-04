@@ -341,7 +341,7 @@
 	else
 		times_dry_fired = 0
 	var/turf/target_turf = get_offset_target_turf(get_ranged_target_turf(owner, owner.dir, 7), dx = rand(-1, 1), dy = rand(-1, 1))
-	held_gun.process_fire(target_turf, owner, TRUE, null, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
+	held_gun.process_fire(target_turf, owner, TRUE, null, pick(GLOB.all_body_zones))
 	held_gun.semicd = FALSE
 
 /datum/action/cooldown/spell/charged/psychic_booster

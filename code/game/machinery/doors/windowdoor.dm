@@ -66,11 +66,8 @@
 
 /obj/machinery/door/window/Destroy()
 	set_density(FALSE)
-	if(atom_integrity == 0)
-		playsound(src, SFX_SHATTER, 70, TRUE)
 	electronics = null
-	var/turf/floor = get_turf(src)
-	floor.air_update_turf(TRUE, FALSE)
+	air_update_turf(TRUE, FALSE)
 	return ..()
 
 /obj/machinery/door/window/update_icon_state()
@@ -300,10 +297,11 @@
 		if(BURN)
 			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 
-
 /obj/machinery/door/window/on_deconstruction(disassembled)
 	if(disassembled)
 		return
+
+	playsound(src, SFX_SHATTER, 70, TRUE)
 
 	for(var/i in 1 to shards)
 		drop_debris(new /obj/item/shard(src))

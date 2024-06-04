@@ -164,14 +164,12 @@
 		ui = new(user, src, "Sleeper", name)
 		ui.open()
 
-/obj/machinery/sleeper/AltClick(mob/user)
-	. = ..()
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return
+/obj/machinery/sleeper/click_alt(mob/user)
 	if(state_open)
 		close_machine()
 	else
 		open_machine()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/sleeper/examine(mob/user)
 	. = ..()
@@ -310,6 +308,12 @@
 ///Fully upgraded variant, the circuit using tier 4 parts.
 /obj/machinery/sleeper/syndie/fullupgrade
 	circuit = /obj/item/circuitboard/machine/sleeper/fullupgrade
+
+///Fully upgraded, not deconstructable, while using the normal sprite.
+/obj/machinery/sleeper/syndie/fullupgrade/nt
+	icon_state = "sleeper"
+	base_icon_state = "sleeper"
+	deconstructable = FALSE
 
 /obj/machinery/sleeper/self_control
 	controls_inside = TRUE

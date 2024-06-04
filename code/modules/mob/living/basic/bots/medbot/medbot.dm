@@ -7,7 +7,6 @@
 	icon_state = "medibot0"
 	base_icon_state = "medibot"
 	density = FALSE
-	anchored = FALSE
 	health = 20
 	maxHealth = 20
 	speed = 2

@@ -143,16 +143,26 @@ GUEST_BAN
 
 ## IPINTEL:
 ## This allows you to detect likely proxies by checking ips against getipintel.net
-## Rating to warn at: (0.9 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
-#IPINTEL_RATING_BAD 0.9
+## Rating to warn at: (0.8 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
+#IPINTEL_RATING_BAD 0.8
 ## Contact email, (required to use the service, leaving blank or default disables IPINTEL)
 #IPINTEL_EMAIL ch@nge.me
-## How long to save good matches (ipintel rate limits to 15 per minute and 500 per day. so this shouldn't be too low, getipintel.net suggests 6 hours, time is in hours) (Your ip will get banned if you go over 500 a day too many times)
-#IPINTEL_SAVE_GOOD 12
-## How long to save bad matches (these numbers can change as ips change hands, best not to save these for too long in case somebody gets a new ip used by a spammer/proxy before.)
-#IPINTEL_SAVE_BAD 3
-## Domain name to query (leave commented out for the default, only needed if you pay getipintel.net for more querys)
-#IPINTEL_DOMAIN check.getipintel.net
+## Query base, if you pay for more queries this is what you want to change.
+#IPINTEL_BASE check.getipintel.net
+## Maximum number of queries in a minute
+#IPINTEL_MAX_QUERY_MINUTE 15
+## Maximum number of queries in a day
+#IPINTEL_MAX_QUERY_DAY 500
+## Whether clients which cannot be checked due to a rate limit will be denied
+#IPINTEL_REJECT_RATE_LIMITED
+## Whether clients which are flagged as a VPN will be denied
+IPINTEL_REJECT_BAD
+## Whether clients which cannot be checked due to an error of some form will be denied
+#IPINTEL_REJECT_UNKNOWN
+## How long to store results in the cache before they must be retrieved again. IN DAYS.
+#IPINTEL_CACHE_LENGTH 7
+## How many minutes of living playtime to be automatically exempt from IPIntel. 0 for never.
+#IPINTEL_EXEMPT_PLAYTIME_LIVING 0
 
 ## Uncomment to allow web client connections
 #ALLOW_WEBCLIENT
@@ -368,14 +378,14 @@ AUTOADMIN_RANK Game Master
 ## These trigger for any version below (non-inclusive) the given version, so 510 triggers on 509 or lower.
 ## These messages will be followed by one stating the clients current version and the required version for clarity.
 ## If CLIENT_WARN_POPUP is uncommented a popup window with the message will be displayed instead
-#CLIENT_WARN_VERSION 511
-#CLIENT_WARN_BUILD 1421
+#CLIENT_WARN_VERSION 515
+#CLIENT_WARN_BUILD 1635
 #CLIENT_WARN_POPUP
-#CLIENT_WARN_MESSAGE Byond released 511 as the stable release. You can set the framerate your client runs at, which makes the game feel very different and cool. Shortly after its release we will end up using 511 client features and you will be forced to update.
-CLIENT_ERROR_VERSION 511
+#CLIENT_WARN_MESSAGE Byond released 515 as the stable release. This comes bundled with a host of niceties, including image generation for UIs and :: operators.
+CLIENT_ERROR_VERSION 515
 CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
-## The minimum build needed for joining the server, if using 512, a good minimum build would be 1421 as that disables the Middle Mouse Button exploit.
-CLIENT_ERROR_BUILD 1421
+## The minimum build needed for joining the server.
+CLIENT_ERROR_BUILD 1590
 
 ## TOPIC RATE LIMITING
 ## This allows you to limit how many topic calls (clicking on an interface window) the client can do in any given game second and/or game minute.

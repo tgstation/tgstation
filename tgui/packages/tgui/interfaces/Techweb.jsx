@@ -41,9 +41,9 @@ const selectRemappedStaticData = (data) => {
       ...node,
       id: remapId(id),
       costs,
-      prereq_ids: map(remapId)(node.prereq_ids || []),
-      design_ids: map(remapId)(node.design_ids || []),
-      unlock_ids: map(remapId)(node.unlock_ids || []),
+      prereq_ids: map(node.prereq_ids || [], remapId),
+      design_ids: map(node.design_ids || [], remapId),
+      unlock_ids: map(node.unlock_ids || [], remapId),
       required_experiments: node.required_experiments || [],
       discount_experiments: node.discount_experiments || [],
     };
@@ -251,10 +251,11 @@ const TechwebOverview = (props) => {
       );
     });
   } else {
-    displayedNodes = sortBy((x) => node_cache[x.id].name)(
+    displayedNodes = sortBy(
       tabIndex < 2
         ? nodes.filter((x) => x.tier === tabIndex)
         : nodes.filter((x) => x.tier >= tabIndex),
+      (x) => node_cache[x.id].name,
     );
   }
 
