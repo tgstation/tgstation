@@ -26,6 +26,9 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/snail
 	)
 
+	///Multiplier for the speed we give them. Positive numbers make it move slower, negative numbers make it move faster.
+	var/snail_speed_mod = 6
+
 /datum/species/snail/prepare_human_for_preview(mob/living/carbon/human/human)
 	human.dna.features["mcolor"] = COLOR_BEIGE
 	human.update_body(is_creating = TRUE)
@@ -88,11 +91,13 @@
 	if(!istype(bag, /obj/item/storage/backpack/snail))
 		if(new_snailperson.dropItemToGround(bag)) //returns TRUE even if its null
 			new_snailperson.equip_to_slot_or_del(new /obj/item/storage/backpack/snail(new_snailperson), ITEM_SLOT_BACK)
-	new_snailperson.AddElement(/datum/element/snailcrawl)
+	new_snailperson.AddElement(/datum/element/lube_walking, require_resting = TRUE)
+	new_snailperson.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/snail, multiplicative_slowdown = snail_speed_mod)
 
 /datum/species/snail/on_species_loss(mob/living/carbon/former_snailperson, datum/species/new_species, pref_load)
 	. = ..()
-	former_snailperson.RemoveElement(/datum/element/snailcrawl)
+	former_snailperson.remove_movespeed_modifier(/datum/movespeed_modifier/snail)
+	former_snailperson.RemoveElement(/datum/element/lube_walking, require_resting = TRUE)
 	var/obj/item/storage/backpack/bag = former_snailperson.get_item_by_slot(ITEM_SLOT_BACK)
 	if(istype(bag, /obj/item/storage/backpack/snail))
 		bag.emptyStorage()

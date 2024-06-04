@@ -1,4 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "Lootpanel now requires 515.1635 to generate most icons. TG support for 514 ended May 1. Update your client to fix the icons."

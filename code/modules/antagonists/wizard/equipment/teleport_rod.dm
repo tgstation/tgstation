@@ -144,6 +144,7 @@
 	duration = 6 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/teleport_flux
 	remove_on_fullheal = TRUE // staff of healing ~synergy~
+	show_duration = TRUE
 
 	/// Amount of damage to deal when teleporting in flux
 	var/tp_damage = 15

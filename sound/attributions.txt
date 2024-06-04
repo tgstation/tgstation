@@ -171,3 +171,10 @@ lizard_laugh1.ogg: https://youtu.be/I7CX0AS8RNI , License: CC-BY-3.0
 moth_laugh1.ogg: https://github.com/BeeStation/BeeStation-Hornet/blob/11ba3fa04105c93dd96a63ad4afaef4b20c02d0d/sound/emotes/ , license: CC-BY-SA-3.0
 whistle1.ogg: https://freesound.org/people/taure/sounds/411638/ , license: CC0 1.0 DEED
 
+portal_close, portal_open_1 , portal_open_2 , portal_open_3 , portal_travel made by @virgilcore (discord IGN)
+
+toilet-flush.ogg is made by shw489 (CC0):
+https://freesound.org/people/shw489/sounds/234389/
+
+soup_boil1.ogg through soup_boil5.ogg and soup_boil_end.ogg are taken from Boiling Soup from Freesoung.org (CC4) and converted to OGG / split apart (but is otherwise unchanged):
+https://freesound.org/people/jorickhoofd/sounds/632783/

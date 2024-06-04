@@ -1,0 +1,5 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - rscadd: "Added Biomes capabilities to the Cave Generator, to allow for procedurally-placed biomes to be introduced in cave generation. This feature is not currently used on any map, but the tools are all there for anyone with the motivation to add biomes to any cave-generating area, like Lavaland and Ice Box."
+  - code_imp: "Biomes can now affect features (which are usually structures), on top of flora and fauna."

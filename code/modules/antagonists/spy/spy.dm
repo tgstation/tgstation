@@ -130,30 +130,34 @@
 		your_mission.owner = owner
 		your_mission.explanation_text = pick_list_replacements(SPY_OBJECTIVE_FILE, "objective_body")
 		objectives += your_mission
-	
+
 	if((length(objectives) < 3) && prob(25))
 		switch(rand(1, 4))
 			if(1)
 				var/datum/objective/protect/save_the_person = new()
 				save_the_person.owner = owner
+				save_the_person.find_target()
 				save_the_person.no_failure = TRUE
 				objectives += save_the_person
 			if(2)
 				var/datum/objective/protect/nonhuman/save_the_entity = new()
 				save_the_entity.owner = owner
+				save_the_entity.find_target()
 				save_the_entity.no_failure = TRUE
 				objectives += save_the_entity
 			if(3)
 				var/datum/objective/jailbreak/save_the_jailbird = new()
 				save_the_jailbird.owner = owner
+				save_the_jailbird.find_target()
 				save_the_jailbird.no_failure = TRUE
 				objectives += save_the_jailbird
 			if(4)
 				var/datum/objective/jailbreak/detain/cage_the_jailbird = new()
 				cage_the_jailbird.owner = owner
+				cage_the_jailbird.find_target()
 				cage_the_jailbird.no_failure = TRUE
 				objectives += cage_the_jailbird
-	
+
 	if(prob(10))
 		var/datum/objective/martyr/leave_no_trace = new()
 		leave_no_trace.owner = owner

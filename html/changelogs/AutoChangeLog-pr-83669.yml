@@ -1,0 +1,4 @@
+author: "Wayland-Smithy"
+delete-after: True
+changes:
+  - qol: "AI's jump to AI Core button works while on backup power (likely when needed most)."
