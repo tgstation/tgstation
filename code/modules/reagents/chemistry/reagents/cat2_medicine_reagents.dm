@@ -33,7 +33,7 @@
 	var/need_mob_update = FALSE
 	switch(affected_mob.stat)
 		if(CONSCIOUS) //bad
-			thou_shall_heal = min(death_is_coming/20, 3)
+			thou_shall_heal = max(death_is_coming/20, 3)
 			need_mob_update += affected_mob.adjustOxyLoss(2 * REM * seconds_per_tick, TRUE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		if(SOFT_CRIT) //meh convert
 			thou_shall_heal = round(death_is_coming/13,0.1)
