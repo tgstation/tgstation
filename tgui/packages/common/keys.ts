@@ -16,6 +16,9 @@
  *   // do something
  * }
  * ```
+ *
+ * Note that Escape is aliased to 'Esc' because of IE reasons. That will probably break again in 516.
+ *
  */
 export enum KEY {
   Alt = 'Alt',
@@ -25,7 +28,7 @@ export enum KEY {
   Down = 'ArrowDown',
   End = 'End',
   Enter = 'Enter',
-  Escape = 'Escape',
+  Escape = 'Esc',
   Home = 'Home',
   Insert = 'Insert',
   Left = 'ArrowLeft',
