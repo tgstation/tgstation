@@ -43,7 +43,7 @@
 	pixel_x = 5;
 	pixel_y = -6
 	},
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/standard_air,
 /area/ruin/comms_agent)
 "di" = (
 /obj/effect/turf_decal/siding/wood{
@@ -52,7 +52,6 @@
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
 "do" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/ruin/comms_agent)
 "ds" = (
@@ -113,7 +112,7 @@
 /turf/open/floor/wood/parquet,
 /area/ruin/comms_agent)
 "he" = (
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/standard_air,
 /area/ruin/comms_agent)
 "hl" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -161,7 +160,7 @@
 /area/ruin/comms_agent)
 "ka" = (
 /obj/machinery/seed_extractor,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/standard_air,
 /area/ruin/comms_agent)
 "kp" = (
 /obj/effect/decal/cleanable/dirt,
@@ -180,6 +179,7 @@
 /obj/structure/cable,
 /obj/structure/sign/poster/contraband/random/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "kD" = (
@@ -200,13 +200,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/ruin/comms_agent)
+"la" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/closed/wall,
+/area/ruin/comms_agent)
 "lb" = (
 /turf/open/floor/stone,
-/area/ruin/comms_agent)
-"lf" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/white,
 /area/ruin/comms_agent)
 "lj" = (
 /obj/machinery/light_switch/directional/south,
@@ -269,6 +268,12 @@
 /obj/item/tape/frozen,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"pg" = (
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "pl" = (
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/airlock/centcom{
@@ -304,7 +309,8 @@
 /turf/open/floor/wood/tile,
 /area/ruin/comms_agent)
 "rA" = (
-/obj/structure/closet/emcloset,
+/obj/machinery/atmospherics/components/tank/air,
+/obj/machinery/light/dim/directional/north,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "rW" = (
@@ -363,8 +369,17 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/turf/open/floor/plating/snowed,
+/turf/open/floor/plating/snowed{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/ruin/comms_agent)
+"uk" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/turf/open/floor/plating,
+/area/ruin/comms_agent/maint)
 "un" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -425,7 +440,7 @@
 /area/ruin/comms_agent)
 "xi" = (
 /obj/machinery/hydroponics/soil,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/standard_air,
 /area/ruin/comms_agent)
 "xq" = (
 /obj/effect/decal/cleanable/dirt,
@@ -480,6 +495,10 @@
 /obj/item/taperecorder/empty,
 /turf/open/floor/carpet,
 /area/ruin/comms_agent)
+"zd" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/closed/mineral/snowmountain/icemoon,
+/area/icemoon/underground/explored)
 "zi" = (
 /turf/open/floor/plating,
 /area/ruin/comms_agent)
@@ -493,7 +512,7 @@
 /area/ruin/comms_agent)
 "zJ" = (
 /obj/machinery/biogenerator,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/standard_air,
 /area/ruin/comms_agent)
 "Ac" = (
 /obj/effect/turf_decal/siding/wideplating/light{
@@ -532,6 +551,7 @@
 "CL" = (
 /obj/structure/cable,
 /obj/machinery/power/smes/super/full,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible/layer2,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "CS" = (
@@ -539,12 +559,15 @@
 /obj/item/clothing/head/utility/welding,
 /obj/item/flashlight,
 /obj/item/weldingtool/largetank,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/syndicate_access,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "CW" = (
-/obj/machinery/atmospherics/components/tank/air{
-	piping_layer = 4
-	},
+/obj/structure/closet/emcloset,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "DH" = (
@@ -612,7 +635,7 @@
 /obj/item/seeds/coffee/robusta,
 /obj/item/seeds/wheat,
 /obj/effect/spawner/random/food_or_drink/seed,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/standard_air,
 /area/ruin/comms_agent)
 "GQ" = (
 /obj/structure/table,
@@ -627,8 +650,16 @@
 /turf/open/floor/carpet,
 /area/ruin/comms_agent)
 "GR" = (
+/obj/machinery/atmospherics/components/trinary/mixer/flipped/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
+"GY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "HX" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -677,22 +708,13 @@
 /turf/open/floor/iron/white,
 /area/ruin/comms_agent)
 "Kv" = (
-/obj/structure/closet/crate,
-/obj/item/stack/sheet/glass{
-	amount = 20
+/obj/machinery/atmospherics/components/trinary/filter/layer2{
+	dir = 8
 	},
-/obj/item/stack/sheet/iron/twenty,
-/obj/item/stack/sheet/leather{
-	amount = 10
-	},
-/obj/item/reagent_containers/condiment/enzyme,
-/obj/machinery/light/dim/directional/south,
-/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/item/stack/sheet/mineral/plasma/thirty,
-/obj/item/stack/sheet/mineral/plasma/thirty,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "KB" = (
@@ -715,12 +737,16 @@
 /obj/structure/cable,
 /obj/item/cultivator/rake,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating/snowed,
+/turf/open/floor/plating/snowed{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/ruin/comms_agent)
 "Ll" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/cable,
 /obj/machinery/light/small/directional/east,
+/obj/machinery/atmospherics/components/binary/volume_pump/layer2{
+	dir = 1
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
@@ -756,7 +782,7 @@
 	pixel_x = 7;
 	pixel_y = 4
 	},
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/standard_air,
 /area/ruin/comms_agent)
 "LP" = (
 /turf/closed/wall/r_wall,
@@ -771,6 +797,22 @@
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/stone,
 /area/ruin/comms_agent)
+"Mv" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/glass{
+	amount = 20
+	},
+/obj/item/stack/sheet/iron/twenty,
+/obj/item/stack/sheet/leather{
+	amount = 10
+	},
+/obj/item/reagent_containers/condiment/enzyme,
+/obj/structure/cable,
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/ruin/comms_agent/maint)
 "Mz" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -785,6 +827,7 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "Ng" = (
@@ -800,7 +843,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/turf/open/floor/plating/snowed,
+/turf/open/floor/plating/snowed{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/ruin/comms_agent)
 "NJ" = (
 /obj/item/storage/medkit/regular,
@@ -808,6 +853,10 @@
 /obj/structure/closet/secure_closet/freezer/empty/open,
 /turf/open/floor/iron/white,
 /area/ruin/comms_agent)
+"NL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/closed/wall/r_wall,
+/area/ruin/comms_agent/maint)
 "Ok" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
@@ -819,7 +868,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating/snowed,
+/turf/open/floor/plating/snowed{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
 /area/ruin/comms_agent)
 "OB" = (
 /turf/open/lava/plasma/ice_moon,
@@ -843,7 +894,7 @@
 	pixel_y = -9;
 	pixel_x = 11
 	},
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/standard_air,
 /area/ruin/comms_agent)
 "Qn" = (
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -856,6 +907,9 @@
 /area/ruin/comms_agent)
 "Qx" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "QG" = (
@@ -881,6 +935,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/r_wall,
 /area/ruin/comms_agent)
+"QW" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/general/visible,
+/turf/open/floor/plating,
+/area/ruin/comms_agent/maint)
 "Sc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -936,7 +994,6 @@
 /turf/open/floor/wood/tile,
 /area/ruin/comms_agent)
 "Vo" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
@@ -948,18 +1005,19 @@
 "Wl" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/trinary/filter/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "Wm" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "ssyndicate_comms_base"
+	cycle_id = "syndicate_comms_base"
 	},
 /turf/open/floor/iron,
 /area/ruin/comms_agent)
 "WL" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/ruin/comms_agent)
 "WR" = (
@@ -1908,11 +1966,11 @@ tl
 nP
 WR
 wh
-WR
-nP
-MH
-tl
-MH
+la
+QU
+NL
+NL
+NL
 MH
 OM
 OM
@@ -1966,10 +2024,10 @@ nP
 od
 do
 NJ
-LP
-LP
-LP
-LP
+YI
+tb
+fk
+NL
 MH
 MH
 TH
@@ -2024,9 +2082,9 @@ IJ
 do
 DH
 YI
-tb
+QW
 Qx
-LP
+NL
 LP
 MH
 OM
@@ -2082,8 +2140,8 @@ WL
 eT
 YI
 rA
-Qx
-fk
+uk
+Mv
 LP
 MH
 TV
@@ -2199,7 +2257,7 @@ CS
 Wl
 CL
 LP
-MH
+zd
 MH
 OM
 sB
@@ -2250,13 +2308,13 @@ WR
 vK
 JY
 JY
-lf
+JY
 MM
 kB
 Ll
 CW
-LP
-MH
+NL
+GY
 MH
 TH
 OM
@@ -2313,8 +2371,8 @@ YI
 YI
 LP
 LP
-MH
-MH
+pg
+OM
 OM
 OM
 OB
