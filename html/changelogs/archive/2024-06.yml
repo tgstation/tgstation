@@ -165,3 +165,17 @@
       shop!
   jwc1015:
   - bugfix: Made the anxious zipzap accessible.
+2024-06-04:
+  Iajret:
+  - bugfix: fixed being able to confirm cargo orders from cargo request console (and,
+      probably, from PDAs)
+  Jane:
+  - balance: Spider Breachers and Vipers have swapped castes. Breachers come from
+      Enriched Eggs while Vipers come from Abnormals! Breachers can no longer survive
+      in spaced rooms/temperatures. The Nurse wraps wounds faster, but with less damage
+      healed per wrap.
+  Melbert:
+  - sound: Boiling soup now makes a sound.
+  Time-Green:
+  - bugfix: fixes touching a crutch permanently crippling you
+  - bugfix: fixes crutches giving permanent speedboosts even when dropped
