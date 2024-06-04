@@ -526,6 +526,7 @@
 
 	new_profile.age = target.age
 	new_profile.physique = target.physique
+	new_profile.athletics_level = target.mind?.get_skill_level(/datum/skill/athletics) || SKILL_LEVEL_NONE
 
 	// Grab the target's quirks.
 	for(var/datum/quirk/target_quirk as anything in target.quirks)
@@ -536,10 +537,6 @@
 	new_profile.underwear_color = target.underwear_color
 	new_profile.undershirt = target.undershirt
 	new_profile.socks = target.socks
-
-	// Hair and facial hair gradients, alongside their colours.
-	new_profile.grad_style = LAZYLISTDUPLICATE(target.grad_style)
-	new_profile.grad_color = LAZYLISTDUPLICATE(target.grad_color)
 
 	// Grab skillchips they have
 	new_profile.skillchips = target.clone_skillchip_list(TRUE)
@@ -766,8 +763,7 @@
 	user.socks = chosen_profile.socks
 	user.age = chosen_profile.age
 	user.physique = chosen_profile.physique
-	user.grad_style = LAZYLISTDUPLICATE(chosen_profile.grad_style)
-	user.grad_color = LAZYLISTDUPLICATE(chosen_profile.grad_color)
+	user.mind?.set_level(/datum/skill/athletics, chosen_profile.athletics_level, silent = TRUE)
 	user.voice = chosen_profile.voice
 	user.voice_filter = chosen_profile.voice_filter
 
@@ -913,12 +909,10 @@
 	var/age
 	/// The body type of the profile source.
 	var/physique
+	/// The athleticism of the profile source.
+	var/athletics_level
 	/// The quirks of the profile source.
 	var/list/quirks = list()
-	/// The hair and facial hair gradient styles of the profile source.
-	var/list/grad_style = list("None", "None")
-	/// The hair and facial hair gradient colours of the profile source.
-	var/list/grad_color = list(null, null)
 	/// The TTS voice of the profile source
 	var/voice
 	/// The TTS filter of the profile filter
@@ -958,9 +952,8 @@
 	new_profile.id_icon = id_icon
 	new_profile.age = age
 	new_profile.physique = physique
+	new_profile.athletics_level = athletics_level
 	new_profile.quirks = quirks.Copy()
-	new_profile.grad_style = LAZYLISTDUPLICATE(grad_style)
-	new_profile.grad_color = LAZYLISTDUPLICATE(grad_color)
 	new_profile.voice = voice
 	new_profile.voice_filter = voice_filter
 

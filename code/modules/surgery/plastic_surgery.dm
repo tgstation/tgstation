@@ -42,11 +42,11 @@
 	display_results(
 		user,
 		target,
-		span_notice("You begin to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]..."),
-		span_notice("[user] begins to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]."),
-		span_notice("[user] begins to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]."),
+		span_notice("You begin to insert [tool] into the incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]..."),
+		span_notice("[user] begins to insert [tool] into the incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+		span_notice("[user] begins to insert [tool] into the incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 	)
-	display_pain(target, "You feel something inserting just below the skin in your [parse_zone(target_zone)].")
+	display_pain(target, "You feel something inserting just below the skin in your [target.parse_zone_with_bodypart(target_zone)].")
 
 /datum/surgery_step/insert_plastic/success(mob/user, mob/living/target, target_zone, obj/item/stack/tool, datum/surgery/surgery, default_display_results)
 	. = ..()

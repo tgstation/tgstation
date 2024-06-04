@@ -53,6 +53,7 @@
 	duration = 8 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/realignment
 	tick_interval = 0.2 SECONDS
+	show_duration = TRUE
 
 /datum/status_effect/realignment/get_examine_text()
 	return span_notice("[owner.p_Theyre()] glowing a soft white.")

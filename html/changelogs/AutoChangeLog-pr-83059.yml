@@ -1,4 +1,0 @@
-author: "ReturnToZender (hitting delete on a power cable)"
-delete-after: True
-changes:
-  - rscdel: "Single loose power cable in icebox maintenance"

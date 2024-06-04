@@ -11,6 +11,7 @@
 		"Did he drop this into a moisture trap? Yuck.",
 		"Toolboxing techniques, huh? I kinda just want to know how to make the gun.",
 		"What the hell does he mean by 'ancient warrior tradition'?",
+		"...the true masters of this place are not those who merely inhabit it...",
 	)
 
 /obj/item/book/granter/crafting_recipe/dusting/laser_musket_prime

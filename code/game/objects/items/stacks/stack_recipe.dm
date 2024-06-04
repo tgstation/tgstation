@@ -64,15 +64,13 @@
 	res_amount = 1,
 	max_res_amount = 1,
 	time = 0,
-	one_per_turf = FALSE,
-	on_solid_ground = FALSE,
-	window_checks = FALSE,
+	crafting_flags = CRAFT_CHECK_DENSITY,
 	placement_checks = NONE,
 	trait_booster,
 	trait_modifier = 1,
+	category,
 	desc,
 	required_noun,
-	category,
 )
 	if(category)
 		src.category = category

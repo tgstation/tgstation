@@ -127,3 +127,13 @@ among other potential differences. This granularity is helpful for things like t
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "missile_broken"
 	w_class = WEIGHT_CLASS_TINY
+
+//immediately hits firer
+/obj/projectile/bullet/rocket/reverse
+	name = "faulty rocket"
+
+/obj/projectile/bullet/rocket/reverse/fire(angle, atom/direct_target)
+	..()
+	if(firer) //troll
+		firer.visible_message(span_danger("[src] blows up as soon as [firer] fires it!"))
+		on_hit(firer)

@@ -1,0 +1,4 @@
+author: "MelokGleb"
+delete-after: True
+changes:
+  - code_imp: "crab17 telegraph now uses animated spinning telegraph circle instead of sniper scope button"

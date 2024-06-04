@@ -545,7 +545,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/teleport/proc/handle_portal(portal_type, turf/origin)
 	var/turf/T = get_turf(src)
 	close_portal() // To avoid stacking descriptions/animations
-	playsound(T, pick('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg'), 100, TRUE, 14)
+	playsound(T, 'sound/effects/portal_travel.ogg', 100, TRUE, 14)
 	inner_portal = new /obj/effect/temp_visual/cult/portal(T)
 	if(portal_type == "space")
 		set_light_color(color)
@@ -1141,7 +1141,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			images += B
 		if(!IS_CULTIST(M))
 			if(M.client)
-				var/image/C = image('icons/effects/cult/effects.dmi',M,"bloodsparkles", ABOVE_MOB_LAYER)
+				var/image/C = image('icons/effects/cult.dmi',M,"bloodsparkles", ABOVE_MOB_LAYER)
 				add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, NONE)
 				addtimer(CALLBACK(M, TYPE_PROC_REF(/atom/, remove_alt_appearance),"cult_apoc",TRUE), duration)
 				images += C

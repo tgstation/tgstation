@@ -17,7 +17,6 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/basic/spider/giant/sgt_araneus,
 	/mob/living/simple_animal/bot/secbot/beepsky,
 	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
-	/mob/living/simple_animal/pet,
 )))
 
 /datum/round_event_control/sentience
@@ -49,8 +48,9 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	priority_announce(sentience_report,"[command_name()] Medium-Priority Update")
 
 /datum/round_event/ghost_role/sentience/spawn_role()
-	var/list/mob/dead/observer/candidates
-	candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_SENTIENCE, role = ROLE_SENTIENCE, alert_pic = /obj/item/slimepotion/slime/sentience, role_name_text = role_name)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_SENTIENCE, role = ROLE_SENTIENCE, alert_pic = /obj/item/slimepotion/slime/sentience, role_name_text = role_name)
+	if(!length(candidates))
+		return NOT_ENOUGH_PLAYERS
 
 	// find our chosen mob to breathe life into
 	// Mobs have to be simple animals, mindless, on station, and NOT holograms.
