@@ -1,13 +1,14 @@
 /datum/status_effect/incapacitating/stamcrit
-	status_type = STATUS_EFFECT_REFRESH
-	duration = 1 SECONDS // overridden in on_creation
+	status_type = STATUS_EFFECT_UNIQUE
+	// Lasts until we go back to 0 stamina, which is handled by the mob
+	duration = -1
+	tick_interval = -1
 	/// Cooldown between displaying warning messages that we hit diminishing returns
 	COOLDOWN_DECLARE(warn_cd)
 	/// A counter that tracks every time we've taken enough damage to trigger diminishing returns
 	var/diminishing_return_counter = 0
 
 /datum/status_effect/incapacitating/stamcrit/on_creation(mob/living/new_owner, set_duration)
-	duration = set_duration || new_owner.stamina_regen_time
 	. = ..()
 	if(!.)
 		return .
@@ -21,9 +22,6 @@
 	// Same
 	RegisterSignal(owner, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, PROC_REF(update_diminishing_return))
 	RegisterSignal(owner, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_remove))
-
-/datum/status_effect/incapacitating/stamcrit/refresh(effect, ...)
-	duration = world.time + owner.stamina_regen_time
 
 /datum/status_effect/incapacitating/stamcrit/on_apply()
 	if(owner.stat == DEAD)
@@ -50,6 +48,9 @@
 	SIGNAL_HANDLER
 	if(amount <= 0 || forced)
 		return NONE
+	// Here we fake the effect of having diminishing returns
+	// We don't actually decrease incoming stamina damage because that would be pointless, the mob is at stam damage cap anyways
+	// Instead we just "ignore" the damage if we have a sufficiently high diminishing return counter
 	var/mod_amount = ceil(sqrt(amount) / 2) - diminishing_return_counter
 	// We check base amount not mod_amount because we still want to up tick it even if we've already got a high counter
 	// We also only uptick it after calculating damage so we start ticking up after the damage and not before
