@@ -26,7 +26,11 @@ Mineral Sheets
 GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	new/datum/stack_recipe("pile of dirt", /obj/machinery/growing/soil, 3, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_TOOLS), \
 	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_DOORS), \
-	new/datum/stack_recipe("Breakdown into sand", /obj/item/stack/ore/glass, 1, one_per_turf = FALSE, on_solid_ground = TRUE, category = CAT_MISC) \
+	new/datum/stack_recipe("Breakdown into sand", /obj/item/stack/ore/glass, 1, one_per_turf = FALSE, on_solid_ground = TRUE, category = CAT_MISC), \
+
+	new/datum/stack_recipe("sandstone stool", /obj/structure/chair/stool/sandstone, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("sandstone sarcophagus", /obj/structure/closet/crate/coffin/sandstonesarcophagus, 8, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("sandstone table", /obj/structure/table/sandstone, 6, time = 5 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE, category = CAT_FURNITURE) \
 	))
 
 /obj/item/stack/sheet/mineral/sandstone
