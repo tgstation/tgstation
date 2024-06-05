@@ -191,8 +191,8 @@
 
 /obj/effect/temp_visual/devestating_light
 	name = "holy light"
-	icon = 'icons/effects/beam.dmi'
-	icon_state = "plasmabeam"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "falling_celeste"
 	layer = ABOVE_ALL_MOB_LAYER
 	duration = 1.5 SECONDS
 	light_range = 1
@@ -208,7 +208,7 @@
 	addtimer(CALLBACK(src, PROC_REF(apply_damage)), duration)
 
 /obj/effect/temp_visual/devestating_light/proc/apply_damage()
-	playsound(src, 'sound/magic/lightningbolt.ogg', 20)
+	playsound(src, 'sound/effects/curse1.ogg', 50, TRUE)
 	var/turf/my_turf = get_turf(src)
 	new /obj/effect/temp_visual/mook_dust(my_turf)
 	for(var/mob/living/victim in my_turf)
@@ -630,7 +630,7 @@
 		BeamTarget = target_turf,
 		beam_type = /obj/effect/ebeam/reacting/judgement,
 		icon = 'icons/effects/beam.dmi',
-		icon_state = "holy_beam",
+		icon_state = "celestial_beam",
 		beam_color = COLOR_WHITE,
 		time = 2 SECONDS,
 		emissive = TRUE,

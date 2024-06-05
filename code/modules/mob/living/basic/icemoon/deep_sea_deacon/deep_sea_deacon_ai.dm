@@ -9,7 +9,7 @@
 		BB_DEACON_SPECIAL_ATTACK_COUNTER = 0,
 		BB_DEACON_NEXT_CYCLE_READY = TRUE,
 		BB_DEACON_BOUNCE_MODE = FALSE,
-		BB_DEACON_USED_SPECIAL_ATTACKS = list()
+		BB_DEACON_USED_SPECIAL_ATTACKS = list(),
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
