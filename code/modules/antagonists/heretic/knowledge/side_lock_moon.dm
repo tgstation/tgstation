@@ -5,7 +5,7 @@
 	desc = "Grants you Mind Gate, a spell \
 		which deals you 20 brain damage but the target suffers a hallucination,\
 		is left confused for 10 seconds, suffers oxygen loss and brain damage."
-	gain_text = "My mind swings open like a gate, and its insight will let me percieve the truth."
+	gain_text = "My mind swings open like a gate, and its insight will let me perceive the truth."
 	next_knowledge = list(
 		/datum/heretic_knowledge/key_ring,
 		/datum/heretic_knowledge/spell/moon_smile,
@@ -23,7 +23,7 @@
 	gain_text = "The mansus holds many a curio, some are not meant for the mortal eye."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/burglar_finesse,
-		/datum/heretic_knowledge/moon_amulette,
+		/datum/heretic_knowledge/moon_amulet,
 	)
 	required_atoms = list(
 		/obj/item/organ/internal/lungs = 1,
@@ -48,7 +48,7 @@
 				They yearn for mortal eyes again, and I shall grant that wish."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/burglar_finesse,
-		/datum/heretic_knowledge/moon_amulette,
+		/datum/heretic_knowledge/moon_amulet,
 	)
 	required_atoms = list(/obj/item/canvas = 1)
 	result_atoms = list(/obj/item/canvas)
