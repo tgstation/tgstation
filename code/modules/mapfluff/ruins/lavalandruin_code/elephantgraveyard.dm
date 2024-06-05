@@ -160,6 +160,8 @@
 	var/first_open = FALSE
 	/// was a shovel used to close this grave
 	var/dug_closed = FALSE
+	/// do we have a mood effect tied to accessing this type of grave?
+	var/affect_mood = TRUE
 
 /obj/structure/closet/crate/grave/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(isnull(held_item))
@@ -252,7 +254,7 @@
 		if(opened)
 			dug_closed = TRUE
 			close(user)
-		else if(open(user, force = TRUE))
+		else if(open(user, force = TRUE) && affect_mood)
 			if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
 				user.add_mood_event("morbid_graverobbing", /datum/mood_event/morbid_graverobbing)
 			else
@@ -314,6 +316,7 @@
 	icon_state = "grave_fresh"
 	base_icon_state = "grave_fresh"
 	material_drop_amount = 0
+	affect_mood = FALSE
 
 /obj/structure/closet/crate/grave/filled/lead_researcher
 	name = "ominous burial mound"
