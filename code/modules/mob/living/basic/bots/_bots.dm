@@ -14,32 +14,40 @@ GLOBAL_LIST_INIT(command_strings, list(
 	gender = NEUTER
 	mob_biotypes = MOB_ROBOTIC
 	basic_mob_flags = DEL_ON_DEATH
+	density = FALSE
+
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "medibot0"
 	base_icon_state = "medibot"
+
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	habitable_atmos = null
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST)
+
 	maximum_survivable_temperature = INFINITY
 	minimum_survivable_temperature = 0
 	has_unlimited_silicon_privilege = TRUE
+
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
-	faction = list(FACTION_MINING)
 	ai_controller = /datum/ai_controller/basic_controller/bot
-	pass_flags = PASSFLAPS
+	pass_flags = PASSFLAPS | PASSMOB
+
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
+
 	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
+
 	speech_span = SPAN_ROBOT
-	faction = list(FACTION_NEUTRAL, FACTION_SILICON, FACTION_TURRET)
+	faction = list(FACTION_SILICON)
 	light_system = OVERLAY_LIGHT
 	light_range = 3
 	light_power = 0.6
 	speed = 3
+
 	req_one_access = list(ACCESS_ROBOTICS)
 	interaction_flags_click = ALLOW_SILICON_REACH
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
@@ -101,7 +109,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/Initialize(mapload)
 	. = ..()
 
-	AddElement(/datum/element/relay_attackers)
+	AddElement(/datum/element/ai_retaliate)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(handle_loop_movement))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(after_attacked))
 	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
