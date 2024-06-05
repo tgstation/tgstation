@@ -1,12 +1,13 @@
 /datum/status_effect/incapacitating/stamcrit
 	status_type = STATUS_EFFECT_REFRESH
-	duration = STAMINA_REGEN_TIME
+	duration = 1 SECONDS // overridden in on_creation
 	/// Cooldown between displaying warning messages that we hit diminishing returns
 	COOLDOWN_DECLARE(warn_cd)
 	/// A counter that tracks every time we've taken enough damage to trigger diminishing returns
 	var/diminishing_return_counter = 0
 
 /datum/status_effect/incapacitating/stamcrit/on_creation(mob/living/new_owner, set_duration)
+	duration = set_duration || new_owner.stamina_regen_time
 	. = ..()
 	if(!.)
 		return .
@@ -20,6 +21,9 @@
 	// Same
 	RegisterSignal(owner, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, PROC_REF(update_diminishing_return))
 	RegisterSignal(owner, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_remove))
+
+/datum/status_effect/incapacitating/stamcrit/refresh(effect, ...)
+	duration = world.time + owner.stamina_regen_time
 
 /datum/status_effect/incapacitating/stamcrit/on_apply()
 	if(owner.stat == DEAD)
