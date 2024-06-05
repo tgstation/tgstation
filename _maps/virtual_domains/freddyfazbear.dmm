@@ -206,7 +206,6 @@
 "lS" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/structure/fluff/balloon_nuke,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/powered/virtual_domain)
@@ -848,12 +847,6 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/item/toy/balloon/heart,
 /obj/machinery/light/built/directional/west,
-/turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"QC" = (
-/obj/effect/turf_decal/tile/dark_red/opposingcorners,
-/obj/effect/turf_decal/tile/dark_red/opposingcorners,
-/obj/machinery/jukebox/no_access,
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "RB" = (
@@ -1560,7 +1553,7 @@ Cm
 Ne
 ve
 sk
-OD
+Ux
 Ux
 kL
 Ux
@@ -2064,7 +2057,7 @@ ML
 to
 ML
 cn
-QC
+ML
 to
 ML
 ZU
@@ -2663,9 +2656,9 @@ Ne
 Ne
 Ne
 Ne
-ex
-ex
-ex
+Ne
+Ne
+Ne
 ve
 Ux
 Sr
