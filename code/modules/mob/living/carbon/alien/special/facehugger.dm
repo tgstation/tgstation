@@ -265,14 +265,17 @@
 	return ..()
 
 /obj/item/clothing/mask/facehugger/MouseDrop(atom/over)
-	if(!real || sterile || user.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo))
-		return ..()
 	var/mob/living/user = usr
 	var/mob/living/carbon/human/wearer = loc
-	if(istype(user) && istype(wearer) && stat != DEAD)
-		if(wearer.get_item_by_slot(slot_flags) == src && user == wearer)
-			to_chat(user, span_userdanger("[src] is latched on too tight! Get help or wait for it to let go!"))
-			return
+	if(!istype(user) || !istype(wearer))
+		return..()
+	if(user != wearer)
+		return ..()
+	if(!real || sterile || user.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo))
+		return ..()
+	if(wearer.get_item_by_slot(slot_flags) == src && stat != DEAD)
+		to_chat(user, span_userdanger("[src] is latched on too tight! Get help or wait for it to let go!"))
+		return
 	return ..()
 
 /proc/CanHug(mob/living/M)
