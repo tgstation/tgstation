@@ -82,6 +82,10 @@
 	for(var/module in get_usable_modules())
 		if(!(module in cyborg.held_items))
 			. += module
+	if(!cyborg.emagged)
+		for(var/module in emag_modules)
+			if(!(module in cyborg.held_items))
+				. += module
 
 /obj/item/robot_model/proc/add_module(obj/item/added_module, nonstandard, requires_rebuild)
 	if(isstack(added_module))
@@ -129,7 +133,7 @@
 	for(var/obj/item/module in added_modules)
 		add_module(module, FALSE, FALSE)
 	for(var/module in held_modules)
-		if(module)
+		if(module in modules)
 			cyborg.equip_module_to_slot(module, held_modules.Find(module))
 	if(active_module)
 		cyborg.select_module(held_modules.Find(active_module))
