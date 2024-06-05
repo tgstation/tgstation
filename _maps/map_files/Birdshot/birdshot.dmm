@@ -1687,10 +1687,10 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
 /obj/item/kirbyplants/random,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
 /turf/open/floor/stone,
 /area/station/service/bar)
 "aLk" = (
@@ -2491,6 +2491,14 @@
 /obj/machinery/meter,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
+"bdk" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/grass,
+/area/station/service/chapel)
 "bdN" = (
 /obj/structure/falsewall,
 /turf/open/floor/plating,
@@ -2543,9 +2551,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/stone,
 /area/station/service/bar)
 "bfE" = (
@@ -10468,6 +10474,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 8
 	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/grass,
 /area/station/service/chapel)
 "epa" = (
@@ -10819,10 +10826,10 @@
 "ewi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/cold/directional/west,
-/obj/machinery/duct,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "ewo" = (
@@ -15839,7 +15846,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Public Shrine"
 	},
-/turf/open/floor/iron,
+/turf/open/floor/wood/large,
 /area/station/hallway/primary/central/fore)
 "gnA" = (
 /obj/structure/cable,
@@ -19184,14 +19191,6 @@
 /obj/item/reagent_containers/cup/watering_can/wood,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
-"hqL" = (
-/obj/effect/turf_decal/trimline/neutral/line,
-/obj/effect/turf_decal/trimline/neutral/line{
-	dir = 1
-	},
-/obj/effect/spawner/xmastree,
-/turf/open/floor/iron,
-/area/station/hallway/primary/port)
 "hqM" = (
 /obj/structure/toiletbong{
 	dir = 1
@@ -28125,6 +28124,11 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/virology)
+"kom" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall,
+/area/station/maintenance/port/greater)
 "kop" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -28626,17 +28630,6 @@
 "kvb" = (
 /turf/closed/wall/r_wall/rust,
 /area/station/engineering/atmos)
-"kvj" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/sign/departments/holy/directional/north,
-/turf/open/floor/iron,
-/area/station/hallway/primary/port)
 "kvl" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -51724,6 +51717,13 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/cafeteria,
 /area/station/hallway/secondary/exit/departure_lounge)
+"sbB" = (
+/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/machinery/door/airlock/maintenance{
+	name = "Maintenance"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/greater)
 "sbG" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
 /obj/machinery/door/firedoor,
@@ -56812,6 +56812,10 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
+"tKy" = (
+/obj/effect/spawner/xmastree,
+/turf/open/misc/dirt/jungle,
+/area/station/service/chapel)
 "tKG" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/broken_floor,
@@ -58749,15 +58753,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/customs/auxiliary)
-"uny" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/firealarm/directional/west,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
 "unG" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
@@ -63792,6 +63787,14 @@
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /turf/open/floor/iron,
 /area/station/security/tram)
+"vKK" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/structure/flora/bush/flowers_yw/style_3,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/grass,
+/area/station/service/chapel)
 "vKU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -64827,7 +64830,6 @@
 /area/station/engineering/main)
 "waD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -69505,7 +69507,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/stone,
 /area/station/service/bar)
 "xrA" = (
@@ -70915,14 +70916,6 @@
 "xJB" = (
 /turf/closed/wall,
 /area/station/security/courtroom)
-"xJR" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
 "xJZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -86412,7 +86405,7 @@ mhk
 xmI
 pbu
 mhk
-mYS
+bdk
 dVK
 qCR
 qOp
@@ -86424,7 +86417,7 @@ szy
 tYt
 rKU
 wXk
-hqL
+glM
 khE
 yea
 vmX
@@ -86668,7 +86661,7 @@ nFY
 mhk
 mhk
 xLO
-mhk
+sbB
 ptZ
 xpT
 qCR
@@ -87955,7 +87948,7 @@ mhk
 mhk
 mhk
 sMG
-sdy
+tKy
 xpT
 qCR
 tsh
@@ -88210,7 +88203,7 @@ nGJ
 ntJ
 srn
 oSh
-ntJ
+srn
 gBn
 oun
 xpT
@@ -88724,7 +88717,7 @@ ina
 mhk
 ozt
 oSP
-rYv
+kom
 gBn
 pNy
 xpT
@@ -88736,7 +88729,7 @@ bOl
 sdy
 wjc
 wAW
-wXk
+jXc
 jte
 xFO
 yeF
@@ -89250,7 +89243,7 @@ sdy
 tWi
 xRZ
 rKU
-kvj
+wWT
 xiF
 xOS
 xle
@@ -90010,7 +90003,7 @@ oaa
 mhk
 oTH
 mhk
-lgX
+vKK
 nqm
 xpT
 qCR
@@ -92326,12 +92319,12 @@ pfw
 frI
 ofo
 waD
-xJR
-xJR
-xJR
+frI
+frI
+frI
 ewi
-uny
-xJR
+frI
+frI
 frI
 ldZ
 wXk
@@ -101577,7 +101570,7 @@ rtG
 pFr
 pFr
 aLa
-qTL
+vsq
 mgN
 sxk
 qTL
