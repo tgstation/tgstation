@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Wearing a mask can now prevent you from being spread airborne diseases. Prior, it only stopped you from spreading it yourself."
-  - balance: "Wearing a mask no longer 100% guarantees you don't spread viruses to others people - it now scales on the masks BIO armor. Get a sterile mask from Medical for max safety."
-  - balance: "Wearing a mask to stop you from spreading to other people is doubly effective than wearing a mask to prevent spread to yourself - Mask up for the greater good!"
-  - balance: "Passive airborne virus spread attempts are now done every time you breathe (every eight seconds), rather than every two seconds. The chance of spread is the same, though - it has been scaled up to accommodate."
-  - code_imp: "Cleaned up a fair bid of airborne-transmission-code. Report any oddities."

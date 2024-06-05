@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Re-ups the cost of the new ling adrenal ability"
-  - bugfix: "Patches an exploit with new ling adrenal ability"
