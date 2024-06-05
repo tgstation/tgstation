@@ -350,84 +350,84 @@
 
 /obj/item/circuitboard/mecha/ripley/peripherals
 	name = "Ripley Peripherals Control module (Exosuit Board)"
-	icon_state = "mcontroller"
+	icon_state = "mecha_peripherals"
 
 /obj/item/circuitboard/mecha/ripley/main
 	name = "Ripley Central Control module (Exosuit Board)"
-	icon_state = "mainboard"
+	icon_state = "mecha_mainboard"
 
 
 /obj/item/circuitboard/mecha/gygax/peripherals
 	name = "Gygax Peripherals Control module (Exosuit Board)"
-	icon_state = "mcontroller"
+	icon_state = "mecha_peripherals"
 
 /obj/item/circuitboard/mecha/gygax/targeting
 	name = "Gygax Weapon Control and Targeting module (Exosuit Board)"
-	icon_state = "mcontroller"
+	icon_state = "mecha_targeting"
 
 /obj/item/circuitboard/mecha/gygax/main
 	name = "Gygax Central Control module (Exosuit Board)"
-	icon_state = "mainboard"
+	icon_state = "mecha_mainboard"
 
 /obj/item/circuitboard/mecha/durand/peripherals
 	name = "Durand Peripherals Control module (Exosuit Board)"
-	icon_state = "mcontroller"
+	icon_state = "mecha_peripherals"
 
 /obj/item/circuitboard/mecha/durand/targeting
 	name = "Durand Weapon Control and Targeting module (Exosuit Board)"
-	icon_state = "mcontroller"
+	icon_state = "mecha_targeting"
 
 /obj/item/circuitboard/mecha/durand/main
 	name = "Durand Central Control module (Exosuit Board)"
-	icon_state = "mainboard"
+	icon_state = "mecha_mainboard"
 
 /obj/item/circuitboard/mecha/honker/peripherals
 	name = "H.O.N.K Peripherals Control module (Exosuit Board)"
-	icon_state = "mcontroller"
+	icon_state = "mecha_peripherals"
 
 /obj/item/circuitboard/mecha/honker/targeting
 	name = "H.O.N.K Weapon Control and Targeting module (Exosuit Board)"
-	icon_state = "mcontroller"
+	icon_state = "mecha_targeting"
 
 /obj/item/circuitboard/mecha/honker/main
 	name = "H.O.N.K Central Control module (Exosuit Board)"
-	icon_state = "mainboard"
+	icon_state = "mecha_mainboard"
 
 /obj/item/circuitboard/mecha/odysseus/peripherals
 	name = "Odysseus Peripherals Control module (Exosuit Board)"
-	icon_state = "mcontroller"
+	icon_state = "mecha_peripherals"
 
 /obj/item/circuitboard/mecha/odysseus/main
 	name = "Odysseus Central Control module (Exosuit Board)"
-	icon_state = "mainboard"
+	icon_state = "mecha_mainboard"
 
 /obj/item/circuitboard/mecha/phazon/peripherals
 	name = "Phazon Peripherals Control module (Exosuit Board)"
-	icon_state = "mcontroller"
+	icon_state = "mecha_peripherals"
 
 /obj/item/circuitboard/mecha/phazon/targeting
 	name = "Phazon Weapon Control and Targeting module (Exosuit Board)"
-	icon_state = "mcontroller"
+	icon_state = "mecha_targeting"
 
 /obj/item/circuitboard/mecha/phazon/main
 	name = "Phazon Central Control module (Exosuit Board)"
 
 /obj/item/circuitboard/mecha/clarke/peripherals
 	name = "Clarke Peripherals Control module (Exosuit Board)"
-	icon_state = "mcontroller"
+	icon_state = "mecha_peripherals"
 
 /obj/item/circuitboard/mecha/clarke/main
 	name = "Clarke Central Control module (Exosuit Board)"
-	icon_state = "mainboard"
+	icon_state = "mecha_mainboard"
 
 /obj/item/circuitboard/mecha/savannah_ivanov/peripherals
 	name = "Savannah Peripherals Control module (Exosuit Board)"
-	icon_state = "mcontroller"
+	icon_state = "mecha_peripherals"
 
 /obj/item/circuitboard/mecha/savannah_ivanov/targeting
 	name = "Ivanov Weapon Control and Targeting module (Exosuit Board)"
-	icon_state = "mcontroller"
+	icon_state = "mecha_targeting"
 
 /obj/item/circuitboard/mecha/savannah_ivanov/main
 	name = "Savannah-Ivanov Combination Control Lock module (Exosuit Board)"
-	icon_state = "mainboard"
+	icon_state = "mecha_mainboard"
