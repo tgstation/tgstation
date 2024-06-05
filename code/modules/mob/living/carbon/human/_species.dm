@@ -102,6 +102,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Replaces default appendix with a different organ.
 	var/obj/item/organ/internal/appendix/mutantappendix = /obj/item/organ/internal/appendix
 
+	/// Store body marking defines. See mobs.dm for bitflags
+	var/list/body_markings = list()
+
 	/// Flat modifier on all damage taken via [apply_damage][/mob/living/proc/apply_damage] (so being punched, shot, etc.)
 	/// IE: 10 = 10% less damage taken.
 	var/damage_modifier = 0
@@ -466,7 +469,27 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
 			new_organ.Insert(human, special=TRUE, movement_flags = DELETE_IF_REPLACED)
 
+	for(var/datum/bodypart_overlay/simple/body_marking/markings as anything in body_markings)
+		markings = new markings() // instantized... TO DIE!!!
+		var/accessory_name = human_who_gained_species.dna.features[markings.dna_feature_key]
+		var/datum/sprite_accessory/moth_markings/accessory = markings.get_accessory(accessory_name)
 
+		if(isnull(accessory))
+			CRASH("Value: [accessory_name] did not have a corresponding sprite accessory!")
+
+		for(var/obj/item/bodypart/part as anything in markings.applies_to)
+			var/obj/item/bodypart/people_part = human_who_gained_species.get_bodypart(initial(part.body_zone))
+
+			if(!people_part)
+				continue
+
+			var/datum/bodypart_overlay/simple/body_marking/overlay = new /datum/bodypart_overlay/simple/body_marking ()
+
+			overlay.icon = initial(accessory.icon)
+			overlay.icon_state = initial(accessory.icon_state)
+			overlay.use_gender = initial(accessory.gender_specific)
+
+			people_part.add_bodypart_overlay(overlay)
 
 	if(length(inherent_traits))
 		human_who_gained_species.add_traits(inherent_traits, SPECIES_TRAIT)
@@ -560,42 +583,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				eye_organ.refresh(call_update = FALSE)
 				standing += eye_organ.generate_body_overlay(species_human)
 
-		// organic body markings (oh my god this is terrible please rework this to be done on the limbs themselves i beg you)
-		if(HAS_TRAIT(species_human, TRAIT_HAS_MARKINGS))
-			var/obj/item/bodypart/chest/chest = species_human.get_bodypart(BODY_ZONE_CHEST)
-			var/obj/item/bodypart/arm/right/right_arm = species_human.get_bodypart(BODY_ZONE_R_ARM)
-			var/obj/item/bodypart/arm/left/left_arm = species_human.get_bodypart(BODY_ZONE_L_ARM)
-			var/obj/item/bodypart/leg/right/right_leg = species_human.get_bodypart(BODY_ZONE_R_LEG)
-			var/obj/item/bodypart/leg/left/left_leg = species_human.get_bodypart(BODY_ZONE_L_LEG)
-			var/datum/sprite_accessory/markings = SSaccessories.moth_markings_list[species_human.dna.features["moth_markings"]]
-			var/mutable_appearance/marking = mutable_appearance(layer = -BODY_LAYER, appearance_flags = KEEP_TOGETHER)
-
-			if(noggin && (IS_ORGANIC_LIMB(noggin)))
-				var/mutable_appearance/markings_head_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_head")
-				marking.overlays += markings_head_overlay
-
-			if(chest && (IS_ORGANIC_LIMB(chest)))
-				var/mutable_appearance/markings_chest_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_chest")
-				marking.overlays += markings_chest_overlay
-
-			if(right_arm && (IS_ORGANIC_LIMB(right_arm)))
-				var/mutable_appearance/markings_r_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_arm")
-				marking.overlays += markings_r_arm_overlay
-
-			if(left_arm && (IS_ORGANIC_LIMB(left_arm)))
-				var/mutable_appearance/markings_l_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_arm")
-				marking.overlays += markings_l_arm_overlay
-
-			if(right_leg && (IS_ORGANIC_LIMB(right_leg)))
-				var/mutable_appearance/markings_r_leg_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_leg")
-				marking.overlays += markings_r_leg_overlay
-
-			if(left_leg && (IS_ORGANIC_LIMB(left_leg)))
-				var/mutable_appearance/markings_l_leg_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_leg")
-				marking.overlays += markings_l_leg_overlay
-
-			standing += marking
-
 	//Underwear, Undershirts & Socks
 	if(!HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
 		if(species_human.underwear)
@@ -672,8 +659,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			switch(bodypart)
 				if("ears")
 					accessory = SSaccessories.ears_list[source.dna.features["ears"]]
-				if("body_markings")
-					accessory = SSaccessories.body_markings_list[source.dna.features["body_markings"]]
 				if("legs")
 					accessory = SSaccessories.legs_list[source.dna.features["legs"]]
 

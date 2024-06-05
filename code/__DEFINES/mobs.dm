@@ -797,6 +797,12 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// This organ allows restyling with enamel restyling (like a fucking file or something?). It's for horns and shit
 #define EXTERNAL_RESTYLE_ENAMEL (1 << 3)
 
+// Bitflags to indicate which body markings we're allowed to use on the species
+/// Body markings for moths
+#define BODY_MARKINGS_MOTH /datum/bodypart_overlay/simple/body_marking/moth
+/// Body markings for lizards
+#define BODY_MARKINGS_LIZARD /datum/bodypart_overlay/simple/body_marking/lizard
+
 //Mob Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
 //IT DOESN'T OK, IT MEANS "UNDER"
