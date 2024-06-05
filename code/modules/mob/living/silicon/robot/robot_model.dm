@@ -643,7 +643,7 @@
 	if(light_replacer)
 		if(light_replacer.uses < light_replacer.max_uses
 			. = TRUE
-			light_replacer.Charge(cyborg)
+			light_replacer.Charge(cyborg, coeff)
 
 	var/obj/item/reagent_containers/spray/cyborg_drying/drying_agent = locate(/obj/item/reagent_containers/spray/cyborg_drying) in basic_modules
 	if(drying_agent)

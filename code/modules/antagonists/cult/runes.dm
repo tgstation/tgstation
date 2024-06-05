@@ -149,6 +149,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 		for(var/mob/living/cultist in range(1, src))
 			if(!IS_CULTIST(cultist))
 				continue
+			var/datum/antagonist/cult/cultist_datum = locate(/datum/antagonist/cult) in cultist.mind.antag_datums
+			if(!cultist_datum.check_invoke_validity()) //We can assume there's a datum here since we can't get past the previous check otherwise.
+				continue
 			if(cultist == user)
 				continue
 			if(!cultist.can_speak(allow_mimes = TRUE))
@@ -1141,7 +1144,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			images += B
 		if(!IS_CULTIST(M))
 			if(M.client)
-				var/image/C = image('icons/effects/cult/effects.dmi',M,"bloodsparkles", ABOVE_MOB_LAYER)
+				var/image/C = image('icons/effects/cult.dmi',M,"bloodsparkles", ABOVE_MOB_LAYER)
 				add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, NONE)
 				addtimer(CALLBACK(M, TYPE_PROC_REF(/atom/, remove_alt_appearance),"cult_apoc",TRUE), duration)
 				images += C

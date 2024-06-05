@@ -1,7 +1,7 @@
 /obj/vehicle/ridden/wheelchair //ported from Hippiestation (by Jujumatic)
 	name = "wheelchair"
 	desc = "A chair with big wheels. It looks like you can move in this on your own."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "wheelchair"
 	layer = OBJ_LAYER
 	max_integrity = 100
@@ -90,7 +90,7 @@
 /obj/item/wheelchair
 	name = "wheelchair"
 	desc = "A collapsed wheelchair that can be carried around."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "wheelchair_folded"
 	inhand_icon_state = "wheelchair_folded"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -105,7 +105,7 @@
 /obj/item/wheelchair/gold
 	name = "gold wheelchair"
 	desc = "A collapsed, shiny wheelchair that can be carried around."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "wheelchair_folded_gold"
 	inhand_icon_state = "wheelchair_folded_gold"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'

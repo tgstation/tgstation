@@ -20,6 +20,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider
 	bite_injection_flags = INJECT_CHECK_PENETRATE_THICK
+	max_grab = GRAB_AGGRESSIVE
 	/// Actions to grant on Initialize
 	var/list/innate_actions = null
 
@@ -182,8 +183,9 @@
 	datahud.show_to(src)
 
 	AddComponent(/datum/component/healing_touch,\
-		heal_brute = 25,\
-		heal_burn = 25,\
+		heal_brute = 10,\
+		heal_burn = 10,\
+		heal_time = 2.5 SECONDS,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/giant)),\
 		action_text = "%SOURCE% begins wrapping the wounds of %TARGET%.",\
@@ -317,7 +319,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 10
 	unsuitable_atmos_damage = 0
-	minimum_survivable_temperature = 0
+	minimum_survivable_temperature = 75
 	maximum_survivable_temperature = 700
 	unsuitable_cold_damage = 0
 	wound_bonus = 25
@@ -329,7 +331,7 @@
 	speed = 5
 	player_speed_modifier = -4
 	sight = SEE_TURFS
-	menu_description = "Atmospherically resistant with the ability to destroy walls and limbs, and to send warnings to the nest."
+	menu_description = "Has the ability to destroy walls and limbs, and to send warnings to the nest."
 
 /mob/living/basic/spider/giant/breacher/Initialize(mapload)
 	. = ..()

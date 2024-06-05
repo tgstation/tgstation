@@ -1071,7 +1071,7 @@
  */
 /obj/item/toy/beach_ball
 	name = "beach ball"
-	icon = 'icons/misc/beach.dmi'
+	icon = 'icons/obj/fluff/beach.dmi'
 	icon_state = "ball"
 	inhand_icon_state = "beachball"
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
@@ -1426,7 +1426,7 @@
 /obj/item/toy/seashell
 	name = "seashell"
 	desc = "May you always have a shell in your pocket and sand in your shoes. Whatever that's supposed to mean."
-	icon = 'icons/misc/beach.dmi'
+	icon = 'icons/obj/fluff/beach.dmi'
 	icon_state = "shell1"
 	var/static/list/possible_colors = list("" = 2, COLOR_PURPLE_GRAY = 1, COLOR_OLIVE = 1, COLOR_PALE_BLUE_GRAY = 1, COLOR_RED_GRAY = 1)
 
