@@ -506,6 +506,7 @@
 	max_matter = INFINITY
 	matter = INFINITY
 	upgrade = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
+	delay_mod = 0.1
 
 // Ranged RCD
 /obj/item/construction/rcd/arcd

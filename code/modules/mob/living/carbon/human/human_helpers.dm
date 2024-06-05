@@ -322,7 +322,7 @@
 	for(var/datum/quirk/original_quircks as anything in quirks)
 		clone.add_quirk(original_quircks.type, override_client = client)
 	for(var/datum/mutation/human/mutations in dna.mutations)
-		clone.dna.add_mutation(mutations)
+		clone.dna.add_mutation(mutations, MUT_NORMAL)
 
 	clone.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 	clone.domutcheck()
@@ -335,6 +335,8 @@
 		fitness_modifier *= 2
 	if (HAS_TRAIT(src, TRAIT_STRENGTH))
 		fitness_modifier *= 1.5
+	if (HAS_TRAIT(src, TRAIT_ROD_SUPLEX))
+		fitness_modifier *= 2 // To be able to suplex a rod, you must possess an incredible amount of power
 	if (HAS_TRAIT(src, TRAIT_EASILY_WOUNDED))
 		fitness_modifier /= 2
 	if (HAS_TRAIT(src, TRAIT_GAMER))
