@@ -60,8 +60,7 @@
 	// and set the player's client up for interview.
 
 	///guh
-	if(client.ip_intel == "Disabled")
-		client.check_ip_intel()
+	client.check_overwatch()
 
 	if(client.interviewee)
 		register_for_interview()

@@ -180,6 +180,8 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/client/proc/toggle_hub,
 	/client/proc/toggle_interviews,
 	/client/proc/toggle_random_events,
+	/client/proc/Overwatch_ASN_panel,
+	/client/proc/Overwatch_WhitelistPanel,
 	)
 GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 GLOBAL_PROTECT(admin_verbs_debug)
