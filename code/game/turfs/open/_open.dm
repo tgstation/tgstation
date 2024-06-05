@@ -157,6 +157,9 @@
 
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
+	light_range = 3
+	light_color = LIGHT_COLOR_CYAN
+	light_on = TRUE
 
 /turf/open/indestructible/permalube
 	icon_state = "darkfull"
