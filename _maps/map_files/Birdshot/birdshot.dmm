@@ -11572,6 +11572,14 @@
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"eFF" = (
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/line,
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "eFO" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -13947,6 +13955,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/small,
 /area/station/commons/fitness/locker_room)
+"fBt" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "fBw" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -26950,6 +26966,7 @@
 	},
 /obj/machinery/status_display/evac/directional/west,
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "jLh" = (
@@ -29980,6 +29997,13 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
 /area/station/ai_monitored/security/armory)
+"kJq" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "kJs" = (
 /obj/machinery/holopad,
 /turf/open/floor/iron/smooth_edge,
@@ -61946,6 +61970,15 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/wood,
 /area/station/cargo/boutique)
+"uVl" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "uVo" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -93523,7 +93556,7 @@ snc
 lVL
 snc
 nys
-snc
+uVl
 nTj
 snc
 snc
@@ -94045,7 +94078,7 @@ yjZ
 lZD
 yjZ
 nau
-yjZ
+kJq
 nHB
 obm
 oAk
@@ -99177,7 +99210,7 @@ jLR
 jLR
 xMY
 tSe
-oGJ
+eFF
 wQB
 wix
 vtv
@@ -103297,7 +103330,7 @@ vpI
 pwO
 cXj
 vpI
-vpI
+fBt
 nMW
 tEL
 rQN
