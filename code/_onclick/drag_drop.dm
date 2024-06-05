@@ -41,7 +41,7 @@
 
 	over.handle_mouse_drop_receive(src, user, params)
 
-/// The proc that should be overriden by subtypes to handle mouse drop. Called on the atom being dragged
+/// The proc that should be overridden by subtypes to handle mouse drop. Called on the atom being dragged
 /atom/proc/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	PROTECTED_PROC(TRUE)
 
@@ -56,7 +56,7 @@
 
 	SEND_SIGNAL(src, COMSIG_MOUSEDROPPED_ONTO, dropped, usr, params)
 
-/// The proc that should be overriden by subtypes to handle mouse drop. Called on the atom receiving a dragged object
+/// The proc that should be overridden by subtypes to handle mouse drop. Called on the atom receiving a dragged object
 /atom/proc/mouse_drop_receive(atom/dropped, mob/user, params)
 	PROTECTED_PROC(TRUE)
 
