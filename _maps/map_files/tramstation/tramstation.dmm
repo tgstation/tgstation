@@ -2346,6 +2346,7 @@
 /obj/machinery/door/poddoor/massdriver_trash{
 	id = "fortnitedoor"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "ajc" = (

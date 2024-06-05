@@ -1,0 +1,6 @@
+author: "LT3"
+delete-after: True
+changes:
+  - balance: "Doubled number of assignable wildcard slots on grey ID cards"
+  - balance: "Doubled number of assignable wildcard slots on silver ID cards"
+  - balance: "Doubled number of assignable wildcard slots on agent/chameleon ID cards"
