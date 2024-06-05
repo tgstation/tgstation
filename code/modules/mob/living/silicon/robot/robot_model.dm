@@ -84,8 +84,7 @@
 			. += module
 	if(!cyborg.emagged)
 		for(var/module in emag_modules)
-			if(!(module in cyborg.held_items))
-				. += module
+			. += module
 
 /obj/item/robot_model/proc/add_module(obj/item/added_module, nonstandard, requires_rebuild)
 	if(isstack(added_module))
