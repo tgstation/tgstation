@@ -104,19 +104,20 @@ export const feature_lizard_tail: FeatureChoiced = {
   },
 };
 
-export const feature_mcolor: Feature<string> = {
-  name: 'Mutant color',
-  component: FeatureColorInput,
-};
-
-// EDIT START
-export const feature_mcolor_secondary: Feature<string> = { // MASSMETA ADDITION
-  name: 'Second color',
+// MASSMETA EDIT
+// Add Secondary species color
+export const feature_mcolor_secondary: Feature<string> = {
+  name: 'Mutant Secondary color',
   description:
   'Apply only on Colored Belly',
   component: FeatureColorInput,
 };
-// EDIT END
+// End Edit
+
+export const feature_mcolor: Feature<string> = {
+  name: 'Mutant color',
+  component: FeatureColorInput,
+};
 
 export const underwear_color: Feature<string> = {
   name: 'Underwear color',

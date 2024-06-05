@@ -1060,11 +1060,13 @@
 				if(overlay.layers & external_layer)
 					. += overlay.get_overlay(external_layer, src)
 
-				// EDIT START
+				// Edit START (secondary color)
+
 				if(overlay.get_extended_overlay(external_layer, src)) // MASSMETA EDIT
 					for(var/mutable_appearance/item as anything in overlay.get_extended_overlay(external_layer, src))
 						. += item
-				// EDIT END
+
+				// Edit END
 
 	return .
 
