@@ -27091,6 +27091,14 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/textured_large,
 /area/station/cargo/office)
+"jXc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/sign/departments/holy/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/primary/port)
 "jXe" = (
 /obj/machinery/holopad/secure,
 /turf/open/floor/iron/smooth,
@@ -49882,9 +49890,6 @@
 	dir = 1
 	},
 /area/station/science/research)
-"rym" = (
-/turf/open/floor/plating,
-/area/station/hallway/secondary/exit/departure_lounge)
 "ryt" = (
 /obj/machinery/light/dim/directional/north,
 /obj/effect/turf_decal/tile/neutral{
@@ -50621,6 +50626,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
+"rKU" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/hallway/primary/port)
 "rKZ" = (
 /obj/structure/railing,
 /obj/machinery/light/small/dim/directional/north,
@@ -62638,7 +62647,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/sign/departments/holy/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "vuT" = (
@@ -84611,9 +84619,9 @@ pXC
 mhk
 mhk
 qyT
-rym
-rym
-rym
+whL
+whL
+whL
 qyT
 qyT
 tDE
@@ -84872,7 +84880,7 @@ lNZ
 lNZ
 vzP
 wjK
-wAW
+rKU
 wXk
 xKG
 qHH
@@ -85386,7 +85394,7 @@ tdg
 wWa
 oov
 quJ
-wAW
+rKU
 hDT
 glM
 xOS
@@ -85643,7 +85651,7 @@ qCR
 qZB
 jqg
 xRZ
-wAW
+rKU
 wXk
 jte
 uoh
@@ -85900,7 +85908,7 @@ qCR
 qZB
 syv
 wlF
-wAW
+rKU
 tDJ
 blq
 cNu
@@ -86414,7 +86422,7 @@ qCR
 qZB
 szy
 tYt
-wAW
+rKU
 wXk
 hqL
 khE
@@ -86671,7 +86679,7 @@ qCR
 qZB
 lgX
 xRZ
-wAW
+rKU
 wXk
 glM
 xFO
@@ -86928,7 +86936,7 @@ rAb
 vAR
 xYD
 xRZ
-wAW
+rKU
 vuR
 xgA
 wNR
@@ -87186,7 +87194,7 @@ bOl
 kzK
 qYW
 wAW
-wXk
+jXc
 xgN
 rsQ
 kar
@@ -87442,7 +87450,7 @@ xPR
 tdg
 tdg
 tdg
-wAW
+rKU
 wXk
 bVv
 xOS
@@ -87956,7 +87964,7 @@ sdQ
 sdQ
 bPw
 uMo
-wAW
+rKU
 tEW
 xhH
 rje
@@ -88470,7 +88478,7 @@ rAb
 sNv
 sNv
 sNv
-wAW
+rKU
 tET
 glM
 xFO
@@ -88984,7 +88992,7 @@ qZB
 uxR
 rEV
 qhp
-wAW
+rKU
 tEW
 blq
 uoW
@@ -89241,7 +89249,7 @@ qZB
 sdy
 tWi
 xRZ
-wAW
+rKU
 kvj
 xiF
 xOS
@@ -89498,7 +89506,7 @@ qZB
 sdy
 oLu
 quJ
-wAW
+rKU
 wWT
 glM
 xOS
@@ -90012,7 +90020,7 @@ xtm
 hSA
 xFa
 xRZ
-wAW
+rKU
 lzv
 glM
 qHH
@@ -90269,7 +90277,7 @@ nGS
 inO
 hvr
 kNd
-wAW
+rKU
 pTc
 rgT
 upg
@@ -90526,7 +90534,7 @@ mae
 qwJ
 dad
 xRZ
-wAW
+rKU
 wWT
 glM
 xOS
@@ -91040,7 +91048,7 @@ qZB
 axo
 dsl
 bVB
-wAW
+rKU
 wWT
 glM
 xOS
@@ -91297,7 +91305,7 @@ qZB
 fKm
 plw
 xRZ
-wAW
+rKU
 wWT
 glM
 xOS
@@ -91554,7 +91562,7 @@ qZB
 esd
 xYD
 xRZ
-wAW
+rKU
 eTt
 tXT
 wHE
@@ -92065,8 +92073,8 @@ gnk
 xZS
 gnk
 xRV
-xRV
-xRV
+xZS
+xZS
 xRV
 xRV
 saZ
