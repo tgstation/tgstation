@@ -59062,7 +59062,7 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/camera/autoname/directional/north,
 /obj/machinery/button/door/directional/east{
-	id = s;
+	id = "kitchenshutters";
 	name = "Kitchen Shutter Control"
 	},
 /obj/structure/disposalpipe/trunk,
