@@ -227,17 +227,24 @@ SUBSYSTEM_DEF(ticker)
 	return FALSE
 
 /datum/controller/subsystem/ticker/proc/setup()
+	init_roundstart_logs
 	to_chat(world, span_boldannounce("Starting game..."))
 	var/init_start = world.timeofday
 
 	CHECK_TICK
+	log_roundstart("Generating dynamic")
 	//Configure mode and assign player to antagonists
 	var/can_continue = FALSE
 	can_continue = SSdynamic.pre_setup() //Choose antagonists
 	CHECK_TICK
+	log_roundstart("Generating antagonists")
+
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PRE_JOBS_ASSIGNED, src)
+	log_roundstart("Sending COMSIG_GLOB_PRE_JOBS_ASSIGNED")
+
 	can_continue = can_continue && SSjob.DivideOccupations() //Distribute jobs
 	CHECK_TICK
+	log_roundstart("Divying up jobs")
 
 	if(!GLOB.Debug2)
 		if(!can_continue)
@@ -249,6 +256,7 @@ SUBSYSTEM_DEF(ticker)
 		message_admins(span_notice("DEBUG: Bypassing prestart checks..."))
 
 	CHECK_TICK
+	log_roundstart("Sanity checking game setup")
 
 	// There may be various config settings that have been set or modified by this point.
 	// This is the point of no return before spawning in new players, let's run over the
@@ -256,42 +264,56 @@ SUBSYSTEM_DEF(ticker)
 	SSid_access.refresh_job_trim_singletons()
 
 	CHECK_TICK
+	log_roundstart("Setting up the access singletons")
 
 	if(!CONFIG_GET(flag/ooc_during_round))
 		toggle_ooc(FALSE) // Turn it off
 
 	CHECK_TICK
+	log_roundstart("Toggling OOC")
+
 	GLOB.start_landmarks_list = shuffle(GLOB.start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters
 	collect_minds()
 	equip_characters()
+	log_roundstart("Equipping characters")
 
 	GLOB.manifest.build()
+	log_roundstart("Generating the manifest")
 
 	transfer_characters() //transfer keys to the new mobs
+	log_roundstart("Transfering characters")
 
 	for(var/I in round_start_events)
 		var/datum/callback/cb = I
 		cb.InvokeAsync()
+
 	LAZYCLEARLIST(round_start_events)
+	log_roundstart("Running roundstart events")
 
 	round_start_time = world.time //otherwise round_start_time would be 0 for the signals
 	SEND_SIGNAL(src, COMSIG_TICKER_ROUND_STARTING, world.time)
+	log_roundstart("Sending the round starting signal")
 
 	log_world("Game start took [(world.timeofday - init_start)/10]s")
 	INVOKE_ASYNC(SSdbcore, TYPE_PROC_REF(/datum/controller/subsystem/dbcore,SetRoundStart))
+	log_roundstart("Making the DB entry")
 
 	to_chat(world, span_notice(span_bold("Welcome to [station_name()], enjoy your stay!")))
 	SEND_SOUND(world, sound(SSstation.announcer.get_rand_welcome_sound()))
+	log_roundstart("Alerting players")
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
+	log_roundstart("Setting run level")
 
 	if(length(GLOB.holidays))
 		to_chat(world, span_notice("and..."))
 		for(var/holidayname in GLOB.holidays)
 			var/datum/holiday/holiday = GLOB.holidays[holidayname]
 			to_chat(world, span_info(holiday.greet()))
+
+	log_roundstart("Checking holidays")
 
 	PostSetup()
 
@@ -350,6 +372,7 @@ SUBSYSTEM_DEF(ticker)
 		qdel(bomb)
 
 /datum/controller/subsystem/ticker/proc/create_characters()
+	var/count = 0
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
@@ -358,14 +381,21 @@ SUBSYSTEM_DEF(ticker)
 			if(!destination) // Failed to fetch a proper roundstart location, won't be going anywhere.
 				continue
 			player.create_character(destination)
+		count++
 		CHECK_TICK
 
+	log_roundstart("Generating [count] player characters")
+
 /datum/controller/subsystem/ticker/proc/collect_minds()
+	var/count = 0
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/P = i
 		if(P.new_character && P.new_character.mind)
 			SSticker.minds += P.new_character.mind
+		count++
 		CHECK_TICK
+
+	log_roundstart("Creating [count] minds")
 
 
 /datum/controller/subsystem/ticker/proc/equip_characters()
@@ -381,7 +411,9 @@ SUBSYSTEM_DEF(ticker)
 	var/mob/dead/new_player/picked_spare_id_candidate
 
 	// Find a suitable player to hold captaincy.
+	var/count = 0
 	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
+		count++
 		if(is_banned_from(new_player_mob.ckey, list(JOB_CAPTAIN)))
 			CHECK_TICK
 			continue
@@ -406,7 +438,11 @@ SUBSYSTEM_DEF(ticker)
 	if(length(spare_id_candidates))
 		picked_spare_id_candidate = pick(spare_id_candidates)
 
+	log_roundstart("Captain selecting between [count] players")
+
+	count = 0
 	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
+		count++
 		if(QDELETED(new_player_mob) || !isliving(new_player_mob.new_character))
 			CHECK_TICK
 			continue
@@ -429,12 +465,19 @@ SUBSYSTEM_DEF(ticker)
 			SSquirks.AssignQuirks(new_player_living, new_player_mob.client)
 		CHECK_TICK
 
+	log_roundstart("Doing misc player work [count]")
+
 	if(captainless)
+		count = 0
 		for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
 			var/mob/living/carbon/human/new_player_human = new_player_mob.new_character
 			if(new_player_human)
 				to_chat(new_player_mob, span_notice("Captainship not forced on anyone."))
+
+			count++
 			CHECK_TICK
+
+		log_roundstart("Informing [count] players about the lack of captain")
 
 
 /datum/controller/subsystem/ticker/proc/decide_security_officer_departments(

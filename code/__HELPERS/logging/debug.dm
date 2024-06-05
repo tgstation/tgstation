@@ -62,3 +62,13 @@
 	logger.Log(LOG_CATEGORY_RUNTIME, text, data)
 #endif
 	SEND_TEXT(world.log, text)
+
+GLOBAL_VAR_INIT(roundstart_step_tracker, 0)
+#define REAL_TIME_IN_MS (REALTIMEOFDAY + ((TICK_USAGE / 100) * world.tick_lag))
+#define init_roundstart_logs GLOB.roundstart_step_tracker = REAL_TIME_IN_MS
+#define log_roundstart(step) \
+	do { \
+		var/_delta = REAL_TIME_IN_MS - GLOB.roundstart_step_tracker; \
+		GLOB.roundstart_step_tracker = REAL_TIME_IN_MS; \
+		log_game("ROUNDSTART: [step] took [_delta] deciseconds"); \
+	} while(FALSE)
