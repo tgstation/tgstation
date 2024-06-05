@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(identity_block_lengths, list(
  */
 GLOBAL_LIST_INIT(features_block_lengths, list(
 		"[DNA_MUTANT_COLOR_BLOCK]" = DNA_BLOCK_SIZE_COLOR,
-		"[DNA_MUTANT_COLOR_SECONDARY_BLOCK]" = DNA_BLOCK_SIZE_COLOR, // MASSMETA ADDITION
+		"[DNA_MUTANT_COLOR_SECONDARY_BLOCK]" = DNA_BLOCK_SIZE_COLOR, // MASSMETA EDIT
 		"[DNA_ETHEREAL_COLOR_BLOCK]" = DNA_BLOCK_SIZE_COLOR,
 	))
 
@@ -61,7 +61,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/datum/species/species = new /datum/species/human
 	/// Assoc list of feature keys to their value
 	/// Note if you set these manually, and do not update [unique_features] afterwards, it will likely be reset.
+
 	var/list/features = list("mcolor" = COLOR_WHITE, "mcolor_secondary" = COLOR_WHITE) // MASSMETA EDIT
+
 	///Stores the hashed values of the person's non-human features
 	var/unique_features
 	///Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
@@ -207,10 +209,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(features["mcolor"])
 		L[DNA_MUTANT_COLOR_BLOCK] = sanitize_hexcolor(features["mcolor"], include_crunch = FALSE)
 
-	// EDIT START
+	// Add secondary species color
 	if(features["mcolor_secondary"])
-		L[DNA_MUTANT_COLOR_SECONDARY_BLOCK] = sanitize_hexcolor(features["mcolor_secondary"], include_crunch = FALSE) // MASSMETA ADDITION
-	// EDIT END
+		L[DNA_MUTANT_COLOR_SECONDARY_BLOCK] = sanitize_hexcolor(features["mcolor_secondary"], include_crunch = FALSE) // MASSMETA EDIT
+	// Edit End
 
 	if(features["ethcolor"])
 		L[DNA_ETHEREAL_COLOR_BLOCK] = sanitize_hexcolor(features["ethcolor"], include_crunch = FALSE)
@@ -359,10 +361,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		if(DNA_MUTANT_COLOR_BLOCK)
 			set_uni_feature_block(blocknumber, sanitize_hexcolor(features["mcolor"], include_crunch = FALSE))
 
-		// EDIT START
+		// Add secondary color for species
 		if(DNA_MUTANT_COLOR_SECONDARY_BLOCK)
-			set_uni_feature_block(blocknumber, sanitize_hexcolor(features["mcolor_secondary"], include_crunch = FALSE)) // MASSMETA ADDITION
-		// EDIT END
+			set_uni_feature_block(blocknumber, sanitize_hexcolor(features["mcolor_secondary"], include_crunch = FALSE)) // MASSMETA EDIT
+		// Edit End
 
 		if(DNA_ETHEREAL_COLOR_BLOCK)
 			set_uni_feature_block(blocknumber, sanitize_hexcolor(features["ethcolor"], include_crunch = FALSE))
@@ -482,7 +484,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			features |= GLOB.species_prototypes[species_type].randomize_features()
 
 		features["mcolor"] = "#[random_color()]"
-		features["mcolor_secondary"] = "#[random_color()]" // MASSMETA ADDITION
+		features["mcolor_secondary"] = "#[random_color()]" // MASSMETA EDIT
 
 	update_dna_identity()
 
@@ -662,10 +664,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(dna.features["mcolor"])
 		dna.features["mcolor"] = sanitize_hexcolor(get_uni_feature_block(features, DNA_MUTANT_COLOR_BLOCK))
 
-	// EDIT START
+	// Add secondary color for species
 	if(dna.features["mcolor_secondary"])
-		dna.features["mcolor_secondary"] = sanitize_hexcolor(get_uni_feature_block(features, DNA_MUTANT_COLOR_SECONDARY_BLOCK)) // MASSMETA ADDITION
-	// EDIT END
+		dna.features["mcolor_secondary"] = sanitize_hexcolor(get_uni_feature_block(features, DNA_MUTANT_COLOR_SECONDARY_BLOCK)) // MASSMETA EDIT
+	// Edit End
 
 	if(dna.features["ethcolor"])
 		dna.features["ethcolor"] = sanitize_hexcolor(get_uni_feature_block(features, DNA_ETHEREAL_COLOR_BLOCK))

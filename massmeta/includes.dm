@@ -80,9 +80,6 @@
 #include "code\modules\client\preferences\species_features\mutants_color_secondary.dm"
 #include "code\modules\mob\dead\new_player\sprite_accessories\multi_part.dm"
 #include "code\modules\mob\living\carbon\human\accessory_helpers.dm"
-#include "code\datums\bodypart_overlays\bodypart_overlay.dm"
-#include "code\datums\bodypart_overlays\mutant_bodypart_overlay.dm"
-
 //features
 #include "features\additional_circuit\includes.dm"
 #include "features\hardsuits\code\_jetpack.dm"

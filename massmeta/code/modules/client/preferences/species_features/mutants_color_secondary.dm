@@ -5,13 +5,11 @@
 	relevant_inherent_trait = TRAIT_MUTANT_COLORS_SECONDARY
 
 /datum/preference/color/mutant_color_secondary/is_accessible(datum/preferences/preferences)
-
-	var/datum/sprite_accessory/body_markings/choised = preferences.read_preference(/datum/preference/choiced/lizard_body_markings)
-	if (!..(preferences) || choised != "Color Belly") // color box will be appear only if user choose Colored Belly
+	if (!..(preferences))
 		return FALSE
 
 	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
-	var/datum/species/species = GLOB.species_prototypes[species_type]
+	var/datum/species/species = new species_type
 	return !(TRAIT_FIXED_MUTANT_COLORS_SECONDARY in species.inherent_traits)
 
 /datum/preference/color/mutant_color_secondary/create_default_value()
