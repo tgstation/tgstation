@@ -585,7 +585,7 @@
 /obj/item/stack/cable_coil/five,
 /obj/effect/turf_decal/siding/wideplating_new/terracotta,
 /turf/open/floor/wood/tile,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "aoz" = (
 /obj/structure/closet/secure_closet/captains,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -2130,10 +2130,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
+/area/station/commons/vacant_room/commissary)
 "aTn" = (
 /obj/effect/spawner/random/structure/crate,
 /obj/effect/spawner/random/maintenance,
@@ -3817,9 +3814,9 @@
 "bED" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/item/kirbyplants/random,
-/obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron,
 /area/station/holodeck/rec_center)
 "bEN" = (
@@ -9040,7 +9037,7 @@
 	pixel_y = 9
 	},
 /turf/open/floor/iron/dark/small,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "dFI" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white/side,
@@ -9301,10 +9298,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
+/area/station/commons/vacant_room/commissary)
 "dMM" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
@@ -11803,10 +11797,7 @@
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
+/area/station/commons/vacant_room/commissary)
 "eGq" = (
 /turf/closed/wall,
 /area/station/service/chapel)
@@ -13165,7 +13156,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/dark/small,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "fjp" = (
 /obj/machinery/door/airlock{
 	id_tag = "Cabin1";
@@ -18439,7 +18430,7 @@
 "gYX" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark/small,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "gZf" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
@@ -18806,10 +18797,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
+/area/station/commons/vacant_room/commissary)
 "hdc" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
@@ -19948,7 +19936,7 @@
 	dir = 9
 	},
 /turf/open/floor/wood/tile,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "htM" = (
 /obj/effect/turf_decal/tile/dark_red{
 	dir = 4
@@ -23304,10 +23292,7 @@
 /obj/item/clothing/head/utility/welding,
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
+/area/station/commons/vacant_room/commissary)
 "izD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -24471,10 +24456,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
+/area/station/commons/vacant_room/commissary)
 "iSE" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/cyan/visible,
 /obj/effect/landmark/start/atmospheric_technician,
@@ -27241,7 +27223,7 @@
 	dir = 6
 	},
 /turf/open/floor/wood/tile,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "jLl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -27399,7 +27381,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/tile,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "jNL" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -27547,7 +27529,7 @@
 	dir = 10
 	},
 /turf/open/floor/wood/tile,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "jQj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -27628,7 +27610,7 @@
 "jRI" = (
 /obj/structure/table,
 /turf/open/floor/iron/dark/small,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "jRR" = (
 /obj/machinery/atmospherics/components/binary/crystallizer{
 	dir = 4
@@ -28893,10 +28875,7 @@
 /obj/structure/cable,
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
+/area/station/commons/vacant_room/commissary)
 "kmC" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -31803,12 +31782,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
-"ljy" = (
-/turf/closed/wall,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
 "ljz" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -33983,7 +33956,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood/tile,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "lRV" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/siding/dark_red{
@@ -34601,10 +34574,7 @@
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
+/area/station/commons/vacant_room/commissary)
 "maL" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -34778,10 +34748,7 @@
 	pixel_x = 29
 	},
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
+/area/station/commons/vacant_room/commissary)
 "meN" = (
 /obj/structure/chair/sofa/bench{
 	dir = 8
@@ -35369,10 +35336,7 @@
 	name = "Commissary"
 	},
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
+/area/station/commons/vacant_room/commissary)
 "mql" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 1
@@ -35838,7 +35802,7 @@
 	name = "Comissary Shutters"
 	},
 /turf/open/floor/plating,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "mzf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -37563,10 +37527,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
+/area/station/commons/vacant_room/commissary)
 "ndM" = (
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/iron,
@@ -42566,7 +42527,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/small,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "oQF" = (
 /turf/closed/wall/r_wall,
 /area/station/security/execution/transfer)
@@ -42911,7 +42872,7 @@
 	pixel_y = -2
 	},
 /turf/open/floor/iron/dark/small,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "oWr" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock{
@@ -42941,10 +42902,7 @@
 	name = "Commissary"
 	},
 /turf/open/floor/plating,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
+/area/station/commons/vacant_room/commissary)
 "oXa" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -43866,10 +43824,7 @@
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/camera/directional/west,
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
+/area/station/commons/vacant_room/commissary)
 "pmq" = (
 /obj/structure/bed/maint,
 /obj/effect/decal/cleanable/dirt,
@@ -44562,7 +44517,7 @@
 "pxg" = (
 /obj/machinery/light/small/broken/directional/west,
 /turf/open/floor/iron/dark/small,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "pxj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -44920,10 +44875,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
+/area/station/commons/vacant_room/commissary)
 "pDD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -46905,7 +46857,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood/tile,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "qhp" = (
 /obj/effect/turf_decal/weather/dirt,
 /obj/structure/flora/bush/jungle/c/style_3,
@@ -49260,7 +49212,7 @@
 /turf/open/floor/iron/textured_half{
 	dir = 1
 	},
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "qTR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/wood,
@@ -50884,7 +50836,7 @@
 	dir = 5
 	},
 /turf/open/floor/wood/tile,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "rrZ" = (
 /obj/structure/closet/crate/trashcart,
 /obj/effect/spawner/random/trash/garbage,
@@ -52221,7 +52173,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood/tile,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "rMR" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 10
@@ -58068,7 +58020,7 @@
 "tFg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood/tile,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "tFs" = (
 /obj/structure/table/glass,
 /obj/item/storage/medkit/regular{
@@ -58227,10 +58179,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
+/area/station/commons/vacant_room/commissary)
 "tHY" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible{
@@ -58548,7 +58497,7 @@
 	name = "Comissary Shutters"
 	},
 /turf/open/floor/plating,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "tNT" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/kitchen/small,
@@ -59391,7 +59340,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood/tile,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "tZV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -60580,10 +60529,7 @@
 	name = "Commissary"
 	},
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
+/area/station/commons/vacant_room/commissary)
 "uqL" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/spawner/random/trash,
@@ -64228,9 +64174,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/solars/starboard/aft)
-"vuo" = (
-/turf/closed/wall/r_wall,
-/area/station/commons/vacant_room/commissary)
 "vuq" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -67814,7 +67757,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood/tile,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "wvT" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 10
@@ -68068,10 +68011,7 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
+/area/station/commons/vacant_room/commissary)
 "wyU" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
@@ -68718,10 +68658,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/commons/vacant_room/commissary{
-	name = "\improper Commissary";
-	icon_state = "vacant_room"
-	})
+/area/station/commons/vacant_room/commissary)
 "wJX" = (
 /obj/structure/closet/secure_closet/personal,
 /turf/open/floor/iron/herringbone,
@@ -70343,7 +70280,7 @@
 "xeY" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark/small,
-/area/station/commons/vacant_room/commissary)
+/area/station/maintenance/central/lesser)
 "xfa" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -94856,10 +94793,10 @@ xRV
 vIJ
 kux
 wGz
-ljy
+yaL
 oWV
 oWV
-ljy
+yaL
 xdm
 qej
 sIG
@@ -95116,8 +95053,8 @@ vHh
 tHT
 hdb
 iSw
-ljy
-ljy
+yaL
+yaL
 jVM
 iyg
 xeO
@@ -95370,7 +95307,7 @@ xZS
 vrn
 nzK
 wQB
-ljy
+yaL
 wyM
 dMq
 pmo
@@ -109523,7 +109460,7 @@ qUt
 htt
 wvP
 jQg
-vuo
+wua
 sqA
 sJi
 wty
@@ -109773,14 +109710,14 @@ ohr
 rqD
 opN
 xEM
-yaL
+qUt
 xeY
 gYX
 pxg
 tZU
 jNJ
 aoy
-vuo
+wua
 wWX
 blf
 unf
@@ -110030,14 +109967,14 @@ fvj
 uDz
 jXB
 nYs
-yaL
+qUt
 fiN
 gYX
 jRI
 qhi
 tFg
 lRD
-vuo
+wua
 wtX
 wtX
 wtX
@@ -110287,14 +110224,14 @@ fcU
 rem
 xvM
 uDE
-yaL
+qUt
 oQD
 oWp
 dEV
 rrV
 rMM
 jLh
-yaL
+qUt
 sqY
 ata
 taZ
@@ -110544,14 +110481,14 @@ uBk
 iIs
 axw
 shD
-yaL
+qUt
 mzc
 mzc
 tNS
-yaL
+qUt
 qTP
-yaL
-yaL
+qUt
+qUt
 srA
 lrH
 aaH
