@@ -37064,7 +37064,6 @@
 /turf/open/floor/iron/dark/small,
 /area/station/medical/storage)
 "mXu" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
