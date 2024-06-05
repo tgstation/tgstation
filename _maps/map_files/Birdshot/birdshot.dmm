@@ -23137,9 +23137,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/access/all/supply/vault,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/ai_monitored/command/nuke_storage)
@@ -45778,7 +45775,6 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/lawoffice)
 "pTC" = (
-/obj/effect/mapping_helpers/mail_sorting/service/theater,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -53847,6 +53843,10 @@
 /obj/structure/sink/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"squ" = (
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
+/turf/closed/wall,
+/area/station/service/kitchen/coldroom)
 "sqz" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
 /obj/effect/spawner/random/maintenance,
@@ -68102,6 +68102,7 @@
 	icon_state = "L5";
 	pixel_y = -15
 	},
+/obj/effect/landmark/observer_start,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
 "wEs" = (
@@ -98709,7 +98710,7 @@ tVb
 obU
 tGq
 tGq
-tGq
+squ
 xmt
 xmt
 edY
