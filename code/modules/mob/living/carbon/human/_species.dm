@@ -469,27 +469,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
 			new_organ.Insert(human, special=TRUE, movement_flags = DELETE_IF_REPLACED)
 
-	for(var/datum/bodypart_overlay/simple/body_marking/markings as anything in body_markings)
-		markings = new markings() // instantized... TO DIE!!!
-		var/accessory_name = human_who_gained_species.dna.features[markings.dna_feature_key]
-		var/datum/sprite_accessory/moth_markings/accessory = markings.get_accessory(accessory_name)
-
-		if(isnull(accessory))
-			CRASH("Value: [accessory_name] did not have a corresponding sprite accessory!")
-
-		for(var/obj/item/bodypart/part as anything in markings.applies_to)
-			var/obj/item/bodypart/people_part = human_who_gained_species.get_bodypart(initial(part.body_zone))
-
-			if(!people_part)
-				continue
-
-			var/datum/bodypart_overlay/simple/body_marking/overlay = new /datum/bodypart_overlay/simple/body_marking ()
-
-			overlay.icon = initial(accessory.icon)
-			overlay.icon_state = initial(accessory.icon_state)
-			overlay.use_gender = initial(accessory.gender_specific)
-
-			people_part.add_bodypart_overlay(overlay)
+	add_body_markings(human_who_gained_species)
 
 	if(length(inherent_traits))
 		human_who_gained_species.add_traits(inherent_traits, SPECIES_TRAIT)
@@ -548,6 +528,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			C.faction -= i
 
 	clear_tail_moodlets(C)
+
+	remove_body_markings(C)
 
 	// Removes all languages previously associated with [LANGUAGE_SPECIES], gaining our new species will add new ones back
 	var/datum/language_holder/losing_holder = GLOB.prototype_language_holders[species_language_holder]
@@ -711,6 +693,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	source.apply_overlay(BODY_BEHIND_LAYER)
 	source.apply_overlay(BODY_ADJ_LAYER)
 	source.apply_overlay(BODY_FRONT_LAYER)
+
+	update_body_markings(source)
 
 //This exists so sprite accessories can still be per-layer without having to include that layer's
 //number in their sprite name, which causes issues when those numbers change.
@@ -2095,3 +2079,46 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			return fixed_mut_color
 
 	return null
+
+/// Add species appropriate body markings
+/datum/species/proc/add_body_markings(mob/living/carbon/human/hooman)
+	for(var/datum/bodypart_overlay/simple/body_marking/markings as anything in body_markings)
+		markings = new markings() // instantized... TO DIE!!!
+		var/accessory_name = hooman.dna.features[markings.dna_feature_key]
+		var/datum/sprite_accessory/moth_markings/accessory = markings.get_accessory(accessory_name)
+
+		if(isnull(accessory))
+			CRASH("Value: [accessory_name] did not have a corresponding sprite accessory!")
+
+		for(var/obj/item/bodypart/part as anything in markings.applies_to)
+			var/obj/item/bodypart/people_part = hooman.get_bodypart(initial(part.body_zone))
+
+			if(!people_part)
+				continue
+
+			var/datum/bodypart_overlay/simple/body_marking/overlay = new /datum/bodypart_overlay/simple/body_marking ()
+
+			overlay.icon = initial(accessory.icon)
+			overlay.icon_state = initial(accessory.icon_state)
+			overlay.use_gender = initial(accessory.gender_specific)
+
+			people_part.add_bodypart_overlay(overlay)
+
+/// Remove body markings
+/datum/species/proc/remove_body_markings(mob/living/carbon/human/hooman)
+	for(var/obj/item/bodypart/part as anything in hooman.bodyparts)
+		for(var/datum/bodypart_overlay/simple/body_marking/marking in part.bodypart_overlays)
+			part.remove_bodypart_overlay(marking)
+
+/// Update the overlays if necessary
+/datum/species/proc/update_body_markings(mob/living/carbon/human/hooman)
+	var/needs_update = FALSE
+	for(var/datum/bodypart_overlay/simple/body_marking/marking as anything in body_markings)
+		if(initial(marking.dna_feature_key) == body_markings[marking]) // dna is same as our species (sort of mini-cache), so no update needed
+			continue
+		needs_update = TRUE
+		break
+
+	if(needs_update)
+		remove_body_markings(hooman)
+		add_body_markings(hooman)

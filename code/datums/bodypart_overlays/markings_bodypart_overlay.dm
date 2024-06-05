@@ -22,7 +22,7 @@
 	return SSaccessories.moth_markings_list[name]
 
 /datum/bodypart_overlay/simple/body_marking/lizard
-	dna_feature_key = "body_markings"
+	dna_feature_key = "lizard_markings"
 	applies_to = list(/obj/item/bodypart/chest)
 
 /datum/bodypart_overlay/simple/body_marking/lizard/get_accessory(name)

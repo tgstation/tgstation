@@ -80,7 +80,7 @@
 	ling.dna.features["horns"] = "Curled"
 	ling.dna.features["frills"] = "Short"
 	ling.dna.features["spines"] = "Long + Membrane"
-	ling.dna.features["body_markings"] = "Light Belly"
+	ling.dna.features["lizard_markings"] = "Light Belly"
 	ling.dna.features["legs"] = DIGITIGRADE_LEGS
 	ling.eye_color_left = COLOR_WHITE
 	ling.eye_color_right = COLOR_WHITE
