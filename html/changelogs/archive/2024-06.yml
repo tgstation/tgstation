@@ -179,3 +179,53 @@
   Time-Green:
   - bugfix: fixes touching a crutch permanently crippling you
   - bugfix: fixes crutches giving permanent speedboosts even when dropped
+2024-06-05:
+  Absolucy:
+  - qol: The memories for Smoker and Alcoholic now actually mention the preferred
+      brand.
+  Derpguy3:
+  - bugfix: A tiny fan was added to Tramstation's disposal room under the blast doors.
+      No more accidental depressurizations.
+  Goat:
+  - bugfix: meta's cargo lobby and mining maintenance APCs is now connected to the
+      power line
+  GoldenAlpharex:
+  - rscadd: Added Biomes capabilities to the Cave Generator, to allow for procedurally-placed
+      biomes to be introduced in cave generation. This feature is not currently used
+      on any map, but the tools are all there for anyone with the motivation to add
+      biomes to any cave-generating area, like Lavaland and Ice Box.
+  - code_imp: Biomes can now affect features (which are usually structures), on top
+      of flora and fauna.
+  LT3:
+  - qol: Icebox's service hall has a disposal unit again
+  MelokGleb:
+  - code_imp: crab17 telegraph now uses animated spinning telegraph circle instead
+      of sniper scope button
+  PapaMichael:
+  - spellcheck: Nukie uplinks no longer claim to have nonexistent "Tesla Energy Relays"
+  Wayland-Smithy:
+  - qol: AI's jump to AI Core button works while on backup power (likely when needed
+      most).
+  carlarctg:
+  - qol: Disgust vomit knocks you down rather than stunning you.
+  - rscdel: Mitogen Metabolism Factor knocks you down rather than stunning you.
+  githubuser4141:
+  - image: New icons for berserker, godslayer and adamantine armor. Removes the old
+      icons.
+  grungussuss:
+  - sound: frog sounds will no longer explode your ears
+  mc-oofert:
+  - rscadd: wawastation, the station map
+  necromanceranne:
+  - qol: Failing to hit someone with a proto-kinetic crusher one-handedly no longer
+      force drops everything in your hands.
+  norsvenska:
+  - bugfix: Metastation's vault is now connected to the power grid
+  san7890:
+  - bugfix: Status displays should now no longer sporadically randomly break when
+      in the custom message mode
+  sprites by INFRARED_BARON:
+  - image: New icons for Marauder, Seraph, Mauler and adjusts the Phazon/Dark Gygax's
+      sprites.
+  vendingmachine24:
+  - spellcheck: Changed grammar in cat_house.dm
