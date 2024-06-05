@@ -3525,6 +3525,7 @@
 #include "code\modules\bitrunning\virtual_domain\domains\bubblegum.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\clown_planet.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\colossus.dm"
+#include "code\modules\bitrunning\virtual_domain\domains\freddyfazbear.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\gondola_asteroid.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\hierophant.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\pipedream.dm"
@@ -6236,5 +6237,4 @@
 #include "interface\fonts\spess_font.dm"
 #include "interface\fonts\tiny_unicode.dm"
 #include "interface\fonts\vcr_osd_mono.dm"
-#include "code\modules\bitrunning\virtual_domain\domains\freddyfazbear.dm"
 // END_INCLUDE
