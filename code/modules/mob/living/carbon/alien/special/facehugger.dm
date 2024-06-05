@@ -256,18 +256,22 @@
 	AddComponent(/datum/component/knockoff, knockoff_chance = 40, target_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST), slots_knockoffable = slot_flags)
 
 /obj/item/clothing/mask/facehugger/allow_attack_hand_drop(mob/living/carbon/human/user)
+	if(!real || sterile)
+		return ..()
 	if(istype(user) && ishuman(loc) && stat != DEAD)
 		if(user == loc && user.get_item_by_slot(slot_flags) == src)
-			to_chat(user, span_warning("You need help taking these off!"))
-			return
+			to_chat(user, span_userdanger("[src] is latched on too tight! Get help or wait for it to let go!"))
+			return FALSE
 	return ..()
 
 /obj/item/clothing/mask/facehugger/MouseDrop(atom/over)
+	if(!real || sterile)
+		return ..()
 	var/mob/living/user = usr
 	var/mob/living/carbon/human/wearer = loc
 	if(istype(user) && istype(wearer) && stat != DEAD)
 		if(wearer.get_item_by_slot(slot_flags) == src && user == wearer)
-			to_chat(user, span_warning("You need help taking these off!"))
+			to_chat(user, span_userdanger("[src] is latched on too tight! Get help or wait for it to let go!"))
 			return
 	return ..()
 
