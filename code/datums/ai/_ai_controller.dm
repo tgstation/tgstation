@@ -473,7 +473,10 @@ multiple modular subtrees with behaviors
 
 /// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding. Return the access list you want to use
 /datum/ai_controller/proc/get_access()
-	return
+	if(!isliving(pawn))
+		return
+	var/mob/living/living_pawn = pawn
+	return living_pawn.get_access()
 
 ///Returns the minimum required distance to preform one of our current behaviors. Honestly this should just be cached or something but fuck you
 /datum/ai_controller/proc/get_minimum_distance()
@@ -712,6 +715,8 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/clear_blackboard_key(key)
 	if(isnull(blackboard[key]))
 		return
+	if(pawn && (SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_PRECLEAR(key))))
+		return
 	CLEAR_AI_DATUM_TARGET(blackboard[key], key)
 	blackboard[key] = null
 	if(isnull(pawn))
@@ -751,6 +756,19 @@ multiple modular subtrees with behaviors
 
 	CRASH("remove_thing_from_blackboard_key called with an invalid \"thing\" argument ([thing]). \
 		(The passed value is not tracked in the passed list.)")
+
+///removes a tracked object from a lazylist
+/datum/ai_controller/proc/remove_from_blackboard_lazylist_key(key, thing)
+	var/lazylist = blackboard[key]
+	if(isnull(lazylist))
+		return
+	for(var/key_index in lazylist)
+		if(thing == key_index || lazylist[key_index] == thing)
+			CLEAR_AI_DATUM_TARGET(thing, key)
+			lazylist -= key_index
+			break
+	if(!LAZYLEN(lazylist))
+		clear_blackboard_key(key)
 
 /// Signal proc to go through every key and remove the datum from all keys it finds
 /datum/ai_controller/proc/sig_remove_from_blackboard(datum/source)

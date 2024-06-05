@@ -484,7 +484,10 @@
 	playsound(src, 'sound/machines/card_slide.ogg', 50)
 
 /obj/item/modular_computer/proc/turn_on(mob/user, open_ui = TRUE)
-	var/issynth = HAS_SILICON_ACCESS(user) // Robots and AIs get different activation messages.
+	var/issynth = FALSE // Robots and AIs get different activation messages.
+	if(user)
+		issynth = HAS_SILICON_ACCESS(user)
+
 	if(atom_integrity <= integrity_failure * max_integrity)
 		if(user)
 			if(issynth)

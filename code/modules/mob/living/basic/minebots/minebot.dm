@@ -1,6 +1,6 @@
 /mob/living/basic/mining_drone
 	name = "\improper Nanotrasen minebot"
-	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife. Insert any type of ore into it to make it start listening to your commands!"
+	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
 	gender = NEUTER
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "mining_drone"
@@ -107,6 +107,8 @@
 
 	for(var/obj/item/borg/upgrade/modkit/modkit as anything in stored_gun.modkits)
 		. += span_notice("There is \a [modkit] installed, using <b>[modkit.cost]%</b> capacity.")
+	if(ai_controller && ai_controller.ai_status == AI_STATUS_IDLE)
+		. += "The [src] appears to be in <b>sleep mode</b>. You can restore normal functions by <b>tapping</b> it."
 
 
 /mob/living/basic/mining_drone/welder_act(mob/living/user, obj/item/welder)
@@ -132,7 +134,10 @@
 
 /mob/living/basic/mining_drone/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(!user.combat_mode)
-		ui_interact(user)
+		if(ai_controller && ai_controller.ai_status == AI_STATUS_IDLE)
+			ai_controller.set_ai_status(AI_STATUS_ON)
+		if(LAZYACCESS(modifiers, LEFT_CLICK)) //Lets Right Click be specifically for re-enabling their AI (and avoiding the UI popup), while Left Click simply does both.
+			ui_interact(user)
 		return
 	return ..()
 

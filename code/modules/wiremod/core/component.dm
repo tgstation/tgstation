@@ -410,7 +410,7 @@
  * Called when a circuit component requests to send Ntnet data signal.
  *
  * Arguments:
- * * port - The required list port needed by the Ntnet recieve
+ * * port - The required list port needed by the Ntnet receive
  * * key - The encryption key
  * * signal_type - The signal type used for sending this global signal (optional, default is COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT)
  */
