@@ -2,12 +2,12 @@
 #define SNEEZE_CONE 60
 
 /// Launch a sneeze that can infect with a disease
-/mob/living/proc/infectious_sneeze(datum/disease/disease, force, range = 4, count = 3, charge_time = 0.5 SECONDS, obj/projectile/sneezoid = /obj/projectile/sneeze)
+/mob/living/proc/infectious_sneeze(datum/disease/disease, force, range = 4, count = 4, charge_time = 0.5 SECONDS, obj/projectile/sneezoid = /obj/projectile/sneeze)
 	sneeze(range, count, charge_time, sneezoid, on_sneeze_hit_callback = CALLBACK(src, PROC_REF(try_sneeze_infect), disease.Copy(), force))
 
 /// Try and infect following a sneeze hit. force to always infect
 /mob/living/proc/try_sneeze_infect(datum/disease/disease, force, mob/living/target)
-	target.AirborneContractDisease(disease, force)
+	target.contract_airborne_disease(disease)
 
 /// Inhale and start the sneeze timer. on_sneeze_callback can be used to do custom sneezes, on_sneeze_hit_callback for special effects, but probably usually making it infect
 /mob/living/proc/sneeze(range = 4, count = 3, charge_time = 0.5 SECONDS, obj/projectile/sneezoid = /obj/projectile/sneeze, on_sneeze_callback = null, on_sneeze_hit_callback = null)
