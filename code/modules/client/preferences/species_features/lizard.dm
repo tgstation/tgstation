@@ -29,13 +29,13 @@
 	category = PREFERENCE_CATEGORY_FEATURES
 	main_feature_name = "Body markings"
 	should_generate_icons = TRUE
-	relevant_mutant_bodypart = "lizard_markings"
+	relevant_body_markings = BODY_MARKINGS_LIZARD
 
 /datum/preference/choiced/lizard_body_markings/init_possible_values()
-	return assoc_to_keys_features(SSaccessories.body_markings_list)
+	return assoc_to_keys_features(SSaccessories.lizard_markings_list)
 
 /datum/preference/choiced/lizard_body_markings/icon_for(value)
-	var/datum/sprite_accessory/sprite_accessory = SSaccessories.body_markings_list[value]
+	var/datum/sprite_accessory/sprite_accessory = SSaccessories.lizard_markings_list[value]
 
 	var/icon/final_icon = icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_chest_m")
 

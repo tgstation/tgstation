@@ -1488,6 +1488,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			|| (preference.relevant_inherent_trait in inherent_traits) \
 			|| (preference.relevant_external_organ in external_organs) \
 			|| (preference.relevant_head_flag && check_head_flags(preference.relevant_head_flag)) \
+			|| (preference.relevant_body_markings in body_markings) \
 		)
 			features += preference.savefile_key
 

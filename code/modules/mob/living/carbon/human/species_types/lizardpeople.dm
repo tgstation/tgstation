@@ -50,7 +50,7 @@
 
 /datum/species/lizard/randomize_features()
 	var/list/features = ..()
-	features["lizard_markings"] = pick(SSaccessories.body_markings_list)
+	features["lizard_markings"] = pick(SSaccessories.lizard_markings_list)
 	return features
 
 /datum/species/lizard/get_scream_sound(mob/living/carbon/human/lizard)

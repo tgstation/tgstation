@@ -26,4 +26,4 @@
 	applies_to = list(/obj/item/bodypart/chest)
 
 /datum/bodypart_overlay/simple/body_marking/lizard/get_accessory(name)
-	return SSaccessories.body_markings_list[name]
+	return SSaccessories.lizard_markings_list[name]
