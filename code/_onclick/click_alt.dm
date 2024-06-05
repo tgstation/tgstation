@@ -96,12 +96,6 @@
 	if(SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON_SECONDARY, target) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 
-	//can see target in line of sight
-	if(!CAN_I_SEE(target))
-		return
-	if(is_blind() && !IN_GIVEN_RANGE(src, target, 1))
-		return
-
 	var/can_use_click_action = FALSE
 	if(isturf(target))
 		// Turfs are special because they can't be used with can_perform_action
