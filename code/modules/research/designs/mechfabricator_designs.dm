@@ -1716,8 +1716,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/posibrain/
-
 //Misc
 /datum/design/mecha_tracking
 	name = "Exosuit Tracking Beacon"
