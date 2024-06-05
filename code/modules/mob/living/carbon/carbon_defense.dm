@@ -164,6 +164,13 @@
 
 	return FALSE
 
+/mob/living/carbon/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if (!user.combat_mode)
+		for (var/datum/wound/wounds as anything in all_wounds)
+			if (wounds.try_handling(user))
+				return TRUE
+
+	return ..()
 
 /mob/living/carbon/attack_paw(mob/living/carbon/human/user, list/modifiers)
 

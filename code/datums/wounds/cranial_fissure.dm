@@ -74,8 +74,11 @@
 		span_userdanger("Your brain spills right out of your head!"),
 	)
 
-/datum/wound/cranial_fissure/try_handling(mob/living/carbon/human/user)
-	if (user.zone_selected != BODY_ZONE_HEAD && user.zone_selected != BODY_ZONE_PRECISE_EYES)
+/datum/wound/cranial_fissure/try_handling(mob/living/user)
+	if (user.usable_hands <= 0)
+		return FALSE
+
+	if(!isnull(user.hud_used?.zone_select) && (user.zone_selected != BODY_ZONE_HEAD && user.zone_selected != BODY_ZONE_PRECISE_EYES))
 		return FALSE
 
 	if (victim.body_position != LYING_DOWN)
