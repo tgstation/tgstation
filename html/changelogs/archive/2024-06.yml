@@ -59,3 +59,22 @@
       elevated object was initialized inside of a non-turf object.
   - bugfix: Holodisk recording gives the right vfx again. Bonus, the rays work with
       it now too!
+2024-06-05:
+  Absolucy:
+  - refactor: Tgui Say is rewritten, becoming "much more performant". Hey, that's
+      what it says on the tin! I'm not from marketing!
+  - bugfix: Tguisay drag zones are now ever so slightly larger around the corner of
+      the window.
+  - bugfix: Pressing one of the chat open keys (T/Y/M/O) will no longer change channels
+      if it's already open.
+  - bugfix: Fix color selection in VV not working.
+  - rscdel: Removed the Supermatter Syndrome symptom.
+  - bugfix: Fixed a runtime error relating to viral extrapolators.
+  CannibalHunter:
+  - rscadd: Sandstone stool
+  - rscadd: Sandstone table
+  - rscadd: Sandstone sarcophagus
+  lmenvs:
+  - rscadd: Adds donator items for ellie. Thank you for your patronage!
+  - rscadd: Adds Pim, Glep and Mr. Frog plushes, complete with their own squeaks.  These
+      are all available to donators in the loadout.
