@@ -3,10 +3,10 @@
 /datum/ai_controller/basic_controller/raptor
 	blackboard = list(
 		BB_INTERACTIONS_WITH_OWNER = list(
-			"Pecks",
-			"Nuzzles",
-			"Wags tail against",
-			"Playfully leans against"
+			"pecks",
+			"nuzzles",
+			"wags their tail against",
+			"playfully leans against"
 		),
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/raptor,
