@@ -40133,10 +40133,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/textured_half,
 /area/station/hallway/secondary/dock)
-"obU" = (
-/obj/effect/spawner/random/structure/girder,
-/turf/open/floor/plating,
-/area/station/maintenance/central/greater)
 "obW" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -98681,7 +98677,7 @@ jEW
 lqr
 jVM
 tVb
-obU
+wzj
 tGq
 tGq
 squ
