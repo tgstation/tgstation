@@ -1,3 +1,4 @@
+/// For body markings applied on the species, which need some extra code
 /datum/bodypart_overlay/simple/body_marking
 	layers = EXTERNAL_ADJACENT
 	/// Listen to the gendercode, if the limb is bimorphic

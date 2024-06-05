@@ -2083,22 +2083,23 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /// Add species appropriate body markings
 /datum/species/proc/add_body_markings(mob/living/carbon/human/hooman)
-	for(var/datum/bodypart_overlay/simple/body_marking/markings as anything in body_markings)
+	for(var/datum/bodypart_overlay/simple/body_marking/markings as anything in body_markings) //loop through possible species markings
 		markings = new markings() // instantized... TO DIE!!!
-		var/accessory_name = hooman.dna.features[markings.dna_feature_key]
-		var/datum/sprite_accessory/moth_markings/accessory = markings.get_accessory(accessory_name)
+		var/accessory_name = hooman.dna.features[markings.dna_feature_key] //get the accessory name from dna
+		var/datum/sprite_accessory/moth_markings/accessory = markings.get_accessory(accessory_name) //get the actual datum
 
 		if(isnull(accessory))
 			CRASH("Value: [accessory_name] did not have a corresponding sprite accessory!")
 
-		for(var/obj/item/bodypart/part as anything in markings.applies_to)
-			var/obj/item/bodypart/people_part = hooman.get_bodypart(initial(part.body_zone))
+		for(var/obj/item/bodypart/part as anything in markings.applies_to) //check through our limbs
+			var/obj/item/bodypart/people_part = hooman.get_bodypart(initial(part.body_zone)) // and see if we have a compatible marking for that limb
 
 			if(!people_part)
 				continue
 
 			var/datum/bodypart_overlay/simple/body_marking/overlay = new /datum/bodypart_overlay/simple/body_marking ()
 
+			// Tell the overlay what it should look like
 			overlay.icon = initial(accessory.icon)
 			overlay.icon_state = initial(accessory.icon_state)
 			overlay.use_gender = initial(accessory.gender_specific)
