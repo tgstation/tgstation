@@ -50,6 +50,7 @@
 #_maps/RandomRuins/SpaceRuins/intactemptyship.dmm
 #_maps/RandomRuins/SpaceRuins/interdyne.dmm
 #_maps/RandomRuins/SpaceRuins/listeningstation.dmm
+#_maps/RandomRuins/SpaceRuins/meatderelict.dmm
 #_maps/RandomRuins/SpaceRuins/meateor.dmm
 #_maps/RandomRuins/SpaceRuins/mechtransport.dmm
 #_maps/RandomRuins/SpaceRuins/mimesvsclowns.dmm
