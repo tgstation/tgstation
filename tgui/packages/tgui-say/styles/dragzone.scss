@@ -1,72 +1,39 @@
 @use 'sass:color';
 @use './colors.scss';
 
+$dragSize: 0.6rem;
+$borderSize: 0.2rem;
+
 .dragzone-horizontal {
+  border-left: $borderSize solid;
+  border-right: $borderSize solid;
   color: transparent;
-  height: 5px;
   width: 100%;
+  height: $dragSize;
+}
+.dragzone-left {
+  border-left: $borderSize solid;
+}
+
+.dragzone-right {
+  border-right: $borderSize solid;
 }
 
 .dragzone-vertical {
   color: transparent;
   height: 100%;
-  position: absolute;
-  top: 0;
-  width: 5px;
+  width: $dragSize;
 }
 
-@each $channel, $color in colors.$channel-map {
-  $darkened: darken($color, 20%);
+.dragzone-top {
+  border-top: $borderSize solid;
+}
 
-  .dragzone-bottom-#{$channel} {
-    @extend .dragzone-horizontal;
-    border-left: 2px solid $darkened;
-    border-right: 2px solid $darkened;
-  }
-
-  .dragzone-left-#{$channel} {
-    @extend .dragzone-vertical;
-    left: 0;
-    border-left: 2px solid $darkened;
-  }
-
-  .dragzone-right-#{$channel} {
-    @extend .dragzone-vertical;
-    right: 0;
-    border-right: 2px solid $darkened;
-  }
-
-  .dragzone-top-#{$channel} {
-    @extend .dragzone-horizontal;
-    border-left: 2px solid $darkened;
-    border-right: 2px solid $darkened;
-    border-top: 2px solid $darkened;
-  }
+.dragzone-bottom {
+  border-bottom: $borderSize solid;
 }
 
 /** Lightmode static theme */
-.dragzone-bottom-lightMode {
-  @extend .dragzone-horizontal;
-  border-left: 2px solid colors.$lightBorder;
-  border-right: 2px solid colors.$lightBorder;
-  border-bottom: 2px solid colors.$lightBorder;
-}
-
-.dragzone-left-lightMode {
-  @extend .dragzone-vertical;
-  left: 0;
-  border-left: 2px solid colors.$lightBorder;
-}
-
-.dragzone-right-lightMode {
-  @extend .dragzone-vertical;
-  right: 0;
-  border-right: 2px solid colors.$lightBorder;
-}
-
-.dragzone-top-lightMode {
-  @extend .dragzone-horizontal;
-  border-left: 2px solid colors.$lightBorder;
-  border-right: 2px solid colors.$lightBorder;
-  border-top: 2px solid colors.$lightBorder;
+.dragzone-lightMode {
+  border-color: colors.$lightBorder;
 }

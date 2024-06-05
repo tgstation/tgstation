@@ -10,9 +10,13 @@
  * called for N milliseconds. If `immediate` is passed, trigger the
  * function on the leading edge, instead of the trailing.
  */
-export const debounce = (fn, time, immediate = false) => {
-  let timeout;
-  return (...args) => {
+export const debounce = <F extends (...args: any[]) => any>(
+  fn: F,
+  time: number,
+  immediate = false
+): ((...args: Parameters<F>) => void) => {
+  let timeout: ReturnType<typeof setTimeout> | null;
+  return (...args: Parameters<F>) => {
     const later = () => {
       timeout = null;
       if (!immediate) {
@@ -20,7 +24,7 @@ export const debounce = (fn, time, immediate = false) => {
       }
     };
     const callNow = immediate && !timeout;
-    clearTimeout(timeout);
+    clearTimeout(timeout!);
     timeout = setTimeout(later, time);
     if (callNow) {
       fn(...args);
@@ -32,18 +36,24 @@ export const debounce = (fn, time, immediate = false) => {
  * Returns a function, that, when invoked, will only be triggered at most once
  * during a given window of time.
  */
-export const throttle = (fn, time) => {
-  let previouslyRun, queuedToRun;
-  return function invokeFn(...args) {
+export const throttle = <F extends (...args: any[]) => any>(
+  fn: F,
+  time: number
+): ((...args: Parameters<F>) => void) => {
+  let previouslyRun: number | null,
+    queuedToRun: ReturnType<typeof setTimeout> | null;
+  return function invokeFn(...args: Parameters<F>) {
     const now = Date.now();
-    queuedToRun = clearTimeout(queuedToRun);
+    if (queuedToRun) {
+      clearTimeout(queuedToRun);
+    }
     if (!previouslyRun || now - previouslyRun >= time) {
       fn.apply(null, args);
       previouslyRun = now;
     } else {
       queuedToRun = setTimeout(
-        invokeFn.bind(null, ...args),
-        time - (now - previouslyRun)
+        () => invokeFn(...args),
+        time - (now - (previouslyRun ?? 0))
       );
     }
   };
@@ -54,5 +64,5 @@ export const throttle = (fn, time) => {
  *
  * @param {number} time
  */
-export const sleep = (time) =>
+export const sleep = (time: number): Promise<void> =>
   new Promise((resolve) => setTimeout(resolve, time));

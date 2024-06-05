@@ -9314,10 +9314,8 @@ resolve@^2.0.0-next.3:
   resolution: "tgui-say@workspace:packages/tgui-say"
   dependencies:
     common: "workspace:*"
-    dompurify: ^2.3.1
     inferno: ^8.2.1
     tgui: "workspace:*"
-    tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
   languageName: unknown
   linkType: soft
