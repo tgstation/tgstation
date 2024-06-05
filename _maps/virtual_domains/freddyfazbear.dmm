@@ -115,15 +115,6 @@
 	},
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"fI" = (
-/obj/machinery/computer/arcade/amputation{
-	dir = 1
-	},
-/obj/machinery/computer/arcade/amputation{
-	dir = 1
-	},
-/turf/open/floor/iron/kitchen,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "fU" = (
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/floor/iron/kitchen,
@@ -530,11 +521,6 @@
 /obj/structure/railing,
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"zz" = (
-/obj/structure/chair/stool/bar/directional/east,
-/obj/structure/chair/stool/bar/directional/east,
-/turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "zU" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -1679,7 +1665,7 @@ Ux
 Bj
 Ux
 Ux
-fI
+Yy
 Bf
 Ux
 Ux
@@ -2426,7 +2412,7 @@ ve
 kf
 kf
 kf
-zz
+kf
 kf
 kf
 Ux
