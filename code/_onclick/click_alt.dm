@@ -105,7 +105,7 @@
 	if(can_use_click_action)
 		target.alt_click_secondary(src)
 
-///The base proc of when something is right clicked on when alt is held
+///Delegated alt right click from the mob to the clicked atom
 /atom/proc/alt_click_secondary(mob/user)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
