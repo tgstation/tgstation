@@ -1439,6 +1439,7 @@
 #include "code\datums\elements\frozen.dm"
 #include "code\datums\elements\gags_recolorable.dm"
 #include "code\datums\elements\give_turf_traits.dm"
+#include "code\datums\elements\gravedigger.dm"
 #include "code\datums\elements\hat_wearer.dm"
 #include "code\datums\elements\haunted.dm"
 #include "code\datums\elements\high_fiver.dm"

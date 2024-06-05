@@ -1,5 +1,0 @@
-author: "Seven"
-delete-after: True
-changes:
-  - bugfix: "Paradox clones (and changelings) now properly copy hair gradients and heterochromia eye colors."
-  - bugfix: "Hardcore random no longer mistakenly makes your hair white, this was not a feature."
