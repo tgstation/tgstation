@@ -29,7 +29,7 @@
 	category = PREFERENCE_CATEGORY_FEATURES
 	main_feature_name = "Body markings"
 	should_generate_icons = TRUE
-	relevant_body_markings = BODY_MARKINGS_LIZARD
+	relevant_body_markings = /datum/bodypart_overlay/simple/body_marking/lizard
 
 /datum/preference/choiced/lizard_body_markings/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.lizard_markings_list)

@@ -1701,7 +1701,7 @@
 /////////////////////////////
 
 /datum/sprite_accessory/lizard_markings
-	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
+	icon = 'icons/mob/human/species/lizard/lizard_markings.dmi'
 
 /datum/sprite_accessory/lizard_markings/none
 	name = "None"
