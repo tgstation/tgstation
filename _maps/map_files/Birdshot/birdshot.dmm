@@ -42289,7 +42289,6 @@
 /turf/open/floor/tram,
 /area/station/maintenance/port/aft)
 "oOS" = (
-/obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/machinery/camera/autoname/directional/east,
 /obj/structure/disposalpipe/segment{
@@ -42872,7 +42871,6 @@
 	pixel_x = 6
 	},
 /obj/item/lighter,
-/obj/effect/turf_decal/tile,
 /obj/structure/sign/poster/official/random/directional/east,
 /obj/structure/table,
 /turf/open/floor/iron/small,
