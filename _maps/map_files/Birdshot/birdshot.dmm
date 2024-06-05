@@ -543,9 +543,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/vault,
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -15540,7 +15537,6 @@
 /obj/effect/turf_decal/siding/white/corner{
 	dir = 4
 	},
-/obj/machinery/duct,
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /obj/machinery/door/airlock{
 	name = "Kitchen"
@@ -22366,8 +22362,7 @@
 "inP" = (
 /obj/structure/statue/sandstone/venus{
 	dir = 8;
-	pixel_y = -15;
-	luminosity = 1
+	pixel_y = -15
 	},
 /obj/structure/flora/bush/flowers_pp,
 /obj/structure/flora/bush/flowers_br/style_3,
@@ -48221,10 +48216,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/door/poddoor/shutters{
-	name = "kitchen shutters";
-	id = kitchenshutters
-	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
 "qFb" = (
@@ -48444,7 +48435,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	name = "kitchen shutters";
-	id = kitchenshutters
+	id = "kitchenshutters"
 	},
 /turf/open/floor/plating,
 /area/station/service/kitchen)
@@ -51721,7 +51712,7 @@
 /obj/machinery/door/window/right/directional/west,
 /obj/machinery/door/poddoor/shutters{
 	name = "kitchen shutters";
-	id = kitchenshutters
+	id = "kitchenshutters"
 	},
 /turf/open/floor/iron,
 /area/station/service/kitchen)
@@ -51755,7 +51746,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	name = "kitchen shutters";
-	id = kitchenshutters
+	id = "kitchenshutters"
 	},
 /turf/open/floor/plating,
 /area/station/service/kitchen)
@@ -59069,7 +59060,7 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/camera/autoname/directional/north,
 /obj/machinery/button/door/directional/east{
-	id = "kitchenshutters";
+	id = s;
 	name = "Kitchen Shutter Control"
 	},
 /obj/structure/disposalpipe/trunk,
@@ -62891,7 +62882,7 @@
 /obj/machinery/smartfridge,
 /obj/machinery/door/poddoor/shutters{
 	name = "kitchen shutters";
-	id = kitchenshutters
+	id = "kitchenshutters"
 	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
@@ -65851,7 +65842,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	name = "kitchen shutters";
-	id = kitchenshutters
+	id = "kitchenshutters"
 	},
 /turf/open/floor/plating,
 /area/station/service/kitchen)
@@ -66840,7 +66831,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	name = "kitchen shutters";
-	id = kitchenshutters
+	id = "kitchenshutters"
 	},
 /turf/open/floor/plating,
 /area/station/service/kitchen)
@@ -71853,7 +71844,7 @@
 /obj/machinery/door/window/right/directional/south,
 /obj/machinery/door/poddoor/shutters{
 	name = "kitchen shutters";
-	id = kitchenshutters
+	id = "kitchenshutters"
 	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
