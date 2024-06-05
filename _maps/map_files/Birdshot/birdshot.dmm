@@ -35365,7 +35365,7 @@
 /obj/structure/table/reinforced,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor/shutters{
-	id = meow;
+	id = "meow";
 	name = "Commissary"
 	},
 /turf/open/floor/iron,
@@ -42937,7 +42937,7 @@
 "oWV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
-	id = meow;
+	id = "meow";
 	name = "Commissary"
 	},
 /turf/open/floor/plating,
@@ -60576,7 +60576,7 @@
 	},
 /obj/item/pen,
 /obj/machinery/door/poddoor/shutters{
-	id = meow;
+	id = "meow";
 	name = "Commissary"
 	},
 /turf/open/floor/iron,
