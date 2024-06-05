@@ -34577,6 +34577,11 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/machinery/button/door/directional/north{
+	id = "vaco";
+	name = "Comissary Shutters";
+	pixel_x = 29
+	},
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "meN" = (
@@ -35160,12 +35165,12 @@
 /area/station/security/brig)
 "mqi" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters{
-	dir = s;
-	id = "commissaryshutter";
-	name = "Vacant Commissary Shutter"
-	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/poddoor/shutters{
+	dir = 4;
+	id = "vaco";
+	name = "Comissary Shutters"
+	},
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "mql" = (
@@ -42697,6 +42702,11 @@
 /area/station/engineering/supermatter/room)
 "oWV" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters{
+	dir = 4;
+	id = "vaco";
+	name = "Comissary Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/commons/vacant_room/commissary)
 "oXa" = (
@@ -44659,10 +44669,6 @@
 /turf/open/floor/iron/white/small,
 /area/station/medical/storage)
 "pDy" = (
-/obj/machinery/button/door/directional/east{
-	id = "commissaryshutter";
-	name = "Commissary Shutter Control"
-	},
 /obj/effect/turf_decal/tile/brown/opposingcorners{
 	dir = 1
 	},
@@ -60315,9 +60321,9 @@
 	},
 /obj/item/pen,
 /obj/machinery/door/poddoor/shutters{
-	dir = s;
-	id = "commissaryshutter";
-	name = "Vacant Commissary Shutter"
+	dir = 4;
+	id = "vaco";
+	name = "Comissary Shutters"
 	},
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
