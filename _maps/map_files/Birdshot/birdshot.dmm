@@ -20229,8 +20229,8 @@
 /area/station/security/execution/transfer)
 "hym" = (
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
-/obj/machinery/door/airlock{
-	name = "Kitchen"
+/obj/machinery/door/airlock/freezer{
+	name = "Freezer"
 	},
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen/coldroom)
@@ -50528,12 +50528,12 @@
 /turf/open/floor/wood/tile,
 /area/station/maintenance/port/lesser)
 "rot" = (
-/obj/machinery/door/airlock/hydroponics/glass{
-	name = "Service Breakroom"
-	},
 /obj/effect/mapping_helpers/airlock/access/any/service/general,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Service Hallway"
+	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "row" = (
