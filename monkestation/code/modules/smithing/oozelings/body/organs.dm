@@ -219,16 +219,13 @@
 	//we have the plasma. we can rebuild them.
 	brainmob.mind.grab_ghost()
 	if(isnull(brainmob))
-		if(user)
-			user.balloon_alert("This brain is not a viable candidate for repair!")
+		user?.balloon_alert(user, "This brain is not a viable candidate for repair!")
 		return TRUE
 	if(isnull(brainmob.stored_dna))
-		if(user)
-			user.balloon_alert("This brain does not contain any dna!")
+		user?.balloon_alert(user, "This brain does not contain any dna!")
 		return TRUE
 	if(isnull(brainmob.client))
-		if(user)
-			user.balloon_alert("This brain does not contain a mind!")
+		user?.balloon_alert(user, "This brain does not contain a mind!")
 		return TRUE
 	var/mob/living/carbon/human/new_body = new /mob/living/carbon/human(drop_location())
 
