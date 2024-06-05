@@ -205,12 +205,14 @@
 	if(!operating && density && hasPower() && !(obj_flags & EMAGGED))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, emag_act))
 		hacking_module.door_hack_counter++
+		/* monkestation edit: remove doorjack objective
 		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 		if(!ninja_antag)
 			return NONE
 		var/datum/objective/door_jack/objective = locate() in ninja_antag.objectives
 		if(objective && objective.doors_required <= hacking_module.door_hack_counter)
 			objective.completed = TRUE
+		monkestation end */
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 //WIRE//

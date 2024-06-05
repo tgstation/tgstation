@@ -40,9 +40,11 @@
 /datum/objective/cyborg_hijack
 	explanation_text = "Use your gloves to convert at least one cyborg to aid you in sabotaging the station."
 
+/* monkestation edit: remove doorjack objective
 /datum/objective/door_jack
 	///How many doors that need to be opened using the gloves to pass the objective
 	var/doors_required = 0
+*/
 
 /datum/objective/plant_explosive
 	var/area/detonation_location
@@ -70,11 +72,13 @@
 	var/datum/objective/research_secrets/sabotage_research = new /datum/objective/research_secrets()
 	objectives += sabotage_research
 
+	/* monkestation edit: remove doorjack objective
 	//Door jacks, flag will be set to complete on when the last door is hijacked
 	var/datum/objective/door_jack/doorobjective = new /datum/objective/door_jack()
 	doorobjective.doors_required = rand(15,40)
 	doorobjective.explanation_text = "Use your gloves to doorjack [doorobjective.doors_required] airlocks on the station."
 	objectives += doorobjective
+	*/
 
 	//Explosive plant, the bomb will register its completion on priming
 	var/datum/objective/plant_explosive/bombobjective = new /datum/objective/plant_explosive()
