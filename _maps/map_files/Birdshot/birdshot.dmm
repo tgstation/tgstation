@@ -9669,7 +9669,6 @@
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/mob/living/carbon/human/species/monkey/punpun,
 /obj/machinery/light/floor,
 /turf/open/floor/stone,
 /area/station/service/bar)
@@ -23898,10 +23897,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
-"iLq" = (
-/obj/structure/cable,
-/turf/open/floor/iron/dark/small,
-/area/station/commons/vacant_room/commissary)
 "iLC" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -30838,6 +30833,13 @@
 	},
 /turf/open/floor/circuit/green,
 /area/station/science/robotics/mechbay)
+"kYx" = (
+/obj/machinery/door/airlock{
+	name = "Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/central/lesser)
 "kYA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line,
@@ -48668,13 +48670,6 @@
 /obj/structure/hedge,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"qNz" = (
-/obj/structure/cable,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/trash,
-/turf/open/floor/plating,
-/area/station/maintenance/central/lesser)
 "qNF" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
 /obj/effect/spawner/random/maintenance,
@@ -52276,7 +52271,6 @@
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/escape)
 "rSj" = (
-/obj/structure/cable,
 /obj/machinery/door/airlock{
 	name = "Maintenance"
 	},
@@ -58210,10 +58204,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"tNs" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/central/lesser)
 "tNu" = (
 /obj/machinery/holopad,
 /turf/open/floor/iron,
@@ -60094,11 +60084,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"umM" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/station/maintenance/central/lesser)
 "unc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -70072,8 +70057,6 @@
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/research)
 "xeY" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark/small,
 /area/station/commons/vacant_room/commissary)
@@ -108735,11 +108718,11 @@ rsZ
 jQB
 kAJ
 qUt
-umM
-tNs
-umM
-qNz
-umM
+tnb
+tnb
+tnb
+tnb
+tnb
 rSj
 spP
 bRt
@@ -108992,7 +108975,7 @@ lYV
 iXy
 uYY
 qUt
-tNs
+tnb
 qUt
 qUt
 qUt
@@ -109249,7 +109232,7 @@ opN
 eeJ
 eeJ
 qUt
-uiW
+kYx
 qUt
 htt
 wvP
@@ -109506,7 +109489,7 @@ opN
 xEM
 yaL
 xeY
-iLq
+gYX
 pxg
 tZU
 jNJ
