@@ -31172,7 +31172,7 @@
 	dir = 4
 	},
 /turf/closed/wall,
-/area/station/holodeck)
+/area/station/holodeck/rec_center)
 "laZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -35314,6 +35314,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"mpa" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/holodeck/rec_center)
 "mpk" = (
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/circuit/green,
@@ -43730,6 +43734,17 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"pjC" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Holodeck Door"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "holodeck"
+	},
+/turf/open/floor/iron/textured_half{
+	dir = 8
+	},
+/area/station/holodeck/rec_center)
 "pjG" = (
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron,
@@ -114099,18 +114114,18 @@ nFW
 nFW
 nFW
 nFW
-ajF
-ajF
-lfk
-ajF
-iTN
+uBk
+uBk
+mpa
+uBk
+pjC
 laU
-ajF
-iTN
-ajF
-lfk
-ajF
-ajF
+uBk
+pjC
+uBk
+mpa
+uBk
+uBk
 gGk
 gtH
 vDX
