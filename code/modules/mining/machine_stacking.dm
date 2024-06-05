@@ -13,7 +13,13 @@
 /obj/machinery/mineral/stacking_unit_console/Initialize(mapload)
 	. = ..()
 	var/area/our_area = get_area(src)
-	for (var/turf/area_turf as anything in our_area.get_zlevel_turf_lists()[z])
+	if(!isnull(our_area))
+		return
+	var/list/turf_lists = our_area.get_zlevel_turf_lists()
+	if(!islist(turf_lists[z]))
+		return
+	var/list/turf_list = turf_lists[z]
+	for (var/turf/area_turf as anything in turf_list)
 		var/obj/machinery/mineral/stacking_machine/found_machine = locate(/obj/machinery/mineral/stacking_machine) in area_turf
 		if(!isnull(found_machine) && isnull(found_machine.console))
 			found_machine.console = src
