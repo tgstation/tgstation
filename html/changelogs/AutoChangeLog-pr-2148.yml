@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed some errors relating to oozeling revival balloon alerts."
+  - code_imp: "Added a stack traces + fallback behavior for invalid usage of the `balloon_alert` proc."
