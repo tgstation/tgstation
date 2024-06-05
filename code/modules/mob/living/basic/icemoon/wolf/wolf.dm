@@ -29,7 +29,11 @@
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	death_message = "snarls its last and perishes."
+
 	attack_sound = 'sound/weapons/bite.ogg'
+	move_force = MOVE_FORCE_WEAK
+	move_resist = MOVE_FORCE_WEAK
+	pull_force = MOVE_FORCE_WEAK
 
 	ai_controller = /datum/ai_controller/basic_controller/wolf
 
