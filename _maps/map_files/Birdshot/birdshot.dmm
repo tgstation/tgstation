@@ -3418,7 +3418,6 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
 "buW" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
@@ -14159,6 +14158,7 @@
 /area/station/security/brig)
 "fCV" = (
 /obj/machinery/deepfryer,
+/obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "fCW" = (
@@ -17399,7 +17399,6 @@
 "gGN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 6
 	},
@@ -48544,7 +48543,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	name = "kitchen shutters";
+	name = "Kitchen Shutters";
 	id = "kitchenshutters"
 	},
 /turf/open/floor/plating,
@@ -51812,7 +51811,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/right/directional/west,
 /obj/machinery/door/poddoor/shutters{
-	name = "kitchen shutters";
+	name = "Kitchen Shutters";
 	id = "kitchenshutters"
 	},
 /turf/open/floor/iron,
@@ -51846,7 +51845,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	name = "kitchen shutters";
+	name = "Kitchen Shutters";
 	id = "kitchenshutters"
 	},
 /turf/open/floor/plating,
@@ -52249,7 +52248,6 @@
 	dir = 6
 	},
 /obj/machinery/light/floor,
-/obj/structure/table/wood,
 /obj/structure/table/wood,
 /turf/open/floor/iron/grimy,
 /area/station/service/bar)
@@ -59233,7 +59231,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -62966,10 +62963,6 @@
 /area/station/science/research)
 "vgc" = (
 /obj/machinery/smartfridge,
-/obj/machinery/door/poddoor/shutters{
-	name = "kitchen shutters";
-	id = "kitchenshutters"
-	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "vgp" = (
@@ -65935,7 +65928,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	name = "kitchen shutters";
+	name = "Kitchen Shutters";
 	id = "kitchenshutters"
 	},
 /turf/open/floor/plating,
@@ -66023,6 +66016,7 @@
 	dir = 4
 	},
 /obj/structure/sign/poster/official/random/directional/east,
+/obj/structure/cable,
 /turf/open/floor/eighties/red,
 /area/station/hallway/primary/central/fore)
 "vWj" = (
@@ -66921,7 +66915,7 @@
 	pixel_x = 3
 	},
 /obj/machinery/door/poddoor/shutters{
-	name = "kitchen shutters";
+	name = "Kitchen Shutters";
 	id = "kitchenshutters"
 	},
 /turf/open/floor/plating,
@@ -71914,7 +71908,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/right/directional/south,
 /obj/machinery/door/poddoor/shutters{
-	name = "kitchen shutters";
+	name = "Kitchen Shutters";
 	id = "kitchenshutters"
 	},
 /turf/open/floor/iron/kitchen/small,
