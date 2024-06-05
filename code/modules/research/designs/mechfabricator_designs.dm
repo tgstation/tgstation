@@ -1716,6 +1716,8 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/posibrain/
+
 //Misc
 /datum/design/mecha_tracking
 	name = "Exosuit Tracking Beacon"
@@ -2612,9 +2614,9 @@
 	id = "posisphere"
 	build_type = MECHFAB
 	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 1,
-		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 1,
-		/datum/material/gold =SMALL_MATERIAL_AMOUNT * 2
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 0.85,
+		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 0.65,
+		/datum/material/gold =SMALL_MATERIAL_AMOUNT * 2.5
 	)
 	construction_time = 7.5 SECONDS
 	build_path = /obj/item/mmi/posibrain/sphere
@@ -2622,3 +2624,4 @@
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
