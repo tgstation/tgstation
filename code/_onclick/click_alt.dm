@@ -1,5 +1,5 @@
 /**
- * ### Base proc for alt click interaction.
+ * ### Base proc for alt click interaction left click.
  *
  * If you wish to add custom `click_alt` behavior for a single type, use that proc.
  */
@@ -53,7 +53,6 @@
 
 	client.loot_panel.open(tile)
 
-
 /**
  * ## Custom alt click interaction
  * Override this to change default alt click behavior. Return `CLICK_ACTION_SUCCESS`, `CLICK_ACTION_BLOCKING` or `NONE`.
@@ -85,6 +84,54 @@
 	SHOULD_CALL_PARENT(FALSE)
 	return NONE
 
+
+/**
+ * ### Base proc for alt click interaction right click.
+ *
+ * If you wish to add custom `click_alt_secondary` behavior for a single type, use that proc.
+ */
+/mob/proc/base_click_alt_secondary(atom/target)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON_SECONDARY, target) & COMSIG_MOB_CANCEL_CLICKON)
+		return
+
+	//can see target in line of sight
+	if(!CAN_I_SEE(target))
+		return
+	if(is_blind() && !IN_GIVEN_RANGE(src, target, 1))
+		return
+
+	var/can_use_click_action = FALSE
+	if(isturf(target))
+		// Turfs are special because they can't be used with can_perform_action
+		can_use_click_action = can_perform_turf_action(target)
+	else
+		can_use_click_action = can_perform_action(target, target.interaction_flags_click | SILENT_ADJACENCY)
+	if(can_use_click_action)
+		target.alt_click_secondary(src)
+
+///The base proc of when something is right clicked on when alt is held
+/atom/proc/alt_click_secondary(mob/user)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT_SECONDARY, user) & COMPONENT_CANCEL_CLICK_ALT_SECONDARY)
+		return
+	if(isobserver(user) && user.client && check_rights_for(user.client, R_DEBUG))
+		user.client.toggle_tag_datum(src)
+		return
+	click_alt_secondary(user)
+
+/**
+ * ## Custom alt click secondary interaction
+ * Override this to change default alt right click behavior.
+ *
+ * ### Guard clauses
+ * Consider adding `interaction_flags_click` before adding unique guard clauses.
+ **/
+/atom/proc/click_alt_secondary(mob/user)
+	SHOULD_CALL_PARENT(FALSE)
+	return NONE
 
 /// Helper proc to validate turfs. Used because can_perform_action does not support turfs.
 /mob/proc/can_perform_turf_action(turf/target)
