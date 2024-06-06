@@ -29,23 +29,23 @@
 	RegisterSignals(src, list(COMSIG_MOVABLE_CROSS, COMSIG_MOVABLE_CROSS_OVER), PROC_REF(sparks_touched))
 	flick(icon_state, src)
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	var/turf/T = loc
-	if(isturf(T))
-		affect_location(T, just_initialized = TRUE)
+	var/turf/location = loc
+	if(isturf(location))
+		affect_location(location, just_initialized = TRUE)
 	QDEL_IN(src, 20)
 
 /obj/effect/particle_effect/sparks/Destroy()
-	var/turf/T = loc
-	if(isturf(T))
-		affect_location(T)
+	var/turf/location = loc
+	if(isturf(location))
+		affect_location(location)
 	UnregisterSignal(src, list(COMSIG_MOVABLE_CROSS, COMSIG_MOVABLE_CROSS_OVER))
 	return ..()
 
 /obj/effect/particle_effect/sparks/Move()
 	..()
-	var/turf/T = loc
-	if(isturf(T))
-		affect_location(T)
+	var/turf/location = loc
+	if(isturf(location))
+		affect_location(location)
 
 /*
 * Apply the effects of this spark to its location.
@@ -75,8 +75,8 @@
 
 	if(isobj(singed))
 		var/obj/singed_obj = singed
-		if(singed_obj.resistance_flags & FLAMMABLE) //only fire_act flammable objects instead of burning EVERYTHING
-			singed_obj.fire_act(1000,100)
+		if(singed_obj.resistance_flags & FLAMMABLE && singed_obj.resistance_flags ^ ON_FIRE) //only fire_act flammable objects instead of burning EVERYTHING
+			AddComponent(/datum/component/burning, custom_fire_overlay || GLOB.fire_overlay, burning_particles)
 		if(singed_obj.reagents)
 			var/datum/reagents/reagents = singed_obj.reagents
 			reagents?.expose_temperature(1000)
