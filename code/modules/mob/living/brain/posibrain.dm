@@ -256,16 +256,15 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(ismovable(loc) && prob(25))
 		var/obj/item/item = pick(loc.contents)
 		if(istype(loc, /obj/item/storage))
-			item.forceMove(get_turf(src)) //throw stuff out of the inventory till we free ourselves!
+			item.forceMove(loc.drop_location()) //throw stuff out of the inventory till we free ourselves!
 			playsound(src, SFX_RUSTLE, 30, TRUE)
+			return
 
 	// MOVE US
 	if(isturf(loc))
 		can_move = world.time + move_delay
 		try_step_multiz(direction)
 		SpinAnimation(move_delay, 1, direction == NORTH || direction == EAST)
-
-	return
 
 /obj/item/mmi/posibrain/sphere/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
