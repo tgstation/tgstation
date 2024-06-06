@@ -474,12 +474,17 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		. += borg
 
 //Returns a list of AI's
-/proc/active_ais(check_mind=FALSE, z = null)
+/proc/active_ais(check_mind=FALSE, z = null, skip_syndicate, only_syndicate)
 	. = list()
 	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
 		if(ai.stat == DEAD)
 			continue
 		if(ai.control_disabled)
+			continue
+		var/syndie_ai = istype(ai, /mob/living/silicon/ai/weak_syndie)
+		if(skip_syndicate && syndie_ai)
+			continue
+		if(only_syndicate && !syndie_ai)
 			continue
 		if(check_mind)
 			if(!ai.mind)
@@ -507,8 +512,8 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 			. = pick(borgs)
 	return .
 
-/proc/select_active_ai(mob/user, z = null)
-	var/list/ais = active_ais(FALSE, z)
+/proc/select_active_ai(mob/user, z = null, skip_syndicate, only_syndicate)
+	var/list/ais = active_ais(FALSE, z, skip_syndicate, only_syndicate)
 	if(ais.len)
 		if(user)
 			. = input(user,"AI signals detected:", "AI Selection", ais[1]) in sort_list(ais)
