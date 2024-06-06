@@ -6791,6 +6791,7 @@
 #include "monkestation\code\modules\overwatch\subsystem.dm"
 #include "monkestation\code\modules\overwatch\panels\asn_panel.dm"
 #include "monkestation\code\modules\overwatch\panels\whitelist_panel.dm"
+#include "monkestation\code\modules\paperwork\fax.dm"
 #include "monkestation\code\modules\physics\atom_movables.dm"
 #include "monkestation\code\modules\physics\physics_component.dm"
 #include "monkestation\code\modules\physics\physics_SS.dm"
