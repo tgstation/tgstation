@@ -76,7 +76,7 @@
 	if(isobj(singed))
 		var/obj/singed_obj = singed
 		if(singed_obj.resistance_flags & FLAMMABLE && singed_obj.resistance_flags ^ ON_FIRE) //only fire_act flammable objects instead of burning EVERYTHING
-			AddComponent(/datum/component/burning, custom_fire_overlay || GLOB.fire_overlay, burning_particles)
+			singed_obj.fire_act(1,100)
 		if(singed_obj.reagents)
 			var/datum/reagents/reagents = singed_obj.reagents
 			reagents?.expose_temperature(1000)
