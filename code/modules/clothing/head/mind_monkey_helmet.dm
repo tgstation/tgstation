@@ -94,7 +94,7 @@
 				if(2) //brain death
 					magnification.apply_damage(500,BRAIN,BODY_ZONE_HEAD,FALSE,FALSE,FALSE)
 				if(3) //primal gene (gorilla)
-					magnification.gorillize()
+					magnification.gorillize(FALSE) // monkestation edit: don't keep monkey name for gorilla
 				if(4) //genetic mass susceptibility (gib)
 					magnification.gib()
 	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)

@@ -6602,6 +6602,7 @@
 #include "monkestation\code\modules\mob\login.dm"
 #include "monkestation\code\modules\mob\mob.dm"
 #include "monkestation\code\modules\mob\mob_defines.dm"
+#include "monkestation\code\modules\mob\transform_procs.dm"
 #include "monkestation\code\modules\mob\dead\new_player\new_player.dm"
 #include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\_base.dm"
 #include "monkestation\code\modules\mob\dead\new_player\sprite_accessories\anime.dm"
