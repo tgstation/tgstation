@@ -180,6 +180,7 @@
 /area/shuttle/arrival)
 "Z" = (
 /obj/effect/spawner/structure/window/survival_pod,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 
