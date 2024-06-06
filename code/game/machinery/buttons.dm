@@ -36,6 +36,10 @@
 	fire = 90
 	acid = 70
 
+/**
+ * INITIALIZATION
+ */
+
 /obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
 	. = ..()
 	if(built)
@@ -59,6 +63,22 @@
 	setup_device()
 	find_and_hang_on_wall()
 	register_context()
+
+/obj/machinery/button/proc/setup_device()
+	if(id && istype(device, /obj/item/assembly/control))
+		var/obj/item/assembly/control/control_device = device
+		control_device.id = id
+	initialized_button = TRUE
+
+/obj/machinery/button/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	if(id)
+		id = "[port.shuttle_id]_[id]"
+		setup_device()
+
+
+/**
+ * APPEARANCE
+ */
 
 /obj/machinery/button/update_icon_state()
 	icon_state = "[base_icon_state][skin]"
@@ -96,41 +116,10 @@
 	else
 		obj_flags &= ~UNIQUE_RENAME
 
-/obj/machinery/button/screwdriver_act(mob/living/user, obj/item/tool)
-	if(panel_open || allowed(user))
-		default_deconstruction_screwdriver(user, "[base_icon_state][skin]-open", "[base_icon_state][skin]", tool)
-		update_appearance()
-		return ITEM_INTERACT_SUCCESS
 
-	balloon_alert(user, "access denied")
-	flick_overlay_view("[base_icon_state]-overlay-error", 1 SECONDS)
-	return ITEM_INTERACT_BLOCKING
-
-/obj/machinery/button/wrench_act(mob/living/user, obj/item/tool)
-	if(!panel_open)
-		balloon_alert(user, "open button first!")
-		return ITEM_INTERACT_BLOCKING
-
-	if(device || board)
-		balloon_alert(user, "empty button first!")
-		return ITEM_INTERACT_BLOCKING
-
-	to_chat(user, span_notice("You start unsecuring the button frame..."))
-	tool.play_tool_sound(src)
-	if(tool.use_tool(src, user, 40))
-		to_chat(user, span_notice("You unsecure the button frame."))
-		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		deconstruct(TRUE)
-
-	return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/button/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
-	if(.)
-		return .
-	// This is in here so it's called only after every other item interaction.
-	if(!user.combat_mode && !(tool.item_flags & NOBLUDGEON) && !panel_open)
-		return attempt_press(user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+/**
+ * INTERACTION
+ */
 
 /obj/machinery/button/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!panel_open)
@@ -173,6 +162,43 @@
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
+/obj/machinery/button/screwdriver_act(mob/living/user, obj/item/tool)
+	if(panel_open || allowed(user))
+		default_deconstruction_screwdriver(user, "[base_icon_state][skin]-open", "[base_icon_state][skin]", tool)
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	balloon_alert(user, "access denied")
+	flick_overlay_view("[base_icon_state]-overlay-error", 1 SECONDS)
+	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/button/wrench_act(mob/living/user, obj/item/tool)
+	if(!panel_open)
+		balloon_alert(user, "open button first!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(device || board)
+		balloon_alert(user, "empty button first!")
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You start unsecuring the button frame..."))
+	tool.play_tool_sound(src)
+	if(tool.use_tool(src, user, 40))
+		to_chat(user, span_notice("You unsecure the button frame."))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		deconstruct(TRUE)
+
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/button/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(.)
+		return .
+	// This is in here so it's called only after every other item interaction.
+	if(!user.combat_mode && !(tool.item_flags & NOBLUDGEON) && !panel_open)
+		return attempt_press(user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+
+
 /obj/machinery/button/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	if(obj_flags & EMAGGED)
@@ -188,72 +214,13 @@
 		balloon_alert(user, "access overridden")
 	return TRUE
 
+
 /obj/machinery/button/attack_ai(mob/user)
 	if(!silicon_access_disabled && !panel_open)
 		return attempt_press(user)
 
 /obj/machinery/button/attack_robot(mob/user)
 	return attack_ai(user)
-
-/obj/machinery/button/examine(mob/user)
-	. = ..()
-	if(!panel_open)
-		return
-	if(device)
-		. += span_notice("There is \a [device] inside, which could be removed with an <b>empty hand</b>.")
-	if(board)
-		. += span_notice("There is \a [board] inside, which could be removed with an <b>empty hand</b>.")
-	if(isnull(board) && isnull(device))
-		. += span_notice("There is nothing currently installed in \the [src].")
-
-/obj/machinery/button/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(panel_open)
-		if(isnull(held_item))
-			if(board && device)
-				context[SCREENTIP_CONTEXT_LMB] = "Remove Board"
-				context[SCREENTIP_CONTEXT_RMB] = "Remove Device"
-				return CONTEXTUAL_SCREENTIP_SET
-			else if(board)
-				context[SCREENTIP_CONTEXT_LMB] = "Remove Board"
-				return CONTEXTUAL_SCREENTIP_SET
-			else if(device)
-				context[SCREENTIP_CONTEXT_LMB] = "Remove Device"
-				return CONTEXTUAL_SCREENTIP_SET
-			else if(can_alter_skin)
-				context[SCREENTIP_CONTEXT_LMB] = "Swap Style"
-				return CONTEXTUAL_SCREENTIP_SET
-		else if(isassembly(held_item))
-			context[SCREENTIP_CONTEXT_LMB] = "Install Device"
-			return CONTEXTUAL_SCREENTIP_SET
-		else if(istype(held_item, /obj/item/electronics/airlock))
-			context[SCREENTIP_CONTEXT_LMB] = "Install Board"
-			return CONTEXTUAL_SCREENTIP_SET
-		else if(held_item.tool_behaviour == TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct Button"
-			return CONTEXTUAL_SCREENTIP_SET
-		else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-			context[SCREENTIP_CONTEXT_LMB] = "Close Button"
-			return CONTEXTUAL_SCREENTIP_SET
-	else
-		if(isnull(held_item))
-			context[SCREENTIP_CONTEXT_LMB] = "Press Button"
-			return CONTEXTUAL_SCREENTIP_SET
-		else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-			context[SCREENTIP_CONTEXT_LMB] = "Open Button"
-			return CONTEXTUAL_SCREENTIP_SET
-
-	return NONE
-
-/obj/machinery/button/proc/setup_device()
-	if(id && istype(device, /obj/item/assembly/control))
-		var/obj/item/assembly/control/control_device = device
-		control_device.id = id
-	initialized_button = TRUE
-
-/obj/machinery/button/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	if(id)
-		id = "[port.shuttle_id]_[id]"
-		setup_device()
 
 /obj/machinery/button/interact(mob/user)
 	. = ..()
@@ -335,6 +302,15 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED, src)
 	return TRUE
 
+
+/**
+ * DECONSTRUCTION
+ */
+
+/obj/machinery/button/on_deconstruction(disassembled)
+	var/obj/item/wallframe/button/dropped_frame = new /obj/item/wallframe/button(drop_location())
+	transfer_fingerprints_to(dropped_frame)
+
 /obj/machinery/button/dump_inventory_contents(list/subset)
 	. = ..()
 	device = null
@@ -342,9 +318,64 @@
 	req_access = list()
 	req_one_access = list()
 
-/obj/machinery/button/on_deconstruction(disassembled)
-	var/obj/item/wallframe/button/dropped_frame = new /obj/item/wallframe/button(drop_location())
-	transfer_fingerprints_to(dropped_frame)
+
+/**
+ * INFORMATION
+ */
+
+/obj/machinery/button/examine(mob/user)
+	. = ..()
+	if(!panel_open)
+		return
+	if(device)
+		. += span_notice("There is \a [device] inside, which could be removed with an <b>empty hand</b>.")
+	if(board)
+		. += span_notice("There is \a [board] inside, which could be removed with an <b>empty hand</b>.")
+	if(isnull(board) && isnull(device))
+		. += span_notice("There is nothing currently installed in \the [src].")
+
+/obj/machinery/button/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(panel_open)
+		if(isnull(held_item))
+			if(board && device)
+				context[SCREENTIP_CONTEXT_LMB] = "Remove Board"
+				context[SCREENTIP_CONTEXT_RMB] = "Remove Device"
+				return CONTEXTUAL_SCREENTIP_SET
+			else if(board)
+				context[SCREENTIP_CONTEXT_LMB] = "Remove Board"
+				return CONTEXTUAL_SCREENTIP_SET
+			else if(device)
+				context[SCREENTIP_CONTEXT_LMB] = "Remove Device"
+				return CONTEXTUAL_SCREENTIP_SET
+			else if(can_alter_skin)
+				context[SCREENTIP_CONTEXT_LMB] = "Swap Style"
+				return CONTEXTUAL_SCREENTIP_SET
+		else if(isassembly(held_item))
+			context[SCREENTIP_CONTEXT_LMB] = "Install Device"
+			return CONTEXTUAL_SCREENTIP_SET
+		else if(istype(held_item, /obj/item/electronics/airlock))
+			context[SCREENTIP_CONTEXT_LMB] = "Install Board"
+			return CONTEXTUAL_SCREENTIP_SET
+		else if(held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct Button"
+			return CONTEXTUAL_SCREENTIP_SET
+		else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "Close Button"
+			return CONTEXTUAL_SCREENTIP_SET
+	else
+		if(isnull(held_item))
+			context[SCREENTIP_CONTEXT_LMB] = "Press Button"
+			return CONTEXTUAL_SCREENTIP_SET
+		else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "Open Button"
+			return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
+
+/**
+ * MAPPING PRESETS
+ */
 
 /obj/machinery/button/door
 	name = "door button"
