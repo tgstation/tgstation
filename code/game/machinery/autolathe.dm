@@ -9,7 +9,7 @@
 	circuit = /obj/item/circuitboard/machine/autolathe
 	layer = BELOW_OBJ_LAYER
 	processing_flags = NONE
-	interaction_flags_mouse_drop = IGNORE_MOUSE_DROP_CHECKS
+	interaction_flags_atom = parent_type::interaction_flags_atom | IGNORE_MOUSE_DROP_CHECKS
 
 	///Is the autolathe hacked via wiring
 	var/hacked = FALSE

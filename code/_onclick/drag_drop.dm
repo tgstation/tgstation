@@ -29,10 +29,11 @@
 	var/mob/user = usr
 
 	// only if both dragged object & receiver agree to do checks do we proceed
-	if(interaction_flags_mouse_drop != IGNORE_MOUSE_DROP_CHECKS && over.interaction_flags_mouse_drop != IGNORE_MOUSE_DROP_CHECKS)
-		if(!Adjacent(user) || !over.Adjacent(user))
+	var/combined_atom_flags = interaction_flags_atom | over.interaction_flags_atom
+	if(!(combined_atom_flags | IGNORE_MOUSE_DROP_CHECKS))
+		if(!(combined_atom_flags & MOUSEDROP_IGNORE_ADJACENT) && !Adjacent(user) || !over.Adjacent(user))
 			return // should stop you from dragging through windows
-		if(!user.can_perform_action(src, interaction_flags_mouse_drop | over.interaction_flags_mouse_drop | SILENT_ADJACENCY))
+		if(!(combined_atom_flags & MOUSEDROP_SKIP_CAN_PERFORM_ACTION) && !user.can_perform_action(src, interaction_flags_mouse_drop | over.interaction_flags_mouse_drop | SILENT_ADJACENCY))
 			return // is the mob not able to drag the object with both sides conditions applied
 
 	mouse_drop_dragged(over, user, src_location, over_location, params)

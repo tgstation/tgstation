@@ -20,6 +20,12 @@
 #define INTERACT_ATOM_ALLOW_USER_LOCATION (1<<9)
 /// ignores mobility check
 #define INTERACT_ATOM_IGNORE_MOBILITY (1<<10)
+// Bypass all adjacency checks for mouse drop
+#define MOUSEDROP_IGNORE_ADJACENT (1<<11)
+/// Bypass all can_perform_action() checks for mouse drop
+#define MOUSEDROP_SKIP_CAN_PERFORM_ACTION (1<<12)
+/// Bypass all adjacency and other checks for mouse drop
+#define IGNORE_MOUSE_DROP_CHECKS (MOUSEDROP_IGNORE_ADJACENT | MOUSEDROP_SKIP_CAN_PERFORM_ACTION)
 
 /// attempt pickup on attack_hand for items
 #define INTERACT_ITEM_ATTACK_HAND_PICKUP (1<<0)
