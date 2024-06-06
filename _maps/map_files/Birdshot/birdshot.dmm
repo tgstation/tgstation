@@ -5791,8 +5791,6 @@
 	dir = 1
 	},
 /obj/structure/flora/bush/jungle/c/style_3,
-/obj/machinery/light/small/directional/north,
-/obj/machinery/camera/directional/north,
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/grass,
 /area/station/service/chapel)
@@ -32003,6 +32001,7 @@
 /area/station/security/prison)
 "lkU" = (
 /obj/machinery/status_display/evac/directional/north,
+/obj/machinery/camera/directional/north,
 /turf/open/misc/dirt/jungle,
 /area/station/service/chapel)
 "lkV" = (
@@ -67103,6 +67102,10 @@
 /obj/structure/cable,
 /turf/closed/wall,
 /area/station/engineering/engine_smes)
+"wiY" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/misc/dirt/jungle,
+/area/station/service/chapel)
 "wja" = (
 /turf/closed/wall/r_wall,
 /area/station/commons/toilet/auxiliary)
@@ -87490,7 +87493,7 @@ mhk
 uac
 mhk
 mhk
-sdy
+wiY
 csp
 jdB
 qCR
