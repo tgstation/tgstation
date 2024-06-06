@@ -15111,12 +15111,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
-"fbw" = (
-/obj/machinery/modular_computer/preset/id{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/qm)
 "fbx" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/corner{
@@ -85696,7 +85690,7 @@ fUs
 jEi
 bnl
 qJD
-fbw
+pHx
 qqU
 xeM
 aKM
