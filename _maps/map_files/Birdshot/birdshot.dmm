@@ -9483,12 +9483,9 @@
 /area/station/holodeck/rec_center)
 "dQv" = (
 /obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk,
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 5
 	},
-/obj/structure/disposalpipe/trunk,
-/obj/machinery/light_switch/directional/east,
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/eighties/red,
