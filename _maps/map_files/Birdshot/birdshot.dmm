@@ -9487,7 +9487,6 @@
 	dir = 5
 	},
 /obj/structure/disposalpipe/trunk,
-/obj/machinery/light_switch/directional/east,
 /turf/open/floor/eighties/red,
 /area/station/hallway/primary/central/fore)
 "dQE" = (
