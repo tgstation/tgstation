@@ -78,3 +78,13 @@
   - rscadd: Adds donator items for ellie. Thank you for your patronage!
   - rscadd: Adds Pim, Glep and Mr. Frog plushes, complete with their own squeaks.  These
       are all available to donators in the loadout.
+2024-06-06:
+  Absolucy:
+  - rscdel: Removed the doorjacking objective from ninjas.
+  - bugfix: Fixed some errors relating to oozeling revival balloon alerts.
+  - code_imp: Added a stack traces + fallback behavior for invalid usage of the `balloon_alert`
+      proc.
+  - bugfix: Fixed an error relating to Mythril.
+  Gboster-0:
+  - rscadd: The spraycan gun has cometh into existance, feed it with spraycans and
+      print it from an engineering or service protolathe
