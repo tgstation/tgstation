@@ -8281,6 +8281,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"tgui-core@npm:^1.0.13":
+  version: 1.0.13
+  resolution: "tgui-core@npm:1.0.13"
+  peerDependencies:
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 10c0/0e808d3e8932af2daacb86afdda5dce172eb42e4f61b0f2f6d16ff537fa2855cfcce038f72a51b354864df6a6b47b9749532d342adad756c2e858f0af5cb0809
+  languageName: node
+  linkType: hard
+
 "tgui-dev-server@workspace:*, tgui-dev-server@workspace:packages/tgui-dev-server":
   version: 0.0.0-use.local
   resolution: "tgui-dev-server@workspace:packages/tgui-dev-server"
@@ -8389,6 +8399,7 @@ __metadata:
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
     react-popper: "npm:^2.3.0"
+    tgui-core: "npm:^1.0.13"
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
   languageName: unknown
