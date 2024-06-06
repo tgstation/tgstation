@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"map_name": "Wawastation",
+	"map_path": "map_files/wawastation",
+	"map_file": "wawastation.dmm",
+	"shuttles": {
+		"cargo": "cargo_box",
+		"ferry": "ferry_fancy",
+		"whiteship": "whiteship_meta",
+		"emergency": "emergency_tram"
+	},
+	"traits": [
+		{
+			"Up": true,
+			"Baseturf": "/turf/open/misc/asteroid/airless",
+			"Linkage": "Cross"
+		},
+		{
+			"Down": true,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross"
+		}
+	],
+	"job_changes": {
+		"Cook": {
+			"additional_cqc_areas": ["/area/station/service/bar", "/area/station/commons/lounge"]
+		},
+		"Captain": {
+			"special_charter": "asteroid"
+		}
+	}
+}
