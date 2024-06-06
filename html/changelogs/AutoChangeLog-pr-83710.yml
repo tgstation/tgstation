@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - bugfix: "Using the 'ESC' key on your keyboard to unbind a key in the keybindings preferences menu should now work as expected. This should also be fixed for people in a variety of other spots too."

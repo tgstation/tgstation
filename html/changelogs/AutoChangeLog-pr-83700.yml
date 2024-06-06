@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Drake empowerment for berserker armor now uses valuable drake remains, made from ashdrake hides and bones."
+  - rscadd: "Drake armor is made use drake remains to construct. (This is a net neutral to the previous recipe)"
