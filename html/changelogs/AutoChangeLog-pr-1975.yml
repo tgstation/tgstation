@@ -1,0 +1,4 @@
+author: "MichiRecRoom"
+delete-after: True
+changes:
+  - rscadd: "Fax machines are now deconstructable in the same way as many other machines: Screwdriver, then crowbar."
