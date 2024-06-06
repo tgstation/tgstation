@@ -1086,6 +1086,18 @@
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/medicine/mutadone/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+	if (!ishuman(affected_mob))
+		return
+	var/mob/living/carbon/human/human_mob = affected_mob
+	if (ismonkey(human_mob))
+		if (!HAS_TRAIT(human_mob, TRAIT_BORN_MONKEY))
+			human_mob.dna.remove_mutation(/datum/mutation/human/race)
+	else if (HAS_TRAIT(human_mob, TRAIT_BORN_MONKEY))
+		human_mob.monkeyize()
+
+
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
@@ -1358,7 +1370,7 @@
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
 	. = ..()
 	metabolizer.AdjustAllImmobility(-20 * REM * seconds_per_tick)
-	if(metabolizer.adjustStaminaLoss(-10 * REM * seconds_per_tick, updating_stamina = FALSE))
+	if(metabolizer.adjustStaminaLoss(-30 * REM * seconds_per_tick, updating_stamina = FALSE))
 		. = UPDATE_MOB_HEALTH
 	metabolizer.set_jitter_if_lower(20 SECONDS * REM * seconds_per_tick)
 	metabolizer.set_dizzy_if_lower(20 SECONDS * REM * seconds_per_tick)
@@ -1547,7 +1559,7 @@
 /datum/reagent/medicine/metafactor/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(SPT_PROB(13, seconds_per_tick))
-		affected_mob.vomit(VOMIT_CATEGORY_DEFAULT)
+		affected_mob.vomit(VOMIT_CATEGORY_KNOCKDOWN)
 
 /datum/reagent/medicine/silibinin
 	name = "Silibinin"

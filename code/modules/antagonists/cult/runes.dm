@@ -149,6 +149,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 		for(var/mob/living/cultist in range(1, src))
 			if(!IS_CULTIST(cultist))
 				continue
+			var/datum/antagonist/cult/cultist_datum = locate(/datum/antagonist/cult) in cultist.mind.antag_datums
+			if(!cultist_datum.check_invoke_validity()) //We can assume there's a datum here since we can't get past the previous check otherwise.
+				continue
 			if(cultist == user)
 				continue
 			if(!cultist.can_speak(allow_mimes = TRUE))

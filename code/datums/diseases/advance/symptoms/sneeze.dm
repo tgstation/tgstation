@@ -53,10 +53,7 @@
 			if(!suppress_warning)
 				affected_mob.emote("sniff")
 		else
-			if(affected_mob.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
-				for(var/mob/living/exposed_mob in oview(spread_range, affected_mob))
-					if(is_source_facing_target(affected_mob, exposed_mob) && disease_air_spread_walk(get_turf(affected_mob), get_turf(exposed_mob)))
-						exposed_mob.AirborneContractDisease(active_disease, TRUE)
+			active_disease.airborne_spread(spread_range, force_spread = TRUE, require_facing = TRUE)
 			if(cartoon_sneezing) //Yeah, this can fling you around even if you have a space suit helmet on. It's, uh, bluespace snot, yeah.
 				affected_mob.emote("sneeze")
 				to_chat(affected_mob, span_userdanger("You are launched violently backwards by an all-mighty sneeze!"))

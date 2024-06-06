@@ -43,7 +43,7 @@
 	get_ghost()
 
 /datum/brain_trauma/special/imaginary_friend/proc/make_friend()
-	friend = new(get_turf(owner), owner)
+	friend = new(get_turf(owner))
 
 /// Tries a poll for the imaginary friend
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
@@ -65,6 +65,8 @@
 		return
 
 	friend.key = ghost.key
+	friend.attach_to_owner(owner)
+	friend.setup_appearance()
 	friend_initialized = TRUE
 	friend.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(friend)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
@@ -231,7 +233,6 @@
 		spans |= SPAN_SINGING
 
 	var/eavesdrop_range = 0
-	var/eavesdropped_message = ""
 
 	if (message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		message = message_mods[MODE_CUSTOM_SAY_EMOTE]
@@ -241,9 +242,7 @@
 			log_talk(message, LOG_WHISPER, tag="imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 			spans |= SPAN_ITALICS
 			eavesdrop_range = EAVESDROP_EXTRA_RANGE
-			// "This proc is dangerously laggy, avoid it or die"
-			// What other option do I have here? I guess I'll die
-			eavesdropped_message = stars(message)
+			range = WHISPER_RANGE
 		else
 			log_talk(message, LOG_SAY, tag="imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 
@@ -255,11 +254,7 @@
 	Hear(rendered, src, language, message, null, spans, message_mods) // We always hear what we say
 	var/group = owner.imaginary_group - src // The people in our group don't, so we have to exclude ourselves not to hear twice
 	for(var/mob/person in group)
-		if(eavesdrop_range && get_dist(src, person) > WHISPER_RANGE + eavesdrop_range && !HAS_TRAIT(person, TRAIT_GOOD_HEARING))
-			var/new_rendered = "[span_name("[name]")] [say_quote(say_emphasis(eavesdropped_message), spans, message_mods)]"
-			person.Hear(new_rendered, src, language, eavesdropped_message, null, spans, message_mods)
-		else
-			person.Hear(rendered, src, language, message, null, spans, message_mods)
+		person.Hear(null, src, language, message, null, spans, message_mods, range)
 
 	// Speech bubble, but only for those who have runechat off
 	var/list/speech_bubble_recipients = list()
