@@ -1,0 +1,4 @@
+author: "EuSouAFazer"
+delete-after: True
+changes:
+  - qol: "Swabbing the clown's stamp also gives clown cells.\n:cl:"

@@ -38619,11 +38619,11 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/mail_sorting/service/janitor_closet,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 8
+	},
 /turf/open/floor/iron/white/small,
 /area/station/service/janitor)
 "nVe" = (
