@@ -65,6 +65,12 @@ export const settingsReducer = (state = initialState, action) => {
       nextState.highlightSettingById[defaultHighlightSetting.id] =
         defaultHighlightSetting;
     }
+    // Migrate old highlights to include enabled: true
+    Object.keys(nextState.highlightSettingById).forEach((key) => {
+      if (nextState.highlightSettingById[key].enabled === undefined) {
+        nextState.highlightSettingById[key].enabled = true;
+      }
+    });
     // Update the highlight settings for default highlight
     // settings compatibility
     const highlightSetting =
