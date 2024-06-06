@@ -5904,6 +5904,7 @@
 #include "monkestation\code\modules\antagonists\brother\actions\gear.dm"
 #include "monkestation\code\modules\antagonists\brother\gear\_gear.dm"
 #include "monkestation\code\modules\antagonists\brother\gear\recipes.dm"
+#include "monkestation\code\modules\antagonists\changeling\powers\tiny_prick.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\area.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\dynamic_ruleset.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\globals.dm"
