@@ -31,3 +31,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/security/permabrig/get_access()
 	. = ..()
 	. += list(ACCESS_PERMABRIG, ACCESS_BRIG)
+
+/obj/effect/mapping_helpers/airlock/access/any/away/bounty_hunter/get_access()
+	. = ..()
+	. += list(ACCESS_BOUNTY_HUNTER)

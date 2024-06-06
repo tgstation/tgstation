@@ -141,6 +141,7 @@
 	if(istype(equip_to.wear_id, /obj/item/card/id))
 		var/obj/item/card/id/equipped_card = equip_to.wear_id
 		equipped_card.assignment = "Russian Bounty Hunter"
+		equipped_card.access = list(ACCESS_BOUNTY_HUNTER)  //monkestation edit: adds BH access to their cards due to this being a post-process setup of their ID cards specifically.
 		equipped_card.registered_name = equip_to.real_name
 		equipped_card.update_label()
 		equipped_card.update_icon()

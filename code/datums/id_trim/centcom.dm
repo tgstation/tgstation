@@ -46,7 +46,7 @@
 
 /// Trim for Bounty Hunters hired by centcom.
 /datum/id_trim/centcom/bounty_hunter
-	access = list(ACCESS_CENT_GENERAL)
+	access = list(ACCESS_CENT_GENERAL, ACCESS_BOUNTY_HUNTER)
 	assignment = "Bounty Hunter"
 
 /// Trim for Centcom Bartenders.
