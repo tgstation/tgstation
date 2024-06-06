@@ -250,7 +250,7 @@
 
 /datum/antagonist/traitor/proc/forge_single_generic_objective()
 	if(prob(KILL_PROB))
-		var/list/active_ais = active_ais()
+		var/list/active_ais = active_ais(skip_syndicate = TRUE)
 		if(active_ais.len && prob(DESTROY_AI_PROB(GLOB.joined_player_list.len)))
 			var/datum/objective/destroy/destroy_objective = new()
 			destroy_objective.owner = owner
@@ -349,7 +349,7 @@
 	if(uplink_owned)
 		var/uplink_text = "(used [used_telecrystals] TC) [purchases]"
 		if((used_telecrystals == 0) && traitor_won)
-			var/static/icon/badass = icon('icons/ui_icons/antags/badass.dmi', "badass")
+			var/static/icon/badass = icon('icons/ui/antags/badass.dmi', "badass")
 			uplink_text += "<BIG>[icon2html(badass, world)]</BIG>"
 		result += uplink_text
 

@@ -24,6 +24,7 @@
 	var/was_not_hetero = !human_holder.eye_color_heterochromatic
 	human_holder.eye_color_heterochromatic = TRUE
 	human_holder.eye_color_right = color
+	human_holder.dna.update_ui_block(DNA_EYE_COLOR_RIGHT_BLOCK)
 
 	var/obj/item/organ/internal/eyes/eyes_of_the_holder = quirk_holder.get_organ_by_type(/obj/item/organ/internal/eyes)
 	if(!eyes_of_the_holder)

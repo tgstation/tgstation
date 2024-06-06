@@ -45,10 +45,10 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	var/max_hunger = 500
 	///pet icon for each state
 	var/static/list/pet_state_icons = list(
-		PET_STATE_HUNGRY = list("icon" = 'icons/ui_icons/virtualpet/pet_state.dmi', "icon_state" = "pet_hungry"),
-		PET_STATE_HAPPY = list("icon" = 'icons/ui_icons/virtualpet/pet_state.dmi', "icon_state" = "pet_happy"),
-		PET_STATE_ASLEEP = list("icon" = 'icons/ui_icons/virtualpet/pet_state.dmi', "icon_state" = "pet_asleep"),
-		PET_STATE_NEUTRAL = list("icon" = 'icons/ui_icons/virtualpet/pet_state.dmi', "icon_state" = "pet_neutral"),
+		PET_STATE_HUNGRY = list("icon" = 'icons/ui/virtualpet/pet_state.dmi', "icon_state" = "pet_hungry"),
+		PET_STATE_HAPPY = list("icon" = 'icons/ui/virtualpet/pet_state.dmi', "icon_state" = "pet_happy"),
+		PET_STATE_ASLEEP = list("icon" = 'icons/ui/virtualpet/pet_state.dmi', "icon_state" = "pet_asleep"),
+		PET_STATE_NEUTRAL = list("icon" = 'icons/ui/virtualpet/pet_state.dmi', "icon_state" = "pet_neutral"),
 	)
 	///hat options and what level they will be unlocked at
 	var/static/list/hat_selections = list(
@@ -97,7 +97,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 
 /datum/computer_file/program/virtual_pet/on_install()
 	. = ..()
-	profile_picture = getFlatIcon(image(icon = 'icons/ui_icons/virtualpet/pet_state.dmi', icon_state = "pet_preview"))
+	profile_picture = getFlatIcon(image(icon = 'icons/ui/virtualpet/pet_state.dmi', icon_state = "pet_preview"))
 	GLOB.virtual_pets_list += src
 	pet = new pet_type(computer)
 	pet.forceMove(computer)
@@ -188,7 +188,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	overlays += selected_hat["appearance"]
 
 /datum/computer_file/program/virtual_pet/proc/alter_profile_picture()
-	var/image/pet_preview = image(icon = 'icons/ui_icons/virtualpet/pet_state.dmi', icon_state = "pet_preview")
+	var/image/pet_preview = image(icon = 'icons/ui/virtualpet/pet_state.dmi', icon_state = "pet_preview")
 	if(LAZYACCESS(pet.atom_colours, FIXED_COLOUR_PRIORITY))
 		pet_preview.color = pet.atom_colours[FIXED_COLOUR_PRIORITY]
 
