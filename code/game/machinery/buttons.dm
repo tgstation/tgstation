@@ -60,11 +60,6 @@
 	find_and_hang_on_wall()
 	register_context()
 
-/obj/machinery/button/Destroy()
-	QDEL_NULL(device)
-	QDEL_NULL(board)
-	return ..()
-
 /obj/machinery/button/update_icon_state()
 	icon_state = "[base_icon_state][skin]"
 	if(panel_open)
@@ -112,17 +107,20 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/button/wrench_act(mob/living/user, obj/item/tool)
+	if(!panel_open)
+		balloon_alert(user, "open button first!")
+		return ITEM_INTERACT_BLOCKING
+
 	if(device || board)
-		balloon_alert(user, "empty button first")
+		balloon_alert(user, "empty button first!")
 		return ITEM_INTERACT_BLOCKING
 
 	to_chat(user, span_notice("You start unsecuring the button frame..."))
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 40))
 		to_chat(user, span_notice("You unsecure the button frame."))
-		transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		qdel(src)
+		deconstruct(TRUE)
 
 	return ITEM_INTERACT_SUCCESS
 
@@ -337,19 +335,16 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED, src)
 	return TRUE
 
-/**
- * Called when the mounted button's wall is knocked down.
- */
-/obj/machinery/button/proc/knock_down()
-	if(device)
-		device.forceMove(get_turf(src))
-		device = null
-	if(board)
-		board.forceMove(get_turf(src))
-		req_access = list()
-		req_one_access = list()
-		board = null
-	qdel(src)
+/obj/machinery/button/dump_inventory_contents(list/subset)
+	. = ..()
+	device = null
+	board = null
+	req_access = list()
+	req_one_access = list()
+
+/obj/machinery/button/on_deconstruction(disassembled)
+	var/obj/item/wallframe/button/dropped_frame = new /obj/item/wallframe/button(drop_location())
+	transfer_fingerprints_to(dropped_frame)
 
 /obj/machinery/button/door
 	name = "door button"
