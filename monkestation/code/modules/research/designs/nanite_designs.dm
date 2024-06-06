@@ -469,6 +469,13 @@
 	program_type = /datum/nanite_program/bad_mood
 	category = list("Suppression Nanites")
 
+/datum/design/nanites/conversation_filter
+	name = "Conversation Filter"
+	desc = "The nanites pre-process words, granting the ability to filter out certain phrases."
+	id = "word_filter_nanites"
+	program_type = /datum/nanite_program/conversation_filter
+	category = list("Suppression Nanites")
+
 ////////////////////SENSOR NANITES//////////////////////////////////////
 
 /datum/design/nanites/sensor_health

@@ -58,3 +58,7 @@
 #define NES_SCAN_TYPE "Scan Type"
 #define NES_BUTTON_NAME "Button Name"
 #define NES_ICON "Icon"
+// MONKESTATION ADDITIONS
+#define NES_INVALID_PHRASE "Invalid Phrase"
+#define NES_PHRASE_REPLACEMENT "Phrase Replacement"
+#define NES_REPLACEMENT_MODE "Replacement Mode"
