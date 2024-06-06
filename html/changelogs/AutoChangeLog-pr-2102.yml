@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed rare cases where a bloodsucker would be stuck in permanent torpor, i.e if they were a species such as zombie or skeleton."
+  - bugfix: "Fixed bloodsucker abilities such as Mesmerize spamming balloon alerts after success."
+  - bugfix: "Fixed various runtime errors relating to bloodsuckers."
