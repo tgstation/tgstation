@@ -2856,9 +2856,6 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
-"blc" = (
-/turf/closed/wall,
-/area/station/holodeck)
 "blf" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
@@ -3208,7 +3205,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/station/holodeck)
+/area/station/holodeck/rec_center)
 "bqD" = (
 /mob/living/basic/slime,
 /turf/open/floor/engine,
@@ -3425,7 +3422,7 @@
 	dir = 4
 	},
 /turf/open/floor/eighties,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "bvh" = (
 /obj/structure/chair/sofa/bench/right{
 	dir = 8
@@ -7429,7 +7426,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/station/holodeck)
+/area/station/holodeck/rec_center)
 "cZx" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -9483,35 +9480,15 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/station/holodeck)
+/area/station/holodeck/rec_center)
 "dQv" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 5
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk,
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 5
-	},
-/obj/machinery/light_switch/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk,
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 5
-	},
-/obj/machinery/light_switch/directional/east,
 /turf/open/floor/eighties/red,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "dQE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -12002,7 +11979,7 @@
 	dir = 4
 	},
 /turf/open/floor/eighties/red,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "eJw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -14111,7 +14088,7 @@
 	},
 /obj/machinery/light/small/dim/directional/west,
 /turf/open/floor/eighties/red,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "fBf" = (
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
@@ -17484,7 +17461,7 @@
 	dir = 6
 	},
 /turf/open/floor/eighties,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "gGQ" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -20387,7 +20364,7 @@
 	},
 /obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/eighties/red,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "hzm" = (
 /turf/closed/wall/rust,
 /area/station/cargo/miningoffice)
@@ -22392,7 +22369,7 @@
 /obj/effect/turf_decal/siding/thinplating,
 /obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/eighties/red,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "ikU" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 10
@@ -23733,7 +23710,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/eighties,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "iFE" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/chair/office{
@@ -25370,7 +25347,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "jhJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -26819,7 +26796,7 @@
 	dir = 10
 	},
 /turf/open/floor/eighties,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "jEZ" = (
 /obj/structure/hedge,
 /obj/effect/decal/cleanable/dirt,
@@ -29771,10 +29748,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
-"kzV" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/station/holodeck)
 "kAf" = (
 /obj/structure/transit_tube/station/dispenser/flipped{
 	dir = 1
@@ -30162,7 +30135,7 @@
 	},
 /obj/structure/sign/poster/official/random/directional/east,
 /turf/open/floor/eighties/red,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "kHI" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -30996,7 +30969,7 @@
 	},
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/eighties/red,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "kXM" = (
 /obj/effect/spawner/random/structure/girder,
 /obj/structure/barricade/wooden,
@@ -32214,7 +32187,7 @@
 	},
 /obj/effect/turf_decal/siding/thinplating,
 /turf/open/floor/eighties/red,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "lqt" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -32433,17 +32406,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/service/hydroponics)
-"luZ" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Holodeck Door"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "holodeck"
-	},
-/turf/open/floor/iron/textured_half{
-	dir = 8
-	},
-/area/station/holodeck)
 "lvc" = (
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/escape)
@@ -33812,7 +33774,7 @@
 	},
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/eighties/red,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "lOi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -37223,7 +37185,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/eighties,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "mXx" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
@@ -39565,7 +39527,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/station/holodeck)
+/area/station/holodeck/rec_center)
 "nNb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -40395,7 +40357,7 @@
 	},
 /obj/structure/sign/poster/official/tactical_game_cards/directional/west,
 /turf/open/floor/eighties/red,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "ocs" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -42471,7 +42433,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/eighties/red,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "oOV" = (
 /obj/effect/turf_decal/siding/thinplating_new/light{
 	dir = 8
@@ -44149,7 +44111,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/station/holodeck)
+/area/station/holodeck/rec_center)
 "pqa" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/space/basic,
@@ -48208,7 +48170,7 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/station/holodeck)
+/area/station/holodeck/rec_center)
 "qBz" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/mannequin/plastic,
@@ -48872,7 +48834,7 @@
 	},
 /obj/machinery/holopad,
 /turf/open/floor/eighties,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "qMa" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4
@@ -59248,7 +59210,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_half,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "tYj" = (
 /obj/item/exodrone,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -59932,7 +59894,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/eighties/red,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "ugA" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 1
@@ -60035,7 +59997,7 @@
 	},
 /obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron,
-/area/station/holodeck)
+/area/station/commons/fitness/recreation/entertainment)
 "uhH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -65210,7 +65172,7 @@
 	dir = 1
 	},
 /turf/open/floor/eighties/red,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "vHh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral{
@@ -66227,7 +66189,7 @@
 /obj/structure/sign/poster/official/random/directional/east,
 /obj/structure/cable,
 /turf/open/floor/eighties/red,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "vWj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -67015,7 +66977,7 @@
 	dir = 1
 	},
 /turf/closed/wall,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/hallway/primary/central/fore)
 "wiC" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -98463,12 +98425,12 @@ xRU
 vrr
 fHk
 wQB
-pzd
-pzd
-pzd
-pzd
-pzd
-pzd
+xRV
+xRV
+xRV
+xRV
+xRV
+xRV
 jVM
 jVM
 vXW
@@ -98720,7 +98682,7 @@ xYO
 hBK
 dTS
 sbU
-rnD
+xZS
 ocn
 fBb
 kXz
@@ -99234,7 +99196,7 @@ kke
 kgz
 oGJ
 wQB
-rnD
+xZS
 vHf
 mXu
 buW
@@ -99491,7 +99453,7 @@ jYY
 aEl
 oGJ
 wQB
-rnD
+xZS
 dQv
 oOS
 vWh
@@ -99749,11 +99711,11 @@ tSe
 eFF
 oLH
 wix
-pzd
-pzd
-pzd
+xRV
+xRV
+xRV
 jhG
-pzd
+xRV
 jVM
 vDk
 tGq
@@ -111567,16 +111529,16 @@ sOy
 sOy
 psz
 pzd
-kzV
-kzV
-blc
-luZ
-kzV
-kzV
-luZ
-blc
-kzV
-kzV
+rnD
+rnD
+pzd
+iTN
+rnD
+rnD
+iTN
+pzd
+rnD
+rnD
 pzd
 dWF
 sfk
