@@ -123,7 +123,7 @@
 	cooldown_time = 20 SECONDS
 	invocation_type = INVOCATION_NONE
 
-	spell_requirements = SPELL_REQUIRES_HUMAN
+	spell_requirements = NONE
 	antimagic_flags = NONE
 	spell_max_level = 5 //max is actually 7(the point where the sprites stop working), but the implant can only reach 5
 
