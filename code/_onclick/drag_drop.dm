@@ -38,7 +38,7 @@
 
 	mouse_drop_dragged(over, user, src_location, over_location, params)
 
-	SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, usr)
+	SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, user)
 
 	over.handle_mouse_drop_receive(src, user, params)
 
