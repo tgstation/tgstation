@@ -3525,7 +3525,7 @@
 #include "code\modules\bitrunning\virtual_domain\domains\bubblegum.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\clown_planet.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\colossus.dm"
-#include "code\modules\bitrunning\virtual_domain\domains\freddyfazbear.dm"
+#include "code\modules\bitrunning\virtual_domain\domains\fredingtonfastingbear.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\gondola_asteroid.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\hierophant.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\pipedream.dm"
