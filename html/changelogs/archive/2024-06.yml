@@ -229,3 +229,37 @@
       sprites.
   vendingmachine24:
   - spellcheck: Changed grammar in cat_house.dm
+2024-06-06:
+  Ben10Omintrix:
+  - refactor: honkbots are now basic mobs, please report any bugs
+  - rscadd: honkbots will try to slip people on banana peels
+  Jacquerel:
+  - balance: Mutadone restores your originally monkey status, rather than always turning
+      monkeys into humans
+  - rscadd: A unique kind of mob is created when a Monkey is infested by a Legion.
+  - balance: Corrosive slime left behind after a slime fails to eat you can be scraped
+      off with your hands, or shaken off in some other way, by clicking on the debuff.
+      This is slower and less effective than washing it off using water.
+  LT3:
+  - balance: Doubled number of assignable wildcard slots on grey ID cards
+  - balance: Doubled number of assignable wildcard slots on silver ID cards
+  - balance: Doubled number of assignable wildcard slots on agent/chameleon ID cards
+  Rhials:
+  - balance: cultist shades can no longer contribute to rune invocation until they've
+      been out of their soulstone for a minute. Put them in a shell for God's sake!
+  - code_imp: sweeps up cultist antag datum code into its own subfolder.
+  - code_imp: cult shades now have their own antag datum.
+  - bugfix: constructs now properly clear the cultist antag datum and transfer the
+      mind slightly earlier.
+  SyncIt21:
+  - qol: more examines & screentips for plumbing machinery
+  - qol: plumbing grinder has a grind/juice mode which be toggled by hand
+  - code_imp: improved attack chain for RPLD & plumbing grinder
+  - bugfix: You can deconstruct the plumbing grinder with the RPLD
+  - bugfix: You can attack the plumbing grinder with any item in combat mode without
+      getting that item consumed
+  - bugfix: You cannot grind abstract/ hologram items in the plumbing grinder
+  - bugfix: growing vat now uses the correct layer selected on rapid plumbing device
+  mc-oofert:
+  - balance: cult stun gets weaker when they get red eyes and later more when they
+      have halos
