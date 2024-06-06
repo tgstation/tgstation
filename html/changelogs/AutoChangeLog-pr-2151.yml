@@ -1,0 +1,8 @@
+author: "Absolucy, Aylong"
+delete-after: True
+changes:
+  - qol: "General settings tab into TGchat, looks better now, and is more convenient to use. Also, each button has a font written on it."
+  - rscadd: "Added Mute button into Chat Tabs settings, it disables tab unread counter."
+  - rscadd: "Added Clear chat button into General settings, you can clear your dirty chat like you did it before TGchat."
+  - bugfix: "Case-sensitive highlighting now works properly."
+  - rscadd: "Added an option to enable/disable individual chat highlights."
