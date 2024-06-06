@@ -188,18 +188,35 @@
 /// Makes it so that when a slime's core has plasma poured on it, it builds a new body and moves the brain into it.
 
 /obj/item/organ/internal/brain/slime/check_for_repair(obj/item/item, mob/user)
-	if(damage && item.is_drainable() && item.reagents.has_reagent(/datum/reagent/toxin/plasma) && item.reagents.get_reagent_amount(/datum/reagent/toxin/plasma) >= 100) //attempt to heal the brain
+	if(damage && item.is_drainable() && item.reagents.has_reagent(/datum/reagent/toxin/plasma)) //attempt to heal the brain
+		if (item.reagents.get_reagent_amount(/datum/reagent/toxin/plasma) < 100)
+			user.balloon_alert(user, "too little plasma!")
+			return FALSE
 
-		user.visible_message(span_notice("[user] starts to slowly pour the contents of [item] onto [src]. It seems to bubble and roil, beginning to stretch its cytoskeleton outwards..."), span_notice("You start to slowly pour the contents of [item] onto [src]. It seems to bubble and roil, beginning to stretch its membrane outwards..."))
+		user.visible_message(
+			span_notice("[user] starts to slowly pour the contents of [item] onto [src]. It seems to bubble and roil, beginning to stretch its cytoskeleton outwards..."),
+			span_notice("You start to slowly pour the contents of [item] onto [src]. It seems to bubble and roil, beginning to stretch its membrane outwards..."),
+			span_hear("You hear bubbling.")
+			)
+
 		if(!do_after(user, 30 SECONDS, src))
 			to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
-			return TRUE
+			return FALSE
 
-		user.visible_message(span_notice("[user] pours the contents of [item] onto [src], causing it to form a proper cytoplasm and outer membrane."), span_notice("You pour the contents of [item] onto [src], causing it to form a proper cytoplasm and outer membrane."))
-		item.reagents.clear_reagents() //removes the whole shit
+		if (item.reagents.get_reagent_amount(/datum/reagent/toxin/plasma) < 100) // minor exploit but might as well patch it
+			user.balloon_alert(user, "too little plasma!")
+			return FALSE
+
+		user.visible_message(
+			span_notice("[user] pours the contents of [item] onto [src], causing it to form a proper cytoplasm and outer membrane."),
+			span_notice("You pour the contents of [item] onto [src], causing it to form a proper cytoplasm and outer membrane."),
+			span_hear("You hear a splat.")
+			)
+
+		item.reagents.remove_reagent(/datum/reagent/toxin/plasma, 100)
 		rebuild_body(user)
 		return TRUE
-	return FALSE
+	return ..()
 
 /obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf)
 	for(var/atom/movable/item as anything in stored_items)
@@ -210,7 +227,7 @@
 	if(rebuilt)
 		return
 	rebuilt = TRUE
-	set_organ_damage(-maxHealth) //heals 2 damage per unit of mannitol, and by using "set_organ_damage", we clear the failing variable if that was up
+	set_organ_damage(-maxHealth) // heals the brain fully
 
 	if(gps_active) // making sure the gps signal is removed if it's active on revival
 		gps_active = FALSE
@@ -231,8 +248,8 @@
 
 	brainmob.client?.prefs?.safe_transfer_prefs_to(new_body)
 	new_body.underwear = "Nude"
-	new_body.undershirt = "Nude" //Which undershirt the player wants
-	new_body.socks = "Nude" //Which socks the player wants
+	new_body.undershirt = "Nude"
+	new_body.socks = "Nude"
 	stored_dna.transfer_identity(new_body, transfer_SE = TRUE)
 	new_body.dna.features["mcolor"] = new_body.dna.features["mcolor"]
 	new_body.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
