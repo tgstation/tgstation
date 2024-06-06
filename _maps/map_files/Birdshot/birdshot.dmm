@@ -3425,7 +3425,7 @@
 	dir = 4
 	},
 /turf/open/floor/eighties,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "bvh" = (
 /obj/structure/chair/sofa/bench/right{
 	dir = 8
@@ -9500,8 +9500,18 @@
 	dir = 5
 	},
 /obj/machinery/light_switch/directional/east,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 5
+	},
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/eighties/red,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "dQE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -11992,7 +12002,7 @@
 	dir = 4
 	},
 /turf/open/floor/eighties/red,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "eJw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -14101,7 +14111,7 @@
 	},
 /obj/machinery/light/small/dim/directional/west,
 /turf/open/floor/eighties/red,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "fBf" = (
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
@@ -17474,7 +17484,7 @@
 	dir = 6
 	},
 /turf/open/floor/eighties,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "gGQ" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -20377,7 +20387,7 @@
 	},
 /obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/eighties/red,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "hzm" = (
 /turf/closed/wall/rust,
 /area/station/cargo/miningoffice)
@@ -22382,7 +22392,7 @@
 /obj/effect/turf_decal/siding/thinplating,
 /obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/eighties/red,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "ikU" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 10
@@ -23723,7 +23733,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/eighties,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "iFE" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/chair/office{
@@ -25360,7 +25370,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "jhJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -26809,7 +26819,7 @@
 	dir = 10
 	},
 /turf/open/floor/eighties,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "jEZ" = (
 /obj/structure/hedge,
 /obj/effect/decal/cleanable/dirt,
@@ -30152,7 +30162,7 @@
 	},
 /obj/structure/sign/poster/official/random/directional/east,
 /turf/open/floor/eighties/red,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "kHI" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -30986,7 +30996,7 @@
 	},
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/eighties/red,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "kXM" = (
 /obj/effect/spawner/random/structure/girder,
 /obj/structure/barricade/wooden,
@@ -32204,7 +32214,7 @@
 	},
 /obj/effect/turf_decal/siding/thinplating,
 /turf/open/floor/eighties/red,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "lqt" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -33802,7 +33812,7 @@
 	},
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/eighties/red,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "lOi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -37213,7 +37223,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/eighties,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "mXx" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
@@ -40385,7 +40395,7 @@
 	},
 /obj/structure/sign/poster/official/tactical_game_cards/directional/west,
 /turf/open/floor/eighties/red,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "ocs" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -42461,7 +42471,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/eighties/red,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "oOV" = (
 /obj/effect/turf_decal/siding/thinplating_new/light{
 	dir = 8
@@ -48862,7 +48872,7 @@
 	},
 /obj/machinery/holopad,
 /turf/open/floor/eighties,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "qMa" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4
@@ -59238,7 +59248,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_half,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "tYj" = (
 /obj/item/exodrone,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -59922,7 +59932,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/eighties/red,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "ugA" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 1
@@ -65200,7 +65210,7 @@
 	dir = 1
 	},
 /turf/open/floor/eighties/red,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "vHh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral{
@@ -66217,7 +66227,7 @@
 /obj/structure/sign/poster/official/random/directional/east,
 /obj/structure/cable,
 /turf/open/floor/eighties/red,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "vWj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -67005,7 +67015,7 @@
 	dir = 1
 	},
 /turf/closed/wall,
-/area/station/hallway/primary/central/fore)
+/area/station/commons/fitness/recreation/entertainment)
 "wiC" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -98453,12 +98463,12 @@ xRU
 vrr
 fHk
 wQB
-xRV
-xRV
-xRV
-xRV
-xRV
-xRV
+pzd
+pzd
+pzd
+pzd
+pzd
+pzd
 jVM
 jVM
 vXW
@@ -98710,7 +98720,7 @@ xYO
 hBK
 dTS
 sbU
-xZS
+rnD
 ocn
 fBb
 kXz
@@ -99224,7 +99234,7 @@ kke
 kgz
 oGJ
 wQB
-xZS
+rnD
 vHf
 mXu
 buW
@@ -99481,7 +99491,7 @@ jYY
 aEl
 oGJ
 wQB
-xZS
+rnD
 dQv
 oOS
 vWh
@@ -99739,11 +99749,11 @@ tSe
 eFF
 oLH
 wix
-xRV
-xRV
-xRV
+pzd
+pzd
+pzd
 jhG
-xRV
+pzd
 jVM
 vDk
 tGq
