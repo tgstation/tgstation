@@ -1314,7 +1314,18 @@
 	if(!istype(target))
 		CRASH("Missing target arg for can_perform_action")
 
-	if(incapacitated() || stat == DEAD || stat != CONSCIOUS)
+	if(!(interaction_flags_atom & INTERACT_ATOM_IGNORE_INCAPACITATED))
+		var/ignore_flags = NONE
+		if(interaction_flags_atom & INTERACT_ATOM_IGNORE_RESTRAINED)
+			ignore_flags |= IGNORE_RESTRAINTS
+		if(!(interaction_flags_atom & INTERACT_ATOM_CHECK_GRAB))
+			ignore_flags |= IGNORE_GRAB
+
+		if(incapacitated(ignore_flags))
+			to_chat(src, span_warning("You are incapacitated at the moment!"))
+			return FALSE
+
+	if(stat == DEAD || stat != CONSCIOUS)
 		to_chat(src, span_warning("You are in no physical condition to do this!"))
 		return FALSE
 

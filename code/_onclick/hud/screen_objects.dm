@@ -15,7 +15,7 @@
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
 	appearance_flags = APPEARANCE_UI
-	interaction_flags_atom = parent_type::interaction_flags_atom | IGNORE_MOUSE_DROP_CHECKS
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 	/// A reference to the object in the slot. Grabs or items, generally, but any datum will do.
 	var/datum/weakref/master_ref = null
 	/// A reference to the owner HUD, if any.

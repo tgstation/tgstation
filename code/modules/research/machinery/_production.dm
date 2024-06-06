@@ -3,7 +3,7 @@
 	desc = "Makes researched and prototype items with materials and energy."
 	/// Energy cost per full stack of materials spent. Material insertion is 40% of this.
 	active_power_usage = 0.05 * STANDARD_CELL_RATE
-	interaction_flags_atom = parent_type::interaction_flags_atom | IGNORE_MOUSE_DROP_CHECKS
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 
 	/// The efficiency coefficient. Material costs and print times are multiplied by this number;
 	var/efficiency_coeff = 1
