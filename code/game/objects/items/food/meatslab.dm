@@ -135,7 +135,7 @@
 	icon_state = "etherealmeat"
 	desc = "So shiny you feel like ingesting it might make you shine too"
 	food_reagents = list(/datum/reagent/consumable/liquidelectricity = 10)
-	tastes = list("pure electricity" = 2, "meat" = 1)
+	tastes = list("pure electricity" = 2, "glass" = 1) //MONKE EDIT: "meat" to "glass"
 	foodtypes = RAW | MEAT | TOXIC | GORE
 	venue_value = FOOD_MEAT_MUTANT
 

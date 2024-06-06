@@ -244,13 +244,31 @@
 	var/apparent_blood_volume = blood_volume
 	if((dna.species.use_skintones)&& skin_tone == "albino")
 		apparent_blood_volume -= 150 // enough to knock you down one tier
-	switch(apparent_blood_volume)
-		if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-			msg += "[t_He] [t_has] pale skin.\n"
-		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-			msg += "<b>[t_He] look[p_s()] like pale death.</b>\n"
-		if(-INFINITY to BLOOD_VOLUME_BAD)
-			msg += "[span_deadsay("<b>[t_He] resemble[p_s()] a crushed, empty juice pouch.</b>")]\n"
+	if(isethereal(src))//Monkestation Changes Start:
+		if(appears_dead)
+			if(blood_volume < ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE)
+				msg += "[span_deadsay("<b>[t_He] resemble[p_s()] a crushed, empty juice pouch.</b>")]\n"
+		else
+			switch(blood_volume)
+				if(ETHEREAL_BLOOD_CHARGE_OVERLOAD to ETHEREAL_BLOOD_CHARGE_DANGEROUS)
+					msg += "<b>Electricity is arcing off of [t_him]!</b>\n"
+				if(ETHEREAL_BLOOD_CHARGE_FULL to ETHEREAL_BLOOD_CHARGE_OVERLOAD)
+					msg += "[t_He] seems unusually bright, and [t_is] sparking occasionally.\n"
+				if(ETHEREAL_BLOOD_CHARGE_LOW to ETHEREAL_BLOOD_CHARGE_NORMAL)
+					msg += "[t_His] light is dimming.\n"
+				if(ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE to ETHEREAL_BLOOD_CHARGE_LOW)
+					msg += "<b>[t_His] light is very dim, and is flickering slightly.</b>\n"
+				if(-INFINITY to ETHEREAL_BLOOD_CHARGE_LOWEST_PASSIVE)
+					msg += "<b>[t_His] light is very dim, and is flickering on and off.</b>\n"
+					msg += "[span_deadsay("<b>[t_His] movements seem painful and [t_his] breathing is erratic!</b>")]\n"
+	else
+		switch(apparent_blood_volume)
+			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
+				msg += "[t_He] [t_has] pale skin.\n"
+			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
+				msg += "<b>[t_He] look[p_s()] like pale death.</b>\n"
+			if(-INFINITY to BLOOD_VOLUME_BAD)
+				msg += "[span_deadsay("<b>[t_He] resemble[p_s()] a crushed, empty juice pouch.</b>")]\n"
 
 	if(is_bleeding())
 		var/list/obj/item/bodypart/bleeding_limbs = list()

@@ -12,7 +12,7 @@
 /obj/item/bodypart/arm/right/ethereal
 	icon_greyscale = 'monkestation/icons/mob/species/ethereal/bodyparts.dmi'
 
-/obj/item/bodypart/leg/right/ethereal
+/obj/item/bodypart/leg/left/ethereal
 	icon_greyscale = 'monkestation/icons/mob/species/ethereal/bodyparts.dmi'
 
 /obj/item/bodypart/leg/right/ethereal

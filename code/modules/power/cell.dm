@@ -238,7 +238,7 @@
 
 		if(istype(maybe_stomach, /obj/item/organ/internal/stomach/ethereal))
 
-			var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - CELL_POWER_GAIN
+			var/charge_limit = ETHEREAL_BLOOD_CHARGE_DANGEROUS - CELL_POWER_GAIN //Monkestation edit
 			var/obj/item/organ/internal/stomach/ethereal/stomach = maybe_stomach
 			if((stomach.drain_time > world.time) || !stomach)
 				return
@@ -251,7 +251,7 @@
 			to_chat(H, span_notice("You begin clumsily channeling power from [src] into your body."))
 			stomach.drain_time = world.time + CELL_DRAIN_TIME
 			if(do_after(user, CELL_DRAIN_TIME, target = src))
-				if((charge < CELL_POWER_DRAIN) || (stomach.crystal_charge > charge_limit))
+				if((charge < CELL_POWER_DRAIN) || (H.blood_volume > charge_limit)) //Monkestation edit
 					return
 				if(istype(stomach))
 					to_chat(H, span_notice("You receive some charge from [src], wasting some in the process."))

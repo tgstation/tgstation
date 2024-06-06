@@ -111,6 +111,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	target.dna.features["tail_lizard"] = "Smooth"
 	target.dna.features["tail_monkey"] = "Chimp" //Monkestation Addition
 	target.dna.features["pod_hair"] = "Ivy"
+	target.dna.features["ethereal_horns"] = "None" //Monkestation Addition
+	target.dna.features["ethereal_tail"] = "None" //Monkestation Addition
 	target.dna.features["ipc_screen"] = "BSOD" //Monkestation Addition
 	target.dna.features["ipc_chassis"] = "Bishop Cyberkinetics" //Monkestation Addition
 	target.dna.features["ipc_antenna"] = "None" //Monkestation Addition

@@ -2,16 +2,18 @@
 	name = "biological battery"
 	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
 	desc = "A crystal-like organ that stores the electric charge of ethereals."
-	organ_traits = list(TRAIT_NOHUNGER) // We have our own hunger mechanic.
+	//organ_traits = list(TRAIT_NOHUNGER) // We have our own hunger mechanic. //Monkestation Removal, we have our OWN hunger mechanic.
 	///basically satiety but electrical
 	var/crystal_charge = ETHEREAL_CHARGE_FULL
 	///used to keep ethereals from spam draining power sources
 	var/drain_time = 0
 
+/* //Monkestation Removal
 /obj/item/organ/internal/stomach/ethereal/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	adjust_charge(-ETHEREAL_CHARGE_FACTOR * seconds_per_tick)
 	handle_charge(owner, seconds_per_tick, times_fired)
+*/
 
 /obj/item/organ/internal/stomach/ethereal/on_insert(mob/living/carbon/stomach_owner)
 	. = ..()
@@ -31,15 +33,18 @@
 
 /obj/item/organ/internal/stomach/ethereal/proc/charge(datum/source, amount, repairs)
 	SIGNAL_HANDLER
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/human = owner
 	if(!repairs)
 		adjust_charge(amount / 3.5)
 		return
-	if(crystal_charge < ETHEREAL_CHARGE_FULL - amount / 3.5)
+	if(owner.blood_volume < BLOOD_VOLUME_NORMAL - amount / 3.5)
 		adjust_charge(amount / 3.5)
 		return
-	if(crystal_charge > ETHEREAL_CHARGE_OVERLOAD) //prevents reduction of charge of overcharged ethereals
+	if(owner.blood_volume > 700) //prevents reduction of charge of overcharged ethereals
 		return
-	adjust_charge(ETHEREAL_CHARGE_FULL - crystal_charge) //perfectly tops off an ethereal if the amount of power that would be applied would go into overcharge
+	adjust_charge(BLOOD_VOLUME_NORMAL - human.blood_volume) //perfectly tops off an ethereal if the amount of power that would be applied would go into overcharge
 
 /obj/item/organ/internal/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, siemens_coeff = 1, flags = NONE)
 	SIGNAL_HANDLER
@@ -49,7 +54,13 @@
 	to_chat(owner, span_notice("You absorb some of the shock into your body!"))
 
 /obj/item/organ/internal/stomach/ethereal/proc/adjust_charge(amount)
-	crystal_charge = clamp(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_DANGEROUS)
+	//crystal_charge = clamp(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_DANGEROUS) Monkestation Removal
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human = owner
+		if(istype(human.dna.species, /datum/species/ethereal))
+			var/datum/species/ethereal/species = human.dna.species
+			var/amount_adjusted = (BLOOD_VOLUME_NORMAL * amount)/ETHEREAL_CHARGE_FULL
+			species.adjust_charge(human, amount_adjusted, FALSE)
 
 /obj/item/organ/internal/stomach/ethereal/proc/handle_charge(mob/living/carbon/carbon, seconds_per_tick, times_fired)
 	switch(crystal_charge)
