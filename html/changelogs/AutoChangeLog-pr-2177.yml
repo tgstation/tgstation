@@ -1,0 +1,6 @@
+author: "RikuTheKiller"
+delete-after: True
+changes:
+  - balance: "Pouring mannitol on brains now removes all basic and severe traumas."
+  - bugfix: "Pouring mannitol on brains works properly again."
+  - bugfix: "Pouring plasma on oozeling cores works better and has a warning for having too little plasma."
