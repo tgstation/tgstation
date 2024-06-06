@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - config: "Add a config that allows for overriding ruin template variables, for example, forcing a space ruin to always spawn, changing its cost or weight, etc."
