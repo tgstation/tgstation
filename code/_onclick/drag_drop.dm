@@ -30,7 +30,7 @@
 
 	// only if both dragged object & receiver agree to do checks do we proceed
 	var/combined_atom_flags = interaction_flags_atom | over.interaction_flags_atom
-	if(!(combined_atom_flags | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS))
+	if(!(combined_atom_flags & INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS))
 		if(!(combined_atom_flags & INTERACT_ATOM_MOUSEDROP_IGNORE_ADJACENT) && !Adjacent(user) || !over.Adjacent(user))
 			return // should stop you from dragging through windows
 		if(!(combined_atom_flags & INTERACT_ATOM_MOUSEDROP_IGNORE_USABILITY) && !user.can_perform_action(src, interaction_flags_mouse_drop | over.interaction_flags_mouse_drop | SILENT_ADJACENCY))
