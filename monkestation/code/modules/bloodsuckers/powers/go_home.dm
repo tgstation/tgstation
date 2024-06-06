@@ -38,7 +38,7 @@
 	if(!.)
 		return FALSE
 	/// Have No Lair (NOTE: You only got this power if you had a lair, so this means it's destroyed)
-	if(!istype(bloodsuckerdatum_power) || !bloodsuckerdatum_power.coffin)
+	if(!istype(bloodsuckerdatum_power) || QDELETED(bloodsuckerdatum_power.coffin))
 		owner.balloon_alert(owner, "coffin was destroyed!")
 		return FALSE
 	return TRUE
@@ -69,7 +69,7 @@
 		return FALSE
 	if(!isturf(owner.loc))
 		return FALSE
-	if(!bloodsuckerdatum_power.coffin)
+	if(QDELETED(bloodsuckerdatum_power.coffin))
 		user.balloon_alert(user, "coffin destroyed!")
 		to_chat(owner, span_warning("Your coffin has been destroyed! You no longer have a destination."))
 		return FALSE
@@ -84,9 +84,9 @@
 	var/drop_item = FALSE
 	var/turf/current_turf = get_turf(owner)
 	// If we aren't in the dark, anyone watching us will cause us to drop out stuff
-	if(current_turf && current_turf.lighting_object && current_turf.get_lumcount() >= 0.2)
+	if(!QDELETED(current_turf?.lighting_object) && current_turf.get_lumcount() >= 0.2)
 		for(var/mob/living/watchers in viewers(world.view, get_turf(owner)) - owner)
-			if(!watchers.client)
+			if(QDELETED(watchers.client))
 				continue
 			if(watchers.has_unlimited_silicon_privilege)
 				continue

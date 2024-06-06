@@ -54,7 +54,7 @@
 	return ..()
 
 /datum/action/cooldown/bloodsucker/IsAvailable(feedback = FALSE)
-	return next_use_time <= world.time
+	return COOLDOWN_FINISHED(src, next_use_time)
 
 /datum/action/cooldown/bloodsucker/Grant(mob/user)
 	. = ..()
@@ -76,7 +76,7 @@
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/proc/can_pay_cost()
-	if(!owner || !owner.mind)
+	if(QDELETED(owner) || QDELETED(owner.mind))
 		return FALSE
 	// Cooldown?
 	if(!COOLDOWN_FINISHED(src, next_use_time))
@@ -108,7 +108,7 @@
 	if(!isliving(user))
 		return FALSE
 	// Torpor?
-	if((check_flags & BP_CANT_USE_IN_TORPOR) && HAS_TRAIT(user, TRAIT_NODEATH))
+	if((check_flags & BP_CANT_USE_IN_TORPOR) && HAS_TRAIT_FROM(user, TRAIT_NODEATH, TORPOR_TRAIT))
 		to_chat(user, span_warning("Not while you're in Torpor."))
 		return FALSE
 	// Frenzy?
@@ -186,9 +186,11 @@
 /datum/action/cooldown/bloodsucker/process(seconds_per_tick)
 	SHOULD_CALL_PARENT(TRUE) //Need this to call parent so the cooldown system works
 	. = ..()
+	if(!active) // if we're not active anyways, then we shouldn't be processing!!!
+		return PROCESS_KILL
 	if(!ContinueActive(owner)) // We can't afford the Power? Deactivate it.
 		DeactivatePower()
-		return FALSE
+		return PROCESS_KILL
 	// We can keep this up (For now), so Pay Cost!
 	if(!(power_flags & BP_AM_COSTLESS_UNCONSCIOUS) && owner.stat != CONSCIOUS)
 		if(bloodsuckerdatum_power)

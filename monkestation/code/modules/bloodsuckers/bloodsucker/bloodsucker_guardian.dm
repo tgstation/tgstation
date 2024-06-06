@@ -16,7 +16,7 @@
 	if(length(guardians) && !allow_multiple)
 		balloon_alert(user, "already have one!")
 		return
-	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling) && !allow_changeling)
+	if(user.mind?.has_antag_datum(/datum/antagonist/changeling) && !allow_changeling)
 		to_chat(user, ling_failure)
 		return
 	if(used)

@@ -41,7 +41,7 @@
 	if(!master || (master == owner.current))
 		return TRUE
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = master.mind.has_antag_datum(/datum/antagonist/bloodsucker)
-	if(bloodsuckerdatum && bloodsuckerdatum.broke_masquerade)
+	if(bloodsuckerdatum?.broke_masquerade)
 		//vassal stealing
 		return TRUE
 	to_chat(owner.current, span_danger("[conversion_target]'s mind is overwhelmed with too much external force to put your own!"))
@@ -52,7 +52,7 @@
  *  time, ranges from 1 at 20 pop to 4 at 40 pop
  */
 /datum/antagonist/bloodsucker/proc/return_current_max_vassals()
-	var/total_players = GLOB.joined_player_list.len
+	var/total_players = length(GLOB.joined_player_list)
 	switch(total_players)
 		if(1 to 20)
 			return 1
@@ -72,8 +72,7 @@
 		return FALSE
 
 	//Check if they used to be a Vassal and was stolen.
-	var/datum/antagonist/vassal/old_vassal = conversion_target.mind.has_antag_datum(/datum/antagonist/vassal)
-	if(old_vassal)
+	if(IS_VASSAL(conversion_target))
 		conversion_target.mind.remove_antag_datum(/datum/antagonist/vassal)
 
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.has_antag_datum(/datum/antagonist/bloodsucker)

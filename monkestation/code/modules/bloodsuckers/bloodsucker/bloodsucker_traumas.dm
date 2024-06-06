@@ -56,7 +56,7 @@
 
 	// Delete Next Portal if it's time (it will remove its partner)
 	var/obj/effect/client_image_holder/phobetor/first_on_the_stack = created_firsts[1]
-	if(created_firsts.len && world.time >= first_on_the_stack.created_on + first_on_the_stack.exist_length)
+	if(length(created_firsts) && world.time >= first_on_the_stack.created_on + first_on_the_stack.exist_length)
 		var/targetGate = first_on_the_stack
 		created_firsts -= targetGate
 		qdel(targetGate)

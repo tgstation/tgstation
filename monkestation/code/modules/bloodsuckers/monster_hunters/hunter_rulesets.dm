@@ -44,7 +44,7 @@
 			living_players -= player
 
 /datum/dynamic_ruleset/midround/monsterhunter/ready(forced = FALSE)
-	if(required_candidates > living_players.len)
+	if(required_candidates > length(living_players))
 		return FALSE
 	var/count = 0
 	for(var/datum/antagonist/monster as anything in GLOB.antagonists)

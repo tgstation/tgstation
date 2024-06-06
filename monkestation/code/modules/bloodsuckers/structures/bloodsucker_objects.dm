@@ -93,7 +93,7 @@
 		return TRUE
 	if(stat >= UNCONSCIOUS)
 		return TRUE
-	if(HAS_TRAIT(src, TRAIT_NODEATH))
+	if(HAS_TRAIT_FROM(src, TRAIT_NODEATH, TORPOR_TRAIT))
 		return TRUE
 	return FALSE
 

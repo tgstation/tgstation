@@ -78,11 +78,7 @@
 
 // This is its own proc because its done twice, to repeat code copypaste.
 /datum/action/cooldown/bloodsucker/targeted/brawn/proc/break_closet(mob/living/carbon/human/user, obj/structure/closet/closet)
-	if(closet)
-		closet.welded = FALSE
-		closet.locked = FALSE
-		closet.broken = TRUE
-		closet.open()
+	closet?.bust_open()
 
 /datum/action/cooldown/bloodsucker/targeted/brawn/proc/escape_puller()
 	if(!owner.pulledby) // || owner.pulledby.grab_state <= GRAB_PASSIVE)

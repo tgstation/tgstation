@@ -22,7 +22,7 @@
 		unset_click_ability(remove_from)
 
 /datum/action/cooldown/bloodsucker/targeted/Trigger(trigger_flags, atom/target)
-	if((active) && can_deactivate())
+	if(active && can_deactivate())
 		DeactivatePower()
 		return FALSE
 	if(!can_pay_cost(owner) || !can_use(owner, trigger_flags))
@@ -32,7 +32,7 @@
 		to_chat(owner, span_announce("[prefire_message]"))
 
 	ActivatePower(trigger_flags)
-	if(target)
+	if(!QDELETED(target))
 		return InterceptClickOn(owner, null, target)
 
 	return set_click_ability(owner)

@@ -341,7 +341,7 @@
 
 	// Default Report
 	var/objectives_complete = TRUE
-	if(objectives.len)
+	if(length(objectives))
 		report += printobjectives(objectives)
 		for(var/datum/objective/objective in objectives)
 			if(objective.objective_name == "Optional Objective")
@@ -351,10 +351,10 @@
 				break
 
 	// Now list their vassals
-	if(vassals.len)
-		report += "<span class='header'>Their Vassals were...</span>"
+	if(length(vassals))
+		report +=  span_header("Their Vassals were...")
 		for(var/datum/antagonist/vassal/all_vassals as anything in vassals)
-			if(!all_vassals.owner)
+			if(QDELETED(all_vassals?.owner))
 				continue
 			var/list/vassal_report = list()
 			vassal_report += "<b>[all_vassals.owner.name]</b>"
@@ -367,7 +367,7 @@
 				vassal_report += " and was the <b>Revenge Vassal</b>"
 			report += vassal_report.Join()
 
-	if(objectives.len == 0 || objectives_complete)
+	if(!length(objectives) || objectives_complete)
 		report += "<span class='greentext big'>The [name] was successful!</span>"
 	else
 		report += "<span class='redtext big'>The [name] has failed!</span>"

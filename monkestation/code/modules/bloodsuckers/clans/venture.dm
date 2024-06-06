@@ -32,7 +32,7 @@
 		if(initial(power.purchase_flags) & VASSAL_CAN_BUY && !(locate(power) in vassaldatum.powers))
 			options[initial(power.name)] = power
 
-	if(options.len < 1)
+	if(length(options) < 1)
 		to_chat(bloodsuckerdatum.owner.current, span_notice("You grow more ancient by the night!"))
 	else
 		// Give them the UI to purchase a power.

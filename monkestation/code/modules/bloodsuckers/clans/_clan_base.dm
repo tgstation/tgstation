@@ -150,7 +150,7 @@
 		if(initial(power.purchase_flags) & BLOODSUCKER_CAN_BUY && !(locate(power) in bloodsuckerdatum.powers))
 			options[initial(power.name)] = power
 
-	if(options.len < 1)
+	if(length(options) < 1)
 		to_chat(bloodsuckerdatum.owner.current, span_notice("You grow more ancient by the night!"))
 	else
 		// Give them the UI to purchase a power.
@@ -242,7 +242,7 @@
 		option.info = "[initial(vassaldatums.name)] - [span_boldnotice(initial(vassaldatums.vassal_description))]"
 		radial_display[initial(vassaldatums.name)] = option
 
-	if(!options.len)
+	if(!length(options))
 		return
 
 	to_chat(bloodsuckerdatum.owner.current, span_notice("You can change who this Vassal is, who are they to you?"))

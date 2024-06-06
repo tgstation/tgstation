@@ -42,7 +42,7 @@
 	data["bought"] = bought
 	data["items"] = list()
 	data["objectives"] = list()
-	if(weapons.len)
+	if(length(weapons))
 		for(var/datum/hunter_weapons/contraband as anything in weapons)
 			data["items"] += list(list(
 				"id" = contraband.type,

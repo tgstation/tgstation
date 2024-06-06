@@ -23,7 +23,7 @@
 
 /obj/item/soulstone/bloodsucker/get_ghost_to_replace_shade(mob/living/carbon/victim, mob/user)
 	var/mob/dead/observer/chosen_ghost = victim.get_ghost(FALSE, TRUE)
-	if(!chosen_ghost || !chosen_ghost.client)
+	if(QDELETED(chosen_ghost?.client))
 		victim.dust()
 		return FALSE
 	victim.unequip_everything()

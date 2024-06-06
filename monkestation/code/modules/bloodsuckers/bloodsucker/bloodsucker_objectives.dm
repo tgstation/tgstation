@@ -32,7 +32,7 @@
 /// Check Vassals and get their occupations
 /datum/objective/bloodsucker/proc/get_vassal_occupations()
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.has_antag_datum(/datum/antagonist/bloodsucker)
-	if(!bloodsuckerdatum || !bloodsuckerdatum.vassals.len)
+	if(!length(bloodsuckerdatum?.vassals))
 		return FALSE
 	var/list/all_vassal_jobs = list()
 	var/vassal_job
@@ -310,7 +310,7 @@
 	var/list/datum/mind/monsters = list()
 	for(var/datum/antagonist/monster in GLOB.antagonists)
 		var/datum/mind/brain = monster.owner
-		if(!brain || brain == owner)
+		if(QDELETED(brain) || brain == owner)
 			continue
 		if(brain.current.stat == DEAD)
 			continue
@@ -319,7 +319,7 @@
 		if(brain.has_antag_datum(/datum/antagonist/changeling))
 			monsters += brain
 
-	return completed || !monsters.len
+	return completed || !length(monsters)
 
 
 

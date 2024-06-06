@@ -29,10 +29,10 @@
 	if(!.)
 		return FALSE
 	// Are we being grabbed?
-	if(user.pulledby && user.pulledby.grab_state >= GRAB_AGGRESSIVE)
+	if(!QDELETED(user.pulledby) && user.pulledby.grab_state >= GRAB_AGGRESSIVE)
 		owner.balloon_alert(user, "grabbed!")
 		return FALSE
-	if(user.pulling)
+	if(!QDELETED(user.pulling))
 		owner.balloon_alert(user, "grabbing someone!")
 		return FALSE
 	return TRUE
