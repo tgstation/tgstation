@@ -254,6 +254,7 @@
 	..()
 
 /obj/structure/guillotine/post_unbuckle_mob(mob/living/M)
+	M.cut_overlays() // monkestation: bugfix
 	M.regenerate_icons()
 	M.pixel_y -= -GUILLOTINE_HEAD_OFFSET // Move their body back
 	M.layer -= GUILLOTINE_LAYER_DIFF
