@@ -641,7 +641,7 @@
 	..()
 	var/obj/item/lightreplacer/light_replacer = locate(/obj/item/lightreplacer) in basic_modules
 	if(light_replacer)
-		if(light_replacer.uses < light_replacer.max_uses
+		if(light_replacer.uses < light_replacer.max_uses)
 			. = TRUE
 			light_replacer.Charge(cyborg, coeff)
 
