@@ -772,7 +772,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "corn cob pipe"
 	desc = "A nicotine delivery system popularized by folksy backwoodsmen and kept popular in the modern age and beyond by space hipsters. Can be loaded with objects."
 	icon_state = "cobpipeoff"
-	icon_on = "cobpipeff"  //Note - these are in masks.dmi
+	icon_on = "cobpipeoff"  //Note - these are in masks.dmi
 	icon_off = "cobpipeoff"
 	inhand_icon_on = null
 	inhand_icon_off = null
