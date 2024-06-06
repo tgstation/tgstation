@@ -39,23 +39,21 @@
 /obj/item/spellbook/proc/on_magic_charge(datum/source, datum/action/cooldown/spell/spell, mob/living/caster)
 	SIGNAL_HANDLER
 
-	var/static/list/clever_girl = list(
+	to_chat(caster, span_warning("Glowing red letters appear on the front cover..."))
+	to_chat(caster, span_red(pick(
 		"NICE TRY BUT NO!",
 		"CLEVER BUT NOT CLEVER ENOUGH!",
 		"SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!",
 		"CUTE! VERY CUTE!",
 		"YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?",
-	)
-
-	to_chat(caster, span_warning("Glowing red letters appear on the front cover..."))
-	to_chat(caster, span_red(pick(clever_girl)))
+	)))
 
 	return COMPONENT_ITEM_BURNT_OUT
 
 /obj/item/spellbook/examine(mob/user)
 	. = ..()
 	if(owner)
-		. += {"There is a small signature on the front cover: "[owner]"."}
+		. += "There is a small signature on the front cover: \"[owner]\"."
 	else
 		. += "It appears to have no author."
 
@@ -148,8 +146,6 @@
 	var/list/data = list()
 	data["owner"] = owner
 	data["points"] = uses
-	data["semi_random_bonus"] = initial(uses) + semi_random_bonus
-	data["full_random_bonus"] = initial(uses) + full_random_bonus
 	return data
 
 //This is a MASSIVE amount of data, please be careful if you remove it from static.
@@ -172,6 +168,8 @@
 		entry_data += list(individual_entry_data)
 
 	data["entries"] = entry_data
+	data["semi_random_bonus"] = initial(uses) + semi_random_bonus
+	data["full_random_bonus"] = initial(uses) + full_random_bonus
 	return data
 
 /obj/item/spellbook/ui_act(action, params)

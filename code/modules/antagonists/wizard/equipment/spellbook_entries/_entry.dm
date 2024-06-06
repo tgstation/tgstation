@@ -225,6 +225,7 @@
 		log_spellbook("[key_name(user)] cast [src] for [cost] points")
 		SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 		log_purchase(user.key)
+	book.update_static_data(user) // updates "times" var
 	return TRUE
 
 /// Non-purchasable flavor spells to populate the spell book with, for style.
