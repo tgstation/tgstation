@@ -9487,6 +9487,10 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 5
 	},
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/light_switch/directional/east,
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/eighties/red,
 /area/station/hallway/primary/central/fore)
 "dQE" = (
@@ -12393,15 +12397,6 @@
 /obj/item/kirbyplants/random/fullysynthetic,
 /turf/open/floor/iron,
 /area/station/security/prison)
-"eTt" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/landmark/navigate_destination/hydro,
-/turf/open/floor/iron,
-/area/station/hallway/primary/port)
 "eTT" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -89710,7 +89705,7 @@ sdQ
 sdQ
 uMo
 wAW
-wXk
+iIm
 xhH
 rje
 yea
@@ -89967,7 +89962,7 @@ qCR
 qCR
 qCR
 shd
-iIm
+wXk
 glM
 iwZ
 uIt
@@ -93308,7 +93303,7 @@ esd
 xYD
 xRZ
 rKU
-eTt
+vuR
 xgA
 wHE
 qnz
