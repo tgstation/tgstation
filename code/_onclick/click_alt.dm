@@ -93,6 +93,7 @@
 /mob/proc/base_click_alt_secondary(atom/target)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	//Hook on the mob to intercept the click
 	if(SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON_SECONDARY, target) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 
@@ -102,19 +103,17 @@
 		can_use_click_action = can_perform_turf_action(target)
 	else
 		can_use_click_action = can_perform_action(target, target.interaction_flags_click | SILENT_ADJACENCY)
-	if(can_use_click_action)
-		target.alt_click_secondary(src)
-
-///Delegated alt right click from the mob to the clicked atom
-/atom/proc/alt_click_secondary(mob/user)
-	SHOULD_NOT_OVERRIDE(TRUE)
-
-	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT_SECONDARY, user) & COMPONENT_CANCEL_CLICK_ALT_SECONDARY)
+	if(!can_use_click_action)
 		return
-	if(isobserver(user) && user.client && check_rights_for(user.client, R_DEBUG))
-		user.client.toggle_tag_datum(src)
+
+	//Hook on the atom to intercept the click
+	if(SEND_SIGNAL(target, COMSIG_CLICK_ALT_SECONDARY, src) & COMPONENT_CANCEL_CLICK_ALT_SECONDARY)
 		return
-	click_alt_secondary(user)
+	if(isobserver(src) && src.client && check_rights_for(src.client, R_DEBUG))
+		src.client.toggle_tag_datum(src)
+		return
+	click_alt_secondary(src)
+
 
 /**
  * ## Custom alt click secondary interaction
