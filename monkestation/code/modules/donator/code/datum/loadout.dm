@@ -462,3 +462,11 @@
 	item_path = /obj/item/toy/plush/gumball_goblin
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+
+//ThePooba
+/datum/loadout_item/mask/poob_mask
+	name = "Yellow gas mask"
+	item_path = /obj/item/clothing/mask/breath/poob_mask
+	donator_only = TRUE
+	requires_purchase = FALSE

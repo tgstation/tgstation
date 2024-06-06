@@ -407,3 +407,12 @@
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "gumball_wizard_hat"
 	inhand_icon_state = null
+
+/obj/item/clothing/mask/breath/poob_mask
+	name = "yellow gas mask"
+	desc = "An old mask that seems fitted for a lizard person, it's yellow with straps everywhere."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "poob_mask"
+	inhand_icon_state = null
+	flags_inv = HIDEFACE
