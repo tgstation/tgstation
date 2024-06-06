@@ -701,7 +701,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "smoking pipe"
 	desc = "A pipe, for smoking. Probably made of meerschaum or something."
 	icon_state = "pipeoff"
-	icon_on = "pipeff"  //Note - these are in masks.dmi
+	icon_on = "pipeoff"  //Note - these are in masks.dmi
 	icon_off = "pipeoff"
 	inhand_icon_state = null
 	inhand_icon_on = null
