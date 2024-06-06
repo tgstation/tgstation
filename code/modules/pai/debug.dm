@@ -24,6 +24,7 @@
 
 	pai.name = chosen_name
 	pai.real_name = pai.name
+	pai.update_name_tag() // monkestation edit: name tags
 	pai.key = choice.key
 	card.set_personality(pai)
 	if(SSpai.candidates[key])

@@ -665,6 +665,7 @@
 		newname = "Pet Slime"
 	M.name = newname
 	M.real_name = newname
+	M.update_name_tag(newname) // monkestation edit: name tags
 	qdel(src)
 
 /obj/item/slimepotion/slime/sentience

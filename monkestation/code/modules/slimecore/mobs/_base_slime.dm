@@ -303,6 +303,7 @@
 		else
 			name = "[current_color.name] [(slime_flags & ADULT_SLIME) ? "adult" : "baby"] slime ([number])"
 		real_name = name
+	update_name_tag()
 	return ..()
 
 /mob/living/basic/slime/proc/start_split()

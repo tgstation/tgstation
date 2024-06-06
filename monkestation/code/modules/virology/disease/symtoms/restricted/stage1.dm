@@ -48,6 +48,7 @@
 			new_mob.mind.add_antag_datum(transformed_antag_datum)
 		new_mob.name = affected_mob.real_name
 		new_mob.real_name = new_mob.name
+		new_mob.update_name_tag()
 		qdel(affected_mob)
 
 /datum/symptom/transformation/proc/replace_banned_player(mob/living/new_mob, mob/living/affected_mob) // This can run well after the mob has been transferred, so need a handle on the new mob to kill it if needed.

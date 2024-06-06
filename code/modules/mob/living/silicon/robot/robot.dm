@@ -823,6 +823,7 @@
 	braintype = "AI Shell"
 	name = "Empty AI Shell-[ident]"
 	real_name = name
+	update_name_tag() // monkestation edit: name tags
 	GLOB.available_ai_shells |= src
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name //update the camera name too
@@ -842,6 +843,7 @@
 	GLOB.available_ai_shells -= src
 	name = "Unformatted Cyborg-[ident]"
 	real_name = name
+	update_name_tag() // monkestation edit: name tags
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name
 	diag_hud_set_aishell()
@@ -855,6 +857,7 @@
 /mob/living/silicon/robot/proc/deploy_init(mob/living/silicon/ai/AI)
 	real_name = "[AI.real_name] [designation] Shell-[ident]"
 	name = real_name
+	update_name_tag() // monkestation edit: name tags
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name //update the camera name too
 	mainframe = AI

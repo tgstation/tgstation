@@ -63,6 +63,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
+	update_name_tag() // monkestation edit: name tags
 	last_attack = world.time
 	var/datum/blobstrain/BS = pick(GLOB.valid_blobstrains)
 	set_strain(BS)

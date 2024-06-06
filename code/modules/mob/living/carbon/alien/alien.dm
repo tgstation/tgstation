@@ -127,6 +127,7 @@ Des: Removes all infected images from the alien.
 	if(!alien_name_regex.Find(name))
 		new_xeno.name = name
 		new_xeno.real_name = real_name
+		new_xeno.update_name_tag() // monkestation edit: name tags
 	if(mind)
 		mind.name = new_xeno.real_name
 		mind.transfer_to(new_xeno)

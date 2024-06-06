@@ -221,6 +221,7 @@
 	eyeobj.setLoc(loc)
 	eyeobj.name = "[name] (AI Eye)"
 	eyeobj.real_name = eyeobj.name
+	eyeobj.update_name_tag() // monkestation edit: name tags
 	set_eyeobj_visible(TRUE)
 
 /mob/living/silicon/ai/proc/set_eyeobj_visible(state = TRUE)

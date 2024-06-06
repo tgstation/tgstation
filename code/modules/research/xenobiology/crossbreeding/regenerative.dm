@@ -247,6 +247,7 @@ Regenerative extracts:
 		T.dna.transfer_identity(D)
 		D.updateappearance(mutcolor_update=1)
 		D.real_name = T.real_name
+		D.update_name_tag(D.real_name) // monkestation edit: name tags
 	dummy.adjustBruteLoss(target.getBruteLoss())
 	dummy.adjustFireLoss(target.getFireLoss())
 	dummy.adjustToxLoss(target.getToxLoss())

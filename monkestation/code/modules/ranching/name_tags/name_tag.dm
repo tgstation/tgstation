@@ -58,6 +58,8 @@
 		QDEL_NULL(shadow)
 
 /mob/proc/update_name_tag(passed_name)
+	if(QDELETED(name_tag))
+		return
 	if(!passed_name)
 		passed_name = name
 
@@ -66,6 +68,14 @@
 		passed_name = copytext(passed_name, 1, the_check)
 	name_tag.set_name(name)
 
+/mob/fully_replace_character_name(oldname, newname)
+	. = ..()
+	if(oldname != real_name)
+		update_name_tag(real_name)
+
+/mob/living/set_name()
+	. = ..()
+	update_name_tag()
 
 /obj/effect/name_tag
 	plane = PLANE_NAME_TAGS
