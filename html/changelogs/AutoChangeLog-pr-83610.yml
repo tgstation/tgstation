@@ -1,0 +1,6 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Fixed timing issue where tram crossing signals would be out of sync with the moving tram"
+  - bugfix: "Tram crossing signals consistently show green when safe, blue when broken"
+  - bugfix: "Tram crossing signals show red instead of yellow when degraded"
