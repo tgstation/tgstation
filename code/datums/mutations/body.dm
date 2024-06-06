@@ -196,6 +196,7 @@
 	quality = NEGATIVE
 	remove_on_aheal = FALSE
 	locked = TRUE //Species specific, keep out of actual gene pool
+	mutadone_proof = TRUE
 	var/datum/species/original_species = /datum/species/human
 	var/original_name
 
