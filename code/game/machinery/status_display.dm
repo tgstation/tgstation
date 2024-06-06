@@ -146,7 +146,7 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
  */
 /obj/machinery/status_display/proc/update_message(current_key, line_y, message, x_offset, line_pair)
 	var/obj/effect/overlay/status_display_text/current_overlay = get_status_text(current_key)
-	var/obj/effect/overlay/status_display_text/new_overlay = generate_status_text(line_y, message, text_color, header_text_color, x_offset, line_pair)
+	var/obj/effect/overlay/status_display_text/new_overlay = generate_status_text(line_y, message, x_offset, text_color, header_text_color, line_pair)
 
 	if(current_overlay == new_overlay)
 		return current_key
