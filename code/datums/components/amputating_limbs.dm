@@ -73,7 +73,8 @@
 
 /// Chop one off
 /datum/component/amputating_limbs/proc/amputate(mob/living/surgeon, mob/living/carbon/victim, obj/item/bodypart/to_remove)
-	surgeon.visible_message(span_warning("[surgeon] [surgery_verb] [to_remove] off of [victim]!"))
+	if(surgery_time > 0 SECONDS)
+		surgeon.visible_message(span_warning("[surgeon] is [surgery_verb] the [to_remove] off of [victim]!"))
 	if (surgery_time > 0 && !do_after(surgeon, delay = surgery_time, target = victim))
 		return
 	to_remove.dismember()

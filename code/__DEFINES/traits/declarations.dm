@@ -1154,9 +1154,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to anything linked to, not necessarily allied to, the mansus
 #define TRAIT_MANSUS_TOUCHED "mansus_touched"
 
-/// Trait given to anything linked to, not necessarily allied to, the mansus
-#define TRAIT_MANSUS_TOUCHED "mansus_touched"
-
 /// Trait given to mobs wearing the clown mask
 #define TRAIT_PERCEIVED_AS_CLOWN "perceived_as_clown"
 /// Does this item bypass ranged armor checks?
