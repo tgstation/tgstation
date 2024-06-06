@@ -14,7 +14,6 @@
 	exit_delay = 1
 	enter_delay = 2
 	tube_construction = /obj/structure/c_transit_tube/station
-	interaction_flags_mouse_drop = NEED_VITALITY
 
 	var/open_status = STATION_TUBE_CLOSED
 	var/pod_moving = FALSE

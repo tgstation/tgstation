@@ -5,7 +5,7 @@
 	icon_state = "experiment-open"
 	density = FALSE
 	state_open = TRUE
-	interaction_flags_mouse_drop = NEED_VITALITY | NEED_DEXTERITY
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 
 	var/points = 0
 	var/credits = 0

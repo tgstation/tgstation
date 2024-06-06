@@ -6,7 +6,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "grinder"
 	layer = BELOW_OBJ_LAYER
-	interaction_flags_mouse_drop = NEED_VITALITY | NEED_DEXTERITY
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/monkey_recycler
 

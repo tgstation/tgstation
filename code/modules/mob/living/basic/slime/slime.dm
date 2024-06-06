@@ -9,7 +9,6 @@
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE | PASSGRILLE
 	gender = NEUTER
-	interaction_flags_mouse_drop = NEED_VITALITY
 	faction = list(FACTION_SLIME, FACTION_NEUTRAL)
 
 	icon_living = "grey baby slime"

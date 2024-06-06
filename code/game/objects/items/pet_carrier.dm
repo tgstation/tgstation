@@ -18,7 +18,7 @@
 	throw_speed = 2
 	throw_range = 3
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
-	interaction_flags_mouse_drop = NEED_VITALITY | NEED_DEXTERITY
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 
 	var/open = TRUE
 	var/locked = FALSE

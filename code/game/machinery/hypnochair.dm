@@ -7,7 +7,7 @@
 	circuit = /obj/item/circuitboard/machine/hypnochair
 	density = TRUE
 	opacity = FALSE
-	interaction_flags_mouse_drop = NEED_VITALITY | NEED_DEXTERITY
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 
 	///Keeps track of the victim to apply effects if it teleports away
 	var/mob/living/carbon/victim = null

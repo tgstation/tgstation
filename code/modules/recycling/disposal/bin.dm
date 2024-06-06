@@ -11,7 +11,6 @@
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 	obj_flags = CAN_BE_HIT
 	use_power = NO_POWER_USE
-	interaction_flags_mouse_drop = NEED_VITALITY
 
 	/// The internal air reservoir of the disposal
 	var/datum/gas_mixture/air_contents

@@ -8,7 +8,6 @@
 	layer = OBJ_LAYER
 	anchored = FALSE
 	pass_flags = PASSTABLE // Able to place on tables
-	interaction_flags_mouse_drop = NEED_VITALITY
 	max_integrity = 5000 // To make attacking it not instantly break it
 
 	/// The amount of times this bell has been rang, used to check the chance it breaks

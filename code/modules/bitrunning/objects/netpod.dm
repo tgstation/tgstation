@@ -11,7 +11,7 @@
 	max_integrity = 300
 	obj_flags = BLOCKS_CONSTRUCTION
 	state_open = TRUE
-	interaction_flags_mouse_drop = NEED_VITALITY | NEED_HANDS | NEED_DEXTERITY
+	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
 
 	/// Whether we have an ongoing connection
 	var/connected = FALSE

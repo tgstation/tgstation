@@ -8,7 +8,7 @@
 	clothing_flags = ANTI_TINFOIL_MANEUVER
 	var/datum/brain_trauma/mild/phobia/conspiracies/paranoia
 	var/warped = FALSE
-	interaction_flags_mouse_drop = NEED_VITALITY | NEED_HANDS
+	interaction_flags_mouse_drop = NEED_HANDS
 
 /datum/armor/costume_foilhat
 	laser = -5

@@ -3,7 +3,6 @@
 	desc = "A fun way to get around."
 	icon_state = "scooter"
 	are_legs_exposed = TRUE
-	interaction_flags_mouse_drop = NEED_VITALITY
 
 /obj/vehicle/ridden/scooter/Initialize(mapload)
 	. = ..()

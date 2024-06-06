@@ -15,7 +15,6 @@
 	force = 5
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
-	interaction_flags_mouse_drop = NEED_VITALITY
 	actions_types = list(/datum/action/item_action/toggle_paddles)
 	armor_type = /datum/armor/item_defibrillator
 

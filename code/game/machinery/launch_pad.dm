@@ -7,7 +7,7 @@
 	icon_state = "lpad-idle"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.5
 	hud_possible = list(DIAG_LAUNCHPAD_HUD)
-	interaction_flags_mouse_drop = NEED_VITALITY | NEED_DEXTERITY | NEED_HANDS
+	interaction_flags_mouse_drop = NEED_DEXTERITY | NEED_HANDS
 	circuit = /obj/item/circuitboard/machine/launchpad
 
 	/// The beam icon

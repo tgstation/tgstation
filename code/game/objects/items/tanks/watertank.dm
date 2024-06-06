@@ -14,7 +14,7 @@
 	max_integrity = 200
 	armor_type = /datum/armor/item_watertank
 	resistance_flags = FIRE_PROOF
-	interaction_flags_mouse_drop = NEED_VITALITY | ALLOW_RESTING
+	interaction_flags_mouse_drop = ALLOW_RESTING
 
 	var/obj/item/noz
 	var/volume = 500

@@ -1,5 +1,4 @@
 /atom/movable
-	interaction_flags_mouse_drop = NEED_VITALITY
 	/// Whether the atom allows mobs to be buckled to it. Can be ignored in [/atom/movable/proc/buckle_mob()] if force = TRUE
 	var/can_buckle = FALSE
 	/// Bed-like behaviour, forces mob.lying = buckle_lying if not set to [NO_BUCKLE_LYING].

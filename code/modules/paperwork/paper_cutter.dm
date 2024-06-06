@@ -7,7 +7,6 @@
 	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	pass_flags = PASSTABLE
-	interaction_flags_mouse_drop = NEED_VITALITY
 
 	/// The paper currently loaded inside the cutter
 	var/obj/item/paper/stored_paper

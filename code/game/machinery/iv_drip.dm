@@ -23,7 +23,7 @@
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	use_power = NO_POWER_USE
-	interaction_flags_mouse_drop = NEED_VITALITY | NEED_HANDS
+	interaction_flags_mouse_drop = NEED_HANDS
 
 	///What are we sticking our needle in?
 	var/atom/attached

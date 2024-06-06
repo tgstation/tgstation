@@ -1,7 +1,6 @@
 /obj/vehicle/sealed/car
 	layer = ABOVE_MOB_LAYER
 	move_resist = MOVE_FORCE_VERY_STRONG
-	interaction_flags_mouse_drop = NEED_VITALITY
 
 	///Bitflags for special behavior such as kidnapping
 	var/car_traits = NONE

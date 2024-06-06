@@ -5,7 +5,7 @@
 	armor_type = /datum/armor/shoes_cowboy
 	custom_price = PAYCHECK_CREW
 	can_be_tied = FALSE
-	interaction_flags_mouse_drop = NEED_VITALITY | NEED_HANDS | NEED_DEXTERITY
+	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
 
 	var/max_occupants = 4
 	/// Do these boots have spur sounds?

@@ -11,7 +11,7 @@
 	base_icon_state = "infuser"
 	density = TRUE
 	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
-	interaction_flags_mouse_drop = NEED_VITALITY | NEED_HANDS | NEED_DEXTERITY
+	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
 	circuit = /obj/item/circuitboard/machine/dna_infuser
 
 	/// maximum tier this will infuse

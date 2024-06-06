@@ -160,7 +160,6 @@
 	close_sound = 'sound/machines/trapdoor/trapdoor_shut.ogg'
 	set_dir_on_move = TRUE
 	can_buckle = TRUE
-	interaction_flags_mouse_drop = NEED_VITALITY
 
 	/// Whether we're on a set of rails or just on the ground
 	var/on_rails = FALSE

@@ -11,7 +11,7 @@
 	hardware_flag = PROGRAM_LAPTOP
 	max_idle_programs = 3
 	w_class = WEIGHT_CLASS_NORMAL
-	interaction_flags_mouse_drop = NEED_VITALITY | NEED_HANDS
+	interaction_flags_mouse_drop = NEED_HANDS
 
 
 	// No running around with open laptops in hands.

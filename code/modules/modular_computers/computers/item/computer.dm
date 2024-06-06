@@ -12,7 +12,7 @@
 	max_integrity = 100
 	armor_type = /datum/armor/item_modular_computer
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
-	interaction_flags_mouse_drop = NEED_HANDS | NEED_VITALITY | ALLOW_RESTING
+	interaction_flags_mouse_drop = NEED_HANDS | ALLOW_RESTING
 
 	///The ID currently stored in the computer.
 	var/obj/item/card/id/computer_id_slot

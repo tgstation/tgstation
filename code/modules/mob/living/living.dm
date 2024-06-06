@@ -1314,20 +1314,16 @@
 	if(!istype(target))
 		CRASH("Missing target arg for can_perform_action")
 
+	if(incapacitated() || stat == DEAD || stat != CONSCIOUS)
+		to_chat(src, span_warning("You are in no physical condition to do this!"))
+		return FALSE
+
 	// If the MOBILITY_UI bitflag is not set it indicates the mob's hands are cutoff, blocked, or handcuffed
 	// Note - AI's and borgs have the MOBILITY_UI bitflag set even though they don't have hands
 	// Also if it is not set, the mob could be incapcitated, knocked out, unconscious, asleep, EMP'd, etc.
 	if(!(mobility_flags & MOBILITY_UI) && !(action_bitflags & ALLOW_RESTING))
 		to_chat(src, span_warning("You can't do that right now!"))
 		return FALSE
-
-	if(action_bitflags & NEED_VITALITY)
-		if(incapacitated())
-			to_chat(src, span_warning("You are in no condition to do this!"))
-			return FALSE
-		if(stat == DEAD || stat != CONSCIOUS)
-			to_chat(src, span_warning("You are in no physical condition to do this!"))
-			return FALSE
 
 	// NEED_HANDS is already checked by MOBILITY_UI for humans so this is for silicons
 	if((action_bitflags & NEED_HANDS))

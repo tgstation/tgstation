@@ -1,6 +1,6 @@
 /obj/vehicle/sealed
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-	interaction_flags_mouse_drop = NEED_VITALITY | NEED_HANDS
+	interaction_flags_mouse_drop = NEED_HANDS
 
 	var/enter_delay = 2 SECONDS
 	var/mouse_pointer

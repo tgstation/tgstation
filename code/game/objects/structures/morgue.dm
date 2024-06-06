@@ -518,7 +518,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = PASSTABLE | LETPASSTHROW
-	interaction_flags_mouse_drop = NEED_VITALITY
+
 	max_integrity = 350
 
 	///The bodycontainer we are a tray to.

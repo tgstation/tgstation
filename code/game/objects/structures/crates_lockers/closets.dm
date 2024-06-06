@@ -15,7 +15,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	integrity_failure = 0.25
 	armor_type = /datum/armor/structure_closet
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
-	interaction_flags_mouse_drop = NEED_VITALITY
 	/// How close being inside of the thing provides complete pressure safety. Must be between 0 and 1!
 	contents_pressure_protection = 0
 	/// How insulated the thing is, for the purposes of calculating body temperature. Must be between 0 and 1!

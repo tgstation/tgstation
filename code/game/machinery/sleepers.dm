@@ -7,7 +7,7 @@
 	density = FALSE
 	obj_flags = BLOCKS_CONSTRUCTION
 	state_open = TRUE
-	interaction_flags_mouse_drop = NEED_VITALITY | NEED_DEXTERITY
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 	circuit = /obj/item/circuitboard/machine/sleeper
 
 	payment_department = ACCOUNT_MED

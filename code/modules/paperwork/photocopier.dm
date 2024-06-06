@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	power_channel = AREA_USAGE_EQUIP
 	max_integrity = 300
 	integrity_failure = 0.33
-	interaction_flags_mouse_drop = NEED_VITALITY | NEED_DEXTERITY | ALLOW_RESTING
+	interaction_flags_mouse_drop = NEED_DEXTERITY | ALLOW_RESTING
 
 	/// A reference to a mob on top of the photocopier trying to copy their ass. Null if there is no mob.
 	var/mob/living/ass

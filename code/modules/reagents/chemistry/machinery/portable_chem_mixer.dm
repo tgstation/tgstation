@@ -10,7 +10,7 @@
 	custom_price = PAYCHECK_CREW * 10
 	custom_premium_price = PAYCHECK_CREW * 14
 	interaction_flags_click = FORBID_TELEKINESIS_REACH
-	interaction_flags_mouse_drop = NEED_VITALITY | FORBID_TELEKINESIS_REACH
+	interaction_flags_mouse_drop = FORBID_TELEKINESIS_REACH
 
 	///Creating an empty slot for a beaker that can be added to dispense into
 	var/obj/item/reagent_containers/beaker

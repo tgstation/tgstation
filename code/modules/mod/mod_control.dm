@@ -13,7 +13,7 @@
 	base_icon_state = "control"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	interaction_flags_mouse_drop = NEED_HANDS | NEED_VITALITY
+	interaction_flags_mouse_drop = NEED_HANDS
 	strip_delay = 10 SECONDS
 	armor_type = /datum/armor/none
 	actions_types = list(

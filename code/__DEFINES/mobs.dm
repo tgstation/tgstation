@@ -821,18 +821,16 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define NEED_DEXTERITY (1<<3)
 /// If hands are required to perform action (can't use objects that require hands if you are a cyborg)
 #define NEED_HANDS (1<<4)
-/// Must not be incapaciated, unconsious or dead
-#define NEED_VITALITY (1<<5)
 /// If telekinesis is forbidden to perform action from a distance (ex. canisters are blacklisted from telekinesis manipulation)
-#define FORBID_TELEKINESIS_REACH (1<<6)
+#define FORBID_TELEKINESIS_REACH (1<<5)
 /// If silicons are allowed to perform action from a distance (silicons can operate airlocks from far away)
-#define ALLOW_SILICON_REACH (1<<7)
+#define ALLOW_SILICON_REACH (1<<6)
 /// If resting on the floor is allowed to perform action (pAIs can play music while resting)
-#define ALLOW_RESTING (1<<8)
+#define ALLOW_RESTING (1<<7)
 /// If this is accessible to creatures with ventcrawl capabilities
-#define NEED_VENTCRAWL (1<<9)
+#define NEED_VENTCRAWL (1<<8)
 /// Checks for base adjacency, but silences the error
-#define SILENT_ADJACENCY (1<<10)
+#define SILENT_ADJACENCY (1<<9)
 
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1

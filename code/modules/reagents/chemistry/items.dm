@@ -14,7 +14,7 @@
 	item_flags = NOBLUDGEON
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
-	interaction_flags_mouse_drop = NEED_HANDS | NEED_VITALITY
+	interaction_flags_mouse_drop = NEED_HANDS
 
 	///How many pages the booklet holds
 	var/number_of_pages = 50

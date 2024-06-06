@@ -8,7 +8,6 @@
 	melee_damage_lower = 20 //Refers to unarmed damage, aliens do unarmed attacks.
 	melee_damage_upper = 20
 	max_grab = GRAB_AGGRESSIVE
-	interaction_flags_mouse_drop = NEED_VITALITY
 
 	var/caste = ""
 	var/alt_icon = 'icons/mob/nonhuman-player/alienleap.dmi' //used to switch between the two alien icon files.

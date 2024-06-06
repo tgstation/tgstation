@@ -10,7 +10,7 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/sneakers/inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
 	flags_1 = IS_PLAYER_COLORABLE_1
-	interaction_flags_mouse_drop = NEED_VITALITY | NEED_HANDS
+	interaction_flags_mouse_drop = NEED_HANDS
 
 /obj/item/clothing/shoes/sneakers/black
 	name = "black shoes"

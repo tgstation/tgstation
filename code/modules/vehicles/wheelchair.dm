@@ -7,7 +7,7 @@
 	max_integrity = 100
 	armor_type = /datum/armor/ridden_wheelchair
 	density = FALSE
-	interaction_flags_mouse_drop = NEED_VITALITY | ALLOW_RESTING
+	interaction_flags_mouse_drop = ALLOW_RESTING
 
 	/// Run speed delay is multiplied with this for vehicle move delay.
 	var/delay_multiplier = 6.7

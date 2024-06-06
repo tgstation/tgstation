@@ -5,7 +5,7 @@
 	icon_state = "implantchair"
 	density = TRUE
 	opacity = FALSE
-	interaction_flags_mouse_drop = NEED_VITALITY | NEED_DEXTERITY
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 
 	var/ready = TRUE
 	var/replenishing = FALSE

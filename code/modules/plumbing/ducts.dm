@@ -9,7 +9,6 @@ All the important duct code:
 	icon_state = "nduct"
 	layer = PLUMBING_PIPE_VISIBILE_LAYER
 	use_power = NO_POWER_USE
-	interaction_flags_mouse_drop = NEED_VITALITY
 
 	///bitfield with the directions we're connected in
 	var/connects
