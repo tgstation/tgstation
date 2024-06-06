@@ -21,15 +21,17 @@
 	..()
 	animal_count = rand(15,20) //might be too few given ~15 roundstart stationside ones
 	human_count = rand(round(0.75 * SSticker.totalPlayersReady) , SSticker.totalPlayersReady) // 75%+ roundstart population.
-	var/non_standard_plants = non_standard_plants_count()
-	plant_count = rand(round(0.5 * non_standard_plants),round(0.7 * non_standard_plants))
+	//var/non_standard_plants = non_standard_plants_count()
+	plant_count = rand(8, 15) // monkestation edit: make the dna vault actually viable
 
+/* monkestation removal
 /datum/station_goal/dna_vault/proc/non_standard_plants_count()
 	. = 0
 	for(var/T in subtypesof(/obj/item/seeds)) //put a cache if it's used anywhere else
 		var/obj/item/seeds/S = T
 		if(initial(S.rarity) > 0)
 			.++
+*/
 
 /datum/station_goal/dna_vault/get_report()
 	return list(
