@@ -2609,7 +2609,7 @@
 /obj/effect/spawner/random/entertainment/arcade,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/holodeck/rec_center)
 "bfe" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera/autoname/directional/west,
@@ -2856,6 +2856,9 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
+"blc" = (
+/turf/closed/wall,
+/area/station/holodeck)
 "blf" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
@@ -3818,7 +3821,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/holodeck/rec_center)
 "bEN" = (
 /obj/structure/chair/sofa/bench/left{
 	dir = 4
@@ -5253,7 +5256,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/holodeck/rec_center)
 "cip" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/opposingcorners{
@@ -6665,7 +6668,7 @@
 /obj/structure/chair/stool/bar/directional/south,
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/holodeck/rec_center)
 "cIU" = (
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
@@ -8762,7 +8765,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/holodeck/rec_center)
 "dzA" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/simple/brown/visible,
@@ -9487,6 +9490,16 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 5
 	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 5
+	},
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/eighties/red,
 /area/station/hallway/primary/central/fore)
 "dQE" = (
@@ -12713,7 +12726,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/holodeck/rec_center)
 "eYY" = (
 /obj/structure/window/spawner/directional/west,
 /obj/structure/window/spawner/directional/east,
@@ -20593,7 +20606,7 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/iron,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/holodeck/rec_center)
 "hDt" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -29748,6 +29761,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
+"kzV" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/holodeck)
 "kAf" = (
 /obj/structure/transit_tube/station/dispenser/flipped{
 	dir = 1
@@ -29969,6 +29986,9 @@
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark,
 /area/station/cargo/storage)
+"kEX" = (
+/turf/closed/wall,
+/area/station/holodeck/rec_center)
 "kFg" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/siding/wood,
@@ -32403,6 +32423,17 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/service/hydroponics)
+"luZ" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Holodeck Door"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "holodeck"
+	},
+/turf/open/floor/iron/textured_half{
+	dir = 8
+	},
+/area/station/holodeck)
 "lvc" = (
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/escape)
@@ -36484,7 +36515,7 @@
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/holodeck/rec_center)
 "mKB" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
@@ -37506,7 +37537,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/holodeck/rec_center)
 "ncD" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/segment{
@@ -38328,7 +38359,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/holodeck/rec_center)
 "nsL" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/red{
@@ -43216,6 +43247,10 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/smooth,
 /area/station/service/greenroom)
+"pbL" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/floor/iron,
+/area/station/holodeck/rec_center)
 "pbT" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -45810,7 +45845,7 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/iron,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/holodeck/rec_center)
 "pQY" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
@@ -51081,7 +51116,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/holodeck/rec_center)
 "rvX" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/left/directional/south{
@@ -51476,7 +51511,7 @@
 	},
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/holodeck/rec_center)
 "rBO" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -57230,7 +57265,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/holodeck/rec_center)
 "trl" = (
 /obj/effect/spawner/random/structure/tank_holder,
 /obj/machinery/light_switch/directional/east,
@@ -59584,7 +59619,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/holodeck/rec_center)
 "ucy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/red{
@@ -59990,7 +60025,7 @@
 	},
 /obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/holodeck)
 "uhH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -63323,7 +63358,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/holodeck/rec_center)
 "vjn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -67595,7 +67630,7 @@
 /obj/structure/chair/stool/bar/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/station/commons/fitness/recreation/entertainment)
+/area/station/holodeck/rec_center)
 "wtc" = (
 /obj/structure/cable,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -111522,16 +111557,16 @@ sOy
 sOy
 psz
 pzd
-rnD
-rnD
-pzd
-iTN
-rnD
-rnD
-iTN
-pzd
-rnD
-rnD
+kzV
+kzV
+blc
+luZ
+kzV
+kzV
+luZ
+blc
+kzV
+kzV
 pzd
 dWF
 sfk
@@ -114352,13 +114387,13 @@ cvk
 nFW
 pQO
 hDm
-hqL
+pbL
 trc
 rBK
-hqL
+pbL
 wsX
 cij
-pzd
+kEX
 gMz
 rem
 rQA
@@ -114611,11 +114646,11 @@ beR
 rvH
 ucw
 dzq
-hqL
+pbL
 nsH
 cIC
 cij
-pzd
+kEX
 ycQ
 rem
 nvB
@@ -114864,13 +114899,13 @@ eav
 eav
 nFW
 nFW
-pzd
-pzd
+kEX
+kEX
 bED
 vjc
 ncs
 mKs
-pzd
+kEX
 xQJ
 xQJ
 xQJ
@@ -115122,12 +115157,12 @@ tLj
 wOp
 fsq
 iRl
-pzd
-pzd
+kEX
+kEX
 eYT
-pzd
-pzd
-pzd
+kEX
+kEX
+kEX
 xqs
 xMO
 xQJ
