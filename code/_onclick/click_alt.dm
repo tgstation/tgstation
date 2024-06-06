@@ -109,11 +109,10 @@
 	//Hook on the atom to intercept the click
 	if(SEND_SIGNAL(target, COMSIG_CLICK_ALT_SECONDARY, src) & COMPONENT_CANCEL_CLICK_ALT_SECONDARY)
 		return
-	if(isobserver(src) && src.client && check_rights_for(src.client, R_DEBUG))
-		src.client.toggle_tag_datum(src)
+	if(isobserver(src) && client && check_rights_for(client, R_DEBUG))
+		client.toggle_tag_datum(src)
 		return
-	click_alt_secondary(src)
-
+	target.click_alt_secondary(src)
 
 /**
  * ## Custom alt click secondary interaction
