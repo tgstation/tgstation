@@ -166,7 +166,8 @@
 		if("PDA_ringSet")
 			var/mob/living/user = usr
 			var/new_ringtone = tgui_input_text(user, "Enter a new ringtone", "Ringtone", ringtone, encode = FALSE)
-			if(!in_range(computer, user) || computer.loc != user)
+			if(!computer.can_interact(user))
+				computer.balloon_alert(user, "can't reach!")
 				return FALSE
 			return set_ringtone(new_ringtone, user)
 
