@@ -48,7 +48,7 @@
 		span_notice("[user] begins to perform a lobotomy on [target]'s brain."),
 		span_notice("[user] begins to perform surgery on [target]'s brain."),
 	)
-	display_pain(target, "Your head pounds with unimaginable pain!")
+	display_pain(target, "Your head pounds with unimaginable pain!", /datum/mood_event/surgery)
 
 /datum/surgery_step/lobotomize/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(

@@ -263,12 +263,14 @@
  * * pain_message - The message to be displayed
  * * mechanical_surgery - Boolean flag that represents if a surgery step is done on a mechanical limb (therefore does not force scream)
  */
-/datum/surgery_step/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE)
+/datum/surgery_step/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE, mood_event_type)
 	if(target.stat < UNCONSCIOUS)
 		if(HAS_TRAIT(target, TRAIT_ANALGESIA))
 			to_chat(target, span_notice("You feel a dull, numb sensation as your body is surgically operated on."))
 		else
 			to_chat(target, span_userdanger(pain_message))
+			if(mood_event)
+				target.add_mood_event("surgery", mood_event_type)
 			if(prob(30) && !mechanical_surgery)
 				target.emote("scream")
 
