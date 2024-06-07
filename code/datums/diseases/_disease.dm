@@ -288,7 +288,6 @@
 			return FALSE
 		end = Temp
 
-
 /datum/disease/proc/cure(add_resistance = TRUE)
 	if(severity == DISEASE_SEVERITY_UNCURABLE) //aw man :(
 		return

@@ -1,0 +1,4 @@
+author: "DaCoolBoss"
+delete-after: True
+changes:
+  - bugfix: "Fixed entries in config file 'spaceruinsblacklist.txt'."
