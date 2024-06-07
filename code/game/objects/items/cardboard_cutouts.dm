@@ -166,6 +166,12 @@
 /obj/item/cardboard_cutout/adaptive //Purchased by Syndicate agents, these cutouts are indistinguishable from normal cutouts but aren't discolored when their appearance is changed
 	deceptive = TRUE
 
+/obj/item/cardboard_cutout/nuclear_operative
+	starting_cutout = "Nuclear Operative"
+
+/obj/item/cardboard_cutout/xenomorph
+	starting_cutout = "Xenomorph"
+
 /datum/cardboard_cutout
 	/// Name of the cutout, used for radial selection and the global list.
 	var/name = "Boardjak"

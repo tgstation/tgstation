@@ -165,6 +165,12 @@
 
 				initial_contents += new_initial_contents
 
+///verify the movables in our list of contents are actually on our loc
+/obj/structure/transport/linear/proc/verify_transport_contents()
+	for(var/atom/movable/movable_contents as anything in transport_contents)
+		if(!(movable_contents.loc in locs))
+			remove_item_from_transport(movable_contents)
+
 ///signal handler for COMSIG_MOVABLE_UPDATE_GLIDE_SIZE: when a movable in transport_contents changes its glide_size independently.
 ///adds that movable to a lazy list, movables in that list have their glide_size updated when the tram next moves
 /obj/structure/transport/linear/proc/on_changed_glide_size(atom/movable/moving_contents, new_glide_size)
@@ -753,6 +759,23 @@
 
 	if(direction == DOWN)
 		user.visible_message(span_notice("[user] moves the lift downwards."), span_notice("You move the lift downwards."))
+
+/obj/machinery/door/poddoor/lift
+	name = "elevator door"
+	desc = "Keeps idiots like you from walking into an open elevator shaft."
+	icon = 'icons/obj/doors/liftdoor.dmi'
+	opacity = FALSE
+	glass = TRUE
+
+/obj/machinery/door/poddoor/lift/Initialize(mapload)
+	if(!isnull(transport_linked_id)) //linter and stuff
+		elevator_mode = TRUE
+	return ..()
+
+/obj/machinery/door/poddoor/lift/preopen
+	icon_state = "open"
+	density = FALSE
+	opacity = FALSE
 
 // A subtype intended for "public use"
 /obj/structure/transport/linear/public
