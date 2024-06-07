@@ -1,0 +1,4 @@
+author: "nikothedude"
+delete-after: True
+changes:
+  - rscadd: "New deathmatch modifier: \"Random martial arts\""
