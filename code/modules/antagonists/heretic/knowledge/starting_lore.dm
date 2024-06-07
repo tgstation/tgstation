@@ -310,11 +310,11 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		return FALSE
 	user.set_temp_blindness(5 SECONDS)
 	user.AdjustParalyzed(5 SECONDS)
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	for(var/i in 0 to 5)
 		user.emote("scream")
 		playsound(loc, 'sound/items/eatfood.ogg', 100, TRUE)
 		heretic_datum.knowledge_points++
 		sleep(1 SECONDS)
 	to_chat(user,span_danger("You feel different..."))
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	heretic_datum.feast_of_owls = TRUE
