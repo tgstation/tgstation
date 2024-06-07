@@ -70,7 +70,7 @@
  * ### Return flags
  * Forgetting your return will cause the default ctrl click behavior to occur thereafter.
  *
- * Returning any value besides NONE will continue the attack chain causing the object to get pulled/grabbed
+ * Returning any value besides NONE will stop the attack chain and thus stop the object from getting pulled/grabbed
  **/
 /atom/proc/ctrl_click(mob/user)
 	SHOULD_CALL_PARENT(FALSE)
