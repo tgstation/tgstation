@@ -267,6 +267,11 @@
 	if(!cell?.use(current_camera_range > 0 ? REMOTECAM_ENERGY_USAGE_FAR : REMOTECAM_ENERGY_USAGE_NEAR))
 		close_camera()
 		return
+	if(camera_range_settable)
+		//If the camera range has changed, update camera range
+		if(!camera_range.value != !current_camera_range)
+			current_camera_range = camera_range.value
+			update_camera_range()
 	//Set the camera state (if state has been changed)
 	if(current_camera_state ^ shell_camera.camera_enabled)
 		shell_camera.toggle_cam(null, 0)
