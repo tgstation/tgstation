@@ -15,10 +15,9 @@
 	var/area/our_area = get_area(src)
 	if(!isnull(our_area))
 		return
-	var/list/turf_lists = our_area.get_zlevel_turf_lists()
-	if(!islist(turf_lists[z]))
+	var/list/turf_list = our_area.get_turfs_by_zlevel(z)
+	if(!islist(turf_list))
 		return
-	var/list/turf_list = turf_lists[z]
 	for (var/turf/area_turf as anything in turf_list)
 		var/obj/machinery/mineral/stacking_machine/found_machine = locate(/obj/machinery/mineral/stacking_machine) in area_turf
 		if(!isnull(found_machine) && isnull(found_machine.console))
