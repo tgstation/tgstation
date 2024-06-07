@@ -495,10 +495,6 @@
 /obj/item/taperecorder/empty,
 /turf/open/floor/carpet,
 /area/ruin/comms_agent)
-"zd" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/mineral/snowmountain/icemoon,
-/area/icemoon/underground/explored)
 "zi" = (
 /turf/open/floor/plating,
 /area/ruin/comms_agent)
@@ -550,8 +546,8 @@
 /area/ruin/comms_agent)
 "CL" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/super/full,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible/layer2,
+/obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "CS" = (
@@ -566,7 +562,6 @@
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "CW" = (
-/obj/structure/closet/emcloset,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
@@ -715,6 +710,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "KB" = (
@@ -2257,7 +2253,7 @@ CS
 Wl
 CL
 LP
-zd
+MH
 MH
 OM
 sB
