@@ -2,7 +2,9 @@
 
 ## What is this?
 
-This folder holds a set of cached versions of hypnagogic, our icon cutter.
+During CI running, this folder holds a set of cached versions of hypnagogic, our icon cutter
+
+Note that they do not exist here outside of during CI runs.
 
 ## How is it used?
 
