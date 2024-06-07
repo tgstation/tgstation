@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Oozelings now transfer orbiters to/from their core."
+  - code_imp: "Cleaned up some code relating to oozeling cores."
