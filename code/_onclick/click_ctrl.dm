@@ -50,6 +50,7 @@
 		return
 	pulled(target)
 
+
 /**
  * Ctrl mouse wheel click
  * Except for tagging datumns same as control click
@@ -75,3 +76,17 @@
 /atom/proc/ctrl_click(mob/user)
 	SHOULD_CALL_PARENT(FALSE)
 	return NONE
+
+
+/**
+ * Control+Shift click
+ * Unused except for AI
+ */
+/mob/proc/CtrlShiftClickOn(atom/A)
+	A.CtrlShiftClick(src)
+
+/atom/proc/CtrlShiftClick(mob/user)
+	if(!can_interact(user))
+		return FALSE
+	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT, user)
+	return
