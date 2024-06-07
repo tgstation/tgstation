@@ -59,12 +59,11 @@
 	return FALSE
 
 /mob/living/basic/bot/dedbot/HasProximity(mob/living/victim, datum/ai_controller/basic_controller/bot/dedbot/controller)
-	SIGNAL_HANDLER
 	if(!COOLDOWN_FINISHED(src, exenteration_cooldown_duration))
 		return
 	if (!isliving(victim)) //we target living guys
 		return
-	if (!check_faction(victim)) //who arent in our faction
+	if (check_faction(victim)) //who arent in our faction
 		return
 	var/datum/action/cooldown/using_action = controller.blackboard[BB_DEDBOT_SLASH]
 	if (using_action?.IsAvailable())
