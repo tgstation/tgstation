@@ -28,6 +28,7 @@
 	. = ..()
 	var/mob/living/current_mob = mob_override || owner.current
 	current_mob.apply_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)
+	current_mob.clear_mood_event("vampcandle")
 	add_team_hud(current_mob)
 
 /datum/antagonist/vassal/add_team_hud(mob/target)

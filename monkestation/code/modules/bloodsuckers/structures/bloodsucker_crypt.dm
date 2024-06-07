@@ -501,7 +501,7 @@
 		/// We dont want Bloodsuckers or Vassals affected by this
 		if(IS_VASSAL(nearly_people) || IS_BLOODSUCKER(nearly_people) || IS_MONSTERHUNTER(nearly_people))
 			continue
-		nearly_people.adjust_hallucinations(5 SECONDS)
+		nearly_people.set_hallucinations_if_lower(5 SECONDS)
 		nearly_people.add_mood_event("vampcandle", /datum/mood_event/vampcandle)
 
 /// Blood Throne - Allows Bloodsuckers to remotely speak with their Vassals. - Code (Mostly) stolen from comfy chairs (armrests) and chairs (layers)
