@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Ctrl-clicking jumpsuits to max sensors now actually works"
