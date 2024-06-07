@@ -8,7 +8,7 @@
 /datum/action/innate/flight/Activate()
 	var/mob/living/carbon/human/human = owner
 	var/obj/item/organ/external/wings/functional/wings = human.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
-	if(wings && wings.can_fly(human))
+	if(wings?.can_fly(human))
 		wings.toggle_flight(human)
 		if(!(human.movement_type & FLYING))
 			to_chat(human, span_notice("You settle gently back onto the ground..."))
@@ -29,23 +29,26 @@
 	// grind_results = list(/datum/reagent/flightpotion = 5)
 	food_reagents = list(/datum/reagent/flightpotion = 5)
 
+/obj/item/organ/external/wings/functional/Destroy()
+	QDEL_NULL(fly)
+	return ..()
+
 /obj/item/organ/external/wings/functional/Insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
-	if(. && isnull(fly))
+	if(!.)
+		return
+	if(QDELETED(fly))
 		fly = new
-		fly.Grant(receiver)
+	fly.Grant(receiver)
 
 /obj/item/organ/external/wings/functional/Remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-
-	fly.Remove(organ_owner)
-
+	fly?.Remove(organ_owner)
 	if(wings_open)
 		toggle_flight(organ_owner)
 
 /obj/item/organ/external/wings/functional/on_life(seconds_per_tick, times_fired)
 	. = ..()
-
 	handle_flight(owner)
 
 ///Called on_life(). Handle flight code and check if we're still flying

@@ -17,12 +17,14 @@
 	text_color = "#F44"
 	header_text_color = "#F88"
 
-	var/id = null // id of linked machinery/lockers
-
+	/// ID of linked machinery/lockers.
+	var/id = null
+	/// The time at which the timer started.
 	var/activation_time = 0
+	/// The time offset from the activation time before releasing.
 	var/timer_duration = 0
-
-	var/timing = FALSE // boolean, true/1 timer is on, false/0 means it's not timing
+	/// Is the timer on?
+	var/timing = FALSE
 	///List of weakrefs to nearby doors
 	var/list/doors = list()
 	///List of weakrefs to nearby flashers
@@ -138,7 +140,7 @@
 		sec_radio.talk_into(src, "Timer has expired. Releasing prisoner.", FREQ_SECURITY)
 
 	timing = FALSE
-	activation_time = null
+	activation_time = 0
 	set_timer(0)
 	end_processing()
 
@@ -168,12 +170,12 @@
 /**
  * Return time left.
  * Arguments:
- * * seconds - return time in seconds it TRUE, else deciseconds.
+ * * seconds - Return the time in seconds if TRUE, else deciseconds.
  */
 /obj/machinery/status_display/door_timer/proc/time_left(seconds = FALSE)
-	. = max(0, timer_duration - (activation_time ? world.time - activation_time : 0))
+	. = max(0, timer_duration + activation_time - world.time)
 	if(seconds)
-		. /= 10
+		. /= (1 SECONDS)
 
 /**
  * Set the timer. Does NOT automatically start counting down, but does update the display.
@@ -184,7 +186,7 @@
  * value - time in deciseconds to set the timer for.
  */
 /obj/machinery/status_display/door_timer/proc/set_timer(value)
-	var/new_time = clamp(value, 0, MAX_TIMER)
+	var/new_time = clamp(value, 0, MAX_TIMER + world.time - activation_time)
 	. = new_time == timer_duration //return 1 on no change
 	timer_duration = new_time
 	update_content()
@@ -229,7 +231,7 @@
 		if("time")
 			var/value = text2num(params["adjust"])
 			if(value)
-				. = set_timer(time_left() + value)
+				. = set_timer(timer_duration + value)
 				user.investigate_log("modified the timer by [value/10] seconds for cell [id], currently [time_left(seconds = TRUE)]", INVESTIGATE_RECORDS)
 				user.log_message("modified the timer by [value/10] seconds for cell [id], currently [time_left(seconds = TRUE)]", LOG_ATTACK)
 		if("start")
