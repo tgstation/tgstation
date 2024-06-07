@@ -69,6 +69,13 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 /datum/fish_source/proc/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	return rod.reason_we_cant_fish(src)
 
+/// Called below above proc, in case the fishing source has anything to do that isn't denial
+/datum/fish_source/proc/on_start_fishing(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
+	if(istype(rod.hook, /obj/item/fishing_hook/rescue))
+		to_chat(fisherman, span_notice("The rescue hook falls straight down the chasm! Hopefully it catches a corpse."))
+		return
+	to_chat(fisherman, span_danger("Your fishing hook makes a soft 'thud' noise as it gets stuck on the wall of the chasm. It doesn't look like it's going to catch much of anything, except maybe some detritus."))
+
 /**
  * Calculates the difficulty of the minigame:
  *

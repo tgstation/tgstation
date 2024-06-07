@@ -204,6 +204,8 @@
 
 	return rod.hook.chasm_detritus_type
 
+/datum/fish_source/chasm
+
 /datum/fish_source/lavaland
 	catalog_description = "Lava vents"
 	background = "background_lavaland"
