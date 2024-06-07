@@ -1,4 +1,0 @@
-author: "EEASAS"
-delete-after: True
-changes:
-  - bugfix: "fixed the mis-rotated disposals pipe on birdshot"
