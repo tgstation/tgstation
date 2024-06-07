@@ -215,6 +215,7 @@
  * Set the camera as emp'd
  */
 /obj/item/circuit_component/remotecam/proc/set_camera_emp(datum/source, severity, protection)
+	SIGNAL_HANDLER
 	if(current_camera_emp)
 		return
 	if(!prob(150 / severity))
