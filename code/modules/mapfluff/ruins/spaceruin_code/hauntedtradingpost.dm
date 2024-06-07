@@ -144,34 +144,43 @@
 	undertile_pressureplate = FALSE
 	//is this being used as part of the haunted trading post ruin? if true, will self destruct when boss dies
 	var/donk_ai_slave = FALSE
-	//how many times the trap can trigger. -1 = infinite
-	var/uses_remaining = -1
+	//can the trap trigger more than once?
+	var/multiuse = FALSE
+	//(if multiuse) how many times the trap can trigger. 0 or lower is infinite
+	var/uses_remaining = 0
 	//if true, the trap will unbolt all doors it bolted and cycle shutters a second time after a delay
 	var/resets_self = TRUE
 	//time before resets_self kicks in
 	var/reset_timer = 10 SECONDS
+	//when multiple tripwires are in the same suicide pact, they will all die when any of them die
+	var/suicide_pact = FALSE
+	//id of the suicide pact this tripwire is in
+	var/suicide_pact_id
+GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 
 /obj/item/pressure_plate/invisible_tripwire/Initialize(mapload)
 	. = ..()
 	tile_overlay = null
 	if(donk_ai_slave == TRUE)
 		GLOB.selfdestructs_when_boss_dies += src
+	if(suicide_pact == TRUE || suicide_pact_id != null)
+		GLOB.tripwire_suicide_pact += src
 
-/obj/item/pressure_plate/invisible_tripwire/on_entered(datum/source, atom/movable/target)
-	. = ..()
-	SIGNAL_HANDLER
-	if(!can_trigger || !active)
-		return
-	if(trigger_mob && isliving(target))
-		uses_remaining--
-		if(uses_remaining == 0)
-			can_trigger = FALSE
-		addtimer(CALLBACK(src, PROC_REF(trigger)), trigger_delay)
 
-/obj/item/pressure_plate/invisible_tripwire/airlock/trigger()
-
+/obj/item/pressure_plate/invisible_tripwire/trigger()
+	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
+	if(!multiuse)
+		qdel(src)
+	if(uses_remaining == 1)
+		qdel(src)
+	uses_remaining--
 
 /obj/item/pressure_plate/invisible_tripwire/Destroy()
+	if(suicide_pact == TRUE || suicide_pact_id != null)
+		for (var/obj/item/pressure_plate/invisible_tripwire/pact_member in GLOB.tripwire_suicide_pact)
+			if(src.suicide_pact_id == pact_member.suicide_pact_id)
+				qdel(pact_member)
+		GLOB.tripwire_suicide_pact -= src
 	if(donk_ai_slave == TRUE)
 		GLOB.selfdestructs_when_boss_dies -= src
 	return ..()
@@ -189,7 +198,7 @@
 		SEND_SIGNAL(target, COMSIG_AIRLOCK_SET_BOLT)
 
 //variant on invisible trip wire, this one triggers if you stay in the area too long
-/obj/item/pressure_plate/puzzle/invisible_tripwire/delay
+/obj/item/pressure_plate/invisible_tripwire/delay
 //TODO-make this work
 	desc = "Linger too long on this tile, and this will trigger."
 

@@ -43,8 +43,6 @@
 /mob/living/basic/bot/dedbot/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, /obj/effect/gibspawner/robot)
-	proximity_monitor = new(src, 0)
-	proximity_monitor?.set_range(1)
 	var/static/list/innate_actions = list(
 	SPIN_SLASH_ABILITY_TYPEPATH = BB_DEDBOT_SLASH,
 	)
@@ -104,7 +102,7 @@
 	if(!COOLDOWN_FINISHED(src, cooldown_time))
 		return FALSE
 	caster.Shake(1.4, 0.8, 0.3 SECONDS)
-	for(var/mob/viewer in range(5, src))
+	for(var/mob/viewer in range(src, null))
 		if(viewer.is_blind())
 			to_chat(viewer, span_hear("You hear a whirring sound..."))
 		else

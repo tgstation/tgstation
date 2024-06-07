@@ -22,11 +22,6 @@
 	pipe_color = "#FF7B00";
 	color = "#FF7B00"
 	},
-/obj/item/pressure_plate/invisible_tripwire{
-	donk_ai_slave = 1;
-	active = 1;
-	trigger_silent = 1
-	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "am" = (
@@ -335,11 +330,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable/layer1,
 /obj/machinery/camera/xray/directional/east,
-/obj/item/pressure_plate/invisible_tripwire{
-	donk_ai_slave = 1;
-	active = 1;
-	trigger_silent = 1
-	},
+/obj/item/pressure_plate/invisible_tripwire,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "cL" = (
@@ -490,11 +481,7 @@
 	pixel_y = 2;
 	pixel_x = 2
 	},
-/obj/item/pressure_plate/invisible_tripwire{
-	donk_ai_slave = 1;
-	active = 1;
-	trigger_silent = 1
-	},
+/obj/item/pressure_plate/invisible_tripwire,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "dN" = (
@@ -983,13 +970,14 @@
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "iE" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "donk_office_entrance_gamma"
-	},
 /obj/item/chair/wood{
-	pixel_y = 2;
+	pixel_y = -7;
 	pixel_x = 2
 	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "donk_office_entrance_trap_alpha"
+	},
+/obj/item/pressure_plate/invisible_tripwire,
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "iF" = (
@@ -1121,11 +1109,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/layer1,
 /obj/machinery/light/warm/directional/east,
-/obj/item/pressure_plate/invisible_tripwire{
-	donk_ai_slave = 1;
-	active = 1;
-	trigger_silent = 1
-	},
+/obj/item/pressure_plate/invisible_tripwire,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "jK" = (
@@ -3225,6 +3209,7 @@
 	id = "donk_office_entrance_trap_alpha"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/pressure_plate/invisible_tripwire,
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "CZ" = (
@@ -3693,11 +3678,6 @@
 	pipe_color = "#FF7B00";
 	color = "#FF7B00"
 	},
-/obj/item/pressure_plate/invisible_tripwire{
-	donk_ai_slave = 1;
-	active = 1;
-	trigger_silent = 1
-	},
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "GS" = (
@@ -4005,11 +3985,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable/layer1,
-/obj/item/pressure_plate/invisible_tripwire{
-	donk_ai_slave = 1;
-	active = 1;
-	trigger_silent = 1
-	},
+/obj/item/pressure_plate/invisible_tripwire,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "IX" = (
@@ -4717,6 +4693,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/pressure_plate/invisible_tripwire,
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "PA" = (
@@ -5768,11 +5745,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	pipe_color = "#FF7B00";
 	color = "#FF7B00"
-	},
-/obj/item/pressure_plate/invisible_tripwire{
-	donk_ai_slave = 1;
-	active = 1;
-	trigger_silent = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
