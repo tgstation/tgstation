@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed an error with bloodsucker timing math (i.e 0.6 seconds instead of 1 minute)"
+  - bugfix: "Fixed candelabrum hallucinations stacking infinitely."
+  - bugfix: "Vassals now get the candelabrum mood debuff cleared when converted."
