@@ -44,6 +44,7 @@
 #_maps/RandomRuins/SpaceRuins/garbagetruck3.dmm
 #_maps/RandomRuins/SpaceRuins/garbagetruck4.dmm
 #_maps/RandomRuins/SpaceRuins/gondolaasteroid.dmm
+#_maps/RandomRuins/SpaceRuins/hauntedtradingpost.dmm
 #_maps/RandomRuins/SpaceRuins/hellfactory.dmm
 #_maps/RandomRuins/SpaceRuins/hilbertsresearchfacility.dmm
 #_maps/RandomRuins/SpaceRuins/infested_frigate.dmm
