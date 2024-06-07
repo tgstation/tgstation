@@ -27,7 +27,7 @@
 	unsuitable_heat_damage = 0
 	speed = 0
 	density = FALSE
-	pass_flags = PASSTABLE | PASSMOB
+	pass_flags = PASSTABLE | PASSMOB | PASSDOORS //Monke, drones have PASSDOORS so they don't have to open doors to pass.
 	sight = SEE_TURFS | SEE_OBJS
 	status_flags = (CANPUSH | CANSTUN | CANKNOCKDOWN)
 	gender = NEUTER
