@@ -1,4 +1,0 @@
-author: "Vekter"
-delete-after: True
-changes:
-  - rscadd: "Adds an ion law possibility that changes the human status of station pets."

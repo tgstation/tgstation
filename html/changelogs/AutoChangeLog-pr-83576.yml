@@ -1,4 +1,0 @@
-author: "Higgin"
-delete-after: True
-changes:
-  - bugfix: "positive viruses are no longer hidden."

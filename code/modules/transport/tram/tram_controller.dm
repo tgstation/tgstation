@@ -250,6 +250,7 @@
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
 		if(transport_module.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs
 			return //we don't care to undo cover_locked controls, though, as that will resolve itself
+		transport_module.verify_transport_contents()
 		transport_module.glide_size_override = DELAY_TO_GLIDE_SIZE(speed_limiter)
 		transport_module.set_travelling(TRUE)
 
