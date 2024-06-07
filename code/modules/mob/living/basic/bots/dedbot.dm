@@ -39,8 +39,6 @@
 	var/exenteration_cooldown_duration = 0.5 SECONDS
 	//aoe slash ability
 	var/datum/action/cooldown/mob_cooldown/bot/exenterate
-	//datum we use to trigger when someones close
-	var/datum/proximity_monitor/proximity_monitor
 
 /mob/living/basic/bot/dedbot/Initialize(mapload)
 	. = ..()
@@ -52,26 +50,6 @@
 	)
 	grant_actions_by_list(innate_actions)
 
-/mob/living/basic/bot/dedbot/proc/check_faction(mob/target)
-	for(var/faction1 in faction)
-		if(faction1 in target.faction)
-			return TRUE
-	return FALSE
-
-/mob/living/basic/bot/dedbot/HasProximity(mob/living/victim, datum/ai_controller/basic_controller/bot/dedbot/controller)
-	if(!COOLDOWN_FINISHED(src, exenteration_cooldown_duration))
-		return
-	if (!isliving(victim)) //we target living guys
-		return
-	if (check_faction(victim)) //who arent in our faction
-		return
-	var/datum/action/cooldown/using_action = controller.blackboard[BB_DEDBOT_SLASH]
-	if (using_action?.IsAvailable())
-		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
-	var/use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability
-	controller.SelectBehaviors(use_ability_behaviour, SPIN_SLASH_ABILITY_TYPEPATH, victim)
-	COOLDOWN_START(src, exenteration_cooldown_duration, 0.5 SECONDS)
-
 /datum/ai_controller/basic_controller/bot/dedbot
 	max_target_distance = 1
 	blackboard = list(
@@ -80,6 +58,7 @@
 	ai_movement = /datum/ai_movement/jps/bot
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability/exenterate,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/find_patrol_beacon,
@@ -131,7 +110,7 @@
 		else
 			to_chat(viewer, span_notice("The [caster] shakes violently!"))
 	playsound(caster, 'sound/weapons/drill.ogg', 120 , TRUE)
-	slash_em()
+	slash_em(caster)
 	StartCooldown(cooldown_time)
 
 /datum/action/cooldown/mob_cooldown/exenterate/proc/slash_em(atom/caster, mob/living/victim)
