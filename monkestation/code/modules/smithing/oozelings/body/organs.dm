@@ -106,7 +106,7 @@
 	RegisterSignal(organ_owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 
 /obj/item/organ/internal/brain/slime/proc/colorize()
-	if(owner && isoozeling(owner))
+	if(isoozeling(owner))
 		core_color = owner.dna.features["mcolor"]
 		add_atom_colour(core_color, FIXED_COLOUR_PRIORITY)
 
@@ -120,9 +120,7 @@
 
 /obj/item/organ/internal/brain/slime/proc/enable_coredeath()
 	coredeath = TRUE
-	if(owner)
-		if(owner.stat != DEAD)
-			return
+	if(owner?.stat == DEAD)
 		addtimer(CALLBACK(src, PROC_REF(core_ejection), owner), 0)
 
 ///////
@@ -132,7 +130,7 @@
 /obj/item/organ/internal/brain/slime/proc/core_ejection(mob/living/carbon/human/victim, new_stat, turf/loc_override)
 	if(core_ejected || !coredeath)
 		return
-	if(!stored_dna)
+	if(QDELETED(stored_dna))
 		stored_dna = new
 
 	victim.dna.copy_dna(stored_dna)
@@ -140,12 +138,10 @@
 	victim.visible_message(span_warning("[victim]'s body completely dissolves, collapsing outwards!"), span_notice("Your body completely dissolves, collapsing outwards!"), span_notice("You hear liquid splattering."))
 	var/turf/death_turf = get_turf(victim)
 
-	var/list/items = list()
-	items |= victim.get_equipped_items(TRUE)
-	for(var/atom/movable/I as anything in items)
-		victim.dropItemToGround(I)
-		stored_items |= I
-		I.forceMove(src)
+	for(var/atom/movable/item as anything in victim.get_equipped_items(include_pockets = TRUE))
+		victim.dropItemToGround(item)
+		stored_items |= item
+		item.forceMove(src)
 
 	if(victim.get_organ_slot(ORGAN_SLOT_BRAIN) == src)
 		Remove(victim)
@@ -175,6 +171,7 @@
 				target_bloodsucker.bloodsucker_blood_volume -= target_bloodsucker.max_blood_volume * 0.15
 
 	rebuilt = FALSE
+	victim.transfer_observers_to(src)
 	Remove(victim)
 	qdel(victim)
 
@@ -221,7 +218,7 @@
 /obj/item/organ/internal/brain/slime/proc/drop_items_to_ground(turf/turf)
 	for(var/atom/movable/item as anything in stored_items)
 		item.forceMove(turf)
-		stored_items -= item
+	stored_items.Cut()
 
 /obj/item/organ/internal/brain/slime/proc/rebuild_body(mob/user)
 	if(rebuilt)
@@ -234,7 +231,7 @@
 		qdel(GetComponent(/datum/component/gps))
 
 	//we have the plasma. we can rebuild them.
-	brainmob.mind.grab_ghost()
+	brainmob?.mind?.grab_ghost()
 	if(isnull(brainmob))
 		user?.balloon_alert(user, "This brain is not a viable candidate for repair!")
 		return TRUE
@@ -267,13 +264,14 @@
 	forceMove(new_body)
 	Insert(new_body)
 	for(var/obj/item/bodypart as anything in new_body.bodyparts)
-		if(!istype(bodypart, /obj/item/bodypart/chest))
-			qdel(bodypart)
+		if(istype(bodypart, /obj/item/bodypart/chest))
 			continue
+		qdel(bodypart)
 	new_body.visible_message(span_warning("[new_body]'s torso \"forms\" from [new_body.p_their()] core, yet to form the rest."))
 	to_chat(owner, span_purple("Your torso fully forms out of your core, yet to form the rest."))
 
 	brainmob?.mind?.transfer_to(new_body)
 	new_body.grab_ghost()
+	transfer_observers_to(new_body)
 
 	drop_items_to_ground(new_body.drop_location())
