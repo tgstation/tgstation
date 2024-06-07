@@ -11,9 +11,9 @@
 	var/resampler_active = FALSE
 
 ///Add that sexy demnand component
-/obj/machinery/plumbing/growing_vat/Initialize(mapload, bolt)
+/obj/machinery/plumbing/growing_vat/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, bolt)
+	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
 
 /obj/machinery/plumbing/growing_vat/create_reagents(max_vol, flags)
 	. = ..()

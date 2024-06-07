@@ -153,7 +153,7 @@
 //Cult Blood Spells
 /datum/action/innate/cult/blood_spell/stun
 	name = "Stun"
-	desc = "Empowers your hand to stun and mute a victim on contact."
+	desc = "Empowers your hand to stun and mute a victim on contact. Gets weaker depending on how many have joined the Cult."
 	button_icon_state = "hand"
 	magic_path = "/obj/item/melee/blood_magic/stun"
 	health_cost = 10
@@ -416,7 +416,10 @@
 		return
 	if(IS_CULTIST(target))
 		return
-	if(IS_CULTIST(user))
+	var/datum/antagonist/cult/cultist = IS_CULTIST(user)
+	if(!isnull(cultist))
+		var/datum/team/cult/cult_team = cultist.get_team()
+		var/effect_coef = 1 - (cult_team.cult_risen ? 0.4 : 0) - (cult_team.cult_ascendent ? 0.5 : 0)
 		user.visible_message(span_warning("[user] holds up [user.p_their()] hand, which explodes in a flash of red light!"), \
 		span_cult_italic("You attempt to stun [target] with the spell!"))
 		user.mob_light(range = 1.1, power = 2, color = LIGHT_COLOR_BLOOD_MAGIC, duration = 0.2 SECONDS)
@@ -430,17 +433,17 @@
 			to_chat(user, span_warning("The spell had no effect!"))
 		else
 			to_chat(user, span_cult_italic("In a brilliant flash of red, [target] falls to the ground!"))
-			target.Paralyze(16 SECONDS)
+			target.Paralyze(16 SECONDS * effect_coef)
 			target.flash_act(1, TRUE)
 			if(issilicon(target))
 				var/mob/living/silicon/silicon_target = target
 				silicon_target.emp_act(EMP_HEAVY)
 			else if(iscarbon(target))
 				var/mob/living/carbon/carbon_target = target
-				carbon_target.adjust_silence(12 SECONDS)
-				carbon_target.adjust_stutter(30 SECONDS)
-				carbon_target.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/slurring/cult)
-				carbon_target.set_jitter_if_lower(30 SECONDS)
+				carbon_target.adjust_silence(12 SECONDS * effect_coef)
+				carbon_target.adjust_stutter(30 SECONDS * effect_coef)
+				carbon_target.adjust_timed_status_effect(30 SECONDS * effect_coef, /datum/status_effect/speech/slurring/cult)
+				carbon_target.set_jitter_if_lower(30 SECONDS * effect_coef)
 		uses--
 	..()
 
