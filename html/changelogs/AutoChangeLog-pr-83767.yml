@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - spellcheck: "Corrected wrench contextual screentip typo for smart fridge"
