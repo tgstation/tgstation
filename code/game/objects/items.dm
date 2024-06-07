@@ -302,7 +302,7 @@
 	if(. & CLICK_ACTION_ANY)
 		return (isturf(loc) && !anchored) ? NONE : . //allow the object to get dragged on the floor
 
-//Subtypes only override this proc for ctrl click purposes. obeys same principles as ctrl_click()
+/// Subtypes only override this proc for ctrl click purposes. obeys same principles as ctrl_click()
 /obj/item/proc/item_ctrl_click(mob/user)
 	SHOULD_CALL_PARENT(FALSE)
 	return NONE
