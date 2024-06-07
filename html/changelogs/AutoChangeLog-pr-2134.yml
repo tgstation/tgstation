@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Blood Brothers can now only convert people who have BB enabled in their prefs. Failing to convert will give an appropriate feedback message (and the failed convert won't notice anything other than a normal flashing)."
