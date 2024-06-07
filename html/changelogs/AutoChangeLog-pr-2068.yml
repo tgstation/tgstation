@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed a weird body horror bug that could happen with guillotines, resulting in a second, unremovable fake head."

@@ -1,5 +1,0 @@
-author: "DexeeXI"
-delete-after: True
-changes:
-  - rscdel: "Removed the ID console on Box"
-  - rscdel: "Removed a redundant console on Icebox."

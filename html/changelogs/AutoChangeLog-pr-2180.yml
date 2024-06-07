@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - rscdel: "Removes Advanced Tranquility, which is only intended for bitrunner stuff, from the maint pill pool. Normal Tranquility is still available."

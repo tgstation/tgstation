@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - balance: "Halves the amount of slime ooze needed for crossbreeds, except for regenerative extracts."
-  - code_imp: "Changed slime recipes to use defines for the required amount of ooze, rather than hard-set numbers."
