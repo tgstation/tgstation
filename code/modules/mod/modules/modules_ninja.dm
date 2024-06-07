@@ -178,8 +178,7 @@
 		/obj/item/energy_katana,
 		/obj/item/energy_glaive,
 		/obj/item/energy_kusarigama_kama,
-		/obj/item/energy_kusarigama_fundo,
-		/obj/item/gun/ballistic/bow/energy_hankyu
+		/obj/item/energy_kusarigama_fundo
 	)
 
 /obj/item/mod/module/weapon_recall/on_suit_activation()

@@ -3175,7 +3175,6 @@
 #include "code\modules\antagonists\ninja\outfit.dm"
 #include "code\modules\antagonists\ninja\weapons\energy_case.dm"
 #include "code\modules\antagonists\ninja\weapons\energy_glaive.dm"
-#include "code\modules\antagonists\ninja\weapons\energy_hankyu.dm"
 #include "code\modules\antagonists\ninja\weapons\energy_katana.dm"
 #include "code\modules\antagonists\ninja\weapons\energy_kusarigama.dm"
 #include "code\modules\antagonists\nukeop\outfits.dm"

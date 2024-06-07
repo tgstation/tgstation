@@ -25,8 +25,7 @@
 	var/list/weapons = list(
 		"Energy Katana" = image(icon = 'icons/obj/weapons/sword.dmi', icon_state = "energy_katana"),
 		"Energy Glaive" = image(icon = 'icons/obj/weapons/sword.dmi', icon_state = "glaive"),
-		"Energy Kusarigama" = image(icon = 'icons/obj/weapons/thrown.dmi', icon_state = "energy_kama"),
-		"Energy Hankyu" = image(icon = 'icons/obj/weapons/bows/bows.dmi', icon_state = "hankyu")
+		"Energy Kusarigama" = image(icon = 'icons/obj/weapons/thrown.dmi', icon_state = "energy_kama")
 		)
 	var/choise_weapon = show_radial_menu(user, src, weapons, tooltips = TRUE)
 	if(isnull(choise_weapon))
@@ -38,8 +37,6 @@
 			link_weapon = new /obj/item/energy_glaive(get_turf(user))
 		if("Energy Kusarigama")
 			link_weapon = new /obj/item/energy_kusarigama_kama(get_turf(user))
-		if("Energy Hankyu")
-			link_weapon = new /obj/item/gun/ballistic/bow/energy_hankyu(get_turf(user))
 	if(!link_weapon)
 		return
 	qdel(src)
