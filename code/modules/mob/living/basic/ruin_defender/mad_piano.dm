@@ -45,20 +45,27 @@
 	icon_calm = icon_state
 	desc_calm = desc
 
-/mob/living/basic/mad_piano/proc/aggro_tantrum(datum/source, mob/living/victim)
+/mob/living/basic/mad_piano/proc/aggro_tantrum(datum/source, mob/living/victim, datum/ai_controller/controller)
 	SIGNAL_HANDLER
+	if (ai_controller.ai_status == AI_STATUS_ON)
+		return
+	ai_controller.reset_ai_status()
+	if (!ai_controller.ai_status == AI_STATUS_ON)
+		return
 	if(!istype(victim) || !istype(victim, /mob/living/carbon) || victim.stat == DEAD)
 		return
 	name = name_aggro
 	icon_state = icon_aggro
 	desc = desc_aggro
 	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
+	controller.set_ai_status(AI_STATUS_ON)
 
-/mob/living/basic/mad_piano/proc/calm_down(datum/source)
+/mob/living/basic/mad_piano/proc/calm_down(datum/source, datum/ai_controller/controller)
 	icon_state = icon_calm
 	desc = desc_calm
 	name = name_calm
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
+	controller.set_ai_status(AI_STATUS_OFF)
 
 /mob/living/basic/mad_piano/med_hud_set_health() //sneaky sneaky sneaky
 	return
@@ -81,16 +88,15 @@
 	)
 
 /datum/idle_behavior/walk_near_target/mad_piano
-	walk_chance = 50
-	minimum_distance = 5
+	walk_chance = 60
+	minimum_distance = 2
 
 /datum/ai_planning_subtree/sleep_with_no_target/mad_piano
 	sleep_behaviour = /datum/ai_behavior/sleep_after_targetless_time/mad_piano
 
 /datum/ai_behavior/sleep_after_targetless_time/mad_piano
+	time_to_wait = 2
 
 /datum/ai_behavior/sleep_after_targetless_time/mad_piano/enter_sleep(datum/ai_controller/controller)
 	var/mob/living/basic/mad_piano/this_piano = controller.pawn
-	if (!istype(this_piano))
-		return ..()
 	this_piano.calm_down()

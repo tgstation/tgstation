@@ -40,7 +40,8 @@
 
 /mob/living/basic/bot/dedbot/Initialize(mapload)
 	. = ..()
-	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(slashem))
+	AddElement(/datum/element/death_drops, /obj/effect/gibspawner/robot)
+	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(detect_target))
 	var/static/list/innate_actions = list(
 	SPIN_SLASH_ABILITY_TYPEPATH = BB_DEDBOT_SLASH,
 	)
@@ -52,17 +53,19 @@
 			return TRUE
 	return FALSE
 
-/mob/living/basic/bot/dedbot/proc/slashem(datum/source, mob/living/victim, datum/ai_controller/basic_controller/bot/dedbot/controller)
+/mob/living/basic/bot/dedbot/proc/detect_target(datum/source, mob/living/victim, datum/ai_controller/basic_controller/bot/dedbot/controller)
 	SIGNAL_HANDLER
 	if(!COOLDOWN_FINISHED(src, exenteration_cooldown_duration))
 		return
 	if (!isliving(victim)) //we target living guys
 		return
-	if (victim.stat || check_faction(victim)) //who arent in our faction
+	if (check_faction(victim)) //who arent in our faction
 		return
 	var/datum/action/cooldown/using_action = controller.blackboard[BB_DEDBOT_SLASH]
 	if (using_action?.IsAvailable())
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+	var/use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability
+	controller.SelectBehaviors(use_ability_behaviour, SPIN_SLASH_ABILITY_TYPEPATH, victim)
 	COOLDOWN_START(src, exenteration_cooldown_duration, 0.5 SECONDS)
 
 /datum/ai_controller/basic_controller/bot/dedbot
@@ -99,9 +102,13 @@
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
 	cooldown_time = 0.5 SECONDS
-	//how much damage this ability does
+	// radius in tiles of AOE effect
+	var/ability_range = 1
+	// how much damage this ability does
 	var/damage_dealt = 18
-	/// weighted list of body zones this can hit
+	// factions we dont attack
+	var/immune_factions = list(ROLE_SYNDICATE)
+	// weighted list of body zones this can hit
 	var/static/list/valid_targets = list(
 		BODY_ZONE_CHEST = 2,
 		BODY_ZONE_R_ARM = 1,
@@ -111,13 +118,24 @@
 	)
 
 /datum/action/cooldown/mob_cooldown/exenterate/Activate(atom/caster)
-	caster.Shake(1.2, 0.6, 0.3 SECONDS)
+	if(!COOLDOWN_FINISHED(src, cooldown_time))
+		return FALSE
+	caster.Shake(1.4, 0.8, 0.3 SECONDS)
+	for(var/mob/viewer in range(5, src))
+		if(viewer.is_blind())
+			to_chat(viewer, span_hear("You hear a whirring sound..."))
+		else
+			to_chat(viewer, span_notice("The [caster] shakes violently!"))
+	playsound(caster, 'sound/weapons/drill.ogg', 120 , TRUE)
+	slash_em()
 	StartCooldown(cooldown_time)
-	for(var/mob/living/living_mob in range(2, caster))
-		if (living_mob.faction == owner.faction)
-			return
-		to_chat(caster, span_warning("You slice [living_mob]!"))
-		to_chat(living_mob, span_warning("You are cut by the drone's blades!"))
-		living_mob.apply_damage(damage = damage_dealt, damagetype = BRUTE, def_zone = pick(valid_targets), sharpness = SHARP_EDGED)
+
+/datum/action/cooldown/mob_cooldown/exenterate/proc/slash_em(atom/caster, mob/living/victim)
+	for(victim in range(ability_range, caster))
+		if(faction_check(victim.faction, immune_factions))
+			continue
+		to_chat(caster, span_warning("You slice [victim]!"))
+		to_chat(victim, span_warning("You are cut by the [caster]'s blades!"))
+		victim.apply_damage(damage = damage_dealt, damagetype = BRUTE, def_zone = pick(valid_targets), sharpness = SHARP_EDGED)
 
 #undef SPIN_SLASH_ABILITY_TYPEPATH
