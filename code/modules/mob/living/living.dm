@@ -1352,8 +1352,9 @@
 					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 		else // just a normal carbon mob
-			if(action_bitflags & FORBID_TELEKINESIS_REACH)
-				to_chat(src, span_warning("You are too far away!"))
+			if((action_bitflags & FORBID_TELEKINESIS_REACH))
+				if(!(action_bitflags & SILENT_ADJACENCY))
+					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 
 			var/datum/dna/mob_DNA = has_dna()
