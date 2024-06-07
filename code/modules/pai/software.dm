@@ -131,12 +131,17 @@
 /**
  * Changes the image displayed on the pAI.
  *
- * @param {mob} user - The user who is changing the image.
- *
  * @returns {boolean} - TRUE if the image was changed, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/change_image()
-	var/new_image = tgui_input_list(src, "Select your new display image", "Display Image", possible_overlays)
+	var/list/possible_choices = list()
+	for(var/face_option in possible_overlays)
+		var/datum/radial_menu_choice/choice = new
+		choice.name = face_option
+		choice.image = image(icon = card.icon, icon_state = "pai-[face_option]")
+		possible_choices[face_option] += choice
+	var/atom/anchor = get_atom_on_turf(src)
+	var/new_image = show_radial_menu(src, anchor, possible_choices, custom_check = CALLBACK(src, PROC_REF(check_menu), anchor), radius = 40, require_near = TRUE)
 	if(isnull(new_image))
 		return FALSE
 	card.emotion_icon = new_image

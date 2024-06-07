@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes:
+  - bugfix: "Fixed borg chargers (especially unpowered ones) constantly draining a borg's cell."
