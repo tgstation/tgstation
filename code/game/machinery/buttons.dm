@@ -146,7 +146,7 @@
 
 /obj/machinery/button/proc/airlock_electronics_act(mob/living/user, obj/item/electronics/airlock/new_board)
 	if(board)
-		to_chat(user, span_warning("\The button already contains a board!"))
+		to_chat(user, span_warning("The button already contains a board!"))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(new_board, src, silent = FALSE))
 		to_chat(user, span_warning("\The [new_board] is stuck to you!"))
