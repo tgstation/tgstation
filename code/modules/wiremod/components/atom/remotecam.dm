@@ -250,6 +250,27 @@
 /obj/item/circuit_component/remotecam/proc/stop_process()
 	STOP_PROCESSING(SSclock_component, src)
 
+/**
+ * Handle power usage and camera state updating
+ *
+ * This is the generic abstract proc - subtypes with specialized logic should use their own copy of process()
+ */
+/obj/item/circuit_component/remotecam/process(seconds_per_tick)
+	if(!shell_parent || !shell_camera)
+		return PROCESS_KILL
+	//Camera is currently emp'd
+	if (current_camera_emp)
+		close_camera()
+		return
+	var/obj/item/stock_parts/cell/cell = parent.get_cell()
+	//If cell doesn't exist, or we ran out of power
+	if(!cell?.use(current_camera_range > 0 ? REMOTECAM_ENERGY_USAGE_FAR : REMOTECAM_ENERGY_USAGE_NEAR))
+		close_camera()
+		return
+	//Set the camera state (if state has been changed)
+	if(current_camera_state ^ shell_camera.camera_enabled)
+		shell_camera.toggle_cam(null, 0)
+
 /obj/item/circuit_component/remotecam/bci
 	display_name = "BCI Camera"
 	desc = "Digitizes user's sight for surveillance-on-the-go. User must have fully functional eyes for digitizer to work. Camera range input is either 0 (near) or 1 (far). Network field is used for camera network."
@@ -357,7 +378,7 @@
 
 /obj/item/circuit_component/remotecam/bci/process(seconds_per_tick)
 	if(!shell_parent || !shell_camera)
-		return
+		return PROCESS_KILL
 	//Camera is currently emp'd
 	if (current_camera_emp)
 		close_camera()
@@ -387,7 +408,7 @@
 
 /obj/item/circuit_component/remotecam/drone/process(seconds_per_tick)
 	if(!shell_parent || !shell_camera)
-		return
+		return PROCESS_KILL
 	//Camera is currently emp'd
 	if (current_camera_emp)
 		close_camera()
@@ -410,37 +431,6 @@
 	if(current_camera_state ^ shell_camera.camera_enabled)
 		shell_camera.toggle_cam(null, 0)
 
-/obj/item/circuit_component/remotecam/airlock/process(seconds_per_tick)
-	if(!shell_parent || !shell_camera)
-		return
-	//Camera is currently emp'd
-	if (current_camera_emp)
-		close_camera()
-		return
-	var/obj/item/stock_parts/cell/cell = parent.get_cell()
-	//If cell doesn't exist, or we ran out of power
-	if(!cell?.use(REMOTECAM_ENERGY_USAGE_NEAR))
-		close_camera()
-		return
-	//Set the camera state (if state has been changed)
-	if(current_camera_state ^ shell_camera.camera_enabled)
-		shell_camera.toggle_cam(null, 0)
-
-/obj/item/circuit_component/remotecam/polaroid/process(seconds_per_tick)
-	if(!shell_parent || !shell_camera)
-		return
-	//Camera is currently emp'd
-	if (current_camera_emp)
-		close_camera()
-		return
-	var/obj/item/stock_parts/cell/cell = parent.get_cell()
-	//If cell doesn't exist, or we ran out of power
-	if(!cell?.use(REMOTECAM_ENERGY_USAGE_NEAR))
-		close_camera()
-		return
-	//Set the camera state (if state has been changed)
-	if(current_camera_state ^ shell_camera.camera_enabled)
-		shell_camera.toggle_cam(null, 0)
 
 #undef REMOTECAM_RANGE_FAR
 #undef REMOTECAM_RANGE_NEAR
