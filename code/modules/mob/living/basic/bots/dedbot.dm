@@ -13,7 +13,9 @@
 	maxHealth = 50
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	light_power = 0
+	light_range = 1
+	light_power = 0.3
+	light_color = "#eb1809"
 	ai_controller = /datum/ai_controller/basic_controller/bot/dedbot
 	faction = list(ROLE_SYNDICATE)
 	sharpness = SHARP_EDGED
@@ -22,7 +24,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	gold_core_spawnable = HOSTILE_SPAWN
-	limb_destroyer = 1
+	limb_destroyer = TRUE
 	bubble_icon = "machine"
 	pass_flags = PASSMOB | PASSFLAPS
 	maximum_survivable_temperature = 360 //prone to overheating
@@ -37,11 +39,14 @@
 	var/exenteration_cooldown_duration = 0.5 SECONDS
 	//aoe slash ability
 	var/datum/action/cooldown/mob_cooldown/bot/exenterate
+	//datum we use to trigger when someones close
+	var/datum/proximity_monitor/proximity_monitor
 
 /mob/living/basic/bot/dedbot/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, /obj/effect/gibspawner/robot)
-	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(detect_target))
+	proximity_monitor = new(src, 0)
+	proximity_monitor?.set_range(1)
 	var/static/list/innate_actions = list(
 	SPIN_SLASH_ABILITY_TYPEPATH = BB_DEDBOT_SLASH,
 	)
@@ -53,13 +58,13 @@
 			return TRUE
 	return FALSE
 
-/mob/living/basic/bot/dedbot/proc/detect_target(datum/source, mob/living/victim, datum/ai_controller/basic_controller/bot/dedbot/controller)
+/mob/living/basic/bot/dedbot/HasProximity(mob/living/victim, datum/ai_controller/basic_controller/bot/dedbot/controller)
 	SIGNAL_HANDLER
 	if(!COOLDOWN_FINISHED(src, exenteration_cooldown_duration))
 		return
 	if (!isliving(victim)) //we target living guys
 		return
-	if (check_faction(victim)) //who arent in our faction
+	if (!check_faction(victim)) //who arent in our faction
 		return
 	var/datum/action/cooldown/using_action = controller.blackboard[BB_DEDBOT_SLASH]
 	if (using_action?.IsAvailable())

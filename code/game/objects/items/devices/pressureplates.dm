@@ -48,7 +48,7 @@
 		return
 	if(trigger_item && !istype(AM, specific_item))
 		return
-	if(trigger_mob && isliving(AM))
+	if(trigger_mob && isliving(AM) || !trigger_silent)
 		var/mob/living/L = AM
 		to_chat(L, span_warning("You feel something click beneath you!"))
 	else if(!trigger_item)
