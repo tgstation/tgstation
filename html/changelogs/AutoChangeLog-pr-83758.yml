@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fix some modifiers to do after speed (sanity, midas gun) stacking when they shouldn't"

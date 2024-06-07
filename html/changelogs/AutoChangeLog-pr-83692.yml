@@ -1,4 +1,0 @@
-author: "Wayland-Smithy"
-delete-after: True
-changes:
-  - bugfix: "Pre-Loaded Syndicate Intellicard AI's no longer appear in PDA messenger."
