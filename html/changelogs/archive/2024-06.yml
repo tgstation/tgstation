@@ -263,3 +263,72 @@
   mc-oofert:
   - balance: cult stun gets weaker when they get red eyes and later more when they
       have halos
+2024-06-07:
+  00-Steven:
+  - bugfix: RLD glowsticks actually glow again.
+  Absolucy:
+  - bugfix: When implanting functional wings into a new body, they will actually be
+      able to use said wings now.
+  EEASAS:
+  - bugfix: fixed the mis-rotated disposals pipe on birdshot
+  Erol509:
+  - qol: Cyborgs on AI statpanel now have jules energy format.
+  EuSouAFazer:
+  - qol: 'Swabbing the clown''s stamp also gives clown cells.
+
+      :cl:'
+  IsaacExists:
+  - rscadd: You may choose a color preference for your blindfold with the blindness
+      quirk.
+  LT3:
+  - bugfix: Fixed timing issue where tram crossing signals would be out of sync with
+      the moving tram
+  - bugfix: Tram crossing signals consistently show green when safe, blue when broken
+  - bugfix: Tram crossing signals show red instead of yellow when degraded
+  Pickle-Coding:
+  - bugfix: Fixes the brig cell timer adjustment not working correctly on live timers.
+  - bugfix: Fixes paradox clones using a different voice from the owner.
+  RedBaronFlyer:
+  - rscadd: Janitorial keyrings are now part of every janitor's toolkit instead of
+      just the first one.
+  Sadboysuss:
+  - bugfix: curator whip will no longer disarm when parried
+  - qol: you now don't need to weld a closet to install/uninstall electronics/card
+      readers.
+  ShizCalev:
+  - bugfix: Syndicate AI can no longer be selected via the station law upload console.
+  - bugfix: Non-syndicate borgs can no longer accidentally be slaved to syndicate
+      AI by pulsing their AI wires.
+  - bugfix: Syndicate borgs can no longer be slaved to the station AI by pulsing their
+      AI wires.
+  - bugfix: Syndicate operatives onboard the station can no longer end up with an
+      objective to destroy their own syndicate AI.
+  SyncIt21:
+  - bugfix: autolathes don't hang when printing items in areas without apc or if it
+      runs out of materials mid printing
+  Wayland-Smithy:
+  - bugfix: Pre-Loaded Syndicate Intellicard AI's no longer appear in PDA messenger.
+  Whoneedspacee:
+  - bugfix: Bubblegum can no longer melee you while using his charge abilities.
+  githubuser4141:
+  - balance: Antag/Centcom mechs now have top notch un-upgradeable armor out of the
+      box. You can't add armor to centcom or nukie mechs anymore, but their default
+      armor rating is a lot higher.
+  necromanceranne:
+  - bugfix: The armor plate component only adds the prefix once.
+  - bugfix: Drake empowerment for berserker armor now uses valuable drake remains,
+      made from ashdrake hides and bones.
+  - rscadd: Drake armor is made use drake remains to construct. (This is a net neutral
+      to the previous recipe)
+  - qol: Coffee types are overall more consistent, causing jittering only from the
+      overdose effect.
+  - bugfix: Pumpkin lattes will actually work like coffee.
+  nikothedude:
+  - bugfix: COMSIG_ATOM_POST_DIR_CHANGE should ACTUALLY work now
+  san7890:
+  - bugfix: Using the 'ESC' key on your keyboard to unbind a key in the keybindings
+      preferences menu should now work as expected. This should also be fixed for
+      people in a variety of other spots too.
+  zxaber:
+  - bugfix: 'Tool-based flashes (read: from welders) are no longer incorrectly locked
+      at flash level 1. Wear proper PPE!'
