@@ -335,6 +335,7 @@
 /datum/mood_event/surgery
 	description = "THEY'RE CUTTING ME OPEN!!"
 	mood_change = -8
+	timeout = 10 MINUTES
 
 /datum/mood_event/bald
 	description = "I need something to cover my head..."
