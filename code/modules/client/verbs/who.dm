@@ -67,7 +67,7 @@
 	msg += "</tr></table>"
 
 	msg += "<b>Total Players: [length(Lines)]</b>"
-	to_chat(src, "<span class='infoplain'>[msg]</span>")
+	to_chat(src, examine_block(span_infoplain(msg))) // MASSMETA EDIT (lil bit better ui)
 
 /client/verb/adminwho()
 	set category = "Admin"
