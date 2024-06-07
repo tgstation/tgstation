@@ -12,7 +12,7 @@
 		return COMPONENT_INCOMPATIBLE
 	src.pollutant_type = pollutant_type
 	src.pollutant_amount = pollutant_amount
-	src.expiry_time = world.time + expiry_time
+	COOLDOWN_START(src, expiry_time, expiry_time)
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(wash_off))
 	START_PROCESSING(SSobj, src)
 
@@ -23,10 +23,9 @@
 
 /datum/component/temporary_pollution_emission/process(seconds_per_tick = SSOBJ_DT)
 	var/turf/my_turf = get_turf(parent)
-	if(!my_turf || world.time >= expiry_time)
+	if(QDELETED(my_turf) || COOLDOWN_FINISHED(src, expiry_time))
 		qdel(src)
 		return
-
 	my_turf.pollute_turf(pollutant_type, pollutant_amount * seconds_per_tick)
 
 /datum/component/temporary_pollution_emission/proc/wash_off()

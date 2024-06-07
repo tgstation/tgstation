@@ -45,7 +45,6 @@
 	. = ..()
 	on = !on
 	balloon_alert(user, "scrubber turned [on ? "on" : "off"]")
-
 	update_appearance()
 
 /obj/machinery/pollution_scrubber/update_icon(updates)

@@ -11,10 +11,27 @@
 	var/obj/effect/abstract/pollution/managed_overlay
 
 /datum/pollution/New(turf/open/passed_turf)
+	if(!isopenturf(passed_turf))
+		stack_trace("Attempted to create a pollution datum on a non-open turf ([passed_turf?.type || null])")
+		qdel(src)
+		return
 	. = ..()
 	my_turf = passed_turf
 	my_turf.pollution = src
 	REGISTER_POLLUTION(src)
+
+/datum/pollution/Destroy()
+	if(managed_overlay)
+		my_turf?.vis_contents -= managed_overlay
+		if(LAZYLEN(managed_overlay.vis_locs) == 0)
+			qdel(managed_overlay)
+		managed_overlay = null
+	REMOVE_POLLUTION_CURRENTRUN(src)
+	SET_UNACTIVE_POLLUTION(src)
+	UNREGISTER_POLLUTION(src)
+	if(my_turf?.pollution == src)
+		my_turf.pollution = null
+	return ..()
 
 /datum/pollution/proc/touch_act(mob/living/carbon/victim)
 	if(!victim.can_inject())
@@ -80,7 +97,7 @@
 		to_chat(sniffer, span_notice(smell_string))
 
 /datum/pollution/proc/scrub_amount(amount_to_scrub, update_active = TRUE, planetary_multiplier = FALSE)
-	if(amount_to_scrub >= total_amount || !isopenturf(my_turf))
+	if(amount_to_scrub >= total_amount || !isopenturf(my_turf) || QDELING(my_turf))
 		qdel(src)
 		return
 	if(planetary_multiplier && my_turf.planetary_atmos) //Dissipate faster on planetary atmos
@@ -118,44 +135,30 @@
 /datum/pollution/proc/calculate_height(passed_amount)
 	return CEILING(passed_amount / POLLUTION_HEIGHT_DIVISOR, 1)
 
-/datum/pollution/Destroy()
-	if(managed_overlay)
-		if(my_turf)
-			my_turf.vis_contents -= managed_overlay
-		if(LAZYLEN(managed_overlay.vis_locs) == 0)
-			qdel(managed_overlay)
-		managed_overlay = null
-	REMOVE_POLLUTION_CURRENTRUN(src)
-	SET_UNACTIVE_POLLUTION(src)
-	UNREGISTER_POLLUTION(src)
-	if(my_turf)
-		my_turf.pollution = null
-	return ..()
-
 /datum/pollution/proc/process_cell()
 	if(height <= 1)
 		SET_UNACTIVE_POLLUTION(src)
 		return
-	var/list/sharing_turfs = list()
+	var/list/sharing_turfs
 	var/list/already_processed_cache = SSpollution.processed_this_run
-	var/list/potential_activers = list()
+	var/list/potential_activers
 	for(var/turf/open/open_turf as anything in my_turf.atmos_adjacent_turfs)
-		if(!istype(open_turf))
+		if(!isopenturf(open_turf) || QDELING(open_turf))
 			continue
 		if(!already_processed_cache[open_turf])
 			if(can_share_with(open_turf))
-				sharing_turfs[open_turf] = TRUE
+				LAZYSET(sharing_turfs, open_turf, TRUE)
 			else
-				potential_activers[open_turf] = TRUE
-	if(!sharing_turfs.len)
+				LAZYSET(potential_activers, open_turf, TRUE)
+	if(!length(sharing_turfs))
 		SET_UNACTIVE_POLLUTION(src)
 		return
-	sharing_turfs[my_turf] = TRUE
+	LAZYSET(sharing_turfs, my_turf, TRUE)
 	//Now we've gotten all the turfs that should share pollution. Gather their total pollutions and split evenly
 	var/list/total_share_pollutants = list()
 	var/total_share_amount = 0
 	for(var/turf/open/open_turf as anything in sharing_turfs)
-		if(!open_turf.pollution)
+		if(!isopenturf(open_turf) || QDELING(open_turf) || QDELETED(open_turf.pollution))
 			continue
 		var/datum/pollution/cached_pollution = open_turf.pollution
 		for(var/type in cached_pollution.pollutants)
@@ -164,13 +167,14 @@
 			total_share_pollutants[type] += cached_pollution.pollutants[type]
 			total_share_amount += cached_pollution.pollutants[type]
 
+	var/sharing_len = length(sharing_turfs)
 	for(var/type in total_share_pollutants)
-		total_share_pollutants[type] /= sharing_turfs.len
-	total_share_amount /= sharing_turfs.len
+		total_share_pollutants[type] /= sharing_len
+	total_share_amount /= sharing_len
 	var/new_heights = calculate_height(total_share_amount)
 	var/obj/effect/abstract/pollution/new_overlay = get_overlay(total_share_pollutants, total_share_amount)
 	for(var/turf/open/open_turf as anything in sharing_turfs)
-		if(istype(open_turf, /turf/open/space)) // Space should be voiding pollution, basically.
+		if(!isopenturf(open_turf) || isspaceturf(open_turf) || QDELING(open_turf))
 			continue
 
 		assert_pollution(open_turf)
@@ -178,8 +182,8 @@
 		if(cached_pollution.managed_overlay)
 			cached_pollution.my_turf.vis_contents -= cached_pollution.managed_overlay
 
-		cached_pollution.managed_overlay = new_overlay
-		if(new_overlay)
+		if(!QDELETED(new_overlay))
+			cached_pollution.managed_overlay = new_overlay
 			cached_pollution.my_turf.vis_contents += new_overlay
 
 		cached_pollution.pollutants = total_share_pollutants.Copy()
@@ -188,18 +192,24 @@
 		SET_ACTIVE_POLLUTION(cached_pollution)
 
 	for(var/turf/open/open_turf as anything in potential_activers)
-		if(open_turf.pollution && open_turf.pollution.can_share_with(my_turf))
+		if(!isopenturf(open_turf) || QDELING(open_turf))
+			continue
+		if(open_turf?.pollution?.can_share_with(my_turf))
 			SET_ACTIVE_POLLUTION(open_turf.pollution)
 
 /datum/pollution/proc/can_share_with(turf/open/shareto)
-	if(!shareto.pollution)
+	if(!isopenturf(shareto))
+		return FALSE
+	if(QDELETED(shareto.pollution))
 		return TRUE
-	if(shareto.pollution.height + 1 < height)
+	if((shareto.pollution.height + 1) < height)
 		return TRUE
 	return FALSE
 
 /datum/pollution/proc/assert_pollution(turf/open/to_assert)
-	if(!to_assert.pollution)
+	if(!isopenturf(to_assert))
+		CRASH("Attempted to assert pollution on a non-open turf ([to_assert?.type || null])")
+	if(QDELETED(to_assert.pollution))
 		new /datum/pollution(to_assert)
 
 /datum/pollution/proc/handle_overlay()
@@ -215,7 +225,7 @@
 /datum/pollution/proc/get_overlay(list/pollutant_list, total_amount)
 	var/datum/pollutant/pollutant
 	var/total_thickness
-	if(pollutant_list.len == 1)
+	if(length(pollutant_list) == 1)
 		pollutant = SSpollution.singletons[pollutant_list[1]]
 		if(!(pollutant.pollutant_flags & POLLUTANT_APPEARANCE))
 			return
@@ -236,7 +246,7 @@
 	if(!total_thickness || total_thickness < POLLUTANT_APPEARANCE_THICKNESS_THRESHOLD)
 		return
 
-	var/obj/effect/abstract/pollution/overlay = new()
+	var/obj/effect/abstract/pollution/overlay = new
 	overlay.alpha = FLOOR(pollutant.alpha * total_thickness * THICKNESS_ALPHA_COEFFICIENT, 1)
 	overlay.color = pollutant.color
 	return overlay
@@ -244,7 +254,6 @@
 ///Atmos adjacency has been updated on this turf, see if it affects any of our pollutants
 /turf/proc/update_adjacent_pollutants()
 	for(var/turf/open/open_turf as anything in atmos_adjacent_turfs)
-		if(!isopenturf(open_turf))
+		if(!isopenturf(open_turf) || QDELING(open_turf) || QDELETED(open_turf.pollution))
 			continue
-		if(open_turf.pollution)
-			SET_ACTIVE_POLLUTION(open_turf.pollution)
+		SET_ACTIVE_POLLUTION(open_turf.pollution)
