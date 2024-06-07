@@ -25,7 +25,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	has_unlimited_silicon_privilege = TRUE
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
-	faction = list(FACTION_MINING)
 	ai_controller = /datum/ai_controller/basic_controller/bot
 	pass_flags = PASSFLAPS
 	verb_say = "states"
