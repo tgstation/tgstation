@@ -197,9 +197,8 @@
 	if(!R.client)
 		return
 
-	for(var/atom/A in R.model.get_inactive_modules())
-		//Module is not currently active
-		screenmob.client.screen -= A
+	//Module is not currently active
+	screenmob.client.screen -= R.model.get_inactive_modules()
 
 	if(!R.shown_robot_modules || !screenmob.hud_used.hud_shown)
 		//Modules display is hidden
