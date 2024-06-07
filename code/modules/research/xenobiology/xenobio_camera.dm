@@ -372,15 +372,15 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 	SEND_SIGNAL(user, COMSIG_XENO_TURF_CLICK_SHIFT, src)
 	..()
 
-/mob/living/basic/slime/CtrlClick(mob/user)
+/mob/living/basic/slime/CtrlClickOn(mob/user)
 	SEND_SIGNAL(user, COMSIG_XENO_SLIME_CLICK_CTRL, src)
 	..()
 
-/mob/living/carbon/human/species/monkey/CtrlClick(mob/user)
+/mob/living/carbon/human/species/monkey/CtrlClickOn(mob/user)
 	SEND_SIGNAL(user, COMSIG_XENO_MONKEY_CLICK_CTRL, src)
 	..()
 
-/turf/open/CtrlClick(mob/user)
+/turf/open/ctrl_click(mob/user)
 	SEND_SIGNAL(user, COMSIG_XENO_TURF_CLICK_CTRL, src)
 	..()
 

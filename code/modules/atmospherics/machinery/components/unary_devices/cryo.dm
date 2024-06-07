@@ -634,11 +634,12 @@
 		return FALSE
 	return ..()
 
-/obj/machinery/cryo_cell/CtrlClick(mob/user)
-	if(can_interact(user) && !state_open)
+/obj/machinery/cryo_cell/ctrl_click(mob/user)
+	if(is_operational && !state_open)
 		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
-	return ..()
+		return CLICK_ACTION_SUCCESS
+	return CLICK_ACTION_BLOCKING
 
 /obj/machinery/cryo_cell/click_alt(mob/user)
 	if(state_open)

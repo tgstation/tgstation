@@ -556,6 +556,7 @@
 #include "code\_onclick\ai.dm"
 #include "code\_onclick\click.dm"
 #include "code\_onclick\click_alt.dm"
+#include "code\_onclick\click_ctrl.dm"
 #include "code\_onclick\cyborg.dm"
 #include "code\_onclick\drag_drop.dm"
 #include "code\_onclick\item_attack.dm"

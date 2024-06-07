@@ -90,16 +90,16 @@
 	var/atom/food = parent
 
 	if(QDELETED(stored_item))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	if(!food.can_interact(user))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	user.visible_message(span_notice("[user.name] begins tearing at \the [parent]."), \
 					span_notice("You start to rip into \the [parent]."))
 
 	INVOKE_ASYNC(src, PROC_REF(begin_remove_item), user)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+	return CLICK_ACTION_SUCCESS
 
 /** Inserts the item into the food, after a do_after.
  *

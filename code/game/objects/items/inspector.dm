@@ -17,6 +17,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
+	interaction_flags_click = NEED_DEXTERITY
 	throw_range = 1
 	throw_speed = 1
 	///How long it takes to print on time each mode, ordered NORMAL, FAST, HONK
@@ -71,14 +72,15 @@
 			return
 	return ..()
 
-/obj/item/inspector/CtrlClick(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY) || !cell_cover_open || !cell)
-		return ..()
+/obj/item/inspector/item_ctrl_click(mob/user)
+	if(!cell_cover_open || !cell)
+		return CLICK_ACTION_BLOCKING
 	user.visible_message(span_notice("[user] removes \the [cell] from [src]!"), \
 		span_notice("You remove [cell]."))
 	cell.add_fingerprint(user)
 	user.put_in_hands(cell)
 	cell = null
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/inspector/examine(mob/user)
 	. = ..()
