@@ -63,7 +63,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "aP" = (
-/obj/structure/cable/layer1,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
@@ -407,7 +406,7 @@
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/structure/sign/poster/contraband/energy_swords/directional/north,
 /obj/machinery/duct,
-/obj/structure/reagent_dispensers/fueltank/large,
+/obj/structure/chair/sofa/left/maroon,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "dj" = (
@@ -792,7 +791,11 @@
 /obj/structure/cable/layer1,
 /obj/structure/sign/poster/contraband/syndicate_pistol/directional/west,
 /mob/living/simple_animal/bot/secbot{
-	faction = list("Syndicate")
+	faction = list("Syndicate");
+	bot_cover_flags = BOT_COVER_EMAGGED
+	},
+/obj/machinery/navbeacon{
+	location = "breakroom1"
 	},
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
@@ -1148,14 +1151,11 @@
 "jY" = (
 /obj/structure/cable/layer1,
 /obj/structure/noticeboard/directional/north,
-/obj/item/trash/syndi_cakes{
-	pixel_y = 4;
-	pixel_x = -8
-	},
 /obj/item/paper/fluff/ruins/hauntedtradingpost/warning,
 /obj/machinery/duct,
 /obj/item/paper/fluff/ruins/hauntedtradingpost/oldnote,
 /obj/item/paper/fluff/ruins/hauntedtradingpost/officememo,
+/obj/structure/chair/sofa/right/maroon,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "ka" = (
@@ -1523,10 +1523,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/maint/toystorage)
-"nv" = (
-/obj/effect/decal/cleanable/fuel_pool,
-/turf/open/floor/carpet/donk,
-/area/ruin/space/has_grav/hauntedtradingpost/employees)
 "nC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -1613,6 +1609,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/maintenance/no_decals,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/maint/toystorage)
 "oz" = (
@@ -2296,6 +2293,7 @@
 /obj/machinery/light/small/dim/directional/north,
 /obj/item/mop,
 /obj/item/food/badrecipe/moldy/bacteria,
+/obj/effect/spawner/random/maintenance/no_decals,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/maint/disposals)
 "tQ" = (
@@ -2308,6 +2306,7 @@
 "tW" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable/layer1,
+/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "tZ" = (
@@ -2393,7 +2392,6 @@
 "vm" = (
 /obj/structure/cable/layer1,
 /obj/structure/table/wood,
-/obj/effect/decal/cleanable/fuel_pool,
 /obj/item/ammo_casing/foam_dart{
 	pixel_x = 4;
 	pixel_y = -2
@@ -2825,14 +2823,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
-"yM" = (
-/obj/effect/decal/cleanable/oil/slippery{
-	pixel_y = 6;
-	pixel_x = 6
-	},
-/obj/effect/decal/cleanable/fuel_pool,
-/turf/open/floor/carpet/donk,
-/area/ruin/space/has_grav/hauntedtradingpost/employees)
 "yS" = (
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/lattice,
@@ -3493,15 +3483,16 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/public)
 "Ft" = (
-/obj/structure/sink/directional/east,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/cable/layer1,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	pipe_color = "#FF7B00";
-	color = "#FF7B00"
+/obj/structure/closet/crate/cardboard{
+	desc = "A fine example of the ubiquitous cardboard box. Handy if you want to store things. This box is labelled 'OUTLET 6013 - DECO' and has the Donk Co. logo stamped on it."
 	},
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/universal_scanner,
+/obj/item/laser_pointer/red,
+/obj/effect/spawner/random/maintenance/no_decals/two,
+/turf/open/floor/carpet/donk,
+/area/ruin/space/has_grav/hauntedtradingpost/employees)
 "Fx" = (
 /obj/structure/cable/layer1,
 /obj/effect/turf_decal/stripes/red/line{
@@ -4063,15 +4054,9 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
 "JG" = (
-/obj/structure/cable/layer1,
 /obj/structure/sink/directional/west,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	pipe_color = "#FF7B00";
-	color = "#FF7B00"
-	},
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
+/turf/open/floor/carpet/donk,
+/area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "JJ" = (
 /obj/structure/cable/layer1,
 /obj/machinery/light/red/dim/directional/west,
@@ -4293,7 +4278,6 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "LI" = (
-/obj/effect/decal/cleanable/fuel_pool,
 /obj/item/circuitboard/machine/vending/donksofttoyvendor{
 	pixel_y = -2;
 	pixel_x = -6
@@ -4322,8 +4306,12 @@
 "LQ" = (
 /obj/structure/cable/layer1,
 /obj/structure/sign/poster/contraband/arc_slimes/directional/north,
-/obj/structure/chair/sofa/right/maroon,
-/turf/open/floor/carpet/donk,
+/obj/item/trash/syndi_cakes{
+	pixel_y = 4;
+	pixel_x = -8
+	},
+/obj/item/clothing/shoes/sneakers/orange,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "LS" = (
 /obj/structure/cable/layer1,
@@ -4396,7 +4384,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/duct,
 /obj/item/card/id/away/donk,
-/obj/machinery/firealarm/directional/north,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/public)
 "Mr" = (
@@ -4484,6 +4471,7 @@
 	pipe_color = "#FF7B00";
 	color = "#FF7B00"
 	},
+/obj/effect/spawner/random/maintenance/no_decals,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
 "Ni" = (
@@ -4580,8 +4568,8 @@
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "Of" = (
 /obj/structure/cable/layer1,
+/obj/structure/reagent_dispensers/fueltank/large,
 /obj/effect/decal/cleanable/fuel_pool,
-/obj/item/clothing/shoes/sneakers/orange,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "Oh" = (
@@ -4656,7 +4644,6 @@
 "Pd" = (
 /obj/structure/cable/layer1,
 /obj/structure/table/wood,
-/obj/effect/decal/cleanable/fuel_pool,
 /obj/machinery/duct,
 /obj/item/toy/snappop{
 	pixel_y = 6;
@@ -4733,7 +4720,6 @@
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "PA" = (
-/obj/structure/cable/layer1,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/machinery/duct,
 /turf/open/floor/carpet/donk,
@@ -5056,6 +5042,8 @@
 	color = "#FF7B00"
 	},
 /obj/machinery/meter,
+/obj/effect/spawner/random/maintenance/no_decals,
+/obj/effect/spawner/random/trash/deluxe_garbage,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/maint/toystorage)
 "Sx" = (
@@ -5141,10 +5129,11 @@
 /turf/open/floor/circuit/red/off,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "Ti" = (
-/obj/structure/chair/sofa/left/maroon,
 /obj/structure/sign/poster/ripped/directional/north,
 /obj/machinery/light/small/broken/directional/east,
-/turf/open/floor/carpet/donk,
+/obj/structure/reagent_dispensers/fueltank/large,
+/obj/structure/cable/layer1,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "Tl" = (
 /obj/structure/cable/layer1,
@@ -5482,9 +5471,9 @@
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "VX" = (
 /obj/structure/cable/layer1,
-/obj/effect/decal/cleanable/fuel_pool,
 /obj/structure/rack,
 /obj/item/gun/ballistic/automatic/pistol/toy,
+/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "Wa" = (
@@ -5640,7 +5629,6 @@
 /obj/machinery/vending/cola/shamblers{
 	onstation_override = 1
 	},
-/obj/effect/decal/cleanable/fuel_pool,
 /obj/machinery/duct,
 /obj/effect/overloader_trap,
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -5665,6 +5653,11 @@
 	pixel_y = 14;
 	dir = 4
 	},
+/obj/effect/decal/cleanable/oil/slippery{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "Xy" = (
@@ -5883,7 +5876,6 @@
 "YR" = (
 /obj/structure/cable/layer1,
 /obj/structure/frame/machine/secured,
-/obj/effect/decal/cleanable/fuel_pool,
 /obj/machinery/duct,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
@@ -6269,7 +6261,7 @@ hd
 TK
 rs
 IX
-Ft
+IX
 IX
 Mf
 kX
@@ -6363,7 +6355,7 @@ vH
 IR
 qp
 ij
-DR
+JG
 DR
 rI
 iW
@@ -6595,7 +6587,7 @@ tl
 tl
 jY
 VQ
-ef
+Ft
 tl
 uq
 ta
@@ -6639,7 +6631,7 @@ iF
 iF
 tl
 dc
-VQ
+UV
 TR
 tl
 tl
@@ -6730,7 +6722,7 @@ iF
 tl
 YR
 LI
-UV
+VQ
 Of
 tl
 QV
@@ -6774,8 +6766,8 @@ ss
 iF
 tl
 Xe
-yM
-nv
+VQ
+VQ
 hl
 Nr
 oT
@@ -7134,7 +7126,7 @@ pz
 se
 YK
 Nt
-JG
+Nt
 kE
 wy
 cC
