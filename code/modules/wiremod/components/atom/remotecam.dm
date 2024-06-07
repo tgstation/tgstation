@@ -411,32 +411,6 @@
 	if(current_camera_state ^ shell_camera.camera_enabled)
 		shell_camera.toggle_cam(null, 0)
 
-/obj/item/circuit_component/remotecam/drone/process(seconds_per_tick)
-	if(!shell_parent || !shell_camera)
-		return PROCESS_KILL
-	//Camera is currently emp'd
-	if (current_camera_emp)
-		close_camera()
-		return
-	var/mob/living/circuit_drone/drone = shell_parent
-	//If shell is destroyed
-	if(drone.health < 0)
-		close_camera()
-		return
-	var/obj/item/stock_parts/cell/cell = parent.get_cell()
-	//If cell doesn't exist, or we ran out of power
-	if(!cell?.use(current_camera_range > 0 ? REMOTECAM_ENERGY_USAGE_FAR : REMOTECAM_ENERGY_USAGE_NEAR))
-		close_camera()
-		return
-	//If the camera range has changed, update camera range
-	if(!camera_range.value != !current_camera_range)
-		current_camera_range = camera_range.value
-		update_camera_range()
-	//Set the camera state (if state has been changed)
-	if(current_camera_state ^ shell_camera.camera_enabled)
-		shell_camera.toggle_cam(null, 0)
-
-
 #undef REMOTECAM_RANGE_FAR
 #undef REMOTECAM_RANGE_NEAR
 #undef REMOTECAM_ENERGY_USAGE_NEAR
