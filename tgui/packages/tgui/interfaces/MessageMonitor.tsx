@@ -133,7 +133,12 @@ const MessageLogsScreen = (props) => {
                 </Table.Cell>
                 <Table.Cell>{message.sender}</Table.Cell>
                 <Table.Cell>{message.recipient}</Table.Cell>
-                <Table.Cell>{message.message}</Table.Cell>
+                <Table.Cell>
+                  <Box
+                    as="span"
+                    dangerouslySetInnerHTML={{ __html: message.message }}
+                  />
+                </Table.Cell>
               </Table.Row>
             ))}
           </Table>
