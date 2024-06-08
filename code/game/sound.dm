@@ -24,6 +24,57 @@
 	environment = SOUND_ENVIRONMENT_NONE //Default to none so sounds without overrides dont get reverb
 
 /**
+ * Contains data required to update spatial audio awareness.
+ */
+/datum/play_sound_data
+	var/atom/source //! The source atom the sound wants to follow
+	var/list/mob/listeners //! The current listeners of the sound
+	var/list/datum/spatial_grid_cell/spatial_cells //! All cells we are registered for client movements
+	var/channel //! The channel of the sound
+	var/range //! The range of the sound, used to grab the requisite cell range
+
+/datum/play_sound_data/proc/setup(
+	atom/source,
+	channel,
+	range,
+)
+	src.source = source
+	src.channel = channel
+	src.range = range
+	RegisterSignal(source, COMSIG_MOVABLE_MOVED, PROC_REF(on_source_atom_moved))
+	ASYNC // manually call once to setup listeners and cell registration
+		on_source_atom_moved()
+
+/datum/play_sound_data/proc/reset()
+	for(var/datum/spatial_grid_cell/cell as anything in spatial_cells)
+		UnregisterSignals(old_cell, list(
+			SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS),
+			SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS),
+		))
+	spatial_cells.Cut()
+	for(var/mob/listener as anything in listeners)
+		SEND_SOUND(listener, sound(null, channel = channel))
+	listeners.Cut()
+	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
+	source = null
+
+/datum/play_sound_data/proc/on_source_atom_moved()
+	SIGNAL_HANDLER
+
+	var/list/cells_wanted = SSspatial_grid.get_cells_in_range(source, range)
+	var/list/cells_removed = spatial_cells - new_cells
+	var/list/cells_added = new_cells - spatial_cells
+
+	for(var/datum/spatial_grid_cell/old_cell as anything in cells_removed)
+		UnregisterSignals(old_cell, list(
+			SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS),
+			SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS),
+		))
+	for(var/datum/spatial_grid_cell/new_cell as anything in cells_added)
+		RegisterSignal(new_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_cell_entered))
+		RegisterSignal(new_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), PROC_REF(on_cell_exited))
+
+/**
  * playsound is a proc used to play a 3D sound in a specific range. This uses SOUND_RANGE + extra_range to determine that.
  *
  * Arguments:
