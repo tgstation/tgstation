@@ -48099,9 +48099,6 @@
 /obj/item/healthanalyzer,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
-"otC" = (
-/turf/open/genturf,
-/area/icemoon/surface/outdoors/nospawn)
 "otG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/blue{
@@ -272458,7 +272455,7 @@ wNO
 aaX
 wNO
 wNO
-otC
+bln
 hHG
 hHG
 hHG

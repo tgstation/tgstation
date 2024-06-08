@@ -32,7 +32,7 @@
 		to_chat(borg, span_alert("Upgrade mounting error! No suitable hardpoint detected."))
 		to_chat(user, span_warning("There's no mounting point for the module!"))
 		return FALSE
-	if(!allow_duplicates && (locate(type) in borg.contents))
+	if(!allow_duplicates && (locate(type) in borg.upgrades))
 		to_chat(borg, span_alert("Upgrade mounting error! Hardpoint already occupied!"))
 		to_chat(user, span_warning("The mounting point for the module is already occupied!"))
 		return FALSE
@@ -400,7 +400,7 @@
 		found_hypo = TRUE
 
 	if(!found_hypo)
-		to_chat(user, span_warning("This unit is already equipped with a piercing hypospray upgrade!")) //check to see if we already have this module
+		to_chat(user, span_warning("There are no installed hypospray modules to upgrade with piercing!")) //check to see if any hyposprays were upgraded
 		return FALSE
 
 /obj/item/borg/upgrade/piercing_hypospray/deactivate(mob/living/silicon/robot/borg, mob/living/user = usr)
