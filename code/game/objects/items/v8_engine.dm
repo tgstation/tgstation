@@ -83,16 +83,16 @@
 		do_sparks(number = 0, cardinal_only = TRUE, source = src)
 	update_appearance(UPDATE_ICON_STATE)
 
-/obj/item/house_edge/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/house_edge/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, fire_charge_cooldown))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 	if(fire_charges <= 0)
 		balloon_alert(user, "no fire charges!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	user.throw_at(target = get_turf(target), range = 2 * fire_charges, speed = 5, thrower = user, spin = FALSE, gentle = FALSE, quickstart = TRUE)
+		return ITEM_INTERACT_BLOCKING
+	user.throw_at(target = get_turf(interacting_with), range = 2 * fire_charges, speed = 5, thrower = user, spin = FALSE, gentle = FALSE, quickstart = TRUE)
 	COOLDOWN_START(src, fire_charge_cooldown, DASH_COOLDOWN)
 	reset_charges(on_dash = TRUE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/house_edge/update_icon_state()
 	inhand_icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "house_edge1" : "house_edge0"

@@ -279,7 +279,7 @@
 		return ITEM_INTERACT_SKIP_TO_ATTACK // Gun bash / bayonet attack
 	if(try_fire_gun(interacting_with, user, list2params(modifiers)))
 		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	return NONE
 
 /obj/item/gun/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!can_hold_up || !isliving(interacting_with))

@@ -371,7 +371,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 /obj/item/chair/afterattack(atom/target, mob/user, click_parameters)
 	if(!prob(break_chance))
 		return
-	user.visible_message(span_danger("[user] smashes \the [src] to pieces against \the [target]"))
+	user.visible_message(span_danger("[user] smashes [src] to pieces against [target]"))
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(C.health < C.maxHealth*0.5)

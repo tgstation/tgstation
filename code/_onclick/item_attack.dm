@@ -61,8 +61,10 @@
 
 	if(user.client && isitem(target))
 		if(isnull(user.get_inactive_held_item()))
+			testing("Suggesting a switch hands tutorial to [user.ckey] in melee_attack_chain")
 			SStutorials.suggest_tutorial(user, /datum/tutorial/switch_hands, params2list(params))
 		else
+			testing("Suggesting a drop item tutorial to [user.ckey] in melee_attack_chain")
 			SStutorials.suggest_tutorial(user, /datum/tutorial/drop, params2list(params))
 
 	return TRUE
@@ -231,10 +233,12 @@
 	if(force && target_mob == user && user.client)
 		user.client.give_award(/datum/award/achievement/misc/selfouch, user)
 
-	user.do_attack_animation(target_mob)
-	target_mob.attacked_by(src, user)
+	if(loc == user) // telekinesis.
+		user.do_attack_animation(target_mob)
+	if(!target_mob.attacked_by(src, user))
+		return TRUE
+
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target_mob, user, params)
-	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target_mob, src, params)
 	SEND_SIGNAL(target_mob, COMSIG_ATOM_AFTER_ATTACKEDBY, src, user, params)
 	afterattack(target_mob, user, params)
 
@@ -264,10 +268,10 @@
 	if(item_flags & NOBLUDGEON)
 		return FALSE
 	user.changeNext_move(attack_speed)
-	user.do_attack_animation(attacked_atom)
+	if(loc == user) // telekinesis.
+		user.do_attack_animation(attacked_atom)
 	attacked_atom.attacked_by(src, user)
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, attacked_atom, user, params)
-	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, attacked_atom, src, params)
 	SEND_SIGNAL(attacked_atom, COMSIG_ATOM_AFTER_ATTACKEDBY, src, user, params)
 	afterattack(attacked_atom, user, params)
 	return FALSE // unhandled
@@ -326,7 +330,7 @@
 	SEND_SIGNAL(attacking_item, COMSIG_ITEM_ATTACK_ZONE, src, user, targeting)
 
 	if(damage <= 0)
-		return FALSE
+		return TRUE
 
 	if(ishuman(src) || client) // istype(src) is kinda bad, but it's to avoid spamming the blackbox
 		SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
@@ -453,27 +457,6 @@
 /obj/item/proc/afterattack(atom/target, mob/user, click_parameters)
 	PROTECTED_PROC(TRUE)
 	return
-
-/**
- * Called at the end of the attack chain if the user right-clicked.
- *
- * Arguments:
- * * atom/target - The thing that was hit
- * * mob/user - The mob doing the hitting
- * * proximity_flag - is 1 if this afterattack was called on something adjacent, in your square, or on your person.
- * * click_parameters - is the params string from byond [/atom/proc/Click] code, see that documentation.
- */
-/obj/item/proc/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	var/signal_result = SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK_SECONDARY, target, user, proximity_flag, click_parameters)
-	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK_SECONDARY, target, src, proximity_flag, click_parameters)
-
-	if(signal_result & COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	if(signal_result & COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN)
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
-
-	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/item/proc/get_clamped_volume()
 	if(w_class)

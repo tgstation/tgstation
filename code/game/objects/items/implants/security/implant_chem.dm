@@ -97,7 +97,7 @@
 
 /obj/item/implantcase/chem/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/reagent_containers/syringe) && imp)
-		W.afterattack(imp, user, TRUE, params)
+		W.interact_with_atom(imp, user, params)
 		return TRUE
 	else
 		return ..()

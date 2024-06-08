@@ -56,6 +56,8 @@
 /// Args: (mob/living/user, obj/item/tool, list/modifiers)
 /// Return any ITEM_INTERACT_ flags as relevant (see tools.dm)
 #define COMSIG_ATOM_ITEM_INTERACTION_SECONDARY "atom_item_interaction_secondary"
+/// Sent from [atom/proc/item_interaction], to a mob clicking on an atom with an item
+#define COMSIG_USER_ITEM_INTERACTION "user_item_interaction"
 /// Sent from [atom/proc/item_interaction], to an item clicking on an atom
 /// Args: (mob/living/user, atom/interacting_with, list/modifiers)
 /// Return any ITEM_INTERACT_ flags as relevant (see tools.dm)
@@ -64,6 +66,8 @@
 /// Args: (mob/living/user, atom/interacting_with, list/modifiers)
 /// Return any ITEM_INTERACT_ flags as relevant (see tools.dm)
 #define COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY "item_interacting_with_atom_secondary"
+/// Sent from [atom/proc/item_interaction], when this atom is right-clicked on by a mob with a tool
+#define COMSIG_USER_ITEM_INTERACTION_SECONDARY "user_item_interaction_secondary"
 /// Sent from [atom/proc/item_interaction], when this atom is left-clicked on by a mob with a tool of a specific tool type
 /// Args: (mob/living/user, obj/item/tool, list/recipes)
 /// Return any ITEM_INTERACT_ flags as relevant (see tools.dm)
