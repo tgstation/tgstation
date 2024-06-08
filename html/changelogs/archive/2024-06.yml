@@ -332,3 +332,45 @@
   zxaber:
   - bugfix: 'Tool-based flashes (read: from welders) are no longer incorrectly locked
       at flash level 1. Wear proper PPE!'
+2024-06-08:
+  00-Steven:
+  - refactor: Refactored wall button code, please report any issues.
+  - bugfix: Wall buttons actually drop their contents when destroyed.
+  - sound: Putting items into wall buttons actually plays a sound. This matters for
+      assembly devices, but airlock electronics do not have a sound.
+  - qol: Added screentips to wall buttons.
+  - qol: You can now take out the airlock electronics or assembly device out of wall
+      buttons individually. Left click prioritises the board, right click prioritises
+      the device.
+  - qol: Wall buttons are renamable with a pen when opened.
+  - qol: Attempting to wrench deconstruct a wall button or put in airlock electronics
+      or an assembly device when you can't actually gives feedback.
+  DaCoolBoss:
+  - bugfix: Fixed entries in config file 'spaceruinsblacklist.txt'.
+  EnterTheJake:
+  - balance: Rust walkers' summoning ritual now requires 5 sheets of Titanium instead
+      of Iron.
+  - bugfix: Magic resistance grants complete immunity from the passive disgust buildup
+      from standing on Rusted turfs.
+  Melbert:
+  - bugfix: Fix some modifiers to do after speed (sanity, midas gun) stacking when
+      they shouldn't
+  MichiRecRoom:
+  - qol: Personal AI's face display selection is now a radial menu. As a bonus, now
+      you can see what the faces look like before selecting them.
+  Rhials:
+  - bugfix: Only filled graves will impact your mood.
+  SyncIt21:
+  - spellcheck: Corrected wrench contextual screentip typo for smart fridge
+  - refactor: alt right click has been refactored. report bugs on github
+  - bugfix: techfabs don't runtime & hang when printing in no apc areas
+  nikothedude:
+  - rscadd: 'New deathmatch modifier: "Random martial arts"'
+  projectkepler-ru:
+  - bugfix: smoking pipe not showing sprite when lit
+  thegrb93:
+  - bugfix: Borg emag module jank when no longer emagged
+  - bugfix: Borg piercing hypospray fail message
+  zxaber:
+  - bugfix: Fixed borg chargers (especially unpowered ones) constantly draining a
+      borg's cell.
