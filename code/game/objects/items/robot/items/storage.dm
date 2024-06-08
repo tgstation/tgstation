@@ -25,7 +25,7 @@
 	if(istype(loc, /obj/item/robot_model))
 		RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, PROC_REF(safedecon))
 		return
-	CRASH("Unable to set up safedecon signal for [src] - location check matched neither cyborg nor cyborg model. Location is actually [loc.type].")
+	CRASH("Unable to set up safedecon signal for [src] - location check matched neither cyborg nor cyborg model. Location is actually [loc].")
 
 ///If we're safely deconstructed, we put the item neatly onto the ground, rather than deleting it.
 /obj/item/borg/apparatus/proc/safedecon()
