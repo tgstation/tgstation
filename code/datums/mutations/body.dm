@@ -147,7 +147,7 @@
 	ADD_TRAIT(owner, TRAIT_TOO_TALL, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly grows tall!"), span_notice("You feel a small strange urge to fight small men with slingshots. Or maybe play some basketball."))
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(head_bonk))
-	owner.apply_height_filters()
+	owner.regenerate_icons()
 
 /datum/mutation/human/acromegaly/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -155,7 +155,7 @@
 	REMOVE_TRAIT(owner, TRAIT_TOO_TALL, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("You return to your usual height."))
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(head_bonk))
-	owner.apply_height_filters()
+	owner.regenerate_icons()
 
 // This is specifically happening because they're not used to their new height and are stumbling around into machinery made for normal humans
 /datum/mutation/human/acromegaly/proc/head_bonk(mob/living/parent)
