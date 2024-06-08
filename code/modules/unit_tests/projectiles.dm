@@ -26,7 +26,7 @@
 	gunner.set_combat_mode(FALSE) // just to make sure we know we're not trying to pistol-whip them
 	var/expected_damage = loaded_bullet.damage
 	loaded_bullet.def_zone = BODY_ZONE_CHEST
-	var/did_we_shoot = test_gun.afterattack(victim, gunner)
+	var/did_we_shoot = test_gun.melee_attack_chain(gunner, victim)
 	TEST_ASSERT(did_we_shoot, "Gun does not appeared to have successfully fired.")
 	TEST_ASSERT_EQUAL(victim.getBruteLoss(), expected_damage, "Victim took incorrect amount of damage, expected [expected_damage], got [victim.getBruteLoss()].")
 

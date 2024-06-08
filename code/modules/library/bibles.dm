@@ -273,7 +273,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	return !istype(storage_holder, /obj/item/book/bible)
 
 /obj/item/book/bible/interact_with_atom(atom/bible_smacked, mob/living/user, list/modifiers)
-	if(SEND_SIGNAL(bible_smacked, COMSIG_BIBLE_SMACKED, user, proximity_flag, click_parameters) & COMSIG_END_BIBLE_CHAIN)
+	if(SEND_SIGNAL(bible_smacked, COMSIG_BIBLE_SMACKED, user) & COMSIG_END_BIBLE_CHAIN)
 		return ITEM_INTERACT_SUCCESS
 	if(isfloorturf(bible_smacked))
 		if(user.mind?.holy_role)

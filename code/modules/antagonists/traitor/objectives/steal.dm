@@ -273,8 +273,8 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 			. += span_notice("This device must be placed by <b>clicking on the [initial(target_object_type.name)]</b> with it.")
 		. += span_notice("Remember, you may leave behind fingerprints or fibers on the device. Use <b>soap</b> or similar to scrub it clean to be safe!")
 
-/obj/item/traitor_bug/interact_with_atom(atom/target, mob/living/user, list/modifiers)
-	if(!target_object_type)
+/obj/item/traitor_bug/interact_with_atom(atom/movable/target, mob/living/user, list/modifiers)
+	if(!target_object_type || !ismovable(target))
 		return NONE
 
 	var/result = SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PRE_PLANTED_OBJECT, target)

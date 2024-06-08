@@ -30,7 +30,7 @@
 
 	// TOUCH
 	dropper.reagents.add_reagent(/datum/reagent/water, 5)
-	dropper.afterattack(human, human, TRUE)
+	dropper.melee_attack_chain(human, human)
 	TEST_ASSERT(human.fire_stacks < 0, "Human still has fire stacks after touching water")
 
 	// VAPOR

@@ -132,7 +132,7 @@ RSF
 		return NONE
 	if(use_matter(dispense_cost, user))//If we can charge that amount of charge, we do so and return true
 		playsound(loc, 'sound/machines/click.ogg', 10, TRUE)
-		var/atom/meme = new to_dispense(get_turf(A))
+		var/atom/meme = new to_dispense(get_turf(interacting_with))
 		to_chat(user, span_notice("[action_type] [meme.name]..."))
 		cooldown = world.time + cooldowndelay
 		return ITEM_INTERACT_SUCCESS
