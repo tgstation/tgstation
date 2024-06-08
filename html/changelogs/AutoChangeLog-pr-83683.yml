@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes:
+  - qol: "Plexagon Access Management now tells you that you need an ID Trim before applying a Template, rather than silently failing."
