@@ -631,7 +631,7 @@
 	message = emoji_parse(message) //already sent- this just shows the sent emoji as one to the sender in the to_chat
 
 	// Show it to ghosts
-	var/ghost_message = span_game_say("[span_name("[source]")] [rigged ? "(as [span_name(fake_name)]) Rigged " : ""]PDA Message --> [span_name("[signal.format_target()]")]: \"[signal.format_message()]\"")
+	var/ghost_message = span_game_say("[span_name(signal.format_sender())] [rigged ? "(as [span_name(fake_name)]) Rigged " : ""]PDA Message --> [span_name("[signal.format_target()]")]: \"[signal.format_message()]\"")
 	var/list/message_listeners = GLOB.dead_player_list + GLOB.current_observers_list
 	for(var/mob/listener as anything in message_listeners)
 		if(!(get_chat_toggles(listener) & CHAT_GHOSTPDA))
