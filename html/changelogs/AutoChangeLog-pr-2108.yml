@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Once again you can award people medals."
-  - rscadd: "Added two new awards specifically for engineering and medical: The \"Emergency Services Award\" and the \"Atmospheric Mastery Award\". CEs get 3 Emergency Services Awards and 1 Atmospheric Mastery Award and CMOs get 3 Emergency Services Awards."

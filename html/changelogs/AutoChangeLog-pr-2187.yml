@@ -1,5 +1,0 @@
-author: "Uristthedorf"
-delete-after: True
-changes:
-  - rscadd: "Drones can walk through doors without opening them now."
-  - qol: "Drone tools are as good as borg tools now."

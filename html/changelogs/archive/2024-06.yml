@@ -160,3 +160,23 @@
       too little plasma.
   lmenvs:
   - rscadd: Raw spaghetti now has a chance to spawn with the correctly spelled name.
+2024-06-08:
+  Absolucy:
+  - qol: Oozelings now transfer orbiters to/from their core.
+  - code_imp: Cleaned up some code relating to oozeling cores.
+  - bugfix: Fixed an error with bloodsucker timing math (i.e 0.6 seconds instead of
+      1 minute)
+  - bugfix: Fixed candelabrum hallucinations stacking infinitely.
+  - bugfix: Vassals now get the candelabrum mood debuff cleared when converted.
+  - qol: Blood Brothers can now only convert people who have BB enabled in their prefs.
+      Failing to convert will give an appropriate feedback message (and the failed
+      convert won't notice anything other than a normal flashing).
+  - bugfix: Once again you can award people medals.
+  - rscadd: 'Added two new awards specifically for engineering and medical: The "Emergency
+      Services Award" and the "Atmospheric Mastery Award". CEs get 3 Emergency Services
+      Awards and 1 Atmospheric Mastery Award and CMOs get 3 Emergency Services Awards.'
+  - bugfix: Fixed some pollution-related runtimes.
+  - bugfix: Ctrl-clicking jumpsuits to max sensors now actually works
+  Uristthedorf:
+  - rscadd: Drones can walk through doors without opening them now.
+  - qol: Drone tools are as good as borg tools now.
