@@ -445,7 +445,9 @@
 "xq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom{
-	pixel_x = 31
+	pixel_x = 31;
+	syndie = 1;
+	freerange = 1
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/fax{
@@ -542,12 +544,16 @@
 /obj/item/reagent_containers/condiment/milk,
 /obj/item/reagent_containers/condiment/flour,
 /obj/structure/closet/secure_closet/freezer/empty,
+/obj/item/storage/box/donkpockets,
+/obj/item/coffee_cartridge,
+/obj/item/coffee_cartridge/decaf,
+/obj/item/coffee_cartridge/fancy,
 /turf/open/floor/iron/white,
 /area/ruin/comms_agent)
 "CL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible/layer2,
-/obj/structure/closet/emcloset,
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "CS" = (
@@ -563,6 +569,7 @@
 /area/ruin/comms_agent/maint)
 "CW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "DH" = (
@@ -680,6 +687,8 @@
 	pixel_x = -13;
 	pixel_y = 4
 	},
+/obj/item/storage/box/coffeepack,
+/obj/item/storage/box/coffeepack/robusta,
 /turf/open/floor/wood,
 /area/ruin/comms_agent)
 "JD" = (
@@ -706,11 +715,10 @@
 /obj/machinery/atmospherics/components/trinary/filter/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable,
-/obj/machinery/power/smes/super/full,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "KB" = (
@@ -895,9 +903,6 @@
 "Qn" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/mapping_helpers/apc/syndicate_access,
-/obj/machinery/power/terminal{
-	dir = 4
-	},
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/ruin/comms_agent)
