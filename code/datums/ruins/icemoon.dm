@@ -176,8 +176,6 @@
 /datum/map_template/ruin/icemoon/underground/plasma_facility
 	name = "Ice-Ruin Abandoned Plasma Facility"
 	id = "plasma_facility"
-	cost = 0
-	always_place = TRUE
 	description = "Rumors have developed over the many years of Freyja plasma mining. These rumors suggest that the ghosts of dead mistreated excavation staff have returned to \
 	exact revenge on their (now former) employers. Coorperate reminds all staff that rumors are just that: Old Housewife tales meant to scare misbehaving kids to bed."
 	suffix = "icemoon_underground_abandoned_plasma_facility.dmm"
