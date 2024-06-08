@@ -98,6 +98,8 @@
 	UnregisterSignal(source, COMSIG_ATOM_EXITED)
 	for(var/obj/effect/glowing_rune/rune_to_remove in source)
 		qdel(rune_to_remove)
+	for(var/mob/living/victim in source)
+		victim.remove_status_effect(/datum/status_effect/rust_corruption)
 
 /datum/element/rust/heretic/proc/on_entered(turf/source, atom/movable/entered, ...)
 	SIGNAL_HANDLER
@@ -106,6 +108,8 @@
 		return
 	var/mob/living/victim = entered
 	if(IS_HERETIC(victim))
+		return
+	if(victim.can_block_magic(MAGIC_RESISTANCE))
 		return
 	victim.apply_status_effect(/datum/status_effect/rust_corruption)
 

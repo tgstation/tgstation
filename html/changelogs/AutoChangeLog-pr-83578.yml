@@ -1,0 +1,5 @@
+author: "tmyqlfpir"
+delete-after: True
+changes:
+  - rscadd: "Added new circuit camera components"
+  - qol: "Circuit drones can now recharge at recharge stations"

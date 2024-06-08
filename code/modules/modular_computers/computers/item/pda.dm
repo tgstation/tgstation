@@ -1,6 +1,6 @@
 /obj/item/modular_computer/pda
 	name = "pda"
-	icon = 'icons/obj/modular_pda.dmi'
+	icon = 'icons/obj/devices/modular_pda.dmi'
 	icon_state = "pda"
 	worn_icon_state = "nothing"
 	base_icon_state = "tablet"

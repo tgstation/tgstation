@@ -92,7 +92,7 @@
 			elevator_status = LIFT_PLATFORM_LOCKED
 			GLOB.elevator_doors += src
 		else
-			stack_trace("Elevator door [src] has no linked elevator ID!")
+			stack_trace("Elevator door [src] ([x],[y],[z]) has no linked elevator ID!")
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
 	if(density)

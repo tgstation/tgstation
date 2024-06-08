@@ -206,7 +206,7 @@
 
 ///Serializes into JSON. Does not encode type.
 /datum/proc/serialize_json(list/options)
-	. = serialize_list(options)
+	. = serialize_list(options, list())
 	if(!islist(.))
 		. = null
 	else
