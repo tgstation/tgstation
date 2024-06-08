@@ -894,6 +894,7 @@
 		"bci_implanter",
 		"bci_shell",
 		"comp_bar_overlay",
+		"comp_camera_bci",
 		"comp_counter_overlay",
 		"comp_install_detector",
 		"comp_object_overlay",
