@@ -131,4 +131,3 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 /// Called when overriding a pulsar star command report message.
 /datum/station_trait/proc/get_pulsar_message()
 	return
-

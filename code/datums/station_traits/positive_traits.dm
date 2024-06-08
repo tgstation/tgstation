@@ -291,7 +291,6 @@
 	event_control_path = /datum/round_event_control/wisdomcow
 	weight_multiplier = 3
 	max_occurrences_modifier = 10 //lotta cows
-	trait_to_give = STATION_TRAIT_WISE_COWS
 
 /datum/station_trait/random_event_weight_modifier/wise_cows/get_pulsar_message()
 	var/advisory_string = "Advisory Level: <b>Cow Planet</b></center><BR>" //We're gonna go fast and we're gonna go far.

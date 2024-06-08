@@ -979,10 +979,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_UNIQUE_AI "station_trait_unique_ai"
 #define STATION_TRAIT_UNNATURAL_ATMOSPHERE "station_trait_unnatural_atmosphere"
 #define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage"
-#define STATION_TRAIT_INTERN "station_trait_intern"
-#define STATION_TRAIT_WISE_COWS "station_trait_wise_cows"
-#define STATION_TRAIT_BLIZZARD "station_trait_blizzard"
-#define STATION_TRAIT_ION_STORMS "station_trait_ion_storms"
 
 ///Deathmatch traits
 #define TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS "deathmath_explosive_implants"
