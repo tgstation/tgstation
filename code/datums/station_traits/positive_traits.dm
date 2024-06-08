@@ -293,6 +293,11 @@
 	max_occurrences_modifier = 10 //lotta cows
 	trait_to_give = STATION_TRAIT_WISE_COWS
 
+/datum/station_trait/random_event_weight_modifier/wise_cows/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>Cow Planet</b></center><BR>" //We're gonna go fast and we're gonna go far.
+	advisory_string += "Your sector's advisory level is Cow Planet. We don't really know what this one means -- the model we use to create these threat reports hasn't produced this result before. Watch out for cows, I guess? Good luck!"
+	return advisory_string
+
 /datum/station_trait/bright_day
 	name = "Bright Day"
 	report_message = "The stars shine bright and the clouds are scarcer than usual. It's a bright day here on the Ice Moon's surface."
@@ -359,6 +364,11 @@
 	trait_to_give = STATION_TRAIT_ASSISTANT_GIMMICKS
 	show_in_report = TRUE
 	blacklist = list(/datum/station_trait/colored_assistants)
+
+/datum/station_trait/random_event_weight_modifier/assistant_gimmicks/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>Grey Sky</b></center><BR>"
+	advisory_string += "Your sector's advisory level is Grey Sky. Our sensors detect abnormal activity among the assistants assigned to your station. We advise you to closely monitor the Tool Storage, Bridge, Tech Storage, and Brig for gathering crowds or petty thievery."
+	return advisory_string
 
 #undef PARTY_COOLDOWN_LENGTH_MIN
 #undef PARTY_COOLDOWN_LENGTH_MAX
