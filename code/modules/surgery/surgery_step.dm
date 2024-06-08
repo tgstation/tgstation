@@ -265,7 +265,7 @@
  */
 /datum/surgery_step/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE)
 	if(target.stat < UNCONSCIOUS)
-		if(HAS_TRAIT(target, TRAIT_ANALGESIA))
+		if(HAS_TRAIT(target, TRAIT_ANALGESIA) || target.has_trauma_type(/datum/brain_trauma/special/tenacity))
 			to_chat(target, span_notice("You feel a dull, numb sensation as your body is surgically operated on."))
 		else
 			to_chat(target, span_userdanger(pain_message))
