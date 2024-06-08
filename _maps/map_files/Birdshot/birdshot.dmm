@@ -3629,7 +3629,7 @@
 	cycle_id = "engine_airlock_1"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/space/basic,
+/turf/open/floor/catwalk_floor,
 /area/station/engineering/main)
 "bIp" = (
 /obj/structure/flora/bush/large/style_random{
@@ -4883,6 +4883,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible/layer4,
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "clZ" = (
@@ -10896,10 +10897,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"eLN" = (
-/turf/open/space/basic,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/disposal/incinerator)
 "eMc" = (
 /obj/machinery/flasher/portable,
 /obj/effect/turf_decal/stripes/line{
@@ -17853,6 +17850,7 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/structure/closet/toolcloset,
 /obj/machinery/light/small/directional/east,
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/engineering/main)
 "hoG" = (
@@ -22612,7 +22610,6 @@
 /area/station/maintenance/starboard/aft)
 "iXg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/south,
 /obj/machinery/camera/directional/south{
@@ -45024,6 +45021,7 @@
 	name = "Cooling Loop Bypass"
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "qKe" = (
@@ -79325,7 +79323,7 @@ hep
 gvf
 hep
 tlq
-eLN
+hep
 exE
 lxO
 xor
@@ -88328,10 +88326,10 @@ oaJ
 oaJ
 oaJ
 pGi
-fEi
+oWE
 ayK
 ayK
-ayK
+urz
 xYG
 tNV
 hss
@@ -88585,9 +88583,9 @@ ova
 uDr
 uCE
 pGi
-fEi
-fBZ
-fBZ
+oWE
+tMJ
+tMJ
 abR
 ayK
 wlU
