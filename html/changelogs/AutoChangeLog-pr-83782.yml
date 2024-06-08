@@ -1,0 +1,4 @@
+author: "Zenitheevee"
+delete-after: True
+changes:
+  - bugfix: "fish with the Anxiety gene wont die when in the same loc as any 3 items"

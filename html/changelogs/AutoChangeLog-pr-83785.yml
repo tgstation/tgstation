@@ -1,0 +1,4 @@
+author: "Majkl-J"
+delete-after: True
+changes:
+  - bugfix: "Fixes several service and item-handling borg modules not functioning"

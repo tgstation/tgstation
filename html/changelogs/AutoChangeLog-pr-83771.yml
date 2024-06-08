@@ -1,0 +1,4 @@
+author: "Thlumyn"
+delete-after: True
+changes:
+  - bugfix: "add general engineering access to birdshot engineering entrance"

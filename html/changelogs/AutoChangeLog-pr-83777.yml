@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - bugfix: "Basic bots are now in the proper faction and will no longer be targeted by turrets."

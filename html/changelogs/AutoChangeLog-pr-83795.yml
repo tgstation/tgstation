@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - bugfix: "The spooky element will now apply the spooked mood event when someone is spooked."
+  - bugfix: "Fixed spookers getting a popup message when spooking mobs not actively controlled by a player."

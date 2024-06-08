@@ -71,6 +71,9 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		to_chat(user, span_warning("It does nothing!"))
 	else
+		if(HAS_SILICON_ACCESS(user))
+			locked = !locked
+			return
 		if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
 			locked = !locked
 			to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] the air alarm interface."))
@@ -78,7 +81,6 @@
 				ui_interact(user)
 		else
 			to_chat(user, span_danger("Access denied."))
-	return
 
 /obj/machinery/airalarm/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

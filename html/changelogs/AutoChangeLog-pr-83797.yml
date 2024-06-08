@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - bugfix: "Getting surgically cut open while conscious will now give you the \"THEY'RE CUTTING ME OPEN!!\" surgical mood event."
