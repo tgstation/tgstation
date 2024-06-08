@@ -88,7 +88,7 @@
 	else
 		icon_state = "[base_icon_state]-off"
 
-/obj/machinery/atmospherics/components/binary/crystallizer/ctrl_click(mob/user)
+/obj/machinery/atmospherics/components/binary/crystallizer/click_ctrl(mob/user)
 	if(!is_operational)
 		return CLICK_ACTION_BLOCKING
 	if(panel_open)

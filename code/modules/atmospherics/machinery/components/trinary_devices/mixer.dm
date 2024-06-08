@@ -27,7 +27,7 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize target pressure"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/trinary/mixer/ctrl_click(mob/user)
+/obj/machinery/atmospherics/components/trinary/mixer/click_ctrl(mob/user)
 	if(is_operational)
 		on = !on
 		balloon_alert(user, "turned [on ? "on" : "off"]")

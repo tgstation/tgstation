@@ -313,7 +313,7 @@
 
 	update_appearance()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/ctrl_click(mob/user)
+/obj/machinery/atmospherics/components/unary/thermomachine/click_ctrl(mob/user)
 	if(!anchored)
 		return NONE
 	if(panel_open)

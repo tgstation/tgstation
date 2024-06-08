@@ -149,7 +149,7 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 	update_appearance()
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/bluespace_sender/ctrl_click(mob/user)
+/obj/machinery/atmospherics/components/unary/bluespace_sender/click_ctrl(mob/user)
 	if(!panel_open && is_operational)
 		on = !on
 		balloon_alert(user, "turned [on ? "on" : "off"]")

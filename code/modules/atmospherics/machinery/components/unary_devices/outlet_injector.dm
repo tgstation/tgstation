@@ -54,7 +54,7 @@
 	multi_tool.set_buffer(src)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/ctrl_click(mob/user)
+/obj/machinery/atmospherics/components/unary/outlet_injector/click_ctrl(mob/user)
 	if(is_operational)
 		on = !on
 		balloon_alert(user, "turned [on ? "on" : "off"]")

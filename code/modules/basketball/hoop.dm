@@ -134,7 +134,7 @@
 	baller.adjustStaminaLoss(STAMINA_COST_DUNKING_MOB)
 	baller.stop_pulling()
 
-/obj/structure/hoop/ctrl_click(mob/user)
+/obj/structure/hoop/click_ctrl(mob/user)
 	user.balloon_alert_to_viewers("resetting score...")
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
 	if(do_after(user, 5 SECONDS, target = src))
@@ -180,7 +180,7 @@
 	return NONE
 
 // No resetting the score for minigame hoops
-/obj/structure/hoop/minigame/ctrl_click(mob/user)
+/obj/structure/hoop/minigame/click_ctrl(mob/user)
 	return CLICK_ACTION_BLOCKING
 
 /obj/structure/hoop/minigame/score(obj/item/toy/basketball/ball, mob/living/baller, points)

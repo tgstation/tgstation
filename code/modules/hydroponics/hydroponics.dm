@@ -1087,7 +1087,7 @@
 		if(user)
 			user.examinate(src)
 
-/obj/machinery/hydroponics/ctrl_click(mob/user)
+/obj/machinery/hydroponics/click_ctrl(mob/user)
 	if(!powered())
 		to_chat(user, span_warning("[name] has no power."))
 		update_use_power(NO_POWER_USE)
@@ -1182,7 +1182,7 @@
 		deconstruct(disassembled = TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/hydroponics/soil/ctrl_click(mob/user)
+/obj/machinery/hydroponics/soil/click_ctrl(mob/user)
 	return CLICK_ACTION_BLOCKING //Soil has no electricity.
 
 /obj/machinery/hydroponics/soil/on_deconstruction(disassembled)

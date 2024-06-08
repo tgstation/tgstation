@@ -294,7 +294,7 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Reskin"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/ctrl_click(mob/user)
+/obj/item/click_ctrl(mob/user)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	//If the item is on the ground & not anchored we allow the player to drag it

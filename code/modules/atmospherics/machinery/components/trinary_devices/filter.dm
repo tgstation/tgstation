@@ -24,7 +24,7 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize transfer rate"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/trinary/filter/ctrl_click(mob/user)
+/obj/machinery/atmospherics/components/trinary/filter/click_ctrl(mob/user)
 	if(is_operational)
 		on = !on
 		balloon_alert(user, "turned [on ? "on" : "off"]")

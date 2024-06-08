@@ -33,7 +33,7 @@
 	))
 	register_context()
 
-/obj/machinery/atmospherics/components/binary/volume_pump/ctrl_click(mob/user)
+/obj/machinery/atmospherics/components/binary/volume_pump/click_ctrl(mob/user)
 	if(can_interact(user))
 		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
