@@ -102,7 +102,7 @@
 /obj/item/delivery/can_be_package_wrapped()
 	return FALSE
 
-/obj/item/stack/package_wrap/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/stack/package_wrap/interact_with_atom(obj/interacting_with, mob/living/user, list/modifiers)
 	if(!isobj(interacting_with))
 		return NONE
 	if(interacting_with.anchored)
@@ -134,8 +134,8 @@
 		else
 			return ITEM_INTERACT_BLOCKING
 
-	else if(istype(target, /obj/structure/closet))
-		var/obj/structure/closet/closet = target
+	else if(istype(interacting_with, /obj/structure/closet))
+		var/obj/structure/closet/closet = interacting_with
 		if(closet.opened)
 			balloon_alert(user, "can't wrap while open!")
 			return ITEM_INTERACT_BLOCKING
@@ -154,8 +154,8 @@
 			balloon_alert(user, "not enough paper!")
 			return ITEM_INTERACT_BLOCKING
 
-	else if(istype(target,  /obj/machinery/portable_atmospherics))
-		var/obj/machinery/portable_atmospherics/portable_atmospherics = target
+	else if(istype(interacting_with,  /obj/machinery/portable_atmospherics))
+		var/obj/machinery/portable_atmospherics/portable_atmospherics = interacting_with
 		if(portable_atmospherics.anchored)
 			balloon_alert(user, "can't wrap while anchored!")
 			return ITEM_INTERACT_BLOCKING
@@ -175,8 +175,8 @@
 		balloon_alert(user, "can't wrap!")
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] wraps [target]."))
-	user.log_message("has used [name] on [key_name(target)]", LOG_ATTACK, color="blue")
+	user.visible_message(span_notice("[user] wraps [interacting_with]."))
+	user.log_message("has used [name] on [key_name(interacting_with)]", LOG_ATTACK, color="blue")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/package_wrap/use(used, transfer = FALSE, check = TRUE)

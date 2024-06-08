@@ -54,7 +54,7 @@
 			human_user.dropItemToGround(src)
 		return ITEM_INTERACT_BLOCKING
 
-	var/turf/turf_target = get_turf(target)
+	var/turf/turf_target = get_turf(interacting_with)
 	if(locate(barrier_type) in turf_target)
 		user.balloon_alert(user, "already occupied!")
 		return ITEM_INTERACT_BLOCKING

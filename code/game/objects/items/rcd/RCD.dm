@@ -391,7 +391,7 @@
 
 /obj/item/construction/rcd/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	mode = construction_mode
-	rcd_create(target, user)
+	rcd_create(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/construction/rcd/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -402,7 +402,7 @@
 
 /obj/item/construction/rcd/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	mode = RCD_DECONSTRUCT
-	rcd_create(target, user)
+	rcd_create(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/construction/rcd/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)

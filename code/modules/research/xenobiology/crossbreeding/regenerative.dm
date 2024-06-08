@@ -31,7 +31,7 @@ Regenerative extracts:
 	user.do_attack_animation(interacting_with)
 	H.revive(HEAL_ALL)
 	core_effect(H, user)
-	playsound(target, 'sound/effects/splat.ogg', 40, TRUE)
+	playsound(H, 'sound/effects/splat.ogg', 40, TRUE)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 

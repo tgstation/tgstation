@@ -234,8 +234,8 @@
 	to_chat(user, span_notice("You toggle [src] to \"[mode]\" mode."))
 	update_appearance()
 
-/obj/item/borg/charger/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!proximity_flag || !iscyborg(user))
+/obj/item/borg/charger/interact_with_atom(atom/target, mob/living/silicon/robot/user, list/modifiers)
+	if(!iscyborg(user))
 		return NONE
 
 	. = ITEM_INTERACT_BLOCKING

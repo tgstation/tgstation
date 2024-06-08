@@ -133,21 +133,21 @@
 
 /obj/item/camera/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (disk)
-		if(ismob(target))
+		if(ismob(interacting_with))
 			if (disk.record)
 				QDEL_NULL(disk.record)
 
 			disk.record = new
-			var/mob/M = target
+			var/mob/M = interacting_with
 			disk.record.caller_name = M.name
 			disk.record.set_caller_image(M)
 		else
 			to_chat(user, span_warning("Invalid holodisk target."))
 			return ITEM_INTERACT_BLOCKING
 
-	if(!can_target(target, user))
+	if(!can_target(interacting_with, user))
 		return ITEM_INTERACT_BLOCKING
-	if(!photo_taken(target, user))
+	if(!photo_taken(interacting_with, user))
 		return ITEM_INTERACT_BLOCKING
 	return ITEM_INTERACT_SUCCESS
 

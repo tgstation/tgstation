@@ -50,7 +50,7 @@
 	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/chameleon_scanner/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	var/list/scanned_outfit = scan_target(target, user)
+	var/list/scanned_outfit = scan_target(interacting_with, user)
 	if(length(scanned_outfit))
 		var/datum/outfit/empty_outfit = new()
 		var/datum/action/chameleon_outfit/outfit_action = locate() in user.actions

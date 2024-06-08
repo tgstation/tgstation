@@ -67,6 +67,7 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/sequence_scanner/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	// melbert todo : why are there two of this proc
 	if(istype(object, /obj/machinery/computer/scan_consolenew))
 		var/obj/machinery/computer/scan_consolenew/console = object
 		var/buffer_index = tgui_input_number(user, "Slot:", "Which slot to export:", 1, LAZYLEN(console.genetic_makeup_buffer), 1)

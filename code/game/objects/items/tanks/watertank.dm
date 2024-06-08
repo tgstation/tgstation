@@ -316,15 +316,15 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(nozzle_mode == RESIN_FOAM)
-		if(!Adj || !isturf(target))
+		if(!Adj || !isturf(interacting_with))
 			balloon_alert(user, "too far!")
 			return ITEM_INTERACT_BLOCKING
-		for(var/S in target)
-			if(istype(S, /obj/effect/particle_effect/fluid/foam/metal/resin) || istype(S, /obj/structure/foamedmetal/resin))
+		for(var/thing in interacting_with)
+			if(istype(thing, /obj/effect/particle_effect/fluid/foam/metal/resin) || istype(thing, /obj/structure/foamedmetal/resin))
 				balloon_alert(user, "already has resin!")
 				return ITEM_INTERACT_BLOCKING
 		if(metal_synthesis_cooldown < 5)
-			var/obj/effect/particle_effect/fluid/foam/metal/resin/foam = new (get_turf(target))
+			var/obj/effect/particle_effect/fluid/foam/metal/resin/foam = new (get_turf(interacting_with))
 			foam.group.target_size = 0
 			metal_synthesis_cooldown++
 			addtimer(CALLBACK(src, PROC_REF(reduce_metal_synth_cooldown)), 10 SECONDS)

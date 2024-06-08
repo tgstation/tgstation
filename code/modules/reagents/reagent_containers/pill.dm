@@ -59,7 +59,7 @@
 	return TRUE
 
 
-/obj/item/reagent_containers/pill/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/reagent_containers/pill/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(!dissolvable || !target.is_refillable())
 		return NONE
 	if(target.is_drainable() && !target.reagents.total_volume)

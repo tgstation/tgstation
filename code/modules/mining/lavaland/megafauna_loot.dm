@@ -104,7 +104,7 @@
 	if(interacting_with == beacon)
 		return NONE
 	if(blink_activated)
-		blink.teleport(user, target)
+		blink.teleport(user, interacting_with)
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 

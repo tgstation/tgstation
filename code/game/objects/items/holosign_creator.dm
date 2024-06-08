@@ -55,7 +55,7 @@
 	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 	if(creation_time)
 		holocreator_busy = TRUE
-		if(!do_after(user, creation_time, target = target))
+		if(!do_after(user, creation_time, target = interacting_with))
 			holocreator_busy = FALSE
 			return ITEM_INTERACT_BLOCKING
 		holocreator_busy = FALSE
@@ -63,7 +63,7 @@
 			return ITEM_INTERACT_BLOCKING
 		if(target_turf.is_blocked_turf(TRUE)) //don't try to sneak dense stuff on our tile during the wait.
 			return ITEM_INTERACT_BLOCKING
-	target_holosign = create_holosign(target, user)
+	target_holosign = create_holosign(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/holosign_creator/attack(mob/living/carbon/human/M, mob/user)

@@ -127,11 +127,11 @@
 
 	switch(mode)
 		if(THROW_LOLLIPOP_MODE)
-			shootL(interacting_with, user, click_params)
+			shootL(interacting_with, user, list2params(modifiers))
 			return ITEM_INTERACT_SUCCESS
 
 		if(THROW_GUMBALL_MODE)
-			shootG(interacting_with, user, click_params)
+			shootG(interacting_with, user, list2params(modifiers))
 			return ITEM_INTERACT_SUCCESS
 
 	return NONE

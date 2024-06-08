@@ -50,14 +50,21 @@
 	if(!gold_amount)
 		balloon_alert(user, "no gold in bloodstream!")
 		return ITEM_INTERACT_BLOCKING
-	var/gold_beam = user.Beam(interacting_with, icon_state = "drain_gold")
-	if(!do_after(user = user, delay = 1 SECONDS, target = interacting_with, timed_action_flags = (IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE), extra_checks = CALLBACK(src, PROC_REF(check_gold_range), user, victim)))
+	var/mob/living/victim = interacting_with
+	var/gold_beam = user.Beam(victim, icon_state = "drain_gold")
+	if(!do_after(
+		user = user,
+		delay = 1 SECONDS,
+		target = victim,
+		timed_action_flags = (IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE),
+		extra_checks = CALLBACK(src, PROC_REF(check_gold_range), user, victim),
+	))
 		qdel(gold_beam)
 		balloon_alert(user, "link broken!")
 		return ITEM_INTERACT_BLOCKING
 	handle_gold_charges(user, gold_amount)
-	interacting_with.reagents.remove_reagent(/datum/reagent/gold, gold_amount, include_subtypes = TRUE)
-	interacting_with.remove_status_effect(/datum/status_effect/midas_blight)
+	victim.reagents.remove_reagent(/datum/reagent/gold, gold_amount, include_subtypes = TRUE)
+	victim.remove_status_effect(/datum/status_effect/midas_blight)
 	qdel(gold_beam)
 	return ITEM_INTERACT_SUCCESS
 

@@ -198,7 +198,7 @@
 	force_unwielded = 15
 	force_wielded = 25
 
-/obj/item/spear/grey_tide/afterattack(atom/movable/AM, mob/user, click_parameters)
+/obj/item/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, click_parameters)
 	user.faction |= "greytide([REF(user)])"
 	if(!isliving(AM))
 		return

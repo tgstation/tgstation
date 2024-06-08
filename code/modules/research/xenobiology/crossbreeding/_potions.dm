@@ -15,10 +15,10 @@ Slimecrossing Potions
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
-	if(istype(target, /obj/item/slimecross))
-		to_chat(user, span_warning("[target] is too complex for the potion to clone!"))
+	if(istype(interacting_with, /obj/item/slimecross))
+		to_chat(user, span_warning("[interacting_with] is too complex for the potion to clone!"))
 		return ITEM_INTERACT_BLOCKING
-	if(!istype(target, /obj/item/slime_extract))
+	if(!istype(interacting_with, /obj/item/slime_extract))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/slime_extract/S = interacting_with
 	if(S.recurring)
@@ -117,10 +117,10 @@ Slimecrossing Potions
 		to_chat(user, span_warning("The potion can only be used on clothing!"))
 		return ITEM_INTERACT_BLOCKING
 	if(istype(clothing, /obj/item/clothing/suit/space))
-		to_chat(user, span_warning("The [C] is already pressure-resistant!"))
+		to_chat(user, span_warning("The [interacting_with] is already pressure-resistant!"))
 		return ITEM_INTERACT_BLOCKING
-	if(clothing.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && C.clothing_flags & STOPSPRESSUREDAMAGE)
-		to_chat(user, span_warning("The [C] is already pressure-resistant!"))
+	if(clothing.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && (clothing.clothing_flags & STOPSPRESSUREDAMAGE))
+		to_chat(user, span_warning("The [interacting_with] is already pressure-resistant!"))
 		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You slather the blue gunk over the [clothing], making it airtight."))
 	clothing.name = "pressure-resistant [clothing.name]"

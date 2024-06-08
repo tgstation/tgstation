@@ -328,7 +328,7 @@
 	//Handcuffed or unconscious
 	if(istype(carbon_victim) && (carbon_victim.handcuffed || carbon_victim.stat != CONSCIOUS))
 		user.do_attack_animation(carbon_victim)
-		if(!puzzle_imprison(target))
+		if(!puzzle_imprison(carbon_victim))
 			to_chat(user, span_warning("[src] does nothing."))
 			return ITEM_INTERACT_BLOCKING
 		to_chat(user, span_warning("You trap [carbon_victim] in the prison cube!"))

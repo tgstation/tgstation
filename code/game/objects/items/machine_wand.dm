@@ -81,12 +81,12 @@
 		playsound(src, 'sound/machines/synth_no.ogg', 30 , TRUE)
 		say("Remote control disabled temporarily. Please try again soon.")
 		return ITEM_INTERACT_BLOCKING
-	if(!ismachinery(target) && !isbot(target))
+	if(!ismachinery(interacting_with) && !isbot(interacting_with))
 		return NONE
 	if(moving_bug) //we have a bug in transit already, so let's kill it.
 		QDEL_NULL(moving_bug)
 	var/turf/spawning_turf = (controlling_machine_or_bot ? get_turf(controlling_machine_or_bot) : get_turf(src))
-	moving_bug = new(spawning_turf, src, target)
+	moving_bug = new(spawning_turf, src, interacting_with)
 	remove_old_machine()
 	return ITEM_INTERACT_SUCCESS
 

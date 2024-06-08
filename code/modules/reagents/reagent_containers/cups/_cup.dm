@@ -139,7 +139,7 @@
 
 	return NONE
 
-/obj/item/reagent_containers/cup/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/reagent_containers/cup/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
 	if(!check_allowed_items(target, target_self = TRUE))
 		return NONE
 

@@ -63,22 +63,22 @@
 	. += status_string()
 
 /obj/item/lightreplacer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return do_action(target, user) ? ITEM_INTERACT_SUCCESS : NONE
+	return do_action(interacting_with, user) ? ITEM_INTERACT_SUCCESS : NONE
 
 /obj/item/lightreplacer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	// has no bluespace capabilities
 	if(!bluespace_toggle)
 		return NONE
 	// target not in range
-	if(target.z != user.z)
+	if(interacting_with.z != user.z)
 		return NONE
 	// target not in view
-	if(!(target in view(7, get_turf(user))))
+	if(!(interacting_with in view(7, get_turf(user))))
 		user.balloon_alert(user, "out of range!")
 		return ITEM_INTERACT_BLOCKING
 
 	//replace lights & stuff
-	return do_action(target, user) ? ITEM_INTERACT_SUCCESS : NONE
+	return do_action(interacting_with, user) ? ITEM_INTERACT_SUCCESS : NONE
 
 /obj/item/lightreplacer/attackby(obj/item/insert, mob/user, params)
 	. = ..()

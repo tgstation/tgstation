@@ -56,13 +56,13 @@
 			return ITEM_INTERACT_BLOCKING
 
 	if (!door.check_access_list(access_list) || !door.requiresID())
-		target.balloon_alert(user, "can't access!")
+		interacting_with.balloon_alert(user, "can't access!")
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/machinery/door/airlock/airlock = door
 
 	if (!door.hasPower() || (istype(airlock) && !airlock.canAIControl()))
-		target.balloon_alert(user, mode == WAND_OPEN ? "it won't budge!" : "nothing happens!")
+		interacting_with.balloon_alert(user, mode == WAND_OPEN ? "it won't budge!" : "nothing happens!")
 		return ITEM_INTERACT_BLOCKING
 
 	switch (mode)
@@ -73,7 +73,7 @@
 				door.close()
 		if (WAND_BOLT)
 			if (!istype(airlock))
-				target.balloon_alert(user, "only airlocks!")
+				interacting_with.balloon_alert(user, "only airlocks!")
 				return ITEM_INTERACT_BLOCKING
 
 			if (airlock.locked)
@@ -84,7 +84,7 @@
 				log_combat(user, airlock, "bolted", src)
 		if (WAND_EMERGENCY)
 			if (!istype(airlock))
-				target.balloon_alert(user, "only airlocks!")
+				interacting_with.balloon_alert(user, "only airlocks!")
 				return ITEM_INTERACT_BLOCKING
 
 			airlock.emergency = !airlock.emergency

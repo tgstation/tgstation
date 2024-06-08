@@ -49,10 +49,10 @@
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	if(!heretic_datum)
 		return NONE
-	if(isopenturf(target))
-		var/obj/effect/heretic_influence/influence = locate(/obj/effect/heretic_influence) in target
+	if(isopenturf(interacting_with))
+		var/obj/effect/heretic_influence/influence = locate(/obj/effect/heretic_influence) in interacting_with
 		if(!influence?.drain_influence_with_codex(user, src))
-			heretic_datum.try_draw_rune(user, target, drawing_time = 8 SECONDS)
+			heretic_datum.try_draw_rune(user, interacting_with, drawing_time = 8 SECONDS)
 		return ITEM_INTERACT_BLOCKING
 	return NONE
 

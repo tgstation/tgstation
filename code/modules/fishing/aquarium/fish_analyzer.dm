@@ -78,8 +78,8 @@
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 
-/obj/item/fish_analyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!isfish(interacting_with) && !isaquarium(interacting_with))
+/obj/item/fish_analyzer/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	if(!isfish(target) && !isaquarium(target))
 		return NONE
 	if(!user.can_read(src) || user.is_blind())
 		return ITEM_INTERACT_BLOCKING
@@ -93,13 +93,13 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/fish_analyzer/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!isfish(target))
+	if(!isfish(interacting_with))
 		return NONE
 	if(!user.can_read(src) || user.is_blind())
 		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "analyzing traits")
-	analyze_traits(target, user)
+	analyze_traits(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 
 ///Instantiates the radial menu, populates the list of choices, shows it and register signals on the aquarium.

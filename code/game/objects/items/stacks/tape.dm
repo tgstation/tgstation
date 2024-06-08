@@ -39,7 +39,7 @@
 	. = ..()
 	. += "[span_notice("You could rip a piece off by using an empty hand.")]"
 
-/obj/item/stack/sticky_tape/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/stack/sticky_tape/interact_with_atom(obj/item/target, mob/living/user, list/modifiers)
 	if(!isitem(target))
 		return NONE
 

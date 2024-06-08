@@ -38,8 +38,8 @@
 	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, TRUE)
 	held_gibtonite.forceMove(get_turf(src))
 	held_gibtonite.det_time = 2 SECONDS
-	held_gibtonite.GibtoniteReaction(user, "A [src] has targeted [target] with a thrown and primed")
-	held_gibtonite.throw_at(target, range = 10, speed = 3, thrower = user)
+	held_gibtonite.GibtoniteReaction(user, "A [src] has targeted [interacting_with] with a thrown and primed")
+	held_gibtonite.throw_at(interacting_with, range = 10, speed = 3, thrower = user)
 	held_gibtonite = null
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS

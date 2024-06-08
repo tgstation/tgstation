@@ -51,11 +51,12 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	beacon_ref = WEAKREF(chosen_beacon)
 	balloon_alert(user, "linked!")
 
-/obj/item/extraction_pack/interact_with_atom(atom/thing, mob/living/user, list/modifiers)
+/obj/item/extraction_pack/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ismovable(interacting_with))
 		return NONE
-	if(!isturf(thing.loc)) // no extracting stuff inside other stuff
+	if(!isturf(interacting_with.loc)) // no extracting stuff inside other stuff
 		return NONE
+	var/atom/movable/thing = interacting_with
 	if(thing.anchored || (thing.move_resist > max_force_fulton))
 		return NONE
 
@@ -86,8 +87,9 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		return .
 
 	balloon_alert_to_viewers("extracting!")
-	if(loc == user)
-		user.back?.atom_storage?.attempt_insert(src, user, force = STORAGE_SOFT_LOCKED)
+	if(loc == user  && ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		human_user.back?.atom_storage?.attempt_insert(src, user, force = STORAGE_SOFT_LOCKED)
 	uses_left--
 
 	if(uses_left <= 0)

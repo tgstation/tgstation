@@ -224,12 +224,12 @@
 	return ..()
 
 /obj/item/gun/ballistic/shotgun/bulldog/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(weapon, secondary_magazine_type))
+	if(!istype(tool, secondary_magazine_type))
 		return ..()
-	if(!user.transferItemToLoc(weapon, src))
+	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/ammo_box/magazine/old_mag = secondary_magazine
-	secondary_magazine = weapon
+	secondary_magazine = tool
 	if(old_mag)
 		user.put_in_hands(old_mag)
 	balloon_alert(user, "secondary [magazine_wording] loaded")

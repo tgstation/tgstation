@@ -148,7 +148,7 @@
 	desc = "Salt. From dead crew, presumably."
 	return TOXLOSS
 
-/obj/item/reagent_containers/condiment/saltshaker/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/reagent_containers/condiment/saltshaker/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
@@ -440,7 +440,7 @@
 /obj/item/reagent_containers/condiment/pack/attack(mob/M, mob/user, def_zone) //Can't feed these to people directly.
 	return
 
-/obj/item/reagent_containers/condiment/pack/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/reagent_containers/condiment/pack/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	//You can tear the bag open above food to put the condiments on it, obviously.
 	if(IS_EDIBLE(target))
 		if(!reagents.total_volume)

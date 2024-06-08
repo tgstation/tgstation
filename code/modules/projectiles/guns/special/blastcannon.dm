@@ -125,7 +125,7 @@
 
 	cached_firer = WEAKREF(user)
 	if(!bomb)
-		fire_debug(target, user, flag, params)
+		fire_debug(target, user, params)
 		return TRUE
 
 	playsound(src, dry_fire_sound, 30, TRUE) // *click

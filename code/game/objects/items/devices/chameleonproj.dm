@@ -54,7 +54,7 @@
 	if(iseffect(target) && !istype(target, /obj/effect/decal)) //be a footprint
 		return ITEM_INTERACT_BLOCKING
 	make_copy(target, user)
-	return ITEM_INTERACT_HANDLED
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/chameleon/proc/make_copy(atom/target, mob/user)
 	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, TRUE, -6)

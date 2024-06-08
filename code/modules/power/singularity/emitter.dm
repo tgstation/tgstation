@@ -506,7 +506,7 @@
 
 /obj/item/turret_control/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/obj/machinery/power/emitter/emitter = user.buckled
-	emitter.setDir(get_dir(emitter, targeted_atom))
+	emitter.setDir(get_dir(emitter, interacting_with))
 	user.setDir(emitter.dir)
 	switch(emitter.dir)
 		if(NORTH)
@@ -542,7 +542,7 @@
 			user.pixel_x = 8
 			user.pixel_y = -12
 
-	emitter.last_projectile_params = calculate_projectile_angle_and_pixel_offsets(user, null, clickparams)
+	emitter.last_projectile_params = calculate_projectile_angle_and_pixel_offsets(user, null, list2params(modifiers))
 
 	if(emitter.charge >= 10 && world.time > delay)
 		emitter.charge -= 10

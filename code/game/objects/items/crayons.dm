@@ -421,7 +421,7 @@
 	return LOWER_TEXT(crayon_regex.Replace(text, ""))
 
 /// Attempts to color the target. Returns how many charges were used.
-/obj/item/toy/crayon/proc/use_on(atom/target, mob/user, params)
+/obj/item/toy/crayon/proc/use_on(atom/target, mob/user, list/modifiers)
 	var/static/list/punctuation = list("!","?",".",",","/","+","-","=","%","#","&")
 
 	if(istype(target, /obj/effect/decal/cleanable))
@@ -491,7 +491,6 @@
 			else
 				graf_rot = 0
 
-	var/list/modifiers = params2list(params)
 	var/clickx
 	var/clicky
 
@@ -572,7 +571,7 @@
 	if (!check_allowed_items(interacting_with))
 		return NONE
 
-	use_on(interacting_with, user, params)
+	use_on(interacting_with, user, modifiers)
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/toy/crayon/get_writing_implement_details()
@@ -826,7 +825,7 @@
 			. += "It is empty."
 	. += span_notice("Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"]. Right-click a colored object to match its existing color.")
 
-/obj/item/toy/crayon/spraycan/use_on(atom/target, mob/user, params)
+/obj/item/toy/crayon/spraycan/use_on(atom/target, mob/user, list/modifiers)
 	if(is_capped)
 		balloon_alert(user, "take the cap off first!")
 		return
@@ -927,8 +926,8 @@
 	if(check_empty(user))
 		return ITEM_INTERACT_BLOCKING
 
-	if(isbodypart(target) && actually_paints)
-		var/obj/item/bodypart/limb = target
+	if(isbodypart(interacting_with) && actually_paints)
+		var/obj/item/bodypart/limb = interacting_with
 		if(!IS_ORGANIC_LIMB(limb))
 			var/list/skins = list()
 			var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
@@ -942,8 +941,8 @@
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 				limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
 			return ITEM_INTERACT_SUCCESS
-	if(target.color)
-		paint_color = target.color
+	if(interacting_with.color)
+		paint_color = interacting_with.color
 		balloon_alert(user, "matched colour of target")
 		update_appearance()
 		return ITEM_INTERACT_BLOCKING

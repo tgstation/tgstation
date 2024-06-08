@@ -71,7 +71,7 @@
 		if(callback_return & CLEAN_NO_XP)
 			give_xp = FALSE
 
-	INVOKE_ASYNC(src, PROC_REF(clean), source, target, user, give_xp) //signal handlers can't have do_afters inside of them
+	INVOKE_ASYNC(src, PROC_REF(clean), source, target, user, give_xp)
 	return ITEM_INTERACT_SUCCESS
 
 /**

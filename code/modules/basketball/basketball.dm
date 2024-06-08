@@ -185,7 +185,7 @@
 /obj/item/toy/basketball/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	return interact_with_atom_secondary(interacting_with, user, modifiers)
 
-/obj/item/toy/basketball/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/toy/basketball/interact_with_atom_secondary(atom/interacting_with, mob/living/baller, list/modifiers)
 	if(istype(interacting_with, /obj/structure/hoop) && baller.Adjacent(interacting_with))
 		return NONE // Do hoop stuff
 

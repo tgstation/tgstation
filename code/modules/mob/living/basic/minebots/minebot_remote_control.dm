@@ -50,7 +50,7 @@
 	if(!primed)
 		user.balloon_alert(user, "not primed!")
 		return ITEM_INTERACT_BLOCKING
-	var/turf/target_turf = get_turf(attacked_atom)
+	var/turf/target_turf = get_turf(interacting_with)
 	if(isnull(target_turf) || isclosedturf(target_turf) || isgroundlessturf(target_turf))
 		user.balloon_alert(user, "invalid target!")
 		return ITEM_INTERACT_BLOCKING

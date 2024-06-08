@@ -161,17 +161,17 @@
 	if(!check_if_focusable(focus))
 		return NONE
 
-	if(target == focus)
+	if(interacting_with == focus)
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			. = focus.attack_self_secondary_tk(user) || NONE
 		else
-			. = target.attack_self_tk(user) || NONE
+			. = interacting_with.attack_self_tk(user) || NONE
 
 	else if(isitem(focus))
 		var/obj/item/focused_item = focus
 		apply_focus_overlay()
 		if(interacting_with.Adjacent(focus))
-			. = focused_item.melee_attack_chain(user, interacting_with, list2params(params)) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+			. = focused_item.melee_attack_chain(user, interacting_with, list2params(modifiers)) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 			if(check_if_focusable(focus))
 				focus.do_attack_animation(interacting_with, null, focus)
 

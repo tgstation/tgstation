@@ -108,7 +108,7 @@
 	user.visible_message(span_suicide("[user] is putting [src] close to [user.p_their()] eyes and turning it on! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return FIRELOSS
 
-/obj/item/flashlight/proc/eye_examine(mob/living/M, mob/living/user)
+/obj/item/flashlight/proc/eye_examine(mob/living/carbon/human/M, mob/living/user)
 	. = list()
 	if((M.head && M.head.flags_cover & HEADCOVERSEYES) || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) || (M.glasses && M.glasses.flags_cover & GLASSESCOVERSEYES))
 		to_chat(user, span_warning("You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first!"))
@@ -147,7 +147,7 @@
 
 	return .
 
-/obj/item/flashlight/proc/mouth_examine(mob/living/M, mob/living/user)
+/obj/item/flashlight/proc/mouth_examine(mob/living/carbon/human/M, mob/living/user)
 	. = list()
 	if(M.is_mouth_covered())
 		to_chat(user, span_warning("You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSMOUTH) ? "helmet" : "mask"] first!"))
@@ -238,7 +238,7 @@
 		. += "<span class='notice ml-1'>Color returns quickly.</span>\n"//they're okay :D
 
 /obj/item/flashlight/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!isliving(interacting_with))
+	if(!ishuman(interacting_with))
 		return NONE
 	if(!light_on)
 		return NONE

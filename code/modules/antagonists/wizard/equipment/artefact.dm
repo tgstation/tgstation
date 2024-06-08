@@ -467,7 +467,7 @@
 	if(summoning_time)
 		scepter_is_busy_summoning = TRUE
 		user.balloon_alert(user, "summoning...")
-		if(!do_after(user, summoning_time, target = target))
+		if(!do_after(user, summoning_time, target = interacting_with))
 			scepter_is_busy_summoning = FALSE
 			return ITEM_INTERACT_BLOCKING
 		scepter_is_busy_summoning = FALSE
@@ -497,7 +497,7 @@
 /obj/item/runic_vendor_scepter/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	var/turf/afterattack_secondary_turf = get_turf(interacting_with)
 	var/obj/machinery/vending/runic_vendor/vendor_on_turf = locate() in afterattack_secondary_turf
-	if(istype(target, /obj/machinery/vending/runic_vendor))
+	if(istype(interacting_with, /obj/machinery/vending/runic_vendor))
 		var/obj/machinery/vending/runic_vendor/vendor_being_throw = interacting_with
 		vendor_being_throw.throw_at(get_edge_target_turf(interacting_with, get_cardinal_dir(src, interacting_with)), 4, 20, user)
 		return ITEM_INTERACT_SUCCESS

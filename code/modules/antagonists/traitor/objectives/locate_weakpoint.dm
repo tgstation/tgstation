@@ -253,7 +253,7 @@
 		to_chat(user, span_warning("You don't think it would be wise to use [src]."))
 		return FALSE
 
-	var/area/target_area = get_area(tarbomb_targetet)
+	var/area/target_area = get_area(bomb_target)
 	if (target_area.type != objective.weakpoint_area)
 		to_chat(user, span_warning("[src] can only be detonated in [initial(objective.weakpoint_area.name)]."))
 		return FALSE

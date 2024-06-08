@@ -188,7 +188,7 @@
 /obj/item/plaque/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!iswallturf(interacting_with))
 		return NONE
-	var/turf/target_turf = target
+	var/turf/target_turf = interacting_with
 	var/turf/user_turf = get_turf(user)
 	var/obj/structure/plaque/placed_plaque = new plaque_path(user_turf) //We place the plaque on the turf the user is standing, and pixel shift it to the target wall, as below.
 	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.

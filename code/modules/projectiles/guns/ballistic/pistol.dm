@@ -90,17 +90,15 @@
 		return underbarrel.try_fire_gun(target, user, params)
 	return ..()
 
-/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/attack(mob/living/target_mob, mob/living/user, params)
-	. = ..()
-	if(.)
-		return
+/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/afterattack(atom/target, mob/user, click_parameters)
 	var/obj/projectile/energy/fisher/melee/simulated_hit = new
 	simulated_hit.firer = user
 	simulated_hit.on_hit(target)
 
 /obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	// as above comment, mirrors what the standalone fisher does when you hit people with it
 	. = ..()
+	if(.)
+		return
 	var/obj/projectile/energy/fisher/melee/simulated_hit = new
 	simulated_hit.firer = throwingdatum.get_thrower()
 	simulated_hit.on_hit(hit_atom)

@@ -124,11 +124,11 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	if(!istype(interacting_with, /obj/machinery/griddle))
 		return NONE
 
-	var/obj/machinery/griddle/hit_griddle = target
+	var/obj/machinery/griddle/hit_griddle = interacting_with
 	if(length(hit_griddle.griddled_objects) >= hit_griddle.max_items)
 		interacting_with.balloon_alert(user, "no room!")
 		return ITEM_INTERACT_BLOCKING
-	var/atom/broken_egg = new /obj/item/food/rawegg(target.loc)
+	var/atom/broken_egg = new /obj/item/food/rawegg(interacting_with.loc)
 	broken_egg.pixel_x = pixel_x
 	broken_egg.pixel_y = pixel_y
 	playsound(user, 'sound/items/sheath.ogg', 40, TRUE)

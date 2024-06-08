@@ -75,11 +75,11 @@
 	log = list()
 
 /obj/item/detective_scanner/pre_attack_secondary(atom/A, mob/user, params)
-	safe_scan(user, atom_to_scan = A) // Should use interact_with_atom instead but storage insert needs to go over first
+	safe_scan(user, A) // Should use interact_with_atom instead but storage insert needs to go over first // Melbert todo
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/detective_scanner/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	safe_scan(user, atom_to_scan = A)
+	safe_scan(user, interacting_with)
 	return ITEM_INTERACT_SUCCESS
 
 /**

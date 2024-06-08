@@ -168,7 +168,7 @@
 	if(isammocasing(tool))
 		if(istype(tool, underbarrel.magazine.ammo_type))
 			underbarrel.attack_self(user)
-			underbarrel.attackby(tool, user, params)
+			underbarrel.attackby(tool, user, list2params(modifiers))
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 

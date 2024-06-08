@@ -224,9 +224,9 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/sheet/iron/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!isopenturf(interact_with_atom))
+	if(!isopenturf(interacting_with))
 		return NONE
-	var/turf/open/build_on = interact_with_atom
+	var/turf/open/build_on = interacting_with
 	if(!user.Adjacent(build_on))
 		return ITEM_INTERACT_BLOCKING
 	if(isgroundlessturf(build_on))

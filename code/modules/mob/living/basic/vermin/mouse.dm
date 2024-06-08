@@ -357,10 +357,10 @@
 		return NONE
 
 	// is_open_container will not return truthy if target.reagents doesn't exist
-	var/datum/reagents/target_reagents = target.reagents
+	var/datum/reagents/target_reagents = interacting_with.reagents
 	var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
 	if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_to(src, trans_amount))
-		to_chat(user, span_notice("You dip [src] into [target]."))
+		to_chat(user, span_notice("You dip [src] into [interacting_with]."))
 	else
 		to_chat(user, span_warning("That's a terrible idea."))
 	return ITEM_INTERACT_BLOCKING
