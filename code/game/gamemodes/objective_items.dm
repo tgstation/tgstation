@@ -244,7 +244,7 @@
 	steal_hint = "A self-defense weapon standard-issue for all heads of staffs barring the Head of Security. Rarely found off of their person."
 
 /datum/objective_item/steal/traitor/telebaton/check_special_completion(obj/item/thing)
-    return thing.type == /obj/item/melee/baton/telescopic
+	return thing.type == /obj/item/melee/baton/telescopic
 
 /obj/item/melee/baton/telescopic/add_stealing_item_objective()
 	if(type == /obj/item/melee/baton/telescopic)
