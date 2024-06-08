@@ -4,11 +4,6 @@
  * Airlocks with see-through windows are under .../window
  * Airlocks with decorative color bands are under .../custom
  */
-// Wallening todo: why do material airlocks uh, not look like current airlocks? (it's old, don't remember exact details)
-/datum/greyscale_config/material_airlock
-	name = "Material Airlock"
-	icon_file = 'icons/obj/doors/airlocks/material/material.dmi'
-	json_config = 'code/datums/greyscale/json_configs/material_airlock.json'
 
 /datum/greyscale_config/airlocks
 	name = "Solid Airlock"

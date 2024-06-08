@@ -241,7 +241,7 @@
 
 /obj/structure/door_assembly/door_assembly_material
 	name = "airlock assembly"
-	icon =  /obj/machinery/door/airlock/bronze::icon
+	icon =  /obj/machinery/door/airlock/material::icon
 	airlock_type = /obj/machinery/door/airlock/material
 	glass_type = /obj/machinery/door/airlock/material/glass
 	nomineral = TRUE

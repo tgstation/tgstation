@@ -158,20 +158,20 @@
 	rad_insulation = RAD_MEDIUM_INSULATION
 
 /obj/machinery/door/airlock/Initialize(mapload)
+	// Here we check the style of greyscale_config, then cut down the number of colors passed along to 6 colors for window airlocks, or 5 for solids.
+	// This way we only need to pass along the full 7 color set when making a new airlock pattern.
+	if(!ispath(greyscale_config, /datum/greyscale_config/airlocks/custom))
+		if(glass)
+			airlock_material = "glass"
+			greyscale_config = /datum/greyscale_config/airlocks/window
+			greyscale_colors = (copytext(greyscale_colors, 1, 43))
+		else if(ispath(greyscale_config, /datum/greyscale_config/airlocks))
+			greyscale_colors = (copytext(greyscale_colors, 1, 36))
+
 	. = ..()
 
 	set_wires(get_wires())
 
-	// Here we check the style of greyscale_config, then cut down the number of colors passed along to 6 colors for window airlocks, or 5 for solids.
-	// This way we only need to pass along the full 7 color set when making a new airlock pattern.
-	if(glass && !istype(greyscale_config, /datum/greyscale_config/airlocks/custom))
-		airlock_material = "glass"
-		greyscale_config = /datum/greyscale_config/airlocks/window
-		greyscale_colors = (copytext(greyscale_colors, 1, 43))
-		update_greyscale()
-	else if(istype(greyscale_config, /datum/greyscale_config/airlocks))
-		greyscale_colors = (copytext(greyscale_colors, 1, 36))
-		update_greyscale()
 	if(security_level > AIRLOCK_SECURITY_IRON)
 		atom_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
 		max_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
@@ -2501,9 +2501,36 @@
 /obj/machinery/door/airlock/material
 	name = "Airlock"
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS
-	greyscale_config = /datum/greyscale_config/material_airlock
+	greyscale_config = /datum/greyscale_config/airlocks
 	greyscale_colors = "#a5a7ac"
 	assemblytype = /obj/structure/door_assembly/door_assembly_material
+
+/obj/machinery/door/airlock/material/Initialize(mapload)
+	greyscale_colors = extend_colors(greyscale_colors)
+	return ..()
+
+/obj/machinery/door/airlock/material/set_greyscale(list/colors, new_config)
+	colors = extend_colors(colors)
+	return ..()
+
+/// Takes our greyscale colors, if we don't have enough add copies on till we do
+/obj/machinery/door/airlock/material/proc/extend_colors(grey_colors)
+	var/target = 7 // Colors required for custom, the longest config
+	if(!ispath(greyscale_config, /datum/greyscale_config/airlocks/custom))
+		if(glass)
+			target = 6
+		else if(ispath(greyscale_config, /datum/greyscale_config/airlocks))
+			target = 5
+
+	if(islist(grey_colors))
+		var/list/grey_list = grey_colors
+		grey_colors = grey_list.Join("")
+	var/list/split_greyscale = splittext(grey_colors, "#")
+	// 6 comes from the required length for /datum/greyscale_config/airlocks/window, our worst case scenario
+	// - 1 because the first # sections between nothing and the first color
+	for(var/i in 1 to (target - (length(split_greyscale) - 1)))
+		split_greyscale += split_greyscale[2] // backfill with the first color
+	return split_greyscale.Join("#")
 
 /obj/machinery/door/airlock/material/close(forced, force_crush)
 	. = ..()
