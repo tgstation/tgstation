@@ -70,7 +70,6 @@
 			return (callback_return & CLEAN_DONT_BLOCK_INTERACTION) ? NONE : ITEM_INTERACT_BLOCKING
 		if(callback_return & CLEAN_NO_XP)
 			give_xp = FALSE
-		// melbert todo : solve cleaning-and-inserting-storage issue
 
 	INVOKE_ASYNC(src, PROC_REF(clean), source, target, user, give_xp)
 	return ITEM_INTERACT_SUCCESS

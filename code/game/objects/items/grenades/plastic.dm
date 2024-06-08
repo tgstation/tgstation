@@ -109,7 +109,6 @@
 	// Here lies C4 ghosts. We hardly knew ye
 	if(isdead(interacting_with))
 		return NONE
-	// melbert todo : check storage inserting
 	aim_dir = get_dir(user, interacting_with)
 	return plant_c4(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 

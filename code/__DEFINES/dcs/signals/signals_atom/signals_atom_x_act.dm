@@ -85,3 +85,6 @@
 #define COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM "ranged_item_interacting_with_atom"
 /// Sent from [atom/proc/ranged_item_interaction], when a mob is using this item while right-clicking on by an atom while not adjacent
 #define COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY "ranged_item_interacting_with_atom_secondary"
+
+/// Sent from [atom/proc/item_interaction], when this atom is used as a tool and an event occurs
+#define COMSIG_ITEM_TOOL_ACTED "tool_item_acted"

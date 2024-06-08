@@ -30,8 +30,10 @@
 	return try_spray(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 /obj/item/reagent_containers/spray/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	// This is a hack to make spray bottles fillable from / transferable to these sources
+	// However it can be completely removed when these objects are updated to use the new interaction system
+	// (because the desired effect will just work out of the box)
 	if(istype(interacting_with, /obj/structure/sink) || istype(interacting_with, /obj/structure/mop_bucket/janitorialcart) || istype(interacting_with, /obj/machinery/hydroponics))
-		// melbert todo : Fairly certain this is a hack to let you fill these up, revisit
 		return NONE
 
 	return try_spray(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING

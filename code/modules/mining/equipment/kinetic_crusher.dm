@@ -143,7 +143,7 @@
 		balloon_alert(user, "can't aim at yourself!")
 		return ITEM_INTERACT_BLOCKING
 	fire_kinetic_blast(interacting_with, user, modifiers)
-	user.changeNext_move(CLICK_CD_MELEE) // melbert todo check this
+	user.changeNext_move(CLICK_CD_MELEE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/kinetic_crusher/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)

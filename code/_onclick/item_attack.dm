@@ -160,16 +160,6 @@
 	return attacking_item.attack_atom(src, user, params)
 
 /mob/living/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	// Surgery and such happens very high up in the interaction chain, before parent call
-	var/attempt_tending = item_tending(user, tool, modifiers)
-	if(attempt_tending & ITEM_INTERACT_ANY_BLOCKER)
-		return attempt_tending
-
-	return ..() | attempt_tending
-
-/// Handles any use of using a surgical tool or item on a mob to tend to them.
-/// The sole reason this is a separate proc is so carbons can tend wounds AFTER the check for surgery.
-/mob/living/proc/item_tending(mob/living/user, obj/item/tool, list/modifiers)
 	for(var/datum/surgery/operation as anything in surgeries)
 		if(IS_IN_INVALID_SURGICAL_POSITION(src, operation))
 			continue
@@ -233,7 +223,7 @@
 	if(force && target_mob == user && user.client)
 		user.client.give_award(/datum/award/achievement/misc/selfouch, user)
 
-	if(loc == user) // telekinesis.
+	if(get(src, /mob/living) == user) // telekinesis.
 		user.do_attack_animation(target_mob)
 	if(!target_mob.attacked_by(src, user))
 		return TRUE
@@ -268,7 +258,7 @@
 	if(item_flags & NOBLUDGEON)
 		return FALSE
 	user.changeNext_move(attack_speed)
-	if(loc == user) // telekinesis.
+	if(get(src, /mob/living) == user) // telekinesis.
 		user.do_attack_animation(attacked_atom)
 	attacked_atom.attacked_by(src, user)
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, attacked_atom, user, params)

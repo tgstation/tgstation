@@ -134,7 +134,6 @@
 
 /obj/item/organ/internal/monster_core/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	try_apply(interacting_with, user)
-	// melbert todo : check for surgery here
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/organ/internal/monster_core/attack_self(mob/user)

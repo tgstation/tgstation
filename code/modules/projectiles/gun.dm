@@ -251,10 +251,9 @@
 /obj/item/gun/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
 	if(.)
-		return
+		return .
 	if(isnull(bayonet) || !user.combat_mode)
-		return
-	// melbert todo check
+		return .
 	return bayonet.melee_attack_chain(user, A, params)
 
 /obj/item/gun/item_interaction(mob/living/user, obj/item/tool, list/modifiers)

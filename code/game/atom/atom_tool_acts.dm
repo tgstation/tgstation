@@ -88,6 +88,7 @@
 	else
 		log_tool("[key_name(user)] used [tool] on [src] (right click) at [AREACOORD(src)]")
 		SEND_SIGNAL(tool, COMSIG_TOOL_ATOM_ACTED_SECONDARY(tool_type), src)
+	SEND_SIGNAL(tool, COMSIG_ITEM_TOOL_ACTED, src, user, tool_type, act_result)
 	return act_result
 
 /**
