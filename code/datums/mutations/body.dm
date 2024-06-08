@@ -147,6 +147,7 @@
 	ADD_TRAIT(owner, TRAIT_TOO_TALL, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly grows tall!"), span_notice("You feel a small strange urge to fight small men with slingshots. Or maybe play some basketball."))
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(head_bonk))
+	owner.apply_height_filters()
 
 /datum/mutation/human/acromegaly/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -154,9 +155,11 @@
 	REMOVE_TRAIT(owner, TRAIT_TOO_TALL, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("You return to your usual height."))
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(head_bonk))
+	owner.apply_height_filters()
 
 // This is specifically happening because they're not used to their new height and are stumbling around into machinery made for normal humans
 /datum/mutation/human/acromegaly/proc/head_bonk(mob/living/parent)
+	SIGNAL_HANDLER
 	var/turf/airlock_turf = get_turf(parent)
 	var/atom/movable/whacked_by = locate(/obj/machinery/door/airlock) in airlock_turf|| locate(/obj/machinery/door/firedoor) in airlock_turf || locate(/obj/structure/mineral_door) in airlock_turf
 	if(!whacked_by || prob(100 - (8 *  GET_MUTATION_SYNCHRONIZER(src))))
@@ -174,7 +177,6 @@
 	quality = MINOR_NEGATIVE
 	difficulty = 12
 	conflicts = list(/datum/mutation/human/dwarfism)
-	locked = TRUE // now a recipe
 
 /datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
