@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Latejoiners with heterochromatic eyes no longer have the wrong fingerprint in the security records."
+  - bugfix: "Latejoiners actually have their quirks visible in the medical records."

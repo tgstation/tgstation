@@ -1,4 +1,0 @@
-author: "projectkepler-ru"
-delete-after: True
-changes:
-  - bugfix: "smoking pipe not showing sprite when lit"

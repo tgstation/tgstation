@@ -121,7 +121,7 @@
 	dir = 6
 	},
 /obj/structure/table/reinforced,
-/obj/item/reactive_armour_shell,
+/obj/item/reactive_armor_shell,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
