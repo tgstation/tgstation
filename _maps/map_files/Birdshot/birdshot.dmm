@@ -552,7 +552,7 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	name = "O2 to Airmix"
 	},
-/obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
 	},
 /obj/machinery/light/no_nightlight/directional/north,
@@ -3144,7 +3144,7 @@
 	},
 /obj/machinery/button/door/directional/west{
 	id = "Secure Storage below";
-	name = Secure engineering storage;
+	name = "Secure engineering storage";
 	pixel_y = 24;
 	req_access = list("engine_equip")
 	},
@@ -35187,7 +35187,7 @@
 	dir = 1;
 	name = "Plasma to Pure"
 	},
-/obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -38295,7 +38295,7 @@
 	dir = 1;
 	name = "CO2 to Pure"
 	},
-/obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -38398,8 +38398,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/office)
 "oDa" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	name = "Air to Distro"
+/obj/machinery/atmospherics/components/binary/pump/on{
+	name = "Air to Distro staging"
 	},
 /obj/machinery/camera/directional/north{
 	c_tag = "atmospherics - lower"
@@ -51628,7 +51628,7 @@
 /obj/machinery/atmospherics/components/binary/pump/off{
 	name = "O2 To Pure"
 	},
-/obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -52764,7 +52764,7 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	name = "N2 to Airmix"
 	},
-/obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -54604,7 +54604,7 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/bridge_pipe/green/visible,
+/obj/machinery/atmospherics/pipe/smart/simple/green/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "tFG" = (
@@ -63072,7 +63072,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "N2 to Pure"
 	},
-/obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
 	},
 /turf/open/floor/iron,
