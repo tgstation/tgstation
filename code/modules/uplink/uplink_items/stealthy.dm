@@ -103,3 +103,12 @@
 	surplus = 50
 	limited_stock = 1
 	purchasable_from = UPLINK_TRAITORS | UPLINK_SPY
+
+/datum/uplink_item/stealthy_weapons/traitorcqc
+	name = "CQC Equipment Case"
+	desc = "Contains a manual that instructs you in the ways of CQC, or Close Quarters Combat. Comes with a stealth implant, a pack of smokes and a snazzy bandana (use it with the hat stabilizers in your MODsuit)."
+	item = /obj/item/storage/toolbox/guncase/cqc
+	cost = 20
+	progression_minimum = 90 MINUTES
+	surplus = 0
+	purchasable_from = UPLINK_TRAITORS | UPLINK_INFILTRATORS
