@@ -871,16 +871,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, click_parameters)
 	if(is_type_in_typecache(target, splattable))
-		new /obj/effect/decal/cleanable/insectguts(target.drop_location())
 		to_chat(user, span_warning("You easily splat [target]."))
 		if(isliving(target))
+			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
 			var/mob/living/bug = target
 			bug.investigate_log("has been splatted by a flyswatter.", INVESTIGATE_DEATHS)
 			bug.gib(DROP_ALL_REMAINS)
 		else
 			qdel(target)
 		return
-	if(is_type_in_typecache(target, strong_against))
+	if(is_type_in_typecache(target, strong_against) && isliving(target))
 		var/mob/living/living_target = target
 		living_target.adjustBruteLoss(extra_strength_damage)
 

@@ -67,8 +67,8 @@
 		var/mob/living/smacked = target
 		smacked.take_bodypart_damage(20, 0)
 	playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
-	vortex( get_turf(target), user)
-	addtimer(VARSET_CALLBACK(src, recharge, TRUE), 10 SECONDS)
+	vortex(get_turf(target), user)
+	addtimer(VARSET_CALLBACK(src, charged, TRUE), 10 SECONDS)
 
 /obj/item/mjollnir
 	name = "Mjollnir"

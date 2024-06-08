@@ -1,8 +1,17 @@
 
 // Cleaning flags
 
-///Whether we should not attempt to clean.
-#define DO_NOT_CLEAN "do_not_clean"
+/// Return to prevent clean attempts
+#define CLEAN_BLOCKED (1<<0)
+/// Return to allow clean attempts
+/// This is (currently) the same as returning null / none but more explicit
+#define CLEAN_ALLOWED (1<<1)
+/// Return to prevent XP gain
+/// Only does anything if [CLEAN_ALLOWED] is also returned
+#define CLEAN_NO_XP (1<<2)
+/// Return to stop cleaner component from blocking interaction chain further
+/// Only does anything if [CLEAN_BLOCKED] is also returned
+#define CLEAN_DONT_BLOCK_INTERACTION (1<<3)
 
 // Different kinds of things that can be cleaned.
 // Use these when overriding the wash proc or registering for the clean signals to check if your thing should be cleaned

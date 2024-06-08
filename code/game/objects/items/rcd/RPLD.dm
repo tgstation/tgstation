@@ -252,28 +252,27 @@
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/construction/plumbing/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-
+/obj/item/construction/plumbing/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	for(var/category_name in plumbing_design_types)
 		var/list/designs = plumbing_design_types[category_name]
 
 		for(var/obj/machinery/recipe as anything in designs)
-			if(target.type != recipe)
+			if(interacting_with.type != recipe)
 				continue
 
-			var/obj/machinery/machine_target = target
+			var/obj/machinery/machine_target = interacting_with
 			if(machine_target.anchored)
 				balloon_alert(user, "unanchor first!")
 				return
-			if(do_after(user, 2 SECONDS, target = target))
+			if(do_after(user, 2 SECONDS, target = interacting_with))
 				machine_target.deconstruct() //Let's not substract matter
-				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
-			return
+				playsound(src, 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
+			return ITEM_INTERACT_BLOCKING
 
-	create_machine(target, user)
+	if(!isopenturf(interacting_with))
+		return NONE
+
+	return create_machine(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 /obj/item/construction/plumbing/click_alt(mob/user)
 	ui_interact(user)
@@ -376,4 +375,3 @@
 	plumbing_design_types = service_design_types
 
 	. = ..()
-
