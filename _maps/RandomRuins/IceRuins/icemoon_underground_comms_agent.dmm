@@ -525,6 +525,10 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/comms_agent)
+"Bx" = (
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/wall,
+/area/ruin/comms_agent)
 "BD" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
@@ -740,6 +744,10 @@
 "KQ" = (
 /turf/open/genturf,
 /area/template_noop)
+"KR" = (
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/wall,
+/area/ruin/comms_agent/maint)
 "Lh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -2370,8 +2378,8 @@ xD
 ij
 hW
 Ac
-WR
-YI
+Bx
+KR
 YI
 YI
 LP
