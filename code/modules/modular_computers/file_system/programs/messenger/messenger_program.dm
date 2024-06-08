@@ -681,7 +681,7 @@
 			viewing_messages_of = REF(chat)
 
 	var/list/mob/living/receievers = list()
-	if(computer.inserted_pai)
+	if(computer.inserted_pai && computer.inserted_pai.pai)
 		receievers += computer.inserted_pai.pai
 	if(computer.loc && isliving(computer.loc))
 		receievers += computer.loc
