@@ -31357,6 +31357,7 @@
 	name = "Medbay Lockdown Shutters"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "ihQ" = (
@@ -50672,7 +50673,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
-/obj/machinery/disposal/bin/tagger,
+/obj/machinery/disposal/bin,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "mZT" = (
@@ -65697,7 +65698,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "qSD" = (
-/obj/item/kirbyplants/organic/plant21,
+/obj/structure/aquarium/lawyer,
 /turf/open/floor/wood/parquet,
 /area/station/service/lawoffice)
 "qSJ" = (

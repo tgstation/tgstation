@@ -5,7 +5,6 @@
 		/turf/closed/mineral/gibtonite/ice/icemoon = 4,
 	)
 
-
 	weighted_mob_spawn_list = list(
 		/mob/living/basic/mining/goldgrub = 10,
 		/mob/living/basic/mining/legion/snow = 50,
@@ -16,6 +15,7 @@
 		/obj/structure/spawner/ice_moon = 3,
 		/obj/structure/spawner/ice_moon/polarbear = 3,
 	)
+
 	weighted_flora_spawn_list = list(
 		/obj/structure/flora/ash/chilly = 2,
 		/obj/structure/flora/grass/both/style_random = 6,
@@ -23,6 +23,7 @@
 		/obj/structure/flora/rock/pile/icy/style_random = 2,
 		/obj/structure/flora/tree/pine/style_random = 2,
 	)
+
 	///Note that this spawn list is also in the lavaland generator
 	weighted_feature_spawn_list = list(
 		/obj/structure/geyser/hollowwater = 10,
