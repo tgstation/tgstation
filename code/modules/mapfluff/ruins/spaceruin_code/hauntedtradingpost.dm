@@ -131,8 +131,6 @@
 /obj/machinery/button/invisible_tripwire
 	name = "Sonic Tripwire"
 	desc = "An invisible trigger for shutters and doors. Triggers when someone steps on the tile."
-	icon = 'icons/effects/mapping_helpers.dmi'
-	icon_state = null
 	max_integrity = 50
 	invisibility = INVISIBILITY_ABSTRACT
 	anchored = TRUE
@@ -164,7 +162,7 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/button/invisible_tripwire/proc/on_entered(datum/source, mob/living)
-	attack_robot(src)
+	attack_hand(living)
 	if(!multiuse)
 		qdel(src)
 	if(uses_remaining == 1)
@@ -182,7 +180,7 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	return ..()
 
 /obj/machinery/button/invisible_tripwire/airlock_bolter
-
+//TODO-make this work
 //variant on invisible trip wire, this one triggers if you stay in the area too long
 /obj/machinery/button/invisible_tripwire/delay
 //TODO-make this work
