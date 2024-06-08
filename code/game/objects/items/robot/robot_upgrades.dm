@@ -32,7 +32,7 @@
 		to_chat(borg, span_alert("Upgrade mounting error! No suitable hardpoint detected."))
 		to_chat(user, span_warning("There's no mounting point for the module!"))
 		return FALSE
-	if(!allow_duplicates && (locate(type) in borg.contents))
+	if(!allow_duplicates && (locate(type) in borg.upgrades))
 		to_chat(borg, span_alert("Upgrade mounting error! Hardpoint already occupied!"))
 		to_chat(user, span_warning("The mounting point for the module is already occupied!"))
 		return FALSE
