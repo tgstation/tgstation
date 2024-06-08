@@ -336,7 +336,6 @@
 		/obj/item/retractor/cruel = 1,
 		/obj/item/hemostat/cruel = 1,
 		/obj/item/cautery/cruel = 1,
-		/obj/item/toy/crayon/white = 1,
 		/obj/item/radio/headset/headset_srvmed = 2,
 	)
 	contraband = list(
