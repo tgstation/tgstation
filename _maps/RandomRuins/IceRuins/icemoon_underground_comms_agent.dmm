@@ -297,6 +297,7 @@
 /obj/structure/closet/crate,
 /obj/item/flashlight,
 /obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
 /turf/open/floor/wood/parquet,
 /area/ruin/comms_agent)
 "rh" = (
@@ -719,6 +720,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "KB" = (
