@@ -240,8 +240,8 @@
 			if(duct_machine.duct_layer & layer_id)
 				return FALSE
 
-/obj/item/construction/plumbing/interact_with_atom(atom/target, mob/living/user, list/modifiers)
-	if(!isopenturf(destination))
+/obj/item/construction/plumbing/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isopenturf(interacting_with))
 		return NONE
 
 	for(var/category_name in plumbing_design_types)
@@ -255,12 +255,12 @@
 			if(machine_target.anchored)
 				balloon_alert(user, "unanchor first!")
 				return ITEM_INTERACT_BLOCKING
-			if(do_after(user, 2 SECONDS, target = target))
+			if(do_after(user, 2 SECONDS, target = interacting_with))
 				machine_target.deconstruct() //Let's not substract matter
-				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
+				playsound(src, 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
 			return ITEM_INTERACT_SUCCESS
 
-	if(create_machine(target, user))
+	if(create_machine(interacting_with, user))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
