@@ -57,7 +57,7 @@
 // Handles adding items with the module
 /obj/item/borg/upgrade/proc/install_items(mob/living/silicon/robot/borg, mob/living/user = usr, list/items)
 	for(var/item_to_add in items)
-		var/obj/item/module_item = new item_to_add(borg.model.modules)
+		var/obj/item/module_item = new item_to_add(borg.model)
 		borg.model.basic_modules += module_item
 		borg.model.add_module(module_item, FALSE, TRUE)
 	return TRUE
@@ -756,8 +756,10 @@
 	desc = "An upgrade to the service model cyborg, to help provide mobile service."
 	icon_state = "cyborg_upgrade3"
 	require_model = TRUE
-	model_type = list(/obj/item/rolling_table_dock)
+	model_type = list(/obj/item/robot_model/service)
 	model_flags = BORG_MODEL_SERVICE
+
+	items_to_add = list(/obj/item/rolling_table_dock)
 
 /obj/item/borg/upgrade/service_cookbook
 	name = "Service Cyborg Cookbook"
@@ -767,7 +769,7 @@
 	model_type = list(/obj/item/robot_model/service)
 	model_flags = BORG_MODEL_SERVICE
 
-	model_type = list(/obj/item/borg/cookbook)
+	items_to_add = list(/obj/item/borg/cookbook)
 
 ///This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
 //A reusable tool that can bring borgs back to life. They gotta be repaired first, though.
