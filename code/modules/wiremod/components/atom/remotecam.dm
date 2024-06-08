@@ -305,7 +305,7 @@
 
 /obj/item/circuit_component/remotecam/polaroid
 	display_name = "Camera Stream Add-On"
-	desc = "Relays a polaroid camera's feed as a digital stream for surveillance-on-the-go. Network field is used for camera network."
+	desc = "Relays a polaroid camera's feed as a digital stream for surveillance-on-the-go. The camera stream will not work if stored inside of a container like a backpack/box. Network field is used for camera network."
 	camera_prefix = "Polaroid"
 
 	/// Hardcode camera to near range
@@ -407,6 +407,26 @@
 	else if(!camera_range.value != !current_camera_range)
 		current_camera_range = camera_range.value
 		update_camera_range()
+	//Set the camera state (if state has been changed)
+	if(current_camera_state ^ shell_camera.camera_enabled)
+		shell_camera.toggle_cam(null, 0)
+
+/obj/item/circuit_component/remotecam/polaroid/process(seconds_per_tick)
+	if(!shell_parent || !shell_camera)
+		return PROCESS_KILL
+	//Camera is currently emp'd
+	if (current_camera_emp)
+		close_camera()
+		return
+	//If camera is stored inside of bag or something, turn it off
+	if(shell_parent.loc.atom_storage)
+		close_camera()
+		return
+	var/obj/item/stock_parts/cell/cell = parent.get_cell()
+	//If cell doesn't exist, or we ran out of power
+	if(!cell?.use(REMOTECAM_ENERGY_USAGE_NEAR))
+		close_camera()
+		return
 	//Set the camera state (if state has been changed)
 	if(current_camera_state ^ shell_camera.camera_enabled)
 		shell_camera.toggle_cam(null, 0)
