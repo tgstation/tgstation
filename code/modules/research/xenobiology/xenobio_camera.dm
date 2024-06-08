@@ -441,13 +441,20 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoTurfClickCtrl(mob/living/user, turf/open/target_turf)
 	SIGNAL_HANDLER
 
+	var/cleanup = FALSE
 	var/mob/camera/ai_eye/remote/xenobio/remote_eye = user.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/xeno_console = remote_eye.origin
 
 	if(!xeno_console.validate_area(user, remote_eye, target_turf))
 		return
 
-	xeno_console.feed_slime(user, target_turf)
+	for(var/mob/M in target_turf)
+		if(ismonkey(M) && M.stat == DEAD)
+			cleanup = TRUE
+			xeno_console.monkey_recycle(user, M)
+
+	if(!cleanup)
+		xeno_console.feed_slime(user, target_turf)
 
 ///Picks up a dead monkey for recycling
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoMonkeyClickCtrl(mob/living/user, mob/living/carbon/human/target_mob)
