@@ -175,4 +175,3 @@
 	desc = "doink!"
 	damage_type = BRUTE
 	icon_state = "paperball"
-
