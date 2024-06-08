@@ -71,8 +71,6 @@
 	// Onboard Items
 	/// Atmospheric analyzer
 	var/obj/item/analyzer/atmos_analyzer
-	/// Health analyzer
-	var/obj/item/healthanalyzer/host_scan
 	/// GPS
 	var/obj/item/gps/pai/internal_gps
 	/// Music Synthesizer
@@ -115,12 +113,16 @@
 		"crow" = TRUE,
 		"duffel" = TRUE,
 		"fox" = FALSE,
+		"frog" = TRUE,
 		"hawk" = FALSE,
 		"lizard" = FALSE,
 		"monkey" = TRUE,
 		"mouse" = TRUE,
 		"rabbit" = TRUE,
 		"repairbot" = TRUE,
+		"kitten" = FALSE,
+		"puppy" = FALSE,
+		"spider" = FALSE,
 	)
 	/// List of all available card overlays.
 	var/static/list/possible_overlays = list(
@@ -157,7 +159,6 @@
 	QDEL_NULL(atmos_analyzer)
 	QDEL_NULL(camera)
 	QDEL_NULL(hacking_cable)
-	QDEL_NULL(host_scan)
 	QDEL_NULL(instrument)
 	QDEL_NULL(internal_gps)
 	QDEL_NULL(newscaster)
@@ -203,8 +204,6 @@
 		atmos_analyzer = null
 	if(deleting_atom == camera)
 		camera = null
-	if(deleting_atom == host_scan)
-		host_scan = null
 	if(deleting_atom == internal_gps)
 		internal_gps = null
 	if(deleting_atom == instrument)
@@ -263,6 +262,15 @@
 	set_health(maxHealth - getBruteLoss() - getFireLoss())
 	update_stat()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
+
+/mob/living/silicon/pai/set_stat(new_stat)
+	. = ..()
+	update_stat()
+
+/mob/living/silicon/pai/on_knockedout_trait_loss(datum/source)
+	. = ..()
+	set_stat(CONSCIOUS)
+	update_stat()
 
 /**
  * Resolves the weakref of the pai's master.
