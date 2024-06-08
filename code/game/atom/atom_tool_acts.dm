@@ -125,17 +125,27 @@
 	SHOULD_CALL_PARENT(TRUE)
 	PROTECTED_PROC(TRUE)
 
+	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
+	var/is_left_clicking = !is_right_clicking
 	var/early_sig_return = NONE
-	early_sig_return = SEND_SIGNAL(src, COMSIG_ATOM_RANGED_ITEM_INTERACTION, user, tool, modifiers) \
-		| SEND_SIGNAL(tool, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM, user, src, modifiers)
+	if(is_left_clicking)
+		early_sig_return = SEND_SIGNAL(src, COMSIG_ATOM_RANGED_ITEM_INTERACTION, user, tool, modifiers) \
+			| SEND_SIGNAL(tool, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM, user, src, modifiers)
+	else
+		early_sig_return = SEND_SIGNAL(src, COMSIG_ATOM_RANGED_ITEM_INTERACTION_SECONDARY, user, tool, modifiers) \
+			| SEND_SIGNAL(tool, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY, user, src, modifiers)
 	if(early_sig_return)
 		return early_sig_return
 
-	var/self_interaction = ranged_item_interaction(user, tool, modifiers)
+	var/self_interaction = is_left_clicking \
+		? ranged_item_interaction(user, tool, modifiers) \
+		: ranged_item_interaction_secondary(user, tool, modifiers)
 	if(self_interaction)
 		return self_interaction
 
-	var/interact_return = tool.ranged_interact_with_atom(src, user, modifiers)
+	var/interact_return = is_left_clicking \
+		? tool.ranged_interact_with_atom(src, user, modifiers) \
+		: tool.ranged_interact_with_atom_secondary(src, user, modifiers)
 	if(interact_return)
 		return interact_return
 

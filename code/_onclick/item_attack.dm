@@ -65,23 +65,6 @@
 		else
 			SStutorials.suggest_tutorial(user, /datum/tutorial/drop, params2list(params))
 
-/*
-	if (is_right_clicking)
-		var/after_attack_secondary_result = afterattack_secondary(target, user, TRUE, params)
-
-		// There's no chain left to continue at this point, so CANCEL_ATTACK_CHAIN and CONTINUE_CHAIN are functionally the same.
-		if (after_attack_secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || after_attack_secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
-			return TRUE
-
-	var/afterattack_result = afterattack(target, user, TRUE, params)
-
-	if (!(afterattack_result & AFTERATTACK_PROCESSED_ITEM) && isitem(target))
-		if (isnull(user.get_inactive_held_item()))
-			SStutorials.suggest_tutorial(user, /datum/tutorial/switch_hands, params2list(params))
-		else
-			SStutorials.suggest_tutorial(user, /datum/tutorial/drop, params2list(params))
-*/
-
 	return TRUE
 
 /// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.

@@ -22,7 +22,7 @@
 	. = ..()
 	UnregisterSignal(target, COMSIG_ITEM_AFTERATTACK)
 
-/datum/element/easily_fragmented/proc/on_afterattack(datum/source, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/element/easily_fragmented/proc/on_afterattack(datum/source, atom/target, mob/user, click_parameters)
 	SIGNAL_HANDLER
 
 	var/obj/item/item = source
@@ -31,4 +31,4 @@
 		user.visible_message(span_danger("[user]'s [item.name] snap[item.p_s()] into tiny pieces in [user.p_their()] hand."))
 		item.deconstruct(disassembled = FALSE)
 
-	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
+	// melbert todo : work of tools too
