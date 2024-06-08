@@ -88,8 +88,7 @@
 	if(.)
 		return TRUE
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		to_chat(user, span_warning("[src] is too heavy to use with one hand! You fumble and drop everything."))
-		user.drop_all_held_items()
+		user.balloon_alert(user, "must be wielded!")
 		return TRUE
 	return .
 

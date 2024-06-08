@@ -120,6 +120,20 @@
 	)
 	category = CAT_CHEMISTRY
 
+
+/datum/crafting_recipe/chem_separator
+	name = "chemical separator"
+	result = /obj/structure/chem_separator
+	tool_behaviors = list(TOOL_WELDER)
+	time = 5 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 1,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/burner = 1,
+		/obj/item/thermometer = 1,
+	)
+	category = CAT_CHEMISTRY
+
 /datum/crafting_recipe/improvised_chem_heater
 	name = "Improvised chem heater"
 	result = /obj/machinery/space_heater/improvised_chem_heater

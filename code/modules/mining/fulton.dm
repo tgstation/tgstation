@@ -57,7 +57,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(!isturf(interacting_with.loc)) // no extracting stuff inside other stuff
 		return NONE
 	var/atom/movable/thing = interacting_with
-	if(thing.anchored || (thing.move_resist > max_force_fulton))
+	if(thing.anchored)
 		return NONE
 
 	. = ITEM_INTERACT_BLOCKING
@@ -75,7 +75,9 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		to_chat(user, span_warning("[src] is not safe for use with living creatures, they wouldn't survive the trip back!"))
 		balloon_alert(user, "not safe!")
 		return .
-
+	if(thing.move_resist > max_force_fulton)
+		balloon_alert(user, "too heavy!")
+		return .
 	balloon_alert_to_viewers("attaching...")
 	playsound(thing, 'sound/items/zip.ogg', vol = 50, vary = TRUE)
 	if(isliving(thing))

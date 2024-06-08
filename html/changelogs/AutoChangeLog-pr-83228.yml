@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - qol: "The Ansem, suppressor, and SC/FISHER included in the Fisher gimmick bundle now come together as one whole gun, the Ansem/SC. It's integrally suppressed, and fires the disruptor on right-click."
-  - bugfix: "The SC/FISHER disrupts APCs for an appropriate amount of time, not ten times the intended disruption length."
