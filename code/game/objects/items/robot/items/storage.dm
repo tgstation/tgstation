@@ -9,12 +9,23 @@
 	var/list/storable = list()
 
 /obj/item/borg/apparatus/Initialize(mapload)
-	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, PROC_REF(safedecon))
+	addtimer(CALLBACK(src, PROC_REF(set_signal)), 1 SECONDS)
 	return ..()
 
 /obj/item/borg/apparatus/Destroy()
 	QDEL_NULL(stored)
 	return ..()
+
+///Very rarely, Initialize can occur before we're in the borg, causing a runtime. So we delay it slightly.
+///We check both the model and the borg, in case the borg is very quick about equipping the new tool
+/obj/item/borg/apparatus/proc/set_signal()
+	if(istype(loc, /mob/living/silicon/robot))
+		RegisterSignal(loc, COMSIG_BORG_SAFE_DECONSTRUCT, PROC_REF(safedecon))
+		return
+	if(istype(loc, /obj/item/robot_model))
+		RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, PROC_REF(safedecon))
+		return
+	CRASH("Unable to set up safedecon signal for [src] - location check matched neither cyborg nor cyborg model. Location is actually [loc.type].")
 
 ///If we're safely deconstructed, we put the item neatly onto the ground, rather than deleting it.
 /obj/item/borg/apparatus/proc/safedecon()
