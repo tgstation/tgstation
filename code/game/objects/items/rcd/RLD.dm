@@ -188,12 +188,12 @@
 			if(!useResource(GLOW_STICK_COST, user))
 				return FALSE
 			activate()
-			var/obj/item/flashlight/glowstick/G = new /obj/item/flashlight/glowstick(start)
-			G.color = color_choice
-			G.set_light_color(G.color)
-			G.throw_at(A, 9, 3, user)
-			G.light_on = TRUE
-			G.update_brightness()
+			var/obj/item/flashlight/glowstick/new_stick = new /obj/item/flashlight/glowstick(start)
+			new_stick.color = color_choice
+			new_stick.set_light_color(new_stick.color)
+			new_stick.throw_at(A, 9, 3, user)
+			new_stick.turn_on()
+			new_stick.update_brightness()
 
 			return TRUE
 
