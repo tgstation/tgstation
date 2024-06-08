@@ -448,7 +448,9 @@
 /obj/item/radio/intercom{
 	pixel_x = 31;
 	syndie = 1;
-	freerange = 1
+	freerange = 1;
+	name = "syndicate radio intercom";
+	desc = "A custom-made Syndicate-issue intercom used to transmit on all Nanotrasen frequencies. Particularly expensive."
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/fax{
@@ -689,7 +691,6 @@
 	pixel_y = 4
 	},
 /obj/item/storage/box/coffeepack,
-/obj/item/storage/box/coffeepack/robusta,
 /turf/open/floor/wood,
 /area/ruin/comms_agent)
 "JD" = (
@@ -704,6 +705,7 @@
 /obj/item/toy/plush/nukeplushie,
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/m9mm,
+/obj/item/clothing/head/costume/ushanka,
 /turf/open/floor/wood/tile,
 /area/ruin/comms_agent)
 "JY" = (
