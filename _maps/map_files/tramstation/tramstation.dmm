@@ -4604,9 +4604,8 @@
 	dir = 10
 	},
 /obj/structure/table/wood,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/effect/spawner/random/decoration/ornament,
+/obj/item/folder/yellow,
+/obj/item/stamp/law,
 /turf/open/floor/iron/grimy,
 /area/station/service/lawoffice)
 "aGq" = (
@@ -6756,7 +6755,11 @@
 /area/station/engineering/atmos/pumproom)
 "bnh" = (
 /obj/item/radio/intercom/directional/north,
-/obj/machinery/photocopier,
+/obj/machinery/fax{
+	name = "Law Office Fax Machine";
+	fax_name = "Law Office"
+	},
+/obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "bnY" = (
@@ -7612,10 +7615,11 @@
 /area/station/maintenance/tram/left)
 "bFc" = (
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/machinery/vending/wardrobe/law_wardrobe,
 /obj/machinery/camera/directional/north{
 	c_tag = "Civilian - Lawyer's Office"
 	},
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "bFl" = (
@@ -12229,10 +12233,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
-"dep" = (
-/obj/machinery/newscaster/directional/west,
-/turf/open/floor/wood,
-/area/station/service/lawoffice)
 "deq" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/plasticflaps/opaque{
@@ -17915,12 +17915,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
-"flv" = (
-/obj/structure/aquarium/lawyer,
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/turf/open/floor/wood,
-/area/station/service/lawoffice)
 "flP" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/line{
@@ -18840,9 +18834,10 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/station/commons/vacant_room)
 "fEZ" = (
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk,
 /obj/structure/noticeboard/directional/north,
+/obj/structure/aquarium/lawyer,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "fFa" = (
@@ -24682,6 +24677,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/lawyer,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "hPB" = (
@@ -26537,6 +26533,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
 /turf/open/floor/iron/grimy,
 /area/station/service/lawoffice)
 "izO" = (
@@ -28269,17 +28268,11 @@
 /area/station/service/bar/backroom)
 "jeC" = (
 /obj/machinery/airalarm/directional/north,
-/obj/structure/rack,
-/obj/item/clipboard,
-/obj/item/chair/plastic,
-/obj/item/chair/plastic{
-	pixel_y = 5
-	},
-/obj/effect/spawner/random/bureaucracy/briefcase,
 /obj/machinery/light_switch/directional/east{
 	pixel_x = 23;
 	pixel_y = -8
 	},
+/obj/machinery/photocopier,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "jeO" = (
@@ -30838,10 +30831,9 @@
 	dir = 9
 	},
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment{
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/grimy,
 /area/station/service/lawoffice)
 "jYb" = (
@@ -35497,7 +35489,10 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/table/wood,
+/obj/effect/spawner/random/decoration/ornament,
 /turf/open/floor/iron/grimy,
 /area/station/service/lawoffice)
 "lxW" = (
@@ -38099,12 +38094,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/cargo/miningfoundry)
-"mrb" = (
-/obj/structure/table/wood,
-/obj/item/folder/yellow,
-/obj/item/stamp/law,
-/turf/open/floor/wood,
-/area/station/service/lawoffice)
 "mrf" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -48060,6 +48049,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
+/obj/effect/spawner/random/bureaucracy/briefcase,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "pYH" = (
@@ -48386,13 +48376,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/ordnance/burnchamber)
-"qel" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/turf/open/floor/wood,
-/area/station/service/lawoffice)
 "qeo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line{
@@ -67656,10 +67639,10 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
 /turf/open/floor/iron/grimy,
 /area/station/service/lawoffice)
 "wLR" = (
@@ -68052,11 +68035,7 @@
 /area/station/hallway/primary/tram/center)
 "wUL" = (
 /obj/machinery/status_display/evac/directional/north,
-/obj/machinery/fax{
-	name = "Law Office Fax Machine";
-	fax_name = "Law Office"
-	},
-/obj/structure/table/wood,
+/obj/machinery/vending/wardrobe/law_wardrobe,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "wVV" = (
@@ -68941,9 +68920,6 @@
 /area/station/service/hydroponics)
 "xmH" = (
 /obj/structure/sign/poster/official/report_crimes/directional/south,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "xmJ" = (
@@ -99470,11 +99446,11 @@ hLr
 nCe
 udP
 hFr
-hFr
-hFr
-hFr
-hFr
-hFr
+abM
+abM
+abM
+abM
+abM
 abM
 abM
 abM
@@ -99726,11 +99702,11 @@ nzL
 jkM
 adC
 jmp
-iTz
-flv
-qnk
-mrb
-dep
+hFr
+hFr
+hFr
+hFr
+hFr
 hFr
 abM
 abM
@@ -99985,7 +99961,7 @@ vBa
 vrG
 iTz
 fEZ
-qel
+qnk
 aGk
 hPA
 hFr
