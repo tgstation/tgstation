@@ -147,3 +147,230 @@
       up to the cryo loop.
   - qol: The NTSS Independence's medical bay has received improvements. The medibot
       and the sleeper are upgraded, and advanced surgery equipment has been added.
+2024-06-03:
+  MTandi:
+  - balance: 'Floor diseases cures are now common chemicals: Milk, Chlorine, Space
+      Cleaner'
+  Rhials:
+  - rscadd: Shovels and entrenching tools can be used to dig graves on asteroid/dirt/etc.
+      surfaces. Neat!
+  - rscadd: The Icebox Morgue has been given a fenced-off graveyard in the back.
+  - code_imp: burn_tile() is no longer double-defined on asteroid turfs.
+  Zytolg:
+  - qol: Many Janitors have cleaned up Birdshot station. Permanently.
+  - qol: Loose floortiles on Birdshot Station have been properly affixed to the floor
+      by the Engineering and Atmospherics Teams.
+  - bugfix: Birdshot Dorms have been reworked and incorporated the Holodeck Ship as
+      an actual and permanent installment. Come visit our new and improved barber
+      shop!
+  jwc1015:
+  - bugfix: Made the anxious zipzap accessible.
+2024-06-04:
+  Iajret:
+  - bugfix: fixed being able to confirm cargo orders from cargo request console (and,
+      probably, from PDAs)
+  Jane:
+  - balance: Spider Breachers and Vipers have swapped castes. Breachers come from
+      Enriched Eggs while Vipers come from Abnormals! Breachers can no longer survive
+      in spaced rooms/temperatures. The Nurse wraps wounds faster, but with less damage
+      healed per wrap.
+  Melbert:
+  - sound: Boiling soup now makes a sound.
+  Time-Green:
+  - bugfix: fixes touching a crutch permanently crippling you
+  - bugfix: fixes crutches giving permanent speedboosts even when dropped
+2024-06-05:
+  Absolucy:
+  - qol: The memories for Smoker and Alcoholic now actually mention the preferred
+      brand.
+  Derpguy3:
+  - bugfix: A tiny fan was added to Tramstation's disposal room under the blast doors.
+      No more accidental depressurizations.
+  Goat:
+  - bugfix: meta's cargo lobby and mining maintenance APCs is now connected to the
+      power line
+  GoldenAlpharex:
+  - rscadd: Added Biomes capabilities to the Cave Generator, to allow for procedurally-placed
+      biomes to be introduced in cave generation. This feature is not currently used
+      on any map, but the tools are all there for anyone with the motivation to add
+      biomes to any cave-generating area, like Lavaland and Ice Box.
+  - code_imp: Biomes can now affect features (which are usually structures), on top
+      of flora and fauna.
+  LT3:
+  - qol: Icebox's service hall has a disposal unit again
+  MelokGleb:
+  - code_imp: crab17 telegraph now uses animated spinning telegraph circle instead
+      of sniper scope button
+  PapaMichael:
+  - spellcheck: Nukie uplinks no longer claim to have nonexistent "Tesla Energy Relays"
+  Wayland-Smithy:
+  - qol: AI's jump to AI Core button works while on backup power (likely when needed
+      most).
+  carlarctg:
+  - qol: Disgust vomit knocks you down rather than stunning you.
+  - rscdel: Mitogen Metabolism Factor knocks you down rather than stunning you.
+  githubuser4141:
+  - image: New icons for berserker, godslayer and adamantine armor. Removes the old
+      icons.
+  grungussuss:
+  - sound: frog sounds will no longer explode your ears
+  mc-oofert:
+  - rscadd: wawastation, the station map
+  necromanceranne:
+  - qol: Failing to hit someone with a proto-kinetic crusher one-handedly no longer
+      force drops everything in your hands.
+  norsvenska:
+  - bugfix: Metastation's vault is now connected to the power grid
+  san7890:
+  - bugfix: Status displays should now no longer sporadically randomly break when
+      in the custom message mode
+  sprites by INFRARED_BARON:
+  - image: New icons for Marauder, Seraph, Mauler and adjusts the Phazon/Dark Gygax's
+      sprites.
+  vendingmachine24:
+  - spellcheck: Changed grammar in cat_house.dm
+2024-06-06:
+  Ben10Omintrix:
+  - refactor: honkbots are now basic mobs, please report any bugs
+  - rscadd: honkbots will try to slip people on banana peels
+  Jacquerel:
+  - balance: Mutadone restores your originally monkey status, rather than always turning
+      monkeys into humans
+  - rscadd: A unique kind of mob is created when a Monkey is infested by a Legion.
+  - balance: Corrosive slime left behind after a slime fails to eat you can be scraped
+      off with your hands, or shaken off in some other way, by clicking on the debuff.
+      This is slower and less effective than washing it off using water.
+  LT3:
+  - balance: Doubled number of assignable wildcard slots on grey ID cards
+  - balance: Doubled number of assignable wildcard slots on silver ID cards
+  - balance: Doubled number of assignable wildcard slots on agent/chameleon ID cards
+  Rhials:
+  - balance: cultist shades can no longer contribute to rune invocation until they've
+      been out of their soulstone for a minute. Put them in a shell for God's sake!
+  - code_imp: sweeps up cultist antag datum code into its own subfolder.
+  - code_imp: cult shades now have their own antag datum.
+  - bugfix: constructs now properly clear the cultist antag datum and transfer the
+      mind slightly earlier.
+  SyncIt21:
+  - qol: more examines & screentips for plumbing machinery
+  - qol: plumbing grinder has a grind/juice mode which be toggled by hand
+  - code_imp: improved attack chain for RPLD & plumbing grinder
+  - bugfix: You can deconstruct the plumbing grinder with the RPLD
+  - bugfix: You can attack the plumbing grinder with any item in combat mode without
+      getting that item consumed
+  - bugfix: You cannot grind abstract/ hologram items in the plumbing grinder
+  - bugfix: growing vat now uses the correct layer selected on rapid plumbing device
+  mc-oofert:
+  - balance: cult stun gets weaker when they get red eyes and later more when they
+      have halos
+2024-06-07:
+  00-Steven:
+  - bugfix: RLD glowsticks actually glow again.
+  Absolucy:
+  - bugfix: When implanting functional wings into a new body, they will actually be
+      able to use said wings now.
+  EEASAS:
+  - bugfix: fixed the mis-rotated disposals pipe on birdshot
+  Erol509:
+  - qol: Cyborgs on AI statpanel now have jules energy format.
+  EuSouAFazer:
+  - qol: 'Swabbing the clown''s stamp also gives clown cells.
+
+      :cl:'
+  IsaacExists:
+  - rscadd: You may choose a color preference for your blindfold with the blindness
+      quirk.
+  LT3:
+  - bugfix: Fixed timing issue where tram crossing signals would be out of sync with
+      the moving tram
+  - bugfix: Tram crossing signals consistently show green when safe, blue when broken
+  - bugfix: Tram crossing signals show red instead of yellow when degraded
+  Pickle-Coding:
+  - bugfix: Fixes the brig cell timer adjustment not working correctly on live timers.
+  - bugfix: Fixes paradox clones using a different voice from the owner.
+  RedBaronFlyer:
+  - rscadd: Janitorial keyrings are now part of every janitor's toolkit instead of
+      just the first one.
+  Sadboysuss:
+  - bugfix: curator whip will no longer disarm when parried
+  - qol: you now don't need to weld a closet to install/uninstall electronics/card
+      readers.
+  ShizCalev:
+  - bugfix: Syndicate AI can no longer be selected via the station law upload console.
+  - bugfix: Non-syndicate borgs can no longer accidentally be slaved to syndicate
+      AI by pulsing their AI wires.
+  - bugfix: Syndicate borgs can no longer be slaved to the station AI by pulsing their
+      AI wires.
+  - bugfix: Syndicate operatives onboard the station can no longer end up with an
+      objective to destroy their own syndicate AI.
+  SyncIt21:
+  - bugfix: autolathes don't hang when printing items in areas without apc or if it
+      runs out of materials mid printing
+  Wayland-Smithy:
+  - bugfix: Pre-Loaded Syndicate Intellicard AI's no longer appear in PDA messenger.
+  Whoneedspacee:
+  - bugfix: Bubblegum can no longer melee you while using his charge abilities.
+  githubuser4141:
+  - balance: Antag/Centcom mechs now have top notch un-upgradeable armor out of the
+      box. You can't add armor to centcom or nukie mechs anymore, but their default
+      armor rating is a lot higher.
+  necromanceranne:
+  - bugfix: The armor plate component only adds the prefix once.
+  - bugfix: Drake empowerment for berserker armor now uses valuable drake remains,
+      made from ashdrake hides and bones.
+  - rscadd: Drake armor is made use drake remains to construct. (This is a net neutral
+      to the previous recipe)
+  - qol: Coffee types are overall more consistent, causing jittering only from the
+      overdose effect.
+  - bugfix: Pumpkin lattes will actually work like coffee.
+  nikothedude:
+  - bugfix: COMSIG_ATOM_POST_DIR_CHANGE should ACTUALLY work now
+  san7890:
+  - bugfix: Using the 'ESC' key on your keyboard to unbind a key in the keybindings
+      preferences menu should now work as expected. This should also be fixed for
+      people in a variety of other spots too.
+  zxaber:
+  - bugfix: 'Tool-based flashes (read: from welders) are no longer incorrectly locked
+      at flash level 1. Wear proper PPE!'
+2024-06-08:
+  00-Steven:
+  - refactor: Refactored wall button code, please report any issues.
+  - bugfix: Wall buttons actually drop their contents when destroyed.
+  - sound: Putting items into wall buttons actually plays a sound. This matters for
+      assembly devices, but airlock electronics do not have a sound.
+  - qol: Added screentips to wall buttons.
+  - qol: You can now take out the airlock electronics or assembly device out of wall
+      buttons individually. Left click prioritises the board, right click prioritises
+      the device.
+  - qol: Wall buttons are renamable with a pen when opened.
+  - qol: Attempting to wrench deconstruct a wall button or put in airlock electronics
+      or an assembly device when you can't actually gives feedback.
+  DaCoolBoss:
+  - bugfix: Fixed entries in config file 'spaceruinsblacklist.txt'.
+  EnterTheJake:
+  - balance: Rust walkers' summoning ritual now requires 5 sheets of Titanium instead
+      of Iron.
+  - bugfix: Magic resistance grants complete immunity from the passive disgust buildup
+      from standing on Rusted turfs.
+  Melbert:
+  - bugfix: Fix some modifiers to do after speed (sanity, midas gun) stacking when
+      they shouldn't
+  MichiRecRoom:
+  - qol: Personal AI's face display selection is now a radial menu. As a bonus, now
+      you can see what the faces look like before selecting them.
+  Rhials:
+  - bugfix: Only filled graves will impact your mood.
+  SyncIt21:
+  - spellcheck: Corrected wrench contextual screentip typo for smart fridge
+  - refactor: alt right click has been refactored. report bugs on github
+  - bugfix: techfabs don't runtime & hang when printing in no apc areas
+  nikothedude:
+  - rscadd: 'New deathmatch modifier: "Random martial arts"'
+  projectkepler-ru:
+  - bugfix: smoking pipe not showing sprite when lit
+  thegrb93:
+  - bugfix: Borg emag module jank when no longer emagged
+  - bugfix: Borg piercing hypospray fail message
+  zxaber:
+  - bugfix: Fixed borg chargers (especially unpowered ones) constantly draining a
+      borg's cell.

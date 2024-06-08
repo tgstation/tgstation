@@ -376,11 +376,11 @@ SUBSYSTEM_DEF(dynamic)
 /// Generate the advisory level depending on the shown threat level.
 /datum/controller/subsystem/dynamic/proc/generate_advisory_level()
 	var/advisory_string = ""
-	if (prob(PULSAR_REPORT_CHANCE))
-		if(HAS_TRAIT(SSstation, STATION_TRAIT_BANANIUM_SHIPMENTS))
-			advisory_string += "Advisory Level: <b>Clown Planet</b></center><BR>"
-			advisory_string += "Your sector's advisory level is Clown Planet! Our bike horns have picked up on a large bananium stash. Clowns show a large influx of clowns on your station. We highly advise you to slip any threats to keep Honkotrasen assets within the Banana Sector. The Department of Intelligence advises defending chemistry from any clowns that are trying to make baldium or space lube."
-			return advisory_string
+	if(prob(PULSAR_REPORT_CHANCE))
+		for(var/datum/station_trait/our_trait as anything in shuffle(SSstation.station_traits))
+			advisory_string += our_trait.get_pulsar_message()
+			if(length(advisory_string))
+				return advisory_string
 
 		advisory_string += "Advisory Level: <b>Pulsar Star</b></center><BR>"
 		advisory_string += "Your sector's advisory level is Pulsar Star. A large, unknown electromagnetic field has stormed through nearby surveillance equipment, causing major data loss. Partial data was recovered and showed no credible threats to Nanotrasen assets within the Spinward Sector; however, the Department of Intelligence advises maintaining high alert against potential threats due to the lack of complete data."
@@ -662,9 +662,6 @@ SUBSYSTEM_DEF(dynamic)
 		if (initial(ruleset_type.weight) == 0)
 			continue
 
-		if(!(initial(ruleset_type.ruleset_category) & GLOB.dynamic_ruleset_categories))
-			continue
-
 		var/ruleset = new ruleset_type
 		configure_ruleset(ruleset)
 		rulesets += ruleset
@@ -944,6 +941,8 @@ SUBSYSTEM_DEF(dynamic)
 		ruleset.restricted_roles |= ruleset.protected_roles
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		ruleset.restricted_roles |= JOB_ASSISTANT
+	if(!(ruleset.ruleset_category & GLOB.dynamic_ruleset_categories))
+		ruleset.requirements = list(101,101,101,101,101,101,101,101,101,101)
 
 /// Get station traits and call for their config
 /datum/controller/subsystem/dynamic/proc/configure_station_trait_costs()
