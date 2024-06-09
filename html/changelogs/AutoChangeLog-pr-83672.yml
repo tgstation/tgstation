@@ -1,0 +1,7 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Tram doors can now be constructed and assemblies built"
+  - bugfix: "Emergency opening tram doors no longer spam balloon alerts"
+  - bugfix: "Tram doors open faster on arrival"
+  - bugfix: "Tram doors correctly force close on attempt 3"

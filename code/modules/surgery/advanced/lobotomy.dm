@@ -48,7 +48,7 @@
 		span_notice("[user] begins to perform a lobotomy on [target]'s brain."),
 		span_notice("[user] begins to perform surgery on [target]'s brain."),
 	)
-	display_pain(target, "Your head pounds with unimaginable pain!")
+	display_pain(target, "Your head pounds with unimaginable pain!", mood_event_type = /datum/mood_event/surgery)
 
 /datum/surgery_step/lobotomize/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(
@@ -58,7 +58,7 @@
 		span_notice("[user] successfully lobotomizes [target]!"),
 		span_notice("[user] completes the surgery on [target]'s brain."),
 	)
-	display_pain(target, "Your head goes totally numb for a moment, the pain is overwhelming!")
+	display_pain(target, "Your head goes totally numb for a moment, the pain is overwhelming!", mood_event_type = /datum/mood_event/surgery/success)
 
 	target.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/brainwashed))
@@ -86,7 +86,7 @@
 			span_notice("[user] successfully lobotomizes [target]!"),
 			span_notice("[user] completes the surgery on [target]'s brain."),
 		)
-		display_pain(target, "The pain in your head only seems to get worse!")
+		display_pain(target, "The pain in your head only seems to get worse!", mood_event_type = /datum/mood_event/surgery/failure)
 		target_brain.apply_organ_damage(80)
 		switch(rand(1,3))
 			if(1)

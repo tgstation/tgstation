@@ -160,6 +160,8 @@
 	var/first_open = FALSE
 	/// was a shovel used to close this grave
 	var/dug_closed = FALSE
+	/// do we have a mood effect tied to accessing this type of grave?
+	var/affect_mood = FALSE
 
 /obj/structure/closet/crate/grave/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(isnull(held_item))
@@ -179,6 +181,9 @@
 /obj/structure/closet/crate/grave/examine(mob/user)
 	. = ..()
 	. += span_notice("It can be [EXAMINE_HINT((opened ? "closed" : "dug open"))] with a shovel.")
+
+/obj/structure/closet/crate/grave/filled
+	affect_mood = TRUE
 
 /obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()
@@ -252,7 +257,7 @@
 		if(opened)
 			dug_closed = TRUE
 			close(user)
-		else if(open(user, force = TRUE))
+		else if(open(user, force = TRUE) && affect_mood)
 			if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
 				user.add_mood_event("morbid_graverobbing", /datum/mood_event/morbid_graverobbing)
 			else
@@ -306,6 +311,14 @@
 	else
 		if(user.loc == src)
 			to_chat(user, span_warning("You fail to dig yourself out of [src]!"))
+
+/obj/structure/closet/crate/grave/fresh
+	name = "makeshift grave"
+	desc = "A hastily-dug grave. This is definitely not six feet deep, but it'll hold a body."
+	icon = 'icons/obj/storage/crates.dmi'
+	icon_state = "grave_fresh"
+	base_icon_state = "grave_fresh"
+	material_drop_amount = 0
 
 /obj/structure/closet/crate/grave/filled/lead_researcher
 	name = "ominous burial mound"

@@ -7069,10 +7069,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "czF" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -13266,6 +13266,7 @@
 /area/station/science/research)
 "eMY" = (
 /obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "eNb" = (
@@ -15201,6 +15202,7 @@
 	},
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "fvE" = (
@@ -28671,6 +28673,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "keK" = (
@@ -37717,9 +37720,10 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "nrM" = (
+/obj/effect/turf_decal/siding/wood,
 /obj/structure/cable,
-/turf/closed/wall/r_wall,
-/area/station/ai_monitored/command/nuke_storage)
+/turf/open/floor/wood,
+/area/station/service/cafeteria)
 "nrN" = (
 /obj/machinery/mineral/ore_redemption{
 	dir = 4;
@@ -58986,7 +58990,6 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
 "uLE" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -59519,7 +59522,6 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
 "uVm" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
@@ -59953,6 +59955,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "vbF" = (
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/circuit/green{
 	luminosity = 2
 	},
@@ -63883,7 +63886,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "wrt" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -90694,7 +90696,7 @@ vbF
 wHW
 wHW
 okj
-nrM
+rlU
 qYC
 pNC
 lpt
@@ -91737,7 +91739,7 @@ jfX
 aUC
 iFC
 iBt
-gWL
+nrM
 yaE
 tmK
 htd

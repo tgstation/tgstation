@@ -22,6 +22,7 @@
 	attack_verb_simple = list("stab")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
+	operating_sound = 'sound/items/screwdriver_operating.ogg'
 	tool_behaviour = TOOL_SCREWDRIVER
 	toolspeed = 1
 	armor_type = /datum/armor/item_screwdriver
