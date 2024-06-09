@@ -1,8 +1,0 @@
-author: "xPokee, CandleJaxx, MichiRecRoom, A.C.M.O., Melbert, JohnFulpWillard"
-delete-after: True
-changes:
-  - rscadd: "Frog, puppy, kitten, and spider pAI holoforms are now available! The frog holoform can even be placed on your head."
-  - qol: "Personal AI's face display selection is now a radial menu. As a bonus, now you can see what the faces look like before selecting them."
-  - bugfix: "Fixed Personal AI cards, allowing them to wake up from sleep."
-  - bugfix: "Fixes PAI health scan software"
-  - bugfix: "pAI requests should no longer randomly permanently break in a round."
