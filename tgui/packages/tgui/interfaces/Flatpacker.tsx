@@ -22,13 +22,13 @@ type Data = {
   SHEET_MATERIAL_AMOUNT: number;
   materials: Material[];
   design?: Design;
-  busy:  boolean;
+  busy: boolean;
 };
 
 type Design = {
   name: string;
   icon: string;
-  requiredMaterials: Omit<Material, 'ref' | 'color'>[];
+  requiredMaterials: Material[];
   canPrint: boolean;
   disableReason?: string;
 };
@@ -40,17 +40,17 @@ export const Flatpacker = (props: any) => {
   return (
     <Window width={400} height={445} title="Flatpacker">
       <Window.Content>
-	  {!!busy && (
-              <Dimmer
-                style={{
-                  fontSize: '2em',
-                  textAlign: 'center',
-                }}
-              >
-                <Icon name="cog" spin />
-                {' Flatpacking...'}
-              </Dimmer>
-            )}
+        {!!busy && (
+          <Dimmer
+            style={{
+              fontSize: '2em',
+              textAlign: 'center',
+            }}
+          >
+            <Icon name="cog" spin />
+            {' Flatpacking...'}
+          </Dimmer>
+        )}
         <Stack fill vertical align="stretch">
           <Stack.Item>
             <Stack>
@@ -58,8 +58,10 @@ export const Flatpacker = (props: any) => {
                 <Section>
                   <Box
                     className="FabricatorRecipe__Label"
-                    fontSize="18px"
-                    font="Helvetica"
+                    style={{
+                      fontFamily: 'Helvetica',
+                      fontSize: '18px',
+                    }}
                   >
                     {design ? toTitleCase(design.name) : 'No Board!'}
                   </Box>
@@ -73,7 +75,7 @@ export const Flatpacker = (props: any) => {
                   width="37px"
                   onClick={() => act('ejectBoard')}
                 >
-                  <Icon name="eject" size="1.5" mt="0.8rem" ml="0rem" />
+                  <Icon name="eject" size={1.5} mt="0.8rem" ml="0rem" />
                 </Button>
               </Stack.Item>
             </Stack>
@@ -168,18 +170,18 @@ const CostPreview = (props: CostPreviewProps) => {
       {materials ? (
         <Table>
           {materials.map((material) => (
-            <Table.Row key={material.name} collapsing className="candystripe">
+            <Table.Row key={material.name} className="candystripe">
               <Table.Cell verticalAlign="middle">
                 <MaterialIcon
                   materialName={material.name}
-                  sheets={material.count / SHEET_MATERIAL_AMOUNT}
+                  sheets={material.amount / SHEET_MATERIAL_AMOUNT}
                 />
               </Table.Cell>
               <TableCell verticalAlign="middle">
                 {toTitleCase(material.name)}
               </TableCell>
               <Table.Cell verticalAlign="middle">
-                &times;{(material.count / SHEET_MATERIAL_AMOUNT).toFixed(2)}
+                &times;{(material.amount / SHEET_MATERIAL_AMOUNT).toFixed(2)}
               </Table.Cell>
             </Table.Row>
           ))}

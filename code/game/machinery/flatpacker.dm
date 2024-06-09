@@ -11,13 +11,10 @@
 
 	/// Are we busy printing?
 	var/busy = FALSE
-
 	/// Coefficient applied to consumed materials. Lower values result in lower material consumption.
 	var/creation_efficiency = 2
-
 	///The container to hold materials
 	var/datum/component/material_container/materials
-
 	/// The inserted board
 	var/obj/item/circuitboard/machine/inserted_board
 	/// Materials needed to print this board
@@ -98,7 +95,7 @@
 	for(var/datum/material/mat_type as anything in needed_mats)
 		var/list/new_entry = list()
 		new_entry["name"] = initial(mat_type.name)
-		new_entry["count"] = needed_mats[mat_type]
+		new_entry["amount"] = needed_mats[mat_type]
 		cost_mats += list(new_entry)
 
 	var/list/design
@@ -124,13 +121,13 @@
 		get_asset_datum(/datum/asset/spritesheet/research_designs),
 	)
 
-/obj/machinery/flatpacker/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/machinery/flatpacker/item_interaction(mob/living/user, obj/item/attacking_item, params)
 	if(istype(attacking_item, /obj/item/circuitboard/machine))
 		if(busy)
 			balloon_alert(user, "busy!")
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 		if (!user.transferItemToLoc(attacking_item, src))
-			return
+			return ITEM_INTERACT_BLOCKING
 		// If insertion was successful and there's already a diskette in the console, eject the old one.
 		if(inserted_board)
 			inserted_board.forceMove(drop_location())
@@ -145,10 +142,20 @@
 		CREATE_AND_INCREMENT(needed_mats, /datum/material/glass, (SHEET_MATERIAL_AMOUNT / 20) * creation_efficiency)
 
 		update_appearance()
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
+/**
+ * Attempts to find the total material cost of a typepath (including our creation efficiency), modifying a list
+ * The list is modified as an assoc list: Material datum typepath = Cost
+ * If the type is found on a techweb, uses material costs from there
+ * Otherwise, the typepath is created in nullspace and fetches materials from the initialized one, then deleted.
+ *
+ * Args:
+ * type - Typepath of the item we are trying to find the costs of
+ * costs - Assoc list we modify and return
+ */
 /obj/machinery/flatpacker/proc/analyze_cost(type, costs)
 	var/comp_type = type
 	if(ispath(type, /datum/stock_part))
@@ -168,6 +175,7 @@
 	qdel(null_comp)
 	return costs
 
+/// Start building the currently inserted board, if possible
 /obj/machinery/flatpacker/proc/start_build()
 	. = FALSE
 	if(!inserted_board)
@@ -185,6 +193,7 @@
 	addtimer(CALLBACK(src, PROC_REF(finish_build), inserted_board), flatpack_time)
 	return TRUE
 
+/// turns the supplied board into a flatpack, and sets the machine as not busy
 /obj/machinery/flatpacker/proc/finish_build(board)
 	busy = FALSE
 	new /obj/item/flatpack(drop_location(), board)
@@ -236,8 +245,11 @@
 	desc = "A box containing a compacted packed machine. Use multitool to deploy."
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "flatpack"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_HUGE //cart time
 	throw_range = 2
+	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
+	slowdown = 2.5
+	drag_slowdown = 3.5 //use the cart stupid
 	/// The board we deploy
 	var/obj/item/circuitboard/machine/board
 
@@ -256,13 +268,13 @@
 /obj/item/flatpack/multitool_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(isnull(board))
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	if(!isopenturf(loc))
 		user.balloon_alert(user, "cant deploy here!")
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	balloon_alert_to_viewers("deploying!")
 	if(!do_after(user, 1 SECONDS, target = src))
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	new /obj/effect/temp_visual/mook_dust(loc)
 	var/obj/machinery/new_machine = new board.build_path(loc)
 	loc.visible_message(span_warning("[src] deploys!"))
@@ -276,4 +288,58 @@
 
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/flatpack_cart
+	name = "flatpack cart"
+	desc = "A cart specifically made to hold flatpacks from a flatpacker, evenly distributing weight. Convenient!"
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "flatcart"
+	density = TRUE
+	opacity = FALSE
+	/// max flatpacks
+	var/max_flatpacks = 3
+
+/obj/structure/flatpack_cart/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/noisy_movement, volume = 45) // i hate noise
+
+/obj/structure/flatpack_cart/atom_destruction(damage_flag)
+	for(var/atom/movable/content as anything in contents)
+		content.forceMove(drop_location())
+	return ..()
+
+/obj/structure/flatpack_cart/examine(mob/user)
+	. = ..()
+	. += "From bottom to top, this cart contains:"
+	for(var/obj/item/flatpack as anything in contents)
+		. += flatpack.name
+
+/obj/structure/flatpack_cart/update_overlays()
+	. = ..()
+
+	var/offset = 0
+	for(var/item in contents)
+		var/mutable_appearance/flatpack_overlay = mutable_appearance(icon, "flatcart_flat", layer = layer + (offset * 0.01))
+		flatpack_overlay.pixel_y = offset
+		offset += 4
+		. += flatpack_overlay
+
+/obj/structure/flatpack_cart/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	user.put_in_hands(contents[length(contents)]) //topmost box
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/structure/flatpack_cart/item_interaction(mob/living/user, obj/item/attacking_item, params)
+	if(istype(attacking_item, /obj/item/flatpack))
+		if (length(contents) >= max_flatpacks)
+			balloon_alert(user, "full!")
+			return ITEM_INTERACT_BLOCKING
+		if (!user.transferItemToLoc(attacking_item, src))
+			return ITEM_INTERACT_BLOCKING
+		update_appearance(UPDATE_OVERLAYS)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
 #undef CREATE_AND_INCREMENT
