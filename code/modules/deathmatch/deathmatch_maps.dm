@@ -185,5 +185,24 @@
 	key = "train"
 	turf_reservation_type = /datum/turf_reservation/indestructible_plating
 
+/datum/lazy_template/deathmatch/finaldestination
+	name = "Final Destination"
+	desc = "1v1v1v1, 1 Stock, Final Destination."
+	max_players = 8
+	allowed_loadouts = list(
+		/datum/outfit/deathmatch_loadout/captain,
+		/datum/outfit/deathmatch_loadout/head_of_security,
+		/datum/outfit/deathmatch_loadout/traitor,
+		/datum/outfit/deathmatch_loadout/nukie,
+		/datum/outfit/deathmatch_loadout/tider,
+		/datum/outfit/deathmatch_loadout/abductor,
+		/datum/outfit/deathmatch_loadout/chef/upgraded,
+		/datum/outfit/deathmatch_loadout/battler/clown/upgraded,
+		/datum/outfit/deathmatch_loadout/mime,
+		/datum/outfit/deathmatch_loadout/pete,
+	)
+	map_name = "finaldestination"
+	key = "finaldestination"
+
 /datum/turf_reservation/indestructible_plating
 	turf_type = /turf/open/indestructible/plating //a little hacky but i guess it has to be done

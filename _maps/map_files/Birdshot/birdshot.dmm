@@ -38619,11 +38619,11 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/mail_sorting/service/janitor_closet,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 8
+	},
 /turf/open/floor/iron/white/small,
 /area/station/service/janitor)
 "nVe" = (
@@ -40716,6 +40716,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/break_room)
 "oJn" = (
@@ -54321,13 +54322,14 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "sKD" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Engine Airlock"
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
 /obj/structure/cable,
 /obj/effect/landmark/navigate_destination,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
+/obj/machinery/door/airlock/engineering{
+	name = "Main Engineering"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/break_room)
 "sKE" = (
