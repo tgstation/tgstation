@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - code_imp: "stacking machine consoles check in area instead of a tiny view range on init"
