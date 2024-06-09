@@ -173,7 +173,8 @@
 /obj/item/gun/ballistic/rifle/rebarxbow
 	name = "Heated Rebar Crossbow"
 	desc = "Made from an inducer, iron rods, and some wire, this crossbow fires sharpened iron rods, made from the plentiful iron rods found stationwide. \
-			Only holds one rod in the magazine - you can craft the crossbow with a crowbar to try and force a second rod in, but risks a misfire, or worse..."
+		   Additionally, can fire specialty ammo made from the materials in the atmos crystalizer - zaukerite, metallic hydrogen, and healium crytals all work. \
+		   Very slow to reload - you can craft the crossbow with a crowbar to try loosen the crossbar, but risks a misfire, or worse..."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "rebarxbow"
 	inhand_icon_state = "rebarxbow"
@@ -244,7 +245,7 @@
 /obj/item/gun/ballistic/rifle/rebarxbow/syndie
 	name = "Syndicate Rebar Crossbow"
 	desc = "The syndicate liked the bootleg rebar crossbow NT engineers made, so they showed what it could be if properly developed. \
-			Holds three shots without a chance of exploding, and features a built in scope. Normally uses special syndicate jagged iron bars, but can be wrenched to shoot inferior normal ones."
+			Holds three shots without a chance of exploding, and features a built in scope. Compatable with all known crossbow ammunition."
 	icon_state = "rebarxbowsyndie"
 	inhand_icon_state = "rebarxbowsyndie"
 	worn_icon_state = "rebarxbowsyndie"

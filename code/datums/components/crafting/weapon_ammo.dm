@@ -27,6 +27,7 @@
 	reqs = list(
 		/obj/item/stack/rods = 1,
 	)
+	tool_behaviors = list(TOOL_WIRECUTTER)
 	time = 0.1 SECONDS
 	category = CAT_WEAPON_AMMO
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
