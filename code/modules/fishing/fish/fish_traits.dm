@@ -397,7 +397,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	var/fish_tolerance = 3
 	if(!fish.loc || fish.status == FISH_DEAD)
 		return
-	for(var/obj/item/other_fish in fish.loc.contents)
+	for(var/obj/item/fish/other_fish in fish.loc.contents)
 		if(fish_tolerance <= 0)
 			fish.loc.visible_message(span_warning("[fish] seems to freak out for a moment, then it stops moving..."))
 			fish.set_status(FISH_DEAD)

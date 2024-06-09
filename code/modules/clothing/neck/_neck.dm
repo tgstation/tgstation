@@ -3,6 +3,7 @@
 	icon = 'icons/obj/clothing/neck.dmi'
 	body_parts_covered = NECK
 	slot_flags = ITEM_SLOT_NECK
+	interaction_flags_click = NEED_DEXTERITY
 	strip_delay = 40
 	equip_delay_other = 40
 
@@ -103,11 +104,8 @@
 	user.update_clothing(ITEM_SLOT_NECK)
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/clothing/neck/tie/alt_click_secondary(mob/user)
-	. = ..()
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return
-	alternate_worn_layer = alternate_worn_layer == initial(alternate_worn_layer) ? NONE : initial(alternate_worn_layer)
+/obj/item/clothing/neck/tie/click_alt_secondary(mob/user)
+	alternate_worn_layer = (alternate_worn_layer == initial(alternate_worn_layer) ? NONE : initial(alternate_worn_layer))
 	user.update_clothing(ITEM_SLOT_NECK)
 	balloon_alert(user, "wearing [alternate_worn_layer == initial(alternate_worn_layer) ? "below" : "above"] suits")
 

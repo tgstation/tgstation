@@ -20,7 +20,7 @@
 		span_notice("[user] begins to make an incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 		span_notice("[user] begins to make an incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 	)
-	display_pain(target, "You feel a stabbing in your [target.parse_zone_with_bodypart(target_zone)].")
+	display_pain(target, "You feel a stabbing in your [target.parse_zone_with_bodypart(target_zone)].", mood_event_type = /datum/mood_event/surgery)
 
 /datum/surgery_step/incise/tool_check(mob/user, obj/item/tool)
 	if(implement_type == /obj/item && !tool.get_sharpness())
@@ -39,9 +39,14 @@
 				span_notice("Blood pools around the incision in [human_target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 				span_notice("Blood pools around the incision in [human_target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 			)
+			display_pain(target, mood_event_type = /datum/mood_event/surgery/success)
 			var/obj/item/bodypart/target_bodypart = target.get_bodypart(target_zone)
 			if(target_bodypart)
 				target_bodypart.adjustBleedStacks(10)
+	return ..()
+
+/datum/surgery_step/incise/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, fail_prob)
+	display_pain(target, mood_event_type = /datum/mood_event/surgery)
 	return ..()
 
 /datum/surgery_step/incise/nobleed/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -52,7 +57,7 @@
 		span_notice("[user] begins to <i>carefully</i> make an incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 		span_notice("[user] begins to <i>carefully</i> make an incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 	)
-	display_pain(target, "You feel a <i>careful</i> stabbing in your [target.parse_zone_with_bodypart(target_zone)].")
+	display_pain(target, "You feel a <i>careful</i> stabbing in your [target.parse_zone_with_bodypart(target_zone)].", mood_event_type = /datum/mood_event/surgery)
 
 //clamp bleeders
 /datum/surgery_step/clamp_bleeders
@@ -177,7 +182,7 @@
 		span_notice("[user] begins to saw through the bone in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 		span_notice("[user] begins to saw through the bone in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 	)
-	display_pain(target, "You feel a horrid ache spread through the inside of your [target.parse_zone_with_bodypart(target_zone)]!")
+	display_pain(target, "You feel a horrid ache spread through the inside of your [target.parse_zone_with_bodypart(target_zone)]!", mood_event_type = /datum/mood_event/surgery)
 
 /datum/surgery_step/saw/tool_check(mob/user, obj/item/tool)
 	if(implement_type == /obj/item && !(tool.get_sharpness() && (tool.force >= 10)))
@@ -193,7 +198,11 @@
 		span_notice("[user] saws [target]'s [target.parse_zone_with_bodypart(target_zone)] open!"),
 		span_notice("[user] saws [target]'s [target.parse_zone_with_bodypart(target_zone)] open!"),
 	)
-	display_pain(target, "It feels like something just broke in your [target.parse_zone_with_bodypart(target_zone)]!")
+	display_pain(target, "It feels like something just broke in your [target.parse_zone_with_bodypart(target_zone)]!", mood_event_type = /datum/mood_event/surgery/success)
+	return ..()
+
+/datum/surgery_step/saw/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, fail_prob)
+	display_pain(target, mood_event_type = /datum/mood_event/surgery/failure)
 	return ..()
 
 //drill bone
