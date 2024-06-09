@@ -173,23 +173,14 @@
 \***************************************/
 /datum/action/changeling/weapon/arm_blade
 	name = "Arm Blade"
-	desc = "We reform one of our arms into a deadly blade that breaks after a number of hits, improvable by absorbing genomes. Costs 40 chemicals."
-	helptext = "We may retract our armblade in the same manner as we form it. Organic tissue is not perfect; the armblade will break after it is used too much. The more genomes we absorb, the stronger it is. Cannot be used while in lesser form."
+	desc = "We reform one of our arms into a deadly blade. Costs 20 chemicals."
+	helptext = "We may retract our armblade in the same manner as we form it. Cannot be used while in lesser form."
 	button_icon_state = "armblade"
-	chemical_cost = 30
-	dna_cost = 3
+	chemical_cost = 20
+	dna_cost = 2
 	req_human = TRUE
 	weapon_type = /obj/item/melee/arm_blade
 	weapon_name_simple = "blade"
-
-/datum/action/changeling/weapon/arm_blade/sting_action(mob/living/carbon/user)
-	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user) //So we can read the absorbed_count.
-	if(!changeling)
-		return
-
-	var/obj/item/melee/arm_blade/blade = ..()
-	blade.remaining_uses = round(changeling.absorbed_count * 3)
-	return TRUE
 
 /obj/item/melee/arm_blade
 	name = "arm blade"
@@ -212,10 +203,8 @@
 	wound_bonus = 10
 	bare_wound_bonus = 10
 	armour_penetration = 35
-	resistance_flags = FLAMMABLE
 	var/can_drop = FALSE
 	var/fake = FALSE
-	var/remaining_uses
 
 /obj/item/melee/arm_blade/Initialize(mapload,silent,synthetic)
 	. = ..()
@@ -260,15 +249,6 @@
 		user.visible_message(span_warning("[user] forces the airlock to open with [user.p_their()] [src]!"), span_warning("We force the [opening] to open."), \
 		span_hear("You hear a metal screeching sound."))
 		opening.open(BYPASS_DOOR_CHECKS)
-
-	if(remaining_uses <= 1)
-		if(ishuman(loc))
-			var/mob/living/carbon/human/changeling = loc
-			changeling.visible_message(span_warning("With a sickening crunch, [changeling] reforms [changeling.p_their()] [src] into an arm!"), span_notice("We assimilate our armblade into our body."), "<span class='italics'>You hear organic matter ripping and tearing!</span>")
-		qdel(src)
-	else
-		remaining_uses--
-
 
 /obj/item/melee/arm_blade/dropped(mob/user)
 	..()
@@ -317,7 +297,6 @@
 	throw_range = 0
 	throw_speed = 0
 	can_hold_up = FALSE
-	resistance_flags = FLAMMABLE
 
 /obj/item/gun/magic/tentacle/Initialize(mapload, silent)
 	. = ..()
@@ -514,9 +493,6 @@
 	S.remaining_uses = round(changeling.absorbed_count * 3)
 	return TRUE
 
-/datum/armor/item_shield/changeling
-	fire = -100
-
 /obj/item/shield/changeling
 	name = "shield-like mass"
 	desc = "A mass of tough, boney tissue. You can still see the fingers as a twisted pattern in the shield."
@@ -526,8 +502,6 @@
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	block_chance = 50
-	armor_type = /datum/armor/item_shield/changeling
-	resistance_flags = FLAMMABLE
 
 	var/remaining_uses //Set by the changeling ability.
 
@@ -538,7 +512,7 @@
 		loc.visible_message(span_warning("The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!"), span_warning("We inflate our hand into a strong shield."), span_hear("You hear organic matter ripping and tearing!"))
 
 /obj/item/shield/changeling/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(remaining_uses <= 1)
+	if(remaining_uses < 1)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			H.visible_message(span_warning("With a sickening crunch, [H] reforms [H.p_their()] shield into an arm!"), span_notice("We assimilate our shield into our body"), "<span class='italics>You hear organic matter ripping and tearing!</span>")
@@ -577,7 +551,6 @@
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0
 	heat_protection = 0
-	resistance_flags = FLAMMABLE
 
 /datum/armor/armor_changeling
 	melee = 40
@@ -586,7 +559,7 @@
 	energy = 50
 	bomb = 10
 	bio = 10
-	fire = -100
+	fire = 90
 	acid = 90
 
 /obj/item/clothing/suit/armor/changeling/Initialize(mapload)
@@ -603,7 +576,6 @@
 	item_flags = DROPDEL
 	armor_type = /datum/armor/helmet_changeling
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
-	resistance_flags = FLAMMABLE
 
 /datum/armor/helmet_changeling
 	melee = 40
@@ -612,7 +584,7 @@
 	energy = 50
 	bomb = 10
 	bio = 10
-	fire = -90
+	fire = 90
 	acid = 90
 
 /obj/item/clothing/head/helmet/changeling/Initialize(mapload)
@@ -642,7 +614,6 @@
 	armor_type = /datum/armor/changeling_hivehead
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
 	actions_types = list(/datum/action/cooldown/hivehead_spawn_minions)
-	resistance_flags = FLAMMABLE
 	///Does this hive head hold reagents?
 	var/holds_reagents = TRUE
 
@@ -657,7 +628,6 @@
 	laser = 10
 	energy = 10
 	bio = 50
-	fire = -100
 
 /obj/item/clothing/head/helmet/changeling_hivehead/Initialize(mapload)
 	. = ..()
