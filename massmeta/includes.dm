@@ -76,10 +76,6 @@
 #include "code\game\objects\structures\crates_lockers\crates\large.dm"
 #include "code\modules\cargo\packs\imports.dm"
 
-//species secondary color
-#include "code\modules\client\preferences\species_features\mutants_color_secondary.dm"
-#include "code\modules\mob\dead\new_player\sprite_accessories\multi_part.dm"
-#include "code\modules\mob\living\carbon\human\accessory_helpers.dm"
 //features
 #include "features\additional_circuit\includes.dm"
 #include "features\hardsuits\code\_jetpack.dm"
@@ -87,9 +83,11 @@
 #include "features\hardsuits\code\hardsuit.dm"
 #include "features\hardsuits\code\helmet.dm"
 #include "features\hardsuits\code\space_suit_beacon.dm"
+
 //buts
 #include "code\modules\surgery\organs\internal\butts\butts.dm"
 #include "code\modules\surgery\organs\internal\butts\butts_init.dm"
+
 //gay removal (6.21 КоАП РФ)
 #include "code\modules\clothing\under\accessories\badges.dm"
 #include "code\modules\clothing\shoes\sneakers.dm"

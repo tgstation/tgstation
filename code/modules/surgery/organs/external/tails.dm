@@ -79,25 +79,6 @@
 		organ_owner.add_mood_event("tail_lost", /datum/mood_event/tail_lost)
 		organ_owner.add_mood_event("tail_balance_lost", /datum/mood_event/tail_balance_lost)
 
-/obj/item/organ/external/tail/proc/wag(mob/living/carbon/organ_owner, start = TRUE, stop_after = 0)
-	if(!(wag_flags & WAG_ABLE))
-		return
-
-	if(start)
-		if(start_wag(organ_owner) && stop_after)
-			addtimer(CALLBACK(src, PROC_REF(wag), organ_owner, FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
-	else
-		stop_wag(organ_owner)
-
-	// Edit START
-
-	owner.update_body_parts() // MASSMETA EDIT
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human = owner
-		human.update_mutant_bodyparts()
-
-	// Edit END
-
 ///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
 ///Accepts an optional timeout after which we remove the tail wagging
 ///Returns false if the wag worked, true otherwise
