@@ -217,24 +217,6 @@
 /obj/structure/door_assembly/door_assembly_bronze/seethru
 	airlock_type = /obj/machinery/door/airlock/bronze/seethru
 
-/obj/structure/door_assembly/door_assembly_greyscale
-	name = "fancy ungodlike airlock assembly"
-	icon =  /obj/machinery/door/airlock/greyscale::icon
-	airlock_type = /obj/machinery/door/airlock/greyscale
-	noglass = TRUE
-
-/obj/structure/door_assembly/door_assembly_greyscale_red
-	name = "fancy ungodlike airlock assembly"
-	icon =  /obj/machinery/door/airlock/greyscale/red::icon
-	airlock_type = /obj/machinery/door/airlock/greyscale/red
-	noglass = TRUE
-
-/obj/structure/door_assembly/door_assembly_greyscale_green
-	name = "fancy ungodlike airlock assembly"
-	icon =  /obj/machinery/door/airlock/greyscale/green::icon
-	airlock_type = /obj/machinery/door/airlock/greyscale/green
-	noglass = TRUE
-
 /obj/structure/door_assembly/multi_tile/door_assembly_public
 	name = "large public airlock assembly"
 	base_name = "large public airlock"

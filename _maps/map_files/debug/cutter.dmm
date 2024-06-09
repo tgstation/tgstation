@@ -321,7 +321,6 @@
 /turf/open/floor/carpet,
 /area/misc/testroom)
 "dn" = (
-/obj/machinery/door/airlock/greyscale,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "dr" = (
@@ -914,7 +913,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "ks" = (
-/obj/machinery/door/airlock/greyscale/green,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "kt" = (
@@ -2605,7 +2603,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "CJ" = (
-/obj/machinery/door/airlock/greyscale/red,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "CN" = (
