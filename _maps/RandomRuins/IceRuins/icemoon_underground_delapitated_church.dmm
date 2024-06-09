@@ -3,7 +3,7 @@
 /obj/structure/chair/pew/left{
 	dir = 1
 	},
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "bE" = (
 /obj/structure/chair/pew{
@@ -12,7 +12,7 @@
 /obj/structure/chair/pew/right{
 	dir = 1
 	},
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "cO" = (
 /obj/structure/statue/bone/rib{
@@ -21,7 +21,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "ds" = (
 /turf/closed/wall/mineral/wood,
@@ -30,7 +30,7 @@
 /obj/structure/railing/wooden_fence{
 	dir = 9
 	},
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/icemoon,
 /area/icemoon/surface/outdoors)
 "eb" = (
 /obj/structure/flora/grass/brown/style_random,
@@ -43,30 +43,30 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "eu" = (
 /obj/structure/railing/wooden_fence{
 	dir = 4
 	},
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/icemoon,
 /area/icemoon/surface/outdoors)
 "eB" = (
 /obj/item/flashlight/lantern{
 	light_on = 1
 	},
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "eE" = (
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "fl" = (
 /obj/structure/statue/bone/rib{
 	dir = 4
 	},
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "hL" = (
 /obj/structure/chair/wood{
@@ -78,7 +78,7 @@
 /obj/structure/statue/bone/rib{
 	dir = 1
 	},
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "hS" = (
 /turf/open/misc/asteroid/snow/icemoon,
@@ -88,23 +88,23 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "jQ" = (
 /obj/structure/fake_stairs/directional/north,
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "kd" = (
 /obj/structure/flora/grass/brown/style_random,
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "kq" = (
 /obj/structure/fluff/divine/convertaltar,
 /obj/item/book/bible,
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "kW" = (
 /obj/item/chair/wood,
@@ -114,40 +114,40 @@
 /obj/structure/railing/wooden_fence{
 	dir = 6
 	},
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/icemoon,
 /area/icemoon/surface/outdoors)
 "lH" = (
 /mob/living/basic/mining/deacon,
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "lR" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
 /obj/effect/turf_decal/weather/snow,
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "mP" = (
 /obj/structure/fake_stairs/directional/north,
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "nt" = (
 /obj/structure/chair/pew{
 	dir = 1
 	},
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "nT" = (
 /obj/structure/railing/wooden_fence{
 	dir = 8
 	},
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/icemoon,
 /area/icemoon/surface/outdoors)
 "qS" = (
 /obj/structure/railing/wooden_fence{
 	dir = 5
 	},
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/icemoon,
 /area/icemoon/surface/outdoors)
 "tW" = (
 /obj/structure/statue/bone/rib{
@@ -156,7 +156,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "wg" = (
 /obj/structure/statue/bone/rib{
@@ -168,24 +168,24 @@
 /obj/structure/railing/wooden_fence{
 	dir = 10
 	},
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/icemoon,
 /area/icemoon/surface/outdoors)
 "yy" = (
 /obj/item/flashlight/lantern{
 	light_on = 1
 	},
-/turf/open/floor/carpet/airless,
+/turf/open/floor/carpet/delapitated_church,
 /area/icemoon/surface/outdoors)
 "yK" = (
 /obj/structure/fireplace{
 	fuel_added = 1000;
 	lit = 1
 	},
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "At" = (
 /obj/structure/fluff/divine/convertaltar,
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "AB" = (
 /obj/structure/statue/bone/rib{
@@ -194,18 +194,18 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "Dd" = (
 /obj/structure/railing/wooden_fence{
 	dir = 1
 	},
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/icemoon,
 /area/icemoon/surface/outdoors)
 "DG" = (
 /obj/effect/turf_decal/weather/snow,
 /obj/structure/flora/grass/brown/style_random,
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "Ep" = (
 /turf/open/misc/ice/icemoon,
@@ -216,7 +216,7 @@
 /area/icemoon/surface/outdoors)
 "Ff" = (
 /obj/structure/railing/wooden_fence,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/icemoon,
 /area/icemoon/surface/outdoors)
 "Fn" = (
 /obj/structure/closet/crate/coffin,
@@ -225,12 +225,12 @@
 "GV" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/flare/candle,
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "GY" = (
 /obj/structure/table/wood,
 /obj/item/book/bible,
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "HU" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -242,37 +242,37 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "IC" = (
 /obj/structure/flora/tree/jungle,
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/icemoon,
 /area/icemoon/surface/outdoors)
 "KQ" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "KT" = (
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "Oe" = (
 /obj/structure/chair/pew/right{
 	dir = 1
 	},
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "Ot" = (
 /obj/structure/fake_stairs/directional/north,
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "Py" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "PS" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -283,13 +283,13 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "Sc" = (
-/turf/open/floor/carpet/airless,
+/turf/open/floor/carpet/delapitated_church,
 /area/icemoon/surface/outdoors)
 "SX" = (
-/turf/open/misc/grass/jungle,
+/turf/open/misc/grass/icemoon,
 /area/icemoon/surface/outdoors)
 "TE" = (
 /obj/structure/statue/bone/rib{
@@ -301,7 +301,7 @@
 /obj/structure/statue/bone/rib{
 	dir = 4
 	},
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "TZ" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -310,15 +310,15 @@
 /obj/item/flashlight/lantern{
 	light_on = 1
 	},
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "Vg" = (
 /obj/structure/bookcase/random/religion,
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "Wr" = (
 /obj/effect/turf_decal/weather/snow,
-/turf/open/floor/dilapitated_church_alt,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "XV" = (
 /obj/item/flashlight/lantern{

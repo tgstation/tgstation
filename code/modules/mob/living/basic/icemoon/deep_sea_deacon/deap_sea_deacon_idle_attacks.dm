@@ -1,5 +1,6 @@
 ////lightning fissure attack
 #define AOE_THUNDER_TELEGRAPH_PERIOD 1.25 SECONDS
+#define CELESTIAL_BEAM_PERIOD 2 SECONDS
 
 /datum/action/cooldown/mob_cooldown/lightning_fissure
 	name = "lightning Fissure"
@@ -271,6 +272,8 @@
 	light_color = COLOR_WHITE
 	///the victim we will be beaming
 	var/datum/weakref/beam_victim
+	///effect we create at the point we hit
+	var/effect_to_create = /obj/effect/temp_visual/celestial_crossing
 
 /obj/effect/temp_visual/judgement_crystal/Initialize(mapload)
 	. = ..()
@@ -298,9 +301,12 @@
 		icon = 'icons/effects/beam.dmi',
 		icon_state = "celestial_beam",
 		beam_color = COLOR_WHITE,
-		time = 2 SECONDS,
+		time = CELESTIAL_BEAM_PERIOD,
 		emissive = TRUE,
 	)
+	if(!locate(effect_to_create) in target_turf)
+		new effect_to_create(target_turf)
+
 	damage_enemies_in_line(get_line(my_turf, target_turf))
 	addtimer(CALLBACK(src, PROC_REF(charge_up_beam)), 2 SECONDS) //recursive until delete
 
@@ -310,3 +316,10 @@
 			if((FACTION_BOSS in victim.faction))
 				continue
 			victim.apply_damage(50, BURN)
+
+/obj/effect/temp_visual/celestial_crossing
+	light_color = COLOR_WHITE
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "celestial_crossing"
+	plane = ABOVE_GAME_PLANE
+	duration = CELESTIAL_BEAM_PERIOD

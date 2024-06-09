@@ -15,7 +15,7 @@
 	/// time between each droplet launched
 	var/fire_interval = 3 SECONDS
 	///how many turfs should we pick every so often?
-	var/turf_pick = 4
+	var/turf_pick = 7
 	///how many times do we rain down a barrage?
 	var/rain_down_count = 4
 
@@ -39,6 +39,7 @@
 		var/turf/curr_turf = surrounding_turfs[count]
 		new /obj/effect/temp_visual/devestating_light(curr_turf)
 		new /obj/effect/temp_visual/shadow_telegraph/light_beam(curr_turf)
+		surrounding_turfs -= RANGE_TURFS(2, curr_turf) //spread out!
 
 /obj/effect/temp_visual/devestating_light
 	name = "holy light"
@@ -59,7 +60,7 @@
 	addtimer(CALLBACK(src, PROC_REF(apply_damage)), duration)
 
 /obj/effect/temp_visual/devestating_light/proc/apply_damage()
-	playsound(src, 'sound/chemistry/shockwave_explosion.ogg', 100, TRUE)
+	playsound(src, 'sound/magic/magic_missile.ogg', 100, TRUE)
 	var/turf/my_turf = get_turf(src)
 	new /obj/effect/temp_visual/mook_dust(my_turf)
 	for(var/mob/living/victim in my_turf)
@@ -241,9 +242,22 @@
 	for(var/turf/possible_turf in turf_list)
 		if(isclosedturf(possible_turf))
 			continue
+		owner.Beam(
+			BeamTarget = possible_turf,
+			icon = 'icons/effects/beam.dmi',
+			icon_state = "curse0",
+			beam_color = COLOR_PINK,
+			time = 0.75 SECONDS,
+			emissive = TRUE,
+		)
 		var/mob/living/living_phantom = new phantom_type(possible_turf)
 		living_phantom.alpha = 0
-		living_phantom.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
-		animate(living_phantom, alpha = initial(living_phantom.alpha), 1 SECONDS)
+		animate(living_phantom, alpha = initial(living_phantom.alpha), 1.5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(activate_phantom), living_phantom, target), 1.5 SECONDS)
 		StartCooldown()
 		return TRUE
+
+/datum/action/cooldown/mob_cooldown/cast_phantom/proc/activate_phantom(mob/living/living_phantom, atom/target)
+	if(isnull(living_phantom) || isnull(target))
+		return
+	living_phantom.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)

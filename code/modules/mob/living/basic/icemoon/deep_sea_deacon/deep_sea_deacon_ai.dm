@@ -142,7 +142,6 @@
 	)
 
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability/deacon_bounce,
 	)
 
