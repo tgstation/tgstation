@@ -244,6 +244,21 @@ DEFINE_BITFIELD(medical_mode_flags, list(
 	"MEDBOT_TIPPED_MODE" = MEDBOT_TIPPED_MODE,
 ))
 
+///Whether we are stationary or not
+#define FIREBOT_STATIONARY_MODE (1<<0)
+///If we will extinguish people
+#define FIREBOT_EXTINGUISH_PEOPLE (1<<1)
+///if we will extinguish turfs on flames
+#define FIREBOT_EXTINGUISH_FLAMES (1<<2)
+
+DEFINE_BITFIELD(firebot_mode_flags, list(
+	"FIREBOT_STATIONARY_MODE" = FIREBOT_STATIONARY_MODE,
+	"FIREBOT_EXTINGUISH_PEOPLE" = FIREBOT_EXTINGUISH_PEOPLE,
+	"FIREBOT_EXTINGUISH_FLAMES" = FIREBOT_EXTINGUISH_FLAMES,
+))
+
+
+
 //cleanBOT defines on what to clean
 #define CLEANBOT_CLEAN_BLOOD (1<<0)
 #define CLEANBOT_CLEAN_TRASH (1<<1)
