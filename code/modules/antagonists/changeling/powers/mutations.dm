@@ -188,7 +188,7 @@
 		return
 
 	var/obj/item/melee/arm_blade/blade = ..()
-	blade.remaining_uses = round(changeling.absorbed_count * 3)
+	blade.remaining_uses += changeling.true_absorbs * 2
 	return TRUE
 
 /obj/item/melee/arm_blade
@@ -201,7 +201,7 @@
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
-	force = 25
+	force = 40
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
@@ -213,20 +213,19 @@
 	bare_wound_bonus = 10
 	armour_penetration = 35
 	resistance_flags = FLAMMABLE
-	var/can_drop = FALSE
+	/// Is this a real arm blade?
 	var/fake = FALSE
-	var/remaining_uses
+	/// How many times can you use this before it retracts?
+	var/remaining_uses = 4
 
-/obj/item/melee/arm_blade/Initialize(mapload,silent,synthetic)
+/obj/item/melee/arm_blade/Initialize(mapload, silent)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc) && !silent)
 		loc.visible_message(span_warning("A grotesque blade forms around [loc.name]\'s arm!"), span_warning("Our arm twists and mutates, transforming it into a deadly blade."), span_hear("You hear organic matter ripping and tearing!"))
-	if(synthetic)
-		can_drop = TRUE
 	AddComponent(/datum/component/butchering, \
-	speed = 6 SECONDS, \
-	effectiveness = 80, \
+		speed = 6 SECONDS, \
+		effectiveness = 80, \
 	)
 
 /obj/item/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
@@ -266,14 +265,17 @@
 			var/mob/living/carbon/human/changeling = loc
 			changeling.visible_message(span_warning("With a sickening crunch, [changeling] reforms [changeling.p_their()] [src] into an arm!"), span_notice("We assimilate our armblade into our body."), "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 		qdel(src)
-	else
+	else if isliving(target)
 		remaining_uses--
 
 
-/obj/item/melee/arm_blade/dropped(mob/user)
-	..()
-	if(can_drop)
-		new /obj/item/melee/synthetic_arm_blade(get_turf(user))
+/obj/item/melee/arm_blade/prosthetic
+	force = 25
+	remaining_uses = INFINITE
+
+/obj/item/melee/arm_blade/prosthetic/dropped(mob/user)
+	. = ..()
+	new /obj/item/melee/synthetic_arm_blade(get_turf(user))
 
 /***************************************\
 |***********COMBAT TENTACLES*************|

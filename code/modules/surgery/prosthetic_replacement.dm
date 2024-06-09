@@ -131,7 +131,7 @@
 			return
 		else if(istype(tool, /obj/item/melee/synthetic_arm_blade))
 			qdel(tool)
-			var/obj/item/melee/arm_blade/new_arm = new(target,TRUE,TRUE)
+			var/obj/item/melee/arm_blade/prosthetic/new_arm = new(target,TRUE)
 			target_zone == BODY_ZONE_R_ARM ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
 			return
 	return ..() //if for some reason we fail everything we'll print out some text okay?
