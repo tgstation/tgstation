@@ -32,6 +32,7 @@
 	var/suppress_reactions = FALSE
 	/// Is there a hypernoblium crystal inserted into this
 	var/nob_crystal_inserted = FALSE
+	var/list/insert_sound = list('sound/effects/compressed_air1.ogg', 'sound/effects/compressed_air2.ogg')
 
 /datum/armor/machinery_portable_atmospherics
 	energy = 100
@@ -196,6 +197,7 @@
 		holding = null
 	if(new_tank)
 		holding = new_tank
+		playsound(src, pick(insert_sound), 50)
 		RegisterSignal(holding, COMSIG_QDELETING, PROC_REF(unregister_holding))
 
 	SSair.start_processing_machine(src)
