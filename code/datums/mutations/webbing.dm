@@ -24,8 +24,10 @@
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_WEB_WEAVER, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_WEB_SURFER, GENETIC_MUTATION)
 
 /datum/mutation/human/webbing/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_WEB_WEAVER, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_WEB_SURFER, GENETIC_MUTATION)
