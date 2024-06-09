@@ -6,14 +6,14 @@
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "hygienebot"
 	base_icon_state = "hygienebot"
-	pass_flags = PASSMOB | PASSFLAPS | PASSTABLE
+	pass_flags = parent_type::pass_flags | PASSTABLE
 	layer = MOB_UPPER_LAYER
 	density = FALSE
 	anchored = FALSE
 	health = 100
 	maxHealth = 100
 	path_image_color = "#80dae7"
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
+	req_one_access = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE
 	bot_type = HYGIENE_BOT

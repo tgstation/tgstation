@@ -166,7 +166,10 @@
 	name = "Bone Armor"
 	result = /obj/item/clothing/suit/armor/bone
 	time = 3 SECONDS
-	reqs = list(/obj/item/stack/sheet/bone = 6)
+	reqs = list(
+		/obj/item/stack/sheet/bone = 6,
+		/obj/item/stack/sheet/animalhide/goliath_hide = 3,
+	)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/bonetalisman
@@ -199,6 +202,29 @@
 	)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/wreath
+	name = "Watcher Wreath"
+	result = /obj/item/clothing/neck/wreath
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/bone = 2,
+		/obj/item/stack/sheet/sinew = 2,
+		/obj/item/stack/ore/diamond = 2,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/icewreath
+	name = "Icewing Wreath"
+	result = /obj/item/clothing/neck/wreath/icewing
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/bone = 1,
+		/obj/item/stack/sheet/sinew = 1,
+		/obj/item/stack/ore/diamond = 2,
+		/obj/item/crusher_trophy/watcher_wing/ice_wing = 1,
+	)
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/bracers
 	name = "Bone Bracers"
 	result = /obj/item/clothing/gloves/bracer
@@ -221,19 +247,27 @@
 	result = /obj/item/clothing/suit/hooded/cloak/goliath
 	time = 5 SECONDS
 	reqs = list(
-		/obj/item/stack/sheet/leather = 2,
-		/obj/item/stack/sheet/sinew = 2,
-		/obj/item/stack/sheet/animalhide/goliath_hide = 2,
-	) //it takes 4 goliaths to make 1 cloak if the plates are skinned
+		/obj/item/stack/sheet/sinew = 3,
+		/obj/item/stack/sheet/animalhide/goliath_hide = 9,
+	)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/drakecloak
 	name = "Ash Drake Armour"
 	result = /obj/item/clothing/suit/hooded/cloak/drake
-	time = 6 SECONDS
+	time = 4 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/sinew = 2,
+		/obj/item/drake_remains = 1,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/drakeremains
+	name = "Drake Remains"
+	result = /obj/item/drake_remains
+	time = 1 SECONDS
 	reqs = list(
 		/obj/item/stack/sheet/bone = 10,
-		/obj/item/stack/sheet/sinew = 2,
 		/obj/item/stack/sheet/animalhide/ashdrake = 5,
 	)
 	category = CAT_CLOTHING
@@ -345,6 +379,27 @@
 	)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/shark_costume
+	name = "shark costume"
+	result = /obj/item/clothing/suit/hooded/shark_costume
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/leather = 5,
+		/obj/item/stack/sheet/animalhide/carp = 5,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/shork_costume
+	name = "shork costume"
+	result = /obj/item/clothing/suit/hooded/shork_costume
+	time = 2 SECONDS
+	tool_behaviors = list(TOOL_WIRECUTTER)
+	reqs = list(
+		/obj/item/clothing/suit/hooded/shark_costume = 1,
+	)
+	category = CAT_CLOTHING
+
+
 /datum/crafting_recipe/sturdy_shako
 	name = "Sturdy Shako"
 	result = /obj/item/clothing/head/hats/hos/shako
@@ -398,3 +453,42 @@
 		/obj/item/clothing/suit/armor/vest = 1,
 	)
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/balloon_helmet
+	result = /obj/item/clothing/head/helmet/balloon
+	reqs = list(
+		/obj/item/toy/balloon/long = 6,
+	)
+	time = 4 SECONDS
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/balloon_helmet/check_requirements(mob/user, list/collected_requirements)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
+		return TRUE
+
+/datum/crafting_recipe/balloon_tophat
+	result = /obj/item/clothing/head/hats/tophat/balloon
+	reqs = list(
+		/obj/item/toy/balloon/long = 6,
+	)
+	time = 4 SECONDS
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/balloon_tophat/check_requirements(mob/user, list/collected_requirements)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
+		return TRUE
+
+/datum/crafting_recipe/balloon_vest
+	result = /obj/item/clothing/suit/armor/balloon_vest
+	reqs = list(
+		/obj/item/toy/balloon/long = 18,
+	)
+	time = 8 SECONDS
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/balloon_vest/check_requirements(mob/user, list/collected_requirements)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
+		return TRUE

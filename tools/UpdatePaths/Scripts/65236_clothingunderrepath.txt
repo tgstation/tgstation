@@ -34,7 +34,7 @@
 /obj/item/clothing/under/blacktango : /obj/item/clothing/under/dress/blacktango
 /obj/item/clothing/under/stripeddress : /obj/item/clothing/under/dress/striped
 /obj/item/clothing/under/sailordress : /obj/item/clothing/under/dress/sailor
-/obj/item/clothing/under/redeveninggown : /obj/item/clothing/under/dress/redeveninggown
+/obj/item/clothing/under/eveninggown : /obj/item/clothing/under/dress/eveninggown
 /obj/item/clothing/under/plaid_skirt : /obj/item/clothing/under/dress/skirt/plaid
 /obj/item/clothing/under/plaid_skirt/blue : /obj/item/clothing/under/dress/skirt/plaid/blue
 /obj/item/clothing/under/plaid_skirt/purple : /obj/item/clothing/under/dress/skirt/plaid/purple

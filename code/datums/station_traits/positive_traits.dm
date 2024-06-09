@@ -1,7 +1,6 @@
 #define PARTY_COOLDOWN_LENGTH_MIN (6 MINUTES)
 #define PARTY_COOLDOWN_LENGTH_MAX (12 MINUTES)
 
-
 /datum/station_trait/lucky_winner
 	name = "Lucky winner"
 	trait_type = STATION_TRAIT_POSITIVE
@@ -30,6 +29,9 @@
 	for(var/i in 1 to 6)
 		new /obj/item/reagent_containers/cup/glass/bottle/beer(toLaunch)
 	new /obj/effect/pod_landingzone(T, toLaunch)
+
+#undef PARTY_COOLDOWN_LENGTH_MIN
+#undef PARTY_COOLDOWN_LENGTH_MAX
 
 /datum/station_trait/galactic_grant
 	name = "Galactic grant"
@@ -219,6 +221,7 @@
 		/datum/job/geneticist = /obj/item/organ/internal/fly, //we don't care about implants, we have cancer.
 		/datum/job/head_of_personnel = /obj/item/organ/internal/eyes/robotic,
 		/datum/job/head_of_security = /obj/item/organ/internal/eyes/robotic/thermals,
+		/datum/job/human_ai = /obj/item/organ/internal/brain/cybernetic,
 		/datum/job/janitor = /obj/item/organ/internal/eyes/robotic/xray,
 		/datum/job/lawyer = /obj/item/organ/internal/heart/cybernetic/tier2,
 		/datum/job/mime = /obj/item/organ/internal/tongue/robot, //...
@@ -232,7 +235,6 @@
 		/datum/job/security_officer = /obj/item/organ/internal/cyberimp/arm/flash,
 		/datum/job/shaft_miner = /obj/item/organ/internal/monster_core/rush_gland,
 		/datum/job/station_engineer = /obj/item/organ/internal/cyberimp/arm/toolset,
-		/datum/job/virologist = /obj/item/organ/internal/lungs/cybernetic/tier2,
 		/datum/job/warden = /obj/item/organ/internal/cyberimp/eyes/hud/security,
 	)
 
@@ -292,6 +294,20 @@
 	weight_multiplier = 3
 	max_occurrences_modifier = 10 //lotta cows
 
+/datum/station_trait/random_event_weight_modifier/wise_cows/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>Cow Planet</b></center><BR>" //We're gonna go fast and we're gonna go far.
+	advisory_string += "Your sector's advisory level is Cow Planet. We don't really know what this one means -- the model we use to create these threat reports hasn't produced this result before. Watch out for cows, I guess? Good luck!"
+	return advisory_string
+
+/datum/station_trait/bright_day
+	name = "Bright Day"
+	report_message = "The stars shine bright and the clouds are scarcer than usual. It's a bright day here on the Ice Moon's surface."
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 5
+	show_in_report = TRUE
+	trait_flags = STATION_TRAIT_PLANETARY
+	trait_to_give = STATION_TRAIT_BRIGHT_DAY
+
 /datum/station_trait/shuttle_sale
 	name = "Shuttle Firesale"
 	report_message = "The Nanotrasen Emergency Dispatch team is celebrating a record number of shuttle calls in the recent quarter. Some of your emergency shuttle options have been discounted!"
@@ -343,12 +359,14 @@
 /// Spawns assistants with some gear, either gimmicky or functional. Maybe, one day, it will inspire an assistant to do something productive or fun
 /datum/station_trait/assistant_gimmicks
 	name = "Geared Assistants Pilot"
-	report_message = "The Nanotrassen Assistant Affairs division is performing a pilot to see if different assistant equipments help improve productivity!"
+	report_message = "The Nanotrassen Assistant Affairs division is performing a pilot to see if different assistant equipment helps improve productivity!"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 3
 	trait_to_give = STATION_TRAIT_ASSISTANT_GIMMICKS
 	show_in_report = TRUE
 	blacklist = list(/datum/station_trait/colored_assistants)
 
-#undef PARTY_COOLDOWN_LENGTH_MIN
-#undef PARTY_COOLDOWN_LENGTH_MAX
+/datum/station_trait/random_event_weight_modifier/assistant_gimmicks/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>Grey Sky</b></center><BR>"
+	advisory_string += "Your sector's advisory level is Grey Sky. Our sensors detect abnormal activity among the assistants assigned to your station. We advise you to closely monitor the Tool Storage, Bridge, Tech Storage, and Brig for gathering crowds or petty thievery."
+	return advisory_string

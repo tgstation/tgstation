@@ -32,7 +32,7 @@
 		else
 			signal.levels |= SSmapping.get_connected_levels(relay_turf)
 
-	use_power(idle_power_usage)
+	use_energy(idle_power_usage)
 
 /**
  * Checks to see if the relay can send/receive the signal, by checking if it's

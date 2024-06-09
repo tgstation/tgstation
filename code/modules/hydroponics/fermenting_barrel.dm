@@ -10,7 +10,9 @@
 	anchored = FALSE
 	pressure_resistance = 2 * ONE_ATMOSPHERE
 	max_integrity = 300
+	/// Is the barrel currently opened?
 	var/open = FALSE
+	/// Can the barrel be opened?
 	var/can_open = TRUE
 	/// The amount of reagents that can be created from the contained products, used for validation
 	var/potential_volume = 0
@@ -20,7 +22,9 @@
 	var/sound_volume = 25
 	/// The sound of fermentation
 	var/datum/looping_sound/boiling/soundloop
+	/// Sound played when the lid is opened.
 	var/lid_open_sound = 'sound/items/handling/cardboardbox_pickup.ogg'
+	/// Sound played when the lid is closed.
 	var/lid_close_sound = 'sound/effects/footstep/woodclaw2.ogg'
 
 /obj/structure/fermenting_barrel/Initialize(mapload)
@@ -28,6 +32,14 @@
 	create_reagents(600, DRAINABLE)
 	soundloop = new(src, fermenting)
 	soundloop.volume = sound_volume
+	register_context()
+
+	RegisterSignals(src, list(
+		SIGNAL_ADDTRAIT(TRAIT_WAS_RENAMED),
+		SIGNAL_ADDTRAIT(TRAIT_HAS_LABEL),
+		SIGNAL_REMOVETRAIT(TRAIT_WAS_RENAMED),
+		SIGNAL_REMOVETRAIT(TRAIT_HAS_LABEL),
+	), PROC_REF(update_overlay_on_sig))
 
 /obj/structure/fermenting_barrel/Destroy()
 	QDEL_NULL(soundloop)
@@ -39,6 +51,7 @@
 		var/fruit_count = contents.len
 		if(fruit_count)
 			. += span_notice("It contains [fruit_count] fruit\s ready to be fermented.")
+			. += span_notice("[EXAMINE_HINT("Right-click")] to take them out of [src].")
 		. += span_notice("It is currently open, letting you fill it with fruits or reagents.")
 	else
 		. += span_notice("It is currently closed, letting it ferment fruits or draw reagents from its tap.")
@@ -78,14 +91,60 @@
 		stop_fermentation()
 	update_appearance(UPDATE_ICON)
 
+/obj/structure/fermenting_barrel/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return .
+
+	if(!open)
+		return .
+
+	if(!length(contents))
+		balloon_alert(user, "empty!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	dump_contents()
+	balloon_alert(user, "emptied [src]")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/structure/fermenting_barrel/wrench_act(mob/living/user, obj/item/tool)
+	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
+		return ITEM_INTERACT_SUCCESS
+
 /obj/structure/fermenting_barrel/update_icon_state()
 	icon_state = open ? "barrel_open" : "barrel"
 	return ..()
+
+/obj/structure/fermenting_barrel/proc/update_overlay_on_sig()
+	SIGNAL_HANDLER
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/fermenting_barrel/update_overlays()
 	. = ..()
 	if(HAS_TRAIT(src, TRAIT_WAS_RENAMED) || HAS_TRAIT(src, TRAIT_HAS_LABEL))
 		. += mutable_appearance(icon, "[base_icon_state]_overlay_label")
+
+/obj/structure/fermenting_barrel/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = open ? "Close" : "Open"
+
+		if(open && length(contents))
+			context[SCREENTIP_CONTEXT_RMB] = "Empty"
+
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unanchor" : "Anchor"
+
+	else if(open && (istype(held_item, /obj/item/food/grown) || istype(held_item, /obj/item/storage/bag/plants)))
+		context[SCREENTIP_CONTEXT_LMB] = "Add to barrel"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/structure/fermenting_barrel/dump_contents()
+	var/atom/drop_point = drop_location()
+	for(var/obj/item/food/grown/fruit as anything in contents)
+		fruit.forceMove(drop_point)
 
 /// Adds the fruit to the barrel to queue the fermentation
 /obj/structure/fermenting_barrel/proc/insert_fruit(mob/user, obj/item/food/grown/fruit, obj/item/storage/bag/plants/bag = null)
@@ -152,3 +211,13 @@
 /obj/structure/fermenting_barrel/gunpowder/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/gunpowder, 500)
+
+/// Medieval pirates can have a barrel as a treat
+/obj/structure/fermenting_barrel/thermite
+	name = "thermite barrel"
+	desc = "A large wooden barrel for holding thermite. Use this to make a big flipping hole on walls."
+	can_open = FALSE
+
+/obj/structure/fermenting_barrel/thermite/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/thermite, 500)

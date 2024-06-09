@@ -134,6 +134,13 @@
 		/obj/effect/spawner/random/trash/cigbutt = 2,
 	)
 
+/obj/effect/spawner/random/trash/grime/Initialize(mapload)
+	if(mapload)
+		var/turf/location = get_turf(loc)
+		if(location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
+			loot -= /mob/living/basic/cockroach
+	return ..()
+
 /obj/effect/spawner/random/trash/moisture
 	name = "water hazard spawner"
 	icon_state = "caution"
@@ -149,6 +156,13 @@
 		/obj/structure/mop_bucket = 2,
 		/mob/living/basic/axolotl = 1,
 	)
+
+/obj/effect/spawner/random/trash/moisture/Initialize(mapload)
+	if(mapload)
+		var/turf/location = get_turf(loc)
+		if(location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
+			loot -= list(/mob/living/basic/frog, /mob/living/basic/axolotl)
+	return ..()
 
 /obj/effect/spawner/random/trash/graffiti
 	name = "random graffiti spawner"

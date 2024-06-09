@@ -36,8 +36,14 @@
 	/// The default color for the reel overlay if no line is equipped.
 	var/default_line_color = "gray"
 
+	///should there be a fishing line?
+	var/display_fishing_line = TRUE
+
 	///The name of the icon state of the reel overlay
 	var/reel_overlay = "reel_overlay"
+
+	///Prevents spamming the line casting, without affecting the player's click cooldown.
+	COOLDOWN_DECLARE(casting_cd)
 
 /obj/item/fishing_rod/Initialize(mapload)
 	. = ..()
@@ -151,9 +157,11 @@
 
 /// Generates the fishing line visual from the current user to the target and updates inhands
 /obj/item/fishing_rod/proc/create_fishing_line(atom/movable/target, target_py = null)
+	if(!display_fishing_line)
+		return null
 	var/mob/user = loc
 	if(!istype(user))
-		return
+		return null
 	if(fishing_line)
 		QDEL_NULL(fishing_line)
 	var/beam_color = line?.line_color || default_line_color
@@ -220,6 +228,8 @@
 	if(!CheckToolReach(user, target, cast_range))
 		balloon_alert(user, "cannot reach there!")
 		return
+	if(!COOLDOWN_FINISHED(src, casting_cd))
+		return
 	/// Annoyingly pre attack is only called in melee
 	SEND_SIGNAL(target, COMSIG_PRE_FISHING)
 	casting = TRUE
@@ -229,9 +239,10 @@
 	cast_projectile.original = target
 	cast_projectile.fired_from = src
 	cast_projectile.firer = user
-	cast_projectile.impacted = list(user = TRUE)
+	cast_projectile.impacted = list(WEAKREF(user) = TRUE)
 	cast_projectile.preparePixelProjectile(target, user)
 	cast_projectile.fire()
+	COOLDOWN_START(src, casting_cd, 1 SECONDS)
 
 /// Called by hook projectile when hitting things
 /obj/item/fishing_rod/proc/hook_hit(atom/atom_hit_by_hook_projectile)
@@ -361,9 +372,7 @@
 		if("slot_action")
 			// Simple click with empty hand to remove, click with item to insert/switch
 			var/obj/item/held_item = user.get_active_held_item()
-			if(held_item == src)
-				return
-			use_slot(params["slot"], user, held_item)
+			use_slot(params["slot"], user, held_item == src ? null : held_item)
 			return TRUE
 
 /// Ideally this will be replaced with generic slotted storage datum + display
@@ -403,6 +412,9 @@
 					line = new_item
 		user.put_in_hands(current_item)
 		balloon_alert(user, "[slot] swapped")
+
+	if(new_item)
+		SEND_SIGNAL(new_item, COMSIG_FISHING_EQUIPMENT_SLOTTED, src)
 
 	update_icon()
 	playsound(src, 'sound/items/click.ogg', 50, TRUE)

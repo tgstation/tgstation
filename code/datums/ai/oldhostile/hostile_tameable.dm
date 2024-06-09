@@ -108,7 +108,7 @@
 		return
 	if(!istype(clicker) || blackboard[BB_HOSTILE_FRIEND] != clicker)
 		return
-	. = COMPONENT_CANCEL_CLICK_ALT
+	. = CLICK_ACTION_BLOCKING
 	INVOKE_ASYNC(src, PROC_REF(command_radial), clicker)
 
 /// Show the command radial menu

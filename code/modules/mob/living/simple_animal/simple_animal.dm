@@ -131,7 +131,7 @@
 	///Played when someone punches the creature.
 	var/attacked_sound = SFX_PUNCH
 
-	///The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever), AI_Z_OFF (Temporarily off due to nonpresence of players).
+	///The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever).
 	var/AIStatus = AI_ON
 	///once we have become sentient, we can never go back.
 	var/can_have_ai = TRUE
@@ -176,7 +176,6 @@
 		add_traits(weather_immunities, ROUNDSTART_TRAIT)
 	if (environment_smash >= ENVIRONMENT_SMASH_WALLS)
 		AddElement(/datum/element/wall_smasher, strength_flag = environment_smash)
-
 	if(speak)
 		speak = string_list(speak)
 	if(speak_emote)
@@ -185,8 +184,6 @@
 		emote_hear = string_list(emote_hear)
 	if(emote_see)
 		emote_see = string_list(emote_hear)
-	if(atmos_requirements)
-		atmos_requirements = string_assoc_list(atmos_requirements)
 	if(damage_coeff)
 		damage_coeff = string_assoc_list(damage_coeff)
 	if(footstep_type)
@@ -195,6 +192,24 @@
 		unsuitable_cold_damage = unsuitable_atmos_damage
 	if(isnull(unsuitable_heat_damage))
 		unsuitable_heat_damage = unsuitable_atmos_damage
+
+	///We need to wait for SSair to be initialized before we can check atmos/temp requirements.
+	if(PERFORM_ALL_TESTS(focus_only/atmos_and_temp_requirements) && mapload && !SSair.initialized)
+		RegisterSignal(SSair, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(on_ssair_init))
+		return
+	init_atmos_temp_requirement(mapload)
+
+/mob/living/simple_animal/proc/on_ssair_init(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(SSair, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	init_atmos_temp_requirement(TRUE)
+
+/mob/living/simple_animal/proc/init_atmos_temp_requirement(mapload)
+	if(atmos_requirements && unsuitable_atmos_damage)
+		atmos_requirements = string_assoc_list(atmos_requirements)
+		AddElement(/datum/element/atmos_requirements, atmos_requirements, unsuitable_atmos_damage, mapload)
+	if((unsuitable_cold_damage || unsuitable_heat_damage) && (minbodytemp > 0 || maxbodytemp < INFINITY))
+		AddElement(/datum/element/body_temp_sensitive, minbodytemp, maxbodytemp, unsuitable_cold_damage, unsuitable_heat_damage, mapload)
 
 /mob/living/simple_animal/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
@@ -205,10 +220,6 @@
 	QDEL_NULL(access_card)
 	GLOB.simple_animals[AIStatus] -= src
 	SSnpcpool.currentrun -= src
-
-	var/turf/T = get_turf(src)
-	if (T && AIStatus == AI_Z_OFF)
-		SSidlenpcpool.idle_mobs_by_zlevel[T.z] -= src
 
 	return ..()
 
@@ -302,51 +313,6 @@
 					else
 						manual_emote(pick(emote_hear))
 
-/mob/living/simple_animal/proc/environment_air_is_safe()
-	. = TRUE
-
-	if(pulledby && pulledby.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
-		. = FALSE //getting choked
-
-	if(isturf(loc) && isopenturf(loc))
-		var/turf/open/ST = loc
-		if(ST.air)
-			var/ST_gases = ST.air.gases
-			ST.air.assert_gases(/datum/gas/oxygen, /datum/gas/pluoxium, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)
-
-			var/plas = ST_gases[/datum/gas/plasma][MOLES]
-			var/oxy = ST_gases[/datum/gas/oxygen][MOLES] + (ST_gases[/datum/gas/pluoxium][MOLES] * PLUOXIUM_PROPORTION)
-			var/n2 = ST_gases[/datum/gas/nitrogen][MOLES]
-			var/co2 = ST_gases[/datum/gas/carbon_dioxide][MOLES]
-
-			ST.air.garbage_collect()
-
-			if(atmos_requirements["min_oxy"] && oxy < atmos_requirements["min_oxy"])
-				. = FALSE
-			else if(atmos_requirements["max_oxy"] && oxy > atmos_requirements["max_oxy"])
-				. = FALSE
-			else if(atmos_requirements["min_plas"] && plas < atmos_requirements["min_plas"])
-				. = FALSE
-			else if(atmos_requirements["max_plas"] && plas > atmos_requirements["max_plas"])
-				. = FALSE
-			else if(atmos_requirements["min_n2"] && n2 < atmos_requirements["min_n2"])
-				. = FALSE
-			else if(atmos_requirements["max_n2"] && n2 > atmos_requirements["max_n2"])
-				. = FALSE
-			else if(atmos_requirements["min_co2"] && co2 < atmos_requirements["min_co2"])
-				. = FALSE
-			else if(atmos_requirements["max_co2"] && co2 > atmos_requirements["max_co2"])
-				. = FALSE
-		else
-			if(atmos_requirements["min_oxy"] || atmos_requirements["min_plas"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"])
-				. = FALSE
-
-/mob/living/simple_animal/proc/environment_temperature_is_safe(datum/gas_mixture/environment)
-	. = TRUE
-	var/areatemp = get_temperature(environment)
-	if((areatemp < minbodytemp) || (areatemp > maxbodytemp))
-		. = FALSE
-
 /mob/living/simple_animal/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
 	var/atom/A = loc
 	if(isturf(A))
@@ -358,42 +324,6 @@
 					adjust_bodytemperature(clamp(temp_delta * seconds_per_tick / temperature_normalization_speed, temp_delta, 0))
 			else
 				adjust_bodytemperature(clamp(temp_delta * seconds_per_tick / temperature_normalization_speed, 0, temp_delta))
-
-	if(!environment_air_is_safe() && unsuitable_atmos_damage)
-		adjustHealth(unsuitable_atmos_damage * seconds_per_tick)
-		if(unsuitable_atmos_damage > 0)
-			throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
-	else
-		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
-
-	handle_temperature_damage(seconds_per_tick, times_fired)
-
-/mob/living/simple_animal/proc/handle_temperature_damage(seconds_per_tick, times_fired)
-	. = FALSE
-	if((bodytemperature < minbodytemp) && unsuitable_cold_damage)
-		adjustHealth(unsuitable_cold_damage * seconds_per_tick)
-		switch(unsuitable_cold_damage)
-			if(1 to 5)
-				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 1)
-			if(5 to 10)
-				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 2)
-			if(10 to INFINITY)
-				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 3)
-		. = TRUE
-
-	if((bodytemperature > maxbodytemp) && unsuitable_heat_damage)
-		adjustHealth(unsuitable_heat_damage * seconds_per_tick)
-		switch(unsuitable_heat_damage)
-			if(1 to 5)
-				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 1)
-			if(5 to 10)
-				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 2)
-			if(10 to INFINITY)
-				throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 3)
-		. = TRUE
-
-	if(!.)
-		clear_alert(ALERT_TEMPERATURE)
 
 /mob/living/simple_animal/gib()
 	if(butcher_results || guaranteed_butcher_results)
@@ -580,28 +510,11 @@
 		return
 	if (AIStatus != togglestatus)
 		if (togglestatus > 0 && togglestatus < 5)
-			if (togglestatus == AI_Z_OFF || AIStatus == AI_Z_OFF)
-				var/turf/T = get_turf(src)
-				if (T)
-					if (AIStatus == AI_Z_OFF)
-						SSidlenpcpool.idle_mobs_by_zlevel[T.z] -= src
-					else
-						SSidlenpcpool.idle_mobs_by_zlevel[T.z] += src
 			GLOB.simple_animals[AIStatus] -= src
 			GLOB.simple_animals[togglestatus] += src
 			AIStatus = togglestatus
 		else
 			stack_trace("Something attempted to set simple animals AI to an invalid state: [togglestatus]")
-
-/mob/living/simple_animal/proc/consider_wakeup()
-	if (pulledby || shouldwakeup)
-		toggle_ai(AI_ON)
-
-/mob/living/simple_animal/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	..()
-	if (old_turf && AIStatus == AI_Z_OFF)
-		SSidlenpcpool.idle_mobs_by_zlevel[old_turf.z] -= src
-		toggle_ai(initial(AIStatus))
 
 ///This proc is used for adding the swabbale element to mobs so that they are able to be biopsied and making sure holograpic and butter-based creatures don't yield viable cells samples.
 /mob/living/simple_animal/proc/add_cell_sample()
@@ -626,7 +539,7 @@
 /mob/living/simple_animal/proc/Goto(target, delay, minimum_distance)
 	if(prevent_goto_movement)
 		return FALSE
-	SSmove_manager.move_to(src, target, minimum_distance, delay)
+	GLOB.move_manager.move_to(src, target, minimum_distance, delay)
 	return TRUE
 
 //Makes this mob hunt the prey, be it living or an object. Will kill living creatures, and delete objects.

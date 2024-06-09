@@ -119,7 +119,7 @@ GLOBAL_VAR(restart_counter)
 	// From a really fucking old commit (91d7150)
 	// I wanted to move it but I think this needs to be after /world/New is called but before any sleeps?
 	// - Dominion/Cyberboss
-	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
+	GLOB.timezoneOffset = world.timezone * 36000
 
 	// First possible sleep()
 	InitTgs()
@@ -388,7 +388,7 @@ GLOBAL_VAR(restart_counter)
 		else if(SSticker.current_state == GAME_STATE_SETTING_UP)
 			new_status += "<br>Starting: <b>Now</b>"
 		else if(SSticker.IsRoundInProgress())
-			new_status += "<br>Time: <b>[time2text(STATION_TIME_PASSED(), "hh:mm")]</b>"
+			new_status += "<br>Time: <b>[time2text(STATION_TIME_PASSED(), "hh:mm", 0)]</b>"
 			if(SSshuttle?.emergency && SSshuttle?.emergency?.mode != (SHUTTLE_IDLE || SHUTTLE_ENDGAME))
 				new_status += " | Shuttle: <b>[SSshuttle.emergency.getModeStr()] [SSshuttle.emergency.getTimerStr()]</b>"
 		else if(SSticker.current_state == GAME_STATE_FINISHED)
@@ -448,7 +448,7 @@ GLOBAL_VAR(restart_counter)
 /world/proc/incrementMaxZ()
 	maxz++
 	SSmobs.MaxZChanged()
-	SSidlenpcpool.MaxZChanged()
+	SSai_controllers.on_max_z_changed()
 
 /world/proc/change_fps(new_value = 20)
 	if(new_value <= 0)

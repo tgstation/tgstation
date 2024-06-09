@@ -29,7 +29,7 @@ const powerStatusMap = {
   1: {
     color: 'average',
     externalPowerText: 'Low External Power',
-    chargingText: 'Charging',
+    chargingText: 'Charging: ',
   },
   0: {
     color: 'bad',
@@ -131,7 +131,10 @@ const ApcContent = (props) => {
               />
             }
           >
-            [ {chargingStatus.chargingText} ]
+            [{' '}
+            {chargingStatus.chargingText +
+              (data.chargingStatus === 1 ? data.chargingPowerDisplay : '')}{' '}
+            ]
           </LabeledList.Item>
         </LabeledList>
       </Section>

@@ -30,6 +30,7 @@
 	. = ..()
 	if(!holds_charge)
 		empty()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/gun/energy/recharge/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
 	. = ..()
@@ -77,9 +78,6 @@
 	carried = max(carried, 1)
 	deltimer(recharge_timerid)
 	recharge_timerid = addtimer(CALLBACK(src, PROC_REF(reload)), set_recharge_time * carried, TIMER_STOPPABLE)
-
-/obj/item/gun/energy/recharge/emp_act(severity)
-	return
 
 /obj/item/gun/energy/recharge/proc/reload()
 	cell.give(cell.maxcharge)
@@ -152,19 +150,23 @@
 
 /obj/item/gun/energy/recharge/fisher/examine_more(mob/user)
 	. = ..()
-	. += span_notice("The SC/FISHER is an illegally-modified kinetic accelerator cut down and refit into a disassembled miniature energy gun chassis, with its pressure chamber \
-	attenuated to launch kinetic bolts that <b>disrupt flashlights and cameras, if only temporarily</b>. This effect also works on <b>cyborg headlamps<b>, and works longer in melee.<br><br>\
-	While some would argue that this is a really terrible design choice, others argue that it is very funny to be able to shoot at light sources. Caveat emptor.")
+	. += span_notice("The SC/FISHER is an illegally-modified kinetic accelerator cut down and refit into a disassembled miniature energy gun chassis, \
+	with its pressure chamber attenuated to launch kinetic bolts that <b>temporarily disrupt flashlights, cameras, and certain other electronics</b>. \
+	This effect also works on <b>cyborg headlamps<b>, and works longer in melee.<br><br>\
+	While some would argue that this is a really terrible design choice, others argue that it is very funny to be able to shoot at light sources.<br>\
+	Caveat emptor.")
 
 /obj/item/gun/energy/recharge/fisher/afterattack(atom/target, mob/living/user, flag, params)
 	// you should just shoot them, but in case you can't/wont
 	. = ..()
 	if(user.Adjacent(target))
 		var/obj/projectile/energy/fisher/melee/simulated_hit = new
+		simulated_hit.firer = user
 		simulated_hit.on_hit(target)
 
 /obj/item/gun/energy/recharge/fisher/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	// ...you reeeeeally just shoot them, but in case you can't/won't
 	. = ..()
 	var/obj/projectile/energy/fisher/melee/simulated_hit = new
+	simulated_hit.firer = throwingdatum.get_thrower()
 	simulated_hit.on_hit(hit_atom)

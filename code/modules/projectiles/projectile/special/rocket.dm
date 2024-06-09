@@ -72,6 +72,7 @@ among other potential differences. This granularity is helpful for things like t
 /obj/projectile/bullet/rocket/weak
 	name = "low-yield rocket"
 	desc = "Boom, but less so."
+	icon_state = "low_yield_rocket"
 	damage = 30
 
 /obj/projectile/bullet/rocket/weak/do_boom(atom/target, blocked=0)
@@ -101,6 +102,7 @@ among other potential differences. This granularity is helpful for things like t
 /obj/projectile/bullet/rocket/pep
 	name = "precise explosive missile"
 	desc = "Human friendly, metal unfriendly."
+	icon_state = "low_yield_rocket"
 	damage = 30
 	anti_armour_damage = 80 //Doesn't (probably) kill borgs in one shot, but it will hurt
 	random_crits_enabled = FALSE //yeah, no
@@ -125,3 +127,13 @@ among other potential differences. This granularity is helpful for things like t
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "missile_broken"
 	w_class = WEIGHT_CLASS_TINY
+
+//immediately hits firer
+/obj/projectile/bullet/rocket/reverse
+	name = "faulty rocket"
+
+/obj/projectile/bullet/rocket/reverse/fire(angle, atom/direct_target)
+	..()
+	if(firer) //troll
+		firer.visible_message(span_danger("[src] blows up as soon as [firer] fires it!"))
+		on_hit(firer)

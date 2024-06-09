@@ -2,12 +2,21 @@
 #define GET_TARGETING_STRATEGY(targeting_type) SSai_behaviors.targeting_strategies[targeting_type]
 #define HAS_AI_CONTROLLER_TYPE(thing, type) istype(thing?.ai_controller, type)
 
-#define AI_STATUS_ON 1
-#define AI_STATUS_OFF 2
+//AI controller flags
+//If you add a new status, be sure to add it to the ai_controllers subsystem's ai_controllers_by_status list.
+///The AI is currently active.
+#define AI_STATUS_ON "ai_on"
+///The AI is currently offline for any reason.
+#define AI_STATUS_OFF "ai_off"
+///The AI is currently in idle mode.
+#define AI_STATUS_IDLE "ai_idle"
 
 ///For JPS pathing, the maximum length of a path we'll try to generate. Should be modularized depending on what we're doing later on
 #define AI_MAX_PATH_LENGTH 30 // 30 is possibly overkill since by default we lose interest after 14 tiles of distance, but this gives wiggle room for weaving around obstacles
-#define AI_BOT_PATH_LENGTH 150
+#define AI_BOT_PATH_LENGTH 75
+
+// How far should we, by default, be looking for interesting things to de-idle?
+#define AI_DEFAULT_INTERESTING_DIST 10
 
 ///Cooldown on planning if planning failed last time
 
@@ -15,6 +24,16 @@
 
 ///Flags for ai_behavior new()
 #define AI_CONTROLLER_INCOMPATIBLE (1<<0)
+
+//Return flags for ai_behavior/perform()
+///Update this behavior's cooldown
+#define AI_BEHAVIOR_DELAY (1<<0)
+///Finish the behavior successfully
+#define AI_BEHAVIOR_SUCCEEDED (1<<1)
+///Finish the behavior unsuccessfully
+#define AI_BEHAVIOR_FAILED (1<<2)
+
+#define AI_BEHAVIOR_INSTANT (NONE)
 
 ///Does this task require movement from the AI before it can be performed?
 #define AI_BEHAVIOR_REQUIRE_MOVEMENT (1<<0)

@@ -8,7 +8,7 @@
 	id = "basic_cell"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE |MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 0.5)
-	construction_time=100
+	construction_time = 10 SECONDS
 	build_path = /obj/item/stock_parts/cell/empty
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
@@ -21,7 +21,7 @@
 	id = "high_cell"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE | MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.6)
-	construction_time=100
+	construction_time = 10 SECONDS
 	build_path = /obj/item/stock_parts/cell/high/empty
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_2
@@ -34,7 +34,7 @@
 	id = "super_cell"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
-	construction_time=100
+	construction_time = 10 SECONDS
 	build_path = /obj/item/stock_parts/cell/super/empty
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_3
@@ -47,7 +47,7 @@
 	id = "hyper_cell"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.8)
-	construction_time=100
+	construction_time = 10 SECONDS
 	build_path = /obj/item/stock_parts/cell/hyper/empty
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_3
@@ -60,7 +60,7 @@
 	id = "bluespace_cell"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 8, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 1.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.6, /datum/material/diamond = SMALL_MATERIAL_AMOUNT * 1.6, /datum/material/titanium =SMALL_MATERIAL_AMOUNT * 3, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT)
-	construction_time=100
+	construction_time = 10 SECONDS
 	build_path = /obj/item/stock_parts/cell/bluespace/empty
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_4
@@ -101,13 +101,23 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/board/bioelec_gen
+	name = "Aquarium Bioelectricity Kit"
+	desc = "The required components to convert an aquarium into a bioelectricity generator."
+	id = "bioelec_gen"
+	build_path = /obj/item/aquarium_upgrade/bioelec_gen
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/turbine_part_compressor
 	name = "Turbine Compressor"
 	desc = "The basic tier of a compressor blade."
 	id = "turbine_part_compressor"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	build_path = /obj/item/turbine_parts/compressor
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_TURBINE
@@ -120,7 +130,7 @@
 	id = "turbine_part_rotor"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	build_path = /obj/item/turbine_parts/rotor
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_TURBINE
@@ -133,7 +143,7 @@
 	id = "turbine_part_stator"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
-	construction_time = 100
+	construction_time = 10 SECONDS
 	build_path = /obj/item/turbine_parts/stator
 	category = list(
 		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_TURBINE

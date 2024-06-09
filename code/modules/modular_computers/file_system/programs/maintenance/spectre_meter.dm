@@ -143,10 +143,13 @@
 
 	/// Returns the spookiness of each scan.
 	var/datum/port/output/scan_results
+	/// Pinged whenever a scan is done.
+	var/datum/port/output/scanned
 
 /obj/item/circuit_component/mod_program/spectre_meter/populate_ports()
 	. = ..()
 	scan_results = add_output_port("Scan Results", PORT_TYPE_NUMBER)
+	scanned = add_output_port("Scaned", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/mod_program/spectre_meter/register_shell(atom/movable/shell)
 	. = ..()
@@ -166,7 +169,8 @@
 
 /obj/item/circuit_component/mod_program/spectre_meter/proc/on_scan(datum/source, spook_value)
 	SIGNAL_HANDLER
-	scan_results.set_value(spook_value)
+	scan_results.set_output(spook_value)
+	scanned.set_output(COMPONENT_SIGNAL)
 
 #undef SPOOK_VALUE_SAME_TURF_MULT
 #undef SPOOK_VALUE_LIVING_MULT

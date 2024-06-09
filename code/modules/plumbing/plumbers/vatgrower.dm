@@ -11,9 +11,9 @@
 	var/resampler_active = FALSE
 
 ///Add that sexy demnand component
-/obj/machinery/plumbing/growing_vat/Initialize(mapload, bolt)
+/obj/machinery/plumbing/growing_vat/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, bolt)
+	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
 
 /obj/machinery/plumbing/growing_vat/create_reagents(max_vol, flags)
 	. = ..()
@@ -27,7 +27,7 @@
 	return NONE
 
 ///When we process, we make use of our reagents to try and feed the samples we have.
-/obj/machinery/plumbing/growing_vat/process()
+/obj/machinery/plumbing/growing_vat/process(seconds_per_tick)
 	if(!is_operational)
 		return
 	if(!biological_sample)
@@ -37,6 +37,7 @@
 			return
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		audible_message(pick(list(span_notice("[src] grumbles!"), span_notice("[src] makes a splashing noise!"), span_notice("[src] sloshes!"))))
+	use_energy(active_power_usage * seconds_per_tick)
 
 ///Handles the petri dish depositing into the vat.
 /obj/machinery/plumbing/growing_vat/attacked_by(obj/item/I, mob/living/user)

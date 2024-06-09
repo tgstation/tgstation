@@ -20,7 +20,7 @@
 /obj/vehicle/sealed/mecha
 	name = "exosuit"
 	desc = "Exosuit"
-	icon = 'icons/mob/mecha.dmi'
+	icon = 'icons/mob/rideables/mecha.dmi'
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	max_integrity = 300
 	armor_type = /datum/armor/sealed_mecha
@@ -29,18 +29,18 @@
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	COOLDOWN_DECLARE(mecha_bump_smash)
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
-	light_range = 8
+	light_range = 6
 	generic_canpass = FALSE
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD)
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 	///How much energy the mech will consume each time it moves. this is the current active energy consumed
-	var/step_energy_drain = 8
+	var/step_energy_drain = 0.008 * STANDARD_CELL_CHARGE
 	///How much energy we drain each time we mechpunch someone
-	var/melee_energy_drain = 15
+	var/melee_energy_drain = 0.015 * STANDARD_CELL_CHARGE
 	///Power we use to have the lights on
-	var/light_energy_drain = 2
+	var/light_power_drain = 0.002 * STANDARD_CELL_RATE
 	///Modifiers for directional damage reduction
 	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 0.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 1.5)
 	///if we cant use our equipment(such as due to EMP)
@@ -187,7 +187,7 @@
 	///check for phasing, if it is set to text (to describe how it is phasing: "flying", "phasing") it will let the mech walk through walls.
 	var/phasing = ""
 	///Power we use every time we phaze through something
-	var/phasing_energy_drain = 200
+	var/phasing_energy_drain = 0.2 * STANDARD_CELL_CHARGE
 	///icon_state for flick() when phazing
 	var/phase_state = ""
 
@@ -221,6 +221,7 @@
 	ui_view.generate_view("mech_view_[REF(src)]")
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 	spark_system = new
 	spark_system.set_up(2, 0, src)
@@ -268,8 +269,12 @@
 	AddElement(/datum/element/hostile_machine)
 
 /obj/vehicle/sealed/mecha/Destroy()
-	for(var/ejectee in occupants)
-		mob_exit(ejectee, silent = TRUE)
+	/// If the former occupants get polymorphed, mutated, chestburstered,
+	/// or otherwise replaced by another mob, that mob is no longer in .occupants
+	/// and gets deleted with the mech. However, they do remain in .contents
+	var/list/potential_occupants = contents | occupants
+	for(var/mob/buggy_ejectee in potential_occupants)
+		mob_exit(buggy_ejectee, silent = TRUE, forced = TRUE)
 
 	if(LAZYLEN(flat_equipment))
 		for(var/obj/item/mecha_parts/mecha_equipment/equip as anything in flat_equipment)
@@ -323,7 +328,7 @@
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
 			var/mob/living/silicon/ai/ai = occupant
-			if(!ai.linked_core) // we probably shouldnt gib AIs with a core
+			if(!ai.linked_core && !ai.can_shunt) // we probably shouldnt gib AIs with a core or shunting abilities
 				unlucky_ai = occupant
 				ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
 				ai.gib(DROP_ALL_REMAINS) //No wreck, no AI to recover
@@ -457,9 +462,9 @@
 			. += span_notice("[icon2html(ME, user)] \A [ME].")
 	if(mecha_flags & PANEL_OPEN)
 		if(servo)
-			. += span_notice("Micro-servos reduce movement power usage by [100 - round(100 / servo.rating)]%")
+			. += span_notice("Servo reduces movement power usage by [100 - round(100 / servo.rating)]%")
 		else
-			. += span_warning("It's missing a micro-servo.")
+			. += span_warning("It's missing a servo.")
 		if(capacitor)
 			. += span_notice("Capacitor increases armor against energy attacks by [capacitor.rating * 5].")
 		else
@@ -553,8 +558,9 @@
 
 	if(internal_damage & MECHA_INT_SHORT_CIRCUIT && get_charge())
 		spark_system.start()
-		use_power(min(10 * seconds_per_tick, cell.charge))
-		cell.maxcharge -= min(10 * seconds_per_tick, cell.maxcharge)
+		var/damage_energy_consumption = 0.005 * STANDARD_CELL_CHARGE * seconds_per_tick
+		use_energy(damage_energy_consumption)
+		cell.maxcharge -= min(damage_energy_consumption, cell.maxcharge)
 
 /obj/vehicle/sealed/mecha/proc/process_cabin_air(seconds_per_tick)
 	if(!(internal_damage & MECHA_INT_TEMP_CONTROL) && cabin_air && cabin_air.return_volume() > 0)
@@ -619,7 +625,7 @@
 	diag_hud_set_mechstat()
 
 /obj/vehicle/sealed/mecha/proc/process_constant_power_usage(seconds_per_tick)
-	if(mecha_flags & LIGHTS_ON && !use_power(light_energy_drain * seconds_per_tick))
+	if(mecha_flags & LIGHTS_ON && !use_energy(light_power_drain * seconds_per_tick))
 		mecha_flags &= ~LIGHTS_ON
 		set_light_on(mecha_flags & LIGHTS_ON)
 		playsound(src,'sound/machines/clockcult/brass_skewer.ogg', 40, TRUE)
@@ -695,11 +701,31 @@
 
 	if(!has_charge(melee_energy_drain))
 		return
-	use_power(melee_energy_drain)
+	use_energy(melee_energy_drain)
 
 	SEND_SIGNAL(user, COMSIG_MOB_USED_MECH_MELEE, src)
 	target.mech_melee_attack(src, user)
 	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
+
+
+/// Driver alt clicks anything while in mech
+/obj/vehicle/sealed/mecha/proc/on_click_alt(mob/user, atom/target, params)
+	SIGNAL_HANDLER
+
+	. = COMSIG_MOB_CANCEL_CLICKON // Cancel base_click_alt
+
+	if(target != src)
+		return
+
+	if(!(user in occupants))
+		return
+
+	if(!(user in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE)))
+		to_chat(user, span_warning("You're in the wrong seat to control movement."))
+		return
+
+	toggle_strafe()
+
 
 /// middle mouse click signal wrapper for AI users
 /obj/vehicle/sealed/mecha/proc/on_middlemouseclick(mob/user, atom/target, params)
@@ -799,6 +825,12 @@
 		remove_action_type_from_mob(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, occupant)
 	return COMPONENT_BLOCK_LIGHT_EATER
 
+/obj/vehicle/sealed/mecha/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	if(mecha_flags &= HAS_LIGHTS && light_on)
+		set_light_on(FALSE)
+		return COMSIG_SABOTEUR_SUCCESS
+
 /// Apply corresponding accesses
 /obj/vehicle/sealed/mecha/proc/update_access()
 	req_access = one_access ? list() : accesses
@@ -849,11 +881,11 @@
 	if(capacitor)
 		phasing_energy_drain = initial(phasing_energy_drain) / capacitor.rating
 		melee_energy_drain = initial(melee_energy_drain) / capacitor.rating
-		light_energy_drain = initial(light_energy_drain) / capacitor.rating
+		light_power_drain = initial(light_power_drain) / capacitor.rating
 	else
 		phasing_energy_drain = initial(phasing_energy_drain)
 		melee_energy_drain = initial(melee_energy_drain)
-		light_energy_drain = initial(light_energy_drain)
+		light_power_drain = initial(light_power_drain)
 
 /// Toggle lights on/off
 /obj/vehicle/sealed/mecha/proc/toggle_lights(forced_state = null, mob/user)
@@ -861,7 +893,7 @@
 		if(user)
 			balloon_alert(user, "mech has no lights!")
 		return
-	if((!(mecha_flags & LIGHTS_ON) && forced_state != FALSE) && get_charge() < light_energy_drain)
+	if((!(mecha_flags & LIGHTS_ON) && forced_state != FALSE) && get_charge() < power_to_energy(light_power_drain, scheduler = SSobj))
 		if(user)
 			balloon_alert(user, "no power for lights!")
 		return

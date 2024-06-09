@@ -107,10 +107,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	if(!(machine_stat & (BROKEN|NOPOWER)))
 		power_change()
 
-/obj/machinery/light_switch/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/wallframe/light_switch(loc)
-	qdel(src)
+/obj/machinery/light_switch/on_deconstruction(disassembled)
+	new /obj/item/wallframe/light_switch(loc)
 
 /obj/item/wallframe/light_switch
 	name = "light switch"

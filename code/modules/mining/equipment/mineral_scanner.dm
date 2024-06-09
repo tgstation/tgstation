@@ -49,6 +49,9 @@
 	/// The range of the scanner in tiles.
 	var/range = 7
 
+/obj/item/t_scanner/adv_mining_scanner/cyborg
+	shut_off_on_unequip = FALSE
+
 /obj/item/t_scanner/adv_mining_scanner/cyborg/Initialize(mapload)
 	. = ..()
 	toggle_on()
@@ -71,7 +74,6 @@
 	var/vents_nearby = FALSE
 	var/undiscovered = FALSE
 	var/radar_volume = 30
-	scanner.transform = matrix()
 	for(var/turf/closed/mineral/mineral in  RANGE_TURFS(range, T))
 		if(mineral.scan_state)
 			minerals += mineral

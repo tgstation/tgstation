@@ -68,10 +68,10 @@
 // Second link in a breath chain, calls [carbon/proc/check_breath()]
 /mob/living/carbon/proc/breathe(seconds_per_tick, times_fired)
 	var/obj/item/organ/internal/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
-	if(SEND_SIGNAL(src, COMSIG_CARBON_ATTEMPT_BREATHE) & COMSIG_CARBON_BLOCK_BREATH)
+	if(SEND_SIGNAL(src, COMSIG_CARBON_ATTEMPT_BREATHE, seconds_per_tick, times_fired) & COMSIG_CARBON_BLOCK_BREATH)
 		return
 
-	SEND_SIGNAL(src, COMSIG_CARBON_PRE_BREATHE)
+	SEND_SIGNAL(src, COMSIG_CARBON_PRE_BREATHE, seconds_per_tick, times_fired)
 
 	var/datum/gas_mixture/environment
 	if(loc)
@@ -244,7 +244,8 @@
 	if(!can_breathe_vacuum && (o2_pp < safe_oxygen_min))
 		// Breathe insufficient amount of O2.
 		oxygen_used = handle_suffocation(o2_pp, safe_oxygen_min, breath_gases[/datum/gas/oxygen][MOLES])
-		throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
+		if(!HAS_TRAIT(src, TRAIT_ANOSMIA))
+			throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 	else
 		// Enough oxygen to breathe.
 		failed_last_breath = FALSE
@@ -271,7 +272,8 @@
 		if(!co2overloadtime)
 			co2overloadtime = world.time
 		else if((world.time - co2overloadtime) > 12 SECONDS)
-			throw_alert(ALERT_TOO_MUCH_CO2, /atom/movable/screen/alert/too_much_co2)
+			if(!HAS_TRAIT(src, TRAIT_ANOSMIA))
+				throw_alert(ALERT_TOO_MUCH_CO2, /atom/movable/screen/alert/too_much_co2)
 			Unconscious(6 SECONDS)
 			// Lets hurt em a little, let them know we mean business.
 			adjustOxyLoss(3)
@@ -289,7 +291,8 @@
 		// Plasma side-effects.
 		var/ratio = (breath_gases[/datum/gas/plasma][MOLES] / safe_plas_max) * 10
 		adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
-		throw_alert(ALERT_TOO_MUCH_PLASMA, /atom/movable/screen/alert/too_much_plas)
+		if(!HAS_TRAIT(src, TRAIT_ANOSMIA))
+			throw_alert(ALERT_TOO_MUCH_PLASMA, /atom/movable/screen/alert/too_much_plas)
 	else
 		// Reset side-effects.
 		clear_alert(ALERT_TOO_MUCH_PLASMA)
@@ -314,12 +317,9 @@
 	// Clear moodlet if no miasma at all.
 		clear_mood_event("smell")
 	else
-		// Miasma sickness
-		if(prob(1 * miasma_pp))
-			var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(max_symptoms = 2, max_level = 3)
-			miasma_disease.name = "Unknown"
-			ForceContractDisease(miasma_disease, make_copy = TRUE, del_on_fail = TRUE)
 		// Miasma side-effects.
+		if (HAS_TRAIT(src, TRAIT_ANOSMIA)) //We can't feel miasma without sense of smell
+			return
 		switch(miasma_pp)
 			if(0.25 to 5)
 				// At lower pp, give out a little warning
@@ -350,7 +350,8 @@
 	if(n2o_pp > n2o_para_min)
 		// More N2O, more severe side-effects. Causes stun/sleep.
 		n2o_euphoria = EUPHORIA_ACTIVE
-		throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
+		if(!HAS_TRAIT(src, TRAIT_ANOSMIA))
+			throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
 		// give them one second of grace to wake up and run away a bit!
 		if(!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE))
 			Unconscious(6 SECONDS)
@@ -476,8 +477,6 @@
 	for(var/datum/disease/disease as anything in diseases)
 		if(QDELETED(disease)) //Got cured/deleted while the loop was still going.
 			continue
-		if(SPT_PROB(disease.infectivity, seconds_per_tick))
-			disease.spread()
 		if(stat != DEAD || disease.process_dead)
 			disease.stage_act(seconds_per_tick, times_fired)
 
@@ -781,7 +780,7 @@
  * Returns TRUE if heart status was changed (heart attack -> no heart attack, or visa versa)
  */
 /mob/living/carbon/proc/set_heartattack(status)
-	if(!can_heartattack())
+	if(status && !can_heartattack())
 		return FALSE
 
 	var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)

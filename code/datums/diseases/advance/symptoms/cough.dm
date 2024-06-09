@@ -10,6 +10,7 @@
 	name = "Cough"
 	desc = "The virus irritates the throat of the host, causing occasional coughing. Each cough will try to infect bystanders who are within 1 tile of the host with the virus."
 	illness = "Jest Infection"
+	weight = 2
 	stealth = -1
 	resistance = 3
 	stage_speed = 1
@@ -67,8 +68,7 @@
 					off_cooldown_coughed = TRUE
 				else
 					off_cooldown_coughed = FALSE
-			if(affected_mob.CanSpreadAirborneDisease())
-				active_disease.spread(spread_range)
+			active_disease.airborne_spread(spread_range)
 			if(power >= 1.5)
 				var/obj/item/held_object = affected_mob.get_active_held_item()
 				if(held_object && held_object.w_class == WEIGHT_CLASS_TINY)
@@ -76,6 +76,6 @@
 			if(power >= 2 && prob(30))
 				to_chat(affected_mob, span_userdanger("[pick("You have a coughing fit!", "You can't stop coughing!")]"))
 				affected_mob.Immobilize(20)
-				addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/, emote), "cough"), 6)
-				addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/, emote), "cough"), 12)
-				addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/, emote), "cough"), 18)
+				addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/, emote), "cough"), 0.6 SECONDS)
+				addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/, emote), "cough"), 1.2 SECONDS)
+				addtimer(CALLBACK(affected_mob, TYPE_PROC_REF(/mob/, emote), "cough"), 1.8 SECONDS)

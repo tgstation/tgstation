@@ -4,22 +4,18 @@
 	max_total_storage = 50
 	rustle_sound = FALSE
 
-/datum/storage/pockets/attempt_insert(obj/item/to_insert, mob/user, override, force)
+/datum/storage/pockets/attempt_insert(obj/item/to_insert, mob/user, override, force, messages)
 	. = ..()
 	if(!.)
-		return
-
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
 		return
 
 	if(!silent || override)
 		return
 
 	if(quickdraw)
-		to_chat(user, span_notice("You discreetly slip [to_insert] into [resolve_parent]. Right-click [resolve_parent] to remove it."))
+		to_chat(user, span_notice("You discreetly slip [to_insert] into [parent]. Right-click to remove it."))
 	else
-		to_chat(user, span_notice("You discreetly slip [to_insert] into [resolve_parent]."))
+		to_chat(user, span_notice("You discreetly slip [to_insert] into [parent]."))
 
 /datum/storage/pockets/small
 	max_slots = 1
@@ -31,7 +27,12 @@
 	max_specific_storage = WEIGHT_CLASS_TINY
 	attack_hand_interact = FALSE
 
-/datum/storage/pockets/small/fedora/New()
+/datum/storage/pockets/small/fedora/New(
+	atom/parent,
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+)
 	. = ..()
 	var/static/list/exception_cache = typecacheof(list(
 		/obj/item/katana,
@@ -44,13 +45,19 @@
 
 /datum/storage/pockets/small/fedora/detective
 	attack_hand_interact = TRUE // so the detectives would discover pockets in their hats
+	click_alt_open = FALSE
 
 /datum/storage/pockets/chefhat
 	attack_hand_interact = TRUE
 	max_slots = 1
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 
-/datum/storage/pockets/chefhat/New()
+/datum/storage/pockets/chefhat/New(
+	atom/parent,
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+)
 	. = ..()
 	set_holdable(list(
 		/obj/item/clothing/head/mob_holder,
@@ -71,7 +78,12 @@
 	quickdraw = TRUE
 	silent = TRUE
 
-/datum/storage/pockets/shoes/New()
+/datum/storage/pockets/shoes/New(
+	atom/parent,
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+)
 	. = ..()
 	set_holdable(list(
 		/obj/item/knife,
@@ -108,61 +120,80 @@
 		/obj/item/toy/crayon/spraycan)
 		)
 
-/datum/storage/pockets/shoes/clown/New()
+/datum/storage/pockets/shoes/clown/New(
+	atom/parent,
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+)
 	. = ..()
-	set_holdable(list(
-		/obj/item/knife,
-		/obj/item/spess_knife,
-		/obj/item/switchblade,
-		/obj/item/pen,
-		/obj/item/scalpel,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/dnainjector,
-		/obj/item/reagent_containers/hypospray/medipen,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/implanter,
-		/obj/item/screwdriver,
-		/obj/item/weldingtool/mini,
-		/obj/item/firing_pin,
-		/obj/item/suppressor,
-		/obj/item/ammo_box/magazine/m9mm,
-		/obj/item/ammo_box/magazine/m10mm,
-		/obj/item/ammo_box/magazine/m45,
-		/obj/item/ammo_casing,
-		/obj/item/lipstick,
-		/obj/item/clothing/mask/cigarette,
-		/obj/item/lighter,
-		/obj/item/match,
-		/obj/item/holochip,
-		/obj/item/toy/crayon,
-		/obj/item/bikehorn,
-		/obj/item/reagent_containers/cup/glass/flask),
-		list(/obj/item/screwdriver/power,
-		/obj/item/ammo_casing/rocket,
-		/obj/item/clothing/mask/cigarette/pipe,
-		/obj/item/toy/crayon/spraycan)
-		)
+	set_holdable(
+		can_hold_list = list(
+			/obj/item/ammo_box/magazine/m10mm,
+			/obj/item/ammo_box/magazine/m45,
+			/obj/item/ammo_box/magazine/m9mm,
+			/obj/item/ammo_casing,
+			/obj/item/bikehorn,
+			/obj/item/clothing/mask/cigarette,
+			/obj/item/dnainjector,
+			/obj/item/firing_pin,
+			/obj/item/holochip,
+			/obj/item/implanter,
+			/obj/item/knife,
+			/obj/item/lighter,
+			/obj/item/lipstick,
+			/obj/item/match,
+			/obj/item/pen,
+			/obj/item/reagent_containers/cup/glass/flask,
+			/obj/item/reagent_containers/dropper,
+			/obj/item/reagent_containers/hypospray/medipen,
+			/obj/item/reagent_containers/syringe,
+			/obj/item/scalpel,
+			/obj/item/screwdriver,
+			/obj/item/spess_knife,
+			/obj/item/suppressor,
+			/obj/item/switchblade,
+			/obj/item/toy/crayon,
+			/obj/item/weldingtool/mini,
+		),
+		cant_hold_list = list(
+			/obj/item/ammo_casing/rocket,
+			/obj/item/clothing/mask/cigarette/pipe,
+			/obj/item/screwdriver/power,
+			/obj/item/toy/crayon/spraycan,
+		),
+	)
 
 /datum/storage/pockets/pocketprotector
 	max_slots = 3
 	max_specific_storage = WEIGHT_CLASS_TINY
 
-/datum/storage/pockets/pocketprotector/New()
+/datum/storage/pockets/pocketprotector/New(
+	atom/parent,
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+)
 	. = ..()
 	set_holdable(list( //Same items as a PDA
 		/obj/item/pen,
 		/obj/item/toy/crayon,
 		/obj/item/lipstick,
 		/obj/item/flashlight/pen,
-		/obj/item/clothing/mask/cigarette)
-		)
+		/obj/item/lipstick,
+	))
 
 /datum/storage/pockets/helmet
 	max_slots = 2
 	quickdraw = TRUE
 	max_total_storage = 6
 
-/datum/storage/pockets/helmet/New()
+/datum/storage/pockets/helmet/New(
+	atom/parent,
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+)
 	. = ..()
 	set_holdable(list(/obj/item/reagent_containers/cup/glass/bottle/vodka,
 					  /obj/item/reagent_containers/cup/glass/bottle/molotov,
@@ -175,7 +206,12 @@
 	max_total_storage = 5 // 2 small items + 1 tiny item, or 1 normal item + 1 small item
 	max_slots = 3
 
-/datum/storage/pockets/void_cloak/New()
+/datum/storage/pockets/void_cloak/New(
+	atom/parent,
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+)
 	. = ..()
 	set_holdable(list(
 		/obj/item/ammo_box/strilka310/lionhunter,

@@ -15,10 +15,9 @@
 		/mob/living/simple_animal,
 		/mob/living/basic,
 	))
-	types_to_check -= /mob/living/simple_animal/pet/gondola/gondolapod // need a pod, which we don't have
 	types_to_check -= typesof(/mob/living/simple_animal/hostile/megafauna) // no
 	types_to_check -= typesof(/mob/living/basic/mouse) // qdel themselves on death; why dont they use DEL_ON_DEATH you might ask. I-unno
-	types_to_check -= typesof(/mob/living/simple_animal/slime) // if they roll the 50% chance to spawn as an adult, they can just at random split and qdel themselves
+	types_to_check -= typesof(/mob/living/basic/slime) // if they roll the 50% chance to spawn as an adult, they can just at random split and qdel themselves
 
 	for(var/mob/living/type as anything in types_to_check)
 		var/mob/living/target = allocate_new_target(type)
@@ -153,7 +152,7 @@
 		return
 	if(QDELETED(target))
 		return
-		
+
 	update_amounts(target)
 	strange_reagent.expose_mob(target, INGEST, amount_needed_to_revive)
 	TEST_ASSERT_EQUAL(target.stat, DEAD, "Strange Reagent revived a target type [target.type] with more than double their max health in damage.")

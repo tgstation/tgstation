@@ -23,6 +23,6 @@
 
 	user.hairstyle = "Long Hair 3"
 	user.facial_hairstyle = "Beard (Full)"
-	user.hair_color = "#FFFFFF"
-	user.facial_hair_color = "#FFFFFF"
+	user.hair_color = COLOR_WHITE
+	user.facial_hair_color = COLOR_WHITE
 	user.update_body_parts(update_limb_data = TRUE)

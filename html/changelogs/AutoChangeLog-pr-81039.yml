@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "reactions that create multiple reagents now terminate without looping endlessly."
-  - bugfix: "oatmeal reactions now terminate & produce the right quantity of results but without milk."

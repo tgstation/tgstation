@@ -21,8 +21,7 @@
 	. = ..()
 	break_message = span_warning("[src] falls apart with a thud!")
 
-/obj/structure/destructible/eldritch_crucible/deconstruct(disassembled = TRUE)
-
+/obj/structure/destructible/eldritch_crucible/atom_deconstruct(disassembled = TRUE)
 	// Create a spillage if we were destroyed with leftover mass
 	if(current_mass)
 		break_message = span_warning("[src] falls apart with a thud, spilling shining extract everywhere!")

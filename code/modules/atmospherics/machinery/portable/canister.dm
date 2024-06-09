@@ -103,12 +103,15 @@
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	. += span_notice("A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]; MAX SAFE TEMPERATURE: [siunit(temp_limit, "K", 0)]</b>.")
+	. += span_notice("The hull is <b>welded</b> together and can be cut apart.")
 	if(internal_cell)
 		. += span_notice("The internal cell has [internal_cell.percent()]% of its total charge.")
 	else
 		. += span_notice("Warning, no cell installed, use a screwdriver to open the hatch and insert one.")
 	if(panel_open)
 		. += span_notice("Hatch open, close it with a screwdriver.")
+	if(integrity_failure)
+		. += span_notice("Integrity compromised, repair hull with a welding tool.")
 
 // Please keep the canister types sorted
 // Basic canister per gas below here
@@ -353,10 +356,7 @@
 /obj/machinery/portable_atmospherics/canister/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	take_damage(5, BURN, 0)
 
-/obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
-	if((obj_flags & NO_DECONSTRUCTION))
-		qdel(src)
-		return
+/obj/machinery/portable_atmospherics/canister/on_deconstruction(disassembled = TRUE)
 	if(!(machine_stat & BROKEN))
 		canister_break()
 	if(!disassembled)
@@ -366,7 +366,6 @@
 	new /obj/item/stack/sheet/iron (drop_location(), 10)
 	if(internal_cell)
 		internal_cell.forceMove(drop_location())
-	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/stock_parts/cell))
@@ -483,11 +482,11 @@
 	var/our_temperature = air_contents.return_temperature()
 
 	if(shielding_powered)
-		var/power_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - temp_limit, 1)))
-		var/power_consumed = power_factor * 250 * seconds_per_tick
+		var/energy_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - temp_limit, 1)))
+		var/energy_consumed = energy_factor * 250 * seconds_per_tick
 		if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
-			use_power(power_consumed, AREA_USAGE_EQUIP)
-		else if(!internal_cell?.use(power_consumed * 0.025))
+			use_energy(energy_consumed, channel = AREA_USAGE_EQUIP)
+		else if(!internal_cell?.use(energy_consumed * 0.025))
 			shielding_powered = FALSE
 			SSair.start_processing_machine(src)
 			investigate_log("shielding turned off due to power loss")

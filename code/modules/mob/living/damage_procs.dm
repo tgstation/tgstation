@@ -61,7 +61,7 @@
 					update_damage_overlays()
 				damage_dealt = actual_hit.get_damage() - delta // Unfortunately bodypart receive_damage doesn't return damage dealt so we do it manually
 			else
-				damage_dealt = adjustBruteLoss(damage_amount, forced = forced)
+				damage_dealt = -1 * adjustBruteLoss(damage_amount, forced = forced)
 		if(BURN)
 			if(isbodypart(def_zone))
 				var/obj/item/bodypart/actual_hit = def_zone
@@ -77,17 +77,17 @@
 					damage_source = attacking_item,
 				))
 					update_damage_overlays()
-				damage_dealt = delta - actual_hit.get_damage() // See above
+				damage_dealt = actual_hit.get_damage() - delta // See above
 			else
-				damage_dealt = adjustFireLoss(damage_amount, forced = forced)
+				damage_dealt = -1 * adjustFireLoss(damage_amount, forced = forced)
 		if(TOX)
-			damage_dealt = adjustToxLoss(damage_amount, forced = forced)
+			damage_dealt = -1 * adjustToxLoss(damage_amount, forced = forced)
 		if(OXY)
-			damage_dealt = adjustOxyLoss(damage_amount, forced = forced)
+			damage_dealt = -1 * adjustOxyLoss(damage_amount, forced = forced)
 		if(STAMINA)
-			damage_dealt = adjustStaminaLoss(damage_amount, forced = forced)
+			damage_dealt = -1 * adjustStaminaLoss(damage_amount, forced = forced)
 		if(BRAIN)
-			damage_dealt = adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
+			damage_dealt = -1 * adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
 
 	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage_dealt, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
 	return damage_dealt
@@ -359,13 +359,30 @@
 /mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
 	if(!can_adjust_tox_loss(amount, forced, required_biotype))
 		return 0
+
+	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
+		amount = -amount
+		if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
+			amount = min(amount, 0)
+		if(blood_volume)
+			if(amount > 0)
+				blood_volume = max(blood_volume - (5 * amount), 0)
+			else
+				blood_volume = max(blood_volume - amount, 0)
+
+	else if(!forced && HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
+		amount = min(amount, 0)
+
 	. = toxloss
 	toxloss = clamp((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	. -= toxloss
+
 	if(!.) // no change, no need to update
 		return FALSE
+
 	if(updating_health)
 		updatehealth()
+
 
 /mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
 	if(!forced && (status_flags & GODMODE))

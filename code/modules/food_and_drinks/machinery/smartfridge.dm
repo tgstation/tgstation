@@ -173,7 +173,7 @@
 			tool_tip_set = TRUE
 
 	else if(held_item.tool_behaviour == TOOL_WRENCH)
-		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]anchore"
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Una" : "A"]nchor"
 		tool_tip_set = TRUE
 
 	return tool_tip_set ? CONTEXTUAL_SCREENTIP_SET : NONE
@@ -411,7 +411,7 @@
 					if(!living_mob.put_in_hands(dispensed_item))
 						dispensed_item.forceMove(drop_location())
 						adjust_item_drop_location(dispensed_item)
-					use_power(active_power_usage)
+					use_energy(active_power_usage)
 					desired--
 
 			if (visible_contents)
@@ -491,7 +491,7 @@
 /obj/machinery/smartfridge/drying_rack/exchange_parts()
 	return
 
-/obj/machinery/smartfridge/drying_rack/on_deconstruction()
+/obj/machinery/smartfridge/drying_rack/on_deconstruction(disassembled)
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
 
 /obj/machinery/smartfridge/drying_rack/crowbar_act(mob/living/user, obj/item/tool)
@@ -546,7 +546,7 @@
 
 		SStgui.update_uis(src)
 		update_appearance()
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 
 /obj/machinery/smartfridge/drying_rack/accept_check(obj/item/O)
 	return HAS_TRAIT(O, TRAIT_DRYABLE)

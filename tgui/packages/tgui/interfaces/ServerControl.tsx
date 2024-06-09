@@ -55,13 +55,17 @@ export const ServerControl = (props) => {
           </NoticeBox>
         ) : (
           <Section>
-            <Table cellpadding="3" textAlign="center">
+            <Table textAlign="center">
               <Table.Row header>
                 <Table.Cell>Research Servers</Table.Cell>
               </Table.Row>
               {servers.map((server) => (
                 <>
-                  <Table.Row header key={server} className="candystripe" />
+                  <Table.Row
+                    header
+                    key={server.server_ref}
+                    className="candystripe"
+                  />
                   <Table.Cell> {server.server_name}</Table.Cell>
                   <Button
                     mt={1}
@@ -88,13 +92,17 @@ export const ServerControl = (props) => {
           </NoticeBox>
         ) : (
           <Section align="right">
-            <Table cellpadding="3" textAlign="center">
+            <Table textAlign="center">
               <Table.Row header>
                 <Table.Cell>Research Consoles</Table.Cell>
               </Table.Row>
               {consoles.map((console) => (
                 <>
-                  <Table.Row header key={console} className="candystripe" />
+                  <Table.Row
+                    header
+                    key={console.console_ref}
+                    className="candystripe"
+                  />
                   <Table.Cell>
                     {' '}
                     {console.console_name} - Location:{' '}

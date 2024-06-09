@@ -63,6 +63,15 @@
 	. = ..()
 	diode = new /obj/item/stock_parts/micro_laser/ultra
 
+/obj/item/laser_pointer/infinite_range
+	name = "infinite laser pointer"
+	desc = "Used to shine in the eyes of Cyborgs who need a bit of a push, this works through camera consoles."
+	max_range = INFINITE
+
+/obj/item/laser_pointer/infinite_range/Initialize(mapload)
+	. = ..()
+	diode = new /obj/item/stock_parts/micro_laser/quadultra
+
 /obj/item/laser_pointer/screwdriver_act(mob/living/user, obj/item/tool)
 	if(diode)
 		tool.play_tool_sound(src)
@@ -71,14 +80,11 @@
 		diode = null
 		return TRUE
 
-/obj/item/laser_pointer/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
+/obj/item/laser_pointer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(isnull(crystal_lens))
-		return .
+		return NONE
 	if(tool_behaviour != TOOL_WIRECUTTER && tool_behaviour != TOOL_HEMOSTAT)
-		return .
+		return NONE
 	tool.play_tool_sound(src)
 	balloon_alert(user, "removed crystal lens")
 	crystal_lens.forceMove(drop_location())
@@ -193,16 +199,17 @@
 		to_chat(user, span_warning("Your fingers can't press the button!"))
 		return
 
-	if(!IN_GIVEN_RANGE(target, user, max_range))
-		to_chat(user, span_warning("\The [target] is too far away!"))
-		return
-	if(!(user in (view(max_range, target)))) //check if we are visible from the target's PoV
-		if(isnull(crystal_lens))
-			to_chat(user, span_warning("You can't point with [src] through walls!"))
+	if(max_range != INFINITE)
+		if(!IN_GIVEN_RANGE(target, user, max_range))
+			to_chat(user, span_warning("\The [target] is too far away!"))
 			return
-		if(!((user.sight & SEE_OBJS) || (user.sight & SEE_MOBS))) //only let it work if we have xray or thermals. mesons don't count because they are easier to get.
-			to_chat(user, span_notice("You can't quite make out your target and you fail to shine at it."))
-			return
+		if(!(user in (view(max_range, target)))) //check if we are visible from the target's PoV
+			if(isnull(crystal_lens))
+				to_chat(user, span_warning("You can't point with [src] through walls!"))
+				return
+			if(!((user.sight & SEE_OBJS) || (user.sight & SEE_MOBS))) //only let it work if we have xray or thermals. mesons don't count because they are easier to get.
+				to_chat(user, span_notice("You can't quite make out your target and you fail to shine at it."))
+				return
 
 	add_fingerprint(user)
 
@@ -251,7 +258,7 @@
 	//cameras: chance to EMP the camera
 	else if(istype(target, /obj/machinery/camera))
 		var/obj/machinery/camera/target_camera = target
-		if(!target_camera.status && !target_camera.emped)
+		if(!target_camera.camera_enabled && !target_camera.emped)
 			outmsg = span_notice("You point [src] at [target_camera], but it seems to be disabled.")
 		else if(prob(effectchance * diode.rating))
 			target_camera.emp_act(EMP_HEAVY)

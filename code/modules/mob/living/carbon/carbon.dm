@@ -60,7 +60,7 @@
 			take_bodypart_damage(5 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 		else if(!iscarbon(hit_atom) && extra_speed)
 			take_bodypart_damage(5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
-		visible_message(span_danger("[src] crashes into [hit_atom][extra_speed ? " really hard" : ""]"),\
+		visible_message(span_danger("[src] crashes into [hit_atom][extra_speed ? " really hard" : ""]!"),\
 			span_userdanger("You violently crash into [hit_atom][extra_speed ? " extra hard" : ""]!"))
 		log_combat(hit_atom, src, "crashes ")
 		oof_noise = TRUE
@@ -85,12 +85,18 @@
 				span_userdanger("You violently crash into [victim][extra_speed ? " extra hard" : ""], but [victim] managed to block the worst of it!"))
 			log_combat(src, victim, "crashed into and was blocked by")
 			return
+		else if(HAS_TRAIT(victim, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
+			victim.take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
+			victim.apply_damage(10 + 10 * extra_speed, STAMINA)
+			victim.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
+			visible_message(span_danger("[src] crashes into [victim][extra_speed ? " really hard" : ""], but [victim] was able to stay on their feet!"),\
+				span_userdanger("You violently crash into [victim][extra_speed ? " extra hard" : ""], but [victim] managed to stay on their feet!"))
 		else
 			victim.Paralyze(2 SECONDS)
 			victim.take_bodypart_damage(10 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 			visible_message(span_danger("[src] crashes into [victim][extra_speed ? " really hard" : ""], knocking them both over!"),\
 				span_userdanger("You violently crash into [victim][extra_speed ? " extra hard" : ""]!"))
-			log_combat(src, victim, "crashed into")
+		log_combat(src, victim, "crashed into")
 
 	if(oof_noise)
 		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
@@ -111,12 +117,14 @@
 	throw_mode = THROW_MODE_DISABLED
 	if(hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_off"
+	SEND_SIGNAL(src, COMSIG_LIVING_THROW_MODE_TOGGLE, throw_mode)
 
 
 /mob/living/carbon/proc/throw_mode_on(mode = THROW_MODE_TOGGLE)
 	throw_mode = mode
 	if(hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_on"
+	SEND_SIGNAL(src, COMSIG_LIVING_THROW_MODE_TOGGLE, throw_mode)
 
 /mob/proc/throw_item(atom/target)
 	SEND_SIGNAL(src, COMSIG_MOB_THROW, target)
@@ -228,25 +236,34 @@
 			return TRUE
 	return FALSE
 
+
 /mob/living/carbon/resist_buckle()
-	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
-		var/buckle_cd = 60 SECONDS
-		if(handcuffed)
-			var/obj/item/restraints/O = src.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
-			buckle_cd = O.breakouttime
-		visible_message(span_warning("[src] attempts to unbuckle [p_them()]self!"), \
-					span_notice("You attempt to unbuckle yourself... (This will take around [round(buckle_cd/600,1)] minute\s, and you need to stay still.)"))
-		if(do_after(src, buckle_cd, target = src, timed_action_flags = IGNORE_HELD_ITEM))
-			if(!buckled)
-				return
-			buckled.user_unbuckle_mob(src,src)
-		else
-			if(src && buckled)
-				to_chat(src, span_warning("You fail to unbuckle yourself!"))
-	else
-		buckled.user_unbuckle_mob(src,src)
+	if(!HAS_TRAIT(src, TRAIT_RESTRAINED))
+		buckled.user_unbuckle_mob(src, src)
+		return
+
+	changeNext_move(CLICK_CD_BREAKOUT)
+	last_special = world.time + CLICK_CD_BREAKOUT
+	var/buckle_cd = 1 MINUTES
+
+	if(handcuffed)
+		var/obj/item/restraints/cuffs = src.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
+		buckle_cd = cuffs.breakouttime
+
+	visible_message(span_warning("[src] attempts to unbuckle [p_them()]self!"),
+				span_notice("You attempt to unbuckle yourself... \
+				(This will take around [DisplayTimeText(buckle_cd)] and you must stay still.)"))
+
+	if(!do_after(src, buckle_cd, target = src, timed_action_flags = IGNORE_HELD_ITEM, hidden = TRUE))
+		if(buckled)
+			to_chat(src, span_warning("You fail to unbuckle yourself!"))
+		return
+
+	if(QDELETED(src) || isnull(buckled))
+		return
+
+	buckled.user_unbuckle_mob(src, src)
+
 
 /mob/living/carbon/resist_fire()
 	return !!apply_status_effect(/datum/status_effect/stop_drop_roll)
@@ -262,42 +279,48 @@
 		type = 2
 	if(I)
 		if(type == 1)
-			changeNext_move(CLICK_CD_BREAKOUT)
-			last_special = world.time + CLICK_CD_BREAKOUT
+			changeNext_move(I.resist_cooldown)
+			last_special = world.time + I.resist_cooldown
 		if(type == 2)
 			changeNext_move(CLICK_CD_RANGE)
 			last_special = world.time + CLICK_CD_RANGE
 		cuff_resist(I)
 
 
-/mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 1 MINUTES, cuff_break = 0)
-	if((cuff_break != INSTANT_CUFFBREAK) && (SEND_SIGNAL(src, COMSIG_MOB_REMOVING_CUFFS, I) & COMSIG_MOB_BLOCK_CUFF_REMOVAL))
+/**
+ * Helper to break the cuffs from hands
+ * @param {obj/item} cuffs - The cuffs to break
+ * @param {number} breakouttime - The time it takes to break the cuffs. Use SECONDS/MINUTES defines
+ * @param {number} cuff_break - Speed multiplier, 0 is default, see _DEFINES\combat.dm
+ */
+/mob/living/carbon/proc/cuff_resist(obj/item/cuffs, breakouttime = 1 MINUTES, cuff_break = 0)
+	if((cuff_break != INSTANT_CUFFBREAK) && (SEND_SIGNAL(src, COMSIG_MOB_REMOVING_CUFFS, cuffs) & COMSIG_MOB_BLOCK_CUFF_REMOVAL))
 		return //The blocking object should sent a fluff-appropriate to_chat about cuff removal being blocked
-	if(I.item_flags & BEING_REMOVED)
-		to_chat(src, span_warning("You're already attempting to remove [I]!"))
+	if(cuffs.item_flags & BEING_REMOVED)
+		to_chat(src, span_warning("You're already attempting to remove [cuffs]!"))
 		return
-	I.item_flags |= BEING_REMOVED
-	breakouttime = I.breakouttime
+	cuffs.item_flags |= BEING_REMOVED
+	breakouttime = cuffs.breakouttime
 	if(!cuff_break)
-		visible_message(span_warning("[src] attempts to remove [I]!"))
-		to_chat(src, span_notice("You attempt to remove [I]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM))
-			. = clear_cuffs(I, cuff_break)
+		visible_message(span_warning("[src] attempts to remove [cuffs]!"))
+		to_chat(src, span_notice("You attempt to remove [cuffs]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)"))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM, hidden = TRUE))
+			. = clear_cuffs(cuffs, cuff_break)
 		else
-			to_chat(src, span_warning("You fail to remove [I]!"))
+			to_chat(src, span_warning("You fail to remove [cuffs]!"))
 
 	else if(cuff_break == FAST_CUFFBREAK)
-		breakouttime = 50
-		visible_message(span_warning("[src] is trying to break [I]!"))
-		to_chat(src, span_notice("You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)"))
+		breakouttime = 5 SECONDS
+		visible_message(span_warning("[src] is trying to break [cuffs]!"))
+		to_chat(src, span_notice("You attempt to break [cuffs]... (This will take around 5 seconds and you need to stand still.)"))
 		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM))
-			. = clear_cuffs(I, cuff_break)
+			. = clear_cuffs(cuffs, cuff_break)
 		else
-			to_chat(src, span_warning("You fail to break [I]!"))
+			to_chat(src, span_warning("You fail to break [cuffs]!"))
 
 	else if(cuff_break == INSTANT_CUFFBREAK)
-		. = clear_cuffs(I, cuff_break)
-	I.item_flags &= ~BEING_REMOVED
+		. = clear_cuffs(cuffs, cuff_break)
+	cuffs.item_flags &= ~BEING_REMOVED
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
@@ -398,6 +421,9 @@
 	if((HAS_TRAIT(src, TRAIT_NOHUNGER) || HAS_TRAIT(src, TRAIT_TOXINLOVER)) && !force)
 		return TRUE
 
+	if(!force && HAS_TRAIT(src, TRAIT_STRONG_STOMACH))
+		lost_nutrition *= 0.5
+
 	SEND_SIGNAL(src, COMSIG_CARBON_VOMITED, distance, force)
 
 	// cache some stuff that we'll need later (at least multiple times)
@@ -414,7 +440,10 @@
 				span_userdanger("You try to throw up, but there's nothing in your stomach!"),
 			)
 		if(stun)
-			Stun(20 SECONDS)
+			var/stun_time = 20 SECONDS
+			if(HAS_TRAIT(src, TRAIT_STRONG_STOMACH))
+				stun_time *= 0.5
+			Stun(stun_time)
 		if(knockdown)
 			Knockdown(20 SECONDS)
 		return TRUE
@@ -437,11 +466,14 @@
 				add_mood_event("vomit", /datum/mood_event/vomit)
 
 	if(stun)
-		Stun(8 SECONDS)
+		var/stun_time = 8 SECONDS
+		if(!blood && HAS_TRAIT(src, TRAIT_STRONG_STOMACH))
+			stun_time *= 0.5
+		Stun(stun_time)
 	if(knockdown)
 		Knockdown(8 SECONDS)
 
-	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 
 	var/need_mob_update = FALSE
 	var/turf/location = get_turf(src)
@@ -621,12 +653,8 @@
  */
 /mob/living/carbon/proc/update_tint()
 	var/tint = 0
-	if(isclothing(head))
-		tint += head.tint
-	if(isclothing(wear_mask))
-		tint += wear_mask.tint
-	if(isclothing(glasses))
-		tint += glasses.tint
+	for(var/obj/item/clothing/worn_item in get_equipped_items())
+		tint += worn_item.tint
 
 	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(eyes)
@@ -802,8 +830,7 @@
 			hud_used.stamina.icon_state = "stamina_full"
 
 /mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state = "empty")
-	if(hud_used?.spacesuit)
-		hud_used.spacesuit.icon_state = "spacesuit_[cell_state]"
+	hud_used?.spacesuit?.icon_state = "spacesuit_[cell_state]"
 
 /mob/living/carbon/set_health(new_value)
 	. = ..()
@@ -883,7 +910,11 @@
 	if(!HAS_TRAIT(src, TRAIT_LIVERLESS_METABOLISM) && !isnull(dna?.species.mutantliver) && !get_organ_slot(ORGAN_SLOT_LIVER))
 		return FALSE
 
-	return ..()
+	. = ..()
+	if(.) // if revived successfully
+		set_heartattack(FALSE)
+
+	return .
 
 /mob/living/carbon/fully_heal(heal_flags = HEAL_ALL)
 
@@ -921,8 +952,12 @@
 
 	return ..()
 
+/mob/living/carbon/do_strange_reagent_revival(healing_amount)
+	set_heartattack(FALSE)
+	return ..()
+
 /mob/living/carbon/can_be_revived()
-	if(!get_organ_by_type(/obj/item/organ/internal/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)) || HAS_TRAIT(src, TRAIT_HUSK))
+	if(!get_organ_by_type(/obj/item/organ/internal/brain) && (!IS_CHANGELING(src)) || HAS_TRAIT(src, TRAIT_HUSK))
 		return FALSE
 	return ..()
 
@@ -1023,6 +1058,7 @@
 				set_usable_hands(usable_hands + 1)
 
 	synchronize_bodytypes()
+	synchronize_bodyshapes()
 
 ///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart, special)
@@ -1049,6 +1085,7 @@
 				set_usable_hands(usable_hands - 1)
 
 	synchronize_bodytypes()
+	synchronize_bodyshapes()
 
 ///Updates the bodypart speed modifier based on our bodyparts.
 /mob/living/carbon/proc/update_bodypart_speed_modifier()
@@ -1063,6 +1100,9 @@
 
 /proc/cmp_organ_slot_asc(slot_a, slot_b)
 	return GLOB.organ_process_order.Find(slot_a) - GLOB.organ_process_order.Find(slot_b)
+
+/mob/living/carbon/proc/get_footprint_sprite()
+	return FOOTPRINT_SPRITE_PAWS
 
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
@@ -1087,14 +1127,14 @@
 			return
 		var/list/limb_list = list()
 		if(edit_action == "remove")
-			for(var/obj/item/bodypart/B as anything in bodyparts)
-				limb_list += B.body_zone
+			for(var/obj/item/bodypart/iter_part as anything in bodyparts)
+				limb_list += iter_part.body_zone
 				limb_list -= BODY_ZONE_CHEST
 		else
 			limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_CHEST)
 		var/result = input(usr, "Please choose which bodypart to [edit_action]","[capitalize(edit_action)] Bodypart") as null|anything in sort_list(limb_list)
 		if(result)
-			var/obj/item/bodypart/BP = get_bodypart(result)
+			var/obj/item/bodypart/part = get_bodypart(result)
 			var/list/limbtypes = list()
 			switch(result)
 				if(BODY_ZONE_CHEST)
@@ -1111,9 +1151,9 @@
 					limbtypes = typesof(/obj/item/bodypart/leg/right)
 			switch(edit_action)
 				if("remove")
-					if(BP)
-						BP.drop_limb()
-						admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [parse_zone(BP.body_zone)]")
+					if(part)
+						part.drop_limb()
+						admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [part.plaintext_zone]")
 					else
 						to_chat(usr, span_boldwarning("[src] doesn't have such bodypart."))
 						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
@@ -1121,16 +1161,14 @@
 					var/limb2add = input(usr, "Select a bodypart type to add", "Add/Replace Bodypart") as null|anything in sort_list(limbtypes)
 					var/obj/item/bodypart/new_bp = new limb2add()
 					if(new_bp.replace_limb(src, special = TRUE))
-						admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [BP.type] with [new_bp.type]")
-						qdel(BP)
+						admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [part.type] with [new_bp.type]")
+						qdel(part)
 					else
 						to_chat(usr, "Failed to replace bodypart! They might be incompatible.")
 						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
 
 	if(href_list[VV_HK_MODIFY_ORGANS])
-		if(!check_rights(NONE))
-			return
-		usr.client.manipulate_organs(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/manipulate_organs, src)
 
 	if(href_list[VV_HK_MARTIAL_ART])
 		if(!check_rights(NONE))
@@ -1204,35 +1242,35 @@
 		update_worn_back(0)
 		. = TRUE
 
-	if(head?.wash(clean_types))
-		update_worn_head()
-		. = TRUE
-
 	// Check and wash stuff that can be covered
 	var/obscured = check_obscured_slots()
 
+	if(!(obscured & ITEM_SLOT_HEAD) && head?.wash(clean_types))
+		update_worn_head()
+		. = TRUE
+
 	// If the eyes are covered by anything but glasses, that thing will be covering any potential glasses as well.
-	if(glasses && is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types))
+	if(is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses?.wash(clean_types))
 		update_worn_glasses()
 		. = TRUE
 
-	if(wear_mask && !(obscured & ITEM_SLOT_MASK) && wear_mask.wash(clean_types))
+	if(!(obscured & ITEM_SLOT_MASK) && wear_mask?.wash(clean_types))
 		update_worn_mask()
 		. = TRUE
 
-	if(ears && !(obscured & ITEM_SLOT_EARS) && ears.wash(clean_types))
-		update_inv_ears()
+	if(!(obscured & ITEM_SLOT_EARS) && ears?.wash(clean_types))
+		update_worn_ears()
 		. = TRUE
 
-	if(wear_neck && !(obscured & ITEM_SLOT_NECK) && wear_neck.wash(clean_types))
+	if(!(obscured & ITEM_SLOT_NECK) && wear_neck?.wash(clean_types))
 		update_worn_neck()
 		. = TRUE
 
-	if(shoes && !(obscured & ITEM_SLOT_FEET) && shoes.wash(clean_types))
+	if(!(obscured & ITEM_SLOT_FEET) && shoes?.wash(clean_types))
 		update_worn_shoes()
 		. = TRUE
 
-	if(gloves && !(obscured & ITEM_SLOT_GLOVES) && gloves.wash(clean_types))
+	if(!(obscured & ITEM_SLOT_GLOVES) && gloves?.wash(clean_types))
 		update_worn_gloves()
 		. = TRUE
 
@@ -1344,7 +1382,6 @@
 	else
 		set_lying_angle(new_lying_angle)
 
-
 /mob/living/carbon/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if(NAMEOF(src, disgust))
@@ -1360,17 +1397,18 @@
 
 	return ..()
 
-
 /mob/living/carbon/get_attack_type()
 	if(has_active_hand())
 		var/obj/item/bodypart/arm/active_arm = get_active_hand()
 		return active_arm.attack_type
 	return ..()
 
-
 /mob/living/carbon/proc/attach_rot()
-	if(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD))
-		AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
+	if(flags_1 & HOLOGRAM_1)
+		return
+	if(!(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+		return
+	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
 /**
  * This proc is used to determine whether or not the mob can handle touching an acid affected object.
@@ -1420,3 +1458,37 @@
 	if(item && ((item in organs) || (item in bodyparts))) //let's not do this, aight?
 		return FALSE
 	return ..()
+
+/// Helper to cleanly trigger tail wagging
+/// Accepts an optional timeout after which we remove the tail wagging
+/// Returns true if successful, false otherwise
+/mob/living/carbon/proc/wag_tail(timeout = INFINITY)
+	var/obj/item/organ/external/tail/wagged = get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	if(!wagged)
+		return FALSE
+	return wagged.start_wag(src, timeout)
+
+/// Helper to cleanly stop all tail wagging
+/// Returns true if successful, false otherwise
+/mob/living/carbon/proc/unwag_tail() // can't unwag a tail
+	var/obj/item/organ/external/tail/unwagged = get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	if(!unwagged)
+		return FALSE
+	return unwagged.stop_wag(src)
+
+/mob/living/carbon/itch(obj/item/bodypart/target_part = null, damage = 0.5, can_scratch = TRUE, silent = FALSE)
+	if (isnull(target_part))
+		target_part = get_bodypart(get_random_valid_zone(even_weights = TRUE))
+	if (!IS_ORGANIC_LIMB(target_part) || (target_part.bodypart_flags & BODYPART_PSEUDOPART))
+		return FALSE
+	return ..()
+
+/mob/living/carbon/ominous_nosebleed()
+	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
+	if(isnull(head))
+		return ..()
+	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
+		to_chat(src, span_notice("You get a headache."))
+		return
+	head.adjustBleedStacks(5)
+	visible_message(span_notice("[src] gets a nosebleed."), span_warning("You get a nosebleed."))

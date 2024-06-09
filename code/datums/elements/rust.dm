@@ -17,6 +17,7 @@
 	ADD_TRAIT(target, TRAIT_RUSTY, ELEMENT_TRAIT(type))
 	RegisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_rust_overlay))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(handle_examine))
+	RegisterSignal (target, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_interaction))
 	RegisterSignals(target, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), PROC_REF(secondary_tool_act))
 	// Unfortunately registering with parent sometimes doesn't cause an overlay update
 	target.update_appearance()
@@ -25,6 +26,7 @@
 	. = ..()
 	UnregisterSignal(source, COMSIG_ATOM_UPDATE_OVERLAYS)
 	UnregisterSignal(source, COMSIG_ATOM_EXAMINE)
+	UnregisterSignal(source, COMSIG_ATOM_ITEM_INTERACTION)
 	UnregisterSignal(source, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)))
 	REMOVE_TRAIT(source, TRAIT_RUSTY, ELEMENT_TRAIT(type))
 	source.update_appearance()
@@ -72,3 +74,48 @@
 			user.balloon_alert(user, "scraped off rust")
 			Detach(source)
 			return
+
+/// Prevents placing floor tiles on rusted turf
+/datum/element/rust/proc/on_interaction(datum/source, mob/user, obj/item/tool, modifiers)
+	SIGNAL_HANDLER
+	if(istype(tool, /obj/item/stack/tile) || istype(tool, /obj/item/stack/rods))
+		user.balloon_alert(user, "floor too rusted!")
+		return ITEM_INTERACT_BLOCKING
+
+/// For rust applied by heretics
+/datum/element/rust/heretic
+
+/datum/element/rust/heretic/Attach(atom/target, rust_icon, rust_icon_state)
+	. = ..()
+	if(. == ELEMENT_INCOMPATIBLE)
+		return .
+	RegisterSignal(target, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+	RegisterSignal(target, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
+
+/datum/element/rust/heretic/Detach(atom/source)
+	. = ..()
+	UnregisterSignal(source, COMSIG_ATOM_ENTERED)
+	UnregisterSignal(source, COMSIG_ATOM_EXITED)
+	for(var/obj/effect/glowing_rune/rune_to_remove in source)
+		qdel(rune_to_remove)
+	for(var/mob/living/victim in source)
+		victim.remove_status_effect(/datum/status_effect/rust_corruption)
+
+/datum/element/rust/heretic/proc/on_entered(turf/source, atom/movable/entered, ...)
+	SIGNAL_HANDLER
+
+	if(!isliving(entered))
+		return
+	var/mob/living/victim = entered
+	if(IS_HERETIC(victim))
+		return
+	if(victim.can_block_magic(MAGIC_RESISTANCE))
+		return
+	victim.apply_status_effect(/datum/status_effect/rust_corruption)
+
+/datum/element/rust/heretic/proc/on_exited(turf/source, atom/movable/gone)
+	SIGNAL_HANDLER
+	if(!isliving(gone))
+		return
+	var/mob/living/leaver = gone
+	leaver.remove_status_effect(/datum/status_effect/rust_corruption)

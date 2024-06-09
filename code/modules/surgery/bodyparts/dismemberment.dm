@@ -211,8 +211,8 @@
 		associated_hand?.update_appearance()
 	if(arm_owner.gloves)
 		arm_owner.dropItemToGround(arm_owner.gloves, TRUE)
+	. = ..()
 	arm_owner.update_worn_gloves() //to remove the bloody hands overlay
-	return ..()
 
 /obj/item/bodypart/leg/drop_limb(special, dismembered, move_to_floor = TRUE)
 	if(owner && !special)
@@ -270,7 +270,7 @@
 		return FALSE
 
 	var/obj/item/bodypart/chest/mob_chest = new_limb_owner.get_bodypart(BODY_ZONE_CHEST)
-	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype) && !special)
+	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype) && !(mob_chest.acceptable_bodyshape & bodyshape) && !special)
 		return FALSE
 	return TRUE
 
@@ -354,8 +354,8 @@
 		sexy_chad.hair_color = hair_color
 		sexy_chad.facial_hairstyle = facial_hairstyle
 		sexy_chad.facial_hair_color = facial_hair_color
-		sexy_chad.grad_style = gradient_styles?.Copy()
-		sexy_chad.grad_color = gradient_colors?.Copy()
+		sexy_chad.grad_style = gradient_styles.Copy()
+		sexy_chad.grad_color = gradient_colors.Copy()
 		sexy_chad.lip_style = lip_style
 		sexy_chad.lip_color = lip_color
 
@@ -363,9 +363,17 @@
 	new_head_owner.update_body()
 	new_head_owner.update_damage_overlays()
 
+/obj/item/bodypart/arm/try_attach_limb(mob/living/carbon/new_arm_owner, special = FALSE)
+	. = ..()
+
+	if(!.)
+		return
+
+	new_arm_owner.update_worn_gloves() // To apply bloody hands overlay
+
 /mob/living/carbon/proc/regenerate_limbs(list/excluded_zones = list())
 	SEND_SIGNAL(src, COMSIG_CARBON_REGENERATE_LIMBS, excluded_zones)
-	var/list/zone_list = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	var/list/zone_list = GLOB.all_body_zones.Copy()
 
 	var/list/dismembered_by_copy = body_zone_dismembered_by?.Copy()
 

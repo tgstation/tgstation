@@ -16,8 +16,8 @@
  * * play_sound - if TRUE, play a sound with the announcement (based on player option)
  * * sound_override - optional, override the default announcement sound
  * * sender_override - optional, modifies the sender of the announcement
- * * encode_title - if TRUE, the title will be HTML encoded
- * * encode_text - if TRUE, the text will be HTML encoded
+ * * encode_title - if TRUE, the title will be HTML encoded (escaped)
+ * * encode_text - if TRUE, the text will be HTML encoded (escaped)
  */
 
 /proc/send_ooc_announcement(
@@ -28,7 +28,7 @@
 	sound_override = 'sound/misc/bloop.ogg',
 	sender_override = "Server Admin Announcement",
 	encode_title = TRUE,
-	encode_text = TRUE,
+	encode_text = FALSE,
 )
 	if(isnull(text))
 		return
