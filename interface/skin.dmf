@@ -53,34 +53,6 @@ menu "menu"
 		command = "Hotkeys-Help"
 		category = "&Help"
 		saved-params = "is-checked"
-	
-	// MASSMETA ADDITION (lil bit better ui)
-	elem
-		name = "Refresh TGUI"
-		command = "refresh-tgui"
-		category = "&Help"
-		saved-params = "is-checked"
-	elem
-		name = "Fix Chat"
-		command = "fix-chat"
-		category = "&Help"
-		saved-params = "is-checked"
-	elem
-		name = "&Who"
-		command = ""
-		saved-params = "is-checked"
-	elem
-		name = "All Players"
-		command = "who"
-		category = "&Who"
-		saved-params = "is-checked"
-	elem
-		name = "Admins Online"
-		command = "adminwho"
-		category = "&Who"
-		saved-params = "is-checked"
-	
-	// EDIT END
 
 
 window "mainwindow"
