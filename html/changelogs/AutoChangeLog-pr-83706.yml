@@ -1,0 +1,9 @@
+author: "LT3"
+delete-after: True
+changes:
+  - rscadd: "Telecoms now has a central tram controller"
+  - rscadd: "Tram controller is now included in communications blackout event"
+  - qol: "Tram malfunction event only stops tram once, requiring engineering to reset (no tools required)"
+  - qol: "Tram malfunction event no longer sends a Central Command announcement when fixed"
+  - rscdel: "Tram doors no longer force crush you during tram malfunction event"
+  - rscdel: "Silicons can no longer control the tram when communication is lost"
