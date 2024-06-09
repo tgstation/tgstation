@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Seeing heretical stuff while having the heresy phobia will now apply the heresy mood event."
-  - bugfix: "Seeing skeletons while having the skeleton phobia will now apply the spooked (by skeletons) mood event."
