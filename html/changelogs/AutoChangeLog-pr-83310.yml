@@ -1,0 +1,14 @@
+author: "WebcomicArtist"
+delete-after: True
+changes:
+  - rscadd: "Added zaukerite (high damage/embed, low AP) and metallic hydrogen (High AP and piercing, but low embed) crossbow ammo for the rebar crossbows"
+  - rscadd: "Added healium crystal ammo for the crossbow as well, which heals whomever you shoot it at."
+  - rscadd: "Added admin-only supermatter crossbow bolts that dust you, because why the hell not."
+  - rscadd: "Added non-harmful paper balls. Can be shot from a crossbow, or thrown at co-workers."
+  - rscadd: "Added a quiver made from cutting an o2 tank in half, to hold it all."
+  - image: "added sprites for all the above."
+  - balance: "Traitor Engineer Crossbow ammo now does 55 damage instead of 45, to make it compete with revolver."
+  - balance: "Stressed Rebar Crossbow now has a shorter delay required to rack it, but can shoot you in the face on misfire."
+  - bugfix: "fixed rebar crossbow shots not dropping items on hitting walls"
+  - bugfix: "fixed traitor crossbow having worse wound chance than the base one"
+  - sound: "added new crossbow firing sound effect"
