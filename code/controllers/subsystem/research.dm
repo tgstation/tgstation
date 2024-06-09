@@ -180,7 +180,7 @@ SUBSYSTEM_DEF(research)
 			continue
 		if(!isnull(initial(DN.build_path)))
 			if(!(initial(DN.build_path) in item_to_design))
-				item_to_design[initial(DN.build_path)] = list()		
+				item_to_design[initial(DN.build_path)] = list()
 			item_to_design[initial(DN.build_path)] += DN
 		DN.InitializeMaterials() //Initialize the materials in the design
 		returned[initial(DN.id)] = DN

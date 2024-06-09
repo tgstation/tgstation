@@ -17,7 +17,7 @@
 
 	///The container to hold materials
 	var/datum/component/material_container/materials
-	
+
 	/// The inserted board
 	var/obj/item/circuitboard/machine/inserted_board
 	/// Materials needed to print this board
@@ -80,7 +80,7 @@
 
 	flick_overlay_view("[base_icon_state]_[item_inserted.has_material_type(/datum/material/glass) ? "glass" : "metal"]", 1.4 SECONDS)
 
-	use_power(min(active_power_usage * 0.25, amount_inserted / 100))
+	directly_use_energy(min(active_power_usage * 0.25, amount_inserted / 100))
 
 	update_static_data_for_all_viewers()
 
@@ -108,7 +108,7 @@
 	var/list/data = list()
 
 	var/atom/build = initial(inserted_board.build_path)
-	data["materials"] = materials.ui_data() 
+	data["materials"] = materials.ui_data()
 	data["boardInserted"] = !isnull(inserted_board)
 	data["busy"] = busy
 	var/list/cost_mats = list()
@@ -117,7 +117,7 @@
 		new_entry["name"] = initial(mat_type.name)
 		new_entry["count"] = needed_mats[mat_type]
 		cost_mats += list(new_entry)
-	
+
 	var/list/design
 	if(data["boardInserted"])
 		var/disableReason = ""
@@ -151,16 +151,16 @@
 		// If insertion was successful and there's already a diskette in the console, eject the old one.
 		if(inserted_board)
 			inserted_board.forceMove(drop_location())
-		
+
 		inserted_board = attacking_item
 		// 5 sheets of iron and 5 of cable coil
 		needed_mats = list()
 		for(var/type as anything in inserted_board.req_components)
 			needed_mats = analyze_cost(type, needed_mats)
-		
+
 		CREATE_AND_INCREMENT(needed_mats, /datum/material/iron, (SHEET_MATERIAL_AMOUNT * 5 + (SHEET_MATERIAL_AMOUNT / 20)) * creation_efficiency)
 		CREATE_AND_INCREMENT(needed_mats, /datum/material/glass, (SHEET_MATERIAL_AMOUNT / 20) * creation_efficiency)
-		
+
 		update_appearance()
 		return TRUE
 
@@ -198,10 +198,10 @@
 	materials.use_materials(needed_mats)
 	playsound(src, 'sound/items/rped.ogg', 50, TRUE)
 	busy = TRUE
-	
+
 	addtimer(CALLBACK(src, PROC_REF(finish_build), inserted_board), flatpack_time)
 	return TRUE
-	
+
 /obj/machinery/flatpacker/proc/finish_build(board)
 	busy = FALSE
 	new /obj/item/flatpack(drop_location(), board)
@@ -277,6 +277,9 @@
 	if(!isopenturf(loc))
 		user.balloon_alert(user, "cant deploy here!")
 		return FALSE
+	balloon_alert_to_viewers("deploying!")
+	if(!do_after(user, 1 SECONDS, target = src))
+		return FALSE
 	new /obj/effect/temp_visual/mook_dust(loc)
 	var/obj/machinery/new_machine = new board.build_path(loc)
 	loc.visible_message(span_warning("[src] deploys!"))
@@ -284,7 +287,7 @@
 	qdel(board)
 	new_machine.RefreshParts()
 	new_machine.on_construction(user)
-	
+
 	for(var/mob/living/victim in loc)
 		step(victim, pick(GLOB.cardinals))
 
