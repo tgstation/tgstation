@@ -92,7 +92,7 @@
 	if(ascii_only)
 		if(length(text) > max_length)
 			return null
-		var/static/regex/non_ascii = regex(@"[^\x20-\x7E\t\n]")
+		var/static/regex/non_ascii = regex(@"[^\x20-\x7E\t\n\u0400-\u04FF]") // MASSMETA EDIT: Allow cyrillic symbols
 		if(non_ascii.Find(text))
 			return null
 	else if(length_char(text) > max_length)
