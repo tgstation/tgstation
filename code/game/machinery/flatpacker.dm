@@ -85,11 +85,7 @@
 		ui.open()
 
 /obj/machinery/flatpacker/ui_static_data(mob/user)
-	var/list/data = materials.ui_static_data()
-
-	data["SHEET_MATERIAL_AMOUNT"] = SHEET_MATERIAL_AMOUNT
-
-	return data
+	return materials.ui_static_data()
 
 /obj/machinery/flatpacker/ui_data(mob/user)
 	var/list/data = list()
