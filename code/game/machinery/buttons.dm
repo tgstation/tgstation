@@ -32,7 +32,14 @@
 	var/initialized_button = 0
 	var/silicon_access_disabled = FALSE
 
+/obj/machinery/button/table
+	icon_state = "button_table"
+	base_icon_state = "button_table"
+
 /obj/machinery/button/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/machinery/button/table/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /datum/armor/machinery_button
@@ -297,7 +304,16 @@
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/button/door)
 
+/obj/machinery/button/door/table
+	icon_state = "button_table"
+	base_icon_state = "button_table"
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/button/door/table)
+
 /obj/machinery/button/door/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/machinery/button/door/table/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/button/door/setup_device()
@@ -317,7 +333,17 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/button/door)
 	id = INCINERATOR_ORDMIX_VENT
 	req_access = list(ACCESS_ORDNANCE)
 
+/obj/machinery/button/door/table/incinerator_vent_ordmix
+	name = "combustion chamber vent control"
+	id = INCINERATOR_ORDMIX_VENT
+	req_access = list(ACCESS_ORDNANCE)
+
 /obj/machinery/button/door/incinerator_vent_atmos_main
+	name = "turbine vent control"
+	id = INCINERATOR_ATMOS_MAINVENT
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
+
+/obj/machinery/button/door/table/incinerator_vent_atmos_main
 	name = "turbine vent control"
 	id = INCINERATOR_ATMOS_MAINVENT
 	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
@@ -327,7 +353,17 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/button/door)
 	id = INCINERATOR_ATMOS_AUXVENT
 	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
 
+/obj/machinery/button/door/table/incinerator_vent_atmos_aux
+	name = "combustion chamber vent control"
+	id = INCINERATOR_ATMOS_AUXVENT
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
+
 /obj/machinery/button/door/atmos_test_room_mainvent_1
+	name = "test chamber 1 vent control"
+	id = TEST_ROOM_ATMOS_MAINVENT_1
+	req_one_access = list(ACCESS_ATMOSPHERICS)
+
+/obj/machinery/button/door/table/atmos_test_room_mainvent_1
 	name = "test chamber 1 vent control"
 	id = TEST_ROOM_ATMOS_MAINVENT_1
 	req_one_access = list(ACCESS_ATMOSPHERICS)
@@ -337,12 +373,27 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/button/door)
 	id = TEST_ROOM_ATMOS_MAINVENT_2
 	req_one_access = list(ACCESS_ATMOSPHERICS)
 
+/obj/machinery/button/door/table/atmos_test_room_mainvent_2
+	name = "test chamber 2 vent control"
+	id = TEST_ROOM_ATMOS_MAINVENT_2
+	req_one_access = list(ACCESS_ATMOSPHERICS)
+
 /obj/machinery/button/door/incinerator_vent_syndicatelava_main
 	name = "turbine vent control"
 	id = INCINERATOR_SYNDICATELAVA_MAINVENT
 	req_access = list(ACCESS_SYNDICATE)
 
+/obj/machinery/button/door/table/incinerator_vent_syndicatelava_main
+	name = "turbine vent control"
+	id = INCINERATOR_SYNDICATELAVA_MAINVENT
+	req_access = list(ACCESS_SYNDICATE)
+
 /obj/machinery/button/door/incinerator_vent_syndicatelava_aux
+	name = "combustion chamber vent control"
+	id = INCINERATOR_SYNDICATELAVA_AUXVENT
+	req_access = list(ACCESS_SYNDICATE)
+
+/obj/machinery/button/door/table/incinerator_vent_syndicatelava_aux
 	name = "combustion chamber vent control"
 	id = INCINERATOR_SYNDICATELAVA_AUXVENT
 	req_access = list(ACCESS_SYNDICATE)
@@ -354,7 +405,14 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/button/door)
 	base_icon_state = "launcher"
 	device_type = /obj/item/assembly/control/massdriver
 
+/obj/machinery/button/massdriver/table
+	icon_state = "launcher_table"
+	base_icon_state = "launcher_table"
+
 /obj/machinery/button/massdriver/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/machinery/button/massdriver/table/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/button/ignition
@@ -364,20 +422,40 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/button/door)
 	base_icon_state = "launcher"
 	device_type = /obj/item/assembly/control/igniter
 
+/obj/machinery/button/ignition/table
+	icon_state = "launcher_table"
+	base_icon_state = "launcher_table"
+
 /obj/machinery/button/ignition/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/machinery/button/ignition/table/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/button/ignition/incinerator
 	name = "combustion chamber ignition switch"
 	desc = "A remote control switch for the combustion chamber's igniter."
 
+/obj/machinery/button/ignition/incinerator/table
+	icon_state = "launcher_table"
+	base_icon_state = "launcher_table"
+
 /obj/machinery/button/ignition/incinerator/ordmix
+	id = INCINERATOR_ORDMIX_IGNITER
+
+/obj/machinery/button/ignition/incinerator/table/ordmix
 	id = INCINERATOR_ORDMIX_IGNITER
 
 /obj/machinery/button/ignition/incinerator/atmos
 	id = INCINERATOR_ATMOS_IGNITER
 
+/obj/machinery/button/ignition/incinerator/table/atmos
+	id = INCINERATOR_ATMOS_IGNITER
+
 /obj/machinery/button/ignition/incinerator/syndicatelava
+	id = INCINERATOR_SYNDICATELAVA_IGNITER
+
+/obj/machinery/button/ignition/incinerator/table/syndicatelava
 	id = INCINERATOR_SYNDICATELAVA_IGNITER
 
 /obj/machinery/button/flasher
@@ -387,7 +465,14 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/button/door)
 	base_icon_state = "launcher"
 	device_type = /obj/item/assembly/control/flasher
 
+/obj/machinery/button/flasher/table
+	icon_state = "launcher_table"
+	base_icon_state = "launcher_table"
+
 /obj/machinery/button/flasher/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/machinery/button/flasher/table/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/button/curtain
@@ -403,6 +488,10 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/button/door)
 	curtain.sync_doors = sync_doors
 	return ..()
 
+/obj/machinery/button/curtain/table
+	icon_state = "launcher_table"
+	base_icon_state = "launcher_table"
+
 /obj/machinery/button/crematorium
 	name = "crematorium igniter"
 	desc = "Burn baby burn!"
@@ -412,7 +501,14 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/button/door)
 	req_access = list()
 	id = 1
 
+/obj/machinery/button/crematorium/table
+	icon_state = "launcher_table"
+	base_icon_state = "launcher_table"
+
 /obj/machinery/button/crematorium/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/machinery/button/crematorium/table/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/wallframe/button

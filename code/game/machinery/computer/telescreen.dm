@@ -328,6 +328,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/bar)
 /obj/machinery/button/showtime
 	name = "thunderdome showtime button"
 	desc = "Use this button to allow entertainment monitors to broadcast the big game."
+	base_icon_state = "button_table"
+	icon_state = "button_table"
 	device_type = /obj/item/assembly/control/showtime
 	req_access = list()
 	id = "showtime_1"
