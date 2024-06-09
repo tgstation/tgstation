@@ -1313,7 +1313,12 @@
 // Note: Does NOT return EMP protection value from parent call or pass it on to subtypes
 /obj/item/bodypart/emp_act(severity)
 	var/protection = ..()
-	if((protection & EMP_PROTECT_WIRES) || !IS_ROBOTIC_LIMB(src))
+	// If the limb doesn't protect contents, strike them first
+	if(!(protection & EMP_PROTECT_CONTENTS))
+		for(var/atom/content as anything in contents)
+			content.emp_act(severity)
+
+	if((protection & (EMP_PROTECT_WIRES | EMP_PROTECT_SELF)) || !IS_ROBOTIC_LIMB(src))
 		return FALSE
 
 	// with defines at the time of writing, this is 2 brute and 1.5 burn

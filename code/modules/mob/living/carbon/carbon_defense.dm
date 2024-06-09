@@ -233,8 +233,6 @@
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
-	for(var/obj/item/organ/organ as anything in organs)
-		organ.emp_act(severity)
 	for(var/obj/item/bodypart/bodypart as anything in src.bodyparts)
 		bodypart.emp_act(severity)
 
