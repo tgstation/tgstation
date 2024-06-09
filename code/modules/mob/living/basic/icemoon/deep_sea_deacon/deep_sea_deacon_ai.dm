@@ -92,6 +92,12 @@
 /datum/ai_planning_subtree/targeted_mob_ability/deacon/deacon_normal_attack/check_conditions(datum/ai_controller/controller)
 	return controller.blackboard[BB_DEACON_CYCLE_STARTED]
 
+/datum/ai_planning_subtree/targeted_mob_ability/deacon/deacon_normal_attack/check_availability(datum/ai_controller/controller, ability_key)
+	var/mob/living/living_pawn = controller.pawn
+	if(ability_key == BB_DEACON_PHANTOM && (living_pawn.health / living_pawn.maxHealth > 0.75))
+		return FALSE
+	return ..()
+
 /datum/ai_planning_subtree/targeted_mob_ability/deacon/deacon_idle_attack
 	ability_list = BB_DEACON_IDLE_ATTACKS
 
@@ -127,5 +133,17 @@
 		return
 	. = ..()
 	return SUBTREE_RETURN_FINISH_PLANNING //always finish planning, we just bouncing around for now
+
+/datum/ai_controller/basic_controller/deacon_phantom
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_DEACON_BOUNCE_MODE = TRUE,
+	)
+
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/targeted_mob_ability/deacon_bounce,
+	)
 
 #undef SPECIAL_ATTACK_COUNTER

@@ -8,11 +8,11 @@
 	base_pixel_x = -32
 	gender = MALE
 	speed = 10
-	light_range = 2
+	light_range = 6
 	light_color = COLOR_PINK
 	basic_mob_flags = IMMUNE_TO_FISTS
-	maxHealth = 3000
-	health = 3000
+	maxHealth = 3500 //big health cause our attack window is gonna be always open
+	health = 3500
 	faction = list(FACTION_MINING, FACTION_BOSS)
 	speak_emote = list("preaches")
 	obj_damage = 100
@@ -46,6 +46,8 @@
 		/datum/action/cooldown/mob_cooldown/domain_teleport/hell = BB_DEACON_HELL_DOMAIN,
 		/datum/action/cooldown/mob_cooldown/domain_teleport/heaven = BB_DEACON_HEAVEN_DOMAIN,
 		/datum/action/cooldown/mob_cooldown/bounce = BB_DEACON_BOUNCE,
+		/datum/action/cooldown/mob_cooldown/cast_phantom = BB_DEACON_PHANTOM,
+		/datum/action/cooldown/mob_cooldown/crystal_mayhem = BB_DEACON_CRYSTAL_MAYHEM,
 	)
 	grant_actions_by_list(other_innate_actions)
 	var/static/list/idle_attacks = list(
@@ -56,11 +58,13 @@
 	var/static/list/normal_attacks = list(
 		BB_DEACON_LIGHTBEAM,
 		BB_DEACON_BLADES,
+		BB_DEACON_PHANTOM,
 	)
 	var/static/list/special_attacks = list(
 		BB_DEACON_HEALING_PYLON,
 		BB_DEACON_BLACKNWHITE,
 		BB_DEACON_ENTRAPPMENT,
+		BB_DEACON_CRYSTAL_MAYHEM,
 	)
 	var/static/list/domain_attacks = list(
 		BB_DEACON_HELL_DOMAIN,
@@ -71,9 +75,10 @@
 		/datum/action/cooldown/mob_cooldown/healing_pylon,
 		/datum/action/cooldown/mob_cooldown/black_n_white,
 		/datum/action/cooldown/mob_cooldown/beam_trial,
+		/datum/action/cooldown/mob_cooldown/crystal_mayhem,
 	)
 	var/static/list/cycle_timers = list(
-		/datum/action/cooldown/mob_cooldown/lightning_fissure = 13 SECONDS,
+		/datum/action/cooldown/mob_cooldown/lightning_fissure = 15 SECONDS,
 		/datum/action/cooldown/mob_cooldown/crystal_barrage = 18 SECONDS,
 		/datum/action/cooldown/mob_cooldown/beam_crystal = 15 SECONDS,
 	)
@@ -84,3 +89,36 @@
 	ai_controller.set_blackboard_key(BB_DEACON_DOMAIN_ATTACKS, domain_attacks)
 	ai_controller.set_blackboard_key(BB_DEACON_CYCLE_TIMERS, cycle_timers)
 	ai_controller.set_blackboard_key(BB_DEACON_CYCLE_RESETERS, cycle_count_reseters)
+
+/mob/living/basic/mining/deacon_phantom
+	name = "deep sea phantom"
+	desc = "Spooky..."
+	icon = 'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi'
+	icon_state = "deep_sea_deacon_phantom"
+	icon_living = "deep_sea_deacon_phantom"
+	pixel_x = -32
+	base_pixel_x = -32
+	gender = MALE
+	speed = 10
+	light_range = 2
+	light_color = COLOR_PURPLE
+	basic_mob_flags = IMMUNE_TO_FISTS
+	light_range = 6
+	light_color = COLOR_PURPLE
+	maxHealth = 500
+	health = 500
+	faction = list(FACTION_MINING, FACTION_BOSS)
+	sentience_type = SENTIENCE_BOSS
+	move_force = MOVE_FORCE_VERY_STRONG
+	move_resist = MOVE_FORCE_VERY_STRONG
+	pull_force = MOVE_FORCE_VERY_STRONG
+	density = FALSE
+	ai_controller = /datum/ai_controller/basic_controller/deacon_phantom
+
+/mob/living/basic/mining/deacon_phantom/Initialize(mapload)
+	. = ..()
+	var/static/list/other_innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/bounce/no_chasm = BB_DEACON_BOUNCE,
+	)
+	AddElement(/datum/element/temporary_atom, life_time = 15 SECONDS, fade_time = 1.5 SECONDS)
+	grant_actions_by_list(other_innate_actions)

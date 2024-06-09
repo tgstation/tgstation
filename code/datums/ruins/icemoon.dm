@@ -104,7 +104,6 @@
 	id = "delapitatedchurch-underground"
 	description = "Does the horror not end?"
 	suffix = "icemoon_underground_delapitated_church.dmm"
-	has_ceiling = FALSE
 	unpickable = TRUE
 	always_spawn_with = list(/datum/map_template/ruin/icemoon/underground/deacon_hell = PLACE_BELOW)
 
