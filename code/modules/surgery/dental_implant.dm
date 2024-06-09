@@ -2,9 +2,24 @@
 	name = "Dental implant"
 	possible_locs = list(BODY_ZONE_PRECISE_MOUTH)
 	steps = list(
-		/datum/surgery_step/drill,
+		/datum/surgery_step/drill/pill,
 		/datum/surgery_step/insert_pill,
 	)
+
+/datum/surgery_step/drill/pill/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	. = ..()
+	var/count = 0
+
+	for(var/obj/item/reagent_containers/pill/dental in target.get_bodypart(BODY_ZONE_HEAD))
+		count++
+
+	if(target.dna.species.teeth_count == 0)
+		to_chat(user, span_notice("[user] has no teeth, doofus!"))
+		return SURGERY_STEP_FAIL
+
+	if(count >= target.dna.species.teeth_count)
+		to_chat(user, span_notice("[user]'s teeth have all been replaced with pills already!"))
+		return SURGERY_STEP_FAIL
 
 /datum/surgery_step/insert_pill
 	name = "insert pill"
@@ -12,6 +27,7 @@
 	time = 16
 
 /datum/surgery_step/insert_pill/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+
 	display_results(
 		user,
 		target,
@@ -25,7 +41,8 @@
 	if(!istype(tool))
 		return FALSE
 
-	user.transferItemToLoc(tool, target, TRUE)
+	// Pills go into head
+	user.transferItemToLoc(tool, target.get_bodypart(BODY_ZONE_HEAD), TRUE)
 
 	var/datum/action/item_action/hands_free/activate_pill/pill_action = new(tool)
 	pill_action.name = "Activate [tool.name]"

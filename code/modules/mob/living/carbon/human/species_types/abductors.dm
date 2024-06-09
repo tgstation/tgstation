@@ -18,6 +18,7 @@
 	mutantlungs = null
 	mutantbrain = /obj/item/organ/internal/brain/abductor
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
+	teeth_count = 0
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/abductor,

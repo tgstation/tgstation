@@ -181,6 +181,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// This supresses the "dosen't appear to be himself" examine text for if the mob is run by an AI controller. Should be used on any NPC human subtypes. Monkeys are the prime example.
 	var/ai_controlled_species = FALSE
 
+	/// How many teeth the species has, humans have 32 so that's the default. Used for a limit to dental pill implants.
+	var/teeth_count = 32
+
 	/**
 	 * Was on_species_gain ever actually called?
 	 * Species code is really odd...
