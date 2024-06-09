@@ -931,12 +931,11 @@
 /area/shuttle/escape)
 "EL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	control_area = "/area/shuttle/escape";
 	desc = "Used to control the Lance's automated defenses.";
 	icon_state = "control_kill";
 	lethal = 1;
-	pixel_y = -26;
 	req_access = list("command")
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,

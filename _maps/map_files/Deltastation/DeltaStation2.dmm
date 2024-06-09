@@ -6999,11 +6999,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "bIW" = (
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	icon_state = "control_stun";
-	name = "AI Chamber turret control";
-	pixel_x = 3;
-	pixel_y = -23
+	name = "AI Chamber turret control"
 	},
 /obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Primary AI Core Access";
@@ -43241,11 +43239,10 @@
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "kKz" = (
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
 	icon_state = "control_stun";
-	name = "AI Upload Turret Control";
-	pixel_y = -32
+	name = "AI Upload Turret Control"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -81434,10 +81431,9 @@
 /area/station/maintenance/department/science/xenobiology)
 "upp" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
 	name = "Antechamber Turret Control";
-	pixel_x = -32;
 	req_access = list("minisat")
 	},
 /obj/machinery/camera/directional/west{

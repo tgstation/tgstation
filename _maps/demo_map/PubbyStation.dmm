@@ -479,11 +479,9 @@
 /turf/open/floor/plating,
 /area/station/cargo/drone_bay)
 "acq" = (
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	control_area = "/area/station/ai_monitored/turret_protected/ai";
-	name = "AI Chamber turret control";
-	pixel_x = 5;
-	pixel_y = -24
+	name = "AI Chamber turret control"
 	},
 /obj/machinery/holopad/secure,
 /obj/item/radio/intercom/directional/south{
@@ -7143,10 +7141,9 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "azk" = (
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
-	name = "AI Upload turret control";
-	pixel_y = -25
+	name = "AI Upload turret control"
 	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Bridge Central"
@@ -27791,11 +27788,9 @@
 /turf/open/space,
 /area/space/nearstation)
 "cnC" = (
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
-	name = "AI Satellite turret control";
-	pixel_x = -5;
-	pixel_y = -24
+	name = "AI Satellite turret control"
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8

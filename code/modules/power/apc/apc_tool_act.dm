@@ -235,8 +235,8 @@
 
 /obj/machinery/power/apc/crowbar_act(mob/user, obj/item/crowbar)
 	. = TRUE
-	//Prying off broken cover
-	#warn does this apc stuff work
+
+	// Removing the cover from a broken APC
 	if((opened == APC_COVER_CLOSED || opened == APC_COVER_OPENED) && (machine_stat & BROKEN))
 		crowbar.play_tool_sound(src)
 		balloon_alert(user, "prying...")
@@ -259,7 +259,7 @@
 					balloon_alert(user, "cover is locked!")
 					return
 				opened = APC_COVER_OPENED
-			if(APC_COVER_CLOSED)
+			if(APC_COVER_OPENED)
 				if(has_electronics != APC_ELECTRONICS_SECURED)
 					return
 				opened = APC_COVER_CLOSED
@@ -442,7 +442,7 @@
 	else if(machine_stat & (BROKEN|MAINT))
 		balloon_alert(user, "nothing happens!")
 		return FALSE
-		
+
 	var/image/overlay = image(icon, src, "sparks_flick", layer, dir)
 	SET_PLANE_EXPLICIT(overlay, plane, src)
 	flick_overlay_view(overlay, src, 0.5 SECONDS)
