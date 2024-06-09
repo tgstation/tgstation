@@ -30,22 +30,9 @@
 	var/flatpack_time = 4.5 SECONDS
 
 /obj/machinery/flatpacker/Initialize(mapload)
-	var/static/list/materials_list = list(
-		/datum/material/iron,
-		/datum/material/glass,
-		/datum/material/silver,
-		/datum/material/gold,
-		/datum/material/diamond,
-		/datum/material/plasma,
-		/datum/material/uranium,
-		/datum/material/bananium,
-		/datum/material/titanium,
-		/datum/material/bluespace,
-		/datum/material/plastic,
-		)
 	materials = AddComponent( \
 		/datum/component/material_container, \
-		materials_list, \
+		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		0, \
 		MATCONTAINER_EXAMINE, \
 		container_signals = list(COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/flatpacker, AfterMaterialInsert)) \
@@ -56,16 +43,16 @@
 	. = ..()
 	var/mat_capacity = 0
 	for(var/datum/stock_part/matter_bin/new_matter_bin in component_parts)
-		mat_capacity += new_matter_bin.tier * (25*SHEET_MATERIAL_AMOUNT)
+		mat_capacity += new_matter_bin.tier * 25 * SHEET_MATERIAL_AMOUNT
 	materials.max_amount = mat_capacity
 
 	var/datum/stock_part/servo/servo = locate() in component_parts
 	max_part_tier = servo.tier
-	flatpack_time = initial(flatpack_time) - servo.tier/2 // T4 = 2 seconds off
+	flatpack_time = initial(flatpack_time) - servo.tier / 2 // T4 = 2 seconds off
 	var/efficiency = initial(creation_efficiency)
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
 		efficiency -= laser.tier * 0.2
-	creation_efficiency = max(1.2,efficiency)
+	creation_efficiency = max(1.2, efficiency)
 
 /obj/machinery/flatpacker/examine(mob/user)
 	. += ..()
@@ -292,5 +279,5 @@
 		step(victim, pick(GLOB.cardinals))
 
 	qdel(src)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 #undef CREATE_AND_INCREMENT
