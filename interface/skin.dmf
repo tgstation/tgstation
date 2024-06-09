@@ -54,6 +54,38 @@ menu "menu"
 		category = "&Help"
 		saved-params = "is-checked"
 
+// MASSMETA ADDITION (lil bit better ui)
+	elem
+		name = "Refresh TGUI"
+		command = "refresh-tgui"
+		category = "&Help"
+		saved-params = "is-checked"
+	elem
+		name = "Fix Chat"
+		command = "fix-chat"
+		category = "&Help"
+		saved-params = "is-checked"
+	elem
+		name = "Fit Viewport"
+		command = "fit-viewport"
+		category = "&Help"
+		saved-params = "is-checked"
+	elem
+		name = "&Players"
+		command = ""
+		saved-params = "is-checked"
+	elem
+		name = "All Players"
+		command = "who"
+		category = "&Players"
+		saved-params = "is-checked"
+	elem
+		name = "Admins Online"
+		command = "adminwho"
+		category = "&Players"
+		saved-params = "is-checked"
+
+// EDIT END
 
 window "mainwindow"
 	elem "mainwindow"
