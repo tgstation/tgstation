@@ -1,0 +1,4 @@
+author: "Higgin"
+delete-after: True
+changes:
+  - bugfix: "energy bolas now work on prone targets and don't leave behind a fake item when they whiff."
