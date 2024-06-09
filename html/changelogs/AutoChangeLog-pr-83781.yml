@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - qol: "Adds a chat message for fishing in a chasm with a normal and rescue hook, to clarify that only rescue hooks can drag up corpses."

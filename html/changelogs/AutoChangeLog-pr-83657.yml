@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - bugfix: "admins can force rulesets on background checks station trait (fucking lame)"

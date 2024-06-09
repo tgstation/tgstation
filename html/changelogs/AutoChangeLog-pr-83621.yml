@@ -1,4 +1,0 @@
-author: "Goat"
-delete-after: True
-changes:
-  - bugfix: "mobs no longer move during cutscenes"

@@ -374,3 +374,75 @@
   zxaber:
   - bugfix: Fixed borg chargers (especially unpowered ones) constantly draining a
       borg's cell.
+2024-06-09:
+  00-Steven:
+  - bugfix: Latejoiners with heterochromatic eyes no longer have the wrong fingerprint
+      in the security records.
+  - bugfix: Latejoiners actually have their quirks visible in the medical records.
+  Ben10Omintrix:
+  - bugfix: lobstrosities will no longer be able to fish out multiple necropolis chests
+  DATA-xPUNGED:
+  - rscadd: NT reports indicate that the Syndicate have increased listening activities
+      on Icemoon, crew is advised to watch out for possible communication interference.
+  DustanHache:
+  - bugfix: Lobstrosities are no longer pre-cooked through bluespace shenanigans.
+  Goat:
+  - bugfix: mobs no longer move during cutscenes
+  Jackraxxus:
+  - admin: The auto-mute system yells at you harder when you send a bunch of identical
+      messages.
+  Majkl-J:
+  - bugfix: The orbit menu clicks are accurate again
+  - bugfix: Fixes several service and item-handling borg modules not functioning
+  Melbert:
+  - balance: Coders are now locked to the coderbus
+  Rhials:
+  - rscadd: Adds some more station-trait dependent pulsar star reports. Keep an eye
+      on that roundstart command report!
+  ShizCalev:
+  - bugfix: Basic bots are now in the proper faction and will no longer be targeted
+      by turrets.
+  - bugfix: The spooky element will now apply the spooked mood event when someone
+      is spooked.
+  - bugfix: Fixed spookers getting a popup message when spooking mobs not actively
+      controlled by a player.
+  - bugfix: Seeing heretical stuff while having the heresy phobia will now apply the
+      heresy mood event.
+  - bugfix: Seeing skeletons while having the skeleton phobia will now apply the spooked
+      (by skeletons) mood event.
+  - bugfix: Getting surgically cut open while conscious will now give you the "THEY'RE
+      CUTTING ME OPEN!!" surgical mood event.
+  TheBoondock:
+  - sound: added operating sounds for wrench, wirecutter and crowbar
+  Thlumyn:
+  - bugfix: add general engineering access to birdshot engineering entrance
+  Time-Green:
+  - bugfix: admins can force rulesets on background checks station trait (fucking
+      lame)
+  Watermelon914:
+  - spellcheck: Intern announcer no longer has a weird space before the introduction
+      message.
+  Wayland-Smithy:
+  - bugfix: Fixed Silicons not being able to (un)lock Air Alarms.
+  Zenitheevee:
+  - bugfix: fish with the Anxiety gene wont die when in the same loc as any 3 items
+  carlarctg:
+  - qol: Adds a chat message for fishing in a chasm with a normal and rescue hook,
+      to clarify that only rescue hooks can drag up corpses.
+  grungussuss:
+  - spellcheck: all instances of reactive armor are now spelt the same
+  improvedname:
+  - balance: Roundstart mutadone pills now have less chems in them from 50 to 5
+  krookodilehunter:
+  - spellcheck: fixes bad raptor grammar
+  mc-oofert:
+  - code_imp: stacking machine consoles check in area instead of a tiny view range
+      on init
+  thegrb93:
+  - bugfix: Fixes admin borg panel upgrade functions
+  tmyqlfpir:
+  - rscadd: Added new circuit camera components
+  - qol: Circuit drones can now recharge at recharge stations
+  zxaber:
+  - qol: Plexagon Access Management now tells you that you need an ID Trim before
+      applying a Template, rather than silently failing.
