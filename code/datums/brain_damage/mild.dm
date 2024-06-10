@@ -16,7 +16,10 @@
 	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
 		return
 	if(HAS_TRAIT(owner, TRAIT_RDS_SUPPRESSED))
+		owner.remove_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 		return
+	if(!HAS_TRAIT(owner, TRAIT_RDS_SUPPRESSED))
+		owner.grant_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 
 	owner.adjust_hallucinations_up_to(10 SECONDS * seconds_per_tick, 100 SECONDS)
 
