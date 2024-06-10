@@ -501,10 +501,10 @@
 	run_animation("closing")
 	layer = closingLayer
 	var/delay = animation_delay("closing")
-	SLEEP_NOT_DEL(delay)
+	SLEEP_NOT_DEL(0.2 SECONDS)
 	set_density(TRUE)
 	flags_1 |= PREVENT_CLICK_UNDER_1
-	SLEEP_NOT_DEL(0.2 SECONDS)
+	SLEEP_NOT_DEL(delay - 0.2 SECONDS)
 	update_appearance()
 	if(visible && !glass)
 		set_opacity(1)

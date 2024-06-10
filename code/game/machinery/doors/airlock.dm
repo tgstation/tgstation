@@ -1273,12 +1273,13 @@
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
 	update_icon(ALL, AIRLOCK_OPENING, TRUE)
+	var/delay = animation_delay("opening")
 	sleep(0.1 SECONDS)
 	set_opacity(0)
 	if(multi_tile)
 		filler.set_opacity(FALSE)
 	update_freelook_sight()
-	sleep(0.4 SECONDS)
+	sleep(delay - 0.1 SECONDS)
 	set_density(FALSE)
 	if(multi_tile)
 		filler.set_density(FALSE)
@@ -1353,6 +1354,7 @@
 			filler.density = TRUE
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
+	var/delay = animation_delay("closing")
 	sleep(0.1 SECONDS)
 	if(!air_tight)
 		set_density(TRUE)
@@ -1360,7 +1362,7 @@
 			filler.density = TRUE
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
-	sleep(0.4 SECONDS)
+	sleep(delay - 0.1 SECONDS)
 	if(dangerous_close)
 		crush()
 	if(visible && !glass)
@@ -2289,6 +2291,15 @@
 
 	return ..()
 
+/obj/machinery/door/airlock/external/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 0.6 SECONDS
+		if("closing")
+			return 0.6 SECONDS
+		if("deny")
+			return 0.3 SECONDS
+
 // Access free external airlocks
 /obj/machinery/door/airlock/external/ruin
 
@@ -2350,6 +2361,15 @@
 	greyscale_config = null
 	greyscale_colors = null
 
+/obj/machinery/door/airlock/hatch/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 0.95 SECONDS
+		if("closing")
+			return 0.95 SECONDS
+		if("deny")
+			return 0.3 SECONDS
+
 /obj/machinery/door/airlock/maintenance_hatch //Please dear fucking LORD make this a subtype of the above, they're the SAME GOD DAMN THING
 	name = "maintenance hatch"
 	icon = 'icons/obj/doors/airlocks/tall/hatch/maintenance.dmi'
@@ -2358,6 +2378,15 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_mhatch
 	greyscale_config = null
 	greyscale_colors = null
+
+/obj/machinery/door/airlock/maintenance_hatch/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 0.9 SECONDS
+		if("closing")
+			return 0.9 SECONDS
+		if("deny")
+			return 0.3 SECONDS
 
 // High Security Airlocks
 
@@ -2462,6 +2491,15 @@
 			L.Paralyze(40)
 			L.throw_at(throwtarget, 5, 1)
 		return FALSE
+
+/obj/machinery/door/airlock/cult/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 1.6 SECONDS
+		if("closing")
+			return 1.6 SECONDS
+		if("deny")
+			return 0.3 SECONDS
 
 /obj/machinery/door/airlock/cult/proc/conceal()
 	icon = 'icons/obj/doors/airlocks/tall/maintenance.dmi'
