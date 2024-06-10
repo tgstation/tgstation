@@ -57,7 +57,8 @@
 	var/list/formatted_list = list()
 
 	for(var/datum/loadout_item/item as anything in associated_items)
-		UNTYPED_LIST_ADD(formatted_list, item.to_ui_data())
+		var/list/item_data = item.to_ui_data()
+		UNTYPED_LIST_ADD(formatted_list, item_data)
 
 	sortTim(formatted_list, /proc/cmp_assoc_list_name) // Alphabetizing
 	return formatted_list

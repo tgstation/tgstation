@@ -108,12 +108,13 @@
 	var/list/data = list()
 	var/list/loadout_tabs = list()
 	for(var/datum/loadout_category/category as anything in GLOB.all_loadout_categories)
-		UNTYPED_LIST_ADD(loadout_tabs, list(
+		var/list/cat_data = list(
 			"name" = category.category_name,
 			"category_icon" = category.category_ui_icon,
 			"category_info" = category.category_info,
 			"contents" = category.items_to_ui_data(),
-		))
+		)
+		UNTYPED_LIST_ADD(loadout_tabs, cat_data)
 
 	data["loadout_tabs"] = loadout_tabs
 	return data
