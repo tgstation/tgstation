@@ -1,5 +1,3 @@
-// --- Loadout item datums for heads ---
-
 /// Head Slot Items (Deletes overrided items)
 /datum/loadout_category/head
 	category_name = "Head"
@@ -137,4 +135,4 @@
 /datum/loadout_item/head/wig
 	name = "Wig"
 	item_path = /obj/item/clothing/head/wig/natural
-	additional_displayed_text = list("Matches hair color")
+	additional_displayed_text = list("Hair Color")

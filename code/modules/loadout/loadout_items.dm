@@ -62,22 +62,15 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	VAR_FINAL/list/cached_reskin_options
 
 /datum/loadout_item/New(category)
-
 	src.category = category
 
 	if(can_be_greyscale == DONT_GREYSCALE)
-		// Explicitly be false if we don't want this to greyscale
 		can_be_greyscale = FALSE
 	else if(item_path::flags_1 & IS_PLAYER_COLORABLE_1)
-		// Otherwise set this automatically to true if it is actually colorable
 		can_be_greyscale = TRUE
 
 	if(isnull(name))
 		name = item_path::name
-
-	if(GLOB.all_loadout_datums[item_path])
-		stack_trace("Loadout datum collision detected! [item_path] is shared between multiple loadout datums.")
-	GLOB.all_loadout_datums[item_path] = src
 
 	if(isnull(ui_icon) && isnull(ui_icon_state))
 		ui_icon = item_path::icon_preview || item_path::icon
@@ -122,12 +115,11 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 		if("set_skin")
 			return set_skin(manager, user, params)
 
-	return FALSE
+	return TRUE
 
-/// Opens up the GAGS editing menu for a certain item
+/// Opens up the GAGS editing menu.
 /datum/loadout_item/proc/set_item_color(datum/preference_middleware/loadout/manager, mob/user)
 	if(manager.menu)
-		tgui_alert(user, "You already have a color menu open!")
 		return FALSE
 
 	var/list/loadout = manager.preferences.read_preference(/datum/preference/loadout)
@@ -155,7 +147,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	menu.ui_interact(user)
 	return TRUE
 
-/// Sets [category_slot]'s greyscale colors to the colors in the currently opened [open_menu].
+/// Callback for GAGS menu to set this item's color.
 /datum/loadout_item/proc/set_slot_greyscale(datum/preference_middleware/loadout/manager, datum/greyscale_modify_menu/open_menu)
 	if(!istype(open_menu))
 		CRASH("set_slot_greyscale called without a greyscale menu!")
@@ -172,12 +164,12 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	manager.preferences.update_preference(GLOB.preference_entries[/datum/preference/loadout], loadout)
 	return TRUE // update UI
 
-/// Sets the name of the item in the loadout
+/// Sets the name of the item.
 /datum/loadout_item/proc/set_name(datum/preference_middleware/loadout/manager, mob/user)
 	var/list/loadout = manager.preferences.read_preference(/datum/preference/loadout)
 	var/input_name = tgui_input_text(
 		user = user,
-		message = "What name do you want to give [name]? Leave blank to clear.",
+		message = "What name do you want to give the [name]? Leave blank to clear.",
 		title = "[name] name",
 		default = loadout?[item_path]?[INFO_NAMED], // plop in existing name (if any)
 		max_length = MAX_NAME_LEN,
@@ -197,7 +189,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	manager.preferences.update_preference(GLOB.preference_entries[/datum/preference/loadout], loadout)
 	return FALSE // no update needed
 
-/// Used for reskinning an item to an alt skin by default
+/// Used for reskinning an item to an alt skin.
 /datum/loadout_item/proc/set_skin(datum/preference_middleware/loadout/manager, mob/user, params)
 	if(!can_be_reskinned)
 		return FALSE
@@ -215,13 +207,14 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	return TRUE // always update UI
 
 /**
- * Place our [var/item_path] into [outfit].
+ * Place our [item_path] into the passed [outfit].
  *
  * By default, just adds the item into the outfit's backpack contents, if non-visual.
  *
- * outfit - The outfit we're equipping our items into.
- * equipper - If we're equipping out outfit onto a mob at the time, this is the mob it is equipped on. Can be null.
- * visual - If TRUE, then our outfit is only for visual use (for example, a preview).
+ * Arguments:
+ * * outfit - The outfit we're equipping our items into.
+ * * equipper - If we're equipping out outfit onto a mob at the time, this is the mob it is equipped on. Can be null.
+ * * visual - If TRUE, then our outfit is only for visual use (for example, a preview).
  */
 /datum/loadout_item/proc/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE)
 	if(!visuals_only)
@@ -240,7 +233,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 /datum/loadout_item/proc/on_equip_item(
 	obj/item/equipped_item,
 	datum/preferences/preference_source,
-	list/preference_list = preference_source?.read_preference(/datum/preference/loadout),
+	list/preference_list,
 	mob/living/carbon/human/equipper,
 	visuals_only = FALSE,
 )
@@ -276,7 +269,9 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 
 	return equipped_item
 
-/// Returns a formatted list of data for this loadout item, for use in UIs
+/**
+ * Returns a formatted list of data for this loadout item.
+ */
 /datum/loadout_item/proc/to_ui_data() as /list
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -290,6 +285,11 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	formatted_item["icon_state"] = ui_icon_state
 	return formatted_item
 
+/**
+ * Returns a list of information to display about this item in the loadout UI.
+ *
+ * These should be short strings, sub 14 characters generally.
+ */
 /datum/loadout_item/proc/get_item_information() as /list
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -308,6 +308,19 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 
 	return displayed_text
 
+/**
+ * Returns a list of buttons that are shown in the loadout UI for customizing this item.
+ *
+ * Buttons contain
+ * - 'L'abel: The text displayed beside the button
+ * - act_key: The key that is sent to the loadout manager when the button is clicked,
+ * for use in handle_loadout_action
+ * - button_icon: The FontAwesome icon to display on the button
+ * - active_key: In the loadout UI, this key is checked  in the user's loadout list for this item
+ * to determine if the button is 'active' (green) or not (blue).
+ * - active_text: Optional, if provided, the button appears to be a checkbox and this text is shown when 'active'
+ * - inactive_text: Optional, if provided, the button appears to be a checkbox and this text is shown when not 'active'
+ */
 /datum/loadout_item/proc/get_ui_buttons() as /list
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -331,8 +344,10 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 
 	return button_list
 
+/**
+ * Returns a list of options this item can be reskinned into.
+ */
 /datum/loadout_item/proc/get_reskin_options() as /list
-
 	if(!can_be_reskinned)
 		return null
 

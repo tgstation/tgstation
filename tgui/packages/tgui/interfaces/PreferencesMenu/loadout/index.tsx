@@ -21,8 +21,8 @@ import {
   LoadoutManagerData,
   typePath,
 } from './base';
-import { ItemIcon, LoadoutTabDisplay, SearchDisplay } from './item_display';
-import { LoadoutModifyDimmer } from './modify';
+import { ItemIcon, LoadoutTabDisplay, SearchDisplay } from './ItemDisplay';
+import { LoadoutModifyDimmer } from './Modify';
 
 export const LoadoutPage = () => {
   return (
@@ -179,7 +179,7 @@ const LoadoutTabs = (props: {
   );
 };
 
-const TypepathToLoadoutItem = (
+const typepathToLoadoutItem = (
   typepath: typePath,
   all_tabs: LoadoutCategory[],
 ) => {
@@ -204,7 +204,7 @@ const LoadoutSelectedItem = (props: {
   const { all_tabs, path, key, modifyItemDimmer, setModifyItemDimmer } = props;
   const { act } = useBackend();
 
-  const item = TypepathToLoadoutItem(path, all_tabs);
+  const item = typepathToLoadoutItem(path, all_tabs);
   if (!item) {
     return null;
   }

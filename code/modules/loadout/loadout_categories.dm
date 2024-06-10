@@ -20,6 +20,10 @@
 /datum/loadout_category/New()
 	. = ..()
 	associated_items = get_items()
+	for(var/datum/loadout_item/item as anything in associated_items)
+		if(GLOB.all_loadout_datums[item.item_path])
+			stack_trace("Loadout datum collision - [item.item_path] is shared between multiple loadout datums.")
+		GLOB.all_loadout_datums[item.item_path] = item
 
 /datum/loadout_category/Destroy(force, ...)
 	if(!force)
@@ -37,11 +41,12 @@
 			continue
 
 		if(!ispath(initial(found_type.item_path), /obj/item))
-			stack_trace("loadout get_items(): Attempted to instantiate a loadout item ([found_type]) with an invalid or null typepath! (got path: [initial(found_type.item_path)])")
+			stack_trace("Loadout get_items(): Attempted to instantiate a loadout item ([found_type]) with an invalid or null typepath! (got path: [initial(found_type.item_path)])")
 			continue
 
 		var/datum/loadout_item/spawned_type = new found_type(src)
 		all_items += spawned_type
+
 	return all_items
 
 /// Returns a list of all /datum/loadout_items in this category, formatted for UI use. Only ran once.
@@ -54,7 +59,7 @@
 	for(var/datum/loadout_item/item as anything in associated_items)
 		UNTYPED_LIST_ADD(formatted_list, item.to_ui_data())
 
-	sortTim(formatted_list, /proc/cmp_assoc_list_name) // Alphebetizig
+	sortTim(formatted_list, /proc/cmp_assoc_list_name) // Alphabetizing
 	return formatted_list
 
 /**

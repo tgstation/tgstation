@@ -42,11 +42,11 @@
 		if(isnull(equipped))
 			continue
 		item.on_equip_item(
-			equipped,
-			preference_source,
-			preference_list,
-			src,
-			visuals_only,
+			equipped_item = equipped,
+			preference_source = preference_source,
+			preference_list = preference_list,
+			equipper = src,
+			visuals_only = visuals_only,
 		)
 
 	return TRUE
@@ -57,10 +57,9 @@
  *
  * loadout_list - the list being checked
  *
- * returns a list of singleton datums
+ * Returns a list of singleton datums
  */
-/proc/loadout_list_to_datums(list/loadout_list)
-	RETURN_TYPE(/list)
+/proc/loadout_list_to_datums(list/loadout_list) as /list
 	var/list/datums = list()
 
 	if(!length(GLOB.all_loadout_datums))

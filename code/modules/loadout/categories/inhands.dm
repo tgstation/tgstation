@@ -1,11 +1,9 @@
-// --- Loadout item datums for inhand items ---
-
 /// Inhand items (Moves overrided items to backpack)
 /datum/loadout_category/inhands
 	category_name = "Inhand"
 	category_ui_icon = FA_ICON_BRIEFCASE
 	type_to_generate = /datum/loadout_item/inhand
-	tab_order = 5
+	tab_order = /datum/loadout_category/head::tab_order + 4
 
 /datum/loadout_item/inhand
 	abstract_type = /datum/loadout_item/inhand

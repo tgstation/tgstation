@@ -104,8 +104,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if (current_version < 43)
 		migrate_legacy_sound_toggles(savefile)
 
-	if (current_version < 45) // Feel free to bump this version up if more quirks are added to this proc
-		migrate_quirks_to_loadout(save_data)
+	if (current_version < 45)
+		migrate_quirk_to_loadout(
+			quirk_to_migrate = "Pride Pin",
+			new_typepath = /obj/item/clothing/accessory/pride,
+			data_to_migrate = list(INFO_RESKIN = save_data?["pride_pin"]),
+		)
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()

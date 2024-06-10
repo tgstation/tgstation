@@ -1,11 +1,9 @@
-// --- Loadout item datums for glasses ---
-
 /// Glasses Slot Items (Moves overrided items to backpack)
 /datum/loadout_category/glasses
 	category_name = "Glasses"
 	category_ui_icon = FA_ICON_GLASSES
 	type_to_generate = /datum/loadout_item/glasses
-	tab_order = 2
+	tab_order = /datum/loadout_category/head::tab_order + 1
 
 /datum/loadout_item/glasses
 	abstract_type = /datum/loadout_item/glasses

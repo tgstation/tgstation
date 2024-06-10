@@ -11,7 +11,7 @@ import {
   Stack,
 } from '../../../components';
 import { FAIcon, LoadoutItem, LoadoutManagerData, ReskinOption } from './base';
-import { ItemIcon } from './item_display';
+import { ItemIcon } from './ItemDisplay';
 
 // Used in LoadoutItem to make buttons relating to how an item can be edited
 export type LoadoutButton = {

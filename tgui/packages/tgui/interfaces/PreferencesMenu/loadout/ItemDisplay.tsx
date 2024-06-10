@@ -1,3 +1,4 @@
+import { createSearch } from '../../../../common/string';
 import { useBackend } from '../../../backend';
 import {
   Box,
@@ -43,22 +44,18 @@ export const ItemIcon = (props: { item: LoadoutItem; scale?: number }) => {
 
 export const ItemDisplay = (props: {
   active: boolean;
-  item: LoadoutItem | null;
+  item: LoadoutItem;
   scale?: number;
 }) => {
   const { act } = useBackend();
   const { active, item, scale = 3 } = props;
-  if (!item) {
-    // This is an error
-    return null;
-  }
 
-  const box_size = `${scale * 32}px`;
+  const boxSize = `${scale * 32}px`;
 
   return (
     <Button
-      height={box_size}
-      width={box_size}
+      height={boxSize}
+      width={boxSize}
       color={active ? 'green' : 'default'}
       style={{ textTransform: 'capitalize', zIndex: '1' }}
       tooltip={item.name}
@@ -132,18 +129,15 @@ export const SearchDisplay = (props: {
 }) => {
   const { loadout_tabs, currentSearch } = props;
 
-  const allLoadoutItems = () => {
-    const concatItems: LoadoutItem[] = [];
-    for (const tab of loadout_tabs) {
-      for (const item of tab.contents) {
-        concatItems.push(item);
-      }
-    }
-    return concatItems.sort((a, b) => a.name.localeCompare(b.name));
-  };
-  const validLoadoutItems = allLoadoutItems().filter((item) =>
-    item.name.toLowerCase().includes(currentSearch.toLowerCase()),
+  const search = createSearch(
+    currentSearch.toLowerCase(),
+    (loadout_item: LoadoutItem) => loadout_item.name,
   );
+
+  const validLoadoutItems = loadout_tabs
+    .flatMap((tab) => tab.contents)
+    .filter(search)
+    .sort((a, b) => (a.name > b.name ? 1 : -1));
 
   if (validLoadoutItems.length === 0) {
     return <NoticeBox>No items found!</NoticeBox>;

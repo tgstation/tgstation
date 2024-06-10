@@ -1,6 +1,6 @@
 import { BooleanLike } from '../../../../common/react';
 import { PreferencesMenuData } from '../data';
-import { LoadoutButton } from './modify';
+import { LoadoutButton } from './Modify';
 
 // Generic types
 export type DmIconFile = string;

@@ -1,11 +1,9 @@
-// --- Loadout item datums for neck items ---
-
 /// Neck Slot Items (Deletes overrided items)
 /datum/loadout_category/neck
 	category_name = "Neck"
 	category_ui_icon = FA_ICON_USER_TIE
 	type_to_generate = /datum/loadout_item/neck
-	tab_order = 3
+	tab_order = /datum/loadout_category/head::tab_order + 2
 
 /datum/loadout_item/neck
 	abstract_type = /datum/loadout_item/neck

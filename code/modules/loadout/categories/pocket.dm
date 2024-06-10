@@ -1,11 +1,9 @@
-// --- Loadout item datums for backpack / pocket items ---
-
 /// Pocket items (Moved to backpack)
 /datum/loadout_category/pocket
 	category_name = "Other"
 	category_ui_icon = FA_ICON_QUESTION
 	type_to_generate = /datum/loadout_item/pocket_items
-	tab_order = 6
+	tab_order = /datum/loadout_category/head::tab_order + 5
 	/// How many pocket items are allowed
 	VAR_PRIVATE/max_allowed = 2
 
@@ -35,7 +33,7 @@
 /datum/loadout_item/pocket_items/on_equip_item(
 	obj/item/equipped_item,
 	datum/preferences/preference_source,
-	list/preference_list = preference_source?.read_preference(/datum/preference/loadout),
+	list/preference_list,
 	mob/living/carbon/human/equipper,
 	visuals_only = FALSE,
 )

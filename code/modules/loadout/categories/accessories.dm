@@ -1,11 +1,9 @@
-// --- Loadout item datums for accessories ---
-
 /// Accessory Items (Moves overrided items to backpack)
 /datum/loadout_category/accessories
 	category_name = "Accessory"
 	category_ui_icon = FA_ICON_VEST
 	type_to_generate = /datum/loadout_item/accessory
-	tab_order = 4
+	tab_order = /datum/loadout_category/head::tab_order + 3
 
 /datum/loadout_item/accessory
 	abstract_type = /datum/loadout_item/accessory
@@ -62,7 +60,7 @@
 /datum/loadout_item/accessory/on_equip_item(
 	obj/item/clothing/accessory/equipped_item,
 	datum/preferences/preference_source,
-	list/preference_list = preference_source?.read_preference(/datum/preference/loadout),
+	list/preference_list,
 	mob/living/carbon/human/equipper,
 	visuals_only = FALSE,
 )
