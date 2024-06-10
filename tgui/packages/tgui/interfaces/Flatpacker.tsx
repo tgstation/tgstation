@@ -1,4 +1,5 @@
 import { toTitleCase } from 'common/string';
+import { BooleanLike, classes } from 'common/react';
 
 import { useBackend } from '../backend';
 import {
@@ -22,14 +23,14 @@ type Data = {
   SHEET_MATERIAL_AMOUNT: number;
   materials: Material[];
   design?: Design;
-  busy: boolean;
+  busy: BooleanLike;
 };
 
 type Design = {
   name: string;
   icon: string;
   requiredMaterials: Material[];
-  canPrint: boolean;
+  canPrint: BooleanLike;
   disableReason?: string;
 };
 
