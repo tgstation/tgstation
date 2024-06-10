@@ -1324,7 +1324,7 @@
 	emp_effect(severity, protection)
 	return protection
 
-// The actual effect of EMPs on the limb. Allows children to override it however they want
+/// The actual effect of EMPs on the limb. Allows children to override it however they want
 /obj/item/bodypart/proc/emp_effect(severity, protection)
 	if(!IS_ROBOTIC_LIMB(src))
 		return FALSE
