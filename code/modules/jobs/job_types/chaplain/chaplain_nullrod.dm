@@ -660,7 +660,7 @@
 	desc = "Clerical assassins are not officially recognized by the collective faiths of Nanotrasen. And yet, here you are."
 	icon_state = "nullsword"
 	inhand_icon_state = "nullsword"
-	worn_icon_state = "nullrod"
+	worn_icon_state = "nullsword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
