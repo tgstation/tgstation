@@ -176,7 +176,7 @@ export const BotAnnouncement = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Stack align="center">
-                {(tab === TAB.Announcements && (
+                {tab === TAB.Announcements ? (
                   <Stack.Item grow>
                     <Dropdown
                       options={['No radio channel', ...channels]}
@@ -196,7 +196,9 @@ export const BotAnnouncement = (props) => {
                       }}
                     />
                   </Stack.Item>
-                )) || <Stack.Item grow />}
+                ) : (
+                  <Stack.Item grow />
+                )}
                 <Stack.Item>
                   <Button
                     textAlign="center"
@@ -221,8 +223,9 @@ export const BotAnnouncement = (props) => {
                     color={tab === TAB.Announcements ? 'default' : 'red'}
                     minWidth="96px"
                   >
-                    {(tab === TAB.Announcements && 'Make Shortcut') ||
-                      'Delete Shortcut'}
+                    {tab === TAB.Announcements
+                      ? 'Make Shortcut'
+                      : 'Delete Shortcut'}
                   </Button>
                 </Stack.Item>
                 <Stack.Item>
