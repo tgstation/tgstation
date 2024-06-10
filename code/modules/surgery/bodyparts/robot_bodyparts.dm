@@ -117,8 +117,8 @@
 
 /obj/item/bodypart/leg/left/robot/emp_effect(severity, protection)
 	. = ..()
-	if(isnull(owner))
-		return FALSE
+	if(!. || isnull(owner))
+		return
 
 	var/knockdown_time = AUGGED_LEG_EMP_KNOCKDOWN_TIME
 	if (severity == EMP_HEAVY)
@@ -127,7 +127,7 @@
 	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
 		return FALSE
 	to_chat(owner, span_danger("As your [plaintext_zone] unexpectedly malfunctions, it causes you to fall to the ground!"))
-	return TRUE
+	return
 
 /obj/item/bodypart/leg/right/robot
 	name = "cyborg right leg"
@@ -166,8 +166,8 @@
 
 /obj/item/bodypart/leg/right/robot/emp_effect(severity, protection)
 	. = ..()
-	if(isnull(owner))
-		return FALSE
+	if(!. || isnull(owner))
+		return
 
 	var/knockdown_time = AUGGED_LEG_EMP_KNOCKDOWN_TIME
 	if (severity == EMP_HEAVY)
@@ -176,7 +176,7 @@
 	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
 		return FALSE
 	to_chat(owner, span_danger("As your [plaintext_zone] unexpectedly malfunctions, it causes you to fall to the ground!"))
-	return TRUE
+	return
 
 /obj/item/bodypart/chest/robot
 	name = "cyborg torso"
@@ -219,8 +219,8 @@
 
 /obj/item/bodypart/chest/robot/emp_effect(severity, protection)
 	. = ..()
-	if(isnull(owner))
-		return FALSE
+	if(!. || isnull(owner))
+		return
 
 	var/stun_time = 0
 	var/shift_x = 3
@@ -238,7 +238,7 @@
 		to_chat(owner, span_danger("Your [plaintext_zone]'s logic boards temporarily become unresponsive!"))
 		owner.Stun(stun_time)
 	owner.Shake(pixelshiftx = shift_x, pixelshifty = shift_y, duration = shake_duration)
-	return TRUE
+	return
 
 /obj/item/bodypart/chest/robot/get_cell()
 	return cell
@@ -395,8 +395,8 @@
 
 /obj/item/bodypart/head/robot/emp_effect(severity, protection)
 	. = ..()
-	if(isnull(owner))
-		return FALSE
+	if(!. || isnull(owner))
+		return
 
 	to_chat(owner, span_danger("Your [plaintext_zone]'s optical transponders glitch out and malfunction!"))
 
@@ -407,7 +407,7 @@
 	owner.add_client_colour(/datum/client_colour/malfunction)
 
 	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon/human, remove_client_colour), /datum/client_colour/malfunction), glitch_duration)
-	return TRUE
+	return
 
 #undef EMP_GLITCH
 
