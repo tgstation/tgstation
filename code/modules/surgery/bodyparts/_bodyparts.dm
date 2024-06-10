@@ -1319,9 +1319,10 @@
 			content.emp_act(severity)
 
 	if((protection & (EMP_PROTECT_WIRES | EMP_PROTECT_SELF)))
-		return FALSE
+		return protection
 
-	return emp_effect(severity, protection)
+	emp_effect(severity, protection)
+	return protection
 
 // The actual effect of EMPs on the limb. Allows children to override it however they want
 /obj/item/bodypart/proc/emp_effect(severity, protection)
