@@ -60,7 +60,7 @@
 /datum/uplink_item/dangerous/doublesword
 	name = "Double-Bladed Energy Sword"
 	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
-			a majority of energy projectiles that hit their mark, but requires two hands to wield. Struggles to protect you from tackles."
+			a majority of energy projectiles that hit their mark, but it requires two hands to wield. Struggles to protect you from tackles."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/dualsaber
 
