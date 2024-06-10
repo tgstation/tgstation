@@ -658,6 +658,7 @@
 /obj/item/nullrod/nullblade
 	name = "nullblade"
 	desc = "Clerical assassins are not officially recognized by the collective faiths of Nanotrasen. And yet, here you are."
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "nullsword"
 	inhand_icon_state = "nullsword"
 	worn_icon_state = "nullsword"
