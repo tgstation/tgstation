@@ -401,7 +401,7 @@
 	return items
 
 /**
- * Used to return a list of equipped items on a human mob; does not include held items (use get_all_gear)
+ * Used to return a list of equipped items on a human mob; does not by default include held items, see include_flags
  *
  * Argument(s):
  * * Optional - include_flags, (see obj.flags.dm) describes which optional things to include or not (pockets, accessories, held items)
