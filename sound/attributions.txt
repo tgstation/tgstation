@@ -178,3 +178,8 @@ https://freesound.org/people/shw489/sounds/234389/
 
 soup_boil1.ogg through soup_boil5.ogg and soup_boil_end.ogg are taken from Boiling Soup from Freesoung.org (CC4) and converted to OGG / split apart (but is otherwise unchanged):
 https://freesound.org/people/jorickhoofd/sounds/632783/
+
+compressed_air1.ogg is taken from Freesound and converted to ogg
+https://freesound.org/people/Geoff-Bremner-Audio/sounds/682952/
+compressed_air2.ogg is taken from Freesound and converted to ogg
+https://freesound.org/people/Geoff-Bremner-Audio/sounds/682816/
