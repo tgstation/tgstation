@@ -35,7 +35,6 @@
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
 			pocketed when inactive. Activating it produces a loud, distinctive noise."
-	progression_minimum = 20 MINUTES
 	item = /obj/item/melee/energy/sword/saber
 	cost = 8
 	purchasable_from = ~UPLINK_CLOWN_OPS
@@ -48,7 +47,7 @@
 			deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
 	progression_minimum = 20 MINUTES
 	item = /obj/item/melee/powerfist
-	cost = 6
+	cost = 10
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/dangerous/rapid
@@ -61,7 +60,7 @@
 /datum/uplink_item/dangerous/doublesword
 	name = "Double-Bladed Energy Sword"
 	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
-			energy projectiles it blocks, but requires two hands to wield. It also struggles to protect you from tackles."
+			a majority of energy projectiles that hit their mark, but requires two hands to wield. Struggles to protect you from tackles."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/dualsaber
 
