@@ -8,7 +8,8 @@
 
 /obj/item/melee/powerfist
 	name = "power-fist"
-	desc = "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch."
+	desc = "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch.\
+			Once held, it wraps itself so tightly around your arm it could only be removed surgically."
 	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "powerfist"
 	inhand_icon_state = "powerfist"
@@ -31,6 +32,10 @@
 	var/gas_per_fist = 3
 	/// Tank used for the gauntlet's piston-ram.
 	var/obj/item/tank/internals/tank
+
+/obj/item/melee/powerfist/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
 /datum/armor/melee_powerfist
 	fire = 100
