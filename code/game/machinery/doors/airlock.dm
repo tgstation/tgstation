@@ -2330,6 +2330,15 @@
 	greyscale_config = null
 	greyscale_colors = null
 
+/obj/machinery/door/airlock/vault/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 1.9 SECONDS
+		if("closing")
+			return 1.9 SECONDS
+		if("deny")
+			return 0.3 SECONDS
+
 // Hatch Airlocks
 
 /obj/machinery/door/airlock/hatch
@@ -2363,6 +2372,15 @@
 	damage_deflection = 30
 	greyscale_config = null
 	greyscale_colors = null
+
+/obj/machinery/door/airlock/highsecurity/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 1.7 SECONDS
+		if("closing")
+			return 1.7 SECONDS
+		if("deny")
+			return 0.3 SECONDS
 
 // Shuttle Airlocks
 
