@@ -101,7 +101,8 @@
 	var/list/design
 	if(data["boardInserted"])
 		var/disableReason = ""
-		if(!materials.has_materials(needed_mats))
+		var/has_materials = materials.has_materials(needed_mats, creation_efficiency)
+		if(!has_materials)
 			disableReason += "Not enough materials. "
 		if(print_tier > max_part_tier)
 			disableReason += "This design is too advanced for this machine. "
@@ -109,7 +110,7 @@
 			"name" = initial(build.name),
 			"requiredMaterials" = cost_mats,
 			"icon" = icon2base64(icon(initial(build.icon), initial(build.icon_state), frame = 1)),
-			"canPrint" = materials.has_materials(needed_mats) && print_tier <= max_part_tier,
+			"canPrint" = has_materials && print_tier <= max_part_tier,
 			"disableReason" = disableReason
 		)
 	data["design"] = design
@@ -138,8 +139,8 @@
 		for(var/type as anything in inserted_board.req_components)
 			needed_mats = analyze_cost(type, needed_mats)
 
-		CREATE_AND_INCREMENT(needed_mats, /datum/material/iron, (SHEET_MATERIAL_AMOUNT * 5 + (SHEET_MATERIAL_AMOUNT / 20)) * creation_efficiency)
-		CREATE_AND_INCREMENT(needed_mats, /datum/material/glass, (SHEET_MATERIAL_AMOUNT / 20) * creation_efficiency)
+		CREATE_AND_INCREMENT(needed_mats, /datum/material/iron, (SHEET_MATERIAL_AMOUNT * 5 + (SHEET_MATERIAL_AMOUNT / 20)))
+		CREATE_AND_INCREMENT(needed_mats, /datum/material/glass, (SHEET_MATERIAL_AMOUNT / 20))
 
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -170,7 +171,7 @@
 	for(var/atom/mat as anything in mat_list)
 		var/mat_type = mat.type
 
-		CREATE_AND_INCREMENT(costs, mat_type, (mat_list[mat] * creation_efficiency) * inserted_board.req_components[type])
+		CREATE_AND_INCREMENT(costs, mat_type, mat_list[mat] * inserted_board.req_components[type])
 
 	qdel(null_comp)
 	return costs
@@ -180,13 +181,13 @@
 	. = FALSE
 	if(!inserted_board)
 		return
-	if(!materials.has_materials(needed_mats))
+	if(!materials.has_materials(needed_mats, creation_efficiency))
 		say("Not enough materials to begin production.")
 		return
 	if(print_tier > max_part_tier)
 		say("Design too complex.")
 		return
-	materials.use_materials(needed_mats)
+	materials.use_materials(needed_mats, creation_efficiency)
 	playsound(src, 'sound/items/rped.ogg', 50, TRUE)
 	busy = TRUE
 
