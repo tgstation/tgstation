@@ -14,6 +14,8 @@
 	var/datum/ai_laws/laws = new()
 	var/force_replace_ai_name = FALSE
 	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
+	/// Whether the brainmob can move. Doesnt usually matter but SPHERICAL POSIBRAINSSS
+	var/immobilize = TRUE
 
 /obj/item/mmi/Initialize(mapload)
 	. = ..()
@@ -250,7 +252,7 @@
 	if(new_mecha)
 		if(!. && brainmob) // There was no mecha, there now is, and we have a brain mob that is no longer unaided.
 			brainmob.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
-	else if(. && brainmob) // There was a mecha, there no longer is one, and there is a brain mob that is now again unaided.
+	else if(. && brainmob && immobilize) // There was a mecha, there no longer is one, and there is a brain mob that is now again unaided.
 		brainmob.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 
 

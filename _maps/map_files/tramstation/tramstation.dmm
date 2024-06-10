@@ -6765,7 +6765,10 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/west,
-/obj/item/paper/fluff/jobs/engineering/frequencies,
+/obj/item/toy/plush/lizard_plushie/green{
+	name = "Runs-The-Rails";
+	desc = "An adorable, hard working lizard that runs in circles to keep the tram operating safely."
+	},
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "boc" = (
@@ -26721,6 +26724,7 @@
 	},
 /obj/item/folder/blue,
 /obj/item/pen/blue,
+/obj/item/paper/fluff/jobs/engineering/frequencies,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "iDQ" = (
@@ -61751,6 +61755,10 @@
 "uGW" = (
 /turf/closed/wall,
 /area/station/cargo/miningdock)
+"uGX" = (
+/obj/machinery/transport/tram_controller/tcomms,
+/turf/open/floor/iron/dark/telecomms,
+/area/station/tcommsat/server)
 "uHb" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/photocopier,
@@ -98247,7 +98255,7 @@ dwR
 ngp
 dwR
 dwR
-cXL
+ney
 ney
 sMr
 sMr
@@ -98505,7 +98513,7 @@ gga
 rBW
 ffN
 sMr
-sMr
+uGX
 drH
 ney
 tms
@@ -98761,7 +98769,7 @@ ocK
 ngp
 dwR
 dwR
-cXL
+sMr
 sMr
 sMr
 sMr

@@ -40,7 +40,7 @@
 		span_notice("[user] begins to make an incision in [target]'s heart."),
 		span_notice("[user] begins to make an incision in [target]'s heart."),
 	)
-	display_pain(target, "You feel a horrendous pain in your heart, it's almost enough to make you pass out!")
+	display_pain(target, "You feel a horrendous pain in your heart, it's almost enough to make you pass out!", mood_event_type = /datum/mood_event/surgery)
 
 /datum/surgery_step/incise_heart/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(ishuman(target))
@@ -53,6 +53,7 @@
 				span_notice("Blood pools around the incision in [target_human]'s heart."),
 				span_notice("Blood pools around the incision in [target_human]'s heart."),
 			)
+			display_pain(target, mood_event_type = /datum/mood_event/surgery/success)
 			var/obj/item/bodypart/target_bodypart = target_human.get_bodypart(target_zone)
 			target_bodypart.adjustBleedStacks(10)
 			target_human.adjustBruteLoss(10)
@@ -68,6 +69,7 @@
 			span_warning("[user] screws up, causing blood to spurt out of [target_human]'s chest!"),
 			span_warning("[user] screws up, causing blood to spurt out of [target_human]'s chest!"),
 		)
+		display_pain(target, mood_event_type = /datum/mood_event/surgery/failure)
 		var/obj/item/bodypart/target_bodypart = target_human.get_bodypart(target_zone)
 		target_bodypart.adjustBleedStacks(10)
 		target_human.adjustOrganLoss(ORGAN_SLOT_HEART, 10)

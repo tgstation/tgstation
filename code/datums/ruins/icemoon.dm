@@ -166,6 +166,12 @@
 	description = "3 Peaks Radio, where the 2000's live forever."
 	suffix = "icemoon_underground_frozen_comms.dmm"
 
+/datum/map_template/ruin/icemoon/underground/comms_agent
+	name = "Icemoon Listening Post"
+	id = "icemoon_comms_agent"
+	description = "Radio signals are being detected and the source is this completely innocent pile of snow."
+	suffix = "icemoon_underground_comms_agent.dmm"
+
 //TODO: Bottom-Level ONLY Spawns after Refactoring Related Code
 /datum/map_template/ruin/icemoon/underground/plasma_facility
 	name = "Ice-Ruin Abandoned Plasma Facility"

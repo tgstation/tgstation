@@ -45,7 +45,7 @@
 
 /obj/item/camera/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/camera), SHELL_CAPACITY_SMALL)
+	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/camera, new /obj/item/circuit_component/remotecam/polaroid), SHELL_CAPACITY_SMALL)
 
 /obj/item/camera/attack_self(mob/user)
 	if(!disk)
