@@ -361,8 +361,8 @@
 	toolspeed = 0.5
 	upgraded_toolspeed = 0.3
 
-/obj/item/borg/cyborg_omnitool/engineering/get_all_tool_behaviours()
-	return list(TOOL_SCREWDRIVER, TOOL_CROWBAR, TOOL_WRENCH, TOOL_WIRECUTTER, TOOL_MULTITOOL)
+	///Inbuild multitool used by this module
+	var/obj/item/multitool/multi_tool
 
 /obj/item/borg/cyborg_omnitool/engineering/Initialize(mapload)
 	. = ..()
@@ -373,6 +373,13 @@
 		TOOL_WIRECUTTER = image(icon = 'icons/obj/tools.dmi', icon_state = "[TOOL_WIRECUTTER]_map"),
 		TOOL_MULTITOOL = image(icon = 'icons/obj/devices/tool.dmi', icon_state = "[TOOL_MULTITOOL]"),
 	)
+
+/obj/item/borg/cyborg_omnitool/engineering/Destroy(force)
+	QDEL_NULL(multi_tool)
+	return ..()
+
+/obj/item/borg/cyborg_omnitool/engineering/get_all_tool_behaviours()
+	return list(TOOL_SCREWDRIVER, TOOL_CROWBAR, TOOL_WRENCH, TOOL_WIRECUTTER, TOOL_MULTITOOL)
 
 /obj/item/borg/cyborg_omnitool/engineering/reference_item_for_parameters()
 	RemoveElement(/datum/element/eyestab)
@@ -388,6 +395,12 @@
 			reference = /obj/item/wirecutters
 		if(TOOL_MULTITOOL)
 			reference = /obj/item/multitool
+
+/obj/item/borg/cyborg_omnitool/engineering/get_multi_tool(mob/user)
+	if(!multi_tool)
+		multi_tool = new (src)
+
+	return multi_tool
 
 #undef PKBORG_DAMPEN_CYCLE_DELAY
 #undef POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER
