@@ -360,6 +360,7 @@
 	item_flags = null
 	toolspeed = 0.5
 	upgraded_toolspeed = 0.3
+	var/datum/buffer
 
 /obj/item/borg/cyborg_omnitool/engineering/get_all_tool_behaviours()
 	return list(TOOL_SCREWDRIVER, TOOL_CROWBAR, TOOL_WRENCH, TOOL_WIRECUTTER, TOOL_MULTITOOL)
@@ -373,6 +374,23 @@
 		TOOL_WIRECUTTER = image(icon = 'icons/obj/tools.dmi', icon_state = "[TOOL_WIRECUTTER]_map"),
 		TOOL_MULTITOOL = image(icon = 'icons/obj/devices/tool.dmi', icon_state = "[TOOL_MULTITOOL]"),
 	)
+
+/obj/item/borg/cyborg_omnitool/engineering/proc/set_buffer(datum/buffer) //we have multitool. we need buffer.
+	if(src.buffer)
+		UnregisterSignal(src.buffer, COMSIG_QDELETING)
+	src.buffer = buffer
+	if(!QDELETED(buffer))
+		RegisterSignal(buffer, COMSIG_QDELETING, PROC_REF(on_buffer_del))
+
+/obj/item/borg/cyborg_omnitool/engineering/proc/on_buffer_del(datum/source)
+	SIGNAL_HANDLER
+	buffer = null
+
+/obj/item/borg/cyborg_omnitool/engineering/multitool_check_buffer(user, obj/item/multitool, silent = FALSE) //IM A MULTITOOL I PROMISE
+	if(tool_behaviour == TOOL_MULTITOOL)
+		return TRUE
+	else
+		return ..()
 
 /obj/item/borg/cyborg_omnitool/engineering/reference_item_for_parameters()
 	RemoveElement(/datum/element/eyestab)
