@@ -690,7 +690,7 @@
 	// Did we successfully meet the criteria for a sneak attack?
 	var/successful_sneak_attack = FALSE
 
-	// The force our sneak attack applies. Starts as our force, then multipleid based on certain factors.
+	// The force our sneak attack applies. Starts as 1d6, then changed based on certain factors.
 	var/force_applied = rand(1,6)
 
 	// Status effects on the target that grant us sneak attacks
