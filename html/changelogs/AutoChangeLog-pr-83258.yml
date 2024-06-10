@@ -1,6 +1,0 @@
-author: "Higgin"
-delete-after: True
-changes:
-  - balance: "buffed healing values of helbital, probital, lenturi, hercuri, syriniver, musiver, and tirimol for their respective damage types."
-  - balance: "Tirimol now uses oxygen as a catalyst rather than consuming it over time making it easier to make without babysitting. Tirimol now requires much more careful management of impurity in order to make Super Melatonin."
-  - rscadd: "medical chem vendors now sell bottles of calomel, a potent full-range chemical purger."
