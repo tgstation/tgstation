@@ -454,7 +454,7 @@
 	add_filter("ready_outline", 3, list("type" = "outline", "color" = outline_color, "size" = 2))
 	animate(src, pixel_y = 12, time = anim_time * 0.5, easing = QUAD_EASING | EASE_OUT)
 	animate(pixel_y = 0, time = anim_time * 0.5, easing = QUAD_EASING | EASE_IN)
-	addtimer(CALLBACK(src, PROC_REF(remove_gender_reveal_fx), og_layer, anim_time))
+	addtimer(CALLBACK(src, PROC_REF(remove_gender_reveal_fx), og_layer), anim_time)
 
 /**
  * Removes the non-animate effects from above proc
