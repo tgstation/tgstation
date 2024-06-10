@@ -701,7 +701,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "smoking pipe"
 	desc = "A pipe, for smoking. Probably made of meerschaum or something."
 	icon_state = "pipeoff"
-	icon_on = "pipeff"  //Note - these are in masks.dmi
+	icon_on = "pipeoff"  //Note - these are in masks.dmi
 	icon_off = "pipeoff"
 	inhand_icon_state = null
 	inhand_icon_on = null
@@ -772,7 +772,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "corn cob pipe"
 	desc = "A nicotine delivery system popularized by folksy backwoodsmen and kept popular in the modern age and beyond by space hipsters. Can be loaded with objects."
 	icon_state = "cobpipeoff"
-	icon_on = "cobpipeff"  //Note - these are in masks.dmi
+	icon_on = "cobpipeoff"  //Note - these are in masks.dmi
 	icon_off = "cobpipeoff"
 	inhand_icon_on = null
 	inhand_icon_off = null
