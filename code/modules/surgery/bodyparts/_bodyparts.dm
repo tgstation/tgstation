@@ -1318,9 +1318,15 @@
 		for(var/atom/content as anything in contents)
 			content.emp_act(severity)
 
-	if((protection & (EMP_PROTECT_WIRES | EMP_PROTECT_SELF)) || !IS_ROBOTIC_LIMB(src))
+	if((protection & (EMP_PROTECT_WIRES | EMP_PROTECT_SELF)))
 		return FALSE
 
+	return emp_effect(severity, protection)
+
+// The actual effect of EMPs on the limb. Allows children to override it however they want
+/obj/item/bodypart/proc/emp_effect(severity, protection)
+	if(!IS_ROBOTIC_LIMB(src))
+		return FALSE
 	// with defines at the time of writing, this is 2 brute and 1.5 burn
 	// 2 + 1.5 = 3,5, with 6 limbs thats 21, on a heavy 42
 	// 42 * 0.8 = 33.6

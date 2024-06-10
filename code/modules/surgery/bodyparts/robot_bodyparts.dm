@@ -115,18 +115,19 @@
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	bodypart_flags = BODYPART_UNHUSKABLE
 
-/obj/item/bodypart/leg/left/robot/emp_act(severity)
+/obj/item/bodypart/leg/left/robot/emp_effect(severity, protection)
 	. = ..()
-	if(!. || isnull(owner))
-		return
+	if(isnull(owner))
+		return FALSE
 
 	var/knockdown_time = AUGGED_LEG_EMP_KNOCKDOWN_TIME
 	if (severity == EMP_HEAVY)
 		knockdown_time *= 2
 	owner.Knockdown(knockdown_time)
 	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
-		return
+		return FALSE
 	to_chat(owner, span_danger("As your [plaintext_zone] unexpectedly malfunctions, it causes you to fall to the ground!"))
+	return TRUE
 
 /obj/item/bodypart/leg/right/robot
 	name = "cyborg right leg"
@@ -163,18 +164,19 @@
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	bodypart_flags = BODYPART_UNHUSKABLE
 
-/obj/item/bodypart/leg/right/robot/emp_act(severity)
+/obj/item/bodypart/leg/right/robot/emp_effect(severity, protection)
 	. = ..()
-	if(!. || isnull(owner))
-		return
+	if(isnull(owner))
+		return FALSE
 
 	var/knockdown_time = AUGGED_LEG_EMP_KNOCKDOWN_TIME
 	if (severity == EMP_HEAVY)
 		knockdown_time *= 2
 	owner.Knockdown(knockdown_time)
 	if(owner.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
-		return
+		return FALSE
 	to_chat(owner, span_danger("As your [plaintext_zone] unexpectedly malfunctions, it causes you to fall to the ground!"))
+	return TRUE
 
 /obj/item/bodypart/chest/robot
 	name = "cyborg torso"
@@ -215,10 +217,10 @@
 	var/wired = FALSE
 	var/obj/item/stock_parts/cell/cell = null
 
-/obj/item/bodypart/chest/robot/emp_act(severity)
+/obj/item/bodypart/chest/robot/emp_effect(severity, protection)
 	. = ..()
-	if(!. || isnull(owner))
-		return
+	if(isnull(owner))
+		return FALSE
 
 	var/stun_time = 0
 	var/shift_x = 3
@@ -236,6 +238,7 @@
 		to_chat(owner, span_danger("Your [plaintext_zone]'s logic boards temporarily become unresponsive!"))
 		owner.Stun(stun_time)
 	owner.Shake(pixelshiftx = shift_x, pixelshifty = shift_y, duration = shake_duration)
+	return TRUE
 
 /obj/item/bodypart/chest/robot/get_cell()
 	return cell
@@ -390,10 +393,10 @@
 
 #define EMP_GLITCH "EMP_GLITCH"
 
-/obj/item/bodypart/head/robot/emp_act(severity)
+/obj/item/bodypart/head/robot/emp_effect(severity, protection)
 	. = ..()
-	if(!. || isnull(owner))
-		return
+	if(isnull(owner))
+		return FALSE
 
 	to_chat(owner, span_danger("Your [plaintext_zone]'s optical transponders glitch out and malfunction!"))
 
@@ -404,6 +407,7 @@
 	owner.add_client_colour(/datum/client_colour/malfunction)
 
 	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon/human, remove_client_colour), /datum/client_colour/malfunction), glitch_duration)
+	return TRUE
 
 #undef EMP_GLITCH
 
