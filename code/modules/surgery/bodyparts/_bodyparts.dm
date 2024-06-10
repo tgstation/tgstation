@@ -1310,7 +1310,7 @@
 	else
 		update_icon_dropped()
 
-// Note: Does NOT return EMP protection value from parent call or pass it on to subtypes
+// Note: For effects on subtypes, use the emp_effect() proc instead
 /obj/item/bodypart/emp_act(severity)
 	var/protection = ..()
 	// If the limb doesn't protect contents, strike them first
