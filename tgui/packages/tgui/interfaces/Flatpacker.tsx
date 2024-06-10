@@ -13,11 +13,11 @@ import {
   Stack,
   Table,
 } from '../components';
-import { Material } from './Fabrication/Types';
-import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
-import { MaterialIcon } from './Fabrication/MaterialIcon';
 import { TableCell } from '../components/Table';
 import { Window } from '../layouts';
+import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
+import { MaterialIcon } from './Fabrication/MaterialIcon';
+import { Material } from './Fabrication/Types';
 
 type Data = {
   SHEET_MATERIAL_AMOUNT: number;
