@@ -89,55 +89,8 @@
 	. += span_cult_italic("It has the blood of [num_slain] fallen cultist[num_slain == 1 ? "" : "s"] on it. \
 		<b>Offering</b> it to Nar'sie will transform it into a [num_slain >= 3 ? "powerful" : "standard"] cult weapon.")
 
-/obj/item/nullrod/godhand
-	name = "god hand"
-	desc = "This hand of yours glows with an awesome power!"
-	icon = 'icons/obj/weapons/hand.dmi'
-	icon_state = "disintegrate"
-	inhand_icon_state = "disintegrate"
-	lefthand_file = 'icons/mob/inhands/items/touchspell_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items/touchspell_righthand.dmi'
-	slot_flags = null
-	item_flags = ABSTRACT | DROPDEL
-	w_class = WEIGHT_CLASS_HUGE
-	hitsound = 'sound/weapons/sear.ogg'
-	damtype = BURN
-	attack_verb_continuous = list("punches", "cross counters", "pummels")
-	attack_verb_simple = list(SFX_PUNCH, "cross counter", "pummel")
-	menu_description = "An undroppable god hand dealing burn damage. Disappears if the arm holding it is cut off."
-
-/obj/item/nullrod/godhand/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-
-/obj/item/nullrod/staff
-	name = "red holy staff"
-	desc = "It has a mysterious, protective aura."
-	icon = 'icons/obj/weapons/staff.dmi'
-	icon_state = "godstaff-red"
-	inhand_icon_state = "godstaff-red"
-	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	w_class = WEIGHT_CLASS_HUGE
-	force = 5
-	slot_flags = ITEM_SLOT_BACK
-	block_chance = 50
-	block_sound = 'sound/weapons/genhit.ogg'
-	menu_description = "A red staff which provides a medium chance of blocking incoming attacks via a protective red aura around its user, but deals very low amount of damage. Can be worn only on the back."
-	/// The icon which appears over the mob holding the item
-	var/shield_icon = "shield-red"
-
-/obj/item/nullrod/staff/worn_overlays(mutable_appearance/standing, isinhands)
-	. = ..()
-	if(isinhands)
-		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_SHIELD_LAYER)
-
-/obj/item/nullrod/staff/blue
-	name = "blue holy staff"
-	icon_state = "godstaff-blue"
-	inhand_icon_state = "godstaff-blue"
-	shield_icon = "shield-old"
-	menu_description = "A blue staff which provides a medium chance of blocking incoming attacks via a protective blue aura around its user, but deals very low amount of damage. Can be worn only on the back."
+/// Claymore Variant
+/// This subtype possesses a block chance and is sharp.
 
 /obj/item/nullrod/claymore
 	name = "holy claymore"
@@ -249,27 +202,8 @@
 	inhand_icon_state = "e_cutlass_on"
 	worn_icon_state = "swordred"
 
-/obj/item/nullrod/sord
-	name = "\improper UNREAL SORD"
-	desc = "This thing is so unspeakably HOLY you are having a hard time even holding it."
-	icon = 'icons/obj/weapons/sword.dmi'
-	icon_state = "sord"
-	inhand_icon_state = "sord"
-	worn_icon_state = "sord"
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	force = 4.13
-	throwforce = 1
-	slot_flags = ITEM_SLOT_BELT
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-	menu_description = "An odd s(w)ord dealing a laughable amount of damage. Fits in pockets. Can be worn on the belt."
-
-/obj/item/nullrod/sord/suicide_act(mob/living/user) //a near-exact copy+paste of the actual sord suicide_act()
-	user.visible_message(span_suicide("[user] is trying to impale [user.p_them()]self with [src]! It might be a suicide attempt if it weren't so HOLY."), \
-	span_suicide("You try to impale yourself with [src], but it's TOO HOLY..."))
-	return SHAME
+/// Vibro Variant
+/// This subtype possesses armor penetration and is sharp.
 
 /obj/item/nullrod/vibro
 	name = "high frequency blade"
@@ -341,6 +275,81 @@
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5 //same speed as an active chainsaw
 	chaplain_spawnable = FALSE //prevents being pickable as a chaplain weapon (it has 30 force)
+
+/// Other Variants
+/// Not a special category on their own, but usually possess more unique mechanics
+
+/obj/item/nullrod/godhand
+	name = "god hand"
+	desc = "This hand of yours glows with an awesome power!"
+	icon = 'icons/obj/weapons/hand.dmi'
+	icon_state = "disintegrate"
+	inhand_icon_state = "disintegrate"
+	lefthand_file = 'icons/mob/inhands/items/touchspell_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/touchspell_righthand.dmi'
+	slot_flags = null
+	item_flags = ABSTRACT | DROPDEL
+	w_class = WEIGHT_CLASS_HUGE
+	hitsound = 'sound/weapons/sear.ogg'
+	damtype = BURN
+	attack_verb_continuous = list("punches", "cross counters", "pummels")
+	attack_verb_simple = list(SFX_PUNCH, "cross counter", "pummel")
+	menu_description = "An undroppable god hand dealing burn damage. Disappears if the arm holding it is cut off."
+
+/obj/item/nullrod/godhand/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+
+/obj/item/nullrod/staff
+	name = "red holy staff"
+	desc = "It has a mysterious, protective aura."
+	icon = 'icons/obj/weapons/staff.dmi'
+	icon_state = "godstaff-red"
+	inhand_icon_state = "godstaff-red"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+	w_class = WEIGHT_CLASS_HUGE
+	force = 5
+	slot_flags = ITEM_SLOT_BACK
+	block_chance = 50
+	block_sound = 'sound/weapons/genhit.ogg'
+	menu_description = "A red staff which provides a medium chance of blocking incoming attacks via a protective red aura around its user, but deals very low amount of damage. Can be worn only on the back."
+	/// The icon which appears over the mob holding the item
+	var/shield_icon = "shield-red"
+
+/obj/item/nullrod/staff/worn_overlays(mutable_appearance/standing, isinhands)
+	. = ..()
+	if(isinhands)
+		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_SHIELD_LAYER)
+
+/obj/item/nullrod/staff/blue
+	name = "blue holy staff"
+	icon_state = "godstaff-blue"
+	inhand_icon_state = "godstaff-blue"
+	shield_icon = "shield-old"
+	menu_description = "A blue staff which provides a medium chance of blocking incoming attacks via a protective blue aura around its user, but deals very low amount of damage. Can be worn only on the back."
+
+/obj/item/nullrod/sord
+	name = "\improper UNREAL SORD"
+	desc = "This thing is so unspeakably HOLY you are having a hard time even holding it."
+	icon = 'icons/obj/weapons/sword.dmi'
+	icon_state = "sord"
+	inhand_icon_state = "sord"
+	worn_icon_state = "sord"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	force = 4.13
+	throwforce = 1
+	slot_flags = ITEM_SLOT_BELT
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	menu_description = "An odd s(w)ord dealing a laughable amount of damage. Fits in pockets. Can be worn on the belt."
+
+/obj/item/nullrod/sord/suicide_act(mob/living/user) //a near-exact copy+paste of the actual sord suicide_act()
+	user.visible_message(span_suicide("[user] is trying to impale [user.p_them()]self with [src]! It might be a suicide attempt if it weren't so HOLY."), \
+	span_suicide("You try to impale yourself with [src], but it's TOO HOLY..."))
+	return SHAME
 
 /obj/item/nullrod/hammer
 	name = "relic war hammer"
@@ -525,7 +534,7 @@
 	. = ..()
 	AddComponent(/datum/component/faction_granter, FACTION_CARP, holy_role_required = HOLY_ROLE_PRIEST, grant_message = span_boldnotice("You are blessed by Carp-Sie. Wild space carp will no longer attack you."))
 
-/obj/item/nullrod/claymore/bostaff //May as well make it a "claymore" and inherit the blocking
+/obj/item/nullrod/bostaff
 	name = "monk's staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, it is now used to harass the clown."
 	force = 15
@@ -533,7 +542,6 @@
 	block_sound = 'sound/weapons/genhit.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
-	sharpness = NONE
 	hitsound = SFX_SWING_HIT
 	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
@@ -543,7 +551,7 @@
 	worn_icon_state = "bostaff0"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	menu_description = "A staff which provides a medium-low chance of blocking incoming melee attacks and deals a little less damage due to being made of wood. Can be worn on the back."
+	menu_description = "A staff which provides a medium-low chance of blocking incoming melee attacks and deals a little less damage. Can be worn on the back."
 
 /obj/item/nullrod/tribal_knife
 	name = "arrhythmic knife"
@@ -646,3 +654,93 @@
 	attack_verb_simple = list("stab", "poke", "slash", "clock")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	menu_description = "A pointy spear which penetrates armor a little. Can be worn only on the belt."
+
+/obj/item/nullrod/nullblade
+	name = "nullblade"
+	desc = "Clerical assassins are not officially recognized by the collective faiths of Nanotrasen. And yet, here you are."
+	icon_state = "nullsword"
+	inhand_icon_state = "nullsword"
+	worn_icon_state = "nullrod"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	w_class = WEIGHT_CLASS_BULKY
+	force = 12
+	wound_bonus = 5
+	bare_wound_bonus = 30
+	slot_flags = ITEM_SLOT_BELT
+	block_sound = 'sound/weapons/parry.ogg'
+	sharpness = SHARP_POINTY
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb_continuous = list("attacks", "punctures", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "puncture", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	menu_description = "A blade that deals low damage, but easily inflicts wounds. Against debilitated targets, can also deal additional sneak attack damage with a very high wound chance."
+
+/obj/item/nullrod/nullblade/afterattack(atom/target, mob/user, proximity, params)
+	. = ..()
+	if(!proximity)
+		return
+
+	if(!isliving(target))
+		return
+
+	sneak_attack(target, user)
+
+/// If our target is incapacitated, unable to protect themselves, or we attack them from behind, we sneak attack!
+/obj/item/nullrod/nullblade/proc/sneak_attack(mob/living/living_target, mob/user)
+	// Did we successfully meet the criteria for a sneak attack?
+	var/successful_sneak_attack = FALSE
+
+	// The force our sneak attack applies. Starts as our force, then multipleid based on certain factors.
+	var/force_applied = rand(1,6)
+
+	// Status effects on the target that grant us sneak attacks
+	if(living_target.is_blind())
+		successful_sneak_attack = TRUE
+
+	if(living_target.get_timed_status_effect_duration(/datum/status_effect/staggered))
+		successful_sneak_attack = TRUE
+
+	if(living_target.get_timed_status_effect_duration(/datum/status_effect/confusion))
+		successful_sneak_attack = TRUE
+
+	// If the target is rebuked, we also add some additional damage. It is the closest thing to 'studying' your target, okay?
+	if(living_target.has_status_effect(/datum/status_effect/rebuked))
+		force_applied += 2
+
+	// Our target is in some kind of grapple, which prevents them form protecting themselves.
+	if(living_target.pulledby && living_target.pulledby.grab_state >= GRAB_AGGRESSIVE)
+		successful_sneak_attack = TRUE
+
+	// traits that render you unable to defend yourself properly from an attack
+	if(HAS_TRAIT(living_target, TRAIT_SPINNING) || HAS_TRAIT(living_target, TRAIT_HANDS_BLOCKED))
+		successful_sneak_attack = TRUE
+
+	// If our target is also unconscious for some reason, we get even more damage. Coup de grace, motherfucker.
+	if(HAS_TRAIT(living_target, TRAIT_KNOCKEDOUT))
+		force_applied += rand(1,6)
+		new /obj/effect/temp_visual/crit(get_turf(living_target))
+
+	// Baton + this weapon might be a little too much fun so we're nerfing this combination outright.
+	if(HAS_TRAIT(living_target, TRAIT_IWASBATONED))
+		force_applied *= 0.5
+
+	// We'll take "same tile" as "behind" for ease
+	if(living_target.loc == user.loc)
+		successful_sneak_attack = TRUE
+
+	// We'll also assume lying down is vulnerable, as mob directions when lying are unclear and you have trouble defending yourself from prone
+	if(living_target.body_position == LYING_DOWN)
+		successful_sneak_attack = TRUE
+
+	// Now check for if we're behind
+	var/dir_living_target_to_user = get_dir(living_target, user)
+	if(living_target.dir & REVERSE_DIR(dir_living_target_to_user))
+		successful_sneak_attack = TRUE
+
+	if(!successful_sneak_attack)
+		return
+
+	// We got a sneak attack!
+	living_target.apply_damage(force_applied, BRUTE, wound_bonus = bare_wound_bonus)
+	living_target.balloon_alert(user, "sneak attack!")
+	playsound(get_turf(living_target), 'sound/weapons/guillotine.ogg', 50, TRUE)
