@@ -170,7 +170,7 @@
 /obj/item/spear/explosive/afterattack(atom/movable/target, mob/user, click_parameters)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED) || !istype(target))
 		return
-	if(AM.resistance_flags & INDESTRUCTIBLE) //due to the lich incident of 2021, embedding grenades inside of indestructible structures is forbidden
+	if(target.resistance_flags & INDESTRUCTIBLE) //due to the lich incident of 2021, embedding grenades inside of indestructible structures is forbidden
 		return
 	if(ismob(target))
 		var/mob/mob_target = target
