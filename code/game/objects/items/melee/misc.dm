@@ -242,7 +242,7 @@
 /obj/item/melee/supermatter_sword/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
 	if(.)
-		return
+		return .
 
 	if(A == user)
 		user.dropItemToGround(src, TRUE)

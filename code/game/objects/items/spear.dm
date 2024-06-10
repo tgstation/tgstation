@@ -167,22 +167,22 @@
 	return CLICK_ACTION_SUCCESS
 
 
-/obj/item/spear/explosive/afterattack(atom/movable/AM, mob/user, click_parameters)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED) || !istype(AM))
+/obj/item/spear/explosive/afterattack(atom/movable/target, mob/user, click_parameters)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED) || !istype(target))
 		return
 	if(AM.resistance_flags & INDESTRUCTIBLE) //due to the lich incident of 2021, embedding grenades inside of indestructible structures is forbidden
 		return
-	if(ismob(AM))
-		var/mob/mob_target = AM
+	if(ismob(target))
+		var/mob/mob_target = target
 		if(mob_target.status_flags & GODMODE) //no embedding grenade phylacteries inside of ghost poly either
 			return
-	if(iseffect(AM)) //and no accidentally wasting your moment of glory on graffiti
+	if(iseffect(target)) //and no accidentally wasting your moment of glory on graffiti
 		return
 	user.say("[war_cry]", forced="spear warcry")
 	if(isliving(user))
 		var/mob/living/living_user = user
 		living_user.set_resting(new_resting = TRUE, silent = TRUE, instant = TRUE)
-		living_user.Move(get_turf(AM))
+		living_user.Move(get_turf(target))
 		explosive.forceMove(get_turf(living_user))
 		explosive.detonate(lanced_by=user)
 		if(!QDELETED(living_user))
@@ -198,18 +198,18 @@
 	force_unwielded = 15
 	force_wielded = 25
 
-/obj/item/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, click_parameters)
+/obj/item/spear/grey_tide/afterattack(atom/movable/target, mob/living/user, click_parameters)
 	user.faction |= "greytide([REF(user)])"
-	if(!isliving(AM))
+	if(!isliving(target))
 		return
-	var/mob/living/L = AM
-	if(istype(L, /mob/living/simple_animal/hostile/illusion))
+	var/mob/living/stabbed = target
+	if(istype(stabbed, /mob/living/simple_animal/hostile/illusion))
 		return
-	if(!L.stat && prob(50))
-		var/mob/living/simple_animal/hostile/illusion/M = new(user.loc)
-		M.faction = user.faction.Copy()
-		M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
-		M.GiveTarget(L)
+	if(stabbed.stat == CONSCIOUS && prob(50))
+		var/mob/living/simple_animal/hostile/illusion/fake_clone = new(user.loc)
+		fake_clone.faction = user.faction.Copy()
+		fake_clone.Copy_Parent(user, 100, user.health/2.5, 12, 30)
+		fake_clone.GiveTarget(stabbed)
 
 //MILITARY
 /obj/item/spear/military

@@ -17,7 +17,7 @@
 		balloon_alert(user, "painted in [paint_color] color")
 		return ITEM_INTERACT_SUCCESS
 
-	else if(istype(interacting_with, /obj/item/pipe))
+	if(istype(interacting_with, /obj/item/pipe))
 		var/obj/item/pipe/target_pipe = interacting_with
 		var/color = GLOB.pipe_paint_colors[paint_color]
 		target_pipe.pipe_color = color

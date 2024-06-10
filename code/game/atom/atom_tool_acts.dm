@@ -153,7 +153,7 @@
 	var/is_left_clicking = !is_right_clicking
 	var/early_sig_return = NONE
 	if(is_left_clicking)
-		// See above for why this is using `||`
+		// See [base_item_interaction] for defails on why this is using `||` (TL;DR it's short circuiting)
 		early_sig_return = SEND_SIGNAL(src, COMSIG_ATOM_RANGED_ITEM_INTERACTION, user, tool, modifiers) \
 			|| SEND_SIGNAL(tool, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM, user, src, modifiers)
 	else

@@ -586,25 +586,26 @@
 	var/turf/T = get_turf(target)
 	if(istype(target, /obj/item/stack/sheet/iron))
 		var/obj/item/stack/sheet/candidate = target
-		if(candidate.use(IRON_TO_CONSTRUCT_SHELL_CONVERSION))
-			uses--
-			to_chat(user, span_warning("A dark cloud emanates from your hand and swirls around the iron, twisting it into a construct shell!"))
-			new /obj/structure/constructshell(T)
-			SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
-			return ..()
-		to_chat(user, span_warning("You need [IRON_TO_CONSTRUCT_SHELL_CONVERSION] iron to produce a construct shell!"))
-		return
+		if(!candidate.use(IRON_TO_CONSTRUCT_SHELL_CONVERSION))
+			to_chat(user, span_warning("You need [IRON_TO_CONSTRUCT_SHELL_CONVERSION] iron to produce a construct shell!"))
+			return
+		uses--
+		to_chat(user, span_warning("A dark cloud emanates from your hand and swirls around the iron, twisting it into a construct shell!"))
+		new /obj/structure/constructshell(T)
+		SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+		return ..()
 
 	if(istype(target, /obj/item/stack/sheet/plasteel))
 		var/obj/item/stack/sheet/plasteel/candidate = target
 		var/quantity = candidate.amount
-		if(candidate.use(quantity))
-			uses --
-			new /obj/item/stack/sheet/runed_metal(T,quantity)
-			to_chat(user, span_warning("A dark cloud emanates from you hand and swirls around the plasteel, transforming it into runed metal!"))
-			SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
-			return ..()
-		return
+		if(!candidate.use(quantity))
+			return
+
+		uses--
+		new /obj/item/stack/sheet/runed_metal(T,quantity)
+		to_chat(user, span_warning("A dark cloud emanates from you hand and swirls around the plasteel, transforming it into runed metal!"))
+		SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+		return ..()
 
 	if(istype(target,/mob/living/silicon/robot))
 		var/mob/living/silicon/robot/candidate = target
@@ -614,26 +615,24 @@
 			playsound(T, 'sound/machines/airlock_alien_prying.ogg', 80, TRUE)
 			var/prev_color = candidate.color
 			candidate.color = "black"
-			if(do_after(user, 9 SECONDS, target = candidate))
-				candidate.undeploy()
-				candidate.emp_act(EMP_HEAVY)
-				var/construct_class = show_radial_menu(user, src, GLOB.construct_radial_images, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
-				if(!check_menu(user))
-					return
-				if(QDELETED(candidate))
-					channeling = FALSE
-					return
-				candidate.grab_ghost()
-				user.visible_message(span_danger("The dark cloud recedes from what was formerly [candidate], revealing a\n [construct_class]!"))
-				make_new_construct_from_class(construct_class, THEME_CULT, candidate, user, FALSE, T)
-				uses--
-				qdel(candidate)
+			if(!do_after(user, 9 SECONDS, target = candidate))
 				channeling = FALSE
-				return ..()
-
+				candidate.color = prev_color
+				return
+			candidate.undeploy()
+			candidate.emp_act(EMP_HEAVY)
+			var/construct_class = show_radial_menu(user, src, GLOB.construct_radial_images, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
+			if(!check_menu(user) || QDELETED(candidate))
+				channeling = FALSE
+				candidate.color = prev_color
+				return
+			candidate.grab_ghost()
+			user.visible_message(span_danger("The dark cloud recedes from what was formerly [candidate], revealing a\n [construct_class]!"))
+			make_new_construct_from_class(construct_class, THEME_CULT, candidate, user, FALSE, T)
+			uses--
+			qdel(candidate)
 			channeling = FALSE
-			candidate.color = prev_color
-			return
+			return ..()
 
 		uses--
 		to_chat(user, span_warning("A dark cloud emanates from you hand and swirls around [candidate] - twisting it into a construct shell!"))
@@ -646,24 +645,26 @@
 		channeling = TRUE
 		playsound(T, 'sound/machines/airlockforced.ogg', 50, TRUE)
 		do_sparks(5, TRUE, target)
-		if(do_after(user, 5 SECONDS, target = user) && !QDELETED(target))
-			target.narsie_act()
-			uses--
-			user.visible_message(span_warning("Black ribbons suddenly emanate from [user]'s hand and cling to the airlock - twisting and corrupting it!"))
-			SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+		if(!do_after(user, 5 SECONDS, target = user) && !QDELETED(target))
 			channeling = FALSE
-			return ..()
+			return
+
+		target.narsie_act()
+		uses--
+		user.visible_message(span_warning("Black ribbons suddenly emanate from [user]'s hand and cling to the airlock - twisting and corrupting it!"))
+		SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		channeling = FALSE
-		return
+		return ..()
 
 	if(istype(target,/obj/item/soulstone))
 		var/obj/item/soulstone/candidate = target
-		if(candidate.corrupt())
-			uses--
-			to_chat(user, span_warning("You corrupt [candidate]!"))
-			SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
-			return ..()
-		return
+		if(!candidate.corrupt())
+			return
+
+		uses--
+		to_chat(user, span_warning("You corrupt [candidate]!"))
+		SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+		return ..()
 
 	to_chat(user, span_warning("The spell will not work on [target]!"))
 

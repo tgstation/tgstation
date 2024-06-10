@@ -61,10 +61,8 @@
 
 	if(user.client && isitem(target))
 		if(isnull(user.get_inactive_held_item()))
-			testing("Suggesting a switch hands tutorial to [user.ckey] in melee_attack_chain")
 			SStutorials.suggest_tutorial(user, /datum/tutorial/switch_hands, params2list(params))
 		else
-			testing("Suggesting a drop item tutorial to [user.ckey] in melee_attack_chain")
 			SStutorials.suggest_tutorial(user, /datum/tutorial/drop, params2list(params))
 
 	return TRUE
