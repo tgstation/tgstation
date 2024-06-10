@@ -149,7 +149,7 @@
 /atom/proc/multitool_act_secondary(mob/living/user, obj/item/tool)
 	return
 
-///Either typecasts this atom into an multitool or gets its inbuilt multitool
+///Either typecasts this atom into a multitool or gets its inbuilt multitool
 /atom/proc/get_multi_tool(mob/user)
 	RETURN_TYPE(/obj/item/multitool)
 
