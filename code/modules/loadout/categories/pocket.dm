@@ -39,7 +39,7 @@
 )
 	// Backpack items aren't created if it's a visual equipping, so don't do any on equip stuff. It doesn't exist.
 	if(visuals_only)
-		return
+		return NONE
 
 	return ..()
 

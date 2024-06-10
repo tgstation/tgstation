@@ -37,17 +37,21 @@
 		return FALSE
 	// Handle any snowflake on_equips
 	var/list/new_contents = get_all_gear()
+	var/update = NONE
 	for(var/datum/loadout_item/item as anything in loadout_datums)
 		var/obj/item/equipped = locate(item.item_path) in new_contents
 		if(isnull(equipped))
 			continue
-		item.on_equip_item(
+		update |= item.on_equip_item(
 			equipped_item = equipped,
 			preference_source = preference_source,
 			preference_list = preference_list,
 			equipper = src,
 			visuals_only = visuals_only,
 		)
+
+	if(update)
+		update_clothing(update)
 
 	return TRUE
 

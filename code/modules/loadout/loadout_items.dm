@@ -183,7 +183,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 
 	if(input_name)
 		loadout[item_path][INFO_NAMED] = input_name
-	else
+	else if(input_name == "")
 		loadout[item_path] -= INFO_NAMED
 
 	manager.preferences.update_preference(GLOB.preference_entries[/datum/preference/loadout], loadout)
@@ -225,10 +225,13 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
  *
  * At this point the item is in the mob's contents
  *
- * preference_source - the datum/preferences our loadout item originated from - cannot be null
- * equipper - the mob we're equipping this item onto - cannot be null
- * visuals_only - whether or not this is only concerned with visual things (not backpack, not renaming, etc)
- * preference_list - what the raw loadout list looks like in the preferences
+ * Arguments:
+ * * preference_source - the datum/preferences our loadout item originated from - cannot be null
+ * * equipper - the mob we're equipping this item onto - cannot be null
+ * * visuals_only - whether or not this is only concerned with visual things (not backpack, not renaming, etc)
+ * * preference_list - what the raw loadout list looks like in the preferences
+ *
+ * Return a bitflag of slot flags to update
  */
 /datum/loadout_item/proc/on_equip_item(
 	obj/item/equipped_item,
@@ -238,11 +241,16 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	visuals_only = FALSE,
 )
 	ASSERT(!isnull(equipped_item))
+
+	if(!visuals_only)
+		ADD_TRAIT(equipped_item, TRAIT_ITEM_OBJECTIVE_BLOCKED, "Loadout")
+
 	var/list/item_details = preference_list[item_path]
+	var/update_flag = NONE
 
 	if(can_be_greyscale && item_details?[INFO_GREYSCALE])
 		equipped_item.set_greyscale(item_details[INFO_GREYSCALE])
-		equipper.update_clothing(equipped_item.slot_flags)
+		update_flag |= equipped_item.slot_flags
 
 	if(can_be_named && item_details?[INFO_NAMED] && !visuals_only)
 		equipped_item.name = item_details[INFO_NAMED]
@@ -258,16 +266,16 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 				if(isclothing(equipped_item.loc))
 					var/obj/item/clothing/under/attached_to = equipped_item.loc
 					attached_to.update_accessory_overlay()
-					equipper.update_clothing(ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING)
+					update_flag |= (ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING)
 			else
-				equipper.update_clothing(equipped_item.slot_flags)
+				update_flag |= equipped_item.slot_flags
 
 		else
 			// Not valid, update the preference
 			item_details -= INFO_RESKIN
 			preference_source.write_preference(GLOB.preference_entries[/datum/preference/loadout], preference_list)
 
-	return equipped_item
+	return update_flag
 
 /**
  * Returns a formatted list of data for this loadout item.

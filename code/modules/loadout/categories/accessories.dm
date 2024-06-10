@@ -65,10 +65,9 @@
 	visuals_only = FALSE,
 )
 	. = ..()
-	if(!istype(equipped_item))
-		return
-	equipped_item.above_suit = !!preference_list[item_path]?[INFO_LAYER]
-	equipper.update_clothing(ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING)
+	if(istype(equipped_item))
+		equipped_item.above_suit = !!preference_list[item_path]?[INFO_LAYER]
+		. |= (ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING)
 
 /datum/loadout_item/accessory/maid_apron
 	name = "Maid Apron"
