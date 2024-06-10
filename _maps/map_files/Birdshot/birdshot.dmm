@@ -70049,7 +70049,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/engineering/break_room)
 "xfB" = (
-/mob/living/simple_animal/bot/firebot,
+/mob/living/basic/bot/firebot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/holopad,

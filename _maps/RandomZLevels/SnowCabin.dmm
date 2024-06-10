@@ -2052,7 +2052,7 @@
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "jV" = (
-/mob/living/simple_animal/bot/firebot,
+/mob/living/basic/bot/firebot,
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "jW" = (
