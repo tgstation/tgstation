@@ -6,7 +6,7 @@
 	overlay_icon_state = "bg_tech_blue_border"
 	button_icon = 'icons/obj/machines/wallmounts.dmi'
 	button_icon_state = "intercom"
-	cooldown_time = 10 SECONDS
+	cooldown_time = 5 SECONDS
 	shared_cooldown = MOB_SHARED_COOLDOWN_BOT_ANNOUNCMENT
 	melee_cooldown_time = 0 SECONDS
 	/// List of strings to sound effects corresponding to automated messages we can play
