@@ -796,8 +796,9 @@
 	if(leg_clothes)
 		burning_items |= leg_clothes
 
-	for(var/obj/item/burnable_item in held_items)
-		burning_items |= burnable_item
+	if (!gloves || (!(gloves.resistance_flags & FIRE_PROOF) && (gloves.resistance_flags & FLAMMABLE)))
+		for(var/obj/item/burnable_item in held_items)
+			burning_items |= burnable_item
 
 	for(var/obj/item/burning in burning_items)
 		burning.fire_act((stacks * 25 * seconds_per_tick)) //damage taken is reduced to 2% of this value by fire_act()
