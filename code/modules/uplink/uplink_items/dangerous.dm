@@ -44,8 +44,8 @@
 	desc = "The power-fist is a metal gauntlet with a built-in piston-ram powered by an external gas supply.\
 			Upon hitting a target, the piston-ram will extend forward to make contact for some serious damage. \
 			Using a wrench on the piston valve will allow you to tweak the amount of gas used per punch to \
-			deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks.\
-			Once held, it wraps itself so tightly around your hand it could only be removed surgically."
+			deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks. \
+			Once held, it wraps itself so tightly around your arm it could only be removed alongside it."
 	progression_minimum = 20 MINUTES
 	item = /obj/item/melee/powerfist
 	cost = 10
