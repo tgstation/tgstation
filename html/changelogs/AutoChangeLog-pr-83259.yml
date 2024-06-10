@@ -1,4 +1,0 @@
-author: "Echriser"
-delete-after: True
-changes:
-  - bugfix: "Fixes a bunch of hearts turning into errors when you try to eat them"

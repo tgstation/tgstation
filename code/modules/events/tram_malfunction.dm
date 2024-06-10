@@ -4,11 +4,11 @@
 /datum/round_event_control/tram_malfunction
 	name = "Tram Malfunction"
 	typepath = /datum/round_event/tram_malfunction
-	weight = 40
-	max_occurrences = 4
+	weight = 30
+	max_occurrences = 3
 	earliest_start = 15 MINUTES
 	category = EVENT_CATEGORY_ENGINEERING
-	description = "Tram crossing signals malfunction, tram collision damage is increased."
+	description = "Tram comes to an emergency stop, requiring engineering to reset."
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 3
 
@@ -34,9 +34,6 @@
 /datum/round_event/tram_malfunction/setup()
 	end_when = rand(TRAM_MALFUNCTION_TIME_LOWER, TRAM_MALFUNCTION_TIME_UPPER)
 
-/datum/round_event/tram_malfunction/announce()
-	priority_announce("Our automated control system has lost contact with the tram's onboard computer. Please take extra care while engineers diagnose and resolve the issue.", "[command_name()] Engineering Division")
-
 /datum/round_event/tram_malfunction/start()
 	for(var/datum/transport_controller/linear/tram/malfunctioning_controller as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 		if(malfunctioning_controller.specific_transport_id == specific_transport_id)
@@ -45,9 +42,8 @@
 
 /datum/round_event/tram_malfunction/end()
 	for(var/datum/transport_controller/linear/tram/malfunctioning_controller as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
-		if(malfunctioning_controller.specific_transport_id == specific_transport_id && malfunctioning_controller.controller_status & COMM_ERROR)
+		if(malfunctioning_controller.specific_transport_id == specific_transport_id && malfunctioning_controller.malf_active)
 			malfunctioning_controller.end_malf_event()
-			priority_announce("The software on the tram has been reset, normal operations are now resuming. Sorry for any inconvienence this may have caused.", "[command_name()] Engineering Division")
 			return
 
 #undef TRAM_MALFUNCTION_TIME_UPPER

@@ -38,6 +38,7 @@
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/clickbox, icon_state = "sphere", max_scale = 2)
+	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	addtimer(CALLBACK(src, PROC_REF(death)), 10 SECONDS)
 
 /mob/living/basic/legion_brood/death(gibbed)
@@ -63,7 +64,7 @@
 	return ..()
 
 /// Turn the targeted mob into one of us
-/mob/living/basic/legion_brood/proc/infest(mob/living/target)
+/mob/living/basic/legion_brood/proc/infest(mob/living/carbon/human/target)
 	visible_message(span_warning("[name] burrows into the flesh of [target]!"))
 	var/spawn_type = get_legion_type(target)
 	var/mob/living/basic/mining/legion/new_legion = new spawn_type(loc)
@@ -72,7 +73,9 @@
 	qdel(src)
 
 /// Returns the kind of legion we make out of the target
-/mob/living/basic/legion_brood/proc/get_legion_type(mob/living/target)
+/mob/living/basic/legion_brood/proc/get_legion_type(mob/living/carbon/human/target)
+	if (ismonkey(target))
+		return /mob/living/basic/mining/legion/monkey
 	if (HAS_TRAIT(target, TRAIT_DWARF))
 		return /mob/living/basic/mining/legion/dwarf
 	return /mob/living/basic/mining/legion
@@ -105,4 +108,6 @@
 	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
 
 /mob/living/basic/legion_brood/snow/get_legion_type(mob/living/target)
+	if (ismonkey(target))
+		return /mob/living/basic/mining/legion/monkey/snow
 	return /mob/living/basic/mining/legion/snow

@@ -34,7 +34,7 @@
 		if(3)
 			flavour_text += "you were a doctor on one of Nanotrasen's space stations, but you left behind that damn corporation's tyranny and everything it stood for. From a metaphorical hell \
 			to a literal one, you find yourself nonetheless missing the recycled air and warm floors of what you left behind... but you'd still rather be here than there."
-			outfit.uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
+			outfit.uniform = /obj/item/clothing/under/rank/medical/doctor
 			outfit.suit = /obj/item/clothing/suit/toggle/labcoat
 			outfit.back = /obj/item/storage/backpack/medic
 		if(4)
@@ -283,6 +283,7 @@
 	important_text = "The base is rigged with explosives, DO NOT abandon it or let it fall into enemy hands!"
 	outfit = /datum/outfit/lavaland_syndicate
 	spawner_job_path = /datum/job/lavaland_syndicate
+	deletes_on_zero_uses_left = FALSE
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/special(mob/living/new_spawn)
 	. = ..()
@@ -320,6 +321,21 @@
 	mask = /obj/item/clothing/mask/chameleon/gps
 	r_hand = /obj/item/melee/energy/sword/saber
 
+/datum/outfit/lavaland_syndicate/comms/icemoon
+	name = "Icemoon Syndicate Comms Agent"
+	mask = /obj/item/clothing/mask/chameleon
+	shoes = /obj/item/clothing/shoes/winterboots/ice_boots/eva
+
 /obj/item/clothing/mask/chameleon/gps/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "Encrypted Signal")
+
+///Icemoon Syndicate Comms Agent
+
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/icemoon
+	name = "Icemoon Comms Agent"
+	prompt_name = "a syndicate comms agent"
+	you_are_text = "You are a syndicate comms agent, assigned in an underground secret listening post close to your enemy's facility."
+	flavour_text = "Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. Monitor enemy activity as best you can, and try to keep a low profile. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the outpost fall into enemy hands!"
+	important_text = "Do NOT let the outpost fall into enemy hands"
+	outfit = /datum/outfit/lavaland_syndicate/comms/icemoon

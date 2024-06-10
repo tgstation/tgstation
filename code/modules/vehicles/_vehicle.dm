@@ -1,7 +1,7 @@
 /obj/vehicle
 	name = "generic vehicle"
 	desc = "Yell at coderbus."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "error"
 	max_integrity = 300
 	armor_type = /datum/armor/obj_vehicle

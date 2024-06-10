@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Icebox: The bar returns to its home."
-  - rscadd: "Icebox: Standardizes some decal styles in the main hallway."
-  - bugfix: "Icebox: The lower brig's missing air alarm has been found."

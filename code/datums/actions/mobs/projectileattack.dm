@@ -16,13 +16,22 @@
 	var/default_projectile_spread = 0
 	/// The multiplier to the projectiles speed (a value of 2 makes it twice as slow, 0.5 makes it twice as fast)
 	var/projectile_speed_multiplier = 1
+	/// Whether the target can move or not while the attack is occurring
+	var/can_move = TRUE
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/Activate(atom/target_atom)
 	disable_cooldown_actions()
+	RegisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move), override = TRUE)
 	attack_sequence(owner, target_atom)
+	UnregisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE)
 	StartCooldown()
 	enable_cooldown_actions()
 	return TRUE
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/proc/on_move(atom/source, atom/new_loc)
+	SIGNAL_HANDLER
+	if(!can_move)
+		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/proc/attack_sequence(mob/living/firer, atom/target)
 	shoot_projectile(firer, target, null, firer, rand(-default_projectile_spread, default_projectile_spread), null)
@@ -151,6 +160,25 @@
 	SLEEP_CHECK_DEATH(1.5 SECONDS, owner)
 	return ..()
 
+/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/wendigo
+	cooldown_time = 10 SECONDS
+	projectile_type = /obj/projectile/colossus/wendigo_shockwave/spiral
+	can_move = FALSE
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/wendigo/create_spiral_attack(mob/living/firer, atom/target, negative = pick(TRUE, FALSE))
+	wendigo_scream(firer)
+	var/shots_spiral = 40
+	var/angle_to_target = get_angle(firer, target)
+	var/spiral_direction = pick(-1, 1)
+	for(var/shot in 1 to shots_spiral)
+		var/shots_per_tick = 5 - enraged * 3
+		var/angle_change = (5 + enraged * shot / 6) * spiral_direction
+		for(var/count in 1 to shots_per_tick)
+			var/angle = angle_to_target + shot * angle_change + count * 360 / shots_per_tick
+			shoot_projectile(firer, target, angle, firer, null, null)
+		SLEEP_CHECK_DEATH(1, firer)
+	SLEEP_CHECK_DEATH(3 SECONDS, firer)
+
 /datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe
 	name = "All Directions"
 	button_icon = 'icons/effects/effects.dmi'
@@ -190,6 +218,13 @@
 	playsound(firer, projectile_sound, 200, TRUE, 2)
 	for(var/spread in chosen_angles)
 		shoot_projectile(firer, target, null, firer, spread, null)
+
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/wendigo
+	cooldown_time = 10 SECONDS
+	projectile_type = /obj/projectile/colossus/wendigo_shockwave
+	shot_angles = list(-20, -10, 0, 10, 20)
+	projectile_speed_multiplier = 4
 
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/colossus
@@ -327,3 +362,54 @@
 			colossus.telegraph()
 			colossus.dir_shots.attack_sequence(firer, target)
 		SLEEP_CHECK_DEATH(1 SECONDS, firer)
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/alternating_circle
+	name = "Alternating Shots"
+	button_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "sniper_zoom"
+	desc = "Fires projectiles around you in an alternating fashion."
+	cooldown_time = 10 SECONDS
+	projectile_type = /obj/projectile/colossus/wendigo_shockwave
+	can_move = FALSE
+	var/enraged = FALSE
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/alternating_circle/attack_sequence(mob/living/firer, atom/target)
+	wendigo_scream(firer)
+	if(enraged)
+		projectile_speed_multiplier = 1
+	else
+		projectile_speed_multiplier = 1.5
+	var/shots_per = 24
+	for(var/shoot_times in 1 to 8)
+		var/offset = shoot_times % 2
+		for(var/shot in 1 to shots_per)
+			var/angle = shot * 360 / shots_per + (offset * 360 / shots_per) * 0.5
+			shoot_projectile(firer, target, angle, firer, null, null)
+		SLEEP_CHECK_DEATH(6 - enraged * 2, firer)
+	SLEEP_CHECK_DEATH(3 SECONDS, firer)
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/wave
+	name = "Wave Shots"
+	button_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "sniper_zoom"
+	desc = "Fires projectiles around you in a circular wave."
+	cooldown_time = 10 SECONDS
+	projectile_type = /obj/projectile/colossus/wendigo_shockwave/wave
+	can_move = FALSE
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/wave/attack_sequence(mob/living/firer, atom/target)
+	wendigo_scream(firer)
+	var/shots_per = 7
+	var/difference = 360 / shots_per
+	var/wave_direction = pick(-1, 1)
+	switch(wave_direction)
+		if(-1)
+			projectile_type = /obj/projectile/colossus/wendigo_shockwave/wave/alternate
+		if(1)
+			projectile_type = /obj/projectile/colossus/wendigo_shockwave/wave
+	for(var/shoot_times in 1 to 32)
+		for(var/shot in 1 to shots_per)
+			var/angle = shot * difference + shoot_times * 5 * wave_direction * -1
+			shoot_projectile(firer, target, angle, firer, null, null)
+		SLEEP_CHECK_DEATH(2, firer)
+	SLEEP_CHECK_DEATH(3 SECONDS, firer)

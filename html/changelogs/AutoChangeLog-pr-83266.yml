@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Mob spawners (such as lavaland tendrils) won't spawn more mobs than they are supposed to, faster than they should."

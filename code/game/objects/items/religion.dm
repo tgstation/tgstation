@@ -418,8 +418,8 @@
 
 /obj/item/claymore/weak
 	desc = "This one is rusted."
-	force = 30
-	armour_penetration = 15
+	force = 24
+	armour_penetration = 10
 
 /obj/item/claymore/weak/ceremonial
 	desc = "A rusted claymore, once at the heart of a powerful scottish clan struck down and oppressed by tyrants, it has been passed down the ages as a symbol of defiance."
