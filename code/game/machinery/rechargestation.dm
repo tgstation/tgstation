@@ -8,7 +8,7 @@
 	req_access = list(ACCESS_ROBOTICS)
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/cyborgrecharger
-	occupant_typecache = list(/mob/living/silicon/robot, /mob/living/carbon/human)
+	occupant_typecache = list(/mob/living/silicon/robot, /mob/living/carbon/human, /mob/living/circuit_drone)
 	processing_flags = NONE
 	var/recharge_speed
 	var/repairs
