@@ -137,3 +137,10 @@
 
 /datum/targeting_strategy/basic/same_faction/faction_check(mob/living/living_mob, mob/living/the_target)
 	return !..() // inverts logic to ONLY target mobs that share a faction
+
+/datum/targeting_strategy/basic/allow_turfs
+
+/datum/targeting_strategy/basic/allow_turfs/can_attack(mob/living/living_mob, atom/the_target, vision_range)
+	if(isturf(the_target))
+		return TRUE
+	return ..()

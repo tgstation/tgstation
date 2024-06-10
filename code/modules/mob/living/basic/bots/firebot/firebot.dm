@@ -16,7 +16,7 @@
 	hackables = "fire safety protocols"
 	path_image_color = "#FFA500"
 	possessed_message = "You are a firebot! Protect the station from fires to the best of your ability!"
-
+	ai_controller = /datum/ai_controller/basic_controller/bot/firebot
 	///our inbuilt fire extinguisher
 	var/obj/item/extinguisher/internal_ext
 
@@ -28,22 +28,33 @@
 
 
 /mob/living/basic/bot/firebot/generate_speak_list()
-	var/static/list/automated_announcements = list(
-		FIREBOT_VOICED_FIRE_DETECTED = 'sound/voice/firebot/detected.ogg',
-		FIREBOT_VOICED_STOP_DROP = 'sound/voice/firebot/stopdropnroll.ogg',
-		FIREBOT_VOICED_EXTINGUISHING = 'sound/voice/firebot/extinguishing.ogg',
+	var/static/list/idle_lines = list(
 		FIREBOT_VOICED_NO_FIRES = 'sound/voice/firebot/nofires.ogg',
 		FIREBOT_VOICED_ONLY_YOU = 'sound/voice/firebot/onlyyou.ogg',
 		FIREBOT_VOICED_TEMPERATURE_NOMINAL = 'sound/voice/firebot/tempnominal.ogg',
 		FIREBOT_VOICED_KEEP_COOL = 'sound/voice/firebot/keepitcool.ogg',
 	)
-	return automated_announcements
+	var/static/list/fire_detected_lines = list(
+		FIREBOT_VOICED_FIRE_DETECTED = 'sound/voice/firebot/detected.ogg',
+		FIREBOT_VOICED_STOP_DROP = 'sound/voice/firebot/stopdropnroll.ogg',
+		FIREBOT_VOICED_EXTINGUISHING = 'sound/voice/firebot/extinguishing.ogg',
+	)
+	var/static/list/emagged_lines = list(
+		FIREBOT_VOICED_CANDLE_TIP = 'sound/voice/firebot/candle_tip.ogg',
+		FIREBOT_VOICED_ELECTRIC_FIRE = 'sound/voice/firebot/electric_fire_tip.ogg',
+		FIREBOT_VOICED_GASOLINE_TIP = 'sound/voice/firebot/gasoline_tip.ogg'
+	)
+	ai_controller.set_blackboard_key(BB_FIREBOT_EMAGGED_LINES, emagged_lines)
+	ai_controller.set_blackboard_key(BB_FIREBOT_IDLE_LINES, idle_lines)
+	ai_controller.set_blackboard_key(BB_FIREBOT_FIRE_DETECTED_LINES, fire_detected_lines)
+	return idle_lines + fire_detected_lines
 
 /mob/living/basic/bot/firebot/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	update_appearance(UPDATE_ICON)
-
+	var/static/list/things_to_extinguish = typecacheof(list(/mob/living/carbon))
+	ai_controller.set_blackboard_key(BB_FIREBOT_CAN_EXTINGUISH, things_to_extinguish)
 	create_extinguisher()
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
@@ -62,10 +73,10 @@
 	internal_ext.max_water = INFINITY
 	internal_ext.refill()
 
-/mob/living/basic/bot/firebot/UnarmedAttack(atom/attacked_atom, proximity_flag, list/modifiers)
+/mob/living/basic/bot/firebot/melee_attack(atom/attacked_atom, proximity_flag, list/modifiers)
 	use_extinguisher(attacked_atom)
 
-/mob/living/basic/bot/firebot/RangedAttack(atom/A, proximity_flag, list/modifiers)
+/mob/living/basic/bot/firebot/RangedAttack(atom/attacked_atom, proximity_flag, list/modifiers)
 	use_extinguisher(attacked_atom)
 
 /mob/living/basic/bot/firebot/proc/use_extinguisher(atom/attacked_atom)
@@ -75,7 +86,7 @@
 
 /mob/living/basic/bot/firebot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
-	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
+	if(!(bot_access_flags & BOT_COVER_EMAGGED))
 		return
 
 	to_chat(user, span_warning("You enable the very ironically named \"fighting with fire\" mode, and disable the targeting safeties.")) // heheehe. funny

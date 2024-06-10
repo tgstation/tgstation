@@ -4644,6 +4644,8 @@
 #include "code\modules\mob\living\basic\bots\cleanbot\cleanbot.dm"
 #include "code\modules\mob\living\basic\bots\cleanbot\cleanbot_abilities.dm"
 #include "code\modules\mob\living\basic\bots\cleanbot\cleanbot_ai.dm"
+#include "code\modules\mob\living\basic\bots\firebot\firebot.dm"
+#include "code\modules\mob\living\basic\bots\firebot\firebot_ai.dm"
 #include "code\modules\mob\living\basic\bots\honkbots\honkbot.dm"
 #include "code\modules\mob\living\basic\bots\honkbots\honkbot_abilities.dm"
 #include "code\modules\mob\living\basic\bots\honkbots\honkbot_ai.dm"
