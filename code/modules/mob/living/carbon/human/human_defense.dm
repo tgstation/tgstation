@@ -93,7 +93,7 @@
 		return TRUE
 
 	var/block_chance_modifier = round(damage / -3)
-	for(var/obj/item/worn_thing in get_equipped_items(include_pockets = FALSE) + held_items)
+	for(var/obj/item/worn_thing in get_equipped_items(INCLUDE_HELD))
 		// Things that are supposed to be worn, being held = cannot block
 		if(isclothing(worn_thing))
 			if(worn_thing in held_items)

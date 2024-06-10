@@ -209,6 +209,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, "Select Equipment", mob/ta
 				delete_pocket = TRUE
 
 	BLACKBOX_LOG_ADMIN_VERB("Select Equipment")
+	var/includes_flags = delete_pocket ? INCLUDE_POCKETS | NONE
 	for(var/obj/item/item in human_target.get_equipped_items(include_pockets = delete_pocket))
 		qdel(item)
 

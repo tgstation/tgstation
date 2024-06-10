@@ -347,7 +347,7 @@
 
 //delete all equipment without dropping anything
 /mob/living/carbon/human/proc/delete_equipment()
-	for(var/slot in get_equipped_items(include_pockets = TRUE))//order matters, dependant slots go first
+	for(var/slot in get_equipped_items(INCLUDE_POCKETS))//order matters, dependant slots go first
 		qdel(slot)
 	for(var/obj/item/held_item in held_items)
 		qdel(held_item)
