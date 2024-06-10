@@ -39,4 +39,3 @@
 
 /datum/quirk/insanity/remove()
 	QDEL_NULL(added_trama_ref)
-	quirk_holder.remove_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
