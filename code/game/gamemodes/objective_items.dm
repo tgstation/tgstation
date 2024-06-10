@@ -243,8 +243,12 @@
 	difficulty = 3
 	steal_hint = "A self-defense weapon standard-issue for all heads of staffs barring the Head of Security. Rarely found off of their person."
 
+/datum/objective_item/steal/traitor/telebaton/check_special_completion(obj/item/thing)
+	return thing.type == /obj/item/melee/baton/telescopic
+
 /obj/item/melee/baton/telescopic/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/melee/baton/telescopic)
+	if(type == /obj/item/melee/baton/telescopic)
+		return add_item_to_steal(src, /obj/item/melee/baton/telescopic)
 
 /datum/objective_item/steal/traitor/cargo_budget
 	name = "cargo's departmental budget"

@@ -69,6 +69,7 @@
 			span_warning("[user] screws up, causing blood to spurt out of [target_human]'s chest!"),
 			span_warning("[user] screws up, causing blood to spurt out of [target_human]'s chest!"),
 		)
+		display_pain(target, mood_event_type = /datum/mood_event/surgery/failure)
 		var/obj/item/bodypart/target_bodypart = target_human.get_bodypart(target_zone)
 		target_bodypart.adjustBleedStacks(10)
 		target_human.adjustOrganLoss(ORGAN_SLOT_HEART, 10)

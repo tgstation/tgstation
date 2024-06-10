@@ -46,7 +46,7 @@
 	return ..()
 
 /datum/surgery_step/incise/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, fail_prob)
-	display_pain(target, mood_event_type = /datum/mood_event/surgery)
+	display_pain(target, mood_event_type = /datum/mood_event/surgery/failure)
 	return ..()
 
 /datum/surgery_step/incise/nobleed/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
