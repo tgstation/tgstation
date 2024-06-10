@@ -749,7 +749,7 @@
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 
-	if(HAS_TRAIT(living_target, TRAIT_MIND_READER)) // FORESIGHT SAYS 'FUCK YOU' TO SNEAK ATTACKERS.
+	if(HAS_TRAIT(living_target, TRAIT_MIND_READER) && !user.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0)) // FORESIGHT SAYS 'FUCK YOU' TO SNEAK ATTACKERS. BUT IF YOU HAVE A TIN FOIL HAT, YOU'RE SAFE!
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 
