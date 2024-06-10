@@ -1,5 +1,5 @@
+import { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
-import { BooleanLike, classes } from 'common/react';
 
 import { useBackend } from '../backend';
 import {
@@ -13,11 +13,11 @@ import {
   Stack,
   Table,
 } from '../components';
-import { TableCell } from '../components/Table';
-import { Window } from '../layouts';
+import { Material } from './Fabrication/Types';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { MaterialIcon } from './Fabrication/MaterialIcon';
-import { Material } from './Fabrication/Types';
+import { TableCell } from '../components/Table';
+import { Window } from '../layouts';
 
 type Data = {
   SHEET_MATERIAL_AMOUNT: number;
