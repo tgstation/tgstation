@@ -18,9 +18,6 @@
 		return
 	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
 	
-	//Gives the RDS-Haver Gibberish
-	quirk_holder.grant_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
-	
 	// Setup our special RDS mild hallucination.
 	// Not a unique subtype so not to plague subtypesof,
 	// also as we inherit the names and values from our quirk.
