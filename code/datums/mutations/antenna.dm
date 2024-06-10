@@ -51,6 +51,18 @@
 	difficulty = 8
 	locked = TRUE
 
+/datum/mutation/human/mindreader/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+
+	owner.add_traits(TRAIT_MIND_READER, GENETIC_MUTATION)
+
+/datum/mutation/human/mindreader/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+
+	owner.remove_traits(TRAIT_MIND_READER, GENETIC_MUTATION)
+
 /datum/action/cooldown/spell/pointed/mindread
 	name = "Mindread"
 	desc = "Read the target's mind."

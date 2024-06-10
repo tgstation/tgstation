@@ -691,8 +691,14 @@
 	// Did we successfully meet the criteria for a sneak attack?
 	var/successful_sneak_attack = FALSE
 
+	// Did our sneak attack fail due to a special effect?
+	var/sneak_attack_fail_message = FALSE
+
 	// The force our sneak attack applies. Starts as 1d6, then changed based on certain factors.
 	var/force_applied = rand(1,6)
+
+	if(living_target.stat == DEAD)
+		return
 
 	// Status effects on the target that grant us sneak attacks
 	if(living_target.is_blind())
@@ -704,10 +710,6 @@
 	if(living_target.get_timed_status_effect_duration(/datum/status_effect/confusion))
 		successful_sneak_attack = TRUE
 
-	// If the target is rebuked, we also add some additional damage. It is the closest thing to 'studying' your target, okay?
-	if(living_target.has_status_effect(/datum/status_effect/rebuked))
-		force_applied += 2
-
 	// Our target is in some kind of grapple, which prevents them form protecting themselves.
 	if(living_target.pulledby && living_target.pulledby.grab_state >= GRAB_AGGRESSIVE)
 		successful_sneak_attack = TRUE
@@ -715,15 +717,6 @@
 	// traits that render you unable to defend yourself properly from an attack
 	if(HAS_TRAIT(living_target, TRAIT_SPINNING) || HAS_TRAIT(living_target, TRAIT_HANDS_BLOCKED))
 		successful_sneak_attack = TRUE
-
-	// If our target is also unconscious for some reason, we get even more damage. Coup de grace, motherfucker.
-	if(HAS_TRAIT(living_target, TRAIT_KNOCKEDOUT))
-		force_applied += rand(1,6)
-		new /obj/effect/temp_visual/crit(get_turf(living_target))
-
-	// Baton + this weapon might be a little too much fun so we're nerfing this combination outright.
-	if(HAS_TRAIT(living_target, TRAIT_IWASBATONED))
-		force_applied *= 0.5
 
 	// We'll take "same tile" as "behind" for ease
 	if(living_target.loc == user.loc)
@@ -738,7 +731,57 @@
 	if(living_target.dir & REVERSE_DIR(dir_living_target_to_user))
 		successful_sneak_attack = TRUE
 
+	/// Now we'll check for things that STOP a sneak attack. Why? Because this mechanic isn't complicated enough and I must insert more ivory tower design.
+
+	if(living_target.mob_biotypes == MOB_SLIME) // SLIMES HAVE NO ANATOMY.
+		successful_sneak_attack = FALSE
+		sneak_attack_fail_message = TRUE
+
+	if(living_target.incorporeal_move >= 1 && !HAS_TRAIT(living_target, TRAIT_REVENANT_REVEALED)) // WE CAN'T SNEAK ATTACK INCORPOREAL JERKS. BUT WE CAN SNEAK ATTACK REVEALED REVENANTS BECAUSE DUH, NULLROD.
+		successful_sneak_attack = FALSE
+		sneak_attack_fail_message = TRUE
+
+	if(IS_HERETIC_MONSTER(living_target) && prob(50)) // IT IS HARD TO SNEAK ATTACK SOMETHING WITH TOO MANY REDUNDANT EVERYTHINGS.
+		successful_sneak_attack = FALSE
+		sneak_attack_fail_message = TRUE
+
+	if(HAS_TRAIT(living_target, TRAIT_STABLEHEART) && prob(50)) // THEIR ANATOMY IS FUCKING WEIRD.
+		successful_sneak_attack = FALSE
+		sneak_attack_fail_message = TRUE
+
+	if(HAS_TRAIT(living_target, TRAIT_MIND_READER)) // FORESIGHT SAYS 'FUCK YOU' TO SNEAK ATTACKERS.
+		successful_sneak_attack = FALSE
+		sneak_attack_fail_message = TRUE
+
+	if(user.is_blind()) // YOU CAN'T STAB PRECISELY WHAT YOU CAN'T SEE.
+		successful_sneak_attack = FALSE
+		sneak_attack_fail_message = TRUE
+
+	/// And now we'll deal with sneak attack damage modifiers.
+
+	// If our target is also unconscious for some reason, we get even more damage. Coup de grace, motherfucker.
+	if(HAS_TRAIT(living_target, TRAIT_KNOCKEDOUT))
+		force_applied += rand(1,6)
+		new /obj/effect/temp_visual/crit(get_turf(living_target))
+
+	// If the target is rebuked, we also add some additional damage. It is the closest thing to 'studying' your target, okay?
+	if(living_target.has_status_effect(/datum/status_effect/rebuked))
+		force_applied += 2
+
+	// If we're morbid, and the target has been dissected, we get an extra d6.
+	// The chances of this occuring are quite low, as even having this weapon means you're locked out of becoming morbid as a chaplain, but when it does come up...
+	// Or the coroner stole this blade to go hunt the recently dead...
+	if(HAS_TRAIT(user, TRAIT_MORBID) && HAS_TRAIT(living_target, TRAIT_DISSECTED))
+		force_applied += rand(1,6)
+
+	// Baton + this weapon might be a little too much fun so we're nerfing this combination outright.
+	if(HAS_TRAIT(living_target, TRAIT_IWASBATONED))
+		force_applied *= 0.5
+
+	/// And so we return here if we are not entitled to a sneak attack.
 	if(!successful_sneak_attack)
+		if(sneak_attack_fail_message)
+			user.balloon_alert(living_target, "sneak attack avoided!")
 		return
 
 	// We got a sneak attack!
