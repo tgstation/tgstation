@@ -128,3 +128,5 @@
 	var/mob/living/basic/bot/living_bot = controller.pawn
 	var/list/idle_lines = (living_bot.bot_access_flags & BOT_COVER_EMAGGED) ? controller.blackboard[BB_FIREBOT_EMAGGED_LINES] : controller.blackboard[BB_FIREBOT_IDLE_LINES]
 	controller.queue_behavior(/datum/ai_behavior/bot_speech, idle_lines, BB_ANNOUNCE_ABILITY)
+
+#undef ANNOUNCEMENT_TIMER
