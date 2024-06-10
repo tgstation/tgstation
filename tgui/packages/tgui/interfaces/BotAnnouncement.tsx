@@ -1,3 +1,4 @@
+import { createSearch } from 'common/string';
 import { useState } from 'react';
 
 import { useBackend } from '../backend';
@@ -19,7 +20,17 @@ type ButtonData = {
   channel: string;
 };
 
-type BotAnnouncementContext = {
+type ButtonDataWithId = {
+  button: ButtonData;
+  index: number;
+};
+
+type StringWithId = {
+  string: string;
+  index: number;
+};
+
+type BotAnnouncementData = {
   channels: string[];
   lines: string[];
   button_data: ButtonData[];
@@ -32,7 +43,7 @@ enum TAB {
 }
 
 export const BotAnnouncement = (props) => {
-  const { act, data } = useBackend<BotAnnouncementContext>();
+  const { act, data } = useBackend<BotAnnouncementData>();
   const { channels, lines, button_data, cooldown_left } = data;
 
   const [tab, setTab] = useState(TAB.Announcements);
@@ -41,20 +52,28 @@ export const BotAnnouncement = (props) => {
   const [selectedButton, setSelectedButton] = useState<null | number>(null);
   const [search, setSearch] = useState('');
 
-  let filteredLines = lines.map((val, index) => ({ string: val, index }));
-  let filteredShortcuts = button_data.map((val, index) => ({
+  let filteredLines: StringWithId[] = lines.map((val, index) => ({
+    string: val,
+    index,
+  }));
+  let filteredShortcuts: ButtonDataWithId[] = button_data.map((val, index) => ({
     button: val,
     index,
   }));
+
   if (search !== '') {
     if (tab === TAB.Announcements) {
-      filteredLines = filteredLines.filter((line) =>
-        line.string.toLowerCase().includes(search.toLowerCase()),
+      const lineSearch = createSearch(
+        search,
+        (item: StringWithId) => item.string,
       );
+      filteredLines = filteredLines.filter(lineSearch);
     } else {
-      filteredShortcuts = filteredShortcuts.filter((line) =>
-        line.button.name.toLowerCase().includes(search.toLowerCase()),
+      const buttonSearch = createSearch(
+        search,
+        (item: ButtonDataWithId) => item.button.name,
       );
+      filteredShortcuts = filteredShortcuts.filter(buttonSearch);
     }
   }
 
@@ -84,8 +103,8 @@ export const BotAnnouncement = (props) => {
           </Tabs>
         </Section>
         <Section m={0} scrollable fill maxHeight="350px">
-          {tab === TAB.Announcements && (
-            <Stack vertical>
+          {tab === TAB.Announcements ? (
+            <Stack vertical zebra>
               {filteredLines.map((val) => (
                 <Stack.Item key={val.string}>
                   <Button
@@ -105,9 +124,9 @@ export const BotAnnouncement = (props) => {
                 </Stack.Item>
               ))}
             </Stack>
-          )}
-          {tab === TAB.Shortcuts && (
-            <Stack vertical>
+          ) : null}
+          {tab === TAB.Shortcuts ? (
+            <Stack vertical zebra>
               {filteredShortcuts.map((val) => (
                 <Stack.Item key={val.index}>
                   <Button
@@ -123,7 +142,7 @@ export const BotAnnouncement = (props) => {
                       <Stack.Item>
                         <Icon name="volume-high" />
                       </Stack.Item>
-                      <Stack.Item grow={1}>{val.button.name}</Stack.Item>
+                      <Stack.Item grow>{val.button.name}</Stack.Item>
                       <Stack.Item align="center">
                         <Box
                           color={
@@ -143,7 +162,7 @@ export const BotAnnouncement = (props) => {
                 </Stack.Item>
               ))}
             </Stack>
-          )}
+          ) : null}
         </Section>
         <Section>
           <Stack vertical>
@@ -158,7 +177,7 @@ export const BotAnnouncement = (props) => {
             <Stack.Item>
               <Stack align="center">
                 {(tab === TAB.Announcements && (
-                  <Stack.Item grow={1}>
+                  <Stack.Item grow>
                     <Dropdown
                       options={['No radio channel', ...channels]}
                       displayText={
@@ -177,7 +196,7 @@ export const BotAnnouncement = (props) => {
                       }}
                     />
                   </Stack.Item>
-                )) || <Stack.Item grow={1} />}
+                )) || <Stack.Item grow />}
                 <Stack.Item>
                   <Button
                     textAlign="center"
