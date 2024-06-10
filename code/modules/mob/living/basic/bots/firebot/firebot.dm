@@ -73,10 +73,10 @@
 	internal_ext.max_water = INFINITY
 	internal_ext.refill()
 
-/mob/living/basic/bot/firebot/melee_attack(atom/attacked_atom, proximity_flag, list/modifiers)
+/mob/living/basic/bot/firebot/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	use_extinguisher(attacked_atom)
 
-/mob/living/basic/bot/firebot/RangedAttack(atom/attacked_atom, proximity_flag, list/modifiers)
+/mob/living/basic/bot/firebot/RangedAttack(atom/attacked_atom, list/modifiers)
 	use_extinguisher(attacked_atom)
 
 /mob/living/basic/bot/firebot/proc/use_extinguisher(atom/attacked_atom)
