@@ -293,25 +293,6 @@
 	acid = 80
 	wound = 20
 
-/obj/item/clothing/suit/armor/bone
-	name = "bone armor"
-	desc = "A tribal armor plate, crafted from animal bone."
-	icon_state = "bonearmor"
-	inhand_icon_state = null
-	blood_overlay_type = "armor"
-	armor_type = /datum/armor/armor_bone
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
-
-/datum/armor/armor_bone
-	melee = 35
-	bullet = 25
-	laser = 25
-	energy = 35
-	bomb = 25
-	fire = 50
-	acid = 50
-	wound = 10
-
 /obj/item/clothing/suit/armor/balloon_vest
 	name = "balloon vest"
 	desc = "A vest made entirely from balloons, resistant to any evil forces a mime could throw at you, including electricity and fire. Just a strike with something sharp, though..."

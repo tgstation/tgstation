@@ -12,12 +12,21 @@
 
 /obj/machinery/mineral/stacking_unit_console/Initialize(mapload)
 	. = ..()
-	machine = locate(/obj/machinery/mineral/stacking_machine) in view(2, src)
-	if (machine)
-		machine.console = src
+	var/area/our_area = get_area(src)
+	if(!isnull(our_area))
+		return
+	var/list/turf_list = our_area.get_turfs_by_zlevel(z)
+	if(!islist(turf_list))
+		return
+	for (var/turf/area_turf as anything in turf_list)
+		var/obj/machinery/mineral/stacking_machine/found_machine = locate(/obj/machinery/mineral/stacking_machine) in area_turf
+		if(!isnull(found_machine) && isnull(found_machine.console))
+			found_machine.console = src
+			machine = found_machine
+			break
 
 /obj/machinery/mineral/stacking_unit_console/Destroy()
-	if(machine)
+	if(!isnull(machine))
 		machine.console = null
 		machine = null
 	return ..()
@@ -109,7 +118,7 @@
 	)
 
 /obj/machinery/mineral/stacking_machine/Destroy()
-	if(console)
+	if(!isnull(console))
 		console.machine = null
 		console = null
 	materials = null

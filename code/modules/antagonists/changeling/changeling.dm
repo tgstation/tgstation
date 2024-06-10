@@ -260,6 +260,10 @@
  */
 /datum/antagonist/changeling/proc/on_life(datum/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
+	if(isliving(owner.current))
+		var/mob/living/living_owner = owner.current
+		if(living_owner.fire_stacks && living_owner.on_fire)
+			return // No chemical regen while on fire.
 
 	var/delta_time = DELTA_WORLD_TIME(SSmobs)
 
@@ -538,10 +542,6 @@
 	new_profile.undershirt = target.undershirt
 	new_profile.socks = target.socks
 
-	// Hair and facial hair gradients, alongside their colours.
-	new_profile.grad_style = LAZYLISTDUPLICATE(target.grad_style)
-	new_profile.grad_color = LAZYLISTDUPLICATE(target.grad_color)
-
 	// Grab skillchips they have
 	new_profile.skillchips = target.clone_skillchip_list(TRUE)
 
@@ -768,8 +768,6 @@
 	user.age = chosen_profile.age
 	user.physique = chosen_profile.physique
 	user.mind?.set_level(/datum/skill/athletics, chosen_profile.athletics_level, silent = TRUE)
-	user.grad_style = LAZYLISTDUPLICATE(chosen_profile.grad_style)
-	user.grad_color = LAZYLISTDUPLICATE(chosen_profile.grad_color)
 	user.voice = chosen_profile.voice
 	user.voice_filter = chosen_profile.voice_filter
 
@@ -919,10 +917,6 @@
 	var/athletics_level
 	/// The quirks of the profile source.
 	var/list/quirks = list()
-	/// The hair and facial hair gradient styles of the profile source.
-	var/list/grad_style = list("None", "None")
-	/// The hair and facial hair gradient colours of the profile source.
-	var/list/grad_color = list(null, null)
 	/// The TTS voice of the profile source
 	var/voice
 	/// The TTS filter of the profile filter
@@ -964,8 +958,6 @@
 	new_profile.physique = physique
 	new_profile.athletics_level = athletics_level
 	new_profile.quirks = quirks.Copy()
-	new_profile.grad_style = LAZYLISTDUPLICATE(grad_style)
-	new_profile.grad_color = LAZYLISTDUPLICATE(grad_color)
 	new_profile.voice = voice
 	new_profile.voice_filter = voice_filter
 

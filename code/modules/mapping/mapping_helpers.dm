@@ -1072,7 +1072,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 /obj/effect/mapping_helpers/airlock_note_placer/LateInitialize()
 	var/turf/turf = get_turf(src)
-	if(note_path && !istype(note_path, /obj/item/paper)) //don't put non-paper in the paper slot thank you
+	if(note_path && !ispath(note_path, /obj/item/paper)) //don't put non-paper in the paper slot thank you
 		log_mapping("[src] at [x],[y] had an improper note_path path, could not place paper note.")
 		qdel(src)
 		return
