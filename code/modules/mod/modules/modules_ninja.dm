@@ -155,11 +155,11 @@
 	else
 		to_chat(mod.wearer, span_warning("[drained_atom] has run dry of energy, you must find another source!"))
 
-///Weapon Recall - Teleports your katana to you, prevents gun use.
+///Weapon Recall - Teleports your weapon to you, prevents gun use.
 /obj/item/mod/module/weapon_recall
 	name = "MOD weapon recall module"
 	desc = "The cornerstone of a clanmember's life as a blademaster, and a module symbolizing their eternal bond with their weapon. \
-		This hooks to the micro bluespace drive inside an energy katana's handle, capable of recalling it to the user's \
+		This hooks to the micro bluespace drive inside an energy weapon handle, capable of recalling it to the user's \
 		skilled hands wherever they are. However, those that make such a bond with their weapon are cursed to \
 		fusing their existence with acts of combat, with a singular purpose; Cutting Down Their Opponent. \
 		Their hand a hand that is cutting, their body a body that is cutting, their mind, a mind that is cutting. \

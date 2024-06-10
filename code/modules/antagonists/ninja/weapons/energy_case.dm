@@ -17,30 +17,29 @@
 	inhand_icon_state = "energy_case"
 	worn_icon_state = "energy_case"
 	w_class = WEIGHT_CLASS_BULKY
-	/// When we choise weapon we auto try to link it with mod weapon recall
-	var/obj/item/link_weapon
 
 /obj/item/energy_case/attack_self(mob/user, modifiers)
 	. = ..()
 	var/list/weapons = list(
-		"Energy Katana" = image(icon = 'icons/obj/weapons/sword.dmi', icon_state = "energy_katana"),
-		"Energy Glaive" = image(icon = 'icons/obj/weapons/sword.dmi', icon_state = "glaive"),
-		"Energy Kusarigama" = image(icon = 'icons/obj/weapons/thrown.dmi', icon_state = "energy_kama")
+		"Energy Katana(Easy)" = image(icon = 'icons/obj/weapons/sword.dmi', icon_state = "energy_katana"),
+		"Energy Glaive(Normal)" = image(icon = 'icons/obj/weapons/sword.dmi', icon_state = "glaive"),
+		"Energy Kusarigama(Hard)" = image(icon = 'icons/obj/weapons/thrown.dmi', icon_state = "energy_kama")
 		)
-	var/choise_weapon = show_radial_menu(user, src, weapons, tooltips = TRUE)
-	if(isnull(choise_weapon))
+	var/choice_weapon = show_radial_menu(user, src, weapons, tooltips = TRUE)
+	var/obj/item/linked_weapon
+	if(isnull(choice_weapon))
 		return
-	switch(choise_weapon)
+	switch(choice_weapon)
 		if("Energy Katana")
-			link_weapon = new /obj/item/energy_katana(get_turf(user))
+			linked_weapon = new /obj/item/energy_katana(get_turf(user))
 		if("Energy Glaive")
-			link_weapon = new /obj/item/energy_glaive(get_turf(user))
+			linked_weapon = new /obj/item/energy_glaive(get_turf(user))
 		if("Energy Kusarigama")
-			link_weapon = new /obj/item/energy_kusarigama_kama(get_turf(user))
-	if(!link_weapon)
+			linked_weapon = new /obj/item/energy_kusarigama_kama(get_turf(user))
+	if(!linked_weapon)
 		return
 	qdel(src)
-	user.put_in_active_hand(link_weapon)
+	user.put_in_active_hand(linked_weapon)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/case_man = user
@@ -48,6 +47,6 @@
 	if(!istype(mod))
 		return
 	var/obj/item/mod/module/weapon_recall/recall = locate(/obj/item/mod/module/weapon_recall) in mod.modules
-	if(!is_type_in_list(link_weapon, recall.accepted_types))
+	if(!is_type_in_list(linked_weapon, recall.accepted_types))
 		return
-	recall.set_weapon(link_weapon)
+	recall.set_weapon(linked_weapon)

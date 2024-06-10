@@ -13,14 +13,16 @@
 #define GLAIVE_COOLDOWN 10 SECONDS
 /obj/item/energy_glaive
 	name = "energy glaive"
-	desc = "Double-sided energy spear."
+	desc = "Crescent blade. \
+	Its razor-sharp edge slices through space, revealing unseen dimensions and unveiling new realms of combat. \
+	Mastery of this weapon demands advanced skills and battle experience."
 	desc_controls = "Throw it to teleport."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "glaive"
 	inhand_icon_state = "glaive"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	force = 12 // 12 + 12 = 24
+	force = 14 // 28 becouse making double attack everytime
 	throwforce = 40
 	block_chance = 70
 	armour_penetration = 50
@@ -34,6 +36,7 @@
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	/// Making sparks effects when doing somthing
 	var/datum/effect_system/spark_spread/spark_system
 	/// If if double attacked other target we don't attack first target again
 	var/double_attack = FALSE
@@ -83,8 +86,6 @@
 			continue
 		if(another_target == target)
 			continue
-		if(!proximity_flag)
-			continue
 		target_found = TRUE
 		addtimer(CALLBACK(src, PROC_REF(double_attack), user, another_target), 0.25 SECONDS)
 		break
@@ -93,14 +94,18 @@
 
 /obj/item/energy_glaive/proc/add_charge(mob/living/give_ballon)
 	charges++
+	if(!(loc == give_ballon))
+		return
 	balloon_alert(give_ballon, "[charges]/4 throw charges")
 
-/obj/item/energy_glaive/proc/double_attack(mob/attacker, mob/living/attack_me)
+/obj/item/energy_glaive/proc/double_attack(mob/user, mob/living/target)
+	if(!(loc == user))
+		return
 	if(double_attack)
 		double_attack = FALSE
 		return
 	double_attack = TRUE
-	melee_attack_chain(attacker, attack_me)
+	melee_attack_chain(user, target)
 
 /obj/item/energy_glaive/Destroy()
 	QDEL_NULL(spark_system)

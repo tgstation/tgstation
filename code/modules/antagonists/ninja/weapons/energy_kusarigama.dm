@@ -10,11 +10,16 @@
  * 				If anyone stands between friends when one of them moves towards the other, he will receive a slide effect:
  * 					Kama effect - Deal 60 damage and have 25% chanse to cut target leg off,
  * 					Fundo effect - Paralize target on 3 SECONDS.
+ * Parts can't be picked up if someone else is holding another part.
+ * All parts can be used in hands to pull it near owner.
  *
  */
 /obj/item/energy_kusarigama_kama
 	name = "energy kama"
-	desc = "An energy sickle. One of three parts of a kusarigami."
+	desc = "Shimmering scythe. \
+	Harder then any ninja weapons. \
+	Its curved form gainsstrength in rotation, shattering spatial barriers and clearing path for dancer of space."
+	desc_controls = "Use in hands to pull fundo to you"
 	icon = 'icons/obj/weapons/thrown.dmi'
 	icon_state = "energy_kama"
 	inhand_icon_state = "energy_kama"
@@ -37,6 +42,7 @@
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	/// Making sparks effects when doing somthing
 	var/datum/effect_system/spark_spread/spark_system
 	/// Chain var
 	var/chain
@@ -134,13 +140,19 @@
 	if(living_equip_tail == user)
 		chain_check()
 		return
+	if(living_equip_tail)
+		if(!(user.mind?.has_antag_datum(/datum/antagonist/ninja)))
+			user.dropItemToGround(src)
+			chain_check()
+			return
+		living_equip_tail.dropItemToGround(kusarigama_tail)
 	if(slot & ITEM_SLOT_HANDS)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	chain_check()
 
 /obj/item/energy_kusarigama_kama/attack_self(mob/user, modifiers)
 	. = ..()
-	if(living_equip_tail == user)
+	if(living_equip_tail)
 		return
 	kusarigama_tail.throw_at(user, 3, 3)
 	chain_check()
@@ -214,7 +226,9 @@
 
 /obj/item/energy_kusarigama_fundo
 	name = "energy fundo"
-	desc = "Large heavy steel ball. One of three part of kusarigama."
+	desc = "Spherical weight at the end of the kusarigama, \
+	wielded by master to seize decisive moments in battle. This is a weapon for true masters, surpassing ordinary ninja skills."
+	desc_controls = "Can disarm weapons. Throw it to knockdown enemy. Use in hands to pull kama to you"
 	icon = 'icons/obj/weapons/thrown.dmi'
 	icon_state = "energy_fundo"
 	inhand_icon_state = "energy_fundo"
@@ -238,6 +252,7 @@
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	/// Making sparks effects when doing somthing
 	var/datum/effect_system/spark_spread/spark_system
 	/// Our friend
 	var/obj/item/energy_kusarigama_kama/kusarigama_head
@@ -322,13 +337,19 @@
 	if(kusarigama_head.living_equip_head == user)
 		kusarigama_head.chain_check()
 		return
+	if(kusarigama_head.living_equip_head)
+		if(!(user.mind?.has_antag_datum(/datum/antagonist/ninja)))
+			user.dropItemToGround(src)
+			kusarigama_head.chain_check()
+			return
+		kusarigama_head.living_equip_head.dropItemToGround(kusarigama_head)
 	if(slot & ITEM_SLOT_HANDS)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	kusarigama_head.chain_check()
 
 /obj/item/energy_kusarigama_fundo/attack_self(mob/user, modifiers)
 	. = ..()
-	if(kusarigama_head.living_equip_head == user)
+	if(kusarigama_head.living_equip_head)
 		return
 	kusarigama_head.throw_at(user, 3, 3)
 	kusarigama_head.chain_check()
