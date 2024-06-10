@@ -18,13 +18,15 @@
 
 	if(istype(attacking_item, /obj/item/storage/bag)) // covers any kind of bag that has a compostible item
 		var/obj/item/storage/bag/bag = attacking_item
-		for(var/obj/item/food/item in bag.contents)
+		var/list/to_compost
+		for(var/item in bag.contents)
+			if(!istype(item, /obj/item/food) && !istype(item, /obj/item/seeds))
+				continue
 			if(bag.atom_storage.attempt_remove(item, src))
-				compost(item)
-
-		for(var/obj/item/seeds/item in bag.contents)
-			if(bag.atom_storage.attempt_remove(item, src))
-				compost(item)
+				LAZYADD(to_compost, item)
+			CHECK_TICK
+		if(to_compost)
+			compost(to_compost)
 		to_chat(user, span_info("You empty \the [bag] into \the [src]."))
 
 /obj/machinery/gibber/attack_paw(mob/user, list/modifiers)
@@ -34,6 +36,9 @@
 	. = ..()
 	if(user.pulling && isliving(user.pulling))
 		var/mob/living/L = user.pulling
+		if(!(obj_flags & EMAGGED))
+			to_chat(user, span_warning("Safeties prevent the composting of living beings!"))
+			return
 		if(!iscarbon(L))
 			to_chat(user, span_warning("This item is not suitable for [src]!"))
 			return
@@ -54,12 +59,12 @@
 		if(do_after(user, 80, target = src))
 			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !occupant)
 				user.visible_message(span_danger("[user] stuffs [C] into [src]!"))
-				compost(C)
+				compost(C, allow_carbons = TRUE)
 
 	if(biomatter < 40)
 		to_chat(user, span_notice("Not enough biomatter to produce Bio-Cube"))
 		return
-	new /obj/item/bio_cube(get_turf(src))
+	new /obj/item/bio_cube(drop_location())
 	biomatter -= 40
 	update_desc()
 	update_appearance()
@@ -76,44 +81,62 @@
 	else
 		. += mutable_appearance('monkestation/icons/obj/machines/composter.dmi', "light_on", layer = OBJ_LAYER + 0.01)
 
-/obj/machinery/composters/proc/compost(atom/composter)
-	if(istype(composter, /obj/item/seeds))
-		biomatter++
-		qdel(composter)
-	if(istype(composter, /obj/item/food))
-		biomatter += 4
-		qdel(composter)
-	if(istype(composter, /mob/living/carbon))
+/obj/machinery/composters/proc/compost(list/composting, allow_carbons = FALSE)
+	if(!islist(composting))
+		composting = list(composting)
+	var/biomatter_added = 0
+	var/yucky = FALSE
+	for(var/atom/movable/composter as anything in composting)
+		if(istype(composter, /obj/item/seeds))
+			biomatter_added++
+			qdel(composter)
+		else if(istype(composter, /obj/item/food))
+			biomatter_added += 4
+			qdel(composter)
+		else if(istype(composter, /mob/living/carbon) && allow_carbons)
+			var/mob/living/carbon/carbon_target = composter
+			if(carbon_target.stat != DEAD)
+				continue
+			yucky = TRUE
+			biomatter_added += 40
+			INVOKE_ASYNC(carbon_target, TYPE_PROC_REF(/mob/living/carbon, gib))
+		CHECK_TICK
+	if(!biomatter_added)
+		return
+	biomatter += biomatter_added
+	if(yucky)
+		playsound(loc, 'sound/machines/juicer.ogg', vol = 50, vary = TRUE)
 		audible_message(span_hear("You hear a loud squelchy grinding sound."))
-		playsound(loc, 'sound/machines/juicer.ogg', 50, TRUE)
-		biomatter += 40
-		qdel(composter)
 	update_desc()
 	update_appearance()
 	flick("composter_animate", src)
 
-/obj/item/seeds/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+/obj/machinery/composters/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	obj_flags |= EMAGGED
+	balloon_alert(user, "safeties overriden")
+	return TRUE
+
+/obj/item/seeds/MouseDrop(atom/over, atom/src_location, over_location, src_control, over_control, params)
 	. = ..()
 	// ensure user is next to what we're mouse dropping into
-	if (!Adjacent(usr, over))
+	if(!Adjacent(usr, over) || !istype(src_location))
 		return
 	// ensure the stuff we're mouse dropping is ALSO adjacent
-	if(istype(over, /obj/machinery/composters) && Adjacent(src_location, over_location))
-		var/obj/machinery/composters/dropped = over
-		for(var/obj/item/seeds/seed in src_location)
-			dropped.compost(seed)
+	var/obj/machinery/composters/dropped = over
+	if(istype(dropped) && Adjacent(src_location, over_location))
+		dropped.compost(src_location.contents)
 
-/obj/item/food/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+/obj/item/food/MouseDrop(atom/over, atom/src_location, over_location, src_control, over_control, params)
 	. = ..()
 	// ensure user is next to what we're mouse dropping into
-	if (!Adjacent(usr, over))
+	if(!Adjacent(usr, over) || !istype(src_location))
 		return
 	// ensure the stuff we're mouse dropping is ALSO adjacent
-	if(istype(over, /obj/machinery/composters) && Adjacent(src_location, over_location))
-		var/obj/machinery/composters/dropped = over
-		for(var/obj/item/food/food in src_location)
-			dropped.compost(food)
-
+	var/obj/machinery/composters/dropped = over
+	if(istype(dropped) && Adjacent(src_location, over_location))
+		dropped.compost(src_location.contents)
 
 /obj/item/bio_cube
 	name = "Bio Cube"
