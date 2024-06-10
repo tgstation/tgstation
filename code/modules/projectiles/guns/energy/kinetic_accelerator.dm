@@ -7,6 +7,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	item_flags = NONE
 	obj_flags = UNIQUE_RENAME
+	resistance_flags = FIRE_PROOF
 	weapon_weight = WEAPON_LIGHT
 	can_bayonet = TRUE
 	knife_x_offset = 20

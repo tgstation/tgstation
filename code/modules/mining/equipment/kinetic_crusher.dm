@@ -15,6 +15,7 @@
 	desc = "An early design of the proto-kinetic accelerator, it is little more than a combination of various mining tools cobbled together, \
 		forming a high-tech club. While it is an effective mining tool, it did little to aid any but the most skilled and/or \
 		suicidal miners against local fauna."
+	resistance_flags = FIRE_PROOF
 	force = 0 //You can't hit stuff unless wielded
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
