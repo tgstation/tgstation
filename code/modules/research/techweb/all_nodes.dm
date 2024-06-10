@@ -508,6 +508,18 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/random/cytology = 3000) //Big discount to reinforce doing it.
 
+/datum/techweb_node/marine_util
+	id = "marine_util"
+	display_name = "Marine Utility"
+	description = "Fish are nice to look at and all, but they can be put to use."
+	prereq_ids = list("bio_process")
+	design_ids = list(
+		"bioelec_gen",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
+	// only available if you've done the first fishing experiment (thus unlocking fishing tech), but not a strict requirement to get the tech
+	discount_experiments = list(/datum/experiment/scanning/fish/second = 3000)
+
 /////////////////////////Advanced Surgery/////////////////////////
 
 /datum/techweb_node/imp_wt_surgery

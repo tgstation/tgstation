@@ -1,0 +1,4 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - rscadd: "Station-Wide Background Checks (station trait, rare): Disables crew antagonists, but get a lot more non-crew antagonists"

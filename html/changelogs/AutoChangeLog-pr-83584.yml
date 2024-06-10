@@ -1,0 +1,5 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - bugfix: "Fixes railings being invisible"
+  - bugfix: "Snow walls dont spawn on railings anymore in icebox"
