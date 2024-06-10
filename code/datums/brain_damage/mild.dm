@@ -25,6 +25,7 @@
 
 /datum/brain_trauma/mild/hallucinations/on_lose()
 	owner.remove_status_effect(/datum/status_effect/hallucination)
+	owner.remove_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 	return ..()
 
 /datum/brain_trauma/mild/stuttering
