@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - refactor: "Refactored Composter code in an attempt to eliminate the lag it can cause."
