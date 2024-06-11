@@ -34,7 +34,7 @@
 	acid = 100
 
 /obj/vehicle/sealed/mecha/gygax/dark
-	desc = "A lightweight exosuit, painted in a dark scheme. This model appears to have some modifications."
+	desc = "A lightweight exosuit, painted in a dark scheme. This model's armor has been upgraded with a cutting-edge armor composite, resulting in greater protection and performance at the cost of modularity."
 	name = "\improper Dark Gygax"
 	ui_theme = "syndicate"
 	icon_state = "darkgygax"
@@ -53,21 +53,21 @@
 		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 4,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 3,
+		MECHA_ARMOR = 0,
 	)
 	equip_by_category = list(
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot,
 		MECHA_R_ARM = null,
 		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/radio, /obj/item/mecha_parts/mecha_equipment/air_tank/full, /obj/item/mecha_parts/mecha_equipment/thrusters/ion),
 		MECHA_POWER = list(),
-		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/anticcw_armor_booster, /obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster),
+		MECHA_ARMOR = list(),
 	)
 	destruction_sleep_duration = 20
 
 /datum/armor/gygax_dark
-	melee = 40
-	bullet = 40
-	laser = 50
+	melee = 70
+	bullet = 50
+	laser = 55
 	energy = 35
 	bomb = 20
 	fire = 100

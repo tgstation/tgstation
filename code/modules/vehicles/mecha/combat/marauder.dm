@@ -1,5 +1,5 @@
 /obj/vehicle/sealed/mecha/marauder
-	desc = "Heavy-duty, combat exosuit, developed after the Durand model. Rarely found among civilian populations."
+	desc = "Heavy-duty, combat exosuit, developed after the Durand model. Rarely found among civilian populations. Its bleeding edge armour ensures maximum usability and protection at the cost of some modularity."
 	name = "\improper Marauder"
 	icon_state = "marauder"
 	base_icon_state = "marauder"
@@ -20,16 +20,16 @@
 		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 5,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 3,
+		MECHA_ARMOR = 0,
 	)
 	bumpsmash = TRUE
 
 /datum/armor/mecha_marauder
-	melee = 50
-	bullet = 55
-	laser = 40
+	melee = 70
+	bullet = 60
+	laser = 60
 	energy = 30
-	bomb = 30
+	bomb = 50
 	fire = 100
 	acid = 100
 
@@ -44,7 +44,7 @@
 		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack,
 		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/radio, /obj/item/mecha_parts/mecha_equipment/air_tank/full, /obj/item/mecha_parts/mecha_equipment/thrusters/ion),
 		MECHA_POWER = list(),
-		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster),
+		MECHA_ARMOR = list(),
 	)
 
 /obj/vehicle/sealed/mecha/marauder/loaded/populate_parts()
@@ -92,6 +92,7 @@
 	accesses = list(ACCESS_CENT_SPECOPS)
 	movedelay = 3
 	max_integrity = 550
+	armor_type = /datum/armor/mecha_seraph
 	wreckage = /obj/structure/mecha_wreckage/seraph
 	force = 55
 	max_equip_by_category = list(
@@ -99,22 +100,33 @@
 		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 5,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 3,
+		MECHA_ARMOR = 0,
 	)
 	equip_by_category = list(
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse,
 		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack,
 		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/radio, /obj/item/mecha_parts/mecha_equipment/air_tank/full, /obj/item/mecha_parts/mecha_equipment/thrusters/ion),
 		MECHA_POWER = list(),
-		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster),
+		MECHA_ARMOR = list(),
 	)
 
+/datum/armor/mecha_seraph
+	melee = 80
+	bullet = 65
+	laser = 65
+	energy = 50
+	bomb = 50
+	fire = 100
+	acid = 100
+
+
 /obj/vehicle/sealed/mecha/marauder/mauler
-	desc = "Heavy-duty, combat exosuit, developed off of the existing Marauder model."
+	desc = "Heavy-duty, combat exosuit, developed off of the existing Marauder model, its hardened exterior prevents the use of add-on armor packages."
 	name = "\improper Mauler"
 	ui_theme = "syndicate"
 	icon_state = "mauler"
 	base_icon_state = "mauler"
+	armor_type = /datum/armor/mecha_mauler
 	accesses = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/mauler
 	mecha_flags = ID_LOCK_ON | CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
@@ -123,7 +135,7 @@
 		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 4,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 4,
+		MECHA_ARMOR = 0,
 	)
 	equip_by_category = list(
 		MECHA_L_ARM = null,
@@ -134,13 +146,22 @@
 	)
 	destruction_sleep_duration = 20
 
+/datum/armor/mecha_mauler
+	melee = 80
+	bullet = 60
+	laser = 50
+	energy = 30
+	bomb = 50
+	fire = 100
+	acid = 100
+
 /obj/vehicle/sealed/mecha/marauder/mauler/loaded
 	equip_by_category = list(
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,
 		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack,
 		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/radio, /obj/item/mecha_parts/mecha_equipment/air_tank/full, /obj/item/mecha_parts/mecha_equipment/thrusters/ion),
 		MECHA_POWER = list(),
-		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster),
+		MECHA_ARMOR = list(),
 	)
 
 /obj/vehicle/sealed/mecha/marauder/mauler/loaded/Initialize(mapload)

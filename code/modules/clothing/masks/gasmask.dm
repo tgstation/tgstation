@@ -277,6 +277,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	dye_color = DYE_CLOWN
 	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = MASKCOVERSEYES
+	clothing_traits = list(TRAIT_PERCEIVED_AS_CLOWN)
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = /datum/dog_fashion/head/clown

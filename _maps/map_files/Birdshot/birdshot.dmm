@@ -22386,6 +22386,12 @@
 	},
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos/space_catwalk)
+"izw" = (
+/obj/machinery/transport/tram_controller/tcomms{
+	configured_transport_id = "bird_2"
+	},
+/turf/open/floor/circuit,
+/area/station/tcommsat/server)
 "izB" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/sign/painting/library{
@@ -38619,11 +38625,11 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/mail_sorting/service/janitor_closet,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 8
+	},
 /turf/open/floor/iron/white/small,
 /area/station/service/janitor)
 "nVe" = (
@@ -40716,6 +40722,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/break_room)
 "oJn" = (
@@ -54321,13 +54328,14 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "sKD" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Engine Airlock"
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
 /obj/structure/cable,
 /obj/effect/landmark/navigate_destination,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
+/obj/machinery/door/airlock/engineering{
+	name = "Main Engineering"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/break_room)
 "sKE" = (
@@ -58360,8 +58368,10 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
 "tUD" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/obj/machinery/transport/tram_controller/tcomms{
+	configured_transport_id = "bird_1"
+	},
+/turf/open/floor/circuit,
 /area/station/tcommsat/server)
 "tUH" = (
 /obj/structure/disposalpipe/segment,
@@ -121802,7 +121812,7 @@ wos
 udv
 tSq
 mvo
-tUD
+izw
 bFw
 ulK
 cdn
