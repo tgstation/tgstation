@@ -29,6 +29,9 @@
 	/// Amount of blood to heal over a second
 	var/blood_heal = 0
 
+	/// Amount of bleed/pierce wound lowering per second.
+	var/wound_clotting = 0
+
 	/// Map of organ (such as ORGAN_SLOT_BRAIN) to damage heal over a second
 	var/list/organ_healing = null
 
@@ -56,6 +59,7 @@
 	suffocation_heal = 0,
 	stamina_heal = 0,
 	blood_heal = 0,
+	wound_clotting = 0,
 	organ_healing = null,
 	simple_heal = 0,
 	limit_to_trait = null,
@@ -74,6 +78,7 @@
 	src.suffocation_heal = suffocation_heal
 	src.stamina_heal = stamina_heal
 	src.blood_heal = blood_heal
+	src.wound_clotting = wound_clotting
 	src.organ_healing = organ_healing
 	src.simple_heal = simple_heal
 	src.limit_to_trait = limit_to_trait
@@ -130,6 +135,10 @@
 
 			for (var/organ in organ_healing)
 				candidate.adjustOrganLoss(organ, -organ_healing[organ] * seconds_per_tick)
+			var/mob/living/carbon/carbidate = candidate
+			for(var/datum/wound/iter_wound as anything in carbidate.all_wounds)
+				iter_wound.adjust_blood_flow(-wound_clotting * seconds_per_tick)
+
 		else if (isanimal(candidate))
 			var/mob/living/simple_animal/animal_candidate = candidate
 			animal_candidate.adjustHealth(-simple_heal * seconds_per_tick, updating_health = FALSE)

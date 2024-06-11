@@ -22,6 +22,7 @@
 		burn_heal = 0.4, \
 		blood_heal = 0.4, \
 		simple_heal = 1.2, \
+		wound_clotting = 0.1, \
 		requires_visibility = FALSE, \
 		limit_to_trait = TRAIT_HEALS_FROM_CULT_PYLONS, \
 		healing_color = COLOR_CULT_RED, \
