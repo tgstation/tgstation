@@ -1,0 +1,6 @@
+author: "PowerfulAtom111"
+delete-after: True
+changes:
+  - rscadd: "after a quick galactic meeting, insane people around the universe can now speak gibbering to express their ideas free from the prying ears of the walls"
+  - rscadd: "as an insane person, taking your meds deafens your ears to the holy tongue all the other insane people are speaking"
+  - spellcheck: "added a bit of text to the RDS quirk and the RDS medical record text to highlight the insane's new abilities"
