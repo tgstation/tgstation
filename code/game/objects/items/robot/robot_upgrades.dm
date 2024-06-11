@@ -429,14 +429,14 @@
 		to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
 		return FALSE
 	cyborg.model.toolbox.currently_upgraded = TRUE
-	cyborg.model.toolbox.set_upgade()
+	cyborg.model.toolbox.set_upgrade()
 
 /obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
 	cyborg.model.toolbox.currently_upgraded = FALSE
-	cyborg.model.toolbox.set_upgade()
+	cyborg.model.toolbox.set_upgrade()
 
 /obj/item/borg/upgrade/engineering_omnitool
 	name = "cyborg engineering omni-tool upgrade"
@@ -455,14 +455,14 @@
 		to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
 		return FALSE
 	cyborg.model.toolbox.currently_upgraded = TRUE
-	cyborg.model.toolbox.set_upgade()
+	cyborg.model.toolbox.set_upgrade()
 
 /obj/item/borg/upgrade/engineering_omnitool/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
 	cyborg.model.toolbox.currently_upgraded = FALSE
-	cyborg.model.toolbox.set_upgade()
+	cyborg.model.toolbox.set_upgrade()
 
 /obj/item/borg/upgrade/defib
 	name = "medical cyborg defibrillator"
