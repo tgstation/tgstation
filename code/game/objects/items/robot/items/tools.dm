@@ -204,7 +204,7 @@
 	var/upgraded_toolspeed = 10
 	var/currently_upgraded = FALSE
 
-obj/item/cyborg_omnitoolbox/Initialize(mapload)
+/obj/item/cyborg_omnitoolbox/Initialize(mapload)
 	. = ..()
 	if(!toolpaths.len)
 		qdel(src)
@@ -217,7 +217,7 @@ obj/item/cyborg_omnitoolbox/Initialize(mapload)
 		ADD_TRAIT(newitem, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 		radial_menu_options[newitem] = image(icon = newitem.icon, icon_state = newitem.icon_state)
 
-obj/item/cyborg_omnitoolbox/proc/set_upgade()
+/obj/item/cyborg_omnitoolbox/proc/set_upgade()
 	for(var/obj/item/tool in contents)
 		if(currently_upgraded)
 			tool.toolspeed = upgraded_toolspeed
@@ -265,7 +265,6 @@ obj/item/cyborg_omnitoolbox/proc/set_upgade()
 	if(!iscyborg(loc.loc))
 		qdel(src)
 		CRASH("Cyborg Omnitool spawned, but not in cyborg! Spawn location [loc], inside [loc.loc] which should be a cyborg.")
-		return
 	var/obj/item/robot_model/model = loc
 	var/mob/living/silicon/robot/cyborg = model.loc
 	var/obj/item/cyborg_omnitoolbox/chassis_toolbox = model.toolbox
