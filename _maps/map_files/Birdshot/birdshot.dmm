@@ -11290,7 +11290,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron/white/textured_half{
 	dir = 1
 	},
@@ -13285,7 +13284,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron/white/textured_half{
 	dir = 1
 	},
@@ -54429,9 +54427,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 4
-	},
 /turf/open/floor/iron/white/textured_half{
 	dir = 1
 	},
@@ -71350,9 +71345,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 4
-	},
 /turf/open/floor/iron/white/textured_half{
 	dir = 1
 	},
