@@ -34,9 +34,9 @@
 /turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
 		return
-	var/obj/item/tool = user.is_holding_item_of_type(/obj/item/screwdriver)
+	var/obj/item/tool = user.is_holding_tool_quality(TOOL_SCREWDRIVER)
 	if(!tool)
-		tool = user.is_holding_item_of_type(/obj/item/crowbar)
+		tool = user.is_holding_tool_quality(TOOL_CROWBAR)
 	if(!tool)
 		return
 	var/turf/open/floor/plating/P = pry_tile(tool, user, TRUE)
