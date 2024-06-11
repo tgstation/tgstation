@@ -51,11 +51,7 @@
 	difficulty = 8
 	locked = TRUE
 
-/datum/mutation/human/mindreader/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
 
-	owner.add_traits(TRAIT_MIND_READER, GENETIC_MUTATION)
 
 /datum/mutation/human/mindreader/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -73,6 +69,14 @@
 	antimagic_flags = MAGIC_RESISTANCE_MIND
 
 	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
+
+/datum/action/cooldown/spell/pointed/mindread/Grant(mob/grant_to)
+	. = ..()
+	grant_to.add_traits(TRAIT_MIND_READER, GENETIC_MUTATION)
+
+/datum/action/cooldown/spell/pointed/mindread/Remove(mob/remove_from)
+	. = ..()
+	remove_from.remove_traits(TRAIT_MIND_READER, GENETIC_MUTATION)
 
 /datum/action/cooldown/spell/pointed/mindread/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))

@@ -279,6 +279,8 @@
 /// Other Variants
 /// Not a special category on their own, but usually possess more unique mechanics
 
+// God Hand - Cannot be dropped. Does burn damage.
+
 /obj/item/nullrod/godhand
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
@@ -299,6 +301,8 @@
 /obj/item/nullrod/godhand/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+
+// Red/Blue Holy Staff - 50% block chance, almost no damage at all.
 
 /obj/item/nullrod/staff
 	name = "red holy staff"
@@ -329,6 +333,8 @@
 	shield_icon = "shield-old"
 	menu_description = "A blue staff which provides a medium chance of blocking incoming attacks via a protective blue aura around its user, but deals very low amount of damage. Can be worn only on the back."
 
+// SORD - It is unspeakably shitty.
+
 /obj/item/nullrod/sord
 	name = "\improper UNREAL SORD"
 	desc = "This thing is so unspeakably HOLY you are having a hard time even holding it."
@@ -351,6 +357,8 @@
 	span_suicide("You try to impale yourself with [src], but it's TOO HOLY..."))
 	return SHAME
 
+// Relic War Hammer - Nothing special.
+
 /obj/item/nullrod/hammer
 	name = "relic war hammer"
 	desc = "This war hammer cost the chaplain forty thousand space dollars."
@@ -368,6 +376,8 @@
 /obj/item/nullrod/hammer/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/kneejerk)
+
+// Chainsaw Hand - Cannot be dropped.
 
 /obj/item/nullrod/chainsaw
 	name = "chainsaw hand"
@@ -398,6 +408,8 @@
 	butcher_sound = hitsound, \
 	)
 
+// Clown Dagger - Nothing special, just honks.
+
 /obj/item/nullrod/clown
 	name = "clown dagger"
 	desc = "Used for absolutely hilarious sacrifices."
@@ -412,6 +424,8 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	menu_description = "A sharp dagger. Fits in pockets. Can be worn on the belt. Honk."
+
+// Pride-struck Hammer - Transfers reagents in your body to those you hit.
 
 #define CHEMICAL_TRANSFER_CHANCE 30
 
@@ -445,6 +459,8 @@
 
 #undef CHEMICAL_TRANSFER_CHANCE
 
+// Holy Whip - Does more damage to vampires.
+
 /obj/item/nullrod/whip
 	name = "holy whip"
 	desc = "What a terrible night to be on Space Station 13."
@@ -459,6 +475,8 @@
 	attack_verb_simple = list("whip", "lash")
 	hitsound = 'sound/weapons/chainhit.ogg'
 	menu_description = "A whip. Deals extra damage to vampires. Fits in pockets. Can be worn on the belt."
+
+// Atheist's Fedora - Wear it on your head. No melee damage, massive throw force.
 
 /obj/item/nullrod/fedora
 	name = "atheist's fedora"
@@ -482,6 +500,8 @@
 /obj/item/nullrod/fedora/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get further from god!"))
 	return (BRUTELOSS|FIRELOSS)
+
+// Dark Blessing - Replaces your arm with an armblade. Cannot be dropped.
 
 /obj/item/nullrod/armblade
 	name = "dark blessing"
@@ -507,11 +527,15 @@
 	effectiveness = 70, \
 	)
 
+// Unholy Blessing - Just a reskinned dark blessing.
+
 /obj/item/nullrod/armblade/tentacle
 	name = "unholy blessing"
 	icon_state = "tentacle"
 	inhand_icon_state = "tentacle"
 	menu_description = "An undroppable sharp tentacle capable of inflicting deep wounds. Capable of an ineffective butchering of bodies. Disappears if the arm holding it is cut off."
+
+// Carp-sie Plushie - Gives you the carp faction so that you can be friends with carp.
 
 /obj/item/nullrod/carp
 	name = "carp-sie plushie"
@@ -534,6 +558,8 @@
 	. = ..()
 	AddComponent(/datum/component/faction_granter, FACTION_CARP, holy_role_required = HOLY_ROLE_PRIEST, grant_message = span_boldnotice("You are blessed by Carp-Sie. Wild space carp will no longer attack you."))
 
+// Monk's Staff - Higher block, lower damage.
+
 /obj/item/nullrod/bostaff
 	name = "monk's staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, it is now used to harass the clown."
@@ -552,6 +578,8 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	menu_description = "A staff which provides a medium-low chance of blocking incoming melee attacks and deals a little less damage. Can be worn on the back."
+
+// Arrhythmic Knife - Lets your walk without rhythm by varying your walk speed. Can't be put away.
 
 /obj/item/nullrod/tribal_knife
 	name = "arrhythmic knife"
@@ -589,6 +617,8 @@
 		if(wielder.is_holding(src))
 			wielder.update_equipment_speed_mods()
 
+// Unholy Pitchfork - Does absolutely nothing special, it is just bigger.
+
 /obj/item/nullrod/pitchfork
 	name = "unholy pitchfork"
 	desc = "Holding this makes you look absolutely devilish."
@@ -606,6 +636,8 @@
 	sharpness = SHARP_EDGED
 	menu_description = "A sharp pitchfork. Can be worn on the back."
 
+// Egyptian Staff - Used as a tool for making mummy wraps.
+
 /obj/item/nullrod/egyptian
 	name = "egyptian staff"
 	desc = "A tutorial in mummification is carved into the staff. You could probably craft the wraps if you had some cloth."
@@ -620,6 +652,8 @@
 	attack_verb_continuous = list("bashes", "smacks", "whacks")
 	attack_verb_simple = list("bash", "smack", "whack")
 	menu_description = "A staff. Can be used as a tool to craft exclusive egyptian items. Easily stored. Can be worn on the back."
+
+// Hypertool - It does brain damage rather than normal damage.
 
 /obj/item/nullrod/hypertool
 	name = "hypertool"
@@ -638,6 +672,8 @@
 	hitsound = 'sound/effects/sparks4.ogg'
 	menu_description = "A tool dealing brain damage which partially penetrates armor. Fits in pockets. Can be worn on the belt."
 
+// Ancient Spear - Slight armor penetration, based on the Brass Spear from the Clockcult game mode.
+
 /obj/item/nullrod/spear
 	name = "ancient spear"
 	desc = "An ancient spear made of brass, I mean gold, I mean bronze. It looks highly mechanical."
@@ -655,6 +691,8 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	menu_description = "A pointy spear which penetrates armor a little. Can be worn only on the belt."
 
+// Nullblade - For when you really want to feel like rolling dice during combat
+
 /obj/item/nullrod/nullblade
 	name = "nullblade"
 	desc = "Clerical assassins are not officially recognized by the collective faiths of Nanotrasen. And yet, here you are."
@@ -666,7 +704,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	force = 12
-	wound_bonus = 5
+	wound_bonus = 10
 	bare_wound_bonus = 30
 	slot_flags = ITEM_SLOT_BELT
 	block_sound = 'sound/weapons/parry.ogg'
@@ -674,7 +712,36 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "punctures", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "puncture", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-	menu_description = "A blade that deals low damage, but easily inflicts wounds. Against debilitated targets, can also deal additional sneak attack damage with a very high wound chance."
+	menu_description = "A blade that deals variable, low amounts of damage, but does easily inflict wounds. \
+		The stronger your swinging arm is, the stronger the blade is, though only slightly. \
+		Against debilitated targets, can also deal additional sneak attack damage with a very high wound chance."
+
+/obj/item/nullrod/nullblade/melee_attack_chain(mob/user, atom/target, params)
+	//Track our actual force separately
+	var/old_force = force
+	force = 0
+	//Potential dice roll for our baseline force
+	force += roll("1d6")
+
+	//Now we can check for our user's potential 'strength' value. As a baseline, we'll use a default value of 4 for the sake of nonhuman users.
+	var/strength_value = 4
+
+	//We can use our human wielder's arm strength to determine their 'strength'. We add unarmed lower and upper, then divide by four.
+	//This isn't how strength works in dnd but who fucking cares.
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		var/obj/item/bodypart/wielding_bodypart = human_user.get_active_hand()
+		strength_value = round((wielding_bodypart.unarmed_damage_low + wielding_bodypart.unarmed_damage_high) * 0.25)
+
+	force += strength_value
+
+	//If our old_force is higher than our initial force, add the difference to this calculation.
+	//We do this because our force could have been changed by things like whetstones and RPG stats.
+	force += old_force - initial(force)
+
+	. = ..()
+	//Reapply our old force.
+	force = old_force
 
 /obj/item/nullrod/nullblade/afterattack(atom/target, mob/user, proximity, params)
 	. = ..()
@@ -682,6 +749,9 @@
 		return
 
 	if(!isliving(target))
+		return
+
+	if(user == target)
 		return
 
 	sneak_attack(target, user)
@@ -694,8 +764,8 @@
 	// Did our sneak attack fail due to a special effect?
 	var/sneak_attack_fail_message = FALSE
 
-	// The force our sneak attack applies. Starts as 1d6, then changed based on certain factors.
-	var/force_applied = rand(1,6)
+	// The force our sneak attack applies. Starts as 3d6, then changed based on certain factors.
+	var/sneak_attack_dice = roll("3d6")
 
 	if(living_target.stat == DEAD)
 		return
@@ -704,26 +774,26 @@
 	if(living_target.is_blind())
 		successful_sneak_attack = TRUE
 
-	if(living_target.get_timed_status_effect_duration(/datum/status_effect/staggered))
+	else if(living_target.get_timed_status_effect_duration(/datum/status_effect/staggered))
 		successful_sneak_attack = TRUE
 
-	if(living_target.get_timed_status_effect_duration(/datum/status_effect/confusion))
+	else if(living_target.get_timed_status_effect_duration(/datum/status_effect/confusion))
 		successful_sneak_attack = TRUE
 
 	// Our target is in some kind of grapple, which prevents them form protecting themselves.
-	if(living_target.pulledby && living_target.pulledby.grab_state >= GRAB_AGGRESSIVE)
+	else if(living_target.pulledby && living_target.pulledby.grab_state >= GRAB_AGGRESSIVE)
 		successful_sneak_attack = TRUE
 
 	// traits that render you unable to defend yourself properly from an attack
-	if(HAS_TRAIT(living_target, TRAIT_SPINNING) || HAS_TRAIT(living_target, TRAIT_HANDS_BLOCKED))
+	else if(HAS_TRAIT(living_target, TRAIT_SPINNING) || HAS_TRAIT(living_target, TRAIT_HANDS_BLOCKED))
 		successful_sneak_attack = TRUE
 
 	// We'll take "same tile" as "behind" for ease
-	if(living_target.loc == user.loc)
+	else if(living_target.loc == user.loc)
 		successful_sneak_attack = TRUE
 
 	// We'll also assume lying down is vulnerable, as mob directions when lying are unclear and you have trouble defending yourself from prone
-	if(living_target.body_position == LYING_DOWN)
+	else if(living_target.body_position == LYING_DOWN)
 		successful_sneak_attack = TRUE
 
 	// Now check for if we're behind
@@ -733,27 +803,27 @@
 
 	/// Now we'll check for things that STOP a sneak attack. Why? Because this mechanic isn't complicated enough and I must insert more ivory tower design.
 
-	if(living_target.mob_biotypes == MOB_SLIME) // SLIMES HAVE NO ANATOMY.
+	if(living_target.mob_biotypes & MOB_SLIME) // SLIMES HAVE NO ANATOMY.
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 
-	if(living_target.incorporeal_move >= 1 && !HAS_TRAIT(living_target, TRAIT_REVENANT_REVEALED)) // WE CAN'T SNEAK ATTACK INCORPOREAL JERKS. BUT WE CAN SNEAK ATTACK REVEALED REVENANTS BECAUSE DUH, NULLROD.
+	else if(living_target.incorporeal_move >= 1 && !HAS_TRAIT(living_target, TRAIT_REVENANT_REVEALED)) // WE CAN'T SNEAK ATTACK INCORPOREAL JERKS. BUT WE CAN SNEAK ATTACK REVEALED REVENANTS BECAUSE DUH, NULLROD.
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 
-	if(IS_HERETIC_MONSTER(living_target) && prob(50)) // IT IS HARD TO SNEAK ATTACK SOMETHING WITH TOO MANY REDUNDANT EVERYTHINGS.
+	else if(IS_HERETIC_MONSTER(living_target) && prob(50)) // IT IS HARD TO SNEAK ATTACK SOMETHING WITH TOO MANY REDUNDANT EVERYTHINGS.
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 
-	if(HAS_TRAIT(living_target, TRAIT_STABLEHEART) && prob(50)) // THEIR ANATOMY IS FUCKING WEIRD.
+	else if(HAS_TRAIT(living_target, TRAIT_STABLEHEART) && prob(50)) // THEIR ANATOMY IS FUCKING WEIRD.
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 
-	if(HAS_TRAIT(living_target, TRAIT_MIND_READER) && !user.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0)) // FORESIGHT SAYS 'FUCK YOU' TO SNEAK ATTACKERS. BUT IF YOU HAVE A TIN FOIL HAT, YOU'RE SAFE!
+	else if(HAS_TRAIT(living_target, TRAIT_MIND_READER) && !user.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0)) // FORESIGHT SAYS 'FUCK YOU' TO SNEAK ATTACKERS. BUT IF YOU HAVE A TIN FOIL HAT, YOU'RE SAFE!
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 
-	if(user.is_blind()) // YOU CAN'T STAB PRECISELY WHAT YOU CAN'T SEE.
+	else if(user.is_blind()) // YOU CAN'T STAB PRECISELY WHAT YOU CAN'T SEE.
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 
@@ -761,22 +831,22 @@
 
 	// If our target is also unconscious for some reason, we get even more damage. Coup de grace, motherfucker.
 	if(HAS_TRAIT(living_target, TRAIT_KNOCKEDOUT))
-		force_applied += rand(1,6)
+		sneak_attack_dice += roll("1d6")
 		new /obj/effect/temp_visual/crit(get_turf(living_target))
 
 	// If the target is rebuked, we also add some additional damage. It is the closest thing to 'studying' your target, okay?
 	if(living_target.has_status_effect(/datum/status_effect/rebuked))
-		force_applied += 2
+		sneak_attack_dice += 2
 
 	// If we're morbid, and the target has been dissected, we get an extra d6.
 	// The chances of this occuring are quite low, as even having this weapon means you're locked out of becoming morbid as a chaplain, but when it does come up...
 	// Or the coroner stole this blade to go hunt the recently dead...
 	if(HAS_TRAIT(user, TRAIT_MORBID) && HAS_TRAIT(living_target, TRAIT_DISSECTED))
-		force_applied += rand(1,6)
+		sneak_attack_dice += roll("1d6")
 
 	// Baton + this weapon might be a little too much fun so we're nerfing this combination outright.
 	if(HAS_TRAIT(living_target, TRAIT_IWASBATONED))
-		force_applied *= 0.5
+		sneak_attack_dice *= 0.5
 
 	/// And so we return here if we are not entitled to a sneak attack.
 	if(!successful_sneak_attack)
@@ -785,6 +855,6 @@
 		return
 
 	// We got a sneak attack!
-	living_target.apply_damage(force_applied, BRUTE, wound_bonus = bare_wound_bonus)
+	living_target.apply_damage(round(sneak_attack_dice), BRUTE, def_zone = BODY_ZONE_CHEST, wound_bonus = bare_wound_bonus, sharpness = SHARP_EDGED)
 	living_target.balloon_alert(user, "sneak attack!")
-	playsound(get_turf(living_target), 'sound/weapons/guillotine.ogg', 50, TRUE)
+	playsound(living_target, 'sound/weapons/guillotine.ogg', 50, TRUE)
