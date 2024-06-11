@@ -115,7 +115,7 @@ export const SettingsGeneral = (props, context) => {
                 <Input
                   width={'100%'}
                   value={fontFamily}
-                  onChange={(value) =>
+                  onChange={(e, value) =>
                     dispatch(
                       updateSettings({
                         fontFamily: value,
@@ -146,7 +146,7 @@ export const SettingsGeneral = (props, context) => {
             value={fontSize}
             unit="px"
             format={(value) => toFixed(value)}
-            onChange={(value) =>
+            onChange={(e, value) =>
               dispatch(
                 updateSettings({
                   fontSize: value,
@@ -164,7 +164,7 @@ export const SettingsGeneral = (props, context) => {
             maxValue={5}
             value={lineHeight}
             format={(value) => toFixed(value, 2)}
-            onDrag={(value) =>
+            onDrag={(e, value) =>
               dispatch(
                 updateSettings({
                   lineHeight: value,
