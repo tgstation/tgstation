@@ -804,6 +804,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return NONE
 	if(!parent.storage_insert_on_interacted_with(src, thing, user))
 		return NONE
+	if(SEND_SIGNAL(parent, COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT, thing, user) & BLOCK_STORAGE_INSERT)
+		return NONE
 
 	if(iscyborg(user))
 		return ITEM_INTERACT_BLOCKING

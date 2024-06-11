@@ -327,8 +327,10 @@ rough example of the "cone" made by the 3 dirs checked
 	)
 
 /**
- * Called before an item is put into this atom's storage datum
- * via the item clicking on this atom
+ * Called before an item is put into this atom's storage datum via the item clicking on this atom
+ *
+ * This can be used to add item-atom interactions that you want handled before inserting something into storage
+ * (But it's also fairly snowflakey)
  *
  * Returning FALSE will block that item from being put into our storage
  */
