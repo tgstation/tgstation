@@ -121,6 +121,30 @@ export const Fax = (props) => {
                 </Button>
               ))}
             </Box>
+          ) : data.special_faxes.length !== 0 ? (
+            <Box mt={0.4}>
+              {(data.syndicate_network
+                ? data.special_faxes
+                : data.special_faxes.filter(
+                    (fax: FaxSpecial) => !fax.emag_needed,
+                  )
+              ).map((special: FaxSpecial) => (
+                <Button
+                  key={special.fax_id}
+                  tooltip={special.fax_name}
+                  disabled={!data.has_paper}
+                  color={special.color}
+                  onClick={() =>
+                    act('send_special', {
+                      id: special.fax_id,
+                      name: special.fax_name,
+                    })
+                  }
+                >
+                  {special.fax_name}
+                </Button>
+              ))}
+            </Box>
           ) : (
             "The fax couldn't detect any other faxes on the network."
           )}
