@@ -318,6 +318,9 @@
 /obj/structure/filingcabinet,
 /obj/item/paperwork,
 /obj/item/paper/monitorkey,
+/obj/item/paper/fluff/ruins/listeningstation/briefing{
+	pixel_x = -2
+	},
 /turf/open/floor/wood/tile,
 /area/ruin/comms_agent)
 "sc" = (
@@ -402,10 +405,15 @@
 "vB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
-/obj/item/paper/fluff/ruins/listeningstation/briefing{
-	pixel_x = -2
+/obj/item/pen/survival{
+	pixel_x = 8;
+	pixel_y = 8
 	},
-/obj/item/pen/survival,
+/obj/machinery/button/door{
+	id = "syndie_lpost_icemoon_windows";
+	name = "Window Shutters";
+	req_access = list("syndicate")
+	},
 /turf/open/floor/wood/tile,
 /area/ruin/comms_agent)
 "vK" = (
@@ -1055,6 +1063,9 @@
 /area/ruin/comms_agent)
 "XU" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "syndie_lpost_icemoon_windows"
+	},
 /turf/open/floor/plating,
 /area/ruin/comms_agent)
 "Yz" = (
