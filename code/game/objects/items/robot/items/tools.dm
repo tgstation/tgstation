@@ -207,8 +207,7 @@
 /obj/item/cyborg_omnitoolbox/Initialize(mapload)
 	. = ..()
 	if(!toolpaths.len)
-		stack_trace("Cyborg Omnitool Toolbox for [loc.loc], model type [loc] has no tools defined!")
-		return INITIALIZE_HINT_QDEL
+		return
 
 	var/obj/item/newitem
 	for(var/newpath in toolpaths)
@@ -262,14 +261,12 @@
 /obj/item/borg/cyborg_omnitool/Initialize(mapload)
 	. = ..()
 	if(!iscyborg(loc.loc))
-		stack_trace("Cyborg Omnitool spawned, but not in cyborg! Spawn location [loc], inside [loc.loc] which should be a cyborg.")
-		return INITIALIZE_HINT_QDEL
+		return
 	var/obj/item/robot_model/model = loc
 	var/mob/living/silicon/robot/cyborg = model.loc
 	var/obj/item/cyborg_omnitoolbox/chassis_toolbox = model.toolbox
 	if(!chassis_toolbox)
-		stack_trace("Cyborg Omnitool added for [cyborg], of type [model], but no toolbox was found!")
-		return INITIALIZE_HINT_QDEL
+		return
 	toolbox = chassis_toolbox
 	toolbox.omnitools += src
 
