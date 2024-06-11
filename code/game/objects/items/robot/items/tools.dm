@@ -204,7 +204,7 @@
 	var/upgraded_toolspeed = 10
 	var/currently_upgraded = FALSE
 
-obj/item/cyborg_omnitoolbox/Initialize()
+obj/item/cyborg_omnitoolbox/Initialize(mapload)
 	. = ..()
 	if(!toolpaths.len)
 		qdel(src)
@@ -260,7 +260,7 @@ obj/item/cyborg_omnitoolbox/proc/set_upgade()
 	///Ref to currently selected tool, if any
 	var/obj/item/selected
 
-/obj/item/borg/cyborg_omnitool/Initialize()
+/obj/item/borg/cyborg_omnitool/Initialize(mapload)
 	. = ..()
 	if(!iscyborg(loc.loc))
 		qdel(src)
