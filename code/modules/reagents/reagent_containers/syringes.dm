@@ -37,6 +37,8 @@
 	return TRUE
 
 /obj/item/reagent_containers/syringe/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	if(!target.reagents)
+		return NONE
 	if(!try_syringe(target, user))
 		return ITEM_INTERACT_BLOCKING
 
@@ -88,6 +90,8 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/reagent_containers/syringe/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
+	if (!target.reagents)
+		return NONE
 	if (!try_syringe(target, user))
 		return ITEM_INTERACT_BLOCKING
 
