@@ -247,18 +247,21 @@
 /// Returns a multitool from a user depending on their mobtype.
 /obj/machinery/telecomms/proc/get_multitool(mob/user)
 	var/obj/item/multitool/multitool = null
-	// Let's double check
-	if(!HAS_SILICON_ACCESS(user) && istype(user.get_active_held_item(), /obj/item/multitool))
-		multitool = user.get_active_held_item()
-	else if(isAI(user))
+
+	if(isAI(user))
 		var/mob/living/silicon/ai/U = user
 		multitool = U.aiMulti
-	else if(iscyborg(user) && in_range(user, src))
-		if(istype(user.get_active_held_item(), /obj/item/multitool))
-			multitool = user.get_active_held_item()
-	return multitool
+	else
+		var/obj/item/held_item = user.get_active_held_item()
+		if(QDELETED(held_item))
+			return null
+		held_item = held_item.get_proxy_for(src, user) //for borgs omni tool
+		if(held_item.tool_behaviour != TOOL_MULTITOOL)
+			return null
 
-/obj/machinery/telecomms/proc/canAccess(mob/user)
-	if(HAS_SILICON_ACCESS(user) || in_range(user, src))
-		return TRUE
-	return FALSE
+		if(!HAS_SILICON_ACCESS(user))
+			multitool = held_item
+		else if(iscyborg(user) && in_range(user, src))
+			multitool = held_item
+
+	return multitool

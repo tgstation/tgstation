@@ -80,22 +80,19 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 
-/obj/machinery/bsa/middle/multitool_act(mob/living/user, obj/item/multitool/M)
+/obj/machinery/bsa/middle/multitool_act(mob/living/user, obj/item/multitool/tool)
 	. = NONE
 
-	if(M.buffer)
-		if(istype(M.buffer, /obj/machinery/bsa/back))
-			back_ref = WEAKREF(M.buffer)
-			to_chat(user, span_notice("You link [src] with [M.buffer]."))
-			M.set_buffer(null)
-			. = ITEM_INTERACT_SUCCESS
-		else if(istype(M.buffer, /obj/machinery/bsa/front))
-			front_ref = WEAKREF(M.buffer)
-			to_chat(user, span_notice("You link [src] with [M.buffer]."))
-			M.set_buffer(null)
-			. = ITEM_INTERACT_SUCCESS
-	else
-		to_chat(user, span_warning("[M] data buffer is empty!"))
+	if(istype(tool.buffer, /obj/machinery/bsa/back))
+		back_ref = WEAKREF(tool.buffer)
+		to_chat(user, span_notice("You link [src] with [tool.buffer]."))
+		tool.set_buffer(null)
+		return ITEM_INTERACT_SUCCESS
+	else if(istype(tool.buffer, /obj/machinery/bsa/front))
+		front_ref = WEAKREF(tool.buffer)
+		to_chat(user, span_notice("You link [src] with [tool.buffer]."))
+		tool.set_buffer(null)
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/bsa/middle/proc/check_completion()
 	var/obj/machinery/bsa/front/front = front_ref?.resolve()

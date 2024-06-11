@@ -282,3 +282,15 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/proc/check_on_table()
 	if(anchored_tabletop_offset != 0 && !istype(src, /obj/structure/table) && locate(/obj/structure/table) in loc)
 		pixel_y = anchored ? anchored_tabletop_offset : initial(pixel_y)
+
+
+/**
+ * Returns the atom(either itself or an internal module) that can interact correctly with the target
+ * For example an object can have differet `tool_behaviours` (e.g borg omni tool) but will return an internal reference of that tool
+ * You can use it for general purpose polymorphism if you need a proxy atom to interact in a specific way
+ * with a target on behalf on this atom
+ *
+ * Currently used only in the object melee attack chain but can be used anywhere else or even moved up to the atom level if required
+ */
+/obj/proc/get_proxy_for(atom/target, mob/user)
+	return src

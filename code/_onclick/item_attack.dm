@@ -11,7 +11,11 @@
 	var/list/modifiers = params2list(params)
 	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 
-	var/item_interact_result = target.base_item_interaction(user, src, modifiers)
+	var/atom/source_atom = get_proxy_for(target, user)
+	if(!source_atom)
+		return NONE
+
+	var/item_interact_result = target.base_item_interaction(user, source_atom, modifiers)
 	if(item_interact_result & ITEM_INTERACT_SUCCESS)
 		return TRUE
 	if(item_interact_result & ITEM_INTERACT_BLOCKING)
@@ -37,9 +41,9 @@
 	var/attackby_result
 
 	if (is_right_clicking)
-		switch (target.attackby_secondary(src, user, params))
+		switch (target.attackby_secondary(source_atom, user, params))
 			if (SECONDARY_ATTACK_CALL_NORMAL)
-				attackby_result = target.attackby(src, user, params)
+				attackby_result = target.attackby(source_atom, user, params)
 			if (SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 				return TRUE
 			if (SECONDARY_ATTACK_CONTINUE_CHAIN)
@@ -47,7 +51,7 @@
 			else
 				CRASH("attackby_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 	else
-		attackby_result = target.attackby(src, user, params)
+		attackby_result = target.attackby(source_atom, user, params)
 
 	if (attackby_result)
 		return TRUE

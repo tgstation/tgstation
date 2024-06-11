@@ -60,15 +60,14 @@
 
 /obj/machinery/computer/launchpad/multitool_act(mob/living/user, obj/item/multitool/tool)
 	. = NONE
-	if(tool.buffer && istype(tool.buffer, /obj/machinery/launchpad))
-		if(LAZYLEN(launchpads) < maximum_pads)
-			launchpads |= tool.buffer
-			tool.set_buffer(null)
-			to_chat(user, span_notice("You upload the data from the [tool] buffer."))
-			return ITEM_INTERACT_SUCCESS
-		else
-			to_chat(user, span_warning("[src] cannot handle any more connections!"))
-			return ITEM_INTERACT_BLOCKING
+	if(!istype(tool.buffer, /obj/machinery/launchpad))
+		return
+
+	if(LAZYLEN(launchpads) < maximum_pads)
+		launchpads |= tool.buffer
+		tool.set_buffer(null)
+		to_chat(user, span_notice("You upload the data from the [tool] buffer."))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/launchpad/proc/pad_exists(number)
 	var/obj/machinery/launchpad/pad = launchpads[number]

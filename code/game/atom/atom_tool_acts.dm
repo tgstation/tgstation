@@ -36,10 +36,6 @@
 	var/tool_type = tool.tool_behaviour
 	if(!tool_type) // here on only deals with ... tools
 		return NONE
-	if(tool_type == TOOL_MULTITOOL)
-		tool = tool.get_multi_tool(user)
-		if(!tool)
-			return NONE
 
 	var/list/processing_recipes = list()
 	var/signal_result = is_left_clicking \
@@ -148,12 +144,6 @@
 /// Called on an object when a tool with multitool capabilities is used to right click an object
 /atom/proc/multitool_act_secondary(mob/living/user, obj/item/tool)
 	return
-
-///Either typecasts this atom into a multitool or gets its inbuilt multitool
-/atom/proc/get_multi_tool(mob/user)
-	RETURN_TYPE(/obj/item/multitool)
-
-	return null
 
 /// Called on an object when a tool with screwdriver capabilities is used to left click an object
 /atom/proc/screwdriver_act(mob/living/user, obj/item/tool)

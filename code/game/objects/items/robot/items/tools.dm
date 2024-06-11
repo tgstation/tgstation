@@ -182,30 +182,46 @@
 	desc = "You shouldn't see this in-game normally."
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_medborg"
+
 	///our tools
 	var/list/radial_menu_options = list()
 	///object we are referencing to for force, sharpness and sound
 	var/obj/item/reference
+	///Map of solid objects internally used by the omni tool
+	var/list/obj/item/atoms = list()
 	//is the toolset upgraded or not
 	var/upgraded = FALSE
 	///how much faster should the toolspeed be?
 	var/upgraded_toolspeed = 0.7
 
-/obj/item/borg/cyborg_omnitool/get_all_tool_behaviours()
-	return list(TOOL_SCALPEL, TOOL_HEMOSTAT)
-
 /obj/item/borg/cyborg_omnitool/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, \
-	speed = 8 SECONDS, \
-	effectiveness = 100, \
-	disabled = TRUE, \
-	)
+
 	radial_menu_options = list(
 		NO_TOOL = image(icon = 'icons/mob/silicon/robot_items.dmi', icon_state = initial(icon_state)),
 		TOOL_SCALPEL = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_SCALPEL]"),
 		TOOL_HEMOSTAT = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_HEMOSTAT]"),
 	)
+
+/obj/item/borg/cyborg_omnitool/Destroy(force)
+	QDEL_LIST_ASSOC_VAL(atoms)
+	return ..()
+
+/obj/item/borg/cyborg_omnitool/get_all_tool_behaviours()
+	return list(TOOL_SCALPEL, TOOL_HEMOSTAT)
+
+/obj/item/borg/cyborg_omnitool/get_proxy_for(atom/target, mob/user)
+	if(!reference)
+		return src
+
+	var/obj/item/tool = atoms[reference]
+
+	if(QDELETED(tool))
+		tool = new reference(src)
+		atoms[reference] = tool
+
+	tool.toolspeed = toolspeed
+	return tool
 
 /obj/item/borg/cyborg_omnitool/attack_self(mob/user)
 	var/new_tool_behaviour = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
@@ -218,7 +234,6 @@
 		tool_behaviour = new_tool_behaviour
 
 	reference_item_for_parameters()
-	update_tool_parameters(reference)
 	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
 
@@ -230,25 +245,6 @@
 			reference = /obj/item/scalpel
 		if(TOOL_HEMOSTAT)
 			reference = /obj/item/hemostat
-
-/// Used to update sounds and tool parameters during switching
-/obj/item/borg/cyborg_omnitool/proc/update_tool_parameters(/obj/item/reference)
-	if(isnull(reference))
-		sharpness = NONE
-		force = initial(force)
-		wound_bonus = 0
-		bare_wound_bonus = 0
-		armour_penetration = 0
-		hitsound = initial(hitsound)
-		usesound = initial(usesound)
-	else
-		force = initial(reference.force)
-		wound_bonus = reference::wound_bonus
-		bare_wound_bonus = reference::bare_wound_bonus
-		armour_penetration = reference::armour_penetration
-		sharpness = initial(reference.sharpness)
-		hitsound = initial(reference.hitsound)
-		usesound = initial(reference.usesound)
 
 /obj/item/borg/cyborg_omnitool/update_icon_state()
 	icon_state = initial(icon_state)
@@ -276,7 +272,6 @@
 	upgraded = TRUE
 	tool_behaviour = null
 	reference_item_for_parameters()
-	update_tool_parameters(reference)
 	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
 
@@ -293,7 +288,6 @@
 	upgraded = FALSE
 	tool_behaviour = null
 	reference_item_for_parameters()
-	update_tool_parameters(reference)
 	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
 
@@ -307,11 +301,7 @@
 
 /obj/item/borg/cyborg_omnitool/medical/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, \
-	speed = 8 SECONDS, \
-	effectiveness = 100, \
-	disabled = TRUE, \
-	)
+
 	radial_menu_options = list(
 		TOOL_SCALPEL = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_SCALPEL]"),
 		TOOL_HEMOSTAT = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "[TOOL_HEMOSTAT]"),
@@ -324,18 +314,11 @@
 	)
 
 /obj/item/borg/cyborg_omnitool/medical/reference_item_for_parameters()
-	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
-	butchering.butchering_enabled = (tool_behaviour == TOOL_SCALPEL || tool_behaviour == TOOL_SAW)
-	RemoveElement(/datum/element/eyestab)
-	qdel(GetComponent(/datum/component/surgery_initiator))
-	item_flags = SURGICAL_TOOL
 	switch(tool_behaviour)
 		if(TOOL_SCALPEL)
 			reference = /obj/item/scalpel
-			AddElement(/datum/element/eyestab)
 		if(TOOL_DRILL)
 			reference = /obj/item/surgicaldrill
-			AddElement(/datum/element/eyestab)
 		if(TOOL_HEMOSTAT)
 			reference = /obj/item/hemostat
 		if(TOOL_RETRACTOR)
@@ -348,8 +331,6 @@
 			reference = /obj/item/bonesetter
 		if(TOOL_DRAPES)
 			reference = /obj/item/surgical_drapes
-			AddComponent(/datum/component/surgery_initiator)
-			item_flags = null
 
 //Toolset for engineering cyborgs, this is all of the tools except for the welding tool. since it's quite hard to implement (read:can't be arsed to)
 /obj/item/borg/cyborg_omnitool/engineering
@@ -366,6 +347,7 @@
 
 /obj/item/borg/cyborg_omnitool/engineering/Initialize(mapload)
 	. = ..()
+
 	radial_menu_options = list(
 		TOOL_SCREWDRIVER = image(icon = 'icons/obj/tools.dmi', icon_state = "[TOOL_SCREWDRIVER]_map"),
 		TOOL_CROWBAR = image(icon = 'icons/obj/tools.dmi', icon_state = "[TOOL_CROWBAR]"),
@@ -382,11 +364,9 @@
 	return list(TOOL_SCREWDRIVER, TOOL_CROWBAR, TOOL_WRENCH, TOOL_WIRECUTTER, TOOL_MULTITOOL)
 
 /obj/item/borg/cyborg_omnitool/engineering/reference_item_for_parameters()
-	RemoveElement(/datum/element/eyestab)
 	switch(tool_behaviour)
 		if(TOOL_SCREWDRIVER)
 			reference = /obj/item/screwdriver
-			AddElement(/datum/element/eyestab)
 		if(TOOL_CROWBAR)
 			reference = /obj/item/crowbar
 		if(TOOL_WRENCH)
@@ -395,12 +375,6 @@
 			reference = /obj/item/wirecutters
 		if(TOOL_MULTITOOL)
 			reference = /obj/item/multitool
-
-/obj/item/borg/cyborg_omnitool/engineering/get_multi_tool(mob/user)
-	if(!multi_tool)
-		multi_tool = new (src)
-
-	return multi_tool
 
 #undef PKBORG_DAMPEN_CYCLE_DELAY
 #undef POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER

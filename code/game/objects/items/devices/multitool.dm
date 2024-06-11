@@ -41,9 +41,6 @@
 	user.visible_message(span_suicide("[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!"))
 	return OXYLOSS//theres a reason it wasn't recommended by doctors
 
-/obj/item/multitool/get_multi_tool(mob/user)
-	return src
-
 /**
  * Sets the multitool internal object buffer
  *

@@ -317,12 +317,12 @@ DEFINE_BITFIELD(turret_flags, list(
 		remove_control()
 	check_should_process()
 
-/obj/machinery/porta_turret/multitool_act(mob/living/user, obj/item/multitool/M)
+/obj/machinery/porta_turret/multitool_act(mob/living/user, obj/item/multitool/tool)
 	. = NONE
 	if(locked)
 		return
 
-	M.set_buffer(src)
+	tool.set_buffer(src)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 
