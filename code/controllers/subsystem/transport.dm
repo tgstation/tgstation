@@ -170,10 +170,6 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 /datum/controller/subsystem/processing/transport/proc/pre_departure(datum/transport_controller/linear/tram/transport_controller, request_flags)
 	log_transport("Sub: [transport_controller.specific_transport_id] start pre-departure. Info: [SUB_TS_STATUS]")
 
-	// Tram Malfunction event
-	if(transport_controller.controller_status & COMM_ERROR)
-		request_flags |= BYPASS_SENSORS
-
 	// Lock the physical controls of the tram
 	transport_controller.set_status_code(PRE_DEPARTURE, TRUE)
 	transport_controller.set_status_code(CONTROLS_LOCKED, TRUE)
