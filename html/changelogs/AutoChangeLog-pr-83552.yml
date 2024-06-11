@@ -1,0 +1,7 @@
+author: "uaioy"
+delete-after: True
+changes:
+  - qol: "the first Medieval pirate to spawn will be the Warlord, warlord and crude helmet have flash protection"
+  - bugfix: "Medieval shuttle has actual engines now"
+  - bugfix: "Shortsword has its original colours"
+  - bugfix: "Crude helmet no longer makes you bald"

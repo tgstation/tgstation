@@ -1,4 +1,0 @@
-author: "Wayland-Smithy"
-delete-after: True
-changes:
-  - bugfix: "Fixed Silicons not being able to (un)lock Air Alarms."

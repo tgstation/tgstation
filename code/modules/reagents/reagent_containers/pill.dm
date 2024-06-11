@@ -162,7 +162,7 @@
 	name = "mutadone pill"
 	desc = "Used to treat genetic damage."
 	icon_state = "pill20"
-	list_reagents = list(/datum/reagent/medicine/mutadone = 50)
+	list_reagents = list(/datum/reagent/medicine/mutadone = 5)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/salicylic
