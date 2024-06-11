@@ -118,6 +118,10 @@
 	// Now if we were't ACTUALLY gibbed, spawn the dead mouse
 	if(!gibbed)
 		var/obj/item/food/deadmouse/mouse = new(loc)
+		if(istype(mouse.loc.loc, /obj/machinery/microwave))//If our mouse is dying in place holder in a microwave, put the dead mouse in the microwave
+			var/obj/machinery/microwave/found_microwave = mouse.loc.loc
+			mouse.forceMove(found_microwave)
+			found_microwave.ingredients += mouse
 		mouse.copy_corpse(src)
 		if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
 			mouse.desc = "They're toast."

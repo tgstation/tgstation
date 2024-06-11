@@ -536,8 +536,9 @@
 
 /obj/machinery/microwave/proc/eject()
 	var/atom/drop_loc = drop_location()
-	for(var/atom/movable/movable_ingredient as anything in ingredients)
-		movable_ingredient.forceMove(drop_loc)
+	for(var/obj/item/item_ingredient as anything in ingredients)
+		item_ingredient.forceMove(drop_loc)
+		item_ingredient.dropped() //Mob holders can be on the ground if we don't do this
 	open(autoclose = 1.4 SECONDS)
 
 /obj/machinery/microwave/proc/start_cycle(mob/user)
@@ -669,6 +670,13 @@
 			if(MICROWAVE_PRE)
 				pre_success(cooker)
 		return
+
+	if(cycles % 3)
+		var/list/microwave_contents = list()
+		microwave_contents += src.get_all_contents() //Mobs are often hid inside of mob holders, which could be fried and made into a burger...
+		for(var/mob/living/victim in microwave_contents)
+			victim.electrocute_act(30, src, 1, SHOCK_NOGLOVES)
+
 	cycles--
 	use_energy(active_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(cook_loop), type, cycles, wait, cooker), wait)
