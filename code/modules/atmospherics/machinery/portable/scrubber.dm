@@ -63,6 +63,21 @@
 	scrub(target.return_air())
 	return ..()
 
+/obj/machinery/portable_atmospherics/scrubber/welder_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return
+	if(atom_integrity >= max_integrity || (machine_stat & BROKEN) || !tool.tool_start_check(user, amount = 1))
+		return ITEM_INTERACT_SUCCESS
+	to_chat(user, span_notice("You begin repairing [src]..."))
+	while(tool.use_tool(src, user, 2.5 SECONDS, volume=40))
+		atom_integrity = min(atom_integrity + 25, max_integrity)
+		if(atom_integrity >= max_integrity)
+			to_chat(user, span_notice("You've finished repairing [src]."))
+			return ITEM_INTERACT_SUCCESS
+		to_chat(user, span_notice("You repair some of the damage in [src]..."))
+
+	return ITEM_INTERACT_BLOCKING
+
 /**
  * Called in process_atmos(), handles the scrubbing of the given gas_mixture
  * Arguments:
