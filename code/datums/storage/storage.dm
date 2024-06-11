@@ -798,7 +798,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/on_item_interact(datum/source, mob/user, obj/item/thing, params)
 	SIGNAL_HANDLER
 
-	if(!insert_on_attack || !thing.attackby_storage_insert(src, parent, user))
+	if(!insert_on_attack)
+		return NONE
+	if(!thing.storage_insert_on_interaction(src, parent, user))
+		return NONE
+	if(!parent.storage_insert_on_interacted_with(src, thing, user))
 		return NONE
 
 	if(iscyborg(user))

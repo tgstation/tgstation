@@ -154,7 +154,7 @@
 		return CLEAN_BLOCKED
 	return ..()
 
-/obj/item/soap/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
+/obj/item/soap/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/living/user)
 	return !user.combat_mode  // only cleans a storage item if on combat
 
 /*

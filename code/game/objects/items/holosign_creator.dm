@@ -26,9 +26,8 @@
 	AddElement(/datum/element/openspace_item_click_handler)
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, TYPE_PROC_REF(/obj/item/holosign_creator, on_color_change))
 
-/obj/item/holosign_creator/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
-	if(proximity_flag)
-		interact_with_atom(target, user, click_parameters)
+/obj/item/holosign_creator/handle_openspace_click(turf/target, mob/user, click_parameters)
+	interact_with_atom(target, user, click_parameters)
 
 /obj/item/holosign_creator/examine(mob/user)
 	. = ..()

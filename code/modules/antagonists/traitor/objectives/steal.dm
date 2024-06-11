@@ -312,5 +312,5 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		UnregisterSignal(planted_on, COMSIG_QDELETING)
 		planted_on = null
 
-/obj/item/traitor_bug/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+/obj/item/traitor_bug/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
 	return !istype(storage_holder, target_object_type)

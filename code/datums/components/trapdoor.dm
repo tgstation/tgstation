@@ -349,9 +349,8 @@
 	. = ..()
 	AddElement(/datum/element/openspace_item_click_handler)
 
-/obj/item/trapdoor_kit/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
-	if(proximity_flag)
-		interact_with_atom(target, user, click_parameters)
+/obj/item/trapdoor_kit/handle_openspace_click(turf/target, mob/user, click_parameters)
+	interact_with_atom(target, user, click_parameters)
 
 /obj/item/trapdoor_kit/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/turf/target_turf = get_turf(interacting_with)

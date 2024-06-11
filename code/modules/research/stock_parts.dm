@@ -38,7 +38,9 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	return TRUE
 
 /obj/item/storage/part_replacer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return part_replace_action(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+	if(part_replace_action(interacting_with, user))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/storage/part_replacer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!works_from_distance)
@@ -47,10 +49,12 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		user.Beam(interacting_with, icon_state = "rped_upgrade", time = 0.5 SECONDS)
 		return ITEM_INTERACT_SUCCESS
 	if(istype(interacting_with, /obj/structure/frame))
-		interacting_with.item_interaction(user, src) // Cursed snowflake but we need to handle frame ranged interaction here
+		// Cursed snowflake but we need to handle frame ranged interaction here
+		// Likely no longer necessary with the new framework, revisit later
+		interacting_with.item_interaction(user, src)
 		user.Beam(interacting_with, icon_state = "rped_upgrade", time = 0.5 SECONDS)
 		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	return NONE
 
 /obj/item/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.

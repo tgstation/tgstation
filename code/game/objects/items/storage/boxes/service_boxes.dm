@@ -92,6 +92,9 @@
 	atom_storage.max_slots = 10
 	atom_storage.set_holdable(/obj/item/match)
 
+/obj/item/storage/box/matches/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
+	return !istype(inserted, /obj/item/match)
+
 /obj/item/storage/box/matches/PopulateContents()
 	for(var/i in 1 to 10)
 		new /obj/item/match(src)

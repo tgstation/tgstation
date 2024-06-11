@@ -74,7 +74,7 @@
 	// Clear the logs
 	log = list()
 
-/obj/item/detective_scanner/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
+/obj/item/detective_scanner/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/living/user)
 	return !user.combat_mode
 
 /obj/item/detective_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)

@@ -241,9 +241,6 @@
 				return FALSE
 
 /obj/item/construction/plumbing/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!isopenturf(interacting_with))
-		return NONE
-
 	for(var/category_name in plumbing_design_types)
 		var/list/designs = plumbing_design_types[category_name]
 
@@ -260,6 +257,8 @@
 				playsound(src, 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
 			return ITEM_INTERACT_SUCCESS
 
+	if(!isopenturf(interacting_with))
+		return NONE
 	if(create_machine(interacting_with, user))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING

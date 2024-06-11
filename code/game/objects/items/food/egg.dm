@@ -129,8 +129,10 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 		interacting_with.balloon_alert(user, "no room!")
 		return ITEM_INTERACT_BLOCKING
 	var/atom/broken_egg = new /obj/item/food/rawegg(interacting_with.loc)
-	broken_egg.pixel_x = pixel_x
-	broken_egg.pixel_y = pixel_y
+	if(LAZYACCESS(modifiers, ICON_X))
+		broken_egg.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
+	if(LAZYACCESS(modifiers, ICON_Y))
+		broken_egg.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
 	playsound(user, 'sound/items/sheath.ogg', 40, TRUE)
 	reagents.copy_to(broken_egg, reagents.total_volume)
 
