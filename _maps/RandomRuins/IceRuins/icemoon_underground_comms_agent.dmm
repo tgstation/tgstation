@@ -29,7 +29,10 @@
 /obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "ce" = (
 /obj/machinery/modular_computer/preset{
@@ -62,11 +65,17 @@
 /area/ruin/comms_agent)
 "dP" = (
 /obj/structure/closet/crate/secure/freezer/commsagent,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "eE" = (
 /obj/structure/cable,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "eT" = (
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/icemoon{
@@ -126,7 +135,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "ig" = (
 /obj/effect/turf_decal/siding/wood,
@@ -136,11 +148,17 @@
 /obj/effect/turf_decal/siding/wideplating/light/corner{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "in" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "iZ" = (
 /obj/effect/turf_decal/siding/wood{
@@ -156,7 +174,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "ka" = (
 /obj/machinery/seed_extractor,
@@ -192,13 +213,19 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/storage/bag/trash,
 /obj/structure/closet/crate/bin,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "kL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "la" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -223,7 +250,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "mr" = (
 /obj/effect/turf_decal/siding/wood{
@@ -232,7 +262,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "mM" = (
 /obj/structure/ore_box,
@@ -296,6 +329,7 @@
 /obj/item/pickaxe,
 /obj/structure/closet/crate,
 /obj/item/flashlight,
+/obj/item/tank/internals/emergency_oxygen,
 /obj/item/tank/internals/emergency_oxygen,
 /turf/open/floor/wood/parquet,
 /area/ruin/comms_agent)
@@ -361,7 +395,10 @@
 	pixel_x = 6;
 	pixel_y = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "ud" = (
 /obj/effect/decal/cleanable/dirt,
@@ -386,11 +423,17 @@
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/tank_holder/extinguisher,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "up" = (
 /obj/effect/decal/cleanable/food/flour,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "uY" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -410,7 +453,10 @@
 "vK" = (
 /obj/effect/turf_decal/siding/wideplating/light,
 /obj/machinery/computer/arcade/orion_trail,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "vV" = (
 /obj/structure/toilet{
@@ -445,7 +491,11 @@
 "xq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom{
-	pixel_x = 31
+	pixel_x = 31;
+	syndie = 1;
+	freerange = 1;
+	name = "syndicate radio intercom";
+	desc = "A custom-made Syndicate-issue intercom used to transmit on all Nanotrasen frequencies. Particularly expensive."
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/fax{
@@ -504,7 +554,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "zJ" = (
 /obj/machinery/biogenerator,
@@ -518,7 +571,14 @@
 /obj/machinery/coffeemaker/impressa{
 	pixel_y = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
+/area/ruin/comms_agent)
+"Bx" = (
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/wall,
 /area/ruin/comms_agent)
 "BD" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -542,12 +602,16 @@
 /obj/item/reagent_containers/condiment/milk,
 /obj/item/reagent_containers/condiment/flour,
 /obj/structure/closet/secure_closet/freezer/empty,
+/obj/item/storage/box/donkpockets,
+/obj/item/coffee_cartridge,
+/obj/item/coffee_cartridge/decaf,
+/obj/item/coffee_cartridge/fancy,
 /turf/open/floor/iron/white,
 /area/ruin/comms_agent)
 "CL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible/layer2,
-/obj/structure/closet/emcloset,
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "CS" = (
@@ -563,6 +627,7 @@
 /area/ruin/comms_agent/maint)
 "CW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "DH" = (
@@ -604,7 +669,10 @@
 "FZ" = (
 /obj/effect/baseturf_helper/reinforced_plating/ceiling,
 /obj/structure/cable,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "Gp" = (
 /obj/structure/fluff/empty_sleeper/syndicate{
@@ -619,7 +687,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "GI" = (
 /obj/structure/closet/crate/hydroponics,
@@ -680,7 +751,11 @@
 	pixel_x = -13;
 	pixel_y = 4
 	},
-/turf/open/floor/wood,
+/obj/item/storage/box/coffeepack,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "JD" = (
 /obj/structure/closet/cabinet,
@@ -694,6 +769,7 @@
 /obj/item/toy/plush/nukeplushie,
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/m9mm,
+/obj/item/clothing/head/costume/ushanka,
 /turf/open/floor/wood/tile,
 /area/ruin/comms_agent)
 "JY" = (
@@ -706,11 +782,11 @@
 /obj/machinery/atmospherics/components/trinary/filter/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable,
-/obj/machinery/power/smes/super/full,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "KB" = (
@@ -728,6 +804,10 @@
 "KQ" = (
 /turf/open/genturf,
 /area/template_noop)
+"KR" = (
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/wall,
+/area/ruin/comms_agent/maint)
 "Lh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -769,7 +849,7 @@
 /area/ruin/comms_agent)
 "Lz" = (
 /turf/open/floor/wood{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180";
+	initial_gas_mix = "ICEMOON_ATMOS";
 	name = "bridge"
 	},
 /area/icemoon/underground/explored)
@@ -814,7 +894,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "MH" = (
 /turf/closed/mineral/snowmountain/icemoon,
@@ -895,11 +978,11 @@
 "Qn" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/mapping_helpers/apc/syndicate_access,
-/obj/machinery/power/terminal{
-	dir = 4
-	},
 /obj/structure/cable,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "Qx" = (
 /obj/structure/cable,
@@ -916,7 +999,10 @@
 /obj/item/pipe/trinary/flippable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "QT" = (
 /obj/structure/table,
@@ -925,7 +1011,10 @@
 	pixel_y = 4
 	},
 /obj/item/crowbar/red,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "QU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1068,7 +1157,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS";
+	name = "bridge"
+	},
 /area/ruin/comms_agent)
 "ZE" = (
 /obj/structure/sink/directional/east,
@@ -2361,8 +2453,8 @@ xD
 ij
 hW
 Ac
-WR
-YI
+Bx
+KR
 YI
 YI
 LP
