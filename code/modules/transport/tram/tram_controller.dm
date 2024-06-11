@@ -467,11 +467,11 @@
  */
 /datum/transport_controller/linear/tram/proc/crash_fx()
 	playsound(nav_beacon, 'sound/vehicles/car_crash.ogg', 100, vary = FALSE, falloff_distance = DEFAULT_TRAM_LENGTH)
-	for(var/mob/living/tram_passenger in urange(7, nav_beacon))
+	for(var/mob/living/tram_passenger in urange(DEFAULT_TRAM_LENGTH - 2, nav_beacon))
 		if(tram_passenger.stat != CONSCIOUS)
 			continue
 		shake_camera(tram_passenger, duration = 0.2 SECONDS, strength = 3)
-	nav_beacon.audible_message(span_userdanger("The tram comes to a sudden, grinding stop!"))
+	nav_beacon.audible_message(span_userdanger("You hear metal grinding as the tram comes to a sudden, complete stop!"))
 
 /**
  * Handles unlocking the tram controls for use after moving
