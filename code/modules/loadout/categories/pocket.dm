@@ -46,30 +46,39 @@
 /datum/loadout_item/pocket_items/lipstick_black
 	name = "Lipstick (Black)"
 	item_path = /obj/item/lipstick/black
+	additional_displayed_text = list("Black")
 
 /datum/loadout_item/pocket_items/lipstick_blue
 	name = "Lipstick (Blue)"
 	item_path = /obj/item/lipstick/blue
+	additional_displayed_text = list("Blue")
+
 
 /datum/loadout_item/pocket_items/lipstick_green
 	name = "Lipstick (Green)"
 	item_path = /obj/item/lipstick/green
+	additional_displayed_text = list("Green")
+
 
 /datum/loadout_item/pocket_items/lipstick_jade
 	name = "Lipstick (Jade)"
 	item_path = /obj/item/lipstick/jade
+	additional_displayed_text = list("Jade")
 
 /datum/loadout_item/pocket_items/lipstick_purple
 	name = "Lipstick (Purple)"
 	item_path = /obj/item/lipstick/purple
+	additional_displayed_text = list("Purple")
 
 /datum/loadout_item/pocket_items/lipstick_red
 	name = "Lipstick (Red)"
 	item_path = /obj/item/lipstick
+	additional_displayed_text = list("Red")
 
 /datum/loadout_item/pocket_items/lipstick_white
 	name = "Lipstick (White)"
 	item_path = /obj/item/lipstick/white
+	additional_displayed_text = list("White")
 
 /datum/loadout_item/pocket_items/plush
 	abstract_type = /datum/loadout_item/pocket_items/plush
