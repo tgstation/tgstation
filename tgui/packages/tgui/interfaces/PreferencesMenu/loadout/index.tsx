@@ -200,7 +200,7 @@ const LoadoutSelectedItem = (props: {
   modifyItemDimmer: LoadoutItem | null;
   setModifyItemDimmer: (dimmer: LoadoutItem | null) => void;
 }) => {
-  const { all_tabs, path, key, modifyItemDimmer, setModifyItemDimmer } = props;
+  const { all_tabs, path, modifyItemDimmer, setModifyItemDimmer } = props;
   const { act } = useBackend();
 
   const item = typepathToLoadoutItem(path, all_tabs);
