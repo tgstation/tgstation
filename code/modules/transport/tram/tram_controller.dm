@@ -400,9 +400,8 @@
 
 	if(travel_remaining)
 		travel_remaining = 0
-		if(paired_cabinet)
-			playsound(nav_beacon, 'sound/vehicles/car_crash.ogg', 100, vary = FALSE, falloff_distance = DEFAULT_TRAM_LENGTH)
-			nav_beacon.audible_message(span_userdanger("The tram comes to a sudden, grinding stop!"))
+		playsound(nav_beacon, 'sound/vehicles/car_crash.ogg', 100, vary = FALSE, falloff_distance = DEFAULT_TRAM_LENGTH)
+		nav_beacon.audible_message(span_userdanger("The tram comes to a sudden, grinding stop!"))
 		var/throw_direction = travel_direction
 		for(var/obj/structure/transport/linear/tram/module in transport_modules)
 			module.estop_throw(throw_direction)
