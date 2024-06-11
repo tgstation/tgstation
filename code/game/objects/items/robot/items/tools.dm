@@ -263,7 +263,6 @@
 	if(!iscyborg(loc.loc))
 		return
 	var/obj/item/robot_model/model = loc
-	var/mob/living/silicon/robot/cyborg = model.loc
 	var/obj/item/cyborg_omnitoolbox/chassis_toolbox = model.toolbox
 	if(!chassis_toolbox)
 		return
