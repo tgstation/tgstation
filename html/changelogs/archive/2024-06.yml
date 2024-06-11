@@ -191,3 +191,7 @@
   - bugfix: Fixed Personal AI cards, allowing them to wake up from sleep.
   - bugfix: Fixes PAI health scan software
   - bugfix: pAI requests should no longer randomly permanently break in a round.
+2024-06-11:
+  Absolucy:
+  - refactor: Refactored Composter code in an attempt to eliminate the lag it can
+      cause.
