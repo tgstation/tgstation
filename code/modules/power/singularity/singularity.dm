@@ -309,6 +309,10 @@
 	return TRUE
 
 /obj/singularity/proc/consume(atom/thing)
+	if(istype(thing, /obj/item/storage/backpack/holding))
+		consume_boh(thing)
+		return
+
 	var/gain = thing.singularity_act(current_size, src)
 	energy += gain
 	if(istype(thing, /obj/machinery/power/supermatter_crystal) && !consumed_supermatter)
@@ -319,6 +323,19 @@
 	desc = "[initial(desc)] It glows fiercely with inner fire."
 	consumed_supermatter = TRUE
 	set_light(10)
+
+/obj/singularity/proc/consume_boh(obj/boh)
+	visible_message(
+		message = span_danger("As [src] consumes [boh], it begins to collapse in on itself!"),
+		blind_message = span_hear("You hear aggressive crackling!"),
+		vision_distance = 15,
+	)
+	playsound(loc, 'sound/effects/clockcult_gateway_disrupted.ogg', 200, TRUE, extrarange = 3, falloff_exponent = 1, frequency = 0.5)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), loc, 'sound/effects/supermatter.ogg', 200, TRUE, 3, 1, 0.5), 4 SECONDS)
+	animate(src, time = 4.5 SECONDS, transform = matrix(transform).Scale(0.25), flags = ANIMATION_PARALLEL, easing = ELASTIC_EASING)
+	animate(src, time = 0.5 SECONDS, alpha = 0)
+	QDEL_IN(src, 4.1 SECONDS)
+	qdel(boh)
 
 /obj/singularity/proc/check_cardinals_range(steps, retry_with_move = FALSE)
 	. = length(GLOB.cardinals) //Should be 4.
