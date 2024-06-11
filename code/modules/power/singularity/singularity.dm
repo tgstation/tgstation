@@ -43,6 +43,8 @@
 	var/move_self = TRUE
 	///If the singularity has eaten a supermatter shard and can go to stage six
 	var/consumed_supermatter = FALSE
+	/// Is the black hole collapsing into nothing
+	var/collapsing = FALSE
 	/// How long it's been since the singulo last acted, in seconds
 	var/time_since_act = 0
 	/// What the game tells ghosts when you make one
@@ -309,7 +311,7 @@
 	return TRUE
 
 /obj/singularity/proc/consume(atom/thing)
-	if(istype(thing, /obj/item/storage/backpack/holding) && !consumed_supermatter)
+	if(istype(thing, /obj/item/storage/backpack/holding) && !consumed_supermatter && !collapsing)
 		consume_boh(thing)
 		return
 
@@ -325,17 +327,26 @@
 	set_light(10)
 
 /obj/singularity/proc/consume_boh(obj/boh)
+	collapsing = TRUE
+	name = "unstable [initial(name)]"
+	desc = "[initial(desc)] It seems to be collapsing in on itself."
 	visible_message(
 		message = span_danger("As [src] consumes [boh], it begins to collapse in on itself!"),
 		blind_message = span_hear("You hear aggressive crackling!"),
 		vision_distance = 15,
 	)
-	playsound(loc, 'sound/effects/clockcult_gateway_disrupted.ogg', 200, TRUE, extrarange = 3, falloff_exponent = 1, frequency = 0.5)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), loc, 'sound/effects/supermatter.ogg', 200, TRUE, 3, 1, 0.5), 4 SECONDS)
+	var/sound/collapse = sound('sound/effects/clockcult_gateway_disrupted.ogg')
+	collapse.pitch = -1
+	collapse.frequency = 0.5
+	playsound(loc, collapse, 200, vary = TRUE, extrarange = 3, falloff_exponent = 1, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = 7)
+	addtimer(CALLBACK(src, PROC_REF(consume_boh_sfx)), 4 SECONDS)
 	animate(src, time = 4.5 SECONDS, transform = matrix(transform).Scale(0.25), flags = ANIMATION_PARALLEL, easing = ELASTIC_EASING)
-	animate(src, time = 0.5 SECONDS, alpha = 0)
+	animate(time = 0.5 SECONDS, alpha = 0)
 	QDEL_IN(src, 4.1 SECONDS)
 	qdel(boh)
+
+/obj/singularity/proc/consume_boh_sfx()
+	playsound(loc, 'sound/effects/supermatter.ogg', 200, vary = TRUE, extrarange = 3, falloff_exponent = 1, frequency = 0.5, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = 7)
 
 /obj/singularity/proc/check_cardinals_range(steps, retry_with_move = FALSE)
 	. = length(GLOB.cardinals) //Should be 4.
