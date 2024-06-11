@@ -10,9 +10,6 @@
 	name = "\improper Clown Biodome"
 	ambientsounds = list('sound/ambience/clown.ogg')
 
-/area/ruin/lizard_gaslava
-	name = "\improper Lizard's Gas(Lava)"
-
 /area/ruin/unpowered/gaia
 	name = "\improper Patch of Eden"
 
@@ -47,6 +44,12 @@
 	name = "\improper Cult Altar"
 	area_flags = CULT_PERMITTED
 	ambience_index = AMBIENCE_SPOOKY
+
+/area/ruin/thelizardsgas_lavaland
+	name = "\improper The Lizard's Gas"
+	icon_state = "lizardgas"
+	sound_environment = SOUND_ENVIRONMENT_ROOM
+	ambient_buzz = 'sound/ambience/magma.ogg'
 
 //Syndicate lavaland base
 

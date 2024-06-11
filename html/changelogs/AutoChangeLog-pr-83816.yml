@@ -1,0 +1,4 @@
+author: "IsaacExists"
+delete-after: True
+changes:
+  - bugfix: "Eastern icebox visitation door no longer missing a floor tile."

@@ -1,0 +1,5 @@
+author: "improvedname"
+delete-after: True
+changes:
+  - qol: "Adds additional piping to wawastation ordnance"
+  - bugfix: "Adds a missing atmos waste vent for wawastation"
