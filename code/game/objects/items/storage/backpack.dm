@@ -65,9 +65,6 @@
 	armor_type = /datum/armor/backpack_holding
 	storage_type = /datum/storage/bag_of_holding
 
-/obj/item/storage/backpack/holding/singularity_act()
-	return
-
 /datum/armor/backpack_holding
 	fire = 60
 	acid = 50

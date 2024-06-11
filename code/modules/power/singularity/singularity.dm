@@ -309,7 +309,7 @@
 	return TRUE
 
 /obj/singularity/proc/consume(atom/thing)
-	if(istype(thing, /obj/item/storage/backpack/holding))
+	if(istype(thing, /obj/item/storage/backpack/holding) && !consumed_supermatter)
 		consume_boh(thing)
 		return
 
