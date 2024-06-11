@@ -23,7 +23,6 @@
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	ai_controller = /datum/ai_controller/basic_controller/mad_piano
-	faction = list(ROLE_SYNDICATE)
 	//alternate variables used when aggro
 	var/name_aggro = "mad piano"
 	var/icon_aggro = "aggressive"
@@ -32,6 +31,9 @@
 	var/name_calm
 	var/icon_calm
 	var/desc_calm
+	COOLDOWN_DECLARE(tantrum_time)
+	//length of aggro state
+	var/tantrum_time_duration = 2 SECONDS
 
 /mob/living/basic/mad_piano/Initialize(mapload)
 	. = ..()
@@ -41,31 +43,32 @@
 	AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = 2, works_in_containers = FALSE)
 	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_PACIFISM, TRAIT_GENERIC)
 	name_calm = name
 	icon_calm = icon_state
 	desc_calm = desc
 
-/mob/living/basic/mad_piano/proc/aggro_tantrum(datum/source, mob/living/victim, datum/ai_controller/controller)
+/mob/living/basic/mad_piano/proc/aggro_tantrum(datum/source, mob/living/victim)
 	SIGNAL_HANDLER
-	if (ai_controller.ai_status == AI_STATUS_ON)
-		return
-	ai_controller.reset_ai_status()
-	if (!ai_controller.ai_status == AI_STATUS_ON)
-		return
 	if(!istype(victim) || !istype(victim, /mob/living/carbon) || victim.stat == DEAD)
 		return
+	tantrum_time = tantrum_time_duration
 	name = name_aggro
 	icon_state = icon_aggro
 	desc = desc_aggro
 	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
-	controller.set_ai_status(AI_STATUS_ON)
+	REMOVE_TRAIT(src, TRAIT_PACIFISM, TRAIT_GENERIC)
+	if (COOLDOWN_FINISHED(src, tantrum_time))
+		src.calm_down()
 
-/mob/living/basic/mad_piano/proc/calm_down(datum/source, datum/ai_controller/controller)
+/mob/living/basic/mad_piano/proc/calm_down(datum/source)
+	if(!COOLDOWN_FINISHED(src, tantrum_time))
+		return
 	icon_state = icon_calm
 	desc = desc_calm
 	name = name_calm
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
-	controller.set_ai_status(AI_STATUS_OFF)
+	ADD_TRAIT(src, TRAIT_PACIFISM, TRAIT_GENERIC)
 
 /mob/living/basic/mad_piano/med_hud_set_health() //sneaky sneaky sneaky
 	return
@@ -79,24 +82,12 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
-		BB_TARGETLESS_TIME = 2 SECONDS,
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/sleep_with_no_target/mad_piano,
 	)
 
 /datum/idle_behavior/walk_near_target/mad_piano
 	walk_chance = 60
 	minimum_distance = 2
-
-/datum/ai_planning_subtree/sleep_with_no_target/mad_piano
-	sleep_behaviour = /datum/ai_behavior/sleep_after_targetless_time/mad_piano
-
-/datum/ai_behavior/sleep_after_targetless_time/mad_piano
-	time_to_wait = 2
-
-/datum/ai_behavior/sleep_after_targetless_time/mad_piano/enter_sleep(datum/ai_controller/controller)
-	var/mob/living/basic/mad_piano/this_piano = controller.pawn
-	this_piano.calm_down()

@@ -162,7 +162,7 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/button/invisible_tripwire/proc/on_entered(datum/source, mob/living)
-	attack_hand(living)
+	src.interact()
 	if(!multiuse)
 		qdel(src)
 	if(uses_remaining == 1)

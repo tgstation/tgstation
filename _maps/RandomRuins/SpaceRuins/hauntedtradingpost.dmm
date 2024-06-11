@@ -43,6 +43,12 @@
 /obj/effect/mapping_helpers/damaged_window,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
+"aD" = (
+/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/robot_debris/old,
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/carpet/donk,
+/area/ruin/space/has_grav/hauntedtradingpost/employees)
 "aH" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/orange,
@@ -287,6 +293,11 @@
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
+"cv" = (
+/obj/structure/cable/layer1,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "cB" = (
 /obj/item/throwing_star/toy{
 	pixel_y = -6;
@@ -537,6 +548,7 @@
 /obj/item/mod/construction/broken_core,
 /obj/item/mod/module/storage/large_capacity,
 /obj/item/mod/module/visor/night,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "eB" = (
@@ -789,7 +801,10 @@
 /obj/structure/sign/poster/contraband/syndicate_pistol/directional/west,
 /mob/living/simple_animal/bot/secbot{
 	faction = list("Syndicate");
-	bot_cover_flags = 4
+	bot_cover_flags = 4;
+	baton_type = /obj/item/melee/baton/security/cattleprod;
+	name = "\improper Syndicate Securitron";
+	desc = "A little security robot, reprogrammed by the syndicate. He looks downright surly."
 	},
 /obj/machinery/navbeacon{
 	location = "breakroom1"
@@ -1304,6 +1319,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
+"lA" = (
+/mob/living/basic/viscerator,
+/obj/effect/turf_decal/bot_red,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "lD" = (
 /obj/structure/bookcase/random/reference,
 /obj/item/book/random{
@@ -1843,6 +1864,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "qp" = (
 /obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/mine/shrapnel/sting,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "qB" = (
@@ -1868,6 +1890,7 @@
 /obj/structure/holosign/barrier/cyborg/cybersun_ai_shield{
 	desc = "A fragile holographic energy field projected by an AI core. It blocks movement. Excels at blocking lethal projectiles."
 	},
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/circuit/red,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "qL" = (
@@ -2022,6 +2045,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/public)
 "rV" = (
 /obj/effect/turf_decal/stripes/red/line,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "se" = (
@@ -2194,6 +2218,11 @@
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
+"sT" = (
+/obj/effect/mine/shrapnel/sting,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "sU" = (
 /obj/structure/table/wood/fancy/orange,
 /obj/item/paper/fluff/ruins/hauntedtradingpost/curatorsnote{
@@ -2241,6 +2270,17 @@
 /obj/item/universal_scanner,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
+"tk" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	pipe_color = "#FF7B00";
+	color = "#FF7B00"
+	},
+/mob/living/simple_animal/bot/firebot{
+	bot_mode_flags = 3
+	},
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "tl" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
@@ -2476,7 +2516,9 @@
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "vH" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/mine/shrapnel/sting,
+/obj/item/restraints/legcuffs/beartrap/prearmed{
+	trap_damage = 30
+	},
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "vM" = (
@@ -2767,6 +2809,11 @@
 	},
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
+"yb" = (
+/obj/structure/cable/layer1,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "yi" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/hauntedtradingpost/maint)
@@ -2948,8 +2995,10 @@
 	specialfunctions = 4;
 	id = "donk_aicore_door_bolts";
 	name = "Door Bolt Button";
-	skin = "-warning"
+	skin = "-warning";
+	silicon_access_disabled = 1
 	},
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/circuit/red/off,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "Ab" = (
@@ -3925,7 +3974,8 @@
 	specialfunctions = 4;
 	id = "donk_aicore_door_bolts";
 	name = "Door Bolt Button";
-	skin = "-warning"
+	skin = "-warning";
+	silicon_access_disabled = 1
 	},
 /turf/open/floor/circuit/red/off,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
@@ -4224,7 +4274,9 @@
 	pipe_color = "#FF7B00";
 	color = "#FF7B00"
 	},
-/obj/item/restraints/legcuffs/beartrap/prearmed,
+/obj/item/restraints/legcuffs/beartrap/prearmed{
+	trap_damage = 30
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "Lt" = (
@@ -4409,9 +4461,6 @@
 	location = "hall1";
 	codes_txt = "patrol;next_patrol=hall2"
 	},
-/mob/living/simple_animal/bot/firebot{
-	bot_mode_flags = 3
-	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "MJ" = (
@@ -4574,12 +4623,13 @@
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "Of" = (
 /obj/structure/cable/layer1,
-/obj/structure/reagent_dispensers/fueltank/large,
 /obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "Oh" = (
 /obj/effect/turf_decal/stripes/red/line,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/circuit/red/off,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "Oi" = (
@@ -4654,6 +4704,10 @@
 /obj/item/toy/snappop{
 	pixel_y = 6;
 	pixel_x = 6
+	},
+/obj/item/weldingtool{
+	pixel_y = 3;
+	pixel_x = -5
 	},
 /obj/item/storage/toolbox/electrical,
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -4922,6 +4976,7 @@
 	dir = 4
 	},
 /obj/structure/holosign/barrier/cyborg/cybersun_ai_shield,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "Rx" = (
@@ -4961,6 +5016,7 @@
 	pipe_color = "#FF7B00";
 	color = "#FF7B00"
 	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
 "RH" = (
@@ -5130,7 +5186,8 @@
 	id = "donk_door_bolts";
 	name = "door bolt override";
 	desc = "A button for unbolting doors throughout the facility.";
-	skin = "-warning"
+	skin = "-warning";
+	silicon_access_disabled = 1
 	},
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
@@ -5232,6 +5289,9 @@
 "TR" = (
 /obj/structure/sign/poster/ripped/directional/south,
 /obj/structure/cable/layer1,
+/obj/structure/closet/crate/cardboard{
+	desc = "A fine example of the ubiquitous cardboard box. Handy if you want to store things. This box is labelled 'OUTLET 6013 - DECO' and has the Donk Co. logo stamped on it."
+	},
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "TT" = (
@@ -5450,6 +5510,13 @@
 /obj/machinery/duct,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
+"VA" = (
+/obj/effect/decal/cleanable/oil/slippery{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/turf/open/floor/carpet/donk,
+/area/ruin/space/has_grav/hauntedtradingpost/employees)
 "VJ" = (
 /obj/structure/cable/layer1,
 /obj/machinery/power/apc{
@@ -6447,10 +6514,10 @@ FB
 Tp
 sr
 MJ
-bu
+cv
 JJ
-bu
-bu
+cv
+cv
 en
 Li
 PU
@@ -6495,8 +6562,8 @@ Nw
 DM
 DM
 Nw
-je
-Nw
+sT
+yb
 AG
 IQ
 tl
@@ -6630,7 +6697,7 @@ Nw
 Ii
 ve
 QA
-kl
+lA
 nE
 IL
 iF
@@ -6728,7 +6795,7 @@ iF
 tl
 YR
 LI
-VQ
+aD
 Of
 tl
 QV
@@ -6761,7 +6828,7 @@ Dp
 Li
 WO
 BE
-Nw
+yb
 Im
 MR
 kl
@@ -6772,7 +6839,7 @@ ss
 iF
 tl
 Xe
-VQ
+VA
 VQ
 hl
 Nr
@@ -6941,7 +7008,7 @@ tL
 VJ
 Gg
 Hj
-Nw
+yb
 DM
 DM
 Nw
@@ -6987,7 +7054,7 @@ tm
 Gg
 Lz
 bu
-bu
+cv
 gb
 zg
 bu
@@ -7143,7 +7210,7 @@ pT
 tG
 xV
 XT
-tG
+tk
 xV
 tG
 sD
