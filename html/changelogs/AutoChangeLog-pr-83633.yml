@@ -1,0 +1,4 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - bugfix: "fixed getting a fake white dwarf report when the shift isn't extended mode, which lead to meta knowledge being used."
