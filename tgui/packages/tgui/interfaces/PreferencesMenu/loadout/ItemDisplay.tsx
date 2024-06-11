@@ -130,7 +130,7 @@ export const SearchDisplay = (props: {
   const { loadout_tabs, currentSearch } = props;
 
   const search = createSearch(
-    currentSearch.toLowerCase(),
+    currentSearch,
     (loadout_item: LoadoutItem) => loadout_item.name,
   );
 

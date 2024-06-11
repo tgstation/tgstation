@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import { useBackend } from '../../../backend';
 import {
@@ -22,7 +22,7 @@ import {
   typePath,
 } from './base';
 import { ItemIcon, LoadoutTabDisplay, SearchDisplay } from './ItemDisplay';
-import { LoadoutModifyDimmer } from './Modify';
+import { LoadoutModifyDimmer } from './ModifyPanel';
 
 export const LoadoutPage = () => {
   return (
@@ -129,7 +129,7 @@ const LoadoutTabs = (props: {
   return (
     <Stack fill height="550px">
       <Stack.Item align="center" width="250px" height="100%">
-        <Stack vertical height="100%">
+        <Stack vertical fill>
           <Stack.Item height="60%">
             <LoadoutPreviewSection />
           </Stack.Item>
@@ -195,7 +195,6 @@ const typepathToLoadoutItem = (
 };
 
 const LoadoutSelectedItem = (props: {
-  key: string;
   path: typePath;
   all_tabs: LoadoutCategory[];
   modifyItemDimmer: LoadoutItem | null;
@@ -210,7 +209,7 @@ const LoadoutSelectedItem = (props: {
   }
 
   return (
-    <Stack key={key} align={'center'}>
+    <Stack align={'center'}>
       <Stack.Item>
         <ItemIcon item={item} scale={1} />
       </Stack.Item>
@@ -272,16 +271,15 @@ const LoadoutSelectedSection = (props: {
     >
       {loadout_list &&
         Object.entries(loadout_list).map(([path, item]) => (
-          <>
+          <Fragment key={path}>
             <LoadoutSelectedItem
-              key={path}
               path={path}
               all_tabs={all_tabs}
               modifyItemDimmer={modifyItemDimmer}
               setModifyItemDimmer={setModifyItemDimmer}
             />
             <Divider />
-          </>
+          </Fragment>
         ))}
     </Section>
   );
@@ -304,7 +302,7 @@ const LoadoutPreviewSection = () => {
         </Button.Checkbox>
       }
     >
-      <Stack vertical height="100%">
+      <Stack vertical fill>
         <Stack.Item grow align="center">
           <CharacterPreview height="100%" id={data.character_preview_view} />
         </Stack.Item>

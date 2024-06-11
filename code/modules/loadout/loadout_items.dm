@@ -253,7 +253,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 		update_flag |= equipped_item.slot_flags
 
 	if(can_be_named && item_details?[INFO_NAMED] && !visuals_only)
-		equipped_item.name = trim(item_details[INFO_NAMED], PREVENT_CHARACTER_TRIM_LOSS(MAX_NAME_LENGTH))
+		equipped_item.name = trim(item_details[INFO_NAMED], PREVENT_CHARACTER_TRIM_LOSS(MAX_NAME_LEN))
 		ADD_TRAIT(equipped_item, TRAIT_WAS_RENAMED, "Loadout")
 
 	if(can_be_reskinned && item_details?[INFO_RESKIN])
