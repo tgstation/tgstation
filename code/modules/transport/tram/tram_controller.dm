@@ -362,7 +362,7 @@
  */
 /datum/transport_controller/linear/tram/proc/degraded_stop()
 	playsound(nav_beacon, 'sound/vehicles/car_crash.ogg', 100, vary = FALSE, falloff_distance = DEFAULT_TRAM_LENGTH)
-	nav_beacon.audible_message(span_userdanger("The tram comes to a sudden, grinding stop!"))
+	nav_beacon.audible_message(span_userdanger("You hear metal grinding as the tram comes to a sudden, complete stop!"))
 	for(var/mob/living/tram_passenger in range(DEFAULT_TRAM_LENGTH - 2, nav_beacon))
 		if(tram_passenger.stat != CONSCIOUS)
 			continue
@@ -405,7 +405,7 @@
 	if(travel_remaining)
 		travel_remaining = 0
 		playsound(nav_beacon, 'sound/vehicles/car_crash.ogg', 100, vary = FALSE, falloff_distance = DEFAULT_TRAM_LENGTH)
-		nav_beacon.audible_message(span_userdanger("The tram comes to a sudden, grinding stop!"))
+		nav_beacon.audible_message(span_userdanger("You hear metal grinding as the tram comes to a sudden, complete stop!"))
 		for(var/mob/living/tram_passenger in range(DEFAULT_TRAM_LENGTH - 2, nav_beacon))
 			if(tram_passenger.stat != CONSCIOUS)
 				continue
