@@ -37,6 +37,8 @@
 	var/datum/component/remote_materials/silo_mats
 	/// switch to use internal or remote storage
 	var/silo_link = FALSE
+	/// has the blueprint design changed
+	var/blueprint_changed = FALSE
 
 /datum/armor/item_construction
 	fire = 100
@@ -50,6 +52,18 @@
 	if(upgrade & RCD_UPGRADE_SILO_LINK)
 		silo_mats = AddComponent(/datum/component/remote_materials, mapload, FALSE)
 	update_appearance()
+
+///An do_after() specially designed for rhd devices
+/obj/item/construction/proc/build_delay(mob/user, delay, atom/target)
+	if(delay <= 0)
+		return TRUE
+
+	blueprint_changed = FALSE
+
+	return do_after(user, delay, target, extra_checks = CALLBACK(src, PROC_REF(blueprint_change)))
+
+/obj/item/construction/proc/blueprint_change()
+	return !blueprint_changed
 
 ///used for examining the RCD and for its UI
 /obj/item/construction/proc/get_silo_iron()
