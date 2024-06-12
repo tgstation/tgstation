@@ -25,8 +25,8 @@
 			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * seconds_per_tick)
 			blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * seconds_per_tick), BLOOD_VOLUME_NORMAL)
 
-	// Some effects are halved mid-combat. Not a reagent count, just a modifier
-	var/determined_mod = reagents.has_reagent(/datum/reagent/determination) ? 0.5 : 0
+	// Some effects are halved mid-combat.
+	var/determined_mod = has_status_effect(/datum/status_effect/determined) ? 0.5 : 0
 
 	//Effects of bloodloss
 	var/word = pick("dizzy","woozy","faint")
@@ -44,11 +44,6 @@
 		if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
 			if(SPT_PROB(5, seconds_per_tick))
 				to_chat(src, span_warning("You feel terribly bloated."))
-		// Slightly less blood than normal
-		if(BLOOD_VOLUME_SAFE to BLOOD_VOLUME_NORMAL)
-			if(SPT_PROB(1.5, seconds_per_tick))
-				set_eye_blur_if_lower(1 SECONDS * determined_mod)
-				to_chat(src, span_warning("You feel a little bit [word]."))
 		// Low blood but not a big deal in the immediate
 		if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 			if(SPT_PROB(2.5, seconds_per_tick))
@@ -56,7 +51,7 @@
 				if(prob(50))
 					to_chat(src, span_danger("You feel [word]. It's getting a bit hard to breathe."))
 					losebreath += 0.5 * determined_mod * seconds_per_tick
-				else if(staminaloss < 25 * determined_mod)
+				else if(getStaminaLoss() < 25 * determined_mod)
 					to_chat(src, span_danger("You feel [word]. It's getting a bit hard to focus."))
 					adjustStaminaLoss(10 * determined_mod * REM * seconds_per_tick)
 		// Pretty low blood, getting dangerous!
@@ -67,7 +62,7 @@
 				if(prob(50))
 					to_chat(src, span_bolddanger("You feel very [word]. It's getting hard to breathe!"))
 					losebreath += 1 * determined_mod * seconds_per_tick
-				else if(staminaloss < 40 * determined_mod)
+				else if(getStaminaLoss() < 40 * determined_mod)
 					to_chat(src, span_bolddanger("You feel very [word]. It's getting hard to stay awake!"))
 					adjustStaminaLoss(15 * determined_mod * REM * seconds_per_tick)
 		// Very low blood, danger!!
@@ -78,7 +73,7 @@
 				if(prob(50))
 					to_chat(src, span_userdanger("You feel extremely [word]! It's getting very hard to breathe!"))
 					losebreath += 1.5 * determined_mod * seconds_per_tick
-				else if(staminaloss < 80 * determined_mod)
+				else if(getStaminaLoss() < 80 * determined_mod)
 					to_chat(src, span_userdanger("You feel extremely [word]! It's getting very hard to stay awake!"))
 					adjustStaminaLoss(20 * determined_mod * REM * seconds_per_tick)
 		// Critically low blood, death is near! Adrenaline won't help you here.
@@ -98,7 +93,7 @@
 	// If your ratio is less than one (you're missing any blood) and your oxyloss is under that ratio %, start getting oxy damage.
 	// This damage accrues faster the less blood you have.
 	// If KO or in hardcrit, the damage accrues even then to prevent being perma-KO.
-	if(((effective_blood_ratio < 1) && (oxyloss < (effective_blood_ratio * 100))) || stat in list(UNCONSCIOUS, HARD_CRIT))
+	if(((effective_blood_ratio < 1) && (getOxyLoss() < (effective_blood_ratio * 100))) || stat in list(UNCONSCIOUS, HARD_CRIT))
 		// At roughly half blood this equals to 3 oxyloss per tick. At 90% blood it's close to 0.5
 		var/rounded_oxyloss = round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume) * seconds_per_tick, 0.25)
 		adjustOxyLoss(rounded_oxyloss, updating_health = TRUE)
