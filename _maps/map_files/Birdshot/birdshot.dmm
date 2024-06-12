@@ -48865,6 +48865,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/door/poddoor/shutters,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine/atmos)
 "qFb" = (
