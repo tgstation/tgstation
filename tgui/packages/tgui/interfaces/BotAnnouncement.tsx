@@ -103,7 +103,7 @@ export const BotAnnouncement = (props) => {
           </Tabs>
         </Section>
         <Section m={0} scrollable fill maxHeight="350px">
-          {tab === TAB.Announcements ? (
+          {tab === TAB.Announcements && (
             <Stack vertical zebra>
               {filteredLines.map((val) => (
                 <Stack.Item key={val.string}>
@@ -124,8 +124,8 @@ export const BotAnnouncement = (props) => {
                 </Stack.Item>
               ))}
             </Stack>
-          ) : null}
-          {tab === TAB.Shortcuts ? (
+          )}
+          {tab === TAB.Shortcuts && (
             <Stack vertical zebra>
               {filteredShortcuts.map((val) => (
                 <Stack.Item key={val.index}>
@@ -162,7 +162,7 @@ export const BotAnnouncement = (props) => {
                 </Stack.Item>
               ))}
             </Stack>
-          ) : null}
+          )}
         </Section>
         <Section>
           <Stack vertical>
