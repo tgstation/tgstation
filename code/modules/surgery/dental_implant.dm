@@ -47,12 +47,15 @@
 	check_flags = NONE
 
 /datum/action/item_action/activate_pill/IsAvailable(feedback)
-    if(owner.stat > SOFT_CRIT)
+    if(owner.stat == DEAD)
         return FALSE
     return ..()
 
 /datum/action/item_action/activate_pill/Trigger(trigger_flags)
 	if(!..())
+		return FALSE
+	owner.balloon_alert_to_viewers("[owner] grinds their teeth!", "You grit your teeth.")
+	if(!do_after(owner, 2.5*owner.stat SECONDS, owner,  IGNORE_USER_LOC_CHANGE | IGNORE_INCAPACITATED))
 		return FALSE
 	var/obj/item/item_target = target
 	to_chat(owner, span_notice("You grit your teeth and burst the implanted [item_target.name]!"))
