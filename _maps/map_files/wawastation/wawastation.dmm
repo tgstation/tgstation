@@ -9203,11 +9203,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
-"dpf" = (
-/obj/structure/transport/linear/public,
-/obj/machinery/light/floor/transport,
-/turf/open/floor/plating/elevatorshaft,
-/area/station/medical/treatment_center)
 "dpj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
@@ -16049,6 +16044,11 @@
 	},
 /turf/open/floor/iron/half,
 /area/station/security/breakroom)
+"fLM" = (
+/obj/structure/transport/linear/public,
+/obj/machinery/light/floor/transport,
+/turf/open/floor/plating/elevatorshaft,
+/area/station/cargo/storage)
 "fLU" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/mapping_helpers/broken_floor,
@@ -49233,7 +49233,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "ryG" = (
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Break Room"
@@ -49242,6 +49241,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "ryP" = (
@@ -60949,7 +60949,7 @@
 /obj/structure/transport/linear/public,
 /obj/machinery/light/floor/transport,
 /turf/open/floor/plating/elevatorshaft,
-/area/station/cargo/storage)
+/area/station/medical/treatment_center)
 "vBD" = (
 /obj/structure/chair/office/light{
 	dir = 1
@@ -82638,7 +82638,7 @@ dgR
 xDp
 bui
 yit
-dpf
+vBA
 yit
 dKw
 miD
@@ -83623,11 +83623,11 @@ uDB
 uDB
 uDB
 sdc
-vBA
+fLM
 soZ
 jCX
 jCX
-vBA
+fLM
 sdc
 guF
 uyL
@@ -84651,11 +84651,11 @@ iHv
 rZJ
 rAK
 sdc
-vBA
+fLM
 jCX
 qzF
 jCX
-vBA
+fLM
 sdc
 dro
 uyL
