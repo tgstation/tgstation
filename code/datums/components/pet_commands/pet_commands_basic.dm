@@ -250,7 +250,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/basic/owner = weak_parent.resolve()
-	if(isnull(owner))
+	if(isnull(owner) || source == attacker)
 		return
 	var/mob/living/current_target = owner.ai_controller?.blackboard[BB_CURRENT_PET_TARGET]
 	if(attacker == current_target) //we are already dealing with this target
