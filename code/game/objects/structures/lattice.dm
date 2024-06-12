@@ -112,9 +112,11 @@
 	..()
 
 /obj/structure/lattice/catwalk/atom_deconstruct(disassembled = TRUE)
+	new build_material(get_turf(src), number_of_mats)
 	var/turf/T = loc
 	for(var/obj/structure/cable/C in T)
 		C.deconstruct()
+
 
 /obj/structure/lattice/catwalk/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
