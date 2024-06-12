@@ -98,7 +98,7 @@
 			emissive = TRUE,
 		)
 		crystal.remove_filter("crystal_glow")
-		playsound(crystal, 'sound/magic/magic_block_holy.ogg', 60, TRUE)
+		playsound(crystal, 'sound/magic/magic_block_holy.ogg', 60, TRUE, pressure_affected = FALSE)
 	for(var/turf/current_turf as anything in target_turf_list)
 		for(var/mob/living/victim in current_turf)
 			victim.apply_damage(25, BURN)

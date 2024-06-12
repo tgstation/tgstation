@@ -231,7 +231,7 @@
 	var/turf/right_turf = get_ranged_target_turf(owner, EAST, 4)
 	var/turf/left_turf = get_ranged_target_turf(owner, WEST, 4)
 	var/list/target_turfs = list(right_turf, left_turf)
-	playsound(owner, 'sound/magic/holy_crystal_fire.ogg', 100, TRUE)
+	playsound(owner, 'sound/magic/holy_crystal_fire.ogg', 70, TRUE, pressure_affected = FALSE)
 	for(var/turf/current_turf as anything in target_turfs)
 		var/obj/projectile/judgement_crystal/crystal = new
 		crystal.preparePixelProjectile(current_turf, my_turf)
@@ -294,7 +294,7 @@
 
 /obj/effect/temp_visual/judgement_crystal/proc/shoot_target(turf/target_turf)
 	var/turf/my_turf = get_turf(src)
-	playsound(src, 'sound/effects/curse2.ogg', 100, TRUE)
+	playsound(src, 'sound/effects/curse2.ogg', 70, TRUE, pressure_affected = FALSE)
 	my_turf.Beam(
 		BeamTarget = target_turf,
 		beam_type = /obj/effect/ebeam/reacting/judgement,

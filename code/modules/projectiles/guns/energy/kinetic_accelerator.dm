@@ -636,3 +636,29 @@
 
 	var/new_color = input(user,"","Choose Color",bolt_color) as color|null
 	bolt_color = new_color || bolt_color
+
+/obj/item/borg/upgrade/modkit/crystal
+	name = "crystal gun"
+	desc = "Shoot pretty crystals to cause colorful explosions!"
+	cost = 0
+	denied_type = /obj/item/borg/upgrade/modkit/crystal
+
+/obj/item/borg/upgrade/modkit/crystal/modify_projectile(obj/projectile/kinetic/projectile)
+	projectile.icon = 'icons/effects/effects.dmi'
+	projectile.icon_state = "judgement_crystal"
+
+/obj/item/borg/upgrade/modkit/crystal/projectile_strike_predamage(obj/projectile/kinetic/projectile, turf/target_turf, atom/target, obj/item/gun/energy/recharge/kinetic_accelerator/gun)
+	new /obj/effect/temp_visual/celestial_shot(target_turf)
+
+/obj/effect/temp_visual/celestial_shot
+	duration = 0.6 SECONDS
+	icon_state = "celestial_crossing"
+	plane = ABOVE_GAME_PLANE
+	layer = NAVIGATION_EYE_LAYER
+
+/obj/effect/temp_visual/celestial_shot/Initialize(mapload)
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(begin_dissappear)), duration - 0.2 SECONDS)
+
+/obj/effect/temp_visual/celestial_shot/proc/begin_dissappear()
+	animate(src, alpha = 0, 0.2 SECONDS)

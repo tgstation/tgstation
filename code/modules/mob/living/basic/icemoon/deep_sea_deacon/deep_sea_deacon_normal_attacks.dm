@@ -60,7 +60,7 @@
 	addtimer(CALLBACK(src, PROC_REF(apply_damage)), duration)
 
 /obj/effect/temp_visual/devestating_light/proc/apply_damage()
-	playsound(src, 'sound/magic/magic_missile.ogg', 100, TRUE)
+	playsound(src, 'sound/magic/magic_missile.ogg', 30, TRUE, pressure_affected = FALSE)
 	var/turf/my_turf = get_turf(src)
 	new /obj/effect/temp_visual/mook_dust(my_turf)
 	for(var/mob/living/victim in my_turf)
