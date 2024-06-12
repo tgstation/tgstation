@@ -325,7 +325,7 @@
 		return
 	return user.dna.species.get_sneeze_sound(user)
 
-/datum/emote/living/carbon/cough
+/datum/emote/living/cough
 	key = "cough"
 	key_third_person = "coughs"
 	message = "coughs!"
