@@ -350,15 +350,15 @@
 		user.transferItemToLoc(src, pad, TRUE)
 		atom_storage.close_all()
 
-/obj/item/storage/briefcase/launchpad/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/launchpad_remote))
-		var/obj/item/launchpad_remote/L = I
-		if(L.pad == WEAKREF(src.pad)) //do not attempt to link when already linked
-			return ..()
-		L.pad = WEAKREF(src.pad)
-		to_chat(user, span_notice("You link [pad] to [L]."))
-	else
-		return ..()
+/obj/item/storage/briefcase/launchpad/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
+	if(istype(inserted, /obj/item/launchpad_remote))
+		var/obj/item/launchpad_remote/remote = inserted
+		if(remote.pad == WEAKREF(src.pad))
+			return TRUE
+		remote.pad = WEAKREF(src.pad)
+		to_chat(user, span_notice("You link [pad] to [remote]."))
+		return FALSE // no insert
+	return TRUE
 
 /obj/item/launchpad_remote
 	name = "folder"
