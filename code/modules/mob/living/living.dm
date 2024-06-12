@@ -1376,7 +1376,7 @@
 	return TRUE
 
 /mob/living/proc/update_stamina()
-	return
+	update_stamina_hud()
 
 /mob/living/carbon/alien/update_stamina()
 	return

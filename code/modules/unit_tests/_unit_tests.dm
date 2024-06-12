@@ -119,6 +119,7 @@
 #include "closets.dm"
 #include "clothing_under_armor_subtype_check.dm"
 #include "combat.dm"
+#include "combat_stamina.dm"
 #include "combat_welder.dm"
 #include "component_tests.dm"
 #include "confusion.dm"
