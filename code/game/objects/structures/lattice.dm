@@ -117,7 +117,6 @@
 	for(var/obj/structure/cable/C in T)
 		C.deconstruct()
 
-
 /obj/structure/lattice/catwalk/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
 		return list("mode" = RCD_DECONSTRUCT, "delay" = 1 SECONDS, "cost" = 5)
