@@ -199,14 +199,14 @@
 
 	parent = new_parent
 	// a few of theses should probably be on the real_location rather than the parent
-	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interact))
 	RegisterSignals(parent, list(COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_HAND), PROC_REF(on_attack))
 	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_mousedrop_onto))
 	RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(on_mousedropped_onto))
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(on_preattack))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(mass_empty))
 	RegisterSignals(parent, list(COMSIG_ATOM_ATTACK_GHOST, COMSIG_ATOM_ATTACK_HAND_SECONDARY), PROC_REF(open_storage_on_signal))
-	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY_SECONDARY, PROC_REF(open_storage_attackby_secondary))
+	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, PROC_REF(on_item_interact_secondary))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(close_distance))
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(update_actions))
 	RegisterSignal(parent, COMSIG_TOPIC, PROC_REF(topic_handle))
@@ -795,17 +795,23 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	attempt_insert(dropping, user)
 
 /// Signal handler for whenever we're attacked by an object.
-/datum/storage/proc/on_attackby(datum/source, obj/item/thing, mob/user, params)
+/datum/storage/proc/on_item_interact(datum/source, mob/user, obj/item/thing, params)
 	SIGNAL_HANDLER
 
-	if(!insert_on_attack || !thing.attackby_storage_insert(src, parent, user))
-		return
+	if(!insert_on_attack)
+		return NONE
+	if(!thing.storage_insert_on_interaction(src, parent, user))
+		return NONE
+	if(!parent.storage_insert_on_interacted_with(src, thing, user))
+		return NONE
+	if(SEND_SIGNAL(parent, COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT, thing, user) & BLOCK_STORAGE_INSERT)
+		return NONE
 
 	if(iscyborg(user))
-		return COMPONENT_NO_AFTERATTACK
+		return ITEM_INTERACT_BLOCKING
 
 	attempt_insert(thing, user)
-	return COMPONENT_NO_AFTERATTACK
+	return ITEM_INTERACT_SUCCESS
 
 /// Signal handler for whenever we're attacked by a mob.
 /datum/storage/proc/on_attack(datum/source, mob/user)
@@ -915,14 +921,16 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 
 /// Signal handler for when we get attacked with secondary click by an item.
-/datum/storage/proc/open_storage_attackby_secondary(datum/source, atom/weapon, mob/user)
+/datum/storage/proc/on_item_interact_secondary(datum/source, mob/user, atom/weapon)
 	SIGNAL_HANDLER
 
 	if(istype(weapon, /obj/item/chameleon))
 		var/obj/item/chameleon/chameleon_weapon = weapon
 		chameleon_weapon.make_copy(source, user)
 
-	return open_storage_on_signal(source, user)
+	if(open_storage_on_signal(source, user))
+		return ITEM_INTERACT_BLOCKING
+	return NONE
 
 /// Signal handler to open up the storage when we receive a signal.
 /datum/storage/proc/open_storage_on_signal(datum/source, mob/to_show)

@@ -112,17 +112,16 @@
 		return FALSE
 	return TRUE
 
-/obj/item/paint/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
+/obj/item/paint/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isturf(interacting_with) || isspaceturf(interacting_with))
+		return NONE
+	if(paintleft <= 0)
+		return NONE
+	paintleft--
+	interacting_with.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 	if(paintleft <= 0)
 		icon_state = "paint_empty"
-		return
-	if(!isturf(target) || isspaceturf(target))
-		return
-	paintleft--
-	target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/paint/paint_remover
 	gender = PLURAL
@@ -130,12 +129,10 @@
 	desc = "Used to remove color from anything."
 	icon_state = "paint_neutral"
 
-/obj/item/paint/paint_remover/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(!isturf(target) || !isobj(target))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(target.color != initial(target.color))
-		target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+/obj/item/paint/paint_remover/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isturf(interacting_with) || !isobj(interacting_with))
+		return NONE
+	if(interacting_with.color != initial(interacting_with.color))
+		interacting_with.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+		return ITEM_INTERACT_SUCCESS
+	return NONE

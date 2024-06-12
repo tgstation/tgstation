@@ -1842,6 +1842,7 @@
 #include "code\datums\status_effects\debuffs\spacer.dm"
 #include "code\datums\status_effects\debuffs\speech_debuffs.dm"
 #include "code\datums\status_effects\debuffs\staggered.dm"
+#include "code\datums\status_effects\debuffs\stamcrit.dm"
 #include "code\datums\status_effects\debuffs\static_vision.dm"
 #include "code\datums\status_effects\debuffs\strandling.dm"
 #include "code\datums\status_effects\debuffs\terrified.dm"

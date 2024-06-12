@@ -144,10 +144,10 @@
 	if(AT_TOXIN_VOMIT_THRESHOLD(src))
 		apply_status_effect(/datum/status_effect/tox_vomit)
 
-/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina, forced, required_biotype = ALL)
+/mob/living/carbon/received_stamina_damage(current_level, amount_actual, amount)
 	. = ..()
-	if(amount > 0)
-		stam_regen_start_time = world.time + STAMINA_REGEN_BLOCK_TIME
+	if((maxHealth - current_level) <= crit_threshold && stat != DEAD)
+		apply_status_effect(/datum/status_effect/incapacitating/stamcrit)
 
 /**
  * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the damage proc on that organ.
