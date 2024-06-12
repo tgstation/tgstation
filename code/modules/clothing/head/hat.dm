@@ -84,6 +84,8 @@
 	name = "flat cap"
 	desc = "A working man's cap."
 	icon_state = "beret_flat"
+	icon_preview = 'icons/obj/clothing/head/beret.dmi'
+	icon_state_preview = "beret_flat"
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#8F7654"

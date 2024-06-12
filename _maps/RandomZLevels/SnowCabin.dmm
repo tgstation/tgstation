@@ -3392,7 +3392,8 @@
 /area/awaymission/cabin/caves)
 "wq" = (
 /obj/machinery/recycler/lumbermill{
-	desc = "Is better at killing people than cutting logs, for some reason."
+	desc = "Is better at killing people than cutting logs, for some reason.";
+	dir = 8
 	},
 /obj/machinery/conveyor{
 	dir = 4;

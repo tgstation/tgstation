@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "autolathes don't hang when printing items in areas without apc or if it runs out of materials mid printing"

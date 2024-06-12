@@ -1,4 +1,0 @@
-author: "nikothedude"
-delete-after: True
-changes:
-  - bugfix: "COMSIG_ATOM_POST_DIR_CHANGE should ACTUALLY work now"

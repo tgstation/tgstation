@@ -26,8 +26,8 @@
 /obj/item/knife/envy //Envy's knife: Found in the Envy ruin. Attackers take on the appearance of whoever they strike.
 	name = "envy's knife"
 	desc = "Their success will be yours."
-	icon = 'icons/obj/weapons/khopesh.dmi'
-	icon_state = "render"
+	icon = 'icons/obj/weapons/stabby.dmi'
+	icon_state = "envyknife"
 	inhand_icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'

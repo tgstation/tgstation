@@ -84,6 +84,8 @@
 	if(denial_reason)
 		to_chat(user, span_warning(denial_reason))
 		return COMPONENT_NO_AFTERATTACK
+	// In case the fishing source has anything else to do before beginning to fish.
+	fish_source.on_start_fishing(rod, user, parent)
 	start_fishing_challenge(rod, user)
 	return COMPONENT_NO_AFTERATTACK
 

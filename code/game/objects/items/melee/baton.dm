@@ -212,6 +212,7 @@
 		if(!trait_check)
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
 		additional_effects_non_cyborg(target, user)
+	SEND_SIGNAL(target, COMSIG_MOB_BATONED, user, src)
 	return TRUE
 
 /// Description for trying to stun when still on cooldown.
