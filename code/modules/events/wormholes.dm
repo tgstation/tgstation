@@ -79,4 +79,7 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 				hard_target = P.loc
 		if(!hard_target)
 			return
-		do_teleport(M, hard_target, 1, null, null, channel = TELEPORT_CHANNEL_WORMHOLE) ///You will appear adjacent to the beacon
+		var/turf/start_turf = get_turf(M)
+		if(do_teleport(M, hard_target, 1, null, null, channel = TELEPORT_CHANNEL_WORMHOLE)) ///You will appear adjacent to the beacon
+			playsound(start_turf, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(hard_target, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)

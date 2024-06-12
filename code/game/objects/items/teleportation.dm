@@ -141,9 +141,9 @@
 
 /obj/item/hand_tele/proc/try_dispel_portal(atom/target, mob/user)
 	if(is_parent_of_portal(target))
-		qdel(target)
-		to_chat(user, span_notice("You dispel [target] with \the [src]!"))
-		playsound(loc, SFX_PORTAL_CLOSE, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		to_chat(user, span_notice("You dispel [target] with [src]!"))
+		var/obj/effect/portal/portal = target
+		portal.expire()
 		return TRUE
 	return FALSE
 
