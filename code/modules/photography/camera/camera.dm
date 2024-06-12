@@ -45,7 +45,7 @@
 
 /obj/item/camera/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/camera), SHELL_CAPACITY_SMALL)
+	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/camera, new /obj/item/circuit_component/remotecam/polaroid), SHELL_CAPACITY_SMALL)
 
 /obj/item/camera/attack_self(mob/user)
 	if(!disk)
@@ -226,7 +226,7 @@
 		if(person.is_face_visible())
 			names += "[person.name]"
 
-	var/datum/picture/picture = new("picture", desc.Join(" "), mobs_spotted, dead_spotted, names, get_icon, null, psize_x, psize_y, blueprints, can_see_ghosts = see_ghosts)
+	var/datum/picture/picture = new("picture", desc.Join("<br>"), mobs_spotted, dead_spotted, names, get_icon, null, psize_x, psize_y, blueprints, can_see_ghosts = see_ghosts)
 	after_picture(user, picture)
 	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user, picture)
 	blending = FALSE

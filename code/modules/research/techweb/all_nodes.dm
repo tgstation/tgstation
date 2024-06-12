@@ -508,6 +508,18 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/random/cytology = 3000) //Big discount to reinforce doing it.
 
+/datum/techweb_node/marine_util
+	id = "marine_util"
+	display_name = "Marine Utility"
+	description = "Fish are nice to look at and all, but they can be put to use."
+	prereq_ids = list("bio_process")
+	design_ids = list(
+		"bioelec_gen",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
+	// only available if you've done the first fishing experiment (thus unlocking fishing tech), but not a strict requirement to get the tech
+	discount_experiments = list(/datum/experiment/scanning/fish/second = 3000)
+
 /////////////////////////Advanced Surgery/////////////////////////
 
 /datum/techweb_node/imp_wt_surgery
@@ -882,6 +894,7 @@
 		"bci_implanter",
 		"bci_shell",
 		"comp_bar_overlay",
+		"comp_camera_bci",
 		"comp_counter_overlay",
 		"comp_install_detector",
 		"comp_object_overlay",
@@ -2451,6 +2464,33 @@
 		"mod_joint_torsion",
 		"mod_recycler",
 		"mod_shooting",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	hidden = TRUE
+	experimental = TRUE
+
+/datum/techweb_node/mod_experimental
+	id = "mod_experimental"
+	display_name = "Experimental Modular Suits"
+	description = "Applications of experimentality when creating MODsuits have created these..."
+	prereq_ids = list("base")
+	design_ids = list(
+		"mod_disposal",
+		"mod_joint_torsion",
+		"mod_recycler",
+		"mod_shooting",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	hidden = TRUE
+	experimental = TRUE
+
+/datum/techweb_node/posisphere
+	id = "positronic_sphere"
+	display_name = "Experimental Spherical Positronic Brain"
+	description = "Recent developments on cost-cutting measures have allowed us to cut positronic brain cubes into twice-as-cheap spheres. Unfortunately, it also allows them to move around the lab via rolling maneuvers."
+	prereq_ids = list("base")
+	design_ids = list(
+		"posisphere",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE

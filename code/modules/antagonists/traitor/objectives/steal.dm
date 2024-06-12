@@ -29,6 +29,8 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 
 /datum/objective_item_handler/proc/new_item_created(datum/source, obj/item/item)
 	SIGNAL_HANDLER
+	if(HAS_TRAIT(item, TRAIT_ITEM_OBJECTIVE_BLOCKED))
+		return
 	if(!generated_items)
 		item.add_stealing_item_objective()
 		return
@@ -224,6 +226,8 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 
 /datum/traitor_objective/steal_item/proc/handle_special_case(obj/item/source, obj/item/target)
 	SIGNAL_HANDLER
+	if(HAS_TRAIT(target, TRAIT_ITEM_OBJECTIVE_BLOCKED))
+		return COMPONENT_FORCE_FAIL_PLACEMENT
 	if(istype(target, target_item.targetitem))
 		if(!target_item.check_special_completion(target))
 			return COMPONENT_FORCE_FAIL_PLACEMENT

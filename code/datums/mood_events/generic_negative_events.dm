@@ -332,10 +332,15 @@
 	mood_change *= people_laughing_at_you
 	return ..()
 
-//These are unused so far but I want to remember them to use them later
 /datum/mood_event/surgery
 	description = "THEY'RE CUTTING ME OPEN!!"
 	mood_change = -8
+
+/datum/mood_event/surgery/success
+	timeout = 3 MINUTES
+
+/datum/mood_event/surgery/failure
+	timeout = 10 MINUTES
 
 /datum/mood_event/bald
 	description = "I need something to cover my head..."
@@ -494,3 +499,9 @@
 	description = "Nothing will ever rival with what I seen in the past..."
 	mood_change = -3
 	special_screen_obj = "mood_desentized"
+
+//Used for the psychotic brawling martial art, if the person is a pacifist.
+/datum/mood_event/pacifism_bypassed
+	description = "I DIDN'T MEAN TO HURT THEM!"
+	mood_change = -20
+	timeout = 10 MINUTES

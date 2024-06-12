@@ -12,7 +12,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	icon = 'icons/mob/silicon/cameramob.dmi'
 	icon_state = "marker"
 	mouse_opacity = MOUSE_OPACITY_ICON
-	move_on_shuttle = 1
+	move_on_shuttle = TRUE
 	invisibility = INVISIBILITY_OBSERVER
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE

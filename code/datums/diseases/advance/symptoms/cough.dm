@@ -68,8 +68,7 @@
 					off_cooldown_coughed = TRUE
 				else
 					off_cooldown_coughed = FALSE
-			if(affected_mob.CanSpreadAirborneDisease())
-				active_disease.spread(spread_range)
+			active_disease.airborne_spread(spread_range)
 			if(power >= 1.5)
 				var/obj/item/held_object = affected_mob.get_active_held_item()
 				if(held_object && held_object.w_class == WEIGHT_CLASS_TINY)

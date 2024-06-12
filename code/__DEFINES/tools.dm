@@ -24,7 +24,7 @@
 // If delay between the start and the end of tool operation is less than MIN_TOOL_SOUND_DELAY,
 // tool sound is only played when op is started. If not, it's played twice.
 #define MIN_TOOL_SOUND_DELAY 20
-
+#define MIN_TOOL_OPERATING_DELAY 40 //minimum delay for operating sound. Prevent overlaps and overhand sound.
 /// Return when an item interaction is successful.
 /// This cancels the rest of the chain entirely and indicates success.
 #define ITEM_INTERACT_SUCCESS (1<<0) // Same as TRUE, as most tool (legacy) tool acts return TRUE on success

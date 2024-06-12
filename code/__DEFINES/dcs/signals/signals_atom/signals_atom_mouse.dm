@@ -15,8 +15,8 @@
 #define COMSIG_CLICK_CTRL "ctrl_click"
 ///from base of atom/AltClick(): (/mob)
 #define COMSIG_CLICK_ALT "alt_click"
-///from base of atom/alt_click_secondary(): (/mob)
-#define COMSIG_CLICK_ALT_SECONDARY "alt_click_secondary"
+///from base of atom/base_click_alt_secondary(): (/mob)
+#define COMSIG_CLICK_ALT_SECONDARY "click_alt_secondary"
 	#define COMPONENT_CANCEL_CLICK_ALT_SECONDARY (1<<0)
 ///from base of atom/CtrlShiftClick(/mob)
 #define COMSIG_CLICK_CTRL_SHIFT "ctrl_shift_click"
