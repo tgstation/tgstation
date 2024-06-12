@@ -34,7 +34,7 @@
 		MATCONTAINER_EXAMINE, \
 		container_signals = list(COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/flatpacker, AfterMaterialInsert)) \
 	)
-	. = ..()
+	return ..()
 
 /obj/machinery/flatpacker/RefreshParts()
 	. = ..()
@@ -74,7 +74,6 @@
 
 /obj/machinery/flatpacker/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
-
 	if(!ui)
 		ui = new(user, src, "Flatpacker")
 		ui.open()
@@ -211,7 +210,6 @@
 	if(.)
 		return
 
-	. = TRUE
 
 	switch(action)
 		if("build")
@@ -228,16 +226,15 @@
 			var/datum/material/ejecting = locate(params["ref"])
 			var/amount = text2num(params["amount"])
 			if(!isnum(amount) || !istype(ejecting))
-				return TRUE
+				return FALSE
 
 			materials.retrieve_sheets(amount, ejecting, drop_location())
 			return TRUE
 
-	return FALSE
 
 /obj/machinery/flatpacker/Destroy()
+	QDEL_NULL(inserted_board)
 	. = ..()
-	inserted_board = null // this could be destroyed but the relevant refactor isnt in yet
 
 /obj/item/flatpack
 	name = "flatpack"
@@ -261,11 +258,11 @@
 		name += " ([initial(build.name)])"
 
 /obj/item/flatpack/Destroy()
+	QDEL_NULL(board)
 	. = ..()
-	qdel(board)
 
 /obj/item/flatpack/multitool_act(mob/living/user, obj/item/tool)
-	. = ..()
+	. = NONE
 	if(isnull(board))
 		return ITEM_INTERACT_BLOCKING
 	if(!isopenturf(loc))
@@ -278,7 +275,6 @@
 	var/obj/machinery/new_machine = new board.build_path(loc)
 	loc.visible_message(span_warning("[src] deploys!"))
 	playsound(src, 'sound/machines/terminal_eject.ogg', 70, TRUE)
-	qdel(board)
 	new_machine.RefreshParts()
 	new_machine.on_construction(user)
 
