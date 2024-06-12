@@ -9205,7 +9205,7 @@
 /area/station/medical/virology)
 "dpf" = (
 /obj/structure/transport/linear/public,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/transport,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/medical/treatment_center)
 "dpj" = (
@@ -16049,13 +16049,6 @@
 	},
 /turf/open/floor/iron/half,
 /area/station/security/breakroom)
-"fLM" = (
-/obj/structure/transport/linear/public,
-/obj/machinery/light/floor{
-	_status_traits = list("underfloor" = list("innate"))
-	},
-/turf/open/floor/plating/elevatorshaft,
-/area/station/cargo/storage)
 "fLU" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/mapping_helpers/broken_floor,
@@ -60953,10 +60946,8 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "vBA" = (
-/obj/machinery/light/floor{
-	_status_traits = list("underfloor" = list("innate"))
-	},
 /obj/structure/transport/linear/public,
+/obj/machinery/light/floor/transport,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/cargo/storage)
 "vBD" = (
@@ -82647,8 +82638,8 @@ dgR
 xDp
 bui
 yit
-yit
 dpf
+yit
 dKw
 miD
 dFY
@@ -83636,7 +83627,7 @@ vBA
 soZ
 jCX
 jCX
-fLM
+vBA
 sdc
 guF
 uyL
@@ -84660,11 +84651,11 @@ iHv
 rZJ
 rAK
 sdc
-fLM
+vBA
 jCX
 qzF
 jCX
-fLM
+vBA
 sdc
 dro
 uyL
