@@ -29,5 +29,4 @@
 		return BULLET_ACT_BLOCK
 
 	. = ..()
-	playsound(loc, SFX_PORTAL_CREATED, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	projector.create_portal(src, get_turf(src))
