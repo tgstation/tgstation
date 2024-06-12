@@ -671,15 +671,32 @@
 				pre_success(cooker)
 		return
 
-	if(cycles % 3)
+	if(cycles == 1) //Only needs to try to shock mobs once, towards the end of the loop
+		var/successful_shock
 		var/list/microwave_contents = list()
 		microwave_contents += src.get_all_contents() //Mobs are often hid inside of mob holders, which could be fried and made into a burger...
 		for(var/mob/living/victim in microwave_contents)
-			victim.electrocute_act(30, src, 1, SHOCK_NOGLOVES)
+			if(victim.electrocute_act(100, src, 1, SHOCK_NOGLOVES))
+				successful_shock = TRUE
+				if(victim.stat == DEAD) //This is mostly so humans that can_be_held don't get gibbed from one microwave run alone, but mice become burnt messes
+					victim.gib()
+					muck()
+		if(successful_shock) //We only want to give feedback once, regardless of how many mobs got shocked
+			var/list/cant_smell = list()
+			for(var/mob/smeller in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src))
+				if(HAS_TRAIT(smeller, TRAIT_ANOSMIA))
+					cant_smell += smeller
+			visible_message(span_danger("You smell a burnt smell coming from [src]!"), ignored_mobs = cant_smell)
+			particles = new /particles/smoke()
+			addtimer(CALLBACK(src, PROC_REF(remove_smoke)), 10 SECONDS)
+			src.Shake(duration = 1 SECONDS)
 
 	cycles--
 	use_energy(active_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(cook_loop), type, cycles, wait, cooker), wait)
+
+/obj/machinery/microwave/proc/remove_smoke()
+	QDEL_NULL(particles)
 
 /obj/machinery/microwave/power_change()
 	. = ..()
