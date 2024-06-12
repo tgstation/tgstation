@@ -177,7 +177,7 @@
 	affected_mob.add_mood_event("tweaking", /datum/mood_event/stimulant_medium)
 	affected_mob.AdjustAllImmobility(-40 * REM * seconds_per_tick)
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustStaminaLoss(-2 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+	need_mob_update = affected_mob.adjustStaminaLoss(-5 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	affected_mob.set_jitter_if_lower(4 SECONDS * REM * seconds_per_tick)
 	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1, 4) * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	if(need_mob_update)
@@ -233,7 +233,7 @@
 		to_chat(affected_mob, span_notice("[high_message]"))
 	affected_mob.add_mood_event("salted", /datum/mood_event/stimulant_heavy)
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustStaminaLoss(-5 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+	need_mob_update = affected_mob.adjustStaminaLoss(-6 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 4 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	affected_mob.adjust_hallucinations(10 SECONDS * REM * seconds_per_tick)
 	if(need_mob_update)
@@ -811,7 +811,7 @@
 	if(!iscarbon(kronkaine_receptacle))
 		return
 	var/mob/living/carbon/druggo = kronkaine_receptacle
-	if(druggo.adjustStaminaLoss(-4 * trans_volume, updating_stamina = FALSE))
+	if(druggo.adjustStaminaLoss(-6 * trans_volume, updating_stamina = FALSE))
 		return UPDATE_MOB_HEALTH
 	//I wish i could give it some kind of bonus when smoked, but we don't have an INHALE method.
 
