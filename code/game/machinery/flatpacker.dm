@@ -66,8 +66,6 @@
 
 	directly_use_energy(min(active_power_usage * 0.25, amount_inserted / 100))
 
-	update_static_data_for_all_viewers()
-
 /obj/machinery/flatpacker/update_overlays()
 	. = ..()
 
