@@ -45,6 +45,12 @@
 /datum/action/item_action/activate_pill
 	name = "Activate Pill"
 	check_flags = NONE
+
+/datum/action/item_action/activate_pill/IsAvailable(feedback)
+    if(owner.stat > SOFT_CRIT)
+        return FALSE
+    return ..()
+
 /datum/action/item_action/activate_pill/Trigger(trigger_flags)
 	if(!..())
 		return FALSE
