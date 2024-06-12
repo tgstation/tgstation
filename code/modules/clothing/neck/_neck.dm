@@ -398,6 +398,8 @@
 /obj/item/clothing/neck/large_scarf
 	name = "large scarf"
 	icon_state = "large_scarf"
+	icon_preview = 'icons/obj/fluff/previews.dmi'
+	icon_state_preview = "scarf_large"
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#C6C6C6#EEEEEE"
