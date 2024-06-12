@@ -6,8 +6,8 @@
 		and you can be removed from it upon contact with antimagical artifacts."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
-	button_icon_state = "ninja_cloak"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "caretaker"
 	sound = 'sound/effects/curse2.ogg'
 
 	school = SCHOOL_FORBIDDEN
@@ -24,12 +24,18 @@
 /datum/action/cooldown/spell/caretaker/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
-/datum/action/cooldown/spell/caretaker/cast(atom/cast_on)
+/datum/action/cooldown/spell/caretaker/before_cast(atom/cast_on)
 	. = ..()
+	if(. & SPELL_CANCEL_CAST)
+		return
+
 	for(var/mob/living/alive in orange(5, owner))
 		if(alive.stat != DEAD && alive.client)
 			owner.balloon_alert(owner, "other minds nearby!")
-			return FALSE
+			return . | SPELL_CANCEL_CAST
+
+/datum/action/cooldown/spell/caretaker/cast(mob/living/cast_on)
+	. = ..()
 
 	var/mob/living/carbon/carbon_user = owner
 	if(carbon_user.has_status_effect(/datum/status_effect/caretaker_refuge))

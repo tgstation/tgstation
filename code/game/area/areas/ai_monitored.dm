@@ -47,6 +47,7 @@
 	name = "\improper AI Chamber"
 	icon_state = "ai_chamber"
 	ai_will_not_hear_this = null
+	area_flags = parent_type::area_flags | ABDUCTOR_PROOF
 
 /area/station/ai_monitored/turret_protected/aisat
 	name = "\improper AI Satellite"
@@ -80,6 +81,14 @@
 /area/station/ai_monitored/turret_protected/aisat/maint
 	name = "\improper AI Satellite Maintenance"
 	icon_state = "ai_maint"
+
+/area/station/ai_monitored/turret_protected/aisat/uppernorth
+	name = "\improper AI Satellite Upper Fore"
+	icon_state = "ai"
+
+/area/station/ai_monitored/turret_protected/aisat/uppersouth
+	name = "\improper AI Satellite Upper Aft"
+	icon_state = "ai"
 
 /area/station/ai_monitored/turret_protected/aisat_interior
 	name = "\improper AI Satellite Antechamber"

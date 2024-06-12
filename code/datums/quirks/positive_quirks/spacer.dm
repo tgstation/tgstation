@@ -11,6 +11,7 @@
 	icon = FA_ICON_USER_ASTRONAUT
 	value = 7
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
+	medical_record_text = "Patient is well-adapted to non-terrestrial environments."
 	mail_goodies = list(
 		/obj/item/storage/pill_bottle/ondansetron,
 		/obj/item/reagent_containers/pill/gravitum,
@@ -41,7 +42,6 @@
 	// Yes, it's assumed for planetary maps that you start at gravity sickness.
 	check_z(quirk_holder, skip_timers = TRUE)
 
-/datum/quirk/spacer_born/add_unique(client/client_source)
 	// drift slightly faster through zero G
 	quirk_holder.inertia_move_delay *= 0.8
 

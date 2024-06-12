@@ -20,7 +20,6 @@
 	icon_gib = "carp_gib"
 	gold_core_spawnable = HOSTILE_SPAWN
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
-	movement_type = FLYING
 	health = 25
 	maxHealth = 25
 	pressure_resistance = 200
@@ -41,7 +40,7 @@
 	butcher_results = list(/obj/item/food/fishmeat/carp = 2, /obj/item/stack/sheet/animalhide/carp = 1)
 	greyscale_config = /datum/greyscale_config/carp
 	ai_controller = /datum/ai_controller/basic_controller/carp
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
 
@@ -58,7 +57,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack
+		/datum/pet_command/point_targeting/attack
 	)
 	/// Carp want to eat raw meat
 	var/static/list/desired_food = list(/obj/item/food/meat/slab, /obj/item/food/meat/rawcutlet)
@@ -95,26 +94,22 @@
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("gnashes")))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 	if (tamer)
-		on_tamed(tamer, feedback = FALSE)
+		tamed(tamer, feedback = FALSE)
 		befriend(tamer)
 	else
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(on_tamed)))
+		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5)
 
 	teleport = new(src)
 	teleport.Grant(src)
 	ai_controller.set_blackboard_key(BB_CARP_RIFT, teleport)
-	ai_controller.set_blackboard_key(BB_OBSTACLE_TARGETTING_WHITELIST, allowed_obstacle_targets)
-
-
-/mob/living/basic/carp/Destroy()
-	QDEL_NULL(teleport)
-	return ..()
+	ai_controller.set_blackboard_key(BB_OBSTACLE_TARGETING_WHITELIST, allowed_obstacle_targets)
 
 /// Tell the elements and the blackboard what food we want to eat
 /mob/living/basic/carp/proc/setup_eating()
-	AddElement(/datum/element/basic_eating, 10, 0, null, desired_food)
-	AddElement(/datum/element/basic_eating, 0, 10, BRUTE, desired_trash) // We are killing our planet
-	ai_controller.set_blackboard_key(BB_BASIC_FOODS, desired_food + desired_trash)
+	AddElement(/datum/element/basic_eating, food_types = desired_food)
+	AddElement(/datum/element/basic_eating, heal_amt = 0, damage_amount = 10, damage_type = BRUTE, food_types = desired_trash) // We are killing our planet
+	var/list/foods_list = desired_food + desired_trash
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(foods_list))
 
 /// Set a random colour on the carp, override to do something else
 /mob/living/basic/carp/proc/apply_colour()
@@ -123,7 +118,7 @@
 	set_greyscale(colors = list(pick_weight(GLOB.carp_colors)))
 
 /// Called when another mob has forged a bond of friendship with this one, passed the taming mob as 'tamer'
-/mob/living/basic/carp/proc/on_tamed(mob/tamer, feedback = TRUE)
+/mob/living/basic/carp/tamed(mob/living/tamer, atom/food, feedback = TRUE)
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, ridable_data)
 	AddComponent(/datum/component/obeys_commands, tamed_commands)
@@ -138,6 +133,8 @@
 
 /// Gives the carp a list of weakrefs of destinations to try and travel between when it has nothing better to do
 /mob/living/basic/carp/proc/migrate_to(list/datum/weakref/migration_points)
+	ai_controller.can_idle = FALSE
+	ai_controller.set_ai_status(AI_STATUS_ON) // We need htem to actually walk to the station
 	var/list/actual_points = list()
 	for(var/datum/weakref/point_ref as anything in migration_points)
 		var/turf/point_resolved = point_ref.resolve()
@@ -252,6 +249,7 @@
 
 /mob/living/basic/carp/advanced
 	health = 40
+	maxHealth = 40
 	obj_damage = 15
 
 #undef RARE_CAYENNE_CHANCE

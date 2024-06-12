@@ -421,9 +421,8 @@
 		"The [src] has begun melting down!",
 		source = src,
 		header = "Meltdown Incoming",
-		action = NOTIFY_ORBIT,
 		ghost_sound = 'sound/machines/warning-buzzer.ogg',
-		notify_volume = 75
+		notify_volume = 75,
 	)
 
 	for(var/i in HYPERTORUS_COUNTDOWN_TIME to 0 step -10)

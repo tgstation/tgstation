@@ -23,7 +23,7 @@
 		qdel(src)
 		return
 	if(!friend.client && friend_initialized)
-		addtimer(CALLBACK(src, PROC_REF(reroll_friend)), 600)
+		addtimer(CALLBACK(src, PROC_REF(reroll_friend)), 1 MINUTES)
 
 /datum/brain_trauma/special/imaginary_friend/on_death()
 	..()
@@ -43,17 +43,33 @@
 	get_ghost()
 
 /datum/brain_trauma/special/imaginary_friend/proc/make_friend()
-	friend = new(get_turf(owner), owner)
+	friend = new(get_turf(owner))
 
+/// Tries a poll for the imaginary friend
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
-	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [owner.real_name]'s imaginary friend?", ROLE_PAI, null, 7.5 SECONDS, friend, POLL_IGNORE_IMAGINARYFRIEND)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		friend.key = C.key
-		friend_initialized = TRUE
-	else
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		question = "Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice("imaginary friend")]?",
+		check_jobban = ROLE_PAI,
+		poll_time = 20 SECONDS,
+		checked_target = owner,
+		ignore_category = POLL_IGNORE_IMAGINARYFRIEND,
+		alert_pic = owner,
+		role_name_text = "imaginary friend",
+	)
+	add_friend(chosen_one)
+
+/// Yay more friends!
+/datum/brain_trauma/special/imaginary_friend/proc/add_friend(mob/dead/observer/ghost)
+	if(isnull(ghost))
 		qdel(src)
+		return
+
+	friend.key = ghost.key
+	friend.attach_to_owner(owner)
+	friend.setup_appearance()
+	friend_initialized = TRUE
+	friend.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
+	message_admins("[ADMIN_LOOKUPFLW(friend)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
 
 /mob/camera/imaginary_friend
 	name = "imaginary friend"
@@ -71,9 +87,6 @@
 	var/move_delay = 0
 	var/mob/living/owner
 	var/bubble_icon = "default"
-
-	var/datum/action/innate/imaginary_join/join
-	var/datum/action/innate/imaginary_hide/hide
 
 /mob/camera/imaginary_friend/Login()
 	. = ..()
@@ -94,10 +107,11 @@
  */
 /mob/camera/imaginary_friend/Initialize(mapload)
 	. = ..()
-	join = new
-	join.Grant(src)
-	hide = new
-	hide.Grant(src)
+	var/static/list/grantable_actions = list(
+		/datum/action/innate/imaginary_join,
+		/datum/action/innate/imaginary_hide,
+	)
+	grant_actions_by_list(grantable_actions)
 
 /// Links this imaginary friend to the provided mob
 /mob/camera/imaginary_friend/proc/attach_to_owner(mob/living/imaginary_friend_owner)
@@ -115,8 +129,8 @@
 
 /// Randomise friend name and appearance
 /mob/camera/imaginary_friend/proc/setup_friend()
-	var/gender = pick(MALE, FEMALE)
-	real_name = random_unique_name(gender)
+	gender = pick(MALE, FEMALE)
+	real_name = generate_random_name_species_based(gender, FALSE, /datum/species/human)
 	name = real_name
 	human_image = get_flat_human_icon(null, pick(SSjob.joinable_occupations))
 	Show()
@@ -203,11 +217,11 @@
 	message = capitalize(message)
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-		client?.cmd_admin_say(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, message)
 		return
 
 	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-		client?.dsay(message)
+		SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/dsay, message)
 		return
 
 	if(check_emote(message, forced))
@@ -219,7 +233,6 @@
 		spans |= SPAN_SINGING
 
 	var/eavesdrop_range = 0
-	var/eavesdropped_message = ""
 
 	if (message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		message = message_mods[MODE_CUSTOM_SAY_EMOTE]
@@ -229,9 +242,7 @@
 			log_talk(message, LOG_WHISPER, tag="imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 			spans |= SPAN_ITALICS
 			eavesdrop_range = EAVESDROP_EXTRA_RANGE
-			// "This proc is dangerously laggy, avoid it or die"
-			// What other option do I have here? I guess I'll die
-			eavesdropped_message = stars(message)
+			range = WHISPER_RANGE
 		else
 			log_talk(message, LOG_SAY, tag="imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 
@@ -243,11 +254,7 @@
 	Hear(rendered, src, language, message, null, spans, message_mods) // We always hear what we say
 	var/group = owner.imaginary_group - src // The people in our group don't, so we have to exclude ourselves not to hear twice
 	for(var/mob/person in group)
-		if(eavesdrop_range && get_dist(src, person) > WHISPER_RANGE + eavesdrop_range && !HAS_TRAIT(person, TRAIT_GOOD_HEARING))
-			var/new_rendered = "[span_name("[name]")] [say_quote(say_emphasis(eavesdropped_message), spans, message_mods)]"
-			person.Hear(new_rendered, src, language, eavesdropped_message, null, spans, message_mods)
-		else
-			person.Hear(rendered, src, language, message, null, spans, message_mods)
+		person.Hear(null, src, language, message, null, spans, message_mods, range)
 
 	// Speech bubble, but only for those who have runechat off
 	var/list/speech_bubble_recipients = list()
@@ -379,7 +386,7 @@
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
 /mob/camera/imaginary_friend/create_thinking_indicator()
-	if(active_thinking_indicator || active_typing_indicator || !thinking_IC)
+	if(active_thinking_indicator || active_typing_indicator || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
 	active_thinking_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]3", TYPING_LAYER)
 	add_image_to_clients(active_thinking_indicator, group_clients())
@@ -391,7 +398,7 @@
 	active_thinking_indicator = null
 
 /mob/camera/imaginary_friend/create_typing_indicator()
-	if(active_typing_indicator || active_thinking_indicator || !thinking_IC)
+	if(active_typing_indicator || active_thinking_indicator || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
 	active_typing_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]0", TYPING_LAYER)
 	add_image_to_clients(active_typing_indicator, group_clients())
@@ -403,7 +410,7 @@
 	active_typing_indicator = null
 
 /mob/camera/imaginary_friend/remove_all_indicators()
-	thinking_IC = FALSE
+	REMOVE_TRAIT(src, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT)
 	remove_thinking_indicator()
 	remove_typing_indicator()
 

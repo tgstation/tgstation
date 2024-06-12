@@ -1,6 +1,6 @@
 /*
 
-	Advance Disease is a system for Virologist to Engineer their own disease with symptoms that have effects and properties
+	Advance Disease is a system for medical to Engineer their own disease with symptoms that have effects and properties
 	which add onto the overall disease.
 
 	If you need help with creating new symptoms or expanding the advance disease, ask for Giacom on #coderbus.
@@ -17,7 +17,7 @@
  */
 
 /datum/disease/advance
-	name = "Unknown" // We will always let our Virologist name our disease.
+	name = "Unknown" // We will always let our creator name our disease.
 	desc = "An engineered disease which can contain a multitude of symptoms."
 	form = "Advanced Disease" // Will let med-scanners know that this disease was engineered.
 	agent = "advance microbes"
@@ -130,10 +130,13 @@
 		sortTim(advance_diseases, GLOBAL_PROC_REF(cmp_advdisease_resistance_asc))
 		for(var/i in 1 to replace_num)
 			var/datum/disease/advance/competition = advance_diseases[i]
-			if(totalTransmittable() > competition.totalResistance())
-				competition.cure(FALSE)
-			else
-				return FALSE //we are not strong enough to bully our way in
+			if(!competition.bypasses_immunity)
+				if(bypasses_immunity) //viruses with bypasses_immunity get a free pass on beating normal advanced diseases
+					competition.cure(FALSE)
+				if(totalTransmittable() > competition.totalResistance())
+					competition.cure(FALSE)
+				else
+					return FALSE //we are not strong enough to bully our way in
 	infect(infectee, make_copy)
 	return TRUE
 
@@ -152,12 +155,13 @@
 		for(var/s in symptoms)
 			var/datum/symptom/symptom_datum = s
 			if(symptom_datum.Start(src)) //this will return FALSE if the symptom is neutered
-				symptom_datum.next_activation = world.time + rand(symptom_datum.symptom_delay_min SECONDS, symptom_datum.symptom_delay_max SECONDS)
+				symptom_datum.next_activation = world.time + (rand(symptom_datum.symptom_delay_min SECONDS, symptom_datum.symptom_delay_max SECONDS) * DISEASE_SYMPTOM_FREQUENCY_MODIFIER)
 			symptom_datum.on_stage_change(src)
 
 	for(var/s in symptoms)
 		var/datum/symptom/symptom_datum = s
-		symptom_datum.Activate(src)
+		if(!symptom_datum.neutered)
+			symptom_datum.Activate(src)
 
 
 // Tell symptoms stage changed
@@ -254,13 +258,21 @@
 		properties["stage_rate"] += S.stage_speed
 		properties["transmittable"] += S.transmittable
 		if(!S.neutered)
-			properties["severity"] = max(properties["severity"], S.severity) // severity is based on the highest severity non-neutered symptom
+			properties["severity"] += S.severity // severity is based on the sum of all non-neutered symptoms' severity
+	if(properties["severity"] > 0)
+		properties["severity"] += round((properties["resistance"] / 12), 1)
+		properties["severity"] += round((properties["stage_rate"] / 11), 1)
+		properties["severity"] += round((properties["transmittable"] / 8), 1)
+		properties["severity"] = round((properties["severity"] / 2), 1)
+		properties["severity"] *= (symptoms.len / VIRUS_SYMPTOM_LIMIT) //fewer symptoms, less severity
+		properties["severity"] = clamp(properties["severity"], 1, 7)
+	properties["capacity"] = get_symptom_weights()
 
 // Assign the properties that are in the list.
 /datum/disease/advance/proc/assign_properties()
 
 	if(properties?.len)
-		if(properties["stealth"] >= 2)
+		if(properties["stealth"] >= properties["severity"] && properties["severity"] > 0)
 			visibility_flags |= HIDDEN_SCANNER
 		else
 			visibility_flags &= ~HIDDEN_SCANNER
@@ -275,9 +287,9 @@
 			set_spread(DISEASE_SPREAD_BLOOD)
 
 		spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
-		cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // can be between 5 and 10
-		stage_prob = max(0.5 * properties["stage_rate"], 1)
-		set_severity(properties["severity"])
+		cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 1, 10) // can be between 1 and 10
+		stage_prob = max(0.3 * properties["stage_rate"], 1)
+		set_severity(round(properties["severity"]), 1)
 		generate_cure(properties)
 	else
 		CRASH("Our properties were empty or null!")
@@ -287,22 +299,22 @@
 /datum/disease/advance/proc/set_spread(spread_id)
 	switch(spread_id)
 		if(DISEASE_SPREAD_NON_CONTAGIOUS)
-			spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
+			update_spread_flags(DISEASE_SPREAD_NON_CONTAGIOUS)
 			spread_text = "None"
 		if(DISEASE_SPREAD_SPECIAL)
-			spread_flags = DISEASE_SPREAD_SPECIAL
+			update_spread_flags(DISEASE_SPREAD_SPECIAL)
 			spread_text = "None"
 		if(DISEASE_SPREAD_BLOOD)
-			spread_flags = DISEASE_SPREAD_BLOOD
+			update_spread_flags(DISEASE_SPREAD_BLOOD)
 			spread_text = "Blood"
 		if(DISEASE_SPREAD_CONTACT_FLUIDS)
-			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS
+			update_spread_flags(DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS)
 			spread_text = "Fluids"
 		if(DISEASE_SPREAD_CONTACT_SKIN)
-			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN
+			update_spread_flags(DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN)
 			spread_text = "Skin contact"
 		if(DISEASE_SPREAD_AIRBORNE)
-			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_AIRBORNE
+			update_spread_flags(DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_AIRBORNE)
 			spread_text = "Respiration"
 
 /datum/disease/advance/proc/set_severity(level_sev)
@@ -330,7 +342,7 @@
 // Will generate a random cure, the more resistance the symptoms have, the harder the cure.
 /datum/disease/advance/proc/generate_cure()
 	if(properties?.len)
-		var/res = clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
+		var/res = clamp(properties["resistance"] - (symptoms.len * 0.5), 1, advance_cures.len)
 		if(res == oldres)
 			return
 		cures = list(pick(advance_cures[res]))
@@ -391,11 +403,9 @@
 
 // Add a symptom, if it is over the limit we take a random symptom away and add the new one.
 /datum/disease/advance/proc/AddSymptom(datum/symptom/S)
-
 	if(HasSymptom(S))
 		return
-
-	if(symptoms.len >= VIRUS_SYMPTOM_LIMIT)
+	while(get_symptom_weights() + S.weight > VIRUS_SYMPTOM_LIMIT)
 		RemoveSymptom(pick(symptoms))
 	symptoms += S
 	S.OnAdd(src)
@@ -411,6 +421,12 @@
 		S.neutered = TRUE
 		S.name += " (neutered)"
 		S.OnRemove(src)
+
+/// How much of the symptom capacity is currently being used?
+/datum/disease/advance/proc/get_symptom_weights()
+	. = 0
+	for(var/datum/symptom/symptom as anything in symptoms)
+		. += symptom.weight
 
 /*
 

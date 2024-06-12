@@ -67,11 +67,14 @@
 /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced)
 	SIGNAL_HANDLER
 
-	if(!owner.client || owner.body_position == LYING_DOWN || !owner.has_gravity() || (owner.movement_type & FLYING) || forced || owner.buckled)
+	if(!owner.client || owner.body_position == LYING_DOWN || !owner.has_gravity() || (owner.movement_type & (FLYING|FLOATING)) || forced || owner.buckled)
 		return
 
 	// less limping while we have determination still
 	var/determined_mod = owner.has_status_effect(/datum/status_effect/determined) ? 0.5 : 1
+
+	if(SEND_SIGNAL(owner, COMSIG_CARBON_LIMPING) & COMPONENT_CANCEL_LIMP)
+		return
 
 	if(next_leg == left)
 		if(prob(limp_chance_left * determined_mod))

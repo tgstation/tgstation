@@ -257,6 +257,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	name = "Wizard Apprentice"
 	antag_hud_name = "apprentice"
 	can_assign_self_objectives = FALSE
+	move_to_lair = FALSE
 	var/datum/mind/master
 	var/school = APPRENTICE_DESTRUCTION
 	outfit_type = /datum/outfit/wizard/apprentice

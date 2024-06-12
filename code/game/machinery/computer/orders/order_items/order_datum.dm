@@ -22,7 +22,7 @@
 	if(!desc)
 		desc = initial(item_path.desc)
 
-/datum/orderable_item/Destroy(force, ...)
+/datum/orderable_item/Destroy(force)
 	if(item_path)
 		qdel(item_path)
 	return ..()

@@ -80,7 +80,7 @@
 		user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
 			span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
 			span_hear("You hear a metallic creaking from [src]."))
-		if(do_after(user, breakout_time, target = src))
+		if(do_after(user, breakout_time, target = src, hidden = TRUE))
 			if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 				return
 			free_exit = TRUE
@@ -98,17 +98,16 @@
 	else
 		to_chat(user, span_warning("The safety hatch has been disabled!"))
 
-/obj/machinery/fat_sucker/AltClick(mob/living/user)
-	if(!user.can_perform_action(src))
-		return
+/obj/machinery/fat_sucker/click_alt(mob/living/user)
 	if(user == occupant)
 		to_chat(user, span_warning("You can't reach the controls from inside!"))
-		return
+		return CLICK_ACTION_BLOCKING
 	if(!(obj_flags & EMAGGED) && !allowed(user))
 		to_chat(user, span_warning("You lack the required access."))
-		return
+		return CLICK_ACTION_BLOCKING
 	free_exit = !free_exit
 	to_chat(user, span_notice("Safety hatch [free_exit ? "unlocked" : "locked"]."))
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/fat_sucker/update_overlays()
 	. = ..()
@@ -153,7 +152,7 @@
 		playsound(loc, 'sound/machines/chime.ogg', 30, FALSE)
 	else
 		next_fact--
-	use_power(active_power_usage)
+	use_energy(active_power_usage * seconds_per_tick)
 
 /obj/machinery/fat_sucker/proc/start_extracting()
 	if(state_open || !occupant || processing || !powered())

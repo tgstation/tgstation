@@ -37,7 +37,7 @@
 	plant_icon_offset = 2
 	species = "replicapod"
 	plantname = "Replica Pod"
-	product = /mob/living/carbon/human //verrry special -- Urist
+	product = null // the human mob is spawned in harvest()
 	lifespan = 50
 	endurance = 8
 	maturation = 10
@@ -197,7 +197,7 @@
 	if(!features["mcolor"])
 		features["mcolor"] = "#59CE00"
 	if(!features["pod_hair"])
-		features["pod_hair"] = pick(GLOB.pod_hair_list)
+		features["pod_hair"] = pick(SSaccessories.pod_hair_list)
 
 	for(var/V in quirks)
 		new V(podman)

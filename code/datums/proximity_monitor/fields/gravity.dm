@@ -7,7 +7,7 @@
 /datum/proximity_monitor/advanced/gravity/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, gravity)
 	. = ..()
 	gravity_value = gravity
-	recalculate_field()
+	recalculate_field(full_recalc = TRUE)
 
 /datum/proximity_monitor/advanced/gravity/setup_field_turf(turf/target)
 	. = ..()
@@ -42,15 +42,15 @@
 	for(var/mob/living/guy in target)
 		warn_mob(guy, target)
 
-/datum/proximity_monitor/advanced/gravity/warns_on_entrance/field_edge_crossed(atom/movable/movable, turf/location)
+/datum/proximity_monitor/advanced/gravity/warns_on_entrance/field_edge_crossed(atom/movable/movable, turf/old_location, turf/new_location)
 	. = ..()
 	if(isliving(movable))
-		warn_mob(movable, location)
+		warn_mob(movable, new_location)
 
-/datum/proximity_monitor/advanced/gravity/warns_on_entrance/field_edge_uncrossed(atom/movable/movable, turf/location)
+/datum/proximity_monitor/advanced/gravity/warns_on_entrance/field_edge_uncrossed(atom/movable/movable, turf/old_location, turf/new_location)
 	. = ..()
 	if(isliving(movable))
-		warn_mob(movable, location)
+		warn_mob(movable, old_location)
 
 /datum/proximity_monitor/advanced/gravity/warns_on_entrance/proc/warn_mob(mob/living/to_warn, turf/location)
 	var/mob_ref_key = REF(to_warn)

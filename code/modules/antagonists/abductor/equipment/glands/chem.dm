@@ -16,5 +16,5 @@
 /obj/item/organ/internal/heart/gland/chem/activate()
 	var/chem_to_add = pick(possible_reagents)
 	owner.reagents.add_reagent(chem_to_add, 2)
-	owner.adjustToxLoss(-5, TRUE, TRUE)
+	owner.adjustToxLoss(-5, forced = TRUE)
 	..()

@@ -1,0 +1,18 @@
+.JobIcon {
+  height: 20px;
+  background: black;
+  padding: 1px 1px 0 1px;
+  overflow: hidden;
+}
+
+.OrbitItem__selected {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid white;
+  transform: translateX(-50%);
+}

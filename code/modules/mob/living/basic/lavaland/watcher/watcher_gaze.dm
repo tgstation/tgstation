@@ -9,9 +9,9 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 	cooldown_time = 20 SECONDS
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	click_to_activate = FALSE
 	shared_cooldown = NONE
+	melee_cooldown_time = 0 SECONDS
 	/// At what range do we check for vision?
 	var/effect_radius = 7
 	/// How long does it take to play our various animation stages
@@ -115,6 +115,8 @@
 	var/max_throw = 3
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/ice/apply_effect(mob/living/viewer)
+	if(!HAS_TRAIT(viewer, TRAIT_RESISTCOLD))
+		return
 	to_chat(viewer, span_warning("You are repulsed by the force of [owner]'s cold stare!"))
 	viewer.apply_status_effect(/datum/status_effect/freon/watcher/extended)
 	viewer.safe_throw_at(

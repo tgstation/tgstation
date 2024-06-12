@@ -58,7 +58,7 @@
 		COMSIG_GEIGER_COUNTER_SCAN,
 	))
 
-/datum/component/irradiated/Destroy(force, silent)
+/datum/component/irradiated/Destroy(force)
 	var/atom/movable/parent_movable = parent
 	if (istype(parent_movable))
 		parent_movable.remove_filter("rad_glow")
@@ -90,13 +90,13 @@
 	if (should_halt_effects(parent))
 		return
 
-	if (human_parent.stat > DEAD)
+	if (human_parent.stat != DEAD)
 		human_parent.dna?.species?.handle_radiation(human_parent, world.time - beginning_of_irradiation, seconds_per_tick)
 
 	process_tox_damage(human_parent, seconds_per_tick)
 
 /datum/component/irradiated/proc/should_halt_effects(mob/living/carbon/human/target)
-	if (IS_IN_STASIS(target))
+	if (HAS_TRAIT(target, TRAIT_STASIS))
 		return TRUE
 
 	if (HAS_TRAIT(target, TRAIT_HALT_RADIATION_EFFECTS))

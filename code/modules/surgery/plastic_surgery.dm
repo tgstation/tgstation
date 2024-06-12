@@ -16,7 +16,9 @@
 	)
 
 /datum/surgery/plastic_surgery/advanced
-	name = "advanced plastic surgery"
+	name = "Advanced plastic surgery"
+	desc =  "Surgery allows one-self to completely remake someone's face with that of another. Provided they have a picture of them in their offhand when reshaping the face."
+	requires_tech = TRUE
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -40,11 +42,11 @@
 	display_results(
 		user,
 		target,
-		span_notice("You begin to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]..."),
-		span_notice("[user] begins to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]."),
-		span_notice("[user] begins to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]."),
+		span_notice("You begin to insert [tool] into the incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]..."),
+		span_notice("[user] begins to insert [tool] into the incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+		span_notice("[user] begins to insert [tool] into the incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 	)
-	display_pain(target, "You feel something inserting just below the skin in your [parse_zone(target_zone)].")
+	display_pain(target, "You feel something inserting just below the skin in your [target.parse_zone_with_bodypart(target_zone)].")
 
 /datum/surgery_step/insert_plastic/success(mob/user, mob/living/target, target_zone, obj/item/stack/tool, datum/surgery/surgery, default_display_results)
 	. = ..()
@@ -68,7 +70,7 @@
 		span_notice("[user] begins to alter [target]'s appearance."),
 		span_notice("[user] begins to make an incision in [target]'s face."),
 	)
-	display_pain(target, "You feel slicing pain across your face!")
+	display_pain(target, "You feel slicing pain across your face!", mood_event_type = /datum/mood_event/surgery)
 
 /datum/surgery_step/reshape_face/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(HAS_TRAIT_FROM(target, TRAIT_DISFIGURED, TRAIT_GENERIC))
@@ -80,7 +82,7 @@
 			span_notice("[user] successfully restores [target]'s appearance!"),
 			span_notice("[user] finishes the operation on [target]'s face."),
 		)
-		display_pain(target, "The pain fades, your face feels normal again!")
+		display_pain(target, "The pain fades, your face feels normal again!", mood_event_type = /datum/mood_event/surgery/success)
 	else
 		var/list/names = list()
 		if(!isabductor(user))
@@ -92,11 +94,11 @@
 			else
 				user.visible_message(span_warning("You have no picture to base the appearance on, reverting to random appearances."))
 				for(var/i in 1 to 10)
-					names += target.dna.species.random_name(target.gender, TRUE)
+					names += target.generate_random_mob_name(TRUE)
 		else
-			for(var/_i in 1 to 9)
+			for(var/j in 1 to 9)
 				names += "Subject [target.gender == MALE ? "i" : "o"]-[pick("a", "b", "c", "d", "e")]-[rand(10000, 99999)]"
-			names += target.dna.species.random_name(target.gender, TRUE) //give one normal name in case they want to do regular plastic surgery
+			names += target.generate_random_mob_name(TRUE) //give one normal name in case they want to do regular plastic surgery
 		var/chosen_name = tgui_input_list(user, "New name to assign", "Plastic Surgery", names)
 		if(isnull(chosen_name))
 			return
@@ -110,7 +112,7 @@
 			span_notice("[user] alters [oldname]'s appearance completely, [target.p_they()] is now [newname]!"),
 			span_notice("[user] finishes the operation on [target]'s face."),
 		)
-		display_pain(target, "The pain fades, your face feels new and unfamiliar!")
+		display_pain(target, "The pain fades, your face feels new and unfamiliar!", mood_event_type = /datum/mood_event/surgery/failure)
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		human_target.sec_hud_set_ID()

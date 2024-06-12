@@ -11,7 +11,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FIRE_PROOF
 	tool_behaviour = null
@@ -60,10 +60,10 @@
 		mistake_occured = TRUE
 
 	if(isnull(tool_behaviour))
-		w_class = WEIGHT_CLASS_TINY
+		update_weight_class(WEIGHT_CLASS_TINY)
 		balloon_alert(user, "folded")
 	else
-		w_class = WEIGHT_CLASS_SMALL
+		update_weight_class(WEIGHT_CLASS_SMALL)
 		balloon_alert(user, mistake_occured ? "oops! [tool_behaviour] out" : "[tool_behaviour] out")
 
 	update_tool_parameters()

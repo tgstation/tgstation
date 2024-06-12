@@ -42,7 +42,7 @@
 	if(!owner || !istype(owner) || !owner.client)
 		return
 
-	if(TIMER_COOLDOWN_CHECK(parent.shell, COOLDOWN_CIRCUIT_TARGET_INTERCEPT))
+	if(TIMER_COOLDOWN_RUNNING(parent.shell, COOLDOWN_CIRCUIT_TARGET_INTERCEPT))
 		return
 
 	to_chat(owner, "<B>Left-click to trigger target interceptor!</B>")

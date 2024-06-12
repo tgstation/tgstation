@@ -13,7 +13,7 @@
 	growthstages = 3
 	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	mutatelist = list(/obj/item/seeds/carrot/parsnip)
-	reagents_add = list(/datum/reagent/medicine/oculine = 0.25, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
+	reagents_add = list(/datum/reagent/medicine/oculine = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/food/grown/carrot
 	seed = /obj/item/seeds/carrot
@@ -27,11 +27,17 @@
 
 /obj/item/food/grown/carrot/attackby(obj/item/I, mob/user, params)
 	if(I.get_sharpness())
-		to_chat(user, span_notice("You sharpen the carrot into a shiv with [I]."))
-		var/obj/item/knife/shiv/carrot/Shiv = new /obj/item/knife/shiv/carrot
+		var/carrot_blade
+		var/carrot_sword_chance = (max(0, seed.potency - 50) / 50)
+		if (prob(carrot_sword_chance))
+			carrot_blade = new /obj/item/claymore/carrot
+			to_chat(user, span_notice("You sharpen the carrot into a sword with [I]."))
+		else
+			carrot_blade = new /obj/item/knife/shiv/carrot
+			to_chat(user, span_notice("You sharpen the carrot into a shiv with [I]."))
 		remove_item_from_storage(user)
 		qdel(src)
-		user.put_in_hands(Shiv)
+		user.put_in_hands(carrot_blade)
 	else
 		return ..()
 

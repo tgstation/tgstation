@@ -3,10 +3,9 @@
 	name = "Spin Web"
 	desc = "Spin a web to slow down potential prey."
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
-	button_icon_state = "lay_web"
+	button_icon_state = "spider_web"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	cooldown_time = 0 SECONDS
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
@@ -18,10 +17,12 @@
 	. = ..()
 	if (!owner)
 		return
+	ADD_TRAIT(owner, TRAIT_WEB_WEAVER, REF(src))
 	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_status_on_signal))
 
 /datum/action/cooldown/mob_cooldown/lay_web/Remove(mob/removed_from)
 	. = ..()
+	REMOVE_TRAIT(removed_from, TRAIT_WEB_WEAVER, REF(src))
 	UnregisterSignal(removed_from, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED))
 
 /datum/action/cooldown/mob_cooldown/lay_web/IsAvailable(feedback = FALSE)
@@ -73,7 +74,7 @@
 /// Variant for genetics, created webs only allow the creator passage
 /datum/action/cooldown/mob_cooldown/lay_web/genetic
 	desc = "Spin a web. Only you will be able to traverse your web easily."
-	cooldown_time = 4 SECONDS //the same time to lay a web
+	cooldown_time = 4 SECONDS
 
 /datum/action/cooldown/mob_cooldown/lay_web/genetic/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
 	new /obj/structure/spider/stickyweb/genetic(target_turf, owner)
@@ -95,20 +96,20 @@
 /datum/action/cooldown/mob_cooldown/lay_web/solid_web
 	name = "Spin Solid Web"
 	desc = "Spin a web to obstruct potential prey."
-	button_icon_state = "lay_solid_web"
+	button_icon_state = "spider_wall"
 	cooldown_time = 0 SECONDS
 	webbing_time = 5 SECONDS
 
 /datum/action/cooldown/mob_cooldown/lay_web/solid_web/obstructed_by_other_web()
-	return !!(locate(/obj/structure/spider/solid) in get_turf(owner))
+	return !!(locate(/obj/structure/spider/stickyweb/sealed/tough) in get_turf(owner))
 
 /datum/action/cooldown/mob_cooldown/lay_web/solid_web/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
-	new /obj/structure/spider/solid(target_turf)
+	new /obj/structure/spider/stickyweb/sealed/tough(target_turf)
 
 /datum/action/cooldown/mob_cooldown/lay_web/web_passage
 	name = "Spin Web Passage"
 	desc = "Spin a web passage to hide the nest from prey view."
-	button_icon_state = "lay_web_passage"
+	button_icon_state = "spider_roof"
 	cooldown_time = 0 SECONDS
 	webbing_time = 4 SECONDS
 
@@ -118,24 +119,23 @@
 /datum/action/cooldown/mob_cooldown/lay_web/web_passage/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
 	new /obj/structure/spider/passage(target_turf)
 
-
 /datum/action/cooldown/mob_cooldown/lay_web/sticky_web
 	name = "Spin Sticky Web"
 	desc = "Spin a sticky web to trap intruders."
-	button_icon_state = "lay_sticky_web"
+	button_icon_state = "spider_ropes"
 	cooldown_time = 20 SECONDS
 	webbing_time = 3 SECONDS
 
 /datum/action/cooldown/mob_cooldown/lay_web/sticky_web/obstructed_by_other_web()
-	return !!(locate(/obj/structure/spider/sticky) in get_turf(owner))
+	return !!(locate(/obj/structure/spider/stickyweb/very_sticky) in get_turf(owner))
 
 /datum/action/cooldown/mob_cooldown/lay_web/sticky_web/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
-	new /obj/structure/spider/sticky(target_turf)
+	new /obj/structure/spider/stickyweb/very_sticky(target_turf)
 
 /datum/action/cooldown/mob_cooldown/lay_web/web_spikes
 	name = "Spin Web Spikes"
 	desc = "Extrude silk spikes to dissuade invaders."
-	button_icon_state = "lay_web_spikes"
+	button_icon_state = "spider_spikes"
 	cooldown_time = 40 SECONDS
 	webbing_time = 3 SECONDS
 
@@ -172,3 +172,16 @@
 /datum/action/cooldown/mob_cooldown/web_effigy/Activate()
 	new /obj/structure/spider/effigy(get_turf(owner))
 	return ..()
+
+/datum/action/cooldown/mob_cooldown/lay_web/web_reflector
+	name = "Spin reflective silk screen"
+	desc = "Spin a web to reflect missiles from the nest."
+	button_icon_state = "spider_mirror"
+	cooldown_time = 30 SECONDS
+	webbing_time = 4 SECONDS
+
+/datum/action/cooldown/mob_cooldown/lay_web/web_reflector/obstructed_by_other_web()
+	return !!(locate(/obj/structure/spider/stickyweb/sealed/reflector) in get_turf(owner))
+
+/datum/action/cooldown/mob_cooldown/lay_web/web_reflector/plant_web(turf/target_turf, obj/structure/spider/stickyweb/existing_web)
+	new /obj/structure/spider/stickyweb/sealed/reflector(target_turf)

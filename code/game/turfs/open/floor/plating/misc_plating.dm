@@ -6,6 +6,10 @@
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	baseturfs = /turf/open/floor/plating/lowpressure
 
+/turf/open/floor/plating/dumpsterair
+	initial_gas_mix = OPENTURF_DIRTY_ATMOS
+	temperature = 309
+
 /turf/open/floor/plating/icemoon
 	icon_state = "plating"
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
@@ -15,6 +19,7 @@
 	icon_state = "alienpod1"
 	base_icon_state = "alienpod1"
 	tiled_dirt = FALSE
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 	// Not actually broken, just should never break...yeah.
 	broken = TRUE
 	damaged_dmi = null
@@ -28,6 +33,7 @@
 	icon_state = "alienplating"
 	base_icon_state = "alienplating"
 	tiled_dirt = FALSE
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 	damaged_dmi = null
 
 /turf/open/floor/plating/abductor2/break_tile()
@@ -53,6 +59,7 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 /turf/open/floor/plating/snowed/cavern
 	initial_gas_mix = BURNING_COLD

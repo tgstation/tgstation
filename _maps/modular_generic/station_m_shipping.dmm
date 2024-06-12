@@ -1,0 +1,309 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/door/airlock/multi_tile{
+	dir = 8;
+	name = "Cargo Hold"
+	},
+/obj/effect/decal/cleanable/oil/streak,
+/turf/open/floor/iron/smooth,
+/area/template_noop)
+"b" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/template_noop)
+"c" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth,
+/area/template_noop)
+"d" = (
+/obj/machinery/light/small/directional/north,
+/turf/template_noop,
+/area/template_noop)
+"e" = (
+/obj/machinery/light/broken/directional/north,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/template_noop)
+"f" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/microwave{
+	pixel_y = 6
+	},
+/obj/structure/table,
+/obj/item/food/ready_donk/donkhiladas{
+	pixel_y = 19
+	},
+/turf/open/floor/iron/smooth,
+/area/template_noop)
+"g" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"h" = (
+/turf/template_noop,
+/area/template_noop)
+"j" = (
+/obj/structure/rack,
+/obj/item/paper_bin/carbon,
+/obj/item/stamp/denied{
+	pixel_y = 7;
+	pixel_x = 9
+	},
+/obj/item/stamp/granted{
+	pixel_y = 2;
+	pixel_x = -9
+	},
+/obj/item/folder/yellow{
+	name = "Order Collection"
+	},
+/obj/item/pen,
+/turf/open/floor/iron,
+/area/template_noop)
+"l" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/template_noop)
+"o" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/structure/shipping_container,
+/turf/open/floor/plating,
+/area/template_noop)
+"p" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth,
+/area/template_noop)
+"q" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/smooth,
+/area/template_noop)
+"r" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/template_noop)
+"s" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/poster/official/here_for_your_safety/directional/north,
+/turf/open/floor/plating,
+/area/template_noop)
+"t" = (
+/turf/closed/wall,
+/area/template_noop)
+"u" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/template_noop)
+"w" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth,
+/area/template_noop)
+"x" = (
+/obj/structure/window/fulltile,
+/turf/open/floor/plating,
+/area/template_noop)
+"z" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"B" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/oil/streak{
+	pixel_x = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/template_noop)
+"H" = (
+/obj/structure/closet{
+	name = "Equipment Locker"
+	},
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/head/utility/hardhat{
+	pixel_y = 11;
+	pixel_x = 1
+	},
+/obj/item/clothing/gloves/cargo_gauntlet,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/template_noop)
+"J" = (
+/obj/machinery/door/airlock/mining/glass{
+	name = "Cargo Hold"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/template_noop)
+"K" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/oil/streak,
+/turf/open/floor/iron/smooth,
+/area/template_noop)
+"L" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/smooth,
+/area/template_noop)
+"O" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes,
+/turf/open/floor/iron/smooth,
+/area/template_noop)
+"V" = (
+/obj/machinery/light/directional/east,
+/obj/structure/sign/poster/official/moth_hardhat/directional/east,
+/obj/item/clothing/head/utility/hardhat{
+	pixel_y = 11;
+	pixel_x = 1
+	},
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/iron,
+/area/template_noop)
+"X" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/broken/directional/west,
+/turf/open/floor/iron/smooth,
+/area/template_noop)
+"Z" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/template_noop)
+
+(1,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+h
+g
+"}
+(2,1,1) = {"
+h
+t
+t
+t
+t
+t
+t
+t
+h
+"}
+(3,1,1) = {"
+h
+t
+b
+X
+r
+o
+l
+x
+h
+"}
+(4,1,1) = {"
+h
+t
+e
+O
+r
+r
+c
+J
+h
+"}
+(5,1,1) = {"
+h
+t
+s
+O
+z
+z
+L
+t
+d
+"}
+(6,1,1) = {"
+h
+t
+f
+B
+u
+K
+p
+t
+h
+"}
+(7,1,1) = {"
+h
+t
+j
+V
+w
+q
+H
+t
+h
+"}
+(8,1,1) = {"
+h
+t
+t
+t
+Z
+a
+t
+t
+h
+"}
+(9,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+h
+h
+"}

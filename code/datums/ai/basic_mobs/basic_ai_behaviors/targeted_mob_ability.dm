@@ -8,11 +8,13 @@
 	var/datum/action/cooldown/ability = get_ability_to_use(controller, ability_key)
 	var/mob/living/target = controller.blackboard[target_key]
 	if(QDELETED(ability) || QDELETED(target))
-		finish_action(controller, FALSE, ability_key, target_key)
-		return
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	var/mob/pawn = controller.pawn
-	var/result = ability.InterceptClickOn(pawn, null, target)
-	finish_action(controller, result, ability_key, target_key)
+	pawn.face_atom(target)
+	var/result = ability.Trigger(target = target)
+	if(result)
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 /datum/ai_behavior/targeted_mob_ability/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
 	. = ..()

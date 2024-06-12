@@ -1,5 +1,5 @@
 /atom/movable/screen/buildmode
-	icon = 'icons/misc/buildmode.dmi'
+	icon = 'icons/hud/buildmode.dmi'
 	var/datum/buildmode/bd
 	// If we don't do this, we get occluded by item action buttons
 	plane = ABOVE_HUD_PLANE

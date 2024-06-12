@@ -55,9 +55,7 @@
 /datum/traitor_objective/target_player/assault/ungenerate_objective()
 	UnregisterSignal(target, COMSIG_ATOM_WAS_ATTACKED)
 	UnregisterSignal(target, COMSIG_LIVING_DEATH)
-	UnregisterSignal(target, COMSIG_QDELETING)
-
-	target = null
+	set_target(null)
 
 /datum/traitor_objective/target_player/assault/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	var/list/already_targeting = list() //List of minds we're already targeting. The possible_duplicates is a list of objectives, so let's not mix things
@@ -102,7 +100,7 @@
 
 	var/datum/mind/target_mind = pick(possible_targets)
 
-	target = target_mind.current
+	set_target(target_mind.current)
 	replace_in_name("%TARGET%", target.real_name)
 	replace_in_name("%JOB TITLE%", target_mind.assigned_role.title)
 
@@ -110,7 +108,6 @@
 	replace_in_name("%COUNT%", attacks_required)
 
 	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death))
-	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_qdeleted))
 
 	return TRUE
 
@@ -120,11 +117,10 @@
 		buttons += add_ui_button("[attacks_required - attacks_inflicted]", "This tells you how many more times you have to attack the target player to succeed.", "hand-rock-o", "none")
 	return buttons
 
-/datum/traitor_objective/target_player/assault/proc/on_target_qdeleted()
-	SIGNAL_HANDLER
-
+/datum/traitor_objective/target_player/assault/target_deleted()
 	//don't take an objective target of someone who is already obliterated
 	fail_objective()
+	return ..()
 
 /datum/traitor_objective/target_player/assault/proc/on_target_death()
 	SIGNAL_HANDLER

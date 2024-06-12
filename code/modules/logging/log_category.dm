@@ -20,6 +20,9 @@
 	/// Whether or not this log should not be publically visible
 	var/secret = FALSE
 
+	/// The list of header information for this category. Used for log file re-initialization
+	var/list/category_header
+
 	/// Whether the readable version of the log message is formatted internally instead of by rustg
 	/// IF YOU CHANGE THIS VERIFY LOGS ARE STILL PARSED CORRECTLY
 	var/internal_formatting = FALSE
@@ -31,10 +34,6 @@
 	var/entry_count = 0
 
 GENERAL_PROTECT_DATUM(/datum/log_category)
-
-/// Backup log category to catch attempts to log to a category that doesn't exist
-/datum/log_category/backup_category_not_found
-	category = LOG_CATEGORY_NOT_FOUND
 
 /// Add an entry to this category. It is very important that any data you provide doesn't hold references to anything!
 /datum/log_category/proc/create_entry(message, list/data, list/semver_store)

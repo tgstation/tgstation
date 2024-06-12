@@ -4,7 +4,7 @@
 	action_cooldown = 0
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	/// How far do we try to run? Further makes for smoother running, but potentially weirder pathfinding
-	var/run_distance = 9
+	var/run_distance = DEFAULT_BASIC_FLEE_DISTANCE
 	/// Clear target if we finish the action unsuccessfully
 	var/clear_failed_targets = TRUE
 
@@ -12,24 +12,22 @@
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	if(QDELETED(target))
 		return FALSE
+	run_distance = controller.blackboard[BB_BASIC_MOB_FLEE_DISTANCE] || initial(run_distance)
 	if(!plot_path_away_from(controller, target))
 		return FALSE
 	return ..()
 
 /datum/ai_behavior/run_away_from_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hiding_location_key)
-	. = ..()
-	if (!controller.blackboard[BB_BASIC_MOB_FLEEING])
-		return
+	if (controller.blackboard[BB_BASIC_MOB_STOP_FLEEING])
+		return AI_BEHAVIOR_DELAY
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
-	var/escaped =  QDELETED(target) || !can_see(controller.pawn, target, run_distance) // If we can't see it we got away
-	if (escaped)
-		finish_action(controller, succeeded = TRUE, target_key = target_key, hiding_location_key = hiding_location_key)
-		return
+	if (QDELETED(target) || !can_see(controller.pawn, target, run_distance))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	if (get_dist(controller.pawn, controller.current_movement_target) > required_distance)
-		return
-	if(plot_path_away_from(controller, target))
-		return
-	finish_action(controller, succeeded = FALSE, target_key = target_key, hiding_location_key = hiding_location_key)
+		return AI_BEHAVIOR_DELAY // Still heading over
+	if (plot_path_away_from(controller, target))
+		return AI_BEHAVIOR_DELAY
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 /datum/ai_behavior/run_away_from_target/proc/plot_path_away_from(datum/ai_controller/controller, atom/target)
 	var/turf/target_destination = get_turf(controller.pawn)
@@ -55,7 +53,7 @@
 	var/list/airlocks = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock)
 	for(var/i in 1 to run_distance)
 		var/turf/test_destination = get_ranged_target_turf_direct(source, target, range = i, offset = angle)
-		if(test_destination.is_blocked_turf(exclude_mobs = !source.density, source_atom = source, ignore_atoms = airlocks))
+		if(test_destination.is_blocked_turf(source_atom = source, ignore_atoms = airlocks))
 			break
 		return_turf = test_destination
 	return return_turf
@@ -64,3 +62,15 @@
 	. = ..()
 	if (clear_failed_targets)
 		controller.clear_blackboard_key(target_key)
+
+/datum/ai_behavior/run_away_from_target/run_and_shoot
+	clear_failed_targets = FALSE
+
+/datum/ai_behavior/run_away_from_target/run_and_shoot/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hiding_location_key)
+	var/atom/target = controller.blackboard[target_key]
+	if(QDELETED(target))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	var/mob/living/living_pawn = controller.pawn
+	living_pawn.RangedAttack(target)
+	return ..()
+

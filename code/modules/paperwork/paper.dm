@@ -30,6 +30,7 @@
 	grind_results = list(/datum/reagent/cellulose = 3)
 	color = COLOR_WHITE
 	item_flags = SKIP_FANTASY_ON_SPAWN
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 
 	/// Lazylist of raw, unsanitised, unparsed text inputs that have been made to the paper.
 	var/list/datum/paper_input/raw_text_inputs
@@ -319,6 +320,7 @@
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
+	. += span_notice("Alt-click [src] to fold it into a paper plane.")
 	if(!in_range(user, src) && !isobserver(user))
 		. += span_warning("You're too far away to read it!")
 		return
@@ -332,7 +334,7 @@
 		return
 	. += span_warning("You cannot read it!")
 
-/obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
+/obj/item/paper/ui_status(mob/user, datum/ui_state/state)
 	// Are we on fire?  Hard to read if so
 	if(resistance_flags & ON_FIRE)
 		return UI_CLOSE
@@ -357,6 +359,31 @@
 	if(in_contents_of(/obj/machinery/door/airlock))
 		return TRUE
 	return ..()
+
+/obj/item/paper/click_alt(mob/living/user)
+	if(HAS_TRAIT(user, TRAIT_PAPER_MASTER))
+		make_plane(user, /obj/item/paperplane/syndicate)
+		return CLICK_ACTION_SUCCESS
+	make_plane(user, /obj/item/paperplane)
+	return CLICK_ACTION_SUCCESS
+
+
+
+/**
+ * Paper plane folding
+ * Makes a paperplane depending on args and returns it.
+ *
+ * Arguments:
+ * * mob/living/user - who's folding
+ * * plane_type - what it will be folded into (path)
+ */
+/obj/item/paper/proc/make_plane(mob/living/user, plane_type = /obj/item/paperplane)
+	balloon_alert(user, "folded into a plane")
+	user.temporarilyRemoveItemFromInventory(src)
+	var/obj/item/paperplane/new_plane = new plane_type(loc, src)
+	if(user.Adjacent(new_plane))
+		user.put_in_hands(new_plane)
+	return new_plane
 
 /obj/item/proc/burn_paper_product_attackby_check(obj/item/attacking_item, mob/living/user, bypass_clumsy = FALSE)
 	//can't be put on fire!
@@ -414,8 +441,8 @@
 	// Handle stamping items.
 	if(writing_stats["interaction_mode"] == MODE_STAMPING)
 		if(!user.can_read(src) || user.is_blind())
-			//The paper's stampable window area is assumed approx 400x500
-			add_stamp(writing_stats["stamp_class"], rand(0, 400), rand(0, 500), rand(0, 360), writing_stats["stamp_icon_state"])
+			//The paper's stampable window area is assumed approx 300x400
+			add_stamp(writing_stats["stamp_class"], rand(0, 300), rand(0, 400), rand(0, 360), writing_stats["stamp_icon_state"])
 			user.visible_message(span_notice("[user] blindly stamps [src] with \the [attacking_item]!"))
 			to_chat(user, span_notice("You stamp [src] with \the [attacking_item] the best you can!"))
 			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
@@ -427,6 +454,25 @@
 	ui_interact(user)
 	return ..()
 
+/// Secondary right click interaction to quickly stamp things
+/obj/item/paper/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	var/list/writing_stats = tool.get_writing_implement_details()
+
+	if(!length(writing_stats))
+		return NONE
+	if(writing_stats["interaction_mode"] != MODE_STAMPING)
+		return NONE
+	if(!user.can_read(src) || user.is_blind()) // Just leftclick instead
+		return NONE
+
+	add_stamp(writing_stats["stamp_class"], rand(1, 300), rand(1, 400), stamp_icon_state = writing_stats["stamp_icon_state"])
+	user.visible_message(
+		span_notice("[user] quickly stamps [src] with [tool] without looking."),
+		span_notice("You quickly stamp [src] with [tool] without looking."),
+	)
+	playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
+
+	return ITEM_INTERACT_BLOCKING // Stop the UI from opening.
 /**
  * Attempts to ui_interact the paper to the given user, with some sanity checking
  * to make sure the camera still exists via the weakref and that this paper is still

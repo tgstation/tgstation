@@ -60,6 +60,7 @@
 	spawn_amt_left--
 	if(spawn_amt_left <= 0)
 		qdel(src)
+		return PROCESS_KILL
 
 /obj/effect/rend/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/nullrod))
@@ -311,7 +312,7 @@
 
 //Provides a decent heal, need to pump every 6 seconds
 /obj/item/organ/internal/heart/cursed/wizard
-	pump_delay = 60
+	pump_delay = 6 SECONDS
 	heal_brute = 25
 	heal_burn = 25
 	heal_oxy = 25
@@ -361,7 +362,7 @@
 		qdel(src)
 		return
 	RegisterSignal(src, COMSIG_MOVABLE_CROSS_OVER, PROC_REF(check_teleport))
-	SSmove_manager.move_towards(src, get_turf(whistle.whistler))
+	GLOB.move_manager.move_towards(src, get_turf(whistle.whistler))
 
 /// Check if anything the tornado crosses is the creator.
 /obj/effect/temp_visual/teleporting_tornado/proc/check_teleport(datum/source, atom/movable/crossed)

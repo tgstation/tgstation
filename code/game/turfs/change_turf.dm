@@ -91,6 +91,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	var/list/old_baseturfs = baseturfs
 	var/old_type = type
+	var/datum/weakref/old_ref = weak_reference
+	weak_reference = null
 
 	var/list/post_change_callbacks = list()
 	SEND_SIGNAL(src, COMSIG_TURF_CHANGE, path, new_baseturfs, flags, post_change_callbacks)
@@ -136,6 +138,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	dynamic_lumcount = old_dynamic_lumcount
 
 	lattice_underneath = old_lattice_underneath
+
+	new_turf.weak_reference = old_ref
 
 	if(SSlighting.initialized)
 		// Space tiles should never have lighting objects
@@ -213,7 +217,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	else
 		if(excited || excited_group)
 			SSair.remove_from_active(src) //Clean up wall excitement, and refresh excited groups
-		if(ispath(path,/turf/closed) || ispath(path,/turf/cordon))
+		if(ispath(path, /turf/closed) || ispath(path, /turf/cordon))
 			flags |= CHANGETURF_RECALC_ADJACENT
 		return ..()
 

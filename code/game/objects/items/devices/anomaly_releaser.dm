@@ -2,7 +2,7 @@
 /obj/item/anomaly_releaser
 	name = "anomaly releaser"
 	desc = "Single-use injector that releases and stabilizes anomalies by injecting an unknown substance."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "anomaly_releaser"
 	inhand_icon_state = "stimpen"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -28,6 +28,9 @@
 	if(!do_after(user, 3 SECONDS, target))
 		return
 
+	if(used)
+		return
+
 	var/obj/item/assembly/signaler/anomaly/core = target
 
 	if(!core.anomaly_type)
@@ -35,6 +38,7 @@
 
 	var/obj/effect/anomaly/anomaly = new core.anomaly_type(get_turf(core))
 	anomaly.stabilize()
+	log_combat(user, anomaly, "released", object = src, addition = "in [get_area(target)].")
 
 	if(infinite)
 		return

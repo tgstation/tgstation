@@ -1,4 +1,6 @@
 #define BLOOD_DRIP_RATE_MOD 90 //Greater number means creating blood drips more often while bleeding
+// Conversion between internal drunk power and common blood alcohol content
+#define DRUNK_POWER_TO_BLOOD_ALCOHOL 0.003
 
 /****************************************************
 				BLOOD SYSTEM
@@ -6,37 +8,22 @@
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood(seconds_per_tick, times_fired)
-
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+	// Under these circumstances blood handling is not necessary
+	if(bodytemperature < BLOOD_STOP_TEMP || HAS_TRAIT(src, TRAIT_FAKEDEATH) || HAS_TRAIT(src, TRAIT_HUSK))
 		return
-
-	if(bodytemperature < BLOOD_STOP_TEMP || (HAS_TRAIT(src, TRAIT_HUSK))) //cold or husked people do not pump the blood.
+	// Run the signal, still allowing mobs with noblood to "handle blood" in their own way
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_HUMAN_ON_HANDLE_BLOOD, seconds_per_tick, times_fired)
+	if((sigreturn & HANDLE_BLOOD_HANDLED) || HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return
 
 	//Blood regeneration if there is some space
-	if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))
-		var/nutrition_ratio = 0
-		switch(nutrition)
-			if(0 to NUTRITION_LEVEL_STARVING)
-				nutrition_ratio = 0.2
-			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-				nutrition_ratio = 0.4
-			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-				nutrition_ratio = 0.6
-			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-				nutrition_ratio = 0.8
-			else
-				nutrition_ratio = 1
-		if(satiety > 80)
-			nutrition_ratio *= 1.25
-		adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * seconds_per_tick)
-		blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * seconds_per_tick), BLOOD_VOLUME_NORMAL)
-
-	// we call lose_blood() here rather than quirk/process() to make sure that the blood loss happens in sync with life()
-	if(HAS_TRAIT(src, TRAIT_BLOOD_DEFICIENCY))
-		var/datum/quirk/blooddeficiency/blooddeficiency = get_quirk(/datum/quirk/blooddeficiency)
-		if(!isnull(blooddeficiency))
-			blooddeficiency.lose_blood(seconds_per_tick)
+	if(!(sigreturn & HANDLE_BLOOD_NO_NUTRITION_DRAIN))
+		if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))
+			var/nutrition_ratio = round(nutrition / NUTRITION_LEVEL_WELL_FED, 0.2)
+			if(satiety > 80)
+				nutrition_ratio *= 1.25
+			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * seconds_per_tick)
+			blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * seconds_per_tick), BLOOD_VOLUME_NORMAL)
 
 	// Some effects are halved mid-combat. Not a reagent count, just a modifier
 	var/determined_mod = reagents.has_reagent(/datum/reagent/determination) ? 0.5 : 0
@@ -49,6 +36,10 @@
 				to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
 				investigate_log("has been gibbed by having too much blood.", INVESTIGATE_DEATHS)
 				inflate_gib()
+			// Way too much blood!
+			if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
+				if(SPT_PROB(5, seconds_per_tick))
+					to_chat(src, span_warning("You feel your skin swelling."))
 		// Too much blood
 		if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
 			if(SPT_PROB(5, seconds_per_tick))
@@ -137,7 +128,7 @@
 
 	//Blood loss still happens in locker, floor stays clean
 	if(isturf(loc) && prob(sqrt(amt)*BLOOD_DRIP_RATE_MOD))
-		add_splatter_floor(loc, (amt >= 10))
+		add_splatter_floor(loc, (amt <= 10))
 
 /mob/living/carbon/human/bleed(amt)
 	amt *= physiology.bleed_mod
@@ -326,7 +317,7 @@
 		return /datum/reagent/blood
 
 /mob/living/carbon/human/get_blood_id()
-	if(HAS_TRAIT(src, TRAIT_HUSK))
+	if(HAS_TRAIT(src, TRAIT_HUSK) || !dna)
 		return
 	if(check_holidays(APRIL_FOOLS) && is_clown_job(mind?.assigned_role))
 		return /datum/reagent/colorful_reagent
@@ -416,4 +407,13 @@
 	if(!B)
 		B = new(T)
 
+/mob/living/proc/get_blood_alcohol_content()
+	var/blood_alcohol_content = 0
+	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
+	if(!isnull(inebriation))
+		blood_alcohol_content = round(inebriation.drunk_value * DRUNK_POWER_TO_BLOOD_ALCOHOL, 0.01)
+
+	return blood_alcohol_content
+
 #undef BLOOD_DRIP_RATE_MOD
+#undef DRUNK_POWER_TO_BLOOD_ALCOHOL

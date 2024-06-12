@@ -129,7 +129,9 @@
  * * target - The atom that is being cleaned
  * * user - The mob that is using the soap to clean.
  */
-/obj/item/soap/proc/decreaseUses(datum/source, atom/target, mob/living/user)
+/obj/item/soap/proc/decreaseUses(datum/source, atom/target, mob/living/user, clean_succeeded)
+	if(!clean_succeeded)
+		return
 	var/skillcheck = 1
 	if(user?.mind)
 		skillcheck = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
@@ -230,6 +232,22 @@
 		if(M.can_hear())
 			M.emote("flip")
 	COOLDOWN_START(src, golden_horn_cooldown, 1 SECONDS)
+
+/obj/item/bikehorn/rubberducky/plasticducky
+	name = "plastic ducky"
+	desc = "It's a cheap plastic knockoff of a loveable bathtime toy."
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
+
+/obj/item/bikehorn/rubberducky
+	name = "rubber ducky"
+	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~" //thanks doohl
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "rubberducky"
+	inhand_icon_state = "rubberducky"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	worn_icon_state = "duck"
+	sound_file = 'sound/effects/quack.ogg'
 
 //canned laughter
 /obj/item/reagent_containers/cup/soda_cans/canned_laughter

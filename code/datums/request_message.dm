@@ -32,7 +32,7 @@
 	if(data_appended_list && data_appended_list.len)
 		appended_list = data_appended_list
 
-/// Retrieves the alert spoken/blared by the requests console that recieves this message
+/// Retrieves the alert spoken/blared by the requests console that receives this message
 /datum/request_message/proc/get_alert()
 	var/authenticated = ""
 	if(message_verified_by)

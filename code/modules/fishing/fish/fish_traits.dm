@@ -12,6 +12,8 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	var/diff_traits_inheritability = 50
 	/// fishes of types within this list are granted to have this trait, no matter the probability
 	var/list/guaranteed_inheritance_types
+	/// Depending on the value, fish with trait will be reported as more or less difficult in the catalog.
+	var/added_difficulty = 0
 
 /// Difficulty modifier from this mod, needs to return a list with two values
 /datum/fish_trait/proc/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
@@ -68,7 +70,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	if(!rod.bait)
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 		return
-	if(HAS_TRAIT(rod.bait, OMNI_BAIT_TRAIT))
+	if(HAS_TRAIT(rod.bait, TRAIT_OMNI_BAIT))
 		return
 	if(HAS_TRAIT(rod.bait, TRAIT_GOOD_QUALITY_BAIT) || HAS_TRAIT(rod.bait, TRAIT_GREAT_QUALITY_BAIT))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
@@ -113,7 +115,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	if(!rod.bait)
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 		return
-	if(HAS_TRAIT(rod.bait, OMNI_BAIT_TRAIT))
+	if(HAS_TRAIT(rod.bait, TRAIT_OMNI_BAIT))
 		return
 	if(!istype(rod.bait, /obj/item/food))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
@@ -132,7 +134,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	if(!rod.bait)
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 		return
-	if(HAS_TRAIT(rod.bait, OMNI_BAIT_TRAIT))
+	if(HAS_TRAIT(rod.bait, TRAIT_OMNI_BAIT))
 		return
 	if(!istype(rod.bait, /obj/item/food/grown))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
@@ -161,7 +163,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/necrophage
 	name = "Necrophage"
-	catalog_description = "This fish will eat the carcasses of dead fishes when hungry."
+	catalog_description = "This fish will eat carcasses of dead fish when hungry."
 	incompatible_traits = list(/datum/fish_trait/vegan)
 
 /datum/fish_trait/necrophage/apply_to_fish(obj/item/fish/fish)
@@ -169,7 +171,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/necrophage/proc/eat_dead_fishes(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(world.time - source.last_feeding < source.feeding_frequency || !isaquarium(source.loc))
+	if(!source.is_hungry() || !isaquarium(source.loc))
 		return
 	for(var/obj/item/fish/victim in source.loc)
 		if(victim.status != FISH_DEAD || victim == source || HAS_TRAIT(victim, TRAIT_YUCKY_FISH))
@@ -211,9 +213,10 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 /datum/fish_trait/revival/proc/check_status(obj/item/fish/source)
 	SIGNAL_HANDLER
 	if(source.status == FISH_DEAD)
-		addtimer(CALLBACK(src, PROC_REF(revive), source), rand(1 MINUTES, 2 MINUTES))
+		addtimer(CALLBACK(src, PROC_REF(revive), WEAKREF(source)), rand(1 MINUTES, 2 MINUTES))
 
-/datum/fish_trait/revival/proc/revive(obj/item/fish/source)
+/datum/fish_trait/revival/proc/revive(datum/weakref/fish_ref)
+	var/obj/item/fish/source = fish_ref.resolve()
 	if(QDELETED(source) || source.status != FISH_DEAD)
 		return
 	source.set_status(FISH_ALIVE)
@@ -233,7 +236,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/predator/proc/eat_fishes(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(world.time - source.last_feeding < source.feeding_frequency || !isaquarium(source.loc))
+	if(!source.is_hungry() || !isaquarium(source.loc))
 		return
 	var/obj/structure/aquarium/aquarium = source.loc
 	for(var/obj/item/fish/victim in aquarium.get_fishes(TRUE, source))
@@ -310,7 +313,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	name = "Aggressive"
 	inheritability = 80
 	diff_traits_inheritability = 40
-	catalog_description = "This fish is agressively territorial, and may attack fish that come close to it."
+	catalog_description = "This fish is aggressively territorial, and may attack fish that come close to it."
 
 /datum/fish_trait/aggressive/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(try_attack_fish))
@@ -334,6 +337,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	diff_traits_inheritability = 45
 	guaranteed_inheritance_types = list(/obj/item/fish/clownfish/lube)
 	catalog_description = "This fish exudes a viscous, slippery lubrificant. It's reccomended not to step on it."
+	added_difficulty = 5
 
 /datum/fish_trait/lubed/apply_to_fish(obj/item/fish/fish)
 	fish.AddComponent(/datum/component/slippery, 8 SECONDS, SLIDE|GALOSHES_DONT_HELP)
@@ -352,3 +356,76 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	ADD_TRAIT(fish, TRAIT_FISH_AMPHIBIOUS, FISH_TRAIT_DATUM)
 	if(fish.required_fluid_type == AQUARIUM_FLUID_AIR)
 		fish.required_fluid_type = AQUARIUM_FLUID_FRESHWATER
+
+/datum/fish_trait/mixotroph
+	name = "Mixotroph"
+	inheritability = 75
+	diff_traits_inheritability = 25
+	catalog_description = "This fish is capable of substaining itself by producing its own sources of energy (food)."
+	incompatible_traits = list(/datum/fish_trait/predator, /datum/fish_trait/necrophage)
+
+/datum/fish_trait/mixotroph/apply_to_fish(obj/item/fish/fish)
+	ADD_TRAIT(fish, TRAIT_FISH_NO_HUNGER, FISH_TRAIT_DATUM)
+
+/datum/fish_trait/antigrav
+	name = "Anti-Gravity"
+	inheritability = 75
+	diff_traits_inheritability = 25
+	catalog_description = "This fish will invert the gravity of the bait at random. May fall upward outside after being caught."
+	added_difficulty = 15
+
+/datum/fish_trait/antigrav/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/minigame)
+	minigame.special_effects |= FISHING_MINIGAME_RULE_ANTIGRAV
+
+/datum/fish_trait/antigrav/apply_to_fish(obj/item/fish/fish)
+	fish.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
+
+///Anxiety means the fish will die if in a location with more than 3 fish (including itself)
+///This is just barely enough to crossbreed out of anxiety, but it severely limits the potential of
+/datum/fish_trait/anxiety
+	name = "Anxiety"
+	inheritability = 100
+	diff_traits_inheritability = 70
+	catalog_description = "This fish tends to die of stress when forced to be around too many other fish."
+
+/datum/fish_trait/anxiety/apply_to_fish(obj/item/fish/fish)
+	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(on_fish_life))
+
+///signal sent when the anxiety fish is fed, killing it if sharing contents with too many fish.
+/datum/fish_trait/anxiety/proc/on_fish_life(obj/item/fish/fish, seconds_per_tick)
+	SIGNAL_HANDLER
+	var/fish_tolerance = 3
+	if(!fish.loc || fish.status == FISH_DEAD)
+		return
+	for(var/obj/item/fish/other_fish in fish.loc.contents)
+		if(fish_tolerance <= 0)
+			fish.loc.visible_message(span_warning("[fish] seems to freak out for a moment, then it stops moving..."))
+			fish.set_status(FISH_DEAD)
+			return
+		fish_tolerance -= 1
+
+/datum/fish_trait/electrogenesis
+	name = "Electrogenesis"
+	inheritability = 60
+	diff_traits_inheritability = 30
+	catalog_description = "This fish is electroreceptive, and will generate electric fields. Can be harnessed inside a bioelectric generator."
+
+/datum/fish_trait/electrogenesis/apply_to_fish(obj/item/fish/fish)
+	ADD_TRAIT(fish, TRAIT_FISH_ELECTROGENESIS, FISH_TRAIT_DATUM)
+	RegisterSignal(fish, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
+
+/datum/fish_trait/electrogenesis/proc/on_item_attack(obj/item/fish/fish, mob/living/target, mob/living/user)
+	SIGNAL_HANDLER
+
+	if(fish.status == FISH_ALIVE)
+		fish.force = 16
+		fish.damtype = BURN
+		fish.attack_verb_continuous = list("shocks", "zaps")
+		fish.attack_verb_simple = list("shock", "zap")
+		fish.hitsound = 'sound/effects/sparks4.ogg'
+	else
+		fish.force = fish::force
+		fish.damtype = fish::damtype
+		fish.attack_verb_continuous = fish::attack_verb_continuous
+		fish.attack_verb_simple = fish::attack_verb_simple
+		fish.hitsound = fish::hitsound

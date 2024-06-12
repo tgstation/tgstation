@@ -2,7 +2,7 @@
 /obj/item/fish_feed
 	name = "fish feed can"
 	desc = "A refillable can that dispenses nutritious fish feed."
-	icon = 'icons/obj/aquarium.dmi'
+	icon = 'icons/obj/aquarium/supplies.dmi'
 	icon_state = "fish_feed"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -35,6 +35,7 @@
 	var/fish_type = get_fish_type()
 	if(fish_type)
 		var/obj/item/fish/spawned_fish = new fish_type(null)
+		ADD_TRAIT(spawned_fish, TRAIT_FISH_FROM_CASE, TRAIT_GENERIC)
 		spawned_fish.forceMove(src) // trigger storage.handle_entered
 
 /obj/item/storage/fish_case/proc/get_fish_type()
@@ -57,7 +58,7 @@
 	name = "ominous fish case"
 
 /obj/item/storage/fish_case/syndicate/get_fish_type()
-	return pick(/obj/item/fish/donkfish, /obj/item/fish/emulsijack)
+	return pick(/obj/item/fish/donkfish, /obj/item/fish/emulsijack, /obj/item/fish/jumpercable)
 
 /obj/item/storage/fish_case/tiziran
 	name = "imported fish case"
@@ -75,6 +76,7 @@
 		/obj/item/fish/boned = 1,
 		/obj/item/fish/clownfish/lube = 3,
 		/obj/item/fish/emulsijack = 1,
+		/obj/item/fish/jumpercable = 1,
 		/obj/item/fish/sludgefish/purple = 1,
 		/obj/item/fish/pufferfish = 3,
 		/obj/item/fish/slimefish = 2,
@@ -84,7 +86,7 @@
 	)
 	return pick_weight(weighted_list)
 
-/obj/item/storage/fish_cas/blackmarket/Initialize(mapload)
+/obj/item/storage/fish_case/blackmarket/Initialize(mapload)
 	. = ..()
 	for(var/obj/item/fish/fish as anything in contents)
 		fish.set_status(FISH_DEAD)
@@ -92,25 +94,25 @@
 /obj/item/aquarium_kit
 	name = "DIY Aquarium Construction Kit"
 	desc = "Everything you need to build your own aquarium. Raw materials sold separately."
-	icon = 'icons/obj/aquarium.dmi'
+	icon = 'icons/obj/aquarium/supplies.dmi'
 	icon_state = "construction_kit"
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/aquarium_kit/attack_self(mob/user)
+/obj/item/aquarium_kit/Initialize(mapload)
 	. = ..()
-	to_chat(user,span_notice("There's instruction and tools necessary to build aquarium inside. All you need is to start crafting."))
+	AddComponent(/datum/component/slapcrafting, /datum/crafting_recipe/aquarium)
 
 /obj/item/aquarium_prop
 	name = "generic aquarium prop"
 	desc = "very boring"
-	icon = 'icons/obj/aquarium.dmi'
+	icon = 'icons/obj/aquarium/supplies.dmi'
 
 	w_class = WEIGHT_CLASS_TINY
 	var/layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
 
 /obj/item/aquarium_prop/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/aquarium_content)
+	AddComponent(/datum/component/aquarium_content, icon)
 
 /obj/item/aquarium_prop/rocks
 	name = "rocks"
@@ -126,10 +128,10 @@
 	icon_state = "seaweeds_back"
 	layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
 
-/obj/item/aquarium_prop/rockfloor
-	name = "rock floor"
-	icon_state = "rockfloor"
-	layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
+/obj/item/aquarium_prop/sand
+	name = "aquarium sand"
+	icon_state = "sand"
+	layer_mode = AQUARIUM_LAYER_MODE_BEHIND_GLASS
 
 /obj/item/aquarium_prop/treasure
 	name = "tiny treasure chest"

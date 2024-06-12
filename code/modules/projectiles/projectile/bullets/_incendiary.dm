@@ -5,7 +5,7 @@
 	/// If TRUE, leaves a trail of hotspots as it flies, very very chaotic
 	var/leaves_fire_trail = TRUE
 
-/obj/projectile/bullet/incendiary/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/incendiary/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
@@ -41,7 +41,7 @@
 	wound_falloff_tile = -4
 	fire_stacks = 3
 
-/obj/projectile/bullet/incendiary/fire/on_hit(atom/target, blocked)
+/obj/projectile/bullet/incendiary/fire/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	var/turf/location = get_turf(target)
 	if(isopenturf(location))

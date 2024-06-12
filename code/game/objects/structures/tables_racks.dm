@@ -29,8 +29,6 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_TABLES
-	///TRUE if the table can be climbed on and have living mobs placed on it normally, FALSE otherwise
-	var/climbable = TRUE
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
 	var/glass_shard_type = /obj/item/shard
@@ -46,17 +44,21 @@
 		buildstack = _buildstack
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 
-	if (climbable)
-		AddElement(/datum/element/climbable)
+	make_climbable()
 
 	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(table_carbon),
+		COMSIG_LIVING_DISARM_COLLIDE = PROC_REF(table_living),
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
 	var/static/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY, TRAIT_IMMERSE_STOPPED)
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 	register_context()
+
+///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
+/obj/structure/table/proc/make_climbable()
+	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
@@ -71,7 +73,7 @@
 			context[SCREENTIP_CONTEXT_RMB] = "Deal card faceup"
 			. = CONTEXTUAL_SCREENTIP_SET
 
-	if(!(flags_1 & NODECONSTRUCT_1) && deconstruction_ready)
+	if(deconstruction_ready)
 		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_RMB] = "Disassemble"
 			. = CONTEXTUAL_SCREENTIP_SET
@@ -149,10 +151,12 @@
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return TRUE
 
-/obj/structure/table/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
-	. = !density
-	if(caller)
-		. = . || (caller.pass_flags & PASSTABLE)
+/obj/structure/table/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
+	if(!density)
+		return TRUE
+	if(pass_info.pass_flags & PASSTABLE)
+		return TRUE
+	return FALSE
 
 /obj/structure/table/proc/tableplace(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
@@ -177,7 +181,7 @@
 	pushed_mob.Knockdown(30)
 	pushed_mob.apply_damage(10, BRUTE)
 	pushed_mob.apply_damage(40, STAMINA)
-	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
+	if(user.mind?.martial_art?.smashes_tables && user.mind?.martial_art.can_use(user))
 		deconstruct(FALSE)
 	playsound(pushed_mob, 'sound/effects/tableslam.ogg', 90, TRUE)
 	pushed_mob.visible_message(span_danger("[user] slams [pushed_mob] onto \the [src]!"), \
@@ -194,7 +198,7 @@
 	banged_limb?.receive_damage(30, wound_bonus = extra_wound)
 	pushed_mob.apply_damage(60, STAMINA)
 	take_damage(50)
-	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
+	if(user.mind?.martial_art?.smashes_tables && user.mind?.martial_art.can_use(user))
 		deconstruct(FALSE)
 	playsound(pushed_mob, 'sound/effects/bang.ogg', 90, TRUE)
 	pushed_mob.visible_message(span_danger("[user] smashes [pushed_mob]'s [banged_limb.plaintext_zone] against \the [src]!"),
@@ -203,21 +207,22 @@
 	pushed_mob.add_mood_event("table", /datum/mood_event/table_limbsmash, banged_limb)
 
 /obj/structure/table/screwdriver_act_secondary(mob/living/user, obj/item/tool)
-	if(flags_1 & NODECONSTRUCT_1 || !deconstruction_ready)
+	if(!deconstruction_ready)
 		return FALSE
 	to_chat(user, span_notice("You start disassembling [src]..."))
 	if(tool.use_tool(src, user, 2 SECONDS, volume=50))
 		deconstruct(TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/wrench_act_secondary(mob/living/user, obj/item/tool)
-	if(flags_1 & NODECONSTRUCT_1 || !deconstruction_ready)
+	if(!deconstruction_ready)
 		return FALSE
 	to_chat(user, span_notice("You start deconstructing [src]..."))
 	if(tool.use_tool(src, user, 4 SECONDS, volume=50))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		deconstruct(TRUE, 1)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+		frame = null
+		deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/attackby(obj/item/I, mob/living/user, params)
 	var/list/modifiers = params2list(params)
@@ -290,49 +295,44 @@
 	..()
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/obj/structure/table/proc/AfterPutItemOnTable(obj/item/I, mob/living/user)
+/obj/structure/table/proc/AfterPutItemOnTable(obj/item/thing, mob/living/user)
 	return
 
-/obj/structure/table/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		var/turf/T = get_turf(src)
-		if(buildstack)
-			new buildstack(T, buildstackamount)
-		else
-			for(var/i in custom_materials)
-				var/datum/material/M = i
-				new M.sheet_type(T, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
-		if(!wrench_disassembly)
-			new frame(T)
-		else
-			new framestack(T, framestackamount)
-	qdel(src)
+/obj/structure/table/atom_deconstruct(disassembled = TRUE)
+	var/turf/target_turf = get_turf(src)
+	if(buildstack)
+		new buildstack(target_turf, buildstackamount)
+	else
+		for(var/datum/material/mat in custom_materials)
+			new mat.sheet_type(target_turf, FLOOR(custom_materials[mat] / SHEET_MATERIAL_AMOUNT, 1))
+
+	if(frame)
+		new frame(target_turf)
+	else
+		new framestack(get_turf(src), framestackamount)
 
 /obj/structure/table/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	switch(the_rcd.mode)
-		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 2.4 SECONDS, "cost" = 16)
+	if(the_rcd.mode == RCD_DECONSTRUCT)
+		return list("delay" = 2.4 SECONDS, "cost" = 16)
 	return FALSE
 
-/obj/structure/table/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	switch(passed_mode)
-		if(RCD_DECONSTRUCT)
-			to_chat(user, span_notice("You deconstruct the table."))
-			qdel(src)
-			return TRUE
+/obj/structure/table/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_DECONSTRUCT)
+		qdel(src)
+		return TRUE
 	return FALSE
 
-/obj/structure/table/proc/table_carbon(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
+/obj/structure/table/proc/table_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
 	SIGNAL_HANDLER
-	if(!shove_blocked)
+	if((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED))
 		return
 	target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
 	target.visible_message(span_danger("[shover.name] shoves [target.name] onto \the [src]!"),
-		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
 	to_chat(shover, span_danger("You shove [target.name] onto \the [src]!"))
 	target.throw_at(src, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
-	log_combat(shover, target, "shoved", "onto [src] (table)")
-	return COMSIG_CARBON_SHOVE_HANDLED
+	log_combat(shover, target, "shoved", "onto [src] (table)[weapon ? " with [weapon]" : ""]")
+	return COMSIG_LIVING_SHOVE_HANDLED
 
 /obj/structure/table/greyscale
 	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
@@ -359,34 +359,52 @@
 	canSmoothWith = null
 	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
 	icon_state = "rollingtable"
-	var/list/attached_items = list()
+	/// Lazylist of the items that we have on our surface.
+	var/list/attached_items = null
 
 /obj/structure/table/rolling/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noisy_movement)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_our_moved))
 
-/obj/structure/table/rolling/AfterPutItemOnTable(obj/item/I, mob/living/user)
+/obj/structure/table/rolling/Destroy()
+	for(var/item in attached_items)
+		clear_item_reference(item)
+	LAZYNULL(attached_items) // safety
+	return ..()
+
+/obj/structure/table/rolling/AfterPutItemOnTable(obj/item/thing, mob/living/user)
 	. = ..()
-	attached_items += I
-	RegisterSignal(I, COMSIG_MOVABLE_MOVED, PROC_REF(RemoveItemFromTable)) //Listen for the pickup event, unregister on pick-up so we aren't moved
+	LAZYADD(attached_items, thing)
+	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(on_item_moved))
 
-/obj/structure/table/rolling/proc/RemoveItemFromTable(datum/source, newloc, dir)
+/// Handles cases where any attached item moves, with or without the table. If we get picked up or anything, unregister the signal so we don't move with the table after removal from the surface.
+/obj/structure/table/rolling/proc/on_item_moved(datum/source, atom/old_loc, dir, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 
-	if(newloc != loc) //Did we not move with the table? because that shit's ok
-		return FALSE
-	attached_items -= source
-	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
-
-/obj/structure/table/rolling/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	if(!loc)
+	var/atom/thing = source // let it runtime if it doesn't work because that is mad wack
+	if(thing.loc == loc) // if we move with the table, move on
 		return
+
+	clear_item_reference(thing)
+
+/// Handles movement of the table itself, as well as moving along any atoms we have on our surface.
+/obj/structure/table/rolling/proc/on_our_moved(datum/source, atom/old_loc, dir, forced, list/old_locs, momentum_change)
+	SIGNAL_HANDLER
+	if(isnull(loc)) // aw hell naw
+		return
+
 	for(var/mob/living/living_mob in old_loc.contents)//Kidnap everyone on top
 		living_mob.forceMove(loc)
+
 	for(var/atom/movable/attached_movable as anything in attached_items)
-		if(!attached_movable.Move(loc))
-			RemoveItemFromTable(attached_movable, attached_movable.loc)
+		if(!attached_movable.Move(loc)) // weird
+			clear_item_reference(attached_movable) // we check again in on_item_moved() just in case something's wacky tobaccy
+
+/// Removes the signal and the entrance from the list.
+/obj/structure/table/rolling/proc/clear_item_reference(obj/item/thing)
+	UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)
+	LAZYREMOVE(attached_items, thing)
 
 /*
  * Glass tables
@@ -418,13 +436,12 @@
 
 /obj/structure/table/glass/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	if(flags_1 & NODECONSTRUCT_1)
-		return
+
 	if(!isliving(AM))
 		return
 	// Don't break if they're just flying past
 	if(AM.throwing)
-		addtimer(CALLBACK(src, PROC_REF(throw_check), AM), 5)
+		addtimer(CALLBACK(src, PROC_REF(throw_check), AM), 0.5 SECONDS)
 	else
 		check_break(AM)
 
@@ -433,7 +450,7 @@
 		check_break(M)
 
 /obj/structure/table/glass/proc/check_break(mob/living/M)
-	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL && !(M.movement_type & FLYING))
+	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL && !(M.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
 		table_shatter(M)
 
 /obj/structure/table/glass/proc/table_shatter(mob/living/victim)
@@ -450,19 +467,16 @@
 	victim.Paralyze(100)
 	qdel(src)
 
-/obj/structure/table/glass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(disassembled)
-			..()
-			return
-		else
-			var/turf/T = get_turf(src)
-			playsound(T, SFX_SHATTER, 50, TRUE)
+/obj/structure/table/glass/atom_deconstruct(disassembled = TRUE)
+	if(disassembled)
+		..()
+		return
+	else
+		var/turf/T = get_turf(src)
+		playsound(T, SFX_SHATTER, 50, TRUE)
 
-			new frame(loc)
-			new glass_shard_type(loc)
-
-	qdel(src)
+		new frame(loc)
+		new glass_shard_type(loc)
 
 /obj/structure/table/glass/narsie_act()
 	color = NARSIE_WINDOW_COLOUR
@@ -713,9 +727,8 @@
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
-	can_buckle = 1
+	can_buckle = TRUE
 	buckle_lying = 90
-	climbable = FALSE
 	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
 	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/computer = null
@@ -739,10 +752,23 @@
 	UnregisterSignal(loc, COMSIG_ATOM_EXITED)
 	return ..()
 
+/obj/structure/table/optable/make_climbable()
+	AddElement(/datum/element/elevation, pixel_shift = 12)
+
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
 	pushed_mob.set_resting(TRUE, TRUE)
 	visible_message(span_notice("[user] lays [pushed_mob] on [src]."))
+
+///Align the mob with the table when buckled.
+/obj/structure/table/optable/post_buckle_mob(mob/living/buckled)
+	. = ..()
+	buckled.pixel_y += 6
+
+///Disalign the mob with the table when unbuckled.
+/obj/structure/table/optable/post_unbuckle_mob(mob/living/buckled)
+	. = ..()
+	buckled.pixel_y -= 6
 
 /// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
 /obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/carbon/potential_patient)
@@ -751,7 +777,6 @@
 		return
 	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(recheck_patient))
 	recheck_patient(potential_patient) // In case the mob is already lying down before they entered.
-	potential_patient.pixel_y = potential_patient.base_pixel_y
 
 /// Unmark the potential patient.
 /obj/structure/table/optable/proc/unmark_patient(datum/source, mob/living/carbon/potential_patient)
@@ -761,7 +786,6 @@
 	if(potential_patient == patient)
 		recheck_patient(patient) // Can just set patient to null, but doing the recheck lets us find a replacement patient.
 	UnregisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION)
-	potential_patient.pixel_y = potential_patient.base_pixel_y + potential_patient.body_position_pixel_y_offset
 
 /// Someone on our tile just lied down, got up, moved in, or moved out.
 /// potential_patient is the mob that had one of those four things change.
@@ -796,6 +820,28 @@
 	pass_flags_self = LETPASSTHROW //You can throw objects over this, despite it's density.
 	max_integrity = 20
 
+/obj/structure/rack/skeletal
+	name = "skeletal minibar"
+	desc = "Rattle me boozes!"
+	icon = 'icons/obj/fluff/general.dmi'
+	icon_state = "minibar"
+
+/obj/structure/rack/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/elevation, pixel_shift = 12)
+	register_context()
+
+/obj/structure/rack/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
 /obj/structure/rack/examine(mob/user)
 	. = ..()
 	. += span_notice("It's held together by a couple of <b>bolts</b>.")
@@ -807,25 +853,17 @@
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
 		return TRUE
 
-/obj/structure/rack/MouseDrop_T(obj/O, mob/user)
-	. = ..()
-	if ((!( isitem(O) ) || user.get_active_held_item() != O))
-		return
-	if(!user.dropItemToGround(O))
-		return
-	if(O.loc != src.loc)
-		step(O, get_dir(O, src))
+/obj/structure/rack/wrench_act_secondary(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src)
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/rack/attackby(obj/item/W, mob/living/user, params)
-	var/list/modifiers = params2list(params)
-	if (W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1) && LAZYACCESS(modifiers, RIGHT_CLICK))
-		W.play_tool_sound(src)
-		deconstruct(TRUE)
-		return
-	if(user.combat_mode)
-		return ..()
-	if(user.transferItemToLoc(W, drop_location()))
-		return 1
+/obj/structure/rack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if((tool.item_flags & ABSTRACT) || user.combat_mode)
+		return NONE
+	if(user.transferItemToLoc(tool, drop_location(), silent = FALSE))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/structure/rack/attack_paw(mob/living/user, list/modifiers)
 	attack_hand(user, modifiers)
@@ -834,7 +872,7 @@
 	. = ..()
 	if(.)
 		return
-	if(user.body_position == LYING_DOWN || user.usable_legs < 2)
+	if(!user.combat_mode || user.body_position == LYING_DOWN || user.usable_legs < 2)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
@@ -855,12 +893,10 @@
  * Rack destruction
  */
 
-/obj/structure/rack/deconstruct(disassembled = TRUE)
-	if(!(flags_1&NODECONSTRUCT_1))
-		set_density(FALSE)
-		var/obj/item/rack_parts/newparts = new(loc)
-		transfer_fingerprints_to(newparts)
-	qdel(src)
+/obj/structure/rack/atom_deconstruct(disassembled = TRUE)
+	set_density(FALSE)
+	var/obj/item/rack_parts/newparts = new(loc)
+	transfer_fingerprints_to(newparts)
 
 
 /*
@@ -873,23 +909,42 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "rack_parts"
 	inhand_icon_state = "rack_parts"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	var/building = FALSE
 
-/obj/item/rack_parts/attackby(obj/item/W, mob/user, params)
-	if (W.tool_behaviour == TOOL_WRENCH)
-		new /obj/item/stack/sheet/iron(user.loc)
-		qdel(src)
-	else
-		. = ..()
+/obj/item/rack_parts/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/rack_parts/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item == src)
+		context[SCREENTIP_CONTEXT_LMB] = "Construct Rack"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
+/obj/item/rack_parts/wrench_act(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src)
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/rack_parts/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/iron(drop_location())
 
 /obj/item/rack_parts/attack_self(mob/user)
 	if(building)
 		return
 	building = TRUE
 	to_chat(user, span_notice("You start constructing a rack..."))
-	if(do_after(user, 50, target = user, progress=TRUE))
+	if(do_after(user, 5 SECONDS, target = user, progress=TRUE))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/obj/structure/rack/R = new /obj/structure/rack(get_turf(src))

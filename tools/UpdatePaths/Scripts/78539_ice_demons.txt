@@ -1,0 +1,1 @@
+/mob/living/simple_animal/hostile/asteroid/ice_demon : /mob/living/basic/mining/ice_demon{@OLD}

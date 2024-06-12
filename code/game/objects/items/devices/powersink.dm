@@ -11,13 +11,13 @@
 /obj/item/powersink
 	name = "power sink"
 	desc = "A power sink which drains energy from electrical systems and converts it to heat. Ensure short workloads and ample time to cool down if used in high energy systems."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "powersink0"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = NO_PIXEL_RANDOM_DROP
 	throwforce = 5
 	throw_speed = 1
@@ -124,7 +124,11 @@
 				span_hear("You hear a click."))
 			message_admins("Power sink activated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(src)]")
 			user.log_message("activated a powersink", LOG_GAME)
-			notify_ghosts("[user] has activated a power sink!", source = src, header = "Shocking News!")
+			notify_ghosts(
+				"[user] has activated a power sink!",
+				source = src,
+				header = "Shocking News!",
+			)
 			set_mode(OPERATING)
 
 		if(OPERATING)
@@ -154,7 +158,7 @@
 
 /// Drains power from the connected powernet, if any.
 /obj/item/powersink/proc/drain_power()
-	var/datum/powernet/PN = attached.powernet
+	var/datum/powernet/powernet = attached.powernet
 	var/drained = 0
 	set_light(5)
 
@@ -163,14 +167,11 @@
 	attached.add_delayedload(drained)
 
 	// If tried to drain more than available on powernet, now look for APCs and drain their cells
-	for(var/obj/machinery/power/terminal/T in PN.nodes)
-		if(istype(T.master, /obj/machinery/power/apc))
-			var/obj/machinery/power/apc/A = T.master
-			if(A.operating && A.cell)
-				A.cell.charge = max(0, A.cell.charge - 50)
-				drained += 50
-				if(A.charging == 2) // If the cell was full
-					A.charging = 1 // It's no longer full
+	for(var/obj/machinery/power/terminal/terminal in powernet.nodes)
+		if(istype(terminal.master, /obj/machinery/power/apc))
+			var/obj/machinery/power/apc/apc = terminal.master
+			if(apc.operating && apc.cell)
+				drained += 0.001 * apc.cell.use(0.05 * STANDARD_CELL_CHARGE, force = TRUE)
 	internal_heat += drained
 
 /obj/item/powersink/process()
@@ -188,7 +189,11 @@
 		if (!warning_given)
 			warning_given = TRUE
 			message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) has reached [ALERT]% of max heat. Explosion imminent.")
-			notify_ghosts("[src] is about to reach critical heat capacity!", source = src, header = "Power Sunk")
+			notify_ghosts(
+				"[src] is about to reach critical heat capacity!",
+				source = src,
+				header = "Power Sunk",
+			)
 		playsound(src, 'sound/effects/screech.ogg', 100, TRUE, TRUE)
 
 	if(internal_heat >= max_heat)

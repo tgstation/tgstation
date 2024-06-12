@@ -17,8 +17,10 @@
 		/obj/item/stack/medical/ointment = 2,
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/bone_gel = 4,
+		/obj/item/cane/crutch = 2,
 		/obj/item/cane/white = 2,
 		/obj/item/clothing/glasses/eyepatch/medical = 2,
+		/obj/item/storage/box/bandages = 2,
 	)
 	contraband = list(
 		/obj/item/storage/box/gum/happiness = 3,
@@ -61,6 +63,7 @@
 		/obj/item/stack/medical/ointment = 0,
 		/obj/item/stack/medical/suture = 1,
 		/obj/item/stack/medical/bone_gel = 1,
+		/obj/item/cane/crutch = 2,
 		/obj/item/cane/white = 2,
 		/obj/item/clothing/glasses/eyepatch/medical = 2,
 	)
@@ -80,6 +83,7 @@
 		/obj/item/reagent_containers/pill/insulin = 5,
 		/obj/item/reagent_containers/cup/bottle/multiver = 2,
 		/obj/item/reagent_containers/cup/bottle/syriniver = 2,
+		/obj/item/reagent_containers/cup/bottle/calomel = 2,
 		/obj/item/reagent_containers/cup/bottle/epinephrine = 3,
 		/obj/item/reagent_containers/cup/bottle/morphine = 4,
 		/obj/item/reagent_containers/cup/bottle/potass_iodide = 1,

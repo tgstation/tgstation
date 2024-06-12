@@ -106,7 +106,7 @@
 
 /obj/item/storage/fancy/donut_box/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/donut))
+	atom_storage.set_holdable(/obj/item/food/donut)
 
 /obj/item/storage/fancy/donut_box/PopulateContents()
 	. = ..()
@@ -153,7 +153,17 @@
 
 /obj/item/storage/fancy/egg_box/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/egg))
+	atom_storage.set_holdable(/obj/item/food/egg)
+
+/*
+ * Fertile Egg Box
+ */
+
+/obj/item/storage/fancy/egg_box/fertile
+	name = "fertile egg box"
+	desc = "Only one thing here is fertile, and it's not the eggs."
+	spawn_type = /obj/item/food/egg/fertile
+	spawn_count = 6
 
 /*
  * Candle Box
@@ -176,7 +186,7 @@
 
 /obj/item/storage/fancy/candle_box/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/flashlight/flare/candle))
+	atom_storage.set_holdable(/obj/item/flashlight/flare/candle)
 
 ////////////
 //CIG PACK//
@@ -213,7 +223,7 @@
 	balloon_alert(user, "ooh, free coupon")
 	var/obj/item/coupon/attached_coupon = new
 	user.put_in_hands(attached_coupon)
-	attached_coupon.generate(rigged_omen)
+	attached_coupon.generate(rigged_omen ? COUPON_OMEN : null, null, user)
 	attached_coupon = null
 	spawn_coupon = FALSE
 	name = "discarded cigarette packet"
@@ -226,24 +236,37 @@
 	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
 	register_context()
 
+/obj/item/storage/fancy/cigarettes/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(interacting_with != user) // you can quickly put a cigarette in your mouth only
+		return ..()
+	quick_remove_item(/obj/item/clothing/mask/cigarette, user, equip_to_mouth = TRUE)
+
 /obj/item/storage/fancy/cigarettes/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	quick_remove_item(/obj/item/clothing/mask/cigarette, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/storage/fancy/cigarettes/AltClick(mob/user)
-	. = ..()
+/obj/item/storage/fancy/cigarettes/click_alt(mob/user)
 	var/obj/item/lighter = locate(/obj/item/lighter) in contents
 	if(lighter)
 		quick_remove_item(lighter, user)
 	else
 		quick_remove_item(/obj/item/clothing/mask/cigarette, user)
+	return CLICK_ACTION_SUCCESS
 
-/// Removes an item from the packet if there is one
-/obj/item/storage/fancy/cigarettes/proc/quick_remove_item(obj/item/grabbies, mob/user)
+/// Removes an item or puts it in mouth from the packet, if any
+/obj/item/storage/fancy/cigarettes/proc/quick_remove_item(obj/item/grabbies, mob/user, equip_to_mouth =  FALSE)
 	var/obj/item/finger = locate(grabbies) in contents
 	if(finger)
-		atom_storage.remove_single(user, finger, drop_location())
-		user.put_in_hands(finger)
+		if(!equip_to_mouth)
+			atom_storage.remove_single(user, finger, drop_location())
+			user.put_in_hands(finger)
+			return
+		if(user.equip_to_slot_if_possible(finger, ITEM_SLOT_MASK, qdel_on_fail = FALSE, disable_warning = TRUE))
+			finger.forceMove(user)
+			return
+		balloon_alert(user, "mouth is covered!")
 
 /obj/item/storage/fancy/cigarettes/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -395,7 +418,7 @@
 
 /obj/item/storage/fancy/rollingpapers/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/rollingpaper))
+	atom_storage.set_holdable(/obj/item/rollingpaper)
 
 /obj/item/storage/fancy/rollingpapers/update_overlays()
 	. = ..()
@@ -414,14 +437,14 @@
 	base_icon_state = "cigarcase"
 	w_class = WEIGHT_CLASS_NORMAL
 	contents_tag = "premium cigar"
-	spawn_type = /obj/item/clothing/mask/cigarette/cigar
+	spawn_type = /obj/item/clothing/mask/cigarette/cigar/premium
 	spawn_count = 5
 	spawn_coupon = FALSE
 	display_cigs = FALSE
 
 /obj/item/storage/fancy/cigarettes/cigars/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/clothing/mask/cigarette/cigar))
+	atom_storage.set_holdable(/obj/item/clothing/mask/cigarette/cigar)
 
 /obj/item/storage/fancy/cigarettes/cigars/update_icon_state()
 	. = ..()
@@ -476,7 +499,7 @@
 
 /obj/item/storage/fancy/heart_box/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/bonbon))
+	atom_storage.set_holdable(/obj/item/food/bonbon)
 
 
 /obj/item/storage/fancy/nugget_box
@@ -491,7 +514,7 @@
 
 /obj/item/storage/fancy/nugget_box/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/nugget))
+	atom_storage.set_holdable(/obj/item/food/nugget)
 
 /*
  * Jar of pickles
@@ -506,14 +529,14 @@
 	spawn_type = /obj/item/food/pickle
 	spawn_count = 10
 	contents_tag = "pickle"
-	foldable_result = null
+	foldable_result = /obj/item/reagent_containers/cup/beaker/large
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE
 
 /obj/item/storage/fancy/pickles_jar/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/food/pickle))
+	atom_storage.set_holdable(/obj/item/food/pickle)
 
 /obj/item/storage/fancy/pickles_jar/update_icon_state()
 	. = ..()

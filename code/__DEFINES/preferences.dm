@@ -35,7 +35,7 @@
 #define CHAT_GHOSTLAWS (1<<11)
 #define CHAT_LOGIN_LOGOUT (1<<12)
 
-#define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_PULLR|CHAT_GHOSTWHISPER|CHAT_GHOSTPDA|CHAT_GHOSTRADIO|CHAT_BANKCARD|CHAT_GHOSTLAWS|CHAT_LOGIN_LOGOUT)
+#define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_DEAD|CHAT_PRAYER|CHAT_PULLR|CHAT_GHOSTPDA|CHAT_GHOSTRADIO|CHAT_BANKCARD|CHAT_GHOSTLAWS|CHAT_LOGIN_LOGOUT)
 
 #define PARALLAX_INSANE "Insane"
 #define PARALLAX_HIGH "High"
@@ -130,6 +130,9 @@
 /// These are preferences that are supplementary for main features,
 /// such as hair color being affixed to hair.
 #define PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES "supplemental_features"
+
+/// These preferences will not be rendered on the preferences page, and are practically invisible unless specifically rendered. Used for quirks, currently.
+#define PREFERENCE_CATEGORY_MANUALLY_RENDERED "manually_rendered_features"
 
 // Playtime is tracked in minutes
 /// The time needed to unlock hardcore random mode in preferences

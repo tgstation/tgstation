@@ -1,5 +1,8 @@
 // Icemoon Ruins
 
+/area/ruin/powered/lizard_gas
+	name = "\improper Lizard Gas Station"
+
 /area/ruin/unpowered/buried_library
 	name = "\improper Buried Library"
 
@@ -15,9 +18,18 @@
 	base_icon_state = "block"
 	smoothing_flags = NONE
 	canSmoothWith = null
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 /area/ruin/powered/mailroom
 	name = "\improper Abandoned Post Office"
+
+/area/ruin/comms_agent
+	name = "\improper Listening Post"
+	sound_environment = SOUND_ENVIRONMENT_CITY
+
+/area/ruin/comms_agent/maint
+	name = "\improper Listening Post Maintenance"
+	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
 
 /area/ruin/plasma_facility/commons
 	name = "\improper Abandoned Plasma Facility Commons"

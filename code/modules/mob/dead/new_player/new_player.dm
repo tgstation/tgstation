@@ -149,6 +149,12 @@
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
+	// Check that they're picking someone new for new character respawning
+	if(CONFIG_GET(flag/allow_respawn) == RESPAWN_FLAG_NEW_CHARACTER)
+		if("[client.prefs.default_slot]" in client.player_details.joined_as_slots)
+			tgui_alert(usr, "You already have played this character in this round!")
+			return FALSE
+
 	var/error = IsJobUnavailable(rank)
 	if(error != JOB_AVAILABLE)
 		tgui_alert(usr, get_job_unavailable_error_message(error, rank))
@@ -210,7 +216,6 @@
 		humanc = character //Let's retypecast the var to be human,
 
 	if(humanc) //These procs all expect humans
-		GLOB.manifest.inject(humanc)
 		if(SSshuttle.arrivals)
 			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
 		else
@@ -229,18 +234,21 @@
 		if(SSshuttle.emergency)
 			switch(SSshuttle.emergency.mode)
 				if(SHUTTLE_RECALL, SHUTTLE_IDLE)
-					SSticker.mode.make_antag_chance(humanc)
+					SSdynamic.make_antag_chance(humanc)
 				if(SHUTTLE_CALL)
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergency_call_time)*0.5)
-						SSticker.mode.make_antag_chance(humanc)
+						SSdynamic.make_antag_chance(humanc)
 
 	if((job.job_flags & JOB_ASSIGN_QUIRKS) && humanc && CONFIG_GET(flag/roundstart_traits))
 		SSquirks.AssignQuirks(humanc, humanc.client)
 
+	if(humanc) // Quirks may change manifest datapoints, so inject only after assigning quirks
+		GLOB.manifest.inject(humanc)
+
 	var/area/station/arrivals = GLOB.areas_by_type[/area/station/hallway/secondary/entry]
 	if(humanc && arrivals && !arrivals.power_environ) //arrivals depowered
 		humanc.put_in_hands(new /obj/item/crowbar/large/emergency(get_turf(humanc))) //if hands full then just drops on the floor
-	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
+	log_manifest(character.mind.key, character.mind, character, latejoin = TRUE)
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
@@ -263,6 +271,8 @@
 		preserved_mind.original_character_slot_index = client.prefs.default_slot
 		preserved_mind.transfer_to(spawning_mob) //won't transfer key since the mind is not active
 		preserved_mind.set_original_character(spawning_mob)
+
+	LAZYADD(client.player_details.joined_as_slots, "[client.prefs.default_slot]")
 	client.init_verbs()
 	. = spawning_mob
 	new_character = .
@@ -288,10 +298,7 @@
 		return
 	client.crew_manifest_delay = world.time + (1 SECONDS)
 
-	if(!GLOB.crew_manifest_tgui)
-		GLOB.crew_manifest_tgui = new /datum/crew_manifest(src)
-
-	GLOB.crew_manifest_tgui.ui_interact(src)
+	GLOB.manifest.ui_interact(src)
 
 /mob/dead/new_player/Move()
 	return 0
