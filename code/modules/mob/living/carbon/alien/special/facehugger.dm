@@ -269,6 +269,10 @@
 	desc = "The Research Director's pet, a domesticated and debeaked xenomorph facehugger. Friendly, but may still try to couple with your head."
 	sterile = TRUE
 
+/obj/item/clothing/mask/facehugger/lamarr/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/bane, target_type = /mob/living/simple_animal/hostile/megafauna/dragon, damage_multiplier = 0, added_damage = 30) //hitting a drake with lamar(r) in melee does 30 extra damage. note that, due to how the bane element works, this doesn't affect thrown impact damage.
+
 /obj/item/clothing/mask/facehugger/dead
 	icon_state = "facehugger_dead"
 	inhand_icon_state = "facehugger_inactive"

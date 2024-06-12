@@ -29,7 +29,7 @@
 /datum/orderable_item/bitrunning_tech/ability_tier3
 	cost_per_order = 3200
 	item_path = /obj/item/bitrunning_disk/ability/tier3
-	desc = "This disk contains a program that lets you shapeshift into a lesser ashdrake, or a polar bear."
+	desc = "This disk contains a program that lets you shapeshift into a lesser ash drake or a polar bear."
 
 /datum/orderable_item/bitrunning_tech/flip_skillchip
 	item_path = /obj/item/skillchip/matrix_flip
