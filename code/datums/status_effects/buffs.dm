@@ -339,7 +339,7 @@
 			need_mob_update += itemUser.adjustFireLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
 			need_mob_update += itemUser.adjustToxLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE) //Because Slime People are people too
 			need_mob_update += itemUser.adjustOxyLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-			need_mob_update += itemUser.adjustStaminaLoss(-0.6 * seconds_between_ticks, updating_stamina = FALSE, forced = TRUE)
+			need_mob_update += itemUser.adjustStaminaLoss(-3 * seconds_between_ticks, updating_stamina = FALSE, forced = TRUE)
 			need_mob_update += itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.6 * seconds_between_ticks)
 			if(need_mob_update)
 				itemUser.updatehealth()

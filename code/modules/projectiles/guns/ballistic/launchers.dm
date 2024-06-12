@@ -89,8 +89,10 @@
 		This one has been fitted with a special backblast diverter to prevent 'friendly' fire 'accidents' during use."
 	backblast = FALSE
 
-/obj/item/gun/ballistic/rocketlauncher/afterattack()
+/obj/item/gun/ballistic/rocketlauncher/try_fire_gun(atom/target, mob/living/user, params)
 	. = ..()
+	if(!.)
+		return
 	magazine.get_round(FALSE) //Hack to clear the mag after it's fired
 
 /obj/item/gun/ballistic/rocketlauncher/attack_self_tk(mob/user)
