@@ -514,3 +514,63 @@
   - bugfix: fixed rebar crossbow shots not dropping items on hitting walls
   - bugfix: fixed traitor crossbow having worse wound chance than the base one
   - sound: added new crossbow firing sound effect
+2024-06-11:
+  Addust:
+  - bugfix: The Syndicate has corrected some technical issues at a listening post
+      in the Icemoon.
+  DaCoolBoss:
+  - rscadd: The Lizard's Gas ruin in Lavaland has been revamped, and now dispenses
+      plasma gas fuel.
+  EnterTheJake:
+  - rscadd: adds the MOD shock-absorption module, into the game.
+  - rscadd: The MOD shock-absorption module into the the uplinks, costs 4 TC.
+  - balance: Nukie modsuits come with the shock_absorption module preinstalled.
+  EuSouAFazer:
+  - rscadd: New room in Wawastation, the Cytology Lab! Positioned behind the test
+      fire range.
+  IsaacExists:
+  - bugfix: Eastern icebox visitation door no longer missing a floor tile.
+  grungususs:
+  - bugfix: fixed the hole in lawyer's office on tramstation
+  improvedname:
+  - qol: Adds additional piping to wawastation ordnance
+  - bugfix: Adds a missing atmos waste vent for wawastation
+  junkgle01:
+  - bugfix: Polishes up new Meta Cargo's decals and associated amenities.
+2024-06-12:
+  Goat:
+  - bugfix: blood drunk miner can now path over lava
+  NewyearnewmeUwu:
+  - balance: Pacifists can now use psychotic brawling, at major mood costs.
+  PowerfulAtom111:
+  - rscadd: after a quick galactic meeting, insane people around the universe can
+      now speak gibbering to express their ideas free from the prying ears of the
+      walls
+  - rscadd: as an insane person, taking your meds deafens your ears to the holy tongue
+      all the other insane people are speaking
+  - spellcheck: added a bit of text to the RDS quirk and the RDS medical record text
+      to highlight the insane's new abilities
+  aaaa1023:
+  - bugfix: there is now one more crayon in the Mortidrobe.
+  grungussuss:
+  - bugfix: fixed getting a fake white dwarf report when the shift isn't extended
+      mode, which lead to meta knowledge being used.
+  munchyi:
+  - rscadd: 'added a new virtual domain
+
+      :cl:
+
+      ![image](https://github.com/tgstation/tgstation/assets/154919526/2d94fe21-bc45-40dc-9f84-4b69088b353c)'
+  norsvenska:
+  - bugfix: The recyclers in the snow cabin gateway, the cyborg mothership, and the
+      deep storage space ruin are now rotated properly.
+  r3dj4ck0424:
+  - rscadd: Added another ruin to Lavaland
+  sylvia-from-fulp-station:
+  - image: Adds a unique sprite for envyknife
+  uaioy:
+  - qol: the first Medieval pirate to spawn will be the Warlord, warlord and crude
+      helmet have flash protection
+  - bugfix: Medieval shuttle has actual engines now
+  - bugfix: Shortsword has its original colours
+  - bugfix: Crude helmet no longer makes you bald

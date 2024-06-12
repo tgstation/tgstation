@@ -368,17 +368,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 		return TRUE
 	return FALSE
 
-/obj/item/chair/afterattack(atom/target, mob/living/carbon/user, proximity)
-	. = ..()
-	if(!proximity)
+/obj/item/chair/afterattack(atom/target, mob/user, click_parameters)
+	if(!prob(break_chance))
 		return
-	if(prob(break_chance))
-		user.visible_message(span_danger("[user] smashes \the [src] to pieces against \the [target]"))
-		if(iscarbon(target))
-			var/mob/living/carbon/C = target
-			if(C.health < C.maxHealth*0.5)
-				C.Paralyze(20)
-		smash(user)
+	user.visible_message(span_danger("[user] smashes [src] to pieces against [target]"))
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		if(C.health < C.maxHealth*0.5)
+			C.Paralyze(20)
+	smash(user)
 
 /obj/item/chair/greyscale
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS

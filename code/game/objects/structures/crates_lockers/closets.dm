@@ -993,7 +993,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)
 	if(attack_hand(user))
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
 /obj/structure/closet/verb/verb_toggleopen()
 	set src in view(1)

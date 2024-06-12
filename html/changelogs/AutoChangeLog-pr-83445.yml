@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Taking stamina damage in stamcrit has diminishing returns associated, meaning you cannot be infinitely stamcrit."

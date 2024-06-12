@@ -644,13 +644,12 @@
 	desc = "A hard yet gelatinous capsule excreted by a slime, containing mysterious substances."
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/slimepotion/afterattack(obj/item/reagent_containers/target, mob/user , proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if (istype(target))
-		to_chat(user, span_warning("You cannot transfer [src] to [target]! It appears the potion must be given directly to a slime to absorb.") )
-		return
+/obj/item/slimepotion/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(is_reagent_container(interacting_with))
+		to_chat(user, span_warning("You cannot transfer [src] to [interacting_with]! \
+			It appears the potion must be given directly to a slime to absorb.") )
+		return ITEM_INTERACT_BLOCKING
+	return NONE
 
 /obj/item/slimepotion/slime/docility
 	name = "docility potion"
@@ -778,33 +777,36 @@
 	var/prompted = 0
 	var/animal_type = SENTIENCE_ORGANIC
 
-/obj/item/slimepotion/transference/afterattack(mob/living/switchy_mob, mob/living/user, proximity)
-	if(!proximity)
-		return
+/obj/item/slimepotion/transference/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	var/mob/living/switchy_mob = interacting_with
 	if(prompted || !isliving(switchy_mob))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(switchy_mob.ckey) //much like sentience, these will not work on something that is already player controlled
 		balloon_alert(user, "already sentient!")
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 	if(switchy_mob.stat)
 		balloon_alert(user, "it's dead!")
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 	if(!switchy_mob.compare_sentience_type(animal_type))
 		balloon_alert(user, "invalid creature!")
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
 	var/job_banned = is_banned_from(user.ckey, ROLE_MIND_TRANSFER)
 	if(QDELETED(src) || QDELETED(switchy_mob) || QDELETED(user))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(job_banned)
 		balloon_alert(user, "you're banned!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
+	user.do_attack_animation(interacting_with)
 	prompted = 1
 	if(tgui_alert(usr,"This will permanently transfer your consciousness to [switchy_mob]. Are you sure you want to do this?",,list("Yes","No")) == "No")
 		prompted = 0
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	to_chat(user, span_notice("You drink the potion then place your hands on [switchy_mob]..."))
 
@@ -820,6 +822,7 @@
 	if(isanimal(switchy_mob))
 		var/mob/living/simple_animal/switchy_animal= switchy_mob
 		switchy_animal.sentience_act()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/slimepotion/slime/steroid
 	name = "slime steroid"
@@ -903,29 +906,29 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potyellow"
 
-/obj/item/slimepotion/speed/afterattack(obj/C, mob/user, proximity)
+/obj/item/slimepotion/speed/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!proximity)
-		return
-	if(!istype(C))
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(!isobj(interacting_with))
 		to_chat(user, span_warning("The potion can only be used on objects!"))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(SEND_SIGNAL(C, COMSIG_SPEED_POTION_APPLIED, src, user) & SPEED_POTION_STOP)
-		return
-	if(isitem(C))
-		var/obj/item/I = C
-		if(I.slowdown <= 0 || (I.item_flags & IMMUTABLE_SLOW))
-			to_chat(user, span_warning("The [C] can't be made any faster!"))
-			return ..()
-		I.slowdown = 0
+		return ITEM_INTERACT_BLOCKING
+	if(SEND_SIGNAL(interacting_with, COMSIG_SPEED_POTION_APPLIED, src, user) & SPEED_POTION_STOP)
+		return ITEM_INTERACT_SUCCESS
+	if(isitem(interacting_with))
+		var/obj/item/apply_to = interacting_with
+		if(apply_to.slowdown <= 0 || (apply_to.item_flags & IMMUTABLE_SLOW))
+			to_chat(user, span_warning("The [apply_to] can't be made any faster!"))
+			return ITEM_INTERACT_BLOCKING
+		apply_to.slowdown = 0
 
-	to_chat(user, span_notice("You slather the red gunk over the [C], making it faster."))
-	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	C.add_atom_colour(COLOR_RED, FIXED_COLOUR_PRIORITY)
+	to_chat(user, span_notice("You slather the red gunk over the [interacting_with], making it faster."))
+	interacting_with.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	interacting_with.add_atom_colour(COLOR_RED, FIXED_COLOUR_PRIORITY)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/slimepotion/speed/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+/obj/item/slimepotion/speed/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
 	if(!isitem(storage_holder))
 		return TRUE
 	if(istype(storage_holder, /obj/item/mod/control))
@@ -942,20 +945,20 @@
 	resistance_flags = FIRE_PROOF
 	var/uses = 3
 
-/obj/item/slimepotion/fireproof/afterattack(obj/item/clothing/clothing, mob/user, proximity)
+/obj/item/slimepotion/fireproof/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!proximity)
-		return
-	if(!uses)
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(uses <= 0)
 		qdel(src)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/clothing/clothing = interacting_with
 	if(!istype(clothing))
 		to_chat(user, span_warning("The potion can only be used on clothing!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(clothing.max_heat_protection_temperature >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
 		to_chat(user, span_warning("The [clothing] is already fireproof!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You slather the blue gunk over the [clothing], fireproofing it."))
 	clothing.name = "fireproofed [clothing.name]"
 	clothing.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -964,8 +967,9 @@
 	clothing.heat_protection = clothing.body_parts_covered
 	clothing.resistance_flags |= FIRE_PROOF
 	uses --
-	if(!uses)
+	if(uses <= 0)
 		qdel(src)
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/slimepotion/genderchange
 	name = "gender change potion"
@@ -1080,4 +1084,3 @@
 	max_amount = 60
 	turf_type = /turf/open/floor/sepia
 	merge_type = /obj/item/stack/tile/sepia
-

@@ -1,6 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - rscadd: "adds the MOD shock-absorption module, into the game."
-  - rscadd: "The MOD shock-absorption module into the the uplinks, costs 4 TC."
-  - balance: "Nukie modsuits come with the shock_absorption module preinstalled."
