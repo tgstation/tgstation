@@ -511,8 +511,9 @@
 	desc = "A cheaply made kettle helmet with an added faceplate to protect your eyes and mouth."
 	icon_state = "military"
 	inhand_icon_state = "knight_helmet"
-	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flash_protect = FLASH_PROTECTION_FLASH
 	strip_delay = 80
 	dog_fashion = null
 	armor_type = /datum/armor/helmet_military
@@ -539,6 +540,7 @@
 	armor_type = /datum/armor/helmet_warlord
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEMASK|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	flash_protect = FLASH_PROTECTION_FLASH
 	slowdown = 0.2
 
 /datum/armor/helmet_warlord

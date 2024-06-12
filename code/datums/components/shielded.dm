@@ -28,6 +28,9 @@
 	var/show_charge_as_alpha = FALSE
 	/// The item we use for recharging
 	var/recharge_path
+	/// Whether or not we lose a charge when hit by 0 damage items or projectiles
+	var/lose_charge_on_damageless = FALSE
+
 	/// The cooldown tracking when we were last hit
 	COOLDOWN_DECLARE(recently_hit_cd)
 	/// The cooldown tracking when we last replenished a charge
@@ -171,6 +174,9 @@
 
 	if(lose_multiple_charges) // if the shield has health like damage we'll lose charges equal to the damage of the hit
 		charge_loss = damage
+
+	else if(!lose_charge_on_damageless && !damage)
+		charge_loss = 0
 
 	adjust_charge(-charge_loss)
 

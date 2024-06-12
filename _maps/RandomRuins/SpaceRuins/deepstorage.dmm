@@ -42,7 +42,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "am" = (
-/obj/machinery/recycler/deathtrap,
+/obj/machinery/recycler/deathtrap{
+	dir = 8
+	},
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "bunkerrecycle"
