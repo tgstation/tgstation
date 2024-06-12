@@ -195,3 +195,13 @@
   Absolucy:
   - refactor: Refactored Composter code in an attempt to eliminate the lag it can
       cause.
+2024-06-12:
+  Absolucy:
+  - bugfix: Fix changing font size and such breaking tgchat. Whoopsie daisy!
+  - balance: Having both the "easily wounded" and "hardly wounded" traits will now
+      act like you have neither, resulting in you taking the normal amount of wound
+      damage.
+  RikuTheKiller:
+  - bugfix: Unknown Methamphetamine Isomer (cortical borer meth) is now actually safe
+      to use and doesn't cause brain damage or addiction. It's effects are now equivalent
+      to regular meth instead of being doubled, too.

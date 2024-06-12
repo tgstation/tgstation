@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - balance: "Having both the \"easily wounded\" and \"hardly wounded\" traits will now act like you have neither, resulting in you taking the normal amount of wound damage."

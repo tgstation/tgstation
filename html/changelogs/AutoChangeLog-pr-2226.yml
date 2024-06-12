@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fix changing font size and such breaking tgchat. Whoopsie daisy!"
