@@ -50,7 +50,7 @@
 	},
 /area/ruin/unpowered)
 "gP" = (
-/turf/closed/mineral/titanium,
+/turf/closed/mineral/titanium/volcanic,
 /area/ruin/unpowered)
 "hT" = (
 /turf/closed/wall/mineral/titanium{
@@ -132,7 +132,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "sZ" = (
-/turf/closed/mineral/random,
+/turf/closed/mineral/random/volcanic,
 /area/ruin/unpowered)
 "tp" = (
 /obj/item/stack/sheet/iron,
@@ -153,7 +153,7 @@
 	},
 /area/ruin/unpowered)
 "uh" = (
-/turf/closed/mineral/random,
+/turf/closed/mineral/random/volcanic,
 /area/lavaland/surface)
 "uH" = (
 /obj/effect/spawner/random/structure/crate,
@@ -272,7 +272,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "GZ" = (
-/turf/closed/mineral/titanium,
+/turf/closed/mineral/titanium/volcanic,
 /area/lavaland/surface)
 "Hy" = (
 /obj/machinery/computer/communications{
