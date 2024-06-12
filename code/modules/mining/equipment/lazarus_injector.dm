@@ -25,27 +25,25 @@
 	///So you can't revive boss monsters or robots with it
 	var/revive_type = SENTIENCE_ORGANIC
 
-/obj/item/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(!loaded || !proximity_flag)
-		return
-
+/obj/item/lazarus_injector/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	if(!loaded)
+		return NONE
 	if(SEND_SIGNAL(target, COMSIG_ATOM_ON_LAZARUS_INJECTOR, src, user) & LAZARUS_INJECTOR_USED)
-		return
-
+		return ITEM_INTERACT_SUCCESS
 	if(!isliving(target))
-		return
+		return NONE
 
 	var/mob/living/target_animal = target
 	if(!target_animal.compare_sentience_type(revive_type)) // Will also return false if not a basic or simple mob, which are the only two we want anyway
 		balloon_alert(user, "invalid creature!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(target_animal.stat != DEAD)
 		balloon_alert(user, "it's not dead!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	target_animal.lazarus_revive(user, malfunctioning)
 	expend(target_animal, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/lazarus_injector/proc/expend(atom/revived_target, mob/user)
 	user.visible_message(span_notice("[user] injects [revived_target] with [src], reviving it."))

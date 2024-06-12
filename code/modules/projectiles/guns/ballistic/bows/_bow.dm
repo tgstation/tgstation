@@ -63,14 +63,13 @@
 	playsound(src, 'sound/weapons/gun/bow/bow_draw.ogg', 25, TRUE)
 	update_appearance()
 
-/obj/item/gun/ballistic/bow/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/gun/ballistic/bow/try_fire_gun(atom/target, mob/living/user, params)
 	if(!chambered)
-		return
+		return FALSE
 	if(!drawn)
 		to_chat(user, span_warning("Without drawing the bow, the arrow uselessly falls to the ground."))
 		drop_arrow()
-		return
+		return FALSE
 	return ..() //fires, removing the arrow
 
 /obj/item/gun/ballistic/bow/equipped(mob/user, slot, initial)
