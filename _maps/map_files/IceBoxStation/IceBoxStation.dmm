@@ -22520,7 +22520,7 @@
 /obj/item/pen{
 	pixel_x = -5
 	},
-/obj/item/hand_labeler/borg{
+/obj/item/hand_labeler{
 	pixel_y = -3
 	},
 /turf/open/floor/wood,
