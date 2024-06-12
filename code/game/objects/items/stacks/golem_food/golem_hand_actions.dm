@@ -26,20 +26,23 @@
 	held_gibtonite.forceMove(src)
 	addtimer(CALLBACK(src, PROC_REF(release_gibtonite)), GIBTONITE_GOLEM_HOLD_TIME, TIMER_DELETE_ME)
 
-/obj/item/gibtonite_hand/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
+/obj/item/gibtonite_hand/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/gibtonite_hand/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (!held_gibtonite)
 		to_chat(user, span_warning("[src] fizzles, it was a dud!"))
 		qdel(src)
-		return TRUE | AFTERATTACK_PROCESSED_ITEM
+		return ITEM_INTERACT_BLOCKING
+
 	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, TRUE)
 	held_gibtonite.forceMove(get_turf(src))
 	held_gibtonite.det_time = 2 SECONDS
-	held_gibtonite.GibtoniteReaction(user, "A [src] has targeted [target] with a thrown and primed")
-	held_gibtonite.throw_at(target, range = 10, speed = 3, thrower = user)
+	held_gibtonite.GibtoniteReaction(user, "A [src] has targeted [interacting_with] with a thrown and primed")
+	held_gibtonite.throw_at(interacting_with, range = 10, speed = 3, thrower = user)
 	held_gibtonite = null
 	qdel(src)
-	return TRUE | AFTERATTACK_PROCESSED_ITEM
+	return ITEM_INTERACT_SUCCESS
 
 /// Called when you can't hold it in any longer and just drop it on the ground
 /obj/item/gibtonite_hand/proc/release_gibtonite()
@@ -69,15 +72,17 @@
 	/// How accurate are you?
 	var/teleport_vary = 2
 
-/obj/item/bluespace_finger/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
-	var/turf/target_turf = get_turf(target)
+/obj/item/bluespace_finger/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/bluespace_finger/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/turf/target_turf = get_turf(interacting_with)
 	if (get_dist(target_turf, get_turf(src)) > teleport_range)
 		balloon_alert(user, "too far!")
-		return TRUE | AFTERATTACK_PROCESSED_ITEM
+		return ITEM_INTERACT_BLOCKING
 	if (target_turf.is_blocked_turf(exclude_mobs = TRUE))
 		balloon_alert(user, "no room!")
-		return TRUE | AFTERATTACK_PROCESSED_ITEM
+		return ITEM_INTERACT_BLOCKING
 
 	var/obj/effect/temp_visual/teleport_golem/landing_indicator = new(target_turf)
 	user.add_filter(BLUESPACE_GLOW_FILTER, 2, list("type" = "outline", "color" = COLOR_BRIGHT_BLUE, "alpha" = 0, "size" = 1))
@@ -89,7 +94,7 @@
 	qdel(landing_indicator)
 	user.remove_filter(BLUESPACE_GLOW_FILTER)
 	if (!did_teleport)
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	var/list/valid_landing_tiles = list(target_turf)
 	for (var/turf/potential_landing in oview(teleport_vary, target_turf))
@@ -101,6 +106,7 @@
 		telefrag.Knockdown(2 SECONDS)
 	do_teleport(user, final_destination, asoundin = 'sound/effects/phasein.ogg', no_effects = TRUE)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 #undef GIBTONITE_GOLEM_HOLD_TIME
 #undef BLUESPACE_GLOW_FILTER
