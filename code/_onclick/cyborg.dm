@@ -84,13 +84,7 @@
 			W.melee_attack_chain(src, A, params)
 			return
 		else if(isturf(A) || isturf(A.loc))
-			if(LAZYACCESS(modifiers, RIGHT_CLICK))
-				var/after_attack_secondary_result = W.afterattack_secondary(A, src, FALSE, params)
-
-				if(after_attack_secondary_result == SECONDARY_ATTACK_CALL_NORMAL)
-					W.afterattack(A, src, FALSE, params)
-			else
-				W.afterattack(A, src, FALSE, params)
+			A.base_ranged_item_interaction(src, W, modifiers)
 
 //Give cyborgs hotkey clicks without breaking existing uses of hotkey clicks
 // for non-doors/apcs

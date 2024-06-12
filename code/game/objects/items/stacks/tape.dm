@@ -39,18 +39,13 @@
 	. = ..()
 	. += "[span_notice("You could rip a piece off by using an empty hand.")]"
 
-/obj/item/stack/sticky_tape/afterattack(obj/item/target, mob/living/user, proximity)
-	if(!proximity)
-		return
-
-	if(!istype(target))
-		return
-
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/stack/sticky_tape/interact_with_atom(obj/item/target, mob/living/user, list/modifiers)
+	if(!isitem(target))
+		return NONE
 
 	if(target.embedding && target.embedding == conferred_embed)
 		to_chat(user, span_warning("[target] is already coated in [src]!"))
-		return .
+		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(span_notice("[user] begins wrapping [target] with [src]."), span_notice("You begin wrapping [target] with [src]."))
 	playsound(user, 'sound/items/duct_tape_rip.ogg', 50, TRUE)
@@ -63,11 +58,11 @@
 			to_chat(user, span_notice("You turn [target] into [O] with [src]."))
 			QDEL_NULL(target)
 			user.put_in_hands(O)
-			return .
+			return ITEM_INTERACT_SUCCESS
 
 		if(target.embedding && target.embedding == conferred_embed)
 			to_chat(user, span_warning("[target] is already coated in [src]!"))
-			return .
+			return ITEM_INTERACT_BLOCKING
 
 		target.embedding = conferred_embed
 		target.updateEmbedding()
@@ -78,7 +73,7 @@
 			var/obj/item/grenade/sticky_bomb = target
 			sticky_bomb.sticky = TRUE
 
-	return .
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/sticky_tape/super
 	name = "super sticky tape"

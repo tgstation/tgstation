@@ -118,7 +118,9 @@
 	return TOXLOSS
 
 /obj/item/soap/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
-	return check_allowed_items(atom_to_clean)
+	. = CLEAN_ALLOWED
+	if(!check_allowed_items(atom_to_clean))
+		. |= CLEAN_NO_XP
 
 /**
  * Decrease the number of uses the bar of soap has.
@@ -145,17 +147,15 @@
 	qdel(src)
 
 /obj/item/soap/nanotrasen/cyborg/noUses(mob/user)
-	to_chat(user, span_warning("The soap has ran out of chemicals"))
+	to_chat(user, span_warning("[src] has ran out of chemicals! Head to a recharger to refill it."))
 
-/obj/item/soap/nanotrasen/cyborg/afterattack(atom/target, mob/user, proximity)
-	. = isitem(target) ? AFTERATTACK_PROCESSED_ITEM : NONE
+/obj/item/soap/nanotrasen/cyborg/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
 	if(uses <= 0)
-		to_chat(user, span_warning("No good, you need to recharge!"))
-		return .
-	return ..() | .
+		return CLEAN_BLOCKED
+	return ..()
 
-/obj/item/soap/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
-	return !user?.combat_mode  // only cleans a storage item if on combat
+/obj/item/soap/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/living/user)
+	return !user.combat_mode  // only cleans a storage item if on combat
 
 /*
  * Bike Horns

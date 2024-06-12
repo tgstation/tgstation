@@ -30,13 +30,10 @@
 	return ..()
 
 /// triggered after an item attacks something
-/datum/element/knockback/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/element/knockback/proc/item_afterattack(obj/item/source, atom/target, mob/user, click_parameters)
 	SIGNAL_HANDLER
 
-	if(!proximity_flag)
-		return
 	do_knockback(target, user, get_dir(source, target))
-	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
 
 /// triggered after a hostile simplemob attacks something
 /datum/element/knockback/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)

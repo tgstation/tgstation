@@ -11,22 +11,18 @@
 	reagent_flags = TRANSPARENT
 	custom_price = PAYCHECK_CREW
 
-/obj/item/reagent_containers/dropper/afterattack(obj/target, mob/user , proximity)
-	. = ..()
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/reagent_containers/dropper/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(!target.reagents)
-		return
+		return NONE
 
 	if(reagents.total_volume > 0)
 		if(target.reagents.holder_full())
 			to_chat(user, span_notice("[target] is full."))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		if(!target.is_injectable(user))
 			to_chat(user, span_warning("You cannot transfer reagents to [target]!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		var/trans = 0
 		var/fraction = min(amount_per_transfer_from_this / reagents.total_volume, 1)
@@ -48,10 +44,10 @@
 
 					to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
 					update_appearance()
-					return
+					return ITEM_INTERACT_BLOCKING
 			else if(isalien(target)) //hiss-hiss has no eyes!
 				to_chat(target, span_danger("[target] does not seem to have any eyes!"))
-				return
+				return ITEM_INTERACT_BLOCKING
 
 			target.visible_message(span_danger("[user] squirts something into [target]'s eyes!"), \
 									span_userdanger("[user] squirts something into your eyes!"))
@@ -69,23 +65,23 @@
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
 		update_appearance()
 		target.update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	else
+	if(!target.is_drawable(user, FALSE)) //No drawing from mobs here
+		to_chat(user, span_warning("You cannot directly remove reagents from [target]!"))
+		return ITEM_INTERACT_BLOCKING
 
-		if(!target.is_drawable(user, FALSE)) //No drawing from mobs here
-			to_chat(user, span_warning("You cannot directly remove reagents from [target]!"))
-			return
+	if(!target.reagents.total_volume)
+		to_chat(user, span_warning("[target] is empty!"))
+		return ITEM_INTERACT_BLOCKING
 
-		if(!target.reagents.total_volume)
-			to_chat(user, span_warning("[target] is empty!"))
-			return
+	var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
+	to_chat(user, span_notice("You fill [src] with [trans] unit\s of the solution."))
 
-		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the solution."))
-
-		update_appearance()
-		target.update_appearance()
+	update_appearance()
+	target.update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/dropper/update_overlays()
 	. = ..()

@@ -276,12 +276,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/mob/living/carbon/the_smoker = user
 	return the_smoker.can_breathe_helmet()
 
-/obj/item/clothing/mask/cigarette/afterattack(obj/item/reagent_containers/cup/glass, mob/user, proximity)
-	. = ..()
-	if(!proximity || lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
-		return
+/obj/item/clothing/mask/cigarette/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
+		return NONE
+	var/obj/item/reagent_containers/cup/glass = interacting_with
 	if(!istype(glass)) //you can dip cigarettes into beakers
-		return
+		return NONE
 
 	if(glass.reagents.trans_to(src, chem_volume, transferred_by = user)) //if reagents were transferred, show the message
 		to_chat(user, span_notice("You dip \the [src] into \the [glass]."))
@@ -290,8 +290,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		to_chat(user, span_warning("[glass] is empty!"))
 	else
 		to_chat(user, span_warning("[src] is full!"))
-
-	return AFTERATTACK_PROCESSED_ITEM
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/mask/cigarette/update_icon_state()
 	. = ..()

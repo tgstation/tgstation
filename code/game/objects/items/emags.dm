@@ -53,6 +53,9 @@
 	. = ..()
 	type_blacklist = list(typesof(/obj/machinery/door/airlock) + typesof(/obj/machinery/door/window/) +  typesof(/obj/machinery/door/firedoor) - typesof(/obj/machinery/door/airlock/tram)) //list of all typepaths that require a specialized emag to hack.
 
+/obj/item/card/emag/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/living/user)
+	return !user.combat_mode
+
 /obj/item/card/emag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!can_emag(interacting_with, user))
 		return ITEM_INTERACT_BLOCKING
@@ -60,15 +63,8 @@
 	interacting_with.emag_act(user, src)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/card/emag/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	// Proximity based emagging is handled by above
-	// This is only for ranged emagging
-	if(proximity_flag || prox_check)
-		return
-
-	. |= AFTERATTACK_PROCESSED_ITEM
-	interact_with_atom(target, user)
+/obj/item/card/emag/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return prox_check ? NONE : interact_with_atom(interacting_with, user)
 
 /obj/item/card/emag/proc/can_emag(atom/target, mob/user)
 	for (var/subtypelist in type_blacklist)

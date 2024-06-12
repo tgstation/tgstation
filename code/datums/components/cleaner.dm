@@ -35,16 +35,16 @@
 	return ..()
 
 /datum/component/cleaner/RegisterWithParent()
-	if(isbot(parent))
+	if(ismob(parent))
 		RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
-		return
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_afterattack))
+	if(isitem(parent))
+		RegisterSignal(parent, COMSIG_ITEM_INTERACTING_WITH_ATOM, PROC_REF(on_interaction))
 
 /datum/component/cleaner/UnregisterFromParent()
-	if(isbot(parent))
-		UnregisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK)
-		return
-	UnregisterSignal(parent, COMSIG_ITEM_AFTERATTACK)
+	UnregisterSignal(parent, list(
+		COMSIG_ITEM_INTERACTING_WITH_ATOM,
+		COMSIG_LIVING_UNARMED_ATTACK,
+	))
 
 /**
  * Handles the COMSIG_LIVING_UNARMED_ATTACK signal used for cleanbots
@@ -52,29 +52,27 @@
  */
 /datum/component/cleaner/proc/on_unarmed_attack(datum/source, atom/target, proximity_flags, modifiers)
 	SIGNAL_HANDLER
-	return on_afterattack(source, target, parent, proximity_flags, modifiers)
+	if(on_interaction(source, source, target, modifiers) & ITEM_INTERACT_ANY_BLOCKER)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+	return NONE
 
 /**
- * Handles the COMSIG_ITEM_AFTERATTACK signal by calling the clean proc.
- *
- * Arguments
- * * source the datum that sent the signal to start cleaning
- * * target the thing being cleaned
- * * user the person doing the cleaning
- * * clean_target set this to false if the target should not be washed and if experience should not be awarded to the user
+ * Handles the COMSIG_ITEM_INTERACTING_WITH_ATOM signal by calling the clean proc.
  */
-/datum/component/cleaner/proc/on_afterattack(datum/source, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/component/cleaner/proc/on_interaction(datum/source, mob/living/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
-	if(!proximity_flag)
-		return
-	. |= COMPONENT_AFTERATTACK_PROCESSED_ITEM
-	var/clean_target
+
+	// By default, give XP
+	var/give_xp = TRUE
 	if(pre_clean_callback)
-		clean_target = pre_clean_callback?.Invoke(source, target, user)
-		if(clean_target == DO_NOT_CLEAN)
-			return .
-	INVOKE_ASYNC(src, PROC_REF(clean), source, target, user, clean_target) //signal handlers can't have do_afters inside of them
-	return .
+		var/callback_return = pre_clean_callback.Invoke(source, target, user)
+		if(callback_return & CLEAN_BLOCKED)
+			return (callback_return & CLEAN_DONT_BLOCK_INTERACTION) ? NONE : ITEM_INTERACT_BLOCKING
+		if(callback_return & CLEAN_NO_XP)
+			give_xp = FALSE
+
+	INVOKE_ASYNC(src, PROC_REF(clean), source, target, user, give_xp)
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * Cleans something using this cleaner.

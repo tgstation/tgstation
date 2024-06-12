@@ -94,16 +94,16 @@
 			desc = "A paper sack with a crude smile etched onto the side."
 	return ..()
 
-/obj/item/storage/box/papersack/attackby(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/pen))
-		var/choice = show_radial_menu(user, src , papersack_designs, custom_check = CALLBACK(src, PROC_REF(check_menu), user, attacking_item), radius = 36, require_near = TRUE)
+/obj/item/storage/box/papersack/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
+	if(istype(inserted, /obj/item/pen))
+		var/choice = show_radial_menu(user, src , papersack_designs, custom_check = CALLBACK(src, PROC_REF(check_menu), user, inserted), radius = 36, require_near = TRUE)
 		if(!choice || choice == design_choice)
 			return FALSE
 		design_choice = choice
 		balloon_alert(user, "modified")
 		update_appearance()
 		return FALSE
-	if(attacking_item.get_sharpness() && !contents.len)
+	if(inserted.get_sharpness() && !contents.len)
 		if(design_choice == "None")
 			user.show_message(span_notice("You cut eyeholes into [src]."), MSG_VISUAL)
 			new /obj/item/clothing/head/costume/papersack(drop_location())
@@ -114,7 +114,7 @@
 			new /obj/item/clothing/head/costume/papersack/smiley(drop_location())
 			qdel(src)
 			return FALSE
-	return ..()
+	return TRUE
 
 /**
  * check_menu: Checks if we are allowed to interact with a radial menu

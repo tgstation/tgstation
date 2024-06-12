@@ -234,11 +234,11 @@
 	to_chat(user, span_notice("You toggle [src] to \"[mode]\" mode."))
 	update_appearance()
 
-/obj/item/borg/charger/afterattack(obj/item/target, mob/living/silicon/robot/user, proximity_flag)
-	. = ..()
-	if(!proximity_flag || !iscyborg(user))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/borg/charger/interact_with_atom(atom/target, mob/living/silicon/robot/user, list/modifiers)
+	if(!iscyborg(user))
+		return NONE
+
+	. = ITEM_INTERACT_BLOCKING
 	if(mode == "draw")
 		if(is_type_in_list(target, charge_machines))
 			var/obj/machinery/target_machine = target

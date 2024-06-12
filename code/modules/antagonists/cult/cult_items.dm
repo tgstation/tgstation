@@ -639,49 +639,49 @@ Striking a noncultist, however, will tear their flesh."}
 	var/charges = 5
 	start_on = TRUE
 
-/obj/item/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
-	if(!proximity)
-		return
-	if(!IS_CULTIST(user))
-		to_chat(user, "That doesn't seem to do anything useful.")
-		return
+/obj/item/flashlight/flare/culttorch/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/datum/antagonist/cult/cult = user.mind.has_antag_datum(/datum/antagonist/cult)
+	var/datum/team/cult/cult_team = cult?.get_team()
+	if(isnull(cult_team))
+		to_chat(user, span_warning("That doesn't seem to do anything useful."))
+		return ITEM_INTERACT_BLOCKING
 
-	if(!isitem(A))
-		..()
-		to_chat(user, span_warning("\The [src] can only transport items!"))
-		return
+	if(!isitem(interacting_with))
+		to_chat(user, span_warning("[src] can only transport items!"))
+		return ITEM_INTERACT_BLOCKING
 
-	. |= AFTERATTACK_PROCESSED_ITEM
+	var/list/mob/living/cultists = list()
+	for(var/datum/mind/cult_mind as anything in cult_team.members)
+		if(cult_mind == user.mind)
+			continue
+		if(cult_mind.current?.stat != DEAD)
+			cultists |= cult_mind.current
 
-	var/list/cultists = list()
-	for(var/datum/mind/M as anything in get_antag_minds(/datum/antagonist/cult))
-		if(M.current && M.current.stat != DEAD)
-			cultists |= M.current
 	var/mob/living/cultist_to_receive = tgui_input_list(user, "Who do you wish to call to [src]?", "Followers of the Geometer", (cultists - user))
-	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
-		return
+	if(QDELETED(src) || loc != user || user.incapacitated())
+		return ITEM_INTERACT_BLOCKING
 	if(isnull(cultist_to_receive))
-		to_chat(user, "<span class='cult italic'>You require a destination!</span>")
-		log_game("[key_name(user)]'s Void torch failed - no target.")
-		return
+		to_chat(user, span_cult_italic("You require a destination!"))
+		return ITEM_INTERACT_BLOCKING
 	if(cultist_to_receive.stat == DEAD)
-		to_chat(user, "<span class='cult italic'>[cultist_to_receive] has died!</span>")
-		log_game("[key_name(user)]'s Void torch failed - target died.")
-		return
-	if(!IS_CULTIST(cultist_to_receive))
-		to_chat(user, "<span class='cult italic'>[cultist_to_receive] is not a follower of the Geometer!</span>")
-		log_game("[key_name(user)]'s Void torch failed - target was deconverted.")
-		return
-	if(A in user.get_all_contents())
-		to_chat(user, "<span class='cult italic'>[A] must be on a surface in order to teleport it!</span>")
-		return
-	to_chat(user, "<span class='cult italic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!</span>")
-	user.log_message("teleported [A] to [cultist_to_receive] with \the [src].", LOG_GAME)
-	cultist_to_receive.put_in_hands(A)
+		to_chat(user, span_cult_italic("[cultist_to_receive] has died!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!(cultist_to_receive.mind in cult_team.members))
+		to_chat(user, span_cult_italic("[cultist_to_receive] is not a follower of the Geometer!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!isturf(interacting_with.loc))
+		to_chat(user, span_cult_italic("[interacting_with] must be on a surface in order to teleport it!"))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_cult_italic("You ignite [interacting_with] with [src], turning it to ash, \
+		but through the torch's flames you see that [interacting_with] has reached [cultist_to_receive]!"))
+	user.log_message("teleported [interacting_with] to [cultist_to_receive] with [src].", LOG_GAME)
+	cultist_to_receive.put_in_hands(interacting_with)
 	charges--
-	to_chat(user, "\The [src] now has [charges] charge\s.")
-	if(charges == 0)
+	to_chat(user, span_notice("[src] now has [charges] charge\s."))
+	if(charges <= 0)
 		qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/cultblade/halberd
 	name = "bloody halberd"
@@ -859,31 +859,33 @@ Striking a noncultist, however, will tear their flesh."}
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 
 
-/obj/item/blood_beam/afterattack(atom/A, mob/living/user, proximity_flag, clickparams)
-	. = ..()
+/obj/item/blood_beam/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/blood_beam/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(firing || charging)
-		return
-	if(ishuman(user))
-		angle = get_angle(user, A)
-	else
-		qdel(src)
-		return . | AFTERATTACK_PROCESSED_ITEM
+		return ITEM_INTERACT_BLOCKING
+	if(!ishuman(user))
+		return ITEM_INTERACT_BLOCKING
+	angle = get_angle(user, interacting_with)
 	charging = TRUE
 	INVOKE_ASYNC(src, PROC_REF(charge), user)
 	if(do_after(user, 9 SECONDS, target = user))
 		firing = TRUE
 		ADD_TRAIT(user, TRAIT_IMMOBILIZED, CULT_TRAIT)
-		INVOKE_ASYNC(src, PROC_REF(pewpew), user, clickparams)
+		var/params = list2params(modifiers)
+		INVOKE_ASYNC(src, PROC_REF(pewpew), user, params)
 		var/obj/structure/emergency_shield/cult/weak/N = new(user.loc)
 		if(do_after(user, 9 SECONDS, target = user))
 			user.Paralyze(40)
-			to_chat(user, "<span class='cult italic'>You have exhausted the power of this spell!</span>")
+			to_chat(user, span_cult_italic("You have exhausted the power of this spell!"))
 		REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, CULT_TRAIT)
 		firing = FALSE
 		if(N)
 			qdel(N)
 		qdel(src)
 	charging = FALSE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/blood_beam/proc/charge(mob/user)
 	var/obj/O

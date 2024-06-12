@@ -126,12 +126,9 @@
  * - [user][/mob/living]: The mob using the source to strike the target
  * - proximity: Whether the strike was in melee range so you can't eat lights from cameras
  */
-/datum/element/light_eater/proc/on_afterattack(obj/item/source, atom/target, mob/living/user, proximity)
+/datum/element/light_eater/proc/on_afterattack(obj/item/source, atom/target, mob/living/user)
 	SIGNAL_HANDLER
-	if(!proximity)
-		return NONE
 	eat_lights(target, source)
-	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
 
 /**
  * Called when a source object is used to block a thrown object, projectile, or attack

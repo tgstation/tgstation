@@ -58,7 +58,6 @@
 		if(!extra_check_callback.Invoke(user, target, source))
 			return
 	on_hit_callback.Invoke(source, user, target, user.zone_selected)
-	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
 
 /datum/component/on_hit_effect/proc/hostile_attackingtarget(mob/living/attacker, atom/target, success)
 	SIGNAL_HANDLER

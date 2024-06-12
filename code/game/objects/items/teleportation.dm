@@ -134,11 +134,6 @@
 	. = ..()
 	active_portal_pairs = list()
 
-/obj/item/hand_tele/pre_attack(atom/target, mob/user, params)
-	if(try_dispel_portal(target, user))
-		return TRUE
-	return ..()
-
 /obj/item/hand_tele/proc/try_dispel_portal(atom/target, mob/user)
 	if(is_parent_of_portal(target))
 		qdel(target)
@@ -147,11 +142,15 @@
 		return TRUE
 	return FALSE
 
-/obj/item/hand_tele/afterattack(atom/target, mob/user)
-	try_dispel_portal(target, user)
-	. = ..()
+/obj/item/hand_tele/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(try_dispel_portal(interacting_with, user))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-/obj/item/hand_tele/pre_attack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/hand_tele/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/hand_tele/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	var/portal_location = last_portal_location
 
 	if (isweakref(portal_location))
@@ -160,12 +159,13 @@
 
 	if (isnull(portal_location))
 		to_chat(user, span_warning("[src] flashes briefly. No target is locked in."))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
 	try_create_portal_to(user, portal_location)
+	return ITEM_INTERACT_SUCCESS
 
-
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/hand_tele/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom_secondary(interacting_with, user, modifiers)
 
 /obj/item/hand_tele/attack_self(mob/user)
 	if (!can_teleport_notifies(user))

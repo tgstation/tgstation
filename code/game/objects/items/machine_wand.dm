@@ -73,19 +73,22 @@
 	remove_old_machine()
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/machine_remote/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
+/obj/item/machine_remote/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/machine_remote/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, timeout_time))
 		playsound(src, 'sound/machines/synth_no.ogg', 30 , TRUE)
 		say("Remote control disabled temporarily. Please try again soon.")
-		return FALSE
-	if(!ismachinery(target) && !isbot(target))
-		return
+		return ITEM_INTERACT_BLOCKING
+	if(!ismachinery(interacting_with) && !isbot(interacting_with))
+		return NONE
 	if(moving_bug) //we have a bug in transit already, so let's kill it.
 		QDEL_NULL(moving_bug)
 	var/turf/spawning_turf = (controlling_machine_or_bot ? get_turf(controlling_machine_or_bot) : get_turf(src))
-	moving_bug = new(spawning_turf, src, target)
+	moving_bug = new(spawning_turf, src, interacting_with)
 	remove_old_machine()
+	return ITEM_INTERACT_SUCCESS
 
 ///Sets a controlled machine to a new machine, if possible. Checks if AIs can even control it.
 /obj/item/machine_remote/proc/set_controlled_machine(obj/machinery/new_machine)

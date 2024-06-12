@@ -58,7 +58,7 @@
 	RegisterSignal(enchanted, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
 
 /// signal called from attacking with the enchanted item
-/datum/action/cooldown/spell/sanguine_strike/proc/on_enchanted_afterattack(obj/item/enchanted, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/action/cooldown/spell/sanguine_strike/proc/on_enchanted_afterattack(obj/item/enchanted, atom/target, mob/user, click_parameters)
 	SIGNAL_HANDLER
 	end_enchantment(enchanted)
 	if(!isliving(target))

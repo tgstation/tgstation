@@ -319,13 +319,6 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 /// Proceed with the attack chain, but don't call the normal methods.
 #define SECONDARY_ATTACK_CONTINUE_CHAIN 3
 
-/// Flag for when /afterattack potentially acts on an item.
-/// Used for the swap hands/drop tutorials to know when you might just be trying to do something normally.
-/// Does not necessarily imply success, or even that it did hit an item, just intent.
-// This is intentionally not (1 << 0) because some stuff currently erroneously returns TRUE/FALSE for afterattack.
-// Doesn't need to be set if proximity flag is FALSE.
-#define AFTERATTACK_PROCESSED_ITEM (1 << 1)
-
 //Autofire component
 /// Compatible firemode is in the gun. Wait until it's held in the user hands.
 #define AUTOFIRE_STAT_IDLE (1<<0)

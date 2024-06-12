@@ -161,14 +161,15 @@
 		loadedWeightClass++
 	return TRUE
 
-/obj/item/pneumatic_cannon/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
-	if(flag && user.combat_mode)//melee attack
-		return
-	if(!istype(user))
-		return
-	Fire(user, target)
-	return AFTERATTACK_PROCESSED_ITEM
+/obj/item/pneumatic_cannon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(user.combat_mode)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	Fire(user, interacting_with)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/pneumatic_cannon/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	Fire(user, interacting_with)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/pneumatic_cannon/proc/Fire(mob/living/user, atom/target)
 	if(!istype(user) && !target)

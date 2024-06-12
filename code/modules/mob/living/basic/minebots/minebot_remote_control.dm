@@ -43,22 +43,22 @@
 	user.client?.mouse_override_icon = 'icons/effects/mouse_pointers/weapon_pointer.dmi'
 	user.update_mouse_pointer()
 
-/obj/item/minebot_remote_control/afterattack(atom/attacked_atom, mob/living/user, proximity)
-	. = ..()
+/obj/item/minebot_remote_control/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
-	. |= AFTERATTACK_PROCESSED_ITEM
-
+/obj/item/minebot_remote_control/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!primed)
 		user.balloon_alert(user, "not primed!")
-		return
-	var/turf/target_turf = get_turf(attacked_atom)
+		return ITEM_INTERACT_BLOCKING
+	var/turf/target_turf = get_turf(interacting_with)
 	if(isnull(target_turf) || isclosedturf(target_turf) || isgroundlessturf(target_turf))
 		user.balloon_alert(user, "invalid target!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	playsound(src, 'sound/machines/beep.ogg', 30)
 	clear_priming()
 	new /obj/effect/temp_visual/minebot_target(target_turf)
 	COOLDOWN_START(src, bomb_timer, BOMB_COOLDOWN)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/effect/temp_visual/minebot_target
 	name = "Rocket Target"

@@ -240,31 +240,32 @@
 			if(duct_machine.duct_layer & layer_id)
 				return FALSE
 
-/obj/item/construction/plumbing/interact_with_atom(atom/target, mob/living/user, list/modifiers)
-	. = NONE
+/obj/item/construction/plumbing/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	for(var/category_name in plumbing_design_types)
 		var/list/designs = plumbing_design_types[category_name]
 
 		for(var/obj/machinery/recipe as anything in designs)
-			if(target.type != recipe)
+			if(interacting_with.type != recipe)
 				continue
 
-			var/obj/machinery/machine_target = target
+			var/obj/machinery/machine_target = interacting_with
 			if(machine_target.anchored)
 				balloon_alert(user, "unanchor first!")
 				return ITEM_INTERACT_BLOCKING
-			if(do_after(user, 2 SECONDS, target = target))
+			if(do_after(user, 2 SECONDS, target = interacting_with))
 				machine_target.deconstruct() //Let's not substract matter
-				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
+				playsound(src, 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
 			return ITEM_INTERACT_SUCCESS
 
-	if(create_machine(target, user))
+	if(!isopenturf(interacting_with))
+		return NONE
+	if(create_machine(interacting_with, user))
 		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/construction/plumbing/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
-	. = NONE
 	if(!istype(target, /obj/machinery/duct))
-		return ITEM_INTERACT_BLOCKING
+		return NONE
 
 	var/obj/machinery/duct/duct = target
 	if(duct.duct_layer && duct.duct_color)
@@ -272,6 +273,7 @@
 		current_layer = GLOB.plumbing_layer_names["[duct.duct_layer]"]
 		balloon_alert(user, "using [current_color], layer [current_layer]")
 		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/construction/plumbing/click_alt(mob/user)
 	ui_interact(user)
@@ -374,4 +376,3 @@
 	plumbing_design_types = service_design_types
 
 	. = ..()
-
