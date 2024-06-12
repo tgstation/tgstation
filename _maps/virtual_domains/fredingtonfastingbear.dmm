@@ -249,7 +249,7 @@
 /obj/structure/closet/gmcloset,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/item/clothing/mask/animal/small/bear/cursed,
+/obj/item/clothing/mask/animal/small/bear,
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "nX" = (
@@ -594,7 +594,7 @@
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "DV" = (
-/obj/machinery/door,
+/obj/machinery/door/airlock,
 /turf/open/floor/iron/cafeteria,
 /area/virtual_domain/protected_space/fullbright)
 "EO" = (
