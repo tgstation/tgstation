@@ -93,7 +93,7 @@
 	// If your ratio is less than one (you're missing any blood) and your oxyloss is under that ratio %, start getting oxy damage.
 	// This damage accrues faster the less blood you have.
 	// If KO or in hardcrit, the damage accrues even then to prevent being perma-KO.
-	if(((effective_blood_ratio < 1) && (getOxyLoss() < (effective_blood_ratio * 100))) || stat in list(UNCONSCIOUS, HARD_CRIT))
+	if(((effective_blood_ratio < 1) && (getOxyLoss() < (effective_blood_ratio * 100))) || (stat in list(UNCONSCIOUS, HARD_CRIT)))
 		// At roughly half blood this equals to 3 oxyloss per tick. At 90% blood it's close to 0.5
 		var/rounded_oxyloss = round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume) * seconds_per_tick, 0.25)
 		adjustOxyLoss(rounded_oxyloss, updating_health = TRUE)
