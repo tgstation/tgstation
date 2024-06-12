@@ -200,7 +200,6 @@
 	toolspeed = 10
 	var/list/omnitools = list()
 	var/list/toolpaths = list()
-	var/list/radial_menu_options = list()
 	var/upgraded_toolspeed = 10
 	var/currently_upgraded = FALSE
 
@@ -214,7 +213,6 @@
 		newitem = new newpath(src)
 		newitem.toolspeed = toolspeed //In case thse have different base speeds as stand-alone tools on other borgs
 		ADD_TRAIT(newitem, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-		radial_menu_options[newitem] = image(icon = newitem.icon, icon_state = newitem.icon_state)
 
 /obj/item/cyborg_omnitoolbox/proc/set_upgrade()
 	for(var/obj/item/tool in contents)
@@ -270,7 +268,10 @@
 	toolbox.omnitools += src
 
 /obj/item/borg/cyborg_omnitool/attack_self(mob/user)
-	var/obj/item/potential_new_tool = show_radial_menu(user, src, toolbox.radial_menu_options, require_near = TRUE, tooltips = TRUE)
+	var/list/radial_menu_options = list()
+	for(var/obj/item/borgtool in toolbox.contents)
+		radial_menu_options[borgtool] = image(icon = borgtool.icon, icon_state = borgtool.icon_state)
+	var/obj/item/potential_new_tool = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
 	if(!potential_new_tool)
 		return ..()
 	if(potential_new_tool == selected)
