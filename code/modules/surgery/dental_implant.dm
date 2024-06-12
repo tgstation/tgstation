@@ -45,6 +45,7 @@
 /datum/action/item_action/activate_pill
 	name = "Activate Pill"
 	check_flags = NONE
+
 /datum/action/item_action/activate_pill/Trigger(trigger_flags)
 	if(!..())
 		return FALSE
