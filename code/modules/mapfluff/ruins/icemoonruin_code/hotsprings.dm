@@ -36,6 +36,6 @@
 		addtimer(TRAIT_CALLBACK_REMOVE(transforming_mind, TRAIT_HOT_SPRING_CURSED, TRAIT_GENERIC), 10 SECONDS)
 		return
 
-	var/turf/return_turf = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE) || find_safe_turf(extended_safety_checks = TRUE, dense_atoms = FALSE)
+	var/turf/return_turf = find_safe_turf(extended_safety_checks = TRUE, dense_atoms = FALSE)
 	transformed_mob.forceMove(return_turf)
 	to_chat(transformed_mob, span_notice("You blink and find yourself in [get_area_name(return_turf)]."))
