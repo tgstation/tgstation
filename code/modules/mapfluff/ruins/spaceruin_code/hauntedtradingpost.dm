@@ -128,11 +128,11 @@
 
 //this is a trigger for traps involving doors and shutters
 //doors get closed and bolted, shutters get cycled open/closed
-/obj/machinery/button/invisible_tripwire
+/obj/machinery/button/door/invisible_tripwire
 	name = "Sonic Tripwire"
 	desc = "An invisible trigger for shutters and doors. Triggers when someone steps on the tile."
 	max_integrity = 50
-	invisibility = INVISIBILITY_ABSTRACT
+//	invisibility = INVISIBILITY_ABSTRACT
 	anchored = TRUE
 	//is this being used as part of the haunted trading post ruin? if true, will self destruct when boss dies
 	var/donk_ai_slave = FALSE
@@ -150,7 +150,7 @@
 	var/suicide_pact_id
 GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 
-/obj/machinery/button/invisible_tripwire/Initialize(mapload)
+/obj/machinery/button/door/invisible_tripwire/Initialize(mapload)
 	. = ..()
 	if(donk_ai_slave == TRUE)
 		GLOB.selfdestructs_when_boss_dies += src
@@ -161,30 +161,65 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/machinery/button/invisible_tripwire/proc/on_entered(datum/source, mob/living)
-	src.interact()
-	if(!multiuse)
-		qdel(src)
-	if(uses_remaining == 1)
-		qdel(src)
-	uses_remaining--
+/obj/machinery/button/door/invisible_tripwire/proc/on_entered(atom/victim)
+	var/mob/living = victim
+	if (living.stat)
+		return
+	tripwire_triggered(victim)
 
-/obj/machinery/button/invisible_tripwire/Destroy()
+/obj/machinery/button/door/invisible_tripwire/proc/tripwire_triggered(atom/victim)
+	src.interact(victim)
+	if(multiuse || uses_remaining != 1)
+		uses_remaining--
+		return
 	if(suicide_pact == TRUE || suicide_pact_id != null)
-		for (var/obj/machinery/button/invisible_tripwire/pact_member in GLOB.tripwire_suicide_pact)
+		for (var/obj/machinery/button/door/invisible_tripwire/pact_member in GLOB.tripwire_suicide_pact)
 			if(src.suicide_pact_id == pact_member.suicide_pact_id)
 				qdel(pact_member)
 		GLOB.tripwire_suicide_pact -= src
+	qdel(src)
+
+
+/obj/machinery/button/door/invisible_tripwire/Destroy()
 	if(donk_ai_slave == TRUE)
 		GLOB.selfdestructs_when_boss_dies -= src
+	if(suicide_pact == TRUE || suicide_pact_id != null)
+		GLOB.tripwire_suicide_pact -= src
 	return ..()
 
-/obj/machinery/button/invisible_tripwire/airlock_bolter
-//TODO-make this work
-//variant on invisible trip wire, this one triggers if you stay in the area too long
-/obj/machinery/button/invisible_tripwire/delay
-//TODO-make this work
+//variant on the invisible trip wire, instead of opening and closing doors this bolts and unbolts them
+/obj/machinery/button/door/invisible_tripwire/airlock_bolter
+	desc = "Bolts doors when stepped on. It's invisible."
+	resets_self = TRUE
+	reset_timer = 4 SECONDS
+	normaldoorcontrol = TRUE
+	specialfunctions = COMSIG_AIRLOCK_CLOSE
+
+/obj/machinery/button/door/invisible_tripwire/airlock_bolter/on_entered(atom/victim)
+	. = ..()
+	specialfunctions = COMSIG_AIRLOCK_SET_BOLT
+	tripwire_triggered(victim)
+
+//variant on the invisible trip wire, this one triggers if you stay in the area too long
+/obj/machinery/button/door/invisible_tripwire/delay
 	desc = "Linger too long on this tile, and this will trigger."
+	//how long this trap will wait before springing (if someone is still on the tile)
+	var/delay_duration = 2 SECONDS
+
+/obj/machinery/button/door/invisible_tripwire/delay/on_entered(atom/victim)
+	. = ..()
+	if(!isliving(victim))
+		return
+	addtimer(CALLBACK(src, PROC_REF(tripwire_triggered)), delay_duration)
+
+/obj/machinery/button/door/invisible_tripwire/delay/tripwire_triggered(atom/victim, datum/source)
+	var/someone_there = FALSE //have we detected someone on the tile?
+	for(victim in src.loc)
+		someone_there = TRUE
+	if(someone_there == FALSE)
+		return
+	. = ..()
+
 
 //trap that gloms onto the first machine it finds on its tile, and lives inside it
 //then it zaps everyone who wants to get close. disarm by dissassembling the machine, or running out its charges

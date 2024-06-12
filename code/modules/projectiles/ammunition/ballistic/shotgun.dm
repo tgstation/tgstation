@@ -109,8 +109,8 @@
 	icon_state = "improvshell"
 	projectile_type = /obj/projectile/bullet/pellet/flechette
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2, /datum/material/glass=SMALL_MATERIAL_AMOUNT*1)
-	pellets = 5
-	variance = 35
+	pellets = 6
+	variance = 20
 
 /obj/item/ammo_casing/shotgun/ion
 	name = "ion shell"
