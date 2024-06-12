@@ -327,14 +327,14 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/flatpack_cart/item_interaction(mob/living/user, obj/item/attacking_item, params)
-	if(istype(attacking_item, /obj/item/flatpack))
-		if (length(contents) >= max_flatpacks)
-			balloon_alert(user, "full!")
-			return ITEM_INTERACT_BLOCKING
-		if (!user.transferItemToLoc(attacking_item, src))
-			return ITEM_INTERACT_BLOCKING
-		update_appearance(UPDATE_OVERLAYS)
-		return ITEM_INTERACT_SUCCESS
-	return NONE
+	if(!istype(attacking_item, /obj/item/flatpack))
+		return NONE
+	if (length(contents) >= max_flatpacks)
+		balloon_alert(user, "full!")
+		return ITEM_INTERACT_BLOCKING
+	if (!user.transferItemToLoc(attacking_item, src))
+		return ITEM_INTERACT_BLOCKING
+	update_appearance(UPDATE_OVERLAYS)
+	return ITEM_INTERACT_SUCCESS
 
 #undef CREATE_AND_INCREMENT
