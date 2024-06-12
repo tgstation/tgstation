@@ -36,19 +36,16 @@ clamping the Knockback_Force value below. */
 	else
 		return default_speed
 
-/datum/element/selfknockback/proc/Item_SelfKnockback(obj/item/I, atom/attacktarget, mob/usertarget, proximity_flag)
+/datum/element/selfknockback/proc/Item_SelfKnockback(obj/item/I, atom/attacktarget, mob/usertarget)
 	SIGNAL_HANDLER
 
-	if(isturf(attacktarget) && !attacktarget.density)
-		return
-	if(proximity_flag || (get_dist(attacktarget, usertarget) <= I.reach))
-		var/knockback_force = Get_Knockback_Force(clamp(CEILING((I.force / 10), 1), 1, 5))
-		var/knockback_speed = Get_Knockback_Speed(clamp(knockback_force, 1, 5))
+	var/knockback_force = Get_Knockback_Force(clamp(CEILING((I.force / 10), 1), 1, 5))
+	var/knockback_speed = Get_Knockback_Speed(clamp(knockback_force, 1, 5))
 
-		var/target_angle = get_angle(attacktarget, usertarget)
-		var/move_target = get_ranged_target_turf(usertarget, angle2dir(target_angle), knockback_force)
-		usertarget.throw_at(move_target, knockback_force, knockback_speed)
-		usertarget.visible_message(span_warning("[usertarget] gets thrown back by the force of \the [I] impacting \the [attacktarget]!"), span_warning("The force of \the [I] impacting \the [attacktarget] sends you flying!"))
+	var/target_angle = get_angle(attacktarget, usertarget)
+	var/move_target = get_ranged_target_turf(usertarget, angle2dir(target_angle), knockback_force)
+	usertarget.throw_at(move_target, knockback_force, knockback_speed)
+	usertarget.visible_message(span_warning("[usertarget] gets thrown back by the force of \the [I] impacting \the [attacktarget]!"), span_warning("The force of \the [I] impacting \the [attacktarget] sends you flying!"))
 
 /datum/element/selfknockback/proc/Projectile_SelfKnockback(obj/projectile/P)
 	SIGNAL_HANDLER

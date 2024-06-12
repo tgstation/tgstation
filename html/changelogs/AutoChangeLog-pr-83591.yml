@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - rscadd: "Adds some more station-trait dependent pulsar star reports. Keep an eye on that roundstart command report!"
