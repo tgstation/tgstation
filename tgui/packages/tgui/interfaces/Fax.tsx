@@ -49,6 +49,9 @@ export const Fax = (props) => {
         (sortFax: FaxInfo) => sortFax.fax_name,
       )
     : [];
+  const special_networks = data.syndicate_network
+    ? data.special_faxes
+    : data.special_faxes.filter((fax: FaxSpecial) => !fax.emag_needed);
   return (
     <Window width={340} height={540}>
       <Window.Content scrollable>
@@ -81,33 +84,26 @@ export const Fax = (props) => {
           </LabeledList.Item>
         </Section>
         <Section title="Send">
-          {faxes.length === 0 && data.special_faxes.length === 0 ? (
+          {faxes.length === 0 && special_networks.length === 0 ? (
             "The fax couldn't detect any other faxes on the network."
           ) : (
             <Box mt={0.4}>
-              {data.special_faxes.length !== 0
-                ? (data.syndicate_network
-                    ? data.special_faxes
-                    : data.special_faxes.filter(
-                        (fax: FaxSpecial) => !fax.emag_needed,
-                      )
-                  ).map((special: FaxSpecial) => (
-                    <Button
-                      key={special.fax_id}
-                      tooltip={special.fax_name}
-                      disabled={!data.has_paper}
-                      color={special.color}
-                      onClick={() =>
-                        act('send_special', {
-                          id: special.fax_id,
-                          name: special.fax_name,
-                        })
-                      }
-                    >
-                      {special.fax_name}
-                    </Button>
-                  ))
-                : null}
+              {special_networks.map((special: FaxSpecial) => (
+                <Button
+                  key={special.fax_id}
+                  tooltip={special.fax_name}
+                  disabled={!data.has_paper}
+                  color={special.color}
+                  onClick={() =>
+                    act('send_special', {
+                      id: special.fax_id,
+                      name: special.fax_name,
+                    })
+                  }
+                >
+                  {special.fax_name}
+                </Button>
+              ))}
               {faxes.length !== 0
                 ? faxes.map((fax: FaxInfo) => (
                     <Button
