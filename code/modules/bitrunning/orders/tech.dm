@@ -53,4 +53,4 @@
 /datum/orderable_item/bitrunning_tech/pkc_mod/premium
 	item_path = /obj/item/bitrunning_disk/item/pkc_mods/premium
 	cost_per_order = 1800
-	desc = "This disk contains a program that lets you equip stronger trophies for the proto-kinetic crusher. Proto-kinetic crusher no included."
+	desc = "This disk contains a program that lets you equip stronger trophies for the proto-kinetic crusher. Proto-kinetic crusher not included."
