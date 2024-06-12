@@ -177,6 +177,7 @@
 			if(!design)
 				return FALSE
 			blueprint = design
+			blueprint_changed = TRUE
 
 			playsound(src, 'sound/effects/pop.ogg', 50, vary = FALSE)
 
@@ -202,7 +203,7 @@
 		if(!is_allowed)
 			balloon_alert(user, "turf is blocked!")
 		return FALSE
-	if(!do_after(user, cost, target = destination)) //"cost" is relative to delay at a rate of 10 matter/second  (1matter/decisecond) rather than playing with 2 different variables since everyone set it to this rate anyways.
+	if(!build_delay(user, cost, target = destination))
 		return FALSE
 	if(!checkResource(cost, user) || !(is_allowed = canPlace(destination)))
 		if(!is_allowed)

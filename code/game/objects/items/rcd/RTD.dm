@@ -224,6 +224,7 @@
 			QDEL_LIST(design_overlays)
 			design_category = params["category_name"]
 			selected_design.set_info(target_design)
+			blueprint_changed = TRUE
 
 	return TRUE
 
@@ -280,7 +281,7 @@
 		return ITEM_INTERACT_BLOCKING
 	var/beam = user.Beam(floor, icon_state = "light_beam", time = delay)
 	playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
-	if(!do_after(user, delay, target = floor))
+	if(!build_delay(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)
 		return ITEM_INTERACT_BLOCKING
