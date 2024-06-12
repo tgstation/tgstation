@@ -204,6 +204,7 @@
 #include "organ_bodypart_shuffle.dm"
 #include "organ_set_bonus.dm"
 #include "organs.dm"
+#include "orphaned_genturf.dm"
 #include "outfit_sanity.dm"
 #include "oxyloss_suffocation.dm"
 #include "paintings.dm"
