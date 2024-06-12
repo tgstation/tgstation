@@ -47,36 +47,6 @@
 		return ..()
 	return FALSE
 
-/datum/emote/living/carbon/human/cough
-	key = "cough"
-	key_third_person = "coughs"
-	message = "coughs!"
-	message_mime = "acts out an exaggerated cough!"
-	vary = TRUE
-	audio_cooldown = 5 SECONDS
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_RUNECHAT
-
-/datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional)
-	return !HAS_TRAIT(user, TRAIT_SOOTHED_THROAT) && ..()
-
-/datum/emote/living/carbon/human/cough/get_sound(mob/living/carbon/human/user)
-	if(!istype(user))
-		return
-	return user.dna.species.get_cough_sound(user)
-/datum/emote/living/carbon/human/sneeze
-	key = "sneeze"
-	key_third_person = "sneezes"
-	message = "sneezes."
-	audio_cooldown = 5 SECONDS
-	message_mime = "acts out an exaggerated silent sneeze."
-	vary = TRUE
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-
-/datum/emote/living/carbon/human/sneeze/get_sound(mob/living/carbon/human/user)
-	if(!istype(user))
-		return
-	return user.dna.species.get_sneeze_sound(user)
-
 /datum/emote/living/carbon/human/glasses/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', user, "glasses")

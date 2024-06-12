@@ -72,8 +72,6 @@
 	return 'sound/voice/human/male_sneeze1.ogg'
 
 /datum/species/human/get_laugh_sound(mob/living/carbon/human/human)
-	if(!ishuman(human))
-		return
 	if(human.physique == FEMALE)
 		return 'sound/voice/human/womanlaugh.ogg'
 	return pick(
