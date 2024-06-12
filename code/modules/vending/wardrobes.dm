@@ -11,9 +11,9 @@
 	panel_type = "panel19"
 	light_mask = "wardrobe-light-mask"
 
-/obj/machinery/vending/wardrobe/post_machine_initialize()
+/obj/machinery/vending/wardrobe/Initialize(mapload)
 	. = ..()
-	if(!prob(MOTHROACH_START_CHANCE))
+	if(!mapload || !prob(MOTHROACH_START_CHANCE))
 		return
 	for(var/count in 1 to rand(1, MAX_MOTHROACH_AMOUNT))
 		new /mob/living/basic/mothroach(src)
