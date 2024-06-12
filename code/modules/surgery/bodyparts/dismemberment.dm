@@ -234,7 +234,7 @@
 	qdel(owner.GetComponent(/datum/component/creamed)) //clean creampie overlay flushed emoji
 
 	//Handle dental implants
-	for(var/datum/action/item_action/hands_free/activate_pill/pill_action in owner.actions)
+	for(var/datum/action/item_action/activate_pill/pill_action in owner.actions)
 		pill_action.Remove(owner)
 		var/obj/pill = pill_action.target
 		if(pill)
@@ -342,7 +342,7 @@
 
 	//Handle dental implants
 	for(var/obj/item/reagent_containers/pill/pill in src)
-		for(var/datum/action/item_action/hands_free/activate_pill/pill_action in pill.actions)
+		for(var/datum/action/item_action/activate_pill/pill_action in pill.actions)
 			pill.forceMove(new_head_owner)
 			pill_action.Grant(new_head_owner)
 			break

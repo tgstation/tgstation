@@ -27,7 +27,7 @@
 
 	user.transferItemToLoc(tool, target, TRUE)
 
-	var/datum/action/item_action/hands_free/activate_pill/pill_action = new(tool)
+	var/datum/action/item_action/activate_pill/pill_action = new(tool)
 	pill_action.name = "Activate [tool.name]"
 	pill_action.build_all_button_icons()
 	pill_action.target = tool
@@ -42,10 +42,10 @@
 	)
 	return ..()
 
-/datum/action/item_action/hands_free/activate_pill
+/datum/action/item_action/activate_pill
 	name = "Activate Pill"
-
-/datum/action/item_action/hands_free/activate_pill/Trigger(trigger_flags)
+	check_flags = NONE
+/datum/action/item_action/activate_pill/Trigger(trigger_flags)
 	if(!..())
 		return FALSE
 	var/obj/item/item_target = target

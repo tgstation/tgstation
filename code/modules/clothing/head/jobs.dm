@@ -701,7 +701,7 @@
 	else
 		var/obj/item/organ/internal/tongue/has_tongue = human_examined.get_organ_slot(ORGAN_SLOT_TONGUE)
 		var/pill_count = 0
-		for(var/datum/action/item_action/hands_free/activate_pill/pill in human_examined.actions)
+		for(var/datum/action/item_action/activate_pill/pill in human_examined.actions)
 			pill_count++
 
 		if(pill_count >= 1 && has_tongue)
