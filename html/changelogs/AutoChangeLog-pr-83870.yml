@@ -1,0 +1,5 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - qol: "Cult pylons slowly close bleeding wounds"
+  - refactor: "allowed aura healing to clot wounds shut"
