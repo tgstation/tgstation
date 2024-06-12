@@ -16,22 +16,21 @@
 	if(SEND_SIGNAL(src, COMSIG_MOB_CTRL_CLICKED, target) & COMSIG_MOB_CANCEL_CLICKON)
 		return TRUE
 
+	// If it has a signal handler that returns a click action, done.
+	if(SEND_SIGNAL(target, COMSIG_CLICK_CTRL, src) & CLICK_ACTION_ANY)
+		return TRUE
+
 	var/can_use_click_action = FALSE
 	if(isturf(target))
 		// Turfs are special because they can't be used with can_perform_action
 		can_use_click_action = can_perform_turf_action(target)
 	else
 		can_use_click_action = can_perform_action(target, target.interaction_flags_click | SILENT_ADJACENCY)
+	if(!can_use_click_action)
+		return TRUE
 
-	. = TRUE
-	if(can_use_click_action)
-		// If it has a signal handler that returns a click action, done.
-		if(SEND_SIGNAL(target, COMSIG_CLICK_CTRL, src) & CLICK_ACTION_ANY)
-			return FALSE
-
-		// If it has a custom click_alt that returns success/block, done.
-		if(!(target.click_ctrl(src) & CLICK_ACTION_ANY))
-			. = FALSE
+	// If it has a custom click_alt that returns success/block, done.
+	return target.click_ctrl(src) & CLICK_ACTION_ANY
 
 /**
  * Ctrl click
@@ -49,7 +48,6 @@
 		changeNext_move(CLICK_CD_MELEE)
 		return
 	pulled(target)
-
 
 /**
  * Ctrl mouse wheel click
@@ -95,7 +93,11 @@
 
 	// Check if they've hooked in to prevent src from ctrl clicking anything
 	if(SEND_SIGNAL(src, COMSIG_MOB_CTRL_SHIFT_CLICKED, target) & COMSIG_MOB_CANCEL_CLICKON)
-		return TRUE
+		return
+
+	// If it has a signal handler that returns a click action, done.
+	if(SEND_SIGNAL(target, COMSIG_CLICK_CTRL_SHIFT, src) & CLICK_ACTION_ANY)
+		return
 
 	var/can_use_click_action = FALSE
 	if(isturf(target))
@@ -103,14 +105,11 @@
 		can_use_click_action = can_perform_turf_action(target)
 	else
 		can_use_click_action = can_perform_action(target, target.interaction_flags_click | SILENT_ADJACENCY)
+	if(!can_use_click_action)
+		return
 
-	if(can_use_click_action)
-		// If it has a signal handler that returns a click action, done.
-		if(SEND_SIGNAL(target, COMSIG_CLICK_CTRL_SHIFT, src) & CLICK_ACTION_ANY)
-			return
-
-		// Proceed with ctrl shift click
-		target.click_ctrl_shift(src)
+	// Proceed with ctrl shift click
+	target.click_ctrl_shift(src)
 
 /**
  * ## Custom ctrl shift click interaction
