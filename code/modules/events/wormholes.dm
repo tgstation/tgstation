@@ -43,6 +43,7 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 			var/turf/T = pick(pick_turfs)
 			if(T)
 				O.forceMove(T)
+				playsound(T, SFX_PORTAL_CREATED, 33, TRUE, SILENCED_SOUND_EXTRARANGE)
 
 /datum/round_event/wormholes/end()
 	QDEL_LIST(wormholes)
