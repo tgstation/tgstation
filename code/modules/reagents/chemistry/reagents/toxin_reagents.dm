@@ -1201,7 +1201,7 @@
 		var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
 		var/obj/item/bodypart/BP = affected_mob.get_bodypart(selected_part)
 		if(BP)
-			playsound(affected_mob, get_sfx(SFX_DESECRATION), 50, TRUE, -1)
+			playsound(affected_mob, SFX_DESECRATION, 50, TRUE, -1)
 			affected_mob.visible_message(span_warning("[affected_mob]'s bones hurt too much!!"), span_danger("Your bones hurt too much!!"))
 			affected_mob.say("OOF!!", forced = /datum/reagent/toxin/bonehurtingjuice)
 			if(BP.receive_damage(brute = 20 * REM * seconds_per_tick, burn = 0, blocked = 200, updating_health = FALSE, wound_bonus = rand(30, 130)))

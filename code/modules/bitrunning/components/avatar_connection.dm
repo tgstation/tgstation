@@ -60,7 +60,7 @@
 		var/datum/action/avatar_domain_info/action = new(help_datum)
 		action.Grant(avatar)
 
-	avatar.playsound_local(avatar, "sound/magic/blink.ogg", 25, TRUE)
+	avatar.playsound_local(avatar, 'sound/magic/blink.ogg', 25, TRUE)
 	avatar.set_static_vision(2 SECONDS)
 	avatar.set_temp_blindness(1 SECONDS)
 

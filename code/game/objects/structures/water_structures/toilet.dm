@@ -162,7 +162,7 @@
 	if(flushing)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	flushing = TRUE
-	playsound(src, "sound/machines/toilet_flush.ogg", cover_open ? 40 : 20, TRUE)
+	playsound(src, 'sound/machines/toilet_flush.ogg', cover_open ? 40 : 20, TRUE)
 	if(cover_open && (dir & SOUTH))
 		update_appearance(UPDATE_OVERLAYS)
 		flick_overlay_view(mutable_appearance(icon, "[base_icon_state]-water-flick"), 3 SECONDS)

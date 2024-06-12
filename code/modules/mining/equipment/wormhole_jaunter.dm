@@ -61,7 +61,7 @@
 	else if(adjacent)
 		try_move_adjacent(tunnel)
 
-	playsound(src, "sound/effects/portal_travel.ogg",50,TRUE)
+	playsound(src, SFX_PORTAL_ENTER,50,TRUE)
 	qdel(src)
 	return FALSE // used for chasm code
 

@@ -62,15 +62,7 @@
 	return ..()
 
 /datum/species/monkey/get_scream_sound(mob/living/carbon/human/monkey)
-	return pick(
-		'sound/creatures/monkey/monkey_screech_1.ogg',
-		'sound/creatures/monkey/monkey_screech_2.ogg',
-		'sound/creatures/monkey/monkey_screech_3.ogg',
-		'sound/creatures/monkey/monkey_screech_4.ogg',
-		'sound/creatures/monkey/monkey_screech_5.ogg',
-		'sound/creatures/monkey/monkey_screech_6.ogg',
-		'sound/creatures/monkey/monkey_screech_7.ogg',
-	)
+	return get_sfx(SFX_SCREECH)
 
 /datum/species/monkey/get_physical_attributes()
 	return "Monkeys are slippery, can crawl into vents, and are more dextrous than humans.. but only when stealing things. \

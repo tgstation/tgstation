@@ -452,4 +452,24 @@
 				'sound/items/rattle2.ogg',
 				'sound/items/rattle3.ogg',
 			)
+		if(SFX_PORTAL_CLOSE)
+			soundin = 'sound/effects/portal_close.ogg'
+		if(SFX_PORTAL_ENTER)
+			soundin = 'sound/effects/portal_travel.ogg'
+		if(SFX_PORTAL_CREATED)
+			soundin = pick(
+				'sound/effects/portal_open_1.ogg',
+				'sound/effects/portal_open_2.ogg',
+				'sound/effects/portal_open_3.ogg',
+			)
+		if(SFX_SCREECH)
+			soundin = pick(
+				'sound/creatures/monkey/monkey_screech_1.ogg',
+				'sound/creatures/monkey/monkey_screech_2.ogg',
+				'sound/creatures/monkey/monkey_screech_3.ogg',
+				'sound/creatures/monkey/monkey_screech_4.ogg',
+				'sound/creatures/monkey/monkey_screech_5.ogg',
+				'sound/creatures/monkey/monkey_screech_6.ogg',
+				'sound/creatures/monkey/monkey_screech_7.ogg',
+			)
 	return soundin

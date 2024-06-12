@@ -379,7 +379,7 @@ effective or pretty fucking useless.
 	user.visible_message(span_danger("[user] bashes [src] with [attacking_item]!"), \
 		span_danger("You bash [src] with [attacking_item]!"), null, COMBAT_MESSAGE_RANGE)
 
-	playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
+	playsound(src, 'sound/items/drill_use.ogg', 80, TRUE, -1)
 	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
 	set_faction(turret, user)
 	turret.toolbox = src

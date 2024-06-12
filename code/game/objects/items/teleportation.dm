@@ -143,7 +143,7 @@
 	if(is_parent_of_portal(target))
 		qdel(target)
 		to_chat(user, span_notice("You dispel [target] with \the [src]!"))
-		playsound(loc, "sound/effects/portal_close.ogg", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(loc, SFX_PORTAL_CLOSE, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return TRUE
 	return FALSE
 
@@ -254,7 +254,7 @@
 	var/list/obj/effect/portal/created = create_portal_pair(get_turf(user), get_teleport_turf(get_turf(teleport_target)), 300, 1, null)
 	if(LAZYLEN(created) != 2)
 		return
-	playsound(loc, pick("sound/effects/portal_open_1.ogg", "sound/effects/portal_open_2.ogg", "sound/effects/portal_open_3.ogg" ), 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(loc, SFX_PORTAL_CREATED, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/obj/effect/portal/portal1 = created[1]
 	var/obj/effect/portal/portal2 = created[2]
 
@@ -479,7 +479,7 @@
 	new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
 	playsound(mobloc, 'sound/effects/portal_travel.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	playsound(destination, 'sound/effects/portal_travel.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	playsound(destination, "sound/magic/disintegrate.ogg", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, 'sound/magic/disintegrate.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(!not_holding_tele)
 		to_chat(victim, span_userdanger("You teleport into [destination], [src] tries to save you, but..."))
 	else

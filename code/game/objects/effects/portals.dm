@@ -69,7 +69,7 @@
 
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
 	if(user && Adjacent(user))
-		playsound(loc, "sound/effects/portal_travel.ogg" , 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(loc, SFX_PORTAL_ENTER , 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		teleport(user)
 		return TRUE
 
@@ -79,7 +79,7 @@
 		return TRUE
 
 /obj/effect/portal/Bumped(atom/movable/bumper)
-	playsound(loc, "sound/effects/portal_travel.ogg" , 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(loc, SFX_PORTAL_ENTER , 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	teleport(bumper)
 
 /obj/effect/portal/attack_hand(mob/user, list/modifiers)
@@ -87,13 +87,13 @@
 	if(.)
 		return
 	if(Adjacent(user))
-		playsound(loc, "sound/effects/portal_travel.ogg" , 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(loc, SFX_PORTAL_ENTER , 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		teleport(user)
 
 
 /obj/effect/portal/attack_robot(mob/living/user)
 	if(Adjacent(user))
-		playsound(loc, "sound/effects/portal_travel.ogg" , 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(loc, SFX_PORTAL_ENTER , 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		teleport(user)
 
 /obj/effect/portal/Initialize(mapload, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override)
@@ -126,7 +126,7 @@
 		QDEL_NULL(linked)
 	else
 		linked = null
-	playsound(loc, "sound/effects/portal_close.ogg" , 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(loc, SFX_PORTAL_CLOSE, 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return ..()
 
 /obj/effect/portal/attack_ghost(mob/dead/observer/O)
