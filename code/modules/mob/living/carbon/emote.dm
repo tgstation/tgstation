@@ -27,14 +27,14 @@
 	vary = TRUE
 
 /datum/emote/living/carbon/clap/get_sound(mob/living/user)
-	if(ishuman(user))
-		if(!user.get_bodypart(BODY_ZONE_L_ARM) || !user.get_bodypart(BODY_ZONE_R_ARM))
-			return
-		else
-			return pick('sound/misc/clap1.ogg',
-							'sound/misc/clap2.ogg',
-							'sound/misc/clap3.ogg',
-							'sound/misc/clap4.ogg')
+	if(!user.get_bodypart(BODY_ZONE_L_ARM) || !user.get_bodypart(BODY_ZONE_R_ARM))
+		return
+	return pick(
+		'sound/misc/clap1.ogg',
+		'sound/misc/clap2.ogg',
+		'sound/misc/clap3.ogg',
+		'sound/misc/clap4.ogg',
+	)
 
 /datum/emote/living/carbon/crack
 	key = "crack"
