@@ -1,4 +1,0 @@
-author: "Goat"
-delete-after: True
-changes:
-  - bugfix: "blood drunk miner can now path over lava"

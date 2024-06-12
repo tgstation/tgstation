@@ -1,4 +1,0 @@
-author: "norsvenska"
-delete-after: True
-changes:
-  - bugfix: "The recyclers in the snow cabin gateway, the cyborg mothership, and the deep storage space ruin are now rotated properly."
