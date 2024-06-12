@@ -36,10 +36,10 @@
 				to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
 				investigate_log("has been gibbed by having too much blood.", INVESTIGATE_DEATHS)
 				inflate_gib()
-			// Way too much blood!
-			if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
-				if(SPT_PROB(5, seconds_per_tick))
-					to_chat(src, span_warning("You feel your skin swelling."))
+		// Way too much blood!
+		if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
+			if(SPT_PROB(5, seconds_per_tick))
+				to_chat(src, span_warning("You feel your skin swelling."))
 		// Too much blood
 		if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
 			if(SPT_PROB(5, seconds_per_tick))
@@ -97,7 +97,8 @@
 
 	// If your ratio is less than one (you're missing any blood) and your oxyloss is under that ratio %, start getting oxy damage.
 	// This damage accrues faster the less blood you have.
-	if((effective_blood_ratio < 1) && (oxyloss < (effective_blood_ratio * 100)))
+	// If KO or in hardcrit, the damage accrues even then to prevent being perma-KO.
+	if(((effective_blood_ratio < 1) && (oxyloss < (effective_blood_ratio * 100))) || stat in list(UNCONSCIOUS, HARD_CRIT))
 		// At roughly half blood this equals to 3 oxyloss per tick. At 90% blood it's close to 0.5
 		var/rounded_oxyloss = round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume) * seconds_per_tick, 0.25)
 		adjustOxyLoss(rounded_oxyloss, updating_health = TRUE)
