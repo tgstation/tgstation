@@ -19,28 +19,27 @@
 	/// Set to true if we finished drawing something, this spraycan is now useless
 	var/expended = FALSE
 
-/obj/item/traitor_spraycan/afterattack(atom/target, mob/user, proximity, params)
-	. = ..()
+/obj/item/traitor_spraycan/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!check_allowed_items(interacting_with) || !isliving(user))
+		return NONE
+
 	if (expended)
 		user.balloon_alert(user, "all out of paint...")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
 	if (drawing_rune)
 		user.balloon_alert(user, "already busy!")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
-	. |= AFTERATTACK_PROCESSED_ITEM
+	if (isturf(interacting_with))
+		try_draw_new_rune(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
 
-	if (!proximity || !check_allowed_items(target) || !isliving(user))
-		return
+	if (istype(interacting_with, /obj/effect/decal/cleanable/traitor_rune))
+		try_complete_rune(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
 
-	if (isturf(target))
-		try_draw_new_rune(user, target)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	if (istype(target, /obj/effect/decal/cleanable/traitor_rune))
-		try_complete_rune(user, target)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_BLOCKING
 
 /**
  * Attempt to draw a rune on [target_turf].

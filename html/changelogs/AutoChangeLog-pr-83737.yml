@@ -1,0 +1,4 @@
+author: "Kocma-san"
+delete-after: True
+changes:
+  - rscadd: "Added new keywords (%d, %date, %t, %time) for fields"
