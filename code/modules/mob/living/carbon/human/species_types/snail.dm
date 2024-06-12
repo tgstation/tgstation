@@ -16,7 +16,6 @@
 	mutanteyes = /obj/item/organ/internal/eyes/snail
 	mutanttongue = /obj/item/organ/internal/tongue/snail
 	exotic_blood = /datum/reagent/lube
-	teeth_count = 0
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/snail,

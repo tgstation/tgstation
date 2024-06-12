@@ -9,15 +9,18 @@
 /datum/surgery_step/drill/pill/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	. = ..()
 	var/count = 0
+	var/obj/item/bodypart/head/teeth_receptangle = target.get_bodypart(BODY_ZONE_HEAD)
 
-	for(var/obj/item/reagent_containers/pill/dental in target.get_bodypart(BODY_ZONE_HEAD))
+	ASSERT(teeth_receptangle)
+
+	for(var/obj/item/reagent_containers/pill/dental in teeth_receptangle)
 		count++
 
-	if(target.dna.species.teeth_count == 0)
+	if(teeth_receptangle.teeth_count == 0)
 		to_chat(user, span_notice("[user] has no teeth, doofus!"))
 		return SURGERY_STEP_FAIL
 
-	if(count >= target.dna.species.teeth_count)
+	if(count >= teeth_receptangle.teeth_count)
 		to_chat(user, span_notice("[user]'s teeth have all been replaced with pills already!"))
 		return SURGERY_STEP_FAIL
 
