@@ -391,6 +391,10 @@
 	ui_interact(user)
 
 /obj/item/construction/rcd/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if (. == ITEM_INTERACT_SUCCESS)
+		return .
+
 	mode = construction_mode
 	rcd_create(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS

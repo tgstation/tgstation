@@ -235,6 +235,10 @@
 
 
 /obj/item/construction/rtd/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if (. == ITEM_INTERACT_SUCCESS)
+		return .
+
 	var/turf/open/floor/floor = interacting_with
 	if(!istype(floor))
 		return NONE

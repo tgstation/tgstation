@@ -94,6 +94,10 @@
 	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/construction/rld/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if (. == ITEM_INTERACT_SUCCESS)
+		return .
+
 	var/turf/start = get_turf(src)
 	switch(mode)
 		if(REMOVE_MODE)

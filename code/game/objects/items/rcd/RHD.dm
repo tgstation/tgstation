@@ -37,7 +37,7 @@
 	var/datum/component/remote_materials/silo_mats
 	/// switch to use internal or remote storage
 	var/silo_link = FALSE
-	/// has the blueprint design changed
+		/// has the blueprint design changed
 	var/blueprint_changed = FALSE
 
 /datum/armor/item_construction
@@ -89,12 +89,12 @@
 	silo_mats = null
 	return ..()
 
-/obj/item/construction/pre_attack(atom/target, mob/user, params)
-	if(istype(target, /obj/item/rcd_upgrade))
-		install_upgrade(target, user)
-		return TRUE
-	if(insert_matter(target, user))
-		return TRUE
+/obj/item/construction/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/item/rcd_upgrade))
+		install_upgrade(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+	if(insert_matter(interacting_with, user))
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /obj/item/construction/attackby(obj/item/item, mob/user, params)
