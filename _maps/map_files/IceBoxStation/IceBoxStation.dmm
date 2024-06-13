@@ -27555,9 +27555,9 @@
 	},
 /area/station/hallway/secondary/entry)
 "ioi" = (
-/obj/structure/bed/dogbed/lia,
 /obj/structure/cable,
-/mob/living/basic/carp/pet/lia,
+/mob/living/basic/bear/snow/misha,
+/obj/structure/bed/dogbed/misha,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/hos)
 "iol" = (
