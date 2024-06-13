@@ -70,8 +70,7 @@
 	update_appearance()
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddElement(/datum/element/volatile_gas_storage)
-	AddComponent(/datum/component/gas_leaker, leak_rate=0.01)
-	register_context()
+	AddComponent(/datum/component/gas_leaker, leak_rate=0.01)1
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
 	. = ..()
