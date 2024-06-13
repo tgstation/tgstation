@@ -20,7 +20,7 @@
 
 	. = COMPONENT_CANCEL_MOUSEDROP_ONTO
 	var/mob/living/picker = user
-	if(!istype(picker) || !user.can_perform_action(source, FORBID_TELEKINESIS_REACH | SILENT_ADJACENCY))
+	if(!istype(picker) || !user.can_perform_action(source, FORBID_TELEKINESIS_REACH))
 		return
 
 	if(over == picker)
