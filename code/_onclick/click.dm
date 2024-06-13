@@ -341,63 +341,11 @@
 	if(user.client && (user.client.eye == user || user.client.eye == user.loc || flags & COMPONENT_ALLOW_EXAMINATE))
 		user.examinate(src)
 
-/**
- * Ctrl click
- * For most objects, pull
- */
-/mob/proc/CtrlClickOn(atom/A)
-	A.CtrlClick(src)
-	return
-
-/atom/proc/CtrlClick(mob/user)
-	SEND_SIGNAL(src, COMSIG_CLICK_CTRL, user)
-	SEND_SIGNAL(user, COMSIG_MOB_CTRL_CLICKED, src)
-
-	var/mob/living/ML = user
-	if(istype(ML))
-		ML.pulled(src)
-	if(!can_interact(user))
-		return FALSE
-
-/mob/living/CtrlClick(mob/living/user)
-	if(!isliving(user) || !user.CanReach(src) || user.incapacitated())
-		return ..()
-
-	if(world.time < user.next_move)
-		return FALSE
-
-	if(user.grab(src))
-		user.changeNext_move(CLICK_CD_MELEE)
-		return TRUE
-
-	return ..()
-
-/mob/proc/CtrlMiddleClickOn(atom/A)
-	if(check_rights_for(client, R_ADMIN))
-		client.toggle_tag_datum(A)
-	else
-		A.CtrlClick(src)
-	return
-
 /mob/proc/TurfAdjacent(turf/tile)
 	return tile.Adjacent(src)
 
-/**
- * Control+Shift click
- * Unused except for AI
- */
-/mob/proc/CtrlShiftClickOn(atom/A)
-	A.CtrlShiftClick(src)
-	return
-
 /mob/proc/ShiftMiddleClickOn(atom/A)
 	src.pointed(A)
-	return
-
-/atom/proc/CtrlShiftClick(mob/user)
-	if(!can_interact(user))
-		return FALSE
-	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT, user)
 	return
 
 /*
