@@ -21,6 +21,11 @@
 /// Station trait for when the clown has bridge access *shudders*
 #define STATION_TRAIT_CLOWN_BRIDGE "clown_bridge"
 
+// /datum/mind
+/// Prevents any sort of antagonist/brainwashing conversion.
+#define TRAIT_UNCONVERTABLE "unconvertable"
+
+
 #define TRAIT_SENSOR_HUD "sensor_hud"
 #define TRAIT_SHOVE_RESIST	"shove_resist" //Used by implants
 #define TRAIT_FAST_CLIMBER 	"fast_climber" //Used by implants

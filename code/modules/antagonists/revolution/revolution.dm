@@ -26,7 +26,7 @@
 	if(.)
 		if(new_owner.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 			return FALSE
-		if(new_owner.unconvertable)
+		if(HAS_TRAIT(new_owner, TRAIT_UNCONVERTABLE)) // monkestation edit: mind.unconvertable -> TRAIT_UNCONVERTABLE
 			return FALSE
 		if(new_owner.current && HAS_TRAIT(new_owner.current, TRAIT_MINDSHIELD))
 			return FALSE

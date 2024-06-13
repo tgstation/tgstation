@@ -79,7 +79,7 @@
 		flashed.balloon_alert(source, "[flashed.p_theyre()] loyal to someone else!")
 		return
 
-	if (HAS_TRAIT(flashed, TRAIT_MINDSHIELD) || (flashed.mind.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY))
+	if (HAS_TRAIT(flashed, TRAIT_MINDSHIELD) || HAS_MIND_TRAIT(flashed, TRAIT_UNCONVERTABLE) || (flashed.mind.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)) // monkestation edit: TRAIT_UNCONVERTABLE
 		flashed.balloon_alert(source, "[flashed.p_they()] resist!")
 		return
 

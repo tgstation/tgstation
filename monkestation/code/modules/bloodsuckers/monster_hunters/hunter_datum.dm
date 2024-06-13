@@ -29,6 +29,7 @@
 	/// A list of traits innately granted to the mind of monster hunters.
 	var/static/list/mind_traits = list(
 		TRAIT_OCCULTIST,
+		TRAIT_UNCONVERTABLE,
 		TRAIT_MADNESS_IMMUNE // You merely adopted the madness. I was born in it, molded by it.
 	)
 	/// A typecache of ability types that will be revealed to the monster hunter when they gain insight.
@@ -61,7 +62,6 @@
 		CRASH("Failed to initialize wonderlandmind_traits, !")
 
 	owner.add_traits(mind_traits, HUNTER_TRAIT)
-	owner.unconvertable = TRUE
 
 	//Teach Stake crafting
 	owner.teach_crafting_recipe(/datum/crafting_recipe/hardened_stake)
@@ -104,7 +104,6 @@
 	UnregisterSignal(src, COMSIG_GAIN_INSIGHT)
 	UnregisterSignal(src, COMSIG_BEASTIFY)
 	REMOVE_TRAITS_IN(owner, HUNTER_TRAIT)
-	owner.unconvertable = FALSE
 	for(var/obj/effect/client_image_holder/white_rabbit/white as anything in rabbits)
 		rabbits -= white
 		qdel(white)

@@ -66,7 +66,7 @@
 	var/datum/weakref/enslaved_to
 
 	var/datum/language_holder/language_holder
-	var/unconvertable = FALSE
+	/* var/unconvertable = FALSE */ // monkestation edit: replace with mind trait
 	var/late_joiner = FALSE
 	/// has this mind ever been an AI
 	var/has_ever_been_ai = FALSE
