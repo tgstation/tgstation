@@ -104,6 +104,7 @@
 		return
 	if(helmet_on)
 		to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
+		set_light_on(FALSE)
 		helmet_on = FALSE
 	playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
 	update_appearance()

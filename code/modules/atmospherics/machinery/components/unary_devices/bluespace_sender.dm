@@ -149,16 +149,14 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 	update_appearance()
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/bluespace_sender/CtrlClick(mob/living/user)
-	if(!panel_open)
-		if(!can_interact(user))
-			return
+/obj/machinery/atmospherics/components/unary/bluespace_sender/click_ctrl(mob/user)
+	if(!panel_open && is_operational)
 		on = !on
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_appearance()
-		return
-	. = ..()
+		return CLICK_ACTION_SUCCESS
+	return CLICK_ACTION_BLOCKING
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
