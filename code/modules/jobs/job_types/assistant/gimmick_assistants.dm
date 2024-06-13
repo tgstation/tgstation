@@ -111,6 +111,7 @@
 			continue
 		var/obj/structure/mop_bucket/bucket = new /obj/structure/mop_bucket(turf)
 		equipped.start_pulling(bucket)
+		break
 
 /datum/outfit/job/assistant/gimmick/broomer
 	name = "Gimmick Assistant - Broomer"

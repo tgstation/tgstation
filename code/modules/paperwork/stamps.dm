@@ -88,6 +88,11 @@
 	icon_state = "stamp-clown"
 	dye_color = DYE_CLOWN
 
+/obj/item/stamp/clown/Initialize(mapload)
+	. = ..()
+
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
+
 /obj/item/stamp/mime
 	name = "mime's rubber stamp"
 	icon_state = "stamp-mime"

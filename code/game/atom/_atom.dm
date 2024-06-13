@@ -565,8 +565,9 @@
 		newdir = dir
 		return
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
+	var/oldDir = dir
 	dir = newdir
-	SEND_SIGNAL(src, COMSIG_ATOM_POST_DIR_CHANGE, dir, newdir)
+	SEND_SIGNAL(src, COMSIG_ATOM_POST_DIR_CHANGE, oldDir, newdir)
 	if(smoothing_flags & SMOOTH_BORDER_OBJECT)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 

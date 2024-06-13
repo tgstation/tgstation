@@ -27,7 +27,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	switch(zoom_method)
 		if(ZOOM_METHOD_RIGHT_CLICK)
-			RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK_SECONDARY, PROC_REF(on_secondary_afterattack))
+			RegisterSignal(parent, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY, PROC_REF(do_secondary_zoom))
 		if(ZOOM_METHOD_WIELD)
 			RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_WIELDED), PROC_REF(on_wielded))
 			RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_WIELDED), PROC_REF(on_unwielded))
@@ -46,7 +46,7 @@
 		parent_item.remove_item_action(scope)
 	UnregisterSignal(parent, list(
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_ITEM_AFTERATTACK_SECONDARY,
+		COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY,
 		SIGNAL_ADDTRAIT(TRAIT_WIELDED),
 		SIGNAL_REMOVETRAIT(TRAIT_WIELDED),
 		COMSIG_GUN_TRY_FIRE,
@@ -71,14 +71,14 @@
 		return
 	stop_zooming(tracker.owner)
 
-/datum/component/scope/proc/on_secondary_afterattack(datum/source, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/component/scope/proc/do_secondary_zoom(datum/source, mob/user, atom/target, click_parameters)
 	SIGNAL_HANDLER
 
 	if(tracker)
 		stop_zooming(user)
 	else
 		zoom(user)
-	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_BLOCKING
 
 /datum/component/scope/proc/on_action_trigger(datum/action/source)
 	SIGNAL_HANDLER

@@ -38,7 +38,7 @@
 		span_notice("[user] begins to cut away [target]'s excess fat."),
 		span_notice("[user] begins to cut [target]'s [target_zone] with [tool]."),
 	)
-	display_pain(target, "You feel a stabbing in your [target_zone]!")
+	display_pain(target, "You feel a stabbing in your [target_zone]!", mood_event_type = /datum/mood_event/surgery)
 
 /datum/surgery_step/cut_fat/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	display_results(
@@ -48,8 +48,12 @@
 		span_notice("[user] cuts [target]'s excess fat loose!"),
 		span_notice("[user] finishes the cut on [target]'s [target_zone]."),
 	)
-	display_pain(target, "The fat in your [target_zone] comes loose, dangling and hurting like hell!")
+	display_pain(target, "The fat in your [target_zone] comes loose, dangling and hurting like hell!", mood_event_type = /datum/mood_event/surgery/success)
 	return TRUE
+
+/datum/surgery_step/cut_fat/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, fail_prob)
+	display_pain(target, mood_event_type = /datum/mood_event/surgery/failure)
+	return ..()
 
 //remove fat
 /datum/surgery_step/remove_fat
