@@ -91,7 +91,6 @@
 /obj/item/raw_anomaly_core/proc/create_core(newloc, del_self = FALSE, count_towards_limit = FALSE)
 	. = new anomaly_type(newloc)
 	if(count_towards_limit)
-		var/existing = SSresearch.created_anomaly_types[anomaly_type] || 0
-		SSresearch.created_anomaly_types[anomaly_type] = existing + 1
+		SSresearch.increment_existing_anomaly_cores(anomaly_type)
 	if(del_self)
 		qdel(src)

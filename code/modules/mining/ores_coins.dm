@@ -198,6 +198,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	scan_state = "rock_Diamond"
 	merge_type = /obj/item/stack/ore/diamond
 
+/obj/item/stack/ore/diamond/five
+	amount = 5
+
 /obj/item/stack/ore/bananium
 	name = "bananium ore"
 	icon_state = "bananium"
