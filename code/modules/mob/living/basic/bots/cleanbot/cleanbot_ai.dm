@@ -5,7 +5,6 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_UNREACHABLE_LIST_COOLDOWN = 3 MINUTES,
 		BB_SALUTE_MESSAGES = list(
 			"salutes",
@@ -77,11 +76,13 @@
 	for(var/atom/found_item in found)
 		if(QDELETED(controller.pawn))
 			break
-		if(LAZYACCESS(ignore_list, REF(found_item)))
+		if(LAZYACCESS(ignore_list, found_item))
 			continue
+		if(get_turf(found_item) == get_turf(controller.pawn))
+			return found_item
 		var/list/path = get_path_to(controller.pawn, found_item, max_distance = BOT_CLEAN_PATH_LIMIT, access = controller.get_access())
 		if(!length(path))
-			controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(found_item), TRUE)
+			controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, found_item, TRUE)
 			continue
 		return found_item
 
@@ -104,7 +105,7 @@
 /datum/ai_behavior/find_and_set/spray_target/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/mob/living/carbon/human/human_target in oview(search_range, controller.pawn))
-		if(LAZYACCESS(ignore_list, REF(human_target)))
+		if(LAZYACCESS(ignore_list, human_target))
 			continue
 		if(human_target.stat != CONSCIOUS || isnull(human_target.mind))
 			continue
@@ -137,7 +138,7 @@
 	var/atom/target = controller.blackboard[target_key]
 	if(!succeeded && !isnull(target))
 		controller.clear_blackboard_key(target_key)
-		controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(target), TRUE)
+		controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
 		return
 	if(QDELETED(target) || is_type_in_typecache(target, controller.blackboard[BB_HUNTABLE_TRASH]))
 		return
@@ -212,7 +213,7 @@
 		return
 	if(isnull(parent.ai_controller))
 		return
-	if(LAZYACCESS(parent.ai_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], REF(target)))
+	if(LAZYACCESS(parent.ai_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], target))
 		return
 	return ..()
 

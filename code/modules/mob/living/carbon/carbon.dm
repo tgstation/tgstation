@@ -23,19 +23,17 @@
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
 
-/mob/living/carbon/item_tending(mob/living/user, obj/item/tool, list/modifiers)
+/mob/living/carbon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
-
+	// Needs to happen after parent call otherwise wounds are prioritized over surgery
 	for(var/datum/wound/wound as anything in shuffle(all_wounds))
 		if(wound.try_treating(tool, user))
 			return ITEM_INTERACT_SUCCESS
-
 	return .
 
-/mob/living/carbon/CtrlShiftClick(mob/user)
-	..()
+/mob/living/carbon/click_ctrl_shift(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
 		carbon_user.give(src)
@@ -569,19 +567,6 @@
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
-
-/mob/living/carbon/update_stamina()
-	var/stam = getStaminaLoss()
-	if(stam > DAMAGE_PRECISION && (maxHealth - stam) <= crit_threshold)
-		if (!stat)
-			enter_stamcrit()
-	else if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
-		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)
-		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, STAMINA)
-		REMOVE_TRAIT(src, TRAIT_FLOORED, STAMINA)
-	else
-		return
-	update_stamina_hud()
 
 /mob/living/carbon/update_sight()
 	if(!client)

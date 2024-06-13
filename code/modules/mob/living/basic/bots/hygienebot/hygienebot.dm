@@ -6,7 +6,7 @@
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "hygienebot"
 	base_icon_state = "hygienebot"
-	pass_flags = PASSMOB | PASSFLAPS | PASSTABLE
+	pass_flags = parent_type::pass_flags | PASSTABLE
 	layer = MOB_UPPER_LAYER
 	density = FALSE
 	anchored = FALSE

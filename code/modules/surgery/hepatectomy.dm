@@ -41,7 +41,7 @@
 		span_notice("[user] begins to make an incision in [target]."),
 		span_notice("[user] begins to make an incision in [target]."),
 	)
-	display_pain(target, "Your abdomen burns in horrific stabbing pain!")
+	display_pain(target, "Your abdomen burns in horrific stabbing pain!", mood_event_type = /datum/mood_event/surgery)
 
 /datum/surgery_step/hepatectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/mob/living/carbon/human/human_target = target
@@ -56,7 +56,7 @@
 		span_notice("[user] successfully removes the damaged part of [target]'s liver."),
 		span_notice("[user] successfully removes the damaged part of [target]'s liver."),
 	)
-	display_pain(target, "The pain receeds slightly.")
+	display_pain(target, "The pain receeds slightly.", mood_event_type = /datum/mood_event/surgery/success)
 	return ..()
 
 /datum/surgery_step/hepatectomy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery)
@@ -69,4 +69,4 @@
 		span_warning("[user] cuts the wrong part of [target]'s liver!"),
 		span_warning("[user] cuts the wrong part of [target]'s liver!"),
 	)
-	display_pain(target, "You feel a sharp stab inside your abdomen!")
+	display_pain(target, "You feel a sharp stab inside your abdomen!", mood_event_type = /datum/mood_event/surgery/failure)

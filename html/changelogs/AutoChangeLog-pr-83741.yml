@@ -1,0 +1,4 @@
+author: "larentoun"
+delete-after: True
+changes:
+  - balance: "Now regaining a tail has three states. If you got your tail back - you'll get a temporarily debuff in exchange of infinite \"tail missing\" debuff (new). If it's NOT your tail and of same species - this temporarily debuff will be a bit stronger (new). If it's NOT your tail and NOT of same species - it will be a considerably stronger debuff (currently on live)."

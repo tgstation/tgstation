@@ -31,6 +31,11 @@
 	icon_state = "command"
 	sound_environment = SOUND_AREA_WOODFLOOR
 
+/area/station/command/emergency_closet
+	name = "\improper Corporate Emergency Closet"
+	icon_state = "command"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
 /*
 * Command Head Areas
 */

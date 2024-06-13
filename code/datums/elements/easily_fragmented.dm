@@ -17,18 +17,21 @@
 	src.break_chance = break_chance
 
 	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_afterattack))
+	RegisterSignal(target, COMSIG_ITEM_TOOL_ACTED, PROC_REF(on_tool_use))
 
 /datum/element/easily_fragmented/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_ITEM_AFTERATTACK)
+	UnregisterSignal(target, list(COMSIG_ITEM_AFTERATTACK, COMSIG_ITEM_TOOL_ACTED))
 
-/datum/element/easily_fragmented/proc/on_afterattack(datum/source, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/element/easily_fragmented/proc/on_afterattack(datum/source, atom/target, mob/user, click_parameters)
 	SIGNAL_HANDLER
+	try_break(source, user)
 
-	var/obj/item/item = source
+/datum/element/easily_fragmented/proc/on_tool_use(datum/source, atom/target, mob/user, tool_type, result)
+	SIGNAL_HANDLER
+	try_break(source, user)
 
+/datum/element/easily_fragmented/proc/try_break(obj/item/source, mob/user)
 	if(prob(break_chance))
-		user.visible_message(span_danger("[user]'s [item.name] snap[item.p_s()] into tiny pieces in [user.p_their()] hand."))
-		item.deconstruct(disassembled = FALSE)
-
-	return COMPONENT_AFTERATTACK_PROCESSED_ITEM
+		user.visible_message(span_danger("[user]'s [source.name] snap[source.p_s()] into tiny pieces in [user.p_their()] hand."))
+		source.deconstruct(disassembled = FALSE)
