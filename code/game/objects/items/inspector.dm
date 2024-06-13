@@ -8,7 +8,7 @@
  */
 /obj/item/inspector
 	name = "\improper N-spect scanner"
-	desc = "Central Command-issued inspection device. Performs inspections according to Nanotrasen protocols when activated, then prints an encrypted report regarding the maintenance of the station. Also determines if something is contraband or not."
+	desc = "Central Command standard issue inspection device. Can perform either wide area scans that central command can use to verify the security of the station, or detailed scans to determine if an item is contraband."
 	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "inspector"
 	worn_icon_state = "salestagger"
@@ -90,6 +90,23 @@
 		. += "The slot for a cell is empty."
 	else
 		. += "\The [cell] is firmly in place. [span_info("Ctrl-click with an empty hand to remove it.")]"
+
+/obj/item/inspector/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!target.can_interact(user, TRUE))
+		return
+	if(cell_cover_open)
+		balloon_alert(user, "close cover first")
+		return
+	if(!cell || !cell.use(INSPECTOR_ENERGY_USAGE_LOW))
+		balloon_alert(user, "check cell")
+		return
+	if(!HAS_TRAIT(target, TRAIT_CONTRABAND))
+		playsound(src, 'sound/machines/ping.ogg', 20)
+		return
+
+	playsound(src, 'sound/machines/uplinkerror.ogg', 40)
+	balloon_alert(user, "CONTRABAND DETECTED")
 
 /**
  * Create our report

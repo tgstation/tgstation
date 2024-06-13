@@ -66,11 +66,13 @@
 /datum/market_item/proc/spawn_item(loc, datum/market_purchase/purchase)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MARKET_ITEM_SPAWNED, purchase.uplink, purchase.method, loc)
+	to_chat(world, "[item] is considered [purchase.legallity] and has arrived.")
 	if(ismovable(item))
 		var/atom/movable/return_item = item
 		UnregisterSignal(item, COMSIG_QDELETING)
 		item.visible_message(span_notice("[item] vanishes..."))
 		do_sparks(8, FALSE, item)
+		post_purchase_effects(item, purchase.legallity)
 		if(isnull(loc))
 			item.moveToNullspace()
 		else
@@ -78,8 +80,9 @@
 		item = null
 		return return_item
 	if(ispath(item))
-		return new item(loc)
-		// add more effects to the spawned item.
+		var/atom/new_item = new item(loc)
+		post_purchase_effects(new_item, purchase.legallity)
+		return new_item
 	CRASH("Invalid item type for market item [item || "null"]")
 
 /**
@@ -109,6 +112,16 @@
 		buyer.log_message("has succesfully purchased [name] using [shipping_method] for shipping.", LOG_ECON)
 		return TRUE
 	return FALSE
+
+/**
+ * Proc that applies secondary effects to objects that are spawned via a market.
+ *
+ * @param spawned_item - Reference to the atom being spawned.
+ * @param legal_status - Is this item considered legal? If illegal, will apply the contraband trait to the spawned item.
+ */
+/datum/market_item/proc/post_purchase_effects(atom/spawned_item, legal_status = MARKET_PRODUCTS_LEGAL)
+	if(legal_status == MARKET_PRODUCTS_ILLEGAL)
+		ADD_TRAIT(spawned_item, TRAIT_CONTRABAND, TRAIT_GENERIC)
 
 // This exists because it is easier to keep track of all the vars this way.
 /datum/market_purchase
