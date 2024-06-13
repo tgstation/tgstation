@@ -335,12 +335,9 @@
 		blind_message = span_hear("You hear aggressive crackling!"),
 		vision_distance = 15,
 	)
-	var/sound/collapse = sound('sound/effects/clockcult_gateway_disrupted.ogg')
-	collapse.pitch = -1
-	collapse.frequency = 0.5
-	playsound(loc, collapse, 200, vary = TRUE, extrarange = 3, falloff_exponent = 1, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = 7)
+	playsound(loc, 'sound/effects/clockcult_gateway_disrupted.ogg', 200, vary = TRUE, extrarange = 3, falloff_exponent = 1, frequency = -1, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = 7)
 	addtimer(CALLBACK(src, PROC_REF(consume_boh_sfx)), 4 SECONDS)
-	animate(src, time = 4.5 SECONDS, transform = matrix(transform).Scale(0.25), flags = ANIMATION_PARALLEL, easing = ELASTIC_EASING)
+	animate(src, time = 4 SECONDS, transform = transform.Scale(0.25), flags = ANIMATION_PARALLEL, easing = ELASTIC_EASING)
 	animate(time = 0.5 SECONDS, alpha = 0)
 	QDEL_IN(src, 4.1 SECONDS)
 	qdel(boh)

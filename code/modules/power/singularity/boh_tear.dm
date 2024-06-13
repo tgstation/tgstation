@@ -27,10 +27,8 @@
 		singularity_size = STAGE_SIX, \
 	)
 	addtimer(CALLBACK(src, PROC_REF(bagulo_time)), 9 SECONDS, TIMER_DELETE_ME)
-	var/matrix/smaller = matrix(transform).Scale(0.25)
-	var/matrix/bigger = matrix(transform).Scale(2)
-	animate(src, time = 7.5 SECONDS, transform = bigger, flags = ANIMATION_PARALLEL)
-	animate(time = 2 SECONDS, transform = smaller, easing = ELASTIC_EASING)
+	animate(src, time = 7.5 SECONDS, transform = transform.Scale(2), flags = ANIMATION_PARALLEL)
+	animate(time = 2 SECONDS, transform = transform.Scale(0.25), easing = ELASTIC_EASING)
 	animate(time = 0.5 SECONDS, alpha = 0)
 
 /obj/boh_tear/proc/bagulo_time()
