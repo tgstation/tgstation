@@ -219,7 +219,7 @@
 
 /datum/design/beamrifle
 	name = "Event Horizon Anti-Existential Beam Rifle Part Kit (DOOMSDAY DEVICE)"
-	desc = "The kit that produces a weapon made to end your foes on an existsential level. Why the fuck can you make this?"
+	desc = "The kit that produces a weapon made to end your foes on an existential level. Why the fuck can you make this?"
 	id = "beamrifle"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/diamond =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2.25, /datum/material/gold =SHEET_MATERIAL_AMOUNT * 2.5)
