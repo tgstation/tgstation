@@ -13,16 +13,22 @@
 	var/datum/mind/ascended_heretic
 	// The body of the ascended heretic who created us
 	var/mob/living/carbon/human/ascended_body
+	// Our objective
+	var/datum/objective/lunatic/lunatic_obj
+
+/datum/antagonist/lunatic/on_gain()
+	var/datum/objective/lunatic/loony = new()
+	objectives += loony
+	lunatic_obj = loony
+	return ..()
 
 /// Runs when the moon heretic creates us, used to give the lunatic a master
 /datum/antagonist/lunatic/proc/set_master(datum/mind/heretic_master, mob/living/carbon/human/heretic_body)
 	src.ascended_heretic = heretic_master
 	src.ascended_body = heretic_body
 
-	var/datum/objective/lunatic/lunatic_obj = new()
 	lunatic_obj.master = heretic_master
 	lunatic_obj.update_explanation_text()
-	objectives += lunatic_obj
 
 	to_chat(owner, span_boldnotice("Ruin the lie, save the truth through obeying [heretic_master] the ringleader!"))
 
@@ -31,7 +37,6 @@
 	handle_clown_mutation(our_mob, "Ancient knowledge from the moon has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	our_mob.faction |= FACTION_HERETIC
 	add_team_hud(our_mob)
-	add_team_hud(our_mob, /datum/antagonist/heretic)
 	ADD_TRAIT(our_mob, TRAIT_MADNESS_IMMUNE, REF(src))
 
 	var/datum/action/cooldown/lunatic_track/moon_track = new /datum/action/cooldown/lunatic_track()
@@ -55,4 +60,4 @@
 
 /datum/objective/lunatic/update_explanation_text()
 	. = ..()
-	explanation_text = "Assist your ringleader [master]"
+	explanation_text = "Assist your ringleader [master], do not harm fellow lunatics"
