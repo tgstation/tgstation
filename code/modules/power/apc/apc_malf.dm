@@ -36,7 +36,7 @@
 		return
 	if(!is_station_level(z))
 		return
-	var/confirm = tgui_alert(usr, "Are you sure that you want to shunt? This will take you out of your core!", "Shunt to [name]?", list("Yes", "No"))
+	var/confirm = tgui_alert(malf, "Are you sure that you want to shunt? This will take you out of your core!", "Shunt to [name]?", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 	malf.ShutOffDoomsdayDevice()
