@@ -171,7 +171,7 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 /obj/machinery/button/door/invisible_tripwire/proc/tripwire_triggered(atom/victim)
 	interact(victim)
 	if(resets_self)
-		addtimer(CALLBACK(src, PROC_REF(interact(victim))), reset_timer)
+		addtimer(CALLBACK(interact(victim)), reset_timer)
 	if(multiuse || uses_remaining != 1)
 		uses_remaining--
 		return

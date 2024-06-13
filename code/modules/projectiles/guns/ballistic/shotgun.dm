@@ -336,9 +336,10 @@
 	. = ..()
 	. += span_notice("Right-click to shoot the hook.")
 
-/obj/item/gun/ballistic/shotgun/hook/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	hook.afterattack(target, user, proximity_flag, click_parameters)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/gun/ballistic/shotgun/hook/try_fire_gun(atom/target, mob/living/user, params)
+	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+		return hook.try_fire_gun(target, user, params)
+	return ..()
 
 /obj/item/gun/ballistic/shotgun/musket
 	name = "\improper Donk Co. Musket"
@@ -353,7 +354,3 @@
 	bolt_type = BOLT_TYPE_LOCKING
 	internal_magazine = TRUE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/musket
-/obj/item/gun/ballistic/shotgun/hook/try_fire_gun(atom/target, mob/living/user, params)
-	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
-		return hook.try_fire_gun(target, user, params)
-	return ..()
