@@ -65,7 +65,7 @@
 		span_notice("[user] begins to realign the torn blood vessels in [target]'s [target.parse_zone_with_bodypart(user.zone_selected)] with [tool]."),
 		span_notice("[user] begins to realign the torn blood vessels in [target]'s [target.parse_zone_with_bodypart(user.zone_selected)]."),
 	)
-	display_pain(target, "You feel a horrible stabbing pain in your [target.parse_zone_with_bodypart(user.zone_selected)]!", mood_event_type = /datum/mood_event/surgery)
+	display_pain(target, "You feel a horrible stabbing pain in your [target.parse_zone_with_bodypart(user.zone_selected)]!", mood_event_type = /datum/mood_event/surgery/success)
 
 /datum/surgery_step/repair_innards/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/datum/wound/pierce/bleed/pierce_wound = surgery.operated_wound

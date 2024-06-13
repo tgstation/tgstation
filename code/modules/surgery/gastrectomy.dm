@@ -42,7 +42,7 @@
 		span_notice("[user] begins to make an incision in [target]."),
 		span_notice("[user] begins to make an incision in [target]."),
 	)
-	display_pain(target, "You feel a horrible stab in your gut!", mood_event_type = /datum/mood_event/surgery)
+	display_pain(target, "You feel a horrible stab in your gut!", mood_event_type = /datum/mood_event/surgery/success)
 
 /datum/surgery_step/gastrectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/mob/living/carbon/human/target_human = target

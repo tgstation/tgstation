@@ -47,7 +47,7 @@
 		span_notice("[user] begins to sever [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 		span_notice("[user] begins to sever [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 	)
-	display_pain(target, "You feel a gruesome pain in your [parse_zone(target_zone)]'s joint!", mood_event_type = /datum/mood_event/surgery)
+	display_pain(target, "You feel a gruesome pain in your [parse_zone(target_zone)]'s joint!", mood_event_type = /datum/mood_event/surgery/success)
 
 
 /datum/surgery_step/sever_limb/success(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)

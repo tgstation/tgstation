@@ -20,7 +20,7 @@
 		span_notice("[user] begins to make an incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 		span_notice("[user] begins to make an incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 	)
-	display_pain(target, "You feel a stabbing in your [target.parse_zone_with_bodypart(target_zone)].", mood_event_type = /datum/mood_event/surgery)
+	display_pain(target, "You feel a stabbing in your [target.parse_zone_with_bodypart(target_zone)].", mood_event_type = /datum/mood_event/surgery/success)
 
 /datum/surgery_step/incise/tool_check(mob/user, obj/item/tool)
 	if(implement_type == /obj/item && !tool.get_sharpness())
@@ -57,7 +57,7 @@
 		span_notice("[user] begins to <i>carefully</i> make an incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 		span_notice("[user] begins to <i>carefully</i> make an incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 	)
-	display_pain(target, "You feel a <i>careful</i> stabbing in your [target.parse_zone_with_bodypart(target_zone)].", mood_event_type = /datum/mood_event/surgery)
+	display_pain(target, "You feel a <i>careful</i> stabbing in your [target.parse_zone_with_bodypart(target_zone)].", mood_event_type = /datum/mood_event/surgery/success)
 
 //clamp bleeders
 /datum/surgery_step/clamp_bleeders
@@ -182,7 +182,7 @@
 		span_notice("[user] begins to saw through the bone in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 		span_notice("[user] begins to saw through the bone in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 	)
-	display_pain(target, "You feel a horrid ache spread through the inside of your [target.parse_zone_with_bodypart(target_zone)]!", mood_event_type = /datum/mood_event/surgery)
+	display_pain(target, "You feel a horrid ache spread through the inside of your [target.parse_zone_with_bodypart(target_zone)]!", mood_event_type = /datum/mood_event/surgery/success)
 
 /datum/surgery_step/saw/tool_check(mob/user, obj/item/tool)
 	if(implement_type == /obj/item && !(tool.get_sharpness() && (tool.force >= 10)))

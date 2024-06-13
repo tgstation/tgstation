@@ -83,7 +83,7 @@
 			span_notice("[user] begins to excise infected flesh from [target]'s [target.parse_zone_with_bodypart(user.zone_selected)] with [tool]."),
 			span_notice("[user] begins to excise infected flesh from [target]'s [target.parse_zone_with_bodypart(user.zone_selected)]."),
 		)
-		display_pain(target, "The infection in your [target.parse_zone_with_bodypart(user.zone_selected)] stings like hell! It feels like you're being stabbed!", mood_event_type = /datum/mood_event/surgery)
+		display_pain(target, "The infection in your [target.parse_zone_with_bodypart(user.zone_selected)] stings like hell! It feels like you're being stabbed!", mood_event_type = /datum/mood_event/surgery/success)
 	else
 		user.visible_message(span_notice("[user] looks for [target]'s [target.parse_zone_with_bodypart(user.zone_selected)]."), span_notice("You look for [target]'s [target.parse_zone_with_bodypart(user.zone_selected)]..."))
 

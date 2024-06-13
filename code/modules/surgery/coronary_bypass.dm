@@ -40,7 +40,7 @@
 		span_notice("[user] begins to make an incision in [target]'s heart."),
 		span_notice("[user] begins to make an incision in [target]'s heart."),
 	)
-	display_pain(target, "You feel a horrendous pain in your heart, it's almost enough to make you pass out!", mood_event_type = /datum/mood_event/surgery)
+	display_pain(target, "You feel a horrendous pain in your heart, it's almost enough to make you pass out!", mood_event_type = /datum/mood_event/surgery/success)
 
 /datum/surgery_step/incise_heart/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(ishuman(target))

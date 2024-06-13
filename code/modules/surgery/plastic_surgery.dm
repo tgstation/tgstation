@@ -70,7 +70,7 @@
 		span_notice("[user] begins to alter [target]'s appearance."),
 		span_notice("[user] begins to make an incision in [target]'s face."),
 	)
-	display_pain(target, "You feel slicing pain across your face!", mood_event_type = /datum/mood_event/surgery)
+	display_pain(target, "You feel slicing pain across your face!", mood_event_type = /datum/mood_event/surgery/success)
 
 /datum/surgery_step/reshape_face/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(HAS_TRAIT_FROM(target, TRAIT_DISFIGURED, TRAIT_GENERIC))

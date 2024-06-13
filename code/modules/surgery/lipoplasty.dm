@@ -38,7 +38,7 @@
 		span_notice("[user] begins to cut away [target]'s excess fat."),
 		span_notice("[user] begins to cut [target]'s [target_zone] with [tool]."),
 	)
-	display_pain(target, "You feel a stabbing in your [target_zone]!", mood_event_type = /datum/mood_event/surgery)
+	display_pain(target, "You feel a stabbing in your [target_zone]!", mood_event_type = /datum/mood_event/surgery/success)
 
 /datum/surgery_step/cut_fat/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	display_results(
