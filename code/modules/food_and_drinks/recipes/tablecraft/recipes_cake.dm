@@ -248,3 +248,12 @@
 	)
 	result = /obj/item/food/cake/plum
 	category = CAT_CAKE
+
+/datum/crafting_recipe/food/weddingcake
+	name = "Wedding cake"
+	reqs = list(
+		/obj/item/food/cake/plain = 4,
+		/datum/reagent/consumable/sugar = 120,
+	)
+	result = /obj/item/food/cake/wedding
+	category = CAT_CAKE

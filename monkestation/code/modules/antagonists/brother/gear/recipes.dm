@@ -31,8 +31,16 @@
 	spawn_path = /obj/item/book/granter/crafting_recipe/maint_gun/smoothbore_disabler_prime
 	preview_path = /obj/item/gun/energy/disabler/smoothbore/prime
 
+
+/datum/bb_gear/granter/death_sandwich
+	name = "Recipe: Death Sandwich"
+	desc = "Contains a recipe book, allowing you to learn the knowledge to build a death sandwich."
+	spawn_path = /obj/item/book/granter/crafting_recipe/death_sandwich
+	preview_path = /obj/item/food/sandwich/death
+
 /datum/bb_gear/granter/elance
 	name = "Recipe: Explosive Lance (Grenade)"
 	desc = "Contains a recipe book, allowing you to learn the knowledge to build an explosive lance (grenade)."
 	spawn_path = /obj/item/spear/explosive
 	preview_path = /obj/item/book/granter/crafting_recipe/maint_gun/explosive_lance
+

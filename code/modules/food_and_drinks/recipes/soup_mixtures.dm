@@ -32,11 +32,11 @@
 	required_reagents = null
 	mob_react = FALSE
 	required_other = TRUE
+	required_container_accepts_subtypes = TRUE
 	required_container = /obj/item/reagent_containers/cup/soup_pot
 	mix_message = "You smell something good coming from the steaming pot of soup."
 	reaction_tags = REACTION_TAG_FOOD | REACTION_TAG_EASY
 	reaction_flags = REACTION_NON_INSTANT
-	var/Nonsouprecipe = FALSE
 
 	// General soup guideline:
 	// - Soups should produce 60-90 units (3-4 servings)
@@ -55,11 +55,6 @@
 	/// Lower this if your ingredients have a small amount of nutriment and isn't filling enough per serving
 	/// (EX: A tomato with 10 nutriment will lose 2.5 nutriment before being added to the pot)
 	var/percentage_of_nutriment_converted = 0.25
-
-	///an assoc list of what items are outputted as a final product in the soup production line
-	var/list/outputted_ingredients
-	///how many ouputs can be processed per reaction
-	var/max_outputs = 1
 
 /datum/chemical_reaction/food/soup/pre_reaction_other_checks(datum/reagents/holder)
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
@@ -186,36 +181,22 @@
 
 	reaction?.data["ingredients"] = null
 
-	if(length(outputted_ingredients))
-		var/repeating_amount = 0
-		for(var/obj/item/ingredient as anything in pot.added_ingredients)
-			if(is_type_in_list(ingredient, required_ingredients))
-				qdel(ingredient)
-				repeating_amount++
-
-		repeating_amount = min(repeating_amount, max_outputs)
-		for(var/number in 1 to repeating_amount)
-			for(var/obj/item/created_output as anything in outputted_ingredients)
-				var/obj/item/new_item = new created_output(pot)
-				LAZYADD(pot.added_ingredients, new_item)
-
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
-		// Let's not mess with fireproof / indestructible items.
-		// It's not likely that soups use fireproof items as ingredients,
-		// and chef doesn't need more ways to delete things with cooking.
-		if(ingredient.resistance_flags & (FIRE_PROOF|INDESTRUCTIBLE))
+		// Let's not mess with  indestructible items.
+		// Chef doesn't need more ways to delete things with cooking.
+		if(ingredient.resistance_flags & INDESTRUCTIBLE)
 			continue
 
 		// Things that had reagents or ingredients in the soup will get deleted
-		if((!isnull(ingredient.reagents) || is_type_in_list(ingredient, required_ingredients)) && !is_type_in_list(ingredient, outputted_ingredients) && !Nonsouprecipe) //monkeedit
+		else if(!isnull(ingredient.reagents) || is_type_in_list(ingredient, required_ingredients))
+			LAZYREMOVE(pot.added_ingredients, ingredient)
 			// Send everything left behind
 			transfer_ingredient_reagents(ingredient, holder)
 			// Delete, it's done
 			qdel(ingredient)
 
 		// Everything else will just get fried
-		if (!Nonsouprecipe) //monkeedit
-			ingredient.AddElement(/datum/element/fried_item, 30)
+		ingredient.AddElement(/datum/element/fried_item, 30)
 
 	// Spawning physical food results
 	if(resulting_food_path)

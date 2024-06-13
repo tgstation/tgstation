@@ -440,8 +440,8 @@
 	category = CAT_BREAD
 
 /datum/crafting_recipe/food/grill/grilled_cheese_sandwich
-	reqs = list(/obj/item/food/cheese_sandwich = 1)
-	result = /obj/item/food/grilled_cheese_sandwich
+	reqs = list(/obj/item/food/sandwich/cheese = 1)
+	result = /obj/item/food/sandwich/cheese/grilled
 	category = CAT_BREAD
 
 /datum/crafting_recipe/food/grill/grilled_cheese

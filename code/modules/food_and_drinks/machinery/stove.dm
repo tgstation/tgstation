@@ -132,11 +132,12 @@
 		balloon_alert(user, "can't add that!")
 		return TRUE
 
-	var/atom/balloon_loc = ismachinery(loc) ? loc : src
+	// Ensures that faceatom works correctly, since we can can often be in another atom's loc (a stove)
+	var/atom/movable/balloon_loc = ismovable(loc) ? loc : src
 	balloon_loc.balloon_alert(user, "ingredient added")
 	user.face_atom(balloon_loc)
-	LAZYADD(added_ingredients, attacking_item)
 
+	LAZYADD(added_ingredients, attacking_item)
 	update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
@@ -147,7 +148,9 @@
 	var/obj/item/removed = added_ingredients[1]
 	removed.forceMove(get_turf(src))
 	user.put_in_hands(removed)
-	var/atom/balloon_loc = ismachinery(loc) ? loc : src
+
+	// Ensures that faceatom works correctly, since we can can often be in another atom's loc (a stove)
+	var/atom/movable/balloon_loc = ismovable(loc) ? loc : src
 	balloon_loc.balloon_alert(user, "ingredient removed")
 	user.face_atom(balloon_loc)
 

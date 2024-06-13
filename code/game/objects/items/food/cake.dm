@@ -619,3 +619,24 @@
 	icon_state = "plumcakeslice"
 	tastes = list("cake" = 5, "sweetness" = 1, "plum" = 2)
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
+
+/obj/item/food/cake/wedding
+	name = "wedding cake"
+	desc = "An expensive, multi-tiered cake."
+	icon_state = "weddingcake"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 40,
+		/datum/reagent/consumable/sugar = 30,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
+	)
+	tastes = list("cake" = 3, "frosting" = 1)
+	foodtypes = GRAIN | DAIRY | SUGAR
+	slice_type = /obj/item/food/cakeslice/wedding
+	yield = 20 //Monkestation Edit: it takes 4 plain cakes to make 4x the output should be fine
+
+/obj/item/food/cakeslice/wedding
+	name = "wedding cake slice"
+	desc = "Traditionally, those getting married feed each other a slice of cake."
+	icon_state = "weddingcake_slice"
+	tastes = list("cake" = 3, "frosting" = 1)
+	foodtypes = GRAIN | DAIRY | SUGAR

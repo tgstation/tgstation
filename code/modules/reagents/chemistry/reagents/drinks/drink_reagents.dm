@@ -1159,6 +1159,23 @@
 
 	return ..()
 
+/datum/reagent/consumable/t_letter
+	name = "T"
+	description = "You expected to find this in a soup, but this is fine too."
+	color = "#583d09" // rgb: 88, 61, 9
+	taste_description = "one of your 26 favorite letters"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/t_letter/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(!HAS_MIND_TRAIT(affected_mob, TRAIT_MIMING))
+		return ..()
+	affected_mob.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
+	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
+	affected_mob.AdjustSleeping(-40 * REM * seconds_per_tick)
+	if(affected_mob.getToxLoss() && SPT_PROB(25, seconds_per_tick))
+		affected_mob.adjustToxLoss(-2, FALSE, required_biotype = affected_biotype)
+	return ..()
+
 /datum/reagent/consumable/hakka_mate
 	name = "Hakka-Mate"
 	description = "A Martian-made yerba mate soda, dragged straight out of the pits of a hacking convention."
