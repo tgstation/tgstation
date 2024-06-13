@@ -732,8 +732,9 @@ GLOBAL_VAR_INIT(lavaland_points_generated, 0)
 	defer_change = TRUE
 
 
-/turf/closed/mineral/random/regrowth/New(loc, _mineral_increase)
-	mineralChance += _mineral_increase
+/turf/closed/mineral/random/regrowth/New(loc, mineral_increase)
+	if(isnum(mineral_increase))
+		src.mineralChance += mineral_increase
 	. = ..()
 
 /turf/closed/mineral/random/regrowth/Destroy(force)
@@ -745,7 +746,8 @@ GLOBAL_VAR_INIT(lavaland_points_generated, 0)
 	var/mineral_increase = 0
 	if(GLOB.lavaland_points_generated > 55000)
 		mineral_increase = min(87, (GLOB.lavaland_points_generated - 55000) / 1000)
-	new /turf/closed/mineral/random/regrowth(location , mineral_increase)
+	var/turf/closed/mineral/random/regrowth/regrowth_turf = location.ChangeTurf(/turf/closed/mineral/random/regrowth, flags = CHANGETURF_INHERIT_AIR)
+	regrowth_turf?.mineralChance += mineral_increase
 
 /turf/closed/mineral/random/regrowth/underwater
 	turf_type = /turf/open/floor/plating/ocean/dark
