@@ -954,7 +954,6 @@
 
 /obj/structure/transport/linear/tram/proc/estop_throw(throw_direction)
 	for(var/mob/living/passenger in transport_contents)
-		to_chat(passenger, span_userdanger("The tram comes to a sudden, grinding stop!"))
 		var/mob_throw_chance = transport_controller_datum.throw_chance
 		if(prob(mob_throw_chance || 17.5) || HAS_TRAIT(passenger, TRAIT_CURSED)) // sometimes you go through a window, especially with bad luck
 			passenger.AddElement(/datum/element/window_smashing, duration = 1.5 SECONDS)
