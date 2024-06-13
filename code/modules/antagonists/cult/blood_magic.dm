@@ -383,6 +383,7 @@
 	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
+	user.do_attack_animation(M)
 	cast_spell(M, user)
 
 /obj/item/melee/blood_magic/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -394,6 +395,7 @@
 	if(isliving(interacting_with))
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
+	user.do_attack_animation(interacting_with)
 	log_combat(user, interacting_with, "used a cult spell on", source.name, "")
 	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
 	cast_spell(interacting_with, user)
