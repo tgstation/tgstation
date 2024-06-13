@@ -20,7 +20,6 @@
 		/mob/living/simple_animal/bot/secbot/genesky,
 		/mob/living/simple_animal/bot/secbot/grievous,
 		/mob/living/simple_animal/bot/secbot/grievous/toy,
-		/mob/living/simple_animal/bot/secbot/honkbot,
 		/mob/living/simple_animal/bot/secbot/pingsky,
 		/mob/living/simple_animal/bot/vibebot,
 		/mob/living/simple_animal/hostile,

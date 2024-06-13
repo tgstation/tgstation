@@ -8,6 +8,7 @@
 	melee_damage_lower = 20 //Refers to unarmed damage, aliens do unarmed attacks.
 	melee_damage_upper = 20
 	max_grab = GRAB_AGGRESSIVE
+
 	var/caste = ""
 	var/alt_icon = 'icons/mob/nonhuman-player/alienleap.dmi' //used to switch between the two alien icon files.
 	var/leap_on_click = 0
@@ -91,7 +92,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 			if(. <= GRAB_AGGRESSIVE)
 				ADD_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
 
-/mob/living/carbon/alien/adult/MouseDrop_T(atom/dropping, atom/user)
+/mob/living/carbon/alien/adult/mouse_drop_receive(atom/dropping, mob/user, params)
 	if(devour_lad(dropping))
 		return
 	return ..()

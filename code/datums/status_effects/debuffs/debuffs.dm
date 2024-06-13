@@ -18,10 +18,12 @@
 /datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
-	. = ..()
-	if(. && (needs_update_stat || issilicon(owner)))
-		owner.update_stat()
+	return ..()
 
+/datum/status_effect/incapacitating/on_apply()
+	if(needs_update_stat || issilicon(owner))
+		owner.update_stat()
+	return TRUE
 
 /datum/status_effect/incapacitating/on_remove()
 	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
@@ -775,7 +777,10 @@
 					span_userdanger(pick("Your lungs hurt!", "It hurts to breathe!")),
 					span_warning(pick("You feel nauseated.", "You feel like you're going to throw up!")))
 				else
-					fake_emote = pick("cough", "sniff", "sneeze")
+					if(prob(40))
+						fake_emote = "cough"
+					else
+						owner.sneeze()
 
 	if(fake_emote)
 		owner.emote(fake_emote)
