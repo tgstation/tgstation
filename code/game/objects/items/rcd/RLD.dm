@@ -91,12 +91,6 @@
 /obj/item/construction/rld/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!range_check(interacting_with, user))
 		return NONE
-	return interact_with_atom(interacting_with, user, modifiers)
-
-/obj/item/construction/rld/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	. = ..()
-	if (. == ITEM_INTERACT_SUCCESS)
-		return .
 
 	var/turf/start = get_turf(src)
 	switch(mode)
@@ -193,6 +187,12 @@
 			return ITEM_INTERACT_SUCCESS
 
 	return NONE
+
+/obj/item/construction/rld/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if (. == ITEM_INTERACT_SUCCESS)
+		return .
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/construction/rld/mini
 	name = "mini-rapid-light-device"
