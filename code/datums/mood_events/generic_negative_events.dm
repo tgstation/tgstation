@@ -197,6 +197,11 @@
 		return
 	return ..()
 
+/datum/mood_event/spooked
+	description = "The rattling of those bones... It still haunts me."
+	mood_change = -4
+	timeout = 4 MINUTES
+
 /datum/mood_event/notcreeping
 	description = "The voices are not happy, and they painfully contort my thoughts into getting back on task."
 	mood_change = -6
@@ -379,6 +384,11 @@
 	description = "I have been excommunicated!"
 	mood_change = -10
 	timeout = 10 MINUTES
+
+/datum/mood_event/heresy
+	description = "I can hardly breathe with all this HERESY going on!"
+	mood_change = -5
+	timeout = 5 MINUTES
 
 /datum/mood_event/soda_spill
 	description = "Cool! That's fine, I wanted to wear that soda, not drink it..."
