@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - refactor: "Ctrl click & Ctrl shift click has been refactored. Please report bugs on GitHub"
