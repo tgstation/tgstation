@@ -37,19 +37,24 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		user.Beam(attacked_machinery, icon_state = "rped_upgrade", time = 0.5 SECONDS)
 	return TRUE
 
-/obj/item/storage/part_replacer/afterattack(obj/attacked_object, mob/living/user, adjacent, params)
-	. = ..()
-	if(!works_from_distance || adjacent) // Adjacent things = already handled by pre-attack
-		return .
+/obj/item/storage/part_replacer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(part_replace_action(interacting_with, user))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-	if(part_replace_action(attacked_object, user))
-		user.Beam(attacked_object, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-		return . | AFTERATTACK_PROCESSED_ITEM
-
-	if(istype(attacked_object, /obj/structure/frame))
-		attacked_object.item_interaction(user, src) // Cursed snowflake but we need to handle frame ranged interaction here
-		user.Beam(attacked_object, icon_state = "rped_upgrade", time = 0.5 SECONDS)
-		return . | AFTERATTACK_PROCESSED_ITEM
+/obj/item/storage/part_replacer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!works_from_distance)
+		return NONE
+	if(part_replace_action(interacting_with, user))
+		user.Beam(interacting_with, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+		return ITEM_INTERACT_SUCCESS
+	if(istype(interacting_with, /obj/structure/frame))
+		// Cursed snowflake but we need to handle frame ranged interaction here
+		// Likely no longer necessary with the new framework, revisit later
+		interacting_with.item_interaction(user, src)
+		user.Beam(interacting_with, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
