@@ -81,10 +81,6 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 	anchored = TRUE
 
 /obj/effect/servant_blocker/CanPass(atom/movable/mover, border_dir)
-	if(ismob(mover))
-		var/mob/passing_mob = mover
-		if(IS_CLOCK(passing_mob))
-			return FALSE
 	for(var/mob/held_mob in mover.get_all_contents())
 		if(IS_CLOCK(held_mob))
 			return FALSE

@@ -202,10 +202,12 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	var/atom/movable/stored_obj
 
 /obj/item/extraction_pack/proc/check_for_living_mobs(atom/A)
+	/* // MONKESTATION REMOVAL START - atom.get_all_contents() already includes `src` in the list.
 	if(isliving(A))
 		var/mob/living/L = A
 		if(L.stat != DEAD)
 			return TRUE
+	*/ // MONKESTATION REMOVAL END
 	for(var/thing in A.get_all_contents())
 		if(isliving(A))
 			var/mob/living/L = A

@@ -84,8 +84,6 @@
 	anchored = TRUE
 
 /obj/effect/gun_check_blocker/CanPass(atom/movable/mover, border_dir)
-	if(istype(mover, /obj/item/gun))
-		return FALSE
 	for(var/object in mover.get_all_contents())
 		if(istype(object, /obj/item/gun))
 			return FALSE
