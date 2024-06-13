@@ -158,12 +158,9 @@
 	playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
 
-/obj/item/modular_computer/pda/CtrlClick(mob/user)
-	. = ..()
-	if(.)
-		return
-
+/obj/item/modular_computer/pda/item_ctrl_click(mob/user)
 	remove_pen(user)
+	return CLICK_ACTION_SUCCESS
 
 ///Finds how hard it is to send a virus to this tablet, checking all programs downloaded.
 /obj/item/modular_computer/pda/proc/get_detomatix_difficulty()

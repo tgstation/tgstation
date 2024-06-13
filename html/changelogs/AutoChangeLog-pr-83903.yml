@@ -1,0 +1,4 @@
+author: "thegrb93"
+delete-after: True
+changes:
+  - bugfix: "Fix bug where you can't interact with a shocked door without shock protection even if it is depowered."
