@@ -537,3 +537,77 @@
   - bugfix: Adds a missing atmos waste vent for wawastation
   junkgle01:
   - bugfix: Polishes up new Meta Cargo's decals and associated amenities.
+2024-06-12:
+  Goat:
+  - bugfix: blood drunk miner can now path over lava
+  NewyearnewmeUwu:
+  - balance: Pacifists can now use psychotic brawling, at major mood costs.
+  PowerfulAtom111:
+  - rscadd: after a quick galactic meeting, insane people around the universe can
+      now speak gibbering to express their ideas free from the prying ears of the
+      walls
+  - rscadd: as an insane person, taking your meds deafens your ears to the holy tongue
+      all the other insane people are speaking
+  - spellcheck: added a bit of text to the RDS quirk and the RDS medical record text
+      to highlight the insane's new abilities
+  aaaa1023:
+  - bugfix: there is now one more crayon in the Mortidrobe.
+  grungussuss:
+  - bugfix: fixed getting a fake white dwarf report when the shift isn't extended
+      mode, which lead to meta knowledge being used.
+  munchyi:
+  - rscadd: 'added a new virtual domain
+
+      :cl:
+
+      ![image](https://github.com/tgstation/tgstation/assets/154919526/2d94fe21-bc45-40dc-9f84-4b69088b353c)'
+  norsvenska:
+  - bugfix: The recyclers in the snow cabin gateway, the cyborg mothership, and the
+      deep storage space ruin are now rotated properly.
+  r3dj4ck0424:
+  - rscadd: Added another ruin to Lavaland
+  sylvia-from-fulp-station:
+  - image: Adds a unique sprite for envyknife
+  uaioy:
+  - qol: the first Medieval pirate to spawn will be the Warlord, warlord and crude
+      helmet have flash protection
+  - bugfix: Medieval shuttle has actual engines now
+  - bugfix: Shortsword has its original colours
+  - bugfix: Crude helmet no longer makes you bald
+2024-06-13:
+  Capsandi:
+  - sound: Some ambience tracks are quieter now.
+  Goat:
+  - bugfix: Enviro suit lights no longer stay on when the welding visor is activated.
+  Kocma-san:
+  - rscadd: Added new keywords (%d, %date, %t, %time) for fields
+  LT3:
+  - sound: You can now experience tram crashes in higher fidelity than ever!
+  Majkl-J:
+  - bugfix: EMPs on carbons no longer happen twice
+  - code_imp: Moves organ emps under bodyparts, changes how bodyparts handle emp effects
+  Melbert:
+  - rscadd: Character Loadouts
+  - rscdel: Pride Pin quirk (it's in the Loadout menu now)
+  - refactor: Over 200 item interactions have been refactored to use a newer, easier-to-use
+      system. Report any oddities with using items on other objects you may see (such
+      as surgery, reagent containers like cups and spray bottles, or construction
+      devices), especially using something at range (such as guns or chisels)
+  - refactor: Item-On-Modsuit interactions have changed slightly. While on combat
+      mode, you will attempt to "use" the item on the suit instead of inserting it
+      into the suit's storage. This means being on combat mode while the suit's panel
+      is open will block you from inserting items entirely via click (but other methods
+      such as hotkey, clicking on the storage boxes, and mousedrop will still work).
+  - refactor: The detective's scanner will now be inserted into storage items if clicked
+      normally, and will scan the storage item if on combat mode
+  - balance: Taking stamina damage in stamcrit has diminishing returns associated,
+      meaning you cannot be infinitely stamcrit.
+  Rhials:
+  - bugfix: The "mopper" gimmick assistant outfit spawns with one cart instead of
+      nine.
+  SyncIt21:
+  - bugfix: ' RCD, RPLD & RTD cancels their build process if their design is changed
+      during build.'
+  carlarctg:
+  - qol: Cult pylons slowly close bleeding wounds
+  - refactor: allowed aura healing to clot wounds shut
