@@ -276,6 +276,7 @@
 	desc = "There is fur all over it, and some blood..."
 	name = "Misha's bed"
 	anchored = TRUE
+
 /obj/structure/bed/dogbed/lia
 	desc = "Seems kind of... fishy."
 	name = "Lia's bed"

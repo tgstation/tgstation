@@ -85,7 +85,7 @@
 /mob/living/basic/bear/snow/misha
 	name = "Misha"
 	real_name = "Misha"
-	desc = "Tamed and trained by the Head of Security. Only beasts are above deceit"
+	desc = "Tamed and trained by the Head of Security. Only beasts are above deceit."
 	gold_core_spawnable = NO_SPAWN
 	maxHealth = 250
 	health = 250
