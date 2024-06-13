@@ -731,7 +731,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/obj/item/bodypart/wielding_bodypart = human_user.get_active_hand()
-		strength_value = round((wielding_bodypart.unarmed_damage_low + wielding_bodypart.unarmed_damage_high) * 0.25)
+		strength_value = round((wielding_bodypart.unarmed_damage_low + wielding_bodypart.unarmed_damage_high) * 0.25, 1)
 
 	force += strength_value
 
@@ -743,11 +743,7 @@
 	//Reapply our old force.
 	force = old_force
 
-/obj/item/nullrod/nullblade/afterattack(atom/target, mob/user, proximity, params)
-	. = ..()
-	if(!proximity)
-		return
-
+/obj/item/nullrod/nullblade/afterattack(atom/target, mob/user, click_parameters)
 	if(!isliving(target))
 		return
 
@@ -855,6 +851,6 @@
 		return
 
 	// We got a sneak attack!
-	living_target.apply_damage(round(sneak_attack_dice), BRUTE, def_zone = BODY_ZONE_CHEST, wound_bonus = bare_wound_bonus, sharpness = SHARP_EDGED)
+	living_target.apply_damage(round(sneak_attack_dice, 1), BRUTE, def_zone = BODY_ZONE_CHEST, wound_bonus = bare_wound_bonus, sharpness = SHARP_EDGED)
 	living_target.balloon_alert(user, "sneak attack!")
 	playsound(living_target, 'sound/weapons/guillotine.ogg', 50, TRUE)
