@@ -23,6 +23,7 @@
 
 /datum/component/udder/UnregisterFromParent()
 	QDEL_NULL(udder)
+	on_milk_callback = null
 	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_ATTACKBY))
 
 ///signal called on parent being examined
@@ -137,6 +138,7 @@
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	udder_mob = null
+	on_generate_callback = null
 
 /obj/item/udder/process(seconds_per_tick)
 	if(udder_mob.stat != DEAD)

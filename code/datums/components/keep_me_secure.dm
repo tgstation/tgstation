@@ -22,6 +22,11 @@
 	src.secured_callback = secured_callback
 	src.unsecured_callback = unsecured_callback
 
+/datum/component/keep_me_secure/Destroy(force, silent)
+	secured_callback = null
+	unsecured_callback = null
+	return ..()
+
 /datum/component/keep_me_secure/RegisterWithParent()
 	last_move = world.time
 	if (secured_callback || unsecured_callback)

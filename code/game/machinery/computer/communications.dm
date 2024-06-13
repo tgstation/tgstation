@@ -945,6 +945,10 @@
 	if(new_possible_answers)
 		possible_answers = new_possible_answers
 
+/datum/comm_message/Destroy()
+	answer_callback = null
+	return ..()
+
 #undef IMPORTANT_ACTION_COOLDOWN
 #undef EMERGENCY_ACCESS_COOLDOWN
 #undef STATE_BUYING_SHUTTLE

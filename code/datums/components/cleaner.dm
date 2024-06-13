@@ -30,10 +30,8 @@
 	src.on_cleaned_callback = on_cleaned_callback
 
 /datum/component/cleaner/Destroy(force, silent)
-	if(pre_clean_callback)
-		QDEL_NULL(pre_clean_callback)
-	if(on_cleaned_callback)
-		QDEL_NULL(on_cleaned_callback)
+	pre_clean_callback = null
+	on_cleaned_callback = null
 	return ..()
 
 /datum/component/cleaner/RegisterWithParent()

@@ -28,6 +28,13 @@
 	if(override_catalyst_type)
 		catalyst_type = override_catalyst_type
 
+/datum/component/religious_tool/Destroy(force, silent)
+	easy_access_sect = null
+	performing_rite = null
+	catalyst_type = null
+	after_sect_select_cb = null
+	return ..()
+
 /datum/component/religious_tool/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(AttemptActions))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))

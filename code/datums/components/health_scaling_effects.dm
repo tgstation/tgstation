@@ -54,7 +54,7 @@
 	return ..()
 
 /datum/component/health_scaling_effects/Destroy(force, silent)
-	QDEL_NULL(additional_status_callback)
+	additional_status_callback = null
 	return ..()
 
 /// Called when mob health changes, recalculates the ratio between maximum and minimum

@@ -436,7 +436,7 @@
 
 /datum/move_loop/has_target/jps/Destroy()
 	avoid = null
-	on_finish_callbacks = null
+	on_finish_callbacks.Cut()
 	return ..()
 
 ///Tries to calculate a new path for this moveloop.

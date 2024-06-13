@@ -21,6 +21,11 @@
 	src.tool_act_callback = tool_act_callback
 	src.consume_callback = consume_callback
 
+/datum/component/supermatter_crystal/Destroy(force, silent)
+	tool_act_callback = null
+	consume_callback = null
+	return ..()
+
 /datum/component/supermatter_crystal/UnregisterFromParent(force, silent)
 	var/list/signals_to_remove = list(
 		COMSIG_ATOM_BLOB_ACT,

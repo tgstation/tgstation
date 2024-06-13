@@ -33,6 +33,7 @@
 		STOP_PROCESSING(SSfastprocess, src)
 	victim = null
 	target = null
+	on_step = null
 	return ..()
 
 //Todo: convert

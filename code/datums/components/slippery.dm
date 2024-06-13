@@ -47,6 +47,11 @@
 	else
 		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(Slip))
 
+/datum/component/slippery/Destroy(force, silent)
+	callback = null
+	holder = null
+	return ..()
+
 /datum/component/slippery/proc/apply_fantasy_bonuses(obj/item/source, bonus)
 	SIGNAL_HANDLER
 	knockdown_time = source.modify_fantasy_variable("knockdown_time", knockdown_time, bonus)

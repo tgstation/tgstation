@@ -41,10 +41,10 @@
 	AddComponent(/datum/component/simple_access, REGION_ACCESS_ALL_STATION) //gary actually balls
 
 /mob/living/basic/chicken/gary/Destroy()
-	. = ..()
 	LAZYREMOVE(SSticker.round_end_events, roundend_callback)
-	QDEL_NULL(roundend_callback) //This ought to free the callback datum, and prevent us from harddeling
+	roundend_callback = null //This ought to free the callback datum, and prevent us from harddeling
 	QDEL_NULL(hideout)
+	return ..()
 
 /mob/living/basic/chicken/gary/death(gibbed)
 	. = ..()
