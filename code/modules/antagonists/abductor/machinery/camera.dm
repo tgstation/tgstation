@@ -65,7 +65,7 @@
 		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
 		return
 
-	if(target_area.area_flags & NOTELEPORT && !istype(target_area, /area/centcom/abductor_ship))
+	if((target_area.area_flags & NOTELEPORT) && !istype(target_area, /area/centcom/abductor_ship))
 		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
 		return
 
