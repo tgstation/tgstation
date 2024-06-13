@@ -28,6 +28,12 @@
 
 	var/mob/user = usr
 
+	if(SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, user) & COMPONENT_CANCEL_MOUSEDROP_ONTO)
+		return
+
+	if(SEND_SIGNAL(over, COMSIG_MOUSEDROPPED_ONTO, src, user, params) & COMPONENT_CANCEL_MOUSEDROPPED_ONTO)
+		return
+
 	// only if both dragged object & receiver agree to do checks do we proceed
 	var/combined_atom_flags = interaction_flags_atom | over.interaction_flags_atom
 	if(!(combined_atom_flags & INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS))
@@ -46,11 +52,7 @@
 
 	mouse_drop_dragged(over, user, src_location, over_location, params)
 
-	SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, user)
-
 	over.mouse_drop_receive(src, user, params)
-
-	SEND_SIGNAL(over, COMSIG_MOUSEDROPPED_ONTO, src, user, params)
 
 /// The proc that should be overridden by subtypes to handle mouse drop. Called on the atom being dragged
 /atom/proc/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
