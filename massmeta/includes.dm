@@ -96,3 +96,4 @@
 
 //oguzok in kitchen, huh?
 #include "code\modules\clothing\under\undersuit.dm"
+#include "code\modules\clothing\masks\moustache_ru.dm"
