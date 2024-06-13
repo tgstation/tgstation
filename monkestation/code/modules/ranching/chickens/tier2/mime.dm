@@ -3,6 +3,7 @@
 
 	breed_name = "Mime"
 	egg_type = /obj/item/food/egg/mime
+	liked_foods = list(/obj/item/food/grown/tobacco = 3)
 
 	book_desc = "..."
 

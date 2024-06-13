@@ -2,7 +2,8 @@
 	name = "chest-mounted implant"
 	desc = "You shouldn't see this! Adminhelp and report this as an issue on github!"
 	zone = BODY_ZONE_CHEST
-	icon_state = "implant-toolkit"
+	icon_state = "chest_implant"
+	implant_overlay = "chest_implant_overlay"
 	w_class = WEIGHT_CLASS_SMALL
 	encode_info = AUGMENT_NT_LOWLEVEL
 	implant_overlay = "chest_implant_overlay"

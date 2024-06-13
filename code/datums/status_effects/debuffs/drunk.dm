@@ -20,7 +20,7 @@
 
 /datum/status_effect/inebriated/on_creation(mob/living/new_owner, drunk_value = 0)
 	. = ..()
-	set_drunk_value(drunk_value)
+	set_drunk_value(drunk_value, TRUE)
 
 /datum/status_effect/inebriated/get_examine_text()
 	// Dead people don't look drunk
@@ -53,7 +53,9 @@
 	return null
 
 /// Sets the drunk value to set_to, deleting if the value drops to 0 or lower
-/datum/status_effect/inebriated/proc/set_drunk_value(set_to)
+/datum/status_effect/inebriated/proc/set_drunk_value(set_to, start = FALSE)
+	if(HAS_TRAIT(owner, TRAIT_LIVING_DRUNK) && !start)
+		return
 	if(!isnum(set_to))
 		CRASH("[type] - invalid value passed to set_drunk_value. (Got: [set_to])")
 

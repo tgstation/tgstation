@@ -4,6 +4,7 @@
 	breed_name = "Phoenix"
 	egg_type = /obj/item/food/egg/phoenix
 	mutation_list = list()
+	liked_foods = list(/obj/item/food/grown/ghost_chili)
 
 	book_desc = "These chickens have evolved to break the cycle of life and death and will always come back from the dead assuming their egg survives."
 

@@ -39,24 +39,20 @@
 	if(head)
 		head.forceMove(get_turf(src))
 
-/mob/living/basic/possession_holder/New(loc, obj/item/_stored_item, _l_y_shift = list(0, 0, 0, 0), _r_y_shift = list(0, 0, 0, 0), _r_x_shift = list(0, 0, 0, 0), _l_x_shift = list(0, 0, 0, 0), _head_y_shift = list(0, 0, 0, 0), _head_x_shift = list(0, 0, 0, 0))
+/mob/living/basic/possession_holder/New(loc, obj/item/_stored_item)
 	. = ..()
 	if(!_stored_item)
 		_stored_item = new /obj/item/toy/plush/cirno_plush/ballin(src)
 		message_admins("ERROR: Possession Holder was generated without a stored item defaulting to Ballin Cirno.")
 
 	stored_item = _stored_item
-	l_y_shift = _l_y_shift
-	r_y_shift = _r_y_shift
-	r_x_shift = _r_x_shift
-	l_x_shift = _l_x_shift
-	head_x_shift = _head_x_shift
-	head_y_shift = _head_y_shift
 
 	_stored_item.forceMove(src)
 
 	AddComponent(/datum/component/carbon_sprint)
 	AddComponent(/datum/component/personal_crafting)
+	AddComponent(/datum/component/basic_inhands, y_offset = -6)
+	AddElement(/datum/element/dextrous)
 	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_LITERATE), ROUNDSTART_TRAIT)
 
 	appearance = stored_item.appearance
@@ -172,7 +168,6 @@
 
 /mob/living/basic/possession_holder/regenerate_icons()
 	update_id_inv()
-	update_held_items()
 	update_worn_head()
 
 /mob/living/basic/possession_holder/update_worn_head()

@@ -1,5 +1,4 @@
 /mob/living/basic
-	hud_type = /datum/hud/living/basic
 	///rendered overlays
 	var/list/possession_overlays[1]
 	/// do we have hands created?
@@ -31,85 +30,6 @@
 	possession_overlays = overlays
 	return
 
-/mob/living/basic/proc/populate_shift_list() // we can add manual offsets as we create them overtime
-	l_y_shift = list(0, 0, 0, 0)
-	r_y_shift = list(0, 0, 0, 0)
-	r_x_shift = list(0, 0, 0, 0)
-	l_x_shift = list(0, 0, 0, 0)
-	head_y_shift = list(0, 0, 0, 0)
-	head_x_shift = list(0, 0, 0, 0)
-
-/mob/living/basic/regenerate_icons()
-	update_held_items()
-
-/mob/living/basic/update_held_items()
-	. = ..()
-	if(!isdrone(src))
-		remove_overlay(1)
-		var/list/hands_overlays = list()
-
-		for(var/obj/item/I in held_items)
-			if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-				I.screen_loc = ui_hand_position(get_held_index_of_item(I))
-				client.screen += I
-				if(length(observers))
-					for(var/mob/dead/observe as anything in observers)
-						if(observe.client && observe.client.eye == src)
-							observe.client.screen += I
-						else
-							observers -= observe
-							if(!observers.len)
-								observers = null
-								break
-
-			var/used_list_index = dir
-			if(dir == WEST)
-				used_list_index = 4
-			if(dir == EAST)
-				used_list_index = 3
-			if(!uses_directional_offsets)
-				used_list_index = 1
-
-			var/icon_file = I.lefthand_file
-			var/x_offset = l_x_shift[used_list_index]
-			var/y_offset = l_y_shift[used_list_index]
-			var/vertical_offset = 0
-			vertical_offset = CEILING(get_held_index_of_item(I) / 2, 1) - 1
-			if(get_held_index_of_item(I) % 2 == 0)
-				icon_file = I.righthand_file
-				y_offset = r_y_shift[used_list_index]
-				x_offset = r_x_shift[used_list_index]
-
-			var/mutable_appearance/hand_overlay = I.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
-			hand_overlay.pixel_y += y_offset  + (vertical_offset * base_vertical_shift)
-			hand_overlay.pixel_x += x_offset
-
-			hands_overlays += hand_overlay
-
-		if(hands_overlays.len)
-			possession_overlays[1] = hands_overlays
-		apply_overlay(1)
-
-/mob/living/basic/proc/remove_overlay(cache_index)
-	var/I = possession_overlays[cache_index]
-	if(I)
-		cut_overlay(I)
-		possession_overlays[cache_index] = null
-
-/mob/living/basic/proc/adjust_hand_count(number = 2)
-	held_items = list()
-	for(var/num=1 to number)
-		held_items += null
-	usable_hands = number
-	hud_used.build_hand_slots()
-	if(number > 0)
-		dexterous = TRUE
-		advanced_simple = TRUE
-		add_traits(list(TRAIT_CAN_HOLD_ITEMS, TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_LITERATE), ROUNDSTART_TRAIT)
-	else
-		dexterous = FALSE
-		advanced_simple = FALSE
-		remove_traits(list(TRAIT_CAN_HOLD_ITEMS, TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_LITERATE), ROUNDSTART_TRAIT)
 
 //general disarm proc
 /mob/living/proc/disarm(mob/living/carbon/target)
@@ -220,39 +140,18 @@
 	else
 		mode()
 
-/mob/living/basic/perform_hand_swap(hand_index)
-	. = ..()
-	if(!isdrone(src))
-		if(!dexterous)
-			return
-		if(!hand_index)
-			hand_index = (active_hand_index % held_items.len)+1
-		var/oindex = active_hand_index
-		active_hand_index = hand_index
-		if(hud_used)
-			var/atom/movable/screen/inventory/hand/H
-			H = hud_used.hand_slots["[hand_index]"]
-			if(H)
-				H.update_appearance()
-			H = hud_used.hand_slots["[oindex]"]
-			if(H)
-				H.update_appearance()
-
-/mob/living/basic/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
-	. = ..()
-	update_held_items()
-
-/mob/living/basic/setDir(newdir)
-	. = ..()
-	update_held_items()
+/mob/living/basic/proc/remove_overlay(cache_index)
+	var/I = possession_overlays[cache_index]
+	if(I)
+		cut_overlay(I)
+		possession_overlays[cache_index] = null
 
 #define VV_HK_OFFSET_EDITOR "offset_editor"
 #define VV_HK_ADJUST_HANDS "hand_count"
 /mob/living/basic/vv_get_dropdown()
 	. = ..()
 	VV_DROPDOWN_OPTION("", "-------------") //monkestation edit
-	VV_DROPDOWN_OPTION(VV_HK_OFFSET_EDITOR, "Edit Offsets") //monkestation edit
-	VV_DROPDOWN_OPTION(VV_HK_ADJUST_HANDS, "Adjust Hand Count") //monkestation edit
+	VV_DROPDOWN_OPTION(VV_HK_ADJUST_HANDS, "Grant Hands") //monkestation edit
 
 /mob/living/basic/vv_do_topic(list/href_list)
 	. = ..()
@@ -260,19 +159,10 @@
 	if(!.)
 		return
 
-	if(href_list[VV_HK_OFFSET_EDITOR] && check_rights(R_FUN))
-		if(!usr.client)
-			return
-		if(!usr.client.offset_editor)
-			usr.client.offset_editor = new
-		usr.client.offset_editor.open_ui(usr, src)
-
 	if(href_list[VV_HK_ADJUST_HANDS] && check_rights(R_FUN))
-		var/number = tgui_input_number(usr, "How many hands should this mob have?", "Adjust Hand Count")
-		if(!number)
-			adjust_hand_count(0)
-			return
-		adjust_hand_count(number)
+		AddComponent(/datum/component/basic_inhands, y_offset = -6)
+		AddComponent(/datum/component/max_held_weight, WEIGHT_CLASS_SMALL)
+		AddElement(/datum/element/dextrous)
 
 #undef VV_HK_OFFSET_EDITOR
 #undef VV_HK_ADJUST_HANDS

@@ -102,8 +102,6 @@
 
 /mob/living/basic/Initialize(mapload)
 	. = ..()
-	create_overlay_index() //monkestation edit
-	populate_shift_list() //monkestation edit
 
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
@@ -111,8 +109,10 @@
 	if(!real_name)
 		real_name = name
 
+	/* MONKESTATION REMOVAL - This is totally valid to create a mob in nullspace, its not valid to move a client onto it, this seems weird.
 	if(!loc)
 		stack_trace("Basic mob being instantiated in nullspace")
+	*/
 
 	update_basic_mob_varspeed()
 

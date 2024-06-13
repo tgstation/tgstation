@@ -7,6 +7,7 @@
 	egg_type = /obj/item/food/egg/clown
 	mutation_list = list(/datum/mutation/ranching/chicken/mime, /datum/mutation/ranching/chicken/clown_sad)
 	minimum_living_happiness = -2000
+	liked_foods = list(/obj/item/food/grown/banana  = 3)
 
 	targeted_ability_planning_tree = /datum/ai_planning_subtree/targeted_mob_ability/min_range/chicken/clown
 

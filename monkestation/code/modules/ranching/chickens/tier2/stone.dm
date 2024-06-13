@@ -7,6 +7,8 @@
 	mutation_list = list(/datum/mutation/ranching/chicken/cockatrice)
 
 	book_desc = "These chickens are capable of replicating materials the eggs have been plated with. The downside, you need to break the eggs to get the materials. This will make chickens very sad and make some become hostile."
+	liked_foods = list(/obj/item/food/grown/cannabis = 3)
+
 /obj/item/food/egg/stone
 	name = "Rocky Egg"
 	icon_state = "stone"

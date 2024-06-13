@@ -778,6 +778,7 @@
  */
 /datum/reagents/proc/metabolize_reagent(mob/living/carbon/owner, datum/reagent/reagent, seconds_per_tick, times_fired, can_overdose = FALSE, liverless = FALSE, dead = FALSE)
 	var/need_mob_update = FALSE
+	SEND_SIGNAL(src, COMSIG_REAGENT_METABOLIZE_REAGENT, reagent, seconds_per_tick)
 	if(QDELETED(reagent.holder))
 		return FALSE
 

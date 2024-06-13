@@ -4,6 +4,7 @@
 	breed_name = "Ixworth"
 	egg_type = /obj/item/food/egg/ixworth
 	mutation_list = list()
+	liked_foods = list(/obj/item/food/grown/tomato = 2)
 
 	book_desc = "A very stylish breed."
 /obj/item/food/egg/ixworth

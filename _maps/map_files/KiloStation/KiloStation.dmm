@@ -8157,6 +8157,9 @@
 /area/station/hallway/primary/central)
 "cGR" = (
 /obj/machinery/light/small/directional/south,
+/mob/living/basic/chicken{
+	forced_gender = "female"
+	},
 /turf/open/floor/sandy_dirt,
 /area/station/service/hydroponics)
 "cHg" = (
@@ -22288,6 +22291,13 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
+"hfR" = (
+/obj/structure/flora/bush/flowers_br/style_random,
+/mob/living/basic/chicken/brown{
+	forced_gender = "female"
+	},
+/turf/open/floor/sandy_dirt,
+/area/station/service/hydroponics)
 "hfV" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -23757,6 +23767,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/security/prison/mess)
+"hDP" = (
+/mob/living/basic/chicken/brown{
+	forced_gender = "male"
+	},
+/turf/open/floor/sandy_dirt,
+/area/station/service/hydroponics)
 "hDV" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -53074,11 +53090,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
-"rcd" = (
-/obj/structure/flora/bush/flowers_br/style_random,
-/mob/living/basic/chicken,
-/turf/open/floor/sandy_dirt,
-/area/station/service/hydroponics)
 "rcj" = (
 /obj/structure/toilet,
 /obj/effect/decal/cleanable/dirt,
@@ -54345,16 +54356,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
-"rwp" = (
-/obj/structure/railing{
-	dir = 1
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/mob/living/basic/chicken,
-/turf/open/floor/sandy_dirt,
-/area/station/service/hydroponics)
 "rwr" = (
 /turf/closed/wall/rust,
 /area/station/medical/psychology)
@@ -69153,6 +69154,15 @@
 /mob/living/simple_animal/bot/secbot/beepsky/officer,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
+"vYu" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/mob/living/basic/chicken{
+	forced_gender = "male"
+	},
+/turf/open/floor/sandy_dirt,
+/area/station/service/hydroponics)
 "vYx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -69518,7 +69528,6 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "wej" = (
-/mob/living/basic/chicken,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -110315,8 +110324,8 @@ jHT
 xWu
 eHZ
 ipq
-doE
-rcd
+vYu
+bNZ
 arl
 qHT
 lzv
@@ -111343,7 +111352,7 @@ kDK
 fcR
 qDO
 irz
-bNZ
+hfR
 vcc
 arl
 arl
@@ -111598,9 +111607,9 @@ eYd
 fmV
 pqu
 bKu
-rwp
+irz
 aUi
-mqr
+hDP
 mqr
 gQv
 abn

@@ -34,6 +34,8 @@ SUBSYSTEM_DEF(liquids)
 	var/list/group_process_work_queue = list()
 	///list of all work queue for turf processing
 	var/list/active_turf_group_queue = list()
+	///list of cached exposures we are working with
+	var/list/cached_exposures = list()
 
 
 /datum/controller/subsystem/liquids/stat_entry(msg)
@@ -182,23 +184,41 @@ SUBSYSTEM_DEF(liquids)
 		list_clear_nulls(active_turf_group_queue)
 
 		if(member_counter > REQUIRED_MEMBER_PROCESSES)
-			for(var/datum/liquid_group/liquid_group as anything in active_turf_group_queue)
-				if(MC_TICK_CHECK)
-					return
-				if(QDELETED(liquid_group))
-					active_turf_group_queue -= liquid_group
-					continue
-				liquid_group.build_turf_reagent()
-				active_turf_group_queue -= liquid_group
-				if(!liquid_group.exposure)
-					continue
-				for(var/turf/member as anything in liquid_group.members)
+			if(!length(cached_exposures))
+				for(var/datum/liquid_group/liquid_group as anything in active_turf_group_queue)
 					if(MC_TICK_CHECK)
 						return
-					if(!istype(member) || QDELING(member))
-						liquid_group.members -= member
+					if(QDELETED(liquid_group))
+						active_turf_group_queue -= liquid_group
 						continue
-					liquid_group.process_member(member)
+					liquid_group.build_turf_reagent()
+					active_turf_group_queue -= liquid_group
+					if(!liquid_group.exposure)
+						continue
+					for(var/turf/member as anything in liquid_group.members)
+						cached_exposures += liquid_group.members
+
+			var/process_count = 0
+			var/list/groups_we_rebuilt = list()
+			while((process_count <= 500) && length(cached_exposures))
+				process_count++
+				var/turf/member = pick_n_take(cached_exposures)
+				if(!member)
+					break
+				if(MC_TICK_CHECK)
+					return
+
+				var/datum/liquid_group/liquid_group = member.liquids.liquid_group
+				if(!(liquid_group in groups_we_rebuilt))
+					groups_we_rebuilt |= liquid_group
+					liquid_group.build_turf_reagent()
+
+				cached_exposures -= member
+				if(!istype(member) || QDELING(member))
+					liquid_group.members -= member
+					continue
+				liquid_group.process_member(member)
+
 			member_counter = 0
 		run_type = SSLIQUIDS_RUN_TYPE_CACHED_EDGES
 

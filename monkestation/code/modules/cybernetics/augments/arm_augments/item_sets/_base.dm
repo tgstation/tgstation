@@ -193,5 +193,5 @@
 
 /obj/item/organ/internal/cyberimp/arm/item_set/proc/swap_tools(active_item)
 	SIGNAL_HANDLER
-	Retract(active_item)
+	Retract(owner)
 	INVOKE_ASYNC(src, PROC_REF(ui_action_click))

@@ -5,6 +5,7 @@
 	breed_name = "Onagadori"
 	egg_type = /obj/item/food/egg/onagadori
 	mutation_list = list(/datum/mutation/ranching/chicken/sword)
+	liked_foods = list(/obj/item/food/grown/peanut = 4)
 
 	book_desc = "Japanese long-tailed chickens, with no unique features aside from its plumage."
 

@@ -14,7 +14,9 @@
 	spawned.alpha = 20
 	spawned.color = pick(list(COLOR_BLUE_GRAY, COLOR_BLUE_LIGHT, COLOR_CARP_BLUE))
 
-	animate(spawned, time = 0.5 SECONDS, alpha = 255)
-	animate(spawned, time = 0.8 SECONDS, pixel_y = rand(-20, -12), easing = LINEAR_EASING)
+	. = ..()
 
-	addtimer(CALLBACK(src, PROC_REF(delete_particle), spawned), duration)
+/datum/component/particle_spewer/rain/adjust_animate_steps()
+	animate_holder.add_animation_step(list(time = 0.5 SECONDS, alpha = 255))
+	animate_holder.add_animation_step(list(time = 0.8 SECONDS, pixel_y = "RANDOM", easing = LINEAR_EASING))
+	animate_holder.set_random_var(2, "pixel_y", list(-20, -12))

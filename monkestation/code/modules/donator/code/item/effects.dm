@@ -10,7 +10,7 @@
 	animal.mind_initialize()
 	var/datum/mind/granters_mind = granter.mind
 	granters_mind.transfer_to(animal)
-	animal.adjust_hand_count(2)
+	animal.AddComponent()
 	qdel(granter)
 	. = ..()
 

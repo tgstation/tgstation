@@ -49,7 +49,7 @@
 			return
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(climbed_thing)
-		structure_climber.Paralyze(40)
+		structure_climber.Immobilize(40)
 		structure_climber.visible_message(span_warning("[structure_climber] is knocked off [climbed_thing]."), span_warning("You're knocked off [climbed_thing]!"), span_hear("You hear a cry from [structure_climber], followed by a slam."))
 
 
@@ -79,7 +79,7 @@
 		if(HAS_TRAIT(user, TRAIT_VAULTING) && user.m_intent == MOVE_INTENT_RUN)//monkestation edit: simians can fling themselves off climbable structures
 			vault_over_object(user, climbed_thing)
 			if(climb_stun)
-				user.Paralyze(climb_stun)
+				user.Immobilize(climb_stun)
 				user.visible_message(span_warning("[user] flips over [climbed_thing]!"), \
 									span_notice("You flip over [climbed_thing]!"))
 
@@ -88,7 +88,7 @@
 								span_notice("You climb onto [climbed_thing]."))
 			log_combat(user, climbed_thing, "climbed onto")
 			if(adjusted_climb_stun)
-				user.Paralyze(adjusted_climb_stun)
+				user.Immobilize(adjusted_climb_stun)
 		else
 			to_chat(user, span_warning("You fail to climb onto [climbed_thing]."))
 	LAZYREMOVEASSOC(current_climbers, climbed_thing, user)

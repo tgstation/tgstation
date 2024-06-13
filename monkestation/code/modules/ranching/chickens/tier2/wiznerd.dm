@@ -21,6 +21,7 @@
 
 	egg_type = /obj/item/food/egg/wiznerd
 	mutation_list = list()
+	liked_foods = list(/obj/item/food/grown/mushroom/amanita = 7)
 
 	projectile_type = /obj/projectile/magic/magic_missle_weak
 	ranged_cooldown = 1.5 SECONDS

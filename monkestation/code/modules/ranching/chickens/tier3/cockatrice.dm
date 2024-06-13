@@ -54,7 +54,7 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/user = target
-		user.petrify(10)
+		user.petrify_immortal(1 SECONDS)
 
 /datum/action/cooldown/mob_cooldown/chicken/petrifying_gaze
 	name = "Petrifying Gaze"
@@ -64,7 +64,7 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 
-	cooldown_time = 20 SECONDS
+	cooldown_time = 45 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	click_to_activate = TRUE
 	shared_cooldown = NONE
@@ -77,8 +77,28 @@
 
 /datum/action/cooldown/mob_cooldown/chicken/petrifying_gaze/Activate(mob/living/target)
 	var/mob/living/living_owner = owner
+
+	if(!is_source_facing_target(target, living_owner))
+		return
+
 	living_owner.visible_message("[living_owner] glares at [target] petrifying them.", "You glare at [target] petrifying them.")
 	living_owner.face_atom(target)
-	target.petrify(10)
+	target.petrify_immortal(1 SECONDS)
 	StartCooldown()
 	return TRUE
+
+/mob/proc/petrify_immortal(statue_timer)
+
+/mob/living/carbon/human/petrify_immortal(statue_timer)
+	if(!isturf(loc))
+		return FALSE
+	var/obj/structure/statue/petrified/immortal/S = new(loc, src, statue_timer)
+	S.name = "statue of [name]"
+	ADD_TRAIT(src, TRAIT_NOBLOOD, MAGIC_TRAIT)
+	S.copy_overlays(src)
+	var/newcolor = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
+	return TRUE
+
+/obj/structure/statue/petrified/immortal/deconstruct(disassembled)
+	qdel(src)

@@ -83,8 +83,8 @@
 	body_damage_coeff = 0.75
 	can_be_disabled = TRUE
 	unarmed_attack_verb = "punch" /// The classic punch, wonderfully classic and completely random
-	unarmed_damage_low = 1
-	unarmed_damage_high = 10
+	unarmed_damage_low = 5
+	unarmed_damage_high = 5
 	unarmed_stun_threshold = 10
 	body_zone = BODY_ZONE_L_ARM
 
@@ -180,7 +180,7 @@
 	px_x = -5
 	px_y = -3
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 1 /// monkey punches must be really weak, considering they bite people instead and their bites are weak as hell.
+	unarmed_damage_low = 2 /// monkey punches must be really weak, considering they bite people instead and their bites are weak as hell.
 	unarmed_damage_high = 2
 	unarmed_stun_threshold = 3
 
@@ -283,7 +283,7 @@
 	px_x = 5
 	px_y = -3
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 1
+	unarmed_damage_low = 2
 	unarmed_damage_high = 2
 	unarmed_stun_threshold = 3
 
@@ -313,8 +313,8 @@
 	unarmed_attack_effect = ATTACK_EFFECT_KICK
 	body_zone = BODY_ZONE_L_LEG
 	unarmed_attack_verb = "kick" // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
-	unarmed_damage_low = 2
-	unarmed_damage_high = 15
+	unarmed_damage_low = 8
+	unarmed_damage_high = 8
 	unarmed_stun_threshold = 10
 
 	/// Can these legs be digitigrade? See digitigrade.dm
@@ -406,7 +406,7 @@
 	wound_resistance = -10
 	px_y = 4
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 2
+	unarmed_damage_low = 3
 	unarmed_damage_high = 3
 	unarmed_stun_threshold = 4
 	footprint_sprite =  FOOTPRINT_SPRITE_PAWS
@@ -501,7 +501,7 @@
 	wound_resistance = -10
 	px_y = 4
 	dmg_overlay_type = SPECIES_MONKEY
-	unarmed_damage_low = 2
+	unarmed_damage_low = 3
 	unarmed_damage_high = 3
 	unarmed_stun_threshold = 4
 	footprint_sprite =  FOOTPRINT_SPRITE_PAWS
@@ -522,11 +522,11 @@
 /obj/item/bodypart/leg/right/tallboy
 	limb_id = SPECIES_TALLBOY
 	top_offset = 23
-	unarmed_damage_low = 30
-	unarmed_damage_low = 50
+	unarmed_damage_low = 40
+	unarmed_damage_low = 40
 
 /obj/item/bodypart/leg/left/tallboy
 	limb_id = SPECIES_TALLBOY
 	top_offset = 23
-	unarmed_damage_low = 30
-	unarmed_damage_low = 50
+	unarmed_damage_low = 40
+	unarmed_damage_low = 40

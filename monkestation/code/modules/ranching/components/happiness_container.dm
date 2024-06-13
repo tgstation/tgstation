@@ -36,18 +36,18 @@
 /datum/component/happiness_container/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_HAPPINESS_ADJUST, PROC_REF(adjust_happiness))
-	RegisterSignal(parent, COMSIG_HAPPINESS_RETURN_VALUE, PROC_REF(return_happiness))
 	RegisterSignal(parent, COMSIG_LIVING_ATE, PROC_REF(on_eat))
 	RegisterSignal(parent, COMSIG_HAPPINESS_PASS_HAPPINESS, PROC_REF(pass_happiness))
+	RegisterSignal(parent, COMSIG_HAPPINESS_CHECK_RANGE, PROC_REF(passes_happy))
 
 /datum/component/happiness_container/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, COMSIG_HAPPINESS_ADJUST)
-	UnregisterSignal(parent, COMSIG_HAPPINESS_RETURN_VALUE)
+	UnregisterSignal(parent, COMSIG_HAPPINESS_CHECK_RANGE)
 	UnregisterSignal(parent, COMSIG_LIVING_ATE)
 	UnregisterSignal(parent, COMSIG_HAPPINESS_PASS_HAPPINESS)
 
-/datum/component/happiness_container/proc/adjust_happiness(datum/source, adjustment, atom/came_from, natural_cause = FALSE)
+/datum/component/happiness_container/proc/adjust_happiness(datum/source, adjustment, atom/came_from, natural_cause = FALSE, transfer = FALSE)
 	if(adjustment > 0)
 		if(!natural_cause)
 			add_visual("love")
@@ -57,8 +57,10 @@
 		else
 			if(maxiumum_life_happiness == 0)
 				return
-		maximum_drain = min(maxiumum_life_happiness, adjustment)
-		maxiumum_life_happiness -= maximum_drain
+			maximum_drain = min(maxiumum_life_happiness, adjustment)
+
+		if(!transfer)
+			maxiumum_life_happiness -= maximum_drain
 		current_happiness += maximum_drain
 	else
 		if(!natural_cause)
@@ -70,9 +72,6 @@
 	for(var/datum/callback/callback as anything in unhappy_callbacks)
 		if(current_happiness < unhappy_callbacks[callback])
 			callback.Invoke()
-
-/datum/component/happiness_container/proc/return_happiness(datum/source)
-	return current_happiness
 
 /datum/component/happiness_container/proc/on_eat(datum/source, atom/ate, atom/came_from)
 	if(istype(ate, /obj/effect/chicken_feed))
@@ -113,7 +112,7 @@
 /datum/component/happiness_container/proc/pass_happiness(datum/source, atom/target)
 	if(!target.GetComponent(/datum/component/happiness_container))
 		target.AddComponent(/datum/component/happiness_container)
-	SEND_SIGNAL(target, COMSIG_HAPPINESS_ADJUST, current_happiness)
+	SEND_SIGNAL(target, COMSIG_HAPPINESS_ADJUST, current_happiness, null, FALSE, TRUE)
 
 /datum/component/happiness_container/proc/add_visual(method)
 	if(applied_visual)
@@ -127,3 +126,12 @@
 	var/atom/movable/parent_movable = parent
 	parent_movable.cut_overlay(applied_visual)
 	QDEL_NULL(applied_visual)
+
+/datum/component/happiness_container/proc/passes_happy(datum/source, check)
+	if(check > 0)
+		if(!(current_happiness > check))
+			return FALSE
+	else
+		if(!(current_happiness < check))
+			return FALSE
+	return TRUE

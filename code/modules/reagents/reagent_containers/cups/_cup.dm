@@ -101,9 +101,57 @@
 	if(LAZYLEN(diseases_to_add))
 		AddComponent(/datum/component/infective, diseases_to_add)
 
+/obj/item/reagent_containers/cup/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+	. = ..()
+	if(!isliving(over))
+		return
+
+	if(!spillable)
+		return
+
+	var/mob/living/chugger = over
+	var/chugging = TRUE //guys this is literally so fucking epic. We are really chugging shit
+	var/chug_time = 2 SECONDS /// guys we are literally chugging
+	while(chugging)
+		if(!reagents.total_volume)
+			chugging = FALSE
+			return
+
+		if(!do_after(chugger, chug_time, src))
+			chugging = FALSE
+			return
+		chug_time = max(0.5 SECONDS, chug_time - 0.2 SECONDS)
+
+		to_chat(chugger, span_notice("You swallow a gulp of [src]."))
+
+		SEND_SIGNAL(src, COMSIG_GLASS_DRANK, chugger, chugger)
+		var/fraction = min(gulp_size/reagents.total_volume, 1)
+		var/obj/item/organ/internal/bladder/contained_bladder = chugger.get_organ_slot(ORGAN_SLOT_BLADDER)
+		if(contained_bladder)
+			contained_bladder.consume_act(reagents, gulp_size * 0.2)
+		reagents.trans_to(chugger, gulp_size, transfered_by = chugger, methods = INGEST)
+		checkLiked(fraction, chugger)
+		playsound(chugger.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
+		if(!iscarbon(chugger))
+			continue
+		var/mob/living/carbon/carbon_drinker = chugger
+		var/list/diseases = carbon_drinker.get_static_viruses()
+		if(!LAZYLEN(diseases))
+			continue
+		var/list/datum/disease/diseases_to_add = list()
+		for(var/datum/disease/malady as anything in diseases)
+			if(malady.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
+				diseases_to_add += malady
+		if(LAZYLEN(diseases_to_add))
+			AddComponent(/datum/component/infective, diseases_to_add)
+
+
 /obj/item/reagent_containers/cup/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!proximity_flag)
+		return
+
+	if(SEND_SIGNAL(src, COMSIG_TRY_EAT_TRAIT, target))
 		return
 
 	. |= AFTERATTACK_PROCESSED_ITEM

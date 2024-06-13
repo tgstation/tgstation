@@ -4,6 +4,7 @@
 	breed_name = "Dream"
 	egg_type = /obj/item/food/egg/dream
 	mutation_list = list()
+	liked_foods = list(/obj/item/food/grown/apple = 3)
 
 	book_desc = "A mystical chicken born from the dreams of death will only appear when a Black Selkie dies of old age."
 

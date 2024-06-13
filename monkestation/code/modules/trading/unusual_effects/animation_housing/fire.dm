@@ -12,17 +12,27 @@
 
 	spawned.add_filter("outline", 1, list(type = "outline", size = 1,  color = "#FF3300"))
 	spawned.add_filter("bloom", 2 , list(type = "bloom", threshold = rgb(255,128,255), size = 5, offset = 4, alpha = 255))
-	
+
 	if(prob(35))
 		spawned.layer = ABOVE_MOB_LAYER
 
-	var/normal_x = rand(-4, 4) + spawned.pixel_x
-	var/inverse_x = 0 - normal_x
 	spawned.alpha = 130
 
-	animate(spawned, alpha = 255,  time = 0.4 SECONDS, pixel_y = rand(6, 16) + spawned.pixel_y, pixel_x = normal_x, easing = LINEAR_EASING)
-	animate(time = 0.5 SECONDS, alpha = 0, inverse_x , pixel_y = rand(6, 16) + spawned.pixel_y, easing = LINEAR_EASING|EASE_OUT)
-	addtimer(CALLBACK(src, PROC_REF(delete_particle), spawned), duration)
+	. = ..()
+
+/datum/component/particle_spewer/fire/adjust_animate_steps()
+	animate_holder.add_animation_step(list(alpha = 255, time = 0.4 SECONDS, pixel_y = "RANDOM", pixel_x = "RANDOM", easing = LINEAR_EASING))
+	animate_holder.set_random_var(1, "pixel_y", list(6, 16))
+	animate_holder.set_parent_copy(1, "pixel_y")
+	animate_holder.set_random_var(1, "pixel_x", list(-4, 4))
+	animate_holder.set_parent_copy(1, "pixel_x")
+
+	animate_holder.add_animation_step(list(alpha = 0, time = 0.5 SECONDS, pixel_x = "RANDOM", pixel_y = "RANDOM", easing = LINEAR_EASING|EASE_OUT))
+	animate_holder.set_random_var(2, "pixel_y", list(6, 16))
+	animate_holder.set_random_var(2, "pixel_x", list(-4, 4))
+	animate_holder.set_parent_copy(2, "pixel_y")
+	animate_holder.set_parent_copy(2, "pixel_x", FALSE)
+
 
 /obj/item/debug_fire/Initialize(mapload)
 	. = ..()

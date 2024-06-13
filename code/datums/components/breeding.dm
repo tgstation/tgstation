@@ -14,15 +14,17 @@
 	var/ready_to_breed = TRUE
 	///callback after we give birth to the child
 	var/datum/callback/post_birth
+	///callback that overrides the birth ending
+	var/datum/callback/override_baby
 
-/datum/component/breed/Initialize(list/can_breed_with = list(), breed_timer = 40 SECONDS, baby_path, post_birth)
+/datum/component/breed/Initialize(list/can_breed_with = list(), breed_timer = 40 SECONDS, baby_path, post_birth, override_baby)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	if(ishuman(parent)) //sin detected
 		return COMPONENT_INCOMPATIBLE
 
-	if(!ispath(baby_path))
+	if(!ispath(baby_path) && !override_baby)
 		stack_trace("attempted to add a breeding component with invalid baby path!")
 		return
 
@@ -30,6 +32,7 @@
 	src.breed_timer = breed_timer
 	src.baby_path = baby_path
 	src.post_birth = post_birth
+	src.override_baby = override_baby
 
 	ADD_TRAIT(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
 
@@ -60,8 +63,12 @@
 	if(!ready_to_breed)
 		source.balloon_alert(source, "not ready!")
 		return COMPONENT_HOSTILE_NO_ATTACK
-
 	var/turf/delivery_destination = get_turf(source)
+	if(override_baby)
+		new /obj/effect/temp_visual/heart(delivery_destination)
+		override_baby.Invoke()
+		return COMPONENT_HOSTILE_NO_ATTACK
+
 	var/mob/living/baby = new baby_path(delivery_destination)
 	new /obj/effect/temp_visual/heart(delivery_destination)
 	toggle_status(source)

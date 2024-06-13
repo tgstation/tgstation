@@ -17,18 +17,20 @@ SUBSYSTEM_DEF(station_coloring)
 	var/list/green = list("#50b47c", "#59b25d", "#46955a", "#4ba17b")
 	//BLUE (Some of Medbay areas)
 	var/list/blue = list("#336f92", "#5d99bc", "#3f87ae", "#6eabce", "#307199")
+	//ORANGE (engineering)
+	var/list/orange = list("#f3a852", "#f39d3a", "#c47010", "#f08913", "#fc8600")
 
 /datum/controller/subsystem/station_coloring/Initialize()
 	var/list/color_palette = list(
 		pick(red)          = typesof(/area/station/security),
 		pick(purple)       = typesof(/area/station/science),
-		pick(green)        = list(/area/station/medical/virology,
-		                        /area/station/service/hydroponics),
+		pick(green)        = list(/area/station/medical/virology) + typesof(/area/station/service) - /area/station/service/bar,
 		pick(blue)         = typesof(/area/station/medical),
 		pick(bar)          = list(/area/station/service/bar),
 		pick(brown)		   = typesof(/area/station/cargo) + typesof(/area/mine),
 		COLOR_WHITE        = typesof(/area/shuttle),
 		COLOR_WHITE        = typesof(/area/centcom),
+		pick(orange)	   = typesof(/area/station/engineering),
 	)
 
 	for(var/color in color_palette)

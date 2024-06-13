@@ -10,7 +10,8 @@
 	var/datum/mind/granters_mind = granter.mind
 
 	granters_mind.transfer_to(new_honk)
-	new_honk.adjust_hand_count(2)
+	new_honk.AddComponent(/datum/component/basic_inhands, y_offset = -6)
+	new_honk.AddElement(/datum/element/dextrous)
 	qdel(granter)
 
 	. = ..()

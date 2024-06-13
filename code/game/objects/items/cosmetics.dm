@@ -136,6 +136,7 @@
 	icon = 'icons/obj/cosmetic.dmi'
 	icon_state = "razor"
 	inhand_icon_state = "razor"
+	toolspeed = 1
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	var/unlocked = FALSE //for unlocking super hairstyles
@@ -156,6 +157,8 @@
 	playsound(loc, 'sound/items/welder2.ogg', 20, TRUE)
 
 /obj/item/razor/attack(mob/M, mob/living/user)
+	if(SEND_SIGNAL(M, COMSIG_MOB_SHEARED, toolspeed, src, user))
+		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/location = user.zone_selected

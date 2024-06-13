@@ -5,6 +5,7 @@
 	egg_type = /obj/item/food/egg/snowy
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 40
+	liked_foods = list(/obj/item/food/grown/icepepper = 4)
 
 	book_desc = "These chickens require a sub-zero environment to live. They will melt if its not cold enough for them."
 /obj/item/food/egg/snowy

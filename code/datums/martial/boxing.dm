@@ -20,7 +20,7 @@
 
 	var/atk_verb = pick("left hook","right hook","straight punch")
 
-	var/damage = rand(5, 8) + active_arm.unarmed_damage_low
+	var/damage = rand(10, 16) + (active_arm.unarmed_damage_low * 2)
 	if(!damage)
 		playsound(defender.loc, active_arm.unarmed_miss_sound, 25, TRUE, -1)
 		defender.visible_message(span_warning("[attacker]'s [atk_verb] misses [defender]!"), \

@@ -309,26 +309,26 @@
 
 /obj/item/bodypart/arm/left/mushroom
 	limb_id = SPECIES_MUSHROOM
-	unarmed_damage_low = 6
-	unarmed_damage_high = 14
+	unarmed_damage_low = 8
+	unarmed_damage_high = 8
 	unarmed_stun_threshold = 14
 
 /obj/item/bodypart/arm/right/mushroom
 	limb_id = SPECIES_MUSHROOM
-	unarmed_damage_low = 6
-	unarmed_damage_high = 14
+	unarmed_damage_low = 8
+	unarmed_damage_high = 8
 	unarmed_stun_threshold = 14
 
 /obj/item/bodypart/leg/left/mushroom
 	limb_id = SPECIES_MUSHROOM
-	unarmed_damage_low = 9
-	unarmed_damage_high = 21
+	unarmed_damage_low = 15
+	unarmed_damage_high = 15
 	unarmed_stun_threshold = 14
 
 /obj/item/bodypart/leg/right/mushroom
 	limb_id = SPECIES_MUSHROOM
-	unarmed_damage_low = 9
-	unarmed_damage_high = 21
+	unarmed_damage_low = 15
+	unarmed_damage_high = 15
 	unarmed_stun_threshold = 14
 
 ///GOLEMS (i hate xenobio SO FUCKING MUCH) (from 2022: Yeah I fucking feel your pain brother)
@@ -354,8 +354,8 @@
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
-	unarmed_damage_low = 5 // I'd like to take the moment that maintaining all of these random ass golem speciese is hell and oranges was right
-	unarmed_damage_high = 14
+	unarmed_damage_low = 8 // I'd like to take the moment that maintaining all of these random ass golem speciese is hell and oranges was right
+	unarmed_damage_high = 8
 	unarmed_stun_threshold = 11
 
 /obj/item/bodypart/arm/left/golem/set_owner(new_owner)
@@ -375,8 +375,8 @@
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
-	unarmed_damage_low = 5
-	unarmed_damage_high = 14
+	unarmed_damage_low = 8
+	unarmed_damage_high = 8
 	unarmed_stun_threshold = 11
 
 /obj/item/bodypart/arm/right/golem/set_owner(new_owner)
@@ -395,8 +395,8 @@
 	bodytype = BODYTYPE_ORGANIC
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
-	unarmed_damage_low = 7
-	unarmed_damage_high = 21
+	unarmed_damage_low = 11
+	unarmed_damage_high = 11
 	unarmed_stun_threshold = 11
 
 /obj/item/bodypart/leg/right/golem
@@ -404,8 +404,8 @@
 	bodytype = BODYTYPE_ORGANIC
 	limb_id = SPECIES_GOLEM
 	dmg_overlay_type = null
-	unarmed_damage_low = 7
-	unarmed_damage_high = 21
+	unarmed_damage_low = 11
+	unarmed_damage_high = 11
 	unarmed_stun_threshold = 11
 
 ///CULT GOLEM
@@ -449,28 +449,28 @@
 /obj/item/bodypart/arm/left/golem/cloth
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
-	unarmed_damage_low = 4
+	unarmed_damage_low = 7
 	unarmed_stun_threshold = 7
 	unarmed_damage_high = 8
 
 /obj/item/bodypart/arm/right/golem/cloth
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
-	unarmed_damage_low = 4
+	unarmed_damage_low = 7
 	unarmed_stun_threshold = 7
 	unarmed_damage_high = 8
 
 /obj/item/bodypart/leg/left/golem/cloth
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
-	unarmed_damage_low = 6
+	unarmed_damage_low = 7
 	unarmed_stun_threshold = 7
 	unarmed_damage_high = 12
 
 /obj/item/bodypart/leg/right/golem/cloth
 	limb_id = SPECIES_GOLEM_CLOTH
 	should_draw_greyscale = FALSE
-	unarmed_damage_low = 6
+	unarmed_damage_low = 7
 	unarmed_stun_threshold = 7
 	unarmed_damage_high = 12
 
@@ -491,7 +491,7 @@
 	unarmed_attack_verb = "whip"
 	unarmed_attack_sound = 'sound/weapons/whip.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
-	unarmed_damage_low = 4
+	unarmed_damage_low = 7
 	unarmed_stun_threshold = 7
 	unarmed_damage_high = 8
 
@@ -501,7 +501,7 @@
 	unarmed_attack_verb = "whip"
 	unarmed_attack_sound = 'sound/weapons/whip.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
-	unarmed_damage_low = 4
+	unarmed_damage_low = 7
 	unarmed_stun_threshold = 7
 	unarmed_damage_high = 8
 
@@ -510,7 +510,7 @@
 	should_draw_greyscale = FALSE
 	unarmed_attack_sound = 'sound/weapons/whip.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
-	unarmed_damage_low = 6
+	unarmed_damage_low = 7
 	unarmed_stun_threshold = 7
 	unarmed_damage_high = 12
 
@@ -519,7 +519,7 @@
 	should_draw_greyscale = FALSE
 	unarmed_attack_sound = 'sound/weapons/whip.ogg'
 	unarmed_miss_sound = 'sound/weapons/etherealmiss.ogg'
-	unarmed_damage_low = 6
+	unarmed_damage_low = 7
 	unarmed_stun_threshold = 7
 	unarmed_damage_high = 12
 
@@ -646,24 +646,24 @@
 	unarmed_attack_verb = "smash"
 	unarmed_attack_effect = ATTACK_EFFECT_SMASH
 	unarmed_attack_sound = 'sound/effects/meteorimpact.ogg' //hits pretty hard
-	unarmed_damage_low = 12
-	unarmed_damage_high = 21
+	unarmed_damage_low = 14
+	unarmed_damage_high = 14
 	unarmed_stun_threshold = 18
 
 /obj/item/bodypart/arm/right/golem/plasteel
 	unarmed_attack_verb = "smash"
 	unarmed_attack_effect = ATTACK_EFFECT_SMASH
 	unarmed_attack_sound = 'sound/effects/meteorimpact.ogg'
-	unarmed_damage_low = 12
-	unarmed_damage_high = 21
+	unarmed_damage_low = 14
+	unarmed_damage_high = 14
 	unarmed_stun_threshold = 18
 
 
 /obj/item/bodypart/leg/left/golem/plasteel
 	unarmed_attack_effect = ATTACK_EFFECT_SMASH
 	unarmed_attack_sound = 'sound/effects/meteorimpact.ogg'
-	unarmed_damage_low = 18
-	unarmed_damage_high = 32
+	unarmed_damage_low = 22
+	unarmed_damage_high = 22
 	unarmed_stun_threshold = 18
 
 /obj/item/bodypart/leg/right/golem/plasteel

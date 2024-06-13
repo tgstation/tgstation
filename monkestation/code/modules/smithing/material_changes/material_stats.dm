@@ -42,7 +42,7 @@
 		new_trait.on_trait_add(material_stats.parent)
 		material_stats.material_traits |= new_trait
 
-/atom/proc/create_stats_from_material(datum/material/material_type, colors = TRUE)
+/atom/proc/create_stats_from_material(datum/material/material_type, colors = TRUE, stack = FALSE)
 	if(!material_type)
 		return
 	if(material_stats)
@@ -66,6 +66,10 @@
 
 	for(var/datum/material_trait/trait as anything in material.material_traits)
 		var/datum/material_trait/new_trait = new trait
+		if(stack && (trait.trait_flags & MATERIAL_NO_STACK_ADD))
+			material_stats.material_traits |= new_trait
+			material_stats.material_traits[new_trait] = material.material_traits[trait]
+			continue
 		new_trait.on_trait_add(material_stats.parent)
 		material_stats.material_traits |= new_trait
 		material_stats.material_traits[new_trait] = material.material_traits[trait]

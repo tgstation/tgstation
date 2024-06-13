@@ -287,7 +287,11 @@
 			reagents.expose(target, TOUCH)
 			var/turf/targets_loc = target.loc
 			if(istype(targets_loc, /turf/open))
-				targets_loc.add_liquid_from_reagents(reagents)
+				if(thrown_by && !target.can_atmos_pass)
+					var/turf/open/open = get_step(src, get_dir(src, thrown_by))
+					open.add_liquid_from_reagents(reagents)
+				else
+					targets_loc.add_liquid_from_reagents(reagents)
 			else
 				targets_loc = get_step_towards(targets_loc, thrown_by)
 				targets_loc.add_liquid_from_reagents(reagents) //not perfect but i can't figure out how to move something to the nearest visible turf from throw_target

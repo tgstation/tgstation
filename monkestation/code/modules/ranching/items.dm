@@ -102,8 +102,10 @@
 			to_chat(user, examine_block(combined_msg.Join("\n")))
 	else
 		var/list/combined_msg = list()
+		var/datum/component/happiness_container/container = scanned_chicken.GetComponent(/datum/component/happiness_container)
+
 		combined_msg += "\t <span class='info'>Age:[SEND_SIGNAL(scanned_chicken, COMSIG_AGE_RETURN_AGE)]</span>"
-		combined_msg += "\t <span class='info'>Happiness:[round(SEND_SIGNAL(scanned_chicken, COMSIG_HAPPINESS_RETURN_VALUE), 1)]</span>"
+		combined_msg += "\t <span class='info'>Happiness:[round(container.current_happiness, 1)]</span>"
 		to_chat(user, examine_block(combined_msg.Join("\n")))
 
 /datum/design/chicken_scanner

@@ -20,6 +20,16 @@
 	/// If the can hasn't been opened yet, this is the measure of how fizzed up it is from being shaken or thrown around. When opened, this is rolled as a percentage chance to burst
 	var/fizziness = 0
 
+/obj/item/reagent_containers/cup/soda_cans/Initialize(mapload, vol)
+	. = ..()
+	AddComponent(/datum/component/edible, \
+		initial_reagents = list(/datum/reagent/iron = 20), \
+		foodtypes = JUNKFOOD, \
+		eat_time = 1 SECONDS, \
+		tastes = list("Metalic"), \
+		bite_consumption = 6, \
+		required_trait = TRAIT_TIN_EATER)
+
 /obj/item/reagent_containers/cup/soda_cans/random/Initialize(mapload)
 	..()
 	var/T = pick(subtypesof(/obj/item/reagent_containers/cup/soda_cans) - /obj/item/reagent_containers/cup/soda_cans/random)

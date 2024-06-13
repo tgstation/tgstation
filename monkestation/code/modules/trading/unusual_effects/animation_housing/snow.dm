@@ -23,7 +23,10 @@
 		spawned.layer = ABOVE_MOB_LAYER
 	spawned.pixel_x += rand(-12, 12)
 	spawned.pixel_y += rand(-5, 5)
+	. = ..()
 
-	animate(spawned, pixel_y = spawned.pixel_y - 32, time = 2 SECONDS)
-	animate(spawned, alpha = 25, time = 1.5 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(delete_particle), spawned), duration)
+/datum/component/particle_spewer/snow/adjust_animate_steps()
+	animate_holder.add_animation_step(list(pixel_y = -32, time = 2 SECONDS))
+	animate_holder.set_parent_copy(1, "pixel_y", FALSE)
+
+	animate_holder.add_animation_step(list(alpha = 25, time = 1.5 SECONDS))

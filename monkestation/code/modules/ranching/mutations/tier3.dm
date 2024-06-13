@@ -30,6 +30,5 @@
 	chicken_type = /mob/living/basic/chicken/rev_raptor
 	egg_type = /obj/item/food/egg/rev_raptor
 	reagent_requirements = list(/datum/reagent/consumable/ethanol/cuba_libre)
-	nearby_items = list(/obj/item/assembly/flash/handheld)
 
 	can_come_from_string = "Tiercel"

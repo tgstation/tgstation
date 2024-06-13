@@ -123,3 +123,5 @@
 	var/instability = 0
 	///modifier to the egg laying cooldown
 	var/egg_laying_boosting = 0
+	///mapping helper gender
+	var/forced_gender

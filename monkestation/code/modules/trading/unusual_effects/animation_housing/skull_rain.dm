@@ -9,9 +9,6 @@
 
 /datum/component/particle_spewer/movement/skull_rain/animate_particle(obj/effect/abstract/particle/spawned)
 	var/matrix/first = matrix(rand(1, 60), MATRIX_ROTATE)
-	var/matrix/second = matrix()
-	second.Turn(rand(-60, 60))
-
 	var/chance = rand(1, 6)
 	switch(chance)
 		if(1 to 2)
@@ -28,7 +25,12 @@
 	spawned.transform = first
 	spawned.alpha = 10
 
-	animate(spawned, transform = second, time = 20, pixel_y = rand(-16, -12), alpha = 255, easing = BOUNCE_EASING)
-	animate(time = duration, alpha = 1, easing = LINEAR_EASING)
+	. = ..()
 
-	addtimer(CALLBACK(src, PROC_REF(delete_particle), spawned), duration)
+/datum/component/particle_spewer/movement/skull_rain/adjust_animate_steps()
+	animate_holder.add_animation_step(list(transform = "RANDOM", time = 2 SECONDS, pixel_y = "RANDOM", alpha = 255, easing = BOUNCE_EASING))
+	animate_holder.set_random_var(1, "pixel_y", list(-16, -12))
+	animate_holder.set_random_var(1, "transform", list(-60, 60))
+	animate_holder.set_transform_type(1, MATRIX_ROTATE)
+
+	animate_holder.add_animation_step(list(time = duration, alpha = 1, easing = LINEAR_EASING))

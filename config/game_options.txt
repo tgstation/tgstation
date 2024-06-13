@@ -356,6 +356,7 @@ ROUNDSTART_RACES ipc
 ROUNDSTART_RACES simian
 ROUNDSTART_RACES arachnid
 ROUNDSTART_RACES apid
+ROUNDSTART_RACES satyr
 
 ## Races that are better than humans in some ways, but worse in others
 ROUNDSTART_RACES ethereal

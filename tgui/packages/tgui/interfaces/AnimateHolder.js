@@ -16,7 +16,7 @@ export const AnimateHolder = (props, context) => {
 
 const AnimateSteps = (props, context) => {
   const { act, data } = useBackend(context);
-  const { steps, easings } = data;
+  const { steps, easings, random_vars } = data;
 
   const variables = [
     { name: 'time', type: 'number' },
@@ -37,68 +37,113 @@ const AnimateSteps = (props, context) => {
 
   return (
     <Section fill scrollable title="Animation Steps">
-      {steps.map((step) => (
-        <Collapsible
-          key={step.index}
-          title={'Step:' + (steps.indexOf(step) + 1)}>
+      {steps.map((step, index) => (
+        <Collapsible key={index} title={'Step:' + (index + 1)}>
           <LabeledList>
-            {variables.map(({ name, type }) => (
-              <LabeledList.Item key={name} label={name.toUpperCase()}>
-                {type === 'number' ? (
-                  <NumberInput
-                    width="45px"
-                    minValue={-1000}
-                    maxValue={1000}
-                    value={step[name] !== undefined ? step[name] : 0}
-                    onChange={(_, value) =>
-                      act('modify_step', {
-                        variable: name,
-                        value: value,
-                        index: steps.indexOf(step) + 1,
-                      })
-                    }
-                  />
-                ) : (
-                  <Input
-                    value={step[name] !== undefined ? step[name] : ''}
-                    width="90px"
-                    onInput={(e, value) =>
-                      act('modify_step', {
-                        variable: name,
-                        value: value,
-                        index: steps.indexOf(step) + 1,
-                      })
-                    }
-                  />
-                )}
-              </LabeledList.Item>
-            ))}
+            {variables.map(({ name, type }) => {
+              const isRandom = step[name] === 'RANDOM';
+              const randomRange =
+                isRandom && random_vars[index] && random_vars[index][name];
+              const [randomMin, randomMax] = randomRange || [0, 0];
+
+              return (
+                <LabeledList.Item key={name} label={name.toUpperCase()}>
+                  {type === 'number' ? (
+                    <ButtonCheckbox
+                      checked={isRandom}
+                      onClick={() =>
+                        act('modify_rand_state', {
+                          variable: name,
+                          index: index + 1,
+                        })
+                      }>
+                      RANDOM
+                    </ButtonCheckbox>
+                  ) : null}
+                  {isRandom ? (
+                    <div>
+                      <NumberInput
+                        width="45px"
+                        minValue={-1000}
+                        maxValue={1000}
+                        value={randomMin}
+                        onChange={(_, value) =>
+                          act('set_random_value', {
+                            variable: name,
+                            rand_lower: value,
+                            index: index + 1,
+                          })
+                        }
+                      />
+                      <NumberInput
+                        width="45px"
+                        minValue={-1000}
+                        maxValue={1000}
+                        value={randomMax}
+                        onChange={(_, value) =>
+                          act('set_random_value', {
+                            variable: name,
+                            rand_upper: value,
+                            index: index + 1,
+                          })
+                        }
+                      />
+                    </div>
+                  ) : type === 'number' ? (
+                    <NumberInput
+                      width="45px"
+                      minValue={-1000}
+                      maxValue={1000}
+                      value={step[name] !== undefined ? step[name] : 0}
+                      onChange={(_, value) =>
+                        act('modify_step', {
+                          variable: name,
+                          value: value,
+                          index: index + 1,
+                        })
+                      }
+                    />
+                  ) : (
+                    <Input
+                      value={step[name] !== undefined ? step[name] : ''}
+                      width="90px"
+                      onInput={(e, value) =>
+                        act('modify_step', {
+                          variable: name,
+                          value: value,
+                          index: index + 1,
+                        })
+                      }
+                    />
+                  )}
+                </LabeledList.Item>
+              );
+            })}
             <LabeledList.Item label={'Easing'}>
-              {Object.entries(easings[steps.indexOf(step)]).map(
-                ([key, value]) => (
-                  <ButtonCheckbox
-                    key={key}
-                    checked={value}
-                    onClick={() =>
-                      act('modify_easing', {
-                        flag: key,
-                        value: !value,
-                        index: steps.indexOf(step) + 1,
-                      })
-                    }>
-                    {key}
-                  </ButtonCheckbox>
-                )
-              )}
+              {Object.entries(easings[index]).map(([key, value]) => (
+                <ButtonCheckbox
+                  key={key}
+                  checked={value}
+                  onClick={() =>
+                    act('modify_easing', {
+                      flag: key,
+                      value: !value,
+                      index: index + 1,
+                    })
+                  }>
+                  {key}
+                </ButtonCheckbox>
+              ))}
+            </LabeledList.Item>
+            <LabeledList.Item label={'Transform'}>
+              <Transform step={index + 1} />
             </LabeledList.Item>
           </LabeledList>
           <Button
             color="red"
             icon="sync"
             width="100%"
-            onClick={() =>
-              act('remove_step', { index: steps.indexOf(step) + 1 })
-            }>
+            onClick={() => act('remove_step', { index: index + 1 })}>
             Delete Step
           </Button>
         </Collapsible>
@@ -117,14 +162,16 @@ const AnimateSteps = (props, context) => {
 export const Transform = (props, context) => {
   const { step } = props;
   const { act, data } = useBackend(context);
-  const { steps, easings, transforms, transform_types } = data;
+  const { steps, transforms, transform_types, random_vars } = data;
   const types = ['rotate', 'scale', 'translate'];
 
-  // Get the transform type and transform values for the current step
-  const transformType = transform_types[step - 1]; // Adjust index since steps are 1-indexed
-  const transformValues = transforms[step - 1]; // Adjust index since steps are 1-indexed
+  const stepData = steps[step - 1];
+  const transformType = transform_types[step - 1];
+  const transformValues = transforms[step - 1];
+  const randomRange = random_vars[step - 1] && random_vars[step - 1].transform;
+  const [randomMin, randomMax] = randomRange || [0, 0];
+  const isRandom = stepData.transform === 'RANDOM';
 
-  // Function to return string representation of transform type
   const returnString = (value) => {
     switch (value) {
       case 5:
@@ -138,19 +185,21 @@ export const Transform = (props, context) => {
     }
   };
 
-  // Function to handle change in transform value
-  const handleTransformChange = (index, value) => {
-    act('modify_transform_value', {
-      value1: value,
-      index: index,
-    });
-  };
-
   return (
     <Section>
+      <ButtonCheckbox
+        checked={isRandom}
+        onClick={() =>
+          act('modify_rand_state', {
+            index: step,
+            variable: 'transform',
+          })
+        }>
+        RANDOM
+      </ButtonCheckbox>
       <Dropdown
-        options={['rotate', 'scale', 'translate']}
-        displayText={returnString(transformType)}
+        options={types}
+        displayText={transformType ? returnString(transformType) : 'None'}
         color="black"
         width="100%"
         onSelected={(value) =>
@@ -160,26 +209,64 @@ export const Transform = (props, context) => {
           })
         }
       />
-      <NumberInput
-        width="45px"
-        minValue={-1000}
-        maxValue={1000}
-        value={transformValues[0]} // First value of transform
-        onChange={(e, value) => handleTransformChange(step, value)}
-      />
-      {transformType === 6 && ( // Render second input only if transform type is Scale (value 6)
-        <NumberInput
-          width="45px"
-          minValue={-1000}
-          maxValue={1000}
-          value={transformValues[1]} // Second value of transform (only for Scale)
-          onChange={(e, value) =>
-            act('modify_transform_value', {
-              value2: value,
-              index: step,
-            })
-          }
-        />
+      {isRandom ? (
+        <div>
+          <NumberInput
+            width="45px"
+            minValue={-1000}
+            maxValue={1000}
+            value={randomMin}
+            onChange={(_, value) =>
+              act('set_random_value', {
+                variable: 'transform',
+                index: step,
+                rand_lower: value,
+              })
+            }
+          />
+          <NumberInput
+            width="45px"
+            minValue={-1000}
+            maxValue={1000}
+            value={randomMax}
+            onChange={(_, value) =>
+              act('set_random_value', {
+                variable: 'transform',
+                index: step,
+                rand_upper: value,
+              })
+            }
+          />
+        </div>
+      ) : (
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <NumberInput
+            width="45px"
+            minValue={-1000}
+            maxValue={1000}
+            value={transformValues[0]}
+            onChange={(e, value) =>
+              act('modify_transform_value', {
+                value1: value,
+                index: step,
+              })
+            }
+          />
+          {(transformType === 6 || transformType === 7) && (
+            <NumberInput
+              width="45px"
+              minValue={-1000}
+              maxValue={1000}
+              value={transformValues[1]}
+              onChange={(e, value) =>
+                act('modify_transform_value', {
+                  value2: value,
+                  index: step,
+                })
+              }
+            />
+          )}
+        </div>
       )}
       <Button
         color="red"

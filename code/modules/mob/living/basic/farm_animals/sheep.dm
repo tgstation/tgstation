@@ -1,3 +1,4 @@
+/*
 /mob/living/basic/sheep
 	name = "sheep"
 	desc = "Known for their soft wool and use in sacrifical rituals. Big fan of grass."
@@ -91,3 +92,5 @@
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/flee_target,
 	)
+
+*/

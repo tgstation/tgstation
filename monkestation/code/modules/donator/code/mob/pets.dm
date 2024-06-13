@@ -11,6 +11,8 @@
 	head_icon = 'monkestation/code/modules/donator/icons/mob/pets_held.dmi'
 	gold_core_spawnable = NO_SPAWN
 
+	ckeywhitelist = list("spinnermaster")
+
 /mob/living/basic/crab/spycrab
 	name = "spy crab"
 	desc = "hon hon hon"
@@ -19,6 +21,8 @@
 	icon_living = "crab"
 	icon_dead = "crab_dead"
 	gold_core_spawnable = NO_SPAWN
+
+	ckeywhitelist = list("TTNT789")
 
 /mob/living/basic/crab/spycrab/Initialize(mapload)
 	. = ..()
@@ -39,6 +43,8 @@
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 
+	ckeywhitelist = list("ruby_flamewing")
+
 /mob/living/basic/pet/cirno  //nobody needs to know she's a lizard
 	name = "Cirno"
 	desc = "She is the greatest."
@@ -50,6 +56,8 @@
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 	basic_mob_flags = FLIP_ON_DEATH
+
+	ckeywhitelist = list("bidlink2")
 
 /mob/living/basic/lizard/snake
 	name = "Three Headed Snake"
@@ -70,6 +78,8 @@
 	can_be_held = FALSE // as funny as this would be, a german shepherd is way too big to carry with one hand
 	gold_core_spawnable = NO_SPAWN
 
+	ckeywhitelist = list("mjolnir2")
+
 /mob/living/basic/pet/slime/talkative
 	name = "Extroverted Slime"
 	desc = "He's got a lot to say!"
@@ -89,6 +99,8 @@
 					"If I throw a stick, will you leave?",)
 	var/positive_quips = list("Hey there, slime pal!",
 								"Aw thanks buddy!",)
+
+	ckeywhitelist = list("Senri08")
 
 /mob/living/basic/pet/slime/talkative/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
@@ -113,6 +125,8 @@
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 
+	ckeywhitelist = list("Random516")
+
 /mob/living/basic/butterfly/void
 	name = "Void Butterfly"
 	desc = "They say if a void butterfly flaps its wings..."
@@ -123,6 +137,8 @@
 	gold_core_spawnable = NO_SPAWN
 	health = 20
 	maxHealth = 20
+
+	ckeywhitelist = list("tonymcsp")
 
 /mob/living/basic/butterfly/void/spacial
 	fixed_color = TRUE
@@ -136,6 +152,8 @@
 	icon_dead = "crab_plant_dead"
 	gold_core_spawnable = NO_SPAWN
 
+	ckeywhitelist = list("Rickdude1231")
+
 /mob/living/basic/pet/quilmaid
 	name = "\improper Quil' Maid"
 	desc = "Someone dressed up this Space-e-mon in a maid outfit."
@@ -147,6 +165,8 @@
 	gold_core_spawnable = NO_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/
 
+	ckeywhitelist = list("quilark")
+
 /mob/living/basic/pet/gumball_goblin
 	name = "Gumball Goblin"
 	desc = "AAAAAAAAAAAAAAAA"
@@ -155,6 +175,8 @@
 	icon_living = "gumball_goblin"
 	icon_dead = "gumball_goblin_dead"
 	gold_core_spawnable = NO_SPAWN
+
+	ckeywhitelist = list("elliethedarksun")
 
 	///Ability
 	var/datum/action/cooldown/lay_gumball/gumball_ability

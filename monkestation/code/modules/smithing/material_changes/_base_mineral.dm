@@ -24,5 +24,5 @@
 	. = ..()
 	if(!material_type)
 		return
-	create_stats_from_material(material_type, FALSE)
+	create_stats_from_material(material_type, FALSE, TRUE)
 	material_stats.material_bitflags |= MATERIAL_STACK
