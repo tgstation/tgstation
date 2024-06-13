@@ -1,0 +1,6 @@
+author: "ThePooba"
+delete-after: True
+changes:
+  - bugfix: "hiding under table for the borers and larvae, they get their plane changed to WALL_PLANE when hiding so they can be under items, tables, other things"
+  - bugfix: "elevating under tables, they now elevate properly when hiding / unhiding by toggling a trait"
+  - rscadd: "A trait define was added to manage this was added to elevate them slightly when they are on certain turfs"
