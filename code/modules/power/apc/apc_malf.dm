@@ -36,6 +36,9 @@
 		return
 	if(!is_station_level(z))
 		return
+	var/confirm = tgui_alert(usr, "Are you sure that you want to shunt? This will take you out of your core!", "Shunt to [name]?", list("Yes", "No"))
+	if(confirm != "Yes")
+		return
 	malf.ShutOffDoomsdayDevice()
 	occupier = malf
 	if (isturf(malf.loc)) // create a deactivated AI core if the AI isn't coming from an emergency mech shunt
