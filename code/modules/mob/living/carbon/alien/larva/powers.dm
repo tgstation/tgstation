@@ -5,21 +5,26 @@
 	plasma_cost = 0
 	/// The layer we are on while hiding
 	var/hide_layer = ABOVE_NORMAL_TURF_LAYER
+	var/hide_plane = WALL_PLANE
 
 /datum/action/cooldown/alien/hide/Activate(atom/target)
 	if(owner.layer == hide_layer)
 		owner.layer = initial(owner.layer)
+		owner.plane = initial(owner.plane)
 		owner.visible_message(
 			span_notice("[owner] slowly peeks up from the ground..."),
 			span_noticealien("You stop hiding."),
 		)
 
+		REMOVE_TRAIT(owner, TRAIT_IGNORE_ELEVATION, ACTION_TRAIT)
 	else
 		owner.layer = hide_layer
+		owner.plane = hide_plane
 		owner.visible_message(
 			span_name("[owner] scurries to the ground!"),
 			span_noticealien("You are now hiding."),
 		)
+		ADD_TRAIT(owner, TRAIT_IGNORE_ELEVATION, ACTION_TRAIT)
 
 	return TRUE
 

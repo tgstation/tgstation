@@ -555,6 +555,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Is the mob standing on an elevated surface? This prevents them from dropping down if not elevated first.
 #define TRAIT_ON_ELEVATED_SURFACE "on_elevated_surface"
+/// Does the mob ignore elevation? (e.g. xeno larvas & cortical borers on hiding)
+#define TRAIT_IGNORE_ELEVATION "ignore_elevation"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
