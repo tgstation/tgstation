@@ -983,8 +983,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		game = create_mafia_game()
 	game.ui_interact(usr)
 
-/mob/dead/observer/CtrlShiftClick(mob/user)
-	if(isobserver(user) && check_rights(R_SPAWN))
+/mob/dead/observer/CtrlShiftClickOn(atom/target)
+	if(check_rights(R_SPAWN))
 		change_mob_type(/mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
 
 /mob/dead/observer/examine(mob/user)

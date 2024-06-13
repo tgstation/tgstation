@@ -296,6 +296,18 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Reskin"
 	return CONTEXTUAL_SCREENTIP_SET
 
+/obj/item/click_ctrl(mob/user)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	//If the item is on the ground & not anchored we allow the player to drag it
+	. = item_ctrl_click(user)
+	if(. & CLICK_ACTION_ANY)
+		return (isturf(loc) && !anchored) ? NONE : . //allow the object to get dragged on the floor
+
+/// Subtypes only override this proc for ctrl click purposes. obeys same principles as ctrl_click()
+/obj/item/proc/item_ctrl_click(mob/user)
+	SHOULD_CALL_PARENT(FALSE)
+	return NONE
 
 /// Called when an action associated with our item is deleted
 /obj/item/proc/on_action_deleted(datum/source)

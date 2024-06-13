@@ -260,7 +260,7 @@
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/storage/portable_chem_mixer/CtrlClick(mob/living/user)
+/obj/item/storage/portable_chem_mixer/item_ctrl_click(mob/user)
 	if(atom_storage.locked == STORAGE_FULLY_LOCKED)
 		atom_storage.locked = STORAGE_NOT_LOCKED
 		replace_beaker(user)
@@ -270,3 +270,4 @@
 		atom_storage.hide_contents(usr)
 
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
