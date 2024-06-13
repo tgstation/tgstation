@@ -491,6 +491,10 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			if(allow_link_change)
 				disconnect_sensor()
 
+		if ("lock")
+			togglelock(usr)
+			return TRUE
+
 	update_appearance()
 
 	return TRUE

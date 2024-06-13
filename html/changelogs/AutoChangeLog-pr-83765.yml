@@ -1,5 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - balance: "Rust walkers' summoning ritual now requires 5 sheets of Titanium instead of Iron."
-  - bugfix: "Magic resistance grants complete immunity from the passive disgust buildup from standing on Rusted turfs."

@@ -451,7 +451,7 @@
  * Does not trigger on tiny mobs.
  * If ignore_movetypes is FALSE, does not trigger on floating / flying / etc. mobs.
  */
-/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(atom/movable/target, ignore_movetypes = FALSE)
+/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(atom/movable/target, ignore_movetypes = FALSE, hit_prone = FALSE)
 	if(!armed || !isturf(loc) || !isliving(target))
 		return
 
@@ -477,7 +477,7 @@
 		victim.visible_message(span_danger("[victim] triggers \the [src]."), \
 				span_userdanger("You trigger \the [src]!"))
 	var/def_zone = BODY_ZONE_CHEST
-	if(iscarbon(victim) && victim.body_position == STANDING_UP)
+	if(iscarbon(victim) && (victim.body_position == STANDING_UP || hit_prone))
 		var/mob/living/carbon/carbon_victim = victim
 		def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 		if(!carbon_victim.legcuffed && carbon_victim.num_legs >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
@@ -595,7 +595,9 @@
 
 /obj/item/restraints/legcuffs/bola/energy/ensnare(atom/hit_atom)
 	var/obj/item/restraints/legcuffs/beartrap/energy/cyborg/B = new (get_turf(hit_atom))
-	B.spring_trap(hit_atom, ignore_movetypes = TRUE)
+	B.spring_trap(hit_atom, ignore_movetypes = TRUE, hit_prone = TRUE)
+	if(B.loc != hit_atom)
+		qdel(B)
 	qdel(src)
 
 /**
