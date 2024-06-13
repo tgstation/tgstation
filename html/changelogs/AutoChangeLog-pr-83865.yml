@@ -1,0 +1,4 @@
+author: "Goat"
+delete-after: True
+changes:
+  - qol: "Mining's PKAs and PKCs are now fireproof."
