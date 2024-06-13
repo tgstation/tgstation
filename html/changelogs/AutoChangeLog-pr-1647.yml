@@ -1,0 +1,10 @@
+author: "AlbertNanotracen"
+delete-after: True
+changes:
+  - rscadd: "T"
+  - bugfix: "Ingredients which fail to react in soup reactions drop when the reaction finishes as intended"
+  - rscadd: "The ancient recipe for the Death Sandwich has been rediscovered buried in the deepest depths of an erupting volcano."
+  - rscadd: "Blood Brothers can chose the death sandwich recipe book as their gear(requested by @knighthethrasher)"
+  - rscadd: "Added wedding cakes"
+  - rscadd: "Toast sandwich"
+  - bugfix: "The peanut butter banana sandwich is no longer presented as grilled when it doesn't require a griddle to make."
