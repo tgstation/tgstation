@@ -1314,6 +1314,21 @@
 	if(!istype(target))
 		CRASH("Missing target arg for can_perform_action")
 
+	if(!(interaction_flags_atom & INTERACT_ATOM_IGNORE_INCAPACITATED))
+		var/ignore_flags = NONE
+		if(interaction_flags_atom & INTERACT_ATOM_IGNORE_RESTRAINED)
+			ignore_flags |= IGNORE_RESTRAINTS
+		if(!(interaction_flags_atom & INTERACT_ATOM_CHECK_GRAB))
+			ignore_flags |= IGNORE_GRAB
+
+		if(incapacitated(ignore_flags))
+			to_chat(src, span_warning("You are incapacitated at the moment!"))
+			return FALSE
+
+	if(stat == DEAD || stat != CONSCIOUS)
+		to_chat(src, span_warning("You are in no physical condition to do this!"))
+		return FALSE
+
 	// If the MOBILITY_UI bitflag is not set it indicates the mob's hands are cutoff, blocked, or handcuffed
 	// Note - AI's and borgs have the MOBILITY_UI bitflag set even though they don't have hands
 	// Also if it is not set, the mob could be incapcitated, knocked out, unconscious, asleep, EMP'd, etc.
@@ -1323,11 +1338,14 @@
 
 	// NEED_HANDS is already checked by MOBILITY_UI for humans so this is for silicons
 	if((action_bitflags & NEED_HANDS))
+		if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+			to_chat(src, span_warning("You can't do that right now!"))
+			return FALSE
 		if(!can_hold_items(isitem(target) ? target : null)) // almost redundant if it weren't for mobs
 			to_chat(src, span_warning("You don't have the physical ability to do this!"))
 			return FALSE
 
-	if(!Adjacent(target) && (target.loc != src) && !recursive_loc_check(src, target))
+	if(!(action_bitflags & BYPASS_ADJACENCY) && !Adjacent(target) && (target.loc != src) && !recursive_loc_check(src, target))
 		if(HAS_SILICON_ACCESS(src) && !ispAI(src))
 			if(!(action_bitflags & ALLOW_SILICON_REACH)) // silicons can ignore range checks (except pAIs)
 				if(!(action_bitflags & SILENT_ADJACENCY))
@@ -1335,7 +1353,8 @@
 				return FALSE
 		else // just a normal carbon mob
 			if((action_bitflags & FORBID_TELEKINESIS_REACH))
-				to_chat(src, span_warning("You are too far away!"))
+				if(!(action_bitflags & SILENT_ADJACENCY))
+					to_chat(src, span_warning("You are too far away!"))
 				return FALSE
 
 			var/datum/dna/mob_DNA = has_dna()
@@ -1812,7 +1831,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	..()
 	update_z(new_turf?.z)
 
-/mob/living/MouseDrop_T(atom/dropping, atom/user)
+/mob/living/mouse_drop_receive(atom/dropping, atom/user, params)
 	var/mob/living/U = user
 	if(isliving(dropping))
 		var/mob/living/M = dropping

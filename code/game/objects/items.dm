@@ -1064,8 +1064,11 @@
 			else
 				apply_outline() //if the player's alive and well we send the command with no color set, so it uses the theme's color
 
-/obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+/obj/item/base_mouse_drop_handler(atom/over, src_location, over_location, params)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	. = ..()
+
 	remove_filter(HOVER_OUTLINE_FILTER) //get rid of the hover effect in case the mouse exit isn't called if someone drags and drops an item and somthing goes wrong
 
 /obj/item/MouseExited()
