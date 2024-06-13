@@ -84,8 +84,10 @@
 	desc = "A suitcase containing the necessary gun parts to tranform a standard energy gun into a temperature gun. Fantastic at birthday parties and killing indigenious populations of lizardpeople."
 
 /obj/item/weaponcrafting/gunkit/beam_rifle
-	name = "particle acceleration rifle part kit (lethal)"
-	desc = "The coup de grace of guncrafting. This suitcase contains the highly experimental rig for a particle acceleration rifle. Requires an energy gun, a stabilized flux anomaly and a stabilized gravity anomaly."
+	name = "\improper Event Horizon anti-existnetial beam rifle part kit (DOOMSDAY DEVICE, DO NOT CONSTRUCT)"
+	desc = "What fevered minds wrought this terrible construction kit? To create a frame to harness the strange enemies that flow through the Spinward Sector towards such horrible acts of violence? \
+		If you are unsound of mind, heed this. One vortex anomaly. One bluespace anomaly. Two flux anomalies. One gravity anomaly. And, maybe, if you believe in it, your soul itself. That is the price paid\
+		for this dread thing."
 
 /obj/item/weaponcrafting/gunkit/ebow
 	name = "energy crossbow part kit (less lethal)"
