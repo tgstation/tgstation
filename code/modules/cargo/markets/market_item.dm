@@ -79,10 +79,18 @@
 		return return_item
 	if(ispath(item))
 		return new item(loc)
+		// add more effects to the spawned item.
 	CRASH("Invalid item type for market item [item || "null"]")
 
-/// Buys the item and makes SSblackmarket handle it.
-/datum/market_item/proc/buy(obj/item/market_uplink/uplink, mob/buyer, shipping_method)
+/**
+ * Buys the item and makes SSblackmarket handle it.
+ *
+ * @param uplink The uplink that is buying the item.
+ * @param buyer The mob that is buying the item.
+ * @param shipping_method The shipping method used to get the market item onto the station.
+ * @param legal_status The legal status of the market. Determines if the item to be spawned is contraband.
+ */
+/datum/market_item/proc/buy(obj/item/market_uplink/uplink, mob/buyer, shipping_method, legal_status)
 	SHOULD_CALL_PARENT(TRUE)
 	// Sanity
 	if(!istype(uplink) || !istype(buyer))
@@ -93,7 +101,7 @@
 		return FALSE
 
 	// Alright, the item has been purchased.
-	var/datum/market_purchase/purchase = new(src, uplink, shipping_method)
+	var/datum/market_purchase/purchase = new(src, uplink, shipping_method, legal_status)
 
 	// SSblackmarket takes care of the shipping.
 	if(SSblackmarket.queue_item(purchase))
@@ -112,13 +120,16 @@
 	var/obj/item/market_uplink/uplink
 	/// Shipping method used to buy this item.
 	var/method
+	/// Is this item considered contraband? If illegal, applies the contraband trait to the item when spawned.
+	var/legallity
 
-/datum/market_purchase/New(datum/market_item/entry, obj/item/market_uplink/uplink, method)
+/datum/market_purchase/New(datum/market_item/entry, obj/item/market_uplink/uplink, method, legal_status)
 	if(!uplink || !entry || !method)
 		CRASH("[type] created with a false value arg: (entry: [entry] - uplink: [uplink] - method: [method])")
 	src.entry = entry
 	src.uplink = uplink
 	src.method = method
+	src.legallity = legal_status
 	RegisterSignal(entry, COMSIG_QDELETING, PROC_REF(on_instance_del))
 	RegisterSignal(uplink, COMSIG_QDELETING, PROC_REF(on_instance_del))
 	if(ismovable(entry.item))
