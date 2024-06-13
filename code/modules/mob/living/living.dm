@@ -1517,7 +1517,7 @@
 				/mob/living/basic/statue,
 				/mob/living/basic/stickman,
 				/mob/living/basic/stickman/dog,
-				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
+				/mob/living/basic/boss/dragon/lesser,
 			)
 			new_mob = new picked_animal(loc)
 		if(WABBAJACK_HUMAN)

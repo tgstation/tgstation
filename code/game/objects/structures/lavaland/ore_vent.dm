@@ -517,7 +517,7 @@
 	)
 	defending_mobs = list(
 		/mob/living/simple_animal/hostile/megafauna/bubblegum,
-		/mob/living/simple_animal/hostile/megafauna/dragon,
+		/mob/living/basic/boss/dragon,
 		/mob/living/simple_animal/hostile/megafauna/colossus,
 	)
 	excavation_warning = "Something big is nearby. Are you ABSOLUTELY ready to excavate this ore vent? A NODE drone will be deployed after threat is neutralized."
@@ -534,7 +534,7 @@
 	switch(summoned_boss)
 		if(/mob/living/simple_animal/hostile/megafauna/bubblegum)
 			boss_string = "A giant fleshbound beast"
-		if(/mob/living/simple_animal/hostile/megafauna/dragon)
+		if(/mob/living/basic/boss/dragon)
 			boss_string = "Sharp teeth and scales"
 		if(/mob/living/simple_animal/hostile/megafauna/colossus)
 			boss_string = "A giant, armored behemoth"

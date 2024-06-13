@@ -150,7 +150,7 @@ GLOBAL_LIST_EMPTY(all_abstract_markers)
 GLOBAL_LIST_INIT(megafauna_spawn_list, list(
 	/mob/living/simple_animal/hostile/megafauna/bubblegum = 6,
 	/mob/living/simple_animal/hostile/megafauna/colossus = 2,
-	/mob/living/simple_animal/hostile/megafauna/dragon = 4,
+	/mob/living/basic/boss/dragon = 4,
 ))
 
 /// List of how many minerals spawned based on proximity to an ore vent.

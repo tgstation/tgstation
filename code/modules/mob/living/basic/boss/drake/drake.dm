@@ -29,7 +29,7 @@
  *Intended Difficulty: Medium
  */
 
-/mob/living/simple_animal/hostile/megafauna/dragon
+/mob/living/basic/boss/dragon
 	name = "ash drake"
 	desc = "Guardians of the necropolis."
 	health = 2500
@@ -50,8 +50,6 @@
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 5
-	move_to_delay = 5
-	ranged = TRUE
 	pixel_x = -32
 	base_pixel_x = -32
 	maptext_height = 64
@@ -60,16 +58,14 @@
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/ashdrake = 10)
-	var/swooping = NONE
-	var/player_cooldown = 0
 	gps_name = "Fiery Signal"
 	achievement_type = /datum/award/achievement/boss/drake_kill
 	crusher_achievement_type = /datum/award/achievement/boss/drake_crusher
 	score_achievement_type = /datum/award/score/drake_score
 	death_message = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
-	footstep_type = FOOTSTEP_MOB_HEAVY
 	summon_line = "ROOOOOOOOAAAAAAAAAAAR!"
+	ai_controller = /datum/ai_controller/basic_controller/drake
 	/// Fire cone ability
 	var/datum/action/cooldown/mob_cooldown/fire_breath/cone/fire_cone
 	/// Meteors ability
@@ -78,8 +74,10 @@
 	var/datum/action/cooldown/mob_cooldown/fire_breath/mass_fire/mass_fire
 	/// Lava swoop ability
 	var/datum/action/cooldown/mob_cooldown/lava_swoop/lava_swoop
+	/// are we swooping
+	var/swooping = NONE
 
-/mob/living/simple_animal/hostile/megafauna/dragon/Initialize(mapload)
+/mob/living/basic/boss/dragon/Initialize(mapload)
 	. = ..()
 	fire_cone = new(src)
 	meteors = new(src)
@@ -94,21 +92,26 @@
 	RegisterSignal(src, COMSIG_SWOOP_INVULNERABILITY_STARTED, PROC_REF(swoop_invulnerability_started))
 	RegisterSignal(src, COMSIG_LAVA_ARENA_FAILED, PROC_REF(on_arena_fail))
 	AddElement(/datum/element/change_force_on_death, move_force = MOVE_FORCE_DEFAULT)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/Destroy()
+/mob/living/basic/boss/dragon/Destroy()
 	fire_cone = null
 	meteors = null
 	mass_fire = null
 	lava_swoop = null
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
+/mob/living/basic/boss/dragon/RangedAttack(atom/target)
+	if(!combat_mode)
+		return
+
 	if(swooping)
 		return
 
 	if(client)
 		return
 
+	var/anger_modifier = ai_controller?.blackboard[BB_ANGER_MODIFIER]
 	if(prob(15 + anger_modifier))
 		if(DRAKE_ENRAGED)
 			// Lava Arena
@@ -116,7 +119,6 @@
 			return
 		// Lava Pools
 		if(lava_swoop.Trigger(target = target))
-			SLEEP_CHECK_DEATH(0, src)
 			fire_cone.StartCooldown(0)
 			fire_cone.Trigger(target = target)
 			meteors.StartCooldown(0)
@@ -129,70 +131,69 @@
 		meteors.StartCooldown(0)
 		meteors.Trigger(target = target)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
+/mob/living/basic/boss/dragon/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
 	SIGNAL_HANDLER
 	if(activated == lava_swoop)
 		icon_state = "dragon_shadow"
 		swooping = SWOOP_DAMAGEABLE
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_invulnerability_started()
+/mob/living/basic/boss/dragon/proc/swoop_invulnerability_started()
 	SIGNAL_HANDLER
 	swooping = SWOOP_INVULNERABLE
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/finished_attack(mob/living/owner, datum/action/cooldown/finished)
+/mob/living/basic/boss/dragon/proc/finished_attack(mob/living/owner, datum/action/cooldown/finished)
 	SIGNAL_HANDLER
 	if(finished == lava_swoop)
 		icon_state = initial(icon_state)
 		swooping = NONE
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/on_arena_fail()
+/mob/living/basic/boss/dragon/proc/on_arena_fail()
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(arena_escape_enrage))
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
-	SLEEP_CHECK_DEATH(0, src)
+/mob/living/basic/boss/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
+	if(stat)
+		return
 	visible_message(span_boldwarning("[src] starts to glow vibrantly as its wounds close up!"))
 	adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
 	add_atom_colour(rgb(255, 255, 0), TEMPORARY_COLOUR_PRIORITY)
-	move_to_delay = move_to_delay / 2
+	set_varspeed(speed / 2)
 	set_light_range(10)
-	SLEEP_CHECK_DEATH(5 SECONDS, src) // run.
-	mass_fire.Activate(target)
+	addtimer(CALLBACK(src, PROC_REF(stop_rage)), 5 SECONDS, TIMER_UNIQUE)
+
+/mob/living/basic/boss/dragon/proc/stop_rage()
+	if(stat)
+		return
+	mass_fire.Activate(ai_controller?.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
 	mass_fire.StartCooldown(8 SECONDS)
-	move_to_delay = initial(move_to_delay)
+	set_varspeed(initial(speed))
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	set_light_range(initial(light_range))
 
-/mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
+/mob/living/basic/boss/dragon/ex_act(severity, target)
 	if(severity <= EXPLODE_LIGHT)
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	anger_modifier = clamp(((maxHealth - health)/60),0,20)
-	lava_swoop.enraged = DRAKE_ENRAGED
+/mob/living/basic/boss/dragon/adjust_health(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (swooping & SWOOP_INVULNERABLE))
 		return FALSE
+	if(amount <= 0)
+		return ..()
+	ai_controller?.set_blackboard_key(BB_ANGER_MODIFIER, clamp(((maxHealth - health)/60),0,20))
+	lava_swoop.enraged = DRAKE_ENRAGED
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, visible_message_flags = NONE)
+/mob/living/basic/boss/dragon/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, visible_message_flags = NONE)
 	if(swooping & SWOOP_INVULNERABLE) //to suppress attack messages without overriding every single proc that could send a message saying we got hit
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget(atom/attacked_target)
+/mob/living/basic/boss/dragon/melee_attack(mob/living/target, list/modifiers, ignore_cooldown = FALSE)
 	if(!swooping)
 		return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/DestroySurroundings()
-	if(!swooping)
-		..()
-
-/mob/living/simple_animal/hostile/megafauna/dragon/Move()
-	if(!swooping)
-		..()
-
-/mob/living/simple_animal/hostile/megafauna/dragon/Goto(target, delay, minimum_distance)
+/mob/living/basic/boss/dragon/Move()
 	if(!swooping)
 		..()
 
@@ -206,18 +207,17 @@
 
 /obj/effect/temp_visual/lava_warning/Initialize(mapload, reset_time = 10)
 	. = ..()
-	INVOKE_ASYNC(src, PROC_REF(fall), reset_time)
+	playsound(loc,'sound/magic/fleshtostone.ogg', 80, TRUE)
 	src.alpha = 63.75
 	animate(src, alpha = 255, time = duration)
+	addtimer(CALLBACK(src, PROC_REF(fall), reset_time), duration, TIMER_UNIQUE)
 
 /obj/effect/temp_visual/lava_warning/proc/fall(reset_time)
 	var/turf/T = get_turf(src)
-	playsound(T,'sound/magic/fleshtostone.ogg', 80, TRUE)
-	sleep(duration)
 	playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
 
 	for(var/mob/living/L in T.contents - owner)
-		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
+		if(istype(L, /mob/living/basic/boss/dragon))
 			continue
 		L.adjustFireLoss(10)
 		to_chat(L, span_userdanger("You fall directly into the pool of lava!"))
@@ -277,13 +277,13 @@
 
 /obj/effect/temp_visual/target/Initialize(mapload, list/flame_hit)
 	. = ..()
-	INVOKE_ASYNC(src, PROC_REF(fall), flame_hit)
-
-/obj/effect/temp_visual/target/proc/fall(list/flame_hit)
 	var/turf/T = get_turf(src)
 	playsound(T,'sound/magic/fleshtostone.ogg', 80, TRUE)
 	new /obj/effect/temp_visual/fireball(T)
-	sleep(duration)
+	addtimer(CALLBACK(src, PROC_REF(fall), flame_hit), duration, TIMER_UNIQUE)
+
+/obj/effect/temp_visual/target/proc/fall(list/flame_hit)
+	var/turf/T = get_turf(src)
 	if(ismineralturf(T))
 		var/turf/closed/mineral/M = T
 		M.gets_drilled()
@@ -291,7 +291,7 @@
 	new /obj/effect/hotspot(T)
 	T.hotspot_expose(DRAKE_FIRE_TEMP, DRAKE_FIRE_EXPOSURE, 1)
 	for(var/mob/living/L in T.contents)
-		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
+		if(istype(L, /mob/living/basic/boss/dragon))
 			continue
 		if(islist(flame_hit) && !flame_hit[L])
 			L.adjustFireLoss(40)
@@ -300,7 +300,7 @@
 		else
 			L.adjustFireLoss(10) //if we've already hit them, do way less damage
 
-/mob/living/simple_animal/hostile/megafauna/dragon/lesser
+/mob/living/basic/boss/dragon/lesser
 	name = "lesser ash drake"
 	maxHealth = 200
 	health = 200
@@ -315,17 +315,17 @@
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	attack_action_types = list()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/lesser/Initialize(mapload)
+/mob/living/basic/boss/dragon/lesser/Initialize(mapload)
 	. = ..()
 	meteors.Remove(src)
 	mass_fire.Remove(src)
 	lava_swoop.cooldown_time = 20 SECONDS
 
-/mob/living/simple_animal/hostile/megafauna/dragon/lesser/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/basic/boss/dragon/lesser/adjust_health(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	lava_swoop?.enraged = FALSE // In case taking damage caused us to start deleting ourselves
 
-/mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
+/mob/living/basic/boss/dragon/lesser/grant_achievement(medaltype,scoretype)
 	return
 
 #undef DRAKE_ENRAGED

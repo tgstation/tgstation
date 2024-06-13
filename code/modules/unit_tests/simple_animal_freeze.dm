@@ -49,8 +49,6 @@
 		/mob/living/simple_animal/hostile/megafauna/clockwork_defender,
 		/mob/living/simple_animal/hostile/megafauna/colossus,
 		/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner,
-		/mob/living/simple_animal/hostile/megafauna/dragon,
-		/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
 		/mob/living/simple_animal/hostile/megafauna/hierophant,
 		/mob/living/simple_animal/hostile/megafauna/legion,
 		/mob/living/simple_animal/hostile/megafauna/legion/medium,

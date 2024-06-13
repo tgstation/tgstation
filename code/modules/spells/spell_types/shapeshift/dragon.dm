@@ -6,4 +6,4 @@
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
-	possible_shapes = list(/mob/living/simple_animal/hostile/megafauna/dragon/lesser)
+	possible_shapes = list(/mob/living/basic/boss/dragon/lesser)

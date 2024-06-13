@@ -137,3 +137,15 @@
 
 /datum/targeting_strategy/basic/same_faction/faction_check(mob/living/living_mob, mob/living/the_target)
 	return !..() // inverts logic to ONLY target mobs that share a faction
+
+/// megafauna
+/datum/targeting_strategy/basic/megafauna
+
+/datum/targeting_strategy/basic/megafauna/can_attack(mob/living/living_mob, mob/living/the_target, vision_range)
+	. = ..()
+	if (!.)
+		return
+	if(istype(the_target) && the_target.has_status_effect(/datum/status_effect/gutted))
+		return FALSE
+
+
