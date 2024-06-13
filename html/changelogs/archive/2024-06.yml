@@ -205,3 +205,6 @@
   - bugfix: Unknown Methamphetamine Isomer (cortical borer meth) is now actually safe
       to use and doesn't cause brain damage or addiction. It's effects are now equivalent
       to regular meth instead of being doubled, too.
+2024-06-13:
+  DexeeXI:
+  - bugfix: Loadouts should have EYEPATCHES of the regular variety available!
