@@ -23,26 +23,26 @@ GLOBAL_REAL_VAR(list/available_interaction_modes = list(
 
 /datum/interaction_mode/New(client/C)
 	owner = C
-	if (owner?.mob?.hud_used.has_interaction_ui)
+	if (owner?.mob?.hud_used?.has_interaction_ui)
 		owner.mob.hud_used.static_inventory += procure_hud(owner.mob, owner.mob.hud_used)
 
 /datum/interaction_mode/Destroy(force, ...)
 	owner = null
-	if (UI)
-		UI.hud.static_inventory -= UI
+	if (!QDELETED(UI))
+		UI.hud?.static_inventory -= UI
 		QDEL_NULL(UI)
 	return ..()
 
 /datum/interaction_mode/proc/reload_hud(mob/M)
 	if (UI)
-		owner.mob.hud_used.static_inventory -= UI
-	if (M.hud_used.has_interaction_ui)
+		owner.mob.hud_used?.static_inventory -= UI
+	if (M.hud_used?.has_interaction_ui)
 		M.hud_used.static_inventory += procure_hud(owner.mob, owner.mob.hud_used)
 
 /datum/interaction_mode/proc/replace(datum/interaction_mode/IM)
 	IM = new IM (owner)
-	if (UI)
-		UI?.hud.static_inventory -= UI
+	if (!QDELETED(UI))
+		UI.hud?.static_inventory -= UI
 	owner.imode = IM
 	qdel(src)
 

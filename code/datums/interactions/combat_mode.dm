@@ -16,7 +16,7 @@
 		M.istate |= ISTATE_CONTROL
 
 /datum/interaction_mode/combat_mode/procure_hud(mob/M, datum/hud/H)
-	if (!M.hud_used.has_interaction_ui)
+	if (!M.hud_used?.has_interaction_ui)
 		return
 	var/atom/movable/screen/combattoggle/flashy/CT = new
 	CT.hud = H
@@ -42,7 +42,7 @@
 			SEND_SOUND(owner, sound('sound/misc/ui_toggleoffcombat.ogg', volume = 25))
 
 	update_istate(owner.mob, null)
-	UI.update_icon_state()
+	UI?.update_icon_state()
 
 /datum/interaction_mode/combat_mode/set_combat_mode(new_state, silent)
 	. = ..()

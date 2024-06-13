@@ -2,7 +2,7 @@
 /datum/interaction_mode/combat_mode/cyborg
 
 /datum/interaction_mode/combat_mode/cyborg/procure_hud(mob/M, datum/hud/H)
-	if (!M.hud_used.has_interaction_ui)
+	if (!M.hud_used?.has_interaction_ui)
 		return
 	var/atom/movable/screen/combattoggle/robot/CT = new
 	CT.hud = H
