@@ -1,5 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - bugfix: "EMPs on carbons no longer happen twice"
-  - code_imp: "Moves organ emps under bodyparts, changes how bodyparts handle emp effects"
