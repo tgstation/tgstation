@@ -48,11 +48,13 @@
 	active = TRUE
 	ADD_TRAIT(owner, TRAIT_SIGN_LANG, TRAIT_GENERIC)
 	to_chat(owner, span_green("You are now communicating with sign language."))
+	build_all_button_icons(UPDATE_BUTTON_BACKGROUND)
 
 /datum/action/innate/sign_language/Deactivate()
 	active = FALSE
 	REMOVE_TRAIT(owner, TRAIT_SIGN_LANG, TRAIT_GENERIC)
 	to_chat(owner, span_green("You have stopped using sign language."))
+	build_all_button_icons(UPDATE_BUTTON_BACKGROUND)
 
 /// Shows the linked action to the owner Carbon.
 /datum/action/innate/sign_language/proc/show_action()
