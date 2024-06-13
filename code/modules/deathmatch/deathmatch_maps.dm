@@ -16,6 +16,15 @@
 	/// whether we are currently being loaded by a lobby
 	var/template_in_use = FALSE
 
+/datum/lazy_template/deathmatch/teamdeathmatch
+	name = "Team Deathmatch"
+	desc = "Detonate the bomb in the middle to win!"
+	max_players = 4
+	min_players = 4
+	automatic_gameend_time = 5 MINUTES
+	allowed_loadouts = list(/datum/outfit/deathmatch_loadout/naked)
+	map_name = "teamdeathmatch"
+	key = "teamdeathmatch"
 
 /datum/lazy_template/deathmatch/ragecage
 	name = "Ragecage"
