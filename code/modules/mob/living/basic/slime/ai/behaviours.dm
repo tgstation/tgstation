@@ -20,6 +20,7 @@
 
 	if(current_mood != new_mood)
 		slime_pawn.current_mood = new_mood
+		slime_pawn.regenerate_icons()
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 

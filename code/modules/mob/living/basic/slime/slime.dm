@@ -191,6 +191,8 @@
 	icon_dead = "[icon_text]-dead"
 	if(stat != DEAD)
 		icon_state = icon_text
+		if(current_mood && current_mood != SLIME_MOOD_NONE && !stat)
+			add_overlay("aslime-[current_mood]")
 	else
 		icon_state = icon_dead
 	..()
