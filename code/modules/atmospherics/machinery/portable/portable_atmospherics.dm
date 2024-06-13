@@ -106,6 +106,7 @@
 		return .
 	if(held_item?.tool_behaviour == TOOL_WELDER)
 		context[SCREENTIP_CONTEXT_LMB] = "Repair"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /// Take damage if a variable is exceeded. Damage is equal to temp/limit * heat/limit.
 /// The damage multiplier is treated as 1 if something is being ignored while the other one is exceeded.
