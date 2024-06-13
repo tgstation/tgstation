@@ -128,7 +128,6 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_hand_hit))
-	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK_SECONDARY, PROC_REF(on_secondary_hand_hit))
 	RegisterSignal(attached_hand, COMSIG_ITEM_DROPPED, PROC_REF(on_hand_dropped))
 	RegisterSignal(attached_hand, COMSIG_QDELETING, PROC_REF(on_hand_deleted))
 
@@ -142,7 +141,6 @@
 
 	UnregisterSignal(attached_hand, list(
 		COMSIG_ITEM_AFTERATTACK,
-		COMSIG_ITEM_AFTERATTACK_SECONDARY,
 		COMSIG_ITEM_DROPPED,
 		COMSIG_QDELETING,
 		COMSIG_ITEM_OFFER_TAKEN,
@@ -165,33 +163,17 @@
  *
  * When our hand hits an atom, we can cast do_hand_hit() on them.
  */
-/datum/action/cooldown/spell/touch/proc/on_hand_hit(datum/source, atom/victim, mob/caster, proximity_flag, click_parameters)
+/datum/action/cooldown/spell/touch/proc/on_hand_hit(datum/source, atom/victim, mob/caster, click_parameters)
 	SIGNAL_HANDLER
 	SHOULD_NOT_OVERRIDE(TRUE) // DEFINITELY don't put effects here, put them in cast_on_hand_hit
 
-	if(!proximity_flag)
-		return
 	if(!can_hit_with_hand(victim, caster))
 		return
 
-	INVOKE_ASYNC(src, PROC_REF(do_hand_hit), source, victim, caster)
-
-/**
- * Signal proc for [COMSIG_ITEM_AFTERATTACK_SECONDARY] from our attached hand.
- *
- * Same as on_hand_hit, but for if right-click was used on hit.
- */
-/datum/action/cooldown/spell/touch/proc/on_secondary_hand_hit(datum/source, atom/victim, mob/caster, proximity_flag, click_parameters)
-	SIGNAL_HANDLER
-	SHOULD_NOT_OVERRIDE(TRUE) // DEFINITELY don't put effects here, put them in cast_on_secondary_hand_hit
-
-	if(!proximity_flag)
-		return
-	if(!can_hit_with_hand(victim, caster))
-		return
-
-	INVOKE_ASYNC(src, PROC_REF(do_secondary_hand_hit), source, victim, caster)
-	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
+	if(LAZYACCESS(params2list(click_parameters), RIGHT_CLICK))
+		INVOKE_ASYNC(src, PROC_REF(do_secondary_hand_hit), source, victim, caster)
+	else
+		INVOKE_ASYNC(src, PROC_REF(do_hand_hit), source, victim, caster)
 
 /// Checks if the passed victim can be cast on by the caster.
 /datum/action/cooldown/spell/touch/proc/can_hit_with_hand(atom/victim, mob/caster)
