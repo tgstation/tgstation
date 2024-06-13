@@ -162,13 +162,16 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/button/door/invisible_tripwire/proc/on_entered(atom/victim)
-	var/mob/living = victim
-	if (living.stat)
-		return
-	tripwire_triggered(victim)
+	var/mob/living/target = victim
+	for(target in loc)
+		if(target.stat != DEAD)
+			tripwire_triggered(target)
+	return
 
 /obj/machinery/button/door/invisible_tripwire/proc/tripwire_triggered(atom/victim)
-	src.interact(victim)
+	interact(victim)
+	if(resets_self)
+		addtimer(CALLBACK(src, PROC_REF(interact(victim))), reset_timer)
 	if(multiuse || uses_remaining != 1)
 		uses_remaining--
 		return
@@ -176,8 +179,8 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 		for (var/obj/machinery/button/door/invisible_tripwire/pact_member in GLOB.tripwire_suicide_pact)
 			if(src.suicide_pact_id == pact_member.suicide_pact_id)
 				qdel(pact_member)
-		GLOB.tripwire_suicide_pact -= src
-	qdel(src)
+	else
+		qdel(src)
 
 
 /obj/machinery/button/door/invisible_tripwire/Destroy()
@@ -193,7 +196,6 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	resets_self = TRUE
 	reset_timer = 4 SECONDS
 	normaldoorcontrol = TRUE
-	specialfunctions = COMSIG_AIRLOCK_CLOSE
 
 /obj/machinery/button/door/invisible_tripwire/airlock_bolter/on_entered(atom/victim)
 	. = ..()
@@ -208,8 +210,6 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 
 /obj/machinery/button/door/invisible_tripwire/delay/on_entered(atom/victim)
 	. = ..()
-	if(!isliving(victim))
-		return
 	addtimer(CALLBACK(src, PROC_REF(tripwire_triggered)), delay_duration)
 
 /obj/machinery/button/door/invisible_tripwire/delay/tripwire_triggered(atom/victim, datum/source)

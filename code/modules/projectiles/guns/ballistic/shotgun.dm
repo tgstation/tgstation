@@ -348,8 +348,7 @@
 	icon_state = "donk_musket"
 	inhand_icon_state = "donk_musket"
 	worn_icon_state = "donk_musket"
-	desc = "A large-bore boltloading firearm with a classy wooden frame. Cheap to buy and easy to maintain, but needs to reload after every shot."
-	casing_ejector = TRUE
+	desc = "A large-bore boltloading firearm with a classy wooden frame. Cheap, accurate, and easy to maintain. Reload and rack after every shot."
 	semi_auto = TRUE
 	alternative_caliber = CALIBER_50BMG
 	bolt_wording = "bolt"

@@ -110,7 +110,7 @@
 
 /obj/projectile/bullet/pellet/flechette
 	name = "flechette"
-	icon_state = "pellet"
+	icon_state = "flechette"
 	damage = 6
 	wound_bonus = -25
 	bare_wound_bonus = 50

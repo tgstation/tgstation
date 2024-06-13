@@ -101,11 +101,7 @@
 	if(!COOLDOWN_FINISHED(src, cooldown_time))
 		return FALSE
 	caster.Shake(1.4, 0.8, 0.3 SECONDS)
-	for(var/mob/viewer in range(5, src))
-		if(viewer.is_blind())
-			to_chat(viewer, span_hear("You hear a whirring sound..."))
-		else
-			to_chat(viewer, span_notice("The [caster] shakes violently!"))
+	caster.visible_message(span_danger("[caster] shakes violently!"))
 	playsound(caster, 'sound/weapons/drill.ogg', 120 , TRUE)
 	slash_em(caster)
 	StartCooldown(cooldown_time)
@@ -115,7 +111,7 @@
 		if(faction_check(victim.faction, immune_factions))
 			continue
 		to_chat(caster, span_warning("You slice [victim]!"))
-		to_chat(victim, span_warning("You are cut by the [caster]'s blades!"))
+		to_chat(victim, span_warning("You are cut by [caster]'s blades!"))
 		victim.apply_damage(damage = damage_dealt, damagetype = BRUTE, def_zone = pick(valid_targets), sharpness = SHARP_EDGED)
 
 #undef SPIN_SLASH_ABILITY_TYPEPATH

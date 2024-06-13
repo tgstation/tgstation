@@ -58,6 +58,7 @@
 	desc = desc_aggro
 	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
 	REMOVE_TRAIT(src, TRAIT_PACIFISM, TRAIT_GENERIC)
+	COOLDOWN_START(src, tantrum_time, tantrum_time_duration)
 	if (COOLDOWN_FINISHED(src, tantrum_time))
 		src.calm_down()
 
