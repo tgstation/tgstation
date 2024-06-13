@@ -283,6 +283,8 @@
 
 		tapped = TRUE //The Node Drone has survived the wave defense, and the ore vent is tapped.
 		SSore_generation.processed_vents += src
+		log_game("Ore vent [key_name_and_tag(src)] was tapped")
+		SSblackbox.record_feedback("tally", "ore_vent_completed", 1, type)
 		balloon_alert_to_viewers("vent tapped!")
 		icon_state = icon_state_tapped
 		update_appearance(UPDATE_ICON_STATE)
@@ -431,16 +433,18 @@
 /**
  * Handle logging for mobs spawned
  */
-/obj/structure/ore_vent/proc/log_mob_spawned(mob/living/created)
+/obj/structure/ore_vent/proc/log_mob_spawned(datum/source, mob/living/created)
 	SIGNAL_HANDLER
+	log_game("Ore vent [key_name_and_tag(src)] spawned the following mob: [key_name_and_tag(created)]")
 	SSblackbox.record_feedback("tally", "ore_vent_mobs_spawned", 1, created.type)
 	RegisterSignal(created, COMSIG_LIVING_DEATH, PROC_REF(log_mob_killed))
 
 /**
  * Handle logging for mobs killed
  */
-/obj/structure/ore_vent/proc/log_mob_killed(mob/living/killed)
+/obj/structure/ore_vent/proc/log_mob_killed(datum/source, mob/living/killed)
 	SIGNAL_HANDLER
+	log_game("Vent-spawned mob [key_name_and_tag(killed)] was killed")
 	SSblackbox.record_feedback("tally", "ore_vent_mobs_killed", 1, killed.type)
 
 //comes with the station, and is already tapped.
