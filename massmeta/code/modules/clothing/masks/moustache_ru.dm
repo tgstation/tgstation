@@ -12,7 +12,7 @@
 /proc/italian_moustache_words_replace_ru(word)
 	var/static/list/italian_words
 	if(!italian_words)
-		italian_words = strings("italian_replacement_ru.json", "italian")
+		italian_words = strings("massmeta/italian_replacement_ru.json", "italian")
 	message_admins("это пришло в фукцию - [word]") ///
 	var/match = italian_words[lowertext(word)]
 
