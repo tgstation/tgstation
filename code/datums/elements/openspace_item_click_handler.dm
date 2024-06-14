@@ -17,7 +17,7 @@
 //Invokes the proctype with a turf above as target.
 /datum/element/openspace_item_click_handler/proc/divert_interaction(obj/item/source, mob/user, atom/target, click_parameters)
 	SIGNAL_HANDLER
-	if(!target.z || !user.z || target.z == user.z)
+	if((target.z == 0) || (user.z == 0) || target.z == user.z)
 		return NONE
 	var/turf/checked_turf = get_turf(target)
 	while(!isnull(checked_turf))
