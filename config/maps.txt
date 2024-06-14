@@ -63,6 +63,10 @@ map wawastation
 	minplayers 40
 endmap
 
+map protoboxstation
+	votable
+endmap
+
 # Debug-only maps.
 
 map gateway_test
