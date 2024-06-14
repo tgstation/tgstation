@@ -14,6 +14,8 @@
 	item_flags = NOBLUDGEON
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
+	interaction_flags_mouse_drop = NEED_HANDS
+
 	///How many pages the booklet holds
 	var/number_of_pages = 50
 
@@ -41,11 +43,8 @@
 		user.put_in_active_hand(src)
 	return ..()
 
-/obj/item/ph_booklet/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
-	var/mob/living/user = usr
-	if(!isliving(user) || !Adjacent(user))
-		return
-	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+/obj/item/ph_booklet/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(!isliving(user))
 		return
 	if(!number_of_pages)
 		to_chat(user, span_warning("[src] is empty!"))

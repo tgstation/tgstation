@@ -1,4 +1,0 @@
-author: "Kocma-san"
-delete-after: True
-changes:
-  - bugfix: "special networks are now displayed in the fax if it is the only one in the world"

@@ -36,10 +36,12 @@
 /datum/element/strippable/proc/mouse_drop_onto(datum/source, atom/over, mob/user)
 	SIGNAL_HANDLER
 
+	. = COMPONENT_CANCEL_MOUSEDROP_ONTO
 	if (user == source)
 		return
-
 	if (over != user)
+		return
+	if(!user.can_perform_action(source, FORBID_TELEKINESIS_REACH))
 		return
 
 	// Cyborgs buckle people by dragging them onto them, unless in combat mode.
