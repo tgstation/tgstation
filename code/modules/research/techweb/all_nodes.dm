@@ -1,12 +1,11 @@
 
 //Current rate: 135000 research points in 90 minutes
 
-TIER_1 = 1
-TIER_2 = 2
-TIER_3 = 3
-TIER_4 = 4
-TIER_5 = 5
-TIER_POINTS = 2500
+#define TIER_1_POINTS 2000
+#define TIER_2_POINTS 4000
+#define TIER_3_POINTS 6000
+#define TIER_4_POINTS 8000
+#define TIER_5_POINTS 10000
 
 /datum/techweb_node/unused
 	id = "unused"
@@ -14,29 +13,23 @@ TIER_POINTS = 2500
 	display_name = "Unused"
 	description = "description"
 	design_ids = list(
-		"camera_assembly",
-		"electropack",
-		"extinguisher",
-		"fluid_ducts",
 		"gas_filter",
-		"handcuffs_s",
 		"holodisk",
-		"light_replacer",
 		"plasmaman_gas_filter",
-		"slime_scanner",
 		"space_heater",
-		"toy_armblade",
 		"turbine_part_compressor",
 		"turbine_part_rotor",
 		"turbine_part_stator",
-		"turret_control",
 		"mmi",
 		"mmi_m",
-		"plunger",
+		"anomaly_refinery",
+		"blutrash",
+		"holobarrier_jani",
+		"light_replacer_blue",
+		"gravitygun",
 	)
 
-
-//Base Nodes
+// General tree
 /datum/techweb_node/office_equip
 	id = "office_equip"
 	starting_node = TRUE
@@ -54,7 +47,6 @@ TIER_POINTS = 2500
 		"toner_large",
 		"toner",
 		"boxcutter",
-		"custom_vendor_refill",
 		"bounced_radio",
 		"radio_headset",
 		"earmuffs",
@@ -80,10 +72,76 @@ TIER_POINTS = 2500
 		"status_display_frame",
 	)
 
-// Sec tree
+/datum/techweb_node/sanitation
+	id = "sanitation"
+	display_name = "Advanced Sanitation Technology"
+	description = "description"
+	prereq_ids = list("office_equip")
+	design_ids = list(
+		"advmop",
+		"light_replacer",
+		"spraybottle",
+		"paint_remover",
+		"beartrap",
+		"buffer",
+		"vacuum",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
 
-/datum/techweb_node/arms_basic
-	id = "arms_basic"
+/datum/techweb_node/toys
+	id = "toys"
+	display_name = "New Toys"
+	description = "description"
+	prereq_ids = list("office_equip")
+	design_ids = list(
+		"toy_armblade",
+		"air_horn",
+		"clown_firing_pin",
+		"smoke_machine",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+
+/datum/techweb_node/consoles
+	id = "consoles"
+	display_name = "Civilian Consoles"
+	description = "description"
+	prereq_ids = list("office_equip")
+	design_ids = list(
+		"comconsole",
+		"cargo",
+		"cargorequest",
+		"med_data",
+		"crewconsole",
+		"bankmachine",
+		"account_console",
+		"idcard",
+		"libraryconsole",
+		"barcode_scanner",
+		"vendor",
+		"custom_vendor_refill",
+		"bounty_pad_control",
+		"bounty_pad",
+		"portadrive_advanced",
+		"portadrive_basic",
+		"portadrive_super",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+
+/datum/techweb_node/gaming
+	id = "gaming"
+	display_name = "Gaming"
+	description = "description"
+	prereq_ids = list("toys", "consoles")
+	design_ids = list(
+		"arcade_battle",
+		"arcade_orion",
+		"slotmachine",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+// Sec tree
+/datum/techweb_node/basic_arms
+	id = "basic_arms"
 	starting_node = TRUE
 	display_name = "Basic Arms"
 	description = "description"
@@ -99,9 +157,98 @@ TIER_POINTS = 2500
 		"sec_rshot",
 	)
 
+/datum/techweb_node/sec_equip
+	id = "sec_equip"
+	display_name = "Security Equipment"
+	description = "description"
+	prereq_ids = list("basic_arms")
+	design_ids = list(
+		"camera_assembly",
+		"secdata",
+		"mining",
+		"prisonmanage",
+		"rdcamera",
+		"seccamera",
+		"security_photobooth",
+		"photobooth",
+		"scanner_gate",
+		"turret_control",
+		"pepperspray",
+		"inspector",
+		"evidencebag",
+		"handcuffs_s",
+		"zipties",
+		"seclite",
+		"electropack",
+		"bola_energy",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
 
-// Service tree
+/datum/techweb_node/riot_supression
+	id = "riot_supression"
+	display_name = "Riot Supression"
+	description = "description"
+	prereq_ids = list("sec_equip")
+	design_ids = list(
+		"pin_testing",
+		"pin_loyalty",
+		"tele_shield",
+		"ballistic_shield",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
 
+/datum/techweb_node/ammo
+	id = "ammo"
+	display_name = "Exotic Ammunition"
+	description = "description"
+	prereq_ids = list("riot_supression")
+	design_ids = list(
+		"c38_hotshot",
+		"c38_iceblox",
+		"lasershell",
+		"techshotshell",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+
+/datum/techweb_node/electric_weapons
+	id = "electric_weapons"
+	display_name = "Electric Weaponry"
+	description = "description"
+	prereq_ids = list("ammo")
+	design_ids = list(
+		"ioncarbine",
+		"stunrevolver",
+		"temp_gun",
+		"xray_laser",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+
+/datum/techweb_node/explosives
+	id = "explosives"
+	display_name = "Explosives"
+	description = "description"
+	prereq_ids = list("ammo")
+	design_ids = list(
+		"large_grenade",
+		"adv_grenade",
+		"pyro_grenade",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+
+/datum/techweb_node/beam_weapons
+	id = "beam_weapons"
+	display_name = "Advanced Beam Weaponry"
+	description = "description"
+	prereq_ids = list("electric_weapons")
+	design_ids = list(
+		"beamrifle",
+		"nuclear_gun",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+
+
+// Service trees
+// Kitchen tree
 /datum/techweb_node/cafeteria_equip
 	id = "cafeteria_equip"
 	starting_node = TRUE
@@ -110,7 +257,6 @@ TIER_POINTS = 2500
 	design_ids = list(
 		"griddle",
 		"microwave",
-		"souppot",
 		"bowl",
 		"plate",
 		"oven_tray",
@@ -130,18 +276,58 @@ TIER_POINTS = 2500
 		"coffeepot",
 		"syrup_bottle",
 	)
+
+/datum/techweb_node/food_proc
+	id = "food_proc"
+	display_name = "Food Processing"
+	description = "description"
+	prereq_ids = list("cafeteria_equip")
+	design_ids = list(
+		"deepfryer",
+		"oven",
+		"stove",
+		"range",
+		"souppot",
+		"processor",
+		"gibber",
+		"monkey_recycler",
+		"reagentgrinder",
+		"microwave_engineering",
+		"smartfridge",
+		"sheetifier",
+		"fat_sucker",
+		"dish_drive",
+		"roastingstick",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+
+// Fishing tree
 /datum/techweb_node/fishing_equip
 	id = "fishing_equip"
 	starting_node = TRUE
 	display_name = "Fishing Equipment"
 	description = "description"
 	design_ids = list(
-		"fish_case",
-		"fishing_rod",
 		"fishing_portal_generator",
+		"fishing_rod",
+		"fish_case",
 	)
 
+/datum/techweb_node/fishing_equip_adv
+	id = "fishing_equip_adv"
+	display_name = "Advanced Fishing Tools"
+	description = "description"
+	prereq_ids = list("fishing_equip")
+	design_ids = list(
+		"fishing_rod_tech",
+		"stabilized_hook",
+		"auto_reel",
+		"fish_analyzer",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	required_experiments = list(/datum/experiment/scanning/fish)
 
+// Botany tree
 /datum/techweb_node/botany_equip
 	id = "botany_equip"
 	starting_node = TRUE
@@ -157,16 +343,41 @@ TIER_POINTS = 2500
 		"hatchet",
 	)
 
+/datum/techweb_node/hydroponics
+	id = "hydroponics"
+	display_name = "Hydroponics"
+	description = "description"
+	prereq_ids = list("botany_equip", "chem_synthesis")
+	design_ids = list(
+		"biogenerator",
+		"hydro_tray",
+		"portaseeder",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
 
+/datum/techweb_node/selection
+	id = "selection"
+	display_name = "Artificial Selection"
+	description = "description"
+	prereq_ids = list("hydroponics")
+	design_ids = list(
+		"flora_gun",
+		"gene_shears",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	required_experiments = list(/datum/experiment/scanning/random/plants/wild)
 
-// Med tree
-
+// Medbay trees
 /datum/techweb_node/medbay_equip
 	id = "medbay_equip"
 	starting_node = TRUE
 	display_name = "Medbay Equipment"
 	description = "description"
 	design_ids = list(
+		"operating",
+		"medicalbed",
+		"defibmountdefault",
+		"defibrillator",
 		"surgical_drapes",
 		"scalpel",
 		"retractor",
@@ -177,11 +388,8 @@ TIER_POINTS = 2500
 		"bonesetter",
 		"blood_filter",
 		"surgical_tape",
-		"operating",
-		"medicalbed",
-		"defibmountdefault",
-		"defibrillator",
 		"penlight",
+		"penlight_paramedic",
 		"stethoscope",
 		"beaker",
 		"large_beaker",
@@ -190,23 +398,208 @@ TIER_POINTS = 2500
 		"pillbottle",
 	)
 
-// Surgery tree
+// Biology tree
+/datum/techweb_node/bio_scan
+	id = "bio_scan"
+	display_name = "Biological Scan"
+	description = "description"
+	prereq_ids = list("medbay_equip")
+	design_ids = list(
+		"healthanalyzer",
+		"autopsyscanner",
+		"medical_kiosk",
+		"chem_master",
+		"chem_mass_spec",
+		"ph_meter",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
 
+/datum/techweb_node/cytology
+	id = "cytology"
+	display_name = "Cytology"
+	description = "description"
+	prereq_ids = list("bio_scan")
+	design_ids = list(
+		"pandemic",
+		"petri_dish",
+		"swab",
+		"biopsy_tool",
+		"limbgrower",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+/datum/techweb_node/xenobiology
+	id = "xenobiology"
+	display_name = "Xenobiology"
+	description = "description"
+	prereq_ids = list("cytology")
+	design_ids = list(
+		"xenobioconsole",
+		"slime_scanner",
+		"limbdesign_ethereal",
+		"limbdesign_felinid",
+		"limbdesign_lizard",
+		"limbdesign_plasmaman",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	required_experiments = list(/datum/experiment/scanning/random/cytology)
+
+/datum/techweb_node/gene_engineering
+	id = "gene_engineering"
+	display_name = "Gene Engineering"
+	description = "description"
+	prereq_ids = list("selection", "xenobiology")
+	design_ids = list(
+		"genescanner",
+		"mod_dna_lock",
+		"dnascanner",
+		"scan_console",
+		"dna_disk",
+		"dnainfuser",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+
+// Chemistry tree
+/datum/techweb_node/chem_synthesis
+	id = "chem_synthesis"
+	display_name = "Chemical Synthesis"
+	description = "description"
+	prereq_ids = list("medbay_equip")
+	design_ids = list(
+		"xlarge_beaker",
+		"blood_pack",
+		"chem_pack",
+		"med_spray_bottle",
+		"medigel",
+		"medipen_refiller",
+		"soda_dispenser",
+		"beer_dispenser",
+		"chem_dispenser",
+		"portable_chem_mixer",
+		"chem_heater",
+		"w-recycler",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+
+/datum/techweb_node/plumbing
+	id = "plumbing"
+	display_name = "Plumbing"
+	description = "description"
+	prereq_ids = list("chem_synthesis")
+	design_ids = list(
+		"plumbing_rcd",
+		"plumbing_rcd_service",
+		"plumbing_rcd_sci",
+		"plunger",
+		"fluid_ducts",
+		"meta_beaker",
+		"piercesyringe",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+/datum/techweb_node/cryostasis
+	id = "cryostasis"
+	display_name = "Cryostasis"
+	description = "description"
+	prereq_ids = list("plumbing", "fusion")
+	design_ids = list(
+		"cryo_grenade",
+		"cryotube",
+		"splitbeaker",
+		"stasis",
+		"mech_sleeper",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+
+/datum/techweb_node/medbay_equip_adv
+	id = "medbay_equip_adv"
+	display_name = "Advanced Medbay Equipment"
+	description = "description"
+	prereq_ids = list("cryostasis")
+	design_ids = list(
+		"healthanalyzer_advanced",
+		"mod_health_analyzer",
+		"defibrillator_compact",
+		"crewpinpointer",
+		"plasmarefiller",
+		"defibmount",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+
+// Surgery tree
 /datum/techweb_node/oldstation_surgery
 	id = "oldstation_surgery"
 	display_name = "Experimental Dissection"
 	description = "Grants access to experimental dissections, which allows generation of research points."
+	prereq_ids = list("medbay_equip")
 	design_ids = list(
 		"surgery_oldstation_dissection",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
 	hidden = TRUE
 	show_on_wiki = FALSE
 
+/datum/techweb_node/surgery
+	id = "surgery"
+	display_name = "Improved Wound-Tending"
+	description = "description"
+	prereq_ids = list("medbay_equip")
+	design_ids = list(
+		"surgery_heal_brute_upgrade",
+		"surgery_heal_burn_upgrade",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
 
+/datum/techweb_node/surgery_adv
+	id = "surgery_adv"
+	display_name = "Advanced Surgery"
+	description = "description"
+	prereq_ids = list("surgery")
+	design_ids = list(
+		"harvester",
+		"surgery_heal_brute_upgrade_femto",
+		"surgery_heal_burn_upgrade_femto",
+		"surgery_heal_combo",
+		"surgery_lobotomy",
+		"surgery_wing_reconstruction",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	required_experiments = list(/datum/experiment/autopsy/human)
+
+/datum/techweb_node/surgery_exp
+	id = "surgery_exp"
+	display_name = "Experimental Surgery"
+	description = "description"
+	prereq_ids = list("surgery_adv")
+	design_ids = list(
+		"surgery_cortex_folding",
+		"surgery_cortex_imprint",
+		"surgery_heal_combo_upgrade",
+		"surgery_ligament_hook",
+		"surgery_ligament_reinforcement",
+		"surgery_muscled_veins",
+		"surgery_nerve_ground",
+		"surgery_nerve_splice",
+		"surgery_pacify",
+		"surgery_vein_thread",
+		"surgery_viral_bond",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	required_experiments = list(/datum/experiment/autopsy/nonhuman)
+
+/datum/techweb_node/surgery_tools
+	id = "surgery_tools"
+	display_name = "Advanced Surgery Tools"
+	description = "description"
+	prereq_ids = list("surgery_exp", "cryostasis")
+	design_ids = list(
+		"laserscalpel",
+		"searingtool",
+		"mechanicalpinches",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
 
 // Robotics trees
-
 /datum/techweb_node/robotics
 	id = "robotics"
 	starting_node = TRUE
@@ -214,8 +607,8 @@ TIER_POINTS = 2500
 	description = "description"
 	design_ids = list(
 		"mechfab",
-		"paicard",
 		"botnavbeacon",
+		"paicard",
 	)
 
 /datum/techweb_node/mech_assembly
@@ -247,7 +640,7 @@ TIER_POINTS = 2500
 		"module_duplicator",
 		"circuit_multitool",
 		"compact_remote_shell",
-		"usb_cable"
+		"usb_cable",
 		"integrated_circuit",
 		"comp_access_checker",
 		"comp_arctan2",
@@ -330,6 +723,7 @@ TIER_POINTS = 2500
 	display_name = "Modular Suit"
 	description = "description"
 	design_ids = list(
+		"suit_storage_unit",
 		"mod_shell",
 		"mod_chestplate",
 		"mod_helmet",
@@ -337,7 +731,6 @@ TIER_POINTS = 2500
 		"mod_boots",
 		"mod_plating_standard",
 		"mod_paint_kit",
-		"suit_storage_unit",
 		"mod_storage",
 		"mod_plasma",
 		"mod_flashlight",
@@ -370,7 +763,6 @@ TIER_POINTS = 2500
 
 
 // Sci tree
-
 /datum/techweb_node/fundamental_sci
 	id = "fundamental_sci"
 	starting_node = TRUE
@@ -382,7 +774,6 @@ TIER_POINTS = 2500
 		"rdconsole",
 		"tech_disk",
 		"doppler_array",
-		"anomaly_refinery",
 		"experimentor",
 		"destructive_analyzer",
 		"destructive_scanner",
@@ -402,6 +793,7 @@ TIER_POINTS = 2500
 		"basic_matter_bin",
 		"basic_micro_laser",
 		"basic_scanning",
+		"high_cell",
 		"basic_cell",
 		"miniature_power_cell",
 		"trapdoor_electronics",
@@ -418,7 +810,6 @@ TIER_POINTS = 2500
 	)
 
 // Engi tree
-
 /datum/techweb_node/engi_essential
 	id = "engi_essential"
 	starting_node = TRUE
@@ -446,8 +837,27 @@ TIER_POINTS = 2500
 		"wirecutters",
 	)
 
-// Cargo tree
+/datum/techweb_node/atmos_equip
+	id = "atmos_equip"
+	display_name = "Engineering Essentials"
+	description = "description"
+	prereq_ids = list("engi_essential")
+	design_ids = list(
+		"extinguisher",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
 
+/datum/techweb_node/fusion
+	id = "fusion"
+	display_name = "Fusion"
+	description = "description"
+	prereq_ids = list("atmos_equip")
+	design_ids = list(
+		"extinguisher",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+// Cargo tree
 /datum/techweb_node/material_processing
 	id = "material_processing"
 	starting_node = TRUE
@@ -466,8 +876,8 @@ TIER_POINTS = 2500
 		"rglass",
 		"plasmaglass",
 		"plasmareinforcedglass",
-		"titaniumglass",
 		"plasteel",
+		"titaniumglass",
 		"plastitanium",
 		"plastitaniumglass",
 		"circuit",
@@ -479,11 +889,9 @@ TIER_POINTS = 2500
 
 
 
-/datum/techweb_node/nodeid
-	id = "nodeid"
-	starting_node = TRUE
-	display_name = "name"
-	description = "description"
-	design_ids = list(
-		"mmi",
-	)
+
+#undef TIER_1_POINTS
+#undef TIER_2_POINTS
+#undef TIER_3_POINTS
+#undef TIER_4_POINTS
+#undef TIER_5_POINTS
