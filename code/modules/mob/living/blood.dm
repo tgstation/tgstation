@@ -29,6 +29,8 @@
 	var/determined_mod = has_status_effect(/datum/status_effect/determined) ? 0.5 : 0
 
 	//Effects of bloodloss
+	if(sigreturn & HANDLE_BLOOD_NO_EFFECTS)
+		return
 	var/word = pick("dizzy","woozy","faint")
 	switch(blood_volume)
 		if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
