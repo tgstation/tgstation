@@ -22520,7 +22520,7 @@
 /obj/item/pen{
 	pixel_x = -5
 	},
-/obj/item/hand_labeler/borg{
+/obj/item/hand_labeler{
 	pixel_y = -3
 	},
 /turf/open/floor/wood,
@@ -52104,7 +52104,7 @@
 	name = "Permabrig Visitation"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/security/brig,
-/turf/open/floor/plating,
+/turf/open/floor/iron,
 /area/station/security/prison/visit)
 "pDt" = (
 /obj/effect/landmark/start/hangover,

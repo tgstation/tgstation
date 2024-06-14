@@ -27,26 +27,49 @@
 	vary = TRUE
 
 /datum/emote/living/carbon/clap/get_sound(mob/living/user)
-	if(ishuman(user))
-		if(!user.get_bodypart(BODY_ZONE_L_ARM) || !user.get_bodypart(BODY_ZONE_R_ARM))
-			return
-		else
-			return pick('sound/misc/clap1.ogg',
-							'sound/misc/clap2.ogg',
-							'sound/misc/clap3.ogg',
-							'sound/misc/clap4.ogg')
+	if(!user.get_bodypart(BODY_ZONE_L_ARM) || !user.get_bodypart(BODY_ZONE_R_ARM))
+		return
+	return pick(
+		'sound/misc/clap1.ogg',
+		'sound/misc/clap2.ogg',
+		'sound/misc/clap3.ogg',
+		'sound/misc/clap4.ogg',
+	)
 
 /datum/emote/living/carbon/crack
 	key = "crack"
 	key_third_person = "cracks"
 	message = "cracks their knuckles."
 	sound = 'sound/misc/knuckles.ogg'
+	hands_use_check = TRUE
 	cooldown = 6 SECONDS
 
 /datum/emote/living/carbon/crack/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional)
 	if(!iscarbon(user) || user.usable_hands < 2)
 		return FALSE
 	return ..()
+
+/datum/emote/living/carbon/cry
+	key = "cry"
+	key_third_person = "cries"
+	message = "cries."
+	message_mime = "sobs silently."
+	audio_cooldown = 5 SECONDS
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	vary = TRUE
+	stat_allowed = SOFT_CRIT
+
+/datum/emote/living/carbon/cry/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/human_user = user
+	QDEL_IN(human_user.give_emote_overlay(/datum/bodypart_overlay/simple/emote/cry), 12.8 SECONDS)
+
+/datum/emote/living/carbon/cry/get_sound(mob/living/carbon/human/user)
+	if(!istype(user))
+		return
+	return user.dna.species.get_cry_sound(user)
 
 /datum/emote/living/carbon/circle
 	key = "circle"

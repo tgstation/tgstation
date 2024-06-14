@@ -479,13 +479,18 @@
 		visible_message(span_notice("[user] sets \the [src] to [vampire_charging_enabled ? "charge" : "cook"]."), blind_message = span_notice("You hear \the [src] make an informative beep!"))
 	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/microwave/CtrlClick(mob/user)
-	. = ..()
-	if(user.can_perform_action(src) && cell_powered && !isnull(cell) && anchored)
+/obj/machinery/microwave/click_ctrl(mob/user)
+	if(!anchored)
+		return NONE
+
+	if(cell_powered && !isnull(cell))
 		user.put_in_hands(cell)
 		balloon_alert(user, "removed cell")
 		cell = null
 		update_appearance()
+		return CLICK_ACTION_SUCCESS
+
+	return CLICK_ACTION_BLOCKING
 
 /obj/machinery/microwave/ui_interact(mob/user)
 	. = ..()
