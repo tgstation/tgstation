@@ -714,35 +714,25 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/on_mousedrop_onto(datum/source, atom/over_object, mob/user)
 	SIGNAL_HANDLER
 
-	. = COMPONENT_CANCEL_MOUSEDROP_ONTO
-	if(ismecha(user.loc) || !user.canUseStorage())
+	if(ismecha(user.loc) || user.incapacitated() || !user.canUseStorage())
 		return
 
+	parent.add_fingerprint(user)
+
 	if(istype(over_object, /atom/movable/screen/inventory/hand))
-		if(real_location.loc != user || !user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
+		if(real_location.loc != user)
 			return
 
 		var/atom/movable/screen/inventory/hand/hand = over_object
 		user.putItemFromInventoryInHandIfPossible(parent, hand.held_index)
-		parent.add_fingerprint(user)
 
 	else if(ismob(over_object))
-		if(over_object != user || !user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
+		if(over_object != user)
 			return
 
-		parent.add_fingerprint(user)
 		INVOKE_ASYNC(src, PROC_REF(open_storage), user)
 
 	else if(!istype(over_object, /atom/movable/screen))
-		var/action_status
-		if(isturf(over_object))
-			action_status = user.can_perform_turf_action(over_object)
-		else
-			action_status = user.can_perform_action(over_object, FORBID_TELEKINESIS_REACH)
-		if(!action_status)
-			return
-
-		parent.add_fingerprint(user)
 		INVOKE_ASYNC(src, PROC_REF(dump_content_at), over_object, user)
 
 /**
@@ -789,16 +779,17 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/on_mousedropped_onto(datum/source, obj/item/dropping, mob/user)
 	SIGNAL_HANDLER
 
-	. = COMPONENT_CANCEL_MOUSEDROPPED_ONTO
 	if(!istype(dropping))
 		return
 	if(dropping != user.get_active_held_item())
 		return
-	if(!user.can_perform_action(source, FORBID_TELEKINESIS_REACH))
-		return
 	if(dropping.atom_storage) // If it has storage it should be trying to dump, not insert.
 		return
+
 	if(!iscarbon(user) && !isdrone(user))
+		return
+	var/mob/living/user_living = user
+	if(user_living.incapacitated())
 		return
 
 	attempt_insert(dropping, user)

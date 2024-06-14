@@ -10,7 +10,6 @@
 	custom_price = PAYCHECK_CREW * 10
 	custom_premium_price = PAYCHECK_CREW * 14
 	interaction_flags_click = FORBID_TELEKINESIS_REACH
-	interaction_flags_mouse_drop = FORBID_TELEKINESIS_REACH
 
 	///Creating an empty slot for a beaker that can be added to dispense into
 	var/obj/item/reagent_containers/beaker
@@ -244,10 +243,11 @@
 			update_appearance()
 			return TRUE
 
-/obj/item/storage/portable_chem_mixer/mouse_drop_dragged(atom/over_object)
+/obj/item/storage/portable_chem_mixer/MouseDrop(obj/over_object)
+	. = ..()
 	if(ismob(loc))
 		var/mob/M = loc
-		if(istype(over_object, /atom/movable/screen/inventory/hand))
+		if(!M.incapacitated() && istype(over_object, /atom/movable/screen/inventory/hand))
 			var/atom/movable/screen/inventory/hand/H = over_object
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 

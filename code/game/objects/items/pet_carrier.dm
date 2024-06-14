@@ -18,8 +18,6 @@
 	throw_speed = 2
 	throw_range = 3
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
-	interaction_flags_mouse_drop = NEED_DEXTERITY
-
 	var/open = TRUE
 	var/locked = FALSE
 	var/list/occupants = list()
@@ -155,9 +153,10 @@
 	if(!open)
 		. += "[base_icon_state]_[locked ? "" : "un"]locked"
 
-/obj/item/pet_carrier/mouse_drop_dragged(atom/over_atom, mob/user, src_location, over_location, params)
-	if(isopenturf(over_atom) && open && occupants.len)
-		user.visible_message(span_notice("[user] unloads [src]."), \
+/obj/item/pet_carrier/MouseDrop(atom/over_atom)
+	. = ..()
+	if(isopenturf(over_atom) && usr.can_perform_action(src, NEED_DEXTERITY) && usr.Adjacent(over_atom) && open && occupants.len)
+		usr.visible_message(span_notice("[usr] unloads [src]."), \
 		span_notice("You unload [src] onto [over_atom]."))
 		for(var/V in occupants)
 			remove_occupant(V, over_atom)

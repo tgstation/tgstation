@@ -11,8 +11,6 @@
 	max_integrity = 300
 	obj_flags = BLOCKS_CONSTRUCTION
 	state_open = TRUE
-	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
-
 	/// Whether we have an ongoing connection
 	var/connected = FALSE
 	/// A player selected outfit by clicking the netpod
@@ -95,10 +93,12 @@
 
 	return ..()
 
-/obj/machinery/netpod/mouse_drop_receive(mob/target, mob/user, params)
+/obj/machinery/netpod/MouseDrop_T(mob/target, mob/user)
 	var/mob/living/carbon/player = user
+	if(!iscarbon(player) || !Adjacent(player) || !ISADVANCEDTOOLUSER(player) || !is_operational || !state_open)
+		return
 
-	if(!iscarbon(player) || !is_operational || !state_open || player.buckled)
+	if(player.buckled || HAS_TRAIT(player, TRAIT_HANDS_BLOCKED))
 		return
 
 	close_machine(target)

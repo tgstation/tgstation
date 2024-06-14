@@ -6,9 +6,7 @@
 	layer = OBJ_LAYER
 	max_integrity = 100
 	armor_type = /datum/armor/ridden_wheelchair
-	density = FALSE
-	interaction_flags_mouse_drop = ALLOW_RESTING
-
+	density = FALSE //Thought I couldn't fix this one easily, phew
 	/// Run speed delay is multiplied with this for vehicle move delay.
 	var/delay_multiplier = 6.7
 	/// This variable is used to specify which overlay icon is used for the wheelchair, ensures wheelchair can cover your legs
@@ -124,14 +122,17 @@
 	fire = 30
 	acid = 40
 
-/obj/vehicle/ridden/wheelchair/mouse_drop_dragged(atom/over_object, mob/user)  //Lets you collapse wheelchair
-	if(over_object != user || !foldabletype || !ishuman(user))
+/obj/vehicle/ridden/wheelchair/MouseDrop(over_object, src_location, over_location)  //Lets you collapse wheelchair
+	. = ..()
+	if(over_object != usr || !Adjacent(usr) || !foldabletype)
+		return FALSE
+	if(!ishuman(usr) || !usr.can_perform_action(src, ALLOW_RESTING))
 		return FALSE
 	if(has_buckled_mobs())
 		return FALSE
-	user.visible_message(span_notice("[user] collapses [src]."), span_notice("You collapse [src]."))
+	usr.visible_message(span_notice("[usr] collapses [src]."), span_notice("You collapse [src]."))
 	var/obj/vehicle/ridden/wheelchair/wheelchair_folded = new foldabletype(get_turf(src))
-	user.put_in_hands(wheelchair_folded)
+	usr.put_in_hands(wheelchair_folded)
 	qdel(src)
 
 /obj/item/wheelchair/attack_self(mob/user)  //Deploys wheelchair on in-hand use

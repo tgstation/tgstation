@@ -129,7 +129,8 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 	last_hovored_ref = WEAKREF(over_object)
 	over_object.MouseEntered(over_location, over_control, params)
 
-/atom/movable/screen/light_button/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+/atom/movable/screen/light_button/MouseDrop(over_object)
+	. = ..()
 	last_hovored_ref = null
 
 /atom/movable/screen/light_button/MouseEntered(location, control, params)
@@ -329,7 +330,8 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 	icon_state = "light_move"
 	mouse_drag_pointer = 'icons/effects/mouse_pointers/light_drag.dmi'
 
-/atom/movable/screen/light_button/move/mouse_drop_dragged(atom/over_object)
+/atom/movable/screen/light_button/move/MouseDrop(over_object)
+	. = ..()
 	if(!ismovable(loc))
 		return
 	var/atom/movable/movable_owner = loc

@@ -11,7 +11,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
-
 	var/obj/item/gun/energy/minigun/gun
 	var/obj/item/stock_parts/cell/minigun/battery
 	var/armed = FALSE //whether the gun is attached, FALSE is attached, TRUE is the gun is wielded.
@@ -64,14 +63,22 @@
 	if(armed)
 		user.dropItemToGround(gun, TRUE)
 
-/obj/item/minigunpack/mouse_drop_dragged(atom/over_object, mob/user)
+/obj/item/minigunpack/MouseDrop(atom/over_object)
+	. = ..()
 	if(armed)
 		return
+	if(iscarbon(usr))
+		var/mob/M = usr
 
-	if(iscarbon(user))
-		if(istype(over_object, /atom/movable/screen/inventory/hand))
-			var/atom/movable/screen/inventory/hand/H = over_object
-			user.putItemFromInventoryInHandIfPossible(src, H.held_index)
+		if(!over_object)
+			return
+
+		if(!M.incapacitated())
+
+			if(istype(over_object, /atom/movable/screen/inventory/hand))
+				var/atom/movable/screen/inventory/hand/H = over_object
+				M.putItemFromInventoryInHandIfPossible(src, H.held_index)
+
 
 /obj/item/minigunpack/update_icon_state()
 	icon_state = armed ? "notholstered" : "holstered"

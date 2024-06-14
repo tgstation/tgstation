@@ -1,7 +1,5 @@
 /obj/vehicle/sealed
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-	interaction_flags_mouse_drop = NEED_HANDS
-
 	var/enter_delay = 2 SECONDS
 	var/mouse_pointer
 	var/headlights_toggle = FALSE
@@ -22,7 +20,7 @@
 	if(istype(E))
 		E.vehicle_entered_target = src
 
-/obj/vehicle/sealed/mouse_drop_receive(atom/dropping, mob/M, params)
+/obj/vehicle/sealed/MouseDrop_T(atom/dropping, mob/M)
 	if(!istype(dropping) || !istype(M))
 		return ..()
 	if(M == dropping)

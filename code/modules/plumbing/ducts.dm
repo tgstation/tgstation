@@ -295,7 +295,7 @@ All the important duct code:
 	disconnect_duct()
 	return ..()
 
-/obj/machinery/duct/mouse_drop_receive(atom/drag_source, mob/living/user, params)
+/obj/machinery/duct/MouseDrop_T(atom/drag_source, mob/living/user)
 	if(!istype(drag_source, /obj/machinery/duct))
 		return
 	var/obj/machinery/duct/other = drag_source

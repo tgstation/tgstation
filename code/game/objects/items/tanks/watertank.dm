@@ -14,7 +14,6 @@
 	max_integrity = 200
 	armor_type = /datum/armor/item_watertank
 	resistance_flags = FIRE_PROOF
-	interaction_flags_mouse_drop = ALLOW_RESTING
 
 	var/obj/item/noz
 	var/volume = 500
@@ -94,11 +93,12 @@
 	else
 		return ..()
 
-/obj/item/watertank/mouse_drop_dragged(atom/over_object)
+/obj/item/watertank/MouseDrop(obj/over_object)
 	var/mob/M = loc
 	if(istype(M) && istype(over_object, /atom/movable/screen/inventory/hand))
 		var/atom/movable/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
+	return ..()
 
 /obj/item/watertank/attackby(obj/item/attacking_item, mob/user, params)
 	if(attacking_item == noz)

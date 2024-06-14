@@ -80,7 +80,6 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.75
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 1.5
 	flags_1 = PREVENT_CLICK_UNDER_1
-	interaction_flags_mouse_drop = NEED_DEXTERITY
 
 	///If TRUE will eject the mob once healing is complete
 	var/autoeject = TRUE
@@ -643,19 +642,15 @@
 	return CLICK_ACTION_BLOCKING
 
 /obj/machinery/cryo_cell/click_alt(mob/user)
-	//Required so players don't close the cryo on themselves without a doctor's help
-	if(get_turf(user) == get_turf(src))
-		return CLICK_ACTION_BLOCKING
-
-	if(state_open )
+	if(state_open)
 		close_machine()
 	else
 		open_machine()
 	balloon_alert(user, "door [state_open ? "opened" : "closed"]")
 	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/cryo_cell/mouse_drop_receive(mob/target, mob/user, params)
-	if(!iscarbon(target))
+/obj/machinery/cryo_cell/MouseDrop_T(mob/target, mob/user)
+	if(user.incapacitated() || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
 		return
 
 	if(isliving(target))

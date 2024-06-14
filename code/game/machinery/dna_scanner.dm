@@ -6,10 +6,8 @@
 	base_icon_state = "scanner"
 	density = TRUE
 	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
-	interaction_flags_mouse_drop = NEED_DEXTERITY
 	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/internal/brain)
 	circuit = /obj/item/circuitboard/machine/dnascanner
-
 	var/locked = FALSE
 	var/damage_coeff
 	var/scan_level
@@ -142,8 +140,8 @@
 /obj/machinery/dna_scannernew/interact(mob/user)
 	toggle_open(user)
 
-/obj/machinery/dna_scannernew/mouse_drop_receive(atom/target, mob/user, params)
-	if(!iscarbon(target))
+/obj/machinery/dna_scannernew/MouseDrop_T(mob/target, mob/user)
+	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
 		return
 	close_machine(target)
 

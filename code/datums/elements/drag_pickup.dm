@@ -17,10 +17,8 @@
 
 /datum/element/drag_pickup/proc/pick_up(atom/source, atom/over, mob/user)
 	SIGNAL_HANDLER
-
-	. = COMPONENT_CANCEL_MOUSEDROP_ONTO
 	var/mob/living/picker = user
-	if(!istype(picker) || !user.can_perform_action(source, FORBID_TELEKINESIS_REACH))
+	if(!istype(picker) || picker.incapacitated() || !source.Adjacent(picker))
 		return
 
 	if(over == picker)
