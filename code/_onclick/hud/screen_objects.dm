@@ -45,8 +45,10 @@
 
 /atom/movable/screen/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
-	if(hud_owner && istype(hud_owner))
-		hud = hud_owner
+	if(!istype(hud_owner))
+		return
+	hud = hud_owner
+	RegisterSignal(hud, COMSIG_QDELETING, PROC_REF(on_hud_delete))
 
 /atom/movable/screen/Destroy()
 	master_ref = null
@@ -75,6 +77,11 @@
 /// Returns the mob this is being displayed to, if any
 /atom/movable/screen/proc/get_mob()
 	return hud?.mymob
+
+/atom/movable/screen/proc/on_hud_delete(datum/source)
+	SIGNAL_HANDLER
+
+	hud = null
 
 /atom/movable/screen/text
 	icon = null
