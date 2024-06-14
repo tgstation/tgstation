@@ -1,8 +1,8 @@
 ///Uncomment this to enable testing of Bloodsucker features (such as vassalizing people with a mind instead of a client).
 //#define BLOODSUCKER_TESTING
 
-/// You have special interactions with Bloodsuckers
-#define TRAIT_OCCULTIST "occultist"
+/// You have special interactions with bloodsuckers and the occult
+#define TRAIT_OCCULTIST "occultists"
 
 /**
  * Blood-level defines

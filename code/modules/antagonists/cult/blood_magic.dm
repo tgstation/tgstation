@@ -399,6 +399,7 @@
 	color = RUNE_COLOR_RED
 	invocation = "Fuu ma'jin!"
 
+/* overriden in monkestation/code/modules/antagonists/cult/blood_magic.dm
 /obj/item/melee/blood_magic/stun/afterattack(mob/living/target, mob/living/carbon/user, proximity)
 	if(!isliving(target) || !proximity)
 		return
@@ -439,6 +440,7 @@
 				carbon_target.set_jitter_if_lower(30 SECONDS)
 		uses--
 	..()
+*/
 
 //Teleportation
 /obj/item/melee/blood_magic/teleport
