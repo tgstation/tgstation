@@ -106,8 +106,8 @@
 				anomaly_core.forceMove(drop_location())
 				anomaly_core = null
 			else // You exceeded the cap sorry
-				visible_message(span_warning("[anomaly_core] collapses into an inert diamond, there is too little ambient energy to support another core of this type."))
-				new /obj/item/stack/sheet/mineral/diamond/five(drop_location())
+				visible_message(span_warning("[anomaly_core] loses its lustre as it falls to the ground, there is too little ambient energy to support another core of this type."))
+				new /obj/item/inert_anomaly(drop_location())
 
 	// else, anomaly core gets deleted by qdel(src).
 
