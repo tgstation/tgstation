@@ -611,3 +611,59 @@
   carlarctg:
   - qol: Cult pylons slowly close bleeding wounds
   - refactor: allowed aura healing to clot wounds shut
+2024-06-14:
+  Addust:
+  - bugfix: the syndicate now imports warm air instead of cold air to their icemoon
+      listening post
+  Goat:
+  - qol: Mining's PKAs and PKCs are now fireproof.
+  JupiterJaeden:
+  - qol: you can now take pulled objects with you when going up and down in zero gravity
+  - bugfix: conga lines now work correctly when going up and down ladders, and in
+      zero gravity
+  Kocma-san:
+  - bugfix: special networks are now displayed in the fax if it is the only one in
+      the world
+  MGOOOOOO:
+  - bugfix: Missing legs no longer slow you down in non-gravity environments.
+  - bugfix: Catwalk deconstruction yields iron rods as intended.
+  Rex9001:
+  - balance: Moon Smile only does a knockdown if the targets sanity is low enough
+      and the minimum duration of its abilities have been decreased
+  ShizCalev:
+  - bugfix: Autolathes now print the correct number of cable coils.
+  - bugfix: Fixed a bug with station traits being added to modify weights for events
+      that couldn't actually occur on the current map!
+  SyncIt21:
+  - refactor: Ctrl click & Ctrl shift click has been refactored. Please report bugs
+      on GitHub
+  - refactor: Mouse drag & drop attack chain has been refactored. Report any bugs
+      on GitHub
+  - bugfix: You cannot close the cryo tube on yourself with Alt click like before
+  Watermelon914:
+  - qol: Bots can now bind voice lines to an action slot. Lowers cooldown for all
+      bot voicelines to 5 seconds.
+  carlarctg:
+  - balance: Corpses won't remain cultists when ghouled by a flesheretic
+  cnleth:
+  - balance: Juicing and distilling plants only consumes nutriment and vitamin
+  - balance: Lanternfruit and polypore mushrooms now contain nutriment
+  - balance: Increased the amount of nutriment in sugarcane and saltcane
+  jlsnow301:
+  - rscadd: Added screentips to extinguishers.
+  - bugfix: Fixed alt-click interaction with extinguishers and mod control units.
+  junkgle01:
+  - bugfix: added an id trim painter that was missing to MetaStation's QM office.
+  larentoun:
+  - balance: Now regaining a tail has three states. If you got your tail back - you'll
+      get a temporarily debuff in exchange of infinite "tail missing" debuff (new).
+      If it's NOT your tail and of same species - this temporarily debuff will be
+      a bit stronger (new). If it's NOT your tail and NOT of same species - it will
+      be a considerably stronger debuff (currently on live).
+  lizelive:
+  - qol: make the cart hold 2.5x more water
+  necromanceranne:
+  - bugfix: Peter Jr. is capable of surviving in the environment they spawn in.
+  thegrb93:
+  - bugfix: Fix bug where you can't interact with a shocked door without shock protection
+      even if it is depowered.
