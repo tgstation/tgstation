@@ -114,7 +114,7 @@
 	QDEL_LIST(ingredients)
 	QDEL_NULL(wires)
 	QDEL_NULL(soundloop)
-	remove_smoke()
+	QDEL_NULL(particles)
 	if(!isnull(cell))
 		QDEL_NULL(cell)
 	return ..()
