@@ -300,7 +300,7 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 #define FIREBOT_VOICED_TEMPERATURE_NOMINAL "Temperature nominal."
 #define FIREBOT_VOICED_KEEP_COOL "Keep it cool."
 #define FIREBOT_VOICED_CANDLE_TIP "Keep candles near curtains for cozy night lights!"
-#define FIREBOT_VOICED_ELECTRIC_FIRE "Keep full buckets of water near outlets incase of an electric fire!"
+#define FIREBOT_VOICED_ELECTRIC_FIRE "Keep full buckets of water near outlets in case of an electric fire!"
 #define FIREBOT_VOICED_GASOLINE_TIP "Pouring gasoline on fire makes it burn out faster!"
 
 #define HYGIENEBOT_VOICED_UNHYGIENIC "Unhygienic client found. Please stand still so I can clean you."
