@@ -3,8 +3,6 @@
 #include "code\__HELPERS\names.dm"
 #include "interface\interface.dm"
 #include "code\modules\clothing\clothing.dm"
-#include "code\modules\reagents\chemistry\drinks.dm"
-#include "code\modules\reagents\containers\cups.dm"
 #include "code\modules\surgery\organs\tongue.dm"
 #include "code\modules\surgery\bodyparts\head.dm"
 #include "code\modules\clothing\suits\chaplainsuits.dm"
@@ -93,3 +91,8 @@
 #include "code\modules\clothing\shoes\sneakers.dm"
 #include "code\modules\client\preferences\pride_pin.dm"
 #include "code\datums\quirks\neutral_quirks\pride_pin.dm"
+
+//kvass
+#include "code\modules\reagents\chemistry\drinks.dm"
+#include "code\modules\reagents\containers\cups\soda.dm"
+#include "code\modules\reagents\chemistry\reagents\drinks\drink_reagents.dm"
