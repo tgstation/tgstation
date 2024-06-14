@@ -208,3 +208,40 @@
 2024-06-13:
   DexeeXI:
   - bugfix: Loadouts should have EYEPATCHES of the regular variety available!
+2024-06-14:
+  Absolucy:
+  - bugfix: Fixed some runtime errors relating to interaction modes, mainly combat
+      mode.
+  - refactor: (vinylspiders) Fixed a bunch of instances of callbacks being qdeleted
+      and cleaned up related code.
+  - bugfix: Fixed a runtime error relating to mineral regrowth.
+  - bugfix: Roundstart antags should now be properly created when the Late Arrivals
+      station trait rolls.
+  - balance: '"Unconvertable" minds now consistently resist most, if not all forms
+      of conversion or brainwashing.'
+  - refactor: Refactored /datum/mind's "unconvertable" var into a trait.
+  - bugfix: Sign Language action properly toggles between an active/inactive background
+      again.
+  AlbertNanotracen:
+  - rscadd: T
+  - bugfix: Ingredients which fail to react in soup reactions drop when the reaction
+      finishes as intended
+  - rscadd: The ancient recipe for the Death Sandwich has been rediscovered buried
+      in the deepest depths of an erupting volcano.
+  - rscadd: Blood Brothers can chose the death sandwich recipe book as their gear(requested
+      by @knighthethrasher)
+  - rscadd: Added wedding cakes
+  - rscadd: Toast sandwich
+  - bugfix: The peanut butter banana sandwich is no longer presented as grilled when
+      it doesn't require a griddle to make.
+  Melbert:
+  - bugfix: Fixes runtime from trying to put two pots on one stove.
+  RikuTheKiller:
+  - balance: Silicons will no longer become soulless if they suicide.
+  ThePooba:
+  - bugfix: hiding under table for the borers and larvae, they get their plane changed
+      to WALL_PLANE when hiding so they can be under items, tables, other things
+  - bugfix: elevating under tables, they now elevate properly when hiding / unhiding
+      by toggling a trait
+  - rscadd: A trait define was added to manage this was added to elevate them slightly
+      when they are on certain turfs

@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Roundstart antags should now be properly created when the Late Arrivals station trait rolls."

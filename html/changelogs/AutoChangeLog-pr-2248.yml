@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - refactor: "(vinylspiders) Fixed a bunch of instances of callbacks being qdeleted and cleaned up related code."

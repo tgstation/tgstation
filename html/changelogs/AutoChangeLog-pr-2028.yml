@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - balance: "\"Unconvertable\" minds now consistently resist most, if not all forms of conversion or brainwashing."
-  - refactor: "Refactored /datum/mind's \"unconvertable\" var into a trait."
