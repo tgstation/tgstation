@@ -140,12 +140,12 @@
 			if(plus_x || plus_y)
 				current_pad.set_offset(
 					x = current_pad.x_offset + plus_x,
-					y = current_pad.y_offset + plus_y
+					y = current_pad.y_offset + plus_y,
 				)
 			else
 				current_pad.set_offset(
 					x = 0,
-					y = 0
+					y = 0,
 				)
 			. = TRUE
 		if("rename")
