@@ -334,7 +334,7 @@
 /// Heals a robotic limb on a mob
 /proc/item_heal_robotic(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = human.get_bodypart(check_zone(user.zone_selected))
-	if(!affecting || IS_ORGANIC_LIMB(affecting))
+	if(!affecting || IS_ORGANIC_LIMB(affecting) || IS_PEG_LIMB(affecting))
 		to_chat(user, span_warning("[affecting] is already in good condition!"))
 		return FALSE
 	var/brute_damage = brute_heal > burn_heal //changes repair text based on how much brute/burn was supplied
@@ -345,6 +345,33 @@
 			span_notice("You fix some of the [brute_damage ? "dents on" : "burnt wires in"] [human == user ? "your" : "[human]'s"] [affecting.name]."))
 		return TRUE //successful heal
 
+/// Heals a peg limb on a mob (based on item_heal_robotic)
+/proc/item_heal_peg(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)
+    var/obj/item/bodypart/affecting = human.get_bodypart(check_zone(user.zone_selected))
+    if (!affecting || IS_ORGANIC_LIMB(affecting) || IS_ROBOTIC_LIMB(affecting))
+        to_chat(user, span_warning("[affecting] is already in good condition!"))
+        return FALSE
+
+    var/brute_damaged = affecting.brute_dam > 0
+    var/burn_damaged = affecting.burn_dam > 0
+
+    if ((brute_heal > 0 && brute_damaged) || (burn_heal > 0 && burn_damaged))
+        if (affecting.heal_damage(brute_heal, burn_heal, required_bodytype = BODYTYPE_PEG))
+            human.update_damage_overlays()
+            var/message
+            if (brute_damaged && burn_damaged)
+                message = "charring and splintering on"
+            else if (brute_damaged)
+                message = "splintering on"
+            else
+                message = "charring on"
+
+            user.visible_message(span_notice("[user] fixes some of the [message] [human]'s [affecting.name]."), \
+                span_notice("You fix some of the [message] [human == user ? "your" : "[human]'s"] [affecting.name]."))
+            return TRUE
+
+    to_chat(user, span_warning("[affecting] is already in good condition!"))
+    return FALSE
 
 ///Is the passed in mob a ghost with admin powers, doesn't check for AI interact like isAdminGhost() used to
 /proc/isAdminObserver(mob/user)

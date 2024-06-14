@@ -1154,4 +1154,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This item cannot be selected for or used by a theft objective (Spies, Traitors, etc.)
 #define TRAIT_ITEM_OBJECTIVE_BLOCKED "item_objective_blocked"
 
+#define TRAIT_EASY_ATTACH "peg"
+
 // END TRAIT DEFINES
