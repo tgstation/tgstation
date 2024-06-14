@@ -4,8 +4,6 @@
 		var/static/regex/words = new(@"(?<![a-zA-Zа-яёА-ЯЁ])[a-zA-Zа-яёА-ЯЁ]+?(?![a-zA-Zа-яёА-ЯЁ])", "g")
 		message = replacetext(message, words, GLOBAL_PROC_REF(italian_moustache_words_replace_ru))
 
-		if(prob(3))
-			message += pick("Белиссимо!"," Мамма-мия!", " Ла ла ла!")
 	speech_args[SPEECH_MESSAGE] = trim(message)
 
 /proc/italian_moustache_words_replace_ru(word)
