@@ -24,6 +24,6 @@
 		checked_turf = GET_TURF_ABOVE(checked_turf)
 		if(checked_turf?.z == user.z && user.CanReach(checked_turf, source))
 			INVOKE_ASYNC(source, TYPE_PROC_REF(/obj/item, handle_openspace_click), checked_turf, user, click_parameters)
-			break
+			return ITEM_INTERACT_BLOCKING
 
-	return ITEM_INTERACT_BLOCKING
+	return NONE
