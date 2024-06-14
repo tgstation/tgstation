@@ -55,11 +55,11 @@
 	database_id = BOSS_MEDAL_LEGION
 	icon_state = "legion"
 
-/datum/award/achievement/boss/wendigo_kill
-	name = "Wendigo Killer"
+/datum/award/achievement/boss/hornvandr_kill
+	name = "Hornvandr Killer"
 	desc = "You've now ruined years of mythical storytelling."
-	database_id = BOSS_MEDAL_WENDIGO
-	icon_state = "wendigo"
+	database_id = BOSS_MEDAL_HORNVANDR
+	icon_state = "hornvandr"
 
 /datum/award/achievement/boss/blood_miner_crusher
 	name = "Blood-Drunk Miner Crusher"
@@ -103,11 +103,11 @@
 	database_id = BOSS_MEDAL_LEGION_CRUSHER
 	icon_state = "legion"
 
-/datum/award/achievement/boss/wendigo_crusher
-	name = "Wendigo Crusher"
+/datum/award/achievement/boss/hornvandr_crusher
+	name = "Hornvandr Crusher"
 	desc = "You've now ruined years of mythical storytelling."
-	database_id = BOSS_MEDAL_WENDIGO_CRUSHER
-	icon_state = "wendigo"
+	database_id = BOSS_MEDAL_HORNVANDR_CRUSHER
+	icon_state = "hornvandr"
 
 //should be removed soon
 /datum/award/achievement/boss/king_goat_kill

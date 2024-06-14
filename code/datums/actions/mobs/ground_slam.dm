@@ -24,7 +24,7 @@
 
 /// Slams the ground around the source throwing back enemies caught nearby, delay is for the radius increase
 /datum/action/cooldown/mob_cooldown/ground_slam/proc/do_slam(atom/target)
-	wendigo_slam(owner, range, delay, throw_range)
+	hornvandr_slam(owner, range, delay, throw_range)
 
 /datum/action/cooldown/mob_cooldown/ground_slam/proc/on_move(atom/source, atom/new_loc)
 	SIGNAL_HANDLER

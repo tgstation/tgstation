@@ -160,13 +160,13 @@
 	SLEEP_CHECK_DEATH(1.5 SECONDS, owner)
 	return ..()
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/wendigo
+/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/hornvandr
 	cooldown_time = 10 SECONDS
-	projectile_type = /obj/projectile/colossus/wendigo_shockwave/spiral
+	projectile_type = /obj/projectile/colossus/hornvandr_shockwave/spiral
 	can_move = FALSE
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/wendigo/create_spiral_attack(mob/living/firer, atom/target, negative = pick(TRUE, FALSE))
-	wendigo_scream(firer)
+/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/hornvandr/create_spiral_attack(mob/living/firer, atom/target, negative = pick(TRUE, FALSE))
+	hornvandr_scream(firer)
 	var/shots_spiral = 40
 	var/angle_to_target = get_angle(firer, target)
 	var/spiral_direction = pick(-1, 1)
@@ -220,9 +220,9 @@
 		shoot_projectile(firer, target, null, firer, spread, null)
 
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/wendigo
+/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/hornvandr
 	cooldown_time = 10 SECONDS
-	projectile_type = /obj/projectile/colossus/wendigo_shockwave
+	projectile_type = /obj/projectile/colossus/hornvandr_shockwave
 	shot_angles = list(-20, -10, 0, 10, 20)
 	projectile_speed_multiplier = 4
 
@@ -369,12 +369,12 @@
 	button_icon_state = "sniper_zoom"
 	desc = "Fires projectiles around you in an alternating fashion."
 	cooldown_time = 10 SECONDS
-	projectile_type = /obj/projectile/colossus/wendigo_shockwave
+	projectile_type = /obj/projectile/colossus/hornvandr_shockwave
 	can_move = FALSE
 	var/enraged = FALSE
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/alternating_circle/attack_sequence(mob/living/firer, atom/target)
-	wendigo_scream(firer)
+	hornvandr_scream(firer)
 	if(enraged)
 		projectile_speed_multiplier = 1
 	else
@@ -394,19 +394,19 @@
 	button_icon_state = "sniper_zoom"
 	desc = "Fires projectiles around you in a circular wave."
 	cooldown_time = 10 SECONDS
-	projectile_type = /obj/projectile/colossus/wendigo_shockwave/wave
+	projectile_type = /obj/projectile/colossus/hornvandr_shockwave/wave
 	can_move = FALSE
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/wave/attack_sequence(mob/living/firer, atom/target)
-	wendigo_scream(firer)
+	hornvandr_scream(firer)
 	var/shots_per = 7
 	var/difference = 360 / shots_per
 	var/wave_direction = pick(-1, 1)
 	switch(wave_direction)
 		if(-1)
-			projectile_type = /obj/projectile/colossus/wendigo_shockwave/wave/alternate
+			projectile_type = /obj/projectile/colossus/hornvandr_shockwave/wave/alternate
 		if(1)
-			projectile_type = /obj/projectile/colossus/wendigo_shockwave/wave
+			projectile_type = /obj/projectile/colossus/hornvandr_shockwave/wave
 	for(var/shoot_times in 1 to 32)
 		for(var/shot in 1 to shots_per)
 			var/angle = shot * difference + shoot_times * 5 * wave_direction * -1

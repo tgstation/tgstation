@@ -9,7 +9,7 @@
 ##MEGAFAUNA
 #_maps/RandomRuins/IceRuins/icemoon_surface_mining_site.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_mining_site.dmm
-#_maps/RandomRuins/IceRuins/icemoon_underground_wendigo_cave.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_hornvandr_cave.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_lavaland.dmm
 
 ##MISC

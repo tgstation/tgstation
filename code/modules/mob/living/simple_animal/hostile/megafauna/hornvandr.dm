@@ -1,4 +1,4 @@
-#define WENDIGO_ENRAGED (health <= maxHealth*0.5)
+#define HORNVANDR_ENRAGED (health <= maxHealth*0.5)
 
 /*
 
@@ -6,14 +6,14 @@ Difficulty: Hard
 
 */
 
-/mob/living/simple_animal/hostile/megafauna/wendigo
-	name = "wendigo"
-	desc = "A mythological man-eating legendary creature, the sockets of it's eyes track you with an unsatiated hunger."
+/mob/living/simple_animal/hostile/megafauna/hornvandr
+	name = "hornvandr"
+	desc = "A man-eating legendary creature, the sockets of it's eyes track you with an unsatiated hunger."
 	health = 2500
 	maxHealth = 2500
-	icon_state = "wendigo"
-	icon_living = "wendigo"
-	icon_dead = "wendigo_dead"
+	icon_state = "hornvandr"
+	icon_living = "hornvandr"
+	icon_dead = "hornvandr_dead"
 	icon = 'icons/mob/simple/icemoon/64x64megafauna.dmi'
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
@@ -34,42 +34,42 @@ Difficulty: Hard
 	gps_name = "Berserk Signal"
 	loot = list()
 	butcher_results = list()
-	guaranteed_butcher_results = list(/obj/item/wendigo_blood = 1, /obj/item/wendigo_skull = 1)
-	crusher_loot = list(/obj/item/crusher_trophy/wendigo_horn)
+	guaranteed_butcher_results = list(/obj/item/hornvandr_blood = 1, /obj/item/hornvandr_skull = 1)
+	crusher_loot = list(/obj/item/crusher_trophy/hornvandr_horn)
 	wander = FALSE
 	del_on_death = FALSE
 	blood_volume = BLOOD_VOLUME_NORMAL
-	achievement_type = /datum/award/achievement/boss/wendigo_kill
-	crusher_achievement_type = /datum/award/achievement/boss/wendigo_crusher
-	score_achievement_type = /datum/award/score/wendigo_score
+	achievement_type = /datum/award/achievement/boss/hornvandr_kill
+	crusher_achievement_type = /datum/award/achievement/boss/hornvandr_crusher
+	score_achievement_type = /datum/award/score/hornvandr_score
 	death_message = "falls to the ground in a bloody heap, shaking the arena."
 	death_sound = 'sound/effects/gravhit.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	summon_line = "GwaHOOOOOOOOOOOOOOOOOOOOO"
 	/// Saves the turf the megafauna was created at (spawns exit portal here)
 	var/turf/starting
-	/// Range for wendigo stomping when it moves
+	/// Range for hornvandr stomping when it moves
 	var/stomp_range = 1
 	/// Stores directions the mob is moving, then calls that a move has fully ended when these directions are removed in moved
 	var/stored_move_dirs = 0
-	/// Time before the wendigo can scream again
+	/// Time before the hornvandr can scream again
 	var/scream_cooldown_time = 10 SECONDS
 	/// Teleport Ability
 	var/datum/action/cooldown/mob_cooldown/teleport/teleport
 	/// Shotgun Ability
-	var/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/wendigo/shotgun_blast
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/hornvandr/shotgun_blast
 	/// Ground Slam Ability
 	var/datum/action/cooldown/mob_cooldown/ground_slam/ground_slam
 	/// Alternating Projectiles Ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/alternating_circle/alternating_circle
 	/// Spiral Projectiles Ability
-	var/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/wendigo/spiral
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/hornvandr/spiral
 	/// Wave Projectiles Ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/wave/wave
 	/// Stores the last scream time so it doesn't spam it
 	COOLDOWN_DECLARE(scream_cooldown)
 
-/mob/living/simple_animal/hostile/megafauna/wendigo/Initialize(mapload)
+/mob/living/simple_animal/hostile/megafauna/hornvandr/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	teleport = new(src)
@@ -85,13 +85,13 @@ Difficulty: Hard
 	spiral.Grant(src)
 	wave.Grant(src)
 
-/mob/living/simple_animal/hostile/megafauna/wendigo/Initialize(mapload)
+/mob/living/simple_animal/hostile/megafauna/hornvandr/Initialize(mapload)
 	. = ..()
 	starting = get_turf(src)
 
-/mob/living/simple_animal/hostile/megafauna/wendigo/OpenFire()
+/mob/living/simple_animal/hostile/megafauna/hornvandr/OpenFire()
 	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 10 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 10 SECONDS))
-	if(WENDIGO_ENRAGED)
+	if(HORNVANDR_ENRAGED)
 		speed = 4
 		move_to_delay = 4
 	else
@@ -115,39 +115,39 @@ Difficulty: Hard
 			ground_slam.Activate(target)
 		if(2)
 			teleport.Activate(target)
-			if(WENDIGO_ENRAGED)
+			if(HORNVANDR_ENRAGED)
 				shotgun_blast.Activate(target)
 		if(3)
 			do_teleport(src, starting, 0,  channel=TELEPORT_CHANNEL_BLUESPACE, forced = TRUE)
 			var/shockwave_attack
-			if(WENDIGO_ENRAGED)
+			if(HORNVANDR_ENRAGED)
 				shockwave_attack = rand(1, 3)
 			else
 				shockwave_attack = rand(1, 2)
 			switch(shockwave_attack)
 				if(1)
-					alternating_circle.enraged = WENDIGO_ENRAGED
+					alternating_circle.enraged = HORNVANDR_ENRAGED
 					alternating_circle.Activate(target)
 				if(2)
-					spiral.enraged = WENDIGO_ENRAGED
+					spiral.enraged = HORNVANDR_ENRAGED
 					spiral.Activate(target)
 				if(3)
 					wave.Activate(target)
 			update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 3 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 3 SECONDS))
 
-/mob/living/simple_animal/hostile/megafauna/wendigo/Move(atom/newloc, direct)
+/mob/living/simple_animal/hostile/megafauna/hornvandr/Move(atom/newloc, direct)
 	stored_move_dirs |= direct
 	. = ..()
 	// Remove after anyways in case the movement was prevented
 	stored_move_dirs &= ~direct
 
-/mob/living/simple_animal/hostile/megafauna/wendigo/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/mob/living/simple_animal/hostile/megafauna/hornvandr/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	stored_move_dirs &= ~movement_dir
 	if(!stored_move_dirs)
-		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(wendigo_slam), src, stomp_range, 1, 8)
+		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(hornvandr_slam), src, stomp_range, 1, 8)
 
-/proc/wendigo_scream(mob/owner)
+/proc/hornvandr_scream(mob/owner)
 	SLEEP_CHECK_DEATH(5, owner)
 	playsound(owner.loc, 'sound/magic/demon_dies.ogg', 600, FALSE, 10)
 	var/pixel_shift = rand(5, 15)
@@ -158,7 +158,7 @@ Difficulty: Hard
 		to_chat(dizzy_target, span_danger("[owner] screams loudly!"))
 	SLEEP_CHECK_DEATH(1 SECONDS, owner)
 
-/proc/wendigo_slam(mob/owner, range, delay, throw_range)
+/proc/hornvandr_slam(mob/owner, range, delay, throw_range)
 	var/turf/origin = get_turf(owner)
 	if(!origin)
 		return
@@ -180,7 +180,7 @@ Difficulty: Hard
 			all_turfs -= stomp_turf
 		SLEEP_CHECK_DEATH(delay, owner)
 
-/mob/living/simple_animal/hostile/megafauna/wendigo/death(gibbed, list/force_grant)
+/mob/living/simple_animal/hostile/megafauna/hornvandr/death(gibbed, list/force_grant)
 	if(health > 0)
 		return
 
@@ -188,13 +188,13 @@ Difficulty: Hard
 		return ..()
 
 	var/obj/effect/portal/permanent/one_way/exit = new /obj/effect/portal/permanent/one_way(starting)
-	exit.id = "wendigo arena exit"
+	exit.id = "hornvandr arena exit"
 	exit.add_atom_colour(COLOR_RED_LIGHT, ADMIN_COLOUR_PRIORITY)
 	exit.set_light(20, 1, COLOR_SOFT_RED)
 	return ..()
 
-/obj/projectile/colossus/wendigo_shockwave
-	name = "wendigo shockwave"
+/obj/projectile/colossus/hornvandr_shockwave
+	name = "hornvandr shockwave"
 	speed = 2
 	/// If wave movement is enabled
 	var/wave_movement = FALSE
@@ -203,30 +203,30 @@ Difficulty: Hard
 	/// Amount of movements this projectile has made
 	var/pixel_moves = 0
 
-/obj/projectile/colossus/wendigo_shockwave/spiral
+/obj/projectile/colossus/hornvandr_shockwave/spiral
 	damage = 15
 
-/obj/projectile/colossus/wendigo_shockwave/wave
+/obj/projectile/colossus/hornvandr_shockwave/wave
 	speed = 8
 	wave_movement = TRUE
 	wave_speed = 10
 
-/obj/projectile/colossus/wendigo_shockwave/wave/alternate
+/obj/projectile/colossus/hornvandr_shockwave/wave/alternate
 	wave_speed = -10
 
-/obj/projectile/colossus/wendigo_shockwave/pixel_move(trajectory_multiplier, hitscanning = FALSE)
+/obj/projectile/colossus/hornvandr_shockwave/pixel_move(trajectory_multiplier, hitscanning = FALSE)
 	. = ..()
 	if(wave_movement)
 		pixel_moves++
 		set_angle(original_angle + pixel_moves * wave_speed)
 
-/obj/item/wendigo_blood
-	name = "bottle of wendigo blood"
+/obj/item/hornvandr_blood
+	name = "bottle of hornvandr blood"
 	desc = "A bottle of viscous red liquid... You're not actually going to drink this, are you?"
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "vial"
 
-/obj/item/wendigo_blood/attack_self(mob/living/user)
+/obj/item/hornvandr_blood/attack_self(mob/living/user)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/human_user = user
@@ -238,31 +238,31 @@ Difficulty: Hard
 	playsound(human_user.loc, 'sound/items/drink.ogg', rand(10,50), TRUE)
 	qdel(src)
 
-/obj/item/crusher_trophy/wendigo_horn
-	name = "wendigo horn"
-	desc = "A gnarled horn ripped from the skull of a wendigo. Suitable as a trophy for a kinetic crusher."
-	icon_state = "wendigo_horn"
-	denied_type = /obj/item/crusher_trophy/wendigo_horn
+/obj/item/crusher_trophy/hornvandr_horn
+	name = "hornvandr horn"
+	desc = "A gnarled horn ripped from the skull of a hornvandr. Suitable as a trophy for a kinetic crusher."
+	icon_state = "hornvandr_horn"
+	denied_type = /obj/item/crusher_trophy/hornvandr_horn
 
-/obj/item/crusher_trophy/wendigo_horn/effect_desc()
+/obj/item/crusher_trophy/hornvandr_horn/effect_desc()
 	return "melee hits inflict twice as much damage"
 
-/obj/item/crusher_trophy/wendigo_horn/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
+/obj/item/crusher_trophy/hornvandr_horn/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
 	if(.)
 		crusher.AddComponent(/datum/component/two_handed, force_wielded=40)
 
-/obj/item/crusher_trophy/wendigo_horn/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
+/obj/item/crusher_trophy/hornvandr_horn/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
 	if(.)
 		crusher.AddComponent(/datum/component/two_handed, force_wielded=20)
 
-/obj/item/wendigo_skull
-	name = "wendigo skull"
+/obj/item/hornvandr_skull
+	name = "hornvandr skull"
 	desc = "A bloody skull torn from a murderous beast, the soulless eye sockets seem to constantly track your movement."
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
-	icon_state = "wendigo_skull"
+	icon_state = "hornvandr_skull"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 
-#undef WENDIGO_ENRAGED
+#undef HORNVANDR_ENRAGED

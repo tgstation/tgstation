@@ -260,7 +260,7 @@
 /obj/item/clothing/suit/hooded/cloak/godslayer
 	name = "godslayer armour"
 	icon_state = "godslayer"
-	desc = "A suit of armour fashioned from the remnants of a knight's armor, and parts of a wendigo."
+	desc = "A suit of armour fashioned from the remnants of a knight's armor, and parts of a hornvandr."
 	armor_type = /datum/armor/cloak_godslayer
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/godslayer
@@ -299,7 +299,7 @@
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "godslayer"
-	desc = "The horns and skull of a wendigo, held together by the remaining icey energy of a demonic miner."
+	desc = "The horns and skull of a hornvandr, held together by the remaining icey energy of a demonic miner."
 	armor_type = /datum/armor/cloak_godslayer
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
 	cold_protection = HEAD

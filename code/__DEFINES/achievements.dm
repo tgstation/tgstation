@@ -98,7 +98,7 @@
 #define BOSS_MEDAL_HIEROPHANT "Hierophant Killer"
 #define BOSS_MEDAL_LEGION "Legion Killer"
 #define BOSS_MEDAL_TENDRIL "Tendril Exterminator"
-#define BOSS_MEDAL_WENDIGO "Wendigo Killer"
+#define BOSS_MEDAL_HORNVANDR "Hornvandr Killer"
 #define BOSS_MEDAL_KINGGOAT "King Goat Killer"
 
 #define BOSS_MEDAL_MINER_CRUSHER "Blood-drunk Miner Crusher"
@@ -108,7 +108,7 @@
 #define BOSS_MEDAL_DRAKE_CRUSHER "Drake Crusher"
 #define BOSS_MEDAL_HIEROPHANT_CRUSHER "Hierophant Crusher"
 #define BOSS_MEDAL_LEGION_CRUSHER "Legion Crusher"
-#define BOSS_MEDAL_WENDIGO_CRUSHER "Wendigo Crusher"
+#define BOSS_MEDAL_HORNVANDR_CRUSHER "Hornvandr Crusher"
 #define BOSS_MEDAL_KINGGOAT_CRUSHER "King Goat Crusher"
 
 // Medal hub IDs for boss-kill scores
@@ -121,7 +121,7 @@
 #define HIEROPHANT_SCORE "Hierophants Killed"
 #define LEGION_SCORE "Legion Killed"
 #define SWARMER_BEACON_SCORE "Swarmer Beacs Killed"
-#define WENDIGO_SCORE "Wendigos Killed"
+#define HORNVANDR_SCORE "Hornvandrs Killed"
 #define KINGGOAT_SCORE "King Goat Killed"
 #define TENDRIL_CLEAR_SCORE "Tendrils Killed"
 

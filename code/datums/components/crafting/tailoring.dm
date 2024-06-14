@@ -278,7 +278,7 @@
 	time = 6 SECONDS
 	reqs = list(
 		/obj/item/ice_energy_crystal = 1,
-		/obj/item/wendigo_skull = 1,
+		/obj/item/hornvandr_skull = 1,
 		/obj/item/clockwork_alloy = 1,
 	)
 	category = CAT_CLOTHING

@@ -140,11 +140,11 @@
 	description = "A warm, safe place."
 	suffix = "icemoon_underground_bathhouse.dmm"
 
-/datum/map_template/ruin/icemoon/underground/wendigo_cave
-	name = "Ice-Ruin Wendigo Cave"
-	id = "wendigocave"
+/datum/map_template/ruin/icemoon/underground/hornvandr_cave
+	name = "Ice-Ruin Hornvandr Cave"
+	id = "hornvandrcave"
 	description = "Into the jaws of the beast."
-	suffix = "icemoon_underground_wendigo_cave.dmm"
+	suffix = "icemoon_underground_hornvandr_cave.dmm"
 
 /datum/map_template/ruin/icemoon/underground/free_golem
 	name = "Ice-Ruin Free Golem Ship"

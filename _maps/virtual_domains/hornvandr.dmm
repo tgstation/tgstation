@@ -165,7 +165,7 @@
 	},
 /area/icemoon/underground/explored/virtual_domain)
 "aH" = (
-/mob/living/simple_animal/hostile/megafauna/wendigo,
+/mob/living/simple_animal/hostile/megafauna/hornvandr,
 /turf/open/indestructible/necropolis{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},

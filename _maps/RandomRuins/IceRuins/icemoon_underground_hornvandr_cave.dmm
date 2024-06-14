@@ -86,7 +86,7 @@
 /area/icemoon/underground/explored)
 "t" = (
 /obj/effect/portal/permanent/one_way{
-	id = "wendigo arena"
+	id = "hornvandr arena"
 	},
 /turf/open/indestructible/necropolis{
 	initial_gas_mix = "ICEMOON_ATMOS"
@@ -231,7 +231,7 @@
 /area/icemoon/underground/unexplored)
 "R" = (
 /obj/effect/landmark/portal_exit{
-	id = "wendigo arena"
+	id = "hornvandr arena"
 	},
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -254,12 +254,12 @@
 /area/icemoon/underground/explored)
 "V" = (
 /obj/effect/landmark/portal_exit{
-	id = "wendigo arena exit"
+	id = "hornvandr arena exit"
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/unexplored)
 "W" = (
-/mob/living/simple_animal/hostile/megafauna/wendigo,
+/mob/living/simple_animal/hostile/megafauna/hornvandr,
 /turf/open/indestructible/necropolis{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
