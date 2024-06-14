@@ -43,11 +43,6 @@
 		"normtrash",
 		"wirebrush",
 		"flashlight",
-		"light_bulb",
-		"light_tube",
-		"intercom_frame",
-		"newscaster_frame",
-		"status_display_frame",
 	)
 
 /datum/techweb_node/sanitation
@@ -65,6 +60,7 @@
 		"vacuum",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/random/janitor_trash = TIER_1_POINTS)
 
 /datum/techweb_node/toys
 	id = "toys"
@@ -93,6 +89,7 @@
 		"bankmachine",
 		"account_console",
 		"idcard",
+		"c-reader",
 		"libraryconsole",
 		"barcode_scanner",
 		"vendor",
@@ -116,6 +113,7 @@
 		"slotmachine",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	discount_experiments = list(/datum/experiment/physical/arcade_winner = TIER_2_POINTS)
 
 // Sec tree
 /datum/techweb_node/basic_arms
@@ -212,6 +210,8 @@
 		"pyro_grenade",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+	required_experiments = list(/datum/experiment/ordnance/explosive/lowyieldbomb)
+	discount_experiments = list(/datum/experiment/ordnance/explosive/highyieldbomb = TIER_4_POINTS)
 
 /datum/techweb_node/beam_weapons
 	id = "beam_weapons"
@@ -223,7 +223,6 @@
 		"nuclear_gun",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
-
 
 // Service trees
 // Kitchen tree
@@ -304,6 +303,18 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
 	required_experiments = list(/datum/experiment/scanning/fish)
+
+/datum/techweb_node/marine_util
+	id = "marine_util"
+	display_name = "Marine Utility"
+	description = "Fish are nice to look at and all, but they can be put to use."
+	prereq_ids = list("fishing_equip_adv")
+	design_ids = list(
+		"bioelec_gen",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	// only available if you've done the first fishing experiment (thus unlocking fishing tech), but not a strict requirement to get the tech
+	discount_experiments = list(/datum/experiment/scanning/fish/second = TIER_3_POINTS)
 
 // Botany tree
 /datum/techweb_node/botany_equip
@@ -438,6 +449,10 @@
 		"mod_dna_lock",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+	discount_experiments = list(
+		/datum/experiment/scanning/random/plants/traits = TIER_2_POINTS,
+		/datum/experiment/scanning/points/slime/hard = TIER_2_POINTS,
+		)
 
 // Chemistry tree
 /datum/techweb_node/chem_synthesis
@@ -578,7 +593,19 @@
 		"mechanicalpinches",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+	discount_experiments = list(/datum/experiment/autopsy/xenomorph = TIER_4_POINTS)
 
+/datum/techweb_node/alien_surgery
+	id = "alien_surgery"
+	display_name = "Alien Surgery"
+	description = "Abductors did nothing wrong."
+	prereq_ids = list("surgery_tools", "alientech")
+	design_ids = list(
+		"surgery_brainwashing",
+		"surgery_heal_combo_upgrade_femto",
+		"surgery_zombie",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
 // Robotics trees
 /datum/techweb_node/robotics
 	id = "robotics"
@@ -614,8 +641,8 @@
 		"aiupload",
 		"aifixer",
 		"intellicard",
-		"borg_ai_control",
 		"mecha_tracking_ai_control",
+		"borg_ai_control",
 		"aicore",
 		"reset_module",
 		"asimov_module",
@@ -770,14 +797,16 @@
 	description = "description"
 	prereq_ids = list("mech_equipment")
 	design_ids = list(
-		"mech_repair_droid",
 		"mech_ccw_armor",
 		"mech_proj_armor",
 		"paddyupgrade",
 		"mech_hydraulic_claw",
 		"mech_disabler",
+		"mech_repair_droid",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	required_experiments = list(/datum/experiment/scanning/random/mecha_equipped_scan)
+	discount_experiments = list(/datum/experiment/scanning/random/mecha_damage_scan = TIER_2_POINTS)
 
 /datum/techweb_node/mech_assault
 	id = "mech_assault"
@@ -1096,6 +1125,12 @@
 		"modlink_scryer",
 		"mod_clamp",
 		"mod_tether",
+		"mod_welding",
+		"mod_safety",
+		"mod_mouthhole",
+		"mod_longfall",
+		"mod_thermal_regulator",
+		"mod_sign_radio",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
 
@@ -1261,11 +1296,11 @@
 	description = "description"
 	prereq_ids = list("borg_service", "surgery_adv")
 	design_ids = list(
+		"borg_upgrade_pinpointer",
 		"borg_upgrade_beakerapp",
 		"borg_upgrade_defibrillator",
 		"borg_upgrade_expandedsynthesiser",
 		"borg_upgrade_piercinghypospray",
-		"borg_upgrade_pinpointer",
 		"borg_upgrade_surgicalprocessor",
 		"borg_upgrade_surgicalomnitool",
 	)
@@ -1293,14 +1328,14 @@
 	description = "description"
 	prereq_ids = list("borg_utility", "exp_tools")
 	design_ids = list(
-		"borg_upgrade_circuitapp",
-		"borg_upgrade_diamonddrill",
-		"borg_upgrade_holding",
-		"borg_upgrade_lavaproof",
 		"borg_upgrade_rped",
-		"borg_upgrade_hypermod",
 		"borg_upgrade_inducer",
 		"borg_upgrade_engineeringomnitool",
+		"borg_upgrade_circuitapp",
+		"borg_upgrade_lavaproof",
+		"borg_upgrade_diamonddrill",
+		"borg_upgrade_holding",
+		"borg_upgrade_hypermod",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
 
@@ -1370,12 +1405,13 @@
 		"cybernetic_eyes_improved",
 		"cybernetic_eyes_improved_moth",
 		"cybernetic_ears_u",
-		"cybernetic_heart_tier2",
-		"cybernetic_liver_tier2",
 		"cybernetic_lungs_tier2",
 		"cybernetic_stomach_tier2",
+		"cybernetic_liver_tier2",
+		"cybernetic_heart_tier2",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/people/novel_organs = TIER_2_POINTS)
 
 /datum/techweb_node/cyber_organs_upgraded
 	id = "cyber_organs_upgraded"
@@ -1388,10 +1424,10 @@
 		"ci-gloweyes-moth",
 		"ci-welding-moth",
 		"cybernetic_ears_whisper",
-		"cybernetic_heart_tier3",
-		"cybernetic_liver_tier3",
 		"cybernetic_lungs_tier3",
 		"cybernetic_stomach_tier3",
+		"cybernetic_liver_tier3",
+		"cybernetic_heart_tier3",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
 
@@ -1426,7 +1462,6 @@
 		"destructive_scanner",
 		"experi_scanner",
 		"laptop",
-		"c-reader",
 	)
 
 /datum/techweb_node/bluespace_theory
@@ -1499,8 +1534,6 @@
 		"high_cell",
 		"basic_cell",
 		"miniature_power_cell",
-		"trapdoor_electronics",
-		"blast",
 		"condenser",
 		"igniter",
 		"infrared_emitter",
@@ -1625,6 +1658,8 @@
 		"airlock_board",
 		"firealarm_electronics",
 		"firelock_board",
+		"trapdoor_electronics",
+		"blast",
 		"tile_sprayer",
 		"airlock_painter",
 		"decal_painter",
@@ -1639,6 +1674,16 @@
 		"crowbar",
 		"screwdriver",
 		"wirecutters",
+		"light_bulb",
+		"light_tube",
+		"intercom_frame",
+		"newscaster_frame",
+		"status_display_frame",
+		"circuit",
+		"circuitgreen",
+		"circuitred",
+		"tram_floor_dark",
+		"tram_floor_light",
 	)
 
 /datum/techweb_node/power
@@ -1796,6 +1841,8 @@
 		"engine_goggles",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	required_experiments = list(/datum/experiment/ordnance/gaseous/bz)
+	discount_experiments = list(/datum/experiment/ordnance/gaseous/nitrous_oxide = TIER_3_POINTS)
 
 /datum/techweb_node/exp_tools
 	id = "exp_tools"
@@ -1835,7 +1882,7 @@
 	id = "rcd_upgrade_adv"
 	display_name = "Advanced RCD Designs Upgrade"
 	description = "description"
-	prereq_ids = list("rcd_upgrade")
+	prereq_ids = list("rcd_upgrade", "bluespace_travel")
 	design_ids = list(
 		"rcd_upgrade_silo_link",
 	)
@@ -1864,11 +1911,6 @@
 		"titaniumglass",
 		"plastitanium",
 		"plastitaniumglass",
-		"circuit",
-		"circuitgreen",
-		"circuitred",
-		"tram_floor_dark",
-		"tram_floor_light",
 	)
 
 /datum/techweb_node/mining
@@ -1896,10 +1938,11 @@
 		"mesons",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/random/material/easy = TIER_1_POINTS)
 
-/datum/techweb_node/low_pressure_arms
-	id = "low_pressure_arms"
-	display_name = "Low-Pressure Arms"
+/datum/techweb_node/low_pressure_excavation
+	id = "low_pressure_excavation"
+	display_name = "Low-Pressure Excavation"
 	description = "description"
 	prereq_ids = list("mining", "gas_compression")
 	design_ids = list(

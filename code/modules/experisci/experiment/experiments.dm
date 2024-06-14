@@ -315,7 +315,7 @@
 	required_stock_part = /obj/item/stock_parts/micro_laser/ultra
 
 /datum/experiment/scanning/random/mecha_damage_scan
-	name = "Exosuit Materials 1: Stress Failure Test"
+	name = "Exosuit Materials: Stress Failure Test"
 	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to more traditional means."
 	exp_tag = "Scan"
 	possible_types = list(/obj/vehicle/sealed/mecha)
@@ -324,7 +324,7 @@
 	var/damage_percent
 
 /datum/experiment/scanning/random/mecha_equipped_scan
-	name = "Exosuit Materials 2: Load Strain Test"
+	name = "Exosuit Materials: Load Strain Test"
 	description = "Exosuit equipment places unique strain upon the structure of the vehicle. Scan exosuits you have assembled from your exosuit fabricator and fully equipped to accelerate our structural stress simulations."
 	possible_types = list(/obj/vehicle/sealed/mecha)
 	total_requirement = 2
