@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "The Gamemode and Holomaps subsystem will no longer claim to have loaded with errors, when they in fact loaded just fine."
