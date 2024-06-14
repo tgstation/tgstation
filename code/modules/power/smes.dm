@@ -23,7 +23,7 @@
 	can_change_cable_layer = TRUE
 
 	/// The charge capacity.
-	var/capacity = 75 * STANDARD_CELL_CHARGE // The board defaults with 5 high capacity power cells.
+	var/capacity = 50 * STANDARD_CELL_CHARGE // The board defaults with 5 high capacity power cells.
 	/// The current charge.
 	var/charge = 0
 
@@ -34,7 +34,7 @@
 	// amount of power the SMES attempts to charge by
 	var/input_level = 75 KILO WATTS
 	// cap on input_level
-	var/input_level_max = 400 KILO WATTS
+	var/input_level_max = 250 KILO WATTS
 	// amount of charge available from input last tick
 	var/input_available = 0
 
@@ -45,7 +45,7 @@
 	// amount of power the SMES attempts to output
 	var/output_level = 75 KILO WATTS
 	// cap on output_level
-	var/output_level_max = 400 KILO WATTS
+	var/output_level_max = 250 KILO WATTS
 	// amount of power actually outputted. may be less than output_level if the powernet returns excess power
 	var/output_used = 0
 
