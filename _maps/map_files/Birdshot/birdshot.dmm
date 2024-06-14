@@ -7579,11 +7579,6 @@
 	},
 /turf/open/floor/iron/small,
 /area/station/medical/morgue)
-"dsE" = (
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible,
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible,
-/turf/closed/wall/r_wall,
-/area/station/engineering/atmos)
 "dsN" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -14737,13 +14732,8 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/green{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/lattice,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/space/basic,
 /area/station/engineering/atmos)
 "glM" = (
@@ -16007,16 +15997,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"gKs" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/green{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/station/engineering/atmos)
 "gKE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/pile/directional/east,
@@ -23922,7 +23902,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "atmos_airlock_1"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/office)
@@ -30666,10 +30645,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/surgery/theatre)
 "lMg" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/lattice,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/space/basic,
 /area/station/engineering/atmos)
 "lMl" = (
@@ -32012,7 +31989,6 @@
 /obj/machinery/power/energy_accumulator/grounding_rod/anchored,
 /obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
@@ -32788,10 +32764,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "mxX" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/lattice,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/space/basic,
 /area/station/engineering/atmos)
 "mya" = (
@@ -42513,6 +42487,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "pUS" = (
@@ -53423,13 +53398,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
-"tlC" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/station/engineering/supermatter/room)
 "tlI" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/rock/pile/jungle/style_random,
@@ -58905,11 +58873,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
-"uUG" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "uUI" = (
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
@@ -67226,12 +67189,6 @@
 /obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/misc/sandy_dirt,
 /area/station/medical/medbay/lobby)
-"xme" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/engineering/supermatter/room)
 "xmg" = (
 /obj/structure/broken_flooring/singular/directional/south,
 /obj/machinery/light/small/directional/east,
@@ -79404,7 +79361,7 @@ adV
 kFS
 hRF
 nxO
-dsE
+qUN
 wBo
 xAh
 mSc
@@ -82208,7 +82165,7 @@ kaT
 ntB
 adV
 adV
-gKs
+glJ
 lMg
 glJ
 adV
@@ -86064,7 +86021,7 @@ tMJ
 tMJ
 tMJ
 uaK
-tlC
+xaK
 tmL
 xaK
 kpq
@@ -87088,7 +87045,7 @@ rmD
 ufR
 rmD
 ayK
-xme
+rmD
 rmD
 rmD
 ayK
@@ -87862,7 +87819,7 @@ kLk
 sio
 xQr
 gEy
-uUG
+kLk
 njH
 kLk
 aPB
