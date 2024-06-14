@@ -1217,19 +1217,19 @@
 	design_ids = list(
 		"bankmachine",
 		"barcode_scanner",
+		"bookbinder",
 		"cargo",
 		"cargorequest",
 		"comconsole",
 		"crewconsole",
 		"idcard",
 		"libraryconsole",
+		"libraryscanner",
 		"mining",
 		"photobooth",
 		"rdcamera",
 		"seccamera",
 		"security_photobooth",
-		"libraryscanner",
-		"bookbinder",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
