@@ -141,7 +141,6 @@
 	return . || NONE
 
 /obj/item/modular_computer/pda/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
 
 	if(!is_type_in_list(tool, contained_item))
 		return NONE
