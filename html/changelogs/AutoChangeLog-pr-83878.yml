@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: " RCD, RPLD & RTD cancels their build process if their design is changed during build."

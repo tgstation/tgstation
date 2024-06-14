@@ -827,8 +827,10 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define ALLOW_RESTING (1<<7)
 /// If this is accessible to creatures with ventcrawl capabilities
 #define NEED_VENTCRAWL (1<<8)
+/// Skips adjacency checks
+#define BYPASS_ADJACENCY (1<<9)
 /// Checks for base adjacency, but silences the error
-#define SILENT_ADJACENCY (1<<9)
+#define SILENT_ADJACENCY (1<<10)
 
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1

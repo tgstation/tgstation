@@ -911,12 +911,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 /obj/structure/closet/proc/after_weld(weld_state)
 	return
 
-/obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
+/obj/structure/closet/mouse_drop_receive(atom/movable/O, mob/living/user, params)
 	if(!istype(O) || O.anchored || istype(O, /atom/movable/screen))
-		return
-	if(!istype(user) || user.incapacitated() || user.body_position == LYING_DOWN)
-		return
-	if(!Adjacent(user) || !user.Adjacent(O))
 		return
 	if(user == O) //try to climb onto it
 		return ..()
@@ -951,7 +947,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			log_combat(user, O, "stuffed", addition = "inside of [src]")
 	else
 		O.forceMove(T)
-	return 1
 
 /obj/structure/closet/relaymove(mob/living/user, direction)
 	if(user.stat || !isturf(loc))
