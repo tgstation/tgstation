@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Heirophant Club Blink at range"
+  - bugfix: "Crusher Loot"
+  - bugfix: "RCD material reclamation"
