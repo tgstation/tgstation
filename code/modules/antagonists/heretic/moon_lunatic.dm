@@ -17,7 +17,10 @@
 	var/datum/objective/lunatic/lunatic_obj
 
 /datum/antagonist/lunatic/on_gain()
-	if(objectives)
+	// Masters gain an objective before so we dont want duplicates
+	for(var/objective in objectives)
+		if(!istype(objective, /datum/objective/lunatic))
+			continue
 		return ..()
 	var/datum/objective/lunatic/loony = new()
 	objectives += loony
@@ -81,6 +84,6 @@
 	loony.update_explanation_text()
 	return ..()
 
-/datum/antagonist/lunatic/apply_innate_effects(mob/living/mob_override)
+/datum/antagonist/lunatic/master/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	add_team_hud(our_mob)
