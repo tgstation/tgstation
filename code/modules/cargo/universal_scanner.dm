@@ -122,11 +122,12 @@
 		new_custom_price = chosen_price
 		to_chat(user, span_notice("[src] will now give things a [new_custom_price] cr tag."))
 
-/obj/item/universal_scanner/CtrlClick(mob/user)
-	. = ..()
+/obj/item/universal_scanner/item_ctrl_click(mob/user)
+	. = CLICK_ACTION_BLOCKING
 	if(scanning_mode == SCAN_SALES_TAG)
 		payments_acc = null
 		to_chat(user, span_notice("You clear the registered account."))
+		return CLICK_ACTION_SUCCESS
 
 /obj/item/universal_scanner/click_alt(mob/user)
 	if(!scanning_mode == SCAN_SALES_TAG)

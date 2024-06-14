@@ -1,4 +1,0 @@
-author: "Goat"
-delete-after: True
-changes:
-  - bugfix: "Enviro suit lights no longer stay on when the welding visor is activated."
