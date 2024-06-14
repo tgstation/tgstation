@@ -9,8 +9,6 @@
 	var/datum/callback/pre_secrete_callback
 	var/next_secrete = 0
 
-
-
 /datum/component/liquid_secretion/Initialize(reagent_id = /datum/reagent/water, amount = 10, secretion_interval = 1 SECONDS, pre_secrete_callback)
 	. = ..()
 
@@ -20,6 +18,11 @@
 	src.pre_secrete_callback = CALLBACK(parent, pre_secrete_callback)
 
 	START_PROCESSING(SSobj, src)
+
+/datum/component/liquid_secretion/Destroy(force, silent)
+	STOP_PROCESSING(SSobj, src)
+	pre_secrete_callback = null
+	return ..()
 
 /datum/component/liquid_secretion/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_SECRETION_UPDATE, PROC_REF(update_information)) //The only signal allowing item -> turf interaction

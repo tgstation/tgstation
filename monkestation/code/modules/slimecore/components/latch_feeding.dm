@@ -36,7 +36,7 @@
 	REMOVE_TRAIT(parent, TRAIT_FEEDING, LATCH_TRAIT)
 	. = ..()
 	target = null
-	qdel(check_and_replace)
+	check_and_replace = null
 
 /datum/component/latch_feeding/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_LIVING_SET_BUCKLED, PROC_REF(check_buckled))
