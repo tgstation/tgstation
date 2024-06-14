@@ -22520,7 +22520,7 @@
 /obj/item/pen{
 	pixel_x = -5
 	},
-/obj/item/hand_labeler/borg{
+/obj/item/hand_labeler{
 	pixel_y = -3
 	},
 /turf/open/floor/wood,
@@ -48099,9 +48099,6 @@
 /obj/item/healthanalyzer,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
-"otC" = (
-/turf/open/genturf,
-/area/icemoon/surface/outdoors/nospawn)
 "otG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/blue{
@@ -52107,7 +52104,7 @@
 	name = "Permabrig Visitation"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/security/brig,
-/turf/open/floor/plating,
+/turf/open/floor/iron,
 /area/station/security/prison/visit)
 "pDt" = (
 /obj/effect/landmark/start/hangover,
@@ -272458,7 +272455,7 @@ wNO
 aaX
 wNO
 wNO
-otC
+bln
 hHG
 hHG
 hHG

@@ -319,13 +319,6 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 /// Proceed with the attack chain, but don't call the normal methods.
 #define SECONDARY_ATTACK_CONTINUE_CHAIN 3
 
-/// Flag for when /afterattack potentially acts on an item.
-/// Used for the swap hands/drop tutorials to know when you might just be trying to do something normally.
-/// Does not necessarily imply success, or even that it did hit an item, just intent.
-// This is intentionally not (1 << 0) because some stuff currently erroneously returns TRUE/FALSE for afterattack.
-// Doesn't need to be set if proximity flag is FALSE.
-#define AFTERATTACK_PROCESSED_ITEM (1 << 1)
-
 //Autofire component
 /// Compatible firemode is in the gun. Wait until it's held in the user hands.
 #define AUTOFIRE_STAT_IDLE (1<<0)
@@ -387,6 +380,9 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 #define SHOVE_BLOCKED (1<<5)
 ///If the obstacle is an object at the border of the turf (so no signal from being sent to the other turf)
 #define SHOVE_DIRECTIONAL_BLOCKED (1<<6)
+
+///Bitfield returned by listeners for COMSIG_CARBON_ENTER_STAMCRIT when they perform some action that prevents a mob going into stamcrit.
+#define STAMCRIT_CANCELLED (1<<0)
 
 ///Deathmatch lobby current status
 #define DEATHMATCH_NOT_PLAYING 0

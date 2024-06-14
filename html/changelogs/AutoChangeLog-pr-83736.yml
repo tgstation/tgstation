@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - refactor: "alt right click has been refactored. report bugs on github"

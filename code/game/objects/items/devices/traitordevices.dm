@@ -361,29 +361,41 @@ effective or pretty fucking useless.
 	new /obj/item/analyzer(src)
 	new /obj/item/wirecutters(src)
 
-/obj/item/storage/toolbox/emergency/turret/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(!istype(attacking_item, /obj/item/wrench/combat))
-		return ..()
-
+/obj/item/storage/toolbox/emergency/turret/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
+	if(!istype(inserted, /obj/item/wrench/combat))
+		return TRUE
 	if(!user.combat_mode)
-		return
+		return TRUE
+	if(!inserted.toolspeed)
+		return TRUE
+	return FALSE
 
-	if(!attacking_item.toolspeed)
-		return
-
+/obj/item/storage/toolbox/emergency/turret/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/wrench/combat))
+		return NONE
+	if(!user.combat_mode)
+		return NONE
+	if(!tool.toolspeed)
+		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "constructing...")
-	if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
-		return
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 20))
+		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "constructed!")
-	user.visible_message(span_danger("[user] bashes [src] with [attacking_item]!"), \
-		span_danger("You bash [src] with [attacking_item]!"), null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(
+		span_danger("[user] bashes [src] with [tool]!"),
+		span_danger("You bash [src] with [tool]!"),
+		null,
+		COMBAT_MESSAGE_RANGE,
+	)
 
-	playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
+	playsound(src, 'sound/items/drill_use.ogg', 80, TRUE, -1)
 	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
 	set_faction(turret, user)
 	turret.toolbox = src
 	forceMove(turret)
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/storage/toolbox/emergency/turret/proc/set_faction(obj/machinery/porta_turret/turret, mob/user)
 	turret.faction = list("[REF(user)]")

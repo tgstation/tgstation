@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Humans can't cough on menthol again"
+  - bugfix: "Moth and lizard emotes decide what sound to play based on body type, not gender."
+  - sound: "*gasp now makes a sound, it's the same as *gaspshock."
+  - sound: "Xenos (or anything with hands) can clap"
