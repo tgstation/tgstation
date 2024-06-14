@@ -95,7 +95,6 @@
 //kvass
 #include "code\modules\cargo\exports\large_objects.dm"
 #include "code\modules\cargo\packs\materials.dm"
-#include "code\modules\reagents\chemistry\drinks.dm"
 #include "code\modules\reagents\chemistry\reagents\drinks\drink_reagents.dm"
 #include "code\modules\reagents\chemistry\reagents\drinks\glass_styles\sodas.dm"
 #include "code\modules\reagents\reagent_containers\cups\soda.dm"

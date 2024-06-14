@@ -27,4 +27,4 @@
 	. = ..()
 	affected_mob.set_jitter_if_lower(5 SECONDS * REM * seconds_per_tick)
 	if(SPT_PROB(7.5, seconds_per_tick))
-		affected_mob.say(pick("Квасссс!!!", "Обожаю квас!", "ММммммм Квасс!!")), forced = /datum/reagent/consumable/kvass)
+		affected_mob.say(pick("Квасссс!!!", "Обожаю квас!", "ММммммм Квасс!!"), forced = /datum/reagent/consumable/kvass)
