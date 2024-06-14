@@ -33871,11 +33871,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
-"mSS" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "mTc" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -82662,7 +82657,7 @@ dDB
 dDB
 nhE
 blb
-mSS
+blb
 wCc
 wCc
 cLg
