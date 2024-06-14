@@ -1,0 +1,7 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "Cult stun hand is now less effective against mindshielded people, their sacrifice target, and monster hunters, alongside anyone else after the cult gains halos. The weakened stun will only knockdown, similar to mansus grasp, and silence for a far shorter period of time."
+  - balance: "Holy magic resistance now fully protects against the cult stun."
+  - rscadd: "Added a funny interaction with the cult stun hand and sacrifice runes when used on someone who is incredibly drunk."
+  - balance: "The cult stun hand can now be countered by CQC and Sleeping Carp, consistent with all other forms of \"touch spells\"."
