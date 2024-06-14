@@ -393,7 +393,6 @@
 				readout += "<b><u>COVERAGE</u></b>"
 				readout += "It will block [english_list(things_blocked)]."
 
-		readout += "</span>"
 
 		if(!length(readout))
 			readout += "No armor or durability information available."
