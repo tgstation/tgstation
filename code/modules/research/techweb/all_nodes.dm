@@ -7,28 +7,6 @@
 #define TIER_4_POINTS 8000
 #define TIER_5_POINTS 10000
 
-/datum/techweb_node/unused
-	id = "unused"
-	starting_node = TRUE
-	display_name = "Unused"
-	description = "description"
-	design_ids = list(
-		"gas_filter",
-		"holodisk",
-		"plasmaman_gas_filter",
-		"space_heater",
-		"turbine_part_compressor",
-		"turbine_part_rotor",
-		"turbine_part_stator",
-		"mmi",
-		"mmi_m",
-		"anomaly_refinery",
-		"blutrash",
-		"holobarrier_jani",
-		"light_replacer_blue",
-		"gravitygun",
-	)
-
 // General tree
 /datum/techweb_node/office_equip
 	id = "office_equip"
@@ -94,10 +72,10 @@
 	description = "description"
 	prereq_ids = list("office_equip")
 	design_ids = list(
+		"smoke_machine",
 		"toy_armblade",
 		"air_horn",
 		"clown_firing_pin",
-		"smoke_machine",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
 
@@ -411,6 +389,8 @@
 		"chem_master",
 		"chem_mass_spec",
 		"ph_meter",
+		"scigoggles",
+		"mod_reagent_scanner",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
 
@@ -420,11 +400,11 @@
 	description = "description"
 	prereq_ids = list("bio_scan")
 	design_ids = list(
+		"limbgrower",
 		"pandemic",
 		"petri_dish",
 		"swab",
 		"biopsy_tool",
-		"limbgrower",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
 
@@ -450,12 +430,12 @@
 	description = "description"
 	prereq_ids = list("selection", "xenobiology")
 	design_ids = list(
-		"genescanner",
-		"mod_dna_lock",
 		"dnascanner",
 		"scan_console",
 		"dna_disk",
 		"dnainfuser",
+		"genescanner",
+		"mod_dna_lock",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
 
@@ -503,11 +483,11 @@
 	description = "description"
 	prereq_ids = list("plumbing", "fusion")
 	design_ids = list(
-		"cryo_grenade",
 		"cryotube",
-		"splitbeaker",
-		"stasis",
 		"mech_sleeper",
+		"stasis",
+		"cryo_grenade",
+		"splitbeaker",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
 
@@ -611,6 +591,80 @@
 		"paicard",
 	)
 
+/datum/techweb_node/exodrone
+	id = "exodrone"
+	display_name = "Exploration Drones"
+	description = "description"
+	prereq_ids = list("robotics")
+	design_ids = list(
+		"exoscanner_console",
+		"exoscanner",
+		"exodrone_console",
+		"exodrone_launcher",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+
+// AI tree
+/datum/techweb_node/ai
+	id = "ai"
+	display_name = "Artificial Intelligence"
+	description = "description"
+	prereq_ids = list("robotics")
+	design_ids = list(
+		"aiupload",
+		"aifixer",
+		"intellicard",
+		"borg_ai_control",
+		"mecha_tracking_ai_control",
+		"aicore",
+		"reset_module",
+		"asimov_module",
+		"default_module",
+		"nutimov_module",
+		"paladin_module",
+		"robocop_module",
+		"corporate_module",
+		"drone_module",
+		"oxygen_module",
+		"safeguard_module",
+		"protectstation_module",
+		"quarantine_module",
+		"freeform_module",
+		"remove_module",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+
+/datum/techweb_node/ai_laws
+	id = "ai_laws"
+	display_name = "Advanced AI Laws"
+	description = "description"
+	prereq_ids = list("ai")
+	design_ids = list(
+		"asimovpp_module",
+		"paladin_devotion_module",
+		"dungeon_master_module",
+		"painter_module",
+		"ten_commandments_module",
+		"hippocratic_module",
+		"maintain_module",
+		"liveandletlive_module",
+		"reporter_module",
+		"yesman_module",
+		"hulkamania_module",
+		"peacekeeper_module",
+		"overlord_module",
+		"tyrant_module",
+		"antimov_module",
+		"balance_module",
+		"thermurderdynamic_module",
+		"damaged_module",
+		"freeformcore_module",
+		"onehuman_module",
+		"purge_module",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+// Mech tree
 /datum/techweb_node/mech_assembly
 	id = "mech_assembly"
 	starting_node = TRUE
@@ -620,16 +674,249 @@
 		"mechapower",
 		"mech_recharger",
 		"ripley_chassis",
-		"ripley_left_arm",
-		"ripley_left_leg",
-		"ripley_right_arm",
-		"ripley_right_leg",
 		"ripley_torso",
+		"ripley_left_arm",
+		"ripley_right_arm",
+		"ripley_left_leg",
+		"ripley_right_leg",
 		"ripley_main",
 		"ripley_peri",
 		"mech_hydraulic_clamp",
 	)
 
+/datum/techweb_node/mech_equipment
+	id = "mech_equipment"
+	display_name = "Hostile Environment Equipment"
+	description = "description"
+	prereq_ids = list("mech_assembly")
+	design_ids = list(
+		"mechacontrol",
+		"botpad",
+		"botpad_remote",
+		"ripleyupgrade",
+		"mech_radio",
+		"mech_air_tank",
+		"mech_thrusters",
+		"mecha_camera",
+		"mech_extinguisher",
+		"mecha_tracking",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+
+/datum/techweb_node/mech_clown
+	id = "mech_clown"
+	display_name = "Funny Robots"
+	description = "description"
+	prereq_ids = list("mech_assembly")
+	design_ids = list(
+		"honk_chassis",
+		"honk_torso",
+		"honk_head",
+		"honk_left_arm",
+		"honk_right_arm",
+		"honk_left_leg",
+		"honk_right_leg",
+		"honker_main",
+		"honker_peri",
+		"honker_targ",
+		"mech_banana_mortar",
+		"mech_honker",
+		"mech_mousetrap_mortar",
+		"mech_punching_face",
+		"borg_transform_clown",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+
+
+/datum/techweb_node/mech_medical
+	id = "mech_medical"
+	display_name = "Medical Mech"
+	description = "description"
+	prereq_ids = list("mech_assembly", "chem_synthesis")
+	design_ids = list(
+		"odysseus_chassis",
+		"odysseus_torso",
+		"odysseus_head",
+		"odysseus_left_arm",
+		"odysseus_right_arm",
+		"odysseus_left_leg",
+		"odysseus_right_leg",
+		"odysseus_main",
+		"odysseus_peri",
+		"mech_medi_beam",
+		"mech_syringe_gun",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+/datum/techweb_node/mech_mining
+	id = "mech_mining"
+	display_name = "Mining Mech"
+	description = "description"
+	prereq_ids = list("mech_equipment", "mining")
+	design_ids = list(
+		"clarke_chassis",
+		"clarke_torso",
+		"clarke_head",
+		"clarke_left_arm",
+		"clarke_right_arm",
+		"clarke_main",
+		"clarke_peri",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+/datum/techweb_node/mech_combat
+	id = "mech_combat"
+	display_name = "Combat Mechs"
+	description = "description"
+	prereq_ids = list("mech_equipment")
+	design_ids = list(
+		"mech_repair_droid",
+		"mech_ccw_armor",
+		"mech_proj_armor",
+		"paddyupgrade",
+		"mech_hydraulic_claw",
+		"mech_disabler",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+/datum/techweb_node/mech_assault
+	id = "mech_assault"
+	display_name = "Assault Mech"
+	description = "description"
+	prereq_ids = list("mech_combat")
+	design_ids = list(
+		"durand_armor",
+		"durand_chassis",
+		"durand_torso",
+		"durand_head",
+		"durand_left_arm",
+		"durand_right_arm",
+		"durand_left_leg",
+		"durand_right_leg",
+		"durand_main",
+		"durand_peri",
+		"durand_targ",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+
+/datum/techweb_node/mech_light
+	id = "mech_light"
+	display_name = "Light Combat Mech"
+	description = "description"
+	prereq_ids = list("mech_combat")
+	design_ids = list(
+		"gygax_armor",
+		"gygax_chassis",
+		"gygax_torso",
+		"gygax_head",
+		"gygax_left_arm",
+		"gygax_right_arm",
+		"gygax_left_leg",
+		"gygax_right_leg",
+		"gygax_main",
+		"gygax_peri",
+		"gygax_targ",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+
+/datum/techweb_node/mech_firearms
+	id = "mech_firearms"
+	display_name = "Mech Firearms"
+	description = "description"
+	prereq_ids = list("mech_combat", "ammo")
+	design_ids = list(
+		"mech_lmg",
+		"mech_lmg_ammo",
+		"mech_scattershot",
+		"mech_scattershot_ammo",
+		"mech_carbine",
+		"mech_carbine_ammo",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+
+/datum/techweb_node/mech_heavy
+	id = "mech_heavy"
+	display_name = "Heavy Mech"
+	description = "description"
+	prereq_ids = list("mech_assault")
+	design_ids = list(
+		"savannah_ivanov_armor",
+		"savannah_ivanov_chassis",
+		"savannah_ivanov_torso",
+		"savannah_ivanov_head",
+		"savannah_ivanov_left_arm",
+		"savannah_ivanov_right_arm",
+		"savannah_ivanov_left_leg",
+		"savannah_ivanov_right_leg",
+		"savannah_ivanov_main",
+		"savannah_ivanov_peri",
+		"savannah_ivanov_targ",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+
+/datum/techweb_node/mech_infiltrator
+	id = "mech_infiltrator"
+	display_name = "Infiltration Mech"
+	description = "description"
+	prereq_ids = list("mech_light", "anomaly_research")
+	design_ids = list(
+		"phazon_armor",
+		"phazon_chassis",
+		"phazon_torso",
+		"phazon_head",
+		"phazon_left_arm",
+		"phazon_right_arm",
+		"phazon_left_leg",
+		"phazon_right_leg",
+		"phazon_main",
+		"phazon_peri",
+		"phazon_targ",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+
+
+/datum/techweb_node/mech_energy_guns
+	id = "mech_energy_guns"
+	display_name = "Mech Energy Guns"
+	description = "description"
+	prereq_ids = list("mech_firearms", "electric_weapons")
+	design_ids = list(
+		"mech_laser",
+		"mech_laser_heavy",
+		"mech_ion",
+		"mech_tesla",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
+
+/datum/techweb_node/mech_heavy_arms
+	id = "mech_heavy_arms"
+	display_name = "Heavy Mech Firearms"
+	description = "description"
+	prereq_ids = list("mech_heavy", "explosives")
+	design_ids = list(
+		"clusterbang_launcher",
+		"clusterbang_launcher_ammo",
+		"mech_grenade_launcher",
+		"mech_grenade_launcher_ammo",
+		"mech_missile_rack",
+		"mech_missile_rack_ammo",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
+
+/datum/techweb_node/mech_equip_bluespace
+	id = "mech_equip_bluespace"
+	display_name = "Bluespace Mech Equipment"
+	description = "description"
+	prereq_ids = list("mech_infiltrator", "bluespace_travel")
+	design_ids = list(
+		"mech_gravcatapult",
+		"mech_teleporter",
+		"mech_wormhole_gen",
+		"mech_rcd",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
+
+// Circuits tree
 /datum/techweb_node/integrated_circuits
 	id = "integrated_circuits"
 	starting_node = TRUE
@@ -717,6 +1004,70 @@
 		"comp_view_sensor",
 	)
 
+/datum/techweb_node/circuit_shells
+	id = "circuit_shells"
+	display_name = "Advanced Circuit Shells"
+	description = "description"
+	prereq_ids = list("integrated_circuits")
+	design_ids = list(
+		"assembly_shell",
+		"bot_shell",
+		"controller_shell",
+		"dispenser_shell",
+		"door_shell",
+		"gun_shell",
+		"keyboard_shell",
+		"module_shell",
+		"money_bot_shell",
+		"scanner_gate_shell",
+		"scanner_shell",
+		"comp_equip_action",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+
+/datum/techweb_node/circuit_bot
+	id = "circuit_bot"
+	display_name = "Programmed Bot"
+	description = "description"
+	prereq_ids = list("circuit_shells")
+	design_ids = list(
+		"drone_shell",
+		"comp_pathfind",
+		"comp_pull",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+/datum/techweb_node/circuit_server
+	id = "circuit_server"
+	display_name = "Programmed Server"
+	description = "description"
+	prereq_ids = list("circuit_bot")
+	design_ids = list(
+		"server_shell",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+
+/datum/techweb_node/circuit_bci
+	id = "circuit_bci"
+	display_name = "Brain-Computer Interface"
+	description = "description"
+	prereq_ids = list("circuit_bot", "implants")
+	design_ids = list(
+		"bci_implanter",
+		"bci_shell",
+		"comp_bar_overlay",
+		"comp_camera_bci",
+		"comp_counter_overlay",
+		"comp_install_detector",
+		"comp_object_overlay",
+		"comp_reagent_injector",
+		"comp_target_intercept",
+		"comp_thought_listener",
+		"comp_vox",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+
+// Exosuit tree
 /datum/techweb_node/mod_suit
 	id = "mod_suit"
 	starting_node = TRUE
@@ -736,6 +1087,116 @@
 		"mod_flashlight",
 	)
 
+/datum/techweb_node/mod_equip
+	id = "mod_equip"
+	display_name = "Modular Suit Equipment"
+	description = "description"
+	prereq_ids = list("mod_suit")
+	design_ids = list(
+		"modlink_scryer",
+		"mod_clamp",
+		"mod_tether",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+
+/datum/techweb_node/mod_entertainment
+	id = "mod_entertainment"
+	display_name = "Entertainment Modular Suit"
+	description = "description"
+	prereq_ids = list("mod_suit")
+	design_ids = list(
+		"mod_plating_cosmohonk",
+		"mod_bikehorn",
+		"mod_microwave_beam",
+		"mod_waddle",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+
+/datum/techweb_node/mod_medical
+	id = "mod_medical"
+	display_name = "Medical Modular Suit"
+	description = "description"
+	prereq_ids = list("mod_suit", "chem_synthesis")
+	design_ids = list(
+		"mod_plating_medical",
+		"mod_quick_carry",
+		"mod_injector",
+		"mod_organ_thrower",
+		"mod_patienttransport",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+/datum/techweb_node/mod_engi
+	id = "mod_engi"
+	display_name = "Engineering Modular Suits"
+	description = "description"
+	prereq_ids = list("mod_equip")
+	design_ids = list(
+		"mod_plating_engineering",
+		"mod_t_ray",
+		"mod_magboot",
+		"mod_constructor",
+		"mod_mister_atmos",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+/datum/techweb_node/mod_security
+	id = "mod_security"
+	display_name = "Security Modular Suits"
+	description = "description"
+	prereq_ids = list("mod_equip")
+	design_ids = list(
+		"mod_plating_security",
+		"mod_stealth",
+		"mod_mag_harness",
+		"mod_pathfinder",
+		"mod_holster",
+		"mod_sonar",
+		"mod_projectile_dampener",
+		"mod_criminalcapture",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+/datum/techweb_node/mod_medical_adv
+	id = "mod_medical_adv"
+	display_name = "Advanced Medical Modular Suit"
+	description = "description"
+	prereq_ids = list("mod_medical")
+	design_ids = list(
+		"mod_defib",
+		"mod_threadripper",
+		"mod_surgicalprocessor",
+		"mod_statusreadout",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+
+/datum/techweb_node/mod_engi_adv
+	id = "mod_engi_adv"
+	display_name = "Advanced Engineering Modular Suit"
+	description = "description"
+	prereq_ids = list("mod_engi")
+	design_ids = list(
+		"mod_plating_atmospheric",
+		"mod_jetpack",
+		"mod_rad_protection",
+		"mod_emp_shield",
+		"mod_storage_expanded",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+
+/datum/techweb_node/mod_anomaly
+	id = "mod_anomaly"
+	display_name = "Anomalock Modular Suit"
+	description = "description"
+	prereq_ids = list("mod_engi_adv", "anomaly_research")
+	design_ids = list(
+		"mod_antigrav",
+		"mod_teleporter",
+		"mod_kinesis",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+
+// Cybernetics tree
 /datum/techweb_node/augmentation
 	id = "augmentation"
 	starting_node = TRUE
@@ -757,12 +1218,198 @@
 		"cybernetic_heart",
 	)
 
+/datum/techweb_node/cybernetics
+	id = "cybernetics"
+	display_name = "Cybernetics"
+	description = "description"
+	prereq_ids = list("augmentation")
+	design_ids = list(
+		"robocontrol",
+		"borgupload",
+		"cyborgrecharger",
+		"borg_suit",
+		"mmi_posi",
+		"mmi",
+		"mmi_m",
+		"advanced_l_arm",
+		"advanced_r_arm",
+		"advanced_l_leg",
+		"advanced_r_leg",
+		"borg_upgrade_rename",
+		"borg_upgrade_restart",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
 
+/datum/techweb_node/borg_service
+	id = "borg_service"
+	display_name = "Service Cyborg Upgrades"
+	description = "description"
+	prereq_ids = list("cybernetics")
+	design_ids = list(
+		"borg_upgrade_rolling_table",
+		"borg_upgrade_condiment_synthesizer",
+		"borg_upgrade_silicon_knife",
+		"borg_upgrade_service_apparatus",
+		"borg_upgrade_drink_apparatus",
+		"borg_upgrade_service_cookbook",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
 
+/datum/techweb_node/borg_medical
+	id = "borg_medical"
+	display_name = "Medical Cyborg Upgrades"
+	description = "description"
+	prereq_ids = list("borg_service", "surgery_adv")
+	design_ids = list(
+		"borg_upgrade_beakerapp",
+		"borg_upgrade_defibrillator",
+		"borg_upgrade_expandedsynthesiser",
+		"borg_upgrade_piercinghypospray",
+		"borg_upgrade_pinpointer",
+		"borg_upgrade_surgicalprocessor",
+		"borg_upgrade_surgicalomnitool",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
 
+/datum/techweb_node/borg_utility
+	id = "borg_utility"
+	display_name = "Medical Cyborg Upgrades"
+	description = "description"
+	prereq_ids = list("borg_service", "surgery_adv")
+	design_ids = list(
+		"borg_upgrade_advancedmop",
+		"borg_upgrade_broomer",
+		"borg_upgrade_expand",
+		"borg_upgrade_prt",
+		"borg_upgrade_selfrepair",
+		"borg_upgrade_thrusters",
+		"borg_upgrade_trashofholding",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
 
+/datum/techweb_node/borg_engi
+	id = "borg_engi"
+	display_name = "Engineering & Mining Cyborg Upgrades"
+	description = "description"
+	prereq_ids = list("borg_utility", "exp_tools")
+	design_ids = list(
+		"borg_upgrade_circuitapp",
+		"borg_upgrade_diamonddrill",
+		"borg_upgrade_holding",
+		"borg_upgrade_lavaproof",
+		"borg_upgrade_rped",
+		"borg_upgrade_hypermod",
+		"borg_upgrade_inducer",
+		"borg_upgrade_engineeringomnitool",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
 
-// Sci tree
+// Implants tree
+/datum/techweb_node/implants
+	id = "implants"
+	display_name = "Passive Implants"
+	description = "description"
+	prereq_ids = list("cybernetics")
+	design_ids = list(
+		"skill_station",
+		"c38_trac",
+		"implant_trombone",
+		"implant_chem",
+		"implant_tracking",
+		"implant_exile",
+		"implant_beacon",
+		"implant_bluespace",
+		"implantcase",
+		"implanter",
+		"locator",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+/datum/techweb_node/cyber_implants
+	id = "cyber_implants"
+	display_name = "Cybernetic Implants"
+	description = "description"
+	prereq_ids = list("implants")
+	design_ids = list(
+		"ci-breather",
+		"ci-nutriment",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+
+/datum/techweb_node/combat_cyber_implants
+	id = "combat_cyber_implants"
+	display_name = "Combat Cybernetic Implants"
+	description = "description"
+	prereq_ids = list("cyber_implants")
+	design_ids = list(
+		"ci-thrusters",
+		"ci-antidrop",
+		"ci-antistun",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+
+/datum/techweb_node/adv_cyber_implants
+	id = "adv_cyber_implants"
+	display_name = "Advanced Cybernetic Implants"
+	description = "description"
+	prereq_ids = list("combat_cyber_implants", "exp_tools")
+	design_ids = list(
+		"ci-nutrimentplus",
+		"ci-reviver",
+		"ci-toolset",
+		"ci-surgery",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
+
+/datum/techweb_node/cyber_organs
+	id = "cyber_organs"
+	display_name = "Cybernetic Organs"
+	description = "description"
+	prereq_ids = list("cybernetics")
+	design_ids = list(
+		"cybernetic_eyes_improved",
+		"cybernetic_eyes_improved_moth",
+		"cybernetic_ears_u",
+		"cybernetic_heart_tier2",
+		"cybernetic_liver_tier2",
+		"cybernetic_lungs_tier2",
+		"cybernetic_stomach_tier2",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+/datum/techweb_node/cyber_organs_upgraded
+	id = "cyber_organs_upgraded"
+	display_name = "Upgraded Cybernetic Organs"
+	description = "description"
+	prereq_ids = list("cyber_organs")
+	design_ids = list(
+		"ci-gloweyes",
+		"ci-welding",
+		"ci-gloweyes-moth",
+		"ci-welding-moth",
+		"cybernetic_ears_whisper",
+		"cybernetic_heart_tier3",
+		"cybernetic_liver_tier3",
+		"cybernetic_lungs_tier3",
+		"cybernetic_stomach_tier3",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+
+/datum/techweb_node/cyber_organs_adv
+	id = "cyber_organs_adv"
+	display_name = "Advanced Cybernetic Organs"
+	description = "description"
+	prereq_ids = list("cyber_organs_upgraded", "night_vision")
+	design_ids = list(
+		"cybernetic_ears_xray",
+		"ci-thermals",
+		"ci-xray",
+		"ci-thermals-moth",
+		"ci-xray-moth",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
+
+// Research tree
 /datum/techweb_node/fundamental_sci
 	id = "fundamental_sci"
 	starting_node = TRUE
@@ -782,8 +1429,64 @@
 		"c-reader",
 	)
 
-/datum/techweb_node/parts_essential
-	id = "parts_essential"
+/datum/techweb_node/bluespace_theory
+	id = "bluespace_theory"
+	display_name = "Bluespace Theory"
+	description = "description"
+	prereq_ids = list("fundamental_sci")
+	design_ids = list(
+		"bluespace_crystal",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+
+/datum/techweb_node/applied_bluespace
+	id = "applied_bluespace"
+	display_name = "Applied Bluespace Research"
+	description = "description"
+	prereq_ids = list("bluespace_theory")
+	design_ids = list(
+		"ore_silo",
+		"minerbag_holding",
+		"plumbing_receiver",
+		"bluespacebeaker",
+		"adv_watering_can",
+		"bluespace_coffeepot",
+		"bluespacesyringe",
+		"blutrash",
+		"light_replacer_blue",
+		"bluespacebodybag",
+		"medicalbed_emergency",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+/datum/techweb_node/anomaly_research
+	id = "anomaly_research"
+	display_name = "Anomaly Research"
+	description = "description"
+	prereq_ids = list("applied_bluespace")
+	design_ids = list(
+		"anomaly_refinery",
+		"anomaly_neutralizer",
+		"reactive_armour",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+
+/datum/techweb_node/anomaly_shells
+	id = "anomaly_shells"
+	display_name = "Advanced Anomaly Shells"
+	description = "description"
+	prereq_ids = list("anomaly_research")
+	design_ids = list(
+		"bag_holding",
+		"wormholeprojector",
+		"gravitygun",
+		"polymorph_belt"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+
+// Parts tree
+/datum/techweb_node/parts
+	id = "parts"
 	starting_node = TRUE
 	display_name = "Essential Stock Parts"
 	description = "description"
@@ -809,21 +1512,122 @@
 		"sflash",
 	)
 
-// Engi tree
-/datum/techweb_node/engi_essential
-	id = "engi_essential"
+/datum/techweb_node/parts_upg
+	id = "parts_upg"
+	display_name = "Upgraded Parts"
+	description = "description"
+	prereq_ids = list("parts")
+	design_ids = list(
+		"rped",
+		"high_micro_laser",
+		"adv_capacitor",
+		"nano_servo",
+		"adv_matter_bin",
+		"adv_scanning",
+		"super_cell",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+
+/datum/techweb_node/parts_adv
+	id = "parts_adv"
+	display_name = "Advanced Parts"
+	description = "description"
+	prereq_ids = list("parts_upg", "power")
+	design_ids = list(
+		"ultra_micro_laser",
+		"super_capacitor",
+		"pico_servo",
+		"super_matter_bin",
+		"phasic_scanning",
+		"hyper_cell",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+/datum/techweb_node/parts_bluespace
+	id = "parts_bluespace"
+	display_name = "Bluespace Parts"
+	description = "description"
+	prereq_ids = list("parts_adv", "applied_bluespace")
+	design_ids = list(
+		"bs_rped",
+		"quadultra_micro_laser",
+		"quadratic_capacitor",
+		"femto_servo",
+		"bluespace_matter_bin",
+		"triphasic_scanning",
+		"bluespace_cell",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+
+/datum/techweb_node/bluespace_travel
+	id = "bluespace_travel"
+	display_name = "Bluespace Travel"
+	description = "description"
+	prereq_ids = list("parts_bluespace")
+	design_ids = list(
+		"teleconsole",
+		"tele_station",
+		"tele_hub",
+		"launchpad_console",
+		"quantumpad",
+		"launchpad",
+		"bluespace_pod",
+		"quantum_keycard",
+		"swapper",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+
+/datum/techweb_node/telecomms
+	id = "telecomms"
+	display_name = "Telecommunications Technology"
+	description = "description"
+	prereq_ids = list("bluespace_travel")
+	design_ids = list(
+		"comm_monitor",
+		"comm_server",
+		"message_monitor",
+		"automated_announcement",
+		"ntnet_relay",
+		"s_hub",
+		"s_messaging",
+		"s_server",
+		"s_processor",
+		"s_relay",
+		"s_bus",
+		"s_broadcaster",
+		"s_receiver",
+		"s_amplifier",
+		"s_analyzer",
+		"s_ansible",
+		"s_crystal",
+		"s_filter",
+		"s_transmitter",
+		"s_treatment",
+		"gigabeacon",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
+
+// Engi trees
+// Energy tree
+/datum/techweb_node/construction
+	id = "construction"
 	starting_node = TRUE
-	display_name = "Engineering Essentials"
+	display_name = "Construction"
 	description = "description"
 	design_ids = list(
 		"circuit_imprinter_offstation",
 		"circuit_imprinter",
+		"solarcontrol",
 		"solar_panel",
 		"solar_tracker",
+		"power_control",
+		"airalarm_electronics",
+		"airlock_board",
+		"firealarm_electronics",
+		"firelock_board",
 		"tile_sprayer",
 		"airlock_painter",
 		"decal_painter",
-		"pipe_painter",
 		"rwd",
 		"cable_coil",
 		"welding_helmet",
@@ -837,29 +1641,209 @@
 		"wirecutters",
 	)
 
-/datum/techweb_node/atmos_equip
-	id = "atmos_equip"
-	display_name = "Engineering Essentials"
+/datum/techweb_node/power
+	id = "power"
+	display_name = "Power Control"
 	description = "description"
-	prereq_ids = list("engi_essential")
+	prereq_ids = list("construction")
 	design_ids = list(
-		"extinguisher",
+		"apc_control",
+		"powermonitor",
+		"smes",
+		"emitter",
+		"grounding_rod",
+		"tesla_coil",
+		"electrolyzer",
+		"cell_charger",
+		"recharger",
+		"inducer",
+		"inducerengi",
+		"welding_goggles",
+		"tray_goggles",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+
+/datum/techweb_node/holography
+	id = "holography"
+	display_name = "Holography"
+	description = "description"
+	prereq_ids = list("power")
+	design_ids = list(
+		"forcefield_projector",
+		"holosign",
+		"holosignsec",
+		"holosignengi",
+		"holosignatmos",
+		"holosignrestaurant",
+		"holosignbar",
+		"holobarrier_jani",
+		"holobarrier_med",
+		"holopad",
+		"vendatray",
+		"holodisk",
+		"modular_shield_generator",
+		"modular_shield_node",
+		"modular_shield_relay",
+		"modular_shield_charger",
+		"modular_shield_well",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+/datum/techweb_node/hud
+	id = "hud"
+	display_name = "Integrated HUDs"
+	description = "description"
+	prereq_ids = list("holography", "implants")
+	design_ids = list(
+		"health_hud",
+		"diagnostic_hud",
+		"security_hud",
+		"mod_visor_medhud",
+		"mod_visor_diaghud",
+		"mod_visor_sechud",
+		"ci-medhud",
+		"ci-diaghud",
+		"ci-sechud",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+
+/datum/techweb_node/night_vision
+	id = "night_vision"
+	display_name = "Night Vision Technology"
+	description = "description"
+	prereq_ids = list("hud")
+	design_ids = list(
+		"diagnostic_hud_night",
+		"health_hud_night",
+		"night_visision_goggles",
+		"nvgmesons",
+		"nv_scigoggles",
+		"security_hud_night",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+
+// Atmos tree
+/datum/techweb_node/atmos
+	id = "atmos"
+	starting_node = TRUE
+	display_name = "Atmospherics"
+	description = "description"
+	design_ids = list(
+		"atmos_control",
+		"atmosalerts",
+		"thermomachine",
+		"space_heater",
+		"generic_tank",
+		"oxygen_tank",
+		"plasma_tank",
+		"plasmaman_tank_belt",
+		"extinguisher",
+		"gas_filter",
+		"plasmaman_gas_filter",
+		"analyzer",
+		"pipe_painter",
+	)
+
+/datum/techweb_node/gas_compression
+	id = "gas_compression"
+	display_name = "Gas Compression"
+	description = "description"
+	prereq_ids = list("atmos")
+	design_ids = list(
+		"tank_compressor",
+		"emergency_oxygen",
+		"emergency_oxygen_engi",
+		"power_turbine_console",
+		"turbine_part_compressor",
+		"turbine_part_rotor",
+		"turbine_part_stator",
+		"turbine_compressor",
+		"turbine_rotor",
+		"turbine_stator",
+		"atmos_thermal",
+		"pneumatic_seal",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+
+/datum/techweb_node/plasma
+	id = "plasma"
+	display_name = "Plasma Research"
+	description = "description"
+	prereq_ids = list("gas_compression")
+	design_ids = list(
+		"pacman",
+		"mech_generator",
+		"mech_plasma_cutter",
+		"plasmacutter",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
 
 /datum/techweb_node/fusion
 	id = "fusion"
 	display_name = "Fusion"
 	description = "description"
-	prereq_ids = list("atmos_equip")
+	prereq_ids = list("plasma")
 	design_ids = list(
-		"extinguisher",
+		"crystallizer",
+		"HFR_core",
+		"HFR_corner",
+		"HFR_fuel_input",
+		"HFR_interface",
+		"HFR_moderator_input",
+		"HFR_waste_output",
+		"bolter_wrench",
+		"rpd_loaded",
+		"engine_goggles",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+
+/datum/techweb_node/exp_tools
+	id = "exp_tools"
+	display_name = "Experimental Tools"
+	description = "description"
+	prereq_ids = list("fusion", "plasma")
+	design_ids = list(
+		"handdrill",
+		"exwelder",
+		"jawsoflife",
+		"rangedanalyzer",
+		"rtd_loaded",
+		"rcd_loaded",
+		"rcd_ammo",
+		"weldingmask",
+		"magboots",
+		"adv_fire_extinguisher",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+
+/datum/techweb_node/rcd_upgrade
+	id = "rcd_upgrade"
+	display_name = "Rapid Device Upgrade Designs"
+	description = "description"
+	prereq_ids = list("exp_tools")
+	design_ids = list(
+		"rcd_upgrade_anti_interrupt",
+		"rcd_upgrade_cooling",
+		"rcd_upgrade_frames",
+		"rcd_upgrade_furnishing",
+		"rcd_upgrade_simple_circuits",
+		"rpd_upgrade_unwrench",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
+
+/datum/techweb_node/rcd_upgrade_adv
+	id = "rcd_upgrade_adv"
+	display_name = "Advanced RCD Designs Upgrade"
+	description = "description"
+	prereq_ids = list("rcd_upgrade")
+	design_ids = list(
+		"rcd_upgrade_silo_link",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
 
 // Cargo tree
 /datum/techweb_node/material_processing
-	id = "material_processing"
+	id = "material_proc"
 	starting_node = TRUE
 	display_name = "Material Processing"
 	description = "description"
@@ -887,7 +1871,63 @@
 		"tram_floor_light",
 	)
 
+/datum/techweb_node/mining
+	id = "mining"
+	display_name = "Mining Technology"
+	description = "description"
+	prereq_ids = list("material_proc")
+	design_ids = list(
+		"cargoexpress",
+		"brm",
+		"b_smelter",
+		"b_refinery",
+		"ore_redemption",
+		"mining_equipment_vendor",
+		"drill",
+		"mining_scanner",
+		"mech_mscanner",
+		"mech_drill",
+		"mod_drill",
+		"mod_orebag",
+		"beacon",
+		"telesci_gps",
+		"mod_gps",
+		"mod_visor_meson",
+		"mesons",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
 
+/datum/techweb_node/low_pressure_arms
+	id = "low_pressure_arms"
+	display_name = "Low-Pressure Arms"
+	description = "description"
+	prereq_ids = list("mining", "gas_compression")
+	design_ids = list(
+		"superresonator",
+		"mecha_kineticgun",
+		"damagemod",
+		"cooldownmod",
+		"rangemod",
+		"triggermod",
+		"borg_upgrade_cooldownmod",
+		"borg_upgrade_damagemod",
+		"borg_upgrade_rangemod",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+/datum/techweb_node/mining_adv
+	id = "mining_adv"
+	display_name = "Advanced Mining Technology"
+	description = "description"
+	prereq_ids = list("low_pressure_arms", "fusion")
+	design_ids = list(
+		"mech_diamond_drill",
+		"drill_diamond",
+		"jackhammer",
+		"plasmacutter_adv",
+		"hypermod",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
 
 
 #undef TIER_1_POINTS
