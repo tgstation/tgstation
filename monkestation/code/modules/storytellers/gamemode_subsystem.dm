@@ -189,8 +189,7 @@ SUBSYSTEM_DEF(gamemode)
 		event_pools[event.track] += event //Add it to the categorized event pools
 
 	load_roundstart_data()
-
-//	return ..()
+	return SS_INIT_SUCCESS
 
 
 /datum/controller/subsystem/gamemode/fire(resumed = FALSE)
