@@ -48,6 +48,11 @@
 	icon_calm = icon_state
 	desc_calm = desc
 
+/mob/living/basic/mad_piano/process(seconds_per_tick)
+
+	if (COOLDOWN_FINISHED(src, tantrum_time))
+		calm_down()
+
 /mob/living/basic/mad_piano/proc/aggro_tantrum(datum/source, mob/living/victim)
 	SIGNAL_HANDLER
 	if(!istype(victim) || !istype(victim, /mob/living/carbon) || victim.stat == DEAD)
@@ -59,8 +64,7 @@
 	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
 	REMOVE_TRAIT(src, TRAIT_PACIFISM, TRAIT_GENERIC)
 	COOLDOWN_START(src, tantrum_time, tantrum_time_duration)
-	if (COOLDOWN_FINISHED(src, tantrum_time))
-		src.calm_down()
+	START_PROCESSING(SSprocessing, src)
 
 /mob/living/basic/mad_piano/proc/calm_down(datum/source)
 	if(!COOLDOWN_FINISHED(src, tantrum_time))
@@ -70,6 +74,7 @@
 	name = name_calm
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_PACIFISM, TRAIT_GENERIC)
+	STOP_PROCESSING(SSprocessing, src)
 
 /mob/living/basic/mad_piano/med_hud_set_health() //sneaky sneaky sneaky
 	return
@@ -77,8 +82,12 @@
 /mob/living/basic/mad_piano/med_hud_set_status()
 	return
 
+/mob/living/basic/mad_piano/Destroy()
+	STOP_PROCESSING(SSprocessing, src)
+	return ..()
+
 /datum/ai_controller/basic_controller/mad_piano
-	idle_behavior = /datum/idle_behavior/walk_near_target/mad_piano
+	idle_behavior = /datum/idle_behavior/idle_random_walk/mad_piano
 	max_target_distance = 2
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
@@ -89,6 +98,5 @@
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 
-/datum/idle_behavior/walk_near_target/mad_piano
-	walk_chance = 60
-	minimum_distance = 2
+/datum/idle_behavior/idle_random_walk/mad_piano
+	walk_chance = 75

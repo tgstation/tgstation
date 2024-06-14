@@ -132,7 +132,7 @@
 	name = "Sonic Tripwire"
 	desc = "An invisible trigger for shutters and doors. Triggers when someone steps on the tile."
 	max_integrity = 50
-//	invisibility = INVISIBILITY_ABSTRACT
+	invisibility = INVISIBILITY_ABSTRACT
 	anchored = TRUE
 	//is this being used as part of the haunted trading post ruin? if true, will self destruct when boss dies
 	var/donk_ai_slave = FALSE
@@ -143,7 +143,7 @@
 	//if true, the trap will unbolt all doors it bolted and cycle shutters a second time after a delay
 	var/resets_self = FALSE
 	//time before resets_self kicks in
-	var/reset_timer = 2.5 SECONDS
+	var/reset_timer = 1 SECONDS
 	//when multiple tripwires are in the same suicide pact, they will all die when any of them die
 	var/suicide_pact = FALSE
 	//id of the suicide pact this tripwire is in
@@ -154,7 +154,7 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	. = ..()
 	if(donk_ai_slave == TRUE)
 		GLOB.selfdestructs_when_boss_dies += src
-	if(suicide_pact == TRUE || suicide_pact_id != null)
+	if(suicide_pact == TRUE && suicide_pact_id != null)
 		GLOB.tripwire_suicide_pact += src
 	var/static/list/loc_connections = list(
 	COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -163,63 +163,35 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 
 /obj/machinery/button/door/invisible_tripwire/proc/on_entered(atom/victim)
 	var/mob/living/target = victim
+	var/triggered
 	for(target in loc)
-		if(target.stat != DEAD)
+		if(target.stat != DEAD && target.mob_size == MOB_SIZE_HUMAN && target.mob_biotypes != MOB_ROBOTIC)
 			tripwire_triggered(target)
-	return
+			triggered = TRUE
+			if(resets_self)
+				addtimer(CALLBACK(src, PROC_REF(tripwire_triggered)), reset_timer)
+			if(multiuse && uses_remaining < 1)
+				uses_remaining--
+	if(resets_self && triggered)
+		addtimer(CALLBACK(src, PROC_REF(tripwire_triggered)), reset_timer)
 
 /obj/machinery/button/door/invisible_tripwire/proc/tripwire_triggered(atom/victim)
 	interact(victim)
-	if(resets_self)
-		addtimer(CALLBACK(interact(victim)), reset_timer)
-	if(multiuse || uses_remaining != 1)
-		uses_remaining--
+	if(multiuse && uses_remaining != 1)
 		return
-	if(suicide_pact == TRUE || suicide_pact_id != null)
+	if(suicide_pact == TRUE && suicide_pact_id != null)
 		for (var/obj/machinery/button/door/invisible_tripwire/pact_member in GLOB.tripwire_suicide_pact)
 			if(src.suicide_pact_id == pact_member.suicide_pact_id)
 				qdel(pact_member)
-	else
-		qdel(src)
+	qdel(src)
 
 
 /obj/machinery/button/door/invisible_tripwire/Destroy()
 	if(donk_ai_slave == TRUE)
 		GLOB.selfdestructs_when_boss_dies -= src
-	if(suicide_pact == TRUE || suicide_pact_id != null)
+	if(suicide_pact == TRUE && suicide_pact_id != null)
 		GLOB.tripwire_suicide_pact -= src
 	return ..()
-
-//variant on the invisible trip wire, instead of opening and closing doors this bolts and unbolts them
-/obj/machinery/button/door/invisible_tripwire/airlock_bolter
-	desc = "Bolts doors when stepped on. It's invisible."
-	resets_self = TRUE
-	reset_timer = 4 SECONDS
-	normaldoorcontrol = TRUE
-
-/obj/machinery/button/door/invisible_tripwire/airlock_bolter/on_entered(atom/victim)
-	. = ..()
-	specialfunctions = COMSIG_AIRLOCK_SET_BOLT
-	tripwire_triggered(victim)
-
-//variant on the invisible trip wire, this one triggers if you stay in the area too long
-/obj/machinery/button/door/invisible_tripwire/delay
-	desc = "Linger too long on this tile, and this will trigger."
-	//how long this trap will wait before springing (if someone is still on the tile)
-	var/delay_duration = 2 SECONDS
-
-/obj/machinery/button/door/invisible_tripwire/delay/on_entered(atom/victim)
-	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(tripwire_triggered)), delay_duration)
-
-/obj/machinery/button/door/invisible_tripwire/delay/tripwire_triggered(atom/victim, datum/source)
-	var/someone_there = FALSE //have we detected someone on the tile?
-	for(victim in src.loc)
-		someone_there = TRUE
-	if(someone_there == FALSE)
-		return
-	. = ..()
-
 
 //trap that gloms onto the first machine it finds on its tile, and lives inside it
 //then it zaps everyone who wants to get close. disarm by dissassembling the machine, or running out its charges
@@ -298,7 +270,7 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 		return
 	if (!isliving(living)) //ensure the guy triggering us is alive
 		return
-	if (living.stat || check_faction(living)) //and make sure it ain't someone on our team
+	if (living.stat && check_faction(living)) //and make sure it ain't someone on our team
 		return
 	COOLDOWN_START(src, trigger_cooldown, 4 SECONDS)
 	trap_alerted()
