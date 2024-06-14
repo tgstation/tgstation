@@ -59,6 +59,16 @@
 	crate_name = "raw vortex anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
 
+/datum/supply_pack/science/raw_ectoplasm_anomaly
+	name = "Raw Ectoplasm Anomaly"
+	desc = "Contains the raw core of a ectoplasm anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = CARGO_CRATE_VALUE * 10
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
+	contains = list(/obj/item/raw_anomaly_core/ectoplasm)
+	crate_name = "raw ectoplasm anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
 /datum/supply_pack/science/raw_bluespace_anomaly
 	name = "Raw Bluespace Anomaly"
 	desc = "Contains the raw core of a bluespace anomaly, ready to be implosion-compressed into a powerful artifact."
