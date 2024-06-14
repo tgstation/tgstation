@@ -506,6 +506,8 @@
 			null,
 			span_hear("You hear a boom."),
 		)
+		playsound(origin, SFX_PORTAL_ENTER, 50, TRUE, SILENCED_SOUND_EXTRARANGE)
+		playsound(dest, SFX_PORTAL_ENTER, 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 	return ..()
 
 //Shackles
