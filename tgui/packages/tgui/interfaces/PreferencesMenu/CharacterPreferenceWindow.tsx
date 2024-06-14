@@ -123,9 +123,7 @@ export const CharacterPreferenceWindow = (props) => {
 
                   act('remove_slot', {
                     slot: data.active_slot,
-                    name: Object.values(data.character_profiles)[
-                      data.active_slot - 1
-                    ],
+                    name: Object.values(data.character_profiles)[choicedSlot],
                     slotToJump: slotToJump + 1,
                   });
                 }}
