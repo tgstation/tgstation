@@ -27,9 +27,9 @@
 	lighting_cutoff_green = 15
 	lighting_cutoff_blue = 35
 	/// Loot dropped when the megafauna is NOT killed with a crusher
-	var/list/loot
+	var/list/loot = list()
 	/// Crusher loot dropped when the megafauna is killed with a crusher
-	var/list/crusher_loot
+	var/list/crusher_loot = list()
 	/// Achievement given to surrounding players when the megafauna is killed
 	var/achievement_type
 	/// Crusher achievement given to players when megafauna is killed
@@ -69,11 +69,11 @@
 	var/datum/status_effect/crusher_damage/crusher_dmg = has_status_effect(/datum/status_effect/crusher_damage)
 	///Whether we killed the megafauna with primarily crusher damage or not
 	var/crusher_kill = (crusher_dmg && crusher_dmg.total_damage >= maxHealth * 0.6)
-	for(var/loot in (crusher_kill ? crusher_loot : loot)) // might aswell just do it here because the element proves unreliable
+	for(var/loot in (crusher_kill && ? crusher_loot : loot)) // might aswell just do it here because the element proves unreliable
 		new loot(drop_location())
 
-	loot.Cut() // no revive farming
-	crusher_loot.Cut()
+	loot?.Cut() // no revive farming
+	crusher_loot?.Cut()
 
 	if(true_spawn && !(flags_1 & ADMIN_SPAWNED_1) && !elimination)
 		grant_achievement(achievement_type, score_achievement_type, crusher_kill, force_grant)
@@ -94,8 +94,8 @@
 	if(!force && health > 0)
 		return
 
-	loot.Cut()
-	crusher_loot.Cut()
+	loot?.Cut()
+	crusher_loot?.Cut()
 
 	return ..()
 
