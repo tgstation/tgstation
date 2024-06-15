@@ -31,3 +31,4 @@
 				new thing_to_spawn(target.drop_location())
 		else
 			new thing_to_spawn(target.drop_location())
+	target.RemoveElement(type)

@@ -50,3 +50,4 @@
 					target.butcher_results[loot] = 1
 			else
 				target.butcher_results[trophy_type] = 1
+	target.RemoveElement(type)
