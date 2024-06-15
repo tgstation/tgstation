@@ -2,7 +2,6 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
 	pressure_resistance = 10
-
 	hud_type = /datum/hud/living
 
 	///Tracks the current size of the mob in relation to its original size. Use update_transform(resize) to change it.

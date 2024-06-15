@@ -7,7 +7,9 @@
 	icon_state = "lpad-idle"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.5
 	hud_possible = list(DIAG_LAUNCHPAD_HUD)
+	interaction_flags_mouse_drop = NEED_DEXTERITY | NEED_HANDS
 	circuit = /obj/item/circuitboard/machine/launchpad
+
 	/// The beam icon
 	var/icon_teleport = "lpad-beam"
 	/// To prevent briefcase pad deconstruction and such
@@ -298,14 +300,13 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/launchpad/briefcase/MouseDrop(over_object, src_location, over_location)
-	. = ..()
-	if(over_object == usr)
-		if(!briefcase || !usr.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+/obj/machinery/launchpad/briefcase/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
+	if(over_object == user)
+		if(!briefcase)
 			return
-		usr.visible_message(span_notice("[usr] starts closing [src]..."), span_notice("You start closing [src]..."))
-		if(do_after(usr, 3 SECONDS, target = usr))
-			usr.put_in_hands(briefcase)
+		user.visible_message(span_notice("[usr] starts closing [src]..."), span_notice("You start closing [src]..."))
+		if(do_after(user, 3 SECONDS, target = user))
+			user.put_in_hands(briefcase)
 			moveToNullspace() //hides it from suitcase contents
 			closed = TRUE
 			update_indicator()

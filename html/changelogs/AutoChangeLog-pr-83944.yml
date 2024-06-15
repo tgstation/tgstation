@@ -1,0 +1,4 @@
+author: "Archie700"
+delete-after: True
+changes:
+  - qol: "Changes description of steal objective to match the name"

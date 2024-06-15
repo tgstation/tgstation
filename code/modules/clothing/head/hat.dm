@@ -118,7 +118,7 @@
 	victim.visible_message(span_warning("\The [bullet] sends [victim]'s hat flying!"))
 	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
 	throw_at(get_edge_target_turf(loc, pick(GLOB.alldirs)), range = 3, speed = 3)
-	playsound(victim, get_sfx(SFX_RICOCHET), 100, TRUE)
+	playsound(victim, SFX_RICOCHET, 100, TRUE)
 
 /datum/armor/head_cowboy
 	melee = 5

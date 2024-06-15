@@ -93,7 +93,7 @@
 	message = "задыхается!"
 	message_mime = "бесшумно задыхается!"
 
-/datum/emote/living/gasp_shock
+/datum/emote/living/gasp/shock
 	name = "вздох (шок)"
 	message = "вздыхает в шоке!"
 	message_mime = "вздыхает в молчаливом шоке!"
@@ -327,7 +327,7 @@
 /datum/emote/living/carbon/circle
 	name = "рука (кольцо)"
 
-/datum/emote/living/carbon/cough
+/datum/emote/living/cough
 	name = "покашлять"
 	message = "кашляет!"
 	message_mime = "изображает преувеличенный кашель!"
@@ -396,7 +396,7 @@
 
 // Emote Human
 
-/datum/emote/living/carbon/human/cry
+/datum/emote/living/carbon/cry
 	name = "плакать"
 	message = "плачет."
 	message_mime = "бесшумно плачет."

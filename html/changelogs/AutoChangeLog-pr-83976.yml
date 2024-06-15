@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - bugfix: "Fixed some surgery failure states not properly setting the correct mood event."
+  - refactor: "Minor refactor to how surgery events work, there is now better support for per-surgery mood events!"

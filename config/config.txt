@@ -483,6 +483,9 @@ DEFAULT_VIEW_SQUARE 15x15
 ## Enable automatic profiling - Byond 513.1506 and newer only.
 #AUTO_PROFILE
 
+## Determines the interval between each saved profiler snapshot (in deciseconds).
+#PROFILER_INTERVAL 3000
+
 ## Threshold (in deciseconds) for real time between ticks before we start dumping profiles
 DRIFT_DUMP_THRESHOLD 40
 

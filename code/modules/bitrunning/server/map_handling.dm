@@ -51,6 +51,8 @@
 		is_ready = TRUE
 		return FALSE
 
+	SSblackbox.record_feedback("tally", "bitrunning_domain_loaded", 1, map_key)
+
 	is_ready = TRUE
 
 	if(prob(clamp((threat * glitch_chance), 1, 10)))
