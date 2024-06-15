@@ -42,8 +42,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture/New(volume)
 	gases = new
-	if (!isnull(volume))
+	if(!isnull(volume))
 		src.volume = volume
+	if(src.volume <= 0)
+		stack_trace("Created a gas mixture with zero volume!")
 	reaction_results = new
 
 //listmos procs

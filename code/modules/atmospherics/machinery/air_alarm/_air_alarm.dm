@@ -104,7 +104,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	my_area = connected_sensor ? get_area(connected_sensor) : get_area(src)
 	alarm_manager = new(src)
-	select_mode(src, /datum/air_alarm_mode/filtering)
+	select_mode(src, /datum/air_alarm_mode/filtering, should_apply = FALSE)
 
 	AddElement(/datum/element/connect_loc, atmos_connections)
 	AddComponent(/datum/component/usb_port, list(
@@ -340,8 +340,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		if ("power")
 			var/obj/machinery/atmospherics/components/powering = vent || scrubber
 			powering.on = !!params["val"]
+			powering.atmos_conditions_changed()
 			powering.update_appearance(UPDATE_ICON)
-			powering.check_atmos_process()
 		if ("direction")
 			if (isnull(vent))
 				return TRUE
@@ -569,14 +569,15 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	selected_mode.replace(my_area, pressure)
 
-/obj/machinery/airalarm/proc/select_mode(atom/source, datum/air_alarm_mode/mode_path)
+/obj/machinery/airalarm/proc/select_mode(atom/source, datum/air_alarm_mode/mode_path, should_apply = TRUE)
 	var/datum/air_alarm_mode/new_mode = GLOB.air_alarm_modes[mode_path]
 	if(!new_mode)
 		return
 	if(new_mode.emag && !(obj_flags & EMAGGED))
 		return
 	selected_mode = new_mode
-	selected_mode.apply(my_area)
+	if(should_apply)
+		selected_mode.apply(my_area)
 	SEND_SIGNAL(src, COMSIG_AIRALARM_UPDATE_MODE, source)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
