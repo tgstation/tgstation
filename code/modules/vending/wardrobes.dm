@@ -1,3 +1,4 @@
+GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 #define MOTHROACH_START_CHANCE 5
 #define MAX_MOTHROACH_AMOUNT 3
 
@@ -13,10 +14,13 @@
 
 /obj/machinery/vending/wardrobe/Initialize(mapload)
 	. = ..()
-	if(!mapload || !prob(MOTHROACH_START_CHANCE))
+	if(!mapload)
+		return
+	if(GLOB.roaches_deployed || !is_station_level(z) || !prob(MOTHROACH_START_CHANCE))
 		return
 	for(var/count in 1 to rand(1, MAX_MOTHROACH_AMOUNT))
 		new /mob/living/basic/mothroach(src)
+	GLOB.roaches_deployed = TRUE
 
 
 /obj/machinery/vending/wardrobe/on_dispense(obj/item/clothing/food)

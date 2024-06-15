@@ -93,4 +93,5 @@
 	if(isstack(target)) //if stack, only consume 1
 		var/obj/item/stack/food_stack = target
 		final_target = food_stack.split_stack(eater, 1)
+	log_admin("[eater] has eaten [target]!")
 	qdel(final_target)
