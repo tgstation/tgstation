@@ -1587,6 +1587,7 @@
 #include "code\datums\keybinding\robot.dm"
 #include "code\datums\looping_sounds\_looping_sound.dm"
 #include "code\datums\looping_sounds\acid.dm"
+#include "code\datums\looping_sounds\breathing.dm"
 #include "code\datums\looping_sounds\burning.dm"
 #include "code\datums\looping_sounds\choking.dm"
 #include "code\datums\looping_sounds\cyborg.dm"
