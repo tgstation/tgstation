@@ -393,7 +393,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 			user.visible_message(span_notice("[user] starts to fix their [affecting.name]."), span_notice("You start fixing [H == user ? "your" : "[H]'s"] [affecting.name]."))
 			if(!do_after(user, 5 SECONDS, H))
 				return
-		if(item_heal_peg(H, user, 15, 15))
+		if(H.item_heal(H, user, 15, 15, "splintering", "charring", BODYTYPE_PEG))
 			use(1)
 		return
 	else
