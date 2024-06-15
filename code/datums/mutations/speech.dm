@@ -49,7 +49,7 @@
 // give master seek to rusted harvester
 
 /datum/mutation/human/heckacious
-	name = "heckacious larynx"
+	name = "heckacious larincks"
 	desc = "duge what is WISH your words man..........."
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_sans(span_red("aw SHIT man. your throat feels like FUCKASS."))
