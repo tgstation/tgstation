@@ -450,60 +450,6 @@ Diagnostic HUDs!
 		holder.icon_state = "hudtrackingai"
 		set_hud_image_active(DIAG_TRACK_HUD)
 
-/*~~~~~~~~~~~~~~~~~~~~
-	BIG STOMPY MECHS
-~~~~~~~~~~~~~~~~~~~~~*/
-/obj/vehicle/sealed/mecha/proc/diag_hud_set_mechhealth()
-	var/image/holder = hud_list[DIAG_MECH_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	holder.icon_state = "huddiag[RoundDiagBar(atom_integrity/max_integrity)]"
-
-
-/obj/vehicle/sealed/mecha/proc/diag_hud_set_mechcell()
-	var/image/holder = hud_list[DIAG_BATT_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	if(cell)
-		var/chargelvl = cell.charge/cell.maxcharge
-		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
-	else
-		holder.icon_state = "hudnobatt"
-
-/obj/vehicle/sealed/mecha/proc/diag_hud_set_mechstat()
-	var/image/holder = hud_list[DIAG_STAT_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	if(internal_damage)
-		holder.icon_state = "hudwarn"
-		set_hud_image_active(DIAG_STAT_HUD)
-		return
-	holder.icon_state = null
-	set_hud_image_inactive(DIAG_STAT_HUD)
-
-///Shows tracking beacons on the mech
-/obj/vehicle/sealed/mecha/proc/diag_hud_set_mechtracking()
-	var/image/holder = hud_list[DIAG_TRACK_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	var/new_icon_state //This var exists so that the holder's icon state is set only once in the event of multiple mech beacons.
-	for(var/obj/item/mecha_parts/mecha_tracking/T in trackers)
-		if(T.ai_beacon) //Beacon with AI uplink
-			new_icon_state = "hudtrackingai"
-			break //Immediately terminate upon finding an AI beacon to ensure it is always shown over the normal one, as mechs can have several trackers.
-		else
-			new_icon_state = "hudtracking"
-	holder.icon_state = new_icon_state
-
-///Shows inbuilt camera on the mech; if the camera's view range was affected by an EMP, shows a red blip while it's affected
-/obj/vehicle/sealed/mecha/proc/diag_hud_set_camera()
-	var/image/holder = hud_list[DIAG_CAMERA_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	if(chassis_camera?.is_emp_scrambled)
-		holder.icon_state = "hudcamera_empd"
-		return
-	holder.icon_state = "hudcamera"
 
 /*~~~~~~~~~
 	Bots!

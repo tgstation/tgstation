@@ -134,13 +134,6 @@
 	restricted = TRUE
 	refundable = TRUE
 
-/datum/uplink_item/mech/honker
-	name = "Dark H.O.N.K."
-	desc = "A clown combat mech equipped with bombanana peel and tearstache grenade launchers, as well as the ubiquitous HoNkER BlAsT 5000."
-	item = /obj/vehicle/sealed/mecha/honker/dark/loaded
-	cost = 80
-	purchasable_from = UPLINK_CLOWN_OPS
-
 /datum/uplink_item/stealthy_tools/combatbananashoes
 	name = "Combat Banana Shoes"
 	desc = "While making the wearer immune to most slipping attacks like regular combat clown shoes, these shoes \

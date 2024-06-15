@@ -48,7 +48,6 @@
 		// Skub
 		/obj/item/skub,
 		// Bulky Supplies
-		/obj/item/mecha_ammo,
 		/obj/item/golem_shell,
 		// Clothing
 		/obj/item/clothing/shoes/winterboots/ice_boots/eva,

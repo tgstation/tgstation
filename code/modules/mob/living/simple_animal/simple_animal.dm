@@ -396,10 +396,6 @@
 		var/mob/living/L = the_target
 		if(L.stat != CONSCIOUS)
 			return FALSE
-	if (ismecha(the_target))
-		var/obj/vehicle/sealed/mecha/M = the_target
-		if(LAZYLEN(M.occupants))
-			return FALSE
 	return TRUE
 
 /mob/living/simple_animal/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)

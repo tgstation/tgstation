@@ -245,7 +245,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	brainmob.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 
 /obj/item/mmi/posibrain/sphere/relaymove(mob/living/user, direction)
-	if(isspaceturf(loc) || !direction || mecha)
+	if(isspaceturf(loc) || !direction)
 		return
 
 	if(can_move >= world.time)

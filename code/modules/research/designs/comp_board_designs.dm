@@ -221,26 +221,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
-/datum/design/board/mechacontrol
-	name = "Exosuit Control Console Board"
-	desc = "Allows for the construction of circuit boards used to build an exosuit control console."
-	id = "mechacontrol"
-	build_path = /obj/item/circuitboard/computer/mecha_control
-	category = list(
-		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/board/mechapower
-	name = "Mech Bay Power Control Console Board"
-	desc = "Allows for the construction of circuit boards used to build a mech bay power control console."
-	id = "mechapower"
-	build_path = /obj/item/circuitboard/computer/mech_bay_power_console
-	category = list(
-		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
 /datum/design/board/rdconsole
 	name = "R&D Console Board"
 	desc = "Allows for the construction of circuit boards used to build a new R&D console."

@@ -68,14 +68,7 @@
 /datum/heretic_knowledge/lock_grasp/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
 	SIGNAL_HANDLER
 
-	if(ismecha(target))
-		var/obj/vehicle/sealed/mecha/mecha = target
-		mecha.dna_lock = null
-		for(var/mob/living/occupant as anything in mecha.occupants)
-			if(isAI(occupant))
-				continue
-			mecha.mob_exit(occupant, randomstep = TRUE)
-	else if(istype(target,/obj/machinery/door/airlock))
+	if(istype(target,/obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/door = target
 		door.unbolt()
 	else if(istype(target, /obj/machinery/computer))

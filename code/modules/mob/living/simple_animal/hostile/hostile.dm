@@ -179,7 +179,7 @@
 	if(!search_objects)
 		. = hearers(vision_range, target_from) - src //Remove self, so we don't suicide
 
-		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))
+		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret))
 
 		for(var/HM in typecache_filter_list(range(vision_range, target_from), hostile_machines))
 			if(can_see(target_from, HM, vision_range))
@@ -275,12 +275,6 @@
 				if((faction_check && !attack_same) || L.stat)
 					return FALSE
 			return TRUE
-
-		if(ismecha(the_target))
-			var/obj/vehicle/sealed/mecha/M = the_target
-			for(var/occupant in M.occupants)
-				if(CanAttack(occupant))
-					return TRUE
 
 		if(istype(the_target, /obj/machinery/porta_turret))
 			var/obj/machinery/porta_turret/P = the_target
@@ -616,7 +610,7 @@
 	search_objects = value
 
 /mob/living/simple_animal/hostile/proc/ListTargetsLazy(_Z)//Step 1, find out what we can see
-	var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))
+	var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret))
 	. = list()
 	for (var/I in SSmobs.clients_by_zlevel[_Z])
 		var/mob/M = I

@@ -81,11 +81,3 @@
 		/obj/item/stack/sheet/mineral/snow{amount = 25} = 2,
 		/obj/item/shovel = 2,
 	)
-
-/obj/effect/spawner/random/exotic/ripley
-	name = "ripley spawner"
-	icon_state = "ripley"
-	loot = list(
-		/obj/structure/mecha_wreckage/ripley = 3,
-		/obj/vehicle/sealed/mecha/ripley/mining = 1,
-	)

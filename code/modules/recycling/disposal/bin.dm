@@ -607,9 +607,6 @@
 /obj/effect/CanEnterDisposals()
 	return
 
-/obj/vehicle/sealed/mecha/CanEnterDisposals()
-	return
-
 /// Handles the signal for the rat king looking inside the disposal
 /obj/machinery/disposal/proc/on_rat_rummage(datum/source, mob/living/basic/regal_rat/king)
 	SIGNAL_HANDLER

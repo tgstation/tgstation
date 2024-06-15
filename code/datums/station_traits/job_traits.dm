@@ -105,9 +105,6 @@
 
 	// hmm our sloth looks funny today
 	qdel(cargo_sloth)
-	// monkey carries the crates, the age of robot is over
-	if(GLOB.cargo_ripley)
-		qdel(GLOB.cargo_ripley)
 
 /datum/station_trait/job/bridge_assistant
 	name = "Bridge Assistant"

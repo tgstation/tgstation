@@ -19,8 +19,6 @@
 	if(isobj(target) && (blocked != 100))
 		var/obj/thing_to_break = target
 		var/damage_to_deal = object_damage
-		if(ismecha(thing_to_break) && mecha_damage)
-			damage_to_deal += mecha_damage
 		if(damage_to_deal)
 			thing_to_break.take_damage(damage_to_deal, BRUTE, BULLET, FALSE)
 	return ..()

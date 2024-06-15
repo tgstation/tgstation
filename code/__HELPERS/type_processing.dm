@@ -24,8 +24,6 @@
 			/mob/living/silicon/robot = "CYBORG",
 
 			/obj/item = "ITEM",
-			/obj/item/mecha_parts/mecha_equipment = "MECHA_EQUIP",
-			/obj/item/mecha_parts/mecha_equipment/weapon = "MECHA_WEAPON",
 			/obj/item/organ = "ORGAN",
 			/obj/item/mod/control = "MODSUIT",
 			/obj/item/mod/module = "MODSUIT_MOD",

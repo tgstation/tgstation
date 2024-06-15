@@ -222,10 +222,6 @@
 		L.adjustFireLoss(10)
 		to_chat(L, span_userdanger("You fall directly into the pool of lava!"))
 
-	// deals damage to mechs
-	for(var/obj/vehicle/sealed/mecha/M in T.contents)
-		M.take_damage(45, BRUTE, MELEE, 1)
-
 	// changes turf to lava temporarily
 	if(!isclosedturf(T) && !islava(T))
 		var/lava_turf = /turf/open/lava/smooth

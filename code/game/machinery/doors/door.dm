@@ -524,9 +524,6 @@
 				//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
 				future_pancake.add_splatter_floor(location)
 				log_combat(src, future_pancake, "crushed")
-		for(var/obj/vehicle/sealed/mecha/mech in get_turf(src)) // Your fancy metal won't save you here!
-			mech.take_damage(DOOR_CRUSH_DAMAGE)
-			log_combat(src, mech, "crushed")
 
 /obj/machinery/door/proc/autoclose()
 	if(!QDELETED(src) && !density && !operating && !locked && !welded && autoclose)

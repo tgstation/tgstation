@@ -462,16 +462,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/mech_recharger
-	name = "Mechbay Recharger Board"
-	desc = "The circuit board for a Mechbay Recharger."
-	id = "mech_recharger"
-	build_path = /obj/item/circuitboard/machine/mech_recharger
-	category = list(
-		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ROBOTICS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
 /datum/design/board/dnascanner
 	name = "DNA Scanner Board"
 	desc = "The circuit board for a DNA Scanner."

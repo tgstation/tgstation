@@ -238,7 +238,6 @@
 	required_points = 6
 	required_atoms = list(
 		/obj/machinery/mecha_part_fabricator = 1,
-		/obj/machinery/mech_bay_recharge_port = 1,
 		/obj/machinery/recharge_station = 1
 	)
 	required_tier = 3
@@ -265,7 +264,6 @@
 	required_atoms = list(
 		/obj/machinery/recharge_station = 1,
 		/obj/machinery/cell_charger = 1,
-		/obj/machinery/mech_bay_recharge_port = 1,
 		/obj/machinery/recharger = 2,
 		/obj/machinery/power/smes = 2,
 		/obj/machinery/chem_dispenser = 3,
@@ -313,21 +311,6 @@
 		/obj/machinery/chem_mass_spec = 3
 	)
 	required_stock_part = /obj/item/stock_parts/micro_laser/ultra
-
-/datum/experiment/scanning/random/mecha_damage_scan
-	name = "Exosuit Materials 1: Stress Failure Test"
-	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to more traditional means."
-	exp_tag = "Scan"
-	possible_types = list(/obj/vehicle/sealed/mecha)
-	total_requirement = 1
-	///Damage percent that each mech needs to be at for a scan to work.
-	var/damage_percent
-
-/datum/experiment/scanning/random/mecha_equipped_scan
-	name = "Exosuit Materials 2: Load Strain Test"
-	description = "Exosuit equipment places unique strain upon the structure of the vehicle. Scan exosuits you have assembled from your exosuit fabricator and fully equipped to accelerate our structural stress simulations."
-	possible_types = list(/obj/vehicle/sealed/mecha)
-	total_requirement = 2
 
 /// Scan for organs you didn't start the round with
 /datum/experiment/scanning/people/novel_organs

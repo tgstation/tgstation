@@ -478,7 +478,7 @@
 //dist_check - set to only shock mobs within 1 of source (vendors, airlocks, etc.)
 //No animations will be performed by this proc.
 /proc/electrocute_mob(mob/living/carbon/victim, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
-	if(!istype(victim) || ismecha(victim.loc))
+	if(!istype(victim))
 		return FALSE //feckin mechs are dumb
 
 	if(dist_check)

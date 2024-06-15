@@ -540,50 +540,6 @@
 	cost = 18
 	purchasable_from = UPLINK_NUKE_OPS
 
-// Mech related gear
-
-/datum/uplink_category/mech
-	name = "Mech Reinforcement"
-	weight = 27
-
-/datum/uplink_item/mech
-	category = /datum/uplink_category/mech
-	surplus = 0
-	purchasable_from = UPLINK_NUKE_OPS
-	restricted = TRUE
-
-// ~~ Mechs ~~
-
-/datum/uplink_item/mech/gygax
-	name = "Dark Gygax Exosuit"
-	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent \
-		for hit-and-run style attacks. Features a scattershot shotgun, armor boosters against melee and ranged attacks, and ion thrusters."
-	item = /obj/vehicle/sealed/mecha/gygax/dark/loaded
-	cost = 60
-
-/datum/uplink_item/mech/mauler
-	name = "Mauler Exosuit"
-	desc = "A massive and incredibly deadly military-grade exosuit. Features long-range targeting, thrust vectoring \
-		and deployable smoke. Comes equipped with an LMG, scattershot carbine, missile rack, and an antiprojectile armor booster."
-	item = /obj/vehicle/sealed/mecha/marauder/mauler/loaded
-	cost = 100
-
-// ~~ Mech Support ~~
-
-/datum/uplink_item/mech/support_bag
-	name = "Mech Support Kit Bag"
-	desc = "A duffel bag containing ammo for four full reloads of the scattershotm which is equipped on standard Dark Gygax and Mauler exosuits. Also comes with some support equipment for maintaining the mech, including tools and an inducer."
-	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mech
-	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS
-
-/datum/uplink_item/mech/support_bag/mauler
-	name = "Mauler Ammo Bag"
-	desc = "A duffel bag containing ammo for three full reloads of the LMG, scattershot carbine, and SRM-8 missile laucher that are equipped on a standard Mauler exosuit."
-	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler
-	cost = 6
-	purchasable_from = UPLINK_NUKE_OPS
-
 // Stealthy Tools
 
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke

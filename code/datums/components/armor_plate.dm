@@ -24,8 +24,6 @@
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(applyplate))
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(dropplates))
-	if(istype(parent, /obj/vehicle/sealed/mecha/ripley))
-		RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_mech_overlays))
 
 	if(maxamount)
 		src.maxamount = maxamount
@@ -41,20 +39,10 @@
 /datum/component/armor_plate/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	//upgrade_item could also be typecast here instead
-	if(ismecha(parent))
-		if(amount)
-			if(amount < maxamount)
-				examine_list += span_notice("Its armor is enhanced with [amount] [upgrade_name].")
-			else
-				examine_list += span_notice("It's wearing a fearsome carapace entirely composed of [upgrade_name] - its pilot must be an experienced monster hunter.")
-		else
-			examine_list += span_notice("It has attachment points for strapping monster hide on for added protection.")
+	if(amount)
+		examine_list += span_notice("It has been strengthened with [amount]/[maxamount] [upgrade_name].")
 	else
-		if(amount)
-			examine_list += span_notice("It has been strengthened with [amount]/[maxamount] [upgrade_name].")
-		else
-			examine_list += span_notice("It can be strengthened with up to [maxamount] [upgrade_name].")
+		examine_list += span_notice("It can be strengthened with up to [maxamount] [upgrade_name].")
 
 /datum/component/armor_plate/proc/applyplate(datum/source, obj/item/our_upgrade_item, mob/user, params)
 	SIGNAL_HANDLER
@@ -77,31 +65,13 @@
 	amount++
 	target_for_upgrading.set_armor(target_for_upgrading.get_armor().add_other_armor(armor_mod))
 
-	if(ismecha(target_for_upgrading))
-		var/obj/vehicle/sealed/mecha/mecha_for_upgrading = target_for_upgrading
-		mecha_for_upgrading.update_appearance()
-		to_chat(user, span_info("You strengthen [mecha_for_upgrading], improving its resistance against attacks."))
-	else
-		SEND_SIGNAL(target_for_upgrading, COMSIG_ARMOR_PLATED, amount, maxamount)
-		if(upgrade_prefix && !have_upgraded)
-			target_for_upgrading.name = "[upgrade_prefix] [target_for_upgrading.name]"
-			have_upgraded = TRUE
-		to_chat(user, span_info("You strengthen [target_for_upgrading], improving its resistance against attacks."))
+	SEND_SIGNAL(target_for_upgrading, COMSIG_ARMOR_PLATED, amount, maxamount)
+	if(upgrade_prefix && !have_upgraded)
+		target_for_upgrading.name = "[upgrade_prefix] [target_for_upgrading.name]"
+		have_upgraded = TRUE
+	to_chat(user, span_info("You strengthen [target_for_upgrading], improving its resistance against attacks."))
 
 /datum/component/armor_plate/proc/dropplates(datum/source, force)
 	SIGNAL_HANDLER
 
-	if(ismecha(parent)) //items didn't drop the plates before and it causes erroneous behavior for the time being with collapsible helmets
-		for(var/i in 1 to amount)
-			new upgrade_item(get_turf(parent))
 
-/datum/component/armor_plate/proc/apply_mech_overlays(obj/vehicle/sealed/mecha/mech, list/overlays)
-	SIGNAL_HANDLER
-
-	if(amount)
-		var/overlay_string = "ripley-g"
-		if(amount >= 3)
-			overlay_string += "-full"
-		if(!LAZYLEN(mech.occupants))
-			overlay_string += "-open"
-		overlays += overlay_string

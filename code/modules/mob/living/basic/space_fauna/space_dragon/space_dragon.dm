@@ -135,12 +135,6 @@
 	overlay.appearance_flags = RESET_COLOR
 	. += overlay
 
-/mob/living/basic/space_dragon/melee_attack(obj/vehicle/sealed/mecha/target, list/modifiers, ignore_cooldown)
-	. = ..()
-	if (!. || !ismecha(target))
-		return
-	target.take_damage(obj_damage, BRUTE, MELEE)
-
 /// Before we attack something, check if we want to do something else instead
 /mob/living/basic/space_dragon/proc/pre_attack(mob/living/source, atom/target)
 	SIGNAL_HANDLER

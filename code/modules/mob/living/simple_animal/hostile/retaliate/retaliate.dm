@@ -9,10 +9,6 @@
 			return L
 		else
 			enemies -= WEAKREF(L)
-	else if(ismecha(A))
-		var/obj/vehicle/sealed/mecha/M = A
-		if(LAZYLEN(M.occupants))
-			return A
 
 /mob/living/simple_animal/hostile/retaliate/ListTargets()
 	if(!enemies.len)
@@ -39,11 +35,6 @@
 			var/mob/living/M = A
 			if(faction_check_atom(M) && attack_same || !faction_check_atom(M))
 				enemies |= WEAKREF(M)
-		else if(ismecha(A))
-			var/obj/vehicle/sealed/mecha/M = A
-			if(LAZYLEN(M.occupants))
-				enemies |= WEAKREF(M)
-				add_enemies(M.occupants)
 
 	for(var/mob/living/simple_animal/hostile/retaliate/H in around)
 		if(faction_check_atom(H) && !attack_same && !H.attack_same)

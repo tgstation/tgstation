@@ -94,9 +94,5 @@
 	for(var/mob/living/mob_target in oview(my_turf, 7)) // They probably cannot see us if we cannot see them... can they?
 		if(mob_target.client && !mob_target.is_blind() && !mob_target.has_unlimited_silicon_privilege && !HAS_TRAIT(mob_target, TRAIT_UNOBSERVANT))
 			return TRUE
-	for(var/obj/vehicle/sealed/mecha/mecha_mob_target in oview(my_turf, 7))
-		for(var/mob/mechamob_target as anything in mecha_mob_target.occupants)
-			if(mechamob_target.client && !mechamob_target.is_blind() && !HAS_TRAIT(mechamob_target, TRAIT_UNOBSERVANT))
-				return TRUE
 
 	return FALSE

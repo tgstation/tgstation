@@ -307,18 +307,6 @@
 	restricted_roles = list(JOB_CHAPLAIN)
 	purchasable_from = ~UPLINK_SPY
 
-/datum/uplink_item/role_restricted/concealed_weapon_bay
-	name = "Concealed Weapon Bay"
-	desc = "A modification for non-combat exosuits that allows them to equip one piece of equipment designed for combat units. \
-			Attach to an exosuit with an existing equipment to disguise the bay as that equipment. The sacrificed equipment will be lost.\
-			Alternatively, you can attach the bay to an empty equipment slot, but the bay will not be concealed. Once the bay is \
-			attached, an exosuit weapon can be fitted inside."
-	progression_minimum = 30 MINUTES
-	item = /obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay
-	cost = 3
-	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
-	surplus = 15
-
 /datum/uplink_item/role_restricted/spider_injector
 	name = "Australicus Slime Mutator"
 	desc = "Crikey mate, it's been a wild travel from the Australicus sector but we've managed to get \
@@ -378,15 +366,3 @@
 	restricted_roles = list(JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
 	restricted = TRUE
 	refundable = FALSE
-
-
-/datum/uplink_item/role_restricted/reticence
-	name = "Reticence Cloaked Assasination exosuit"
-	desc = "A silent, fast, and nigh-invisible but exceptionally fragile miming exosuit! \
-	fully equipped with a near-silenced pistol, and a RCD for your best assasination needs, Does not include tools, No refunds."
-	item = /obj/vehicle/sealed/mecha/reticence/loaded
-	cost = 20
-	restricted_roles = list(JOB_MIME)
-	restricted = TRUE
-	refundable = FALSE
-	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY

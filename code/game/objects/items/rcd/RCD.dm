@@ -521,57 +521,6 @@
 	has_ammobar = FALSE
 	upgrade = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
 
-///How much charge is used up for each matter unit.
-#define MASS_TO_ENERGY (0.016 * STANDARD_CELL_CHARGE)
-
-/obj/item/construction/rcd/exosuit
-	name = "mounted RCD"
-	desc = "An exosuit-mounted Rapid Construction Device."
-	max_matter = INFINITY // mass-energy equivalence go brrrrrr
-	canRturf = TRUE
-	ranged = TRUE
-	has_ammobar = FALSE
-	resistance_flags = FIRE_PROOF | INDESTRUCTIBLE // should NOT be destroyed unless the equipment is destroyed
-	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON | DROPDEL // already qdeleted in the equipment's Destroy() but you can never be too sure
-	delay_mod = 0.5
-
-/obj/item/construction/rcd/exosuit/ui_status(mob/user, datum/ui_state/state)
-	if(ismecha(owner))
-		return owner.ui_status(user)
-	return UI_CLOSE
-
-/obj/item/construction/rcd/exosuit/get_matter(mob/user)
-	if(silo_link)
-		return ..()
-	if(!ismecha(owner))
-		return 0
-	var/obj/vehicle/sealed/mecha/gundam = owner
-	return round(gundam.get_charge() / MASS_TO_ENERGY)
-
-/obj/item/construction/rcd/exosuit/useResource(amount, mob/user)
-	if(silo_link)
-		return ..()
-	if(!ismecha(owner))
-		return 0
-	var/obj/vehicle/sealed/mecha/gundam = owner
-	if(!gundam.use_energy(amount * MASS_TO_ENERGY))
-		gundam.balloon_alert(user, "insufficient charge!")
-		return FALSE
-	return TRUE
-
-/obj/item/construction/rcd/exosuit/checkResource(amount, mob/user)
-	if(silo_link)
-		return ..()
-	if(!ismecha(owner))
-		return 0
-	var/obj/vehicle/sealed/mecha/gundam = owner
-	if(!gundam.has_charge(amount * MASS_TO_ENERGY))
-		gundam.balloon_alert(user, "insufficient charge!")
-		return FALSE
-	return TRUE
-
-#undef MASS_TO_ENERGY
-
 #undef FREQUENT_USE_DEBUFF_MULTIPLIER
 
 /obj/item/rcd_ammo

@@ -121,17 +121,6 @@
 	if(operating || !density)
 		return
 	if(!ismob(AM))
-		if(ismecha(AM))
-			var/obj/vehicle/sealed/mecha/mecha = AM
-			for(var/O in mecha.occupants)
-				var/mob/living/occupant = O
-				if(elevator_mode && elevator_status == LIFT_PLATFORM_UNLOCKED)
-					open()
-					return
-				if(allowed(occupant))
-					open_and_close()
-					return
-			do_animate("deny")
 		return
 	if(!SSticker)
 		return

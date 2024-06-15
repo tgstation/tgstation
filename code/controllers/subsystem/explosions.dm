@@ -337,18 +337,8 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 	// mecha, mob or an object such as the gun itself. Handle each uniquely.
 	if(isprojectile(explosion_cause))
 		var/obj/projectile/fired_projectile = explosion_cause
-		if(ismecha(fired_projectile.firer))
-			var/obj/vehicle/sealed/mecha/firing_mecha = fired_projectile.firer
-			var/list/mob/drivers = firing_mecha.return_occupants()
-			if(length(drivers))
-				who_did_it = "\[Mecha drivers:"
-				who_did_it_game_log = "\[Mecha drivers:"
-				for(var/mob/driver in drivers)
-					who_did_it += " [ADMIN_LOOKUPFLW(driver)]"
-					who_did_it_game_log = " [key_name(driver)]"
-				who_did_it += "\]"
-				who_did_it_game_log += "\]"
-		else if(ismob(fired_projectile.firer))
+
+		if(ismob(fired_projectile.firer))
 			who_did_it = "\[Projectile firer: [ADMIN_LOOKUPFLW(fired_projectile.firer)]\]"
 			who_did_it_game_log = "\[Projectile firer: [key_name(fired_projectile.firer)]\]"
 		else

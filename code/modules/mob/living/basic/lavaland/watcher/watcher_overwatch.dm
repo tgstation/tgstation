@@ -28,12 +28,6 @@
 /datum/action/cooldown/mob_cooldown/watcher_overwatch/PreActivate(atom/target)
 	if (target == owner)
 		return
-	if (ismecha(target))
-		var/obj/vehicle/sealed/mecha/mech = target
-		var/list/drivers = mech.return_drivers()
-		if (!length(drivers))
-			return
-		target = drivers[1]
 	if (!isliving(target))
 		return
 	if (get_dist(owner, target) > max_range)
@@ -71,12 +65,9 @@
 	var/static/list/forbidden_actions = list(
 		COMSIG_MOB_ABILITY_FINISHED,
 		COMSIG_MOB_ATTACK_HAND,
-		COMSIG_MOB_DROVE_MECH,
 		COMSIG_MOB_FIRED_GUN,
 		COMSIG_MOB_ITEM_ATTACK,
 		COMSIG_MOB_THROW,
-		COMSIG_MOB_USED_MECH_EQUIPMENT,
-		COMSIG_MOB_USED_MECH_MELEE,
 		COMSIG_MOVABLE_MOVED,
 	)
 
@@ -100,7 +91,7 @@
 	owner.do_alert_animation()
 	owner.Immobilize(0.25 SECONDS) // Just long enough that they don't trigger it by mistake
 	owner.playsound_local(owner, 'sound/machines/chime.ogg', 50, TRUE)
-	var/atom/beam_origin = ismecha(owner.loc) ? owner.loc : owner
+	var/atom/beam_origin = owner
 	link = beam_origin.Beam(watcher, icon_state = "r_beam", override_target_pixel_x = 0)
 	RegisterSignals(owner, forbidden_actions, PROC_REF(opportunity_attack))
 	RegisterSignals(owner, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_participant_died))

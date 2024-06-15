@@ -221,27 +221,6 @@
 	if(victim.stat == DEAD && (victim.butcher_results || victim.guaranteed_butcher_results))
 		on_butchering(parent, victim)
 
-/datum/component/butchering/mecha
-
-/datum/component/butchering/mecha/RegisterWithParent()
-	. = ..()
-	RegisterSignal(parent, COMSIG_MECHA_EQUIPMENT_ATTACHED, PROC_REF(enable_butchering))
-	RegisterSignal(parent, COMSIG_MECHA_EQUIPMENT_DETACHED, PROC_REF(disable_butchering))
-	RegisterSignal(parent, COMSIG_MECHA_DRILL_MOB, PROC_REF(on_drill))
-
-/datum/component/butchering/mecha/UnregisterFromParent()
-	. = ..()
-	UnregisterSignal(parent, list(
-		COMSIG_MECHA_DRILL_MOB,
-		COMSIG_MECHA_EQUIPMENT_ATTACHED,
-		COMSIG_MECHA_EQUIPMENT_DETACHED,
-	))
-
-///When we are ready to drill through a mob
-/datum/component/butchering/mecha/proc/on_drill(datum/source, obj/vehicle/sealed/mecha/chassis, mob/living/target)
-	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(on_butchering), chassis, target)
-
 /datum/component/butchering/wearable
 
 /datum/component/butchering/wearable/RegisterWithParent()

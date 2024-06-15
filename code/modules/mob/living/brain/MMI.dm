@@ -9,7 +9,6 @@
 	var/obj/item/radio/radio = null //Let's give it a radio.
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
-	var/obj/vehicle/sealed/mecha = null //This does not appear to be used outside of reference in mecha.dm.
 	var/obj/item/organ/internal/brain/brain = null //The actual brain
 	var/datum/ai_laws/laws = new()
 	var/force_replace_ai_name = FALSE
@@ -24,7 +23,6 @@
 	laws.set_laws_config()
 
 /obj/item/mmi/Destroy()
-	set_mecha(null)
 	QDEL_NULL(brainmob)
 	QDEL_NULL(brain)
 	QDEL_NULL(radio)
@@ -234,26 +232,10 @@
 	SEND_SIGNAL(src, COMSIG_MMI_SET_BRAINMOB, new_brainmob)
 	brainmob = new_brainmob
 	if(new_brainmob)
-		if(mecha)
-			new_brainmob.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
-		else
-			new_brainmob.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
+		new_brainmob.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 	if(.)
 		var/mob/living/brain/old_brainmob = .
 		old_brainmob.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
-
-
-/// Proc to hook behavior associated to the change in value of the [obj/vehicle/sealed/var/mecha] variable.
-/obj/item/mmi/proc/set_mecha(obj/vehicle/sealed/mecha/new_mecha)
-	if(mecha == new_mecha)
-		return FALSE
-	. = mecha
-	mecha = new_mecha
-	if(new_mecha)
-		if(!. && brainmob) // There was no mecha, there now is, and we have a brain mob that is no longer unaided.
-			brainmob.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
-	else if(. && brainmob && immobilize) // There was a mecha, there no longer is one, and there is a brain mob that is now again unaided.
-		brainmob.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 
 
 /obj/item/mmi/proc/replacement_ai_name()

@@ -696,30 +696,6 @@
 	icon_state = "duffel-syndieammo"
 	inhand_icon_state = "duffel-syndieammo"
 
-/obj/item/storage/backpack/duffelbag/syndie/ammo/mech
-	desc = "A large duffel bag, packed to the brim with various exosuit ammo."
-
-/obj/item/storage/backpack/duffelbag/syndie/ammo/mech/PopulateContents()
-	new /obj/item/mecha_ammo/scattershot(src)
-	new /obj/item/mecha_ammo/scattershot(src)
-	new /obj/item/mecha_ammo/scattershot(src)
-	new /obj/item/mecha_ammo/scattershot(src)
-	new /obj/item/storage/belt/utility/syndicate(src)
-
-/obj/item/storage/backpack/duffelbag/syndie/ammo/mauler
-	desc = "A large duffel bag, packed to the brim with various exosuit ammo."
-
-/obj/item/storage/backpack/duffelbag/syndie/ammo/mauler/PopulateContents()
-	new /obj/item/mecha_ammo/lmg(src)
-	new /obj/item/mecha_ammo/lmg(src)
-	new /obj/item/mecha_ammo/lmg(src)
-	new /obj/item/mecha_ammo/scattershot(src)
-	new /obj/item/mecha_ammo/scattershot(src)
-	new /obj/item/mecha_ammo/scattershot(src)
-	new /obj/item/mecha_ammo/missiles_srm(src)
-	new /obj/item/mecha_ammo/missiles_srm(src)
-	new /obj/item/mecha_ammo/missiles_srm(src)
-
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
 	desc = "A large duffel bag containing a medical equipment, a Donksoft LMG, a big jumbo box of riot darts, and a magboot MODsuit module."
 

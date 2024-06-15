@@ -974,14 +974,6 @@
 		/datum/stock_part/servo = 2,
 		/datum/stock_part/micro_laser = 2)
 
-/obj/item/circuitboard/machine/mech_recharger
-	name = "Mechbay Recharger"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/mech_bay_recharge_port
-	req_components = list(
-		/obj/item/stack/cable_coil = 2,
-		/datum/stock_part/capacitor = 5)
-
 /obj/item/circuitboard/machine/mechfab
 	name = "Exosuit Fabricator"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
@@ -1081,12 +1073,6 @@
 		/datum/stock_part/micro_laser = 1,
 		/obj/item/stack/cable_coil = 2,
 	)
-
-/obj/item/circuitboard/machine/mechpad
-	name = "Mecha Orbital Pad"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/mechpad
-	req_components = list()
 
 /obj/item/circuitboard/machine/botpad
 	name = "Bot launchpad"

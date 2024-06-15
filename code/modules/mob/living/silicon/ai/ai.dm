@@ -523,31 +523,6 @@
 	if(href_list["track"])
 		ai_tracking_tool.track_name(src, href_list["track"])
 		return
-	if (href_list["ai_take_control"]) //Mech domination
-		var/obj/vehicle/sealed/mecha/M = locate(href_list["ai_take_control"]) in GLOB.mechas_list
-		if (!M)
-			return
-
-		var/mech_has_controlbeacon = FALSE
-		for(var/obj/item/mecha_parts/mecha_tracking/ai_control/A in M.trackers)
-			mech_has_controlbeacon = TRUE
-			break
-		if(!can_dominate_mechs && !mech_has_controlbeacon)
-			message_admins("Warning: possible href exploit by [key_name(usr)] - attempted control of a mecha without can_dominate_mechs or a control beacon in the mech.")
-			usr.log_message("possibly attempting href exploit - attempted control of a mecha without can_dominate_mechs or a control beacon in the mech.", LOG_ADMIN)
-			return
-
-		if(controlled_equipment)
-			to_chat(src, span_warning("You are already loaded into an onboard computer!"))
-			return
-		if(!GLOB.cameranet.checkCameraVis(M))
-			to_chat(src, span_warning("Exosuit is no longer near active cameras."))
-			return
-		if(!isturf(loc))
-			to_chat(src, span_warning("You aren't in your core!"))
-			return
-		if(M)
-			M.transfer_ai(AI_MECH_HACK, src, usr) //Called om the mech itself.
 	if(href_list["show_paper_note"])
 		var/obj/item/paper/paper_note = locate(href_list["show_paper_note"])
 		if(!paper_note)

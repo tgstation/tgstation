@@ -716,15 +716,6 @@ Difficulty: Hard
 			L.adjustBruteLoss(damage)
 		if(caster)
 			log_combat(caster, L, "struck with a [name]")
-	for(var/obj/vehicle/sealed/mecha/M in T.contents - hit_things) //also damage mechs.
-		hit_things += M
-		for(var/O in M.occupants)
-			var/mob/living/occupant = O
-			if(friendly_fire_check && caster?.faction_check_atom(occupant))
-				continue
-			to_chat(occupant, span_userdanger("Your [M.name] is struck by a [name]!"))
-			playsound(M,'sound/weapons/sear.ogg', 50, TRUE, -4)
-			M.take_damage(damage, BURN, 0, 0)
 
 /obj/effect/temp_visual/hierophant/blast/visual
 	icon_state = "hierophant_blast"

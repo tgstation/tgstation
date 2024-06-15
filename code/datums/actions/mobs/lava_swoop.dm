@@ -105,8 +105,6 @@
 			var/throwtarget = get_edge_target_turf(owner, throw_dir)
 			L.throw_at(throwtarget, 3)
 			owner.visible_message(span_warning("[L] is thrown clear of [owner]!"))
-	for(var/obj/vehicle/sealed/mecha/M in orange(1, owner))
-		M.take_damage(75, BRUTE, MELEE, 1)
 
 	for(var/mob/M in range(7, owner))
 		shake_camera(M, 15, 1)
@@ -164,9 +162,7 @@
 					empty += pick(((RANGE_TURFS(2, L) - RANGE_TURFS(1, L)) & turfs) - empty) // picks a turf within 2 of the creature not outside or in the shield
 					any_attack = TRUE
 					mobs_with_clients |= L
-			for(var/obj/vehicle/sealed/mecha/M in T.contents)
-				empty += pick(((RANGE_TURFS(2, M) - RANGE_TURFS(1, M)) & turfs) - empty)
-				any_attack = TRUE
+
 		if(!any_attack) // nothing to attack in the arena, time for enraged attack if we still have a cliented target.
 			for(var/obj/effect/temp_visual/drakewall/D in drakewalls)
 				qdel(D)

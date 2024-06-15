@@ -190,8 +190,6 @@
 
 	if(usr.incapacitated(IGNORE_STASIS))
 		return TRUE
-	if(ismecha(usr.loc)) // stops inventory actions in a mech
-		return TRUE
 
 	if(hud?.mymob && slot_id)
 		var/obj/item/inv_item = hud.mymob.get_item_by_slot(slot_id)
@@ -279,8 +277,6 @@
 	if(world.time <= user.next_move)
 		return TRUE
 	if(user.incapacitated())
-		return TRUE
-	if (ismecha(user.loc)) // stops inventory actions in a mech
 		return TRUE
 
 	if(user.active_hand_index == held_index)
@@ -455,8 +451,6 @@
 	if(world.time <= usr.next_move)
 		return TRUE
 	if(usr.incapacitated())
-		return TRUE
-	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
 
 	var/obj/item/inserted = usr.get_active_held_item()

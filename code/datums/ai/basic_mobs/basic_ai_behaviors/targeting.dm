@@ -3,7 +3,7 @@ GLOBAL_LIST_EMPTY_TYPED(hostile_machines, /atom)
 /// Static typecache list of things we are interested in
 /// Consider this a union of the for loop and the hearers call from below
 /// Must be kept up to date with the contents of hostile_machines
-GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/porta_turret, /obj/vehicle/sealed/mecha)))
+GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/porta_turret)))
 
 /datum/ai_behavior/find_potential_targets
 	action_cooldown = 2 SECONDS

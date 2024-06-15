@@ -33,7 +33,7 @@
 		return ..()
 	var/mob/living/target = controller.blackboard[target_key]
 	// Interrupt attack chain to use tentacles, unless the target is already tentacled
-	if (ismecha(target) || (isliving(target) && !target.has_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled)))
+	if (isliving(target) && !target.has_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled))
 		var/datum/action/cooldown/using_action = controller.blackboard[BB_GOLIATH_TENTACLES]
 		if (using_action?.IsAvailable())
 			return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
@@ -45,7 +45,7 @@
 
 /datum/ai_planning_subtree/targeted_mob_ability/goliath_tentacles/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/target = controller.blackboard[target_key]
-	if (!(isliving(target) || ismecha(target)) || (isliving(target) && target.has_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled)))
+	if (!isliving(target) || (isliving(target) && target.has_status_effect(/datum/status_effect/incapacitating/stun/goliath_tentacled)))
 		return // Target can be an item or already grabbed, we don't want to tentacle those
 	var/time_on_target = controller.blackboard[BB_BASIC_MOB_HAS_TARGET_TIME] || 0
 	if (time_on_target < MIN_TIME_TO_TENTACLE)

@@ -93,7 +93,6 @@
 	cost = CARGO_CRATE_VALUE * 0.025
 	unit_name = "radio"
 	export_types = list(/obj/item/radio)
-	exclude_types = list(/obj/item/radio/mech)
 
 //Advanced/Power Tools.
 /datum/export/weldingtool/experimental

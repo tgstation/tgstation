@@ -389,16 +389,6 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/launchpad
 
-/obj/item/circuitboard/computer/mech_bay_power_console
-	name = "Mech Bay Power Control Console"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/mech_bay_power_console
-
-/obj/item/circuitboard/computer/mecha_control
-	name = "Exosuit Control Console"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/mecha
-
 /obj/item/circuitboard/computer/rdconsole
 	name = "R&D Console"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
@@ -433,11 +423,6 @@
 	name = "DNA Console"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/scan_consolenew
-
-/obj/item/circuitboard/computer/mechpad
-	name = "Mecha Orbital Pad Console"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/mechpad
 
 //Security
 

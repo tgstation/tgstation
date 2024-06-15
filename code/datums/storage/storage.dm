@@ -715,9 +715,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	SIGNAL_HANDLER
 
 	. = COMPONENT_CANCEL_MOUSEDROP_ONTO
-	if(ismecha(user.loc) || !user.canUseStorage())
-		return
-
 	if(istype(over_object, /atom/movable/screen/inventory/hand))
 		if(real_location.loc != user || !user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
 			return

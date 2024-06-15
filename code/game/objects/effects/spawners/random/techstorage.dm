@@ -121,7 +121,6 @@
 /obj/effect/spawner/random/techstorage/rnd_secure_all
 	name = "secure RnD circuit board spawner"
 	loot = list(
-		/obj/item/circuitboard/computer/mecha_control,
 		/obj/item/circuitboard/computer/apc_control,
 		/obj/item/circuitboard/computer/robotics,
 	)

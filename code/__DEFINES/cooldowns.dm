@@ -29,15 +29,6 @@
 #define COOLDOWN_BORG_SELF_REPAIR "borg_self_repair"
 #define COOLDOWN_EXPRESSPOD_CONSOLE "expresspod_console"
 
-//Mecha cooldowns
-#define COOLDOWN_MECHA_MESSAGE "mecha_message"
-#define COOLDOWN_MECHA_EQUIPMENT(type) ("mecha_equip_[type]")
-#define COOLDOWN_MECHA_MELEE_ATTACK "mecha_melee"
-#define COOLDOWN_MECHA_SMOKE "mecha_smoke"
-#define COOLDOWN_MECHA_SKYFALL "mecha_skyfall"
-#define COOLDOWN_MECHA_MISSILE_STRIKE "mecha_missile_strike"
-#define COOLDOWN_MECHA_CABIN_SEAL "mecha_cabin_seal"
-
 //car cooldowns
 #define COOLDOWN_CAR_HONK "car_honk"
 

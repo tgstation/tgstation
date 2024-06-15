@@ -85,7 +85,7 @@
 		if(!living_moving_through_field.incorporeal_move)
 			shock(considered_atom)
 
-	if(ismachinery(considered_atom) || isstructure(considered_atom) || ismecha(considered_atom))
+	if(ismachinery(considered_atom) || isstructure(considered_atom))
 		bump_field(considered_atom)
 
 /obj/machinery/field/containment/proc/set_master(master1,master2)
@@ -131,7 +131,7 @@
 
 /obj/machinery/field/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(has_shocked || isliving(mover) || ismachinery(mover) || isstructure(mover) || ismecha(mover))
+	if(has_shocked || isliving(mover) || ismachinery(mover) || isstructure(mover))
 		return FALSE
 
 /obj/machinery/field/proc/shock(mob/living/user)

@@ -255,36 +255,6 @@
 		do_sparks(5, cardinal_only = FALSE, source = hacking_module.mod)
 	hacking_module.charge_message(src, drain_total)
 
-//MECH//
-/obj/vehicle/sealed/mecha/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!ninja || !hacking_module)
-		return NONE
-	to_chat(occupants, "[icon2html(src, occupants)][span_danger("Warning: Unauthorized access through sub-route 4, block H, detected.")]")
-	INVOKE_ASYNC(src, PROC_REF(ninjadrain_charge), ninja, hacking_module)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
-
-/obj/vehicle/sealed/mecha/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	var/maxcapacity = FALSE //Safety check
-	var/drain = 0 //Drain amount
-	var/drain_total = 0
-	if(get_charge())
-		while(cell.charge > 0 && !maxcapacity)
-			drain = rand(NINJA_MIN_DRAIN, NINJA_MAX_DRAIN)
-			if(cell.charge < drain)
-				drain = cell.charge
-			if(hacking_module.mod.get_charge() + drain > hacking_module.mod.get_max_charge())
-				drain = hacking_module.mod.get_max_charge() - hacking_module.mod.get_charge()
-				maxcapacity = TRUE
-			if (do_after(ninja, 1 SECONDS, target = src, hidden = TRUE))
-				spark_system.start()
-				playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-				cell.use(drain)
-				hacking_module.mod.add_charge(drain)
-				drain_total += drain
-			else
-				break
-	hacking_module.charge_message(src, drain_total)
-
 //BORG//
 /mob/living/silicon/robot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module || (ROLE_NINJA in faction))

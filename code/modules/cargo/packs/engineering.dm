@@ -11,29 +11,6 @@
 	contains = list(/obj/machinery/shieldgen = 2)
 	crate_name = "anti-breach shield projector crate"
 
-/datum/supply_pack/engineering/ripley
-	name = "APLU MK-I Crate"
-	desc = "A do-it-yourself kit for building an ALPU MK-I \"Ripley\", designed for lifting, \
-		carrying heavy equipment, and other station tasks. Batteries not included."
-	cost = CARGO_CRATE_VALUE * 10
-	access_view = ACCESS_ROBOTICS
-	contains = list(/obj/item/mecha_parts/chassis/ripley,
-					/obj/item/mecha_parts/part/ripley_torso,
-					/obj/item/mecha_parts/part/ripley_right_arm,
-					/obj/item/mecha_parts/part/ripley_left_arm,
-					/obj/item/mecha_parts/part/ripley_right_leg,
-					/obj/item/mecha_parts/part/ripley_left_leg,
-					/obj/item/stock_parts/capacitor,
-					/obj/item/stock_parts/scanning_module,
-					/obj/item/stock_parts/servo,
-					/obj/item/circuitboard/mecha/ripley/main,
-					/obj/item/circuitboard/mecha/ripley/peripherals,
-					/obj/item/mecha_parts/mecha_equipment/drill,
-					/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
-				)
-	crate_name= "\improper APLU MK-I kit"
-	crate_type = /obj/structure/closet/crate/science/robo
-
 /datum/supply_pack/engineering/conveyor
 	name = "Conveyor Assembly Crate"
 	desc = "Keep production moving along with thirty conveyor belts. Conveyor switch included. \

@@ -1311,9 +1311,6 @@
 
 /// Returns whether or not the carbon should be able to be shocked
 /mob/living/carbon/proc/should_electrocute(power_source)
-	if (ismecha(loc))
-		return FALSE
-
 	if (wearing_shock_proof_gloves())
 		return FALSE
 

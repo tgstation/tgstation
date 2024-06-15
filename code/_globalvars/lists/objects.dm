@@ -7,9 +7,6 @@ GLOBAL_LIST_EMPTY(portals)
 /// List of all curtains for button tracking
 GLOBAL_LIST_EMPTY(curtains)
 
-/// List of all mechs for hostile mob target tracking
-GLOBAL_LIST_EMPTY(mechas_list)
-
 /// List of all atoms that can call the shuttle, for automatic shuttle calls when there are none.
 GLOBAL_LIST_EMPTY(shuttle_caller_list)
 

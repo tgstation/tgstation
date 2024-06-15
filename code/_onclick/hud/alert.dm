@@ -769,13 +769,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(target_turf)
 		ai_owner.eyeobj.setLoc(target_turf)
 
-//MECHS
-
-/atom/movable/screen/alert/low_mech_integrity
-	name = "Mech Damaged"
-	desc = "Mech integrity is low."
-	icon_state = "low_mech_integrity"
-
 
 //GHOSTS
 //TODO: expand this system to replace the pollCandidates/CheckAntagonist/"choose quickly"/etc Yes/No messages

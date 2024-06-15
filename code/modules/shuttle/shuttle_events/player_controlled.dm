@@ -24,23 +24,6 @@
 	new_mob.ckey = chosen_one.ckey
 	post_spawn(new_mob)
 
-///BACK FOR REVENGE!!!
-/datum/shuttle_event/simple_spawner/player_controlled/alien_queen
-	name = "ALIEN QUEEN! (Kinda dangerous!)"
-	spawning_list = list(/mob/living/carbon/alien/adult/royal/queen = 1, /obj/vehicle/sealed/mecha/ripley = 1)
-	spawning_flags = SHUTTLE_EVENT_HIT_SHUTTLE
-
-	event_probability = 0.2
-	spawn_probability_per_process = 10
-	activation_fraction = 0.5
-
-	spawn_anyway_if_no_player = FALSE
-	ghost_alert_string = "Would you like to be an alien queen shot at the shuttle?"
-	remove_from_list_when_spawned = TRUE
-	self_destruct_when_empty = TRUE
-
-	role_type = ROLE_ALIEN
-
 ///Spawns three player controlled carp!! Deadchats final chance to wreak havoc, probably really not that dangerous if even one person has a laser gun
 /datum/shuttle_event/simple_spawner/player_controlled/carp
 	name = "Three player controlled carp! (Little dangerous!)"

@@ -91,8 +91,6 @@
 					SwitchState()
 			else
 				SwitchState()
-	else if(ismecha(user))
-		SwitchState()
 
 /obj/structure/mineral_door/proc/SwitchState()
 	if(door_opened)

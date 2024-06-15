@@ -62,12 +62,6 @@
 		hit_list |= barbecued
 		on_burn_mob(barbecued, source)
 
-	for(var/obj/vehicle/sealed/mecha/robotron in fire_turf.contents)
-		if(robotron in hit_list)
-			continue
-		hit_list |= robotron
-		robotron.take_damage(mech_damage, BURN, FIRE)
-
 	return fire_hotspot
 
 /// Do something unpleasant to someone we set on fire
