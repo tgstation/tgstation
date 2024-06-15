@@ -142,6 +142,11 @@
 		spawned_item = spawn_path
 	if(refundable)
 		spawned_item.AddElement(/datum/element/uplink_reimburse, (refund_amount ? refund_amount : cost))
+	if(category != /datum/uplink_category/stealthy_tools) // Things that shouldn't be detectable as contraband on the station.
+		ADD_TRAIT(spawned_item, TRAIT_CONTRABAND, TRAIT_GENERIC)
+		if(spawned_item.contents)
+			for(var/obj/contained as anything in spawned_item.contents)
+				ADD_TRAIT(contained, TRAIT_CONTRABAND, TRAIT_GENERIC)
 	var/mob/living/carbon/human/human_user = user
 	if(istype(human_user) && isitem(spawned_item) && human_user.put_in_hands(spawned_item))
 		to_chat(human_user, span_boldnotice("[spawned_item] materializes into your hands!"))

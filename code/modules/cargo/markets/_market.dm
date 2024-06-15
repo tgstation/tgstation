@@ -40,9 +40,8 @@
  * @param method The shipping method to use to get the item on the station.
  * @param uplink The uplink object that is buying the item.
  * @param user The mob that is buying the item.
- * @param legal_status The legal status of the market. Determines if the item to be spawned is contraband.
  */
-/datum/market/proc/purchase(identifier, category, method, obj/item/market_uplink/uplink, user, legal_status)
+/datum/market/proc/purchase(identifier, category, method, obj/item/market_uplink/uplink, user)
 	var/datum/market_item/item = available_items[category][identifier]
 	if(isnull(item))
 		return FALSE

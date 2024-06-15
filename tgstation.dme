@@ -2018,7 +2018,7 @@
 #include "code\game\machinery\recycler.dm"
 #include "code\game\machinery\requests_console.dm"
 #include "code\game\machinery\roulette_machine.dm"
-#include "code\game\machinery\scan_gate.dm"
+#include "code\game\machinery\scanner_gate.dm"
 #include "code\game\machinery\sheetifier.dm"
 #include "code\game\machinery\shieldgen.dm"
 #include "code\game\machinery\sleepers.dm"

@@ -93,6 +93,7 @@
 	COOLDOWN_START(src, use_cooldown, use_cooldown_duration)
 	for(var/item_to_make in spawned_items)
 		var/obj/item/made_item = new item_to_make(get_turf(src))
+		ADD_TRAIT(made_item, TRAIT_CONTRABAND, TRAIT_GENERIC)
 		succcess_message(user, made_item)
 
 

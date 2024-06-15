@@ -8,6 +8,9 @@
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "datadisk3"
 
+/obj/item/malf_upgrade/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND, TRAIT_GENERIC)
 
 /obj/item/malf_upgrade/pre_attack(atom/A, mob/living/user, proximity)
 	if(!proximity)
@@ -36,6 +39,10 @@
 	desc = "An illegal software package that will allow an artificial intelligence to 'hear' from its cameras via lip reading and hidden microphones."
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "datadisk3"
+
+/obj/item/surveillance_upgrade/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND, TRAIT_GENERIC)
 
 /obj/item/surveillance_upgrade/pre_attack(atom/A, mob/living/user, proximity)
 	if(!proximity)

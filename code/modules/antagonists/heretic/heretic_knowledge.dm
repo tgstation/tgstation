@@ -144,8 +144,10 @@
 	if(!length(result_atoms))
 		return FALSE
 
-	for(var/result in result_atoms)
-		new result(loc)
+	for(var/atom/result in result_atoms)
+		result = new result(loc)
+		if(isitem(result))
+			ADD_TRAIT(result, TRAIT_CONTRABAND, TRAIT_GENERIC)
 	return TRUE
 
 /**

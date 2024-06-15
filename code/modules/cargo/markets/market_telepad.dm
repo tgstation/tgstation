@@ -91,6 +91,7 @@
 	if(receiving)
 
 		receiving.item = receiving.entry.spawn_item(turf, receiving)
+		receiving.post_purchase_effects(receiving.item)
 
 		use_energy(energy_usage_per_teleport / power_efficiency)
 		var/datum/effect_system/spark_spread/sparks = new

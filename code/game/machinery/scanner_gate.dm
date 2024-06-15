@@ -5,6 +5,7 @@
 #define SCANGATE_WANTED "Wanted"
 #define SCANGATE_SPECIES "Species"
 #define SCANGATE_NUTRITION "Nutrition"
+#define SCANGATE_CONTRABAND "Contraband"
 
 #define SCANGATE_HUMAN "human"
 #define SCANGATE_LIZARD "lizard"
@@ -29,7 +30,7 @@
 	var/next_beep = 0
 	///Bool to check if the scanner's controls are locked by an ID.
 	var/locked = FALSE
-	///Which setting is the scanner checking for? See defines in scan_gate.dm for the list.
+	///Which setting is the scanner checking for? See defines in scanner_gate.dm for the list.
 	var/scangate_mode = SCANGATE_NONE
 	///Is searching for a disease, what severity is enough to trigger the gate?
 	var/disease_threshold = DISEASE_SEVERITY_MINOR
@@ -45,6 +46,8 @@
 	var/light_fail = FALSE
 	///Does the scanner ignore light_pass and light_fail for sending signals?
 	var/ignore_signals = FALSE
+	///Is an n-spect scanner attached to the gate? Enables contraband scanning.
+	var/obj/item/inspector/n_spect = null
 
 
 /obj/machinery/scanner_gate/Initialize(mapload)
@@ -59,6 +62,9 @@
 /obj/machinery/scanner_gate/Destroy()
 	qdel(wires)
 	set_wires(null)
+	if(n_spect)
+		n_spect.forceMove(drop_location())
+		n_spect = null
 	. = ..()
 
 /obj/machinery/scanner_gate/examine(mob/user)
@@ -67,6 +73,8 @@
 		. += span_notice("The control panel is ID-locked. Swipe a valid ID to unlock it.")
 	else
 		. += span_notice("The control panel is unlocked. Swipe an ID to lock it.")
+	if(n_spect)
+		. += span_notice("The scanner is equipped with an N-Spect scanner. Use a [span_boldnotice("crowbar")] to uninstall.")
 
 /obj/machinery/scanner_gate/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -103,7 +111,23 @@
 			return
 		if(panel_open && is_wire_tool(W))
 			wires.interact(user)
+	if(istype(W, /obj/item/inspector))
+		if(n_spect)
+			to_chat(user, span_warning("The scanner is already equipped with an N-Spect scanner."))
+			return
+		else
+			to_chat(user, span_notice("You install an N-Spect scanner on [src]."))
+			n_spect = W
+			n_spect.forceMove(src)
 	return ..()
+
+/obj/machinery/scanner_gate/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(n_spect)
+		to_chat(user, span_notice("You uninstall the N-Spect scanner from [src]."))
+		n_spect.forceMove(drop_location())
+		n_spect = null
+		return TRUE
 
 /obj/machinery/scanner_gate/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -175,6 +199,11 @@
 					beep = TRUE
 				if(H.nutrition >= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_FAT)
 					beep = TRUE
+		if(SCANGATE_CONTRABAND)
+			for(var/obj/content in M.get_contents())
+				if(HAS_TRAIT(content, TRAIT_CONTRABAND))
+					beep = TRUE
+					break
 
 	if(reverse)
 		beep = !beep
@@ -222,6 +251,7 @@
 	data["disease_threshold"] = disease_threshold
 	data["target_species"] = detect_species
 	data["target_nutrition"] = detect_nutrition
+	data["contraband_enabled"] = n_spect ? FALSE : TRUE
 	return data
 
 /obj/machinery/scanner_gate/ui_act(action, params)
