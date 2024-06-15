@@ -1,5 +1,5 @@
 /datum/bounty/item/security/recharger
-	name = "Rechargers"
+	name = "Weapon Recharger"
 	description = "Nanotrasen military academy is conducting marksmanship exercises. They request that a recharger be shipped."
 	reward = CARGO_CRATE_VALUE * 4
 	required_count = 1
