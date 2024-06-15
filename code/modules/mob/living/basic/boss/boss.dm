@@ -60,11 +60,11 @@
 	add_traits(weather_immunities, ROUNDSTART_TRAIT)
 	grant_actions_by_list(attack_action_types)
 	if(!isnull(loot))
-		AddElement(/datum/element/death_drops, loot)
+		AddElement(/datum/element/death_drops, string_list(loot))
 	if(!isnull(crusher_loot))
 		AddElement(\
 			/datum/element/crusher_loot,\
-			trophy_type = crusher_loot,\
+			trophy_type = string_list(crusher_loot),\
 			drop_mod = 100,\
 			drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
 		)
