@@ -36,7 +36,7 @@
 		return
 	if(!is_station_level(z))
 		return
-	INVOKE_ASYNC(src, PROC_REF(malfshunt) malf)
+	INVOKE_ASYNC(src, PROC_REF(malfshunt), malf)
 
 /obj/machinery/power/apc/proc/malfshunt(mob/living/silicon/ai/malf)
 	var/confirm = tgui_alert(malf, "Are you sure that you want to shunt? This will take you out of your core!", "Shunt to [name]?", list("Yes", "No"))
