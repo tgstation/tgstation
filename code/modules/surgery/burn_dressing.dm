@@ -44,6 +44,7 @@
 	preop_sound = 'sound/surgery/scalpel1.ogg'
 	success_sound = 'sound/surgery/retractor2.ogg'
 	failure_sound = 'sound/surgery/organ1.ogg'
+	surgery_effects_mood = TRUE
 	/// How much sanitization is added per step
 	var/sanitization_added = 0.5
 	/// How much infestation is removed per step (positive number)
@@ -83,7 +84,7 @@
 			span_notice("[user] begins to excise infected flesh from [target]'s [target.parse_zone_with_bodypart(user.zone_selected)] with [tool]."),
 			span_notice("[user] begins to excise infected flesh from [target]'s [target.parse_zone_with_bodypart(user.zone_selected)]."),
 		)
-		display_pain(target, "The infection in your [target.parse_zone_with_bodypart(user.zone_selected)] stings like hell! It feels like you're being stabbed!", mood_event_type = /datum/mood_event/surgery)
+		display_pain(target, "The infection in your [target.parse_zone_with_bodypart(user.zone_selected)] stings like hell! It feels like you're being stabbed!")
 	else
 		user.visible_message(span_notice("[user] looks for [target]'s [target.parse_zone_with_bodypart(user.zone_selected)]."), span_notice("You look for [target]'s [target.parse_zone_with_bodypart(user.zone_selected)]..."))
 
@@ -98,7 +99,6 @@
 			span_notice("[user] successfully excises some of the infected flesh from [target]'s [target.parse_zone_with_bodypart(target_zone)] with [tool]!"),
 			span_notice("[user] successfully excises some of the infected flesh from  [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 		)
-		display_pain(target, mood_event_type = /datum/mood_event/surgery/success)
 		log_combat(user, target, "excised infected flesh in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 		surgery.operated_bodypart.receive_damage(brute=3, wound_bonus=CANT_WOUND)
 		burn_wound.infestation -= infestation_removed
@@ -118,7 +118,6 @@
 		span_notice("[user] carves away some of the healthy flesh from [target]'s [target.parse_zone_with_bodypart(target_zone)] with [tool]!"),
 		span_notice("[user] carves away some of the healthy flesh from  [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 	)
-	display_pain(target, mood_event_type = /datum/mood_event/surgery/failure)
 	surgery.operated_bodypart.receive_damage(brute=rand(4,8), sharpness=TRUE)
 
 /datum/surgery_step/debride/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
