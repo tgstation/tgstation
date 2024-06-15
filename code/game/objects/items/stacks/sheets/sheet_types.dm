@@ -383,21 +383,21 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 /obj/item/stack/sheet/mineral/wood/fifty
 	amount = 50
 
-/obj/item/stack/sheet/mineral/wood/attack(mob/living/carbon/human/H, mob/user)
+/obj/item/stack/sheet/mineral/wood/interact_with_atom(mob/living/carbon/human/H, mob/user)
 	if(!istype(H))
-		return ..()
+		return NONE
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 	if(affecting && IS_PEG_LIMB(affecting))
 		if(user == H)
 			user.visible_message(span_notice("[user] starts to fix their [affecting.name]."), span_notice("You start fixing [H == user ? "your" : "[H]'s"] [affecting.name]."))
 			if(!do_after(user, 5 SECONDS, H))
-				return
+				return ITEM_INTERACT_FAILURE
 		if(H.item_heal(H, user, 15, 15, "splintering", "charring", BODYTYPE_PEG))
 			use(1)
-		return
+		return ITEM_INTERACT_SUCCESS
 	else
-		return ..()
+		return NONE
 /*
  * Bamboo
  */
