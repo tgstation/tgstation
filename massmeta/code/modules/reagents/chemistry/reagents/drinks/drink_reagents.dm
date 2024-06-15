@@ -3,7 +3,7 @@
 /datum/reagent/consumable/kvass
 	name = "Kvass"
 	description = "Kvaaaaaaass."
-	color = "#351300"
+	color = "#351300" // rgb: 53, 19, 0
 	quality = DRINK_VERYGOOD
 	overdose_threshold = 50
 	taste_description = "mmmmm kvass"
@@ -27,4 +27,4 @@
 	. = ..()
 	affected_mob.set_jitter_if_lower(5 SECONDS * REM * seconds_per_tick)
 	if(SPT_PROB(7.5, seconds_per_tick))
-		affected_mob.say(pick("Квасссс!!!", "Обожаю квас!", "ММммммм Квасс!!"), forced = /datum/reagent/consumable/kvass)
+		affected_mob.say(pick_list_replacements(KVASS_PHRASES_FILE, "kvass_phrases"), forced = /datum/reagent/consumable/kvass)
