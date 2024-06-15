@@ -18,11 +18,16 @@
 /// support the "use gender" option.
 #define PREFERENCE_PRIORITY_BODY_TYPE 5
 
+/// Equpping items based on preferences.
+/// Should happen after species and body type to make sure it looks right.
+/// Mostly redundant, but a safety net for saving/loading.
+#define PREFERENCE_PRIORITY_LOADOUT 6
+
 /// The priority at which names are decided, needed for proper randomization.
-#define PREFERENCE_PRIORITY_NAMES 6
+#define PREFERENCE_PRIORITY_NAMES 7
 
 /// Preferences that aren't names, but change the name changes set by PREFERENCE_PRIORITY_NAMES.
-#define PREFERENCE_PRIORITY_NAME_MODIFICATIONS 7
+#define PREFERENCE_PRIORITY_NAME_MODIFICATIONS 8
 
 /// The maximum preference priority, keep this updated, but don't use it for `priority`.
 #define MAX_PREFERENCE_PRIORITY PREFERENCE_PRIORITY_NAME_MODIFICATIONS

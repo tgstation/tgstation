@@ -1,0 +1,4 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - bugfix: "Cosmos spells will no longer star mark your steed"

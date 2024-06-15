@@ -92,17 +92,13 @@
 
 /obj/machinery/computer/camera_advanced/xenobio/GrantActions(mob/living/user)
 	..()
-	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL, PROC_REF(XenoSlimeClickCtrl))
-	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL, PROC_REF(XenoTurfClickCtrl))
-	RegisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, PROC_REF(XenoMonkeyClickCtrl))
+	RegisterSignal(user, COMSIG_MOB_CTRL_CLICKED, PROC_REF(XenoClickCtrl))
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT, PROC_REF(XenoSlimeClickAlt))
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, PROC_REF(XenoSlimeClickShift))
 	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, PROC_REF(XenoTurfClickShift))
 
 /obj/machinery/computer/camera_advanced/xenobio/remove_eye_control(mob/living/user)
-	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL)
-	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL)
-	UnregisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL)
+	UnregisterSignal(user, COMSIG_MOB_CTRL_CLICKED)
 	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT)
 	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT)
 	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT)
@@ -372,30 +368,6 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 	SEND_SIGNAL(user, COMSIG_XENO_TURF_CLICK_SHIFT, src)
 	..()
 
-/mob/living/basic/slime/CtrlClick(mob/user)
-	SEND_SIGNAL(user, COMSIG_XENO_SLIME_CLICK_CTRL, src)
-	..()
-
-/mob/living/carbon/human/species/monkey/CtrlClick(mob/user)
-	SEND_SIGNAL(user, COMSIG_XENO_MONKEY_CLICK_CTRL, src)
-	..()
-
-/turf/open/CtrlClick(mob/user)
-	SEND_SIGNAL(user, COMSIG_XENO_TURF_CLICK_CTRL, src)
-	..()
-
-/// Scans the target slime
-/obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickCtrl(mob/living/user, mob/living/basic/slime/target_slime)
-	SIGNAL_HANDLER
-
-	var/mob/camera/ai_eye/remote/xenobio/remote_eye = user.remote_control
-	var/obj/machinery/computer/camera_advanced/xenobio/xeno_console = remote_eye.origin
-
-	if(!xeno_console.validate_area(user, remote_eye, target_slime.loc))
-		return
-
-	slime_scan(target_slime, user)
-
 ///Feeds a stored potion to a slime
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickAlt(mob/living/user, mob/living/basic/slime/target_slime)
 	SIGNAL_HANDLER
@@ -437,9 +409,22 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 
 	slime_place(target_turf)
 
+/obj/machinery/computer/camera_advanced/xenobio/proc/XenoClickCtrl(mob/living/user, atom/target)
+	SIGNAL_HANDLER
+
+	if(isopenturf(target))
+		XenoTurfClickCtrl(user, target)
+	else if(ismonkey(target))
+		XenoMonkeyClickCtrl(user, target)
+	else if(isslime(target))
+		XenoSlimeClickCtrl(user, target)
+
+	return COMSIG_MOB_CANCEL_CLICKON
+
 ///Places a monkey from the internal storage
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoTurfClickCtrl(mob/living/user, turf/open/target_turf)
-	SIGNAL_HANDLER
+	if(!isopenturf(target_turf))
+		return
 
 	var/mob/camera/ai_eye/remote/xenobio/remote_eye = user.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/xeno_console = remote_eye.origin
@@ -451,18 +436,30 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 
 ///Picks up a dead monkey for recycling
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoMonkeyClickCtrl(mob/living/user, mob/living/carbon/human/target_mob)
-	SIGNAL_HANDLER
 	if(!ismonkey(target_mob))
 		return
 
 	var/mob/camera/ai_eye/remote/xenobio/remote_eye = user.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/xeno_console = remote_eye.origin
 
-	if(!xeno_console.validate_area(user, remote_eye, target_mob.loc))
-		return
-
 	if(!xeno_console.connected_recycler)
 		to_chat(user, span_warning("There is no connected monkey recycler. Use a multitool to link one."))
 		return
 
+	if(!xeno_console.validate_area(user, remote_eye, target_mob.loc))
+		return
+
 	xeno_console.monkey_recycle(user, target_mob)
+
+/// Scans the target slime
+/obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickCtrl(mob/living/user, mob/living/basic/slime/target_slime)
+	if(!isslime(target_slime))
+		return
+
+	var/mob/camera/ai_eye/remote/xenobio/remote_eye = user.remote_control
+	var/obj/machinery/computer/camera_advanced/xenobio/xeno_console = remote_eye.origin
+
+	if(!xeno_console.validate_area(user, remote_eye, target_slime.loc))
+		return
+
+	slime_scan(target_slime, user)

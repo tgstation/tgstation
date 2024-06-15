@@ -140,6 +140,11 @@
 	icon_state = "album_red"
 	persistence_id = "listeningstation"
 
+/obj/item/storage/photo_album/icemoonlisteningstation
+	name = "photo album (Icemoon Outpost)"
+	icon_state = "album_red"
+	persistence_id = "icemooncomms"
+
 /obj/item/storage/photo_album/prison
 	name = "photo album (Prison)"
 	icon_state = "album_blue"

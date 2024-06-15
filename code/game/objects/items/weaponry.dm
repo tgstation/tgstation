@@ -521,12 +521,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/cane/proc/movement_support_add(mob/living/user)
 	RegisterSignal(user, COMSIG_CARBON_LIMPING, PROC_REF(handle_limping))
-	user.set_usable_legs()
 	return TRUE
 
 /obj/item/cane/proc/movement_support_del(mob/living/user)
 	UnregisterSignal(user, list(COMSIG_CARBON_LIMPING))
-	user.set_usable_legs()
 	return TRUE
 
 /obj/item/cane/proc/handle_limping(mob/living/user)
@@ -565,8 +563,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	if(!.)
 		return
-	user.update_usable_leg_status()
 	UnregisterSignal(user, list(COMSIG_LIVING_LIMBLESS_SLOWDOWN, COMSIG_CARBON_LIMPING))
+	user.update_usable_leg_status()
 	REMOVE_TRAIT(user, TRAIT_WADDLING, REF(src))
 
 /obj/item/cane/crutch/proc/handle_slowdown(mob/living/user, limbless_slowdown, list/slowdown_mods)
@@ -953,15 +951,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		))
 
 
-/obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(!proximity_flag || HAS_TRAIT(user, TRAIT_PACIFISM))
-		return
-
+/obj/item/melee/flyswatter/afterattack(atom/target, mob/user, click_parameters)
 	if(is_type_in_typecache(target, splattable))
-		new /obj/effect/decal/cleanable/insectguts(target.drop_location())
 		to_chat(user, span_warning("You easily splat [target]."))
 		if(isliving(target))
+			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
 			var/mob/living/bug = target
 			bug.investigate_log("has been splatted by a flyswatter.", INVESTIGATE_DEATHS)
 			bug.gib(DROP_ALL_REMAINS)
@@ -1091,24 +1085,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)))
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 		return TRUE
+	return FALSE
 
-/obj/item/highfrequencyblade/attack(mob/living/target, mob/living/user, params)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED) || HAS_TRAIT(src, TRAIT_PACIFISM))
-		return ..()
-	slash(target, user, params)
-
-/obj/item/highfrequencyblade/attack_atom(atom/target, mob/living/user, params)
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		return
-	return ..()
-
-/obj/item/highfrequencyblade/afterattack(atom/target, mob/user, proximity_flag, params)
+/obj/item/highfrequencyblade/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(.)
+		return .
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		return ..()
-	if(!proximity_flag || !(isclosedturf(target) || isitem(target) || ismachinery(target) || isstructure(target) || isvehicle(target)))
-		return
-	slash(target, user, params)
-	return AFTERATTACK_PROCESSED_ITEM
+		return . // Default attack
+	if(isliving(A) && HAS_TRAIT(src, TRAIT_PACIFISM))
+		return . // Default attack (ultimately nothing)
+
+	return slash(A, user, params)
 
 /// triggered on wield of two handed item
 /obj/item/highfrequencyblade/proc/on_wield(obj/item/source, mob/user)
@@ -1143,14 +1131,19 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			living_target.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			living_target.gib(DROP_ALL_REMAINS)
 			log_combat(user, living_target, "gibbed", src)
+		return TRUE
 	else if(target.uses_integrity)
 		target.take_damage(force*damage_mod*3, BRUTE, MELEE, FALSE, null, 50)
+		return TRUE
 	else if(iswallturf(target) && prob(force*damage_mod*0.5))
 		var/turf/closed/wall/wall_target = target
 		wall_target.dismantle_wall()
+		return TRUE
 	else if(ismineralturf(target) && prob(force*damage_mod))
 		var/turf/closed/mineral/mineral_target = target
 		mineral_target.gets_drilled()
+		return TRUE
+	return FALSE
 
 /obj/effect/temp_visual/slash
 	icon_state = "highfreq_slash"

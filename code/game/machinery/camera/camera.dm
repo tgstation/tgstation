@@ -90,6 +90,7 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/motion, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/emp_proof, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/motion, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
@@ -119,10 +120,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(camera_enabled)
 		GLOB.cameranet.addCamera(src)
 		LAZYADD(myarea.cameras, src)
+#ifdef MAP_TEST
+		update_appearance()
+#else
 		if(mapload && !start_active && is_station_level(z) && prob(3))
 			toggle_cam()
 		else //this is handled by toggle_camera, so no need to update it twice.
 			update_appearance()
+#endif
 
 	alarm_manager = new(src)
 	find_and_hang_on_wall(directional = TRUE, \

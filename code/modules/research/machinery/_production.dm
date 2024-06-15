@@ -3,6 +3,7 @@
 	desc = "Makes researched and prototype items with materials and energy."
 	/// Energy cost per full stack of materials spent. Material insertion is 40% of this.
 	active_power_usage = 0.05 * STANDARD_CELL_RATE
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 
 	/// The efficiency coefficient. Material costs and print times are multiplied by this number;
 	var/efficiency_coeff = 1
@@ -384,11 +385,14 @@
 	if(!directly_use_energy(charge_per_item)) // provide the wait time until lathe is ready
 		var/area/my_area = get_area(src)
 		var/obj/machinery/power/apc/my_apc = my_area.apc
-		var/charging_wait = my_apc.time_to_charge(charge_per_item)
-		if(!isnull(charging_wait))
-			say("Unable to continue production, APC overload. Wait [DisplayTimeText(charging_wait, round_seconds_to = 1)] and try again.")
+		if(!QDELETED(my_apc))
+			var/charging_wait = my_apc.time_to_charge(charge_per_item)
+			if(!isnull(charging_wait))
+				say("Unable to continue production, APC overload. Wait [DisplayTimeText(charging_wait, round_seconds_to = 1)] and try again.")
+			else
+				say("Unable to continue production, power grid overload.")
 		else
-			say("Unable to continue production, power grid overload.")
+			say("Unable to continue production, no APC in area.")
 		finalize_build()
 		return
 
@@ -435,18 +439,17 @@
 	SStgui.update_uis(src)
 	icon_state = initial(icon_state)
 
-/obj/machinery/rnd/production/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
-	. = ..()
-	if(!can_interact(usr) || (!issilicon(usr) && !isAdminGhostAI(usr)) && !Adjacent(usr))
+/obj/machinery/rnd/production/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
 		return
 	if(busy)
-		balloon_alert(usr, "busy printing!")
+		balloon_alert(user, "busy printing!")
 		return
 	var/direction = get_dir(src, over_location)
 	if(!direction)
 		return
 	drop_direction = direction
-	balloon_alert(usr, "dropping [dir2text(drop_direction)]")
+	balloon_alert(user, "dropping [dir2text(drop_direction)]")
 
 /obj/machinery/rnd/production/click_alt(mob/user)
 	if(drop_direction == 0)

@@ -46,6 +46,7 @@
 	SSair.start_processing_machine(src)
 	AddElement(/datum/element/climbable, climb_time = 3 SECONDS, climb_stun = 3 SECONDS)
 	AddElement(/datum/element/elevation, pixel_shift = 8)
+	register_context()
 
 /obj/machinery/portable_atmospherics/on_deconstruction(disassembled)
 	if(nob_crystal_inserted)
@@ -83,6 +84,29 @@
 	if(!excited)
 		return PROCESS_KILL
 	excited = FALSE
+
+/obj/machinery/portable_atmospherics/welder_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	if(atom_integrity >= max_integrity || (machine_stat & BROKEN) || !tool.tool_start_check(user, amount = 1))
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "repairing...")
+	while(tool.use_tool(src, user, 2.5 SECONDS, volume=40))
+		atom_integrity = min(atom_integrity + 25, max_integrity)
+		if(atom_integrity >= max_integrity)
+			balloon_alert(user, "repaired")
+			return ITEM_INTERACT_SUCCESS
+		balloon_alert(user, "partially repaired...")
+
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/portable_atmospherics/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(!isliving(user) || !Adjacent(user))
+		return .
+	if(held_item?.tool_behaviour == TOOL_WELDER)
+		context[SCREENTIP_CONTEXT_LMB] = "Repair"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /// Take damage if a variable is exceeded. Damage is equal to temp/limit * heat/limit.
 /// The damage multiplier is treated as 1 if something is being ignored while the other one is exceeded.
