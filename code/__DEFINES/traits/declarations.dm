@@ -1152,7 +1152,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BYPASS_RANGED_ARMOR "bypass_ranged_armor"
 
 /// Trait which means that this item is considered illegal contraband, and valid for the contraband bounty or when scanned by an nspect scanner.
-#define TRAIT_CONTRABAND "illegal contraband"
+#define TRAIT_CONTRABAND "illegal_contraband"  
 
 /// This item cannot be selected for or used by a theft objective (Spies, Traitors, etc.)
 #define TRAIT_ITEM_OBJECTIVE_BLOCKED "item_objective_blocked"
