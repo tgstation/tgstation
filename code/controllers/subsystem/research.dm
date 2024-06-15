@@ -7,6 +7,7 @@ SUBSYSTEM_DEF(research)
 	//TECHWEB STATIC
 	var/list/techweb_nodes = list() //associative id = node datum
 	var/list/techweb_designs = list() //associative id = node datum
+	var/list/datum/design/item_to_design = list() //typepath = list of design datums
 
 	///List of all techwebs, generating points or not.
 	///Autolathes, Mechfabs, and others all have shared techwebs, for example.
@@ -162,6 +163,7 @@ SUBSYSTEM_DEF(research)
 
 /datum/controller/subsystem/research/proc/initialize_all_techweb_designs(clearall = FALSE)
 	if(islist(techweb_designs) && clearall)
+		item_to_design = null
 		QDEL_LIST(techweb_designs)
 	var/list/returned = list()
 	for(var/path in subtypesof(/datum/design))
@@ -176,6 +178,11 @@ SUBSYSTEM_DEF(research)
 			stack_trace("WARNING: Design ID clash with ID [initial(DN.id)] detected! Path: [path]")
 			errored_datums[DN] = initial(DN.id)
 			continue
+		var/build_path = initial(DN.build_path)
+		if(!isnull(build_path))
+			if(!(build_path in item_to_design))
+				item_to_design[build_path] = list()
+			item_to_design[build_path] += DN
 		DN.InitializeMaterials() //Initialize the materials in the design
 		returned[initial(DN.id)] = DN
 	techweb_designs = returned

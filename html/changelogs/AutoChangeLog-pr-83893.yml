@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - sound: "Portals made by portal guns now make sounds as expected"
+  - sound: "Wormholes from the wormhole event now make sounds when formed"

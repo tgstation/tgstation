@@ -379,24 +379,27 @@
 	cast_spell(user, user)
 
 /obj/item/melee/blood_magic/attack(mob/living/M, mob/living/carbon/user)
-	if(!iscarbon(user) || !IS_CULTIST(user))
-		uses = 0
-		qdel(src)
-		return
 	log_combat(user, M, "used a cult spell on", source.name, "")
 	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
+	user.do_attack_animation(M)
 	cast_spell(M, user)
 
-/obj/item/melee/blood_magic/attack_atom(atom/attacked_atom, mob/living/user, params)
+/obj/item/melee/blood_magic/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!iscarbon(user) || !IS_CULTIST(user))
 		uses = 0
 		qdel(src)
-		return
-	log_combat(user, attacked_atom, "used a cult spell on", source.name, "")
+		return ITEM_INTERACT_BLOCKING
+
+	if(isliving(interacting_with))
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	user.do_attack_animation(interacting_with)
+	log_combat(user, interacting_with, "used a cult spell on", source.name, "")
 	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
-	cast_spell(attacked_atom, user)
+	cast_spell(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/blood_magic/proc/cast_spell(atom/target, mob/living/carbon/user)
 	if(invocation)
@@ -506,6 +509,8 @@
 			null,
 			span_hear("You hear a boom."),
 		)
+		playsound(origin, SFX_PORTAL_ENTER, 50, TRUE, SILENCED_SOUND_EXTRARANGE)
+		playsound(dest, SFX_PORTAL_ENTER, 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 	return ..()
 
 //Shackles

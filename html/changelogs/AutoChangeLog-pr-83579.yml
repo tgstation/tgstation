@@ -1,6 +1,0 @@
-author: "cnleth"
-delete-after: True
-changes:
-  - balance: "Juicing and distilling plants only consumes nutriment and vitamin"
-  - balance: "Lanternfruit and polypore mushrooms now contain nutriment"
-  - balance: "Increased the amount of nutriment in sugarcane and saltcane"

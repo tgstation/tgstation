@@ -118,12 +118,12 @@
 	var/obj/item/card/id/card = fused_ids[cardname]
 	shapeshift(card)
 
-/obj/item/card/id/advanced/heretic/CtrlClick(mob/user)
-	. = ..()
+/obj/item/card/id/advanced/heretic/item_ctrl_click(mob/user)
 	if(!IS_HERETIC(user))
-		return
+		return CLICK_ACTION_BLOCKING
 	inverted = !inverted
 	balloon_alert(user, "[inverted ? "now" : "no longer"] creating inverted rifts")
+	return CLICK_ACTION_SUCCESS
 
 ///Changes our appearance to the passed ID card
 /obj/item/card/id/advanced/heretic/proc/shapeshift(obj/item/card/id/advanced/card)
