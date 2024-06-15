@@ -16,7 +16,7 @@
 	)
 
 /datum/ai_planning_subtree/ranged_skirmish/drake
-	operational_datums = list()
+	operational_datums = null // uses its RangedAttack proc for this
 	min_range = 0
 
 /datum/ai_planning_subtree/ranged_skirmish/drake/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
