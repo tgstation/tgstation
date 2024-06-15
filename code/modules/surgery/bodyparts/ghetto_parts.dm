@@ -5,23 +5,15 @@
 	icon_static = 'icons/mob/human/species/ghetto.dmi'
 	limb_id = BODYPART_ID_PEG
 	icon_state = "peg_l_arm"
-	body_zone = BODY_ZONE_L_ARM
-	bodyshape = BODYSHAPE_HUMANOID
 	bodytype = BODYTYPE_PEG
 	should_draw_greyscale = FALSE
-	plaintext_zone = "left arm"
-	aux_zone = BODY_ZONE_PRECISE_L_HAND
-	held_index = 1
-	px_x = -6
-	px_y = 0
-	bodypart_trait_source = LEFT_ARM_TRAIT
 	attack_verb_simple = list("bashed", "slashed")
-	can_be_disabled = TRUE
 	unarmed_damage_low = 3
 	unarmed_damage_high = 9
 	unarmed_effectiveness = 5
 	brute_modifier = 1.2
 	burn_modifier = 1.5
+
 /obj/item/bodypart/arm/left/ghetto/Initialize(mapload, ...)
   . = ..()
   ADD_TRAIT(src, TRAIT_EASY_ATTACH, INNATE_TRAIT)

@@ -138,6 +138,7 @@
 #define BODYPART_ID_PSYKER "psyker"
 #define BODYPART_ID_MEAT "meat"
 #define BODYPART_ID_PEG "peg"
+
 //See: datum/species/var/digitigrade_customization
 ///The species does not have digitigrade legs in generation.
 #define DIGITIGRADE_NEVER 0
