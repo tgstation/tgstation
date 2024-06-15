@@ -1,4 +1,0 @@
-author: "GoblinBackwards"
-delete-after: True
-changes:
-  - bugfix: "Fixed thermal pistols sometimes not recognising an equipped holster when trying to spin them to recharge."

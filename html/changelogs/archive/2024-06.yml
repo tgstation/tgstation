@@ -667,3 +667,44 @@
   thegrb93:
   - bugfix: Fix bug where you can't interact with a shocked door without shock protection
       even if it is depowered.
+2024-06-15:
+  BurgerBB:
+  - bugfix: Tweaks some instances of get_safe_turf so things like the nuclear disk
+      doesn't accidentally teleport to the Icebox Syndicate Base
+  EnterTheJake:
+  - image: Rust Heretic's blade now has a new, slicker sprite.
+  Exester509:
+  - balance: Phazon mechs use ectoplasm cores now
+  - balance: You can now acquire ectoplasm cores from the science supply interface
+  Goat-Real:
+  - bugfix: Icebox's service hall now now has a regular hand labeler.
+  GoblinBackwards:
+  - bugfix: Fixed thermal pistols sometimes not recognising an equipped holster when
+      trying to spin them to recharge.
+  Jacquerel:
+  - bugfix: Neutralising an anomaly cannot produce more anomaly cores than are supposed
+      to exist in a single round
+  LucyGrind:
+  - bugfix: Crayons now fit in pdas
+  MTandi:
+  - image: Updated slime sprites
+  Melbert:
+  - bugfix: Human mousedropping
+  - qol: Attack animations for cult spells on attackable objects (people, airlocks)
+  - bugfix: Fix cult spells on non-attackable objects (metal sheets, blood decals)
+  - bugfix: Humans can't cough on menthol again
+  - bugfix: Moth and lizard emotes decide what sound to play based on body type, not
+      gender.
+  - sound: '*gasp now makes a sound, it''s the same as *gaspshock.'
+  - sound: Xenos (or anything with hands) can clap
+  - balance: Re-adds Bagulo
+  - balance: 'The max number of bluespace cores available to the crew has been reduced
+      to 3 (was: 8)'
+  - balance: Chucking a BoH into an uncharged singulo may save the station.
+  - sound: Portals made by portal guns now make sounds as expected
+  - sound: Wormholes from the wormhole event now make sounds when formed
+  - bugfix: Heirophant Club Blink at range
+  - bugfix: Crusher Loot
+  - bugfix: RCD material reclamation
+  mc-oofert:
+  - rscadd: the flatpacker, a machine unlocked at industrial engineering

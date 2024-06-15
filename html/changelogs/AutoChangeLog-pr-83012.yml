@@ -1,4 +1,0 @@
-author: "BurgerBB"
-delete-after: True
-changes:
-  - bugfix: "Tweaks some instances of get_safe_turf so things like the nuclear disk doesn't accidentally teleport to the Icebox Syndicate Base"
