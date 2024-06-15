@@ -28,7 +28,7 @@
 	lighting_cutoff_blue = 35
 	/// Loot dropped when the megafauna is NOT killed with a crusher
 	var/list/loot = list()
-	/// Crusher loot dropped when the megafauna is killed with a crusher
+	/// Loot dropped when the megafauna is killed with a crusher IN ADDITION TO THE NORMAL LOOT
 	var/list/crusher_loot = list()
 	/// Achievement given to surrounding players when the megafauna is killed
 	var/achievement_type
@@ -59,6 +59,15 @@
 	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE, TRAIT_NO_FLOATING_ANIM), MEGAFAUNA_TRAIT)
 	add_traits(weather_immunities, ROUNDSTART_TRAIT)
 	grant_actions_by_list(attack_action_types)
+	if(!isnull(loot))
+		AddElement(/datum/element/death_drops, string_list(loot))
+	if(!isnull(crusher_loot))
+		AddElement(\
+			/datum/element/crusher_loot,\
+			trophy_type = string_list(crusher_loot),\
+			drop_mod = 100,\
+			drop_immediately = TRUE,\
+		)
 
 /mob/living/basic/boss/death(gibbed, list/force_grant)
 	if(gibbed) // in case they've been force dusted
@@ -69,12 +78,6 @@
 	var/datum/status_effect/crusher_damage/crusher_dmg = has_status_effect(/datum/status_effect/crusher_damage)
 	///Whether we killed the megafauna with primarily crusher damage or not
 	var/crusher_kill = (crusher_dmg && crusher_dmg.total_damage >= maxHealth * 0.6)
-	for(var/loot in (crusher_kill ? crusher_loot : loot)) // might aswell just do it here because the element proves unreliable
-		new loot(drop_location())
-
-	loot?.Cut() // no revive farming
-	crusher_loot?.Cut()
-
 	if(true_spawn && !(flags_1 & ADMIN_SPAWNED_1) && !elimination)
 		grant_achievement(achievement_type, score_achievement_type, crusher_kill, force_grant)
 		SSblackbox.record_feedback("tally", "megafauna_kills[crusher_kill ? "_crusher" : ""]", 1, "[initial(name)]")
@@ -94,8 +97,8 @@
 	if(!force && health > 0)
 		return
 
-	loot?.Cut()
-	crusher_loot?.Cut()
+	RemoveElement(/datum/element/crusher_loot)
+	RemoveElement(/datum/element/death_drops)
 
 	return ..()
 

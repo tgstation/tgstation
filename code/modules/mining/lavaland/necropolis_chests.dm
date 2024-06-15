@@ -106,13 +106,6 @@
 		if(4)
 			new /obj/item/dragons_blood(src)
 
-/obj/structure/closet/crate/necropolis/dragon/crusher
-	name = "firey dragon chest"
-
-/obj/structure/closet/crate/necropolis/dragon/crusher/PopulateContents()
-	..()
-	new /obj/item/crusher_trophy/tail_spike(src)
-
 /obj/structure/closet/crate/necropolis/bubblegum
 	name = "\improper Ancient Sarcophagus"
 	desc = "Once guarded by the King of Demons, this sarcophagus contains the relics of an ancient soldier."
