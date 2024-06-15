@@ -404,6 +404,7 @@
 		"splitbeaker",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	required_experiments = list(/datum/experiment/scanning/reagent/cryoxadone)
 
 /datum/techweb_node/medbay_equip_adv
 	id = "medbay_equip_adv"

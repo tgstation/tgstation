@@ -399,6 +399,12 @@
 		return TRUE
 	return FALSE
 
+/datum/experiment/scanning/reagent/cryoxadone
+	name = "Cryoxadone Purity Scan"
+	description = "It appears that the cryoxadone reagent can potentially halt all physiological processes in the human body. Produce Cryoxadone with at least 95% purity and scan the beaker."
+	target_reagent = /datum/reagent/cryoxadone
+	min_purity = 0.95
+
 /datum/experiment/scanning/bluespace_crystal
 	name = "Bluespace Crystal Sampling"
 	description = "Investigate the properties of bluespace crystals by scanning either an artificial or naturally occurring variant. This will help us deepen our understanding of bluespace phenomena."

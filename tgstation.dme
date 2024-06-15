@@ -4046,6 +4046,7 @@
 #include "code\modules\experisci\experiment\types\scanning_people.dm"
 #include "code\modules\experisci\experiment\types\scanning_plants.dm"
 #include "code\modules\experisci\experiment\types\scanning_points.dm"
+#include "code\modules\experisci\experiment\types\scanning_reagent.dm"
 #include "code\modules\experisci\experiment\types\scanning_vatgrown.dm"
 #include "code\modules\explorer_drone\adventure.dm"
 #include "code\modules\explorer_drone\control_console.dm"
