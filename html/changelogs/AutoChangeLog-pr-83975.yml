@@ -1,0 +1,4 @@
+author: "Wayland-Smithy"
+delete-after: True
+changes:
+  - bugfix: "Fixed revenant spawning next to brains and other unharvestable dead mobs."

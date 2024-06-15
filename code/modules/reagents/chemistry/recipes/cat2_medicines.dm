@@ -209,11 +209,11 @@
 /datum/chemical_reaction/medicine/tirimol
 	results = list(/datum/reagent/medicine/c2/tirimol = 5)
 	required_reagents = list(/datum/reagent/nitrogen = 3, /datum/reagent/acetone = 2)
-	required_catalysts = list(/datum/reagent/toxin/acid = 1)
+	required_catalysts = list(/datum/reagent/toxin/acid = 1, /datum/reagent/oxygen = 1)
 	mix_message = "The mixture turns into a tired reddish pink liquid."
 	optimal_temp = 900
 	overheat_temp = 720
-	optimal_ph_min = 2
+	optimal_ph_min = 5
 	optimal_ph_max = 7.1
 	determin_ph_range = 2
 	temp_exponent_factor = 4
@@ -224,14 +224,6 @@
 	purity_min = 0.2
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OXY
-
-/datum/chemical_reaction/medicine/tirimol/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
-	. = ..()
-	var/datum/reagent/oxy = holder.has_reagent(/datum/reagent/oxygen)
-	if(oxy)
-		holder.remove_reagent(/datum/reagent/oxygen, 0.25)
-	else
-		holder.adjust_all_reagents_ph(-0.05*step_reaction_vol)//pH drifts faster
 
 //Sleepytime for chem
 /datum/chemical_reaction/medicine/tirimol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, impure = FALSE)

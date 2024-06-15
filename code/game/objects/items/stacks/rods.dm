@@ -63,9 +63,8 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
-/obj/item/stack/rods/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
-	if(proximity_flag)
-		target.attackby(src, user, click_parameters)
+/obj/item/stack/rods/handle_openspace_click(turf/target, mob/user, click_parameters)
+	target.attackby(src, user, click_parameters)
 
 /obj/item/stack/rods/get_main_recipes()
 	. = ..()

@@ -96,7 +96,7 @@
 	// 0.416% is 15 successes / 3600 seconds. Calculated with 2 minute
 	// mood runtime, so 50% average uptime across the hour.
 	if(HAS_TRAIT(mob_parent, TRAIT_DEPRESSION) && SPT_PROB(0.416, seconds_per_tick))
-		add_mood_event("depression_mild", /datum/mood_event/depression_mild)
+		add_mood_event("depression", /datum/mood_event/depression)
 
 	if(HAS_TRAIT(mob_parent, TRAIT_JOLLY) && SPT_PROB(0.416, seconds_per_tick))
 		add_mood_event("jolly", /datum/mood_event/jolly)

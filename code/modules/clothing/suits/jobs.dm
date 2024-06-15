@@ -180,6 +180,8 @@
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/t_scanner,
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun,
+		/obj/item/storage/bag/rebar_quiver,
+		/obj/item/gun/ballistic/rifle/rebarxbow,
 	)
 	resistance_flags = NONE
 	species_exception = list(/datum/species/golem)
@@ -426,6 +428,9 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/extinguisher,
+		/obj/item/construction/rtd,
+		/obj/item/gun/ballistic/rifle/rebarxbow,
+		/obj/item/storage/bag/rebar_quiver,
 	)
 
 /datum/armor/atmos_overalls

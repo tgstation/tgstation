@@ -1,5 +1,5 @@
 import { range, sortBy } from 'common/collections';
-import { KEY } from 'common/keys';
+import { isEscape, KEY } from 'common/keys';
 import { Component } from 'react';
 
 import { resolveAsset } from '../../assets';
@@ -42,7 +42,7 @@ const isStandardKey = (event: KeyboardEvent): boolean => {
     event.key !== KEY.Alt &&
     event.key !== KEY.Control &&
     event.key !== KEY.Shift &&
-    event.key !== KEY.Escape
+    !isEscape(event.key)
   );
 };
 
@@ -287,7 +287,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     if (isStandardKey(event)) {
       this.setRebindingHotkey(formatKeyboardEvent(event));
       return;
-    } else if (event.key === KEY.Escape) {
+    } else if (isEscape(event.key)) {
       this.setRebindingHotkey(undefined);
       return;
     }

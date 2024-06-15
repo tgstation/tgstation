@@ -27,7 +27,6 @@
 	mob_size = MOB_SIZE_LARGE
 	buckle_prevents_pull = TRUE // No pulling loaded shit
 	bot_mode_flags = ~BOT_MODE_ROUNDSTART_POSSESSION
-
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_CARGO)
 	radio_key = /obj/item/encryptionkey/headset_cargo
 	radio_channel = RADIO_CHANNEL_SUPPLY
@@ -378,20 +377,14 @@
 
 // mousedrop a crate to load the bot
 // can load anything if hacked
-/mob/living/simple_animal/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
-	var/mob/living/L = user
-
-	if (!istype(L))
-		return
-
-	if(user.incapacitated() || (istype(L) && L.body_position == LYING_DOWN))
+/mob/living/simple_animal/bot/mulebot/mouse_drop_receive(atom/movable/AM, mob/user, params)
+	if(!isliving(user))
 		return
 
 	if(!istype(AM) || isdead(AM) || iscameramob(AM) || istype(AM, /obj/effect/dummy/phased_mob))
 		return
 
 	load(AM)
-
 
 // called to load a crate
 /mob/living/simple_animal/bot/mulebot/proc/load(atom/movable/AM)
@@ -812,8 +805,7 @@
 	icon_state = "paranormalmulebot0"
 	base_icon = "paranormalmulebot"
 
-
-/mob/living/simple_animal/bot/mulebot/paranormal/MouseDrop_T(atom/movable/AM, mob/user)
+/mob/living/simple_animal/bot/mulebot/paranormal/mouse_drop_receive(atom/movable/AM, mob/user, params)
 	var/mob/living/L = user
 
 	if(user.incapacitated() || (istype(L) && L.body_position == LYING_DOWN))
