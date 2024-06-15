@@ -35,7 +35,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "q" = (
-/mob/living/simple_animal/hostile/megafauna/dragon,
+/mob/living/basic/boss/dragon,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "s" = (
