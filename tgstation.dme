@@ -3605,6 +3605,7 @@
 #include "code\modules\cargo\bounties\slime.dm"
 #include "code\modules\cargo\bounties\special.dm"
 #include "code\modules\cargo\bounties\virus.dm"
+#include "code\modules\cargo\exports\anomaly.dm"
 #include "code\modules\cargo\exports\antiques.dm"
 #include "code\modules\cargo\exports\civilain_bounty.dm"
 #include "code\modules\cargo\exports\food_and_drink.dm"
