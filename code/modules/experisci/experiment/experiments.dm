@@ -368,3 +368,38 @@
 				continue
 		return TRUE
 	return FALSE
+
+/datum/experiment/scanning/people/augmented_organs
+	name = "Human Field Research: Augmented Organs"
+	description = "We need to gather data on how cybernetic vital organs integrate with human biology. Conduct a scan on a human with these implants to help us understand their compatibility"
+	performance_hint = "Perform an organ manipulation surgery to replace one of the vital organs with a cybernetic variant."
+	required_traits_desc = "augmented vital organs"
+
+/datum/experiment/scanning/people/augmented_organs/is_valid_scan_target(mob/living/carbon/human/check)
+	. = ..()
+	if (!.)
+		return
+	var/static/list/vital_organ_slots = list(
+		ORGAN_SLOT_BRAIN,
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_APPENDIX,
+		ORGAN_SLOT_EYES,
+		ORGAN_SLOT_EARS,
+		ORGAN_SLOT_TONGUE,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_STOMACH,
+	)
+
+	for (var/obj/item/organ/organ as anything in check.organs)
+		if (IS_ORGANIC_ORGAN(organ))
+			continue
+		if (!(organ.slot in vital_organ_slots))
+			continue
+		return TRUE
+	return FALSE
+
+/datum/experiment/scanning/bluespace_crystal
+	name = "Bluespace Crystal Sampling"
+	description = "Investigate the properties of bluespace crystals by scanning either an artificial or naturally occurring variant. This will help us deepen our understanding of bluespace phenomena."
+	required_atoms = list(/obj/item/stack/ore/bluespace_crystal = 1)
