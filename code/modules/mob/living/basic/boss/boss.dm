@@ -109,10 +109,10 @@
 /mob/living/basic/boss/melee_attack(mob/living/target, list/modifiers, ignore_cooldown = FALSE)
 	. = ..()
 
-	if(!.)
+	if(!istype(target))
 		return
 
-	if(!istype(target))
+	if(!. && target.stat != DEAD) // we REALLY need to gut people or we waste time trying to melee someone to gut them
 		return
 
 	if(target.stat == DEAD || (target.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(target, TRAIT_NODEATH)))

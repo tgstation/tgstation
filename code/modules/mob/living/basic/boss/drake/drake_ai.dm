@@ -3,6 +3,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/megafauna,
 		BB_TARGET_MINIMUM_STAT = DEAD,
 		BB_ANGER_MODIFIER = 0,
+		BB_AGGRO_RANGE = 5, //18 if aggroed
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

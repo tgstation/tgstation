@@ -93,6 +93,7 @@
 	RegisterSignal(src, COMSIG_LAVA_ARENA_FAILED, PROC_REF(on_arena_fail))
 	AddElement(/datum/element/change_force_on_death, move_force = MOVE_FORCE_DEFAULT)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
+	AddComponent(/datum/component/sightrange_on_aggro, aggro_range = 18)
 
 /mob/living/basic/boss/dragon/Destroy()
 	fire_cone = null
@@ -102,9 +103,6 @@
 	return ..()
 
 /mob/living/basic/boss/dragon/RangedAttack(atom/target)
-	if(!combat_mode)
-		return
-
 	if(swooping)
 		return
 
@@ -190,12 +188,14 @@
 	return ..()
 
 /mob/living/basic/boss/dragon/melee_attack(mob/living/target, list/modifiers, ignore_cooldown = FALSE)
-	if(!swooping)
-		return ..()
+	if(swooping)
+		return
+	return ..()
 
 /mob/living/basic/boss/dragon/Move()
-	if(!swooping)
-		..()
+	if(swooping)
+		return
+	return ..()
 
 /obj/effect/temp_visual/lava_warning
 	icon_state = "lavastaff_warn"
