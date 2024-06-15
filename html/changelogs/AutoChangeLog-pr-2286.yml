@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "The \"Clear Chat\" button now properly works, instead of BSODing chat."
