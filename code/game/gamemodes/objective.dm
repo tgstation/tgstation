@@ -6,7 +6,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/name = "generic objective" //Name for admin prompts
 	var/explanation_text = "Nothing" //What that person is supposed to do.
 	///if this objective doesn't print failure or success in the roundend report
-	var/no_failure = FALSE 
+	var/no_failure = FALSE
 	///name used in printing this objective (Objective #1)
 	var/objective_name = "Objective"
 	var/team_explanation_text //For when there are multiple owners.
@@ -688,6 +688,9 @@ GLOBAL_LIST_EMPTY(possible_items)
 		var/list/all_items = M.current.get_all_contents() //this should get things in cheesewheels, books, etc.
 
 		for(var/obj/I in all_items) //Check for items
+			if(HAS_TRAIT(I, TRAIT_ITEM_OBJECTIVE_BLOCKED))
+				continue
+
 			if(istype(I, steal_target))
 				if(!targetinfo) //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
 					return TRUE
