@@ -69,7 +69,7 @@
 	var/datum/status_effect/crusher_damage/crusher_dmg = has_status_effect(/datum/status_effect/crusher_damage)
 	///Whether we killed the megafauna with primarily crusher damage or not
 	var/crusher_kill = (crusher_dmg && crusher_dmg.total_damage >= maxHealth * 0.6)
-	for(var/loot in (crusher_kill && ? crusher_loot : loot)) // might aswell just do it here because the element proves unreliable
+	for(var/loot in (crusher_kill ? crusher_loot : loot)) // might aswell just do it here because the element proves unreliable
 		new loot(drop_location())
 
 	loot?.Cut() // no revive farming
