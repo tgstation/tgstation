@@ -514,29 +514,30 @@
 		ignite()
 	return ..()
 
-/obj/effect/decal/cleanable/fuel_pool/on_entered(datum/source, atom/movable/AM)
+/obj/effect/decal/cleanable/fuel_pool/on_entered(datum/source, atom/movable/enflammable_atom)
 	. = ..()
-	if(AM.throwing) // don't light from things being thrown over us
+	if(enflammable_atom.throwing) // don't light from things being thrown over us
 		return
-	if(isitem(AM))
-		var/obj/item/item = AM
-		if(item.get_temperature() > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	if(isitem(enflammable_atom))
+		var/obj/item/enflamed_item = enflammable_atom
+		if(enflamed_item.get_temperature() > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			ignite()
-	else if(isliving(AM))
-		var/mob/living/L = AM
-		if(L.on_fire)
+	else if(isliving(enflammable_atom))
+		var/mob/living/enflamed_living = enflammable_atom
+		if(enflamed_living.on_fire)
 			ignite()
 
-/obj/effect/decal/cleanable/fuel_pool/proc/ignition_trigger(datum/source, atom/movable/AM)
+/obj/effect/decal/cleanable/fuel_pool/proc/ignition_trigger(datum/source, atom/movable/enflammable_atom)
 	SIGNAL_HANDLER
 
-	if(isitem(AM))
-		var/obj/item/item = AM
-		if(item.get_temperature() > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	if(isitem(enflammable_atom))
+		var/obj/item/enflamed_item = enflammable_atom
+		if(enflamed_item.get_temperature() > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			ignite()
-	else if(isliving(AM))
-		var/mob/living/L = AM
-		if(L.on_fire)
+		return
+	else if(isliving(enflammable_atom))
+		var/mob/living/enflamed_liver = enflammable_atom
+		if(enflamed_liver.on_fire)
 			ignite()
 
 
