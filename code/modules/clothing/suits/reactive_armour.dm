@@ -19,7 +19,7 @@
 
 	if(istype(weapon, /obj/item/assembly/signaler/anomaly))
 		var/obj/item/assembly/signaler/anomaly/anomaly = weapon
-		var/armour_path = anomaly_armour_types[anomaly.anomaly_type]
+		var/armour_path = is_path_in_list(anomaly.anomaly_type, anomaly_armour_types, TRUE)
 		if(!armour_path)
 			armour_path = /obj/item/clothing/suit/armor/reactive/stealth //Lets not cheat the player if an anomaly type doesnt have its own armour coded
 		to_chat(user, span_notice("You insert [anomaly] into the chest plate, and the armour gently hums to life."))
