@@ -208,7 +208,7 @@
 
 /obj/structure/table/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	if(!deconstruction_ready)
-		return FALSE
+		return NONE
 	to_chat(user, span_notice("You start disassembling [src]..."))
 	if(tool.use_tool(src, user, 2 SECONDS, volume=50))
 		deconstruct(TRUE)
@@ -216,7 +216,7 @@
 
 /obj/structure/table/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(!deconstruction_ready)
-		return FALSE
+		return NONE
 	to_chat(user, span_notice("You start deconstructing [src]..."))
 	if(tool.use_tool(src, user, 4 SECONDS, volume=50))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -224,33 +224,50 @@
 		deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/table/attackby(obj/item/I, mob/living/user, params)
-	var/list/modifiers = params2list(params)
+/obj/structure/table/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.tool_behaviour == TOOL_SCREWDRIVER || tool.tool_behaviour == TOOL_WRENCH)
+		// continue to tool act
+		// ...we need a better way to do this natively.
+		// maybe flag to call tool acts before item interaction specifically?
+		return NONE
+	if(istype(tool, /obj/item/construction/rcd))
+		return NONE
 
-	if(istype(I, /obj/item/storage/bag/tray))
-		var/obj/item/storage/bag/tray/T = I
-		if(T.contents.len > 0) // If the tray isn't empty
-			for(var/x in T.contents)
-				var/obj/item/item = x
-				AfterPutItemOnTable(item, user)
-			I.atom_storage.remove_all(drop_location())
-			user.visible_message(span_notice("[user] empties [I] on [src]."))
-			return
+	if(istype(tool, /obj/item/toy/cards/deck))
+		var/obj/item/toy/cards/deck/dealer_deck = tool
+		if(HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // deal a card faceup on the table
+			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
+			if(card)
+				card.Flip()
+				attackby(card, user, list2params(modifiers))
+			return ITEM_INTERACT_SUCCESS
+
+	return item_interaction(user, tool, modifiers)
+
+/obj/structure/table/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/storage/bag/tray))
+		var/obj/item/storage/bag/tray/tray = tool
+		if(tray.contents.len > 0) // If the tray isn't empty
+			for(var/obj/item/thing in tray.contents)
+				AfterPutItemOnTable(thing, user)
+			tool.atom_storage.remove_all(drop_location())
+			user.visible_message(span_notice("[user] empties [tool] on [src]."))
+			return ITEM_INTERACT_SUCCESS
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
-	if(istype(I, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = I
+	if(istype(tool, /obj/item/toy/cards/deck))
+		var/obj/item/toy/cards/deck/dealer_deck = tool
 		if(HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // deal a card facedown on the table
 			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
 			if(card)
-				attackby(card, user, params)
-			return
+				attackby(card, user, list2params(modifiers))
+			return ITEM_INTERACT_SUCCESS
 
-	if(istype(I, /obj/item/riding_offhand))
-		var/obj/item/riding_offhand/riding_item = I
+	if(istype(tool, /obj/item/riding_offhand))
+		var/obj/item/riding_offhand/riding_item = tool
 		var/mob/living/carried_mob = riding_item.rider
 		if(carried_mob == user) //Piggyback user.
-			return
+			return NONE
 		if(user.combat_mode)
 			user.unbuckle_mob(carried_mob)
 			tablelimbsmash(user, carried_mob)
@@ -268,32 +285,17 @@
 			if(do_after(user, tableplace_delay, target = carried_mob))
 				user.unbuckle_mob(carried_mob)
 				tableplace(user, carried_mob)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	if(!user.combat_mode && !(I.item_flags & ABSTRACT))
-		if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
-			//Center the icon where the user clicked.
-			if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
-				return
-			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-			I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
-			I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
-			AfterPutItemOnTable(I, user)
-			return TRUE
-	else
-		return ..()
+	// Where putting things on tables is handled.
+	if(!user.combat_mode && !(tool.item_flags & ABSTRACT) && user.transferItemToLoc(tool, drop_location(), silent = FALSE))
+		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+		tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
+		tool.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
+		AfterPutItemOnTable(tool, user)
+		return ITEM_INTERACT_SUCCESS
 
-/obj/structure/table/attackby_secondary(obj/item/weapon, mob/user, params)
-	if(istype(weapon, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = weapon
-		if(HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // deal a card faceup on the table
-			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
-			if(card)
-				card.Flip()
-				attackby(card, user, params)
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	..()
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+	return NONE
 
 /obj/structure/table/proc/AfterPutItemOnTable(obj/item/thing, mob/living/user)
 	return
@@ -642,23 +644,27 @@
 	else
 		return span_notice("The top cover is firmly <b>welded</b> on.")
 
-/obj/structure/table/reinforced/attackby_secondary(obj/item/weapon, mob/user, params)
-	if(weapon.tool_behaviour == TOOL_WELDER)
-		if(weapon.tool_start_check(user, amount = 0))
-			if(deconstruction_ready)
-				to_chat(user, span_notice("You start strengthening the reinforced table..."))
-				if (weapon.use_tool(src, user, 50, volume = 50))
-					to_chat(user, span_notice("You strengthen the table."))
-					deconstruction_ready = FALSE
-			else
-				to_chat(user, span_notice("You start weakening the reinforced table..."))
-				if (weapon.use_tool(src, user, 50, volume = 50))
-					to_chat(user, span_notice("You weaken the table."))
-					deconstruction_ready = TRUE
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/structure/table/reinforced/welder_act_secondary(mob/living/user, obj/item/tool)
+	if(tool.tool_start_check(user, amount = 0))
+		if(deconstruction_ready)
+			to_chat(user, span_notice("You start strengthening the reinforced table..."))
+			if (tool.use_tool(src, user, 50, volume = 50))
+				to_chat(user, span_notice("You strengthen the table."))
+				deconstruction_ready = FALSE
+				return ITEM_INTERACT_SUCCESS
+		else
+			to_chat(user, span_notice("You start weakening the reinforced table..."))
+			if (tool.use_tool(src, user, 50, volume = 50))
+				to_chat(user, span_notice("You weaken the table."))
+				deconstruction_ready = TRUE
+				return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
-	else
-		. = ..()
+/obj/structure/table/reinforced/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.tool_behaviour == TOOL_WELDER)
+		return NONE
+
+	return ..()
 
 /obj/structure/table/bronze
 	name = "bronze table"
@@ -857,6 +863,12 @@
 	tool.play_tool_sound(src)
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/rack/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.tool_behaviour == TOOL_WRENCH)
+		return NONE
+
+	return item_interaction(user, tool, modifiers)
 
 /obj/structure/rack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if((tool.item_flags & ABSTRACT) || user.combat_mode)

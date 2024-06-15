@@ -185,8 +185,10 @@
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
 ///from base of mob/ranged_secondary_attack(): (atom/target, modifiers)
 #define COMSIG_MOB_ATTACK_RANGED_SECONDARY "mob_attack_ranged_secondary"
-///From base of atom/ctrl_click(): (atom/A)
+///From base of /mob/base_click_ctrl: (atom/A)
 #define COMSIG_MOB_CTRL_CLICKED "mob_ctrl_clicked"
+///From base of /mob/base_click_ctrl_shift: (atom/A)
+#define COMSIG_MOB_CTRL_SHIFT_CLICKED "mob_ctrl_shift_clicked"
 ///From base of mob/update_movespeed():area
 #define COMSIG_MOB_MOVESPEED_UPDATED "mob_update_movespeed"
 /// From /atom/movable/screen/zone_sel/proc/set_selected_zone.

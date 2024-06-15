@@ -95,7 +95,7 @@
 	playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
 
 /**
- * This fully rewrites base behavior in order to only check for bounty objects, and nothing else.
+ * This fully rewrites base behavior in order to only check for bounty objects, and no other types of objects like pirate-pads do.
  */
 /obj/machinery/computer/piratepad_control/civilian/send()
 	playsound(loc, 'sound/machines/wewewew.ogg', 70, TRUE)
@@ -125,6 +125,7 @@
 	if(curr_bounty.can_claim())
 		//Pay for the bounty with the ID's department funds.
 		status_report += "Bounty completed! Please give your bounty cube to cargo for your automated payout shortly."
+		SSblackbox.record_feedback("tally", "bounties_completed", 1, curr_bounty.type)
 		inserted_scan_id.registered_account.reset_bounty()
 		SSeconomy.civ_bounty_tracker++
 
@@ -155,12 +156,19 @@
 	COOLDOWN_START(pot_acc, bounty_timer, (5 MINUTES) - cooldown_reduction)
 	pot_acc.bounties = crumbs
 
-/obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(choice)
+/**
+ * Proc that assigned a civilian bounty to an ID card, from the list of potential bounties that that bank account currently has available.
+ * Available choices are assigned during add_bounties, and one is locked in here.
+ *
+ * @param choice The index of the bounty in the list of bounties that the player can choose from.
+ */
+/obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(datum/bounty/choice)
 	if(!inserted_scan_id || !inserted_scan_id.registered_account || !inserted_scan_id.registered_account.bounties || !inserted_scan_id.registered_account.bounties[choice])
 		playsound(loc, 'sound/machines/synth_no.ogg', 40 , TRUE)
 		return
 	inserted_scan_id.registered_account.civilian_bounty = inserted_scan_id.registered_account.bounties[choice]
 	inserted_scan_id.registered_account.bounties = null
+	SSblackbox.record_feedback("tally", "bounties_assigned", 1, choice.type)
 	return inserted_scan_id.registered_account.civilian_bounty
 
 /obj/machinery/computer/piratepad_control/civilian/click_alt(mob/user)

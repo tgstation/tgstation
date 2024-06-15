@@ -1892,6 +1892,7 @@
 	description = "Enhances the functionality and versatility of station tools."
 	prereq_ids = list("fusion", "plasma")
 	design_ids = list(
+		"flatpacker",
 		"handdrill",
 		"exwelder",
 		"jawsoflife",
