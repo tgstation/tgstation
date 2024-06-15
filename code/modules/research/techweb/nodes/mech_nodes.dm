@@ -25,7 +25,7 @@
 
 /datum/techweb_node/mech_equipment
 	id = "mech_equipment"
-	display_name = "Hostile Environment Equipment"
+	display_name = "Expedition Equipment"
 	description = "Specialized mech gear tailored for navigating space and celestial bodies, ensuring durability and functionality in the harshest conditions."
 	prereq_ids = list("mech_assembly")
 	design_ids = list(
