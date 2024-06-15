@@ -325,7 +325,7 @@
 */
 /mob/proc/dropItemToGround(obj/item/I, force = FALSE, silent = FALSE, invdrop = TRUE)
 	if (isnull(I))
-		return TRUE
+		return
 
 	SEND_SIGNAL(src, COMSIG_MOB_DROPPING_ITEM)
 	. = doUnEquip(I, force, drop_location(), FALSE, invdrop = invdrop, silent = silent)
@@ -337,6 +337,7 @@
 		I.pixel_x = I.base_pixel_x + rand(-6, 6)
 		I.pixel_y = I.base_pixel_y + rand(-6, 6)
 	I.do_drop_animation(src)
+	return I
 
 //for when the item will be immediately placed in a loc other than the ground
 /mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE, silent = TRUE)
@@ -417,13 +418,23 @@
 		items += worn_under.attached_accessories
 	return items
 
+/**
+ * Returns the items that were succesfully unequipped.
+ */
 /mob/living/proc/unequip_everything()
 	var/list/items = list()
 	items |= get_equipped_items(include_pockets = TRUE)
+	// In case something isn't actually unequipped somehow
+	var/list/dropped_items = list()
 	for(var/I in items)
-		dropItemToGround(I)
-	drop_all_held_items()
-
+		var/return_val = dropItemToGround(I)
+		if(!isitem(return_val))
+			continue
+		dropped_items |= return_val
+	var/return_val = drop_all_held_items()
+	if(islist(return_val))
+		dropped_items |= return_val
+	return dropped_items
 
 /mob/living/carbon/proc/check_obscured_slots(transparent_protection)
 	var/obscured = NONE

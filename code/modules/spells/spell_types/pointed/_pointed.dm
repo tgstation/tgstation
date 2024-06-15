@@ -16,8 +16,8 @@
 	var/deactive_msg
 	/// The casting range of our spell
 	var/cast_range = 7
-	/// Variable dictating if the spell will use turf based aim assist
-	var/aim_assist = TRUE
+	/// List variable which contains atom types used as backup targets if the spell misses. Default humans and living, but can be anything
+	var/list/aim_assist_list = list(/mob/living, /mob/living/carbon/human)
 
 /datum/action/cooldown/spell/pointed/New(Target)
 	. = ..()
@@ -66,13 +66,19 @@
 
 /datum/action/cooldown/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/target)
 
+	// Find any target in the list. We aren't picky, it's aim assist after all
+	// That said it does iterate through each entry in order, so the last have priority (usually humans over living)
+	// Needs to only trigger if we AREN'T directly hitting something we would want to hit anyways
 	var/atom/aim_assist_target
-	if(aim_assist && isturf(target))
-		// Find any human in the list. We aren't picky, it's aim assist after all
-		aim_assist_target = locate(/mob/living/carbon/human) in target
-		if(!aim_assist_target)
-			// If we didn't find a human, we settle for any living at all
-			aim_assist_target = locate(/mob/living) in target
+	if(aim_assist_list && !(is_type_in_list(target, aim_assist_list)))
+		for(var/typepath in aim_assist_list)
+			// If we still didn't find anything try the turf
+			aim_assist_target = (is_type_on_turf(get_turf(target), typepath) || get_turf(target))
+
+//		aim_assist_target = locate(/mob/living/carbon/human) in target
+//		if(!aim_assist_target)
+//			// If we didn't find a human, we settle for any living at all
+//			aim_assist_target = locate(/mob/living) in target
 
 	return ..(caller, params, aim_assist_target || target)
 

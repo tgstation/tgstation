@@ -229,16 +229,39 @@
 
 	// Visible and audible encouragement!
 	to_chat(user, span_big(span_hypnophrase("A servant of the Sanguine Apostate!")))
-	to_chat(user, span_hierophant("Your patrons are rapturous! You feel the rotten energies of the infidel warp and twist, mixing with that of your own..."))
+	to_chat(user, span_hierophant("Your patrons are rapturous!"))
 	playsound(sacrifice, 'sound/magic/disintegrate.ogg', 75, TRUE)
 
-	// The loser is DUSTED. The rune shines until the reward is deposited.
+	// Drop all items and splatter them around messily.
+	var/list/dustee_items = sacrifice.unequip_everything()
+	for(var/obj/item/loot as anything in dustee_items)
+		loot.throw_at(step_rand(sacrifice), 2, 4, user, TRUE)
+
+	// The loser is DUSTED.
 	sacrifice.dust(TRUE, TRUE)
+
+	// Increase reward counter
+	var/datum/antagonist/heretic/antag = IS_HERETIC(user)
+	antag.rewards_given++
+
+	// We limit the amount so the heretic doesn't just turn into a frickin' god (early)
+	to_chat(user, span_hierophant("You feel the rotten energies of the infidel warp and twist, mixing with that of your own..."))
+	if(prob(8 * antag.rewards_given))
+		to_chat(user, span_hierophant("Faint, dark red sparks flit around the dust, then fade. It looks like your patrons weren't able to fashion something out of it."))
+		return
+
+	// Cool effect for the rune as well as the item
 	var/obj/effect/heretic_rune/rune = locate() in range(2, user)
 	if(rune)
-		rune.add_filter("reward_outline", 3, list("type" = "outline", "color" = COLOR_CULT_RED, "size" = 1.5))
+		rune.gender_reveal(outline_color = COLOR_CULT_RED,\
+		ray_color = null,\
+		do_float = FALSE,\
+		do_layer = FALSE,\
+		)
 
 	addtimer(CALLBACK(src, PROC_REF(deposit_reward), user, loc, null, rune), 5 SECONDS)
+
+/mob/var/AArunesize = 0.5
 
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/deposit_reward(mob/user, turf/loc, loop = 0, obj/rune)
 	if(loop > 5) // Max limit for retrying a reward
@@ -266,12 +289,13 @@
 
 	else if(isitem(reward))
 		var/obj/item/item_reward = reward
-		item_reward.gender_reveal(outline_color = COLOR_GREEN)
+		item_reward.gender_reveal(outline_color = null, ray_color = COLOR_CULT_RED)
 
 	ASSERT(reward)
 
 	return reward
 
+#define TESTING
 
 /**
  * This proc is called from [proc/sacrifice_process] after the heretic successfully sacrifices [sac_target].)

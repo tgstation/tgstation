@@ -124,8 +124,7 @@ Striking a noncultist, however, will tear their flesh."}
 	wound_bonus = -25
 	bare_wound_bonus = 30
 	free_use = TRUE
-	light_color = COLOR_BLACK
-	light_system = OVERLAY_LIGHT
+	light_color = COLOR_VERY_PALE_LIME_GREEN
 	light_range = 2
 	/// holder for the actual action when created.
 	var/datum/action/cooldown/spell/path_wielder_action
@@ -210,6 +209,7 @@ Striking a noncultist, however, will tear their flesh."}
 			soul_to_bind = trapped_mind,\
 			awakener = awakener,\
 			allow_renaming = FALSE,\
+			allow_channeling = FALSE,\
 		)
 
 	// Get the heretic's new body and antag datum.

@@ -56,6 +56,7 @@
 
 /mob/living/basic/construct/Initialize(mapload)
 	. = ..()
+	throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
 	AddElement(/datum/element/simple_flying)
 	var/list/remains = string_list(remains_by_theme[theme])
 	if(length(remains))

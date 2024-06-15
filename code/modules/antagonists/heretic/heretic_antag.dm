@@ -88,6 +88,8 @@
 		/obj/item/clothing/neck/heretic_focus/crimson_focus = 0,
 		/mob/living/basic/construct/harvester/heretic = 0,
 	)
+	/// Simpler version of above used to limit amount of loot that can be hoarded
+	var/rewards_given = 0
 
 /datum/antagonist/heretic/Destroy()
 	LAZYNULL(sac_targets)
@@ -410,11 +412,24 @@
 /datum/antagonist/heretic/proc/on_cult_sacrificed(mob/living/source, list/invokers)
 	SIGNAL_HANDLER
 
+	// Drop all items and splatter them around messily.
+	var/list/dustee_items = source.unequip_everything()
+	for(var/obj/item/loot as anything in dustee_items)
+		loot.throw_at(step_rand(source), 2, 4, pick(invokers), TRUE)
+
 	// Create the blade, give it the heretic and a randomly-chosen master for the soul sword component
 	var/obj/item/melee/cultblade/haunted/haunted_blade = new(get_turf(source), source, pick(invokers))
 
-	ASYNC
-		haunted_blade.gender_reveal(outline_color = COLOR_CULT_RED)
+	// Cool effect for the rune as well as the item
+	var/obj/effect/rune/convert/conversion_rune = locate() in get_turf(source)
+	if(conversion_rune)
+		conversion_rune.gender_reveal(outline_color = COLOR_VERY_PALE_LIME_GREEN,\
+		ray_color = null,\
+		do_float = FALSE,\
+		do_layer = FALSE,\
+		)
+
+	haunted_blade.gender_reveal(outline_color = null, ray_color = COLOR_VERY_PALE_LIME_GREEN)
 
 	for(var/mob/living/culto as anything in invokers)
 		to_chat(culto, span_cult_large("\"A follower of the forgotten gods! You must be rewarded for such a valuable sacrifice.\""))
@@ -446,21 +461,57 @@
  * Creates an animation of the item slowly lifting up from the floor with a colored outline, then slowly drifting back down.
  * Arguments:
  * outline_color: Default is between pink and light blue, is the color of the outline filter.
+ * ray_color: Null by default. If not set, just copies outline. Used for the ray filter.
  * anim_time: Total time of the animation. Split into two different calls.
+ * do_float: Lets you disable the sprite floating up and down.
+ * do_layer: Lets you disable the layering increase.
  */
-/obj/item/proc/gender_reveal(outline_color = pick(COLOR_ADMIN_PINK, COLOR_BLUE_LIGHT), anim_time = 10 SECONDS)
-	var/og_layer = layer
-	layer = ABOVE_MOB_LAYER
-	add_filter("ready_outline", 3, list("type" = "outline", "color" = outline_color, "size" = 2))
-	animate(src, pixel_y = 12, time = anim_time * 0.5, easing = QUAD_EASING | EASE_OUT)
-	animate(pixel_y = 0, time = anim_time * 0.5, easing = QUAD_EASING | EASE_IN)
+/obj/proc/gender_reveal(outline_color = pick(COLOR_ADMIN_PINK, COLOR_BLUE_LIGHT),\
+	ray_color = null,\
+	anim_time = 10 SECONDS,\
+	do_float = TRUE,\
+	do_layer = TRUE,\
+	)
+
+	var/og_layer
+	if(do_layer)
+		// Layering above to stand out!
+		og_layer = layer
+		layer = ABOVE_MOB_LAYER
+
+	// Slowly floats up, then slowly goes down.
+	if(do_float)
+		animate(src, pixel_y = 12, time = anim_time * 0.5, easing = QUAD_EASING | EASE_OUT)
+		animate(pixel_y = 0, time = anim_time * 0.5, easing = QUAD_EASING | EASE_IN)
+
+	// Adding a cool outline effect
+	if(outline_color)
+		add_filter("ready_outline", 3, list("type" = "outline", "color" = outline_color, "size" = 0.5))
+		// Animating it!
+		var/gay_filter = get_filter("ready_outline")
+		animate(gay_filter, alpha = 110, time = 1.5 SECONDS, loop = -1)
+		animate(alpha = 40, time = 2.5 SECONDS)
+
+	// Adding a cool ray effect
+	if(ray_color)
+		add_filter(name = "ray", priority = 1, params = list(
+				type = "rays",
+				size = 45,
+				color = ray_color,
+				density = 6
+			))
+		// Animating it!
+		var/ray_filter = get_filter("ray")
+		// I understand nothing but copypaste saves lives
+		animate(ray_filter, offset = 100, time = 30 SECONDS, loop = -1, flags = ANIMATION_PARALLEL)
+
 	addtimer(CALLBACK(src, PROC_REF(remove_gender_reveal_fx), og_layer), anim_time)
 
 /**
  * Removes the non-animate effects from above proc
  */
-/obj/item/proc/remove_gender_reveal_fx(og_layer)
-	remove_filter("ready_outline")
+/obj/proc/remove_gender_reveal_fx(og_layer)
+	remove_filter(list("ready_outline", "ray"))
 	layer = og_layer
 
 /**

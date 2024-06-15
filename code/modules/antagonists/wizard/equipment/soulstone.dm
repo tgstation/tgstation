@@ -529,7 +529,7 @@
 	newstruct.clear_alert("bloodsense")
 	sense_alert = newstruct.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
 	if(sense_alert)
-		sense_alert.Cviewer = newstruct
+		sense_alert.construct_owner = newstruct
 	newstruct.cancel_camera()
 
 /obj/item/soulstone/anybody

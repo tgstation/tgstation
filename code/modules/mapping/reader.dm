@@ -362,10 +362,10 @@
 	if(expanded_x || expanded_y)
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_EXPANDED_WORLD_BOUNDS, expanded_x, expanded_y)
 
-	#ifdef TESTING
-	if(turfsSkipped)
-		testing("Skipped loading [turfsSkipped] default turfs")
-	#endif
+//	#ifdef TESTING
+//	if(turfsSkipped)
+//		testing("Skipped loading [turfsSkipped] default turfs")
+//	#endif
 
 	return sucessful
 

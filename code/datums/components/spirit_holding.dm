@@ -8,13 +8,16 @@
 	var/attempting_awakening = FALSE
 	/// Allows renaming the bound item
 	var/allow_renaming
+	/// Allows channeling
+	var/allow_channeling
 	///mob contained in the item.
 	var/mob/living/basic/shade/bound_spirit
 
-/datum/component/spirit_holding/Initialize(datum/mind/soul_to_bind, mob/awakener, allow_renaming = TRUE)
+/datum/component/spirit_holding/Initialize(datum/mind/soul_to_bind, mob/awakener, allow_renaming = TRUE, allow_channeling = TRUE)
 	if(!ismovable(parent)) //you may apply this to mobs, i take no responsibility for how that works out
 		return COMPONENT_INCOMPATIBLE
 	src.allow_renaming = allow_renaming
+	src.allow_channeling = allow_channeling
 	if(soul_to_bind)
 		bind_the_soule(soul_to_bind, awakener, soul_to_bind.name)
 
@@ -35,7 +38,7 @@
 /datum/component/spirit_holding/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(!bound_spirit)
-		examine_list += span_notice("[parent] sleeps. Use [parent] in your hands to attempt to awaken it.")
+		examine_list += span_notice("[parent] sleeps.[allow_channeling ? " Use [parent] in your hands to attempt to awaken it." : ""]")
 		return
 	examine_list += span_notice("[parent] is alive.")
 
@@ -52,6 +55,9 @@
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
 		thing.balloon_alert(user, "spirits are unwilling!")
 		to_chat(user, span_warning("Anomalous otherworldly energies block you from awakening [parent]!"))
+		return
+	if(!allow_channeling && bound_spirit)
+		to_chat(user, span_warning("Try as you might, the spirit within slumbers."))
 		return
 	attempting_awakening = TRUE
 	thing.balloon_alert(user, "channeling...")
