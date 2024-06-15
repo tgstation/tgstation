@@ -27,6 +27,8 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 	CHANNEL_PRUDE,
 ))
 
+GLOBAL_LIST_EMPTY(cached_mixer_channels)
+
 
 /proc/guess_mixer_channel(soundin)
 	var/sound_text_string
@@ -35,21 +37,24 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 		sound_text_string = "[bleh.file]"
 	else
 		sound_text_string = "[soundin]"
-	if(findtext(sound_text_string, "effects/"))
-		return CHANNEL_SOUND_EFFECTS
-	if(findtext(sound_text_string, "machines/"))
-		return CHANNEL_MACHINERY
-	if(findtext(sound_text_string, "creatures/"))
-		return CHANNEL_MOB_SOUNDS
-	if(findtext(sound_text_string, "/ai/"))
-		return CHANNEL_VOX
-	if(findtext(sound_text_string, "chatter/"))
-		return CHANNEL_MOB_SOUNDS
-	if(findtext(sound_text_string, "items/"))
-		return CHANNEL_SOUND_EFFECTS
-	if(findtext(sound_text_string, "weapons/"))
-		return CHANNEL_SOUND_EFFECTS
-	return FALSE
+	if(GLOB.cached_mixer_channels[sound_text_string])
+		return GLOB.cached_mixer_channels[sound_text_string]
+	else if(findtext(sound_text_string, "effects/"))
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
+	else if(findtext(sound_text_string, "machines/"))
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MACHINERY
+	else if(findtext(sound_text_string, "creatures/"))
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MOB_SOUNDS
+	else if(findtext(sound_text_string, "/ai/"))
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_VOX
+	else if(findtext(sound_text_string, "chatter/"))
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_MOB_SOUNDS
+	else if(findtext(sound_text_string, "items/"))
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
+	else if(findtext(sound_text_string, "weapons/"))
+		. = GLOB.cached_mixer_channels[sound_text_string] = CHANNEL_SOUND_EFFECTS
+	else
+		return FALSE
 
 ///Default override for echo
 /sound
