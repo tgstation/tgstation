@@ -3600,8 +3600,8 @@
 /obj/effect/spawner/random/trash/crushed_can,
 /obj/structure/lattice/catwalk,
 /obj/effect/spawner/random/trash/crushed_can,
-/obj/effect/spawner/random/trash/garbage,
 /obj/structure/cable/layer1,
+/obj/effect/spawner/random/trash/food_packaging,
 /turf/open/space/basic,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "FI" = (

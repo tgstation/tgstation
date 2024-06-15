@@ -350,6 +350,7 @@
 	desc = "A large-bore boltloading firearm with a classy wooden frame. Cheap, accurate, and easy to maintain. Reload and rack after every shot."
 	semi_auto = TRUE
 	alternative_caliber = CALIBER_50BMG
+	casing_ejector = TRUE
 	bolt_type = BOLT_TYPE_LOCKING
 	bolt_wording = "bolt"
 	internal_magazine = TRUE
