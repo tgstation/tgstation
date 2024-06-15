@@ -32,6 +32,7 @@
 		/obj/item/storage/medkit/advanced = 2,
 		/obj/item/shears = 1,
 		/obj/item/storage/organbox = 1,
+		/obj/item/clothing/gloves/latex/surgical = 1,
 	)
 	refill_canister = /obj/item/vending_refill/medical
 	default_price = PAYCHECK_CREW
