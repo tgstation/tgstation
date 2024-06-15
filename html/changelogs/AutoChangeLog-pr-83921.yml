@@ -1,0 +1,5 @@
+author: "Goat"
+delete-after: True
+changes:
+  - bugfix: "A wrecked shuttle on lavaland no longer has asteroid tiles containing the danger of space."
+  - code_imp: "Added volcanic versions of all mineral turfs for those that did not have it."
