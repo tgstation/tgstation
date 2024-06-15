@@ -402,7 +402,7 @@
 /datum/experiment/scanning/reagent/cryoxadone
 	name = "Cryoxadone Purity Scan"
 	description = "It appears that the cryoxadone reagent can potentially halt all physiological processes in the human body. Produce Cryoxadone with at least 95% purity and scan the beaker."
-	target_reagent = /datum/reagent/cryoxadone
+	target_reagent = /datum/reagent/medicine/cryoxadone
 	min_purity = 0.95
 
 /datum/experiment/scanning/bluespace_crystal
