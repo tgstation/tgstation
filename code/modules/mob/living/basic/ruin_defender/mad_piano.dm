@@ -33,14 +33,14 @@
 	var/desc_calm
 	COOLDOWN_DECLARE(tantrum_time)
 	//length of aggro state
-	var/tantrum_time_duration = 2 SECONDS
+	var/tantrum_time_duration = 3.5 SECONDS
 
 /mob/living/basic/mad_piano/Initialize(mapload)
 	. = ..()
 	var/static/list/death_loot = list(/obj/effect/gibspawner/robot)
 	AddElement(/datum/element/death_drops, death_loot)
 	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(aggro_tantrum))
-	AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = 2, works_in_containers = FALSE)
+	AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = 1, works_in_containers = FALSE)
 	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_PACIFISM, TRAIT_GENERIC)
@@ -55,7 +55,7 @@
 
 /mob/living/basic/mad_piano/proc/aggro_tantrum(datum/source, mob/living/victim)
 	SIGNAL_HANDLER
-	if(!istype(victim) || !istype(victim, /mob/living/carbon) || victim.stat == DEAD)
+	if(!istype(victim, /mob/living/carbon) || victim.stat == DEAD)
 		return
 	tantrum_time = tantrum_time_duration
 	name = name_aggro
@@ -99,4 +99,4 @@
 	)
 
 /datum/idle_behavior/idle_random_walk/mad_piano
-	walk_chance = 75
+	walk_chance = 80

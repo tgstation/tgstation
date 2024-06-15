@@ -143,7 +143,7 @@
 	//if true, the trap will unbolt all doors it bolted and cycle shutters a second time after a delay
 	var/resets_self = FALSE
 	//time before resets_self kicks in
-	var/reset_timer = 1 SECONDS
+	var/reset_timer = 1.8 SECONDS
 	//when multiple tripwires are in the same suicide pact, they will all die when any of them die
 	var/suicide_pact = FALSE
 	//id of the suicide pact this tripwire is in
@@ -163,17 +163,13 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 
 /obj/machinery/button/door/invisible_tripwire/proc/on_entered(atom/victim)
 	var/mob/living/target = victim
-	var/triggered
 	for(target in loc)
 		if(target.stat != DEAD && target.mob_size == MOB_SIZE_HUMAN && target.mob_biotypes != MOB_ROBOTIC)
 			tripwire_triggered(target)
-			triggered = TRUE
-			if(resets_self)
-				addtimer(CALLBACK(src, PROC_REF(tripwire_triggered)), reset_timer)
 			if(multiuse && uses_remaining < 1)
 				uses_remaining--
-	if(resets_self && triggered)
-		addtimer(CALLBACK(src, PROC_REF(tripwire_triggered)), reset_timer)
+			if(resets_self)
+				addtimer(CALLBACK(src, PROC_REF(tripwire_triggered), victim), reset_timer)
 
 /obj/machinery/button/door/invisible_tripwire/proc/tripwire_triggered(atom/victim)
 	interact(victim)
@@ -192,6 +188,17 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	if(suicide_pact == TRUE && suicide_pact_id != null)
 		GLOB.tripwire_suicide_pact -= src
 	return ..()
+
+//door button that destroys itself when it is pressed
+/obj/machinery/button/door/selfdestructs
+	icon_state= "button-warning"
+	skin = "-warning"
+
+/obj/machinery/button/door/selfdestructs/attempt_press(mob/user)
+	. = ..()
+	do_sparks(rand(1,3), src)
+	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	qdel(src)
 
 //trap that gloms onto the first machine it finds on its tile, and lives inside it
 //then it zaps everyone who wants to get close. disarm by dissassembling the machine, or running out its charges

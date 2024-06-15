@@ -2136,10 +2136,6 @@
 /obj/item/trash/ready_donk,
 /turf/open/floor/wood/large,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
-"sw" = (
-/obj/structure/cable/layer1,
-/turf/closed/wall/r_wall,
-/area/ruin/space/has_grav/hauntedtradingpost/office)
 "sx" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 8
@@ -3677,9 +3673,7 @@
 	},
 /obj/machinery/button/door/invisible_tripwire{
 	id = "donk_refuel_window";
-	resets_self = 1;
-	donk_ai_slave = 1;
-	multiuse = 1
+	donk_ai_slave = 1
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
@@ -4347,7 +4341,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "LF" = (
 /obj/structure/cable/layer1,
-/obj/structure/bookcase/random/reference,
+/obj/structure/bookcase,
 /obj/item/book/granter/crafting_recipe/death_sandwich{
 	pixel_x = 6;
 	pixel_y = -7
@@ -5210,24 +5204,22 @@
 /area/ruin/space/has_grav/hauntedtradingpost/maint/toystorage)
 "SX" = (
 /obj/machinery/button/door{
-	pixel_y = -8;
+	pixel_y = 24;
 	pixel_x = 9;
 	id = "donk_office_trap_shutters";
 	name = "shutter button";
 	sync_doors = 0
 	},
-/obj/machinery/button/door{
-	pixel_y = -8;
-	pixel_x = -8;
+/obj/machinery/button/door/selfdestructs{
 	normaldoorcontrol = 1;
-	specialfunctions = 4;
 	id = "donk_door_bolts";
-	name = "door bolt override";
+	specialfunctions = 4;
+	pixel_x = -9;
+	pixel_y = 24;
 	desc = "A button for unbolting doors throughout the facility.";
-	skin = "-warning";
-	silicon_access_disabled = 1
+	name = "door bolt override"
 	},
-/turf/closed/wall/r_wall,
+/turf/open/floor/wood/large,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "SY" = (
 /obj/structure/cable/layer1,
@@ -5322,7 +5314,7 @@
 	name = "\improper Henry";
 	unique_name = 1;
 	desc = "A dusty and dented old cleaning robot. Despite his scars and his aging body, he determinedly stands by to cleanse the galaxy. One stain at a time.";
-	req_one_access = list(ACCESS_SYNDICATE)
+	req_one_access = list("syndicate")
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/maint)
@@ -7226,8 +7218,8 @@ qR
 "}
 (26,1,1) = {"
 ur
+ur
 SX
-ej
 dx
 xY
 kp
@@ -7276,7 +7268,7 @@ lc
 oB
 sH
 su
-sw
+ur
 ia
 pz
 bn
