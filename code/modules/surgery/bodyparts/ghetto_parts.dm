@@ -15,10 +15,10 @@
 	burn_modifier = 1.5
 
 /obj/item/bodypart/arm/left/ghetto/Initialize(mapload, ...)
-  . = ..()
-  ADD_TRAIT(src, TRAIT_EASY_ATTACH, INNATE_TRAIT)
-  ADD_TRAIT(src, TRAIT_CHUNKYFINGERS, INNATE_TRAIT)
-  ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, INNATE_TRAIT)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_EASY_ATTACH, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_CHUNKYFINGERS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, INNATE_TRAIT)
 
 /obj/item/bodypart/arm/right/ghetto
 	name = "right peg arm"
@@ -46,10 +46,10 @@
 	burn_modifier = 1.5
 
 /obj/item/bodypart/arm/right/ghetto/Initialize(mapload, ...)
-  . = ..()
-  ADD_TRAIT(src, TRAIT_EASY_ATTACH, INNATE_TRAIT)
-  ADD_TRAIT(src, TRAIT_CHUNKYFINGERS, INNATE_TRAIT)
-  ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, INNATE_TRAIT)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_EASY_ATTACH, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_CHUNKYFINGERS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, INNATE_TRAIT)
 
 /obj/item/bodypart/leg/left/ghetto
 	name = "left peg leg"
@@ -74,9 +74,9 @@
 	burn_modifier = 1.5
 
 /obj/item/bodypart/leg/left/ghetto/Initialize(mapload, ...)
-  . = ..()
-  ADD_TRAIT(src, TRAIT_EASY_ATTACH, INNATE_TRAIT)
-  ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, INNATE_TRAIT)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_EASY_ATTACH, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, INNATE_TRAIT)
 
 /obj/item/bodypart/leg/right/ghetto
 	name = "right peg leg"
@@ -100,6 +100,6 @@
 	burn_modifier = 1.5
 
 /obj/item/bodypart/leg/right/ghetto/Initialize(mapload, ...)
-  . = ..()
-  ADD_TRAIT(src, TRAIT_EASY_ATTACH, INNATE_TRAIT)
-  ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, INNATE_TRAIT)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_EASY_ATTACH, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, INNATE_TRAIT)
