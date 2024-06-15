@@ -48,3 +48,7 @@
 /datum/generecipe/martyrdom
 	required = "/datum/mutation/human/strong; /datum/mutation/human/stimmed"
 	result = /datum/mutation/human/martyrdom
+
+/datum/generecipe/heckacious
+	required = "/datum/mutation/human/wacky; /datum/mutation/human/trichromatic"
+	result = /datum/mutation/human/heckacious
