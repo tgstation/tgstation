@@ -129,7 +129,7 @@
 
 	var/obj/item/bodypart/arm/using_arm = hand_bodyparts[active_hand_index]
 	if (isnull(using_arm))
-		return FALSE // I don't know what to logically return if you're using an item without an arm but at least your fingers aren't too big
+		return FALSE // Hand with no corresponding arm or other bodypart, just let it through.
 
 	return HAS_TRAIT(using_arm, TRAIT_CHUNKYFINGERS)
 
