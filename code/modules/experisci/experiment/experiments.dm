@@ -369,6 +369,7 @@
 		return TRUE
 	return FALSE
 
+/// Scan for cybernetic organs
 /datum/experiment/scanning/people/augmented_organs
 	name = "Human Field Research: Augmented Organs"
 	description = "We need to gather data on how cybernetic vital organs integrate with human biology. Conduct a scan on a human with these implants to help us understand their compatibility"
@@ -399,10 +400,10 @@
 		return TRUE
 	return FALSE
 
-/datum/experiment/scanning/reagent/cryoxadone
-	name = "Cryoxadone Purity Scan"
-	description = "It appears that the cryoxadone reagent can potentially halt all physiological processes in the human body. Produce Cryoxadone with at least 95% purity and scan the beaker."
-	target_reagent = /datum/reagent/medicine/cryoxadone
+/datum/experiment/scanning/reagent/cryostylane
+	name = "Cryostylane Purity Scan"
+	description = "It appears that the Cryostylane reagent can potentially halt all physiological processes in the human body. Produce Cryostylane with at least 95% purity and scan the beaker."
+	target_reagent = /datum/reagent/cryostylane
 	min_purity = 0.95
 
 /datum/experiment/scanning/bluespace_crystal
