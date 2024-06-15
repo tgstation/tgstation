@@ -4360,10 +4360,14 @@
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
 "anr" = (
-/obj/structure/light_construct{
-	dir = 8
+/obj/structure/disposalpipe/segment{
+	dir = 6
 	},
-/turf/open/floor/wood,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "ans" = (
 /obj/effect/turf_decal/tile/red{
@@ -5796,7 +5800,6 @@
 /area/station/maintenance/port/central)
 "asT" = (
 /obj/structure/closet/secure_closet/chemical,
-/obj/machinery/light/small/dim/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
@@ -9898,6 +9901,9 @@
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/effect/turf_decal/trimline/green/filled/warning,
 /obj/machinery/duct,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "aIk" = (
@@ -9908,7 +9914,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/duct,
-/turf/closed/wall,
+/obj/structure/plasticflaps/opaque,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=2";
+	location = "Hydroponics"
+	},
+/obj/machinery/door/window/right/directional/east{
+	name = "Hydroponics Delivery";
+	req_access = list("hydroponics")
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "aIl" = (
 /obj/structure/disposalpipe/segment{
@@ -10468,14 +10484,10 @@
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "aJL" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=2";
-	location = "Hydroponics"
-	},
-/obj/structure/plasticflaps/opaque,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron,
-/area/station/maintenance/starboard/fore)
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/light_construct/directional/north,
+/turf/open/floor/wood,
+/area/station/maintenance/port/aft)
 "aJM" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp{
@@ -10725,10 +10737,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "aKH" = (
-/obj/structure/sink/directional/south,
-/obj/effect/turf_decal/loading_area{
-	dir = 4
-	},
+/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "aKI" = (
@@ -10810,11 +10819,7 @@
 /turf/open/floor/carpet,
 /area/station/commons/vacant_room/office)
 "aKX" = (
-/obj/machinery/door/window/right/directional/east{
-	name = "Hydroponics Delivery";
-	req_access = list("hydroponics")
-	},
-/obj/effect/turf_decal/delivery,
+/obj/structure/sink/directional/east,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "aKY" = (
@@ -28193,7 +28198,6 @@
 "cax" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/spawner/random/structure/closet_maintenance,
-/obj/machinery/light/small/dim/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "caA" = (
@@ -36531,10 +36535,6 @@
 	name = "Holodeck Projector Floor"
 	},
 /area/station/holodeck/rec_center)
-"fGc" = (
-/obj/structure/lattice,
-/turf/closed/wall,
-/area/space/nearstation)
 "fGe" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/port/aft)
@@ -50002,6 +50002,7 @@
 	},
 /obj/machinery/duct,
 /obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "uWY" = (
@@ -73749,7 +73750,7 @@ aoV
 aoV
 bCq
 alg
-anr
+bPS
 bPT
 efs
 bCq
@@ -74005,7 +74006,7 @@ bGi
 aoV
 aoV
 bCq
-bPT
+aJL
 bPS
 amI
 anB
@@ -76862,8 +76863,8 @@ gXs
 aaa
 aaa
 gXs
-gXs
-fGc
+atS
+atS
 gXs
 aaf
 aaf
@@ -77120,8 +77121,8 @@ byD
 byD
 byD
 byD
-fGc
-fah
+aaa
+aaa
 aaf
 aaa
 aaa
@@ -77378,7 +77379,7 @@ fHN
 cji
 byD
 byD
-fah
+aaa
 aaf
 aaa
 aaa
@@ -77876,7 +77877,7 @@ bWB
 bWB
 cec
 fGe
-bAI
+anr
 bGq
 ouv
 baV
@@ -92462,7 +92463,7 @@ cVb
 cVb
 sAQ
 aIk
-aJL
+alP
 aKX
 aIp
 aIp
