@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Attack animations for cult spells on attackable objects (people, airlocks)"
-  - bugfix: "Fix cult spells on non-attackable objects (metal sheets, blood decals)"
