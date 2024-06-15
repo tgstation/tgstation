@@ -4,7 +4,7 @@
 	allowed_experimentors = list(/obj/item/experi_scanner, /obj/item/scanner_wand)
 	required_atoms = list(/obj/item/reagent_containers = 1)
 	/// The reagent required to present in the scanned container
-	var/required_reagent = /datum/reagent/water
+	var/datum/reagent/required_reagent = /datum/reagent/water
 	/// The minimum required purity of required_reagent
 	var/min_purity = 0
 
@@ -31,7 +31,5 @@
 	return TRUE
 
 /datum/experiment/scanning/reagent/serialize_progress_stage(atom/target, list/seen_instances)
-	return EXPERIMENT_PROG_INT("Scan a reagent container with [irequired_reagent::name] of at least [min_purity] purity.", \
+	return EXPERIMENT_PROG_INT("Scan a reagent container with [required_reagent::name] of at least [min_purity] purity.", \
 		seen_instances.len, required_atoms[target])
-
-

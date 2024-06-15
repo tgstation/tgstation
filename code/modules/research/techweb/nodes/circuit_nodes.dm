@@ -1,0 +1,161 @@
+#define TIER_1_POINTS 2000
+#define TIER_2_POINTS 4000
+#define TIER_3_POINTS 6000
+#define TIER_4_POINTS 8000
+#define TIER_5_POINTS 10000
+
+/datum/techweb_node/programming
+	id = "programming"
+	starting_node = TRUE
+	display_name = "Programming"
+	description = "Dedicate an entire shift to program the fridge to greet you when opened."
+	design_ids = list(
+		"component_printer",
+		"module_duplicator",
+		"circuit_multitool",
+		"compact_remote_shell",
+		"usb_cable",
+		"integrated_circuit",
+		"comp_access_checker",
+		"comp_arctan2",
+		"comp_arithmetic",
+		"comp_assoc_list_pick",
+		"comp_assoc_list_remove",
+		"comp_assoc_list_set",
+		"comp_binary_convert",
+		"comp_clock",
+		"comp_comparison",
+		"comp_concat",
+		"comp_concat_list",
+		"comp_decimal_convert",
+		"comp_delay",
+		"comp_direction",
+		"comp_element_find",
+		"comp_filter_list",
+		"comp_foreach",
+		"comp_format",
+		"comp_format_assoc",
+		"comp_get_column",
+		"comp_gps",
+		"comp_health",
+		"comp_health_state",
+		"comp_hear",
+		"comp_id_access_reader",
+		"comp_id_getter",
+		"comp_id_info_reader",
+		"comp_index",
+		"comp_index_assoc",
+		"comp_index_table",
+		"comp_laserpointer",
+		"comp_length",
+		"comp_light",
+		"comp_list_add",
+		"comp_list_assoc_literal",
+		"comp_list_clear",
+		"comp_list_literal",
+		"comp_list_pick",
+		"comp_list_remove",
+		"comp_logic",
+		"comp_matscanner",
+		"comp_mmi",
+		"comp_module",
+		"comp_multiplexer",
+		"comp_not",
+		"comp_ntnet_receive",
+		"comp_ntnet_send",
+		"comp_ntnet_send_list_literal",
+		"comp_pinpointer",
+		"comp_pressuresensor",
+		"comp_radio",
+		"comp_random",
+		"comp_reagents",
+		"comp_router",
+		"comp_select_query",
+		"comp_self",
+		"comp_set_variable_trigger",
+		"comp_soundemitter",
+		"comp_species",
+		"comp_speech",
+		"comp_speech",
+		"comp_split",
+		"comp_string_contains",
+		"comp_tempsensor",
+		"comp_textcase",
+		"comp_timepiece",
+		"comp_toggle",
+		"comp_tonumber",
+		"comp_tostring",
+		"comp_trigonometry",
+		"comp_typecast",
+		"comp_typecheck",
+		"comp_view_sensor",
+	)
+
+/datum/techweb_node/circuit_shells
+	id = "circuit_shells"
+	display_name = "Advanced Circuit Shells"
+	description = "Adding brains to more things."
+	prereq_ids = list("programming")
+	design_ids = list(
+		"assembly_shell",
+		"bot_shell",
+		"controller_shell",
+		"dispenser_shell",
+		"door_shell",
+		"gun_shell",
+		"keyboard_shell",
+		"module_shell",
+		"money_bot_shell",
+		"scanner_gate_shell",
+		"scanner_shell",
+		"comp_equip_action",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+
+/datum/techweb_node/programmed_bot
+	id = "programmed_bot"
+	display_name = "Programmed Bot"
+	description = "Grants access to movable shells, allowing for remote operations and pranks."
+	prereq_ids = list("circuit_shells")
+	design_ids = list(
+		"drone_shell",
+		"comp_pathfind",
+		"comp_pull",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+
+/datum/techweb_node/bci
+	id = "bci"
+	display_name = "Brain-Computer Interface"
+	description = "Embedded brain circuits. May occasionally stream Nanotrasen ads in dreams."
+	prereq_ids = list("programmed_bot", "implants")
+	design_ids = list(
+		"bci_implanter",
+		"bci_shell",
+		"comp_bar_overlay",
+		"comp_camera_bci",
+		"comp_counter_overlay",
+		"comp_install_detector",
+		"comp_object_overlay",
+		"comp_reagent_injector",
+		"comp_target_intercept",
+		"comp_thought_listener",
+		"comp_vox",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+
+/datum/techweb_node/programmed_server
+	id = "programmed_server"
+	display_name = "Programmed Server"
+	description = "Grants access to a server shell that has a very high capacity for components."
+	prereq_ids = list("bci")
+	design_ids = list(
+		"server_shell",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+
+#undef TIER_1_POINTS
+#undef TIER_2_POINTS
+#undef TIER_3_POINTS
+#undef TIER_4_POINTS
+#undef TIER_5_POINTS

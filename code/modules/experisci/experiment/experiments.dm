@@ -401,10 +401,10 @@
 	return FALSE
 
 /datum/experiment/scanning/reagent/cryostylane
-	name = "Cryostylane Purity Scan"
-	description = "It appears that the Cryostylane reagent can potentially halt all physiological processes in the human body. Produce Cryostylane with at least 95% purity and scan the beaker."
-	target_reagent = /datum/reagent/cryostylane
-	min_purity = 0.95
+	name = "Pure Cryostylane Scan"
+	description = "It appears that the Cryostylane reagent can potentially halt all physiological processes in the human body. Produce Cryostylane with at least 99% purity and scan the beaker."
+	required_reagent = /datum/reagent/cryostylane
+	min_purity = 0.99
 
 /datum/experiment/scanning/bluespace_crystal
 	name = "Bluespace Crystal Sampling"
