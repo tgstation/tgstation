@@ -10,9 +10,9 @@ import { useLocalState } from 'tgui/backend';
 import { useDispatch, useSelector } from 'common/redux';
 import { Box, Button, Collapsible, ColorBox, Divider, Stack, Input, LabeledList, NumberInput, Section, Tabs, TextArea } from 'tgui/components';
 import { ChatPageSettings } from '../chat';
-import { rebuildChat, saveChatToDisk } from '../chat/actions';
+import { clearChat, rebuildChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
-import { clearChat, changeSettingsTab, updateSettings, addHighlightSetting, removeHighlightSetting, updateHighlightSetting } from './actions';
+import { changeSettingsTab, updateSettings, addHighlightSetting, removeHighlightSetting, updateHighlightSetting } from './actions';
 import { SETTINGS_TABS, FONTS, MAX_HIGHLIGHT_SETTINGS } from './constants';
 import { selectActiveTab, selectSettings, selectHighlightSettings, selectHighlightSettingById } from './selectors';
 
