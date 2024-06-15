@@ -78,8 +78,8 @@
 	buffet.Grant(src)
 
 /mob/living/basic/space_dragon/Destroy()
-	QDEL_NULL(fire_breath)
-	QDEL_NULL(buffet)
+	fire_breath = null
+	buffet = null
 	return ..()
 
 /mob/living/basic/space_dragon/Login()
