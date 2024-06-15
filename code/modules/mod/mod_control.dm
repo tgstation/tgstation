@@ -13,6 +13,7 @@
 	base_icon_state = "control"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
+	interaction_flags_mouse_drop = NEED_HANDS
 	strip_delay = 10 SECONDS
 	armor_type = /datum/armor/none
 	actions_types = list(
@@ -30,6 +31,7 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	siemens_coefficient = 0.5
 	alternate_worn_layer = HANDS_LAYER+0.1 //we want it to go above generally everything, but not hands
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	/// The MOD's theme, decides on some stuff like armor and statistics.
 	var/datum/mod_theme/theme = /datum/mod_theme
 	/// Looks of the MOD.
@@ -227,9 +229,9 @@
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
 
-/obj/item/mod/control/MouseDrop(atom/over_object)
-	if(usr != wearer || !istype(over_object, /atom/movable/screen/inventory/hand))
-		return ..()
+/obj/item/mod/control/mouse_drop_dragged(atom/over_object, mob/user)
+	if(user != wearer || !istype(over_object, /atom/movable/screen/inventory/hand))
+		return
 	for(var/obj/item/part as anything in get_parts())
 		if(part.loc != src)
 			balloon_alert(wearer, "retract parts first!")
@@ -238,8 +240,7 @@
 	if(!wearer.incapacitated())
 		var/atom/movable/screen/inventory/hand/ui_hand = over_object
 		if(wearer.putItemFromInventoryInHandIfPossible(src, ui_hand.held_index))
-			add_fingerprint(usr)
-			return ..()
+			add_fingerprint(user)
 
 /obj/item/mod/control/wrench_act(mob/living/user, obj/item/wrench)
 	if(seconds_electrified && get_charge() && shock(user))

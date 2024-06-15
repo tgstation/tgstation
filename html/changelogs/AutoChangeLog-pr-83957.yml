@@ -1,0 +1,4 @@
+author: "GoblinBackwards"
+delete-after: True
+changes:
+  - bugfix: "Fixed the patient information for the mech sleeper module not displaying when the mech didn't also have a syringe gun."

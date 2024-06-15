@@ -1,0 +1,6 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Cats and Dogs can lick slashing wounds clean."
+  - rscadd: "Basic Mobs with hands can relocate dislocated bones, and pluck eyeballs out of pulped skulls."
+  - balance: "Gorillas can strangle people."

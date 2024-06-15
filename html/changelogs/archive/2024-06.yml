@@ -574,3 +574,137 @@
   - bugfix: Medieval shuttle has actual engines now
   - bugfix: Shortsword has its original colours
   - bugfix: Crude helmet no longer makes you bald
+2024-06-13:
+  Capsandi:
+  - sound: Some ambience tracks are quieter now.
+  Goat:
+  - bugfix: Enviro suit lights no longer stay on when the welding visor is activated.
+  Kocma-san:
+  - rscadd: Added new keywords (%d, %date, %t, %time) for fields
+  LT3:
+  - sound: You can now experience tram crashes in higher fidelity than ever!
+  Majkl-J:
+  - bugfix: EMPs on carbons no longer happen twice
+  - code_imp: Moves organ emps under bodyparts, changes how bodyparts handle emp effects
+  Melbert:
+  - rscadd: Character Loadouts
+  - rscdel: Pride Pin quirk (it's in the Loadout menu now)
+  - refactor: Over 200 item interactions have been refactored to use a newer, easier-to-use
+      system. Report any oddities with using items on other objects you may see (such
+      as surgery, reagent containers like cups and spray bottles, or construction
+      devices), especially using something at range (such as guns or chisels)
+  - refactor: Item-On-Modsuit interactions have changed slightly. While on combat
+      mode, you will attempt to "use" the item on the suit instead of inserting it
+      into the suit's storage. This means being on combat mode while the suit's panel
+      is open will block you from inserting items entirely via click (but other methods
+      such as hotkey, clicking on the storage boxes, and mousedrop will still work).
+  - refactor: The detective's scanner will now be inserted into storage items if clicked
+      normally, and will scan the storage item if on combat mode
+  - balance: Taking stamina damage in stamcrit has diminishing returns associated,
+      meaning you cannot be infinitely stamcrit.
+  Rhials:
+  - bugfix: The "mopper" gimmick assistant outfit spawns with one cart instead of
+      nine.
+  SyncIt21:
+  - bugfix: ' RCD, RPLD & RTD cancels their build process if their design is changed
+      during build.'
+  carlarctg:
+  - qol: Cult pylons slowly close bleeding wounds
+  - refactor: allowed aura healing to clot wounds shut
+2024-06-14:
+  Addust:
+  - bugfix: the syndicate now imports warm air instead of cold air to their icemoon
+      listening post
+  Goat:
+  - qol: Mining's PKAs and PKCs are now fireproof.
+  JupiterJaeden:
+  - qol: you can now take pulled objects with you when going up and down in zero gravity
+  - bugfix: conga lines now work correctly when going up and down ladders, and in
+      zero gravity
+  Kocma-san:
+  - bugfix: special networks are now displayed in the fax if it is the only one in
+      the world
+  MGOOOOOO:
+  - bugfix: Missing legs no longer slow you down in non-gravity environments.
+  - bugfix: Catwalk deconstruction yields iron rods as intended.
+  Rex9001:
+  - balance: Moon Smile only does a knockdown if the targets sanity is low enough
+      and the minimum duration of its abilities have been decreased
+  ShizCalev:
+  - bugfix: Autolathes now print the correct number of cable coils.
+  - bugfix: Fixed a bug with station traits being added to modify weights for events
+      that couldn't actually occur on the current map!
+  SyncIt21:
+  - refactor: Ctrl click & Ctrl shift click has been refactored. Please report bugs
+      on GitHub
+  - refactor: Mouse drag & drop attack chain has been refactored. Report any bugs
+      on GitHub
+  - bugfix: You cannot close the cryo tube on yourself with Alt click like before
+  Watermelon914:
+  - qol: Bots can now bind voice lines to an action slot. Lowers cooldown for all
+      bot voicelines to 5 seconds.
+  carlarctg:
+  - balance: Corpses won't remain cultists when ghouled by a flesheretic
+  cnleth:
+  - balance: Juicing and distilling plants only consumes nutriment and vitamin
+  - balance: Lanternfruit and polypore mushrooms now contain nutriment
+  - balance: Increased the amount of nutriment in sugarcane and saltcane
+  jlsnow301:
+  - rscadd: Added screentips to extinguishers.
+  - bugfix: Fixed alt-click interaction with extinguishers and mod control units.
+  junkgle01:
+  - bugfix: added an id trim painter that was missing to MetaStation's QM office.
+  larentoun:
+  - balance: Now regaining a tail has three states. If you got your tail back - you'll
+      get a temporarily debuff in exchange of infinite "tail missing" debuff (new).
+      If it's NOT your tail and of same species - this temporarily debuff will be
+      a bit stronger (new). If it's NOT your tail and NOT of same species - it will
+      be a considerably stronger debuff (currently on live).
+  lizelive:
+  - qol: make the cart hold 2.5x more water
+  necromanceranne:
+  - bugfix: Peter Jr. is capable of surviving in the environment they spawn in.
+  thegrb93:
+  - bugfix: Fix bug where you can't interact with a shocked door without shock protection
+      even if it is depowered.
+2024-06-15:
+  BurgerBB:
+  - bugfix: Tweaks some instances of get_safe_turf so things like the nuclear disk
+      doesn't accidentally teleport to the Icebox Syndicate Base
+  EnterTheJake:
+  - image: Rust Heretic's blade now has a new, slicker sprite.
+  Exester509:
+  - balance: Phazon mechs use ectoplasm cores now
+  - balance: You can now acquire ectoplasm cores from the science supply interface
+  Goat-Real:
+  - bugfix: Icebox's service hall now now has a regular hand labeler.
+  GoblinBackwards:
+  - bugfix: Fixed thermal pistols sometimes not recognising an equipped holster when
+      trying to spin them to recharge.
+  Jacquerel:
+  - bugfix: Neutralising an anomaly cannot produce more anomaly cores than are supposed
+      to exist in a single round
+  LucyGrind:
+  - bugfix: Crayons now fit in pdas
+  MTandi:
+  - image: Updated slime sprites
+  Melbert:
+  - bugfix: Human mousedropping
+  - qol: Attack animations for cult spells on attackable objects (people, airlocks)
+  - bugfix: Fix cult spells on non-attackable objects (metal sheets, blood decals)
+  - bugfix: Humans can't cough on menthol again
+  - bugfix: Moth and lizard emotes decide what sound to play based on body type, not
+      gender.
+  - sound: '*gasp now makes a sound, it''s the same as *gaspshock.'
+  - sound: Xenos (or anything with hands) can clap
+  - balance: Re-adds Bagulo
+  - balance: 'The max number of bluespace cores available to the crew has been reduced
+      to 3 (was: 8)'
+  - balance: Chucking a BoH into an uncharged singulo may save the station.
+  - sound: Portals made by portal guns now make sounds as expected
+  - sound: Wormholes from the wormhole event now make sounds when formed
+  - bugfix: Heirophant Club Blink at range
+  - bugfix: Crusher Loot
+  - bugfix: RCD material reclamation
+  mc-oofert:
+  - rscadd: the flatpacker, a machine unlocked at industrial engineering

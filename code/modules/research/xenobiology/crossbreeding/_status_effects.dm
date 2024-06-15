@@ -706,7 +706,7 @@
 	if(healthcheck && (healthcheck - owner.health) > 5)
 		owner.visible_message(span_warning("[linked_extract] notices the sudden change in [owner]'s physical health, and activates!"))
 		do_sparks(5,FALSE,owner)
-		var/F = find_safe_turf(zlevels = owner.z, extended_safety_checks = TRUE)
+		var/F = find_safe_turf(zlevel = owner.z, extended_safety_checks = TRUE)
 		var/range = 0
 		if(!F)
 			F = get_turf(owner)
