@@ -45,7 +45,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!is_reserved_level(z))
+	if(!is_centcom_level(z))
 		to_chat(user, span_warning("Pods are one way!"))
 		return FALSE
 	return TRUE
