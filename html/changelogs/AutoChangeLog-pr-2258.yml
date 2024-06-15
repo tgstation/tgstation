@@ -1,0 +1,4 @@
+author: "ThePooba"
+delete-after: True
+changes:
+  - bugfix: "Changes Assault Pod Level trait check from not Reserved (centcom and station) to station level trait (just station)"
