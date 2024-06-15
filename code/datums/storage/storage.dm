@@ -735,12 +735,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
 	else if(!istype(over_object, /atom/movable/screen))
-		var/action_status
-		if(isturf(over_object))
-			action_status = user.can_perform_turf_action(over_object)
-		else
-			action_status = user.can_perform_action(over_object, FORBID_TELEKINESIS_REACH)
-		if(!action_status)
+		if(!user.can_perform_action(over_object, FORBID_TELEKINESIS_REACH))
 			return
 
 		parent.add_fingerprint(user)
