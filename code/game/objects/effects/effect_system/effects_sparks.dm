@@ -75,7 +75,7 @@
 
 	if(isobj(singed))
 		var/obj/singed_obj = singed
-		if(singed_obj.resistance_flags & FLAMMABLE && singed_obj.resistance_flags ^ ON_FIRE) //only fire_act flammable objects instead of burning EVERYTHING
+		if(singed_obj.resistance_flags & FLAMMABLE && !(singed_obj.resistance_flags & ON_FIRE)) //only fire_act flammable objects instead of burning EVERYTHING
 			singed_obj.fire_act(1,100)
 		if(singed_obj.reagents)
 			var/datum/reagents/reagents = singed_obj.reagents
