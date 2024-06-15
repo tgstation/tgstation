@@ -231,10 +231,16 @@
 /obj/item/construction/rtd/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!range_check(interacting_with, user))
 		return NONE
-	return interact_with_atom(interacting_with, user, modifiers)
-
+	return try_tiling(interacting_with, user)
 
 /obj/item/construction/rtd/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+
+	return try_tiling(interacting_with, user)
+
+/obj/item/construction/rtd/proc/try_tiling(atom/interacting_with, mob/living/user)
 	var/turf/open/floor/floor = interacting_with
 	if(!istype(floor))
 		return NONE

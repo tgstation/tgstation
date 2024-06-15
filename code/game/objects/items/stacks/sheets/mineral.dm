@@ -113,6 +113,9 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	. = ..()
 	. += GLOB.diamond_recipes
 
+/obj/item/stack/sheet/mineral/diamond/five
+	amount = 5
+
 /*
  * Uranium
  */

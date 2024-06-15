@@ -1,5 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - rscadd: "Added screentips to extinguishers."
-  - bugfix: "Fixed alt-click interaction with extinguishers and mod control units."

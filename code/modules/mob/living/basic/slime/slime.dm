@@ -6,13 +6,13 @@
 /mob/living/basic/slime
 	name = "grey baby slime (123)"
 	icon = 'icons/mob/simple/slimes.dmi'
-	icon_state = "grey baby slime"
+	icon_state = "grey-baby"
 	pass_flags = PASSTABLE | PASSGRILLE
 	gender = NEUTER
 	faction = list(FACTION_SLIME, FACTION_NEUTRAL)
 
-	icon_living = "grey baby slime"
-	icon_dead = "grey baby slime dead"
+	icon_living = "grey-baby"
+	icon_dead = "grey-baby-dead"
 
 	attack_sound = 'sound/weapons/bite.ogg'
 
@@ -187,8 +187,8 @@
 
 /mob/living/basic/slime/regenerate_icons()
 	cut_overlays()
-	var/icon_text = "[slime_type.colour] [life_stage] slime"
-	icon_dead = "[icon_text] dead"
+	var/icon_text = "[slime_type.colour]-[life_stage]"
+	icon_dead = "[icon_text]-dead"
 	if(stat != DEAD)
 		icon_state = icon_text
 		if(current_mood && current_mood != SLIME_MOOD_NONE && !stat)
