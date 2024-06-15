@@ -32,10 +32,16 @@
 	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
 
 /obj/item/bodypart/arm/left/lizard/ashwalker
-	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
+
+/obj/item/bodypart/arm/left/lizard/ashwalker/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CHUNKYFINGERS, INNATE_TRAIT)
 
 /obj/item/bodypart/arm/right/lizard/ashwalker
-	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
+
+/obj/item/bodypart/arm/right/lizard/ashwalker/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CHUNKYFINGERS, INNATE_TRAIT)
 
 /obj/item/bodypart/leg/left/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'

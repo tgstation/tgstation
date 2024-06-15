@@ -122,10 +122,16 @@
 		to_chat(src, span_warning("You can't bring yourself to use a ranged weapon!"))
 		return FALSE
 
+/// Returns true if this mob or one of its arms has chunky fingers
 /mob/living/carbon/human/proc/check_chunky_fingers()
-	if(HAS_TRAIT_NOT_FROM(src, TRAIT_CHUNKYFINGERS, RIGHT_ARM_TRAIT) && HAS_TRAIT_NOT_FROM(src, TRAIT_CHUNKYFINGERS, LEFT_ARM_TRAIT))
+	if (HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
 		return TRUE
-	return (active_hand_index % 2) ? HAS_TRAIT_FROM(src, TRAIT_CHUNKYFINGERS, LEFT_ARM_TRAIT) : HAS_TRAIT_FROM(src, TRAIT_CHUNKYFINGERS, RIGHT_ARM_TRAIT)
+
+	var/obj/item/bodypart/arm/using_arm = hand_bodyparts[active_hand_index]
+	if (isnull(using_arm))
+		return FALSE // I don't know what to logically return if you're using an item without an arm but at least your fingers aren't too big
+
+	return HAS_TRAIT(using_arm, TRAIT_CHUNKYFINGERS)
 
 /mob/living/carbon/human/get_policy_keywords()
 	. = ..()

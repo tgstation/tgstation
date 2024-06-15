@@ -128,6 +128,8 @@
 
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
+	if (!allow_chunky)
+		item_flags |= REQUIRE_SMALL_FINGERS
 	START_PROCESSING(SSobj, src)
 	if(!physical)
 		physical = src

@@ -8,6 +8,10 @@
  * * [/obj/item/proc/afterattack]. The return value does not matter.
  */
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
+	if (are_fingers_too_big(user, target))
+		balloon_alert(user, "fingers too big!")
+		return FALSE
+
 	var/list/modifiers = params2list(params)
 	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 
@@ -66,6 +70,15 @@
 			SStutorials.suggest_tutorial(user, /datum/tutorial/drop, params2list(params))
 
 	return TRUE
+
+/// Called early in the attack chain to return if the item isn't usable with our current fingers
+/obj/item/proc/are_fingers_too_big(mob/user, atom/target)
+	if (!(item_flags & REQUIRE_SMALL_FINGERS))
+		return FALSE
+	if (ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		return human_user.check_chunky_fingers()
+	return HAS_TRAIT(user, TRAIT_CHUNKYFINGERS)
 
 /// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user, modifiers)

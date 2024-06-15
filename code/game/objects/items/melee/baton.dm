@@ -62,6 +62,8 @@
 
 /obj/item/melee/baton/Initialize(mapload)
 	. = ..()
+	if (!chunky_finger_usable)
+		item_flags |= REQUIRE_SMALL_FINGERS
 	// Adding an extra break for the sake of presentation
 	if(stamina_damage != 0)
 		offensive_notes = "It takes [span_warning("[CEILING(100 / stamina_damage, 1)] stunning hit\s")] to stun an enemy."
@@ -128,17 +130,16 @@
 
 	return CONTEXTUAL_SCREENTIP_SET
 
+/obj/item/melee/baton/are_fingers_too_big(mob/user, atom/target)
+	if (HAS_MIND_TRAIT(user, TRAIT_CHUNKYFINGERS_IGNORE_BATON))
+		return FALSE
+	return ..()
+
 /obj/item/melee/baton/proc/baton_attack(mob/living/target, mob/living/user, modifiers)
 	. = BATON_ATTACKING
 
 	if(clumsy_check(user, target))
 		return BATON_ATTACK_DONE
-
-	if(!chunky_finger_usable && ishuman(user))
-		var/mob/living/carbon/human/potential_chunky_finger_human = user
-		if(potential_chunky_finger_human.check_chunky_fingers() && user.is_holding(src) && !HAS_MIND_TRAIT(user, TRAIT_CHUNKYFINGERS_IGNORE_BATON))
-			balloon_alert(potential_chunky_finger_human, "fingers are too big!")
-			return BATON_ATTACK_DONE
 
 	if(!active || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return BATON_DO_NORMAL_ATTACK

@@ -6,7 +6,7 @@
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
 	obj_flags = CONDUCTS_ELECTRICITY
-	item_flags = NOBLUDGEON
+	item_flags = NOBLUDGEON | REQUIRE_SMALL_FINGERS
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
 	w_class = WEIGHT_CLASS_SMALL
@@ -196,9 +196,6 @@
 		return
 	if(!ISADVANCEDTOOLUSER(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
-		return
-	if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS))
-		to_chat(user, span_warning("Your fingers can't press the button!"))
 		return
 
 	if(max_range != INFINITE)

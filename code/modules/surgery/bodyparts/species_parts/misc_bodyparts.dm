@@ -64,12 +64,18 @@
 /obj/item/bodypart/arm/left/abductor
 	limb_id = SPECIES_ABDUCTOR
 	should_draw_greyscale = FALSE
-	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
+
+/obj/item/bodypart/arm/left/abductor/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CHUNKYFINGERS, INNATE_TRAIT)
 
 /obj/item/bodypart/arm/right/abductor
 	limb_id = SPECIES_ABDUCTOR
 	should_draw_greyscale = FALSE
-	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
+
+/obj/item/bodypart/arm/left/abductor/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CHUNKYFINGERS, INNATE_TRAIT)
 
 /obj/item/bodypart/leg/left/abductor
 	limb_id = SPECIES_ABDUCTOR
@@ -309,10 +315,16 @@
 	burn_modifier = 1.5
 
 /obj/item/bodypart/arm/left/shadow/nightmare
-	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
+
+/obj/item/bodypart/arm/left/shadow/nightmare/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CHUNKYFINGERS, INNATE_TRAIT)
 
 /obj/item/bodypart/arm/right/shadow/nightmare
-	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
+
+/obj/item/bodypart/arm/right/shadow/nightmare/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CHUNKYFINGERS, INNATE_TRAIT)
 
 ///SKELETON
 /obj/item/bodypart/head/skeleton
@@ -493,12 +505,13 @@
 	limb_id = SPECIES_GOLEM
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
-	bodypart_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_FIST_MINING)
+	bodypart_traits = list(TRAIT_FIST_MINING)
 	unarmed_damage_low = 5
 	unarmed_damage_high = 14
 	unarmed_effectiveness = 20
 
 /obj/item/bodypart/arm/left/golem/Initialize(mapload)
+	ADD_TRAIT(src, TRAIT_CHUNKYFINGERS, INNATE_TRAIT)
 	held_hand_offset =  new(
 		attached_part = src,
 		feature_key = OFFSET_HELD,
@@ -526,12 +539,13 @@
 	limb_id = SPECIES_GOLEM
 	should_draw_greyscale = FALSE
 	dmg_overlay_type = null
-	bodypart_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_FIST_MINING)
+	bodypart_traits = list(TRAIT_FIST_MINING)
 	unarmed_damage_low = 5
 	unarmed_damage_high = 14
 	unarmed_effectiveness = 20
 
 /obj/item/bodypart/arm/right/golem/Initialize(mapload)
+	ADD_TRAIT(src, TRAIT_CHUNKYFINGERS, INNATE_TRAIT)
 	held_hand_offset =  new(
 		attached_part = src,
 		feature_key = OFFSET_HELD,

@@ -46,6 +46,8 @@
 #define NO_BLOOD_ON_ITEM (1 << 20)
 /// Whether this item should skip the /datum/component/fantasy applied on spawn on the RPG event. Used on things like stacks
 #define SKIP_FANTASY_ON_SPAWN (1<<21)
+/// If set this item cannot be used by someone with the CHUNKY_FINGERS trait
+#define REQUIRE_SMALL_FINGERS (1<<22)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
