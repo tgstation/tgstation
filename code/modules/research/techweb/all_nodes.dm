@@ -59,7 +59,7 @@
 		"buffer",
 		"vacuum",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/janitor_trash = TIER_2_POINTS)
 
 /datum/techweb_node/toys
