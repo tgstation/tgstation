@@ -392,6 +392,9 @@
  * Other vars such as alpha will automatically be applied with the render source
  */
 /atom/movable/screen/plane_master/proc/generate_render_relays()
+#if MIN_COMPILER_VERSION > 515
+	#warn Fully change default relay_loc to "1,1"
+#endif
 	var/relay_loc = home?.relay_loc || ((world.byond_version > 515) ? "1,1" : "CENTER") // As we don't have a client here, we'll use the server's version to determine a default.
 	// If we're using a submap (say for a popup window) make sure we draw onto it
 	if(home?.map)
