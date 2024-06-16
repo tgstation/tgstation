@@ -79,7 +79,7 @@
 	id = "exp_tools"
 	display_name = "Experimental Tools"
 	description = "Enhances the functionality and versatility of station tools."
-	prereq_ids = list("fusion", "plasma")
+	prereq_ids = list("fusion")
 	design_ids = list(
 		"flatpacker",
 		"handdrill",
