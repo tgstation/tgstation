@@ -59,9 +59,9 @@
 	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE, TRAIT_NO_FLOATING_ANIM), MEGAFAUNA_TRAIT)
 	add_traits(weather_immunities, ROUNDSTART_TRAIT)
 	grant_actions_by_list(attack_action_types)
-	if(!isnull(loot))
+	if(length(loot))
 		AddElement(/datum/element/death_drops, string_list(loot))
-	if(!isnull(crusher_loot))
+	if(length(crusher_loot))
 		AddElement(\
 			/datum/element/crusher_loot,\
 			trophy_type = string_list(crusher_loot),\
@@ -76,7 +76,7 @@
 	if(health > 0) // prevents instakills
 		return
 	var/datum/status_effect/crusher_damage/crusher_dmg = has_status_effect(/datum/status_effect/crusher_damage)
-	///Whether we killed the megafauna with primarily crusher damage or not
+	// Whether we killed the megafauna with primarily crusher damage or not
 	var/crusher_kill = (crusher_dmg && crusher_dmg.total_damage >= maxHealth * 0.6)
 	if(true_spawn && !(flags_1 & ADMIN_SPAWNED_1) && !elimination)
 		grant_achievement(achievement_type, score_achievement_type, crusher_kill, force_grant)
