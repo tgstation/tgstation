@@ -28,7 +28,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
 
-// AI tree
+// AI root node
 /datum/techweb_node/ai
 	id = "ai"
 	display_name = "Artificial Intelligence"

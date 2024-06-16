@@ -5692,7 +5692,7 @@
 #include "code\modules\research\techweb\nodes\mining_nodes.dm"
 #include "code\modules\research\techweb\nodes\modsuit_nodes.dm"
 #include "code\modules\research\techweb\nodes\research_nodes.dm"
-#include "code\modules\research\techweb\nodes\robotic_nodes.dm"
+#include "code\modules\research\techweb\nodes\robo_nodes.dm"
 #include "code\modules\research\techweb\nodes\security_nodes.dm"
 #include "code\modules\research\techweb\nodes\service_nodes.dm"
 #include "code\modules\research\techweb\nodes\surgery_nodes.dm"
