@@ -548,7 +548,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 	/obj/item/bodypart = list(
 		"TRAIT_PARALYSIS" = TRAIT_PARALYSIS,
 	),
-		/obj/item/bodypart = list(
+	/obj/item/bodypart = list(
 		"TRAIT_EASY_ATTACH" = TRAIT_EASY_ATTACH,
 	),
 	/obj/item/card/id = list(
