@@ -198,7 +198,7 @@
 	id = "mech_energy_guns"
 	display_name = "Mech Energy Guns"
 	description = "Scaled-up versions of electric weapons optimized for mech deployment."
-	prereq_ids = list("mech_combat")
+	prereq_ids = list("mech_combat", "electric_weapons")
 	design_ids = list(
 		"mech_laser",
 		"mech_laser_heavy",

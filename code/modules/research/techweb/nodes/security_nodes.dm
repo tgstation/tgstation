@@ -55,31 +55,6 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
-/datum/techweb_node/electric_weapons
-	id = "electric_weapons"
-	display_name = "Electric Weaponry"
-	description = "Energy-based weaponry designed for both lethal and non-lethal applications."
-	prereq_ids = list("riot_supression")
-	design_ids = list(
-		"stunrevolver",
-		"ioncarbine",
-		"temp_gun",
-		"lasershell",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
-
-/datum/techweb_node/beam_weapons
-	id = "beam_weapons"
-	display_name = "Advanced Beam Weaponry"
-	description = "So advanced, even engineers are baffled by its operational principles."
-	prereq_ids = list("electric_weapons")
-	design_ids = list(
-		"beamrifle",
-		"xray_laser",
-		"nuclear_gun",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
-
 /datum/techweb_node/explosives
 	id = "explosives"
 	display_name = "Explosives"
@@ -103,5 +78,30 @@
 		"c38_hotshot",
 		"c38_iceblox",
 		"techshotshell",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+
+/datum/techweb_node/electric_weapons
+	id = "electric_weapons"
+	display_name = "Electric Weaponry"
+	description = "Energy-based weaponry designed for both lethal and non-lethal applications."
+	prereq_ids = list("riot_supression")
+	design_ids = list(
+		"stunrevolver",
+		"ioncarbine",
+		"temp_gun",
+		"lasershell",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+
+/datum/techweb_node/beam_weapons
+	id = "beam_weapons"
+	display_name = "Advanced Beam Weaponry"
+	description = "So advanced, even engineers are baffled by its operational principles."
+	prereq_ids = list("electric_weapons")
+	design_ids = list(
+		"beamrifle",
+		"xray_laser",
+		"nuclear_gun",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
