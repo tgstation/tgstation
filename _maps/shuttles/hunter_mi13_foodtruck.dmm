@@ -1,0 +1,518 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters{
+	id = "foodtruck_backroom_shutters";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"ab" = (
+/obj/machinery/computer/operating{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"af" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/surgery_tray/full,
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter)
+"ag" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter)
+"ah" = (
+/obj/machinery/door/airlock/vault,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate/general,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"aj" = (
+/obj/machinery/power/shuttle_engine/heater,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/hunter)
+"al" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/shuttle/hunter)
+"ao" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/shuttle/hunter)
+"bY" = (
+/turf/open/floor/plastic,
+/area/shuttle/hunter)
+"cm" = (
+/obj/structure/lattice,
+/obj/structure/marker_beacon/burgundy,
+/turf/template_noop,
+/area/shuttle/hunter)
+"dg" = (
+/obj/structure/closet/secure_closet/freezer/empty,
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/plastic,
+/area/shuttle/hunter)
+"dB" = (
+/obj/machinery/vending/clothing,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"dJ" = (
+/obj/machinery/vending/syndichem,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"eA" = (
+/obj/machinery/vending/medical/syndicate_access/cybersun,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"eP" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter)
+"gc" = (
+/obj/structure/closet/crate/freezer,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"gv" = (
+/obj/structure/closet/crate/freezer,
+/obj/machinery/button/door/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"hB" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/template_noop,
+/area/shuttle/hunter)
+"jb" = (
+/obj/machinery/light/dim/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"jc" = (
+/obj/machinery/light/floor,
+/obj/structure/table/reinforced,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/shuttle/hunter)
+"kf" = (
+/obj/effect/turf_decal/box,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/hunter)
+"ku" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/hunter)
+"lp" = (
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"lX" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter)
+"mT" = (
+/obj/machinery/power/smes/magical/cybersun,
+/turf/open/floor/circuit/red,
+/area/shuttle/hunter)
+"pQ" = (
+/obj/machinery/computer/shuttle/hunter,
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter)
+"sN" = (
+/obj/structure/table/reinforced,
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/shuttle/hunter)
+"te" = (
+/obj/structure/fans/tiny,
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 3;
+	height = 12;
+	name = "Deep Space";
+	shuttle_id = "huntership_home";
+	width = 7
+	},
+/obj/docking_port/mobile{
+	dir = 4;
+	name = "hunter shuttle";
+	rechargeTime = 1800;
+	shuttle_id = "huntership"
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "foodtruck_shutters";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"tW" = (
+/obj/structure/table/optable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"ui" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/plastic,
+/area/shuttle/hunter)
+"we" = (
+/obj/machinery/power/apc/auto_name/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"wA" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/hunter)
+"xg" = (
+/obj/structure/chair/comfy/shuttle/tactical{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"zJ" = (
+/turf/closed/wall/mineral/titanium,
+/area/template_noop)
+"Ak" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
+	view_range = 7;
+	x_offset = 6
+	},
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter)
+"Am" = (
+/obj/structure/chair/comfy/shuttle/tactical{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"An" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"Bn" = (
+/obj/machinery/computer/camera_advanced,
+/turf/open/floor/circuit/red,
+/area/shuttle/hunter)
+"CF" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor/shutters{
+	id = "foodtruck_shutters";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"CY" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/plastic,
+/area/shuttle/hunter)
+"Dp" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/structure/marker_beacon/burgundy,
+/obj/structure/lattice,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/hunter)
+"Fv" = (
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"IG" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/hunter)
+"Jv" = (
+/obj/structure/closet/cardboard,
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter)
+"KV" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/reagent_containers/cup/beaker{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/cup/beaker{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter)
+"Lm" = (
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/plastic,
+/area/shuttle/hunter)
+"Ml" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/syndicate,
+/turf/open/floor/circuit/red,
+/area/shuttle/hunter)
+"MZ" = (
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter)
+"OU" = (
+/obj/machinery/fugitive_locator,
+/turf/open/floor/circuit/red,
+/area/shuttle/hunter)
+"Pq" = (
+/turf/template_noop,
+/area/template_noop)
+"PE" = (
+/obj/machinery/fugitive_capture,
+/turf/open/floor/circuit/red,
+/area/shuttle/hunter)
+"RO" = (
+/obj/machinery/button/door/directional/east{
+	id = "foodtruck_shutters"
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/plastic,
+/area/shuttle/hunter)
+"SP" = (
+/obj/structure/rack,
+/obj/item/pinpointer/shuttle,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"Yi" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_y = 6;
+	pixel_x = 8
+	},
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter)
+"YW" = (
+/obj/structure/table/reinforced,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/shuttle/hunter)
+
+(1,1,1) = {"
+Pq
+Pq
+Pq
+Pq
+Pq
+zJ
+CF
+CF
+CF
+CF
+te
+CF
+ku
+Pq
+Pq
+"}
+(2,1,1) = {"
+Pq
+Pq
+Pq
+cm
+wA
+ku
+ao
+al
+al
+al
+al
+al
+ku
+IG
+Pq
+"}
+(3,1,1) = {"
+Pq
+Pq
+Pq
+Pq
+wA
+ku
+bY
+bY
+bY
+bY
+bY
+bY
+ku
+aj
+hB
+"}
+(4,1,1) = {"
+cm
+An
+An
+ku
+ku
+ku
+sN
+jc
+YW
+YW
+jc
+bY
+ku
+aj
+hB
+"}
+(5,1,1) = {"
+An
+An
+ag
+Jv
+lp
+ah
+bY
+bY
+bY
+bY
+bY
+bY
+ku
+cm
+Pq
+"}
+(6,1,1) = {"
+An
+Ak
+xg
+lp
+lp
+ku
+CY
+ui
+dg
+Lm
+bY
+RO
+ku
+Pq
+Pq
+"}
+(7,1,1) = {"
+ku
+eP
+SP
+mT
+jb
+ku
+ku
+ku
+ku
+ku
+ah
+kf
+ku
+Pq
+Pq
+"}
+(8,1,1) = {"
+An
+pQ
+xg
+lp
+we
+ku
+eA
+lp
+Fv
+lp
+lp
+gv
+ku
+Pq
+Pq
+"}
+(9,1,1) = {"
+An
+An
+ag
+MZ
+lp
+ah
+lp
+lp
+PE
+OU
+lp
+gc
+ku
+cm
+Pq
+"}
+(10,1,1) = {"
+cm
+An
+An
+ku
+ku
+ku
+dB
+lp
+MZ
+MZ
+lp
+tW
+ku
+aj
+hB
+"}
+(11,1,1) = {"
+Pq
+Pq
+Pq
+Pq
+wA
+ku
+dJ
+Am
+Ml
+Bn
+Am
+ab
+ku
+aj
+hB
+"}
+(12,1,1) = {"
+Pq
+Pq
+Pq
+cm
+wA
+ku
+lX
+KV
+Yi
+ag
+ag
+af
+ku
+Dp
+Pq
+"}
+(13,1,1) = {"
+Pq
+Pq
+Pq
+Pq
+Pq
+zJ
+aa
+aa
+aa
+aa
+aa
+aa
+ku
+Pq
+Pq
+"}
