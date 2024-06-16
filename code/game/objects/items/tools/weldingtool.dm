@@ -160,7 +160,7 @@
 	if(!use_tool(attacked_humanoid, user, use_delay, volume=50, amount=1))
 		return ITEM_INTERACT_BLOCKING
 
-	attacked_humanoid.item_heal(attacked_humanoid, user, 15, 0, "dents", "burnt wires", BODYTYPE_ROBOTIC)
+	attacked_humanoid.item_heal(attacked_humanoid, user, brute_heal = 15, burn_heal = 0, heal_message_brute = "dents", heal_message_burn = "burnt wires", required_bodytype = BODYTYPE_ROBOTIC)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/weldingtool/afterattack(atom/target, mob/user, click_parameters)

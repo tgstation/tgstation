@@ -383,17 +383,17 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 /obj/item/stack/sheet/mineral/wood/fifty
 	amount = 50
 
-/obj/item/stack/sheet/mineral/wood/interact_with_atom(mob/living/carbon/human/H, mob/user)
-	if(!istype(H))
+/obj/item/stack/sheet/mineral/wood/interact_with_atom(mob/living/carbon/human/target, mob/user)
+	if(!istype(target))
 		return NONE
 
-	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
+	var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(user.zone_selected))
 	if(affecting && IS_PEG_LIMB(affecting))
-		if(user == H)
-			user.visible_message(span_notice("[user] starts to fix their [affecting.name]."), span_notice("You start fixing [H == user ? "your" : "[H]'s"] [affecting.name]."))
-			if(!do_after(user, 5 SECONDS, H))
+		if(user == target)
+			user.visible_message(span_notice("[user] starts to fix their [affecting.name]."), span_notice("You start fixing [target == user ? "your" : "[target]'s"] [affecting.name]."))
+			if(!do_after(user, 5 SECONDS, target))
 				return ITEM_INTERACT_FAILURE
-		if(H.item_heal(H, user, 15, 15, "splintering", "charring", BODYTYPE_PEG))
+		if(target.item_heal(target, user, brute_heal = 15, burn_heal = 15, heal_message_burn = "splintering", heal_message_brute = "charring", required_bodytype = BODYTYPE_PEG))
 			use(1)
 		return ITEM_INTERACT_SUCCESS
 	else

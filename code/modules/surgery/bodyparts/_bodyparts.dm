@@ -363,9 +363,6 @@
 	if(ishuman(victim))
 		var/mob/living/carbon/human/human_victim = victim
 		if(HAS_TRAIT(victim, TRAIT_LIMBATTACHMENT) || HAS_TRAIT(src, TRAIT_EASY_ATTACH))
-			if (!HAS_TRAIT(victim, TRAIT_LIMBATTACHMENT))
-				if(!do_after(user, 3 SECONDS, victim))
-					return
 			if(!human_victim.get_bodypart(body_zone))
 				user.temporarilyRemoveItemFromInventory(src, TRUE)
 				if(!try_attach_limb(victim))
@@ -1316,31 +1313,16 @@
 // Note: For effects on subtypes, use the emp_effect() proc instead
 /obj/item/bodypart/emp_act(severity)
 	var/protection = ..()
-	if((protection & EMP_PROTECT_WIRES) || !IS_ROBOTIC_LIMB(src))
-		return FALSE
+	// If the limb doesn't protect contents, strike them first
+	if(!(protection & EMP_PROTECT_CONTENTS))
+		for(var/atom/content as anything in contents)
+			content.emp_act(severity)
 
-	// with defines at the time of writing, this is 2 brute and 1.5 burn
-	// 2 + 1.5 = 3,5, with 6 limbs thats 21, on a heavy 42
-	// 42 * 0.8 = 33.6
-	// 3 hits to crit with an ion rifle on someone fully augged at a total of 100.8 damage, although im p sure mood can boost max hp above 100
-	// dont forget emps pierce armor, debilitate augs, and usually comes with splash damage e.g. ion rifles or grenades
-	var/time_needed = AUGGED_LIMB_EMP_PARALYZE_TIME
-	var/brute_damage = AUGGED_LIMB_EMP_BRUTE_DAMAGE
-	var/burn_damage = AUGGED_LIMB_EMP_BURN_DAMAGE
-	if(severity == EMP_HEAVY)
-		time_needed *= 2
-		brute_damage *= 2
-		burn_damage *= 2
+	if((protection & (EMP_PROTECT_WIRES | EMP_PROTECT_SELF)))
+		return protection
 
-	receive_damage(brute_damage, burn_damage)
-	do_sparks(number = 1, cardinal_only = FALSE, source = owner || src)
-
-	if(can_be_disabled && (get_damage() / max_damage) >= robotic_emp_paralyze_damage_percent_threshold)
-		ADD_TRAIT(src, TRAIT_PARALYSIS, EMP_TRAIT)
-		addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_PARALYSIS, EMP_TRAIT), time_needed)
-		owner?.visible_message(span_danger("[owner]'s [plaintext_zone] seems to malfunction!"))
-
-	return TRUE
+	emp_effect(severity, protection)
+	return protection
 
 /// The actual effect of EMPs on the limb. Allows children to override it however they want
 /obj/item/bodypart/proc/emp_effect(severity, protection)

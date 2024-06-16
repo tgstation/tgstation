@@ -13,7 +13,7 @@
 	unarmed_effectiveness = 5
 	brute_modifier = 1.2
 	burn_modifier = 1.5
-	bodypart_traits = list(TRAIT_CHUNKYFINGERS) // TRAIT_CHUNKYFINGERS is stupid as shit and will be borked within a week, but by god i'm using it (please merge b4 it gets changed so its not my problem)
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 
 /obj/item/bodypart/arm/left/ghetto/Initialize(mapload, ...)
 	. = ..()
