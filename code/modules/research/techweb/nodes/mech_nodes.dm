@@ -9,6 +9,7 @@
 	starting_node = TRUE
 	display_name = "Mech Assembly"
 	description = "Development of mech designed to contend with artificial gravity while transporting cargo."
+	prereq_ids = list("robotics")
 	design_ids = list(
 		"mechapower",
 		"mech_recharger",

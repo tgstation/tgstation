@@ -8,7 +8,8 @@
 	id = "programming"
 	starting_node = TRUE
 	display_name = "Programming"
-	description = "Dedicate an entire shift to program the fridge to greet you when opened."
+	description = "Dedicate an entire shift to program a fridge to greet you when opened."
+	prereq_ids = list("robotics")
 	design_ids = list(
 		"component_printer",
 		"module_duplicator",

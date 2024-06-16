@@ -9,6 +9,7 @@
 	starting_node = TRUE
 	display_name = "Augmentation"
 	description = "For those who prefer shiny metal over squishy flesh."
+	prereq_ids = list("robotics")
 	design_ids = list(
 		"borg_chest",
 		"borg_head",

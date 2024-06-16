@@ -9,6 +9,7 @@
 	starting_node = TRUE
 	display_name = "Modular Exosuit"
 	description = "Specialized back mounted power suits with various different modules."
+	prereq_ids = list("robotics")
 	design_ids = list(
 		"suit_storage_unit",
 		"mod_shell",
