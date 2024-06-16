@@ -254,8 +254,12 @@
 		var/mob/living/silicon/ai/U = user
 		multitool = U.aiMulti
 	else if(iscyborg(user) && in_range(user, src))
-		if(istype(user.get_active_held_item(), /obj/item/multitool))
-			multitool = user.get_active_held_item()
+		var/mob/living/silicon/robot/borguser = user
+		if(borguser.model.toolbox)
+			for(var/obj/item/toolitem in borguser.model.toolbox)
+				if(istype(toolitem, /obj/item/multitool))
+					multitool = toolitem
+					break
 	return multitool
 
 /obj/machinery/telecomms/proc/canAccess(mob/user)
