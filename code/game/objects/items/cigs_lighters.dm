@@ -381,6 +381,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!isturf(smoker.loc))
 		return
 
+	// monkestation edit: pollution
+	var/turf/smoker_turf = smoker.loc
+	smoker_turf.pollute_turf(pollution_type, 30)
+	// monkestation end
+
 	var/obj/effect/abstract/particle_holder/big_smoke = new(smoker.loc, /particles/smoke/cig/big)
 	update_particle_position(big_smoke, smoker.dir)
 	QDEL_IN(big_smoke, big_smoke.particles.lifespan)
