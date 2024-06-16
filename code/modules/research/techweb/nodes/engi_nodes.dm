@@ -1,9 +1,3 @@
-#define TIER_1_POINTS 2000
-#define TIER_2_POINTS 4000
-#define TIER_3_POINTS 6000
-#define TIER_4_POINTS 8000
-#define TIER_5_POINTS 10000
-
 // Parts root node
 /datum/techweb_node/parts
 	id = "parts"
@@ -44,7 +38,7 @@
 		"adv_scanning",
 		"super_cell",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/parts_adv
 	id = "parts_adv"
@@ -59,7 +53,7 @@
 		"phasic_scanning",
 		"hyper_cell",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/parts_bluespace
 	id = "parts_bluespace"
@@ -75,7 +69,7 @@
 		"triphasic_scanning",
 		"bluespace_cell",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/bluespace_travel
 	id = "bluespace_travel"
@@ -93,7 +87,7 @@
 		"quantum_keycard",
 		"swapper",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 
 /datum/techweb_node/telecomms
 	id = "telecomms"
@@ -123,7 +117,7 @@
 		"s_treatment",
 		"gigabeacon",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 
 // Engineering root node
 /datum/techweb_node/construction
@@ -193,7 +187,7 @@
 		"welding_goggles",
 		"tray_goggles",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/holographics
 	id = "holographics"
@@ -219,7 +213,7 @@
 		"modular_shield_charger",
 		"modular_shield_well",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/hud
 	id = "hud"
@@ -237,7 +231,7 @@
 		"ci-diaghud",
 		"ci-sechud",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/night_vision
 	id = "night_vision"
@@ -252,10 +246,4 @@
 		"nv_scigoggles",
 		"security_hud_night",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
-
-#undef TIER_1_POINTS
-#undef TIER_2_POINTS
-#undef TIER_3_POINTS
-#undef TIER_4_POINTS
-#undef TIER_5_POINTS
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)

@@ -1,9 +1,3 @@
-#define TIER_1_POINTS 2000
-#define TIER_2_POINTS 4000
-#define TIER_3_POINTS 6000
-#define TIER_4_POINTS 8000
-#define TIER_5_POINTS 10000
-
 /datum/techweb_node/material_processing
 	id = "material_proc"
 	starting_node = TRUE
@@ -52,7 +46,7 @@
 		"mod_visor_meson",
 		"mesons",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/low_pressure_excavation
 	id = "low_pressure_excavation"
@@ -71,7 +65,7 @@
 		"borg_upgrade_cooldownmod",
 		"borg_upgrade_hypermod",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/plasma_mining
 	id = "plasma_mining"
@@ -82,7 +76,7 @@
 		"mech_plasma_cutter",
 		"plasmacutter",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/bitrunning
 	id = "bitrunning"
@@ -94,7 +88,7 @@
 		"quantum_console",
 		"netpod",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/mining_adv
 	id = "mining_adv"
@@ -108,10 +102,4 @@
 		"plasmacutter_adv",
 		"hypermod",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
-
-#undef TIER_1_POINTS
-#undef TIER_2_POINTS
-#undef TIER_3_POINTS
-#undef TIER_4_POINTS
-#undef TIER_5_POINTS
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)

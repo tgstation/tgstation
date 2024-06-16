@@ -1,9 +1,3 @@
-#define TIER_1_POINTS 2000
-#define TIER_2_POINTS 4000
-#define TIER_3_POINTS 6000
-#define TIER_4_POINTS 8000
-#define TIER_5_POINTS 10000
-
 /datum/techweb_node/augmentation
 	id = "augmentation"
 	starting_node = TRUE
@@ -46,7 +40,7 @@
 		"borg_upgrade_rename",
 		"borg_upgrade_restart",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/borg_service
 	id = "borg_service"
@@ -61,7 +55,7 @@
 		"borg_upgrade_drink_apparatus",
 		"borg_upgrade_service_cookbook",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/borg_medical
 	id = "borg_medical"
@@ -77,7 +71,7 @@
 		"borg_upgrade_surgicalprocessor",
 		"borg_upgrade_surgicalomnitool",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/borg_utility
 	id = "borg_utility"
@@ -93,7 +87,7 @@
 		"borg_upgrade_thrusters",
 		"borg_upgrade_trashofholding",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/borg_utility/New()
 	. = ..()
@@ -114,7 +108,7 @@
 		"borg_upgrade_diamonddrill",
 		"borg_upgrade_holding",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 
 /datum/techweb_node/implants
 	id = "implants"
@@ -134,7 +128,7 @@
 		"implanter",
 		"locator",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/cyber/cyber_implants
 	id = "cyber_implants"
@@ -145,7 +139,7 @@
 		"ci-breather",
 		"ci-nutriment",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/cyber/New()
 	..()
@@ -162,7 +156,7 @@
 		"ci-antidrop",
 		"ci-antistun",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 
 /datum/techweb_node/cyber/adv_cyber_implants
 	id = "adv_cyber_implants"
@@ -175,7 +169,7 @@
 		"ci-toolset",
 		"ci-surgery",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 
 /datum/techweb_node/cyber/cyber_organs
 	id = "cyber_organs"
@@ -191,7 +185,7 @@
 		"cybernetic_liver_tier2",
 		"cybernetic_heart_tier2",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/cyber/cyber_organs_upgraded
 	id = "cyber_organs_upgraded"
@@ -209,7 +203,7 @@
 		"cybernetic_liver_tier3",
 		"cybernetic_heart_tier3",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	required_experiments = list(/datum/experiment/scanning/people/augmented_organs)
 
 /datum/techweb_node/cyber/cyber_organs_adv
@@ -224,10 +218,4 @@
 		"ci-thermals-moth",
 		"ci-xray-moth",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
-
-#undef TIER_1_POINTS
-#undef TIER_2_POINTS
-#undef TIER_3_POINTS
-#undef TIER_4_POINTS
-#undef TIER_5_POINTS
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)

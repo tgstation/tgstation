@@ -1,9 +1,3 @@
-#define TIER_1_POINTS 2000
-#define TIER_2_POINTS 4000
-#define TIER_3_POINTS 6000
-#define TIER_4_POINTS 8000
-#define TIER_5_POINTS 10000
-
 /datum/techweb_node/syndicate_basic
 	id = "syndicate_basic"
 	display_name = "Illegal Technology"
@@ -23,7 +17,7 @@
 		"suppressor",
 		"super_pointy_tape",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	hidden = TRUE
 
 /datum/techweb_node/syndicate_basic/New() //Crappy way of making syndicate gear decon supported until there's another way.
@@ -51,10 +45,4 @@
 	design_ids = list(
 		"desynchronizer",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
-
-#undef TIER_1_POINTS
-#undef TIER_2_POINTS
-#undef TIER_3_POINTS
-#undef TIER_4_POINTS
-#undef TIER_5_POINTS
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)

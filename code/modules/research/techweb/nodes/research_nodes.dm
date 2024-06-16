@@ -1,9 +1,3 @@
-#define TIER_1_POINTS 2000
-#define TIER_2_POINTS 4000
-#define TIER_3_POINTS 6000
-#define TIER_4_POINTS 8000
-#define TIER_5_POINTS 10000
-
 /datum/techweb_node/fundamental_sci
 	id = "fundamental_sci"
 	starting_node = TRUE
@@ -33,7 +27,7 @@
 	design_ids = list(
 		"bluespace_crystal",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/applied_bluespace
 	id = "applied_bluespace"
@@ -52,7 +46,7 @@
 		"light_replacer_blue",
 		"bluespacebodybag",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	required_experiments = list(/datum/experiment/scanning/bluespace_crystal)
 
 /datum/techweb_node/anomaly_research
@@ -65,7 +59,7 @@
 		"anomaly_neutralizer",
 		"reactive_armour",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/anomaly_shells
 	id = "anomaly_shells"
@@ -77,7 +71,7 @@
 		"wormholeprojector",
 		"gravitygun",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 
 /datum/techweb_node/anomaly_morph
 	id = "anomaly_morph"
@@ -87,10 +81,4 @@
 	design_ids = list(
 		"polymorph_belt"
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
-
-#undef TIER_1_POINTS
-#undef TIER_2_POINTS
-#undef TIER_3_POINTS
-#undef TIER_4_POINTS
-#undef TIER_5_POINTS
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)

@@ -1,9 +1,3 @@
-#define TIER_1_POINTS 2000
-#define TIER_2_POINTS 4000
-#define TIER_3_POINTS 6000
-#define TIER_4_POINTS 8000
-#define TIER_5_POINTS 10000
-
 /datum/techweb_node/light_apps
 	id = "light_apps"
 	display_name = "Illumination Applications"
@@ -12,7 +6,7 @@
 		"bright_helmet",
 		"rld_mini",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
 
@@ -24,7 +18,7 @@
 		"mauna_mug",
 		"rolling_table",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
 
@@ -36,7 +30,7 @@
 		"eng_gloves",
 		"lava_rods",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
 
@@ -48,7 +42,7 @@
 		"pin_explorer",
 		"stun_boomerang",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
 
@@ -60,7 +54,7 @@
 	design_ids = list(
 		"hypnochair",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
 
@@ -72,7 +66,7 @@
 		"pointy_tape",
 		"super_sticky_tape",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
 
@@ -85,7 +79,7 @@
 		"tackle_dolphin",
 		"tackle_rocket",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
 
@@ -99,7 +93,7 @@
 		"mod_recycler",
 		"mod_shooting",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
 
@@ -113,7 +107,7 @@
 		"mod_recycler",
 		"mod_shooting",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
 
@@ -124,12 +118,6 @@
 	design_ids = list(
 		"posisphere",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	experimental = TRUE
-
-#undef TIER_1_POINTS
-#undef TIER_2_POINTS
-#undef TIER_3_POINTS
-#undef TIER_4_POINTS
-#undef TIER_5_POINTS

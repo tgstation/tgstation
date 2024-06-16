@@ -4,6 +4,12 @@
 //! Techweb names for new point types. Can be used to define specific point values for specific types of research (science, security, engineering, etc.)
 #define TECHWEB_POINT_TYPE_GENERIC "General Research"
 
+#define TECHWEB_TIER_1_POINTS 2000
+#define TECHWEB_TIER_2_POINTS 4000
+#define TECHWEB_TIER_3_POINTS 6000
+#define TECHWEB_TIER_4_POINTS 8000
+#define TECHWEB_TIER_5_POINTS 10000
+
 //! Amount of points gained per second by a single R&D server, see: [research][code/controllers/subsystem/research.dm]
 #define TECHWEB_SINGLE_SERVER_INCOME 52.3
 

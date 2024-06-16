@@ -1,9 +1,3 @@
-#define TIER_1_POINTS 2000
-#define TIER_2_POINTS 4000
-#define TIER_3_POINTS 6000
-#define TIER_4_POINTS 8000
-#define TIER_5_POINTS 10000
-
 /datum/techweb_node/oldstation_surgery
 	id = "oldstation_surgery"
 	display_name = "Experimental Dissection"
@@ -12,7 +6,7 @@
 	design_ids = list(
 		"surgery_oldstation_dissection",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
 	show_on_wiki = FALSE
 
@@ -25,7 +19,7 @@
 		"surgery_heal_brute_upgrade",
 		"surgery_heal_burn_upgrade",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/surgery_adv
 	id = "surgery_adv"
@@ -40,7 +34,7 @@
 		"surgery_lobotomy",
 		"surgery_wing_reconstruction",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	required_experiments = list(/datum/experiment/autopsy/human)
 
 /datum/techweb_node/surgery_exp
@@ -61,7 +55,7 @@
 		"surgery_vein_thread",
 		"surgery_viral_bond",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	required_experiments = list(/datum/experiment/autopsy/nonhuman)
 
 /datum/techweb_node/surgery_tools
@@ -74,11 +68,5 @@
 		"searingtool",
 		"mechanicalpinches",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
-	discount_experiments = list(/datum/experiment/autopsy/xenomorph = TIER_4_POINTS)
-
-#undef TIER_1_POINTS
-#undef TIER_2_POINTS
-#undef TIER_3_POINTS
-#undef TIER_4_POINTS
-#undef TIER_5_POINTS
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	discount_experiments = list(/datum/experiment/autopsy/xenomorph = TECHWEB_TIER_4_POINTS)

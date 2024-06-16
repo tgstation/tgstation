@@ -1,9 +1,3 @@
-#define TIER_1_POINTS 2000
-#define TIER_2_POINTS 4000
-#define TIER_3_POINTS 6000
-#define TIER_4_POINTS 8000
-#define TIER_5_POINTS 10000
-
 /datum/techweb_node/mod_suit
 	id = "mod_suit"
 	starting_node = TRUE
@@ -40,7 +34,7 @@
 		"mod_thermal_regulator",
 		"mod_sign_radio",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/mod_entertainment
 	id = "mod_entertainment"
@@ -53,7 +47,7 @@
 		"mod_microwave_beam",
 		"mod_waddle",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/mod_medical
 	id = "mod_medical"
@@ -67,7 +61,7 @@
 		"mod_organ_thrower",
 		"mod_patienttransport",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/mod_engi
 	id = "mod_engi"
@@ -81,7 +75,7 @@
 		"mod_constructor",
 		"mod_mister_atmos",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/mod_security
 	id = "mod_security"
@@ -98,7 +92,7 @@
 		"mod_projectile_dampener",
 		"mod_criminalcapture",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/mod_medical_adv
 	id = "mod_medical_adv"
@@ -111,7 +105,7 @@
 		"mod_surgicalprocessor",
 		"mod_statusreadout",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/mod_engi_adv
 	id = "mod_engi_adv"
@@ -125,7 +119,7 @@
 		"mod_emp_shield",
 		"mod_storage_expanded",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/mod_engi_adv/New()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA)) //we'll really need the rad protection modsuit module
@@ -142,10 +136,4 @@
 		"mod_teleporter",
 		"mod_kinesis",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
-
-#undef TIER_1_POINTS
-#undef TIER_2_POINTS
-#undef TIER_3_POINTS
-#undef TIER_4_POINTS
-#undef TIER_5_POINTS
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)

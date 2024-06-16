@@ -1,9 +1,3 @@
-#define TIER_1_POINTS 2000
-#define TIER_2_POINTS 4000
-#define TIER_3_POINTS 6000
-#define TIER_4_POINTS 8000
-#define TIER_5_POINTS 10000
-
 /datum/techweb_node/bio_scan
 	id = "bio_scan"
 	display_name = "Biological Scan"
@@ -18,7 +12,7 @@
 		"scigoggles",
 		"mod_reagent_scanner",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/cytology
 	id = "cytology"
@@ -32,7 +26,7 @@
 		"swab",
 		"biopsy_tool",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/xenobiology
 	id = "xenobiology"
@@ -47,7 +41,7 @@
 		"limbdesign_lizard",
 		"limbdesign_plasmaman",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	required_experiments = list(/datum/experiment/scanning/random/cytology)
 
 /datum/techweb_node/gene_engineering
@@ -63,14 +57,8 @@
 		"genescanner",
 		"mod_dna_lock",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	discount_experiments = list(
-		/datum/experiment/scanning/random/plants/traits = TIER_2_POINTS,
-		/datum/experiment/scanning/points/slime/hard = TIER_2_POINTS,
+		/datum/experiment/scanning/random/plants/traits = TECHWEB_TIER_2_POINTS,
+		/datum/experiment/scanning/points/slime/hard = TECHWEB_TIER_2_POINTS,
 		)
-
-#undef TIER_1_POINTS
-#undef TIER_2_POINTS
-#undef TIER_3_POINTS
-#undef TIER_4_POINTS
-#undef TIER_5_POINTS

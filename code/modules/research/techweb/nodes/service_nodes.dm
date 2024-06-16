@@ -1,9 +1,3 @@
-#define TIER_1_POINTS 2000
-#define TIER_2_POINTS 4000
-#define TIER_3_POINTS 6000
-#define TIER_4_POINTS 8000
-#define TIER_5_POINTS 10000
-
 /datum/techweb_node/office_equip
 	id = "office_equip"
 	starting_node = TRUE
@@ -55,8 +49,8 @@
 		"buffer",
 		"vacuum",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
-	discount_experiments = list(/datum/experiment/scanning/random/janitor_trash = TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/random/janitor_trash = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/toys
 	id = "toys"
@@ -69,7 +63,7 @@
 		"air_horn",
 		"clown_firing_pin",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/consoles
 	id = "consoles"
@@ -93,7 +87,7 @@
 		"bounty_pad_control",
 		"bounty_pad",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/gaming
 	id = "gaming"
@@ -105,8 +99,8 @@
 		"arcade_orion",
 		"slotmachine",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
-	discount_experiments = list(/datum/experiment/physical/arcade_winner = TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	discount_experiments = list(/datum/experiment/physical/arcade_winner = TECHWEB_TIER_2_POINTS)
 
 // Kitchen root node
 /datum/techweb_node/cafeteria_equip
@@ -159,7 +153,7 @@
 		"dish_drive",
 		"roastingstick",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 // Fishing root node
 /datum/techweb_node/fishing_equip
@@ -184,7 +178,7 @@
 		"auto_reel",
 		"fish_analyzer",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	required_experiments = list(/datum/experiment/scanning/fish)
 
 /datum/techweb_node/marine_util
@@ -195,9 +189,9 @@
 	design_ids = list(
 		"bioelec_gen",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	// only available if you've done the first fishing experiment (thus unlocking fishing tech), but not a strict requirement to get the tech
-	discount_experiments = list(/datum/experiment/scanning/fish/second = TIER_3_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/fish/second = TECHWEB_TIER_3_POINTS)
 
 // Botany root node
 /datum/techweb_node/botany_equip
@@ -225,7 +219,7 @@
 		"hydro_tray",
 		"portaseeder",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/selection
 	id = "selection"
@@ -236,12 +230,6 @@
 		"flora_gun",
 		"gene_shears",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	required_experiments = list(/datum/experiment/scanning/random/plants/wild)
-	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = TIER_3_POINTS)
-
-#undef TIER_1_POINTS
-#undef TIER_2_POINTS
-#undef TIER_3_POINTS
-#undef TIER_4_POINTS
-#undef TIER_5_POINTS
+	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = TECHWEB_TIER_3_POINTS)
