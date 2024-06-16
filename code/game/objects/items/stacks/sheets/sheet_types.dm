@@ -393,7 +393,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 			user.visible_message(span_notice("[user] starts to fix their [affecting.name]."), span_notice("You start fixing [target == user ? "your" : "[target]'s"] [affecting.name]."))
 			if(!do_after(user, 5 SECONDS, target))
 				return ITEM_INTERACT_FAILURE
-		if(target.item_heal(target, user, brute_heal = 15, burn_heal = 15, heal_message_burn = "splintering", heal_message_brute = "charring", required_bodytype = BODYTYPE_PEG))
+		if(target.item_heal(user, brute_heal = 15, burn_heal = 15, heal_message_burn = "splintering", heal_message_brute = "charring", required_bodytype = BODYTYPE_PEG))
 			use(1)
 		return ITEM_INTERACT_SUCCESS
 	else

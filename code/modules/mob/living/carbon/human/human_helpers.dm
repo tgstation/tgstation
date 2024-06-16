@@ -361,8 +361,8 @@
 
 	return ceil(damage * (ceil(athletics_level / 2)) * fitness_modifier * maxHealth)
 
-/mob/living/carbon/human/proc/item_heal(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal, heal_message_brute, heal_message_burn, required_bodytype)
-	var/obj/item/bodypart/affecting = human.get_bodypart(check_zone(user.zone_selected))
+/mob/living/carbon/human/proc/item_heal(mob/user, brute_heal, burn_heal, heal_message_brute, heal_message_burn, required_bodytype)
+	var/obj/item/bodypart/affecting = src.get_bodypart(check_zone(user.zone_selected))
 	if (!affecting || !(affecting.bodytype == required_bodytype ))
 		to_chat(user, span_warning("[affecting] is already in good condition!"))
 		return FALSE
@@ -374,7 +374,7 @@
 	if (nothing_to_heal  || !affecting.heal_damage(brute_heal, burn_heal, required_bodytype))
 		to_chat(user, span_notice("[affecting] is already in good condition!"))
 		return FALSE
-	human.update_damage_overlays()
+	src.update_damage_overlays()
 	var/message
 	if (brute_damaged && burn_damaged)
 		message = "[heal_message_brute] and [heal_message_burn] on"
@@ -383,6 +383,6 @@
 	else
 		message = "[heal_message_burn] on"
 
-	user.visible_message(span_notice("[user] fixes some of the [message] [human]'s [affecting.name]."), \
-		span_notice("You fix some of the [message] [human == user ? "your" : "[human]'s"] [affecting.name]."))
+	user.visible_message(span_notice("[user] fixes some of the [message] [src]'s [affecting.name]."), \
+		span_notice("You fix some of the [message] [src == user ? "your" : "[src]'s"] [affecting.name]."))
 	return TRUE
