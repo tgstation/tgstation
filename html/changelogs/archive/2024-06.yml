@@ -708,3 +708,37 @@
   - bugfix: RCD material reclamation
   mc-oofert:
   - rscadd: the flatpacker, a machine unlocked at industrial engineering
+2024-06-16:
+  Archie700:
+  - qol: Changes description of steal objective to match the name
+  EnterTheJake:
+  - qol: You can now repair portable scrubbers and pumps.
+  GPeckman:
+  - bugfix: The reset button in the bluespace launchpad UI should work again.
+  Goat:
+  - bugfix: A wrecked shuttle on lavaland no longer has asteroid tiles containing
+      the danger of space.
+  - code_imp: Added volcanic versions of all mineral turfs for those that did not
+      have it.
+  GoblinBackwards:
+  - bugfix: Fixed the patient information for the mech sleeper module not displaying
+      when the mech didn't also have a syringe gun.
+  Jacquerel:
+  - rscadd: Cats and Dogs can lick slashing wounds clean.
+  - rscadd: Basic Mobs with hands can relocate dislocated bones, and pluck eyeballs
+      out of pulped skulls.
+  - balance: Gorillas can strangle people.
+  Melbert:
+  - bugfix: Fix inability to make r-glass by hand inside your backpack
+  ShizCalev:
+  - bugfix: Fixed some surgery failure states not properly setting the correct mood
+      event.
+  - refactor: Minor refactor to how surgery events work, there is now better support
+      for per-surgery mood events!
+  Wayland-Smithy:
+  - bugfix: Fixed revenant spawning next to brains and other unharvestable dead mobs.
+  WebcomicArtist:
+  - bugfix: Healium bolt now no longer affects silicons.
+  carlarctg:
+  - bugfix: Cosmos spells will no longer star mark your steed
+  - qol: Baby plushies are now smaller than their parents
