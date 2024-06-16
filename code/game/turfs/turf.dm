@@ -568,6 +568,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			if(EXPLODE_LIGHT)
 				SSexplosions.low_mov_atom += movable_thing
 
+/turf/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	var/datum/antagonist/heretic/heretic_data = IS_HERETIC(user)
+	if(istype(tool, /obj/item/melee/touch_attack/mansus_fist) && heretic_data?.rust_strength > 0)
+		var/obj/item/melee/touch_attack/mansus_fist/mansus_tool = tool
+		var/datum/action/cooldown/spell/touch/mansus_grasp/source = mansus_tool.spell_which_made_us?.resolve()
+		source.do_secondary_hand_hit(tool, src, user)
+		return ITEM_INTERACT_SUCCESS
 
 /turf/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)
