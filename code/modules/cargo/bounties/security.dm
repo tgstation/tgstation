@@ -90,7 +90,4 @@
 	wanted_types = list(/obj/item = TRUE)
 
 /datum/bounty/item/security/contraband/applies_to(obj/O)
-	. = ..()
-	if(HAS_TRAIT(O, TRAIT_CONTRABAND))
-		return TRUE
-	return FALSE
+	return HAS_TRAIT(O, TRAIT_CONTRABAND)
