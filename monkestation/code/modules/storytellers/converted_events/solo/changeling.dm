@@ -21,17 +21,16 @@
 	)
 	min_players = 20
 	weight = 3
+	shared_occurence_type = SHARED_CHANGELING
 
 /datum/round_event_control/antagonist/solo/changeling/roundstart
 	name = "Changelings"
 	roundstart = TRUE
 	earliest_start = 0
 	maximum_antags = 1
-	shared_occurences = list(/datum/round_event_control/antagonist/solo/changeling/midround)
 
 /datum/round_event_control/antagonist/solo/changeling/midround
 	name = "Genome Awakening (Changelings)"
 	antag_flag = ROLE_CHANGELING_MIDROUND
 	prompted_picking = TRUE
 	max_occurrences = 2
-	shared_occurences = list(/datum/round_event_control/antagonist/solo/changeling/roundstart)

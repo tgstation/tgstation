@@ -99,3 +99,10 @@
 
 #define ROUNDSTART_OBJECTIVES_BASE 40
 #define ROUNDSTART_OBJECTIVES_GAIN 2
+
+#define SHARED_HIGH_THREAT	"high threat event"
+#define SHARED_ANOMALIES	"anomalous event"
+#define SHARED_SCRUBBERS	"scrubber-related event"
+#define SHARED_METEORS		"meteor event"
+#define SHARED_BSOD			"tech malfunction event"
+#define SHARED_CHANGELING	"changelings"
