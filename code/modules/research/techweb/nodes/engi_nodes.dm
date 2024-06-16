@@ -54,6 +54,8 @@
 		"hyper_cell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	required_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier2_any)
+
 
 /datum/techweb_node/parts_bluespace
 	id = "parts_bluespace"

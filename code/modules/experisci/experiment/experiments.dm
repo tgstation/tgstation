@@ -418,3 +418,12 @@
 	name = "Bluespace Crystal Sampling"
 	description = "Investigate the properties of bluespace crystals by scanning either an artificial or naturally occurring variant. This will help us deepen our understanding of bluespace phenomena."
 	required_atoms = list(/obj/item/stack/ore/bluespace_crystal = 1)
+
+/datum/experiment/scanning/points/machinery_tiered_scan/tier2_any
+	name = "Upgraded Stock Parts Benchmark"
+	description = "Our newly-designed machinery components require practical application tests for hints at possible further advancements, as well as a general confirmation that we didn't actually design worse parts somehow. Scan any machinery with Upgraded Parts and report the results."
+	required_points = 8
+	required_atoms = list(
+		/obj/machinery = 1
+	)
+	required_tier = 2
