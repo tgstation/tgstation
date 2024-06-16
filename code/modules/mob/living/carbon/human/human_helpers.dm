@@ -386,4 +386,4 @@
 
 	user.visible_message(span_notice("[user] fixes some of the [message] [src]'s [affecting.name]."), \
 		span_notice("You fix some of the [message] [src == user ? "your" : "[src]'s"] [affecting.name]."))
-		return TRUE
+	return TRUE
