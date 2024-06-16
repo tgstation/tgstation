@@ -1,0 +1,4 @@
+author: "junkgle01"
+delete-after: True
+changes:
+  - bugfix: "added an id trim painter that was missing to MetaStation's QM office."

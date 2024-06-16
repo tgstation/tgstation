@@ -661,8 +661,8 @@
 	name = "berserker armor"
 	desc = "This hulking armor seems to possess some kind of dark force within; howling in rage, hungry for carnage. \
 		The self-sealing stem bolts that allowed this suit to be spaceworthy have long since corroded. However, the entity \
-		sealed within the suit seems to hunger for the fleeting lifeforce found in the remains left within drake armor. \
-		Feeding it seems to empower a suit piece, though turns the drake armor back to lifeless ash."
+		sealed within the suit seems to hunger for the fleeting lifeforce found in the remains left in the remains of drakes. \
+		Feeding it drake remains seems to empower a suit piece, though turns the remains back to lifeless ash."
 	icon_state = "berserker"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
@@ -697,7 +697,7 @@
 /obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, ALL, inventory_flags = ITEM_SLOT_OCLOTHING)
-	AddComponent(/datum/component/armor_plate, maxamount = 1, upgrade_item = /obj/item/clothing/suit/hooded/cloak/drake, armor_mod = /datum/armor/drake_empowerment, upgrade_prefix = "empowered")
+	AddComponent(/datum/component/armor_plate, maxamount = 1, upgrade_item = /obj/item/drake_remains, armor_mod = /datum/armor/drake_empowerment, upgrade_prefix = "empowered")
 	allowed = GLOB.mining_suit_allowed
 
 #define MAX_BERSERK_CHARGE 100
@@ -710,8 +710,8 @@
 	name = "berserker helmet"
 	desc = "This burdensome helmet seems to possess some kind of dark force within; howling in rage, hungry for carnage. \
 		The self-sealing stem bolts that allowed this helmet to be spaceworthy have long since corroded. However, the entity \
-		sealed within the suit seems to hunger for the fleeting lifeforce found in the remains left within drake armor. \
-		Feeding it seems to empower a suit piece, though turns the drake armor back to lifeless ash."
+		sealed within the suit seems to hunger for the fleeting lifeforce found in the remains left in the remains of drakes. \
+		Feeding it drake remains seems to empower a suit piece, though turns the remains back to lifeless ash."
 	icon_state = "berserker"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
@@ -732,7 +732,7 @@
 /obj/item/clothing/head/hooded/berserker/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
-	AddComponent(/datum/component/armor_plate, maxamount = 1, upgrade_item = /obj/item/clothing/suit/hooded/cloak/drake, armor_mod = /datum/armor/drake_empowerment, upgrade_prefix = "empowered")
+	AddComponent(/datum/component/armor_plate, maxamount = 1, upgrade_item = /obj/item/drake_remains, armor_mod = /datum/armor/drake_empowerment, upgrade_prefix = "empowered")
 
 /obj/item/clothing/head/hooded/berserker/examine()
 	. = ..()
@@ -799,6 +799,16 @@
 #undef DAMAGE_TO_CHARGE_SCALE
 #undef CHARGE_DRAINED_PER_SECOND
 #undef BERSERK_ATTACK_SPEED_MODIFIER
+
+/obj/item/drake_remains
+	name = "drake remains"
+	desc = "The gathered remains of a drake. It still crackles with heat, and smells distinctly of brimstone."
+	icon = 'icons/obj/clothing/head/helmet.dmi'
+	icon_state = "dragon"
+
+/obj/item/drake_remains/Initialize(mapload)
+	. = ..()
+	particles = new /particles/bonfire()
 
 /obj/item/clothing/glasses/godeye
 	name = "eye of god"

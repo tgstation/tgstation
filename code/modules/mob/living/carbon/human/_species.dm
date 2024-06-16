@@ -1500,7 +1500,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/clear_tail_moodlets(mob/living/carbon/human/former_tail_owner)
 	former_tail_owner.clear_mood_event("tail_lost")
 	former_tail_owner.clear_mood_event("tail_balance_lost")
-	former_tail_owner.clear_mood_event("wrong_tail_regained")
+	former_tail_owner.clear_mood_event("tail_regained")
 
 /// Returns a list of strings representing features this species has.
 /// Used by the preferences UI to know what buttons to show.

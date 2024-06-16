@@ -595,6 +595,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	say_mod = "meows"
 	liked_foodtypes = SEAFOOD | ORANGES | BUGS | GORE
 	disliked_foodtypes = GROSS | CLOTH | RAW
+	organ_traits = list(TRAIT_WOUND_LICKER)
 
 /obj/item/organ/internal/tongue/jelly
 	name = "jelly tongue"

@@ -604,7 +604,7 @@
 			if(2)
 				affected_mob.emote("cough")
 			if(3)
-				affected_mob.emote("sneeze")
+				affected_mob.sneeze()
 			if(4)
 				if(prob(75))
 					to_chat(affected_mob, span_danger("You scratch at an itch."))

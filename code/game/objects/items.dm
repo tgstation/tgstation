@@ -69,6 +69,8 @@
 	var/hitsound
 	///Played when the item is used, for example tools
 	var/usesound
+	///Played when item is used for long progress
+	var/operating_sound
 	///Used when yate into a mob
 	var/mob_throw_hit_sound
 	///Sound used when equipping the item into a valid slot
@@ -294,6 +296,18 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Reskin"
 	return CONTEXTUAL_SCREENTIP_SET
 
+/obj/item/click_ctrl(mob/user)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	//If the item is on the ground & not anchored we allow the player to drag it
+	. = item_ctrl_click(user)
+	if(. & CLICK_ACTION_ANY)
+		return (isturf(loc) && !anchored) ? NONE : . //allow the object to get dragged on the floor
+
+/// Subtypes only override this proc for ctrl click purposes. obeys same principles as ctrl_click()
+/obj/item/proc/item_ctrl_click(mob/user)
+	SHOULD_CALL_PARENT(FALSE)
+	return NONE
 
 /// Called when an action associated with our item is deleted
 /obj/item/proc/on_action_deleted(datum/source)
@@ -984,7 +998,7 @@
 
 	return SEND_SIGNAL(src, COMSIG_ITEM_MICROWAVE_ACT, microwave_source, microwaver, randomize_pixel_offset)
 
-//Used to check for extra requirements for blending(grinding or juicing) an object
+///Used to check for extra requirements for blending(grinding or juicing) an object
 /obj/item/proc/blend_requirements(obj/machinery/reagentgrinder/R)
 	return TRUE
 
@@ -994,15 +1008,16 @@
 
 ///Grind item, adding grind_results to item's reagents and transfering to target_holder if specified
 /obj/item/proc/grind(datum/reagents/target_holder, mob/user)
+	. = FALSE
 	if(on_grind() == -1)
-		return FALSE
+		return
 
 	if(length(grind_results))
 		target_holder.add_reagent_list(grind_results)
+		. = TRUE
 	if(reagents?.total_volume)
 		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
-
-	return TRUE
+		. = TRUE
 
 ///Called BEFORE the object is ground up - use this to change grind results based on conditions. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_juice()
@@ -1016,7 +1031,8 @@
 		return FALSE
 
 	if(ispath(juice_typepath))
-		reagents.convert_reagent(/datum/reagent/consumable, juice_typepath, include_source_subtypes = TRUE)
+		reagents.convert_reagent(/datum/reagent/consumable/nutriment, juice_typepath, include_source_subtypes = FALSE)
+		reagents.convert_reagent(/datum/reagent/consumable/nutriment/vitamin, juice_typepath, include_source_subtypes = FALSE)
 	reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 
 	return TRUE
@@ -1060,8 +1076,11 @@
 			else
 				apply_outline() //if the player's alive and well we send the command with no color set, so it uses the theme's color
 
-/obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+/obj/item/base_mouse_drop_handler(atom/over, src_location, over_location, params)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	. = ..()
+
 	remove_filter(HOVER_OUTLINE_FILTER) //get rid of the hover effect in case the mouse exit isn't called if someone drags and drops an item and somthing goes wrong
 
 /obj/item/MouseExited()
@@ -1122,6 +1141,9 @@
 		// Create a callback with checks that would be called every tick by do_after.
 		var/datum/callback/tool_check = CALLBACK(src, PROC_REF(tool_check_callback), user, amount, extra_checks)
 
+		if(delay >= MIN_TOOL_OPERATING_DELAY)
+			play_tool_operating_sound(target, volume)
+
 		if(!do_after(user, delay, target=target, extra_checks=tool_check))
 			return
 	else
@@ -1163,6 +1185,19 @@
 			played_sound = pick(usesound)
 
 		playsound(target, played_sound, volume, TRUE)
+
+///Play item's operating sound
+/obj/item/proc/play_tool_operating_sound(atom/target, volume=50)
+	if(target && operating_sound && volume)
+		var/played_sound = operating_sound
+
+		if(islist(operating_sound))
+			played_sound = pick(operating_sound)
+
+		if(!TIMER_COOLDOWN_FINISHED(src, COOLDOWN_TOOL_SOUND))
+			return
+		playsound(target, played_sound, volume, TRUE)
+		TIMER_COOLDOWN_START(src, COOLDOWN_TOOL_SOUND, 4 SECONDS) //based on our longest sound clip
 
 /// Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
 /obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
@@ -1391,7 +1426,7 @@
 		mob_loc.update_clothing(slot_flags)
 
 /// Called on [/datum/element/openspace_item_click_handler/proc/on_afterattack]. Check the relative file for information.
-/obj/item/proc/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
+/obj/item/proc/handle_openspace_click(turf/target, mob/user, click_parameters)
 	stack_trace("Undefined handle_openspace_click() behaviour. Ascertain the openspace_item_click_handler element has been attached to the right item and that its proc override doesn't call parent.")
 
 /**
@@ -1425,8 +1460,13 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED_AS_OUTFIT, outfit_wearer, visuals_only, item_slot)
 
-/// Whether or not this item can be put into a storage item through attackby
-/obj/item/proc/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+/**
+ * Called before this item is placed into a storage container
+ * via the item clicking on the target atom
+ *
+ * Returning FALSE will prevent the item from being stored
+ */
+/obj/item/proc/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
 	return TRUE
 
 /obj/item/proc/do_pickup_animation(atom/target, turf/source)

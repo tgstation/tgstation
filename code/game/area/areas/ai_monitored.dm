@@ -82,6 +82,14 @@
 	name = "\improper AI Satellite Maintenance"
 	icon_state = "ai_maint"
 
+/area/station/ai_monitored/turret_protected/aisat/uppernorth
+	name = "\improper AI Satellite Upper Fore"
+	icon_state = "ai"
+
+/area/station/ai_monitored/turret_protected/aisat/uppersouth
+	name = "\improper AI Satellite Upper Aft"
+	icon_state = "ai"
+
 /area/station/ai_monitored/turret_protected/aisat_interior
 	name = "\improper AI Satellite Antechamber"
 	icon_state = "ai_interior"

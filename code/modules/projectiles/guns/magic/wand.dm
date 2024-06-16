@@ -33,24 +33,23 @@
 		return
 	..()
 
-/obj/item/gun/magic/wand/afterattack(atom/target, mob/living/user)
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/gun/magic/wand/try_fire_gun(atom/target, mob/living/user, params)
 	if(!charges)
 		shoot_with_empty_chamber(user)
-		return
+		return FALSE
 	if(target == user)
-		if(no_den_usage)
-			var/area/A = get_area(user)
-			if(istype(A, /area/centcom/wizard_station))
-				to_chat(user, span_warning("You know better than to violate the security of The Den, best wait until you leave to use [src]."))
-				return
-			else
-				no_den_usage = 0
+		if(no_den_usage && istype(get_area(user), /area/centcom/wizard_station))
+			to_chat(user, span_warning("You know better than to violate the security of The Den, best wait until you leave to use [src]."))
+			return FALSE
 		zap_self(user)
-	else
-		. |= ..()
-	update_appearance()
+		. = TRUE
 
+	else
+		. = ..()
+
+	if(.)
+		update_appearance()
+	return .
 
 /obj/item/gun/magic/wand/proc/zap_self(mob/living/user)
 	user.visible_message(span_danger("[user] zaps [user.p_them()]self with [src]."))
