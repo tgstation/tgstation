@@ -142,7 +142,7 @@
 		flick("firebots_use", src)
 	else
 		flick("firebot1_use", src)
-	internal_ext?.afterattack(attacked_atom, src)
+	internal_ext?.melee_attack_chain(src, attacked_atom)
 
 /mob/living/basic/bot/firebot/update_icon_state()
 	. = ..()
