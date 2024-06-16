@@ -17,6 +17,8 @@
 	if(item_interact_result & ITEM_INTERACT_BLOCKING)
 		return FALSE
 
+	// At this point it means we're not doing a non-combat interaction so let's just try to bash it
+
 	var/pre_attack_result
 	if (is_right_clicking)
 		switch (pre_attack_secondary(target, user, params))
@@ -34,8 +36,9 @@
 	if(pre_attack_result)
 		return TRUE
 
-	var/attackby_result
+	// At this point the attack is really about to happen
 
+	var/attackby_result
 	if (is_right_clicking)
 		switch (target.attackby_secondary(src, user, params))
 			if (SECONDARY_ATTACK_CALL_NORMAL)
@@ -50,24 +53,19 @@
 		attackby_result = target.attackby(src, user, params)
 
 	if (attackby_result)
+		// This means the attack failed or was handled for whatever reason
 		return TRUE
 
-	if (is_right_clicking)
-		var/after_attack_secondary_result = afterattack_secondary(target, user, TRUE, params)
+	// At this point it means the attack was "successful", or at least unhandled, in some way
+	// This can mean nothing happened, this can mean the target took damage, etc.
 
-		// There's no chain left to continue at this point, so CANCEL_ATTACK_CHAIN and CONTINUE_CHAIN are functionally the same.
-		if (after_attack_secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || after_attack_secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
-			return TRUE
-
-	var/afterattack_result = afterattack(target, user, TRUE, params)
-
-	if (!(afterattack_result & AFTERATTACK_PROCESSED_ITEM) && isitem(target))
-		if (isnull(user.get_inactive_held_item()))
+	if(user.client && isitem(target))
+		if(isnull(user.get_inactive_held_item()))
 			SStutorials.suggest_tutorial(user, /datum/tutorial/switch_hands, params2list(params))
 		else
 			SStutorials.suggest_tutorial(user, /datum/tutorial/drop, params2list(params))
 
-	return afterattack_result & TRUE //this is really stupid but its needed because afterattack can return TRUE | FLAGS.
+	return TRUE
 
 /// Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user, modifiers)
@@ -160,16 +158,6 @@
 	return attacking_item.attack_atom(src, user, params)
 
 /mob/living/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	// Surgery and such happens very high up in the interaction chain, before parent call
-	var/attempt_tending = item_tending(user, tool, modifiers)
-	if(attempt_tending & ITEM_INTERACT_ANY_BLOCKER)
-		return attempt_tending
-
-	return ..() | attempt_tending
-
-/// Handles any use of using a surgical tool or item on a mob to tend to them.
-/// The sole reason this is a separate proc is so carbons can tend wounds AFTER the check for surgery.
-/mob/living/proc/item_tending(mob/living/user, obj/item/tool, list/modifiers)
 	for(var/datum/surgery/operation as anything in surgeries)
 		if(IS_IN_INVALID_SURGICAL_POSITION(src, operation))
 			continue
@@ -211,21 +199,21 @@
 	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	if(signal_return & COMPONENT_SKIP_ATTACK)
-		return
+		return FALSE
 
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, target_mob, user, params)
 
 	if(item_flags & NOBLUDGEON)
-		return
+		return FALSE
 
 	if(damtype != STAMINA && force && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to harm other living beings!"))
-		return
+		return FALSE
 
 	if(!force && !HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
-		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
+		playsound(src, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
 	else if(hitsound)
-		playsound(loc, hitsound, get_clamped_volume(), TRUE, extrarange = stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
+		playsound(src, hitsound, get_clamped_volume(), TRUE, extrarange = stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
 
 	target_mob.lastattacker = user.real_name
 	target_mob.lastattackerckey = user.ckey
@@ -233,13 +221,18 @@
 	if(force && target_mob == user && user.client)
 		user.client.give_award(/datum/award/achievement/misc/selfouch, user)
 
-	user.do_attack_animation(target_mob)
-	target_mob.attacked_by(src, user)
+	if(get(src, /mob/living) == user) // telekinesis.
+		user.do_attack_animation(target_mob)
+	if(!target_mob.attacked_by(src, user))
+		return TRUE
 
-	SEND_SIGNAL(src, COMSIG_ITEM_POST_ATTACK, target_mob, user, params)
+	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target_mob, user, params)
+	SEND_SIGNAL(target_mob, COMSIG_ATOM_AFTER_ATTACKEDBY, src, user, params)
+	afterattack(target_mob, user, params)
 
 	log_combat(user, target_mob, "attacked", src.name, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
+	return FALSE // unhandled
 
 /// The equivalent of [/obj/item/proc/attack] but for alternate attacks, AKA right clicking
 /obj/item/proc/attack_secondary(mob/living/victim, mob/living/user, params)
@@ -255,14 +248,21 @@
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for non mob targets.
 /obj/item/proc/attack_atom(atom/attacked_atom, mob/living/user, params)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_ATOM, attacked_atom, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
-		return
+	var/signal_return = SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_ATOM, attacked_atom, user)
+	if(signal_return & COMPONENT_SKIP_ATTACK)
+		return TRUE
+	if(signal_return & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return FALSE
 	if(item_flags & NOBLUDGEON)
-		return
+		return FALSE
 	user.changeNext_move(attack_speed)
-	user.do_attack_animation(attacked_atom)
+	if(get(src, /mob/living) == user) // telekinesis.
+		user.do_attack_animation(attacked_atom)
 	attacked_atom.attacked_by(src, user)
-	SEND_SIGNAL(src, COMSIG_ITEM_POST_ATTACK_ATOM, attacked_atom, user)
+	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, attacked_atom, user, params)
+	SEND_SIGNAL(attacked_atom, COMSIG_ATOM_AFTER_ATTACKEDBY, src, user, params)
+	afterattack(attacked_atom, user, params)
+	return FALSE // unhandled
 
 /// Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds
 /atom/proc/attacked_by(obj/item/attacking_item, mob/living/user)
@@ -318,7 +318,7 @@
 	SEND_SIGNAL(attacking_item, COMSIG_ITEM_ATTACK_ZONE, src, user, targeting)
 
 	if(damage <= 0)
-		return FALSE
+		return TRUE
 
 	if(ishuman(src) || client) // istype(src) is kinda bad, but it's to avoid spamming the blackbox
 		SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
@@ -442,33 +442,9 @@
  * * proximity_flag - is 1 if this afterattack was called on something adjacent, in your square, or on your person.
  * * click_parameters - is the params string from byond [/atom/proc/Click] code, see that documentation.
  */
-/obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = NONE
-	. |= SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
-	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, src, proximity_flag, click_parameters)
-	SEND_SIGNAL(target, COMSIG_ATOM_AFTER_ATTACKEDBY, src, user, proximity_flag, click_parameters)
-	return .
-
-/**
- * Called at the end of the attack chain if the user right-clicked.
- *
- * Arguments:
- * * atom/target - The thing that was hit
- * * mob/user - The mob doing the hitting
- * * proximity_flag - is 1 if this afterattack was called on something adjacent, in your square, or on your person.
- * * click_parameters - is the params string from byond [/atom/proc/Click] code, see that documentation.
- */
-/obj/item/proc/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	var/signal_result = SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK_SECONDARY, target, user, proximity_flag, click_parameters)
-	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK_SECONDARY, target, src, proximity_flag, click_parameters)
-
-	if(signal_result & COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	if(signal_result & COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN)
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
-
-	return SECONDARY_ATTACK_CALL_NORMAL
+/obj/item/proc/afterattack(atom/target, mob/user, click_parameters)
+	PROTECTED_PROC(TRUE)
+	return
 
 /obj/item/proc/get_clamped_volume()
 	if(w_class)
