@@ -278,7 +278,8 @@
 /mob/living/basic/boss/dragon/lesser/adjust_health(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	// we still start with a controller
-	ai_controller?.blackboard[BB_DRAKE_LAVASWOOP]?.enraged = FALSE // In case taking damage caused us to start deleting ourselves
+	var/datum/action/cooldown/mob_cooldown/lava_swoop/lava_swoop = ai_controller?.blackboard[BB_DRAKE_LAVASWOOP]
+	lava_swoop?.enraged = FALSE // In case taking damage caused us to start deleting ourselves
 
 /mob/living/basic/boss/dragon/lesser/grant_achievement(medaltype,scoretype)
 	return
