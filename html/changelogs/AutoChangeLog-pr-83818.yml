@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Over 200 item interactions have been refactored to use a newer, easier-to-use system. Report any oddities with using items on other objects you may see (such as surgery, reagent containers like cups and spray bottles, or construction devices), especially using something at range (such as guns or chisels)"
-  - refactor: "Item-On-Modsuit interactions have changed slightly. While on combat mode, you will attempt to \"use\" the item on the suit instead of inserting it into the suit's storage. This means being on combat mode while the suit's panel is open will block you from inserting items entirely via click (but other methods such as hotkey, clicking on the storage boxes, and mousedrop will still work)."
-  - refactor: "The detective's scanner will now be inserted into storage items if clicked normally, and will scan the storage item if on combat mode"

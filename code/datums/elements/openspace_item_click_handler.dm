@@ -17,13 +17,13 @@
 //Invokes the proctype with a turf above as target.
 /datum/element/openspace_item_click_handler/proc/divert_interaction(obj/item/source, mob/user, atom/target, click_parameters)
 	SIGNAL_HANDLER
-	if(target.z == user.z)
+	if((target.z == 0) || (user.z == 0) || target.z == user.z)
 		return NONE
 	var/turf/checked_turf = get_turf(target)
 	while(!isnull(checked_turf))
 		checked_turf = GET_TURF_ABOVE(checked_turf)
 		if(checked_turf?.z == user.z && user.CanReach(checked_turf, source))
 			INVOKE_ASYNC(source, TYPE_PROC_REF(/obj/item, handle_openspace_click), checked_turf, user, click_parameters)
-			break
+			return ITEM_INTERACT_BLOCKING
 
-	return ITEM_INTERACT_BLOCKING
+	return NONE

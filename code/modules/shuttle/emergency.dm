@@ -805,10 +805,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/pod, 32)
 		atom_storage?.show_contents(user)
 	return TRUE
 
-/obj/item/storage/pod/MouseDrop(over_object, src_location, over_location)
-	if(can_interact(usr))
-		return ..()
-
 /obj/item/storage/pod/attack_hand_secondary(mob/user, list/modifiers)
 	if(!can_interact(user))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

@@ -124,7 +124,7 @@
 
 /obj/projectile/bullet/rebar/healium/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(!isliving(target))
+	if(!iscarbon(target))
 		return BULLET_ACT_HIT
 	var/mob/living/breather = target
 	breather.SetSleeping(3 SECONDS)

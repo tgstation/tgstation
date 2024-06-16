@@ -27,7 +27,7 @@
 
 	user.transferItemToLoc(tool, target, TRUE)
 
-	var/datum/action/item_action/hands_free/activate_pill/pill_action = new(tool)
+	var/datum/action/item_action/activate_pill/pill_action = new(tool)
 	pill_action.name = "Activate [tool.name]"
 	pill_action.build_all_button_icons()
 	pill_action.target = tool
@@ -42,11 +42,20 @@
 	)
 	return ..()
 
-/datum/action/item_action/hands_free/activate_pill
+/datum/action/item_action/activate_pill
 	name = "Activate Pill"
+	check_flags = NONE
 
-/datum/action/item_action/hands_free/activate_pill/Trigger(trigger_flags)
+/datum/action/item_action/activate_pill/IsAvailable(feedback)
+	if(owner.stat > SOFT_CRIT)
+		return FALSE
+	return ..()
+
+/datum/action/item_action/activate_pill/Trigger(trigger_flags)
 	if(!..())
+		return FALSE
+	owner.balloon_alert_to_viewers("[owner] grinds their teeth!", "You grit your teeth.")
+	if(!do_after(owner, owner.stat * (2.5 SECONDS), owner,  IGNORE_USER_LOC_CHANGE | IGNORE_INCAPACITATED))
 		return FALSE
 	var/obj/item/item_target = target
 	to_chat(owner, span_notice("You grit your teeth and burst the implanted [item_target.name]!"))

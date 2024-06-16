@@ -1,3 +1,8 @@
+#define SURGERY_STATE_STARTED "surgery_started"
+#define SURGERY_STATE_FAILURE "surgery_failed"
+#define SURGERY_STATE_SUCCESS "surgery_success"
+#define SURGERY_MOOD_CATEGORY "surgery"
+
 /datum/surgery_step
 	var/name
 	var/list/implements = list() //format is path = probability of success. alternatively
@@ -12,6 +17,15 @@
 	var/preop_sound //Sound played when the step is started
 	var/success_sound //Sound played if the step succeeded
 	var/failure_sound //Sound played if the step fails
+	///If the surgery causes mood changes if the patient is conscious.
+	var/surgery_effects_mood = FALSE
+	///Which mood event to give the patient when surgery is starting while they're conscious. This should be permanent/not have a timer until the surgery either succeeds or fails, as those states will immediately replace it. Mostly just flavor text.
+	var/datum/mood_event/surgery/surgery_started_mood_event = /datum/mood_event/surgery
+	///Which mood event to give the conscious patient when surgery succeeds. Lasts far shorter than if it failed.
+	var/datum/mood_event/surgery/surgery_success_mood_event = /datum/mood_event/surgery/success
+	///Which mood event to give the consious patient when surgery fails. Lasts muuuuuch longer.
+	var/datum/mood_event/surgery/surgery_failure_mood_event = /datum/mood_event/surgery/failure
+
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
@@ -83,9 +97,11 @@
 	var/advance = FALSE
 
 	if(preop(user, target, target_zone, tool, surgery) == SURGERY_STEP_FAIL)
+		update_surgery_mood(target, SURGERY_STATE_FAILURE)
 		surgery.step_in_progress = FALSE
 		return FALSE
 
+	update_surgery_mood(target, SURGERY_STATE_STARTED)
 	play_preop_sound(user, target, target_zone, tool, surgery) // Here because most steps overwrite preop
 
 	if(tool)
@@ -122,11 +138,13 @@
 		if((prob(100-fail_prob) || (iscyborg(user) && !silicons_obey_prob)) && chem_check_result && !try_to_fail)
 
 			if(success(user, target, target_zone, tool, surgery))
+				update_surgery_mood(target, SURGERY_STATE_SUCCESS)
 				play_success_sound(user, target, target_zone, tool, surgery)
 				advance = TRUE
 		else
 			if(failure(user, target, target_zone, tool, surgery, fail_prob))
 				play_failure_sound(user, target, target_zone, tool, surgery)
+				update_surgery_mood(target, SURGERY_STATE_FAILURE)
 				advance = TRUE
 			if(chem_check_result)
 				return .(user, target, target_zone, tool, surgery, try_to_fail) //automatically re-attempt if failed for reason other than lack of required chemical
@@ -135,11 +153,42 @@
 			if(surgery.status > surgery.steps.len)
 				surgery.complete(user)
 
+	else if(!QDELETED(target))
+		update_surgery_mood(target, SURGERY_STATE_FAILURE)
+
 	if(target.stat == DEAD && was_sleeping && user.client)
 		user.client.give_award(/datum/award/achievement/jobs/sandman, user)
 
 	surgery.step_in_progress = FALSE
 	return advance
+
+/**
+ * Handles updating the mob's mood depending on the surgery states.
+ * * surgery_state = SURGERY_STATE_STARTED, SURGERY_STATE_FAILURE, SURGERY_STATE_SUCCESS
+ * * To prevent typos, the event category is defined as SURGERY_MOOD_CATEGORY ("surgery")
+*/
+/datum/surgery_step/proc/update_surgery_mood(mob/living/target, surgery_state)
+	if(!target)
+		CRASH("Not passed a target, how did we get here?")
+	if(!surgery_effects_mood)
+		return
+	if(HAS_TRAIT(target, TRAIT_ANALGESIA))
+		target.clear_mood_event(SURGERY_MOOD_CATEGORY) //incase they gained the trait mid-surgery. has the added side effect that if someone has a bad surgical memory/mood and gets drunk & goes back to surgery, they'll forget they hated it, which is kinda funny imo.
+		return
+	if(target.stat >= UNCONSCIOUS)
+		var/datum/mood_event/surgery/target_mood_event = target.mob_mood.mood_events[SURGERY_MOOD_CATEGORY]
+		if(target_mood_event?.surgery_completed) //don't give sleeping mobs trauma. that said, if they fell asleep mid-surgery after already getting the bad mood, lets make sure they wake up to a (hopefully) happy memory.
+			return
+	switch(surgery_state)
+		if(SURGERY_STATE_STARTED)
+			target.add_mood_event(SURGERY_MOOD_CATEGORY, surgery_started_mood_event)
+		if(SURGERY_STATE_SUCCESS)
+			target.add_mood_event(SURGERY_MOOD_CATEGORY, surgery_success_mood_event)
+		if(SURGERY_STATE_FAILURE)
+			target.add_mood_event(SURGERY_MOOD_CATEGORY, surgery_failure_mood_event)
+		else
+			CRASH("passed invalid surgery_state, \"[surgery_state]\".")
+
 
 /datum/surgery_step/proc/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -262,17 +311,14 @@
  * * target - Who the message will be sent to
  * * pain_message - The message to be displayed
  * * mechanical_surgery - Boolean flag that represents if a surgery step is done on a mechanical limb (therefore does not force scream)
- * * mood_event_type - What type of mood event the step applies if they're still conscious (ie "THEY'RE CUTTING ME OPEN!!" when being sliced open with a scalpel/saw/ect)
  */
-/datum/surgery_step/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE, datum/mood_event/mood_event_type)
+/datum/surgery_step/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE)
 	if(target.stat < UNCONSCIOUS)
 		if(HAS_TRAIT(target, TRAIT_ANALGESIA))
 			if(!pain_message)
 				return
 			to_chat(target, span_notice("You feel a dull, numb sensation as your body is surgically operated on."))
 		else
-			if(mood_event_type)
-				target.add_mood_event("surgery", mood_event_type)
 			if(!pain_message)
 				return
 			to_chat(target, span_userdanger(pain_message))
@@ -283,3 +329,7 @@
 #undef SURGERY_SPEED_DISSECTION_MODIFIER
 #undef SURGERY_SPEED_MORBID_CURIOSITY
 #undef SURGERY_SLOWDOWN_CAP_MULTIPLIER
+#undef SURGERY_STATE_STARTED
+#undef SURGERY_STATE_FAILURE
+#undef SURGERY_STATE_SUCCESS
+#undef SURGERY_MOOD_CATEGORY
