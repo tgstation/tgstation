@@ -28,7 +28,6 @@
 	. = ..()
 	RegisterSignal(owner.current, COMSIG_MOB_EXAMINATE, PROC_REF(on_examinate))
 	owner.teach_crafting_recipe(/datum/crafting_recipe/skeleton_key)
-	ADD_TRAIT(owner, TRAIT_SETTLER, ROLE_ASHWALKER)
 
 /datum/antagonist/ashwalker/on_removal()
 	. = ..()
