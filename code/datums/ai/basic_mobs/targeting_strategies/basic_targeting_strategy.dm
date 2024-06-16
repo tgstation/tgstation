@@ -142,14 +142,12 @@
 /datum/targeting_strategy/basic/megafauna
 
 /datum/targeting_strategy/basic/megafauna/can_attack(mob/living/living_mob, mob/living/the_target, vision_range)
+	if(istype(the_target) && the_target.has_status_effect(/datum/status_effect/gutted))
+		return FALSE
 	if(the_target == living_mob.ai_controller?.blackboard[BB_BASIC_MOB_CURRENT_TARGET]) // (SOMETHING TRULY EVIL HAS YOUR SCENT NOW)
 		ignore_sight = TRUE //essentially ignore sight checks if we are dingus the nerd who want to kill
 	. = ..()
 	ignore_sight = initial(ignore_sight)
-	if (!.)
-		return
-	if(istype(the_target) && the_target.has_status_effect(/datum/status_effect/gutted))
-		return FALSE
 
 
 

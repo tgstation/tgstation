@@ -213,25 +213,25 @@
 	addtimer(CALLBACK(src, PROC_REF(fall), reset_time), duration, TIMER_UNIQUE)
 
 /obj/effect/temp_visual/lava_warning/proc/fall(reset_time)
-	var/turf/T = get_turf(src)
-	playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
+	var/turf/our_turf = get_turf(src)
+	playsound(our_turf,'sound/magic/fireball.ogg', 200, TRUE)
 
-	for(var/mob/living/L in T.contents - owner)
-		if(istype(L, /mob/living/basic/boss/dragon))
+	for(var/mob/living/victim in our_turf.contents - owner)
+		if(istype(victim, /mob/living/basic/boss/dragon))
 			continue
-		L.adjustFireLoss(10)
-		to_chat(L, span_userdanger("You fall directly into the pool of lava!"))
+		victim.adjustFireLoss(10)
+		to_chat(victim, span_userdanger("You fall directly into the pool of lava!"))
 
 	// deals damage to mechs
-	for(var/obj/vehicle/sealed/mecha/M in T.contents)
-		M.take_damage(45, BRUTE, MELEE, 1)
+	for(var/obj/vehicle/sealed/mecha/mecha in our_turf.contents)
+		mecha.take_damage(45, BRUTE, MELEE, 1)
 
 	// changes turf to lava temporarily
-	if(!isclosedturf(T) && !islava(T))
+	if(!isclosedturf(our_turf) && !islava(our_turf))
 		var/lava_turf = /turf/open/lava/smooth
-		var/reset_turf = T.type
-		T.TerraformTurf(lava_turf, flags = CHANGETURF_INHERIT_AIR)
-		addtimer(CALLBACK(T, TYPE_PROC_REF(/turf, ChangeTurf), reset_turf, null, CHANGETURF_INHERIT_AIR), reset_time, TIMER_OVERRIDE|TIMER_UNIQUE)
+		var/reset_turf = our_turf.type
+		our_turf.TerraformTurf(lava_turf, flags = CHANGETURF_INHERIT_AIR)
+		addtimer(CALLBACK(our_turf, TYPE_PROC_REF(/turf, ChangeTurf), reset_turf, null, CHANGETURF_INHERIT_AIR), reset_time, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /obj/effect/temp_visual/drakewall
 	desc = "An ash drakes true flame."
@@ -277,28 +277,28 @@
 
 /obj/effect/temp_visual/target/Initialize(mapload, list/flame_hit)
 	. = ..()
-	var/turf/T = get_turf(src)
-	playsound(T,'sound/magic/fleshtostone.ogg', 80, TRUE)
-	new /obj/effect/temp_visual/fireball(T)
+	var/turf/our_turf = get_turf(src)
+	playsound(our_turf,'sound/magic/fleshtostone.ogg', 80, TRUE)
+	new /obj/effect/temp_visual/fireball(our_turf)
 	addtimer(CALLBACK(src, PROC_REF(fall), flame_hit), duration, TIMER_UNIQUE)
 
 /obj/effect/temp_visual/target/proc/fall(list/flame_hit)
-	var/turf/T = get_turf(src)
-	if(ismineralturf(T))
-		var/turf/closed/mineral/M = T
-		M.gets_drilled()
-	playsound(T, SFX_EXPLOSION, 80, TRUE)
-	new /obj/effect/hotspot(T)
-	T.hotspot_expose(DRAKE_FIRE_TEMP, DRAKE_FIRE_EXPOSURE, 1)
-	for(var/mob/living/L in T.contents)
-		if(istype(L, /mob/living/basic/boss/dragon))
+	var/turf/our_turf = get_turf(src)
+	if(ismineralturf(our_turf))
+		var/turf/closed/mineral/as_mineral = our_turf
+		as_mineral.gets_drilled()
+	playsound(our_turf, SFX_EXPLOSION, 80, TRUE)
+	new /obj/effect/hotspot(our_turf)
+	our_turf.hotspot_expose(DRAKE_FIRE_TEMP, DRAKE_FIRE_EXPOSURE, 1)
+	for(var/mob/living/victim in our_turf.contents)
+		if(istype(victim, /mob/living/basic/boss/dragon))
 			continue
-		if(islist(flame_hit) && !flame_hit[L])
-			L.adjustFireLoss(40)
-			to_chat(L, span_userdanger("You're hit by the drake's fire breath!"))
-			flame_hit[L] = TRUE
+		if(islist(flame_hit) && !flame_hit[victim])
+			victim.adjustFireLoss(40)
+			to_chat(victim, span_userdanger("You're hit by the drake's fire breath!"))
+			flame_hit[victim] = TRUE
 		else
-			L.adjustFireLoss(10) //if we've already hit them, do way less damage
+			victim.adjustFireLoss(10) //if we've already hit them, do way less damage
 
 /mob/living/basic/boss/dragon/lesser
 	name = "lesser ash drake"
