@@ -50,6 +50,8 @@
 	var/animate_start = 0
 	/// Our animation lifespan, how long this message will last
 	var/animate_lifespan = 0
+	/// The queued [finish_image_generation] callback, so we can remove it from the SSrunechat queue on deletion.
+	var/datum/callback/queued_callback
 
 /**
  * Constructs a chat message overlay
@@ -73,6 +75,7 @@
 	INVOKE_ASYNC(src, PROC_REF(generate_image), text, target, owner, language, extra_classes, lifespan)
 
 /datum/chatmessage/Destroy()
+	remove_from_queue()
 	if (!QDELING(owned_by))
 		if(REALTIMEOFDAY < animate_start + animate_lifespan)
 			stack_trace("Del'd before we finished fading, with [(animate_start + animate_lifespan) - REALTIMEOFDAY] time left")
@@ -91,7 +94,16 @@
  */
 /datum/chatmessage/proc/on_parent_qdel()
 	SIGNAL_HANDLER
+	remove_from_queue()
 	qdel(src)
+
+/**
+ * Removes the associated [finish_image_generation] callback, if there is one, from the SSrunechat queue.
+ */
+/datum/chatmessage/proc/remove_from_queue()
+	if(queued_callback)
+		SSrunechat.message_queue -= queued_callback
+	queued_callback = null
 
 /**
  * Generates a chat message image representation
@@ -188,13 +200,19 @@
 	if(!VERB_SHOULD_YIELD)
 		return finish_image_generation(mheight, target, owner, complete_text, lifespan)
 
-	var/datum/callback/our_callback = CALLBACK(src, PROC_REF(finish_image_generation), mheight, target, owner, complete_text, lifespan)
-	SSrunechat.message_queue += our_callback
+	queued_callback = CALLBACK(src, PROC_REF(finish_image_generation), mheight, target, owner, complete_text, lifespan)
+	SSrunechat.message_queue += queued_callback
 	return
 
 ///finishes the image generation after the MeasureText() call in generate_image().
 ///necessary because after that call the proc can resume at the end of the tick and cause overtime.
 /datum/chatmessage/proc/finish_image_generation(mheight, atom/target, mob/owner, complete_text, lifespan)
+	queued_callback = null
+	if(QDELING(src))
+		return
+	if(QDELETED(owned_by))
+		qdel(src)
+		return
 	var/rough_time = REALTIMEOFDAY
 	approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
 	var/starting_height = target.maptext_height
