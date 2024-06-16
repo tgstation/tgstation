@@ -98,6 +98,7 @@
 		"crewpinpointer",
 		"defibrillator_compact",
 		"defibmount",
+		"medicalbed_emergency",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
 

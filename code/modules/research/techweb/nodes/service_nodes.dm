@@ -108,18 +108,6 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/physical/arcade_winner = TIER_2_POINTS)
 
-/datum/techweb_node/bitrunning
-	id = "bitrunning"
-	display_name = "Bitrunning Technology"
-	description = "Bluespace technology has led to the development of quantum-scale computing, which unlocks the means to materialize atomic structures while executing advanced programs."
-	prereq_ids = list("gaming", "bluespace_travel")
-	design_ids = list(
-		"byteforge",
-		"quantum_console",
-		"netpod",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
-
 // Kitchen root node
 /datum/techweb_node/cafeteria_equip
 	id = "cafeteria_equip"

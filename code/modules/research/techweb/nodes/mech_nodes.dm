@@ -160,21 +160,6 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
 
-/datum/techweb_node/mech_firearms
-	id = "mech_firearms"
-	display_name = "Mech Firearms"
-	description = "Mounted ballistic weaponry, enhancing combat capabilities for mechanized units."
-	prereq_ids = list("mech_combat", "ammo")
-	design_ids = list(
-		"mech_lmg",
-		"mech_lmg_ammo",
-		"mech_scattershot",
-		"mech_scattershot_ammo",
-		"mech_carbine",
-		"mech_carbine_ammo",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
-
 /datum/techweb_node/mech_heavy
 	id = "mech_heavy"
 	display_name = "Heavy Mech"
@@ -219,12 +204,27 @@
 	id = "mech_energy_guns"
 	display_name = "Mech Energy Guns"
 	description = "Scaled-up versions of electric weapons optimized for mech deployment."
-	prereq_ids = list("mech_firearms", "electric_weapons")
+	prereq_ids = list("mech_combat")
 	design_ids = list(
 		"mech_laser",
 		"mech_laser_heavy",
 		"mech_ion",
 		"mech_tesla",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+
+/datum/techweb_node/mech_firearms
+	id = "mech_firearms"
+	display_name = "Mech Firearms"
+	description = "Mounted ballistic weaponry, enhancing combat capabilities for mechanized units."
+	prereq_ids = list("mech_energy_guns", "explosives")
+	design_ids = list(
+		"mech_lmg",
+		"mech_lmg_ammo",
+		"mech_scattershot",
+		"mech_scattershot_ammo",
+		"mech_carbine",
+		"mech_carbine_ammo",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
 
