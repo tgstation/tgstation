@@ -96,7 +96,7 @@
 
 /datum/techweb_node/mod_medical_adv
 	id = "mod_medical_adv"
-	display_name = "Advanced Medical Modular Suit"
+	display_name = "Field Surgery Modules"
 	description = "Medical exosuit equipment designed for conducting surgical operations in field conditions."
 	prereq_ids = list("mod_medical")
 	design_ids = list(

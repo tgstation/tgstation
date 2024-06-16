@@ -163,7 +163,7 @@
 	id = "adv_cyber_implants"
 	display_name = "Advanced Cybernetic Implants"
 	description = "Decades of contraband smuggling by assistants have led to the development of an entire toolbox that fits seamlessly into your arm."
-	prereq_ids = list("combat_cyber_implants", "exp_tools")
+	prereq_ids = list("cyber_implants", "exp_tools")
 	design_ids = list(
 		"ci-nutrimentplus",
 		"ci-reviver",
