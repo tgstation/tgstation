@@ -46618,10 +46618,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/teleporter)
-"qFS" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/floor/glass/reinforced,
-/area/station/security/prison)
 "qGk" = (
 /turf/closed/wall/r_wall,
 /area/station/hallway/secondary/command)
@@ -65254,10 +65250,6 @@
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/station/asteroid)
-"xbr" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/glass/reinforced,
-/area/station/security/prison)
 "xbs" = (
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -151191,8 +151183,8 @@ hHw
 uRG
 oyP
 dAq
-xbr
-qFS
+wSc
+rwW
 wSc
 jOV
 vxX
