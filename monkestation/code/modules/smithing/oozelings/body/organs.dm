@@ -162,12 +162,12 @@
 		if(target_ling)
 			if(target_ling.oozeling_revives > 0)
 				target_ling.oozeling_revives--
-				addtimer(CALLBACK(src, PROC_REF(rebuild_body)), 30 SECONDS)
+				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE), 30 SECONDS)
 
 		if(IS_BLOODSUCKER(brainmob))
 			var/datum/antagonist/bloodsucker/target_bloodsucker = brainmob.mind.has_antag_datum(/datum/antagonist/bloodsucker)
 			if(target_bloodsucker.bloodsucker_blood_volume >= target_bloodsucker.max_blood_volume * 0.4)
-				addtimer(CALLBACK(src, PROC_REF(rebuild_body)), 30 SECONDS)
+				addtimer(CALLBACK(src, PROC_REF(rebuild_body), null, FALSE), 30 SECONDS)
 				target_bloodsucker.bloodsucker_blood_volume -= target_bloodsucker.max_blood_volume * 0.15
 
 	rebuilt = FALSE
@@ -220,7 +220,7 @@
 		item.forceMove(turf)
 	stored_items.Cut()
 
-/obj/item/organ/internal/brain/slime/proc/rebuild_body(mob/user)
+/obj/item/organ/internal/brain/slime/proc/rebuild_body(mob/user, nugget = TRUE)
 	if(rebuilt)
 		return
 	rebuilt = TRUE
@@ -255,7 +255,9 @@
 	new_body.updateappearance(mutcolor_update = TRUE)
 	new_body.domutcheck()
 	new_body.forceMove(drop_location())
-	new_body.blood_volume = BLOOD_VOLUME_SAFE + 60
+	if(!nugget)
+		new_body.set_nutrition(NUTRITION_LEVEL_FED)
+	new_body.blood_volume = nugget ? (BLOOD_VOLUME_SAFE + 60) : BLOOD_VOLUME_NORMAL
 	REMOVE_TRAIT(new_body, TRAIT_NO_TRANSFORM, REF(src))
 	if(!QDELETED(brainmob))
 		SSquirks.AssignQuirks(new_body, brainmob.client)
@@ -263,12 +265,16 @@
 	qdel(new_body_brain)
 	forceMove(new_body)
 	Insert(new_body)
-	for(var/obj/item/bodypart as anything in new_body.bodyparts)
-		if(istype(bodypart, /obj/item/bodypart/chest))
-			continue
-		qdel(bodypart)
-	new_body.visible_message(span_warning("[new_body]'s torso \"forms\" from [new_body.p_their()] core, yet to form the rest."))
-	to_chat(owner, span_purple("Your torso fully forms out of your core, yet to form the rest."))
+	if(nugget)
+		for(var/obj/item/bodypart as anything in new_body.bodyparts)
+			if(istype(bodypart, /obj/item/bodypart/chest))
+				continue
+			qdel(bodypart)
+		new_body.visible_message(span_warning("[new_body]'s torso \"forms\" from [new_body.p_their()] core, yet to form the rest."))
+		to_chat(owner, span_purple("Your torso fully forms out of your core, yet to form the rest."))
+	else
+		new_body.visible_message(span_warning("[new_body]'s body fully forms from [new_body.p_their()] core!"))
+		to_chat(owner, span_purple("Your body fully forms from your core!"))
 
 	brainmob?.mind?.transfer_to(new_body)
 	new_body.grab_ghost()

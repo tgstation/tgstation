@@ -66,7 +66,7 @@
 		if(owner.current.am_staked() && COOLDOWN_FINISHED(src, bloodsucker_spam_sol_burn))
 			to_chat(owner.current, span_userdanger("You are staked! Remove the offending weapon from your heart before sleeping."))
 			COOLDOWN_START(src, bloodsucker_spam_sol_burn, BLOODSUCKER_SPAM_SOL) //This should happen twice per Sol
-		if(!HAS_TRAIT_FROM(owner.current, TRAIT_NODEATH, TORPOR_TRAIT))
+		if(!is_in_torpor())
 			check_begin_torpor(TRUE)
 			owner.current.add_mood_event("vampsleep", /datum/mood_event/coffinsleep)
 		return
@@ -106,7 +106,7 @@
  * Torpor is triggered by:
  * - Being in a Coffin while Sol is on, dealt with by Sol
  * - Entering a Coffin with more than 10 combined Brute/Burn damage, dealt with by /closet/crate/coffin/close() [bloodsucker_coffin.dm]
- * - Death, dealt with by /HandleDeath()
+ * - Death, dealt with by /handle_death()
  * Torpor is ended by:
  * - Having less than 10 Brute damage while OUTSIDE of your Coffin while it isnt Sol.
  * - Having less than 10 Brute & Burn Combined while INSIDE of your Coffin while it isnt Sol.
@@ -122,7 +122,7 @@
 	var/total_burn = user.getFireLoss_nonProsthetic()
 	var/total_damage = total_brute + total_burn
 	/// Checks - Not daylight & Has more than 10 Brute/Burn & not already in Torpor
-	if(!SSsunlight.sunlight_active && total_damage >= 10 && !HAS_TRAIT_FROM(owner.current, TRAIT_NODEATH, TORPOR_TRAIT))
+	if(!SSsunlight.sunlight_active && total_damage >= 10 && !is_in_torpor())
 		torpor_begin()
 
 /datum/antagonist/bloodsucker/proc/check_end_torpor()
@@ -142,12 +142,17 @@
 		if(total_brute <= 10)
 			torpor_end()
 
+/datum/antagonist/bloodsucker/proc/is_in_torpor()
+	if(QDELETED(owner.current))
+		return FALSE
+	return HAS_TRAIT_FROM(owner.current, TRAIT_NODEATH, TORPOR_TRAIT)
+
 /datum/antagonist/bloodsucker/proc/torpor_begin()
 	to_chat(owner.current, span_notice("You enter the horrible slumber of deathless Torpor. You will heal until you are renewed."))
 	// Force them to go to sleep
 	REMOVE_TRAIT(owner.current, TRAIT_SLEEPIMMUNE, BLOODSUCKER_TRAIT)
 	// Without this, you'll just keep dying while you recover.
-	owner.current.add_traits(list(TRAIT_NODEATH, TRAIT_FAKEDEATH, TRAIT_DEATHCOMA, TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE), TORPOR_TRAIT)
+	owner.current.add_traits(torpor_traits, TORPOR_TRAIT)
 	owner.current.set_timed_status_effect(0 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 	// Disable ALL Powers
 	DisableAllPowers()
@@ -155,7 +160,7 @@
 /datum/antagonist/bloodsucker/proc/torpor_end()
 	owner.current.grab_ghost()
 	to_chat(owner.current, span_warning("You have recovered from Torpor."))
-	REMOVE_TRAITS_IN(owner.current, TORPOR_TRAIT)
+	owner.current.remove_traits(torpor_traits, TORPOR_TRAIT)
 	if(!HAS_TRAIT(owner.current, TRAIT_MASQUERADE))
 		ADD_TRAIT(owner.current, TRAIT_SLEEPIMMUNE, BLOODSUCKER_TRAIT)
 	heal_vampire_organs()

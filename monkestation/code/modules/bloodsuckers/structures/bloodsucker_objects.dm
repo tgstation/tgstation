@@ -155,7 +155,7 @@
 	if(bloodsuckerdatum)
 		// If DEAD or TORPID... Kill Bloodsucker!
 		if(target.StakeCanKillMe())
-			bloodsuckerdatum.FinalDeath()
+			bloodsuckerdatum.final_death()
 		else
 			to_chat(target, span_userdanger("You have been staked! Your powers are useless, your death forever, while it remains in place."))
 			target.balloon_alert(target, "you have been staked!")
