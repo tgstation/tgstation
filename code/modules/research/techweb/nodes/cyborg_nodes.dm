@@ -120,8 +120,8 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
 // Implants root node
-/datum/techweb_node/implants
-	id = "implants"
+/datum/techweb_node/passive_implants
+	id = "passive_implants"
 	display_name = "Passive Implants"
 	description = "Implants designed to operate seamlessly without active user input, enhancing various physiological functions or providing continuous benefits."
 	prereq_ids = list("augmentation")
@@ -138,19 +138,17 @@
 		"implanter",
 		"locator",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/cyber/cyber_implants
 	id = "cyber_implants"
 	display_name = "Cybernetic Implants"
 	description = "Advanced technological enhancements integrated into the body, offering improved physical capabilities."
-	prereq_ids = list("implants", "cyber_organs")
+	prereq_ids = list("passive_implants", "cybernetics")
 	design_ids = list(
 		"ci-breather",
 		"ci-nutriment",
 		"ci-thrusters",
-		"ci-antidrop",
-		"ci-antistun",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
@@ -159,14 +157,25 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		research_costs[TECHWEB_POINT_TYPE_GENERIC] /= 2
 
-/datum/techweb_node/cyber/adv_cyber_implants
-	id = "adv_cyber_implants"
-	display_name = "Advanced Cybernetic Implants"
-	description = "Decades of contraband smuggling by assistants have led to the development of an entire toolbox that fits seamlessly into your arm."
-	prereq_ids = list("cyber_implants", "exp_tools")
+/datum/techweb_node/cyber/combat_implants
+	id = "combat_implants"
+	display_name = "Combat Implants"
+	description = "To make sure that you can wake the f*** up, samurai."
+	prereq_ids = list("cyber_implants")
+	design_ids = list(
+		"ci-reviver",
+		"ci-antidrop",
+		"ci-antistun",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+
+/datum/techweb_node/cyber/integrated_toolsets
+	id = "integrated_toolsets"
+	display_name = "Integrated Toolsets"
+	description = "Decades of contraband smuggling by assistants have led to the development of a full toolbox that fits seamlessly into your arm."
+	prereq_ids = list("combat_implants", "exp_tools")
 	design_ids = list(
 		"ci-nutrimentplus",
-		"ci-reviver",
 		"ci-toolset",
 		"ci-surgery",
 	)

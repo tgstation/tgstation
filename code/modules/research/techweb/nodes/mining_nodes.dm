@@ -60,6 +60,7 @@
 		"rangemod",
 		"cooldownmod",
 		"triggermod",
+		"hypermod",
 		"borg_upgrade_damagemod",
 		"borg_upgrade_rangemod",
 		"borg_upgrade_cooldownmod",
@@ -96,9 +97,8 @@
 	description = "High-level mining equipment, pushing the boundaries of efficiency and effectiveness in resource extraction."
 	prereq_ids = list("plasma_mining")
 	design_ids = list(
-		"mech_diamond_drill",
-		"drill_diamond",
 		"jackhammer",
-		"hypermod",
+		"drill_diamond",
+		"mech_diamond_drill",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)

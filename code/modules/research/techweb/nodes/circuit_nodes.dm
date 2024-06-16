@@ -107,6 +107,26 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
+/datum/techweb_node/bci
+	id = "bci"
+	display_name = "Brain-Computer Interface"
+	description = "Embedded brain circuits. May occasionally stream Nanotrasen ads in dreams."
+	prereq_ids = list("circuit_shells", "passive_implants")
+	design_ids = list(
+		"bci_implanter",
+		"bci_shell",
+		"comp_bar_overlay",
+		"comp_camera_bci",
+		"comp_counter_overlay",
+		"comp_install_detector",
+		"comp_object_overlay",
+		"comp_reagent_injector",
+		"comp_target_intercept",
+		"comp_thought_listener",
+		"comp_vox",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+
 /datum/techweb_node/programmed_bot
 	id = "programmed_bot"
 	display_name = "Programmed Bot"
@@ -123,28 +143,8 @@
 	id = "programmed_server"
 	display_name = "Programmed Server"
 	description = "Grants access to a server shell that has a very high capacity for components."
-	prereq_ids = list("circuit_shells")
+	prereq_ids = list("bci")
 	design_ids = list(
 		"server_shell",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
-
-/datum/techweb_node/bci
-	id = "bci"
-	display_name = "Brain-Computer Interface"
-	description = "Embedded brain circuits. May occasionally stream Nanotrasen ads in dreams."
-	prereq_ids = list("programmed_bot", "implants")
-	design_ids = list(
-		"bci_implanter",
-		"bci_shell",
-		"comp_bar_overlay",
-		"comp_camera_bci",
-		"comp_counter_overlay",
-		"comp_install_detector",
-		"comp_object_overlay",
-		"comp_reagent_injector",
-		"comp_target_intercept",
-		"comp_thought_listener",
-		"comp_vox",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
