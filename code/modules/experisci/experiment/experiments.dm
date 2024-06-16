@@ -405,6 +405,26 @@
 		return TRUE
 	return FALSE
 
+/// Scan for skillchips
+/datum/experiment/scanning/people/skillchip
+	name = "Human Field Research: Skill Chip Implants"
+	description = "Before sticking programmed circuits into human brain, we need to know how it handles simple ones. Scan a live person with a skill chip implant in their brain."
+	performance_hint = "Perform a skill chip implantation with a skill station."
+	required_traits_desc = "skill chip implant"
+
+/datum/experiment/scanning/people/skillchip/is_valid_scan_target(mob/living/carbon/human/check, datum/component/experiment_handler/experiment_handler)
+	. = ..()
+	if (!.)
+		return
+	var/obj/item/organ/internal/brain/scanned_brain = check.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if (isnull(scanned_brain))
+		experiment_handler.announce_message("Subject is brainless!")
+		return FALSE
+	if (scanned_brain.get_used_skillchip_slots() == 0)
+		experiment_handler.announce_message("No skill chips found!")
+		return FALSE
+	return TRUE
+
 /datum/experiment/scanning/reagent/cryostylane
 	name = "Pure Cryostylane Scan"
 	description = "It appears that the Cryostylane reagent can potentially halt all physiological processes in the human body. Produce Cryostylane with at least 99% purity and scan the beaker."

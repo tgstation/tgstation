@@ -127,7 +127,6 @@
 	prereq_ids = list("augmentation")
 	design_ids = list(
 		"skill_station",
-		"c38_trac",
 		"implant_trombone",
 		"implant_chem",
 		"implant_tracking",
@@ -137,6 +136,7 @@
 		"implantcase",
 		"implanter",
 		"locator",
+		"c38_trac",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
