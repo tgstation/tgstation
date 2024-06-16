@@ -37,6 +37,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	. = on
 	on = to_open
 	if(on)
+		playsound(src, 'sound/effects/valve opening.ogg', 50)
 		update_icon_nopipes()
 		update_parents()
 		var/datum/pipeline/parent1 = parents[1]
