@@ -82,7 +82,7 @@
 		"mech_plasma_cutter",
 		"plasmacutter",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_4_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_3_POINTS)
 
 /datum/techweb_node/mining_adv
 	id = "mining_adv"

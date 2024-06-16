@@ -59,6 +59,7 @@
 		"mech_generator",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_2_POINTS)
+	discount_experiments = list(/datum/experiment/ordnance/gaseous/plasma = TIER_2_POINTS)
 
 /datum/techweb_node/fusion
 	id = "fusion"

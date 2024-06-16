@@ -118,6 +118,14 @@
 	experiment_proper = TRUE
 	required_gas = /datum/gas/nitrous_oxide
 
+/datum/experiment/ordnance/gaseous/plasma
+	name = "Plasma Gas Shells"
+	description = "The delivery of Plasma gas into an area of operation might prove useful. Pack the specified gas into a tank and burst it using a Tank Compressor. Publish the data in a paper."
+	gain = list(10,40)
+	target_amount = list(200,600)
+	experiment_proper = TRUE
+	required_gas = /datum/gas/plasma
+
 /datum/experiment/ordnance/gaseous/bz
 	name = "BZ Gas Shells"
 	description = "The delivery of BZ gas into an area of operation might prove useful. Pack the specified gas into a tank and burst it using a Tank Compressor. Publish the data in a paper."
