@@ -43,6 +43,11 @@
 	if (distance > max_range || distance < min_range)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
+	if(!try_fire(seconds_per_tick, controller, target))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+
+/datum/ai_behavior/ranged_skirmish/proc/try_fire(seconds_per_tick, datum/ai_controller/controller, atom/target)
 	var/mob/living/basic/gunman = controller.pawn
 	gunman.RangedAttack(target)
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

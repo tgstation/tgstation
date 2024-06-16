@@ -184,6 +184,9 @@
 		SLEEP_CHECK_DEATH(2.4 SECONDS, owner)
 	return TRUE // attack finished completely
 
+/datum/action/cooldown/mob_cooldown/lava_swoop/lesser
+	cooldown_time = 20 SECONDS
+
 /obj/effect/temp_visual/dragon_swoop
 	name = "certain death"
 	desc = "Don't just stand there, move!"

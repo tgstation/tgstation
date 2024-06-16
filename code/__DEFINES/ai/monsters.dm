@@ -273,3 +273,19 @@
 //netguardians
 /// rocket launcher
 #define BB_NETGUARDIAN_ROCKET_ABILITY "netguardian_rocket"
+
+
+/// megafauna anger modifier
+#define BB_ANGER_MODIFIER "BB_angermod"
+
+// drake stuff
+/// drake swooping
+#define BB_DRAKE_SWOOPING "BB_drakeswooping"
+/// drake meteor ability
+#define BB_DRAKE_METEORS "BB_drakemeteors"
+/// drake firecone ability
+#define BB_DRAKE_FIRECONE "BB_drakefirecone"
+/// drake massfire ability
+#define BB_DRAKE_MASSFIRE "BB_drakemassfire"
+/// drake lavaswoop ability
+#define BB_DRAKE_LAVASWOOP "BB_drakelavaswoop"

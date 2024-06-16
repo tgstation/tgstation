@@ -65,28 +65,16 @@
 	death_message = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	summon_line = "ROOOOOOOOAAAAAAAAAAAR!"
+	attack_action_types = list(
+		/datum/action/cooldown/mob_cooldown/fire_breath/cone = BB_DRAKE_FIRECONE,
+		/datum/action/cooldown/mob_cooldown/meteors = BB_DRAKE_METEORS,
+		/datum/action/cooldown/mob_cooldown/fire_breath/mass_fire = BB_DRAKE_MASSFIRE,
+		/datum/action/cooldown/mob_cooldown/lava_swoop = BB_DRAKE_LAVASWOOP,
+	)
 	ai_controller = /datum/ai_controller/basic_controller/drake
-	/// Fire cone ability
-	var/datum/action/cooldown/mob_cooldown/fire_breath/cone/fire_cone
-	/// Meteors ability
-	var/datum/action/cooldown/mob_cooldown/meteors/meteors
-	/// Mass fire ability
-	var/datum/action/cooldown/mob_cooldown/fire_breath/mass_fire/mass_fire
-	/// Lava swoop ability
-	var/datum/action/cooldown/mob_cooldown/lava_swoop/lava_swoop
-	/// are we swooping
-	var/swooping = NONE
 
 /mob/living/basic/boss/dragon/Initialize(mapload)
 	. = ..()
-	fire_cone = new(src)
-	meteors = new(src)
-	mass_fire = new(src)
-	lava_swoop = new(src)
-	fire_cone.Grant(src)
-	meteors.Grant(src)
-	mass_fire.Grant(src)
-	lava_swoop.Grant(src)
 	RegisterSignal(src, COMSIG_MOB_ABILITY_STARTED, PROC_REF(start_attack))
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(finished_attack))
 	RegisterSignal(src, COMSIG_SWOOP_INVULNERABILITY_STARTED, PROC_REF(swoop_invulnerability_started))
@@ -95,55 +83,21 @@
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	AddComponent(/datum/component/sightrange_on_aggro, aggro_range = 18)
 
-/mob/living/basic/boss/dragon/Destroy()
-	fire_cone = null
-	meteors = null
-	mass_fire = null
-	lava_swoop = null
-	return ..()
-
-/mob/living/basic/boss/dragon/RangedAttack(atom/target)
-	if(swooping)
-		return
-
-	if(client)
-		return
-
-	var/anger_modifier = ai_controller?.blackboard[BB_ANGER_MODIFIER]
-	if(prob(15 + anger_modifier))
-		if(DRAKE_ENRAGED)
-			// Lava Arena
-			lava_swoop.Trigger(target = target)
-			return
-		// Lava Pools
-		if(lava_swoop.Trigger(target = target))
-			fire_cone.StartCooldown(0)
-			fire_cone.Trigger(target = target)
-			meteors.StartCooldown(0)
-			meteors.Trigger(target = target)
-			return
-	else if(prob(10+anger_modifier) && DRAKE_ENRAGED)
-		mass_fire.Trigger(target = target)
-		return
-	if(fire_cone.Trigger(target = target) && prob(50))
-		meteors.StartCooldown(0)
-		meteors.Trigger(target = target)
-
 /mob/living/basic/boss/dragon/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
 	SIGNAL_HANDLER
-	if(activated == lava_swoop)
+	if(activated == ai_controller?.blackboard[BB_DRAKE_LAVASWOOP])
 		icon_state = "dragon_shadow"
-		swooping = SWOOP_DAMAGEABLE
+		ai_controller?.set_blackboard_key(BB_DRAKE_SWOOPING, SWOOP_DAMAGEABLE)
 
 /mob/living/basic/boss/dragon/proc/swoop_invulnerability_started()
 	SIGNAL_HANDLER
-	swooping = SWOOP_INVULNERABLE
+	ai_controller?.set_blackboard_key(BB_DRAKE_SWOOPING, SWOOP_INVULNERABLE)
 
 /mob/living/basic/boss/dragon/proc/finished_attack(mob/living/owner, datum/action/cooldown/finished)
 	SIGNAL_HANDLER
-	if(finished == lava_swoop)
+	if(finished == ai_controller?.blackboard[BB_DRAKE_LAVASWOOP])
 		icon_state = initial(icon_state)
-		swooping = NONE
+		ai_controller?.set_blackboard_key(BB_DRAKE_SWOOPING, NONE)
 
 /mob/living/basic/boss/dragon/proc/on_arena_fail()
 	SIGNAL_HANDLER
@@ -162,6 +116,8 @@
 /mob/living/basic/boss/dragon/proc/stop_rage()
 	if(stat)
 		return
+
+	var/datum/action/cooldown/mob_cooldown/fire_breath/mass_fire/mass_fire = ai_controller?.blackboard[BB_DRAKE_MASSFIRE]
 	mass_fire.Activate(ai_controller?.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
 	mass_fire.StartCooldown(8 SECONDS)
 	set_varspeed(initial(speed))
@@ -174,26 +130,27 @@
 	return ..()
 
 /mob/living/basic/boss/dragon/adjust_health(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (swooping & SWOOP_INVULNERABLE))
+	if(!forced && (ai_controller?.blackboard[BB_DRAKE_SWOOPING] & SWOOP_INVULNERABLE))
 		return FALSE
 	if(amount <= 0)
 		return ..()
 	ai_controller?.set_blackboard_key(BB_ANGER_MODIFIER, clamp(((maxHealth - health)/60),0,20))
+	var/datum/action/cooldown/mob_cooldown/lava_swoop/lava_swoop = ai_controller?.blackboard[BB_DRAKE_LAVASWOOP]
 	lava_swoop.enraged = DRAKE_ENRAGED
 	return ..()
 
 /mob/living/basic/boss/dragon/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, visible_message_flags = NONE)
-	if(swooping & SWOOP_INVULNERABLE) //to suppress attack messages without overriding every single proc that could send a message saying we got hit
+	if(ai_controller?.blackboard[BB_DRAKE_SWOOPING] & SWOOP_INVULNERABLE) //to suppress attack messages without overriding every single proc that could send a message saying we got hit
 		return
 	return ..()
 
 /mob/living/basic/boss/dragon/melee_attack(mob/living/target, list/modifiers, ignore_cooldown = FALSE)
-	if(swooping)
+	if(ai_controller?.blackboard[BB_DRAKE_SWOOPING])
 		return
 	return ..()
 
 /mob/living/basic/boss/dragon/Move()
-	if(swooping)
+	if(ai_controller?.blackboard[BB_DRAKE_SWOOPING])
 		return
 	return ..()
 
@@ -313,17 +270,15 @@
 	loot = list()
 	crusher_loot = list()
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
-	attack_action_types = list()
-
-/mob/living/basic/boss/dragon/lesser/Initialize(mapload)
-	. = ..()
-	meteors.Remove(src)
-	mass_fire.Remove(src)
-	lava_swoop.cooldown_time = 20 SECONDS
+	attack_action_types = list(
+		/datum/action/cooldown/mob_cooldown/fire_breath/cone = BB_DRAKE_FIRECONE,
+		/datum/action/cooldown/mob_cooldown/lava_swoop/lesser = BB_DRAKE_LAVASWOOP,
+	)
 
 /mob/living/basic/boss/dragon/lesser/adjust_health(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	lava_swoop?.enraged = FALSE // In case taking damage caused us to start deleting ourselves
+	// we still start with a controller
+	ai_controller?.blackboard[BB_DRAKE_LAVASWOOP]?.enraged = FALSE // In case taking damage caused us to start deleting ourselves
 
 /mob/living/basic/boss/dragon/lesser/grant_achievement(medaltype,scoretype)
 	return
