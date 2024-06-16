@@ -34,11 +34,12 @@
 		"b_refinery",
 		"ore_redemption",
 		"mining_equipment_vendor",
-		"drill",
 		"mining_scanner",
 		"mech_mscanner",
+		"superresonator",
 		"mech_drill",
 		"mod_drill",
+		"drill",
 		"mod_orebag",
 		"beacon",
 		"telesci_gps",
@@ -54,7 +55,6 @@
 	description = "Research of Proto-Kinetic Accelerators (PKAs), pneumatic guns renowned for their exceptional performance in low-pressure environments."
 	prereq_ids = list("mining", "gas_compression")
 	design_ids = list(
-		"superresonator",
 		"mecha_kineticgun",
 		"damagemod",
 		"rangemod",

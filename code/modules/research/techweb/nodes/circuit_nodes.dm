@@ -128,9 +128,9 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/people/skillchip = TECHWEB_TIER_2_POINTS)
 
-/datum/techweb_node/programmed_bot
-	id = "programmed_bot"
-	display_name = "Programmed Bot"
+/datum/techweb_node/programmed_robot
+	id = "programmed_robot"
+	display_name = "Programmed Robot"
 	description = "Grants access to movable shells, allowing for remote operations and pranks."
 	prereq_ids = list("circuit_shells")
 	design_ids = list(
