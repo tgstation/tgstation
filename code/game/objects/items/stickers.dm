@@ -176,7 +176,7 @@
 
 /obj/item/sticker/syndicate/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_CONTRABAND, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/item/sticker/syndicate/c4
 	name = "C-4 sticker"

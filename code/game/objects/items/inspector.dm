@@ -93,9 +93,9 @@
 	else
 		. += "\The [cell] is firmly in place. [span_info("Ctrl-click with an empty hand to remove it.")]"
 
-/obj/item/inspector/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/inspector/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!target.can_interact(user, TRUE))
+	if(!interacting_with.can_interact(user, TRUE))
 		return
 	if(cell_cover_open)
 		balloon_alert(user, "close cover first")
@@ -103,7 +103,7 @@
 	if(!cell || !cell.use(INSPECTOR_ENERGY_USAGE_LOW))
 		balloon_alert(user, "check cell")
 		return
-	if(!HAS_TRAIT(target, TRAIT_CONTRABAND))
+	if(!HAS_TRAIT(interacting_with, TRAIT_CONTRABAND))
 		playsound(src, 'sound/machines/ping.ogg', 20)
 		return
 

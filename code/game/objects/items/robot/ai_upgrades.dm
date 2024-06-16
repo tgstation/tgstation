@@ -10,7 +10,7 @@
 
 /obj/item/malf_upgrade/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_CONTRABAND, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/item/malf_upgrade/pre_attack(atom/A, mob/living/user, proximity)
 	if(!proximity)
@@ -42,7 +42,7 @@
 
 /obj/item/surveillance_upgrade/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_CONTRABAND, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/item/surveillance_upgrade/pre_attack(atom/A, mob/living/user, proximity)
 	if(!proximity)

@@ -6,7 +6,7 @@
 
 /obj/item/poster/random_contraband/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_CONTRABAND, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/structure/sign/poster/contraband
 	poster_item_name = "contraband poster"

@@ -83,7 +83,7 @@ Striking a noncultist, however, will tear their flesh."}
 	speed = 4 SECONDS, \
 	effectiveness = 100, \
 	)
-	ADD_TRAIT(src, TRAIT_CONTRABAND, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/item/melee/cultblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(IS_CULTIST(owner) && prob(final_block_chance))
@@ -486,7 +486,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/reagent_containers/cup/beaker/unholywater/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_CONTRABAND, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 ///how many times can the shuttle be cursed?
 #define MAX_SHUTTLE_CURSES 3

@@ -20,7 +20,7 @@
 
 /obj/item/food/drug/saturnx/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_CONTRABAND, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/item/food/drug/moon_rock
 	name = "moon rock"
@@ -32,7 +32,7 @@
 	. = ..()
 	icon_state = pick("moon_rock1", "moon_rock2", "moon_rock3")
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOONICORN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	ADD_TRAIT(src, TRAIT_CONTRABAND, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/item/reagent_containers/cup/blastoff_ampoule
 	name = "bLaSToFF ampoule" //stylized name
@@ -78,4 +78,4 @@
 
 /obj/item/reagent_containers/cup/blastoff_ampoule/Initialize(mapload, vol)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_CONTRABAND, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)

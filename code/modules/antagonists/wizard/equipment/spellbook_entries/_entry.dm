@@ -206,8 +206,8 @@
 
 	ADD_TRAIT(spawned_path, TRAIT_CONTRABAND, TRAIT_GENERIC)
 	if(spawned_path.contents)
-			for(var/obj/contained as anything in spawned_path.contents)
-				ADD_TRAIT(contained, TRAIT_CONTRABAND, TRAIT_GENERIC)
+		for(var/obj/contained as anything in spawned_path.contents)
+			ADD_TRAIT(contained, TRAIT_CONTRABAND, TRAIT_GENERIC)
 
 	try_equip_item(user, spawned_path)
 	return spawned_path

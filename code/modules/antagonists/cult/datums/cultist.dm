@@ -151,7 +151,7 @@
 
 ///Attempts to make a new item and put it in a potential inventory slot in the provided mob.
 /datum/antagonist/cult/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
-	var/item = new item_path(mob)
+	var/obj/item = new item_path(mob)
 	ADD_TRAIT(item, TRAIT_CONTRABAND, TRAIT_GENERIC)
 	var/where = mob.equip_conspicuous_item(item)
 	if(!where)

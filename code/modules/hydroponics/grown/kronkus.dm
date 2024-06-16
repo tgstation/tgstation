@@ -18,7 +18,7 @@
 
 /obj/item/seeds/kronkus/Initialize(mapload, nogenes)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_CONTRABAND, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/item/food/grown/kronkus
 	seed = /obj/item/seeds/kronkus
@@ -31,4 +31,4 @@
 
 /obj/item/food/grown/kronkus/Initialize(mapload, nogenes)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_CONTRABAND, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)

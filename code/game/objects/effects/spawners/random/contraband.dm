@@ -27,7 +27,7 @@
 	will_modify_loot = TRUE
 
 /obj/effect/spawner/random/contraband/modify_loot()
-	ADD_TRAIT(src, TRAIT_CONTRABAND, TRAIT_GENERIC) // No matter what, it's contraband, and should be treated as such.
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT) // No matter what, it's contraband, and should be treated as such.
 
 /obj/effect/spawner/random/contraband/plus
 	name = "contraband loot spawner plus"

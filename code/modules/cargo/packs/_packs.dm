@@ -73,11 +73,10 @@
 			contains[item] = 1
 		for(var/iteration = 1 to contains[item])
 			var/atom/A = new item(C)
-			if(contraband)
-				ADD_TRAIT(C, TRAIT_CONTRABAND, TRAIT_GENERIC)
 			if(!admin_spawned)
 				continue
 			A.flags_1 |= ADMIN_SPAWNED_1
+
 
 /// For generating supply packs at runtime. Returns a list of supply packs to use instead of this one.
 /datum/supply_pack/proc/generate_supply_packs()
