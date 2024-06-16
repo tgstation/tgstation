@@ -463,10 +463,16 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
-
 //ThePooba
 /datum/loadout_item/mask/poob_mask
 	name = "Yellow gas mask"
 	item_path = /obj/item/clothing/mask/breath/poob_mask
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//Mr_Sandman02
+/datum/loadout_item/suit/menacing_jacket
+	name = "Menacing Jacket"
+	item_path = /obj/item/clothing/suit/toggle/menacing_jacket
 	donator_only = TRUE
 	requires_purchase = FALSE
