@@ -3,7 +3,7 @@ GLOBAL_LIST_INIT(store_pockets, generate_store_items(/datum/store_item/pocket))
 /datum/store_item/pocket
 	category = LOADOUT_ITEM_MISC
 
-/datum/store_item/pocket
+/datum/store_item/pocket/wallet
 	name = "Wallet"
 	item_path = /obj/item/storage/wallet
 
