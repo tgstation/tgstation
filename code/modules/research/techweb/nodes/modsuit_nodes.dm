@@ -98,7 +98,7 @@
 	id = "mod_medical_adv"
 	display_name = "Field Surgery Modules"
 	description = "Medical exosuit equipment designed for conducting surgical operations in field conditions."
-	prereq_ids = list("mod_medical")
+	prereq_ids = list("mod_medical", "surgery_adv")
 	design_ids = list(
 		"mod_defib",
 		"mod_threadripper",
