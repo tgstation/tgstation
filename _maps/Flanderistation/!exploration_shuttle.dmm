@@ -1,0 +1,657 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"cC" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"dM" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"gB" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -32;
+	pixel_y = -1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"gL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"hl" = (
+/obj/machinery/computer/shuttle/white_ship/bridge{
+	shuttleId = "exploration";
+	name = "Exploration Bridge Console"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"hC" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"hW" = (
+/obj/machinery/camera/preset{
+	dir = 8
+	},
+/obj/machinery/newscaster{
+	pixel_x = 32;
+	pixel_y = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"is" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"iV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"jA" = (
+/obj/machinery/door/poddoor/shutters/window{
+	id = "exploration2"
+	},
+/obj/machinery/button/door{
+	desc = "A remote control switch.";
+	id = "exploration2";
+	name = "Exploration Shuttle Shutters";
+	pixel_y = 24
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"ln" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light/small/directional/south,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"mc" = (
+/obj/machinery/button/door{
+	desc = "A remote control switch.";
+	id = "exploration";
+	name = "Exploration Shuttle Shutters";
+	pixel_y = 24
+	},
+/obj/machinery/door/poddoor/shutters/window{
+	id = "exploration"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"ml" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"nN" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 1
+	},
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"pr" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/obj/machinery/power/shuttle_engine/heater,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"qt" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"qO" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"rh" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"uQ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"xx" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	shuttleId = "exploration";
+	name = "Exploration Navigation Computer"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"xZ" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"yD" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"Bw" = (
+/obj/machinery/camera/preset{
+	dir = 10
+	},
+/obj/machinery/button/door{
+	desc = "A remote control switch.";
+	id = "exploration";
+	name = "Exploration Shuttle Shutters";
+	pixel_y = -32
+	},
+/obj/machinery/computer/order_console/mining,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"BR" = (
+/obj/machinery/light/floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"Dk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/airlock/shuttle,
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"Do" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"Fc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"FC" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"FG" = (
+/obj/machinery/camera/preset{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/telecomms/relay/preset/auto,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"FU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"Gx" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"GG" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"GJ" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"Hu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"HI" = (
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"HW" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"HY" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"Ia" = (
+/obj/structure/closet/crate/science,
+/obj/item/multitool,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/gps/mining,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"Jq" = (
+/obj/structure/closet/crate,
+/obj/item/wrench,
+/obj/item/pickaxe,
+/obj/item/mining_scanner,
+/obj/effect/turf_decal/bot,
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"KH" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"LI" = (
+/obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/power/apc/auto_name/directional/west{
+	pixel_x = -24
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"MU" = (
+/obj/machinery/button/door{
+	desc = "A remote control switch.";
+	id = "exploration2";
+	name = "Exploration Shuttle Shutters";
+	pixel_y = -32
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"Oc" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"Ow" = (
+/obj/effect/turf_decal/caution{
+	dir = 8;
+	pixel_x = 7
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"Py" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"PC" = (
+/turf/template_noop,
+/area/template_noop)
+"QT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"Ri" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/tank_dispenser/oxygen,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"RR" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"SE" = (
+/obj/machinery/holopad,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"VJ" = (
+/obj/machinery/light/small/directional/south,
+/obj/structure/sign/warning/no_smoking/circle/directional/east,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"VK" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/caution{
+	dir = 4;
+	pixel_x = -6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"Wa" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"Xv" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/closet/emcloset/anchored,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+"Yf" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/external/glass,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/docking_port/mobile{
+	name = "exploration";
+	shuttle_id = "exploration";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge{
+	name = "Exploration Shuttle"
+	})
+
+(1,1,1) = {"
+PC
+is
+Py
+RR
+qt
+Yf
+qt
+qt
+qt
+mc
+qt
+GG
+PC
+"}
+(2,1,1) = {"
+Py
+Py
+Bw
+qt
+Ri
+FC
+LI
+qt
+Xv
+yD
+ln
+xZ
+GG
+"}
+(3,1,1) = {"
+Py
+xx
+Wa
+Py
+hC
+KH
+rh
+gB
+ml
+VK
+HW
+pr
+Oc
+"}
+(4,1,1) = {"
+Py
+HY
+BR
+Dk
+QT
+iV
+SE
+Fc
+Hu
+gL
+Ia
+nN
+dM
+"}
+(5,1,1) = {"
+Py
+hl
+uQ
+Py
+cC
+FU
+qO
+hW
+Gx
+Ow
+Jq
+pr
+Oc
+"}
+(6,1,1) = {"
+Py
+Py
+MU
+qt
+Do
+Do
+HI
+qt
+FG
+GJ
+VJ
+xZ
+GG
+"}
+(7,1,1) = {"
+PC
+is
+Py
+RR
+qt
+Py
+qt
+qt
+qt
+jA
+qt
+GG
+PC
+"}

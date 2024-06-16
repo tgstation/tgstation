@@ -1,0 +1,223 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/cable,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+"b" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+"h" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+"i" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+"j" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/chair/plastic,
+/obj/machinery/door/window/brigdoor/security/cell/left/directional/south,
+/obj/effect/turf_decal/tile/red/full,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+"k" = (
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+"o" = (
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+"t" = (
+/obj/structure/cable,
+/obj/machinery/camera/autoname/directional/east{
+	network = list("Sec pod")
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+"u" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/item/storage/pod/directional/south{
+	unlocked = 1
+	},
+/obj/machinery/button/flasher{
+	pixel_x = -26;
+	pixel_y = 7
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+"v" = (
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+"x" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/computer/security/telescreen/prison{
+	network = list("Sec pod");
+	pixel_x = -30;
+	dir = 4;
+	name = "Shuttle Monitor"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+"z" = (
+/obj/docking_port/mobile{
+	name = "sec pod";
+	shuttle_id = "sec-pod";
+	dir = 2
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+"A" = (
+/obj/structure/cable,
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	shuttleId = "sec pod";
+	name = "Security Pod Navigation Computer";
+	dir = 8
+	},
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/effect/mapping_helpers/apc/cell_10k,
+/obj/machinery/power/apc/auto_name/directional/south,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+"I" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+"M" = (
+/obj/structure/chair/plastic,
+/obj/machinery/door/window/brigdoor/security/cell/right/directional/south,
+/obj/effect/turf_decal/tile/red/full,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+"P" = (
+/obj/machinery/computer/shuttle/white_ship/bridge{
+	shuttleId = "sec-pod";
+	name = "Security Pod Bridge Console";
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+"S" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/red/half{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+"U" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/obj/item/bodybag/environmental/prisoner/pressurized,
+/obj/item/bodybag/environmental/prisoner/pressurized,
+/obj/item/bodybag/environmental/prisoner/pressurized,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+"Y" = (
+/obj/effect/turf_decal/tile/red/half{
+	dir = 1
+	},
+/obj/machinery/flasher/directional/west,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/bridge{
+	name = "Security Pod"
+	})
+
+(1,1,1) = {"
+h
+I
+I
+I
+h
+"}
+(2,1,1) = {"
+I
+j
+Y
+o
+z
+"}
+(3,1,1) = {"
+I
+M
+S
+t
+a
+"}
+(4,1,1) = {"
+I
+I
+k
+I
+I
+"}
+(5,1,1) = {"
+I
+x
+v
+u
+I
+"}
+(6,1,1) = {"
+I
+P
+U
+A
+I
+"}
+(7,1,1) = {"
+i
+b
+b
+b
+i
+"}
