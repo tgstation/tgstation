@@ -45,10 +45,10 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	var/max_hunger = 500
 	///pet icon for each state
 	var/static/list/pet_state_icons = list(
-		PET_STATE_HUNGRY = list("icon" = 'icons/ui_icons/virtualpet/pet_state.dmi', "icon_state" = "pet_hungry"),
-		PET_STATE_HAPPY = list("icon" = 'icons/ui_icons/virtualpet/pet_state.dmi', "icon_state" = "pet_happy"),
-		PET_STATE_ASLEEP = list("icon" = 'icons/ui_icons/virtualpet/pet_state.dmi', "icon_state" = "pet_asleep"),
-		PET_STATE_NEUTRAL = list("icon" = 'icons/ui_icons/virtualpet/pet_state.dmi', "icon_state" = "pet_neutral"),
+		PET_STATE_HUNGRY = list("icon" = 'icons/ui/virtualpet/pet_state.dmi', "icon_state" = "pet_hungry"),
+		PET_STATE_HAPPY = list("icon" = 'icons/ui/virtualpet/pet_state.dmi', "icon_state" = "pet_happy"),
+		PET_STATE_ASLEEP = list("icon" = 'icons/ui/virtualpet/pet_state.dmi', "icon_state" = "pet_asleep"),
+		PET_STATE_NEUTRAL = list("icon" = 'icons/ui/virtualpet/pet_state.dmi', "icon_state" = "pet_neutral"),
 	)
 	///hat options and what level they will be unlocked at
 	var/static/list/hat_selections = list(
@@ -97,7 +97,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 
 /datum/computer_file/program/virtual_pet/on_install()
 	. = ..()
-	profile_picture = getFlatIcon(image(icon = 'icons/ui_icons/virtualpet/pet_state.dmi', icon_state = "pet_preview"))
+	profile_picture = getFlatIcon(image(icon = 'icons/ui/virtualpet/pet_state.dmi', icon_state = "pet_preview"))
 	GLOB.virtual_pets_list += src
 	pet = new pet_type(computer)
 	pet.forceMove(computer)
@@ -127,11 +127,11 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	pet.forceMove(computer)
 
 
-/datum/computer_file/program/virtual_pet/proc/on_message_recieve(datum/source, sender_title, inbound_message, photo_message)
+/datum/computer_file/program/virtual_pet/proc/on_message_receive(datum/source, sender_title, inbound_message, photo_message)
 	SIGNAL_HANDLER
 
 	var/message_to_display = "[sender_title] has sent you a message [photo_message ? "with a photo attached" : ""]: [inbound_message]!"
-	pet.ai_controller?.set_blackboard_key(BB_LAST_RECIEVED_MESSAGE, message_to_display)
+	pet.ai_controller?.set_blackboard_key(BB_LAST_RECEIVED_MESSAGE, message_to_display)
 
 /datum/computer_file/program/virtual_pet/proc/pet_pre_clean(atom/source, mob/user)
 	SIGNAL_HANDLER
@@ -188,7 +188,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	overlays += selected_hat["appearance"]
 
 /datum/computer_file/program/virtual_pet/proc/alter_profile_picture()
-	var/image/pet_preview = image(icon = 'icons/ui_icons/virtualpet/pet_state.dmi', icon_state = "pet_preview")
+	var/image/pet_preview = image(icon = 'icons/ui/virtualpet/pet_state.dmi', icon_state = "pet_preview")
 	if(LAZYACCESS(pet.atom_colours, FIXED_COLOUR_PRIORITY))
 		pet_preview.color = pet.atom_colours[FIXED_COLOUR_PRIORITY]
 
@@ -289,7 +289,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 /datum/computer_file/program/virtual_pet/proc/grant_level_abilities()
 	switch(level)
 		if(2)
-			RegisterSignal(computer, COMSIG_COMPUTER_RECIEVED_MESSAGE, PROC_REF(on_message_recieve)) // we will now read out PDA messages
+			RegisterSignal(computer, COMSIG_COMPUTER_RECEIVED_MESSAGE, PROC_REF(on_message_receive)) // we will now read out PDA messages
 			var/datum/action/cooldown/mob_cooldown/lights/lights = new(pet)
 			lights.Grant(pet)
 			pet.ai_controller?.set_blackboard_key(BB_LIGHTS_ABILITY, lights)

@@ -238,7 +238,7 @@
 		to_chat(user, span_notice("The candle needs to be lit to be offered!"))
 		return
 	to_chat(user, span_notice("[GLOB.deity] is pleased with your sacrifice."))
-	adjust_favor(50, user) //it's not a lot but hey there's a pacifist favor option at least
+	adjust_favor(40, user) //it's not a lot but hey there's a pacifist favor option at least
 	qdel(offering)
 	return TRUE
 

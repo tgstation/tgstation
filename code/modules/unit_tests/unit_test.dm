@@ -276,8 +276,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/effect/baseturf_helper)
 	//No tauma to pass in
 	returnable_list += typesof(/mob/camera/imaginary_friend)
-	//No pod to gondola
-	returnable_list += typesof(/mob/living/simple_animal/pet/gondola/gondolapod)
 	//No heart to give
 	returnable_list += typesof(/obj/structure/ethereal_crystal)
 	//No linked console

@@ -23,6 +23,8 @@
 
 /datum/action/cooldown/mob_cooldown/charge/Activate(atom/target_atom)
 	disable_cooldown_actions()
+	// No charging and meleeing (overridded by StartCooldown after charge ends)
+	next_melee_use_time = world.time + 100 SECONDS
 	charge_sequence(owner, target_atom, charge_delay, charge_past)
 	StartCooldown()
 	enable_cooldown_actions()

@@ -118,8 +118,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RESISTLOWPRESSURE "resist_low_pressure"
 /// This human is immune to the effects of being exploded. (ex_act)
 #define TRAIT_BOMBIMMUNE "bomb_immunity"
-/// Immune to being irradiated
-#define TRAIT_RADIMMUNE "rad_immunity"
 /// This mob won't get gibbed by nukes going off
 #define TRAIT_NUKEIMMUNE "nuke_immunity"
 /// Can't be given viruses
@@ -224,6 +222,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_REVEAL_FISH "reveal_fish"
 ///This trait gets you a list of fishes that can be caught when examining a fishing spot.
 #define TRAIT_EXAMINE_FISHING_SPOT "examine_fishing_spot"
+///Trait given to turfs or objects that can be fished from
+#define TRAIT_FISHING_SPOT "fishing_spot"
+///Trait given to mobs that can fish without a rod
+#define TRAIT_PROFOUND_FISHER "profound_fisher"
+/// This trait lets you evaluate someone's fitness level against your own
+#define TRAIT_EXAMINE_FITNESS "reveal_power_level"
+/// These mobs have particularly hygienic tongues
+#define TRAIT_WOUND_LICKER "wound_licker"
+
+/// This trait designate that the mob was originally a monkey
+#define TRAIT_BORN_MONKEY "born_as_a_monkey"
 
 /// Added to a mob, allows that mob to experience flavour-based moodlets when examining food
 #define TRAIT_REMOTE_TASTING "remote_tasting"
@@ -286,6 +295,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GOOD_HEARING "good_hearing"
 /// Allows you to hear speech through walls
 #define TRAIT_XRAY_HEARING "xray_hearing"
+
+/// This mob can not enter or move on a shuttle
+#define TRAIT_BLOCK_SHUTTLE_MOVEMENT "block_shuttle_movement"
 
 /// Lets us scan reagents
 #define TRAIT_REAGENT_SCANNER "reagent_scanner"
@@ -902,6 +914,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_NO_HUNGER "fish_no_hunger"
 ///It comes from a fish case. Relevant for bounties so far.
 #define TRAIT_FISH_FROM_CASE "fish_from_case"
+///Fish will also occasionally fire weak tesla zaps
+#define TRAIT_FISH_ELECTROGENESIS "fish_electrogenesis"
 
 /// Trait given to angelic constructs to let them purge cult runes
 #define TRAIT_ANGELIC "angelic"
@@ -1001,6 +1015,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Marks that this object is irradiated
 #define TRAIT_IRRADIATED "iraddiated"
 
+/// Immune to being irradiated
+#define TRAIT_RADIMMUNE "rad_immunity"
+
 /// Harmful radiation effects, the toxin damage and the burns, will not occur while this trait is active
 #define TRAIT_HALT_RADIATION_EFFECTS "halt_radiation_effects"
 
@@ -1080,8 +1097,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to a dragon who fails to defend their rifts
 #define TRAIT_RIFT_FAILURE "fail_dragon_loser"
 
+///this mob is able to relay happiness, given by /datum/component/happiness
+#define TRAIT_MOB_RELAY_HAPPINESS "mob_relay_happiness"
 ///trait determines if this mob can breed given by /datum/component/breeding
 #define TRAIT_MOB_BREEDER "mob_breeder"
+///trait given to mobs that are hatched
+#define TRAIT_MOB_HATCHED "mob_hatched"
 /// Trait given to mobs that we do not want to mindswap
 #define TRAIT_NO_MINDSWAP "no_mindswap"
 ///trait given to food that can be baked by /datum/component/bakeable
@@ -1124,5 +1145,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
 #define TRAIT_BOULDER_BREAKER "boulder_breaker"
+
+/// Trait given to mobs wearing the clown mask
+#define TRAIT_PERCEIVED_AS_CLOWN "perceived_as_clown"
+/// Does this item bypass ranged armor checks?
+#define TRAIT_BYPASS_RANGED_ARMOR "bypass_ranged_armor"
+
+/// This item cannot be selected for or used by a theft objective (Spies, Traitors, etc.)
+#define TRAIT_ITEM_OBJECTIVE_BLOCKED "item_objective_blocked"
 
 // END TRAIT DEFINES

@@ -6,8 +6,8 @@
 	icon_state = "rust_walker_s"
 	base_icon_state = "rust_walker"
 	icon_living = "rust_walker_s"
-	maxHealth = 75
-	health = 75
+	maxHealth = 100
+	health = 100
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	sight = SEE_TURFS

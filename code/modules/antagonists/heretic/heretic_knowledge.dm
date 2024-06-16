@@ -730,6 +730,7 @@
 		source = user,
 		header = "A Heretic is Ascending!",
 	)
+	heretic_datum.increase_rust_strength()
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/cleanup_atoms(list/selected_atoms)

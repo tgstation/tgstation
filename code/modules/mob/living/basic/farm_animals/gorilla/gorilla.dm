@@ -36,6 +36,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/gorilla
 	faction = list(FACTION_MONKEY, FACTION_JUNGLE)
 	butcher_results = list(/obj/item/food/meat/slab/gorilla = 4, /obj/effect/gibspawner/generic/animal = 1)
+	max_grab = GRAB_KILL
 	/// How likely our meaty fist is to stun someone
 	var/paralyze_chance = 20
 	/// A counter for when we can scream again
@@ -67,6 +68,13 @@
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/basic_inhands, y_offset = -1)
 	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, typecacheof(gorilla_food))
+
+/mob/living/basic/gorilla/examine(mob/user)
+	. = ..()
+	if (!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FITNESS))
+		return
+	. += span_notice("This animal appears to be in peak physical condition and yet it has probably never worked out a day in its life. \
+		The untapped potential is almost frightening.")
 
 /mob/living/basic/gorilla/update_overlays()
 	. = ..()

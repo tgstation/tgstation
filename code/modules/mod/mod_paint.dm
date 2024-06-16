@@ -140,18 +140,18 @@
 			SStgui.close_uis(src)
 
 /obj/item/mod/paint/proc/paint_skin(obj/item/mod/control/mod, mob/user)
-	if(length(mod.theme.skins) <= 1)
+	if(length(mod.theme.variants) <= 1)
 		balloon_alert(user, "no alternate skins!")
 		return
 	var/list/skins = list()
-	for(var/mod_skin_name in mod.theme.skins)
-		var/list/mod_skin = mod.theme.skins[mod_skin_name]
+	for(var/mod_skin_name in mod.theme.variants)
+		var/list/mod_skin = mod.theme.variants[mod_skin_name]
 		skins[mod_skin_name] = image(icon = mod_skin[MOD_ICON_OVERRIDE] || mod.icon, icon_state = "[mod_skin_name]-control")
 	var/pick = show_radial_menu(user, mod, skins, custom_check = CALLBACK(src, PROC_REF(check_menu), mod, user), require_near = TRUE)
 	if(!pick)
 		balloon_alert(user, "no skin picked!")
 		return
-	mod.set_mod_skin(pick)
+	mod.theme.set_skin(mod, pick)
 
 /obj/item/mod/paint/proc/check_menu(obj/item/mod/control/mod, mob/user)
 	if(user.incapacitated() || !user.is_holding(src) || !mod || mod.active || mod.activating)
@@ -171,7 +171,6 @@
 	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
 	icon_state = "skinapplier"
 	var/skin = "civilian"
-	var/compatible_theme = /datum/mod_theme
 
 /obj/item/mod/skin_applier/Initialize(mapload)
 	. = ..()
@@ -184,14 +183,13 @@
 	if(mod.active || mod.activating)
 		balloon_alert(user, "suit is active!")
 		return TRUE
-	if(!istype(mod.theme, compatible_theme))
+	if(!(skin in mod.theme.variants))
 		balloon_alert(user, "incompatible theme!")
 		return TRUE
-	mod.set_mod_skin(skin)
+	mod.theme.set_skin(mod, skin)
 	balloon_alert(user, "skin applied")
 	qdel(src)
 	return TRUE
 
 /obj/item/mod/skin_applier/honkerative
 	skin = "honkerative"
-	compatible_theme = /datum/mod_theme/syndicate

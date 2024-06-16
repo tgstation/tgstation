@@ -56,6 +56,7 @@
 	icon_state = "card_grey"
 	worn_icon_state = "nothing"
 	slot_flags = ITEM_SLOT_ID
+	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	armor_type = /datum/armor/card_id
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
@@ -424,13 +425,11 @@
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [src.name][minor]."), span_notice("You show \the [src.name][minor]."))
 	add_fingerprint(user)
 
-/obj/item/card/id/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	if(!proximity_flag || !check_allowed_items(target) || !isfloorturf(target))
-		return
-	try_project_paystand(user, target)
+/obj/item/card/id/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!check_allowed_items(interacting_with) || !isfloorturf(interacting_with))
+		return NONE
+	try_project_paystand(user, interacting_with)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/card/id/attack_self_secondary(mob/user, modifiers)
 	. = ..()
@@ -454,7 +453,7 @@
 	if(!COOLDOWN_FINISHED(src, last_holopay_projection))
 		balloon_alert(user, "still recharging")
 		return
-	if(can_be_used_in_payment(user))
+	if(!can_be_used_in_payment(user))
 		balloon_alert(user, "no account!")
 		to_chat(user, span_warning("You need a valid bank account to do this."))
 		return
@@ -478,7 +477,7 @@
 	var/obj/structure/holopay/new_store = new(projection)
 	if(new_store?.assign_card(projection, src))
 		COOLDOWN_START(src, last_holopay_projection, HOLOPAY_PROJECTION_INTERVAL)
-		playsound(projection, "sound/effects/empulse.ogg", 40, TRUE)
+		playsound(projection, 'sound/effects/empulse.ogg', 40, TRUE)
 		my_store = new_store
 
 /**
@@ -633,9 +632,6 @@
 /obj/item/card/id/proc/alt_click_can_use_id(mob/living/user)
 	if(!isliving(user))
 		return FALSE
-	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return FALSE
-
 	return TRUE
 
 /// Attempts to set a new bank account on the ID card.
@@ -706,13 +702,11 @@
 		registered_account.bank_card_talk(span_warning("ERROR: The linked account requires [difference] more credit\s to perform that withdrawal."), TRUE)
 		return CLICK_ACTION_BLOCKING
 
-/obj/item/card/id/alt_click_secondary(mob/user)
-	. = ..()
+/obj/item/card/id/click_alt_secondary(mob/user)
 	if(!alt_click_can_use_id(user))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return
 	if(!registered_account || registered_account.replaceable)
 		set_new_account(user)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/card/id/proc/pay_debt(user)
 	var/amount_to_pay = tgui_input_number(user, "How much do you want to pay? (Max: [registered_account.account_balance] cr)", "Debt Payment", max_value = min(registered_account.account_balance, registered_account.account_debt))
@@ -1400,68 +1394,59 @@
 	theft_target = null
 	return ..()
 
-/obj/item/card/id/advanced/chameleon/afterattack(atom/target, mob/user, proximity, click_parameters)
-	. = ..()
-	if(!proximity)
-		return
-
-	if(isidcard(target))
-		theft_target = WEAKREF(target)
+/obj/item/card/id/advanced/chameleon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isidcard(interacting_with))
+		theft_target = WEAKREF(interacting_with)
 		ui_interact(user)
-		return . | AFTERATTACK_PROCESSED_ITEM
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-/obj/item/card/id/advanced/chameleon/pre_attack_secondary(atom/target, mob/living/user, params)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return .
-
+/obj/item/card/id/advanced/chameleon/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	// If we're attacking a human, we want it to be covert. We're not ATTACKING them, we're trying
 	// to sneakily steal their accesses by swiping our agent ID card near them. As a result, we
-	// return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN to cancel any part of the following the attack chain.
-	if(ishuman(target))
-		target.balloon_alert(user, "scanning ID card...")
+	// return ITEM_INTERACT_BLOCKING to cancel any part of the following the attack chain.
+	if(ishuman(interacting_with))
+		interacting_with.balloon_alert(user, "scanning ID card...")
 
-		if(!do_after(user, 2 SECONDS, target))
-			target.balloon_alert(user, "interrupted!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		if(!do_after(user, 2 SECONDS, interacting_with))
+			interacting_with.balloon_alert(user, "interrupted!")
+			return ITEM_INTERACT_BLOCKING
 
-		var/mob/living/carbon/human/human_target = target
-
+		var/mob/living/carbon/human/human_target = interacting_with
 		var/list/target_id_cards = human_target.get_all_contents_type(/obj/item/card/id)
 
 		if(!length(target_id_cards))
-			target.balloon_alert(user, "no IDs!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+			interacting_with.balloon_alert(user, "no IDs!")
+			return ITEM_INTERACT_BLOCKING
 
 		var/selected_id = pick(target_id_cards)
-		target.balloon_alert(user, UNLINT("IDs synced"))
+		interacting_with.balloon_alert(user, UNLINT("IDs synced"))
 		theft_target = WEAKREF(selected_id)
 		ui_interact(user)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_SUCCESS
 
-	if(isitem(target))
-		var/obj/item/target_item = target
+	if(isitem(interacting_with))
+		var/obj/item/target_item = interacting_with
 
-		target.balloon_alert(user, "scanning ID card...")
+		interacting_with.balloon_alert(user, "scanning ID card...")
 
 		var/list/target_id_cards = target_item.get_all_contents_type(/obj/item/card/id)
-
 		var/target_item_id = target_item.GetID()
 
 		if(target_item_id)
 			target_id_cards |= target_item_id
 
 		if(!length(target_id_cards))
-			target.balloon_alert(user, "no IDs!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+			interacting_with.balloon_alert(user, "no IDs!")
+			return ITEM_INTERACT_BLOCKING
 
 		var/selected_id = pick(target_id_cards)
-		target.balloon_alert(user, UNLINT("IDs synced"))
+		interacting_with.balloon_alert(user, UNLINT("IDs synced"))
 		theft_target = WEAKREF(selected_id)
 		ui_interact(user)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_SUCCESS
 
-	return .
+	return NONE
 
 /obj/item/card/id/advanced/chameleon/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

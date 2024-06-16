@@ -135,7 +135,7 @@
 
 	// Round u pto the nearest generic zone (body, chest, arm)
 	var/zone_to_check = check_zone(caster.zone_selected)
-	var/parsed_zone = parse_zone(zone_to_check)
+	var/parsed_zone = victim.parse_zone_with_bodypart(zone_to_check)
 
 	var/list/organs_we_can_remove = list()
 	for(var/obj/item/organ/organ as anything in carbon_victim.organs)

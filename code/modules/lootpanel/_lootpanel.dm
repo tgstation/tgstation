@@ -49,6 +49,7 @@
 	var/list/data = list()
 
 	data["contents"] = get_contents()
+	data["is_blind"] = !!user.is_blind()
 	data["searching"] = length(to_image)
 
 	return data

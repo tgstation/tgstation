@@ -205,8 +205,17 @@
 	var/datum/paper_field/field_data_datum = null
 
 	var/is_signature = ((text == "%sign") || (text == "%s"))
+	var/is_date = ((text == "%date") || (text == "%d"))
+	var/is_time = ((text == "%time") || (text == "%t"))
 
-	var/field_text = is_signature ? signature_name : text
+	var/field_text = text
+	if(is_signature)
+		field_text = signature_name
+	else if(is_date)
+		field_text = "[time2text(world.timeofday, "DD/MM")]/[CURRENT_STATION_YEAR]"
+	else if(is_time)
+		field_text = time2text(world.timeofday, "hh:mm")
+
 	var/field_font = is_signature ? SIGNATURE_FONT : font
 
 	for(var/datum/paper_field/field_input in raw_field_input_data)

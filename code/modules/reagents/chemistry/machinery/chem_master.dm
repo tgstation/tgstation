@@ -92,7 +92,7 @@
 
 /obj/machinery/chem_master/update_appearance(updates)
 	. = ..()
-	if(panel_open || (machine_stat & (NOPOWER|BROKEN)))
+	if(panel_open || !is_operational)
 		set_light(0)
 	else
 		set_light(1, 1, "#fffb00")
@@ -112,7 +112,7 @@
 		. += mutable_appearance(icon, base_icon_state + "_overlay_extruder")
 
 	// Screen overlay
-	if(!panel_open && !(machine_stat & (NOPOWER | BROKEN)))
+	if(!panel_open && is_operational)
 		var/screen_overlay = base_icon_state + "_overlay_screen"
 		if(is_printing)
 			screen_overlay += "_active"
@@ -123,15 +123,9 @@
 
 	// Buffer reagents overlay
 	if(reagents.total_volume)
-		var/threshold = null
 		var/static/list/fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
-		for(var/i in 1 to fill_icon_thresholds.len)
-			if(ROUND_UP(100 * (reagents.total_volume / reagents.maximum_volume)) >= fill_icon_thresholds[i])
-				threshold = i
-		if(threshold)
-			var/fill_name = "chemmaster[fill_icon_thresholds[threshold]]"
-			var/mutable_appearance/filling = mutable_appearance('icons/obj/medical/reagent_fillings.dmi', fill_name)
-			filling.color = mix_color_from_reagents(reagents.reagent_list)
+		var/mutable_appearance/filling = reagent_threshold_overlay(reagents, 'icons/obj/medical/reagent_fillings.dmi', "chemmaster", fill_icon_thresholds)
+		if(!isnull(filling))
 			. += filling
 
 /obj/machinery/chem_master/Exited(atom/movable/gone, direction)

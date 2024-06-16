@@ -223,31 +223,31 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		user.put_in_inactive_hand(new_item)
 		return ITEM_INTERACT_SUCCESS
 
-/obj/item/stack/sheet/iron/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	if(isopenturf(target))
-		var/turf/open/build_on = target
-		if(!user.Adjacent(build_on))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		if(isgroundlessturf(build_on))
-			user.balloon_alert(user, "can't place it here!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		if(build_on.is_blocked_turf())
-			user.balloon_alert(user, "something is blocking the tile!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		if(get_amount() < 2)
-			user.balloon_alert(user, "not enough material!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		if(!do_after(user, 4 SECONDS, build_on))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		if(build_on.is_blocked_turf())
-			user.balloon_alert(user, "something is blocking the tile!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		if(!use(2))
-			user.balloon_alert(user, "not enough material!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		new/obj/structure/girder/displaced(build_on)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+/obj/item/stack/sheet/iron/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isopenturf(interacting_with))
+		return NONE
+	var/turf/open/build_on = interacting_with
+	if(!user.Adjacent(build_on))
+		return ITEM_INTERACT_BLOCKING
+	if(isgroundlessturf(build_on))
+		user.balloon_alert(user, "can't place it here!")
+		return ITEM_INTERACT_BLOCKING
+	if(build_on.is_blocked_turf())
+		user.balloon_alert(user, "something is blocking the tile!")
+		return ITEM_INTERACT_BLOCKING
+	if(get_amount() < 2)
+		user.balloon_alert(user, "not enough material!")
+		return ITEM_INTERACT_BLOCKING
+	if(!do_after(user, 4 SECONDS, build_on))
+		return ITEM_INTERACT_BLOCKING
+	if(build_on.is_blocked_turf())
+		user.balloon_alert(user, "something is blocking the tile!")
+		return ITEM_INTERACT_BLOCKING
+	if(!use(2))
+		user.balloon_alert(user, "not enough material!")
+		return ITEM_INTERACT_BLOCKING
+	new/obj/structure/girder/displaced(build_on)
+	return ITEM_INTERACT_SUCCESS
 
 /*
  * Plasteel
@@ -311,6 +311,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 2 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_DOORS), \
 	new/datum/stack_recipe("wooden stairs frame", /obj/structure/stairs_frame/wood, 10, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("wooden fence", /obj/structure/railing/wooden_fence, 2, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_STRUCTURE), \
+	new/datum/stack_recipe("raptor trough", /obj/structure/ore_container/food_trough/raptor_trough, 5, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("cat house", /obj/structure/cat_house, 5, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("coffin", /obj/structure/closet/crate/coffin, 5, time = 1.5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("book case", /obj/structure/bookcase, 4, time = 1.5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
@@ -332,6 +333,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("ore box", /obj/structure/ore_box, 4, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_CONTAINERS),\
 	new/datum/stack_recipe("wooden crate", /obj/structure/closet/crate/wooden, 6, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE),\
 	new/datum/stack_recipe("baseball bat", /obj/item/melee/baseball_bat, 5, time = 1.5 SECONDS, crafting_flags = NONE, category = CAT_WEAPON_MELEE),\
+	new/datum/stack_recipe("wooden crutch", /obj/item/cane/crutch/wood, 5, time = 1.5 SECONDS, crafting_flags = NONE, category = CAT_WEAPON_MELEE),\
 	new/datum/stack_recipe("loom", /obj/structure/loom, 10, time = 1.5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_TOOLS), \
 	new/datum/stack_recipe("mortar", /obj/item/reagent_containers/cup/mortar, 3, crafting_flags = NONE, category = CAT_CHEMISTRY), \
 	new/datum/stack_recipe("firebrand", /obj/item/match/firebrand, 2, time = 10 SECONDS, crafting_flags = NONE, category = CAT_TOOLS), \
@@ -586,6 +588,9 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 		new /datum/stack_recipe("donk-pockets honk box", /obj/item/storage/box/donkpockets/donkpockethonk, crafting_flags = NONE, category = CAT_CONTAINERS), \
 		new /datum/stack_recipe("monkey cube box", /obj/item/storage/box/monkeycubes, crafting_flags = NONE, category = CAT_CONTAINERS),
 		new /datum/stack_recipe("nugget box", /obj/item/storage/fancy/nugget_box, crafting_flags = NONE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("drinking glasses box", /obj/item/storage/box/drinkingglasses, crafting_flags = NONE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("paper cups box", /obj/item/storage/box/cups, crafting_flags = NONE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("cigar case", /obj/item/storage/fancy/cigarettes/cigars, crafting_flags = NONE, category = CAT_CONTAINERS), \
 		null, \
 
 		new /datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot, crafting_flags = NONE, category = CAT_CONTAINERS), \
@@ -599,13 +604,15 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 		null, \
 
 		new /datum/stack_recipe("pillbottle box", /obj/item/storage/box/pillbottles, crafting_flags = NONE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("medical gels box", /obj/item/storage/box/medigels, crafting_flags = NONE, category = CAT_CONTAINERS), \
 		new /datum/stack_recipe("beaker box", /obj/item/storage/box/beakers, crafting_flags = NONE, category = CAT_CONTAINERS), \
 		new /datum/stack_recipe("syringe box", /obj/item/storage/box/syringes, crafting_flags = NONE, category = CAT_CONTAINERS), \
 		new /datum/stack_recipe("latex gloves box", /obj/item/storage/box/gloves, crafting_flags = NONE, category = CAT_CONTAINERS), \
 		new /datum/stack_recipe("sterile masks box", /obj/item/storage/box/masks, crafting_flags = NONE, category = CAT_CONTAINERS), \
 		new /datum/stack_recipe("body bag box", /obj/item/storage/box/bodybags, crafting_flags = NONE, category = CAT_CONTAINERS), \
-		new /datum/stack_recipe("perscription glasses box", /obj/item/storage/box/rxglasses, crafting_flags = NONE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("prescription glasses box", /obj/item/storage/box/rxglasses, crafting_flags = NONE, category = CAT_CONTAINERS), \
 		new /datum/stack_recipe("medipen box", /obj/item/storage/box/medipens, crafting_flags = NONE, category = CAT_CONTAINERS), \
+		new /datum/stack_recipe("DNA injectors box", /obj/item/storage/box/injectors, crafting_flags = NONE, category = CAT_CONTAINERS), \
 		new /datum/stack_recipe("oxygen tank box", /obj/item/storage/box/emergencytank, crafting_flags = NONE, category = CAT_CONTAINERS), \
 		new /datum/stack_recipe("extended oxygen tank box", /obj/item/storage/box/engitank, crafting_flags = NONE, category = CAT_CONTAINERS), \
 		null, \

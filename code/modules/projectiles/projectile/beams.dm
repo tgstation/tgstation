@@ -249,23 +249,6 @@
 /obj/projectile/beam/lasertag/bluetag/hitscan
 	hitscan = TRUE
 
-//a shrink ray that shrinks stuff, which grows back after a short while.
-/obj/projectile/beam/shrink
-	name = "shrink ray"
-	icon_state = "blue_laser"
-	hitsound = 'sound/weapons/shrink_hit.ogg'
-	damage = 0
-	damage_type = STAMINA
-	armor_flag = ENERGY
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/shrink
-	light_color = LIGHT_COLOR_BLUE
-	var/shrink_time = 90
-
-/obj/projectile/beam/shrink/on_hit(atom/target, blocked = 0, pierce_hit)
-	. = ..()
-	if(isopenturf(target) || isindestructiblewall(target))//shrunk floors wouldnt do anything except look weird, i-walls shouldn't be bypassable
-		return
-	target.AddComponent(/datum/component/shrink, shrink_time)
-
-/obj/projectile/beam/shrink/is_hostile_projectile()
-	return TRUE
+/obj/projectile/magic/shrink/alien
+	antimagic_flags = NONE
+	shrink_time = 9 SECONDS

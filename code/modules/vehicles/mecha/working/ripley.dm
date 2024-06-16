@@ -265,8 +265,6 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 
 /obj/vehicle/sealed/mecha/ripley/cargo/Initialize(mapload)
 	. = ..()
-	if(cell)
-		cell.charge = FLOOR(cell.charge * 0.25, 1) //Starts at very low charge
 
 	//Attach hydraulic clamp ONLY
 	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/HC = new
@@ -398,8 +396,13 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/ejector/seccage/container_resist_act(mob/living/user)
-	to_chat(user, span_notice("You begin attempting a breakout. (This will take around 45 seconds and [chassis] need to remain stationary.)"))
-	if(!do_after(user, 1 MINUTES, target = chassis))
+	var/breakout_time = 1 MINUTES
+
+	if (user.mob_size > MOB_SIZE_HUMAN)
+		breakout_time = 6 SECONDS
+
+	to_chat(user, span_notice("You begin attempting a breakout. (This will take around [DisplayTimeText(breakout_time)] and [chassis] needs to remain stationary.)"))
+	if(!do_after(user, breakout_time, target = chassis))
 		return
 	to_chat(user, span_notice("You break out of the [src]."))
 	playsound(chassis, 'sound/items/crowbar.ogg', 100, TRUE)

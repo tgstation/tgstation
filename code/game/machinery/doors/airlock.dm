@@ -1528,10 +1528,12 @@
 		var/obj/item/electronics/airlock/ae
 		if(!electronics)
 			ae = new/obj/item/electronics/airlock(loc)
+			if(closeOtherId)
+				ae.passed_cycle_id = closeOtherId
 			if(length(req_one_access))
 				ae.one_access = 1
 				ae.accesses = req_one_access
-			else
+			else if(length(req_access))
 				ae.accesses = req_access
 		else
 			ae = electronics

@@ -122,9 +122,10 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
 
 //These drug item reactions should probably be converted to fermichem in the future.
-/datum/chemical_reaction/moon_rock //botany is real easy so it requires a lot of kronkus_extract, make it cheaper if it doesnt get amde.
+/datum/chemical_reaction/moon_rock //botany is real easy so it requires a lot of kronkus_extract, make it cheaper if it doesnt get made.
 	required_reagents = list(/datum/reagent/kronkus_extract = 15, /datum/reagent/fuel = 10, /datum/reagent/ammonia = 5)
 	mob_react = FALSE
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
 
 /datum/chemical_reaction/moon_rock/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
@@ -137,6 +138,7 @@
 /datum/chemical_reaction/blastoff_ampoule
 	required_reagents = list(/datum/reagent/silver = 10, /datum/reagent/toxin/cyanide = 10, /datum/reagent/lye = 5)
 	mob_react = FALSE
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
 
 /datum/chemical_reaction/blastoff_ampoule/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
@@ -149,6 +151,7 @@
 /datum/chemical_reaction/saturnx_glob
 	required_reagents = list(/datum/reagent/lead = 5, /datum/reagent/consumable/nothing = 5, /datum/reagent/drug/maint/tar = 10)
 	mob_react = FALSE
+	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
 
 /datum/chemical_reaction/saturnx_glob/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)

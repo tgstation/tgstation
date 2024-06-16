@@ -405,3 +405,14 @@
  */
 /obj/item/circuit_component/proc/unregister_usb_parent(atom/movable/shell)
 	return
+
+/**
+ * Called when a circuit component requests to send Ntnet data signal.
+ *
+ * Arguments:
+ * * port - The required list port needed by the Ntnet receive
+ * * key - The encryption key
+ * * signal_type - The signal type used for sending this global signal (optional, default is COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT)
+ */
+/obj/item/circuit_component/proc/send_ntnet_data(datum/port/input/port, key, signal_type = COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT)
+	SEND_GLOBAL_SIGNAL(signal_type, list("data" = port.value, "enc_key" = key, "port" = WEAKREF(port)))

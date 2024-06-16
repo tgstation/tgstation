@@ -153,6 +153,7 @@
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their skin has small patches of scales growing on it.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
+	AddElement(/datum/element/update_icon_blocker)
 
 #undef CARP_ORGAN_COLOR
 #undef CARP_SCLERA_COLOR

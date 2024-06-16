@@ -73,7 +73,7 @@
 	var/atom/movable/pulling
 	var/grab_state = GRAB_PASSIVE
 	/// The strongest grab we can acomplish
-	var/max_grab = GRAB_KILL
+	var/max_grab = GRAB_PASSIVE
 	var/throwforce = 0
 	var/datum/component/orbiter/orbiting
 
@@ -286,7 +286,7 @@
 	// We're gonna build a light, and mask it with the base turf's appearance
 	// grab a 32x32 square of it
 	// I would like to use GLOB.starbright_overlays here
-	// But that breaks down for... some? reason. I think recieving a render relay breaks keep_together or something
+	// But that breaks down for... some? reason. I think receiving a render relay breaks keep_together or something
 	// So we're just gonna accept  that this'll break with starlight color changing. hardly matters since this is really only for offset stuff, but I'd love to fix it someday
 	var/mutable_appearance/light = new(GLOB.starlight_objects[GET_TURF_PLANE_OFFSET(generate_for) + 1])
 	light.render_target = ""
@@ -401,6 +401,13 @@
 			. |= buckled.pulling
 	if(pulling)
 		. |= pulling
+		if (pulling.buckled_mobs)
+			. |= pulling.buckled_mobs
+
+		//makes conga lines work with ladders and flying up and down; checks if the guy you are pulling is pulling someone,
+		//then uses recursion to run the same function again
+		if (pulling.pulling)
+			. |= pulling.pulling.get_z_move_affected(z_move_flags)
 
 /**
  * Checks if the destination turf is elegible for z movement from the start turf to a given direction and returns it if so.

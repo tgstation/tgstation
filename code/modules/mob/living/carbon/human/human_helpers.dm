@@ -315,6 +315,8 @@
 	clone.fully_replace_character_name(null, dna.real_name)
 	copy_clothing_prefs(clone)
 	clone.age = age
+	clone.voice = voice
+	clone.pitch = pitch
 	dna.transfer_identity(clone, transfer_SE = TRUE, transfer_species = TRUE)
 
 	clone.dress_up_as_job(SSjob.GetJob(job))
@@ -322,9 +324,39 @@
 	for(var/datum/quirk/original_quircks as anything in quirks)
 		clone.add_quirk(original_quircks.type, override_client = client)
 	for(var/datum/mutation/human/mutations in dna.mutations)
-		clone.dna.add_mutation(mutations)
+		clone.dna.add_mutation(mutations, MUT_NORMAL)
 
 	clone.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 	clone.domutcheck()
 
 	return clone
+
+/mob/living/carbon/human/calculate_fitness()
+	var/fitness_modifier = 1
+	if (HAS_TRAIT(src, TRAIT_HULK))
+		fitness_modifier *= 2
+	if (HAS_TRAIT(src, TRAIT_STRENGTH))
+		fitness_modifier *= 1.5
+	if (HAS_TRAIT(src, TRAIT_ROD_SUPLEX))
+		fitness_modifier *= 2 // To be able to suplex a rod, you must possess an incredible amount of power
+	if (HAS_TRAIT(src, TRAIT_EASILY_WOUNDED))
+		fitness_modifier /= 2
+	if (HAS_TRAIT(src, TRAIT_GAMER))
+		fitness_modifier /= 1.5
+	if (HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
+		fitness_modifier /= 1.5
+
+	var/athletics_level = mind?.get_skill_level(/datum/skill/athletics) || 1
+
+	var/min_damage = 0
+	var/max_damage = 0
+	for (var/body_zone in GLOB.limb_zones)
+		var/obj/item/bodypart/part = get_bodypart(body_zone)
+		if (isnull(part) || part.unarmed_damage_high <= 0 || HAS_TRAIT(part, TRAIT_PARALYSIS))
+			continue
+		min_damage += part.unarmed_damage_low
+		max_damage += part.unarmed_damage_high
+
+	var/damage = ((min_damage / 4) + (max_damage / 4)) / 2 // We expect you to have 4 functional limbs- if you have fewer you're probably not going to be so good at lifting
+
+	return ceil(damage * (ceil(athletics_level / 2)) * fitness_modifier * maxHealth)

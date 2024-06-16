@@ -62,7 +62,7 @@
 
 /datum/component/construction/unordered/mecha_chassis/spawn_result()
 	var/atom/parent_atom = parent
-	parent_atom.icon = 'icons/mob/mech_construction.dmi'
+	parent_atom.icon = 'icons/mob/rideables/mech_construction.dmi'
 	parent_atom.set_density(TRUE)
 	parent_atom.cut_overlays()
 	..()
@@ -580,7 +580,7 @@
 /datum/component/construction/mecha/honker/update_parent(step_index)
 	if(step_index == 1)
 		var/atom/parent_atom = parent
-		parent_atom.icon = 'icons/mob/mech_construct.dmi'
+		parent_atom.icon = 'icons/mob/rideables/mech_construct.dmi'
 		parent_atom.icon_state = "honker_chassis"
 	..()
 
@@ -759,12 +759,12 @@
 			"backward_message" = "unfastened external armor layer"
 		),
 		list(
-			"key" = /obj/item/assembly/signaler/anomaly/bluespace,
+			"key" = /obj/item/assembly/signaler/anomaly/ectoplasm,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_WELDER,
-			"desc" = "The external armor is welded, and the <b>bluespace anomaly core</b> socket is open.",
+			"desc" = "The external armor is welded, and the <b>ectoplasm anomaly core</b> socket is open.",
 			"icon_state" = "phazon26",
-			"forward_message" = "inserted bluespace anomaly core",
+			"forward_message" = "inserted ectoplasm anomaly core",
 			"backward_message" = "cut off external armor"
 		)
 	)

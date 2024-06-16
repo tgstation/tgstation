@@ -116,6 +116,27 @@
 	return sanitize(.)
 
 /**
+ * For when you're only able to speak a limited amount of words
+ * phrase - the string to convert
+ * definitive_limit - the amount of words to limit the phrase to, optional
+*/
+/proc/stifled(phrase, definitive_limit = null)
+	phrase = html_decode(phrase)
+	var/num_words = 0
+	var/words = splittext(phrase, " ")
+	if(definitive_limit > 0) // in case someone passes a negative
+		num_words = min(definitive_limit, length(words))
+	else
+		num_words = min(rand(3, 5), length(words))
+	. = ""
+	for(var/i = 1, i <= num_words, i++)
+		if(num_words == i)
+			. += words[i] + "..."
+		else
+			. += words[i] + " ... "
+	return sanitize(.)
+
+/**
  * Turn text into complete gibberish!
  *
  * text is the inputted message, replace_characters will cause original letters to be replaced and chance are the odds that a character gets modified.

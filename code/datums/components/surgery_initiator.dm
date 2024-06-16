@@ -119,11 +119,11 @@
 		patient.surgeries -= the_surgery
 		REMOVE_TRAIT(patient, TRAIT_ALLOWED_HONORBOUND_ATTACK, type)
 		user.visible_message(
-			span_notice("[user] removes [parent] from [patient]'s [parse_zone(selected_zone)]."),
-			span_notice("You remove [parent] from [patient]'s [parse_zone(selected_zone)]."),
+			span_notice("[user] removes [parent] from [patient]'s [patient.parse_zone_with_bodypart(selected_zone)]."),
+			span_notice("You remove [parent] from [patient]'s [patient.parse_zone_with_bodypart(selected_zone)]."),
 		)
 
-		patient.balloon_alert(user, "stopped work on [parse_zone(selected_zone)]")
+		patient.balloon_alert(user, "stopped work on [patient.parse_zone_with_bodypart(selected_zone)]")
 
 		qdel(the_surgery)
 		return
@@ -153,11 +153,11 @@
 	REMOVE_TRAIT(patient, TRAIT_ALLOWED_HONORBOUND_ATTACK, ELEMENT_TRAIT(type))
 
 	user.visible_message(
-		span_notice("[user] closes [patient]'s [parse_zone(selected_zone)] with [close_tool] and removes [parent]."),
-		span_notice("You close [patient]'s [parse_zone(selected_zone)] with [close_tool] and remove [parent]."),
+		span_notice("[user] closes [patient]'s [patient.parse_zone_with_bodypart(selected_zone)] with [close_tool] and removes [parent]."),
+		span_notice("You close [patient]'s [patient.parse_zone_with_bodypart(selected_zone)] with [close_tool] and remove [parent]."),
 	)
 
-	patient.balloon_alert(user, "closed up [parse_zone(selected_zone)]")
+	patient.balloon_alert(user, "closed up [patient.parse_zone_with_bodypart(selected_zone)]")
 
 	qdel(the_surgery)
 
@@ -312,7 +312,7 @@
 		return
 
 	if (surgery_needs_exposure(surgery, target))
-		target.balloon_alert(user, "expose [target.p_their()] [parse_zone(selected_zone)]!")
+		target.balloon_alert(user, "expose [target.p_their()] [target.parse_zone_with_bodypart(selected_zone)]!")
 		return
 
 	ui_close()
@@ -323,8 +323,8 @@
 	target.balloon_alert(user, "starting \"[LOWER_TEXT(procedure.name)]\"")
 
 	user.visible_message(
-		span_notice("[user] drapes [parent] over [target]'s [parse_zone(selected_zone)] to prepare for surgery."),
-		span_notice("You drape [parent] over [target]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name]."),
+		span_notice("[user] drapes [parent] over [target]'s [target.parse_zone_with_bodypart(selected_zone)] to prepare for surgery."),
+		span_notice("You drape [parent] over [target]'s [target.parse_zone_with_bodypart(selected_zone)] to prepare for \an [procedure.name]."),
 	)
 
 	log_combat(user, target, "operated on", null, "(OPERATION TYPE: [procedure.name]) (TARGET AREA: [selected_zone])")

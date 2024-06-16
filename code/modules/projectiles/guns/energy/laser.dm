@@ -143,7 +143,8 @@
 /obj/projectile/beam/laser/accelerator/Range()
 	..()
 	damage += 7
-	transform *= 1 + ((damage/7) * 0.2)//20% larger per tile
+	transform = 0
+	transform *= 1 + (((damage - 6)/7) * 0.2)//20% larger per tile
 
 ///X-ray gun
 

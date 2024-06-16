@@ -508,6 +508,7 @@
 		actual_trauma.owner = owner
 		SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma)
 		actual_trauma.on_gain()
+		log_game("[key_name_and_tag(owner)] has gained the following brain trauma: [trauma.type]")
 	if(resilience)
 		actual_trauma.resilience = resilience
 	SSblackbox.record_feedback("tally", "traumas", 1, actual_trauma.type)

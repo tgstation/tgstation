@@ -28,15 +28,6 @@
 	/// A list of generic access flags people in this department generally have.
 	var/list/department_access = list()
 
-/datum/job_department/New()
-	. = ..()
-	for(var/delivery_area_type in department_delivery_areas)
-		if(GLOB.areas_by_type[delivery_area_type])
-			return
-	//every area fallback didn't exist on this map so throw a mapping error and set some generic area that uuuh please exist okay
-	log_mapping("[type] has no valid areas to deliver to on this map, add some more fallback areas to its \"department_delivery_areas\" var.")
-	department_delivery_areas = list(/area/station/hallway/primary/central) //if this doesn't exist like honestly fuck your map man
-
 /// Handles adding jobs to the department and setting up the job bitflags.
 /datum/job_department/proc/add_job(datum/job/job)
 	department_jobs += job
@@ -111,7 +102,10 @@
 	label_class = "engineering"
 	ui_color = "#dfb567"
 	nation_prefixes = list("Atomo", "Engino", "Power", "Teleco")
-	department_delivery_areas = list(/area/station/engineering/main)
+	department_delivery_areas = list(
+		/area/station/engineering/main,
+		/area/station/engineering/lobby,
+	)
 	associated_cargo_groups = list("Engineering", "Engine Construction", "Canisters & Materials")
 	head_of_staff_access = ACCESS_CE
 	department_access = REGION_ACCESS_ENGINEERING
@@ -144,7 +138,11 @@
 	label_class = "science"
 	ui_color = "#c973c9"
 	nation_prefixes = list("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno", "Nani", "Cyto")
-	department_delivery_areas = list(/area/station/science/research)
+	department_delivery_areas = list(
+		/area/station/science/research,
+		/area/station/science/lobby,
+		/area/station/science/lab,
+	)
 	associated_cargo_groups = list("Science", "Livestock", "Canisters & Materials")
 	head_of_staff_access = ACCESS_RD
 	department_access = REGION_ACCESS_RESEARCH

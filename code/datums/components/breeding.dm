@@ -62,7 +62,7 @@
 		return COMPONENT_HOSTILE_NO_ATTACK
 
 	var/turf/delivery_destination = get_turf(source)
-	var/mob/living/baby = new baby_path(delivery_destination)
+	var/atom/baby = new baby_path(delivery_destination)
 	new /obj/effect/temp_visual/heart(delivery_destination)
 	toggle_status(source)
 

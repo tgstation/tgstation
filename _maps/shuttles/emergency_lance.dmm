@@ -297,7 +297,8 @@
 	},
 /obj/docking_port/mobile/emergency{
 	dir = 2;
-	name = "Lance Emergency Shuttle"
+	name = "Lance Emergency Shuttle";
+	port_direction = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)

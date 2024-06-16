@@ -335,7 +335,7 @@
 	)
 	stage4 = list(span_danger("You can't feel your arms. It does not bother you anymore."), span_danger("You forgive the clown for hurting you."))
 	stage5 = list(span_danger("You have become a Gondola."))
-	new_form = /mob/living/simple_animal/pet/gondola
+	new_form = /mob/living/basic/pet/gondola
 
 
 /datum/disease/transformation/gondola/stage_act(seconds_per_tick, times_fired)

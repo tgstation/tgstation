@@ -36,13 +36,13 @@
 
 /obj/item/gun/energy/fire_sounds()
 	// What frequency the energy gun's sound will make
-	var/pitch_to_use
+	var/pitch_to_use = 1
 
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	// What percentage of the full battery a shot will expend
 	var/shot_cost_percent = round(clamp(shot.e_cost / cell.maxcharge, 0, 1) * 100)
 	// Ignore this on oversized/infinite cells or ammo without cost
-	if(shot_cost_percent > 0)
+	if(shot_cost_percent > 0 && shot_cost_percent < 100)
 		// The total amount of shots the fully charged energy gun can fire before running out
 		var/max_shots = round(100/shot_cost_percent) - 1
 		// How many shots left before the energy gun's current battery runs out of energy

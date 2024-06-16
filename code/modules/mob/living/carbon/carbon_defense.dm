@@ -64,7 +64,7 @@
 
 /mob/living/carbon/check_projectile_dismemberment(obj/projectile/P, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
-	if(affecting && !(affecting.bodypart_flags & BODYPART_UNREMOVABLE) && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
+	if(affecting && affecting.can_dismember() && !(affecting.bodypart_flags & BODYPART_UNREMOVABLE) && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
 		affecting.dismember(P.damtype)
 		if(P.catastropic_dismemberment)
 			apply_damage(P.damage, P.damtype, BODY_ZONE_CHEST, wound_bonus = P.wound_bonus) //stops a projectile blowing off a limb effectively doing no damage. Mostly relevant for sniper rifles.
@@ -164,6 +164,13 @@
 
 	return FALSE
 
+/mob/living/carbon/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if (!user.combat_mode)
+		for (var/datum/wound/wounds as anything in all_wounds)
+			if (wounds.try_handling(user))
+				return TRUE
+
+	return ..()
 
 /mob/living/carbon/attack_paw(mob/living/carbon/human/user, list/modifiers)
 
@@ -228,15 +235,6 @@
 	else
 		show_message(span_userdanger("The blob attacks!"))
 		adjustBruteLoss(10)
-
-/mob/living/carbon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_CONTENTS)
-		return
-	for(var/obj/item/organ/organ as anything in organs)
-		organ.emp_act(severity)
-	for(var/obj/item/bodypart/bodypart as anything in src.bodyparts)
-		bodypart.emp_act(severity)
 
 ///Adds to the parent by also adding functionality to propagate shocks through pulling and doing some fluff effects.
 /mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE, jitter_time = 20 SECONDS, stutter_time = 4 SECONDS, stun_duration = 4 SECONDS)

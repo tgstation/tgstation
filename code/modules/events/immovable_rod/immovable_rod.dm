@@ -247,10 +247,16 @@
 	strongman.client?.give_award(/datum/award/achievement/jobs/feat_of_strength, strongman)
 	strongman.visible_message(
 		span_boldwarning("[strongman] suplexes [src] into the ground!"),
-		span_warning("You suplex [src] into the ground!")
+		span_warning("As you suplex [src] into the ground, your body ripples with power!")
 		)
 	new /obj/structure/festivus/anchored(drop_location())
 	new /obj/effect/anomaly/flux(drop_location())
+
+	var/is_heavy_gravity = strongman.has_gravity() > STANDARD_GRAVITY //If for some reason you have to suplex the rod in heavy gravity, you get the double experience here as well, why not
+	var/experience_gained = 100 * num_sentient_mobs_hit * (is_heavy_gravity ? 2 : 1) // We gain more expeirence the more sentient mobs the rod has taken out. The deadlier the rod, the stronger we become. At 25 sentient mobs, we instantly become a legendary athlete.
+	strongman.mind?.adjust_experience(/datum/skill/athletics, experience_gained)
+	strongman.apply_status_effect(/datum/status_effect/exercised) //time for a nap, you earned it
+
 	qdel(src)
 	return TRUE
 

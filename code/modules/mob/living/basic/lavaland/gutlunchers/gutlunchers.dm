@@ -55,7 +55,7 @@
 /mob/living/basic/mining/gutlunch/proc/pre_attack(mob/living/puncher, atom/target)
 	SIGNAL_HANDLER
 
-	if(!istype(target, /obj/structure/ore_container/gutlunch_trough))
+	if(!istype(target, /obj/structure/ore_container/food_trough/gutlunch_trough))
 		return
 
 	var/obj/ore_food = locate(/obj/item/stack/ore) in target

@@ -252,7 +252,7 @@ Suit storage units not only remove blood and dirt from clothing, but also radiat
 The Chaplain can bless any container with water by hitting it with their bible. Holy water has a myriad of uses against both cults and large amounts of it are a great contributor to success against them.
 The P2P chat function found on tablet computers allows for a stealthy way to communicate with people.
 The resist button will allow you to resist out of handcuffs, being buckled to a chair or bed, out of locked lockers and more. Whenever you're stuck, try resisting!
-The station's self-destruct terminal is invincible. Go find the disk instead of trying to destroy it.
+The station's self-destruct terminal is indestructible. Go find the disk instead of trying to destroy it.
 There are many places around the station to hide contraband. A few for starters: linen boxes, toilet cisterns, body bags. Experiment to find more!
 To crack the safe in the vault, use a stethoscope or three plastic explosives on it.
 Using sticky tape on items can make them stick to people and walls! Be careful, grenades might stick to your hand during the moment of truth!
@@ -285,3 +285,4 @@ You can use an upgraded microwave to charge your PDA!
 You'll quickly lose your interest in the game if you play to win and kill. If you find yourself doing this, take a step back and talk to people - it's a much better experience!
 Some areas of the station use simple nautical directions to indicate their respective locations, like Fore (Front of the ship), Aft (Back), Port (Left side), Starboard (Right), Quarter and Bow (Either sides of Aft and Fore, respectively). You can review these terms on the Notepad App of your PDA.
 Modular computers are compatible with integrated circuits, but most of the program-dependent circuits require them to be open/backgrounded to work. To install circuits on stationary consoles, you need to toggle interaction with the frame with right-click first.
+You don't need to destroy a Spacecoin machine to make your funds stop draining. Swiping your ID on it will stop the withdrawal.

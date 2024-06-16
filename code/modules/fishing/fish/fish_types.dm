@@ -2,7 +2,8 @@
 
 /obj/item/fish/goldfish
 	name = "goldfish"
-	desc = "Despite common belief, goldfish do not have three-second memories. They can actually remember things that happened up to three months ago."
+	desc = "Despite common belief, goldfish do not have three-second memories. \
+		They can actually remember things that happened up to three months ago."
 	icon_state = "goldfish"
 	sprite_width = 8
 	sprite_height = 8
@@ -12,6 +13,12 @@
 	favorite_bait = list(/obj/item/food/bait/worm)
 	required_temperature_min = MIN_AQUARIUM_TEMP+18
 	required_temperature_max = MIN_AQUARIUM_TEMP+26
+
+/obj/item/fish/goldfish/gill
+	name = "McGill"
+	desc = "A great rubber duck tool for Lawyers who can't get a grasp over their case."
+	stable_population = 1
+	random_case_rarity = FISH_RARITY_NOPE
 
 /obj/item/fish/angelfish
 	name = "angelfish"
@@ -295,6 +302,26 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+5
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
 
+/obj/item/fish/jumpercable
+	name = "monocloning jumpercable"
+	desc = "A surprisingly useful if nasty looking creation from the syndicate fish labs. Drop one in a tank, and \
+		watch it self-feed and multiply. Generates more and more power as a growing swarm!"
+	icon_state = "jumpercable"
+	dedicated_in_aquarium_icon_state = "jumpercable_small"
+	sprite_width = 17
+	sprite_height = 5
+	stable_population = 12
+	average_size = 110
+	average_weight = 10000
+	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
+	required_temperature_min = MIN_AQUARIUM_TEMP+10
+	required_temperature_max = MIN_AQUARIUM_TEMP+30
+	fish_traits = list(
+		/datum/fish_trait/parthenogenesis,
+		/datum/fish_trait/mixotroph,
+		/datum/fish_trait/electrogenesis,
+	)
+
 /obj/item/fish/ratfish
 	name = "ratfish"
 	desc = "A rat exposed to the murky waters of maintenance too long. Any higher power, if it revealed itself, would state that the ratfish's continued existence is extremely unwelcome."
@@ -400,9 +427,9 @@
 /obj/item/fish/mastodon
 	name = "unmarine mastodon"
 	desc = "A monster of exposed muscles and innards, wrapped in a fish-like skeleton. You don't remember ever seeing it on the catalog."
-	icon = 'icons/obj/aquarium_wide.dmi'
+	icon = 'icons/obj/aquarium/wide.dmi'
 	icon_state = "mastodon"
-	dedicated_in_aquarium_icon = 'icons/obj/aquarium.dmi'
+	dedicated_in_aquarium_icon = 'icons/obj/aquarium/fish.dmi'
 	dedicated_in_aquarium_icon_state = "mastodon_small"
 	base_pixel_x = -16
 	pixel_x = -16
@@ -540,3 +567,98 @@
 ///It spins, and dimly glows in the dark.
 /obj/item/fish/starfish/flop_animation()
 	DO_FLOATING_ANIM(src)
+
+/obj/item/fish/lavaloop
+	name = "lavaloop fish"
+	desc = "Due to its curvature, it can be used as make-shift boomerang."
+	icon_state = "lava_loop"
+	sprite_width = 3
+	sprite_height = 5
+	average_size = 30
+	average_weight = 500
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	required_fluid_type = AQUARIUM_FLUID_ANY_WATER //if we can survive hot lava and freezing plasrivers, we can survive anything
+	fish_ai_type = FISH_AI_ZIPPY
+	min_pressure = HAZARD_LOW_PRESSURE
+	required_temperature_min = MIN_AQUARIUM_TEMP+30
+	required_temperature_max = MIN_AQUARIUM_TEMP+35
+	aquarium_vc_color = "#ce7e1d"
+	fish_traits = list(
+		/datum/fish_trait/carnivore,
+		/datum/fish_trait/heavy,
+	)
+	hitsound = null
+	throwforce = 5
+	///maximum bonus damage when winded up
+	var/maximum_bonus = 25
+
+/obj/item/fish/lavaloop/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_BYPASS_RANGED_ARMOR, INNATE_TRAIT)
+	AddComponent(/datum/component/boomerang, throw_range, TRUE)
+	AddComponent(\
+		/datum/component/throwbonus_on_windup,\
+		maximum_bonus = maximum_bonus,\
+		windup_increment_speed = 2,\
+		throw_text = "starts cooking in your hands, it may explode soon!",\
+		pass_maximum_callback = CALLBACK(src, PROC_REF(explode_on_user)),\
+		apply_bonus_callback = CALLBACK(src, PROC_REF(on_fish_land)),\
+		sound_on_success = 'sound/weapons/parry.ogg',\
+		effect_on_success = /obj/effect/temp_visual/guardian/phase,\
+	)
+
+/obj/item/fish/lavaloop/proc/explode_on_user(mob/living/user)
+	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
+	active_arm?.dismember()
+	to_chat(user, span_warning("[src] explodes!"))
+	playsound(src, 'sound/effects/explosion1.ogg', 40, TRUE)
+	user.flash_act(1, 1)
+	qdel(src)
+
+/obj/item/fish/lavaloop/proc/on_fish_land(mob/living/target, bonus_value)
+	if(!istype(target))
+		return FALSE
+	return (target.mob_size >= MOB_SIZE_LARGE)
+
+/obj/item/fish/lavaloop/plasma_river
+	maximum_bonus = 30
+
+/obj/item/fish/lavaloop/plasma_river/explode_on_user(mob/living/user)
+	playsound(src, 'sound/effects/explosion1.ogg', 40, TRUE)
+	user.flash_act(1, 1)
+	user.apply_status_effect(/datum/status_effect/ice_block_talisman, 5 SECONDS)
+	qdel(src)
+
+/obj/item/fish/lavaloop/plasma_river/on_fish_land(mob/living/target, bonus_value)
+	if(!istype(target))
+		return FALSE
+	if(target.mob_size < MOB_SIZE_LARGE)
+		return FALSE
+	var/freeze_timer = (bonus_value * 0.1)
+	if(freeze_timer <= 0)
+		return FALSE
+	target.apply_status_effect(/datum/status_effect/ice_block_talisman, freeze_timer SECONDS)
+	return FALSE
+
+/obj/item/fish/zipzap
+	name = "anxious zipzap"
+	desc = "A fish overflowing with crippling anxiety and electric potential. Worried about the walls of its tank closing in constantly. Both literally and as a general metaphorical unease about life's direction."
+	icon_state = "zipzap"
+	icon_state_dead = "zipzap_dead"
+	sprite_width = 8
+	sprite_height = 8
+	stable_population = 3
+	average_size = 30
+	average_weight = 500
+	random_case_rarity = FISH_RARITY_VERY_RARE
+	favorite_bait = list(/obj/item/food/bait/doughball)
+	required_temperature_min = MIN_AQUARIUM_TEMP+18
+	required_temperature_max = MIN_AQUARIUM_TEMP+26
+	fish_traits = list(
+		/datum/fish_trait/no_mating,
+		/datum/fish_trait/wary,
+		/datum/fish_trait/anxiety,
+		/datum/fish_trait/electrogenesis,
+	)
+	//anxiety naturally limits the amount of zipzaps per tank, so they are stronger alone
+	electrogenesis_power = 20 MEGA JOULES

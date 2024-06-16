@@ -83,9 +83,14 @@
 	return TRUE
 
 /datum/element/basic_eating/proc/finish_eating(mob/living/eater, atom/target)
+	set waitfor = FALSE
 	SEND_SIGNAL(eater, COMSIG_MOB_ATE)
 	if(drinking)
 		playsound(eater.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	else
 		playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	qdel(target)
+	var/atom/final_target = target
+	if(isstack(target)) //if stack, only consume 1
+		var/obj/item/stack/food_stack = target
+		final_target = food_stack.split_stack(eater, 1)
+	qdel(final_target)

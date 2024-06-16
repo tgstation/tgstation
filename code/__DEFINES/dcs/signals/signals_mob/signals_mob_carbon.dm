@@ -159,3 +159,7 @@
 	#define HANDLE_BLOOD_NO_NUTRITION_DRAIN (1<<1)
 	/// Return to skip oxyloss and similar effecst from blood level
 	#define HANDLE_BLOOD_NO_EFFECTS (1<<2)
+
+/// from /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced) iodk where it shuld go
+#define COMSIG_CARBON_LIMPING "mob_limp_check"
+	#define COMPONENT_CANCEL_LIMP (1<<0)

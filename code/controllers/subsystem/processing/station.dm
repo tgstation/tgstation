@@ -95,8 +95,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 		return
 
-	for(var/i in subtypesof(/datum/station_trait))
-		var/datum/station_trait/trait_typepath = i
+	for(var/datum/station_trait/trait_typepath as anything in subtypesof(/datum/station_trait))
 
 		// If forced, (probably debugging), just set it up now, keep it out of the pool.
 		if(initial(trait_typepath.force))
@@ -114,6 +113,14 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 		if(!(initial(trait_typepath.trait_flags) & STATION_TRAIT_REQUIRES_AI) && !CONFIG_GET(flag/allow_ai)) //can't have AI traits without AI
 			continue
+
+		if(ispath(trait_typepath, /datum/station_trait/random_event_weight_modifier)) //Don't add event modifiers for events that can't occur on our map.
+			var/datum/station_trait/random_event_weight_modifier/random_trait_typepath = trait_typepath
+			var/datum/round_event_control/event_to_check = initial(random_trait_typepath.event_control_path)
+			if(event_to_check)
+				event_to_check = new event_to_check()
+				if(!event_to_check.valid_for_map())
+					continue
 
 		selectable_traits_by_types[initial(trait_typepath.trait_type)][trait_typepath] = initial(trait_typepath.weight)
 

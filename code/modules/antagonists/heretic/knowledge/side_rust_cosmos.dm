@@ -20,22 +20,22 @@
 
 /datum/heretic_knowledge/entropy_pulse
 	name = "Pulse of Entropy"
-	desc = "Allows you to transmute 20 irons and 2 garbage items to fill the surrounding vicinity of the rune with rust."
+	desc = "Allows you to transmute 10 iron sheets and a garbage item to fill the surrounding vicinity of the rune with rust."
 	gain_text = "Reality begins to whisper to me. To give it its entropic end."
 	required_atoms = list(
-		/obj/item/stack/sheet/iron = 20,
-		/obj/item/trash = 2
+		/obj/item/stack/sheet/iron = 10,
+		/obj/item/trash = 1,
 	)
 	cost = 0
 	route = PATH_SIDE
-	var/rusting_range = 4
+	var/rusting_range = 8
 
 /datum/heretic_knowledge/entropy_pulse/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	for(var/turf/nearby_turf in view(rusting_range, loc))
 		if(get_dist(nearby_turf, loc) <= 1) //tiles on rune should always be rusted
 			nearby_turf.rust_heretic_act()
 		//we exclude closed turf to avoid exposing cultist bases
-		if(prob(20) || isclosedturf(nearby_turf))
+		if(prob(10) || isclosedturf(nearby_turf))
 			continue
 		nearby_turf.rust_heretic_act()
 	return TRUE
@@ -76,17 +76,17 @@
 
 /datum/heretic_knowledge/summon/rusty
 	name = "Rusted Ritual"
-	desc = "Allows you to transmute a pool of vomit, a book, and a head into a Rust Walker. \
+	desc = "Allows you to transmute a pool of vomit, some cable coil, and 5 sheets of titanium into a Rust Walker. \
 		Rust Walkers excel at spreading rust and are moderately strong in combat."
 	gain_text = "I combined my knowledge of creation with my desire for corruption. The Marshal knew my name, and the Rusted Hills echoed out."
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/entropic_plume,
-		/datum/heretic_knowledge/spell/cosmic_expansion,
+		/datum/heretic_knowledge/spell/area_conversion,
+		/datum/heretic_knowledge/spell/star_blast,
 	)
 	required_atoms = list(
 		/obj/effect/decal/cleanable/vomit = 1,
-		/obj/item/book = 1,
-		/obj/item/bodypart/head = 1,
+		/obj/item/stack/sheet/mineral/titanium = 5,
+		/obj/item/stack/cable_coil = 15,
 	)
 	mob_to_summon = /mob/living/basic/heretic_summon/rust_walker
 	cost = 1

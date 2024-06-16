@@ -47,7 +47,7 @@
 	var/icon/final_icon = finish_preview_icon(obsessed_icon)
 
 	final_icon.Blend(
-		icon('icons/ui_icons/antags/obsessed.dmi', "obsession"),
+		icon('icons/ui/antags/obsessed.dmi', "obsession"),
 		ICON_OVERLAY,
 		ANTAGONIST_PREVIEW_ICON_SIZE - 30,
 		20,

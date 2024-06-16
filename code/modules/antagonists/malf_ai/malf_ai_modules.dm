@@ -47,6 +47,9 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		/obj/machinery/hypertorus/corner,
 		/obj/machinery/atmospherics/components/binary/valve,
 		/obj/machinery/portable_atmospherics/canister,
+		/obj/machinery/computer/shuttle,
+		/obj/machinery/computer/emergency_shuttle,
+		/obj/machinery/computer/gateway_control,
 	)))
 
 GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
@@ -450,7 +453,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		to_chat(caller, span_warning("You can only animate machines!"))
 		return FALSE
 	var/obj/machinery/clicked_machine = clicked_on
-	if(!clicked_machine.can_be_overridden() || is_type_in_typecache(clicked_machine, GLOB.blacklisted_malf_machines))
+
+	if(istype(clicked_machine, /obj/machinery/porta_turret_cover)) //clicking on a closed turret will attempt to override the turret itself instead of the animated/abstract cover.
+		var/obj/machinery/porta_turret_cover/clicked_turret = clicked_machine
+		clicked_machine = clicked_turret.parent_turret
+
+	if((clicked_machine.resistance_flags & INDESTRUCTIBLE) || is_type_in_typecache(clicked_machine, GLOB.blacklisted_malf_machines))
 		to_chat(caller, span_warning("That machine can't be overridden!"))
 		return FALSE
 
@@ -538,7 +546,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		to_chat(caller, span_warning("You can only overload machines!"))
 		return FALSE
 	var/obj/machinery/clicked_machine = clicked_on
-	if(is_type_in_typecache(clicked_machine, GLOB.blacklisted_malf_machines))
+
+	if(istype(clicked_machine, /obj/machinery/porta_turret_cover)) //clicking on a closed turret will attempt to override the turret itself instead of the animated/abstract cover.
+		var/obj/machinery/porta_turret_cover/clicked_turret = clicked_machine
+		clicked_machine = clicked_turret.parent_turret
+
+	if((clicked_machine.resistance_flags & INDESTRUCTIBLE) || is_type_in_typecache(clicked_machine, GLOB.blacklisted_malf_machines))
 		to_chat(caller, span_warning("You cannot overload that device!"))
 		return FALSE
 

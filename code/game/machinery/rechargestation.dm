@@ -8,7 +8,7 @@
 	req_access = list(ACCESS_ROBOTICS)
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/cyborgrecharger
-	occupant_typecache = list(/mob/living/silicon/robot, /mob/living/carbon/human)
+	occupant_typecache = list(/mob/living/silicon/robot, /mob/living/carbon/human, /mob/living/circuit_drone)
 	processing_flags = NONE
 	var/recharge_speed
 	var/repairs
@@ -60,7 +60,12 @@
 /obj/machinery/recharge_station/proc/charge_target_cell(obj/item/stock_parts/cell/target, seconds_per_tick)
 	PRIVATE_PROC(TRUE)
 
-	return charge_cell(recharge_speed * seconds_per_tick, target, grid_only = TRUE)
+	//charge the cell, account for heat loss from work done
+	var/charge_given = charge_cell(recharge_speed * seconds_per_tick, target, grid_only = TRUE)
+	if(charge_given)
+		use_energy((charge_given + active_power_usage) * 0.01)
+
+	return charge_given
 
 /obj/machinery/recharge_station/RefreshParts()
 	. = ..()
@@ -87,12 +92,6 @@
 		end_processing()
 	else //Turned on
 		begin_processing()
-
-
-/obj/machinery/recharge_station/process(seconds_per_tick)
-	if(occupant)
-		process_occupant(seconds_per_tick)
-	return 1
 
 /obj/machinery/recharge_station/relaymove(mob/living/user, direction)
 	if(user.stat)
@@ -174,11 +173,8 @@
 	icon_state = "borgcharger[state_open ? 0 : (occupant ? 1 : 2)]"
 	return ..()
 
-/obj/machinery/recharge_station/proc/process_occupant(seconds_per_tick)
-	if(!occupant)
-		return
-
-	if(!use_energy(active_power_usage * seconds_per_tick, force = FALSE))
+/obj/machinery/recharge_station/process(seconds_per_tick)
+	if(QDELETED(occupant) || !is_operational)
 		return
 
 	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, charge_cell, seconds_per_tick, repairs, sendmats)

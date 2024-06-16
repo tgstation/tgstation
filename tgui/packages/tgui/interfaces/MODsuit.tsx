@@ -27,15 +27,17 @@ type MODsuitData = {
   ui_theme: string;
   control: string;
   complexity_max: number;
-  helmet: string;
-  chestplate: string;
-  gauntlets: string;
-  boots: string;
+  parts: PartData[];
   // Dynamic
   suit_status: SuitStatus;
   user_status: UserStatus;
   module_custom_status: ModuleCustomStatus;
   module_info: Module[];
+};
+
+type PartData = {
+  slot: string;
+  name: string;
 };
 
 type SuitStatus = {
@@ -477,7 +479,7 @@ const SuitStatusSection = (props) => {
 
 const HardwareSection = (props) => {
   const { act, data } = useBackend<MODsuitData>();
-  const { control, helmet, chestplate, gauntlets, boots } = data;
+  const { control } = data;
   const { ai_name, core_name } = data.suit_status;
   return (
     <Section title="Hardware" style={{ textTransform: 'capitalize' }}>
@@ -489,16 +491,25 @@ const HardwareSection = (props) => {
           {core_name || 'No Core Detected'}
         </LabeledList.Item>
         <LabeledList.Item label="Control Unit">{control}</LabeledList.Item>
-        <LabeledList.Item label="Helmet">{helmet || 'None'}</LabeledList.Item>
-        <LabeledList.Item label="Chestplate">
-          {chestplate || 'None'}
-        </LabeledList.Item>
-        <LabeledList.Item label="Gauntlets">
-          {gauntlets || 'None'}
-        </LabeledList.Item>
-        <LabeledList.Item label="Boots">{boots || 'None'}</LabeledList.Item>
+        <ModParts />
       </LabeledList>
     </Section>
+  );
+};
+
+const ModParts = (props) => {
+  const { act, data } = useBackend<MODsuitData>();
+  const { parts } = data;
+  return (
+    <>
+      {parts.map((part) => {
+        return (
+          <LabeledList.Item key={part.slot} label={part.slot + ' Slot'}>
+            {part.name}
+          </LabeledList.Item>
+        );
+      })}
+    </>
   );
 };
 

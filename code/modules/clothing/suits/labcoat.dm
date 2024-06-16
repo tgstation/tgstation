@@ -106,6 +106,9 @@
 	allowed += list(
 		/obj/item/autopsy_scanner,
 		/obj/item/scythe,
+		/obj/item/shovel,
+		/obj/item/shovel/serrated,
+		/obj/item/trench_tool,
 	)
 
 /obj/item/clothing/suit/toggle/labcoat/science

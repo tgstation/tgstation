@@ -130,18 +130,16 @@
 		charge_rate *= capacitor.tier
 
 /obj/machinery/cell_charger/process(seconds_per_tick)
-	if(!charging || !anchored || (machine_stat & (BROKEN|NOPOWER)))
-		return
-
-	if(charging.percent() >= 100)
+	if(!charging || charging.percent() >= 100 || !anchored || !is_operational)
 		return
 
 	var/main_draw = charge_rate * seconds_per_tick
 	if(!main_draw)
 		return
 
-	//use a small bit for the charger itself, but power usage scales up with the part tier
-	use_energy(main_draw * 0.01)
-	charge_cell(main_draw, charging, grid_only = TRUE)
+	//charge cell, account for heat loss from work done
+	var/charge_given = charge_cell(main_draw, charging, grid_only = TRUE)
+	if(charge_given)
+		use_energy((charge_given + active_power_usage) * 0.01)
 
 	update_appearance()

@@ -114,6 +114,7 @@
 	id = "fleshmend"
 	duration = 10 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/fleshmend
+	show_duration = TRUE
 
 /datum/status_effect/fleshmend/on_apply()
 	. = ..()
@@ -338,7 +339,7 @@
 			need_mob_update += itemUser.adjustFireLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
 			need_mob_update += itemUser.adjustToxLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE) //Because Slime People are people too
 			need_mob_update += itemUser.adjustOxyLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-			need_mob_update += itemUser.adjustStaminaLoss(-0.6 * seconds_between_ticks, updating_stamina = FALSE, forced = TRUE)
+			need_mob_update += itemUser.adjustStaminaLoss(-3 * seconds_between_ticks, updating_stamina = FALSE, forced = TRUE)
 			need_mob_update += itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.6 * seconds_between_ticks)
 			if(need_mob_update)
 				itemUser.updatehealth()
@@ -379,6 +380,7 @@
 	duration = 1 MINUTES
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /atom/movable/screen/alert/status_effect/regenerative_core
+	show_duration = TRUE
 
 /datum/status_effect/regenerative_core/on_apply()
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
@@ -398,6 +400,7 @@
 	id = "Lightning Orb"
 	duration = 30 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/lightningorb
+	show_duration = TRUE
 
 /datum/status_effect/lightningorb/on_apply()
 	. = ..()
@@ -460,6 +463,7 @@
 	id = "speed_boost"
 	duration = 2 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
+	show_duration = TRUE
 
 /datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -597,3 +601,24 @@
 
 /datum/status_effect/jump_jet/on_remove()
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
+
+/// Makes the mob immune to radiation for a short bit to help with safely spawning in hazardous areas
+/datum/status_effect/radiation_immunity
+	id = "radiation_immunity"
+	duration = 1 MINUTES
+	show_duration = TRUE
+
+/datum/status_effect/radiation_immunity/on_apply()
+	ADD_TRAIT(owner, TRAIT_RADIMMUNE, type)
+	return TRUE
+
+/datum/status_effect/radiation_immunity/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_RADIMMUNE, type)
+
+/datum/status_effect/radiation_immunity/radnebula
+	alert_type = /atom/movable/screen/alert/status_effect/radiation_immunity
+
+/atom/movable/screen/alert/status_effect/radiation_immunity
+	name = "Radiation shielding"
+	desc = "You're immune to radiation, get settled quick!"
+	icon_state = "radiation_shield"

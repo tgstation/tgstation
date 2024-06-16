@@ -14,6 +14,7 @@
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_FLOOR_GRASS
 	canSmoothWith = SMOOTH_GROUP_FLOOR_GRASS + SMOOTH_GROUP_CLOSED_TURFS
 	layer = HIGH_TURF_LAYER
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 	damaged_dmi = 'icons/turf/floors/grass_damaged.dmi'
 	/// The icon used for smoothing.
 	var/smooth_icon = 'icons/turf/floors/grass.dmi'

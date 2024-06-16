@@ -76,7 +76,7 @@
 		checked_target = mutation_target,
 		ignore_category = POLL_IGNORE_GLITCH,
 		alert_pic = mutation_target,
-		role_name_text = "Bitrunning Malfunction: [role_name]",
+		role_name_text = "Malfunction: [role_name]",
 	)
 	spawn_glitch(chosen_role, mutation_target, chosen_one)
 	return mutation_target

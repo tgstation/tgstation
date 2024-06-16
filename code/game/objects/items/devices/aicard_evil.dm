@@ -62,6 +62,11 @@
 	// Make it look evil!!!
 	new_ai.hologram_appearance = mutable_appearance('icons/mob/silicon/ai.dmi',"xeno_queen") //good enough
 	new_ai.icon_state = resolve_ai_icon("hades")
+	// Hide PDA from messenger
+	var/datum/computer_file/program/messenger/msg = locate() in new_ai.modularInterface.stored_files
+	if(msg)
+		msg.invisible = TRUE
+
 	// Transfer the AI from the core we created into the card, then delete the core
 	capture_ai(new_ai, user)
 	var/obj/structure/ai_core/deactivated/detritus = locate() in get_turf(src)

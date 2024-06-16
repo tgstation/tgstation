@@ -54,9 +54,15 @@
 	var/facial_hair_hidden = FALSE
 
 	/// Gradient styles, if any
-	var/list/gradient_styles = null
+	var/list/gradient_styles = list(
+		"None",	//Hair gradient style
+		"None",	//Facial hair gradient style
+	)
 	/// Gradient colors, if any
-	var/list/gradient_colors = null
+	var/list/gradient_colors = list(
+		COLOR_BLACK,	//Hair gradient color
+		COLOR_BLACK,	//Facial hair gradient color
+	)
 
 	/// An override color that can be cleared later, affects both hair and facial hair
 	var/override_hair_color = null

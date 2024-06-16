@@ -68,6 +68,9 @@
 		return
 	..()
 	var/limb_regen = 0
+	if(HAS_TRAIT_FROM_ONLY(user, TRAIT_PARALYSIS_L_ARM, CHANGELING_TRAIT) || HAS_TRAIT_FROM_ONLY(user, TRAIT_PARALYSIS_R_ARM, CHANGELING_TRAIT))
+		user.balloon_alert(user, "not enough muscle!") // no cheesing repuprosed glands
+		return
 	if(user.active_hand_index % 2 == 0) //we regen the arm before changing it into the weapon
 		limb_regen = user.regenerate_limb(BODY_ZONE_R_ARM, 1)
 	else
@@ -215,17 +218,13 @@
 	effectiveness = 80, \
 	)
 
-/obj/item/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
+/obj/item/melee/arm_blade/afterattack(atom/target, mob/user, click_parameters)
 	if(istype(target, /obj/structure/table))
-		var/obj/structure/table/T = target
-		T.deconstruct(FALSE)
+		var/obj/smash = target
+		smash.deconstruct(FALSE)
 
 	else if(istype(target, /obj/machinery/computer))
-		var/obj/machinery/computer/C = target
-		C.attack_alien(user) //muh copypasta
+		target.attack_alien(user) //muh copypasta
 
 	else if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/opening = target
