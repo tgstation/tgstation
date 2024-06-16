@@ -297,6 +297,7 @@
 /obj/structure/closet/crate,
 /obj/item/flashlight,
 /obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
 /turf/open/floor/wood/parquet,
 /area/ruin/comms_agent)
 "rh" = (
@@ -317,6 +318,9 @@
 /obj/structure/filingcabinet,
 /obj/item/paperwork,
 /obj/item/paper/monitorkey,
+/obj/item/paper/fluff/ruins/listeningstation/briefing{
+	pixel_x = -2
+	},
 /turf/open/floor/wood/tile,
 /area/ruin/comms_agent)
 "sc" = (
@@ -401,10 +405,15 @@
 "vB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
-/obj/item/paper/fluff/ruins/listeningstation/briefing{
-	pixel_x = -2
+/obj/item/pen/survival{
+	pixel_x = 8;
+	pixel_y = 8
 	},
-/obj/item/pen/survival,
+/obj/machinery/button/door{
+	id = "syndie_lpost_icemoon_windows";
+	name = "Window Shutters";
+	req_access = list("syndicate")
+	},
 /turf/open/floor/wood/tile,
 /area/ruin/comms_agent)
 "vK" = (
@@ -445,7 +454,11 @@
 "xq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom{
-	pixel_x = 31
+	pixel_x = 31;
+	syndie = 1;
+	freerange = 1;
+	name = "syndicate radio intercom";
+	desc = "A custom-made Syndicate-issue intercom used to transmit on all Nanotrasen frequencies. Particularly expensive."
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/fax{
@@ -520,6 +533,10 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/comms_agent)
+"Bx" = (
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/wall,
+/area/ruin/comms_agent)
 "BD" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
@@ -542,12 +559,16 @@
 /obj/item/reagent_containers/condiment/milk,
 /obj/item/reagent_containers/condiment/flour,
 /obj/structure/closet/secure_closet/freezer/empty,
+/obj/item/storage/box/donkpockets,
+/obj/item/coffee_cartridge,
+/obj/item/coffee_cartridge/decaf,
+/obj/item/coffee_cartridge/fancy,
 /turf/open/floor/iron/white,
 /area/ruin/comms_agent)
 "CL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible/layer2,
-/obj/structure/closet/emcloset,
+/obj/machinery/power/smes/super/full,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "CS" = (
@@ -563,6 +584,7 @@
 /area/ruin/comms_agent/maint)
 "CW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "DH" = (
@@ -680,6 +702,7 @@
 	pixel_x = -13;
 	pixel_y = 4
 	},
+/obj/item/storage/box/coffeepack,
 /turf/open/floor/wood,
 /area/ruin/comms_agent)
 "JD" = (
@@ -694,6 +717,7 @@
 /obj/item/toy/plush/nukeplushie,
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/m9mm,
+/obj/item/clothing/head/costume/ushanka,
 /turf/open/floor/wood/tile,
 /area/ruin/comms_agent)
 "JY" = (
@@ -706,11 +730,11 @@
 /obj/machinery/atmospherics/components/trinary/filter/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable,
-/obj/machinery/power/smes/super/full,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "KB" = (
@@ -728,6 +752,10 @@
 "KQ" = (
 /turf/open/genturf,
 /area/template_noop)
+"KR" = (
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/wall,
+/area/ruin/comms_agent/maint)
 "Lh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -769,7 +797,7 @@
 /area/ruin/comms_agent)
 "Lz" = (
 /turf/open/floor/wood{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180";
+	initial_gas_mix = "ICEMOON_ATMOS";
 	name = "bridge"
 	},
 /area/icemoon/underground/explored)
@@ -895,9 +923,6 @@
 "Qn" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/mapping_helpers/apc/syndicate_access,
-/obj/machinery/power/terminal{
-	dir = 4
-	},
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/ruin/comms_agent)
@@ -1038,6 +1063,9 @@
 /area/ruin/comms_agent)
 "XU" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "syndie_lpost_icemoon_windows"
+	},
 /turf/open/floor/plating,
 /area/ruin/comms_agent)
 "Yz" = (
@@ -2361,8 +2389,8 @@ xD
 ij
 hW
 Ac
-WR
-YI
+Bx
+KR
 YI
 YI
 LP

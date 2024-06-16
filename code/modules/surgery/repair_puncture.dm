@@ -46,6 +46,7 @@
 		TOOL_WIRECUTTER = 40)
 	time = 3 SECONDS
 	preop_sound = 'sound/surgery/hemostat1.ogg'
+	surgery_effects_mood = TRUE
 
 /datum/surgery_step/repair_innards/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/datum/wound/pierce/bleed/pierce_wound = surgery.operated_wound
@@ -65,7 +66,7 @@
 		span_notice("[user] begins to realign the torn blood vessels in [target]'s [target.parse_zone_with_bodypart(user.zone_selected)] with [tool]."),
 		span_notice("[user] begins to realign the torn blood vessels in [target]'s [target.parse_zone_with_bodypart(user.zone_selected)]."),
 	)
-	display_pain(target, "You feel a horrible stabbing pain in your [target.parse_zone_with_bodypart(user.zone_selected)]!", mood_event_type = /datum/mood_event/surgery)
+	display_pain(target, "You feel a horrible stabbing pain in your [target.parse_zone_with_bodypart(user.zone_selected)]!")
 
 /datum/surgery_step/repair_innards/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/datum/wound/pierce/bleed/pierce_wound = surgery.operated_wound
@@ -80,7 +81,6 @@
 		span_notice("[user] successfully realigns some of the blood vessels in [target]'s [target.parse_zone_with_bodypart(target_zone)] with [tool]!"),
 		span_notice("[user] successfully realigns some of the blood vessels in  [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 	)
-	display_pain(target, mood_event_type = /datum/mood_event/surgery/success)
 	log_combat(user, target, "excised infected flesh in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 	surgery.operated_bodypart.receive_damage(brute=3, wound_bonus=CANT_WOUND)
 	pierce_wound.adjust_blood_flow(-0.25)
@@ -95,7 +95,6 @@
 		span_notice("[user] jerks apart some of the blood vessels in [target]'s [target.parse_zone_with_bodypart(target_zone)] with [tool]!"),
 		span_notice("[user] jerk apart some of the blood vessels in [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 	)
-	display_pain(target, mood_event_type = /datum/mood_event/surgery/failure)
 	surgery.operated_bodypart.receive_damage(brute=rand(4,8), sharpness=SHARP_EDGED, wound_bonus = 10)
 
 ///// Sealing the vessels back together

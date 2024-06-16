@@ -32,6 +32,8 @@
 	var/ignores_fakedeath = FALSE
 	/// used by a few powers that toggle
 	var/active = FALSE
+	/// Does this ability stop working if you are burning?
+	var/disabled_by_fire = TRUE
 
 /*
 changeling code now relies on on_purchase to grant powers.
@@ -61,6 +63,9 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 /datum/action/changeling/proc/try_to_sting(mob/living/user, mob/living/target)
 	if(!can_sting(user, target))
 		return FALSE
+	if(disabled_by_fire && user.fire_stacks && user.on_fire)
+		user.balloon_alert(user, "on fire!")
+		return FALSE
 	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	if(sting_action(user, target))
 		sting_feedback(user, target)
@@ -80,10 +85,6 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 // Fairly important to remember to return 1 on success >.< // Return TRUE not 1 >.<
 /datum/action/changeling/proc/can_sting(mob/living/user, mob/living/target)
 	if(!can_be_used_by(user))
-		return FALSE
-	if(user.fire_stacks && user.on_fire)
-		user.balloon_alert(user, "on fire!")
-		to_chat(user, span_boldwarning("WE CANNOT DO THIS WHILE ENGULFED IN FLAMES!!! PUT OUT THE FIRE FIRST!!!"))
 		return FALSE
 	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	if(changeling.chem_charges < chemical_cost)
