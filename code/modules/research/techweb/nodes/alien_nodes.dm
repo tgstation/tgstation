@@ -103,6 +103,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TIER_5_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/slime/hard = TIER_5_POINTS)
+	hidden = TRUE
 
 #undef TIER_1_POINTS
 #undef TIER_2_POINTS
