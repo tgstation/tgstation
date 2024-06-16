@@ -2,7 +2,7 @@
 	id = "syndicate_basic"
 	display_name = "Illegal Technology"
 	description = "Dangerous research used to create dangerous objects."
-	prereq_ids = list("exp_tools", "explosives")
+	prereq_ids = list("exp_tools", "exotic_ammo")
 	design_ids = list(
 		"advanced_camera",
 		"ai_cam_upgrade",
@@ -41,7 +41,7 @@
 	id = "unregulated_bluespace"
 	display_name = "Unregulated Bluespace Research"
 	description = "Bluespace technology using unstable or unbalanced procedures, prone to damaging the fabric of bluespace. Outlawed by galactic conventions."
-	prereq_ids = list("bluespace_travel", "syndicate_basic")
+	prereq_ids = list("parts_bluespace", "syndicate_basic")
 	design_ids = list(
 		"desynchronizer",
 	)

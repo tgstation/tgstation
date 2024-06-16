@@ -28,7 +28,7 @@
 	id = "parts_upg"
 	display_name = "Upgraded Parts"
 	description = "Offering enhanced capabilities beyond their basic counterparts."
-	prereq_ids = list("parts")
+	prereq_ids = list("parts", "energy_manipulation")
 	design_ids = list(
 		"rped",
 		"high_micro_laser",
@@ -38,13 +38,13 @@
 		"adv_scanning",
 		"super_cell",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/parts_adv
 	id = "parts_adv"
 	display_name = "Advanced Parts"
 	description = "The most finely tuned and accurate stock parts."
-	prereq_ids = list("parts_upg", "energy_manipulation")
+	prereq_ids = list("parts_upg")
 	design_ids = list(
 		"ultra_micro_laser",
 		"super_capacitor",
@@ -53,13 +53,13 @@
 		"phasic_scanning",
 		"hyper_cell",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/parts_bluespace
 	id = "parts_bluespace"
 	display_name = "Bluespace Parts"
 	description = "Integrating the latest in bluespace technology, these advanced components not only enhance functionality but also open up new possibilities for the station's technological capabilities."
-	prereq_ids = list("parts_adv", "applied_bluespace")
+	prereq_ids = list("parts_adv", "bluespace_travel")
 	design_ids = list(
 		"bs_rped",
 		"quadultra_micro_laser",
@@ -69,31 +69,13 @@
 		"triphasic_scanning",
 		"bluespace_cell",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
-
-/datum/techweb_node/bluespace_travel
-	id = "bluespace_travel"
-	display_name = "Bluespace Travel"
-	description = "Facilitate teleportation methods based on bluespace principles to revolutionize logistical efficiency."
-	prereq_ids = list("parts_bluespace")
-	design_ids = list(
-		"teleconsole",
-		"tele_station",
-		"tele_hub",
-		"launchpad_console",
-		"quantumpad",
-		"launchpad",
-		"bluespace_pod",
-		"quantum_keycard",
-		"swapper",
-	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 
 /datum/techweb_node/telecomms
 	id = "telecomms"
 	display_name = "Telecommunications Technology"
 	description = "A comprehensive suite of machinery for station-wide communication setups, ensuring seamless connectivity and operational coordination."
-	prereq_ids = list("bluespace_travel")
+	prereq_ids = list("parts_bluespace")
 	design_ids = list(
 		"comm_monitor",
 		"comm_server",

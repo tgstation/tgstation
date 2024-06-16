@@ -55,45 +55,18 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
-/datum/techweb_node/ammo
-	id = "ammo"
-	display_name = "Exotic Ammunition"
-	description = "Specialized bullets designed to ignite, freeze, and inflict various other effects on targets, expanding combat capabilities."
-	prereq_ids = list("riot_supression")
-	design_ids = list(
-		"c38_hotshot",
-		"c38_iceblox",
-		"lasershell",
-		"techshotshell",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
-
 /datum/techweb_node/electric_weapons
 	id = "electric_weapons"
 	display_name = "Electric Weaponry"
-	description = "Advanced energy-based weaponry designed for both lethal and non-lethal applications."
-	prereq_ids = list("ammo")
+	description = "Energy-based weaponry designed for both lethal and non-lethal applications."
+	prereq_ids = list("riot_supression")
 	design_ids = list(
-		"ioncarbine",
 		"stunrevolver",
+		"ioncarbine",
 		"temp_gun",
-		"xray_laser",
+		"lasershell",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
-
-/datum/techweb_node/explosives
-	id = "explosives"
-	display_name = "Explosives"
-	description = "For once, intentional explosions."
-	prereq_ids = list("ammo")
-	design_ids = list(
-		"large_grenade",
-		"adv_grenade",
-		"pyro_grenade",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
-	required_experiments = list(/datum/experiment/ordnance/explosive/lowyieldbomb)
-	discount_experiments = list(/datum/experiment/ordnance/explosive/highyieldbomb = TECHWEB_TIER_4_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/beam_weapons
 	id = "beam_weapons"
@@ -102,6 +75,33 @@
 	prereq_ids = list("electric_weapons")
 	design_ids = list(
 		"beamrifle",
+		"xray_laser",
 		"nuclear_gun",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
+
+/datum/techweb_node/explosives
+	id = "explosives"
+	display_name = "Explosives"
+	description = "For once, intentional explosions."
+	prereq_ids = list("riot_supression")
+	design_ids = list(
+		"large_grenade",
+		"adv_grenade",
+		"pyro_grenade",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	required_experiments = list(/datum/experiment/ordnance/explosive/lowyieldbomb)
+	discount_experiments = list(/datum/experiment/ordnance/explosive/highyieldbomb = TECHWEB_TIER_3_POINTS)
+
+/datum/techweb_node/exotic_ammo
+	id = "exotic_ammo"
+	display_name = "Exotic Ammunition"
+	description = "Specialized bullets designed to ignite, freeze, and inflict various other effects on targets, expanding combat capabilities."
+	prereq_ids = list("explosives")
+	design_ids = list(
+		"c38_hotshot",
+		"c38_iceblox",
+		"techshotshell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)

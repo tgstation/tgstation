@@ -49,6 +49,24 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	required_experiments = list(/datum/experiment/scanning/bluespace_crystal)
 
+/datum/techweb_node/bluespace_travel
+	id = "bluespace_travel"
+	display_name = "Bluespace Travel"
+	description = "Facilitate teleportation methods based on bluespace principles to revolutionize logistical efficiency."
+	prereq_ids = list("applied_bluespace")
+	design_ids = list(
+		"teleconsole",
+		"tele_station",
+		"tele_hub",
+		"launchpad_console",
+		"quantumpad",
+		"launchpad",
+		"bluespace_pod",
+		"quantum_keycard",
+		"swapper",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+
 /datum/techweb_node/anomaly_research
 	id = "anomaly_research"
 	display_name = "Anomaly Research"
@@ -70,15 +88,6 @@
 		"bag_holding",
 		"wormholeprojector",
 		"gravitygun",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
-
-/datum/techweb_node/anomaly_morph
-	id = "anomaly_morph"
-	display_name = "Anomalous Morphology"
-	description = "Use poorly understood energies to change your body."
-	prereq_ids = list("anomaly_shells")
-	design_ids = list(
 		"polymorph_belt"
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)

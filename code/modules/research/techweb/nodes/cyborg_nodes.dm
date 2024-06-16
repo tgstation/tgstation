@@ -57,6 +57,18 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
+/datum/techweb_node/borg_mining
+	id = "borg_mining"
+	display_name = "Mining Cyborg Upgrades"
+	description = ""
+	prereq_ids = list("cybernetics")
+	design_ids = list(
+		"borg_upgrade_lavaproof",
+		"borg_upgrade_holding",
+		"borg_upgrade_diamonddrill",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+
 /datum/techweb_node/borg_medical
 	id = "borg_medical"
 	display_name = "Medical Cyborg Upgrades"
@@ -77,7 +89,7 @@
 	id = "borg_utility"
 	display_name = "Untility Cyborg Upgrades"
 	description = "Let them wipe our floors for us."
-	prereq_ids = list("borg_service", "surgery_adv")
+	prereq_ids = list("borg_service", "sanitation")
 	design_ids = list(
 		"borg_upgrade_advancedmop",
 		"borg_upgrade_broomer",
@@ -96,25 +108,23 @@
 
 /datum/techweb_node/borg_engi
 	id = "borg_engi"
-	display_name = "Engineering & Mining Cyborg Upgrades"
+	display_name = "Engineering Cyborg Upgrades"
 	description = "To slack even more."
-	prereq_ids = list("borg_utility", "exp_tools")
+	prereq_ids = list("borg_mining", "parts_upg")
 	design_ids = list(
 		"borg_upgrade_rped",
-		"borg_upgrade_inducer",
 		"borg_upgrade_engineeringomnitool",
 		"borg_upgrade_circuitapp",
-		"borg_upgrade_lavaproof",
-		"borg_upgrade_diamonddrill",
-		"borg_upgrade_holding",
+		"borg_upgrade_inducer",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
+// Implants root node
 /datum/techweb_node/implants
 	id = "implants"
 	display_name = "Passive Implants"
 	description = "Implants designed to operate seamlessly without active user input, enhancing various physiological functions or providing continuous benefits."
-	prereq_ids = list("cybernetics")
+	prereq_ids = list("augmentation")
 	design_ids = list(
 		"skill_station",
 		"c38_trac",
@@ -134,10 +144,13 @@
 	id = "cyber_implants"
 	display_name = "Cybernetic Implants"
 	description = "Advanced technological enhancements integrated into the body, offering improved physical capabilities."
-	prereq_ids = list("implants")
+	prereq_ids = list("implants", "cyber_organs")
 	design_ids = list(
 		"ci-breather",
 		"ci-nutriment",
+		"ci-thrusters",
+		"ci-antidrop",
+		"ci-antistun",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
@@ -145,18 +158,6 @@
 	..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		research_costs[TECHWEB_POINT_TYPE_GENERIC] /= 2
-
-/datum/techweb_node/cyber/combat_cyber_implants
-	id = "combat_cyber_implants"
-	display_name = "Combat Cybernetic Implants"
-	description = "Implants offering protection against stunning effects, preventing accidental weapon drops, and enabling controlled flight in zero gravity."
-	prereq_ids = list("cyber_implants")
-	design_ids = list(
-		"ci-thrusters",
-		"ci-antidrop",
-		"ci-antistun",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 
 /datum/techweb_node/cyber/adv_cyber_implants
 	id = "adv_cyber_implants"

@@ -211,7 +211,7 @@
 	id = "mech_firearms"
 	display_name = "Mech Firearms"
 	description = "Mounted ballistic weaponry, enhancing combat capabilities for mechanized units."
-	prereq_ids = list("mech_energy_guns", "explosives")
+	prereq_ids = list("mech_energy_guns", "exotic_ammo")
 	design_ids = list(
 		"mech_lmg",
 		"mech_lmg_ammo",
@@ -226,7 +226,7 @@
 	id = "mech_heavy_arms"
 	display_name = "Heavy Mech Firearms"
 	description = "High-impact weaponry integrated into mechs, optimized for maximum firepower."
-	prereq_ids = list("mech_heavy", "explosives")
+	prereq_ids = list("mech_heavy", "exotic_ammo")
 	design_ids = list(
 		"clusterbang_launcher",
 		"clusterbang_launcher_ammo",

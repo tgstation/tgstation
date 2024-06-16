@@ -119,6 +119,16 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
+/datum/techweb_node/programmed_server
+	id = "programmed_server"
+	display_name = "Programmed Server"
+	description = "Grants access to a server shell that has a very high capacity for components."
+	prereq_ids = list("circuit_shells")
+	design_ids = list(
+		"server_shell",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+
 /datum/techweb_node/bci
 	id = "bci"
 	display_name = "Brain-Computer Interface"
@@ -138,13 +148,3 @@
 		"comp_vox",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
-
-/datum/techweb_node/programmed_server
-	id = "programmed_server"
-	display_name = "Programmed Server"
-	description = "Grants access to a server shell that has a very high capacity for components."
-	prereq_ids = list("bci")
-	design_ids = list(
-		"server_shell",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)

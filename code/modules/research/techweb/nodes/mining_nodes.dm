@@ -70,11 +70,11 @@
 /datum/techweb_node/plasma_mining
 	id = "plasma_mining"
 	display_name = "Plasma Beam Mining"
-	description = "Specialized cutters for precision mining operations and welding, leveraging advanced plasma control technology."
+	description = "Engineers' plasma welders have proven highly effective in mining operations. This led to the development of a mech-mounted variant and an enhanced handheld cutter for miners."
 	prereq_ids = list("low_pressure_excavation", "plasma_control")
 	design_ids = list(
 		"mech_plasma_cutter",
-		"plasmacutter",
+		"plasmacutter_adv",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 
@@ -99,7 +99,6 @@
 		"mech_diamond_drill",
 		"drill_diamond",
 		"jackhammer",
-		"plasmacutter_adv",
 		"hypermod",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
