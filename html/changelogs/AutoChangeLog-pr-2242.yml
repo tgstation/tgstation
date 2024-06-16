@@ -1,9 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "(SyncIt21) Fixed a runtime when turning scrubbers on via the air alarm UI."
-  - refactor: "(SyncIt21) atmos_conditions_changed() now starts atmos processing based on it's turf air contents."
-  - refactor: "(SyncIt21) Don't send gas name to gas filter UI as the name is already decoded there from it's ID."
-  - bugfix: "(FlufflesTheDog) VERY small amounts of a gas (<0.0001 mol) in pipenets will once again be fully removed."
-  - balance: "(Deadgebert) Gas mixer output now accurate to set ratio regardless of input temperatures."
-  - bugfix: "(BurgerBB) Scrubbers and Vents will no longer reset their settings on map load."

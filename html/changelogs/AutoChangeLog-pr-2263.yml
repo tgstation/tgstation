@@ -1,4 +1,0 @@
-author: "DexeeXI"
-delete-after: True
-changes:
-  - bugfix: "placed the PTL on the engine side of the SMES units."

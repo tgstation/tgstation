@@ -259,3 +259,28 @@
       when used on someone who is incredibly drunk.
   - balance: The cult stun hand can now be countered by CQC and Sleeping Carp, consistent
       with all other forms of "touch spells".
+2024-06-16:
+  Absolucy:
+  - bugfix: The "Clear Chat" button now properly works, instead of BSODing chat.
+  - bugfix: Hopefully fixed some lag relating to massive amounts of sounds. (me when
+      one morbillion lizard plushies)
+  - bugfix: (SyncIt21) Fixed a runtime when turning scrubbers on via the air alarm
+      UI.
+  - refactor: (SyncIt21) atmos_conditions_changed() now starts atmos processing based
+      on it's turf air contents.
+  - refactor: (SyncIt21) Don't send gas name to gas filter UI as the name is already
+      decoded there from it's ID.
+  - bugfix: (FlufflesTheDog) VERY small amounts of a gas (<0.0001 mol) in pipenets
+      will once again be fully removed.
+  - balance: (Deadgebert) Gas mixer output now accurate to set ratio regardless of
+      input temperatures.
+  - bugfix: (BurgerBB) Scrubbers and Vents will no longer reset their settings on
+      map load.
+  DexeeXI:
+  - bugfix: placed the PTL on the engine side of the SMES units.
+  KnigTheThrasher:
+  - rscadd: Added holomaps and ghost spawners to kilostation
+  ThePooba:
+  - bugfix: Heretics Codex Cicatrix ritual with a skin now uses up the items involved.
+  - bugfix: Changes Assault Pod Level trait check from not Reserved (centcom and station)
+      to station level trait (just station)
