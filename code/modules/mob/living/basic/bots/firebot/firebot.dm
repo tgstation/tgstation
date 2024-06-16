@@ -42,7 +42,7 @@
 	var/static/list/emagged_lines = list(
 		FIREBOT_VOICED_CANDLE_TIP = 'sound/voice/firebot/candle_tip.ogg',
 		FIREBOT_VOICED_ELECTRIC_FIRE = 'sound/voice/firebot/electric_fire_tip.ogg',
-		FIREBOT_VOICED_GASOLINE_TIP = 'sound/voice/firebot/gasoline_tip.ogg'
+		FIREBOT_VOICED_FUEL_TIP = 'sound/voice/firebot/gasoline_tip.ogg'
 	)
 	ai_controller.set_blackboard_key(BB_FIREBOT_EMAGGED_LINES, emagged_lines)
 	ai_controller.set_blackboard_key(BB_FIREBOT_IDLE_LINES, idle_lines)
