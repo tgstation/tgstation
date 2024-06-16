@@ -133,7 +133,7 @@
 		if(BURN)
 			return adjustFireLoss(heal_amount)
 		if(TOX)
-			return adjustToxLoss(heal_amount)
+			return adjustToxLoss(heal_amount, forced = TRUE) // monkestation edit: we're gonna assume anything using this proc intends to do true healing, so, let's not kill oozelings
 		if(OXY)
 			return adjustOxyLoss(heal_amount)
 		if(CLONE)
