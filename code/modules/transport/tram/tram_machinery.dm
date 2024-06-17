@@ -91,6 +91,17 @@
 	/// The ID of the tram we're linked to
 	var/specific_transport_id = TRAMSTATION_LINE_1
 
+/// We allow borgs to use the button locally, but not the AI remotely
+/obj/machinery/button/transport/tram/attack_ai(mob/user)
+	if(isAI(user) || panel_open)
+		return
+	if(HAS_SILICON_ACCESS(user) && !issilicon(user)) //admins and remote controls can use it at a distance
+		return attack_hand(user)
+	if(in_range(user, src))
+		return attack_hand(user)
+	else
+		to_chat(user, span_warning("You are too far away to activate the button!"))
+
 /obj/machinery/button/transport/tram/setup_device()
 	var/obj/item/assembly/control/transport/call_button/tram_device = device
 	tram_device.id = id

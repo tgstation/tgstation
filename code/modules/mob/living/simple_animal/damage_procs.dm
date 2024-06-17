@@ -65,3 +65,6 @@
 		staminaloss = max(0, min(max_staminaloss, staminaloss + (amount * damage_coeff[STAMINA])))
 	if(updating_stamina)
 		update_stamina()
+
+/mob/living/simple_animal/received_stamina_damage(current_level, amount_actual, amount)
+	return

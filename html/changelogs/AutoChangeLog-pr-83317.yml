@@ -1,7 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Syndicate AI can no longer be selected via the station law upload console."
-  - bugfix: "Non-syndicate borgs can no longer accidentally be slaved to syndicate AI by pulsing their AI wires."
-  - bugfix: "Syndicate borgs can no longer be slaved to the station AI by pulsing their AI wires."
-  - bugfix: "Syndicate operatives onboard the station can no longer end up with an objective to destroy their own syndicate AI."
