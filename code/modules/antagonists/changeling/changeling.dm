@@ -272,7 +272,6 @@
 	else
 		if(living_owner.fire_stacks && living_owner.on_fire)
 			adjust_chemicals((chem_recharge_rate - 0.75) * delta_time)
-			to_chat(owner, span_notice("FIRE, FIRE!!"))
 		else
 			adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * delta_time)
 
