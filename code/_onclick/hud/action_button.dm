@@ -78,7 +78,7 @@
 // Very much byond logic, but I want nice behavior, so we fake it with drag
 /atom/movable/screen/movable/action_button/MouseDrag(atom/over_object, src_location, over_location, src_control, over_control, params)
 	. = ..()
-	if(!can_use(usr))
+	if(!over_object || !can_use(usr))
 		return
 	if(IS_WEAKREF_OF(over_object, last_hovored_ref))
 		return
