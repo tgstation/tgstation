@@ -29,7 +29,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
 	actions_types = list(/datum/action/item_action/zoom_lock_action)
-	cell_type = /obj/item/stock_parts/cell/beam_rifle
+	cell_type = /obj/item/stock_parts/power_store/cell/beam_rifle
 	var/aiming = FALSE
 	var/aiming_time = 12
 	var/aiming_time_fire_threshold = 5
@@ -87,7 +87,7 @@
 
 /obj/item/gun/energy/beam_rifle/debug
 	delay = 0
-	cell_type = /obj/item/stock_parts/cell/infinite
+	cell_type = /obj/item/stock_parts/power_store/cell/infinite
 	aiming_time = 0
 	recoil = 0
 	pin = /obj/item/firing_pin

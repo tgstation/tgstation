@@ -43,7 +43,7 @@
 		if (opened == APC_COVER_OPENED && !has_electronics)
 			context[SCREENTIP_CONTEXT_LMB] = "Disassemble the APC"
 
-	else if(istype(held_item, /obj/item/stock_parts/cell) && opened == APC_COVER_OPENED)
+	else if(istype(held_item, /obj/item/stock_parts/power_store/cell) && opened == APC_COVER_OPENED)
 		context[SCREENTIP_CONTEXT_LMB] = "Insert Cell"
 
 	else if(istype(held_item, /obj/item/stack/cable_coil) && opened == APC_COVER_OPENED)
