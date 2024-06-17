@@ -131,6 +131,7 @@
 	. = ..()
 	if(n_spect)
 		to_chat(user, span_notice("You uninstall [n_spect] from [src]."))
+		balloon_alert(user, "scanner uninstalled")
 		n_spect.forceMove(drop_location())
 		return ITEM_INTERACT_SUCCESS
 
@@ -261,7 +262,7 @@
 	data["disease_threshold"] = disease_threshold
 	data["target_species"] = detect_species
 	data["target_nutrition"] = detect_nutrition
-	data["contraband_enabled"] = n_spect ? FALSE : TRUE
+	data["contraband_enabled"] = !!n_spect
 	return data
 
 /obj/machinery/scanner_gate/ui_act(action, params)

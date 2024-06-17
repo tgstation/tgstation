@@ -157,4 +157,4 @@
  */
 /datum/market_purchase/proc/post_purchase_effects(atom/spawned_item)
 	if(legallity == MARKET_PRODUCTS_ILLEGAL)
-		ADD_TRAIT(spawned_item, TRAIT_CONTRABAND, TRAIT_GENERIC)
+		ADD_TRAIT(spawned_item, TRAIT_CONTRABAND, INNATE_TRAIT)

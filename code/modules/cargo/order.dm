@@ -190,7 +190,7 @@
 		var/list/generated_contents = crate.contents.Copy()
 		for(var/atom/movable/item_within as anything in reverse_range(generated_contents))
 			to_chat(world, "Found [item_within] in [crate].")
-			ADD_TRAIT(item_within, TRAIT_CONTRABAND, TRAIT_GENERIC)
+			ADD_TRAIT(item_within, TRAIT_CONTRABAND, INNATE_TRAIT)
 	if(department_destination)
 		crate.AddElement(/datum/element/deliver_first, department_destination, pack.cost)
 	generateManifest(crate, account_holder, pack, pack.cost)

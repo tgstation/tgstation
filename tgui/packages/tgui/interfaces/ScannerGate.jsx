@@ -172,7 +172,7 @@ const ScannerGateOff = (props) => {
         />
         <Button
           content="Contraband"
-          disabled={contraband_enabled ? true : false}
+          disabled={contraband_enabled ? false : true}
           onClick={() => act('set_mode', { new_mode: 'Contraband' })}
         />
       </Box>
