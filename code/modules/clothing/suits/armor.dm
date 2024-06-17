@@ -642,6 +642,14 @@
 	. = ..()
 	AddComponent(/datum/component/toggle_icon)
 
+/obj/item/clothing/suit/armor/centcom_formal/carapace
+	name = "\improper CentCom carapace"
+	desc = "A luxurious vest made with plasteel alloyed ceramic plating armor worn normally by CentCom Commanders of Admirals, you get a hint you shouldn't mess with who wears these."
+	icon_state = "centcom_carapace"
+	body_parts_covered = CHEST|GROIN
+	dog_fashion = null
+	resistance_flags = FIRE_PROOF
+
 /obj/item/clothing/suit/armor/vest/hop
 	name = "head of personnel's coat"
 	desc = "A stylish coat given to a Head of Personnel."

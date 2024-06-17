@@ -95,6 +95,11 @@
 	fire = 70
 	acid = 50
 
+/obj/item/clothing/gloves/captain/centcom
+	desc = "Luxurious green gloves, with a nice pure gold trim, built in with anti-shock coating, and an integrated thermal barrier. Swanky."
+	name = "CentCom's gloves"
+	icon_state = "centcom"
+
 /obj/item/clothing/gloves/latex
 	name = "latex gloves"
 	desc = "Cheap sterile gloves made from latex. Provides quicker carrying from a good grip."
