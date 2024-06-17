@@ -20,7 +20,7 @@
 	//We don't use area power, we always use the cell
 	use_power = NO_POWER_USE
 	///The cell we spawn with
-	var/obj/item/stock_parts/power_store/cell/cell = /obj/item/stock_parts/power_store/cell
+	var/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell
 	///Is the machine on?
 	var/on = FALSE
 	///What is the mode we are in now?

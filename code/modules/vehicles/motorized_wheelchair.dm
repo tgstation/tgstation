@@ -20,7 +20,7 @@
 		/datum/stock_part/capacitor,
 	)
 	///power cell we draw power from
-	var/obj/item/stock_parts/power_store/cell/power_cell
+	var/obj/item/stock_parts/power_store/power_cell
 	///stock parts for this chair
 	var/list/component_parts = list()
 

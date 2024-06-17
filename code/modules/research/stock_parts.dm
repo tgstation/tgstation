@@ -95,8 +95,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 /obj/item/storage/part_replacer/bluespace/proc/on_part_entered(datum/source, obj/item/inserted_component)
 	SIGNAL_HANDLER
 
-	if(istype(inserted_component, /obj/item/stock_parts/power_store/cell))
-		var/obj/item/stock_parts/power_store/cell/inserted_cell = inserted_component
+	if(istype(inserted_component, /obj/item/stock_parts/power_store))
+		var/obj/item/stock_parts/power_store/inserted_cell = inserted_component
 		if(inserted_cell.rigged || inserted_cell.corrupted)
 			message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
 			usr.log_message("has inserted rigged/corrupted [inserted_cell] into [src].", LOG_GAME)

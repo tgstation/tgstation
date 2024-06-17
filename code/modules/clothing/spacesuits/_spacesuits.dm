@@ -62,7 +62,7 @@
 	/// The default temperature setting
 	var/temperature_setting = BODYTEMP_NORMAL
 	/// If this is a path, this gets created as an object in Initialize.
-	var/obj/item/stock_parts/power_store/cell/cell = /obj/item/stock_parts/power_store/cell/high
+	var/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/high
 	/// Status of the cell cover on the suit
 	var/cell_cover_open = FALSE
 	/// Status of the thermal regulator

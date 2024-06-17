@@ -35,7 +35,7 @@
 	///Is shielding turned on/off
 	var/shielding_powered = FALSE
 	///The powercell used to enable shielding
-	var/obj/item/stock_parts/power_store/cell/internal_cell
+	var/obj/item/stock_parts/power_store/internal_cell
 	///used while processing to update appearance only when its pressure state changes
 	var/current_pressure_state
 

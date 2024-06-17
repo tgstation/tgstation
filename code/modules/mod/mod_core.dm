@@ -85,7 +85,7 @@
 		Which one you have in your suit is unclear, but either way, \
 		it's been repurposed to be an internal power source for a Modular Outerwear Device."
 	/// Installed cell.
-	var/obj/item/stock_parts/power_store/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 
 /obj/item/mod/core/standard/Destroy()
 	QDEL_NULL(cell)
@@ -114,15 +114,15 @@
 	return cell
 
 /obj/item/mod/core/standard/charge_amount()
-	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/charge_source = charge_source()
 	return charge_source?.charge || 0
 
 /obj/item/mod/core/standard/max_charge_amount(amount)
-	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/charge_source = charge_source()
 	return charge_source?.maxcharge || 1
 
 /obj/item/mod/core/standard/add_charge(amount)
-	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/charge_source = charge_source()
 	if(isnull(charge_source))
 		return FALSE
 	. = charge_source.give(amount)
@@ -131,7 +131,7 @@
 	return .
 
 /obj/item/mod/core/standard/subtract_charge(amount)
-	var/obj/item/stock_parts/power_store/cell/charge_source = charge_source()
+	var/obj/item/stock_parts/power_store/charge_source = charge_source()
 	if(isnull(charge_source))
 		return FALSE
 	. = charge_source.use(amount, TRUE)
@@ -239,7 +239,7 @@
 /obj/item/mod/core/standard/proc/on_borg_charge(datum/source, datum/callback/charge_cell, seconds_per_tick)
 	SIGNAL_HANDLER
 
-	var/obj/item/stock_parts/power_store/cell/target_cell = charge_source()
+	var/obj/item/stock_parts/power_store/target_cell = charge_source()
 	if(isnull(target_cell))
 		return
 

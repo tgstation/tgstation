@@ -24,7 +24,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	var/label_max_length = 24
 
 	/// The power of the integrated circuit
-	var/obj/item/stock_parts/power_store/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 
 	/// The shell that this circuitboard is attached to. Used by components.
 	var/atom/movable/shell

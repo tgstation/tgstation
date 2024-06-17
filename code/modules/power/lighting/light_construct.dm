@@ -17,7 +17,7 @@
 	///Reference for light object
 	var/obj/machinery/light/new_light = null
 	///Reference for the internal cell
-	var/obj/item/stock_parts/power_store/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 	///Can we support a cell?
 	var/cell_connectors = TRUE
 
@@ -71,7 +71,7 @@
 	if(!cell)
 		return
 	to_chat(user, span_notice("You telekinetically remove [cell]."))
-	var/obj/item/stock_parts/power_store/cell/cell_reference = cell
+	var/obj/item/stock_parts/power_store/cell_reference = cell
 	cell = null
 	cell_reference.forceMove(drop_location())
 	return cell_reference.attack_tk(user)

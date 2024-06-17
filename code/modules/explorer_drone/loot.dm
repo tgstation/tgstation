@@ -152,7 +152,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	lefthand_file = 'icons/mob/inhands/items/firelance_lefthand.dmi'
 	var/windup_time = 10 SECONDS
 	var/melt_range = 3
-	var/obj/item/stock_parts/power_store/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 
 /obj/item/firelance/Initialize(mapload)
 	. = ..()

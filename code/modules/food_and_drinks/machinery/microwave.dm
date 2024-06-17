@@ -53,9 +53,9 @@
 	/// If we use a cell instead of powernet
 	var/cell_powered = FALSE
 	/// The cell we charge with
-	var/obj/item/stock_parts/power_store/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 	/// The cell we're charging
-	var/obj/item/stock_parts/power_store/cell/vampire_cell
+	var/obj/item/stock_parts/power_store/vampire_cell
 	/// Capable of vampire charging PDAs
 	var/vampire_charging_capable = FALSE
 	/// Charge contents of microwave instead of cook

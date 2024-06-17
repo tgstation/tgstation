@@ -11,7 +11,7 @@
 		togglelock(user)
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(tool, /obj/item/stock_parts/power_store))
+	if(istype(tool, /obj/item/stock_parts/power_store/battery))
 		. = cell_act(user, tool)
 	else if(istype(tool, /obj/item/stack/cable_coil))
 		. = cable_act(user, tool, LAZYACCESS(modifiers, RIGHT_CLICK))
@@ -52,21 +52,21 @@
 		return ITEM_INTERACT_SUCCESS
 
 /// Called when we interact with the APC with a cell, attempts to insert it
-/obj/machinery/power/apc/proc/cell_act(mob/living/user, obj/item/stock_parts/power_store/new_cell)
+/obj/machinery/power/apc/proc/cell_act(mob/living/user, obj/item/stock_parts/power_store/battery/new_cell)
 	if(!opened)
 		return NONE
 
 	if(cell)
-		balloon_alert(user, "cell already installed!")
+		balloon_alert(user, "battery already installed!")
 		return ITEM_INTERACT_BLOCKING
 	if(machine_stat & MAINT)
-		balloon_alert(user, "no connector for a cell!")
+		balloon_alert(user, "no connector for a battery!")
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(new_cell, src))
 		return ITEM_INTERACT_BLOCKING
 	cell = new_cell
-	user.visible_message(span_notice("[user.name] inserts the power cell to [src.name]!"))
-	balloon_alert(user, "cell inserted")
+	user.visible_message(span_notice("[user.name] inserts the battery to [src.name]!"))
+	balloon_alert(user, "battery inserted")
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 

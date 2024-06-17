@@ -1,6 +1,6 @@
 /obj/item/stock_parts/power_store/battery
 	name = "battery"
-	desc = "A series of rechargeable electrochemical cells wired together to hold significantly more power."
+	desc = "A series of rechargeable electrochemical cells wired together to hold significantly more power than a standard cell."
 	icon = 'icons/obj/machines/cell_charger.dmi'
 	icon_state = "cell"
 	inhand_icon_state = "cell"
@@ -16,6 +16,16 @@
 	rating_base = STANDARD_BATTERY_CHARGE
 	maxcharge = STANDARD_BATTERY_CHARGE
 	chargerate = STANDARD_BATTERY_RATE
+
+/obj/item/stock_parts/power_store/battery/empty
+	empty = TRUE
+
+/obj/item/stock_parts/power_store/battery/upgraded
+	name = "upgraded battery"
+	desc = "A battery with a slightly higher capacity than normal!"
+	maxcharge = STANDARD_BATTERY_CHARGE * 2.5
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*2.5)
+	chargerate = STANDARD_BATTERY_RATE * 0.5
 
 /obj/item/stock_parts/power_store/battery/high
 	name = "high-capacity battery"

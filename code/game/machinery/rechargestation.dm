@@ -75,7 +75,7 @@
 		recharge_speed += 5e-3 * capacitor.tier
 	for(var/datum/stock_part/servo/servo in component_parts)
 		repairs += servo.tier - 1
-	for(var/obj/item/stock_parts/power_store/cell/cell in component_parts)
+	for(var/obj/item/stock_parts/power_store/cell in component_parts)
 		recharge_speed *= cell.maxcharge
 
 /obj/machinery/recharge_station/examine(mob/user)

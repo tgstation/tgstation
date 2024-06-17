@@ -2246,7 +2246,7 @@
 /obj/structure/cable,
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/status_display/ai/directional/north,
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
@@ -6327,7 +6327,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/electronics/airlock,
 /obj/item/electronics/airlock,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 30
 	},
@@ -11684,7 +11684,7 @@
 "ePg" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/circuit,
 /area/station/maintenance/port/aft)
 "ePn" = (
@@ -17381,7 +17381,7 @@
 /area/station/service/chapel/funeral)
 "gSQ" = (
 /obj/structure/table/glass,
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = 11;
 	pixel_y = 6
 	},
@@ -18278,7 +18278,7 @@
 	pixel_x = -1;
 	pixel_y = 2
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = -1;
 	pixel_y = 1
 	},
@@ -19631,7 +19631,7 @@
 /obj/structure/table,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/clothing/mask/breath{
 	pixel_x = 15;
 	pixel_y = 5
@@ -24081,11 +24081,11 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "jbd" = (
@@ -24168,7 +24168,7 @@
 /area/station/service/chapel/funeral)
 "jcx" = (
 /obj/structure/filingcabinet/chestdrawer,
-/obj/item/stock_parts/cell/emproof{
+/obj/item/stock_parts/power_store/cell/emproof{
 	pixel_y = 9
 	},
 /turf/open/floor/iron/grimy,
@@ -25566,7 +25566,7 @@
 /obj/machinery/camera/directional/west{
 	c_tag = "Engineering - Office"
 	},
-/obj/item/stock_parts/cell/emproof{
+/obj/item/stock_parts/power_store/cell/emproof{
 	pixel_x = -6;
 	pixel_y = 9
 	},
@@ -30642,7 +30642,7 @@
 	pixel_y = 4
 	},
 /obj/machinery/airalarm/directional/east,
-/obj/item/stock_parts/cell/emproof{
+/obj/item/stock_parts/power_store/cell/emproof{
 	pixel_y = 9
 	},
 /turf/open/floor/iron/small,
@@ -42867,7 +42867,7 @@
 	pixel_x = 2;
 	pixel_y = 1
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = 2;
 	pixel_y = 2
 	},
@@ -45719,7 +45719,7 @@
 /obj/machinery/cell_charger{
 	pixel_y = 5
 	},
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "qjh" = (
@@ -48395,7 +48395,7 @@
 "qYq" = (
 /obj/structure/table/glass,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell,
+/obj/item/stock_parts/power_store/cell,
 /turf/open/floor/iron/white,
 /area/station/science/auxlab/firing_range)
 "qYu" = (
@@ -50999,7 +50999,7 @@
 "rLu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = -11;
 	pixel_y = 2
 	},
@@ -54093,7 +54093,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
@@ -56785,7 +56785,7 @@
 "twR" = (
 /obj/structure/table/glass,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell,
+/obj/item/stock_parts/power_store/cell,
 /obj/machinery/status_display/evac/directional/north,
 /obj/structure/sign/directions/supply/directional/west,
 /obj/structure/sign/directions/engineering/directional/west{
@@ -62907,7 +62907,7 @@
 /obj/machinery/cell_charger{
 	pixel_y = 18
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_y = 18
 	},
 /obj/item/clothing/suit/hazardvest,
@@ -63858,7 +63858,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/electronics/airlock{
 	pixel_y = 13
 	},
@@ -66660,7 +66660,7 @@
 /obj/machinery/cell_charger{
 	pixel_y = 5
 	},
-/obj/item/stock_parts/cell/crap{
+/obj/item/stock_parts/power_store/cell/crap{
 	pixel_y = 5
 	},
 /obj/item/clothing/mask/cigarette/pipe/cobpipe{
@@ -66728,7 +66728,7 @@
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /obj/structure/table/reinforced/titaniumglass,
 /obj/item/rcl/pre_loaded,
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_y = 17
 	},
 /obj/machinery/light/small/directional/south,

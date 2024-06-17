@@ -52,7 +52,7 @@
 	var/auto_pickup = TRUE /// true if auto-pickup at beacon
 	var/report_delivery = TRUE /// true if bot will announce an arrival to a location.
 
-	var/obj/item/stock_parts/power_store/cell/cell /// Internal Powercell
+	var/obj/item/stock_parts/power_store/cell /// Internal Powercell
 	var/cell_move_power_usage = 1///How much power we use when we move.
 	var/num_steps = 0 ///The amount of steps we should take until we rest for a time.
 

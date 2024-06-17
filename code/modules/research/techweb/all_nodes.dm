@@ -9,6 +9,7 @@
 	description = "NT default research technologies."
 	// Default research tech, prevents bricking
 	design_ids = list(
+		"basic_battery",
 		"basic_capacitor",
 		"basic_cell",
 		"basic_matter_bin",
@@ -635,6 +636,7 @@
 		"firelock_board",
 		"generic_tank",
 		"grounding_rod",
+		"high_battery",
 		"high_cell",
 		"high_micro_laser",
 		"mesons",
@@ -723,9 +725,11 @@
 	description = "How to get more zap."
 	prereq_ids = list("engineering")
 	design_ids = list(
+		"hyper_battery",
 		"hyper_cell",
 		"power_turbine_console",
 		"smes",
+		"super_battery",
 		"super_capacitor",
 		"super_cell",
 		"turbine_compressor",
@@ -825,6 +829,7 @@
 	description = "Even more powerful.. power!"
 	prereq_ids = list("adv_power", "practical_bluespace")
 	design_ids = list(
+		"bluespace_battery",
 		"bluespace_cell",
 		"quadratic_capacitor",
 	)

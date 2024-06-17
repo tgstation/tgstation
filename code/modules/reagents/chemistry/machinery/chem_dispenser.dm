@@ -11,7 +11,7 @@
 	processing_flags = NONE
 
 	/// The cell used to dispense reagents
-	var/obj/item/stock_parts/power_store/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 	/// Efficiency used when converting cell power to reagents. Units (volume) per joule.
 	var/powerefficiency = 1e-4
 	/// The current amount this machine is dispensing
@@ -432,7 +432,7 @@
 	recharge_amount = initial(recharge_amount)
 	var/newpowereff = INVERSE(1.5e4)
 	var/parts_rating = 0
-	for(var/obj/item/stock_parts/power_store/cell/stock_cell in component_parts)
+	for(var/obj/item/stock_parts/power_store/stock_cell in component_parts)
 		cell = stock_cell
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		newpowereff += matter_bin.tier / 6e4

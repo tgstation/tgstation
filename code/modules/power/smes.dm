@@ -71,7 +71,7 @@
 		power_coefficient += capacitor.tier
 	input_level_max = initial(input_level_max) * power_coefficient
 	output_level_max = initial(output_level_max) * power_coefficient
-	for(var/obj/item/stock_parts/power_store/cell/power_cell in component_parts)
+	for(var/obj/item/stock_parts/power_store/power_cell in component_parts)
 		max_charge += power_cell.maxcharge
 		new_charge += power_cell.charge
 	capacity = max_charge
@@ -203,7 +203,7 @@
 	return ..()
 
 /obj/machinery/power/smes/on_deconstruction(disassembled)
-	for(var/obj/item/stock_parts/power_store/cell/cell in component_parts)
+	for(var/obj/item/stock_parts/power_store/cell in component_parts)
 		cell.charge = (charge / capacity) * cell.maxcharge
 
 /obj/machinery/power/smes/Destroy()
