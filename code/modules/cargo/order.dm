@@ -186,10 +186,8 @@
 		account_holder = "Cargo"
 	var/obj/structure/closet/crate/crate = pack.generate(A, paying_account)
 	if(pack.contraband)
-		to_chat(world, "Startin on contraband.")
 		var/list/generated_contents = crate.contents.Copy()
-		for(var/atom/movable/item_within as anything in reverse_range(generated_contents))
-			to_chat(world, "Found [item_within] in [crate].")
+		for(var/atom/movable/item_within as anything in crate.get_all_contents())
 			ADD_TRAIT(item_within, TRAIT_CONTRABAND, INNATE_TRAIT)
 	if(department_destination)
 		crate.AddElement(/datum/element/deliver_first, department_destination, pack.cost)

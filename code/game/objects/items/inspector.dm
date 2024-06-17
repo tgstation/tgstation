@@ -32,6 +32,8 @@
 	var/cell_cover_open = FALSE
 	///Energy used per print.
 	var/energy_per_print = INSPECTOR_ENERGY_USAGE_NORMAL
+	///Does this item scan for contraband correctly? If not, will provide a flipped response.
+	var/scans_correctly = TRUE
 
 /obj/item/inspector/Initialize(mapload)
 	. = ..()
@@ -103,8 +105,10 @@
 	if(!cell || !cell.use(INSPECTOR_ENERGY_USAGE_LOW))
 		balloon_alert(user, "check cell")
 		return
-	if(!HAS_TRAIT(interacting_with, TRAIT_CONTRABAND))
+	var/contraband_status = HAS_TRAIT(interacting_with, TRAIT_CONTRABAND)
+	if((!contraband_status && scans_correctly) || (contraband_status && !scans_correctly))
 		playsound(src, 'sound/machines/ping.ogg', 20)
+		balloon_alert(user, "CLEAR")
 		return
 
 	playsound(src, 'sound/machines/uplinkerror.ogg', 40)
@@ -199,6 +203,7 @@
 	var/max_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST
 	///names of modes, ordered first to last
 	var/list/mode_names = list("normal", "classic", "honk", "fafafoggy")
+	scans_correctly = FALSE
 
 /obj/item/inspector/clown/attack(mob/living/M, mob/living/user)
 	. = ..()

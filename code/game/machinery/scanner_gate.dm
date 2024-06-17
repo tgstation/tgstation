@@ -64,11 +64,11 @@
 	set_wires(null)
 	. = ..()
 
-/obj/machinery/scanner_gate/deconstruct(disassembled)
+/obj/machinery/scanner_gate/atom_deconstruct(disassembled)
+	. = ..()
 	if(n_spect)
 		n_spect.forceMove(drop_location())
 		n_spect = null
-	return ..()
 
 /obj/machinery/scanner_gate/examine(mob/user)
 	. = ..()
@@ -215,6 +215,8 @@
 				if(HAS_TRAIT(content, TRAIT_CONTRABAND))
 					beep = TRUE
 					break
+			if(!n_spect.scans_correctly)
+				beep = !beep //We do a little trolling
 
 	if(reverse)
 		beep = !beep
