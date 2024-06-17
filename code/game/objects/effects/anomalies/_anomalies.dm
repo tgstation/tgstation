@@ -116,7 +116,7 @@
 /obj/effect/anomaly/analyzer_act(mob/living/user, obj/item/analyzer/tool)
 	if(anomaly_core)
 		to_chat(user, span_notice("Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(anomaly_core.frequency)], code [anomaly_core.code]."))
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 	else
 		to_chat(user, span_notice("Analyzing... [src]'s unstable field is not fluctuating along a stable frequency."))
 
