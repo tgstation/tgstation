@@ -1,6 +1,6 @@
 /obj/item/stock_parts/power_store/battery
 	name = "battery"
-	desc = "A series of rechargeable electrochemical cells wired together to hold significantly more power than a standard cell."
+	desc = "A series of rechargeable electrochemical cells wired together to hold significantly more power than a standard power cell."
 	icon = 'icons/obj/machines/cell_charger.dmi'
 	icon_state = "cellbig"
 	cell_size_prefix = "cellbig"
