@@ -395,7 +395,7 @@
 #if MIN_COMPILER_VERSION > 515
 	#warn Fully change default relay_loc to "1,1"
 #endif
-	var/relay_loc = home?.relay_loc || ((world.byond_version > 515) ? "1,1" : "CENTER") // As we don't have a client here, we'll use the server's version to determine a default.
+	var/relay_loc = home?.relay_loc || "CENTER"
 	// If we're using a submap (say for a popup window) make sure we draw onto it
 	if(home?.map)
 		relay_loc = "[home.map]:[relay_loc]"
