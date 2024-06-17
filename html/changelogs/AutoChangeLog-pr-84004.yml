@@ -1,0 +1,4 @@
+author: "Goat"
+delete-after: True
+changes:
+  - qol: "fire extinguishers can now be filled via stationary tanks. (and water coolers)"
