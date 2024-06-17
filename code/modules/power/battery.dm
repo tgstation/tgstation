@@ -1,5 +1,5 @@
 /obj/item/stock_parts/power_store/battery
-	name = "battery"
+	name = "megacell"
 	desc = "A series of rechargeable electrochemical cells wired together to hold significantly more power than a standard power cell."
 	icon = 'icons/obj/machines/cell_charger.dmi'
 	icon_state = "cellbig"
@@ -22,14 +22,14 @@
 	empty = TRUE
 
 /obj/item/stock_parts/power_store/battery/upgraded
-	name = "upgraded battery"
+	name = "upgraded megacell"
 	desc = "A battery with a slightly higher capacity than normal!"
 	maxcharge = STANDARD_BATTERY_CHARGE * 2.5
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*2.5)
 	chargerate = STANDARD_BATTERY_RATE * 0.5
 
 /obj/item/stock_parts/power_store/battery/high
-	name = "high-capacity battery"
+	name = "high-capacity megacell"
 	icon_state = "hcellbig"
 	maxcharge = STANDARD_BATTERY_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
@@ -39,7 +39,7 @@
 	empty = TRUE
 
 /obj/item/stock_parts/power_store/battery/super
-	name = "super-capacity battery"
+	name = "super-capacity megacell"
 	icon_state = "scellbig"
 	maxcharge = STANDARD_BATTERY_CHARGE * 20
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 4)
@@ -49,7 +49,7 @@
 	empty = TRUE
 
 /obj/item/stock_parts/power_store/battery/hyper
-	name = "hyper-capacity battery"
+	name = "hyper-capacity megacell"
 	icon_state = "hpcellbig"
 	maxcharge = STANDARD_BATTERY_CHARGE * 30
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 5)
@@ -59,8 +59,8 @@
 	empty = TRUE
 
 /obj/item/stock_parts/power_store/battery/bluespace
-	name = "bluespace battery"
-	desc = "A rechargeable transdimensional battery."
+	name = "bluespace megacell"
+	desc = "A rechargeable transdimensional megacell."
 	icon_state = "bscellbig"
 	maxcharge = STANDARD_BATTERY_CHARGE * 40
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*6)
@@ -70,7 +70,7 @@
 	empty = TRUE
 
 /obj/item/stock_parts/power_store/battery/crap
-	name = "\improper Nanotrasen brand rechargeable AA battery"
+	name = "\improper Nanotrasen brand rechargeable AA megacell"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
 	maxcharge = STANDARD_BATTERY_CHARGE * 0.5
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*1)

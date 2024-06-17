@@ -68,8 +68,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/basic_battery
-	name = "Basic Battery"
-	desc = "A basic battery that holds 1 MJ of energy."
+	name = "Basic Megacell"
+	desc = "A basic megacell that holds 1 MJ of energy."
 	id = "basic_battery"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE |MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 12, /datum/material/glass =SMALL_MATERIAL_AMOUNT * 2)
@@ -81,8 +81,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/high_battery
-	name = "High-Capacity Battery"
-	desc = "A battery that holds 10 MJ of energy."
+	name = "High-Capacity Megacell"
+	desc = "A megacell that holds 10 MJ of energy."
 	id = "high_battery"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE | MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 12, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
@@ -94,8 +94,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/super_battery
-	name = "Super-Capacity Battery"
-	desc = "A battery that holds 20 MJ of energy."
+	name = "Super-Capacity Megacell"
+	desc = "A megacell that holds 20 MJ of energy."
 	id = "super_battery"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 12, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
@@ -107,8 +107,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/hyper_battery
-	name = "Hyper-Capacity Battery"
-	desc = "A battery that holds 30 MJ of energy."
+	name = "Hyper-Capacity Megacell"
+	desc = "A megacell that holds 30 MJ of energy."
 	id = "hyper_battery"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 12, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
@@ -120,8 +120,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/bluespace_battery
-	name = "Bluespace Power Cell"
-	desc = "A battery that holds 40 MJ of energy."
+	name = "Bluespace Megacell"
+	desc = "A megacell that holds 40 MJ of energy."
 	id = "bluespace_battery"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 12, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 1.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 6, /datum/material/diamond = SMALL_MATERIAL_AMOUNT * 1.6, /datum/material/titanium =SMALL_MATERIAL_AMOUNT * 3, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT)
