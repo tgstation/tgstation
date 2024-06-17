@@ -75,9 +75,9 @@
 	var/comp_light_color = COLOR_WHITE
 
 	///Power usage when the computer is open (screen is active) and can be interacted with.
-	var/base_active_power_usage = 125
+	var/base_active_power_usage = 2 WATTS
 	///Power usage when the computer is idle and screen is off.
-	var/base_idle_power_usage = 5
+	var/base_idle_power_usage = 1 WATTS
 
 	// Modular computers can run on various devices. Each DEVICE (Laptop, Console & Tablet)
 	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
