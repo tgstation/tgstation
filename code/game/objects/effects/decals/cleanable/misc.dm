@@ -514,18 +514,11 @@
 		ignite()
 	return ..()
 
-/obj/effect/decal/cleanable/fuel_pool/on_entered(datum/source, atom/movable/enflammable_atom)
+/obj/effect/decal/cleanable/fuel_pool/on_entered(datum/source, atom/movable/entered_atom)
 	. = ..()
-	if(enflammable_atom.throwing) // don't light from things being thrown over us
+	if(entered_atom.throwing) // don't light from things being thrown over us, we handle that somewhere else
 		return
-	if(isitem(enflammable_atom))
-		var/obj/item/enflamed_item = enflammable_atom
-		if(enflamed_item.get_temperature() > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-			ignite()
-	else if(isliving(enflammable_atom))
-		var/mob/living/enflamed_living = enflammable_atom
-		if(enflamed_living.on_fire)
-			ignite()
+	ignition_trigger(source = src, enflammable_atom = entered_atom)
 
 /obj/effect/decal/cleanable/fuel_pool/proc/ignition_trigger(datum/source, atom/movable/enflammable_atom)
 	SIGNAL_HANDLER
