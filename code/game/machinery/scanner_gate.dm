@@ -62,10 +62,13 @@
 /obj/machinery/scanner_gate/Destroy()
 	qdel(wires)
 	set_wires(null)
+	. = ..()
+
+/obj/machinery/scanner_gate/deconstruct(disassembled)
 	if(n_spect)
 		n_spect.forceMove(drop_location())
 		n_spect = null
-	. = ..()
+	return ..()
 
 /obj/machinery/scanner_gate/examine(mob/user)
 	. = ..()
@@ -91,6 +94,17 @@
 	if(duration)
 		scanline_timer = addtimer(CALLBACK(src, PROC_REF(set_scanline), "passive"), duration, TIMER_STOPPABLE)
 
+/obj/machinery/scanner_gate/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(istype(tool, /obj/item/inspector))
+		if(n_spect)
+			to_chat(user, span_warning("The scanner is already equipped with an N-Spect scanner."))
+			return
+		else
+			to_chat(user, span_notice("You install an N-Spect scanner on [src]."))
+			n_spect = tool
+			n_spect.forceMove(src)
+
 /obj/machinery/scanner_gate/attackby(obj/item/W, mob/user, params)
 	var/obj/item/card/id/card = W.GetID()
 	if(card)
@@ -111,14 +125,6 @@
 			return
 		if(panel_open && is_wire_tool(W))
 			wires.interact(user)
-	if(istype(W, /obj/item/inspector))
-		if(n_spect)
-			to_chat(user, span_warning("The scanner is already equipped with an N-Spect scanner."))
-			return
-		else
-			to_chat(user, span_notice("You install an N-Spect scanner on [src]."))
-			n_spect = W
-			n_spect.forceMove(src)
 	return ..()
 
 /obj/machinery/scanner_gate/crowbar_act(mob/living/user, obj/item/tool)
@@ -126,8 +132,12 @@
 	if(n_spect)
 		to_chat(user, span_notice("You uninstall [n_spect] from [src]."))
 		n_spect.forceMove(drop_location())
-		n_spect = null
 		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/scanner_gate/Exited(atom/gone)
+	. = ..()
+	if(gone == n_spect)
+		n_spect = null
 
 /obj/machinery/scanner_gate/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
