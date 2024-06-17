@@ -172,7 +172,7 @@
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(do_hand_hit), source, target, caster)
-	ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * Signal proc for [COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY] from our attached hand.
@@ -187,7 +187,7 @@
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(do_secondary_hand_hit), source, target, caster)
-	ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /// Checks if the passed victim can be cast on by the caster.
 /datum/action/cooldown/spell/touch/proc/can_hit_with_hand(atom/victim, mob/caster)

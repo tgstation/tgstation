@@ -55,7 +55,7 @@
 
 /datum/heretic_knowledge/rust_fist/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
-	RegisterSignals(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY), PROC_REF(on_secondary_mansus_grasp))
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_secondary_mansus_grasp))
 	our_heretic.increase_rust_strength()
 
 /datum/heretic_knowledge/rust_fist/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
