@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "When implanting functional wings into a new body, they will actually be able to use said wings now."

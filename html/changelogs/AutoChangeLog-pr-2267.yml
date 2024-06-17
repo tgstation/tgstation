@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - balance: "Split events into several 'shared occurance' groups, hopefully avoiding tiring situations where multiple high-threat antags or events occur back-to-back."

@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Advanced and toxin-healing medibots no longer kill oozelings."

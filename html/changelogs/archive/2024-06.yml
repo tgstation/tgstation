@@ -284,3 +284,21 @@
   - bugfix: Heretics Codex Cicatrix ritual with a skin now uses up the items involved.
   - bugfix: Changes Assault Pod Level trait check from not Reserved (centcom and station)
       to station level trait (just station)
+2024-06-17:
+  Absolucy:
+  - rscadd: Exhaling a big puff of cigarette smoke now actually pollutes.
+  - bugfix: Oozeling bloodsuckers will no longer be stuck in permanent torpor after
+      reviving.
+  - bugfix: Fixed other weird bugs relating to Torpor too.
+  - qol: Oozeling changelings and bloodsuckers will now revive with all their limbs.
+  - bugfix: Fixed some runtime errors relating to Torpor.
+  - bugfix: Fixed a common runtime error relating to runechat messages and logged
+      out clients.
+  - bugfix: Advanced and toxin-healing medibots no longer kill oozelings.
+  - bugfix: Morphs now properly update their name tags when disgusing.
+  - bugfix: When implanting functional wings into a new body, they will actually be
+      able to use said wings now.
+  - balance: Split events into several 'shared occurance' groups, hopefully avoiding
+      tiring situations where multiple high-threat antags or events occur back-to-back.
+  KnigTheThrasher:
+  - bugfix: Loadout wallet now actually works
