@@ -32,7 +32,7 @@
 	/// Can we refill this at a water tank?
 	var/refilling = FALSE
 	/// What tank we need to refill this.
-	var/tanktype = list(
+	var/tanktypes = list(
 		/obj/structure/reagent_dispensers/watertank,
 		/obj/structure/reagent_dispensers/plumbed,
 		/obj/structure/reagent_dispensers/water_cooler,
@@ -135,7 +135,7 @@
 	tank_holder_icon_state = "holder_foam_extinguisher"
 	dog_fashion = null
 	chem = /datum/reagent/firefighting_foam
-	tanktype = list(
+	tanktypes = list(
 		/obj/structure/reagent_dispensers/foamtank,
 		/obj/structure/reagent_dispensers/plumbed,
 	)
@@ -185,13 +185,13 @@
 		. += span_notice("Alt-click to empty it.")
 
 /obj/item/extinguisher/proc/AttemptRefill(atom/target, mob/user)
-	if(is_type_in_list(target, tanktype) && target.Adjacent(user))
+	if(is_type_in_list(target, tanktypes) && target.Adjacent(user))
 		if(reagents.total_volume == reagents.maximum_volume)
 			balloon_alert(user, "already full!")
 			return TRUE
 		// Make sure we're refilling with the proper chem.
 		if(!(target.reagents.has_reagent(chem)))
-			balloon_alert(user, "can't use refill with this liquid!")
+			balloon_alert(user, "can't refill with this liquid!")
 			return TRUE
 		var/obj/structure/reagent_dispensers/W = target //will it work?
 		var/transferred = W.reagents.trans_to(src, max_water, transferred_by = user)
@@ -316,7 +316,7 @@
 	name = "fire extender"
 	desc = "A traditional red fire extinguisher. Made in Britain... wait, what?"
 	chem = /datum/reagent/fuel
-	tanktype = list(
+	tanktypes = list(
 		/obj/structure/reagent_dispensers/fueltank,
 		/obj/structure/reagent_dispensers/plumbed
 	)
