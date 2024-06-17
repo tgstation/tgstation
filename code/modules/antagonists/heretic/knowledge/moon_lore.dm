@@ -1,5 +1,7 @@
 /**
  * # The path of Moon.
+ * Spell names are in this language: ANCIENT HEBREW
+ * Both are related: Ancient Hebrew-Moon Mysticism-Moon
  *
  * Goes as follows:
  *
@@ -194,7 +196,7 @@
 				The truth shall finally devour the lie! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
 		sound = 'sound/ambience/antag/heretic/ascend_moon.ogg',
-		color_override = "pink",
+		color_override = "blue",
 	)
 
 	user.client?.give_award(/datum/award/achievement/misc/moon_ascension, user)
