@@ -8,6 +8,11 @@
 		/obj/item/stock_parts/power_store/cell/super,
 		/obj/item/stock_parts/power_store/cell/hyper,
 		/obj/item/stock_parts/power_store/cell/bluespace,
+		/obj/item/stock_parts/power_store/battery,
+		/obj/item/stock_parts/power_store/battery/high,
+		/obj/item/stock_parts/power_store/battery/super,
+		/obj/item/stock_parts/power_store/battery/hyper,
+		/obj/item/stock_parts/power_store/battery/bluespace,
 	)
 
 /datum/autowiki/stock_parts/generate()
@@ -18,7 +23,7 @@
 		if(initial(type_to_check.abstract_type) == part_type)
 			continue
 
-		if(!battery_whitelist.Find(part_type) && ispath(part_type, /obj/item/stock_parts/power_store/cell))
+		if(!battery_whitelist.Find(part_type) && ispath(part_type, /obj/item/stock_parts/power_store))
 			continue
 
 		var/obj/item/stock_parts/stock_part = new part_type()

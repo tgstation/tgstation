@@ -2,11 +2,12 @@
 	name = "battery"
 	desc = "A series of rechargeable electrochemical cells wired together to hold significantly more power than a standard cell."
 	icon = 'icons/obj/machines/cell_charger.dmi'
-	icon_state = "cell"
+	icon_state = "cellbig"
+	cell_size_prefix = "cellbig"
 	inhand_icon_state = "cell"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
 	throwforce = 5
 	throw_speed = 2
@@ -29,7 +30,7 @@
 
 /obj/item/stock_parts/power_store/battery/high
 	name = "high-capacity battery"
-	icon_state = "hcell"
+	icon_state = "hcellbig"
 	maxcharge = STANDARD_BATTERY_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
 	chargerate = STANDARD_BATTERY_RATE * 0.75
@@ -39,7 +40,7 @@
 
 /obj/item/stock_parts/power_store/battery/super
 	name = "super-capacity battery"
-	icon_state = "scell"
+	icon_state = "scellbig"
 	maxcharge = STANDARD_BATTERY_CHARGE * 20
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 4)
 	chargerate = STANDARD_BATTERY_RATE
@@ -49,7 +50,7 @@
 
 /obj/item/stock_parts/power_store/battery/hyper
 	name = "hyper-capacity battery"
-	icon_state = "hpcell"
+	icon_state = "hpcellbig"
 	maxcharge = STANDARD_BATTERY_CHARGE * 30
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 5)
 	chargerate = STANDARD_BATTERY_RATE * 1.5
@@ -60,7 +61,7 @@
 /obj/item/stock_parts/power_store/battery/bluespace
 	name = "bluespace battery"
 	desc = "A rechargeable transdimensional battery."
-	icon_state = "bscell"
+	icon_state = "bscellbig"
 	maxcharge = STANDARD_BATTERY_CHARGE * 40
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*6)
 	chargerate = STANDARD_BATTERY_RATE * 2

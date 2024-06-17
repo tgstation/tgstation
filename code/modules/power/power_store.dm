@@ -9,6 +9,8 @@
  */
 /obj/item/stock_parts/power_store
 	name = "power store abstract"
+	/// The size icon overlay prefix.
+	var/cell_size_prefix = "cell"
 	///Current charge in cell units
 	var/charge = 0
 	/// Standard cell charge used for rating
@@ -108,7 +110,7 @@
 		. += mutable_appearance('icons/obj/machines/cell_charger.dmi', "grown_wires")
 	if((charge < 0.01) || !charge_light_type)
 		return
-	. += mutable_appearance('icons/obj/machines/cell_charger.dmi', "cell-[charge_light_type]-o[(percent() >= 99.5) ? 2 : 1]")
+	. += mutable_appearance('icons/obj/machines/cell_charger.dmi', "[cell_size]-[charge_light_type]-o[(percent() >= 99.5) ? 2 : 1]")
 
 /obj/item/stock_parts/power_store/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, charge))
