@@ -1,0 +1,17 @@
+{
+    "version": 1,
+	"map_name": "ProtoBox Station",
+	"map_path": "map_files/ProtoBoxStation",
+	"map_file": "ProtoBoxStation.dmm",
+    "shuttles": {
+	    "cargo": "cargo_box",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_box",
+	    "emergency": "emergency_box"
+    },
+    "job_changes": {
+		"Cook": {
+			"additional_cqc_areas": ["/area/station/service/bar", "/area/station/commons/lounge"]
+		}
+	}
+}
