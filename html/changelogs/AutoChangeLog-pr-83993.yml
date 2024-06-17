@@ -1,0 +1,4 @@
+author: "Kaostico"
+delete-after: True
+changes:
+  - bugfix: "Transcendent Olfaction mutation now works properly"
