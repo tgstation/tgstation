@@ -365,7 +365,7 @@
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/microwave/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/machinery/microwave/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(operating)
 		return ITEM_INTERACT_SKIP_TO_ATTACK // Don't use tools if we're dirty
 	if(dirty >= MAX_MICROWAVE_DIRTINESS)
@@ -373,7 +373,7 @@
 	if(panel_open && is_wire_tool(tool))
 		wires.interact(user)
 		return ITEM_INTERACT_SUCCESS
-	return NONE
+	return ..()
 
 /obj/machinery/microwave/attackby(obj/item/item, mob/living/user, params)
 	if(operating)
