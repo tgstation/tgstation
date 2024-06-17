@@ -382,7 +382,7 @@
 	render_relay_planes = list(RENDER_PLANE_MASTER)
 
 /**
- * Plane master proc called in Initialize() that creates relay objects, and sets them uo as needed
+ * Plane master proc called in Initialize() that creates relay objects, and sets them up as needed
  * Sets:
  * * layer from plane to avoid z-fighting
  * * planes to relay the render to
