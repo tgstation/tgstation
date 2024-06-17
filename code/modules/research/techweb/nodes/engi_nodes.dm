@@ -6,7 +6,7 @@
 	description = "Foundational components that form the backbone of station operations, encompassing a range of essential equipment necessary for day-to-day functionality."
 	design_ids = list(
 		"micro_servo",
-		"basic_battery"
+		"basic_battery",
 		"basic_capacitor",
 		"basic_cell",
 		"basic_matter_bin",
