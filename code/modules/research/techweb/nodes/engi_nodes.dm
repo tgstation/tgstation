@@ -204,7 +204,7 @@
 	id = "hud"
 	display_name = "Integrated HUDs"
 	description = "Initially developed for assistants to learn the nuances of different professions through augmented reality."
-	prereq_ids = list("holographics", "implants")
+	prereq_ids = list("holographics", "cyber_implants")
 	design_ids = list(
 		"health_hud",
 		"diagnostic_hud",
