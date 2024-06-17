@@ -10,7 +10,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
 
-	invocation = "Agresiv'nyy rasprostra-neniye!"
+	invocation = "Agresiv'noe rasprostra-neniye!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
