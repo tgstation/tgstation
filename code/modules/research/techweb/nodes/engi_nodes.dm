@@ -12,6 +12,7 @@
 		"basic_matter_bin",
 		"basic_micro_laser",
 		"basic_scanning",
+		"high_battery",
 		"high_cell",
 		"miniature_power_cell",
 		"condenser",
