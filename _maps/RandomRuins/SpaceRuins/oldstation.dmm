@@ -1598,13 +1598,13 @@
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/crowbar,
-/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/door/window/right/directional/north{
 	req_access = list("away_general")
 	},
 /obj/item/paper/fluff/ruins/oldstation/apc_note,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /obj/item/card/id/away/old/equipment,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/engie)
 "hh" = (
