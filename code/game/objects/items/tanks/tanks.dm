@@ -413,6 +413,12 @@
 	if(tank_assembly)
 		tank_assembly.attack_hand()
 
+/obj/item/tank/attack_self(mob/user, modifiers)
+	if (tank_assembly)
+		tank_assembly.attack_self(user)
+		return TRUE
+	return ..()
+
 /obj/item/tank/Move()
 	. = ..()
 	if(tank_assembly)
