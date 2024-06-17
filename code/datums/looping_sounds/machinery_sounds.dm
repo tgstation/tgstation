@@ -79,6 +79,13 @@
 	end_sound = 'sound/machines/microwave/microwave-end.ogg'
 	volume = 90
 
+/datum/looping_sound/lathe_print
+	start_sound = 'sound/machines/lathe/protolathe_print.ogg'
+	start_length = 15
+	mid_sounds = list('sound/machines/lathe/protolathe_print2.ogg' = 1)
+	mid_length = 20
+	vary = TRUE
+
 /datum/looping_sound/jackpot
 	mid_length = 11
 	mid_sounds = list('sound/machines/roulettejackpot.ogg' = 1)
