@@ -2,7 +2,7 @@
 	///Our slime's colour as text. Used by both description, and icon
 	var/colour
 	///Whether the slime icons should be semi-transparent
-	var/transparent
+	var/transparent = FALSE
 	///The type our slime spawns
 	var/core_type
 	///The possible mutations of our slime
