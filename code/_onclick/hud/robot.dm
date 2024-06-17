@@ -197,13 +197,13 @@
 	if(!R.client)
 		return
 
+	//Module is not currently active
+	screenmob.client.screen -= R.model.get_inactive_modules()
+
 	if(!R.shown_robot_modules || !screenmob.hud_used.hud_shown)
 		//Modules display is hidden
 		screenmob.client.screen -= module_store_icon //"store" icon
 
-		for(var/atom/A in R.model.get_inactive_modules())
-			//Module is not currently active
-			screenmob.client.screen -= A
 		R.shown_robot_modules = 0
 		screenmob.client.screen -= R.robot_modules_background
 		return

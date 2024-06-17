@@ -228,6 +228,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PROFOUND_FISHER "profound_fisher"
 /// This trait lets you evaluate someone's fitness level against your own
 #define TRAIT_EXAMINE_FITNESS "reveal_power_level"
+/// These mobs have particularly hygienic tongues
+#define TRAIT_WOUND_LICKER "wound_licker"
+
+/// This trait designate that the mob was originally a monkey
+#define TRAIT_BORN_MONKEY "born_as_a_monkey"
 
 /// Added to a mob, allows that mob to experience flavour-based moodlets when examining food
 #define TRAIT_REMOTE_TASTING "remote_tasting"
@@ -290,6 +295,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GOOD_HEARING "good_hearing"
 /// Allows you to hear speech through walls
 #define TRAIT_XRAY_HEARING "xray_hearing"
+
+/// This mob can not enter or move on a shuttle
+#define TRAIT_BLOCK_SHUTTLE_MOVEMENT "block_shuttle_movement"
 
 /// Lets us scan reagents
 #define TRAIT_REAGENT_SCANNER "reagent_scanner"
@@ -906,6 +914,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_NO_HUNGER "fish_no_hunger"
 ///It comes from a fish case. Relevant for bounties so far.
 #define TRAIT_FISH_FROM_CASE "fish_from_case"
+///Fish will also occasionally fire weak tesla zaps
+#define TRAIT_FISH_ELECTROGENESIS "fish_electrogenesis"
 
 /// Trait given to angelic constructs to let them purge cult runes
 #define TRAIT_ANGELIC "angelic"
@@ -1136,7 +1146,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
 #define TRAIT_BOULDER_BREAKER "boulder_breaker"
 
+/// Trait given to mobs wearing the clown mask
+#define TRAIT_PERCEIVED_AS_CLOWN "perceived_as_clown"
 /// Does this item bypass ranged armor checks?
 #define TRAIT_BYPASS_RANGED_ARMOR "bypass_ranged_armor"
+
+/// This item cannot be selected for or used by a theft objective (Spies, Traitors, etc.)
+#define TRAIT_ITEM_OBJECTIVE_BLOCKED "item_objective_blocked"
+/// This trait lets you attach limbs to any player without surgery.
+#define TRAIT_EASY_ATTACH "easy_attach"
 
 // END TRAIT DEFINES

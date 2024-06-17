@@ -272,7 +272,7 @@
 /datum/disease/advance/proc/assign_properties()
 
 	if(properties?.len)
-		if(properties["stealth"] >= properties["severity"])
+		if(properties["stealth"] >= properties["severity"] && properties["severity"] > 0)
 			visibility_flags |= HIDDEN_SCANNER
 		else
 			visibility_flags &= ~HIDDEN_SCANNER
@@ -299,22 +299,22 @@
 /datum/disease/advance/proc/set_spread(spread_id)
 	switch(spread_id)
 		if(DISEASE_SPREAD_NON_CONTAGIOUS)
-			spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
+			update_spread_flags(DISEASE_SPREAD_NON_CONTAGIOUS)
 			spread_text = "None"
 		if(DISEASE_SPREAD_SPECIAL)
-			spread_flags = DISEASE_SPREAD_SPECIAL
+			update_spread_flags(DISEASE_SPREAD_SPECIAL)
 			spread_text = "None"
 		if(DISEASE_SPREAD_BLOOD)
-			spread_flags = DISEASE_SPREAD_BLOOD
+			update_spread_flags(DISEASE_SPREAD_BLOOD)
 			spread_text = "Blood"
 		if(DISEASE_SPREAD_CONTACT_FLUIDS)
-			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS
+			update_spread_flags(DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS)
 			spread_text = "Fluids"
 		if(DISEASE_SPREAD_CONTACT_SKIN)
-			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN
+			update_spread_flags(DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN)
 			spread_text = "Skin contact"
 		if(DISEASE_SPREAD_AIRBORNE)
-			spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_AIRBORNE
+			update_spread_flags(DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_AIRBORNE)
 			spread_text = "Respiration"
 
 /datum/disease/advance/proc/set_severity(level_sev)

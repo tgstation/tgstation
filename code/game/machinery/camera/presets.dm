@@ -84,6 +84,13 @@
 	autonames_in_areas[camera_area] = number
 	c_tag = "[format_text(camera_area.name)] #[number]"
 
+/obj/machinery/camera/autoname/motion
+	start_active = TRUE
+	name = "motion-sensitive security camera"
+
+/obj/machinery/camera/autoname/motion/Initialize(mapload)
+	. = ..()
+	upgradeMotion()
 
 /**
  * Bomb preset

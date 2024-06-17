@@ -118,7 +118,9 @@
 	return TOXLOSS
 
 /obj/item/soap/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
-	return check_allowed_items(atom_to_clean)
+	. = CLEAN_ALLOWED
+	if(!check_allowed_items(atom_to_clean))
+		. |= CLEAN_NO_XP
 
 /**
  * Decrease the number of uses the bar of soap has.
@@ -145,17 +147,15 @@
 	qdel(src)
 
 /obj/item/soap/nanotrasen/cyborg/noUses(mob/user)
-	to_chat(user, span_warning("The soap has ran out of chemicals"))
+	to_chat(user, span_warning("[src] has ran out of chemicals! Head to a recharger to refill it."))
 
-/obj/item/soap/nanotrasen/cyborg/afterattack(atom/target, mob/user, proximity)
-	. = isitem(target) ? AFTERATTACK_PROCESSED_ITEM : NONE
+/obj/item/soap/nanotrasen/cyborg/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
 	if(uses <= 0)
-		to_chat(user, span_warning("No good, you need to recharge!"))
-		return .
-	return ..() | .
+		return CLEAN_BLOCKED
+	return ..()
 
-/obj/item/soap/attackby_storage_insert(datum/storage, atom/storage_holder, mob/living/user)
-	return !user?.combat_mode  // only cleans a storage item if on combat
+/obj/item/soap/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/living/user)
+	return !user.combat_mode  // only cleans a storage item if on combat
 
 /*
  * Bike Horns
@@ -232,6 +232,22 @@
 		if(M.can_hear())
 			M.emote("flip")
 	COOLDOWN_START(src, golden_horn_cooldown, 1 SECONDS)
+
+/obj/item/bikehorn/rubberducky/plasticducky
+	name = "plastic ducky"
+	desc = "It's a cheap plastic knockoff of a loveable bathtime toy."
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
+
+/obj/item/bikehorn/rubberducky
+	name = "rubber ducky"
+	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~" //thanks doohl
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "rubberducky"
+	inhand_icon_state = "rubberducky"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	worn_icon_state = "duck"
+	sound_file = 'sound/effects/quack.ogg'
 
 //canned laughter
 /obj/item/reagent_containers/cup/soda_cans/canned_laughter

@@ -26,13 +26,14 @@
 		user.visible_message(span_notice("[user] collects [src]."), balloon_alert(user, "you collect the [src]."))
 	return TRUE
 
-/obj/item/rolling_table_dock/afterattack(obj/target, mob/user , proximity)
-	. = ..()
-	var/turf/target_turf = get_turf(target)
-	if(!proximity || target_turf.is_blocked_turf(TRUE) || locate(/mob/living) in target_turf)
-		return
-	if(isopenturf(target))
-		deploy_rolling_table(user, target)
+/obj/item/rolling_table_dock/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/turf/target_turf = get_turf(interacting_with)
+	if(target_turf.is_blocked_turf(TRUE) || (locate(/mob/living) in target_turf))
+		return NONE
+	if(isopenturf(interacting_with))
+		deploy_rolling_table(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/rolling_table_dock/proc/deploy_rolling_table(mob/user, atom/location)
 	var/obj/structure/table/rolling/rable = new /obj/structure/table/rolling(location)

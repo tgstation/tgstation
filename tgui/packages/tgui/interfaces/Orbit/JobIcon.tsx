@@ -13,7 +13,7 @@ type IconSettings = {
 
 const normalIcon: IconSettings = {
   dmi: 'icons/mob/huds/hud.dmi',
-  transform: 'scale(2.3) translateX(8px) translateY(1px)',
+  transform: 'scale(2.3) translateX(9px) translateY(1px)',
 };
 
 const antagIcon: IconSettings = {

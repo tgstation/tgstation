@@ -462,7 +462,6 @@
 /obj/item/organ/internal/lungs/proc/too_much_miasma(mob/living/carbon/breather, datum/gas_mixture/breath, miasma_pp, old_miasma_pp)
 	// Inhale Miasma. Exhale nothing.
 	breathe_gas_volume(breath, /datum/gas/miasma)
-
 	// Miasma side effects
 	if (HAS_TRAIT(breather, TRAIT_ANOSMIA)) //Anosmia quirk holder cannot smell miasma, but can get diseases from it.
 		return

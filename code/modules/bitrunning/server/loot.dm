@@ -22,6 +22,7 @@
 
 /// Handles spawning the (new) crate and deleting the former
 /obj/machinery/quantum_server/proc/generate_loot(obj/cache, obj/machinery/byteforge/chosen_forge)
+	SSblackbox.record_feedback("tally", "bitrunning_domain_primary_completed", 1, generated_domain.key)
 	for(var/mob/person in cache.contents)
 		SEND_SIGNAL(person, COMSIG_BITRUNNER_CACHE_SEVER)
 
@@ -47,6 +48,7 @@
 	reward_cache.update_appearance()
 
 	if(can_generate_tech_disk(grade))
+		SSblackbox.record_feedback("tally", "bitrunning_bepis_rewarded", 1, generated_domain.key)
 		new /obj/item/disk/design_disk/bepis/remove_tech(reward_cache)
 		generated_domain.disk_reward_spawned = TRUE
 
@@ -54,6 +56,7 @@
 	return TRUE
 
 /obj/machinery/quantum_server/proc/generate_secondary_loot(obj/curiosity, obj/machinery/byteforge/chosen_forge)
+	SSblackbox.record_feedback("tally", "bitrunning_domain_secondary_completed", 1, generated_domain.key)
 	spark_at_location(curiosity) // abracadabra!
 	qdel(curiosity) // and it's gone!
 

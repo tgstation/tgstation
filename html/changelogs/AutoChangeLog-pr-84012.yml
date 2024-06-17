@@ -1,0 +1,4 @@
+author: "GoblinBackwards"
+delete-after: True
+changes:
+  - bugfix: "Fixed anomaly cores from the high-intensity grav anomaly event creating the wrong type of reactive armour."

@@ -254,22 +254,23 @@
 /mob/living/proc/grabbedby(mob/living/user, supress_message = FALSE)
 	if(user == src || anchored || !isturf(user.loc))
 		return FALSE
+
 	if(!user.pulling || user.pulling != src)
 		user.start_pulling(src, supress_message = supress_message)
 		return
-	// This line arbitrarily prevents any non-carbon from upgrading grabs
-	if(!iscarbon(user))
-		return
+
 	if(!(status_flags & CANPUSH) || HAS_TRAIT(src, TRAIT_PUSHIMMUNE))
 		to_chat(user, span_warning("[src] can't be grabbed more aggressively!"))
 		return FALSE
+
 	if(user.grab_state >= GRAB_AGGRESSIVE && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to risk hurting [src]!"))
 		return FALSE
+
 	grippedby(user)
 
 //proc to upgrade a simple pull into a more aggressive grab.
-/mob/living/proc/grippedby(mob/living/carbon/user, instant = FALSE)
+/mob/living/proc/grippedby(mob/living/user, instant = FALSE)
 	if(user.grab_state >= user.max_grab)
 		return
 	user.changeNext_move(CLICK_CD_GRABBING)

@@ -85,21 +85,20 @@
 	QDEL_NULL(underbarrel)
 	return ..()
 
-/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/afterattack_secondary(atom/target, mob/living/user, proximity_flag, click_parameters)
-	underbarrel.afterattack(target, user, proximity_flag, click_parameters)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/try_fire_gun(atom/target, mob/living/user, params)
+	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+		return underbarrel.try_fire_gun(target, user, params)
+	return ..()
 
-/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/afterattack(atom/target, mob/living/user, flag, params)
-	// mirrors what the standalone fisher does when you hit people with it
-	. = ..()
-	if(user.Adjacent(target))
-		var/obj/projectile/energy/fisher/melee/simulated_hit = new
-		simulated_hit.firer = user
-		simulated_hit.on_hit(target)
+/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/afterattack(atom/target, mob/user, click_parameters)
+	var/obj/projectile/energy/fisher/melee/simulated_hit = new
+	simulated_hit.firer = user
+	simulated_hit.on_hit(target)
 
 /obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	// as above comment, mirrors what the standalone fisher does when you hit people with it
 	. = ..()
+	if(.)
+		return
 	var/obj/projectile/energy/fisher/melee/simulated_hit = new
 	simulated_hit.firer = throwingdatum.get_thrower()
 	simulated_hit.on_hit(hit_atom)

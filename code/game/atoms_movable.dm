@@ -73,7 +73,7 @@
 	var/atom/movable/pulling
 	var/grab_state = GRAB_PASSIVE
 	/// The strongest grab we can acomplish
-	var/max_grab = GRAB_KILL
+	var/max_grab = GRAB_PASSIVE
 	var/throwforce = 0
 	var/datum/component/orbiter/orbiting
 
@@ -401,6 +401,13 @@
 			. |= buckled.pulling
 	if(pulling)
 		. |= pulling
+		if (pulling.buckled_mobs)
+			. |= pulling.buckled_mobs
+
+		//makes conga lines work with ladders and flying up and down; checks if the guy you are pulling is pulling someone,
+		//then uses recursion to run the same function again
+		if (pulling.pulling)
+			. |= pulling.pulling.get_z_move_affected(z_move_flags)
 
 /**
  * Checks if the destination turf is elegible for z movement from the start turf to a given direction and returns it if so.
