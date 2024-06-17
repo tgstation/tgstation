@@ -274,6 +274,7 @@ export class TguiSay extends Component<{}, State> {
   };
 
   reset() {
+    this.currentPrefix = null;
     this.setValue('');
     this.setSize();
     this.setState({
