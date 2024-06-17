@@ -432,10 +432,14 @@
 	required_reagent = /datum/reagent/cryostylane
 	min_purity = 0.99
 
-/datum/experiment/scanning/bluespace_crystal
+/datum/experiment/scanning/points/bluespace_crystal
 	name = "Bluespace Crystal Sampling"
 	description = "Investigate the properties of bluespace crystals by scanning either an artificial or naturally occurring variant. This will help us deepen our understanding of bluespace phenomena."
-	required_atoms = list(/obj/item/stack/ore/bluespace_crystal = 1)
+	required_points = 1
+	required_atoms = list(
+		/obj/item/stack/ore/bluespace_crystal = 1,
+		/obj/item/stack/sheet/bluespace_crystal = 1
+	)
 
 /datum/experiment/scanning/points/machinery_tiered_scan/tier2_any
 	name = "Upgraded Stock Parts Benchmark"
