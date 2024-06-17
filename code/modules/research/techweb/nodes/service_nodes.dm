@@ -72,6 +72,7 @@
 	prereq_ids = list("office_equip")
 	design_ids = list(
 		"comconsole",
+		"automated_announcement",
 		"cargo",
 		"cargorequest",
 		"med_data",

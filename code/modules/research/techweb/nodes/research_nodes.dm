@@ -8,15 +8,16 @@
 		"rdservercontrol",
 		"rdconsole",
 		"tech_disk",
-		"portadrive_basic",
-		"portadrive_advanced",
-		"portadrive_super",
 		"doppler_array",
 		"experimentor",
 		"destructive_analyzer",
 		"destructive_scanner",
 		"experi_scanner",
+		"ntnet_relay",
 		"laptop",
+		"portadrive_basic",
+		"portadrive_advanced",
+		"portadrive_super",
 	)
 
 /datum/techweb_node/bluespace_theory
