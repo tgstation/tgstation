@@ -622,7 +622,7 @@
 
 /obj/item/clothing/suit/armor/centcom_formal
 	name = "\improper CentCom formal coat"
-	desc = "A stylish coat given to CentCom Commanders. Perfect for sending ERTs to suicide missions with style!"
+	desc = "A fancy, expensive coat worn by CentCom's finest Commanders. Usually only worn in formal events, but that's basically all day for them. It helps you focus when you send an ERT to a suicide mission!"
 	icon_state = "centcom_formal"
 	inhand_icon_state = "centcom"
 	body_parts_covered = CHEST|GROIN|ARMS

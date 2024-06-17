@@ -238,7 +238,7 @@
 
 /obj/item/clothing/head/hats/intern
 	name = "\improper CentCom Head Intern beancap"
-	desc = "A horrifying mix of beanie and softcap in CentCom green. You'd have to be pretty desperate for power over your peers to agree to wear this."
+	desc = "A horrifying mix of beanie and softcap in CentCom colors. You'd have to be pretty desperate for power over your peers to agree to wear this."
 	icon_state = "intern_hat"
 	inhand_icon_state = null
 
@@ -273,7 +273,7 @@
 /obj/item/clothing/head/hats/centcom_cap
 	name = "\improper CentCom commander cap"
 	icon_state = "centcom_cap"
-	desc = "Worn by the finest of CentCom commanders. Inside the lining of the cap, lies two faint initials."
+	desc = "A luxurious peaked cap usually worn by CentCom's finest Commanders, wearing this is a dream of itself. It has two faint initials on the inside."
 	inhand_icon_state = "that"
 	flags_inv = 0
 	armor_type = /datum/armor/hats_centcom_cap
