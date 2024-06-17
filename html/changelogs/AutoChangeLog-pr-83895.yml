@@ -1,0 +1,6 @@
+author: "Hacks-The-Doors"
+delete-after: True
+changes:
+  - balance: "dental pills can now be used in crit."
+  - balance: "dental pills now give off a message when you start using them"
+  - balance: "dental pills have a 2.5 second delay when in soft crit"
