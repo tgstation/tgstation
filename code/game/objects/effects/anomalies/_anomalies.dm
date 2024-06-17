@@ -119,6 +119,7 @@
 		return ITEM_INTERACT_SUCCESS
 	else
 		to_chat(user, span_notice("Analyzing... [src]'s unstable field is not fluctuating along a stable frequency."))
+		return ITEM_INTERACT_BLOCKING
 
 	return ..()
 
