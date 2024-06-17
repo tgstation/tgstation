@@ -345,15 +345,12 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if (!state_open)
 		to_chat(user, span_warning("Open the door first!"))
 		return ITEM_INTERACT_BLOCKING
-
 	if(bloody_mess)
 		to_chat(user, span_warning("[src] must be cleaned up first!"))
 		return ITEM_INTERACT_BLOCKING
-
 	if(contents.len >= max_wash_capacity)
 		to_chat(user, span_warning("The washing machine is full!"))
 		return ITEM_INTERACT_BLOCKING
-
 	if(!user.transferItemToLoc(item, src))
 		to_chat(user, span_warning("\The [item] is stuck to your hand, you cannot put it in the washing machine!"))
 		return ITEM_INTERACT_SUCCESS
@@ -361,8 +358,6 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		color_source = item
 	update_appearance()
 
-	else
-		return NONE
 
 /obj/machinery/washing_machine/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
