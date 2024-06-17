@@ -17,6 +17,9 @@
 // Camera
 #include "cameras/code/cameras.dm"
 
+// Decals
+#include "decals/code/floor_decals.dm"
+
 // Disposal
 #include "disposal/code/disposal.dm"
 
