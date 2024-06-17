@@ -25,7 +25,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	normalize_cardinal_directions()
 	if(animation)
 		flick("[valve_type]valve_[on][!on]-[set_overlay_offset(piping_layer)]", src)
-		playsound(src, 'sound/effects/valve opening.ogg', 50)
+		playsound(src, 'sound/effects/valve_opening.ogg', 50)
 	icon_state = "[valve_type]valve_[on ? "on" : "off"]-[set_overlay_offset(piping_layer)]"
 
 /**
