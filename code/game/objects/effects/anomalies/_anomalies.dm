@@ -121,7 +121,6 @@
 		to_chat(user, span_notice("Analyzing... [src]'s unstable field is not fluctuating along a stable frequency."))
 		return ITEM_INTERACT_BLOCKING
 
-	return ..()
 
 ///Stabilize an anomaly, letting it stay around forever or untill destabilizes by a player. An anomaly without a core can't be signalled, but can be destabilized
 /obj/effect/anomaly/proc/stabilize(anchor = FALSE, has_core = TRUE)
