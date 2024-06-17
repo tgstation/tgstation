@@ -315,6 +315,10 @@
 	maxcharge = STANDARD_CELL_CHARGE * 0.5
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.4)
 
+/obj/item/stock_parts/cell/crap/Initialize(mapload)
+	AddElement(/datum/element/update_icon_blocker)
+	..()
+
 /obj/item/stock_parts/cell/crap/empty
 	empty = TRUE
 
@@ -325,6 +329,10 @@
 	maxcharge = STANDARD_CELL_CHARGE * 2.5
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	chargerate = STANDARD_CELL_RATE * 0.5
+
+/obj/item/stock_parts/cell/upgraded/Initialize(mapload)
+	AddElement(/datum/element/update_icon_blocker)
+	..()
 
 /obj/item/stock_parts/cell/upgraded/plus
 	name = "upgraded power cell+"
