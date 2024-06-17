@@ -60,7 +60,7 @@
 /datum/techweb_node/borg_mining
 	id = "borg_mining"
 	display_name = "Mining Cyborg Upgrades"
-	description = ""
+	description = "To mine places too dangerous for humans."
 	prereq_ids = list("cybernetics")
 	design_ids = list(
 		"borg_upgrade_lavaproof",
