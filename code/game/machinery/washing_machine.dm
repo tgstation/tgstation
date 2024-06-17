@@ -333,33 +333,33 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/washing_machine/attackby(obj/item/W, mob/living/user, params)
-	if(default_deconstruction_screwdriver(user, null, null, W))
+/obj/machinery/washing_machine/item_interaction(mob/living/user, obj/item/item, list/modifiers)
+	if(default_deconstruction_screwdriver(user, null, null, item))
 		update_appearance()
 		return
 
 	else if(!user.combat_mode)
 		if (!state_open)
 			to_chat(user, span_warning("Open the door first!"))
-			return TRUE
+			return ITEM_INTERACT_SUCCESS
 
 		if(bloody_mess)
 			to_chat(user, span_warning("[src] must be cleaned up first!"))
-			return TRUE
+			return ITEM_INTERACT_SUCCESS
 
 		if(contents.len >= max_wash_capacity)
 			to_chat(user, span_warning("The washing machine is full!"))
-			return TRUE
+			return ITEM_INTERACT_SUCCESS
 
-		if(!user.transferItemToLoc(W, src))
-			to_chat(user, span_warning("\The [W] is stuck to your hand, you cannot put it in the washing machine!"))
-			return TRUE
-		if(W.dye_color)
-			color_source = W
+		if(!user.transferItemToLoc(item, src))
+			to_chat(user, span_warning("\The [item] is stuck to your hand, you cannot put it in the washing machine!"))
+			return ITEM_INTERACT_SUCCESS
+		if(item.dye_color)
+			color_source = item
 		update_appearance()
 
 	else
-		return ..()
+		return
 
 /obj/machinery/washing_machine/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
