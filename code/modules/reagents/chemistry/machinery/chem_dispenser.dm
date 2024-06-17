@@ -13,11 +13,11 @@
 	/// The cell used to dispense reagents
 	var/obj/item/stock_parts/power_store/cell
 	/// Efficiency used when converting cell power to reagents. Joule per volume.
-	var/power_cost = 1 KILO WATTS
+	var/power_cost = 0.1 KILO WATTS
 	/// The current amount this machine is dispensing
 	var/amount = 30
 	/// The rate at which this machine recharges the power cell.
-	var/recharge_amount = 1.25 KILO WATTS
+	var/recharge_amount = 0.1 KILO WATTS
 	/// The temperature reagents are dispensed into the beaker
 	var/dispensed_temperature = DEFAULT_REAGENT_TEMPERATURE
 	/// If the UI has the pH meter shown
