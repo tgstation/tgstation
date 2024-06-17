@@ -48,10 +48,13 @@
 	name = "core"
 	desc = "The center core of a slimeperson, technically their 'extract.' Where the cytoplasm, membrane, and organelles come from; perhaps this is also a mitochondria?"
 	zone = BODY_ZONE_CHEST
-	var/obj/effect/death_melt_type = /obj/effect/temp_visual/wizard/out
-	var/core_color = COLOR_WHITE
 	icon = 'monkestation/code/modules/smithing/icons/oozeling.dmi'
 	icon_state = "slime_core"
+	resistance_flags = FIRE_PROOF
+
+	var/obj/effect/death_melt_type = /obj/effect/temp_visual/wizard/out
+	var/core_color = COLOR_WHITE
+
 	var/core_ejected = FALSE
 	var/gps_active = TRUE
 
