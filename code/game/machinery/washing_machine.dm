@@ -334,9 +334,8 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/washing_machine/screwdriver_act(mob/living/user, obj/item/tool)
-	if(busy)
-		return FALSE
 	default_deconstruction_screwdriver(user, null, null, tool)
+	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/washing_machine/item_interaction(mob/living/user, obj/item/item, list/modifiers)
