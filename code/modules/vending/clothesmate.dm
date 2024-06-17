@@ -200,7 +200,7 @@
 		/obj/item/clothing/under/costume/jabroni = 1,
 		/obj/item/clothing/under/costume/geisha = 1,
 		/obj/item/clothing/under/rank/centcom/officer/replica = 1,
-		/obj/item/clothing/under/rank/centcom/officer_skirt/replica = 1,
+		/obj/item/clothing/under/rank/centcom/officer/skirt/replica = 1,
 	)
 	premium = list(/obj/item/clothing/under/suit/checkered = 1,
 		/obj/item/clothing/head/costume/mailman = 1,
