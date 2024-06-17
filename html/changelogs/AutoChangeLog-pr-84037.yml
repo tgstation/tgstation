@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "you may now open the panel of a flatpacker with a screwdriver"
