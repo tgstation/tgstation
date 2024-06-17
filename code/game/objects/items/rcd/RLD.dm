@@ -91,9 +91,16 @@
 /obj/item/construction/rld/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!range_check(interacting_with, user))
 		return NONE
-	return interact_with_atom(interacting_with, user, modifiers)
+	return try_lighting(interacting_with, user)
 
 /obj/item/construction/rld/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	return try_lighting(interacting_with, user)
+
+/obj/item/construction/rld/proc/try_lighting(atom/interacting_with, mob/user)
+
 	var/turf/start = get_turf(src)
 	switch(mode)
 		if(REMOVE_MODE)

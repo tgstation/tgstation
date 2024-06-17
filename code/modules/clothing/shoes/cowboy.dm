@@ -5,6 +5,8 @@
 	armor_type = /datum/armor/shoes_cowboy
 	custom_price = PAYCHECK_CREW
 	can_be_tied = FALSE
+	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
+
 	var/max_occupants = 4
 	/// Do these boots have spur sounds?
 	var/has_spurs = FALSE
@@ -52,9 +54,9 @@
 	user.say(pick("Hot damn!", "Hoo-wee!", "Got-dang!"), spans = list(SPAN_YELL), forced=TRUE)
 	user.client?.give_award(/datum/award/achievement/misc/hot_damn, user)
 
-/obj/item/clothing/shoes/cowboy/MouseDrop_T(mob/living/target, mob/living/user)
+/obj/item/clothing/shoes/cowboy/mouse_drop_receive(mob/living/target, mob/living/user, params)
 	. = ..()
-	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !Adjacent(user) || !isliving(target) || !user.Adjacent(target) || target.stat == DEAD)
+	if(!(user.mobility_flags & MOBILITY_USE) || !isliving(target))
 		return
 	if(contents.len >= max_occupants)
 		to_chat(user, span_warning("[src] are full!"))

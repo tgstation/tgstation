@@ -2,7 +2,7 @@
 /obj/effect/anomaly/bioscrambler
 	name = "bioscrambler anomaly"
 	icon_state = "bioscrambler"
-	aSignal = /obj/item/assembly/signaler/anomaly/bioscrambler
+	anomaly_core = /obj/item/assembly/signaler/anomaly/bioscrambler
 	immortal = TRUE
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 	layer = ABOVE_MOB_LAYER
