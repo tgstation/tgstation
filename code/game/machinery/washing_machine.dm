@@ -359,7 +359,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		update_appearance()
 
 	else
-		return
+		return NONE
 
 /obj/machinery/washing_machine/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
