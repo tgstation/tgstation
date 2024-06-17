@@ -74,6 +74,8 @@
 // JSON text files found in the tgstation/strings folder
 /// File location for brain damage traumas
 #define BRAIN_DAMAGE_FILE "massmeta/traumas.json" //MASSMETA EDIT
+/// File location for kvass phrases, mmmmm kvass
+#define KVASS_PHRASES_FILE "massmeta/kvass.json" //MASSMETA ADDITION (kvass)
 /// File location for AI ion laws
 #define ION_FILE "ion_laws.json"
 /// File location for pirate names
