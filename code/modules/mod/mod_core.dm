@@ -303,15 +303,11 @@
 
 /obj/item/mod/core/plasma/install(obj/item/mod/control/mod_unit)
 	. = ..()
-	RegisterSignal(mod, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(mod, COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT, PROC_REF(on_mod_storage_insert))
+	RegisterSignal(mod, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_mod_interaction))
 
 /obj/item/mod/core/plasma/uninstall()
-	UnregisterSignal(mod, COMSIG_ATOM_ATTACKBY)
-	return ..()
-
-/obj/item/mod/core/plasma/attackby(obj/item/attacking_item, mob/user, params)
-	if(charge_plasma(attacking_item, user))
-		return TRUE
+	UnregisterSignal(mod, list(COMSIG_ATOM_STORAGE_ITEM_INTERACT_INSERT, COMSIG_ATOM_ITEM_INTERACTION))
 	return ..()
 
 /obj/item/mod/core/plasma/charge_source()
@@ -350,11 +346,19 @@
 
 	return "empty"
 
-/obj/item/mod/core/plasma/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user)
+/obj/item/mod/core/plasma/proc/on_mod_storage_insert(datum/source, obj/item/thing, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(charge_plasma(attacking_item, user))
-		return COMPONENT_NO_AFTERATTACK
+	return charge_plasma(thing, user) ? BLOCK_STORAGE_INSERT : NONE
+
+/obj/item/mod/core/plasma/proc/on_mod_interaction(datum/source, mob/living/user, obj/item/thing)
+	SIGNAL_HANDLER
+
+	return item_interaction(thing, user)
+
+/obj/item/mod/core/plasma/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(charge_plasma(tool, user))
+		return ITEM_INTERACT_SUCCESS
 	return NONE
 
 /obj/item/mod/core/plasma/proc/charge_plasma(obj/item/stack/plasma, mob/user)
