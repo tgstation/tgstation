@@ -332,13 +332,13 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		return FALSE
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
-
+/obj/machinery/washing_machine/screwdriver_act(mob/living/user, obj/item/tool)
+	if(busy)
+		return FALSE
+	default_deconstruction_screwdriver(user, null, null, tool)
+	return ITEM_INTERACT_SUCCESS
 /obj/machinery/washing_machine/item_interaction(mob/living/user, obj/item/item, list/modifiers)
-	if(default_deconstruction_screwdriver(user, null, null, item))
-		update_appearance()
-		return
-
-	else if(!user.combat_mode)
+	if(!user.combat_mode)
 		if (!state_open)
 			to_chat(user, span_warning("Open the door first!"))
 			return ITEM_INTERACT_SUCCESS
