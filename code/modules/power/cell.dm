@@ -317,7 +317,7 @@
 
 /obj/item/stock_parts/cell/crap/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
-	..()
+	return ..()
 
 /obj/item/stock_parts/cell/crap/empty
 	empty = TRUE
@@ -332,7 +332,7 @@
 
 /obj/item/stock_parts/cell/upgraded/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
-	..()
+	return ..()
 
 /obj/item/stock_parts/cell/upgraded/plus
 	name = "upgraded power cell+"
