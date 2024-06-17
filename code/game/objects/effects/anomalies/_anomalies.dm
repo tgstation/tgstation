@@ -113,8 +113,8 @@
 
 	qdel(src)
 
-/obj/effect/anomaly/attackby(obj/item/weapon, mob/user, params)
-	if(weapon.tool_behaviour == TOOL_ANALYZER && anomaly_core)
+/obj/effect/anomaly/analyzer_act(mob/living/user, obj/item/analyzer/tool)
+	if(anomaly_core)
 		to_chat(user, span_notice("Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(anomaly_core.frequency)], code [anomaly_core.code]."))
 		return TRUE
 
