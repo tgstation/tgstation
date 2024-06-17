@@ -1,7 +1,6 @@
 /**
  * # The path of Rust.
  * Spell names are in this language: OLD SLAVIC
- * Both are related:
  *
  * Goes as follows:
  *
