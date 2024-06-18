@@ -69,6 +69,7 @@
 		var/obj/item/gun/energy/e_gun/dragnet/dragnet_to_link = tool
 		dragnet_to_link.linked_beacon = src
 		balloon_alert(user, "beacon synced")
+		dragnet_to_link.RegisterSignal(src, COMSIG_QDELETING, TYPE_PROC_REF(/obj/item/gun/energy/e_gun/dragnet, handle_beacon_disable))
 
 /obj/projectile/energy/trap
 	name = "energy snare"

@@ -104,6 +104,12 @@
 	if(istype(tool, /obj/item/dragnet_beacon))
 		linked_beacon = tool
 		balloon_alert(user, "beacon synced")
+		RegisterSignal(tool, COMSIG_QDELETING, PROC_REF(handle_beacon_disable))
+
+/obj/item/gun/energy/e_gun/dragnet/proc/handle_beacon_disable(datum/source)
+	SIGNAL_HANDLER
+	visible_message(span_warning("A light on the [src] flashes, indicating that it is no longer linked with a DRAGnet beacon!"))
+	linked_beacon = null
 
 /obj/item/gun/energy/e_gun/dragnet/snare
 	name = "Energy Snare Launcher"
