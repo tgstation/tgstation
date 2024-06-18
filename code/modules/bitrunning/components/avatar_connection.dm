@@ -266,5 +266,3 @@
 		old_mind.set_current(old_body)
 
 	REMOVE_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
-
-	SSpoints_of_interest.remove_point_of_interest(avatar)

@@ -55,7 +55,7 @@
 
 	is_ready = TRUE
 
-	var/spawn_chance = clamp((threat * glitch_chance), 2, 15)
+	var/spawn_chance = clamp((threat * glitch_chance), 5, threat_prob_max)
 	if(prob(spawn_chance))
 		setup_glitch()
 

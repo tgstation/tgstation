@@ -148,7 +148,7 @@
 	score += time_score * base
 
 	// Increases the chance for glitches to spawn based on how well they're doing
-	threat += score * length(avatar_connection_refs)
+	threat += score + (base * length(avatar_connection_refs))
 
 	switch(score)
 		if(1 to 4)
