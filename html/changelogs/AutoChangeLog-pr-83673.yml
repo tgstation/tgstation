@@ -1,0 +1,5 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - rscadd: "Sparks now ignite flammable things. Including you. Keep a fire extinguisher handy or stop dousing yourself in welding fuel!"
+  - bugfix: "Fixed a few oversights with welding fuel pools not igniting when you throw lit/hot things into them or when you walk into them while on fire."
