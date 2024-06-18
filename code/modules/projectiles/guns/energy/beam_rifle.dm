@@ -18,8 +18,8 @@
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/event_horizon)
-	cell_type = /obj/item/stock_parts/cell/beam_rifle
 	selfcharge = TRUE
+	self_charge_amount = STANDARD_ENERGY_GUN_SELF_CHARGE_RATE * 10
 
 /obj/item/gun/energy/event_horizon/Initialize(mapload)
 	. = ..()
@@ -37,7 +37,7 @@
 /obj/item/ammo_casing/energy/event_horizon
 	projectile_type = /obj/projectile/beam/event_horizon
 	select_name = "doomsday"
-	e_cost = LASER_SHOTS(10, 50000) // Beam rifle has a custom cell
+	e_cost = LASER_SHOTS(1, STANDARD_CELL_CHARGE)
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 
 /obj/projectile/beam/event_horizon
@@ -58,5 +58,6 @@
 	// Where we droppin' boys?
 	var/turf/rift_loc = get_turf(target)
 
-	new /obj/boh_tear(rift_loc)
+	var/obj/reality_tear/temporary/tear = new(rift_loc)
+	tear.start_disaster()
 	message_admins("[ADMIN_LOOKUPFLW(target)] has been hit by an anti-existential beam at [ADMIN_VERBOSEJMP(rift_loc)], creating a singularity.")
