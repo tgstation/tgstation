@@ -391,11 +391,3 @@
 	refundable = FALSE
 	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
-/datum/uplink_item/role_restricted/justice
-	name = "Justice exosuit"
-	desc = "Fast and strong in close combat mech for true lovers of justice with built-in III Tier modules that allow you to temporarily become completely invisible and also make a dash cutting through everything that is in the way."
-	item = /obj/vehicle/sealed/mecha/justice/loaded
-	cost = 20
-	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
-	restricted = TRUE
-	refundable = FALSE
