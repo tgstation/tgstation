@@ -368,7 +368,7 @@
 
 /mob/living/carbon/human/proc/item_heal(mob/user, brute_heal, burn_heal, heal_message_brute, heal_message_burn, required_bodytype)
 	var/obj/item/bodypart/affecting = src.get_bodypart(check_zone(user.zone_selected))
-	if (!affecting || !(affecting.bodytype == required_bodytype))
+	if (!affecting || !(affecting.bodytype & required_bodytype))
 		to_chat(user, span_warning("[affecting] is already in good condition!"))
 		return FALSE
 
