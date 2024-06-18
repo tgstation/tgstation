@@ -1,0 +1,4 @@
+author: "GPeckman"
+delete-after: True
+changes:
+  - bugfix: "Airlocks should no longer appear closed sometimes when fireman carrying someone into them."

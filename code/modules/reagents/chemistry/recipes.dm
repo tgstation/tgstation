@@ -281,7 +281,7 @@
  * * modifier - a flat additive numeric to the size of the explosion - set this if you want a minimum range
  * * strengthdiv - the divisional factor of the explosion, a larger number means a smaller range - This is the part that modifies an explosion's range with volume (i.e. it divides it by this number)
  */
-/datum/chemical_reaction/proc/default_explode(datum/reagents/holder, created_volume, modifier = 0, strengthdiv = 10)
+/datum/chemical_reaction/proc/default_explode(datum/reagents/holder, created_volume, modifier = 0, strengthdiv = 10, clear_mob_reagents)
 	var/power = modifier + round(created_volume/strengthdiv, 1)
 	if(power > 0)
 		var/turf/T = get_turf(holder.my_atom)
@@ -300,8 +300,29 @@
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(power , T, 0, 0)
 		e.start(holder.my_atom)
-	holder.clear_reagents()
-
+	if (ismob(holder.my_atom))
+		if(!clear_mob_reagents)
+			return
+		// Only clear reagents if they use a special explosive reaction to do it; it shouldn't apply
+		// to any explosion inside a person
+		holder.clear_reagents()
+		if(iscarbon(holder.my_atom))
+			var/mob/living/carbon/victim = holder.my_atom
+			var/vomit_flags = MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE
+			// The vomiting here is for effect, not meant to help with purging
+			victim.vomit(vomit_flags, distance = 5)
+		// Not quite the same if the reaction is in their stomach; they'll throw up
+		// from any explosion, but it'll only make them puke up everything in their
+		// stomach
+	else if (istype(holder.my_atom, /obj/item/organ/internal/stomach))
+		var/obj/item/organ/internal/stomach/indigestion = holder.my_atom
+		if(power < 1)
+			return
+		indigestion.owner?.vomit(MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE, lost_nutrition = 150, distance = 5, purge_ratio = 1)
+		holder.clear_reagents()
+		return
+	else
+		holder.clear_reagents()
 /*
  *Creates a flash effect only - less expensive than explode()
  *

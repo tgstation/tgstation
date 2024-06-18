@@ -140,30 +140,27 @@
 
 	return . || NONE
 
-/obj/item/modular_computer/pda/attackby(obj/item/attacking_item, mob/user, params)
-	. = ..()
+/obj/item/modular_computer/pda/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 
-	if(!is_type_in_list(attacking_item, contained_item))
-		return
-	if(attacking_item.w_class >= WEIGHT_CLASS_SMALL) // Anything equal to or larger than small won't work
+	if(!is_type_in_list(tool, contained_item))
+		return NONE
+	if(tool.w_class >= WEIGHT_CLASS_SMALL) // Anything equal to or larger than small won't work
 		user.balloon_alert(user, "too big!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(inserted_item)
 		balloon_alert(user, "no room!")
-		return
-	if(!user.transferItemToLoc(attacking_item, src))
-		return
-	balloon_alert(user, "inserted [attacking_item]")
-	inserted_item = attacking_item
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "inserted [tool]")
+	inserted_item = tool
 	playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 
-/obj/item/modular_computer/pda/CtrlClick(mob/user)
-	. = ..()
-	if(.)
-		return
-
+/obj/item/modular_computer/pda/item_ctrl_click(mob/user)
 	remove_pen(user)
+	return CLICK_ACTION_SUCCESS
 
 ///Finds how hard it is to send a virus to this tablet, checking all programs downloaded.
 /obj/item/modular_computer/pda/proc/get_detomatix_difficulty()

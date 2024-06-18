@@ -430,6 +430,7 @@
 		return FALSE
 	cyborg.model.toolbox.currently_upgraded = TRUE
 	cyborg.model.toolbox.set_upgrade()
+	ADD_TRAIT(cyborg, TRAIT_FASTMED, REF(src))
 
 /obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
@@ -437,6 +438,7 @@
 		return .
 	cyborg.model.toolbox.currently_upgraded = FALSE
 	cyborg.model.toolbox.set_upgrade()
+	REMOVE_TRAIT(cyborg, TRAIT_FASTMED, REF(src))
 
 /obj/item/borg/upgrade/engineering_omnitool
 	name = "cyborg engineering omni-tool upgrade"

@@ -135,6 +135,11 @@
 	target.cut_overlay(sparks)
 
 /obj/item/weldingtool/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!status && interacting_with.is_refillable())
+		reagents.trans_to(interacting_with, reagents.total_volume, transferred_by = user)
+		to_chat(user, span_notice("You empty [src]'s fuel tank into [interacting_with]."))
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 	if(!ishuman(interacting_with))
 		return NONE
 	if(user.combat_mode)
@@ -155,32 +160,21 @@
 	if(!use_tool(attacked_humanoid, user, use_delay, volume=50, amount=1))
 		return ITEM_INTERACT_BLOCKING
 
-	item_heal_robotic(attacked_humanoid, user, 15, 0)
+	attacked_humanoid.item_heal(user, brute_heal = 15, burn_heal = 0, heal_message_brute = "dents", heal_message_burn = "burnt wires", required_bodytype = BODYTYPE_ROBOTIC)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/weldingtool/afterattack(atom/attacked_atom, mob/user, proximity)
-	. = ..()
-	if(!proximity)
+/obj/item/weldingtool/afterattack(atom/target, mob/user, click_parameters)
+	if(!isOn())
 		return
-
-	if(isOn() && ismovable(attacked_atom))
-		use(1)
-		var/turf/location = get_turf(user)
-		location.hotspot_expose(700, 50, 1)
-		. |= AFTERATTACK_PROCESSED_ITEM
-		if (!QDELETED(attacked_atom) && isliving(attacked_atom)) // can't ignite something that doesn't exist
-			var/mob/living/attacked_mob = attacked_atom
-			if(attacked_mob.ignite_mob())
-				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
-				user.log_message("set [key_name(attacked_mob)] on fire with [src].", LOG_ATTACK)
-
-	if(!status && attacked_atom.is_refillable())
-		. |= AFTERATTACK_PROCESSED_ITEM
-		reagents.trans_to(attacked_atom, reagents.total_volume, transferred_by = user)
-		to_chat(user, span_notice("You empty [src]'s fuel tank into [attacked_atom]."))
-		update_appearance()
-
-	return .
+	use(1)
+	var/turf/location = get_turf(user)
+	location.hotspot_expose(700, 50, 1)
+	if(QDELETED(target) || !isliving(target)) // can't ignite something that doesn't exist
+		return
+	var/mob/living/attacked_mob = target
+	if(attacked_mob.ignite_mob())
+		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
+		user.log_message("set [key_name(attacked_mob)] on fire with [src].", LOG_ATTACK)
 
 /obj/item/weldingtool/attack_self(mob/user)
 	if(src.reagents.has_reagent(/datum/reagent/toxin/plasma))
