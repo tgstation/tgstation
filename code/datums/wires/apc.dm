@@ -79,6 +79,8 @@
 			else
 				A.shorted = TRUE
 			A.shock(usr, 50)
+		if(WIRE_INTERFACE)
+			A.locked = !mend
 		if(WIRE_AI) // Disable AI control.
 			A.aidisabled = !mend
 
