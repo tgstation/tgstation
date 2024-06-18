@@ -855,6 +855,18 @@
 	new /obj/item/melee/sabre(src)
 	update_appearance()
 
+/obj/item/storage/belt/sabre/centcom
+	name = "commander's sabre sheath"
+	desc = "An extremely ornate, and soft sheath designed to hold a esteemed CentCom commander's blade."
+	icon_state = "cc-sheath"
+	inhand_icon_state = "cc-sheath"
+	worn_icon_state = "cc-sheath"
+	w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/storage/belt/sabre/centcom/PopulateContents()
+	new /obj/item/melee/sabre/centcom(src)
+	update_appearance()
+
 /obj/item/storage/belt/plant
 	name = "botanical belt"
 	desc = "A sturdy leather belt used to hold most hydroponics supplies."

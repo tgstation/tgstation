@@ -164,6 +164,12 @@
 		user.death(FALSE)
 	REMOVE_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
 
+/obj/item/melee/sabre/centcom
+	name = "commander's sabre"
+	desc = "An superior and deadly, the blade and hilt is made with gold, yet alloyed with plasteel, reinforcing it's strength, and making a monomolecular edge that is more than capable of cutting through flesh and bone with ease."
+	icon_state = "cc-sabre"
+	inhand_icon_state = "cc-sabre"
+
 /obj/item/melee/beesword
 	name = "The Stinger"
 	desc = "Taken from a giant bee and folded over one thousand times in pure honey. Can sting through anything."
