@@ -1,24 +1,31 @@
+import { toFixed } from 'common/math';
+
 import { useBackend, useSharedState } from '../backend';
 import {
   Box,
   Button,
-  Flex,
-  Icon,
+  Knob,
+  LabeledControls,
   LabeledList,
-  Modal,
   NoticeBox,
   RoundGauge,
   Section,
-  Slider,
   Stack,
   Tabs,
 } from '../components';
+import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
-import { GasmixParser } from './common/GasmixParser';
+
+const formatPressure = (value) => {
+  if (value < 10000) {
+    return toFixed(value) + ' kPa';
+  }
+  return formatSiUnit(value * 1000, 1, 'Pa');
+};
 
 export const TankCompressor = (props) => {
   return (
-    <Window title="Tank Compressor" width={650} height={550}>
+    <Window title="Tank Compressor" width={440} height={440}>
       <Window.Content>
         <TankCompressorContent />
       </Window.Content>
@@ -35,56 +42,24 @@ const TankCompressorContent = (props) => {
     <Stack vertical fill>
       {currentTab === 1 && <TankCompressorControls />}
       {currentTab === 2 && <TankCompressorRecords />}
-      <Stack.Item>
+      <Stack.Item grow>
         <Section
+          scrollable
+          fill
           title={disk ? disk + ' (' + storage + ')' : 'No Disk Inserted'}
+          buttons={
+            <Button
+              icon="eject"
+              content="Eject Disk"
+              disabled={!disk}
+              onClick={() => act('eject_disk')}
+            />
+          }
         >
-          <Stack>
-            <Stack.Item grow>
-              <Button
-                textAlign="center"
-                fluid
-                icon={currentTab === 1 ? 'clipboard-list' : 'times'}
-                onClick={() => (currentTab === 1 ? changeTab(2) : changeTab(1))}
-              >
-                {currentTab === 1 ? 'Open Records' : 'Close Records'}
-              </Button>
-            </Stack.Item>
-            <Stack.Item grow>
-              <Button
-                textAlign="center"
-                fluid
-                icon="eject"
-                content="Eject Disk"
-                disabled={!disk}
-                onClick={() => act('eject_disk')}
-              />
-            </Stack.Item>
-          </Stack>
+          <TankCompressorRecords />
         </Section>
       </Stack.Item>
     </Stack>
-  );
-};
-
-const AlertBoxes = (props) => {
-  const { text_content, icon_name, icon_break, color, active } = props;
-
-  return (
-    <Box
-      bold
-      height="100%"
-      fontSize={1.25}
-      backgroundColor={active ? color : '#999999'}
-    >
-      <Flex height="100%" width="100%" justify="center" direction="column">
-        <Flex.Item>
-          <Icon name={icon_name} width={2} />
-          {icon_break && <br />}
-          {text_content}
-        </Flex.Item>
-      </Flex>
-    </Box>
   );
 };
 
@@ -101,160 +76,116 @@ const TankCompressorControls = (props) => {
     active,
     transferRate,
     ejectPressure,
-    inputData,
-    outputData,
-    bufferData,
   } = data;
   const pressure = tankPresent ? tankPressure : lastPressure;
   const usingLastData = !!(lastPressure && !tankPresent);
-
+  const leakHazard =
+    leaking || (pressure >= leakPressure && pressure < fragmentPressure);
   return (
-    <>
-      <Stack.Item>
-        <Section
-          title="Tank Integrity"
-          buttons={
-            <Button
-              icon="eject"
-              disabled={!tankPresent || tankPressure > ejectPressure}
-              onClick={() => act('eject_tank')}
-            >
-              {'Eject Tank'}
-            </Button>
-          }
-        >
-          {!pressure && <Modal>{'No Pressure Detected'}</Modal>}
-          {usingLastData && (
-            <NoticeBox warning>
-              {'Tank destroyed. Displaying last recorded data.'}
-            </NoticeBox>
-          )}
-          <Stack fill textAlign="center">
-            <Stack.Item>
-              <RoundGauge
-                value={pressure}
-                minValue={0}
-                maxValue={fragmentPressure * 1.15}
-                alertAfter={leakPressure}
-                ranges={{
-                  good: [0, leakPressure],
-                  average: [leakPressure, fragmentPressure],
-                  bad: [fragmentPressure, fragmentPressure * 1.15],
-                }}
-                size={5}
-                textAlign="center"
-                format={(value) => (value ? value.toFixed(2) : '-') + ' kPa'}
-              />
-            </Stack.Item>
-            <Stack.Item basis={0} grow>
-              <AlertBoxes
-                text_content="Tank Pressure Nominal"
-                icon_name="check"
-                icon_break
-                color="green"
-                active={pressure < leakPressure}
-              />
-            </Stack.Item>
-            <Stack.Item basis={0} grow>
-              <AlertBoxes
-                text_content="Tank Integrity Faltering"
-                icon_name="exclamation-triangle"
-                icon_break
-                color="yellow"
-                active={pressure >= leakPressure}
-              />
-            </Stack.Item>
-            <Stack.Item basis={0} grow>
-              <Stack vertical fill>
-                <Stack.Item grow>
-                  <AlertBoxes
-                    text_content="Leak Hazard"
-                    icon_name="biohazard"
-                    color="red"
-                    active={
-                      (pressure >= leakPressure &&
-                        pressure < fragmentPressure) ||
-                      leaking
-                    }
-                  />
-                </Stack.Item>
-                <Stack.Item grow>
-                  <AlertBoxes
-                    text_content="Explosive Hazard"
-                    icon_name="bomb"
-                    color="red"
-                    active={pressure >= fragmentPressure}
-                  />
-                </Stack.Item>
-              </Stack>
-            </Stack.Item>
-          </Stack>
-        </Section>
-      </Stack.Item>
-      <Stack.Item>
-        <Section title="Compressor Control">
-          <Stack fill>
-            <Stack.Item grow>
-              <Slider
+    <Stack.Item>
+      <Section
+        title="Tank"
+        buttons={
+          <Button
+            icon="eject"
+            disabled={!tankPresent || tankPressure > ejectPressure}
+            onClick={() => act('eject_tank')}
+          >
+            {'Eject Tank'}
+          </Button>
+        }
+      >
+        {usingLastData && (
+          <NoticeBox warning>
+            Tank destroyed. Displaying last recorded data.
+          </NoticeBox>
+        )}
+        {!pressure && <NoticeBox>No Pressure Detected</NoticeBox>}
+        {pressure > 0 && pressure < leakPressure && (
+          <NoticeBox info>Tank Pressure Nominal</NoticeBox>
+        )}
+        {leakHazard && <NoticeBox warning>Leak Hazard</NoticeBox>}
+        {!usingLastData && pressure >= fragmentPressure && (
+          <NoticeBox danger>Explosive Hazard</NoticeBox>
+        )}
+      </Section>
+      <Section>
+        <LabeledControls px={2}>
+          <LabeledControls.Item label="Pressure">
+            <RoundGauge
+              size={2.5}
+              value={pressure}
+              minValue={0}
+              maxValue={fragmentPressure * 1.15}
+              alertAfter={leakPressure}
+              ranges={{
+                good: [0, leakPressure],
+                average: [leakPressure, fragmentPressure],
+                bad: [fragmentPressure, fragmentPressure * 1.15],
+              }}
+              format={formatPressure}
+            />
+          </LabeledControls.Item>
+          <LabeledControls.Item label="Flow rate">
+            <Box position="relative">
+              <Knob
+                size={2}
+                value={transferRate}
+                unit="L/S"
                 minValue={0}
                 maxValue={maxTransfer}
-                value={transferRate}
-                stepPixelSize={12.5}
-                step={0.5}
-                unit="L/S"
-                onDrag={(e, new_rate) =>
-                  act('change_rate', { target: new_rate })
+                step={1}
+                stepPixelSize={8}
+                onDrag={(e, value) =>
+                  act('change_rate', {
+                    target: value,
+                  })
                 }
               />
-            </Stack.Item>
-            <Stack.Item>
               <Button
-                disabled={
-                  !tankPresent || (!!leaking && pressure < leakPressure)
+                fluid
+                position="absolute"
+                top="-2px"
+                right="-24px"
+                color="transparent"
+                icon="fast-forward"
+                onClick={() =>
+                  act('change_rate', {
+                    target: maxTransfer,
+                  })
                 }
-                selected={active}
-                icon={active ? 'power-off' : 'times'}
-                onClick={() => act('toggle_injection')}
-              >
-                {active ? 'On' : 'Off'}
-              </Button>
-            </Stack.Item>
-          </Stack>
-        </Section>
-      </Stack.Item>
-      <Stack.Item grow>
-        <Stack fill>
-          <Stack.Item grow>
-            <Section fill scrollable title={inputData.name}>
-              {!inputData.total_moles && <Modal>{'No Gas Present'}</Modal>}
-              <GasmixParser gasmix={inputData} />
-            </Section>
-          </Stack.Item>
-          <Stack.Item grow>
-            <Section fill scrollable title={outputData.name}>
-              {!outputData.inputData && <Modal>{'No Gas Present'}</Modal>}
-              <GasmixParser gasmix={outputData} />
-            </Section>
-          </Stack.Item>
-          <Stack.Item grow>
-            <Section
-              fill
-              scrollable
-              title={bufferData.name}
-              buttons={
-                <Button
-                  icon="exclamation"
-                  tooltip="The buffer gas mixture will be recorded when a tank is destroyed or ejected. The printed records will refer to this port for it's experimental data."
-                />
-              }
+              />
+              <Button
+                fluid
+                position="absolute"
+                top="16px"
+                right="-24px"
+                color="transparent"
+                icon="undo"
+                onClick={() =>
+                  act('change_rate', {
+                    target: 0,
+                  })
+                }
+              />
+            </Box>
+          </LabeledControls.Item>
+          <LabeledControls.Item label="Compressor">
+            <Button
+              my={0.5}
+              lineHeight={2}
+              fontSize="18px"
+              icon="power-off"
+              disabled={!tankPresent || (!!leaking && pressure < leakPressure)}
+              selected={active}
+              onClick={() => act('toggle_injection')}
             >
-              {!bufferData.total_moles && <Modal>{'No Gas Present'}</Modal>}
-              <GasmixParser gasmix={bufferData} />
-            </Section>
-          </Stack.Item>
-        </Stack>
-      </Stack.Item>
-    </>
+              {active ? 'On' : 'Off'}
+            </Button>
+          </LabeledControls.Item>
+        </LabeledControls>
+      </Section>
+    </Stack.Item>
   );
 };
 
@@ -295,24 +226,31 @@ const TankCompressorRecords = (props) => {
         </Stack.Item>
         {activeRecord ? (
           <Stack.Item grow>
-            <Section
-              title={activeRecord.name}
-              buttons={[
-                <Button.Confirm
-                  key="delete"
-                  icon="trash"
-                  content="Delete"
-                  color="bad"
-                  onClick={() => {
-                    act('delete_record', {
-                      ref: activeRecord.ref,
-                    });
-                  }}
-                />,
+            <LabeledList>
+              <LabeledList.Item label="Title">
+                {activeRecord.name}
+              </LabeledList.Item>
+              <LabeledList.Item label="Time">
+                {activeRecord.timestamp}
+              </LabeledList.Item>
+              <LabeledList.Item label="Source">
+                {activeRecord.source}
+              </LabeledList.Item>
+              <LabeledList.Item label="Gases">
+                <LabeledList>
+                  {Object.keys(activeRecord.gases).map((gas_name) => (
+                    <LabeledList.Item label={gas_name} key={gas_name}>
+                      {(activeRecord.gases[gas_name]
+                        ? activeRecord.gases[gas_name].toFixed(2)
+                        : '-') + ' moles'}
+                    </LabeledList.Item>
+                  ))}
+                </LabeledList>
+              </LabeledList.Item>
+              <LabeledList.Item label="Actions">
                 <Button
-                  key="save"
                   icon="floppy-disk"
-                  content="Save"
+                  content="Save to disk"
                   disabled={!disk}
                   tooltip="Save the record selected to an inserted data disk."
                   tooltipPosition="bottom"
@@ -321,29 +259,18 @@ const TankCompressorRecords = (props) => {
                       ref: activeRecord.ref,
                     });
                   }}
-                />,
-              ]}
-            >
-              <LabeledList>
-                <LabeledList.Item label="Timestamp">
-                  {activeRecord.timestamp}
-                </LabeledList.Item>
-                <LabeledList.Item label="Source">
-                  {activeRecord.source}
-                </LabeledList.Item>
-                <LabeledList.Item label="Detected Gas">
-                  <LabeledList>
-                    {Object.keys(activeRecord.gases).map((gas_name) => (
-                      <LabeledList.Item label={gas_name} key={gas_name}>
-                        {(activeRecord.gases[gas_name]
-                          ? activeRecord.gases[gas_name].toFixed(2)
-                          : '-') + ' moles'}
-                      </LabeledList.Item>
-                    ))}
-                  </LabeledList>
-                </LabeledList.Item>
-              </LabeledList>
-            </Section>
+                />
+                <Button.Confirm
+                  icon="trash"
+                  color="bad"
+                  onClick={() => {
+                    act('delete_record', {
+                      ref: activeRecord.ref,
+                    });
+                  }}
+                />
+              </LabeledList.Item>
+            </LabeledList>
           </Stack.Item>
         ) : (
           <Stack.Item grow={1} basis={0}>
