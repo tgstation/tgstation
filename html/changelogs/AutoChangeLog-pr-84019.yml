@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "build mode and space dragons dont harddel on destroy"

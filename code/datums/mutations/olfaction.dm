@@ -6,7 +6,7 @@
 	text_gain_indication = "<span class='notice'>Smells begin to make more sense...</span>"
 	text_lose_indication = "<span class='notice'>Your sense of smell goes back to normal.</span>"
 	power_path = /datum/action/cooldown/spell/olfaction
-	instability = 30
+	instability = POSITIVE_INSTABILITY_MODERATE
 	synchronizer_coeff = 1
 
 /datum/mutation/human/olfaction/modify()
