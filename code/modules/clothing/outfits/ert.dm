@@ -149,6 +149,7 @@
 
 	id = /obj/item/card/id/advanced/centcom
 	id_trim = /datum/id_trim/centcom/official
+	head = /obj/item/clothing/head/beret/centcom_formal/official
 	uniform = /obj/item/clothing/under/rank/centcom/official
 	back = /obj/item/storage/backpack/satchel
 	box = /obj/item/storage/box/survival
@@ -176,6 +177,11 @@
 	W.update_label()
 	W.update_icon()
 	return ..()
+
+/datum/outfit/centcom/centcom_official/turtleneck
+	name = "CentCom Official (Turtleneck)"
+
+	uniform = /obj/item/clothing/under/rank/centcom/official/turtleneck
 
 /datum/outfit/centcom/ert/commander/inquisitor
 	name = "Inquisition Commander"
