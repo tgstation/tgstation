@@ -10,7 +10,7 @@
 /// Difficulty modifier when bait is fish's disliked
 #define DISLIKED_BAIT_DIFFICULTY_MOD 15
 /// Difficulty modifier when our fisherman has the trait TRAIT_EXPERT_FISHER
-#define SETTLER_DIFFICULTY_MOD -5
+#define EXPERT_FISHER_DIFFICULTY_MOD -5
 
 #define FISH_TRAIT_MINOR_DIFFICULTY_BOOST 5
 
