@@ -18,7 +18,7 @@ import { NtosWindow } from '../layouts';
 
 export const NtosScipaper = (props) => {
   return (
-    <NtosWindow width={600} height={570}>
+    <NtosWindow width={600} height={580}>
       <NtosWindow.Content scrollable>
         <NtosScipaperContent />
       </NtosWindow.Content>
@@ -63,16 +63,18 @@ const PaperPublishing = (props) => {
               />
             }
           >
-            <Dropdown
-              width="100%"
-              options={Object.keys(fileList)}
-              selected={selectedFile}
-              onSelected={(ordfile_name) =>
-                act('select_file', {
-                  selected_uid: fileList[ordfile_name],
-                })
-              }
-            />
+            <Box position="relative" top="8px">
+              <Dropdown
+                width="100%"
+                options={Object.keys(fileList)}
+                selected={selectedFile}
+                onSelected={(ordfile_name) =>
+                  act('select_file', {
+                    selected_uid: fileList[ordfile_name],
+                  })
+                }
+              />
+            </Box>
           </LabeledList.Item>
           <LabeledList.Item
             label="Experiment (required)"
@@ -83,16 +85,18 @@ const PaperPublishing = (props) => {
               />
             }
           >
-            <Dropdown
-              width="100%"
-              options={Object.keys(expList)}
-              selected={selectedExperiment}
-              onSelected={(experiment_name) =>
-                act('select_experiment', {
-                  selected_expath: expList[experiment_name],
-                })
-              }
-            />
+            <Box position="relative" top="8px">
+              <Dropdown
+                width="100%"
+                options={Object.keys(expList)}
+                selected={selectedExperiment}
+                onSelected={(experiment_name) =>
+                  act('select_experiment', {
+                    selected_expath: expList[experiment_name],
+                  })
+                }
+              />
+            </Box>
           </LabeledList.Item>
           <LabeledList.Item
             label="Tier (required)"
@@ -103,16 +107,18 @@ const PaperPublishing = (props) => {
               />
             }
           >
-            <Dropdown
-              width="100%"
-              options={allowedTiers.map((number) => String(number))}
-              selected={String(tier)}
-              onSelected={(new_tier) =>
-                act('select_tier', {
-                  selected_tier: Number(new_tier),
-                })
-              }
-            />
+            <Box position="relative" top="8px">
+              <Dropdown
+                width="100%"
+                options={allowedTiers.map((number) => String(number))}
+                selected={String(tier)}
+                onSelected={(new_tier) =>
+                  act('select_tier', {
+                    selected_tier: Number(new_tier),
+                  })
+                }
+              />
+            </Box>
           </LabeledList.Item>
           <LabeledList.Item
             label="Partner (required)"
@@ -123,16 +129,18 @@ const PaperPublishing = (props) => {
               />
             }
           >
-            <Dropdown
-              width="100%"
-              options={Object.keys(allowedPartners)}
-              selected={selectedPartner}
-              onSelected={(new_partner) =>
-                act('select_partner', {
-                  selected_partner: allowedPartners[new_partner],
-                })
-              }
-            />
+            <Box position="relative" top="8px">
+              <Dropdown
+                width="100%"
+                options={Object.keys(allowedPartners)}
+                selected={selectedPartner}
+                onSelected={(new_partner) =>
+                  act('select_partner', {
+                    selected_partner: allowedPartners[new_partner],
+                  })
+                }
+              />
+            </Box>
           </LabeledList.Item>
           <LabeledList.Item
             label="Principal Author"
@@ -146,6 +154,7 @@ const PaperPublishing = (props) => {
             }
           >
             <Input
+              mt={2}
               fluid
               value={author}
               onChange={(e, value) =>
