@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - qol: "A message with a link to publicly accessible logs (if enabled by your server operators) should now be visible far earlier when a world is about to reboot."
