@@ -79,7 +79,7 @@
 				return
 			else
 				var/ignite_chance = 120 // base chance applies to anything under WEIGHT_CLASS_NORMAL, so burn everything flammable that's small/tiny
-				ignite_chance = ignite_chance - (singed_obj.w_class > WEIGHT_CLASS_SMALL ? (singed_obj.w_class * 2 + round(singed_obj.w_class * 0.5)) | 0) // 50% normal size, 20% bulky, no chance to ignite bigger items
+				ignite_chance = ignite_chance - (singed_obj.w_class > WEIGHT_CLASS_SMALL ? (singed_obj.w_class * 2 + round(singed_obj.w_class * 0.5)) : 0) // 50% normal size, 20% bulky, no chance to ignite bigger items
 				if(prob(ignite_chance))
 					singed_obj.fire_act(1,100)
 		if(singed_obj.reagents)
