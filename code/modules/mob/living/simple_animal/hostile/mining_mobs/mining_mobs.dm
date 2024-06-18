@@ -46,14 +46,7 @@
 	)
 
 	RegisterSignals(src, list(COMSIG_PROJECTILE_PREHIT, COMSIG_ATOM_PREHITBY), PROC_REF(Aggro))
-	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(check_for_ashwalker_armistice_violation))
 
-/mob/living/simple_animal/hostile/asteroid/check_for_ashwalker_armistice_violation(datum/source, mob/living/carbon/human/ashwalker_attacker)
-	SIGNAL_HANDLER
-
-	if(!isashwalker(ashwalker_attacker))
-		return
-	faction.Remove(FACTION_ASHWALKER)
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
