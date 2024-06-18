@@ -27,7 +27,9 @@
 	var/list/status = list()
 	status += "The interface light is [A.locked ? "red" : "green"]."
 	status += "The short indicator is [A.shorted ? "lit" : "off"]."
-	status += "The channel mask is [A.equipment][A.lighting][A.environ]."
+	status += "The channel one light is [A.equipment ? "on" : "off"]."
+	status += "The channel two light is [A.lighting ? "on" : "off"]."
+	status += "The channel three light is [A.environ ? "on" : "off"]."
 	status += "The AI connection light is [!A.aidisabled ? "on" : "off"]."
 	return status
 
