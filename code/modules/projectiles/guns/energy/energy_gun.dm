@@ -102,6 +102,11 @@
 
 /obj/item/gun/energy/e_gun/dragnet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/dragnet_beacon))
+		if(linked_beacon)
+			if(tool == linked_beacon)
+				return
+			else
+				UnregisterSignal(linked_beacon, COMSIG_QDELETING) //You're getting overridden dude.
 		linked_beacon = tool
 		balloon_alert(user, "beacon synced")
 		RegisterSignal(tool, COMSIG_QDELETING, PROC_REF(handle_beacon_disable))
