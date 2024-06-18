@@ -84,7 +84,7 @@
 	desc = "A suitcase containing the necessary gun parts to tranform a standard energy gun into a temperature gun. Fantastic at birthday parties and killing indigenious populations of lizardpeople."
 
 /obj/item/weaponcrafting/gunkit/beam_rifle
-	name = "\improper Event Horizon anti-existnetial beam rifle part kit (DOOMSDAY DEVICE, DO NOT CONSTRUCT)"
+	name = "\improper Event Horizon anti-existential beam rifle part kit (DOOMSDAY DEVICE, DO NOT CONSTRUCT)"
 	desc = "What fevered minds wrought this terrible construction kit? To create a frame to harness the strange enemies that flow through the Spinward Sector towards such horrible acts of violence? \
 		If you are unsound of mind, heed this. One vortex anomaly. One bluespace anomaly. Two flux anomalies. One gravity anomaly. And, maybe, if you believe in it, your soul itself. That is the price paid\
 		for this dread thing."
