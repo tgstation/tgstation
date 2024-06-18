@@ -95,6 +95,7 @@
 	modifystate = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 	ammo_x_offset = 1
+	var/obj/item/dragnet_beacon/linked_beacon
 
 /obj/item/gun/energy/e_gun/dragnet/add_seclight_point()
 	return

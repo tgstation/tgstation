@@ -5,16 +5,22 @@
 	damage_type = STAMINA
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
+	var/obj/item/dragnet_beacon/destination_beacon
 
 /obj/projectile/energy/net/Initialize(mapload)
 	. = ..()
 	SpinAnimation()
+	var/obj/item/gun/energy/e_gun/dragnet/our_dragnet = fired_from
+	if(!our_dragnet || !istype(our_dragnet))
+		return
+
+	destination_beacon = our_dragnet.linked_beacon
 
 /obj/projectile/energy/net/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(isliving(target))
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
-			new /obj/effect/nettingportal(Tloc)
+			new /obj/effect/nettingportal(Tloc, destination_beacon)
 	. = ..()
 
 /obj/projectile/energy/net/on_range()
@@ -29,26 +35,18 @@
 	light_range = 3
 	anchored = TRUE
 
-/obj/effect/nettingportal/Initialize(mapload)
+/obj/effect/nettingportal/Initialize(mapload, destination_beacon)
 	. = ..()
-	var/obj/item/beacon/teletarget = null
-	for(var/obj/machinery/computer/teleporter/com as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/teleporter))
-		var/atom/target = com.target_ref?.resolve()
-		if(target)
-			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
-				teletarget = target
-		else
-			com.target_ref = null
-
+	var/obj/item/dragnet_beacon/teletarget = destination_beacon
 	addtimer(CALLBACK(src, PROC_REF(pop), teletarget), 3 SECONDS)
 
 /obj/effect/nettingportal/proc/pop(teletarget)
 	if(teletarget)
-		for(var/mob/living/L in get_turf(src))
-			do_teleport(L, teletarget, 2, channel = TELEPORT_CHANNEL_BLUESPACE)//teleport what's in the tile to the beacon
+		for(var/mob/living/living_mob in get_turf(src))
+			do_teleport(living_mob, get_turf(teletarget), 1, channel = TELEPORT_CHANNEL_BLUESPACE) //Teleport what's in the tile to the beacon
 	else
-		for(var/mob/living/L in get_turf(src))
-			do_teleport(L, L, 15, channel = TELEPORT_CHANNEL_BLUESPACE) //Otherwise it just warps you off somewhere.
+		for(var/mob/living/living_mob in get_turf(src))
+			do_teleport(living_mob, get_turf(living_mob), 15, channel = TELEPORT_CHANNEL_BLUESPACE) //Otherwise it just warps you off somewhere.
 
 	qdel(src)
 
@@ -60,9 +58,9 @@
 
 /obj/item/dragnet_beacon
 	name = "\improper DRAGnet beacon"
-	desc = "Can be synced with a DRAGnet to set it as a designated teleporting point"
+	desc = "Can be synced with a DRAGnet to set it as a designated teleporting point."
 	icon = 'icons/obj/devices/tracker.dmi'
-	icon_state = "beacon"
+	icon_state = "dragnet_beacon"
 	inhand_icon_state = "beacon"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
