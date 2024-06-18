@@ -11,6 +11,8 @@
 	var/upgrade_name
 	/// Adds a prefix to the item, demonstrating that it is upgraded in some way.
 	var/upgrade_prefix = "reinforced"
+	/// Tracks whether or not we've received an upgrade or not.
+	var/have_upgraded = FALSE
 
 /datum/armor/armor_plate
 	melee = 10
@@ -81,10 +83,10 @@
 		to_chat(user, span_info("You strengthen [mecha_for_upgrading], improving its resistance against attacks."))
 	else
 		SEND_SIGNAL(target_for_upgrading, COMSIG_ARMOR_PLATED, amount, maxamount)
-		if(upgrade_prefix)
+		if(upgrade_prefix && !have_upgraded)
 			target_for_upgrading.name = "[upgrade_prefix] [target_for_upgrading.name]"
+			have_upgraded = TRUE
 		to_chat(user, span_info("You strengthen [target_for_upgrading], improving its resistance against attacks."))
-
 
 /datum/component/armor_plate/proc/dropplates(datum/source, force)
 	SIGNAL_HANDLER

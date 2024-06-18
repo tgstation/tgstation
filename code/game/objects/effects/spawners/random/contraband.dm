@@ -141,6 +141,13 @@
 		/obj/effect/mine/shrapnel = 5,
 	)
 
+/obj/effect/spawner/random/contraband/qm_rocket
+	name = "QMs dud rocket spawner"
+	loot = list(
+		/obj/item/ammo_casing/rocket/reverse = 85,
+		/obj/item/ammo_casing/rocket = 15,
+	)
+
 /obj/effect/spawner/random/contraband/grenades
 	name = "grenades spawner"
 	loot = list(

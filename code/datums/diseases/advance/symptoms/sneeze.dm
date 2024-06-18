@@ -53,15 +53,14 @@
 			if(!suppress_warning)
 				affected_mob.emote("sniff")
 		else
-			active_disease.airborne_spread(spread_range, force_spread = TRUE, require_facing = TRUE)
+			if(affected_mob.can_spread_airborne_diseases()) //don't spread germs if they covered their mouth
+				affected_mob.infectious_sneeze(active_disease, TRUE, range = spread_range)
 			if(cartoon_sneezing) //Yeah, this can fling you around even if you have a space suit helmet on. It's, uh, bluespace snot, yeah.
-				affected_mob.emote("sneeze")
 				to_chat(affected_mob, span_userdanger("You are launched violently backwards by an all-mighty sneeze!"))
 				var/sneeze_distance = rand(2,4) //twice as far as a normal baseball bat strike will fling you
 				var/turf/target = get_ranged_target_turf(affected_mob, REVERSE_DIR(affected_mob.dir), sneeze_distance)
 				affected_mob.throw_at(target, sneeze_distance, rand(1,4)) //with the wounds update, sneezing at 7 speed was causing peoples bones to spontaneously explode, turning cartoonish sneezing into a nightmarishly lethal GBS 2.0 outbreak
 			else if(COOLDOWN_FINISHED(src, sneeze_cooldown) || !COOLDOWN_FINISHED(src, sneeze_cooldown) && prob(60) && !off_cooldown_sneezed)
-				affected_mob.emote("sneeze")
 				COOLDOWN_START(src, sneeze_cooldown, 5 SECONDS)
 				if(!off_cooldown_sneezed && !COOLDOWN_FINISHED(src, sneeze_cooldown))
 					off_cooldown_sneezed = TRUE
