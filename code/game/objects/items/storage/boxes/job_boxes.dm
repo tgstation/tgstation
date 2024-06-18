@@ -42,7 +42,7 @@
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA))
 		new /obj/item/storage/pill_bottle/potassiodide(src)
-	
+
 	if(SSmapping.is_planetary() && LAZYLEN(SSmapping.multiz_levels))
 		new /obj/item/climbing_hook/emergency(src)
 
@@ -171,20 +171,20 @@
 	desc = "A colorful cardboard box for the clown"
 	illustration = "clown"
 
-/obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
-	if((istype(I, /obj/item/bodypart/arm/left/robot)) || (istype(I, /obj/item/bodypart/arm/right/robot)))
+/obj/item/storage/box/clown/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
+	if(istype(inserted, /obj/item/bodypart/arm/left/robot) || istype(inserted, /obj/item/bodypart/arm/right/robot))
 		if(contents.len) //prevent accidently deleting contents
 			balloon_alert(user, "items inside!")
-			return
-		if(!user.temporarilyRemoveItemFromInventory(I))
-			return
-		qdel(I)
-		balloon_alert(user, "wheels added, honk!")
+			return FALSE
+		if(!user.temporarilyRemoveItemFromInventory(inserted))
+			return FALSE
+		qdel(inserted)
+		loc.balloon_alert(user, "wheels added, honk!")
 		var/obj/item/bot_assembly/honkbot/A = new
 		qdel(src)
 		user.put_in_hands(A)
-	else
-		return ..()
+		return FALSE
+	return TRUE
 
 /obj/item/storage/box/clown/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] opens [src] and gets consumed by [p_them()]! It looks like [user.p_theyre()] trying to commit suicide!"))
