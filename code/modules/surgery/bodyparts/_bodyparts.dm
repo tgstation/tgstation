@@ -362,7 +362,7 @@
 
 	if(ishuman(victim))
 		var/mob/living/carbon/human/human_victim = victim
-		if(HAS_TRAIT(victim, TRAIT_LIMBATTACHMENT))
+		if(HAS_TRAIT(victim, TRAIT_LIMBATTACHMENT) || HAS_TRAIT(src, TRAIT_EASY_ATTACH))
 			if(!human_victim.get_bodypart(body_zone))
 				user.temporarilyRemoveItemFromInventory(src, TRUE)
 				if(!try_attach_limb(victim))

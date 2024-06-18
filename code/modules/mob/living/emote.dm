@@ -175,7 +175,18 @@
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	stat_allowed = HARD_CRIT
 
-/datum/emote/living/gasp_shock
+/datum/emote/living/gasp/get_sound(mob/living/user)
+	if(!HAS_MIND_TRAIT(user, TRAIT_MIMING))
+		return
+	if(!ishuman(user))
+		return
+
+	var/mob/living/carbon/human/human_user = user
+	if(human_user.physique == FEMALE)
+		return pick('sound/voice/human/gasp_female1.ogg', 'sound/voice/human/gasp_female2.ogg', 'sound/voice/human/gasp_female3.ogg')
+	return pick('sound/voice/human/gasp_male1.ogg', 'sound/voice/human/gasp_male2.ogg')
+
+/datum/emote/living/gasp/shock
 	key = "gaspshock"
 	key_third_person = "gaspsshock"
 	name = "gasp (Shock)"
@@ -183,16 +194,6 @@
 	message_mime = "gasps in silent shock!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	stat_allowed = SOFT_CRIT
-
-/datum/emote/living/gasp_shock/get_sound(mob/living/user)
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/human_user = user
-	if(ishumanbasic(human_user) || isfelinid(human_user) && !HAS_MIND_TRAIT(human_user, TRAIT_MIMING))
-		if(human_user.physique == FEMALE)
-			return pick('sound/voice/human/gasp_female1.ogg', 'sound/voice/human/gasp_female2.ogg', 'sound/voice/human/gasp_female3.ogg')
-		else
-			return pick('sound/voice/human/gasp_male1.ogg', 'sound/voice/human/gasp_male2.ogg')
 
 /datum/emote/living/giggle
 	key = "giggle"
@@ -273,11 +274,10 @@
 /datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE , intentional)
 	return ..() && user.can_speak(allow_mimes = TRUE)
 
-/datum/emote/living/laugh/get_sound(mob/living/carbon/user)
-	if(!ishuman(user))
+/datum/emote/living/laugh/get_sound(mob/living/carbon/human/user)
+	if(!istype(user))
 		return
-	var/mob/living/carbon/human/human_user = user
-	return human_user.dna.species.get_laugh_sound(user)
+	return user.dna.species.get_laugh_sound(user)
 
 /datum/emote/living/look
 	key = "look"
@@ -311,36 +311,36 @@
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 	return ..()
 
-/datum/emote/living/carbon/cry
-	key = "cry"
-	key_third_person = "cries"
-	message = "cries."
-	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-	stat_allowed = SOFT_CRIT
-	mob_type_blacklist_typecache = list(/mob/living/carbon/human) //Humans get specialized cry emote with sound and animation.
-
 /datum/emote/living/sneeze
 	key = "sneeze"
 	key_third_person = "sneezes"
 	message = "sneezes."
+	message_mime = "acts out an exaggerated silent sneeze."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	mob_type_blacklist_typecache = list(/mob/living/carbon/human) //Humans get specialized sneeze emote with sound.
+	audio_cooldown = 5 SECONDS
+	vary = TRUE
 
-/datum/emote/living/carbon/human/glasses/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	var/image/emote_animation = image('icons/mob/human/emote_visuals.dmi', user, "glasses")
-	flick_overlay_global(emote_animation, GLOB.clients, 1.6 SECONDS)
+/datum/emote/living/sneeze/get_sound(mob/living/carbon/human/user)
+	if(!istype(user))
+		return
+	return user.dna.species.get_sneeze_sound(user)
 
-/datum/emote/living/carbon/cough
+/datum/emote/living/cough
 	key = "cough"
 	key_third_person = "coughs"
 	message = "coughs!"
 	message_mime = "acts out an exaggerated cough!"
+	vary = TRUE
+	audio_cooldown = 5 SECONDS
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_RUNECHAT
-	mob_type_blacklist_typecache = list(/mob/living/carbon/human) //Humans get specialized cough emote with sound.
 
 /datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional)
 	return !HAS_TRAIT(user, TRAIT_SOOTHED_THROAT) && ..()
+
+/datum/emote/living/cough/get_sound(mob/living/carbon/human/user)
+	if(!istype(user))
+		return
+	return user.dna.species.get_cough_sound(user)
 
 
 /datum/emote/living/pout
@@ -355,7 +355,6 @@
 	message = "screams!"
 	message_mime = "acts out a scream!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	mob_type_blacklist_typecache = list(/mob/living/carbon/human) //Humans get specialized scream.
 
 /datum/emote/living/scream/run_emote(mob/user, params, type_override, intentional = FALSE)
 	if(!intentional && HAS_TRAIT(user, TRAIT_ANALGESIA))
@@ -753,6 +752,4 @@
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/whistle/get_sound(mob/living/user)
-	if(!istype(user))
-		return
 	return 'sound/voice/human/whistle1.ogg'

@@ -423,7 +423,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /datum/dna/proc/update_instability(alert=TRUE)
 	stability = 100
 	for(var/datum/mutation/human/M in mutations)
-		if(M.class == MUT_EXTRA)
+		if(M.class == MUT_EXTRA || M.instability < 0)
 			stability -= M.instability * GET_MUTATION_STABILIZER(M)
 	if(holder)
 		var/message
