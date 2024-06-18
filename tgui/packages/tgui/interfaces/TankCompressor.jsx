@@ -108,8 +108,6 @@ const TankCompressorControls = (props) => {
         {!usingLastData && pressure >= fragmentPressure && (
           <NoticeBox danger>Explosive Hazard</NoticeBox>
         )}
-      </Section>
-      <Section>
         <LabeledControls px={2}>
           <LabeledControls.Item label="Pressure">
             <RoundGauge
