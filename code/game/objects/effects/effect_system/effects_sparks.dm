@@ -38,7 +38,6 @@
 	var/turf/location = loc
 	if(isturf(location))
 		affect_location(location)
-	UnregisterSignal(src, list(COMSIG_MOVABLE_CROSS, COMSIG_MOVABLE_CROSS_OVER))
 	return ..()
 
 /obj/effect/particle_effect/sparks/Move()
