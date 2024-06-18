@@ -78,11 +78,11 @@
 	. += span_infoplain("Can be resource intensive to run. Ensure adequate power supply.")
 
 	if(capacitor_coefficient < 1)
-		. += span_infoplain("Its coolant capacity reduces cooldown time by [(1 - capacitor_coefficient) * 100]%.")
+		. += span_infoplain("- Its coolant capacity reduces cooldown time by [(1 - capacitor_coefficient) * 100]%.")
 
 	if(servo_bonus > 0.2)
-		. += span_infoplain("Its manipulation potential is increasing rewards by [servo_bonus]x.")
-		. += span_infoplain("Injury from unsafe ejection reduced [servo_bonus * 100]%.")
+		. += span_infoplain("- Its manipulation potential is increasing rewards by [servo_bonus]x.")
+		. += span_infoplain("- Injury from unsafe ejection reduced [servo_bonus * 100]%.")
 
 	if(!is_ready)
 		. += span_notice("It is currently cooling down. Give it a few moments.")
