@@ -865,7 +865,7 @@ generate/load female uniform sprites matching all previously decided variables
 				),
 			))
 		if(HUMAN_HEIGHT_DWARF) // tall monkeys and dwarves use the same value
-			if((ismonkey(src)))
+			if(ismonkey(src))
 				appearance.add_filters(list(
 					list(
 						"name" = "Monkey_Torso",
