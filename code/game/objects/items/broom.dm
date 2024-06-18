@@ -54,12 +54,9 @@
 /obj/item/pushbroom/proc/on_unwield(obj/item/source, mob/user)
 	UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 
-/obj/item/pushbroom/afterattack(atom/A, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	sweep(user, A)
-	return . | AFTERATTACK_PROCESSED_ITEM
+/obj/item/pushbroom/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	sweep(user, interacting_with)
+	return NONE // I guess
 
 /**
  * Attempts to push up to BROOM_PUSH_LIMIT atoms from a given location the user's faced direction
