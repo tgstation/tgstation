@@ -58,6 +58,15 @@
 /obj/effect/nettingportal/singularity_pull()
 	return
 
+/obj/item/dragnet_beacon
+	name = "\improper DRAGnet beacon"
+	desc = "Can be synced with a DRAGnet to set it as a designated teleporting point"
+	icon = 'icons/obj/devices/tracker.dmi'
+	icon_state = "beacon"
+	inhand_icon_state = "beacon"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+
 /obj/projectile/energy/trap
 	name = "energy snare"
 	icon_state = "e_snare"

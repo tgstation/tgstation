@@ -45,6 +45,16 @@
 	icon_state = "shotgun"
 	loot = list(/obj/item/gun/ballistic/shotgun/riot)
 
+/obj/effect/spawner/random/armory/dragnet
+	name = "DRAGnet spawner"
+	icon_state = "dragnet"
+	loot = list(
+		/obj/item/gun/energy/e_gun/dragnet,
+		/obj/item/dragnet_beacon,
+	)
+	spawn_loot_count = 2
+	spawn_all_loot = TRUE
+
 // Armor
 /obj/effect/spawner/random/armory/bulletproof_helmet
 	name = "bulletproof helmet spawner"
