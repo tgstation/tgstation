@@ -6,7 +6,7 @@
 	difficulty = 18
 	text_gain_indication = "<span class='notice'>You feel smarter!</span>"
 	limb_req = BODY_ZONE_HEAD
-	instability = 30
+	instability = POSITIVE_INSTABILITY_MAJOR
 	///Typecache of atoms that TK shouldn't interact with
 	var/static/list/blacklisted_atoms = typecacheof(list(/atom/movable/screen))
 
@@ -43,7 +43,7 @@
 	name = "Elastic Arms"
 	desc = "Subject's arms have become elastic, allowing them to stretch up to a meter away. However, this elasticity makes it difficult to wear gloves, handle complex tasks, or grab large objects."
 	quality = POSITIVE
-	instability = 30
+	instability = POSITIVE_INSTABILITY_MAJOR
 	text_gain_indication = span_warning("You feel armstrong!")
 	text_lose_indication = span_warning("Your arms stop feeling so saggy all the time.")
 	difficulty = 32

@@ -95,7 +95,7 @@
 	text_gain_indication = "<span class='notice'>Your hand feels blessed!</span>"
 	text_lose_indication = "<span class='notice'>Your hand feels secular once more.</span>"
 	power_path = /datum/action/cooldown/spell/touch/lay_on_hands
-	instability = 35
+	instability = POSITIVE_INSTABILITY_MAJOR
 	energy_coeff = 1
 	power_coeff = 1
 	synchronizer_coeff = 1

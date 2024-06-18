@@ -359,7 +359,6 @@
 	quality = POSITIVE
 	instability = POSITIVE_INSTABILITY_MINI
 	text_gain_indication = "<span class='notice'>You feel stimmed.</span>"
-	instability = 15
 	difficulty = 16
 
 /datum/mutation/human/stimmed/on_acquiring(mob/living/carbon/human/owner)

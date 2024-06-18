@@ -3,7 +3,7 @@
 	desc = "Allows the host to trigger their body's adrenaline response at will."
 	quality = POSITIVE
 	text_gain_indication = span_notice("You feel pumped up!")
-	instability = 15
+	instability = POSITIVE_INSTABILITY_MODERATE
 	power_path = /datum/action/cooldown/adrenaline
 
 	energy_coeff = 1
