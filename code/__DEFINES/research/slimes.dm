@@ -61,3 +61,6 @@
 #define SLIME_TYPE_SEPIA "sepia"
 #define SLIME_TYPE_SILVER "silver"
 #define SLIME_TYPE_YELLOW "yellow"
+
+// The alpha value of transperent slime types
+#define SLIME_TRANSPARENCY_ALPHA 180
