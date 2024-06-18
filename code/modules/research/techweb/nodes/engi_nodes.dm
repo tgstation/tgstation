@@ -37,6 +37,7 @@
 		"adv_matter_bin",
 		"adv_scanning",
 		"super_cell",
+		"flatpacker",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
