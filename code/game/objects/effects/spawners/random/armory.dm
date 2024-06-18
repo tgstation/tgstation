@@ -48,13 +48,12 @@
 /obj/effect/spawner/random/armory/dragnet
 	name = "DRAGnet spawner"
 	icon_state = "dragnet"
-	loot = list(
-		/obj/item/gun/energy/e_gun/dragnet,
-		/obj/item/dragnet_beacon,
-	)
-	spawn_loot_count = 4
-	spawn_all_loot = TRUE
-	spawn_loot_double = TRUE
+	loot = list(/obj/item/gun/energy/e_gun/dragnet)
+	spawn_loot_count = 2
+
+/obj/effect/spawner/random/armory/dragnet/spawn_loot(lootcount_override)
+	. = ..()
+	new /obj/item/dragnet_beacon(get_turf(src)) //And give them a beacon too!
 
 // Armor
 /obj/effect/spawner/random/armory/bulletproof_helmet
