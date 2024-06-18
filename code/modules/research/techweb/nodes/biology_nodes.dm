@@ -26,7 +26,7 @@
 		"swab",
 		"biopsy_tool",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 
 /datum/techweb_node/xenobiology
 	id = "xenobiology"
@@ -57,7 +57,7 @@
 		"genescanner",
 		"mod_dna_lock",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(
 		/datum/experiment/scanning/random/plants/traits = TECHWEB_TIER_2_POINTS,
 		/datum/experiment/scanning/points/slime/hard = TECHWEB_TIER_2_POINTS,
