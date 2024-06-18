@@ -1726,6 +1726,10 @@
 /datum/sprite_accessory/lizard_markings
 	icon = 'icons/mob/human/species/lizard/lizard_markings.dmi'
 
+/datum/sprite_accessory/lizard_markings/none
+	name = "None"
+	icon_state = "none"
+
 /datum/sprite_accessory/lizard_markings/dtiger
 	name = "Dark Tiger Body"
 	icon_state = "dtiger"
