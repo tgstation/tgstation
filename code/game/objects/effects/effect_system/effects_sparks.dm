@@ -77,11 +77,14 @@
 		if(singed_obj.resistance_flags & FLAMMABLE && !(singed_obj.resistance_flags & ON_FIRE)) //only fire_act flammable objects instead of burning EVERYTHING
 			if(isstructure(singed_obj)) // don't ignite furniture even if it's flammable; we can leave that to actual fires
 				return
-			else
+			else if(isitem(singed_obj))
+				var/obj/item/singed_item = singed_obj
 				var/ignite_chance = 120 // base chance applies to anything under WEIGHT_CLASS_NORMAL, so burn everything flammable that's small/tiny
-				ignite_chance = ignite_chance - (singed_obj.w_class > WEIGHT_CLASS_SMALL ? (singed_obj.w_class * 2 + round(singed_obj.w_class * 0.5)) : 0) // 50% normal size, 20% bulky, no chance to ignite bigger items
+				ignite_chance = ignite_chance - (singed_item.w_class > WEIGHT_CLASS_SMALL ? (singed_item.w_class * 2 + round(singed_item.w_class * 0.5)) : 0) // 50% normal size, 20% bulky, no chance to ignite bigger items
 				if(prob(ignite_chance))
-					singed_obj.fire_act(1,100)
+					singed_item.fire_act(1,100)
+			else
+				singed_obj.fire_act(1,100)
 		if(singed_obj.reagents)
 			var/datum/reagents/reagents = singed_obj.reagents
 			reagents?.expose_temperature(1000)
