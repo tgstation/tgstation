@@ -11,8 +11,8 @@
 	icon_state = "justice"
 	base_icon_state = "justice"
 	movedelay = MOVEDELAY_SAFTY // fast
-	max_integrity = 175 // but weak
-	accesses = list()
+	max_integrity = 200 // but weak
+	accesses = list(ACCESS_SYNDICATE)
 	armor_type = /datum/armor/mecha_justice
 	max_temperature = 40000
 	force = 60 // dangerous in melee
