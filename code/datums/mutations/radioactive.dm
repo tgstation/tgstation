@@ -3,7 +3,7 @@
 	desc = "A volatile mutation that causes the host to sent out deadly beta radiation. This affects both the hosts and their surroundings."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>You can feel it in your bones!</span>"
-	instability = 5
+	instability = NEGATIVE_STABILITY_MAJOR
 	difficulty = 8
 	power_coeff = 1
 	/// Weakref to our radiation emitter component
