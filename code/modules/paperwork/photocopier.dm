@@ -88,6 +88,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/starting_paper = 30
 	/// A stack for all the empty paper we have newly inserted (LIFO)
 	var/list/paper_stack = list()
+	/// Icon for butt sprites
+	var/butt_icon = 'icons/mob/butts.dmi'
 
 
 /obj/machinery/photocopier/Initialize(mapload)
@@ -498,7 +500,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/butt_icon_state = ass.get_butt_sprite()
 	if(isnull(butt_icon_state))
 		return null
-	var/icon/temp_img = icon('icons/mob/butts.dmi', butt_icon_state)
+	var/icon/temp_img = icon(butt_icon, butt_icon_state)
 	var/obj/item/photo/copied_ass = new /obj/item/photo(src)
 	var/datum/picture/toEmbed = new(name = "[ass]'s Ass", desc = "You see [ass]'s ass on the photo.", image = temp_img)
 	toEmbed.psize_x = 128
