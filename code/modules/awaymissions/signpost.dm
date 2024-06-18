@@ -17,7 +17,7 @@
 	if(.)
 		return
 	if(tgui_alert(usr,question,name,list("Yes","No")) == "Yes" && Adjacent(user))
-		var/turf/T = find_safe_turf(zlevels=zlevels)
+		var/turf/T = zlevels ? find_safe_turf(zlevels=zlevels) : get_safe_random_station_turf()
 
 		if(T)
 			var/atom/movable/AM = user.pulling

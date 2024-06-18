@@ -13,11 +13,23 @@
 	var/is_left_clicking = !is_right_clicking
 	var/early_sig_return = NONE
 	if(is_left_clicking)
+		/*
+		 * This is intentionally using `||` instead of `|` to short-circuit the signal calls
+		 * This is because we want to return early if ANY of these signals return a value
+		 *
+		 * This puts priority on the atom's signals, then the tool's signals, then the user's signals
+		 * So stuff like storage can be handled before stuff the item wants to do like cleaner component
+		 *
+		 * Future idea: Being on combat mode could change/reverse the priority of these signals
+		 */
 		early_sig_return = SEND_SIGNAL(src, COMSIG_ATOM_ITEM_INTERACTION, user, tool, modifiers) \
-			| SEND_SIGNAL(tool, COMSIG_ITEM_INTERACTING_WITH_ATOM, user, src, modifiers)
+			|| SEND_SIGNAL(tool, COMSIG_ITEM_INTERACTING_WITH_ATOM, user, src, modifiers) \
+			|| SEND_SIGNAL(user, COMSIG_USER_ITEM_INTERACTION, src, tool, modifiers)
 	else
+		// See above
 		early_sig_return = SEND_SIGNAL(src, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, user, tool, modifiers) \
-			| SEND_SIGNAL(tool, COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY, user, src, modifiers)
+			|| SEND_SIGNAL(tool, COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY, user, src, modifiers) \
+			|| SEND_SIGNAL(user, COMSIG_USER_ITEM_INTERACTION_SECONDARY, src, tool, modifiers)
 	if(early_sig_return)
 		return early_sig_return
 
@@ -76,6 +88,7 @@
 	else
 		log_tool("[key_name(user)] used [tool] on [src] (right click) at [AREACOORD(src)]")
 		SEND_SIGNAL(tool, COMSIG_TOOL_ATOM_ACTED_SECONDARY(tool_type), src)
+	SEND_SIGNAL(tool, COMSIG_ITEM_TOOL_ACTED, src, user, tool_type, act_result)
 	return act_result
 
 /**
@@ -120,6 +133,92 @@
  */
 /obj/item/proc/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	return interact_with_atom(interacting_with, user, modifiers)
+
+/**
+ * ## Ranged item interaction
+ *
+ * Handles non-combat ranged interactions of a tool on this atom,
+ * such as shooting a gun in the direction of someone*,
+ * having a scanner you can point at someone to scan them at any distance,
+ * or pointing a laser pointer at something.
+ *
+ * *While this intuitively sounds combat related, it is not,
+ * because a "combat use" of a gun is gun-butting.
+ */
+/atom/proc/base_ranged_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	SHOULD_CALL_PARENT(TRUE)
+	PROTECTED_PROC(TRUE)
+
+	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
+	var/is_left_clicking = !is_right_clicking
+	var/early_sig_return = NONE
+	if(is_left_clicking)
+		// See [base_item_interaction] for defails on why this is using `||` (TL;DR it's short circuiting)
+		early_sig_return = SEND_SIGNAL(src, COMSIG_ATOM_RANGED_ITEM_INTERACTION, user, tool, modifiers) \
+			|| SEND_SIGNAL(tool, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM, user, src, modifiers)
+	else
+		// See above
+		early_sig_return = SEND_SIGNAL(src, COMSIG_ATOM_RANGED_ITEM_INTERACTION_SECONDARY, user, tool, modifiers) \
+			|| SEND_SIGNAL(tool, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY, user, src, modifiers)
+	if(early_sig_return)
+		return early_sig_return
+
+	var/self_interaction = is_left_clicking \
+		? ranged_item_interaction(user, tool, modifiers) \
+		: ranged_item_interaction_secondary(user, tool, modifiers)
+	if(self_interaction)
+		return self_interaction
+
+	var/interact_return = is_left_clicking \
+		? tool.ranged_interact_with_atom(src, user, modifiers) \
+		: tool.ranged_interact_with_atom_secondary(src, user, modifiers)
+	if(interact_return)
+		return interact_return
+
+	return NONE
+
+/**
+ * Called when this atom has an item used on it from a distance.
+ * IE, a mob is clicking on this atom with an item and is not adjacent.
+ *
+ * Does NOT include Telekinesis users, they are considered adjacent generally.
+ *
+ * Return an ITEM_INTERACT_ flag in the event the interaction was handled, to cancel further interaction code.
+ */
+/atom/proc/ranged_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return NONE
+
+/**
+ * Called when this atom has an item used on it from a distance WITH RIGHT CLICK,
+ * IE, a mob is right clicking on this atom with an item and is not adjacent.
+ *
+ * Default behavior has it run the same code as left click.
+ *
+ * Return an ITEM_INTERACT_ flag in the event the interaction was handled, to cancel further interaction code.
+ */
+/atom/proc/ranged_item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	return ranged_item_interaction(user, tool, modifiers)
+
+/**
+ * Called when this item is being used to interact with an atom from a distance,
+ * IE, a mob is clicking on an atom with this item and is not adjacent.
+ *
+ * Does NOT include Telekinesis users, they are considered adjacent generally
+ * (so long as this item is adjacent to the atom).
+ *
+ * Return an ITEM_INTERACT_ flag in the event the interaction was handled, to cancel further interaction code.
+ */
+/obj/item/proc/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return NONE
+
+/**
+ * Called when this item is being used to interact with an atom from a distance WITH RIGHT CLICK,
+ * IE, a mob is right clicking on an atom with this item and is not adjacent.
+ *
+ * Default behavior has it run the same code as left click.
+ */
+/obj/item/proc/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /*
  * Tool-specific behavior procs.
