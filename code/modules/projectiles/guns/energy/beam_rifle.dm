@@ -58,6 +58,7 @@
 	// Where we droppin' boys?
 	var/turf/rift_loc = get_turf(target)
 
+	// Spawn our temporary rift, then activate it.
 	var/obj/reality_tear/temporary/tear = new(rift_loc)
 	tear.start_disaster()
 	message_admins("[ADMIN_LOOKUPFLW(target)] has been hit by an anti-existential beam at [ADMIN_VERBOSEJMP(rift_loc)], creating a singularity.")
