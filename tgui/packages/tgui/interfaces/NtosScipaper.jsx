@@ -50,7 +50,7 @@ const PaperPublishing = (props) => {
       <Section title="Submission Form">
         {fileList.length === 0 && (
           <NoticeBox>
-            Use the File Manager app to download the file from a disk.
+            Use the File Manager app to download files from a disk.
           </NoticeBox>
         )}
         <LabeledList>
