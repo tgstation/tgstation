@@ -2,7 +2,7 @@
 /mob/living/simple_animal/hostile/asteroid
 	vision_range = 2
 	atmos_requirements = null
-	faction = list(FACTION_MINING, FACTION_ASHWALKER)
+	faction = list(FACTION_MINING)
 	weather_immunities = list(TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE)
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_WALLS
