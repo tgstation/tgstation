@@ -9,10 +9,17 @@
 	value = 4
 	mob_trait = TRAIT_SETTLER
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
-	medical_record_text = "Patient appears to be abnormally stout."
+	medical_record_text = "Patient has been exposed to planetary conditions for extended periods, resulting in bodily adaptions of excessively stout build."
 	mail_goodies = list(
 		/obj/item/clothing/shoes/workboots/mining,
 		/obj/item/gps,
+	)
+	var/list/settler_traits = list( // Some of the behavior of settler is from traits, rather than exclusively the quirk
+		TRAIT_EXPERT_FISHER,
+		TRAIT_ROUGHRIDER,
+		TRAIT_STUBBY_BODY,
+		TRAIT_BEAST_EMPATHY,
+		TRAIT_STURDY_FRAME,
 	)
 
 /datum/quirk/item_quirk/settler/add_unique(client/client_source)
@@ -22,6 +29,7 @@
 	human_quirkholder.set_mob_height(HUMAN_HEIGHT_SHORTEST)
 	human_quirkholder.add_movespeed_modifier(/datum/movespeed_modifier/settler)
 	human_quirkholder.physiology.hunger_mod *= 0.5 //good for you, shortass, you don't get hungry nearly as often
+	human_quirkholder.add_traits(settler_traits, QUIRK_TRAIT)
 
 /datum/quirk/item_quirk/settler/remove()
 	if(QDELING(quirk_holder))
@@ -30,3 +38,4 @@
 	human_quirkholder.set_mob_height(HUMAN_HEIGHT_MEDIUM)
 	human_quirkholder.remove_movespeed_modifier(/datum/movespeed_modifier/settler)
 	human_quirkholder.physiology.hunger_mod *= 2
+	human_quirkholder.remove_traits(settler_traits, QUIRK_TRAIT)

@@ -110,9 +110,14 @@
 	last_move_diagonal = ((direction & (direction - 1)) && (living_parent.loc == next))
 	var/modified_move_cooldown = vehicle_move_cooldown
 	var/modified_move_delay = vehicle_move_delay
-	if(ishuman(user) && HAS_TRAIT(user, TRAIT_SETTLER))
-		var/mob/living/carbon/human/settler_rider = user
-		switch(settler_rider.mob_mood.sanity_level)
+	if(ishuman(user) && HAS_TRAIT(user, TRAIT_ROUGHRIDER)) // YEEHAW!
+		var/mob/living/carbon/human/rough_rider = user
+		var/ride_benefit = null
+		if(isashwalker(rough_rider)) // ashwalkers are closer to beasts than humans, and ride them with expertise
+			ride_benefit = SANITY_LEVEL_GREAT
+		else
+			ride_benefit = rough_rider.mob_mood.sanity_level
+		switch(ride_benefit)
 			if(SANITY_LEVEL_GREAT)
 				modified_move_cooldown *= 0.5
 				modified_move_delay *= 0.5

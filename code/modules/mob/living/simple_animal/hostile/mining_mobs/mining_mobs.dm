@@ -2,7 +2,7 @@
 /mob/living/simple_animal/hostile/asteroid
 	vision_range = 2
 	atmos_requirements = null
-	faction = list(FACTION_MINING)
+	faction = list(FACTION_MINING, FACTION_ASHWALKER)
 	weather_immunities = list(TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE)
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_WALLS
@@ -46,6 +46,14 @@
 	)
 
 	RegisterSignals(src, list(COMSIG_PROJECTILE_PREHIT, COMSIG_ATOM_PREHITBY), PROC_REF(Aggro))
+	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(check_for_ashwalker_armistice_violation))
+
+/mob/living/simple_animal/hostile/asteroid/check_for_ashwalker_armistice_violation(datum/source, mob/living/carbon/human/ashwalker_attacker)
+	SIGNAL_HANDLER
+
+	if(!isashwalker(ashwalker_attacker))
+		return
+	faction.Remove(FACTION_ASHWALKER)
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()

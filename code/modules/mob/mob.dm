@@ -1549,8 +1549,8 @@
 		else
 			speedies += thing.slowdown
 
-	//if our movespeed mod is in the negatives, we don't modify it since that's a benefit
-	if(speedies > 0 && HAS_TRAIT(src, TRAIT_SETTLER))
+	//if we're well-trained in carrying heavy loads, equipment slowdowns are reduced
+	if(speedies > 0 && HAS_TRAIT(src, TRAIT_STURDY_FRAME))
 		speedies *= 0.2
 
 	if(immutable_speedies)
