@@ -24,10 +24,13 @@
 		/obj/effect/spawner/random/contraband/plus = 10,
 		/obj/item/reagent_containers/pill/maintenance = 5,
 	)
-	will_modify_loot = TRUE
 
-/obj/effect/spawner/random/contraband/modify_loot()
-	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT) // No matter what, it's contraband, and should be treated as such.
+
+/obj/effect/spawner/random/contraband/make_item(spawn_loc, type_path_to_make)
+	. = ..()
+	var/obj/item/made = ..()
+	ADD_TRAIT(made, TRAIT_CONTRABAND, INNATE_TRAIT)
+	return made
 
 /obj/effect/spawner/random/contraband/plus
 	name = "contraband loot spawner plus"

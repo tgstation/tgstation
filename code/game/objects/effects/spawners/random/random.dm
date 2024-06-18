@@ -29,8 +29,6 @@
 	var/spawn_scatter_radius = 0
 	/// Whether the items should have a random pixel_x/y offset (maxium offset distance is ±16 pixels for x/y)
 	var/spawn_random_offset = FALSE
-	/// Does this spawner modify the loot items in any way? Calls modify_loot() if true.
-	var/will_modify_loot = FALSE
 
 /obj/effect/spawner/random/Initialize(mapload)
 	. = ..()
@@ -70,8 +68,6 @@
 					spawn_loc = pick_n_take(spawn_locations)
 
 				var/atom/movable/spawned_loot = make_item(spawn_loc, lootspawn)
-				if(will_modify_loot)
-					modify_loot(spawned_loot)
 				spawned_loot.setDir(dir)
 
 				if (!spawn_loot_split && !spawn_random_offset)
@@ -121,12 +117,6 @@
 			continue
 		return FALSE
 	return TRUE
-
-/**
- * Proc that can be overridden to provide additional changes to spawned items, based on the spawner type itself.
- */
-/obj/effect/spawner/random/proc/modify_loot()
-	return
 
 //finds the probabilities of items spawning from a loot spawner's loot pool
 /obj/item/loot_table_maker
