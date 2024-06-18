@@ -11,7 +11,7 @@
 	integrity_failure = 0.1
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	layer = OBJ_LAYER
-	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
+	interaction_flags_mouse_drop = NONE
 
 	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 1
