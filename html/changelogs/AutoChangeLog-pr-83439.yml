@@ -1,0 +1,8 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - balance: "Negative mutations now allow you to have more positive mutations, via reducing your instability!"
+  - code_imp: "All mutations have been overall standardized via defines on their instability values. Many mediocre positive mutations have had their cost reduced significantly!"
+  - rscadd: "Added a new height mutation: Acromegaly! It's the opposite of Dwarfism and makes you uncannily tall. It also makes you hit your head 8% or 4% (with synch) of the time  you pass through airlocks. Wear a helmet!"
+  - rscadd: "Gigantism is now a recipe mutation, mix Acromegaly with Strength to get it."
+  - qol: "Injectors and activators' duration is now dependent on the in/stability (absolute value) of the mutations to be injected! With a minimum of 5-10-15 seconds for each type of injector. Also changed up a bit how part upgrade cooldowns work, by making each tier reduce cooldowns by 25-15-10% for each injector type."
