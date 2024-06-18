@@ -18,7 +18,7 @@
 	id = "cytology"
 	display_name = "Cytology"
 	description = "Cellular biology research focused on cultivation of limbs and diverse organisms from cells."
-	prereq_ids = list("bio_scan")
+	prereq_ids = list("xenobiology","selection")
 	design_ids = list(
 		"limbgrower",
 		"pandemic",
@@ -48,7 +48,7 @@
 	id = "gene_engineering"
 	display_name = "Gene Engineering"
 	description = "Research into sophisticated DNA manipulation techniques, enabling the modification of human genetic traits to unlock specific abilities and enhancements."
-	prereq_ids = list("selection", "xenobiology")
+	prereq_ids = list("bio_scan")
 	design_ids = list(
 		"dnascanner",
 		"scan_console",
