@@ -250,7 +250,7 @@ const TankCompressorRecords = (props) => {
               <LabeledList.Item label="Actions">
                 <Button
                   icon="floppy-disk"
-                  content="Save to disk"
+                  content="Save to Disk"
                   disabled={!disk}
                   tooltip="Save the record selected to an inserted data disk."
                   tooltipPosition="bottom"
