@@ -42,7 +42,6 @@
 		"limbdesign_plasmaman",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
-	required_experiments = list(/datum/experiment/scanning/random/cytology)
 
 /datum/techweb_node/gene_engineering
 	id = "gene_engineering"
@@ -58,6 +57,7 @@
 		"mod_dna_lock",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	required_experiments = list(/datum/experiment/scanning/random/cytology)
 	discount_experiments = list(
 		/datum/experiment/scanning/random/plants/traits = TECHWEB_TIER_2_POINTS,
 		/datum/experiment/scanning/points/slime/hard = TECHWEB_TIER_2_POINTS,
