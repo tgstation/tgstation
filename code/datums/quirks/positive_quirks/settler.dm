@@ -9,7 +9,7 @@
 	value = 4
 	mob_trait = TRAIT_SETTLER
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
-	medical_record_text = "Patient has been exposed to planetary conditions for extended periods, resulting in bodily adaptions of excessively stout build."
+	medical_record_text = "Patient has been exposed to planetary conditions for extended periods, resulting in an excessively stout build."
 	mail_goodies = list(
 		/obj/item/clothing/shoes/workboots/mining,
 		/obj/item/gps,
