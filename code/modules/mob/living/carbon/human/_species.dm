@@ -2083,8 +2083,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /// Add species appropriate body markings
 /datum/species/proc/add_body_markings(mob/living/carbon/human/hooman)
-	for(var/datum/bodypart_overlay/simple/body_marking/markings as anything in body_markings) //loop through possible species markings
-		markings = new markings() // made to die... mostly because we cant use initial on lists but its convenient and organized
+	for(var/markings_type in body_markings) //loop through possible species markings
+		var/datum/bodypart_overlay/simple/body_marking/markings = new markings_type() // made to die... mostly because we cant use initial on lists but its convenient and organized
 		var/accessory_name = hooman.dna.features[markings.dna_feature_key] //get the accessory name from dna
 		var/datum/sprite_accessory/moth_markings/accessory = markings.get_accessory(accessory_name) //get the actual datum
 
@@ -2097,7 +2097,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(!people_part)
 				continue
 
-			var/datum/bodypart_overlay/simple/body_marking/overlay = new markings.type ()
+			var/datum/bodypart_overlay/simple/body_marking/overlay = new markings_type ()
 
 			// Tell the overlay what it should look like
 			overlay.icon = accessory.icon
