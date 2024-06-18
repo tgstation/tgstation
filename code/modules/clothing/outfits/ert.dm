@@ -39,6 +39,7 @@
 	name = "ERT Commander"
 
 	uniform = /obj/item/clothing/under/rank/centcom/officer/commander
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	id = /obj/item/card/id/advanced/centcom/ert
 	back = /obj/item/mod/control/pre_equipped/responsory/commander
 	l_hand = /obj/item/gun/energy/e_gun
