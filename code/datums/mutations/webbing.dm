@@ -4,7 +4,7 @@
 	desc = "Allows the user to lay webbing, and travel through it."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your skin feels webby.</span>"
-	instability = 15
+	instability = POSITIVE_INSTABILITY_MODERATE // useful until you're lynched
 	power_path = /datum/action/cooldown/mob_cooldown/lay_web/genetic
 	energy_coeff = 1
 
