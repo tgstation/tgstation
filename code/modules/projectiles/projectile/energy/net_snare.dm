@@ -5,18 +5,17 @@
 	damage_type = STAMINA
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
-	var/obj/item/dragnet_beacon/destination_beacon
 
 /obj/projectile/energy/net/Initialize(mapload)
 	. = ..()
 	SpinAnimation()
-	var/obj/item/gun/energy/e_gun/dragnet/our_dragnet = fired_from
-	if(!our_dragnet || !istype(our_dragnet))
-		return
-
-	destination_beacon = our_dragnet.linked_beacon
 
 /obj/projectile/energy/net/on_hit(atom/target, blocked = 0, pierce_hit)
+	var/obj/item/dragnet_beacon/destination_beacon = null
+	var/obj/item/gun/energy/e_gun/dragnet/our_dragnet = fired_from
+	if(our_dragnet && istype(our_dragnet))
+		destination_beacon = our_dragnet.linked_beacon
+
 	if(isliving(target))
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
@@ -64,6 +63,12 @@
 	inhand_icon_state = "beacon"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+
+/obj/item/dragnet_beacon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/gun/energy/e_gun/dragnet))
+		var/obj/item/gun/energy/e_gun/dragnet/dragnet_to_link = tool
+		dragnet_to_link.linked_beacon = src
+		balloon_alert(user, "beacon synced")
 
 /obj/projectile/energy/trap
 	name = "energy snare"

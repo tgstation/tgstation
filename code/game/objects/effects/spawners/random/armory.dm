@@ -52,8 +52,9 @@
 		/obj/item/gun/energy/e_gun/dragnet,
 		/obj/item/dragnet_beacon,
 	)
-	spawn_loot_count = 2
+	spawn_loot_count = 4
 	spawn_all_loot = TRUE
+	spawn_loot_double = TRUE
 
 // Armor
 /obj/effect/spawner/random/armory/bulletproof_helmet

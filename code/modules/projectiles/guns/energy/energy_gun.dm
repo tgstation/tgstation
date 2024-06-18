@@ -100,6 +100,11 @@
 /obj/item/gun/energy/e_gun/dragnet/add_seclight_point()
 	return
 
+/obj/item/gun/energy/e_gun/dragnet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/dragnet_beacon))
+		linked_beacon = tool
+		balloon_alert(user, "beacon synced")
+
 /obj/item/gun/energy/e_gun/dragnet/snare
 	name = "Energy Snare Launcher"
 	desc = "Fires an energy snare that slows the target down."
