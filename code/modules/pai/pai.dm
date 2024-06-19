@@ -460,7 +460,7 @@
 	to_chat(src, span_userdanger("Your mental faculties leave you."))
 	to_chat(src, span_rose("oblivion... "))
 	balloon_alert(user, "personality wiped")
-	playsound(src, "sound/machines/buzz-two.ogg", 30, TRUE)
+	playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
 	qdel(src)
 	return TRUE
 

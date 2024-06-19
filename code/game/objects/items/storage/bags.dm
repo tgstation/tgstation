@@ -155,11 +155,13 @@
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 		listeningTo = null
 
-/obj/item/storage/bag/ore/attackby(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/boulder))
-		to_chat(user, span_warning("You can't fit \the [attacking_item] into \the [src]. Perhaps you should break it down first, or find an ore box."))
-		return TRUE
-	return ..()
+/obj/item/storage/bag/ore/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
+	if(istype(inserted, /obj/item/boulder))
+		to_chat(user, span_warning("You can't fit [inserted] into [src]. \
+			Perhaps you should break it down first, or find an ore box."))
+		return FALSE
+
+	return TRUE
 
 /obj/item/storage/bag/ore/proc/pickup_ores(mob/living/user)
 	SIGNAL_HANDLER
@@ -271,11 +273,10 @@
 	. = ..()
 	. += span_notice("Ctrl-click to activate seed extraction.")
 
-/obj/item/storage/bag/plants/portaseeder/CtrlClick(mob/user)
-	if(user.incapacitated())
-		return
+/obj/item/storage/bag/plants/portaseeder/item_ctrl_click(mob/user)
 	for(var/obj/item/plant in contents)
 		seedify(plant, 1)
+	return CLICK_ACTION_SUCCESS
 
 // -----------------------------
 //        Sheet Snatcher
@@ -572,5 +573,29 @@
 /obj/item/storage/bag/harpoon_quiver/PopulateContents()
 	for(var/i in 1 to 40)
 		new /obj/item/ammo_casing/harpoon(src)
+
+/obj/item/storage/bag/rebar_quiver
+	name = "Rebar Storage Quiver"
+	icon = 'icons/obj/weapons/bows/quivers.dmi'
+	icon_state = "rebar_quiver"
+	worn_icon_state = "rebar_quiver"
+	inhand_icon_state = "rebar_quiver"
+	desc = "A oxygen tank cut in half, used for holding sharpened rods for the rebar crossbow."
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE
+	resistance_flags = FLAMMABLE
+
+/obj/item/storage/bag/rebar_quiver/Initialize(mapload)
+	. = ..()
+	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
+	atom_storage.max_slots = 10
+	atom_storage.max_total_storage = 15
+	atom_storage.set_holdable(list(
+		/obj/item/ammo_casing/rebar,
+		/obj/item/ammo_casing/rebar/syndie,
+		/obj/item/ammo_casing/rebar/healium,
+		/obj/item/ammo_casing/rebar/hydrogen,
+		/obj/item/ammo_casing/rebar/zaukerite,
+		/obj/item/ammo_casing/rebar/paperball,
+		))
 
 #undef ORE_BAG_BALOON_COOLDOWN

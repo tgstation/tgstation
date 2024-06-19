@@ -9,6 +9,7 @@
 	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
+	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	use_power = NO_POWER_USE
 	///The amount of water in the tray (max 100)
 	var/waterlevel = 0
@@ -1086,19 +1087,16 @@
 		if(user)
 			user.examinate(src)
 
-/obj/machinery/hydroponics/CtrlClick(mob/user)
-	. = ..()
-	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+/obj/machinery/hydroponics/click_ctrl(mob/user)
 	if(!powered())
 		to_chat(user, span_warning("[name] has no power."))
 		update_use_power(NO_POWER_USE)
-		return
+		return CLICK_ACTION_BLOCKING
 	if(!anchored)
-		return
+		return CLICK_ACTION_BLOCKING
 	set_self_sustaining(!self_sustaining)
 	to_chat(user, span_notice("You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""]."))
-
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/hydroponics/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -1184,8 +1182,8 @@
 		deconstruct(disassembled = TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/hydroponics/soil/CtrlClick(mob/user)
-	return //Soil has no electricity.
+/obj/machinery/hydroponics/soil/click_ctrl(mob/user)
+	return CLICK_ACTION_BLOCKING //Soil has no electricity.
 
 /obj/machinery/hydroponics/soil/on_deconstruction(disassembled)
 	new /obj/item/stack/ore/glass(drop_location(), 3)

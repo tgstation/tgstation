@@ -37,6 +37,8 @@
 	var/datum/component/remote_materials/silo_mats
 	/// switch to use internal or remote storage
 	var/silo_link = FALSE
+	/// has the blueprint design changed
+	var/blueprint_changed = FALSE
 
 /datum/armor/item_construction
 	fire = 100
@@ -50,6 +52,18 @@
 	if(upgrade & RCD_UPGRADE_SILO_LINK)
 		silo_mats = AddComponent(/datum/component/remote_materials, mapload, FALSE)
 	update_appearance()
+
+///An do_after() specially designed for rhd devices
+/obj/item/construction/proc/build_delay(mob/user, delay, atom/target)
+	if(delay <= 0)
+		return TRUE
+
+	blueprint_changed = FALSE
+
+	return do_after(user, delay, target, extra_checks = CALLBACK(src, PROC_REF(blueprint_change)))
+
+/obj/item/construction/proc/blueprint_change()
+	return !blueprint_changed
 
 ///used for examining the RCD and for its UI
 /obj/item/construction/proc/get_silo_iron()
@@ -75,20 +89,22 @@
 	silo_mats = null
 	return ..()
 
-/obj/item/construction/pre_attack(atom/target, mob/user, params)
-	if(istype(target, /obj/item/rcd_upgrade))
-		install_upgrade(target, user)
-		return TRUE
-	if(insert_matter(target, user))
-		return TRUE
+/obj/item/construction/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	SHOULD_CALL_PARENT(TRUE)
+	if(istype(interacting_with, /obj/item/rcd_upgrade))
+		install_upgrade(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+	if(insert_matter(interacting_with, user))
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
-/obj/item/construction/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/rcd_upgrade))
-		install_upgrade(item, user)
-		return TRUE
-	if(insert_matter(item, user))
-		return TRUE
+/obj/item/construction/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	SHOULD_CALL_PARENT(TRUE)
+	if(istype(tool, /obj/item/rcd_upgrade))
+		install_upgrade(tool, user)
+		return ITEM_INTERACT_SUCCESS
+	if(insert_matter(tool, user))
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /// Installs an upgrade into the RCD checking if it is already installed, or if it is a banned upgrade
