@@ -124,7 +124,7 @@
 	name = "Exotic Corgi Crate"
 	desc = "Corgi fit for a king, this corgi comes in a unique color to signify their superiority. \
 		Comes with a cute collar!"
-	cost = CARGO_CRATE_VALUE * 5
+	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/mob/living/basic/pet/dog/corgi/exoticcorgi,
 					/obj/item/clothing/neck/petcollar,
 				)
