@@ -296,7 +296,9 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/hunter/mi13_foodtruck)
 "kv" = (
-/obj/machinery/door/window/brigdoor/right/directional/east,
+/obj/machinery/door/window/brigdoor/right/directional/east{
+	req_access = list("syndicate")
+	},
 /obj/effect/turf_decal/caution/stand_clear{
 	dir = 8
 	},
@@ -326,7 +328,9 @@
 /area/shuttle/hunter/mi13_foodtruck)
 "mT" = (
 /obj/machinery/power/smes/magical{
-	cable_layer = 1
+	cable_layer = 1;
+	name = "cybersun power storage unit";
+	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Produces power via a top-secret method."
 	},
 /obj/structure/cable/layer1,
 /turf/open/floor/circuit/red,
@@ -600,16 +604,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/mi13_foodtruck)
-"FK" = (
-/obj/machinery/door/airlock/vault{
-	normalspeed = 0;
-	name = "Secure Door";
-	desc = "An imposing looking door. It looks reinforced."
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/obj/effect/mapping_helpers/airlock/access/any/syndicate/general,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/hunter/mi13_foodtruck)
 "IG" = (
 /obj/structure/marker_beacon/burgundy,
 /obj/structure/lattice,
@@ -700,6 +694,16 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/cans/sixsoda,
 /turf/open/floor/iron/kitchen/small,
+/area/shuttle/hunter/mi13_foodtruck)
+"Sw" = (
+/obj/machinery/door/airlock/vault{
+	normalspeed = 0;
+	name = "Secure Door";
+	desc = "An imposing looking door. It looks reinforced."
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate/general,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/mi13_foodtruck)
 "SP" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -845,7 +849,7 @@ Ev
 jw
 MZ
 zJ
-FK
+Sw
 bY
 bY
 bY
