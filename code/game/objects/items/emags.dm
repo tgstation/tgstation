@@ -18,6 +18,8 @@
 	var/prox_check = TRUE
 	/// List of types that require a specialized emag
 	var/type_blacklist
+	/// If the emag can be used by crewmembers
+	var/useable_about_crew = FALSE
 	/// The amount of times a non-syndie has used this emag
 	var/crew_uses
 
@@ -31,6 +33,7 @@
 	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
 	color = rgb(40, 130, 255)
 	prox_check = FALSE
+	useable_about_crew = TRUE
 
 /obj/item/card/emag/halloween
 	name = "hack-o'-lantern"
@@ -68,10 +71,10 @@
 	if(!interacting_with.emag_act(user, src))
 		return ITEM_INTERACT_SUCCESS
 
-	if(!(IS_TRAITOR(user) || IS_NUKE_OP(user) || IS_SPY(user)))
-		crew_uses += 1
-		crew_action(user)
+	if(useable_about_crew)
 		return ITEM_INTERACT_SUCCESS
+
+	crew_action(user)
 
 	return ITEM_INTERACT_SUCCESS
 
@@ -87,6 +90,8 @@
 
 /// What happens if a crewmember uses this card
 /obj/item/card/emag/proc/crew_action(mob/user)
+	if(!(IS_TRAITOR(user) || IS_NUKE_OP(user) || IS_SPY(user)))
+		crew_uses += 1
 	if(!prob(crew_uses * 25))
 		return
 	to_chat(user, span_warning("You hear a buzzing from [src] 'Non-authorised personel detected. Terminating card'. [src] beeps ominously!"))
@@ -94,6 +99,7 @@
 	playsound(loc, 'sound/items/timer.ogg', 35, vary = FALSE)
 	// Think fast chucklenuts
 	stoplag(2 SECONDS)
+	user.visible_message(span_boldwarning("[src]s battery ruptures!"))
 	// Small explosion
 	explosion(src, light_impact_range = 1, explosion_cause = src)
 	qdel(src)
