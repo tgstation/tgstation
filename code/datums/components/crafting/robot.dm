@@ -119,7 +119,7 @@
 
 /datum/crafting_recipe/vibebot
 	name = "Vibebot"
-	result = /mob/living/simple_animal/bot/vibebot
+	result = /mob/living/basic/bot/vibebot
 	reqs = list(
 		/obj/item/light/bulb = 2,
 		/obj/item/bodypart/head/robot = 1,

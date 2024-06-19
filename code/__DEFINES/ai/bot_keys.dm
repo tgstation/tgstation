@@ -112,17 +112,13 @@ DEFINE_BITFIELD(honkbot_flags, list(
 //vibebots
 ///key that holds our partying ability
 #define BB_VIBEBOT_PARTY_ABILITY "party_ability"
-///key that holds our birthday boy
-#define BB_VIBEBOT_BIRTHDAY_TARGET "birthday_target"
 ///key that holds our birthday song
 #define BB_VIBEBOT_BIRTHDAY_SONG "birthday_song"
-///key that holds our depressed target
-#define BB_VIBEBOT_DEPRESSED_TARGET "depressed_target"
 ///key that holds happy songs we play to depressed targets
 #define BB_VIBEBOT_HAPPY_SONG "happy_song"
 ///key that holds grim song we play when emagged
 #define BB_VIBEBOT_GRIM_SONG "GRIM_song"
 ///key that holds neutral targets we vibe with
-#define BB_VIBEBOT_NEUTRAL_TARGET "neutral_target"
+#define BB_VIBEBOT_PARTY_TARGET "party_target"
 ///key that holds our instrument
 #define BB_VIBEBOT_INSTRUMENT "instrument"
