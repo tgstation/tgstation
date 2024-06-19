@@ -5,6 +5,7 @@
 	icon_state = "grinder"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/gibber
+	anchored_tabletop_offset = 8
 
 	var/operating = FALSE //Is it on?
 	var/dirty = FALSE // Does it need cleaning?
