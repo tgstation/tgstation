@@ -246,8 +246,6 @@
 
 /datum/component/surgery_initiator/ui_status(mob/user, datum/ui_state/state)
 	var/obj/item/item_parent = parent
-	if (!recursive_loc_check(item_parent, user.type))
-		return UI_CLOSE
 
 	var/mob/living/surgery_target = surgery_target_ref?.resolve()
 	if (isnull(surgery_target))
@@ -263,7 +261,7 @@
 		return FALSE
 
 	// The item was moved somewhere else
-	if (!recursive_loc_check(parent, user.type))
+	if (!recursive_loc_check(parent, user))
 		return FALSE
 
 	// While we were choosing, another surgery was started at the same location
