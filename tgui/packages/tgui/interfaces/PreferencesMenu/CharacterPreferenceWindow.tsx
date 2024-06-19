@@ -101,44 +101,15 @@ export const CharacterPreferenceWindow = (props) => {
               profiles={data.character_profiles}
             />
           </Stack.Item>
-          <Stack.Item align="center">
-            <Button
-              color="red"
-              disabled={
-                Object.values(data.character_profiles).filter((val) => val)
-                  .length < 2
-              } // check if existing chars more than one
-              onClick={() => {
-                let choicedSlot = data.active_slot - 1;
-                let availableSlots = Object.keys(data.character_profiles)
-                  .filter((slot) => data.character_profiles[slot] !== null)
-                  .map((slot) => parseInt(slot, 10)); // get all busy slots as num
 
-                availableSlots.splice(availableSlots.indexOf(choicedSlot), 1); // remove our slot(which we want to delete)
-
-                let slotToJump = availableSlots.reduce((prev, curr) => {
-                  return Math.abs(curr - choicedSlot) <
-                    Math.abs(prev - choicedSlot)
-                    ? curr
-                    : prev;
-                }); // get nearest slot
-
-                act('remove_slot', {
-                  slot: data.active_slot,
-                  name: Object.values(data.character_profiles)[choicedSlot],
-                  slotToJump: slotToJump + 1,
-                });
-              }}
-            >
-              Delete Character
-            </Button>
-          </Stack.Item>
           {!data.content_unlocked && (
             <Stack.Item align="center">
               Buy BYOND premium for more slots!
             </Stack.Item>
           )}
+
           <Stack.Divider />
+
           <Stack.Item>
             <Stack fill>
               <Stack.Item grow>
@@ -197,7 +168,9 @@ export const CharacterPreferenceWindow = (props) => {
               </Stack.Item>
             </Stack>
           </Stack.Item>
+
           <Stack.Divider />
+
           <Stack.Item>{pageContents}</Stack.Item>
         </Stack>
       </Window.Content>
