@@ -311,8 +311,13 @@
 /obj/item/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargeable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
+	icon_state = "aa_cell"
 	maxcharge = STANDARD_CELL_CHARGE * 0.5
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.4)
+
+/obj/item/stock_parts/cell/crap/Initialize(mapload)
+	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/item/stock_parts/cell/crap/empty
 	empty = TRUE
@@ -320,9 +325,14 @@
 /obj/item/stock_parts/cell/upgraded
 	name = "upgraded power cell"
 	desc = "A power cell with a slightly higher capacity than normal!"
+	icon_state = "9v_cell"
 	maxcharge = STANDARD_CELL_CHARGE * 2.5
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	chargerate = STANDARD_CELL_RATE * 0.5
+
+/obj/item/stock_parts/cell/upgraded/Initialize(mapload)
+	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/item/stock_parts/cell/upgraded/plus
 	name = "upgraded power cell+"

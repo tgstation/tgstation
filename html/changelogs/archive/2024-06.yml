@@ -753,3 +753,93 @@
   - sound: added compressed air sound for when air tanks are inserted into machinery
   grungussuss:
   - rscadd: Added Misha the bear to the HoS office on icebox.
+2024-06-18:
+  Bisar:
+  - balance: Replaced the free reagent purging with actually purging by exploding
+      someone in the blood while they have omnizine and a purgative in their bloodstream.
+      Let's go practice medicine!
+  - bugfix: Fixed the free reagent purging mechanic from causing an explosion so weak
+      that it doesn't cause any damage.
+  GPeckman:
+  - bugfix: Mining borgs can get multiple modkits of the same type installed again.
+  Goat:
+  - qol: fire extinguishers can now be filled via stationary tanks. (and water coolers)
+  GoblinBackwards:
+  - bugfix: Fixed mulebots being able to run over people who are leaning against a
+      wall.
+  - bugfix: Fixed anomaly cores from the high-intensity grav anomaly event creating
+      the wrong type of reactive armour.
+  Kaostico:
+  - bugfix: Transcendent Olfaction mutation now works properly
+  LucyGrind:
+  - bugfix: allows cigarette grinding in mortar
+  MTandi:
+  - bugfix: Non-metallic slime types are semi-transparent
+  - balance: Reshuffled tech tree, making nodes more specialized
+  - qol: Research points devided by the amount generated per second, so now research
+      points correspond to seconds
+  - rscadd: Introduced reagent purity scan experiments (required for Cryostasis node)
+  - rscadd: Introduced synthetic organ scan experiment (required for top tier cyber
+      organs)
+  - rscadd: Added a variant of machinery scan experiment that accepts any machines
+      with upgraded parts (required for tier 3 parts)
+  - rscdel: Removed material scanning experiments from the tech tree
+  Melbert:
+  - qol: Block'd out armor readout, should be more readable now
+  - bugfix: Crusher Fix For Real
+  SyncIt21:
+  - bugfix: ctrl+shift clicking on a ghost will only quick spawn that clicked target
+      and not you
+  TheBoondock:
+  - sound: added squeaky turn and gas hissing sound to gas valve
+  TheRyeGuyWhoWillNowDie:
+  - qol: adds a confirmation to malf AI shunting into APCs
+  mc-oofert:
+  - bugfix: build mode and space dragons dont harddel on destroy
+  - bugfix: you may now open the panel of a flatpacker with a screwdriver
+  san7890:
+  - qol: A message with a link to publicly accessible logs (if enabled by your server
+      operators) should now be visible far earlier when a world is about to reboot.
+2024-06-19:
+  Bisar:
+  - rscadd: The Nanotrasen safety commission reminds employees to properly clean themselves
+      of all flammable material before going on smoke breaks.
+  - rscadd: Sparks now ignite flammable things. Including you. Keep a fire extinguisher
+      handy or stop dousing yourself in welding fuel!
+  - bugfix: Fixed a few oversights with welding fuel pools not igniting when you throw
+      lit/hot things into them or when you walk into them while on fire.
+  GPeckman:
+  - bugfix: Airlocks should no longer appear closed sometimes when fireman carrying
+      someone into them.
+  Jacquerel:
+  - balance: Gorillas have big fingers, which mostly just prevents them from using
+      laser pointers and stun batons
+  - balance: Items held in your hands can catch fire.
+  - balance: Items you are holding won't catch fire if your hands cannot catch fire.
+  - balance: When you stop being on fire so will items you are holding.
+  - balance: If you roll around on your burning items they will stop being on fire.
+  Melbert:
+  - bugfix: Fixed hand tele portals being forever
+  - bugfix: Enabling or disabling ambience mid round will properly enable or disable
+      ambience
+  - qol: Added descriptions differentiating "Ship ambience" from "ambience"
+  TheRyeGuyWhoWillNowDie:
+  - rscadd: the advanced omnitool upgrade now hastens the mediborg's syringe too
+  Time-Green:
+  - refactor: Lizard and moth markings now use the bodypart overlay system
+  carlarctg:
+  - balance: Negative mutations now allow you to have more positive mutations, via
+      reducing your instability!
+  - code_imp: All mutations have been overall standardized via defines on their instability
+      values. Many mediocre positive mutations have had their cost reduced significantly!
+  - rscadd: 'Added a new height mutation: Acromegaly! It''s the opposite of Dwarfism
+      and makes you uncannily tall. It also makes you hit your head 8% or 4% (with
+      synch) of the time  you pass through airlocks. Wear a helmet!'
+  - rscadd: Gigantism is now a recipe mutation, mix Acromegaly with Strength to get
+      it.
+  - qol: Injectors and activators' duration is now dependent on the in/stability (absolute
+      value) of the mutations to be injected! With a minimum of 5-10-15 seconds for
+      each type of injector. Also changed up a bit how part upgrade cooldowns work,
+      by making each tier reduce cooldowns by 25-15-10% for each injector type.
+  jlsnow301:
+  - bugfix: TGUI say will no longer spill your /me contents when you get attacked

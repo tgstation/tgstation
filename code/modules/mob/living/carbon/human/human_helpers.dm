@@ -293,6 +293,11 @@
 			return MONKEY_HEIGHT_DWARF
 		else
 			return HUMAN_HEIGHT_DWARF
+	if(HAS_TRAIT(src, TRAIT_TOO_TALL))
+		if(ismonkey(src))
+			return MONKEY_HEIGHT_TALL
+		else
+			return HUMAN_HEIGHT_TALLEST
 
 	else if(ismonkey(src))
 		return MONKEY_HEIGHT_MEDIUM
