@@ -984,8 +984,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	game.ui_interact(usr)
 
 /mob/dead/observer/CtrlShiftClickOn(atom/target)
-	if(check_rights(R_SPAWN))
-		change_mob_type(/mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
+	if(isobserver(target) && check_rights(R_SPAWN))
+		var/mob/dead/observer/target_ghost = target
+
+		target_ghost.change_mob_type(/mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
 
 /mob/dead/observer/examine(mob/user)
 	. = ..()

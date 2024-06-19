@@ -231,6 +231,10 @@
 			materials.retrieve_sheets(amount, ejecting, drop_location())
 			return TRUE
 
+/obj/machinery/flatpacker/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/flatpacker/Destroy()
 	QDEL_NULL(inserted_board)
