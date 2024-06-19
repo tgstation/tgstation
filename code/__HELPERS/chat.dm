@@ -97,3 +97,6 @@ it will be sent to all connected chats.
 	for(var/mob/creature as anything in mob_list)
 		to_chat(creature, message)
 	send_to_observers(message, source)
+
+/// Emboldens runechat messages
+#define RUNECHAT_BOLD(str) "+[str]+"
