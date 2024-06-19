@@ -27,7 +27,7 @@
 	if(imprint_on_next_insertion) //We only want this set *once*
 		var/feature_name = receiver.dna.features[feature_key]
 		if (isnull(feature_name))
-			feature_name = receiver.dna.species.external_organs[parent.type]
+			feature_name = receiver.dna.species.mutant_organs[parent.type]
 		set_appearance_from_name(feature_name)
 		imprint_on_next_insertion = FALSE
 

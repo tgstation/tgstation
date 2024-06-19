@@ -60,16 +60,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Use a [language holder datum][/datum/language_holder] typepath in this var.
 	/// Should never be null.
 	var/datum/language_holder/species_language_holder = /datum/language_holder/human_basic
-	/**
-	  * Visible CURRENT bodyparts that are unique to a species.
-	  * DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK
-	  * SHIT UP! Changes to this list for non-species specific bodyparts (ie
-	  * cat ears and tails) should be assigned at organ level if possible.
-	  * Assoc values are defaults for given bodyparts, also modified by aforementioned organs.
-	  * They also allow for faster '[]' list access versus 'in'. Other than that, they are useless right now.
-	  * Layer hiding is handled by [/datum/species/proc/handle_mutant_bodyparts] below.
-	  */
-	var/list/mutant_bodyparts = list()
 	///The bodyparts this species uses. assoc of bodypart string - bodypart type. Make sure all the fucking entries are in or I'll skin you alive.
 	var/list/bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left,
@@ -79,10 +69,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
-	///Internal organs that are unique to this race, like a tail. list(typepath of organ 1, typepath of organ 2)
+	///Internal organs that are unique to this race, like a tail or other cosmetic organs. list(typepath of organ 1, typepath of organ 2 = "Round").
 	var/list/mutant_organs = list()
-	///List of external organs to generate like horns, frills, wings, etc. list(typepath of organ = "Round Beautiful BDSM Snout"). Still WIP
-	var/list/external_organs = list()
 	///Replaces default brain with a different organ
 	var/obj/item/organ/internal/brain/mutantbrain = /obj/item/organ/internal/brain
 	///Replaces default heart with a different organ
@@ -284,7 +272,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			return mutantstomach
 		else
 			// Non-standard organs we might have
-			for(var/obj/item/organ/extra_organ as anything in external_organs)
+			for(var/obj/item/organ/extra_organ as anything in mutant_organs)
 				if(initial(extra_organ.slot) == slot)
 					return extra_organ
 
@@ -475,14 +463,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Handles the body of a human
  *
  * Handles lipstick, having no eyes, eye color, undergarnments like underwear, undershirts, and socks, and body layers.
- * Calls [handle_mutant_bodyparts][/datum/species/proc/handle_mutant_bodyparts]
  * Arguments:
  * * species_human - Human, whoever we're handling the body for
  */
 /datum/species/proc/handle_body(mob/living/carbon/human/species_human)
 	species_human.remove_overlay(BODY_LAYER)
 	if(HAS_TRAIT(species_human, TRAIT_INVISIBLE_MAN))
-		return handle_mutant_bodyparts(species_human)
+		return
 	var/list/standing = list()
 
 	if(!HAS_TRAIT(species_human, TRAIT_HUSK))
@@ -527,7 +514,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		species_human.overlays_standing[BODY_LAYER] = standing
 
 	species_human.apply_overlay(BODY_LAYER)
-	handle_mutant_bodyparts(species_human)
+	update_body_markings(species_human)
 
 /**
  * Handles the mutant bodyparts of a human
@@ -582,7 +569,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/list/new_features = list()
 	var/static/list/organs_to_randomize = list()
-	for(var/obj/item/organ/organ_path as anything in external_organs)
+	for(var/obj/item/organ/organ_path as anything in mutant_organs)
+		if(!organ_path.bodypart_overlay)
+			continue
 		var/overlay_path = initial(organ_path.bodypart_overlay)
 		var/datum/bodypart_overlay/mutant/sample_overlay = organs_to_randomize[overlay_path]
 		if(isnull(sample_overlay))
@@ -1329,15 +1318,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/datum/preference/preference = GLOB.preference_entries[preference_type]
 
 		if ( \
-			(preference.relevant_mutant_bodypart in mutant_bodyparts) \
-			|| (preference.relevant_inherent_trait in inherent_traits) \
-			|| (preference.relevant_external_organ in external_organs) \
+			(preference.relevant_inherent_trait in inherent_traits) \
+			|| (preference.relevant_external_organ in mutant_organs) \
 			|| (preference.relevant_head_flag && check_head_flags(preference.relevant_head_flag)) \
 			|| (preference.relevant_body_markings in body_markings) \
 		)
 			features += preference.savefile_key
 
-	for (var/obj/item/organ/organ_type as anything in external_organs)
+	for (var/obj/item/organ/organ_type as anything in mutant_organs)
 		var/preference = initial(organ_type.preference)
 		if (!isnull(preference))
 			features += preference
@@ -1374,7 +1362,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/get_types_to_preload()
 	var/list/to_store = list()
 	to_store += mutant_organs
-	for(var/obj/item/organ/horny as anything in external_organs)
+	for(var/obj/item/organ/horny as anything in mutant_organs)
 		to_store += horny //Haha get it?
 
 	//Don't preload brains, cause reuse becomes a horrible headache

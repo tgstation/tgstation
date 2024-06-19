@@ -6,7 +6,7 @@
 	mutantbrain = /obj/item/organ/internal/brain/felinid
 	mutanttongue = /obj/item/organ/internal/tongue/cat
 	mutantears = /obj/item/organ/internal/ears/cat
-	external_organs = list(
+	mutant_organs = list(
 		/obj/item/organ/external/tail/cat = "Cat",
 	)
 	inherent_traits = list(
@@ -160,7 +160,7 @@
 			old_tail.Remove(purrbated_human, special = TRUE)
 			qdel(old_tail)
 			// Locate does not work on assoc lists, so we do it by hand
-			for(var/external_organ in target_species.external_organs)
+			for(var/external_organ in target_species.mutant_organs)
 				if(!should_visual_organ_apply_to(external_organ, purrbated_human))
 					continue
 				if(ispath(external_organ, /obj/item/organ/external/tail))
