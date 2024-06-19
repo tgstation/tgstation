@@ -224,9 +224,27 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			character_preview_view.update_body()
 
 			return TRUE
-		if ("rotate")
-			character_preview_view.dir = turn(character_preview_view.dir, -90)
+		if ("remove_slot")
+			var/picked_slot = params["slot"]
+			var/confidence_check = tgui_input_text(usr, "To confirm the deletion of a character, type the name of the character.", "Character Deletion")
+			if(confidence_check != params["name"])
+				return FALSE
 
+			if(!remove_character(picked_slot))
+				return FALSE
+
+			if (!load_character(params["slotToJump"]))
+				randomise_appearance_prefs()
+				save_character()
+
+			for (var/datum/preference_middleware/preference_middleware as anything in middleware)
+				preference_middleware.on_new_character(usr)
+
+			tainted_character_profiles = TRUE
+			character_preview_view.update_body();
+			return TRUE
+		if ("rotate")
+			character_preview_view.setDir(turn(character_preview_view.dir, -90))
 			return TRUE
 		if ("set_preference")
 			var/requested_preference_key = params["preference"]
@@ -351,6 +369,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/mob/living/carbon/human/dummy/body
 	/// The preferences this refers to
 	var/datum/preferences/preferences
+	/// Whether we show current job clothes or nude/loadout only
+	var/show_job_clothes = TRUE
 
 /atom/movable/screen/map_view/char_preview/Initialize(mapload, datum/preferences/preferences)
 	. = ..()
@@ -368,15 +388,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		create_body()
 	else
 		body.wipe_state()
-	appearance = preferences.render_new_preview_appearance(body)
+
+	appearance = preferences.render_new_preview_appearance(body, show_job_clothes)
 
 /atom/movable/screen/map_view/char_preview/proc/create_body()
 	QDEL_NULL(body)
 
 	body = new
-
-	// Without this, it doesn't show up in the menu
-	body.appearance_flags &= ~KEEP_TOGETHER
 
 /datum/preferences/proc/create_character_profiles()
 	var/list/profiles = list()

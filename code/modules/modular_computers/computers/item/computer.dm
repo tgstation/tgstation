@@ -12,6 +12,7 @@
 	max_integrity = 100
 	armor_type = /datum/armor/item_modular_computer
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
+	interaction_flags_mouse_drop = NEED_HANDS | ALLOW_RESTING
 
 	///The ID currently stored in the computer.
 	var/obj/item/card/id/computer_id_slot
@@ -334,11 +335,9 @@
 	update_appearance()
 	return TRUE
 
-/obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
-	var/mob/M = usr
-	if((!istype(over_object, /atom/movable/screen)) && usr.can_perform_action(src))
-		return attack_self(M)
-	return ..()
+/obj/item/modular_computer/mouse_drop_dragged(atom/over_object, mob/user)
+	if(!istype(over_object, /atom/movable/screen))
+		return attack_self(user)
 
 /obj/item/modular_computer/attack_ai(mob/user)
 	return attack_self(user)
@@ -473,10 +472,7 @@
 		update_appearance(UPDATE_ICON)
 	return ..()
 
-/obj/item/modular_computer/CtrlShiftClick(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/modular_computer/click_ctrl_shift(mob/user)
 	if(!inserted_disk)
 		return
 	user.put_in_hands(inserted_disk)

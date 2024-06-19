@@ -6,8 +6,10 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "grinder"
 	layer = BELOW_OBJ_LAYER
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/monkey_recycler
+
 	var/stored_matter = 0
 	var/cube_production = 0.2
 	var/list/connected = list() //Keeps track of connected xenobio consoles, for deletion in /Destroy()
@@ -59,7 +61,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	else
 		return ..()
 
-/obj/machinery/monkey_recycler/MouseDrop_T(mob/living/target, mob/living/user)
+/obj/machinery/monkey_recycler/mouse_drop_receive(mob/living/target, mob/living/user, params)
 	if(!istype(target))
 		return
 	if(ismonkey(target))

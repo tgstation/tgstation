@@ -9,3 +9,4 @@
 #define BB_FRIENDS_LIST "BB_friends_list"
 /// List of strings we might say to encourage someone to make better choices.
 #define BB_OWNER_SELF_HARM_RESPONSES "BB_self_harm_responses"
+

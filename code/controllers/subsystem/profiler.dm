@@ -16,6 +16,7 @@ SUBSYSTEM_DEF(profiler)
 		StartProfiling()
 	else
 		StopProfiling() //Stop the early start profiler
+	wait = CONFIG_GET(number/profiler_interval)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/profiler/OnConfigLoad()

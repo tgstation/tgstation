@@ -537,3 +537,309 @@
   - bugfix: Adds a missing atmos waste vent for wawastation
   junkgle01:
   - bugfix: Polishes up new Meta Cargo's decals and associated amenities.
+2024-06-12:
+  Goat:
+  - bugfix: blood drunk miner can now path over lava
+  NewyearnewmeUwu:
+  - balance: Pacifists can now use psychotic brawling, at major mood costs.
+  PowerfulAtom111:
+  - rscadd: after a quick galactic meeting, insane people around the universe can
+      now speak gibbering to express their ideas free from the prying ears of the
+      walls
+  - rscadd: as an insane person, taking your meds deafens your ears to the holy tongue
+      all the other insane people are speaking
+  - spellcheck: added a bit of text to the RDS quirk and the RDS medical record text
+      to highlight the insane's new abilities
+  aaaa1023:
+  - bugfix: there is now one more crayon in the Mortidrobe.
+  grungussuss:
+  - bugfix: fixed getting a fake white dwarf report when the shift isn't extended
+      mode, which lead to meta knowledge being used.
+  munchyi:
+  - rscadd: 'added a new virtual domain
+
+      :cl:
+
+      ![image](https://github.com/tgstation/tgstation/assets/154919526/2d94fe21-bc45-40dc-9f84-4b69088b353c)'
+  norsvenska:
+  - bugfix: The recyclers in the snow cabin gateway, the cyborg mothership, and the
+      deep storage space ruin are now rotated properly.
+  r3dj4ck0424:
+  - rscadd: Added another ruin to Lavaland
+  sylvia-from-fulp-station:
+  - image: Adds a unique sprite for envyknife
+  uaioy:
+  - qol: the first Medieval pirate to spawn will be the Warlord, warlord and crude
+      helmet have flash protection
+  - bugfix: Medieval shuttle has actual engines now
+  - bugfix: Shortsword has its original colours
+  - bugfix: Crude helmet no longer makes you bald
+2024-06-13:
+  Capsandi:
+  - sound: Some ambience tracks are quieter now.
+  Goat:
+  - bugfix: Enviro suit lights no longer stay on when the welding visor is activated.
+  Kocma-san:
+  - rscadd: Added new keywords (%d, %date, %t, %time) for fields
+  LT3:
+  - sound: You can now experience tram crashes in higher fidelity than ever!
+  Majkl-J:
+  - bugfix: EMPs on carbons no longer happen twice
+  - code_imp: Moves organ emps under bodyparts, changes how bodyparts handle emp effects
+  Melbert:
+  - rscadd: Character Loadouts
+  - rscdel: Pride Pin quirk (it's in the Loadout menu now)
+  - refactor: Over 200 item interactions have been refactored to use a newer, easier-to-use
+      system. Report any oddities with using items on other objects you may see (such
+      as surgery, reagent containers like cups and spray bottles, or construction
+      devices), especially using something at range (such as guns or chisels)
+  - refactor: Item-On-Modsuit interactions have changed slightly. While on combat
+      mode, you will attempt to "use" the item on the suit instead of inserting it
+      into the suit's storage. This means being on combat mode while the suit's panel
+      is open will block you from inserting items entirely via click (but other methods
+      such as hotkey, clicking on the storage boxes, and mousedrop will still work).
+  - refactor: The detective's scanner will now be inserted into storage items if clicked
+      normally, and will scan the storage item if on combat mode
+  - balance: Taking stamina damage in stamcrit has diminishing returns associated,
+      meaning you cannot be infinitely stamcrit.
+  Rhials:
+  - bugfix: The "mopper" gimmick assistant outfit spawns with one cart instead of
+      nine.
+  SyncIt21:
+  - bugfix: ' RCD, RPLD & RTD cancels their build process if their design is changed
+      during build.'
+  carlarctg:
+  - qol: Cult pylons slowly close bleeding wounds
+  - refactor: allowed aura healing to clot wounds shut
+2024-06-14:
+  Addust:
+  - bugfix: the syndicate now imports warm air instead of cold air to their icemoon
+      listening post
+  Goat:
+  - qol: Mining's PKAs and PKCs are now fireproof.
+  JupiterJaeden:
+  - qol: you can now take pulled objects with you when going up and down in zero gravity
+  - bugfix: conga lines now work correctly when going up and down ladders, and in
+      zero gravity
+  Kocma-san:
+  - bugfix: special networks are now displayed in the fax if it is the only one in
+      the world
+  MGOOOOOO:
+  - bugfix: Missing legs no longer slow you down in non-gravity environments.
+  - bugfix: Catwalk deconstruction yields iron rods as intended.
+  Rex9001:
+  - balance: Moon Smile only does a knockdown if the targets sanity is low enough
+      and the minimum duration of its abilities have been decreased
+  ShizCalev:
+  - bugfix: Autolathes now print the correct number of cable coils.
+  - bugfix: Fixed a bug with station traits being added to modify weights for events
+      that couldn't actually occur on the current map!
+  SyncIt21:
+  - refactor: Ctrl click & Ctrl shift click has been refactored. Please report bugs
+      on GitHub
+  - refactor: Mouse drag & drop attack chain has been refactored. Report any bugs
+      on GitHub
+  - bugfix: You cannot close the cryo tube on yourself with Alt click like before
+  Watermelon914:
+  - qol: Bots can now bind voice lines to an action slot. Lowers cooldown for all
+      bot voicelines to 5 seconds.
+  carlarctg:
+  - balance: Corpses won't remain cultists when ghouled by a flesheretic
+  cnleth:
+  - balance: Juicing and distilling plants only consumes nutriment and vitamin
+  - balance: Lanternfruit and polypore mushrooms now contain nutriment
+  - balance: Increased the amount of nutriment in sugarcane and saltcane
+  jlsnow301:
+  - rscadd: Added screentips to extinguishers.
+  - bugfix: Fixed alt-click interaction with extinguishers and mod control units.
+  junkgle01:
+  - bugfix: added an id trim painter that was missing to MetaStation's QM office.
+  larentoun:
+  - balance: Now regaining a tail has three states. If you got your tail back - you'll
+      get a temporarily debuff in exchange of infinite "tail missing" debuff (new).
+      If it's NOT your tail and of same species - this temporarily debuff will be
+      a bit stronger (new). If it's NOT your tail and NOT of same species - it will
+      be a considerably stronger debuff (currently on live).
+  lizelive:
+  - qol: make the cart hold 2.5x more water
+  necromanceranne:
+  - bugfix: Peter Jr. is capable of surviving in the environment they spawn in.
+  thegrb93:
+  - bugfix: Fix bug where you can't interact with a shocked door without shock protection
+      even if it is depowered.
+2024-06-15:
+  BurgerBB:
+  - bugfix: Tweaks some instances of get_safe_turf so things like the nuclear disk
+      doesn't accidentally teleport to the Icebox Syndicate Base
+  EnterTheJake:
+  - image: Rust Heretic's blade now has a new, slicker sprite.
+  Exester509:
+  - balance: Phazon mechs use ectoplasm cores now
+  - balance: You can now acquire ectoplasm cores from the science supply interface
+  Goat-Real:
+  - bugfix: Icebox's service hall now now has a regular hand labeler.
+  GoblinBackwards:
+  - bugfix: Fixed thermal pistols sometimes not recognising an equipped holster when
+      trying to spin them to recharge.
+  Jacquerel:
+  - bugfix: Neutralising an anomaly cannot produce more anomaly cores than are supposed
+      to exist in a single round
+  LucyGrind:
+  - bugfix: Crayons now fit in pdas
+  MTandi:
+  - image: Updated slime sprites
+  Melbert:
+  - bugfix: Human mousedropping
+  - qol: Attack animations for cult spells on attackable objects (people, airlocks)
+  - bugfix: Fix cult spells on non-attackable objects (metal sheets, blood decals)
+  - bugfix: Humans can't cough on menthol again
+  - bugfix: Moth and lizard emotes decide what sound to play based on body type, not
+      gender.
+  - sound: '*gasp now makes a sound, it''s the same as *gaspshock.'
+  - sound: Xenos (or anything with hands) can clap
+  - balance: Re-adds Bagulo
+  - balance: 'The max number of bluespace cores available to the crew has been reduced
+      to 3 (was: 8)'
+  - balance: Chucking a BoH into an uncharged singulo may save the station.
+  - sound: Portals made by portal guns now make sounds as expected
+  - sound: Wormholes from the wormhole event now make sounds when formed
+  - bugfix: Heirophant Club Blink at range
+  - bugfix: Crusher Loot
+  - bugfix: RCD material reclamation
+  mc-oofert:
+  - rscadd: the flatpacker, a machine unlocked at industrial engineering
+2024-06-16:
+  Archie700:
+  - qol: Changes description of steal objective to match the name
+  EnterTheJake:
+  - qol: You can now repair portable scrubbers and pumps.
+  GPeckman:
+  - bugfix: The reset button in the bluespace launchpad UI should work again.
+  Goat:
+  - bugfix: A wrecked shuttle on lavaland no longer has asteroid tiles containing
+      the danger of space.
+  - code_imp: Added volcanic versions of all mineral turfs for those that did not
+      have it.
+  GoblinBackwards:
+  - bugfix: Fixed the patient information for the mech sleeper module not displaying
+      when the mech didn't also have a syringe gun.
+  Jacquerel:
+  - rscadd: Cats and Dogs can lick slashing wounds clean.
+  - rscadd: Basic Mobs with hands can relocate dislocated bones, and pluck eyeballs
+      out of pulped skulls.
+  - balance: Gorillas can strangle people.
+  Melbert:
+  - bugfix: Fix inability to make r-glass by hand inside your backpack
+  ShizCalev:
+  - bugfix: Fixed some surgery failure states not properly setting the correct mood
+      event.
+  - refactor: Minor refactor to how surgery events work, there is now better support
+      for per-surgery mood events!
+  Wayland-Smithy:
+  - bugfix: Fixed revenant spawning next to brains and other unharvestable dead mobs.
+  WebcomicArtist:
+  - bugfix: Healium bolt now no longer affects silicons.
+  carlarctg:
+  - bugfix: Cosmos spells will no longer star mark your steed
+  - qol: Baby plushies are now smaller than their parents
+2024-06-17:
+  Hacks-The-Doors:
+  - balance: dental pills can now be used in crit.
+  - balance: dental pills now give off a message when you start using them
+  - balance: dental pills have a 2.5 second delay when in soft crit
+  JackEnoff:
+  - balance: Certain changeling abilities won't work while on fire.
+  TheBoondock:
+  - sound: added compressed air sound for when air tanks are inserted into machinery
+  grungussuss:
+  - rscadd: Added Misha the bear to the HoS office on icebox.
+2024-06-18:
+  Bisar:
+  - balance: Replaced the free reagent purging with actually purging by exploding
+      someone in the blood while they have omnizine and a purgative in their bloodstream.
+      Let's go practice medicine!
+  - bugfix: Fixed the free reagent purging mechanic from causing an explosion so weak
+      that it doesn't cause any damage.
+  GPeckman:
+  - bugfix: Mining borgs can get multiple modkits of the same type installed again.
+  Goat:
+  - qol: fire extinguishers can now be filled via stationary tanks. (and water coolers)
+  GoblinBackwards:
+  - bugfix: Fixed mulebots being able to run over people who are leaning against a
+      wall.
+  - bugfix: Fixed anomaly cores from the high-intensity grav anomaly event creating
+      the wrong type of reactive armour.
+  Kaostico:
+  - bugfix: Transcendent Olfaction mutation now works properly
+  LucyGrind:
+  - bugfix: allows cigarette grinding in mortar
+  MTandi:
+  - bugfix: Non-metallic slime types are semi-transparent
+  - balance: Reshuffled tech tree, making nodes more specialized
+  - qol: Research points devided by the amount generated per second, so now research
+      points correspond to seconds
+  - rscadd: Introduced reagent purity scan experiments (required for Cryostasis node)
+  - rscadd: Introduced synthetic organ scan experiment (required for top tier cyber
+      organs)
+  - rscadd: Added a variant of machinery scan experiment that accepts any machines
+      with upgraded parts (required for tier 3 parts)
+  - rscdel: Removed material scanning experiments from the tech tree
+  Melbert:
+  - qol: Block'd out armor readout, should be more readable now
+  - bugfix: Crusher Fix For Real
+  SyncIt21:
+  - bugfix: ctrl+shift clicking on a ghost will only quick spawn that clicked target
+      and not you
+  TheBoondock:
+  - sound: added squeaky turn and gas hissing sound to gas valve
+  TheRyeGuyWhoWillNowDie:
+  - qol: adds a confirmation to malf AI shunting into APCs
+  mc-oofert:
+  - bugfix: build mode and space dragons dont harddel on destroy
+  - bugfix: you may now open the panel of a flatpacker with a screwdriver
+  san7890:
+  - qol: A message with a link to publicly accessible logs (if enabled by your server
+      operators) should now be visible far earlier when a world is about to reboot.
+2024-06-19:
+  Bisar:
+  - rscadd: The Nanotrasen safety commission reminds employees to properly clean themselves
+      of all flammable material before going on smoke breaks.
+  - rscadd: Sparks now ignite flammable things. Including you. Keep a fire extinguisher
+      handy or stop dousing yourself in welding fuel!
+  - bugfix: Fixed a few oversights with welding fuel pools not igniting when you throw
+      lit/hot things into them or when you walk into them while on fire.
+  GPeckman:
+  - bugfix: Airlocks should no longer appear closed sometimes when fireman carrying
+      someone into them.
+  Jacquerel:
+  - balance: Gorillas have big fingers, which mostly just prevents them from using
+      laser pointers and stun batons
+  - balance: Items held in your hands can catch fire.
+  - balance: Items you are holding won't catch fire if your hands cannot catch fire.
+  - balance: When you stop being on fire so will items you are holding.
+  - balance: If you roll around on your burning items they will stop being on fire.
+  Melbert:
+  - bugfix: Fixed hand tele portals being forever
+  - bugfix: Enabling or disabling ambience mid round will properly enable or disable
+      ambience
+  - qol: Added descriptions differentiating "Ship ambience" from "ambience"
+  TheRyeGuyWhoWillNowDie:
+  - rscadd: the advanced omnitool upgrade now hastens the mediborg's syringe too
+  Time-Green:
+  - refactor: Lizard and moth markings now use the bodypart overlay system
+  carlarctg:
+  - balance: Negative mutations now allow you to have more positive mutations, via
+      reducing your instability!
+  - code_imp: All mutations have been overall standardized via defines on their instability
+      values. Many mediocre positive mutations have had their cost reduced significantly!
+  - rscadd: 'Added a new height mutation: Acromegaly! It''s the opposite of Dwarfism
+      and makes you uncannily tall. It also makes you hit your head 8% or 4% (with
+      synch) of the time  you pass through airlocks. Wear a helmet!'
+  - rscadd: Gigantism is now a recipe mutation, mix Acromegaly with Strength to get
+      it.
+  - qol: Injectors and activators' duration is now dependent on the in/stability (absolute
+      value) of the mutations to be injected! With a minimum of 5-10-15 seconds for
+      each type of injector. Also changed up a bit how part upgrade cooldowns work,
+      by making each tier reduce cooldowns by 25-15-10% for each injector type.
+  jlsnow301:
+  - bugfix: TGUI say will no longer spill your /me contents when you get attacked
