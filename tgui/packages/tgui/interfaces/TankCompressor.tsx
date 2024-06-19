@@ -71,6 +71,7 @@ const TankCompressorContent = (props) => {
   return (
     <Stack vertical fill>
       <Stack.Item grow>
+        <TankCompressorControls />
         <Section
           scrollable
           fill
