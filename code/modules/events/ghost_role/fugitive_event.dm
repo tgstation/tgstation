@@ -61,6 +61,7 @@
 		HUNTER_PACK_RUSSIAN,
 		HUNTER_PACK_BOUNTY,
 		HUNTER_PACK_PSYKER,
+		HUNTER_PACK_MI13,
 	)
 	addtimer(CALLBACK(src, PROC_REF(check_spawn_hunters), hunter_backstory, 10 MINUTES), 1 MINUTES)
 	role_name = "fugitive hunter"
@@ -124,6 +125,8 @@
 			ship = new /datum/map_template/shuttle/hunter/bounty
 		if(HUNTER_PACK_PSYKER)
 			ship = new /datum/map_template/shuttle/hunter/psyker
+		if(HUNTER_PACK_MI13)
+			ship = new/datum/map_template/shuttle/hunter/mi13_foodtruck
 
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
