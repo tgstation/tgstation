@@ -47,7 +47,6 @@
 
 	RegisterSignals(src, list(COMSIG_PROJECTILE_PREHIT, COMSIG_ATOM_PREHITBY), PROC_REF(Aggro))
 
-
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
 	if(vision_range == aggro_vision_range && icon_aggro)
