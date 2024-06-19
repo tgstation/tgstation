@@ -256,7 +256,7 @@
 		return
 	if(source == attacker)
 		var/list/interventions = owner.ai_controller?.blackboard[BB_OWNER_SELF_HARM_RESPONSES] || list()
-		if (length(interventions) && COOLDOWN_FINISHED(src, self_harm_message_cooldown) && prob(60))
+		if (length(interventions) && COOLDOWN_FINISHED(src, self_harm_message_cooldown) && prob(30))
 			COOLDOWN_START(src, self_harm_message_cooldown, 5 SECONDS)
 			var/chosen_statement = pick(interventions)
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/atom/movable, say), chosen_statement)
