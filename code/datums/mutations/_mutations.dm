@@ -125,7 +125,7 @@
 	if(limb_req && !acquirer.get_bodypart(limb_req))
 		return TRUE
 	for(var/datum/mutation/human/mewtayshun as anything in acquirer.dna.mutations) //check for conflicting powers
-		if(!(mewtayshun.type in typesof(conflicts)) && !(type in typesof(mewtayshun.conflicts)))
+		if(!(mewtayshun.type in conflicts) && !(type in mewtayshun.conflicts))
 			continue
 		to_chat(acquirer, span_warning("You feel your genes resisting something."))
 		return TRUE
