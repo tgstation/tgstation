@@ -1,0 +1,4 @@
+author: "Metekillot"
+delete-after: True
+changes:
+  - bugfix: "Sparks will no longer turn areas with wooden furniture or similar into naught but a field of ashes; they no longer ignite furniture, (unless it's made of plasma(?!)) and have a decreasing chance to ignite items bigger than small size."
