@@ -14,8 +14,12 @@
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	slot_flags = ITEM_SLOT_ID
 	worn_icon_state = "emag"
-	var/prox_check = TRUE //If the emag requires you to be in range
-	var/type_blacklist //List of types that require a specialized emag
+	/// If the emag requires you to be in range
+	var/prox_check = TRUE
+	/// List of types that require a specialized emag
+	var/type_blacklist
+	/// The amount of times a non-syndie has used this emag
+	var/crew_uses
 
 /obj/item/card/emag/attack_self(mob/user) //for traitors with balls of plastitanium
 	if(Adjacent(user))
@@ -60,7 +64,15 @@
 	if(!can_emag(interacting_with, user))
 		return ITEM_INTERACT_BLOCKING
 	log_combat(user, interacting_with, "attempted to emag")
-	interacting_with.emag_act(user, src)
+
+	if(!interacting_with.emag_act(user, src))
+		return ITEM_INTERACT_SUCCESS
+
+	if(!(IS_TRAITOR(user) || IS_NUKE_OP(user) || IS_SPY(user)))
+		crew_uses += 1
+		crew_action(user)
+		return ITEM_INTERACT_SUCCESS
+
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/card/emag/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -72,6 +84,19 @@
 			to_chat(user, span_warning("The [target] cannot be affected by the [src]! A more specialized hacking device is required."))
 			return FALSE
 	return TRUE
+
+/// What happens if a crewmember uses this card
+/obj/item/card/emag/proc/crew_action(mob/user)
+	if(!prob(crew_uses * 25))
+		return
+	to_chat(user, span_warning("You hear a buzzing from [src] 'Non-authorised personel detected. Terminating card'. [src] beeps ominously!"))
+	user.visible_message(span_boldwarning("[src] beeps ominously!"))
+	playsound(loc, 'sound/items/timer.ogg', 35, vary = FALSE)
+	// Think fast chucklenuts
+	stoplag(2 SECONDS)
+	// Small explosion
+	explosion(src, light_impact_range = 1, explosion_cause = src)
+	qdel(src)
 
 /*
  * DOORMAG
