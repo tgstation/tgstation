@@ -1,4 +1,5 @@
 import { toFixed } from 'common/math';
+import { BooleanLike } from 'common/react';
 
 import { useBackend, useSharedState } from '../backend';
 import {
@@ -15,6 +16,36 @@ import {
 } from '../components';
 import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
+
+type Data = {
+  // Dynamic
+  tankPresent: BooleanLike;
+  tankPressure: number;
+  leaking: BooleanLike;
+  active: BooleanLike;
+  transferRate: number;
+  lastPressure: number;
+  disk: string;
+  storage: string;
+  records: Record[];
+  // Static
+  maxTransfer: number;
+  leakPressure: number;
+  fragmentPressure: number;
+  ejectPressure: number;
+};
+
+type Record = {
+  ref: string;
+  name: string;
+  timestamp: string;
+  source: string;
+  gases: GasMoles[];
+};
+
+type GasMoles = {
+  [key: string]: number;
+};
 
 const formatPressure = (value) => {
   if (value < 10000) {
@@ -34,7 +65,7 @@ export const TankCompressor = (props) => {
 };
 
 const TankCompressorContent = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<Data>();
   const { disk, storage } = data;
   const [currentTab, changeTab] = useSharedState('compressorTab', 1);
 
@@ -46,14 +77,18 @@ const TankCompressorContent = (props) => {
         <Section
           scrollable
           fill
+          style={{
+            textTransform: 'capitalize',
+          }}
           title={disk ? disk + ' (' + storage + ')' : 'No Disk Inserted'}
           buttons={
             <Button
               icon="eject"
-              content="Eject Disk"
               disabled={!disk}
               onClick={() => act('eject_disk')}
-            />
+            >
+              Eject Disk
+            </Button>
           }
         >
           <TankCompressorRecords />
@@ -64,7 +99,7 @@ const TankCompressorContent = (props) => {
 };
 
 const TankCompressorControls = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<Data>();
   const {
     tankPresent,
     leaking,
@@ -79,8 +114,27 @@ const TankCompressorControls = (props) => {
   } = data;
   const pressure = tankPresent ? tankPressure : lastPressure;
   const usingLastData = !!(lastPressure && !tankPresent);
-  const leakHazard =
-    leaking || (pressure >= leakPressure && pressure < fragmentPressure);
+  const notice_color =
+    usingLastData || leaking || pressure > fragmentPressure
+      ? 'bad'
+      : !tankPresent
+        ? 'blue'
+        : pressure > leakPressure
+          ? 'average'
+          : 'good';
+  const notice_text = usingLastData
+    ? 'Tank destroyed. Displaying last recorded data.'
+    : !tankPresent
+      ? 'No Tank Detected'
+      : leaking
+        ? 'Tank Leaking'
+        : !pressure
+          ? 'No Pressure Detected'
+          : pressure < leakPressure
+            ? 'Tank Pressure Nominal'
+            : pressure < fragmentPressure
+              ? 'Leak Hazard'
+              : 'Explosive Hazard';
   return (
     <Stack.Item>
       <Section
@@ -95,20 +149,8 @@ const TankCompressorControls = (props) => {
           </Button>
         }
       >
-        {usingLastData && (
-          <NoticeBox warning>
-            Tank destroyed. Displaying last recorded data.
-          </NoticeBox>
-        )}
-        {!pressure && <NoticeBox>No Pressure Detected</NoticeBox>}
-        {pressure > 0 && pressure < leakPressure && (
-          <NoticeBox info>Tank Pressure Nominal</NoticeBox>
-        )}
-        {leakHazard && <NoticeBox warning>Leak Hazard</NoticeBox>}
-        {!usingLastData && pressure >= fragmentPressure && (
-          <NoticeBox danger>Explosive Hazard</NoticeBox>
-        )}
-        <LabeledControls px={2}>
+        <NoticeBox color={notice_color}>{notice_text}</NoticeBox>
+        <LabeledControls p={2}>
           <LabeledControls.Item label="Pressure">
             <RoundGauge
               size={2.5}
@@ -129,7 +171,7 @@ const TankCompressorControls = (props) => {
               <Knob
                 size={2}
                 value={transferRate}
-                unit="L/S"
+                unit="Liters/sec."
                 minValue={0}
                 maxValue={maxTransfer}
                 step={1}
@@ -188,7 +230,7 @@ const TankCompressorControls = (props) => {
 };
 
 const TankCompressorRecords = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<Data>();
   const { records = [], disk } = data;
   const [activeRecordRef, setActiveRecordRef] = useSharedState(
     'recordRef',
