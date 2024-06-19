@@ -595,7 +595,7 @@
 			stop_pulling()
 		else if(pulling.anchored || pulling.move_resist > move_force)
 			stop_pulling()
-	if(!only_pulling && pulledby && moving_diagonally != FIRST_DIAG_STEP && (get_dist(src, pulledby) > 1 || z != pulledby.z)) //separated from our puller and not in the middle of a diagonal move.
+	if(!only_pulling && pulledby && moving_diagonally != FIRST_DIAG_STEP && (get_dist(src, pulledby) > 1 || (z != pulledby.z && !z_allowed))) //separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
 /atom/movable/proc/set_glide_size(target = 8)
@@ -779,6 +779,7 @@
 		if(pulling.anchored)
 			stop_pulling()
 		else
+			//var/need_to_check_pull = TRUE
 			//puller and pullee more than one tile away or in diagonal position and whatever the pullee is pulling isn't already moving from a pull as it'll most likely result in an infinite loop a la ouroborus.
 			if(!pulling.pulling?.moving_from_pull)
 				var/pull_dir = get_dir(pulling, src)
@@ -789,10 +790,15 @@
 				// The answer is simple. forcemoving and regrabbing is ugly and breaks conga lines.
 				if(pulling.z != z)
 					target_turf = get_step(pulling, get_dir(pulling, current_turf))
+					//need_to_check_pull = FALSE
 
 				if(target_turf != current_turf || (moving_diagonally != SECOND_DIAG_STEP && ISDIAGONALDIR(pull_dir)) || get_dist(src, pulling) > 1)
 					pulling.move_from_pull(src, target_turf, glide_size)
-			check_pulling()
+			if (pulledby)
+				if (pulledby.currently_z_moving)
+					check_pulling(z_allowed = TRUE)
+			else
+				check_pulling()
 
 	//glide_size strangely enough can change mid movement animation and update correctly while the animation is playing
 	//This means that if you don't override it late like this, it will just be set back by the movement update that's called when you move turfs.
