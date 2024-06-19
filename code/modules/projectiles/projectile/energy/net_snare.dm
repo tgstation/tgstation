@@ -63,7 +63,6 @@
 	inhand_icon_state = "beacon"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	req_access = list(ACCESS_SECURITY)
 	///Has a security ID been used to lock this in place?
 	var/locked = FALSE
 
