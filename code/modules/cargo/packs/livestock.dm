@@ -97,7 +97,7 @@
 /datum/supply_pack/critter/pony
 	name = "Pony Crate"
 	desc = "Ponies, yay! (Just the one.)"
-	cost = CARGO_CRATE_VALUE * 3
+	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/mob/living/basic/pony)
 	crate_name = "pony crate"
 
