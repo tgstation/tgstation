@@ -5,7 +5,7 @@
  */
 /datum/element/tool_flash
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// Strength of the flash
 	var/flash_strength
 
@@ -16,8 +16,8 @@
 
 	src.flash_strength = flash_strength
 
-	RegisterSignal(target, COMSIG_TOOL_IN_USE, .proc/prob_flash)
-	RegisterSignal(target, COMSIG_TOOL_START_USE, .proc/flash)
+	RegisterSignal(target, COMSIG_TOOL_IN_USE, PROC_REF(prob_flash))
+	RegisterSignal(target, COMSIG_TOOL_START_USE, PROC_REF(flash))
 
 /datum/element/tool_flash/Detach(datum/source)
 	. = ..()
@@ -34,4 +34,4 @@
 	SIGNAL_HANDLER
 
 	if(user && get_dist(get_turf(source), get_turf(user)) <= 1)
-		user.flash_act(min(flash_strength,1))
+		user.flash_act(max(flash_strength,1))

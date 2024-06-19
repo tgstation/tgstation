@@ -13,12 +13,12 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 	maxHealth = 300
 	icon_state = "clockwork_defender"
 	icon_living = "clockwork_defender"
-	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	weather_immunities = list(WEATHER_SNOW)
+	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 	speak_emote = list("roars")
 	armour_penetration = 40
 	melee_damage_lower = 20
@@ -35,10 +35,14 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 	crusher_loot = list(/obj/item/clockwork_alloy)
 	wander = FALSE
 	del_on_death = TRUE
-	deathmessage = "falls, quickly decaying into centuries old dust."
-	deathsound = "bodyfall"
+	death_message = "falls, quickly decaying into centuries old dust."
+	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list()
+
+/mob/living/simple_animal/hostile/megafauna/clockwork_defender/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_defender/OpenFire()
 	return
@@ -46,7 +50,7 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 /obj/item/clockwork_alloy
 	name = "clockwork alloy"
 	desc = "The remains of the strongest clockwork knight."
-	icon = 'icons/obj/ice_moon/artifacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "clockwork_alloy"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0

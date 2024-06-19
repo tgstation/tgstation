@@ -19,31 +19,40 @@
 		ui = new(user, src, "SpawnersMenu")
 		ui.open()
 
-/datum/spawners_menu/ui_data(mob/user)
+/datum/spawners_menu/ui_static_data(mob/user)
 	var/list/data = list()
 	data["spawners"] = list()
 	for(var/spawner in GLOB.mob_spawners)
 		var/list/this = list()
 		this["name"] = spawner
-		this["short_desc"] = ""
+		this["you_are_text"] = ""
 		this["flavor_text"] = ""
 		this["important_warning"] = ""
 		this["amount_left"] = 0
-		this["refs"] = list()
 		for(var/spawner_obj in GLOB.mob_spawners[spawner])
+			var/obj/effect/mob_spawn/ghost_role/mob_spawner = spawner_obj
 			if(!this["desc"])
 				if(istype(spawner_obj, /obj/effect/mob_spawn))
-					var/obj/effect/mob_spawn/mob_spawner = spawner_obj
-					if(!mob_spawner.ready)
+					if(!mob_spawner.allow_spawn(user, silent = TRUE))
 						continue
-					this["short_desc"] = mob_spawner.short_desc
+					this["you_are_text"] = mob_spawner.you_are_text
 					this["flavor_text"] = mob_spawner.flavour_text
-					this["important_info"] = mob_spawner.important_info
+					this["important_text"] = mob_spawner.important_text
 				else
 					var/obj/object = spawner_obj
 					this["desc"] = object.desc
-			this["refs"] += "[REF(spawner_obj)]"
+			this["amount_left"] += mob_spawner.uses
+			this["infinite"] += mob_spawner.infinite_use
+		if(this["amount_left"] > 0 || this["infinite"])
+			data["spawners"] += list(this)
+	for(var/mob_type in GLOB.joinable_mobs)
+		var/list/this = list()
+		this["name"] = mob_type
+		this["amount_left"] = 0
+		for(var/mob/joinable_mob as anything in GLOB.joinable_mobs[mob_type])
 			this["amount_left"] += 1
+			if(!this["desc"])
+				this["desc"] = initial(joinable_mob.desc)
 		if(this["amount_left"] > 0)
 			data["spawners"] += list(this)
 	return data
@@ -54,16 +63,25 @@
 		return
 
 	var/group_name = params["name"]
-	if(!group_name || !(group_name in GLOB.mob_spawners))
+	if(!group_name)
 		return
-	var/list/spawnerlist = GLOB.mob_spawners[group_name]
-	for(var/obj/effect/mob_spawn/current_spawner as anything in spawnerlist)
-		if(!current_spawner.ready)
-			spawnerlist -= current_spawner
-	if(!spawnerlist.len)
+
+	var/list/spawnerlist = list()
+
+	if (group_name in GLOB.mob_spawners)
+		spawnerlist = GLOB.mob_spawners[group_name]
+		if(!length(spawnerlist))
+			return
+		for(var/obj/effect/mob_spawn/ghost_role/current_spawner as anything in spawnerlist)
+			if(!current_spawner.allow_spawn(usr, silent = TRUE))
+				spawnerlist -= current_spawner
+	else if (group_name in GLOB.joinable_mobs)
+		spawnerlist = GLOB.joinable_mobs[group_name]
+
+	if(!length(spawnerlist))
 		return
-	var/obj/effect/mob_spawn/mob_spawner = pick(spawnerlist)
-	if(!istype(mob_spawner) || !(mob_spawner in GLOB.poi_list))
+	var/atom/mob_spawner = pick(spawnerlist)
+	if(!SSpoints_of_interest.is_valid_poi(mob_spawner))
 		return
 
 	switch(action)
@@ -73,8 +91,7 @@
 				return TRUE
 		if("spawn")
 			if(mob_spawner)
-				if(mob_spawner.radial_based)
-					owner.ManualFollow(mob_spawner)
-					ui.close()
+				owner.ManualFollow(mob_spawner)
+				ui.close()
 				mob_spawner.attack_ghost(owner)
 				return TRUE

@@ -9,11 +9,6 @@
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
-"t" = (
-/obj/structure/table,
-/obj/structure/table,
-/turf/open/floor/holofloor/plating,
-/area/template_noop)
 "H" = (
 /obj/structure/table,
 /turf/open/floor/holofloor/plating,
@@ -71,7 +66,7 @@ l
 a
 a
 H
-t
+H
 a
 H
 H

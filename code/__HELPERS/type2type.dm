@@ -36,8 +36,8 @@
 			return "northwest"
 		if(SOUTHWEST)
 			return "southwest"
-		else
-	return
+
+	return NONE
 
 //Turns text into proper directions
 /proc/text2dir(direction)
@@ -58,8 +58,8 @@
 			return SOUTHEAST
 		if("SOUTHWEST")
 			return SOUTHWEST
-		else
-	return
+
+	return NONE
 
 //Converts an angle (degrees) into a ss13 direction
 GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST))
@@ -102,6 +102,28 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 //Returns the angle in english
 /proc/angle2text(degree)
 	return dir2text(angle2dir(degree))
+
+/// Returns a list(x, y), being the change in position required to step in the passed in direction
+/proc/dir2offset(dir)
+	switch(dir)
+		if(NORTH)
+			return list(0, 1)
+		if(SOUTH)
+			return list(0, -1)
+		if(EAST)
+			return list(1, 0)
+		if(WEST)
+			return list(-1, 0)
+		if(NORTHEAST)
+			return list(1, 1)
+		if(SOUTHEAST)
+			return list(1, -1)
+		if(NORTHWEST)
+			return list(-1, 1)
+		if(SOUTHWEST)
+			return list(-1, -1)
+		else
+			return list(0, 0)
 
 //Converts a blend_mode constant to one acceptable to icon.Blend()
 /proc/blendMode2iconMode(blend_mode)
@@ -152,96 +174,31 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 		. = "NONE"
 	return .
 
-//colour formats
-/proc/rgb2hsl(red, green, blue)
-	red /= 255;green /= 255;blue /= 255;
-	var/max = max(red,green,blue)
-	var/min = min(red,green,blue)
-	var/range = max-min
-
-	var/hue=0;var/saturation=0;var/lightness=0;
-	lightness = (max + min)/2
-	if(range != 0)
-		if(lightness < 0.5)
-			saturation = range/(max+min)
-		else
-			saturation = range/(2-max-min)
-
-		var/dred = ((max-red)/(6*max)) + 0.5
-		var/dgreen = ((max-green)/(6*max)) + 0.5
-		var/dblue = ((max-blue)/(6*max)) + 0.5
-
-		if(max==red)
-			hue = dblue - dgreen
-		else if(max==green)
-			hue = dred - dblue + (1/3)
-		else
-			hue = dgreen - dred + (2/3)
-		if(hue < 0)
-			hue++
-		else if(hue > 1)
-			hue--
-
-	return list(hue, saturation, lightness)
-
-/proc/hsl2rgb(hue, saturation, lightness)
-	var/red;var/green;var/blue;
-	if(saturation == 0)
-		red = lightness * 255
-		green = red
-		blue = red
-	else
-		var/a;var/b;
-		if(lightness < 0.5)
-			b = lightness*(1+saturation)
-		else
-			b = (lightness+saturation) - (saturation*lightness)
-		a = 2*lightness - b
-
-		red = round(255 * hue2rgb(a, b, hue+(1/3)))
-		green = round(255 * hue2rgb(a, b, hue))
-		blue = round(255 * hue2rgb(a, b, hue-(1/3)))
-
-	return list(red, green, blue)
-
-/proc/hue2rgb(a, b, hue)
-	if(hue < 0)
-		hue++
-	else if(hue > 1)
-		hue--
-	if(6*hue < 1)
-		return (a+(b-a)*6*hue)
-	if(2*hue < 1)
-		return b
-	if(3*hue < 2)
-		return (a+(b-a)*((2/3)-hue)*6)
-	return a
-
 /// For finding out what body parts a body zone covers, the inverse of the below basically
-/proc/zone2body_parts_covered(def_zone)
+/proc/body_zone2cover_flags(def_zone)
 	switch(def_zone)
 		if(BODY_ZONE_CHEST)
-			return list(CHEST, GROIN)
+			return CHEST|GROIN
 		if(BODY_ZONE_HEAD)
-			return list(HEAD)
+			return HEAD
 		if(BODY_ZONE_L_ARM)
-			return list(ARM_LEFT, HAND_LEFT)
+			return ARM_LEFT|HAND_LEFT
 		if(BODY_ZONE_R_ARM)
-			return list(ARM_RIGHT, HAND_RIGHT)
+			return ARM_RIGHT|HAND_RIGHT
 		if(BODY_ZONE_L_LEG)
-			return list(LEG_LEFT, FOOT_LEFT)
+			return LEG_LEFT|FOOT_LEFT
 		if(BODY_ZONE_R_LEG)
-			return list(LEG_RIGHT, FOOT_RIGHT)
+			return LEG_RIGHT|FOOT_RIGHT
 
 //Turns a Body_parts_covered bitfield into a list of organ/limb names.
-//(I challenge you to find a use for this) -I found a use for it!!
-/proc/body_parts_covered2organ_names(bpc)
+//(I challenge you to find a use for this) -I found a use for it!! | So did I!.
+/proc/cover_flags2body_zones(bpc)
 	var/list/covered_parts = list()
 
 	if(!bpc)
 		return 0
 
-	if(bpc & FULL_BODY)
+	if(bpc == FULL_BODY)
 		covered_parts |= list(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM,BODY_ZONE_HEAD,BODY_ZONE_CHEST,BODY_ZONE_L_LEG,BODY_ZONE_R_LEG)
 
 	else
@@ -340,58 +297,6 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 		else
 			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
 
-
-/proc/color2hex(color) //web colors
-	if(!color)
-		return "#000000"
-
-	switch(color)
-		if("white")
-			return "#FFFFFF"
-		if("black")
-			return "#000000"
-		if("gray")
-			return "#808080"
-		if("brown")
-			return "#A52A2A"
-		if("red")
-			return "#FF0000"
-		if("darkred")
-			return "#8B0000"
-		if("crimson")
-			return "#DC143C"
-		if("orange")
-			return "#FFA500"
-		if("yellow")
-			return "#FFFF00"
-		if("green")
-			return "#008000"
-		if("lime")
-			return "#00FF00"
-		if("darkgreen")
-			return "#006400"
-		if("cyan")
-			return "#00FFFF"
-		if("blue")
-			return "#0000FF"
-		if("navy")
-			return "#000080"
-		if("teal")
-			return "#008080"
-		if("purple")
-			return "#800080"
-		if("indigo")
-			return "#4B0082"
-		else
-			return "#FFFFFF"
-
-/// Converts "#RRGGBB" to list(0xRR, 0xGG, 0xBB)
-/proc/hex2rgb(color)
-	var/r = hex2num(copytext(color, 2, 4))
-	var/g = hex2num(copytext(color, 4, 6))
-	var/b = hex2num(copytext(color, 6, 8))
-	return list(r, g, b)
-
 //This is a weird one:
 //It returns a list of all var names found in the string
 //These vars must be in the [var_name] format
@@ -428,26 +333,20 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 					if(var_source.vars.Find(A))
 						. += A
 
-//assumes format #RRGGBB #rrggbb
-/proc/color_hex2num(A)
-	if(!A || length(A) != length_char(A))
-		return 0
-	var/rgb = hex2rgb(A)
-	return rgb[1] + rgb[2] + rgb[3]
-
 //word of warning: using a matrix like this as a color value will simplify it back to a string after being set
 /proc/color_hex2color_matrix(string)
 	var/length = length(string)
 	if((length != 7 && length != 9) || length != length_char(string))
-		return color_matrix_identity()
-	var/r = hex2num(copytext(string, 2, 4))/255
-	var/g = hex2num(copytext(string, 4, 6))/255
-	var/b = hex2num(copytext(string, 6, 8))/255
+		return COLOR_MATRIX_IDENTITY
+	// For runtime safety
+	. = COLOR_MATRIX_IDENTITY
+	var/list/color = rgb2num(string)
+	var/r = color[1] / 255
+	var/g = color[2] / 255
+	var/b = color[3] / 255
 	var/a = 1
-	if(length == 9)
-		a = hex2num(copytext(string, 8, 10))/255
-	if(!isnum(r) || !isnum(g) || !isnum(b) || !isnum(a))
-		return color_matrix_identity()
+	if(length(color) == 4)
+		a = color[4] / 255
 	return list(r,0,0,0, 0,g,0,0, 0,0,b,0, 0,0,0,a, 0,0,0,0)
 
 //will drop all values not on the diagonal
@@ -490,7 +389,7 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 		if(/turf)
 			return "turf"
 		else //regex everything else (works for /proc too)
-			return lowertext(replacetext("[the_type]", "[type2parent(the_type)]/", ""))
+			return LOWER_TEXT(replacetext("[the_type]", "[type2parent(the_type)]/", ""))
 
 /// Return html to load a url.
 /// for use inside of browse() calls to html assets that might be loaded on a cdn.

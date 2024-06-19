@@ -1,11 +1,11 @@
 /datum/job/ai
-	title = "AI"
+	title = JOB_AI
+	description = "Assist the crew, follow your laws, coordinate your cyborgs."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "your laws"
-	selection_color = "#ccffcc"
 	spawn_type = /mob/living/silicon/ai
 	req_admin_notify = TRUE
 	minimal_player_age = 30
@@ -19,8 +19,8 @@
 		/datum/job_department/silicon,
 		)
 	random_spawns_possible = FALSE
-	job_flags = JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK | JOB_BOLD_SELECT_TEXT
-	var/do_special_check = TRUE
+	job_flags = JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
+	config_tag = "AI"
 
 
 /datum/job/ai/after_spawn(mob/living/spawned, client/player_client)
@@ -30,13 +30,22 @@
 		for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
 			if(!R.connected_ai)
 				R.TryConnectToAI()
+	var/mob/living/silicon/ai/ai_spawn = spawned
+	ai_spawn.log_current_laws()
 
 
 /datum/job/ai/get_roundstart_spawn_point()
 	return get_latejoin_spawn_point()
 
-
 /datum/job/ai/get_latejoin_spawn_point()
+	for(var/obj/structure/ai_core/latejoin_inactive/inactive_core as anything in GLOB.latejoin_ai_cores)
+		if(!inactive_core.is_available())
+			continue
+		GLOB.latejoin_ai_cores -= inactive_core
+		inactive_core.available = FALSE
+		var/turf/core_turf = get_turf(inactive_core)
+		qdel(inactive_core)
+		return core_turf
 	var/list/primary_spawn_points = list() // Ideal locations.
 	var/list/secondary_spawn_points = list() // Fallback locations.
 	for(var/obj/effect/landmark/start/ai/spawn_point in GLOB.landmarks_list)
@@ -57,27 +66,10 @@
 	chosen_spawn_point.used = TRUE
 	return chosen_spawn_point
 
-
-/datum/job/ai/get_latejoin_spawn_point()
-	for(var/obj/structure/ai_core/latejoin_inactive/inactive_core as anything in GLOB.latejoin_ai_cores)
-		if(!inactive_core.is_available())
-			continue
-		GLOB.latejoin_ai_cores -= inactive_core
-		inactive_core.available = FALSE
-		. = inactive_core.loc
-		qdel(inactive_core)
-		return
-	return ..()
-
-
 /datum/job/ai/special_check_latejoin(client/C)
-	if(!do_special_check)
-		return TRUE
-	for(var/i in GLOB.latejoin_ai_cores)
-		var/obj/structure/ai_core/latejoin_inactive/LAI = i
-		if(istype(LAI))
-			if(LAI.is_available())
-				return TRUE
+	for(var/obj/structure/ai_core/latejoin_inactive/latejoin_core as anything in GLOB.latejoin_ai_cores)
+		if(latejoin_core.is_available())
+			return TRUE
 	return FALSE
 
 
@@ -90,5 +82,5 @@
 /datum/job/ai/config_check()
 	return CONFIG_GET(flag/allow_ai)
 
-/datum/job/ai/radio_help_message(mob/M)
-	to_chat(M, "<b>Prefix your message with :b to speak with cyborgs and other AIs.</b>")
+/datum/job/ai/get_radio_information()
+	return "<b>Prefix your message with :b to speak with cyborgs and other AIs.</b>"

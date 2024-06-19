@@ -7,15 +7,14 @@
  * Kneecapping attacks have a wounding bonus between severe and critical+10 wound thresholds. Without some serious wound protecting
  * armour this all but guarantees a wound of some sort. The attack is directed specifically at a limb and the limb takes the damage.
  *
- * Requires the attacker to be aiming for either leg zone, which will be targetted specifically. They will than have a 3-second long
- * do_mob before executing the attack.
+ * Requires the attacker to be aiming for either leg zone, which will be targeted specifically. They will than have a 3-second long
+ * do_after before executing the attack.
  *
  * Kneecapping requires the target to either be on the floor, immobilised or buckled to something. And also to have an appropriate leg.
  *
  * Passing all the checks will cancel the entire attack chain.
  */
 /datum/element/kneecapping
-	element_flags = ELEMENT_DETACH
 
 /datum/element/kneecapping/Attach(datum/target)
 	if(!isitem(target))
@@ -33,7 +32,7 @@
 	if(. == ELEMENT_INCOMPATIBLE)
 		return
 
-	RegisterSignal(target, COMSIG_ITEM_ATTACK_SECONDARY , .proc/try_kneecap_target)
+	RegisterSignal(target, COMSIG_ITEM_ATTACK_SECONDARY , PROC_REF(try_kneecap_target))
 
 /datum/element/kneecapping/Detach(datum/target)
 	UnregisterSignal(target, COMSIG_ITEM_ATTACK_SECONDARY)
@@ -67,10 +66,10 @@
 
 	. = COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
-	INVOKE_ASYNC(src, .proc/do_kneecap_target, source, leg, target, attacker)
+	INVOKE_ASYNC(src, PROC_REF(do_kneecap_target), source, leg, target, attacker)
 
 /**
- * After a short do_mob, attacker applies damage to the given leg with a significant wounding bonus, applying the weapon's force as damage.
+ * After a short do_after, attacker applies damage to the given leg with a significant wounding bonus, applying the weapon's force as damage.
  */
 /datum/element/kneecapping/proc/do_kneecap_target(obj/item/weapon, obj/item/bodypart/leg, mob/living/carbon/target, mob/attacker)
 	if(LAZYACCESS(attacker.do_afters, weapon))
@@ -79,11 +78,14 @@
 	attacker.visible_message(span_warning("[attacker] carefully aims [attacker.p_their()] [weapon] for a swing at [target]'s kneecaps!"), span_danger("You carefully aim \the [weapon] for a swing at [target]'s kneecaps!"))
 	log_combat(attacker, target, "started aiming a swing to break the kneecaps of", weapon)
 
-	if(do_mob(attacker, target, 3 SECONDS, interaction_key = weapon))
+	if(do_after(attacker, 3 SECONDS, target, interaction_key = weapon))
 		attacker.visible_message(span_warning("[attacker] swings [attacker.p_their()] [weapon] at [target]'s kneecaps!"), span_danger("You swing \the [weapon] at [target]'s kneecaps!"))
-		var/datum/wound/blunt/severe/severe_wound_type = /datum/wound/blunt/severe
-		var/datum/wound/blunt/critical/critical_wound_type = /datum/wound/blunt/critical
-		leg.receive_damage(brute = weapon.force, wound_bonus = rand(initial(severe_wound_type.threshold_minimum), initial(critical_wound_type.threshold_minimum) + 10))
+
+		var/min_wound = leg.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_SEVERE, return_value_if_no_wound = 30, wound_source = weapon)
+		var/max_wound = leg.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_CRITICAL, return_value_if_no_wound = 50, wound_source = weapon)
+
+		leg.receive_damage(brute = weapon.force, wound_bonus = rand(min_wound, max_wound + 10), damage_source = "kneecapping")
+		target.emote("scream")
 		log_combat(attacker, target, "broke the kneecaps of", weapon)
 		target.update_damage_overlays()
 		attacker.do_attack_animation(target, used_item = weapon)

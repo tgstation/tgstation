@@ -1,23 +1,5 @@
-// PDA defines //
-#define CART_SECURITY (1<<0)
-#define CART_ENGINE (1<<1)
-#define CART_ATMOS (1<<2)
-#define CART_MEDICAL (1<<3)
-#define CART_MANIFEST (1<<4)
-#define CART_CLOWN (1<<5)
-#define CART_MIME (1<<6)
-#define CART_JANITOR (1<<7)
-#define CART_REAGENT_SCANNER (1<<8)
-#define CART_NEWSCASTER (1<<9)
-#define CART_REMOTE_DOOR (1<<10)
-#define CART_STATUS_DISPLAY (1<<11)
-#define CART_QUARTERMASTER (1<<12)
-#define CART_HYDROPONICS (1<<13)
-#define CART_DRONEPHONE (1<<14)
-#define CART_DRONEACCESS (1<<15)
-
-// Used by PDA and cartridge code to reduce repetitiveness of spritesheets
-#define PDAIMG(what) {"<span class="pda16x16 [#what]"></span>"}
+// Used to stringify message targets before sending the signal datum.
+#define STRINGIFY_PDA_TARGET(name, job) "[name] ([job])"
 
 //N-spect scanner defines
 #define INSPECTOR_PRINT_SOUND_MODE_NORMAL 1
@@ -26,8 +8,17 @@
 #define INSPECTOR_PRINT_SOUND_MODE_FAFAFOGGY 4
 #define BANANIUM_CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST 4
 #define CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST 4
-#define INSPECTOR_POWER_USAGE_HONK 15
-#define INSPECTOR_POWER_USAGE_NORMAL 5
+#define INSPECTOR_ENERGY_USAGE_HONK (0.015 * STANDARD_CELL_CHARGE)
+#define INSPECTOR_ENERGY_USAGE_NORMAL (0.005 * STANDARD_CELL_CHARGE)
 #define INSPECTOR_TIME_MODE_SLOW 1
 #define INSPECTOR_TIME_MODE_FAST 2
 #define INSPECTOR_TIME_MODE_HONK 3
+
+// Health scan modes
+/// Healthscan prints health of the target
+#define SCANNER_CONDENSED 0
+/// Healthscan prints health of each bodypart of the target in addition to broad health
+#define SCANNER_VERBOSE 1
+/// Used to prevent health analyzers from switching modes when they shouldn't.
+/// Functions the same as [SCANNER_CONDENSED]
+#define SCANNER_NO_MODE -1

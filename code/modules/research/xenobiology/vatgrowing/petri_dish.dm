@@ -2,7 +2,7 @@
 /obj/item/petri_dish
 	name = "petri dish"
 	desc = "This makes you feel well-cultured."
-	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
+	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "petri_dish"
 	w_class = WEIGHT_CLASS_TINY
 	///The sample stored on the dish
@@ -11,6 +11,11 @@
 /obj/item/petri_dish/Destroy()
 	. = ..()
 	QDEL_NULL(sample)
+
+/obj/item/petri_dish/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, sample))
+		update_appearance()
 
 /obj/item/petri_dish/examine(mob/user)
 	. = ..()
@@ -27,6 +32,7 @@
 		return FALSE
 	to_chat(user, span_notice("You wash the sample out of [src]."))
 	sample = null
+	update_appearance()
 
 /obj/item/petri_dish/update_overlays()
 	. = ..()
@@ -54,7 +60,7 @@
 		list(CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	)
 
-/obj/item/petri_dish/random/Initialize()
+/obj/item/petri_dish/random/Initialize(mapload)
 	. = ..()
 	var/list/chosen = pick(possible_samples)
 	sample = new

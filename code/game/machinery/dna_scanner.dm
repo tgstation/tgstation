@@ -5,30 +5,30 @@
 	icon_state = "scanner"
 	base_icon_state = "scanner"
 	density = TRUE
-	obj_flags = NO_BUILD // Becomes undense when the door is open
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 50
-	active_power_usage = 300
-	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/brain)
+	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
+	interaction_flags_mouse_drop = NEED_DEXTERITY
+	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/internal/brain)
 	circuit = /obj/item/circuitboard/machine/dnascanner
+
 	var/locked = FALSE
-	var/damage_coeff
+	var/damage_coeff = 1
 	var/scan_level
-	var/precision_coeff
+	var/precision_coeff = 1
 	var/message_cooldown
 	var/breakout_time = 1200
 	var/obj/machinery/computer/scan_consolenew/linked_console = null
 
 /obj/machinery/dna_scannernew/RefreshParts()
+	. = ..()
 	scan_level = 0
 	damage_coeff = 0
 	precision_coeff = 0
-	for(var/obj/item/stock_parts/scanning_module/P in component_parts)
-		scan_level += P.rating
-	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		precision_coeff = M.rating
-	for(var/obj/item/stock_parts/micro_laser/P in component_parts)
-		damage_coeff = P.rating
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
+		scan_level += scanning_module.tier
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		precision_coeff = matter_bin.tier
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		damage_coeff = micro_laser.tier
 
 /obj/machinery/dna_scannernew/examine(mob/user)
 	. = ..()
@@ -93,7 +93,7 @@
 			return C
 	return null
 
-/obj/machinery/dna_scannernew/close_machine(mob/living/carbon/user)
+/obj/machinery/dna_scannernew/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	if(!state_open)
 		return FALSE
 
@@ -106,7 +106,7 @@
 
 	return TRUE
 
-/obj/machinery/dna_scannernew/open_machine()
+/obj/machinery/dna_scannernew/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(state_open)
 		return FALSE
 
@@ -131,7 +131,7 @@
 		update_appearance()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
-	if(default_pry_open(I))
+	if(default_pry_open(I, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
 		return
 
 	if(default_deconstruction_crowbar(I))
@@ -142,18 +142,18 @@
 /obj/machinery/dna_scannernew/interact(mob/user)
 	toggle_open(user)
 
-/obj/machinery/dna_scannernew/MouseDrop_T(mob/target, mob/user)
-	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
+/obj/machinery/dna_scannernew/mouse_drop_receive(atom/target, mob/user, params)
+	if(!iscarbon(target))
 		return
 	close_machine(target)
 
 //This is only called by the scanner. if you ever want to use this outside of that context you'll need to refactor things a bit
 /obj/machinery/dna_scannernew/proc/set_linked_console(new_console)
 	if(linked_console)
-		UnregisterSignal(linked_console, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(linked_console, COMSIG_QDELETING)
 	linked_console = new_console
 	if(linked_console)
-		RegisterSignal(linked_console, COMSIG_PARENT_QDELETING, .proc/react_to_console_del)
+		RegisterSignal(linked_console, COMSIG_QDELETING, PROC_REF(react_to_console_del))
 
 /obj/machinery/dna_scannernew/proc/react_to_console_del(datum/source)
 	SIGNAL_HANDLER
@@ -169,10 +169,22 @@
 	var/max_mutations = 6
 	var/read_only = FALSE //Well,it's still a floppy disk
 
-/obj/item/disk/data/Initialize()
+/obj/item/disk/data/Initialize(mapload)
 	. = ..()
-	icon_state = "datadisk[rand(0,6)]"
+	icon_state = "datadisk[rand(0,7)]"
 	add_overlay("datadisk_gene")
+
+/obj/item/disk/data/debug
+	name = "\improper CentCom DNA disk"
+	desc = "A debug item for genetics"
+	custom_materials = null
+
+/obj/item/disk/data/debug/Initialize(mapload)
+	. = ..()
+	// Grabs all instances of mutations and adds them to the disk
+	for(var/datum/mutation/human/mut as anything in subtypesof(/datum/mutation/human))
+		var/datum/mutation/human/ref = GET_INITIALIZED_MUTATION(mut)
+		mutations += ref
 
 /obj/item/disk/data/attack_self(mob/user)
 	read_only = !read_only

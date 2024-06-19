@@ -3,9 +3,10 @@
 	desc = "A small electronic device able to control a blast door remotely."
 	icon_state = "control"
 	attachable = TRUE
+	/// The ID of the blast door electronics to match to the ID of the blast door being used.
 	var/id = null
-	var/can_change_id = 0
-	var/cooldown = FALSE //Door cooldowns
+	/// Cooldown of the door's controller. Updates when pressed (activate())
+	var/cooldown = FALSE
 	var/sync_doors = TRUE
 
 /obj/item/assembly/control/examine(mob/user)
@@ -14,22 +15,24 @@
 		. += span_notice("Its channel ID is '[id]'.")
 
 /obj/item/assembly/control/multitool_act(mob/living/user)
-	var/change_id = input("Set the shutters/blast door/blast door controllers ID. It must be a number between 1 and 100.", "ID", id) as num|null
-	if(change_id)
-		id = clamp(round(change_id, 1), 1, 100)
-		to_chat(user, span_notice("You change the ID to [id]."))
+	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door ID", id, 100)
+	if(!change_id || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
+	id = change_id
+	balloon_alert(user, "id changed")
+	to_chat(user, span_notice("You change the ID to [id]."))
 
 /obj/item/assembly/control/activate()
 	var/openclose
 	if(cooldown)
 		return
 	cooldown = TRUE
-	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
+	for(var/obj/machinery/door/poddoor/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
 		if(M.id == src.id)
 			if(openclose == null || !sync_doors)
 				openclose = M.density
-			INVOKE_ASYNC(M, openclose ? /obj/machinery/door/poddoor.proc/open : /obj/machinery/door/poddoor.proc/close)
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
+			INVOKE_ASYNC(M, openclose ? TYPE_PROC_REF(/obj/machinery/door/poddoor, open) : TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 1 SECONDS)
 
 /obj/item/assembly/control/curtain
 	name = "curtain controller"
@@ -49,8 +52,8 @@
 		if(M.id == src.id)
 			if(openclose == null || !sync_doors)
 				openclose = M.density
-			INVOKE_ASYNC(M, openclose ? /obj/structure/curtain/cloth/fancy/mechanical.proc/open : /obj/structure/curtain/cloth/fancy/mechanical.proc/close)
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 5)
+			INVOKE_ASYNC(M, openclose ? TYPE_PROC_REF(/obj/structure/curtain/cloth/fancy/mechanical, open) : TYPE_PROC_REF(/obj/structure/curtain/cloth/fancy/mechanical, close))
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 0.5 SECONDS)
 
 
 /obj/item/assembly/control/airlock
@@ -72,7 +75,7 @@
 	cooldown = TRUE
 	var/doors_need_closing = FALSE
 	var/list/obj/machinery/door/airlock/open_or_close = list()
-	for(var/obj/machinery/door/airlock/D in GLOB.airlocks)
+	for(var/obj/machinery/door/airlock/D as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
 		if(D.id_tag == src.id)
 			if(specialfunctions & OPEN)
 				open_or_close += D
@@ -82,7 +85,10 @@
 				D.aiDisabledIdScanner = !D.aiDisabledIdScanner
 			if(specialfunctions & BOLTS)
 				if(!D.wires.is_cut(WIRE_BOLTS) && D.hasPower())
-					D.locked = !D.locked
+					if(D.locked)
+						D.unlock()
+					else
+						D.lock()
 					D.update_appearance()
 			if(specialfunctions & SHOCK)
 				if(D.secondsElectrified)
@@ -93,9 +99,9 @@
 				D.safe = !D.safe
 
 	for(var/D in open_or_close)
-		INVOKE_ASYNC(D, doors_need_closing ? /obj/machinery/door/airlock.proc/close : /obj/machinery/door/airlock.proc/open)
+		INVOKE_ASYNC(D,  doors_need_closing ? TYPE_PROC_REF(/obj/machinery/door/airlock, close) : TYPE_PROC_REF(/obj/machinery/door/airlock, open))
 
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 1 SECONDS)
 
 
 /obj/item/assembly/control/massdriver
@@ -106,23 +112,25 @@
 	if(cooldown)
 		return
 	cooldown = TRUE
-	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
+	for(var/obj/machinery/door/poddoor/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
 		if (M.id == src.id)
-			INVOKE_ASYNC(M, /obj/machinery/door/poddoor.proc/open)
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
 
-	sleep(10)
+	addtimer(CALLBACK(src, PROC_REF(activate_stage2)), 1 SECONDS)
 
-	for(var/obj/machinery/mass_driver/M in GLOB.machines)
+/obj/item/assembly/control/massdriver/proc/activate_stage2()
+	for(var/obj/machinery/mass_driver/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/mass_driver))
 		if(M.id == src.id)
 			M.drive()
 
-	sleep(60)
+	addtimer(CALLBACK(src, PROC_REF(activate_stage3)), 6 SECONDS)
 
-	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
+/obj/item/assembly/control/massdriver/proc/activate_stage3()
+	for(var/obj/machinery/door/poddoor/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
 		if (M.id == src.id)
-			INVOKE_ASYNC(M, /obj/machinery/door/poddoor.proc/close)
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
 
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 1 SECONDS)
 
 
 /obj/item/assembly/control/igniter
@@ -133,17 +141,15 @@
 	if(cooldown)
 		return
 	cooldown = TRUE
-	for(var/obj/machinery/sparker/M in GLOB.machines)
+	for(var/obj/machinery/sparker/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/sparker))
 		if (M.id == src.id)
-			INVOKE_ASYNC(M, /obj/machinery/sparker.proc/ignite)
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/sparker, ignite))
 
-	for(var/obj/machinery/igniter/M in GLOB.machines)
+	for(var/obj/machinery/igniter/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/igniter))
 		if(M.id == src.id)
-			M.use_power(50)
-			M.on = !M.on
-			M.icon_state = "igniter[M.on]"
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/igniter, toggle))
 
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 30)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 3 SECONDS)
 
 /obj/item/assembly/control/flasher
 	name = "flasher controller"
@@ -153,11 +159,11 @@
 	if(cooldown)
 		return
 	cooldown = TRUE
-	for(var/obj/machinery/flasher/M in GLOB.machines)
+	for(var/obj/machinery/flasher/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/flasher))
 		if(M.id == src.id)
-			INVOKE_ASYNC(M, /obj/machinery/flasher.proc/flash)
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/flasher, flash))
 
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 5 SECONDS)
 
 
 /obj/item/assembly/control/crematorium
@@ -172,93 +178,4 @@
 		if (C.id == id)
 			C.cremate(usr)
 
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)
-
-//how long it spends on each floor when moving somewhere, so it'd take 4 seconds to reach you if it had to travel up 2 floors
-#define FLOOR_TRAVEL_TIME 2 SECONDS
-/obj/item/assembly/control/elevator
-	name = "elevator controller"
-	desc = "A small device used to call elevators to the current floor."
-
-/obj/item/assembly/control/elevator/activate()
-	if(cooldown)
-		return
-	cooldown = TRUE
-	var/obj/structure/industrial_lift/lift
-	for(var/l in GLOB.lifts)
-		var/obj/structure/industrial_lift/possible_lift = l
-		if(possible_lift.id != id || possible_lift.z == z || possible_lift.controls_locked)
-			continue
-		lift = possible_lift
-		break
-	if(!lift)
-		addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
-		return
-	lift.visible_message("<span class='notice'>[src] clinks and whirrs into automated motion, locking controls.</span")
-	lift.lift_master_datum.set_controls(LOCKED)
-	///The z level to which the elevator should travel
-	var/targetZ = (abs(loc.z)) //The target Z (where the elevator should move to) is not our z level (we are just some assembly in nullspace) but actually the Z level of whatever we are contained in (e.g. elevator button)
-	///The amount of z levels between the our and targetZ
-	var/difference = abs(targetZ - lift.z)
-	///Direction (up/down) needed to go to reach targetZ
-	var/direction = lift.z < targetZ ? UP : DOWN
-	///How long it will/should take us to reach the target Z level
-	var/travel_duration = FLOOR_TRAVEL_TIME * difference //100 / 2 floors up = 50 seconds on every floor, will always reach destination in the same time
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), travel_duration)
-	for(var/i in 1 to difference)
-		sleep(FLOOR_TRAVEL_TIME)//hey this should be alright... right?
-		if(QDELETED(lift) || QDELETED(src))//elevator control or button gone = don't go up anymore
-			return
-		lift.lift_master_datum.MoveLift(direction, null)
-	lift.visible_message("<span class='notice'>[src] clicks, ready to be manually operated again.</span")
-	lift.lift_master_datum.set_controls(UNLOCKED)
-
-#undef FLOOR_TRAVEL_TIME
-
-/obj/item/assembly/control/tram
-	name = "tram call button"
-	desc = "A small device used to bring trams to you."
-	///for finding the landmark initially - should be the exact same as the landmark's destination id.
-	var/initial_id
-	///this is our destination's landmark, so we only have to find it the first time.
-	var/datum/weakref/to_where
-
-/obj/item/assembly/control/tram/Initialize()
-	. = ..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/item/assembly/control/tram/LateInitialize()
-	. = ..()
-	//find where the tram needs to go to (our destination). only needs to happen the first time
-	for(var/obj/effect/landmark/tram/our_destination as anything in GLOB.tram_landmarks)
-		if(our_destination.destination_id == initial_id)
-			to_where = WEAKREF(our_destination)
-			break
-
-/obj/item/assembly/control/tram/Destroy()
-	to_where = null
-	return ..()
-
-/obj/item/assembly/control/tram/activate()
-	if(cooldown)
-		return
-	cooldown = TRUE
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
-	var/obj/structure/industrial_lift/tram/tram_part = GLOB.central_tram
-	if(!tram_part)
-		say("The tram is not responding to call signals. Please send a technician to repair the internals of the tram.")
-		return
-	if(tram_part.travelling) //in use
-		say("The tram is already travelling to [tram_part.from_where].")
-		return
-	if(!to_where)
-		return
-	var/obj/effect/landmark/tram/current_location = to_where.resolve()
-	if(!current_location)
-		return
-	if(tram_part.from_where == current_location) //already here
-		say("The tram is already here. Please board the tram and select a destination.")
-		return
-
-	say("The tram has been called to [current_location.name]. Please wait for its arrival.")
-	tram_part.tram_travel(current_location)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 5 SECONDS)

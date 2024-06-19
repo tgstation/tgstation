@@ -1,18 +1,10 @@
-#define HOLOPAD_MAX_DIAL_TIME 200
-
-#define HOLORECORD_DELAY "delay"
-#define HOLORECORD_SAY "say"
-#define HOLORECORD_SOUND "sound"
-#define HOLORECORD_LANGUAGE "lang"
-#define HOLORECORD_PRESET "preset"
-#define HOLORECORD_RENAME "rename"
-
-#define HOLORECORD_MAX_LENGTH 200
-
-/mob/camera/ai_eye/remote/holo/setLoc()
-	. = ..()
+/mob/camera/ai_eye/remote/holo/setLoc(turf/destination, force_update = FALSE)
+	// If we're moving outside the space of our projector, then just... don't
 	var/obj/machinery/holopad/H = origin
-	H?.move_hologram(eye_user, loc)
+	if(!H?.move_hologram(eye_user, destination))
+		sprint = initial(sprint) // Reset sprint so it doesn't balloon in our calling proc
+		return
+	return ..()
 
 /obj/machinery/holopad/remove_eye_control(mob/living/user)
 	if(user.client)
@@ -22,17 +14,25 @@
 //this datum manages it's own references
 
 /datum/holocall
-	var/mob/living/user //the one that called
-	var/obj/machinery/holopad/calling_holopad //the one that sent the call
-	var/obj/machinery/holopad/connected_holopad //the one that answered the call (may be null)
-	var/list/dialed_holopads //all things called, will be cleared out to just connected_holopad once answered
+	///the one that called
+	var/mob/living/user
+	///the holopad that sent the call to another holopad
+	var/obj/machinery/holopad/calling_holopad
+	///the one that answered the call (may be null)
+	var/obj/machinery/holopad/connected_holopad
+	///populated with all holopads that are either being dialed or have that have answered us, will be cleared out to just connected_holopad once answered
+	var/list/dialed_holopads
 
-	var/mob/camera/ai_eye/remote/holo/eye //user's eye, once connected
-	var/obj/effect/overlay/holo_pad_hologram/hologram //user's hologram, once connected
-	var/datum/action/innate/end_holocall/hangup //hangup action
+	///user's eye, once connected
+	var/mob/camera/ai_eye/remote/holo/eye
+	///user's hologram, once connected
+	var/obj/effect/overlay/holo_pad_hologram/hologram
+	///hangup action
+	var/datum/action/innate/end_holocall/hangup
 
 	var/call_start_time
-	var/head_call = FALSE //calls from a head of staff autoconnect, if the receiving pad is not secure.
+	///calls from a head of staff autoconnect, if the receiving pad is not secure.
+	var/head_call = FALSE
 
 //creates a holocall made by `caller` from `calling_pad` to `callees`
 /datum/holocall/New(mob/living/caller, obj/machinery/holopad/calling_pad, list/callees, elevated_access = FALSE)
@@ -43,19 +43,18 @@
 	head_call = elevated_access
 	dialed_holopads = list()
 
-	for(var/I in callees)
-		var/obj/machinery/holopad/H = I
-		if(!QDELETED(H) && H.is_operational)
-			dialed_holopads += H
+	for(var/obj/machinery/holopad/connected_holopad as anything in callees)
+		if(!QDELETED(connected_holopad) && connected_holopad.is_operational)
+			dialed_holopads += connected_holopad
 			if(head_call)
-				if(H.secure)
+				if(connected_holopad.secure)
 					calling_pad.say("Auto-connection refused, falling back to call mode.")
-					H.say("Incoming call.")
+					connected_holopad.say("Incoming call.")
 				else
-					H.say("Incoming connection.")
+					connected_holopad.say("Incoming connection.")
 			else
-				H.say("Incoming call.")
-			LAZYADD(H.holo_calls, src)
+				connected_holopad.say("Incoming call.")
+			connected_holopad.set_holocall(src)
 
 	if(!dialed_holopads.len)
 		calling_pad.say("Connection failure.")
@@ -67,9 +66,7 @@
 //cleans up ALL references :)
 /datum/holocall/Destroy()
 	QDEL_NULL(hangup)
-
-	if(!QDELETED(eye))
-		QDEL_NULL(eye)
+	QDEL_NULL(eye)
 
 	if(connected_holopad && !QDELETED(hologram))
 		hologram = null
@@ -83,15 +80,13 @@
 		QDEL_NULL(hologram)
 	hologram = null
 
-	for(var/I in dialed_holopads)
-		var/obj/machinery/holopad/H = I
-		LAZYREMOVE(H.holo_calls, src)
+	for(var/obj/machinery/holopad/dialed_holopad as anything in dialed_holopads)
+		dialed_holopad.set_holocall(src, FALSE)
+
 	dialed_holopads.Cut()
 
-	if(calling_holopad)
-		calling_holopad.calling = FALSE
-		calling_holopad.outgoing_call = null
-		calling_holopad.SetLightsAndPower()
+	if(calling_holopad)//if the call is answered, then calling_holopad wont be in dialed_holopads and thus wont have set_holocall(src, FALSE) called
+		calling_holopad.callee_hung_up()
 		calling_holopad = null
 	if(connected_holopad)
 		connected_holopad.SetLightsAndPower()
@@ -112,75 +107,74 @@
 
 	ConnectionFailure(H, TRUE)
 
-//Forcefully disconnects a holopad `H` from a call. Pads not in the call are ignored.
-/datum/holocall/proc/ConnectionFailure(obj/machinery/holopad/H, graceful = FALSE)
+//Forcefully disconnects disconnected_holopad from a call. Pads not in the call are ignored.
+/datum/holocall/proc/ConnectionFailure(obj/machinery/holopad/disconnected_holopad, graceful = FALSE)
 	testing("Holocall connection failure: graceful [graceful]")
-	if(H == connected_holopad || H == calling_holopad)
-		if(!graceful && H != calling_holopad)
+	if(disconnected_holopad == connected_holopad || disconnected_holopad == calling_holopad)
+		if(!graceful && disconnected_holopad != calling_holopad)
 			calling_holopad.say("Connection failure.")
 		qdel(src)
 		return
 
-	LAZYREMOVE(H.holo_calls, src)
-	dialed_holopads -= H
+	disconnected_holopad.set_holocall(src, FALSE)
+
+	dialed_holopads -= disconnected_holopad
 	if(!dialed_holopads.len)
 		if(graceful)
 			calling_holopad.say("Call rejected.")
 		testing("No recipients, terminating")
 		qdel(src)
 
-//Answers a call made to a holopad `H` which cannot be the calling holopad. Pads not in the call are ignored
-/datum/holocall/proc/Answer(obj/machinery/holopad/H)
+///Answers a call made to answering_holopad which cannot be the calling holopad. Pads not in the call are ignored
+/datum/holocall/proc/Answer(obj/machinery/holopad/answering_holopad)
 	testing("Holocall answer")
-	if(H == calling_holopad)
+	if(answering_holopad == calling_holopad)
 		CRASH("How cute, a holopad tried to answer itself.")
 
-	if(!(H in dialed_holopads))
+	if(!(answering_holopad in dialed_holopads))
 		return
 
 	if(connected_holopad)
 		CRASH("Multi-connection holocall")
 
-	for(var/I in dialed_holopads)
-		if(I == H)
+	for(var/obj/machinery/holopad/other_dialed_holopad as anything in dialed_holopads)
+		if(other_dialed_holopad == answering_holopad)
 			continue
-		Disconnect(I)
+		Disconnect(other_dialed_holopad)
 
-	for(var/I in H.holo_calls)
-		var/datum/holocall/HC = I
-		if(HC != src)
-			HC.Disconnect(H)
+	for(var/datum/holocall/previously_answered_holocall as anything in answering_holopad.holo_calls)//disconnect the other holocalls answering_holopad is occupied with
+		if(previously_answered_holocall != src)
+			previously_answered_holocall.Disconnect(answering_holopad)
 
-	connected_holopad = H
+	connected_holopad = answering_holopad
 
 	if(!Check())
 		return
 
-	calling_holopad.calling = FALSE
-	hologram = H.activate_holo(user)
+	calling_holopad.callee_picked_up()
+	hologram = answering_holopad.activate_holo(user)
 	hologram.HC = src
 
 	//eyeobj code is horrid, this is the best copypasta I could make
 	eye = new
-	eye.origin = H
+	eye.origin = answering_holopad
 	eye.eye_initialized = TRUE
 	eye.eye_user = user
 	eye.name = "Camera Eye ([user.name])"
 	user.remote_control = eye
 	user.reset_perspective(eye)
-	eye.setLoc(H.loc)
+	eye.setLoc(answering_holopad.loc)
 
 	hangup = new(eye, src)
 	hangup.Grant(user)
-	playsound(H, 'sound/machines/ping.ogg', 100)
-	H.say("Connection established.")
+	playsound(answering_holopad, 'sound/machines/ping.ogg', 100)
+	answering_holopad.say("Connection established.")
 
 //Checks the validity of a holocall and qdels itself if it's not. Returns TRUE if valid, FALSE otherwise
 /datum/holocall/proc/Check()
-	for(var/I in dialed_holopads)
-		var/obj/machinery/holopad/H = I
-		if(!H.is_operational)
-			ConnectionFailure(H)
+	for(var/obj/machinery/holopad/dialed_holopad as anything in dialed_holopads)
+		if(!dialed_holopad.is_operational)
+			ConnectionFailure(dialed_holopad)
 
 	if(QDELETED(src))
 		return FALSE
@@ -199,7 +193,7 @@
 
 /datum/action/innate/end_holocall
 	name = "End Holocall"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "camera_off"
 	var/datum/holocall/hcall
 
@@ -229,7 +223,7 @@
 	desc = "Stores recorder holocalls."
 	icon_state = "holodisk"
 	obj_flags = UNIQUE_RENAME
-	custom_materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	var/datum/holorecord/record
 	//Preset variables
 	var/preset_image_type
@@ -238,7 +232,7 @@
 /obj/item/disk/holodisk/Initialize(mapload)
 	. = ..()
 	if(preset_record_text)
-		INVOKE_ASYNC(src, .proc/build_record)
+		INVOKE_ASYNC(src, PROC_REF(build_record))
 
 /obj/item/disk/holodisk/Destroy()
 	QDEL_NULL(record)
@@ -296,7 +290,7 @@
 				if(ispath(preset_type,/datum/preset_holoimage))
 					record.entries += list(list(HOLORECORD_PRESET,preset_type))
 	if(!preset_image_type)
-		record.caller_image = image('icons/mob/animal.dmi',"old")
+		record.caller_image = image('icons/mob/simple/animal.dmi',"old")
 	else
 		var/datum/preset_holoimage/H = new preset_image_type
 		record.caller_image = H.build_image()
@@ -318,9 +312,56 @@
 		if(outfit_type)
 			mannequin.equipOutfit(outfit_type,TRUE)
 		mannequin.setDir(SOUTH)
-		COMPILE_OVERLAYS(mannequin)
 		. = image(mannequin)
 		unset_busy_human_dummy("HOLODISK_PRESET")
+
+/datum/preset_holoimage/clown
+	outfit_type = /datum/outfit/job/clown
+
+/datum/preset_holoimage/engineer
+	outfit_type = /datum/outfit/job/engineer
+
+/datum/preset_holoimage/corgi
+	nonhuman_mobtype = /mob/living/basic/pet/dog/corgi
+
+/datum/preset_holoimage/engineer/mod
+	outfit_type = /datum/outfit/job/engineer/mod
+
+/datum/preset_holoimage/engineer/ce
+	outfit_type = /datum/outfit/job/ce
+
+/datum/preset_holoimage/engineer/ce/mod
+	outfit_type = /datum/outfit/job/ce/mod
+
+/datum/preset_holoimage/engineer/atmos
+	outfit_type = /datum/outfit/job/atmos
+
+/datum/preset_holoimage/engineer/atmos/mod
+	outfit_type = /datum/outfit/job/atmos/mod
+
+/datum/preset_holoimage/researcher
+	outfit_type = /datum/outfit/job/scientist
+
+/datum/preset_holoimage/captain
+	outfit_type = /datum/outfit/job/captain
+
+/datum/preset_holoimage/nanotrasenprivatesecurity
+	outfit_type = /datum/outfit/nanotrasensoldiercorpse
+
+/datum/preset_holoimage/syndicatebattlecruisercaptain
+	outfit_type = /datum/outfit/syndicate_empty/battlecruiser
+
+/datum/preset_holoimage/hivebot
+	nonhuman_mobtype = /mob/living/basic/hivebot
+
+/datum/preset_holoimage/ai
+	nonhuman_mobtype = /mob/living/silicon/ai
+
+/datum/preset_holoimage/robot
+	nonhuman_mobtype = /mob/living/silicon/robot
+
+/datum/preset_holoimage/assistant
+	outfit_type = /datum/outfit/job/assistant
 
 /obj/item/disk/holodisk/example
 	preset_image_type = /datum/preset_holoimage/clown
@@ -342,42 +383,6 @@
 	LANGUAGE /datum/language/common
 	SAY OOGA
 	DELAY 20"}
-
-/datum/preset_holoimage/engineer
-	outfit_type = /datum/outfit/job/engineer
-
-/datum/preset_holoimage/engineer/rig
-	outfit_type = /datum/outfit/job/engineer/gloved/rig
-
-/datum/preset_holoimage/engineer/ce
-	outfit_type = /datum/outfit/job/ce
-
-/datum/preset_holoimage/engineer/ce/rig
-	outfit_type = /datum/outfit/job/engineer/gloved/rig
-
-/datum/preset_holoimage/engineer/atmos
-	outfit_type = /datum/outfit/job/atmos
-
-/datum/preset_holoimage/engineer/atmos/rig
-	outfit_type = /datum/outfit/job/engineer/gloved/rig
-
-/datum/preset_holoimage/researcher
-	outfit_type = /datum/outfit/job/scientist
-
-/datum/preset_holoimage/captain
-	outfit_type = /datum/outfit/job/captain
-
-/datum/preset_holoimage/nanotrasenprivatesecurity
-	outfit_type = /datum/outfit/nanotrasensoldiercorpse2
-
-/datum/preset_holoimage/gorilla
-	nonhuman_mobtype = /mob/living/simple_animal/hostile/gorilla
-
-/datum/preset_holoimage/corgi
-	nonhuman_mobtype = /mob/living/simple_animal/pet/dog/corgi
-
-/datum/preset_holoimage/clown
-	outfit_type = /datum/outfit/job/clown
 
 /obj/item/disk/holodisk/donutstation/whiteship
 	name = "Blackbox Print-out #DS024"
@@ -449,19 +454,141 @@
 	DELAY 10
 	SAY Oh, shit!
 	DELAY 10
-	PRESET /datum/preset_holoimage/engineer/atmos/rig
+	PRESET /datum/preset_holoimage/engineer/atmos/mod
 	LANGUAGE /datum/language/narsie
 	NAME Unknown
 	SAY RISE, MY LORD!!
 	DELAY 10
 	LANGUAGE /datum/language/common
 	NAME Plastic
-	PRESET /datum/preset_holoimage/engineer/rig
+	PRESET /datum/preset_holoimage/engineer/mod
 	SAY Fuck, fuck, fuck!
 	DELAY 20
-	SAY It's loose! CALL THE FUCKING SHUTT-
+	NAME Maria Dell
+	PRESET /datum/preset_holoimage/engineer/atmos
+	SAY GEORGE, WAIT-
 	DELAY 10
 	PRESET /datum/preset_holoimage/corgi
 	NAME Blackbox Automated Message
 	SAY Connection lost. Dumping audio logs to disk.
 	DELAY 50"}
+
+/obj/item/disk/holodisk/ruin/ghost_restaurant
+	name = "Blackbox Print-out #NG234"
+	preset_image_type = /datum/preset_holoimage/assistant
+	preset_record_text = {"
+	NAME Aron Blue
+	SAY Message from NTGrub Themed Surprise Deliveries, Trademark.
+	DELAY 20
+	NAME Henry Fresh
+	SAY Must you always say the full name, dude?
+	DELAY 20
+	NAME Aron Blue
+	SAY Ahem!
+	DELAY 20
+	NAME Aron Blue
+	SAY It says that they loved our new robot themes!
+	DELAY 20
+	NAME Henry Fresh
+	SAY Oh dang!
+	DELAY 20
+	NAME Henry Fresh
+	SAY Will we be moved to the main team?
+	DELAY 20
+	NAME Aron Blue
+	SAY Hell yeah we will! High five!
+	DELAY 20
+	SOUND punch
+	NAME Henry Fresh
+	SAY High five!
+	DELAY 20
+	NAME Henry Fresh
+	SAY Oh, new order. Its for, hah, *Funny Food*.
+	DELAY 20
+	NAME Aron Blue
+	SAY Easy!
+	DELAY 20
+	NAME Aron Blue
+	SAY I will dress up this robot as a clown.
+	DELAY 20
+	NAME Henry Fresh
+	SAY Well, if you are that basic, lets make it ask for a Banana Pie.
+	DELAY 20
+	NAME Aron Blue
+	SAY Gateway to Planetside Pagliacci 15 is open.
+	DELAY 20
+	NAME Aron Blue
+	SAY Feels appropriate.
+	DELAY 15
+	SOUND clown_step
+	DELAY 10
+	SOUND sparks
+	DELAY 10
+	NAME Aron Blue
+	SAY Next order is for a simple farm dish.
+	DELAY 20
+	NAME Henry Fresh
+	SAY Unlike you, I am creative.
+	DELAY 20
+	NAME Henry Fresh
+	SAY I'll dress it up as a scarecrow.
+	SOUND rustle
+	DELAY 20
+	NAME Aron Blue
+	SAY Let's ask for uuuh, Hot Potato.
+	DELAY 20
+	NAME Henry Fresh
+	SAY Send it to the new place. Firebase Balthazord.
+	DELAY 20
+	NAME Henry Fresh
+	SAY Wait.
+	DELAY 10
+	NAME Henry Fresh
+	SAY You know its called Baked Potato, right?
+	DELAY 10
+	SOUND sparks
+	DELAY 20
+	NAME Aron Blue
+	SAY Shut up, they'll know what I meant!
+	DELAY 20
+	SOUND sparks
+	DELAY 10
+	NAME Henry Fresh
+	SAY Its back.
+	DELAY 20
+	NAME Henry Fresh
+	SAY Haha, it brought a raw potato.
+	DELAY 20
+	NAME Aron Blue
+	SAY HENRY ITS TICK-
+	DELAY 20
+	SOUND explosion
+	DELAY 20
+	PRESET /datum/preset_holoimage/corgi
+	NAME Blackbox Automated Message
+	SAY Connection lost. Dumping audio logs to disk.
+	DELAY 50
+	"}
+
+/obj/item/disk/holodisk/ruin/space/travelers_rest
+	name = "Owner's memo"
+	desc = "A holodisk containing a small memo from the previous owner, addressed to someone else."
+	preset_image_type = /datum/preset_holoimage/engineer/atmos
+	preset_record_text = {"
+		NAME Space Adventurer
+		SOUND PING
+		DELAY 20
+		SAY Hey, I left you this message for when you come back.
+		DELAY 50
+		SAY I picked up an emergency signal from a freighter and I'm going there to search for some goodies.
+		DELAY 50
+		SAY You can crash here if you need to, but make sure to check the anchor cables before you leave.
+		DELAY 50
+		SAY If you don't, this thing might drift off into space.
+		DELAY 50
+		SAY Then some weirdo could find it and potentially claim it as their own.
+		DELAY 50
+		SAY Anyway, gotta go, see ya!
+		DELAY 40
+		SOUND sparks
+	"}

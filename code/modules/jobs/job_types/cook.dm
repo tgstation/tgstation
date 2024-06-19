@@ -1,20 +1,19 @@
 /datum/job/cook
-	title = "Cook"
-	department_head = list("Head of Personnel")
+	title = JOB_COOK
+	description = "Serve food, cook meat, keep the crew fed."
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 1
-	supervisors = "the head of personnel"
-	selection_color = "#bbe291"
+	supervisors = SUPERVISOR_HOP
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "COOK"
 	var/cooks = 0 //Counts cooks amount
-	/// List of areas that are counted as the kitchen for the purposes of CQC. Defaults to just the kitchen. Mapping configs can and should override this.
-	var/list/kitchen_areas = list(/area/service/kitchen)
 
 	outfit = /datum/outfit/job/cook
 	plasmaman_outfit = /datum/outfit/plasmaman/chef
 
-	paycheck = PAYCHECK_EASY
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
 	liver_traits = list(TRAIT_CULINARY_METABOLISM)
@@ -25,51 +24,32 @@
 		/datum/job_department/service,
 		)
 
-	family_heirlooms = list(/obj/item/reagent_containers/food/condiment/saltshaker, /obj/item/kitchen/rollingpin, /obj/item/clothing/head/chefhat)
-
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS
-
-
-/datum/job/cook/New()
-	. = ..()
-	var/list/job_changes = SSmapping.config.job_changes
-
-	if(!length(job_changes))
-		return
-
-	var/list/cook_changes = job_changes["cook"]
-
-	if(!length(cook_changes))
-		return
-
-	var/list/additional_cqc_areas = cook_changes["additional_cqc_areas"]
-
-	if(!additional_cqc_areas)
-		return
-
-	if(!islist(additional_cqc_areas))
-		stack_trace("Incorrect CQC area format from mapping configs. Expected /list, got: \[[additional_cqc_areas.type]\]")
-		return
-
-	for(var/path_as_text in additional_cqc_areas)
-		var/path = text2path(path_as_text)
-		if(!ispath(path, /area))
-			stack_trace("Invalid path in mapping config for chef CQC: \[[path_as_text]\]")
-			continue
-
-		kitchen_areas |= path
-
-	mail_goodies = list(
-		/obj/item/storage/box/ingredients/random = 80,
-		/obj/item/reagent_containers/glass/bottle/caramel = 20,
-		/obj/item/reagent_containers/food/condiment/flour = 20,
-		/obj/item/reagent_containers/food/condiment/rice = 20,
-		/obj/item/reagent_containers/food/condiment/enzyme = 15,
-		/obj/item/reagent_containers/food/condiment/soymilk = 15,
-		/obj/item/kitchen/knife = 4,
-		/obj/item/kitchen/knife/butcher = 2
+	family_heirlooms = list(
+		/obj/item/reagent_containers/condiment/saltshaker,
+		/obj/item/kitchen/rollingpin,
+		/obj/item/clothing/head/utility/chefhat,
 	)
 
+	// Adds up to 100, don't mess it up
+	mail_goodies = list(
+		/obj/item/storage/box/ingredients/random = 40,
+		/obj/item/reagent_containers/cup/bottle/caramel = 7,
+		/obj/item/reagent_containers/condiment/flour = 7,
+		/obj/item/reagent_containers/condiment/rice = 7,
+		/obj/item/reagent_containers/condiment/ketchup = 7,
+		/obj/item/reagent_containers/condiment/enzyme = 7,
+		/obj/item/reagent_containers/condiment/soymilk = 7,
+		/obj/item/kitchen/spoon/soup_ladle = 6,
+		/obj/item/kitchen/tongs = 6,
+		/obj/item/knife/kitchen = 4,
+		/obj/item/knife/butcher = 2,
+	)
+
+	rpg_title = "Tavern Chef"
+	alternate_titles = list(
+		JOB_CHEF,
+	)
+	job_flags = STATION_JOB_FLAGS
 
 /datum/job/cook/award_service(client/winner, award)
 	winner.give_award(award, winner.mob)
@@ -86,26 +66,43 @@
 	name = "Cook"
 	jobtype = /datum/job/cook
 
-	belt = /obj/item/pda/cook
-	ears = /obj/item/radio/headset/headset_srv
-	uniform = /obj/item/clothing/under/rank/civilian/chef
+	id_trim = /datum/id_trim/job/cook/chef
+	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	suit = /obj/item/clothing/suit/toggle/chef
-	head = /obj/item/clothing/head/chefhat
-	mask = /obj/item/clothing/mask/fakemoustache/italian
 	backpack_contents = list(
+		/obj/item/choice_beacon/ingredient = 1,
 		/obj/item/sharpener = 1,
-		/obj/item/choice_beacon/ingredient = 1
 	)
-	skillchips = list(/obj/item/skillchip/job/chef)
+	belt = /obj/item/modular_computer/pda/cook
+	ears = /obj/item/radio/headset/headset_srv
+	head = /obj/item/clothing/head/utility/chefhat
+	mask = /obj/item/clothing/mask/fakemoustache/italian
 
-	id_trim = /datum/id_trim/job/cook
+	skillchips = list(/obj/item/skillchip/job/chef)
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
-	var/datum/job/cook/J = SSjob.GetJobType(jobtype)
-	if(J) // Fix for runtime caused by invalid job being passed
-		if(J.cooks>0)//Cooks
+	var/datum/job/cook/other_chefs = SSjob.GetJobType(jobtype)
+	if(other_chefs) // If there's other Chefs, you're a Cook
+		if(other_chefs.cooks > 0)//Cooks
+			id_trim = /datum/id_trim/job/cook
 			suit = /obj/item/clothing/suit/apron/chef
 			head = /obj/item/clothing/head/soft/mime
 		if(!visualsOnly)
-			J.cooks++
+			other_chefs.cooks++
+
+/datum/outfit/job/cook/post_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+	. = ..()
+	// Update PDA to match possible new trim.
+	var/obj/item/card/id/worn_id = user.wear_id
+	var/obj/item/modular_computer/pda/pda = user.get_item_by_slot(pda_slot)
+	if(!istype(worn_id) || !istype(pda))
+		return
+	var/assignment = worn_id.get_trim_assignment()
+	if(!isnull(assignment))
+		pda.imprint_id(user.real_name, assignment)
+
+/datum/outfit/job/cook/get_types_to_preload()
+	. = ..()
+	. += /obj/item/clothing/suit/apron/chef
+	. += /obj/item/clothing/head/soft/mime

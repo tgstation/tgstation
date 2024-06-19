@@ -1,16 +1,16 @@
 /obj/item/forcefield_projector
 	name = "forcefield projector"
 	desc = "An experimental device that can create several forcefields at a distance."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "signmaker_forcefield"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NOBLUDGEON
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	custom_materials = list(/datum/material/iron=250, /datum/material/glass=500)
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 2.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 5)
 	var/max_shield_integrity = 250
 	var/shield_integrity = 250
 	var/max_fields = 3
@@ -21,47 +21,50 @@
 	/// Checks to make sure the projector isn't busy with making another forcefield.
 	var/force_proj_busy = FALSE
 
-/obj/item/forcefield_projector/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(!check_allowed_items(target, 1))
-		return
-	if(istype(target, /obj/structure/projected_forcefield))
-		var/obj/structure/projected_forcefield/F = target
+/obj/item/forcefield_projector/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/forcefield_projector/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!check_allowed_items(interacting_with, not_inside = TRUE))
+		return NONE
+	if(istype(interacting_with, /obj/structure/projected_forcefield))
+		var/obj/structure/projected_forcefield/F = interacting_with
 		if(F.generator == src)
 			to_chat(user, span_notice("You deactivate [F]."))
 			qdel(F)
-			return
-	var/turf/T = get_turf(target)
+			return ITEM_INTERACT_BLOCKING
+	var/turf/T = get_turf(interacting_with)
 	var/obj/structure/projected_forcefield/found_field = locate() in T
 	if(found_field)
 		to_chat(user, span_warning("There is already a forcefield in that location!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(T.density)
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(get_dist(T,src) > field_distance_limit)
-		return
-	if (get_turf(src) == T)
+		return ITEM_INTERACT_BLOCKING
+	if(get_turf(src) == T)
 		to_chat(user, span_warning("Target is too close, aborting!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(LAZYLEN(current_fields) >= max_fields)
 		to_chat(user, span_warning("[src] cannot sustain any more forcefields!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(force_proj_busy)
 		to_chat(user, span_notice("[src] is busy creating a forcefield."))
-		return
+		return ITEM_INTERACT_BLOCKING
 	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
 	if(creation_time)
 		force_proj_busy = TRUE
-		if(!do_after(user, creation_time, target = target))
+		if(!do_after(user, creation_time, target = interacting_with))
 			force_proj_busy = FALSE
-			return
+			return ITEM_INTERACT_BLOCKING
 		force_proj_busy = FALSE
-	
+
 	playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
 	user.visible_message(span_warning("[user] projects a forcefield!"),span_notice("You project a forcefield."))
 	var/obj/structure/projected_forcefield/F = new(T, src)
 	current_fields += F
 	user.changeNext_move(CLICK_CD_MELEE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/forcefield_projector/attack_self(mob/user)
 	if(LAZYLEN(current_fields))
@@ -82,11 +85,11 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/forcefield_projector/process(delta_time)
+/obj/item/forcefield_projector/process(seconds_per_tick)
 	if(!LAZYLEN(current_fields))
-		shield_integrity = min(shield_integrity + delta_time * 2, max_shield_integrity)
+		shield_integrity = min(shield_integrity + seconds_per_tick * 2, max_shield_integrity)
 	else
-		shield_integrity = max(shield_integrity - LAZYLEN(current_fields) * delta_time * 0.5, 0) //fields degrade slowly over time
+		shield_integrity = max(shield_integrity - LAZYLEN(current_fields) * seconds_per_tick * 0.5, 0) //fields degrade slowly over time
 	for(var/obj/structure/projected_forcefield/F in current_fields)
 		if(shield_integrity <= 0 || get_dist(F,src) > field_distance_limit)
 			qdel(F)
@@ -97,14 +100,23 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "forcefield"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
 	pass_flags_self = PASSGLASS
 	density = TRUE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	resistance_flags = INDESTRUCTIBLE
-	CanAtmosPass = ATMOS_PASS_DENSITY
-	armor = list(MELEE = 0, BULLET = 25, LASER = 50, ENERGY = 50, BOMB = 25, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+	can_atmos_pass = ATMOS_PASS_DENSITY
+	armor_type = /datum/armor/structure_projected_forcefield
 	var/obj/item/forcefield_projector/generator
+
+/datum/armor/structure_projected_forcefield
+	bullet = 25
+	laser = 50
+	energy = 50
+	bomb = 25
+	fire = 100
+	acid = 100
 
 /obj/structure/projected_forcefield/Initialize(mapload, obj/item/forcefield_projector/origin)
 	. = ..()
@@ -113,8 +125,9 @@
 /obj/structure/projected_forcefield/Destroy()
 	visible_message(span_warning("[src] flickers and disappears!"))
 	playsound(src,'sound/weapons/resonator_blast.ogg',25,TRUE)
-	generator.current_fields -= src
-	generator = null
+	if(generator)
+		generator.current_fields -= src
+		generator = null
 	return ..()
 
 /obj/structure/projected_forcefield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -123,4 +136,5 @@
 /obj/structure/projected_forcefield/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
-	generator.shield_integrity = max(generator.shield_integrity - damage_amount, 0)
+	if(generator)
+		generator.shield_integrity = max(generator.shield_integrity - damage_amount, 0)

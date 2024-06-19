@@ -1,19 +1,26 @@
 /obj/item/desynchronizer
 	name = "desynchronizer"
 	desc = "An experimental device that can temporarily desynchronize the user from spacetime, effectively making them disappear while it's active."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "desynchronizer"
 	inhand_icon_state = "electronic"
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NOBLUDGEON
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	custom_materials = list(/datum/material/iron=250, /datum/material/glass=500)
-	var/max_duration = 3000
-	var/duration = 300
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 2.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 5)
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
+	/// Max time this can be set
+	var/max_duration = 300 SECONDS
+	/// Currently set time
+	var/duration = 30 SECONDS
+	/// Last world time
 	var/last_use = 0
+	/// world.time + (world.time - last_use)
 	var/next_use = 0
+	/// The current space time rift
 	var/obj/effect/abstract/sync_holder/sync_holder
+	/// Timer obj for calling resync
 	var/resync_timer
 
 /obj/item/desynchronizer/attack_self(mob/living/user)
@@ -32,15 +39,13 @@
 	. += span_notice("Alt-click to customize the duration. Current duration: [DisplayTimeText(duration)].")
 	. += span_notice("Can be used again to interrupt the effect early. The recharge time is the same as the time spent in desync.")
 
-/obj/item/desynchronizer/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
-		return
-	var/new_duration = input(user, "Set the duration (5-300):", "Desynchronizer", duration / 10) as null|num
-	if(new_duration)
-		new_duration = new_duration SECONDS
-		new_duration = clamp(new_duration, 50, max_duration)
-		duration = new_duration
-		to_chat(user, span_notice("You set the duration to [DisplayTimeText(duration)]."))
+/obj/item/desynchronizer/click_alt(mob/living/user)
+	var/new_duration = tgui_input_number(user, "Set the duration", "Desynchronizer", duration / 10, max_duration, 5)
+	if(!new_duration || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, NEED_DEXTERITY))
+		return CLICK_ACTION_BLOCKING
+	duration = new_duration
+	to_chat(user, span_notice("You set the duration to [DisplayTimeText(duration)]."))
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/desynchronizer/proc/desync(mob/living/user)
 	if(sync_holder)
@@ -49,13 +54,9 @@
 	new /obj/effect/temp_visual/desynchronizer(drop_location())
 	to_chat(user, span_notice("You activate [src], desynchronizing yourself from the present. You can still see your surroundings, but you feel eerily dissociated from reality."))
 	user.forceMove(sync_holder)
-	SEND_SIGNAL(user, COMSIG_MOVABLE_SECLUDED_LOCATION)
-	for(var/thing in user)
-		var/atom/movable/AM = thing
-		SEND_SIGNAL(AM, COMSIG_MOVABLE_SECLUDED_LOCATION)
 	last_use = world.time
 	icon_state = "desynchronizer-on"
-	resync_timer = addtimer(CALLBACK(src, .proc/resync), duration , TIMER_STOPPABLE)
+	resync_timer = addtimer(CALLBACK(src, PROC_REF(resync)), duration , TIMER_STOPPABLE)
 
 /obj/item/desynchronizer/proc/resync()
 	new /obj/effect/temp_visual/desynchronizer(sync_holder.drop_location())
@@ -81,6 +82,14 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
+
+/obj/effect/abstract/sync_holder/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SECLUDED_LOCATION, INNATE_TRAIT)
+
+/obj/effect/abstract/sync_holder/relaymove(mob/living/user, direction)
+	// While faded out of spacetime, no, you cannot move.
+	return
 
 /obj/effect/abstract/sync_holder/Destroy()
 	for(var/I in contents)

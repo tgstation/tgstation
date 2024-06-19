@@ -1,13 +1,18 @@
 /mob/living/carbon/human/Login()
 	. = ..()
+
+	dna?.species?.on_owner_login(src)
+
+	if(SStts.tts_enabled && !voice)
+		voice = pick(SStts.available_speakers)
+
 	if(!LAZYLEN(afk_thefts))
 		return
 
 	var/list/print_msg = list()
-	print_msg += span_info("*---------*")
 	print_msg += span_userdanger("As you snap back to consciousness, you recall people messing with your stuff...")
 
-	afk_thefts = reverseRange(afk_thefts)
+	afk_thefts = reverse_range(afk_thefts)
 
 	for(var/list/iter_theft as anything in afk_thefts)
 		if(!islist(iter_theft) || LAZYLEN(iter_theft) != AFK_THEFT_TIME)
@@ -25,7 +30,6 @@
 
 	if(LAZYLEN(afk_thefts) >= AFK_THEFT_MAX_MESSAGES)
 		print_msg += span_warning("There may have been more, but that's all you can remember...")
-	print_msg += span_info("*---------*")
 
-	to_chat(src, print_msg.Join("\n"))
+	to_chat(src, examine_block(print_msg.Join("\n")))
 	LAZYNULL(afk_thefts)

@@ -1,7 +1,7 @@
 /obj/item/suspiciousphone
 	name = "suspicious phone"
 	desc = "This device raises pink levels to unknown highs."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "suspiciousphone"
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("dumps")
@@ -30,25 +30,32 @@
 			var/datum/bank_account/B = i
 			B.being_dumped = TRUE
 		new /obj/effect/dumpeet_target(targetturf, L)
+
+		to_chat(user, span_notice("You have activated Protocol CRAB-17."))
+		message_admins("[ADMIN_LOOKUPFLW(user)] has activated Protocol CRAB-17.")
+		user.log_message("activated Protocol CRAB-17.", LOG_GAME)
+
 		dumped = TRUE
 
 /obj/structure/checkoutmachine
 	name = "\improper Nanotrasen Space-Coin Market"
 	desc = "This is good for spacecoin because"
-	icon = 'icons/obj/money_machine.dmi'
+	icon = 'icons/obj/machines/money_machine.dmi'
 	icon_state = "bogdanoff"
-	layer = LARGE_MOB_LAYER
-	armor = list(MELEE = 80, BULLET = 30, LASER = 30, ENERGY = 60, BOMB = 90, BIO = 0, RAD = 0, FIRE = 100, ACID = 80)
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	density = TRUE
 	pixel_z = -8
 	max_integrity = 5000
 	var/list/accounts_to_rob
 	var/mob/living/bogdanoff
+	/// Are we able to start moving?
 	var/canwalk = FALSE
 
 /obj/structure/checkoutmachine/examine(mob/living/user)
 	. = ..()
-	. += span_info("It's integrated integrity meter reads: <b>HEALTH: [obj_integrity]</b>.")
+	. += span_info("It has a flashing <b>ID card reader</b> for convenient cashing out.")
 
 /obj/structure/checkoutmachine/proc/check_if_finished()
 	for(var/i in accounts_to_rob)
@@ -57,53 +64,66 @@
 			return FALSE
 	return TRUE
 
-/obj/structure/checkoutmachine/attackby(obj/item/W, mob/user, params)
+/obj/structure/checkoutmachine/attackby(obj/item/attacking_item, mob/user, params)
+	if(!canwalk)
+		balloon_alert(user, "not ready to accept transactions!")
+		return
+
 	if(check_if_finished())
 		qdel(src)
 		return
-	if(istype(W, /obj/item/card/id))
-		var/obj/item/card/id/card = W
-		if(!card.registered_account)
-			to_chat(user, span_warning("This card does not have a registered account!"))
-			return
-		if(!card.registered_account.being_dumped)
-			to_chat(user, span_warning("It appears that your funds are safe from draining!"))
-			return
-		if(do_after(user, 40, target = src))
-			if(!card.registered_account.being_dumped)
-				return
-			to_chat(user, span_warning("You quickly cash out your funds to a more secure banking location. Funds are safu.")) // This is a reference and not a typo
-			card.registered_account.being_dumped = FALSE
-			if(check_if_finished())
-				qdel(src)
-				return
-	else
-		return ..()
+
+	var/obj/item/card/id/card = attacking_item.GetID()
+	if(!card)
+		balloon_alert(user, "your [attacking_item.name] gets repelled by the id card reader")
+
+		var/throwtarget = get_step(user, get_dir(src, user))
+		user.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
+		playsound(get_turf(src),'sound/magic/repulse.ogg', 100, TRUE)
+
+		return
+
+	if(!card.registered_account)
+		balloon_alert(user, "card has no registered account!")
+		return
+
+	if(!card.registered_account.being_dumped)
+		balloon_alert(user, "funds are already safe!")
+		return
+
+	to_chat(user, span_warning("You quickly cash out your funds to a more secure banking location. Funds are safu.")) // This is a reference and not a typo
+	card.registered_account.being_dumped = FALSE
+
+	if(check_if_finished())
+		qdel(src)
+		return
 
 /obj/structure/checkoutmachine/Initialize(mapload, mob/living/user)
 	. = ..()
+	if(QDELETED(src))
+		return
 	bogdanoff = user
 	add_overlay("flaps")
 	add_overlay("hatch")
 	add_overlay("legs_retracted")
-	addtimer(CALLBACK(src, .proc/startUp), 50)
-	QDEL_IN(WEAKREF(src), 8 MINUTES) //Self-destruct after 8 min
-	SSeconomy.market_crashing = TRUE
+	addtimer(CALLBACK(src, PROC_REF(startUp)), 5 SECONDS)
+	QDEL_IN(src, 8 MINUTES) //Self-destruct after 8 min
+	ADD_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, REF(src))
 
 
 /obj/structure/checkoutmachine/proc/startUp() //very VERY snowflake code that adds a neat animation when the pod lands.
 	start_dumping() //The machine doesnt move during this time, giving people close by a small window to grab their funds before it starts running around
-	sleep(10)
+	sleep(1 SECONDS)
 	if(QDELETED(src))
 		return
 	playsound(src, 'sound/machines/click.ogg', 15, TRUE, -3)
 	cut_overlay("flaps")
-	sleep(10)
+	sleep(1 SECONDS)
 	if(QDELETED(src))
 		return
 	playsound(src, 'sound/machines/click.ogg', 15, TRUE, -3)
 	cut_overlay("hatch")
-	sleep(30)
+	sleep(3 SECONDS)
 	if(QDELETED(src))
 		return
 	playsound(src,'sound/machines/twobeep.ogg',50,FALSE)
@@ -116,31 +136,31 @@
 	add_overlay("legs_extending")
 	cut_overlay("legs_retracted")
 	pixel_z += 4
-	sleep(5)
+	sleep(0.5 SECONDS)
 	if(QDELETED(src))
 		return
 	add_overlay("legs_extended")
 	cut_overlay("legs_extending")
 	pixel_z += 4
-	sleep(20)
+	sleep(2 SECONDS)
 	if(QDELETED(src))
 		return
 	add_overlay("screen_lines")
-	sleep(5)
+	sleep(0.5 SECONDS)
 	if(QDELETED(src))
 		return
 	cut_overlay("screen_lines")
-	sleep(5)
+	sleep(0.5 SECONDS)
 	if(QDELETED(src))
 		return
 	add_overlay("screen_lines")
 	add_overlay("screen")
-	sleep(5)
+	sleep(0.5 SECONDS)
 	if(QDELETED(src))
 		return
 	playsound(src,'sound/machines/triple_beep.ogg',50,FALSE)
 	add_overlay("text")
-	sleep(10)
+	sleep(1 SECONDS)
 	if(QDELETED(src))
 		return
 	add_overlay("legs")
@@ -151,15 +171,15 @@
 	add_overlay("screen_lines")
 	cut_overlay("text")
 	add_overlay("text")
+	START_PROCESSING(SSfastprocess, src) // we only start doing economy draining stuff once our machinery is initialized, thematically
 	canwalk = TRUE
-	START_PROCESSING(SSfastprocess, src)
 
 /obj/structure/checkoutmachine/Destroy()
 	stop_dumping()
 	STOP_PROCESSING(SSfastprocess, src)
 	priority_announce("The credit deposit machine at [get_area(src)] has been destroyed. Station funds have stopped draining!", sender_override = "CRAB-17 Protocol")
 	explosion(src, light_impact_range = 1, flame_range = 2)
-	SSeconomy.market_crashing = FALSE
+	REMOVE_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, REF(src))
 	return ..()
 
 /obj/structure/checkoutmachine/proc/start_dumping()
@@ -177,12 +197,12 @@
 		if(!(B?.being_dumped))
 			accounts_to_rob -= B
 			continue
-		var/amount = B.account_balance * percentage_lost
+		var/amount = round(B.account_balance * percentage_lost) // We don't want fractions of a credit stolen. That's just agony for everyone.
 		var/datum/bank_account/account = bogdanoff?.get_bank_account()
 		if (account) // get_bank_account() may return FALSE
-			account.transfer_money(B, amount)
+			account.transfer_money(B, amount, "?VIVA¿: !LA CRABBE¡")
 			B.bank_card_talk("You have lost [percentage_lost * 100]% of your funds! A spacecoin credit deposit machine is located at: [get_area(src)].")
-	addtimer(CALLBACK(src, .proc/dump), 150) //Drain every 15 seconds
+	addtimer(CALLBACK(src, PROC_REF(dump)), 15 SECONDS) //Drain every 15 seconds
 
 /obj/structure/checkoutmachine/process()
 	var/anydir = pick(GLOB.cardinals)
@@ -197,17 +217,18 @@
 
 /obj/effect/dumpeet_fall //Falling pod
 	name = ""
-	icon = 'icons/obj/money_machine_64.dmi'
+	icon = 'icons/obj/machines/money_machine_64.dmi'
 	pixel_z = 300
 	desc = "Get out of the way!"
 	layer = FLY_LAYER//that wasn't flying, that was falling with style!
+	plane = ABOVE_GAME_PLANE
 	icon_state = "missile_blur"
 
 /obj/effect/dumpeet_target
 	name = "Landing Zone Indicator"
 	desc = "A holographic projection designating the landing zone of something. It's probably best to stand back."
-	icon = 'icons/mob/actions/actions_items.dmi'
-	icon_state = "sniper_zoom"
+	icon = 'icons/mob/telegraphing/telegraph_holographic.dmi'
+	icon_state = "target_circle"
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	light_range = 2
 	var/obj/effect/dumpeet_fall/DF
@@ -217,7 +238,7 @@
 /obj/effect/dumpeet_target/Initialize(mapload, user)
 	. = ..()
 	bogdanoff = user
-	addtimer(CALLBACK(src, .proc/startLaunch), 100)
+	addtimer(CALLBACK(src, PROC_REF(startLaunch)), 10 SECONDS)
 	sound_to_playing_players('sound/items/dump_it.ogg', 20)
 	deadchat_broadcast("Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!", turf_target = get_turf(src), message_type=DEADCHAT_ANNOUNCEMENT)
 
@@ -227,12 +248,12 @@
 	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src)] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
 	animate(DF, pixel_z = -8, time = 5, , easing = LINEAR_EASING)
 	playsound(src,  'sound/weapons/mortar_whistle.ogg', 70, TRUE, 6)
-	addtimer(CALLBACK(src, .proc/endLaunch), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
+	addtimer(CALLBACK(src, PROC_REF(endLaunch)), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
 
 
 /obj/effect/dumpeet_target/proc/endLaunch()
 	QDEL_NULL(DF) //Delete the falling machine effect, because at this point its animation is over. We dont use temp_visual because we want to manually delete it as soon as the pod appears
-	playsound(src, "explosion", 80, TRUE)
+	playsound(src, SFX_EXPLOSION, 80, TRUE)
 	dump.forceMove(get_turf(src))
 	qdel(src) //The target's purpose is complete. It can rest easy now

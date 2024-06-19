@@ -14,6 +14,7 @@
 #define COMSIG_KB_ADMIN_INVISIMINTOGGLE_DOWN "keybinding_admin_invisimintoggle_down"
 #define COMSIG_KB_ADMIN_DEADMIN_DOWN "keybinding_admin_deadmin_down"
 #define COMSIG_KB_ADMIN_READMIN_DOWN "keybinding_admin_readmin_down"
+#define COMSIG_KB_ADMIN_VIEWTAGS_DOWN "keybinding_admin_viewtags_down"
 
 //Carbon
 #define COMSIG_KB_CARBON_HOLDRUNMOVEINTENT_DOWN "keybinding_carbon_holdrunmoveintent_down"
@@ -28,15 +29,19 @@
 #define COMSIG_KB_CLIENT_MINIMALHUD_DOWN "keybinding_client_minimalhud_down"
 
 //Communication
-#define COMSIG_KB_CLIENT_OOC_DOWN "keybinding_client_ooc_down"
+
 #define COMSIG_KB_CLIENT_SAY_DOWN "keybinding_client_say_down"
+#define COMSIG_KB_CLIENT_RADIO_DOWN "keybinding_client_radio_down"
 #define COMSIG_KB_CLIENT_ME_DOWN "keybinding_client_me_down"
+#define COMSIG_KB_CLIENT_OOC_DOWN "keybinding_client_ooc_down"
 
 //Human
 #define COMSIG_KB_HUMAN_QUICKEQUIP_DOWN "keybinding_human_quickequip_down"
 #define COMSIG_KB_HUMAN_QUICKEQUIPBELT_DOWN "keybinding_human_quickequipbelt_down"
 #define COMSIG_KB_HUMAN_BAGEQUIP_DOWN "keybinding_human_bagequip_down"
 #define COMSIG_KB_HUMAN_SUITEQUIP_DOWN "keybinding_human_suitequip_down"
+#define COMSIG_KB_HUMAN_LPOCKETEQUIP_DOWN "keybinding_human_lpocketequip_down"
+#define COMSIG_KB_HUMAN_RPOCKETEQUIP_DOWN "keybinding_human_rpocketequip_down"
 
 //Living
 #define COMSIG_KB_LIVING_RESIST_DOWN "keybinding_living_resist_down"
@@ -46,6 +51,8 @@
 #define COMSIG_KB_LIVING_TOGGLE_COMBAT_DOWN "keybinding_living_toggle_combat_down"
 #define COMSIG_KB_LIVING_ENABLE_COMBAT_DOWN "keybinding_living_enable_combat_down"
 #define COMSIG_KB_LIVING_DISABLE_COMBAT_DOWN "keybinding_living_disable_combat_down"
+#define COMSIG_KB_LIVING_TOGGLEMOVEINTENT_DOWN "keybinding_mob_togglemoveintent_down"
+#define COMSIG_KB_LIVING_TOGGLEMOVEINTENTALT_DOWN "keybinding_mob_togglemoveintentalt_down"
 
 //Mob
 #define COMSIG_KB_MOB_FACENORTH_DOWN "keybinding_mob_facenorth_down"
@@ -58,9 +65,8 @@
 #define COMSIG_KB_MOB_SWAPHANDS_DOWN "keybinding_mob_swaphands_down"
 #define COMSIG_KB_MOB_ACTIVATEINHAND_DOWN "keybinding_mob_activateinhand_down"
 #define COMSIG_KB_MOB_DROPITEM_DOWN "keybinding_mob_dropitem_down"
-#define COMSIG_KB_MOB_TOGGLEMOVEINTENT_DOWN "keybinding_mob_togglemoveintent_down"
-#define COMSIG_KB_MOB_TOGGLEMOVEINTENTALT_DOWN "keybinding_mob_togglemoveintentalt_down"
 #define COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN "keybinding_mob_targetcyclehead_down"
+#define COMSIG_KB_MOB_TARGETHEAD_DOWN "keybinding_mob_targethead_down"
 #define COMSIG_KB_MOB_TARGETEYES_DOWN "keybinding_mob_targeteyes_down"
 #define COMSIG_KB_MOB_TARGETMOUTH_DOWN "keybinding_mob_targetmouth_down"
 #define COMSIG_KB_MOB_TARGETRIGHTARM_DOWN "keybinding_mob_targetrightarm_down"
@@ -76,6 +82,8 @@
 #define COMSIG_KB_SILICON_TOGGLEMODULETWO_DOWN "keybinding_silicon_togglemoduletwo_down"
 #define COMSIG_KB_SILICON_TOGGLEMODULETHREE_DOWN "keybinding_silicon_togglemodulethree_down"
 #define COMSIG_KB_SILICON_UNEQUIPMODULE_DOWN "keybinding_silicon_unequipmodule_down"
+#define COMSIG_KB_SILION_UNDEPLOY_DOWN "keybinding_silicon_undeploy_down"
+#define COMSIG_KB_SILICON_RECONNECT_DOWN "keybinding_silicon_reconnect_down"
 
 //Movement
 #define COMSIG_KB_MOVEMENT_NORTH_DOWN "keybinding_movement_north_down"

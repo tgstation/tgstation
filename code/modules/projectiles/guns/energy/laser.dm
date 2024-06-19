@@ -4,10 +4,22 @@
 	icon_state = "laser"
 	inhand_icon_state = "laser"
 	w_class = WEIGHT_CLASS_BULKY
-	custom_materials = list(/datum/material/iron=2000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
 	shaded_charge = 1
+
+/obj/item/gun/energy/laser/Initialize(mapload)
+	. = ..()
+	// Only actual lasguns can be converted
+	if(type != /obj/item/gun/energy/laser)
+		return
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/xraylaser, /datum/crafting_recipe/hellgun, /datum/crafting_recipe/ioncarbine)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
@@ -15,12 +27,31 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = FALSE
 	item_flags = NONE
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/laser/retro
 	name ="retro laser gun"
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 	ammo_x_offset = 3
+
+/obj/item/gun/energy/laser/carbine
+	name = "laser carbine"
+	desc = "A modified laser gun which can shoot far faster, but each shot is far less damaging."
+	icon_state = "laser_carbine"
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/carbine)
+
+/obj/item/gun/energy/laser/carbine/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.15 SECONDS, allow_akimbo = FALSE)
+
+/obj/item/gun/energy/laser/carbine/practice
+	name = "practice laser carbine"
+	desc = "A modified version of the laser carbine, this one fires even less concentrated energy bolts designed for target practice."
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/carbine/practice)
+	clumsy_check = FALSE
+	item_flags = NONE
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/laser/retro/old
 	name ="laser gun"
@@ -45,7 +76,8 @@
 	ammo_x_offset = 3
 	selfcharge = 1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire/antique)
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire)
 
 /obj/item/gun/energy/laser/captain/scattershot
 	name = "scatter shot laser rifle"
@@ -61,8 +93,9 @@
 	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"
 	use_cyborg_cell = TRUE
 
-/obj/item/gun/energy/laser/cyborg/emp_act()
-	return
+/obj/item/gun/energy/laser/cyborg/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/gun/energy/laser/scatter
 	name = "scatter laser gun"
@@ -71,7 +104,7 @@
 
 /obj/item/gun/energy/laser/scatter/shotty
 	name = "energy shotgun"
-	icon = 'icons/obj/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "cshotgun"
 	inhand_icon_state = "shotgun"
 	desc = "A combat shotgun gutted and refitted with an internal laser system. Can switch between taser and scattered disabler shots."
@@ -90,7 +123,7 @@
 	worn_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
-	flags_1 =  CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/accelerator)
 	pin = null
@@ -110,7 +143,8 @@
 /obj/projectile/beam/laser/accelerator/Range()
 	..()
 	damage += 7
-	transform *= 1 + ((damage/7) * 0.2)//20% larger per tile
+	transform = 0
+	transform *= 1 + (((damage - 6)/7) * 0.2)//20% larger per tile
 
 ///X-ray gun
 
@@ -135,6 +169,7 @@
 	pin = /obj/item/firing_pin/tag/blue
 	ammo_x_offset = 2
 	selfcharge = TRUE
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/laser/bluetag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag/hitscan)
@@ -149,6 +184,18 @@
 	pin = /obj/item/firing_pin/tag/red
 	ammo_x_offset = 2
 	selfcharge = TRUE
+	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/laser/redtag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)
+
+// luxury shuttle funnies
+/obj/item/firing_pin/paywall/luxury
+	multi_payment = TRUE
+	owned = TRUE
+	payment_amount = 20
+
+/obj/item/gun/energy/laser/luxurypaywall
+	name = "luxurious laser gun"
+	desc = "A laser gun modified to cost 20 credits to fire. Point towards poor people."
+	pin = /obj/item/firing_pin/paywall/luxury

@@ -61,19 +61,11 @@
 
 		"Revolution": {
 			"weight": 0
-		},
-
-		"Families": {
-			"weight": 0
 		}
 	},
 
 	"Midround": {
 		"Syndicate Sleeper Agent": {
-			"weight": 0
-		},
-
-		"Family Head Aspirants": {
 			"weight": 0
 		},
 
@@ -113,15 +105,31 @@
 			"weight": 0
 		},
 
-		"Swarmers": {
-			"weight": 0
-		},
-
 		"Space Ninja": {
 			"weight": 0
 		},
 
 		"Spiders": {
+			"weight": 0
+		},
+
+		"Revenant": {
+			"weight": 0
+		},
+
+		"Space Pirates": {
+			"weight": 0
+		},
+
+		"Obsessed": {
+			"weight": 0
+		},
+
+		"Space Changeling": {
+			"weight": 0
+		},
+
+		"Paradox Clone": {
 			"weight": 0
 		}
 	},
@@ -137,6 +145,17 @@
 
 		"Heretic Smuggler": {
 			"weight": 0
+		},
+
+		"Stowaway Changeling": {
+			"weight": 0
+		}
+	},
+
+	"Station": {
+		"Radioactive Nebula": {
+		},
+		"Background Checks": {
 		}
 	}
 }

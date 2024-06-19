@@ -1,7 +1,7 @@
 /obj/machinery/computer/aifixer
 	name = "\improper AI system integrity restorer"
 	desc = "Used with intelliCards containing nonfunctional AIs to restore them to working order."
-	req_access = list(ACCESS_CAPTAIN, ACCESS_ROBOTICS, ACCESS_HEADS)
+	req_access = list(ACCESS_CAPTAIN, ACCESS_ROBOTICS, ACCESS_COMMAND)
 	circuit = /obj/item/circuitboard/computer/aifixer
 	icon_keyboard = "tech_key"
 	icon_screen = "ai-fixer"
@@ -22,6 +22,7 @@
 		return ..()
 
 /obj/machinery/computer/aifixer/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "AiRestorer", name)
@@ -59,17 +60,21 @@
 				to_chat(usr, span_notice("Reconstruction in progress. This will take several minutes."))
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 				restoring = TRUE
-				occupier.notify_ghost_cloning("Your core files are being restored!", source = src)
+				occupier.notify_revival("Your core files are being restored!", source = src)
 				. = TRUE
 
 /obj/machinery/computer/aifixer/proc/Fix()
-	use_power(1000)
-	occupier.adjustOxyLoss(-5, FALSE)
-	occupier.adjustFireLoss(-5, FALSE)
-	occupier.adjustBruteLoss(-5, FALSE)
-	occupier.updatehealth()
+	if(!use_energy(active_power_usage, force = TRUE))
+		say("Not enough energy. Restoration cancelled.")
+		return FALSE
+	var/need_mob_update = FALSE
+	need_mob_update += occupier.adjustOxyLoss(-5, updating_health = FALSE)
+	need_mob_update += occupier.adjustFireLoss(-5, updating_health = FALSE)
+	need_mob_update += occupier.adjustBruteLoss(-5, updating_health = FALSE)
+	if(need_mob_update)
+		occupier.updatehealth()
 	if(occupier.health >= 0 && occupier.stat == DEAD)
-		occupier.revive(full_heal = FALSE, admin_revive = FALSE)
+		occupier.revive()
 		if(!occupier.radio_enabled)
 			occupier.radio_enabled = TRUE
 			to_chat(occupier, span_warning("Your Subspace Transceiver has been enabled!"))
@@ -130,6 +135,11 @@
 		else if (!occupier)
 			to_chat(user, span_alert("ERROR: Unable to locate artificial intelligence."))
 
-/obj/machinery/computer/aifixer/on_deconstruction()
+/obj/machinery/computer/aifixer/Destroy()
+	if(occupier)
+		QDEL_NULL(occupier)
+	return ..()
+
+/obj/machinery/computer/aifixer/on_deconstruction(disassembled)
 	if(occupier)
 		QDEL_NULL(occupier)

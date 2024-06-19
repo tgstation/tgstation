@@ -1,21 +1,28 @@
 /obj/machinery/hypnochair
 	name = "enhanced interrogation chamber"
 	desc = "A device used to perform \"enhanced interrogation\" through invasive mental conditioning."
-	icon = 'icons/obj/machines/implantchair.dmi'
+	icon = 'icons/obj/machines/implant_chair.dmi'
 	icon_state = "hypnochair"
 	base_icon_state = "hypnochair"
 	circuit = /obj/item/circuitboard/machine/hypnochair
 	density = TRUE
 	opacity = FALSE
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 
-	var/mob/living/carbon/victim = null ///Keeps track of the victim to apply effects if it teleports away
-	var/interrogating = FALSE ///Is the device currently interrogating someone?
-	var/start_time = 0 ///Time when the interrogation was started, to calculate effect in case of interruption
-	var/trigger_phrase = "" ///Trigger phrase to implant
-	var/timerid = 0 ///Timer ID for interrogations
-	var/message_cooldown = 0 ///Cooldown for breakout message
+	///Keeps track of the victim to apply effects if it teleports away
+	var/mob/living/carbon/victim = null
+	///Is the device currently interrogating someone?
+	var/interrogating = FALSE
+	///Time when the interrogation was started, to calculate effect in case of interruption
+	var/start_time = 0
+	///Trigger phrase to implant
+	var/trigger_phrase = ""
+	///Timer ID for interrogations
+	var/timerid = 0
+	///Cooldown for breakout message
+	var/message_cooldown = 0
 
-/obj/machinery/hypnochair/Initialize()
+/obj/machinery/hypnochair/Initialize(mapload)
 	. = ..()
 	open_machine()
 	update_appearance()
@@ -91,7 +98,7 @@
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, TRUE)
 		return
 	victim = C
-	if(!(C.get_eye_protection() > 0))
+	if(C.get_eye_protection() <= 0)
 		to_chat(C, span_warning("Strobing coloured lights assault you relentlessly! You're losing your ability to think straight!"))
 		C.become_blind(HYPNOCHAIR_TRAIT)
 		ADD_TRAIT(C, TRAIT_DEAF, HYPNOCHAIR_TRAIT)
@@ -99,14 +106,14 @@
 	START_PROCESSING(SSobj, src)
 	start_time = world.time
 	update_appearance()
-	timerid = addtimer(CALLBACK(src, .proc/finish_interrogation), 450, TIMER_STOPPABLE)
+	timerid = addtimer(CALLBACK(src, PROC_REF(finish_interrogation)), 450, TIMER_STOPPABLE)
 
-/obj/machinery/hypnochair/process(delta_time)
+/obj/machinery/hypnochair/process(seconds_per_tick)
 	var/mob/living/carbon/C = occupant
 	if(!istype(C) || C != victim)
 		interrupt_interrogation()
 		return
-	if(DT_PROB(5, delta_time) && !(C.get_eye_protection() > 0))
+	if(SPT_PROB(5, seconds_per_tick) && !(C.get_eye_protection() > 0))
 		to_chat(C, "<span class='hypnophrase'>[pick(\
 			"...blue... red... green... blue, red, green, blueredgreen[span_small("blueredgreen")]",\
 			"...pretty colors...",\
@@ -114,6 +121,8 @@
 			"...so peaceful...",\
 			"...an annoying buzz in your ears..."\
 		)]</span>")
+
+	use_energy(active_power_usage * seconds_per_tick)
 
 /obj/machinery/hypnochair/proc/finish_interrogation()
 	interrogating = FALSE
@@ -146,25 +155,25 @@
 	if(QDELETED(victim))
 		victim = null
 		return
-	victim.cure_blind("hypnochair")
-	REMOVE_TRAIT(victim, TRAIT_DEAF, "hypnochair")
+	victim.cure_blind(HYPNOCHAIR_TRAIT)
+	REMOVE_TRAIT(victim, TRAIT_DEAF, HYPNOCHAIR_TRAIT)
 	if(!(victim.get_eye_protection() > 0))
 		var/time_diff = world.time - start_time
 		switch(time_diff)
 			if(0 to 100)
-				victim.add_confusion(10)
-				victim.Dizzy(100)
-				victim.blur_eyes(5)
+				victim.adjust_confusion(10 SECONDS)
+				victim.set_dizzy_if_lower(200 SECONDS)
+				victim.set_eye_blur_if_lower(10 SECONDS)
 			if(101 to 200)
-				victim.add_confusion(15)
-				victim.Dizzy(200)
-				victim.blur_eyes(10)
+				victim.adjust_confusion(15 SECONDS)
+				victim.set_dizzy_if_lower(400 SECONDS)
+				victim.set_eye_blur_if_lower(20 SECONDS)
 				if(prob(25))
 					victim.apply_status_effect(/datum/status_effect/trance, rand(50,150), FALSE)
 			if(201 to INFINITY)
-				victim.add_confusion(20)
-				victim.Dizzy(300)
-				victim.blur_eyes(15)
+				victim.adjust_confusion(20 SECONDS)
+				victim.set_dizzy_if_lower(600 SECONDS)
+				victim.set_eye_blur_if_lower(30 SECONDS)
 				if(prob(65))
 					victim.apply_status_effect(/datum/status_effect/trance, rand(50,150), FALSE)
 	victim = null
@@ -192,8 +201,7 @@
 		to_chat(user, span_warning("[src]'s door won't budge!"))
 
 
-/obj/machinery/hypnochair/MouseDrop_T(mob/target, mob/user)
-	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !ISADVANCEDTOOLUSER(user))
+/obj/machinery/hypnochair/mouse_drop_receive(atom/target, mob/user, params)
+	if(!isliving(target))
 		return
-
 	close_machine(target)

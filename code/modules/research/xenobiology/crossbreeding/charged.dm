@@ -10,15 +10,15 @@ Charged extracts:
 	effect = "charged"
 	icon_state = "charged"
 
-/obj/item/slimecross/charged/Initialize()
+/obj/item/slimecross/charged/Initialize(mapload)
 	. = ..()
 	create_reagents(10, INJECTABLE | DRAWABLE)
 
 /obj/item/slimecross/charged/attack_self(mob/user)
-	if(!reagents.has_reagent(/datum/reagent/toxin/plasma,10))
+	if(!reagents.has_reagent(/datum/reagent/toxin/plasma, 10))
 		to_chat(user, span_warning("This extract needs to be full of plasma to activate!"))
 		return
-	reagents.remove_reagent(/datum/reagent/toxin/plasma,10)
+	reagents.remove_reagent(/datum/reagent/toxin/plasma, 10)
 	to_chat(user, span_notice("You squeeze the extract, and it absorbs the plasma!"))
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 	playsound(src, 'sound/effects/light_flicker.ogg', 50, TRUE)
@@ -29,7 +29,7 @@ Charged extracts:
 	return
 
 /obj/item/slimecross/charged/grey
-	colour = "grey"
+	colour = SLIME_TYPE_GREY
 	effect_desc = "Produces a slime reviver potion, which revives dead slimes."
 
 /obj/item/slimecross/charged/grey/do_effect(mob/user)
@@ -38,7 +38,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/orange
-	colour = "orange"
+	colour = SLIME_TYPE_ORANGE
 	effect_desc = "Instantly makes a large burst of flame for a moment."
 
 /obj/item/slimecross/charged/orange/do_effect(mob/user)
@@ -49,7 +49,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/purple
-	colour = "purple"
+	colour = SLIME_TYPE_PURPLE
 	effect_desc = "Creates a packet of omnizine."
 
 /obj/item/slimecross/charged/purple/do_effect(mob/user)
@@ -58,7 +58,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/blue
-	colour = "blue"
+	colour = SLIME_TYPE_BLUE
 	effect_desc = "Creates a potion that neuters the mutation chance of a slime, which passes on to new generations."
 
 /obj/item/slimecross/charged/blue/do_effect(mob/user)
@@ -67,7 +67,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/metal
-	colour = "metal"
+	colour = SLIME_TYPE_METAL
 	effect_desc = "Produces a bunch of metal and plasteel."
 
 /obj/item/slimecross/charged/metal/do_effect(mob/user)
@@ -77,7 +77,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/yellow
-	colour = "yellow"
+	colour = SLIME_TYPE_YELLOW
 	effect_desc = "Creates a hypercharged slime cell battery, which has high capacity but takes longer to recharge."
 
 /obj/item/slimecross/charged/yellow/do_effect(mob/user)
@@ -86,7 +86,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/darkpurple
-	colour = "dark purple"
+	colour = SLIME_TYPE_DARK_PURPLE
 	effect_desc = "Creates several sheets of plasma."
 
 /obj/item/slimecross/charged/darkpurple/do_effect(mob/user)
@@ -95,7 +95,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/darkblue
-	colour = "dark blue"
+	colour = SLIME_TYPE_DARK_BLUE
 	effect_desc = "Produces a pressure proofing potion."
 
 /obj/item/slimecross/charged/darkblue/do_effect(mob/user)
@@ -104,7 +104,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/silver
-	colour = "silver"
+	colour = SLIME_TYPE_SILVER
 	effect_desc = "Creates a slime cake and some drinks."
 
 /obj/item/slimecross/charged/silver/do_effect(mob/user)
@@ -116,7 +116,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/bluespace
-	colour = "bluespace"
+	colour = SLIME_TYPE_BLUESPACE
 	effect_desc = "Makes a bluespace polycrystal."
 
 /obj/item/slimecross/charged/bluespace/do_effect(mob/user)
@@ -125,7 +125,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/sepia
-	colour = "sepia"
+	colour = SLIME_TYPE_SEPIA
 	effect_desc = "Creates a camera obscura."
 
 /obj/item/slimecross/charged/sepia/do_effect(mob/user)
@@ -134,7 +134,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/cerulean
-	colour = "cerulean"
+	colour = SLIME_TYPE_CERULEAN
 	effect_desc = "Creates an extract enhancer, giving whatever it's used on five more uses."
 
 /obj/item/slimecross/charged/cerulean/do_effect(mob/user)
@@ -143,7 +143,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/pyrite
-	colour = "pyrite"
+	colour = SLIME_TYPE_PYRITE
 	effect_desc = "Creates bananium. Oh no."
 
 /obj/item/slimecross/charged/pyrite/do_effect(mob/user)
@@ -152,7 +152,7 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/red
-	colour = "red"
+	colour = SLIME_TYPE_RED
 	effect_desc = "Produces a lavaproofing potion"
 
 /obj/item/slimecross/charged/red/do_effect(mob/user)
@@ -161,26 +161,29 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/green
-	colour = "green"
+	colour = SLIME_TYPE_GREEN
 	effect_desc = "Lets you choose what slime species you want to be."
 
 /obj/item/slimecross/charged/green/do_effect(mob/user)
-	var/mob/living/carbon/human/H = user
-	if(!istype(H))
+	var/mob/living/carbon/human/human_user = user
+	if(!istype(human_user))
 		to_chat(user, span_warning("You must be a humanoid to use this!"))
 		return
-	var/racechoice = input(H, "Choose your slime subspecies.", "Slime Selection") as null|anything in sortList(subtypesof(/datum/species/jelly), /proc/cmp_typepaths_asc)
-	if(!racechoice)
+	var/list/choice_list = list()
+	for(var/datum/species/species_type as anything in subtypesof(/datum/species/jelly))
+		choice_list[initial(species_type.name)] = species_type
+	var/racechoice = tgui_input_list(human_user, "Choose your slime subspecies", "Slime Selection", sort_list(choice_list))
+	if(isnull(racechoice))
 		to_chat(user, span_notice("You decide not to become a slime for now."))
 		return
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.can_perform_action(src))
 		return
-	H.set_species(racechoice, icon_update=1)
-	H.visible_message(span_warning("[H] suddenly shifts form as [src] dissolves into [H.p_their()] skin!"))
+	human_user.set_species(choice_list[racechoice], icon_update=1)
+	human_user.visible_message(span_warning("[human_user] suddenly shifts form as [src] dissolves into [human_user.p_their()] skin!"))
 	..()
 
 /obj/item/slimecross/charged/pink
-	colour = "pink"
+	colour = SLIME_TYPE_PINK
 	effect_desc = "Produces a... lovepotion... no ERP."
 
 /obj/item/slimecross/charged/pink/do_effect(mob/user)
@@ -189,14 +192,14 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/gold
-	colour = "gold"
+	colour = SLIME_TYPE_GOLD
 	effect_desc = "Slowly spawns 10 hostile monsters."
 	var/max_spawn = 10
 	var/spawned = 0
 
 /obj/item/slimecross/charged/gold/do_effect(mob/user)
 	user.visible_message(span_warning("[src] starts shuddering violently!"))
-	addtimer(CALLBACK(src, .proc/startTimer), 50)
+	addtimer(CALLBACK(src, PROC_REF(startTimer)), 5 SECONDS)
 
 /obj/item/slimecross/charged/gold/proc/startTimer()
 	START_PROCESSING(SSobj, src)
@@ -204,7 +207,7 @@ Charged extracts:
 /obj/item/slimecross/charged/gold/process()
 	visible_message(span_warning("[src] lets off a spark, and produces a living creature!"))
 	new /obj/effect/particle_effect/sparks(get_turf(src))
-	playsound(get_turf(src), "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(get_turf(src), SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	create_random_mob(get_turf(src), HOSTILE_SPAWN)
 	spawned++
 	if(spawned >= max_spawn)
@@ -216,40 +219,42 @@ Charged extracts:
 	return ..()
 
 /obj/item/slimecross/charged/oil
-	colour = "oil"
+	colour = SLIME_TYPE_OIL
 	effect_desc = "Creates an explosion after a few seconds."
 
 /obj/item/slimecross/charged/oil/do_effect(mob/user)
 	user.visible_message(span_danger("[src] begins to shake with rapidly increasing force!"))
-	addtimer(CALLBACK(src, .proc/boom), 50)
+	addtimer(CALLBACK(src, PROC_REF(boom)), 5 SECONDS)
 
 /obj/item/slimecross/charged/oil/proc/boom()
-	explosion(src, devastation_range = 2, heavy_impact_range = 3, light_impact_range = 4) //Much smaller effect than normal oils, but devastatingly strong where it does hit.
+	explosion(src, devastation_range = 2, heavy_impact_range = 3, light_impact_range = 4, explosion_cause = src) //Much smaller effect than normal oils, but devastatingly strong where it does hit.
 	qdel(src)
 
 /obj/item/slimecross/charged/black
-	colour = "black"
+	colour = SLIME_TYPE_BLACK
 	effect_desc = "Randomizes the user's species."
 
 /obj/item/slimecross/charged/black/do_effect(mob/user)
-	var/mob/living/carbon/human/H = user
-	if(!istype(H))
-		to_chat(user, span_warning("You have to be able to have a species to get your species changed."))
+	var/mob/living/carbon/human/experiment_subject = user
+	if(!istype(experiment_subject))
+		balloon_alert(experiment_subject, "incompatible biology!")
 		return
 	var/list/allowed_species = list()
 	for(var/stype in subtypesof(/datum/species))
-		var/datum/species/X = stype
-		if(initial(X.changesource_flags) & SLIME_EXTRACT)
+		var/datum/species/try_species = stype
+		if(initial(try_species.changesource_flags) & SLIME_EXTRACT)
 			allowed_species += stype
 
 	var/datum/species/changed = pick(allowed_species)
-	if(changed)
-		H.set_species(changed, icon_update = 1)
-		to_chat(H, span_danger("You feel very different!"))
-	..()
+	if(isnull(changed))
+		visible_message(span_notice("[src] fizzes uselessly."))
+		return
+	experiment_subject.set_species(changed, icon_update = TRUE)
+	to_chat(experiment_subject, span_danger("You feel very different!"))
+	return ..()
 
 /obj/item/slimecross/charged/lightpink
-	colour = "light pink"
+	colour = SLIME_TYPE_LIGHT_PINK
 	effect_desc = "Produces a pacification potion, which works on monsters and humanoids."
 
 /obj/item/slimecross/charged/lightpink/do_effect(mob/user)
@@ -258,21 +263,21 @@ Charged extracts:
 	..()
 
 /obj/item/slimecross/charged/adamantine
-	colour = "adamantine"
+	colour = SLIME_TYPE_ADAMANTINE
 	effect_desc = "Creates a completed golem shell."
 
 /obj/item/slimecross/charged/adamantine/do_effect(mob/user)
 	user.visible_message(span_notice("[src] produces a fully formed golem shell!"))
-	new /obj/effect/mob_spawn/human/golem/servant(get_turf(src), /datum/species/golem/adamantine, user)
+	new /obj/effect/mob_spawn/ghost_role/human/golem/servant(get_turf(src), /datum/species/golem, user)
 	..()
 
 /obj/item/slimecross/charged/rainbow
-	colour = "rainbow"
+	colour = SLIME_TYPE_RAINBOW
 	effect_desc = "Produces three living slimes of random colors."
 
 /obj/item/slimecross/charged/rainbow/do_effect(mob/user)
 	user.visible_message(span_warning("[src] swells and splits into three new slimes!"))
 	for(var/i in 1 to 3)
-		var/mob/living/simple_animal/slime/S = new(get_turf(user))
-		S.random_colour()
+		var/mob/living/basic/slime/new_slime = new (get_turf(user))
+		new_slime.random_colour()
 	return ..()

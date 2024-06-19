@@ -1,41 +1,33 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/indestructible/riveted,
-/area/mafia)
+/area/centcom/mafia)
 "b" = (
 /turf/closed/indestructible/riveted/plastinum,
-/area/mafia)
+/area/centcom/mafia)
 "c" = (
 /turf/closed/wall/rust,
-/area/mafia)
+/area/centcom/mafia)
 "d" = (
 /turf/open/floor/plating,
-/area/mafia)
-"e" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/mafia)
+/area/centcom/mafia)
 "f" = (
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/mafia)
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
 "g" = (
 /obj/mafia_game_board,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/mafia)
-"h" = (
-/obj/structure/grille/indestructable,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/mafia)
+/area/centcom/mafia)
+"h" = (
+/obj/structure/grille/indestructible,
+/turf/open/floor/plating,
+/area/centcom/mafia)
 "i" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/mafia)
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
 "j" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	max_integrity = 99999;
@@ -43,31 +35,31 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
-/area/mafia)
+/area/centcom/mafia)
 "k" = (
 /obj/mafia_game_board,
 /turf/open/floor/plating,
-/area/mafia)
+/area/centcom/mafia)
 "l" = (
 /obj/structure/closet/cabinet{
 	anchored = 1
 	},
 /turf/open/floor/iron/dark,
-/area/mafia)
+/area/centcom/mafia)
 "m" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/iron/dark,
-/area/mafia)
+/area/centcom/mafia)
 "n" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/iron,
-/area/mafia)
+/area/centcom/mafia)
 "o" = (
 /obj/structure/closet/cabinet{
 	anchored = 1
 	},
 /turf/open/floor/iron,
-/area/mafia)
+/area/centcom/mafia)
 "p" = (
 /obj/machinery/door/poddoor/preopen{
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
@@ -75,33 +67,37 @@
 	max_integrity = 99999;
 	name = "Station Night Shutters"
 	},
-/turf/closed/indestructible/fakeglass,
-/area/mafia)
+/obj/effect/spawner/structure/window/reinforced/indestructible,
+/turf/open/space/basic,
+/area/centcom/mafia)
 "q" = (
 /turf/open/floor/iron/dark,
-/area/mafia)
+/area/centcom/mafia)
 "r" = (
 /turf/open/floor/iron,
-/area/mafia)
+/area/centcom/mafia)
 "s" = (
 /turf/open/floor/fakespace,
-/area/mafia)
+/area/centcom/mafia)
 "t" = (
 /turf/open/floor/iron/solarpanel,
-/area/mafia)
+/area/centcom/mafia)
 "u" = (
 /obj/effect/baseturf_helper/asteroid,
 /obj/effect/landmark/mafia/town_center,
 /turf/open/floor/iron/solarpanel,
-/area/mafia)
+/area/centcom/mafia)
 "v" = (
 /obj/mafia_game_board,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/mafia)
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"E" = (
+/turf/template_noop,
+/area/template_noop)
 
 (1,1,1) = {"
+E
 a
 a
 a
@@ -123,10 +119,10 @@ a
 a
 a
 a
-a
-a
+E
 "}
 (2,1,1) = {"
+E
 a
 b
 b
@@ -147,14 +143,13 @@ b
 b
 b
 b
-b
-b
 a
+E
 "}
 (3,1,1) = {"
+E
 a
 b
-b
 c
 c
 c
@@ -172,13 +167,13 @@ c
 c
 c
 c
-b
 b
 a
+E
 "}
 (4,1,1) = {"
+E
 a
-b
 b
 c
 g
@@ -188,7 +183,7 @@ d
 d
 d
 d
-e
+i
 d
 d
 d
@@ -198,18 +193,18 @@ h
 k
 c
 b
-b
 a
+E
 "}
 (5,1,1) = {"
 a
-b
+a
 b
 c
 h
 d
 d
-e
+i
 b
 b
 j
@@ -223,7 +218,7 @@ i
 h
 c
 b
-b
+a
 a
 "}
 (6,1,1) = {"
@@ -261,11 +256,11 @@ b
 o
 r
 p
-m
+q
 q
 p
 r
-n
+r
 p
 q
 l
@@ -283,7 +278,7 @@ c
 d
 d
 b
-n
+r
 r
 b
 b
@@ -293,7 +288,7 @@ r
 b
 b
 q
-m
+q
 b
 d
 d
@@ -310,13 +305,13 @@ b
 b
 p
 r
-r
+n
 p
-q
+m
 p
-r
+n
 p
-q
+m
 q
 p
 b
@@ -357,21 +352,21 @@ b
 c
 d
 j
+q
+q
+q
 m
-q
-q
-q
 p
 s
 t
 s
 p
-r
-r
-r
 n
+r
+r
+r
 j
-e
+i
 c
 b
 a
@@ -380,7 +375,7 @@ a
 a
 b
 c
-e
+i
 b
 b
 p
@@ -407,19 +402,19 @@ b
 c
 d
 j
+r
+r
+r
 n
-r
-r
-r
 p
 s
 t
 s
 p
-q
-q
-q
 m
+q
+q
+q
 j
 d
 c
@@ -460,13 +455,13 @@ b
 b
 p
 q
-q
+m
 p
-r
+n
 p
-q
+m
 p
-r
+n
 r
 p
 b
@@ -483,7 +478,7 @@ c
 f
 d
 b
-m
+q
 q
 b
 b
@@ -493,7 +488,7 @@ q
 b
 b
 r
-n
+r
 b
 d
 d
@@ -511,11 +506,11 @@ b
 l
 q
 p
-n
+r
 r
 p
 q
-m
+q
 p
 r
 o
@@ -553,7 +548,7 @@ a
 "}
 (19,1,1) = {"
 a
-b
+a
 b
 c
 h
@@ -568,24 +563,24 @@ j
 b
 b
 d
-e
+i
 d
 h
 c
 b
-b
+a
 a
 "}
 (20,1,1) = {"
+E
 a
-b
 b
 c
 k
 h
 d
 d
-e
+i
 d
 d
 d
@@ -598,13 +593,13 @@ h
 v
 c
 b
-b
 a
+E
 "}
 (21,1,1) = {"
+E
 a
 b
-b
 c
 c
 c
@@ -622,11 +617,12 @@ c
 c
 c
 c
-b
 b
 a
+E
 "}
 (22,1,1) = {"
+E
 a
 b
 b
@@ -647,11 +643,11 @@ b
 b
 b
 b
-b
-b
 a
+E
 "}
 (23,1,1) = {"
+E
 a
 a
 a
@@ -673,6 +669,5 @@ a
 a
 a
 a
-a
-a
+E
 "}

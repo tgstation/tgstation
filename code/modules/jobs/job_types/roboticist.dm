@@ -1,15 +1,16 @@
 /datum/job/roboticist
-	title = "Roboticist"
-	department_head = list("Research Director")
+	title = JOB_ROBOTICIST
+	description = "Build and repair the AI and cyborgs, create mechs."
+	department_head = list(JOB_RESEARCH_DIRECTOR)
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the research director"
-	selection_color = "#ffeeff"
+	supervisors = SUPERVISOR_RD
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
 	bounty_types = CIV_JOB_ROBO
+	config_tag = "ROBOTICIST"
 
 	outfit = /datum/outfit/job/roboticist
 	plasmaman_outfit = /datum/outfit/plasmaman/robotics
@@ -17,7 +18,7 @@
 		/datum/job_department/science,
 		)
 
-	paycheck = PAYCHECK_MEDIUM
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SCI
 
 	display_order = JOB_DISPLAY_ORDER_ROBOTICIST
@@ -25,12 +26,13 @@
 	mail_goodies = list(
 		/obj/item/storage/box/flashes = 20,
 		/obj/item/stack/sheet/iron/twenty = 15,
-		/obj/item/modular_computer/tablet/preset/advanced = 5
+		/obj/item/modular_computer/laptop = 5,
+		/obj/item/mmi/posibrain/sphere = 5,
 	)
 
 	family_heirlooms = list(/obj/item/toy/plush/pkplush)
-
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS
+	rpg_title = "Necromancer"
+	job_flags = STATION_JOB_FLAGS
 
 
 /datum/job/roboticist/New()
@@ -41,19 +43,24 @@
 	name = "Roboticist"
 	jobtype = /datum/job/roboticist
 
-	belt = /obj/item/storage/belt/utility/full
-	l_pocket = /obj/item/pda/roboticist
-	ears = /obj/item/radio/headset/headset_sci
+	id_trim = /datum/id_trim/job/roboticist
 	uniform = /obj/item/clothing/under/rank/rnd/roboticist
 	suit = /obj/item/clothing/suit/toggle/labcoat/roboticist
+	belt = /obj/item/storage/belt/utility/full
+	ears = /obj/item/radio/headset/headset_sci
+	l_pocket = /obj/item/modular_computer/pda/roboticist
 
 	backpack = /obj/item/storage/backpack/science
-	satchel = /obj/item/storage/backpack/satchel/tox
-	duffelbag = /obj/item/storage/backpack/duffelbag/toxins
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/science=1)
+	satchel = /obj/item/storage/backpack/satchel/science
+	duffelbag = /obj/item/storage/backpack/duffelbag/science
 
 	pda_slot = ITEM_SLOT_LPOCKET
-
 	skillchips = list(/obj/item/skillchip/job/roboticist)
 
-	id_trim = /datum/id_trim/job/roboticist
+/datum/outfit/job/roboticist/mod
+	name = "Roboticist (MODsuit)"
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/standard
+	suit = null
+	mask = /obj/item/clothing/mask/breath
+	internals_slot = ITEM_SLOT_SUITSTORE

@@ -1,0 +1,62 @@
+{
+	"transmutation_rune": [
+		{
+			"type": "icon_state",
+			"icon_state": "transmutation_rune",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"transmutation_rune_active": [
+		{
+			"type": "icon_state",
+			"icon_state": "transmutation_rune_activate_colour",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "transmutation_rune_activate_white",
+			"blend_mode": "overlay"
+		}
+	],
+	"transmutation_rune_draw": [
+		{
+			"type": "icon_state",
+			"icon_state": "transmutation_rune_draw_colour",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "transmutation_rune_draw_white",
+			"blend_mode": "overlay"
+		}
+	],
+	"transmutation_rune_fast": [
+		{
+			"type": "icon_state",
+			"icon_state": "transmutation_rune_fast_colour",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "transmutation_rune_fast_white",
+			"blend_mode": "overlay"
+		}
+	],
+	"transmutation_rune_fail": [
+		{
+			"type": "icon_state",
+			"icon_state": "transmutation_rune_fail_colour",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "transmutation_rune_fail_white",
+			"blend_mode": "overlay"
+		}
+	]
+}

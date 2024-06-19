@@ -3,7 +3,7 @@
 	desc = "Turns plants into various types of booze."
 	icon_state = "fermenter"
 	layer = ABOVE_ALL_MOB_LAYER
-
+	plane = ABOVE_GAME_PLANE
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 400
 
@@ -14,15 +14,9 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
-
-/obj/machinery/plumbing/grinder_chemical/can_be_rotated(mob/user, rotation_type)
-	if(anchored)
-		to_chat(user, span_warning("It is fastened to the floor!"))
-		return FALSE
-	return TRUE
 
 /obj/machinery/plumbing/fermenter/setDir(newdir)
 	. = ..()
@@ -41,7 +35,7 @@
 
 /// uses fermentation proc similar to fermentation barrels
 /obj/machinery/plumbing/fermenter/proc/ferment(atom/AM)
-	if(machine_stat & NOPOWER)
+	if(!is_operational)
 		return
 	if(reagents.holder_full())
 		return
@@ -52,4 +46,5 @@
 		if(G.distill_reagent)
 			var/amount = G.seed.potency * 0.25
 			reagents.add_reagent(G.distill_reagent, amount)
+			use_energy(active_power_usage * amount)
 			qdel(G)

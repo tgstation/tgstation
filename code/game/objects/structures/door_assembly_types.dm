@@ -1,7 +1,7 @@
 /obj/structure/door_assembly/door_assembly_public
 	name = "public airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/public/glass.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/public/overlays.dmi'
 	glass_type = /obj/machinery/door/airlock/public/glass
 	airlock_type = /obj/machinery/door/airlock/public
 
@@ -60,6 +60,13 @@
 	base_name = "medical airlock"
 	glass_type = /obj/machinery/door/airlock/medical/glass
 	airlock_type = /obj/machinery/door/airlock/medical
+
+/obj/structure/door_assembly/door_assembly_hydro
+	name = "hydroponics airlock assembly"
+	icon = 'icons/obj/doors/airlocks/station/hydroponics.dmi'
+	base_name = "hydroponics airlock"
+	glass_type = /obj/machinery/door/airlock/hydroponics/glass
+	airlock_type = /obj/machinery/door/airlock/hydroponics
 
 /obj/structure/door_assembly/door_assembly_mai
 	name = "maintenance airlock assembly"
@@ -251,3 +258,49 @@
 
 /obj/structure/door_assembly/door_assembly_bronze/seethru
 	airlock_type = /obj/machinery/door/airlock/bronze/seethru
+
+/obj/structure/door_assembly/door_assembly_material
+	name = "airlock assembly"
+	airlock_type = /obj/machinery/door/airlock/material
+	glass_type = /obj/machinery/door/airlock/material/glass
+	greyscale_config = /datum/greyscale_config/material_airlock
+	nomineral = TRUE
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS
+
+/obj/structure/door_assembly/multi_tile/door_assembly_public
+	name = "large public airlock assembly"
+	base_name = "large public airlock"
+
+/obj/structure/door_assembly/multi_tile/door_assembly_tram
+	name = "tram door assembly"
+	icon = 'icons/obj/doors/airlocks/tram/tram.dmi'
+	base_name = "tram door"
+	overlays_file = 'icons/obj/doors/airlocks/tram/tram-overlays.dmi'
+	glass_type = /obj/machinery/door/airlock/tram
+	airlock_type = /obj/machinery/door/airlock/tram
+	glass = FALSE
+	noglass = TRUE
+	mineral = "titanium"
+	material_type = /obj/item/stack/sheet/mineral/titanium
+
+/obj/structure/door_assembly/door_assembly_material/atom_deconstruct(disassembled = TRUE)
+	var/turf/target_turf = get_turf(src)
+	for(var/datum/material/material_datum as anything in custom_materials)
+		var/material_count = FLOOR(custom_materials[material_datum] / SHEET_MATERIAL_AMOUNT, 1)
+		if(!disassembled)
+			material_count = rand(FLOOR(material_count/2, 1), material_count)
+		new material_datum.sheet_type(target_turf, material_count)
+	if(glass)
+		if(disassembled)
+			if(heat_proof_finished)
+				new /obj/item/stack/sheet/rglass(target_turf)
+			else
+				new /obj/item/stack/sheet/glass(target_turf)
+		else
+			new /obj/item/shard(target_turf)
+
+/obj/structure/door_assembly/door_assembly_material/finish_door()
+	var/obj/machinery/door/airlock/door = ..()
+	door.set_custom_materials(custom_materials)
+	door.update_appearance()
+	return door

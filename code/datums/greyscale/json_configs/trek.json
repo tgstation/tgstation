@@ -1,0 +1,113 @@
+{
+	"trek_tos": [
+		{
+			"type": "icon_state",
+			"icon_state": "tos_base",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "tos_color",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "trek_badge",
+			"blend_mode": "overlay"
+		}
+	],
+	"trek_tos_sec": [
+		{
+			"type": "icon_state",
+			"icon_state": "tos_color",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "tos_base",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "trek_badge",
+			"blend_mode": "overlay"
+		}
+	],
+	"trek_tos_com": [
+		{
+			"type": "icon_state",
+			"icon_state": "tos_base",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "tos_color",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "trek_badge",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "command_band",
+			"blend_mode": "overlay"
+		}
+	],
+
+	"trek_next": [
+		{
+			"type": "icon_state",
+			"icon_state": "next_base",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "next_color",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "trek_badge",
+			"blend_mode": "overlay"
+		}
+	],
+
+	"trek_voy": [
+		{
+			"type": "icon_state",
+			"icon_state": "voy_base",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "voy_color",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "trek_badge",
+			"blend_mode": "overlay"
+		}
+	],
+
+	"trek_ent": [
+		{
+			"type": "icon_state",
+			"icon_state": "ent_base",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "ent_color",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

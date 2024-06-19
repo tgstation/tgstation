@@ -33,7 +33,7 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 	//Owerride non zero bound_x, bound_y, pixel_x, pixel_y to zero.
 	//Dont take in account starting bound_x, bound_y, pixel_x, pixel_y.
 	//So it can unintentionally shift physical bounds of things that starts with non zero bound_x, bound_y.
-	if(((bound_height != world.icon_size) || (bound_width != world.icon_size)) && (bound_x==0) && (bound_y==0)) //Dont shift things that have non zero bound_x and bound_y, or it move somewhere. Now it BSA and Gateway.
+	if(((bound_height != world.icon_size) || (bound_width != world.icon_size)) && (bound_x == 0) && (bound_y == 0)) //Dont shift things that have non zero bound_x and bound_y, or it move somewhere. Now it BSA and Gateway.
 		pixel_x = dir & (NORTH|EAST) ? -bound_width+world.icon_size : 0
 		pixel_y = dir & (NORTH|WEST) ? -bound_width+world.icon_size : 0
 		bound_x = pixel_x
@@ -80,13 +80,13 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 /************************************Machine rotate procs************************************/
 
 /obj/machinery/atmospherics/shuttleRotate(rotation, params)
-	var/list/real_node_connect = getNodeConnects()
+	var/list/real_node_connect = get_node_connects()
 	for(var/i in 1 to device_type)
 		real_node_connect[i] = angle2dir(rotation+dir2angle(real_node_connect[i]))
 
 	. = ..()
-	SetInitDirections()
-	var/list/supposed_node_connect = getNodeConnects()
+	set_init_directions()
+	var/list/supposed_node_connect = get_node_connects()
 	var/list/nodes_copy = nodes.Copy()
 
 	for(var/i in 1 to device_type)
@@ -95,11 +95,6 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 
 //prevents shuttles attempting to rotate this since it messes up sprites
 /obj/machinery/gateway/shuttleRotate(rotation, params)
-	params = NONE
-	return ..()
-
-//prevents shuttles attempting to rotate this since it messes up sprites
-/obj/machinery/gravity_generator/shuttleRotate(rotation, params)
 	params = NONE
 	return ..()
 

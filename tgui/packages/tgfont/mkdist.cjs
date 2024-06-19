@@ -10,5 +10,4 @@ process.chdir(__dirname);
 // Silently make a dist folder
 try {
   require('fs').mkdirSync('dist');
-}
-catch (err) {}
+} catch (err) {}

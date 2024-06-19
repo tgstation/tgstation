@@ -1,4 +1,5 @@
 root: true
+extends: prettier
 parser: '@typescript-eslint/parser'
 parserOptions:
   ecmaVersion: 2020
@@ -10,13 +11,14 @@ env:
   browser: true
   node: true
 plugins:
-  - radar
+  - sonarjs
   - react
+  - unused-imports
+  - simple-import-sort
 settings:
   react:
-    version: '16.10'
+    version: '18.2'
 rules:
-
   ## Possible Errors
   ## ----------------------------------------
   ## Enforce “for” loop update clause moving the counter in the right
@@ -307,13 +309,16 @@ rules:
   ## Enforce or disallow capitalization of the first letter of a comment
   # capitalized-comments: error
   ## Require or disallow trailing commas
-  comma-dangle: [error, {
-    arrays: always-multiline,
-    objects: always-multiline,
-    imports: always-multiline,
-    exports: always-multiline,
-    functions: only-multiline, ## Optional on functions
-  }]
+  comma-dangle: [
+      error,
+      {
+        arrays: always-multiline,
+        objects: always-multiline,
+        imports: always-multiline,
+        exports: always-multiline,
+        functions: only-multiline, ## Optional on functions
+      },
+    ]
   ## Enforce consistent spacing before and after commas
   comma-spacing: [error, { before: false, after: true }]
   ## Enforce consistent comma style
@@ -333,7 +338,7 @@ rules:
   ## Require or disallow named function expressions
   # func-names: error
   ## Enforce the consistent use of either function declarations or expressions
-  func-style: [error, expression]
+  # func-style: [error, expression]
   ## Enforce line breaks between arguments of a function call
   # function-call-argument-newline: error
   ## Enforce consistent line breaks inside function parentheses
@@ -348,15 +353,15 @@ rules:
   ## Enforce the location of arrow function bodies
   # implicit-arrow-linebreak: error
   ## Enforce consistent indentation
-  indent: [error, 2, { SwitchCase: 1 }]
+  # indent: [error, 2, { SwitchCase: 1 }]
   ## Enforce the consistent use of either double or single quotes in JSX
   ## attributes
-  jsx-quotes: [error, prefer-double]
+  # jsx-quotes: [error, prefer-double]
   ## Enforce consistent spacing between keys and values in object literal
   ## properties
-  key-spacing: [error, { beforeColon: false, afterColon: true }]
+  # key-spacing: [error, { beforeColon: false, afterColon: true }]
   ## Enforce consistent spacing before and after keywords
-  keyword-spacing: [error, { before: true, after: true }]
+  # keyword-spacing: [error, { before: true, after: true }]
   ## Enforce position of line comments
   # line-comment-position: error
   ## Enforce consistent linebreak style
@@ -368,14 +373,15 @@ rules:
   ## Enforce a maximum depth that blocks can be nested
   # max-depth: error
   ## Enforce a maximum line length
-  max-len: [error, {
-    code: 80,
-    ## Ignore imports
-    ignorePattern: '^(import\s.+\sfrom\s|.*require\()',
-    ignoreUrls: true,
-    ignoreRegExpLiterals: true,
-    ignoreStrings: true,
-  }]
+  # max-len: [error, {
+  #   code: 80,
+  #   ## Ignore imports
+  #   ignorePattern: '^(import\s.+\sfrom\s|.*require\()',
+  #   ignoreUrls: true,
+  #   ignoreRegExpLiterals: true,
+  #   ignoreStrings: true,
+  #   ignoreTemplateLiterals: true,
+  # }]
   ## Enforce a maximum number of lines per file
   # max-lines: error
   ## Enforce a maximum number of line of code in a function
@@ -412,7 +418,7 @@ rules:
   ## Disallow mixed binary operators
   # no-mixed-operators: error
   ## Disallow mixed spaces and tabs for indentation
-  no-mixed-spaces-and-tabs: error
+  # no-mixed-spaces-and-tabs: error
   ## Disallow use of chained assignment expressions
   # no-multi-assign: error
   ## Disallow multiple empty lines
@@ -438,7 +444,7 @@ rules:
   ## Disallow ternary operators when simpler alternatives exist
   # no-unneeded-ternary: error
   ## Disallow whitespace before properties
-  no-whitespace-before-property: error
+  # no-whitespace-before-property: error
   ## Enforce the location of single-line statements
   # nonblock-statement-body-position: error
   ## Enforce consistent line breaks inside braces
@@ -455,7 +461,7 @@ rules:
   ## Require or disallow assignment operator shorthand where possible
   # operator-assignment: error
   ## Enforce consistent linebreak style for operators
-  operator-linebreak: [error, before]
+  # operator-linebreak: [error, before]
   ## Require or disallow padding within blocks
   # padded-blocks: error
   ## Require or disallow padding lines between statements
@@ -480,11 +486,11 @@ rules:
   ## Enforce consistent spacing before blocks
   space-before-blocks: [error, always]
   ## Enforce consistent spacing before function definition opening parenthesis
-  space-before-function-paren: [error, {
-    anonymous: always,
-    named: never,
-    asyncArrow: always,
-  }]
+  # space-before-function-paren: [error, {
+  #   anonymous: always,
+  #   named: never,
+  #   asyncArrow: always,
+  # }]
   ## Enforce consistent spacing inside parentheses
   space-in-parens: [error, never]
   ## Require spacing around infix operators
@@ -646,7 +652,7 @@ rules:
   ## Enforce ES5 or ES6 class for React Components
   react/prefer-es6-class: error
   ## Enforce that props are read-only
-  react/prefer-read-only-props: error
+  react/prefer-read-only-props: off
   ## Enforce stateless React Components to be written as a pure function
   react/prefer-stateless-function: error
   ## Prevent missing props validation in a React component definition
@@ -668,7 +674,7 @@ rules:
   # react/sort-prop-types: error
   ## Enforce the state initialization style to be either in a constructor or
   ## with a class property
-  react/state-in-constructor: error
+  # react/state-in-constructor: error
   ## Enforces where React component static properties should be positioned.
   # react/static-property-placement: error
   ## Enforce style prop value being an object
@@ -693,7 +699,7 @@ rules:
   react/jsx-closing-tag-location: error
   ## Enforce or disallow newlines inside of curly braces in JSX attributes and
   ## expressions (fixable)
-  react/jsx-curly-newline: error
+  # react/jsx-curly-newline: error
   ## Enforce or disallow spaces inside of curly braces in JSX attributes and
   ## expressions (fixable)
   react/jsx-curly-spacing: error
@@ -706,11 +712,11 @@ rules:
   ## Enforce event handler naming conventions in JSX
   react/jsx-handler-names: error
   ## Validate JSX indentation (fixable)
-  react/jsx-indent: [error, 2, {
-    checkAttributes: true,
-  }]
+  # react/jsx-indent: [error, 2, {
+  #   checkAttributes: true,
+  # }]
   ## Validate props indentation in JSX (fixable)
-  react/jsx-indent-props: [error, 2]
+  # react/jsx-indent-props: [error, 2]
   ## Validate JSX has key prop when in array or iterator
   react/jsx-key: error
   ## Validate JSX maximum depth
@@ -756,3 +762,9 @@ rules:
   react/jsx-uses-vars: error
   ## Prevent missing parentheses around multilines JSX (fixable)
   react/jsx-wrap-multilines: error
+  ## Prevents the use of unused imports.
+  ## This could be done by enabling no-unused-vars, but we're doing this for now
+  unused-imports/no-unused-imports: error
+  ## https://github.com/lydell/eslint-plugin-simple-import-sort/
+  simple-import-sort/imports: error
+  simple-import-sort/exports: error

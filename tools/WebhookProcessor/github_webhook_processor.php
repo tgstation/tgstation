@@ -28,7 +28,8 @@ define('F_SECRET_PR', 1<<1);
 
 $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 $apiKey = '209ab8d879c0f987d06a09b9d879c0f987d06a09b9d8787d0a089c';
-$repoOwnerAndName = "tgstation/tgstation";
+$repoOwnerAndName = "tgstation/tgstation"; // this is just the repository auto-updates happen from
+$repoAutoTaggerWhitelist = array("tgstation", "TerraGov-Marine-Corps");
 $servers = array();
 $enable_live_tracking = true;
 $path_to_script = 'tools/WebhookProcessor/github_webhook_processor.php';
@@ -39,6 +40,18 @@ $validation_count = 1;
 $tracked_branch = 'master';
 $require_changelogs = false;
 $discordWebHooks = array();
+
+// Only these repositories will announce in game.
+// Any repository that players actually care about.
+$game_announce_whitelist = array(
+	"tgstation",
+	"TerraGov-Marine-Corps",
+);
+
+// Any repository that matches in this blacklist will not appear on Discord.
+$discord_announce_blacklist = array(
+	"/^event-.*$/",
+);
 
 require_once 'secret.php';
 
@@ -174,7 +187,7 @@ function validate_user($payload) {
 		$querystring .= ($querystring == '' ? '' : '+') . urlencode($key) . ':' . urlencode($value);
 	$res = github_apisend('https://api.github.com/search/issues?q='.$querystring);
 	$res = json_decode($res, TRUE);
-	return $res['total_count'] >= (int)$validation_count;
+	return (isset($res['total_count']) && $res['total_count'] >= (int)$validation_count);
 
 }
 
@@ -197,6 +210,11 @@ function check_tag_and_replace($payload, $title_tag, $label, &$array_to_add_labe
 }
 
 function set_labels($payload, $labels, $remove) {
+	global $repoAutoTaggerWhitelist;
+	if(!in_array($payload['repository']['name'], $repoAutoTaggerWhitelist)) {
+		return;
+	}
+
 	$existing = get_labels($payload);
 	$tags = array();
 
@@ -218,21 +236,26 @@ function set_labels($payload, $labels, $remove) {
 function tag_pr($payload, $opened) {
 	//get the mergeable state
 	$url = $payload['pull_request']['url'];
-	$payload['pull_request'] = json_decode(github_apisend($url), TRUE);
+	$new_pull_request_payload = json_decode(github_apisend($url), TRUE);
+	if (isset($new_pull_request_payload['id']))
+		$payload['pull_request'] = $new_pull_request_payload;
 	if($payload['pull_request']['mergeable'] == null) {
 		//STILL not ready. Give it a bit, then try one more time
 		sleep(10);
-		$payload['pull_request'] = json_decode(github_apisend($url), TRUE);
+		$new_pull_request_payload = json_decode(github_apisend($url), TRUE);
+		if (isset($new_pull_request_payload['id']))
+			$payload['pull_request'] = $new_pull_request_payload;
 	}
 
 	$tags = array();
 	$title = $payload['pull_request']['title'];
 	if($opened) {	//you only have one shot on these ones so as to not annoy maintainers
-		$tags = checkchangelog($payload, false);
+		$tags = checkchangelog($payload);
 
+		if(strpos(strtolower($title), 'logs') !== FALSE || strpos(strtolower($title), 'logging') !== FALSE)
+			$tags[] = 'Logging';
 		if(strpos(strtolower($title), 'refactor') !== FALSE)
 			$tags[] = 'Refactor';
-
 		if(strpos(strtolower($title), 'revert') !== FALSE)
 			$tags[] = 'Revert';
 		if(strpos(strtolower($title), 'removes') !== FALSE)
@@ -259,6 +282,8 @@ function tag_pr($payload, $opened) {
 			$tags[] = $tag;
 
 	check_tag_and_replace($payload, '[dnm]', 'Do Not Merge', $tags);
+	check_tag_and_replace($payload, '[no gbp]', 'GBP: No Update', $tags);
+	check_tag_and_replace($payload, '[april fools]', 'April Fools', $tags);
 
 	return array($tags, $remove);
 }
@@ -290,7 +315,7 @@ function check_dismiss_changelog_review($payload){
 		return;
 
 	if(!$no_changelog)
-		checkchangelog($payload, false);
+		checkchangelog($payload);
 
 	$review_message = 'Your changelog for this PR is either malformed or non-existent. Please create one to document your changes.';
 
@@ -310,8 +335,21 @@ function check_dismiss_changelog_review($payload){
 				dismiss_review($payload, $R['id'], 'Changelog added/fixed.');
 }
 
+function is_blacklisted($blacklist, $name) {
+	foreach ($blacklist as $pattern) {
+		if (preg_match($pattern, $name)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 function handle_pr($payload) {
+	global $discord_announce_blacklist;
 	global $no_changelog;
+	global $game_announce_whitelist;
+
 	$action = 'opened';
 	$validated = validate_user($payload);
 	switch ($payload["action"]) {
@@ -337,7 +375,7 @@ function handle_pr($payload) {
 			else {
 				$action = 'merged';
 				auto_update($payload);
-				checkchangelog($payload, true);
+				checkchangelog($payload);
 				$validated = TRUE; //pr merged events always get announced.
 			}
 			break;
@@ -352,9 +390,16 @@ function handle_pr($payload) {
 	if (!$validated) {
 		$pr_flags |= F_UNVALIDATED_USER;
 	}
-	discord_announce($action, $payload, $pr_flags);
-	game_announce($action, $payload, $pr_flags);
 
+	$repo_name = $payload['repository']['name'];
+
+	if (in_array($repo_name, $game_announce_whitelist)) {
+		game_announce($action, $payload, $pr_flags);
+	}
+
+	if (!is_blacklisted($discord_announce_blacklist, $repo_name)) {
+		discord_announce($action, $payload, $pr_flags);
+	}
 }
 
 function filter_announce_targets($targets, $owner, $repo, $action, $pr_flags) {
@@ -598,13 +643,13 @@ function has_tree_been_edited($payload, $tree){
 }
 
 $no_changelog = false;
-function checkchangelog($payload, $compile = true) {
+function checkchangelog($payload) {
 	global $no_changelog;
 	if (!isset($payload['pull_request']) || !isset($payload['pull_request']['body'])) {
-		return;
+		return array();
 	}
 	if (!isset($payload['pull_request']['user']) || !isset($payload['pull_request']['user']['login'])) {
-		return;
+		return array();
 	}
 	$body = $payload['pull_request']['body'];
 
@@ -616,26 +661,16 @@ function checkchangelog($payload, $compile = true) {
 	$body = str_replace("\r\n", "\n", $body);
 	$body = explode("\n", $body);
 
-	$username = $payload['pull_request']['user']['login'];
 	$incltag = false;
-	$changelogbody = array();
-	$currentchangelogblock = array();
 	$foundcltag = false;
 	foreach ($body as $line) {
 		$line = trim($line);
 		if (substr($line,0,4) == ':cl:' || substr($line,0,1) == '??') {
 			$incltag = true;
 			$foundcltag = true;
-			$pos = strpos($line, " ");
-			if ($pos) {
-				$tmp = substr($line, $pos+1);
-				if (trim($tmp) != 'optional name here')
-					$username = $tmp;
-			}
 			continue;
 		} else if (substr($line,0,5) == '/:cl:' || substr($line,0,6) == '/ :cl:' || substr($line,0,5) == ':/cl:' || substr($line,0,5) == '/??' || substr($line,0,6) == '/ ??' ) {
 			$incltag = false;
-			$changelogbody = array_merge($changelogbody, $currentchangelogblock);
 			continue;
 		}
 		if (!$incltag)
@@ -651,55 +686,45 @@ function checkchangelog($payload, $compile = true) {
 			$firstword = $line;
 		}
 
+		// Line is empty
 		if (!strlen($firstword)) {
-			if (count($currentchangelogblock) <= 0)
-				continue;
-			$currentchangelogblock[count($currentchangelogblock)-1]['body'] .= "\n";
 			continue;
 		}
+
 		//not a prefix line.
-		//so we add it to the last changelog entry as a separate line
 		if (!strlen($firstword) || $firstword[strlen($firstword)-1] != ':') {
-			if (count($currentchangelogblock) <= 0)
-				continue;
-			$currentchangelogblock[count($currentchangelogblock)-1]['body'] .= "\n".$line;
 			continue;
 		}
+
 		$cltype = strtolower(substr($firstword, 0, -1));
+
+		// !!!
+		// !!! If you are changing any of these at the bottom, also edit `tools/pull_request_hooks/changelogConfig.js`.
+		// !!!
+
 		switch ($cltype) {
 			case 'fix':
 			case 'fixes':
 			case 'bugfix':
 				if($item != 'fixed a few things') {
 					$tags[] = 'Fix';
-					$currentchangelogblock[] = array('type' => 'bugfix', 'body' => $item);
 				}
 				break;
 			case 'qol':
 				if($item != 'made something easier to use') {
 					$tags[] = 'Quality of Life';
-					$currentchangelogblock[] = array('type' => 'qol', 'body' => $item);
 				}
 				break;
-			case 'soundadd':
-				if($item != 'added a new sound thingy') {
+			case 'sound':
+				if($item != 'added/modified/removed audio or sound effects') {
 					$tags[] = 'Sound';
-					$currentchangelogblock[] = array('type' => 'soundadd', 'body' => $item);
-				}
-				break;
-			case 'sounddel':
-				if($item != 'removed an old sound thingy') {
-					$tags[] = 'Sound';
-					$tags[] = 'Removal';
-					$currentchangelogblock[] = array('type' => 'sounddel', 'body' => $item);
 				}
 				break;
 			case 'add':
 			case 'adds':
 			case 'rscadd':
 				if($item != 'Added new mechanics or gameplay changes' && $item != 'Added more things') {
-					$tags[] = 'Mechanic';
-					$currentchangelogblock[] = array('type' => 'rscadd', 'body' => $item);
+					$tags[] = 'Feature';
 				}
 				break;
 			case 'del':
@@ -707,102 +732,48 @@ function checkchangelog($payload, $compile = true) {
 			case 'rscdel':
 				if($item != 'Removed old things') {
 					$tags[] = 'Removal';
-					$currentchangelogblock[] = array('type' => 'rscdel', 'body' => $item);
 				}
 				break;
-			case 'imageadd':
-				if($item != 'added some icons and images') {
+			case 'image':
+				if($item != 'added/modified/removed some icons or images') {
 					$tags[] = 'Sprites';
-					$currentchangelogblock[] = array('type' => 'imageadd', 'body' => $item);
-				}
-				break;
-			case 'imagedel':
-				if($item != 'deleted some icons and images') {
-					$tags[] = 'Sprites';
-					$tags[] = 'Removal';
-					$currentchangelogblock[] = array('type' => 'imagedel', 'body' => $item);
 				}
 				break;
 			case 'typo':
 			case 'spellcheck':
 				if($item != 'fixed a few typos') {
 					$tags[] = 'Grammar and Formatting';
-					$currentchangelogblock[] = array('type' => 'spellcheck', 'body' => $item);
 				}
 				break;
 			case 'balance':
-			case 'rebalance':
 				if($item != 'rebalanced something'){
-					$tags[] = 'Balance/Rebalance';
-					$currentchangelogblock[] = array('type' => 'balance', 'body' => $item);
+					$tags[] = 'Balance';
 				}
 				break;
 			case 'code_imp':
 			case 'code':
 				if($item != 'changed some code'){
 					$tags[] = 'Code Improvement';
-					$currentchangelogblock[] = array('type' => 'code_imp', 'body' => $item);
-				}
-				break;
-			case 'expansion':
-				if($item != 'Expands content of an existing feature'){
-					$tags[] = 'Content Expansion';
-					$currentchangelogblock[] = array('type' => 'expansion', 'body' => $item);
 				}
 				break;
 			case 'refactor':
 				if($item != 'refactored some code'){
 					$tags[] = 'Refactor';
-					$currentchangelogblock[] = array('type' => 'refactor', 'body' => $item);
 				}
 				break;
 			case 'config':
 				if($item != 'changed some config setting'){
 					$tags[] = 'Config Update';
-					$currentchangelogblock[] = array('type' => 'config', 'body' => $item);
 				}
 				break;
 			case 'admin':
 				if($item != 'messed with admin stuff'){
 					$tags[] = 'Administration';
-					$currentchangelogblock[] = array('type' => 'admin', 'body' => $item);
 				}
-				break;
-			case 'server':
-				if($item != 'something server ops should know')
-					$currentchangelogblock[] = array('type' => 'server', 'body' => $item);
-				break;
-			default:
-				//we add it to the last changelog entry as a separate line
-				if (count($currentchangelogblock) > 0)
-					$currentchangelogblock[count($currentchangelogblock)-1]['body'] .= "\n".$line;
 				break;
 		}
 	}
-
-	if(!count($changelogbody))
-		$no_changelog = true;
-
-	if ($no_changelog || !$compile)
-		return $tags;
-
-	$file = 'author: "'.trim(str_replace(array("\\", '"'), array("\\\\", "\\\""), $username)).'"'."\n";
-	$file .= "delete-after: True\n";
-	$file .= "changes: \n";
-	foreach ($changelogbody as $changelogitem) {
-		$type = $changelogitem['type'];
-		$body = trim(str_replace(array("\\", '"'), array("\\\\", "\\\""), $changelogitem['body']));
-		$file .= '  - '.$type.': "'.$body.'"';
-		$file .= "\n";
-	}
-	$content = array (
-		'branch' 	=> $payload['pull_request']['base']['ref'],
-		'message' 	=> 'Automatic changelog generation for PR #'.$payload['pull_request']['number'].' [ci skip]',
-		'content' 	=> base64_encode($file)
-	);
-
-	$filename = '/html/changelogs/AutoChangeLog-pr-'.$payload['pull_request']['number'].'.yml';
-	echo github_apisend($payload['pull_request']['base']['repo']['url'].'/contents'.$filename, 'PUT', $content);
+	return $tags;
 }
 
 function game_server_send($addr, $port, $str) {
@@ -832,7 +803,7 @@ function game_server_send($addr, $port, $str) {
 		$bytessent += $result;
 	}
 
-	/* --- Idle for a while until recieved bytes from game server --- */
+	/* --- Idle for a while until received bytes from game server --- */
 	$result = socket_read($server, 10000, PHP_BINARY_READ);
 	socket_close($server); // we don't need this anymore
 

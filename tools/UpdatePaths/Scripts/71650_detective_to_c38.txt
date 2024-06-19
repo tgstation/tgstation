@@ -1,0 +1,3 @@
+#comment This repaths detective revolvers to be a subtype of a generic c38 path.
+
+/obj/item/gun/ballistic/revolver/detective : /obj/item/gun/ballistic/revolver/c38/detective{@OLD}

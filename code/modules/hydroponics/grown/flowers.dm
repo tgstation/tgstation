@@ -12,7 +12,7 @@
 	potency = 20
 	instability = 1 //Flowers have 1 instability, if you want to breed out instability, crossbreed with flowers.
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
 	genes = list(/datum/plant_gene/trait/preserved)
@@ -23,14 +23,12 @@
 	seed = /obj/item/seeds/poppy
 	name = "poppy"
 	desc = "Long-used as a symbol of rest, peace, and death."
-	icon_state = "map_flower"
+	icon_state = "poppy"
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
 	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
-	greyscale_config = /datum/greyscale_config/flower_simple
-	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
-	greyscale_colors = "#d23838"
 
 // Lily
 /obj/item/seeds/poppy/lily
@@ -40,13 +38,17 @@
 	species = "lily"
 	plantname = "Lily Plants"
 	product = /obj/item/food/grown/poppy/lily
+	growthstages = 3
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
+	icon_grow = "lily-grow"
+	icon_dead = "lily-dead"
 	mutatelist = list(/obj/item/seeds/poppy/lily/trumpet)
 
 /obj/item/food/grown/poppy/lily
 	seed = /obj/item/seeds/poppy/lily
 	name = "lily"
-	desc = "A beautiful orange flower."
-	greyscale_colors = "#fe881f"
+	desc = "A beautiful white flower."
+	icon_state = "lily"
 
 	//Spacemans's Trumpet
 /obj/item/seeds/poppy/lily/trumpet
@@ -65,14 +67,14 @@
 	growthstages = 4
 	weed_rate = 2
 	weed_chance = 10
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "spacemanstrumpet-grow"
 	icon_dead = "spacemanstrumpet-dead"
-	mutatelist = list()
-	genes = list(/datum/plant_gene/reagent/polypyr, /datum/plant_gene/trait/preserved)
+	mutatelist = null
+	genes = list(/datum/plant_gene/reagent/preset/polypyr, /datum/plant_gene/trait/preserved)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
 	rarity = 30
-	graft_gene = /datum/plant_gene/reagent/polypyr
+	graft_gene = /datum/plant_gene/reagent/preset/polypyr
 
 /obj/item/food/grown/trumpet
 	seed = /obj/item/seeds/poppy/lily/trumpet
@@ -90,13 +92,17 @@
 	species = "geranium"
 	plantname = "Geranium Plants"
 	product = /obj/item/food/grown/poppy/geranium
+	growthstages = 3
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
+	icon_grow = "geranium-grow"
+	icon_dead = "geranium-dead"
 	mutatelist = list(/obj/item/seeds/poppy/geranium/fraxinella)
 
 /obj/item/food/grown/poppy/geranium
 	seed = /obj/item/seeds/poppy/geranium
 	name = "geranium"
 	desc = "A beautiful blue flower."
-	greyscale_colors = "#1499bb"
+	icon_state = "geranium"
 
 ///Fraxinella seeds.
 /obj/item/seeds/poppy/geranium/fraxinella
@@ -106,9 +112,10 @@
 	species = "fraxinella"
 	plantname = "Fraxinella Plants"
 	product = /obj/item/food/grown/poppy/geranium/fraxinella
-	mutatelist = list()
+	mutatelist = null
 	rarity = 15
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/fuel/oil = 0.05)
+	graft_gene = /datum/plant_gene/trait/preserved
 
 ///Fraxinella Flowers.
 /obj/item/food/grown/poppy/geranium/fraxinella
@@ -126,6 +133,7 @@
 	name = "pack of harebell seeds"
 	desc = "These seeds grow into pretty little flowers."
 	icon_state = "seed-harebell"
+	plant_icon_offset = 1
 	species = "harebell"
 	plantname = "Harebells"
 	product = /obj/item/food/grown/harebell
@@ -138,7 +146,7 @@
 	instability = 1
 	growthstages = 4
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/preserved)
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04)
 	graft_gene = /datum/plant_gene/trait/plant_type/weed_hardy
 
@@ -148,6 +156,7 @@
 	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten'd not thy breath.\""
 	icon_state = "harebell"
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2
 	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
 
@@ -158,48 +167,54 @@
 	icon_state = "seed-sunflower"
 	species = "sunflower"
 	plantname = "Sunflowers"
-	product = /obj/item/grown/sunflower
+	product = /obj/item/food/grown/sunflower
 	genes = list(/datum/plant_gene/trait/attack/sunflower_attack, /datum/plant_gene/trait/preserved)
 	endurance = 20
 	production = 2
 	yield = 2
 	instability = 1
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "sunflower-grow"
 	icon_dead = "sunflower-dead"
 	mutatelist = list(/obj/item/seeds/sunflower/moonflower, /obj/item/seeds/sunflower/novaflower)
-	reagents_add = list(/datum/reagent/consumable/cornoil = 0.08, /datum/reagent/consumable/nutriment = 0.04)
+	reagents_add = list(/datum/reagent/consumable/nutriment/fat/oil = 0.08, /datum/reagent/consumable/nutriment = 0.04)
 
-/obj/item/grown/sunflower // FLOWER POWER!
+/obj/item/food/grown/sunflower // FLOWER POWER!
 	seed = /obj/item/seeds/sunflower
 	name = "sunflower"
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
 	icon_state = "sunflower"
+	inhand_icon_state = "sunflower"
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
+	foodtypes = VEGETABLES
 	damtype = BURN
 	force = 0
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
+
+/obj/item/food/grown/sunflower/make_dryable()
+	AddElement(/datum/element/dryable, /obj/item/food/semki/healthy) //yum
 
 // Moonflower
 /obj/item/seeds/sunflower/moonflower
 	name = "pack of moonflower seeds"
 	desc = "These seeds grow into moonflowers."
 	icon_state = "seed-moonflower"
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	species = "moonflower"
 	plantname = "Moonflowers"
 	icon_grow = "moonflower-grow"
 	icon_dead = "sunflower-dead"
 	product = /obj/item/food/grown/moonflower
 	genes = list(/datum/plant_gene/trait/glow/purple, /datum/plant_gene/trait/preserved)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/ethanol/moonshine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 15
 	graft_gene = /datum/plant_gene/trait/glow/purple
@@ -209,7 +224,9 @@
 	name = "moonflower"
 	desc = "Store in a location at least 50 yards away from werewolves."
 	icon_state = "moonflower"
+	inhand_icon_state = "moonflower"
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	distill_reagent = /datum/reagent/consumable/ethanol/absinthe //It's made from flowers.
 
 // Novaflower
@@ -223,20 +240,22 @@
 	icon_dead = "sunflower-dead"
 	product = /obj/item/grown/novaflower
 	genes = list(/datum/plant_gene/trait/backfire/novaflower_heat, /datum/plant_gene/trait/attack/novaflower_attack, /datum/plant_gene/trait/preserved)
-	mutatelist = list()
-	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.25, /datum/reagent/consumable/capsaicin = 0.3, /datum/reagent/consumable/nutriment = 0)
-	rarity = 20
+	mutatelist = null
+	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.25, /datum/reagent/consumable/capsaicin = 0.3, /datum/reagent/consumable/nutriment = 0, /datum/reagent/toxin/acid = 0.05)
+	rarity = PLANT_MODERATELY_RARE
 
 /obj/item/grown/novaflower
 	seed = /obj/item/seeds/sunflower/novaflower
 	name = "\improper novaflower"
 	desc = "These beautiful flowers have a crisp smokey scent, like a summer bonfire."
 	icon_state = "novaflower"
+	inhand_icon_state = "novaflower"
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	damtype = BURN
 	force = 0
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
@@ -259,7 +278,7 @@
 	instability = 20 //Roses crossbreed easily, and there's many many species of them.
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/backfire/rose_thorns, /datum/plant_gene/trait/preserved)
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "rose-grow"
 	icon_dead = "rose-dead"
 	mutatelist = list(/obj/item/seeds/carbon_rose)
@@ -272,21 +291,23 @@
 	desc = "The classic fleur d'amour - flower of love. Watch for its thorns!"
 	base_icon_state = "rose"
 	icon_state = "rose"
+	inhand_icon_state = "rose"
 	worn_icon_state = "rose"
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_MASK
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
 
 /obj/item/food/grown/rose/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot == ITEM_SLOT_MASK)
+	if(slot & ITEM_SLOT_MASK)
 		worn_icon_state = "[base_icon_state]_mouth"
-		user.update_inv_wear_mask()
+		user.update_worn_mask()
 	else
 		worn_icon_state = base_icon_state
-		user.update_inv_head()
+		user.update_worn_head()
 
 // Carbon Rose
 /obj/item/seeds/carbon_rose
@@ -301,13 +322,13 @@
 	potency = 15
 	instability = 3
 	growthstages = 3
-	genes = list(/datum/plant_gene/reagent/carbon, /datum/plant_gene/trait/preserved)
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	genes = list(/datum/plant_gene/reagent/preset/carbon, /datum/plant_gene/trait/preserved)
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_grow = "carbonrose-grow"
 	icon_dead = "carbonrose-dead"
 	reagents_add = list(/datum/reagent/plastic_polymers = 0.05)
 	rarity = 10
-	graft_gene = /datum/plant_gene/reagent/carbon
+	graft_gene = /datum/plant_gene/reagent/preset/carbon
 
 /obj/item/grown/carbon_rose
 	seed = /obj/item/seeds/carbon_rose
@@ -319,5 +340,6 @@
 	force = 0
 	throwforce = 0
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	throw_speed = 1
 	throw_range = 3

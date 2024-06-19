@@ -30,27 +30,34 @@
 	data["right"] = english_right
 	return data
 
-/obj/machinery/plumbing/filter/ui_act(action, params)
+/obj/machinery/plumbing/filter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 	. = TRUE
 	switch(action)
 		if("add")
-			var/new_chem_name = params["name"]
-			var/chem_id = get_chem_id(new_chem_name)
-			if(chem_id)
-				switch(params["which"])
-					if("left")
-						if(!left.Find(chem_id))
-							english_left += new_chem_name
-							left += chem_id
-					if("right")
-						if(!right.Find(chem_id))
-							english_right += new_chem_name
-							right += chem_id
-			else
-				to_chat(usr, span_warning("No such known reagent exists!"))
+			var/which = params["which"]
+
+			var/selected_reagent = tgui_input_list(usr, "Select [which] reagent", "Reagent", GLOB.name2reagent)
+			if(!selected_reagent)
+				return TRUE
+			if(QDELETED(ui) || ui.status != UI_INTERACTIVE)
+				return FALSE
+
+			var/datum/reagent/chem_id = GLOB.name2reagent[selected_reagent]
+			if(!chem_id)
+				return TRUE
+
+			switch(which)
+				if("left")
+					if(!left.Find(chem_id))
+						english_left += selected_reagent
+						left += chem_id
+				if("right")
+					if(!right.Find(chem_id))
+						english_right += selected_reagent
+						right += chem_id
 
 		if("remove")
 			var/chem_name = params["reagent"]
@@ -64,5 +71,3 @@
 					if(english_right.Find(chem_name))
 						english_right -= chem_name
 						right -= chem_id
-
-

@@ -1,6 +1,6 @@
 2015-03-01:
   Dannno:
-  - rscadd: Resprited all owl items. Wings are now a seperate toggleable suit item.
+  - rscadd: Resprited all owl items. Wings are now a separate toggleable suit item.
   - rscadd: Added The Griffin costume, arch nemesis of The Owl. Found in the autodrobe.
   - rscadd: Added admin-only Owl hardsuit. Only for the most vengeful souls.
   - rscadd: Added Owl and Griffin merchandise; The Nest barsign, Owl/Griffin toys
@@ -94,7 +94,7 @@
   - rscadd: Icons for the above, from VG's SkowronX
   - rscadd: Many icon procs for the above, from VG's ComicIronic
   - rscadd: Drones moved into their own folder
-  - tweak: Drone.dm replaced with seperate files for each functionality
+  - tweak: Drone.dm replaced with separate files for each functionality
   - rscadd: Drones now have 2 skins to choose from, Maintenance Drone (Current drones)
       and Repair Drone (A modified VG/Bay sprite)
   - rscadd: Much more support for alternate skins on drones

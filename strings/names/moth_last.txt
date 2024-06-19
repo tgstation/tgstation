@@ -23,8 +23,8 @@ Hirashimai
 Hypophaea
 Ignita
 Impura
-Insularis
 Infrargyrea
+Insularis
 Intermediata
 Intolerabilis
 Laevusta
@@ -41,7 +41,7 @@ Nepalina
 Obscura
 Osseogrisea
 Pastellina
-Phlebitis 
+Phlebitis
 Pyrausta
 Radiata
 Riparia

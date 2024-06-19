@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(stickyban)
 	var/dbcacheexpire = 0
 
 
-/datum/controller/subsystem/stickyban/Initialize(timeofday)
+/datum/controller/subsystem/stickyban/Initialize()
 	if (length(GLOB.stickybanadminexemptions))
 		restore_stickybans()
 	var/list/bannedkeys = sticky_banned_ckeys()
@@ -44,6 +44,12 @@ SUBSYSTEM_DEF(stickyban)
 		if (ckey != bannedkey)
 			world.SetConfig("ban", bannedkey, null)
 
+		//get_stickyban_from_ckey returned null, aka something broke. Notify admins about it
+		if (!ban)
+			message_admins("Failed to apply stickyban for [bannedkey]. Check the DB for corrupt stickyban entries.")
+			log_admin_private ("Failed to apply stickyban for [bannedkey]. Check the DB for corrupt stickyban entries.")
+			continue
+
 		if (!ban["ckey"])
 			ban["ckey"] = ckey
 
@@ -55,7 +61,7 @@ SUBSYSTEM_DEF(stickyban)
 		cache[ckey] = ban
 		world.SetConfig("ban", ckey, list2stickyban(ban))
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/stickyban/proc/Populatedbcache()
 	var/newdbcache = list() //so if we runtime or the db connection dies we don't kill the existing cache

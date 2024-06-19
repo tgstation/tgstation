@@ -1,31 +1,17 @@
-#define MAX_NOTICES 5
+#define MAX_NOTICES 8
 
 /obj/structure/noticeboard
 	name = "notice board"
-	desc = "A board for pinning important notices upon."
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "nboard00"
+	desc = "A board for pinning important notices upon. It is made of the finest Spanish cork."
+	icon = 'icons/obj/wallmounts.dmi'
+	icon_state = "noticeboard"
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 150
 	/// Current number of a pinned notices
 	var/notices = 0
 
-/obj/structure/noticeboard/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/structure/noticeboard/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/structure/noticeboard/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/structure/noticeboard/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 
 /obj/structure/noticeboard/Initialize(mapload)
 	. = ..()
@@ -39,7 +25,8 @@
 		if(istype(I, /obj/item/paper))
 			I.forceMove(src)
 			notices++
-	icon_state = "nboard0[notices]"
+	update_appearance(UPDATE_ICON)
+	find_and_hang_on_wall()
 
 //attaching papers!!
 /obj/structure/noticeboard/attackby(obj/item/O, mob/user, params)
@@ -51,7 +38,7 @@
 			if(!user.transferItemToLoc(O, src))
 				return
 			notices++
-			icon_state = "nboard0[notices]"
+			update_appearance(UPDATE_ICON)
 			to_chat(user, span_notice("You pin the [O] to the noticeboard."))
 		else
 			to_chat(user, span_warning("The notice board is full!"))
@@ -103,6 +90,11 @@
 			remove_item(item, user)
 			return TRUE
 
+/obj/structure/noticeboard/update_overlays()
+	. = ..()
+	if(notices)
+		. += "notices_[notices]"
+
 /**
  * Removes an item from the notice board
  *
@@ -116,14 +108,27 @@
 		user.put_in_hands(item)
 		balloon_alert(user, "removed from board")
 	notices--
-	icon_state = "nboard0[notices]"
+	update_appearance(UPDATE_ICON)
 
-/obj/structure/noticeboard/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/iron (loc, 1)
+/obj/structure/noticeboard/atom_deconstruct(disassembled = TRUE)
+	if(!disassembled)
+		new /obj/item/stack/sheet/mineral/wood(loc)
+	else
+		new /obj/item/wallframe/noticeboard(loc)
 	for(var/obj/item/content in contents)
 		remove_item(content)
-	qdel(src)
+
+/obj/item/wallframe/noticeboard
+	name = "notice board"
+	desc = "Right now it's more of a clipboard. Attach to a wall to use."
+	icon = 'icons/obj/wallmounts.dmi'
+	icon_state = "noticeboard"
+	custom_materials = list(
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT,
+	)
+	resistance_flags = FLAMMABLE
+	result_path = /obj/structure/noticeboard
+	pixel_shift = 32
 
 // Notice boards for the heads of staff (plus the qm)
 
@@ -165,6 +170,6 @@
 /obj/structure/noticeboard/staff
 	name = "Staff Notice Board"
 	desc = "Important notices from the heads of staff."
-	req_access = list(ACCESS_HEADS)
+	req_access = list(ACCESS_COMMAND)
 
 #undef MAX_NOTICES

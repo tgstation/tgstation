@@ -15,84 +15,27 @@
 	unit_name = "solar panel control board"
 	export_types = list(/obj/item/circuitboard/computer/solar_control)
 
-//Computer Tablets and Parts
-/datum/export/modular_part
-	cost = CARGO_CRATE_VALUE * 0.075
-	unit_name = "miscellaneous computer part"
-	export_types = list(/obj/item/computer_hardware)
-	include_subtypes = TRUE
-
-//Processors.
-
-/datum/export/modular_part/processor
-	cost = CARGO_CRATE_VALUE * 0.2
-	unit_name = "computer processor"
-	export_types = list(/obj/item/computer_hardware/processor_unit)
-	include_subtypes = FALSE
-
-/datum/export/modular_part/processor/photoic
-	cost = CARGO_CRATE_VALUE * 0.5
-	unit_name = "advanced computer processor"
-	export_types = list(/obj/item/computer_hardware/processor_unit)
-	include_subtypes = FALSE
-
-//Batteries.
-
-/datum/export/modular_part/battery
-	cost = CARGO_CRATE_VALUE * 0.2
-	unit_name = "computer power cell"
-	export_types = list(/obj/item/stock_parts/cell/computer/nano)
-	include_subtypes = FALSE
-
-
-/datum/export/modular_part/battery/upgraded
-	cost = CARGO_CRATE_VALUE * 0.5
-	unit_name = "upgraded computer power cell"
-	export_types = list(/obj/item/stock_parts/cell/computer/micro)
-	include_subtypes = FALSE
-
-
-/datum/export/modular_part/battery/advanced
-	cost = CARGO_CRATE_VALUE * 0.75
-	unit_name = "advanced computer power cell"
-	export_types = list(/obj/item/stock_parts/cell/computer)
-	include_subtypes = FALSE
-
-//Hard Drives.
-
-/datum/export/modular_part/harddrive
-	cost = CARGO_CRATE_VALUE * 0.05
-	unit_name = "tiny computer harddrive"
-	export_types = list(/obj/item/computer_hardware/hard_drive/micro)
-	include_subtypes = TRUE
-
-/datum/export/modular_part/harddrive/small
-	cost = CARGO_CRATE_VALUE * 0.25
-	unit_name = "small computer harddrive"
-	export_types = list(/obj/item/computer_hardware/hard_drive/small)
-	include_subtypes = FALSE
-
-/datum/export/modular_part/harddrive/normal
+//Data Disks
+/datum/export/modular_part/portabledrive/advanced
 	cost = CARGO_CRATE_VALUE * 0.4
-	unit_name = "computer harddrive"
-	export_types = list(/obj/item/computer_hardware/hard_drive)
+	unit_name = "advanced data disk"
+	export_types = list(/obj/item/computer_disk/advanced)
 	include_subtypes = FALSE
 
-//Networking/Card Parts
-/datum/export/modular_part/networkcard
-	cost = CARGO_CRATE_VALUE * 0.25
-	unit_name = "computer network card"
-	export_types = list(/obj/item/computer_hardware/network_card)
-	include_subtypes = TRUE
+/datum/export/modular_part/portabledrive/super
+	cost = CARGO_CRATE_VALUE * 0.6
+	unit_name = "super data disk"
+	export_types = list(/obj/item/computer_disk/super)
+	include_subtypes = FALSE
 
-/datum/export/modular_part/idcard
-	cost = CARGO_CRATE_VALUE * 0.1
-	unit_name = "computer ID card slot"
-	export_types = list(/obj/item/computer_hardware/card_slot)
-	include_subtypes = TRUE
-
-/datum/export/modular_part/intellicard
+/datum/export/modular_part/portabledrive/standard
 	cost = CARGO_CRATE_VALUE * 0.2
-	unit_name = "computer intellicard slot"
-	export_types = list(/obj/item/computer_hardware/ai_slot)
+	unit_name = "data disk"
+	export_types = list(/obj/item/computer_disk)
 	include_subtypes = TRUE
+
+/datum/export/refill_canister
+	cost = CARGO_CRATE_VALUE * 0.5 //If someone want to make this worth more as it empties, go ahead
+	unit_name = "vending refill canister"
+	message = "Thank you for restocking the station!"
+	export_types = list(/obj/item/vending_refill)

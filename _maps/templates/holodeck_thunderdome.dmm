@@ -4,9 +4,7 @@
 /turf/open/floor/holofloor/basalt,
 /area/template_noop)
 "c" = (
-/obj/structure/window{
-	dir = 1
-	},
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/holofloor/basalt,
 /area/template_noop)
 "h" = (
@@ -14,7 +12,7 @@
 /obj/item/clothing/head/helmet/thunderdome/holosuit,
 /obj/item/clothing/suit/armor/tdome/holosuit/green,
 /obj/item/clothing/under/color/green,
-/obj/item/holo/esword/green,
+/obj/item/melee/energy/sword/holographic/green,
 /turf/open/floor/holofloor/basalt,
 /area/template_noop)
 "q" = (
@@ -22,11 +20,11 @@
 /obj/item/clothing/head/helmet/thunderdome/holosuit,
 /obj/item/clothing/suit/armor/tdome/holosuit/red,
 /obj/item/clothing/under/color/red,
-/obj/item/holo/esword/red,
+/obj/item/melee/energy/sword/holographic/red,
 /turf/open/floor/holofloor/basalt,
 /area/template_noop)
 "x" = (
-/obj/structure/window,
+/obj/structure/window/spawner/directional/south,
 /turf/open/floor/holofloor/basalt,
 /area/template_noop)
 "B" = (

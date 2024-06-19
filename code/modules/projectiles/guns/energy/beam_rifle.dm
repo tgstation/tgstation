@@ -10,10 +10,9 @@
 
 /obj/item/gun/energy/beam_rifle
 	name = "particle acceleration rifle"
-	desc = "An energy-based anti material marksman rifle that uses highly charged particle beams moving at extreme velocities to decimate whatever is unfortunate enough to be targeted by one. \
-		<span class='boldnotice'>Hold down left click while scoped to aim, when weapon is fully aimed (Tracer goes from red to green as it charges), release to fire. Moving while aiming or \
-		changing where you're pointing at while aiming will delay the aiming process depending on how much you changed.</span>"
-	icon = 'icons/obj/guns/energy.dmi'
+	desc = "An energy-based anti material marksman rifle that uses highly charged particle beams moving at extreme velocities to decimate whatever is unfortunate enough to be targeted by one."
+	desc_controls = "Hold down left click while scoped to aim, when weapon is fully aimed (Tracer goes from red to green as it charges), release to fire. Moving while aiming or changing where you're pointing at while aiming will delay the aiming process depending on how much you changed."
+	icon = 'icons/obj/weapons/guns/energy.dmi'
 	icon_state = "esniper"
 	inhand_icon_state = null
 	worn_icon_state = null
@@ -29,8 +28,8 @@
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
+	actions_types = list(/datum/action/item_action/zoom_lock_action)
 	cell_type = /obj/item/stock_parts/cell/beam_rifle
-	canMouseDown = TRUE
 	var/aiming = FALSE
 	var/aiming_time = 12
 	var/aiming_time_fire_threshold = 5
@@ -72,8 +71,19 @@
 	var/current_zoom_x = 0
 	var/current_zoom_y = 0
 
-	var/datum/action/item_action/zoom_lock_action/zoom_lock_action
-	var/mob/listeningTo
+	var/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/trace = null
+
+/obj/item/gun/energy/beam_rifle/apply_fantasy_bonuses(bonus)
+	. = ..()
+	delay = modify_fantasy_variable("delay", delay, -bonus * 2)
+	aiming_time = modify_fantasy_variable("aiming_time", aiming_time, -bonus * 2)
+	recoil = modify_fantasy_variable("recoil", recoil, round(-bonus / 2))
+
+/obj/item/gun/energy/beam_rifle/remove_fantasy_bonuses(bonus)
+	delay = reset_fantasy_variable("delay", delay)
+	aiming_time = reset_fantasy_variable("aiming_time", aiming_time)
+	recoil = reset_fantasy_variable("recoil", recoil)
+	return ..()
 
 /obj/item/gun/energy/beam_rifle/debug
 	delay = 0
@@ -95,7 +105,7 @@
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/ui_action_click(mob/user, actiontype)
-	if(istype(actiontype, zoom_lock_action))
+	if(istype(actiontype, /datum/action/item_action/zoom_lock_action))
 		zoom_lock++
 		if(zoom_lock > 3)
 			zoom_lock = 0
@@ -109,8 +119,9 @@
 			if(ZOOM_LOCK_OFF)
 				to_chat(user, span_boldnotice("You disable [src]'s zooming system."))
 		reset_zooming()
-	else
-		..()
+		return
+
+	return ..()
 
 /obj/item/gun/energy/beam_rifle/proc/set_autozoom_pixel_offsets_immediate(current_angle)
 	if(zoom_lock == ZOOM_LOCK_CENTER_VIEW || zoom_lock == ZOOM_LOCK_OFF)
@@ -148,7 +159,7 @@
 
 /obj/item/gun/energy/beam_rifle/attack_self(mob/user)
 	projectile_setting_pierce = !projectile_setting_pierce
-	to_chat(user, span_boldnotice("You set \the [src] to [projectile_setting_pierce? "pierce":"impact"] mode."))
+	balloon_alert(user, "switched to [projectile_setting_pierce ? "pierce":"impact"] mode")
 	aiming_beam()
 
 /obj/item/gun/energy/beam_rifle/proc/update_slowdown()
@@ -157,18 +168,16 @@
 	else
 		slowdown = initial(slowdown)
 
-/obj/item/gun/energy/beam_rifle/Initialize()
+/obj/item/gun/energy/beam_rifle/Initialize(mapload)
 	. = ..()
 	fire_delay = delay
 	current_tracers = list()
 	START_PROCESSING(SSfastprocess, src)
-	zoom_lock_action = new(src)
 
 /obj/item/gun/energy/beam_rifle/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	set_user(null)
 	QDEL_LIST(current_tracers)
-	listeningTo = null
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/emp_act(severity)
@@ -185,25 +194,31 @@
 	if(diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD && !force_update)
 		return
 	aiming_lastangle = lastangle
-	var/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/P = new
-	P.gun = src
-	P.wall_pierce_amount = wall_pierce_amount
-	P.structure_pierce_amount = structure_piercing
-	P.do_pierce = projectile_setting_pierce
+	// ONLY ONE at once (since fire can sleep)
+	if(trace)
+		QDEL_NULL(trace)
+	trace = new
+	trace.gun = src
+	trace.wall_pierce_amount = wall_pierce_amount
+	trace.structure_pierce_amount = structure_piercing
+	trace.do_pierce = projectile_setting_pierce
 	if(aiming_time)
 		var/percent = ((100/aiming_time)*aiming_time_left)
-		P.color = rgb(255 * percent,255 * ((100 - percent) / 100),0)
+		trace.color = rgb(255 * percent,255 * ((100 - percent) / 100),0)
 	else
-		P.color = rgb(0, 255, 0)
+		trace.color = rgb(0, 255, 0)
 	var/turf/curloc = get_turf(src)
-	var/turf/targloc = get_turf(current_user.client.mouseObject)
+
+	var/atom/target_atom = current_user.client.mouse_object_ref?.resolve()
+	var/turf/targloc = get_turf(target_atom)
 	if(!istype(targloc))
 		if(!istype(curloc))
 			return
 		targloc = get_turf_in_angle(lastangle, curloc, 10)
 	var/mouse_modifiers = params2list(current_user.client.mouseParams)
-	P.preparePixelProjectile(targloc, current_user, mouse_modifiers, 0)
-	P.fire(lastangle)
+	trace.preparePixelProjectile(targloc, current_user, mouse_modifiers, 0)
+	trace.fire(lastangle)
+	trace = null
 
 /obj/item/gun/energy/beam_rifle/process()
 	if(!aiming)
@@ -219,30 +234,28 @@
 	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated()) //Doesn't work if you're not holding it!
 		if(automatic_cleanup)
 			stop_aiming()
-			set_user(null)
 		return FALSE
 	return TRUE
 
-/obj/item/gun/energy/beam_rifle/proc/process_aim()
-	if(istype(current_user) && current_user.client && current_user.client.mouseParams)
-		var/angle = mouse_angle_from_client(current_user.client)
-		current_user.setDir(angle2dir_cardinal(angle))
-		var/difference = abs(closer_angle_difference(lastangle, angle))
-		delay_penalty(difference * aiming_time_increase_angle_multiplier)
-		lastangle = angle
+/obj/item/gun/energy/beam_rifle/proc/process_aim(params)
+	var/angle = mouse_angle_from_client(current_user?.client, params)
+	current_user.setDir(angle2dir_cardinal(angle))
+	var/difference = abs(closer_angle_difference(lastangle, angle))
+	delay_penalty(difference * aiming_time_increase_angle_multiplier)
+	lastangle = angle
 
 /obj/item/gun/energy/beam_rifle/proc/on_mob_move()
 	SIGNAL_HANDLER
 	check_user()
 	if(aiming)
 		delay_penalty(aiming_time_increase_user_movement)
-		process_aim()
-		INVOKE_ASYNC(src, .proc/aiming_beam, TRUE)
+		process_aim(current_user?.client?.mouseParams)
+		INVOKE_ASYNC(src, PROC_REF(aiming_beam), TRUE)
 
-/obj/item/gun/energy/beam_rifle/proc/start_aiming()
+/obj/item/gun/energy/beam_rifle/proc/start_aiming(params)
 	aiming_time_left = aiming_time
 	aiming = TRUE
-	process_aim()
+	process_aim(params)
 	aiming_beam(TRUE)
 	zooming_angle = lastangle
 	start_zooming()
@@ -252,67 +265,90 @@
 	aiming_time_left = aiming_time
 	aiming = FALSE
 	QDEL_LIST(current_tracers)
+	QDEL_NULL(trace)
 	stop_zooming(user)
 
 /obj/item/gun/energy/beam_rifle/proc/set_user(mob/user)
 	if(user == current_user)
 		return
 	stop_aiming(current_user)
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-		listeningTo = null
 	if(istype(current_user))
+		unregister_client_signals(current_user)
+		UnregisterSignal(current_user, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT))
 		current_user = null
-	if(istype(user))
-		current_user = user
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
-		listeningTo = user
+	if(!istype(user))
+		return
+	current_user = user
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_mob_move))
+	RegisterSignal(user, COMSIG_MOB_LOGIN, PROC_REF(register_client_signals))
+	RegisterSignal(user, COMSIG_MOB_LOGOUT, PROC_REF(unregister_client_signals))
+	if(user.client)
+		register_client_signals(user)
 
-/obj/item/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
+/obj/item/gun/energy/beam_rifle/proc/register_client_signals(mob/source)
+	SIGNAL_HANDLER
+	RegisterSignal(source.client, COMSIG_CLIENT_MOUSEDOWN, PROC_REF(on_mouse_down))
+
+/obj/item/gun/energy/beam_rifle/proc/unregister_client_signals(mob/source)
+	SIGNAL_HANDLER
+	stop_aiming()
+	if(QDELETED(source.client))
+		return
+	UnregisterSignal(source.client, list(COMSIG_CLIENT_MOUSEDOWN, COMSIG_CLIENT_MOUSEUP, COMSIG_CLIENT_MOUSEDRAG))
+
+///change the aiming beam angle to that of the mouse cursor.
+/obj/item/gun/energy/beam_rifle/proc/on_mouse_drag(client/source, src_object, over_object, src_location, over_location, src_control, over_control, params)
+	SIGNAL_HANDLER
 	if(aiming)
-		process_aim()
-		aiming_beam()
+		process_aim(params)
+		INVOKE_ASYNC(src, PROC_REF(aiming_beam))
 		if(zoom_lock == ZOOM_LOCK_AUTOZOOM_FREEMOVE)
 			zooming_angle = lastangle
 			set_autozoom_pixel_offsets_immediate(zooming_angle)
-	return ..()
 
-/obj/item/gun/energy/beam_rifle/onMouseDown(object, location, params, mob/mob)
-	if(istype(mob))
-		set_user(mob)
-	if(istype(object, /atom/movable/screen) && !istype(object, /atom/movable/screen/click_catcher))
+///Start aiming and charging the beam
+/obj/item/gun/energy/beam_rifle/proc/on_mouse_down(client/source, atom/movable/object, location, control, params)
+	SIGNAL_HANDLER
+	if(source.mob.get_active_held_item() != src)
 		return
-	if((object in mob.contents) || (object == mob))
+	if(!object.IsAutoclickable() || (object in source.mob.contents) || (object == source.mob))
 		return
-	start_aiming()
-	return ..()
+	INVOKE_ASYNC(src, PROC_REF(start_aiming), params)
+	RegisterSignal(source, COMSIG_CLIENT_MOUSEDRAG, PROC_REF(on_mouse_drag))
+	RegisterSignal(source, COMSIG_CLIENT_MOUSEUP, PROC_REF(on_mouse_up))
 
-/obj/item/gun/energy/beam_rifle/onMouseUp(object, location, params, mob/M)
-	if(istype(object, /atom/movable/screen) && !istype(object, /atom/movable/screen/click_catcher))
+///Stop aiming and fire the beam if charged enough
+/obj/item/gun/energy/beam_rifle/proc/on_mouse_up(client/source, atom/movable/object, location, control, params)
+	SIGNAL_HANDLER
+	if(!object.IsAutoclickable())
 		return
-	process_aim()
+	process_aim(params)
+	UnregisterSignal(source, list(COMSIG_CLIENT_MOUSEDRAG, COMSIG_CLIENT_MOUSEUP))
 	if(aiming_time_left <= aiming_time_fire_threshold && check_user())
 		sync_ammo()
-		afterattack(M.client.mouseObject, M, FALSE, M.client.mouseParams, passthrough = TRUE)
+		var/atom/target = source.mouse_object_ref?.resolve()
+		if(target)
+			INVOKE_ASYNC(src, PROC_REF(try_fire_gun), target, source.mob, source.mouseParams, TRUE)
 	stop_aiming()
 	QDEL_LIST(current_tracers)
-	return ..()
 
-/obj/item/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
-	if(flag) //It's adjacent, is the user, or is on the user's person
+/obj/item/gun/energy/beam_rifle/try_fire_gun(atom/target, mob/living/user, params, passthrough = FALSE)
+	if(user.Adjacent(target)) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
-			return
+			return FALSE
 		if(!ismob(target) || user.combat_mode) //melee attack
-			return
+			return FALSE
 		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
-			return
+			return FALSE
 	if(!passthrough && (aiming_time > aiming_time_fire_threshold))
-		return
+		return FALSE
 	if(lastfire > world.time + delay)
-		return
+		return FALSE
+	if(!..())
+		return FALSE
 	lastfire = world.time
-	. = ..()
 	stop_aiming()
+	return TRUE
 
 /obj/item/gun/energy/beam_rifle/proc/sync_ammo()
 	for(var/obj/item/ammo_casing/energy/beam_rifle/AC in contents)
@@ -382,7 +418,7 @@
 	HS_BB.do_pierce = do_pierce
 	HS_BB.gun = host
 
-/obj/item/ammo_casing/energy/beam_rifle/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread)
+/obj/item/ammo_casing/energy/beam_rifle/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread, atom/fired_from)
 	var/turf/curloc = get_turf(user)
 	if(!istype(curloc) || !loaded_projectile)
 		return FALSE
@@ -405,7 +441,7 @@
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/projectile/beam/beam_rifle/hitscan
 	select_name = "beam"
-	e_cost = 10000
+	e_cost = LASER_SHOTS(5, 50000) // Beam rifle has a custom cell
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 
 /obj/projectile/beam/beam_rifle
@@ -414,9 +450,9 @@
 	hitsound = 'sound/effects/explosion3.ogg'
 	damage = 0 //Handled manually.
 	damage_type = BURN
-	flag = ENERGY
+	armor_flag = ENERGY
 	range = 150
-	jitter = 10
+	jitter = 20 SECONDS
 	var/obj/item/gun/energy/beam_rifle/gun
 	var/structure_pierce_amount = 0 //All set to 0 so the gun can manually set them during firing.
 	var/structure_bleed_coeff = 0
@@ -484,17 +520,20 @@
 
 /obj/projectile/beam/beam_rifle/proc/handle_hit(atom/target, piercing_hit = FALSE)
 	set waitfor = FALSE
-	if(nodamage)
+	if(!is_hostile_projectile())
 		return FALSE
 	playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
-	if(!piercing_hit)
+	if(!do_pierce)
 		AOE(get_turf(target) || get_turf(src))
 	if(!QDELETED(target))
 		handle_impact(target)
 
-/obj/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE, piercing_hit = FALSE)
-	handle_hit(target, piercing_hit)
+/obj/projectile/beam/beam_rifle/on_hit(atom/target, blocked = 0, pierce_hit)
+	handle_hit(target, pierce_hit)
 	return ..()
+
+/obj/projectile/beam/beam_rifle/is_hostile_projectile()
+	return TRUE // on hit = boom fire
 
 /obj/projectile/beam/beam_rifle/hitscan
 	icon_state = ""
@@ -523,7 +562,6 @@
 	name = "aiming beam"
 	hitsound = null
 	hitsound_wall = null
-	nodamage = TRUE
 	damage = 0
 	constant_tracer = TRUE
 	hitscan_light_range = 0
@@ -531,9 +569,20 @@
 	hitscan_light_color_override = "#99ff99"
 	reflectable = REFLECT_FAKEPROJECTILE
 
+/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/is_hostile_projectile()
+	return FALSE // just an aiming reticle
+
 /obj/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit_pierce(atom/target)
 	return PROJECTILE_DELETE_WITHOUT_HITTING
 
-/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit()
+/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit(atom/target, blocked = 0, pierce_hit)
+	SHOULD_CALL_PARENT(FALSE) // This is some snowflake stuff so whatever
 	qdel(src)
 	return BULLET_ACT_BLOCK
+
+#undef AIMING_BEAM_ANGLE_CHANGE_THRESHOLD
+#undef AUTOZOOM_PIXEL_STEP_FACTOR
+#undef ZOOM_LOCK_AUTOZOOM_ANGLELOCK
+#undef ZOOM_LOCK_AUTOZOOM_FREEMOVE
+#undef ZOOM_LOCK_CENTER_VIEW
+#undef ZOOM_LOCK_OFF

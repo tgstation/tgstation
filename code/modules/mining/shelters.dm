@@ -5,6 +5,9 @@
 	var/list/whitelisted_turfs
 	var/list/banned_areas
 	var/list/banned_objects
+	has_ceiling = TRUE
+	ceiling_turf = /turf/open/floor/engine/hull
+	ceiling_baseturfs = list(/turf/open/floor/plating)
 
 /datum/map_template/shelter/New()
 	. = ..()
@@ -79,6 +82,19 @@
 	mappath = "_maps/templates/shelter_3.dmm"
 
 /datum/map_template/shelter/charlie/New()
+	. = ..()
+	whitelisted_turfs = typecacheof(/turf/closed/mineral)
+	banned_objects = typecacheof(/obj/structure/stone_tile)
+
+/datum/map_template/shelter/toilet
+	name = "Emergency Relief Shelter"
+	shelter_id = "shelter_toilet"
+	description = "A stripped-down emergency shelter focused on providing \
+		only the most essential amenities to unfortunate employees who find \
+		themselves in need far from home."
+	mappath = "_maps/templates/shelter_t.dmm"
+
+/datum/map_template/shelter/toilet/New()
 	. = ..()
 	whitelisted_turfs = typecacheof(/turf/closed/mineral)
 	banned_objects = typecacheof(/obj/structure/stone_tile)

@@ -13,7 +13,7 @@
 	name = "table frame"
 	desc = "Four metal legs with four framing rods for a table. You could easily pass through this."
 	icon = 'icons/obj/structures.dmi'
-	icon_state = "nu_table_frame"
+	icon_state = "table_frame"
 	density = FALSE
 	anchored = FALSE
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
@@ -58,7 +58,7 @@
 				return
 			var/list/material_list = list()
 			if(material.material_type)
-				material_list[material.material_type] = MINERAL_MATERIAL_AMOUNT
+				material_list[material.material_type] = SHEET_MATERIAL_AMOUNT
 			make_new_table(/obj/structure/table/greyscale, material_list)
 		return
 	return ..()
@@ -75,9 +75,8 @@
 		T.set_custom_materials(custom_materials)
 	qdel(src)
 
-/obj/structure/table_frame/deconstruct(disassembled = TRUE)
+/obj/structure/table_frame/atom_deconstruct(disassembled = TRUE)
 	new framestack(get_turf(src), framestackamount)
-	qdel(src)
 
 /obj/structure/table_frame/narsie_act()
 	new /obj/structure/table_frame/wood(src.loc)
@@ -90,13 +89,13 @@
 /obj/structure/table_frame/wood
 	name = "wooden table frame"
 	desc = "Four wooden legs with four framing wooden rods for a wooden table. You could easily pass through this."
-	icon_state = "nu_wood_frame"
+	icon_state = "wood_frame"
 	framestack = /obj/item/stack/sheet/mineral/wood
 	framestackamount = 2
 	resistance_flags = FLAMMABLE
 
 /obj/structure/table_frame/wood/attackby(obj/item/I, mob/user, params)
-	if (istype(I, /obj/item/stack))
+	if (isstack(I))
 		var/obj/item/stack/material = I
 		var/toConstruct // stores the table variant
 		var/carpet_type // stores the carpet type used for construction in case of poker tables
@@ -110,7 +109,7 @@
 				to_chat(user, span_warning("You need one [material.name] sheet to do this!"))
 				return
 			to_chat(user, span_notice("You start adding [material] to [src]..."))
-			if(do_after(user, 20, target = src) && material.use(1))
+			if(do_after(user, 2 SECONDS, target = src) && material.use(1))
 				make_new_table(toConstruct, null, carpet_type)
 	else
 		return ..()

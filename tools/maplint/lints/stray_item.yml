@@ -1,0 +1,3 @@
+/turf/closed:
+  banned_neighbors:
+  - =/obj/item

@@ -4,7 +4,7 @@
 /obj/machinery/deployable_turret
 	name = "machine gun turret"
 	desc = "While the trigger is held down, this gun will redistribute recoil to allow its user to easily shift targets."
-	icon = 'icons/obj/turrets.dmi'
+	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "machinegun"
 	can_buckle = TRUE
 	anchored = FALSE
@@ -36,31 +36,40 @@
 	var/obj/spawned_on_undeploy
 	/// How long it takes for a wrench user to undeploy the object
 	var/undeploy_time = 3 SECONDS
+	/// If TRUE, the turret will not become unanchored when not mounted
+	var/always_anchored = FALSE
+
+/obj/machinery/deployable_turret/Initialize(mapload)
+	. = ..()
+	if(always_anchored)
+		set_anchored(TRUE)
 
 /obj/machinery/deployable_turret/Destroy()
 	target = null
 	target_turf = null
-	..()
+	return ..()
 
 /// Undeploying, for when you want to move your big dakka around
 /obj/machinery/deployable_turret/wrench_act(mob/living/user, obj/item/wrench/used_wrench)
-	. = ..()
 	if(!can_be_undeployed)
-		return
+		return ITEM_INTERACT_SKIP_TO_ATTACK
 	if(!ishuman(user))
-		return
+		return ITEM_INTERACT_SKIP_TO_ATTACK
 	used_wrench.play_tool_sound(user)
 	user.balloon_alert(user, "undeploying...")
 	if(!do_after(user, undeploy_time))
-		return
-	var/obj/undeployed_object = new spawned_on_undeploy(src)
+		return ITEM_INTERACT_BLOCKING
+	var/obj/undeployed_object = new spawned_on_undeploy()
 	//Keeps the health the same even if you redeploy the gun
 	undeployed_object.modify_max_integrity(max_integrity)
+	if(!user.put_in_hands(undeployed_object))
+		undeployed_object.forceMove(loc)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 //BUCKLE HOOKS
 
-/obj/machinery/deployable_turret/unbuckle_mob(mob/living/buckled_mob,force = FALSE)
+/obj/machinery/deployable_turret/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
 	for(var/obj/item/I in buckled_mob.held_items)
 		if(istype(I, /obj/item/gun_control))
@@ -70,7 +79,8 @@
 		buckled_mob.pixel_y = buckled_mob.base_pixel_y
 		if(buckled_mob.client)
 			buckled_mob.client.view_size.resetToDefault()
-	set_anchored(FALSE)
+	if(!always_anchored)
+		set_anchored(FALSE)
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
 
@@ -112,11 +122,11 @@
 	var/client/controlling_client = controller.client
 	if(controlling_client)
 		var/modifiers = params2list(controlling_client.mouseParams)
-		var/atom/target_atom = controlling_client.mouseObject
+		var/atom/target_atom = controlling_client.mouse_object_ref?.resolve()
 		var/turf/target_turf = get_turf(target_atom)
 		if(istype(target_turf)) //They're hovering over something in the map.
 			direction_track(controller, target_turf)
-			calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(controller, modifiers)
+			calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(controller, target_turf, modifiers)
 
 /obj/machinery/deployable_turret/proc/direction_track(mob/user, atom/targeted)
 	if(user.incapacitated())
@@ -174,7 +184,7 @@
 /obj/machinery/deployable_turret/proc/volley(mob/user)
 	target_turf = get_turf(target)
 	for(var/i in 1 to number_of_shots)
-		addtimer(CALLBACK(src, /obj/machinery/deployable_turret/.proc/fire_helper, user), i*rate_of_fire)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/deployable_turret/, fire_helper), user), i*rate_of_fire)
 
 /obj/machinery/deployable_turret/proc/fire_helper(mob/user)
 	if(user.incapacitated() || !(user in buckled_mobs))
@@ -183,9 +193,11 @@
 	var/turf/targets_from = get_turf(src)
 	if(QDELETED(target))
 		target = target_turf
-	var/obj/projectile/projectile_to_fire = new projectile_type
+	var/obj/projectile/projectile_to_fire = new projectile_type(targets_from)
 	playsound(src, firesound, 75, TRUE)
 	projectile_to_fire.preparePixelProjectile(target, targets_from)
+	projectile_to_fire.firer = user
+	projectile_to_fire.fired_from = src
 	projectile_to_fire.fire()
 
 /obj/machinery/deployable_turret/ultimate  // Admin-only proof of concept for autoclicker automatics
@@ -201,7 +213,7 @@
 
 /obj/machinery/deployable_turret/hmg
 	name = "heavy machine gun turret"
-	desc = "A heavy calibre machine gun commonly used by Nanotrasen forces, famed for it's ability to give people on the recieving end more holes than normal."
+	desc = "A heavy caliber machine gun commonly used by Nanotrasen forces, famed for it's ability to give people on the receiving end more holes than normal."
 	icon_state = "hmg"
 	max_integrity = 250
 	projectile_type = /obj/projectile/bullet/manned_turret/hmg
@@ -216,14 +228,14 @@
 
 /obj/item/gun_control
 	name = "turret controls"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/hand.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT | NOBLUDGEON | DROPDEL
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/obj/machinery/deployable_turret/turret
 
-/obj/item/gun_control/Initialize()
+/obj/item/gun_control/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	turret = loc
@@ -232,12 +244,12 @@
 
 /obj/item/gun_control/Destroy()
 	turret = null
-	..()
+	return ..()
 
 /obj/item/gun_control/CanItemAutoclick()
 	return TRUE
 
-/obj/item/gun_control/attack_obj(obj/O, mob/living/user, params)
+/obj/item/gun_control/attack_atom(obj/O, mob/living/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	O.attacked_by(src, user)
 
@@ -247,10 +259,11 @@
 	M.attacked_by(src, user)
 	add_fingerprint(user)
 
-/obj/item/gun_control/afterattack(atom/targeted_atom, mob/user, flag, params)
-	. = ..()
-	var/modifiers = params2list(params)
+/obj/item/gun_control/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/obj/machinery/deployable_turret/E = user.buckled
-	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, modifiers)
-	E.direction_track(user, targeted_atom)
-	E.checkfire(targeted_atom, user)
+	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, interacting_with, modifiers)
+	E.direction_track(user, interacting_with)
+	E.checkfire(interacting_with, user)
+
+/obj/item/gun_control/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)

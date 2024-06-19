@@ -3,23 +3,27 @@
 	desc = "Used to remotely activate devices. Allows for syncing when using a secure signaler on another."
 	icon_state = "signaller"
 	inhand_icon_state = "signaler"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	custom_materials = list(/datum/material/iron=400, /datum/material/glass=120)
-	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 4, /datum/material/glass=SMALL_MATERIAL_AMOUNT*1.2)
 	attachable = TRUE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
-	pickup_sound =  'sound/items/handling/component_pickup.ogg'
+	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 
+	/// The code sent by this signaler.
 	var/code = DEFAULT_SIGNALER_CODE
+	/// The frequency this signaler is set to.
 	var/frequency = FREQ_SIGNALER
+	/// How long of a cooldown exists on this signaller.
+	var/cooldown_length = 1 SECONDS
+	/// The radio frequency connection this signaler is using.
 	var/datum/radio_frequency/radio_connection
-	///Holds the mind that commited suicide.
+	/// Holds the mind that commited suicide.
 	var/datum/mind/suicider
-	///Holds a reference string to the mob, decides how much of a gamer you are.
+	/// Holds a reference string to the mob, decides how much of a gamer you are.
 	var/suicide_mob
+	/// How many tiles away can you hear when this signaler is used or gets activated.
 	var/hearing_range = 1
-
 	/// String containing the last piece of logging data relating to when this signaller has received a signal.
 	var/last_receive_signal_log
 
@@ -41,12 +45,11 @@
 		user.visible_message(span_suicide("[user]'s [src] receives a signal and [user.p_they()] die[user.p_s()] like a gamer!"))
 	user.set_suicide(TRUE)
 	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
-	user.death(0)
-	user.suicide_log()
+	user.death(FALSE)
 	playsound(user, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	qdel(src)
 
-/obj/item/assembly/signaler/Initialize()
+/obj/item/assembly/signaler/Initialize(mapload)
 	. = ..()
 	set_frequency(frequency)
 
@@ -65,7 +68,7 @@
 	. = ..()
 	holder?.update_appearance()
 
-/obj/item/assembly/signaler/ui_status(mob/user)
+/obj/item/assembly/signaler/ui_status(mob/user, datum/ui_state/state)
 	if(is_secured(user))
 		return ..()
 	return UI_CLOSE
@@ -79,24 +82,30 @@
 /obj/item/assembly/signaler/ui_data(mob/user)
 	var/list/data = list()
 	data["frequency"] = frequency
+	data["cooldown"] = cooldown_length
 	data["code"] = code
 	data["minFrequency"] = MIN_FREE_FREQ
 	data["maxFrequency"] = MAX_FREE_FREQ
 	return data
 
-/obj/item/assembly/signaler/ui_act(action, params)
+/obj/item/assembly/signaler/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
 
 	switch(action)
 		if("signal")
-			INVOKE_ASYNC(src, .proc/signal)
+			if(cooldown_length > 0)
+				if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_SIGNALLER_SEND))
+					balloon_alert(ui.user, "recharging!")
+					return
+				TIMER_COOLDOWN_START(src, COOLDOWN_SIGNALLER_SEND, cooldown_length)
+			INVOKE_ASYNC(src, PROC_REF(signal))
+			balloon_alert(ui.user, "signaled")
 			. = TRUE
 		if("freq")
-			frequency = unformat_frequency(params["freq"])
-			frequency = sanitize_frequency(frequency, TRUE)
-			set_frequency(frequency)
+			var/new_frequency = sanitize_frequency(unformat_frequency(params["freq"]), TRUE)
+			set_frequency(new_frequency)
 			. = TRUE
 		if("code")
 			code = text2num(params["code"])
@@ -120,6 +129,19 @@
 			to_chat(user, "You transfer the frequency and code of \the [signaler2.name] to \the [name]")
 	..()
 
+/obj/item/assembly/signaler/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	if(!can_interact(user))
+		return
+	if(!ishuman(user))
+		return
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_SIGNALLER_SEND))
+		balloon_alert(user, "still recharging...")
+		return
+	TIMER_COOLDOWN_START(src, COOLDOWN_SIGNALLER_SEND, 1 SECONDS)
+	INVOKE_ASYNC(src, PROC_REF(signal))
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/item/assembly/signaler/proc/signal()
 	if(!radio_connection)
 		return
@@ -127,10 +149,8 @@
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/turf/T = get_turf(src)
 
-	var/logging_data
-	if(usr)
-		logging_data = "[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]"
-		GLOB.lastsignalers.Add(logging_data)
+	var/logging_data = "[time] <B>:</B> [key_name(usr)] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]"
+	add_to_signaler_investigate_log(logging_data)
 
 	var/datum/signal/signal = new(list("code" = code), logging_data = logging_data)
 	radio_connection.post_signal(src, signal)
@@ -141,8 +161,6 @@
 		return
 	if(signal.data["code"] != code)
 		return
-	if(!(src.wires & WIRE_RADIO_RECEIVE))
-		return
 	if(suicider)
 		manual_suicide(suicider)
 		return
@@ -150,7 +168,7 @@
 	// If the holder is a TTV, we want to store the last received signal to incorporate it into TTV logging, else wipe it.
 	last_receive_signal_log = istype(holder, /obj/item/transfer_valve) ? signal.logging_data : null
 
-	pulse(TRUE)
+	pulse()
 	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
 	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
 		hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
@@ -162,37 +180,26 @@
 	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
 	return
 
-// Embedded signaller used in grenade construction.
-// It's necessary because the signaler doens't have an off state.
-// Generated during grenade construction.  -Sayu
-/obj/item/assembly/signaler/receiver
-	var/on = FALSE
-
-/obj/item/assembly/signaler/receiver/proc/toggle_safety()
-	on = !on
-
-/obj/item/assembly/signaler/receiver/activate()
-	toggle_safety()
-	return TRUE
-
-/obj/item/assembly/signaler/receiver/examine(mob/user)
-	. = ..()
-	. += span_notice("The radio receiver is [on?"on":"off"].")
-
-/obj/item/assembly/signaler/receiver/receive_signal(datum/signal/signal)
-	if(!on)
-		return
-	return ..(signal)
-
-/obj/item/assembly/signaler/anomaly/attack_self()
-	return
-
-/obj/item/assembly/signaler/crystal_anomaly/attack_self()
-	return
-
 /obj/item/assembly/signaler/cyborg
 
 /obj/item/assembly/signaler/cyborg/attackby(obj/item/W, mob/user, params)
 	return
 /obj/item/assembly/signaler/cyborg/screwdriver_act(mob/living/user, obj/item/I)
 	return
+
+/obj/item/assembly/signaler/internal
+	name = "internal remote signaling device"
+
+/obj/item/assembly/signaler/internal/ui_state(mob/user)
+	return GLOB.inventory_state
+
+/obj/item/assembly/signaler/internal/attackby(obj/item/W, mob/user, params)
+	return
+
+/obj/item/assembly/signaler/internal/screwdriver_act(mob/living/user, obj/item/I)
+	return
+
+/obj/item/assembly/signaler/internal/can_interact(mob/user)
+	if(ispAI(user))
+		return TRUE
+	. = ..()

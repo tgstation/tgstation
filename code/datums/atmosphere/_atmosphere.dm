@@ -49,8 +49,11 @@
 		amount *= pressure_scalar // If we pick a really small target pressure we want roughly the same mix but less of it all
 		amount = CEILING(amount, 0.1)
 
-		ASSERT_GAS(gastype, gasmix)
+		ASSERT_GAS_IN_LIST(gastype, gaslist)
 		gaslist[gastype][MOLES] += amount
+
+	// Ensure that minimum_pressure is actually a hard lower limit
+	target_pressure = clamp(target_pressure, minimum_pressure + (gaslist[gastype][MOLES] * 0.1), maximum_pressure)
 
 	// That last one put us over the limit, remove some of it
 	while(gasmix.return_pressure() > target_pressure)

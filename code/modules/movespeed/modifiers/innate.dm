@@ -6,7 +6,11 @@
 	multiplicative_slowdown = 2
 	flags = IGNORE_NOSLOW
 
-/datum/movespeed_modifier/species
+/datum/movespeed_modifier/snail
+	movetypes = ~FLYING
+	variable = TRUE
+
+/datum/movespeed_modifier/bodypart
 	movetypes = ~FLYING
 	variable = TRUE
 

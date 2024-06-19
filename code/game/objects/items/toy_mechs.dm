@@ -12,7 +12,7 @@
 #define MAX_BATTLE_LENGTH 50
 
 /obj/item/toy/mecha
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "fivestarstoy"
 	verb_say = "beeps"
 	verb_ask = "beeps"
@@ -50,9 +50,10 @@
 	/// ...And their loss count in combat
 	var/losses = 0
 
-/obj/item/toy/mecha/Initialize()
+/obj/item/toy/mecha/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/series, /obj/item/toy/mecha, "Mini-Mecha action figures")
+	AddElement(/datum/element/toy_talk)
 	combat_health = max_combat_health
 	switch(special_attack_type)
 		if(SPECIAL_ATTACK_DAMAGE)
@@ -98,8 +99,8 @@
 		if(attacker_controller.incapacitated())
 			return FALSE
 		//if the attacker_controller isn't next to the attacking toy (and doesn't have telekinesis), the battle ends
-		if(!in_range(attacker, attacker_controller) && !(attacker_controller.dna.check_mutation(TK)))
-			attacker_controller.visible_message(span_notice("[attacker_controller.name] seperates from [attacker], ending the battle."), \
+		if(!in_range(attacker, attacker_controller) && !(attacker_controller.dna.check_mutation(/datum/mutation/human/telekinesis)))
+			attacker_controller.visible_message(span_notice("[attacker_controller.name] separates from [attacker], ending the battle."), \
 								span_notice("You separate from [attacker], ending the battle."))
 			return FALSE
 
@@ -107,14 +108,14 @@
 		if(opponent)
 			if(opponent.incapacitated())
 				return FALSE
-			if(!in_range(src, opponent) && !(opponent.dna.check_mutation(TK)))
-				opponent.visible_message(span_notice("[opponent.name] seperates from [src], ending the battle."), \
+			if(!in_range(src, opponent) && !(opponent.dna.check_mutation(/datum/mutation/human/telekinesis)))
+				opponent.visible_message(span_notice("[opponent.name] separates from [src], ending the battle."), \
 							span_notice("You separate from [src], ending the battle."))
 				return FALSE
 		//if it's not PVP and the attacker_controller isn't next to the defending toy (and doesn't have telekinesis), the battle ends
 		else
-			if (!in_range(src, attacker_controller) && !(attacker_controller.dna.check_mutation(TK)))
-				attacker_controller.visible_message(span_notice("[attacker_controller.name] seperates from [src] and [attacker], ending the battle."), \
+			if (!in_range(src, attacker_controller) && !(attacker_controller.dna.check_mutation(/datum/mutation/human/telekinesis)))
+				attacker_controller.visible_message(span_notice("[attacker_controller.name] separates from [src] and [attacker], ending the battle."), \
 									span_notice("You separate [attacker] and [src], ending the battle."))
 				return FALSE
 
@@ -179,7 +180,7 @@
 		to_chat(user, span_notice("You offer battle to [target.name]!"))
 		to_chat(target, span_notice("<b>[user.name] wants to battle with [user.p_their()] [name]!</b> <i>Attack them with a toy mech to initiate combat.</i>"))
 		wants_to_battle = TRUE
-		addtimer(CALLBACK(src, .proc/withdraw_offer, user), 6 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(withdraw_offer), user), 6 SECONDS)
 		return
 
 	..()
@@ -263,12 +264,8 @@
 	if(wins || losses)
 		. += span_notice("This toy has [wins] wins, and [losses] losses.")
 
-/**
- * Override the say proc if they're mute
- */
-/obj/item/toy/mecha/say()
-	if(!quiet)
-		. = ..()
+/obj/item/toy/mecha/can_speak(allow_mimes)
+	return !quiet && ..()
 
 /**
  * The 'master' proc of the mech battle. Processes the entire battle's events and makes sure it start and finishes correctly.

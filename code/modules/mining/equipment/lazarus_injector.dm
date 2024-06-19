@@ -9,7 +9,7 @@
 /obj/item/lazarus_injector
 	name = "lazarus injector"
 	desc = "An injector with a cocktail of nanomachines and chemicals, this device can seemingly raise animals from the dead, making them become friendly to the user. Unfortunately, the process is useless on higher forms of life and incredibly costly, so these were hidden in storage until an executive thought they'd be great motivation for some of their employees."
-	icon = 'icons/obj/syringe.dmi'
+	icon = 'icons/obj/medical/syringe.dmi'
 	icon_state = "lazarus_hypo"
 	inhand_icon_state = "hypo"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -25,41 +25,34 @@
 	///So you can't revive boss monsters or robots with it
 	var/revive_type = SENTIENCE_ORGANIC
 
-/obj/item/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(!loaded || !(isliving(target) && proximity_flag) )
-		return
-	if(!isanimal(target))
-		to_chat(user, span_info("[src] is only effective on lesser beings."))
-		return
+/obj/item/lazarus_injector/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	if(!loaded)
+		return NONE
+	if(SEND_SIGNAL(target, COMSIG_ATOM_ON_LAZARUS_INJECTOR, src, user) & LAZARUS_INJECTOR_USED)
+		return ITEM_INTERACT_SUCCESS
+	if(!isliving(target))
+		return NONE
 
-	var/mob/living/simple_animal/target_animal = target
-	if(target_animal.sentience_type != revive_type)
-		to_chat(user, span_info("[src] does not work on this sort of creature."))
-		return
+	var/mob/living/target_animal = target
+	if(!target_animal.compare_sentience_type(revive_type)) // Will also return false if not a basic or simple mob, which are the only two we want anyway
+		balloon_alert(user, "invalid creature!")
+		return ITEM_INTERACT_BLOCKING
 	if(target_animal.stat != DEAD)
-		to_chat(user, span_info("[src] is only effective on the dead."))
-		return
+		balloon_alert(user, "it's not dead!")
+		return ITEM_INTERACT_BLOCKING
 
-	target_animal.faction = list("neutral")
-	target_animal.revive(full_heal = TRUE, admin_revive = TRUE)
-	if(ishostile(target))
-		var/mob/living/simple_animal/hostile/target_hostile = target_animal
-		if(malfunctioning)
-			target_hostile.faction |= list("lazarus", "[REF(user)]")
-			target_hostile.robust_searching = TRUE
-			target_hostile.friends += user
-			target_hostile.attack_same = TRUE
-			log_game("[key_name(user)] has revived hostile mob [key_name(target)] with a malfunctioning lazarus injector")
-		else
-			target_hostile.attack_same = FALSE
+	target_animal.lazarus_revive(user, malfunctioning)
+	expend(target_animal, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/lazarus_injector/proc/expend(atom/revived_target, mob/user)
+	user.visible_message(span_notice("[user] injects [revived_target] with [src], reviving it."))
+	SSblackbox.record_feedback("tally", "lazarus_injector", 1, revived_target.type)
 	loaded = FALSE
-	user.visible_message(span_notice("[user] injects [target_animal] with [src], reviving it."))
-	SSblackbox.record_feedback("tally", "lazarus_injector", 1, target_animal.type)
 	playsound(src,'sound/effects/refill.ogg',50,TRUE)
 	icon_state = "lazarus_empty"
 
-/obj/item/lazarus_injector/emp_act()
+/obj/item/lazarus_injector/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return

@@ -9,14 +9,14 @@
 // forced: whether or not to ignore no_teleport
 /proc/do_teleport(atom/movable/teleatom, atom/destination, precision=null, datum/effect_system/effectin=null, datum/effect_system/effectout=null, asoundin=null, asoundout=null, no_effects=FALSE, channel=TELEPORT_CHANNEL_BLUESPACE, forced = FALSE)
 	// teleporting most effects just deletes them
-	var/static/list/delete_atoms = typecacheof(list(
-		/obj/effect,
-		)) - typecacheof(list(
-		/obj/effect/dummy/chameleon,
-		/obj/effect/wisp,
-		/obj/effect/mob_spawn,
-		/obj/effect/immovablerod,
-		))
+	var/static/list/delete_atoms = zebra_typecacheof(list(
+		/obj/effect = TRUE,
+		/obj/effect/dummy/chameleon = FALSE,
+		/obj/effect/wisp = FALSE,
+		/obj/effect/mob_spawn = FALSE,
+		/obj/effect/immovablerod = FALSE,
+		/obj/effect/meteor = FALSE,
+	))
 	if(delete_atoms[teleatom.type])
 		qdel(teleatom)
 		return FALSE
@@ -32,7 +32,7 @@
 				precision = rand(1,100)
 
 			var/static/list/bag_cache = typecacheof(/obj/item/storage/backpack/holding)
-			var/list/bagholding = typecache_filter_list(teleatom.GetAllContents(), bag_cache)
+			var/list/bagholding = typecache_filter_list(teleatom.get_all_contents(), bag_cache)
 			if(bagholding.len)
 				precision = max(rand(1,100)*bagholding.len,100)
 				if(isliving(teleatom))
@@ -64,13 +64,14 @@
 	if(!destturf || !curturf || destturf.is_transition_turf())
 		return FALSE
 
-	var/area/A = get_area(curturf)
-	var/area/B = get_area(destturf)
-	if(!forced && (HAS_TRAIT(teleatom, TRAIT_NO_TELEPORT) || (A.area_flags & NOTELEPORT) || (B.area_flags & NOTELEPORT)))
-		return FALSE
+	if(!forced)
+		if(!check_teleport_valid(teleatom, destturf, channel, original_destination = destination))
+			if(ismob(teleatom))
+				teleatom.balloon_alert(teleatom, "something holds you back!")
+			return FALSE
 
-	if(SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORT, channel, curturf, destturf))
-		return FALSE
+	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_TELEPORTED, destination, channel)
+	SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORTED, channel, curturf, destturf)
 
 	if(isobserver(teleatom))
 		teleatom.abstract_move(destturf)
@@ -84,7 +85,10 @@
 
 	if(ismob(teleatom))
 		var/mob/M = teleatom
+		teleatom.log_message("teleported from [loc_name(curturf)] to [loc_name(destturf)].", LOG_GAME, log_globally = FALSE)
 		M.cancel_camera()
+
+	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_POST_TELEPORT, destination, channel)
 
 	return TRUE
 
@@ -99,7 +103,7 @@
 		effect.start()
 
 // Safe location finder
-/proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE, dense_atoms = TRUE)
+/proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE, dense_atoms = FALSE)
 	if(!zlevels)
 		if (zlevel)
 			zlevels = list(zlevel)
@@ -113,60 +117,58 @@
 		var/z = pick(zlevels)
 		var/random_location = locate(x,y,z)
 
-		if(!isfloorturf(random_location))
-			continue
-		var/turf/open/floor/F = random_location
-		var/area/destination_area = F.loc
+		if(is_safe_turf(random_location, extended_safety_checks, dense_atoms, cycle < 300))//if the area is mostly NOTELEPORT (centcom) we gotta give up on this fantasy at some point.
+			return random_location
 
-		if(cycle < 300 && destination_area.area_flags & NOTELEPORT)//if the area is mostly NOTELEPORT (centcom) we gotta give up on this fantasy at some point.
-			continue
-		if(!F.air)
-			continue
+/// Checks if a given turf is a "safe" location
+/proc/is_safe_turf(turf/random_location, extended_safety_checks = FALSE, dense_atoms = FALSE, no_teleport = FALSE)
+	. = FALSE
+	if(!isfloorturf(random_location))
+		return
+	var/turf/open/floor/floor_turf = random_location
+	var/area/destination_area = floor_turf.loc
 
-		var/datum/gas_mixture/A = F.air
-		var/list/A_gases = A.gases
-		var/trace_gases
-		for(var/id in A_gases)
-			if(id in GLOB.hardcoded_gases)
-				continue
-			trace_gases = TRUE
-			break
+	if(no_teleport && (destination_area.area_flags & NOTELEPORT))
+		return
 
-		// Can most things breathe?
-		if(trace_gases)
-			continue
-		if(!(A_gases[/datum/gas/oxygen] && A_gases[/datum/gas/oxygen][MOLES] >= 16))
-			continue
-		if(A_gases[/datum/gas/plasma])
-			continue
-		if(A_gases[/datum/gas/carbon_dioxide] && A_gases[/datum/gas/carbon_dioxide][MOLES] >= 10)
-			continue
+	var/datum/gas_mixture/floor_gas_mixture = floor_turf.air
+	if(!floor_gas_mixture)
+		return
 
-		// Aim for goldilocks temperatures and pressure
-		if((A.temperature <= 270) || (A.temperature >= 360))
-			continue
-		var/pressure = A.return_pressure()
-		if((pressure <= 20) || (pressure >= 550))
-			continue
+	var/list/floor_gases = floor_gas_mixture.gases
+	var/static/list/gases_to_check = list(
+		/datum/gas/oxygen = list(16, 100),
+		/datum/gas/nitrogen,
+		/datum/gas/carbon_dioxide = list(0, 10)
+	)
+	if(!check_gases(floor_gases, gases_to_check))
+		return FALSE
 
-		if(extended_safety_checks)
-			if(islava(F)) //chasms aren't /floor, and so are pre-filtered
-				var/turf/open/lava/L = F
-				if(!L.is_safe())
-					continue
+	// Aim for goldilocks temperatures and pressure
+	if((floor_gas_mixture.temperature <= 270) || (floor_gas_mixture.temperature >= 360))
+		return
+	var/pressure = floor_gas_mixture.return_pressure()
+	if((pressure <= 20) || (pressure >= 550))
+		return
 
-		// Check that we're not warping onto a table or window
-		if(!dense_atoms)
-			var/density_found = FALSE
-			for(var/atom/movable/found_movable in F)
-				if(found_movable.density)
-					density_found = TRUE
-					break
-			if(density_found)
-				continue
+	if(extended_safety_checks)
+		if(islava(floor_turf)) //chasms aren't /floor, and so are pre-filtered
+			var/turf/open/lava/lava_turf = floor_turf // Cyberboss: okay, this makes no sense and I don't understand the above comment, but I'm too lazy to check history to see what it's supposed to do right now
+			if(!lava_turf.is_safe())
+				return
 
-		// DING! You have passed the gauntlet, and are "probably" safe.
-		return F
+	// Check that we're not warping onto a table or window
+	if(!dense_atoms)
+		var/density_found = FALSE
+		for(var/atom/movable/found_movable in floor_turf)
+			if(found_movable.density)
+				density_found = TRUE
+				break
+		if(density_found)
+			return
+
+	// DING! You have passed the gauntlet, and are "probably" safe.
+	return TRUE
 
 /proc/get_teleport_turfs(turf/center, precision = 0)
 	if(!precision)
@@ -184,3 +186,30 @@
 	var/list/turfs = get_teleport_turfs(center, precision)
 	if (length(turfs))
 		return pick(turfs)
+
+/// Validates that the teleport being attempted is valid or not
+/proc/check_teleport_valid(atom/teleported_atom, atom/destination, channel, atom/original_destination = null)
+	var/area/origin_area = get_area(teleported_atom)
+	var/turf/origin_turf = get_turf(teleported_atom)
+
+	var/area/destination_area = get_area(destination)
+	var/turf/destination_turf = get_turf(destination)
+
+	if(HAS_TRAIT(teleported_atom, TRAIT_NO_TELEPORT))
+		return FALSE
+
+	// prevent unprecise teleports from landing you outside of the destination's reserved area
+	if(is_reserved_level(destination_turf.z) && istype(original_destination) \
+		&& SSmapping.get_reservation_from_turf(destination_turf) != SSmapping.get_reservation_from_turf(get_turf(original_destination)))
+		return FALSE
+
+	if((origin_area.area_flags & NOTELEPORT) || (destination_area.area_flags & NOTELEPORT))
+		return FALSE
+
+	if(SEND_SIGNAL(teleported_atom, COMSIG_MOVABLE_TELEPORTING, destination, channel) & COMPONENT_BLOCK_TELEPORT)
+		return FALSE
+
+	if(SEND_SIGNAL(destination_turf, COMSIG_ATOM_INTERCEPT_TELEPORTING, channel, origin_turf, destination_turf) & COMPONENT_BLOCK_TELEPORT)
+		return FALSE
+
+	return TRUE

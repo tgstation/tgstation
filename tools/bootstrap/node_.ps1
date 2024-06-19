@@ -20,7 +20,8 @@ function Download-Node {
 	Write-Output "Downloading Node v$NodeVersion (may take a while)"
 	New-Item $NodeTargetDir -ItemType Directory -ErrorAction silentlyContinue | Out-Null
 	$WebClient = New-Object Net.WebClient
-	$WebClient.DownloadFile($NodeSource, $NodeTarget)
+	$WebClient.DownloadFile($NodeSource, "$NodeTarget.downloading")
+	Rename-Item "$NodeTarget.downloading" $NodeTarget
 }
 
 ## Convenience variables
@@ -29,9 +30,21 @@ $Cache = "$BaseDir\.cache"
 if ($Env:TG_BOOTSTRAP_CACHE) {
 	$Cache = $Env:TG_BOOTSTRAP_CACHE
 }
-$NodeVersion = Extract-Variable -Path "$BaseDir\..\..\dependencies.sh" -Key "NODE_VERSION_PRECISE"
-$NodeSource = "https://nodejs.org/download/release/v$NodeVersion/win-x86/node.exe"
-$NodeTargetDir = "$Cache\node-v$NodeVersion"
+
+# Get OS version
+[int]$OSMajor = (Get-WmiObject -Class Win32_OperatingSystem).Version.Split(".")[0]
+
+# Set Node version based on OS version
+if ($OSMajor -lt 10) {
+	# Anything under Windows 10
+	$NodeVersion = Extract-Variable -Path "$BaseDir\..\..\dependencies.sh" -Key "NODE_VERSION_COMPAT"
+}
+else {
+	$NodeVersion = Extract-Variable -Path "$BaseDir\..\..\dependencies.sh" -Key "NODE_VERSION_LTS"
+}
+
+$NodeSource = "https://nodejs.org/download/release/v$NodeVersion/win-x64/node.exe"
+$NodeTargetDir = "$Cache\node-v$NodeVersion-x64"
 $NodeTarget = "$NodeTargetDir\node.exe"
 
 ## Just print the path and exit

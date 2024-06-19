@@ -1,12 +1,12 @@
 /obj/structure/altar_of_gods
 	name = "\improper Altar of the Gods"
 	desc = "An altar which allows the head of the church to choose a sect of religious teachings as well as provide sacrifices to earn favor."
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "convertaltar"
 	density = TRUE
 	anchored = TRUE
 	layer = TABLE_LAYER
-	pass_flags_self = LETPASSTHROW
+	pass_flags_self = PASSSTRUCTURE | PASSTABLE | LETPASSTHROW
 	can_buckle = TRUE
 	buckle_lying = 90 //we turn to you!
 	///Avoids having to check global everytime by referencing it locally.
@@ -14,16 +14,22 @@
 
 /obj/structure/altar_of_gods/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/religious_tool, ALL, FALSE, CALLBACK(src, PROC_REF(reflect_sect_in_icons)))
 	reflect_sect_in_icons()
+	GLOB.chaplain_altars += src
 	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/elevation, pixel_shift = 12)
 
-/obj/structure/altar_of_gods/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/religious_tool, ALL, FALSE, CALLBACK(src, .proc/reflect_sect_in_icons))
+/obj/structure/altar_of_gods/Destroy()
+	GLOB.chaplain_altars -= src
+	return ..()
 
 /obj/structure/altar_of_gods/update_overlays()
-	. = ..()
-	. += "convertaltarcandle"
+	var/list/new_overlays = ..()
+	if(GLOB.religious_sect)
+		return new_overlays
+	new_overlays += "convertaltarcandle"
+	return new_overlays
 
 /obj/structure/altar_of_gods/attack_hand(mob/living/user, list/modifiers)
 	if(!Adjacent(user) || !user.pulling)
@@ -34,7 +40,7 @@
 	if(pushed_mob.buckled)
 		to_chat(user, span_warning("[pushed_mob] is buckled to [pushed_mob.buckled]!"))
 		return ..()
-	to_chat(user,"<span class='notice>You try to coax [pushed_mob] onto [src]...</span>")
+	to_chat(user, span_notice("You try to coax [pushed_mob] onto [src]..."))
 	if(!do_after(user,(5 SECONDS),target = pushed_mob))
 		return ..()
 	pushed_mob.forceMove(loc)
@@ -56,7 +62,10 @@
 		. += list(span_notice("Chaplains: [chaplains]."))
 
 /obj/structure/altar_of_gods/proc/reflect_sect_in_icons()
-	if(GLOB.religious_sect)
+	if(isnull(GLOB.religious_sect))
+		icon = initial(icon)
+		icon_state = initial(icon_state)
+	else
 		sect_to_altar = GLOB.religious_sect
 		if(sect_to_altar.altar_icon)
 			icon = sect_to_altar.altar_icon
@@ -76,27 +85,29 @@
 /obj/item/ritual_totem
 	name = "ritual totem"
 	desc = "A wooden totem with strange carvings on it."
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "ritual_totem"
 	inhand_icon_state = "sheet-wood"
-	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
 	//made out of a single sheet of wood
-	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 	item_flags = NO_PIXEL_RANDOM_DROP
 
-/obj/item/ritual_totem/Initialize()
+/obj/item/ritual_totem/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, 1, FALSE, CALLBACK(src, .proc/block_magic), CALLBACK(src, .proc/expire))//one charge of anti_magic
+	AddComponent(/datum/component/anti_magic, \
+		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
+		charges = 1, \
+		expiration = CALLBACK(src, PROC_REF(expire)), \
+	)
 	AddComponent(/datum/component/religious_tool, RELIGION_TOOL_INVOKE, FALSE)
 
-/obj/item/ritual_totem/proc/block_magic(mob/user, major)
-	if(major)
-		to_chat(user, span_warning("[src] consumes the magic within itself!"))
-
+/// When the ritual totem is depleted of antimagic
 /obj/item/ritual_totem/proc/expire(mob/user)
-	to_chat(user, span_warning("[src] quickly decays into rot!"))
-	qdel(src)
+	to_chat(user, span_warning("[src] consumes the magic within itself and quickly decays into rot!"))
 	new /obj/effect/decal/cleanable/ash(drop_location())
+	qdel(src)
 
 /obj/item/ritual_totem/can_be_pulled(user, grab_state, force)
 	. = ..()

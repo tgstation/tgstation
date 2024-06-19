@@ -4,17 +4,18 @@
 /datum/mutation/human/nervousness
 	name = "Nervousness"
 	desc = "Causes the holder to stutter."
+	instability = NEGATIVE_STABILITY_MINI
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel nervous.</span>"
 
-/datum/mutation/human/nervousness/on_life(delta_time, times_fired)
-	if(DT_PROB(5, delta_time))
-		owner.stuttering = max(10, owner.stuttering)
-
+/datum/mutation/human/nervousness/on_life(seconds_per_tick, times_fired)
+	if(SPT_PROB(5, seconds_per_tick))
+		owner.set_stutter_if_lower(20 SECONDS)
 
 /datum/mutation/human/wacky
 	name = "Wacky"
 	desc = "You are not a clown. You are the entire circus."
+	instability = NEGATIVE_STABILITY_MINI
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='sans'><span class='infoplain'>You feel an off sensation in your voicebox.</span></span>"
 	text_lose_indication = "<span class='notice'>The off sensation passes.</span>"
@@ -22,7 +23,7 @@
 /datum/mutation/human/wacky/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/wacky/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -37,6 +38,7 @@
 /datum/mutation/human/mute
 	name = "Mute"
 	desc = "Completely inhibits the vocal section of the brain."
+	instability = NEGATIVE_STABILITY_MAJOR
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel unable to express yourself at all.</span>"
 	text_lose_indication = "<span class='danger'>You feel able to speak freely again.</span>"
@@ -54,6 +56,7 @@
 /datum/mutation/human/unintelligible
 	name = "Unintelligible"
 	desc = "Partially inhibits the vocal center of the brain, severely distorting speech."
+	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You can't seem to form any coherent thoughts!</span>"
 	text_lose_indication = "<span class='danger'>Your mind feels more clear.</span>"
@@ -71,6 +74,7 @@
 /datum/mutation/human/swedish
 	name = "Swedish"
 	desc = "A horrible mutation originating from the distant past. Thought to be eradicated after the incident in 2037."
+	instability = NEGATIVE_STABILITY_MINI
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='notice'>You feel Swedish, however that works.</span>"
 	text_lose_indication = "<span class='notice'>The feeling of Swedishness passes.</span>"
@@ -78,7 +82,7 @@
 /datum/mutation/human/swedish/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/swedish/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -102,6 +106,7 @@
 /datum/mutation/human/chav
 	name = "Chav"
 	desc = "Unknown"
+	instability = NEGATIVE_STABILITY_MINI
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='notice'>Ye feel like a reet prat like, innit?</span>"
 	text_lose_indication = "<span class='notice'>You no longer feel like being rude and sassy.</span>"
@@ -109,14 +114,14 @@
 /datum/mutation/human/chav/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/chav/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 
-/datum/mutation/human/chav/proc/handle_speech(datum/source, mob/speech_args)
+/datum/mutation/human/chav/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
 	var/message = speech_args[SPEECH_MESSAGE]
@@ -139,26 +144,27 @@
 /datum/mutation/human/elvis
 	name = "Elvis"
 	desc = "A terrifying mutation named after its 'patient-zero'."
+	instability = NEGATIVE_STABILITY_MINI
 	quality = MINOR_NEGATIVE
 	locked = TRUE
 	text_gain_indication = "<span class='notice'>You feel pretty good, honeydoll.</span>"
 	text_lose_indication = "<span class='notice'>You feel a little less conversation would be great.</span>"
 
-/datum/mutation/human/elvis/on_life(delta_time, times_fired)
+/datum/mutation/human/elvis/on_life(seconds_per_tick, times_fired)
 	switch(pick(1,2))
 		if(1)
-			if(DT_PROB(7.5, delta_time))
+			if(SPT_PROB(7.5, seconds_per_tick))
 				var/list/dancetypes = list("swinging", "fancy", "stylish", "20'th century", "jivin'", "rock and roller", "cool", "salacious", "bashing", "smashing")
 				var/dancemoves = pick(dancetypes)
 				owner.visible_message("<b>[owner]</b> busts out some [dancemoves] moves!")
 		if(2)
-			if(DT_PROB(7.5, delta_time))
+			if(SPT_PROB(7.5, seconds_per_tick))
 				owner.visible_message("<b>[owner]</b> [pick("jiggles their hips", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "snaps their fingers")]!")
 
 /datum/mutation/human/elvis/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/elvis/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -193,17 +199,18 @@
 
 /datum/mutation/human/stoner/on_acquiring(mob/living/carbon/human/owner)
 	..()
-	owner.grant_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_STONER)
+	owner.grant_language(/datum/language/beachbum, source = LANGUAGE_STONER)
 	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
 
 /datum/mutation/human/stoner/on_losing(mob/living/carbon/human/owner)
 	..()
-	owner.remove_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_STONER)
+	owner.remove_language(/datum/language/beachbum, source = LANGUAGE_STONER)
 	owner.remove_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
 
 /datum/mutation/human/medieval
 	name = "Medieval"
 	desc = "A horrible mutation originating from the distant past, thought to have once been a common gene in all of old world Europe."
+	instability = NEGATIVE_STABILITY_MINI
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='notice'>You feel like seeking the holy grail!</span>"
 	text_lose_indication = "<span class='notice'>You no longer feel like seeking anything.</span>"
@@ -211,7 +218,7 @@
 /datum/mutation/human/medieval/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/medieval/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -240,3 +247,28 @@
 		message = "[chosen_starting] [message]"
 
 		speech_args[SPEECH_MESSAGE] = message
+
+/datum/mutation/human/piglatin
+	name = "Pig Latin"
+	desc = "Historians say back in the 2020's humanity spoke entirely in this mystical language."
+	instability = NEGATIVE_STABILITY_MINI
+	quality = MINOR_NEGATIVE
+	text_gain_indication = span_notice("Omethingsay eelsfay offyay.")
+	text_lose_indication = span_notice("The off sensation passes.")
+
+/datum/mutation/human/piglatin/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+
+/datum/mutation/human/piglatin/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
+
+/datum/mutation/human/piglatin/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
+	var/spoken_message = speech_args[SPEECH_MESSAGE]
+	spoken_message = piglatin_sentence(spoken_message)
+	speech_args[SPEECH_MESSAGE] = spoken_message

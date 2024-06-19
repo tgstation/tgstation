@@ -24,7 +24,7 @@ export const classes = (classNames: (string | BooleanLike)[]) => {
  */
 export const normalizeChildren = <T>(children: T | T[]) => {
   if (Array.isArray(children)) {
-    return children.flat().filter(value => value) as T[];
+    return children.flat().filter((value) => value) as T[];
   }
   if (typeof children === 'object') {
     return [children];
@@ -52,25 +52,17 @@ export const shallowDiffers = (a: object, b: object) => {
 };
 
 /**
- * Default inferno hooks for pure components.
+ * A common case in tgui, when you pass a value conditionally, these are
+ * the types that can fall through the condition.
  */
-export const pureComponentHooks = {
-  onComponentShouldUpdate: (lastProps, nextProps) => {
-    return shallowDiffers(lastProps, nextProps);
-  },
-};
+export type BooleanLike = number | boolean | null | undefined;
 
 /**
  * A helper to determine whether the object is renderable by React.
  */
 export const canRender = (value: unknown) => {
+  // prettier-ignore
   return value !== undefined
     && value !== null
     && typeof value !== 'boolean';
 };
-
-/**
- * A common case in tgui, when you pass a value conditionally, these are
- * the types that can fall through the condition.
- */
-export type BooleanLike = number | boolean | null | undefined;

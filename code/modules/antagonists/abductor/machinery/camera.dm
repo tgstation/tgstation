@@ -1,60 +1,42 @@
 /obj/machinery/computer/camera_advanced/abductor
 	name = "Human Observation Console"
 	var/team_number = 0
-	networks = list("ss13", "abductor")
-	var/datum/action/innate/teleport_in/tele_in_action = new
-	var/datum/action/innate/teleport_out/tele_out_action = new
-	var/datum/action/innate/teleport_self/tele_self_action = new
-	var/datum/action/innate/vest_mode_swap/vest_mode_action = new
-	var/datum/action/innate/vest_disguise_swap/vest_disguise_action = new
-	var/datum/action/innate/set_droppoint/set_droppoint_action = new
+	networks = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_ABDUCTOR)
 	var/obj/machinery/abductor/console/console
+	/// We can't create our actions until after LateInitialize
+	/// So we instead do it on the first call to GrantActions
+	var/abduct_created = FALSE
 	lock_override = TRUE
 
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "camera"
 	icon_keyboard = null
+	icon_screen = null
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
+/obj/machinery/computer/camera_advanced/abductor/Destroy()
+	if(console)
+		console.camera = null
+		console = null
+	return ..()
 
 /obj/machinery/computer/camera_advanced/abductor/CreateEye()
 	..()
 	eyeobj.visible_icon = TRUE
-	eyeobj.icon = 'icons/mob/cameramob.dmi'
+	eyeobj.icon = 'icons/mob/silicon/cameramob.dmi'
 	eyeobj.icon_state = "abductor_camera"
-	eyeobj.invisibility = INVISIBILITY_OBSERVER
+	eyeobj.SetInvisibility(INVISIBILITY_OBSERVER)
 
 /obj/machinery/computer/camera_advanced/abductor/GrantActions(mob/living/carbon/user)
+	if(!abduct_created)
+		abduct_created = TRUE
+		actions += new /datum/action/innate/teleport_in(console.pad)
+		actions += new /datum/action/innate/teleport_out(console)
+		actions += new /datum/action/innate/teleport_self(console.pad)
+		actions += new /datum/action/innate/vest_mode_swap(console)
+		actions += new /datum/action/innate/vest_disguise_swap(console)
+		actions += new /datum/action/innate/set_droppoint(console)
 	..()
-
-	if(tele_in_action)
-		tele_in_action.target = console.pad
-		tele_in_action.Grant(user)
-		actions += tele_in_action
-
-	if(tele_out_action)
-		tele_out_action.target = console
-		tele_out_action.Grant(user)
-		actions += tele_out_action
-
-	if(tele_self_action)
-		tele_self_action.target = console.pad
-		tele_self_action.Grant(user)
-		actions += tele_self_action
-
-	if(vest_mode_action)
-		vest_mode_action.target = console
-		vest_mode_action.Grant(user)
-		actions += vest_mode_action
-
-	if(vest_disguise_action)
-		vest_disguise_action.target = console
-		vest_disguise_action.Grant(user)
-		actions += vest_disguise_action
-
-	if(set_droppoint_action)
-		set_droppoint_action.target = console
-		set_droppoint_action.Grant(user)
-		actions += set_droppoint_action
 
 /obj/machinery/computer/camera_advanced/abductor/proc/IsScientist(mob/living/carbon/human/H)
 	return HAS_TRAIT(H, TRAIT_ABDUCTOR_SCIENTIST_TRAINING)
@@ -65,7 +47,7 @@
 ///Is used to compare to world.time in order to determine if the action should early return
 	var/use_delay
 	name = "Send To"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "beam_down"
 
 /datum/action/innate/teleport_in/Activate()
@@ -79,7 +61,11 @@
 	var/obj/machinery/abductor/pad/P = target
 
 	var/area/target_area = get_area(remote_eye)
-	if(target_area.area_flags & ABDUCTOR_PROOF)
+	if((target_area.area_flags & NOTELEPORT) && !istype(target_area, /area/centcom/abductor_ship))
+		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
+		return
+
+	if(istype(target_area, /area/station/ai_monitored))
 		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
 		return
 
@@ -90,7 +76,7 @@
 
 /datum/action/innate/teleport_out
 	name = "Retrieve"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "beam_up"
 
 /datum/action/innate/teleport_out/Activate()
@@ -105,7 +91,7 @@
 	var/teleport_self_cooldown = 9 SECONDS
 	var/use_delay
 	name = "Send Self"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "beam_down"
 
 /datum/action/innate/teleport_self/Activate()
@@ -119,7 +105,11 @@
 	var/obj/machinery/abductor/pad/P = target
 
 	var/area/target_area = get_area(remote_eye)
-	if(target_area.area_flags & ABDUCTOR_PROOF)
+	if((target_area.area_flags & NOTELEPORT) && !istype(target_area, /area/centcom/abductor_ship))
+		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
+		return
+
+	if(istype(target_area, /area/station/ai_monitored))
 		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
 		return
 
@@ -130,7 +120,7 @@
 
 /datum/action/innate/vest_mode_swap
 	name = "Switch Vest Mode"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "vest_mode"
 
 /datum/action/innate/vest_mode_swap/Activate()
@@ -142,7 +132,7 @@
 
 /datum/action/innate/vest_disguise_swap
 	name = "Switch Vest Disguise"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "vest_disguise"
 
 /datum/action/innate/vest_disguise_swap/Activate()
@@ -153,7 +143,7 @@
 
 /datum/action/innate/set_droppoint
 	name = "Set Experiment Release Point"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "set_drop"
 
 /datum/action/innate/set_droppoint/Activate()

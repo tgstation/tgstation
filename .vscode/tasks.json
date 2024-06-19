@@ -25,6 +25,30 @@
 			"label": "Build All"
 		},
 		{
+			"type": "process",
+			"command": "tools/build/build",
+			"args": ["-DLOWMEMORYMODE"],
+			"windows": {
+				"command": ".\\tools\\build\\build.bat",
+				"args": ["-DLOWMEMORYMODE"]
+			},
+			"options": {
+				"env": {
+					"DM_EXE": "${config:dreammaker.byondPath}"
+				}
+			},
+			"problemMatcher": [
+				"$dreammaker",
+				"$tsc",
+				"$eslint-stylish"
+			],
+			"group": {
+				"kind": "build"
+			},
+			"dependsOn": "dm: reparse",
+			"label": "Build All (low memory mode)"
+		},
+		{
 			"type": "dreammaker",
 			"dme": "tgstation.dme",
 			"problemMatcher": [
@@ -34,10 +58,15 @@
 			"label": "dm: build - tgstation.dme"
 		},
 		{
+			"command": "${command:dreammaker.reparse}",
+			"group": "build",
+			"label": "dm: reparse"
+		},
+		{
 			"type": "shell",
-			"command": "tgui/bin/tgui",
+			"command": "bin/tgui-build",
 			"windows": {
-				"command": ".\\tgui\\bin\\tgui.bat"
+				"command": ".\\bin\\tgui-build.cmd"
 			},
 			"problemMatcher": [
 				"$tsc",
@@ -47,9 +76,56 @@
 			"label": "tgui: build"
 		},
 		{
-			"command": "${command:dreammaker.reparse}",
+			"type": "shell",
+			"command": "bin/tgui-dev",
+			"windows": {
+				"command": ".\\bin\\tgui-dev.cmd"
+			},
+			"problemMatcher": [
+				"$tsc",
+				"$eslint-stylish"
+			],
 			"group": "build",
-			"label": "dm: reparse"
+			"label": "tgui: dev server"
+		},
+		{
+			"type": "shell",
+			"command": "bin/tgui-bench",
+			"windows": {
+				"command": ".\\bin\\tgui-bench.cmd"
+			},
+			"problemMatcher": [
+				"$tsc",
+				"$eslint-stylish"
+			],
+			"group": "build",
+			"label": "tgui: bench"
+		},
+		{
+			"type": "shell",
+			"command": "bin/tgui-sonar",
+			"windows": {
+				"command": ".\\bin\\tgui-sonar.cmd"
+			},
+			"problemMatcher": [
+				"$tsc",
+				"$eslint-stylish"
+			],
+			"group": "build",
+			"label": "tgui: sonar"
+		},
+		{
+			"type": "shell",
+			"command": "bin/tgfont",
+			"windows": {
+				"command": ".\\bin\\tgfont.cmd"
+			},
+			"problemMatcher": [
+				"$tsc",
+				"$eslint-stylish"
+			],
+			"group": "build",
+			"label": "tgui: rebuild tgfont"
 		}
 	]
 }

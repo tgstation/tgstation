@@ -9,17 +9,24 @@
 	circuit = /obj/item/circuitboard/machine/stacking_unit_console
 	/// Connected stacking machine
 	var/obj/machinery/mineral/stacking_machine/machine
-	/// Direction for which console looks for stacking machine to connect to
-	var/machinedir = SOUTHEAST
 
-/obj/machinery/mineral/stacking_unit_console/Initialize()
+/obj/machinery/mineral/stacking_unit_console/Initialize(mapload)
 	. = ..()
-	machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
-	if (machine)
-		machine.console = src
+	var/area/our_area = get_area(src)
+	if(!isnull(our_area))
+		return
+	var/list/turf_list = our_area.get_turfs_by_zlevel(z)
+	if(!islist(turf_list))
+		return
+	for (var/turf/area_turf as anything in turf_list)
+		var/obj/machinery/mineral/stacking_machine/found_machine = locate(/obj/machinery/mineral/stacking_machine) in area_turf
+		if(!isnull(found_machine) && isnull(found_machine.console))
+			found_machine.console = src
+			machine = found_machine
+			break
 
 /obj/machinery/mineral/stacking_unit_console/Destroy()
-	if(machine)
+	if(!isnull(machine))
 		machine.console = null
 		machine = null
 	return ..()
@@ -28,8 +35,8 @@
 	if(!multitool_check_buffer(user, I))
 		return
 	var/obj/item/multitool/M = I
-	M.buffer = src
-	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
+	M.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
 	return TRUE
 
 /obj/machinery/mineral/stacking_unit_console/ui_interact(mob/user, datum/tgui/ui)
@@ -45,6 +52,8 @@
 	data["contents"] = list()
 	if(machine)
 		data["stacking_amount"] = machine.stack_amt
+		data["input_direction"] = dir2text(machine.input_dir)
+		data["output_direction"] = dir2text(machine.output_dir)
 		for(var/stack_type in machine.stack_list)
 			var/obj/item/stack/sheet/stored_sheet = machine.stack_list[stack_type]
 			if(stored_sheet.amount <= 0)
@@ -71,6 +80,10 @@
 			inp.amount = 0
 			machine.unload_mineral(out)
 			return TRUE
+		if("rotate")
+			var/input = text2num(params["input"])
+			machine.rotate(input)
+			return TRUE
 
 /**********************Mineral stacking unit**************************/
 
@@ -86,19 +99,26 @@
 	output_dir = WEST
 	var/obj/machinery/mineral/stacking_unit_console/console
 	var/stk_types = list()
-	var/stk_amt   = list()
-	var/stack_list[0] //Key: Type.  Value: Instance of type.
+	var/stk_amt = list()
+	var/stack_list[0] //Key: Type. Value: Instance of type.
 	var/stack_amt = 50 //amount to stack before releassing
 	var/datum/component/remote_materials/materials
 	var/force_connect = FALSE
+	///Proximity monitor associated with this atom, needed for proximity checks.
+	var/datum/proximity_monitor/proximity_monitor
 
 /obj/machinery/mineral/stacking_machine/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 1)
-	materials = AddComponent(/datum/component/remote_materials, "stacking", mapload, FALSE, mapload && force_connect)
+	materials = AddComponent(
+		/datum/component/remote_materials, \
+		mapload, \
+		FALSE, \
+		(mapload && force_connect) \
+	)
 
 /obj/machinery/mineral/stacking_machine/Destroy()
-	if(console)
+	if(!isnull(console))
 		console.machine = null
 		console = null
 	materials = null
@@ -118,28 +138,34 @@
 			to_chat(user, span_notice("You link [src] to the console in [M]'s buffer."))
 			return TRUE
 
-/obj/machinery/mineral/stacking_machine/proc/process_sheet(obj/item/stack/sheet/inp)
-	if(QDELETED(inp))
+/obj/machinery/mineral/stacking_machine/proc/rotate(input)
+	if (input)
+		input_dir = turn(input_dir, 90)
+	else
+		output_dir = turn(output_dir, 90)
+	if (input_dir == output_dir)
+		rotate(input)
+
+/obj/machinery/mineral/stacking_machine/proc/process_sheet(obj/item/stack/sheet/input)
+	if(QDELETED(input))
 		return
 
 	// Dump the sheets to the silo if attached
 	if(materials.silo && !materials.on_hold())
-		var/matlist = inp.custom_materials & materials.mat_container.materials
+		var/matlist = input.custom_materials & materials.mat_container.materials
 		if (length(matlist))
-			var/inserted = materials.mat_container.insert_item(inp)
-			materials.silo_log(src, "collected", inserted, "sheets", matlist)
-			qdel(inp)
+			materials.insert_item(input)
 			return
 
 	// No silo attached process to internal storage
-	var/key = inp.merge_type
+	var/key = input.merge_type
 	var/obj/item/stack/sheet/storage = stack_list[key]
 	if(!storage) //It's the first of this sheet added
-		stack_list[key] = storage = new inp.type(src, 0)
-	storage.amount += inp.amount //Stack the sheets
-	qdel(inp)
+		stack_list[key] = storage = new input.type(src, 0)
+	storage.amount += input.amount //Stack the sheets
+	qdel(input)
 
 	while(storage.amount >= stack_amt) //Get rid of excessive stackage
-		var/obj/item/stack/sheet/out = new inp.type(null, stack_amt)
+		var/obj/item/stack/sheet/out = new input.type(null, stack_amt)
 		unload_mineral(out)
 		storage.amount -= stack_amt

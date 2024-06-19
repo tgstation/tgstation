@@ -1,0 +1,5 @@
+/obj/machinery/requests_console/@SUBTYPES{assistance_requestable=1} : /obj/machinery/requests_console/@SUBTYPES{@OLD;assistance_requestable=@SKIP},/obj/effect/mapping_helpers/requests_console/assistance
+/obj/machinery/requests_console/@SUBTYPES{supplies_requestable=1} : /obj/machinery/requests_console/@SUBTYPES{@OLD;supplies_requestable=@SKIP},/obj/effect/mapping_helpers/requests_console/supplies
+/obj/machinery/requests_console/@SUBTYPES{anon_tips_receiver=1} : /obj/machinery/requests_console/@SUBTYPES{@OLD;anon_tips_receiver=@SKIP},/obj/effect/mapping_helpers/requests_console/information
+/obj/machinery/requests_console/@SUBTYPES{receive_ore_updates=1} : /obj/machinery/requests_console/@SUBTYPES{@OLD;receive_ore_updates=@SKIP},/obj/effect/mapping_helpers/requests_console/ore_update
+/obj/machinery/requests_console/@SUBTYPES{can_send_announcements=1} : /obj/machinery/requests_console/@SUBTYPES{@OLD;can_send_announcements=@SKIP},/obj/effect/mapping_helpers/requests_console/announcement

@@ -9,25 +9,27 @@
 	agent = "Gravitokinetic Bipotential SADS+"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
-	permeability_mod = 1
+	spreading_modifier = 1
 	severity = DISEASE_SEVERITY_BIOHAZARD
+	bypasses_immunity = TRUE
 
-/datum/disease/gbs/stage_act(delta_time, times_fired)
+/datum/disease/gbs/stage_act(seconds_per_tick, times_fired)
 	. = ..()
 	if(!.)
 		return
 
 	switch(stage)
 		if(2)
-			if(DT_PROB(2.5, delta_time))
+			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.emote("cough")
 		if(3)
-			if(DT_PROB(2.5, delta_time))
+			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.emote("gasp")
-			if(DT_PROB(5, delta_time))
+			if(SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("Your body hurts all over!"))
 		if(4)
 			to_chat(affected_mob, span_userdanger("Your body feels as if it's trying to rip itself apart!"))
-			if(DT_PROB(30, delta_time))
-				affected_mob.gib()
+			if(SPT_PROB(30, seconds_per_tick))
+				affected_mob.investigate_log("has been gibbed by GBS.", INVESTIGATE_DEATHS)
+				affected_mob.gib(DROP_ALL_REMAINS)
 				return FALSE

@@ -10,33 +10,24 @@
 
 	user << browse(create_panel_helper(create_mob_html), "window=create_mob;size=425x475")
 
-/proc/randomize_human(mob/living/carbon/human/H)
-	H.gender = pick(MALE, FEMALE)
-	H.body_type = H.gender
-	H.real_name = random_unique_name(H.gender)
-	H.name = H.real_name
-	H.underwear = random_underwear(H.gender)
-	H.underwear_color = random_short_color()
-	H.skin_tone = random_skin_tone()
-	H.hairstyle = random_hairstyle(H.gender)
-	H.facial_hairstyle = random_facial_hairstyle(H.gender)
-	H.hair_color = random_short_color()
-	H.facial_hair_color = H.hair_color
-	H.eye_color = random_eye_color()
-	H.dna.blood_type = random_blood_type()
-
-	// Mutant randomizing, doesn't affect the mob appearance unless it's the specific mutant.
-	H.dna.features["mcolor"] = random_short_color()
-	H.dna.features["ethcolor"] = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
-	H.dna.features["tail_lizard"] = pick(GLOB.tails_list_lizard)
-	H.dna.features["snout"] = pick(GLOB.snouts_list)
-	H.dna.features["horns"] = pick(GLOB.horns_list)
-	H.dna.features["frills"] = pick(GLOB.frills_list)
-	H.dna.features["spines"] = pick(GLOB.spines_list)
-	H.dna.features["body_markings"] = pick(GLOB.body_markings_list)
-	H.dna.features["moth_wings"] = pick(GLOB.moth_wings_list)
-	H.dna.features["moth_antennae"] = pick(GLOB.moth_antennae_list)
-
-	H.update_body()
-	H.update_hair()
-	H.update_body_parts()
+/**
+ * Randomizes everything about a human, including DNA and name
+ */
+/proc/randomize_human(mob/living/carbon/human/human, randomize_mutations = FALSE)
+	human.gender = human.dna.species.sexes ? pick(MALE, FEMALE, PLURAL, NEUTER) : PLURAL
+	human.physique = human.gender
+	human.real_name = human.generate_random_mob_name()
+	human.name = human.get_visible_name()
+	human.set_hairstyle(random_hairstyle(human.gender), update = FALSE)
+	human.set_facial_hairstyle(random_facial_hairstyle(human.gender), update = FALSE)
+	human.set_haircolor("#[random_color()]", update = FALSE)
+	human.set_facial_haircolor(human.hair_color, update = FALSE)
+	human.eye_color_left = random_eye_color()
+	human.eye_color_right = human.eye_color_left
+	human.skin_tone = pick(GLOB.skin_tones)
+	human.dna.species.randomize_active_underwear_only(human)
+	// Needs to be called towards the end to update all the UIs just set above
+	human.dna.initialize_dna(newblood_type = random_blood_type(), create_mutation_blocks = randomize_mutations, randomize_features = TRUE)
+	// Snowflake for Ethereals
+	human.updatehealth()
+	human.updateappearance(mutcolor_update = TRUE)

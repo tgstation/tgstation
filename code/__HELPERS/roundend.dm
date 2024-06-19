@@ -4,6 +4,8 @@
 #define PERSONAL_LAST_ROUND "personal last round"
 #define SERVER_LAST_ROUND "server last round"
 
+GLOBAL_LIST_INIT(achievements_unlocked, list())
+
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
 	gather_antag_data()
 	record_nuke_disk_location()
@@ -57,7 +59,7 @@
 						mob_data["module"] = "pAI"
 					else if(iscyborg(L))
 						var/mob/living/silicon/robot/R = L
-						mob_data["module"] = R.model.name
+						mob_data["module"] = (R.model ? R.model.name : "Null Model")
 				else
 					category = "others"
 					mob_data["typepath"] = M.type
@@ -133,50 +135,51 @@
 		SSblackbox.record_feedback("associative", "antagonists", 1, antag_info)
 
 /datum/controller/subsystem/ticker/proc/record_nuke_disk_location()
-	var/obj/item/disk/nuclear/N = locate() in GLOB.poi_list
-	if(N)
+	var/disk_count = 1
+	for(var/obj/item/disk/nuclear/nuke_disk as anything in SSpoints_of_interest.real_nuclear_disks)
 		var/list/data = list()
-		var/turf/T = get_turf(N)
-		if(T)
-			data["x"] = T.x
-			data["y"] = T.y
-			data["z"] = T.z
-		var/atom/outer = get_atom_on_turf(N,/mob/living)
-		if(outer != N)
+		var/turf/disk_turf = get_turf(nuke_disk)
+		if(disk_turf)
+			data["x"] = disk_turf.x
+			data["y"] = disk_turf.y
+			data["z"] = disk_turf.z
+		var/atom/outer = get_atom_on_turf(nuke_disk, /mob/living)
+		if(outer != nuke_disk)
 			if(isliving(outer))
-				var/mob/living/L = outer
-				data["holder"] = L.real_name
+				var/mob/living/disk_holder = outer
+				data["holder"] = disk_holder.real_name
 			else
 				data["holder"] = outer.name
 
-		SSblackbox.record_feedback("associative", "roundend_nukedisk", 1 , data)
+		SSblackbox.record_feedback("associative", "roundend_nukedisk", disk_count, data)
+		disk_count++
 
 /datum/controller/subsystem/ticker/proc/gather_newscaster()
 	var/json_file = file("[GLOB.log_directory]/newscaster.json")
 	var/list/file_data = list()
 	var/pos = 1
 	for(var/V in GLOB.news_network.network_channels)
-		var/datum/newscaster/feed_channel/channel = V
+		var/datum/feed_channel/channel = V
 		if(!istype(channel))
 			stack_trace("Non-channel in newscaster channel list")
 			continue
-		file_data["[pos]"] = list("channel name" = "[channel.channel_name]", "author" = "[channel.author]", "censored" = channel.censored ? 1 : 0, "author censored" = channel.authorCensor ? 1 : 0, "messages" = list())
+		file_data["[pos]"] = list("channel name" = "[channel.channel_name]", "author" = "[channel.author]", "censored" = channel.censored ? 1 : 0, "author censored" = channel.author_censor ? 1 : 0, "messages" = list())
 		for(var/M in channel.messages)
-			var/datum/newscaster/feed_message/message = M
+			var/datum/feed_message/message = M
 			if(!istype(message))
 				stack_trace("Non-message in newscaster channel messages list")
 				continue
 			var/list/comment_data = list()
 			for(var/C in message.comments)
-				var/datum/newscaster/feed_comment/comment = C
+				var/datum/feed_comment/comment = C
 				if(!istype(comment))
 					stack_trace("Non-message in newscaster message comments list")
 					continue
 				comment_data += list(list("author" = "[comment.author]", "time stamp" = "[comment.time_stamp]", "body" = "[comment.body]"))
-			file_data["[pos]"]["messages"] += list(list("author" = "[message.author]", "time stamp" = "[message.time_stamp]", "censored" = message.bodyCensor ? 1 : 0, "author censored" = message.authorCensor ? 1 : 0, "photo file" = "[message.photo_file]", "photo caption" = "[message.caption]", "body" = "[message.body]", "comments" = comment_data))
+			file_data["[pos]"]["messages"] += list(list("author" = "[message.author]", "time stamp" = "[message.time_stamp]", "censored" = message.body_censor ? 1 : 0, "author censored" = message.author_censor ? 1 : 0, "photo file" = "[message.photo_file]", "photo caption" = "[message.caption]", "body" = "[message.body]", "comments" = comment_data))
 		pos++
 	if(GLOB.news_network.wanted_issue.active)
-		file_data["wanted"] = list("author" = "[GLOB.news_network.wanted_issue.scannedUser]", "criminal" = "[GLOB.news_network.wanted_issue.criminal]", "description" = "[GLOB.news_network.wanted_issue.body]", "photo file" = "[GLOB.news_network.wanted_issue.photo_file]")
+		file_data["wanted"] = list("author" = "[GLOB.news_network.wanted_issue.scanned_user]", "criminal" = "[GLOB.news_network.wanted_issue.criminal]", "description" = "[GLOB.news_network.wanted_issue.body]", "photo file" = "[GLOB.news_network.wanted_issue.photo_file]")
 	WRITE_FILE(json_file, json_encode(file_data))
 
 ///Handles random hardcore point rewarding if it applies.
@@ -187,41 +190,42 @@
 	if(!human_mob.hardcore_survival_score) ///no score no glory
 		return FALSE
 
-	if(human_mob.mind && (human_mob.mind.special_role || length(human_mob.mind.antag_datums) > 0))
-		var/didthegamerwin = TRUE
-		for(var/a in human_mob.mind.antag_datums)
-			var/datum/antagonist/antag_datum = a
-			for(var/i in antag_datum.objectives)
-				var/datum/objective/objective_datum = i
+	if(human_mob.mind && (length(human_mob.mind.antag_datums) > 0))
+		for(var/datum/antagonist/antag_datums as anything in human_mob.mind.antag_datums)
+			if(!antag_datums.hardcore_random_bonus) //dont give bonusses to dumb stuff like revs or hypnos
+				continue
+			if(initial(antag_datums.can_assign_self_objectives) && !antag_datums.can_assign_self_objectives)
+				continue // You don't get a prize if you picked your own objective, you can't fail those
+
+			var/greentexted = TRUE
+			for(var/datum/objective/objective_datum as anything in antag_datums.objectives)
 				if(!objective_datum.check_completion())
-					didthegamerwin = FALSE
-		if(!didthegamerwin)
-			return FALSE
-		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score * 2))
-	else if(human_mob.onCentCom())
+					greentexted = FALSE
+					break
+			if(greentexted)
+				var/score = round(human_mob.hardcore_survival_score * 2)
+				player_client.give_award(/datum/award/score/hardcore_random, human_mob, score)
+				log_admin("[player_client] gained [score] hardcore random points, including greentext bonus!")
+				return
+
+	if(considered_escaped(human_mob.mind))
 		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
+		log_admin("[player_client] gained [round(human_mob.hardcore_survival_score)] hardcore random points.")
 
-
-/datum/controller/subsystem/ticker/proc/declare_completion()
+/datum/controller/subsystem/ticker/proc/declare_completion(was_forced = END_ROUND_AS_NORMAL)
 	set waitfor = FALSE
 
-	to_chat(world, "<span class='infoplain'><BR><BR><BR><span class='big bold'>The round has ended.</span></span>")
-	log_game("The round has ended.")
-
-	for(var/I in round_end_events)
-		var/datum/callback/cb = I
-		cb.InvokeAsync()
+	for(var/datum/callback/roundend_callbacks as anything in round_end_events)
+		roundend_callbacks.InvokeAsync()
 	LAZYCLEARLIST(round_end_events)
 
-	var/speed_round = FALSE
-	if(world.time - SSticker.round_start_time <= 300 SECONDS)
-		speed_round = TRUE
+	var/speed_round = (STATION_TIME_PASSED() <= 10 MINUTES)
 
 	for(var/client/C in GLOB.clients)
 		if(!C?.credits)
 			C?.RollCredits()
 		C?.playtitlemusic(40)
-		if(speed_round)
+		if(speed_round && was_forced != ADMIN_FORCE_END_ROUND)
 			C?.give_award(/datum/award/achievement/misc/speed_round, C?.mob)
 		HandleRandomHardcoreScore(C)
 
@@ -231,16 +235,18 @@
 	CHECK_TICK
 
 	// Add AntagHUD to everyone, see who was really evil the whole time!
-	for(var/datum/atom_hud/antag/H in GLOB.huds)
-		for(var/m in GLOB.player_list)
-			var/mob/M = m
-			H.add_hud_to(M)
+	for(var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antagonist_hud in GLOB.active_alternate_appearances)
+		for(var/mob/player as anything in GLOB.player_list)
+			antagonist_hud.show_to(player)
 
 	CHECK_TICK
 
 	//Set news report and mode result
-	mode.set_round_result()
+	SSdynamic.set_round_result()
 
+	to_chat(world, span_infoplain(span_big(span_bold("<BR><BR><BR>The round has ended."))))
+	log_game("The round has ended.")
+	send2chat(new /datum/tgs_message_content("[GLOB.round_id ? "Round [GLOB.round_id]" : "The round has"] just ended."), CONFIG_GET(string/channel_announce_end_game))
 	send2adminchat("Server", "Round just ended.")
 
 	if(length(CONFIG_GET(keyed_list/cross_server)))
@@ -274,13 +280,15 @@
 
 	CHECK_TICK
 	SSdbcore.SetRoundEnd()
+
 	//Collects persistence features
-	SSpersistence.CollectData()
+	SSpersistence.collect_data()
+	SSpersistent_paintings.save_paintings()
 
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()
 
-	sleep(50)
+	sleep(5 SECONDS)
 	ready_for_reboot = TRUE
 	standard_reboot()
 
@@ -314,8 +322,10 @@
 	parts += goal_report()
 	//Economy & Money
 	parts += market_report()
+	//Player Achievements
+	parts += cheevo_report()
 
-	listclearnulls(parts)
+	list_clear_nulls(parts)
 
 	return parts.Join()
 
@@ -343,13 +353,17 @@
 			//ignore this comment, it fixes the broken sytax parsing caused by the " above
 			else
 				parts += "[FOURSPACES]<i>Nobody died this shift!</i>"
-	if(istype(SSticker.mode, /datum/game_mode/dynamic))
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		parts += "[FOURSPACES]Threat level: [mode.threat_level]"
-		parts += "[FOURSPACES]Threat left: [mode.mid_round_budget]"
-		parts += "[FOURSPACES]Executed rules:"
-		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
-			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
+
+	parts += "[FOURSPACES]Threat level: [SSdynamic.threat_level]"
+	parts += "[FOURSPACES]Threat left: [SSdynamic.mid_round_budget]"
+	if(SSdynamic.roundend_threat_log.len)
+		parts += "[FOURSPACES]Threat edits:"
+		for(var/entry as anything in SSdynamic.roundend_threat_log)
+			parts += "[FOURSPACES][FOURSPACES][entry]<BR>"
+	parts += "[FOURSPACES]Executed rules:"
+	for(var/datum/dynamic_ruleset/rule in SSdynamic.executed_rules)
+		parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
+
 	return parts.Join("<br>")
 
 /client/proc/roundend_report_file()
@@ -440,7 +454,7 @@
 
 /datum/controller/subsystem/ticker/proc/law_report()
 	var/list/parts = list()
-	var/borg_spacer = FALSE //inserts an extra linebreak to seperate AIs from independent borgs, and then multiple independent borgs.
+	var/borg_spacer = FALSE //inserts an extra linebreak to separate AIs from independent borgs, and then multiple independent borgs.
 	//Silicon laws report
 	for (var/i in GLOB.ai_list)
 		var/mob/living/silicon/ai/aiPlayer = i
@@ -477,11 +491,14 @@
 		return ""
 
 /datum/controller/subsystem/ticker/proc/goal_report()
+	var/list/goals = SSstation.get_station_goals()
+	if(!length(goals))
+		return null
+
 	var/list/parts = list()
-	if(GLOB.station_goals.len)
-		for(var/datum/station_goal/goal as anything in GLOB.station_goals)
-			parts += goal.get_result()
-		return "<div class='panel stationborder'><ul>[parts.Join()]</ul></div>"
+	for(var/datum/station_goal/goal as anything in SSstation.get_station_goals())
+		parts += goal.get_result()
+	return "<div class='panel stationborder'><ul>[parts.Join()]</ul></div>"
 
 ///Generate a report for how much money is on station, as well as the richest crewmember on the station.
 /datum/controller/subsystem/ticker/proc/market_report()
@@ -546,7 +563,7 @@
 		if(!human.client || !human.mind)
 			continue
 		var/datum/job/human_job = human.mind.assigned_role
-		if(!(human_job.departments_bitflags & DEPARTMENT_SERVICE))
+		if(!(human_job.departments_bitflags & DEPARTMENT_BITFLAG_SERVICE))
 			continue
 		human_job.award_service(human.client, award)
 
@@ -568,7 +585,7 @@
 		if(!ishuman(i))
 			continue
 		var/mob/living/carbon/human/human_player = i
-		if(!human_player.hardcore_survival_score || !human_player.onCentCom() || human_player.stat == DEAD) ///gotta escape nerd
+		if(!human_player.hardcore_survival_score || !considered_escaped(human_player.mind) || human_player.stat == DEAD) ///gotta escape nerd
 			continue
 		if(!human_player.mind)
 			continue
@@ -586,39 +603,45 @@
 	var/list/all_teams = list()
 	var/list/all_antagonists = list()
 
-	for(var/datum/team/A in GLOB.antagonist_teams)
-		all_teams |= A
+	for(var/datum/team/team as anything in GLOB.antagonist_teams)
+		all_teams |= team
 
-	for(var/datum/antagonist/A in GLOB.antagonists)
-		if(!A.owner)
+	for(var/datum/antagonist/antagonists as anything in GLOB.antagonists)
+		if(!antagonists.owner)
 			continue
-		all_antagonists |= A
+		all_antagonists |= antagonists
 
-	for(var/datum/team/T in all_teams)
-		result += T.roundend_report()
-		for(var/datum/antagonist/X in all_antagonists)
-			if(X.get_team() == T)
-				all_antagonists -= X
+	for(var/datum/team/active_teams as anything in all_teams)
+		//check if we should show the team
+		if(!active_teams.show_roundend_report)
+			continue
+
+		//remove the team's individual antag reports, if the team actually shows up in the report.
+		for(var/datum/mind/team_minds as anything in active_teams.members)
+			if(!isnull(team_minds.antag_datums)) // is_special_character passes if they have a special role instead of an antag
+				all_antagonists -= team_minds.antag_datums
+
+		result += active_teams.roundend_report()
 		result += " "//newline between teams
 		CHECK_TICK
 
 	var/currrent_category
 	var/datum/antagonist/previous_category
 
-	sortTim(all_antagonists, /proc/cmp_antag_category)
+	sortTim(all_antagonists, GLOBAL_PROC_REF(cmp_antag_category))
 
-	for(var/datum/antagonist/A in all_antagonists)
-		if(!A.show_in_roundend)
+	for(var/datum/antagonist/antagonists in all_antagonists)
+		if(!antagonists.show_in_roundend)
 			continue
-		if(A.roundend_category != currrent_category)
+		if(antagonists.roundend_category != currrent_category)
 			if(previous_category)
 				result += previous_category.roundend_report_footer()
 				result += "</div>"
 			result += "<div class='panel redborder'>"
-			result += A.roundend_report_header()
-			currrent_category = A.roundend_category
-			previous_category = A
-		result += A.roundend_report()
+			result += antagonists.roundend_report_header()
+			currrent_category = antagonists.roundend_category
+			previous_category = antagonists
+		result += antagonists.roundend_report()
 		result += "<br><br>"
 		CHECK_TICK
 
@@ -642,13 +665,14 @@
 /datum/action/report
 	name = "Show roundend report"
 	button_icon_state = "round_end"
+	show_to_observers = FALSE
 
-/datum/action/report/Trigger()
+/datum/action/report/Trigger(trigger_flags)
 	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
 		SSticker.show_roundend_report(owner.client)
 
-/datum/action/report/IsAvailable()
-	return 1
+/datum/action/report/IsAvailable(feedback = FALSE)
+	return TRUE
 
 /datum/action/report/Topic(href,href_list)
 	if(usr != owner)
@@ -694,90 +718,29 @@
 	var/list/objective_parts = list()
 	var/count = 1
 	for(var/datum/objective/objective in objectives)
-		if(objective.check_completion())
-			objective_parts += "<b>[objective.objective_name] #[count]</b>: [objective.explanation_text] [span_greentext("Success!")]"
-		else
-			objective_parts += "<b>[objective.objective_name] #[count]</b>: [objective.explanation_text] [span_redtext("Fail.")]"
+		objective_parts += "<b>[objective.objective_name] #[count]</b>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
 		count++
 	return objective_parts.Join("<br>")
 
-/datum/controller/subsystem/ticker/proc/save_admin_data()
-	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Admin rank DB Sync blocked: Advanced ProcCall detected.</span>")
-		return
-	if(CONFIG_GET(flag/admin_legacy_system)) //we're already using legacy system so there's nothing to save
-		return
-	else if(load_admins(TRUE)) //returns true if there was a database failure and the backup was loaded from
-		return
-	sync_ranks_with_db()
-	var/list/sql_admins = list()
-	for(var/i in GLOB.protected_admins)
-		var/datum/admins/A = GLOB.protected_admins[i]
-		sql_admins += list(list("ckey" = A.target, "rank" = A.rank.name))
-	SSdbcore.MassInsert(format_table_name("admin"), sql_admins, duplicate_key = TRUE)
-	var/datum/db_query/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
-	query_admin_rank_update.Execute()
-	qdel(query_admin_rank_update)
 
-	//json format backup file generation stored per server
-	var/json_file = file("data/admins_backup.json")
-	var/list/file_data = list(
-		"ranks" = list(),
-		"admins" = list(),
-		"connections" = list(),
-	)
-	for(var/datum/admin_rank/R in GLOB.admin_ranks)
-		file_data["ranks"]["[R.name]"] = list()
-		file_data["ranks"]["[R.name]"]["include rights"] = R.include_rights
-		file_data["ranks"]["[R.name]"]["exclude rights"] = R.exclude_rights
-		file_data["ranks"]["[R.name]"]["can edit rights"] = R.can_edit_rights
+/datum/controller/subsystem/ticker/proc/cheevo_report()
+	var/list/parts = list()
+	if(length(GLOB.achievements_unlocked))
+		parts += "<span class='header'>Achievement Get!</span><BR>"
+		parts += "<span class='infoplain'>Total Achievements Earned: <B>[length(GLOB.achievements_unlocked)]!</B></span><BR>"
+		parts += "<ul class='playerlist'>"
+		for(var/datum/achievement_report/cheevo_report in GLOB.achievements_unlocked)
+			parts += "<BR>[cheevo_report.winner_key] was <b>[cheevo_report.winner]</b>, who earned the [span_greentext("'[cheevo_report.cheevo]'")] achievement at [cheevo_report.award_location]!<BR>"
+		parts += "</ul>"
+		return "<div class='panel greenborder'><ul>[parts.Join()]</ul></div>"
 
-	for(var/admin_ckey in GLOB.admin_datums + GLOB.deadmins)
-		var/datum/admins/admin = GLOB.admin_datums[admin_ckey]
-
-		if(!admin)
-			admin = GLOB.deadmins[admin_ckey]
-			if (!admin)
-				continue
-
-		file_data["admins"][admin_ckey] = admin.rank.name
-
-		if (admin.owner)
-			file_data["connections"][admin_ckey] = list(
-				"cid" = admin.owner.computer_id,
-				"ip" = admin.owner.address,
-			)
-
-	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
-
-/datum/controller/subsystem/ticker/proc/update_everything_flag_in_db()
-	for(var/datum/admin_rank/R in GLOB.admin_ranks)
-		var/list/flags = list()
-		if(R.include_rights == R_EVERYTHING)
-			flags += "flags"
-		if(R.exclude_rights == R_EVERYTHING)
-			flags += "exclude_flags"
-		if(R.can_edit_rights == R_EVERYTHING)
-			flags += "can_edit_flags"
-		if(!flags.len)
-			continue
-		var/flags_to_check = flags.Join(" != [R_EVERYTHING] AND ") + " != [R_EVERYTHING]"
-		var/datum/db_query/query_check_everything_ranks = SSdbcore.NewQuery(
-			"SELECT flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")] WHERE rank = :rank AND ([flags_to_check])",
-			list("rank" = R.name)
-		)
-		if(!query_check_everything_ranks.Execute())
-			qdel(query_check_everything_ranks)
-			return
-		if(query_check_everything_ranks.NextRow()) //no row is returned if the rank already has the correct flag value
-			var/flags_to_update = flags.Join(" = [R_EVERYTHING], ") + " = [R_EVERYTHING]"
-			var/datum/db_query/query_update_everything_ranks = SSdbcore.NewQuery(
-				"UPDATE [format_table_name("admin_ranks")] SET [flags_to_update] WHERE rank = :rank",
-				list("rank" = R.name)
-			)
-			if(!query_update_everything_ranks.Execute())
-				qdel(query_update_everything_ranks)
-				return
-			qdel(query_update_everything_ranks)
-		qdel(query_check_everything_ranks)
+///A datum containing the info necessary for an achievement readout, reported and added to the global list in /datum/award/achievement/on_unlock(mob/user)
+/datum/achievement_report
+	///The winner of this achievement.
+	var/winner
+	///The achievement that was won.
+	var/cheevo
+	///The ckey of our winner
+	var/winner_key
+	///The name of the area we earned this cheevo in
+	var/award_location

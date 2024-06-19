@@ -9,7 +9,7 @@
 	var/list/octaves = list(3, 3, 3, 3, 3, 3, 3)
 	var/list/accents = list("n", "n", "n", "n", "n", "n", "n")
 	for(var/line in lines)
-		var/list/chords = splittext(lowertext(line), ",")
+		var/list/chords = splittext(LOWER_TEXT(line), ",")
 		for(var/chord in chords)
 			var/list/compiled_chord = list()
 			var/tempodiv = 1
@@ -42,9 +42,8 @@
  * Plays a specific numerical key from our instrument to anyone who can hear us.
  * Does a hearing check if enough time has passed.
  */
-/datum/song/proc/playkey_synth(key, mob/user)
-	if(can_noteshift)
-		key = clamp(key + note_shift, key_min, key_max)
+/datum/song/proc/playkey_synth(key, atom/player)
+	key = clamp(key + note_shift, key_min, key_max)
 	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
 		do_hearcheck()
 	var/datum/instrument_key/K = using_instrument.samples[num2text(key)] //See how fucking easy it is to make a number text? You don't need a complicated 9 line proc!
@@ -62,10 +61,10 @@
 	last_channel_played = channel_text
 	for(var/i in hearing_mobs)
 		var/mob/M = i
-		if(user && HAS_TRAIT(user, TRAIT_MUSICIAN) && isliving(M))
+		if(player && HAS_TRAIT(player, TRAIT_MUSICIAN) && isliving(M))
 			var/mob/living/L = M
-			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
-		if(!(M?.client?.prefs?.toggles & SOUND_INSTRUMENTS))
+			L.apply_status_effect(/datum/status_effect/good_music)
+		if(!(M?.client?.prefs.read_preference(/datum/preference/toggle/sound_instruments)))
 			continue
 		M.playsound_local(get_turf(parent), null, volume, FALSE, K.frequency, null, channel, null, copy)
 		// Could do environment and echo later but not for now

@@ -1,24 +1,16 @@
-/*
-//////////////////////////////////////
-
-Voice Change
-
-	Noticeable.
-	Lowers resistance.
-	Decreases stage speed.
-	Increased transmittable.
-	Fatal Level.
-
-Bonus
-	Changes the voice of the affected mob. Causing confusion in communication.
-
-//////////////////////////////////////
+/*Voice Change
+ * Slight stealth reduction
+ * Reduces resistance
+ * Reduces stage speed
+ * Increases transmissibility
+ * Fatal level
+ * Bonus: Changes the voice of the affected mob. Causing confusion in communication.
 */
 
 /datum/symptom/voice_change
-
 	name = "Voice Change"
 	desc = "The virus alters the pitch and tone of the host's vocal cords, changing how their voice sounds."
+	illness = "Mime Crisis"
 	stealth = -1
 	resistance = -2
 	stage_speed = -2
@@ -28,13 +20,14 @@ Bonus
 	base_message_chance = 100
 	symptom_delay_min = 60
 	symptom_delay_max = 120
-	var/scramble_language = FALSE
-	var/datum/language/current_language
+	required_organ = ORGAN_SLOT_TONGUE
 	threshold_descs = list(
 		"Transmission 14" = "The host's language center of the brain is damaged, leading to complete inability to speak or understand any language.",
 		"Stage Speed 7" = "Changes voice more often.",
 		"Stealth 3" = "The symptom remains hidden until active."
 	)
+	var/scramble_language = FALSE
+	var/datum/language/current_language
 
 /datum/symptom/voice_change/Start(datum/disease/advance/A)
 	. = ..()
@@ -61,11 +54,11 @@ Bonus
 		else
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				H.SetSpecialVoice(H.dna.species.random_name(H.gender))
+				H.SetSpecialVoice(H.generate_random_mob_name())
 				if(scramble_language && !current_language) // Last part prevents rerolling language with small amounts of cure.
 					current_language = pick(subtypesof(/datum/language) - /datum/language/common)
 					H.add_blocked_language(subtypesof(/datum/language) - current_language, LANGUAGE_VOICECHANGE)
-					H.grant_language(current_language, TRUE, TRUE, LANGUAGE_VOICECHANGE)
+					H.grant_language(current_language, source = LANGUAGE_VOICECHANGE)
 
 /datum/symptom/voice_change/End(datum/disease/advance/A)
 	..()

@@ -1,11 +1,9 @@
 /obj/machinery/quantumpad
 	name = "quantum pad"
 	desc = "A bluespace quantum-linked telepad used for teleporting objects to other quantum pads."
-	icon = 'icons/obj/telescience.dmi'
+	icon = 'icons/obj/machines/telepad.dmi'
 	icon_state = "qpad-idle"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 200
-	active_power_usage = 5000
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 10
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/quantumpad
 	var/teleport_cooldown = 400 //30 seconds base due to base parts
@@ -20,7 +18,7 @@
 	var/map_pad_id = "" as text //what's my name
 	var/map_pad_link_id = "" as text //who's my friend
 
-/obj/machinery/quantumpad/Initialize()
+/obj/machinery/quantumpad/Initialize(mapload)
 	. = ..()
 	if(map_pad_id)
 		mapped_quantum_pads[map_pad_id] = src
@@ -42,20 +40,21 @@
 		. += span_notice("The <i>linking</i> device is now able to be <i>scanned<i> with a multitool.")
 
 /obj/machinery/quantumpad/RefreshParts()
+	. = ..()
 	var/E = 0
-	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		E += C.rating
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		E += capacitor.tier
 	power_efficiency = E
 	E = 0
-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		E += M.rating
+	for(var/datum/stock_part/servo/servo in component_parts)
+		E += servo.tier
 	teleport_speed = initial(teleport_speed)
 	teleport_speed -= (E*10)
 	teleport_cooldown = initial(teleport_cooldown)
 	teleport_cooldown -= (E * 100)
 
 /obj/machinery/quantumpad/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "pad-idle-o", "qpad-idle", I))
+	if(default_deconstruction_screwdriver(user, "qpad-idle-open", "qpad-idle", I))
 		return
 
 	if(panel_open)
@@ -63,7 +62,8 @@
 			if(!multitool_check_buffer(user, I))
 				return
 			var/obj/item/multitool/M = I
-			M.buffer = src
+			M.set_buffer(src)
+			balloon_alert(user, "saved to multitool buffer")
 			to_chat(user, span_notice("You save the data in [I]'s buffer. It can now be saved to pads with closed panels."))
 			return TRUE
 	else if(I.tool_behaviour == TOOL_MULTITOOL)
@@ -72,14 +72,14 @@
 		var/obj/item/multitool/M = I
 		if(istype(M.buffer, /obj/machinery/quantumpad))
 			if(M.buffer == src)
-				to_chat(user, span_warning("You cannot link a pad to itself!"))
+				balloon_alert(user, "cannot link to self!")
 				return TRUE
 			else
 				linked_pad = M.buffer
-				to_chat(user, span_notice("You link [src] to the one in [I]'s buffer."))
+				balloon_alert(user, "data uploaded from buffer")
 				return TRUE
 		else
-			to_chat(user, span_warning("There is no quantum pad data saved in [I]'s buffer!"))
+			balloon_alert(user, "no quantum pad data found!")
 			return TRUE
 
 	else if(istype(I, /obj/item/quantum_keycard))
@@ -89,9 +89,9 @@
 			interact(user, K.qpad)
 		else
 			to_chat(user, span_notice("You insert [K] into [src]'s card slot, initiating the link procedure."))
-			if(do_after(user, 40, target = src))
+			if(do_after(user, 4 SECONDS, target = src))
 				to_chat(user, span_notice("You complete the link between [K] and [src]."))
-				K.qpad = src
+				K.set_pad(src)
 
 	if(default_deconstruction_crowbar(I))
 		return
@@ -137,54 +137,51 @@
 		ghost.forceMove(get_turf(linked_pad))
 
 /obj/machinery/quantumpad/proc/doteleport(mob/user = null, obj/machinery/quantumpad/target_pad = linked_pad)
-	if(target_pad)
-		playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
-		teleporting = TRUE
+	if(!target_pad)
+		return
+	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
+	teleporting = TRUE
 
-		spawn(teleport_speed)
-			if(!src || QDELETED(src))
-				teleporting = FALSE
-				return
-			if(machine_stat & NOPOWER)
-				if(user)
-					to_chat(user, span_warning("[src] is unpowered!"))
-				teleporting = FALSE
-				return
-			if(!target_pad || QDELETED(target_pad) || target_pad.machine_stat & NOPOWER)
-				if(user)
-					to_chat(user, span_warning("Linked pad is not responding to ping. Teleport aborted."))
-				teleporting = FALSE
-				return
+	addtimer(CALLBACK(src, PROC_REF(teleport_contents), user, target_pad), teleport_speed)
 
-			teleporting = FALSE
-			last_teleport = world.time
+/obj/machinery/quantumpad/proc/teleport_contents(mob/user, obj/machinery/quantumpad/target_pad)
+	teleporting = FALSE
+	if(machine_stat & NOPOWER)
+		if(user)
+			to_chat(user, span_warning("[src] is unpowered!"))
+		return
+	if(QDELETED(target_pad) || target_pad.machine_stat & NOPOWER)
+		if(user)
+			to_chat(user, span_warning("Linked pad is not responding to ping. Teleport aborted."))
+		return
 
-			// use a lot of power
-			use_power(10000 / power_efficiency)
-			sparks()
-			target_pad.sparks()
+	last_teleport = world.time
 
-			flick("qpad-beam", src)
-			playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, TRUE)
-			flick("qpad-beam", target_pad)
-			playsound(get_turf(target_pad), 'sound/weapons/emitter2.ogg', 25, TRUE)
-			for(var/atom/movable/ROI in get_turf(src))
-				if(QDELETED(ROI))
-					continue //sleeps in CHECK_TICK
+	// use a lot of power
+	use_energy(active_power_usage / power_efficiency)
+	sparks()
+	target_pad.sparks()
 
-				// if is anchored, don't let through
-				if(ROI.anchored)
-					if(isliving(ROI))
-						var/mob/living/L = ROI
-						//only TP living mobs buckled to non anchored items
-						if(!L.buckled || L.buckled.anchored)
-							continue
-					//Don't TP ghosts
-					else if(!isobserver(ROI))
-						continue
+	flick("qpad-beam", src)
+	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, TRUE)
+	flick("qpad-beam", target_pad)
+	playsound(get_turf(target_pad), 'sound/weapons/emitter2.ogg', 25, TRUE)
+	for(var/atom/movable/ROI in get_turf(src))
+		if(QDELETED(ROI))
+			continue //sleeps in CHECK_TICK
 
-				do_teleport(ROI, get_turf(target_pad),null,TRUE,null,null,null,null,TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
-				CHECK_TICK
+		// if is anchored, don't let through
+		if(ROI.anchored)
+			continue
+
+		if(isliving(ROI))
+			var/mob/living/living_subject = ROI
+			//only TP living mobs buckled to non anchored items
+			if(living_subject.buckled && living_subject.buckled.anchored)
+				continue
+
+		do_teleport(ROI, get_turf(target_pad), no_effects = TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
+		CHECK_TICK
 
 /obj/machinery/quantumpad/proc/initMappedLink()
 	. = FALSE
@@ -195,7 +192,7 @@
 
 /obj/item/paper/guides/quantumpad
 	name = "Quantum Pad For Dummies"
-	info = "<center><b>Dummies Guide To Quantum Pads</b></center><br><br><center>Do you hate the concept of having to use your legs, let alone <i>walk</i> to places? Well, with the Quantum Pad (tm), never again will the fear of cardio keep you from going places!<br><br><c><b>How to set up your Quantum Pad(tm)</b></center><br><br>1.Unscrew the Quantum Pad(tm) you wish to link.<br>2. Use your multi-tool to cache the buffer of the Quantum Pad(tm) you wish to link.<br>3. Apply the multi-tool to the secondary Quantum Pad(tm) you wish to link to the first Quantum Pad(tm)<br><br><center>If you followed these instructions carefully, your Quantum Pad(tm) should now be properly linked together for near-instant movement across the station! Bear in mind that this is technically a one-way teleport, so you'll need to do the same process with the secondary pad to the first one if you wish to travel between both.</center>"
+	default_raw_text = "<center><b>Dummies Guide To Quantum Pads</b></center><br><br><center>Do you hate the concept of having to use your legs, let alone <i>walk</i> to places? Well, with the Quantum Pad (tm), never again will the fear of cardio keep you from going places!<br><br><c><b>How to set up your Quantum Pad(tm)</b></center><br><br>1.Unscrew the Quantum Pad(tm) you wish to link.<br>2. Use your multi-tool to cache the buffer of the Quantum Pad(tm) you wish to link.<br>3. Apply the multi-tool to the secondary Quantum Pad(tm) you wish to link to the first Quantum Pad(tm)<br><br><center>If you followed these instructions carefully, your Quantum Pad(tm) should now be properly linked together for near-instant movement across the station! Bear in mind that this is technically a one-way teleport, so you'll need to do the same process with the secondary pad to the first one if you wish to travel between both.</center>"
 
 /obj/item/circuit_component/quantumpad
 	display_name = "Quantum Pad"
@@ -207,23 +204,21 @@
 
 	var/obj/machinery/quantumpad/attached_pad
 
-/obj/item/circuit_component/quantumpad/Initialize()
-	. = ..()
+/obj/item/circuit_component/quantumpad/populate_ports()
 	target_pad = add_input_port("Target Pad", PORT_TYPE_ATOM)
 	failed = add_output_port("On Fail", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/quantumpad/register_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/quantumpad/register_usb_parent(atom/movable/shell)
 	. = ..()
-	if(istype(parent, /obj/machinery/quantumpad))
-		attached_pad = parent
+	if(istype(shell, /obj/machinery/quantumpad))
+		attached_pad = shell
 
-/obj/item/circuit_component/quantumpad/unregister_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/quantumpad/unregister_usb_parent(atom/movable/shell)
 	attached_pad = null
 	return ..()
 
 /obj/item/circuit_component/quantumpad/input_received(datum/port/input/port)
-	. = ..()
-	if(. || !attached_pad)
+	if(!attached_pad)
 		return
 
 	var/obj/machinery/quantumpad/targeted_pad = target_pad.value

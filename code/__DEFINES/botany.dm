@@ -11,6 +11,9 @@
 /// MINS:
 #define MIN_PLANT_ENDURANCE 10
 
+/// Default reagent volume for grown plants
+#define PLANT_REAGENT_VOLUME 100
+
 /// -- Some botany trait value defines. --
 /// Weed Hardy can only reduce plants to 3 yield.
 #define WEED_HARDY_YIELD_MIN 3
@@ -20,8 +23,6 @@
 #define FUNGAL_METAB_YIELD_MIN 1
 
 /// -- Hydroponics tray defines. --
-/// Macro for updating the tray name.
-#define TRAY_NAME_UPDATE name = myseed ? "[initial(name)] ([myseed.plantname])" : initial(name)
 ///  Base amount of nutrients a tray can old.
 #define STATIC_NUTRIENT_CAPACITY 10
 /// Maximum amount of toxins a tray can reach.
@@ -32,6 +33,8 @@
 #define MAX_TRAY_WEEDS 10
 /// Minumum plant health required for gene shears.
 #define GENE_SHEAR_MIN_HEALTH 15
+/// Minumum plant endurance required to lock a mutation with a somatoray.
+#define FLORA_GUN_MIN_ENDURANCE 20
 
 /// -- Flags for genes --
 /// Plant genes that can be removed via gene shears.
@@ -68,3 +71,19 @@
 #define GLOWSHROOM_SPREAD_BASE_DIMINISH_FACTOR 10
 #define GLOWSHROOM_SPREAD_DIMINISH_FACTOR_PER_GLOWSHROOM 0.2
 #define GLOWSHROOM_BASE_INTEGRITY 60
+
+// obj/machinery/hydroponics/var/plant_status defines
+
+/// How long to wait between plant age ticks, by default. See [/obj/machinery/hydroponics/var/cycledelay]
+#define HYDROTRAY_CYCLE_DELAY 20 SECONDS
+
+#define HYDROTRAY_NO_PLANT "missing"
+#define HYDROTRAY_PLANT_DEAD "dead"
+#define HYDROTRAY_PLANT_GROWING "growing"
+#define HYDROTRAY_PLANT_HARVESTABLE "harvestable"
+
+/// A list of possible egg laying descriptions
+#define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
+
+/// Used as a baseline plant rarity for more uncommon plants, usually requiring mutation
+#define PLANT_MODERATELY_RARE 20

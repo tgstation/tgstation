@@ -1,10 +1,3 @@
-#define FORWARD 1
-#define BACKWARD -1
-
-#define ITEM_DELETE "delete"
-#define ITEM_MOVE_INSIDE "move_inside"
-
-
 /datum/component/construction
 	var/list/steps
 	var/result
@@ -15,8 +8,8 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY,.proc/action)
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(action))
 	update_parent(index)
 
 /datum/component/construction/proc/examine(datum/source, mob/user, list/examine_list)
@@ -33,8 +26,9 @@
 
 /datum/component/construction/proc/action(datum/source, obj/item/I, mob/living/user)
 	SIGNAL_HANDLER
-
-	return INVOKE_ASYNC(src, .proc/check_step, I, user)
+	ASYNC //This proc will never actually sleep, it calls do_after with a time of 0.
+		. = check_step(I, user)
+	return .
 
 /datum/component/construction/proc/update_index(diff)
 	index += diff
@@ -91,8 +85,9 @@
 				. = user.transferItemToLoc(I, parent)
 
 			// Using stacks
-			else if(istype(I, /obj/item/stack))
-				. = I.use_tool(parent, user, 0, volume=50, amount=current_step["amount"])
+			else
+				if(isstack(I))
+					. = I.use_tool(parent, user, 0, volume=50, amount=current_step["amount"])
 
 
 	// Going backwards? Undo the last action. Drop/respawn the items used in last action, if any.
@@ -108,8 +103,9 @@
 				if(located_item)
 					located_item.forceMove(drop_location())
 
-			else if(ispath(target_step_key, /obj/item/stack))
-				new target_step_key(drop_location(), target_step["amount"])
+			else
+				if(ispath(target_step_key, /obj/item/stack))
+					new target_step_key(drop_location(), target_step["amount"])
 
 /datum/component/construction/proc/spawn_result()
 	// Some constructions result in new components being added.

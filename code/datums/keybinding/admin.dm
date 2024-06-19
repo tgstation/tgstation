@@ -7,17 +7,10 @@
 
 /datum/keybinding/admin/admin_say
 	hotkey_keys = list("F3")
-	name = "admin_say"
+	name = ADMIN_CHANNEL
 	full_name = "Admin say"
 	description = "Talk with other admins."
 	keybind_signal = COMSIG_KB_ADMIN_ASAY_DOWN
-
-/datum/keybinding/admin/admin_say/down(client/user)
-	. = ..()
-	if(.)
-		return
-	user.get_admin_say()
-	return TRUE
 
 /datum/keybinding/admin/admin_ghost
 	hotkey_keys = list("F5")
@@ -30,7 +23,7 @@
 	. = ..()
 	if(.)
 		return
-	user.admin_ghost()
+	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/admin_ghost)
 	return TRUE
 
 /datum/keybinding/admin/player_panel_new
@@ -58,7 +51,7 @@
 	. = ..()
 	if(.)
 		return
-	user.togglebuildmodeself()
+	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/build_mode_self)
 	return TRUE
 
 /datum/keybinding/admin/stealthmode
@@ -72,7 +65,7 @@
 	. = ..()
 	if(.)
 		return
-	user.stealth()
+	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/stealth)
 	return TRUE
 
 /datum/keybinding/admin/invisimin
@@ -86,7 +79,7 @@
 	. = ..()
 	if(.)
 		return
-	user.invisimin()
+	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/invisimin)
 	return TRUE
 
 /datum/keybinding/admin/deadsay
@@ -114,7 +107,7 @@
 	. = ..()
 	if(.)
 		return
-	user.deadmin()
+	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/deadmin)
 	return TRUE
 
 /datum/keybinding/admin/readmin
@@ -129,4 +122,18 @@
 	if(.)
 		return
 	user.readmin()
+	return TRUE
+
+/datum/keybinding/admin/view_tags
+	hotkey_keys = list("F9")
+	name = "view_tags"
+	full_name = "View Tags"
+	description = "Open the View-Tags menu"
+	keybind_signal = COMSIG_KB_ADMIN_VIEWTAGS_DOWN
+
+/datum/keybinding/admin/view_tags/down(client/user)
+	. = ..()
+	if(.)
+		return
+	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/display_tags)
 	return TRUE

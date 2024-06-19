@@ -1,8 +1,8 @@
 /obj/item/shrapnel // frag grenades
 	name = "shrapnel shard"
-	custom_materials = list(/datum/material/iron=50)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5)
 	weak_against_armour = TRUE
-	icon = 'icons/obj/shards.dmi'
+	icon = 'icons/obj/debris.dmi'
 	icon_state = "large"
 	w_class = WEIGHT_CLASS_TINY
 	item_flags = DROPDEL
@@ -15,7 +15,7 @@
 
 /obj/item/shrapnel/bullet // bullets
 	name = "bullet"
-	icon = 'icons/obj/guns/ammo.dmi'
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "s-casing"
 	embedding = null // embedding vars are taken from the projectile itself
 
@@ -30,10 +30,14 @@
 	ricochet_chance = 70
 	shrapnel_type = /obj/item/shrapnel
 	ricochet_incidence_leeway = 60
-	hit_stunned_targets = TRUE
+	hit_prone_targets = TRUE
+	ignore_range_hit_prone_targets = TRUE
 	sharpness = SHARP_EDGED
 	wound_bonus = 30
 	embedding = list(embed_chance=70, ignore_throwspeed_threshold=TRUE, fall_chance=1)
+
+/obj/projectile/bullet/shrapnel/short_range
+	range = 5
 
 /obj/projectile/bullet/shrapnel/mega
 	name = "flying shrapnel hunk"
@@ -43,6 +47,15 @@
 	ricochet_chance = 130
 	ricochet_incidence_leeway = 0
 	ricochet_decay_chance = 0.9
+
+/obj/projectile/bullet/shrapnel/ied
+	name = "flying glass shrapnel"
+	damage = 15
+	range = 6
+	ricochets_max = 1
+	ricochet_chance = 40
+	shrapnel_type = /obj/item/shard
+	ricochet_incidence_leeway = 60
 
 /obj/projectile/bullet/pellet/stingball
 	name = "stingball pellet"
@@ -59,15 +72,14 @@
 	shrapnel_type = /obj/item/shrapnel/stingball
 	embedding = list(embed_chance=55, fall_chance=2, jostle_chance=7, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.7, pain_mult=3, jostle_pain_mult=3, rip_time=15)
 
+/obj/projectile/bullet/pellet/stingball/on_ricochet(atom/A)
+	hit_prone_targets = TRUE // ducking will save you from the first wave, but not the rebounds
+	ignore_range_hit_prone_targets = TRUE
+
 /obj/projectile/bullet/pellet/stingball/mega
 	name = "megastingball pellet"
 	ricochets_max = 6
 	ricochet_chance = 110
-
-/obj/projectile/bullet/pellet/stingball/on_ricochet(atom/A)
-	hit_stunned_targets = TRUE // ducking will save you from the first wave, but not the rebounds
-
-
 
 /obj/projectile/bullet/pellet/capmine
 	name = "\improper AP shrapnel shard"
@@ -86,6 +98,6 @@
 
 /obj/item/shrapnel/capmine
 	name = "\improper AP shrapnel shard"
-	custom_materials = list(/datum/material/iron=50)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5)
 	weak_against_armour = TRUE
 

@@ -6,18 +6,20 @@
 	difficulty = 18
 	text_gain_indication = "<span class='notice'>You feel smarter!</span>"
 	limb_req = BODY_ZONE_HEAD
-	instability = 30
+	instability = POSITIVE_INSTABILITY_MAJOR
+	///Typecache of atoms that TK shouldn't interact with
+	var/static/list/blacklisted_atoms = typecacheof(list(/atom/movable/screen))
 
 /datum/mutation/human/telekinesis/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
 	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER))
+		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER))
 
 /datum/mutation/human/telekinesis/on_acquiring(mob/living/carbon/human/H)
 	. = ..()
 	if(.)
 		return
-	RegisterSignal(H, COMSIG_MOB_ATTACK_RANGED, .proc/on_ranged_attack)
+	RegisterSignal(H, COMSIG_MOB_ATTACK_RANGED, PROC_REF(on_ranged_attack))
 
 /datum/mutation/human/telekinesis/on_losing(mob/living/carbon/human/H)
 	. = ..()
@@ -31,4 +33,8 @@
 ///Triggers on COMSIG_MOB_ATTACK_RANGED. Usually handles stuff like picking up items at range.
 /datum/mutation/human/telekinesis/proc/on_ranged_attack(mob/source, atom/target)
 	SIGNAL_HANDLER
+	if(is_type_in_typecache(target, blacklisted_atoms))
+		return
+	if(!tkMaxRangeCheck(source, target) || source.z != target.z)
+		return
 	return target.attack_tk(source)

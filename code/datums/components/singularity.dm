@@ -1,8 +1,13 @@
 /// The range at which a singularity is considered "contained" to admins
 #define FIELD_CONTAINMENT_DISTANCE 30
 
-/// What's the chance that, when a singularity moves, it'll go to its target?
+/// What's the chance that, when a normal singularity moves, it'll go to its target?
 #define CHANCE_TO_MOVE_TO_TARGET 60
+
+/// What's the /bloodthirsty subtype chance it'll go to its target?
+#define CHANCE_TO_MOVE_TO_TARGET_BLOODTHIRSTY 80
+/// what's the /bloodthirsty subtype chance it'll change targets to a closer one?
+#define CHANCE_TO_CHANGE_TARGET_BLOODTHIRSTY 20
 
 /// Things that maybe move around and does stuff to things around them
 /// Used for the singularity (duh) and Nar'Sie
@@ -40,10 +45,19 @@
 	/// If specified, the singularity will slowly move to this target
 	var/atom/target
 
+	/// List of turfs we have yet to consume, but need to
+	var/list/turf/turfs_to_consume = list()
+
+	/// The time that has elapsed since our last move/eat call
+	var/time_since_last_eat
+
+	/// What's the chance that, when a singularity moves, it'll go to its target?
+	var/chance_to_move_to_target = CHANCE_TO_MOVE_TO_TARGET
+
 /datum/component/singularity/Initialize(
 	bsa_targetable = TRUE,
 	consume_range = 0,
-	consume_callback = CALLBACK(src, .proc/default_singularity_act),
+	consume_callback = CALLBACK(src, PROC_REF(default_singularity_act)),
 	disregard_failed_movements = FALSE,
 	grav_pull = 4,
 	notify_admins = TRUE,
@@ -63,46 +77,46 @@
 	src.singularity_size = singularity_size
 
 /datum/component/singularity/RegisterWithParent()
-	START_PROCESSING(SSdcs, src)
+	START_PROCESSING(SSsinguloprocess, src)
 
 	// The singularity stops drifting for no man!
 	parent.AddElement(/datum/element/forced_gravity, FALSE)
 
 	parent.AddElement(/datum/element/bsa_blocker)
-	RegisterSignal(parent, COMSIG_ATOM_BSA_BEAM, .proc/bluespace_reaction)
+	RegisterSignal(parent, COMSIG_ATOM_BSA_BEAM, PROC_REF(bluespace_reaction))
 
-	RegisterSignal(parent, COMSIG_ATOM_BLOB_ACT, .proc/block_blob)
+	RegisterSignal(parent, COMSIG_ATOM_BLOB_ACT, PROC_REF(block_blob))
 
-	RegisterSignal(parent, list(
+	RegisterSignals(parent, list(
 		COMSIG_ATOM_ATTACK_ANIMAL,
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACK_PAW,
-	), .proc/consume_attack)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/consume_attackby)
+	), PROC_REF(consume_attack))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(consume_attackby))
 
-	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, .proc/moved)
-	RegisterSignal(parent, COMSIG_ATOM_BUMPED, .proc/consume)
+	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(moved))
+	RegisterSignal(parent, COMSIG_ATOM_BUMPED, PROC_REF(consume))
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
-	AddElement(/datum/element/connect_loc_behalf, parent, loc_connections)
+	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
-	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, .proc/consume_bullets)
+	RegisterSignal(parent, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(consume_bullets))
 
 	if (notify_admins)
 		admin_investigate_setup()
 
 	GLOB.singularities |= src
 
-/datum/component/singularity/Destroy(force, silent)
+/datum/component/singularity/Destroy(force)
 	GLOB.singularities -= src
-	QDEL_NULL(consume_callback)
+	consume_callback = null
 	target = null
 
 	return ..()
 
 /datum/component/singularity/UnregisterFromParent()
-	STOP_PROCESSING(SSdcs, src)
+	STOP_PROCESSING(SSsinguloprocess, src)
 
 	parent.RemoveElement(/datum/element/bsa_blocker)
 	parent.RemoveElement(/datum/element/forced_gravity)
@@ -113,16 +127,24 @@
 		COMSIG_ATOM_ATTACK_PAW,
 		COMSIG_ATOM_BLOB_ACT,
 		COMSIG_ATOM_BSA_BEAM,
-		COMSIG_ATOM_BULLET_ACT,
+		COMSIG_ATOM_PRE_BULLET_ACT,
 		COMSIG_ATOM_BUMPED,
 		COMSIG_MOVABLE_PRE_MOVE,
-		COMSIG_PARENT_ATTACKBY,
+		COMSIG_ATOM_ATTACKBY,
 	))
 
-/datum/component/singularity/process(delta_time)
-	if (roaming)
-		move()
-	eat()
+/datum/component/singularity/process(seconds_per_tick)
+	// We want to move and eat once a second, but want to process our turf consume queue the rest of the time
+	time_since_last_eat += seconds_per_tick
+	digest()
+	if(TICK_CHECK)
+		return
+	if(time_since_last_eat > 1) // Delta time is in seconds for "reasons"
+		time_since_last_eat = 0
+		if (roaming)
+			move()
+		eat()
+		digest() // Try and process as much as you can with the time we have left
 
 /datum/component/singularity/proc/block_blob()
 	SIGNAL_HANDLER
@@ -158,44 +180,62 @@
 	SIGNAL_HANDLER
 
 	qdel(projectile)
+	return COMPONENT_BULLET_BLOCKED
 
 /// Calls singularity_act on the thing passed, usually destroying the object
 /datum/component/singularity/proc/default_singularity_act(atom/thing)
 	thing.singularity_act(singularity_size, parent)
 
 /datum/component/singularity/proc/eat()
+	turfs_to_consume |= spiral_range_turfs(grav_pull, parent)
+
+/datum/component/singularity/proc/digest()
 	var/atom/atom_parent = parent
 
-	for (var/_tile in spiral_range_turfs(grav_pull, parent))
-		var/turf/tile = _tile
-		if (!tile || !isturf(atom_parent.loc))
+	if(!isturf(atom_parent.loc))
+		return
+
+	// We use a static index for this to prevent infinite runtimes.
+	// Maybe a might overengineered, but let's be safe yes?
+	var/static/cached_index = 0
+	if(cached_index)
+		var/old_index = cached_index
+		cached_index = 0 // Prevents infinite Cut() runtimes. Sorry MSO
+		turfs_to_consume.Cut(1, old_index + 1)
+
+	for (cached_index in 1 to length(turfs_to_consume))
+		var/turf/tile = turfs_to_consume[cached_index]
+		var/dist_to_tile = get_dist(tile, parent)
+
+		if(grav_pull < dist_to_tile) //If we've exited the singulo's range already, just skip us
 			continue
-		if (get_dist(tile, parent) > consume_range)
-			tile.singularity_pull(src, singularity_size)
-		else
+
+		var/in_consume_range = (dist_to_tile <= consume_range)
+		if (in_consume_range)
 			consume(src, tile)
+		else
+			tile.singularity_pull(parent, singularity_size)
 
-		for (var/_thing in tile)
-			var/atom/thing = _thing
-
-			// Because we can possibly yield in the middle of iteration, let's make sure what were looking at is still there
-			// Without this, you get "Qdeleted thing being thrown around"
-			if (QDELETED(thing))
+		for (var/atom/movable/thing as anything in tile)
+			if(thing == parent)
 				continue
+			if (in_consume_range)
+				consume(src, thing)
+			else
+				thing.singularity_pull(parent, singularity_size)
 
-			if (isturf(atom_parent.loc) && thing != parent)
-				var/atom/movable/movable_thing = thing
-				if (get_dist(movable_thing, parent) > consume_range)
-					movable_thing.singularity_pull(parent, singularity_size)
-				else
-					consume(src, movable_thing)
+		if(TICK_CHECK) //Yes this means the singulo can eat all of its host subsystem's cpu, but like it's the singulo, and it was gonna do that anyway
+			turfs_to_consume.Cut(1, cached_index + 1)
+			cached_index = 0
+			return
 
-			CHECK_TICK
+	turfs_to_consume.Cut()
+	cached_index = 0
 
 /datum/component/singularity/proc/move()
 	var/drifting_dir = pick(GLOB.alldirs - last_failed_movement)
 
-	if (!QDELETED(target) && prob(CHANCE_TO_MOVE_TO_TARGET))
+	if (!QDELETED(target) && prob(chance_to_move_to_target))
 		drifting_dir = get_dir(parent, target)
 
 	step(parent, drifting_dir)
@@ -246,7 +286,7 @@
 			if (STAGE_ONE)
 				steps = 1
 			if (STAGE_TWO)
-				steps = 3//Yes this is right
+				steps = 2
 			if (STAGE_THREE)
 				steps = 3
 			if (STAGE_FOUR)
@@ -263,10 +303,10 @@
 	var/dir2
 	var/dir3
 	switch (direction)
-		if (NORTH || SOUTH)
+		if (NORTH, SOUTH)
 			dir2 = EAST
 			dir3 = WEST
-		if (EAST || WEST)
+		if (EAST, WEST)
 			dir2 = NORTH
 			dir3 = SOUTH
 	var/turf/farthest_perpendicular_turf = farthest_turf
@@ -292,7 +332,7 @@
 	var/turf/spawned_turf = get_turf(parent)
 	message_admins("A singulo has been created at [ADMIN_VERBOSEJMP(spawned_turf)].")
 	var/atom/atom_parent = parent
-	atom_parent.investigate_log("was made a singularity at [AREACOORD(spawned_turf)].", INVESTIGATE_SINGULO)
+	atom_parent.investigate_log("was made into a singularity at [AREACOORD(spawned_turf)].", INVESTIGATE_ENGINE)
 
 /// Fired when the singularity is fired at with the BSA and deletes it
 /datum/component/singularity/proc/bluespace_reaction()
@@ -301,8 +341,47 @@
 		return
 
 	var/atom/atom_parent = parent
-	atom_parent.investigate_log("has been shot by bluespace artillery and destroyed.", INVESTIGATE_SINGULO)
+	atom_parent.investigate_log("has been shot by bluespace artillery and destroyed.", INVESTIGATE_ENGINE)
 	qdel(parent)
 
+/datum/component/singularity/bloodthirsty
+	chance_to_move_to_target = CHANCE_TO_MOVE_TO_TARGET_BLOODTHIRSTY
+
+/datum/component/singularity/bloodthirsty/move()
+	var/atom/atom_parent = parent
+	//handle current target
+	if(target && !QDELETED(target))
+		if(istype(target, /obj/machinery/power/singularity_beacon))
+			return ..() //don't switch targets from a singulo beacon
+		if(target.z != atom_parent.z)
+			target = null
+		var/mob/living/potentially_closer = find_new_target()
+		if(potentially_closer != target && prob(20))
+			target = potentially_closer
+	//if we lost that target get a new one
+	if(!target || QDELETED(target))
+		var/mob/living/new_target = find_new_target()
+		new_target?.ominous_nosebleed()
+		target = new_target
+	return ..()
+
+///Searches the living list for the closest target, and begins chasing them down.
+/datum/component/singularity/bloodthirsty/proc/find_new_target()
+	var/atom/atom_parent = parent
+	var/closest_distance = INFINITY
+	var/mob/living/closest_target
+	for(var/mob/living/target as anything in GLOB.mob_living_list)
+		if(target.z != atom_parent.z)
+			continue
+		if(target.status_effects & GODMODE)
+			continue
+		var/distance_from_target = get_dist(target, atom_parent)
+		if(distance_from_target < closest_distance)
+			closest_distance = distance_from_target
+			closest_target = target
+	return closest_target
+
 #undef CHANCE_TO_MOVE_TO_TARGET
+#undef CHANCE_TO_MOVE_TO_TARGET_BLOODTHIRSTY
+#undef CHANCE_TO_CHANGE_TARGET_BLOODTHIRSTY
 #undef FIELD_CONTAINMENT_DISTANCE

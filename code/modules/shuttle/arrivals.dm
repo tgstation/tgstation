@@ -1,10 +1,7 @@
 /obj/docking_port/mobile/arrivals
 	name = "arrivals shuttle"
-	id = "arrivals"
+	shuttle_id = "arrival"
 
-	dwidth = 3
-	width = 7
-	height = 15
 	dir = WEST
 	port_direction = SOUTH
 
@@ -30,27 +27,29 @@
 /obj/docking_port/mobile/arrivals/register()
 	..()
 	if(SSshuttle.arrivals)
-		WARNING("More than one arrivals docking_port placed on map! Ignoring duplicates.")
+		log_mapping("More than one arrivals docking_port placed on map! Ignoring duplicates.")
 	SSshuttle.arrivals = src
 
 /obj/docking_port/mobile/arrivals/LateInitialize()
 	areas = list()
 
 	var/list/new_latejoin = list()
-	for(var/area/shuttle/arrival/A in GLOB.sortedAreas)
-		for(var/obj/structure/chair/C in A)
-			new_latejoin += C
-		if(!console)
-			console = locate(/obj/machinery/requests_console) in A
-		areas += A
+	for(var/area/shuttle/arrival/arrival_area in GLOB.areas)
+		for (var/list/zlevel_turfs as anything in arrival_area.get_zlevel_turf_lists())
+			for(var/turf/arrival_turf as anything in zlevel_turfs)
+				for(var/obj/structure/chair/shuttle_chair in arrival_turf)
+					new_latejoin += shuttle_chair
+				if(isnull(console))
+					console = locate() in arrival_turf
+		areas += arrival_area
 
 	if(SSjob.latejoin_trackers.len)
-		WARNING("Map contains predefined latejoin spawn points and an arrivals shuttle. Using the arrivals shuttle.")
+		log_mapping("Map contains predefined latejoin spawn points and an arrivals shuttle. Using the arrivals shuttle.")
 
 	if(!new_latejoin.len)
-		WARNING("Arrivals shuttle contains no chairs for spawn points. Reverting to latejoin landmarks.")
+		log_mapping("Arrivals shuttle contains no chairs for spawn points. Reverting to latejoin landmarks.")
 		if(!SSjob.latejoin_trackers.len)
-			WARNING("No latejoin landmarks exist. Players will spawn unbuckled on the shuttle.")
+			log_mapping("No latejoin landmarks exist. Players will spawn unbuckled on the shuttle.")
 		return
 
 	SSjob.latejoin_trackers = new_latejoin
@@ -113,18 +112,13 @@
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/PersonCheck()
-	for(var/V in GLOB.player_list)
-		var/mob/M = V
-		if((get_area(M) in areas) && M.stat != DEAD)
-			if(!iscameramob(M))
-				return TRUE
-			var/mob/camera/C = M
-			if(C.move_on_shuttle)
-				return TRUE
+	for(var/mob/player as anything in GLOB.player_list)
+		if((get_area(player) in areas) && (player.stat != DEAD) && !HAS_TRAIT(player, TRAIT_BLOCK_SHUTTLE_MOVEMENT))
+			return TRUE
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/NukeDiskCheck()
-	for (var/obj/item/disk/nuclear/N in GLOB.poi_list)
+	for (var/obj/item/disk/nuclear/N in SSpoints_of_interest.real_nuclear_disks)
 		if (get_area(N) in areas)
 			return TRUE
 	return FALSE
@@ -181,7 +175,7 @@
 			console.say(pickingup ? "Departing immediately for new employee pickup." : "Shuttle departing.")
 		var/obj/docking_port/stationary/target = target_dock
 		if(QDELETED(target))
-			target = SSshuttle.getDock("arrivals_stationary")
+			target = SSshuttle.getDock("arrival_stationary")
 		request(target) //we will intentionally never return SHUTTLE_ALREADY_DOCKED
 
 /obj/docking_port/mobile/arrivals/proc/RequireUndocked(mob/user)
@@ -203,9 +197,9 @@
  */
 /obj/docking_port/mobile/arrivals/proc/QueueAnnounce(mob, rank)
 	if(mode != SHUTTLE_CALL)
-		AnnounceArrival(mob, rank)
+		announce_arrival(mob, rank)
 	else
-		LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
+		LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(announce_arrival), mob, rank))
 
 /obj/docking_port/mobile/arrivals/vv_edit_var(var_name, var_value)
 	switch(var_name)

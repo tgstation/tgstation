@@ -1,0 +1,27 @@
+/obj/structure/fluff/broken_flooring{icon_state = "singular";dir = 1} : /obj/structure/broken_flooring/singular/directional/north{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "singular";dir = @UNSET} : /obj/structure/broken_flooring/singular/directional/south{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "singular";dir = 4} : /obj/structure/broken_flooring/singular/directional/east{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "singular";dir = 8} : /obj/structure/broken_flooring/singular/directional/west{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "pile";dir = 1} : /obj/structure/broken_flooring/pile/directional/north{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "pile";dir = @UNSET} : /obj/structure/broken_flooring/pile/directional/south{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "pile";dir = 4} : /obj/structure/broken_flooring/pile/directional/east{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "pile";dir = 8} : /obj/structure/broken_flooring/pile/directional/west{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "side";dir = 1} : /obj/structure/broken_flooring/side/directional/north{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "side";dir = @UNSET} : /obj/structure/broken_flooring/side/directional/south{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "side";dir = 4} : /obj/structure/broken_flooring/side/directional/east{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "side";dir = 8} : /obj/structure/broken_flooring/side/directional/west{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "corner";dir = 1} : /obj/structure/broken_flooring/corner/directional/north{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "corner";dir = @UNSET} : /obj/structure/broken_flooring/corner/directional/south{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "corner";dir = 4} : /obj/structure/broken_flooring/corner/directional/east{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "corner";dir = 8} : /obj/structure/broken_flooring/corner/directional/west{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = @UNSET;dir = 1} : /obj/structure/broken_flooring/corner/directional/north{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = @UNSET;dir = @UNSET} : /obj/structure/broken_flooring/corner/directional/south{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = @UNSET;dir = 4} : /obj/structure/broken_flooring/corner/directional/east{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = @UNSET;dir = 8} : /obj/structure/broken_flooring/corner/directional/west{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "plating";dir = 1} : /obj/structure/broken_flooring/plating/directional/north{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "plating";dir = @UNSET} : /obj/structure/broken_flooring/plating/directional/south{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "plating";dir = 4} : /obj/structure/broken_flooring/plating/directional/east{@OLD;icon_state=@SKIP;dir=@SKIP}
+/obj/structure/fluff/broken_flooring{icon_state = "plating";dir = 8} : /obj/structure/broken_flooring/plating/directional/west{@OLD;icon_state=@SKIP;dir=@SKIP}
+
+# Dust had dirt icon before
+/obj/effect/decal/cleanable/dirt/dust : /obj/effect/decal/cleanable/dirt{@OLD}

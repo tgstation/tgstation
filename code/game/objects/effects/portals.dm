@@ -1,12 +1,13 @@
-
-/proc/create_portal_pair(turf/source, turf/destination, _lifespan = 300, accuracy = 0, newtype = /obj/effect/portal, atmos_link_override)
+/proc/create_portal_pair(turf/source, turf/destination, _lifespan = 300, accuracy = 0, newtype = /obj/effect/portal)
 	if(!istype(source) || !istype(destination))
 		return
 	var/turf/actual_destination = get_teleport_turf(destination, accuracy)
-	var/obj/effect/portal/P1 = new newtype(source, _lifespan, null, FALSE, null, atmos_link_override)
-	var/obj/effect/portal/P2 = new newtype(actual_destination, _lifespan, P1, TRUE, null, atmos_link_override)
-	if(!istype(P1)||!istype(P2))
+	var/obj/effect/portal/P1 = new newtype(source, _lifespan, null, FALSE, null)
+	var/obj/effect/portal/P2 = new newtype(actual_destination, _lifespan, P1, TRUE, null)
+	if(!istype(P1) || !istype(P2))
 		return
+	playsound(P1, SFX_PORTAL_CREATED, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(P2, SFX_PORTAL_CREATED, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	P1.link_portal(P2)
 	P1.hardlinked = TRUE
 	return list(P1, P2)
@@ -14,38 +15,59 @@
 /obj/effect/portal
 	name = "portal"
 	desc = "Looks unstable. Best to test it with the clown."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/anomaly.dmi'
 	icon_state = "portal"
 	anchored = TRUE
 	density = TRUE // dense for receiving bumbs
 	layer = HIGH_OBJ_LAYER
+	light_system = COMPLEX_LIGHT
+	light_range = 3
+	light_power = 1
+	light_on = TRUE
+	light_color = COLOR_BLUE_LIGHT
+	/// Are mechs able to enter this portal?
 	var/mech_sized = FALSE
+	/// A reference to another "linked" destination portal
 	var/obj/effect/portal/linked
-	var/hardlinked = TRUE //Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
+	/// Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
+	var/hardlinked = TRUE
+	/// What teleport channel does this portal use?
 	var/teleport_channel = TELEPORT_CHANNEL_BLUESPACE
-	var/turf/hard_target //For when a portal needs a hard target and isn't to be linked.
-	var/atmos_link = FALSE //Link source/destination atmos.
-	var/turf/open/atmos_source //Atmos link source
-	var/turf/open/atmos_destination //Atmos link destination
+	/// For when a portal needs a hard target and isn't to be linked.
+	var/turf/hard_target
+	/// Do we teleport anchored objects?
 	var/allow_anchored = FALSE
+	/// What precision value do we pass to do_teleport (how far from the target destination we will pop out at).
 	var/innate_accuracy_penalty = 0
+	/// Used to track how often sparks should be output. Might want to turn this into a cooldown.
 	var/last_effect = 0
 	/// Does this portal bypass teleport restrictions? like TRAIT_NO_TELEPORT and NOTELEPORT flags.
 	var/force_teleport = FALSE
+	/// Does this portal create spark effect when teleporting?
+	var/sparkless = TRUE
+	/// If FALSE, the wibble filter will not be applied to this portal (only a visual effect).
+	var/wibbles = TRUE
 
 /obj/effect/portal/anom
 	name = "wormhole"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/anomaly.dmi'
 	icon_state = "anom"
 	layer = RIPPLE_LAYER
+	plane = ABOVE_GAME_PLANE
 	mech_sized = TRUE
 	teleport_channel = TELEPORT_CHANNEL_WORMHOLE
+	light_on = FALSE
+	wibbles = FALSE
 
 /obj/effect/portal/Move(newloc)
 	for(var/T in newloc)
 		if(istype(T, /obj/effect/portal))
 			return FALSE
 	return ..()
+
+// Prevents portals spawned by jaunter/handtele from floating into space when relocated to an adjacent tile.
+/obj/effect/portal/newtonian_move(direction, instant = FALSE, start_delay = 0)
+	return TRUE
 
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
 	if(user && Adjacent(user))
@@ -67,24 +89,29 @@
 	if(Adjacent(user))
 		teleport(user)
 
+
 /obj/effect/portal/attack_robot(mob/living/user)
 	if(Adjacent(user))
 		teleport(user)
 
-/obj/effect/portal/Initialize(mapload, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
+/obj/effect/portal/Initialize(mapload, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override)
 	. = ..()
 	GLOB.portals += src
 	if(!istype(_linked) && automatic_link)
 		. = INITIALIZE_HINT_QDEL
 		CRASH("Somebody fucked up.")
 	if(_lifespan > 0)
-		QDEL_IN(src, _lifespan)
-	if(!isnull(atmos_link_override))
-		atmos_link = atmos_link_override
+		addtimer(CALLBACK(src, PROC_REF(expire)), _lifespan, TIMER_DELETE_ME)
 	link_portal(_linked)
 	hardlinked = automatic_link
 	if(isturf(hard_target_override))
 		hard_target = hard_target_override
+	if(wibbles)
+		apply_wibbly_filters(src)
+
+/obj/effect/portal/proc/expire()
+	playsound(loc, SFX_PORTAL_CLOSE, 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+	qdel(src)
 
 /obj/effect/portal/singularity_pull()
 	return
@@ -94,51 +121,9 @@
 
 /obj/effect/portal/proc/link_portal(obj/effect/portal/newlink)
 	linked = newlink
-	if(atmos_link)
-		link_atmos()
-
-//This proc breaks as soon as atmos turfs are reacalculated, someone fix it
-/obj/effect/portal/proc/link_atmos()
-	if(atmos_source || atmos_destination)
-		unlink_atmos()
-	if(!isopenturf(get_turf(src)))
-		return FALSE
-	if(linked)
-		if(isopenturf(get_turf(linked)))
-			atmos_source = get_turf(src)
-			atmos_destination = get_turf(linked)
-	else if(hard_target)
-		if(isopenturf(hard_target))
-			atmos_source = get_turf(src)
-			atmos_destination = hard_target
-	else
-		return FALSE
-	if(!istype(atmos_source) || !istype(atmos_destination))
-		return FALSE
-	LAZYINITLIST(atmos_source.atmos_adjacent_turfs)
-	LAZYINITLIST(atmos_destination.atmos_adjacent_turfs)
-	if(atmos_source.atmos_adjacent_turfs[atmos_destination] || atmos_destination.atmos_adjacent_turfs[atmos_source]) //Already linked!
-		return FALSE
-	atmos_source.atmos_adjacent_turfs[atmos_destination] = TRUE
-	atmos_destination.atmos_adjacent_turfs[atmos_source] = TRUE
-	atmos_source.air_update_turf(FALSE, FALSE)
-	atmos_destination.air_update_turf(FALSE, FALSE)
-
-/obj/effect/portal/proc/unlink_atmos()
-	if(istype(atmos_source))
-		if(istype(atmos_destination))
-			LAZYREMOVE(atmos_source.atmos_adjacent_turfs, atmos_destination)
-			atmos_source.ImmediateCalculateAdjacentTurfs() //Just in case they were next to each other
-		atmos_source = null
-	if(istype(atmos_destination))
-		if(istype(atmos_source))
-			LAZYREMOVE(atmos_destination.atmos_adjacent_turfs, atmos_source)
-			atmos_destination.ImmediateCalculateAdjacentTurfs()
-		atmos_destination = null
 
 /obj/effect/portal/Destroy()
 	GLOB.portals -= src
-	unlink_atmos()
 	if(hardlinked && !QDELETED(linked))
 		QDEL_NULL(linked)
 	else
@@ -155,17 +140,21 @@
 	var/turf/real_target = get_link_target_turf()
 	if(!istype(real_target))
 		return FALSE
-	if(!force && (!ismecha(M) && !istype(M, /obj/projectile) && M.anchored && !allow_anchored))
+	if(!force && (!ismecha(M) && !isprojectile(M) && M.anchored && !allow_anchored))
 		return
 	var/no_effect = FALSE
-	if(last_effect == world.time)
+	if(last_effect == world.time || sparkless)
 		no_effect = TRUE
 	else
 		last_effect = world.time
+	var/turf/start_turf = get_turf(M)
 	if(do_teleport(M, real_target, innate_accuracy_penalty, no_effects = no_effect, channel = teleport_channel, forced = force_teleport))
-		if(istype(M, /obj/projectile))
+		if(isprojectile(M))
 			var/obj/projectile/P = M
 			P.ignore_source_check = TRUE
+		new /obj/effect/temp_visual/portal_animation(start_turf, src, M)
+		playsound(start_turf, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(real_target, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return TRUE
 	return FALSE
 
@@ -226,4 +215,24 @@
 
 /obj/effect/portal/permanent/one_way/one_use/teleport(atom/movable/M, force = FALSE)
 	. = ..()
-	qdel(src)
+	if (. && !isdead(M))
+		expire()
+
+/**
+ * Animation used for transitioning atoms which are teleporting somewhere via a portal
+ *
+ * To use, pass it the atom doing the teleporting and the atom that is being teleported in init.
+ */
+/obj/effect/temp_visual/portal_animation
+	duration = 0.25 SECONDS
+
+/obj/effect/temp_visual/portal_animation/Initialize(mapload, atom/portal, atom/movable/teleporting)
+	. = ..()
+	if(isnull(portal) || isnull(teleporting))
+		return
+
+	appearance = teleporting.appearance
+	dir = teleporting.dir
+	layer = portal.layer + 0.01
+	alpha = teleporting.alpha
+	animate(src, pixel_x = (portal.x * 32) - (x * 32), pixel_y = (portal.y * 32) - (y * 32), alpha = 0, time = duration)

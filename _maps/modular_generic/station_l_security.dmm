@@ -1,0 +1,541 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aJ" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/brigdoor/left/directional/east{
+	name = "Security Desk"
+	},
+/obj/item/flashlight/lamp{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/cup/glass/mug/nanotrasen,
+/turf/open/floor/plating,
+/area/template_noop)
+"aP" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/turf/closed/wall/r_wall,
+/area/template_noop)
+"aU" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/template_noop)
+"aY" = (
+/obj/structure/closet/secure_closet/brig{
+	name = "Prisoner Locker"
+	},
+/obj/effect/spawner/random/contraband,
+/obj/effect/spawner/random/contraband,
+/obj/machinery/light/dim/directional/west,
+/obj/effect/turf_decal/bot_red,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 6
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"bf" = (
+/turf/template_noop,
+/area/template_noop)
+"bh" = (
+/obj/structure/guncase/shotgun,
+/obj/effect/turf_decal/bot_red,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 8
+	},
+/obj/item/gun/ballistic/shotgun/riot,
+/obj/item/gun/ballistic/shotgun/riot,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"bO" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"ds" = (
+/obj/structure/closet/secure_closet/contraband/armory,
+/obj/effect/turf_decal/bot_red,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"es" = (
+/obj/effect/spawner/random/trash/food_packaging{
+	pixel_x = 8
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"fA" = (
+/turf/closed/wall/r_wall,
+/area/template_noop)
+"fC" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/chair/sofa/bench/right{
+	dir = 4
+	},
+/obj/effect/turf_decal/box/corners,
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured,
+/area/template_noop)
+"gy" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/structure/chair/sofa/right/maroon{
+	dir = 1
+	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"hj" = (
+/obj/structure/closet/secure_closet/brig{
+	name = "Prisoner Locker"
+	},
+/obj/effect/spawner/random/contraband,
+/obj/effect/spawner/random/contraband,
+/obj/effect/spawner/random/contraband,
+/obj/effect/turf_decal/bot_red,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"iP" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/structure/sign/warning/yes_smoking/circle/directional/south,
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"lG" = (
+/obj/structure/chair/stool/directional/west,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"lW" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/brigdoor/right/directional/east{
+	name = "Security Desk"
+	},
+/obj/item/paper_bin{
+	pixel_y = 3
+	},
+/obj/effect/spawner/random/bureaucracy/pen,
+/obj/effect/spawner/random/bureaucracy/pen{
+	pixel_x = 2
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"ma" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/structure/filingcabinet,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"mI" = (
+/obj/structure/closet/secure_closet/brig{
+	name = "Prisoner Locker"
+	},
+/obj/effect/spawner/random/contraband,
+/obj/effect/turf_decal/bot_red,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"mQ" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/obj/effect/spawner/random/bureaucracy/briefcase{
+	pixel_y = 10;
+	pixel_x = -2
+	},
+/obj/item/radio{
+	desc = "An old handheld radio. Tuned to the outpost's hit radio station.";
+	frequency = 1475;
+	icon_state = "radio";
+	name = "old radio"
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"nh" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 8
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured,
+/area/template_noop)
+"nu" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/chair/sofa/bench/left{
+	dir = 8
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/obj/effect/turf_decal/box/corners,
+/turf/open/floor/iron/dark/textured,
+/area/template_noop)
+"nB" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/structure/chair/stool/bar/directional/east,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"nR" = (
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/iron/dark/textured,
+/area/template_noop)
+"oJ" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/spawner/random/trash/bin,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"pz" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"sV" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/machinery/modular_computer/preset/cargochat/security{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"vv" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/structure/table/reinforced,
+/obj/structure/sign/poster/contraband/donut_corp/directional/south,
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"vJ" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Security Outpost"
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"ys" = (
+/obj/structure/sign/departments/security/directional/east,
+/turf/template_noop,
+/area/template_noop)
+"zf" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"zy" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 4
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured,
+/area/template_noop)
+"Bn" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/turf/closed/wall/r_wall,
+/area/template_noop)
+"BA" = (
+/obj/structure/sign/departments/security/directional/south,
+/turf/template_noop,
+/area/template_noop)
+"Dj" = (
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_y = 4;
+	pixel_x = -11
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"DJ" = (
+/obj/machinery/door/window/brigdoor/security/cell/left/directional/south{
+	id = "cell-2";
+	name = "Holding Cell"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/template_noop)
+"Ee" = (
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"FR" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"GC" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"Hl" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"IF" = (
+/obj/effect/turf_decal/trimline/red/filled/end{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"LN" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"MP" = (
+/obj/structure/chair/stool/bar/directional/east{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"NS" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/structure/chair/sofa/left/maroon{
+	dir = 1
+	},
+/obj/machinery/light/dim/directional/south,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"QW" = (
+/obj/structure/guncase/wt550,
+/obj/effect/turf_decal/bot_red,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 8
+	},
+/obj/item/gun/ballistic/automatic/wt550,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"TA" = (
+/obj/effect/spawner/random/trash/graffiti,
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/iron/dark/textured,
+/area/template_noop)
+"TI" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"TT" = (
+/obj/structure/chair/stool/bar/directional/east{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"Uc" = (
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_y = 3
+	},
+/obj/effect/spawner/random/bureaucracy/pen,
+/turf/open/floor/iron/dark/textured,
+/area/template_noop)
+"Vo" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/item/modular_computer/laptop/preset/civilian,
+/obj/machinery/coffeemaker,
+/obj/structure/sign/poster/contraband/fun_police/directional/north,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"Wn" = (
+/obj/effect/mapping_helpers/airlock/access/any/security/brig,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"WI" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 6
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/coffeemaker,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"XZ" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 10
+	},
+/obj/structure/filingcabinet,
+/turf/open/floor/iron/dark,
+/area/template_noop)
+"ZU" = (
+/obj/structure/table,
+/obj/item/flashlight/lamp,
+/turf/open/floor/iron/dark/textured,
+/area/template_noop)
+
+(1,1,1) = {"
+bf
+bf
+bf
+bf
+ys
+bf
+ys
+bf
+bf
+bf
+bO
+"}
+(2,1,1) = {"
+bf
+fA
+fA
+fA
+fA
+vJ
+fA
+fA
+fA
+fA
+bf
+"}
+(3,1,1) = {"
+bf
+fA
+ZU
+zy
+fC
+TI
+ma
+sV
+XZ
+fA
+bf
+"}
+(4,1,1) = {"
+bf
+fA
+TA
+nR
+DJ
+LN
+Ee
+lG
+oJ
+fA
+bf
+"}
+(5,1,1) = {"
+bf
+fA
+Uc
+nh
+nu
+nB
+Ee
+Ee
+NS
+fA
+bf
+"}
+(6,1,1) = {"
+bf
+fA
+fA
+aP
+Bn
+Vo
+mQ
+Ee
+gy
+fA
+bf
+"}
+(7,1,1) = {"
+BA
+fA
+mI
+hj
+aY
+TT
+MP
+es
+iP
+fA
+bf
+"}
+(8,1,1) = {"
+bf
+Wn
+IF
+FR
+FR
+pz
+Ee
+Dj
+vv
+fA
+bf
+"}
+(9,1,1) = {"
+BA
+fA
+QW
+bh
+ds
+GC
+zf
+Hl
+WI
+fA
+bf
+"}
+(10,1,1) = {"
+bf
+fA
+fA
+aU
+aU
+fA
+aJ
+lW
+fA
+fA
+bf
+"}
+(11,1,1) = {"
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+bf
+"}

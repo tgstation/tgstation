@@ -1,0 +1,707 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aC" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/tree/jungle/small/style_random,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"bz" = (
+/obj/structure/flora/bush/ferny/style_random,
+/obj/structure/flora/bush/large/style_random{
+	pixel_y = -3
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"cg" = (
+/obj/structure/flora/rock/style_3,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/item/flashlight/lantern{
+	icon_state = "lantern-on";
+	pixel_y = 15;
+	pixel_x = -2
+	},
+/turf/open/water/jungle,
+/area/template_noop)
+"cF" = (
+/obj/structure/flora/bush/ferny/style_random,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/rock/pile/jungle/large/style_random{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"de" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_x = 16;
+	pixel_y = 11
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_x = -4;
+	pixel_y = 16
+	},
+/obj/structure/railing,
+/turf/open/floor/wood/large,
+/area/template_noop)
+"ez" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/gun/syringe/blowgun,
+/turf/open/floor/wood/large,
+/area/template_noop)
+"eI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/grave/filled,
+/obj/effect/spawner/random/exotic/syndie,
+/obj/effect/spawner/random/exotic/antag_gear,
+/turf/open/misc/dirt/jungle/dark,
+/area/template_noop)
+"fE" = (
+/obj/structure/flora/bush/ferny/style_random,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"ge" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"gj" = (
+/obj/structure/flora/bush/reed/style_random,
+/turf/open/water/jungle,
+/area/template_noop)
+"gq" = (
+/obj/structure/flora/bush/grassy/style_random,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"gI" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old/black_bile,
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"gL" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"is" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/water/jungle,
+/area/template_noop)
+"iL" = (
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/closet/crate/grave/filled,
+/obj/effect/spawner/random/contraband/armory,
+/obj/effect/spawner/random/exotic/antag_gear,
+/turf/open/misc/dirt/jungle/dark,
+/area/template_noop)
+"iW" = (
+/obj/structure/flora/rock,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/water/jungle,
+/area/template_noop)
+"ja" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/turf/open/water/jungle,
+/area/template_noop)
+"jk" = (
+/obj/structure/flora/bush/ferny/style_random,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"kb" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/rock/pile/style_2,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"ll" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"mF" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/water/jungle,
+/area/template_noop)
+"mV" = (
+/obj/structure/flora/rock/style_2,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/water/jungle,
+/area/template_noop)
+"nl" = (
+/obj/effect/turf_decal/weather/dirt,
+/obj/structure/flora/bush/large/style_random{
+	pixel_y = -3
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"nF" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/item/fishing_line/reinforced{
+	pixel_y = 9
+	},
+/obj/item/fishing_hook{
+	pixel_x = 11
+	},
+/obj/effect/turf_decal/weather/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/large,
+/area/template_noop)
+"nY" = (
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"pE" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old/black_bile,
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = 8;
+	pixel_y = 13
+	},
+/turf/open/floor/wood/large,
+/area/template_noop)
+"qx" = (
+/obj/effect/decal/cleanable/vomit/old/black_bile,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/punji_sticks/spikes{
+	icon_state = "punji"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor7-old"
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"qS" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/rock/pile/jungle/large/style_random{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/item/poster/random_contraband,
+/obj/effect/spawner/random/clothing/pirate_or_bandana,
+/turf/open/misc/dirt/jungle/dark,
+/area/template_noop)
+"qT" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"rJ" = (
+/turf/template_noop,
+/area/template_noop)
+"sE" = (
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/punji_sticks/spikes{
+	icon_state = "punji"
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"tD" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/structure/closet/crate/wooden,
+/obj/item/shovel,
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/effect/spawner/random/maintenance/two,
+/turf/open/floor/wood/large,
+/area/template_noop)
+"ul" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/effect/decal/cleanable/vomit/old/black_bile,
+/obj/structure/flora/rock/pile/style_3,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"vl" = (
+/obj/structure/flora/bush/reed/style_random,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/water/jungle,
+/area/template_noop)
+"vG" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"vY" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/turf/open/water/jungle,
+/area/template_noop)
+"xR" = (
+/obj/structure/flora/bush/grassy/style_random,
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = 8;
+	pixel_y = 13
+	},
+/obj/structure/punji_sticks/spikes{
+	icon_state = "punji"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor6-old"
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"yN" = (
+/obj/structure/flora/bush/large/style_random{
+	pixel_y = -3
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"yO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/rock/pile/jungle/style_random,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"zP" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"AG" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt/jungle/dark,
+/area/template_noop)
+"AK" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/turf/open/water/jungle,
+/area/template_noop)
+"Er" = (
+/turf/open/misc/dirt/jungle/dark,
+/area/template_noop)
+"EQ" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"GK" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/water/jungle,
+/area/template_noop)
+"Hd" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/large/style_random{
+	pixel_y = -3
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"HW" = (
+/obj/structure/flora/bush/large/style_random{
+	pixel_y = -3
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"Ij" = (
+/obj/structure/flora/bush/grassy/style_random,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/obj/structure/flora/rock/pile/jungle/large/style_random{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"Jf" = (
+/obj/structure/flora/rock/style_3,
+/obj/item/flashlight/lantern{
+	icon_state = "lantern-on";
+	pixel_y = 15;
+	pixel_x = -2
+	},
+/turf/open/water/jungle,
+/area/template_noop)
+"JB" = (
+/obj/effect/mob_spawn/corpse/human/pirate,
+/turf/open/water/jungle,
+/area/template_noop)
+"JC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/rock/pile/jungle/large/style_random{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/structure/closet/crate/grave/filled,
+/obj/effect/spawner/random/engineering/material_rare,
+/obj/effect/spawner/random/exotic/antag_gear,
+/turf/open/misc/dirt/jungle/dark,
+/area/template_noop)
+"JF" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/rock/pile/style_2,
+/obj/structure/punji_sticks/spikes{
+	icon_state = "punji"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor5-old"
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"Kz" = (
+/obj/structure/flora/bush/grassy/style_random,
+/turf/open/misc/dirt/jungle/dark,
+/area/template_noop)
+"KW" = (
+/turf/open/water/jungle,
+/area/template_noop)
+"LL" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = 9;
+	pixel_y = 21
+	},
+/obj/effect/decal/cleanable/vomit/old/black_bile,
+/obj/effect/spawner/random/entertainment/money_small,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"LW" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/frog,
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/open/floor/wood/large,
+/area/template_noop)
+"Mv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/tree/jungle/small/style_random,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"NG" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/grave/filled,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/exotic/antag_gear,
+/turf/open/misc/dirt/jungle/dark,
+/area/template_noop)
+"Pb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/bush/large/style_random{
+	pixel_y = -3
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"Qk" = (
+/obj/item/fishing_rod,
+/obj/structure/flora/bush/stalky/style_random,
+/turf/open/water/jungle,
+/area/template_noop)
+"Rn" = (
+/obj/structure/flora/rock/style_4,
+/turf/open/water/jungle,
+/area/template_noop)
+"RX" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/water/jungle,
+/area/template_noop)
+"Sb" = (
+/obj/structure/flora/bush/grassy/style_random,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/punji_sticks/spikes{
+	icon_state = "punji"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor4-old"
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"TU" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/trash/crushed_can{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/template_noop)
+"Uw" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/tree/jungle/small/style_random,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"UE" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/railing,
+/obj/item/chair/plastic{
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_x = 5;
+	pixel_y = 15
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/item/bait_can{
+	pixel_y = 16;
+	pixel_x = -8
+	},
+/turf/open/floor/wood/large,
+/area/template_noop)
+"VC" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/tree/jungle/small/style_random,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"WZ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt/jungle/dark,
+/area/template_noop)
+"Xn" = (
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/water/jungle,
+/area/template_noop)
+"Yf" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/turf/open/water/jungle,
+/area/template_noop)
+"Yt" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"Zl" = (
+/obj/structure/flora/bush/stalky/style_random,
+/turf/open/water/jungle,
+/area/template_noop)
+
+(1,1,1) = {"
+rJ
+rJ
+rJ
+rJ
+rJ
+rJ
+rJ
+rJ
+rJ
+rJ
+vG
+"}
+(2,1,1) = {"
+rJ
+zP
+xR
+gI
+jk
+Pb
+gL
+Ij
+JF
+jk
+rJ
+"}
+(3,1,1) = {"
+rJ
+qT
+Mv
+iL
+iW
+AK
+WZ
+AG
+Uw
+EQ
+rJ
+"}
+(4,1,1) = {"
+rJ
+nY
+qS
+GK
+KW
+JB
+vl
+ja
+NG
+ll
+rJ
+"}
+(5,1,1) = {"
+rJ
+nl
+Er
+cg
+Zl
+KW
+de
+KW
+yN
+Sb
+rJ
+"}
+(6,1,1) = {"
+rJ
+fE
+pE
+ez
+LW
+TU
+nF
+Jf
+vY
+ul
+rJ
+"}
+(7,1,1) = {"
+rJ
+Hd
+Rn
+gj
+UE
+Qk
+tD
+Yf
+mF
+aC
+rJ
+"}
+(8,1,1) = {"
+rJ
+qx
+gq
+is
+JB
+KW
+KW
+Xn
+Kz
+cF
+rJ
+"}
+(9,1,1) = {"
+rJ
+EQ
+HW
+JC
+RX
+vY
+bz
+mV
+eI
+ge
+rJ
+"}
+(10,1,1) = {"
+rJ
+kb
+zP
+Yt
+VC
+sE
+LL
+yO
+Pb
+zP
+rJ
+"}
+(11,1,1) = {"
+rJ
+rJ
+rJ
+rJ
+rJ
+rJ
+rJ
+rJ
+rJ
+rJ
+rJ
+"}

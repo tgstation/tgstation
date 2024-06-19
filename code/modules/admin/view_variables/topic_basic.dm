@@ -44,46 +44,103 @@
 	if(check_rights(R_DEBUG))
 		if(href_list[VV_HK_DELETE])
 			usr.client.admin_delete(target)
-			if (isturf(src)) // show the turf that took its place
-				usr.client.debug_variables(src)
+			if (isturf(target)) // show the turf that took its place
+				usr.client.debug_variables(target)
 				return
 
 	if(href_list[VV_HK_MARK])
 		usr.client.mark_datum(target)
+	if(href_list[VV_HK_TAG])
+		usr.client.tag_datum(target)
 	if(href_list[VV_HK_ADDCOMPONENT])
 		if(!check_rights(NONE))
 			return
 		var/list/names = list()
-		var/list/componentsubtypes = sortList(subtypesof(/datum/component), /proc/cmp_typepaths_asc)
+		var/list/componentsubtypes = sort_list(subtypesof(/datum/component), GLOBAL_PROC_REF(cmp_typepaths_asc))
 		names += "---Components---"
 		names += componentsubtypes
 		names += "---Elements---"
-		names += sortList(subtypesof(/datum/element), /proc/cmp_typepaths_asc)
-		var/result = input(usr, "Choose a component/element to add","better know what ur fuckin doin pal") as null|anything in names
-		if(!usr || !result || result == "---Components---" || result == "---Elements---")
+		names += sort_list(subtypesof(/datum/element), GLOBAL_PROC_REF(cmp_typepaths_asc))
+
+		var/result = tgui_input_list(usr, "Choose a component/element to add", "Add Component", names)
+		if(isnull(result))
 			return
+		if(!usr || result == "---Components---" || result == "---Elements---")
+			return
+
 		if(QDELETED(src))
 			to_chat(usr, "That thing doesn't exist anymore!", confidential = TRUE)
 			return
+
+		var/add_source
+		if(ispath(result, /datum/component))
+			var/datum/component/comp_path = result
+			if(initial(comp_path.dupe_mode) == COMPONENT_DUPE_SOURCES)
+				add_source = tgui_input_text(usr, "Enter a source for the component", "Add Component", "ADMIN-ABUSE")
+				if(isnull(add_source))
+					return
+
 		var/list/lst = get_callproc_args()
 		if(!lst)
 			return
+
 		var/datumname = "error"
 		lst.Insert(1, result)
 		if(result in componentsubtypes)
 			datumname = "component"
-			target._AddComponent(lst)
+			target._AddComponent(lst, add_source)
 		else
 			datumname = "element"
 			target._AddElement(lst)
 		log_admin("[key_name(usr)] has added [result] [datumname] to [key_name(target)].")
 		message_admins(span_notice("[key_name_admin(usr)] has added [result] [datumname] to [key_name_admin(target)]."))
+	if(href_list[VV_HK_REMOVECOMPONENT] || href_list[VV_HK_MASS_REMOVECOMPONENT])
+		if(!check_rights(NONE))
+			return
+		var/mass_remove = href_list[VV_HK_MASS_REMOVECOMPONENT]
+		var/list/components = target._datum_components.Copy()
+		var/list/names = list()
+		names += "---Components---"
+		if(length(components))
+			names += sort_list(components, GLOBAL_PROC_REF(cmp_typepaths_asc))
+		names += "---Elements---"
+		// We have to list every element here because there is no way to know what element is on this object without doing some sort of hack.
+		names += sort_list(subtypesof(/datum/element), GLOBAL_PROC_REF(cmp_typepaths_asc))
+		var/path = tgui_input_list(usr, "Choose a component/element to remove. All elements listed here may not be on the datum.", "Remove element", names)
+		if(isnull(path))
+			return
+		if(!usr || path == "---Components---" || path == "---Elements---")
+			return
+		if(QDELETED(src))
+			to_chat(usr, "That thing doesn't exist anymore!")
+			return
+		var/list/targets_to_remove_from = list(target)
+		if(mass_remove)
+			var/method = vv_subtype_prompt(target.type)
+			targets_to_remove_from = get_all_of_type(target.type, method)
+
+			if(alert(usr, "Are you sure you want to mass-delete [path] on [target.type]?", "Mass Remove Confirmation", "Yes", "No") == "No")
+				return
+
+		for(var/datum/target_to_remove_from as anything in targets_to_remove_from)
+			if(ispath(path, /datum/element))
+				var/list/lst = get_callproc_args()
+				if(!lst)
+					lst = list()
+				lst.Insert(1, path)
+				target._RemoveElement(lst)
+			else
+				var/list/components_actual = target_to_remove_from.GetComponents(path)
+				for(var/to_delete in components_actual)
+					qdel(to_delete)
+
+		message_admins(span_notice("[key_name_admin(usr)] has [mass_remove? "mass" : ""] removed [path] component from [mass_remove? target.type : key_name_admin(target)]."))
 	if(href_list[VV_HK_MODIFY_GREYSCALE])
 		if(!check_rights(NONE))
 			return
-		var/datum/greyscale_modify_menu/menu = new(target, usr, SSgreyscale.configurations)
-		menu.Unlock()
+		var/datum/greyscale_modify_menu/menu = new(target, usr, SSgreyscale.configurations, unlocked = TRUE)
 		menu.ui_interact(usr)
+
 	if(href_list[VV_HK_CALLPROC])
-		usr.client.callproc_datum(target)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/call_proc_datum, target)
 

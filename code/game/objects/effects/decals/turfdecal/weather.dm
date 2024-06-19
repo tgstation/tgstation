@@ -3,12 +3,13 @@
 	icon_state = "sandyfloor"
 
 /obj/effect/turf_decal/weather/snow
+	icon = 'icons/turf/overlays.dmi'
 	name = "snowy floor"
-	icon_state = "snowyfloor"
+	icon_state = "snowfloor"
 
 /obj/effect/turf_decal/weather/snow/corner
-	name = "snow corner piece"
 	icon = 'icons/turf/snow.dmi'
+	name = "snow corner piece"
 	icon_state = "snow_corner"
 
 /obj/effect/turf_decal/weather/dirt
@@ -18,7 +19,7 @@
 
 /obj/effect/turf_decal/weather/sand
 	name = "sand siding"
-	icon = 'icons/misc/beach.dmi'
+	icon = 'icons/obj/fluff/beach.dmi'
 	icon_state = "sand_side"
 
 /obj/effect/turf_decal/weather/sand/light

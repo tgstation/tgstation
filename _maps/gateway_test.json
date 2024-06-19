@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"map_name": "Gateway Test",
+	"map_path": "map_files/debug",
+	"map_file": "gateway_test.dmm",
+	"space_ruin_levels": 1,
+	"load_all_away_missions": true,
+	"ignored_unit_tests": [
+		"/datum/unit_test/antag_moodlets",
+		"/datum/unit_test/cargo_dep_order_locations",
+		"/datum/unit_test/job_roundstart_spawnpoints",
+		"/datum/unit_test/required_map_items",
+		"/datum/unit_test/space_dragon_expiration",
+		"/datum/unit_test/spy_bounty",
+		"/datum/unit_test/traitor"
+	]
+}

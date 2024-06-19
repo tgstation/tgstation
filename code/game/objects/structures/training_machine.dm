@@ -15,11 +15,12 @@
 /obj/structure/training_machine
 	name = "AURUMILL-Brand MkII. Personnel Training Machine"
 	desc = "Used for combat training simulations. Accepts standard training targets. A pair of buckling straps are attached."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/machines/sec.dmi'
 	icon_state = "training_machine"
 	can_buckle = TRUE
 	buckle_lying = 0
 	max_integrity = 200
+	interaction_flags_click = NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	///Is the machine moving? Setting this to FALSE will automatically call stop_moving()
 	var/moving = FALSE
 	///The distance the machine is allowed to roam from its starting point
@@ -47,7 +48,7 @@
 /**
  * Called on a normal destruction, so we have a cool explosion and toss whatever's attached
  */
-/obj/structure/training_machine/obj_destruction(damage_flag)
+/obj/structure/training_machine/atom_destruction(damage_flag)
 	remove_attached_item(throwing = TRUE)
 	explosion(src, light_impact_range = 1, flash_range = 2)
 	return ..()
@@ -117,7 +118,7 @@
 		return
 	attach_item(target)
 	to_chat(user, span_notice("You attach \the [attached_item] to the training device."))
-	playsound(src, "rustle", 50, TRUE)
+	playsound(src, SFX_RUSTLE, 50, TRUE)
 
 /**
  * Attach an item to the machine
@@ -131,9 +132,9 @@
 	remove_attached_item()
 	attached_item = target
 	attached_item.forceMove(src)
-	attached_item.vis_flags |= VIS_INHERIT_ID
+	attached_item.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_PLANE
 	vis_contents += attached_item
-	RegisterSignal(attached_item, COMSIG_PARENT_QDELETING, .proc/on_attached_delete)
+	RegisterSignal(attached_item, COMSIG_QDELETING, PROC_REF(on_attached_delete))
 	handle_density()
 
 /**
@@ -143,8 +144,9 @@
  */
 /obj/structure/training_machine/proc/on_attached_delete()
 	SIGNAL_HANDLER
-	UnregisterSignal(attached_item, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(attached_item, COMSIG_QDELETING)
 	vis_contents -= attached_item
+	attached_item.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE)
 	attached_item = null
 	handle_density()
 
@@ -161,10 +163,10 @@
 	if (!attached_item)
 		return
 	if (istype(attached_item, /obj/item/storage/toolbox/syndicate))
-		UnregisterSignal(attached_item, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(attached_item, COMSIG_QDELETING)
 		qdel(attached_item)
 	else if (user)
-		user.put_in_hands(attached_item)
+		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), attached_item)
 	else
 		attached_item.forceMove(drop_location())
 	if (throwing && !QDELETED(attached_item)) //Fun little thing where we throw out the old attached item when emagged
@@ -173,21 +175,19 @@
 		attached_item.throw_at(destination, 4, 1)
 	on_attached_delete()
 
-/obj/structure/training_machine/AltClick(mob/user)
-	. = ..()
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, FLOOR_OKAY))
-		return
+/obj/structure/training_machine/click_alt(mob/user)
 	if(has_buckled_mobs())
 		user_unbuckle_mob(buckled_mobs[1], user)
-		return
+		return CLICK_ACTION_SUCCESS
 	if (!attached_item)
-		return
+		return NONE
 	if (obj_flags & EMAGGED)
 		to_chat(user, span_warning("The toolbox is somehow stuck on! It won't budge!"))
-		return
+		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice("You remove \the [attached_item] from the training device."))
 	remove_attached_item(user)
-	playsound(src, "rustle", 50, TRUE)
+	playsound(src, SFX_RUSTLE, 50, TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /**
  * Toggle the machine's movement
@@ -284,7 +284,7 @@
 		return
 	do_attack_animation(target, null, attached_item)
 	if (obj_flags & EMAGGED)
-		target.apply_damage(attached_item.force, BRUTE, BODY_ZONE_CHEST)
+		target.apply_damage(attached_item.force, BRUTE, BODY_ZONE_CHEST, attacking_item = attached_item)
 	playsound(src, 'sound/weapons/smash.ogg', 15, TRUE)
 	COOLDOWN_START(src, attack_cooldown, rand(MIN_ATTACK_DELAY, MAX_ATTACK_DELAY))
 
@@ -313,7 +313,7 @@
 /**
  * Emagging causes a deadly, unremovable syndicate toolbox to be attached to the machine
  */
-/obj/structure/training_machine/emag_act(mob/user)
+/obj/structure/training_machine/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	if (obj_flags & EMAGGED)
 		return
@@ -323,6 +323,7 @@
 	to_chat(user, span_warning("You override the training machine's safety protocols, and activate its realistic combat feature. A toolbox pops out of a slot on the top."))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	add_overlay("evil_trainer")
+	return TRUE
 
 /obj/structure/training_machine/examine(mob/user)
 	. = ..()
@@ -342,13 +343,13 @@
  */
 /obj/item/training_toolbox
 	name = "Training Toolbox"
-	desc = "AURUMILL-Brand Baby's First Training Toolbox. A digital display on the back keeps track of hits made by the user. Second toolbox sold seperately!"
-	icon = 'icons/obj/storage.dmi'
+	desc = "AURUMILL-Brand Baby's First Training Toolbox. A digital display on the back keeps track of hits made by the user. Second toolbox sold separately!"
+	icon = 'icons/obj/storage/toolbox.dmi'
 	icon_state = "gold"
 	inhand_icon_state = "toolbox_gold"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 0
 	throwforce = 0
 	throw_speed = 2
@@ -359,12 +360,17 @@
 	///Number of hits made since the Lap button (alt-click) was last pushed
 	var/lap_hits = 0
 
-/obj/item/training_toolbox/afterattack(atom/target, mob/living/user, proximity)
+/obj/item/training_toolbox/pre_attack(atom/A, mob/living/user, params)
 	. = ..()
-	if (!proximity || target == user || !user.combat_mode)
-		return
-	if (check_hit(target))
-		user.changeNext_move(CLICK_CD_MELEE)
+	if(.)
+		return .
+	if(A == user || !user.combat_mode)
+		return .
+	if(!check_hit(A))
+		return .
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(A)
+	return TRUE
 
 /**
  * Check if we should increment the hit counter
@@ -394,10 +400,10 @@
 	if (!.)
 		check_hit(hit_atom)
 
-/obj/item/training_toolbox/AltClick(mob/user)
-	. = ..()
+/obj/item/training_toolbox/click_alt(mob/user)
 	to_chat(user, span_notice("You push the 'Lap' button on the toolbox's display."))
 	lap_hits = initial(lap_hits)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/training_toolbox/examine(mob/user)
 	. = ..()

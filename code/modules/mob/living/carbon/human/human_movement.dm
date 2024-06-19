@@ -9,46 +9,27 @@
 		return
 	return considering
 
-/mob/living/carbon/human/slip(knockdown_amount, obj/O, lube, paralyze, forcedrop)
-	if(HAS_TRAIT(src, TRAIT_NOSLIPALL))
+/mob/living/carbon/human/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, force_drop = FALSE)
+	if(HAS_TRAIT(src, TRAIT_NO_SLIP_ALL))
 		return FALSE
-	if (!(lube & GALOSHES_DONT_HELP))
-		if(HAS_TRAIT(src, TRAIT_NOSLIPWATER))
-			return FALSE
-		if(shoes && istype(shoes, /obj/item/clothing))
-			var/obj/item/clothing/CS = shoes
-			if (CS.clothing_flags & NOSLIP)
-				return FALSE
-	if (lube & SLIDE_ICE)
-		if(shoes && istype(shoes, /obj/item/clothing))
-			var/obj/item/clothing/CS = shoes
-			if (CS.clothing_flags & NOSLIP_ICE)
-				return FALSE
-	return ..()
 
-/mob/living/carbon/human/experience_pressure_difference()
-	playsound(src, 'sound/effects/space_wind.ogg', 50, TRUE)
-	if(shoes && istype(shoes, /obj/item/clothing))
-		var/obj/item/clothing/S = shoes
-		if (S.clothing_flags & NOSLIP)
-			return 0
-	return ..()
+	if(HAS_TRAIT(src, TRAIT_NO_SLIP_WATER) && !(lube_flags & GALOSHES_DONT_HELP))
+		return FALSE
 
-/mob/living/carbon/human/mob_has_gravity()
-	. = ..()
-	if(!.)
-		if(mob_negates_gravity())
-			. = 1
+	if(HAS_TRAIT(src, TRAIT_NO_SLIP_ICE) && (lube_flags & SLIDE_ICE))
+		return FALSE
+
+	return ..()
 
 /mob/living/carbon/human/mob_negates_gravity()
-	return ((shoes?.negates_gravity()) || (dna.species.negates_gravity(src)))
+	return dna.species.negates_gravity(src) || ..()
 
 /mob/living/carbon/human/Move(NewLoc, direct)
 	. = ..()
 	if(shoes && body_position == STANDING_UP && loc == NewLoc && has_gravity(loc))
 		SEND_SIGNAL(shoes, COMSIG_SHOES_STEP_ACTION)
 
-/mob/living/carbon/human/Process_Spacemove(movement_dir = 0)
+/mob/living/carbon/human/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	if(movement_type & FLYING || HAS_TRAIT(src, TRAIT_FREE_FLOAT_MOVEMENT))
 		return TRUE
 	return ..()

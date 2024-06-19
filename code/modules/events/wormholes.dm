@@ -6,11 +6,14 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 	max_occurrences = 3
 	weight = 2
 	min_players = 2
-
+	category = EVENT_CATEGORY_SPACE
+	description = "Space time anomalies appear on the station, randomly teleporting people who walk into them."
+	min_wizard_trigger_potency = 3
+	max_wizard_trigger_potency = 7
 
 /datum/round_event/wormholes
-	announceWhen = 10
-	endWhen = 60
+	announce_when = 10
+	end_when = 60
 
 	var/list/pick_turfs = list()
 	var/list/wormholes = list()
@@ -18,27 +21,28 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 	var/number_of_wormholes = 400
 
 /datum/round_event/wormholes/setup()
-	announceWhen = rand(0, 20)
-	endWhen = rand(40, 80)
+	announce_when = rand(0, 20)
+	end_when = rand(40, 80)
 
 /datum/round_event/wormholes/start()
-	for(var/turf/open/floor/T in world)
-		if(is_station_level(T.z))
-			pick_turfs += T
+	for(var/turf/open/floor/valid in GLOB.station_turfs)
+		pick_turfs += valid
 
-	for(var/i = 1, i <= number_of_wormholes, i++)
+	for(var/i in 1 to number_of_wormholes)
 		var/turf/T = pick(pick_turfs)
 		wormholes += new /obj/effect/portal/wormhole(T, 0, null, FALSE)
+		playsound(T, SFX_PORTAL_CREATED, 20, TRUE, SILENCED_SOUND_EXTRARANGE) // much much quieter
 
 /datum/round_event/wormholes/announce(fake)
 	priority_announce("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert", ANNOUNCER_SPANOMALIES)
 
 /datum/round_event/wormholes/tick()
 	if(activeFor % shift_frequency == 0)
-		for(var/obj/effect/portal/wormhole/O in wormholes)
+		for(var/obj/effect/portal/wormhole/O as anything in wormholes)
 			var/turf/T = pick(pick_turfs)
-			if(T)
+			if(isopenturf(T))
 				O.forceMove(T)
+				playsound(T, SFX_PORTAL_CREATED, 20, TRUE, SILENCED_SOUND_EXTRARANGE)
 
 /datum/round_event/wormholes/end()
 	QDEL_LIST(wormholes)
@@ -47,12 +51,13 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 /obj/effect/portal/wormhole
 	name = "wormhole"
 	desc = "It looks highly unstable; It could close at any moment."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/anomaly.dmi'
 	icon_state = "anom"
 	mech_sized = TRUE
+	light_on = FALSE
+	wibbles = FALSE
 
-
-/obj/effect/portal/wormhole/Initialize(mapload, _creator, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
+/obj/effect/portal/wormhole/Initialize(mapload, _creator, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override)
 	. = ..()
 	GLOB.all_wormholes += src
 
@@ -74,4 +79,7 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 				hard_target = P.loc
 		if(!hard_target)
 			return
-		do_teleport(M, hard_target, 1, 1, 0, 0, channel = TELEPORT_CHANNEL_WORMHOLE) ///You will appear adjacent to the beacon
+		var/turf/start_turf = get_turf(M)
+		if(do_teleport(M, hard_target, 1, null, null, channel = TELEPORT_CHANNEL_WORMHOLE)) ///You will appear adjacent to the beacon
+			playsound(start_turf, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(hard_target, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)

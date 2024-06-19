@@ -16,11 +16,14 @@
 /obj/item/gun/energy/e_gun/advtaser/cyborg
 	name = "cyborg taser"
 	desc = "An integrated hybrid taser that draws directly from a cyborg's power cell. The weapon contains a limiter to prevent the cyborg's power cell from overheating."
-	can_flashlight = FALSE
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
 
-/obj/item/gun/energy/e_gun/advtaser/cyborg/emp_act()
+/obj/item/gun/energy/e_gun/advtaser/cyborg/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
+
+/obj/item/gun/energy/e_gun/advtaser/cyborg/add_seclight_point()
 	return
 
 /obj/item/gun/energy/disabler
@@ -30,9 +33,33 @@
 	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 2
-	can_flashlight = TRUE
-	flight_x_offset = 15
-	flight_y_offset = 10
+
+/obj/item/gun/energy/disabler/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 15, \
+		overlay_y = 10)
+
+/obj/item/gun/energy/disabler/smg
+	name = "disabler smg"
+	desc = "An automatic disabler variant, as opposed to the conventional model, boasts a higher ammunition capacity at the cost of slightly reduced beam effectiveness."
+	icon_state = "disabler_smg"
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler/smg)
+	shaded_charge = 1
+
+/obj/item/gun/energy/disabler/smg/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.15 SECONDS, allow_akimbo = FALSE)
+
+/obj/item/gun/energy/disabler/add_seclight_point()
+	AddComponent(\
+		/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 15, \
+		overlay_y = 13, \
+	)
 
 /obj/item/gun/energy/disabler/cyborg
 	name = "cyborg disabler"
@@ -40,5 +67,6 @@
 	can_charge = FALSE
 	use_cyborg_cell = TRUE
 
-/obj/item/gun/energy/disabler/cyborg/emp_act()
-	return
+/obj/item/gun/energy/disabler/cyborg/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)

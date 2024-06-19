@@ -1,0 +1,685 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"am" = (
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark/corner,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"cQ" = (
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"de" = (
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 1
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"dm" = (
+/obj/effect/turf_decal/trimline/dark_red,
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"dS" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/trading_card_holder{
+	pixel_y = 5;
+	pixel_x = 8;
+	summon_offset_x = -1
+	},
+/obj/machinery/trading_card_holder{
+	pixel_y = 2;
+	pixel_x = -3;
+	summon_offset_x = -2
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"hk" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/trading_card_holder/red{
+	pixel_y = 9;
+	pixel_x = 8;
+	summon_offset_x = -1
+	},
+/obj/machinery/trading_card_holder/red{
+	pixel_y = 12;
+	pixel_x = -3;
+	summon_offset_x = -2
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"iq" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"iu" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/coin/thunderdome{
+	pixel_y = 8
+	},
+/obj/machinery/trading_card_button/health{
+	pixel_y = -3
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"iB" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/trading_card_holder{
+	pixel_y = 8
+	},
+/obj/machinery/trading_card_holder{
+	pixel_y = 7;
+	pixel_x = 12;
+	summon_offset_x = 1
+	},
+/obj/machinery/trading_card_holder{
+	pixel_y = 7;
+	pixel_x = -12;
+	summon_offset_x = -1
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"jv" = (
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner,
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 1
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"kh" = (
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 8
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"kT" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/trading_card_holder{
+	pixel_y = 5;
+	pixel_x = -8;
+	summon_offset_x = 1
+	},
+/obj/machinery/trading_card_holder{
+	pixel_y = 2;
+	pixel_x = 3;
+	summon_offset_x = 2
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"lh" = (
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner,
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 4
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"mA" = (
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 1
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"mJ" = (
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/corner,
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"ne" = (
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"nR" = (
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 9
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"oj" = (
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"pc" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 10
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 4
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"qx" = (
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 10
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"qZ" = (
+/obj/effect/turf_decal/trimline/dark_red/line,
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 4
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"sb" = (
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"sq" = (
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_red/line,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"tE" = (
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/book/manual/wiki/tgc{
+	pixel_y = 12
+	},
+/obj/machinery/trading_card_button{
+	pixel_y = -3
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"tT" = (
+/turf/open/floor/holofloor/stairs/right,
+/area/template_noop)
+"uv" = (
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 4
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"vu" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"wc" = (
+/turf/open/floor/holofloor/hyperspace,
+/area/template_noop)
+"wk" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/trimline/dark_red/end{
+	dir = 1
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"wN" = (
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 1
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"wO" = (
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"xi" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"zk" = (
+/turf/open/floor/holofloor/stairs/medium{
+	dir = 1
+	},
+/area/template_noop)
+"Aj" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/trading_card_holder/red{
+	pixel_y = 9;
+	pixel_x = -8;
+	summon_offset_x = 1
+	},
+/obj/machinery/trading_card_holder/red{
+	pixel_y = 12;
+	pixel_x = 3;
+	summon_offset_x = 2
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"Ar" = (
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner,
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"Dt" = (
+/turf/open/floor/holofloor/stairs/left{
+	dir = 1
+	},
+/area/template_noop)
+"EY" = (
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 1
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"Fy" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/book/manual/wiki/tgc{
+	pixel_y = -4
+	},
+/obj/machinery/trading_card_button/health{
+	pixel_y = 10;
+	panel_offset_y = -1
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"IB" = (
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_red/line,
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 8
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"IK" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"Jr" = (
+/obj/effect/turf_decal/trimline/dark_red,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"Kr" = (
+/turf/open/floor/holofloor/stairs/left,
+/area/template_noop)
+"NC" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/coin/thunderdome{
+	pixel_y = -4
+	},
+/obj/machinery/trading_card_button{
+	pixel_y = 10;
+	panel_offset_y = -1
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"NW" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"Op" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"OG" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 4
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"Sn" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/trading_card_holder/red{
+	pixel_y = 6
+	},
+/obj/machinery/trading_card_holder/red{
+	pixel_y = 7;
+	pixel_x = -12;
+	summon_offset_x = -1
+	},
+/obj/machinery/trading_card_holder/red{
+	pixel_y = 7;
+	pixel_x = 12;
+	summon_offset_x = 1
+	},
+/turf/open/floor/holofloor/plating,
+/area/template_noop)
+"So" = (
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 4
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"SJ" = (
+/obj/effect/turf_decal/trimline/dark_red/end{
+	dir = 4
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"SR" = (
+/obj/effect/turf_decal/trimline/dark_red/line,
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 1
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"Tw" = (
+/turf/open/floor/holofloor/stairs/medium,
+/area/template_noop)
+"Wa" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/trimline/dark_red/end,
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"Wk" = (
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 8
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"WI" = (
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 6
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"XD" = (
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 4
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"XJ" = (
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"Yr" = (
+/turf/open/floor/holofloor/stairs/right{
+	dir = 1
+	},
+/area/template_noop)
+"YB" = (
+/obj/effect/turf_decal/trimline/dark_red/end{
+	dir = 8
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"YN" = (
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line,
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"YY" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 8
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"Zz" = (
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/dark_red/corner,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"ZP" = (
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+
+(1,1,1) = {"
+YB
+SJ
+YB
+Jr
+wk
+iq
+sb
+oj
+WI
+YN
+"}
+(2,1,1) = {"
+qZ
+Zz
+XD
+OG
+wc
+wc
+IK
+oj
+mJ
+So
+"}
+(3,1,1) = {"
+jv
+am
+dm
+Op
+wc
+wc
+xi
+XJ
+uv
+mA
+"}
+(4,1,1) = {"
+SR
+Dt
+Fy
+hk
+wc
+wc
+dS
+iu
+Kr
+mA
+"}
+(5,1,1) = {"
+qZ
+zk
+wO
+Sn
+wc
+wc
+iB
+wO
+Tw
+mA
+"}
+(6,1,1) = {"
+EY
+Yr
+NC
+Aj
+wc
+wc
+kT
+tE
+tT
+mA
+"}
+(7,1,1) = {"
+nR
+IB
+Ar
+Wa
+wc
+wc
+NW
+ZP
+de
+mA
+"}
+(8,1,1) = {"
+cQ
+ne
+lh
+YY
+wc
+wc
+IK
+sb
+kh
+wN
+"}
+(9,1,1) = {"
+sq
+Wk
+EY
+Zz
+pc
+vu
+oj
+sb
+qx
+YN
+"}

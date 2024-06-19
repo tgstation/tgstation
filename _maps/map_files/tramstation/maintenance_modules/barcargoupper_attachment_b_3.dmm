@@ -1,0 +1,94 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"c" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/filingcabinet/chestdrawer{
+	pixel_y = 2
+	},
+/obj/item/paper{
+	default_raw_text = "what the hell is this thing....???? tell me ur secrets you devil machine!!! i will not be denied!!!!!";
+	name = "scribbled notes"
+	},
+/obj/structure/sign/clock/directional/west,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"l" = (
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"r" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/relic,
+/obj/item/pen{
+	pixel_x = -4
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"u" = (
+/turf/template_noop,
+/area/template_noop)
+"F" = (
+/turf/closed/wall,
+/area/station/maintenance/department/cargo)
+"H" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/multitool{
+	pixel_y = -7;
+	pixel_x = -8
+	},
+/obj/item/screwdriver{
+	pixel_y = 11
+	},
+/obj/item/assembly/signaler{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/structure/sign/calendar/directional/west,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"N" = (
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+
+(1,1,1) = {"
+F
+F
+F
+F
+F
+"}
+(2,1,1) = {"
+u
+c
+H
+r
+F
+"}
+(3,1,1) = {"
+u
+a
+a
+l
+F
+"}
+(4,1,1) = {"
+u
+N
+u
+u
+u
+"}

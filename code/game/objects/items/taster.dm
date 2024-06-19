@@ -1,22 +1,19 @@
 /obj/item/taster
 	name = "taster"
 	desc = "Tastes things, so you don't have to!"
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "tonguenormal"
+	icon = 'icons/obj/medical/organs/organs.dmi'
+	icon_state = "tongue"
 
 	w_class = WEIGHT_CLASS_TINY
 
 	var/taste_sensitivity = 15
 
-/obj/item/taster/afterattack(atom/O, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-
-	if(!O.reagents)
-		to_chat(user, span_notice("[src] cannot taste [O], since [O.p_they()] [O.p_have()] have no reagents."))
-	else if(O.reagents.total_volume == 0)
-		to_chat(user, "<span class='notice'>[src] cannot taste [O], since [O.p_they()] [O.p_are()] empty.</span>")
+/obj/item/taster/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!interacting_with.reagents)
+		to_chat(user, span_notice("[src] cannot taste [interacting_with], since [interacting_with.p_they()] [interacting_with.p_have()] have no reagents."))
+	else if(interacting_with.reagents.total_volume == 0)
+		to_chat(user, span_notice("[src] cannot taste [interacting_with], since [interacting_with.p_they()] [interacting_with.p_are()] empty."))
 	else
-		var/message = O.reagents.generate_taste_message(user, taste_sensitivity)
-		to_chat(user, "<span class='notice'>[src] tastes <span class='italics'>[message]</span> in [O].</span>")
+		var/message = interacting_with.reagents.generate_taste_message(user, taste_sensitivity)
+		to_chat(user, span_notice("[src] tastes <i>[message]</i> in [interacting_with]."))
+	return ITEM_INTERACT_SUCCESS

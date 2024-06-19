@@ -43,5 +43,6 @@
 		if(EAST)
 			if(amount >= S.transfer_side)
 				amount = S.transfer_side
+	S.use_energy(S.active_power_usage)
 	return ..()
 

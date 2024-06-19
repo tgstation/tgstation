@@ -5,6 +5,7 @@
 	default_priority = 0
 	flags = TONGUELESS_SPEECH | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
 	icon_state = "codespeak"
+	always_use_default_namelist = TRUE // No syllables anyways
 
 /datum/language/codespeak/scramble(input)
 	var/lookup = check_cache(input)

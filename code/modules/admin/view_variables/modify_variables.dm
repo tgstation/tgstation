@@ -95,7 +95,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if (O)
 		L = L.Copy()
 
-	L += var_value
+	L += list(var_value) //var_value could be a list
 
 	switch(tgui_alert(usr,"Would you like to associate a value with the list entry?",,list("Yes","No")))
 		if("Yes")
@@ -142,7 +142,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 		if(variable == "(CLEAR NULLS)")
 			L = L.Copy()
-			listclearnulls(L)
+			list_clear_nulls(L)
 			if (!O.vv_edit_var(objectvar, L))
 				to_chat(src, "Your edit was rejected by the object.", confidential = TRUE)
 				return
@@ -152,7 +152,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 			return
 
 		if(variable == "(CLEAR DUPES)")
-			L = uniqueList(L)
+			L = unique_list(L)
 			if (!O.vv_edit_var(objectvar, L))
 				to_chat(src, "Your edit was rejected by the object.", confidential = TRUE)
 				return
@@ -306,7 +306,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 		for (var/V in O.vars)
 			names += V
 
-		names = sortList(names)
+		names = sort_list(names)
 
 		variable = input("Which var?","Var") as null|anything in names
 		if(!variable)

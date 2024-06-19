@@ -1,0 +1,278 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"f" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/mug/coco{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"h" = (
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"i" = (
+/obj/structure/closet/wardrobe/black,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"n" = (
+/obj/structure/table,
+/obj/item/folder/yellow{
+	pixel_x = 4
+	},
+/obj/item/phone{
+	pixel_x = -2;
+	pixel_y = 10
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"o" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
+	dir = 4
+	},
+/obj/docking_port/mobile/arrivals{
+	name = "birdshot arrivals shuttle"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+"q" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/arrival)
+"r" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"u" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+"v" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"w" = (
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"x" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+"B" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"F" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Arrivals Shuttle Airlock"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"J" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"K" = (
+/obj/structure/closet/emcloset,
+/obj/item/storage/medkit/o2,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"L" = (
+/obj/machinery/light/cold/directional/south,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"M" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular{
+	pixel_y = 4
+	},
+/obj/item/storage/toolbox/emergency,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"P" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"Q" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+"R" = (
+/obj/structure/table,
+/obj/item/clothing/head/costume/lobsterhat,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"U" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"V" = (
+/turf/closed/wall/mineral/titanium/overspace,
+/area/shuttle/arrival)
+"W" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+
+(1,1,1) = {"
+a
+x
+x
+x
+x
+x
+a
+"}
+(2,1,1) = {"
+a
+x
+f
+n
+R
+x
+a
+"}
+(3,1,1) = {"
+V
+q
+q
+v
+q
+q
+V
+"}
+(4,1,1) = {"
+q
+r
+J
+h
+J
+M
+q
+"}
+(5,1,1) = {"
+F
+B
+B
+B
+B
+B
+F
+"}
+(6,1,1) = {"
+x
+U
+B
+U
+B
+U
+x
+"}
+(7,1,1) = {"
+x
+U
+B
+U
+B
+U
+x
+"}
+(8,1,1) = {"
+V
+q
+B
+q
+B
+q
+V
+"}
+(9,1,1) = {"
+a
+Q
+L
+q
+w
+x
+a
+"}
+(10,1,1) = {"
+V
+q
+B
+q
+B
+q
+V
+"}
+(11,1,1) = {"
+x
+U
+B
+U
+B
+U
+x
+"}
+(12,1,1) = {"
+x
+U
+B
+U
+B
+U
+x
+"}
+(13,1,1) = {"
+F
+B
+B
+h
+B
+B
+F
+"}
+(14,1,1) = {"
+q
+i
+K
+P
+K
+i
+q
+"}
+(15,1,1) = {"
+q
+u
+u
+u
+u
+u
+q
+"}
+(16,1,1) = {"
+V
+W
+W
+o
+W
+W
+V
+"}

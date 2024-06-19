@@ -1,0 +1,5 @@
+#comment This repaths basketballs, hoops, and dodgeballs
+
+/obj/item/toy/beach_ball/holoball : /obj/item/toy/basketball{@OLD}
+/obj/structure/holohoop : /obj/structure/hoop{@OLD}
+/obj/item/toy/beach_ball/holoball/dodgeball : /obj/item/toy/dodgeball{@OLD}

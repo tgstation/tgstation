@@ -15,7 +15,7 @@
 		method = vv_subtype_prompt(A.type)
 
 	src.massmodify_variables(A, var_name, method)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Mass Edit Variables") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Mass Edit Variables")
 
 /client/proc/massmodify_variables(datum/O, var_name = "", method = 0)
 	if(!check_rights(R_VAREDIT))
@@ -29,7 +29,7 @@
 		for (var/V in O.vars)
 			names += V
 
-		names = sortList(names)
+		names = sort_list(names)
 
 		variable = input("Which var?", "Var") as null|anything in names
 	else

@@ -15,10 +15,10 @@
 /// far away users will be able to see, and anyone farther won't see anything.
 /// Dead users will receive updates no matter what, though you likely want to add
 /// a [`ui_status_only_living`] check for finer observer interactions.
-/proc/ui_status_user_is_adjacent(mob/user, atom/source)
+/proc/ui_status_user_is_adjacent(mob/user, atom/source, allow_tk = TRUE)
 	if (isliving(user))
 		var/mob/living/living_user = user
-		return living_user.shared_living_ui_distance(source)
+		return living_user.shared_living_ui_distance(source, allow_tk = allow_tk)
 	else
 		return UI_UPDATE
 

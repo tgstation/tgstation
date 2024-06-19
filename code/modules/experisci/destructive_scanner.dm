@@ -6,23 +6,26 @@
 /obj/machinery/destructive_scanner
 	name = "Experimental Destructive Scanner"
 	desc = "A much larger version of the hand-held scanner, a charred label warns about its destructive capabilities."
-	icon = 'icons/obj/machines/experisci.dmi'
+	icon = 'icons/obj/machines/destructive_scanner.dmi'
 	icon_state = "tube_open"
 	circuit = /obj/item/circuitboard/machine/destructive_scanner
 	layer = MOB_LAYER
 	var/scanning = FALSE
 
-/obj/machinery/destructive_scanner/Initialize()
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
 // Late load to ensure the component initialization occurs after the machines are initialized
-/obj/machinery/destructive_scanner/LateInitialize()
+/obj/machinery/destructive_scanner/post_machine_initialize()
 	. = ..()
+
+	var/static/list/destructive_signals = list(
+		COMSIG_MACHINERY_DESTRUCTIVE_SCAN = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_destructive_experiment),
+	)
+
 	AddComponent(/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/scanning),\
 		config_mode = EXPERIMENT_CONFIG_CLICK, \
-		start_experiment_callback = CALLBACK(src, .proc/activate))
+		start_experiment_callback = CALLBACK(src, PROC_REF(activate)), \
+		experiment_signals = destructive_signals, \
+	)
 
 ///Activates the machine; checks if it can actually scan, then starts.
 /obj/machinery/destructive_scanner/proc/activate()
@@ -35,6 +38,7 @@
 			return
 		aggressive = TRUE
 	start_closing(aggressive)
+	use_energy(idle_power_usage)
 
 ///Closes the machine to kidnap everything in the turf into it.
 /obj/machinery/destructive_scanner/proc/start_closing(aggressive)
@@ -47,7 +51,8 @@
 	scanning = TRUE
 	update_icon()
 	playsound(src, 'sound/machines/destructive_scanner/TubeDown.ogg', 100)
-	addtimer(CALLBACK(src, .proc/start_scanning, aggressive), 1.2 SECONDS)
+	use_energy(idle_power_usage)
+	addtimer(CALLBACK(src, PROC_REF(start_scanning), aggressive), 1.2 SECONDS)
 
 ///Starts scanning the fancy scanning effects
 /obj/machinery/destructive_scanner/proc/start_scanning(aggressive)
@@ -55,7 +60,8 @@
 		playsound(src, 'sound/machines/destructive_scanner/ScanDangerous.ogg', 100, extrarange = 5)
 	else
 		playsound(src, 'sound/machines/destructive_scanner/ScanSafe.ogg', 100)
-	addtimer(CALLBACK(src, .proc/finish_scanning, aggressive), 6 SECONDS)
+	use_energy(active_power_usage)
+	addtimer(CALLBACK(src, PROC_REF(finish_scanning), aggressive), 6 SECONDS)
 
 
 ///Performs the actual scan, happens once the tube effects are done
@@ -64,7 +70,7 @@
 	scanning = FALSE
 	update_icon()
 	playsound(src, 'sound/machines/destructive_scanner/TubeUp.ogg', 100)
-	addtimer(CALLBACK(src, .proc/open, aggressive), 1.2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(open), aggressive), 1.2 SECONDS)
 
 ///Opens the machine to let out any contents. If the scan had mobs it'll gib them.
 /obj/machinery/destructive_scanner/proc/open(aggressive)
@@ -78,17 +84,19 @@
 		movable_atom.forceMove(this_turf)
 		if(isliving(movable_atom))
 			var/mob/living/fucked_up_thing = movable_atom
-			fucked_up_thing.gib()
+			fucked_up_thing.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
+			fucked_up_thing.gib(DROP_ALL_REMAINS)
 
 	SEND_SIGNAL(src, COMSIG_MACHINERY_DESTRUCTIVE_SCAN, scanned_atoms)
 
 
-/obj/machinery/destructive_scanner/emag_act(mob/user)
+/obj/machinery/destructive_scanner/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
-	playsound(src, "sparks", 75, TRUE, SILENCED_SOUND_EXTRARANGE)
-	to_chat(user, span_notice("You disable the safety sensor BIOS on [src]."))
+	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
+	balloon_alert(user, "safety sensor BIOS disabled")
+	return TRUE
 
 /obj/machinery/destructive_scanner/update_icon_state()
 	. = ..()

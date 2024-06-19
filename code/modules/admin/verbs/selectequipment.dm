@@ -1,10 +1,6 @@
-/client/proc/cmd_select_equipment(mob/target in GLOB.mob_list)
-	set category = "Admin.Events"
-	set name = "Select equipment"
-
-
-	var/datum/select_equipment/ui = new(usr, target)
-	ui.ui_interact(usr)
+ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, "Select Equipment", mob/target in world)
+	var/datum/select_equipment/ui = new(user, target)
+	ui.ui_interact(user.mob)
 
 /*
  * This is the datum housing the select equipment UI.
@@ -152,7 +148,7 @@
 			return custom_outfit
 
 
-/datum/select_equipment/ui_act(action, params)
+/datum/select_equipment/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
 	. = TRUE
@@ -181,7 +177,7 @@
 			user.admin_apply_outfit(target_mob, new_outfit)
 
 		if("customoutfit")
-			user.outfit_manager()
+			return SSadmin_verbs.dynamic_invoke_verb(ui.user, /datum/admin_verb/outfit_manager)
 
 		if("togglefavorite")
 			var/datum/outfit/outfit_path = resolve_outfit(params["path"])
@@ -209,12 +205,17 @@
 	else
 		human_target = target
 		if(human_target.l_store || human_target.r_store || human_target.s_store) //saves a lot of time for admins and coders alike
-			if(tgui_alert(usr,"Drop Items in Pockets? No will delete them.", "Robust quick dress shop", list("Yes", "No")) == "No")
+			if(tgui_alert(usr,"Do you need the items in your pockets?", "Pocket Items", list("Delete Them", "Drop Them")) == "Delete Them")
 				delete_pocket = TRUE
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Select Equipment") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	for(var/obj/item/item in human_target.get_equipped_items(delete_pocket))
+	BLACKBOX_LOG_ADMIN_VERB("Select Equipment")
+	var/includes_flags = delete_pocket ? INCLUDE_POCKETS : NONE
+	for(var/obj/item/item in human_target.get_equipped_items(includes_flags))
 		qdel(item)
+
+	var/obj/item/organ/internal/brain/human_brain = human_target.get_organ_slot(BRAIN)
+	human_brain.destroy_all_skillchips() // get rid of skillchips to prevent runtimes
+
 	if(dresscode != "Naked")
 		human_target.equipOutfit(dresscode)
 

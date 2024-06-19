@@ -13,13 +13,13 @@
 
 	var/list/temp_weight_list = GLOB.cell_line_tables[cell_line_define].Copy() //Temp list to prevent double picking
 	for(var/i in 1 to cell_line_amount)
-		var/datum/micro_organism/chosen_type = pickweight(temp_weight_list)
+		var/datum/micro_organism/chosen_type = pick_weight(temp_weight_list)
 		temp_weight_list -= chosen_type
 		micro_organisms += new chosen_type
 	if(prob(virus_chance))
 		if(!GLOB.cell_virus_tables[virus_define])
 			return
-		var/datum/micro_organism/chosen_type = pickweight(GLOB.cell_virus_tables[virus_define])
+		var/datum/micro_organism/chosen_type = pick_weight(GLOB.cell_virus_tables[virus_define])
 		micro_organisms += new chosen_type
 
 ///Takes another sample and merges it into use. This can cause one very big sample but we limit it to 3 layers.
@@ -34,3 +34,8 @@
 /datum/biological_sample/proc/handle_growth(obj/machinery/plumbing/growing_vat/vat)
 	for(var/datum/micro_organism/cell_line/organism in micro_organisms) //Types because we don't grow viruses.
 		organism.handle_growth(vat)
+
+///resets the progress of all cell ines
+/datum/biological_sample/proc/reset_sample()
+	for(var/datum/micro_organism/cell_line/organism in micro_organisms) //Types because we don't grow viruses.
+		organism.growth = 0

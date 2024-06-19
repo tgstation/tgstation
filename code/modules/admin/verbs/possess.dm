@@ -1,56 +1,20 @@
-/proc/possess(obj/O in world)
-	set name = "Possess Obj"
-	set category = "Object"
 
-	if((O.obj_flags & DANGEROUS_POSSESSION) && CONFIG_GET(flag/forbid_singulo_possession))
-		to_chat(usr, "[O] is too powerful for you to possess.", confidential = TRUE)
+ADMIN_VERB_AND_CONTEXT_MENU(possess, R_POSSESS, "Possess Obj", "Possess an object.", ADMIN_CATEGORY_OBJECT, obj/target in world)
+	var/result = user.mob.AddComponent(/datum/component/object_possession, target)
+
+	if(isnull(result)) // trigger a safety movement just in case we yonk
+		user.mob.forceMove(get_turf(user.mob))
 		return
 
-	var/turf/T = get_turf(O)
+	var/turf/target_turf = get_turf(target)
+	var/message = "[key_name(user)] has possessed [target] ([target.type]) at [AREACOORD(target_turf)]"
+	message_admins(message)
+	log_admin(message)
 
-	if(T)
-		log_admin("[key_name(usr)] has possessed [O] ([O.type]) at [AREACOORD(T)]")
-		message_admins("[key_name(usr)] has possessed [O] ([O.type]) at [AREACOORD(T)]")
-	else
-		log_admin("[key_name(usr)] has possessed [O] ([O.type]) at an unknown location")
-		message_admins("[key_name(usr)] has possessed [O] ([O.type]) at an unknown location")
+	BLACKBOX_LOG_ADMIN_VERB("Possess Object")
 
-	if(!usr.control_object) //If you're not already possessing something...
-		usr.name_archive = usr.real_name
-
-	usr.forceMove(O)
-	usr.real_name = O.name
-	usr.name = O.name
-	usr.reset_perspective(O)
-	usr.control_object = O
-	O.AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Possess Object") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/proc/release()
-	set name = "Release Obj"
-	set category = "Object"
-
-	if(!usr.control_object) //lest we are banished to the nullspace realm.
-		return
-
-	if(usr.name_archive) //if you have a name archived
-		usr.real_name = usr.name_archive
-		usr.name_archive = ""
-		usr.name = usr.real_name
-		if(ishuman(usr))
-			var/mob/living/carbon/human/H = usr
-			H.name = H.get_visible_name()
-
-	usr.control_object.RemoveElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
-	usr.forceMove(get_turf(usr.control_object))
-	usr.reset_perspective()
-	usr.control_object = null
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Release Object") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/proc/givetestverbs(mob/M in GLOB.mob_list)
-	set desc = "Give this guy possess/release verbs"
-	set category = "Debug"
-	set name = "Give Possessing Verbs"
-	add_verb(M, /proc/possess)
-	add_verb(M, /proc/release)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Possessing Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+ADMIN_VERB(release, R_POSSESS, "Release Object", "Stop possessing an object.", ADMIN_CATEGORY_OBJECT)
+	var/possess_component = user.mob.GetComponent(/datum/component/object_possession)
+	if(!isnull(possess_component))
+		qdel(possess_component)
+	BLACKBOX_LOG_ADMIN_VERB("Release Object")

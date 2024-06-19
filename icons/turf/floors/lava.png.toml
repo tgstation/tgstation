@@ -1,0 +1,5 @@
+output_name = "lava"
+template = "bitmask/diagonal_32x32.toml"
+
+[animation]
+delays = [20, 20, 20, 20]

@@ -1,3 +1,6 @@
+#define REGIME_TELEPORTER "Teleporter"
+#define REGIME_GATE "Gate"
+
 /obj/machinery/computer/teleporter
 	name = "teleporter control console"
 	desc = "Used to control a linked teleportation Hub and Station."
@@ -5,15 +8,18 @@
 	icon_keyboard = "teleport_key"
 	light_color = LIGHT_COLOR_BLUE
 	circuit = /obj/item/circuitboard/computer/teleporter
-
-	var/regime_set = "Teleporter"
+	/// Currently can be "Teleporter" or "Gate"
+	var/regime_set = REGIME_TELEPORTER
+	/// The ID of this teleporter, used for linking to power stations
 	var/id
+	/// The power station this teleporter is linked to
 	var/obj/machinery/teleport/station/power_station
+	/// Whether the teleporter is currently calibrating
 	var/calibrating
 	///Weakref to the target atom we're pointed at currently
 	var/datum/weakref/target_ref
 
-/obj/machinery/computer/teleporter/Initialize()
+/obj/machinery/computer/teleporter/Initialize(mapload)
 	. = ..()
 	id = "[rand(1000, 9999)]"
 	link_power_station()
@@ -28,6 +34,14 @@
 		power_station = null
 	return ..()
 
+/obj/machinery/computer/teleporter/proc/check_for_disabled_beacon(datum/target)
+	if (!target)
+		return
+	if (target.weak_reference != target_ref)
+		return
+	turn_off()
+	set_teleport_target(null)
+
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
 		return
@@ -39,6 +53,7 @@
 	return power_station
 
 /obj/machinery/computer/teleporter/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Teleporter", name)
@@ -54,7 +69,7 @@
 	data["power_station"] = power_station ? TRUE : FALSE
 	data["teleporter_hub"] = power_station?.teleporter_hub ? TRUE : FALSE
 	data["regime_set"] = regime_set
-	data["target"] = !target ? "None" : "[get_area(target)] [(regime_set != "Gate") ? "" : "Teleporter"]"
+	data["target"] = !target ? "None" : "[get_area(target)] [(regime_set != REGIME_GATE) ? "" : REGIME_TELEPORTER]"
 	data["calibrating"] = calibrating
 
 	if(power_station?.teleporter_hub?.calibrated || power_station?.teleporter_hub?.accuracy >= 3)
@@ -63,6 +78,11 @@
 		data["calibrated"] = FALSE
 
 	return data
+
+/obj/machinery/computer/teleporter/proc/turn_off()
+	power_station.engaged = FALSE
+	power_station.teleporter_hub.update_appearance()
+	power_station.teleporter_hub.calibrated = FALSE
 
 /obj/machinery/computer/teleporter/ui_act(action, params)
 	. = ..()
@@ -78,15 +98,11 @@
 
 	switch(action)
 		if("regimeset")
-			power_station.engaged = FALSE
-			power_station.teleporter_hub.update_appearance()
-			power_station.teleporter_hub.calibrated = FALSE
+			turn_off()
 			reset_regime()
 			. = TRUE
 		if("settarget")
-			power_station.engaged = FALSE
-			power_station.teleporter_hub.update_appearance()
-			power_station.teleporter_hub.calibrated = FALSE
+			turn_off()
 			set_target(usr)
 			. = TRUE
 		if("calibrate")
@@ -100,15 +116,22 @@
 			say("Processing hub calibration to target...")
 			calibrating = TRUE
 			power_station.update_appearance()
-			addtimer(CALLBACK(src, .proc/finish_calibration), 50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
+			addtimer(CALLBACK(src, PROC_REF(finish_calibration)), 50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
 			return TRUE
 
 /obj/machinery/computer/teleporter/proc/set_teleport_target(new_target)
+	var/datum/old_target
 	var/datum/weakref/new_target_ref = WEAKREF(new_target)
 	if (target_ref == new_target_ref)
 		return
+	if (target_ref)
+		old_target = target_ref.resolve()
 	SEND_SIGNAL(src, COMSIG_TELEPORTER_NEW_TARGET, new_target)
 	target_ref = new_target_ref
+	if (istype(old_target, /obj/item/beacon))
+		UnregisterSignal(old_target, COMSIG_BEACON_DISABLED)
+	if (istype(new_target, /obj/item/beacon))
+		RegisterSignal(new_target, COMSIG_BEACON_DISABLED, PROC_REF(check_for_disabled_beacon))
 
 /obj/machinery/computer/teleporter/proc/finish_calibration()
 	calibrating = FALSE
@@ -128,10 +151,10 @@
 
 /obj/machinery/computer/teleporter/proc/reset_regime()
 	set_teleport_target(null)
-	if(regime_set == "Teleporter")
-		regime_set = "Gate"
+	if(regime_set == REGIME_TELEPORTER)
+		regime_set = REGIME_GATE
 	else
-		regime_set = "Teleporter"
+		regime_set = REGIME_TELEPORTER
 
 /// Gets a list of targets to teleport to.
 /// List is an assoc list of descriptors to locations.
@@ -139,32 +162,32 @@
 	var/list/targets = list()
 	var/list/area_index = list()
 
-	if (regime_set == "Teleporter")
+	if (regime_set == REGIME_TELEPORTER)
 		for (var/obj/item/beacon/beacon as anything in GLOB.teleportbeacons)
 			if (!is_eligible(beacon))
 				continue
 
 			if(beacon.renamed)
-				targets[avoid_assoc_duplicate_keys("[beacon.name] ([get_area(beacon)])", area_index)] = beacon
+				targets[avoid_assoc_duplicate_keys("[beacon.name] ([format_text(get_area(beacon))])", area_index)] = beacon
 			else
 				var/area/area = get_area(beacon)
-				targets[avoid_assoc_duplicate_keys(area.name, area_index)] = beacon
+				targets[avoid_assoc_duplicate_keys(format_text(area.name), area_index)] = beacon
 
-		for (var/obj/item/implant/tracking/tracking_implant in GLOB.tracked_implants)
-			if (!tracking_implant.imp_in || !isliving(tracking_implant.loc) || !tracking_implant.allow_teleport)
+		for (var/obj/item/implant/beacon/tracking_beacon in GLOB.tracked_implants)
+			if (isnull(tracking_beacon.imp_in) || !isliving(tracking_beacon.loc))
 				continue
 
-			var/mob/living/implanted = tracking_implant.loc
-			if (implanted.stat == DEAD && implanted.timeofdeath + tracking_implant.lifespan_postmortem < world.time)
+			var/mob/living/implanted = tracking_beacon.loc
+			if (implanted.stat == DEAD && implanted.timeofdeath + tracking_beacon.lifespan_postmortem < world.time)
 				continue
 
-			if (is_eligible(tracking_implant))
-				targets[avoid_assoc_duplicate_keys("[implanted.real_name] ([get_area(implanted)])", area_index)] = tracking_implant
+			if (is_eligible(tracking_beacon))
+				targets[avoid_assoc_duplicate_keys("[implanted.real_name] ([format_text(get_area(implanted))])", area_index)] = tracking_beacon
 	else
 		for (var/obj/machinery/teleport/station/station as anything in power_station.linked_stations)
 			if (is_eligible(station) && station.teleporter_hub)
 				var/area/area = get_area(station)
-				targets[avoid_assoc_duplicate_keys(area.name, area_index)] = station
+				targets[avoid_assoc_duplicate_keys(format_text(area.name), area_index)] = station
 
 	return targets
 
@@ -182,22 +205,25 @@
 /obj/machinery/computer/teleporter/proc/set_target(mob/user)
 	var/list/targets = get_targets()
 
-	if (regime_set == "Teleporter")
-		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in sortList(targets)
+	if (regime_set == REGIME_TELEPORTER)
+		var/desc = tgui_input_list(usr, "Select a location to lock in", "Locking Computer", sort_list(targets))
+		if(isnull(desc) || !user.can_perform_action(src, ALLOW_SILICON_REACH))
+			return
 		set_teleport_target(targets[desc])
-		var/turf/target_turf = get_turf(targets[desc])
-		log_game("[key_name(user)] has set the teleporter target to [targets[desc]] at [AREACOORD(target_turf)]")
+		user.log_message("set the teleporter target to [targets[desc]].]", LOG_GAME)
 	else
-		if (targets.len == 0)
+		if (!length(targets))
 			to_chat(user, span_alert("No active connected stations located."))
 			return
 
-		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in sortList(targets)
+		var/desc = tgui_input_list(usr, "Select a station to lock in", "Locking Computer", sort_list(targets))
+		if(isnull(desc)|| !user.can_perform_action(src, ALLOW_SILICON_REACH))
+			return
 		var/obj/machinery/teleport/station/target_station = targets[desc]
 		if(!target_station || !target_station.teleporter_hub)
 			return
 		var/turf/target_station_turf = get_turf(target_station)
-		log_game("[key_name(user)] has set the teleporter target to [target_station] at [AREACOORD(target_station_turf)]")
+		user.log_message("set the teleporter target to [target_station_turf].", LOG_GAME)
 		set_teleport_target(target_station.teleporter_hub)
 		lock_in_station(target_station)
 
@@ -208,9 +234,13 @@
 	if(is_centcom_level(T.z) || is_away_level(T.z))
 		return FALSE
 	var/area/A = get_area(T)
-	if(!A ||(A.area_flags & NOTELEPORT))
+	if(!A || (A.area_flags & NOTELEPORT))
 		return FALSE
 	return TRUE
+
+
+#undef REGIME_TELEPORTER
+#undef REGIME_GATE
 
 /obj/item/circuit_component/teleporter_control_console
 	display_name = "Teleporter Control Console"
@@ -227,37 +257,31 @@
 
 	var/obj/machinery/computer/teleporter/attached_console
 
-/obj/item/circuit_component/teleporter_control_console/Initialize()
-	. = ..()
+/obj/item/circuit_component/teleporter_control_console/populate_ports()
 
 	new_target = add_input_port("New Target", PORT_TYPE_STRING)
 	set_target_trigger = add_input_port("Set Target", PORT_TYPE_SIGNAL)
 	update_trigger = add_input_port("Update Targets", PORT_TYPE_SIGNAL)
 
 	current_target = add_output_port("Current Target", PORT_TYPE_STRING)
-	possible_targets = add_output_port("Possible Targets", PORT_TYPE_LIST)
+	possible_targets = add_output_port("Possible Targets", PORT_TYPE_LIST(PORT_TYPE_ANY))
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/teleporter_control_console/register_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/teleporter_control_console/register_usb_parent(atom/movable/shell)
 	. = ..()
 
-	if (istype(parent, /obj/machinery/computer/teleporter))
-		attached_console = parent
+	if (istype(shell, /obj/machinery/computer/teleporter))
+		attached_console = shell
 
-		RegisterSignal(attached_console, COMSIG_TELEPORTER_NEW_TARGET, .proc/on_teleporter_new_target)
+		RegisterSignal(attached_console, COMSIG_TELEPORTER_NEW_TARGET, PROC_REF(on_teleporter_new_target))
 		update_targets()
 
-/obj/item/circuit_component/teleporter_control_console/unregister_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/teleporter_control_console/unregister_usb_parent(atom/movable/shell)
 	UnregisterSignal(attached_console, COMSIG_TELEPORTER_NEW_TARGET)
 	attached_console = null
 	return attached_console
 
 /obj/item/circuit_component/teleporter_control_console/input_received(datum/port/input/port)
-	. = ..()
-
-	if (.)
-		return .
-
 	var/list/targets = attached_console.get_targets()
 
 	if (COMPONENT_TRIGGERED_BY(set_target_trigger, port))

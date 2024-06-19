@@ -20,8 +20,8 @@
 /datum/gas_mixture/immutable/merge()
 	return FALSE //we're immutable.
 
-/datum/gas_mixture/immutable/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
-	. = ..(sharer, 0)
+/datum/gas_mixture/immutable/share(datum/gas_mixture/sharer, our_coeff, sharer_coeff)
+	. = ..()
 	sharer.temperature = initial_temperature
 	garbage_collect()
 
@@ -34,10 +34,7 @@
 /datum/gas_mixture/immutable/copy_from()
 	return FALSE //we're immutable.
 
-/datum/gas_mixture/immutable/copy_from_turf()
-	return FALSE //we're immutable.
-
-/datum/gas_mixture/immutable/parse_gas_string()
+/datum/gas_mixture/immutable/copy_from_ratio()
 	return FALSE //we're immutable.
 
 /datum/gas_mixture/immutable/temperature_share(datum/gas_mixture/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity)

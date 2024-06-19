@@ -1,29 +1,91 @@
 /turf/open
 	plane = FLOOR_PLANE
-	var/slowdown = 0 //negative for faster, positive for slower
+	///negative for faster, positive for slower
+	var/slowdown = 0
 
 	var/footstep = null
 	var/barefootstep = null
 	var/clawfootstep = null
 	var/heavyfootstep = null
 
-//direction is direction of travel of A
-/turf/open/zPassIn(atom/movable/A, direction, turf/source)
-	if(direction == DOWN)
-		for(var/obj/O in contents)
-			if(O.obj_flags & BLOCK_Z_IN_DOWN)
-				return FALSE
-		return TRUE
-	return FALSE
+	/// Determines the type of damage overlay that will be used for the tile
+	var/damaged_dmi = null
+	var/broken = FALSE
+	var/burnt = FALSE
+
+
+/// Returns a list of every turf state considered "broken".
+/// Will be randomly chosen if a turf breaks at runtime.
+/turf/open/proc/broken_states()
+	return list()
+
+/// Returns a list of every turf state considered "burnt".
+/// Will be randomly chosen if a turf is burnt at runtime.
+/turf/open/proc/burnt_states()
+	return list()
+
+/turf/open/break_tile()
+	if(isnull(damaged_dmi) || broken)
+		return FALSE
+	broken = TRUE
+	update_appearance()
+	return TRUE
+
+/turf/open/burn_tile()
+	if(isnull(damaged_dmi) || burnt)
+		return FALSE
+	burnt = TRUE
+	update_appearance()
+	return TRUE
+
+/turf/open/update_overlays()
+	if(isnull(damaged_dmi))
+		return ..()
+
+	. = ..()
+
+	if(broken)
+		var/mutable_appearance/broken_appearance = mutable_appearance(damaged_dmi, pick(broken_states()))
+
+		if(smoothing_flags && !(smoothing_flags & SMOOTH_BROKEN_TURF))
+			var/matrix/translation = new
+			translation.Translate(-LARGE_TURF_SMOOTHING_X_OFFSET, -LARGE_TURF_SMOOTHING_Y_OFFSET)
+			broken_appearance.transform = translation
+
+		. += broken_appearance
+
+	else if(burnt)
+		var/list/burnt_states = burnt_states()
+		var/mutable_appearance/burnt_appearance
+		if(burnt_states.len)
+			burnt_appearance = mutable_appearance(damaged_dmi, pick(burnt_states))
+		else
+			burnt_appearance = mutable_appearance(damaged_dmi, pick(broken_states()))
+
+		if(smoothing_flags && !(smoothing_flags & SMOOTH_BURNT_TURF))
+			var/matrix/translation = new
+			translation.Translate(-LARGE_TURF_SMOOTHING_X_OFFSET, -LARGE_TURF_SMOOTHING_Y_OFFSET)
+			burnt_appearance.transform = translation
+
+		. += burnt_appearance
 
 //direction is direction of travel of A
-/turf/open/zPassOut(atom/movable/A, direction, turf/destination)
-	if(direction == UP)
-		for(var/obj/O in contents)
-			if(O.obj_flags & BLOCK_Z_OUT_UP)
-				return FALSE
-		return TRUE
-	return FALSE
+/turf/open/zPassIn(direction)
+	if(direction != DOWN)
+		return FALSE
+	for(var/obj/on_us in contents)
+		if(on_us.obj_flags & BLOCK_Z_IN_DOWN)
+			return FALSE
+	return TRUE
+
+//direction is direction of travel of an atom
+/turf/open/zPassOut(direction)
+	if(direction != UP)
+		return FALSE
+	for(var/obj/on_us in contents)
+		if(on_us.obj_flags & BLOCK_Z_OUT_UP)
+			return FALSE
+	return TRUE
 
 //direction is direction of travel of air
 /turf/open/zAirIn(direction, turf/source)
@@ -33,8 +95,26 @@
 /turf/open/zAirOut(direction, turf/source)
 	return (direction == UP)
 
+/turf/open/update_icon()
+	. = ..()
+	update_visuals()
+
+/**
+ * Replace an open turf with another open turf while avoiding the pitfall of replacing plating with a floor tile, leaving a hole underneath.
+ * This replaces the current turf if it is plating and is passed plating, is tile and is passed tile.
+ * It places the new turf on top of itself if it is plating and is passed a tile.
+ * It also replaces the turf if it is tile and is passed plating, essentially destroying the over turf.
+ * Flags argument is passed directly to ChangeTurf or PlaceOnTop
+ */
+/turf/open/proc/replace_floor(turf/open/new_floor_path, flags)
+	if (!overfloor_placed && initial(new_floor_path.overfloor_placed))
+		place_on_top(new_floor_path, flags = flags)
+		return
+	ChangeTurf(new_floor_path, flags = flags)
+
 /turf/open/indestructible
 	name = "floor"
+	desc = "The floor you walk on. It looks near-impervious to damage."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	footstep = FOOTSTEP_FLOOR
@@ -53,16 +133,38 @@
 /turf/open/indestructible/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)
 	return
 
+
+/turf/open/indestructible/large
+	icon_state = "floor_large"
+
 /turf/open/indestructible/white
 	icon_state = "white"
 
+/turf/open/indestructible/white/smooth_large
+	icon_state = "white_large"
+
+/turf/open/indestructible/white/textured
+	icon_state = "textured_white"
+
+/turf/open/indestructible/dark
+	icon_state = "darkfull"
+
+/turf/open/indestructible/dark/textured
+	icon_state = "textured_dark"
+
+/turf/open/indestructible/dark/smooth_large
+	icon_state = "dark_large"
+
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
+	light_range = 3
+	light_color = LIGHT_COLOR_CYAN
+	light_on = TRUE
 
 /turf/open/indestructible/permalube
 	icon_state = "darkfull"
 
-/turf/open/indestructible/permalube/ComponentInitialize()
+/turf/open/indestructible/permalube/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wet_floor, TURF_WET_LUBE, INFINITY, 0, INFINITY, TRUE)
 
@@ -73,9 +175,9 @@
 	barefootstep = null
 	clawfootstep = null
 	heavyfootstep = null
-	var/sound = 'sound/effects/clownstep1.ogg'
+	var/sound = 'sound/effects/footstep/clownstep1.ogg'
 
-/turf/open/indestructible/honk/ComponentInitialize()
+/turf/open/indestructible/honk/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wet_floor, TURF_WET_SUPERLUBE, INFINITY, 0, INFINITY, TRUE)
 
@@ -97,7 +199,7 @@
 	heavyfootstep = FOOTSTEP_LAVA
 	tiled_dirt = FALSE
 
-/turf/open/indestructible/necropolis/Initialize()
+/turf/open/indestructible/necropolis/Initialize(mapload)
 	. = ..()
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
@@ -141,7 +243,7 @@
 
 /turf/open/indestructible/binary
 	name = "tear in the fabric of reality"
-	CanAtmosPass = ATMOS_PASS_NO
+	can_atmos_pass = ATMOS_PASS_NO
 	baseturfs = /turf/open/indestructible/binary
 	icon_state = "binary"
 	footstep = null
@@ -152,21 +254,53 @@
 /turf/open/indestructible/airblock
 	icon_state = "bluespace"
 	blocks_air = TRUE
+	init_air = FALSE
 	baseturfs = /turf/open/indestructible/airblock
 
-/turf/open/Initalize_Atmos(times_fired)
+/turf/open/indestructible/meat
+	icon_state = "meat"
+	footstep = FOOTSTEP_MEAT
+	barefootstep = FOOTSTEP_MEAT
+	clawfootstep = FOOTSTEP_MEAT
+	heavyfootstep = FOOTSTEP_MEAT
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	baseturfs = /turf/open/indestructible/meat
+
+/turf/open/indestructible/meat/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/indestructible/vault
+	icon_state = "rockvault"
+
+/turf/open/indestructible/plating
+	name = "plating"
+	icon_state = "plating"
+	desc = "The attachment points are all bent to uselessness, looks nigh-impervious to damage."
+	overfloor_placed = FALSE
+	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
+	footstep = FOOTSTEP_PLATING
+
+/turf/open/indestructible/plating/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/indestructible/kitchen
+	icon_state = /turf/open/floor/iron/kitchen::icon_state
+
+/turf/open/indestructible/rockyground
+	icon_state = /turf/open/misc/ashplanet/rocky::icon_state
+	icon = /turf/open/misc/ashplanet/rocky::icon
+	name = /turf/open/misc/ashplanet/rocky::name
+
+/turf/open/indestructible/stone
+	icon_state = /turf/open/floor/stone::icon_state
+	name = /turf/open/floor/stone::name
+
+/turf/open/Initalize_Atmos(time)
 	excited = FALSE
 	update_visuals()
 
-	current_cycle = times_fired
-	ImmediateCalculateAdjacentTurfs()
-	for(var/i in atmos_adjacent_turfs)
-		var/turf/open/enemy_tile = i
-		var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
-		if(!excited && air.compare(enemy_air))
-			//testing("Active turf found. Return value of compare(): [is_active]")
-			excited = TRUE
-			SSair.active_turfs += src
+	current_cycle = time
+	init_immediate_calculate_adjacent_turfs()
 
 /turf/open/GetHeatCapacity()
 	. = air.heat_capacity()
@@ -178,14 +312,13 @@
 	air.temperature += temp
 	air_update_turf(FALSE, FALSE)
 
-/turf/open/proc/freon_gas_act()
+/turf/open/proc/freeze_turf()
 	for(var/obj/I in contents)
-		if(I.resistance_flags & FREEZE_PROOF)
-			continue
-		if(!(I.obj_flags & FROZEN))
-			I.make_frozen_visual()
+		if(!HAS_TRAIT(I, TRAIT_FROZEN) && !(I.resistance_flags & FREEZE_PROOF))
+			I.AddElement(/datum/element/frozen)
+
 	for(var/mob/living/L in contents)
-		if(L.bodytemperature <= 50)
+		if(L.bodytemperature <= 50 && !HAS_TRAIT(L, TRAIT_RESISTCOLD))
 			L.apply_status_effect(/datum/status_effect/freon)
 	MakeSlippery(TURF_WET_PERMAFROST, 50)
 	return TRUE
@@ -193,63 +326,83 @@
 /turf/open/proc/water_vapor_gas_act()
 	MakeSlippery(TURF_WET_WATER, min_wet_time = 100, wet_time_to_add = 50)
 
-	for(var/mob/living/simple_animal/slime/M in src)
+	for(var/mob/living/basic/slime/M in src)
 		M.apply_water()
 
 	wash(CLEAN_WASH)
-	for(var/am in src)
-		var/atom/movable/movable_content = am
+	for(var/atom/movable/movable_content as anything in src)
 		if(ismopable(movable_content)) // Will have already been washed by the wash call above at this point.
 			continue
 		movable_content.wash(CLEAN_WASH)
 	return TRUE
 
-/turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube, paralyze_amount, force_drop)
-	if(C.movement_type & FLYING)
+/turf/open/handle_slip(mob/living/carbon/slipper, knockdown_amount, obj/slippable, lube, paralyze_amount, force_drop)
+	if(slipper.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return FALSE
-	if(has_gravity(src))
-		var/obj/buckled_obj
-		if(C.buckled)
-			buckled_obj = C.buckled
-			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
-				return FALSE
-		else
-			if(!(lube & SLIP_WHEN_CRAWLING) && (C.body_position == LYING_DOWN || !(C.status_flags & CANKNOCKDOWN))) // can't slip unbuckled mob if they're lying or can't fall.
-				return FALSE
-			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
-				return FALSE
-		if(!(lube&SLIDE_ICE))
-			to_chat(C, span_notice("You slipped[ O ? " on the [O.name]" : ""]!"))
-			playsound(C.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
+	if(!has_gravity(src))
+		return FALSE
 
-		SEND_SIGNAL(C, COMSIG_ON_CARBON_SLIP)
-		if(force_drop)
-			for(var/obj/item/I in C.held_items)
-				C.accident(I)
+	var/slide_distance = 4
+	if(lube & SLIDE_ICE)
+		// Ice slides only go 1 tile, this is so you will slip across ice until you reach a non-slip tile
+		slide_distance = 1
+	else if(HAS_TRAIT(slipper, TRAIT_CURSED))
+		// When cursed, all slips send you flying
+		lube |= SLIDE
+		slide_distance = rand(5, 9)
+	else if(HAS_TRAIT(slipper, TRAIT_NO_SLIP_SLIDE))
+		// Stops sliding
+		slide_distance = 0
 
-		var/olddir = C.dir
-		C.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
-		if(!(lube & SLIDE_ICE))
-			C.Knockdown(knockdown_amount)
-			C.Paralyze(paralyze_amount)
-			C.stop_pulling()
-		else
-			C.Knockdown(20)
+	var/obj/buckled_obj
+	if(slipper.buckled)
+		if(!(lube & GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
+			return FALSE
+		buckled_obj = slipper.buckled
+	else
+		if(!(lube & SLIP_WHEN_CRAWLING) && (slipper.body_position == LYING_DOWN || !(slipper.status_flags & CANKNOCKDOWN))) // can't slip unbuckled mob if they're lying or can't fall.
+			return FALSE
+		if(slipper.move_intent == MOVE_INTENT_WALK && (lube & NO_SLIP_WHEN_WALKING))
+			return FALSE
 
-		if(buckled_obj)
-			buckled_obj.unbuckle_mob(C)
-			lube |= SLIDE_ICE
+	if(!(lube & SLIDE_ICE))
+		// Ice slides are intended to be combo'd so don't give the feedback
+		to_chat(slipper, span_notice("You slipped[ slippable ? " on the [slippable.name]" : ""]!"))
+		playsound(slipper.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
-		if(lube&SLIDE)
-			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, /mob/living/carbon/.proc/spin, 1, 1))
-		else if(lube&SLIDE_ICE)
-			if(C.force_moving) //If we're already slipping extend it
-				qdel(C.force_moving)
-			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE) //spinning would be bad for ice, fucks up the next dir
-		return TRUE
+	SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
+	slipper.add_mood_event("slipped", /datum/mood_event/slipped)
+	if(force_drop)
+		for(var/obj/item/item in slipper.held_items)
+			slipper.accident(item)
 
-/turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0, max_wet_time = MAXIMUM_WET_TIME, permanent)
-	AddComponent(/datum/component/wet_floor, wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
+	var/olddir = slipper.dir
+	slipper.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
+	if(lube & SLIDE_ICE)
+		// They need to be kept upright to maintain the combo effect (So don't knockdown)
+		slipper.Immobilize(1 SECONDS)
+		slipper.incapacitate(1 SECONDS)
+	else
+		slipper.Knockdown(knockdown_amount)
+		slipper.Paralyze(paralyze_amount)
+		slipper.stop_pulling()
+
+	if(buckled_obj)
+		buckled_obj.unbuckle_mob(slipper)
+		// This is added onto the end so they slip "out of their chair" (one tile)
+		lube |= SLIDE_ICE
+		slide_distance = 1
+
+	if(slide_distance)
+		var/turf/target = get_ranged_target_turf(slipper, olddir, slide_distance)
+		if(lube & SLIDE)
+			slipper.AddComponent(/datum/component/force_move, target, TRUE)
+		else if(lube & SLIDE_ICE)
+			slipper.AddComponent(/datum/component/force_move, target, FALSE)//spinning would be bad for ice, fucks up the next dir
+	return TRUE
+
+/turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0, max_wet_time = MAXIMUM_WET_TIME, permanent = FALSE, should_display_overlay = TRUE)
+	AddComponent(/datum/component/wet_floor, wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent, should_display_overlay)
 
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER, immediate = FALSE, amount = INFINITY)
 	SEND_SIGNAL(src, COMSIG_TURF_MAKE_DRY, wet_setting, immediate, amount)
@@ -260,28 +413,80 @@
 /turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperyness from the tile instead of the natural drying over time
 	qdel(GetComponent(/datum/component/wet_floor))
 
-/turf/open/rad_act(strength)
-	. = ..()
-	var/gas_change = FALSE
-	var/list/cached_gases = air.gases
-	if(cached_gases[/datum/gas/oxygen] && cached_gases[/datum/gas/carbon_dioxide] && air.temperature <= PLUOXIUM_TEMP_CAP)
-		gas_change = TRUE
-		var/pulse_strength = min(strength, cached_gases[/datum/gas/oxygen][MOLES] * 1000, cached_gases[/datum/gas/carbon_dioxide][MOLES] * 2000)
-		cached_gases[/datum/gas/carbon_dioxide][MOLES] -= pulse_strength / 2000
-		cached_gases[/datum/gas/oxygen][MOLES] -= pulse_strength / 1000
-		ASSERT_GAS(/datum/gas/pluoxium, air)
-		cached_gases[/datum/gas/pluoxium][MOLES] += pulse_strength / 4000
-		strength -= pulse_strength
+/// Builds with rods. This doesn't exist to be overriden, just to remove duplicate logic for turfs that want
+/// To support floor tile creation
+/// I'd make it a component, but one of these things is space. So no.
+/turf/open/proc/build_with_rods(obj/item/stack/rods/used_rods, mob/user)
+	var/obj/structure/lattice/catwalk_bait = locate(/obj/structure/lattice, src)
+	var/obj/structure/lattice/catwalk/existing_catwalk = locate(/obj/structure/lattice/catwalk, src)
+	if(existing_catwalk)
+		to_chat(user, span_warning("There is already a catwalk here!"))
+		return
 
-	if(cached_gases[/datum/gas/hydrogen])
-		gas_change = TRUE
-		var/pulse_strength = min(strength, cached_gases[/datum/gas/hydrogen][MOLES] * 1000)
-		cached_gases[/datum/gas/hydrogen][MOLES] -= pulse_strength / 1000
-		ASSERT_GAS(/datum/gas/tritium, air)
-		cached_gases[/datum/gas/tritium][MOLES] += pulse_strength / 1000
-		strength -= pulse_strength
+	if(catwalk_bait)
+		if(used_rods.use(1))
+			qdel(catwalk_bait)
+			to_chat(user, span_notice("You construct a catwalk."))
+			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+			new /obj/structure/lattice/catwalk(src)
+		else
+			to_chat(user, span_warning("You need two rods to build a catwalk!"))
+		return
 
-	if(gas_change)
-		air.garbage_collect()
-		air_update_turf(FALSE, FALSE)
+	if(used_rods.use(1))
+		to_chat(user, span_notice("You construct a lattice."))
+		playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+		new /obj/structure/lattice(src)
+	else
+		to_chat(user, span_warning("You need one rod to build a lattice."))
 
+/// Very similar to build_with_rods, this exists to allow consistent behavior between different types in terms of how
+/// Building floors works
+/turf/open/proc/build_with_floor_tiles(obj/item/stack/tile/iron/used_tiles, user)
+	var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
+	if(!has_valid_support() && !lattice)
+		balloon_alert(user, "needs support, place rods!")
+		return
+	if(!used_tiles.use(1))
+		balloon_alert(user, "need a floor tile to build!")
+		return
+
+	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	var/turf/open/floor/plating/new_plating = place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	if(lattice)
+		qdel(lattice)
+	else
+		new_plating.lattice_underneath = FALSE
+
+/turf/open/proc/has_valid_support()
+	for (var/direction in GLOB.cardinals)
+		if(istype(get_step(src, direction), /turf/open/floor))
+			return TRUE
+	return FALSE
+
+/// Very similar to build_with_rods, this exists to allow consistent behavior between different types in terms of how
+/// Building floors works
+/turf/open/proc/build_with_transport_tiles(obj/item/stack/thermoplastic/used_tiles, user)
+	var/obj/structure/transport/linear/platform = locate(/obj/structure/transport/linear, src)
+	if(!platform)
+		balloon_alert(user, "no tram base!")
+		return
+	if(!used_tiles.use(1))
+		balloon_alert(user, "no tile!")
+		return
+
+	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	new used_tiles.tile_type(src)
+
+/// Very similar to build_with_rods, this exists to allow building transport/tram girders on openspace
+/turf/open/proc/build_with_titanium(obj/item/stack/sheet/mineral/titanium/used_stack, user)
+	var/obj/structure/transport/linear/platform = locate(/obj/structure/transport/linear, src)
+	if(!platform)
+		to_chat(user, span_warning("There is no transport frame to attach the anchor!"))
+		return
+	if(!used_stack.use(2))
+		balloon_alert(user, "not enough titanium!")
+		return
+
+	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	new /obj/structure/girder/tram(src)

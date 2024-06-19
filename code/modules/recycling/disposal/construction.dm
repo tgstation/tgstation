@@ -4,7 +4,7 @@
 /obj/structure/disposalconstruct
 	name = "disposal pipe segment"
 	desc = "A huge pipe segment used for constructing disposal systems."
-	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
+	icon = 'icons/obj/pipes_n_cables/disposal.dmi'
 	icon_state = "conpipe"
 	anchored = FALSE
 	density = FALSE
@@ -33,13 +33,14 @@
 
 	pipename = initial(pipe_type.name)
 
+	AddComponent(/datum/component/simple_rotation, post_rotation = CALLBACK(src, PROC_REF(post_rotation)))
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+
 	if(flip)
 		var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
-		rotcomp.BaseRot(null,ROTATION_FLIP)
+		rotcomp.rotate(usr, ROTATION_FLIP) // this only gets used by pipes created by RPDs or pipe dispensers
 
-	update_appearance()
-
-	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/disposalconstruct/Move()
 	var/old_dir = dir
@@ -82,15 +83,11 @@
 		if(initialize_dirs & DISP_DIR_RIGHT)
 			dpdir |= turn(dir, -90)
 		if(initialize_dirs & DISP_DIR_FLIP)
-			dpdir |= turn(dir, 180)
+			dpdir |= REVERSE_DIR(dir)
 	return dpdir
 
-/obj/structure/disposalconstruct/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_FLIP | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated), CALLBACK(src, .proc/after_rot))
-
-/obj/structure/disposalconstruct/proc/after_rot(mob/user,rotation_type)
-	if(rotation_type == ROTATION_FLIP)
+/obj/structure/disposalconstruct/proc/post_rotation(mob/user, degrees)
+	if(degrees == ROTATION_FLIP)
 		var/obj/structure/disposalpipe/temp = pipe_type
 		if(initial(temp.flip_type))
 			if(ISDIAGONALDIR(dir)) // Fix RPD-induced diagonal turning
@@ -98,11 +95,6 @@
 			pipe_type = initial(temp.flip_type)
 	update_appearance()
 
-/obj/structure/disposalconstruct/proc/can_be_rotated(mob/user,rotation_type)
-	if(anchored)
-		to_chat(user, span_warning("You must unfasten the pipe before rotating it!"))
-		return FALSE
-	return TRUE
 
 // construction/deconstruction
 // wrench: (un)anchor
@@ -116,7 +108,7 @@
 		var/ispipe = is_pipe() // Indicates if we should change the level of this pipe
 
 		var/turf/T = get_turf(src)
-		if(T.intact && isfloorturf(T))
+		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && isfloorturf(T))
 			var/obj/item/crowbar/held_crowbar = user.is_holding_item_of_type(/obj/item/crowbar)
 			if(!held_crowbar || !T.crowbar_act(user, held_crowbar))
 				to_chat(user, span_warning("You can only attach the [pipename] if the floor plating is removed!"))
@@ -155,7 +147,12 @@
 /obj/structure/disposalconstruct/welder_act(mob/living/user, obj/item/I)
 	..()
 	if(anchored)
-		if(!I.tool_start_check(user, amount=0))
+		var/turf/T = get_turf(src)
+		if(!is_pipe() && ((locate(/obj/machinery/disposal) in T) || ((locate(/obj/structure/disposaloutlet) in T))))
+			to_chat(user, span_warning("A disposals machine already exists here!"))
+			return TRUE
+
+		if(!I.tool_start_check(user, amount=1))
 			return TRUE
 
 		to_chat(user, span_notice("You start welding the [pipename] in place..."))

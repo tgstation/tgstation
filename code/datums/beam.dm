@@ -28,14 +28,50 @@
 	var/beam_type = /obj/effect/ebeam
 	///This is used as the visual_contents of beams, so you can apply one effect to this and the whole beam will look like that. never gets deleted on redrawing.
 	var/obj/effect/ebeam/visuals
+	///The color of the beam we're drawing.
+	var/beam_color
+	///If we use an emissive appearance
+	var/emissive = TRUE
+	/// If set will be used instead of origin's pixel_x in offset calculations
+	var/override_origin_pixel_x = null
+	/// If set will be used instead of origin's pixel_y in offset calculations
+	var/override_origin_pixel_y = null
+	/// If set will be used instead of targets's pixel_x in offset calculations
+	var/override_target_pixel_x = null
+	/// If set will be used instead of targets's pixel_y in offset calculations
+	var/override_target_pixel_y = null
+	///the layer of our beam
+	var/beam_layer
 
-/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=INFINITY,maxdistance=INFINITY,btype = /obj/effect/ebeam)
-	origin = beam_origin
-	target = beam_target
-	max_distance = maxdistance
-	icon = beam_icon
-	icon_state = beam_icon_state
-	beam_type = btype
+/datum/beam/New(
+	origin,
+	target,
+	icon = 'icons/effects/beam.dmi',
+	icon_state = "b_beam",
+	time = INFINITY,
+	max_distance = INFINITY,
+	beam_type = /obj/effect/ebeam,
+	beam_color = null,
+	emissive = TRUE,
+	override_origin_pixel_x = null,
+	override_origin_pixel_y = null,
+	override_target_pixel_x = null,
+	override_target_pixel_y = null,
+	beam_layer = ABOVE_ALL_MOB_LAYER
+)
+	src.origin = origin
+	src.target = target
+	src.icon = icon
+	src.icon_state = icon_state
+	src.max_distance = max_distance
+	src.beam_type = beam_type
+	src.beam_color = beam_color
+	src.emissive = emissive
+	src.override_origin_pixel_x = override_origin_pixel_x
+	src.override_origin_pixel_y = override_origin_pixel_y
+	src.override_target_pixel_x = override_target_pixel_x
+	src.override_target_pixel_y = override_target_pixel_y
+	src.beam_layer = beam_layer
 	if(time < INFINITY)
 		QDEL_IN(src, time)
 
@@ -46,9 +82,14 @@
 	visuals = new beam_type()
 	visuals.icon = icon
 	visuals.icon_state = icon_state
+	visuals.color = beam_color
+	visuals.vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_LAYER
+	visuals.emissive = emissive
+	visuals.layer = beam_layer
+	visuals.update_appearance()
 	Draw()
-	RegisterSignal(origin, COMSIG_MOVABLE_MOVED, .proc/redrawing)
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/redrawing)
+	RegisterSignal(origin, COMSIG_MOVABLE_MOVED, PROC_REF(redrawing))
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(redrawing))
 
 /**
  * Triggered by signals set up when the beam is set up. If it's still sane to create a beam, it removes the old beam, creates a new one. Otherwise it kills the beam.
@@ -62,7 +103,7 @@
 	SIGNAL_HANDLER
 	if(origin && target && get_dist(origin,target)<max_distance && origin.z == target.z)
 		QDEL_LIST(elements)
-		INVOKE_ASYNC(src, .proc/Draw)
+		INVOKE_ASYNC(src, PROC_REF(Draw))
 	else
 		qdel(src)
 
@@ -79,33 +120,40 @@
  * Creates the beam effects and places them in a line from the origin to the target. Sets their rotation to make the beams face the target, too.
  */
 /datum/beam/proc/Draw()
-	var/Angle = round(Get_Angle(origin,target))
+	if(SEND_SIGNAL(src, COMSIG_BEAM_BEFORE_DRAW) & BEAM_CANCEL_DRAW)
+		return
+	var/origin_px = isnull(override_origin_pixel_x) ? origin.pixel_x : override_origin_pixel_x
+	var/origin_py = isnull(override_origin_pixel_y) ? origin.pixel_y : override_origin_pixel_y
+	var/target_px = isnull(override_target_pixel_x) ? target.pixel_x : override_target_pixel_x
+	var/target_py = isnull(override_target_pixel_y) ? target.pixel_y : override_target_pixel_y
+	var/Angle = get_angle_raw(origin.x, origin.y, origin_px, origin_py, target.x , target.y, target_px, target_py)
+	///var/Angle = round(get_angle(origin,target))
 	var/matrix/rot_matrix = matrix()
 	var/turf/origin_turf = get_turf(origin)
 	rot_matrix.Turn(Angle)
 
 	//Translation vector for origin and target
-	var/DX = (32*target.x+target.pixel_x)-(32*origin.x+origin.pixel_x)
-	var/DY = (32*target.y+target.pixel_y)-(32*origin.y+origin.pixel_y)
+	var/DX = (32*target.x+target_px)-(32*origin.x+origin_px)
+	var/DY = (32*target.y+target_py)-(32*origin.y+origin_py)
 	var/N = 0
 	var/length = round(sqrt((DX)**2+(DY)**2)) //hypotenuse of the triangle formed by target and origin's displacement
 
 	for(N in 0 to length-1 step 32)//-1 as we want < not <=, but we want the speed of X in Y to Z and step X
 		if(QDELETED(src))
 			break
-		var/obj/effect/ebeam/X = new beam_type(origin_turf)
-		X.owner = src
-		elements += X
+		var/obj/effect/ebeam/segment = new beam_type(origin_turf, src)
+		elements += segment
 
 		//Assign our single visual ebeam to each ebeam's vis_contents
 		//ends are cropped by a transparent box icon of length-N pixel size laid over the visuals obj
 		if(N+32>length) //went past the target, we draw a box of space to cut away from the beam sprite so the icon actually ends at the center of the target sprite
 			var/icon/II = new(icon, icon_state)//this means we exclude the overshooting object from the visual contents which does mean those visuals don't show up for the final bit of the beam...
 			II.DrawBox(null,1,(length-N),32,32)//in the future if you want to improve this, remove the drawbox and instead use a 513 filter to cut away at the final object's icon
-			X.icon = II
+			segment.icon = II
+			segment.color = beam_color
 		else
-			X.vis_contents += visuals
-		X.transform = rot_matrix
+			segment.vis_contents += visuals
+		segment.transform = rot_matrix
 
 		//Calculate pixel offsets (If necessary)
 		var/Pixel_x
@@ -120,24 +168,39 @@
 			Pixel_y = round(cos(Angle)+32*cos(Angle)*(N+16)/32)
 
 		//Position the effect so the beam is one continous line
-		var/a
+		var/final_x = segment.x
+		var/final_y = segment.y
 		if(abs(Pixel_x)>32)
-			a = Pixel_x > 0 ? round(Pixel_x/32) : CEILING(Pixel_x/32, 1)
-			X.x += a
+			final_x += Pixel_x > 0 ? round(Pixel_x/32) : CEILING(Pixel_x/32, 1)
 			Pixel_x %= 32
 		if(abs(Pixel_y)>32)
-			a = Pixel_y > 0 ? round(Pixel_y/32) : CEILING(Pixel_y/32, 1)
-			X.y += a
+			final_y += Pixel_y > 0 ? round(Pixel_y/32) : CEILING(Pixel_y/32, 1)
 			Pixel_y %= 32
 
-		X.pixel_x = Pixel_x
-		X.pixel_y = Pixel_y
+		segment.forceMove(locate(final_x, final_y, segment.z))
+		segment.pixel_x = origin_px + Pixel_x
+		segment.pixel_y = origin_py + Pixel_y
 		CHECK_TICK
 
 /obj/effect/ebeam
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = ABOVE_ALL_MOB_LAYER
 	anchored = TRUE
+	var/emissive = TRUE
 	var/datum/beam/owner
+
+/obj/effect/ebeam/Initialize(mapload, beam_owner)
+	owner = beam_owner
+	return ..()
+
+/obj/effect/ebeam/update_overlays()
+	. = ..()
+	if(!emissive)
+		return
+	var/mutable_appearance/emissive_overlay = emissive_appearance(icon, icon_state, src)
+	emissive_overlay.transform = transform
+	emissive_overlay.alpha = alpha
+	. += emissive_overlay
 
 /obj/effect/ebeam/Destroy()
 	owner = null
@@ -145,8 +208,68 @@
 
 /obj/effect/ebeam/singularity_pull()
 	return
+
 /obj/effect/ebeam/singularity_act()
 	return
+
+/// A beam subtype used for advanced beams, to react to atoms entering the beam
+/obj/effect/ebeam/reacting
+	/// If TRUE, atoms that exist in the beam's loc when inited count as "entering" the beam
+	var/react_on_init = FALSE
+
+/obj/effect/ebeam/reacting/Initialize(mapload, beam_owner)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_EXITED = PROC_REF(on_exited),
+		COMSIG_TURF_CHANGE = PROC_REF(on_turf_change),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+	if(!isturf(loc) || isnull(owner) || mapload || !react_on_init)
+		return
+
+	for(var/atom/movable/existing as anything in loc)
+		beam_entered(existing)
+
+/obj/effect/ebeam/reacting/proc/on_entered(datum/source, atom/movable/entered)
+	SIGNAL_HANDLER
+
+	if(isnull(owner))
+		return
+
+	beam_entered(entered)
+
+/obj/effect/ebeam/reacting/proc/on_exited(datum/source, atom/movable/exited)
+	SIGNAL_HANDLER
+
+	if(isnull(owner))
+		return
+
+	beam_exited(exited)
+
+/obj/effect/ebeam/reacting/proc/on_turf_change(datum/source, path, new_baseturfs, flags, list/datum/callback/post_change_callbacks)
+	SIGNAL_HANDLER
+
+	if(isnull(owner))
+		return
+
+	beam_turfs_changed(post_change_callbacks)
+
+/// Some atom entered the beam's line
+/obj/effect/ebeam/reacting/proc/beam_entered(atom/movable/entered)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(owner, COMSIG_BEAM_ENTERED, src, entered)
+
+/// Some atom exited the beam's line
+/obj/effect/ebeam/reacting/proc/beam_exited(atom/movable/exited)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(owner, COMSIG_BEAM_EXITED, src, exited)
+
+/// Some turf the beam covers has changed to a new turf type
+/obj/effect/ebeam/reacting/proc/beam_turfs_changed(list/datum/callback/post_change_callbacks)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(owner, COMSIG_BEAM_TURFS_CHANGED, post_change_callbacks)
 
 /**
  * This is what you use to start a beam. Example: origin.Beam(target, args). **Store the return of this proc if you don't set maxdist or time, you need it to delete the beam.**
@@ -160,7 +283,18 @@
  * maxdistance: how far the beam will go before stopping itself. Used mainly for two things: preventing lag if the beam may go in that direction and setting a range to abilities that use beams.
  * beam_type: The type of your custom beam. This is for adding other wacky stuff for your beam only. Most likely, you won't (and shouldn't) change it.
  */
-/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=INFINITY,maxdistance=INFINITY,beam_type=/obj/effect/ebeam)
-	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type)
-	INVOKE_ASYNC(newbeam, /datum/beam/.proc/Start)
+/atom/proc/Beam(atom/BeamTarget,
+	icon_state="b_beam",
+	icon='icons/effects/beam.dmi',
+	time=INFINITY,maxdistance=INFINITY,
+	beam_type=/obj/effect/ebeam,
+	beam_color = null, emissive = TRUE,
+	override_origin_pixel_x = null,
+	override_origin_pixel_y = null,
+	override_target_pixel_x = null,
+	override_target_pixel_y = null,
+	layer = ABOVE_ALL_MOB_LAYER
+)
+	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer)
+	INVOKE_ASYNC(newbeam, TYPE_PROC_REF(/datum/beam/, Start))
 	return newbeam

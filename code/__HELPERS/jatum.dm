@@ -42,7 +42,7 @@
 			"path" = value
 		)
 
-	var/ref = "\ref[value]"
+	var/ref = text_ref(value)
 	var/existing_ref = seen_references[ref]
 	if(existing_ref)
 		return list(
@@ -101,7 +101,7 @@
 			"contents" = list_contents)
 
 	// JATUM is really only meant for PoD types
-	if(!istype(value, /datum)\
+	if(!isdatum(value)\
 		|| istype(value, /image)\
 		|| istype(value, /icon)\
 		|| istype(value, /sound)\
@@ -133,7 +133,7 @@
 	return json_structure
 
 /**
- * Attempt to create a value from a JATUN JSON.
+ * Attempt to create a value from a JATUM JSON.
  *
  * * json - The JSON to deserialize.
  */

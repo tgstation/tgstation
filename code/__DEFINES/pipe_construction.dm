@@ -6,6 +6,7 @@
 #define PIPE_UNARY 4 //4 directions: N, S, E, W
 #define PIPE_ONEDIR 5 //1 direction: N/S/E/W
 #define PIPE_UNARY_FLIPPABLE 6 //8 directions: N/S/E/W/N-flipped/S-flipped/E-flipped/W-flipped
+#define PIPE_ONEDIR_FLIPPABLE 7 //2 direction: N/S/E/W, N-flipped/S-flipped/E-flipped/W-flipped
 
 //Disposal pipe relative connection directions
 #define DISP_DIR_BASE 0

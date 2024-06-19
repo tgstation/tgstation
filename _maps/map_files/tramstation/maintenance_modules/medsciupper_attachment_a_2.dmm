@@ -1,0 +1,288 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/science)
+"b" = (
+/turf/template_noop,
+/area/template_noop)
+"i" = (
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/science)
+"j" = (
+/obj/effect/landmark/blobstart,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/science)
+"k" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"l" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"m" = (
+/mob/living/basic/crab{
+	name = "la creatura";
+	desc = "ay dios mios..."
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/science)
+"s" = (
+/turf/closed/wall/r_wall,
+/area/station/maintenance/department/science)
+"t" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"u" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"x" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/wrench,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"B" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/maintenance/department/science)
+"K" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/door/window/left/directional/north{
+	name = "Containment Pen";
+	req_access = list("xenobiology")
+	},
+/obj/machinery/door/window/left/directional/south{
+	name = "Containment Pen";
+	req_access = list("xenobiology")
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"L" = (
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Creature Containment Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/science)
+"N" = (
+/turf/closed/wall/rock/porous,
+/area/station/maintenance/department/science)
+"P" = (
+/obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
+/obj/item/electropack,
+/obj/item/assembly/signaler,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/science)
+"T" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+"W" = (
+/obj/structure/cable,
+/obj/machinery/power/shieldwallgen/xenobiologyaccess,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science)
+
+(1,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(2,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(3,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(4,1,1) = {"
+b
+s
+s
+s
+s
+s
+N
+B
+B
+b
+b
+b
+"}
+(5,1,1) = {"
+b
+s
+P
+l
+W
+s
+u
+a
+B
+B
+b
+b
+"}
+(6,1,1) = {"
+b
+L
+x
+y
+t
+u
+a
+i
+a
+B
+b
+b
+"}
+(7,1,1) = {"
+b
+s
+k
+k
+K
+u
+m
+a
+T
+N
+b
+b
+"}
+(8,1,1) = {"
+b
+s
+l
+l
+t
+u
+u
+j
+B
+B
+b
+b
+"}
+(9,1,1) = {"
+b
+s
+l
+v
+W
+s
+a
+u
+B
+b
+b
+b
+"}
+(10,1,1) = {"
+b
+s
+s
+s
+s
+s
+a
+N
+B
+b
+b
+b
+"}
+(11,1,1) = {"
+b
+b
+b
+b
+b
+b
+B
+b
+b
+b
+b
+b
+"}
+(12,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(13,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}

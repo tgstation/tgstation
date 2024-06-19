@@ -1,0 +1,112 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'sass:color';
+@use 'sass:meta';
+
+@use '../colors.scss' with (
+  $primary: #24e87e,
+  $label: #24e87e,
+  $good: rgba(36, 232, 127, 0.5),
+  // $fg-map-keys: (),
+  // $bg-map-keys: (),
+);
+@use '../base.scss' with (
+  $color-bg: #121b12,
+  $color-bg-grad-spread: 0%
+);
+
+.theme-ntos_terminal {
+  // Atomic classes
+  @include meta.load-css('../atomic/color.scss');
+
+  // Components
+  @include meta.load-css(
+    '../components/Button.scss',
+    $with: (
+      'color-default': rgba(0, 0, 0, 0),
+      'color-disabled': #4a6a4a,
+      'color-selected': rgba(36, 232, 127, 0.25)
+    )
+  );
+  @include meta.load-css(
+    '../components/Input.scss',
+    $with: ('border-color': colors.$primary)
+  );
+  @include meta.load-css(
+    '../components/ProgressBar.scss',
+    $with: (
+      'background-color': rgba(0, 0, 0, 0.5),
+      'color-default-fill': rgba(36, 232, 127, 0.5)
+    )
+  );
+  @include meta.load-css('../components/Modal.scss');
+  @include meta.load-css('../components/Section.scss');
+
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css(
+    '../layouts/TitleBar.scss',
+    $with: ('background-color': rgba(0, 97, 0, 0.25))
+  );
+
+  .Layout__content {
+    //background-image: none;
+    background-image: repeating-linear-gradient(
+        0deg,
+        rgba(black, 0.15),
+        rgba(black, 0.15) 1px,
+        transparent 2.5px,
+        transparent 5px
+      ),
+      radial-gradient(rgba(0, 97, 0, 0.75), black 120%);
+    background-size: 100%, 100%;
+    background-position: center, center;
+  }
+
+  .Button {
+    font: Inconsolata;
+    color: #24e87e;
+    text-shadow: 0 0 2px #24e87e;
+  }
+  .Button:hover {
+    background-color: rgba(36, 232, 127, 0.25);
+    transition: 0.1s;
+  }
+  .Button--selected {
+    color: #24e87e;
+  }
+
+  body {
+    //background-color: black;
+    color: white;
+    font: 1.3rem Inconsolata;
+    text-shadow: 0 0 2px #24e87e;
+
+    //font: bold 12px Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  }
+  .Section {
+    color: rgb(36, 232, 126);
+  }
+  .Tab {
+    color: #24e87e;
+  }
+  .Tab--selected {
+    color: #24e87e;
+    border: 2px solid #24e87e;
+    background-color: rgba(36, 232, 127, 0.25);
+  }
+  ::selection {
+    background: #0080ff;
+    text-shadow: none;
+  }
+  .Table {
+    text-shadow: 0 0 2px #24e87e;
+  }
+  .Flex {
+    text-shadow: 0 0 2px #24e87e;
+  }
+}

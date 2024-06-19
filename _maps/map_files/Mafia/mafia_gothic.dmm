@@ -1,68 +1,60 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/indestructible/riveted,
-/area/mafia)
+/area/centcom/mafia)
 "b" = (
 /turf/closed/wall/mineral/iron,
-/area/mafia)
+/area/centcom/mafia)
 "c" = (
 /turf/closed/wall/rust,
-/area/mafia)
+/area/centcom/mafia)
 "d" = (
 /turf/open/floor/plating,
-/area/mafia)
-"e" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/mafia)
+/area/centcom/mafia)
 "f" = (
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/mafia)
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
 "g" = (
 /obj/mafia_game_board,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/mafia)
-"h" = (
-/obj/structure/grille/indestructable,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/mafia)
+/area/centcom/mafia)
+"h" = (
+/obj/structure/grille/indestructible,
+/turf/open/floor/plating,
+/area/centcom/mafia)
 "i" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/mafia)
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
 "j" = (
 /turf/closed/indestructible/fakedoor,
-/area/mafia)
+/area/centcom/mafia)
 "k" = (
 /obj/mafia_game_board,
 /turf/open/floor/plating,
-/area/mafia)
+/area/centcom/mafia)
 "l" = (
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/carpet/red,
-/area/mafia)
+/area/centcom/mafia)
 "m" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/carpet/red,
-/area/mafia)
+/area/centcom/mafia)
 "n" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/iron/chapel{
 	dir = 1
 	},
-/area/mafia)
+/area/centcom/mafia)
 "o" = (
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/iron/chapel{
 	dir = 4
 	},
-/area/mafia)
+/area/centcom/mafia)
 "p" = (
 /obj/machinery/door/poddoor/preopen{
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
@@ -70,83 +62,90 @@
 	max_integrity = 99999;
 	name = "Station Night Shutters"
 	},
-/turf/closed/indestructible/opsglass,
-/area/mafia)
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/space/basic,
+/area/centcom/mafia)
 "q" = (
 /turf/open/floor/carpet/red,
-/area/mafia)
+/area/centcom/mafia)
 "r" = (
 /turf/open/floor/iron/chapel{
 	dir = 8
 	},
-/area/mafia)
+/area/centcom/mafia)
 "t" = (
 /turf/open/floor/carpet/royalblack,
-/area/mafia)
+/area/centcom/mafia)
 "u" = (
 /obj/effect/baseturf_helper/asteroid,
 /obj/effect/landmark/mafia/town_center,
 /turf/open/floor/carpet/royalblack,
-/area/mafia)
+/area/centcom/mafia)
 "v" = (
 /obj/mafia_game_board,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/mafia)
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/centcom/mafia)
+"y" = (
+/turf/template_noop,
+/area/template_noop)
 "D" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/iron/chapel{
 	dir = 4
 	},
-/area/mafia)
+/area/centcom/mafia)
 "E" = (
 /turf/open/floor/iron/chapel{
 	dir = 4
 	},
-/area/mafia)
+/area/centcom/mafia)
 "H" = (
 /obj/structure/closet/cabinet{
 	anchored = 1
 	},
 /turf/open/floor/carpet/red,
-/area/mafia)
+/area/centcom/mafia)
 "J" = (
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/iron/chapel{
 	dir = 1
 	},
-/area/mafia)
+/area/centcom/mafia)
 "M" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/iron/chapel{
 	dir = 8
 	},
-/area/mafia)
+/area/centcom/mafia)
 "N" = (
 /obj/effect/landmark/mafia,
 /turf/open/floor/iron/chapel,
-/area/mafia)
+/area/centcom/mafia)
 "O" = (
 /turf/open/floor/iron/chapel,
-/area/mafia)
+/area/centcom/mafia)
 "P" = (
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/iron/chapel,
-/area/mafia)
+/area/centcom/mafia)
 "Q" = (
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/iron/chapel{
 	dir = 8
 	},
-/area/mafia)
+/area/centcom/mafia)
+"U" = (
+/turf/closed/wall/r_wall,
+/area/centcom/mafia)
 "X" = (
 /turf/open/floor/iron/chapel{
 	dir = 1
 	},
-/area/mafia)
+/area/centcom/mafia)
 
 (1,1,1) = {"
+y
 a
 a
 a
@@ -168,38 +167,37 @@ a
 a
 a
 a
-a
-a
+y
 "}
 (2,1,1) = {"
+y
 a
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
 a
+y
 "}
 (3,1,1) = {"
+y
 a
-b
-b
+U
 c
 c
 c
@@ -217,14 +215,14 @@ c
 c
 c
 c
-b
-b
+U
 a
+y
 "}
 (4,1,1) = {"
+y
 a
-b
-b
+U
 c
 g
 h
@@ -233,7 +231,7 @@ d
 d
 d
 d
-e
+i
 d
 d
 d
@@ -242,19 +240,19 @@ d
 h
 k
 c
-b
-b
+U
 a
+y
 "}
 (5,1,1) = {"
 a
-b
-b
+a
+U
 c
 h
 d
 d
-e
+i
 b
 b
 j
@@ -267,14 +265,14 @@ d
 i
 h
 c
-b
-b
+U
+a
 a
 "}
 (6,1,1) = {"
 a
-b
-b
+U
+U
 c
 i
 b
@@ -292,13 +290,13 @@ b
 b
 d
 c
-b
-b
+U
+U
 a
 "}
 (7,1,1) = {"
 a
-b
+U
 c
 c
 d
@@ -306,11 +304,11 @@ b
 J
 r
 p
-m
+q
 q
 p
 E
-N
+O
 p
 q
 l
@@ -318,17 +316,17 @@ b
 d
 c
 c
-b
+U
 a
 "}
 (8,1,1) = {"
 a
-b
+U
 c
 d
 d
 b
-D
+E
 O
 b
 b
@@ -338,42 +336,42 @@ r
 b
 b
 q
-m
+q
 b
 d
 d
 c
-b
+U
 a
 "}
 (9,1,1) = {"
 a
-b
+U
 c
 d
 b
 b
 p
 X
-r
+M
 p
-q
+m
 p
-O
+N
 p
-q
+m
 q
 p
 b
 b
 d
 c
-b
+U
 a
 "}
 (10,1,1) = {"
 a
-b
+U
 c
 d
 b
@@ -393,39 +391,39 @@ Q
 b
 d
 c
-b
+U
 a
 "}
 (11,1,1) = {"
 a
-b
+U
 c
 d
 j
+q
+q
+q
 m
-q
-q
-q
 p
 t
 t
 t
 p
-X
+n
 r
 E
-N
+O
 j
-e
+i
 c
-b
+U
 a
 "}
 (12,1,1) = {"
 a
-b
+U
 c
-e
+i
 b
 b
 p
@@ -443,37 +441,37 @@ b
 b
 d
 c
-b
+U
 a
 "}
 (13,1,1) = {"
 a
-b
+U
 c
 d
 j
-n
+X
 r
 E
-O
+N
 p
 t
 t
 t
 p
-q
-q
-q
 m
+q
+q
+q
 j
 d
 c
-b
+U
 a
 "}
 (14,1,1) = {"
 a
-b
+U
 c
 d
 b
@@ -493,42 +491,42 @@ l
 b
 i
 c
-b
+U
 a
 "}
 (15,1,1) = {"
 a
-b
+U
 c
 d
 b
 b
 p
 q
-q
+m
 p
-X
+n
 p
-q
+m
 p
-E
+D
 O
 p
 b
 b
 d
 c
-b
+U
 a
 "}
 (16,1,1) = {"
 a
-b
+U
 c
 f
 d
 b
-m
+q
 q
 b
 b
@@ -538,17 +536,17 @@ q
 b
 b
 X
-M
+r
 b
 d
 d
 c
-b
+U
 a
 "}
 (17,1,1) = {"
 a
-b
+U
 c
 c
 d
@@ -556,11 +554,11 @@ b
 l
 q
 p
-n
+X
 r
 p
 q
-m
+q
 p
 E
 P
@@ -568,13 +566,13 @@ b
 d
 c
 c
-b
+U
 a
 "}
 (18,1,1) = {"
 a
-b
-b
+U
+U
 c
 d
 b
@@ -592,14 +590,14 @@ b
 b
 d
 c
-b
-b
+U
+U
 a
 "}
 (19,1,1) = {"
 a
-b
-b
+a
+U
 c
 h
 i
@@ -613,24 +611,24 @@ j
 b
 b
 d
-e
+i
 d
 h
 c
-b
-b
+U
+a
 a
 "}
 (20,1,1) = {"
+y
 a
-b
-b
+U
 c
 k
 h
 d
 d
-e
+i
 d
 d
 d
@@ -642,14 +640,14 @@ d
 h
 v
 c
-b
-b
+U
 a
+y
 "}
 (21,1,1) = {"
+y
 a
-b
-b
+U
 c
 c
 c
@@ -667,36 +665,37 @@ c
 c
 c
 c
-b
-b
+U
 a
+y
 "}
 (22,1,1) = {"
+y
 a
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
 a
+y
 "}
 (23,1,1) = {"
+y
 a
 a
 a
@@ -718,6 +717,5 @@ a
 a
 a
 a
-a
-a
+y
 "}

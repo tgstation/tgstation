@@ -1,0 +1,3 @@
+# modifies simple_animal ghosts into the new basic mob ghost type
+
+/mob/living/simple_animal/hostile/retaliate/ghost : /mob/living/basic/ghost{@OLD}

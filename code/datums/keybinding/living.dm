@@ -76,7 +76,7 @@
 	return TRUE
 
 /datum/keybinding/living/toggle_combat_mode
-	hotkey_keys = list("F", "4")
+	hotkey_keys = list("F")
 	name = "toggle_combat_mode"
 	full_name = "Toggle Combat Mode"
 	description = "Toggles combat mode. Like Help/Harm but cooler."
@@ -91,7 +91,7 @@
 	user_mob.set_combat_mode(!user_mob.combat_mode, FALSE)
 
 /datum/keybinding/living/enable_combat_mode
-	hotkey_keys = list("Unbound")
+	hotkey_keys = list("4")
 	name = "enable_combat_mode"
 	full_name = "Enable Combat Mode"
 	description = "Enable combat mode."
@@ -105,7 +105,7 @@
 	user_mob.set_combat_mode(TRUE, silent = FALSE)
 
 /datum/keybinding/living/disable_combat_mode
-	hotkey_keys = list("Unbound")
+	hotkey_keys = list("1")
 	name = "disable_combat_mode"
 	full_name = "Disable Combat Mode"
 	description = "Disable combat mode."
@@ -117,3 +117,38 @@
 		return
 	var/mob/living/user_mob = user.mob
 	user_mob.set_combat_mode(FALSE, silent = FALSE)
+
+/datum/keybinding/living/toggle_move_intent
+	hotkey_keys = list("C")
+	name = "toggle_move_intent"
+	full_name = "Hold to toggle move intent"
+	description = "Held down to cycle to the other move intent, release to cycle back"
+	keybind_signal = COMSIG_KB_LIVING_TOGGLEMOVEINTENT_DOWN
+
+/datum/keybinding/living/toggle_move_intent/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/M = user.mob
+	M.toggle_move_intent()
+	return TRUE
+
+/datum/keybinding/living/toggle_move_intent/up(client/user)
+	var/mob/living/M = user.mob
+	M.toggle_move_intent()
+	return TRUE
+
+/datum/keybinding/living/toggle_move_intent_alternative
+	hotkey_keys = list("Unbound")
+	name = "toggle_move_intent_alt"
+	full_name = "press to cycle move intent"
+	description = "Pressing this cycle to the opposite move intent, does not cycle back"
+	keybind_signal = COMSIG_KB_LIVING_TOGGLEMOVEINTENTALT_DOWN
+
+/datum/keybinding/living/toggle_move_intent_alternative/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/M = user.mob
+	M.toggle_move_intent()
+	return TRUE

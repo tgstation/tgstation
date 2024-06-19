@@ -1,0 +1,4 @@
+#comment This repaths candles to be a subtype of a flares.
+
+/obj/item/candle : /obj/item/flashlight/flare/candle{@OLD}
+/obj/item/candle/infinite : /obj/item/flashlight/flare/candle/infinite{@OLD}

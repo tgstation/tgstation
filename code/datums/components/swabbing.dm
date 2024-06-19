@@ -21,10 +21,10 @@ This component is used in vat growing to swab for microbiological samples which 
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/try_to_swab)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/handle_overlays)
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, .proc/handle_icon)
+	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(try_to_swab))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(handle_overlays))
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, PROC_REF(handle_icon))
 
 	src.can_swab_objs = can_swab_objs
 	src.can_swab_turfs = can_swab_turfs
@@ -32,12 +32,12 @@ This component is used in vat growing to swab for microbiological samples which 
 	src.update_icons = update_icons
 	src.update_overlays = update_overlays
 
-/datum/component/swabbing/Destroy()
-	. = ..()
+/datum/component/swabbing/Destroy(force)
 	for(var/swabbed in swabbed_items)
 		qdel(swabbed)
-	QDEL_NULL(update_icons)
-	QDEL_NULL(update_overlays)
+	update_icons = null
+	update_overlays = null
+	return ..()
 
 
 ///Changes examine based on your sample
@@ -97,7 +97,7 @@ This component is used in vat growing to swab for microbiological samples which 
 		return
 
 	to_chat(user, span_notice("You start swabbing [target] for samples!"))
-	INVOKE_ASYNC(src, .proc/async_try_to_swab, target, user)
+	INVOKE_ASYNC(src, PROC_REF(async_try_to_swab), target, user)
 
 /datum/component/swabbing/proc/async_try_to_swab(atom/target, mob/user)
 	if(!do_after(user, 3 SECONDS, target)) // Start swabbing boi
@@ -106,7 +106,7 @@ This component is used in vat growing to swab for microbiological samples which 
 	LAZYINITLIST(swabbed_items) //If it isn't initialized, initialize it. As we need to pass it by reference
 
 	if(SEND_SIGNAL(target, COMSIG_SWAB_FOR_SAMPLES, swabbed_items) == NONE) //If we found something to swab now we let the swabbed thing handle what it would do, we just sit back and relax now.
-		to_chat(user, span_warning("You do not manage to find a anything on [target]!"))
+		to_chat(user, span_warning("You do not manage to find anything on [target]!"))
 		return
 
 	to_chat(user, span_nicegreen("You manage to collect a microbiological sample from [target]!"))

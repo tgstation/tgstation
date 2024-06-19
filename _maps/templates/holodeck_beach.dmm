@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/floor/holofloor/beach/water,
+/turf/open/floor/holofloor/beach/coast,
 /area/template_noop)
 "f" = (
 /obj/item/shovel/spade,
-/turf/open/floor/holofloor/beach/coast_t,
+/turf/open/floor/holofloor/beach,
 /area/template_noop)
 "g" = (
 /obj/item/toy/beach_ball,
@@ -15,32 +15,27 @@
 /obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
-"k" = (
-/turf/open/floor/holofloor/beach/coast_b,
-/area/template_noop)
 "q" = (
-/obj/item/reagent_containers/glass/bucket,
-/turf/open/floor/holofloor/beach/coast_t,
+/obj/item/reagent_containers/cup/bucket,
+/turf/open/floor/holofloor/beach,
 /area/template_noop)
 "t" = (
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
+"B" = (
+/turf/open/floor/holofloor/beach/water,
+/area/template_noop)
 "H" = (
 /obj/effect/holodeck_effect/mobspawner/monkey,
 /turf/open/floor/holofloor/beach,
-/area/template_noop)
-"J" = (
-/turf/open/floor/holofloor/beach/coast_t,
 /area/template_noop)
 "M" = (
 /obj/item/toy/seashell,
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "Q" = (
-/mob/living/simple_animal/crab{
-	name = "Jon"
-	},
-/turf/open/floor/holofloor/beach/coast_t,
+/obj/effect/holodeck_effect/mobspawner/crab/jon,
+/turf/open/floor/holofloor/beach,
 /area/template_noop)
 "R" = (
 /turf/open/floor/holofloor/beach,
@@ -50,16 +45,16 @@
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "T" = (
-/obj/effect/overlay/palmtree_l,
-/obj/effect/overlay/coconut,
+/obj/structure/flora/tree/palm,
+/obj/structure/flora/coconuts,
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "W" = (
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "X" = (
-/obj/effect/overlay/palmtree_r,
+/obj/structure/flora/tree/palm,
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 
@@ -71,9 +66,9 @@ R
 R
 R
 R
-J
-k
+R
 a
+B
 "}
 (2,1,1) = {"
 R
@@ -84,8 +79,8 @@ R
 S
 R
 Q
-k
 a
+B
 "}
 (3,1,1) = {"
 X
@@ -95,9 +90,9 @@ R
 R
 t
 t
-J
-k
+R
 a
+B
 "}
 (4,1,1) = {"
 R
@@ -107,9 +102,9 @@ R
 h
 R
 R
-J
-k
+R
 a
+B
 "}
 (5,1,1) = {"
 R
@@ -119,9 +114,9 @@ R
 R
 t
 t
-J
-k
+R
 a
+B
 "}
 (6,1,1) = {"
 R
@@ -132,8 +127,8 @@ X
 g
 R
 q
-k
 a
+B
 "}
 (7,1,1) = {"
 R
@@ -144,8 +139,8 @@ R
 R
 R
 f
-k
 a
+B
 "}
 (8,1,1) = {"
 W
@@ -155,9 +150,9 @@ R
 H
 R
 M
-J
-k
+R
 a
+B
 "}
 (9,1,1) = {"
 R
@@ -167,7 +162,7 @@ R
 R
 R
 R
-J
-k
+R
 a
+B
 "}

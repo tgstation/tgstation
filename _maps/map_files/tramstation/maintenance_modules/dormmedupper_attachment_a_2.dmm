@@ -1,0 +1,146 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"c" = (
+/obj/structure/easel,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas/twentythree_twentythree,
+/obj/item/canvas,
+/obj/item/canvas,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"r" = (
+/turf/template_noop,
+/area/template_noop)
+"x" = (
+/obj/structure/table,
+/obj/item/camera,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"B" = (
+/obj/structure/rack,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/stack/pipe_cleaner_coil/random{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/toy/crayon/spraycan,
+/obj/item/toy/crayon/spraycan{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"N" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/cardboard{
+	amount = 25
+	},
+/obj/item/chisel{
+	pixel_y = 3;
+	pixel_x = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"P" = (
+/obj/structure/rack,
+/obj/item/storage/crayons,
+/obj/item/storage/crayons{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"R" = (
+/obj/structure/table,
+/obj/item/camera_film,
+/obj/item/camera_film{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/camera_film{
+	pixel_x = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"X" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Art Storage Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"Z" = (
+/obj/structure/rack,
+/obj/item/rcl/pre_loaded,
+/obj/item/rcl/pre_loaded{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+
+(1,1,1) = {"
+B
+a
+a
+a
+r
+"}
+(2,1,1) = {"
+N
+a
+a
+a
+X
+"}
+(3,1,1) = {"
+c
+a
+a
+a
+r
+"}
+(4,1,1) = {"
+c
+a
+a
+a
+r
+"}
+(5,1,1) = {"
+Z
+a
+a
+R
+r
+"}
+(6,1,1) = {"
+P
+a
+a
+x
+r
+"}
+(7,1,1) = {"
+r
+r
+r
+r
+r
+"}

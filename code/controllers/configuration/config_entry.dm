@@ -1,10 +1,3 @@
-#define VALUE_MODE_NUM 0
-#define VALUE_MODE_TEXT 1
-#define VALUE_MODE_FLAG 2
-
-#define KEY_MODE_TEXT 0
-#define KEY_MODE_TYPE 1
-
 /datum/config_entry
 	/// Read-only, this is determined by the last portion of the derived entry type
 	var/name
@@ -32,7 +25,7 @@
 /datum/config_entry/New()
 	if(type == abstract_type)
 		CRASH("Abstract config entry [type] instatiated!")
-	name = lowertext(type2top(type))
+	name = LOWER_TEXT(type2top(type))
 	default_protection = protection
 	set_default()
 
@@ -62,7 +55,7 @@
 		. &= !(protection & CONFIG_ENTRY_HIDDEN)
 
 /datum/config_entry/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list(NAMEOF(src, name), NAMEOF(src, vv_VAS), NAMEOF(src, default), NAMEOF(src, resident_file), NAMEOF(src, protection), NAMEOF(src, abstract_type), NAMEOF(src, modified), NAMEOF(src, dupes_allowed))
+	var/static/list/banned_edits = list(NAMEOF_STATIC(src, name), NAMEOF_STATIC(src, vv_VAS), NAMEOF_STATIC(src, default), NAMEOF_STATIC(src, resident_file), NAMEOF_STATIC(src, protection), NAMEOF_STATIC(src, abstract_type), NAMEOF_STATIC(src, modified), NAMEOF_STATIC(src, dupes_allowed))
 	if(var_name == NAMEOF(src, config_entry_value))
 		if(protection & CONFIG_ENTRY_LOCKED)
 			return FALSE
@@ -96,6 +89,8 @@
 	default = ""
 	abstract_type = /datum/config_entry/string
 	var/auto_trim = TRUE
+	/// whether the string will be lowercased on ValidateAndSet or not.
+	var/lowercase = FALSE
 
 /datum/config_entry/string/vv_edit_var(var_name, var_value)
 	return var_name != NAMEOF(src, auto_trim) && ..()
@@ -104,6 +99,8 @@
 	if(!VASProcCallGuard(str_val))
 		return FALSE
 	config_entry_value = auto_trim ? trim(str_val) : str_val
+	if(lowercase)
+		config_entry_value = LOWER_TEXT(config_entry_value)
 	return TRUE
 
 /datum/config_entry/number
@@ -125,7 +122,7 @@
 	return FALSE
 
 /datum/config_entry/number/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list(NAMEOF(src, max_val), NAMEOF(src, min_val), NAMEOF(src, integer))
+	var/static/list/banned_edits = list(NAMEOF_STATIC(src, max_val), NAMEOF_STATIC(src, min_val), NAMEOF_STATIC(src, integer))
 	return !(var_name in banned_edits) && ..()
 
 /datum/config_entry/flag
@@ -143,13 +140,15 @@
 	abstract_type = /datum/config_entry/str_list
 	default = list()
 	dupes_allowed = TRUE
+	/// whether the string elements will be lowercased on ValidateAndSet or not.
+	var/lowercase = FALSE
 
 /datum/config_entry/str_list/ValidateAndSet(str_val)
 	if (!VASProcCallGuard(str_val))
 		return FALSE
 	str_val = trim(str_val)
 	if (str_val != "")
-		config_entry_value += str_val
+		config_entry_value += lowercase ? LOWER_TEXT(str_val) : str_val
 	return TRUE
 
 /datum/config_entry/number_list
@@ -180,6 +179,8 @@
 	var/key_mode
 	var/value_mode
 	var/splitter = " "
+	/// whether the key names will be lowercased on ValidateAndSet or not.
+	var/lowercase_key = TRUE
 
 /datum/config_entry/keyed_list/New()
 	. = ..()
@@ -191,41 +192,107 @@
 		return FALSE
 
 	str_val = trim(str_val)
-	var/key_pos = findtext(str_val, splitter)
-	var/key_name = null
-	var/key_value = null
 
-	if(key_pos || value_mode == VALUE_MODE_FLAG)
-		key_name = lowertext(copytext(str_val, 1, key_pos))
-		if(key_pos)
-			key_value = copytext(str_val, key_pos + length(str_val[key_pos]))
-		var/new_key
-		var/new_value
-		var/continue_check_value
-		var/continue_check_key
-		switch(key_mode)
-			if(KEY_MODE_TEXT)
-				new_key = key_name
-				continue_check_key = new_key
-			if(KEY_MODE_TYPE)
-				new_key = key_name
-				if(!ispath(new_key))
-					new_key = text2path(new_key)
-				continue_check_key = ispath(new_key)
-		switch(value_mode)
-			if(VALUE_MODE_FLAG)
-				new_value = TRUE
-				continue_check_value = TRUE
-			if(VALUE_MODE_NUM)
-				new_value = text2num(key_value)
-				continue_check_value = !isnull(new_value)
-			if(VALUE_MODE_TEXT)
-				new_value = key_value
-				continue_check_value = new_value
-		if(continue_check_value && continue_check_key && ValidateListEntry(new_key, new_value))
-			config_entry_value[new_key] = new_value
-			return TRUE
+	var/list/new_entry = parse_key_and_value(str_val)
+
+	var/new_key = new_entry["config_key"]
+	var/new_value = new_entry["config_value"]
+
+	if(!isnull(new_value) && !isnull(new_key) && ValidateListEntry(new_key, new_value))
+		config_entry_value[new_key] = new_value
+		return TRUE
 	return FALSE
+
+/datum/config_entry/keyed_list/proc/parse_key_and_value(option_string)
+	// Blank or null option string? Bad mojo!
+	if(!option_string)
+		log_config("ERROR: Keyed list config tried to parse with no key or value data.")
+		return null
+
+	var/list/config_entry_words = splittext(option_string, splitter)
+	var/config_value
+	var/config_key
+	var/is_ambiguous = FALSE
+
+	// If this config entry's value mode is flag, the value can either be TRUE or FALSE.
+	// However, the config supports implicitly setting a config entry to TRUE by omitting the value.
+	// This value mode should also support config overrides disabling it too.
+	// The following code supports config entries as such:
+	// Implicitly enable the config entry: CONFIG_ENTRY config key goes here
+	// Explicitly enable the config entry: CONFIG_ENTRY config key goes here 1
+	// Explicitly disable the config entry: CONFIG_ENTRY config key goes here 0
+	if(value_mode == VALUE_MODE_FLAG)
+		var/value = peek(config_entry_words)
+		config_value = TRUE
+
+		if(value == "0")
+			config_key = jointext(config_entry_words, splitter, length(config_entry_words) - 1)
+			config_value = FALSE
+			is_ambiguous = (length(config_entry_words) > 2)
+		else if(value == "1")
+			config_key = jointext(config_entry_words, splitter, length(config_entry_words) - 1)
+			is_ambiguous = (length(config_entry_words) > 2)
+		else
+			config_key = option_string
+			is_ambiguous = (length(config_entry_words) > 1)
+	// Else it has to be a key value pair and we parse it under that assumption.
+	else
+		// If config_entry_words only has 1 or 0 words in it and isn't value_mode == VALUE_MODE_FLAG then it's an invalid config entry.
+		if(length(config_entry_words) <= 1)
+			log_config("ERROR: Could not parse value from config entry string: [option_string]")
+			return null
+
+		config_value = pop(config_entry_words)
+		config_key = jointext(config_entry_words, splitter)
+
+		if(lowercase_key)
+			config_key = LOWER_TEXT(config_key)
+
+		is_ambiguous = (length(config_entry_words) > 2)
+
+	config_key = validate_config_key(config_key)
+	config_value = validate_config_value(config_value)
+
+	// If there are multiple splitters, it's definitely ambiguous and we'll warn about how we parsed it. Helps with debugging config issues.
+	if(is_ambiguous)
+		log_config("WARNING: Multiple splitter characters (\"[splitter]\") found. Using \"[config_key]\" as config key and \"[config_value]\" as config value.")
+
+	return list("config_key" = config_key, "config_value" = config_value)
+
+/// Takes a given config key and validates it. If successful, returns the formatted key. If unsuccessful, returns null.
+/datum/config_entry/keyed_list/proc/validate_config_key(key)
+	switch(key_mode)
+		if(KEY_MODE_TEXT)
+			return key
+		if(KEY_MODE_TYPE)
+			if(ispath(key))
+				return key
+
+			var/key_path = text2path(key)
+			if(isnull(key_path))
+				log_config("ERROR: Invalid KEY_MODE_TYPE typepath. Is not a valid typepath: [key]")
+				return
+
+			return key_path
+
+
+/// Takes a given config value and validates it. If successful, returns the formatted key. If unsuccessful, returns null.
+/datum/config_entry/keyed_list/proc/validate_config_value(value)
+	switch(value_mode)
+		if(VALUE_MODE_FLAG)
+			return value
+		if(VALUE_MODE_NUM)
+			if(isnum(value))
+				return value
+
+			var/value_num = text2num(value)
+			if(isnull(value_num))
+				log_config("ERROR: Invalid VALUE_MODE_NUM number. Could not parse a valid number: [value]")
+				return
+
+			return value_num
+		if(VALUE_MODE_TEXT)
+			return value
 
 /datum/config_entry/keyed_list/vv_edit_var(var_name, var_value)
 	return var_name != NAMEOF(src, splitter) && ..()

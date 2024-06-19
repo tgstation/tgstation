@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { useSelector } from 'common/redux';
+import { useSelector } from '../backend';
 import { selectDebug } from './selectors';
 
-export const useDebug = context => useSelector(context, selectDebug);
+export const useDebug = () => useSelector(selectDebug);

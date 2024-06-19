@@ -1,20 +1,21 @@
 {
     "ballmer_good_msg": [
-        "Hey guys, what if we rolled out a bluespace wiring system so mice can't destroy the powergrid anymore?",
         "Hear me out here. What if, and this is just a theory, we made R&D controllable from our PDAs?",
-        "I'm thinking we should roll out a git repository for our research under the AGPLv3 license so that we can share it among the other stations freely.",
+        "Hey guys, what if we rolled out a bluespace wiring system so mice can't destroy the powergrid anymore?",
         "I dunno about you guys, but IDs and PDAs being separate is clunky as fuck. Maybe we should merge them into a chip in our arms? That way they can't be stolen easily.",
+        "I'm thinking we should roll out a git repository for our research under the AGPLv3 license so that we can share it among the other stations freely.",
         "Why the fuck aren't we just making every pair of shoes into galoshes? We have the technology."
     ],
 
     "ballmer_windows_me_msg": [
-        "Yo man, what if, we like, uh, put a webserver that's automatically turned on with default admin passwords into every PDA?",
-        "So like, you know how we separate our codebase from the master copy that runs on our consumer boxes? What if we merged the two and undid the separation between codebase and server?",
-        "Dude, radical idea: H.O.N.K mechs but with no bananium required.",
+		"Who keeps commiting to master?",
         "Best idea ever: Disposal pipes instead of hallways.",
-        "We should store bank records in a webscale datastore, like /dev/null.",
-        "You ever wonder if /dev/null supports sharding?",
         "Do you know who ate all the donuts?",
-        "What if we use a language that was written on a napkin and created over 1 weekend for all of our servers?"
+        "Dude, radical idea: H.O.N.K mechs but with no bananium required.",
+        "So like, you know how we separate our codebase from the master copy that runs on our consumer boxes? What if we merged the two and undid the separation between codebase and server?",
+        "We should store bank records in a webscale datastore, like /dev/null.",
+        "What if we use a language that was written on a napkin and created over 1 weekend for all of our servers?",
+        "Yo man, what if, we like, uh, put a webserver that's automatically turned on with default admin passwords into every PDA?",
+        "You ever wonder if /dev/null supports sharding?"
     ]
 }

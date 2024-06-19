@@ -4,8 +4,8 @@
 	icon = 'icons/obj/machines/prison.dmi'
 	icon_state = "offline"
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 2
-	active_power_usage = 50
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.05
 	var/obj/item/stack/license_plates/empty/current_plate
 	var/pressing = FALSE
 
@@ -53,12 +53,12 @@
 	update_appearance()
 	to_chat(user, span_notice("You start pressing a new license plate!"))
 
-	if(!do_after(user, 40, target = src))
+	if(!do_after(user, 4 SECONDS, target = src))
 		pressing = FALSE
 		update_appearance()
 		return FALSE
 
-	use_power(100)
+	use_energy(active_power_usage)
 	to_chat(user, span_notice("You finish pressing a new license plate!"))
 
 	pressing = FALSE

@@ -41,15 +41,16 @@
 
 /datum/component/egg_layer/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/feed_food)
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(feed_food))
 
 /datum/component/egg_layer/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
+	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 
-/datum/component/egg_layer/Destroy(force, silent)
+/datum/component/egg_layer/Destroy(force)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
+	egg_laid_callback = null
 
 /datum/component/egg_layer/proc/feed_food(datum/source, obj/item/food, mob/living/attacker, params)
 	SIGNAL_HANDLER
@@ -71,14 +72,14 @@
 	eggs_left += min(eggs_left + eggs_added_from_eating, max_eggs_held)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/datum/component/egg_layer/process(delta_time = SSOBJ_DT)
+/datum/component/egg_layer/process(seconds_per_tick = SSOBJ_DT)
 
 	var/atom/at_least_atom = parent
 	if(isliving(at_least_atom))
 		var/mob/living/potentially_dead_horse = at_least_atom
 		if(potentially_dead_horse.stat != CONSCIOUS)
 			return
-	if(!eggs_left || !DT_PROB(1.5, delta_time))
+	if(!eggs_left || !SPT_PROB(1.5, seconds_per_tick))
 		return
 
 	at_least_atom.visible_message(span_alertalien("[at_least_atom] [pick(lay_messages)]"))

@@ -1,0 +1,10 @@
+{
+	"party_hat": [
+		{
+			"type": "icon_state",
+			"icon_state": "party_hat",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

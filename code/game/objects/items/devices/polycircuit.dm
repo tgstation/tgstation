@@ -6,6 +6,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	max_amount = 8
 	merge_type = /obj/item/stack/circuit_stack
+	singular_name = "circuit aggregate"
 	var/circuit_type = /obj/item/electronics/airlock
 	var/chosen_circuit = "airlock"
 
@@ -17,17 +18,17 @@
 	if(user.get_inactive_held_item() != src)
 		return ..()
 	else
-		if(zero_amount())
+		if(is_zero_amount(delete_if_zero = TRUE))
 			return
-		chosen_circuit = input("What type of circuit would you like to remove?", "Choose a Circuit Type", chosen_circuit) in list("airlock","firelock","fire alarm","air alarm","APC","cancel")
-		if(zero_amount())
+		chosen_circuit = tgui_input_list(user, "Circuit to remove", "Circuit Removal", list("airlock","firelock","fire alarm","air alarm","APC"), chosen_circuit)
+		if(isnull(chosen_circuit))
+			to_chat(user, span_notice("You wisely avoid putting your hands anywhere near [src]."))
+			return
+		if(is_zero_amount(delete_if_zero = TRUE))
 			return
 		if(loc != user)
 			return
 		switch(chosen_circuit)
-			if("cancel")
-				to_chat(user, span_notice("You wisely avoid putting your hands anywhere near [src]."))
-				return
 			if("airlock")
 				circuit_type = /obj/item/electronics/airlock
 			if("firelock")
@@ -39,7 +40,7 @@
 			if("APC")
 				circuit_type = /obj/item/electronics/apc
 		to_chat(user, span_notice("You spot your circuit, and carefully attempt to remove it from [src], hold still!"))
-		if(do_after(user, 30, target = user))
+		if(do_after(user, 3 SECONDS, target = user))
 			if(!src || QDELETED(src))//Sanity Check.
 				return
 			var/returned_circuit = new circuit_type(src)
@@ -50,7 +51,7 @@
 			else
 				to_chat(user, span_notice("You navigate the sharp edges of circuitry and remove a single board from [src]"))
 		else
-			H.apply_damage(15, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+			H.apply_damage(15, BRUTE, pick(GLOB.arm_zones))
 			to_chat(user, span_warning("You give yourself a wicked cut on [src]'s many sharp corners and edges!"))
 
 /obj/item/stack/circuit_stack/full

@@ -60,7 +60,7 @@
 "l" = (
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor2";
-	name = "supply dock loading door"
+	name = "Supply Dock Loading Door"
 	},
 /obj/machinery/conveyor{
 	dir = 8;
@@ -74,9 +74,9 @@
 /area/shuttle/supply)
 "o" = (
 /obj/machinery/door/airlock/titanium{
-	name = "Supply Shuttle Airlock";
-	req_access_txt = "31"
+	name = "Supply Shuttle Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "p" = (
@@ -98,19 +98,16 @@
 /area/shuttle/supply)
 "q" = (
 /obj/machinery/door/airlock/titanium{
-	name = "Supply Shuttle Airlock";
-	req_access_txt = "31"
+	name = "Supply Shuttle Airlock"
 	},
-/obj/docking_port/mobile/supply{
-	dwidth = 3;
-	width = 10
-	},
+/obj/docking_port/mobile/supply,
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "r" = (
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor";
-	name = "supply dock loading door"
+	name = "Supply Dock Loading Door"
 	},
 /obj/machinery/conveyor{
 	dir = 4;
@@ -119,26 +116,19 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
-"u" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/shuttle/engine/heater,
-/turf/open/floor/plating/airless,
-/area/shuttle/supply)
 "w" = (
 /turf/template_noop,
 /area/template_noop)
 "x" = (
-/obj/structure/shuttle/engine/propulsion/burst/left,
+/obj/machinery/power/shuttle_engine/propulsion/burst/left,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "y" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "z" = (
-/obj/structure/shuttle/engine/propulsion/burst/right,
+/obj/machinery/power/shuttle_engine/propulsion/burst/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "A" = (
@@ -150,9 +140,10 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
-"B" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/mineral/titanium,
+"C" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/power/shuttle_engine/heater,
+/turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "G" = (
 /obj/machinery/conveyor{
@@ -196,7 +187,7 @@ e
 P
 R
 n
-B
+n
 n
 g
 b
@@ -211,7 +202,7 @@ n
 n
 n
 g
-u
+C
 y
 "}
 (4,1,1) = {"
@@ -223,7 +214,7 @@ n
 n
 n
 g
-u
+C
 y
 "}
 (5,1,1) = {"
@@ -235,7 +226,7 @@ n
 n
 n
 g
-u
+C
 y
 "}
 (6,1,1) = {"

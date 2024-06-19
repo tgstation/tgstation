@@ -1,19 +1,19 @@
 /obj/item/assembly/shock_kit
 	name = "electrohelmet assembly"
 	desc = "This appears to be made from both an electropack and a helmet."
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/devices/assemblies.dmi'
 	icon_state = "shock_kit"
 	var/obj/item/clothing/head/helmet/helmet_part = null
 	var/obj/item/electropack/electropack_part = null
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 
 /obj/item/assembly/shock_kit/Destroy()
 	QDEL_NULL(helmet_part)
 	QDEL_NULL(electropack_part)
 	return ..()
 
-/obj/item/assembly/shock_kit/Initialize()
+/obj/item/assembly/shock_kit/Initialize(mapload)
 	. = ..()
 	if(!helmet_part)
 		helmet_part = new(src)

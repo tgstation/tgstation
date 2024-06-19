@@ -1,0 +1,27 @@
+{
+	"tie_greyscale_tied": [
+		{
+			"type": "icon_state",
+			"icon_state": "tie_greyscale_tied",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"tie_greyscale_untied": [
+		{
+			"type": "icon_state",
+			"icon_state": "tie_greyscale_untied",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"bowtie_greyscale": [
+		{
+			"type": "icon_state",
+			"icon_state": "bowtie_greyscale",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+
+}

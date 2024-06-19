@@ -1,351 +1,598 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
+"ah" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/turf/open/floor/catwalk_floor/iron_smooth/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"ce" = (
+/obj/effect/decal/cleanable/glass/titanium,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"dq" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"dB" = (
+/obj/machinery/light/broken{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_large/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"dW" = (
+/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/smooth_large/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"gK" = (
+/obj/structure/mecha_wreckage/ripley,
+/turf/open/floor/iron/recharge_floor/Airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"hq" = (
+/obj/item/stack/tile/iron/smooth,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"hR" = (
+/obj/item/shard/titanium,
 /turf/template_noop,
 /area/template_noop)
-"b" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/ruin/space/has_grav/powered/mechtransport)
-"c" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/powered/mechtransport)
-"d" = (
-/turf/closed/wall/mineral/titanium,
-/area/ruin/space/has_grav/powered/mechtransport)
-"f" = (
-/obj/structure/closet/crate/secure/loot,
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/mineral/titanium/blue,
-/area/ruin/space/has_grav/powered/mechtransport)
-"g" = (
-/obj/structure/closet/crate/secure/loot,
-/turf/open/floor/mineral/titanium/blue,
-/area/ruin/space/has_grav/powered/mechtransport)
-"h" = (
+"if" = (
+/obj/structure/lattice,
+/obj/structure/mecha_wreckage/gygax,
+/turf/template_noop,
+/area/template_noop)
+"is" = (
+/turf/template_noop,
+/area/template_noop)
+"iT" = (
 /obj/structure/table,
 /obj/machinery/button/door{
 	id = "mechaship1";
 	name = "Mecha Cargo Ship Doors"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
-"i" = (
+"jI" = (
+/obj/effect/decal/cleanable/robot_debris/old,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"jZ" = (
+/obj/item/stack/tile/iron/smooth,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/turf/open/floor/catwalk_floor/iron_smooth/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"kl" = (
+/obj/item/ammo_casing/spent{
+	dir = 9;
+	pixel_y = -9;
+	pixel_x = -10
+	},
+/obj/effect/turf_decal/stripes/full,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"ko" = (
+/obj/structure/mecha_wreckage/phazon,
+/turf/open/floor/catwalk_floor/iron_smooth/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"kt" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/titanium/blue,
+/obj/machinery/light/broken{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/cup/glass/coffee_cup{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/obj/effect/turf_decal/siding/wideplating_new,
+/turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
-"j" = (
+"kY" = (
+/obj/structure/lattice,
+/obj/item/ammo_casing/spent{
+	dir = 5;
+	pixel_y = -7;
+	pixel_x = 12
+	},
+/turf/template_noop,
+/area/template_noop)
+"lc" = (
+/obj/structure/lattice,
+/obj/item/stack/sheet/iron,
+/turf/template_noop,
+/area/template_noop)
+"lB" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wideplating_new,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"lP" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"mU" = (
 /obj/machinery/computer/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
-"k" = (
-/obj/effect/decal/cleanable/vomit/old,
-/turf/open/floor/mineral/titanium/blue,
+"nf" = (
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
-"l" = (
-/obj/effect/decal/remains/human,
-/turf/open/floor/mineral/titanium/blue,
+"qH" = (
+/obj/structure/mecha_wreckage/durand,
+/turf/open/floor/iron/recharge_floor/Airless,
 /area/ruin/space/has_grav/powered/mechtransport)
-"m" = (
+"rD" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Cockpit"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/admin/general,
+/turf/open/floor/iron/smooth_large/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"sv" = (
+/obj/machinery/light/broken{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/iron/smooth_large/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"sY" = (
+/turf/open/floor/engine/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"uF" = (
+/obj/structure/mecha_wreckage/clarke,
+/turf/open/floor/iron/recharge_floor/Airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"uN" = (
+/obj/structure/closet/crate/secure/loot,
+/obj/machinery/light/broken{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
-"n" = (
+"vJ" = (
+/obj/item/ammo_casing/spent{
+	dir = 5;
+	pixel_x = -12
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/full,
+/turf/open/floor/iron/smooth_large/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"wJ" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"xJ" = (
 /obj/structure/chair/office{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/blue,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
-"p" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Cockpit";
-	req_access_txt = "101"
+"yr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/turf/open/floor/iron/stairs/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"yT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/turf/open/floor/iron/smooth_large/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"Bl" = (
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	dir = 4;
+	name = "Broken Computer"
 	},
-/turf/open/floor/mineral/titanium,
+/obj/machinery/light/broken{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
-"r" = (
+"Ch" = (
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/powered/mechtransport)
+"Cy" = (
+/obj/item/stack/tile/iron/smooth,
+/obj/item/ammo_casing/spent{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"CT" = (
+/obj/effect/decal/cleanable/robot_debris,
+/turf/open/floor/catwalk_floor/iron_smooth/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"DD" = (
+/turf/open/floor/catwalk_floor/iron_smooth/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"DM" = (
+/obj/structure/mecha_wreckage/odysseus,
+/turf/open/floor/iron/recharge_floor/Airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"Ga" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/effect/turf_decal/stripes/full,
+/turf/open/floor/iron/smooth_large/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"Gy" = (
+/obj/structure/mecha_wreckage/odysseus,
+/turf/open/floor/catwalk_floor/iron_smooth/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"GT" = (
+/obj/item/ammo_casing/spent{
+	pixel_y = -6;
+	pixel_x = -7
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/mineral/titanium/airless,
+/turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
-"s" = (
-/turf/open/floor/mineral/titanium/airless,
+"HB" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/layer4{
+	dir = 4
+	},
+/turf/open/floor/catwalk_floor/titanium/Airless,
 /area/ruin/space/has_grav/powered/mechtransport)
-"t" = (
+"Il" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"Kv" = (
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	dir = 4;
+	name = "Broken Computer"
+	},
+/turf/open/floor/iron/smooth_large/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"KR" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/turf/template_noop,
+/area/template_noop)
+"Lk" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/titanium/airless,
+/turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
-"u" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/mineral/titanium/airless,
-/area/ruin/space/has_grav/powered/mechtransport)
-"v" = (
-/obj/structure/mecha_wreckage/phazon,
-/turf/open/floor/mineral/titanium/yellow/airless,
-/area/ruin/space/has_grav/powered/mechtransport)
-"w" = (
-/turf/open/floor/mineral/titanium/yellow/airless,
-/area/ruin/space/has_grav/powered/mechtransport)
-"x" = (
-/obj/structure/mecha_wreckage/clarke,
-/turf/open/floor/mineral/titanium/yellow/airless,
-/area/ruin/space/has_grav/powered/mechtransport)
-"y" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/titanium/yellow/airless,
-/area/ruin/space/has_grav/powered/mechtransport)
-"z" = (
-/obj/structure/mecha_wreckage/ripley,
-/turf/open/floor/mineral/titanium/yellow/airless,
-/area/ruin/space/has_grav/powered/mechtransport)
-"A" = (
-/obj/vehicle/sealed/mecha/working/ripley,
-/turf/open/floor/mineral/titanium/yellow/airless,
-/area/ruin/space/has_grav/powered/mechtransport)
-"B" = (
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/mineral/titanium/yellow/airless,
-/area/ruin/space/has_grav/powered/mechtransport)
-"C" = (
+"Mn" = (
 /obj/effect/decal/cleanable/robot_debris/up,
-/turf/open/floor/mineral/titanium/yellow/airless,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
-"D" = (
+"NG" = (
+/obj/vehicle/sealed/mecha/ripley,
+/turf/open/floor/iron/recharge_floor/Airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"Oh" = (
+/obj/machinery/mech_bay_recharge_port{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"Ov" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/catwalk_floor/iron_smooth/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"OJ" = (
+/turf/open/floor/iron/recharge_floor/Airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"PG" = (
+/obj/item/stack/rods,
+/turf/template_noop,
+/area/template_noop)
+"Qc" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer2{
+	dir = 8
+	},
+/turf/open/floor/catwalk_floor/titanium/Airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"Ry" = (
+/obj/structure/closet/crate/secure/loot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth_large/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"Te" = (
+/obj/effect/decal/cleanable/robot_debris/up,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/effect/turf_decal/stripes/full,
+/turf/open/floor/iron/smooth_large/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"Uj" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"Vl" = (
+/obj/machinery/power/shuttle_engine/heater,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"WC" = (
+/obj/item/storage/toolbox/mechanical,
+/obj/structure/rack,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/smooth_large/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"WN" = (
+/obj/effect/decal/cleanable/robot_debris/up,
+/obj/effect/turf_decal/stripes/full,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"WX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/iron/smooth_large/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"Xe" = (
+/obj/machinery/computer/mecha{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wideplating_new,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"Xs" = (
+/obj/effect/turf_decal/stripes/full,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large/airless,
+/area/ruin/space/has_grav/powered/mechtransport)
+"XL" = (
 /obj/machinery/door/poddoor{
 	id = "mechaship1";
 	name = "Cargo Bay Door"
 	},
-/turf/open/floor/mineral/titanium/yellow/airless,
+/turf/open/floor/engine/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
-"E" = (
-/obj/effect/decal/cleanable/robot_debris,
-/turf/open/floor/mineral/titanium/yellow/airless,
+"XO" = (
+/obj/machinery/mech_bay_recharge_port,
+/turf/open/floor/iron/smooth_large/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
-"F" = (
-/obj/structure/mecha_wreckage/durand,
-/turf/open/floor/mineral/titanium/yellow/airless,
-/area/ruin/space/has_grav/powered/mechtransport)
-"G" = (
-/obj/item/stack/tile/iron/base,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/powered/mechtransport)
-"H" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/powered/mechtransport)
-"I" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/ruin/space/has_grav/powered/mechtransport)
-"J" = (
-/obj/machinery/computer/mecha{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/ruin/space/has_grav/powered/mechtransport)
-"K" = (
-/obj/effect/decal/cleanable/robot_debris,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/powered/mechtransport)
-"L" = (
-/obj/effect/decal/cleanable/robot_debris,
-/obj/item/stack/tile/iron/base,
-/turf/open/floor/mineral/titanium/yellow/airless,
-/area/ruin/space/has_grav/powered/mechtransport)
-"M" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
-/area/ruin/space/has_grav/powered/mechtransport)
-"N" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
-/area/ruin/space/has_grav/powered/mechtransport)
-"O" = (
-/obj/structure/mecha_wreckage/odysseus,
-/turf/open/floor/mineral/titanium/yellow/airless,
-/area/ruin/space/has_grav/powered/mechtransport)
-"P" = (
-/obj/item/stack/sheet/iron,
-/turf/template_noop,
-/area/ruin/space/has_grav/powered/mechtransport)
-"Q" = (
-/obj/structure/mecha_wreckage/gygax,
-/turf/open/floor/mineral/titanium/airless,
-/area/ruin/space/has_grav/powered/mechtransport)
-"R" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
-/area/ruin/space/has_grav/powered/mechtransport)
-"S" = (
-/obj/item/stack/rods,
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/powered/mechtransport)
-"T" = (
-/turf/template_noop,
-/area/ruin/space/has_grav/powered/mechtransport)
-"V" = (
-/obj/item/stack/rods,
-/turf/template_noop,
-/area/ruin/space/has_grav/powered/mechtransport)
-"X" = (
-/obj/structure/shuttle/engine/propulsion,
-/turf/template_noop,
+"YQ" = (
+/turf/closed/wall/mineral/titanium,
 /area/ruin/space/has_grav/powered/mechtransport)
 
 (1,1,1) = {"
-a
-a
-a
-b
-d
-d
-d
-d
-G
-I
-M
-P
-T
-T
-T
+is
+is
+Ch
+Il
+Il
+YQ
+YQ
+YQ
+YQ
+YQ
+YQ
+YQ
+YQ
+YQ
+YQ
+YQ
+is
+wJ
+is
+is
 "}
 (2,1,1) = {"
-b
-d
-d
-d
-r
-v
-B
-E
-H
-S
-H
-I
-R
-V
-T
+is
+is
+Il
+iT
+kt
+HB
+YQ
+WC
+XO
+Bl
+XO
+Kv
+XO
+Bl
+WX
+wJ
+Vl
+is
+is
+is
 "}
 (3,1,1) = {"
-c
-f
-k
-p
-s
-w
-w
-F
-w
-H
-N
-I
-I
-T
-T
+hR
+PG
+ce
+xJ
+lB
+yr
+yr
+yT
+gK
+DD
+NG
+DD
+gK
+DD
+Mn
+dq
+wJ
+wJ
+is
+is
 "}
 (4,1,1) = {"
-c
-g
-l
-d
-t
-w
-C
-G
-F
-w
-G
-H
-P
-T
-T
+is
+is
+Il
+mU
+Xe
+Qc
+YQ
+yT
+Ga
+ah
+vJ
+ah
+Te
+jZ
+GT
+KR
+is
+is
+Uj
+is
 "}
 (5,1,1) = {"
-c
-h
-m
-d
-s
-x
-w
-w
-y
-K
-O
-s
-S
-I
-T
+is
+is
+Ch
+YQ
+YQ
+YQ
+YQ
+sv
+OJ
+Gy
+DM
+CT
+OJ
+ko
+lP
+lc
+is
+is
+is
+is
 "}
 (6,1,1) = {"
-c
-i
-n
-d
-t
-y
-z
-w
-H
-L
-O
-H
-H
-T
-T
+is
+is
+is
+YQ
+uN
+Lk
+rD
+WX
+Oh
+DD
+Oh
+DD
+Oh
+hq
+hq
+is
+is
+PG
+is
+is
 "}
 (7,1,1) = {"
-c
-j
-J
-d
-t
-z
-w
-w
-y
-w
-w
-Q
-d
-b
-X
+is
+is
+is
+YQ
+YQ
+Ry
+YQ
+Lk
+XO
+DD
+XO
+DD
+XO
+nf
+kY
+wJ
+is
+is
+is
+PG
 "}
 (8,1,1) = {"
-b
-d
-d
-d
-u
-A
-y
-w
-w
-B
-y
-s
-d
-d
-X
+is
+is
+is
+is
+YQ
+YQ
+YQ
+dB
+uF
+DD
+qH
+Ov
+Cy
+DD
+jI
+if
+lc
+is
+is
+is
 "}
 (9,1,1) = {"
-a
-a
-a
-b
-d
-d
-D
-D
-D
-D
-D
-d
-b
-b
-X
+is
+is
+is
+is
+is
+YQ
+YQ
+dW
+Xs
+WN
+kl
+Xs
+Xs
+wJ
+is
+is
+is
+is
+is
+is
+"}
+(10,1,1) = {"
+is
+is
+is
+is
+is
+is
+Ch
+YQ
+XL
+XL
+XL
+XL
+sY
+is
+is
+is
+is
+is
+is
+is
 "}

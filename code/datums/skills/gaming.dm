@@ -4,7 +4,7 @@
 	desc = "My proficiency as a gamer. This helps me beat bosses with ease, powergame in Orion Trail, and makes me wanna slam some gamer fuel."
 	modifiers = list(SKILL_PROBS_MODIFIER = list(0, 5, 10, 15, 15, 20, 25),
 				SKILL_RANDS_MODIFIER = list(0, 1, 2, 3, 4, 5, 7))
-	skill_cape_path = /obj/item/clothing/neck/cloak/skill_reward/gaming
+	skill_item_path = /obj/item/clothing/neck/cloak/skill_reward/gaming
 
 /datum/skill/gaming/New()
 	. = ..()

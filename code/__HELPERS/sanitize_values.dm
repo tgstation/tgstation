@@ -9,7 +9,7 @@
 /proc/sanitize_float(number, min=0, max=1, accuracy=1, default=0)
 	if(isnum(number))
 		number = round(number, accuracy)
-		if(min <= number && number <= max)
+		if(round(min, accuracy) <= number && number <= round(max, accuracy))
 			return number
 	return default
 
@@ -51,7 +51,7 @@
 				return default
 	return default
 
-/proc/sanitize_hexcolor(color, desired_format = 3, include_crunch = FALSE, default)
+/proc/sanitize_hexcolor(color, desired_format = DEFAULT_HEX_COLOR_LEN, include_crunch = TRUE, default)
 	var/crunch = include_crunch ? "#" : ""
 	if(!istext(color))
 		color = ""
@@ -73,7 +73,7 @@
 			if(97 to 102) //letters a to f
 				. += char
 			if(65 to 70) //letters A to F
-				char = lowertext(char)
+				char = LOWER_TEXT(char)
 				. += char
 			else
 				break
@@ -94,5 +94,5 @@
 			return default ? default : crunch + repeat_string(desired_format, "0")
 
 /// Makes sure the input color is text with a # at the start followed by 6 hexadecimal characters. Examples: "#ff1234", "#A38321", COLOR_GREEN_GRAY
-/proc/sanitize_ooccolor(color)
+/proc/sanitize_color(color)
 	return findtext(color, GLOB.is_color) ? color : GLOB.normal_ooc_colour

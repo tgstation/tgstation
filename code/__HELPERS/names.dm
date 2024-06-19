@@ -1,20 +1,75 @@
-/proc/lizard_name(gender)
-	if(gender == MALE)
-		return "[pick(GLOB.lizard_names_male)]-[pick(GLOB.lizard_names_male)]"
-	else
-		return "[pick(GLOB.lizard_names_female)]-[pick(GLOB.lizard_names_female)]"
+/**
+ * Generate a random name based off of one of the roundstart languages
+ *
+ * * gender - What gender to pick from. Picks between male, female if not provided.
+ * * unique - If the name should be unique, IE, avoid picking names that mobs already have.
+ * * list/language_weights - A list of language weights to pick from.
+ * If not provided, it will default to a list of roundstart languages, with common being the most likely.
+ */
+/proc/generate_random_name(gender, unique, list/language_weights)
+	if(isnull(language_weights))
+		language_weights = list()
+		for(var/lang_type in GLOB.uncommon_roundstart_languages)
+			language_weights[lang_type] = 1
+		language_weights[/datum/language/common] = 20
 
-/proc/ethereal_name()
-	var/tempname = "[pick(GLOB.ethereal_names)] [random_capital_letter()]"
-	if(prob(65))
-		tempname += random_capital_letter()
-	return tempname
+	var/datum/language/picked = GLOB.language_datum_instances[pick_weight(language_weights)]
+	if(unique)
+		return picked.get_random_unique_name(gender)
+	return picked.get_random_name(gender)
 
-/proc/plasmaman_name()
-	return "[pick(GLOB.plasmaman_names)] \Roman[rand(1,99)]"
+/**
+ * Generate a random name based off of a species
+ * This will pick a name from the species language, and avoid picking common if there are alternatives
+ *
+ * * gender - What gender to pick from. Picks between male, female if not provided.
+ * * unique - If the name should be unique, IE, avoid picking names that mobs already have.
+ * * datum/species/species_type - The species to pick from
+ * * include_all - Makes the generated name a mix of all the languages the species can speak rather than just one of them
+ * Does this on a per-name basis, IE "Lizard first name, uncommon last name".
+ */
+/proc/generate_random_name_species_based(gender, unique, datum/species/species_type, include_all = FALSE)
+	ASSERT(ispath(species_type, /datum/species))
+	var/datum/language_holder/holder = GLOB.prototype_language_holders[species_type::species_language_holder]
 
-/proc/moth_name()
-	return "[pick(GLOB.moth_first)] [pick(GLOB.moth_last)]"
+	var/list/languages_to_pick_from = list()
+	for(var/language in holder.spoken_languages)
+		languages_to_pick_from[language] = 1
+
+	if(length(languages_to_pick_from) >= 2)
+		// Basically, if we have alternatives, don't pick common it's boring
+		languages_to_pick_from -= /datum/language/common
+
+	if(!include_all || length(languages_to_pick_from) <= 1)
+		return generate_random_name(gender, unique, languages_to_pick_from)
+
+	var/list/name_parts = list()
+	for(var/lang_type in shuffle(languages_to_pick_from))
+		name_parts += GLOB.language_datum_instances[lang_type].get_random_name(gender, name_count = 1, force_use_syllables = TRUE)
+	return jointext(name_parts, " ")
+
+/**
+ * Generates a random name for the mob based on their gender or species (for humans)
+ *
+ * * unique - If the name should be unique, IE, avoid picking names that mobs already have.
+ */
+/mob/proc/generate_random_mob_name(unique)
+	return generate_random_name_species_based(gender, unique, /datum/species/human)
+
+/mob/living/carbon/generate_random_mob_name(unique)
+	return generate_random_name_species_based(gender, unique, dna?.species?.type || /datum/species/human)
+
+/mob/living/silicon/generate_random_mob_name(unique)
+	return generate_random_name(gender, unique, list(/datum/language/machine = 1))
+
+/mob/living/basic/drone/generate_random_mob_name(unique)
+	return generate_random_name(gender, unique, list(/datum/language/machine = 1))
+
+/mob/living/basic/bot/generate_random_mob_name(unique)
+	return generate_random_name(gender, unique, list(/datum/language/machine = 1))
+
+/mob/living/simple_animal/bot/generate_random_mob_name(unique)
+	return generate_random_name(gender, unique, list(/datum/language/machine = 1))
 
 GLOBAL_VAR(command_name)
 /proc/command_name()
@@ -45,8 +100,9 @@ GLOBAL_VAR(command_name)
 
 	return GLOB.station_name
 
-/proc/set_station_name(newname)
-	GLOB.station_name = newname
+/proc/set_station_name(new_name)
+	var/old_name = GLOB.station_name
+	GLOB.station_name = new_name
 
 	var/config_server_name = CONFIG_GET(string/servername)
 	if(config_server_name)
@@ -54,6 +110,7 @@ GLOBAL_VAR(command_name)
 	else
 		world.name = html_decode(GLOB.station_name)
 
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_STATION_NAME_CHANGED, new_name, old_name)
 
 /proc/new_station_name()
 	var/random = rand(1,5)
@@ -66,10 +123,13 @@ GLOBAL_VAR(command_name)
 		new_station_name = name + " "
 		name = ""
 
+	if(prob(0.1))
+		random = 999999999 //ridiculously long name in written numbers
+
 	// Prefix
-	var/holiday_name = pick(SSevents.holidays)
+	var/holiday_name = length(GLOB.holidays) && pick(GLOB.holidays)
 	if(holiday_name)
-		var/datum/holiday/holiday = SSevents.holidays[holiday_name]
+		var/datum/holiday/holiday = GLOB.holidays[holiday_name]
 		if(istype(holiday, /datum/holiday/friday_thirteenth))
 			random = 13
 		name = holiday.getStationPrefix()
@@ -94,16 +154,18 @@ GLOBAL_VAR(command_name)
 		if(4)
 			new_station_name += pick(GLOB.phonetic_alphabet)
 		if(5)
-			new_station_name += pick(GLOB.numbers_as_words)
+			new_station_name += convert_integer_to_words(rand(-1,99), capitalise = TRUE)
 		if(13)
 			new_station_name += pick("13","XIII","Thirteen")
+		if(999999999)
+			new_station_name += convert_integer_to_words(rand(111111111,999999999), capitalise = TRUE)
 	return new_station_name
 
 /proc/syndicate_name()
 	var/name = ""
 
 	// Prefix
-	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib")
+	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib")
 
 	// Suffix
 	if (prob(80))
@@ -116,11 +178,11 @@ GLOBAL_VAR(command_name)
 		else
 			name += pick("Syndi", "Corp", "Bio", "System", "Prod", "Chem", "Inter", "Hive")
 			name += pick("", "-")
-			name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Code")
+			name += pick("Tech", "Co", "Tek", "X", "Inc", "Code")
 	// Small
 	else
 		name += pick("-", "*", "")
-		name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Gen", "Star", "Dyne", "Code", "Hive")
+		name += pick("Tech", "Co", "Tek", "X", "Inc", "Gen", "Star", "Dyne", "Code", "Hive")
 
 	return name
 
@@ -171,62 +233,99 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 	var/locations = strings(LOCATIONS_FILE, "locations")
 
 	var/list/names = list()
-	for(var/datum/data/record/t in GLOB.data_core.general)//Picks from crew manifest.
-		names += t.fields["name"]
+	for(var/datum/record/crew/target in GLOB.manifest.general)//Picks from crew manifest.
+		names += target.name
 
 	var/maxwords = words//Extra var to check for duplicates.
 
 	for(words,words>0,words--)//Randomly picks from one of the choices below.
 
-		if(words==1&&(1 in safety)&&(2 in safety))//If there is only one word remaining and choice 1 or 2 have not been selected.
+		if(words == 1 && (1 in safety) && (2 in safety))//If there is only one word remaining and choice 1 or 2 have not been selected.
 			safety = list(pick(1,2))//Select choice 1 or 2.
-		else if(words==1&&maxwords==2)//Else if there is only one word remaining (and there were two originally), and 1 or 2 were chosen,
+		else if(words == 1 && maxwords == 2)//Else if there is only one word remaining (and there were two originally), and 1 or 2 were chosen,
 			safety = list(3)//Default to list 3
 
 		switch(pick(safety))//Chance based on the safety list.
 			if(1)//1 and 2 can only be selected once each to prevent more than two specific names/places/etc.
 				switch(rand(1,2))//Mainly to add more options later.
 					if(1)
-						if(names.len&&prob(70))
+						if(length(names) && prob(70))
 							. += pick(names)
 						else
-							if(prob(10))
-								. += pick(lizard_name(MALE),lizard_name(FEMALE))
-							else
-								var/new_name = pick(pick(GLOB.first_names_male,GLOB.first_names_female))
-								new_name += " "
-								new_name += pick(GLOB.last_names)
-								. += new_name
+							. += generate_random_name()
+
 					if(2)
-						. += pick(SSjob.station_jobs)//Returns a job.
+						var/datum/job/job = pick(SSjob.joinable_occupations)
+						if(job)
+							. += job.title //Returns a job.
+						else
+							stack_trace("Failed to pick(SSjob.joinable_occupations) on generate_code_phrase()")
+							. += "Bug"
 				safety -= 1
 			if(2)
 				switch(rand(1,3))//Food, drinks, or places. Only selectable once.
 					if(1)
-						. += lowertext(pick(drinks))
+						. += LOWER_TEXT(pick(drinks))
 					if(2)
-						. += lowertext(pick(foods))
+						. += LOWER_TEXT(pick(foods))
 					if(3)
-						. += lowertext(pick(locations))
+						. += LOWER_TEXT(pick(locations))
 				safety -= 2
 			if(3)
 				switch(rand(1,4))//Abstract nouns, objects, adjectives, threats. Can be selected more than once.
 					if(1)
-						. += lowertext(pick(nouns))
+						. += LOWER_TEXT(pick(nouns))
 					if(2)
-						. += lowertext(pick(objects))
+						. += LOWER_TEXT(pick(objects))
 					if(3)
-						. += lowertext(pick(adjectives))
+						. += LOWER_TEXT(pick(adjectives))
 					if(4)
-						. += lowertext(pick(threats))
+						. += LOWER_TEXT(pick(threats))
 		if(!return_list)
-			if(words==1)
+			if(words == 1)
 				. += "."
 			else
 				. += ", "
 
 /proc/odd_organ_name()
 	return "[pick(GLOB.gross_adjectives)], [pick(GLOB.gross_adjectives)] organ"
+
+/proc/hive_name()
+	return "[pick(GLOB.hive_names)]-hive"
+
+/**
+ * Generate a name devices
+ *
+ * Creates a randomly generated tag or name for devices or anything really
+ * it keeps track of a special list that makes sure no name is used more than
+ * once
+ *
+ * args:
+ * * len (int)(Optional) Default=5 The length of the name
+ * * prefix (string)(Optional) static text in front of the random name
+ * * postfix (string)(Optional) static text in back of the random name
+ * Returns (string) The generated name
+ */
+/proc/assign_random_name(len=5, prefix="", postfix="")
+	//DO NOT REMOVE NAMES HERE UNLESS YOU KNOW WHAT YOU'RE DOING
+	//All names already used
+	var/static/list/used_names = list()
+
+	var/static/valid_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+	var/list/new_name = list()
+	var/text
+	// machine id's should be fun random chars hinting at a larger world
+	do
+		new_name.Cut()
+		new_name += prefix
+		for(var/i = 1 to len)
+			new_name += valid_chars[rand(1,length(valid_chars))]
+		new_name += postfix
+		text = new_name.Join()
+	while(used_names[text])
+	used_names[text] = TRUE
+	return text
+
 
 /**
  * returns an ic name of the tool needed

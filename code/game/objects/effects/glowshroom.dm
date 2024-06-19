@@ -34,8 +34,9 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 
 	/// Turfs where the glowshroom cannot spread to
 	var/static/list/blacklisted_glowshroom_turfs = typecacheof(list(
-	/turf/open/lava,
-	/turf/open/floor/plating/beach/water))
+		/turf/open/lava,
+		/turf/open/water,
+	))
 
 /obj/structure/glowshroom/glowcap
 	name = "glowcap"
@@ -48,6 +49,13 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	desc = "Mycena Umbra, a species of mushroom that emits shadow instead of light."
 	icon_state = "shadowshroom"
 	myseed = /obj/item/seeds/glowshroom/shadowshroom
+
+/// Mapping object, a glowshroom that doesn't spread or die
+/obj/structure/glowshroom/single
+
+/obj/structure/glowshroom/single/Initialize(mapload, obj/item/seeds/newseed)
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/glowshroom/single/Spread()
 	return
@@ -68,7 +76,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 /obj/structure/glowshroom/Initialize(mapload, obj/item/seeds/newseed)
 	. = ..()
 	GLOB.glowshrooms++
-	if(newseed)
+	if(istype(newseed))
 		myseed = newseed
 		myseed.forceMove(src)
 	else
@@ -76,12 +84,13 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 
 	modify_max_integrity(GLOWSHROOM_BASE_INTEGRITY + ((100 - GLOWSHROOM_BASE_INTEGRITY) / 100 * myseed.endurance)) //goes up to 100 with peak endurance
 
-	var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
-	if(ispath(G)) // Seeds were ported to initialize so their genes are still typepaths here, luckily their initializer is smart enough to handle us doing this
-		myseed.genes -= G
-		G = new G
-		myseed.genes += G
-	set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
+	var/datum/plant_gene/trait/glow/our_glow_gene = myseed.get_gene(/datum/plant_gene/trait/glow)
+	if(ispath(our_glow_gene)) // Seeds were ported to initialize so their genes are still typepaths here, luckily their initializer is smart enough to handle us doing this
+		myseed.genes -= our_glow_gene
+		our_glow_gene = new our_glow_gene
+		myseed.genes += our_glow_gene
+	if(istype(our_glow_gene))
+		set_light(our_glow_gene.glow_range(myseed), our_glow_gene.glow_power(myseed), our_glow_gene.glow_color)
 	setDir(calc_dir())
 	base_icon_state = initial(icon_state)
 	if(!floor)
@@ -103,21 +112,32 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 
 	START_PROCESSING(SSobj, src)
 
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/plant_analyzer = list(
+			SCREENTIP_CONTEXT_LMB = "Scan shroom stats",
+			SCREENTIP_CONTEXT_RMB = "Scan shroom chemicals"
+		),
+	)
+
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+
 /obj/structure/glowshroom/Destroy()
-	. = ..()
+	if(isatom(myseed))
+		QDEL_NULL(myseed)
 	GLOB.glowshrooms--
 	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /**
  * Causes glowshroom spreading across the floor/walls.
  */
 
-/obj/structure/glowshroom/process(delta_time)
+/obj/structure/glowshroom/process(seconds_per_tick)
 	if(COOLDOWN_FINISHED(src, spread_cooldown))
 		COOLDOWN_START(src, spread_cooldown, rand(min_delay_spread, max_delay_spread))
 		Spread()
 
-	Decay(rand(idle_decay_min, idle_decay_max) * delta_time)
+	Decay(rand(idle_decay_min, idle_decay_max) * seconds_per_tick)
 
 
 
@@ -196,7 +216,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 
 	var/list/dir_list = list()
 
-	for(var/i=1,i<=16,i <<= 1)
+	for(var/i=1,i <= 16,i <<= 1)
 		if(direction & i)
 			dir_list += i
 
@@ -219,7 +239,9 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 /obj/structure/glowshroom/proc/Decay(amount)
 	myseed.adjust_endurance(-amount * endurance_decay_rate)
 	take_damage(amount)
-	if (myseed.endurance <= MIN_PLANT_ENDURANCE) // Plant is gone
+	// take_damage could qdel our shroom, so check beforehand
+	// if our endurance dropped before the min plant endurance, then delete our shroom anyways
+	if (!QDELETED(src) && myseed.endurance <= MIN_PLANT_ENDURANCE)
 		qdel(src)
 
 /obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)

@@ -1,0 +1,16 @@
+## NPM
+/**/node_modules
+
+## Yarn
+/.yarn
+/yarn.lock
+/.pnp.*
+
+.swcrc
+/docs
+/public
+/packages/tgui-polyfill
+/packages/tgfont/static
+**/*.json
+**/*.yml
+**/*.md

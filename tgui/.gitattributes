@@ -13,10 +13,9 @@
 *.md text eol=lf
 *.bat text eol=lf
 yarn.lock text eol=lf
-bin/tgui text eol=lf
 
-## Treat bundles as binary and ignore them during conflicts
-*.bundle.* binary merge=tgui-merge-bundle
-*.chunk.* binary merge=tgui-merge-bundle
+## Treat bundles as binary
+*.bundle.* binary
+*.chunk.* binary
 .yarn/releases/**/* binary
 .yarn/plugins/**/* binary

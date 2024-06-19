@@ -1,0 +1,4 @@
+/obj/item/computer_hardware/hard_drive/portable/virus/@SUBTYPES : /obj/item/computer_disk/virus/@SUBTYPES {@OLD}
+/obj/item/computer_hardware/hard_drive/portable/@SUBTYPES : /obj/item/computer_disk/@SUBTYPES {@OLD}
+/obj/item/computer_hardware/hard_drive/cluster/hdd_theft : /obj/item/computer_disk/hdd_theft
+/obj/item/computer_hardware/hard_drive/cluster : @DELETE

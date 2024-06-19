@@ -11,4 +11,12 @@
 	z_value = new_z
 	name = new_name
 	traits = new_traits
+
+	if (islist(new_traits))
+		for (var/trait in new_traits)
+			SSmapping.z_trait_levels[trait] += list(new_z)
+	else // in case a single trait is passed in
+		SSmapping.z_trait_levels[new_traits] += list(new_z)
+
+
 	set_linkage(new_traits[ZTRAIT_LINKAGE])

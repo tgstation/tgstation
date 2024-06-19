@@ -1,6 +1,10 @@
 {
   "name": "typescript",
-  "version": "4.2.3-pnpify",
+  "version": "5.4.3-sdk",
   "main": "./lib/typescript.js",
-  "type": "commonjs"
+  "type": "commonjs",
+  "bin": {
+    "tsc": "./bin/tsc",
+    "tsserver": "./bin/tsserver"
+  }
 }

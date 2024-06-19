@@ -25,7 +25,7 @@
 /datum/chemical_reaction/medicine/helbital/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	explode_fire_vortex(holder, equilibrium, 1, 1, "impure")
 	holder.chem_temp += 2.5
-	var/datum/reagent/helbital = holder.get_reagent(/datum/reagent/medicine/c2/helbital)
+	var/datum/reagent/helbital = holder.has_reagent(/datum/reagent/medicine/c2/helbital)
 	if(!helbital)
 		return
 	if(helbital.purity <= 0.25)
@@ -41,7 +41,7 @@
 
 /datum/chemical_reaction/medicine/helbital/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
-	var/datum/reagent/helbital = holder.get_reagent(/datum/reagent/medicine/c2/helbital)
+	var/datum/reagent/helbital = holder.has_reagent(/datum/reagent/medicine/c2/helbital)
 	if(!helbital)
 		return
 	if(helbital.purity <= 0.1) //So people don't ezmode this by keeping it at min
@@ -129,7 +129,7 @@
 	. = ..()
 	for(var/mob/living/living_mob in orange(3, get_turf(holder.my_atom)))
 		if(living_mob.flash_act(1, length = 5))
-			living_mob.set_blurriness(10)
+			living_mob.set_eye_blur(20 SECONDS)
 	holder.my_atom.audible_message(span_notice("[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The [holder.my_atom] lets out a loud bang!"))
 	playsound(holder.my_atom, 'sound/effects/explosion1.ogg', 50, 1)
 
@@ -200,18 +200,20 @@
 /datum/chemical_reaction/medicine/convermol/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	. = ..()
 	overheated(holder, equilibrium, impure = TRUE)
-	clear_reactants(holder, step_volume_added*2)
+	if(holder.has_reagent(/datum/reagent/oxygen))
+		clear_reactants(holder, step_volume_added*2)
+	else
+		clear_reactants(holder)
 
 
 /datum/chemical_reaction/medicine/tirimol
 	results = list(/datum/reagent/medicine/c2/tirimol = 5)
 	required_reagents = list(/datum/reagent/nitrogen = 3, /datum/reagent/acetone = 2)
-	required_catalysts = list(/datum/reagent/toxin/acid = 1)
+	required_catalysts = list(/datum/reagent/toxin/acid = 1, /datum/reagent/oxygen = 1)
 	mix_message = "The mixture turns into a tired reddish pink liquid."
-	optimal_temp = 1
 	optimal_temp = 900
 	overheat_temp = 720
-	optimal_ph_min = 2
+	optimal_ph_min = 5
 	optimal_ph_max = 7.1
 	determin_ph_range = 2
 	temp_exponent_factor = 4
@@ -222,14 +224,6 @@
 	purity_min = 0.2
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OXY
-
-/datum/chemical_reaction/medicine/tirimol/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
-	. = ..()
-	var/datum/reagent/oxy = holder.has_reagent(/datum/reagent/oxygen)
-	if(oxy)
-		holder.remove_reagent(/datum/reagent/oxygen, 0.25)
-	else
-		holder.adjust_all_reagents_ph(-0.05*step_reaction_vol)//pH drifts faster
 
 //Sleepytime for chem
 /datum/chemical_reaction/medicine/tirimol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, impure = FALSE)
@@ -269,12 +263,6 @@
 	reaction_flags = REACTION_PH_VOL_CONSTANT | REACTION_CLEAR_INVERSE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_TOXIN
 
-/datum/chemical_reaction/medicine/seiver/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
-	if(off_cooldown(holder, equilibrium, 1, "seiver_rads"))
-		return
-	var/modifier = max((100 - holder.chem_temp)*0.025, 0)*step_volume_added //0 - 5 * volume based off temperature(colder is more)
-	radiation_pulse(holder.my_atom, modifier, 0.5, can_contaminate=FALSE) //Please advise on this, I don't have a good handle on the numbers
-
 /datum/chemical_reaction/medicine/multiver
 	results = list(/datum/reagent/medicine/c2/multiver = 2)
 	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/salt = 1)
@@ -282,16 +270,15 @@
 	required_temp = 380
 	optimal_temp = 400
 	overheat_temp = 410
-	optimal_ph_min = 2.5
-	optimal_ph_max = 7
+	optimal_ph_min = 5
+	optimal_ph_max = 9.5
 	determin_ph_range = 4
-	temp_exponent_factor = 0.5
+	temp_exponent_factor = 0.1
 	ph_exponent_factor = 1
 	thermic_constant = 0
-	H_ion_release = 0
-	rate_up_lim = 25
+	H_ion_release = 0.015
+	rate_up_lim = 10
 	purity_min = 0.1 //Fire is our worry for now
-	reaction_flags = REACTION_REAL_TIME_SPLIT | REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_PLANT | REACTION_TAG_TOXIN
 
 //You get nothing! I'm serious about staying under the heating requirements!

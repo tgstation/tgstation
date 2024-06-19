@@ -1,6 +1,5 @@
 /obj/effect/ebeam/curse_arm
 	name = "curse arm"
-	layer = LARGE_MOB_LAYER
 
 /obj/projectile/curse_hand
 	name = "curse hand"
@@ -18,6 +17,7 @@
 
 /obj/projectile/curse_hand/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT)
 	handedness = prob(50)
 	icon_state = "[base_icon_state][handedness]"
 

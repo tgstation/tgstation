@@ -19,24 +19,21 @@ $bg-map: colors.$bg-map !default;
 @mixin button-color($color) {
   // Adapt text color to background luminance to ensure high contast
   $luminance: luminance($color);
-  $text-color: if($luminance > 0.4,
-    rgba(0, 0, 0, 1),
-    rgba(255, 255, 255, 1));
+  $text-color: if($luminance > 0.4, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
 
-  transition: color 50ms, background-color 50ms;
+  transition:
+    color 50ms,
+    background-color 50ms;
   background-color: $color;
   color: $text-color;
 
+  &:focus {
+    transition:
+      color 100ms,
+      background-color 100ms;
+  }
+
   &:hover {
-    transition: color 0ms, background-color 0ms;
-  }
-
-  &:focus {
-    transition: color 100ms, background-color 100ms;
-  }
-
-  &:hover,
-  &:focus {
     background-color: lighten($color, 30%);
     color: $text-color;
   }
@@ -61,7 +58,9 @@ $bg-map: colors.$bg-map !default;
     margin-bottom: 0;
   }
 
-  .fa, .fas, .far {
+  .fa,
+  .fas,
+  .far {
     margin-left: -0.25em;
     margin-right: -0.25em;
     min-width: 1.333em;
@@ -69,23 +68,33 @@ $bg-map: colors.$bg-map !default;
   }
 }
 
+.Button--dropdown {
+  line-height: base.em(16px);
+  height: base.em(22px);
+  padding: 0.2rem 0.5rem;
+}
+
 .Button--hasContent {
   // Add a margin to the icon to keep it separate from the text
-  .fa, .fas, .far {
+  .fa,
+  .fas,
+  .far {
     margin-right: 0.25em;
   }
 }
 
 .Button--hasContent.Button--iconPosition--right {
-  .fa, .fas, .far {
+  .fa,
+  .fas,
+  .far {
     margin-right: 0px;
     margin-left: 3px;
   }
 }
 
 .Button--ellipsis {
-  overflow: hidden;
   text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .Button--fluid {
@@ -133,4 +142,34 @@ $bg-map: colors.$bg-map !default;
 
 .Button--selected {
   @include button-color($color-selected);
+}
+
+.Button--flex {
+  display: inline-flex; //Inline even for fluid
+  flex-direction: column;
+}
+
+.Button--flex--fluid {
+  width: 100%;
+}
+
+.Button--verticalAlignContent--top {
+  justify-content: flex-start;
+}
+
+.Button--verticalAlignContent--middle {
+  justify-content: center;
+}
+
+.Button--verticalAlignContent--bottom {
+  justify-content: flex-end;
+}
+
+.Button__content {
+  display: block;
+  align-self: stretch;
+}
+
+.Button__textMargin {
+  margin-left: 0.4rem;
 }

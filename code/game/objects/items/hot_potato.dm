@@ -2,7 +2,7 @@
 /obj/item/hot_potato
 	name = "hot potato"
 	desc = "A label on the side of this potato reads \"Product of Donk Co. Service Wing. Activate far away from populated areas. Device will only attach to sapient creatures.\" <span class='boldnotice'>You can attack anyone with it to force it on them instead of yourself!</span>"
-	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "potato"
 	item_flags = NOBLUDGEON
 	force = 0
@@ -95,11 +95,12 @@
 	if(active)
 		to_chat(user, span_userdanger("You have a really bad feeling about [src]!"))
 
-/obj/item/hot_potato/afterattack(atom/target, mob/user, adjacent, params)
+/obj/item/hot_potato/attack(mob/living/target_mob, mob/living/user, params)
 	. = ..()
-	if(!adjacent || !ismob(target))
-		return
-	force_onto(target, user)
+	if(.)
+		return .
+
+	return force_onto(target_mob, user)
 
 /obj/item/hot_potato/proc/force_onto(mob/living/victim, mob/user)
 	if(!istype(victim) || user != loc || victim == user)
@@ -142,13 +143,19 @@
 		ADD_TRAIT(src, TRAIT_NODROP, HOT_POTATO_TRAIT)
 	name = "primed [name]"
 	activation_time = timer + world.time
-	detonation_timerid = addtimer(CALLBACK(src, .proc/detonate), delay, TIMER_STOPPABLE)
+	detonation_timerid = addtimer(CALLBACK(src, PROC_REF(detonate)), delay, TIMER_STOPPABLE)
 	START_PROCESSING(SSfastprocess, src)
 	if(user)
 		log_bomber(user, "has primed a", src, "for detonation (Timer:[delay],Explosive:[detonate_explosion],Range:[detonate_dev_range]/[detonate_heavy_range]/[detonate_light_range]/[detonate_fire_range])")
 	else
 		log_bomber(null, null, src, "was primed for detonation (Timer:[delay],Explosive:[detonate_explosion],Range:[detonate_dev_range]/[detonate_heavy_range]/[detonate_light_range]/[detonate_fire_range])")
 	active = TRUE
+	if(detonate_explosion) //doesn't send a notification unless it's a genuine, exploding hot potato.
+		notify_ghosts(
+			"[user] has primed a Hot Potato!",
+			source = src,
+			header = "Hot Hot Hot!",
+		)
 
 /obj/item/hot_potato/proc/deactivate()
 	update_appearance()

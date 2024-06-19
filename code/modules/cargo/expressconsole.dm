@@ -1,11 +1,3 @@
-#define MAX_EMAG_ROCKETS 5
-#define BEACON_COST 500
-#define SP_LINKED 1
-#define SP_READY 2
-#define SP_LAUNCH 3
-#define SP_UNLINK 4
-#define SP_UNREADY 5
-
 /obj/machinery/computer/cargo/express
 	name = "express supply console"
 	desc = "This console allows the user to purchase a package \
@@ -14,24 +6,25 @@
 	icon_screen = "supply_express"
 	circuit = /obj/item/circuitboard/computer/cargo/express
 	blockade_warning = "Bluespace instability detected. Delivery impossible."
-	req_access = list(ACCESS_QM)
+	req_access = list(ACCESS_CARGO)
 	is_express = TRUE
+	interface_type = "CargoExpress"
 
 	var/message
 	var/printed_beacons = 0 //number of beacons printed. Used to determine beacon names.
 	var/list/meme_pack_data
 	var/obj/item/supplypod_beacon/beacon //the linked supplypod beacon
-	var/area/landingzone = /area/cargo/storage //where we droppin boys
+	var/area/landingzone = /area/station/cargo/storage //where we droppin boys
 	var/podType = /obj/structure/closet/supplypod
 	var/cooldown = 0 //cooldown to prevent printing supplypod beacon spam
 	var/locked = TRUE //is the console locked? unlock with ID
 	var/usingBeacon = FALSE //is the console in beacon mode? exists to let beacon know when a pod may come in
 
-/obj/machinery/computer/cargo/express/Initialize()
+/obj/machinery/computer/cargo/express/Initialize(mapload)
 	. = ..()
 	packin_up()
 
-/obj/machinery/computer/cargo/express/on_construction()
+/obj/machinery/computer/cargo/express/on_construction(mob/user)
 	. = ..()
 	packin_up()
 
@@ -59,12 +52,13 @@
 			to_chat(user, span_alert("[src] is already linked to [sb]."))
 	..()
 
-/obj/machinery/computer/cargo/express/emag_act(mob/living/user)
+/obj/machinery/computer/cargo/express/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	if(user)
-		user.visible_message(span_warning("[user] swipes a suspicious card through [src]!"),
-		span_notice("You change the routing protocols, allowing the Supply Pod to land anywhere on the station."))
+		if (emag_card)
+			user.visible_message(span_warning("[user] swipes [emag_card] through [src]!"))
+		to_chat(user, span_notice("You change the routing protocols, allowing the Supply Pod to land anywhere on the station."))
 	obj_flags |= EMAGGED
 	contraband = TRUE
 	// This also sets this on the circuit board
@@ -72,6 +66,7 @@
 	board.obj_flags |= EMAGGED
 	board.contraband = TRUE
 	packin_up()
+	return TRUE
 
 /obj/machinery/computer/cargo/express/proc/packin_up() // oh shit, I'm sorry
 	meme_pack_data = list() // sorry for what?
@@ -93,20 +88,14 @@
 			"desc" = P.desc || P.name // If there is a description, use it. Otherwise use the pack's name.
 		))
 
-/obj/machinery/computer/cargo/express/ui_interact(mob/living/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "CargoExpress", name)
-		ui.open()
-
 /obj/machinery/computer/cargo/express/ui_data(mob/user)
 	var/canBeacon = beacon && (isturf(beacon.loc) || ismob(beacon.loc))//is the beacon in a valid location?
 	var/list/data = list()
-	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	var/datum/bank_account/D = SSeconomy.get_dep_account(cargo_account)
 	if(D)
 		data["points"] = D.account_balance
 	data["locked"] = locked//swipe an ID to unlock
-	data["siliconUser"] = user.has_unlimited_silicon_privilege
+	data["siliconUser"] = HAS_SILICON_ACCESS(user)
 	data["beaconzone"] = beacon ? get_area(beacon) : ""//where is the beacon located? outputs in the tgui
 	data["usingBeacon"] = usingBeacon //is the mode set to deliver to the beacon or the cargobay?
 	data["canBeacon"] = !usingBeacon || canBeacon //is the mode set to beacon delivery, and is the beacon in a valid location?
@@ -117,7 +106,7 @@
 	data["printMsg"] = cooldown > 0 ? "Print Beacon for [BEACON_COST] credits ([cooldown])" : "Print Beacon for [BEACON_COST] credits"//buttontext for printing beacons
 	data["supplies"] = list()
 	message = "Sales are near-instantaneous - please choose carefully."
-	if(SSshuttle.supplyBlocked)
+	if(SSshuttle.supply_blocked)
 		message = blockade_warning
 	if(usingBeacon && !beacon)
 		message = "BEACON ERROR: BEACON MISSING"//beacon was destroyed
@@ -149,7 +138,7 @@
 			if (beacon)
 				beacon.update_status(SP_READY) //turns on the beacon's ready light
 		if("printBeacon")
-			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			var/datum/bank_account/D = SSeconomy.get_dep_account(cargo_account)
 			if(D)
 				if(D.adjust_money(-BEACON_COST))
 					cooldown = 10//a ~ten second cooldown for printing beacons to prevent spam
@@ -160,7 +149,7 @@
 
 
 		if("add")//Generate Supply Order first
-			if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_EXPRESSPOD_CONSOLE))
+			if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_EXPRESSPOD_CONSOLE))
 				say("Railgun recalibrating. Stand by.")
 				return
 			var/id = params["id"]
@@ -175,14 +164,14 @@
 				var/mob/living/carbon/human/H = usr
 				name = H.get_authentification_name()
 				rank = H.get_assignment(hand_first = TRUE)
-			else if(issilicon(usr))
+			else if(HAS_SILICON_ACCESS(usr))
 				name = usr.real_name
 				rank = "Silicon"
 			var/reason = ""
 			var/list/empty_turfs
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason)
 			var/points_to_check
-			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			var/datum/bank_account/D = SSeconomy.get_dep_account(cargo_account)
 			if(D)
 				points_to_check = D.account_balance
 			if(!(obj_flags & EMAGGED))
@@ -192,11 +181,11 @@
 						LZ = get_turf(beacon)
 						beacon.update_status(SP_LAUNCH)
 					else if (!usingBeacon)//find a suitable supplypod landing zone in cargobay
-						landingzone = GLOB.areas_by_type[/area/cargo/storage]
+						landingzone = GLOB.areas_by_type[/area/station/cargo/storage]
 						if (!landingzone)
 							WARNING("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
 							landingzone = get_area(src)
-						for(var/turf/open/floor/T in landingzone.contents)//uses default landing zone
+						for(var/turf/open/floor/T in landingzone.get_turfs_from_all_zlevels())//uses default landing zone
 							if(T.is_blocked_turf())
 								continue
 							LAZYADD(empty_turfs, T)
@@ -215,7 +204,7 @@
 			else
 				if(SO.pack.get_cost() * (0.72*MAX_EMAG_ROCKETS) <= points_to_check) // bulk discount :^)
 					landingzone = GLOB.areas_by_type[pick(GLOB.the_station_areas)]  //override default landing zone
-					for(var/turf/open/floor/T in landingzone.contents)
+					for(var/turf/open/floor/T in landingzone.get_turfs_from_all_zlevels())
 						if(T.is_blocked_turf())
 							continue
 						LAZYADD(empty_turfs, T)
@@ -235,3 +224,4 @@
 							. = TRUE
 							update_appearance()
 							CHECK_TICK
+

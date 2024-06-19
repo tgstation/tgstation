@@ -1,3 +1,9 @@
+/// How much to scale the explosion ranges for blastcannon shots.
+#define BLASTCANNON_RANGE_EXP (1 / GLOB.DYN_EX_SCALE)
+/// How much to scale the explosion ranges for blastcannon shots.
+#define BLASTCANNON_RANGE_SCALE PI
+
+
 /**
  * A gun that consumes a TTV to shoot an projectile with equivalent power.
  *
@@ -5,8 +11,14 @@
  */
 /obj/item/gun/blastcannon
 	name = "blast cannon"
-	desc = "A makeshift device used to concentrate a bomb's blast energy to a narrow wave. Small enough to stow in a bag."
-	icon_state = "empty_blastcannon"
+	desc = "A surprisingly portable device used to concentrate a bomb's blast energy to a narrow wave. Small enough to stow in a bag."
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	icon_state = "blastcannon_empty"
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	inhand_x_dimension = 64
+	base_pixel_x = -2
+	pixel_x = -2
 	inhand_icon_state = "blastcannon_empty"
 	base_icon_state = "blastcannon"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -35,11 +47,12 @@
 	var/debug_power = 0
 
 
-/obj/item/gun/blastcannon/Initialize()
+/obj/item/gun/blastcannon/Initialize(mapload)
 	. = ..()
 	if(!pin)
 		pin = new
-	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, .proc/channel_blastwave)
+	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, PROC_REF(channel_blastwave))
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/gun/blastcannon/Destroy()
 	if(bomb)
@@ -49,11 +62,11 @@
 	cached_target = null
 	return ..()
 
-/obj/item/gun/blastcannon/handle_atom_del(atom/A)
-	if(A == bomb)
+/obj/item/gun/blastcannon/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == bomb)
 		bomb = null
 		update_appearance()
-	return ..()
 
 /obj/item/gun/blastcannon/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
@@ -74,7 +87,8 @@
 	return ..()
 
 /obj/item/gun/blastcannon/update_icon_state()
-	icon_state = "[bomb ? "loaded" : "empty"]_[base_icon_state]"
+	icon_state = "[base_icon_state]_[bomb ? "loaded" : "empty"]"
+	inhand_icon_state = icon_state
 	return ..()
 
 /obj/item/gun/blastcannon/attackby(obj/item/transfer_valve/bomb_to_attach, mob/user)
@@ -96,8 +110,8 @@
 	update_appearance()
 	return TRUE
 
-/obj/item/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)
-	if((!bomb && bombcheck) || !target || (get_dist(get_turf(target), get_turf(user)) <= 2))
+/obj/item/gun/blastcannon/try_fire_gun(atom/target, mob/living/user, params)
+	if((!bomb && bombcheck) || isnull(target) || (get_dist(get_turf(target), get_turf(user)) <= 2))
 		return ..()
 
 	cached_target = WEAKREF(target)
@@ -107,12 +121,12 @@
 			span_danger("[user] points [src] at [target]!"),
 			span_danger("You point [src] at [target]!")
 		)
-		return
+		return FALSE
 
 	cached_firer = WEAKREF(user)
 	if(!bomb)
-		fire_debug(target, user, flag, params)
-		return
+		fire_debug(target, user, params)
+		return TRUE
 
 	playsound(src, dry_fire_sound, 30, TRUE) // *click
 	user.visible_message(
@@ -122,10 +136,10 @@
 	var/turf/current_turf = get_turf(src)
 	var/turf/target_turf = get_turf(target)
 	message_admins("Blastcannon transfer valve opened by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(current_turf)] while aiming at [ADMIN_VERBOSEJMP(target_turf)] (target).")
-	log_game("Blastcannon transfer valve opened by [key_name(user)] at [AREACOORD(current_turf)] while aiming at [AREACOORD(target_turf)] (target).")
+	user.log_message("opened blastcannon transfer valve at [AREACOORD(current_turf)] while aiming at [AREACOORD(target_turf)] (target).", LOG_GAME)
 	bomb.toggle_valve()
-	return
-
+	update_appearance()
+	return TRUE
 
 /**
  * Channels an internal explosion into a blastwave projectile.
@@ -137,24 +151,24 @@
 	SIGNAL_HANDLER
 	. = COMSIG_CANCEL_EXPLOSION
 
-	var/heavy = arguments[EXARG_KEY_DEV_RANGE]
-	var/medium = arguments[EXARG_KEY_HEAVY_RANGE]
-	var/light = arguments[EXARG_KEY_LIGHT_RANGE]
+	var/heavy = (arguments[EXARG_KEY_DEV_RANGE]**BLASTCANNON_RANGE_EXP) * BLASTCANNON_RANGE_SCALE
+	var/medium = (arguments[EXARG_KEY_HEAVY_RANGE]**BLASTCANNON_RANGE_EXP) * BLASTCANNON_RANGE_SCALE
+	var/light = (arguments[EXARG_KEY_LIGHT_RANGE]**BLASTCANNON_RANGE_EXP) * BLASTCANNON_RANGE_SCALE
 	var/range = max(heavy, medium, light, 0)
 	if(!range)
 		visible_message(span_warning("[src] lets out a little \"phut\"."))
 		return
 
 	if(!ismob(loc))
-		INVOKE_ASYNC(src, .proc/fire_dropped, heavy, medium, light)
+		INVOKE_ASYNC(src, PROC_REF(fire_dropped), heavy, medium, light)
 		return
 
 	var/mob/holding = loc
 	var/target = cached_target?.resolve()
 	if(target && (holding.get_active_held_item() == src) && cached_firer && (holding == cached_firer.resolve()))
-		INVOKE_ASYNC(src, .proc/fire_intentionally, target, holding, heavy, medium, light, cached_modifiers)
+		INVOKE_ASYNC(src, PROC_REF(fire_intentionally), target, holding, heavy, medium, light, cached_modifiers)
 	else
-		INVOKE_ASYNC(src, .proc/fire_accidentally, holding, heavy, medium, light)
+		INVOKE_ASYNC(src, PROC_REF(fire_accidentally), holding, heavy, medium, light)
 	return
 
 /**
@@ -206,7 +220,8 @@
 	var/turf/start_turf = get_turf(src)
 	var/turf/target_turf = get_turf(target)
 	message_admins("Blast wave fired from [ADMIN_VERBOSEJMP(start_turf)] at [ADMIN_VERBOSEJMP(target_turf)] ([target]) by [ADMIN_LOOKUPFLW(firer)] with power [heavy]/[medium]/[light].")
-	log_game("Blast wave fired from [AREACOORD(start_turf)] at [AREACOORD(target_turf)] ([target]) by [key_name(firer)] with power [heavy]/[medium]/[light].")
+	firer.log_message("fired a blast wave from [AREACOORD(start_turf)] at [AREACOORD(target_turf)] ([target]) with power [heavy]/[medium]/[light].", LOG_GAME)
+	firer.log_message("fired a blast wave from [AREACOORD(start_turf)] at [AREACOORD(target_turf)] ([target]) with power [heavy]/[medium]/[light].", LOG_ATTACK, log_globally = FALSE)
 	fire_blastwave(target, heavy, medium, light, modifiers)
 	return
 
@@ -274,41 +289,58 @@
 	name = "blast wave"
 	icon_state = "blastwave"
 	damage = 0
-	nodamage = FALSE
+	armor_flag = BOMB // Doesn't actually have any functional purpose. But it makes sense.
 	movement_type = FLYING
 	projectile_phasing = ALL // just blows up the turfs lmao
+	phasing_ignore_direct_target = TRUE // If we don't do this the blastcannon shot can be blocked by random items.
 	/// The maximum distance this will inflict [EXPLODE_DEVASTATE]
 	var/heavy_ex_range = 0
 	/// The maximum distance this will inflict [EXPLODE_HEAVY]
 	var/medium_ex_range = 0
 	/// The maximum distance this will inflict [EXPLODE_LIGHT]
 	var/light_ex_range = 0
+	/// Whether or not to care about the explosion block of the things we are passing through.
+	var/reactionary
 
-/obj/projectile/blastwave/Initialize(mapload, heavy_ex_range, medium_ex_range, light_ex_range)
-	range = max(heavy_ex_range, medium_ex_range, light_range, 0)
+/obj/projectile/blastwave/Initialize(mapload, heavy_ex_range, medium_ex_range, light_ex_range, reactionary = CONFIG_GET(flag/reactionary_explosions))
+	range = max(heavy_ex_range, medium_ex_range, light_ex_range, 0)
 	src.heavy_ex_range = heavy_ex_range
 	src.medium_ex_range = medium_ex_range
 	src.light_ex_range = light_ex_range
+	src.reactionary = reactionary
 	return ..()
+
+// Though the projectile itself is not damaging its effects are
+/obj/projectile/blastwave/is_hostile_projectile()
+	return TRUE
 
 /obj/projectile/blastwave/Range()
 	. = ..()
 	if(QDELETED(src))
 		return
 
-	heavy_ex_range = max(heavy_ex_range - 1, 0)
-	medium_ex_range = max(medium_ex_range - 1, 0)
-	light_ex_range = max(light_ex_range - 1, 0)
+	var/decrement = 1
+	var/atom/location = loc
+	if (reactionary)
+		decrement += location.explosive_resistance
 
-	if(heavy_ex_range)
-		SSexplosions.highturf += loc
+	range = max(range - decrement + 1, 0) // Already decremented by 1 in the parent. Exists so that if we pass through something with negative block it extends the range.
+	heavy_ex_range = max(heavy_ex_range - decrement, 0)
+	medium_ex_range = max(medium_ex_range - decrement, 0)
+	light_ex_range = max(light_ex_range - decrement, 0)
+
+	if (heavy_ex_range)
+		SSexplosions.highturf += location
 	else if(medium_ex_range)
-		SSexplosions.medturf += loc
-	else if(light_range)
-		SSexplosions.lowturf += loc
+		SSexplosions.medturf += location
+	else if(light_ex_range)
+		SSexplosions.lowturf += location
 	else
 		qdel(src)
 		return
 
 /obj/projectile/blastwave/ex_act()
 	return FALSE
+
+#undef BLASTCANNON_RANGE_EXP
+#undef BLASTCANNON_RANGE_SCALE

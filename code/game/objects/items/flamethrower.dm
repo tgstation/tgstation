@@ -1,22 +1,26 @@
 /obj/item/flamethrower
 	name = "flamethrower"
 	desc = "You are a firestarter!"
-	icon = 'icons/obj/flamethrower.dmi'
+	icon = 'icons/obj/weapons/flamethrower.dmi'
 	icon_state = "flamethrowerbase"
 	inhand_icon_state = "flamethrower_0"
 	lefthand_file = 'icons/mob/inhands/weapons/flamethrower_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/flamethrower_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 3
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron=500)
+	custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT * 0.5)
 	resistance_flags = FIRE_PROOF
 	trigger_guard = TRIGGER_GUARD_NORMAL
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
+	light_color = LIGHT_COLOR_FLARE
+	light_range = 2
+	light_power = 2
 	light_on = FALSE
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	var/status = FALSE
 	var/lit = FALSE //on or off
 	var/operating = FALSE//cooldown
@@ -31,25 +35,30 @@
 	var/acti_sound = 'sound/items/welderactivate.ogg'
 	var/deac_sound = 'sound/items/welderdeactivate.ogg'
 
-/obj/item/flamethrower/ComponentInitialize()
+/obj/item/flamethrower/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/flamethrower)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/flamethrower/Destroy()
 	if(weldtool)
-		qdel(weldtool)
+		QDEL_NULL(weldtool)
 	if(igniter)
-		qdel(igniter)
+		QDEL_NULL(igniter)
 	if(ptank)
-		qdel(ptank)
+		QDEL_NULL(ptank)
 	return ..()
 
 /obj/item/flamethrower/process()
 	if(!lit || !igniter)
-		STOP_PROCESSING(SSobj, src)
-		return null
+		return PROCESS_KILL
 	var/turf/location = loc
-	if(istype(location, /mob/))
+	if(ismob(location))
 		var/mob/M = location
 		if(M.is_holding(src))
 			location = M.loc
@@ -70,46 +79,46 @@
 	if(lit)
 		. += "+lit"
 
-/obj/item/flamethrower/afterattack(atom/target, mob/user, flag)
-	. = ..()
-	if(flag)
-		return // too close
-	if(ishuman(user))
-		if(!can_trigger_gun(user))
-			return
+/obj/item/flamethrower/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You can't bring yourself to fire \the [src]! You don't want to risk harming anyone..."))
-		return
-	if(user && user.get_active_held_item() == src) // Make sure our user is still holding us
-		var/turf/target_turf = get_turf(target)
-		if(target_turf)
-			var/turflist = getline(user, target_turf)
-			log_combat(user, target, "flamethrowered", src)
-			flame_turf(turflist)
+		log_combat(user, interacting_with, "attempted to flamethrower", src, "with gas mixture: {[print_gas_mixture(ptank.return_analyzable_air())]}, flamethrower: \"[name]\" ([src]), igniter: \"[igniter.name]\", tank: \"[ptank.name]\" and tank distribution pressure: \"[siunit(1000 * ptank.distribute_pressure, unit = "Pa", maxdecimals = 9)]\"" + (lit ? " while lit" : "" + " but failed due to pacifism."))
+		return ITEM_INTERACT_BLOCKING
+	var/turf/target_turf = get_turf(interacting_with)
+	if(target_turf)
+		var/turflist = get_line(user, target_turf)
+		log_combat(user, interacting_with, "flamethrowered", src, "with gas mixture: {[print_gas_mixture(ptank.return_analyzable_air())]}, flamethrower: \"[name]\", igniter: \"[igniter.name]\", tank: \"[ptank.name]\" and tank distribution pressure: \"[siunit(1000 * ptank.distribute_pressure, unit = "Pa", maxdecimals = 9)]\"" + (lit ? " while lit." : "."))
+		flame_turf(turflist)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/flamethrower/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WRENCH && !status)//Taking this apart
-		var/turf/T = get_turf(src)
-		if(weldtool)
-			weldtool.forceMove(T)
-			weldtool = null
-		if(igniter)
-			igniter.forceMove(T)
-			igniter = null
-		if(ptank)
-			ptank.forceMove(T)
-			ptank = null
-		new /obj/item/stack/rods(T)
-		qdel(src)
-		return
+/obj/item/flamethrower/wrench_act(mob/living/user, obj/item/tool)
+	. = TRUE
+	if(status)
+		return FALSE
+	tool.play_tool_sound(src)
+	var/turf/T = get_turf(src)
+	if(weldtool)
+		weldtool.forceMove(T)
+		weldtool = null
+	if(igniter)
+		igniter.forceMove(T)
+		igniter = null
+	if(ptank)
+		ptank.forceMove(T)
+		ptank = null
+	new /obj/item/stack/rods(T)
+	qdel(src)
 
-	else if(W.tool_behaviour == TOOL_SCREWDRIVER && igniter && !lit)
+/obj/item/flamethrower/screwdriver_act(mob/living/user, obj/item/tool)
+	if(igniter && !lit)
+		tool.play_tool_sound(src)
 		status = !status
 		to_chat(user, span_notice("[igniter] is now [status ? "secured" : "unsecured"]!"))
 		update_appearance()
-		return
+		return TRUE
 
-	else if(isigniter(W))
+/obj/item/flamethrower/attackby(obj/item/W, mob/user, params)
+	if(isigniter(W))
 		var/obj/item/assembly/igniter/I = W
 		if(I.secured)
 			return
@@ -146,12 +155,15 @@
 /obj/item/flamethrower/attack_self(mob/user)
 	toggle_igniter(user)
 
-/obj/item/flamethrower/AltClick(mob/user)
-	if(ptank && isliving(user) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
-		user.put_in_hands(ptank)
-		ptank = null
-		to_chat(user, span_notice("You remove the plasma tank from [src]!"))
-		update_appearance()
+/obj/item/flamethrower/click_alt(mob/user)
+	if(isnull(ptank))
+		return NONE
+
+	user.put_in_hands(ptank)
+	ptank = null
+	to_chat(user, span_notice("You remove the plasma tank from [src]!"))
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/flamethrower/examine(mob/user)
 	. = ..()
@@ -197,20 +209,16 @@
 	for(var/turf/T in turflist)
 		if(T == previousturf)
 			continue //so we don't burn the tile we be standin on
-		var/list/turfs_sharing_with_prev = previousturf.GetAtmosAdjacentTurfs(alldir=1)
+		var/list/turfs_sharing_with_prev = previousturf.get_atmos_adjacent_turfs(alldir=1)
 		if(!(T in turfs_sharing_with_prev))
 			break
 		if(igniter)
 			igniter.ignite_turf(src,T)
 		else
 			default_ignite(T)
-		sleep(1)
+		sleep(0.1 SECONDS)
 		previousturf = T
 	operating = FALSE
-	for(var/mob/M in viewers(1, loc))
-		if((M.client && M.machine == src))
-			attack_self(M)
-
 
 /obj/item/flamethrower/proc/default_ignite(turf/target, release_amount = 0.05)
 	//TODO: DEFERRED Consider checking to make sure tank pressure is high enough before doing this...
@@ -221,7 +229,7 @@
 	if(air_transfer.gases[/datum/gas/plasma])
 		air_transfer.gases[/datum/gas/plasma][MOLES] *= 5 //Suffering
 	target.assume_air(air_transfer)
-	//Burn it based on transfered gas
+	//Burn it based on transferred gas
 	target.hotspot_expose((tank_mix.temperature*2) + 380,500)
 	//location.hotspot_expose(1000,500,1)
 
@@ -238,7 +246,7 @@
 		if(create_with_tank)
 			ptank = new /obj/item/tank/internals/plasma/full(src)
 		update_appearance()
-	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_refill)
+	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_refill))
 
 /obj/item/flamethrower/full
 	create_full = TRUE
@@ -246,12 +254,11 @@
 /obj/item/flamethrower/full/tank
 	create_with_tank = TRUE
 
-/obj/item/flamethrower/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	var/obj/projectile/P = hitby
-	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
+/obj/item/flamethrower/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(damage && attack_type == PROJECTILE_ATTACK && damage_type != STAMINA && prob(15))
 		owner.visible_message(span_danger("\The [attack_text] hits the fuel tank on [owner]'s [name], rupturing it! What a shot!"))
 		var/turf/target_turf = get_turf(owner)
-		log_game("A projectile ([hitby]) detonated a flamethrower tank held by [key_name(owner)] at [COORD(target_turf)]")
+		owner.log_message("held a flamethrower tank detonated by a projectile ([hitby])", LOG_GAME)
 		igniter.ignite_turf(src,target_turf, release_amount = 100)
 		qdel(ptank)
 		return 1 //It hit the flamethrower, not them

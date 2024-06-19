@@ -8,36 +8,14 @@
 	return
 
 /obj/effect/overlay/beam//Not actually a projectile, just an effect.
-	name="beam"
-	icon='icons/effects/beam.dmi'
-	icon_state="b_beam"
+	name = "beam"
+	icon = 'icons/effects/beam.dmi'
+	icon_state = "b_beam"
 	var/atom/BeamSource
 
-/obj/effect/overlay/beam/Initialize()
+/obj/effect/overlay/beam/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 10)
-
-/obj/effect/overlay/palmtree_r
-	name = "palm tree"
-	icon = 'icons/misc/beach2.dmi'
-	icon_state = "palm1"
-	density = TRUE
-	layer = WALL_OBJ_LAYER
-	anchored = TRUE
-
-/obj/effect/overlay/palmtree_l
-	name = "palm tree"
-	icon = 'icons/misc/beach2.dmi'
-	icon_state = "palm2"
-	density = TRUE
-	layer = WALL_OBJ_LAYER
-	anchored = TRUE
-
-/obj/effect/overlay/coconut
-	gender = PLURAL
-	name = "coconuts"
-	icon = 'icons/misc/beach.dmi'
-	icon_state = "coconuts"
 
 /obj/effect/overlay/sparkles
 	gender = PLURAL
@@ -45,6 +23,16 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shieldsparkles"
 	anchored = TRUE
+
+/obj/effect/overlay/thermite
+	name = "thermite"
+	desc = "Looks hot."
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "2" //what?
+	anchored = TRUE
+	plane = ABOVE_GAME_PLANE
+	layer = FLY_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/overlay/vis
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -63,5 +51,13 @@
 	appearance_flags = RESET_TRANSFORM | TILE_BOUND
 	invisibility = INVISIBILITY_ABSTRACT
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	vis_flags = VIS_INHERIT_PLANE
+	plane = HIGH_GAME_PLANE
 
-	plane = ATMOS_GROUP_PLANE
+/// Door overlay for animating closets
+/obj/effect/overlay/closet_door
+	anchored = TRUE
+	plane = FLOAT_PLANE
+	layer = FLOAT_LAYER
+	vis_flags = VIS_INHERIT_ID
+	appearance_flags = KEEP_TOGETHER | LONG_GLIDE | PIXEL_SCALE

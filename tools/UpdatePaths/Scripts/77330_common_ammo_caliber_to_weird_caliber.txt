@@ -1,0 +1,13 @@
+#comment This repaths several ammo types to a new type with a different caliber.
+
+/obj/item/ammo_box/magazine/mm712x82 : : /obj/item/ammo_box/magazine/m7mm
+
+/obj/item/ammo_casing/mm712x82 : /obj/item/ammo_casing/m7mm{@OLD}
+
+/obj/projectile/bullet/mm712x82 : /obj/projectile/bullet/a7mm{@OLD}
+
+/obj/projectile/bullet/m223 : /obj/item/ammo_box/magazine/m223{@OLD}
+
+/obj/item/ammo_casing/a556 : /obj/item/ammo_casing/a223{@OLD}
+
+/obj/projectile/bullet/a556 : /obj/projectile/bullet/a223{@OLD}

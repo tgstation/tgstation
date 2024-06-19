@@ -15,19 +15,19 @@
 
 		var/obj/item/reagent_containers/syringe/S = SG.syringes[1]
 
-		S.reagents.trans_to(loaded_projectile, S.reagents.total_volume, transfered_by = user)
+		S.reagents.trans_to(loaded_projectile, S.reagents.total_volume, transferred_by = user)
 		loaded_projectile.name = S.name
 		var/obj/projectile/bullet/dart/D = loaded_projectile
-		D.piercing = S.proj_piercing
+		D.inject_flags = S.inject_flags
 		SG.syringes.Remove(S)
 		qdel(S)
 	else if(istype(loc, /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun))
 		var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/syringe_gun = loc
 		var/obj/item/reagent_containers/syringe/loaded_syringe = syringe_gun.syringes[1]
 		var/obj/projectile/bullet/dart/shot_dart = loaded_projectile
-		syringe_gun.reagents.trans_to(shot_dart, min(loaded_syringe.volume, syringe_gun.reagents.total_volume), transfered_by = user)
+		syringe_gun.reagents.trans_to(shot_dart, min(loaded_syringe.volume, syringe_gun.reagents.total_volume), transferred_by = user)
 		shot_dart.name = loaded_syringe.name
-		shot_dart.piercing = loaded_syringe.proj_piercing
+		shot_dart.inject_flags = loaded_syringe.inject_flags
 		LAZYREMOVE(syringe_gun.syringes, loaded_syringe)
 		qdel(loaded_syringe)
 	return ..()
@@ -45,7 +45,7 @@
 		var/obj/item/gun/chem/CG = loc
 		if(CG.syringes_left <= 0)
 			return
-		CG.reagents.trans_to(loaded_projectile, 15, transfered_by = user)
+		CG.reagents.trans_to(loaded_projectile, 15, transferred_by = user)
 		loaded_projectile.name = "piercing chemical dart"
 		CG.syringes_left--
 	return ..()

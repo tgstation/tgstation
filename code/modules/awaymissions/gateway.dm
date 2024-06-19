@@ -22,6 +22,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 /datum/gateway_destination/proc/get_available_reason()
 	. = "Unreachable"
 	if(world.time - SSticker.round_start_time < wait)
+		playsound(src, 'sound/effects/gateway_calibrating.ogg', 80, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		. = "Connection desynchronized. Recalibration in progress."
 
 /* Check if the movable is allowed to arrive at this destination (exile implants mostly) */
@@ -85,11 +86,11 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		. = "Exit gateway unpowered."
 
 /datum/gateway_destination/gateway/get_target_turf()
-	return get_step(target_gateway.portal,SOUTH)
+	return get_step(target_gateway.portal, target_gateway.dir)
 
 /datum/gateway_destination/gateway/post_transfer(atom/movable/AM)
 	. = ..()
-	addtimer(CALLBACK(AM,/atom/movable.proc/setDir,SOUTH),0)
+	addtimer(CALLBACK(AM, TYPE_PROC_REF(/atom/movable, setDir), target_gateway.dir),0)
 
 /* Special home destination, so we can check exile implants */
 /datum/gateway_destination/gateway/home
@@ -133,7 +134,8 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/effect/gateway_portal_bumper/Bumped(atom/movable/AM)
-	if(get_dir(src,AM) == SOUTH)
+	if(get_dir(src,AM) == gateway?.dir)
+		playsound(src, 'sound/effects/gateway_travel.ogg', 70, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		gateway.Transfer(AM)
 
 /obj/effect/gateway_portal_bumper/Destroy(force)
@@ -156,9 +158,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	bound_y = 0
 	density = TRUE
 
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 100
-	active_power_usage = 5000
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 5
 
 	var/calibrated = TRUE
 	/// Type of instanced gateway destination, needs to be subtype of /datum/gateway_destination/gateway
@@ -172,16 +172,20 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	/// bumper object, the thing that starts actual teleport
 	var/obj/effect/gateway_portal_bumper/portal
 	/// Visual object for handling the viscontents
-	var/obj/effect/gateway_portal_effect/portal_visuals
+	var/atom/movable/screen/map_view/gateway_port/portal_visuals
+	var/teleportion_possible = FALSE
+	var/transport_active = FALSE
 
-/obj/machinery/gateway/Initialize()
+/obj/machinery/gateway/Initialize(mapload)
 	generate_destination()
 	update_appearance()
 	portal_visuals = new
-	vis_contents += portal_visuals
+	portal_visuals.generate_view("gateway_popup_[REF(src)]")
+	portal_visuals.update_portal_filters()
 	return ..()
 
 /obj/machinery/gateway/Destroy()
+	QDEL_NULL(portal_visuals)
 	destination.target_gateway = null
 	GLOB.gateway_destinations -= destination
 	destination = null
@@ -196,17 +200,54 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 /obj/machinery/gateway/proc/deactivate()
 	var/datum/gateway_destination/dest = target
 	target = null
+	playsound(src, 'sound/effects/gateway_close.ogg', 140, TRUE, TRUE, SOUND_RANGE)
 	dest.deactivate(src)
 	QDEL_NULL(portal)
-	use_power = IDLE_POWER_USE
+	update_use_power(IDLE_POWER_USE)
+	transport_active = FALSE
 	update_appearance()
 	portal_visuals.reset_visuals()
 
 /obj/machinery/gateway/process()
 	if((machine_stat & (NOPOWER)) && use_power)
+		teleportion_possible = FALSE
 		if(target)
 			deactivate()
 		return
+	if(teleportion_possible)
+		return
+	for(var/datum/gateway_destination/possible_destination as anything in GLOB.gateway_destinations)
+		if(!valid_destination(possible_destination) || !possible_destination.is_available())
+			continue
+		teleportion_possible = TRUE
+		update_appearance()
+		break
+
+/obj/machinery/gateway/proc/valid_destination(datum/gateway_destination/possible_destination)
+	if(possible_destination == destination)
+		return FALSE
+	if(istype(possible_destination, /datum/gateway_destination/gateway))
+		var/datum/gateway_destination/gateway/gateway_dest = possible_destination
+		if(gateway_dest.target_gateway == src)
+			return FALSE
+	return TRUE
+
+/obj/machinery/gateway/proc/show_light_overlays(light_state, toggle)
+	if(!toggle)
+		return list()
+
+	var/list/image/to_animate = list()
+	to_animate += image('icons/obj/machines/gateway.dmi', light_state)
+	var/image/glowing_light = image('icons/obj/machines/gateway.dmi', light_state)
+	glowing_light.color = GLOB.emissive_color
+	SET_PLANE_EXPLICIT(glowing_light, EMISSIVE_PLANE, src)
+	to_animate += glowing_light
+	return to_animate
+
+/obj/machinery/gateway/update_overlays()
+	. = ..()
+	. += show_light_overlays("portal_light", teleportion_possible)
+	. += show_light_overlays("portal_effect", transport_active)
 
 /obj/machinery/gateway/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return
@@ -221,8 +262,10 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	target = D
 	target.activate(destination)
 	portal_visuals.setup_visuals(target)
+	transport_active = TRUE
+	playsound(src, 'sound/effects/gateway_open.ogg', 140, TRUE, TRUE, SOUND_RANGE)
 	generate_bumper()
-	use_power = ACTIVE_POWER_USE
+	update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
 
 /obj/machinery/gateway/proc/Transfer(atom/movable/AM)
@@ -231,12 +274,25 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	AM.forceMove(target.get_target_turf())
 	target.post_transfer(AM)
 
+/obj/machinery/gateway/attack_ghost(mob/user)
+	. = ..()
+	if(.)
+		return
+	var/turf/tar_turf = target?.get_target_turf()
+	if(isnull(tar_turf))
+		to_chat(user, span_warning("There's no active destination for the gateway... or it's broken. Maybe try again later?"))
+		return
+	if(is_secret_level(tar_turf.z) && !user.client?.holder)
+		to_chat(user, span_warning("The gateway destination is secret."))
+		return
+	Transfer(user)
+
 /* Station's primary gateway */
 /obj/machinery/gateway/centerstation
 	destination_type = /datum/gateway_destination/gateway/home
 	destination_name = "Home Gateway"
 
-/obj/machinery/gateway/centerstation/Initialize()
+/obj/machinery/gateway/centerstation/Initialize(mapload)
 	. = ..()
 	if(!GLOB.the_gateway)
 		GLOB.the_gateway = src
@@ -250,6 +306,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	if(calibrated)
 		to_chat(user, span_alert("The gate is already calibrated, there is no work for you to do here."))
 	else
+		playsound(src, 'sound/effects/gateway_calibrated.ogg', 80, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		to_chat(user, "[span_boldnotice("Recalibration successful!")]: \black This gate's systems have been fine tuned. Travel to this gate will now be on target.")
 		calibrated = TRUE
 	return TRUE
@@ -259,7 +316,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	density = TRUE
 	use_power = NO_POWER_USE
 
-/obj/machinery/gateway/away/interact(mob/user, special_state)
+/obj/machinery/gateway/away/interact(mob/user)
 	. = ..()
 	if(!target)
 		if(!GLOB.the_gateway)
@@ -281,8 +338,10 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	try_to_linkup()
 
 /obj/machinery/computer/gateway_control/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
+		G.portal_visuals.display_to(user)
 		ui = new(user, src, "Gateway", name)
 		ui.open()
 
@@ -291,12 +350,13 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	.["gateway_present"] = G
 	.["gateway_status"] = G ? G.powered() : FALSE
 	.["current_target"] = G?.target?.get_ui_data()
+	.["gateway_mapkey"] = G.portal_visuals.assigned_map
 	var/list/destinations = list()
 	if(G)
-		for(var/datum/gateway_destination/D in GLOB.gateway_destinations)
-			if(D == G.destination)
+		for(var/datum/gateway_destination/possible_destination in GLOB.gateway_destinations)
+			if(!G.valid_destination(possible_destination))
 				continue
-			destinations += list(D.get_ui_data())
+			destinations += list(possible_destination.get_ui_data())
 	.["destinations"] = destinations
 
 /obj/machinery/computer/gateway_control/ui_act(action, list/params)
@@ -316,6 +376,10 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 				G.deactivate()
 			return TRUE
 
+/obj/machinery/computer/gateway_control/ui_close(mob/user)
+	. = ..()
+	G.portal_visuals.hide_from(user)
+
 /obj/machinery/computer/gateway_control/proc/try_to_linkup()
 	G = locate(/obj/machinery/gateway) in view(7,get_turf(src))
 
@@ -327,39 +391,65 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	G.activate(D)
 
 /obj/item/paper/fluff/gateway
-	info = "Congratulations,<br><br>Your station has been selected to carry out the Gateway Project.<br><br>The equipment will be shipped to you at the start of the next quarter.<br> You are to prepare a secure location to house the equipment as outlined in the attached documents.<br><br>--Nanotrasen Bluespace Research"
+	default_raw_text = "Congratulations,<br><br>Your station has been selected to carry out the Gateway Project.<br><br>The equipment will be shipped to you at the start of the next quarter.<br> You are to prepare a secure location to house the equipment as outlined in the attached documents.<br><br>--Nanotrasen Bluespace Research"
 	name = "Confidential Correspondence, Pg 1"
 
-/obj/effect/gateway_portal_effect
-	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	vis_flags = VIS_INHERIT_ID
-	layer = GATEWAY_UNDERLAY_LAYER //Slightly lower than gateway itself
-	var/alpha_icon = 'icons/obj/machines/gateway.dmi'
-	var/alpha_icon_state = "portal_mask"
+/atom/movable/screen/map_view/gateway_port
 	var/datum/gateway_destination/our_destination
+	/// Handles the background of the portal, ensures the effect well, works properly
+	var/atom/movable/screen/background/cam_background
+
+/atom/movable/screen/map_view/gateway_port/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	cam_background = new
+	cam_background.del_on_map_removal = FALSE
+	// Draw above everything
+	cam_background.layer = 200
+	cam_background.plane = HIGHEST_EVER_PLANE
+	cam_background.blend_mode = BLEND_OVERLAY
 
 
-/obj/effect/gateway_portal_effect/proc/setup_visuals(datum/gateway_destination/D)
+/atom/movable/screen/map_view/gateway_port/generate_view(map_key)
+	. = ..()
+	cam_background.assigned_map = assigned_map
+	cam_background.fill_rect(1, 1, 3, 3)
+
+/atom/movable/screen/map_view/gateway_port/Destroy()
+	QDEL_NULL(cam_background)
+	return ..()
+
+/atom/movable/screen/map_view/gateway_port/display_to(mob/show_to)
+	. = ..()
+	show_to.client.register_map_obj(cam_background)
+
+/atom/movable/screen/map_view/gateway_port/proc/setup_visuals(datum/gateway_destination/D)
 	our_destination = D
 	update_portal_filters()
 
-/obj/effect/gateway_portal_effect/proc/reset_visuals()
+/atom/movable/screen/map_view/gateway_port/proc/reset_visuals()
 	our_destination = null
 	update_portal_filters()
 
-/obj/effect/gateway_portal_effect/proc/update_portal_filters()
-	clear_filters()
+/atom/movable/screen/map_view/gateway_port/proc/update_portal_filters()
+	cam_background.clear_filters()
+	// ok so what this used to do was render the tiles "on the other side" of the gateway onto the gateway mask
+	// Unfortunately since I've removed the plane inheriting from /atom vis_flags, this no longer works
+	// You could setup gateways to draw onto "lower then everything" z layers, but generating a whole stack of plane masters
+	// Just for this one effect is kinda silly. Maybe next time
+	// Rather then that, let's just render a little preview port to the console, because for reasons that's trivial
 	vis_contents = null
 
-	if(!our_destination)
+	var/turf/center_turf = our_destination?.get_target_turf()
+	if(!center_turf)
+		// Draw static
+		cam_background.icon_state = "scanline2"
+		cam_background.color = null
+		cam_background.alpha = 255
 		return
 
-	add_filter("portal_alpha", 1, list("type" = "alpha", "icon" = icon(alpha_icon, alpha_icon_state), "x" = 32, "y" = 32))
-	add_filter("portal_blur", 1, list("type" = "blur", "size" = 0.5))
-	add_filter("portal_ripple", 1, list("type" = "ripple", "size" = 2, "radius" = 1, "falloff" = 1, "y" = 7))
+	cam_background.add_filter("portal_blur", 1, list("type" = "blur", "size" = 0.5))
 
-	animate(get_filter("portal_ripple"), time = 1.3 SECONDS, loop = -1, easing = LINEAR_EASING, radius = 32)
-
-	var/turf/center_turf = our_destination.get_target_turf()
-	vis_contents += block(locate(center_turf.x - 1, center_turf.y - 1, center_turf.z), locate(center_turf.x + 1, center_turf.y + 1, center_turf.z))
+	vis_contents += TURF_NEIGHBORS(center_turf)
+	cam_background.icon_state = "scanline4"
+	cam_background.color = "#adadff"
+	cam_background.alpha = 128

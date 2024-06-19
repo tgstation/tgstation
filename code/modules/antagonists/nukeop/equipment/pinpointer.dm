@@ -15,15 +15,15 @@
 		else
 			msg = "Its tracking indicator is blank."
 	. += msg
-	for(var/obj/machinery/nuclearbomb/bomb in GLOB.machines)
+	for(var/obj/machinery/nuclearbomb/bomb as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb))
 		if(bomb.timing)
 			. += "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()]."
 
-/obj/item/pinpointer/nuke/process(delta_time)
+/obj/item/pinpointer/nuke/process(seconds_per_tick)
 	..()
 	if(!active || alert)
 		return
-	for(var/obj/machinery/nuclearbomb/bomb as anything in GLOB.nuke_list)
+	for(var/obj/machinery/nuclearbomb/bomb as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb))
 		if(!bomb.timing)
 			continue
 		alert = TRUE
@@ -37,17 +37,16 @@
 	target = null
 	switch(mode)
 		if(TRACK_NUKE_DISK)
-			var/obj/item/disk/nuclear/N = locate() in GLOB.poi_list
+			var/obj/item/disk/nuclear/N = locate() in SSpoints_of_interest.real_nuclear_disks
 			target = N
 		if(TRACK_MALF_AI)
 			for(var/V in GLOB.ai_list)
 				var/mob/living/silicon/ai/A = V
 				if(A.nuking)
 					target = A
-			for(var/V in GLOB.apcs_list)
-				var/obj/machinery/power/apc/A = V
-				if(A.malfhack && A.occupier)
-					target = A
+			for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
+				if(apc.malfhack && apc.occupier)
+					target = apc
 		if(TRACK_INFILTRATOR)
 			target = SSshuttle.getShuttle("syndicate")
 	..()
@@ -72,7 +71,7 @@
 	flags_1 = NONE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/item/pinpointer/syndicate_cyborg/Initialize()
+/obj/item/pinpointer/syndicate_cyborg/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 

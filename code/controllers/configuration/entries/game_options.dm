@@ -1,12 +1,5 @@
 /datum/config_entry/number_list/repeated_mode_adjust
 
-/datum/config_entry/keyed_list/probability
-	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_NUM
-
-/datum/config_entry/keyed_list/probability/ValidateListEntry(key_name)
-	return key_name in config.modes
-
 /datum/config_entry/keyed_list/max_pop
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM
@@ -36,6 +29,11 @@
 
 /datum/config_entry/flag/everyone_has_maint_access
 
+/datum/config_entry/number/depsec_access_level
+	default = 1
+	min_val = 0
+	max_val = 2
+
 /datum/config_entry/flag/sec_start_brig //makes sec start in brig instead of dept sec posts
 
 /datum/config_entry/flag/force_random_names
@@ -63,6 +61,21 @@
 	default = 25
 	integer = FALSE
 	min_val = 0
+
+/// Determines the ideal player count for maximum progression per minute.
+/datum/config_entry/number/traitor_ideal_player_count
+	default = 20
+	min_val = 1
+
+/// Determines how fast traitors scale in general.
+/datum/config_entry/number/traitor_scaling_multiplier
+	default = 1
+	min_val = 0.01
+
+/// Determines how many potential objectives a traitor can have.
+/datum/config_entry/number/maximum_potential_objectives
+	default = 6
+	min_val = 1
 
 /datum/config_entry/number/changeling_scaling_coeff //how much does the amount of players get divided by to determine changelings
 	default = 6
@@ -95,6 +108,8 @@
 
 /datum/config_entry/flag/enforce_human_authority //If non-human species are barred from joining as a head of staff
 
+/datum/config_entry/flag/enforce_human_authority_on_everyone //If non-human species are barred from joining as a head of staff, including jobs flagged as allowed for non-humans, ie. Quartermaster.
+
 /datum/config_entry/flag/allow_latejoin_antagonists // If late-joining players can be traitor/changeling
 
 /datum/config_entry/number/shuttle_refuel_delay
@@ -106,11 +121,23 @@
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_FLAG
 
+/datum/config_entry/keyed_list/roundstart_races/ValidateListEntry(key_name, key_value)
+	if(key_name in GLOB.species_list)
+		return TRUE
+
+	log_config("ERROR: [key_name] is not a valid race ID.")
+	return FALSE
+
 /datum/config_entry/keyed_list/roundstart_no_hard_check // Species contained in this list will not cause existing characters with no-longer-roundstart species set to be resetted to the human race.
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_FLAG
 
-/datum/config_entry/flag/join_with_mutant_humans //players can pick mutant bodyparts for humans before joining the game
+/datum/config_entry/keyed_list/roundstart_no_hard_check/ValidateListEntry(key_name, key_value)
+	if(key_name in GLOB.species_list)
+		return TRUE
+
+	log_config("ERROR: [key_name] is not a valid race ID.")
+	return FALSE
 
 /datum/config_entry/flag/no_summon_guns //No
 
@@ -172,9 +199,6 @@
 	default = list( //DEFAULTS
 	/mob/living/simple_animal = 1,
 	/mob/living/silicon/pai = 1,
-	/mob/living/carbon/alien/humanoid/hunter = -1,
-	/mob/living/carbon/alien/humanoid/royal/praetorian = 1,
-	/mob/living/carbon/alien/humanoid/royal/queen = 3
 	)
 
 /datum/config_entry/keyed_list/multiplicative_movespeed/ValidateAndSet()
@@ -233,12 +257,10 @@
 /datum/config_entry/number/outdated_movedelay/alien_delay
 	movedelay_type = /mob/living/carbon/alien
 /datum/config_entry/number/outdated_movedelay/slime_delay
-	movedelay_type = /mob/living/simple_animal/slime
+	movedelay_type = /mob/living/basic/slime
 /datum/config_entry/number/outdated_movedelay/animal_delay
 	movedelay_type = /mob/living/simple_animal
 /////////////////////////////////////////////////
-
-/datum/config_entry/flag/virtual_reality //Will virtual reality be loaded
 
 /datum/config_entry/flag/roundstart_away //Will random away mission be loaded.
 
@@ -247,6 +269,11 @@
 	integer = FALSE
 	min_val = 0
 
+/datum/config_entry/number/config_gateway_chance
+	integer = FALSE
+	min_val = 0
+	max_val = 100
+
 /datum/config_entry/flag/ghost_interaction
 
 /datum/config_entry/flag/near_death_experience //If carbons can hear ghosts when unconscious and very close to death
@@ -254,16 +281,21 @@
 /datum/config_entry/flag/silent_ai
 /datum/config_entry/flag/silent_borg
 
-/datum/config_entry/flag/sandbox_autoclose // close the sandbox panel after spawning an item, potentially reducing griff
-
 /datum/config_entry/number/default_laws //Controls what laws the AI spawns with.
 	default = 0
 	min_val = 0
-	max_val = 3
+	max_val = 4
+
+/// Controls if Asimov Superiority appears as a perk for humans even if standard Asimov isn't the default AI lawset
+/datum/config_entry/flag/silicon_asimov_superiority_override
 
 /datum/config_entry/number/silicon_max_law_amount
 	default = 12
 	min_val = 0
+
+/datum/config_entry/keyed_list/specified_laws
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
 
 /datum/config_entry/keyed_list/random_laws
 	key_mode = KEY_MODE_TEXT
@@ -282,9 +314,8 @@
 	min_val = -1
 
 /datum/config_entry/string/overflow_job
-	default = "Assistant"
+	default = JOB_ASSISTANT
 
-/datum/config_entry/flag/starlight
 /datum/config_entry/flag/grey_assistants
 
 /datum/config_entry/number/lavaland_budget
@@ -304,6 +335,8 @@
 
 /datum/config_entry/flag/allow_random_events // Enables random events mid-round when set
 
+/datum/config_entry/flag/forbid_station_traits
+
 /datum/config_entry/number/events_min_time_mul // Multipliers for random events minimal starting time and minimal players amounts
 	default = 1
 	min_val = 0
@@ -313,6 +346,16 @@
 	default = 1
 	min_val = 0
 	integer = FALSE
+
+/datum/config_entry/number/events_frequency_lower
+	default = 2.5 MINUTES
+	min_val = 0
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/number/events_frequency_upper
+	default = 7 MINUTES
+	min_val = 0
+	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/number/mice_roundstart
 	default = 10
@@ -344,6 +387,11 @@
 
 /datum/config_entry/flag/shift_time_realtime
 
+/datum/config_entry/number/shift_time_start_hour
+	default = 12
+	min_val = 0
+	max_val = 23
+
 /datum/config_entry/number/monkeycap
 	default = 64
 	min_val = 0
@@ -366,4 +414,53 @@
 	min_val = 0
 	integer = FALSE // It is in hours, but just in case one wants to specify minutes.
 
-/datum/config_entry/flag/sdql_spells
+/datum/config_entry/flag/native_fov
+
+/datum/config_entry/flag/disallow_title_music
+
+/datum/config_entry/number/station_goal_budget
+	default = 1
+	min_val = 0
+	integer = FALSE
+
+/datum/config_entry/flag/disallow_circuit_sounds
+
+/datum/config_entry/string/tts_http_url
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/string/tts_http_token
+	protection = CONFIG_ENTRY_LOCKED|CONFIG_ENTRY_HIDDEN
+
+/datum/config_entry/number/tts_max_concurrent_requests
+	default = 4
+	min_val = 1
+
+/datum/config_entry/str_list/tts_voice_blacklist
+
+/datum/config_entry/flag/give_tutorials_without_db
+
+/datum/config_entry/string/new_player_alert_role_id
+
+/datum/config_entry/keyed_list/positive_station_traits
+	default = list("0" = 8, "1" = 4, "2" = 2, "3" = 1)
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+
+/datum/config_entry/keyed_list/negative_station_traits
+	default = list("0" = 8, "1" = 4, "2" = 2, "3" = 1)
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+
+/datum/config_entry/keyed_list/neutral_station_traits
+	default = list("0" = 10, "1" = 10, "2" = 3, "2.5" = 1)
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+
+// Configs for the Quirk system
+/// Disables Quirk point balancing for the server and clients.
+/datum/config_entry/flag/disable_quirk_points
+
+/// The maximum amount of positive quirks one character can have at roundstart.
+/datum/config_entry/number/max_positive_quirks
+	default = 6
+	min_val = -1

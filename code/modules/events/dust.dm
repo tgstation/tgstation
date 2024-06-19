@@ -1,31 +1,19 @@
 /datum/round_event_control/space_dust
-	name = "Minor Space Dust"
+	name = "Space Dust: Minor"
 	typepath = /datum/round_event/space_dust
 	weight = 200
 	max_occurrences = 1000
 	earliest_start = 0 MINUTES
 	alert_observers = FALSE
+	category = EVENT_CATEGORY_SPACE
+	description = "A single space dust is hurled at the station."
+	map_flags = EVENT_SPACE_ONLY
 
 /datum/round_event/space_dust
-	startWhen = 1
-	endWhen = 2
+	start_when = 1
+	end_when = 2
 	fakeable = FALSE
 
 /datum/round_event/space_dust/start()
-	spawn_meteors(1, GLOB.meteorsC)
+	spawn_meteors(1, GLOB.meteors_dust)
 
-/datum/round_event_control/sandstorm
-	name = "Sandstorm"
-	typepath = /datum/round_event/sandstorm
-	weight = 0
-	max_occurrences = 0
-	earliest_start = 0 MINUTES
-
-/datum/round_event/sandstorm
-	startWhen = 1
-	endWhen = 150 // ~5 min
-	announceWhen = 0
-	fakeable = FALSE
-
-/datum/round_event/sandstorm/tick()
-	spawn_meteors(10, GLOB.meteorsC)

@@ -1,14 +1,14 @@
 //Bot Construction
 
 /obj/item/bot_assembly
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 3
 	throw_speed = 2
 	throw_range = 5
 	var/created_name
 	var/build_step = ASSEMBLY_FIRST_STEP
-	var/robot_arm = /obj/item/bodypart/r_arm/robot
+	var/robot_arm = /obj/item/bodypart/arm/right/robot
 
 /obj/item/bot_assembly/attackby(obj/item/I, mob/user, params)
 	..()
@@ -17,7 +17,7 @@
 		return
 
 /obj/item/bot_assembly/proc/rename_bot()
-	var/t = sanitize_name(stripped_input(usr, "Enter new robot name", name, created_name,MAX_NAME_LEN), allow_numbers = TRUE)
+	var/t = sanitize_name(tgui_input_text(usr, "Enter a new robot name", "Robot Rename", created_name, MAX_NAME_LEN), allow_numbers = TRUE)
 	if(!t)
 		return
 	if(!in_range(src, usr) && loc != usr)
@@ -44,21 +44,48 @@
 /obj/item/bot_assembly/cleanbot
 	desc = "It's a bucket with a sensor attached."
 	name = "incomplete cleanbot assembly"
-	icon_state = "bucket_proxy"
+	icon_state = "cleanbot_assembly"
 	throwforce = 5
 	created_name = "Cleanbot"
+	var/obj/item/reagent_containers/cup/bucket/bucket_obj
 
-/obj/item/bot_assembly/cleanbot/attackby(obj/item/W, mob/user, params)
+/obj/item/bot_assembly/cleanbot/Initialize(mapload, obj/item/reagent_containers/cup/bucket/new_bucket)
+	if(!new_bucket)
+		new_bucket = new()
+	new_bucket.forceMove(src)
+	return ..()
+
+/obj/item/bot_assembly/cleanbot/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(istype(arrived, /obj/item/reagent_containers/cup/bucket))
+		if(bucket_obj && bucket_obj != arrived)
+			qdel(bucket_obj)
+		bucket_obj = arrived
+	return ..()
+
+/obj/item/bot_assembly/cleanbot/Exited(atom/movable/gone, direction)
+	if(gone == bucket_obj)
+		bucket_obj = null
+	return ..()
+
+
+/obj/item/bot_assembly/cleanbot/Destroy(force)
+	QDEL_NULL(bucket_obj)
+	return ..()
+
+
+/obj/item/bot_assembly/cleanbot/attackby(obj/item/item_attached, mob/user, params)
 	..()
-	if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
-		if(!can_finish_build(W, user))
-			return
-		var/mob/living/simple_animal/bot/cleanbot/A = new(drop_location())
-		A.name = created_name
-		A.robot_arm = W.type
-		to_chat(user, span_notice("You add [W] to [src]. Beep boop!"))
-		qdel(W)
-		qdel(src)
+	if(!istype(item_attached, /obj/item/bodypart/arm/left/robot) && !istype(item_attached, /obj/item/bodypart/arm/right/robot))
+		return
+	if(!can_finish_build(item_attached, user))
+		return
+	var/mob/living/basic/bot/cleanbot/bot = new(drop_location())
+	bot.apply_custom_bucket(bucket_obj)
+	bot.name = created_name
+	bot.robot_arm = item_attached.type
+	to_chat(user, span_notice("You add [item_attached] to [src]. Beep boop!"))
+	qdel(item_attached)
+	qdel(src)
 
 
 //Edbot Assembly
@@ -66,7 +93,7 @@
 	name = "incomplete ED-209 assembly"
 	desc = "Some sort of bizarre assembly."
 	icon_state = "ed209_frame"
-	inhand_icon_state = "ed209_frame"
+	inhand_icon_state = null
 	created_name = "ED-209 Security Robot" //To preserve the name if it's a unique securitron I guess
 	var/lasercolor = ""
 	var/vest_type = /obj/item/clothing/suit/armor/vest
@@ -75,7 +102,7 @@
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP, ASSEMBLY_SECOND_STEP)
-			if(istype(W, /obj/item/bodypart/l_leg/robot) || istype(W, /obj/item/bodypart/r_leg/robot))
+			if(istype(W, /obj/item/bodypart/leg/left/robot) || istype(W, /obj/item/bodypart/leg/right/robot))
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				to_chat(user, span_notice("You add [W] to [src]."))
@@ -108,7 +135,7 @@
 					build_step++
 
 		if(ASSEMBLY_FIFTH_STEP)
-			if(istype(W, /obj/item/clothing/head/helmet))
+			if(istype(W, /obj/item/clothing/head/helmet/sec))
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				to_chat(user, span_notice("You add [W] to [src]."))
@@ -118,7 +145,7 @@
 				icon_state = "ed209_hat"
 				build_step++
 
-		if(5)
+		if(ASSEMBLY_SIXTH_STEP)
 			if(isprox(W))
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
@@ -129,21 +156,21 @@
 				inhand_icon_state = "ed209_prox"
 				icon_state = "ed209_prox"
 
-		if(6)
+		if(ASSEMBLY_SEVENTH_STEP)
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/coil = W
 				if(coil.get_amount() < 1)
 					to_chat(user, span_warning("You need one length of cable to wire the ED-209!"))
 					return
 				to_chat(user, span_notice("You start to wire [src]..."))
-				if(do_after(user, 40, target = src))
-					if(coil.get_amount() >= 1 && build_step == 6)
+				if(do_after(user, 4 SECONDS, target = src))
+					if(coil.get_amount() >= 1 && build_step == ASSEMBLY_SEVENTH_STEP)
 						coil.use(1)
 						to_chat(user, span_notice("You wire [src]."))
 						name = "wired ED-209 assembly"
 						build_step++
 
-		if(7)
+		if(ASSEMBLY_EIGHTH_STEP)
 			if(istype(W, /obj/item/gun/energy/disabler))
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
@@ -154,7 +181,7 @@
 				qdel(W)
 				build_step++
 
-		if(8)
+		if(ASSEMBLY_NINTH_STEP)
 			if(W.tool_behaviour == TOOL_SCREWDRIVER)
 				to_chat(user, span_notice("You start attaching the gun to the frame..."))
 				if(W.use_tool(src, user, 40, volume=100))
@@ -173,7 +200,7 @@
 	var/toolbox = /obj/item/storage/toolbox/mechanical
 	var/toolbox_color = "" //Blank for blue, r for red, y for yellow, etc.
 
-/obj/item/bot_assembly/floorbot/Initialize()
+/obj/item/bot_assembly/floorbot/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
@@ -214,7 +241,7 @@
 				update_appearance()
 
 		if(ASSEMBLY_SECOND_STEP)
-			if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
+			if(istype(W, /obj/item/bodypart/arm/left/robot) || istype(W, /obj/item/bodypart/arm/right/robot))
 				if(!can_finish_build(W, user))
 					return
 				var/mob/living/simple_animal/bot/floorbot/A = new(drop_location(), toolbox_color)
@@ -234,7 +261,7 @@
 	created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
 	var/healthanalyzer = /obj/item/healthanalyzer
-	var/firstaid = /obj/item/storage/firstaid
+	var/medkit_type = /obj/item/storage/medkit
 
 /obj/item/bot_assembly/medbot/proc/set_skin(skin)
 	src.skin = skin
@@ -260,14 +287,14 @@
 				if(!can_finish_build(W, user))
 					return
 				qdel(W)
-				var/mob/living/simple_animal/bot/medbot/S = new(drop_location(), skin)
+				var/mob/living/basic/bot/medbot/medbot = new(drop_location(), skin)
 				to_chat(user, span_notice("You complete the Medbot. Beep boop!"))
-				S.name = created_name
-				S.firstaid = firstaid
-				S.robot_arm = robot_arm
-				S.healthanalyzer = healthanalyzer
-				var/obj/item/storage/firstaid/FA = firstaid
-				S.damagetype_healer = initial(FA.damagetype_healed) ? initial(FA.damagetype_healed) : BRUTE
+				medbot.name = created_name
+				medbot.medkit_type = medkit_type
+				medbot.robot_arm = robot_arm
+				medbot.health_analyzer = healthanalyzer
+				var/obj/item/storage/medkit/medkit = medkit_type
+				medbot.damage_type_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
 				qdel(src)
 
 
@@ -278,30 +305,28 @@
 	icon_state = "honkbot_arm"
 	created_name = "Honkbot"
 
-/obj/item/bot_assembly/honkbot/attackby(obj/item/I, mob/user, params)
+/obj/item/bot_assembly/honkbot/attackby(obj/item/attacking_item, mob/user, params)
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			if(isprox(I))
-				if(!user.temporarilyRemoveItemFromInventory(I))
+			if(isprox(attacking_item))
+				if(!user.temporarilyRemoveItemFromInventory(attacking_item))
 					return
-				to_chat(user, span_notice("You add the [I] to [src]!"))
+				to_chat(user, span_notice("You add the [attacking_item] to [src]!"))
 				icon_state = "honkbot_proxy"
 				name = "incomplete Honkbot assembly"
-				qdel(I)
+				qdel(attacking_item)
 				build_step++
 
 		if(ASSEMBLY_SECOND_STEP)
-			if(istype(I, /obj/item/bikehorn))
-				if(!can_finish_build(I, user))
+			if(istype(attacking_item, /obj/item/bikehorn))
+				if(!can_finish_build(attacking_item, user))
 					return
-				to_chat(user, span_notice("You add the [I] to [src]! Honk!"))
-				var/mob/living/simple_animal/bot/honkbot/S = new(drop_location())
-				S.name = created_name
-				S.limiting_spam = TRUE // only long enough to hear the first ping.
-				addtimer(CALLBACK (S, .mob/living/simple_animal/bot/honkbot/proc/react_ping), 5)
-				S.bikehorn = I.type
-				qdel(I)
+				to_chat(user, span_notice("You add the [attacking_item] to [src]! Honk!"))
+				var/mob/living/basic/bot/honkbot/new_honkbot = new(drop_location())
+				new_honkbot.name = created_name
+				playsound(new_honkbot, 'sound/machines/ping.ogg', 50, TRUE, -1)
+				qdel(attacking_item)
 				qdel(src)
 
 
@@ -311,6 +336,8 @@
 	desc = "Some sort of bizarre assembly made from a proximity sensor, helmet, and signaler."
 	icon_state = "helmet_signaler"
 	inhand_icon_state = "helmet"
+	lefthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
 	created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
 	var/swordamt = 0 //If you're converting it into a grievousbot, how many swords have you attached
 	var/toyswordamt = 0 //honk
@@ -349,7 +376,7 @@
 					build_step--
 
 		if(ASSEMBLY_THIRD_STEP)
-			if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
+			if((istype(I, /obj/item/bodypart/arm/left/robot)) || (istype(I, /obj/item/bodypart/arm/right/robot)))
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
 				to_chat(user, span_notice("You add [I] to [src]!"))
@@ -366,7 +393,7 @@
 				build_step--
 
 		if(ASSEMBLY_FOURTH_STEP)
-			if(istype(I, /obj/item/melee/baton))
+			if(istype(I, /obj/item/melee/baton/security))
 				if(!can_finish_build(I, user))
 					return
 				to_chat(user, span_notice("You complete the Securitron! Beep boop."))
@@ -414,7 +441,7 @@
 						new /obj/item/toy/sword(Tsec)
 
 		if(ASSEMBLY_FIFTH_STEP)
-			if(istype(I, /obj/item/melee/transforming/energy/sword/saber))
+			if(istype(I, /obj/item/melee/energy/sword/saber))
 				if(swordamt < 3)
 					if(!user.temporarilyRemoveItemFromInventory(I))
 						return
@@ -439,7 +466,7 @@
 				icon_state = initial(icon_state)
 				to_chat(user, span_notice("You unbolt [src]'s energy swords."))
 				for(var/IS in 1 to swordamt)
-					new /obj/item/melee/transforming/energy/sword/saber(Tsec)
+					new /obj/item/melee/energy/sword/saber(Tsec)
 
 
 //Firebot Assembly
@@ -453,7 +480,7 @@
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			if(istype(I, /obj/item/clothing/head/hardhat/red))
+			if(istype(I, /obj/item/clothing/head/utility/hardhat/red))
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
 				to_chat(user,span_notice("You add the [I] to [src]!"))
@@ -517,10 +544,10 @@
 					to_chat(user, span_warning("You need one fluid duct to finish [src]"))
 					return
 				to_chat(user, span_notice("You start to pipe up [src]..."))
-				if(do_after(user, 40, target = src) && D.use(1))
+				if(do_after(user, 4 SECONDS, target = src) && D.use(1))
 					to_chat(user, span_notice("You pipe up [src]."))
-					var/mob/living/simple_animal/bot/hygienebot/H = new(drop_location())
-					H.name = created_name
+					var/mob/living/basic/bot/hygienebot/new_bot = new(drop_location())
+					new_bot.name = created_name
 					qdel(src)
 			if(I.tool_behaviour == TOOL_SCREWDRIVER) //deconstruct
 				new /obj/item/assembly/prox_sensor(Tsec)
@@ -540,7 +567,7 @@
 		return
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			if(istype(part, /obj/item/bodypart/l_leg/robot) || istype(part, /obj/item/bodypart/r_leg/robot))
+			if(istype(part, /obj/item/bodypart/leg/left/robot) || istype(part, /obj/item/bodypart/leg/right/robot))
 				if(!user.temporarilyRemoveItemFromInventory(part))
 					return
 				balloon_alert(user, "leg attached")

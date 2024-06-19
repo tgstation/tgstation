@@ -1,28 +1,29 @@
 {
   "compilerOptions": {
-    "target": "es3",
-    "noEmit": true,
-    "strict": false,
     "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "checkJs": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": false,
     "jsx": "preserve",
     "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext",
+      "DOM",
+      "DOM.Iterable",
+      "ESNext",
       "ScriptHost"
     ],
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
     "resolveJsonModule": true,
-    "isolatedModules": false
+    "skipLibCheck": true,
+    "strict": false,
+    "strictNullChecks": true,
+    "target": "ES5"
   },
   "include": [
-    "./global.d.ts",
+    "./*.d.ts",
     "./packages"
   ]
 }

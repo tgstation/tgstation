@@ -1,13 +1,15 @@
 /obj/vehicle
 	name = "generic vehicle"
 	desc = "Yell at coderbus."
-	icon = 'icons/obj/vehicles.dmi'
-	icon_state = "fuckyou"
+	icon = 'icons/mob/rideables/vehicles.dmi'
+	icon_state = "error"
 	max_integrity = 300
-	armor = list(MELEE = 30, BULLET = 30, LASER = 30, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 60, ACID = 60)
+	armor_type = /datum/armor/obj_vehicle
+	layer = VEHICLE_LAYER
 	density = TRUE
 	anchored = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	pass_flags_self = PASSVEHICLE
 	COOLDOWN_DECLARE(cooldown_vehicle_move)
 	var/list/mob/occupants //mob = bitflags of their control level.
 	///Maximum amount of passengers plus drivers
@@ -33,6 +35,14 @@
 	var/obj/vehicle/trailer
 	var/are_legs_exposed = FALSE
 
+/datum/armor/obj_vehicle
+	melee = 30
+	bullet = 30
+	laser = 30
+	bomb = 30
+	fire = 60
+	acid = 60
+
 /obj/vehicle/Initialize(mapload)
 	. = ..()
 	occupants = list()
@@ -40,19 +50,35 @@
 	autogrant_actions_controller = list()
 	occupant_actions = list()
 	generate_actions()
+	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
+
+/obj/vehicle/Destroy(force)
+	QDEL_NULL(trailer)
+	inserted_key = null
+	return ..()
+
+/obj/vehicle/Exited(atom/movable/gone, direction)
+	if(gone == inserted_key)
+		inserted_key = null
+	return ..()
 
 /obj/vehicle/examine(mob/user)
 	. = ..()
-	if(resistance_flags & ON_FIRE)
-		. += span_warning("It's on fire!")
-	var/healthpercent = obj_integrity/max_integrity * 100
-	switch(healthpercent)
+	. += generate_integrity_message()
+
+/// Returns a readable string of the vehicle's health for examining. Overridden by subtypes who want to be more verbose with their health messages.
+/obj/vehicle/proc/generate_integrity_message()
+	var/examine_text = ""
+	var/integrity = atom_integrity/max_integrity * 100
+	switch(integrity)
 		if(50 to 99)
-			. += "It looks slightly damaged."
+			examine_text = "It looks slightly damaged."
 		if(25 to 50)
-			. += "It appears heavily damaged."
+			examine_text = "It appears heavily damaged."
 		if(0 to 25)
-			. += span_warning("It's falling apart!")
+			examine_text = span_warning("It's falling apart!")
+
+	return examine_text
 
 /obj/vehicle/proc/is_key(obj/item/I)
 	return istype(I, key_type)
@@ -146,8 +172,22 @@
 			remove_controller_actions_by_flag(controller, i)
 	return TRUE
 
+/// To add a trailer to the vehicle in a manner that allows safe qdels
+/obj/vehicle/proc/add_trailer(obj/vehicle/added_vehicle)
+	trailer = added_vehicle
+	RegisterSignal(trailer, COMSIG_QDELETING, PROC_REF(remove_trailer))
+
+/// To remove a trailer from the vehicle in a manner that allows safe qdels
+/obj/vehicle/proc/remove_trailer()
+	SIGNAL_HANDLER
+	UnregisterSignal(trailer, COMSIG_QDELETING)
+	trailer = null
+
 /obj/vehicle/Move(newloc, dir)
+	// It is unfortunate, but this is the way to make it not mess up
+	var/atom/old_loc = loc
+	// When we do this, it will set the loc to the new loc
 	. = ..()
 	if(trailer && .)
-		var/dir_to_move = get_dir(trailer.loc, newloc)
+		var/dir_to_move = get_dir(trailer.loc, old_loc)
 		step(trailer, dir_to_move)

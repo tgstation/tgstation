@@ -5,8 +5,8 @@
  * used for mechas and rare collectable hats, should totally be used for way more ;)
  */
 /datum/element/series
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
+	argument_hash_start_idx = 2
 	var/list/subtype_list
 	var/series_name
 
@@ -20,11 +20,11 @@
 	subtype_list = subtypesof(subtype)
 	src.series_name = series_name
 	var/atom/attached = target
-	RegisterSignal(attached, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(attached, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/element/series/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(target, COMSIG_ATOM_EXAMINE)
 
 ///signal called examining
 /datum/element/series/proc/on_examine(datum/target, mob/user, list/examine_list)

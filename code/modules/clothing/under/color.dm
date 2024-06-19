@@ -1,11 +1,12 @@
 /obj/item/clothing/under/color
+	name = "jumpsuit"
 	desc = "A standard issue colored jumpsuit. Variety is the spice of life!"
 	dying_key = DYE_REGISTRY_UNDER
 	greyscale_colors = "#3f3f3f"
 	greyscale_config = /datum/greyscale_config/jumpsuit
-	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit_inhand_left
-	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit_inhand_right
-	greyscale_config_worn = /datum/greyscale_config/jumpsuit_worn
+	greyscale_config_worn = /datum/greyscale_config/jumpsuit/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit/inhand_right
 	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "jumpsuit"
 	inhand_icon_state = "jumpsuit"
@@ -16,15 +17,27 @@
 /obj/item/clothing/under/color/jumpskirt
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	icon_state = "jumpskirt"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/// Returns a random, acceptable jumpsuit typepath
+/proc/get_random_jumpsuit()
+	return pick(
+		subtypesof(/obj/item/clothing/under/color) \
+			- typesof(/obj/item/clothing/under/color/jumpskirt) \
+			- /obj/item/clothing/under/color/random \
+			- /obj/item/clothing/under/color/grey/ancient \
+			- /obj/item/clothing/under/color/black/ghost \
+			- /obj/item/clothing/under/rank/prisoner \
+	)
 
 /obj/item/clothing/under/color/random
 	icon_state = "random_jumpsuit"
 
-/obj/item/clothing/under/color/random/Initialize()
+/obj/item/clothing/under/color/random/Initialize(mapload)
 	..()
-	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - typesof(/obj/item/clothing/under/color/jumpskirt) - /obj/item/clothing/under/color/random - /obj/item/clothing/under/color/grey/ancient - /obj/item/clothing/under/color/black/ghost - /obj/item/clothing/under/rank/prisoner)
+	var/obj/item/clothing/under/color/C = get_random_jumpsuit()
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		H.equip_to_slot_or_del(new C(H), ITEM_SLOT_ICLOTHING, initial=TRUE) //or else you end up with naked assistants running around everywhere...
@@ -32,12 +45,20 @@
 		new C(loc)
 	return INITIALIZE_HINT_QDEL
 
+/// Returns a random, acceptable jumpskirt typepath
+/proc/get_random_jumpskirt()
+	return pick(
+		subtypesof(/obj/item/clothing/under/color/jumpskirt) \
+			- /obj/item/clothing/under/color/jumpskirt/random \
+			- /obj/item/clothing/under/rank/prisoner/skirt \
+	)
+
 /obj/item/clothing/under/color/jumpskirt/random
 	icon_state = "random_jumpsuit" //Skirt variant needed
 
-/obj/item/clothing/under/color/jumpskirt/random/Initialize()
+/obj/item/clothing/under/color/jumpskirt/random/Initialize(mapload)
 	..()
-	var/obj/item/clothing/under/color/jumpskirt/C = pick(subtypesof(/obj/item/clothing/under/color/jumpskirt) - /obj/item/clothing/under/color/jumpskirt/random - /obj/item/clothing/under/rank/prisoner/skirt)
+	var/obj/item/clothing/under/color/jumpskirt/C = get_random_jumpskirt()
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		H.equip_to_slot_or_del(new C(H), ITEM_SLOT_ICLOTHING, initial=TRUE)
@@ -55,7 +76,7 @@
 /obj/item/clothing/under/color/black/ghost
 	item_flags = DROPDEL
 
-/obj/item/clothing/under/color/black/ghost/Initialize()
+/obj/item/clothing/under/color/black/ghost/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
 

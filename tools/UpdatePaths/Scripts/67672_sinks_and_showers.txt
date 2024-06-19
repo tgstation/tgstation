@@ -1,0 +1,17 @@
+/obj/structure/sink {dir=@UNSET} : /obj/structure/sink/directional/south {@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sink {dir=1} : /obj/structure/sink/directional/north {@OLD;dir=@SKIP;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sink {dir=2} : /obj/structure/sink/directional/south {@OLD;dir=@SKIP;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sink {dir=4} : /obj/structure/sink/directional/east {@OLD;dir=@SKIP;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sink {dir=8} : /obj/structure/sink/directional/west {@OLD;dir=@SKIP;pixel_x=@SKIP;pixel_y=@SKIP}
+
+/obj/structure/sink/kitchen {dir=@UNSET} : /obj/structure/sink/kitchen/directional/south {@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sink/kitchen {dir=1} : /obj/structure/sink/kitchen/directional/north {@OLD;dir=@SKIP;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sink/kitchen {dir=2} : /obj/structure/sink/kitchen/directional/south {@OLD;dir=@SKIP;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sink/kitchen {dir=4} : /obj/structure/sink/kitchen/directional/east {@OLD;dir=@SKIP;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/sink/kitchen {dir=8} : /obj/structure/sink/kitchen/directional/west {@OLD;dir=@SKIP;pixel_x=@SKIP;pixel_y=@SKIP}
+
+/obj/machinery/shower {dir=@UNSET} : /obj/machinery/shower/directional/south {@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/machinery/shower {dir=1} : /obj/machinery/shower/directional/north {@OLD;dir=@SKIP;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/machinery/shower {dir=2} : /obj/machinery/shower/directional/south {@OLD;dir=@SKIP;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/machinery/shower {dir=4} : /obj/machinery/shower/directional/east {@OLD;dir=@SKIP;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/machinery/shower {dir=8} : /obj/machinery/shower/directional/west {@OLD;dir=@SKIP;pixel_x=@SKIP;pixel_y=@SKIP}

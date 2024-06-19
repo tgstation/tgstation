@@ -79,64 +79,6 @@
 		"Yuletide"
 	],
 
-	"rpg_action": [
-		"Annihilate",
-		"Ban",
-		"Defeat",
-		"Destroy",
-		"Mutilate",
-		"Nuke",
-		"Own",
-		"Perma",
-		"Pwn",
-		"Pulverize",
-		"Robust",
-		"Save",
-		"Stop",
-		"Strike",
-		"Valid",
-		"Yeet"
-	],
-
-	"rpg_action_valentines": [
-		"Bewitch",
-		"Crush",
-		"Cuddle",
-		"Divorce",
-		"ERP",
-		"Romance",
-		"Seduce",
-		"Smooch",
-		"Titillate"
-	],
-
-	"rpg_action_halloween": [
-		"Amputate",
-		"Behead",
-		"Beware",
-		"Butcher",
-		"Dismember",
-		"Exorcise",
-		"Frighten",
-		"Horrify",
-		"Scare",
-		"Scythe",
-		"Slay",
-		"Spook",
-		"Vanquish"
-	],
-
-	"rpg_action_xmas": [
-		"Freeze",
-		"Jingle",
-		"Nutcrack",
-		"Regift",
-		"Snowplow",
-		"Stuff",
-		"Unwrap",
-		"Wassail"
-	],
-
 	"rpg_enemy": [
 		"Administrator",
 		"Bloopers",
@@ -217,66 +159,6 @@
 		"Stalking Stocking",
 		"Yeti",
 		"Yuki-Onna"
-	],
-
-	"rpg_weapon": [
-		"baseball bat",
-		"bike horn",
-		"broken bottle",
-		"chef's knife",
-		"circular saw",
-		"claymore",
-		"cleaver",
-		"crowbar",
-		"curator's whip",
-		"fire axe",
-		"fire extinguisher",
-		"full oxygen tank",
-		"glass shard",
-		"liz o' nine tails",
-		"null rod",
-		"potted plant",
-		"rolling pin",
-		"scalpel",
-		"screwdriver",
-		"stunprod",
-		"toolbox",
-		"welder"
-	],
-	
-	"rpg_weapon_valentines": [
-		"bouquet of deathnettles",
-		"candy-heart shotgun",
-		"cupid's arrow",
-		"declaration of anguished feelings",
-		"razor-sharp breakup letter",
-		"still-beating heart",
-		"thorny rose",
-		"toolbox of chocolates"
-	],
-	
-	"rpg_weapon_halloween": [
-		"chainsaw",
-		"heavy gravestone",
-		"lit jack-o-lantern",
-		"machete",
-		"silver dagger",
-		"skeleton femur",
-		"spectral blade",
-		"wooden stake"
-	],
-	
-	"rpg_weapon_xmas": [
-		"bike horn playing carols",
-		"blunt fruitcake",
-		"box cutter",
-		"Christmas-light garrotte",
-		"festivus polearm",
-		"rejected present",
-		"sharpened icicle",
-		"sprig of mistletoe",
-		"thrown snowball",
-		"whole Christmas tree"
 	]
 
 }

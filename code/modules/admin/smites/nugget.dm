@@ -15,7 +15,7 @@
 		var/obj/item/bodypart/limb = _limb
 		if (limb.body_part == HEAD || limb.body_part == CHEST)
 			continue
-		addtimer(CALLBACK(limb, /obj/item/bodypart/.proc/dismember), timer)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, carbon_target, 'sound/effects/cartoon_pop.ogg', 70), timer)
-		addtimer(CALLBACK(carbon_target, /mob/living/.proc/spin, 4, 1), timer - 0.4 SECONDS)
+		addtimer(CALLBACK(limb, TYPE_PROC_REF(/obj/item/bodypart/, dismember)), timer)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), carbon_target, 'sound/effects/cartoon_pop.ogg', 70), timer)
+		addtimer(CALLBACK(carbon_target, TYPE_PROC_REF(/mob/living/, spin), 4, 1), timer - 0.4 SECONDS)
 		timer += 2 SECONDS

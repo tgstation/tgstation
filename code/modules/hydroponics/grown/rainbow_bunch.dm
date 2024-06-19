@@ -14,7 +14,7 @@
 	potency = 20
 	instability = 25
 	growthstages = 4
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	icon_dead = "rainbowbunch-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/preserved)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
@@ -25,6 +25,7 @@
 	desc = "A beautiful flower capable of being used for most dyeing processes."
 	icon_state = "map_flower"
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	force = 0
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -32,12 +33,13 @@
 	throw_range = 3
 	attack_verb_continuous = list("pompfs")
 	attack_verb_simple = list("pompf")
+	greyscale_colors = COLOR_BLACK //only here for unit testing. overriden in initialize()
 	greyscale_config = /datum/greyscale_config/flower_simple
 	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
 
-/obj/item/food/grown/rainbow_flower/Initialize()
+/obj/item/food/grown/rainbow_flower/Initialize(mapload)
 	. = ..()
-	if(greyscale_colors)
+	if(greyscale_colors != initial(greyscale_colors))
 		return
 
 	var/flower_color = rand(1,8)
@@ -78,7 +80,7 @@
 			dye_color = DYE_BLACK
 			desc += " This one is in a midnight black color."
 		if(8)
-			set_greyscale("#FFFFFF")
+			set_greyscale(COLOR_WHITE)
 			reagents.add_reagent(/datum/reagent/colorful_reagent/powder/white, 3)
 			dye_color = DYE_WHITE
 			desc += " This one is in a pure white color."

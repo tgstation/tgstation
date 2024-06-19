@@ -1,20 +1,15 @@
-
-/*
-//////////////////////////////////////
-Narcolepsy
-	Noticeable.
-	Lowers resistance
-	Decreases stage speed tremendously.
-	Decreases transmittablity tremendously.
-
-Bonus
-	Causes drowsiness and sleep.
-
-//////////////////////////////////////
+/*Narcolepsy
+ * Slight reduction to stealth
+ * Reduces resistance
+ * Greatly reduces stage speed
+ * No change to transmissibility
+ * Fatal level
+ * Bonus: Causes drowsiness and sleep.
 */
 /datum/symptom/narcolepsy
 	name = "Narcolepsy"
 	desc = "The virus causes a hormone imbalance, making the host sleepy and narcoleptic."
+	illness = "Aurora Snorealis"
 	stealth = -1
 	resistance = -2
 	stage_speed = -3
@@ -25,7 +20,7 @@ Bonus
 	severity = 4
 	var/yawning = FALSE
 	threshold_descs = list(
-		"Transmission 4" = "Causes the host to periodically emit a yawn that spreads the virus in a manner similar to that of a sneeze.",
+		"Transmission 4" = "Causes the host to periodically emit a yawn that tries to infect bystanders within 6 meters of the host.",
 		"Stage Speed 10" = "Causes narcolepsy more often, increasing the chance of the host falling asleep.",
 	)
 
@@ -40,6 +35,10 @@ Bonus
 		symptom_delay_max = 45
 
 /datum/symptom/narcolepsy/Activate(datum/disease/advance/A)
+	. = ..()
+	if(!.)
+		return
+
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(1)
@@ -51,26 +50,28 @@ Bonus
 		if(3)
 			if(prob(50))
 				to_chat(M, span_warning("You try to focus on staying awake."))
-			if(M.drowsyness < 70)
-				M.drowsyness += 5
+
+			M.adjust_drowsiness_up_to(10 SECONDS, 140 SECONDS)
+
 		if(4)
 			if(prob(50))
 				if(yawning)
 					to_chat(M, span_warning("You try and fail to suppress a yawn."))
 				else
 					to_chat(M, span_warning("You nod off for a moment.")) //you can't really yawn while nodding off, can you?
-			if(M.drowsyness < 70)
-				M.drowsyness += 10
+
+			M.adjust_drowsiness_up_to(20 SECONDS, 140 SECONDS)
+
 			if(yawning)
 				M.emote("yawn")
-				if(M.CanSpreadAirborneDisease())
-					A.spread(6)
+				A.airborne_spread(6)
+
 		if(5)
 			if(prob(50))
 				to_chat(M, span_warning("[pick("So tired...","You feel very sleepy.","You have a hard time keeping your eyes open.","You try to stay awake.")]"))
-			if(M.drowsyness < 70)
-				M.drowsyness += 40
+
+			M.adjust_drowsiness_up_to(80 SECONDS, 140 SECONDS)
+
 			if(yawning)
 				M.emote("yawn")
-				if(M.CanSpreadAirborneDisease())
-					A.spread(6)
+				A.airborne_spread(6)

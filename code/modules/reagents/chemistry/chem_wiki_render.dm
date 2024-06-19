@@ -1,10 +1,6 @@
-//Generates a wikitable txt file for use with the wiki - does not support productless reactions at the moment
-/client/proc/generate_wikichem_list()
-	set category = "Debug"
-	set name = "Parse Wikichems"
-
+ADMIN_VERB(generate_wikichem_list, R_DEBUG, "Parse Wikichems", "Parse and generate a text file for wikichem.", ADMIN_CATEGORY_DEBUG)
 	//If we're a reaction product
-	var/prefix_reaction = {"{| class=\"wikitable sortable\" style=\"width:100%; text-align:left; border: 3px solid #FFDD66; cellspacing=0; cellpadding=2; background-color:white;\"
+	var/static/prefix_reaction = {"{| class=\"wikitable sortable\" style=\"width:100%; text-align:left; border: 3px solid #FFDD66; cellspacing=0; cellpadding=2; background-color:white;\"
 ! scope=\"col\" style='width:150px; background-color:#FFDD66;'|Name
 ! scope=\"col\" class=\"unsortable\" style='background-color:#FFDD66;'|Formula
 ! scope=\"col\" class=\"unsortable\" style='background-color:#FFDD66; width:170px;'|Reaction conditions
@@ -13,9 +9,9 @@
 |-
 "}
 
-	var/input_text = stripped_input(usr, "Input a name of a reagent, or a series of reagents split with a comma (no spaces) to get it's wiki table entry", "Recipe") //95% of the time, the reagent type is a lowercase, no spaces / underscored version of the name
+	var/input_text = tgui_input_text(user, "Input a name of a reagent, or a series of reagents split with a comma (no spaces) to get it's wiki table entry", "Recipe") //95% of the time, the reagent type is a lowercase, no spaces / underscored version of the name
 	if(!input_text)
-		to_chat(usr, "Input was blank!")
+		to_chat(user, "Input was blank!")
 		return
 	text2file(prefix_reaction, "[GLOB.log_directory]/chem_parse.txt")
 	var/list/names = splittext("[input_text]", ",")
@@ -23,13 +19,13 @@
 	for(var/name in names)
 		var/datum/reagent/reagent = find_reagent_object_from_type(get_chem_id(name))
 		if(!reagent)
-			to_chat(usr, "Could not find [name]. Skipping.")
+			to_chat(user, "Could not find [name]. Skipping.")
 			continue
 		//Get reaction
 		var/list/reactions = GLOB.chemical_reactions_list_product_index[reagent.type]
 
 		if(!length(reactions))
-			to_chat(usr, "Could not find [name] reaction! Continuing anyways.")
+			to_chat(user, "Could not find [name] reaction! Continuing anyways.")
 			var/single_parse = generate_chemwiki_line(reagent, null)
 			text2file(single_parse, "[GLOB.log_directory]/chem_parse.txt")
 			continue
@@ -38,8 +34,7 @@
 			var/single_parse = generate_chemwiki_line(reagent, reaction)
 			text2file(single_parse, "[GLOB.log_directory]/chem_parse.txt")
 	text2file("|}", "[GLOB.log_directory]/chem_parse.txt") //Cap off the table
-	to_chat(usr, "Done! Saved file to (wherever your root folder is, i.e. where the DME is)/[GLOB.log_directory]/chem_parse.txt OR use the Get Current Logs verb under the Admin tab. (if you click Open, and it does nothing, that's because you've not set a .txt default program! Try downloading it instead, and use that file to set a default program! Have a nice day!")
-
+	to_chat(user, "Done! Saved file to (wherever your root folder is, i.e. where the DME is)/[GLOB.log_directory]/chem_parse.txt OR use the Get Current Logs verb under the Admin tab. (if you click Open, and it does nothing, that's because you've not set a .txt default program! Try downloading it instead, and use that file to set a default program! Have a nice day!")
 
 /// Generate the big list of reagent based reactions.
 /proc/generate_chemwiki_line(datum/reagent/reagent, datum/chemical_reaction/reaction)
@@ -48,25 +43,14 @@
 	//NAME
 	//!style='background-color:#FFEE88;'|{{anchor|Synthetic-derived growth factor}}Synthetic-derived growth factor<span style="color:#A502E0;background-color:white">▮</span>
 	var/outstring = "!style='background-color:#FFEE88;'|{{anchor|[reagent.name]}}[reagent.name]<span style=\"color:[reagent.color];background-color:white\">▮</span>"
-	//Impurities
-	if(istype(reagent, /datum/reagent/impurity))
-		outstring += "\n<br>Impure reagent"
 
 	if(istype(reagent, /datum/reagent/inverse))
 		outstring += "\n<br>Inverse reagent"
 
 	else
-		var/datum/reagent/impure_reagent = GLOB.chemical_reagents_list[reagent.impure_chem]
-		if(impure_reagent)
-			outstring += "\n<br>Impurity: \[\[#[impure_reagent.name]|[impure_reagent.name]\]\]"
-
 		var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
 		if(inverse_reagent)
 			outstring += "\n<br>Inverse: \[\[#[inverse_reagent.name]|[inverse_reagent.name]\]\] <[reagent.inverse_chem_val*100]%"
-
-		var/datum/reagent/failed_reagent = GLOB.chemical_reagents_list[reagent.failed_chem]
-		if(failed_reagent && reaction)
-			outstring += "\n<br>Failed: \[\[#[failed_reagent.name]|[failed_reagent.name]\]\] <[reaction.purity_min*100]%"
 	var/ph_color
 	CONVERT_PH_TO_COLOR(reagent.ph, ph_color)
 	outstring += "\n<br>pH: [reagent.ph]<span style=\"color:[ph_color];background-color:white\">▮</span>"
@@ -193,6 +177,9 @@
 
 	if(reagent.chemical_flags & REAGENT_DEAD_PROCESS)
 		outstring += "\n<br>Works on the dead"
+
+	if(reagent.chemical_flags & REAGENT_CLEANS)
+		outstring += "\n<br>Sanitizes well"
 
 	outstring += "\n|-"
 	return outstring

@@ -12,18 +12,68 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor2";
-	name = "supply dock loading door"
+	name = "Supply Dock Loading Door"
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "g" = (
 /obj/machinery/door/airlock/titanium{
-	name = "Supply Shuttle Airlock";
-	req_access_txt = "31"
+	name = "Supply Shuttle Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"i" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Supply Shuttle Airlock"
+	},
+/obj/docking_port/mobile/supply,
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"j" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor";
+	name = "Supply Dock Loading Door"
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
-"h" = (
+"l" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/supply)
+"p" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/power/shuttle_engine/heater,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"s" = (
+/turf/template_noop,
+/area/template_noop)
+"t" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/left,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"u" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"v" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/right,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"x" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"C" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/supply)
+"F" = (
 /obj/machinery/button/door/directional/east{
 	id = "QMLoaddoor2";
 	name = "Loading Doors";
@@ -34,59 +84,6 @@
 	name = "Loading Doors";
 	pixel_y = -8
 	},
-/obj/machinery/light/directional/east,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/supply)
-"i" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Supply Shuttle Airlock";
-	req_access_txt = "31"
-	},
-/obj/docking_port/mobile/supply,
-/turf/open/floor/plating,
-/area/shuttle/supply)
-"j" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "QMLoad"
-	},
-/obj/machinery/door/poddoor{
-	id = "QMLoaddoor";
-	name = "supply dock loading door"
-	},
-/turf/open/floor/plating,
-/area/shuttle/supply)
-"l" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/supply)
-"q" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/shuttle/engine/heater,
-/turf/open/floor/plating/airless,
-/area/shuttle/supply)
-"s" = (
-/turf/template_noop,
-/area/template_noop)
-"t" = (
-/obj/structure/shuttle/engine/propulsion/burst/left,
-/turf/open/floor/plating/airless,
-/area/shuttle/supply)
-"u" = (
-/obj/structure/shuttle/engine/propulsion,
-/turf/open/floor/plating/airless,
-/area/shuttle/supply)
-"v" = (
-/obj/structure/shuttle/engine/propulsion/burst/right,
-/turf/open/floor/plating/airless,
-/area/shuttle/supply)
-"w" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/supply)
-"x" = (
-/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 
@@ -107,10 +104,10 @@ s
 (2,1,1) = {"
 b
 e
-e
-e
-e
 x
+e
+e
+e
 e
 e
 e
@@ -129,12 +126,11 @@ e
 e
 e
 e
-q
+p
 u
 "}
 (4,1,1) = {"
 b
-w
 e
 e
 e
@@ -143,7 +139,8 @@ e
 e
 e
 e
-q
+e
+p
 u
 "}
 (5,1,1) = {"
@@ -157,7 +154,7 @@ e
 e
 e
 e
-q
+p
 u
 "}
 (6,1,1) = {"
@@ -166,10 +163,10 @@ e
 e
 e
 e
-h
+F
 e
 e
-e
+C
 l
 b
 v

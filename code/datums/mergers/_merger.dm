@@ -11,15 +11,12 @@
 
 	/// The arbitrary "owner" member of the merge group
 	var/atom/origin
-	/// A list of all members in the group
+	/// Assoc list of all members in the group -> dirs from them to their connected nighbors
 	var/list/members = list()
 
 #if MERGERS_DEBUG
 	var/debug_color
 #endif
-
-	/// Signals in members to trigger a refresh
-	var/static/list/refresh_signals = list(COMSIG_MOVABLE_MOVED)
 
 /datum/merger/New(id, list/merged_typecache, atom/origin, attempt_merge_proc)
 #if MERGERS_DEBUG
@@ -31,15 +28,15 @@
 	src.attempt_merge_proc = attempt_merge_proc
 	Refresh()
 
-/datum/merger/Destroy(force, ...)
+/datum/merger/Destroy(force)
 	for(var/atom/thing as anything in members)
 		RemoveMember(thing)
 	return ..()
 
 /datum/merger/proc/RemoveMember(atom/thing, clean=TRUE)
 	SEND_SIGNAL(thing, COMSIG_MERGER_REMOVING, src)
-	UnregisterSignal(thing, refresh_signals)
-	UnregisterSignal(thing, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(thing, COMSIG_QDELETING)
 	if(!thing.mergers)
 		return
 	thing.mergers -= id
@@ -52,8 +49,8 @@
 
 /datum/merger/proc/AddMember(atom/thing, connected_dir) // note that this fires for the origin of the merger as well
 	SEND_SIGNAL(thing, COMSIG_MERGER_ADDING, src)
-	RegisterSignal(thing, refresh_signals, .proc/QueueRefresh)
-	RegisterSignal(thing, COMSIG_PARENT_QDELETING, .proc/HandleMemberDel)
+	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(QueueRefresh))
+	RegisterSignal(thing, COMSIG_QDELETING, PROC_REF(HandleMemberDel))
 	if(!thing.mergers)
 		thing.mergers = list()
 	else if(thing.mergers[id])
@@ -80,58 +77,81 @@
 
 /datum/merger/proc/QueueRefresh()
 	SIGNAL_HANDLER
-	addtimer(CALLBACK(src, .proc/Refresh), 1, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(Refresh)), 1, TIMER_UNIQUE)
 
 /datum/merger/proc/Refresh()
-	var/list/tips = list()
-	tips[origin] = NORTH|EAST|SOUTH|WEST
-	var/list/checked_turfs = list()
-	var/list/new_members = list()
-	new_members[origin] = NONE
-	while(length(tips))
-		var/atom/focus = tips[length(tips)]
-		var/dirs_to_check = tips[focus]
-		tips.len--
+	// List of turf -> list(interesting dir, found matching atoms)
+	var/list/found_turfs = list()
+	if(origin)
+		var/turf/starting = get_turf(origin)
+		check_turf(starting, found_turfs, NONE)
+	for(var/i = 1; i <= length(found_turfs), i++)
+		var/turf/focus = found_turfs[i]
+		var/list/focus_packet = found_turfs[focus]
+		var/dirs_checked = focus_packet[MERGE_TURF_PACKET_DIR]
 		for(var/dir in GLOB.cardinals)
-			if(!(dirs_to_check & dir))
+			if(dirs_checked & dir)
 				continue
 			var/turf/location = get_step(focus, dir)
-			if(!location || checked_turfs[location])
+			if(!location)
 				continue
-			checked_turfs[location] = TRUE
-			for(var/i in location)
-				var/atom/movable/thing = i
-				if(!merged_typecache[thing.type])
-					continue
-				if(attempt_merge_proc && !call(thing, attempt_merge_proc)(src, new_members))
-					continue
-				if(thing.mergers && thing.mergers[id] != src)
-					var/datum/merger/existing = thing.mergers[id]
-					qdel(src)
-					existing.Refresh()
+			if(!check_turf(location, found_turfs, dir))
+				if(QDELETED(src))
 					return
-				new_members[focus] |= dir // This is not a list, value of the members list is a bitfield of dirs
-				var/next_dirs = turn(dir, 180)
-				new_members[thing] |= next_dirs
-				next_dirs = ~next_dirs
-				var/existing = tips[thing] || (NORTH|EAST|SOUTH|WEST)
-				tips[thing] = existing & next_dirs
+				continue
+			focus_packet[MERGE_TURF_PACKET_DIR] |= dir
 
-	var/list/leaving_members = members - new_members
+	// Now that we have an idea of our connecting directions, build the fresh members list
+	var/list/fresh_members = list()
+	for(var/turf/location as anything in found_turfs)
+		var/list/turf_packet = found_turfs[location]
+		var/connected_dirs = turf_packet[MERGE_TURF_PACKET_DIR]
+		for(var/datum/member as anything in turf_packet[MERGE_TURF_PACKET_ATOMS])
+			fresh_members[member] = connected_dirs
+
+	var/list/leaving_members = members - fresh_members
 	for(var/atom/thing as anything in leaving_members)
 		RemoveMember(thing)
 
-	var/list/joining_members = new_members - members
+	var/list/joining_members = fresh_members - members
 	for(var/atom/thing as anything in joining_members)
 		AddMember(thing, joining_members[thing])
 
 	// They may not need a full update but the connected dirs could change
-	for(var/atom/thing as anything in new_members)
-		members[thing] = new_members[thing]
+	for(var/atom/thing as anything in fresh_members)
+		members[thing] = fresh_members[thing]
 
 	SEND_SIGNAL(src, COMSIG_MERGER_REFRESH_COMPLETE, leaving_members, joining_members)
 
 	if(!length(members))
 		qdel(src)
+
+// Checks to see if the passed in location contains something interesting to us. If it does, return TRUE, otherwise return false
+// If it is interesting, we add it to our processing list
+/datum/merger/proc/check_turf(turf/location, list/found_turfs, asking_from)
+	var/found_something = FALSE
+	// if asking_from is invalid (like if it's 0), we get a random output. that's bad, let's check for falsyness
+	var/us_to_them = asking_from && REVERSE_DIR(asking_from)
+
+	if(found_turfs[location])
+		found_turfs[location][MERGE_TURF_PACKET_DIR] |= us_to_them
+		return TRUE
+
+	for(var/atom/movable/thing as anything in location)
+		if(!merged_typecache[thing.type])
+			continue
+		if(attempt_merge_proc && !call(thing, attempt_merge_proc)(src, found_turfs))
+			continue
+		if(thing.mergers && thing.mergers[id] != src)
+			var/datum/merger/existing = thing.mergers[id]
+			qdel(src)
+			existing.Refresh()
+			return FALSE
+		if(!found_turfs[location])
+			found_turfs[location] = list(us_to_them, list())
+		found_turfs[location][MERGE_TURF_PACKET_ATOMS] += thing
+		found_something = TRUE
+
+	return found_something
 
 #undef MERGERS_DEBUG

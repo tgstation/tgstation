@@ -1,0 +1,3 @@
+# modifies simple_animal spacemans into the new basic mob type
+
+/mob/living/simple_animal/hostile/retaliate/spaceman : /mob/living/basic/spaceman{@OLD}

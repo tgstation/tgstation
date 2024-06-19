@@ -1,0 +1,16 @@
+{
+    "greyscale_bandana": [
+        {
+            "type": "icon_state",
+            "icon_state": "greyscale_bandana",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        },
+		{
+            "type": "icon_state",
+            "icon_state": "greyscale_bandana_skull",
+            "blend_mode": "overlay",
+            "color_ids": [ 2 ]
+        }
+    ]
+}

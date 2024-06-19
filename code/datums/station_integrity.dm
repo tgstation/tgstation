@@ -25,7 +25,7 @@
 	grille = 0
 	mach = 0
 	for(var/Z in SSmapping.levels_by_trait(ZTRAIT_STATION))
-		for(var/turf/T in block(locate(1,1,Z), locate(world.maxx,world.maxy,Z)))
+		for(var/turf/T as anything in Z_TURFS(Z))
 			// don't count shuttles since they may have just left
 			if(istype(T.loc, /area/shuttle))
 				continue
@@ -38,15 +38,11 @@
 					floor += 2
 
 			if(iswallturf(T))
-				var/turf/closed/wall/TW = T
-				if(TW.intact)
-					wall += 2
-				else
-					wall += 1
+				wall += 1
 
 			if(istype(T, /turf/closed/wall/r_wall))
 				var/turf/closed/wall/r_wall/TRW = T
-				if(TRW.intact)
+				if(TRW.d_state == INTACT)
 					r_wall += 2
 				else
 					r_wall += 1

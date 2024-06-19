@@ -3,11 +3,11 @@
 	icon_state = "syringeproj"
 	var/obj/item/dnainjector/injector
 	damage = 5
-	hitsound_wall = "shatter"
+	hitsound_wall = SFX_SHATTER
 	embedding = null
 	shrapnel_type = null
 
-/obj/projectile/bullet/dnainjector/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/dnainjector/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(blocked != 100)

@@ -1,7 +1,7 @@
 /obj/projectile/plasma
 	name = "plasma blast"
 	icon_state = "plasmacutter"
-	damage_type = BRUTE
+	damage_type = BURN
 	damage = 5
 	range = 4
 	dismemberment = 20
@@ -11,7 +11,7 @@
 	muzzle_type = /obj/effect/projectile/muzzle/plasma_cutter
 	impact_type = /obj/effect/projectile/impact/plasma_cutter
 
-/obj/projectile/plasma/on_hit(atom/target)
+/obj/projectile/plasma/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target

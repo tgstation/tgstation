@@ -1,0 +1,175 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"e" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Bureaucracy Storage Maintenance Hatch"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"m" = (
+/obj/structure/rack,
+/obj/item/pen/fourcolor,
+/obj/item/pen/invisible,
+/obj/item/pen/blue,
+/obj/item/pen/red,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/folder/yellow,
+/obj/item/folder/white{
+	pixel_y = 4
+	},
+/obj/item/folder/blue{
+	pixel_y = 2
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"n" = (
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/briefcase/secure{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/storage/briefcase/secure,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"o" = (
+/obj/structure/table,
+/obj/item/paper_bin/carbon,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"A" = (
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
+	pixel_x = -4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/folder/red{
+	pixel_x = 3
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"G" = (
+/obj/structure/filingcabinet/chestdrawer{
+	pixel_y = 2
+	},
+/obj/item/paper/secretrecipe,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"H" = (
+/turf/closed/wall,
+/area/station/maintenance/department/security)
+"I" = (
+/turf/template_noop,
+/area/template_noop)
+"J" = (
+/obj/structure/table,
+/obj/machinery/fax{
+	fax_name = "Head of Personnel's Office";
+	name = "Head of Personnel's Fax Machine"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/photocopier,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"T" = (
+/obj/structure/table,
+/obj/item/papercutter,
+/obj/item/paper/paperslip,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+
+(1,1,1) = {"
+I
+I
+I
+I
+I
+"}
+(2,1,1) = {"
+e
+C
+C
+T
+H
+"}
+(3,1,1) = {"
+I
+C
+C
+o
+H
+"}
+(4,1,1) = {"
+I
+A
+C
+Q
+H
+"}
+(5,1,1) = {"
+I
+J
+C
+n
+H
+"}
+(6,1,1) = {"
+I
+G
+C
+m
+H
+"}
+(7,1,1) = {"
+I
+H
+H
+H
+H
+"}
+(8,1,1) = {"
+I
+I
+I
+I
+I
+"}
+(9,1,1) = {"
+I
+I
+I
+I
+I
+"}
+(10,1,1) = {"
+I
+I
+I
+I
+I
+"}
+(11,1,1) = {"
+I
+I
+I
+I
+I
+"}

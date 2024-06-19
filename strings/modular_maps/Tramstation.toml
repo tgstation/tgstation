@@ -1,0 +1,104 @@
+directory = "_maps/map_files/tramstation/maintenance_modules/"
+
+
+[rooms.arrivalsecupper]
+modules = ["arrivalsecupper_1.dmm", "arrivalsecupper_2.dmm", "arrivalsecupper_3.dmm"]
+
+[rooms.arrivallibraryupper]
+modules = ["arrivallibraryupper_1.dmm", "arrivallibraryupper_2.dmm", "arrivallibraryupper_3.dmm"]
+
+[rooms.medsciupper]
+modules = ["medsciupper_1.dmm", "medsciupper_2.dmm", "medsciupper_3.dmm"]
+
+[rooms.medsciupper_attachment_a]
+modules = ["medsciupper_attachment_a_1.dmm", "medsciupper_attachment_a_2.dmm", "medsciupper_attachment_a_3.dmm"]
+
+[rooms.medsciupper_attachment_b]
+modules = ["medsciupper_attachment_b_1.dmm", "medsciupper_attachment_b_2.dmm", "medsciupper_attachment_b_3.dmm"]
+
+[rooms.barcargoupper]
+modules = ["barcargoupper_1.dmm", "barcargoupper_2.dmm", "barcargoupper_3.dmm"]
+
+[rooms.barcargoupper_cave]
+modules = ["barcargoupper_cave_1.dmm", "barcargoupper_cave_2.dmm", "barcargoupper_cave_3.dmm"]
+
+[rooms.barcargoupper_attachment_a]
+modules = ["barcargoupper_attachment_a_1.dmm", "barcargoupper_attachment_a_2.dmm", "barcargoupper_attachment_a_3.dmm"]
+
+[rooms.barcargoupper_attachment_b]
+modules = ["barcargoupper_attachment_b_1.dmm", "barcargoupper_attachment_b_2.dmm", "barcargoupper_attachment_b_3.dmm"]
+
+[rooms.secbarupper]
+modules = ["secbarupper_1.dmm", "secbarupper_2.dmm", "secbarupper_3.dmm"]
+
+[rooms.secbarupper_attachment_a]
+modules = ["secbarupper_attachment_a_1.dmm", "secbarupper_attachment_a_2.dmm", "secbarupper_attachment_a_3.dmm"]
+
+[rooms.secbarupper_attachment_b]
+modules = ["secbarupper_attachment_b_1.dmm", "secbarupper_attachment_b_2.dmm", "secbarupper_attachment_b_3.dmm"]
+
+[rooms.secbarupper_cave]
+modules = ["secbarupper_cave_1.dmm", "secbarupper_cave_2.dmm", "secbarupper_cave_3.dmm"]
+
+[rooms.dormmedupper]
+modules = ["dormmedupper_1.dmm", "dormmedupper_2.dmm", "dormmedupper_3.dmm"]
+
+[rooms.dormmedupper_attachment_a]
+modules = ["dormmedupper_attachment_a_1.dmm", "dormmedupper_attachment_a_2.dmm", "dormmedupper_attachment_a_3.dmm"]
+
+[rooms.dormmedupper_attachment_b]
+modules = ["dormmedupper_attachment_b_1.dmm", "dormmedupper_attachment_b_2.dmm", "dormmedupper_attachment_b_3.dmm"]
+
+[rooms.secservicelower]
+modules = ["secservicelower_1.dmm", "secservicelower_1.dmm", "secservicelower_1.dmm"]
+
+[rooms.secservicelower_attachment_a]
+modules = ["secservicelower_attachment_a_1.dmm", "secservicelower_attachment_a_2.dmm", "secservicelower_attachment_a_3.dmm"]
+
+[rooms.secservicelower_attachment_b]
+modules = ["secservicelower_attachment_b_1.dmm", "secservicelower_attachment_b_2.dmm", "secservicelower_attachment_b_3.dmm"]
+
+[rooms.secservicelower_attachment_c]
+modules = ["secservicelower_attachment_c_1.dmm", "secservicelower_attachment_c_2.dmm", "secservicelower_attachment_c_3.dmm"]
+
+[rooms.servicecargolower]
+modules = ["servicecargolower_1.dmm", "servicecargolower_1.dmm", "servicecargolower_1.dmm"]
+
+[rooms.servicecargolower_attachment_a]
+modules = ["servicecargolower_attachment_a_1.dmm", "servicecargolower_attachment_a_1.dmm", "servicecargolower_attachment_a_1.dmm"]
+
+[rooms.servicecargolower_attachment_b]
+modules = ["servicecargolower_attachment_b_1.dmm", "servicecargolower_attachment_b_1.dmm", "servicecargolower_attachment_b_1.dmm"]
+
+[rooms.cargoscilower]
+modules = ["cargoscilower_1.dmm", "cargoscilower_1.dmm", "cargoscilower_1.dmm"]
+
+[rooms.cargoscilower_attachment_a]
+modules = ["cargoscilower_attachment_a_1.dmm", "cargoscilower_attachment_a_1.dmm", "cargoscilower_attachment_a_1.dmm"]
+
+[rooms.cargoscilower_attachment_b]
+modules = ["cargoscilower_attachment_b_1.dmm", "cargoscilower_attachment_b_1.dmm", "cargoscilower_attachment_b_1.dmm"]
+
+[rooms.atmosscilower]
+modules = ["atmosscilower_1.dmm", "atmosscilower_2.dmm", "atmosscilower_3.dmm"]
+
+[rooms.atmosscilower_attachment_a]
+modules = ["atmosscilower_attachment_a_1.dmm", "atmosscilower_attachment_a_2.dmm", "atmosscilower_attachment_a_3.dmm"]
+
+[rooms.atmoscilower]
+modules = ["atmoscilower_1.dmm", "atmoscilower_2.dmm", "atmoscilower_3.dmm"]
+
+[rooms.atmoscilower_attachment_a]
+modules = ["atmoscilower_attachment_a_1.dmm", "atmoscilower_attachment_a_2.dmm", "atmoscilower_attachment_a_3.dmm"]
+
+[rooms.atmoscilower_attachment_b]
+modules = ["atmoscilower_attachment_b_1.dmm", "atmoscilower_attachment_b_2.dmm", "atmoscilower_attachment_b_3.dmm"]
+
+[rooms.dormenginelower]
+modules = ["dormenginelower_1.dmm", "dormenginelower_2.dmm", "dormenginelower_3.dmm"]
+
+[rooms.dormenginelower_attachment_a]
+modules = ["dormenginelower_attachment_a_1.dmm", "dormenginelower_attachment_a_2.dmm", "dormenginelower_attachment_a_3.dmm"]
+
+[rooms.dormenginelower_attachment_b]
+modules = ["dormenginelower_attachment_b_1.dmm", "dormenginelower_attachment_b_2.dmm", "dormenginelower_attachment_b_3.dmm"]

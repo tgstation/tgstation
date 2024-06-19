@@ -10,9 +10,12 @@
 	var/warned_about_the_dangers_of_robutussin = !warnings_only
 	for(var/I in typesof(/datum/tgs_chat_command) - /datum/tgs_chat_command)
 		if(!warned_about_the_dangers_of_robutussin)
-			TGS_ERROR_LOG("Custom chat commands in [ApiVersion()] lacks the /datum/tgs_chat_user/sender.channel field!")
+			TGS_WARNING_LOG("Custom chat commands in [ApiVersion()] lacks the /datum/tgs_chat_user/sender.channel field!")
 			warned_about_the_dangers_of_robutussin = TRUE
 		var/datum/tgs_chat_command/stc = I
+		if(stc.ignore_type == I)
+			continue
+
 		var/command_name = initial(stc.name)
 		if(!command_name || findtext(command_name, " ") || findtext(command_name, "'") || findtext(command_name, "\""))
 			if(warnings_only && !warned_command_names[command_name])
@@ -44,9 +47,12 @@
 	user.friendly_name = sender
 
 	// Discord hack, fix the mention if it's only numbers (fuck you IRC trolls)
-	var/regex/discord_id_regex = regex(@"^[0-9]+$")
+	var/regex/discord_id_regex = regex("^\[0-9\]+$")
 	if(findtext(sender, discord_id_regex))
 		sender = "<@[sender]>"
 
 	user.mention = sender
-	return stc.Run(user, params) || TRUE
+	var/datum/tgs_message_content/result = stc.Run(user, params)
+	result = UpgradeDeprecatedCommandResponse(result, command)
+
+	return result ? result.text : TRUE

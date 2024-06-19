@@ -37,7 +37,7 @@
 			continue
 		if(isliving(A))
 			var/mob/living/M = A
-			if(faction_check_mob(M) && attack_same || !faction_check_mob(M))
+			if(faction_check_atom(M) && attack_same || !faction_check_atom(M))
 				enemies |= WEAKREF(M)
 		else if(ismecha(A))
 			var/obj/vehicle/sealed/mecha/M = A
@@ -46,7 +46,7 @@
 				add_enemies(M.occupants)
 
 	for(var/mob/living/simple_animal/hostile/retaliate/H in around)
-		if(faction_check_mob(H) && !attack_same && !H.attack_same)
+		if(faction_check_atom(H) && !attack_same && !H.attack_same)
 			H.enemies |= enemies
 
 /mob/living/simple_animal/hostile/retaliate/adjustHealth(amount, updating_health = TRUE, forced = FALSE)

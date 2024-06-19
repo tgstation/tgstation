@@ -113,6 +113,24 @@
 	description = "benis"
 	mappath = "_maps/templates/holodeck_skatepark.dmm"
 
+/datum/map_template/holodeck/microwave
+	name = "Holodeck - Microwave Paradise"
+	template_id = "holodeck_microwave"
+	description = "benis"
+	mappath = "_maps/templates/holodeck_microwave.dmm"
+
+/datum/map_template/holodeck/baseball
+	name = "Holodeck - Baseball Field"
+	template_id = "holodeck_baseball"
+	description = "benis"
+	mappath = "_maps/templates/holodeck_baseball.dmm"
+
+/datum/map_template/holodeck/card_battle
+	name = "Holodeck - TGC Battle Arena"
+	template_id = "holodeck_card_battle"
+	description = "An arena for playing Tactical Game Cards."
+	mappath = "_maps/templates/holodeck_card_battle.dmm"
+
 //bad evil no good programs
 
 /datum/map_template/holodeck/medicalsim

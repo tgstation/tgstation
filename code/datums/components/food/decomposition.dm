@@ -1,152 +1,141 @@
 //"Don't leave food on the floor, that's how we get ants"
 
-#define DECOMPOSITION_TIME 10 MINUTES
-#define DECOMPOSITION_TIME_RAW 5 MINUTES
-#define DECOMPOSITION_TIME_GROSS 7 MINUTES
+#define DECOMPOSITION_TIME (10 MINUTES)
+#define DECOMPOSITION_TIME_RAW (5 MINUTES)
+#define DECOMPOSITION_TIME_GROSS (7 MINUTES)
 
-#define DECOMP_EXAM_NORMAL 0
-#define DECOMP_EXAM_GROSS 1
-#define DECOMP_EXAM_RAW 2
-
+///Makes things decompose when exposed to germs. Requires /datum/component/germ_sensitive to detect exposure.
 /datum/component/decomposition
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	/// Makes sure maploaded food only starts decomposing if a player's EVER picked it up before
 	var/handled = TRUE
 	/// Used to stop food in someone's hand & in storage slots from decomposing.
 	var/protected = FALSE
-	/// Used to stop the timer & check for the examine proc
-	var/timerid
+	/// The total time that this takes to decompose
+	var/original_time = DECOMPOSITION_TIME
 	/// Used so the timer won't reset.
 	var/time_remaining = DECOMPOSITION_TIME
+	/// Used to create stink lines when the food is close to going bad
+	var/stink_timerid
+	/// Used to stop decomposition & check for the examine proc
+	var/decomp_timerid
 	/// Used to give raw/gross food lower timers
 	var/decomp_flags
-	/// Used for examining
-	var/examine_type = DECOMP_EXAM_NORMAL
+	/// Use for determining what kind of item the food decomposes into.
+	var/decomp_result
+	/// Does our food attract ants?
+	var/produce_ants = FALSE
+	/// Stink particle type, if we are supposed to create stink particles
+	var/stink_particles
+	/// Stink particle holder
+	var/obj/effect/abstract/particle_holder/particle_effect
 
-/datum/component/decomposition/Initialize(mapload, decomp_flags = NONE)
-	if(!isobj(parent))
+/datum/component/decomposition/Initialize(mapload, decomp_req_handle, decomp_flags = NONE, decomp_result, ant_attracting = FALSE, custom_time = 0, stink_particles = /particles/stink)
+	if(!ismovable(parent) || !HAS_TRAIT(parent, TRAIT_GERM_SENSITIVE))
 		return COMPONENT_INCOMPATIBLE
 
 	src.decomp_flags = decomp_flags
-	if(mapload)
+	src.decomp_result = decomp_result
+	if(mapload || decomp_req_handle)
 		handled = FALSE
+	src.produce_ants = ant_attracting
 
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/handle_movement)
-	RegisterSignal(parent, list(
-		COMSIG_ITEM_PICKUP, //person picks up an item
-		COMSIG_STORAGE_ENTERED), //Object enters a storage object (boxes, etc.)
-		.proc/picked_up)
-	RegisterSignal(parent, list(
-		COMSIG_ITEM_DROPPED, //Object is dropped anywhere
-		COMSIG_STORAGE_EXITED), //Object exits a storage object (boxes, etc)
-		.proc/dropped)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
-
-	if(decomp_flags & RAW) // Raw food overrides gross
-		time_remaining = DECOMPOSITION_TIME_RAW
-		examine_type = DECOMP_EXAM_RAW
+	if(custom_time) // We have a custom decomposition time, set it to that
+		original_time = custom_time
+	else if(decomp_flags & RAW) // Raw food overrides gross
+		original_time = DECOMPOSITION_TIME_RAW
 	else if(decomp_flags & GROSS)
-		time_remaining = DECOMPOSITION_TIME_GROSS
-		examine_type = DECOMP_EXAM_GROSS
+		original_time = DECOMPOSITION_TIME_GROSS
 
-	handle_movement()
+	time_remaining = original_time
 
+	src.stink_particles = stink_particles
+
+/datum/component/decomposition/Destroy()
+	. = ..()
+	if(particle_effect)
+		QDEL_NULL(particle_effect)
+
+/datum/component/decomposition/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_ATOM_GERM_EXPOSED, PROC_REF(start_timer))
+	RegisterSignal(parent, COMSIG_ATOM_GERM_UNEXPOSED, PROC_REF(remove_timer))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 
 /datum/component/decomposition/UnregisterFromParent()
 	UnregisterSignal(parent, list(
-		COMSIG_ITEM_PICKUP,
-		COMSIG_STORAGE_ENTERED,
-		COMSIG_MOVABLE_MOVED,
-		COMSIG_ITEM_DROPPED,
-		COMSIG_STORAGE_EXITED,
-		COMSIG_PARENT_EXAMINE))
+		COMSIG_ATOM_GERM_EXPOSED,
+		COMSIG_ATOM_GERM_UNEXPOSED,
+		COMSIG_ATOM_EXAMINE
+	))
 
-/datum/component/decomposition/proc/handle_movement()
+/datum/component/decomposition/proc/start_timer()
 	SIGNAL_HANDLER
+
 	if(!handled) // If maploaded, has someone touched this previously?
+		handled = TRUE // First germ exposure is ignored
 		return
-	var/obj/food = parent // Doesn't HAVE to be food, that's just what it's intended for
-
-	var/turf/open/open_turf = food.loc
-
-	if(!istype(open_turf)) //Are we actually in an open turf?
-		remove_timer()
-		return
-
-	for(var/atom/movable/content as anything in open_turf.contents)
-		if(GLOB.typecache_elevated_structures[content.type])
-			remove_timer()
-			return
 
 	// If all other checks fail, then begin decomposition.
-	timerid = addtimer(CALLBACK(src, .proc/decompose), time_remaining, TIMER_STOPPABLE | TIMER_UNIQUE)
+	decomp_timerid = addtimer(CALLBACK(src, PROC_REF(decompose)), time_remaining, TIMER_STOPPABLE | TIMER_UNIQUE)
+
+	// Also start the stinking timer, if have stink particles and aren't stinking yet
+	if(!stink_particles || particle_effect)
+		return
+
+	var/stink_time = max(0, time_remaining - (original_time * 0.5))
+	stink_timerid = addtimer(CALLBACK(src, PROC_REF(stink_up)), stink_time, TIMER_STOPPABLE | TIMER_UNIQUE)
 
 /datum/component/decomposition/Destroy()
 	remove_timer()
 	return ..()
 
+/// Returns the time remaining in decomp, either from our potential timer or our own value, whichever is more useful
+/datum/component/decomposition/proc/get_time()
+	if(!decomp_timerid)
+		return time_remaining
+	return timeleft(decomp_timerid)
+
 /datum/component/decomposition/proc/remove_timer()
-	if(active_timers) // Makes sure there's an active timer to delete.
-		time_remaining = timeleft(timerid)
-		deltimer(timerid)
+	if(!decomp_timerid)
+		return
+	time_remaining = timeleft(decomp_timerid)
+	deltimer(decomp_timerid)
+	decomp_timerid = null
+	if(!stink_timerid)
+		return
+	deltimer(stink_timerid)
+	stink_timerid = null
 
-/datum/component/decomposition/proc/dropped()
-	SIGNAL_HANDLER
-	protected = FALSE
-	handle_movement()
-
-/datum/component/decomposition/proc/picked_up()
-	SIGNAL_HANDLER
-	remove_timer()
-	protected = TRUE
-	if(!handled)
-		handled = TRUE
+/datum/component/decomposition/proc/stink_up()
+	stink_timerid = null
+	// Neither should happen, but to be sure
+	if(particle_effect || !stink_particles)
+		return
+	// we don't want stink lines on mobs (even though it'd be quite funny)
+	particle_effect = new(parent, stink_particles, isitem(parent) ? NONE : PARTICLE_ATTACH_MOB)
 
 /datum/component/decomposition/proc/decompose()
+	decomp_timerid = null
 	var/obj/decomp = parent //Lets us spawn things at decomp
-	new /obj/effect/decal/cleanable/ants(decomp.loc)
-	new /obj/item/food/badrecipe/moldy(decomp.loc)
-	decomp.visible_message("<span class='notice'>[decomp] gets overtaken by mold and ants! Gross!</span>")
+	if(produce_ants)
+		new /obj/effect/decal/cleanable/ants(decomp.loc)
+	if(decomp_result)
+		new decomp_result(decomp.loc)
+	decomp.visible_message(span_warning("[decomp] gets overtaken by mold[produce_ants ? " and ants":""]! Gross!"))
 	qdel(decomp)
 	return
 
 /datum/component/decomposition/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	var/time_d = 0
-	if(active_timers) // Is the timer currently applied to this?
-		time_d = timeleft(timerid)
-	else
-		time_d = time_remaining
-	switch(examine_type)
-		if(DECOMP_EXAM_NORMAL)// All other types
-			switch(time_d) // Deciseconds used so there's no gaps between examine times.
-				if(3001 to 4500) // 7.5 to 5 Minutes left
-					examine_list += "[parent] looks kinda stale."
-				if(1501 to 3000) // 5 to 2.5 Minutes left
-					examine_list += "[parent] is starting to look pretty gross."
-				if(1 to 1500) // 2.5 Minutes to 1 Decisecond left
-					examine_list += "[parent] looks barely edible."
-		if(DECOMP_EXAM_GROSS) // Gross food
-			switch(time_d)
-				if(2101 to 3150) // 5.25 to 3.5 Minutes
-					examine_list += "[parent] looks kinda stale."
-				if(1050 to 2100) // 3.5 to 1.75 Minutes left
-					examine_list += "[parent] is starting to look pretty gross."
-				if(1 to 1051) // 1.75 Minutes to 1 Decisecond left
-					examine_list += "[parent] looks barely edible."
-		if(DECOMP_EXAM_RAW) // Raw food
-			switch(time_d)
-				if(1501 to 2250) // 3.75 to 2.5 Minutes left
-					examine_list += "[parent] looks kinda stale."
-				if(751 to 1500) // 2.5 to 1.25 Minutes left
-					examine_list += "[parent] is starting to look pretty gross."
-				if(1 to 750) // 1.25 Minutes to 1 Decisecond left
-					examine_list += "[parent] looks barely edible."
+	var/time_d = get_time()
+	switch(time_d / original_time)
+		if(0.5 to 0.75) // 25% rotten
+			examine_list += span_notice("[parent] looks kinda stale.")
+		if(0.25 to 0.5) // 50% rotten
+			examine_list += span_notice("[parent] is starting to look pretty gross.")
+		if(0 to 0.25) // 75% rotten
+			examine_list += span_danger("[parent] barely looks edible.")
 
 #undef DECOMPOSITION_TIME
 #undef DECOMPOSITION_TIME_GROSS
 #undef DECOMPOSITION_TIME_RAW
-
-#undef DECOMP_EXAM_NORMAL
-#undef DECOMP_EXAM_GROSS
-#undef DECOMP_EXAM_RAW

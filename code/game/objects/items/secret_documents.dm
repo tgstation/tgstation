@@ -10,7 +10,7 @@
 /obj/item/documents
 	name = "secret documents"
 	desc = "\"Top Secret\" documents."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "docs_generic"
 	inhand_icon_state = "paper"
 	throwforce = 0
@@ -58,8 +58,8 @@
 	///What was copied
 	var/copy_type = null
 
-/obj/item/documents/photocopy/New(loc, obj/item/documents/copy=null)
-	..()
+/obj/item/documents/photocopy/Initialize(mapload, obj/item/documents/copy=null)
+	. = ..()
 	if(copy)
 		copy_type = copy.type
 		if(istype(copy, /obj/item/documents/photocopy)) // Copy Of A Copy Of A Copy

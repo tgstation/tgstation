@@ -19,9 +19,9 @@
 	var/obj/item/radio/R = holder
 	switch(index)
 		if(WIRE_SIGNAL)
-			R.listening = !R.listening
-			R.broadcasting = R.listening
+			R.set_listening(!R.get_listening())
+			R.set_broadcasting(R.get_listening())
 		if(WIRE_RX)
-			R.listening = !R.listening
+			R.set_listening(!R.get_listening())
 		if(WIRE_TX)
-			R.broadcasting = !R.broadcasting
+			R.set_broadcasting(!R.get_broadcasting())

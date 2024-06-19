@@ -15,14 +15,14 @@
 	/// Countdown timer for the mass driver's delayed launch functionality.
 	COOLDOWN_DECLARE(massdriver_countdown)
 
-/obj/machinery/computer/pod/Initialize()
+/obj/machinery/computer/pod/Initialize(mapload)
 	. = ..()
 	for(var/obj/machinery/mass_driver/M in range(range, src))
 		if(M.id == id)
 			connected = M
 			break
 
-/obj/machinery/computer/pod/process(delta_time)
+/obj/machinery/computer/pod/process(seconds_per_tick)
 	if(COOLDOWN_FINISHED(src, massdriver_countdown))
 		timing = FALSE
 		// alarm() sleeps, so we want to end processing first and can't rely on return PROCESS_KILL
@@ -44,18 +44,19 @@
 		if(M.id == id)
 			M.open()
 
-	sleep(20)
+	sleep(2 SECONDS)
 	for(var/obj/machinery/mass_driver/M in range(range, src))
 		if(M.id == id)
 			M.power = connected.power
 			M.drive()
 
-	sleep(50)
+	sleep(5 SECONDS)
 	for(var/obj/machinery/door/poddoor/M in range(range, src))
 		if(M.id == id)
 			M.close()
 
 /obj/machinery/computer/pod/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "MassDriverControl", name)
@@ -138,16 +139,16 @@
 
 /obj/machinery/computer/pod/old/mass_driver_controller
 	name = "\improper Mass Driver Controller"
-	icon = 'icons/obj/airlock_machines.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "airlock_control_standby"
-	icon_keyboard = null
+	icon_screen = null
 	density = FALSE
 
-/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver
-	id = MASSDRIVER_TOXINS
+/obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver
+	id = MASSDRIVER_ORDNANCE
 
 //for maps where pod doors are outside of the standard 4 tile controller detection range (ie Pubbystation)
-/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver/longrange
+/obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver/longrange
 	range = 6
 
 /obj/machinery/computer/pod/old/mass_driver_controller/chapelgun

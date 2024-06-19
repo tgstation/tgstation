@@ -2,12 +2,16 @@
 	name = "Prison Escapee"
 	uniform = /obj/item/clothing/under/rank/prisoner
 	shoes = /obj/item/clothing/shoes/sneakers/orange
-	r_pocket = /obj/item/kitchen/knife/shiv
+	r_pocket = /obj/item/knife/shiv
 
-/datum/outfit/prisoner/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
+/datum/outfit/prisoner/post_equip(mob/living/carbon/human/prisoner, visualsOnly=FALSE)
+	// This outfit is used by the assets SS, which is ran before the atoms SS
+	if(SSatoms.initialized == INITIALIZATION_INSSATOMS)
+		prisoner.w_uniform?.update_greyscale()
+		prisoner.update_worn_undersuit()
 	if(visualsOnly)
 		return
-	H.fully_replace_character_name(null,"NTP #CC-0[rand(111,999)]") //same as the lavaland prisoner transport, but this time they are from CC, or CentCom
+	prisoner.fully_replace_character_name(null,"NTP #CC-0[rand(111,999)]") //same as the lavaland prisoner transport, but this time they are from CC, or CentCom
 
 /datum/outfit/yalp_cultist
 	name = "Cultist of Yalp Elor"
@@ -20,26 +24,28 @@
 /datum/outfit/waldo
 	name = "Waldo"
 	uniform = /obj/item/clothing/under/pants/jeans
-	suit = /obj/item/clothing/suit/striped_sweater
-	head = /obj/item/clothing/head/beanie/waldo
+	suit = /obj/item/clothing/suit/costume/striped_sweater
+	head = /obj/item/clothing/head/waldo
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/regular/circle
 
 /datum/outfit/waldo/post_equip(mob/living/carbon/human/equipped_on, visualsOnly=FALSE)
+	equipped_on.w_uniform?.update_greyscale()
+	equipped_on.update_worn_undersuit()
 	if(visualsOnly)
 		return
-	equipped_on.fully_replace_character_name(null,"Waldo")
-	equipped_on.eye_color = "000"
+	equipped_on.fully_replace_character_name(null, "Waldo")
+	equipped_on.eye_color_left = COLOR_BLACK
+	equipped_on.eye_color_right = COLOR_BLACK
 	equipped_on.gender = MALE
 	equipped_on.skin_tone = "caucasian3"
 	equipped_on.hairstyle = "Business Hair 3"
 	equipped_on.facial_hairstyle = "Shaved"
-	equipped_on.hair_color = "000"
-	equipped_on.facial_hair_color = equipped_on.hair_color
-	equipped_on.update_body()
-	if(equipped_on.mind)
-		equipped_on.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
+	equipped_on.hair_color = COLOR_BLACK
+	equipped_on.facial_hair_color = COLOR_BLACK
+	equipped_on.update_body(is_creating = TRUE)
+
 	var/list/no_drops = list()
 	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_FEET)
 	no_drops += equipped_on.get_item_by_slot(ITEM_SLOT_ICLOTHING)
@@ -49,6 +55,9 @@
 	for(var/obj/item/trait_needed as anything in no_drops)
 		ADD_TRAIT(trait_needed, TRAIT_NODROP, CURSED_ITEM_TRAIT(trait_needed.type))
 
+	var/datum/action/cooldown/spell/aoe/knock/waldos_key = new(equipped_on.mind || equipped_on)
+	waldos_key.Grant(equipped_on)
+
 /datum/outfit/synthetic
 	name = "Factory Error Synth"
 	uniform = /obj/item/clothing/under/color/white
@@ -57,118 +66,24 @@
 /datum/outfit/synthetic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
-	var/obj/item/organ/eyes/robotic/glow/eyes = new()
-	eyes.Insert(H, drop_if_replaced = FALSE)
+	var/obj/item/organ/internal/eyes/robotic/glow/eyes = new()
+	eyes.Insert(H, movement_flags = DELETE_IF_REPLACED)
 
-/datum/outfit/spacepol
-	name = "Spacepol Officer"
-	uniform = /obj/item/clothing/under/rank/security/officer/spacepol
-	suit = /obj/item/clothing/suit/armor/vest/blueshirt
-	belt = /obj/item/gun/ballistic/automatic/pistol/m1911
-	head = /obj/item/clothing/head/helmet/police
-	gloves = /obj/item/clothing/gloves/tackler/combat
-	shoes = /obj/item/clothing/shoes/jackboots
-	mask = /obj/item/clothing/mask/gas/sechailer/swat/spacepol
-	glasses = /obj/item/clothing/glasses/sunglasses
+/datum/outfit/invisible_man
+	name = "Invisible Man"
+	uniform = /obj/item/clothing/under/suit/black_really
+	back = /obj/item/storage/backpack/satchel/leather
+	shoes = /obj/item/clothing/shoes/laceup
+	glasses = /obj/item/clothing/glasses/monocle
+	mask = /obj/item/clothing/mask/cigarette/pipe
 	ears = /obj/item/radio/headset
-	l_pocket = /obj/item/ammo_box/magazine/m45
-	r_pocket = /obj/item/restraints/handcuffs
-	id = /obj/item/card/id/advanced
-
-/datum/outfit/spacepol/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
-		return
-	var/obj/item/card/id/W = H.wear_id
-	W.assignment = "Police Officer"
-	W.registered_name = H.real_name
-	W.update_label()
-	W.update_icon()
-
-/datum/outfit/russiancorpse/hunter
-	ears = /obj/item/radio/headset
-	r_hand = /obj/item/gun/ballistic/rifle/boltaction/brand_new
-
-/datum/outfit/russiancorpse/hunter/pre_equip(mob/living/carbon/human/H)
-	if(prob(50))
-		head = /obj/item/clothing/head/ushanka
-
-/datum/outfit/bountyarmor
-	name = "Bounty Hunter - Armored"
-	uniform = /obj/item/clothing/under/rank/prisoner
-	back = /obj/item/storage/backpack
-	head = /obj/item/clothing/head/hunter
-	suit = /obj/item/clothing/suit/space/hunter
-	gloves = /obj/item/clothing/gloves/tackler/combat
-	shoes = /obj/item/clothing/shoes/jackboots
-	mask = /obj/item/clothing/mask/gas/hunter
-	glasses = /obj/item/clothing/glasses/sunglasses/garb
-	ears = /obj/item/radio/headset
-	r_pocket = /obj/item/restraints/handcuffs/cable
-	id = /obj/item/card/id/advanced
-	l_hand = /obj/item/tank/internals/plasma/full
-	r_hand = /obj/item/flamethrower/full/tank
-
-/datum/outfit/bountyarmor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
-		return
-	var/obj/item/card/id/W = H.wear_id
-	W.assignment = "Bounty Hunter"
-	W.registered_name = H.real_name
-	W.update_label()
-	W.update_icon()
-
-/datum/outfit/bountyhook
-	name = "Bounty Hunter - Hook"
-	uniform = /obj/item/clothing/under/rank/prisoner
-	back = /obj/item/storage/backpack
-	head = /obj/item/clothing/head/scarecrow_hat
-	gloves = /obj/item/clothing/gloves/botanic_leather
-	ears = /obj/item/radio/headset
-	shoes = /obj/item/clothing/shoes/jackboots
-	mask = /obj/item/clothing/mask/scarecrow
-	r_pocket = /obj/item/restraints/handcuffs/cable
-	id = /obj/item/card/id/advanced
-	r_hand = /obj/item/gun/ballistic/shotgun/hook
 
 	backpack_contents = list(
-		/obj/item/ammo_casing/shotgun/incapacitate = 6
-		)
+		/obj/item/reagent_containers/hypospray/medipen/invisibility = 3,
+	)
 
-/datum/outfit/bountyhook/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
-		return
-	var/obj/item/card/id/W = H.wear_id
-	W.assignment = "Bounty Hunter"
-	W.registered_name = H.real_name
-	W.update_label()
-	W.update_icon()
+/datum/outfit/invisible_man/post_equip(mob/living/carbon/human/equipee, visualsOnly)
+	. = ..()
 
-/datum/outfit/bountysynth
-	name = "Bounty Hunter - Synth"
-	uniform = /obj/item/clothing/under/rank/prisoner
-	back = /obj/item/storage/backpack
-	suit = /obj/item/clothing/suit/armor/riot
-	shoes = /obj/item/clothing/shoes/jackboots
-	glasses = /obj/item/clothing/glasses/eyepatch
-	r_pocket = /obj/item/restraints/handcuffs/cable
-	ears = /obj/item/radio/headset
-	id = /obj/item/card/id/advanced
-	r_hand = /obj/item/storage/firstaid/regular
-	l_hand = /obj/item/pinpointer/shuttle
-
-	backpack_contents = list(
-		/obj/item/bountytrap = 4
-		)
-
-/datum/outfit/bountysynth/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
-		return
-	var/datum/species/synth/synthetic_appearance = new()
-	H.set_species(synthetic_appearance)
-	synthetic_appearance.assume_disguise(synthetic_appearance, H)
-	H.update_hair()
-	var/obj/item/card/id/W = H.wear_id
-	W.assignment = "Bounty Hunter"
-	W.registered_name = H.real_name
-	W.update_label()
-	W.update_icon()
+	var/obj/item/implant/camouflage/invisibility_implant = new(equipee)
+	invisibility_implant.implant(equipee)

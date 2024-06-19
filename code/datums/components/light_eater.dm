@@ -20,19 +20,19 @@
 	var/list/cached_eaten_lights = eaten_lights
 	for(var/morsel in _eaten)
 		LAZYSET(cached_eaten_lights, morsel, TRUE)
-		RegisterSignal(morsel, COMSIG_PARENT_QDELETING, .proc/deref_eaten_light)
+		RegisterSignal(morsel, COMSIG_QDELETING, PROC_REF(deref_eaten_light))
 
-/datum/component/light_eater/Destroy(force, silent)
+/datum/component/light_eater/Destroy(force)
 	for(var/light in eaten_lights)
 		var/atom/eaten_light = light
 		eaten_light.RemoveElement(/datum/element/light_eaten)
-		UnregisterSignal(eaten_light, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(eaten_light, COMSIG_QDELETING)
 	eaten_lights = null
 	return ..()
 
 /datum/component/light_eater/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_LIGHT_EATER_DEVOUR, .proc/on_devour)
+	RegisterSignal(parent, COMSIG_LIGHT_EATER_DEVOUR, PROC_REF(on_devour))
 	parent.AddElement(/datum/element/light_eater)
 
 /datum/component/light_eater/UnregisterFromParent()
@@ -48,19 +48,19 @@
 	LAZYINITLIST(eaten_lights)
 	var/list/cached_eaten_lights = eaten_lights
 	for(var/morsel in _eaten)
-		RegisterSignal(morsel, COMSIG_PARENT_QDELETING, .proc/deref_eaten_light)
+		RegisterSignal(morsel, COMSIG_QDELETING, PROC_REF(deref_eaten_light))
 		LAZYSET(cached_eaten_lights, morsel, TRUE)
 
 /// Handles storing references to lights eaten by the light eater.
 /datum/component/light_eater/proc/on_devour(datum/source, atom/morsel)
 	SIGNAL_HANDLER
 	LAZYSET(eaten_lights, morsel, TRUE)
-	RegisterSignal(morsel, COMSIG_PARENT_QDELETING, .proc/deref_eaten_light)
+	RegisterSignal(morsel, COMSIG_QDELETING, PROC_REF(deref_eaten_light))
 	return NONE
 
 /// Handles dereferencing deleted lights.
 /datum/component/light_eater/proc/deref_eaten_light(atom/eaten_light, force)
 	SIGNAL_HANDLER
-	UnregisterSignal(eaten_light, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(eaten_light, COMSIG_QDELETING)
 	LAZYREMOVE(eaten_lights, eaten_light)
 	return NONE

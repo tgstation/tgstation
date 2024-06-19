@@ -27,7 +27,7 @@
 	"Unsaturated fat, that is monounsaturated fats, polyunsaturated fats and omega-3 fatty acids, is found in plant foods and fish." \
 	)
 
-/obj/machinery/fat_sucker/Initialize()
+/obj/machinery/fat_sucker/Initialize(mapload)
 	. = ..()
 	soundloop = new(src,  FALSE)
 	update_appearance()
@@ -37,10 +37,10 @@
 	. = ..()
 
 /obj/machinery/fat_sucker/RefreshParts()
-	..()
+	. = ..()
 	var/rating = 0
-	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
-		rating += L.rating
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		rating += micro_laser.tier
 	bite_size = initial(bite_size) + rating * 2.5
 	nutrient_to_meat = initial(nutrient_to_meat) - rating * 5
 
@@ -50,7 +50,7 @@
 				[span_notice("Removing [bite_size] nutritional units per operation.")]
 				[span_notice("Requires [nutrient_to_meat] nutritional units per meat slab.")]"}
 
-/obj/machinery/fat_sucker/close_machine(mob/user)
+/obj/machinery/fat_sucker/close_machine(mob/user, density_to_set = TRUE)
 	if(panel_open)
 		to_chat(user, span_warning("You need to close the maintenance hatch first!"))
 		return
@@ -62,10 +62,10 @@
 			set_occupant(null)
 			return
 		to_chat(occupant, span_notice("You enter [src]."))
-		addtimer(CALLBACK(src, .proc/start_extracting), 20, TIMER_OVERRIDE|TIMER_UNIQUE)
+		addtimer(CALLBACK(src, PROC_REF(start_extracting)), 20, TIMER_OVERRIDE|TIMER_UNIQUE)
 		update_appearance()
 
-/obj/machinery/fat_sucker/open_machine(mob/user)
+/obj/machinery/fat_sucker/open_machine(mob/user, density_to_set = FALSE)
 	make_meat()
 	playsound(src, 'sound/machines/click.ogg', 50)
 	if(processing)
@@ -80,7 +80,7 @@
 		user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
 			span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
 			span_hear("You hear a metallic creaking from [src]."))
-		if(do_after(user, breakout_time, target = src))
+		if(do_after(user, breakout_time, target = src, hidden = TRUE))
 			if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 				return
 			free_exit = TRUE
@@ -98,17 +98,16 @@
 	else
 		to_chat(user, span_warning("The safety hatch has been disabled!"))
 
-/obj/machinery/fat_sucker/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, BE_CLOSE))
-		return
+/obj/machinery/fat_sucker/click_alt(mob/living/user)
 	if(user == occupant)
 		to_chat(user, span_warning("You can't reach the controls from inside!"))
-		return
+		return CLICK_ACTION_BLOCKING
 	if(!(obj_flags & EMAGGED) && !allowed(user))
 		to_chat(user, span_warning("You lack the required access."))
-		return
+		return CLICK_ACTION_BLOCKING
 	free_exit = !free_exit
 	to_chat(user, span_notice("Safety hatch [free_exit ? "unlocked" : "locked"]."))
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/fat_sucker/update_overlays()
 	. = ..()
@@ -132,7 +131,7 @@
 	if(panel_open)
 		. += "[icon_state]_panel"
 
-/obj/machinery/fat_sucker/process(delta_time)
+/obj/machinery/fat_sucker/process(seconds_per_tick)
 	if(!processing)
 		return
 	if(!powered() || !occupant || !iscarbon(occupant))
@@ -144,8 +143,8 @@
 		open_machine()
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 		return
-	C.adjust_nutrition(-bite_size * delta_time)
-	nutrients += bite_size * delta_time
+	C.adjust_nutrition(-bite_size * seconds_per_tick)
+	nutrients += bite_size * seconds_per_tick
 
 	if(next_fact <= 0)
 		next_fact = initial(next_fact)
@@ -153,7 +152,7 @@
 		playsound(loc, 'sound/machines/chime.ogg', 30, FALSE)
 	else
 		next_fact--
-	use_power(500)
+	use_energy(active_power_usage * seconds_per_tick)
 
 /obj/machinery/fat_sucker/proc/start_extracting()
 	if(state_open || !occupant || processing || !powered())
@@ -184,11 +183,11 @@
 			while(nutrients >= nutrient_to_meat)
 				nutrients -= nutrient_to_meat
 				var/atom/meat = new C.type_of_meat (drop_location())
-				meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, C) = MINERAL_MATERIAL_AMOUNT * 4))
+				meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, C) = SHEET_MATERIAL_AMOUNT * 4))
 			while(nutrients >= nutrient_to_meat / 3)
 				nutrients -= nutrient_to_meat / 3
 				var/atom/meat = new /obj/item/food/meat/rawcutlet/plain (drop_location())
-				meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, C) = round(MINERAL_MATERIAL_AMOUNT * (4/3))))
+				meat.set_custom_materials(list(GET_MATERIAL_REF(/datum/material/meat/mob_meat, C) = round(SHEET_MATERIAL_AMOUNT * (4/3))))
 			nutrients = 0
 
 /obj/machinery/fat_sucker/screwdriver_act(mob/living/user, obj/item/I)
@@ -210,10 +209,11 @@
 	if(default_deconstruction_crowbar(I))
 		return TRUE
 
-/obj/machinery/fat_sucker/emag_act(mob/living/user)
+/obj/machinery/fat_sucker/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	start_at = 100
 	stop_at = 0
 	to_chat(user, span_notice("You remove the access restrictions and lower the automatic ejection threshold!"))
 	obj_flags |= EMAGGED
+	return TRUE

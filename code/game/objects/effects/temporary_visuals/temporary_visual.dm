@@ -11,12 +11,12 @@
 	///id of the deletion timer
 	var/timerid
 
-/obj/effect/temp_visual/Initialize()
+/obj/effect/temp_visual/Initialize(mapload)
 	. = ..()
 	if(randomdir)
 		setDir(pick(GLOB.cardinals))
 
-	timerid = QDEL_IN(src, duration)
+	timerid = QDEL_IN_STOPPABLE(src, duration)
 
 /obj/effect/temp_visual/Destroy()
 	. = ..()

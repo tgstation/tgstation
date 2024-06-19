@@ -1,4 +1,5 @@
 #define ROUND_START_MUSIC_LIST "strings/round_start_sounds.txt"
+#define SS_TICKER_TRAIT "SS_Ticker"
 
 SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
@@ -8,13 +9,16 @@ SUBSYSTEM_DEF(ticker)
 	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
 
-	var/current_state = GAME_STATE_STARTUP //state of current round (used by process()) Use the defines GAME_STATE_* !
-	var/force_ending = 0 //Round was ended by admin intervention
-	// If true, there is no lobby phase, the game starts immediately.
+	/// state of current round (used by process()) Use the defines GAME_STATE_* !
+	var/current_state = GAME_STATE_STARTUP
+	/// Boolean to track if round should be forcibly ended next ticker tick.
+	/// Set by admin intervention ([ADMIN_FORCE_END_ROUND])
+	/// or a "round-ending" event, like summoning Nar'Sie, a blob victory, the nuke going off, etc. ([FORCE_END_ROUND])
+	var/force_ending = END_ROUND_AS_NORMAL
+	/// If TRUE, there is no lobby phase, the game starts immediately.
 	var/start_immediately = FALSE
-	var/setup_done = FALSE //All game setup done including mode post setup and
-
-	var/datum/game_mode/mode = null
+	/// Boolean to track and check if our subsystem setup is done.
+	var/setup_done = FALSE
 
 	var/login_music //music played in pregame lobby
 	var/round_end_sound //music/jingle played when the world reboots
@@ -35,12 +39,17 @@ SUBSYSTEM_DEF(ticker)
 	var/gametime_offset = 432000 //Deciseconds to add to world.time for station time.
 	var/station_time_rate_multiplier = 12 //factor of station time progressal vs real time.
 
-	var/totalPlayers = 0 //used for pregame stats on statpanel
-	var/totalPlayersReady = 0 //used for pregame stats on statpanel
+	/// Num of players, used for pregame stats on statpanel
+	var/totalPlayers = 0
+	/// Num of ready players, used for pregame stats on statpanel (only viewable by admins)
+	var/totalPlayersReady = 0
+	/// Num of ready admins, used for pregame stats on statpanel (only viewable by admins)
+	var/total_admins_ready = 0
 
 	var/queue_delay = 0
 	var/list/queued_players = list() //used for join queues when the server exceeds the hard population cap
 
+	/// What is going to be reported to other stations at end of round?
 	var/news_report
 
 
@@ -58,20 +67,20 @@ SUBSYSTEM_DEF(ticker)
 	/// Why an emergency shuttle was called
 	var/emergency_reason
 
-/datum/controller/subsystem/ticker/Initialize(timeofday)
+/datum/controller/subsystem/ticker/Initialize()
 	var/list/byond_sound_formats = list(
-		"mid"  = TRUE,
+		"mid" = TRUE,
 		"midi" = TRUE,
-		"mod"  = TRUE,
-		"it"   = TRUE,
-		"s3m"  = TRUE,
-		"xm"   = TRUE,
-		"oxm"  = TRUE,
-		"wav"  = TRUE,
-		"ogg"  = TRUE,
-		"raw"  = TRUE,
-		"wma"  = TRUE,
-		"aiff" = TRUE
+		"mod" = TRUE,
+		"it" = TRUE,
+		"s3m" = TRUE,
+		"xm" = TRUE,
+		"oxm" = TRUE,
+		"wav" = TRUE,
+		"ogg" = TRUE,
+		"raw" = TRUE,
+		"wma" = TRUE,
+		"aiff" = TRUE,
 	)
 
 	var/list/provisional_title_music = flist("[global.config.directory]/title_music/sounds/")
@@ -79,7 +88,7 @@ SUBSYSTEM_DEF(ticker)
 	var/use_rare_music = prob(1)
 
 	for(var/S in provisional_title_music)
-		var/lower = lowertext(S)
+		var/lower = LOWER_TEXT(S)
 		var/list/L = splittext(lower,"+")
 		switch(L.len)
 			if(3) //rare+MAP+sound.ogg or MAP+rare.sound.ogg -- Rare Map-specific sounds
@@ -103,7 +112,7 @@ SUBSYSTEM_DEF(ticker)
 	for(var/S in music)
 		var/list/L = splittext(S,".")
 		if(L.len >= 2)
-			var/ext = lowertext(L[L.len]) //pick the real extension, no 'honk.ogg.exe' nonsense here
+			var/ext = LOWER_TEXT(L[L.len]) //pick the real extension, no 'honk.ogg.exe' nonsense here
 			if(byond_sound_formats[ext])
 				continue
 		music -= S
@@ -136,7 +145,9 @@ SUBSYSTEM_DEF(ticker)
 		gametime_offset = rand(0, 23) HOURS
 	else if(CONFIG_GET(flag/shift_time_realtime))
 		gametime_offset = world.timeofday
-	return ..()
+	else
+		gametime_offset = (CONFIG_GET(number/shift_time_start_hour) HOURS)
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ticker/fire()
 	switch(current_state)
@@ -146,10 +157,10 @@ SUBSYSTEM_DEF(ticker)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, span_notice("<b>Welcome to [station_name()]!</b>"))
-			send2chat("New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game))
+			send2chat(new /datum/tgs_message_content("New round starting on [SSmapping.config.map_name]!"), CONFIG_GET(string/channel_announce_new_game))
 			current_state = GAME_STATE_PREGAME
-			//Everyone who wants to be an observer is now spawned
-			create_observers()
+			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
+
 			fire()
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
@@ -157,10 +168,12 @@ SUBSYSTEM_DEF(ticker)
 				timeLeft = max(0,start_at - world.time)
 			totalPlayers = LAZYLEN(GLOB.new_player_list)
 			totalPlayersReady = 0
-			for(var/i in GLOB.new_player_list)
-				var/mob/dead/new_player/player = i
+			total_admins_ready = 0
+			for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
 				if(player.ready == PLAYER_READY_TO_PLAY)
 					++totalPlayersReady
+					if(player.client?.holder)
+						++total_admins_ready
 
 			if(start_immediately)
 				timeLeft = 0
@@ -171,10 +184,11 @@ SUBSYSTEM_DEF(ticker)
 			timeLeft -= wait
 
 			if(timeLeft <= 300 && !tipped)
-				send_tip_of_the_round()
+				send_tip_of_the_round(world, selected_tip)
 				tipped = TRUE
 
 			if(timeLeft <= 0)
+				SEND_SIGNAL(src, COMSIG_TICKER_ENTER_SETTING_UP)
 				current_state = GAME_STATE_SETTING_UP
 				Master.SetRunLevel(RUNLEVEL_SETUP)
 				if(start_immediately)
@@ -187,12 +201,12 @@ SUBSYSTEM_DEF(ticker)
 				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 				timeLeft = null
 				Master.SetRunLevel(RUNLEVEL_LOBBY)
+				SEND_SIGNAL(src, COMSIG_TICKER_ERROR_SETTING_UP)
 
 		if(GAME_STATE_PLAYING)
-			mode.process(wait * 0.1)
 			check_queue()
 
-			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)
+			if(!roundend_check_paused && (check_finished() || force_ending))
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(TRUE) // Turn it on
 				toggle_dooc(TRUE)
@@ -200,25 +214,34 @@ SUBSYSTEM_DEF(ticker)
 				check_maprotate()
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 
+/// Checks if the round should be ending, called every ticker tick
+/datum/controller/subsystem/ticker/proc/check_finished()
+	if(!setup_done)
+		return FALSE
+	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
+		return TRUE
+	if(GLOB.station_was_nuked)
+		return TRUE
+	if(GLOB.revolutionary_win)
+		return TRUE
+	return FALSE
 
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, span_boldannounce("Starting game..."))
 	var/init_start = world.timeofday
 
-	mode = new /datum/game_mode/dynamic
-
 	CHECK_TICK
-	//Configure mode and assign player to special mode stuff
-	var/can_continue = 0
-	can_continue = src.mode.pre_setup() //Choose antagonists
+	//Configure mode and assign player to antagonists
+	var/can_continue = FALSE
+	can_continue = SSdynamic.pre_setup() //Choose antagonists
 	CHECK_TICK
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PRE_JOBS_ASSIGNED, src)
 	can_continue = can_continue && SSjob.DivideOccupations() //Distribute jobs
 	CHECK_TICK
 
 	if(!GLOB.Debug2)
 		if(!can_continue)
 			log_game("Game failed pre_setup")
-			QDEL_NULL(mode)
 			to_chat(world, "<B>Error setting up game.</B> Reverting to pre-game lobby.")
 			SSjob.ResetOccupations()
 			return FALSE
@@ -243,7 +266,7 @@ SUBSYSTEM_DEF(ticker)
 	collect_minds()
 	equip_characters()
 
-	GLOB.data_core.manifest()
+	GLOB.manifest.build()
 
 	transfer_characters() //transfer keys to the new mobs
 
@@ -252,21 +275,23 @@ SUBSYSTEM_DEF(ticker)
 		cb.InvokeAsync()
 	LAZYCLEARLIST(round_start_events)
 
-	log_world("Game start took [(world.timeofday - init_start)/10]s")
-	round_start_time = world.time
-	SSdbcore.SetRoundStart()
+	round_start_time = world.time //otherwise round_start_time would be 0 for the signals
+	SEND_SIGNAL(src, COMSIG_TICKER_ROUND_STARTING, world.time)
 
-	to_chat(world, span_notice("<B>Welcome to [station_name()], enjoy your stay!</B>"))
+	log_world("Game start took [(world.timeofday - init_start)/10]s")
+	INVOKE_ASYNC(SSdbcore, TYPE_PROC_REF(/datum/controller/subsystem/dbcore,SetRoundStart))
+
+	to_chat(world, span_notice(span_bold("Welcome to [station_name()], enjoy your stay!")))
 	SEND_SOUND(world, sound(SSstation.announcer.get_rand_welcome_sound()))
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
 
-	if(SSevents.holidays)
+	if(length(GLOB.holidays))
 		to_chat(world, span_notice("and..."))
-		for(var/holidayname in SSevents.holidays)
-			var/datum/holiday/holiday = SSevents.holidays[holidayname]
-			to_chat(world, "<h4>[holiday.greet()]</h4>")
+		for(var/holidayname in GLOB.holidays)
+			var/datum/holiday/holiday = GLOB.holidays[holidayname]
+			to_chat(world, span_info(holiday.greet()))
 
 	PostSetup()
 
@@ -274,7 +299,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = FALSE
-	mode.post_setup()
+	SSdynamic.post_setup()
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count()
 
@@ -331,11 +356,8 @@ SUBSYSTEM_DEF(ticker)
 			GLOB.joined_player_list += player.ckey
 			var/atom/destination = player.mind.assigned_role.get_roundstart_spawn_point()
 			if(!destination) // Failed to fetch a proper roundstart location, won't be going anywhere.
-				player.new_player_panel()
 				continue
 			player.create_character(destination)
-		else
-			player.new_player_panel()
 		CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
@@ -360,7 +382,7 @@ SUBSYSTEM_DEF(ticker)
 
 	// Find a suitable player to hold captaincy.
 	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
-		if(is_banned_from(new_player_mob.ckey, list("Captain")))
+		if(is_banned_from(new_player_mob.ckey, list(JOB_CAPTAIN)))
 			CHECK_TICK
 			continue
 		if(!ishuman(new_player_mob.new_character))
@@ -389,7 +411,7 @@ SUBSYSTEM_DEF(ticker)
 			CHECK_TICK
 			continue
 		var/mob/living/new_player_living = new_player_mob.new_character
-		if(!new_player_living.mind || is_unassigned_job(new_player_living.mind.assigned_role))
+		if(!new_player_living.mind)
 			CHECK_TICK
 			continue
 		var/datum/job/player_assigned_role = new_player_living.mind.assigned_role
@@ -400,8 +422,8 @@ SUBSYSTEM_DEF(ticker)
 			captainless = FALSE
 			var/acting_captain = !is_captain_job(player_assigned_role)
 			SSjob.promote_to_captain(new_player_living, acting_captain)
-			OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, player_assigned_role.get_captaincy_announcement(new_player_living)))
-		if(ishuman(new_player_living) && CONFIG_GET(flag/roundstart_traits))
+			OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(minor_announce), player_assigned_role.get_captaincy_announcement(new_player_living)))
+		if((player_assigned_role.job_flags & JOB_ASSIGN_QUIRKS) && ishuman(new_player_living) && CONFIG_GET(flag/roundstart_traits))
 			if(new_player_mob.client?.prefs?.should_be_random_hardcore(player_assigned_role, new_player_living.mind))
 				new_player_mob.client.prefs.hardcore_random_setup(new_player_living)
 			SSquirks.AssignQuirks(new_player_living, new_player_mob.client)
@@ -428,7 +450,7 @@ SUBSYSTEM_DEF(ticker)
 			officer_mobs += character
 
 			var/datum/client_interface/client = GET_CLIENT(new_player_mob)
-			var/preference = client?.prefs?.prefered_security_department || SEC_DEPT_NONE
+			var/preference = client?.prefs?.read_preference(/datum/preference/choiced/security_department)
 			officer_preferences += preference
 
 	var/distribution = get_officer_departments(officer_preferences, departments)
@@ -442,50 +464,33 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
-	for(var/i in GLOB.new_player_list)
-		var/mob/dead/new_player/player = i
+	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
 		var/mob/living = player.transfer_character()
 		if(living)
 			qdel(player)
-			living.notransform = TRUE
+			ADD_TRAIT(living, TRAIT_NO_TRANSFORM, SS_TICKER_TRAIT)
 			if(living.client)
-				var/atom/movable/screen/splash/S = new(living.client, TRUE)
+				var/atom/movable/screen/splash/S = new(null, living.client, TRUE)
 				S.Fade(TRUE)
 				living.client.init_verbs()
 			livings += living
 	if(livings.len)
-		addtimer(CALLBACK(src, .proc/release_characters, livings), 30, TIMER_CLIENT_TIME)
+		addtimer(CALLBACK(src, PROC_REF(release_characters), livings), 3 SECONDS, TIMER_CLIENT_TIME)
 
 /datum/controller/subsystem/ticker/proc/release_characters(list/livings)
-	for(var/I in livings)
-		var/mob/living/L = I
-		L.notransform = FALSE
-
-/datum/controller/subsystem/ticker/proc/send_tip_of_the_round()
-	var/m
-	if(selected_tip)
-		m = selected_tip
-	else
-		var/list/randomtips = world.file2list("strings/tips.txt")
-		var/list/memetips = world.file2list("strings/sillytips.txt")
-		if(randomtips.len && prob(95))
-			m = pick(randomtips)
-		else if(memetips.len)
-			m = pick(memetips)
-
-	if(m)
-		to_chat(world, span_purple("<span class='oocplain'><b>Tip of the round: </b>[html_encode(m)]</span>"))
+	for(var/mob/living/living_mob as anything in livings)
+		REMOVE_TRAIT(living_mob, TRAIT_NO_TRANSFORM, SS_TICKER_TRAIT)
 
 /datum/controller/subsystem/ticker/proc/check_queue()
 	if(!queued_players.len)
 		return
-	var/hpc = CONFIG_GET(number/hard_popcap)
-	if(!hpc)
-		listclearnulls(queued_players)
-		for (var/mob/dead/new_player/NP in queued_players)
-			to_chat(NP, span_userdanger("The alive players limit has been released!<br><a href='?src=[REF(NP)];late_join=override'>[html_encode(">>Join Game<<")]</a>"))
-			SEND_SOUND(NP, sound('sound/misc/notice1.ogg'))
-			NP.LateChoices()
+	var/hard_popcap = CONFIG_GET(number/hard_popcap)
+	if(!hard_popcap)
+		list_clear_nulls(queued_players)
+		for (var/mob/dead/new_player/new_player in queued_players)
+			to_chat(new_player, span_userdanger("The alive players limit has been released!<br><a href='?src=[REF(new_player)];late_join=override'>[html_encode(">>Join Game<<")]</a>"))
+			SEND_SOUND(new_player, sound('sound/misc/notice1.ogg'))
+			GLOB.latejoin_menu.ui_interact(new_player)
 		queued_players.len = 0
 		queue_delay = 0
 		return
@@ -495,12 +500,12 @@ SUBSYSTEM_DEF(ticker)
 
 	switch(queue_delay)
 		if(5) //every 5 ticks check if there is a slot available
-			listclearnulls(queued_players)
-			if(living_player_count() < hpc)
+			list_clear_nulls(queued_players)
+			if(living_player_count() < hard_popcap)
 				if(next_in_line?.client)
 					to_chat(next_in_line, span_userdanger("A slot has opened! You have approximately 20 seconds to join. <a href='?src=[REF(next_in_line)];late_join=override'>\>\>Join Game\<\<</a>"))
 					SEND_SOUND(next_in_line, sound('sound/misc/notice1.ogg'))
-					next_in_line.LateChoices()
+					next_in_line.ui_interact(next_in_line)
 					return
 				queued_players -= next_in_line //Client disconnected, remove he
 			queue_delay = 0 //No vacancy: restart timer
@@ -514,7 +519,7 @@ SUBSYSTEM_DEF(ticker)
 		return
 	if(world.time - SSticker.round_start_time < 10 MINUTES) //Not forcing map rotation for very short rounds.
 		return
-	INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
+	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping/, maprotate))
 
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING
@@ -525,7 +530,6 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state
 	force_ending = SSticker.force_ending
-	mode = SSticker.mode
 
 	login_music = SSticker.login_music
 	round_end_sound = SSticker.round_end_sound
@@ -541,6 +545,7 @@ SUBSYSTEM_DEF(ticker)
 
 	totalPlayers = SSticker.totalPlayers
 	totalPlayersReady = SSticker.totalPlayersReady
+	total_admins_ready = SSticker.total_admins_ready
 
 	queue_delay = SSticker.queue_delay
 	queued_players = SSticker.queued_players
@@ -549,69 +554,111 @@ SUBSYSTEM_DEF(ticker)
 	queue_delay = SSticker.queue_delay
 	queued_players = SSticker.queued_players
 
-	switch (current_state)
-		if(GAME_STATE_SETTING_UP)
-			Master.SetRunLevel(RUNLEVEL_SETUP)
-		if(GAME_STATE_PLAYING)
-			Master.SetRunLevel(RUNLEVEL_GAME)
-		if(GAME_STATE_FINISHED)
-			Master.SetRunLevel(RUNLEVEL_POSTGAME)
+	if (Master) //Set Masters run level if it exists
+		switch (current_state)
+			if(GAME_STATE_SETTING_UP)
+				Master.SetRunLevel(RUNLEVEL_SETUP)
+			if(GAME_STATE_PLAYING)
+				Master.SetRunLevel(RUNLEVEL_GAME)
+			if(GAME_STATE_FINISHED)
+				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 
 /datum/controller/subsystem/ticker/proc/send_news_report()
 	var/news_message
 	var/news_source = "Nanotrasen News Network"
 	var/decoded_station_name = html_decode(station_name()) //decode station_name to avoid minor_announce double encode
+
 	switch(news_report)
+		// The nuke was detonated on the syndicate recon outpost
 		if(NUKE_SYNDICATE_BASE)
-			news_message = "In a daring raid, the heroic crew of [decoded_station_name] detonated a nuclear device in the heart of a terrorist base."
+			news_message = "In a daring raid, the heroic crew of [decoded_station_name] \
+				detonated a nuclear device in the heart of a terrorist base."
+		// The station was destroyed by nuke ops
 		if(STATION_DESTROYED_NUKE)
-			news_message = "We would like to reassure all employees that the reports of a Syndicate backed nuclear attack on [decoded_station_name] are, in fact, a hoax. Have a secure day!"
+			news_message = "We would like to reassure all employees that the reports of a Syndicate \
+				backed nuclear attack on [decoded_station_name] are, in fact, a hoax. Have a secure day!"
+		// The station was evacuated (normal result)
 		if(STATION_EVACUATED)
+			// Had an emergency reason supplied to pass along
 			if(emergency_reason)
-				news_message = "[decoded_station_name] has been evacuated after transmitting the following distress beacon:\n\n[html_decode(emergency_reason)]"
+				news_message = "[decoded_station_name] has been evacuated after transmitting \
+					the following distress beacon:\n\n[html_decode(emergency_reason)]"
 			else
-				news_message = "The crew of [decoded_station_name] has been evacuated amid unconfirmed reports of enemy activity."
+				news_message = "The crew of [decoded_station_name] has been \
+					evacuated amid unconfirmed reports of enemy activity."
+		// A blob won
 		if(BLOB_WIN)
-			news_message = "[decoded_station_name] was overcome by an unknown biological outbreak, killing all crew on board. Don't let it happen to you! Remember, a clean work station is a safe work station."
-		if(BLOB_NUKE)
-			news_message = "[decoded_station_name] is currently undergoing decontanimation after a controlled burst of radiation was used to remove a biological ooze. All employees were safely evacuated prior, and are enjoying a relaxing vacation."
+			news_message = "[decoded_station_name] was overcome by an unknown biological outbreak, killing \
+				all crew on board. Don't let it happen to you! Remember, a clean work station is a safe work station."
+		// A blob was destroyed
 		if(BLOB_DESTROYED)
-			news_message = "[decoded_station_name] is currently undergoing decontamination procedures after the destruction of a biological hazard. As a reminder, any crew members experiencing cramps or bloating should report immediately to security for incineration."
+			news_message = "[decoded_station_name] is currently undergoing decontamination procedures \
+				after the destruction of a biological hazard. As a reminder, any crew members experiencing \
+				cramps or bloating should report immediately to security for incineration."
+		// A certain percentage of all cultists managed to escape at the end of round
 		if(CULT_ESCAPE)
 			news_message = "Security Alert: A group of religious fanatics have escaped from [decoded_station_name]."
+		// Cult was completely or almost completely wiped out
 		if(CULT_FAILURE)
-			news_message = "Following the dismantling of a restricted cult aboard [decoded_station_name], we would like to remind all employees that worship outside of the Chapel is strictly prohibited, and cause for termination."
+			news_message = "Following the dismantling of a restricted cult aboard [decoded_station_name], \
+				we would like to remind all employees that worship outside of the Chapel is strictly prohibited, \
+				and cause for termination."
+		// Cult summoned Nar'sie
 		if(CULT_SUMMON)
-			news_message = "Company officials would like to clarify that [decoded_station_name] was scheduled to be decommissioned following meteor damage earlier this year. Earlier reports of an unknowable eldritch horror were made in error."
+			news_message = "Company officials would like to clarify that [decoded_station_name] was scheduled \
+				to be decommissioned following meteor damage earlier this year. Earlier reports of an \
+				unknowable eldritch horror were made in error."
+		// Nuke detonated, but missed the station entirely
 		if(NUKE_MISS)
-			news_message = "The Syndicate have bungled a terrorist attack [decoded_station_name], detonating a nuclear weapon in empty space nearby."
+			news_message = "The Syndicate have bungled a terrorist attack [decoded_station_name], \
+				detonating a nuclear weapon in empty space nearby."
+		// All nuke ops got killed
 		if(OPERATIVES_KILLED)
-			news_message = "Repairs to [decoded_station_name] are underway after an elite Syndicate death squad was wiped out by the crew."
+			news_message = "Repairs to [decoded_station_name] are underway after an elite \
+				Syndicate death squad was wiped out by the crew."
+		// Nuke ops results inconclusive - Crew escaped without the disk, or nukies were left alive, or something
 		if(OPERATIVE_SKIRMISH)
-			news_message = "A skirmish between security forces and Syndicate agents aboard [decoded_station_name] ended with both sides bloodied but intact."
+			news_message = "A skirmish between security forces and Syndicate agents aboard [decoded_station_name] \
+				ended with both sides bloodied but intact."
+		// Revolution victory
 		if(REVS_WIN)
-			news_message = "Company officials have reassured investors that despite a union led revolt aboard [decoded_station_name] there will be no wage increases for workers."
+			news_message = "Company officials have reassured investors that despite a union led revolt \
+				aboard [decoded_station_name] there will be no wage increases for workers."
+		// Revolution defeat
 		if(REVS_LOSE)
-			news_message = "[decoded_station_name] quickly put down a misguided attempt at mutiny. Remember, unionizing is illegal!"
+			news_message = "[decoded_station_name] quickly put down a misguided attempt at mutiny. \
+				Remember, unionizing is illegal!"
+		// All wizards (plus apprentices) have been killed
 		if(WIZARD_KILLED)
-			news_message = "Tensions have flared with the Space Wizard Federation following the death of one of their members aboard [decoded_station_name]."
+			news_message = "Tensions have flared with the Space Wizard Federation following the death \
+				of one of their members aboard [decoded_station_name]."
+		// The station was nuked generically
 		if(STATION_NUKED)
-			news_message = "[decoded_station_name] activated its self-destruct device for unknown reasons. Attempts to clone the Captain so he can be arrested and executed are underway."
-		if(CLOCK_SUMMON)
-			news_message = "The garbled messages about hailing a mouse and strange energy readings from [decoded_station_name] have been discovered to be an ill-advised, if thorough, prank by a clown."
-		if(CLOCK_SILICONS)
-			news_message = "The project started by [decoded_station_name] to upgrade their silicon units with advanced equipment have been largely successful, though they have thus far refused to release schematics in a violation of company policy."
-		if(CLOCK_PROSELYTIZATION)
-			news_message = "The burst of energy released near [decoded_station_name] has been confirmed as merely a test of a new weapon. However, due to an unexpected mechanical error, their communications system has been knocked offline."
+			// There was a blob on board, guess it was nuked to stop it
+			if(length(GLOB.overminds))
+				for(var/mob/camera/blob/overmind as anything in GLOB.overminds)
+					if(overmind.max_count < overmind.announcement_size)
+						continue
+
+					news_message = "[decoded_station_name] is currently undergoing decontanimation after a controlled \
+						burst of radiation was used to remove a biological ooze. All employees were safely evacuated prior, \
+						and are enjoying a relaxing vacation."
+					break
+			// A self destruct or something else
+			else
+				news_message = "[decoded_station_name] activated its self-destruct device for unknown reasons. \
+					Attempts to clone the Captain for arrest and execution are underway."
+		// The emergency escape shuttle was hijacked
 		if(SHUTTLE_HIJACK)
-			news_message = "During routine evacuation procedures, the emergency shuttle of [decoded_station_name] had its navigation protocols corrupted and went off course, but was recovered shortly after."
-		if(GANG_OPERATING)
-			news_message = "The company would like to state that any rumors of criminal organizing on board stations such as [decoded_station_name] are falsehoods, and not to be emulated."
-		if(GANG_DESTROYED)
-			news_message = "The crew of [decoded_station_name] would like to thank the Spinward Stellar Coalition Police Department for quickly resolving a minor terror threat to the station."
+			news_message = "During routine evacuation procedures, the emergency shuttle of [decoded_station_name] \
+				had its navigation protocols corrupted and went off course, but was recovered shortly after."
+		// A supermatter cascade triggered
+		if(SUPERMATTER_CASCADE)
+			news_message = "Officials are advising nearby colonies about a newly declared exclusion zone in \
+				the sector surrounding [decoded_station_name]."
 
 	if(news_message)
-		send2otherserver(news_source, news_message,"News_Report")
+		send2otherserver(news_source, news_message, "News_Report")
 
 /datum/controller/subsystem/ticker/proc/GetTimeLeft()
 	if(isnull(SSticker.timeLeft))
@@ -623,14 +670,6 @@ SUBSYSTEM_DEF(ticker)
 		start_at = world.time + newtime
 	else
 		timeLeft = newtime
-
-//Everyone who wanted to be an observer gets made one now
-/datum/controller/subsystem/ticker/proc/create_observers()
-	for(var/i in GLOB.new_player_list)
-		var/mob/dead/new_player/player = i
-		if(player.ready == PLAYER_READY_TO_OBSERVE && player.mind)
-			//Break chain since this has a sleep input in it
-			addtimer(CALLBACK(player, /mob/dead/new_player.proc/make_me_an_observer), 1)
 
 /datum/controller/subsystem/ticker/proc/SetRoundEndSound(the_sound)
 	set waitfor = FALSE
@@ -658,6 +697,13 @@ SUBSYSTEM_DEF(ticker)
 
 	to_chat(world, span_boldannounce("Rebooting World in [DisplayTimeText(delay)]. [reason]"))
 
+	var/statspage = CONFIG_GET(string/roundstatsurl)
+	var/gamelogloc = CONFIG_GET(string/gamelogurl)
+	if(statspage)
+		to_chat(world, span_info("Round statistics and logs can be viewed <a href=\"[statspage][GLOB.round_id]\">at this website!</a>"))
+	else if(gamelogloc)
+		to_chat(world, span_info("Round logs can be located <a href=\"[gamelogloc]\">at this website!</a>"))
+
 	var/start_wait = world.time
 	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2)) //don't wait forever
 	sleep(delay - (world.time - start_wait))
@@ -668,38 +714,30 @@ SUBSYSTEM_DEF(ticker)
 	if(end_string)
 		end_state = end_string
 
-	var/statspage = CONFIG_GET(string/roundstatsurl)
-	var/gamelogloc = CONFIG_GET(string/gamelogurl)
-	if(statspage)
-		to_chat(world, span_info("Round statistics and logs can be viewed <a href=\"[statspage][GLOB.round_id]\">at this website!</a>"))
-	else if(gamelogloc)
-		to_chat(world, span_info("Round logs can be located <a href=\"[gamelogloc]\">at this website!</a>"))
-
 	log_game(span_boldannounce("Rebooting World. [reason]"))
 
 	world.Reboot()
 
 /datum/controller/subsystem/ticker/Shutdown()
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
-	save_admin_data()
-	update_everything_flag_in_db()
 	if(!round_end_sound)
-		round_end_sound = pick(\
-		'sound/roundend/newroundsexy.ogg',
-		'sound/roundend/apcdestroyed.ogg',
-		'sound/roundend/bangindonk.ogg',
-		'sound/roundend/leavingtg.ogg',
-		'sound/roundend/its_only_game.ogg',
-		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg',
-		'sound/roundend/scrunglartiy.ogg',
-		'sound/roundend/petersondisappointed.ogg',
-		'sound/roundend/bully2.ogg'\
-		)
+		round_end_sound = choose_round_end_song()
 	///The reference to the end of round sound that we have chosen.
 	var/sound/end_of_round_sound_ref = sound(round_end_sound)
 	for(var/mob/M in GLOB.player_list)
-		if(M.client.prefs?.toggles & SOUND_ENDOFROUND)
+		if(M.client.prefs.read_preference(/datum/preference/toggle/sound_endofround))
 			SEND_SOUND(M.client, end_of_round_sound_ref)
 
 	text2file(login_music, "data/last_round_lobby_music.txt")
+
+/datum/controller/subsystem/ticker/proc/choose_round_end_song()
+	var/list/reboot_sounds = flist("[global.config.directory]/reboot_themes/")
+	var/list/possible_themes = list()
+
+	for(var/themes in reboot_sounds)
+		possible_themes += themes
+	if(possible_themes.len)
+		return "[global.config.directory]/reboot_themes/[pick(possible_themes)]"
+
+#undef ROUND_START_MUSIC_LIST
+#undef SS_TICKER_TRAIT

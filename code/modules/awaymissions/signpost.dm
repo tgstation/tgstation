@@ -1,13 +1,13 @@
 /*An alternative to exit gateways, signposts send you back to somewhere safe onstation with their semiotic magic.*/
 /obj/structure/signpost
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "signpost"
 	anchored = TRUE
 	density = TRUE
 	var/question = "Travel back?"
 	var/list/zlevels
 
-/obj/structure/signpost/Initialize()
+/obj/structure/signpost/Initialize(mapload)
 	. = ..()
 	set_light(2)
 	zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
@@ -17,7 +17,7 @@
 	if(.)
 		return
 	if(tgui_alert(usr,question,name,list("Yes","No")) == "Yes" && Adjacent(user))
-		var/turf/T = find_safe_turf(zlevels=zlevels)
+		var/turf/T = zlevels ? find_safe_turf(zlevels=zlevels) : get_safe_random_station_turf()
 
 		if(T)
 			var/atom/movable/AM = user.pulling
@@ -39,15 +39,12 @@
 /obj/structure/signpost/attack_hulk(mob/user)
 	return
 
-/obj/structure/signpost/attack_larva(mob/user)
+/obj/structure/signpost/attack_larva(mob/user, list/modifiers)
 	return interact(user)
 
 /obj/structure/signpost/attack_robot(mob/user)
 	if (Adjacent(user))
 		return interact(user)
-
-/obj/structure/signpost/attack_slime(mob/user)
-	return interact(user)
 
 /obj/structure/signpost/attack_animal(mob/user, list/modifiers)
 	return interact(user)
@@ -63,7 +60,7 @@
 		exit the area."
 	question = "Leave? You might never come back."
 
-/obj/structure/signpost/exit/Initialize()
+/obj/structure/signpost/exit/Initialize(mapload)
 	. = ..()
 	zlevels = list()
 	for(var/i in 1 to world.maxz)

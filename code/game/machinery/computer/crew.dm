@@ -1,16 +1,13 @@
 /// How often the sensor data is updated
-#define SENSORS_UPDATE_PERIOD 10 SECONDS //How often the sensor data updates.
+#define SENSORS_UPDATE_PERIOD (10 SECONDS) //How often the sensor data updates.
 /// The job sorting ID associated with otherwise unknown jobs
-#define UNKNOWN_JOB_ID 81
+#define UNKNOWN_JOB_ID 998
 
 /obj/machinery/computer/crew
 	name = "crew monitoring console"
 	desc = "Used to monitor active health sensors built into most of the crew's uniforms."
 	icon_screen = "crew"
 	icon_keyboard = "med_key"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 250
-	active_power_usage = 500
 	circuit = /obj/item/circuitboard/computer/crew
 	light_color = LIGHT_COLOR_BLUE
 
@@ -30,16 +27,15 @@
 
 	var/obj/machinery/computer/crew/attached_console
 
-/obj/item/circuit_component/medical_console_data/Initialize()
-	. = ..()
+/obj/item/circuit_component/medical_console_data/populate_ports()
 	records = add_output_port("Crew Monitoring Data", PORT_TYPE_TABLE)
 
-/obj/item/circuit_component/medical_console_data/register_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/medical_console_data/register_usb_parent(atom/movable/shell)
 	. = ..()
-	if(istype(parent, /obj/machinery/computer/crew))
-		attached_console = parent
+	if(istype(shell, /obj/machinery/computer/crew))
+		attached_console = shell
 
-/obj/item/circuit_component/medical_console_data/unregister_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/medical_console_data/unregister_usb_parent(atom/movable/shell)
 	attached_console = null
 	return ..()
 
@@ -54,13 +50,11 @@
 		"burn",
 		"brute",
 		"location",
+		"health",
 	))
 
 
 /obj/item/circuit_component/medical_console_data/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	if(!attached_console || !GLOB.crewmonitor)
 		return
@@ -76,7 +70,7 @@
 		entry["burn"] = player_record["burndam"]
 		entry["brute"] = player_record["brutedam"]
 		entry["location"] = player_record["area"]
-
+		entry["health"] = player_record["health"]
 		new_table += list(entry)
 
 	records.set_output(new_table)
@@ -85,6 +79,7 @@
 	icon_keyboard = "syndie_key"
 
 /obj/machinery/computer/crew/ui_interact(mob/user)
+	. = ..()
 	GLOB.crewmonitor.show(user,src)
 
 GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
@@ -100,60 +95,70 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	var/list/jobs = list(
 		// Note that jobs divisible by 10 are considered heads of staff, and bolded
 		// 00: Captain
-		"Captain" = 00,
+		JOB_CAPTAIN = 0,
+		JOB_HUMAN_AI = 1,
 		// 10-19: Security
-		"Head of Security" = 10,
-		"Warden" = 11,
-		"Security Officer" = 12,
-		"Security Officer (Medical)" = 13,
-		"Security Officer (Engineering)" = 14,
-		"Security Officer (Science)" = 15,
-		"Security Officer (Cargo)" = 16,
-		"Detective" = 17,
+		JOB_HEAD_OF_SECURITY = 10,
+		JOB_WARDEN = 11,
+		JOB_SECURITY_OFFICER = 12,
+		JOB_SECURITY_OFFICER_MEDICAL = 13,
+		JOB_SECURITY_OFFICER_ENGINEERING = 14,
+		JOB_SECURITY_OFFICER_SCIENCE = 15,
+		JOB_SECURITY_OFFICER_SUPPLY = 16,
+		JOB_DETECTIVE = 17,
 		// 20-29: Medbay
-		"Chief Medical Officer" = 20,
-		"Chemist" = 21,
-		"Virologist" = 22,
-		"Medical Doctor" = 23,
-		"Paramedic" = 24,
+		JOB_CHIEF_MEDICAL_OFFICER = 20,
+		JOB_CHEMIST = 21,
+		JOB_MEDICAL_DOCTOR = 22,
+		JOB_PARAMEDIC = 23,
+		JOB_CORONER = 24,
 		// 30-39: Science
-		"Research Director" = 30,
-		"Scientist" = 31,
-		"Roboticist" = 32,
-		"Geneticist" = 33,
+		JOB_RESEARCH_DIRECTOR = 30,
+		JOB_SCIENTIST = 31,
+		JOB_ROBOTICIST = 32,
+		JOB_GENETICIST = 33,
 		// 40-49: Engineering
-		"Chief Engineer" = 40,
-		"Station Engineer" = 41,
-		"Atmospheric Technician" = 42,
+		JOB_CHIEF_ENGINEER = 40,
+		JOB_STATION_ENGINEER = 41,
+		JOB_ATMOSPHERIC_TECHNICIAN = 42,
 		// 50-59: Cargo
-		"Head of Personnel" = 50,
-		"Quartermaster" = 51,
-		"Shaft Miner" = 52,
-		"Cargo Technician" = 53,
-		// 60+: Civilian/other
-		"Bartender" = 61,
-		"Cook" = 62,
-		"Botanist" = 63,
-		"Curator" = 64,
-		"Chaplain" = 65,
-		"Clown" = 66,
-		"Mime" = 67,
-		"Janitor" = 68,
-		"Lawyer" = 69,
-		"Psychologist" = 71,
-		// ANYTHING ELSE = UNKNOWN_JOB_ID, Unknowns/custom jobs will appear after civilians, and before assistants
-		"Assistant" = 999,
-
+		JOB_QUARTERMASTER = 50,
+		JOB_SHAFT_MINER = 51,
+		JOB_CARGO_TECHNICIAN = 52,
+		JOB_BITRUNNER = 53,
+		// 60+: Service
+		JOB_HEAD_OF_PERSONNEL = 60,
+		JOB_BARTENDER = 61,
+		JOB_CHEF = 62,
+		JOB_COOK = 63,
+		JOB_BOTANIST = 64,
+		JOB_CURATOR = 65,
+		JOB_CHAPLAIN = 66,
+		JOB_CLOWN = 67,
+		JOB_MIME = 68,
+		JOB_JANITOR = 69,
+		JOB_LAWYER = 71,
+		JOB_PSYCHOLOGIST = 72,
 		// 200-229: Centcom
-		"Admiral" = 200,
-		"CentCom Commander" = 210,
-		"Custodian" = 211,
-		"Medical Officer" = 212,
-		"Research Officer" = 213,
-		"Emergency Response Team Commander" = 220,
-		"Security Response Officer" = 221,
-		"Engineer Response Officer" = 222,
-		"Medical Response Officer" = 223
+		JOB_CENTCOM_ADMIRAL = 200,
+		JOB_CENTCOM = 201,
+		JOB_CENTCOM_OFFICIAL = 210,
+		JOB_CENTCOM_COMMANDER = 211,
+		JOB_CENTCOM_BARTENDER = 212,
+		JOB_CENTCOM_CUSTODIAN = 213,
+		JOB_CENTCOM_MEDICAL_DOCTOR = 214,
+		JOB_CENTCOM_RESEARCH_OFFICER = 215,
+		JOB_ERT_COMMANDER = 220,
+		JOB_ERT_OFFICER = 221,
+		JOB_ERT_ENGINEER = 222,
+		JOB_ERT_MEDICAL_DOCTOR = 223,
+		JOB_ERT_CLOWN = 224,
+		JOB_ERT_CHAPLAIN = 225,
+		JOB_ERT_JANITOR = 226,
+		JOB_ERT_DEATHSQUAD = 227,
+
+		// ANYTHING ELSE = UNKNOWN_JOB_ID, Unknowns/custom jobs will appear after civilians, and before assistants
+		JOB_ASSISTANT = 999,
 	)
 
 /datum/crewmonitor/ui_interact(mob/user, datum/tgui/ui)
@@ -163,11 +168,12 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		ui.open()
 
 /datum/crewmonitor/proc/show(mob/M, source)
-	ui_sources[WEAKREF(M)] = source
+	ui_sources[WEAKREF(M)] = WEAKREF(source)
 	ui_interact(M)
 
 /datum/crewmonitor/ui_host(mob/user)
-	return ui_sources[WEAKREF(user)]
+	var/datum/weakref/host_ref = ui_sources[WEAKREF(user)]
+	return host_ref?.resolve()
 
 /datum/crewmonitor/ui_data(mob/user)
 	var/z = user.z
@@ -176,7 +182,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		z = T.z
 	. = list(
 		"sensors" = update_data(z),
-		"link_allowed" = isAI(user)
+		"link_allowed" = HAS_AI_ACCESS(user)
 	)
 
 /datum/crewmonitor/proc/update_data(z)
@@ -200,7 +206,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			continue
 
 		// Machinery and the target should be on the same level or different levels of the same station
-		if(pos.z != z && (!is_station_level(pos.z) || !is_station_level(z)))
+		if(pos.z != z && (!is_station_level(pos.z) || !is_station_level(z)) && !HAS_TRAIT(tracked_living_mob, TRAIT_MULTIZ_SUIT_SENSORS))
 			continue
 
 		var/mob/living/carbon/human/tracked_human = tracked_living_mob
@@ -227,7 +233,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		var/list/entry = list(
 			"ref" = REF(tracked_living_mob),
 			"name" = "Unknown",
-			"ijob" = UNKNOWN_JOB_ID
+			"ijob" = UNKNOWN_JOB_ID,
 		)
 
 		// ID and id-related data
@@ -235,11 +241,13 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		if (id_card)
 			entry["name"] = id_card.registered_name
 			entry["assignment"] = id_card.assignment
-			entry["ijob"] = jobs[id_card.assignment]
+			var/trim_assignment = id_card.get_trim_assignment()
+			if (jobs[trim_assignment] != null)
+				entry["ijob"] = jobs[trim_assignment]
 
-		// Binary living/dead status
+		// Current status
 		if (sensor_mode >= SENSOR_LIVING)
-			entry["life_status"] = !tracked_living_mob.stat
+			entry["life_status"] = tracked_living_mob.stat
 
 		// Damage
 		if (sensor_mode >= SENSOR_VITALS)
@@ -247,7 +255,8 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 				"oxydam" = round(tracked_living_mob.getOxyLoss(), 1),
 				"toxdam" = round(tracked_living_mob.getToxLoss(), 1),
 				"burndam" = round(tracked_living_mob.getFireLoss(), 1),
-				"brutedam" = round(tracked_living_mob.getBruteLoss(), 1)
+				"brutedam" = round(tracked_living_mob.getBruteLoss(), 1),
+				"health" = round(tracked_living_mob.health, 1),
 			)
 
 		// Location
@@ -265,7 +274,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 	return results
 
-/datum/crewmonitor/ui_act(action,params)
+/datum/crewmonitor/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -274,7 +283,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			var/mob/living/silicon/ai/AI = usr
 			if(!istype(AI))
 				return
-			AI.ai_camera_track(params["name"])
+			AI.ai_tracking_tool.track_name(AI, params["name"])
 
 #undef SENSORS_UPDATE_PERIOD
 #undef UNKNOWN_JOB_ID

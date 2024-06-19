@@ -1,0 +1,341 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/item/gun/ballistic/shotgun/toy/crossbow{
+	name = "huntress boltcaster"
+	},
+/obj/effect/baseturf_helper/asteroid/airless,
+/turf/open/floor/mineral/titanium/white/airless,
+/area/ruin/space/has_grav)
+"h" = (
+/obj/machinery/computer/terminal/derelict,
+/turf/open/floor/mineral/titanium/white/airless,
+/area/ruin/space/has_grav)
+"k" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/mob/living/basic/mining/hivelord,
+/turf/open/floor/mineral/titanium/white/airless,
+/area/ruin/space/has_grav)
+"p" = (
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/has_grav)
+"A" = (
+/obj/structure/window/reinforced/shuttle{
+	broken = 1
+	},
+/obj/structure/grille/broken,
+/turf/open/floor/mineral/titanium/white/airless,
+/area/ruin/space/has_grav)
+"D" = (
+/obj/structure/chair/comfy/shuttle,
+/mob/living/basic/mining/hivelord,
+/turf/open/floor/mineral/titanium/white/airless,
+/area/ruin/space/has_grav)
+"E" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white/airless,
+/area/ruin/space/has_grav)
+"H" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space/has_grav)
+"O" = (
+/obj/machinery/door/airlock/titanium/glass,
+/turf/open/floor/mineral/titanium/white/airless,
+/area/ruin/space/has_grav)
+"P" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav)
+"Q" = (
+/obj/effect/mob_spawn/corpse/human/prey_pod,
+/turf/open/floor/mineral/titanium/white/airless,
+/area/ruin/space/has_grav)
+"S" = (
+/mob/living/basic/mining/hivelord,
+/turf/open/floor/mineral/titanium/white/airless,
+/area/ruin/space/has_grav)
+"T" = (
+/obj/structure/window/reinforced/shuttle,
+/obj/structure/grille/broken,
+/turf/open/floor/mineral/titanium/white/airless,
+/area/ruin/space/has_grav)
+"U" = (
+/turf/open/floor/mineral/titanium/white/airless,
+/area/ruin/space/has_grav)
+"W" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/white/airless,
+/area/ruin/space/has_grav)
+"X" = (
+/turf/closed/mineral/random,
+/area/ruin/space/has_grav)
+"Y" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/white/airless,
+/area/ruin/space/has_grav)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+X
+X
+X
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+X
+X
+X
+X
+X
+p
+p
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+X
+X
+X
+X
+P
+P
+P
+H
+p
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+X
+X
+X
+X
+P
+k
+Y
+Y
+P
+p
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+X
+p
+T
+D
+Q
+S
+U
+W
+P
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+p
+P
+h
+S
+c
+U
+U
+O
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+X
+X
+X
+A
+E
+U
+U
+W
+P
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+X
+X
+X
+X
+X
+X
+X
+E
+P
+p
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+X
+X
+X
+X
+X
+P
+P
+H
+p
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+X
+X
+X
+X
+X
+p
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

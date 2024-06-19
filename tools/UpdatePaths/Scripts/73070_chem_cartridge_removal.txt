@@ -1,0 +1,5 @@
+# removes chemistry cartridges as they no longer exist. removes previous paths in case of older versions.
+
+/obj/item/cartridge/chemistry : @DELETE
+/obj/item/computer_disk/chemistry : @DELETE
+/obj/item/computer_hardware/hard_drive/role/chemistry : @DELETE

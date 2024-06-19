@@ -4,17 +4,23 @@
 	var/mob/living/carbon/human/alice
 	var/mob/living/carbon/human/bob
 	var/mob/living/carbon/human/charlie
+	var/targetz = 5
+	var/datum/turf_reservation/reserved
 
 /datum/unit_test/chain_pull_through_space/New()
 	..()
 
+	//reserve a tile that is always empty for our z destination
+	reserved = SSmapping.request_turf_block_reservation(5, 5, 1)
+
 	// Create a space tile that goes to another z-level
 	claimed_tile = run_loc_floor_bottom_left.type
 
-	space_tile = new(locate(run_loc_floor_bottom_left.x, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-	space_tile.destination_x = 100
-	space_tile.destination_y = 100
-	space_tile.destination_z = 5
+	space_tile = run_loc_floor_bottom_left.ChangeTurf(/turf/open/space)
+	var/turf/bottom_left = reserved.bottom_left_turfs[1]
+	space_tile.destination_x = round(bottom_left.x + (reserved.width-1) / 2)
+	space_tile.destination_y = round(bottom_left.y + (reserved.height-1) / 2)
+	space_tile.destination_z = bottom_left.z
 
 	// Create our list of humans, all adjacent to one another
 	alice = new(locate(run_loc_floor_bottom_left.x + 2, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
@@ -31,6 +37,7 @@
 	qdel(alice)
 	qdel(bob)
 	qdel(charlie)
+	qdel(reserved)
 	return ..()
 
 /datum/unit_test/chain_pull_through_space/Run()
@@ -41,22 +48,15 @@
 
 	// Walk normally to the left, make sure we're still a chain
 	alice.Move(locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
-	if (bob.x != run_loc_floor_bottom_left.x + 2)
-		return Fail("During normal move, Bob was not at the correct x ([bob.x])")
-	if (charlie.x != run_loc_floor_bottom_left.x + 3)
-		return Fail("During normal move, Charlie was not at the correct x ([charlie.x])")
+	TEST_ASSERT_EQUAL(bob.x, run_loc_floor_bottom_left.x + 2, "During normal move, Bob was not at the correct x ([bob.x])")
+	TEST_ASSERT_EQUAL(charlie.x, run_loc_floor_bottom_left.x + 3, "During normal move, Charlie was not at the correct x ([charlie.x])")
 
 	// We're going through the space turf now that should teleport us
 	alice.Move(run_loc_floor_bottom_left)
-	if (alice.z != space_tile.destination_z)
-		return Fail("Alice did not teleport to the destination z-level. Current location: ([alice.x], [alice.y], [alice.z])")
+	TEST_ASSERT_EQUAL(alice.z, space_tile.destination_z, "Alice did not teleport to the destination z-level. Current location: ([alice.x], [alice.y], [alice.z])")
 
-	if (bob.z != space_tile.destination_z)
-		return Fail("Bob did not teleport to the destination z-level. Current location: ([bob.x], [bob.y], [bob.z])")
-	if (!bob.Adjacent(alice))
-		return Fail("Bob is not adjacent to Alice. Bob is at [bob.x], Alice is at [alice.x]")
+	TEST_ASSERT_EQUAL(bob.z, space_tile.destination_z, "Bob did not teleport to the destination z-level. Current location: ([bob.x], [bob.y], [bob.z])")
+	TEST_ASSERT(bob.Adjacent(alice), "Bob is not adjacent to Alice. Bob is at [bob.x], Alice is at [alice.x]")
 
-	if (charlie.z != space_tile.destination_z)
-		return Fail("Charlie did not teleport to the destination z-level. Current location: ([charlie.x], [charlie.y], [charlie.z])")
-	if (!charlie.Adjacent(bob))
-		return Fail("Charlie is not adjacent to Bob. Charlie is at [charlie.x], Bob is at [bob.x]")
+	TEST_ASSERT_EQUAL(charlie.z, space_tile.destination_z, "Charlie did not teleport to the destination z-level. Current location: ([charlie.x], [charlie.y], [charlie.z])")
+	TEST_ASSERT(charlie.Adjacent(bob), "Charlie is not adjacent to Bob. Charlie is at [charlie.x], Bob is at [bob.x]")
