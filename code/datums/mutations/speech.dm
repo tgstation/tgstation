@@ -448,3 +448,7 @@
 	var/spoken_message = speech_args[SPEECH_MESSAGE]
 	spoken_message = piglatin_sentence(spoken_message)
 	speech_args[SPEECH_MESSAGE] = spoken_message
+
+#undef ALPHABET
+#undef VOWELS
+#undef CONSONANTS
