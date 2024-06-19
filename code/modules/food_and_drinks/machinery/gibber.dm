@@ -162,8 +162,7 @@
 	operating = TRUE
 	update_appearance()
 
-	var/offset = prob(50) ? -1 : 1
-	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
+	Shake(pixelshiftx = 1, pixelshifty = 0, duration = gibtime)
 	var/mob/living/mob_occupant = occupant
 	var/sourcename = mob_occupant.real_name
 	var/sourcejob
