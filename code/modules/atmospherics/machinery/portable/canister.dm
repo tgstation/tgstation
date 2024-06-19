@@ -110,7 +110,7 @@
 	if(panel_open)
 		. += span_notice("Hatch open, close it with a screwdriver.")
 	if(atom_integrity < max_integrity)
-		. += span_notice("Integrity compromised, repair hull with a welding tool.")
+		. += span_notice("The cracks could be [EXAMINE_HINT("welded")] together.")
 
 // Please keep the canister types sorted
 // Basic canister per gas below here
