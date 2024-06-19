@@ -473,3 +473,20 @@
 				'sound/creatures/monkey/monkey_screech_7.ogg',
 			)
 	return soundin
+
+///generate a room to group all the similarly playing sound together then find an average center to play the sound in
+/proc/generate_sound_area(turf/source)
+	var/list/x_coord
+	var/list/y_coord
+	var/counter = 1 // a counter which increment each loop
+	if(source.blocks_air)
+		return
+	var/list/connected_turfs = list(source)
+	. = connected_turfs
+	for(var/turf/reference_turf in connected_turfs)
+		x_coord[counter] = reference_turf.x
+		y_coord[counter] = reference_turf.y
+		connected_turfs |= reference_turf.atmos_adjacent_turfs
+
+	var/average_x = max(x_coord) - min(x_coord)
+	var/average_y = max(y_coord) - min(y_coord)
