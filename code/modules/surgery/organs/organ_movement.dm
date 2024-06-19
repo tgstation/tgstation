@@ -18,8 +18,6 @@
 	mob_insert(receiver, special, movement_flags)
 	bodypart_insert(limb_owner = receiver, movement_flags = movement_flags)
 
-	return TRUE
-
 /*
  * Remove the organ from the select mob.
  *
@@ -65,6 +63,11 @@
 		wash(CLEAN_TYPE_BLOOD)
 		organ_flags &= ~ORGAN_VIRGIN
 
+	if(external_bodytypes)
+		receiver.synchronize_bodytypes()
+	if(external_bodyshapes)
+		receiver.synchronize_bodyshapes()
+
 	receiver.organs |= src
 	receiver.organs_slot[slot] = src
 	owner = receiver
@@ -91,6 +94,9 @@
 	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_owner_examine))
 	SEND_SIGNAL(src, COMSIG_ORGAN_IMPLANTED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_GAIN_ORGAN, src, special)
+
+	if(bodypart_overlay && !special)
+		organ_owner.update_body_parts()
 
 /// Insert an organ into a limb, assume the limb as always detached and include no owner operations here (except the get_bodypart helper here I guess)
 /// Give EITHER a limb OR a limb owner
@@ -119,6 +125,9 @@
 	item_flags |= ABSTRACT
 	ADD_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
 	interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
+
+	if(bodypart_overlay)
+		limb.add_bodypart_overlay(bodypart_overlay)
 
 /*
  * Remove the organ from the select mob.
@@ -178,6 +187,11 @@
 
 		diseases_to_add += disease
 
+	if(!special)
+		organ_owner.synchronize_bodytypes()
+		organ_owner.synchronize_bodyshapes()
+		organ_owner.update_body_parts()
+
 	if(LAZYLEN(diseases_to_add))
 		AddComponent(/datum/component/infective, diseases_to_add)
 
@@ -209,6 +223,20 @@
 	item_flags &= ~ABSTRACT
 	REMOVE_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
 	interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
+
+	if(!bodypart_overlay)
+		return
+
+	limb.remove_bodypart_overlay(bodypart_overlay)
+
+	if(use_mob_sprite_as_obj_sprite)
+		update_appearance(UPDATE_OVERLAYS)
+
+	color = bodypart_overlay.draw_color // so a pink felinid doesn't drop a gray tail
+
+/obj/item/organ/on_bodypart_remove(obj/item/bodypart/bodypart)
+
+	return ..()
 
 /// In space station videogame, nothing is sacred. If somehow an organ is removed unexpectedly, handle it properly
 /obj/item/organ/proc/forced_removal()

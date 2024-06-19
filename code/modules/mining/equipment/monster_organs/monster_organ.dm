@@ -36,7 +36,7 @@
 	icon = 'icons/obj/medical/organs/mining_organs.dmi'
 	icon_state = "hivelord_core"
 	actions_types = list(/datum/action/cooldown/monster_core_action)
-	visual = FALSE
+
 	item_flags = NOBLUDGEON
 	slot = ORGAN_SLOT_MONSTER_CORE
 	organ_flags = ORGAN_ORGANIC

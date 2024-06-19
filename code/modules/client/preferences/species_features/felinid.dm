@@ -20,7 +20,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	can_randomize = FALSE
-	relevant_mutant_bodypart = "ears"
+	relevant_external_organ = /datum/bodypart_overlay/mutant/cat_ears
 
 /datum/preference/choiced/ears/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.ears_list)
