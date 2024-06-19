@@ -152,6 +152,35 @@
 					header = "Spawn Here!",
 				)
 
-	priority_announce("Unidentified ship detected near the station.")
+	var/announcement_text = ""
+	var/announcement_title = ""
+	switch(backstory)
+		if(HUNTER_PACK_COPS)
+			announcement_text += "Attention Crew of [GLOB.station_name], this is the Police. A wanted criminal has been reported taking refuge on your station."
+			announcement_text += " We have a warrant from the SSC authorities to take them into custody. Officers have been dispatched to your location."
+			announcement_text += " We demand your cooperation in bringing this criminal to justice."
+			announcement_title += "Spacepol Command"
+		if(HUNTER_PACK_RUSSIAN)
+			announcement_text += "Zdraviya zhelaju, [GLOB.station_name] crew. We are coming to your station."
+			announcement_text += " There is a criminal aboard. We will arrest them and return them to the gulag. That's good, yes?"
+			announcement_title += "Russian Freighter"
+		if(HUNTER_PACK_BOUNTY)
+			announcement_text += "[GLOB.station_name]. One of our bounty marks has ended up on your station. We will be arriving to collect shortly."
+			announcement_text += " Let's make this quick. If you don't want trouble, stay the hell out of our way."
+			announcement_title += "Unregistered Signal"
+		if(HUNTER_PACK_PSYKER)
+			announcement_text += "HEY, CAN YOU HEAR US? We're coming to your station. There's a bad guy down there, really bad guy. We need to arrest them."
+			announcement_text += " We're also offering fortune telling services out from the front door, if you have paying customers."
+			announcement_title += "Fortune-Telling Entertainment Shuttle"
+
+	if(!length(announcement_text))
+		announcement_text += "Unidentified ship detected near the station."
+		stack_trace("Fugitive hunter announcement was unable to generate an announcement text based on backstory: [backstory]")
+
+	if(!length(announcement_title))
+		announcement_title += "Unknown Signal"
+		stack_trace("Fugitive hunter announcement was unable to generate an announcement title based on backstory: [backstory]")
+
+	priority_announce(announcement_text, announcement_title)
 
 #undef TEAM_BACKSTORY_SIZE
