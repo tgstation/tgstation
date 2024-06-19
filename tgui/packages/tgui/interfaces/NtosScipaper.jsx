@@ -18,7 +18,7 @@ import { NtosWindow } from '../layouts';
 
 export const NtosScipaper = (props) => {
   return (
-    <NtosWindow width={600} height={580}>
+    <NtosWindow width={600} height={600}>
       <NtosWindow.Content scrollable>
         <NtosScipaperContent />
       </NtosWindow.Content>
@@ -209,12 +209,14 @@ const PaperPublishing = (props) => {
         </Stack>
         <br />
         <Button
+          lineHeight={3}
           icon="upload"
           textAlign="center"
           fluid
           onClick={() => act('publish')}
-          content="Publish Paper"
-        />
+        >
+          Publish Paper
+        </Button>
       </Section>
     </>
   );
