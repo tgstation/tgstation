@@ -35,11 +35,11 @@ GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
 		event.announce_to_ghosts(vine)
 	START_PROCESSING(SSobj, src)
 	if(potency != null)
-		mutativeness = potency * MUTATIVENESS_SCALE_FACTOR // If potency is 100, 20 mutativeness; if 1: 0.2 mutativeness
+		mutativeness = qp_sigmoid(100, 30, potency)
 		max_mutation_severity = round(potency * MAX_SEVERITY_LINEAR_COEFF + MAX_SEVERITY_CONSTANT_TERM) // If potency is 100, 25 max mutation severity; if 1, 10 max mutation severity
-	if(production != null && production <= MAX_POSSIBLE_PRODUCTIVITY_VALUE) //Prevents runtime in case production is set to 11.
-		spread_cap = SPREAD_CAP_LINEAR_COEFF * (MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - production) + SPREAD_CAP_CONSTANT_TERM //Best production speed of 1 increases spread_cap to 60, worst production speed of 10 lowers it to 24, even distribution
-		spread_multiplier = SPREAD_MULTIPLIER_MAX / (MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - production) // Best production speed of 1: 10% of total vines will spread per second, worst production speed of 10: 1% of total vines (with minimum of 1) will spread per second
+	if(production != null)
+		spread_cap = min(production * SPREAD_CAP_LINEAR_COEFF + SPREAD_CAP_CONSTANT_TERM, 60) // clamps at 60 to keep the original balancing
+		spread_multiplier = qp_sigmoid(100, SPREAD_MULTIPLIER_MAX, production) // gets to 10% at 100 production instead of 1 production, gets close to 20% at +infinity
 	if(event != null) // spawned by space vine event
 		max_mutation_severity += MAX_SEVERITY_EVENT_BONUS
 		minimum_spread_rate = 3

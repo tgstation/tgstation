@@ -40,10 +40,10 @@
 #define MAX_POSSIBLE_PRODUCTIVITY_VALUE 10
 
 /// Kudzu spread cap is a scaled version of production speed, such that the better the production speed, ie. the lower the speed value is, the faster is spreads
-#define SPREAD_CAP_LINEAR_COEFF 4
-#define SPREAD_CAP_CONSTANT_TERM 20
+#define SPREAD_CAP_LINEAR_COEFF 0.36
+#define SPREAD_CAP_CONSTANT_TERM 24
 /// Kudzu spread multiplier is a reciporal function of production speed, such that the better the production speed, ie. the lower the speed value is, the faster it spreads
-#define SPREAD_MULTIPLIER_MAX 50
+#define SPREAD_MULTIPLIER_MAX 20
 
 /// Kudzu's maximum possible maximum mutation severity (assuming ideal potency), used to balance mutation appearance chance
 #define IDEAL_MAX_SEVERITY 20

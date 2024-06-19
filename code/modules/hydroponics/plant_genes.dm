@@ -363,6 +363,7 @@
 	description = "It can electrocute on interaction or recharge batteries when eaten."
 	icon = "bolt"
 	rate = 0.2
+	prob_mult = 2
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/cell_charge/on_new_plant(obj/item/our_plant, newloc)
@@ -394,8 +395,8 @@
 	our_plant.investigate_log("zapped [key_name(target)] at [AREACOORD(target)]. Last touched by: [our_plant.fingerprintslast].", INVESTIGATE_BOTANY)
 	var/mob/living/carbon/target_carbon = target
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	var/power = min(our_seed.potency, 100) * rate
-	if(prob(power))
+	var/power = qp_sigmoid(750, 45, our_seed.potency) //22.5 power at 750 potency
+	if(prob(power * prob_mult))
 		target_carbon.electrocute_act(round(power), our_plant, 1, SHOCK_NOGLOVES)
 
 /*
@@ -716,7 +717,9 @@
 	var/mob/living/living_target = target
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	if(living_target.reagents && living_target.can_inject())
-		var/injecting_amount = max(1, our_seed.potency * 0.2) // Minimum of 1, max of 20
+		var/injecting_amount = qp_sigmoid(2000, 840, our_seed.potency)
+		//420 units at 2000 potency
+		//one 5% reagent would fill a standard plant completely at 2000 potency
 		our_plant.reagents.trans_to(living_target, injecting_amount, methods = INJECT)
 		to_chat(target, span_danger("You are pricked by [our_plant]!"))
 		log_combat(our_plant, living_target, "pricked and attempted to inject reagents from [our_plant] to [living_target]. Last touched by: [our_plant.fingerprintslast].")
@@ -941,7 +944,7 @@
 	else
 		our_plant.embedding = EMBED_HARMLESS
 	our_plant.updateEmbedding()
-	our_plant.throwforce = (our_seed.potency/20)
+	our_plant.throwforce = qp_sigmoid(1000, 100, our_seed.potency)
 
 /**
  * This trait automatically heats up the plant's chemical contents when harvested.

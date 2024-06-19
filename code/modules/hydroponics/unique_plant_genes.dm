@@ -432,7 +432,9 @@
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	var/mob/living/spawned_mob = new killer_plant(our_plant.drop_location())
-	spawned_mob.maxHealth += round(min(our_seed.endurance, 90) * mob_health_multiplier)
+	var/health_mid_point = 150
+	var/health_max_value = 40 
+	spawned_mob.maxHealth += qp_sigmoid(health_mid_point, health_max_value, our_seed.endurance)
 	spawned_mob.health = spawned_mob.maxHealth
 	if(ishostile(spawned_mob))
 		var/mob/living/simple_animal/hostile/spawned_simplemob = spawned_mob
@@ -441,9 +443,12 @@
 		spawned_simplemob.move_to_delay -= round(our_seed.production * mob_speed_multiplier)
 
 	if(isbasicmob(spawned_mob))
+		var/damage_mid_point = 100
+		var/damage_max_value = 14
+		var/mob_damage = qp_sigmoid(damage_mid_point, damage_max_value, our_seed.potency)
 		var/mob/living/basic/spawned_basicmob = spawned_mob
-		spawned_basicmob.melee_damage_lower += round(min(our_seed.potency, 100) * mob_melee_multiplier)
-		spawned_basicmob.melee_damage_upper += round(min(our_seed.potency, 100) * mob_melee_multiplier)
+		spawned_basicmob.melee_damage_lower += mob_damage
+		spawned_basicmob.melee_damage_upper += mob_damage
 		// basic mob speeds aren't exactly equivalent to simple animal's "move to delay" but this seems balanced enough.
 		var/calculated_speed = initial(spawned_basicmob.speed) - round((min(our_seed.production, 25) * mob_speed_multiplier), 0.01)
 		spawned_basicmob.set_varspeed(calculated_speed)
