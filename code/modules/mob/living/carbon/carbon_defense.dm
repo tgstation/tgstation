@@ -284,11 +284,11 @@
 		Knockdown(stun_duration)
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper)
-	if(on_fire)
-		to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
+	if(SEND_SIGNAL(src, COMSIG_CARBON_PRE_MISC_HELP, helper) & COMPONENT_BLOCK_MISC_HELP)
 		return
 
-	if(SEND_SIGNAL(src, COMSIG_CARBON_PRE_MISC_HELP, helper) & COMPONENT_BLOCK_MISC_HELP)
+	if(on_fire)
+		to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
 		return
 
 	if(helper == src)
