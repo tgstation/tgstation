@@ -25,9 +25,13 @@
 /turf/open/floor/circuit/red/off,
 /area/shuttle/hunter/mi13_foodtruck)
 "ah" = (
-/obj/machinery/door/airlock/vault,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/access/any/syndicate/general,
+/obj/machinery/door/airlock/vault{
+	normalspeed = 0;
+	name = "Secure Door";
+	desc = "An imposing looking door. It looks reinforced."
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/mi13_foodtruck)
 "aj" = (
@@ -243,7 +247,11 @@
 "jw" = (
 /obj/structure/closet/cardboard,
 /obj/structure/cable/layer1,
-/obj/effect/spawner/random/trash/bucket,
+/obj/item/cardboard_cutout,
+/obj/item/cardboard_cutout,
+/obj/item/cardboard_cutout,
+/obj/item/cardboard_cutout,
+/obj/item/storage/crayons,
 /obj/item/soap/syndie{
 	pixel_y = -7
 	},
@@ -251,6 +259,7 @@
 	pixel_y = 2;
 	pixel_x = 4
 	},
+/obj/effect/spawner/random/trash/bucket,
 /turf/open/floor/circuit/red/off,
 /area/shuttle/hunter/mi13_foodtruck)
 "jA" = (
@@ -402,7 +411,7 @@
 	rechargeTime = 1800;
 	dir = 4;
 	shuttle_id = "huntership";
-	preferred_direction = 2
+	port_direction = 8
 	},
 /obj/effect/turf_decal/stripes{
 	dir = 8
@@ -591,6 +600,16 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/mi13_foodtruck)
+"FK" = (
+/obj/machinery/door/airlock/vault{
+	normalspeed = 0;
+	name = "Secure Door";
+	desc = "An imposing looking door. It looks reinforced."
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate/general,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
 "IG" = (
 /obj/structure/marker_beacon/burgundy,
 /obj/structure/lattice,
@@ -689,7 +708,7 @@
 /area/shuttle/hunter/mi13_foodtruck)
 "UF" = (
 /obj/machinery/door/airlock/external{
-	name = "fire escape";
+	name = "Fire Escape";
 	desc = "If you really need to escape in a hurry, try this door.";
 	id_tag = "foodtruck_firescape"
 	},
@@ -826,7 +845,7 @@ Ev
 jw
 MZ
 zJ
-ah
+FK
 bY
 bY
 bY
