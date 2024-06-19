@@ -67,12 +67,9 @@ export const TankCompressor = (props) => {
 const TankCompressorContent = (props) => {
   const { act, data } = useBackend<Data>();
   const { disk, storage } = data;
-  const [currentTab, changeTab] = useSharedState('compressorTab', 1);
 
   return (
     <Stack vertical fill>
-      {currentTab === 1 && <TankCompressorControls />}
-      {currentTab === 2 && <TankCompressorRecords />}
       <Stack.Item grow>
         <Section
           scrollable
@@ -135,6 +132,7 @@ const TankCompressorControls = (props) => {
             : pressure < fragmentPressure
               ? 'Leak Hazard'
               : 'Explosive Hazard';
+
   return (
     <Stack.Item>
       <Section
