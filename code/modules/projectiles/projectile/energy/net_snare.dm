@@ -63,11 +63,58 @@
 	inhand_icon_state = "beacon"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	req_access = list(ACCESS_SECURITY)
+	///Has a security ID been used to lock this in place?
+	var/locked = FALSE
 
 /obj/item/dragnet_beacon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/gun/energy/e_gun/dragnet))
 		var/obj/item/gun/energy/e_gun/dragnet/dragnet_to_link = tool
 		dragnet_to_link.link_beacon(user, src)
+		return
+
+	if(isidcard(tool))
+		if(!anchored)
+			balloon_alert(user, "wrench the beacon first!")
+			return
+
+		if(obj_flags & EMAGGED)
+			balloon_alert(user, "the access control is fried!")
+			return
+
+		var/obj/item/card/id/id_card = tool
+		if((ACCESS_SECURITY in id_card.GetAccess()))
+			locked = !locked
+			balloon_alert(user, "beacon [locked ? "locked" : "unlocked"]")
+		else
+			balloon_alert(user, "no access!")
+
+/obj/item/dragnet_beacon/wrench_act(mob/living/user, obj/item/tool)
+	if(user.is_holding(src))
+		balloon_alert(user, "put it down first!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(anchored && locked)
+		balloon_alert(user, "must be unlocked first!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(isinspace() && !anchored)
+		balloon_alert(user, "nothing to anchor to!")
+		return ITEM_INTERACT_BLOCKING
+
+	set_anchored(!anchored)
+	tool.play_tool_sound(src, 75)
+	user.balloon_alert_to_viewers("[anchored ? "anchored" : "unanchored"]")
+
+/obj/item/dragnet_beacon/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	obj_flags |= EMAGGED
+	locked = FALSE
+	set_anchored(FALSE)
+	do_sparks(3, TRUE, src)
+	balloon_alert(user, "beacon unlocked")
+	return TRUE
 
 /obj/projectile/energy/trap
 	name = "energy snare"
