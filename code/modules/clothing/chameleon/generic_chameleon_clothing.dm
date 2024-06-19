@@ -252,6 +252,10 @@ do { \
 	name = "backpack"
 	actions_types = list(/datum/action/item_action/chameleon/change/backpack)
 
+/obj/item/storage/backpack/chameleon/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND_BLOCKER, INNATE_TRAIT)
+
 /obj/item/storage/backpack/chameleon/broken
 
 /obj/item/storage/backpack/chameleon/broken/Initialize(mapload)

@@ -139,6 +139,8 @@
 	. = ..()
 	if(gone == n_spect)
 		n_spect = null
+		if(scangate_mode == SCANGATE_CONTRABAND)
+			scangate_mode = SCANGATE_NONE
 
 /obj/machinery/scanner_gate/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -211,7 +213,7 @@
 				if(H.nutrition >= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_FAT)
 					beep = TRUE
 		if(SCANGATE_CONTRABAND)
-			for(var/obj/content in M.get_contents())
+			for(var/obj/content in M.get_all_contents_skipping_traits(TRAIT_CONTRABAND_BLOCKER))
 				if(HAS_TRAIT(content, TRAIT_CONTRABAND))
 					beep = TRUE
 					break
