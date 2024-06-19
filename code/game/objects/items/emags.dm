@@ -22,6 +22,8 @@
 	var/useable_about_crew = FALSE
 	/// The amount of times a non-syndie has used this emag
 	var/crew_uses
+	/// If the emag is exploding, stops it from interacting
+	var/is_exploding = FALSE
 
 /obj/item/card/emag/attack_self(mob/user) //for traitors with balls of plastitanium
 	if(Adjacent(user))
@@ -66,6 +68,10 @@
 /obj/item/card/emag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!can_emag(interacting_with, user))
 		return ITEM_INTERACT_BLOCKING
+
+	if(is_exploding)
+		return ITEM_INTERACT_BLOCKING
+
 	log_combat(user, interacting_with, "attempted to emag")
 
 	if(!interacting_with.emag_act(user, src))
@@ -95,12 +101,15 @@
 	if(!prob(crew_uses * 25))
 		return
 	to_chat(user, span_warning("You hear a buzzing from [src] 'Non-authorised personel detected. Terminating card'."))
-	user.visible_message(span_boldwarning("[src] beeps ominously!"))
+	user.audible_message(span_boldwarning("[src] beeps ominously!"))
 	playsound(src, 'sound/items/timer.ogg', 35, vary = FALSE)
 	// Think fast chucklenuts
-	stoplag(2 SECONDS)
+	is_exploding = TRUE
+	addtimer(CALLBACK(src, PROC_REF(detonate), user), 2 SECONDS)
+
+/// What happens when this card is exploded! Used if you want to add any unique explosion effects to the card.
+/obj/item/card/emag/proc/detonate(mob/user)
 	user.visible_message(span_boldwarning("[src]'s battery ruptures!"))
-	// Small explosion
 	explosion(src, light_impact_range = 1, explosion_cause = src)
 	qdel(src)
 
