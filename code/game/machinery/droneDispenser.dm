@@ -169,7 +169,7 @@
 	if((machine_stat & (NOPOWER|BROKEN)) || !anchored)
 		return
 
-	if((glass_cost != 0 && iron_cost != 0) && !materials.has_materials(using_materials))
+	if((glass_cost != 0 || iron_cost != 0) && !materials.has_materials(using_materials))
 		return // We require more minerals
 
 	// We are currently in the middle of something
