@@ -16,7 +16,8 @@
 	worn_icon_state = "emag"
 	var/prox_check = TRUE //If the emag requires you to be in range
 	var/type_blacklist //List of types that require a specialized emag
-
+	var/pshoom = 'sound/items/pshoom.ogg'
+	var/pshoom_2 = 'sound/items/pshoom_2.ogg'
 /obj/item/card/emag/attack_self(mob/user) //for traitors with balls of plastitanium
 	if(Adjacent(user))
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
@@ -25,7 +26,7 @@
 /obj/item/card/emag/bluespace
 	name = "bluespace cryptographic sequencer"
 	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
-	color = rgb(40, 130, 255)
+	icon_state = "bluemag"
 	prox_check = FALSE
 
 /obj/item/card/emag/halloween
@@ -64,7 +65,20 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/card/emag/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (can_emag(interacting_with, user))
+		if(pshoom_2 && prob(1))
+			playsound(src, pshoom_2, 40, TRUE)
+		else
+			playsound(src, pshoom, 40, TRUE)
+		user.Beam(interacting_with, icon_state = "rped_upgrade", time = 0.5 SECONDS)
 	return prox_check ? NONE : interact_with_atom(interacting_with, user)
+
+/obj/item/card/emag/item_interaction(mob/living/user, obj/item/tool)
+	if (istype(tool, /obj/item/assembly/signaler/anomaly/bluespace))
+		qdel(src)
+		qdel(tool)
+		user.put_in_active_hand(new /obj/item/card/emag/bluespace)
+	else return NONE
 
 /obj/item/card/emag/proc/can_emag(atom/target, mob/user)
 	for (var/subtypelist in type_blacklist)
