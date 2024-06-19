@@ -3,7 +3,8 @@
 	command_desc = "Command your pet to stop eating."
 	radial_icon = 'icons/testing/turf_analysis.dmi'
 	radial_icon_state = "red_arrow"
-	speech_commands = list("stop eating", "get off")
+	speech_commands = list("stay", "stop", "get off")
+	command_feedback = "stops"
 
 /datum/pet_command/stop_eating/execute_action(datum/ai_controller/controller)
 	var/mob/living/mob = controller.pawn

@@ -33,6 +33,21 @@
 	if(length(latch_needed))
 		RegisterSignal(host, COMSIG_MOB_FEED, PROC_REF(check_latch))
 
+/// Copies mutation progress to the target slime.
+/// Target should always be a slime of the same type.
+/datum/slime_mutation_data/proc/copy_progress(mob/living/basic/slime/target)
+	var/datum/slime_mutation_data/data
+	for (var/datum/slime_mutation_data/potential_data as anything in target.possible_color_mutations)
+		if (istype(potential_data, type))
+			data = potential_data
+			break
+	if (!data)
+		CRASH("[host] tried to copy it's mutation progress into [target], but didn't find compatible mutation data.")
+	data.needed_items = needed_items.Copy()
+	data.needed_reagents = needed_reagents.Copy()
+	data.latch_needed = latch_needed.Copy()
+	data.recheck_mutation()
+
 /datum/slime_mutation_data/proc/recheck_mutation()
 	if(length(latch_needed) || length(needed_reagents) || length(needed_items))
 		return
@@ -47,6 +62,7 @@
 	latch_needed[target.type] -= amount
 	if(latch_needed[target.type] <= 0)
 		latch_needed -= target.type
+
 	recheck_mutation()
 
 /datum/slime_mutation_data/proc/check_ate(datum/source, atom/target)
@@ -54,6 +70,7 @@
 		if(!istype(target, item))
 			continue
 		needed_items -= item
+		host.recompile_ai_tree()
 
 	recheck_mutation()
 

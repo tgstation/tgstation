@@ -263,6 +263,7 @@
 		out of. It only makes sense in the context of space because you're trying to keep a freezing vacuum out. Is anyone following me on this? \
 		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
 	icon_state = "stone_floor"
+	floor_tile = /obj/item/stack/tile/stone // MONKESTATION EDIT: Add a floor tile so xenobio doesn't get screwed by crowbars.
 
 /turf/open/floor/vault
 	name = "strange floor"

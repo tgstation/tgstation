@@ -21,8 +21,6 @@
 
 /obj/item/slime_mutation_syringe/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!ispath(infusing_trait_path))
-		return
 	if(!uses)
 		user.balloon_alert(user, "used up")
 		to_chat(user, span_warning("[src] has been completely used up!"))
@@ -31,11 +29,17 @@
 		return
 
 	var/mob/living/basic/slime/slime = target
-	if(slime.add_trait(infusing_trait_path))
-		uses--
-		update_icon_state()
-		user.balloon_alert_to_viewers("injected mutator")
-		to_chat(user, span_notice("You inject [target] with [src]."))
+
+	if(ispath(infusing_trait_path) && !slime.add_trait(infusing_trait_path))
+		return
+
+	uses--
+	update_icon_state()
+	user.balloon_alert_to_viewers("injected mutator")
+	to_chat(user, span_notice("You inject [target] with [src]."))
+	on_inject(slime)
+
+/obj/item/slime_mutation_syringe/proc/on_inject(mob/living/basic/slime/target)
 
 /obj/item/slime_mutation_syringe/update_icon_state()
 	. = ..()
@@ -73,39 +77,8 @@
 	name = "beer slime mutation syringe"
 	infusing_trait_path = /datum/slime_trait/beer_slime
 
-/obj/item/slime_mutation_syringe_random
-	name = "slime mutation syringe"
-	desc = "Infuses a mutation into a slime."
+/obj/item/slime_mutation_syringe/random_color
+	name = "random color slime mutation syringe"
 
-	icon = 'monkestation/code/modules/slimecore/icons/slimes.dmi'
-	icon_state = "mutation_syringe"
-
-	/// Amount of uses remaining.
-	var/uses = 1
-
-/obj/item/slime_mutation_syringe_random/examine(mob/user)
-	. = ..()
-	if(uses)
-		. += span_notice("It has <b>[uses]</b> uses left.")
-	else
-		. += span_warning("It has been completely used up.")
-
-/obj/item/slime_mutation_syringe_random/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!uses)
-		user.balloon_alert(user, "used up")
-		to_chat(user, span_warning("[src] has been completely used up!"))
-		return
-	if(!istype(target, /mob/living/basic/slime))
-		return
-
-	var/mob/living/basic/slime/slime = target
+/obj/item/slime_mutation_syringe/random_color/on_inject(mob/living/basic/slime/slime)
 	slime.start_mutating(TRUE)
-	uses--
-	update_icon_state()
-	user.balloon_alert_to_viewers("injected mutator")
-	to_chat(user, span_notice("You inject [target] with [src]."))
-
-/obj/item/slime_mutation_syringe_random/update_icon_state()
-	. = ..()
-	icon_state = uses ? initial(icon_state) : "[initial(icon_state)]-empty"

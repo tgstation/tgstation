@@ -23,6 +23,7 @@
 		/obj/effect/decal/cleanable/glass,
 		/obj/effect/decal/cleanable/vomit,
 		/obj/effect/decal/cleanable/wrapping,
+		/obj/effect/decal/cleanable/piss_stain,
 		/obj/effect/decal/remains,
 	))
 	///blood we can clean
@@ -40,6 +41,14 @@
 	var/static/list/huntable_trash = typecacheof(list(
 		/obj/item/trash,
 		/obj/item/food/deadmouse,
+		/obj/item/shard,
+		/obj/item/food/candy_trash,
+		/obj/item/cigbutt,
+		/obj/item/food/breadslice/moldy,
+		/obj/item/light/tube/broken,
+		/obj/item/light/bulb/broken,
+		/obj/item/popsicle_stick,
+		/obj/item/broken_bottle,
 	))
 
 /datum/slime_trait/cleaner/on_add(mob/living/basic/slime/parent)

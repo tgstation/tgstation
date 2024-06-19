@@ -15,7 +15,7 @@ Slimecrossing Mobs
 	spell_requirements = NONE
 
 	convert_damage = TRUE
-	convert_damage_type = CLONE
+	convert_damage_type = BRUTE // MONKESTATION EDIT: slimes take brute so we give the unshapeshift brute too
 	possible_shapes = list(/mob/living/basic/slime)
 
 	/// If TRUE, we self-delete (remove ourselves) the next time we turn back into a human

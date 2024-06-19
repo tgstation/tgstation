@@ -17,11 +17,11 @@ GLOBAL_LIST_INIT(biomass_unlocks, list())
 
 /obj/machinery/biomass_recycler/RefreshParts() //Ranges from 0.2 to 0.8 per monkey recycled
 	. = ..()
-	cube_production = 0.2
-	for(var/obj/item/stock_parts/manipulator/B in component_parts)
-		cube_production += B.rating * 0.1
-	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		cube_production += M.rating * 0.1
+	cube_production = 0
+	for(var/datum/stock_part/manipulator/manipulator in component_parts)
+		cube_production += manipulator.tier * 0.04
+	for(var/datum/stock_part/matter_bin/bin in component_parts)
+		cube_production += bin.tier * 0.04
 
 /obj/machinery/biomass_recycler/examine(mob/user)
 	. = ..()

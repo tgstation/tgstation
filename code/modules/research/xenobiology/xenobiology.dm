@@ -791,7 +791,7 @@
 
 /obj/item/slimepotion/slime/steroid/attack(mob/living/basic/slime/M, mob/user)
 	if(!isslime(M))//If target is not a slime.
-		to_chat(user, span_warning("The steroid only works on baby slimes!"))
+		to_chat(user, span_warning("The steroid only works on slimes!")) // monkestation edit: not baby slimes only, no
 		return ..()
 	if(M.stat)
 		to_chat(user, span_warning("The slime is dead!"))
@@ -801,7 +801,7 @@
 		to_chat(user, span_warning("The slime is already producing too much ooze!"))
 		return
 	to_chat(user, span_notice("You feed the slime the steroid. It will now produce more ooze."))
-	M.ooze_production = min(M.ooze_production + 10, 50)
+	M.ooze_production = min(M.ooze_production + 20, 50)
 	// monkestation end
 	qdel(src)
 

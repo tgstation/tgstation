@@ -3,3 +3,4 @@
 
 /datum/asset/spritesheet/xenobio_market/create_spritesheets()
 	InsertAll("", 'monkestation/code/modules/slimecore/icons/slimes.dmi')
+	InsertAll("", 'icons/obj/module.dmi')

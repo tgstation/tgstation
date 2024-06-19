@@ -30,7 +30,7 @@
 
 /obj/machinery/corral_corner
 	name = "corral fencepost"
-	desc = "One of the corners of a corral"
+	desc = "One of the corners of a corral."
 
 	icon = 'monkestation/code/modules/slimecore/icons/machinery.dmi'
 	icon_state = "corral_corner"

@@ -274,16 +274,16 @@ Burning extracts:
 
 /obj/item/slimecross/burning/black
 	colour = "black"
-	effect_desc = "Transforms the user into a slime. They can transform back at will and do not lose any items."
+	effect_desc = "Gives the user a one-time use slime transformation ability. They can transform back at will and do not lose any items." // monkestation edit: same here
 
 /obj/item/slimecross/burning/black/do_effect(mob/user)
 	if(!isliving(user))
 		return
-	user.visible_message(span_danger("[src] absorbs [user], transforming [user.p_them()] into a slime!"))
+	user.visible_message(span_danger("[user] absorbs \the [src]!")) // monkestation edit: slight change to reflect the cast removal
 	var/datum/action/cooldown/spell/shapeshift/slime_form/transform = new(user.mind || user)
 	transform.remove_on_restore = TRUE
 	transform.Grant(user)
-	transform.cast(user)
+	//transform.cast(user) // monkestation removal: embrace the choice (it was broken anyway for whatever reason)
 	return ..()
 
 /obj/item/slimecross/burning/lightpink

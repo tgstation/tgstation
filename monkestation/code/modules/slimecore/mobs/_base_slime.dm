@@ -94,7 +94,7 @@
 	var/overriding_name_prefix
 
 
-	/// Commands you can give this carp once it is tamed, not static because subtypes can modify it
+	/// Commands you can give this slime once it is tamed, not static because subtypes can modify it
 	var/friendship_commands = list(
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
@@ -104,13 +104,14 @@
 	///the amount of ooze we produce
 	var/ooze_production = 10
 
-/mob/living/basic/slime/Initialize(mapload, datum/slime_color/passed_color)
+/mob/living/basic/slime/Initialize(mapload, datum/slime_color/passed_color, is_split)
 	. = ..()
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SLIME, 0.5, -11)
 	AddElement(/datum/element/soft_landing)
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_CAREFUL_STEPS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_LIGHTWEIGHT, INNATE_TRAIT)
 
 	if(!passed_color)
 		current_color = new current_color
@@ -128,18 +129,17 @@
 
 	RegisterSignal(src, COMSIG_HUNGER_UPDATED, PROC_REF(hunger_updated))
 	RegisterSignal(src, COMSIG_MOB_OVERATE, PROC_REF(attempt_change))
+	RegisterSignals(src, list(COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_CURRENT_PET_TARGET), COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_PET_TARGET)), PROC_REF(on_blackboard_key_changed))
 
 	for(var/datum/slime_mutation_data/listed as anything in current_color.possible_mutations)
 		var/datum/slime_mutation_data/data = new listed
 		data.on_add_to_slime(src)
 		possible_color_mutations += data
-		if(length(data.needed_items))
-			compiled_liked_foods |= data.needed_items
 
 	update_slime_varience()
-	if(length(compiled_liked_foods))
-		recompile_ai_tree()
 
+	if (!is_split) // no point recalculating twice
+		recompile_ai_tree()
 
 /mob/living/basic/slime/death(gibbed)
 	. = ..()
@@ -150,8 +150,12 @@
 	. = ..()
 	for(var/datum/slime_trait/trait as anything in slime_traits)
 		remove_trait(trait)
-	UnregisterSignal(src, COMSIG_HUNGER_UPDATED)
-	UnregisterSignal(src, COMSIG_MOB_OVERATE)
+	UnregisterSignal(src, list(
+		COMSIG_HUNGER_UPDATED,
+		COMSIG_MOB_OVERATE,
+		COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_CURRENT_PET_TARGET),
+		COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_PET_TARGET),
+		))
 
 	for(var/datum/slime_mutation_data/mutation as anything in possible_color_mutations)
 		possible_color_mutations -= mutation
@@ -172,7 +176,15 @@
 		if(SEND_SIGNAL(src, COMSIG_FRIENDSHIP_CHECK_LEVEL, user, FRIENDSHIP_BESTFRIEND))
 			. += span_notice("You are one of [src]'s best friends!")
 		else
-			. += span_notice("You are one of [src]'s friends")
+			. += span_notice("You are one of [src]'s friends.")
+	if(check_secretion())
+		switch(ooze_production)
+			if(-INFINITY to 10)
+				. += span_notice("It's secreting some ooze.")
+			if(10 to 40)
+				. += span_notice("It's secreting a lot of ooze.")
+			if(40 to INFINITY)
+				. += span_boldnotice("It's overflowing with ooze!")
 
 /mob/living/basic/slime/resolve_right_click_attack(atom/target, list/modifiers)
 	if(GetComponent(/datum/component/latch_feeding))
@@ -185,12 +197,33 @@
 
 
 /mob/living/basic/slime/proc/rebuild_foods()
+	compiled_liked_foods = list()
 	compiled_liked_foods |= trait_foods
+	for(var/datum/slime_mutation_data/data as anything in possible_color_mutations)
+		if(length(data.needed_items))
+			compiled_liked_foods |= data.needed_items
+
+/mob/living/basic/slime/proc/on_blackboard_key_changed(datum/source)
+	SIGNAL_HANDLER
+	update_ai_movement_type()
+
+/mob/living/basic/slime/proc/update_ai_movement_type()
+	var/picked_type = /datum/ai_movement/basic_avoidance
+	if(slime_flags & CLEANER_SLIME)
+		picked_type = /datum/ai_movement/jps/slime_cleaner
+	if(ai_controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
+		picked_type = /datum/ai_movement/basic_avoidance/adaptive
+	if(!istype(ai_controller.ai_movement, picked_type))
+		ai_controller.change_ai_movement_type(picked_type)
 
 /mob/living/basic/slime/proc/recompile_ai_tree()
 	var/list/new_planning_subtree = list()
 	RemoveElement(/datum/element/basic_eating, food_types = compiled_liked_foods)
 	rebuild_foods()
+
+	update_ai_movement_type()
+
+	ai_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET) // else it'll keep going after things it shouldn't
 
 	new_planning_subtree |= add_or_replace_tree(/datum/ai_planning_subtree/pet_planning)
 
@@ -260,7 +293,7 @@
 
 /mob/living/basic/slime/proc/hunger_updated(datum/source, current_hunger, max_hunger)
 	hunger_precent = current_hunger / max_hunger
-	if(hunger_precent > 0.6)
+	if(hunger_precent > production_precent)
 		slime_flags |= ADULT_SLIME
 	else
 		slime_flags &= ~ADULT_SLIME
@@ -317,15 +350,18 @@
 
 /mob/living/basic/slime/proc/finish_splitting()
 	SEND_SIGNAL(src, COMSIG_MOB_ADJUST_HUNGER, -200)
-	update_slime_varience()
 
 	slime_flags &= ~SPLITTING_SLIME
 	ai_controller.set_ai_status(AI_STATUS_ON)
 
-	var/mob/living/basic/slime/new_slime = new(loc, current_color.type)
+	var/mob/living/basic/slime/new_slime = new(loc, current_color.type, TRUE)
 	new_slime.mutation_chance = mutation_chance
+	new_slime.ooze_production = ooze_production
+	for(var/datum/slime_mutation_data/data as anything in possible_color_mutations)
+		data.copy_progress(new_slime)
 	for(var/datum/slime_trait/trait as anything in slime_traits)
 		new_slime.add_trait(trait.type)
+	new_slime.recompile_ai_tree()
 
 /mob/living/basic/slime/proc/start_mutating(random = FALSE)
 	if(!pick_mutation(random))
@@ -337,7 +373,6 @@
 	slime_flags |= MUTATING_SLIME
 
 	ungulate()
-
 
 	addtimer(CALLBACK(src, PROC_REF(finish_mutating)), 30 SECONDS)
 	mutation_chance = 30
@@ -351,8 +386,6 @@
 
 	update_slime_varience()
 
-	compiled_liked_foods = list()
-
 	QDEL_LIST(possible_color_mutations)
 	possible_color_mutations = list()
 
@@ -360,8 +393,6 @@
 		var/datum/slime_mutation_data/data = new listed
 		data.on_add_to_slime(src)
 		possible_color_mutations += data
-		if(length(data.needed_items))
-			compiled_liked_foods |= data.needed_items
 
 	recompile_ai_tree()
 
@@ -422,7 +453,7 @@
 	if(worn_accessory)
 		visible_message("[user] takes the [worn_accessory] off the [src].")
 		balloon_alert_to_viewers("removed accessory")
-		worn_accessory.forceMove(user.drop_location())
+		user.put_in_hands(worn_accessory)
 		worn_accessory = null
 		update_appearance()
 
@@ -453,7 +484,7 @@
 
 /mob/living/basic/slime/random
 
-/mob/living/basic/slime/random/Initialize(mapload, datum/slime_color/passed_color)
+/mob/living/basic/slime/random/Initialize(mapload, datum/slime_color/passed_color, is_split)
 	current_color = pick(subtypesof(/datum/slime_color))
 	. = ..()
 

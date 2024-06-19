@@ -214,35 +214,28 @@ const StoreViewer = (_, context) => {
       <Section textAlign="center" fontSize="18px">
         Corral Data
       </Section>
-      <LabeledList>
-        <LabeledList.Item label="Corral Upgrades">
-          <Collapsible>
-            {corral_upgrades.map((item) => (
-              <Section
-                style={{ 'border-radius': '5px' }}
-                mb="6px"
-                key={item.name}>
-                <Stack fill>
-                  <Stack.Item>
-                    <Box fontSize="16px">{item.name}</Box>
-                  </Stack.Item>
-                  <Stack.Item>
-                    <Button
-                      ml="10px"
-                      mt="3px"
-                      style={{
-                        'transform': 'scale(1.5)',
-                      }}
-                      icon={'question'}
-                      tooltip={item.desc}
-                    />
-                  </Stack.Item>
-                </Stack>
-              </Section>
-            ))}
-          </Collapsible>
-        </LabeledList.Item>
-      </LabeledList>
+      <Collapsible title="Active Corral Upgrades">
+        {corral_upgrades.map((item) => (
+          <Section style={{ 'border-radius': '5px' }} mb="6px" key={item.name}>
+            <Stack fill>
+              <Stack.Item>
+                <Box fontSize="16px">{item.name}</Box>
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  ml="10px"
+                  mt="3px"
+                  style={{
+                    'transform': 'scale(1.5)',
+                  }}
+                  icon={'question'}
+                  tooltip={item.desc}
+                />
+              </Stack.Item>
+            </Stack>
+          </Section>
+        ))}
+      </Collapsible>
       <Section textAlign="center" fontSize="18px">
         {'Stored Ooze: ' + toFixed(reagent_amount, 0.1) + ' units'}
       </Section>

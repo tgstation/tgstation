@@ -84,7 +84,7 @@
 		. += span_notice("It has [LAZYLEN(stored)] creatures stored in it.")
 	if(LAZYLEN(upgrades))
 		for(var/upgrade in upgrades)
-			. += span_notice("It has [upgrade] upgrade installed.")
+			. += span_notice("It has \a [upgrade] upgrade installed.")
 
 /obj/item/vacuum_pack/attackby(obj/item/item, mob/living/user, params)
 	if(item == nozzle)
@@ -194,12 +194,30 @@
 	if(!istype(pack))
 		return INITIALIZE_HINT_QDEL
 
+/obj/item/vacuum_nozzle/examine(mob/user)
+	. = ..()
+	if (!pack.illegal)
+		. += span_notice("Activate to change firing modes. Currently set to [pack.give_choice ? "selective" : "indiscriminate"].")
+	else
+		. += span_notice("It's selection mechanism is hotwired to fire indiscriminately.")
+
 /obj/item/vacuum_nozzle/doMove(atom/destination)
 	if(destination && (destination != pack.loc || !ismob(destination)))
 		if (loc != pack)
 			to_chat(pack.loc, span_notice("[src] snaps back onto [pack]."))
 		destination = pack
 	. = ..()
+
+/obj/item/vacuum_nozzle/attack_self(mob/user, modifiers)
+	. = ..()
+	if (!pack.illegal)
+		pack.give_choice = !pack.give_choice
+		var/mode_desc = pack.give_choice ? "selectively" : "indiscriminately"
+		visible_message(
+			span_notice("[user] switches the [pack] to fire [mode_desc]."),
+			span_notice("You switch the [pack] to fire [mode_desc]."),
+			span_hear("You hear a click.")
+		)
 
 /obj/item/vacuum_nozzle/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
