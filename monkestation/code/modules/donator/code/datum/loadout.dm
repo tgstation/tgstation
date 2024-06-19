@@ -5,6 +5,12 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/toys/charlie
+	name = "Charlie Plush"
+	item_path = /obj/item/toy/plush/charlie
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 /datum/loadout_item/toys/glep
 	name = "Glep Plush"
 	item_path = /obj/item/toy/plush/glep
@@ -453,7 +459,7 @@
 
 /datum/loadout_item/effects/gumball_goblin
 	ckeywhitelist = list("elliethedarksun")
-	name = "Quil Maid Transformation"
+	name = "Gumball Goblin Transformation"
 	item_path = /obj/item/effect_granter/donator/gumball_goblin
 	requires_purchase = FALSE
 
@@ -474,5 +480,24 @@
 /datum/loadout_item/suit/menacing_jacket
 	name = "Menacing Jacket"
 	item_path = /obj/item/clothing/suit/toggle/menacing_jacket
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//Raziaar
+	name = "Pet Delivery Beacon - Orangutan"
+	item_path = /obj/item/choice_beacon/pet/donator/orangutan
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("Raziaar")
+
+/datum/loadout_item/effects/orangutan
+	ckeywhitelist = list("Raziaar")
+	name = "Orangutan Transformation"
+	item_path = /obj/item/effect_granter/donator/orangutan
+	requires_purchase = FALSE
+
+/datum/loadout_item/toys/cowlophant
+	name = "Cowlephant Plush"
+	item_path = /obj/item/toy/plush/cowlephant
 	donator_only = TRUE
 	requires_purchase = FALSE

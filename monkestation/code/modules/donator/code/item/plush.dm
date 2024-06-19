@@ -99,3 +99,16 @@
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "pim"
 	squeak_override = list('monkestation/code/modules/donator/sounds/pim.ogg'=1)
+
+/obj/item/toy/plush/charlie
+	name = "charlie plush"
+	desc = "A plush of Charlie."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "charlie"
+	squeak_override = list('monkestation/code/modules/donator/sounds/charlie.ogg'=1)
+
+/obj/item/toy/plush/cowlephant
+	name = "cowlephant plush"
+	desc = "A plush of a Cowlephant ~Handcrafted lovingly for Raziaar"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "cowlephant"
