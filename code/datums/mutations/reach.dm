@@ -76,12 +76,12 @@
 	if(isliving(target))
 		var/mob/living/living_target = target
 		if(living_target.mob_size > MOB_SIZE_HUMAN)
-			living_target.balloon_alert(owner, "arms too floppy  to pull this!")
+			living_target.balloon_alert(owner, "arms too floppy to pull this!")
 			return COMSIG_LIVING_CANCEL_PULL
 	if(isitem(target))
 		var/obj/item/item_target = target
 		if(item_target.w_class > WEIGHT_CLASS_BULKY)
-			item_target.balloon_alert(owner, "arms too floppy  to pull this!")
+			item_target.balloon_alert(owner, "arms too floppy to pull this!")
 			return COMSIG_LIVING_CANCEL_PULL
 
 // probably buggy. let's enlist our players as bug testers
