@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "no more runtimes when dragging turfs onto other stuff"
+  - code_imp: "most actions now properly check for recursive locs & better adjacency"
