@@ -11,7 +11,7 @@
 	desc = "Causes the holder to stutter."
 	instability = NEGATIVE_STABILITY_MINI
 	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='danger'>You feel nervous.</span>"
+	text_gain_indication = span_danger("You feel nervous.")
 
 /datum/mutation/human/nervousness/on_life(seconds_per_tick, times_fired)
 	if(SPT_PROB(5, seconds_per_tick))
@@ -22,8 +22,8 @@
 	desc = "You are not a clown. You are the entire circus."
 	instability = NEGATIVE_STABILITY_MINI
 	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='sans'><span class='infoplain'>You feel an off sensation in your voicebox.</span></span>"
-	text_lose_indication = "<span class='notice'>The off sensation passes.</span>"
+	text_gain_indication = span_sans(span_notice("You feel an off sensation in your voicebox."))
+	text_lose_indication = span_notice("The off sensation passes.")
 
 /datum/mutation/human/wacky/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -57,6 +57,7 @@
 	text_gain_indication = span_sans(span_red("aw SHIT man. your throat feels like FUCKASS."))
 	text_lose_indication = span_notice("The demonic entity possessing your larynx has finally released its grasp.")
 	locked = TRUE
+	conflicts = list(/datum/mutation/human/trichromatic) // they both modify with the same spans. also would be way too annoying
 
 /datum/mutation/human/heckacious/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -73,8 +74,7 @@
 	SIGNAL_HANDLER
 	message_args[TREAT_CAPITALIZE_MESSAGE] = FALSE
 
-/datum/mutation/human/heckacious/handle_speech(datum/source, list/speech_args)
-	..()
+/datum/mutation/human/heckacious/proc/handle_speech(datum/source, list/speech_args)
 
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(!message)
@@ -134,10 +134,7 @@
 			editing_word = patchword
 
 		// Some words are randomly recolored and resized so they get a few of these
-		// span combinations will not make multiple colors yay
-		var/list/static/span_combo_list = list("big", "small", "green", "red", "blue")
-		if(prob(15))
-			editing_word = "<span class='[pick(span_combo_list)]'>" + editing_word + "</span>"
+		editing_word = span_class_handler(editing_word)
 
 		LAZYADD(edited_message_words, editing_word)
 
@@ -147,12 +144,34 @@
 
 	speech_args[SPEECH_MESSAGE] = message
 
+/datum/mutation/human/heckacious/proc/span_class_handler(message, looped = FALSE)
+	// Sadly combining span colors will not combine the colors of the message
+	if(prob(15))
+		switch(rand(1,3))
+			if(1)
+				message = span_red(message)
+			if(2)
+				message = span_blue(message)
+			if(3)
+				message = span_green(message)
+	if(prob(15))
+		switch(rand(1,2))
+			if(1)
+				message = span_big(message)
+			if(2)
+				message = span_small(message)
+	// do it AGAIN
+	if(prob(40))
+		span_class_handler(message, looped = TRUE)
+	return message
+
 /datum/mutation/human/trichromatic
 	name = "Trichromatic Larynx"
 	desc = "A strange mutation originating from Clown Planet which alters the color of the patient's vocal chords."
 	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='red'>You.</span> <span class='blue'>Feel.</span> <span class='green'>Weird.</span>"
-	text_lose_indication = "<span class='notice'>Your colors feel normal again.</span>"
+	text_gain_indication = span_red("You") + span_blue(" feel ") + span_green("Weird.")
+	text_lose_indication = span_notice("Your colors feel normal again.")
+	conflicts = list(/datum/mutation/human/heckacious)
 
 /datum/mutation/human/trichromatic/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -173,7 +192,7 @@
 	var/list/static/span_combo_list = list("green", "red", "blue")
 	var/words_key = 1
 	for(var/i in message_words)
-		message_words[words_key] = ("<span class='[pick(span_combo_list)]'>" + message_words[words_key] + "</span>")
+		message_words[words_key] = span_class_handler(message_words[words_key])
 		words_key++
 
 	var/edited_message = jointext(message_words, " ")
@@ -182,13 +201,24 @@
 
 	speech_args[SPEECH_MESSAGE] = message
 
+/datum/mutation/human/trichromatic/proc/span_class_handler(message)
+	// Sadly combining span colors will not combine the colors of the message
+	switch(rand(1,3))
+		if(1)
+			message = span_red(message)
+		if(2)
+			message = span_blue(message)
+		if(3)
+			message = span_green(message)
+	return message
+
 /datum/mutation/human/mute
 	name = "Mute"
 	desc = "Completely inhibits the vocal section of the brain."
 	instability = NEGATIVE_STABILITY_MAJOR
 	quality = NEGATIVE
-	text_gain_indication = "<span class='danger'>You feel unable to express yourself at all.</span>"
-	text_lose_indication = "<span class='danger'>You feel able to speak freely again.</span>"
+	text_gain_indication = span_danger("You feel unable to express yourself at all.")
+	text_lose_indication = span_danger("You feel able to speak freely again.")
 
 /datum/mutation/human/mute/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -205,8 +235,8 @@
 	desc = "Partially inhibits the vocal center of the brain, severely distorting speech."
 	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
-	text_gain_indication = "<span class='danger'>You can't seem to form any coherent thoughts!</span>"
-	text_lose_indication = "<span class='danger'>Your mind feels more clear.</span>"
+	text_gain_indication = span_danger("You can't seem to form any coherent thoughts!")
+	text_lose_indication = span_danger("Your mind feels more clear.")
 
 /datum/mutation/human/unintelligible/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -223,8 +253,8 @@
 	desc = "A horrible mutation originating from the distant past. Thought to be eradicated after the incident in 2037."
 	instability = NEGATIVE_STABILITY_MINI
 	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='notice'>You feel Swedish, however that works.</span>"
-	text_lose_indication = "<span class='notice'>The feeling of Swedishness passes.</span>"
+	text_gain_indication = span_notice("You feel Swedish, however that works.")
+	text_lose_indication = span_notice("The feeling of Swedishness passes.")
 
 /datum/mutation/human/swedish/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -255,8 +285,8 @@
 	desc = "Unknown"
 	instability = NEGATIVE_STABILITY_MINI
 	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='notice'>Ye feel like a reet prat like, innit?</span>"
-	text_lose_indication = "<span class='notice'>You no longer feel like being rude and sassy.</span>"
+	text_gain_indication = span_notice("Ye feel like a reet prat like, innit?")
+	text_lose_indication = span_notice("You no longer feel like being rude and sassy.")
 
 /datum/mutation/human/chav/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -293,8 +323,8 @@
 	desc = "A terrifying mutation named after its 'patient-zero'."
 	instability = NEGATIVE_STABILITY_MINI
 	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='notice'>You feel pretty good, honeydoll.</span>"
-	text_lose_indication = "<span class='notice'>You feel a little less conversation would be great.</span>"
+	text_gain_indication = span_notice("You feel pretty good, honeydoll.")
+	text_lose_indication = span_notice("You feel a little less conversation would be great.")
 
 /datum/mutation/human/elvis/on_life(seconds_per_tick, times_fired)
 	switch(pick(1,2))
@@ -340,8 +370,8 @@
 	desc = "A common mutation that severely decreases intelligence."
 	quality = NEGATIVE
 	locked = TRUE
-	text_gain_indication = "<span class='notice'>You feel...totally chill, man!</span>"
-	text_lose_indication = "<span class='notice'>You feel like you have a better sense of time.</span>"
+	text_gain_indication = span_notice("You feel...totally chill, man!")
+	text_lose_indication = span_notice("You feel like you have a better sense of time.")
 
 /datum/mutation/human/stoner/on_acquiring(mob/living/carbon/human/owner)
 	..()
@@ -358,8 +388,8 @@
 	desc = "A horrible mutation originating from the distant past, thought to have once been a common gene in all of old world Europe."
 	instability = NEGATIVE_STABILITY_MINI
 	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='notice'>You feel like seeking the holy grail!</span>"
-	text_lose_indication = "<span class='notice'>You no longer feel like seeking anything.</span>"
+	text_gain_indication = span_notice("You feel like seeking the holy grail!")
+	text_lose_indication = span_notice("You no longer feel like seeking anything.")
 
 /datum/mutation/human/medieval/on_acquiring(mob/living/carbon/human/owner)
 	if(..())

@@ -4,8 +4,8 @@
 	quality = POSITIVE
 	locked = TRUE
 	difficulty = 16
-	text_gain_indication = "<span class='notice'>You feel power flow through your hands.</span>"
-	text_lose_indication = "<span class='notice'>The energy in your hands subsides.</span>"
+	text_gain_indication = span_notice("You feel power flow through your hands.")
+	text_lose_indication = span_notice("The energy in your hands subsides.")
 	power_path = /datum/action/cooldown/spell/touch/shock
 	instability = POSITIVE_INSTABILITY_MODERATE // bad stun baton
 	energy_coeff = 1
@@ -92,8 +92,8 @@
 	quality = POSITIVE
 	locked = FALSE
 	difficulty = 16
-	text_gain_indication = "<span class='notice'>Your hand feels blessed!</span>"
-	text_lose_indication = "<span class='notice'>Your hand feels secular once more.</span>"
+	text_gain_indication = span_notice("Your hand feels blessed!")
+	text_lose_indication = span_notice("Your hand feels secular once more.")
 	power_path = /datum/action/cooldown/spell/touch/lay_on_hands
 	instability = POSITIVE_INSTABILITY_MAJOR
 	energy_coeff = 1

@@ -169,7 +169,8 @@
 		owner.overlays_standing[layer_used] = mut_overlay
 		owner.apply_overlay(layer_used)
 
-	owner.remove_traits(mutation_traits, GENETIC_MUTATION)
+	if(mutation_traits)
+		owner.remove_traits(mutation_traits, GENETIC_MUTATION)
 
 /mob/living/carbon/proc/update_mutations_overlay()
 	return

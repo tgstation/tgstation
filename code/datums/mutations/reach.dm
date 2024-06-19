@@ -4,7 +4,7 @@
 	desc = "A strange mutation that allows the holder to interact with objects through thought."
 	quality = POSITIVE
 	difficulty = 18
-	text_gain_indication = "<span class='notice'>You feel smarter!</span>"
+	text_gain_indication = span_notice("You feel smarter!")
 	limb_req = BODY_ZONE_HEAD
 	instability = POSITIVE_INSTABILITY_MAJOR
 	///Typecache of atoms that TK shouldn't interact with
@@ -15,17 +15,17 @@
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER))
 
-/datum/mutation/human/telekinesis/on_acquiring(mob/living/carbon/human/H)
+/datum/mutation/human/telekinesis/on_acquiring(mob/living/carbon/human/homan)
 	. = ..()
 	if(.)
 		return
-	RegisterSignal(H, COMSIG_MOB_ATTACK_RANGED, PROC_REF(on_ranged_attack))
+	RegisterSignal(homan, COMSIG_MOB_ATTACK_RANGED, PROC_REF(on_ranged_attack))
 
-/datum/mutation/human/telekinesis/on_losing(mob/living/carbon/human/H)
+/datum/mutation/human/telekinesis/on_losing(mob/living/carbon/human/homan)
 	. = ..()
 	if(.)
 		return
-	UnregisterSignal(H, COMSIG_MOB_ATTACK_RANGED)
+	UnregisterSignal(homan, COMSIG_MOB_ATTACK_RANGED)
 
 /datum/mutation/human/telekinesis/get_visual_indicator()
 	return visual_indicators[type][1]
@@ -49,19 +49,19 @@
 	difficulty = 32
 	mutation_traits = list(TRAIT_CHUNKYFINGERS, TRAIT_NO_TWOHANDING)
 
-/datum/mutation/human/elastic_arms/on_acquiring(mob/living/carbon/human/H)
+/datum/mutation/human/elastic_arms/on_acquiring(mob/living/carbon/human/homan)
 	. = ..()
 	if(.)
 		return
-	RegisterSignal(H, COMSIG_ATOM_CANREACH, PROC_REF(on_canreach))
-	RegisterSignal(H, COMSIG_LIVING_TRY_PUT_IN_HAND, PROC_REF(on_owner_equipping_item))
-	RegisterSignal(H, COMSIG_LIVING_TRY_PULL, PROC_REF(on_owner_try_pull))
+	RegisterSignal(homan, COMSIG_ATOM_CANREACH, PROC_REF(on_canreach))
+	RegisterSignal(homan, COMSIG_LIVING_TRY_PUT_IN_HAND, PROC_REF(on_owner_equipping_item))
+	RegisterSignal(homan, COMSIG_LIVING_TRY_PULL, PROC_REF(on_owner_try_pull))
 
-/datum/mutation/human/elastic_arms/on_losing(mob/living/carbon/human/H)
+/datum/mutation/human/elastic_arms/on_losing(mob/living/carbon/human/homan)
 	. = ..()
 	if(.)
 		return
-	UnregisterSignal(H, list(COMSIG_ATOM_CANREACH, COMSIG_LIVING_TRY_PUT_IN_HAND, COMSIG_LIVING_TRY_PULL))
+	UnregisterSignal(homan, list(COMSIG_ATOM_CANREACH, COMSIG_LIVING_TRY_PUT_IN_HAND, COMSIG_LIVING_TRY_PULL))
 
 /// signal sent when prompting if an item can be equipped
 /datum/mutation/human/elastic_arms/proc/on_owner_equipping_item(mob/living/carbon/human/owner, obj/item/pick_item)
