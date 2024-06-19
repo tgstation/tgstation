@@ -6,7 +6,7 @@
 	text_gain_indication = "<span class='notice'>Smells begin to make more sense...</span>"
 	text_lose_indication = "<span class='notice'>Your sense of smell goes back to normal.</span>"
 	power_path = /datum/action/cooldown/spell/olfaction
-	instability = 30
+	instability = POSITIVE_INSTABILITY_MODERATE
 	synchronizer_coeff = 1
 
 /datum/mutation/human/olfaction/modify()
@@ -119,6 +119,9 @@
 /// Actually go through and give the user a hint of the direction our target is.
 /datum/action/cooldown/spell/olfaction/proc/on_the_trail(mob/living/caster)
 	var/mob/living/carbon/current_target = tracking_ref?.resolve()
+	//Using get_turf to deal with those pesky closets that put your x y z to 0
+	var/turf/current_target_turf = get_turf(current_target)
+	var/turf/caster_turf = get_turf(caster)
 	if(!current_target)
 		to_chat(caster, span_warning("You're not tracking a scent, but the game thought you were. \
 			Something's gone wrong! Report this as a bug."))
@@ -130,14 +133,14 @@
 		to_chat(caster, span_warning("You smell out the trail to yourself. Yep, it's you."))
 		return
 
-	if(caster.z < current_target.z)
+	if(caster_turf.z < current_target_turf.z)
 		to_chat(caster, span_warning("The trail leads... way up above you? Huh. They must be really, really far away."))
 		return
 
-	else if(caster.z > current_target.z)
+	else if(caster_turf.z > current_target_turf.z)
 		to_chat(caster, span_warning("The trail leads... way down below you? Huh. They must be really, really far away."))
 		return
 
-	var/direction_text = span_bold("[dir2text(get_dir(caster, current_target))]")
+	var/direction_text = span_bold("[dir2text(get_dir(caster_turf, current_target_turf))]")
 	if(direction_text)
 		to_chat(caster, span_notice("You consider [current_target]'s scent. The trail leads [direction_text]."))
