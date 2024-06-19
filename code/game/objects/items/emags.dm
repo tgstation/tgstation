@@ -99,7 +99,7 @@
 	playsound(loc, 'sound/items/timer.ogg', 35, vary = FALSE)
 	// Think fast chucklenuts
 	stoplag(2 SECONDS)
-	user.visible_message(span_boldwarning("[src]s battery ruptures!"))
+	user.visible_message(span_boldwarning("[src]'s battery ruptures!"))
 	// Small explosion
 	explosion(src, light_impact_range = 1, explosion_cause = src)
 	qdel(src)
