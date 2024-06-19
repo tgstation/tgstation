@@ -96,7 +96,7 @@
 		return
 	to_chat(user, span_warning("You hear a buzzing from [src] 'Non-authorised personel detected. Terminating card'."))
 	user.visible_message(span_boldwarning("[src] beeps ominously!"))
-	playsound(loc, 'sound/items/timer.ogg', 35, vary = FALSE)
+	playsound(src, 'sound/items/timer.ogg', 35, vary = FALSE)
 	// Think fast chucklenuts
 	stoplag(2 SECONDS)
 	user.visible_message(span_boldwarning("[src]'s battery ruptures!"))
