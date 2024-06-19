@@ -277,6 +277,8 @@
 	. = ..()
 	var/mob/living/datum_owner = mob_override || owner.current
 
+	ADD_TRAIT(datum_owner, TRAIT_EMAG_USER, REF(src))
+
 	handle_clown_mutation(datum_owner, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	if(should_give_codewords)
 		datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
@@ -286,6 +288,8 @@
 	. = ..()
 	var/mob/living/datum_owner = mob_override || owner.current
 	handle_clown_mutation(datum_owner, removing = FALSE)
+
+	REMOVE_TRAIT(datum_owner, TRAIT_EMAG_USER, REF(src))
 
 	for(var/datum/component/codeword_hearing/component as anything in datum_owner.GetComponents(/datum/component/codeword_hearing))
 		component.delete_if_from_source(src)

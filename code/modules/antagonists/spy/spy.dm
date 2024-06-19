@@ -30,6 +30,14 @@
 	. = ..()
 	SEND_SOUND(owner.current, sound('sound/ambience/antag/spy.ogg'))
 
+/datum/antagonist/spy/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/our_mob = mob_override || owner.current
+	ADD_TRAIT(our_mob, TRAIT_EMAG_USER, REF(src))
+
+/datum/antagonist/spy/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/our_mob = mob_override || owner.current
+	REMOVE_TRAIT(our_mob, TRAIT_EMAG_USER, REF(src))
+
 /datum/antagonist/spy/ui_static_data(mob/user)
 	var/list/data = ..()
 	data["uplink_location"] = uplink_location

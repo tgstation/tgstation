@@ -90,11 +90,11 @@
 
 /// What happens if a crewmember uses this card
 /obj/item/card/emag/proc/crew_action(mob/user)
-	if(!(IS_TRAITOR(user) || IS_NUKE_OP(user) || IS_SPY(user)))
+	if(!HAS_TRAIT(user, TRAIT_EMAG_USER))
 		crew_uses += 1
 	if(!prob(crew_uses * 25))
 		return
-	to_chat(user, span_warning("You hear a buzzing from [src] 'Non-authorised personel detected. Terminating card'. [src] beeps ominously!"))
+	to_chat(user, span_warning("You hear a buzzing from [src] 'Non-authorised personel detected. Terminating card'."))
 	user.visible_message(span_boldwarning("[src] beeps ominously!"))
 	playsound(loc, 'sound/items/timer.ogg', 35, vary = FALSE)
 	// Think fast chucklenuts

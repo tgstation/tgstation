@@ -1156,4 +1156,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This trait lets you attach limbs to any player without surgery.
 #define TRAIT_EASY_ATTACH "easy_attach"
 
+/// Trait given to mobs by antag datums letting them emag freely
+#define TRAIT_EMAG_USER "emag_user"
+
 // END TRAIT DEFINES

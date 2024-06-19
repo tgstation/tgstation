@@ -65,7 +65,16 @@
 	return nuke_team
 
 /datum/antagonist/nukeop/apply_innate_effects(mob/living/mob_override)
-	add_team_hud(mob_override || owner.current, /datum/antagonist/nukeop)
+	var/mob/living/datum_owner = mob_override || owner.current
+
+	add_team_hud(datum_owner, /datum/antagonist/nukeop)
+	ADD_TRAIT(datum_owner, TRAIT_EMAG_USER, REF(src))
+
+/datum/antagonist/nukeop/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/datum_owner = mob_override || owner.current
+
+	REMOVE_TRAIT(datum_owner, TRAIT_EMAG_USER, REF(src))
+
 
 /datum/antagonist/nukeop/forge_objectives()
 	if(nuke_team)
