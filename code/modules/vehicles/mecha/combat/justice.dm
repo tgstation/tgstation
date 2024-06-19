@@ -1,12 +1,12 @@
-#define DISMEMBER_CUALITY_HIGTH 50
-#define DISMEMBER_CUALITY_LOW 25
+#define DISMEMBER_CHANCE_HIGH 50
+#define DISMEMBER_CHANCE_LOW 25
 
 #define MOVEDELAY_ANGRY 4.5
 #define MOVEDELAY_SAFTY 2.5
 
 /obj/vehicle/sealed/mecha/justice
-	desc = "Black and red syndicate mech designed for execution an orders. \
-	For safety reasons, the syndicate advises against standing too close."
+	desc = "Black and red syndicate mech designed for execution orders. \
+		For safety reasons, the syndicate advises against standing too close."
 	name = "\improper Justice"
 	icon_state = "justice"
 	base_icon_state = "justice"
@@ -25,7 +25,7 @@
 	mecha_flags = ID_LOCK_ON | QUIET_STEPS | QUIET_TURNS | CAN_STRAFE | HAS_LIGHTS | MMI_COMPATIBLE | IS_ENCLOSED
 	destroy_wall_sound = 'sound/mecha/mech_blade_break_wall.ogg'
 	brute_attack_sound = 'sound/mecha/mech_blade_attack.ogg'
-	attack_verbs = list("cut", "cuts", "cuting")
+	attack_verbs = list("cut", "cuts", "cutting")
 	weapons_safety = TRUE
 	max_equip_by_category = list(
 		MECHA_L_ARM = null,
@@ -140,11 +140,12 @@
 
 /obj/vehicle/sealed/mecha/justice/melee_attack_effect(mob/living/victim, heavy)
 	if(!heavy)
-		victim.Knockdown(40)
+		victim.Knockdown(4 SECONDS)
+		return
+	if(!prob(DISMEMBER_CUALITY_HIGTH))
 		return
 	var/obj/item/bodypart/cut_bodypart = victim.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG))
-	if(prob(DISMEMBER_CUALITY_HIGTH))
-		cut_bodypart.dismember(BRUTE)
+	cut_bodypart?.dismember(BRUTE)
 
 
 /obj/vehicle/sealed/mecha/justice/mob_exit(mob/M, silent, randomstep, forced)
@@ -200,10 +201,10 @@
 /datum/action/vehicle/sealed/mecha/invisibility/Trigger(trigger_flags)
 	. = ..()
 	if(chassis.weapons_safety)
-		owner.balloon_alert(owner, "safty is on!")
+		owner.balloon_alert(owner, "safety is on!")
 		return
 	if(!charge)
-		owner.balloon_alert(owner, "on recharge!")
+		owner.balloon_alert(owner, "recharging!")
 		return
 	new /obj/effect/temp_visual/mech_sparks(get_turf(chassis))
 	on = !on
@@ -235,7 +236,8 @@
 	owner.balloon_alert(owner, "invisability is over")
 	Trigger()
 
-/**  Proc makes an AOE attack after 1 SECOND.
+/**  
+ * Proc makes an AOE attack after 1 SECOND.
  * Called by the mech pilot when he is in stealth mode and wants to attack.
  * During this, mech cannot move.
 */
@@ -265,9 +267,7 @@
 /datum/action/vehicle/sealed/mecha/invisibility/proc/attack_in_aoe(mob/living/pilot)
 	Trigger()
 	new /obj/effect/temp_visual/mech_attack_aoe_attack(get_turf(chassis))
-	for(var/mob/living/somthing_living as anything in range(1, get_turf(chassis)))
-		if(!isliving(somthing_living))
-			continue
+	for(var/mob/living/something_living in range(1, get_turf(chassis)))
 		if(somthing_living.stat >= UNCONSCIOUS)
 			continue
 		if(somthing_living.getStaminaLoss() >= 100)
@@ -276,7 +276,7 @@
 			continue
 		if(prob(DISMEMBER_CUALITY_LOW))
 			var/obj/item/bodypart/cut_bodypart = somthing_living.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG))
-			cut_bodypart.dismember(BRUTE)
+			cut_bodypart?.dismember(BRUTE)
 		somthing_living.apply_damage(35, BRUTE)
 	playsound(chassis, stealth_attack_sound, 75, FALSE)
 	start_attack = FALSE
@@ -309,10 +309,10 @@
 
 /datum/action/vehicle/sealed/mecha/charge_attack/Trigger(trigger_flags)
 	if(chassis.weapons_safety)
-		owner.balloon_alert(owner, "safty is on!")
+		owner.balloon_alert(owner, "safety is on!")
 		return
 	if(!charge)
-		owner.balloon_alert(owner, "on recharge!")
+		owner.balloon_alert(owner, "recharging!")
 		return
 	on = !on
 	if(on)
@@ -324,7 +324,7 @@
 					stealth_action.Trigger()
 		button_icon_state = "mech_charge_on"
 		RegisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK, PROC_REF(click_try_charge))
-	if(!on)
+	else
 		button_icon_state = "mech_charge_off"
 		UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)
 	build_all_button_icons()
@@ -337,11 +337,11 @@
 	if(!on)
 		UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)
 		return FALSE
-	if(!turf)
+	if(isnull(turf))
 		pilot.balloon_alert(pilot, "invalid direction!")
 		return FALSE
 	if(!charge)
-		pilot.balloon_alert(pilot, "on recharge!")
+		pilot.balloon_alert(pilot, "recharging!")
 		return FALSE
 	else
 		if(charge_attack(pilot, turf))
@@ -358,13 +358,9 @@
  * * target - occupant inside mech.
  */
 /datum/action/vehicle/sealed/mecha/charge_attack/proc/charge_attack(mob/living/charger, turf/target)
-	/// Remember where we start charge
 	var/turf/start_charge_here = get_turf(charger)
-	/// Calculate charge range betwen range where we click and max charge range
 	var/charge_range = min(get_dist_euclidian(start_charge_here, target), max_charge_range)
-	/// Final result where where we start charge and charge range
 	var/turf/but_we_gonna_here = get_ranged_target_turf(start_charge_here, get_dir(start_charge_here, target), floor(charge_range))
-	/// Where mech is
 	var/turf/here_we_go = start_charge_here
 	for(var/turf/line_turf in get_line(get_step(start_charge_here, get_dir(start_charge_here, target)), but_we_gonna_here))
 		if(get_turf(charger) == get_turf(line_turf))
@@ -372,8 +368,6 @@
 		if(isclosedturf(line_turf))
 			if(isindestructiblewall(line_turf))
 				break
-			if(istype(line_turf, /turf/closed/wall/r_wall))
-				line_turf.atom_destruction(MELEE)
 			if(istype(line_turf, /turf/closed/wall))
 				line_turf.atom_destruction(MELEE)
 		for(var/obj/break_in as anything in line_turf.contents)
@@ -409,7 +403,7 @@
 
 	// If the mech didn't move, it didn't charge
 	if(here_we_go == start_charge_here)
-		charger.balloon_alert(charger, "can't charge this direction!")
+		charger.balloon_alert(charger, "invalid direction!")
 		return FALSE
 	chassis.forceMove(here_we_go)
 	start_charge_here.Beam(chassis, icon_state = "mech_charge", time = 8)

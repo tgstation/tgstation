@@ -925,8 +925,8 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/justice_torso
 	materials = list(
-		/datum/material/iron=SHEET_MATERIAL_AMOUNT*50,
-		/datum/material/silver =SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 50,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 5,
 	)
 	construction_time = 30 SECONDS
 	category = list(
@@ -939,8 +939,8 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/justice_left_arm
 	materials = list(
-		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
-		/datum/material/silver=SHEET_MATERIAL_AMOUNT*2,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2,
 	)
 	construction_time = 10 SECONDS
 	category = list(

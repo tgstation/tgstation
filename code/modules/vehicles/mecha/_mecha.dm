@@ -921,6 +921,6 @@
 
 /obj/vehicle/sealed/mecha/proc/melee_attack_effect(mob/living/victim, heavy)
 	if(heavy)
-		victim.Unconscious(20)
+		victim.Unconscious(2 SECONDS)
 	else
-		victim.Knockdown(40)
+		victim.Knockdown(4 SECONDS)
