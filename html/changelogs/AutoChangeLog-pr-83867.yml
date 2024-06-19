@@ -1,7 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "Items held in your hands can catch fire."
-  - balance: "Items you are holding won't catch fire if your hands cannot catch fire."
-  - balance: "When you stop being on fire so will items you are holding."
-  - balance: "If you roll around on your burning items they will stop being on fire."

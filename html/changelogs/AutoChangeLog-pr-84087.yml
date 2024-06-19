@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Enabling or disabling ambience mid round will properly enable or disable ambience"
-  - qol: "Added descriptions differentiating \"Ship ambience\" from \"ambience\""
