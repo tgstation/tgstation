@@ -363,8 +363,8 @@
 	description = "It can electrocute on interaction or recharge batteries when eaten."
 	icon = "bolt"
 	rate = 0.2
-	prob_mult = 2
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+	var/prob_mult = 2
 
 /datum/plant_gene/trait/cell_charge/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
