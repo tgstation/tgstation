@@ -243,7 +243,6 @@
 		/obj/item/cautery/cyborg,
 		/obj/item/circular_saw/cyborg,
 		/obj/item/bonesetter/cyborg,
-		/obj/item/surgical_drapes/cyborg,
 	)
 
 /obj/item/borg/cyborg_omnitool
