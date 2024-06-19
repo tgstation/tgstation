@@ -234,13 +234,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				return FALSE
 
 			if (!load_character(params["slotToJump"]))
-				tainted_character_profiles = TRUE
 				randomise_appearance_prefs()
 				save_character()
 
 			for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 				preference_middleware.on_new_character(usr)
 
+			tainted_character_profiles = TRUE
 			character_preview_view.update_body();
 			return TRUE
 		if ("rotate")
