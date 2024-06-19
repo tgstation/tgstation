@@ -293,7 +293,7 @@
 	// Use mask in absence of tube.
 	if(isclothing(wear_mask) && ((wear_mask.visor_flags & MASKINTERNALS) || (wear_mask.clothing_flags & MASKINTERNALS)))
 		// Adjust dishevelled breathing mask back onto face.
-		if (wear_mask.up)
+		if ((wear_mask.up) && !(istype(wear_mask, /obj/item/clothing/mask/gas/welding/up)))
 			wear_mask.adjust_visor(src)
 		return toggle_open_internals(tank, is_external)
 	// Use helmet in absence of tube or valid mask.
