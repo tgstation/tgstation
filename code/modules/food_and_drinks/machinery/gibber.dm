@@ -21,7 +21,8 @@
 			you'r- you're PROBABLY DEAD! You're probably going to - not you, I'm just sayin', like, if you- if somebody were to, like, \
 			push you into a meat grinder, and, like, your- one of your finger bones is still intact, they're not gonna pick it up and go, \
 			Well see, yeah it wasn't deadly, it wasn't an instant kill move! You still got, like, this part of your finger left!"
-	add_overlay("grjam")
+		dirty = TRUE
+		update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/gibber/RefreshParts()
 	. = ..()
@@ -45,16 +46,17 @@
 /obj/machinery/gibber/update_overlays()
 	. = ..()
 	if(dirty)
-		. +="grbloody"
-	if(machine_stat & (NOPOWER|BROKEN))
+		. += "grinder_bloody"
+	if(machine_stat & (NOPOWER|BROKEN) || panel_open)
 		return
 	if(!occupant)
-		. += "grjam"
+		. += "grinder_empty"
 		return
 	if(operating)
-		. += "gruse"
+		. += "grinder_active"
+		. += "grinder_jaws_active"
 		return
-	. += "gridle"
+	. += "grinder_loaded"
 
 /obj/machinery/gibber/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -160,7 +162,7 @@
 	operating = TRUE
 	update_appearance()
 
-	var/offset = prob(50) ? -2 : 2
+	var/offset = prob(50) ? -1 : 1
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	var/mob/living/mob_occupant = occupant
 	var/sourcename = mob_occupant.real_name
@@ -223,6 +225,8 @@
 /obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/food/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
 	operating = FALSE
+	if (!dirty && prob(50))
+		dirty = TRUE
 	var/turf/T = get_turf(src)
 	var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T
 	if(skin)
