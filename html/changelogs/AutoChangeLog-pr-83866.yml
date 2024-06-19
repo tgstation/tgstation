@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Prettied up the Chemical Analyzer's output in chat, making it easier to read, especially when scanning multiple things."
