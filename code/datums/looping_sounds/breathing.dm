@@ -2,7 +2,7 @@
 	mid_sounds = 'sound/voice/breathing.ogg'
 	mid_length = 3.2 SECONDS
 	mid_length_vary = 0.1 SECONDS
-	volume = 5
+	//spess station-
+	volume = 13
+	pressure_affected = FALSE
 	use_reverb = FALSE
-	//only the mouth breather shall hear his breathing, mouth
-	direct = TRUE

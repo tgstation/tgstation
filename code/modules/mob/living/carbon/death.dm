@@ -3,6 +3,7 @@
 		return
 
 	losebreath = 0
+	breathing_loop.stop()
 
 	if(!gibbed)
 		INVOKE_ASYNC(src, PROC_REF(emote), "deathgasp")
