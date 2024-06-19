@@ -104,7 +104,7 @@
 	if(atom_integrity < max_integrity)
 		. += span_notice("The cracks could be repaired with a [EXAMINE_HINT("welding tool")].")
 	. += span_notice("A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]; MAX SAFE TEMPERATURE: [siunit(temp_limit, "K", 0)]</b>.")
-	. += span_notice("The cracks could be cut apart with a [EXAMINE_HINT("welding tool")].")
+	. += span_notice("The hull could be cut apart with a [EXAMINE_HINT("welding tool")].")
 	if(internal_cell)
 		. += span_notice("The internal cell has [internal_cell.percent()]% of its total charge.")
 	else
