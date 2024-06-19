@@ -547,6 +547,7 @@
 #include "code\__HELPERS\logging\tool.dm"
 #include "code\__HELPERS\logging\ui.dm"
 #include "code\__HELPERS\logging\virus.dm"
+#include "code\__HELPERS\math_curves\qp_sigmoid.dm"
 #include "code\__HELPERS\paths\jps.dm"
 #include "code\__HELPERS\paths\path.dm"
 #include "code\__HELPERS\paths\sssp.dm"
