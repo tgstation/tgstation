@@ -51,12 +51,18 @@
 		return
 	if(!occupant)
 		. += "grinder_empty"
+		. += emissive_appearance(icon, "grinder_empty", src, alpha = src.alpha)
 		return
 	if(operating)
 		. += "grinder_active"
+		. += emissive_appearance(icon, "grinder_active", src, alpha = src.alpha)
 		. += "grinder_jaws_active"
 		return
 	. += "grinder_loaded"
+	. += emissive_appearance(icon, "grinder_loaded", src, alpha = src.alpha)
+
+/obj/machinery/gibber/on_set_panel_open(old_value)
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/gibber/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
