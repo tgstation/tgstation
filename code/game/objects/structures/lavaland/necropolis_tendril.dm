@@ -6,7 +6,7 @@
 	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	icon_state = "tendril"
 
-	faction = list(FACTION_MINING)
+	faction = list(FACTION_MINING, FACTION_ASHWALKER)
 	max_mobs = 3
 	max_integrity = 250
 	mob_types = list(/mob/living/basic/mining/watcher)
