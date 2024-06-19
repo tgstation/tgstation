@@ -1,0 +1,6 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - bugfix: "Made 10 MJ & 20 MJ cells properly correspond to tiers 1 & 2 in lathes."
+  - image: "Updated cell sprites to correspond to other stock parts of their tiers."
+  - image: "Updated plasma cell, 500KJ cell and 2.5MJ cell sprites"
