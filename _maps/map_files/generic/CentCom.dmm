@@ -1281,6 +1281,14 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
+"ds" = (
+/obj/structure/carving_block{
+	color = "#cc9439"
+	},
+/turf/open/floor/sepia{
+	color = "#cc9439"
+	},
+/area/centcom/central_command_areas/admin)
 "dt" = (
 /obj/structure/window/reinforced/tinted/frosted,
 /obj/structure/closet/mini_fridge,
@@ -2031,6 +2039,15 @@
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/medical)
+"fG" = (
+/obj/structure/table/optable/abductor{
+	color = "#efbc1e";
+	name = "Ancient Operating Table"
+	},
+/turf/open/floor/sepia{
+	color = "#cc9439"
+	},
+/area/centcom/central_command_areas/admin)
 "fH" = (
 /obj/machinery/light/neon_lining{
 	dir = 1;
@@ -2985,6 +3002,23 @@
 	},
 /turf/open/floor/iron/white/herringbone,
 /area/centcom/central_command_areas/kitchen)
+"im" = (
+/obj/structure/rack{
+	color = "#efbc1e"
+	},
+/obj/item/chisel,
+/obj/item/toy/crayon/spraycan/infinite{
+	pixel_y = 3;
+	pixel_x = 9
+	},
+/obj/item/stack/sheet/mineral/sandstone/thirty{
+	pixel_y = 2;
+	pixel_x = -10
+	},
+/turf/open/floor/sepia{
+	color = "#cc9439"
+	},
+/area/centcom/central_command_areas/admin)
 "in" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22";
@@ -4000,6 +4034,28 @@
 /obj/structure/punching_bag,
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/control)
+"lf" = (
+/obj/structure/table/sandstone{
+	color = "#efbc1e"
+	},
+/obj/item/storage/backpack/duffelbag/syndie/surgery{
+	pixel_y = -3;
+	color = "#efbc1e"
+	},
+/obj/item/reagent_containers/cup/beaker/jar{
+	pixel_y = 7;
+	pixel_x = -4;
+	color = "#ffe599"
+	},
+/obj/item/reagent_containers/cup/beaker/jar{
+	pixel_y = 10;
+	pixel_x = 7;
+	color = "#ffe599"
+	},
+/turf/open/floor/sepia{
+	color = "#cc9439"
+	},
+/area/centcom/central_command_areas/admin)
 "lg" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/chair/comfy/shuttle/tactical{
@@ -4042,6 +4098,9 @@
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin_hangout)
+"ll" = (
+/turf/closed/indestructible/sandstone,
+/area/centcom/central_command_areas/admin)
 "lm" = (
 /obj/structure/window/plasma/spawner/directional/north,
 /obj/structure/window/plasma/spawner/directional/west,
@@ -4069,6 +4128,11 @@
 "lr" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
+"ls" = (
+/turf/closed/indestructible/fakeglass{
+	color = "#ffe599"
+	},
+/area/centcom/central_command_areas/admin)
 "lt" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/turf_decal/stripes/line{
@@ -5155,6 +5219,17 @@
 	},
 /turf/open/floor/carpet,
 /area/centcom/wizard_station)
+"ox" = (
+/obj/item/nullrod/egyptian{
+	name = "Staff of Anubis"
+	},
+/obj/structure/destructible/cult/pants_altar{
+	color = "#cc9439"
+	},
+/turf/open/floor/sepia{
+	color = "#cc9439"
+	},
+/area/centcom/central_command_areas/admin)
 "oy" = (
 /obj/machinery/vending/wardrobe/curator_wardrobe,
 /obj/effect/turf_decal/siding/dark,
@@ -10481,6 +10556,14 @@
 /obj/structure/injured_spawner,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
+"CR" = (
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/obj/machinery/door/airlock/sandstone{
+	dir = 4;
+	name = "Amun's Office"
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/admin)
 "CS" = (
 /obj/machinery/door/airlock/centcom,
 /obj/effect/mapping_helpers/airlock/access/any/admin/captain,
@@ -10953,6 +11036,9 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/catwalk_floor/titanium,
 /area/centcom/syndicate_mothership/control)
+"Ej" = (
+/turf/closed/wall/vault/sandstone,
+/area/centcom/central_command_areas/admin)
 "Ek" = (
 /obj/item/toy/figure/syndie,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -11256,6 +11342,12 @@
 	},
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/evacuation/ship)
+"EW" = (
+/obj/machinery/door/poddoor/shutters/indestructible/preopen,
+/turf/closed/indestructible/fakeglass{
+	color = "#ffe599"
+	},
+/area/centcom/central_command_areas/admin)
 "EY" = (
 /obj/structure/chair{
 	dir = 1
@@ -11847,6 +11939,10 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/supply)
+"GD" = (
+/obj/structure/chair/stool/sandstone,
+/turf/open/floor/vault/sandstone,
+/area/centcom/central_command_areas/admin)
 "GE" = (
 /obj/structure/chair/stool/directional/north,
 /turf/open/floor/iron/dark/textured_large,
@@ -12375,6 +12471,14 @@
 /turf/open/floor/iron/smooth_large{
 	icon = 'goon/icons/turf/floors.dmi';
 	icon_state = "boxing"
+	},
+/area/centcom/central_command_areas/admin)
+"Ie" = (
+/obj/structure/table/sandstone{
+	color = "#efbc1e"
+	},
+/turf/open/floor/sepia{
+	color = "#cc9439"
 	},
 /area/centcom/central_command_areas/admin)
 "If" = (
@@ -14133,6 +14237,19 @@
 	dir = 10
 	},
 /area/centcom/central_command_areas/hall)
+"MR" = (
+/obj/machinery/fax{
+	color = "#cc9439";
+	name = "Amun's Fax Machine";
+	fax_name = "Portal to the underworld"
+	},
+/obj/structure/table/sandstone{
+	color = "#efbc1e"
+	},
+/turf/open/floor/sepia{
+	color = "#cc9439"
+	},
+/area/centcom/central_command_areas/admin)
 "MS" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -14614,6 +14731,11 @@
 "On" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/admin)
+"Oo" = (
+/turf/open/floor/sepia{
+	color = "#cc9439"
+	},
+/area/centcom/central_command_areas/admin)
 "Op" = (
 /obj/structure/railing/wood,
 /obj/structure/table/reinforced,
@@ -15091,6 +15213,9 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/supply)
+"PH" = (
+/turf/open/floor/vault/sandstone,
+/area/centcom/central_command_areas/admin)
 "PJ" = (
 /obj/structure/closet/crate/freezer/blood,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -15350,6 +15475,17 @@
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/iron/smooth_large,
 /area/centcom/central_command_areas/evacuation/ship)
+"Qu" = (
+/obj/machinery/modular_computer/preset/id/centcom{
+	color = "#cc9439"
+	},
+/obj/structure/table/sandstone{
+	color = "#efbc1e"
+	},
+/turf/open/floor/sepia{
+	color = "#cc9439"
+	},
+/area/centcom/central_command_areas/admin)
 "Qv" = (
 /obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/siding/wood{
@@ -15554,6 +15690,15 @@
 /area/centcom/syndicate_mothership/control)
 "QV" = (
 /turf/open/floor/iron/grimy,
+/area/centcom/central_command_areas/admin)
+"QW" = (
+/obj/structure/destructible/cult/item_dispenser/archives/library{
+	color = "#cc9439";
+	name = "Records of the Sand"
+	},
+/turf/open/floor/sepia{
+	color = "#cc9439"
+	},
 /area/centcom/central_command_areas/admin)
 "QX" = (
 /obj/machinery/light/directional/west,
@@ -16402,6 +16547,32 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
+"To" = (
+/obj/structure/table/sandstone{
+	color = "#efbc1e"
+	},
+/obj/item/clothing/under/costume/mummy{
+	pixel_y = -8;
+	pixel_x = -6
+	},
+/obj/item/clothing/mask/mummy{
+	pixel_y = 6;
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/cup/beaker/jar{
+	pixel_y = 8;
+	pixel_x = 9;
+	color = "#ffe599"
+	},
+/obj/item/reagent_containers/cup/beaker/jar{
+	pixel_y = -2;
+	pixel_x = 9;
+	color = "#ffe599"
+	},
+/turf/open/floor/sepia{
+	color = "#cc9439"
+	},
+/area/centcom/central_command_areas/admin)
 "Tp" = (
 /obj/machinery/light/floor/has_bulb,
 /obj/effect/turf_decal/siding/wood{
@@ -16996,6 +17167,13 @@
 /obj/item/paper_bin/carbon,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
+"UV" = (
+/obj/structure/closet/crate/coffin/sandstonesarcophagus{
+	color = "#efbc1e";
+	name = "Tomb of Amun Set Hep"
+	},
+/turf/open/floor/vault/sandstone,
+/area/centcom/central_command_areas/admin)
 "UX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -47807,14 +47985,14 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+On
+On
+ll
+ls
+ll
+ls
+ll
+On
 aa
 aa
 aa
@@ -48064,13 +48242,13 @@ aa
 aa
 aa
 aa
-aa
 On
-On
-Zf
-Zf
-Zf
-On
+ll
+ll
+ox
+PH
+UV
+ll
 On
 On
 Zf
@@ -48322,12 +48500,12 @@ iF
 iF
 iF
 iF
-On
-Tx
-pi
-pi
-pi
-Ly
+ll
+MR
+Ie
+PH
+To
+ll
 On
 hA
 gH
@@ -48579,12 +48757,12 @@ jt
 FO
 Tq
 iF
-On
-gf
-hw
-pi
-pi
-oT
+ll
+Qu
+GD
+PH
+fG
+ll
 On
 SD
 uk
@@ -48836,12 +49014,12 @@ pj
 nm
 XA
 iF
-On
-lQ
-eU
-NK
-pi
-pi
+ll
+Ie
+Ie
+PH
+lf
+ll
 On
 CO
 uk
@@ -49093,12 +49271,12 @@ oJ
 lo
 Uq
 iF
-On
-pi
-pp
-hw
-pi
-pi
+Ej
+PH
+GD
+PH
+PH
+Ej
 On
 wQ
 uk
@@ -49350,12 +49528,12 @@ oJ
 lo
 qn
 iF
-On
-pi
-pi
-pi
-pi
-pi
+ll
+im
+Oo
+PH
+QW
+ll
 On
 aS
 uk
@@ -49607,12 +49785,12 @@ oJ
 nn
 qo
 iN
-On
-SI
-SI
-pi
-pi
-EK
+ll
+ll
+ds
+PH
+Oo
+ll
 On
 uk
 uk
@@ -49865,11 +50043,11 @@ lo
 oM
 iF
 bD
-On
-On
-GZ
-IS
-On
+ll
+ll
+CR
+EW
+ll
 On
 On
 On
