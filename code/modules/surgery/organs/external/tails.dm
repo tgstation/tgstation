@@ -161,7 +161,7 @@
 	return SSaccessories.tails_list_human
 
 /obj/item/organ/external/tail/cat/get_butt_sprite()
-	return BUTT_SPRITE_CAT
+	return icon('icons/mob/butts.dmi', BUTT_SPRITE_CAT)
 
 ///Cat tail bodypart overlay
 /datum/bodypart_overlay/mutant/tail/cat
