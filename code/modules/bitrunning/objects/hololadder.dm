@@ -56,7 +56,6 @@
 	if(isnull(our_server))
 		return ..()
 
-
 	ghostie.abstract_move(get_turf(our_server))
 
 
@@ -66,7 +65,7 @@
 		return
 
 	if(!HAS_TRAIT(user, TRAIT_TEMPORARY_BODY))
-		balloon_alert(user, "no connection detected.")
+		balloon_alert(user, "no connection detected")
 		return
 
 	balloon_alert(user, "disconnecting...")
