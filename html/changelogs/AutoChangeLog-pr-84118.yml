@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - balance: "DRAGnets now come with a beacon they can be synced to, which will set the destination for the snare round's teleport ability."

@@ -36,6 +36,10 @@
 
 /mob/living/basic/mothroach/Initialize(mapload)
 	. = ..()
+	var/static/list/food_types = list(/obj/item/clothing)
+	AddElement(/datum/element/basic_eating, food_types = food_types)
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
+	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "squeaks happily!")
 	add_verb(src, /mob/living/proc/toggle_resting)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
@@ -63,16 +67,6 @@
 		return
 	else
 		playsound(loc, 'sound/voice/moth/scream_moth.ogg', 50, TRUE)
-
-/datum/ai_controller/basic_controller/mothroach
-	blackboard = list()
-
-	ai_traits = STOP_MOVING_WHEN_PULLED
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/random_speech/mothroach,
-	)
 
 /mob/living/basic/mothroach/bar
 	name = "mothroach bartender"
