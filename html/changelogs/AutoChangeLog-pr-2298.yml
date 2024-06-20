@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - admin: "Add a version of the \"Get Server Logs\" and \"Get Current Logs\" verbs which can only download debug/runtime logs, available to +DEBUG."
+  - admin: "View Round Logs is now available to +DEBUG, but it will only show log categories marked in the code as being \"available\" for debuggers."
