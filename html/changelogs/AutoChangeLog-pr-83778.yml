@@ -1,0 +1,4 @@
+author: "projectkepler-ru"
+delete-after: True
+changes:
+  - bugfix: "Wawastation bridge now has the correct access on their suit storage and medkit now actually starts filled"

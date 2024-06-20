@@ -1,0 +1,4 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - bugfix: "Welding protection module for MODsuits protect flash-sensitives from welding arcs"

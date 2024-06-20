@@ -1164,7 +1164,7 @@
  * silence_adjacency: Sometimes we want to use this proc to check interaction without allowing it to throw errors for base case adjacency
  * Alt click uses this, as otherwise you can detect what is interactable from a distance via the error message
 **/
-/mob/proc/can_perform_action(atom/movable/target, action_bitflags)
+/mob/proc/can_perform_action(atom/target, action_bitflags)
 	return
 
 ///Can this mob use storage

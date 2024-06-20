@@ -82,6 +82,15 @@
 	icon_dead = "snowbear_dead"
 	desc = "It's a polar bear, in space, but not actually in space."
 
+/mob/living/basic/bear/snow/misha
+	name = "Misha"
+	real_name = "Misha"
+	desc = "Tamed and trained by the Head of Security. Only beasts are above deceit."
+	gold_core_spawnable = NO_SPAWN
+	maxHealth = 250
+	health = 250
+	faction = list(FACTION_NEUTRAL)
+
 /mob/living/basic/bear/snow/ancient
 	name = "ancient polar bear"
 	desc = "A grizzled old polar bear, its hide thick enough to make it impervious to almost all weapons."

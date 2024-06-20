@@ -9215,6 +9215,9 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/north,
+/obj/item/lightreplacer{
+	pixel_y = 7
+	},
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -32127,12 +32130,11 @@
 /area/station/maintenance/fore)
 "loY" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
+/obj/effect/spawner/random/armory/dragnet,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "lpo" = (
@@ -58915,12 +58917,16 @@
 "uJz" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
-/obj/item/lightreplacer{
-	pixel_y = 7
-	},
 /obj/machinery/status_display/evac/directional/east,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
+	},
+/obj/item/flatpack{
+	board = /obj/item/circuitboard/machine/flatpacker;
+	pixel_x = -5
+	},
+/obj/item/multitool{
+	pixel_x = 8
 	},
 /turf/open/floor/iron/checker,
 /area/station/engineering/storage_shared)

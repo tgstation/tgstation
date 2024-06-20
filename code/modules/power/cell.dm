@@ -311,8 +311,13 @@
 /obj/item/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargeable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
+	icon_state = "aa_cell"
 	maxcharge = STANDARD_CELL_CHARGE * 0.5
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.4)
+
+/obj/item/stock_parts/cell/crap/Initialize(mapload)
+	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/item/stock_parts/cell/crap/empty
 	empty = TRUE
@@ -320,9 +325,14 @@
 /obj/item/stock_parts/cell/upgraded
 	name = "upgraded power cell"
 	desc = "A power cell with a slightly higher capacity than normal!"
+	icon_state = "9v_cell"
 	maxcharge = STANDARD_CELL_CHARGE * 2.5
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	chargerate = STANDARD_CELL_RATE * 0.5
+
+/obj/item/stock_parts/cell/upgraded/Initialize(mapload)
+	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/item/stock_parts/cell/upgraded/plus
 	name = "upgraded power cell+"
@@ -469,21 +479,6 @@
 	maxcharge = STANDARD_CELL_CHARGE * 5
 	charge_light_type = null
 	connector_type = "slimecore"
-
-/obj/item/stock_parts/cell/beam_rifle
-	name = "beam rifle capacitor"
-	desc = "A high powered capacitor that can provide huge amounts of energy in an instant."
-	maxcharge = STANDARD_CELL_CHARGE * 50
-	chargerate = STANDARD_CELL_RATE * 2.5 //Extremely energy intensive
-
-/obj/item/stock_parts/cell/beam_rifle/corrupt()
-	return
-
-/obj/item/stock_parts/cell/beam_rifle/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	charge = clamp((charge-(10000/severity)),0,maxcharge)
 
 /obj/item/stock_parts/cell/emergency_light
 	name = "miniature power cell"

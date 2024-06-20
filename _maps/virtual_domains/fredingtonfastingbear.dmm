@@ -535,6 +535,10 @@
 	},
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"Ak" = (
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/iron/kitchen,
+/area/ruin/space/has_grav/powered/virtual_domain)
 "AF" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/glass/bottle/goldschlager{
@@ -594,7 +598,7 @@
 /turf/open/floor/iron/kitchen,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "DV" = (
-/obj/machinery/door,
+/obj/machinery/door/airlock,
 /turf/open/floor/iron/cafeteria,
 /area/virtual_domain/protected_space/fullbright)
 "EO" = (
@@ -633,6 +637,7 @@
 "Gn" = (
 /obj/machinery/light/built/directional/east,
 /obj/effect/decal/cleanable/food/tomato_smudge,
+/obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/iron/kitchen/small,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "GD" = (
@@ -947,7 +952,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "VS" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/camera_advanced,
+/obj/item/modular_computer/laptop/preset/civilian,
 /turf/open/floor/iron/cafeteria,
 /area/virtual_domain/protected_space/fullbright)
 "VW" = (
@@ -2802,7 +2807,7 @@ Cm
 Ne
 Ne
 ve
-Ux
+Ak
 Ux
 Ux
 Ux
