@@ -113,7 +113,7 @@
 	if(ishuman(user) && HAS_TRAIT(user, TRAIT_ROUGHRIDER)) // YEEHAW!
 		var/mob/living/carbon/human/rough_rider = user
 		var/ride_benefit = null
-		if(isashwalker(rough_rider)) // ashwalkers are closer to beasts than humans, and ride them with expertise
+		if(HAS_TRAIT(rough_rider, TRAIT_PRIMITIVE)) // closer to a beast than a man; you don't need to think to ride!
 			ride_benefit = SANITY_LEVEL_GREAT
 		else
 			ride_benefit = rough_rider.mob_mood.sanity_level
