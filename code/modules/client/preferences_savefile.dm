@@ -382,7 +382,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 /datum/preferences/proc/remove_current_slot()
 	PRIVATE_PROC(TRUE)
-	SHOULD_NOT_SLEEP(TRUE)
 
 	var/closest_slot
 	for (var/other_slot in default_slot - 1 to 1 step -1)
