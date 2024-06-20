@@ -800,7 +800,7 @@
 	desc = "An advanced tactical space helmet."
 	icon_state = "deathsquad"
 	inhand_icon_state = null
-	armor_type = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 60, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 20)
+	armor_type = /datum/armor/hardsuit_deathsquad
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
