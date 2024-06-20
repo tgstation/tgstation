@@ -1,1 +1,1 @@
-Эти файлы добавлены в tgstation.dme под комментом // ADDITION DEFINES
+На этот файл идёт переадресация из code/__DEFINES/~meta_defines_include.dm
