@@ -16,6 +16,7 @@
 
 /obj/machinery/gibber/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_cleaned))
 	if(prob(5))
 		name = "meat grinder"
 		desc = "Okay, if I... if I chop you up in a meat grinder, and the only thing that comes out, that's left of you, is your eyeball, \
@@ -275,3 +276,7 @@
 		if(victim.loc == input)
 			victim.forceMove(src)
 			victim.gib(DROP_ALL_REMAINS)
+
+/obj/machinery/gibber/proc/on_cleaned(obj/source_component, obj/source)
+	dirty = FALSE
+	update_appearance(UPDATE_OVERLAYS)
