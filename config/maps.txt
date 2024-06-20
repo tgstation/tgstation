@@ -50,10 +50,6 @@ map pubbystation
 	votable
 endmap
 
-map boxstation
-	votable
-endmap
-
 map kilostation
 	maxplayers 35
 	votable
