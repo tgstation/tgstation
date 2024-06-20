@@ -74,12 +74,27 @@
 
 	if(isobj(singed))
 		var/obj/singed_obj = singed
-		if(singed_obj.resistance_flags & FLAMMABLE && !(singed_obj.resistance_flags & ON_FIRE)) //only fire_act flammable objects instead of burning EVERYTHING
-			singed_obj.fire_act(1,100)
 		if(singed_obj.reagents)
-			var/datum/reagents/reagents = singed_obj.reagents
-			reagents?.expose_temperature(1000)
-		return
+			var/datum/reagents/reagents = singed_obj.reagents // heat up things that contain reagents before we check to see if they burn
+			reagents?.expose_temperature(1000) // we set this at 1000 because that's the max reagent temp for a chem heater, higher temps require more than sparks
+		if(singed_obj.custom_materials && (GET_MATERIAL_REF(/datum/material/plasma) in singed_obj.custom_materials))
+			singed_obj.fire_act(FIRE_MINIMUM_TEMPERATURE_TO_SPREAD,100)
+			return // if it's made of plasma we just start burning no matter what, even furniture (see right below)
+		if(isstructure(singed_obj) || ismachinery(singed_obj)) // don't ignite furniture even if it's flammable, leave that to actual fires
+			return
+		if(singed_obj.resistance_flags & FLAMMABLE && !(singed_obj.resistance_flags & ON_FIRE)) //only fire_act flammable objects instead of burning EVERYTHING
+			if(isitem(singed_obj))
+				var/obj/item/singed_item = singed_obj
+				var/ignite_chance = 120 // base chance applies to anything under WEIGHT_CLASS_NORMAL, so burn everything flammable that's small/tiny
+				if(singed_item.w_class > WEIGHT_CLASS_SMALL)
+					var/ignite_chance_penalty = (singed_item.w_class * 2 + round(singed_item.w_class * 0.5)) * 10 // size penalties to ignite chance: normal = 70, bulky = 100,
+					ignite_chance -= ignite_chance_penalty // the bigger the item, the less likely it is to ignite
+				if(prob(ignite_chance))
+					singed_item.fire_act(FIRE_MINIMUM_TEMPERATURE_TO_SPREAD,100)
+				return
+			else
+				singed_obj.fire_act(FIRE_MINIMUM_TEMPERATURE_TO_SPREAD,100)
+				return
 	if(isliving(singed))
 		var/mob/living/singed_living = singed
 		if(singed_living.fire_stacks)
