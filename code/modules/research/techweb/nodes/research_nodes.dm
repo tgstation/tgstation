@@ -87,6 +87,7 @@
 	prereq_ids = list("anomaly_research")
 	design_ids = list(
 		"bag_holding",
+		"cybernetic_heart_anomalock",
 		"wormholeprojector",
 		"gravitygun",
 		"polymorph_belt"
