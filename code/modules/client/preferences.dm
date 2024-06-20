@@ -224,6 +224,25 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			character_preview_view.update_body()
 
 			return TRUE
+		if ("remove_slot")
+			var/picked_slot = params["slot"]
+			var/confidence_check = tgui_input_text(usr, "To confirm the deletion of a character, type the name of the character.", "Character Deletion")
+			if(confidence_check != params["name"])
+				return FALSE
+
+			if(!remove_character(picked_slot))
+				return FALSE
+
+			if (!load_character(params["slotToJump"]))
+				randomise_appearance_prefs()
+				save_character()
+
+			for (var/datum/preference_middleware/preference_middleware as anything in middleware)
+				preference_middleware.on_new_character(usr)
+
+			tainted_character_profiles = TRUE
+			character_preview_view.update_body();
+			return TRUE
 		if ("rotate")
 			character_preview_view.setDir(turn(character_preview_view.dir, -90))
 			return TRUE
