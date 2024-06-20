@@ -1,4 +1,18 @@
-//master files
+/*
+*
+* Это основной файл куда будут складываться все наши модульные добавления.
+* Добавлять только:
+*	Модули (.dm файлами)
+* Сам этот файл добавлен в tgstation.dme
+*
+*Все Defines файлы лежат в папке "~meta_defines\", однако там идет переопределение пути для того чтобы не ругались тесты.
+*
+*/
+
+//modular files
+
+
+//master files (unsorted, TODO: need modularization)
 #include "code\_globalvars\lists\names.dm"
 #include "code\__HELPERS\names.dm"
 #include "interface\interface.dm"
@@ -91,7 +105,6 @@
 #include "code\modules\clothing\shoes\sneakers.dm"
 #include "code\modules\client\preferences\pride_pin.dm"
 #include "code\datums\quirks\neutral_quirks\pride_pin.dm"
-
 
 //oguzok in kitchen, huh?
 #include "code\modules\clothing\under\undersuit.dm"
