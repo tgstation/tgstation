@@ -81,7 +81,7 @@ export const RestockTracker = (props) => {
             </Stack.Item>
           </Stack>
         ))}
-        {vending_list.length ? null : <RestockTrackerFull />}
+        {vending_list.length === 0 && <RestockTrackerFull />}
       </Stack>
     </Section>
   );
