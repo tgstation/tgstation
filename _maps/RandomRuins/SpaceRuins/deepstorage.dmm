@@ -42,7 +42,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
 "am" = (
-/obj/machinery/recycler/deathtrap,
+/obj/machinery/recycler/deathtrap{
+	dir = 8
+	},
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "bunkerrecycle"
@@ -1958,7 +1960,7 @@
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "zl" = (
 /obj/structure/bed/double,
-/obj/item/bedsheet/dorms_double,
+/obj/effect/spawner/random/bedsheet/double,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/deepstorage/dorm)
@@ -2128,7 +2130,7 @@
 "Ev" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/bed/double,
-/obj/item/bedsheet/dorms_double,
+/obj/effect/spawner/random/bedsheet/double,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "EA" = (

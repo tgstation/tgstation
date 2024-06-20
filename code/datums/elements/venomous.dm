@@ -8,14 +8,21 @@
 	argument_hash_start_idx = 2
 	///Path of the reagent added
 	var/poison_type
+	///Details of how we inject our venom
+	var/injection_flags
 	///How much of the reagent added. if it's a list, it'll pick a range with the range being list(lower_value, upper_value)
 	var/list/amount_added
 
-/datum/element/venomous/Attach(datum/target, poison_type, amount_added)
+/datum/element/venomous/Attach(datum/target, poison_type, amount_added, injection_flags = NONE, thrown_effect = FALSE)
 	. = ..()
 	src.poison_type = poison_type
 	src.amount_added = amount_added
-	target.AddComponent(/datum/component/on_hit_effect, CALLBACK(src, PROC_REF(do_venom)))
+	src.injection_flags = injection_flags
+	target.AddComponent(\
+		/datum/component/on_hit_effect,\
+		on_hit_callback = CALLBACK(src, PROC_REF(do_venom)),\
+		thrown_effect = thrown_effect,\
+	)
 
 /datum/element/venomous/Detach(datum/target)
 	qdel(target.GetComponent(/datum/component/on_hit_effect))
@@ -25,6 +32,8 @@
 	if(!istype(target))
 		return
 	if(target.stat == DEAD)
+		return
+	if(isliving(element_owner) && !target.try_inject(element_owner, hit_zone, injection_flags))
 		return
 	var/final_amount_added
 	if(islist(amount_added))

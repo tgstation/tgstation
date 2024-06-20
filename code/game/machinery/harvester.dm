@@ -57,39 +57,32 @@
 	else if(!harvesting)
 		open_machine()
 
-/obj/machinery/harvester/AltClick(mob/user)
-	. = ..()
-	if(!user.can_perform_action(src))
-		return
+/obj/machinery/harvester/click_alt(mob/user)
 	if(panel_open)
 		output_dir = turn(output_dir, -90)
 		to_chat(user, span_notice("You change [src]'s output settings, setting the output to [dir2text(output_dir)]."))
-		return
-	if(!can_interact(user))
-		return
-	if(harvesting || !user || !isliving(user) || state_open)
-		return
-	if(can_harvest())
-		start_harvest()
+		return CLICK_ACTION_SUCCESS
+	if(harvesting || state_open || !can_harvest())
+		return CLICK_ACTION_BLOCKING
+
+	start_harvest()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/harvester/proc/can_harvest()
 	if(!powered() || state_open || !occupant || !iscarbon(occupant))
 		return
-	var/mob/living/carbon/C = occupant
+	var/mob/living/carbon/carbon_occupant = occupant
 	if(!allow_clothing)
-		for(var/A in C.held_items + C.get_equipped_items())
-			if(!isitem(A))
-				continue
-			var/obj/item/I = A
-			if(!(HAS_TRAIT(I, TRAIT_NODROP)))
+		for(var/obj/item/abiotic_item in carbon_occupant.held_items + carbon_occupant.get_equipped_items())
+			if(!(HAS_TRAIT(abiotic_item, TRAIT_NODROP)))
 				say("Subject may not have abiotic items on.")
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 				return
-	if(!(C.mob_biotypes & MOB_ORGANIC))
+	if(!(carbon_occupant.mob_biotypes & MOB_ORGANIC))
 		say("Subject is not organic.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return
-	if(!allow_living && !(C.stat == DEAD || HAS_TRAIT(C, TRAIT_FAKEDEATH)))     //I mean, the machines scanners arent advanced enough to tell you're alive
+	if(!allow_living && !(carbon_occupant.stat == DEAD || HAS_TRAIT(carbon_occupant, TRAIT_FAKEDEATH)))     //I mean, the machines scanners arent advanced enough to tell you're alive
 		say("Subject is still alive.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return
@@ -106,7 +99,6 @@
 			"[occupant] is about to be ground up by a malfunctioning organ harvester!",
 			source = src,
 			header = "Gruesome!",
-			action = NOTIFY_ORBIT,
 		)
 
 	operation_order = reverseList(carbon_occupant.bodyparts)   //Chest and head are first in bodyparts, so we invert it to make them suffer more
@@ -124,23 +116,23 @@
 		end_harvesting(success = FALSE)
 		return
 	playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
-	var/mob/living/carbon/C = occupant
+	var/mob/living/carbon/carbon_occupant = occupant
 	if(!LAZYLEN(operation_order)) //The list is empty, so we're done here
 		end_harvesting(success = TRUE)
 		return
 	var/turf/target = get_step(src, output_dir)
-	for(var/obj/item/bodypart/BP in operation_order) //first we do non-essential limbs
-		BP.drop_limb()
-		C.emote("scream")
-		if(BP.body_zone != "chest")
-			BP.forceMove(target)    //Move the limbs right next to it, except chest, that's a weird one
-			BP.drop_organs()
+	for(var/obj/item/bodypart/limb_to_remove as anything in operation_order) //first we do non-essential limbs
+		limb_to_remove.drop_limb()
+		carbon_occupant.emote("scream")
+		if(limb_to_remove.body_zone != "chest")
+			limb_to_remove.forceMove(target)    //Move the limbs right next to it, except chest, that's a weird one
+			limb_to_remove.drop_organs()
 		else
-			for(var/obj/item/organ/O in BP.dismember())
-				O.forceMove(target) //Some organs, like chest ones, are different so we need to manually move them
-		operation_order.Remove(BP)
+			for(var/obj/item/organ/organ_to_remove in limb_to_remove.dismember())
+				organ_to_remove.forceMove(target) //Some organs, like chest ones, are different so we need to manually move them
+		operation_order.Remove(limb_to_remove)
 		break
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 	addtimer(CALLBACK(src, PROC_REF(harvest)), interval)
 
 /obj/machinery/harvester/proc/end_harvesting(success = TRUE)
@@ -154,7 +146,7 @@
 		say("Subject has been successfully harvested.")
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 
-/obj/machinery/harvester/screwdriver_act(mob/living/user, obj/item/I)
+/obj/machinery/harvester/screwdriver_act(mob/living/user, obj/item/tool)
 	. = TRUE
 	if(..())
 		return
@@ -164,20 +156,20 @@
 	if(state_open)
 		to_chat(user, span_warning("[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!"))
 		return
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), tool))
 		return
 	return FALSE
 
-/obj/machinery/harvester/crowbar_act(mob/living/user, obj/item/I)
-	if(default_pry_open(I))
+/obj/machinery/harvester/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_pry_open(tool))
 		return TRUE
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(tool))
 		return TRUE
 
-/obj/machinery/harvester/default_pry_open(obj/item/I) //wew
-	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR //We removed is_operational here
+/obj/machinery/harvester/default_pry_open(obj/item/tool) //wew
+	. = !(state_open || panel_open) && tool.tool_behaviour == TOOL_CROWBAR //We removed is_operational here
 	if(.)
-		I.play_tool_sound(src, 50)
+		tool.play_tool_sound(src, 50)
 		visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open [src]."))
 		open_machine()
 

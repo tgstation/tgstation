@@ -2,6 +2,11 @@
 	name = "Generic"
 	name_extension = "(Computer Board)"
 
+/obj/item/circuitboard/computer/examine()
+	. = ..()
+	if(GetComponent(/datum/component/gps))
+		. += span_info("there's a small, blinking light!")
+
 //Command
 
 /obj/item/circuitboard/computer/aiupload
@@ -331,6 +336,20 @@
 /obj/item/circuitboard/computer/tram_controls
 	name = "Tram Controls"
 	build_path = /obj/machinery/computer/tram_controls
+	var/split_mode = FALSE
+
+/obj/item/circuitboard/computer/tram_controls/split
+	split_mode = TRUE
+
+/obj/item/circuitboard/computer/tram_controls/examine(mob/user)
+	. = ..()
+	. += span_info("The board is configured for [split_mode ? "split window" : "normal window"].")
+	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
+
+/obj/item/circuitboard/computer/tram_controls/multitool_act(mob/living/user)
+	split_mode = !split_mode
+	to_chat(user, span_notice("[src] positioning set to [split_mode ? "split window" : "normal window"]."))
+	return TRUE
 
 /obj/item/circuitboard/computer/terminal
 	name = "Terminal"
@@ -580,33 +599,3 @@
 /obj/item/circuitboard/computer/exodrone_console
 	name = "Exploration Drone Control Console"
 	build_path = /obj/machinery/computer/exodrone_control_console
-
-/obj/item/circuitboard/computer/service_orders
-	name = "Service Order"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/computer/department_orders/service
-
-/obj/item/circuitboard/computer/engineering_orders
-	name = "Engineering Order"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/computer/department_orders/engineering
-
-/obj/item/circuitboard/computer/science_orders
-	name = "Science Order"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/computer/department_orders/science
-
-/obj/item/circuitboard/computer/security_orders
-	name = "Security Order"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/computer/department_orders/security
-
-/obj/item/circuitboard/computer/medical_orders
-	name = "Medical Order"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/computer/department_orders/medical
-
-/obj/item/circuitboard/computer/quantum_console
-	name = "Quantum Server Console"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/computer/quantum_console

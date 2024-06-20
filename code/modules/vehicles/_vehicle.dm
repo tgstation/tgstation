@@ -1,12 +1,11 @@
 /obj/vehicle
 	name = "generic vehicle"
 	desc = "Yell at coderbus."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "error"
 	max_integrity = 300
 	armor_type = /datum/armor/obj_vehicle
 	layer = VEHICLE_LAYER
-	plane = GAME_PLANE_FOV_HIDDEN
 	density = TRUE
 	anchored = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC

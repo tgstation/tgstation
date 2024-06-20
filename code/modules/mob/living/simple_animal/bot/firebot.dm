@@ -9,12 +9,14 @@
 	desc = "A little fire extinguishing bot. He looks rather anxious."
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "firebot1"
+	light_color = "#8cffc9"
+	light_power = 0.8
 	density = FALSE
 	anchored = FALSE
 	health = 25
 	maxHealth = 25
 
-	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
+	req_one_access = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FIRE_BOT
@@ -77,10 +79,10 @@
 /mob/living/simple_animal/bot/firebot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+	if(!can_unarmed_attack())
 		return
 	if(internal_ext)
-		internal_ext.afterattack(A, src)
+		internal_ext.interact_with_atom(A, src, modifiers)
 	else
 		return ..()
 
@@ -88,7 +90,7 @@
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(internal_ext)
-		internal_ext.afterattack(A, src)
+		internal_ext.interact_with_atom(A, src, modifiers)
 	else
 		return ..()
 
@@ -119,7 +121,7 @@
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
 
-	to_chat(user, span_warning("You enable the very ironically named \"fighting with fire\" mode, and disable the targetting safeties.")) // heheehe. funny
+	to_chat(user, span_warning("You enable the very ironically named \"fighting with fire\" mode, and disable the targeting safeties.")) // heheehe. funny
 
 	audible_message(span_danger("[src] buzzes oddly!"))
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -140,7 +142,7 @@
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/firebot/ui_data(mob/user)
 	var/list/data = ..()
-	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_cover_flags & BOT_COVER_LOCKED) || HAS_SILICON_ACCESS(user))
 		data["custom_controls"]["extinguish_fires"] = extinguish_fires
 		data["custom_controls"]["extinguish_people"] = extinguish_people
 		data["custom_controls"]["stationary_mode"] = stationary_mode
@@ -149,7 +151,7 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/firebot/ui_act(action, params)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !HAS_SILICON_ACCESS(usr)))
 		return
 
 	switch(action)
@@ -239,7 +241,7 @@
 
 	if(target_fire && (get_dist(src, target_fire) > 2))
 
-		path = get_path_to(src, target_fire, max_distance=30, mintargetdist=1, id=access_card)
+		path = get_path_to(src, target_fire, max_distance=30, mintargetdist=1, access=access_card.GetAccess())
 		mode = BOT_MOVING
 		if(!path.len)
 			soft_reset()
@@ -287,7 +289,7 @@
 		flick("firebots_use", user)
 	else
 		flick("firebot1_use", user)
-	internal_ext.afterattack(target, user, null)
+	internal_ext.interact_with_atom(target, src)
 
 /mob/living/simple_animal/bot/firebot/update_icon_state()
 	. = ..()
@@ -316,4 +318,3 @@
 #undef SPEECH_INTERVAL
 #undef DETECTED_VOICE_INTERVAL
 #undef FOAM_INTERVAL
-

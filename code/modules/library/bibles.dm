@@ -77,30 +77,24 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	unique = TRUE
 	/// Deity this bible is related to
 	var/deity_name = "Space Jesus"
-	/// Component which catches bullets for us
-	var/datum/component/bullet_catcher
 
 /obj/item/book/bible/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_HOLY)
-	bullet_catcher = AddComponent(\
+	AddComponent(\
 		/datum/component/bullet_intercepting,\
 		active_slots = ITEM_SLOT_SUITSTORE,\
 		on_intercepted = CALLBACK(src, PROC_REF(on_intercepted_bullet)),\
+		block_charges = 1,\
 	)
-	carve_out()
-
-/obj/item/book/bible/Destroy(force)
-	QDEL_NULL(bullet_catcher)
-	return ..()
 
 /// Destroy the bible when it's shot by a bullet
 /obj/item/book/bible/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
 	victim.add_mood_event("blessing", /datum/mood_event/blessing)
 	playsound(victim, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
-	victim.visible_message(span_warning("\The [src] takes \the [bullet] in [victim]'s place!"))
+	victim.visible_message(span_warning("[src] takes [bullet] in [victim]'s place!"))
 	var/obj/structure/fluff/paper/stack/pages = new(get_turf(src))
-	pages.dir = pick(GLOB.alldirs)
+	pages.setDir(pick(GLOB.alldirs))
 	name = "punctured bible"
 	desc = "A memento of good luck, or perhaps divine intervention?"
 	icon_state = "shot"
@@ -108,7 +102,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		GLOB.bible_icon_state = "shot" // New symbol of your religion if you hadn't picked one
 	atom_storage?.remove_all(get_turf(src))
 	QDEL_NULL(atom_storage)
-	QDEL_NULL(bullet_catcher)
 
 /obj/item/book/bible/examine(mob/user)
 	. = ..()
@@ -132,7 +125,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			to_chat(user, span_userdanger("[deity_name] <b>SMITE</b> thee!"))
 			add_memory_in_range(user, 7, /datum/memory/witnessed_gods_wrath, protagonist = user, deuteragonist = src, antagonist = deity_name)
 			user.client?.give_award(/datum/award/achievement/misc/gods_wrath, user)
-			user.gib()
+			user.gib(DROP_ALL_REMAINS)
 		else
 			to_chat(user, span_userdanger("[deity_name] cast a curse upon thee!"))
 			user.AddComponent(/datum/component/omen/bible)
@@ -251,71 +244,73 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		return ..()
 
 	if(target_mob.stat == DEAD)
-		target_mob.visible_message(span_danger("[user] smacks [target_mob]'s lifeless corpse with [src]."))
-		playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
+		if(!GLOB.religious_sect?.sect_dead_bless(target_mob, user))
+			target_mob.visible_message(span_danger("[user] smacks [target_mob]'s lifeless corpse with [src]."))
+			playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
 		return
 
 	if(user == target_mob)
 		balloon_alert(user, "can't heal yourself!")
 		return
 
-	var/smack = TRUE
-	if(prob(60) && bless(target_mob, user))
-		smack = FALSE
-	else if(iscarbon(target_mob))
+	var/smack_chance = DEFAULT_SMACK_CHANCE
+	if(GLOB.religious_sect)
+		smack_chance = GLOB.religious_sect.smack_chance
+	var/success = !prob(smack_chance) && bless(target_mob, user)
+	if(success)
+		return
+	if(iscarbon(target_mob))
 		var/mob/living/carbon/carbon_target = target_mob
 		if(!istype(carbon_target.head, /obj/item/clothing/head/helmet))
 			carbon_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 60)
 			carbon_target.balloon_alert(carbon_target, "you feel dumber!")
-	if(smack)
-		target_mob.visible_message(span_danger("[user] beats [target_mob] over the head with [src]!"), \
-				span_userdanger("[user] beats [target_mob] over the head with [src]!"))
-		playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
-		log_combat(user, target_mob, "attacked", src)
+	target_mob.visible_message(span_danger("[user] beats [target_mob] over the head with [src]!"), \
+			span_userdanger("[user] beats [target_mob] over the head with [src]!"))
+	playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
+	log_combat(user, target_mob, "attacked", src)
 
-/obj/item/book/bible/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
+/obj/item/book/bible/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
 	return !istype(storage_holder, /obj/item/book/bible)
 
-/obj/item/book/bible/afterattack(atom/bible_smacked, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag)
-		return
-	if(SEND_SIGNAL(bible_smacked, COMSIG_BIBLE_SMACKED, user, proximity_flag, click_parameters) & COMSIG_END_BIBLE_CHAIN)
-		return . | AFTERATTACK_PROCESSED_ITEM
+/obj/item/book/bible/interact_with_atom(atom/bible_smacked, mob/living/user, list/modifiers)
+	if(SEND_SIGNAL(bible_smacked, COMSIG_BIBLE_SMACKED, user) & COMSIG_END_BIBLE_CHAIN)
+		return ITEM_INTERACT_SUCCESS
 	if(isfloorturf(bible_smacked))
 		if(user.mind?.holy_role)
 			var/area/current_area = get_area(bible_smacked)
 			if(!GLOB.chaplain_altars.len && istype(current_area, /area/station/service/chapel))
 				make_new_altar(bible_smacked, user)
-				return
+				return ITEM_INTERACT_SUCCESS
 			for(var/obj/effect/rune/nearby_runes in range(2, user))
-				nearby_runes.invisibility = 0
+				nearby_runes.SetInvisibility(INVISIBILITY_NONE, id=type, priority=INVISIBILITY_PRIORITY_BASIC_ANTI_INVISIBILITY)
 		bible_smacked.balloon_alert(user, "floor smacked!")
+		return ITEM_INTERACT_SUCCESS
 
 	if(user.mind?.holy_role)
-		if(bible_smacked.reagents && bible_smacked.reagents.has_reagent(/datum/reagent/water)) // blesses all the water in the holder
-			. |= AFTERATTACK_PROCESSED_ITEM
+		if(bible_smacked.reagents?.has_reagent(/datum/reagent/water)) // blesses all the water in the holder
 			bible_smacked.balloon_alert(user, "blessed")
 			var/water2holy = bible_smacked.reagents.get_reagent_amount(/datum/reagent/water)
 			bible_smacked.reagents.del_reagent(/datum/reagent/water)
 			bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,water2holy)
-		if(bible_smacked.reagents && bible_smacked.reagents.has_reagent(/datum/reagent/fuel/unholywater)) // yeah yeah, copy pasted code - sue me
-			. |= AFTERATTACK_PROCESSED_ITEM
+			. = ITEM_INTERACT_SUCCESS
+		if(bible_smacked.reagents?.has_reagent(/datum/reagent/fuel/unholywater)) // yeah yeah, copy pasted code - sue me
 			bible_smacked.balloon_alert(user, "purified")
 			var/unholy2holy = bible_smacked.reagents.get_reagent_amount(/datum/reagent/fuel/unholywater)
 			bible_smacked.reagents.del_reagent(/datum/reagent/fuel/unholywater)
 			bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,unholy2holy)
+			. = ITEM_INTERACT_SUCCESS
 		if(istype(bible_smacked, /obj/item/book/bible) && !istype(bible_smacked, /obj/item/book/bible/syndicate))
-			. |= AFTERATTACK_PROCESSED_ITEM
 			bible_smacked.balloon_alert(user, "converted")
 			var/obj/item/book/bible/other_bible = bible_smacked
 			other_bible.name = name
 			other_bible.icon_state = icon_state
 			other_bible.inhand_icon_state = inhand_icon_state
 			other_bible.deity_name = deity_name
+			. = ITEM_INTERACT_SUCCESS
+		if(.)
+			return .
 
 	if(istype(bible_smacked, /obj/item/cult_bastard) && !IS_CULTIST(user))
-		. |= AFTERATTACK_PROCESSED_ITEM
 		var/obj/item/cult_bastard/sword = bible_smacked
 		bible_smacked.balloon_alert(user, "exorcising...")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
@@ -323,24 +318,30 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
 			for(var/obj/item/soulstone/stone in sword.contents)
 				stone.required_role = null
-				for(var/mob/living/simple_animal/shade/shade in stone)
+				for(var/mob/living/basic/shade/shade in stone)
 					var/datum/antagonist/cult/cultist = shade.mind.has_antag_datum(/datum/antagonist/cult)
 					if(cultist)
 						cultist.silent = TRUE
 						cultist.on_removal()
-					shade.icon_state = "shade_holy"
-					shade.name = "Purified [shade.name]"
+						SSblackbox.record_feedback("tally", "cult_shade_purified", 1)
+					shade.theme = THEME_HOLY
+					shade.name = "Purified [shade.real_name]"
+					shade.update_appearance(UPDATE_ICON_STATE)
 				stone.release_shades(user)
 				qdel(stone)
 			new /obj/item/nullrod/claymore(get_turf(sword))
 			user.visible_message(span_notice("[user] exorcises [sword]!"))
 			qdel(sword)
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+	return NONE
 
 /obj/item/book/bible/booze
 	desc = "To be applied to the head repeatedly."
 
 /obj/item/book/bible/booze/Initialize(mapload)
 	. = ..()
+	carve_out()
 	new /obj/item/reagent_containers/cup/glass/bottle/whiskey(src)
 
 /obj/item/book/bible/syndicate
@@ -369,7 +370,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		tip_text = "Clear rune", \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)
-	AddElement(/datum/element/bane, target_type = /mob/living/simple_animal/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
+	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
 
 /obj/item/book/bible/syndicate/attack_self(mob/living/carbon/human/user, modifiers)
 	if(!uses || !istype(user))

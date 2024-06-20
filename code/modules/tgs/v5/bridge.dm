@@ -48,7 +48,9 @@
 	var/json = CreateBridgeData(command, data, TRUE)
 	var/encoded_json = url_encode(json)
 
-	var/url = "http://127.0.0.1:[server_port]/Bridge?[DMAPI5_BRIDGE_DATA]=[encoded_json]"
+	var/api_prefix = interop_version.minor >= 8 ? "api/" : ""
+
+	var/url = "http://127.0.0.1:[server_port]/[api_prefix]Bridge?[DMAPI5_BRIDGE_DATA]=[encoded_json]"
 	return url
 
 /datum/tgs_api/v5/proc/CreateBridgeData(command, list/data, needs_auth)
@@ -63,7 +65,7 @@
 	if(detached)
 		// Wait up to one minute
 		for(var/i in 1 to 600)
-			sleep(1)
+			sleep(world.tick_lag)
 			if(!detached && (!require_channels || length(chat_channels)))
 				break
 
@@ -75,15 +77,23 @@
 /datum/tgs_api/v5/proc/PerformBridgeRequest(bridge_request)
 	WaitForReattach(FALSE)
 
+	TGS_DEBUG_LOG("Bridge request start")
 	// This is an infinite sleep until we get a response
 	var/export_response = world.Export(bridge_request)
+	TGS_DEBUG_LOG("Bridge request complete")
+
 	if(!export_response)
 		TGS_ERROR_LOG("Failed bridge request: [bridge_request]")
 		return
 
-	var/response_json = file2text(export_response["CONTENT"])
-	if(!response_json)
+	var/content = export_response["CONTENT"]
+	if(!content)
 		TGS_ERROR_LOG("Failed bridge request, missing content!")
+		return
+
+	var/response_json = TGS_FILE2TEXT_NATIVE(content)
+	if(!response_json)
+		TGS_ERROR_LOG("Failed bridge request, failed to load content!")
 		return
 
 	var/list/bridge_response = json_decode(response_json)

@@ -29,6 +29,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/list/categories = list()
 	///The type of sheet this material creates. This should be replaced as soon as possible by greyscale sheets
 	var/sheet_type
+	/// What type of ore is this material associated with? Used for mining, and not every material has one.
+	var/obj/item/ore_type
 	///This is a modifier for force, and resembles the strength of the material
 	var/strength_modifier = 1
 	///This is a modifier for integrity, and resembles the strength of the material
@@ -57,8 +59,14 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/cached_texture_filter_icon
 	///What type of shard the material will shatter to
 	var/obj/item/shard_type
+	///How resistant the material is to rusting when applied to a turf
+	var/mat_rust_resistance = RUST_RESISTANCE_ORGANIC
 	///What type of debris the tile will leave behind when shattered.
 	var/obj/effect/decal/debris_type
+	/// How likely this mineral is to be found in a boulder during mining.
+	var/mineral_rarity = MATERIAL_RARITY_COMMON
+	/// How many points per units of ore does this grant?
+	var/points_per_unit = 1
 
 /** Handles initializing the material.
  *
@@ -154,6 +162,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(alpha < 255)
 		T.AddElement(/datum/element/turf_z_transparency)
 		setup_glow(T)
+	T.rust_resistance = mat_rust_resistance
 	return
 
 /datum/material/proc/setup_glow(turf/on)
@@ -162,11 +171,17 @@ Simple datum which is instanced once per type and is used for every object of sa
 	// We assume no parallax means no space means no light
 	if(SSmapping.level_trait(on.z, ZTRAIT_NOPARALLAX))
 		return
-	on.set_light(2, 0.75, get_starlight_color())
+	if(!starlight_color)
+		on.RegisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED, TYPE_PROC_REF(/turf, material_starlight_changed))
+		RegisterSignal(on, COMSIG_QDELETING, PROC_REF(lit_turf_deleted))
+	on.set_light(2, 1, starlight_color || GLOB.starlight_color, l_height = LIGHTING_HEIGHT_SPACE)
 
-///Gets the space color and possible changed color if space is different
-/datum/material/proc/get_starlight_color()
-	return starlight_color || GLOB.starlight_color
+/turf/proc/material_starlight_changed(datum/source, old_star, new_star)
+	if(light_color == old_star)
+		set_light_color(new_star)
+
+/datum/material/proc/lit_turf_deleted(turf/source)
+	source.set_light(0, 0, null)
 
 /datum/material/proc/get_greyscale_config_for(datum/greyscale_config/config_path)
 	if(!config_path)
@@ -220,6 +235,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 /datum/material/proc/on_removed_turf(turf/T, amount, material_flags)
 	if(alpha < 255)
 		T.RemoveElement(/datum/element/turf_z_transparency)
+		// yeets glow
+		T.UnregisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED)
+		T.set_light(0, 0, null)
 
 /**
  * This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.
@@ -236,7 +254,7 @@ Simple datum which is instanced once per type and is used for every object of sa
  *
  * Arguments:
  * - amount: The amount of the material to break down.
- * - breakdown_flags: Some flags dictating how exactly this material is being broken down.
  */
-/datum/material/proc/return_composition(amount=1, breakdown_flags=NONE)
-	return list((src) = amount) // Yes we need the parenthesis, without them BYOND stringifies src into "src" and things break.
+/datum/material/proc/return_composition(amount = 1)
+	// Yes we need the parenthesis, without them BYOND stringifies src into "src" and things break.
+	return list((src) = amount)

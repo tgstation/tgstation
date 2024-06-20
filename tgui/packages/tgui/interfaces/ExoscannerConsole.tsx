@@ -1,7 +1,17 @@
 import { useBackend } from '../backend';
-import { BlockQuote, Box, Button, Icon, Modal, Section, LabeledList, NoticeBox, Stack } from '../components';
-import { Window } from '../layouts';
+import {
+  BlockQuote,
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  Modal,
+  NoticeBox,
+  Section,
+  Stack,
+} from '../components';
 import { formatTime } from '../format';
+import { Window } from '../layouts';
 
 type SiteData = {
   name: string;
@@ -21,8 +31,8 @@ type ScanData = {
   site_data: SiteData;
 };
 
-const ScanFailedModal = (props, context) => {
-  const { act } = useBackend(context);
+const ScanFailedModal = (props) => {
+  const { act } = useBackend();
   return (
     <Modal>
       <Stack fill vertical>
@@ -37,8 +47,8 @@ const ScanFailedModal = (props, context) => {
   );
 };
 
-const ScanSelectionSection = (props, context) => {
-  const { act, data } = useBackend<ScanData>(context);
+const ScanSelectionSection = (props) => {
+  const { act, data } = useBackend<ScanData>();
   const {
     scan_power,
     point_scan_eta,
@@ -61,9 +71,10 @@ const ScanSelectionSection = (props, context) => {
           buttons={
             <Button
               content="Back"
-              onClick={() => act('select_site', { 'site_ref': null })}
+              onClick={() => act('select_site', { site_ref: null })}
             />
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Name">{site.name}</LabeledList.Item>
             <LabeledList.Item label="Description">
@@ -135,8 +146,8 @@ type ScanInProgressData = {
   scan_description: string;
 };
 
-const ScanInProgressModal = (props, context) => {
-  const { act, data } = useBackend<ScanInProgressData>(context);
+const ScanInProgressModal = (props) => {
+  const { act, data } = useBackend<ScanInProgressData>();
   const { scan_time, scan_power, scan_description } = data;
 
   return (
@@ -176,8 +187,8 @@ type ExoscannerConsoleData = {
   scan_conditions: Array<string>;
 };
 
-export const ExoscannerConsole = (props, context) => {
-  const { act, data } = useBackend<ExoscannerConsoleData>(context);
+export const ExoscannerConsole = (props) => {
+  const { act, data } = useBackend<ExoscannerConsoleData>();
   const {
     scan_in_progress,
     scan_power,
@@ -214,9 +225,7 @@ export const ExoscannerConsole = (props, context) => {
               <Section title="Special Scan Condtions">
                 {scan_conditions &&
                   scan_conditions.map((condition) => (
-                    <NoticeBox key={condition} warning>
-                      {condition}
-                    </NoticeBox>
+                    <NoticeBox key={condition}>{condition}</NoticeBox>
                   ))}
               </Section>
             </Section>
@@ -234,12 +243,14 @@ export const ExoscannerConsole = (props, context) => {
                     <Button
                       icon="search"
                       disabled={!can_start_wide_scan}
-                      onClick={() => act('start_wide_scan')}>
+                      onClick={() => act('start_wide_scan')}
+                    >
                       Scan
                     </Button>
                   }
                   fill
-                  title="Configure Wide Scan">
+                  title="Configure Wide Scan"
+                >
                   <Stack>
                     <Stack.Item>
                       <BlockQuote>
@@ -267,14 +278,15 @@ export const ExoscannerConsole = (props, context) => {
                       onClick={() => act('open_experiments')}
                       icon="tasks"
                     />
-                  }>
+                  }
+                >
                   <Stack vertical>
                     {possible_sites.map((site) => (
                       <Stack.Item key={site.ref}>
                         <Button
                           content={site.name}
                           onClick={() =>
-                            act('select_site', { 'site_ref': site.ref })
+                            act('select_site', { site_ref: site.ref })
                           }
                         />
                       </Stack.Item>

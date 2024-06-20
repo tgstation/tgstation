@@ -150,6 +150,7 @@
 		/obj/projectile/magic/teleport,
 		/obj/projectile/magic/wipe,
 		/obj/projectile/temp/chill,
+		/obj/projectile/magic/shrink
 	)
 
 /obj/item/gun/magic/staff/chaos/unrestricted
@@ -199,7 +200,6 @@
 		/obj/projectile/bullet/honker,
 		/obj/projectile/bullet/mime,
 		/obj/projectile/curse_hand,
-		/obj/projectile/energy/declone,
 		/obj/projectile/energy/electrode,
 		/obj/projectile/energy/net,
 		/obj/projectile/energy/nuclear_particle,
@@ -263,8 +263,8 @@
 	)
 
 /obj/item/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword
 	return ..()
 
 /obj/item/gun/magic/staff/locker
@@ -320,3 +320,17 @@
 	inhand_icon_state = "pharoah_sceptre"
 	worn_icon_state = "wipestaff"
 	school = SCHOOL_FORBIDDEN //arguably the worst staff in the entire game effect wise
+
+/obj/item/gun/magic/staff/shrink
+	name = "staff of shrinking"
+	desc = "An artefact that spits bolts of tiny magic that makes things small. It's easily mistaken for a wand."
+	fire_sound = 'sound/magic/staff_shrink.ogg'
+	ammo_type = /obj/item/ammo_casing/magic/shrink
+	icon_state = "shrinkstaff"
+	inhand_icon_state = "staff"
+	max_charges = 10 // slightly more/faster charges since this will be used on walls and such
+	recharge_rate = 5
+	no_den_usage = TRUE
+	school = SCHOOL_TRANSMUTATION
+	slot_flags = NONE //too small to wear on your back
+	w_class = WEIGHT_CLASS_NORMAL //but small enough for a bag

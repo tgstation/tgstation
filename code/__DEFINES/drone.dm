@@ -2,9 +2,8 @@
 /// If drones are blacklisted from certain sensitive machines
 GLOBAL_VAR_INIT(drone_machine_blacklist_enabled, FALSE)
 
-#define DRONE_HANDS_LAYER 1
-#define DRONE_HEAD_LAYER 2
-#define DRONE_TOTAL_LAYERS 2
+#define DRONE_HEAD_LAYER 1
+#define DRONE_TOTAL_LAYERS 1
 
 /// Message displayed when new drone spawns in drone network
 #define DRONE_NET_CONNECT span_notice("DRONE NETWORK: [name] connected.")

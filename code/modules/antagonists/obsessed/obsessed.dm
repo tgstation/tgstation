@@ -1,8 +1,9 @@
 /datum/antagonist/obsessed
 	name = "Obsessed"
 	show_in_antagpanel = TRUE
-	antagpanel_category = "Other"
+	antagpanel_category = ANTAG_GROUP_CREW
 	job_rank = ROLE_OBSESSED
+	show_to_ghosts = TRUE
 	antag_hud_name = "obsessed"
 	show_name_in_check_antagonists = TRUE
 	roundend_category = "obsessed"
@@ -46,7 +47,7 @@
 	var/icon/final_icon = finish_preview_icon(obsessed_icon)
 
 	final_icon.Blend(
-		icon('icons/ui_icons/antags/obsessed.dmi', "obsession"),
+		icon('icons/ui/antags/obsessed.dmi', "obsession"),
 		ICON_OVERLAY,
 		ANTAGONIST_PREVIEW_ICON_SIZE - 30,
 		20,
@@ -62,9 +63,10 @@
 	mask = /obj/item/clothing/mask/surgical
 	neck = /obj/item/camera
 	suit = /obj/item/clothing/suit/apron
+	shoes = /obj/item/clothing/shoes/sneakers/black
 
 /datum/outfit/obsessed/post_equip(mob/living/carbon/human/H)
-	for(var/obj/item/carried_item in H.get_equipped_items(include_pockets = TRUE, include_accessories = TRUE))
+	for(var/obj/item/carried_item in H.get_equipped_items(INCLUDE_POCKETS | INCLUDE_ACCESSORIES))
 		carried_item.add_mob_blood(H)//Oh yes, there will be blood...
 	H.regenerate_icons()
 

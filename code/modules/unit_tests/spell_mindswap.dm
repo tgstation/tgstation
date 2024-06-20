@@ -11,6 +11,10 @@
 
 	var/mob/living/carbon/human/swapper = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/to_swap = allocate(/mob/living/carbon/human/consistent)
+	swapper.real_name = "The Mindswapper"
+	swapper.name = swapper.real_name
+	to_swap.real_name = "The Guy Who Gets Mindswapped"
+	to_swap.name = to_swap.real_name
 
 	swapper.forceMove(run_loc_floor_bottom_left)
 	to_swap.forceMove(locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))

@@ -39,7 +39,7 @@
 	for(var/obj/structure/structure_to_check in mob_turf)
 		if(structure_to_check.density)
 			return FALSE
-	if(mob_to_check.movement_type & (FLYING|FLOATING))
+	if(mob_to_check.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return FALSE
 
 /datum/weather/floor_is_lava/weather_act(mob/living/victim)

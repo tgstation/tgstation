@@ -15,6 +15,8 @@
 	close_sound_volume = 50
 	contents_pressure_protection = 0.8
 	can_install_electronics = FALSE
+	elevation = 21
+	elevation_open = 0
 
 	var/obj/item/tank/internals/emergency_oxygen/tank
 

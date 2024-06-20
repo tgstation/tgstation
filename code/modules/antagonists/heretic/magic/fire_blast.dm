@@ -31,7 +31,7 @@
 
 /datum/action/cooldown/spell/charged/beam/fire_blast/send_beam(atom/origin, mob/living/carbon/to_beam, bounces = 4)
 	// Send a beam from the origin to the hit mob
-	origin.Beam(to_beam, icon_state = "solar_beam", time = beam_duration, beam_type = /obj/effect/ebeam/fire)
+	origin.Beam(to_beam, icon_state = "solar_beam", time = beam_duration, beam_type = /obj/effect/ebeam/reacting/fire)
 
 	// If they block the magic, the chain wont necessarily stop,
 	// but likely will (due to them not catching on fire)
@@ -141,25 +141,11 @@
 	owner.adjustStaminaLoss(2 * tick_damage * seconds_between_ticks)
 
 // The beam fireblast spits out, causes people to walk through it to be on fire
-/obj/effect/ebeam/fire
+/obj/effect/ebeam/reacting/fire
 	name = "fire beam"
 
-/obj/effect/ebeam/fire/Initialize(mapload)
+/obj/effect/ebeam/reacting/fire/beam_entered(atom/movable/entered)
 	. = ..()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
-
-	if(!isturf(loc) || mapload) // idk if this would ever be maploaded but you never know
-		return
-
-	for(var/mob/living/living_mob in loc)
-		on_entered(entered = living_mob)
-
-/obj/effect/ebeam/fire/proc/on_entered(datum/source, atom/movable/entered)
-	SIGNAL_HANDLER
-
 	if(!isliving(entered))
 		return
 	var/mob/living/living_entered = entered

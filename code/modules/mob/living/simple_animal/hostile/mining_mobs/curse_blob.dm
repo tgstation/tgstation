@@ -23,7 +23,6 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	sentience_type = SENTIENCE_BOSS
 	layer = LARGE_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	var/mob/living/set_target
 	var/datum/move_loop/has_target/force_move/our_loop
 
@@ -46,7 +45,7 @@
 /mob/living/simple_animal/hostile/asteroid/curseblob/proc/move_loop(move_target, delay)
 	if(our_loop)
 		return
-	our_loop = SSmove_manager.force_move(src, move_target, delay, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	our_loop = GLOB.move_manager.force_move(src, move_target, delay, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	if(!our_loop)
 		return
 	RegisterSignal(move_target, COMSIG_MOB_STATCHANGE, PROC_REF(stat_change))
@@ -119,8 +118,6 @@ IGNORE_PROC_IF_NOT_TARGET(attack_alien)
 IGNORE_PROC_IF_NOT_TARGET(attack_larva)
 
 IGNORE_PROC_IF_NOT_TARGET(attack_animal)
-
-IGNORE_PROC_IF_NOT_TARGET(attack_slime)
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/bullet_act(obj/projectile/Proj)
 	if(Proj.firer != set_target)

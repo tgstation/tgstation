@@ -39,7 +39,7 @@ SUBSYSTEM_DEF(circuit_component)
  * Those that registered first will be executed first and those registered last will be executed last.
  */
 /datum/controller/subsystem/circuit_component/proc/add_callback(datum/port/input, datum/callback/to_call)
-	if(instant_run_tick == world.time && (TICK_USAGE - instant_run_start_cpu_usage) < instant_run_max_cpu_usage)
+	if(instant_run_tick == world.time && (TICK_USAGE - instant_run_start_cpu_usage) <= instant_run_max_cpu_usage)
 		instant_run_callbacks_to_run += to_call
 		return
 
@@ -80,7 +80,7 @@ SUBSYSTEM_DEF(circuit_component)
 	else
 		instant_run_tick = 0
 
-	if((TICK_USAGE - instant_run_start_cpu_usage) < instant_run_max_cpu_usage)
+	if((TICK_USAGE - instant_run_start_cpu_usage) <= instant_run_max_cpu_usage)
 		return received_inputs
 	else
 		return null

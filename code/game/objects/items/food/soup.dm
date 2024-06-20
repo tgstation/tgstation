@@ -7,6 +7,9 @@
 	eatverbs = list("slurp", "sip", "inhale", "drink")
 	venue_value = FOOD_PRICE_CHEAP
 
+/obj/item/food/bowled/make_germ_sensitive(mapload)
+	return // It's in a bowl
+
 /obj/item/food/bowled/wish
 	name = "wish soup"
 	desc = "I wish this was soup."

@@ -1,58 +1,143 @@
 
 /**
- * Applies damage to this mob
+ * Applies damage to this mob.
  *
  * Sends [COMSIG_MOB_APPLY_DAMAGE]
  *
  * Arguuments:
- * * damage - amount of damage
- * * damagetype - one of [BRUTE], [BURN], [TOX], [OXY], [CLONE], [STAMINA]
- * * def_zone - zone that is being hit if any
- * * blocked - armor value applied
- * * forced - bypass hit percentage
- * * spread_damage - used in overrides
+ * * damage - Amount of damage
+ * * damagetype - What type of damage to do. one of [BRUTE], [BURN], [TOX], [OXY], [STAMINA], [BRAIN].
+ * * def_zone - What body zone is being hit. Or a reference to what bodypart is being hit.
+ * * blocked - Percent modifier to damage. 100 = 100% less damage dealt, 50% = 50% less damage dealt.
+ * * forced - "Force" exactly the damage dealt. This means it skips damage modifier from blocked.
+ * * spread_damage - For carbons, spreads the damage across all bodyparts rather than just the targeted zone.
+ * * wound_bonus - Bonus modifier for wound chance.
+ * * bare_wound_bonus - Bonus modifier for wound chance on bare skin.
+ * * sharpness - Sharpness of the weapon.
+ * * attack_direction - Direction of the attack from the attacker to [src].
+ * * attacking_item - Item that is attacking [src].
  *
- * Returns TRUE if damage applied
+ * Returns the amount of damage dealt.
  */
-/mob/living/proc/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, attacking_item)
-	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone)
-	var/hit_percent = (100-blocked)/100
-	if(!damage || (!forced && hit_percent <= 0))
-		return FALSE
-	var/damage_amount = forced ? damage : damage * hit_percent
-	switch(damagetype)
-		if(BRUTE)
-			adjustBruteLoss(damage_amount, forced = forced)
-		if(BURN)
-			adjustFireLoss(damage_amount, forced = forced)
-		if(TOX)
-			adjustToxLoss(damage_amount, forced = forced)
-		if(OXY)
-			adjustOxyLoss(damage_amount, forced = forced)
-		if(CLONE)
-			adjustCloneLoss(damage_amount, forced = forced)
-		if(STAMINA)
-			adjustStaminaLoss(damage_amount, forced = forced)
-	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage, damagetype, def_zone)
-	return TRUE
+/mob/living/proc/apply_damage(
+	damage = 0,
+	damagetype = BRUTE,
+	def_zone = null,
+	blocked = 0,
+	forced = FALSE,
+	spread_damage = FALSE,
+	wound_bonus = 0,
+	bare_wound_bonus = 0,
+	sharpness = NONE,
+	attack_direction = null,
+	attacking_item,
+)
+	SHOULD_CALL_PARENT(TRUE)
+	var/damage_amount = damage
+	if(!forced)
+		damage_amount *= ((100 - blocked) / 100)
+		damage_amount *= get_incoming_damage_modifier(damage_amount, damagetype, def_zone, sharpness, attack_direction, attacking_item)
+	if(damage_amount <= 0)
+		return 0
 
-///like [apply_damage][/mob/living/proc/apply_damage] except it always uses the damage procs
-/mob/living/proc/apply_damage_type(damage = 0, damagetype = BRUTE)
+	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage_amount, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+
+	var/damage_dealt = 0
 	switch(damagetype)
 		if(BRUTE)
-			return adjustBruteLoss(damage)
+			if(isbodypart(def_zone))
+				var/obj/item/bodypart/actual_hit = def_zone
+				var/delta = actual_hit.get_damage()
+				if(actual_hit.receive_damage(
+					brute = damage_amount,
+					burn = 0,
+					forced = forced,
+					wound_bonus = wound_bonus,
+					bare_wound_bonus = bare_wound_bonus,
+					sharpness = sharpness,
+					attack_direction = attack_direction,
+					damage_source = attacking_item,
+				))
+					update_damage_overlays()
+				damage_dealt = actual_hit.get_damage() - delta // Unfortunately bodypart receive_damage doesn't return damage dealt so we do it manually
+			else
+				damage_dealt = -1 * adjustBruteLoss(damage_amount, forced = forced)
 		if(BURN)
-			return adjustFireLoss(damage)
+			if(isbodypart(def_zone))
+				var/obj/item/bodypart/actual_hit = def_zone
+				var/delta = actual_hit.get_damage()
+				if(actual_hit.receive_damage(
+					brute = 0,
+					burn = damage_amount,
+					forced = forced,
+					wound_bonus = wound_bonus,
+					bare_wound_bonus = bare_wound_bonus,
+					sharpness = sharpness,
+					attack_direction = attack_direction,
+					damage_source = attacking_item,
+				))
+					update_damage_overlays()
+				damage_dealt = actual_hit.get_damage() - delta // See above
+			else
+				damage_dealt = -1 * adjustFireLoss(damage_amount, forced = forced)
 		if(TOX)
-			return adjustToxLoss(damage)
+			damage_dealt = -1 * adjustToxLoss(damage_amount, forced = forced)
 		if(OXY)
-			return adjustOxyLoss(damage)
-		if(CLONE)
-			return adjustCloneLoss(damage)
+			damage_dealt = -1 * adjustOxyLoss(damage_amount, forced = forced)
 		if(STAMINA)
-			return adjustStaminaLoss(damage)
+			damage_dealt = -1 * adjustStaminaLoss(damage_amount, forced = forced)
+		if(BRAIN)
+			damage_dealt = -1 * adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
+
+	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage_dealt, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+	return damage_dealt
+
+/**
+ * Used in tandem with [/mob/living/proc/apply_damage] to calculate modifier applied into incoming damage
+ */
+/mob/living/proc/get_incoming_damage_modifier(
+	damage = 0,
+	damagetype = BRUTE,
+	def_zone = null,
+	sharpness = NONE,
+	attack_direction = null,
+	attacking_item,
+)
+	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_BE_PURE(TRUE)
+
+	var/list/damage_mods = list()
+	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, damage_mods, damage, damagetype, def_zone, sharpness, attack_direction, attacking_item)
+
+	var/final_mod = 1
+	for(var/new_mod in damage_mods)
+		final_mod *= new_mod
+	return final_mod
+
+/**
+ * Simply a wrapper for calling mob adjustXLoss() procs to heal a certain damage type,
+ * when you don't know what damage type you're healing exactly.
+ */
+/mob/living/proc/heal_damage_type(heal_amount = 0, damagetype = BRUTE)
+	heal_amount = abs(heal_amount) * -1
+
+	switch(damagetype)
+		if(BRUTE)
+			return adjustBruteLoss(heal_amount)
+		if(BURN)
+			return adjustFireLoss(heal_amount)
+		if(TOX)
+			return adjustToxLoss(heal_amount)
+		if(OXY)
+			return adjustOxyLoss(heal_amount)
+		if(STAMINA)
+			return adjustStaminaLoss(heal_amount)
 
 /// return the damage amount for the type given
+/**
+ * Simply a wrapper for calling mob getXLoss() procs to get a certain damage type,
+ * when you don't know what damage type you're getting exactly.
+ */
 /mob/living/proc/get_current_damage_of_type(damagetype = BRUTE)
 	switch(damagetype)
 		if(BRUTE)
@@ -63,31 +148,38 @@
 			return getToxLoss()
 		if(OXY)
 			return getOxyLoss()
-		if(CLONE)
-			return getCloneLoss()
 		if(STAMINA)
 			return getStaminaLoss()
 
-/// applies multiple damages at once via [/mob/living/proc/apply_damage]
-/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, brain = 0)
-	if(blocked >= 100)
-		return 0
-	if(brute)
-		apply_damage(brute, BRUTE, def_zone, blocked)
-	if(burn)
-		apply_damage(burn, BURN, def_zone, blocked)
-	if(tox)
-		apply_damage(tox, TOX, def_zone, blocked)
-	if(oxy)
-		apply_damage(oxy, OXY, def_zone, blocked)
-	if(clone)
-		apply_damage(clone, CLONE, def_zone, blocked)
-	if(stamina)
-		apply_damage(stamina, STAMINA, def_zone, blocked)
-	if(brain)
-		apply_damage(brain, BRAIN, def_zone, blocked)
-	return 1
+/// return the total damage of all types which update your health
+/mob/living/proc/get_total_damage(precision = DAMAGE_PRECISION)
+	return round(getBruteLoss() + getFireLoss() + getToxLoss() + getOxyLoss(), precision)
 
+/// Applies multiple damages at once via [apply_damage][/mob/living/proc/apply_damage]
+/mob/living/proc/apply_damages(
+	brute = 0,
+	burn = 0,
+	tox = 0,
+	oxy = 0,
+	def_zone = null,
+	blocked = 0,
+	stamina = 0,
+	brain = 0,
+)
+	var/total_damage = 0
+	if(brute)
+		total_damage += apply_damage(brute, BRUTE, def_zone, blocked)
+	if(burn)
+		total_damage += apply_damage(burn, BURN, def_zone, blocked)
+	if(tox)
+		total_damage += apply_damage(tox, TOX, def_zone, blocked)
+	if(oxy)
+		total_damage += apply_damage(oxy, OXY, def_zone, blocked)
+	if(stamina)
+		total_damage += apply_damage(stamina, STAMINA, def_zone, blocked)
+	if(brain)
+		total_damage += apply_damage(brain, BRAIN, def_zone, blocked)
+	return total_damage
 
 /// applies various common status effects or common hardcoded mob effects
 /mob/living/proc/apply_effect(effect = 0,effecttype = EFFECT_STUN, blocked = 0)
@@ -159,23 +251,35 @@
 
 	return TRUE
 
-/// Should be called by any adjustXLoss proc to send signalling information, returns a bit flag which may indicate that we don't want to make any adjustment
-/mob/living/proc/on_damage_adjustment(damage_type, amount, forced)
-	return SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_DAMAGE, damage_type, amount, forced)
+/// Returns a multiplier to apply to a specific kind of damage
+/mob/living/proc/get_damage_mod(damage_type)
+	switch(damage_type)
+		if (OXY)
+			return HAS_TRAIT(src, TRAIT_NOBREATH) ? 0 : 1
+		if (TOX)
+			if (HAS_TRAIT(src, TRAIT_TOXINLOVER))
+				return -1
+			return HAS_TRAIT(src, TRAIT_TOXIMMUNE) ? 0 : 1
+	return 1
 
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
-/mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
+/mob/living/proc/can_adjust_brute_loss(amount, forced, required_bodytype)
 	if(!forced && (status_flags & GODMODE))
-		return 0
-	if(on_damage_adjustment(BRUTE, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, BRUTE, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return FALSE
+	return TRUE
+
+/mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
+	if (!can_adjust_brute_loss(amount, forced, required_bodytype))
 		return 0
 	. = bruteloss
 	bruteloss = clamp((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	. -= bruteloss
 	if(!.) // no change, no need to update
-		return FALSE
+		return 0
 	if(updating_health)
 		updatehealth()
 
@@ -195,19 +299,24 @@
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
-/mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL, required_respiration_type = ALL)
+/mob/living/proc/can_adjust_oxy_loss(amount, forced, required_biotype, required_respiration_type)
 	if(!forced)
 		if(status_flags & GODMODE)
-			return 0
+			return FALSE
+		if (required_respiration_type)
+			var/obj/item/organ/internal/lungs/affected_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+			if(isnull(affected_lungs))
+				if(!(mob_respiration_type & required_respiration_type))  // if the mob has no lungs, use mob_respiration_type
+					return FALSE
+			else
+				if(!(affected_lungs.respiration_type & required_respiration_type)) // otherwise use the lungs' respiration_type
+					return FALSE
+	if(SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_OXY_DAMAGE, OXY, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return FALSE
+	return TRUE
 
-		var/obj/item/organ/internal/lungs/affected_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
-		if(isnull(affected_lungs))
-			if(!(mob_respiration_type & required_respiration_type))  // if the mob has no lungs, use mob_respiration_type
-				return 0
-		else
-			if(!(affected_lungs.respiration_type & required_respiration_type)) // otherwise use the lungs' respiration_type
-				return 0
-	if(on_damage_adjustment(OXY, amount, forced) & COMPONENT_IGNORE_CHANGE)
+/mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL, required_respiration_type = ALL)
+	if(!can_adjust_oxy_loss(amount, forced, required_biotype, required_respiration_type))
 		return 0
 	. = oxyloss
 	oxyloss = clamp((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
@@ -240,20 +349,40 @@
 /mob/living/proc/getToxLoss()
 	return toxloss
 
+/mob/living/proc/can_adjust_tox_loss(amount, forced, required_biotype = ALL)
+	if(!forced && ((status_flags & GODMODE) || !(mob_biotypes & required_biotype)))
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_TOX_DAMAGE, TOX, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return FALSE
+	return TRUE
+
 /mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
-	if(!forced && (status_flags & GODMODE))
-		return FALSE
-	if(on_damage_adjustment(TOX, amount, forced) & COMPONENT_IGNORE_CHANGE)
+	if(!can_adjust_tox_loss(amount, forced, required_biotype))
 		return 0
-	if(!forced && !(mob_biotypes & required_biotype))
-		return FALSE
+
+	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
+		amount = -amount
+		if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
+			amount = min(amount, 0)
+		if(blood_volume)
+			if(amount > 0)
+				blood_volume = max(blood_volume - (5 * amount), 0)
+			else
+				blood_volume = max(blood_volume - amount, 0)
+
+	else if(!forced && HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
+		amount = min(amount, 0)
+
 	. = toxloss
 	toxloss = clamp((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	. -= toxloss
+
 	if(!.) // no change, no need to update
 		return FALSE
+
 	if(updating_health)
 		updatehealth()
+
 
 /mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
 	if(!forced && (status_flags & GODMODE))
@@ -271,10 +400,15 @@
 /mob/living/proc/getFireLoss()
 	return fireloss
 
-/mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
+/mob/living/proc/can_adjust_fire_loss(amount, forced, required_bodytype)
 	if(!forced && (status_flags & GODMODE))
-		return 0
-	if(on_damage_adjustment(BURN, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_BURN_DAMAGE, BURN, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return FALSE
+	return TRUE
+
+/mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
+	if(!can_adjust_fire_loss(amount, forced, required_bodytype))
 		return 0
 	. = fireloss
 	fireloss = clamp((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
@@ -295,35 +429,6 @@
 	if(updating_health)
 		updatehealth()
 
-/mob/living/proc/getCloneLoss()
-	return cloneloss
-
-/mob/living/proc/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
-	if(!forced && (!(mob_biotypes & required_biotype) || status_flags & GODMODE || HAS_TRAIT(src, TRAIT_NOCLONELOSS)))
-		return 0
-	if(on_damage_adjustment(CLONE, amount, forced) & COMPONENT_IGNORE_CHANGE)
-		return 0
-	. = cloneloss
-	cloneloss = clamp((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
-	. -= cloneloss
-	if(. == 0) // no change, no need to update
-		return 0
-	if(updating_health)
-		updatehealth()
-
-/mob/living/proc/setCloneLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
-	if(!forced && ( (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NOCLONELOSS)) )
-		return FALSE
-	if(!forced && !(mob_biotypes & required_biotype))
-		return FALSE
-	. = cloneloss
-	cloneloss = amount
-	. -= cloneloss
-	if(!.) // no change, no need to update
-		return FALSE
-	if(updating_health)
-		updatehealth()
-
 /mob/living/proc/adjustOrganLoss(slot, amount, maximum, required_organ_flag)
 	return
 
@@ -336,31 +441,52 @@
 /mob/living/proc/getStaminaLoss()
 	return staminaloss
 
+/mob/living/proc/can_adjust_stamina_loss(amount, forced, required_biotype = ALL)
+	if(!forced && (!(mob_biotypes & required_biotype) || status_flags & GODMODE))
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, STAMINA, amount, forced) & COMPONENT_IGNORE_CHANGE)
+		return FALSE
+	return TRUE
+
 /mob/living/proc/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype = ALL)
-	if(!forced && ((status_flags & GODMODE) || required_biotype && !(mob_biotypes & required_biotype)))
+	if(!can_adjust_stamina_loss(amount, forced, required_biotype))
 		return 0
-	if(on_damage_adjustment(STAMINA, amount, forced) & COMPONENT_IGNORE_CHANGE)
-		return 0
-	. = staminaloss
+	var/old_amount = staminaloss
 	staminaloss = clamp((staminaloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, max_stamina)
-	. -= staminaloss
-	if(. == 0) // no change, no need to update
+	var/delta = old_amount - staminaloss
+	if(delta <= 0)
+		// need to check for stamcrit AFTER canadjust but BEFORE early return here
+		received_stamina_damage(staminaloss, -1 * delta)
+	if(delta == 0) // no change, no need to update
 		return 0
 	if(updating_stamina)
 		updatehealth()
+	return delta
 
 /mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype = ALL)
 	if(!forced && (status_flags & GODMODE))
-		return FALSE
+		return 0
 	if(!forced && !(mob_biotypes & required_biotype))
-		return FALSE
-	. = staminaloss
+		return 0
+	var/old_amount = staminaloss
 	staminaloss = amount
-	. -= staminaloss
-	if(!.) // no change, no need to update
-		return FALSE
+	var/delta = old_amount - staminaloss
+	if(delta <= 0 && amount >= DAMAGE_PRECISION)
+		received_stamina_damage(staminaloss, -1 * delta, amount)
+	if(delta == 0) // no change, no need to update
+		return 0
 	if(updating_stamina)
 		updatehealth()
+	return delta
+
+/// The mob has received stamina damage
+///
+/// - current_level: The mob's current stamina damage amount (to save unnecessary getStaminaLoss() calls)
+/// - amount_actual: The amount of stamina damage received, in actuality
+/// For example, if you are taking 50 stamina damage but are at 90, you would actually only receive 30 stamina damage (due to the cap)
+/// - amount: The amount of stamina damage received, raw
+/mob/living/proc/received_stamina_damage(current_level, amount_actual, amount)
+	addtimer(CALLBACK(src, PROC_REF(setStaminaLoss), 0, TRUE, TRUE), stamina_regen_time, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /**
  * heal ONE external organ, organ gets randomly selected from damaged ones.
@@ -404,11 +530,11 @@
 
 ///heal up to amount damage, in a given order
 /mob/living/proc/heal_ordered_damage(amount, list/damage_types)
-	. = FALSE //we'll return the amount of damage healed
+	. = 0 //we'll return the amount of damage healed
 	for(var/damagetype in damage_types)
 		var/amount_to_heal = min(abs(amount), get_current_damage_of_type(damagetype)) //heal only up to the amount of damage we have
 		if(amount_to_heal)
-			. += apply_damage_type(-amount_to_heal, damagetype)
+			. += heal_damage_type(amount_to_heal, damagetype)
 			amount -= amount_to_heal //remove what we healed from our current amount
 		if(!amount)
 			break

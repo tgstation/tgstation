@@ -8,7 +8,7 @@
 	circuit = /obj/item/circuitboard/computer/security
 	light_color = COLOR_SOFT_RED
 
-	var/list/network = list("ss13")
+	var/list/network = list(CAMERANET_NETWORK_SS13)
 	var/obj/machinery/camera/active_camera
 	/// The turf where the camera was last updated.
 	var/turf/last_camera_turf
@@ -19,7 +19,7 @@
 	/// All the plane masters that need to be applied.
 	var/atom/movable/screen/background/cam_background
 
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_REQUIRES_SIGHT
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_SIGHT
 
 /obj/machinery/computer/security/Initialize(mapload)
 	. = ..()
@@ -30,7 +30,7 @@
 	// Convert networks to lowercase
 	for(var/i in network)
 		network -= i
-		network += lowertext(i)
+		network += LOWER_TEXT(i)
 	// Initialize map objects
 	cam_screen = new
 	cam_screen.generate_view(map_name)
@@ -50,6 +50,8 @@
 
 /obj/machinery/computer/security/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
+	if(!user.client) //prevents errors by trying to pass clients that don't exist.
+		return
 	// Update UI
 	ui = SStgui.try_update_ui(user, src, ui)
 
@@ -66,7 +68,7 @@
 		// Turn on the console
 		if(length(concurrent_users) == 1 && is_living)
 			playsound(src, 'sound/machines/terminal_on.ogg', 25, FALSE)
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 		// Register map objects
 		cam_screen.display_to(user)
 		user.client.register_map_obj(cam_background)
@@ -74,7 +76,7 @@
 		ui = new(user, src, "CameraConsole", name)
 		ui.open()
 
-/obj/machinery/computer/security/ui_status(mob/user)
+/obj/machinery/computer/security/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
 	if(. == UI_DISABLED)
 		return UI_CLOSE
@@ -82,17 +84,18 @@
 
 /obj/machinery/computer/security/ui_data()
 	var/list/data = list()
-	data["network"] = network
 	data["activeCamera"] = null
 	if(active_camera)
 		data["activeCamera"] = list(
 			name = active_camera.c_tag,
-			status = active_camera.status,
+			ref = REF(active_camera),
+			status = active_camera.camera_enabled,
 		)
 	return data
 
 /obj/machinery/computer/security/ui_static_data()
 	var/list/data = list()
+	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
 	var/list/cameras = get_camera_list(network)
 	data["cameras"] = list()
@@ -100,6 +103,7 @@
 		var/obj/machinery/camera/C = cameras[i]
 		data["cameras"] += list(list(
 			name = C.c_tag,
+			ref = REF(C),
 		))
 
 	return data
@@ -110,13 +114,11 @@
 		return
 
 	if(action == "switch_camera")
-		var/c_tag = params["name"]
-		var/list/cameras = get_camera_list(network)
-		var/obj/machinery/camera/selected_camera = cameras[c_tag]
+		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in GLOB.cameranet.cameras
 		active_camera = selected_camera
-		playsound(src, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+		playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
 
-		if(!selected_camera)
+		if(isnull(active_camera))
 			return TRUE
 
 		update_active_camera_screen()
@@ -171,7 +173,6 @@
 		active_camera = null
 		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
-		use_power(0)
 
 /obj/machinery/computer/security/proc/show_camera_static()
 	cam_screen.vis_contents.Cut()
@@ -193,31 +194,31 @@
 	desc = "Used to access the various cameras on the outpost."
 	icon_screen = "mining"
 	icon_keyboard = "mining_key"
-	network = list("mine", "auxbase")
+	network = list(CAMERANET_NETWORK_MINE, CAMERANET_NETWORK_AUXBASE)
 	circuit = /obj/item/circuitboard/computer/mining
 
 /obj/machinery/computer/security/research
 	name = "research camera console"
 	desc = "Used to access the various cameras in science."
-	network = list("rd")
+	network = list(CAMERANET_NETWORK_RD)
 	circuit = /obj/item/circuitboard/computer/research
 
 /obj/machinery/computer/security/hos
 	name = "\improper Head of Security's camera console"
 	desc = "A custom security console with added access to the labor camp network."
-	network = list("ss13", "labor")
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_LABOR)
 	circuit = null
 
 /obj/machinery/computer/security/labor
 	name = "labor camp monitoring"
 	desc = "Used to access the various cameras on the labor camp."
-	network = list("labor")
+	network = list(CAMERANET_NETWORK_LABOR)
 	circuit = null
 
 /obj/machinery/computer/security/qm
 	name = "\improper Quartermaster's camera console"
 	desc = "A console with access to the mining, auxiliary base and vault camera networks."
-	network = list("mine", "auxbase", "vault")
+	network = list(CAMERANET_NETWORK_MINE, CAMERANET_NETWORK_AUXBASE, CAMERANET_NETWORK_VAULT)
 	circuit = null
 
 #undef DEFAULT_MAP_SIZE

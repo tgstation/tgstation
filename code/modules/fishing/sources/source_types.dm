@@ -7,6 +7,7 @@
 		/obj/item/fish/cardinal = 15,
 		/obj/item/fish/greenchromis = 15,
 		/obj/item/fish/lanternfish = 5,
+		/obj/item/fish/zipzap = 5,
 		/obj/item/fish/clownfish/lube = 3,
 	)
 	fish_counts = list(
@@ -67,6 +68,7 @@
 		/obj/item/fish/gunner_jellyfish = 5,
 		/obj/item/fish/needlefish = 5,
 		/obj/item/fish/armorfish = 5,
+		/obj/item/fish/zipzap = 5,
 	)
 	catalog_description = "Ocean dimension (Fishing portal generator)"
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
@@ -97,6 +99,7 @@
 		FISHING_DUD = 5,
 		/obj/item/fish/donkfish = 5,
 		/obj/item/fish/emulsijack = 5,
+		/obj/item/fish/jumpercable = 5,
 	)
 	catalog_description = "Syndicate dimension (Fishing portal generator)"
 	radial_name = "Syndicate"
@@ -193,6 +196,13 @@
 
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
 
+/datum/fish_source/chasm/on_start_fishing(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
+	. = ..()
+	if(istype(rod.hook, /obj/item/fishing_hook/rescue))
+		to_chat(fisherman, span_notice("The rescue hook falls straight down the chasm! Hopefully it catches a corpse."))
+		return
+	to_chat(fisherman, span_danger("Your fishing hook makes a soft 'thud' noise as it gets stuck on the wall of the chasm. It doesn't look like it's going to catch much of anything, except maybe some detritus."))
+
 /datum/fish_source/chasm/roll_reward(obj/item/fishing_rod/rod, mob/fisherman)
 	var/rolled_reward = ..()
 
@@ -201,12 +211,15 @@
 
 	return rod.hook.chasm_detritus_type
 
+/datum/fish_source/chasm
+
 /datum/fish_source/lavaland
 	catalog_description = "Lava vents"
 	background = "background_lavaland"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/stack/ore/slag = 20,
+		/obj/item/fish/lavaloop = 15,
 		/obj/structure/closet/crate/necropolis/tendril = 1,
 		/obj/effect/mob_spawn/corpse/human/charredskeleton = 1
 	)
@@ -216,7 +229,7 @@
 
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
 
-/datum/fish_source/lavaland/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman)
+/datum/fish_source/lavaland/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
 	var/turf/approx = get_turf(fisherman) //todo pass the parent
 	if(!SSmapping.level_trait(approx.z, ZTRAIT_MINING))
@@ -229,16 +242,17 @@
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/chasm_crab/ice = 15,
+		/obj/item/fish/lavaloop/plasma_river = 15,
 		/obj/item/coin/plasma = 3,
 		/obj/item/stack/ore/plasma = 3,
 		/mob/living/basic/mining/lobstrosity = 1,
 		/obj/effect/decal/remains/plasma = 1,
-		/obj/item/stack/sheet/mineral/mythril = 1,
+		/obj/item/stack/sheet/mineral/runite = 1,
 		/obj/item/stack/sheet/mineral/adamantine = 1,
 	)
 	fish_counts = list(
 		/obj/item/stack/sheet/mineral/adamantine = 3,
-		/obj/item/stack/sheet/mineral/mythril = 2,
+		/obj/item/stack/sheet/mineral/runite = 2,
 	)
 
 /datum/fish_source/moisture_trap
@@ -262,7 +276,7 @@
 	fish_counts = list(
 		/obj/item/storage/wallet/money = 2,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY - 5 //For beginners
+	fishing_difficulty = FISHING_EASY_DIFFICULTY //For beginners
 
 /datum/fish_source/holographic
 	catalog_description = "Holographic water"
@@ -275,9 +289,9 @@
 		/obj/item/fish/holo/checkered = 5,
 		/obj/item/fish/holo/halffish = 5,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY - 5
+	fishing_difficulty = FISHING_EASY_DIFFICULTY
 
-/datum/fish_source/holographic/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman)
+/datum/fish_source/holographic/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
 	if(!istype(get_area(fisherman), /area/station/holodeck))
 		return "You need to be inside the Holodeck to catch holographic fish."
@@ -310,3 +324,63 @@
 		/obj/item/fish/mastodon = 1,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
+
+#define RANDOM_SEED "Random seed"
+
+/datum/fish_source/hydro_tray
+	catalog_description = "Hydroponics trays"
+	fish_table = list(
+		FISHING_DUD = 25,
+		/obj/item/food/grown/grass = 25,
+		RANDOM_SEED = 16,
+		/obj/item/seeds/grass = 6,
+		/obj/item/seeds/random = 1,
+		/mob/living/basic/frog = 1,
+		/mob/living/basic/axolotl = 1,
+	)
+	fish_counts = list(
+		/obj/item/food/grown/grass = 10,
+		/obj/item/seeds/grass = 4,
+		RANDOM_SEED = 4,
+		/obj/item/seeds/random = 1,
+		/mob/living/basic/frog = 1,
+		/mob/living/basic/axolotl = 1,
+	)
+	fishing_difficulty = FISHING_EASY_DIFFICULTY - 5
+
+/datum/fish_source/hydro_tray/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
+	if(!istype(parent, /obj/machinery/hydroponics/constructable))
+		return ..()
+
+	var/obj/machinery/hydroponics/constructable/basin = parent
+	if(basin.waterlevel <= 0)
+		return "There's no water in [parent] to fish in."
+	if(basin.myseed)
+		return "There's a plant growing in [parent]."
+
+	return ..()
+
+/datum/fish_source/hydro_tray/spawn_reward(reward_path, mob/fisherman, turf/fishing_spot)
+	if(reward_path != RANDOM_SEED)
+		var/mob/living/created_reward = ..()
+		if(istype(created_reward))
+			created_reward.name = "small [created_reward.name]"
+			created_reward.update_transform(0.75)
+		return created_reward
+
+	var/static/list/seeds_to_draw_from
+	if(isnull(seeds_to_draw_from))
+		seeds_to_draw_from = subtypesof(/obj/item/seeds)
+		// These two are already covered innately
+		seeds_to_draw_from -= /obj/item/seeds/random
+		seeds_to_draw_from -= /obj/item/seeds/grass
+		// -1 yield are unharvestable plants so we don't care
+		// 20 rarirty is where most of the wacky plants are so let's ignore them
+		for(var/obj/item/seeds/seed_path as anything in seeds_to_draw_from)
+			if(initial(seed_path.yield) == -1 || initial(seed_path.rarity) >= PLANT_MODERATELY_RARE)
+				seeds_to_draw_from -= seed_path
+
+	var/picked_path = pick(seeds_to_draw_from)
+	return new picked_path(get_turf(fishing_spot))
+
+#undef RANDOM_SEED

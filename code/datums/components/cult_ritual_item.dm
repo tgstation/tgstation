@@ -39,7 +39,7 @@
 		var/datum/action/added_action = item_parent.add_item_action(action)
 		linked_action_ref = WEAKREF(added_action)
 
-/datum/component/cult_ritual_item/Destroy(force, silent)
+/datum/component/cult_ritual_item/Destroy(force)
 	cleanup_shields()
 	QDEL_NULL(linked_action_ref)
 	return ..()
@@ -221,7 +221,7 @@
 		cultist.log_message("erased a [rune.cultist_name] rune with [parent].", LOG_GAME)
 		message_admins("[ADMIN_LOOKUPFLW(cultist)] erased a [rune.cultist_name] rune with [parent].")
 
-	to_chat(cultist, span_notice("You carefully erase the [lowertext(rune.cultist_name)] rune."))
+	to_chat(cultist, span_notice("You carefully erase the [LOWER_TEXT(rune.cultist_name)] rune."))
 	qdel(rune)
 
 /*
@@ -283,13 +283,13 @@
 		return FALSE
 
 	if(ispath(rune_to_scribe, /obj/effect/rune/summon) && (!is_station_level(our_turf.z) || istype(get_area(cultist), /area/space)))
-		to_chat(cultist, span_cultitalic("The veil is not weak enough here to summon a cultist, you must be on station!"))
+		to_chat(cultist, span_cult_italic("The veil is not weak enough here to summon a cultist, you must be on station!"))
 		return
 
 	if(ispath(rune_to_scribe, /obj/effect/rune/apocalypse))
 		if((world.time - SSticker.round_start_time) <= 6000)
 			var/wait = 6000 - (world.time - SSticker.round_start_time)
-			to_chat(cultist, span_cultitalic("The veil is not yet weak enough for this rune - it will be available in [DisplayTimeText(wait)]."))
+			to_chat(cultist, span_cult_italic("The veil is not yet weak enough for this rune - it will be available in [DisplayTimeText(wait)]."))
 			return
 		if(!check_if_in_ritual_site(cultist, user_team, TRUE))
 			return
@@ -310,12 +310,23 @@
 	if(!initial(rune_to_scribe.no_scribe_boost) && (our_turf.type in turfs_that_boost_us))
 		scribe_mod *= 0.5
 
+	var/scribe_started = initial(rune_to_scribe.started_creating)
+	var/scribe_failed = initial(rune_to_scribe.failed_to_create)
+	if(scribe_started)
+		var/datum/callback/startup = CALLBACK(GLOBAL_PROC, scribe_started)
+		startup.Invoke()
+	var/datum/callback/failed
+	if(scribe_failed)
+		failed = CALLBACK(GLOBAL_PROC, scribe_failed)
+
 	SEND_SOUND(cultist, sound('sound/weapons/slice.ogg', 0, 1, 10))
 	if(!do_after(cultist, scribe_mod, target = get_turf(cultist), timed_action_flags = IGNORE_SLOWDOWNS))
 		cleanup_shields()
+		failed?.Invoke()
 		return FALSE
 	if(!can_scribe_rune(tool, cultist))
 		cleanup_shields()
+		failed?.Invoke()
 		return FALSE
 
 	cultist.visible_message(
@@ -327,8 +338,8 @@
 	var/obj/effect/rune/made_rune = new rune_to_scribe(our_turf, chosen_keyword)
 	made_rune.add_mob_blood(cultist)
 
-	to_chat(cultist, span_cult("The [lowertext(made_rune.cultist_name)] rune [made_rune.cultist_desc]"))
-	cultist.log_message("scribed \a [lowertext(made_rune.cultist_name)] rune using [parent] ([parent.type])", LOG_GAME)
+	to_chat(cultist, span_cult("The [LOWER_TEXT(made_rune.cultist_name)] rune [made_rune.cultist_desc]"))
+	cultist.log_message("scribed \a [LOWER_TEXT(made_rune.cultist_name)] rune using [parent] ([parent.type])", LOG_GAME)
 	SSblackbox.record_feedback("tally", "cult_runes_scribed", 1, made_rune.cultist_name)
 
 	return TRUE
@@ -348,7 +359,7 @@
 		to_chat(cultist, span_warning("The sacrifice is not complete. The portal would lack the power to open if you tried!"))
 		return FALSE
 	if(summon_objective.check_completion())
-		to_chat(cultist, span_cultlarge("\"I am already here. There is no need to try to summon me now.\""))
+		to_chat(cultist, span_cult_large("\"I am already here. There is no need to try to summon me now.\""))
 		return FALSE
 	var/confirm_final = tgui_alert(cultist, "This is the FINAL step to summon Nar'Sie; it is a long, painful ritual and the crew will be alerted to your presence.", "Are you prepared for the final battle?", list("My life for Nar'Sie!", "No"))
 	if(confirm_final == "No")
@@ -357,9 +368,21 @@
 	if(!check_if_in_ritual_site(cultist, cult_team))
 		return FALSE
 	var/area/summon_location = get_area(cultist)
-	priority_announce("Figments from an eldritch god are being summoned by [cultist.real_name] into [summon_location.get_original_area_name()] from an unknown dimension. Disrupt the ritual at all costs!", "Central Command Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, has_important_message = TRUE)
+	priority_announce(
+		text = "Figments from an eldritch god are being summoned by [cultist.real_name] into [summon_location.get_original_area_name()] from an unknown dimension. Disrupt the ritual at all costs!",
+		sound = 'sound/ambience/antag/bloodcult/bloodcult_scribe.ogg',
+		sender_override = "[command_name()] Higher Dimensional Affairs",
+		has_important_message = TRUE,
+	)
 	for(var/shielded_turf in spiral_range_turfs(1, cultist, 1))
 		LAZYADD(shields, new /obj/structure/emergency_shield/cult/narsie(shielded_turf))
+
+	notify_ghosts(
+		"[cultist] has begun scribing a Nar'Sie rune!",
+		source = cultist,
+		header = "Maranax Infirmux!",
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+	)
 
 	return TRUE
 

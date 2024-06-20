@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/conjure/cosmic_expansion
 	name = "Cosmic Expansion"
 	desc = "This spell generates a 3x3 domain of cosmic fields. \
-		Creatures up to 7 tiles away will also recieve a star mark."
+		Creatures up to 7 tiles away will also receive a star mark."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -28,7 +28,7 @@
 /datum/action/cooldown/spell/conjure/cosmic_expansion/cast(mob/living/cast_on)
 	new expansion_effect(get_turf(cast_on))
 	for(var/mob/living/nearby_mob in range(star_mark_range, cast_on))
-		if(cast_on == nearby_mob)
+		if(cast_on == nearby_mob || cast_on.buckled == nearby_mob)
 			continue
 		nearby_mob.apply_status_effect(/datum/status_effect/star_mark, cast_on)
 	if (ascended)

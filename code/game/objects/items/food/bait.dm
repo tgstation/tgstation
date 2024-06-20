@@ -36,9 +36,8 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	inhand_icon_state = "pen"
-	food_reagents = list(/datum/reagent/drug/kronkaine = 1)
+	food_reagents = list(/datum/reagent/drug/kronkaine = 2) //The kronkaine is the thing that makes this a great bait.
 	tastes = list("hypocrisy" = 1)
-	bait_quality = TRAIT_GREAT_QUALITY_BAIT
 
 /obj/item/food/bait/doughball
 	name = "doughball"
@@ -66,4 +65,4 @@
 
 /obj/item/food/bait/doughball/synthetic/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, OMNI_BAIT_TRAIT, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_OMNI_BAIT, INNATE_TRAIT)

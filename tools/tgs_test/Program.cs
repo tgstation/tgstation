@@ -11,6 +11,7 @@ using Tgstation.Server.Api.Models.Request;
 using Tgstation.Server.Api.Models;
 using Tgstation.Server.Api.Models.Response;
 using Tgstation.Server.Client;
+using Tgstation.Server.Common.Extensions;
 using YamlDotNet.Serialization.NamingConventions;
 using YamlDotNet.Serialization;
 
@@ -202,10 +203,14 @@ try
 		default);
 
 	Console.WriteLine("Installing BYOND...");
-	var byondInstallJob = await instanceClient.Byond.SetActiveVersion(
-		new ByondVersionRequest
+	var byondInstallJob = await instanceClient.Engine.SetActiveVersion(
+		new EngineVersionRequest
 		{
-			Version = targetByondVersion
+			EngineVersion = new EngineVersion
+			{
+				Version = targetByondVersion,
+				Engine = EngineType.Byond,
+			}
 		},
 		null,
 		default);

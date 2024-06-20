@@ -214,6 +214,14 @@
 	emote_hear = list("rawrs.","grumbles.","grawls.", "stomps!")
 	emote_see = list("stares ferociously.")
 
+/datum/ai_planning_subtree/random_speech/cats
+	speech_chance = 10
+	speak = list(
+		"mrawww!",
+		"meow!",
+		"maw!",
+	)
+
 /datum/ai_planning_subtree/random_speech/blackboard //literal tower of babel, subtree form
 	speech_chance = 1
 
@@ -228,6 +236,6 @@
 	emote_see = speech_lines[BB_EMOTE_SEE] || list()
 	emote_hear = speech_lines[BB_EMOTE_HEAR] || list()
 	sound = speech_lines[BB_EMOTE_SOUND] || list()
-	speech_chance = speech_lines[BB_EMOTE_CHANCE] ? speech_lines[BB_EMOTE_CHANCE] : initial(speech_chance)
+	speech_chance = speech_lines[BB_SPEAK_CHANCE] ? speech_lines[BB_SPEAK_CHANCE] : initial(speech_chance)
 
 	return ..()

@@ -10,8 +10,6 @@
 	var/load = 0 // the current load on the powernet, increased by each machine at processing
 	var/newavail = 0 // what available power was gathered last tick, then becomes...
 	var/avail = 0 //...the current available power in the powernet
-	var/viewavail = 0 // the available power as it appears on the power console (gradually updated)
-	var/viewload = 0 // the load as it appears on the power console (gradually updated)
 	var/netexcess = 0 // excess power on the powernet (typically avail-load)///////
 	var/delayedload = 0 // load applied to powernet between power ticks.
 
@@ -84,10 +82,6 @@
 		for(var/obj/machinery/power/smes/S in nodes) // find the SMESes in the network
 			S.restore() // and restore some of the power that was used
 
-	// update power consoles
-	viewavail = round(0.8 * viewavail + 0.2 * avail)
-	viewload = round(0.8 * viewload + 0.2 * load)
-
 	// reset the powernet
 	load = delayedload
 	delayedload = 0
@@ -95,7 +89,4 @@
 	newavail = 0
 
 /datum/powernet/proc/get_electrocute_damage()
-	if(avail >= 1000)
-		return clamp(20 + round(avail/25000), 20, 195) + rand(-5,5)
-	else
-		return 0
+	return ELECTROCUTE_DAMAGE(energy_to_power(avail)) // Assuming 1 second of contact.

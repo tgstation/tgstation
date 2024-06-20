@@ -13,11 +13,14 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/glasses/changeling/attack_hand(mob/user, list/modifiers)
-	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
+	if(loc == user && IS_CHANGELING(user))
 		to_chat(user, span_notice("You reabsorb [src] into your body."))
 		qdel(src)
 		return
 	. = ..()
+
+/obj/item/clothing/glasses/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
 
 /obj/item/clothing/under/changeling
 	name = "flesh"
@@ -25,11 +28,14 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/under/changeling/attack_hand(mob/user, list/modifiers)
-	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
+	if(loc == user && IS_CHANGELING(user))
 		to_chat(user, span_notice("You reabsorb [src] into your body."))
 		qdel(src)
 		return
 	. = ..()
+
+/obj/item/clothing/under/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
 
 /obj/item/clothing/suit/changeling
 	name = "flesh"
@@ -38,11 +44,14 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/suit/changeling/attack_hand(mob/user, list/modifiers)
-	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
+	if(loc == user && IS_CHANGELING(user))
 		to_chat(user, span_notice("You reabsorb [src] into your body."))
 		qdel(src)
 		return
 	. = ..()
+
+/obj/item/clothing/suit/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
 
 /obj/item/clothing/head/changeling
 	name = "flesh"
@@ -51,11 +60,14 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/head/changeling/attack_hand(mob/user, list/modifiers)
-	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
+	if(loc == user && IS_CHANGELING(user))
 		to_chat(user, span_notice("You reabsorb [src] into your body."))
 		qdel(src)
 		return
 	. = ..()
+
+/obj/item/clothing/head/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
 
 /obj/item/clothing/shoes/changeling
 	name = "flesh"
@@ -63,11 +75,14 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/shoes/changeling/attack_hand(mob/user, list/modifiers)
-	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
+	if(loc == user && IS_CHANGELING(user))
 		to_chat(user, span_notice("You reabsorb [src] into your body."))
 		qdel(src)
 		return
 	. = ..()
+
+/obj/item/clothing/shoes/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
 
 /obj/item/clothing/gloves/changeling
 	name = "flesh"
@@ -75,11 +90,14 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/gloves/changeling/attack_hand(mob/user, list/modifiers)
-	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
+	if(loc == user && IS_CHANGELING(user))
 		to_chat(user, span_notice("You reabsorb [src] into your body."))
 		qdel(src)
 		return
 	. = ..()
+
+/obj/item/clothing/gloves/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
 
 /obj/item/clothing/mask/changeling
 	name = "flesh"
@@ -87,11 +105,14 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/changeling/attack_hand(mob/user, list/modifiers)
-	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
+	if(loc == user && IS_CHANGELING(user))
 		to_chat(user, span_notice("You reabsorb [src] into your body."))
 		qdel(src)
 		return
 	. = ..()
+
+/obj/item/clothing/mask/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
 
 /obj/item/changeling
 	name = "flesh"
@@ -100,11 +121,14 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/changeling/attack_hand(mob/user, list/modifiers)
-	if(loc == user && user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling))
+	if(loc == user && IS_CHANGELING(user))
 		to_chat(user, span_notice("You reabsorb [src] into your body."))
 		qdel(src)
 		return
 	. = ..()
+
+/obj/item/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
 
 /obj/item/changeling/id
 	slot_flags = ITEM_SLOT_ID
@@ -127,14 +151,19 @@
 /obj/item/changeling/id/proc/get_cached_flat_icon()
 	if(!cached_flat_icon)
 		cached_flat_icon = getFlatIcon(src)
+		cached_flat_icon.Crop(ID_ICON_BORDERS)
 	return cached_flat_icon
+
+/obj/item/changeling/id/get_id_examine_strings(mob/user)
+	. = ..()
+	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
 
 /obj/item/changeling/id/get_examine_string(mob/user, thats = FALSE)
 	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
 
 //Change our DNA to that of somebody we've absorbed.
 /datum/action/changeling/transform/sting_action(mob/living/carbon/human/user)
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	var/datum/changeling_profile/chosen_prof = changeling.select_dna()
 
 	if(!chosen_prof)
@@ -185,7 +214,7 @@
 /datum/antagonist/changeling/proc/check_menu(mob/living/carbon/user)
 	if(!istype(user))
 		return FALSE
-	var/datum/antagonist/changeling/changeling_datum = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling_datum = IS_CHANGELING(user)
 	if(!changeling_datum)
 		return FALSE
 	return TRUE

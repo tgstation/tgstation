@@ -54,7 +54,7 @@
 	if(!heart_nominee)
 		return
 
-	heart_nominee = lowertext(heart_nominee)
+	heart_nominee = LOWER_TEXT(heart_nominee)
 	var/list/name_checks = get_mob_by_name(heart_nominee)
 	if(!name_checks || name_checks.len == 0)
 		query_heart(attempt + 1)

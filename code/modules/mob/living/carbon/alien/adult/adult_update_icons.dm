@@ -76,7 +76,7 @@
 
 //Royals have bigger sprites, so inhand things must be handled differently.
 /mob/living/carbon/alien/adult/royal/update_held_items()
-	..()
+	. = ..()
 	remove_overlay(HANDS_LAYER)
 	var/list/hands = list()
 

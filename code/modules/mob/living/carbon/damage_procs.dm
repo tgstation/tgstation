@@ -1,44 +1,83 @@
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = 0, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null, attacking_item)
-	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone)
-	var/hit_percent = (100-blocked)/100
-	if(!damage || (!forced && hit_percent <= 0))
-		return 0
+/mob/living/carbon/apply_damage(
+	damage = 0,
+	damagetype = BRUTE,
+	def_zone = null,
+	blocked = 0,
+	forced = FALSE,
+	spread_damage = FALSE,
+	wound_bonus = 0,
+	bare_wound_bonus = 0,
+	sharpness = NONE,
+	attack_direction = null,
+	attacking_item,
+)
+	// Spread damage should always have def zone be null
+	if(spread_damage)
+		def_zone = null
 
-	var/obj/item/bodypart/BP = null
-	if(!spread_damage)
-		if(isbodypart(def_zone)) //we specified a bodypart object
-			BP = def_zone
-		else
-			if(!def_zone)
-				def_zone = get_random_valid_zone(def_zone)
-			BP = get_bodypart(check_zone(def_zone))
-			if(!BP)
-				BP = bodyparts[1]
+	// Otherwise if def zone is null, we'll get a random bodypart / zone to hit.
+	// ALso we'll automatically covnert string def zones into bodyparts to pass into parent call.
+	else if(!isbodypart(def_zone))
+		var/random_zone = check_zone(def_zone || get_random_valid_zone(def_zone))
+		def_zone = get_bodypart(random_zone) || bodyparts[1]
 
-	var/damage_amount = forced ? damage : damage * hit_percent
+	. = ..()
+	// Taking brute or burn to bodyparts gives a damage flash
+	if(def_zone && (damagetype == BRUTE || damagetype == BURN))
+		damageoverlaytemp += .
+
+	return .
+
+/mob/living/carbon/human/get_damage_mod(damage_type)
+	if (!dna?.species?.damage_modifier)
+		return ..()
+	var/species_mod = (100 - dna.species.damage_modifier) / 100
+	return ..() * species_mod
+
+/mob/living/carbon/human/apply_damage(
+	damage = 0,
+	damagetype = BRUTE,
+	def_zone = null,
+	blocked = 0,
+	forced = FALSE,
+	spread_damage = FALSE,
+	wound_bonus = 0,
+	bare_wound_bonus = 0,
+	sharpness = NONE,
+	attack_direction = null,
+	attacking_item,
+)
+
+	// Add relevant DR modifiers into blocked value to pass to parent
+	blocked += physiology?.damage_resistance
+	blocked += dna?.species?.damage_modifier
+	return ..()
+
+/mob/living/carbon/human/get_incoming_damage_modifier(
+	damage = 0,
+	damagetype = BRUTE,
+	def_zone = null,
+	sharpness = NONE,
+	attack_direction = null,
+	attacking_item,
+)
+	var/final_mod = ..()
+
 	switch(damagetype)
 		if(BRUTE)
-			if(BP)
-				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
-					update_damage_overlays()
-			else //no bodypart, we deal damage with a more general method.
-				adjustBruteLoss(damage_amount, forced = forced)
+			final_mod *= physiology.brute_mod
 		if(BURN)
-			if(BP)
-				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
-					update_damage_overlays()
-			else
-				adjustFireLoss(damage_amount, forced = forced)
+			final_mod *= physiology.burn_mod
 		if(TOX)
-			adjustToxLoss(damage_amount, forced = forced)
+			final_mod *= physiology.tox_mod
 		if(OXY)
-			adjustOxyLoss(damage_amount, forced = forced)
-		if(CLONE)
-			adjustCloneLoss(damage_amount, forced = forced)
+			final_mod *= physiology.oxy_mod
 		if(STAMINA)
-			adjustStaminaLoss(damage_amount, forced = forced)
-	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage, damagetype, def_zone)
-	return TRUE
+			final_mod *= physiology.stamina_mod
+		if(BRAIN)
+			final_mod *= physiology.brain_mod
+
+	return final_mod
 
 //These procs fetch a cumulative total damage from all bodyparts
 /mob/living/carbon/getBruteLoss()
@@ -56,9 +95,7 @@
 	return amount
 
 /mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
-	if(!forced && (status_flags & GODMODE))
-		return 0
-	if(on_damage_adjustment(BRUTE, amount, forced) & COMPONENT_IGNORE_CHANGE)
+	if(!can_adjust_brute_loss(amount, forced, required_bodytype))
 		return 0
 	if(amount > 0)
 		. = take_overall_damage(brute = amount, updating_health = updating_health, forced = forced, required_bodytype = required_bodytype)
@@ -75,9 +112,7 @@
 	return adjustBruteLoss(diff, updating_health, forced, required_bodytype)
 
 /mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
-	if(!forced && (status_flags & GODMODE))
-		return 0
-	if(on_damage_adjustment(BURN, amount, forced) & COMPONENT_IGNORE_CHANGE)
+	if(!can_adjust_fire_loss(amount, forced, required_bodytype))
 		return 0
 	if(amount > 0)
 		. = take_overall_damage(burn = amount, updating_health = updating_health, forced = forced, required_bodytype = required_bodytype)
@@ -93,29 +128,26 @@
 		return FALSE
 	return adjustFireLoss(diff, updating_health, forced, required_bodytype)
 
-/mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
-	if(!forced && (status_flags & GODMODE))
-		return 0
-	if(!forced && !(mob_biotypes & required_biotype))
-		return 0
-	if(on_damage_adjustment(TOX, amount, forced) & COMPONENT_IGNORE_CHANGE)
-		return 0
-	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
-		amount = -amount
-		if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
-			amount = min(amount, 0)
-		if(amount > 0)
-			blood_volume = max(blood_volume - (5*amount), 0)
-		else
-			blood_volume = max(blood_volume - amount, 0)
-	else if(!forced && HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
-		amount = min(amount, 0)
-	return ..()
-
-/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina, forced, required_biotype = ALL)
+/mob/living/carbon/human/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
 	. = ..()
-	if(amount > 0)
-		stam_regen_start_time = world.time + STAMINA_REGEN_BLOCK_TIME
+	if(. >= 0) // 0 = no damage, + values = healed damage
+		return .
+
+	if(AT_TOXIN_VOMIT_THRESHOLD(src))
+		apply_status_effect(/datum/status_effect/tox_vomit)
+
+/mob/living/carbon/human/setToxLoss(amount, updating_health, forced, required_biotype)
+	. = ..()
+	if(. >= 0)
+		return .
+
+	if(AT_TOXIN_VOMIT_THRESHOLD(src))
+		apply_status_effect(/datum/status_effect/tox_vomit)
+
+/mob/living/carbon/received_stamina_damage(current_level, amount_actual, amount)
+	. = ..()
+	if((maxHealth - current_level) <= crit_threshold && stat != DEAD)
+		apply_status_effect(/datum/status_effect/incapacitating/stamcrit)
 
 /**
  * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the damage proc on that organ.
@@ -196,7 +228,7 @@
 
 
 ///Returns a list of bodyparts with wounds (in case someone has a wound on an otherwise fully healed limb)
-/mob/living/carbon/proc/get_wounded_bodyparts(brute = FALSE, burn = FALSE, required_bodytype)
+/mob/living/carbon/proc/get_wounded_bodyparts(required_bodytype)
 	var/list/obj/item/bodypart/parts = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X

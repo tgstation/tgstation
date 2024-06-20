@@ -127,7 +127,7 @@
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest/warden/alt
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/hats/warden
+	head = /obj/item/clothing/head/hats/warden/red
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 
 //mafia
@@ -155,7 +155,7 @@
 	suit = /obj/item/clothing/suit/apron
 
 /datum/outfit/mafia/obsessed/post_equip(mob/living/carbon/human/H)
-	for(var/obj/item/carried_item in H.get_equipped_items(include_pockets = TRUE, include_accessories = TRUE))
+	for(var/obj/item/carried_item in H.get_equipped_items(INCLUDE_POCKETS | INCLUDE_ACCESSORIES))
 		carried_item.add_mob_blood(H)//Oh yes, there will be blood...
 	H.regenerate_icons()
 

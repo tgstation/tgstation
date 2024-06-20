@@ -8,7 +8,6 @@
 	overlay_icon_state = "bg_alien_border"
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "wrap_0"
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	click_to_activate = TRUE
 	ranged_mousepointer = 'icons/effects/mouse_pointers/wrap_target.dmi'
 	shared_cooldown = NONE

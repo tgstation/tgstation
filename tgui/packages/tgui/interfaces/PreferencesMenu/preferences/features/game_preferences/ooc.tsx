@@ -1,4 +1,4 @@
-import { FeatureColorInput, Feature } from '../base';
+import { Feature, FeatureColorInput } from '../base';
 
 export const ooccolor: Feature<string> = {
   name: 'OOC color',

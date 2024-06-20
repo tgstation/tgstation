@@ -15,7 +15,7 @@
 
 	maxHealth = 150
 	health = 150
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	minimum_survivable_temperature = TCMB
 
 	obj_damage = 50
@@ -200,7 +200,7 @@
 /// Only real human-powered intelligence is capable of playing prop hunt in SS13 (until further notice).
 /datum/ai_controller/basic_controller/morph
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

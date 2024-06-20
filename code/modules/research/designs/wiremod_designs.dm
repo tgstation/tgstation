@@ -61,6 +61,11 @@
 	id = "comp_trigonometry"
 	build_path = /obj/item/circuit_component/trigonometry
 
+/datum/design/component/arctan2
+	name = "Arctangent 2 Component"
+	id = "comp_arctan2"
+	build_path = /obj/item/circuit_component/arctan2
+
 /datum/design/component/clock
 	name = "Clock Component"
 	id = "comp_clock"
@@ -75,6 +80,11 @@
 	name = "Logic Component"
 	id = "comp_logic"
 	build_path = /obj/item/circuit_component/compare/logic
+
+/datum/design/component/toggle
+	name = "Toggle Component"
+	id = "comp_toggle"
+	build_path = /obj/item/circuit_component/compare/toggle
 
 /datum/design/component/delay
 	name = "Delay Component"
@@ -216,6 +226,11 @@
 	id = "comp_health"
 	build_path = /obj/item/circuit_component/health
 
+/datum/design/component/compare/health_state
+	name = "Compare Health State Component"
+	id = "comp_health_state"
+	build_path = /obj/item/circuit_component/compare/health_state
+
 /datum/design/component/matscanner
 	name = "Material Scanner"
 	id = "comp_matscanner"
@@ -332,6 +347,11 @@
 	id = "comp_ntnet_send"
 	build_path = /obj/item/circuit_component/ntnet_send
 
+/datum/design/component/list_literal/ntnet_send
+	name = "NTNet Transmitter List Literal"
+	id = "comp_ntnet_send_list_literal"
+	build_path = /obj/item/circuit_component/list_literal/ntnet_send
+
 /datum/design/component/list_literal
 	name = "List Literal Component"
 	id = "comp_list_literal"
@@ -352,15 +372,10 @@
 	id = "comp_pinpointer"
 	build_path = /obj/item/circuit_component/pinpointer
 
-/datum/design/component/bci
-	category = list(
-		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_BCI_COMPONENTS
-	)
-
-/datum/design/component/bci/bci_action
-	name = "BCI Action Component"
-	id = "comp_bci_action"
-	build_path = /obj/item/circuit_component/equipment_action/bci
+/datum/design/component/equipment_action
+	name = "Equipment Action Component"
+	id = "comp_equip_action"
+	build_path = /obj/item/circuit_component/equipment_action
 
 /datum/design/component/bci/object_overlay
 	name = "Object Overlay Component"
@@ -412,11 +427,6 @@
 	id = "comp_filter_list"
 	build_path = /obj/item/circuit_component/filter_list
 
-/datum/design/component/mod_action
-	name = "MOD Action Component"
-	id = "comp_mod_action"
-	build_path = /obj/item/circuit_component/equipment_action/mod
-
 /datum/design/component/id_getter
 	name = "ID Getter Component"
 	id = "comp_id_getter"
@@ -456,6 +466,11 @@
 	name = "Associative List Pick Component"
 	id = "comp_assoc_list_pick"
 	build_path = /obj/item/circuit_component/list_pick/assoc
+
+/datum/design/component/bci/bci_camera
+	name = "BCI Camera"
+	id = "comp_camera_bci"
+	build_path = /obj/item/circuit_component/remotecam/bci
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"

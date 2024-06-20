@@ -862,7 +862,7 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
 	},
-/mob/living/simple_animal/bot/medbot{
+/mob/living/basic/bot/medbot{
 	name = "Accidents Happen"
 	},
 /obj/structure/cable,

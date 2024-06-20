@@ -52,8 +52,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "dM" = (
-/obj/machinery/door/window/brigdoor{
-	dir = 8;
+/obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Containment Pen"
 	},
 /turf/open/floor/iron/white,
@@ -218,7 +217,7 @@
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "pu" = (
-/mob/living/simple_animal/slime/random,
+/mob/living/basic/slime/random,
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "qU" = (
@@ -234,10 +233,7 @@
 /area/centcom/basketball)
 "rU" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/door/window/left/directional/north{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/east{
 	name = "Containment Pen"
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -291,13 +287,13 @@
 /turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "zZ" = (
-/obj/structure/window/reinforced/fulltile/damaged,
 /obj/effect/particle_effect/water/extinguisher/stomach_acid,
 /obj/machinery/door/poddoor/preopen{
 	id = null;
 	name = "Xenobiology Blast Door"
 	},
-/turf/open/floor/engine,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "Ax" = (
 /obj/structure/alien/weeds,
@@ -315,10 +311,7 @@
 /area/centcom/basketball)
 "AI" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/door/window/left/directional/north{
-	base_state = "right";
-	dir = 8;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/west{
 	name = "Containment Pen"
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -389,8 +382,7 @@
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "Gi" = (
-/obj/machinery/door/window/brigdoor{
-	dir = 4;
+/obj/machinery/door/window/brigdoor/left/directional/east{
 	name = "Containment Pen"
 	},
 /turf/open/floor/iron/white,
@@ -484,17 +476,24 @@
 /obj/effect/landmark/basketball/team_spawn/home,
 /turf/open/floor/engine,
 /area/centcom/basketball)
-"PU" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/floor/engine,
-/area/centcom/basketball)
-"PW" = (
-/obj/structure/window/reinforced/fulltile/damaged,
+"PN" = (
 /obj/machinery/door/poddoor/preopen{
 	id = null;
 	name = "Xenobiology Blast Door"
 	},
 /turf/open/floor/engine,
+/area/centcom/basketball)
+"PU" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"PW" = (
+/obj/machinery/door/poddoor/preopen{
+	id = null;
+	name = "Xenobiology Blast Door"
+	},
+/obj/effect/mapping_helpers/damaged_window,
+/turf/closed/indestructible/fakeglass,
 /area/centcom/basketball)
 "Qh" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -864,7 +863,7 @@ uH
 Cw
 Vr
 Vr
-PW
+PN
 kT
 dr
 IA

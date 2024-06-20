@@ -8,7 +8,7 @@
 		return FALSE
 
 	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
-	var/datum/species/species = new species_type
+	var/datum/species/species = GLOB.species_prototypes[species_type]
 	return !(TRAIT_NO_UNDERWEAR in species.inherent_traits)
 
 /datum/preference/color/underwear_color/apply_to_human(mob/living/carbon/human/target, value)

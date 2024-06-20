@@ -70,6 +70,15 @@
 	bluespace = TRUE
 	explosionSize = list(0,0,0,0)
 
+/obj/structure/closet/supplypod/podspawn/deathmatch
+	desc = "A blood-red styled drop pod."
+	specialised = TRUE
+
+/obj/structure/closet/supplypod/podspawn/deathmatch/preOpen()
+	for(var/mob/living/critter in contents)
+		critter.faction = list(FACTION_HOSTILE) //No infighting, but also KILL!!
+	return ..()
+
 /obj/structure/closet/supplypod/extractionpod
 	name = "Syndicate Extraction Pod"
 	desc = "A specalised, blood-red styled pod for extracting high-value targets out of active mission areas. <b>Targets must be manually stuffed inside the pod for proper delivery.</b>"
@@ -89,6 +98,42 @@
 	explosionSize = list(0,0,0,0)
 	delays = list(POD_TRANSIT = 20, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/structure/closet/supplypod/centcompod/sisyphus
+	delays = list(POD_TRANSIT = 0, POD_FALLING = 0, POD_OPENING = 0, POD_LEAVING = 0.2)
+	reverse_delays = list(POD_TRANSIT = 0, POD_FALLING = 1.5 SECONDS, POD_OPENING = 0.6 SECONDS, POD_LEAVING = 0)
+	custom_rev_delay = TRUE
+	effectStealth = TRUE
+	reversing = TRUE
+	reverse_option_list = list(
+		"Mobs" = TRUE,
+		"Objects" = FALSE,
+		"Anchored" = FALSE,
+		"Underfloor" = FALSE,
+		"Wallmounted" = FALSE,
+		"Floors" = FALSE,
+		"Walls" = FALSE,
+		"Mecha" = TRUE,
+	)
+
+/obj/structure/closet/supplypod/back_to_station
+	name = "blood-red supply pod"
+	desc = "An intimidating supply pod, covered in the blood-red markings"
+	bluespace = TRUE
+	explosionSize = list(0,0,0,0)
+	style = STYLE_SYNDICATE
+	specialised = TRUE
+
+/obj/structure/closet/supplypod/deadmatch_missile
+	name = "cruise missile"
+	desc = "A big ass missile, likely launched from some far-off deep space missile silo."
+	style = STYLE_RED_MISSILE
+	explosionSize = list(0,1,2,2)
+	effectShrapnel = TRUE
+	specialised = TRUE
+	delays = list(POD_TRANSIT = 2.6 SECONDS, POD_FALLING = 0.4 SECONDS)
+	effectMissile = TRUE
+	shrapnel_type = /obj/projectile/bullet/shrapnel/short_range
 
 /datum/armor/closet_supplypod
 	melee = 30
@@ -172,7 +217,7 @@
 		var/icon/door_masker = new(icon, door) //The door shape we want to 'cut out' of the decal
 		door_masker.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 1,1,1,0, 0,0,0,1)
 		door_masker.SwapColor("#ffffffff", null)
-		door_masker.Blend("#000000", ICON_SUBTRACT)
+		door_masker.Blend(COLOR_BLACK, ICON_SUBTRACT)
 		masked_decal.Blend(door_masker, ICON_ADD)
 		. += masked_decal
 		return
@@ -189,7 +234,7 @@
 		var/icon/fin_masker = new(icon, "mask_[fin_mask]") //The fin shape we want to 'cut out' of the door
 		fin_masker.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 1,1,1,0, 0,0,0,1)
 		fin_masker.SwapColor("#ffffffff", null)
-		fin_masker.Blend("#000000", ICON_SUBTRACT)
+		fin_masker.Blend(COLOR_BLACK, ICON_SUBTRACT)
 		masked_door.Blend(fin_masker, ICON_ADD)
 		. += masked_door
 	if(decal)
@@ -213,6 +258,24 @@
 /obj/structure/closet/supplypod/open(mob/living/user, force = FALSE, special_effects = TRUE)
 	return
 
+///Called by the drop pods that return captured crewmembers from the ninja den.
+/obj/structure/closet/supplypod/proc/return_from_capture(mob/living/victim, turf/destination = get_safe_random_station_turf())
+	if(isnull(destination)) //Uuuuh, something went wrong. This is gonna hurt.
+		to_chat(victim, span_hypnophrase("A million voices echo in your head... \"Seems where you got sent won't \
+			be able to handle our pod... as if we wanted the occupant to survive. Brace yourself, corporate dog.\""))
+		flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
+		explosionSize = list(0,1,1,1)
+		destination = get_random_station_turf()
+
+	do_sparks(8, FALSE, victim)
+	victim.visible_message(span_notice("[victim] vanishes..."))
+
+	victim.forceMove(src)
+
+	new /obj/effect/pod_landingzone(destination, src)
+
+	SEND_SIGNAL(victim, COMSIG_LIVING_RETURN_FROM_CAPTURE, destination)
+
 /obj/structure/closet/supplypod/proc/handleReturnAfterDeparting(atom/movable/holder = src)
 	reversing = FALSE //Now that we're done reversing, we set this to false (otherwise we would get stuck in an infinite loop of calling the close proc at the bottom of open_pod() )
 	bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
@@ -222,6 +285,9 @@
 	stay_after_drop = FALSE
 	holder.pixel_z = initial(holder.pixel_z)
 	holder.alpha = initial(holder.alpha)
+	if (holder != src)
+		contents |= holder.contents
+		qdel(holder)
 	var/shippingLane = GLOB.areas_by_type[/area/centcom/central_command_areas/supplypod/supplypod_temp_holding]
 	forceMove(shippingLane) //Move to the centcom-z-level until the pod_landingzone says we can drop back down again
 	if (!reverse_dropoff_coords) //If we're centcom-launched, the reverse dropoff turf will be a centcom loading bay. If we're an extraction pod, it should be the ninja jail. Thus, this shouldn't ever really happen.
@@ -271,7 +337,7 @@
 		if (effectGib) //effectGib is on, that means whatever's underneath us better be fucking oof'd on
 			target_living.adjustBruteLoss(5000) //THATS A LOT OF DAMAGE (called just in case gib() doesnt work on em)
 			if (!QDELETED(target_living))
-				target_living.gib() //After adjusting the fuck outta that brute loss we finish the job with some satisfying gibs
+				target_living.gib(DROP_ALL_REMAINS) //After adjusting the fuck outta that brute loss we finish the job with some satisfying gibs
 		else
 			target_living.adjustBruteLoss(damage)
 	var/explosion_sum = B[1] + B[2] + B[3] + B[4]
@@ -286,8 +352,10 @@
 		qdel(src)
 		return
 	if (style == STYLE_GONDOLA) //Checks if we are supposed to be a gondola pod. If so, create a gondolapod mob, and move this pod to nullspace. I'd like to give a shout out, to my man oranges
-		var/mob/living/simple_animal/pet/gondola/gondolapod/benis = new(turf_underneath, src)
+		var/mob/living/basic/pet/gondola/gondolapod/benis = new(turf_underneath, src)
 		benis.contents |= contents //Move the contents of this supplypod into the gondolapod mob.
+		for (var/mob/living/mob_in_pod in benis.contents)
+			mob_in_pod.reset_perspective(null)
 		moveToNullspace()
 		addtimer(CALLBACK(src, PROC_REF(open_pod), benis), delays[POD_OPENING]) //After the opening delay passes, we use the open proc from this supplyprod while referencing the contents of the "holder", in this case the gondolapod mob
 	else if (style == STYLE_SEETHROUGH)
@@ -309,8 +377,8 @@
 	if (openingSound)
 		playsound(get_turf(holder), openingSound, soundVolume, FALSE, FALSE) //Special admin sound to play
 	for (var/turf_type in turfs_in_cargo)
-		turf_underneath.PlaceOnTop(turf_type)
-	for (var/cargo in contents)
+		turf_underneath.place_on_top(turf_type)
+	for (var/cargo in holder.contents)
 		var/atom/movable/movable_cargo = cargo
 		movable_cargo.forceMove(turf_underneath)
 	if (!effectQuiet && !openingSound && style != STYLE_SEETHROUGH && !(pod_flags & FIRST_SOUNDS)) //If we aren't being quiet, play the default pod open sound
@@ -482,7 +550,8 @@
 	. = ..()
 	if(same_z_layer)
 		return
-	SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
+	if(glow_effect)
+		SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
 
 /obj/structure/closet/supplypod/proc/endGlow()
 	if(!glow_effect)
@@ -532,7 +601,7 @@
 /obj/effect/supplypod_smoke/proc/drawSelf(amount)
 	alpha = max(0, 255-(amount*20))
 
-/obj/effect/supplypod_rubble //This is the object that forceMoves the supplypod to it's location
+/obj/effect/supplypod_rubble
 	name = "debris"
 	desc = "A small crater of rubble. Closer inspection reveals the debris to be made primarily of space-grade metal fragments. You're pretty sure that this will disperse before too long."
 	icon = 'icons/obj/supplypods.dmi'
@@ -693,7 +762,7 @@
 /obj/item/disk/cargo/bluespace_pod //Disk that can be inserted into the Express Console to allow for Advanced Bluespace Pods
 	name = "Bluespace Drop Pod Upgrade"
 	desc = "This disk provides a firmware update to the Express Supply Console, granting the use of Nanotrasen's Bluespace Drop Pods to the supply department."
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "cargodisk"
 	inhand_icon_state = "card-id"
 	w_class = WEIGHT_CLASS_SMALL

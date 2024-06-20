@@ -89,4 +89,4 @@
 
 	if(tool.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		flood(user, tool.get_temperature())
-		return COMPONENT_BLOCK_TOOL_ATTACK
+		return ITEM_INTERACT_BLOCKING

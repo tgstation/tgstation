@@ -36,6 +36,15 @@
 	/// Message for when the polar bear starts to attack faster
 	var/aggressive_message_said = FALSE
 
+/mob/living/simple_animal/hostile/asteroid/polarbear/Initialize(mapload)
+	. = ..()
+	AddElement(\
+		/datum/element/change_force_on_death,\
+		move_force = MOVE_FORCE_DEFAULT,\
+		move_resist = MOVE_RESIST_DEFAULT,\
+		pull_force = PULL_FORCE_DEFAULT,\
+	)
+
 /mob/living/simple_animal/hostile/asteroid/polarbear/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(health > maxHealth*0.5)
@@ -51,20 +60,6 @@
 	if(!. || target)
 		return
 	aggressive_message_said = FALSE
-
-/mob/living/simple_animal/hostile/asteroid/polarbear/death(gibbed)
-	move_force = MOVE_FORCE_DEFAULT
-	move_resist = MOVE_RESIST_DEFAULT
-	pull_force = PULL_FORCE_DEFAULT
-	return ..()
-
-/mob/living/simple_animal/hostile/asteroid/polarbear/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
-	. = ..()
-	if(!.)
-		return
-	move_force = initial(move_force)
-	move_resist = initial(move_resist)
-	pull_force = initial(pull_force)
 
 /mob/living/simple_animal/hostile/asteroid/polarbear/lesser
 	name = "magic polar bear"

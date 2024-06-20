@@ -9,7 +9,7 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
 	time = 10 SECONDS
 	category = CAT_DOORS
-	one_per_turf = TRUE
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF
 
 /datum/crafting_recipe/blast_doors
 	name = "Blast Door"
@@ -22,4 +22,4 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
 	time = 30 SECONDS
 	category = CAT_DOORS
-	one_per_turf = TRUE
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF

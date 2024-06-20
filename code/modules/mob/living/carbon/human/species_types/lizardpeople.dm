@@ -5,11 +5,11 @@
 	id = SPECIES_LIZARD
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
-		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_TACKLING_TAILED_DEFENDER,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
-	mutant_bodyparts = list("body_markings" = "None", "legs" = "Normal Legs")
+	mutant_bodyparts = list("legs" = "Normal Legs")
+	body_markings = list(/datum/bodypart_overlay/simple/body_marking/lizard = "None")
 	external_organs = list(
 		/obj/item/organ/external/horns = "None",
 		/obj/item/organ/external/frills = "None",
@@ -28,15 +28,12 @@
 	exotic_bloodtype = "L"
 	inert_mutation = /datum/mutation/human/firebreath
 	death_sound = 'sound/voice/lizard/deathsound.ogg'
-	wing_types = list(/obj/item/organ/external/wings/functional/dragon)
 	species_language_holder = /datum/language_holder/lizard
 	digitigrade_customization = DIGITIGRADE_OPTIONAL
 
 	// Lizards are coldblooded and can stand a greater temperature range than humans
 	bodytemp_heat_damage_limit = BODYTEMP_HEAT_LAVALAND_SAFE
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 10)
-
-	ass_image = 'icons/ass/asslizard.png'
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/lizard,
@@ -47,37 +44,13 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard,
 	)
 
-/datum/species/lizard/on_species_gain(mob/living/carbon/new_lizard, datum/species/old_species, pref_load)
-	. = ..()
-	if(ishuman(new_lizard))
-		update_mail_goodies(new_lizard)
-
-/datum/species/lizard/update_quirk_mail_goodies(mob/living/carbon/human/recipient, datum/quirk/quirk, list/mail_goodies = list())
-	if(istype(quirk, /datum/quirk/blooddeficiency))
-		mail_goodies += list(
-			/obj/item/reagent_containers/blood/lizard
-		)
-	return ..()
-
 /// Lizards are cold blooded and do not stabilize body temperature naturally
 /datum/species/lizard/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick, times_fired)
 	return
 
-/datum/species/lizard/random_name(gender,unique,lastname)
-	if(unique)
-		return random_unique_lizard_name(gender)
-
-	var/randname = lizard_name(gender)
-
-	if(lastname)
-		randname += " [lastname]"
-
-	return randname
-
-
 /datum/species/lizard/randomize_features()
 	var/list/features = ..()
-	features["body_markings"] = pick(GLOB.body_markings_list)
+	features["lizard_markings"] = pick(SSaccessories.lizard_markings_list)
 	return features
 
 /datum/species/lizard/get_scream_sound(mob/living/carbon/human/lizard)
@@ -86,6 +59,51 @@
 		'sound/voice/lizard/lizard_scream_2.ogg',
 		'sound/voice/lizard/lizard_scream_3.ogg',
 	)
+
+/datum/species/lizard/get_cough_sound(mob/living/carbon/human/lizard)
+	if(lizard.physique == FEMALE)
+		return pick(
+			'sound/voice/human/female_cough1.ogg',
+			'sound/voice/human/female_cough2.ogg',
+			'sound/voice/human/female_cough3.ogg',
+			'sound/voice/human/female_cough4.ogg',
+			'sound/voice/human/female_cough5.ogg',
+			'sound/voice/human/female_cough6.ogg',
+		)
+	return pick(
+		'sound/voice/human/male_cough1.ogg',
+		'sound/voice/human/male_cough2.ogg',
+		'sound/voice/human/male_cough3.ogg',
+		'sound/voice/human/male_cough4.ogg',
+		'sound/voice/human/male_cough5.ogg',
+		'sound/voice/human/male_cough6.ogg',
+	)
+
+
+/datum/species/lizard/get_cry_sound(mob/living/carbon/human/lizard)
+	if(lizard.physique == FEMALE)
+		return pick(
+			'sound/voice/human/female_cry1.ogg',
+			'sound/voice/human/female_cry2.ogg',
+		)
+	return pick(
+		'sound/voice/human/male_cry1.ogg',
+		'sound/voice/human/male_cry2.ogg',
+		'sound/voice/human/male_cry3.ogg',
+	)
+
+
+/datum/species/lizard/get_sneeze_sound(mob/living/carbon/human/lizard)
+	if(lizard.physique == FEMALE)
+		return 'sound/voice/human/female_sneeze1.ogg'
+	return 'sound/voice/human/male_sneeze1.ogg'
+
+/datum/species/lizard/get_laugh_sound(mob/living/carbon/human/lizard)
+	return 'sound/voice/lizard/lizard_laugh1.ogg'
+
+/datum/species/lizard/get_physical_attributes()
+	return "Lizardpeople can withstand slightly higher temperatures than most species, but they are very vulnerable to the cold \
+		and can't regulate their body-temperature internally, making the vacuum of space extremely deadly to them."
 
 /datum/species/lizard/get_species_description()
 	return "The militaristic Lizardpeople hail originally from Tizira, but have grown \
@@ -153,6 +171,10 @@ Lizard subspecies: ASHWALKERS
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard,
 	)
 
+/datum/species/lizard/ashwalker/get_physical_attributes()
+	return "Ash Walkers are identical to lizardpeople in almost all aspects. \
+		Unlike them, they're always digitigrade, they can breathe Lavaland's often noxious atmosphere and resist viruses. They are usually illiterate."
+
 /*
 Lizard subspecies: SILVER SCALED
 */
@@ -181,6 +203,11 @@ Lizard subspecies: SILVER SCALED
 	var/old_eye_color_left
 	///See above
 	var/old_eye_color_right
+
+/datum/species/lizard/silverscale/get_physical_attributes()
+	return "Silver Scales are to lizardpeople what angels are to humans. \
+		Mostly identical, they are holy, don't breathe, don't get viruses, their hide cannot be pierced, love the taste of wine, \
+		and their tongue allows them to turn into a statue, for some reason."
 
 /datum/species/lizard/silverscale/on_species_gain(mob/living/carbon/human/new_silverscale, datum/species/old_species, pref_load)
 	old_mutcolor = new_silverscale.dna.features["mcolor"]

@@ -40,6 +40,48 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(user.combat_mode)
 		return ..(M, user)
 
+
+/obj/item/balloon_mallet
+	name = "balloon mallet"
+	desc = "It's a mallet, a weapon known for being heavy, but made from notoriously light balloons. Air inside removes any force from the swings. It'd be quite embarrassing to get hit by this."
+	icon = 'icons/obj/weapons/hammer.dmi'
+	icon_state = "balloon_mallet"
+	inhand_icon_state = "balloon_mallet"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	siemens_coefficient = 0
+	force = 1
+	throw_speed = 1
+	throwforce = 1
+	throw_range = 1
+	w_class = WEIGHT_CLASS_HUGE
+	attack_verb_continuous = list("mallets", "smoother")
+	attack_verb_simple = list("mallet", "smoother")
+	max_integrity = 20
+	armor_type = /datum/armor/item_banhammer
+	resistance_flags = FIRE_PROOF
+
+/obj/item/balloon_mallet/examine(mob/user)
+	. = ..()
+	if(HAS_TRAIT(user,TRAIT_BALLOON_SUTRA))
+		. = "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
+
+/obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
+	playsound(loc, 'sound/creatures/clown/hehe.ogg', 20)
+	if (!isliving(target))
+		return
+	switch(target.mob_mood.sanity)
+		if (SANITY_INSANE to SANITY_CRAZY)
+			force = 8
+		if (SANITY_UNSTABLE to SANITY_DISTURBED)
+			force = 4
+			target.add_mood_event("humiliated", /datum/mood_event/mallet_humiliation)
+		if (SANITY_NEUTRAL to SANITY_GREAT)
+			target.add_mood_event("humiliated", /datum/mood_event/mallet_humiliation)
+
+	if(user.combat_mode)
+		return ..(target, user)
+
 /obj/item/sord
 	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
@@ -70,7 +112,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 40
 	throwforce = 10
@@ -99,6 +141,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.visible_message(span_suicide("[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
+/obj/item/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword
+	return ..()
+
 //statistically similar to e-cutlasses
 /obj/item/claymore/cutlass
 	name = "cutlass"
@@ -113,9 +160,36 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_range = 5
 	armour_penetration = 35
 
+/obj/item/claymore/carrot
+	name = "carrot sword"
+	desc = "A full-sized carrot sword. Definitely \not\ good for the eyes, not anymore."
+	icon_state = "carrot_sword"
+	inhand_icon_state = "carrot_sword"
+	worn_icon_state = "carrot_sword"
+	flags_1 = NONE
+	force = 19
+	throwforce = 7
+	throw_speed = 3
+	throw_range = 7
+	armour_penetration = 5
+	block_chance = 10
+	resistance_flags = NONE
+
+//bootleg claymore
+/obj/item/claymore/shortsword
+	name = "shortsword"
+	desc = "A mercenary's sword, chipped and worn from battles long gone. You could say it is a swordsman's shortsword short sword."
+	icon_state = "shortsword"
+	inhand_icon_state = "shortsword"
+	worn_icon_state = "shortsword"
+	slot_flags = ITEM_SLOT_BELT
+	force = 20
+	demolition_mod = 0.75
+	block_chance = 30
+
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = DROPDEL //WOW BRO YOU LOST AN ARM, GUESS WHAT YOU DONT GET YOUR SWORD ANYMORE //I CANT BELIEVE SPOOKYDONUT WOULD BREAK THE REQUIREMENTS
 	slot_flags = null
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
@@ -141,7 +215,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/process()
 	if(ishuman(loc))
 		var/mob/living/carbon/human/holder = loc
-		SET_PLANE_EXPLICIT(holder, GAME_PLANE_UPPER_FOV_HIDDEN, src) //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
+		holder.layer = ABOVE_ALL_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
 		ADD_TRAIT(holder, TRAIT_NOBLOOD, HIGHLANDER_TRAIT) //AND WE WON'T BLEED OUT LIKE COWARDS
 	else
 		if(!(flags_1 & ADMIN_SPAWNED_1))
@@ -265,7 +339,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/claymore/highlander/robot/process()
-	SET_PLANE_IMPLICIT(loc, GAME_PLANE_UPPER_FOV_HIDDEN)
+	loc.layer = ABOVE_ALL_MOB_LAYER
 
 /obj/item/katana
 	name = "katana"
@@ -276,7 +350,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	worn_icon_state = "katana"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 40
 	throwforce = 10
@@ -343,7 +417,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharp, concealable, spring-loaded knife."
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 3
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 5
@@ -398,7 +472,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/phone
 	name = "red phone"
 	desc = "Should anything ever go wrong..."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "red_phone"
 	force = 3
 	throwforce = 2
@@ -431,9 +505,88 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "discipline", "thrash")
 
+/obj/item/cane/examine(mob/user, thats)
+	. = ..()
+	. += span_notice("This item can be used to support your weight, preventing limping from any broken bones on your legs you may have.")
+
+/obj/item/cane/equipped(mob/living/user, slot, initial)
+	..()
+	if(!(slot & ITEM_SLOT_HANDS))
+		return
+	movement_support_add(user)
+
+/obj/item/cane/dropped(mob/living/user, silent = FALSE)
+	. = ..()
+	movement_support_del(user)
+
+/obj/item/cane/proc/movement_support_add(mob/living/user)
+	RegisterSignal(user, COMSIG_CARBON_LIMPING, PROC_REF(handle_limping))
+	return TRUE
+
+/obj/item/cane/proc/movement_support_del(mob/living/user)
+	UnregisterSignal(user, list(COMSIG_CARBON_LIMPING))
+	return TRUE
+
+/obj/item/cane/proc/handle_limping(mob/living/user)
+	SIGNAL_HANDLER
+	return COMPONENT_CANCEL_LIMP
+
+/obj/item/cane/crutch
+	name = "medical crutch"
+	desc = "A medical crutch used by people missing a leg. Not all that useful if you're missing both of them, though."
+	icon = 'icons/obj/weapons/staff.dmi'
+	icon_state = "crutch_med"
+	inhand_icon_state = "crutch_med"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	force = 12
+	throwforce = 8
+	w_class = WEIGHT_CLASS_BULKY
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5)
+	attack_verb_continuous = list("bludgeons", "whacks", "thrashes")
+	attack_verb_simple = list("bludgeon", "whack", "thrash")
+
+/obj/item/cane/crutch/examine(mob/user, thats)
+	. = ..()
+	// tacked on after the cane string
+	. += span_notice("As a crutch, it can also help lessen the slowdown incurred by missing a leg.")
+
+/obj/item/cane/crutch/movement_support_add(mob/living/user)
+	. = ..()
+	if(!.)
+		return
+	RegisterSignal(user, COMSIG_LIVING_LIMBLESS_SLOWDOWN, PROC_REF(handle_slowdown))
+	user.update_usable_leg_status()
+	user.AddElementTrait(TRAIT_WADDLING, REF(src), /datum/element/waddling)
+
+/obj/item/cane/crutch/movement_support_del(mob/living/user)
+	. = ..()
+	if(!.)
+		return
+	UnregisterSignal(user, list(COMSIG_LIVING_LIMBLESS_SLOWDOWN, COMSIG_CARBON_LIMPING))
+	user.update_usable_leg_status()
+	REMOVE_TRAIT(user, TRAIT_WADDLING, REF(src))
+
+/obj/item/cane/crutch/proc/handle_slowdown(mob/living/user, limbless_slowdown, list/slowdown_mods)
+	SIGNAL_HANDLER
+	var/leg_amount = user.usable_legs
+	// Don't do anything if the number is equal (or higher) to the usual.
+	if(leg_amount >= user.default_num_legs)
+		return
+	// If we have at least one leg and it's less than the default, reduce slowdown by 60%.
+	if(leg_amount && (leg_amount < user.default_num_legs))
+		slowdown_mods += 0.4
+
+/obj/item/cane/crutch/wood
+	name = "wooden crutch"
+	desc = "A handmade crutch. Also makes a decent bludgeon if you need it."
+	icon_state = "crutch_wood"
+	inhand_icon_state = "crutch_wood"
+	custom_materials = list(/datum/material/wood = SMALL_MATERIAL_AMOUNT * 0.5)
+
 /obj/item/cane/white
 	name = "white cane"
-	desc = "A cane traditionally used by the blind to help them see. Folds down to be easier to transport."
+	desc = "Traditionally used by the blind to help them see. Folds down to be easier to transport."
 	icon_state = "cane_white"
 	inhand_icon_state = "cane_white"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -455,6 +608,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 	ADD_TRAIT(src, TRAIT_BLIND_TOOL, INNATE_TRAIT)
+
+/obj/item/cane/white/handle_limping(mob/living/user)
+	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? COMPONENT_CANCEL_LIMP : NONE
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -534,124 +690,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/ectoplasm/mystic
 	icon_state = "mysticplasm"
 
-/obj/item/statuebust
-	name = "bust"
-	desc = "A priceless ancient marble bust, the kind that belongs in a museum." //or you can hit people with it
-	icon = 'icons/obj/art/statue.dmi'
-	icon_state = "bust"
-	force = 15
-	throwforce = 10
-	throw_speed = 5
-	throw_range = 2
-	attack_verb_continuous = list("busts")
-	attack_verb_simple = list("bust")
-	var/impressiveness = 45
-
-/obj/item/statuebust/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/art, impressiveness)
-	AddElement(/datum/element/beauty, 1000)
-
-/obj/item/statuebust/hippocratic
-	name = "hippocrates bust"
-	desc = "A bust of the famous Greek physician Hippocrates of Kos, often referred to as the father of western medicine."
-	icon_state = "hippocratic"
-	impressiveness = 50
-	// If it hits the prob(reference_chance) chance, this is set to TRUE. Adds medical HUD when wielded, but has a 10% slower attack speed and is too bloody to make an oath with.
-	var/reference = FALSE
-	// Chance for above.
-	var/reference_chance = 1
-	// Minimum time inbetween oaths.
-	COOLDOWN_DECLARE(oath_cd)
-
-/obj/item/statuebust/hippocratic/evil
-	reference_chance = 100
-
-/obj/item/statuebust/hippocratic/Initialize(mapload)
-	. = ..()
-	if(prob(reference_chance))
-		name = "Solemn Vow"
-		desc = "Art lovers will cherish the bust of Hippocrates, commemorating a time when medics still thought doing no harm was a good idea."
-		attack_speed = CLICK_CD_SLOW
-		reference = TRUE
-
-/obj/item/statuebust/hippocratic/examine(mob/user)
-	. = ..()
-	if(reference)
-		. += span_notice("You could activate the bust in-hand to swear or forswear a Hippocratic Oath... but it seems like somebody decided it was more of a Hippocratic Suggestion. This thing is caked with bits of blood and gore.")
-		return
-	. += span_notice("You can activate the bust in-hand to swear or forswear a Hippocratic Oath! This has no effects except pacifism or bragging rights. Does not remove other sources of pacifism. Do not eat.")
-
-/obj/item/statuebust/hippocratic/equipped(mob/living/carbon/human/user, slot)
-	..()
-	if(!(slot & ITEM_SLOT_HANDS))
-		return
-	var/datum/atom_hud/our_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	our_hud.show_to(user)
-	ADD_TRAIT(user, TRAIT_MEDICAL_HUD, type)
-
-/obj/item/statuebust/hippocratic/dropped(mob/living/carbon/human/user)
-	..()
-	if(HAS_TRAIT_NOT_FROM(user, TRAIT_MEDICAL_HUD, type))
-		return
-	var/datum/atom_hud/our_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	our_hud.hide_from(user)
-	REMOVE_TRAIT(user, TRAIT_MEDICAL_HUD, type)
-
-/obj/item/statuebust/hippocratic/attack_self(mob/user)
-	if(!iscarbon(user))
-		to_chat(user, span_warning("You remember how the Hippocratic Oath specifies 'my fellow human beings' and realize that it's completely meaningless to you."))
-		return
-
-	if(reference)
-		to_chat(user, span_warning("As you prepare yourself to swear the Oath, you realize that doing so on a blood-caked bust is probably not a good idea."))
-		return
-
-	if(!COOLDOWN_FINISHED(src, oath_cd))
-		to_chat(user, span_warning("You've sworn or forsworn an oath too recently to undo your decisions. The bust looks at you with disgust."))
-		return
-
-	COOLDOWN_START(src, oath_cd, 5 MINUTES)
-
-	if(HAS_TRAIT_FROM(user, TRAIT_PACIFISM, type))
-		to_chat(user, span_warning("You've already sworn a vow. You start preparing to rescind it..."))
-		if(do_after(user, 5 SECONDS, target = user))
-			user.say("Yeah this Hippopotamus thing isn't working out. I quit!", forced = "hippocratic hippocrisy")
-			REMOVE_TRAIT(user, TRAIT_PACIFISM, type)
-
-	// they can still do it for rp purposes
-	if(HAS_TRAIT_NOT_FROM(user, TRAIT_PACIFISM, type))
-		to_chat(user, span_warning("You already don't want to harm people, this isn't going to do anything!"))
-
-
-	to_chat(user, span_notice("You remind yourself of the Hippocratic Oath's contents and prepare to swear yourself to it..."))
-	if(do_after(user, 4 SECONDS, target = user))
-		user.say("I swear to fulfill, to the best of my ability and judgment, this covenant:", forced = "hippocratic oath")
-	else
-		return fuck_it_up(user)
-	if(do_after(user, 2 SECONDS, target = user))
-		user.say("I will apply, for the benefit of the sick, all measures that are required, avoiding those twin traps of overtreatment and therapeutic nihilism.", forced = "hippocratic oath")
-	else
-		return fuck_it_up(user)
-	if(do_after(user, 3 SECONDS, target = user))
-		user.say("I will remember that I remain a member of society, with special obligations to all my fellow human beings, those sound of mind and body as well as the infirm.", forced = "hippocratic oath")
-	else
-
-		return fuck_it_up(user)
-	if(do_after(user, 3 SECONDS, target = user))
-		user.say("If I do not violate this oath, may I enjoy life and art, respected while I live and remembered with affection thereafter. May I always act so as to preserve the finest traditions of my calling and may I long experience the joy of healing those who seek my help.", forced = "hippocratic oath")
-	else
-		return fuck_it_up(user)
-
-	to_chat(user, span_notice("Contentment, understanding, and purpose washes over you as you finish the oath. You consider for a second the concept of harm and shudder."))
-	ADD_TRAIT(user, TRAIT_PACIFISM, type)
-
-// Bully the guy for fucking up.
-/obj/item/statuebust/hippocratic/proc/fuck_it_up(mob/living/carbon/user)
-	to_chat(user, span_warning("You forget what comes next like a dumbass. The Hippocrates bust looks down on you, disappointed."))
-	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2)
-	COOLDOWN_RESET(src, oath_cd)
-
 /obj/item/tailclub
 	name = "tail club"
 	desc = "For the beating to death of lizards with their own tails."
@@ -680,7 +718,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/skateboard
 	name = "skateboard"
 	desc = "A skateboard. It can be placed on its wheels and ridden, or used as a radical weapon."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "skateboard_held"
 	inhand_icon_state = "skateboard"
 	force = 12
@@ -889,40 +927,38 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	hitsound = 'sound/effects/snap.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 	/// Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
-	var/list/splattable
+	var/static/list/splattable
 	/// Things in this list which take a lot more damage from the fly swatter, but not be necessarily killed by it.
-	var/list/strong_against
+	var/static/list/strong_against
 	/// How much extra damage the fly swatter does against mobs it is strong against
 	var/extra_strength_damage = 24
 
 /obj/item/melee/flyswatter/Initialize(mapload)
 	. = ..()
-	splattable = typecacheof(list(
-		/mob/living/basic/ant,
-		/mob/living/basic/butterfly,
-		/mob/living/basic/cockroach,
-		/mob/living/basic/spider/growing/spiderling,
-		/mob/living/basic/bee,
-		/obj/effect/decal/cleanable/ants,
-		/obj/item/queen_bee,
-	))
-	strong_against = typecacheof(list(
-		/mob/living/basic/spider/giant,
-	))
+	if (isnull(splattable))
+		splattable = typecacheof(list(
+			/mob/living/basic/ant,
+			/mob/living/basic/butterfly,
+			/mob/living/basic/cockroach,
+			/mob/living/basic/spider/growing/spiderling,
+			/mob/living/basic/bee,
+			/obj/effect/decal/cleanable/ants,
+			/obj/item/queen_bee,
+		))
+	if (isnull(strong_against))
+		strong_against = typecacheof(list(
+			/mob/living/basic/spider,
+		))
 
 
-/obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(!proximity_flag || HAS_TRAIT(user, TRAIT_PACIFISM))
-		return
-
+/obj/item/melee/flyswatter/afterattack(atom/target, mob/user, click_parameters)
 	if(is_type_in_typecache(target, splattable))
-		new /obj/effect/decal/cleanable/insectguts(target.drop_location())
 		to_chat(user, span_warning("You easily splat [target]."))
 		if(isliving(target))
+			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
 			var/mob/living/bug = target
 			bug.investigate_log("has been splatted by a flyswatter.", INVESTIGATE_DEATHS)
-			bug.gib()
+			bug.gib(DROP_ALL_REMAINS)
 		else
 			qdel(target)
 		return
@@ -1049,24 +1085,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)))
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 		return TRUE
+	return FALSE
 
-/obj/item/highfrequencyblade/attack(mob/living/target, mob/living/user, params)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED) || HAS_TRAIT(src, TRAIT_PACIFISM))
-		return ..()
-	slash(target, user, params)
-
-/obj/item/highfrequencyblade/attack_atom(atom/target, mob/living/user, params)
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		return
-	return ..()
-
-/obj/item/highfrequencyblade/afterattack(atom/target, mob/user, proximity_flag, params)
+/obj/item/highfrequencyblade/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(.)
+		return .
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		return ..()
-	if(!proximity_flag || !(isclosedturf(target) || isitem(target) || ismachinery(target) || isstructure(target) || isvehicle(target)))
-		return
-	slash(target, user, params)
-	return AFTERATTACK_PROCESSED_ITEM
+		return . // Default attack
+	if(isliving(A) && HAS_TRAIT(src, TRAIT_PACIFISM))
+		return . // Default attack (ultimately nothing)
+
+	return slash(A, user, params)
 
 /// triggered on wield of two handed item
 /obj/item/highfrequencyblade/proc/on_wield(obj/item/source, mob/user)
@@ -1099,16 +1129,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		if(living_target.stat == DEAD && prob(force*damage_mod*0.5))
 			living_target.visible_message(span_danger("[living_target] explodes in a shower of gore!"), blind_message = span_hear("You hear organic matter ripping and tearing!"))
 			living_target.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-			living_target.gib()
+			living_target.gib(DROP_ALL_REMAINS)
 			log_combat(user, living_target, "gibbed", src)
+		return TRUE
 	else if(target.uses_integrity)
 		target.take_damage(force*damage_mod*3, BRUTE, MELEE, FALSE, null, 50)
+		return TRUE
 	else if(iswallturf(target) && prob(force*damage_mod*0.5))
 		var/turf/closed/wall/wall_target = target
 		wall_target.dismantle_wall()
+		return TRUE
 	else if(ismineralturf(target) && prob(force*damage_mod))
 		var/turf/closed/mineral/mineral_target = target
 		mineral_target.gets_drilled()
+		return TRUE
+	return FALSE
 
 /obj/effect/temp_visual/slash
 	icon_state = "highfreq_slash"

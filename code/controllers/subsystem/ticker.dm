@@ -20,8 +20,6 @@ SUBSYSTEM_DEF(ticker)
 	/// Boolean to track and check if our subsystem setup is done.
 	var/setup_done = FALSE
 
-	var/datum/game_mode/mode = null
-
 	var/login_music //music played in pregame lobby
 	var/round_end_sound //music/jingle played when the world reboots
 	var/round_end_sound_sent = TRUE //If all clients have loaded it
@@ -90,7 +88,7 @@ SUBSYSTEM_DEF(ticker)
 	var/use_rare_music = prob(1)
 
 	for(var/S in provisional_title_music)
-		var/lower = lowertext(S)
+		var/lower = LOWER_TEXT(S)
 		var/list/L = splittext(lower,"+")
 		switch(L.len)
 			if(3) //rare+MAP+sound.ogg or MAP+rare.sound.ogg -- Rare Map-specific sounds
@@ -114,7 +112,7 @@ SUBSYSTEM_DEF(ticker)
 	for(var/S in music)
 		var/list/L = splittext(S,".")
 		if(L.len >= 2)
-			var/ext = lowertext(L[L.len]) //pick the real extension, no 'honk.ogg.exe' nonsense here
+			var/ext = LOWER_TEXT(L[L.len]) //pick the real extension, no 'honk.ogg.exe' nonsense here
 			if(byond_sound_formats[ext])
 				continue
 		music -= S
@@ -206,10 +204,9 @@ SUBSYSTEM_DEF(ticker)
 				SEND_SIGNAL(src, COMSIG_TICKER_ERROR_SETTING_UP)
 
 		if(GAME_STATE_PLAYING)
-			mode.process(wait * 0.1)
 			check_queue()
 
-			if(!roundend_check_paused && (mode.check_finished() || force_ending))
+			if(!roundend_check_paused && (check_finished() || force_ending))
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(TRUE) // Turn it on
 				toggle_dooc(TRUE)
@@ -217,25 +214,34 @@ SUBSYSTEM_DEF(ticker)
 				check_maprotate()
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 
+/// Checks if the round should be ending, called every ticker tick
+/datum/controller/subsystem/ticker/proc/check_finished()
+	if(!setup_done)
+		return FALSE
+	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
+		return TRUE
+	if(GLOB.station_was_nuked)
+		return TRUE
+	if(GLOB.revolutionary_win)
+		return TRUE
+	return FALSE
 
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, span_boldannounce("Starting game..."))
 	var/init_start = world.timeofday
 
-	mode = new /datum/game_mode/dynamic
-
 	CHECK_TICK
-	//Configure mode and assign player to special mode stuff
-	var/can_continue = 0
-	can_continue = src.mode.pre_setup() //Choose antagonists
+	//Configure mode and assign player to antagonists
+	var/can_continue = FALSE
+	can_continue = SSdynamic.pre_setup() //Choose antagonists
 	CHECK_TICK
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PRE_JOBS_ASSIGNED, src)
 	can_continue = can_continue && SSjob.DivideOccupations() //Distribute jobs
 	CHECK_TICK
 
 	if(!GLOB.Debug2)
 		if(!can_continue)
 			log_game("Game failed pre_setup")
-			QDEL_NULL(mode)
 			to_chat(world, "<B>Error setting up game.</B> Reverting to pre-game lobby.")
 			SSjob.ResetOccupations()
 			return FALSE
@@ -275,7 +281,7 @@ SUBSYSTEM_DEF(ticker)
 	log_world("Game start took [(world.timeofday - init_start)/10]s")
 	INVOKE_ASYNC(SSdbcore, TYPE_PROC_REF(/datum/controller/subsystem/dbcore,SetRoundStart))
 
-	to_chat(world, span_notice("<B>Welcome to [station_name()], enjoy your stay!</B>"))
+	to_chat(world, span_notice(span_bold("Welcome to [station_name()], enjoy your stay!")))
 	SEND_SOUND(world, sound(SSstation.announcer.get_rand_welcome_sound()))
 
 	current_state = GAME_STATE_PLAYING
@@ -285,7 +291,7 @@ SUBSYSTEM_DEF(ticker)
 		to_chat(world, span_notice("and..."))
 		for(var/holidayname in GLOB.holidays)
 			var/datum/holiday/holiday = GLOB.holidays[holidayname]
-			to_chat(world, "<h4>[holiday.greet()]</h4>")
+			to_chat(world, span_info(holiday.greet()))
 
 	PostSetup()
 
@@ -293,7 +299,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = FALSE
-	mode.post_setup()
+	SSdynamic.post_setup()
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count()
 
@@ -458,8 +464,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
-	for(var/i in GLOB.new_player_list)
-		var/mob/dead/new_player/player = i
+	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
 		var/mob/living = player.transfer_character()
 		if(living)
 			qdel(player)
@@ -525,7 +530,6 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state
 	force_ending = SSticker.force_ending
-	mode = SSticker.mode
 
 	login_music = SSticker.login_music
 	round_end_sound = SSticker.round_end_sound
@@ -693,6 +697,13 @@ SUBSYSTEM_DEF(ticker)
 
 	to_chat(world, span_boldannounce("Rebooting World in [DisplayTimeText(delay)]. [reason]"))
 
+	var/statspage = CONFIG_GET(string/roundstatsurl)
+	var/gamelogloc = CONFIG_GET(string/gamelogurl)
+	if(statspage)
+		to_chat(world, span_info("Round statistics and logs can be viewed <a href=\"[statspage][GLOB.round_id]\">at this website!</a>"))
+	else if(gamelogloc)
+		to_chat(world, span_info("Round logs can be located <a href=\"[gamelogloc]\">at this website!</a>"))
+
 	var/start_wait = world.time
 	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2)) //don't wait forever
 	sleep(delay - (world.time - start_wait))
@@ -703,21 +714,12 @@ SUBSYSTEM_DEF(ticker)
 	if(end_string)
 		end_state = end_string
 
-	var/statspage = CONFIG_GET(string/roundstatsurl)
-	var/gamelogloc = CONFIG_GET(string/gamelogurl)
-	if(statspage)
-		to_chat(world, span_info("Round statistics and logs can be viewed <a href=\"[statspage][GLOB.round_id]\">at this website!</a>"))
-	else if(gamelogloc)
-		to_chat(world, span_info("Round logs can be located <a href=\"[gamelogloc]\">at this website!</a>"))
-
 	log_game(span_boldannounce("Rebooting World. [reason]"))
 
 	world.Reboot()
 
 /datum/controller/subsystem/ticker/Shutdown()
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
-	save_admin_data()
-	update_everything_flag_in_db()
 	if(!round_end_sound)
 		round_end_sound = choose_round_end_song()
 	///The reference to the end of round sound that we have chosen.

@@ -1,6 +1,6 @@
 /obj/item/scanner_wand
 	name = "kiosk scanner wand"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "scanner_wand"
 	inhand_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'

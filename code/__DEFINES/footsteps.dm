@@ -25,6 +25,7 @@
 #define FOOTSTEP_MOB_SHOE "footstep_shoe"
 #define FOOTSTEP_MOB_HUMAN "footstep_human" //Warning: Only works on /mob/living/carbon/human
 #define FOOTSTEP_MOB_SLIME "footstep_slime"
+#define FOOTSTEP_MOB_RUST "footstep_rust"
 #define FOOTSTEP_OBJ_MACHINE "footstep_machine"
 #define FOOTSTEP_OBJ_ROBOT "footstep_robot"
 
@@ -37,14 +38,13 @@
 #define STEP_SOUND_PRIORITY "step_sound_priority"
 
 /*
+Below is how the following lists are defined
 
 id = list(
 list(sounds),
 base volume,
 extra range addition
 )
-
-
 */
 
 GLOBAL_LIST_INIT(footstep, list(
@@ -101,6 +101,7 @@ GLOBAL_LIST_INIT(footstep, list(
 		'sound/effects/footstep/catwalk4.ogg',
 		'sound/effects/footstep/catwalk5.ogg'), 100, 1),
 ))
+
 //bare footsteps lists
 GLOBAL_LIST_INIT(barefootstep, list(
 	FOOTSTEP_WOOD_BAREFOOT = list(list(

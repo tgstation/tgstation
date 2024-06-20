@@ -42,7 +42,7 @@
 		// This has some interesting side effects with gravitum or similar negating effects that may be worth nothing
 		owner.adjustStaminaLoss(-1 * stamina_heal_per_tick)
 		owner.AdjustAllImmobility(-1 * stun_heal_per_tick)
-		// For comparison: Ephedrine heals 1 stamina per tick / 0.5 per second
+		// For comparison: Ephedrine heals 4 stamina per tick / 2 per second
 		// and Nicotine heals 5 seconds of stun per tick / 2.5 per second
 
 // The bad side (being on a planet)
@@ -93,7 +93,7 @@
 	description = "Space is long and dark and empty, but it's my home."
 
 /datum/mood_event/spacer/on_planet
-	description = "I'm on a planet. The gravity here makes me uncomfotable."
+	description = "I'm on a planet. The gravity here makes me uncomfortable."
 	mood_change = -2
 
 /datum/mood_event/spacer/on_planet/too_long

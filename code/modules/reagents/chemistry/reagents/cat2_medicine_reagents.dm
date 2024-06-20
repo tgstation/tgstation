@@ -1,6 +1,5 @@
 // Category 2 medicines are medicines that have an ill effect regardless of volume/OD to dissuade doping. Mostly used as emergency chemicals OR to convert damage (and heal a bit in the process). The type is used to prompt borgs that the medicine is harmful.
 /datum/reagent/medicine/c2
-	harmful = TRUE
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	inverse_chem = null //Some of these use inverse chems - we're just defining them all to null here to avoid repetition, eventually this will be moved up to parent
 	creation_purity = REAGENT_STANDARD_PURITY//All sources by default are 0.75 - reactions are primed to resolve to roughly the same with no intervention for these.
@@ -27,26 +26,32 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/helbital/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
 	var/death_is_coming = (affected_mob.getToxLoss() + affected_mob.getOxyLoss() + affected_mob.getFireLoss() + affected_mob.getBruteLoss())*normalise_creation_purity()
 	var/thou_shall_heal = 0
 	var/good_kind_of_healing = FALSE
 	var/need_mob_update = FALSE
 	switch(affected_mob.stat)
 		if(CONSCIOUS) //bad
-			thou_shall_heal = death_is_coming/50
+			thou_shall_heal = max(death_is_coming/20, 3)
 			need_mob_update += affected_mob.adjustOxyLoss(2 * REM * seconds_per_tick, TRUE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		if(SOFT_CRIT) //meh convert
-			thou_shall_heal = round(death_is_coming/47,0.1)
+			thou_shall_heal = round(death_is_coming/13,0.1)
 			need_mob_update += affected_mob.adjustOxyLoss(1 * REM * seconds_per_tick, TRUE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+			good_kind_of_healing = TRUE
 		else //no convert
-			thou_shall_heal = round(death_is_coming/45, 0.1)
+			thou_shall_heal = round(death_is_coming/10, 0.1)
 			good_kind_of_healing = TRUE
 	need_mob_update += affected_mob.adjustBruteLoss(-thou_shall_heal * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 
 	if(good_kind_of_healing && !reaping && SPT_PROB(0.00005, seconds_per_tick)) //janken with the grim reaper!
-		notify_ghosts("[affected_mob] has entered a game of rock-paper-scissors with death!", source = affected_mob, action = NOTIFY_ORBIT, header = "Who Will Win?")
+		notify_ghosts(
+			"[affected_mob] has entered a game of rock-paper-scissors with death!",
+			source = affected_mob,
+			header = "Who Will Win?",
+		)
 		reaping = TRUE
 		if(affected_mob.apply_status_effect(/datum/status_effect/necropolis_curse, CURSE_BLINDING))
 			helbent = TRUE
@@ -75,7 +80,6 @@
 				affected_mob.revive(HEAL_ALL)
 				holder.del_reagent(type)
 				return
-	return ..() || .
 
 /datum/reagent/medicine/c2/helbital/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -88,6 +92,12 @@
 	if(helbent)
 		affected_mob.remove_status_effect(/datum/status_effect/necropolis_curse)
 
+/datum/reagent/medicine/c2/helbital/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	if(current_cycle >= 50) //greater than 10u in the system
+		affected_mob.AddComponent(/datum/component/omen, incidents_left = min(round(current_cycle/51), 3)) //no more than 3 bad incidents for dropping more than 10u
+		to_chat(affected_mob, span_hierophant_warning("You feel a sense of heavy dread and grave misfortune settle in as the substance leaves your body."))
+
 /datum/reagent/medicine/c2/libital //messes with your liber
 	name = "Libital"
 	description = "A bruise reliever. Does minor liver damage."
@@ -95,6 +105,8 @@
 	ph = 8.2
 	taste_description = "bitter with a hint of alcohol"
 	reagent_state = SOLID
+	inverse_chem_val = 0.3
+	inverse_chem = /datum/reagent/inverse/libitoil
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/c2/libital/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -119,7 +131,7 @@
 /datum/reagent/medicine/c2/probital/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustBruteLoss(-2.25 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update = affected_mob.adjustBruteLoss(-3 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	var/ooo_youaregettingsleepy = 3.5
 	switch(round(affected_mob.getStaminaLoss()))
 		if(10 to 40)
@@ -158,18 +170,21 @@
 /*Suffix: -uri*/
 /datum/reagent/medicine/c2/lenturi
 	name = "Lenturi"
-	description = "Used to treat burns. Makes you move slower while it is in your system. Applies stomach damage when it leaves your system."
+	description = "Used to treat burns. Applies stomach damage when it leaves your system."
 	reagent_state = LIQUID
 	color = "#6171FF"
 	ph = 4.7
 	var/resetting_probability = 0 //What are these for?? Can I remove them?
 	var/spammer = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	inverse_chem_val = 0.4
+	inverse_chem = /datum/reagent/inverse/lentslurri
+
 
 /datum/reagent/medicine/c2/lenturi/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustFireLoss(-3 * REM * normalise_creation_purity() * seconds_per_tick, required_bodytype = affected_bodytype)
+	need_mob_update = affected_mob.adjustFireLoss(-3.75 * REM * normalise_creation_purity() * seconds_per_tick, required_bodytype = affected_bodytype)
 	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.4 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -183,6 +198,8 @@
 	var/resetting_probability = 0 //same with this? Old legacy vars that should be removed?
 	var/message_cd = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	inverse_chem_val = 0.35
+	inverse_chem = /datum/reagent/inverse/aiuri
 
 /datum/reagent/medicine/c2/aiuri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -208,9 +225,9 @@
 	. = ..()
 	var/need_mob_update
 	if(affected_mob.getFireLoss() > 50)
-		need_mob_update = affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update = affected_mob.adjustFireLoss(-3 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
 	else
-		need_mob_update = affected_mob.adjustFireLoss(-1.25 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update = affected_mob.adjustFireLoss(-2.25 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjust_bodytemperature(rand(-25,-5) * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 50)
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/humi = affected_mob
@@ -279,7 +296,7 @@
 	color = "#FF6464"
 	ph = 5.6
 	inverse_chem = /datum/reagent/inverse/healing/tirimol
-	inverse_chem_val = 0.4
+	inverse_chem_val = 0.25
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 	/// A cooldown for spacing bursts of stamina damage
@@ -288,7 +305,7 @@
 /datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustOxyLoss(-3 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update = affected_mob.adjustOxyLoss(-4.5 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	need_mob_update += affected_mob.adjustStaminaLoss(2 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	if(drowsycd && COOLDOWN_FINISHED(src, drowsycd))
 		affected_mob.adjust_drowsiness(20 SECONDS)
@@ -376,6 +393,8 @@
 		if(the_reagent2 == src)
 			continue
 		var/amount2purge = 3
+		if(holder.has_reagent(/datum/reagent/toxin/anacea))
+			amount2purge = 0
 		if(medibonus >= 3 && istype(the_reagent2, /datum/reagent/medicine)) //3 unique meds (2+multiver) | (1 + pure multiver) will make it not purge medicines
 			continue
 		affected_mob.reagents.remove_reagent(the_reagent2.type, amount2purge * REM * seconds_per_tick)
@@ -403,8 +422,8 @@
 	if(!(methods & INJECT) || !iscarbon(A))
 		return
 	var/mob/living/carbon/C = A
-	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
-		C.adjustToxLoss((-1.5 * min(2, trans_volume) * REM) * normalise_creation_purity(), required_biotype = affected_biotype) //This is to promote iv pole use for that chemotherapy feel.
+	if(trans_volume >= 0.4) //prevents cheesing with ultralow doses.
+		C.adjustToxLoss((-3 * min(2, trans_volume) * REM) * normalise_creation_purity(), required_biotype = affected_biotype) //This is to promote iv pole use for that chemotherapy feel.
 	var/obj/item/organ/internal/liver/L = C.organs_slot[ORGAN_SLOT_LIVER]
 	if(!L || L.organ_flags & ORGAN_FAILING)
 		return
@@ -417,7 +436,7 @@
 	. = ..()
 	var/need_mob_update
 	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.8 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
-	need_mob_update += affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update += affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	for(var/datum/reagent/R in affected_mob.reagents.reagent_list)
 		if(issyrinormusc(R))
 			continue
@@ -442,13 +461,13 @@
 	overdose_threshold = 25
 	ph = 9.1
 	var/datum/brain_trauma/mild/muscle_weakness/trauma
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/c2/musiver/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
 	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
-	need_mob_update += affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update += affected_mob.adjustToxLoss(-1.5 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype)
 	for(var/datum/reagent/R in affected_mob.reagents.reagent_list)
 		if(issyrinormusc(R))
 			continue
@@ -492,13 +511,15 @@
 		show_message = 0
 	if(!(methods & (PATCH|TOUCH|VAPOR)))
 		return
-	var/harmies = min(carbies.getBruteLoss(), carbies.adjustBruteLoss(-1.25 * reac_volume, updating_health = FALSE, required_bodytype = affected_bodytype)*-1)
-	var/burnies = min(carbies.getFireLoss(), carbies.adjustFireLoss(-1.25 * reac_volume, updating_health = FALSE, required_bodytype = affected_bodytype)*-1)
+	var/current_bruteloss = carbies.getBruteLoss() // because this will be changed after calling adjustBruteLoss()
+	var/current_fireloss = carbies.getFireLoss() // because this will be changed after calling adjustFireLoss()
+	var/harmies = clamp(carbies.adjustBruteLoss(-1.25 * reac_volume, updating_health = FALSE, required_bodytype = affected_bodytype), 0, current_bruteloss)
+	var/burnies = clamp(carbies.adjustFireLoss(-1.25 * reac_volume, updating_health = FALSE, required_bodytype = affected_bodytype), 0, current_fireloss)
 	for(var/i in carbies.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_synthflesh(reac_volume)
 	var/need_mob_update = harmies + burnies
-	need_mob_update += carbies.adjustToxLoss((harmies+burnies)*(0.5 + (0.25*(1-creation_purity))), updating_health = FALSE, required_biotype = affected_biotype) //0.5 - 0.75
+	need_mob_update = carbies.adjustToxLoss((harmies + burnies)*(0.5 + (0.25*(1-creation_purity))), updating_health = FALSE, required_biotype = affected_biotype) || need_mob_update //0.5 - 0.75
 
 	if(need_mob_update)
 		carbies.updatehealth()
@@ -572,8 +593,10 @@
 
 	if(affected_mob.health <= (affected_mob.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*(2*normalise_creation_purity()))) //certain death below this threshold
 		REMOVE_TRAIT(affected_mob, TRAIT_STABLEHEART, type) //we have to remove the stable heart trait before we give them a heart attack
-		to_chat(affected_mob,span_danger("You feel something rupturing inside your chest!"))
-		affected_mob.emote("scream")
+		affected_mob.remove_traits(subject_traits, type)
+		to_chat(affected_mob, span_danger("You feel something rupturing inside your chest!"))
+		if(!HAS_TRAIT(affected_mob, TRAIT_ANALGESIA))
+			affected_mob.emote("scream")
 		affected_mob.set_heartattack(TRUE)
 		volume = 0
 	if(need_mob_update)

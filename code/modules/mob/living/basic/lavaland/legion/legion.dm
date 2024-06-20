@@ -35,13 +35,18 @@
 
 /mob/living/basic/mining/legion/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/death_drops, get_loot_list())
 	AddElement(/datum/element/content_barfer)
+	var/list/drops = get_loot_list()
+	if (length(drops))
+		AddElement(/datum/element/death_drops, string_list(drops))
+	assign_abilities()
 
+/// Give the Legion its spells
+/mob/living/basic/mining/legion/proc/assign_abilities()
 	var/datum/action/cooldown/mob_cooldown/skull_launcher/skull_launcher = new(src)
 	skull_launcher.Grant(src)
 	skull_launcher.spawn_type = brood_type
-	ai_controller.blackboard[BB_TARGETTED_ACTION] = skull_launcher
+	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, skull_launcher)
 
 /// Create what we want to drop on death, in proc form so we can always return a static list
 /mob/living/basic/mining/legion/proc/get_loot_list()
@@ -52,6 +57,7 @@
 	. = ..()
 	if (gone != stored_mob)
 		return
+	UnregisterSignal(stored_mob, COMSIG_LIVING_REVIVE)
 	ai_controller.clear_blackboard_key(BB_LEGION_CORPSE)
 	stored_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_LEGION_EATEN)
 	stored_mob.add_mood_event(MOOD_CATEGORY_LEGION_CORE, /datum/mood_event/healsbadman/long_term) // This will still probably mostly be gone before you are alive
@@ -63,15 +69,17 @@
 	return ..()
 
 /// Put a corpse in this guy
-/mob/living/basic/mining/legion/proc/consume(mob/living/consumed)
+/mob/living/basic/mining/legion/proc/consume(mob/living/carbon/human/consumed)
 	new /obj/effect/gibspawner/generic(consumed.loc)
 	gender = consumed.gender
-	name = consumed.real_name
+	if (!ismonkey(consumed) || consumed == GLOB.the_one_and_only_punpun)
+		name = consumed.real_name
 	consumed.investigate_log("has been killed by hivelord infestation.", INVESTIGATE_DEATHS)
 	consumed.death()
 	consumed.extinguish_mob()
 	consumed.fully_heal(HEAL_DAMAGE)
 	consumed.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_LEGION_EATEN)
+	RegisterSignal(consumed, COMSIG_LIVING_REVIVE, PROC_REF(on_consumed_revive))
 	consumed.forceMove(src)
 	ai_controller?.set_blackboard_key(BB_LEGION_CORPSE, consumed)
 	ai_controller?.set_blackboard_key(BB_LEGION_RECENT_LINES, consumed.copy_recent_speech(line_chance = 80))
@@ -81,9 +89,14 @@
 		return
 	// Congratulations you have won a special prize: cancer
 	var/obj/item/organ/internal/legion_tumour/cancer = new()
-	cancer.Insert(consumed, special = TRUE, drop_if_replaced = FALSE)
+	cancer.Insert(consumed, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 /// A Legion which only drops skeletons instead of corpses which might have fun loot, so it cannot be farmed
+
+/mob/living/basic/mining/legion/proc/on_consumed_revive(full_heal_flags)
+	SIGNAL_HANDLER
+	gib()
+
 /mob/living/basic/mining/legion/spawner_made
 	corpse_type = /obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/charred
 

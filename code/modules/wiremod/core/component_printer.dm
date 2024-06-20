@@ -22,13 +22,9 @@
 
 /obj/machinery/component_printer/Initialize(mapload)
 	. = ..()
-	materials = AddComponent( \
-		/datum/component/remote_materials, \
-		mapload, \
-		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
-	)
+	materials = AddComponent(/datum/component/remote_materials, mapload)
 
-/obj/machinery/component_printer/LateInitialize()
+/obj/machinery/component_printer/post_machine_initialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !techweb)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(techweb, src)
@@ -188,8 +184,7 @@
 			"cost" = cost,
 			"id" = researched_design_id,
 			"categories" = design.category,
-			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]",
-			"constructionTime" = -1
+			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]"
 		)
 
 	data["designs"] = designs
@@ -323,11 +318,7 @@
 /obj/machinery/module_duplicator/Initialize(mapload)
 	. = ..()
 
-	materials = AddComponent( \
-		/datum/component/remote_materials, \
-		mapload, \
-		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
-	)
+	materials = AddComponent(/datum/component/remote_materials, mapload)
 
 /obj/machinery/module_duplicator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

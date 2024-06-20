@@ -32,7 +32,7 @@
 	options = forge_items
 
 /obj/structure/destructible/cult/item_dispenser/forge/succcess_message(mob/living/user, obj/item/spawned_item)
-	to_chat(user, span_cultitalic("You work [src] as dark knowledge guides your hands, creating [spawned_item]!"))
+	to_chat(user, span_cult_italic("You work [src] as dark knowledge guides your hands, creating [spawned_item]!"))
 
 /obj/structure/destructible/cult/item_dispenser/forge/engine
 	name = "magma engine"

@@ -29,7 +29,7 @@
 /// Used by all young spiders if they ever appear.
 /datum/ai_controller/basic_controller/young_spider
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_FLEE_DISTANCE = 6,
 	)
 
@@ -47,3 +47,6 @@
 		/datum/ai_planning_subtree/find_unwebbed_turf,
 		/datum/ai_planning_subtree/spin_web,
 	)
+
+/mob/living/basic/spider/growing/young/start_pulling(atom/movable/pulled_atom, state, force = move_force, supress_message = FALSE) // we're TOO FUCKING WEAK
+	return

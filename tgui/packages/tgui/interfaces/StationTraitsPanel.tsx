@@ -1,7 +1,9 @@
-import { filterMap } from 'common/collections';
+import { filter, map } from 'common/collections';
 import { exhaustiveCheck } from 'common/exhaustive';
 import { BooleanLike } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import { Box, Button, Divider, Dropdown, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
@@ -28,20 +30,16 @@ enum Tab {
   ViewStationTraits,
 }
 
-const FutureStationTraitsPage = (props, context) => {
-  const { act, data } = useBackend<StationTraitsData>(context);
+const FutureStationTraitsPage = (props) => {
+  const { act, data } = useBackend<StationTraitsData>();
   const { future_station_traits } = data;
 
-  const [selectedTrait, setSelectedTrait] = useLocalState<string | null>(
-    context,
-    'selectedFutureTrait',
-    null
-  );
+  const [selectedTrait, setSelectedTrait] = useState<string>('');
 
   const traitsByName = Object.fromEntries(
     data.valid_station_traits.map((trait) => {
       return [trait.name, trait.path];
-    })
+    }),
   );
 
   const traitNames = Object.keys(traitsByName);
@@ -52,9 +50,9 @@ const FutureStationTraitsPage = (props, context) => {
       <Stack fill>
         <Stack.Item grow>
           <Dropdown
-            displayText={!selectedTrait && 'Select trait to add...'}
             onSelected={setSelectedTrait}
             options={traitNames}
+            placeholder="Select trait to add..."
             selected={selectedTrait}
             width="100%"
           />
@@ -74,7 +72,7 @@ const FutureStationTraitsPage = (props, context) => {
               let newStationTraits = [selectedPath];
               if (future_station_traits) {
                 const selectedTraitPaths = future_station_traits.map(
-                  (trait) => trait.path
+                  (trait) => trait.path,
                 );
 
                 if (selectedTraitPaths.indexOf(selectedPath) !== -1) {
@@ -82,14 +80,15 @@ const FutureStationTraitsPage = (props, context) => {
                 }
 
                 newStationTraits = newStationTraits.concat(
-                  ...selectedTraitPaths
+                  ...selectedTraitPaths,
                 );
               }
 
               act('setup_future_traits', {
                 station_traits: newStationTraits,
               });
-            }}>
+            }}
+          >
             Add
           </Button>
         </Stack.Item>
@@ -111,18 +110,13 @@ const FutureStationTraitsPage = (props, context) => {
                       icon="times"
                       onClick={() => {
                         act('setup_future_traits', {
-                          station_traits: filterMap(
-                            future_station_traits,
-                            (otherTrait) => {
-                              if (otherTrait.path === trait.path) {
-                                return undefined;
-                              } else {
-                                return otherTrait.path;
-                              }
-                            }
+                          station_traits: filter(
+                            map(future_station_traits, (t) => t.path),
+                            (p) => p !== trait.path,
                           ),
                         });
-                      }}>
+                      }}
+                    >
                       Delete
                     </Button>
                   </Stack.Item>
@@ -139,7 +133,8 @@ const FutureStationTraitsPage = (props, context) => {
                 color="red"
                 icon="times"
                 tooltip="The next round will roll station traits randomly, just like normal"
-                onClick={() => act('clear_future_traits')}>
+                onClick={() => act('clear_future_traits')}
+              >
                 Run Station Traits Normally
               </Button>
             </Box>
@@ -157,7 +152,8 @@ const FutureStationTraitsPage = (props, context) => {
                 act('setup_future_traits', {
                   station_traits: [],
                 })
-              }>
+              }
+            >
               Prevent station traits from running next round
             </Button>
           </Box>
@@ -167,8 +163,8 @@ const FutureStationTraitsPage = (props, context) => {
   );
 };
 
-const ViewStationTraitsPage = (props, context) => {
-  const { act, data } = useBackend<StationTraitsData>(context);
+const ViewStationTraitsPage = (props) => {
+  const { act, data } = useBackend<StationTraitsData>();
 
   return data.current_traits.length > 0 ? (
     <Stack vertical fill>
@@ -205,12 +201,8 @@ const ViewStationTraitsPage = (props, context) => {
   );
 };
 
-export const StationTraitsPanel = (props, context) => {
-  const [currentTab, setCurrentTab] = useLocalState(
-    context,
-    'station_traits_tab',
-    Tab.ViewStationTraits
-  );
+export const StationTraitsPanel = (props) => {
+  const [currentTab, setCurrentTab] = useState(Tab.ViewStationTraits);
 
   let currentPage;
 
@@ -232,14 +224,16 @@ export const StationTraitsPanel = (props, context) => {
           <Tabs.Tab
             icon="eye"
             selected={currentTab === Tab.ViewStationTraits}
-            onClick={() => setCurrentTab(Tab.ViewStationTraits)}>
+            onClick={() => setCurrentTab(Tab.ViewStationTraits)}
+          >
             View
           </Tabs.Tab>
 
           <Tabs.Tab
             icon="edit"
             selected={currentTab === Tab.SetupFutureStationTraits}
-            onClick={() => setCurrentTab(Tab.SetupFutureStationTraits)}>
+            onClick={() => setCurrentTab(Tab.SetupFutureStationTraits)}
+          >
             Edit
           </Tabs.Tab>
         </Tabs>

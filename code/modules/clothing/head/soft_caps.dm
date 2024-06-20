@@ -5,11 +5,14 @@
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 	icon_state = "cargosoft"
 	inhand_icon_state = "greyscale_softcap" //todo wip
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
+	/// For setting icon archetype
 	var/soft_type = "cargo"
+	/// If there is a suffix to append
 	var/soft_suffix = "soft"
 
 	dog_fashion = /datum/dog_fashion/head/cargo_tech
-
+	/// Whether this is on backwards... Woah, cool
 	var/flipped = FALSE
 
 /obj/item/clothing/head/soft/dropped()
@@ -24,10 +27,9 @@
 	flip(usr)
 
 
-/obj/item/clothing/head/soft/AltClick(mob/user)
-	..()
-	if(user.can_perform_action(src, NEED_DEXTERITY))
-		flip(user)
+/obj/item/clothing/head/soft/click_alt(mob/user)
+	flip(user)
+	return CLICK_ACTION_SUCCESS
 
 
 /obj/item/clothing/head/soft/proc/flip(mob/user)
@@ -39,6 +41,7 @@
 		else
 			icon_state = "[soft_type][soft_suffix]"
 			to_chat(user, span_notice("You flip the hat back in normal position."))
+		update_icon()
 		usr.update_worn_head() //so our mob-overlays update
 
 /obj/item/clothing/head/soft/examine(mob/user)
@@ -134,6 +137,15 @@
 	strip_delay = 60
 	dog_fashion = null
 
+/obj/item/clothing/head/soft/veteran
+	name = "veteran cap"
+	desc = "It's a robust baseball hat in tasteful black colour with a golden connotation to \"REMEMBER\"."
+	icon_state = "veteransoft"
+	soft_type = "veteran"
+	armor_type = /datum/armor/cosmetic_sec
+	strip_delay = 60
+	dog_fashion = null
+
 /obj/item/clothing/head/soft/paramedic
 	name = "paramedic cap"
 	desc = "It's a baseball hat with a dark turquoise color and a reflective cross on the top."
@@ -161,3 +173,41 @@
 /obj/item/clothing/head/soft/fishing_hat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/skill_reward, /datum/skill/fishing)
+
+#define PROPHAT_MOOD "prophat"
+
+/obj/item/clothing/head/soft/propeller_hat
+	name = "propeller hat"
+	desc = "A colorful hat with a spinning propeller sat on top."
+	icon_state = "propeller_hat"
+	soft_type = "propeller_hat"
+	inhand_icon_state = "rainbow_softcap"
+	worn_y_offset = 1
+	soft_suffix = null
+	actions_types = list(/datum/action/item_action/toggle)
+	var/enabled_waddle = TRUE
+	var/active = FALSE
+
+/obj/item/clothing/head/soft/propeller_hat/update_icon_state()
+	. = ..()
+	worn_icon_state = "[soft_type][flipped ? "_flipped" : null][active ? "_on" : null]"
+
+/obj/item/clothing/head/soft/propeller_hat/attack_self(mob/user)
+	active = !active
+	balloon_alert(user, (active ? "started propeller" : "stopped propeller"))
+	update_icon()
+	user.update_worn_head()
+	add_fingerprint(user)
+
+/obj/item/clothing/head/soft/propeller_hat/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_HEAD)
+		user.add_mood_event(PROPHAT_MOOD, /datum/mood_event/prophat)
+
+/obj/item/clothing/head/soft/propeller_hat/dropped(mob/living/user)
+	. = ..()
+	user.clear_mood_event(PROPHAT_MOOD)
+	active = FALSE
+	update_icon()
+
+#undef PROPHAT_MOOD

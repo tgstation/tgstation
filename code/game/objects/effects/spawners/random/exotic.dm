@@ -50,7 +50,7 @@
 		/obj/item/storage/medkit/brute = 27,
 		/obj/item/storage/medkit/fire = 27,
 		/obj/item/storage/toolbox/syndicate = 12,
-		/obj/item/borg/upgrade/ddrill = 3,
+		/obj/item/borg/upgrade/diamond_drill = 3,
 		/obj/item/knife/butcher = 14,
 		/obj/item/clothing/glasses/night = 10,
 		/obj/item/pickaxe/drill/diamonddrill = 6,

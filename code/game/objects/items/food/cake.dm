@@ -288,16 +288,23 @@
 	tastes = list("cake" = 3, "a Vlad's Salad" = 1)
 	crafting_complexity = FOOD_COMPLEXITY_4
 
-/obj/item/food/cakeslice/birthday/energy/proc/energy_bite(mob/living/user)
-	to_chat(user, "<font color='red' size='5'>As you eat the cake slice, you accidentally hurt yourself on the embedded energy dagger!</font>")
-	user.apply_damage(18, BRUTE, BODY_ZONE_HEAD)
-	playsound(user, 'sound/weapons/blade1.ogg', 5, TRUE)
+/obj/item/food/cakeslice/birthday/energy/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_FOOD_EATEN, PROC_REF(bite_taken))
 
 /obj/item/food/cakeslice/birthday/energy/attack(mob/living/target_mob, mob/living/user)
-	. = ..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM) && target_mob != user) //Prevents pacifists from attacking others directly
-		return
-	energy_bite(target_mob, user)
+		balloon_alert(user, "that's dangerous!")
+		return FALSE
+	return ..()
+
+/obj/item/food/cakeslice/birthday/energy/proc/bite_taken(datum/source, mob/living/eater, mob/living/feeder)
+	SIGNAL_HANDLER
+	to_chat(eater, "<font color='red' size='5'>As you eat the cake slice, you accidentally hurt yourself on the embedded energy dagger!</font>")
+	if(eater != feeder)
+		log_combat(feeder, eater, "fed an energy cake to", src)
+	eater.apply_damage(18, BRUTE, BODY_ZONE_HEAD)
+	playsound(eater, 'sound/weapons/blade1.ogg', 5, TRUE)
 
 /obj/item/food/cake/apple
 	name = "apple cake"

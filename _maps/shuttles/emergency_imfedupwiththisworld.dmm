@@ -75,9 +75,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "s" = (
-/obj/machinery/door/window{
-	dir = 8
-	},
+/obj/machinery/door/window/left/directional/west,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)

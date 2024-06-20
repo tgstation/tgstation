@@ -141,11 +141,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	return ..() // then go ahead and delete the cable
 
-/obj/structure/cable/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		var/obj/item/stack/cable_coil/cable = new(drop_location(), 1)
-		cable.set_cable_color(cable_color)
-	qdel(src)
+/obj/structure/cable/atom_deconstruct(disassembled = TRUE)
+	var/obj/item/stack/cable_coil/cable = new(drop_location(), 1)
+	cable.set_cable_color(cable_color)
 
 ///////////////////////////////////
 // General procedures
@@ -439,7 +437,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	throw_speed = 3
 	throw_range = 5
 	mats_per_unit = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.1, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.1)
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes", "disciplines", "flogs")
 	attack_verb_simple = list("whip", "lash", "discipline", "flog")
@@ -464,7 +462,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/item/stack/cable_coil/examine(mob/user)
 	. = ..()
-	. += "<b>Ctrl+Click</b> to change the layer you are placing on."
+	. += "<b>Use it in hand</b> to change the layer you are placing on, amongst other things."
 
 /obj/item/stack/cable_coil/update_name()
 	. = ..()
@@ -507,7 +505,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(!user)
 		return
 
-	var/image/restraints_icon = image(icon = 'icons/obj/restraints.dmi', icon_state = "cuff")
+	var/image/restraints_icon = image(icon = 'icons/obj/weapons/restraints.dmi', icon_state = "cuff")
 	restraints_icon.maptext = MAPTEXT("<span [amount >= CABLE_RESTRAINTS_COST ? "" : "style='color: red'"]>[CABLE_RESTRAINTS_COST]</span>")
 	restraints_icon.color = color
 
@@ -575,9 +573,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(affecting && IS_ROBOTIC_LIMB(affecting))
 		if(user == H)
 			user.visible_message(span_notice("[user] starts to fix some of the wires in [H]'s [affecting.name]."), span_notice("You start fixing some of the wires in [H == user ? "your" : "[H]'s"] [affecting.name]."))
-			if(!do_after(user, 50, H))
+			if(!do_after(user, 5 SECONDS, H))
 				return
-		if(item_heal_robotic(H, user, 0, 15))
+		if(H.item_heal(user, 0, 15, "dents", "burnt wires", BODYTYPE_ROBOTIC))
 			use(1)
 		return
 	else
@@ -630,6 +628,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/item/stack/cable_coil/five
 	amount = 5
+
+/obj/item/stack/cable_coil/thirty
+	amount = 30
 
 /obj/item/stack/cable_coil/cut
 	amount = null
@@ -757,9 +758,10 @@ GLOBAL_LIST(hub_radial_layer_list)
 			C.deconstruct() // remove adversary cable
 	auto_propagate_cut_cable(src) // update the powernets
 
-/obj/structure/cable/multilayer/CtrlClick(mob/living/user)
+/obj/structure/cable/multilayer/click_ctrl(mob/user)
 	to_chat(user, span_warning("You push the reset button."))
 	addtimer(CALLBACK(src, PROC_REF(Reload)), 10, TIMER_UNIQUE) //spam protect
+	return CLICK_ACTION_SUCCESS
 
 // This is a mapping aid. In order for this to be placed on a map and function, all three layers need to have their nodes active
 /obj/structure/cable/multilayer/connected

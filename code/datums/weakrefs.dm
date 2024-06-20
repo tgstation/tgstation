@@ -100,6 +100,10 @@
 
 /datum/weakref/vv_do_topic(list/href_list)
 	. = ..()
+
+	if(!.)
+		return
+
 	if(href_list[VV_HK_WEAKREF_RESOLVE])
 		if(!check_rights(NONE))
 			return

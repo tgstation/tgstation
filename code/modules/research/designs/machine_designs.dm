@@ -318,6 +318,26 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
+/datum/design/board/photobooth
+	name = "Photobooth Board"
+	desc = "The circuit board for a photobooth."
+	id = "photobooth"
+	build_path = /obj/item/circuitboard/machine/photobooth
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_SERVICE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/board/security_photobooth
+	name = "Security Photobooth Board"
+	desc = "The circuit board for a security photobooth."
+	id = "security_photobooth"
+	build_path = /obj/item/circuitboard/machine/photobooth/security
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_SECURITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
 /datum/design/board/biogenerator
 	name = "Biogenerator Board"
 	desc = "The circuit board for a biogenerator."
@@ -532,6 +552,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
+/datum/design/board/microwave_engineering
+	name = "Wireless Microwave Board"
+	desc = "The circuit board for a cell-powered microwave."
+	id = "microwave_engineering"
+	build_path = /obj/item/circuitboard/machine/microwave/engineering
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_KITCHEN
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/board/gibber
 	name = "Gibber Board"
 	desc = "The circuit board for a gibber."
@@ -651,7 +681,7 @@
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_SECURITY
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/board/vendor
 	name = "Vendor Board"
@@ -723,6 +753,26 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_TELECOMMS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/crossing_signal
+	name = "Crossing Signal Board"
+	desc = "The circuit board for a tram crossing signal."
+	id = "crossing_signal"
+	build_path = /obj/item/circuitboard/machine/crossing_signal
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_TELECOMMS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/guideway_sensor
+	name = "Guideway Sensor Board"
+	desc = "The circuit board for a tram proximity sensor."
+	id = "guideway_sensor"
+	build_path = /obj/item/circuitboard/machine/guideway_sensor
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_TELECOMMS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/limbgrower
 	name = "Limb Grower Board"
@@ -1090,7 +1140,6 @@
 	name = "Machine Design (Bot Navigational Beacon)"
 	desc = "The circuit board for a beacon that aids bot navigation."
 	id = "botnavbeacon"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/navbeacon
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ROBOTICS
@@ -1106,3 +1155,26 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/brm
+	name = "Boulder Retrieval Matrix"
+	id = "brm"
+	materials = list(
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/circuitboard/machine/brm
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_TELEPORT,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
+
+/datum/design/board/flatpacker
+	name = "Flatpacker Machine Board"
+	desc = "The circuit board for a Flatpacker."
+	id = "flatpacker"
+	build_path = /obj/item/circuitboard/machine/flatpacker
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING

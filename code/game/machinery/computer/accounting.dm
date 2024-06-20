@@ -23,7 +23,7 @@
 		var/datum/bank_account/current_bank_account = SSeconomy.bank_accounts_by_id[current_account]
 		player_accounts += list(list(
 			"name" = current_bank_account.account_holder,
-			"job" = current_bank_account.account_job.title,
+			"job" = current_bank_account.account_job?.title || "No job", // because this can be null
 			"balance" = round(current_bank_account.account_balance),
 			"modifier" = round((current_bank_account.payday_modifier * 0.9), 0.1),
 		))
@@ -31,4 +31,3 @@
 	data["AuditLog"] = audit_list
 	data["Crashing"] = HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING)
 	return data
-

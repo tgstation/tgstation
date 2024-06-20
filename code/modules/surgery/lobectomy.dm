@@ -13,10 +13,9 @@
 
 /datum/surgery/lobectomy/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/lungs/target_lungs = target.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if(target_lungs)
-		if(target_lungs.damage > 60 && !target_lungs.operated)
-			return TRUE
-	return FALSE
+	if(isnull(target_lungs) || target_lungs.damage < 60 || target_lungs.operated)
+		return FALSE
+	return ..()
 
 
 //lobectomy, removes the most damaged lung lobe with a 95% base success chance
@@ -31,6 +30,7 @@
 	preop_sound = 'sound/surgery/scalpel1.ogg'
 	success_sound = 'sound/surgery/organ1.ogg'
 	failure_sound = 'sound/surgery/organ2.ogg'
+	surgery_effects_mood = TRUE
 
 /datum/surgery_step/lobectomy/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(

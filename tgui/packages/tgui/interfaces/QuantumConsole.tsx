@@ -1,9 +1,21 @@
-import { Window } from '../layouts';
-import { useBackend } from '../backend';
-import { Button, Collapsible, Icon, NoticeBox, ProgressBar, Section, Stack, Table, Tooltip } from '../components';
 import { BooleanLike } from 'common/react';
-import { LoadingScreen } from './common/LoadingToolbox';
+
+import { useBackend, useSharedState } from '../backend';
+import {
+  Button,
+  Collapsible,
+  Icon,
+  NoticeBox,
+  ProgressBar,
+  Section,
+  Stack,
+  Table,
+  Tabs,
+  Tooltip,
+} from '../components';
 import { TableCell, TableRow } from '../components/Table';
+import { Window } from '../layouts';
+import { LoadingScreen } from './common/LoadingToolbox';
 
 type Data =
   | {
@@ -17,6 +29,8 @@ type Data =
       ready: BooleanLike;
       retries_left: number;
       scanner_tier: number;
+      broadcasting: BooleanLike;
+      broadcasting_on_cd: BooleanLike;
     }
   | {
       connected: 0;
@@ -37,6 +51,8 @@ type Domain = {
   desc: string;
   difficulty: number;
   id: string;
+  is_modular: BooleanLike;
+  has_secondary_objectives: BooleanLike;
   name: string;
   reward: number | string;
 };
@@ -70,12 +86,12 @@ const getColor = (difficulty: number) => {
     case Difficulty.High:
       return 'bad';
     default:
-      return '';
+      return 'green';
   }
 };
 
-export const QuantumConsole = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const QuantumConsole = (props) => {
+  const { data } = useBackend<Data>();
 
   return (
     <Window title="Quantum Console" width={500} height={500}>
@@ -87,24 +103,39 @@ export const QuantumConsole = (props, context) => {
   );
 };
 
-const AccessView = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const AccessView = (props) => {
+  const { act, data } = useBackend<Data>();
+  const [tab, setTab] = useSharedState('tab', 0);
 
   if (!isConnected(data)) {
-    return <NoticeBox error>No server connected!</NoticeBox>;
+    return <NoticeBox danger>No server connected!</NoticeBox>;
   }
 
   const {
     available_domains = [],
+    broadcasting,
+    broadcasting_on_cd,
     generated_domain,
-    ready,
     occupants,
     points,
+    randomized,
+    ready,
   } = data;
 
   const sorted = available_domains.sort((a, b) => a.cost - b.cost);
 
-  const selected = sorted.find(({ id }) => id === generated_domain);
+  const filtered = sorted.filter((domain) => {
+    return domain.difficulty === tab;
+  });
+
+  let selected;
+  if (generated_domain) {
+    selected = randomized
+      ? '???'
+      : sorted.find(({ id }) => id === generated_domain)?.name;
+  } else {
+    selected = 'Nothing loaded';
+  }
 
   return (
     <Stack fill vertical>
@@ -112,6 +143,15 @@ const AccessView = (props, context) => {
         <Section
           buttons={
             <>
+              <Button.Checkbox
+                checked={broadcasting}
+                disabled={broadcasting_on_cd}
+                onClick={() => act('broadcast')}
+                tooltip="Toggles whether you broadcast your
+                  bitrun to station Entertainment Monitors."
+              >
+                Broadcast
+              </Button.Checkbox>
               <Button
                 disabled={
                   !ready || occupants > 0 || points < 1 || !!generated_domain
@@ -119,7 +159,9 @@ const AccessView = (props, context) => {
                 icon="random"
                 onClick={() => act('random_domain')}
                 mr={1}
-                tooltip="Get a random domain for more rewards. Weighted towards your current points. Minimum: 1 point.">
+                tooltip="Get a random domain for more rewards.
+                  Weighted towards your current points. Minimum: 1 point."
+              >
                 Randomize
               </Button>
               <Tooltip content="Accrued points for purchasing domains.">
@@ -130,8 +172,47 @@ const AccessView = (props, context) => {
           }
           fill
           scrollable
-          title="Virtual Domains">
-          {sorted.map((domain) => (
+          title="Virtual Domains"
+        >
+          <Tabs fluid>
+            <Tabs.Tab
+              backgroundColor={getColor(Difficulty.None)}
+              textColor="white"
+              selected={tab === 0}
+              onClick={() => setTab(0)}
+              icon="chevron-down"
+            >
+              Peaceful
+            </Tabs.Tab>
+            <Tabs.Tab
+              backgroundColor={getColor(Difficulty.Low)}
+              textColor="black"
+              selected={tab === 1}
+              onClick={() => setTab(1)}
+              icon="chevron-down"
+            >
+              Easy
+            </Tabs.Tab>
+            <Tabs.Tab
+              backgroundColor={getColor(Difficulty.Medium)}
+              textColor="white"
+              selected={tab === 2}
+              onClick={() => setTab(2)}
+              icon="chevron-down"
+            >
+              Medium
+            </Tabs.Tab>
+            <Tabs.Tab
+              backgroundColor={getColor(Difficulty.High)}
+              textColor="white"
+              selected={tab === 3}
+              onClick={() => setTab(3)}
+              icon="chevron-down"
+            >
+              Hard <Icon name="skull" ml={1} />{' '}
+            </Tabs.Tab>
+          </Tabs>
+          {filtered.map((domain) => (
             <DomainEntry key={domain.id} domain={domain} />
           ))}
         </Section>
@@ -143,9 +224,7 @@ const AccessView = (props, context) => {
         <Section>
           <Stack fill>
             <Stack.Item grow>
-              <NoticeBox info={!!generated_domain}>
-                {selected?.name ?? 'Nothing loaded'}
-              </NoticeBox>
+              <NoticeBox info={!!generated_domain}>{selected}</NoticeBox>
             </Stack.Item>
             <Stack.Item>
               <Button.Confirm
@@ -162,11 +241,20 @@ const AccessView = (props, context) => {
   );
 };
 
-const DomainEntry = (props: DomainEntryProps, context) => {
+const DomainEntry = (props: DomainEntryProps) => {
   const {
-    domain: { cost, desc, difficulty, id, name, reward },
+    domain: {
+      cost,
+      desc,
+      difficulty,
+      id,
+      is_modular,
+      has_secondary_objectives,
+      name,
+      reward,
+    },
   } = props;
-  const { act, data } = useBackend<Data>(context);
+  const { act, data } = useBackend<Data>();
   if (!isConnected(data)) {
     return null;
   }
@@ -194,7 +282,8 @@ const DomainEntry = (props: DomainEntryProps, context) => {
           disabled={!!generated_domain || !ready || occupied || points < cost}
           icon={buttonIcon}
           onClick={() => act('set_domain', { id })}
-          tooltip={!!generated_domain && 'Stop current domain first.'}>
+          tooltip={!!generated_domain && 'Stop current domain first.'}
+        >
           {buttonName}
         </Button>
       }
@@ -202,24 +291,31 @@ const DomainEntry = (props: DomainEntryProps, context) => {
       title={
         <>
           {name}
-          {difficulty === Difficulty.High && <Icon name="skull" ml={1} />}
+          {!!is_modular && name !== '???' && <Icon name="cubes" ml={1} />}
+          {!!has_secondary_objectives && name !== '???' && (
+            <Icon name="gem" ml={1} />
+          )}
         </>
-      }>
+      }
+    >
       <Stack height={5}>
         <Stack.Item color="label" grow={4}>
           {desc}
+          {!!is_modular && ' (Modular)'}
+          {!!has_secondary_objectives && ' (Secondary Objective Available)'}
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item grow>
           <Table>
             <TableRow>
-              <DisplayDetails amount={cost} color="pink" icon="star" />
+              <Tooltip content="Points cost for deploying domain.">
+                <DisplayDetails amount={cost} color="pink" icon="star" />
+              </Tooltip>
             </TableRow>
             <TableRow>
-              <DisplayDetails amount={difficulty} color="white" icon="skull" />
-            </TableRow>
-            <TableRow>
-              <DisplayDetails amount={reward} color="gold" icon="coins" />
+              <Tooltip content="Reward for competing domain.">
+                <DisplayDetails amount={reward} color="gold" icon="coins" />
+              </Tooltip>
             </TableRow>
           </Table>
         </Stack.Item>
@@ -228,8 +324,8 @@ const DomainEntry = (props: DomainEntryProps, context) => {
   );
 };
 
-const AvatarDisplay = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const AvatarDisplay = (props) => {
+  const { act, data } = useBackend<Data>();
   if (!isConnected(data)) {
     return null;
   }
@@ -256,12 +352,14 @@ const AvatarDisplay = (props, context) => {
             <Button
               icon="sync"
               onClick={() => act('refresh')}
-              tooltip="Refresh avatar data.">
+              tooltip="Refresh avatar data."
+            >
               Refresh
             </Button>
           </Stack.Item>
         </Stack>
-      }>
+      }
+    >
       <Table>
         {avatars.map(({ health, name, pilot, brute, burn, tox, oxy }) => (
           <TableRow key={name}>
@@ -312,11 +410,11 @@ const AvatarDisplay = (props, context) => {
   );
 };
 
-const DisplayDetails = (props: DisplayDetailsProps, context) => {
+const DisplayDetails = (props: DisplayDetailsProps) => {
   const { amount = 0, color, icon = 'star' } = props;
 
   if (amount === 0) {
-    return <TableCell color="label">No bandwidth</TableCell>;
+    return <TableCell color="label">None</TableCell>;
   }
 
   if (typeof amount === 'string') {
@@ -340,8 +438,8 @@ const DisplayDetails = (props: DisplayDetailsProps, context) => {
     <TableCell>
       <Stack>
         {Array.from({ length: amount }, (_, index) => (
-          <Stack.Item>
-            <Icon color={color} key={index} name={icon} />
+          <Stack.Item key={index}>
+            <Icon color={color} name={icon} />
           </Stack.Item>
         ))}
       </Stack>

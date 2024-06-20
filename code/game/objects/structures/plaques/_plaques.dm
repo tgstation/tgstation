@@ -169,7 +169,7 @@
 			return
 		user.visible_message(span_notice("[user] begins engraving [src]."), \
 			span_notice("You begin engraving [src]."))
-		if(!do_after(user, 40, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
+		if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
 			return
 		name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
 		desc = "The plaque reads: '[descriptionchoice]'"
@@ -185,11 +185,10 @@
 		return
 	return ..()
 
-/obj/item/plaque/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!iswallturf(target) || !proximity)
-		return
-	var/turf/target_turf = target
+/obj/item/plaque/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!iswallturf(interacting_with))
+		return NONE
+	var/turf/target_turf = interacting_with
 	var/turf/user_turf = get_turf(user)
 	var/obj/structure/plaque/placed_plaque = new plaque_path(user_turf) //We place the plaque on the turf the user is standing, and pixel shift it to the target wall, as below.
 	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
@@ -213,3 +212,4 @@
 	placed_plaque.update_integrity(get_integrity())
 	placed_plaque.setDir(dir)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS

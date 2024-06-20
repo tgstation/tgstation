@@ -34,10 +34,7 @@
 	if(!istype(entity) || !IN_GIVEN_RANGE(location, entity, max_range))
 		result.set_output(null)
 		return
-	var/breakdown_flags = BREAKDOWN_INCLUDE_ALCHEMY
-	if(break_down_alloys.value)
-		breakdown_flags |= BREAKDOWN_ALLOYS
-	var/list/composition = entity.get_material_composition(breakdown_flags)
+	var/list/composition = entity.get_material_composition()
 	var/list/composition_but_with_string_keys = list()
 	for(var/datum/material/material as anything in composition)
 		composition_but_with_string_keys[material.name] = composition[material]

@@ -62,6 +62,11 @@
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
+"x" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plating,
+/area/shuttle/arrival)
 "B" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
@@ -69,6 +74,7 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Arrivals Shuttle Airlock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "J" = (
@@ -128,20 +134,20 @@
 
 (1,1,1) = {"
 a
-Q
-Q
-Q
-Q
-Q
+x
+x
+x
+x
+x
 a
 "}
 (2,1,1) = {"
 a
-Q
+x
 f
 n
 R
-Q
+x
 a
 "}
 (3,1,1) = {"
@@ -172,22 +178,22 @@ B
 F
 "}
 (6,1,1) = {"
-Q
+x
 U
 B
 U
 B
 U
-Q
+x
 "}
 (7,1,1) = {"
-Q
+x
 U
 B
 U
 B
 U
-Q
+x
 "}
 (8,1,1) = {"
 V
@@ -204,7 +210,7 @@ Q
 L
 q
 w
-Q
+x
 a
 "}
 (10,1,1) = {"
@@ -217,22 +223,22 @@ q
 V
 "}
 (11,1,1) = {"
-Q
+x
 U
 B
 U
 B
 U
-Q
+x
 "}
 (12,1,1) = {"
-Q
+x
 U
 B
 U
 B
 U
-Q
+x
 "}
 (13,1,1) = {"
 F

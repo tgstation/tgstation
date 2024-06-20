@@ -46,7 +46,7 @@
 	var/temp_exponent_factor = 2
 	/// How sharp the pH exponential curve is (to the power of value)
 	var/ph_exponent_factor = 2
-	/// How much the temperature will change (with no intervention) (i.e. for 30u made the temperature will increase by 100, same with 300u. The final temp will always be start + this value, with the exception con beakers with different specific heats)
+	/// How much the temperature changes per unit of chem used. without REACTION_HEAT_ARBITARY flag the rate of change depends on the holder heat capacity else results are more accurate
 	var/thermic_constant = 50
 	/// pH change per 1u reaction
 	var/H_ion_release = 0.01
@@ -59,21 +59,6 @@
 	///Tagging vars
 	///A bitflag var for tagging reagents for the reagent loopup functon
 	var/reaction_tags = NONE
-
-/datum/chemical_reaction/New()
-	. = ..()
-	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(update_info)))
-
-/**
- * Updates information during the roundstart
- *
- * This proc is mainly used by explosives but can be used anywhere else
- * You should generally use the special reactions in [/datum/chemical_reaction/randomized]
- * But for simple variable edits, like changing the temperature or adding/subtracting required reagents it is better to use this.
- */
-/datum/chemical_reaction/proc/update_info()
-	return
-
 
 ///REACTION PROCS
 
@@ -161,7 +146,7 @@
 		var/cached_purity = reagent.purity
 		if((reaction_flags & REACTION_CLEAR_INVERSE) && reagent.inverse_chem)
 			if(reagent.inverse_chem_val > reagent.purity)
-				holder.remove_reagent(reagent.type, cached_volume, FALSE)
+				holder.remove_reagent(reagent.type, cached_volume, safety = FALSE)
 				holder.add_reagent(reagent.inverse_chem, cached_volume, FALSE, added_purity = reagent.get_inverse_purity(cached_purity))
 				return
 
@@ -179,10 +164,11 @@
  */
 /datum/chemical_reaction/proc/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	for(var/id in results)
-		var/datum/reagent/reagent = holder.get_reagent(id)
+		var/datum/reagent/reagent = holder.has_reagent(id)
 		if(!reagent)
 			return
-		reagent.volume = round((reagent.volume*0.98), 0.01) //Slowly lower yield per tick
+		reagent.volume *= 0.98 //Slowly lower yield per tick
+	holder.update_total()
 
 /**
  * Occurs when a reation is too impure (i.e. it's below purity_min)
@@ -199,7 +185,7 @@
 /datum/chemical_reaction/proc/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	var/affected_list = results + required_reagents
 	for(var/_reagent in affected_list)
-		var/datum/reagent/reagent = holder.get_reagent(_reagent)
+		var/datum/reagent/reagent = holder.has_reagent(_reagent)
 		if(!reagent)
 			continue
 		reagent.purity = clamp((reagent.purity-0.01), 0, 1) //slowly reduce purity of reagents
@@ -275,10 +261,10 @@
 		else
 			if(setting_type)
 				if(step_away(X, T) && moving_power > 1) //Can happen twice at most. So this is fine.
-					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_away), X, T), 2)
+					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_away), X, T), 0.2 SECONDS)
 			else
 				if(step_towards(X, T) && moving_power > 1)
-					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_towards), X, T), 2)
+					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_towards), X, T), 0.2 SECONDS)
 
 //////////////////Generic explosions/failures////////////////////
 // It is HIGHLY, HIGHLY recomended that you consume all/a good volume of the reagents/products in an explosion - because it will just keep going forever until the reaction stops
@@ -295,7 +281,7 @@
  * * modifier - a flat additive numeric to the size of the explosion - set this if you want a minimum range
  * * strengthdiv - the divisional factor of the explosion, a larger number means a smaller range - This is the part that modifies an explosion's range with volume (i.e. it divides it by this number)
  */
-/datum/chemical_reaction/proc/default_explode(datum/reagents/holder, created_volume, modifier = 0, strengthdiv = 10)
+/datum/chemical_reaction/proc/default_explode(datum/reagents/holder, created_volume, modifier = 0, strengthdiv = 10, clear_mob_reagents)
 	var/power = modifier + round(created_volume/strengthdiv, 1)
 	if(power > 0)
 		var/turf/T = get_turf(holder.my_atom)
@@ -314,8 +300,29 @@
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(power , T, 0, 0)
 		e.start(holder.my_atom)
-	holder.clear_reagents()
-
+	if (ismob(holder.my_atom))
+		if(!clear_mob_reagents)
+			return
+		// Only clear reagents if they use a special explosive reaction to do it; it shouldn't apply
+		// to any explosion inside a person
+		holder.clear_reagents()
+		if(iscarbon(holder.my_atom))
+			var/mob/living/carbon/victim = holder.my_atom
+			var/vomit_flags = MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE
+			// The vomiting here is for effect, not meant to help with purging
+			victim.vomit(vomit_flags, distance = 5)
+		// Not quite the same if the reaction is in their stomach; they'll throw up
+		// from any explosion, but it'll only make them puke up everything in their
+		// stomach
+	else if (istype(holder.my_atom, /obj/item/organ/internal/stomach))
+		var/obj/item/organ/internal/stomach/indigestion = holder.my_atom
+		if(power < 1)
+			return
+		indigestion.owner?.vomit(MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE, lost_nutrition = 150, distance = 5, purge_ratio = 1)
+		holder.clear_reagents()
+		return
+	else
+		holder.clear_reagents()
 /*
  *Creates a flash effect only - less expensive than explode()
  *

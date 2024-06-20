@@ -369,7 +369,7 @@
 /obj/structure/barricade/wooden/snowed
 	name = "crude plank barricade"
 	desc = "This space is blocked off by a wooden barricade. It seems to be covered in a layer of snow."
-	icon_state = "woodenbarricade-snow"
+	icon_state = "woodenbarricade_snow"
 	max_integrity = 125
 
 /obj/item/clothing/under/syndicate/coldres

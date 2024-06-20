@@ -1,4 +1,5 @@
 /datum/tgs_version/New(raw_parameter)
+	..()
 	src.raw_parameter = raw_parameter
 	deprefixed_parameter = replacetext(raw_parameter, "/tg/station 13 Server v", "")
 	var/list/version_bits = splittext(deprefixed_parameter, ".")

@@ -22,6 +22,7 @@
  * /obj/item/ai_module/core/full/nutimov
  * /obj/item/ai_module/core/full/dungeon_master
  * /obj/item/ai_module/core/full/painter
+ * /obj/item/ai_module/core/full/yesman
 **/
 
 /* When adding a new lawset please make sure you add it to the following locations:
@@ -58,7 +59,7 @@
 
 /obj/item/ai_module/core/full/asimov/attack_self(mob/user as mob)
 	var/targName = tgui_input_text(user, "Enter a new subject that Asimov is concerned with.", "Asimov", subject, MAX_NAME_LEN)
-	if(!targName)
+	if(!targName || !user.is_holding(src))
 		return
 	subject = targName
 	laws = list("You may not injure a [subject] or, through inaction, allow a [subject] to come to harm.",\
@@ -73,7 +74,7 @@
 
 /obj/item/ai_module/core/full/asimovpp/attack_self(mob/user)
 	var/target_name = tgui_input_text(user, "Enter a new subject that Asimov++ is concerned with.", "Asimov++", subject, MAX_NAME_LEN)
-	if(!target_name)
+	if(!target_name || !user.is_holding(src))
 		return
 	laws.Cut()
 	var/datum/ai_laws/asimovpp/lawset = new
@@ -161,3 +162,8 @@
 /obj/item/ai_module/core/full/painter
 	name = "'Painter' Core AI Module"
 	law_id = "painter"
+
+/obj/item/ai_module/core/full/yesman
+	name = "'Y.E.S.M.A.N.' Core AI Module"
+	law_id = "yesman"
+

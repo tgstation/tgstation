@@ -1,6 +1,6 @@
 /datum/surgery/core_removal
 	name = "Core removal"
-	target_mobtypes = list(/mob/living/simple_animal/slime)
+	target_mobtypes = list(/mob/living/basic/slime)
 	surgery_flags = SURGERY_IGNORE_CLOTHES
 	possible_locs = list(
 		BODY_ZONE_R_ARM,
@@ -16,9 +16,7 @@
 	)
 
 /datum/surgery/core_removal/can_start(mob/user, mob/living/target)
-	if(target.stat == DEAD)
-		return TRUE
-	return FALSE
+	return target.stat == DEAD && ..()
 
 //extract brain
 /datum/surgery_step/extract_core
@@ -38,7 +36,7 @@
 	)
 
 /datum/surgery_step/extract_core/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	var/mob/living/simple_animal/slime/target_slime = target
+	var/mob/living/basic/slime/target_slime = target
 	if(target_slime.cores > 0)
 		target_slime.cores--
 		display_results(
@@ -49,10 +47,10 @@
 			span_notice("[user] successfully extracts a core from [target]!"),
 		)
 
-		new target_slime.coretype(target_slime.loc)
+		new target_slime.slime_type.core_type(target_slime.loc)
 
 		if(target_slime.cores <= 0)
-			target_slime.icon_state = "[target_slime.colour] baby slime dead-nocore"
+			target_slime.icon_state = "[target_slime.slime_type.colour] baby slime dead-nocore"
 			return ..()
 		else
 			return FALSE

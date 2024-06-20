@@ -1,4 +1,4 @@
-/proc/generate_icon_with_head_accessory(datum/sprite_accessory/sprite_accessory)
+/proc/generate_icon_with_head_accessory(datum/sprite_accessory/sprite_accessory, y_offset = 0)
 	var/static/icon/head_icon
 	if (isnull(head_icon))
 		head_icon = icon('icons/mob/human/bodyparts_greyscale.dmi', "human_head_m")
@@ -9,6 +9,8 @@
 		ASSERT(istype(sprite_accessory))
 
 		var/icon/head_accessory_icon = icon(sprite_accessory.icon, sprite_accessory.icon_state)
+		if(y_offset)
+			head_accessory_icon.Shift(NORTH, y_offset)
 		head_accessory_icon.Blend(COLOR_DARK_BROWN, ICON_MULTIPLY)
 		final_icon.Blend(head_accessory_icon, ICON_OVERLAY)
 
@@ -59,10 +61,10 @@
 	relevant_head_flag = HEAD_FACIAL_HAIR
 
 /datum/preference/choiced/facial_hairstyle/init_possible_values()
-	return assoc_to_keys_features(GLOB.facial_hairstyles_list)
+	return assoc_to_keys_features(SSaccessories.facial_hairstyles_list)
 
 /datum/preference/choiced/facial_hairstyle/icon_for(value)
-	return generate_icon_with_head_accessory(GLOB.facial_hairstyles_list[value])
+	return generate_icon_with_head_accessory(SSaccessories.facial_hairstyles_list[value])
 
 /datum/preference/choiced/facial_hairstyle/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_facial_hairstyle(value, update = FALSE)
@@ -92,7 +94,7 @@
 	relevant_head_flag = HEAD_FACIAL_HAIR
 
 /datum/preference/choiced/facial_hair_gradient/init_possible_values()
-	return assoc_to_keys_features(GLOB.facial_hair_gradients_list)
+	return assoc_to_keys_features(SSaccessories.facial_hair_gradients_list)
 
 /datum/preference/choiced/facial_hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_facial_hair_gradient_style(new_style = value, update = FALSE)
@@ -135,10 +137,11 @@
 	relevant_head_flag = HEAD_HAIR
 
 /datum/preference/choiced/hairstyle/init_possible_values()
-	return assoc_to_keys_features(GLOB.hairstyles_list)
+	return assoc_to_keys_features(SSaccessories.hairstyles_list)
 
 /datum/preference/choiced/hairstyle/icon_for(value)
-	return generate_icon_with_head_accessory(GLOB.hairstyles_list[value])
+	var/datum/sprite_accessory/hair/hairstyle = SSaccessories.hairstyles_list[value]
+	return generate_icon_with_head_accessory(hairstyle, hairstyle?.y_offset)
 
 /datum/preference/choiced/hairstyle/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_hairstyle(value, update = FALSE)
@@ -158,7 +161,7 @@
 	relevant_head_flag = HEAD_HAIR
 
 /datum/preference/choiced/hair_gradient/init_possible_values()
-	return assoc_to_keys_features(GLOB.hair_gradients_list)
+	return assoc_to_keys_features(SSaccessories.hair_gradients_list)
 
 /datum/preference/choiced/hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_hair_gradient_style(new_style = value, update = FALSE)

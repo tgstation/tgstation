@@ -38,7 +38,7 @@
 		return TRUE
 	// Software related ui actions
 	if(available_software[action] && !installed_software.Find(action))
-		balloon_alert(usr, "software unavailable")
+		balloon_alert(ui.user, "software unavailable!")
 		return FALSE
 	switch(action)
 		if("Atmospheric Sensor")
@@ -116,8 +116,6 @@
 			atmos_analyzer = new(src)
 		if("Digital Messenger")
 			create_modularInterface()
-		if("Host Scan")
-			host_scan = new(src)
 		if("Internal GPS")
 			internal_gps = new(src)
 		if("Music Synthesizer")
@@ -133,12 +131,17 @@
 /**
  * Changes the image displayed on the pAI.
  *
- * @param {mob} user - The user who is changing the image.
- *
  * @returns {boolean} - TRUE if the image was changed, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/change_image()
-	var/new_image = tgui_input_list(src, "Select your new display image", "Display Image", possible_overlays)
+	var/list/possible_choices = list()
+	for(var/face_option in possible_overlays)
+		var/datum/radial_menu_choice/choice = new
+		choice.name = face_option
+		choice.image = image(icon = card.icon, icon_state = "pai-[face_option]")
+		possible_choices[face_option] += choice
+	var/atom/anchor = get_atom_on_turf(src)
+	var/new_image = show_radial_menu(src, anchor, possible_choices, custom_check = CALLBACK(src, PROC_REF(check_menu), anchor), radius = 40, require_near = TRUE)
 	if(isnull(new_image))
 		return FALSE
 	card.emotion_icon = new_image
@@ -193,28 +196,27 @@
  * @returns {boolean} - TRUE if the scan was successful, FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/host_scan(mode)
-	if(isnull(mode))
-		return FALSE
-	if(mode == PAI_SCAN_TARGET)
-		var/mob/living/target = get_holder()
-		if(!target || !isliving(target))
-			balloon_alert(src, "not being carried")
-			return FALSE
-		host_scan.attack(target, src)
-		return TRUE
-	if(mode == PAI_SCAN_MASTER)
-		if(!master_ref)
-			balloon_alert(src, "no master detected")
-			return FALSE
-		var/mob/living/resolved_master = find_master()
-		if(!resolved_master)
-			balloon_alert(src, "cannot locate master")
-			return FALSE
-		if(!is_valid_z_level(get_turf(src), get_turf(resolved_master)))
-			balloon_alert(src, "master out of range")
-			return FALSE
-		host_scan.attack(resolved_master, src)
-		return TRUE
+	switch(mode)
+		if(PAI_SCAN_TARGET)
+			var/mob/living/target = get_holder()
+			if(!isliving(target))
+				balloon_alert(src, "not being carried!")
+				return FALSE
+			healthscan(src, target)
+			return TRUE
+
+		if(PAI_SCAN_MASTER)
+			var/mob/living/resolved_master = find_master()
+			if(isnull(resolved_master))
+				balloon_alert(src, "no master detected!")
+				return FALSE
+			if(!is_valid_z_level(get_turf(src), get_turf(resolved_master)))
+				balloon_alert(src, "master out of range!")
+				return FALSE
+			healthscan(src, resolved_master)
+			return TRUE
+
+	stack_trace("Invalid mode passed to host scan: [mode || "null"]")
 	return FALSE
 
 /**

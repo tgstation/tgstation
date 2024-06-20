@@ -2,7 +2,7 @@
 	icon = 'icons/obj/poster.dmi'
 	icon_state = "tailpin"
 	name = "tail pin"
-	desc = "Offically branded 'pin the tail on the corgi' style party implement. Not intended to be used on people."
+	desc = "Officially branded 'pin the tail on the corgi' style party implement. Not intended to be used on people."
 	force = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0

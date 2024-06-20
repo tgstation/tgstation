@@ -21,8 +21,7 @@
 
 /datum/spellbook_entry/summon/guns/can_be_purchased()
 	// Summon Guns requires 98 threat.
-	var/datum/game_mode/dynamic/mode = SSticker.mode
-	if(mode.threat_level < MINIMUM_THREAT_FOR_RITUALS)
+	if(SSdynamic.threat_level < MINIMUM_THREAT_FOR_RITUALS)
 		return FALSE
 	// Also must be config enabled
 	return !CONFIG_GET(flag/no_summon_guns)
@@ -39,8 +38,7 @@
 
 /datum/spellbook_entry/summon/magic/can_be_purchased()
 	// Summon Magic requires 98 threat.
-	var/datum/game_mode/dynamic/mode = SSticker.mode
-	if(mode.threat_level < MINIMUM_THREAT_FOR_RITUALS)
+	if(SSdynamic.threat_level < MINIMUM_THREAT_FOR_RITUALS)
 		return FALSE
 	// Also must be config enabled
 	return !CONFIG_GET(flag/no_summon_magic)
@@ -60,8 +58,7 @@
 
 /datum/spellbook_entry/summon/events/can_be_purchased()
 	// Summon Events requires 98 threat.
-	var/datum/game_mode/dynamic/mode = SSticker.mode
-	if(mode.threat_level < MINIMUM_THREAT_FOR_RITUALS)
+	if(SSdynamic.threat_level < MINIMUM_THREAT_FOR_RITUALS)
 		return FALSE
 	// Also, must be config enabled
 	return !CONFIG_GET(flag/no_summon_events)
@@ -138,8 +135,7 @@
 	return ..()
 
 /datum/spellbook_entry/summon/specific_spell/can_be_purchased()
-	var/datum/game_mode/dynamic/mode = SSticker.mode
-	if(mode.threat_level < MINIMUM_THREAT_FOR_RITUALS)
+	if(SSdynamic.threat_level < MINIMUM_THREAT_FOR_RITUALS)
 		return FALSE
 	if(GLOB.mass_teaching)
 		return FALSE

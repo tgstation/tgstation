@@ -188,18 +188,23 @@
 	else if(istype(I, /obj/item/stack/medical/suture))
 		return suture(I, user)
 
-/datum/wound/slash/flesh/try_handling(mob/living/carbon/human/user)
-	if(user.pulling != victim || user.zone_selected != limb.body_zone || !isfelinid(user) || !victim.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
+/datum/wound/slash/flesh/try_handling(mob/living/user)
+	if(user.pulling != victim || !HAS_TRAIT(user, TRAIT_WOUND_LICKER) || !victim.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
 		return FALSE
+	if(!isnull(user.hud_used?.zone_select) && user.zone_selected != limb.body_zone)
+		return FALSE
+
 	if(DOING_INTERACTION_WITH_TARGET(user, victim))
 		to_chat(user, span_warning("You're already interacting with [victim]!"))
 		return
-	if(user.is_mouth_covered())
-		to_chat(user, span_warning("Your mouth is covered, you can't lick [victim]'s wounds!"))
-		return
-	if(!user.get_organ_slot(ORGAN_SLOT_TONGUE))
-		to_chat(user, span_warning("You can't lick wounds without a tongue!")) // f in chat
-		return
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		if(carbon_user.is_mouth_covered())
+			to_chat(user, span_warning("Your mouth is covered, you can't lick [victim]'s wounds!"))
+			return
+		if(!carbon_user.get_organ_slot(ORGAN_SLOT_TONGUE))
+			to_chat(user, span_warning("You can't lick wounds without a tongue!")) // f in chat
+			return
 
 	lick_wounds(user)
 	return TRUE
@@ -215,7 +220,7 @@
 
 	user.visible_message(span_notice("[user] begins licking the wounds on [victim]'s [limb.plaintext_zone]."), span_notice("You begin licking the wounds on [victim]'s [limb.plaintext_zone]..."), ignored_mobs=victim)
 	to_chat(victim, span_notice("[user] begins to lick the wounds on your [limb.plaintext_zone]."))
-	if(!do_after(user, base_treat_time, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+	if(!do_after(user, base_treat_time, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 
 	user.visible_message(span_notice("[user] licks the wounds on [victim]'s [limb.plaintext_zone]."), span_notice("You lick some of the wounds on [victim]'s [limb.plaintext_zone]"), ignored_mobs=victim)
@@ -241,7 +246,7 @@
 /datum/wound/slash/flesh/proc/las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.25 : 1)
 	user.visible_message(span_warning("[user] begins aiming [lasgun] directly at [victim]'s [limb.plaintext_zone]..."), span_userdanger("You begin aiming [lasgun] directly at [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]..."))
-	if(!do_after(user, base_treat_time  * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+	if(!do_after(user, base_treat_time  * self_penalty_mult, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 	var/damage = lasgun.chambered.loaded_projectile.damage
 	lasgun.chambered.loaded_projectile.wound_bonus -= 30

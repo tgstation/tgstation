@@ -37,6 +37,7 @@
 #define WIRE_LIMIT "Limiter"
 #define WIRE_LOADCHECK "Load Check"
 #define WIRE_LOCKDOWN "Lockdown"
+#define WIRE_MODE_SELECT "Mode Select"
 #define WIRE_MOTOR1 "Motor 1"
 #define WIRE_MOTOR2 "Motor 2"
 #define WIRE_OPEN "Open"
@@ -63,6 +64,8 @@
 #define WIRE_ZAP1 "High Voltage Circuit 1"
 #define WIRE_ZAP2 "High Voltage Circuit 2"
 #define WIRE_OVERCLOCK "Overclock"
+#define WIRE_EQUIPMENT "Equipment"
+#define WIRE_ENVIRONMENT "Environment"
 
 // Wire states for the AI
 #define AI_WIRE_NORMAL 0

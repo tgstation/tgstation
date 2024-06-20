@@ -19,7 +19,7 @@
 ///from base of [/datum/reagent/proc/expose_atom]: (/turf, reac_volume)
 #define COMSIG_REAGENT_EXPOSE_TURF "reagent_expose_turf"
 
-///from base of [/datum/controller/subsystem/materials/proc/InitializeMaterial]: (/datum/material)
+///from base of [/datum/materials_controller/proc/InitializeMaterial]: (/datum/material)
 #define COMSIG_MATERIALS_INIT_MAT "SSmaterials_init_mat"
 
 ///from base of [/datum/component/multiple_lives/proc/respawn]: (mob/respawned_mob, gibbed, lives_left)
@@ -55,3 +55,7 @@
 #define COMSIG_REAGENTS_EXPOSE_TURF "reagents_expose_turf"
 ///from base of [/datum/component/personal_crafting/proc/del_reqs]: ()
 #define COMSIG_REAGENTS_CRAFTING_PING "reagents_crafting_ping"
+/// sent when reagents are transfered from a cup, to something refillable (atom/transfer_to)
+#define COMSIG_REAGENTS_CUP_TRANSFER_TO "reagents_cup_transfer_to"
+/// sent when reagents are transfered from some reagent container, to a cup (atom/transfer_from)
+#define COMSIG_REAGENTS_CUP_TRANSFER_FROM "reagents_cup_transfer_from"

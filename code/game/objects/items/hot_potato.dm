@@ -95,11 +95,12 @@
 	if(active)
 		to_chat(user, span_userdanger("You have a really bad feeling about [src]!"))
 
-/obj/item/hot_potato/afterattack(atom/target, mob/user, adjacent, params)
+/obj/item/hot_potato/attack(mob/living/target_mob, mob/living/user, params)
 	. = ..()
-	if(!adjacent || !ismob(target))
-		return
-	force_onto(target, user)
+	if(.)
+		return .
+
+	return force_onto(target_mob, user)
 
 /obj/item/hot_potato/proc/force_onto(mob/living/victim, mob/user)
 	if(!istype(victim) || user != loc || victim == user)
@@ -150,7 +151,11 @@
 		log_bomber(null, null, src, "was primed for detonation (Timer:[delay],Explosive:[detonate_explosion],Range:[detonate_dev_range]/[detonate_heavy_range]/[detonate_light_range]/[detonate_fire_range])")
 	active = TRUE
 	if(detonate_explosion) //doesn't send a notification unless it's a genuine, exploding hot potato.
-		notify_ghosts("[user] has primed a Hot Potato!", source = src, action = NOTIFY_ORBIT, header = "Hot Hot Hot!")
+		notify_ghosts(
+			"[user] has primed a Hot Potato!",
+			source = src,
+			header = "Hot Hot Hot!",
+		)
 
 /obj/item/hot_potato/proc/deactivate()
 	update_appearance()

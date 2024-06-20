@@ -7,7 +7,7 @@
 	/// Current amount of stacks we have
 	var/stacks
 	/// Maximum of stacks that we could possibly get
-	var/stack_limit = 20
+	var/stack_limit = MAX_FIRE_STACKS
 	/// What status effect types do we remove uppon being applied. These are just deleted without any deduction from our or their stacks when forced.
 	var/list/enemy_types
 	/// What status effect types do we merge into if they exist. Ignored when forced.
@@ -30,8 +30,7 @@
 		qdel(src)
 		return
 	if(isbasicmob(owner))
-		var/mob/living/basic/basic_owner = owner
-		if(!(basic_owner.basic_mob_flags & FLAMMABLE_MOB))
+		if(!check_basic_mob_immunity(owner))
 			qdel(src)
 			return
 
@@ -94,6 +93,10 @@
 	stacks = max(0, min(stack_limit, stacks + new_stacks))
 	cache_stacks()
 
+/// Checks if the applicable basic mob is immune to the status effect we're trying to apply. Returns TRUE if it is, FALSE if it isn't.
+/datum/status_effect/fire_handler/proc/check_basic_mob_immunity(mob/living/basic/basic_owner)
+	return (basic_owner.basic_mob_flags & FLAMMABLE_MOB)
+
 /**
  * Refresher for mob's fire_stacks
  */
@@ -116,12 +119,8 @@
 		owner.clear_alert(ALERT_FIRE)
 	else if(!was_on_fire && owner.on_fire)
 		owner.throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire)
-
-/**
- * Used to update owner's effect overlay
- */
-
-/datum/status_effect/fire_handler/proc/update_overlay()
+	owner.update_appearance(UPDATE_OVERLAYS)
+	update_particles()
 
 /datum/status_effect/fire_handler/fire_stacks
 	id = "fire_stacks" //fire_stacks and wet_stacks should have different IDs or else has_status_effect won't work
@@ -132,8 +131,6 @@
 
 	/// If we're on fire
 	var/on_fire = FALSE
-	/// Stores current fire overlay icon state, for optimisation purposes
-	var/last_icon_state
 	/// Reference to the mob light emitter itself
 	var/obj/effect/dummy/lighting_obj/moblight
 	/// Type of mob light emitter we use when on fire
@@ -147,7 +144,8 @@
 	if(!on_fire)
 		return TRUE
 
-	adjust_stacks(owner.fire_stack_decay_rate * seconds_between_ticks)
+	var/decay_multiplier = HAS_TRAIT(owner, TRAIT_HUSK) ? 2 : 1 // husks decay twice as fast
+	adjust_stacks(owner.fire_stack_decay_rate * decay_multiplier * seconds_between_ticks)
 
 	if(stacks <= 0)
 		qdel(src)
@@ -159,8 +157,6 @@
 		return TRUE
 
 	deal_damage(seconds_between_ticks)
-	update_overlay()
-	update_particles()
 
 /datum/status_effect/fire_handler/fire_stacks/update_particles()
 	if(on_fire)
@@ -200,14 +196,19 @@
 	var/mob/living/carbon/human/victim = owner
 	var/thermal_protection = victim.get_thermal_protection()
 
-	if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT && !no_protection)
-		return
+	if(!no_protection)
+		if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
+			return
+		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
+			victim.adjust_bodytemperature(5.5 * seconds_per_tick)
+			return
 
-	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
-		victim.adjust_bodytemperature(5.5 * seconds_per_tick)
-		return
+	var/amount_to_heat = (BODYTEMP_HEATING_MAX + (stacks * 12)) * 0.5 * seconds_per_tick
+	if(owner.bodytemperature > BODYTEMP_FIRE_TEMP_SOFTCAP)
+		// Apply dimishing returns upon temp beyond the soft cap
+		amount_to_heat = amount_to_heat ** (BODYTEMP_FIRE_TEMP_SOFTCAP / owner.bodytemperature)
 
-	victim.adjust_bodytemperature((BODYTEMP_HEATING_MAX + (stacks * 12)) * 0.5 * seconds_per_tick)
+	victim.adjust_bodytemperature(amount_to_heat)
 	victim.add_mood_event("on_fire", /datum/mood_event/on_fire)
 	victim.add_mob_memory(/datum/memory/was_burning)
 
@@ -232,10 +233,8 @@
 			qdel(moblight)
 		moblight = new moblight_type(owner)
 
-	SEND_SIGNAL(owner, COMSIG_LIVING_IGNITED, owner)
 	cache_stacks()
-	update_overlay()
-	update_particles()
+	SEND_SIGNAL(owner, COMSIG_LIVING_IGNITED, owner)
 	return TRUE
 
 /**
@@ -248,30 +247,34 @@
 	owner.clear_mood_event("on_fire")
 	SEND_SIGNAL(owner, COMSIG_LIVING_EXTINGUISHED, owner)
 	cache_stacks()
-	update_overlay()
-	update_particles()
-	for(var/obj/item/equipped in owner.get_equipped_items())
+	for(var/obj/item/equipped in (owner.get_equipped_items(INCLUDE_HELD)))
 		equipped.extinguish()
 
 /datum/status_effect/fire_handler/fire_stacks/on_remove()
 	if(on_fire)
 		extinguish()
 	set_stacks(0)
-	update_overlay()
-	update_particles()
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
+	owner.update_appearance(UPDATE_OVERLAYS)
 	return ..()
-
-/datum/status_effect/fire_handler/fire_stacks/update_overlay()
-	last_icon_state = owner.update_fire_overlay(stacks, on_fire, last_icon_state)
 
 /datum/status_effect/fire_handler/fire_stacks/on_apply()
 	. = ..()
-	update_overlay()
+	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_fire_overlay))
+	RegisterSignal(owner, COMSIG_ATOM_EXTINGUISH, PROC_REF(extinguish))
+	owner.update_appearance(UPDATE_OVERLAYS)
 
-/obj/effect/dummy/lighting_obj/moblight/fire
-	name = "fire"
-	light_color = LIGHT_COLOR_FIRE
-	light_range = LIGHT_RANGE_FIRE
+/datum/status_effect/fire_handler/fire_stacks/proc/add_fire_overlay(mob/living/source, list/overlays)
+	SIGNAL_HANDLER
+
+	if(stacks <= 0 || !on_fire)
+		return
+
+	var/mutable_appearance/created_overlay = owner.get_fire_overlay(stacks, on_fire)
+	if(isnull(created_overlay))
+		return
+
+	overlays |= created_overlay
 
 /datum/status_effect/fire_handler/wet_stacks
 	id = "wet_stacks"
@@ -288,3 +291,6 @@
 	if(particle_effect)
 		return
 	particle_effect = new(owner, /particles/droplets)
+
+/datum/status_effect/fire_handler/wet_stacks/check_basic_mob_immunity(mob/living/basic/basic_owner)
+	return !(basic_owner.basic_mob_flags & IMMUNE_TO_GETTING_WET)

@@ -13,7 +13,7 @@
 /obj/item/storage/dice/Initialize(mapload)
 	. = ..()
 	atom_storage.allow_quick_gather = TRUE
-	atom_storage.set_holdable(list(/obj/item/dice))
+	atom_storage.set_holdable(/obj/item/dice)
 
 /obj/item/storage/dice/PopulateContents()
 	new /obj/item/dice/d4(src)
@@ -70,6 +70,66 @@
 	if(!result)
 		result = roll(sides)
 	update_appearance()
+
+/obj/item/dice/attack_self(mob/user)
+	diceroll(user, in_hand = TRUE)
+
+/obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	var/mob/thrown_by = thrownby?.resolve()
+	if(thrown_by)
+		diceroll(thrown_by)
+	return ..()
+
+/obj/item/dice/proc/diceroll(mob/user, in_hand=FALSE)
+	result = roll(sides)
+	if(rigged != DICE_NOT_RIGGED && result != rigged_value)
+		if(rigged == DICE_BASICALLY_RIGGED && prob(clamp(1/(sides - 1) * 100, 25, 80)))
+			result = rigged_value
+		else if(rigged == DICE_TOTALLY_RIGGED)
+			result = rigged_value
+
+	. = result
+
+	var/fake_result = roll(sides)//Daredevil isn't as good as he used to be
+	var/comment = ""
+	if(sides > MIN_SIDES_ALERT && result == 1)  // less comment spam
+		comment = "Ouch, bad luck."
+	if(sides == 20 && result == 20)
+		comment = "NAT 20!"
+	update_appearance()
+	result = manipulate_result(result)
+	if(special_faces.len == sides)
+		comment = ""  // its not a number
+		result = special_faces[result]
+		if(!ISINTEGER(result))
+			comment = special_faces[result]  // should be a str now
+
+	if(in_hand) //Dice was rolled in someone's hand
+		user.visible_message(
+			span_notice("[user] rolls [src]. It lands on [result]. [comment]"),
+			span_notice("You roll [src]. It lands on [result]. [comment]"),
+			span_hear("You hear [src] rolling, it sounds like a [fake_result]."),
+		)
+	else
+		visible_message(span_notice("[src] rolls to a stop, landing on [result]. [comment]"))
+
+	return .
+
+
+/obj/item/dice/update_overlays()
+	. = ..()
+	. += "[icon_state]-[result]"
+
+/obj/item/dice/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
+	if(microwave_riggable)
+		rigged = DICE_BASICALLY_RIGGED
+		rigged_value = result
+
+	return ..() | COMPONENT_MICROWAVE_SUCCESS
+
+/// A proc to modify the displayed result. (Does not affect what the icon_state is passed.)
+/obj/item/dice/proc/manipulate_result(original)
+	return original
 
 /obj/item/dice/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -208,61 +268,6 @@
 	AddElement(/datum/element/update_icon_blocker)
 	return ..()
 
-/obj/item/dice/attack_self(mob/user)
-	diceroll(user)
-
-/obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	var/mob/thrown_by = thrownby?.resolve()
-	if(thrown_by)
-		diceroll(thrown_by)
-	return ..()
-
-/obj/item/dice/proc/diceroll(mob/user)
-	result = roll(sides)
-	if(rigged != DICE_NOT_RIGGED && result != rigged_value)
-		if(rigged == DICE_BASICALLY_RIGGED && prob(clamp(1/(sides - 1) * 100, 25, 80)))
-			result = rigged_value
-		else if(rigged == DICE_TOTALLY_RIGGED)
-			result = rigged_value
-
-	. = result
-
-	var/fake_result = roll(sides)//Daredevil isn't as good as he used to be
-	var/comment = ""
-	if(sides > MIN_SIDES_ALERT && result == 1)  // less comment spam
-		comment = "Ouch, bad luck."
-	if(sides == 20 && result == 20)
-		comment = "NAT 20!"  // maint wanted this hardcoded to nat20 don't blame me
-	update_appearance()
-	result = manipulate_result(result)
-	if(special_faces.len == sides)
-		comment = ""  // its not a number
-		result = special_faces[result]
-		if(!ISINTEGER(result))
-			comment = special_faces[result]  // should be a str now
-
-	if(user != null) //Dice was rolled in someone's hand
-		user.visible_message(span_notice("[user] throws [src]. It lands on [result]. [comment]"), \
-			span_notice("You throw [src]. It lands on [result]. [comment]"), \
-			span_hear("You hear [src] rolling, it sounds like a [fake_result]."))
-	else if(!src.throwing) //Dice was thrown and is coming to rest
-		visible_message(span_notice("[src] rolls to a stop, landing on [result]. [comment]"))
-
-/obj/item/dice/update_overlays()
-	. = ..()
-	. += "[icon_state]-[result]"
-
-/obj/item/dice/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
-	if(microwave_riggable)
-		rigged = DICE_BASICALLY_RIGGED
-		rigged_value = result
-
-	return ..() | COMPONENT_MICROWAVE_SUCCESS
-
-/// A proc to modify the displayed result. (Does not affect what the icon_state is passed.)
-/obj/item/dice/proc/manipulate_result(original)
-	return original
-
 // Die of fate stuff
 /obj/item/dice/d20/fate
 	name = "\improper Die of Fate"
@@ -303,7 +308,7 @@
 /obj/item/dice/d20/fate/stealth/cursed/one_use
 	reusable = FALSE
 
-/obj/item/dice/d20/fate/diceroll(mob/user)
+/obj/item/dice/d20/fate/diceroll(mob/user, in_hand=FALSE)
 	if(!COOLDOWN_FINISHED(src, roll_cd))
 		to_chat(user, span_warning("Hold on, [src] isn't caught up with your last roll!"))
 		return
@@ -425,11 +430,10 @@
 			var/mob/living/carbon/human/human_servant = new(drop_location())
 			do_smoke(0, holder = src, location = drop_location())
 
-			var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [user.real_name]'s Servant?", ROLE_WIZARD, ROLE_WIZARD, 5 SECONDS, human_servant)
-			if(LAZYLEN(candidates))
-				var/mob/dead/observer/candidate = pick(candidates)
-				message_admins("[ADMIN_LOOKUPFLW(candidate)] was spawned as Dice Servant")
-				human_servant.key = candidate.key
+			var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[user.real_name]'s")] [span_notice("Servant")]?", check_jobban = ROLE_WIZARD, role = ROLE_WIZARD, poll_time = 5 SECONDS, checked_target = human_servant, alert_pic = user, role_name_text = "dice servant")
+			if(chosen_one)
+				message_admins("[ADMIN_LOOKUPFLW(chosen_one)] was spawned as Dice Servant")
+				human_servant.key = chosen_one.key
 
 			human_servant.equipOutfit(/datum/outfit/butler)
 			var/datum/mind/servant_mind = new /datum/mind()

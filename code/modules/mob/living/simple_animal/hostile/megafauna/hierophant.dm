@@ -231,7 +231,7 @@ Difficulty: Hard
 			blinking = TRUE
 			SLEEP_CHECK_DEATH(4 + target_slowness, src)
 		animate(src, color = oldcolor, time = 8)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 8)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 0.8 SECONDS)
 		SLEEP_CHECK_DEATH(8, src)
 		blinking = FALSE
 	else
@@ -252,7 +252,7 @@ Difficulty: Hard
 			INVOKE_ASYNC(src, PROC_REF(blasts), target, GLOB.diagonals)
 		SLEEP_CHECK_DEATH(6 + target_slowness, src)
 	animate(src, color = oldcolor, time = 8)
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 8)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 0.8 SECONDS)
 	SLEEP_CHECK_DEATH(8, src)
 	blinking = FALSE
 
@@ -280,7 +280,7 @@ Difficulty: Hard
 		SLEEP_CHECK_DEATH(8 + target_slowness, src)
 	update_cooldowns(list(COOLDOWN_UPDATE_SET_CHASER = chaser_cooldown_time))
 	animate(src, color = oldcolor, time = 8)
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 8)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 0.8 SECONDS)
 	SLEEP_CHECK_DEATH(8, src)
 	blinking = FALSE
 
@@ -453,7 +453,7 @@ Difficulty: Hard
 		wander = TRUE
 		did_reset = FALSE
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget(atom/attacked_target)
 	if(!blinking)
 		if(target && isliving(target))
 			var/mob/living/L = target
@@ -582,7 +582,7 @@ Difficulty: Hard
 	friendly_fire_check = is_friendly_fire
 	if(new_speed)
 		speed = new_speed
-	addtimer(CALLBACK(src, PROC_REF(seek_target)), 1)
+	addtimer(CALLBACK(src, PROC_REF(seek_target)), 0.1 SECONDS)
 
 /obj/effect/temp_visual/hierophant/chaser/proc/get_target_dir()
 	. = get_cardinal_dir(src, targetturf)
@@ -618,6 +618,7 @@ Difficulty: Hard
 				moving--
 				sleep(speed)
 			targetturf = get_turf(target)
+
 /obj/effect/temp_visual/hierophant/chaser/proc/make_blast()
 	var/obj/effect/temp_visual/hierophant/blast/damaging/B = new(loc, caster, friendly_fire_check)
 	B.damage = damage
@@ -694,7 +695,7 @@ Difficulty: Hard
 		return
 	for(var/mob/living/L in T.contents - hit_things) //find and damage mobs...
 		hit_things += L
-		if((friendly_fire_check && caster?.faction_check_mob(L)) || L.stat == DEAD)
+		if((friendly_fire_check && caster?.faction_check_atom(L)) || L.stat == DEAD)
 			continue
 		if(L.client)
 			flash_color(L.client, "#660099", 1)
@@ -719,7 +720,7 @@ Difficulty: Hard
 		hit_things += M
 		for(var/O in M.occupants)
 			var/mob/living/occupant = O
-			if(friendly_fire_check && caster?.faction_check_mob(occupant))
+			if(friendly_fire_check && caster?.faction_check_atom(occupant))
 				continue
 			to_chat(occupant, span_userdanger("Your [M.name] is struck by a [name]!"))
 			playsound(M,'sound/weapons/sear.ogg', 50, TRUE, -4)
@@ -752,7 +753,7 @@ Difficulty: Hard
 		var/obj/item/hierophant_club/club = attacking_item
 		if(club.beacon == src)
 			to_chat(user, span_notice("You start removing your hierophant beacon..."))
-			if(do_after(user, 50, target = src))
+			if(do_after(user, 5 SECONDS, target = src))
 				playsound(src,'sound/magic/blind.ogg', 100, TRUE, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(get_turf(src), user)
 				to_chat(user, span_hierophant_warning("You collect [src], reattaching it to the club!"))

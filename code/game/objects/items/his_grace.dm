@@ -65,8 +65,9 @@
 	else
 		..()
 
-/obj/item/his_grace/CtrlClick(mob/user) //you can't pull his grace
-	return
+/obj/item/his_grace/item_ctrl_click(mob/user)
+	//you can't pull his grace
+	return NONE
 
 /obj/item/his_grace/examine(mob/user)
 	. = ..()
@@ -149,7 +150,11 @@
 	gender = MALE
 	adjust_bloodthirst(1)
 	force_bonus = HIS_GRACE_FORCE_BONUS * LAZYLEN(contents)
-	notify_ghosts("[user] has awoken His Grace!", source = src, action = NOTIFY_ORBIT, header = "All Hail His Grace!")
+	notify_ghosts(
+		"[user] has awoken His Grace!",
+		source = src,
+		header = "All Hail His Grace!",
+	)
 	playsound(user, 'sound/effects/pope_entry.ogg', 100)
 	update_appearance()
 	move_gracefully()

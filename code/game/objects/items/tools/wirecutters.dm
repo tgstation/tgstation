@@ -13,7 +13,7 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/wirecutter_inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/wirecutter_inhand_right
 
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 6
 	throw_speed = 3
@@ -24,6 +24,7 @@
 	attack_verb_simple = list("pinch", "nip")
 	hitsound = 'sound/items/wirecutter.ogg'
 	usesound = 'sound/items/wirecutter.ogg'
+	operating_sound = 'sound/items/wirecutter_cut.ogg'
 	drop_sound = 'sound/items/handling/wirecutter_drop.ogg'
 	pickup_sound = 'sound/items/handling/wirecutter_pickup.ogg'
 	tool_behaviour = TOOL_WIRECUTTER
@@ -77,7 +78,7 @@
 	name = "powered wirecutters"
 	desc = "Cuts wires with the power of ELECTRICITY. Faster than normal wirecutters."
 	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "wirecutters_cyborg"
+	icon_state = "toolkit_engiborg_cutters"
 	worn_icon_state = "cutters"
 	toolspeed = 0.5
 	random_color = FALSE

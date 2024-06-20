@@ -1,0 +1,2 @@
+output_name = "junglechasm"
+template = "bitmask/diagonal_32x32.toml"

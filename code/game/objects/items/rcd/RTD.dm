@@ -23,7 +23,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
-	banned_upgrades = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING | RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
+	banned_upgrades = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
 
 	/// main category for tile design
 	var/root_category = "Conventional"
@@ -165,21 +165,17 @@
 	. = ..()
 	ui_interact(user)
 
-/obj/item/construction/rtd/ui_data(mob/user)
+/obj/item/construction/rtd/ui_static_data(mob/user)
 	var/list/data = ..()
-	var/floor_designs = GLOB.floor_designs
 
-	data["selected_root"] = root_category
 	data["root_categories"] = list()
-	for(var/category in floor_designs)
+	for(var/category in GLOB.floor_designs)
 		data["root_categories"] += category
-	data["selected_category"] = design_category
-
-	selected_design.fill_ui_data(data)
+	data["selected_root"] = root_category
 
 	data["categories"] = list()
-	for(var/sub_category as anything in floor_designs[root_category])
-		var/list/target_category =  floor_designs[root_category][sub_category]
+	for(var/sub_category as anything in GLOB.floor_designs[root_category])
+		var/list/target_category =  GLOB.floor_designs[root_category][sub_category]
 
 		var/list/designs = list() //initialize all designs under this category
 		for(var/list/design as anything in target_category)
@@ -190,10 +186,15 @@
 
 	return data
 
-/obj/item/construction/rtd/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+/obj/item/construction/rtd/ui_data(mob/user)
+	var/list/data = ..()
+
+	data["selected_category"] = design_category
+	selected_design.fill_ui_data(data)
+
+	return data
+
+/obj/item/construction/rtd/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 
 	var/floor_designs = GLOB.floor_designs
 	switch(action)
@@ -201,6 +202,7 @@
 			var/new_root = params["root_category"]
 			if(floor_designs[new_root] != null) //is a valid category
 				root_category = new_root
+				update_static_data_for_all_viewers()
 
 		if("set_dir")
 			var/direction = text2dir(params["dir"])
@@ -222,13 +224,26 @@
 			QDEL_LIST(design_overlays)
 			design_category = params["category_name"]
 			selected_design.set_info(target_design)
+			blueprint_changed = TRUE
 
 	return TRUE
 
-/obj/item/construction/rtd/afterattack(turf/open/floor/floor, mob/user)
+/obj/item/construction/rtd/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!range_check(interacting_with, user))
+		return NONE
+	return try_tiling(interacting_with, user)
+
+/obj/item/construction/rtd/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!istype(floor) || !range_check(floor,user))
-		return TRUE
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+
+	return try_tiling(interacting_with, user)
+
+/obj/item/construction/rtd/proc/try_tiling(atom/interacting_with, mob/living/user)
+	var/turf/open/floor/floor = interacting_with
+	if(!istype(floor))
+		return NONE
 
 	var/floor_designs = GLOB.floor_designs
 	if(!istype(floor, /turf/open/floor/plating)) //we infer what floor type it is if its not the usual plating
@@ -257,39 +272,39 @@
 					selected_design.set_direction(floor.dir)
 					balloon_alert(user, "tile changed to [selected_design.name]")
 
-					return TRUE
+					return ITEM_INTERACT_SUCCESS
 
 		//can't infer floor type!
 		balloon_alert(user, "design not supported!")
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
 	var/delay = CONSTRUCTION_TIME(selected_design.cost)
-	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_FLOORWALL)
+	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_TURF)
 
 	//resource sanity check before & after delay along with special effects
 	if(!checkResource(selected_design.cost, user))
 		qdel(rcd_effect)
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	var/beam = user.Beam(floor, icon_state = "light_beam", time = delay)
 	playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
-	if(!do_after(user, delay, target = floor))
+	if(!build_delay(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	if(!checkResource(selected_design.cost, user))
 		qdel(rcd_effect)
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
 	if(!useResource(selected_design.cost, user))
 		qdel(rcd_effect)
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	activate()
 	//step 1 create tile
 	var/obj/item/stack/tile/final_tile = selected_design.new_tile(user.drop_location())
 	if(QDELETED(final_tile)) //if you were standing on a stack of tiles this newly spawned tile could get merged with it cause its spawned on your location
 		qdel(rcd_effect)
 		balloon_alert(user, "tile got merged with the stack beneath you!")
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 	//step 2 lay tile
 	var/turf/open/new_turf = final_tile.place_tile(floor, user)
 	if(new_turf) //apply infered overlays
@@ -297,16 +312,21 @@
 			info.add_decal(new_turf)
 	rcd_effect.end_animation()
 
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/construction/rtd/afterattack_secondary(turf/open/floor/floor, mob/user, proximity_flag, click_parameters)
-	..()
-	if(!istype(floor) || !range_check(floor,user))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/construction/rtd/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!range_check(interacting_with, user))
+		return NONE
+	return interact_with_atom_secondary(interacting_with, user, modifiers)
+
+/obj/item/construction/rtd/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	var/turf/open/floor/floor = interacting_with
+	if(!istype(floor))
+		return NONE
 
 	if(istype(floor, /turf/open/floor/plating)) //cant deconstruct normal plating thats the RCD's job
 		balloon_alert(user, "nothing to deconstruct!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
 	var/floor_designs = GLOB.floor_designs
 
@@ -325,7 +345,7 @@
 					break
 	if(!cost)
 		balloon_alert(user, "can't deconstruct this type!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
 	var/delay = DECONSTRUCTION_TIME(cost)
 	var/obj/effect/constructing_effect/rcd_effect = new(floor, delay, RCD_DECONSTRUCT)
@@ -333,21 +353,21 @@
 	//resource sanity check before & after delay along with beam effects
 	if(!checkResource(cost * 0.7, user)) //no ballon alert for checkResource as it already spans an alert to chat
 		qdel(rcd_effect)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 	var/beam = user.Beam(floor, icon_state = "light_beam", time = delay)
 	playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
 	if(!do_after(user, delay, target = floor))
 		qdel(beam)
 		qdel(rcd_effect)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 	if(!checkResource(cost * 0.7, user))
 		qdel(rcd_effect)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
 	//do the tiling
 	if(!useResource(cost * 0.7, user))
 		qdel(rcd_effect)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 	activate()
 	//find & collect all decals
 	var/list/all_decals = list()
@@ -363,7 +383,7 @@
 		floor.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	rcd_effect.end_animation()
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/construction/rtd/loaded
 	matter = 350

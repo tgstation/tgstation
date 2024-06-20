@@ -1,4 +1,3 @@
-#define MAX_DENT_DECALS 15
 #define LEANING_OFFSET 11
 
 /turf/closed/wall
@@ -8,6 +7,7 @@
 	icon_state = "wall-0"
 	base_icon_state = "wall"
 	explosive_resistance = 1
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 62500 //a little over 5 cm thick , 62500 for 1 m by 2.5 m by 0.25 m iron wall. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
@@ -34,48 +34,62 @@
 
 	var/list/dent_decals
 
-/turf/closed/wall/MouseDrop_T(mob/living/carbon/carbon_mob, mob/user)
-	..()
-	if(carbon_mob != user)
+/turf/closed/wall/mouse_drop_receive(atom/dropping, mob/user, params)
+	if(dropping != user)
 		return
-	if(carbon_mob.is_leaning == TRUE)
+	if(!iscarbon(dropping) && !iscyborg(dropping))
 		return
-	if(carbon_mob.pulledby)
+	var/mob/living/leaner = dropping
+	if(leaner.incapacitated(IGNORE_RESTRAINTS) || leaner.stat != CONSCIOUS || HAS_TRAIT(leaner, TRAIT_NO_TRANSFORM))
 		return
-	if(!carbon_mob.density)
+	if(!leaner.density || leaner.pulledby || leaner.buckled || !(leaner.mobility_flags & MOBILITY_STAND))
 		return
-	var/turf/checked_turf = get_step(carbon_mob, REVERSE_DIR(carbon_mob.dir))
-	if(checked_turf == src)
-		carbon_mob.start_leaning(src)
+	if(HAS_TRAIT_FROM(leaner, TRAIT_UNDENSE, LEANING_TRAIT))
+		return
+	var/turf/checked_turf = get_step(leaner, REVERSE_DIR(leaner.dir))
+	if(checked_turf != src)
+		return
+	leaner.start_leaning(src)
 
-/mob/living/carbon/proc/start_leaning(obj/wall)
-
+/mob/living/proc/start_leaning(turf/closed/wall/wall)
+	var/new_y = base_pixel_y + pixel_y
+	var/new_x = base_pixel_x + pixel_x
 	switch(dir)
 		if(SOUTH)
-			pixel_y += LEANING_OFFSET
+			new_y += LEANING_OFFSET
 		if(NORTH)
-			pixel_y += -LEANING_OFFSET
+			new_y -= LEANING_OFFSET
 		if(WEST)
-			pixel_x += LEANING_OFFSET
+			new_x += LEANING_OFFSET
 		if(EAST)
-			pixel_x += -LEANING_OFFSET
+			new_x -= LEANING_OFFSET
 
-	ADD_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
-	ADD_TRAIT(src, TRAIT_EXPANDED_FOV, LEANING_TRAIT)
-	visible_message(span_notice("[src] leans against \the [wall]!"), \
-						span_notice("You lean against \the [wall]!"))
-	RegisterSignals(src, list(COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED, COMSIG_MOVABLE_TELEPORTING, COMSIG_ATOM_DIR_CHANGE), PROC_REF(stop_leaning))
+	animate(src, 0.2 SECONDS, pixel_x = new_x, pixel_y = new_y)
+	add_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
+	visible_message(
+		span_notice("[src] leans against [wall]."),
+		span_notice("You lean against [wall]."),
+	)
+	RegisterSignals(src, list(
+		COMSIG_MOB_CLIENT_PRE_MOVE,
+		COMSIG_LIVING_DISARM_HIT,
+		COMSIG_LIVING_GET_PULLED,
+		COMSIG_MOVABLE_TELEPORTING,
+		COMSIG_ATOM_DIR_CHANGE,
+	), PROC_REF(stop_leaning))
 	update_fov()
-	is_leaning = TRUE
 
-/mob/living/carbon/proc/stop_leaning()
+/mob/living/proc/stop_leaning()
 	SIGNAL_HANDLER
-	UnregisterSignal(src, list(COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_GET_PULLED, COMSIG_MOVABLE_TELEPORTING, COMSIG_ATOM_DIR_CHANGE))
-	is_leaning = FALSE
-	pixel_y = base_pixel_y + body_position_pixel_x_offset
-	pixel_x = base_pixel_y + body_position_pixel_y_offset
-	REMOVE_TRAIT(src, TRAIT_UNDENSE, LEANING_TRAIT)
-	REMOVE_TRAIT(src, TRAIT_EXPANDED_FOV, LEANING_TRAIT)
+	UnregisterSignal(src, list(
+		COMSIG_MOB_CLIENT_PRE_MOVE,
+		COMSIG_LIVING_DISARM_HIT,
+		COMSIG_LIVING_GET_PULLED,
+		COMSIG_MOVABLE_TELEPORTING,
+		COMSIG_ATOM_DIR_CHANGE,
+	))
+	animate(src, 0.2 SECONDS, pixel_x = base_pixel_x, pixel_y = base_pixel_y)
+	remove_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
 	update_fov()
 
 /turf/closed/wall/Initialize(mapload)
@@ -126,7 +140,7 @@
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O, /obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
-			P.roll_and_drop(src)
+			INVOKE_ASYNC(P, TYPE_PROC_REF(/obj/structure/sign/poster, roll_and_drop), src)
 	if(decon_type)
 		ChangeTurf(decon_type, flags = CHANGETURF_INHERIT_AIR)
 	else
@@ -315,15 +329,16 @@
 /turf/closed/wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 4 SECONDS, "cost" = 26)
+			return list("delay" = 4 SECONDS, "cost" = 26)
 		if(RCD_WALLFRAME)
-			return list("mode" = RCD_WALLFRAME, "delay" = 1 SECONDS, "cost" = 8)
+			return list("delay" = 1 SECONDS, "cost" = 8)
 	return FALSE
 
-/turf/closed/wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	switch(passed_mode)
+/turf/closed/wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	switch(rcd_data["[RCD_DESIGN_MODE]"])
 		if(RCD_WALLFRAME)
-			var/obj/item/wallframe/new_wallmount = new the_rcd.wallframe_type(user.drop_location())
+			var/obj/item/wallframe/wallmount = rcd_data["[RCD_DESIGN_PATH]"]
+			var/obj/item/wallframe/new_wallmount = new wallmount(user.drop_location())
 			return try_wallmount(new_wallmount, user, src)
 		if(RCD_DECONSTRUCT)
 			ScrapeAway()
@@ -352,16 +367,22 @@
 
 	add_overlay(dent_decals)
 
-/turf/closed/wall/rust_heretic_act()
+/turf/closed/wall/rust_turf()
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ScrapeAway()
 		return
-	if(prob(70))
-		new /obj/effect/temp_visual/glowing_rune(src)
+
 	return ..()
 
 /turf/closed/wall/metal_foam_base
 	girder_type = /obj/structure/foamedmetal
 
-#undef MAX_DENT_DECALS
+/turf/closed/wall/Bumped(atom/movable/bumped_atom)
+	. = ..()
+	SEND_SIGNAL(bumped_atom, COMSIG_LIVING_WALL_BUMP, src)
+
+/turf/closed/wall/Exited(atom/movable/gone, direction)
+	. = ..()
+	SEND_SIGNAL(gone, COMSIG_LIVING_WALL_EXITED, src)
+
 #undef LEANING_OFFSET

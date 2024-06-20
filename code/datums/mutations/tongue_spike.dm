@@ -3,7 +3,7 @@
 	desc = "Allows a creature to voluntary shoot their tongue out as a deadly weapon."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your feel like you can throw your voice.")
-	instability = 15
+	instability = POSITIVE_INSTABILITY_MINI // worthless. also serves as a bit of a hint that it's not good
 	power_path = /datum/action/cooldown/spell/tongue_spike
 
 	energy_coeff = 1
@@ -73,6 +73,7 @@
 		unembedded()
 
 /obj/item/hardened_spike/embedded(atom/target)
+	. = ..()
 	if(isbodypart(target))
 		missed = FALSE
 
@@ -88,7 +89,7 @@
 	desc = "Allows a creature to voluntary shoot their tongue out as biomass, allowing a long range transfer of chemicals."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your feel like you can really connect with people by throwing your voice.")
-	instability = 15
+	instability = POSITIVE_INSTABILITY_MINOR // slightly less worthless. slightly.
 	locked = TRUE
 	power_path = /datum/action/cooldown/spell/tongue_spike/chem
 	energy_coeff = 1
@@ -121,6 +122,7 @@
 	var/embedded_once_alread = FALSE
 
 /obj/item/hardened_spike/chem/embedded(mob/living/carbon/human/embedded_mob)
+	. = ..()
 	if(embedded_once_alread)
 		return
 	embedded_once_alread = TRUE
@@ -173,7 +175,7 @@
 		return FALSE
 
 	to_chat(transferred, span_warning("You feel a tiny prick!"))
-	transferer.reagents.trans_to(transferred, transferer.reagents.total_volume, 1, 1, 0, transferred_by = transferer)
+	transferer.reagents.trans_to(transferred, transferer.reagents.total_volume, transferred_by = transferer)
 
 	var/obj/item/hardened_spike/chem/chem_spike = target
 	var/obj/item/bodypart/spike_location = chem_spike.check_embedded()

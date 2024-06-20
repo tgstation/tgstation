@@ -7,6 +7,7 @@
 	id = "rainbow_protection"
 	duration = 100
 	alert_type = /atom/movable/screen/alert/status_effect/rainbow_protection
+	show_duration = TRUE
 	var/originalcolor
 
 /datum/status_effect/rainbow_protection/on_apply()
@@ -37,6 +38,7 @@
 	id = "slimeskin"
 	duration = 300
 	alert_type = /atom/movable/screen/alert/status_effect/slimeskin
+	show_duration = TRUE
 	var/originalcolor
 
 /datum/status_effect/slimeskin/on_apply()
@@ -473,10 +475,10 @@
 	colour = SLIME_TYPE_GREY
 
 /datum/status_effect/stabilized/grey/tick(seconds_between_ticks)
-	for(var/mob/living/simple_animal/slime/S in range(1, get_turf(owner)))
-		if(!(owner in S.Friends))
-			to_chat(owner, span_notice("[linked_extract] pulses gently as it communicates with [S]."))
-			S.set_friendship(owner, 1)
+	for(var/mob/living/basic/slime/slimes_in_range in range(1, get_turf(owner)))
+		if(!(REF(owner) in slimes_in_range.faction))
+			to_chat(owner, span_notice("[linked_extract] pulses gently as it communicates with [slimes_in_range]."))
+			slimes_in_range.befriend(owner)
 	return ..()
 
 /datum/status_effect/stabilized/orange
@@ -528,7 +530,7 @@
 
 	// Technically, "healed this tick" by now.
 	if(healed_last_tick)
-		new /obj/effect/temp_visual/heal(get_turf(owner), "#FF0000")
+		new /obj/effect/temp_visual/heal(get_turf(owner), COLOR_RED)
 
 	return ..()
 
@@ -704,7 +706,7 @@
 	if(healthcheck && (healthcheck - owner.health) > 5)
 		owner.visible_message(span_warning("[linked_extract] notices the sudden change in [owner]'s physical health, and activates!"))
 		do_sparks(5,FALSE,owner)
-		var/F = find_safe_turf(zlevels = owner.z, extended_safety_checks = TRUE)
+		var/F = find_safe_turf(zlevel = owner.z, extended_safety_checks = TRUE)
 		var/range = 0
 		if(!F)
 			F = get_turf(owner)
@@ -991,11 +993,9 @@
 		healing_types += BURN
 	if(owner.getToxLoss() > 0)
 		healing_types += TOX
-	if(owner.getCloneLoss() > 0)
-		healing_types += CLONE
 
 	if(length(healing_types))
-		owner.apply_damage_type(-heal_amount, damagetype = pick(healing_types))
+		owner.heal_damage_type(heal_amount, damagetype = pick(healing_types))
 
 	owner.adjust_nutrition(3)
 	drained.apply_damage(heal_amount * DRAIN_DAMAGE_MULTIPLIER, damagetype = BRUTE, spread_damage = TRUE)
@@ -1079,7 +1079,7 @@
 		var/obj/item/slimecross/stabilized/rainbow/X = linked_extract
 		if(istype(X))
 			if(X.regencore)
-				X.regencore.afterattack(owner,owner,TRUE)
+				X.regencore.interact_with_atom(owner, owner)
 				X.regencore = null
 				owner.visible_message(span_warning("[owner] flashes a rainbow of colors, and [owner.p_their()] skin is coated in a milky regenerative goo!"))
 				qdel(src)

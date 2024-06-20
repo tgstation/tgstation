@@ -259,7 +259,7 @@
 	icon_state = "medkit_advanced"
 	inhand_icon_state = "medkit-rad"
 	custom_premium_price = PAYCHECK_COMMAND * 6
-	damagetype_healed = "all"
+	damagetype_healed = HEAL_ALL_DAMAGE
 
 /obj/item/storage/medkit/advanced/PopulateContents()
 	if(empty)
@@ -271,12 +271,30 @@
 		/obj/item/storage/pill_bottle/penacid = 1)
 	generate_items_inside(items_inside,src)
 
+/obj/item/storage/medkit/tactical_lite
+	name = "combat first aid kit"
+	icon_state = "medkit_tactical"
+	inhand_icon_state = "medkit-tactical"
+	damagetype_healed = HEAL_ALL_DAMAGE
+
+/obj/item/storage/medkit/tactical_lite/PopulateContents()
+	if(empty)
+		return
+	var/static/list/items_inside = list(
+		/obj/item/healthanalyzer/advanced = 1,
+		/obj/item/reagent_containers/hypospray/medipen/atropine = 1,
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/suture/medicated = 2,
+		/obj/item/stack/medical/mesh/advanced = 2,
+	)
+	generate_items_inside(items_inside, src)
+
 /obj/item/storage/medkit/tactical
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
 	icon_state = "medkit_tactical"
 	inhand_icon_state = "medkit-tactical"
-	damagetype_healed = "all"
+	damagetype_healed = HEAL_ALL_DAMAGE
 
 /obj/item/storage/medkit/tactical/Initialize(mapload)
 	. = ..()
@@ -381,14 +399,13 @@
 	generate_items_inside(items_inside,src)
 
 //medibot assembly
-/obj/item/storage/medkit/attackby(obj/item/bodypart/bodypart, mob/user, params)
-	if((!istype(bodypart, /obj/item/bodypart/arm/left/robot)) && (!istype(bodypart, /obj/item/bodypart/arm/right/robot)))
-		return ..()
-
+/obj/item/storage/medkit/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
+	if(!istype(inserted, /obj/item/bodypart/arm/left/robot) && !istype(inserted, /obj/item/bodypart/arm/right/robot))
+		return TRUE
 	//Making a medibot!
 	if(contents.len >= 1)
 		balloon_alert(user, "items inside!")
-		return
+		return FALSE
 
 	///if you add a new one don't forget to update /datum/crafting_recipe/medbot/on_craft_completion()
 	var/obj/item/bot_assembly/medbot/medbot_assembly = new
@@ -406,10 +423,11 @@
 		medbot_assembly.set_skin("bezerk")
 	user.put_in_hands(medbot_assembly)
 	medbot_assembly.balloon_alert(user, "arm added")
-	medbot_assembly.robot_arm = bodypart.type
+	medbot_assembly.robot_arm = inserted.type
 	medbot_assembly.medkit_type = type
-	qdel(bodypart)
+	qdel(inserted)
 	qdel(src)
+	return FALSE
 
 /*
  * Pill Bottles
@@ -666,12 +684,16 @@
 /obj/item/storage/organbox/Initialize(mapload)
 	. = ..()
 
-	create_storage(storage_type = /datum/storage/organ_box, max_specific_storage = WEIGHT_CLASS_BULKY, max_total_storage = 21)
-	atom_storage.set_holdable(list(
-		/obj/item/organ,
-		/obj/item/bodypart,
-		/obj/item/food/icecream
-		))
+	create_storage(
+		storage_type = /datum/storage/organ_box,
+		max_specific_storage = WEIGHT_CLASS_BULKY,
+		max_total_storage = 21,
+		canhold = list(
+			/obj/item/organ,
+			/obj/item/bodypart,
+			/obj/item/food/icecream,
+		),
+	)
 
 	create_reagents(100, TRANSPARENT)
 	START_PROCESSING(SSobj, src)
@@ -711,20 +733,28 @@
 	icon_state = "[base_icon_state][cooling ? "-working" : null]"
 	return ..()
 
-/obj/item/storage/organbox/attackby(obj/item/I, mob/user, params)
-	if(is_reagent_container(I) && I.is_open_container())
-		var/obj/item/reagent_containers/RC = I
+/obj/item/storage/organbox/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
+	if(is_reagent_container(inserted) && inserted.is_open_container())
+		return FALSE
+	if(istype(inserted, /obj/item/plunger))
+		return FALSE
+	return TRUE
+
+/obj/item/storage/organbox/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(is_reagent_container(tool) && tool.is_open_container())
+		var/obj/item/reagent_containers/RC = tool
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transferred_by = user)
 		if(units)
 			balloon_alert(user, "[units]u transferred")
-			return
-	if(istype(I, /obj/item/plunger))
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+	if(istype(tool, /obj/item/plunger))
 		balloon_alert(user, "plunging...")
-		if(do_after(user, 10, target = src))
+		if(do_after(user, 1 SECONDS, target = src))
 			balloon_alert(user, "plunged")
 			reagents.clear_reagents()
-		return
-	return ..()
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/storage/organbox/suicide_act(mob/living/carbon/user)
 	if(HAS_TRAIT(user, TRAIT_RESISTCOLD)) //if they're immune to cold, just do the box suicide
@@ -766,9 +796,7 @@
 	atom_storage.max_slots = 8
 	atom_storage.screen_max_columns = 4
 	atom_storage.screen_max_rows = 2
-	atom_storage.set_holdable(list(
-		/obj/item/reagent_containers/cup/tube,
-	))
+	atom_storage.set_holdable(/obj/item/reagent_containers/cup/tube)
 
 /obj/item/storage/test_tube_rack/attack_self(mob/user)
 	emptyStorage()

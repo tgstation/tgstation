@@ -1,19 +1,23 @@
-import { Component, createRef } from 'inferno';
+import { PropsWithChildren, useEffect, useRef } from 'react';
 
-export class Autofocus extends Component {
-  ref = createRef<HTMLDivElement>();
+/** Used to force the window to steal focus on load. Children optional */
+export function Autofocus(props: PropsWithChildren) {
+  const { children } = props;
+  const ref = useRef<HTMLDivElement>(null);
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.ref.current?.focus();
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      ref.current?.focus();
     }, 1);
-  }
 
-  render() {
-    return (
-      <div ref={this.ref} tabIndex={-1}>
-        {this.props.children}
-      </div>
-    );
-  }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  return (
+    <div ref={ref} tabIndex={-1}>
+      {children}
+    </div>
+  );
 }

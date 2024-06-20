@@ -45,7 +45,7 @@
 ///Transfer reagents and display a flashing icon
 /obj/machinery/plumbing/sender/proc/teleport_chemicals(obj/machinery/plumbing/receiver/R, amount)
 	flick(initial(icon_state) + "_flash", src)
-	reagents.trans_to(R, amount, round_robin = TRUE)
+	reagents.trans_to(R, amount)
 
 ///A bluespace output pipe for plumbing. Supports multiple recipients. Must be constructed with a circuit board
 /obj/machinery/plumbing/receiver
@@ -77,7 +77,7 @@
 	return TRUE
 
 /obj/machinery/plumbing/receiver/process(seconds_per_tick)
-	if(machine_stat & NOPOWER || panel_open)
+	if(!is_operational || panel_open)
 		return
 
 	if(senders.len)
@@ -95,7 +95,7 @@
 
 		next_index++
 
-		use_power(active_power_usage * seconds_per_tick)
+		use_energy(active_power_usage * seconds_per_tick)
 
 ///Notify all senders to forget us
 /obj/machinery/plumbing/receiver/proc/lose_senders()

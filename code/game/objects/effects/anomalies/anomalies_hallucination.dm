@@ -2,7 +2,7 @@
 /obj/effect/anomaly/hallucination
 	name = "hallucination anomaly"
 	icon_state = "hallucination"
-	aSignal = /obj/item/assembly/signaler/anomaly/hallucination
+	anomaly_core = /obj/item/assembly/signaler/anomaly/hallucination
 	/// Time passed since the last effect, increased by seconds_per_tick of the SSobj
 	var/ticks = 0
 	/// How many seconds between each small hallucination pulses
@@ -14,6 +14,10 @@
 		span_warning("Something's wispering around you!"),
 		span_warning("You are going insane!"),
 	)
+
+/obj/effect/anomaly/hallucination/Initialize(mapload, new_lifespan, drops_core)
+	. = ..()
+	apply_wibbly_filters(src)
 
 /obj/effect/anomaly/hallucination/anomalyEffect(seconds_per_tick)
 	. = ..()

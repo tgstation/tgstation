@@ -51,7 +51,7 @@
 
 		M.adjust_confusion(-2 SECONDS)
 		if(purge_alcohol)
-			M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3)
+			M.reagents.remove_reagent(/datum/reagent/consumable/ethanol, 3, include_subtypes = TRUE)
 			M.adjust_drunk_effect(-5)
 
 	if(A.stage >= 4)

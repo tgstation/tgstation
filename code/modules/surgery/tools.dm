@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 1.5)
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
 	tool_behaviour = TOOL_RETRACTOR
@@ -32,7 +32,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*1.25)
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("attacks", "pinches")
@@ -59,7 +59,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/glass = SMALL_MATERIAL_AMOUNT*7.5)
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("burns")
@@ -93,8 +93,9 @@
 	hitsound = 'sound/items/welder.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
-	light_system = MOVABLE_LIGHT
-	light_range = 1
+	light_system = OVERLAY_LIGHT
+	light_range = 1.5
+	light_power = 0.4
 	light_color = COLOR_SOFT_RED
 
 /obj/item/cautery/advanced/get_all_tool_behaviours()
@@ -120,7 +121,13 @@
 /obj/item/cautery/advanced/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	tool_behaviour = (active ? TOOL_DRILL : TOOL_CAUTERY)
+	if(active)
+		tool_behaviour = TOOL_DRILL
+		set_light_color(LIGHT_COLOR_BLUE)
+	else
+		tool_behaviour = TOOL_CAUTERY
+		set_light_color(LIGHT_COLOR_ORANGE)
+
 	balloon_alert(user, "lenses set to [active ? "drill" : "mend"]")
 	playsound(user ? user : src, 'sound/weapons/tap.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
@@ -139,7 +146,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*3)
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = SURGICAL_TOOL
 	force = 15
 	demolition_mod = 0.5
@@ -163,7 +170,7 @@
 
 /obj/item/surgicaldrill/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] rams [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!"))
-	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon, gib), null, null, TRUE, TRUE), 25)
+	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon, gib), null, null, TRUE, TRUE), 2.5 SECONDS)
 	user.SpinAnimation(3, 10)
 	playsound(user, 'sound/machines/juicer.ogg', 20, TRUE)
 	return MANUAL_SUICIDE
@@ -182,7 +189,7 @@
 	inhand_icon_state = "scalpel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = SURGICAL_TOOL
 	force = 10
 	demolition_mod = 0.25
@@ -232,7 +239,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	mob_throw_hit_sound = 'sound/weapons/pierce.ogg'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = SURGICAL_TOOL
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
@@ -286,6 +293,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("slaps")
 	attack_verb_simple = list("slap")
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 
 /obj/item/surgical_drapes/Initialize(mapload)
 	. = ..()
@@ -294,7 +302,7 @@
 /obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
 	name = "surgical processor"
 	desc = "A device for scanning and initiating surgeries from a disk or operating computer."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "surgical_processor"
 	item_flags = NOBLUDGEON
 	// List of surgeries downloaded into the device.
@@ -333,11 +341,9 @@
 	. = ..()
 	UnregisterSignal(user, COMSIG_SURGERY_STARTING)
 
-/obj/item/surgical_processor/afterattack(atom/design_holder, mob/user, proximity)
-	if(!proximity)
-		return ..()
+/obj/item/surgical_processor/interact_with_atom(atom/design_holder, mob/living/user, list/modifiers)
 	if(!istype(design_holder, /obj/item/disk/surgery) && !istype(design_holder, /obj/machinery/computer/operating))
-		return ..()
+		return NONE
 	balloon_alert(user, "copying designs...")
 	playsound(src, 'sound/machines/terminal_processing.ogg', 25, TRUE)
 	if(do_after(user, 1 SECONDS, target = design_holder))
@@ -350,7 +356,8 @@
 		playsound(src, 'sound/machines/terminal_success.ogg', 25, TRUE)
 		downloaded = TRUE
 		update_appearance(UPDATE_OVERLAYS)
-	return TRUE
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/surgical_processor/update_overlays()
 	. = ..()
@@ -378,8 +385,9 @@
 	force = 16
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
-	light_system = MOVABLE_LIGHT
-	light_range = 1
+	light_system = OVERLAY_LIGHT
+	light_range = 1.5
+	light_power = 0.4
 	light_color = LIGHT_COLOR_BLUE
 	sharpness = SHARP_EDGED
 
@@ -410,10 +418,10 @@
 
 	if(active)
 		tool_behaviour = TOOL_SAW
-		set_light_range(2)
+		set_light_color(LIGHT_COLOR_ORANGE)
 	else
 		tool_behaviour = TOOL_SCALPEL
-		set_light_range(1)
+		set_light_color(LIGHT_COLOR_BLUE)
 
 	balloon_alert(user, "[active ? "enabled" : "disabled"] bone-cutting mode")
 	playsound(user ? user : src, 'sound/machines/click.ogg', 50, TRUE)
@@ -473,7 +481,7 @@
 	desc = "A type of heavy duty surgical shears used for achieving a clean separation between limb and patient. Keeping the patient still is imperative to be able to secure and align the shears."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "shears"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = SURGICAL_TOOL
 	toolspeed = 1
 	force = 12
@@ -535,6 +543,8 @@
 		else
 			limb_snip_candidate.dismember()
 		user.visible_message(span_danger("[src] violently slams shut, amputating [patient]'s [candidate_name]."), span_notice("You amputate [patient]'s [candidate_name] with [src]."))
+		user.log_message("[user] has amputated [patient]'s [candidate_name] with [src]", LOG_GAME)
+		patient.log_message("[patient]'s [candidate_name] has been amputated by [user] with [src]", LOG_GAME)
 
 	if(HAS_MIND_TRAIT(user, TRAIT_MORBID)) //Freak
 		user.add_mood_event("morbid_dismemberment", /datum/mood_event/morbid_dismemberment)
@@ -559,7 +569,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5,  /datum/material/glass = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.25)
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("corrects", "properly sets")
@@ -597,32 +607,30 @@
 		ui.open()
 
 /obj/item/blood_filter/ui_data(mob/user)
-	var/list/data = list()
-	var/list/chem_names = list()
+	. = list()
+
+	.["whitelist"] = list()
 	for(var/key in whitelist)
-		chem_names += whitelist[key]
-	data["whitelist"] = chem_names
-	return data
+		.["whitelist"] += whitelist[key]
 
 /obj/item/blood_filter/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
+
 	. = TRUE
 	switch(action)
 		if("add")
-			var/selected_reagent = tgui_input_list(usr, "Select reagent to filter", "Whitelist reagent", GLOB.chemical_name_list)
+			var/selected_reagent = tgui_input_list(usr, "Select reagent to filter", "Whitelist reagent", GLOB.name2reagent)
 			if(!selected_reagent)
-				return TRUE
+				return FALSE
 
-			var/chem_id = get_chem_id(selected_reagent)
+			var/datum/reagent/chem_id = GLOB.name2reagent[selected_reagent]
 			if(!chem_id)
-				return TRUE
+				return FALSE
 
 			if(!(chem_id in whitelist))
 				whitelist[chem_id] = selected_reagent
-
-
 
 		if("remove")
 			var/chem_name = params["reagent"]

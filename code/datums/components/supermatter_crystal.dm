@@ -4,6 +4,11 @@
 	var/datum/callback/tool_act_callback
 	///Callback used by the SM to get the damage and matter power increase/decrease
 	var/datum/callback/consume_callback
+	// A whitelist of items that can interact with the SM without dusting the user
+	var/static/list/sm_item_whitelist = typecacheof(list(
+		/obj/item/melee/roastingstick,
+		/obj/item/toy/crayon/spraycan
+	))
 
 /datum/component/supermatter_crystal/Initialize(datum/callback/tool_act_callback, datum/callback/consume_callback)
 
@@ -15,6 +20,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(hand_hit))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(attackby_hit))
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH), PROC_REF(tool_hit))
+	RegisterSignal(parent, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WRENCH), PROC_REF(tool_hit))
 	RegisterSignal(parent, COMSIG_ATOM_BUMPED, PROC_REF(bumped_hit))
 	RegisterSignal(parent, COMSIG_ATOM_INTERCEPT_Z_FALL, PROC_REF(intercept_z_fall))
 	RegisterSignal(parent, COMSIG_ATOM_ON_Z_IMPACT, PROC_REF(on_z_impact))
@@ -22,7 +28,7 @@
 	src.tool_act_callback = tool_act_callback
 	src.consume_callback = consume_callback
 
-/datum/component/supermatter_crystal/Destroy(force, silent)
+/datum/component/supermatter_crystal/Destroy(force)
 	tool_act_callback = null
 	consume_callback = null
 	return ..()
@@ -37,6 +43,7 @@
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACKBY,
 		COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH),
+		COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WRENCH),
 		COMSIG_ATOM_BUMPED,
 		COMSIG_ATOM_INTERCEPT_Z_FALL,
 		COMSIG_ATOM_ON_Z_IMPACT,
@@ -152,9 +159,7 @@
 	var/atom/atom_source = source
 	if(!istype(item) || (item.item_flags & ABSTRACT) || !istype(user))
 		return
-	if(istype(item, /obj/item/melee/roastingstick))
-		return FALSE
-	if(istype(item, /obj/item/toy/crayon/spraycan))
+	if(is_type_in_typecache(item, sm_item_whitelist))
 		return FALSE
 	if(istype(item, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/cig = item
@@ -207,7 +212,7 @@
 	SIGNAL_HANDLER
 	if(tool_act_callback)
 		tool_act_callback.Invoke(user, tool)
-		return COMPONENT_BLOCK_TOOL_ATTACK
+		return ITEM_INTERACT_BLOCKING
 	attackby_hit(source, tool, user)
 
 /datum/component/supermatter_crystal/proc/bumped_hit(datum/source, atom/movable/hit_object)
@@ -283,28 +288,38 @@
 	consume(atom_source, nom)
 
 /datum/component/supermatter_crystal/proc/consume(atom/source, atom/movable/consumed_object)
+	if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
+		return
+	if(isliving(consumed_object))
+		var/mob/living/consumed_mob = consumed_object
+		if(consumed_mob.status_flags & GODMODE)
+			return
+
 	var/atom/atom_source = source
+	SEND_SIGNAL(consumed_object, COMSIG_SUPERMATTER_CONSUMED, atom_source)
+
 	var/object_size = 0
 	var/matter_increase = 0
 	var/damage_increase = 0
+
 	if(isliving(consumed_object))
 		var/mob/living/consumed_mob = consumed_object
 		object_size = consumed_mob.mob_size + 2
-		if(consumed_mob.status_flags & GODMODE)
-			return
 		message_admins("[atom_source] has consumed [key_name_admin(consumed_mob)] [ADMIN_JMP(atom_source)].")
 		atom_source.investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.investigate_log("has been dusted by [atom_source].", INVESTIGATE_DEATHS)
-		if(istype(consumed_mob, /mob/living/simple_animal/parrot/poly)) // Dusting Poly creates a power surge
+		if(istype(consumed_mob, /mob/living/basic/parrot/poly)) // Dusting Poly creates a power surge
 			force_event(/datum/round_event_control/supermatter_surge/poly, "Poly's revenge")
-			notify_ghosts("[consumed_mob] has been dusted by [atom_source]!", source = atom_source, action = NOTIFY_JUMP, header = "Polytechnical Difficulties")
+			notify_ghosts(
+				"[consumed_mob] has been dusted by [atom_source]!",
+				source = atom_source,
+				header = "Polytechnical Difficulties",
+			)
 		consumed_mob.dust(force = TRUE)
 		matter_increase += 100 * object_size
 		if(is_clown_job(consumed_mob.mind?.assigned_role))
 			damage_increase += rand(-30, 30) // HONK
 		consume_returns(matter_increase, damage_increase)
-	else if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
-		return
 	else if(isobj(consumed_object))
 		if(!iseffect(consumed_object))
 			var/suspicion = ""
@@ -336,7 +351,7 @@
 			near_mob.show_message(span_hear("An unearthly ringing fills your ears, and you find your skin covered in new radiation burns."), MSG_AUDIBLE)
 	consume_returns(matter_increase, damage_increase)
 	var/obj/machinery/power/supermatter_crystal/our_crystal = parent
-	if(istype(parent))
+	if(istype(our_crystal))
 		our_crystal.log_activation(who = consumed_object)
 
 /datum/component/supermatter_crystal/proc/consume_returns(matter_increase = 0, damage_increase = 0)

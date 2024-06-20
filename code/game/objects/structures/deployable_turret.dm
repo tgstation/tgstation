@@ -12,7 +12,6 @@
 	max_integrity = 100
 	buckle_lying = 0
 	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
 	var/view_range = 2.5
 	var/cooldown = 0
 	/// The projectile that the turret fires
@@ -52,19 +51,21 @@
 
 /// Undeploying, for when you want to move your big dakka around
 /obj/machinery/deployable_turret/wrench_act(mob/living/user, obj/item/wrench/used_wrench)
-	. = ..()
 	if(!can_be_undeployed)
-		return
+		return ITEM_INTERACT_SKIP_TO_ATTACK
 	if(!ishuman(user))
-		return
+		return ITEM_INTERACT_SKIP_TO_ATTACK
 	used_wrench.play_tool_sound(user)
 	user.balloon_alert(user, "undeploying...")
 	if(!do_after(user, undeploy_time))
-		return
-	var/obj/undeployed_object = new spawned_on_undeploy(src)
+		return ITEM_INTERACT_BLOCKING
+	var/obj/undeployed_object = new spawned_on_undeploy()
 	//Keeps the health the same even if you redeploy the gun
 	undeployed_object.modify_max_integrity(max_integrity)
+	if(!user.put_in_hands(undeployed_object))
+		undeployed_object.forceMove(loc)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 //BUCKLE HOOKS
 
@@ -101,7 +102,6 @@
 			M.put_in_hands(TC)
 	M.pixel_y = 14
 	layer = ABOVE_MOB_LAYER
-	SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 	setDir(SOUTH)
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
 	set_anchored(TRUE)
@@ -136,43 +136,34 @@
 	switch(dir)
 		if(NORTH)
 			layer = BELOW_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE)
 			user.pixel_x = 0
 			user.pixel_y = -14
 		if(NORTHEAST)
 			layer = BELOW_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE)
 			user.pixel_x = -8
 			user.pixel_y = -4
 		if(EAST)
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 			user.pixel_x = -14
 			user.pixel_y = 0
 		if(SOUTHEAST)
 			layer = BELOW_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE)
 			user.pixel_x = -8
 			user.pixel_y = 4
 		if(SOUTH)
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
-			plane = GAME_PLANE_UPPER
 			user.pixel_x = 0
 			user.pixel_y = 14
 		if(SOUTHWEST)
 			layer = BELOW_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE)
 			user.pixel_x = 8
 			user.pixel_y = 4
 		if(WEST)
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 			user.pixel_x = 14
 			user.pixel_y = 0
 		if(NORTHWEST)
 			layer = BELOW_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE)
 			user.pixel_x = 8
 			user.pixel_y = -4
 
@@ -222,7 +213,7 @@
 
 /obj/machinery/deployable_turret/hmg
 	name = "heavy machine gun turret"
-	desc = "A heavy calibre machine gun commonly used by Nanotrasen forces, famed for it's ability to give people on the recieving end more holes than normal."
+	desc = "A heavy caliber machine gun commonly used by Nanotrasen forces, famed for it's ability to give people on the receiving end more holes than normal."
 	icon_state = "hmg"
 	max_integrity = 250
 	projectile_type = /obj/projectile/bullet/manned_turret/hmg
@@ -268,11 +259,11 @@
 	M.attacked_by(src, user)
 	add_fingerprint(user)
 
-/obj/item/gun_control/afterattack(atom/targeted_atom, mob/user, flag, params)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
-	var/modifiers = params2list(params)
+/obj/item/gun_control/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/obj/machinery/deployable_turret/E = user.buckled
-	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, targeted_atom, modifiers)
-	E.direction_track(user, targeted_atom)
-	E.checkfire(targeted_atom, user)
+	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, interacting_with, modifiers)
+	E.direction_track(user, interacting_with)
+	E.checkfire(interacting_with, user)
+
+/obj/item/gun_control/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)

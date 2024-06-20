@@ -60,10 +60,9 @@
 
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
-	if(!user.can_perform_action(src))
-		return
-	return attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
+/obj/structure/closet/crate/secure/loot/click_alt(mob/living/user)
+	attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/W, mob/user)
 	if(locked)
@@ -121,7 +120,7 @@
 		return
 	return ..()
 
-/obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
+/obj/structure/closet/crate/secure/loot/atom_deconstruct(disassembled = TRUE)
 	if(locked)
 		boom()
 		return
@@ -146,7 +145,7 @@
 		if(6 to 10)
 			new /obj/item/melee/skateboard/pro(src)
 		if(11 to 15)
-			new /mob/living/simple_animal/bot/secbot/honkbot(src)
+			new /mob/living/basic/bot/honkbot(src)
 		if(16 to 20)
 			new /obj/item/stack/ore/diamond(src, 10)
 		if(21 to 25)
@@ -196,7 +195,7 @@
 		if(71 to 72)
 			new /obj/item/toy/plush/snakeplushie(src)
 		if(73 to 74)
-			new /mob/living/simple_animal/pet/gondola(src)
+			new /mob/living/basic/pet/gondola(src)
 		if(75 to 76)
 			new /obj/item/bikehorn/airhorn(src)
 		if(77 to 78)
@@ -210,7 +209,14 @@
 		if(85 to 86)
 			new /obj/item/defibrillator/compact(src)
 		if(87) //1% chance
-			new /obj/item/weed_extract(src)
+			var/list/cannabis_seeds = typesof(/obj/item/seeds/cannabis)
+			var/list/cannabis_plants = typesof(/obj/item/food/grown/cannabis)
+			for(var/i in 1 to rand(2, 4))
+				var/seed_type = pick(cannabis_seeds)
+				new seed_type(src)
+			for(var/i in 1 to rand(2, 4))
+				var/cannabis_type = pick(cannabis_plants)
+				new cannabis_type(src)
 		if(88)
 			new /obj/item/reagent_containers/cup/glass/bottle/lizardwine(src)
 		if(89)

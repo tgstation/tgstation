@@ -1,0 +1,138 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"d" = (
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/toy/crayon/spraycan/mimecan{
+	pixel_x = 6;
+	pixel_y = 17
+	},
+/obj/item/flashlight/lamp{
+	pixel_x = -5;
+	pixel_y = 12
+	},
+/obj/item/food/baguette,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"i" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"o" = (
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"A" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"H" = (
+/obj/effect/forcefield/mime/advanced{
+	initial_duration = 0
+	},
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"K" = (
+/obj/structure/dresser,
+/obj/item/toy/figure/mime{
+	pixel_y = 13;
+	pixel_x = -5
+	},
+/obj/item/stamp/mime{
+	pixel_y = 13;
+	pixel_x = 7
+	},
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"L" = (
+/obj/structure/table/wood,
+/obj/item/clothing/accessory/mime_fan_pin{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/effect/spawner/random/decoration/flower{
+	pixel_y = 4;
+	pixel_x = 7
+	},
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"Q" = (
+/turf/open/floor/iron/checker,
+/area/template_noop)
+"Y" = (
+/obj/structure/closet/secure_closet/personal/cabinet{
+	name = "mime's closet"
+	},
+/obj/item/clothing/mask/gas/mime,
+/obj/item/book/granter/action/spell/mime/mimery,
+/turf/open/floor/iron/checker,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+A
+"}
+(2,1,1) = {"
+a
+i
+v
+v
+H
+H
+a
+"}
+(3,1,1) = {"
+a
+H
+K
+v
+o
+v
+a
+"}
+(4,1,1) = {"
+a
+H
+d
+Q
+L
+H
+a
+"}
+(5,1,1) = {"
+a
+v
+Q
+i
+Y
+H
+a
+"}
+(6,1,1) = {"
+a
+v
+v
+H
+H
+H
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+"}

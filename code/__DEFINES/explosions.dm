@@ -23,8 +23,10 @@
 	if(!(target.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) { \
 		target.contents_explosion(##args);\
 	};\
-	SEND_SIGNAL(target, COMSIG_ATOM_EX_ACT, ##args);\
-	target.ex_act(##args);
+	if(!(SEND_SIGNAL(target, COMSIG_ATOM_PRE_EX_ACT, ##args) & COMPONENT_CANCEL_EX_ACT)) { \
+		SEND_SIGNAL(target, COMSIG_ATOM_EX_ACT, ##args);\
+		target.ex_act(##args);\
+	}
 
 // Internal explosion argument list keys.
 // Must match the arguments to [/datum/controller/subsystem/explosions/proc/propagate_blastwave]
@@ -50,6 +52,12 @@
 #define EXARG_KEY_SILENT STRINGIFY(silent)
 /// Whether or not the explosion should produce smoke if it is large enough to warrant it.
 #define EXARG_KEY_SMOKE STRINGIFY(smoke)
+/// Whether or not to leave the epicenter turf unaffected
+#define EXARG_KEY_PROTECT_EPICENTER STRINGIFY(protect_epicenter)
+/// For directional explosions, the angle the explosion is pointing at.
+#define EXARG_KEY_EXPLOSION_DIRECTION STRINGIFY(explosion_direction)
+/// For directional explosions, the angle covered by the explosion, centred on EXPLOSION_DIRECTION.
+#define EXARG_KEY_EXPLOSION_ARC STRINGIFY(explosion_arc)
 
 // Explodable component deletion values
 /// Makes the explodable component queue to reset its exploding status when it detonates.

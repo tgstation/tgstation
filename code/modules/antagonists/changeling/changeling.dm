@@ -350,13 +350,12 @@
 /datum/antagonist/changeling/proc/regain_powers()
 	emporium_action.Grant(owner.current)
 	for(var/datum/action/changeling/power as anything in innate_powers)
-		if(power.needs_button)
-			power.Grant(owner.current)
+		power.on_purchase(owner.current)
 
 	for(var/power_path in purchased_powers)
 		var/datum/action/changeling/power = purchased_powers[power_path]
-		if(istype(power) && power.needs_button)
-			power.Grant(owner.current)
+		if(istype(power))
+			power.on_purchase(owner.current)
 
 /*
  * The act of purchasing a certain power for a changeling.
@@ -416,7 +415,8 @@
 
 	purchased_powers[power_path] = new_action
 	new_action.on_purchase(owner.current) // Grant() is ran in this proc, see changeling_powers.dm.
-	log_changeling_power("[key_name(owner)] adapted the [new_action] power")
+	log_changeling_power("[key_name(owner)] adapted the [new_action.name] power")
+	SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, new_action.name)
 
 	return TRUE
 
@@ -526,6 +526,7 @@
 
 	new_profile.age = target.age
 	new_profile.physique = target.physique
+	new_profile.athletics_level = target.mind?.get_skill_level(/datum/skill/athletics) || SKILL_LEVEL_NONE
 
 	// Grab the target's quirks.
 	for(var/datum/quirk/target_quirk as anything in target.quirks)
@@ -536,10 +537,6 @@
 	new_profile.underwear_color = target.underwear_color
 	new_profile.undershirt = target.undershirt
 	new_profile.socks = target.socks
-
-	// Hair and facial hair gradients, alongside their colours.
-	new_profile.grad_style = LAZYLISTDUPLICATE(target.grad_style)
-	new_profile.grad_color = LAZYLISTDUPLICATE(target.grad_color)
 
 	// Grab skillchips they have
 	new_profile.skillchips = target.clone_skillchip_list(TRUE)
@@ -691,16 +688,21 @@
 		else
 			var/datum/objective/maroon/maroon_objective = new
 			maroon_objective.owner = owner
-			maroon_objective.find_target()
-			objectives += maroon_objective
 
 			if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
 				var/datum/objective/escape/escape_with_identity/identity_theft = new
 				identity_theft.owner = owner
-				identity_theft.target = maroon_objective.target
+				identity_theft.find_target()
 				identity_theft.update_explanation_text()
-				objectives += identity_theft
 				escape_objective_possible = FALSE
+				maroon_objective.target = identity_theft.target || maroon_objective.find_target()
+				maroon_objective.update_explanation_text()
+				objectives += maroon_objective
+				objectives += identity_theft
+			else
+				maroon_objective.find_target()
+				objectives += maroon_objective
+
 
 	if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
 		if(prob(50))
@@ -761,8 +763,7 @@
 	user.socks = chosen_profile.socks
 	user.age = chosen_profile.age
 	user.physique = chosen_profile.physique
-	user.grad_style = LAZYLISTDUPLICATE(chosen_profile.grad_style)
-	user.grad_color = LAZYLISTDUPLICATE(chosen_profile.grad_color)
+	user.mind?.set_level(/datum/skill/athletics, chosen_profile.athletics_level, silent = TRUE)
 	user.voice = chosen_profile.voice
 	user.voice_filter = chosen_profile.voice_filter
 
@@ -908,12 +909,10 @@
 	var/age
 	/// The body type of the profile source.
 	var/physique
+	/// The athleticism of the profile source.
+	var/athletics_level
 	/// The quirks of the profile source.
 	var/list/quirks = list()
-	/// The hair and facial hair gradient styles of the profile source.
-	var/list/grad_style = list("None", "None")
-	/// The hair and facial hair gradient colours of the profile source.
-	var/list/grad_color = list(null, null)
 	/// The TTS voice of the profile source
 	var/voice
 	/// The TTS filter of the profile filter
@@ -953,9 +952,8 @@
 	new_profile.id_icon = id_icon
 	new_profile.age = age
 	new_profile.physique = physique
+	new_profile.athletics_level = athletics_level
 	new_profile.quirks = quirks.Copy()
-	new_profile.grad_style = LAZYLISTDUPLICATE(grad_style)
-	new_profile.grad_color = LAZYLISTDUPLICATE(grad_color)
 	new_profile.voice = voice
 	new_profile.voice_filter = voice_filter
 
@@ -1048,9 +1046,6 @@
 
 /datum/outfit/changeling_space
 	name = "Changeling (Space)"
-
-	head = /obj/item/clothing/head/helmet/space/changeling
-	suit = /obj/item/clothing/suit/space/changeling
 	l_hand = /obj/item/melee/arm_blade
 
 #undef FORMAT_CHEM_CHARGES_TEXT

@@ -1,12 +1,12 @@
-/obj/item/reactive_armour_shell
-	name = "reactive armour shell"
-	desc = "An experimental suit of armour, awaiting installation of an anomaly core."
+/obj/item/reactive_armor_shell
+	name = "reactive armor shell"
+	desc = "An experimental suit of armor, awaiting installation of an anomaly core."
 	icon_state = "reactiveoff"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/reactive_armour_shell/attackby(obj/item/weapon, mob/user, params)
-	..()
+/obj/item/reactive_armor_shell/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
 	var/static/list/anomaly_armour_types = list(
 		/obj/effect/anomaly/grav = /obj/item/clothing/suit/armor/reactive/repulse,
 		/obj/effect/anomaly/flux = /obj/item/clothing/suit/armor/reactive/tesla,
@@ -17,15 +17,16 @@
 		/obj/effect/anomaly/ectoplasm = /obj/item/clothing/suit/armor/reactive/ectoplasm,
 		)
 
-	if(istype(weapon, /obj/item/assembly/signaler/anomaly))
-		var/obj/item/assembly/signaler/anomaly/anomaly = weapon
-		var/armour_path = anomaly_armour_types[anomaly.anomaly_type]
+	if(istype(tool, /obj/item/assembly/signaler/anomaly))
+		var/obj/item/assembly/signaler/anomaly/anomaly = tool
+		var/armour_path = is_path_in_list(anomaly.anomaly_type, anomaly_armour_types, TRUE)
 		if(!armour_path)
 			armour_path = /obj/item/clothing/suit/armor/reactive/stealth //Lets not cheat the player if an anomaly type doesnt have its own armour coded
 		to_chat(user, span_notice("You insert [anomaly] into the chest plate, and the armour gently hums to life."))
 		new armour_path(get_turf(src))
 		qdel(src)
 		qdel(anomaly)
+		return ITEM_INTERACT_SUCCESS
 
 //Reactive armor
 /obj/item/clothing/suit/armor/reactive
@@ -226,7 +227,7 @@
 	emp_message = span_warning("The tesla capacitors beep ominously for a moment.")
 	clothing_traits = list(TRAIT_TESLA_SHOCKIMMUNE)
 	/// How strong are the zaps we give off?
-	var/zap_power = 1e7
+	var/zap_power = 2.5e4
 	/// How far to the zaps we give off go?
 	var/zap_range = 20
 	/// What flags do we pass to the zaps we give off?
@@ -240,7 +241,7 @@
 
 /obj/item/clothing/suit/armor/reactive/tesla/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], sending out arcs of lightning!"))
-	tesla_zap(owner, zap_range, zap_power, zap_flags)
+	tesla_zap(source = owner, zap_range = zap_range, power = zap_power, cutoff = 1e3, zap_flags = zap_flags)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 

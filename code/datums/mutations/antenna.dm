@@ -4,14 +4,14 @@
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You feel an antenna sprout from your forehead.</span>"
 	text_lose_indication = "<span class='notice'>Your antenna shrinks back down.</span>"
-	instability = 5
+	instability = POSITIVE_INSTABILITY_MINOR
 	difficulty = 8
 	var/datum/weakref/radio_weakref
 
 /obj/item/implant/radio/antenna
 	name = "internal antenna organ"
 	desc = "The internal organ part of the antenna. Science has not yet given it a good name."
-	icon = 'icons/obj/radio.dmi'//maybe make a unique sprite later. not important
+	icon = 'icons/obj/devices/voice.dmi'//maybe make a unique sprite later. not important
 	icon_state = "walkietalkie"
 
 /obj/item/implant/radio/antenna/Initialize(mapload)
@@ -47,7 +47,7 @@
 	text_gain_indication = "<span class='notice'>You hear distant voices at the corners of your mind.</span>"
 	text_lose_indication = "<span class='notice'>The distant voices fade.</span>"
 	power_path = /datum/action/cooldown/spell/pointed/mindread
-	instability = 40
+	instability = POSITIVE_INSTABILITY_MINOR
 	difficulty = 8
 	locked = TRUE
 

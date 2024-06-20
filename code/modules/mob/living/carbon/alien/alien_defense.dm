@@ -44,56 +44,28 @@ In all, this is a lot like the monkey code. /N
 
 /mob/living/carbon/alien/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
-	if(.) //to allow surgery to return properly.
-		return FALSE
-
-	var/martial_result = user.apply_martial_art(src, modifiers)
-	if (martial_result != MARTIAL_ATTACK_INVALID)
-		return martial_result
-
-	if(user.combat_mode)
-		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-			return TRUE
-		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+	if(.)
 		return TRUE
+
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		user.disarm(src)
+		return TRUE
+	if(user.combat_mode)
+		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	else
 		help_shake_act(user)
+		return TRUE
 
+/mob/living/carbon/alien/get_shove_flags(mob/living/shover, obj/item/weapon)
+	. = ..()
+	if(isnull(weapon) || stat != CONSCIOUS)
+		. &= ~(SHOVE_CAN_MOVE|SHOVE_CAN_HIT_SOMETHING|SHOVE_CAN_STAGGER)
 
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	if(..())
 		if (stat != DEAD)
 			var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(user.zone_selected))
 			apply_damage(rand(1, 3), BRUTE, affecting)
-
-
-/mob/living/carbon/alien/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	. = ..()
-	if(.)
-		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-		switch(user.melee_damage_type)
-			if(BRUTE)
-				adjustBruteLoss(damage)
-			if(BURN)
-				adjustFireLoss(damage)
-			if(TOX)
-				adjustToxLoss(damage)
-			if(OXY)
-				adjustOxyLoss(damage)
-			if(CLONE)
-				adjustCloneLoss(damage)
-			if(STAMINA)
-				adjustStaminaLoss(damage)
-
-/mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
-	if(..()) //successful slime attack
-		var/damage = rand(5, 35)
-		if(M.is_adult)
-			damage = rand(10, 40)
-		adjustBruteLoss(damage)
-		log_combat(M, src, "attacked")
-		updatehealth()
 
 /mob/living/carbon/alien/ex_act(severity, target, origin)
 	. = ..()
@@ -103,7 +75,7 @@ In all, this is a lot like the monkey code. /N
 	var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
-			gib()
+			gib(DROP_ALL_REMAINS)
 
 		if (EXPLODE_HEAVY)
 			take_overall_damage(60, 60)

@@ -5,7 +5,7 @@
 		BB_MOD_IMPLANT,
 	)
 	max_target_distance = MOD_AI_RANGE //a little spicy but its one specific item that summons it, and it doesn't run otherwise
-	ai_movement = /datum/ai_movement/jps
+	ai_movement = /datum/ai_movement/jps/modsuit
 	///ID card generated from the suit's required access. Used for pathing.
 	var/obj/item/card/id/advanced/id_card
 
@@ -28,18 +28,17 @@
 		queue_behavior(/datum/ai_behavior/mod_attach)
 
 /datum/ai_controller/mod/get_access()
-	return id_card
+	return id_card.GetAccess()
 
 /datum/ai_behavior/mod_attach
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT|AI_BEHAVIOR_MOVE_AND_PERFORM
 
 /datum/ai_behavior/mod_attach/perform(seconds_per_tick, datum/ai_controller/controller)
-	. = ..()
 	if(!controller.pawn.Adjacent(controller.blackboard[BB_MOD_TARGET]))
-		return
+		return AI_BEHAVIOR_DELAY
 	var/obj/item/implant/mod/implant = controller.blackboard[BB_MOD_IMPLANT]
 	implant.module.attach(controller.blackboard[BB_MOD_TARGET])
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/mod_attach/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()

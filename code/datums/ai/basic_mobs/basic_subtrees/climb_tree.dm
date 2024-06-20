@@ -1,4 +1,5 @@
 /datum/ai_planning_subtree/climb_trees
+	operational_datums = list(/datum/component/tree_climber)
 	///chance to climb a tree
 	var/climb_chance = 35
 

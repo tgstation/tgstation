@@ -12,15 +12,18 @@
 /mob/living/proc/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	set waitfor = FALSE
 
-	SEND_SIGNAL(src, COMSIG_LIVING_LIFE, seconds_per_tick, times_fired)
+	var/signal_result = SEND_SIGNAL(src, COMSIG_LIVING_LIFE, seconds_per_tick, times_fired)
+
+	if(signal_result & COMPONENT_LIVING_CANCEL_LIFE_PROCESSING) // mmm less work
+		return
 
 	if (client)
 		var/turf/T = get_turf(src)
 		if(!T)
 			move_to_error_room()
-			var/msg = "[ADMIN_LOOKUPFLW(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
-			message_admins(msg)
-			send2tgs_adminless_only("Mob", msg, R_ADMIN)
+			var/msg = " was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
+			message_admins(ADMIN_LOOKUPFLW(src) + msg)
+			send2tgs_adminless_only("Mob", key_name_and_tag(src) + msg, R_ADMIN)
 			src.log_message("was found to have no .loc with an attached client.", LOG_GAME)
 
 		// This is a temporary error tracker to make sure we've caught everything
@@ -50,10 +53,6 @@
 		if (QDELETED(src)) // diseases can qdel the mob via transformations
 			return
 
-		if(stat != DEAD)
-			//Random events (vomiting etc)
-			handle_random_events(seconds_per_tick, times_fired)
-
 		//Handle temperature/pressure differences between body and environment
 		var/datum/gas_mixture/environment = loc.return_air()
 		if(environment)
@@ -62,9 +61,6 @@
 		handle_gravity(seconds_per_tick, times_fired)
 
 	handle_wounds(seconds_per_tick, times_fired)
-
-	if(machine)
-		machine.check_eye(src)
 
 	if(stat != DEAD)
 		return 1
@@ -80,9 +76,6 @@
 	return
 
 /mob/living/proc/handle_wounds(seconds_per_tick, times_fired)
-	return
-
-/mob/living/proc/handle_random_events(seconds_per_tick, times_fired)
 	return
 
 // Base mob environment handler for body temperature
@@ -114,7 +107,7 @@
 	for(var/bile in reagents.reagent_list)
 		var/datum/reagent/consumable/bits = bile
 		if(bits)
-			fullness += bits.get_nutriment_factor() * bits.volume / bits.metabolization_rate
+			fullness += bits.get_nutriment_factor(src) * bits.volume / bits.metabolization_rate
 	return fullness
 
 /**

@@ -452,7 +452,7 @@ SUBSYSTEM_DEF(air)
 			border += item
 
 			net.air.volume += item.volume
-			item.parent = net
+			item.replace_pipenet(item.parent, net)
 
 			if(item.air_temporary)
 				net.air.merge(item.air_temporary)
@@ -898,7 +898,6 @@ GLOBAL_LIST_EMPTY(colored_images)
 			if(!target)
 				return
 			usr.forceMove(target)
-			usr.update_parallax_contents()
 		if("toggle-freeze")
 			can_fire = !can_fire
 			return TRUE

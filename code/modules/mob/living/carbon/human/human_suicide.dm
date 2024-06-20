@@ -85,8 +85,15 @@
 	visible_message(span_danger(suicide_message), span_userdanger(suicide_message), span_hear(get_blind_suicide_message()))
 
 /mob/living/carbon/human/suicide_log(obj/item/suicide_tool)
-	investigate_log("has died from committing suicide[suicide_tool ? " with [suicide_tool]" : ""].", INVESTIGATE_DEATHS)
-	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK)
+	var/suicide_tool_type = suicide_tool?.type
+	var/list/suicide_data = null // log_message() is nullsafe for the data field
+	if(!isnull(suicide_tool))
+		suicide_data = list("suicide tool" = suicide_tool_type)
+		SSblackbox.record_feedback("tally", "suicide_item", 1, suicide_tool_type)
+
+	investigate_log("has died from committing suicide[suicide_tool ? " with [suicide_tool] ([suicide_tool_type])" : ""].", INVESTIGATE_DEATHS)
+	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK, data = suicide_data)
+
 
 #undef HUMAN_BRAIN_DAMAGE_SUICIDE_MESSAGE
 #undef HUMAN_COMBAT_MODE_SUICIDE_MESSAGE

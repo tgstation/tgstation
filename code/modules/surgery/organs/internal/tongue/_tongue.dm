@@ -94,8 +94,10 @@
 /obj/item/organ/internal/tongue/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
-	if(speech_args[SPEECH_LANGUAGE] in languages_native)
-		return FALSE //no changes
+	if(speech_args[SPEECH_LANGUAGE] in languages_native) // Speaking a native language?
+		return FALSE // Don't modify speech
+	if(HAS_TRAIT(source, TRAIT_SIGN_LANG)) // No modifiers for signers - I hate this but I simply cannot get these to combine into one statement
+		return FALSE // Don't modify speech
 	modify_speech(source, speech_args)
 
 /obj/item/organ/internal/tongue/proc/modify_speech(datum/source, list/speech_args)
@@ -118,7 +120,7 @@
 		food_taste_reaction = FOOD_LIKED
 	return food_taste_reaction
 
-/obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
 		return
@@ -133,7 +135,7 @@
 	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 	apply_tongue_effects()
 
-/obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special = FALSE)
+/obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special, movement_flags)
 	. = ..()
 	temp_say_mod = ""
 	UnregisterSignal(tongue_owner, COMSIG_MOB_SAY)
@@ -182,6 +184,7 @@
 	liked_foodtypes = GORE | MEAT | SEAFOOD | NUTS | BUGS
 	disliked_foodtypes = GRAIN | DAIRY | CLOTH | GROSS
 	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.9,aresample=%SAMPLE_RATE%,atempo=1/0.9,aformat=channel_layouts=mono,volume=0.2 [p0]; [out2] asetrate=%SAMPLE_RATE%*1.1,aresample=%SAMPLE_RATE%,atempo=1/1.1,aformat=channel_layouts=mono,volume=0.2[p2]; [p0][0][p2] amix=inputs=3"}
+
 /obj/item/organ/internal/tongue/lizard/modify_speech(datum/source, list/speech_args)
 	var/static/regex/lizard_hiss = new("s+", "g")
 	var/static/regex/lizard_hiSS = new("S+", "g")
@@ -306,7 +309,7 @@
 		return // the statue ended up getting destroyed while in nullspace?
 
 	var/mob/living/carbon/carbon_owner = owner
-	RegisterSignal(carbon_owner, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(carbon_owner, COMSIG_MOVABLE_MOVED)
 
 	to_chat(carbon_owner, span_userdanger("Your existence as a living creature snaps as your statue form crumbles!"))
 	carbon_owner.forceMove(get_turf(statue))
@@ -441,7 +444,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 		var/list/message_word_list = splittext(message, " ")
 		var/list/translated_word_list = list()
 		for(var/word in message_word_list)
-			word = GLOB.english_to_zombie[lowertext(word)]
+			word = GLOB.english_to_zombie[LOWER_TEXT(word)]
 			translated_word_list += word ? word : FALSE
 
 		// all occurrences of characters "eiou" (case-insensitive) are replaced with "r"
@@ -546,7 +549,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	taste_sensitivity = 25 // not as good as an organic tongue
 	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
-/obj/item/organ/internal/tongue/robot/can_speak_language(language)
+/obj/item/organ/internal/tongue/robot/could_speak_language(datum/language/language_path)
 	return TRUE // THE MAGIC OF ELECTRONICS
 
 /obj/item/organ/internal/tongue/robot/modify_speech(datum/source, list/speech_args)
@@ -592,6 +595,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	say_mod = "meows"
 	liked_foodtypes = SEAFOOD | ORANGES | BUGS | GORE
 	disliked_foodtypes = GROSS | CLOTH | RAW
+	organ_traits = list(TRAIT_WOUND_LICKER)
 
 /obj/item/organ/internal/tongue/jelly
 	name = "jelly tongue"

@@ -8,7 +8,7 @@
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
 	species_allowed = list(SPECIES_HUMAN) //no skeleton/lizard hulk
 	health_req = 25
-	instability = 40
+	instability = POSITIVE_INSTABILITY_MAJOR
 	var/scream_delay = 50
 	var/last_scream = 0
 	/// List of traits to add/remove when someone gets this mutation.
@@ -26,29 +26,30 @@
 		return
 	owner.add_traits(mutation_traits, GENETIC_MUTATION)
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
-		part.variable_color = "#00aa00"
+		part.variable_color = COLOR_DARK_LIME
 	owner.update_body_parts()
 	owner.add_mood_event("hulk", /datum/mood_event/hulk)
-	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
+	RegisterSignal(owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(check_swing))
 
 /datum/mutation/human/hulk/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if(!proximity)
-		return
-	if(!source.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
-		return
-	if(target.attack_hulk(owner))
-		if(world.time > (last_scream + scream_delay))
-			last_scream = world.time
-			INVOKE_ASYNC(src, PROC_REF(scream_attack), source)
-		log_combat(source, target, "punched", "hulk powers")
-		source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
-		source.changeNext_move(CLICK_CD_MELEE)
+	if(!source.combat_mode || !proximity || LAZYACCESS(modifiers, RIGHT_CLICK))
+		return NONE
+	if(!source.can_unarmed_attack())
+		return COMPONENT_SKIP_ATTACK
+	if(!target.attack_hulk(owner))
+		return NONE
 
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+	if(world.time > (last_scream + scream_delay))
+		last_scream = world.time
+		INVOKE_ASYNC(src, PROC_REF(scream_attack), source)
+	log_combat(source, target, "punched", "hulk powers")
+	source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
+	source.changeNext_move(CLICK_CD_MELEE)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/mutation/human/hulk/proc/scream_attack(mob/living/carbon/human/source)
 	source.say("WAAAAAAAAAAAAAAGH!", forced="hulk")
@@ -81,6 +82,7 @@
 	if(owner.health < owner.crit_threshold)
 		on_losing(owner)
 		to_chat(owner, span_danger("You suddenly feel very weak."))
+		qdel(src)
 
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -90,7 +92,7 @@
 		part.variable_color = null
 	owner.update_body_parts()
 	owner.clear_mood_event("hulk")
-	UnregisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+	UnregisterSignal(owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 	UnregisterSignal(owner, COMSIG_MOB_CLICKON)
 
@@ -274,5 +276,23 @@
 		TRAIT_PUSHIMMUNE,
 		TRAIT_STUNIMMUNE,
 	) // no chunk
+
+/datum/mutation/human/hulk/superhuman
+	health_req = 0
+	instability = 0
+	/// List of traits to add/remove when someone gets this mutation.
+	mutation_traits = list(
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_HULK,
+		TRAIT_IGNOREDAMAGESLOWDOWN,
+		TRAIT_NOSOFTCRIT,
+		TRAIT_NOHARDCRIT,
+		TRAIT_PUSHIMMUNE,
+		TRAIT_STUNIMMUNE,
+		TRAIT_ANALGESIA,
+	) // fight till your last breath
+
+/datum/mutation/human/hulk/superhuman/on_life(seconds_per_tick, times_fired)
+	return
 
 #undef HULK_TAILTHROW_STEPS

@@ -1,6 +1,7 @@
 import { range } from 'common/collections';
 import { BooleanLike } from 'common/react';
-import { SFC } from 'inferno';
+import { PropsWithChildren } from 'react';
+
 import { useBackend } from '../backend';
 import { Box, Button, FitText, Stack } from '../components';
 import { Window } from '../layouts';
@@ -23,22 +24,25 @@ type PuzzgridData = {
   wrong_group_select_cooldown: BooleanLike;
 };
 
-const PuzzgridButton: SFC<{
-  // In the future, this would be the TypeScript props of the button
-  [key: string]: unknown;
-}> = (props) => {
+const PuzzgridButton = (
+  props: {
+    // In the future, this would be the TypeScript props of the button
+    [key: string]: unknown;
+  } & PropsWithChildren,
+) => {
   return (
     <Button
       verticalAlignContent="middle"
       style={{
-        'width': '100%',
-        'height': '100%',
+        width: '100%',
+        height: '100%',
 
-        'text-align': 'center',
-        'vertical-align': 'middle',
-        'white-space': 'normal',
+        textAlign: 'center',
+        verticalAlign: 'middle',
+        whiteSpace: 'normal',
       }}
-      {...props}>
+      {...props}
+    >
       <FitText maxFontSize={17} maxWidth={CELL_WIDTH}>
         {props.children}
       </FitText>
@@ -46,19 +50,20 @@ const PuzzgridButton: SFC<{
   );
 };
 
-export const Puzzgrid = (props, context) => {
-  const { act, data } = useBackend<PuzzgridData>(context);
+export const Puzzgrid = (props) => {
+  const { act, data } = useBackend<PuzzgridData>();
 
   const answersLeft = data.answers.filter(
     (answer) =>
-      !data.solved_groups.find((group) => group.answers.indexOf(answer) !== -1)
+      !data.solved_groups.find((group) => group.answers.indexOf(answer) !== -1),
   );
 
   return (
     <Window
       title={data.host}
       width={CELL_WIDTH * CELLS_PER_GROUP}
-      height={CELL_HEIGHT * CELLS_PER_GROUP}>
+      height={CELL_HEIGHT * CELLS_PER_GROUP}
+    >
       <Window.Content>
         <Stack vertical fill>
           {data.solved_groups.map((group, groupIndex) => (
@@ -91,7 +96,8 @@ export const Puzzgrid = (props, context) => {
                           act(selected ? 'unselect' : 'select', {
                             answer,
                           })
-                        }>
+                        }
+                      >
                         {answer}
                       </PuzzgridButton>
                     </Stack.Item>
@@ -106,12 +112,13 @@ export const Puzzgrid = (props, context) => {
           <Box
             color="red"
             style={{
-              'text-shadow': '1px 1px 1px #222',
-              'font-size': '30px',
+              textShadow: '1px 1px 1px #222',
+              fontSize: '30px',
               position: 'absolute',
-              top: 0,
+              top: '0',
               left: '10px',
-            }}>
+            }}
+          >
             {range(0, data.lives).map((live) => (
               <span key={live}>♥</span>
             ))}
@@ -121,14 +128,15 @@ export const Puzzgrid = (props, context) => {
         {data.time_left && (
           <Box
             style={{
-              'text-shadow': '1px 1px 1px #222',
-              'text-align': 'right',
-              'font-size': '15px',
-              'pointer-events': 'none',
+              textShadow: '1px 1px 1px #222',
+              textAlign: 'right',
+              fontSize: '15px',
+              pointerEvents: 'none',
               position: 'absolute',
-              top: 0,
+              top: '0',
               right: '10px',
-            }}>
+            }}
+          >
             {Math.ceil(data.time_left)}s
           </Box>
         )}

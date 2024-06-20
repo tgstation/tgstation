@@ -74,7 +74,7 @@
 /turf/open/floor/oldshuttle,
 /area/ruin/space/has_grav/powered)
 "t" = (
-/obj/machinery/power/generator,
+/obj/machinery/power/thermoelectric_generator,
 /turf/open/floor/oldshuttle,
 /area/ruin/space/has_grav/powered)
 "u" = (

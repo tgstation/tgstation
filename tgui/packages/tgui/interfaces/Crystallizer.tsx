@@ -1,10 +1,17 @@
-import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from '../components';
-
-import { BooleanLike } from 'common/react';
-import { Window } from '../layouts';
-import { getGasColor } from '../constants';
 import { toFixed } from 'common/math';
+import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NumberInput,
+  ProgressBar,
+  Section,
+} from '../components';
+import { getGasColor } from '../constants';
+import { Window } from '../layouts';
 
 type Data = {
   on: BooleanLike;
@@ -30,7 +37,7 @@ type Gas = {
 
 const logScale = (value) => Math.log2(16 + Math.max(0, value)) - 4;
 
-export const Crystallizer = (props, context) => {
+export const Crystallizer = (props) => {
   return (
     <Window width={500} height={600}>
       <Window.Content scrollable>
@@ -42,8 +49,8 @@ export const Crystallizer = (props, context) => {
   );
 };
 
-const Controls = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const Controls = (props) => {
+  const { act, data } = useBackend<Data>();
   const { gas_input, on, selected, selected_recipes = [] } = data;
 
   return (
@@ -74,12 +81,13 @@ const Controls = (props, context) => {
         <LabeledList.Item label="Gas Input">
           <NumberInput
             animated
+            step={0.1}
             value={gas_input}
             width="63px"
             unit="moles/s"
             minValue={0}
             maxValue={250}
-            onDrag={(e, value) =>
+            onDrag={(value) =>
               act('gas_input', {
                 gas_input: value,
               })
@@ -91,8 +99,8 @@ const Controls = (props, context) => {
   );
 };
 
-const Requirements = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const Requirements = (props) => {
+  const { act, data } = useBackend<Data>();
   const { requirements, internal_temperature, progress_bar } = data;
 
   return (
@@ -123,7 +131,8 @@ const Requirements = (props, context) => {
               good: [logScale(80), logScale(600)],
               average: [logScale(600), logScale(5000)],
               bad: [logScale(5000), Infinity],
-            }}>
+            }}
+          >
             {toFixed(internal_temperature) + ' K'}
           </ProgressBar>
         </LabeledList.Item>
@@ -132,8 +141,8 @@ const Requirements = (props, context) => {
   );
 };
 
-const Gases = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const Gases = (props) => {
+  const { data } = useBackend<Data>();
   const { internal_gas_data = [] } = data;
 
   return (
@@ -145,7 +154,8 @@ const Gases = (props, context) => {
               color={getGasColor(id)}
               value={amount}
               minValue={0}
-              maxValue={1000}>
+              maxValue={1000}
+            >
               {toFixed(amount, 2) + ' moles'}
             </ProgressBar>
           </LabeledList.Item>

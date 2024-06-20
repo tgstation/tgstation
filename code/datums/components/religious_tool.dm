@@ -4,7 +4,7 @@
  *
  */
 /datum/component/religious_tool
-	dupe_mode = COMPONENT_DUPE_UNIQUE
+	dupe_mode = COMPONENT_DUPE_HIGHLANDER
 	/// Enables access to the global sect directly
 	var/datum/religion_sect/easy_access_sect
 	/// Prevents double selecting sects
@@ -14,23 +14,36 @@
 	/// The rite currently being invoked
 	var/datum/religion_rites/performing_rite
 	///Sets the type for catalyst
-	var/catalyst_type = /obj/item/book/bible
+	var/obj/item/catalyst_type = /obj/item/book/bible
 	///Enables overide of COMPONENT_NO_AFTERATTACK, not recommended as it means you can potentially cause damage to the item using the catalyst.
 	var/force_catalyst_afterattack = FALSE
+	///Callback provided to the tool for after a sect is chosen
 	var/datum/callback/after_sect_select_cb
+	///Optional argument. If a positive value, each invocation will lower charges, and the component will delete without any more charges
+	var/charges
+	///If a typecache is provided, only types of rites in the cache can be invoked.
+	var/list/rite_types_allowlist
 
-/datum/component/religious_tool/Initialize(_flags = ALL, _force_catalyst_afterattack = FALSE, _after_sect_select_cb, override_catalyst_type)
+/datum/component/religious_tool/Initialize(
+		operation_flags = ALL,
+		force_catalyst_afterattack = FALSE,
+		after_sect_select_cb = null,
+		catalyst_type = /obj/item/book/bible,
+		charges = -1,
+		rite_types_allowlist = null,
+	)
 	. = ..()
 	SetGlobalToLocal() //attempt to connect on start in case one already exists!
-	operation_flags = _flags
-	force_catalyst_afterattack = _force_catalyst_afterattack
-	after_sect_select_cb = _after_sect_select_cb
-	if(override_catalyst_type)
-		catalyst_type = override_catalyst_type
+	src.operation_flags = operation_flags
+	src.force_catalyst_afterattack = force_catalyst_afterattack
+	src.after_sect_select_cb = after_sect_select_cb
+	src.catalyst_type = catalyst_type
+	src.charges = charges
+	src.rite_types_allowlist = rite_types_allowlist
 	RegisterSignal(SSdcs, COMSIG_RELIGIOUS_SECT_CHANGED, PROC_REF(SetGlobalToLocal))
 	RegisterSignal(SSdcs, COMSIG_RELIGIOUS_SECT_RESET, PROC_REF(on_sect_reset))
 
-/datum/component/religious_tool/Destroy(force, silent)
+/datum/component/religious_tool/Destroy(force)
 	easy_access_sect = null
 	performing_rite = null
 	catalyst_type = null
@@ -150,6 +163,9 @@
 		else
 			to_chat(user, "<span class='warning'>You are not holy, and therefore cannot perform rites.")
 		return
+	if(rite_types_allowlist && !is_path_in_list(path, rite_types_allowlist))
+		to_chat(user, span_warning("This cannot perform that kind of rite."))
+		return
 	if(performing_rite)
 		to_chat(user, "<span class='notice'>There is a rite currently being performed here already.")
 		return
@@ -159,13 +175,17 @@
 	performing_rite = new path(parent)
 	if(!performing_rite.perform_rite(user, parent))
 		QDEL_NULL(performing_rite)
+		return
+	performing_rite.invoke_effect(user, parent)
+	easy_access_sect.adjust_favor(-performing_rite.favor_cost)
+	if(performing_rite.auto_delete)
+		QDEL_NULL(performing_rite)
 	else
-		performing_rite.invoke_effect(user, parent)
-		easy_access_sect.adjust_favor(-performing_rite.favor_cost)
-		if(performing_rite.auto_delete)
-			QDEL_NULL(performing_rite)
-		else
-			performing_rite = null
+		performing_rite = null
+	if(charges)
+		charges--
+		if(!charges)
+			qdel(src)
 
 /**
  * Generates a list of available sects to the user. Intended to support custom-availability sects.
@@ -231,7 +251,7 @@
 
 	if(!can_i_see)
 		return
-	examine_list += span_notice("Use a bible to interact with this.")
+	examine_list += span_notice("Use a [catalyst_type::name] to interact with this.")
 	if(isnull(easy_access_sect))
 		if(operation_flags & RELIGION_TOOL_SECTSELECT)
 			examine_list += span_notice("This looks like it can be used to select a sect.")

@@ -44,7 +44,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(on_attack))
+	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_successful_attack))
 	RegisterSignal(parent, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /datum/component/jousting/UnregisterFromParent()
@@ -53,7 +53,7 @@
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_ITEM_EQUIPPED,
 		COMSIG_ITEM_DROPPED,
-		COMSIG_ITEM_ATTACK,
+		COMSIG_ITEM_AFTERATTACK,
 		COMSIG_TRANSFORMING_ON_TRANSFORM,
 	))
 
@@ -94,7 +94,7 @@
  * We deduct the minimum tile charge from the current tile charge to get what will actually be buffed
  * So your charge will only get benefits from each extra tile after the minimum (and before the maximum).
  */
-/datum/component/jousting/proc/on_attack(datum/source, mob/living/target, mob/user)
+/datum/component/jousting/proc/on_successful_attack(datum/source, mob/living/target, mob/user)
 	SIGNAL_HANDLER
 	if(user != current_holder || !user.buckled)
 		return

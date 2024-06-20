@@ -16,6 +16,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	preserved_food = TRUE
 
+/obj/item/food/canned/make_germ_sensitive(mapload)
+	return // It's in a can
+
 /obj/item/food/canned/proc/open_can(mob/user)
 	to_chat(user, span_notice("You pull back the tab of \the [src]."))
 	playsound(user.loc, 'sound/items/foodcanopen.ogg', 50)
@@ -114,15 +117,13 @@
 		return ..()
 	apply_buff(user)
 
-/obj/item/food/canned/envirochow/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(!proximity_flag)
-		return
-	if(!check_buffability(target))
-		return
-	apply_buff(target, user)
+/obj/item/food/canned/envirochow/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!check_buffability(interacting_with))
+		return NONE
+	apply_buff(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
-///This proc checks if the mob is able to recieve the buff.
+///This proc checks if the mob is able to receive the buff.
 /obj/item/food/canned/envirochow/proc/check_buffability(mob/living/hungry_pet)
 	if(!isanimal_or_basicmob(hungry_pet)) // Not a pet
 		return FALSE
@@ -209,11 +210,14 @@
 	/// What type of ready-donk are we warmed into?
 	var/warm_type = /obj/item/food/ready_donk/warm
 
+	/// What reagents should be added when this item is warmed?
+	var/static/list/added_reagents = list(/datum/reagent/medicine/omnizine = 3)
+
 /obj/item/food/ready_donk/make_bakeable()
-	AddComponent(/datum/component/bakeable, warm_type, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/bakeable, warm_type, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE, added_reagents)
 
 /obj/item/food/ready_donk/make_microwaveable()
-	AddElement(/datum/element/microwavable, warm_type)
+	AddElement(/datum/element/microwavable, warm_type, added_reagents)
 
 /obj/item/food/ready_donk/examine_more(mob/user)
 	. = ..()

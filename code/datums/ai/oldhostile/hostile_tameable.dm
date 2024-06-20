@@ -62,7 +62,7 @@
 	if(!istype(simple_pawn))
 		return
 
-	return simple_pawn.access_card
+	return simple_pawn.access_card.GetAccess()
 
 /datum/ai_controller/hostile_friend/proc/on_ridden_driver_move(atom/movable/movable_parent, mob/living/user, direction)
 	SIGNAL_HANDLER
@@ -108,7 +108,7 @@
 		return
 	if(!istype(clicker) || blackboard[BB_HOSTILE_FRIEND] != clicker)
 		return
-	. = COMPONENT_CANCEL_CLICK_ALT
+	. = CLICK_ACTION_BLOCKING
 	INVOKE_ASYNC(src, PROC_REF(command_radial), clicker)
 
 /// Show the command radial menu

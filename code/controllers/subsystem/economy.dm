@@ -28,6 +28,8 @@ SUBSYSTEM_DEF(economy)
 	  * A list of sole account datums can be obtained with flatten_list(), another variable would be redundant rn.
 	  */
 	var/list/bank_accounts_by_id = list()
+	/// A list of bank accounts indexed by their assigned job typepath.
+	var/list/bank_accounts_by_job = list()
 	///List of the departmental budget cards in existance.
 	var/list/dep_cards = list()
 	/// A var that collects the total amount of credits owned in player accounts on station, reset and recounted on fire()
@@ -52,10 +54,6 @@ SUBSYSTEM_DEF(economy)
 	 */
 	var/list/audit_log = list()
 
-	/// Total value of exported materials.
-	var/export_total = 0
-	/// Total value of imported goods.
-	var/import_total = 0
 	/// Number of mail items generated.
 	var/mail_waiting = 0
 	/// Mail Holiday: AKA does mail arrive today? Always blocked on Sundays.

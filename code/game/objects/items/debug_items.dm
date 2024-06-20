@@ -12,22 +12,26 @@
 	var/datum/species/selected_species
 	var/valid_species = list()
 
-/obj/item/debug/human_spawner/afterattack(atom/target, mob/user, proximity)
-	..()
-	if(isturf(target))
-		var/mob/living/carbon/human/H = new /mob/living/carbon/human(target)
+/obj/item/debug/human_spawner/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/debug/human_spawner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isturf(interacting_with))
+		var/mob/living/carbon/human/H = new /mob/living/carbon/human(interacting_with)
 		if(selected_species)
 			H.set_species(selected_species)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/debug/human_spawner/attack_self(mob/user)
 	..()
-	var/choice = input("Select a species", "Human Spawner", null) in GLOB.species_list
+	var/choice = input("Select a species", "Human Spawner", null) in sortTim(GLOB.species_list, GLOBAL_PROC_REF(cmp_text_asc))
 	selected_species = GLOB.species_list[choice]
 
 /obj/item/debug/omnitool
 	name = "omnitool"
 	desc = "The original hypertool, born before them all. Use it in hand to unleash its true power."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/weapons/club.dmi'
 	icon_state = "hypertool"
 	inhand_icon_state = "hypertool"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -74,12 +78,12 @@
 		return
 	var/list/tool_list = list(
 		"Crowbar" = image(icon = 'icons/obj/tools.dmi', icon_state = "crowbar"),
-		"Multitool" = image(icon = 'icons/obj/device.dmi', icon_state = "multitool"),
+		"Multitool" = image(icon = 'icons/obj/devices/tool.dmi', icon_state = "multitool"),
 		"Screwdriver" = image(icon = 'icons/obj/tools.dmi', icon_state = "screwdriver_map"),
 		"Wirecutters" = image(icon = 'icons/obj/tools.dmi', icon_state = "cutters_map"),
 		"Wrench" = image(icon = 'icons/obj/tools.dmi', icon_state = "wrench"),
 		"Welding Tool" = image(icon = 'icons/obj/tools.dmi', icon_state = "miniwelder"),
-		"Analyzer" = image(icon = 'icons/obj/device.dmi', icon_state = "analyzer"),
+		"Analyzer" = image(icon = 'icons/obj/devices/scanner.dmi', icon_state = "analyzer"),
 		"Pickaxe" = image(icon = 'icons/obj/mining.dmi', icon_state = "minipick"),
 		"Shovel" = image(icon = 'icons/obj/mining.dmi', icon_state = "shovel"),
 		"Retractor" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "retractor"),
@@ -163,9 +167,8 @@
 			playsound(src, 'sound/voice/borg_deathsound.ogg')
 			sleep(3 SECONDS)
 			living_user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-			living_user.gib()
+			living_user.gib(DROP_ALL_REMAINS)
 			return
 	var/turf/loc_turf = get_turf(src)
 	for(var/spawn_atom in (choice == "No" ? typesof(path) : subtypesof(path)))
 		new spawn_atom(loc_turf)
-

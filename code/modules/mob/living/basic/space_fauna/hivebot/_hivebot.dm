@@ -29,7 +29,7 @@
 	speech_span = SPAN_ROBOT
 	death_message = "blows apart!"
 
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	minimum_survivable_temperature = TCMB
 	ai_controller = /datum/ai_controller/basic_controller/hivebot
 	///does this type do range attacks?
@@ -95,8 +95,7 @@
 
 /mob/living/basic/hivebot/mechanic/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/spell/conjure/foam_wall/foam = new(src)
-	foam.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/spell/conjure/foam_wall)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 
 /mob/living/basic/hivebot/mechanic/proc/pre_attack(mob/living/fixer, atom/target)

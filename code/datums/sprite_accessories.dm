@@ -1,49 +1,20 @@
 /*
-
-	Hello and welcome to sprite_accessories: For sprite accessories, such as hair,
-	facial hair, and possibly tattoos and stuff somewhere along the line. This file is
-	intended to be friendly for people with little to no actual coding experience.
-	The process of adding in new hairstyles has been made pain-free and easy to do.
-	Enjoy! - Doohl
-
-
-	Notice: This all gets automatically compiled in a list in dna.dm, so you do not
-	have to define any UI values for sprite accessories manually for hair and facial
-	hair. Just add in new hair types and the game will naturally adapt.
-
-	!!WARNING!!: changing existing hair information can be VERY hazardous to savefiles,
-	to the point where you may completely corrupt a server's savefiles. Please refrain
-	from doing this unless you absolutely know what you are doing, and have defined a
-	conversion in savefile.dm
-*/
-/proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female, add_blank)//Roundstart argument builds a specific list for roundstart parts where some parts may be locked
-	if(!istype(L))
-		L = list()
-	if(!istype(male))
-		male = list()
-	if(!istype(female))
-		female = list()
-
-	for(var/path in subtypesof(prototype))
-		var/datum/sprite_accessory/D = new path()
-
-		if(D.icon_state)
-			L[D.name] = D
-		else
-			L += D.name
-
-		switch(D.gender)
-			if(MALE)
-				male += D.name
-			if(FEMALE)
-				female += D.name
-			else
-				male += D.name
-				female += D.name
-	if(add_blank)
-		L[SPRITE_ACCESSORY_NONE] = new /datum/sprite_accessory/blank
-
-	return L
+ *	Hello and welcome to sprite_accessories: For sprite accessories, such as hair,
+ *	facial hair, and possibly tattoos and stuff somewhere along the line. This file is
+ *	intended to be friendly for people with little to no actual coding experience.
+ *	The process of adding in new hairstyles has been made pain-free and easy to do.
+ *	Enjoy! - Doohl
+ *
+ *
+ *	Notice: This all gets automatically compiled in a list in dna.dm, so you do not
+ *	have to define any UI values for sprite accessories manually for hair and facial
+ *	hair. Just add in new hair types and the game will naturally adapt.
+ *
+ *	!!WARNING!!: changing existing hair information can be VERY hazardous to savefiles,
+ *	to the point where you may completely corrupt a server's savefiles. Please refrain
+ *	from doing this unless you absolutely know what you are doing, and have defined a
+ *	conversion in savefile.dm
+ */
 
 /datum/sprite_accessory
 	/// The icon file the accessory is located in.
@@ -85,6 +56,7 @@
 //////////////////////
 /datum/sprite_accessory/hair
 	icon = 'icons/mob/human/human_face.dmi'   // default icon for all hairs
+	var/y_offset = 0 // Y offset to apply so we can have hair that reaches above the player sprite's visual bounding box
 
 	// please make sure they're sorted alphabetically and, where needed, categorized
 	// try to capitalize the names please~
@@ -102,6 +74,11 @@
 /datum/sprite_accessory/hair/afro_large
 	name = "Afro (Large)"
 	icon_state = "hair_bigafro"
+
+/datum/sprite_accessory/hair/afro_huge
+	name = "Afro (Huge)"
+	icon_state = "hair_hugeafro"
+	y_offset = 6
 
 /datum/sprite_accessory/hair/allthefuzz
 	name = "All The Fuzz"
@@ -1723,33 +1700,36 @@
 // MutantParts Definitions //
 /////////////////////////////
 
-/datum/sprite_accessory/body_markings
-	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
+/datum/sprite_accessory/lizard_markings
+	icon = 'icons/mob/human/species/lizard/lizard_markings.dmi'
 
-/datum/sprite_accessory/body_markings/none
+/datum/sprite_accessory/lizard_markings/none
 	name = "None"
 	icon_state = "none"
 
-/datum/sprite_accessory/body_markings/dtiger
+/datum/sprite_accessory/lizard_markings/dtiger
 	name = "Dark Tiger Body"
 	icon_state = "dtiger"
-	gender_specific = 1
+	gender_specific = TRUE
 
-/datum/sprite_accessory/body_markings/ltiger
+/datum/sprite_accessory/lizard_markings/ltiger
 	name = "Light Tiger Body"
 	icon_state = "ltiger"
-	gender_specific = 1
+	gender_specific = TRUE
 
-/datum/sprite_accessory/body_markings/lbelly
+/datum/sprite_accessory/lizard_markings/lbelly
 	name = "Light Belly"
 	icon_state = "lbelly"
-	gender_specific = 1
+	gender_specific = TRUE
 
 /datum/sprite_accessory/tails
 	em_block = TRUE
+	/// Describes which tail spine sprites to use, if any.
+	var/spine_key = NONE
 
 /datum/sprite_accessory/tails/lizard
 	icon = 'icons/mob/human/species/lizard/lizard_tails.dmi'
+	spine_key = SPINE_KEY_LIZARD
 
 /datum/sprite_accessory/tails/lizard/smooth
 	name = "Smooth"
@@ -1767,19 +1747,22 @@
 	name = "Spikes"
 	icon_state = "spikes"
 
+/datum/sprite_accessory/tails/lizard/short
+	name = "Short"
+	icon_state = "short"
+	spine_key = NONE
+
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
 	icon = 'icons/mob/human/cat_features.dmi'
 	icon_state = "default"
 	color_src = HAIR_COLOR
 
-/datum/sprite_accessory/tails/monkey
-	icon = 'icons/mob/human/species/monkey/monkey_tail.dmi'
-	color_src = FALSE
-
-/datum/sprite_accessory/tails/monkey/standard
+/datum/sprite_accessory/tails/monkey/default
 	name = "Monkey"
-	icon_state = "monkey"
+	icon = 'icons/mob/human/species/monkey/monkey_tail.dmi'
+	icon_state = "default"
+	color_src = FALSE
 
 /datum/sprite_accessory/pod_hair
 	icon = 'icons/mob/human/species/podperson_hair.dmi'
@@ -1886,6 +1869,26 @@
 	icon_state = "cat"
 	hasinner = TRUE
 	color_src = HAIR_COLOR
+
+/datum/sprite_accessory/ears/cat/big
+	name = "Big"
+	icon_state = "big"
+
+/datum/sprite_accessory/ears/cat/miqo
+	name = "Coeurl"
+	icon_state = "miqo"
+
+/datum/sprite_accessory/ears/cat/fold
+	name = "Fold"
+	icon_state = "fold"
+
+/datum/sprite_accessory/ears/cat/lynx
+	name = "Lynx"
+	icon_state = "lynx"
+
+/datum/sprite_accessory/ears/cat/round
+	name = "Round"
+	icon_state = "round"
 
 /datum/sprite_accessory/ears/fox
 	icon = 'icons/mob/human/fox_features.dmi'
@@ -2024,6 +2027,21 @@
 	center = TRUE
 	dimension_y = 32
 
+/datum/sprite_accessory/wings/slime
+	name = "Slime"
+	icon_state = "slime"
+	dimension_x = 96
+	center = TRUE
+	dimension_y = 32
+	locked = TRUE
+
+/datum/sprite_accessory/wings_open/slime
+	name = "Slime"
+	icon_state = "slime"
+	dimension_x = 96
+	center = TRUE
+	dimension_y = 32
+
 /datum/sprite_accessory/frills
 	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
 
@@ -2047,7 +2065,7 @@
 	icon = 'icons/mob/human/species/lizard/lizard_spines.dmi'
 	em_block = TRUE
 
-/datum/sprite_accessory/spines_animated
+/datum/sprite_accessory/tail_spines
 	icon = 'icons/mob/human/species/lizard/lizard_spines.dmi'
 	em_block = TRUE
 
@@ -2055,7 +2073,7 @@
 	name = "None"
 	icon_state = "none"
 
-/datum/sprite_accessory/spines_animated/none
+/datum/sprite_accessory/tail_spines/none
 	name = "None"
 	icon_state = "none"
 
@@ -2063,7 +2081,7 @@
 	name = "Short"
 	icon_state = "short"
 
-/datum/sprite_accessory/spines_animated/short
+/datum/sprite_accessory/tail_spines/short
 	name = "Short"
 	icon_state = "short"
 
@@ -2071,7 +2089,7 @@
 	name = "Short + Membrane"
 	icon_state = "shortmeme"
 
-/datum/sprite_accessory/spines_animated/shortmeme
+/datum/sprite_accessory/tail_spines/shortmeme
 	name = "Short + Membrane"
 	icon_state = "shortmeme"
 
@@ -2079,7 +2097,7 @@
 	name = "Long"
 	icon_state = "long"
 
-/datum/sprite_accessory/spines_animated/long
+/datum/sprite_accessory/tail_spines/long
 	name = "Long"
 	icon_state = "long"
 
@@ -2087,15 +2105,15 @@
 	name = "Long + Membrane"
 	icon_state = "longmeme"
 
-/datum/sprite_accessory/spines_animated/longmeme
+/datum/sprite_accessory/tail_spines/longmeme
 	name = "Long + Membrane"
 	icon_state = "longmeme"
 
-/datum/sprite_accessory/spines/aqautic
+/datum/sprite_accessory/spines/aquatic
 	name = "Aquatic"
 	icon_state = "aqua"
 
-/datum/sprite_accessory/spines_animated/aqautic
+/datum/sprite_accessory/tail_spines/aquatic
 	name = "Aquatic"
 	icon_state = "aqua"
 
@@ -2220,6 +2238,10 @@
 	name = "Moffra"
 	icon_state = "moffra"
 
+/datum/sprite_accessory/moth_wings/lightbearer
+	name = "Lightbearer"
+	icon_state = "lightbearer"
+
 /datum/sprite_accessory/moth_antennae //Finally splitting the sprite
 	icon = 'icons/mob/human/species/moth/moth_antennae.dmi'
 	color_src = null
@@ -2307,6 +2329,10 @@
 	name = "Moffra"
 	icon_state = "moffra"
 
+/datum/sprite_accessory/moth_antennae/lightbearer
+	name = "Lightbearer"
+	icon_state = "lightbearer"
+
 /datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
 	icon = 'icons/mob/human/species/moth/moth_markings.dmi'
 	color_src = null
@@ -2370,3 +2396,7 @@
 /datum/sprite_accessory/moth_markings/witchwing
 	name = "Witch Wing"
 	icon_state = "witchwing"
+
+/datum/sprite_accessory/moth_markings/lightbearer
+	name = "Lightbearer"
+	icon_state = "lightbearer"

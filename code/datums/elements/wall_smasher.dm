@@ -17,7 +17,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	src.strength_flag = strength_flag
-	RegisterSignals(target, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK), PROC_REF(on_unarm_attack)) // Players
+	RegisterSignal(target, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarm_attack)) // Players
 	RegisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_pre_attackingtarget)) // AI
 
 	if (isanimal_or_basicmob(target))
@@ -25,7 +25,7 @@
 		animal_target.environment_smash = strength_flag
 
 /datum/element/wall_smasher/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
+	UnregisterSignal(target, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
 	if (isanimal_or_basicmob(target))
 		var/mob/living/simple_animal/animal_target = target
 		animal_target.environment_smash = initial(animal_target.environment_smash)
@@ -34,19 +34,19 @@
 
 /datum/element/wall_smasher/proc/on_unarm_attack(mob/living/puncher, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
-	try_smashing(puncher, target)
+	return try_smashing(puncher, target)
 
 /datum/element/wall_smasher/proc/on_pre_attackingtarget(mob/living/puncher, atom/target)
 	SIGNAL_HANDLER
-	try_smashing(puncher, target)
+	return try_smashing(puncher, target)
 
 /datum/element/wall_smasher/proc/try_smashing(mob/living/puncher, atom/target)
 	if (!isturf(target))
-		return
+		return NONE
 	if (isfloorturf(target))
-		return
+		return NONE
 	if (isindestructiblewall(target))
-		return
+		return NONE
 
 	puncher.changeNext_move(CLICK_CD_MELEE)
 	puncher.do_attack_animation(target)

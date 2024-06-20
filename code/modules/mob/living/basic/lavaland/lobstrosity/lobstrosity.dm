@@ -20,7 +20,7 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE // Closer than a scratch to a crustacean pinching effect
 	melee_attack_cooldown = 1 SECONDS
 	butcher_results = list(
-		/obj/item/food/meat/crab = 2,
+		/obj/item/food/meat/slab/rawcrab = 2,
 		/obj/item/stack/sheet/bone = 2,
 		/obj/item/organ/internal/monster_core/rush_gland = 1,
 	)
@@ -29,22 +29,28 @@
 	/// Charging ability
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/charge
 	/// Things we will eat if we see them (arms, chiefly)
-	var/static/list/target_foods = list(/obj/item/bodypart/arm)
+	var/static/list/target_foods = list(/obj/item/bodypart/arm, /obj/item/fish/lavaloop)
 
 /mob/living/basic/mining/lobstrosity/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
+	var/static/list/food_types = list(/obj/item/fish/lavaloop)
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
+	var/static/list/fishing_preset = list(
+		/turf/open/lava = /datum/fish_source/lavaland,
+		/turf/open/lava/plasma = /datum/fish_source/lavaland/icemoon,
+	)
+	AddComponent(/datum/component/profound_fisher, npc_fishing_preset = fishing_preset)
 	AddElement(/datum/element/mob_grabber)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/basic_eating, food_types = target_foods)
 	AddElement(\
 		/datum/element/amputating_limbs,\
-		surgery_verb = "snipping",\
+		surgery_verb = "begins snipping",\
 		target_zones = GLOB.arm_zones,\
 	)
 	charge = new(src)
 	charge.Grant(src)
-	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, charge)
+	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, charge)
 
 /mob/living/basic/mining/lobstrosity/Destroy()
 	QDEL_NULL(charge)
@@ -69,12 +75,12 @@
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/hit_target(atom/movable/source, atom/target, damage_dealt)
 	. = ..()
-	if(!isliving(target) || !isbasicmob(source))
+	if(!isbasicmob(source) || !isliving(target))
 		return
 	var/mob/living/basic/basic_source = source
 	var/mob/living/living_target = target
 	basic_source.melee_attack(living_target, ignore_cooldown = TRUE)
-	basic_source.ai_controller?.set_blackboard_key(BB_BASIC_MOB_FLEEING, FALSE)
+	basic_source.ai_controller?.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, TRUE)
 	basic_source.start_pulling(living_target)
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/do_charge(atom/movable/charger, atom/target_atom, delay, past)

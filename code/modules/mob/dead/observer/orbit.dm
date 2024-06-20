@@ -36,12 +36,25 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			var/mob/dead/observer/user = usr
 			user.ManualFollow(poi)
 			user.reset_perspective(null)
+			user.orbiting_ref = ref
 			if (auto_observe)
 				user.do_observe(poi)
 			return TRUE
 		if ("refresh")
-			update_static_data(usr, ui)
+			ui.send_full_update()
 			return TRUE
+
+	return FALSE
+
+
+/datum/orbit_menu/ui_data(mob/user)
+	var/list/data = list()
+
+	if(isobserver(user))
+		data["orbiting"] = get_currently_orbiting(user)
+
+	return data
+
 
 /datum/orbit_menu/ui_static_data(mob/user)
 	var/list/new_mob_pois = SSpoints_of_interest.get_mob_pois(CALLBACK(src, PROC_REF(validate_mob_poi)), append_dead_role = FALSE)
@@ -49,6 +62,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 	var/list/alive = list()
 	var/list/antagonists = list()
+	var/list/critical = list()
 	var/list/deadchat_controlled = list()
 	var/list/dead = list()
 	var/list/ghosts = list()
@@ -57,14 +71,10 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 	for(var/name in new_mob_pois)
 		var/list/serialized = list()
-
 		var/mob/mob_poi = new_mob_pois[name]
-
-		var/poi_ref = REF(mob_poi)
-
 		var/number_of_orbiters = length(mob_poi.get_all_orbiters())
 
-		serialized["ref"] = poi_ref
+		serialized["ref"] = REF(mob_poi)
 		serialized["full_name"] = name
 		if(number_of_orbiters)
 			serialized["orbiters"] = number_of_orbiters
@@ -81,33 +91,26 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			continue
 
 		if(isnull(mob_poi.mind))
+			if(isliving(mob_poi))
+				var/mob/living/npc = mob_poi
+				serialized["health"] = FLOOR((npc.health / npc.maxHealth * 100), 1)
+
 			npcs += list(serialized)
 			continue
 
-		var/datum/mind/mind = mob_poi.mind
-		var/was_antagonist = FALSE
-
+		serialized["client"] = !!mob_poi.client
 		serialized["name"] = mob_poi.real_name
 
-		if(isliving(mob_poi)) // handles edge cases like blob
-			var/mob/living/player = mob_poi
-			serialized["health"] = FLOOR((player.health / player.maxHealth * 100), 1)
-			if(issilicon(player))
-				serialized["job"] = player.job
-			else
-				var/obj/item/card/id/id_card = player.get_idcard(hand_first = FALSE)
-				serialized["job"] = id_card?.get_trim_assignment()
+		if(isliving(mob_poi))
+			serialized += get_living_data(mob_poi)
 
-		for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
-			if (antag_datum.show_to_ghosts)
-				was_antagonist = TRUE
-				serialized["antag"] = antag_datum.name
-				serialized["antag_group"] = antag_datum.antagpanel_category
-				antagonists += list(serialized)
-				break
+		var/list/antag_data = get_antag_data(mob_poi.mind)
+		if(length(antag_data))
+			serialized += antag_data
+			antagonists += list(serialized)
+			continue
 
-		if(!was_antagonist)
-			alive += list(serialized)
+		alive += list(serialized)
 
 	for(var/name in new_other_pois)
 		var/atom/atom_poi = new_other_pois[name]
@@ -122,32 +125,18 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			))
 			continue
 
-		misc += list(list(
-			"ref" = REF(atom_poi),
-			"full_name" = name,
-		))
+		var/list/other_data = get_misc_data(atom_poi)
+		var/misc_data = list(other_data[1])
 
-		// Display the supermatter crystal integrity
-		if(istype(atom_poi, /obj/machinery/power/supermatter_crystal))
-			var/obj/machinery/power/supermatter_crystal/crystal = atom_poi
-			misc[length(misc)]["extra"] = "Integrity: [round(crystal.get_integrity_percent())]%"
-			continue
-		// Display the nuke timer
-		if(istype(atom_poi, /obj/machinery/nuclearbomb))
-			var/obj/machinery/nuclearbomb/bomb = atom_poi
-			if(bomb.timing)
-				misc[length(misc)]["extra"] = "Timer: [bomb.countdown?.displayed_text]s"
-			continue
-		// Display the holder if its a nuke disk
-		if(istype(atom_poi, /obj/item/disk/nuclear))
-			var/obj/item/disk/nuclear/disk = atom_poi
-			var/mob/holder = disk.pulledby || get(disk, /mob)
-			misc[length(misc)]["extra"] = "Location: [holder?.real_name || "Unsecured"]"
-			continue
+		misc += misc_data
+
+		if(other_data[2]) // Critical = TRUE
+			critical += misc_data
 
 	return list(
 		"alive" = alive,
 		"antagonists" = antagonists,
+		"critical" = critical,
 		"deadchat_controlled" = deadchat_controlled,
 		"dead" = dead,
 		"ghosts" = ghosts,
@@ -155,9 +144,130 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		"npcs" = npcs,
 	)
 
+
 /// Shows the UI to the specified user.
 /datum/orbit_menu/proc/show(mob/user)
 	ui_interact(user)
+
+
+/// Helper function to get threat type, group, overrides for job and icon
+/datum/orbit_menu/proc/get_antag_data(datum/mind/poi_mind) as /list
+	var/list/serialized = list()
+
+	for(var/datum/antagonist/antag as anything in poi_mind.antag_datums)
+		if(!antag.show_to_ghosts)
+			continue
+
+		serialized["antag"] = antag.name
+		serialized["antag_group"] = antag.antagpanel_category
+		serialized["job"] = antag.name
+		serialized["icon"] = antag.antag_hud_name
+
+		return serialized
+
+
+/// Helper to get the current thing we're orbiting (if any)
+/datum/orbit_menu/proc/get_currently_orbiting(mob/dead/observer/user)
+	if(isnull(user.orbiting_ref))
+		return
+
+	var/atom/poi = SSpoints_of_interest.get_poi_atom_by_ref(user.orbiting_ref)
+	if(isnull(poi))
+		user.orbiting_ref = null
+		return
+
+	if((ismob(poi) && !SSpoints_of_interest.is_valid_poi(poi, CALLBACK(src, PROC_REF(validate_mob_poi)))) \
+		|| !SSpoints_of_interest.is_valid_poi(poi)
+	)
+		user.orbiting_ref = null
+		return
+
+	var/list/serialized = list()
+
+	if(!ismob(poi))
+		var/list/misc_info = get_misc_data(poi)
+		serialized += misc_info[1]
+		return serialized
+
+	var/mob/mob_poi = poi
+	serialized["full_name"] = mob_poi.name
+	serialized["ref"] = REF(poi)
+
+	if(mob_poi.mind)
+		serialized["client"] = !!mob_poi.client
+		serialized["name"] = mob_poi.real_name
+
+	if(isliving(mob_poi))
+		serialized += get_living_data(mob_poi)
+
+	return serialized
+
+
+/// Helper function to get job / icon / health data for a living mob
+/datum/orbit_menu/proc/get_living_data(mob/living/player) as /list
+	var/list/serialized = list()
+
+	serialized["health"] = FLOOR((player.health / player.maxHealth * 100), 1)
+	if(issilicon(player))
+		serialized["job"] = player.job
+		serialized["icon"] = "borg"
+	else
+		var/obj/item/card/id/id_card = player.get_idcard(hand_first = FALSE)
+		serialized["job"] = id_card?.get_trim_assignment()
+		serialized["icon"] = id_card?.get_trim_sechud_icon_state()
+
+	return serialized
+
+
+/// Gets a list: Misc data and whether it's critical. Handles all snowflakey type cases
+/datum/orbit_menu/proc/get_misc_data(atom/movable/atom_poi) as /list
+	var/list/misc = list()
+	var/critical = FALSE
+
+	misc["ref"] = REF(atom_poi)
+	misc["full_name"] = atom_poi.name
+
+	// Display the supermatter crystal integrity
+	if(istype(atom_poi, /obj/machinery/power/supermatter_crystal))
+		var/obj/machinery/power/supermatter_crystal/crystal = atom_poi
+		var/integrity = round(crystal.get_integrity_percent())
+		misc["extra"] = "Integrity: [integrity]%"
+
+		if(integrity < 10)
+			critical = TRUE
+
+		return list(misc, critical)
+
+	// Display the nuke timer
+	if(istype(atom_poi, /obj/machinery/nuclearbomb))
+		var/obj/machinery/nuclearbomb/bomb = atom_poi
+
+		if(bomb.timing)
+			misc["extra"] = "Timer: [bomb.countdown?.displayed_text]s"
+			critical = TRUE
+
+		return list(misc, critical)
+
+	// Display the holder if its a nuke disk
+	if(istype(atom_poi, /obj/item/disk/nuclear))
+		var/obj/item/disk/nuclear/disk = atom_poi
+		var/mob/holder = disk.pulledby || get(disk, /mob)
+		misc["extra"] = "Location: [holder?.real_name || "Unsecured"]"
+
+		return list(misc, critical)
+
+	// Display singuloths if they exist
+	if(istype(atom_poi, /obj/singularity))
+		var/obj/singularity/singulo = atom_poi
+		misc["extra"] = "Energy: [round(singulo.energy)]"
+
+		if(singulo.current_size > 2)
+			critical = TRUE
+
+		return list(misc, critical)
+
+	return list(misc, critical)
+
 
 /**
  * Helper POI validation function passed as a callback to various SSpoints_of_interest procs.
@@ -181,3 +291,4 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			return FALSE
 
 	return potential_poi.validate()
+

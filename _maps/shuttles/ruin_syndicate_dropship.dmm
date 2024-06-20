@@ -211,7 +211,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/mob/living/basic/syndicate/ranged/smg/pilot{
+/mob/living/basic/trooper/syndicate/ranged/smg/pilot{
 	environment_smash = 0
 	},
 /turf/open/floor/iron/dark,
@@ -376,9 +376,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/ruin/caravan/syndicate3)
 "Oe" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/super/full,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},

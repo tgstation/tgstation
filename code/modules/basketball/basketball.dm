@@ -48,7 +48,7 @@
 
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(movement_effect))
 	RegisterSignal(user, COMSIG_MOB_EMOTED("spin"), PROC_REF(on_spin))
-	RegisterSignal(user, COMSIG_HUMAN_DISARM_HIT, PROC_REF(on_equipped_mob_disarm))
+	RegisterSignal(user, COMSIG_LIVING_DISARM_HIT, PROC_REF(on_equipped_mob_disarm))
 	RegisterSignal(user, COMSIG_LIVING_STATUS_KNOCKDOWN, PROC_REF(on_equipped_mob_knockdown))
 
 /obj/item/toy/basketball/proc/remove_ball_effects()
@@ -57,7 +57,7 @@
 	// unlike on_equip, this signal is triggered after the ball is removed from hands
 	// so we can just use is_holding_item_of_type() proc to check for multiple balls
 	if(!wielder.is_holding_item_of_type(/obj/item/toy/basketball))
-		UnregisterSignal(wielder, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTED("spin"), COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOB_THROW))
+		UnregisterSignal(wielder, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTED("spin"), COMSIG_LIVING_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOB_THROW))
 
 	wielder = null
 
@@ -99,14 +99,11 @@
 
 /// Used to calculate our disarm chance based on stamina, direction, and spinning
 /// Note - monkeys use attack_paw() and never trigger this signal (so they always have 100% disarm)
-/obj/item/toy/basketball/proc/on_equipped_mob_disarm(mob/living/baller, mob/living/stealer, zone)
+/obj/item/toy/basketball/proc/on_equipped_mob_disarm(mob/living/baller, mob/living/stealer, zone, obj/item/weapon)
 	SIGNAL_HANDLER
 
-	if(!istype(baller))
-		return
-
 	// spinning gives you a lower disarm chance but it drains stamina
-	var/disarm_chance = baller.flags_1 & IS_SPINNING_1 ? 35 : 50
+	var/disarm_chance = HAS_TRAIT(baller, TRAIT_SPINNING) ? 35 : 50
 	// ballers stamina results in lower disarm, stealer stamina results in higher disarm
 	disarm_chance += (baller.getStaminaLoss() - stealer.getStaminaLoss()) / 2
 	// the lowest chance for disarm is 25% and the highest is 75%
@@ -169,38 +166,44 @@
 		return
 
 	// need a free hand and can't be spinning
-	if(!user.put_in_inactive_hand(src) || user.flags_1 & IS_SPINNING_1)
+	if(!user.put_in_inactive_hand(src) || HAS_TRAIT(user, TRAIT_SPINNING))
 		return
 
 	last_use = world.time
 	user.swap_hand(user.get_held_index_of_item(src))
 	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
 
-/obj/item/toy/basketball/afterattack(atom/target, mob/living/user)
-	. = ..()
-	if(!user.combat_mode)
-		user.throw_item(target)
+/obj/item/toy/basketball/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
 
-/obj/item/toy/basketball/afterattack_secondary(atom/aim_target, mob/living/baller, proximity_flag, click_parameters)
-	// dunking negates shooting
-	if(istype(aim_target, /obj/structure/hoop) && baller.Adjacent(aim_target))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/toy/basketball/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(user.combat_mode)
+		user.throw_item(interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
+/obj/item/toy/basketball/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom_secondary(interacting_with, user, modifiers)
+
+/obj/item/toy/basketball/interact_with_atom_secondary(atom/interacting_with, mob/living/baller, list/modifiers)
+	if(istype(interacting_with, /obj/structure/hoop) && baller.Adjacent(interacting_with))
+		return NONE // Do hoop stuff
 
 	baller.adjustStaminaLoss(STAMINA_COST_SHOOTING)
 
-	var/dunk_dir = get_dir(baller, aim_target)
+	var/dunk_dir = get_dir(baller, interacting_with)
 	var/dunk_pixel_y = dunk_dir & SOUTH ? -16 : 16
 	var/dunk_pixel_x = dunk_dir & EAST && 16 || dunk_dir & WEST && -16 || 0
 
 	animate(baller, pixel_x = dunk_pixel_x, pixel_y = dunk_pixel_y, time = 5, easing = BOUNCE_EASING|EASE_IN|EASE_OUT)
 	if(do_after(baller, 0.5 SECONDS))
 		pass_flags |= PASSMOB
-		baller.throw_item(aim_target)
+		baller.throw_item(interacting_with)
 		animate(baller, pixel_x = 0, pixel_y = 0, time = 3)
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
+		return ITEM_INTERACT_SUCCESS
 
 	animate(baller, pixel_x = 0, pixel_y = 0, time = 3)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/toy/basketball/throw_impact(mob/living/carbon/target, datum/thrownthing/throwingdatum)
 	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)

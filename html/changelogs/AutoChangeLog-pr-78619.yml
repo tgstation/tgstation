@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "plumbing reaction chamber now balances the ph of it's solution correctly to the best of it's ability so no guarantees"
-  - code_imp: "converted plumbing reaction chamber & mixing chamber UI files to Typescript"
-  - refactor: "plumbing mixing chamber now also accepts an TGUI input list to input it's chemicals"

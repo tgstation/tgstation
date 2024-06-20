@@ -47,12 +47,7 @@
 	. += span_notice("<b>Alt-click</b> to [zipped ? "un" : ""]zip.")
 
 
-/obj/item/clothing/suit/hooded/wintercoat/AltClick(mob/user)
-	. = ..()
-
-	if (. == FALSE) // Direct check for FALSE, because that's the specific case we want to propagate, not just null.
-		return FALSE
-
+/obj/item/clothing/suit/hooded/wintercoat/click_alt(mob/user)
 	zipped = !zipped
 	worn_icon_state = "[initial(icon_state)][zipped ? "_t" : ""]"
 	balloon_alert(user, "[zipped ? "" : "un"]zipped")
@@ -60,6 +55,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearer = loc
 		wearer.update_worn_oversuit()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/hooded/winterhood
 	name = "winter hood"
@@ -247,8 +243,10 @@
 	icon_state = "coatjanitor"
 	inhand_icon_state = null
 	allowed = list(
+		/obj/item/access_key,
 		/obj/item/grenade/chem_grenade,
 		/obj/item/holosign_creator,
+		/obj/item/key/janitor,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
@@ -386,6 +384,9 @@
 	allowed += list(
 		/obj/item/autopsy_scanner,
 		/obj/item/scythe,
+		/obj/item/shovel,
+		/obj/item/shovel/serrated,
+		/obj/item/trench_tool,
 	)
 
 /obj/item/clothing/head/hooded/winterhood/medical/coroner
@@ -518,6 +519,10 @@
 		/obj/item/pipe_dispenser,
 		/obj/item/storage/bag/construction,
 		/obj/item/t_scanner,
+		/obj/item/construction/rld,
+		/obj/item/construction/rtd,
+		/obj/item/gun/ballistic/rifle/rebarxbow,
+		/obj/item/storage/bag/rebar_quiver,
 	)
 	armor_type = /datum/armor/wintercoat_engineering
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering
@@ -628,6 +633,8 @@
 		/obj/item/storage/bag/ore,
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/tank/internals,
+		/obj/item/shovel,
+		/obj/item/trench_tool,
 	)
 	armor_type = /datum/armor/wintercoat_miner
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/miner

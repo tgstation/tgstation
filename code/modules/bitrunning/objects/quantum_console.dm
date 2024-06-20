@@ -12,22 +12,15 @@
 	. = ..()
 	desc = "Even in the distant year [CURRENT_STATION_YEAR], Nanostrasen is still using REST APIs. How grim."
 
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/computer/quantum_console/LateInitialize()
+/obj/machinery/computer/quantum_console/post_machine_initialize()
 	. = ..()
-
-	if(isnull(server_ref?.resolve()))
-		find_server()
+	find_server()
 
 /obj/machinery/computer/quantum_console/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 
 	if(!is_operational)
 		return
-
-	if(isnull(server_ref?.resolve()))
-		find_server()
 
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -50,6 +43,8 @@
 	data["ready"] = server.is_ready && server.is_operational
 	data["scanner_tier"] = server.scanner_tier
 	data["retries_left"] = length(server.exit_turfs) - server.retries_spent
+	data["broadcasting"] = server.broadcasting
+	data["broadcasting_on_cd"] = !COOLDOWN_FINISHED(server, broadcast_toggle_cd)
 
 	return data
 
@@ -60,7 +55,7 @@
 	if(isnull(server))
 		return data
 
-	data["available_domains"] = server.get_available_domains()
+	data["available_domains"] = SSbitrunning.get_available_domains(server.scanner_tier, server.points)
 	data["avatars"] = server.get_avatar_data()
 
 	return data
@@ -76,20 +71,19 @@
 
 	switch(action)
 		if("random_domain")
-			var/map_id = server.get_random_domain_id()
-			if(!map_id)
-				return TRUE
-
-			server.cold_boot_map(usr, map_id)
+			server.cold_boot_map(server.get_random_domain_id())
 			return TRUE
 		if("refresh")
 			ui.send_full_update()
 			return TRUE
 		if("set_domain")
-			server.cold_boot_map(usr, params["id"])
+			server.cold_boot_map(params["id"])
 			return TRUE
 		if("stop_domain")
 			server.begin_shutdown(usr)
+			return TRUE
+		if("broadcast")
+			server.toggle_broadcast()
 			return TRUE
 
 	return FALSE
@@ -104,5 +98,4 @@
 		var/obj/machinery/quantum_server/nearby_server = locate(/obj/machinery/quantum_server, get_step(src, direction))
 		if(nearby_server)
 			server_ref = WEAKREF(nearby_server)
-			nearby_server.console_ref = WEAKREF(src)
 			return nearby_server

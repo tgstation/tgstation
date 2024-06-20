@@ -144,7 +144,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose/proc/choke(obj/item/food/plastic)
 	if(stat == DEAD || choking)
 		return
-	addtimer(CALLBACK(src, PROC_REF(suffocate)), 300)
+	addtimer(CALLBACK(src, PROC_REF(suffocate)), 30 SECONDS)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/choke(obj/item/food/plastic)
 	if(stat == DEAD || choking)
@@ -152,9 +152,9 @@
 	if(prob(25))
 		visible_message(span_warning("[src] is gagging on \the [plastic]!"))
 		manual_emote("gags!")
-		addtimer(CALLBACK(src, PROC_REF(vomit)), 300)
+		addtimer(CALLBACK(src, PROC_REF(vomit)), 30 SECONDS)
 	else
-		addtimer(CALLBACK(src, PROC_REF(suffocate)), 300)
+		addtimer(CALLBACK(src, PROC_REF(suffocate)), 30 SECONDS)
 
 /mob/living/simple_animal/hostile/retaliate/goose/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()

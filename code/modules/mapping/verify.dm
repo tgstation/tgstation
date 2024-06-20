@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(map_reports)
 	original_path = map.original_path || "Untitled"
 	GLOB.map_reports += src
 
-/datum/map_report/Destroy(force, ...)
+/datum/map_report/Destroy(force)
 	GLOB.map_reports -= src
 	return ..()
 

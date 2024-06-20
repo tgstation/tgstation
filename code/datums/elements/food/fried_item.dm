@@ -47,6 +47,7 @@
 		food_flags = FOOD_FINGER_FOOD, \
 		junkiness = 10, \
 		foodtypes = FRIED, \
+		volume = this_food.reagents?.maximum_volume, \
 	)
 
 /datum/element/fried_item/Detach(atom/source, ...)

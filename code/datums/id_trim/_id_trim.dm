@@ -16,8 +16,16 @@
 	var/intern_alt_name = null
 	/// The icon_state associated with this trim, as it will show on the security HUD.
 	var/sechud_icon_state = SECHUD_UNKNOWN
+	/// How threatened does a security bot feel when scanning this ID? A negative value may cause them to forgive things which would otherwise cause aggro.
+	var/threat_modifier = 0
 
 	/// Accesses that this trim unlocks on a card it is imprinted on. These accesses never take wildcard slots and can be added and removed at will.
 	var/list/access = list()
 	/// Accesses that this trim unlocks on a card that require wildcard slots to apply. If a card cannot accept all a trim's wildcard accesses, the card is incompatible with the trim.
 	var/list/wildcard_access = list()
+
+/// Returns the SecHUD job icon state for whatever this object's ID card is, if it has one.
+/obj/item/proc/get_sechud_job_icon_state()
+	var/obj/item/card/id/id_card = GetID()
+
+	return id_card?.get_trim_sechud_icon_state() || SECHUD_NO_ID

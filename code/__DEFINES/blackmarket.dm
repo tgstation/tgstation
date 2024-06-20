@@ -7,4 +7,5 @@
 #define SHIPPING_METHOD_TELEPORT "Teleport"
 // Throws the item from somewhere at the station.
 #define SHIPPING_METHOD_LAUNCH "Launch"
-
+// Sends a supply pod to the buyer's location, showy.
+#define SHIPPING_METHOD_SUPPLYPOD "Supply Pod"

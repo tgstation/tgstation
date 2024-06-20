@@ -189,14 +189,28 @@
 	to_chat(src, span_notice("You attempt to produce a blobbernaut."))
 	pick_blobbernaut_candidate(factory)
 
-/** Polls ghosts to get a blobbernaut candidate. */
+/// Polls ghosts to get a blobbernaut candidate.
 /mob/camera/blob/proc/pick_blobbernaut_candidate(obj/structure/blob/special/factory/factory)
-	if(!factory)
+	if(isnull(factory))
 		return
+	var/icon/blobbernaut_icon = icon(icon, "blobbernaut")
+	blobbernaut_icon.Blend(blobstrain.color, ICON_MULTIPLY)
+	var/image/blobbernaut_image = image(blobbernaut_icon)
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		check_jobban = ROLE_BLOB,
+		poll_time = 20 SECONDS,
+		checked_target = factory,
+		ignore_category = POLL_IGNORE_BLOB,
+		alert_pic = blobbernaut_image,
+		jump_target = factory,
+		role_name_text = "blobbernaut",
+		chat_text_border_icon = blobbernaut_image,
+	)
+	on_poll_concluded(factory, chosen_one)
 
-	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as a [blobstrain.name] blobbernaut?", ROLE_BLOB, ROLE_BLOB, 50)
-
-	if(!length(candidates))
+/// Called when the ghost poll concludes
+/mob/camera/blob/proc/on_poll_concluded(obj/structure/blob/special/factory/factory, mob/dead/observer/ghost)
+	if(isnull(ghost))
 		to_chat(src, span_warning("You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later."))
 		add_points(BLOBMOB_BLOBBERNAUT_RESOURCE_COST)
 		factory.assign_blobbernaut(null)
@@ -205,8 +219,7 @@
 	var/mob/living/basic/blob_minion/blobbernaut/minion/blobber = new(get_turf(factory))
 	assume_direct_control(blobber)
 	factory.assign_blobbernaut(blobber)
-	var/mob/dead/observer/player = pick(candidates)
-	blobber.assign_key(player.key, blobstrain)
+	blobber.assign_key(ghost.key, blobstrain)
 	RegisterSignal(blobber, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_blobbernaut_attacked))
 
 /// When one of our boys attacked something, we sometimes want to perform extra effects

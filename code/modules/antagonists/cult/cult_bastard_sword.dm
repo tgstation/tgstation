@@ -77,7 +77,7 @@
 			force = 5
 			return
 		else
-			to_chat(user, span_cultlarge("\"You cling to the Forgotten Gods, as if you're more than their pawn.\""))
+			to_chat(user, span_cult_large("\"You cling to the Forgotten Gods, as if you're more than their pawn.\""))
 			to_chat(user, span_userdanger("A horrible force yanks at your arm!"))
 			user.emote("scream")
 			user.apply_damage(30, BRUTE, pick(GLOB.arm_zones))

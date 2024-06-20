@@ -12,10 +12,10 @@
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 
 	possible_shapes = list(
+		/mob/living/basic/carp/magic/chaos,
+		/mob/living/basic/construct/juggernaut/mystic,
 		/mob/living/basic/mouse,
 		/mob/living/basic/pet/dog/corgi,
-		/mob/living/basic/carp/magic/chaos,
-		/mob/living/simple_animal/bot/secbot/ed209,
 		/mob/living/basic/spider/giant/viper/wizard,
-		/mob/living/simple_animal/hostile/construct/juggernaut/mystic,
+		/mob/living/simple_animal/bot/secbot/ed209,
 	)

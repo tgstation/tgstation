@@ -12,7 +12,7 @@
 /datum/crafting_recipe/pipe
 	name = "Smart pipe fitting"
 	tool_behaviors = list(TOOL_WRENCH)
-	result = /obj/item/pipe/quaternary/pipe
+	result = /obj/item/pipe/quaternary/pipe/crafted
 	reqs = list(/obj/item/stack/sheet/iron = 1)
 	time = 0.5 SECONDS
 	category = CAT_ATMOSPHERIC
@@ -25,7 +25,7 @@
 		/obj/item/assembly/igniter = 1,
 	)
 	blacklist = list(/obj/item/assembly/igniter/condenser)
-	one_per_turf = TRUE
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
 
@@ -37,14 +37,6 @@
 		/obj/item/stack/sheet/iron = 1,
 		)
 	blacklist = list(/obj/item/analyzer/ranged)
-
-/datum/crafting_recipe/pipe/on_craft_completion(mob/user, atom/result)
-	var/obj/item/pipe/crafted_pipe = result
-	crafted_pipe.pipe_type = /obj/machinery/atmospherics/pipe/smart
-	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
-	crafted_pipe.p_init_dir = ALL_CARDINALS
-	crafted_pipe.setDir(SOUTH)
-	crafted_pipe.update()
 
 /datum/crafting_recipe/layer_adapter
 	name = "Layer manifold fitting"

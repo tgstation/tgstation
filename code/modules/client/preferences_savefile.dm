@@ -5,7 +5,7 @@
 // You do not need to raise this if you are adding new values that have sane defaults.
 // Only raise this value when changing the meaning/format/name/layout of an existing value
 // where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 44
+#define SAVEFILE_VERSION_MAX 45
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -103,6 +103,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if (current_version < 43)
 		migrate_legacy_sound_toggles(savefile)
+
+	if (current_version < 45)
+		migrate_quirk_to_loadout(
+			quirk_to_migrate = "Pride Pin",
+			new_typepath = /obj/item/clothing/accessory/pride,
+			data_to_migrate = list(INFO_RESKIN = save_data?["pride_pin"]),
+		)
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
@@ -213,7 +220,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Sanitize
 	lastchangelog = sanitize_text(lastchangelog, initial(lastchangelog))
 	default_slot = sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
-	toggles = sanitize_integer(toggles, 0, (2**24)-1, initial(toggles))
+	toggles = sanitize_integer(toggles, 0, SHORT_REAL_LIMIT-1, initial(toggles))
 	be_special = sanitize_be_special(SANITIZE_LIST(be_special))
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
@@ -359,6 +366,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Quirks
 	save_data["all_quirks"] = all_quirks
 
+	return TRUE
+
+/datum/preferences/proc/remove_character(slot)
+	SHOULD_NOT_SLEEP(TRUE)
+	if(!slot)
+		return FALSE
+	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
+
+	var/tree_key = "character[slot]"
+	savefile.remove_entry(tree_key)
 	return TRUE
 
 /datum/preferences/proc/sanitize_be_special(list/input_be_special)

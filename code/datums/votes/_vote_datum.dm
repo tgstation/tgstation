@@ -15,21 +15,25 @@
 	var/list/default_choices
 	/// Does the name of this vote contain the word "vote"?
 	var/contains_vote_in_name = FALSE
-	/// What message do we want to pass to the player-side vote panel as a tooltip?
-	var/message = "Click to initiate a vote."
+	/// What message do we show as the tooltip of this vote if the vote can be initiated?
+	var/default_message = "Click to initiate a vote."
+	/// The counting method we use for votes.
+	var/count_method = VOTE_COUNT_METHOD_SINGLE
+	/// The method for selecting a winner.
+	var/winner_method = VOTE_WINNER_METHOD_SIMPLE
+	/// Should we show details about the number of votes submitted for each option?
+	var/display_statistics = TRUE
 
 	// Internal values used when tracking ongoing votes.
 	// Don't mess with these, change the above values / override procs for subtypes.
 	/// An assoc list of [all choices] to [number of votes in the current running vote].
-	var/list/choices = list()
+	VAR_FINAL/list/choices = list()
 	/// A assoc list of [ckey] to [what they voted for in the current running vote].
-	var/list/choices_by_ckey = list()
+	VAR_FINAL/list/choices_by_ckey = list()
 	/// The world time this vote was started.
-	var/started_time
+	VAR_FINAL/started_time = -1
 	/// The time remaining in this vote's run.
-	var/time_remaining
-	/// The counting method we use for votes.
-	var/count_method = VOTE_COUNT_METHOD_SINGLE
+	VAR_FINAL/time_remaining = -1
 
 /**
  * Used to determine if this vote is a possible
@@ -51,14 +55,13 @@
 	choices.Cut()
 	choices_by_ckey.Cut()
 	started_time = null
-	time_remaining = null
+	time_remaining = -1
 
 /**
  * If this vote has a config associated, toggles it between enabled and disabled.
- * Returns TRUE on a successful toggle, FALSE otherwise
  */
-/datum/vote/proc/toggle_votable(mob/toggler)
-	return FALSE
+/datum/vote/proc/toggle_votable()
+	return
 
 /**
  * If this vote has a config associated, returns its value (True or False, usually).
@@ -70,20 +73,18 @@
 /**
  * Checks if the passed mob can initiate this vote.
  *
- * Return TRUE if the mob can begin the vote, allowing anyone to actually vote on it.
- * Return FALSE if the mob cannot initiate the vote.
+ * * forced - if being invoked by someone who is an admin
+ *
+ * Return VOTE_AVAILABLE if the mob can initiate the vote.
+ * Return a string with the reason why the mob can't initiate the vote.
  */
-/datum/vote/proc/can_be_initiated(mob/by_who, forced = FALSE)
+/datum/vote/proc/can_be_initiated(forced = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(started_time)
-		var/next_allowed_time = (started_time + CONFIG_GET(number/vote_delay))
-		if(next_allowed_time > world.time && !forced)
-			message = "A vote was initiated recently. You must wait [DisplayTimeText(next_allowed_time - world.time)] before a new vote can be started!"
-			return FALSE
+	if(!forced && !is_config_enabled())
+		return "This vote is currently disabled by the server configuration."
 
-	message = initial(message)
-	return TRUE
+	return VOTE_AVAILABLE
 
 /**
  * Called prior to the vote being initiated.
@@ -123,33 +124,41 @@
  */
 /datum/vote/proc/get_vote_result(list/non_voters)
 	RETURN_TYPE(/list)
+	SHOULD_CALL_PARENT(TRUE)
 
-	var/list/winners = list()
+	switch(winner_method)
+		if(VOTE_WINNER_METHOD_NONE)
+			return list()
+		if(VOTE_WINNER_METHOD_SIMPLE)
+			return get_simple_winner()
+		if(VOTE_WINNER_METHOD_WEIGHTED_RANDOM)
+			return get_random_winner()
+
+	stack_trace("invalid select winner method: [winner_method]. Defaulting to simple.")
+	return get_simple_winner()
+
+/// Gets the winner of the vote, selecting the choice with the most votes.
+/datum/vote/proc/get_simple_winner()
 	var/highest_vote = 0
+	var/list/current_winners = list()
 
 	for(var/option in choices)
-
 		var/vote_count = choices[option]
-		// If we currently have no winners...
-		if(!length(winners))
-			// And the current option has any votes, it's the new highest.
-			if(vote_count > 0)
-				winners += option
-				highest_vote = vote_count
+		if(vote_count < highest_vote)
 			continue
 
-		// If we're greater than, and NOT equal to, the highest vote,
-		// we are the new supreme winner - clear all others
 		if(vote_count > highest_vote)
-			winners.Cut()
-			winners += option
 			highest_vote = vote_count
+			current_winners = list(option)
+			continue
+		current_winners += option
 
-		// If we're equal to the highest vote, we tie for winner
-		else if(vote_count == highest_vote)
-			winners += option
+	return length(current_winners) ? current_winners : list()
 
-	return winners
+/// Gets the winner of the vote, selecting a random choice from all choices based on their vote count.
+/datum/vote/proc/get_random_winner()
+	var/winner = pick_weight(choices)
+	return winner ? list(winner) : list()
 
 /**
  * Gets the resulting text displayed when the vote is completed.
@@ -161,17 +170,47 @@
  * Return a formatted string of text to be displayed to everyone.
  */
 /datum/vote/proc/get_result_text(list/all_winners, real_winner, list/non_voters)
-	if(length(all_winners) <= 0 || !real_winner)
-		return span_bold("Vote Result: Inconclusive - No Votes!")
-
 	var/returned_text = ""
 	if(override_question)
 		returned_text += span_bold(override_question)
 	else
 		returned_text += span_bold("[capitalize(name)] Vote")
 
+	returned_text += "\nWinner Selection: "
+	switch(winner_method)
+		if(VOTE_WINNER_METHOD_NONE)
+			returned_text += "None"
+		if(VOTE_WINNER_METHOD_WEIGHTED_RANDOM)
+			returned_text += "Weighted Random"
+		else
+			returned_text += "Simple"
+
+	var/total_votes = 0 // for determining percentage of votes
 	for(var/option in choices)
-		returned_text += "\n[span_bold(option)]: [choices[option]]"
+		total_votes += choices[option]
+
+	if(total_votes <= 0)
+		return span_bold("Vote Result: Inconclusive - No Votes!")
+
+	if (display_statistics)
+		returned_text += "\nResults:"
+		for(var/option in choices)
+			returned_text += "\n"
+			var/votes = choices[option]
+			var/percentage_text = ""
+			if(votes > 0)
+				var/actual_percentage = round((votes / total_votes) * 100, 0.1)
+				var/text = "[actual_percentage]"
+				var/spaces_needed = 5 - length(text)
+				for(var/_ in 1 to spaces_needed)
+					returned_text += " "
+				percentage_text += "[text]%"
+			else
+				percentage_text = "    0%"
+			returned_text += "[percentage_text] | [span_bold(option)]: [choices[option]]"
+
+	if(!real_winner) // vote has no winner or cannot be won, but still had votes
+		return returned_text
 
 	returned_text += "\n"
 	returned_text += get_winner_text(all_winners, real_winner, non_voters)

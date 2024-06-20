@@ -36,4 +36,13 @@
 		var/mob/living/basic/rabbit/bunbun = new(get_turf(magician))
 		bunbun.mob_try_pickup(magician, instant=TRUE)
 
+/obj/item/clothing/head/hats/tophat/balloon
+	name = "balloon top-hat"
+	desc = "It's an colourful looking top-hat to match yout colourful personality."
+	icon_state = "balloon_tophat"
+	inhand_icon_state = "balloon_that"
+	throwforce = 0
+	resistance_flags = FIRE_PROOF
+	dog_fashion = null
+
 #undef RABBIT_CD_TIME

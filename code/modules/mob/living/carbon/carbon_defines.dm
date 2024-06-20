@@ -15,8 +15,6 @@
 	var/list/obj/item/organ/organs = list()
 	///Same as [above][/mob/living/carbon/var/organs], but stores "slot ID" - "organ" pairs for easy access.
 	var/list/organs_slot = list()
-	///How many dream images we have left to send
-	var/dreaming = 0
 
 	///Whether or not the mob is handcuffed
 	var/obj/item/handcuffed = null
@@ -47,7 +45,7 @@
 	///only used by humans.
 	var/obj/item/clothing/ears = null
 
-	/// Carbon
+	/// Carbon, you should really only be accessing this through has_dna() but it's your life
 	var/datum/dna/dna = null
 	///last mind to control this mob, for blood-based cloning
 	var/datum/mind/last_mind = null
@@ -88,9 +86,6 @@
 	/// This number is also reset to 0 every tick of carbon Life(). Pain.
 	var/damageoverlaytemp = 0
 
-	///used to halt stamina regen temporarily
-	var/stam_regen_start_time = 0
-
 	/// Protection (insulation) from the heat, Value 0-1 corresponding to the percentage of protection
 	var/heat_protection = 0 // No heat protection
 	/// Protection (insulation) from the cold, Value 0-1 corresponding to the percentage of protection
@@ -120,8 +115,10 @@
 	var/last_top_offset
 
 	/// A bitfield of "bodytypes", updated by /obj/item/bodypart/proc/synchronize_bodytypes()
-	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
+	var/bodytype = BODYTYPE_ORGANIC
 
-	var/is_leaning = FALSE
+	/// A bitfield of "bodyshapes", updated by /obj/item/bodypart/proc/synchronize_bodyshapes()
+	var/bodyshape = BODYSHAPE_HUMANOID
 
 	COOLDOWN_DECLARE(bleeding_message_cd)
+

@@ -228,6 +228,7 @@
 	limb._unembed_object(weapon)
 	UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING)) // have to do it here otherwise we trigger weaponDeleted()
 
+	SEND_SIGNAL(weapon, COMSIG_ITEM_UNEMBEDDED, victim)
 	if(!weapon.unembedded()) // if it hasn't deleted itself due to drop del
 		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 		if(to_hands)

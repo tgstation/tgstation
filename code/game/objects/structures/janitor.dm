@@ -73,6 +73,7 @@
 
 /obj/structure/mop_bucket/janitorialcart/Initialize(mapload)
 	. = ..()
+	reagents.maximum_volume *= 2.5
 	GLOB.janitor_devices += src
 
 /obj/structure/mop_bucket/janitorialcart/Destroy()
@@ -229,7 +230,7 @@
 /obj/structure/mop_bucket/janitorialcart/crowbar_act(mob/living/user, obj/item/tool)
 	if(!CART_HAS_MINIMUM_REAGENT_VOLUME)
 		balloon_alert(user, "mop bucket is empty!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	user.balloon_alert_to_viewers("starts dumping [src]...", "started dumping [src]...")
 	user.visible_message(span_notice("[user] begins to dumping the contents of [src]'s mop bucket."), span_notice("You begin to dump the contents of [src]'s mop bucket..."))
 	if(tool.use_tool(src, user, 5 SECONDS, volume = 50))
@@ -238,7 +239,7 @@
 		reagents.expose(loc)
 		reagents.clear_reagents()
 		update_appearance(UPDATE_OVERLAYS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/mop_bucket/janitorialcart/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()

@@ -27,9 +27,9 @@ Slimecrossing Weapons
 	throwforce = 15
 	damtype = BRUTE
 
-/obj/item/knife/rainbowknife/afterattack(atom/O, mob/user, proximity)
-	if(proximity && isliving(O))
-		damtype = pick(BRUTE, BURN, TOX, OXY, CLONE)
+/obj/item/knife/rainbowknife/afterattack(atom/target, mob/user, params)
+	if(isliving(target))
+		damtype = pick(BRUTE, BURN, TOX, OXY)
 	switch(damtype)
 		if(BRUTE)
 			hitsound = 'sound/weapons/bladeslice.ogg'
@@ -47,11 +47,6 @@ Slimecrossing Weapons
 			hitsound = 'sound/effects/space_wind.ogg'
 			attack_verb_continuous = string_list(list("suffocates", "winds", "vacuums"))
 			attack_verb_simple = string_list(list("suffocate", "wind", "vacuum"))
-		if(CLONE)
-			hitsound = 'sound/items/geiger/ext1.ogg'
-			attack_verb_continuous = string_list(list("irradiates", "mutates", "maligns"))
-			attack_verb_simple = string_list(list("irradiate", "mutate", "malign"))
-	return ..()
 
 //Adamantine shield - Chilling Adamantine
 /obj/item/shield/adamantineshield
@@ -128,7 +123,7 @@ Slimecrossing Weapons
 	icon_state = "pulse0_bl"
 	hitsound = 'sound/effects/splat.ogg'
 
-/obj/projectile/magic/bloodchill/on_hit(mob/living/target)
+/obj/projectile/magic/bloodchill/on_hit(mob/living/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		target.apply_status_effect(/datum/status_effect/bloodchill)
