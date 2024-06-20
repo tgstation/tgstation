@@ -14,7 +14,8 @@
 		/obj/item/clothing/shoes/workboots/mining,
 		/obj/item/gps,
 	)
-	var/list/settler_traits = list( // Some of the behavior of settler is from traits, rather than exclusively the quirk
+	/// Most of the behavior of settler is from these traits, rather than exclusively the quirk
+	var/list/settler_traits = list(
 		TRAIT_EXPERT_FISHER,
 		TRAIT_ROUGHRIDER,
 		TRAIT_STUBBY_BODY,
