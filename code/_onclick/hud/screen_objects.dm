@@ -442,7 +442,6 @@
 	name = "storage"
 	icon = 'icons/hud/screen_midnight.dmi'
 	icon_state = "storage_cell"
-	screen_loc = "7,7 to 10,8"
 	plane = HUD_PLANE
 
 /atom/movable/screen/storage/Initialize(mapload, datum/hud/hud_owner, new_master)
@@ -470,12 +469,10 @@
 /atom/movable/screen/storage/corner
 	name = "storage"
 	icon_state = "storage_corner_topleft"
-	screen_loc = "7,7 to 10,8"
 
 /atom/movable/screen/storage/rowjoin
 	name = "storage"
 	icon_state = "storage_rowjoin_left"
-	screen_loc = "7,7 to 7,7"
 	alpha = 0
 
 /atom/movable/screen/throw_catch

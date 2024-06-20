@@ -5,14 +5,6 @@
  * If you're looking to create custom storage type behaviors, check ../subtypes
  */
 
-#define STORAGE_CELL_INDEX 1
-#define STORAGE_TOP_LEFT_CORNER_INDEX 2
-#define STORAGE_TOP_RIGHT_CORNER_INDEX 3
-#define STORAGE_BOTTOM_LEFT_CORNER_INDEX 4
-#define STORAGE_BOTTOM_RIGHT_CORNER_INDEX 5
-#define STORAGE_LEFT_ROWJOIN_INDEX 6
-#define STORAGE_RIGHT_ROWJOIN_INDEX 7
-
 /datum/storage
 	/**
 	 * A reference to the atom linked to this storage object
@@ -31,15 +23,10 @@
 	/// List of all the mobs currently viewing the contents of this storage.
 	VAR_PRIVATE/list/mob/is_using = list()
 
-	/// Associated list of all storage cells and corners.
-	/// In order to minimize memory taken, only one storage UI set is generated per UI theme.
-	VAR_PRIVATE/list/storage_sets = list()
-	/// Associated list of all "close storage" buttons.
-	VAR_PRIVATE/list/atom/movable/screen/close/storage_closers = list()
-	/// Associated list that tracks how many mobs are viewing this storage with a certain UI theme. Used to delete unused UI theme objects.
-	VAR_PRIVATE/list/storage_themes = list()
+	/// Associated list that keeps track of all storage UI datums, which store how many people with a certain UI theme have this storage open and all UI elements for that theme.
+	VAR_PRIVATE/list/datum/storage_ui_theme/storage_themes = null
 	/// Associated list that keeps track of what theme the container was open with. Without this, if observer changes their UI with an open container it will not close and will cause a runtime
-	VAR_PRIVATE/list/theme_cache = list()
+	VAR_PRIVATE/list/theme_cache = null
 
 	/// Typecache of items that can be inserted into this storage.
 	/// By default, all item types can be inserted (assuming other conditions are met).
@@ -160,8 +147,8 @@
 		hide_contents(person)
 
 	is_using.Cut()
-	storage_themes.Cut()
-	theme_cache.Cut()
+	QDEL_LAZYLIST(storage_themes)
+	QDEL_LAZYLIST(theme_cache)
 
 	return ..()
 
@@ -1017,21 +1004,22 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		var/atom/movable/movable_loc = real_location
 		movable_loc.become_active_storage(src)
 
+	LAZYINITLIST(theme_cache)
+	LAZYINITLIST(storage_themes)
+
 	var/ui_style = ui_style2icon(toshow.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 	theme_cache[toshow] = ui_style
 
-	if (ui_style in storage_themes)
-		storage_themes[ui_style] += 1
+	if (!isnull(storage_themes[ui_style]))
+		storage_themes[ui_style].current_viewers += 1
 	else
-		storage_themes[ui_style] = 1
-		generate_storage_ui(ui_style)
+		storage_themes[ui_style] = new /datum/storage_ui_theme(ui_style, src)
 
 	orient_storage()
 
 	is_using |= toshow
 
-	toshow.client.screen |= storage_sets[ui_style]
-	toshow.client.screen |= storage_closers[ui_style]
+	toshow.client.screen |= storage_themes[ui_style].list_ui_elements()
 	toshow.client.screen |= real_location.contents
 
 	return TRUE
@@ -1054,32 +1042,19 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	is_using -= to_hide
 
-	var/ui_style = GLOB.available_ui_styles[GLOB.available_ui_styles[1]] //Default UI style
-	if (to_hide in theme_cache)
-		ui_style = theme_cache[to_hide]
-		theme_cache -= to_hide
+	if (!(to_hide in theme_cache))
+		return
 
-	to_hide.client.screen -= storage_sets[ui_style]
-	to_hide.client.screen -= storage_closers[ui_style]
+	var/ui_style = theme_cache[to_hide]
+	theme_cache -= to_hide
+	to_hide.client.screen -= storage_themes[ui_style].list_ui_elements()
 	to_hide.client.screen -= real_location.contents
 
-	if (ui_style in storage_themes)
-		storage_themes[ui_style] -= 1
-
-		if (storage_themes[ui_style] <= 0)
-			for (var/ui_elem in storage_sets[ui_style])
-				QDEL_NULL(ui_elem)
-			storage_sets -= ui_style
-
-			QDEL_NULL(storage_closers[ui_style])
-			storage_themes -= ui_style
-	else
-		for (var/ui_elem in storage_sets[ui_style])
-			QDEL_NULL(ui_elem)
-		storage_sets -= ui_style
-		QDEL_NULL(storage_closers[ui_style])
+	if (storage_themes[ui_style].deduct_viewer())
+		QDEL_NULL(storage_themes[ui_style])
 
 	return TRUE
+
 
 /datum/storage/proc/action_trigger(datum/source, datum/action/triggered)
 	SIGNAL_HANDLER
@@ -1090,44 +1065,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	SIGNAL_HANDLER
 
 	modeswitch_action = null
-
-
-/**
- * Generates UI elements for a certain UI style
- *
- * @param ui_style UI style that we are generating elements for
- */
-/datum/storage/proc/generate_storage_ui(ui_style)
-	var/atom/movable/screen/close/closer = new(null, null, src)
-	closer.icon = ui_style
-	storage_closers[ui_style] = closer
-
-	var/atom/movable/screen/storage/cells = new(null, null, src)
-	var/atom/movable/screen/storage/corner/corner1 = new(null, null, src)
-	var/atom/movable/screen/storage/corner/corner2 = new(null, null, src)
-	var/atom/movable/screen/storage/corner/corner3 = new(null, null, src)
-	var/atom/movable/screen/storage/corner/corner4 = new(null, null, src)
-	var/atom/movable/screen/storage/rowjoin/rowjoin1 = new(null, null, src)
-	var/atom/movable/screen/storage/rowjoin/rowjoin2 = new(null, null, src)
-
-	cells.icon = ui_style
-	corner1.icon = ui_style
-	corner2.icon = ui_style
-	corner3.icon = ui_style
-	corner4.icon = ui_style
-	rowjoin1.icon = ui_style
-	rowjoin2.icon = ui_style
-
-	corner2.icon_state = "storage_corner_topright"
-	corner3.icon_state = "storage_corner_bottomleft"
-	corner4.icon_state = "storage_corner_bottomright"
-	corner2.update_appearance()
-	corner3.update_appearance()
-	corner4.update_appearance()
-
-	rowjoin2.icon_state = "storage_rowjoin_right"
-
-	storage_sets[ui_style] = list(cells, corner1, corner2, corner3, corner4, rowjoin1, rowjoin2)
 
 /// Updates views of all objects in storage and stretches UI to appropriate size
 /datum/storage/proc/orient_storage()
@@ -1143,45 +1080,30 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/columns = clamp(max_slots, 1, screen_max_columns)
 	var/rows = clamp(CEILING(adjusted_contents / columns, 1) + additional_row, 1, screen_max_rows)
 
-	for (var/ui_theme in storage_sets)
-		var/list/atom/movable/screen/storage/ui_set = storage_sets[ui_theme]
-		ui_set[STORAGE_CELL_INDEX].screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x + columns - 1]:[screen_pixel_x],[screen_start_y + rows - 1]:[screen_pixel_y]"
-
-		ui_set[STORAGE_TOP_LEFT_CORNER_INDEX].screen_loc = "[screen_start_x + 1]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x + columns - 1]:[screen_pixel_x],[screen_start_y + rows - 1]:[screen_pixel_y]"
-		ui_set[STORAGE_TOP_RIGHT_CORNER_INDEX].screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x + max(0, columns - 2)]:[screen_pixel_x],[screen_start_y + rows - 1]:[screen_pixel_y]"
-		ui_set[STORAGE_BOTTOM_LEFT_CORNER_INDEX].screen_loc = "[screen_start_x + 1]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x + columns - 1]:[screen_pixel_x],[screen_start_y + rows - 1]:[screen_pixel_y]"
-		ui_set[STORAGE_BOTTOM_RIGHT_CORNER_INDEX].screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x + max(0, columns - 2)]:[screen_pixel_x],[screen_start_y + rows - 1]:[screen_pixel_y]"
-
-		ui_set[STORAGE_LEFT_ROWJOIN_INDEX].screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y + 27] to [screen_start_x]:[screen_pixel_x],[screen_start_y + max(0, rows - 2)]:[screen_pixel_y + 27]"
-		ui_set[STORAGE_LEFT_ROWJOIN_INDEX].alpha = (rows > 1) * 255
-
-		ui_set[STORAGE_RIGHT_ROWJOIN_INDEX].screen_loc = "[screen_start_x + columns - 1]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y + 27] to [screen_start_x + columns - 1]:[screen_pixel_x],[screen_start_y + max(0, rows - 2)]:[screen_pixel_y + 27]"
-		ui_set[STORAGE_RIGHT_ROWJOIN_INDEX].alpha = (rows > 1) * 255
-
-		storage_closers[ui_theme].screen_loc = "[screen_start_x + columns]:[screen_pixel_x - 5],[screen_start_y]:[screen_pixel_y]"
+	for (var/ui_theme in storage_themes)
+		storage_themes[ui_theme].update_position(screen_start_x, screen_pixel_x, screen_start_y, screen_pixel_y, columns, rows)
 
 	var/current_x = screen_start_x
 	var/current_y = screen_start_y
 	var/turf/our_turf = get_turf(real_location)
 
 	if(islist(numbered_contents))
-		for(var/type in numbered_contents)
-			var/datum/numbered_display/numberdisplay = numbered_contents[type]
+		for(var/content_type in numbered_contents)
+			var/datum/numbered_display/numberdisplay = numbered_contents[content_type]
 
 			var/obj/item/display_sample = numberdisplay.sample_object
 			display_sample.mouse_opacity = MOUSE_OPACITY_OPAQUE
 			display_sample.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
 			display_sample.maptext = MAPTEXT("<font color='white'>[(numberdisplay.number > 1)? "[numberdisplay.number]" : ""]</font>")
 			SET_PLANE(display_sample, ABOVE_HUD_PLANE, our_turf)
-
 			current_x++
+			if(current_x - screen_start_x < columns)
+				continue
+			current_x = screen_start_x
 
-			if(current_x - screen_start_x >= columns)
-				current_x = screen_start_x
-				current_y++
-
-				if(current_y - screen_start_y >= rows)
-					break
+			current_y++
+			if(current_y - screen_start_y >= rows)
+				break
 
 		return
 
@@ -1191,15 +1113,14 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		item.maptext = ""
 		item.plane = ABOVE_HUD_PLANE
 		SET_PLANE(item, ABOVE_HUD_PLANE, our_turf)
-
 		current_x++
+		if(current_x - screen_start_x < columns)
+			continue
+		current_x = screen_start_x
 
-		if(current_x - screen_start_x >= columns)
-			current_x = screen_start_x
-			current_y++
-
-			if(current_y - screen_start_y >= rows)
-				break
+		current_y++
+		if(current_y - screen_start_y >= rows)
+			break
 
 /**
  * Toggles the collectmode of our storage.
@@ -1232,11 +1153,3 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	changed.visible_message(span_warning("[changed] falls out of [parent]!"), vision_distance = COMBAT_MESSAGE_RANGE)
-
-#undef STORAGE_CELL_INDEX
-#undef STORAGE_TOP_LEFT_CORNER_INDEX
-#undef STORAGE_TOP_RIGHT_CORNER_INDEX
-#undef STORAGE_BOTTOM_LEFT_CORNER_INDEX
-#undef STORAGE_BOTTOM_RIGHT_CORNER_INDEX
-#undef STORAGE_LEFT_ROWJOIN_INDEX
-#undef STORAGE_RIGHT_ROWJOIN_INDEX
