@@ -281,7 +281,7 @@
 /mob/living/basic/revenant/gib()
 	death()
 
-/mob/living/basic/revenant/can_perform_action(atom/movable/target, action_bitflags)
+/mob/living/basic/revenant/can_perform_action(atom/target, action_bitflags)
 	return FALSE
 
 /mob/living/basic/revenant/ex_act(severity, target)

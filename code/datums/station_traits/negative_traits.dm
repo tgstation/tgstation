@@ -285,7 +285,7 @@
 	weight = 0
 
 	/// The path to the round_event_control that we modify.
-	var/event_control_path
+	var/datum/round_event_control/event_control_path
 	/// Multiplier applied to the weight of the event.
 	var/weight_multiplier = 1
 	/// Flat modifier added to the amount of max occurances the random event can have.
@@ -307,6 +307,11 @@
 	weight = 3
 	event_control_path = /datum/round_event_control/ion_storm
 	weight_multiplier = 2
+
+/datum/station_trait/random_event_weight_modifier/ion_storms/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>ERROR</b></center><BR>"
+	advisory_string += scramble_message_replace_chars("Your sector's advisory level is ERROR. An electromagnetic field has stormed through nearby surveillance equipment, causing major data loss. Partial data was recovered and showed no credible threats to Nanotrasen assets within the Spinward Sector; however, the Department of Intelligence advises maintaining high alert against potential threats due to the lack of complete data.", 35)
+	return advisory_string
 
 /datum/station_trait/random_event_weight_modifier/rad_storms
 	name = "Radiation Stormfront"
@@ -719,7 +724,11 @@
 	weight = 3
 	show_in_report = TRUE
 	report_message = "It looks like the storm is not gonna calm down anytime soon, stay safe out there."
-
 	storm_type = /datum/weather/snow_storm/forever_storm
+
+/datum/station_trait/storm/foreverstorm/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>Ice Giant</b></center><BR>"
+	advisory_string += "The ongoing blizzard has interfered with our surveillance equipment, and we cannot provide an accurate threat summary at this time. We advise you to stay safe and avoid traversing the area around the station."
+	return advisory_string
 
 #undef GLOW_NEBULA

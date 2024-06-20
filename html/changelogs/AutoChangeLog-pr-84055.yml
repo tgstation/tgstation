@@ -1,0 +1,4 @@
+author: "Goat"
+delete-after: True
+changes:
+  - bugfix: "Icebox's raptor den is now lined with asbestos and lead and no longer gets hit with radiation."

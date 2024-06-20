@@ -7,6 +7,11 @@
 	report_message = "Rumors has it that the clown planet has been sending support packages to clowns in this system."
 	trait_to_give = STATION_TRAIT_BANANIUM_SHIPMENTS
 
+/datum/station_trait/bananium_shipment/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>Clown Planet</b></center><BR>"
+	advisory_string += "Your sector's advisory level is Clown Planet! Our bike horns have picked up on a large bananium stash. Clowns show a large influx of clowns on your station. We highly advise you to slip any threats to keep Honkotrasen assets within the Banana Sector. The Department of Intelligence advises defending chemistry from any clowns that are trying to make baldium or space lube."
+	return advisory_string
+
 /datum/station_trait/unnatural_atmosphere
 	name = "Unnatural atmospherical properties"
 	trait_type = STATION_TRAIT_NEUTRAL
@@ -121,6 +126,11 @@
 /datum/station_trait/announcement_intern/New()
 	. = ..()
 	SSstation.announcer = /datum/centcom_announcer/intern
+
+/datum/station_trait/announcement_intern/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>(TITLE HERE)</b></center><BR>"
+	advisory_string += "(Copy/Paste the summary provided by the Threat Intelligence Office in this field. You shouldn't have any trouble with this just make sure to replace this message before hitting the send button. Also, make sure there's coffee ready for the meeting at 06:00 when you're done.)"
+	return advisory_string
 
 /datum/station_trait/announcement_medbot
 	name = "Announcement \"System\""

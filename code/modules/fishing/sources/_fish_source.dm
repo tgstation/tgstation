@@ -69,6 +69,10 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 /datum/fish_source/proc/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	return rod.reason_we_cant_fish(src)
 
+/// Called below above proc, in case the fishing source has anything to do that isn't denial
+/datum/fish_source/proc/on_start_fishing(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
+	return
+
 /**
  * Calculates the difficulty of the minigame:
  *

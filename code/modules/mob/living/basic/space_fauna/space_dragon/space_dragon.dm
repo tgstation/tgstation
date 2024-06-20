@@ -80,6 +80,11 @@
 	buffet = new(src)
 	buffet.Grant(src)
 
+/mob/living/basic/space_dragon/Destroy()
+	fire_breath = null
+	buffet = null
+	return ..()
+
 /mob/living/basic/space_dragon/Login()
 	. = ..()
 	if(!isnull(chosen_colour))
