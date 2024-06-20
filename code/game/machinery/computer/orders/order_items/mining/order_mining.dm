@@ -119,3 +119,7 @@
 /datum/orderable_item/mining/grapple_gun
 	item_path = /obj/item/grapple_gun
 	cost_per_order = 3000
+
+/datum/orderable_item/mining/spess_knife
+	item_path = /obj/item/spess_knife
+	cost_per_order = 2000
