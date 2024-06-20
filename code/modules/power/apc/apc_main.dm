@@ -250,9 +250,18 @@
 
 /obj/machinery/power/apc/proc/on_saboteur(datum/source, disrupt_duration)
 	SIGNAL_HANDLER
+
 	disrupt_duration *= 0.1 // so, turns out, failure timer is in seconds, not deciseconds; without this, disruptions last 10 times as long as they probably should
 	energy_fail(disrupt_duration)
 	return COMSIG_SABOTEUR_SUCCESS
+
+/obj/machinery/power/apc/on_set_is_operational(old_value)
+	update_area_power_usage(!old_value)
+
+/obj/machinery/power/apc/update_name(updates)
+	. = ..()
+	if(auto_name)
+		name = "\improper [get_area_name(area, TRUE)] APC"
 
 /obj/machinery/power/apc/proc/assign_to_area(area/target_area = get_area(src))
 	if(area == target_area)
@@ -260,28 +269,32 @@
 
 	disconnect_from_area()
 	area = target_area
-	area.power_light = TRUE
-	area.power_equip = TRUE
-	area.power_environ = TRUE
-	area.power_change()
+	update_area_power_usage(TRUE)
 	area.apc = src
 	auto_name = TRUE
 
 	update_appearance(UPDATE_NAME)
 
-/obj/machinery/power/apc/update_name(updates)
-	. = ..()
-	if(auto_name)
-		name = "\improper [get_area_name(area, TRUE)] APC"
+/obj/machinery/power/apc/proc/update_area_power_usage(state)
+	//apc is non functional so force disable
+	if(state && (has_electronics != APC_ELECTRONICS_SECURED || (machine_stat & (BROKEN | MAINT)) || QDELETED(cell)))
+		state = FALSE
+
+	//no change in value
+	if(state == area.power_light && state == area.power_equip && state == area.power_environ)
+		return
+
+	area.power_light = state
+	area.power_equip = state
+	area.power_environ = state
+
+	area.power_change()
 
 /obj/machinery/power/apc/proc/disconnect_from_area()
 	if(isnull(area))
 		return
 
-	area.power_light = FALSE
-	area.power_equip = FALSE
-	area.power_environ = FALSE
-	area.power_change()
+	update_area_power_usage(FALSE)
 	area.apc = null
 	area = null
 
@@ -318,9 +331,16 @@
 		else
 			. += "The cover is closed."
 
-/obj/machinery/power/apc/on_deconstruction(disassembled = TRUE)
-	if(!(machine_stat & BROKEN))
-		set_broken()
+/obj/machinery/power/apc/atom_break(damage_flag)
+	. = ..()
+	if(.)
+		if(malfai && operating)
+			malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10, 0, 1000)
+		operating = FALSE
+		if(occupier)
+			malfvacate(TRUE)
+		update()
+
 	if(opened != APC_COVER_REMOVED)
 		opened = APC_COVER_REMOVED
 		coverlocked = FALSE

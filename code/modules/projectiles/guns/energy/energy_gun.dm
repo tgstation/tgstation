@@ -86,7 +86,7 @@
 
 /obj/item/gun/energy/e_gun/dragnet
 	name = "\improper DRAGnet"
-	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology."
+	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology. Can by synced with a DRAGnet beacon to set a teleport destination for snare rounds."
 	icon_state = "dragnet"
 	inhand_icon_state = "dragnet"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -95,9 +95,34 @@
 	modifystate = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 	ammo_x_offset = 1
+	///A dragnet beacon set to be the teleport destination for snare teleport rounds.
+	var/obj/item/dragnet_beacon/linked_beacon
 
 /obj/item/gun/energy/e_gun/dragnet/add_seclight_point()
 	return
+
+/obj/item/gun/energy/e_gun/dragnet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/dragnet_beacon))
+		link_beacon(user, tool)
+
+///Sets the linked_beacon var on the dragnet, which becomes the snare round's teleport destination.
+/obj/item/gun/energy/e_gun/dragnet/proc/link_beacon(mob/living/user, obj/item/dragnet_beacon/our_beacon)
+	if(linked_beacon)
+		if(our_beacon == linked_beacon)
+			balloon_alert(user, "already synced!")
+			return
+		else
+			UnregisterSignal(linked_beacon, COMSIG_QDELETING) //You're getting overridden dude.
+
+	linked_beacon = our_beacon
+	balloon_alert(user, "beacon synced")
+	RegisterSignal(our_beacon, COMSIG_QDELETING, PROC_REF(handle_beacon_disable))
+
+///Handles clearing the linked_beacon reference in the event that it is deleted.
+/obj/item/gun/energy/e_gun/dragnet/proc/handle_beacon_disable(datum/source)
+	SIGNAL_HANDLER
+	visible_message(span_warning("A light on the [src] flashes, indicating that it is no longer linked with a DRAGnet beacon!"))
+	linked_beacon = null
 
 /obj/item/gun/energy/e_gun/dragnet/snare
 	name = "Energy Snare Launcher"

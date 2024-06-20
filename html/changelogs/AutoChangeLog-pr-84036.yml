@@ -1,0 +1,5 @@
+author: "r3dj4ck0424"
+delete-after: True
+changes:
+  - bugfix: "puts tiles under the wawa tool storage doors"
+  - bugfix: "allows you to access a door and a fire alarm on wawa's prison second floor"

@@ -335,7 +335,7 @@
 	name = "Exosuit Materials: Load Strain Test"
 	description = "Exosuit equipment places unique strain upon the structure of the vehicle. Scan exosuits you have assembled from your exosuit fabricator and fully equipped to accelerate our structural stress simulations."
 	possible_types = list(/obj/vehicle/sealed/mecha)
-	total_requirement = 2
+	total_requirement = 1
 
 /// Scan for organs you didn't start the round with
 /datum/experiment/scanning/people/novel_organs
@@ -383,6 +383,7 @@
 	description = "We need to gather data on how cybernetic vital organs integrate with human biology. Conduct a scan on a human with these implants to help us understand their compatibility"
 	performance_hint = "Perform an organ manipulation surgery to replace one of the vital organs with a cybernetic variant."
 	required_traits_desc = "augmented vital organs"
+	required_count = 1
 
 /datum/experiment/scanning/people/augmented_organs/is_valid_scan_target(mob/living/carbon/human/check)
 	. = ..()
@@ -431,15 +432,19 @@
 	required_reagent = /datum/reagent/cryostylane
 	min_purity = 0.99
 
-/datum/experiment/scanning/bluespace_crystal
+/datum/experiment/scanning/points/bluespace_crystal
 	name = "Bluespace Crystal Sampling"
 	description = "Investigate the properties of bluespace crystals by scanning either an artificial or naturally occurring variant. This will help us deepen our understanding of bluespace phenomena."
-	required_atoms = list(/obj/item/stack/ore/bluespace_crystal = 1)
+	required_points = 1
+	required_atoms = list(
+		/obj/item/stack/ore/bluespace_crystal = 1,
+		/obj/item/stack/sheet/bluespace_crystal = 1
+	)
 
 /datum/experiment/scanning/points/machinery_tiered_scan/tier2_any
 	name = "Upgraded Stock Parts Benchmark"
 	description = "Our newly-designed machinery components require practical application tests for hints at possible further advancements, as well as a general confirmation that we didn't actually design worse parts somehow. Scan any machinery with Upgraded Parts and report the results."
-	required_points = 8
+	required_points = 4
 	required_atoms = list(
 		/obj/machinery = 1
 	)
@@ -448,7 +453,7 @@
 /datum/experiment/scanning/points/machinery_tiered_scan/tier3_any
 	name = "Advanced Stock Parts Benchmark"
 	description = "Our newly-designed machinery components require practical application tests for hints at possible further advancements, as well as a general confirmation that we didn't actually design worse parts somehow. Scan any machinery with Advanced Parts and report the results."
-	required_points = 8
+	required_points = 4
 	required_atoms = list(
 		/obj/machinery = 1
 	)

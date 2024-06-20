@@ -388,38 +388,37 @@
  * Used to return a list of equipped items on a mob; does not include held items (use get_all_gear)
  *
  * Argument(s):
- * * Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list
- * * Optional - include_accessories (TRUE/FALSE), whether or not to include the accessories in the returned list
+ * * Optional - include_flags, (see obj.flags.dm) describes which optional things to include or not (pockets, accessories, held items)
  */
 
-/mob/living/proc/get_equipped_items(include_pockets = FALSE, include_accessories = FALSE)
+/mob/living/proc/get_equipped_items(include_flags = NONE)
 	var/list/items = list()
 	for(var/obj/item/item_contents in contents)
 		if(item_contents.item_flags & IN_INVENTORY)
 			items += item_contents
-	items -= held_items
+	if (!(include_flags & INCLUDE_HELD))
+		items -= held_items
 	return items
 
 /**
- * Used to return a list of equipped items on a human mob; does not include held items (use get_all_gear)
+ * Used to return a list of equipped items on a human mob; does not by default include held items, see include_flags
  *
  * Argument(s):
- * * Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list
- * * Optional - include_accessories (TRUE/FALSE), whether or not to include the accessories in the returned list
+ * * Optional - include_flags, (see obj.flags.dm) describes which optional things to include or not (pockets, accessories, held items)
  */
 
-/mob/living/carbon/human/get_equipped_items(include_pockets = FALSE, include_accessories = FALSE)
+/mob/living/carbon/human/get_equipped_items(include_flags = NONE)
 	var/list/items = ..()
-	if(!include_pockets)
+	if(!(include_flags & INCLUDE_POCKETS))
 		items -= list(l_store, r_store, s_store)
-	if(include_accessories && w_uniform)
+	if((include_flags & INCLUDE_ACCESSORIES) && w_uniform)
 		var/obj/item/clothing/under/worn_under = w_uniform
 		items += worn_under.attached_accessories
 	return items
 
 /mob/living/proc/unequip_everything()
 	var/list/items = list()
-	items |= get_equipped_items(include_pockets = TRUE)
+	items |= get_equipped_items(INCLUDE_POCKETS)
 	for(var/I in items)
 		dropItemToGround(I)
 	drop_all_held_items()
@@ -558,7 +557,7 @@
 
 //GetAllContents that is reasonable and not stupid
 /mob/living/proc/get_all_gear()
-	var/list/processing_list = get_equipped_items(include_pockets = TRUE, include_accessories = TRUE) + held_items
+	var/list/processing_list = get_equipped_items(INCLUDE_POCKETS | INCLUDE_ACCESSORIES | INCLUDE_HELD)
 	list_clear_nulls(processing_list) // handles empty hands
 	var/i = 0
 	while(i < length(processing_list))

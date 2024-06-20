@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - rscadd: "Replaces the Particle Acceleration Rifle with the Event Horizon anti-existential beam rifle. It shoots black holes. You can make this in-game. That's right, YOU!"
+  - balance: "Only one vortex anomaly can be made in a round."
