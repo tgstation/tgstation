@@ -1,0 +1,4 @@
+author: "RikuTheKiller"
+delete-after: True
+changes:
+  - bugfix: "Reagents will now be removed/transferred consistently from cigarettes, smoke machines, etc. rather than at random."
