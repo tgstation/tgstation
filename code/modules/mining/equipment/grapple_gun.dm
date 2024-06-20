@@ -2,7 +2,7 @@
 
 /obj/item/grapple_gun
 	name = "grapple gun"
-	desc = "A handy tool for traversing the land-scape of lava-land!"
+	desc = "A handy tool for traversing the craggy landscape of lavaland!"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "grapple_gun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
