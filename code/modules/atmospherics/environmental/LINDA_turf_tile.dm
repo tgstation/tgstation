@@ -696,6 +696,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 //handle the grouping of hotspot and then determining an average center to play sound in
 /datum/hot_group
 	var/list/turf_list = list()
+	var/turf/open/current_sound_loc
 	var/datum/looping_sound/fire/sound
 	var/static/mutable_appearance/highlight = mutable_appearance('icons/turf/overlays.dmi', "greenOverlay", 5.06)
 	var/tiles_limit = 50
@@ -739,10 +740,14 @@ Then we space some of our heat, and think about if we should stop conducting.
 
 /datum/hot_group/proc/update_sound()
 	var/turf/open/sound_turf = create_sound_center(turf_list)
+	if(sound_turf == current_sound_loc)
+		return
 	if(sound)
 		sound.parent = sound_turf
-	else
-		sound = new(sound_turf, TRUE)
+	else if(!sound)
+		sound = new
+		sound.parent = sound_turf
+		current_sound_loc = sound_turf
 
 /datum/looping_sound/fire
 	mid_sounds = 'sound/vox_fem/fire.ogg'
