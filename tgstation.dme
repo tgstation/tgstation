@@ -392,7 +392,7 @@
 #include "code\__DEFINES\traits\declarations.dm"
 #include "code\__DEFINES\traits\macros.dm"
 #include "code\__DEFINES\traits\sources.dm"
-#include "code\__DEFINES\~massmeta_defines\_defines_include.dm"
+#include "code\__DEFINES\~meta_defines\modular_meta_defines.dme" //MASSMETA EDIT ADDITION (all massmeta defines only here)
 #include "code\__HELPERS\_auxtools_api.dm"
 #include "code\__HELPERS\_lists.dm"
 #include "code\__HELPERS\_planes.dm"
@@ -507,6 +507,7 @@
 #include "code\__HELPERS\paths\sssp.dm"
 #include "code\__HELPERS\sorts\helpers.dm"
 #include "code\__HELPERS\sorts\sort_instance.dm"
+#include "code\__HELPERS\~meta_helpers\modular_meta_helpers.dme" //MASSMETA EDIT ADDITION (all massmeta helpers only here)
 #include "code\_globalvars\_regexes.dm"
 #include "code\_globalvars\admin.dm"
 #include "code\_globalvars\arcade.dm"
@@ -6240,5 +6241,5 @@
 #include "interface\fonts\spess_font.dm"
 #include "interface\fonts\tiny_unicode.dm"
 #include "interface\fonts\vcr_osd_mono.dm"
-#include "massmeta\includes.dm"
+#include "massmeta\modular_meta.dme" //MASSMETA EDIT ADDITION (all massmeta modules only here)
 // END_INCLUDE

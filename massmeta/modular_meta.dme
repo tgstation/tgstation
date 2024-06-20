@@ -1,4 +1,7 @@
-//master files
+//modular files
+
+
+//master files (unsorted, TODO: need modularization)
 #include "code\_globalvars\lists\names.dm"
 #include "code\__HELPERS\names.dm"
 #include "interface\interface.dm"
@@ -104,3 +107,4 @@
 #include "code\modules\reagents\chemistry\reagents\drinks\glass_styles\sodas.dm"
 #include "code\modules\reagents\reagent_containers\cups\soda.dm"
 #include "code\modules\reagents\reagent_dispenser.dm"
+
