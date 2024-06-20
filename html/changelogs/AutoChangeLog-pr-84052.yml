@@ -1,4 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - bugfix: "Mining borgs can get multiple modkits of the same type installed again."

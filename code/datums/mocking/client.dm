@@ -48,3 +48,6 @@
 
 /datum/client_interface/proc/set_macros()
 	return
+
+/datum/client_interface/proc/update_ambience_pref()
+	return

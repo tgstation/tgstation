@@ -1,0 +1,6 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - qol: "Vending machines now give audio feedback when you restock a vending refill and get a payout."
+  - qol: "The Restock tracker NTOS app for tracking vending machine contents now works on all consoles, and comes pre-installed on the cargochat cargo computers."
+  - balance: "Vending machines now offer a bit more credits when missing contents at the start of a round after getting restocked."

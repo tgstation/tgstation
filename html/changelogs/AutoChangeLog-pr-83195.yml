@@ -1,5 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - balance: "Replaced the free reagent purging with actually purging by exploding someone in the blood while they have omnizine and a purgative in their bloodstream. Let's go practice medicine!"
-  - bugfix: "Fixed the free reagent purging mechanic from causing an explosion so weak that it doesn't cause any damage."

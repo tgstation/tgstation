@@ -176,7 +176,7 @@
 	stat_allowed = HARD_CRIT
 
 /datum/emote/living/gasp/get_sound(mob/living/user)
-	if(!HAS_MIND_TRAIT(user, TRAIT_MIMING))
+	if(HAS_MIND_TRAIT(user, TRAIT_MIMING))
 		return
 	if(!ishuman(user))
 		return

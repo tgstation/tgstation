@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "ctrl+shift clicking on a ghost will only quick spawn that clicked target and not you"
