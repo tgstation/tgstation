@@ -9,7 +9,7 @@
  */
 /atom/proc/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user, mecha_attack_cooldown)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_MECH, mecha_attacker, user, mecha_cooldown)
+	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_MECH, mecha_attacker, user, mecha_attack_cooldown)
 	log_combat(user, src, "attacked", mecha_attacker, "(COMBAT MODE: [uppertext(user.combat_mode)] (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
 	return 0
 
@@ -31,7 +31,7 @@
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	else
 		add_dent(WALL_DENT_HIT)
-	TIMER_COOLDOWN_START(mecha_attacker, COOLDOWN_MECHA_MELEE_ATTACK, mecha_attacker.mecha_attack_cooldown)
+	TIMER_COOLDOWN_START(mecha_attacker, COOLDOWN_MECHA_MELEE_ATTACK, mecha_attack_cooldown)
 	..()
 	return 100 //this is an arbitrary "damage" number since the actual damage is rng dismantle
 
@@ -48,7 +48,7 @@
 		else
 			return 0
 	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
-	TIMER_COOLDOWN_START(mecha_attacker, COOLDOWN_MECHA_MELEE_ATTACK, mecha_attacker.mecha_attack_cooldown)
+	TIMER_COOLDOWN_START(mecha_attacker, COOLDOWN_MECHA_MELEE_ATTACK, mecha_attack_cooldown)
 	..()
 	return take_damage(mecha_attacker.force * 3, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
@@ -65,7 +65,7 @@
 		else
 			return 0
 	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
-	TIMER_COOLDOWN_START(mecha_attacker, COOLDOWN_MECHA_MELEE_ATTACK, mecha_attacker.mecha_attack_cooldown)
+	TIMER_COOLDOWN_START(mecha_attacker, COOLDOWN_MECHA_MELEE_ATTACK, mecha_attack_cooldown)
 	..()
 	return take_damage(mecha_attacker.force * 3, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
@@ -75,7 +75,7 @@
 	return ..()
 
 /mob/living/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user, mecha_attack_cooldown)
-	TIMER_COOLDOWN_START(mecha_attacker, COOLDOWN_MECHA_MELEE_ATTACK, mecha_attacker.mecha_attack_cooldown)
+	TIMER_COOLDOWN_START(mecha_attacker, COOLDOWN_MECHA_MELEE_ATTACK, mecha_attack_cooldown)
 
 	if(!user.combat_mode)
 		step_away(src, mecha_attacker)
