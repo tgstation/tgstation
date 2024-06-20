@@ -1,0 +1,6 @@
+author: "Rex9001"
+delete-after: True
+changes:
+  - bugfix: "lunatics now get their hud properly"
+  - bugfix: "lunatics now get objectives"
+  - qol: "ascended moon heretics are now labelled as ringleaders and are easier for lunatics to spot"
