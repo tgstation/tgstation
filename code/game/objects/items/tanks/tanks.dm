@@ -419,6 +419,10 @@
 		return TRUE
 	return ..()
 
+/obj/item/tank/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	ui_interact(user)
+
 /obj/item/tank/Move()
 	. = ..()
 	if(tank_assembly)
