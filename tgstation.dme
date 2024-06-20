@@ -392,8 +392,7 @@
 #include "code\__DEFINES\traits\declarations.dm"
 #include "code\__DEFINES\traits\macros.dm"
 #include "code\__DEFINES\traits\sources.dm"
-#include "code\__DEFINES\~meta_defines\inventory.dm" //MASSMETA EDIT ADDITION DEFINES
-#include "code\__DEFINES\~meta_defines\butt_furrt.dm" //MASSMETA EDIT ADDITION DEFINES
+#include "code\__DEFINES\~meta_defines\meta_defines_all.dm" //MASSMETA EDIT ADDITION DEFINES
 #include "code\__HELPERS\_auxtools_api.dm"
 #include "code\__HELPERS\_lists.dm"
 #include "code\__HELPERS\_planes.dm"
@@ -508,7 +507,6 @@
 #include "code\__HELPERS\paths\sssp.dm"
 #include "code\__HELPERS\sorts\helpers.dm"
 #include "code\__HELPERS\sorts\sort_instance.dm"
-// MASSMETA HELPERS WILL GOES HERE
 #include "code\_globalvars\_regexes.dm"
 #include "code\_globalvars\admin.dm"
 #include "code\_globalvars\arcade.dm"
