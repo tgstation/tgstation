@@ -4,14 +4,14 @@
 	icon = 'icons/obj/signs.dmi'
 	resistance_flags = FLAMMABLE
 	flags_1 = NONE
-	icon_state = "frame-empty"
+	icon_state = "eldritch_painting_debug"
 	result_path = /obj/structure/sign/painting/eldritch
 	pixel_shift = 30
 
 /obj/structure/sign/painting/eldritch
 	name = "The debug and a coder who slept"
 	icon = 'icons/obj/signs.dmi'
-	icon_state = "frame-empty"
+	icon_state = "eldritch_painting_debug"
 	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
 	buildable_sign = FALSE
