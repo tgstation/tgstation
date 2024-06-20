@@ -14,6 +14,9 @@
 	return 0
 
 /turf/closed/wall/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
+	if(!COOLDOWN_FINISHED(mecha_attacker, mecha_bump_smash) || !user.combat_mode)
+		return 0
+
 	mecha_attacker.do_attack_animation(src)
 	switch(mecha_attacker.damtype)
 		if(BRUTE)
@@ -28,10 +31,14 @@
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	else
 		add_dent(WALL_DENT_HIT)
+	COOLDOWN_START(mecha_attacker, mecha_bump_smash, mecha_attacker.smashcooldown)
 	..()
 	return 100 //this is an arbitrary "damage" number since the actual damage is rng dismantle
 
-/obj/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
+/obj/structure/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
+	if(!COOLDOWN_FINISHED(mecha_attacker, mecha_bump_smash) || !user.combat_mode)
+		return 0
+
 	mecha_attacker.do_attack_animation(src)
 	switch(mecha_attacker.damtype)
 		if(BRUTE)
@@ -41,6 +48,24 @@
 		else
 			return 0
 	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
+	COOLDOWN_START(mecha_attacker, mecha_bump_smash, mecha_attacker.smashcooldown)
+	..()
+	return take_damage(mecha_attacker.force * 3, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
+
+/obj/machinery/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
+	if(!COOLDOWN_FINISHED(mecha_attacker, mecha_bump_smash) || !user.combat_mode)
+		return 0
+
+	mecha_attacker.do_attack_animation(src)
+	switch(mecha_attacker.damtype)
+		if(BRUTE)
+			playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
+		if(BURN)
+			playsound(src, 'sound/items/welder.ogg', 50, TRUE)
+		else
+			return 0
+	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
+	COOLDOWN_START(mecha_attacker, mecha_bump_smash, mecha_attacker.smashcooldown)
 	..()
 	return take_damage(mecha_attacker.force * 3, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
@@ -50,6 +75,11 @@
 	return ..()
 
 /mob/living/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
+	if(!COOLDOWN_FINISHED(mecha_attacker, mecha_bump_smash))
+		return 0
+
+	COOLDOWN_START(mecha_attacker, mecha_bump_smash, mecha_attacker.smashcooldown)
+
 	if(!user.combat_mode)
 		step_away(src, mecha_attacker)
 		log_combat(user, src, "pushed", mecha_attacker)

@@ -194,8 +194,8 @@
 	///Wether we are strafing
 	var/strafe = FALSE
 
-	///Cooldown length between bumpsmashes
-	var/smashcooldown = 3
+	///Cooldown length between bumpsmashes.
+	var/smashcooldown = 0.3 SECONDS
 
 	///Bool for whether this mech can only be used on lavaland
 	var/lavaland_only = FALSE

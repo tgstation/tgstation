@@ -154,11 +154,12 @@
 		return
 	if(.) //mech was thrown/door/whatever
 		return
+
 	if(bumpsmash) //Need a pilot to push the PUNCH button.
 		if(COOLDOWN_FINISHED(src, mecha_bump_smash))
+			// Our pilot for this evening
 			var/list/mob/mobster = return_drivers()
 			obstacle.mech_melee_attack(src, mobster[1])
-			COOLDOWN_START(src, mecha_bump_smash, smashcooldown)
 			if(!obstacle || obstacle.CanPass(src, get_dir(obstacle, src) || dir)) // The else is in case the obstacle is in the same turf.
 				step(src,dir)
 	if(isobj(obstacle))
