@@ -35,7 +35,7 @@
 	/// In order to minimize memory taken, only one storage UI set is generated per UI theme.
 	VAR_PRIVATE/list/storage_sets = list()
 	/// Associated list of all "close storage" buttons.
-	VAR_PRIVATE/list/storage_closers = list()
+	VAR_PRIVATE/list/atom/movable/screen/close/storage_closers = list()
 	/// Associated list that tracks how many mobs are viewing this storage with a certain UI theme. Used to delete unused UI theme objects.
 	VAR_PRIVATE/list/storage_themes = list()
 	/// Associated list that keeps track of what theme the container was open with. Without this, if observer changes their UI with an open container it will not close and will cause a runtime
@@ -1232,3 +1232,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	changed.visible_message(span_warning("[changed] falls out of [parent]!"), vision_distance = COMBAT_MESSAGE_RANGE)
+
+#undef STORAGE_CELL_INDEX
+#undef STORAGE_TOP_LEFT_CORNER_INDEX
+#undef STORAGE_TOP_RIGHT_CORNER_INDEX
+#undef STORAGE_BOTTOM_LEFT_CORNER_INDEX
+#undef STORAGE_BOTTOM_RIGHT_CORNER_INDEX
+#undef STORAGE_LEFT_ROWJOIN_INDEX
+#undef STORAGE_RIGHT_ROWJOIN_INDEX
