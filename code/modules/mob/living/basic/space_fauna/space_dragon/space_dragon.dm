@@ -47,9 +47,9 @@
 	death_message = "screeches in agony as it collapses to the floor, its life extinguished."
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	can_buckle_to = FALSE
-	lighting_cutoff_red = 32
+	lighting_cutoff_red = 12
 	lighting_cutoff_green = 15
-	lighting_cutoff_blue = 12
+	lighting_cutoff_blue = 34
 
 	/// The colour of the space dragon
 	var/chosen_colour
