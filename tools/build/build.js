@@ -216,7 +216,7 @@ export const DmTarget = new Juke.Target({
     'html/**',
     'icons/**',
     'interface/**',
-    'massmeta/**',
+    'massmeta/**', // MASSMETA EDIT ADDITION - Making the CBT work
     `${DME_NAME}.dme`,
     NamedVersionFile,
   ],
