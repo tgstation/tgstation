@@ -1,0 +1,5 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - refactor: "Compressor UI to TypeScript"
+  - qol: "Simplified Compressor UI layout"
