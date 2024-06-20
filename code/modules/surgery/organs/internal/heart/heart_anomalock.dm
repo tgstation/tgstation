@@ -84,9 +84,9 @@
 	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
 		owner.blood_volume += 5 * seconds_per_tick
 	if(active && owner.health < owner.crit_threshold)
-		owner.heal_overall_damage(3, 3)
+		owner.heal_overall_damage(5, 5)
 		owner.adjustOxyLoss(-5)
-		owner.adjustToxLoss(-3)
+		owner.adjustToxLoss(-5)
 
 ///Does a few things to try to help you live whatever you may be going through
 /obj/item/organ/internal/heart/cybernetic/anomalock/proc/activate_survival(mob/living/carbon/organ_owner)
