@@ -700,7 +700,7 @@
 		return
 	use_energy(melee_energy_drain)
 
-	SEND_SIGNAL(user, COMSIG_MOB_USED_MECH_MELEE, src)
+	SEND_SIGNAL(user, COMSIG_MOB_USED_CLICK_MECH_MELEE, src)
 	target.mech_melee_attack(src, user, melee_cooldown)
 
 /// Driver alt clicks anything while in mech
