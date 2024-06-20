@@ -7,8 +7,8 @@
 	caliber = CALIBER_STRILKA310
 	projectile_type = /obj/projectile/bullet/strilka310
 
- /obj/item/ammo_casing/strilka310/Initialize(mapload)
- 	. = ..()
+/obj/item/ammo_casing/strilka310/Initialize(mapload)
+	. = ..()
 
 	AddElement(/datum/element/caseless)
 
