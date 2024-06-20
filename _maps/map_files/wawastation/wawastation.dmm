@@ -9539,6 +9539,7 @@
 "duB" = (
 /obj/structure/cable,
 /obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
 "duS" = (
@@ -22386,10 +22387,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
-"hWN" = (
-/obj/machinery/firealarm/directional/south,
-/turf/open/openspace,
-/area/station/security/prison)
 "hWW" = (
 /obj/structure/cable,
 /obj/effect/landmark/start/atmospheric_technician,
@@ -45703,7 +45700,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
+/turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "qmI" = (
 /obj/effect/turf_decal/tile/purple/fourcorners,
@@ -46634,6 +46631,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/teleporter)
+"qFS" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/glass/reinforced,
+/area/station/security/prison)
 "qGk" = (
 /turf/closed/wall/r_wall,
 /area/station/hallway/secondary/command)
@@ -65281,6 +65282,10 @@
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/station/asteroid)
+"xbr" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/glass/reinforced,
+/area/station/security/prison)
 "xbs" = (
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -68155,7 +68160,7 @@
 	name = "Primary Tool Storage"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
+/turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "ydC" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -151220,9 +151225,9 @@ hHw
 uRG
 oyP
 dAq
+xbr
+qFS
 wSc
-rwW
-hWN
 jOV
 vxX
 vxX
