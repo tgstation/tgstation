@@ -33,10 +33,9 @@
 		toggled_on = TRUE
 		balloon_alert(eye_owner, "hud enabled")
 
-/obj/item/organ/internal/cyberimp/eyes/hud/Insert(mob/living/carbon/eye_owner, special = FALSE, movement_flags)
+/obj/item/organ/internal/cyberimp/eyes/hud/mob_insert(mob/living/carbon/eye_owner, special = FALSE, movement_flags)
 	. = ..()
-	if(!.)
-		return
+
 	if(HUD_type)
 		var/datum/atom_hud/hud = GLOB.huds[HUD_type]
 		hud.show_to(eye_owner)
@@ -44,7 +43,7 @@
 		ADD_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
 	toggled_on = TRUE
 
-/obj/item/organ/internal/cyberimp/eyes/hud/Remove(mob/living/carbon/eye_owner, special, movement_flags)
+/obj/item/organ/internal/cyberimp/eyes/hud/mob_remove(mob/living/carbon/eye_owner, special, movement_flags)
 	. = ..()
 	if(HUD_type)
 		var/datum/atom_hud/hud = GLOB.huds[HUD_type]
