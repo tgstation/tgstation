@@ -1,0 +1,8 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - refactor: "Updated cards/ids to use the proper item interaction system instead of attackby, please report any issues."
+  - bugfix: "You can no longer recolour an ID at any point if you open the menu but then don't select anything until later."
+  - bugfix: "ID cards can be recoloured using crayons/spraycans again."
+  - qol: "Prisoner IDs show genpop sentence time in hours/minutes/seconds instead of seconds."
+  - qol: "Prisoner IDs have genpop usage tips in their examine."
