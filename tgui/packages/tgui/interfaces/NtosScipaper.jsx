@@ -406,7 +406,7 @@ export const NtosScipaperContent = (props) => {
             })
           }
         >
-          {' Scientific Partners'}
+          {'Scientific Partners'}
         </Tabs.Tab>
       </Tabs>
       {currentTab === 1 && <PaperPublishing />}
