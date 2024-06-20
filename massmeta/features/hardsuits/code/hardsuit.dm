@@ -6,6 +6,7 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
 	lefthand_file = 'massmeta/features/hardsuits/icons/clothing_lefthand.dmi'
 	righthand_file = 'massmeta/features/hardsuits/icons/clothing_righthand.dmi'
+	inhand_icon_state  = "eng_hardsuit"
 	icon = 'massmeta/features/hardsuits/icons/suits.dmi'
 	worn_icon = 'massmeta/features/hardsuits/icons/suit.dmi'
 	icon_state = "hardsuit-engineering"
@@ -283,6 +284,7 @@
 	name = "medical hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement."
 	icon_state = "hardsuit-medical"
+	inhand_icon_state  = "medical_hardsuit"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/medkit, /obj/item/healthanalyzer, /obj/item/stack/medical)
 	armor_type = /datum/armor/hardsuit_medical
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/combatmedic
@@ -333,6 +335,7 @@
 /obj/item/clothing/suit/space/hardsuit/rd
 	name = "prototype hardsuit"
 	desc = "A prototype suit that protects against hazardous, low pressure environments. Fitted with extensive plating for handling explosives and dangerous research materials."
+	inhand_icon_state  = "hardsuit-rd"
 	icon_state = "hardsuit-rd"
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT //Same as an emergency firesuit. Not ideal for extended exposure.
@@ -373,6 +376,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/security/hos
 	icon_state = "hardsuit-hos"
+	inhand_icon_state = "sec_hardsuit"
 	name = "head of security's hardsuit"
 	desc = "A special bulky suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
 	armor_type = /datum/armor/hardsuit_security_hos
@@ -399,7 +403,7 @@
 	name = "\improper MK.II SWAT Suit"
 	desc = "A MK.II SWAT suit with streamlined joints and armor made out of superior materials, insulated against intense heat if worn with the complementary gas mask. The most advanced tactical armor available."
 	icon_state = "swat2"
-	inhand_icon_state = "swat2"
+	inhand_icon_state = "capspacesuit"
 	armor_type = /datum/armor/hardsuit_swat
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -1021,6 +1025,7 @@
 	name = "shielded hardsuit"
 	desc = "A hardsuit with built in energy shielding. Will rapidly recharge when not under fire."
 	icon_state = "hardsuit-hos"
+	inhand_icon_state =  "sec_hardsuit"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/hos
 	allowed = null
 	armor_type = /datum/armor/hardsuit_shielded
@@ -1063,7 +1068,7 @@
 	name = "death commando spacesuit"
 	desc = "An advanced hardsuit favored by commandos for use in special operations."
 	icon_state = "deathsquad"
-	inhand_icon_state = "swat_suit"
+	inhand_icon_state = "capspacesuit"
 	hardsuit_type = "syndi"
 	armor_type = /datum/armor/hardsuit_shielded_swat
 	strip_delay = 130
