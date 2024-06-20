@@ -5,6 +5,7 @@
  */
 GLOBAL_VAR_INIT(fileaccess_timer, 0)
 
+/* monkestation edit: replaced in [monkestation\code\__HELPERS\files.dm]
 /client/proc/browse_files(root_type=BROWSE_ROOT_ALL_LOGS, max_iterations=10, list/valid_extensions=list("txt","log","htm", "html", "gz", "json"))
 	// wow why was this ever a parameter
 	var/root = "data/logs/"
@@ -51,6 +52,7 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 		return
 
 	return path
+*/
 
 #define FTPDELAY 200 //200 tick delay to discourage spam
 #define ADMIN_FTPDELAY_MODIFIER 0.5 //Admins get to spam files faster since we ~trust~ them!
