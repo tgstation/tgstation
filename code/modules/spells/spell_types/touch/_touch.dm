@@ -198,6 +198,9 @@
 		return FALSE
 	if(!can_cast_spell(feedback = TRUE))
 		return FALSE
+	if(!(caster.mobility_flags & MOBILITY_USE))
+		caster.balloon_alert(caster, "can't reach out!")
+		return TRUE
 
 	return TRUE
 
@@ -222,6 +225,8 @@
 	log_combat(caster, victim, "cast the touch spell [name] on", hand)
 	spell_feedback(caster)
 	caster.do_attack_animation(victim)
+	caster.changeNext_move(CLICK_CD_MELEE)
+	victim.add_fingerprint(caster)
 	remove_hand(caster)
 
 /**
@@ -240,6 +245,8 @@
 			log_combat(caster, victim, "cast the touch spell [name] on", hand, "(secondary / alt cast)")
 			spell_feedback(caster)
 			caster.do_attack_animation(victim)
+			caster.changeNext_move(CLICK_CD_MELEE)
+			victim.add_fingerprint(caster)
 			remove_hand(caster)
 
 		// Call normal will call the normal cast proc
@@ -345,14 +352,6 @@
 
 	if(spell)
 		spell_which_made_us = WEAKREF(spell)
-
-/obj/item/melee/touch_attack/attack(mob/target, mob/living/carbon/user)
-	if(!iscarbon(user)) //Look ma, no hands
-		return TRUE
-	if(!(user.mobility_flags & MOBILITY_USE))
-		user.balloon_alert(user, "can't reach out!")
-		return TRUE
-	return ..()
 
 /**
  * When the hand component of a touch spell is qdel'd, (the hand is dropped or otherwise lost),
