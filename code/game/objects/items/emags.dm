@@ -78,7 +78,9 @@
 		qdel(src)
 		qdel(tool)
 		user.put_in_active_hand(new /obj/item/card/emag/bluespace)
-	else return NONE
+		return ITEM_INTERACT_SUCCESS
+	else
+		return NONE
 
 /obj/item/card/emag/proc/can_emag(atom/target, mob/user)
 	for (var/subtypelist in type_blacklist)
