@@ -16185,6 +16185,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/warehouse)
 "bdU" = (
@@ -20974,6 +20975,10 @@
 	dir = 1
 	},
 /obj/structure/table,
+/obj/item/screwdriver{
+	pixel_y = 10
+	},
+/obj/item/radio/off,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "bvQ" = (
@@ -21650,10 +21655,6 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "byK" = (
-/obj/item/screwdriver{
-	pixel_y = 10
-	},
-/obj/item/radio/off,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -34460,6 +34461,11 @@
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
+"cUK" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "cVb" = (
 /turf/closed/wall,
 /area/station/hallway/secondary/service)
@@ -79696,7 +79702,7 @@ aYl
 svg
 bgG
 bid
-aYl
+cUK
 dNQ
 aJq
 bnN
