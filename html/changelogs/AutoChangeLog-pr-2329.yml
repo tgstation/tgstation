@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fix recipes for same-color crossbreeds requiring 1000u of ooze instead of 500u."
