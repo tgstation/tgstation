@@ -81,7 +81,17 @@ export const RestockTracker = (props) => {
             </Stack.Item>
           </Stack>
         ))}
+        {vending_list.length === 0 && <RestockTrackerFull />}
       </Stack>
+    </Section>
+  );
+};
+
+export const RestockTrackerFull = (props) => {
+  const { data } = useBackend();
+  return (
+    <Section bold textAlign="center">
+      All vending machines stocked!
     </Section>
   );
 };
