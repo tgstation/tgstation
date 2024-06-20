@@ -19,7 +19,8 @@
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
 	name = "battlemage helmet"
 	desc = "A suitably impressive helmet."
-	icon_state = "hardsuit-wiz"
+	icon_state = "hardsuit0-wiz"
+	hardsuit_type = "wiz"
 	inhand_icon_state = null
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
