@@ -234,3 +234,25 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 		return
 	show_to(relevant)
+
+/**
+ * Offsets our relays in place using the given parameter by adjusting their plane and
+ * layer values, avoiding changing the layer for relays with custom-set layers.
+ *
+ * Used in [proc/transform_lower_turfs] to make the relays for non-offsetting planes
+ * match the highest rendering plane that matches the target, to avoid them rendering
+ * on the highest level above things that should be visible.
+ *
+ * Parameters:
+ * - new_offset: the offset we will adjust our relays to
+ */
+/atom/movable/screen/plane_master/proc/offset_relays_in_place(new_offset)
+	for(var/atom/movable/render_plane_relay/rpr in relays)
+		var/base_relay_plane = PLANE_TO_TRUE(rpr.plane)
+		rpr.plane = GET_NEW_PLANE(base_relay_plane, new_offset)
+
+		var/old_layer = (plane + abs(LOWEST_EVER_PLANE * 30))
+		var/offset_plane = real_plane - (PLANE_RANGE * new_offset)
+		var/new_layer = (offset_plane + abs(LOWEST_EVER_PLANE * 30))
+		if(rpr.layer == old_layer) // Avoid overriding custom-set layers
+			rpr.layer = new_layer

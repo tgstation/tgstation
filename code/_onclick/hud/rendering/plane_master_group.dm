@@ -151,6 +151,9 @@
 	for(var/plane_key in plane_masters)
 		var/atom/movable/screen/plane_master/plane = plane_masters[plane_key]
 		if(!plane.allows_offsetting)
+			// Don't offset the plane, offset where the relays point
+			// Required for making things like the blind fullscreen not render over runechat
+			plane.offset_relays_in_place(new_offset)
 			continue
 
 		var/visual_offset = plane.offset - new_offset
