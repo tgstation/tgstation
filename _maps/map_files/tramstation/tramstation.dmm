@@ -49386,6 +49386,13 @@
 	},
 /obj/structure/cable,
 /obj/structure/table,
+/obj/item/multitool{
+	pixel_x = 8
+	},
+/obj/item/flatpack{
+	board = /obj/item/circuitboard/machine/flatpacker;
+	pixel_x = -5
+	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "qwq" = (
