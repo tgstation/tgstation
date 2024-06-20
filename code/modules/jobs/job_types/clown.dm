@@ -104,3 +104,8 @@
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
 	fan.show_to(H)
 	H.faction |= FACTION_CLOWN
+
+/datum/job/clown/get_mail_goodies(mob/recipient)
+	. = ..()
+	// As a joke for clumsy clown from engineering department
+	. += list(/obj/item/spess_knife = 10)

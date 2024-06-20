@@ -78,3 +78,8 @@
 	head = null
 	mask = /obj/item/clothing/mask/breath
 	internals_slot = ITEM_SLOT_SUITSTORE
+
+/datum/job/engineer/get_mail_goodies(mob/recipient)
+	. = ..()
+	// A multi-tool for station work
+	. += list(/obj/item/spess_knife = 20)
