@@ -1,0 +1,1411 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aj" = (
+/turf/closed/indestructible/sandstone,
+/area/deathmatch/fullbright)
+"aq" = (
+/obj/effect/mine/explosive,
+/obj/effect/mine/explosive,
+/obj/effect/mine/explosive,
+/obj/effect/mine/explosive,
+/obj/effect/mine/explosive,
+/obj/effect/mine/explosive,
+/obj/effect/mine/explosive,
+/obj/effect/mine/explosive,
+/obj/effect/mine/explosive,
+/obj/effect/mine/explosive,
+/obj/effect/turf_decal/stripes/red/box,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch/fullbright)
+"cf" = (
+/obj/structure/fluff/beach_umbrella/security,
+/turf/open/misc/beach/sand,
+/area/deathmatch/fullbright)
+"cm" = (
+/obj/machinery/door/poddoor/shutters/indestructible{
+	id_tag = "tdm2";
+	dir = 1
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch/fullbright)
+"cR" = (
+/obj/structure/table/optable,
+/obj/item/storage/backpack/duffelbag/syndie/surgery{
+	pixel_y = 3;
+	pixel_x = -5
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"dB" = (
+/obj/structure/table,
+/obj/item/storage/medkit/tactical/premium{
+	pixel_y = 3
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"dP" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/turf/open/misc/beach/sand,
+/area/deathmatch/fullbright)
+"fO" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/barricade/sandbags,
+/obj/structure/barricade/wooden,
+/turf/open/misc/beach/sand,
+/area/deathmatch/fullbright)
+"fY" = (
+/obj/item/restraints/legcuffs/beartrap/prearmed,
+/turf/open/indestructible/hotelwood,
+/area/deathmatch/fullbright)
+"gh" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/structure/table,
+/obj/item/clothing/head/helmet/swat/nanotrasen,
+/obj/item/clothing/suit/armor/vest/alt/sec,
+/obj/item/grenade/frag,
+/obj/item/grenade/frag,
+/turf/open/indestructible/white,
+/area/deathmatch/fullbright)
+"gJ" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/structure/table,
+/obj/item/clothing/suit/armor/vest/russian,
+/obj/item/clothing/head/helmet/blueshirt,
+/obj/item/storage/belt/military/army,
+/turf/open/indestructible/white,
+/area/deathmatch/fullbright)
+"hC" = (
+/obj/machinery/deployable_turret{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/deathmatch/fullbright)
+"hQ" = (
+/turf/open/chasm/true/no_smooth/fake_motion_sand,
+/area/deathmatch/fullbright)
+"jG" = (
+/turf/open/floor/holofloor/beach/coast{
+	dir = 4
+	},
+/area/deathmatch/fullbright)
+"kt" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/barricade/sandbags,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/turf/open/misc/beach/sand,
+/area/deathmatch/fullbright)
+"kB" = (
+/obj/structure/table,
+/obj/item/storage/backpack,
+/obj/item/knife/combat,
+/obj/structure/sign/departments/medbay/alt/directional/west,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"lq" = (
+/obj/structure/barricade/sandbags,
+/turf/open/floor/holofloor/beach/coast{
+	dir = 8
+	},
+/area/deathmatch/fullbright)
+"lY" = (
+/obj/structure/lattice/catwalk,
+/turf/open/floor/holofloor/beach/water,
+/area/deathmatch/fullbright)
+"mA" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/computer/operating{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"mX" = (
+/obj/structure/flora/tree/palm/style_random,
+/obj/structure/flora/coconuts,
+/turf/open/misc/beach/sand,
+/area/deathmatch/fullbright)
+"nc" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/shoes/combat,
+/obj/item/clothing/under/syndicate/combat,
+/obj/item/knife/combat/survival,
+/obj/item/clothing/gloves/fingerless,
+/obj/item/clothing/glasses/sunglasses,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"nr" = (
+/obj/machinery/mech_bay_recharge_port{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"nQ" = (
+/turf/open/floor/holofloor/beach/water,
+/area/deathmatch/fullbright)
+"ou" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/structure/table,
+/obj/item/clothing/mask/balaclava,
+/turf/open/indestructible/white,
+/area/deathmatch/fullbright)
+"qg" = (
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"sp" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/structure/table,
+/obj/item/clothing/gloves/color/black,
+/obj/item/knife/combat/survival,
+/obj/item/clothing/under/syndicate/combat,
+/obj/item/clothing/shoes/combat,
+/obj/item/clothing/neck/scarf/black,
+/turf/open/indestructible/white,
+/area/deathmatch/fullbright)
+"ta" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/machinery/button/door/directional/west{
+	id = "tdm1"
+	},
+/turf/open/indestructible/white,
+/area/deathmatch/fullbright)
+"tM" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/clothing/suit/armor/vest/alt,
+/obj/item/clothing/head/utility/hardhat/welding/dblue,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"wC" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"wI" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/structure/reagent_dispensers/fueltank/large,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"wS" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/structure/table,
+/obj/item/gun/ballistic/rocketlauncher/unrestricted,
+/obj/item/ammo_casing/rocket/heap,
+/obj/item/ammo_casing/rocket/heap,
+/obj/item/ammo_casing/rocket/heap,
+/obj/item/ammo_casing/rocket/heap,
+/turf/open/indestructible/white,
+/area/deathmatch/fullbright)
+"xb" = (
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"xD" = (
+/obj/machinery/door/poddoor/shutters/indestructible{
+	id_tag = "tdm1"
+	},
+/turf/open/indestructible/plating,
+/area/deathmatch/fullbright)
+"xW" = (
+/turf/open/indestructible/hotelwood,
+/area/deathmatch/fullbright)
+"yT" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/indestructible/white,
+/area/deathmatch/fullbright)
+"zD" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Bc" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Bd" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"CB" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/machinery/iv_drip/saline,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"DQ" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/structure/table,
+/obj/item/clothing/under/syndicate/rus_army,
+/obj/item/clothing/shoes/workboots,
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/mask/russian_balaclava,
+/obj/item/clothing/glasses/sunglasses,
+/turf/open/indestructible/white,
+/area/deathmatch/fullbright)
+"DY" = (
+/obj/structure/table,
+/obj/item/clothing/under/syndicate/rus_army,
+/obj/item/clothing/shoes/workboots,
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/mask/russian_balaclava,
+/obj/item/clothing/glasses/sunglasses,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"GI" = (
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Hh" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Ho" = (
+/obj/structure/flora/tree/palm/style_random,
+/turf/open/misc/beach/sand,
+/area/deathmatch/fullbright)
+"Ij" = (
+/obj/structure/fluff/beach_umbrella/engine,
+/turf/open/misc/beach/sand,
+/area/deathmatch/fullbright)
+"Jl" = (
+/obj/structure/fake_stairs/directional/east,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Jz" = (
+/obj/structure/grille,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"JD" = (
+/obj/structure/table,
+/obj/item/clothing/suit/armor/vest/russian,
+/obj/item/clothing/head/helmet/rus_ushanka,
+/obj/structure/sign/departments/medbay/alt/directional/north,
+/obj/item/storage/belt/military/army,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"JE" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/syndicate,
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine,
+/obj/item/mecha_ammo/incendiary,
+/obj/item/mecha_ammo/incendiary,
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine,
+/obj/item/mecha_parts/mecha_equipment/armor/anticcw_armor_booster,
+/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster,
+/obj/item/mecha_parts/mecha_equipment/generator,
+/obj/item/stack/sheet/mineral/plasma/thirty,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"JV" = (
+/obj/structure/fake_stairs/directional/south,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"KM" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/closed/indestructible/sandstone,
+/area/deathmatch/fullbright)
+"NW" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/structure/table,
+/obj/item/storage/backpack,
+/obj/item/knife/combat,
+/turf/open/indestructible/white,
+/area/deathmatch/fullbright)
+"Og" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/structure/table,
+/obj/item/gun/ballistic/rifle/boltaction/prime,
+/obj/item/storage/toolbox/ammobox/strilka310,
+/turf/open/indestructible/white,
+/area/deathmatch/fullbright)
+"Oi" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/machinery/button/door/directional/north{
+	id = "tdm2"
+	},
+/turf/open/indestructible/white,
+/area/deathmatch/fullbright)
+"Pt" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/indestructible/white,
+/area/deathmatch/fullbright)
+"Pu" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"PK" = (
+/obj/structure/barricade/sandbags,
+/turf/open/floor/holofloor/beach/coast{
+	dir = 4
+	},
+/area/deathmatch/fullbright)
+"Qa" = (
+/obj/structure/table,
+/obj/item/grenade/flashbang,
+/obj/item/grenade/flashbang,
+/obj/item/ammo_box/c10mm,
+/obj/item/gun/ballistic/automatic/pistol/clandestine,
+/obj/item/ammo_box/magazine/m10mm,
+/obj/item/ammo_box/magazine/m10mm,
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Qz" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/effect/landmark/deathmatch_player_spawn,
+/turf/open/indestructible/white,
+/area/deathmatch/fullbright)
+"Rf" = (
+/obj/structure/flora/coconuts,
+/turf/open/misc/beach/sand,
+/area/deathmatch/fullbright)
+"Rt" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/structure/table,
+/obj/item/gun/ballistic/automatic/wt550,
+/obj/item/storage/toolbox/ammobox/wt550m9,
+/obj/item/ammo_box/magazine/wt550m9,
+/obj/item/ammo_box/magazine/wt550m9,
+/obj/item/ammo_box/magazine/wt550m9,
+/obj/item/ammo_box/magazine/wt550m9,
+/turf/open/indestructible/white,
+/area/deathmatch/fullbright)
+"SD" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/structure/table,
+/obj/item/clothing/glasses/sunglasses,
+/turf/open/indestructible/white,
+/area/deathmatch/fullbright)
+"UT" = (
+/turf/open/floor/holofloor/beach/coast{
+	dir = 8
+	},
+/area/deathmatch/fullbright)
+"Vf" = (
+/obj/vehicle/sealed/mecha/gygax{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"Vn" = (
+/obj/structure/barricade/wooden,
+/turf/open/misc/beach/sand,
+/area/deathmatch/fullbright)
+"Vr" = (
+/turf/open/misc/beach/sand,
+/area/deathmatch/fullbright)
+"Xj" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch/fullbright)
+"YP" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/item/paper,
+/turf/open/indestructible/white,
+/area/deathmatch/fullbright)
+"YW" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/indestructible/white,
+/area/deathmatch/fullbright)
+
+(1,1,1) = {"
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+"}
+(2,1,1) = {"
+aj
+Qa
+kB
+dB
+qg
+Bd
+ta
+Pt
+KM
+Vr
+Vr
+Vr
+Vr
+Vr
+Rf
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+aj
+"}
+(3,1,1) = {"
+aj
+JD
+GI
+qg
+qg
+JV
+Pt
+Pt
+xD
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Ho
+Vr
+Rf
+Vr
+aj
+"}
+(4,1,1) = {"
+aj
+DY
+qg
+qg
+qg
+wC
+Pt
+Pt
+xD
+Vr
+Vr
+Vr
+Vr
+Vr
+Ho
+hQ
+hQ
+Vr
+Rf
+Vr
+Ho
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+aj
+"}
+(5,1,1) = {"
+aj
+qg
+qg
+qg
+cR
+CB
+Pt
+Pt
+xD
+Vr
+mX
+Vr
+Vr
+Vr
+hQ
+hQ
+hQ
+hQ
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+aj
+"}
+(6,1,1) = {"
+aj
+Hh
+Jl
+Bc
+mA
+Pu
+Pt
+Pt
+xD
+Vr
+Vr
+Vr
+Vr
+Vr
+hQ
+hQ
+hQ
+hQ
+Vr
+Vr
+Vr
+Vr
+Vr
+Rf
+Vr
+Vr
+Vr
+Vr
+Vr
+aj
+"}
+(7,1,1) = {"
+aj
+Pt
+Pt
+Pt
+Pt
+Pt
+Pt
+gJ
+KM
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+hQ
+hQ
+Vr
+Ho
+Vr
+Vr
+Vr
+Vr
+Ho
+Vr
+Vr
+Vr
+Ho
+Vr
+aj
+"}
+(8,1,1) = {"
+aj
+YW
+Pt
+Pt
+Pt
+YP
+Qz
+DQ
+KM
+Vr
+Vr
+Vr
+Vr
+mX
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+aj
+"}
+(9,1,1) = {"
+aj
+Pt
+Pt
+Pt
+Pt
+NW
+Og
+wS
+KM
+Vr
+Vr
+Vr
+Vr
+Rf
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+aj
+"}
+(10,1,1) = {"
+aj
+KM
+KM
+KM
+KM
+KM
+KM
+KM
+KM
+Ij
+Vr
+Vr
+hC
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Ij
+Vr
+Vr
+Vr
+aj
+"}
+(11,1,1) = {"
+aj
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+fO
+fO
+Vr
+Vr
+Vr
+Vr
+Ij
+Vr
+Vn
+Vn
+Vn
+Vr
+Vr
+Vr
+Vr
+Vr
+Ij
+aj
+"}
+(12,1,1) = {"
+aj
+jG
+jG
+jG
+PK
+PK
+PK
+PK
+jG
+jG
+jG
+jG
+xW
+xW
+jG
+jG
+jG
+jG
+jG
+jG
+jG
+jG
+jG
+jG
+jG
+jG
+jG
+jG
+jG
+aj
+"}
+(13,1,1) = {"
+aj
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+xW
+xW
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+aj
+"}
+(14,1,1) = {"
+aj
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+lY
+fY
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+aj
+"}
+(15,1,1) = {"
+aj
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+aq
+xW
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+aj
+"}
+(16,1,1) = {"
+aj
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+xW
+lY
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+aj
+"}
+(17,1,1) = {"
+aj
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+fY
+xW
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+aj
+"}
+(18,1,1) = {"
+aj
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+xW
+xW
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+nQ
+aj
+"}
+(19,1,1) = {"
+aj
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+UT
+xW
+xW
+UT
+UT
+UT
+UT
+UT
+UT
+lq
+lq
+lq
+lq
+UT
+UT
+UT
+UT
+UT
+aj
+"}
+(20,1,1) = {"
+aj
+Vr
+Vr
+Vr
+Vr
+Vn
+Vn
+Vn
+cf
+Vr
+Vr
+dP
+kt
+kt
+dP
+Vr
+cf
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+cf
+Vr
+Vr
+Vr
+aj
+"}
+(21,1,1) = {"
+aj
+Vr
+Ho
+Vr
+cf
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Rf
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Ho
+Vr
+Vr
+Vr
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+"}
+(22,1,1) = {"
+aj
+Vr
+Rf
+Vr
+Vr
+Vr
+Ho
+Vr
+Vr
+Vr
+Vr
+Ho
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Rf
+Vr
+Vr
+Vr
+aj
+yT
+Pt
+Pt
+Rt
+ou
+gh
+aj
+"}
+(23,1,1) = {"
+aj
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+hQ
+hQ
+Vr
+Vr
+Vr
+Vr
+Vr
+Ho
+Vr
+Vr
+Vr
+Vr
+aj
+Oi
+Pt
+Pt
+Pt
+Pt
+sp
+aj
+"}
+(24,1,1) = {"
+aj
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+hQ
+hQ
+hQ
+hQ
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+aj
+Pt
+Pt
+Qz
+Pt
+Pt
+SD
+aj
+"}
+(25,1,1) = {"
+aj
+Vr
+Vr
+Vr
+Vr
+Rf
+Vr
+Vr
+Vr
+hQ
+hQ
+hQ
+hQ
+Vr
+Rf
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+cm
+Pt
+Pt
+Pt
+Pt
+Pt
+Pt
+aj
+"}
+(26,1,1) = {"
+aj
+Vr
+Vr
+Ho
+Vr
+Vr
+Vr
+Vr
+Vr
+Ho
+hQ
+hQ
+Vr
+Vr
+Vr
+Vr
+Ho
+Vr
+Vr
+Vr
+Vr
+Vr
+cm
+Pt
+Pt
+wI
+Jz
+zD
+tM
+aj
+"}
+(27,1,1) = {"
+aj
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Ho
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Ho
+cm
+Pt
+Pt
+Xj
+qg
+qg
+nc
+aj
+"}
+(28,1,1) = {"
+aj
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+cm
+Pt
+Pt
+Xj
+qg
+GI
+qg
+aj
+"}
+(29,1,1) = {"
+aj
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+aj
+Pt
+Pt
+JE
+Vf
+nr
+xb
+aj
+"}
+(30,1,1) = {"
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+aj
+"}
