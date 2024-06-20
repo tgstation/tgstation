@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Character Loadouts"
-  - rscdel: "Pride Pin quirk (it's in the Loadout menu now)"

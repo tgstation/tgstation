@@ -84,7 +84,7 @@ Slimecrossing Items
 	name = "hypercharged slime core"
 	desc = "A charged yellow slime extract, infused with plasma. It almost hurts to touch."
 	icon = 'icons/mob/simple/slimes.dmi'
-	icon_state = "yellow slime extract"
+	icon_state = "yellow-core"
 	rating = 7
 	custom_materials = null
 	maxcharge = 50 * STANDARD_CELL_CHARGE

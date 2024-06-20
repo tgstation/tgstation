@@ -331,19 +331,6 @@
 		toast.name = header
 		toast.target_ref = WEAKREF(source)
 
-/// Heals a robotic limb on a mob
-/proc/item_heal_robotic(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)
-	var/obj/item/bodypart/affecting = human.get_bodypart(check_zone(user.zone_selected))
-	if(!affecting || IS_ORGANIC_LIMB(affecting))
-		to_chat(user, span_warning("[affecting] is already in good condition!"))
-		return FALSE
-	var/brute_damage = brute_heal > burn_heal //changes repair text based on how much brute/burn was supplied
-	if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
-		if(affecting.heal_damage(brute_heal, burn_heal, required_bodytype = BODYTYPE_ROBOTIC))
-			human.update_damage_overlays()
-		user.visible_message(span_notice("[user] fixes some of the [brute_damage ? "dents on" : "burnt wires in"] [human]'s [affecting.name]."), \
-			span_notice("You fix some of the [brute_damage ? "dents on" : "burnt wires in"] [human == user ? "your" : "[human]'s"] [affecting.name]."))
-		return TRUE //successful heal
 
 
 ///Is the passed in mob a ghost with admin powers, doesn't check for AI interact like isAdminGhost() used to

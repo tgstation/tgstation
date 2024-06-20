@@ -108,6 +108,12 @@
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
+/obj/item/hierophant_club/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(blink_activated)
+		blink.teleport(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
+
 /obj/item/hierophant_club/update_icon_state()
 	icon_state = inhand_icon_state = "hierophant_club[blink?.current_charges > 0 ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
 	return ..()
@@ -749,7 +755,7 @@
 				"wings" = "None",
 				"frills" = "None",
 				"spines" = "Long",
-				"body_markings" = "Dark Tiger Body",
+				"lizard_markings" = "Dark Tiger Body",
 				"legs" = DIGITIGRADE_LEGS,
 			)
 			consumer.eye_color_left = "#FEE5A3"

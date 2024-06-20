@@ -60,10 +60,12 @@
  * * anomaly_type - anomaly type define
  */
 /obj/machinery/research/anomaly_refinery/proc/get_required_radius(anomaly_type)
+	if(!SSresearch.is_core_available(anomaly_type))
+		return //return null
+
 	var/already_made = SSresearch.created_anomaly_types[anomaly_type]
 	var/hard_limit = SSresearch.anomaly_hard_limit_by_type[anomaly_type]
-	if(already_made >= hard_limit)
-		return //return null
+
 	// my crappy autoscale formula
 	// linear scaling.
 	var/radius_span = MAX_RADIUS_REQUIRED - MIN_RADIUS_REQUIRED
