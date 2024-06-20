@@ -17,6 +17,8 @@
 		/obj/item/flashlight/seclite = 4,
 		/obj/item/restraints/legcuffs/bola/energy = 7,
 		/obj/item/ammo_box/magazine/m35/rubber = 15, //monkestation edit: Paco sec
+		/obj/item/clothing/mask/gas/sechailer = 6, ////monkestation edit
+		/obj/item/bodycam_upgrade = 10, //monkestation edit: Security Liability Act
 	)
 	contraband = list(
 		/obj/item/clothing/glasses/sunglasses = 2,

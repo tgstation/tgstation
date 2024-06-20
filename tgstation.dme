@@ -6346,6 +6346,7 @@
 #include "monkestation\code\modules\clothing\spacesuits\hardsuits\misc.dm"
 #include "monkestation\code\modules\clothing\spacesuits\hardsuits\science.dm"
 #include "monkestation\code\modules\clothing\spacesuits\hardsuits\security.dm"
+#include "monkestation\code\modules\clothing\suit_accessories\bodycamera.dm"
 #include "monkestation\code\modules\clothing\suits\coats.dm"
 #include "monkestation\code\modules\clothing\suits\costume.dm"
 #include "monkestation\code\modules\clothing\suits\toggles.dm"
