@@ -38,7 +38,3 @@
 /datum/orderable_item/bitrunning_flair/jackboots
 	item_path = /obj/item/clothing/shoes/jackboots
 	cost_per_order = 1000
-
-/datum/orderable_item/bitrunning_flair/spess_knife
-	item_path = /obj/item/spess_knife
-	cost_per_order = 2000
