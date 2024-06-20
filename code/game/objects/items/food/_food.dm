@@ -2,7 +2,6 @@
 /obj/item/food
 	name = "food"
 	desc = "you eat this"
-	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = null
