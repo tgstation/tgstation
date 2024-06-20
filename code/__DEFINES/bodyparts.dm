@@ -43,3 +43,6 @@
 #define AUGGED_CHEST_EMP_SHAKE_TIME 5 SECONDS
 /// When hit by an EMP, the time an augged head will make vision fucky for.
 #define AUGGED_HEAD_EMP_GLITCH_DURATION 6 SECONDS
+
+/// If all limbs have this trait, be able to pass through windows
+#define TRAIT_GLASS_PASSER "glass_passer"

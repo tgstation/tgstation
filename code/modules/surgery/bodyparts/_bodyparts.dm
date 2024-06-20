@@ -185,6 +185,8 @@
 	var/list/bodypart_traits = list()
 	/// The name of the trait source that the organ gives. Should not be altered during the events of gameplay, and will cause problems if it is.
 	var/bodypart_trait_source = BODYPART_TRAIT
+	/// Traits added to the bodypart itself
+	var/inherent_traits = list()
 	/// List of the above datums which have actually been instantiated, managed automatically
 	var/list/feature_offsets = list()
 
@@ -199,6 +201,8 @@
 	var/any_existing_wound_can_mangle_our_interior
 	/// get_damage() / total_damage must surpass this to allow our limb to be disabled, even temporarily, by an EMP.
 	var/robotic_emp_paralyze_damage_percent_threshold = 0.3
+	/// A potential texturing overlay to put on the limb
+	var/datum/bodypart_overlay/texture/texture_bodypart_overlay
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -223,6 +227,12 @@
 		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS), PROC_REF(on_paralysis_trait_loss))
 
 	RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle))
+
+	if(texture_bodypart_overlay)
+		texture_bodypart_overlay = new texture_bodypart_overlay()
+		add_bodypart_overlay(texture_bodypart_overlay)
+
+	add_traits(inherent_traits, TRAIT_GENERIC)
 
 	if(!IS_ORGANIC_LIMB(src))
 		grind_results = null
@@ -1059,7 +1069,8 @@
 			for(var/external_layer in overlay.all_layers)
 				if(overlay.layers & external_layer)
 					. += overlay.get_overlay(external_layer, src)
-
+			for(var/datum/layer in .)
+				overlay.modify_bodypart_appearance(layer)
 	return .
 
 /obj/item/bodypart/proc/huskify_image(image/thing_to_husk, draw_blood = TRUE)
