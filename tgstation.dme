@@ -392,7 +392,7 @@
 #include "code\__DEFINES\traits\declarations.dm"
 #include "code\__DEFINES\traits\macros.dm"
 #include "code\__DEFINES\traits\sources.dm"
-#include "code\__DEFINES\~meta_defines\meta_defines_all.dm" //MASSMETA EDIT ADDITION DEFINES
+#include "massmeta\~meta_defines\meta_defines_all.dm"
 #include "code\__HELPERS\_auxtools_api.dm"
 #include "code\__HELPERS\_lists.dm"
 #include "code\__HELPERS\_planes.dm"
@@ -6240,5 +6240,5 @@
 #include "interface\fonts\spess_font.dm"
 #include "interface\fonts\tiny_unicode.dm"
 #include "interface\fonts\vcr_osd_mono.dm"
-#include "massmeta\modular_meta.dm" //MASSMETA EDIT ADDITION (all massmeta modules only here)
+#include "massmeta\modular_meta.dme"
 // END_INCLUDE
