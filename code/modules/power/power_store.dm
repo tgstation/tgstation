@@ -197,10 +197,6 @@
 	else
 		. += "The charge meter reads [CEILING(percent(), 0.1)]%." //so it doesn't say 0% charge when the overlay indicates it still has charge
 
-/obj/item/stock_parts/power_store/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return FIRELOSS
-
 /obj/item/stock_parts/power_store/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
 	rigged = (corrupted || holder.has_reagent(/datum/reagent/toxin/plasma, 5)) ? TRUE : FALSE //has_reagent returns the reagent datum
@@ -253,6 +249,36 @@
 				corrupt()
 
 	return TRUE
+
+/obj/item/stock_parts/power_store/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	do_sparks(2, TRUE, user)
+	var/eating_success = do_after(user, 5 SECONDS, src)
+	if(QDELETED(user))
+		return SHAME
+	if(!eating_success || QDELETED(src) || charge == 0)
+		user.visible_message(span_suicide("[user] chickens out!"))
+		return SHAME
+	playsound(user, 'sound/effects/sparks1.ogg', charge / maxcharge)
+	var/damage = charge / (1 KILO JOULES)
+	user.electrocute_act(damage, src, 1, SHOCK_IGNORE_IMMUNITY|SHOCK_DELAY_STUN|SHOCK_NOGLOVES)
+	charge = 0
+	update_appearance()
+	if(user.stat != DEAD)
+		to_chat(user, span_suicide("There's not enough charge in [src] to kill you!"))
+		return SHAME
+	addtimer(CALLBACK(src, PROC_REF(gib_user), user, charge), 3 SECONDS)
+	return MANUAL_SUICIDE
+
+/obj/item/stock_parts/power_store/proc/gib_user(mob/living/user, discharged_energy)
+	if(QDELETED(user))
+		return
+	if(discharged_energy < STANDARD_BATTERY_CHARGE)
+		return
+	user.dropItemToGround(src)
+	user.dust(just_ash = TRUE)
+	playsound(src, 'sound/magic/lightningshock.ogg', 50, TRUE, 10)
+	tesla_zap(source = src, zap_range = 10, power = discharged_energy)
 
 /obj/item/stock_parts/power_store/attack_self(mob/user)
 	if(ishuman(user))
