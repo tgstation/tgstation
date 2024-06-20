@@ -1,0 +1,6 @@
+author: "CannibalHunter"
+delete-after: True
+changes:
+  - rscadd: "THE Security Liability Act! Adds in Body cameras in security that can be used by the warden and AI to observe from thier safe space."
+  - balance: "AIs and sec get a small buff using this, Ai can see out of the camera's"
+  - admin: "Body Camera item name is 'bodycam_upgrade'"
