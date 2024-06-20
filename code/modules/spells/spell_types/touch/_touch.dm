@@ -191,7 +191,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /// Checks if the passed victim can be cast on by the caster.
-/datum/action/cooldown/spell/touch/proc/can_hit_with_hand(atom/victim, mob/caster)
+/datum/action/cooldown/spell/touch/proc/can_hit_with_hand(atom/victim, mob/living/caster)
 	if(!can_cast_on_self && victim == caster)
 		return FALSE
 	if(!is_valid_target(victim))
