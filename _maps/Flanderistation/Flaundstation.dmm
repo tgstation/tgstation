@@ -9986,6 +9986,11 @@
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/main)
+"cYA" = (
+/obj/structure/cable,
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/iron/small,
+/area/station/security/prison)
 "cYB" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -16909,6 +16914,11 @@
 	dir = 8
 	},
 /area/station/engineering/atmospherics_engine)
+"fcN" = (
+/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/plating/reinforced,
+/area/station/security/prison)
 "fcO" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/warning{
@@ -32573,6 +32583,11 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/circuit/telecomms,
 /area/station/science/ordnance/burnchamber)
+"jJG" = (
+/obj/structure/chair/stool/directional/west,
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/iron/small,
+/area/station/security/prison)
 "jJH" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -32627,6 +32642,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plating/reinforced,
 /area/station/security/prison)
 "jKp" = (
@@ -33494,6 +33510,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plating/reinforced,
 /area/station/security/prison)
 "jXh" = (
@@ -36259,6 +36276,7 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/light/small/directional/west,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/iron/freezer,
 /area/station/security/prison)
 "kON" = (
@@ -40301,6 +40319,10 @@
 	dir = 8
 	},
 /area/station/maintenance/starboard/fore)
+"lVV" = (
+/obj/structure/closet/crate/mod,
+/turf/open/floor/iron/dark,
+/area/station/science/robotics/mechbay)
 "lVW" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -46433,6 +46455,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/structure/chair/sofa/bench/right,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plating/reinforced,
 /area/station/security/prison/safe)
 "nNM" = (
@@ -46504,6 +46527,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plating/reinforced,
 /area/station/security/prison)
 "nPP" = (
@@ -51517,7 +51541,8 @@
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/ecto_sniffer{
 	pixel_x = -1;
-	pixel_y = 6
+	pixel_y = 6;
+	layer = 3
 	},
 /turf/open/floor/iron/small,
 /area/station/science/robotics/lab)
@@ -51961,6 +51986,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plating/reinforced,
 /area/station/security/prison)
 "pzW" = (
@@ -65544,11 +65570,11 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "trH" = (
-/obj/machinery/modular_computer/preset/research{
-	dir = 8
-	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/directional/east,
+/obj/machinery/modular_computer/preset/civilian{
+	dir = 8
+	},
 /turf/open/floor/iron/small,
 /area/station/science/robotics/lab)
 "trL" = (
@@ -79367,7 +79393,9 @@
 /area/station/maintenance/port)
 "xaL" = (
 /obj/structure/table,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement{
+	dir = 1
+	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/plating/reinforced,
 /area/station/security/prison)
@@ -116835,7 +116863,7 @@ mKU
 loY
 eUC
 sJa
-uNj
+lVV
 uNj
 xye
 cme
@@ -119882,7 +119910,7 @@ sJq
 kJI
 wxp
 ehp
-rBM
+fcN
 xaL
 wYw
 bTp
@@ -121422,7 +121450,7 @@ sjm
 sjm
 uaC
 hCo
-hCo
+jJG
 hCo
 khJ
 uTx
@@ -122189,7 +122217,7 @@ jUd
 qvA
 vmJ
 jvz
-jvz
+cYA
 mFw
 ncG
 sjN
