@@ -843,3 +843,52 @@
       by making each tier reduce cooldowns by 25-15-10% for each injector type.
   jlsnow301:
   - bugfix: TGUI say will no longer spill your /me contents when you get attacked
+2024-06-20:
+  Absolucy:
+  - qol: Prettied up the Chemical Analyzer's output in chat, making it easier to read,
+      especially when scanning multiple things.
+  Ben10Omintrix:
+  - rscadd: vendrobes may have mothroaches inside them
+  - rscadd: mothroaches will now seek out clothes to eat them
+  FlufflesTheDog:
+  - bugfix: limbs that are both robotic and something else can be repaired properly
+  GPeckman:
+  - bugfix: The chaplain altar can once again be buckled to.
+  LT3:
+  - spellcheck: Melon fruit bowl now comes with a side of foreshadowing for people
+      who want to experience an explosion of flavour
+  MTandi:
+  - bugfix: Fixed techweb app showing wrong designs on Details button click
+  - bugfix: Fixed new compressor UI
+  - refactor: Compressor UI to TypeScript
+  - qol: Simplified Compressor UI layout
+  - bugfix: Made 10 MJ & 20 MJ cells properly correspond to tiers 1 & 2 in lathes.
+  - image: Updated cell sprites to correspond to other stock parts of their tiers.
+  - image: Updated plasma cell, 500KJ cell and 2.5MJ cell sprites
+  - qol: APC has wires for machinery/lights/environment channels
+  Metekillot:
+  - bugfix: Sparks will no longer turn areas with wooden furniture or similar into
+      naught but a field of ashes; they no longer ignite furniture, (unless it's made
+      of plasma(?!)) and have a decreasing chance to ignite items bigger than small
+      size.
+  Rhials:
+  - bugfix: Fixes a door in the Fredington Fasting Bear Five Nights and Fnafbears
+      map.
+  - balance: The energy bola slowdown has been (roughly) halved, to allow for more
+      retaliation when used on a criminal.
+  SyncIt21:
+  - bugfix: Techfabs now print 5x cable coil
+  - bugfix: no more runtimes when dragging turfs onto other stuff
+  - code_imp: most actions now properly check for recursive locs & better adjacency
+  - bugfix: You can move around ui buttons in your action bar
+  Vishenka0704:
+  - qol: Ability to delete characters(yourself)
+  grungussuss:
+  - bugfix: mimes can now break their vow while borged or an MMI
+  mc-oofert:
+  - bugfix: wawa centcom interns may actually leave the stationside dock
+  - bugfix: wawa hop office and cap office get keycard auths
+  - bugfix: wawa disposals blast doors work properly
+  - bugfix: wawa med elevator controls on the bottom floor are accessible
+  - bugfix: sci entrance actually has access restrictions
+  - bugfix: gasping makes sound now
