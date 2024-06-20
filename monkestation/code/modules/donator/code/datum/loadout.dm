@@ -484,6 +484,7 @@
 	requires_purchase = FALSE
 
 //Raziaar
+/datum/loadout_item/pocket_items/donator/orangutan
 	name = "Pet Delivery Beacon - Orangutan"
 	item_path = /obj/item/choice_beacon/pet/donator/orangutan
 	donator_only = TRUE
