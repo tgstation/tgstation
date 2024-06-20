@@ -474,19 +474,17 @@
 			)
 	return soundin
 
-///generate a room to group all the similarly playing sound together then find an average center to play the sound in
-/proc/generate_sound_area(turf/source)
-	var/list/x_coord
-	var/list/y_coord
-	var/counter = 1 // a counter which increment each loop
-	if(source.blocks_air)
-		return
-	var/list/connected_turfs = list(source)
-	. = connected_turfs
-	for(var/turf/reference_turf in connected_turfs)
-		x_coord[counter] = reference_turf.x
-		y_coord[counter] = reference_turf.y
-		connected_turfs |= reference_turf.atmos_adjacent_turfs
+///play sound at the center of room, source as the turf to start, sound_file sent as 'sound/your_file.ogg'
+/proc/create_sound_center(list/turf/source)
+	var/list/x_coord = list()
+	var/list/y_coord = list()
+	var/z_coord = source[1].z
+	for(var/i = 1, i <= length(source), i++)
+		var/turf/open/reference_turf = source[i]
+		x_coord += reference_turf.x
+		y_coord += reference_turf.y
 
-	var/average_x = max(x_coord) - min(x_coord)
-	var/average_y = max(y_coord) - min(y_coord)
+	var/average_x = round((max(x_coord) + min(x_coord))/2)
+	var/average_y = round((max(y_coord) + min(y_coord))/2)
+	return locate(average_x,average_y, z_coord)
+

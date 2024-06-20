@@ -41,6 +41,8 @@
 
 	///If there is an active hotspot on us store a reference to it here
 	var/obj/effect/hotspot/active_hotspot
+	///the group of hotspots we are a part of
+	var/datum/hot_group/our_hot_group
 	/// air will slowly revert to initial_gas_mix
 	var/planetary_atmos = FALSE
 	/// once our paired turfs are finished with all other shares, do one 100% share
@@ -67,6 +69,8 @@
 /turf/open/Destroy()
 	if(active_hotspot)
 		QDEL_NULL(active_hotspot)
+	if(our_hot_group)
+		QDEL_NULL(our_hot_group)
 	// Adds the adjacent turfs to the current atmos processing
 	for(var/near_turf in atmos_adjacent_turfs)
 		SSair.add_to_active(near_turf)
@@ -318,6 +322,8 @@
 					enemy_tile.consider_pressure_difference(src, -difference)
 			//This acts effectivly as a very slow timer, the max deltas of the group will slowly lower until it breaksdown, they then pop up a bit, and fall back down until irrelevant
 			LAST_SHARE_CHECK
+		if(active_hotspot && enemy_tile.active_hotspot)
+			our_hot_group.merge_hot_groups(enemy_tile.our_hot_group)
 
 
 	/******************* GROUP HANDLING FINISH *********************************************************************/
@@ -686,6 +692,61 @@ Then we space some of our heat, and think about if we should stop conducting.
 	var/heat = conduction_coefficient * CALCULATE_CONDUCTION_ENERGY(delta_temperature, heat_capacity, sharer.heat_capacity)
 	temperature += heat / heat_capacity //The higher your own heat cap the less heat you get from this arrangement
 	sharer.temperature -= heat / sharer.heat_capacity
+
+//handle the grouping of hotspot and then determining an average center to play sound in
+/datum/hot_group
+	var/list/turf_list = list()
+	var/datum/looping_sound/fire/sound
+	var/static/mutable_appearance/highlight = mutable_appearance('icons/turf/overlays.dmi', "greenOverlay", 5.06)
+	var/tiles_limit = 50
+
+/datum/hot_group/New()
+	. = ..()
+	SSair.hot_groups += src
+
+/datum/hot_group/process(seconds_per_tick)
+	. = ..()
+	update_sound()
+
+/datum/hot_group/Destroy()
+	. = ..()
+	SSair.hot_groups -= src
+	turf_list.Cut()
+	qdel(src)
+
+/datum/hot_group/proc/remove_from_group(turf/open/target)
+	target.our_hot_group.turf_list -= target
+	target.our_hot_group = null
+
+/datum/hot_group/proc/add_to_group(turf/open/target)
+	turf_list += target
+	target.our_hot_group = src
+
+/datum/hot_group/proc/merge_hot_groups(datum/hot_group/enemy_group)
+	var/random_group
+	if(turf_list.len >= tiles_limit || enemy_group.turf_list.len >= tiles_limit)
+		return
+	if(turf_list == enemy_group.turf_list)
+		random_group = rand(0,1)
+	else if(turf_list.len > enemy_group.turf_list.len || random_group)
+		for(var/turf/open/reference in enemy_group.turf_list)
+			turf_list += reference
+			reference.our_hot_group = src
+	else
+		for(var/turf/open/reference in turf_list)
+			enemy_group.turf_list += reference
+			reference.our_hot_group = enemy_group
+
+/datum/hot_group/proc/update_sound()
+	var/turf/open/sound_turf = create_sound_center(turf_list)
+	if(sound)
+		sound.parent = sound_turf
+	else
+		sound = new(sound_turf, TRUE)
+
+/datum/looping_sound/fire
+	mid_sounds = 'sound/vox_fem/fire.ogg'
+	volume = 25
 
 #undef LAST_SHARE_CHECK
 #undef PLANET_SHARE_CHECK
