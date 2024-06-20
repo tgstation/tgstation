@@ -108,11 +108,11 @@
 	var/contraband_status = HAS_TRAIT(interacting_with, TRAIT_CONTRABAND)
 	if((!contraband_status && scans_correctly) || (contraband_status && !scans_correctly))
 		playsound(src, 'sound/machines/ping.ogg', 20)
-		balloon_alert(user, "CLEAR")
+		balloon_alert(user, "clear")
 		return
 
 	playsound(src, 'sound/machines/uplinkerror.ogg', 40)
-	balloon_alert(user, "CONTRABAND DETECTED")
+	balloon_alert(user, "contraband detected")
 
 /**
  * Create our report
