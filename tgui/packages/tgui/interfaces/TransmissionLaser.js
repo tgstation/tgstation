@@ -145,6 +145,31 @@ const InputControls = (props, context) => {
           selected={power_format === 10 ** 15}
           onClick={() => act('inputPW')}
         />
+        <Button
+          content={'EW'}
+          selected={power_format === 10 ** 18}
+          onClick={() => act('inputEW')}
+        />
+        <Button
+          content={'ZW'}
+          selected={power_format === 10 ** 21}
+          onClick={() => act('inputZW')}
+        />
+        <Button
+          content={'YW'}
+          selected={power_format === 10 ** 24}
+          onClick={() => act('inputYW')}
+        />
+        <Button
+          content={'RW'}
+          selected={power_format === 10 ** 27}
+          onClick={() => act('inputRW')}
+        />
+        <Button
+          content={'QW'}
+          selected={power_format === 10 ** 30}
+          onClick={() => act('inputQW')}
+        />
       </Box>
     </Section>
   );
@@ -221,6 +246,31 @@ const OutputControls = (props, context) => {
           content={'PW'}
           selected={output_multiplier === 10 ** 15}
           onClick={() => act('outputPW')}
+        />
+        <Button
+          content={'EW'}
+          selected={output_multiplier === 10 ** 18}
+          onClick={() => act('outputEW')}
+        />
+        <Button
+          content={'ZW'}
+          selected={output_multiplier === 10 ** 21}
+          onClick={() => act('outputZW')}
+        />
+        <Button
+          content={'YW'}
+          selected={output_multiplier === 10 ** 24}
+          onClick={() => act('outpuYW')}
+        />
+        <Button
+          content={'RW'}
+          selected={output_multiplier === 10 ** 27}
+          onClick={() => act('outputRW')}
+        />
+        <Button
+          content={'QW'}
+          selected={output_multiplier === 10 ** 30}
+          onClick={() => act('outputQW')}
         />
       </Box>
     </Section>

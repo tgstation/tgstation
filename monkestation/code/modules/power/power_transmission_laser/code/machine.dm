@@ -211,6 +211,16 @@
 			power_format_multi = 1 TW
 		if("inputPW")
 			power_format_multi = 1 PW
+		if("inputEW")
+			power_format_multi = 1 EW
+		if("inputZW")
+			power_format_multi = 1 ZW
+		if("inputYW")
+			power_format_multi = 1 YW
+		if("inputRW")
+			power_format_multi = 1 RW
+		if("inputQW")
+			power_format_multi = 1 QW
 
 		if("outputW")
 			power_format_multi_output = 1
@@ -224,6 +234,16 @@
 			power_format_multi_output = 1 TW
 		if("outputPW")
 			power_format_multi_output = 1 PW
+		if("outputEW")
+			power_format_multi_output = 1 EW
+		if("outputZW")
+			power_format_multi_output = 1 ZW
+		if("outputYW")
+			power_format_multi_output = 1 YW
+		if("outputRW")
+			power_format_multi_output = 1 RW
+		if("outputQW")
+			power_format_multi_output = 1 QW
 
 
 /obj/machinery/power/transmission_laser/process()
@@ -284,7 +304,7 @@
 
 ////selling defines are here
 #define MINIMUM_BAR 25
-#define PROCESS_CAP 5000 - MINIMUM_BAR
+#define PROCESS_CAP 5000000 - MINIMUM_BAR
 
 #define A1_CURVE 70
 
