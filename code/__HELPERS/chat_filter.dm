@@ -5,7 +5,7 @@
 /// Given a text, will return what word is on the IC filter, with the reason.
 /// Returns null if the message is OK.
 /proc/is_ic_filtered(message)
-	if (config.ic_filter_regex?.Find_char(LOWER_TEXT(message))) //MASSMETA EDIT
+	if (config.ic_filter_regex?.Find_char(LOWER_TEXT(message))) //MASSMETA EDIT CHANGE - ORIGINAL: .Find(message)
 		var/matched_group = GET_MATCHED_GROUP(config.ic_filter_regex)
 		return list(
 			matched_group,
