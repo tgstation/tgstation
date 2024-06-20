@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "fixed wrong access on one door on wawastation and also made lights on elevators not break (On Wawastation)"
