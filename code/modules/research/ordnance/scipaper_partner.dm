@@ -70,5 +70,5 @@
 		"emp_adv" = 1250,
 		"high_efficiency" = 5000,
 		"micro_bluespace" = 5000,
-		"adv_power" = 1500,
+		"parts_adv" = 1500,
 	)
