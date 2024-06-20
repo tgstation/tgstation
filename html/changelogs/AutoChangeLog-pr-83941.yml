@@ -1,0 +1,4 @@
+author: "GPeckman"
+delete-after: True
+changes:
+  - bugfix: "When on 'stream' mode, the cleaning spray from a bottle of space cleaner should no longer be blocked by just about everything."

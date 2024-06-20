@@ -6,6 +6,7 @@
 	design_ids = list(
 		"healthanalyzer",
 		"autopsyscanner",
+		"genescanner",
 		"medical_kiosk",
 		"chem_master",
 		"ph_meter",
@@ -54,7 +55,6 @@
 		"scan_console",
 		"dna_disk",
 		"dnainfuser",
-		"genescanner",
 		"mod_dna_lock",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)

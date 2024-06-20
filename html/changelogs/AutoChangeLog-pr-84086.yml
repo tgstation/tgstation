@@ -1,0 +1,11 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - balance: "Added ordnance to extra access of geneticists and roboticists"
+  - balance: "Reduced parts scanning tests' machine count to 4 from 8"
+  - balance: "Reduced augmented organs scanning tests mob count to 1 from 2"
+  - balance: "Reduced equipped mech scanning test count to 1 from 2"
+  - balance: "Added polycrystal option to bluespace crystal scan test"
+  - bugfix: "Allowed NTNet relay in away circuit imprinter for NT Frontier app"
+  - qol: "NT Frontier app installed on RD and Scientists` PDAs by default"
+  - qol: "Updated NT Frontier app to be more user-friendly"

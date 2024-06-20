@@ -1,0 +1,4 @@
+author: "JackEnoff"
+delete-after: True
+changes:
+  - bugfix: "Repurposed Glands (Adrenals) now show their correct duration and chemical cost in its description."
