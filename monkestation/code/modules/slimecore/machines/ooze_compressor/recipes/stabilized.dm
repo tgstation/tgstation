@@ -52,7 +52,7 @@
 
 /datum/compressor_recipe/crossbreed/stabilized/blue
 	required_oozes = list(
-		/datum/reagent/slime_ooze/blue = 1000,
+		/datum/reagent/slime_ooze/blue = CROSSBREED_RECIPE_OOZE_AMOUNT * 2,
 		)
 	output_item = /obj/item/slimecross/stabilized/blue
 

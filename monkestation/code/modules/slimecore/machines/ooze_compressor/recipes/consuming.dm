@@ -52,7 +52,7 @@
 
 /datum/compressor_recipe/crossbreed/consuming/silver
 	required_oozes = list(
-		/datum/reagent/slime_ooze/silver = 1000,
+		/datum/reagent/slime_ooze/silver = CROSSBREED_RECIPE_OOZE_AMOUNT * 2,
 		)
 	output_item = /obj/item/slimecross/consuming/silver
 

@@ -52,7 +52,7 @@
 
 /datum/compressor_recipe/crossbreed/recurring/cerulean
 	required_oozes = list(
-		/datum/reagent/slime_ooze/cerulean = 1000,
+		/datum/reagent/slime_ooze/cerulean = CROSSBREED_RECIPE_OOZE_AMOUNT * 2,
 		)
 	output_item = /obj/item/slimecross/recurring/cerulean
 

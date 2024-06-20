@@ -38,7 +38,7 @@
 
 /datum/compressor_recipe/crossbreed/charged/yellow
 	required_oozes = list(
-		/datum/reagent/slime_ooze/yellow = 1000,
+		/datum/reagent/slime_ooze/yellow = CROSSBREED_RECIPE_OOZE_AMOUNT * 2,
 		)
 	output_item = /obj/item/slimecross/charged/yellow
 

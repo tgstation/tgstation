@@ -52,7 +52,7 @@
 
 /datum/compressor_recipe/crossbreed/selfsustaining/darkpurple
 	required_oozes = list(
-		/datum/reagent/slime_ooze/darkpurple = 1000,
+		/datum/reagent/slime_ooze/darkpurple = CROSSBREED_RECIPE_OOZE_AMOUNT * 2,
 		)
 	output_item = /obj/item/slimecross/selfsustaining/darkpurple
 

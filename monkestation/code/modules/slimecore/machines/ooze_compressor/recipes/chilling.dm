@@ -52,7 +52,7 @@
 
 /datum/compressor_recipe/crossbreed/chilling/darkblue
 	required_oozes = list(
-		/datum/reagent/slime_ooze/darkblue = 1000,
+		/datum/reagent/slime_ooze/darkblue = CROSSBREED_RECIPE_OOZE_AMOUNT * 2,
 		)
 	output_item = /obj/item/slimecross/chilling/darkblue
 

@@ -10,7 +10,7 @@
 
 /datum/compressor_recipe/crossbreed/industrial/metal
 	required_oozes = list(
-		/datum/reagent/slime_ooze/metal = 1000,
+		/datum/reagent/slime_ooze/metal = CROSSBREED_RECIPE_OOZE_AMOUNT * 2,
 		)
 	output_item = /obj/item/slimecross/industrial/metal
 
