@@ -113,6 +113,9 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	. = ..()
 	. += GLOB.diamond_recipes
 
+/obj/item/stack/sheet/mineral/diamond/five
+	amount = 5
+
 /*
  * Uranium
  */
@@ -282,8 +285,9 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	walltype = /turf/closed/wall/mineral/titanium
 
 GLOBAL_LIST_INIT(titanium_recipes, list ( \
-	new/datum/stack_recipe("Titanium tile", /obj/item/stack/tile/mineral/titanium, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
-	new/datum/stack_recipe("Shuttle seat", /obj/structure/chair/comfy/shuttle, 2, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+	new /datum/stack_recipe("Titanium tile", /obj/item/stack/tile/mineral/titanium, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
+	new /datum/stack_recipe("Shuttle seat", /obj/structure/chair/comfy/shuttle, 2, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
+	new /datum/stack_recipe("Material tram door assembly", /obj/structure/door_assembly/multi_tile/door_assembly_tram, 8, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_DOORS), \
 	))
 
 /obj/item/stack/sheet/mineral/titanium/get_main_recipes()
@@ -473,6 +477,7 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	new /datum/stack_recipe("ancient armor", /obj/item/clothing/suit/armor/elder_atmosian, req_amount = 5, res_amount = 1, crafting_flags = NONE, category = CAT_CLOTHING),
 	new /datum/stack_recipe("ancient helmet", /obj/item/clothing/head/helmet/elder_atmosian, req_amount = 3, res_amount = 1, crafting_flags = NONE, category = CAT_CLOTHING),
 	new /datum/stack_recipe("metallic hydrogen axe", /obj/item/fireaxe/metal_h2_axe, req_amount = 15, res_amount = 1, crafting_flags = NONE, category = CAT_WEAPON_MELEE),
+	new /datum/stack_recipe("metallic hydrogen bolts", /obj/item/ammo_casing/rebar/hydrogen, req_amount = 1, res_amount = 1, crafting_flags = NONE, category = CAT_WEAPON_AMMO),
 	))
 
 /obj/item/stack/sheet/mineral/metal_hydrogen
@@ -491,6 +496,12 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	. = ..()
 	. += GLOB.metalhydrogen_recipes
 
+
+
+GLOBAL_LIST_INIT(zaukerite_recipes, list(
+	new /datum/stack_recipe("zaukerite shard", /obj/item/ammo_casing/rebar/zaukerite, req_amount=1, res_amount=1, category = CAT_WEAPON_AMMO),
+	))
+
 /obj/item/stack/sheet/mineral/zaukerite
 	name = "zaukerite"
 	icon_state = "zaukerite"
@@ -501,3 +512,7 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	mats_per_unit = list(/datum/material/zaukerite = SHEET_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/zaukerite
 	material_type = /datum/material/zaukerite
+
+/obj/item/stack/sheet/mineral/zaukerite/get_main_recipes()
+	. = ..()
+	. += GLOB.zaukerite_recipes

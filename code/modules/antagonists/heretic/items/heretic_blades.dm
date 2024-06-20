@@ -28,14 +28,19 @@
 /obj/item/melee/sickly_blade/proc/check_usability(mob/living/user)
 	return IS_HERETIC_OR_MONSTER(user)
 
-/obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
+/obj/item/melee/sickly_blade/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(.)
+		return .
 	if(!check_usability(user))
 		to_chat(user, span_danger("You feel a pulse of alien intellect lash out at your mind!"))
-		var/mob/living/carbon/human/human_user = user
-		human_user.AdjustParalyzed(5 SECONDS)
+		user.AdjustParalyzed(5 SECONDS)
 		return TRUE
+	return .
 
-	return ..()
+/obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, click_parameters)
+	if(isliving(target))
+		SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target, src)
 
 /obj/item/melee/sickly_blade/attack_self(mob/user)
 	seek_safety(user)
@@ -43,7 +48,7 @@
 
 /// Attempts to teleport the passed mob to somewhere safe on the station, if they can use the blade.
 /obj/item/melee/sickly_blade/proc/seek_safety(mob/user)
-	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
+	var/turf/safe_turf = find_safe_turf(zlevel = z, extended_safety_checks = TRUE)
 	if(check_usability(user))
 		if(do_teleport(user, safe_turf, channel = TELEPORT_CHANNEL_MAGIC))
 			to_chat(user, span_warning("As you shatter [src], you feel a gust of energy flow through your body. [after_use_message]"))
@@ -54,15 +59,10 @@
 	playsound(src, SFX_SHATTER, 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
 	qdel(src)
 
-/obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!isliving(target))
-		return
-
-	if(proximity_flag)
-		SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target, src)
-	else
-		SEND_SIGNAL(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, target, src)
+/obj/item/melee/sickly_blade/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isliving(interacting_with))
+		SEND_SIGNAL(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, interacting_with, src)
+		return ITEM_INTERACT_BLOCKING
 
 /obj/item/melee/sickly_blade/examine(mob/user)
 	. = ..()

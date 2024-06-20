@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - qol: "Coffee types are overall more consistent, causing jittering only from the overdose effect."
-  - bugfix: "Pumpkin lattes will actually work like coffee."

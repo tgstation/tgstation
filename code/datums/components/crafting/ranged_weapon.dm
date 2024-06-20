@@ -225,7 +225,7 @@
 
 /datum/crafting_recipe/rebarxbowforced
 	name = "Forced Rebar Crossbow"
-	desc = "Get an extra shot in your crossbow... for a chance of shooting yourself when you fire it."
+	desc = "A much quicker reload... for a chance of shooting yourself when you fire it."
 	result = /obj/item/gun/ballistic/rifle/rebarxbow/forced
 	reqs = list(
 		/obj/item/gun/ballistic/rifle/rebarxbow = 1,

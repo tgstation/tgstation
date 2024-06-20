@@ -20,7 +20,7 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE // Closer than a scratch to a crustacean pinching effect
 	melee_attack_cooldown = 1 SECONDS
 	butcher_results = list(
-		/obj/item/food/meat/crab = 2,
+		/obj/item/food/meat/slab/rawcrab = 2,
 		/obj/item/stack/sheet/bone = 2,
 		/obj/item/organ/internal/monster_core/rush_gland = 1,
 	)

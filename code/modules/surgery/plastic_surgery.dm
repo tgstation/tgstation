@@ -60,6 +60,7 @@
 		/obj/item/knife = 50,
 		TOOL_WIRECUTTER = 35)
 	time = 64
+	surgery_effects_mood = TRUE
 
 /datum/surgery_step/reshape_face/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message(span_notice("[user] begins to alter [target]'s appearance."), span_notice("You begin to alter [target]'s appearance..."))
