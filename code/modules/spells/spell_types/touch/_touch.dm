@@ -200,7 +200,7 @@
 		return FALSE
 	if(!(caster.mobility_flags & MOBILITY_USE))
 		caster.balloon_alert(caster, "can't reach out!")
-		return TRUE
+		return FALSE
 
 	return TRUE
 
