@@ -1,0 +1,6 @@
+author: "ven1883"
+delete-after: True
+changes:
+  - balance: "The PTL can now output up to quettawatts of power."
+  - balance: "The PTL can now generate up to 5,000,000 credits per tick at max."
+  - balance: "Adjusted the PTL money generation curve."
