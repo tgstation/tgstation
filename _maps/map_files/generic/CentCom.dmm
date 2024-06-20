@@ -348,6 +348,12 @@
 /obj/structure/railing/wood,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/botany)
+"aY" = (
+/obj/machinery/sleeper/self_control{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/centcom/central_command_areas/admin)
 "aZ" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/reinforced,
@@ -806,6 +812,10 @@
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/borbop)
+"cf" = (
+/obj/machinery/limbgrower/fullupgrade,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/centcom/central_command_areas/admin)
 "cg" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/evacuation)
@@ -1485,6 +1495,36 @@
 /obj/effect/turf_decal/siding/dark,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/admin_hangout)
+"dU" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/window/reinforced/spawner/directional,
+/obj/item/gun/syringe/rapidsyringe,
+/obj/item/reagent_containers/syringe/contraband/fentanyl{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/syringe/contraband/fentanyl{
+	pixel_x = 2;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/syringe/contraband/fentanyl{
+	pixel_x = -2;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/syringe/contraband/fentanyl{
+	pixel_x = 8;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/syringe/contraband/fentanyl{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/syringe/contraband/fentanyl{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/turf/open/floor/glass/reinforced,
+/area/centcom/central_command_areas/admin)
 "dV" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -1973,6 +2013,16 @@
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/wood/parquet,
 /area/centcom/central_command_areas/borbop)
+"fr" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/door/window/brigdoor/security,
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/obj/item/mod/control/pre_equipped/responsory/medic{
+	pixel_y = 4
+	},
+/turf/open/floor/glass/reinforced,
+/area/centcom/central_command_areas/admin)
 "fs" = (
 /obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/airless,
@@ -2172,6 +2222,10 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/hall)
+"fZ" = (
+/obj/structure/table/optable,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/centcom/central_command_areas/admin)
 "ga" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/closed/indestructible/syndicate,
@@ -2901,6 +2955,10 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/borbop)
+"hY" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/glass/reinforced,
+/area/centcom/central_command_areas/admin)
 "hZ" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 5
@@ -3704,6 +3762,14 @@
 /obj/item/storage/toolbox/fishing,
 /turf/open/floor/carpet/neon/simple/cyan,
 /area/centcom/central_command_areas/admin)
+"kp" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/fax{
+	fax_name = "Raziel's Desk";
+	name = "Raziel's Fax Machine"
+	},
+/turf/open/floor/glass/reinforced/plasma,
+/area/centcom/central_command_areas/admin)
 "kq" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/structure/table/reinforced,
@@ -4272,6 +4338,9 @@
 /obj/effect/mapping_helpers/airlock/access/any/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
+"lL" = (
+/turf/open/floor/carpet/orange,
+/area/centcom/central_command_areas/admin)
 "lM" = (
 /obj/structure/toilet{
 	dir = 1
@@ -4496,6 +4565,9 @@
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/centcom/central_command_areas/medical)
+"ms" = (
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/centcom/central_command_areas/admin)
 "mt" = (
 /obj/structure/table/reinforced,
 /obj/machinery/microwave{
@@ -4997,6 +5069,19 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
+"nQ" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/machinery/door/window/brigdoor/security,
+/obj/machinery/door/window/brigdoor/security,
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/obj/item/mod/module/injector{
+	pixel_y = -2
+	},
+/obj/item/mod/module/health_analyzer{
+	pixel_y = 7
+	},
+/turf/open/floor/glass/reinforced/plasma,
+/area/centcom/central_command_areas/admin)
 "nR" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -5383,7 +5468,9 @@
 /area/centcom/syndicate_mothership/control)
 "oT" = (
 /obj/structure/table/wood,
-/obj/machinery/fax,
+/obj/machinery/fax{
+	fax_name = "Raziel's Desk"
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "oU" = (
@@ -5588,7 +5675,9 @@
 /area/centcom/syndicate_mothership/expansion_bombthreat)
 "pt" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/machinery/fax,
+/obj/machinery/fax{
+	fax_name = "Raziel's Desk"
+	},
 /turf/open/floor/circuit,
 /area/centcom/central_command_areas/admin)
 "pu" = (
@@ -6026,6 +6115,13 @@
 	},
 /turf/open/misc/asteroid/snow/airless,
 /area/centcom/syndicate_mothership)
+"qz" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Raziel's Theatre"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/admin)
 "qA" = (
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark/textured_large,
@@ -6129,6 +6225,13 @@
 "qK" = (
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/hall)
+"qL" = (
+/obj/structure/alien_tank/filled{
+	desc = "A black slime creature swims around in the fluids.";
+	name = "Bio Creature Tank"
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/centcom/central_command_areas/admin)
 "qM" = (
 /turf/open/floor/glass/reinforced,
 /area/centcom/tdome/observation)
@@ -7944,7 +8047,9 @@
 	dir = 6
 	},
 /obj/structure/table/wood,
-/obj/machinery/fax,
+/obj/machinery/fax{
+	fax_name = "Raziel's Desk"
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "vJ" = (
@@ -8272,6 +8377,13 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/kitchen)
+"wD" = (
+/obj/item/reagent_containers/syringe/contraband/fentanyl{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/admin)
 "wE" = (
 /obj/structure/chair/sofa/corp/left,
 /turf/open/floor/carpet,
@@ -8345,6 +8457,21 @@
 	force = -10
 	},
 /turf/open/misc/grass,
+/area/centcom/central_command_areas/admin)
+"wR" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/mod/module/megaphone{
+	pixel_y = 12;
+	pixel_x = -1
+	},
+/obj/item/mod/module/quick_carry/advanced{
+	pixel_y = -2;
+	pixel_x = -2
+	},
+/obj/machinery/door/window/brigdoor/security,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/turf/open/floor/glass/reinforced,
 /area/centcom/central_command_areas/admin)
 "wS" = (
 /obj/structure/table/wood/fancy/black,
@@ -9376,6 +9503,17 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
+"zA" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/window/reinforced/spawner/directional,
+/obj/item/autosurgeon{
+	pixel_y = 17
+	},
+/obj/item/organ/internal/cyberimp/brain/linked_surgery/perfect{
+	pixel_x = -1
+	},
+/turf/open/floor/glass/reinforced/plasma,
+/area/centcom/central_command_areas/admin)
 "zB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -9582,6 +9720,24 @@
 	dir = 8
 	},
 /area/centcom/central_command_areas/evacuation/ship)
+"Af" = (
+/obj/machinery/light/directional/east,
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/cautery/advanced{
+	pixel_y = 4;
+	pixel_x = -2
+	},
+/obj/item/scalpel/advanced{
+	pixel_y = 6
+	},
+/obj/item/retractor/advanced{
+	pixel_y = 10
+	},
+/obj/item/surgical_drapes{
+	pixel_x = 5
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/centcom/central_command_areas/admin)
 "Ag" = (
 /obj/structure/chair/stool/directional/south,
 /obj/structure/sign/map/right{
@@ -9624,6 +9780,16 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/centcom/central_command_areas/admin_hangout)
+"Al" = (
+/obj/structure/sign{
+	name = "wall";
+	icon = 'monkestation/icons/turf/walls/reinforced_wall.dmi';
+	icon_state = "reinforced_wall-3";
+	desc = "Effectively impervious to conventional methods of destruction.";
+	pixel_x = -32
+	},
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/admin)
 "Am" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -9763,6 +9929,21 @@
 /obj/item/banner/command,
 /turf/open/floor/stone,
 /area/centcom/central_command_areas/evacuation/ship)
+"AE" = (
+/obj/structure/sign{
+	name = "wall";
+	icon = 'monkestation/icons/turf/walls/reinforced_wall.dmi';
+	icon_state = "reinforced_wall-3";
+	desc = "Effectively impervious to conventional methods of destruction.";
+	pixel_x = -32
+	},
+/obj/structure/closet/secure_closet/ert_med,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -3
+	},
+/obj/item/mod/module/flamethrower,
+/turf/open/floor/glass/reinforced/plasma,
+/area/centcom/central_command_areas/admin)
 "AF" = (
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
@@ -10248,6 +10429,21 @@
 "BR" = (
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation/ship)
+"BS" = (
+/obj/machinery/light/directional/east{
+	dir = 8
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/reagent_containers/cup/beaker/synthflesh{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/cup/beaker/synthflesh,
+/obj/item/reagent_containers/cup/beaker/synthflesh{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/cup/beaker/meta/omnizine,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/centcom/central_command_areas/admin)
 "BT" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -10483,6 +10679,12 @@
 /obj/item/megaphone/sec,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/firing_range_checkpoint_control)
+"CE" = (
+/obj/item/bedsheet/medical,
+/obj/structure/bed,
+/obj/structure/curtain/cloth/fancy,
+/turf/open/floor/glass/reinforced/plasma,
+/area/centcom/central_command_areas/admin)
 "CF" = (
 /obj/machinery/suit_storage_unit/industrial,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
@@ -12112,6 +12314,10 @@
 "He" = (
 /obj/structure/table/wood,
 /obj/item/toy/plush/lizard_plushie,
+/obj/machinery/fax{
+	fax_name = "s";
+	name = "Abraxis' Fax Machine"
+	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
 "Hf" = (
@@ -15584,6 +15790,16 @@
 	dir = 4
 	},
 /area/centcom/syndicate_mothership/control)
+"QG" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/door/window/brigdoor/security,
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/obj/machinery/computer/records/medical/laptop{
+	dir = 1;
+	pixel_y = 4
+	},
+/turf/open/floor/glass/reinforced,
+/area/centcom/central_command_areas/admin)
 "QH" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark,
 /obj/effect/turf_decal/tile/neutral/full,
@@ -17006,6 +17222,11 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/ghost_spawn)
+"Uy" = (
+/obj/machinery/door/airlock/medical/glass,
+/obj/effect/mapping_helpers/airlock/access/any/admin/captain,
+/turf/open/floor/glass/reinforced,
+/area/centcom/central_command_areas/admin)
 "Uz" = (
 /turf/closed/indestructible/fakeglass,
 /area/centcom/central_command_areas/hall)
@@ -17705,6 +17926,17 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
+"Wq" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/window/reinforced/spawner/directional,
+/obj/item/clothing/glasses/sunglasses/chemical{
+	pixel_y = -1
+	},
+/obj/item/autosurgeon/medical_hud{
+	pixel_y = 18
+	},
+/turf/open/floor/glass/reinforced/plasma,
+/area/centcom/central_command_areas/admin)
 "Wr" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -18069,11 +18301,21 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/admin)
+"Xo" = (
+/obj/structure/chair/comfy/teal,
+/turf/open/floor/glass/reinforced/plasma,
+/area/centcom/central_command_areas/admin)
 "Xp" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/computer/monitor,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation/ship)
+"Xq" = (
+/obj/machinery/computer/operating{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/centcom/central_command_areas/admin)
 "Xr" = (
 /obj/machinery/keycard_auth/directional/south,
 /obj/structure/table/reinforced,
@@ -18416,6 +18658,9 @@
 	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
+"Yr" = (
+/turf/open/floor/glass/reinforced/plasma,
+/area/centcom/central_command_areas/admin)
 "Ys" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
@@ -18483,6 +18728,12 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/hall)
+"YG" = (
+/obj/machinery/light/directional/east{
+	dir = 8
+	},
+/turf/open/floor/glass/reinforced,
+/area/centcom/central_command_areas/admin)
 "YH" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -18685,10 +18936,6 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
-"Zi" = (
-/obj/item/kirbyplants/fullysynthetic,
-/turf/open/floor/mineral/titanium/white,
-/area/centcom/central_command_areas/admin)
 "Zj" = (
 /obj/effect/turf_decal/tile/dark/opposingcorners,
 /obj/effect/landmark/navigate_destination/centcom/kitchen,
@@ -52867,15 +53114,15 @@ aa
 aa
 Uv
 PR
-PR
-PR
-On
-Tx
-gf
-uD
-pi
-pi
-pi
+Al
+AE
+YG
+kp
+dU
+qL
+BS
+aY
+cf
 On
 Mc
 Mc
@@ -53124,15 +53371,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-Zf
-pi
-pi
-eU
-XN
-pi
-pi
+ua
+fr
+Yr
+ID
+zA
+ms
+lL
+lL
+ms
 On
 Mc
 Mc
@@ -53381,16 +53628,16 @@ aa
 aa
 aa
 aa
-aa
-aa
-Zf
-pi
-XN
-NK
-XN
-pi
-pi
-CS
+ua
+nQ
+ID
+Xo
+QG
+ms
+lL
+lL
+ms
+qz
 Mc
 dQ
 Mc
@@ -53638,16 +53885,16 @@ aa
 aa
 aa
 aa
-aa
-aa
-Zf
-pi
-pi
-pi
-pi
-pi
-pi
-IS
+ua
+wR
+Yr
+ID
+Wq
+ms
+lL
+lL
+ms
+On
 Mc
 Mc
 Mc
@@ -53895,15 +54142,15 @@ aa
 aa
 aa
 aa
-aa
-aa
 On
-Ly
-oT
-SI
-SI
-pi
-EK
+CE
+hY
+Yr
+Uy
+ms
+Af
+fZ
+Xq
 On
 Mc
 Mc
@@ -54152,10 +54399,10 @@ aa
 aa
 aa
 aa
-aa
 On
 On
 On
+wD
 On
 On
 On
@@ -54942,7 +55189,7 @@ ID
 VU
 eo
 ID
-Zi
+IU
 ua
 aa
 aa
