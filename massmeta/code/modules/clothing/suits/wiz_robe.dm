@@ -20,7 +20,7 @@
 	name = "battlemage helmet"
 	desc = "A suitably impressive helmet."
 	icon_state = "hardsuit-wiz"
-	inhand_icon_state = "wiz_hardsuit"
+	inhand_icon_state = null
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	armor_type = /datum/armor/hardsuit_wizard_shielded
