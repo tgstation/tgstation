@@ -1,0 +1,5 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - image: "New gibber sprite"
+  - image: "New food/slime processor sprite"
