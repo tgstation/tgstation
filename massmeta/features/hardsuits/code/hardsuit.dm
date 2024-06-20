@@ -4,6 +4,8 @@
 /obj/item/clothing/suit/space/hardsuit
 	name = "hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
+	lefthand_file = 'massmeta/features/hardsuits/icons/clothing_lefthand.dmi'
+	righthand_file = 'massmeta/features/hardsuits/icons/clothing_righthand.dmi'
 	icon = 'massmeta/features/hardsuits/icons/suits.dmi'
 	worn_icon = 'massmeta/features/hardsuits/icons/suit.dmi'
 	icon_state = "hardsuit-engineering"
@@ -592,7 +594,7 @@
 	toggle_hardsuit_mode(user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		C.update_worn_head(src, forced = 1)
+		C.update_worn_head()
 	icon_state = "hardsuit[on]-[hardsuit_type]"
 	worn_icon_state = "hardsuit[on]-[hardsuit_type]"
 	user.update_worn_head()
@@ -937,7 +939,7 @@
 /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
 	name = "paranormal response team helmet"
 	desc = "A helmet worn by those who deal with paranormal threats for a living."
-	icon_state = "hardsuit0-prt"
+	icon_state = "hardsuit0-inq"
 	inhand_icon_state = "hardsuit0-prt"
 	hardsuit_type = "prt"
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
