@@ -77,7 +77,7 @@
 			return
 		to_chat(user, span_notice("You put [weapon] into [src]."))
 		update_appearance()
-	else if(istype(weapon, /obj/item/pen))
+	else if(weapon.get_writing_implement_details()?["interaction_mode"] == MODE_WRITING)
 		rename(user, weapon)
 
 /obj/item/folder/attack_self(mob/user)

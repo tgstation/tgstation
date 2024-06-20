@@ -228,7 +228,7 @@
 			return
 		else if(bomb)
 			balloon_alert(user, "already rigged!")
-	else if(istype(I, /obj/item/pen))
+	else if(I.get_writing_implement_details()?["interaction_mode"] == MODE_WRITING)
 		if(!open)
 			if(!user.can_write(I))
 				return

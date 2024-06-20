@@ -462,7 +462,7 @@
 	return
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/pen))
+	if(O.get_writing_implement_details()?["interaction_mode"] == MODE_WRITING)
 		var/choice = tgui_input_list(usr, "What would you like to change?", "Seed Alteration", list("Plant Name", "Seed Description", "Product Description"))
 		if(isnull(choice))
 			return

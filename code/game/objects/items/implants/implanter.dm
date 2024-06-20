@@ -45,7 +45,7 @@
 		to_chat(user, span_warning("[src] fails to implant [target]."))
 
 /obj/item/implanter/attackby(obj/item/I, mob/living/user, params)
-	if(!istype(I, /obj/item/pen))
+	if(I.get_writing_implement_details()?["interaction_mode"] == MODE_WRITING)
 		return ..()
 	if(!user.can_write(I))
 		return

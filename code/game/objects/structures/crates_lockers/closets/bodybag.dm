@@ -47,7 +47,7 @@
 	return ..()
 
 /obj/structure/closet/body_bag/attackby(obj/item/interact_tool, mob/user, params)
-	if (istype(interact_tool, /obj/item/pen) || istype(interact_tool, /obj/item/toy/crayon))
+	if (interact_tool.get_writing_implement_details()?["interaction_mode"] == MODE_WRITING)
 		if(!user.can_write(interact_tool))
 			return
 		var/t = tgui_input_text(user, "What would you like the label to be?", name, max_length = 53)

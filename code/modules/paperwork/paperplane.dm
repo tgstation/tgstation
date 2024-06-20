@@ -78,7 +78,7 @@
 /obj/item/paperplane/attackby(obj/item/attacking_item, mob/user, params)
 	if(burn_paper_product_attackby_check(attacking_item, user))
 		return
-	if(istype(attacking_item, /obj/item/pen) || istype(attacking_item, /obj/item/toy/crayon))
+	if(attacking_item.get_writing_implement_details()?["interaction_mode"] == MODE_WRITING)
 		to_chat(user, span_warning("You should unfold [src] before changing it!"))
 		return
 	else if(istype(attacking_item, /obj/item/stamp)) //we don't randomize stamps on a paperplane

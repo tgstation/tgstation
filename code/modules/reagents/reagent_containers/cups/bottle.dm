@@ -510,7 +510,7 @@
 		balloon_alert(user, "transferred [transfer_amount] unit\s")
 		flick("syrup_anim",src)
 
-	if(istype(attacking_item, /obj/item/pen))
+	if(attacking_item.get_writing_implement_details()?["interaction_mode"] == MODE_WRITING)
 		rename(user, attacking_item)
 
 	attacking_item.update_appearance()
