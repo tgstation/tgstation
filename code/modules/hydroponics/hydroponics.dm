@@ -1343,7 +1343,7 @@
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///
 /obj/machinery/hydroponics/proc/adjust_plant_nutriments(adjustamt)
-	reagents.remove_any(adjustamt)
+	reagents.remove_all(adjustamt)
 
 /obj/machinery/hydroponics/proc/increase_sustaining(amount)
 	sustaining_precent += amount

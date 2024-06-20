@@ -359,7 +359,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		return
 
 	busy = FALSE
-	reagents.remove_any(5)
+	reagents.remove_all(5)
 	reagents.expose(user, TOUCH, 5 / max(reagents.total_volume, 5))
 	begin_reclamation()
 	if(washing_face)

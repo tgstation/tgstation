@@ -52,7 +52,7 @@
 
 	var/metabolism_amount = metabolization_amount * seconds_per_tick
 	if (!reagents.trans_to(item.loc, metabolism_amount, methods = INGEST))
-		reagents.remove_any(metabolism_amount)
+		reagents.remove_all(metabolism_amount)
 
 /datum/element/chewable/proc/on_dropped(datum/source)
 	SIGNAL_HANDLER

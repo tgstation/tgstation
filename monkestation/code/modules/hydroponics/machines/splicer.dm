@@ -239,6 +239,6 @@
 	seed_1.adjust_maturation(stats["maturation_change"])
 
 	seed_1.check_infusions(held_beaker.reagents.reagent_list)
-	held_beaker.reagents.remove_any(held_beaker.reagents.total_volume)
+	held_beaker.reagents.remove_all(held_beaker.reagents.total_volume)
 	stats = list()
 	potential_damage = 0

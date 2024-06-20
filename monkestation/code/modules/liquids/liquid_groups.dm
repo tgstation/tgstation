@@ -328,7 +328,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	process_group()
 
 /datum/liquid_group/proc/remove_any(obj/effect/abstract/liquid_turf/remover, amount)
-	reagents.remove_any(amount, TRUE)
+	reagents.remove_all(amount)
 	if(!QDELETED(remover))
 		check_liquid_removal(remover, amount)
 	total_reagent_volume = reagents.total_volume

@@ -312,41 +312,6 @@
 			return TRUE
 	return FALSE
 
-/// Remove an amount of reagents without caring about what they are
-/datum/reagents/proc/remove_any(amount = 1)
-	if(!amount)
-		return
-
-	var/list/cached_reagents = reagent_list
-	var/total_removed = 0
-	var/current_list_element = 1
-	var/initial_list_length = length(cached_reagents) //stored here because removing can cause some reagents to be deleted, ergo length change.
-	if(!initial_list_length)
-		return
-
-	current_list_element = rand(1, cached_reagents.len)
-
-	while(total_removed != amount)
-		if(total_removed >= amount)
-			break
-		if(total_volume <= 0 || !cached_reagents.len)
-			break
-
-		if(current_list_element > cached_reagents.len)
-			current_list_element = 1
-
-		var/datum/reagent/R = cached_reagents[current_list_element]
-		var/remove_amt = min(amount-total_removed,round(amount/max(1, rand(2,initial_list_length)),round(amount/10,0.01))) //double round to keep it at a somewhat even spread relative to amount without getting funky numbers.
-		//min ensures we don't go over amount.
-		remove_reagent(R.type, remove_amt)
-
-		current_list_element++
-		total_removed += remove_amt
-		update_total()
-
-	handle_reactions()
-	return total_removed //this should be amount unless the loop is prematurely broken, in which case it'll be lower. It shouldn't ever go OVER amount.
-
 /// Removes all reagents from this holder
 /datum/reagents/proc/remove_all(amount = 1)
 	var/list/cached_reagents = reagent_list

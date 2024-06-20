@@ -126,9 +126,9 @@
 
 	if(movable_parent.reagents.total_volume > 5)
 		if(bio_boosted)
-			movable_parent.reagents.remove_any(max(1,round(movable_parent.reagents.total_volume * 0.01, CHEMICAL_QUANTISATION_LEVEL)))
+			movable_parent.reagents.remove_all(max(1,round(movable_parent.reagents.total_volume * 0.01, CHEMICAL_QUANTISATION_LEVEL)))
 		else
-			movable_parent.reagents.remove_any(max(1,round(movable_parent.reagents.total_volume * 0.025, CHEMICAL_QUANTISATION_LEVEL)))
+			movable_parent.reagents.remove_all(max(1,round(movable_parent.reagents.total_volume * 0.025, CHEMICAL_QUANTISATION_LEVEL)))
 
 	SEND_SIGNAL(movable_parent, COMSIG_NUTRIENT_UPDATE, movable_parent.reagents.total_volume / movable_parent.reagents.maximum_volume)
 

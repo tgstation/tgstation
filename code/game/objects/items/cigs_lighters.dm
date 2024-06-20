@@ -404,18 +404,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!istype(smoker))
 		// If not, check if it's a gas mask
 		if(!istype(smoker, /obj/item/clothing/mask/gas))
-			reagents.remove_any(to_smoke)
+			reagents.remove_all(to_smoke)
 			return
 
 		smoker = smoker.loc
 
 		// If it is, check if that mask is on a carbon mob
 		if(!istype(smoker) || smoker.get_item_by_slot(ITEM_SLOT_MASK) != loc)
-			reagents.remove_any(to_smoke)
+			reagents.remove_all(to_smoke)
 			return
 	else
 		if(src != smoker.wear_mask)
-			reagents.remove_any(to_smoke)
+			reagents.remove_all(to_smoke)
 			return
 
 	how_long_have_we_been_smokin += seconds_per_tick * (1 SECONDS)
@@ -425,7 +425,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/smoker_resistance = HAS_TRAIT(smoker, TRAIT_SMOKER) ? 0.5 : 1
 		smoker.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm*smoker_resistance)
 	if(!reagents.trans_to(smoker, to_smoke, methods = INGEST, ignore_stomach = TRUE))
-		reagents.remove_any(to_smoke)
+		reagents.remove_all(to_smoke)
 
 /obj/item/clothing/mask/cigarette/process(seconds_per_tick)
 	var/mob/living/user = isliving(loc) ? loc : null
@@ -1236,7 +1236,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	var/mob/living/carbon/vaper = loc
 	if(!iscarbon(vaper) || src != vaper.wear_mask)
-		reagents.remove_any(REAGENTS_METABOLISM)
+		reagents.remove_all(REAGENTS_METABOLISM)
 		return
 
 	if(reagents.get_reagent_amount(/datum/reagent/fuel))
@@ -1251,7 +1251,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		qdel(src)
 
 	if(!reagents.trans_to(vaper, REAGENTS_METABOLISM, methods = INGEST, ignore_stomach = TRUE))
-		reagents.remove_any(REAGENTS_METABOLISM)
+		reagents.remove_all(REAGENTS_METABOLISM)
 
 /obj/item/clothing/mask/vape/process(seconds_per_tick)
 	var/mob/living/M = loc
