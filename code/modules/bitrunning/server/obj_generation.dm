@@ -98,7 +98,7 @@
 	if(!length(exit_turfs))
 		return
 
-	if(retries_spent >= length(exit_turfs))
+	if(!unlimited_respawns && (retries_spent >= length(exit_turfs)))
 		return
 
 	var/turf/destination
