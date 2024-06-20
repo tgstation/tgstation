@@ -1854,7 +1854,7 @@
 #include "code\datums\status_effects\debuffs\slime\slime_leech.dm"
 #include "code\datums\status_effects\debuffs\slime\slimed.dm"
 #include "code\datums\storage\storage.dm"
-#include "code\datums\storage\storage_ui_theme.dm"
+#include "code\datums\storage\storage_interface.dm"
 #include "code\datums\storage\subtypes\backpack.dm"
 #include "code\datums\storage\subtypes\bag_of_holding.dm"
 #include "code\datums\storage\subtypes\cards.dm"

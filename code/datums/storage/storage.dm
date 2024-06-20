@@ -23,10 +23,8 @@
 	/// List of all the mobs currently viewing the contents of this storage.
 	VAR_PRIVATE/list/mob/is_using = list()
 
-	/// Associated list that keeps track of all storage UI datums, which store how many people with a certain UI theme have this storage open and all UI elements for that theme.
-	VAR_PRIVATE/list/datum/storage_ui_theme/storage_themes = null
-	/// Associated list that keeps track of what theme the container was open with. Without this, if observer changes their UI with an open container it will not close and will cause a runtime
-	VAR_PRIVATE/list/theme_cache = null
+	/// Associated list that keeps track of all storage UI datums per person.
+	VAR_PRIVATE/list/datum/storage_interface/storage_interfaces = null
 
 	/// Typecache of items that can be inserted into this storage.
 	/// By default, all item types can be inserted (assuming other conditions are met).
@@ -147,8 +145,7 @@
 		hide_contents(person)
 
 	is_using.Cut()
-	QDEL_LAZYLIST(storage_themes)
-	QDEL_LAZYLIST(theme_cache)
+	QDEL_LAZYLIST(storage_interfaces)
 
 	return ..()
 
@@ -938,10 +935,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 
 /// Async version of putting something into a mobs hand.
-/datum/storage/proc/put_in_hands_async(mob/toshow, obj/item/toremove)
-	if(!toshow.put_in_hands(toremove))
+/datum/storage/proc/put_in_hands_async(mob/to_show, obj/item/toremove)
+	if(!to_show.put_in_hands(toremove))
 		if(!silent)
-			toremove.balloon_alert(toshow, "fumbled!")
+			toremove.balloon_alert(to_show, "fumbled!")
 		return TRUE
 
 /// Signal handler for whenever a mob walks away with us, close if they can't reach us.
@@ -976,51 +973,47 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * Show our storage to a mob.
  *
  * Arguments
- * * mob/toshow - the mob to show the storage to
+ * * mob/to_show - the mob to show the storage to
  *
  * Returns
  * * FALSE if the show failed
  * * TRUE otherwise
  */
-/datum/storage/proc/show_contents(mob/toshow)
-	if(!toshow.client)
+/datum/storage/proc/show_contents(mob/to_show)
+	if(!to_show.client)
 		return FALSE
 
 	// You can only inspect hidden contents if you're an observer
-	if(!isobserver(toshow) && !display_contents)
+	if(!isobserver(to_show) && !display_contents)
 		return FALSE
 
-	if(toshow.active_storage != src && (toshow.stat == CONSCIOUS))
+	if(to_show.active_storage != src && (to_show.stat == CONSCIOUS))
 		for(var/obj/item/thing in real_location)
-			if(thing.on_found(toshow))
-				toshow.active_storage.hide_contents(toshow)
+			if(thing.on_found(to_show))
+				to_show.active_storage.hide_contents(to_show)
 
-	if(toshow.active_storage)
-		toshow.active_storage.hide_contents(toshow)
+	if(to_show.active_storage)
+		to_show.active_storage.hide_contents(to_show)
 
-	toshow.active_storage = src
+	to_show.active_storage = src
 
 	if(ismovable(real_location))
 		var/atom/movable/movable_loc = real_location
 		movable_loc.become_active_storage(src)
 
-	LAZYINITLIST(theme_cache)
-	LAZYINITLIST(storage_themes)
+	LAZYINITLIST(storage_interfaces)
 
-	var/ui_style = ui_style2icon(toshow.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
-	theme_cache[toshow] = ui_style
+	var/ui_style = ui_style2icon(to_show.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 
-	if (!isnull(storage_themes[ui_style]))
-		storage_themes[ui_style].current_viewers += 1
-	else
-		storage_themes[ui_style] = new /datum/storage_ui_theme(ui_style, src)
+	if (isnull(storage_interfaces[to_show]))
+		storage_interfaces[to_show] = new /datum/storage_interface(ui_style, src)
 
 	orient_storage()
 
-	is_using |= toshow
+	is_using |= to_show
 
-	toshow.client.screen |= storage_themes[ui_style].list_ui_elements()
-	toshow.client.screen |= real_location.contents
+	to_show.client.screen |= storage_interfaces[to_show].list_ui_elements()
+	to_show.client.screen |= real_location.contents
 
 	return TRUE
 
@@ -1028,7 +1021,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * Hide our storage from a mob.
  *
  * Arguments
- * * mob/toshow - the mob to hide the storage from
+ * * mob/to_hide - the mob to hide the storage from
  */
 /datum/storage/proc/hide_contents(mob/to_hide)
 	if(!to_hide.client)
@@ -1040,18 +1033,14 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		var/atom/movable/movable_loc = real_location
 		movable_loc.lose_active_storage(src)
 
+	if (isnull(storage_interfaces[to_hide]))
+		return TRUE
+
 	is_using -= to_hide
 
-	if (!(to_hide in theme_cache))
-		return
-
-	var/ui_style = theme_cache[to_hide]
-	theme_cache -= to_hide
-	to_hide.client.screen -= storage_themes[ui_style].list_ui_elements()
+	to_hide.client.screen -= storage_interfaces[to_hide].list_ui_elements()
 	to_hide.client.screen -= real_location.contents
-
-	if (storage_themes[ui_style].deduct_viewer())
-		QDEL_NULL(storage_themes[ui_style])
+	QDEL_NULL(storage_interfaces[to_hide])
 
 	return TRUE
 
@@ -1080,8 +1069,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/columns = clamp(max_slots, 1, screen_max_columns)
 	var/rows = clamp(CEILING(adjusted_contents / columns, 1) + additional_row, 1, screen_max_rows)
 
-	for (var/ui_theme in storage_themes)
-		storage_themes[ui_theme].update_position(screen_start_x, screen_pixel_x, screen_start_y, screen_pixel_y, columns, rows)
+	for (var/ui_user in storage_interfaces)
+		storage_interfaces[ui_user].update_position(screen_start_x, screen_pixel_x, screen_start_y, screen_pixel_y, columns, rows)
 
 	var/current_x = screen_start_x
 	var/current_y = screen_start_y
@@ -1125,7 +1114,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /**
  * Toggles the collectmode of our storage.
  *
- * @param mob/toshow the mob toggling us
+ * @param mob/to_show the mob toggling us
  */
 /datum/storage/proc/toggle_collection_mode(mob/user)
 	collection_mode = (collection_mode + 1) % 3

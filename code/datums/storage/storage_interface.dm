@@ -1,5 +1,5 @@
 /// Datum tracker for storage UI
-/datum/storage_ui_theme
+/datum/storage_interface
 	/// UI elements for this theme
 	var/atom/movable/screen/close/closer
 	var/atom/movable/screen/storage/cells
@@ -10,13 +10,10 @@
 	var/atom/movable/screen/storage/rowjoin/rowjoin1
 	var/atom/movable/screen/storage/rowjoin/rowjoin2
 
-	/// How many people are currently observing us.
-	/// Defaults to one since this is only generated if someone opens the UI
-	var/current_viewers = 1
 	/// Storage that owns us
 	var/datum/storage/parent_storage
 
-/datum/storage_ui_theme/New(ui_style, parent_storage)
+/datum/storage_interface/New(ui_style, parent_storage)
 	src.parent_storage = parent_storage
 	closer = new(null, null, parent_storage)
 	closer.icon = ui_style
@@ -48,15 +45,11 @@
 	rowjoin2.update_appearance()
 
 /// Returns all UI elements under this theme
-/datum/storage_ui_theme/proc/list_ui_elements()
+/datum/storage_interface/proc/list_ui_elements()
 	return list(cells, corner1, corner2, corner3, corner4, rowjoin1, rowjoin2, closer)
 
-/// Called when someone closes the UI, deducts one from current_viewers and if it hits zero - deletes all UI elements and returns TRUE
-/datum/storage_ui_theme/proc/deduct_viewer()
-	current_viewers -= 1
-	if (current_viewers > 0)
-		return FALSE
-
+/datum/storage_interface/Destroy(force)
+	. = ..()
 	QDEL_NULL(cells)
 	QDEL_NULL(corner1)
 	QDEL_NULL(corner2)
@@ -64,11 +57,10 @@
 	QDEL_NULL(corner4)
 	QDEL_NULL(rowjoin1)
 	QDEL_NULL(rowjoin2)
-	return TRUE
-
+	return .
 
 /// Updates position of all UI elements
-/datum/storage_ui_theme/proc/update_position(screen_start_x, screen_pixel_x, screen_start_y, screen_pixel_y, columns, rows)
+/datum/storage_interface/proc/update_position(screen_start_x, screen_pixel_x, screen_start_y, screen_pixel_y, columns, rows)
 	cells.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x + columns - 1]:[screen_pixel_x],[screen_start_y + rows - 1]:[screen_pixel_y]"
 
 	corner1.screen_loc = "[screen_start_x + 1]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x + columns - 1]:[screen_pixel_x],[screen_start_y + rows - 1]:[screen_pixel_y]"
