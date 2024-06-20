@@ -302,3 +302,56 @@
       tiring situations where multiple high-threat antags or events occur back-to-back.
   KnigTheThrasher:
   - bugfix: Loadout wallet now actually works
+2024-06-20:
+  Absolucy:
+  - rscdel: Bioscramblers can no longer give people an Atomic Ass.
+  RafRoq:
+  - rscadd: adds qp_sigmoid function
+  - bugfix: fixed a bug where kudzu vine used production 1 as maximum spread scaling
+  - code_imp: adjusted kudzu vine consts
+  - code_imp: adjusted battery plant gene zap damage to have  sigmoid scaling instead
+      of linear scaling
+  - balance: buffed battery plant gene zap probability chance at really high levels
+      of potency
+  - balance: nerfed battery plant gene zap probability chance at really low levels
+      of potency
+  - code_imp: adjusted prickle adhesion plant gene to have sigmoid scaling instead
+      of linear scaling in force and reagent injection
+  - code_imp: adjusted killer tomatos health to have sigmoid scaling instead of linear
+      scaling
+  - balance: killer tomatos have slightly more health at really high levels of endurance
+  - code_imp: adjusted killer tomatos damage to have sigmoid scaling instead of linear
+      scaling
+  - balance: 'killer tomatos have slightly more damage at really high levels of potency
+
+      :cl:'
+  RikuTheKiller:
+  - rscadd: Lots of new xenobiology upgrades are now available.
+  - balance: Slimes will no longer eat mutation items they've already consumed.
+  - balance: Mobs will no longer eat entire stacks of items at once.
+  - balance: Ooze production and fulfilled mutation conditions now carry through generations.
+  - balance: The stabilized grey extract is now twice as fast at making slimes friendly
+      to you.
+  - balance: You only need 2 slime steroids to max out a slime's ooze production.
+  - qol: '"Stop Eating" and "Follow" commands now have feedback messages.'
+  - qol: The "Stop Eating" command now has the additional aliases "Stay" and "Stop".
+  - qol: Slimes now have an examine message for ooze production.
+  - qol: You can now toggle between selective and indiscriminate firing modes on vacuum
+      packs. (except syndicate ones)
+  - qol: There's now an examine message on the vacuum nozzle telling you which firing
+      mode it's on.
+  - bugfix: The slime pen UI now has a more consistent style.
+  - bugfix: The slime market now correctly displays upgrade disk icons.
+  - bugfix: Slimes no longer break glass tables.
+  - bugfix: Cleaner slimes will now eat glass shards.
+  - bugfix: Visual slime mutations like "Gooey Cat" should now show up immediately.
+  - bugfix: Biomatter recyclers are now actually affected by stock part ratings.
+  - bugfix: Cleaner slimes and commanded slimes will now pathfind much better.
+  - bugfix: Deshapeshifting will no longer commit go go gadget blood deleter. (especially
+      for slimes)
+  - bugfix: Random color mutation syringes are now correctly labeled. (and refactored
+      slightly, please report issues)
+  - bugfix: Stone brick floor tiles now have an associated tile stack.
+  lmenvs:
+  - rscadd: Adds Raziaar's plush and pet.  Thank you so much for your patronage!
+  - rscadd: donators can get a Charlie plush in their loadout!
