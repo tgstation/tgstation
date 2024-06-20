@@ -74,11 +74,6 @@
 #include "code\modules\uplink\uplink_items\suits.dm"
 #include "code\modules\uplink\uplink_items\nukeops.dm"
 #include "code\game\machinery\suit_storage_unit.dm"
-#include "code\modules\projectiles\guns\ballistic\rifle.dm"
-#include "code\game\objects\items\storage\toolbox.dm"
-#include "code\modules\projectiles\boxes_magazines\ammo_boxes.dm"
-#include "code\modules\projectiles\ammunition\ballistic\rifle.dm"
-#include "code\modules\projectiles\projectile\bullets\rifle.dm"
 #include "code\modules\map_vote.dm"
 #include "code\modules\hallucination\fake_chat.dm"
 
