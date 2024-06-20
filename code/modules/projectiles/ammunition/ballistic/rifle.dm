@@ -7,14 +7,10 @@
 	caliber = CALIBER_STRILKA310
 	projectile_type = /obj/projectile/bullet/strilka310
 
-// MASSMETA EDIT REMOVAL BEGIN - mosin return
-/*
-/obj/item/ammo_casing/strilka310/Initialize(mapload)
-	. = ..()
+ /obj/item/ammo_casing/strilka310/Initialize(mapload)
+ 	. = ..()
 
 	AddElement(/datum/element/caseless)
-*/
-// MASSMETA EDIT REMOVAL END
 
 /obj/item/ammo_casing/strilka310/surplus
 	name = ".310 Strilka surplus bullet casing"
