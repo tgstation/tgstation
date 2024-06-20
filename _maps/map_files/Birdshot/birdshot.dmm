@@ -16781,13 +16781,6 @@
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /turf/open/floor/iron/cafeteria,
 /area/station/science/circuits)
-"gqk" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
 "gqs" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
@@ -95125,7 +95118,7 @@ pfO
 siC
 siC
 siC
-gqk
+siC
 siC
 siC
 siC
