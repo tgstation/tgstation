@@ -779,7 +779,6 @@
 		if(pulling.anchored)
 			stop_pulling()
 		else
-			//var/need_to_check_pull = TRUE
 			//puller and pullee more than one tile away or in diagonal position and whatever the pullee is pulling isn't already moving from a pull as it'll most likely result in an infinite loop a la ouroborus.
 			if(!pulling.pulling?.moving_from_pull)
 				var/pull_dir = get_dir(pulling, src)
@@ -790,13 +789,15 @@
 				// The answer is simple. forcemoving and regrabbing is ugly and breaks conga lines.
 				if(pulling.z != z)
 					target_turf = get_step(pulling, get_dir(pulling, current_turf))
-					//need_to_check_pull = FALSE
 
 				if(target_turf != current_turf || (moving_diagonally != SECOND_DIAG_STEP && ISDIAGONALDIR(pull_dir)) || get_dist(src, pulling) > 1)
 					pulling.move_from_pull(src, target_turf, glide_size)
 			if (pulledby)
 				if (pulledby.currently_z_moving)
 					check_pulling(z_allowed = TRUE)
+				//dont call check_pulling() here at all if there is a pulledby that is not currently z moving
+				//because it breaks stair conga lines, for some fucking reason.
+				//it's fine because the pull will be checked when this whole proc is called by the mob doing the pulling anyways
 			else
 				check_pulling()
 
