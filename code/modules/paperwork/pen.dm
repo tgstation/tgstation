@@ -404,8 +404,6 @@
  * as they're supposed to look like a normal pen.
  */
 /obj/item/pen/edagger/on_transform(obj/item/source, mob/user, active)
-	SIGNAL_HANDLER
-
 	if(active)
 		name = hidden_name
 		desc = hidden_desc
@@ -502,8 +500,6 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/pen/screwdriver/on_transform(obj/item/source, mob/user, active)
-	SIGNAL_HANDLER
-
 	if(user)
 		balloon_alert(user, active ? "extended" : "retracted")
 	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
