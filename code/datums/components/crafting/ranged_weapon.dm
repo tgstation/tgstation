@@ -72,20 +72,17 @@
 	blacklist += subtypesof(/obj/item/gun/energy/e_gun)
 
 /datum/crafting_recipe/beam_rifle
-	name = "Particle Acceleration Rifle"
-	result = /obj/item/gun/energy/beam_rifle
+	name = "Event Horizon Anti-Existential Beam Rifle"
+	result = /obj/item/gun/energy/event_horizon
 	reqs = list(
-		/obj/item/gun/energy/e_gun = 1,
-		/obj/item/assembly/signaler/anomaly/flux = 1,
+		/obj/item/assembly/signaler/anomaly/flux = 2,
 		/obj/item/assembly/signaler/anomaly/grav = 1,
+		/obj/item/assembly/signaler/anomaly/vortex = MAX_CORES_VORTEX,
+		/obj/item/assembly/signaler/anomaly/bluespace = 1,
 		/obj/item/weaponcrafting/gunkit/beam_rifle = 1,
 	)
-	time = 10 SECONDS
+	time = 30 SECONDS //Maybe the delay will make you reconsider your choices
 	category = CAT_WEAPON_RANGED
-
-/datum/crafting_recipe/beam_rifle/New()
-	..()
-	blacklist += subtypesof(/obj/item/gun/energy/e_gun)
 
 /datum/crafting_recipe/ebow
 	name = "Energy Crossbow"
