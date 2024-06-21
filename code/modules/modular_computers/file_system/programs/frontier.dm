@@ -33,7 +33,7 @@
 	return TRUE
 
 /datum/computer_file/program/scipaper_program/proc/recheck_file_presence()
-	if(selected_file in computer.stored_files)
+	if(selected_file in get_files())
 		return FALSE
 	UnregisterSignal(selected_file, COMSIG_COMPUTER_FILE_DELETE)
 	selected_file = null
@@ -92,7 +92,7 @@
 			data["allowedTiers"] = list()
 			data["allowedPartners"] =  list()
 			// Both the file and experiment list are assoc lists. ID as value, display name as keys.
-			for(var/datum/computer_file/data/ordnance/ordnance_file in computer.stored_files)
+			for(var/datum/computer_file/data/ordnance/ordnance_file in get_files())
 				data["fileList"] += list(ordnance_file.filename = ordnance_file.uid)
 			if(selected_file)
 				for (var/possible_experiment in selected_file.possible_experiments)
@@ -189,7 +189,7 @@
 			if(selected_file)
 				UnregisterSignal(selected_file, COMSIG_COMPUTER_FILE_DELETE)
 			paper_to_be.set_experiment() // Clears the paper info.
-			for(var/datum/computer_file/data/ordnance/ordnance_data in computer.stored_files)
+			for(var/datum/computer_file/data/ordnance/ordnance_data in get_files())
 				if(ordnance_data.uid == params["selected_uid"])
 					selected_file = ordnance_data
 					RegisterSignal(selected_file, COMSIG_COMPUTER_FILE_DELETE, PROC_REF(recheck_file_presence))
@@ -234,3 +234,11 @@
 		return TRUE
 	playsound(computer, 'sound/machines/terminal_error.ogg', 25)
 	return FALSE
+
+/// Get valid experiment files in both computer and the disk
+/datum/computer_file/program/scipaper_program/proc/get_files()
+	var/list/datum/computer_file/all_files = list()
+	all_files += computer.stored_files
+	if(computer.inserted_disk)
+		all_files += computer.inserted_disk.stored_files
+	return all_files
