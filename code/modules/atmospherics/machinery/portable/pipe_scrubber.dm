@@ -34,10 +34,8 @@
 /obj/machinery/portable_atmospherics/pipe_scrubber/Initialize(mapload)
 	. = ..()
 	internal_tank = new(src)
-	RegisterSignal(internal_tank, COMSIG_QDELETING, PROC_REF(tank_destroyed))
-
-/obj/machinery/portable_atmospherics/pipe_scrubber/proc/tank_destroyed()
-	deconstruct()
+	RegisterSignal(internal_tank, COMSIG_ATOM_BREAK, PROC_REF(deconstruct))
+	RegisterSignal(internal_tank, COMSIG_QDELETING, PROC_REF(deconstruct))
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/atom_deconstruct(disassembled)
 	. = ..()
@@ -52,6 +50,10 @@
 		air_contents,
 		internal_tank.air_contents
 	)
+
+/obj/machinery/portable_atmospherics/pipe_scrubber/welder_act(mob/living/user, obj/item/tool)
+	internal_tank.welder_act(user, tool)
+	return ..()
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/click_alt(mob/living/user)
 	return CLICK_ACTION_BLOCKING
