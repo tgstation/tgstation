@@ -172,7 +172,7 @@
 	time = 10 SECONDS
 	category = CAT_WEAPON_MELEE
 
-/datum/crafting_recipe/giant_wrench
+/datum/crafting_recipe/singulo_hammer
 	name = "Singularity Hammer"
 	result = /obj/item/singularityhammer
 	reqs = list(
