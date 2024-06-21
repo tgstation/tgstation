@@ -695,11 +695,17 @@ Then we space some of our heat, and think about if we should stop conducting.
 
 //handle the grouping of hotspot and then determining an average center to play sound in
 /datum/hot_group
-	var/list/turf_list = list()
+	var/list/turf/open/turf_list = list()
 	var/turf/open/current_sound_loc
 	var/datum/looping_sound/fire/sound
-	var/static/mutable_appearance/highlight = mutable_appearance('icons/turf/overlays.dmi', "greenOverlay", 5.06)
 	var/tiles_limit = 50
+	//these lists and average var are to find the average center of a group
+	var/list/x_coord = list()
+	var/list/y_coord = list()
+	var/z_coord
+	var/average_x
+	var/average_y
+
 
 /datum/hot_group/New()
 	. = ..()
@@ -708,45 +714,60 @@ Then we space some of our heat, and think about if we should stop conducting.
 /datum/hot_group/process(seconds_per_tick)
 	. = ..()
 	update_sound()
+	if(turf_list.len <= 0)
+		qdel()
+	average_x = round((max(y_coord) + min(y_coord))/2)
+	average_y = round((max(y_coord) + min(y_coord))/2)
 
 /datum/hot_group/Destroy()
 	. = ..()
 	SSair.hot_groups -= src
 	turf_list.Cut()
-	qdel(src)
+	qdel(sound)
 
 /datum/hot_group/proc/remove_from_group(turf/open/target)
 	target.our_hot_group.turf_list -= target
 	target.our_hot_group = null
+	x_coord -= target.x
+	y_coord -= target.y
 
 /datum/hot_group/proc/add_to_group(turf/open/target)
 	turf_list += target
 	target.our_hot_group = src
+	x_coord += target.x
+	y_coord += target.y
 
 /datum/hot_group/proc/merge_hot_groups(datum/hot_group/enemy_group)
 	var/random_group
+
+	z_coord = turf_list[1].z
 	if(turf_list.len >= tiles_limit || enemy_group.turf_list.len >= tiles_limit)
 		return
 	if(turf_list == enemy_group.turf_list)
 		random_group = rand(0,1)
-	else if(turf_list.len > enemy_group.turf_list.len || random_group)
+	else if(turf_list.len > enemy_group.turf_list.len || random_group)//we're bigger take all of their territory
 		for(var/turf/open/reference in enemy_group.turf_list)
 			turf_list += reference
+			x_coord += reference.x
+			y_coord += reference.y
 			reference.our_hot_group = src
+		qdel(enemy_group)
 	else
 		for(var/turf/open/reference in turf_list)
 			enemy_group.turf_list += reference
+			x_coord += reference.x
+			y_coord += reference.y
 			reference.our_hot_group = enemy_group
+		qdel(src)
 
 /datum/hot_group/proc/update_sound()
-	var/turf/open/sound_turf = create_sound_center(turf_list)
+	var/turf/open/sound_turf = locate(average_x, average_y, z_coord)
 	if(sound_turf == current_sound_loc)
 		return
-	if(sound)
+	else if(sound)
 		sound.parent = sound_turf
-	else if(!sound)
-		sound = new
-		sound.parent = sound_turf
+	else
+		sound = new(sound_turf, TRUE)
 		current_sound_loc = sound_turf
 
 /datum/looping_sound/fire

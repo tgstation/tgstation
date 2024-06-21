@@ -474,17 +474,4 @@
 			)
 	return soundin
 
-///play sound at the center of room, source as the turf to start, sound_file sent as 'sound/your_file.ogg'
-/proc/create_sound_center(list/turf/source)
-	var/list/x_coord = list()
-	var/list/y_coord = list()
-	var/z_coord = source[1].z
-	for(var/i = 1, i <= length(source), i++)
-		var/turf/open/reference_turf = source[i]
-		x_coord += reference_turf.x
-		y_coord += reference_turf.y
-
-	var/average_x = round((max(x_coord) + min(x_coord))/2)
-	var/average_y = round((max(y_coord) + min(y_coord))/2)
-	return locate(average_x,average_y, z_coord)
 
