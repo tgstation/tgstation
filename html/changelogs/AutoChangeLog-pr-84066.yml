@@ -1,0 +1,4 @@
+author: "AyIong"
+delete-after: True
+changes:
+  - qol: "Fullscreen mode can now be toggled by pressing F11 or the button at the top right"
