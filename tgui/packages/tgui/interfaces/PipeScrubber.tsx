@@ -9,6 +9,7 @@ import {
   LabeledControls,
   RoundGauge,
   Section,
+  Tooltip,
 } from '../components';
 import { getGasLabel } from '../constants';
 import { formatSiUnit } from '../format';
@@ -18,8 +19,11 @@ type Data = {
   on: BooleanLike;
   direction: BooleanLike;
   connected: BooleanLike;
-  pressure: number;
-  maxPressure: number;
+  pressureTank: number;
+  pressureLimitTank: number;
+  pressurePump: number;
+  pressureLimitPump: number;
+  pumpMaxPressure: number;
   hasHypernobCrystal: BooleanLike;
   reactionSuppressionEnabled: BooleanLike;
   filterTypes: Filter[];
@@ -45,15 +49,17 @@ export const PipeScrubber = (props) => {
     on,
     connected,
     direction,
-    pressure,
-    maxPressure,
+    pressureTank,
+    pressureLimitTank,
+    pressurePump,
+    pressureLimitPump,
     hasHypernobCrystal,
     reactionSuppressionEnabled,
     filterTypes = [],
   } = data;
 
   return (
-    <Window width={400} height={360}>
+    <Window width={400} height={350}>
       <Window.Content>
         <Section
           title="Status"
@@ -71,40 +77,58 @@ export const PipeScrubber = (props) => {
             )
           }
         >
-          <LabeledControls p={2}>
-            <LabeledControls.Item label="Tank Pressure">
+          <LabeledControls p={1}>
+            <LabeledControls.Item label="Buffer Port">
+              <Box position="relative">
+                <Tooltip
+                  position="top"
+                  content={connected ? 'Connected' : 'Disconnected'}
+                >
+                  <Icon
+                    size={2}
+                    name={connected ? 'plug-circle-check' : 'plug-circle-xmark'}
+                    color={connected ? 'good' : 'bad'}
+                  />
+                </Tooltip>
+              </Box>
+            </LabeledControls.Item>
+            <LabeledControls.Item label="Buffer">
               <RoundGauge
-                size={2.5}
-                value={pressure}
+                size={1.75}
+                value={pressurePump}
                 minValue={0}
-                maxValue={maxPressure}
+                maxValue={pressureLimitPump}
+                alertAfter={pressureLimitPump * 0.7}
                 ranges={{
-                  good: [0, maxPressure * 0.5],
-                  average: [maxPressure * 0.5, maxPressure * 0.8],
-                  bad: [maxPressure * 0.8, maxPressure],
+                  good: [0, pressureLimitPump * 0.7],
+                  average: [pressureLimitPump * 0.7, pressureLimitPump * 0.85],
+                  bad: [pressureLimitPump * 0.85, pressureLimitPump],
                 }}
                 format={formatPressure}
               />
             </LabeledControls.Item>
-            <LabeledControls.Item
-              mr={1}
-              label={connected ? 'Port Connected' : 'Port Disconnected'}
-            >
-              <Box position="relative">
-                <Icon
-                  size={3}
-                  name={connected ? 'plug' : 'times'}
-                  color={connected ? 'good' : 'bad'}
-                />
-              </Box>
+            <LabeledControls.Item label="Tank">
+              <RoundGauge
+                size={1.75}
+                value={pressureTank}
+                minValue={0}
+                maxValue={pressureLimitTank}
+                alertAfter={pressureLimitTank * 0.7}
+                ranges={{
+                  good: [0, pressureLimitTank * 0.7],
+                  average: [pressureLimitTank * 0.7, pressureLimitTank * 0.85],
+                  bad: [pressureLimitTank * 0.85, pressureLimitTank],
+                }}
+                format={formatPressure}
+              />
             </LabeledControls.Item>
             <LabeledControls.Item label="Pump">
               <Button
                 my={0.5}
+                width={6}
                 lineHeight={2}
                 fontSize="18px"
                 icon="power-off"
-                disabled={!connected}
                 selected={on}
                 onClick={() => act('power')}
               >
@@ -117,13 +141,13 @@ export const PipeScrubber = (props) => {
           title="Direction"
           buttons={
             <Button onClick={() => act('direction')}>
-              {direction ? 'Port → Tank' : 'Tank → Port'}
+              {direction ? 'Buffer → Tank' : 'Tank → Buffer'}
             </Button>
           }
         >
           {!!direction && (
             <>
-              <Box>Filtering gases from the port into the internal tank.</Box>
+              <Box>Filtering gases from the buffer into the internal tank.</Box>
               <Section>
                 {filterTypes.map((filter) => (
                   <Button
@@ -141,7 +165,9 @@ export const PipeScrubber = (props) => {
               </Section>
             </>
           )}
-          {!direction && <Box>Dumping internal tank gases into the port.</Box>}
+          {!direction && (
+            <Box>Dumping internal tank gases into the buffer.</Box>
+          )}
         </Section>
       </Window.Content>
     </Window>

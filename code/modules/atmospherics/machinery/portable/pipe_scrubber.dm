@@ -53,10 +53,6 @@
 		internal_tank.air_contents
 	)
 
-/obj/machinery/portable_atmospherics/pipe_scrubber/disconnect()
-	on = FALSE
-	return ..()
-
 /obj/machinery/portable_atmospherics/pipe_scrubber/click_alt(mob/living/user)
 	return CLICK_ACTION_BLOCKING
 
@@ -128,7 +124,6 @@
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/ui_static_data()
 	var/list/data = list()
-	data["pumpMaxPressure"] = PUMP_MAX_PRESSURE
 	data["pressureLimitPump"] = pressure_limit
 	data["pressureLimitTank"] = internal_tank.pressure_limit
 	return data
@@ -139,8 +134,6 @@
 		return
 	switch(action)
 		if("power")
-			if (!connected_port)
-				return
 			on = !on
 			if(on)
 				SSair.start_processing_machine(src)
