@@ -252,7 +252,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		rpr.plane = GET_NEW_PLANE(base_relay_plane, new_offset)
 
 		var/old_layer = (plane + abs(LOWEST_EVER_PLANE * 30))
+		if(rpr.layer != old_layer) // Avoid overriding custom-set layers
+			continue
+
 		var/offset_plane = real_plane - (PLANE_RANGE * new_offset)
 		var/new_layer = (offset_plane + abs(LOWEST_EVER_PLANE * 30))
-		if(rpr.layer == old_layer) // Avoid overriding custom-set layers
-			rpr.layer = new_layer
+		rpr.layer = new_layer
