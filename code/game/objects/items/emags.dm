@@ -22,6 +22,56 @@
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
 	add_fingerprint(user)
 
+/obj/item/card/emag/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(isnull(user) || !istype(emag_card))
+		return FALSE
+	var/emag_count = 0
+	for(var/obj/item/card/emag/emag in contents + emag_card.contents)
+		emag_count++
+	if(emag_count >= 6) // 1 uplink's worth is the limit
+		to_chat(user, span_warning("Nope, lesson learned. No more."))
+		return FALSE
+	if(emag_card.loc != loc) // Both have to be in your hand (or TK shenanigans)
+		return FALSE
+	if(!user.transferItemToLoc(emag_card, src))
+		return FALSE
+
+	user.visible_message(
+		span_notice("[user] holds [emag_card] to [src], getting the two cards stuck together!"),
+		span_notice("As you hold [emag_card] to [src], [emag_card.p_their()] magnets attract to one another, \
+			and [emag_card.p_they()] become stuck together!"),
+		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+	)
+	playsound(src, 'sound/effects/bang.ogg', 33, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	addtimer(CALLBACK(src, PROC_REF(contemplation_period), user), 2 SECONDS, TIMER_DELETE_ME)
+	emag_card.pixel_x = pixel_x + 4
+	emag_card.pixel_y = pixel_y + 4
+	emag_card.layer = layer - 0.01
+	emag_card.vis_flags |= VIS_INHERIT_ID|VIS_INHERIT_PLANE
+	vis_contents += emag_card
+	name += "-[emag_card.name]"
+	if(desc == initial(desc))
+		desc += " There seems to be another emag stuck to it...pretty soundly."
+	return TRUE
+
+/obj/item/card/emag/proc/contemplation_period(mob/user)
+	if(QDELETED(user))
+		return
+	if(QDELETED(src))
+		to_chat(user, span_notice("Oh, well."))
+	else
+		to_chat(user, span_warning("Well, shit. Those are never coming apart now."))
+
+/obj/item/card/emag/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(istype(gone, /obj/item/card/emag))
+		// This is here so if(when) admins fish it out of contents it doesn't become glitchy
+		gone.layer = initial(gone.layer)
+		gone.vis_flags = initial(gone.vis_flags)
+		vis_contents -= gone
+		name = initial(name)
+		desc = initial(desc)
+
 /obj/item/card/emag/bluespace
 	name = "bluespace cryptographic sequencer"
 	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
