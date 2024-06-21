@@ -69,7 +69,6 @@
 		/datum/computer_file/program/job_management,
 		/datum/computer_file/program/crew_manifest,
 	)
-	startup_program = "plexagonidwriter"
 
 /obj/machinery/modular_computer/preset/id/centcom
 	desc = "A stationary computer. This one comes preloaded with CentCom identification modification programs."
