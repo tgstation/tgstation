@@ -52,7 +52,7 @@
 	register_context()
 
 /obj/machinery/portable_atmospherics/on_deconstruction(disassembled)
-	if(has_nob_crystal())
+	if(nob_crystal_inserted)
 		new /obj/item/hypernoblium_crystal(src)
 
 	return ..()
@@ -66,9 +66,9 @@
 
 /obj/machinery/portable_atmospherics/examine(mob/user)
 	. = ..()
-	if(has_nob_crystal())
+	if(nob_crystal_inserted)
 		. += "There is a hypernoblium crystal inside it that allows for reactions inside to be suppressed."
-	if(reaction_suppression_enabled())
+	if(suppress_reactions)
 		. += "The hypernoblium crystal inside is glowing with a faint blue colour, indicating reactions inside are currently being suppressed."
 
 /obj/machinery/portable_atmospherics/ex_act(severity, target)
@@ -83,7 +83,7 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/process_atmos()
-	excited = (!reaction_suppression_enabled() && (excited || air_contents.react(src)))
+	excited = (!suppress_reactions && (excited || air_contents.react(src)))
 	if(!excited)
 		return PROCESS_KILL
 	excited = FALSE
@@ -294,14 +294,6 @@
 
 	UnregisterSignal(holding, COMSIG_QDELETING)
 	holding = null
-
-/// Check whether the machine has Hypernob crystal inserted
-/obj/machinery/portable_atmospherics/proc/has_nob_crystal()
-	return nob_crystal_inserted
-
-/// Check whether the machine has reaction supression enabled
-/obj/machinery/portable_atmospherics/proc/reaction_suppression_enabled()
-	return suppress_reactions
 
 /// Insert Hypernob crystal into the machine
 /obj/machinery/portable_atmospherics/proc/insert_nob_crystal()

@@ -1,5 +1,6 @@
 /obj/machinery/portable_atmospherics/pipe_scrubber
 	name = "pipe scrubber"
+	desc = "A machine for cleaning out pipes of lingering gases. It is a huge tank with a pump attached to it."
 	icon_state = "pipe_scrubber"
 	density = TRUE
 	max_integrity = 250
@@ -113,9 +114,10 @@
 	data["on"] = on
 	data["direction"] = direction
 	data["connected"] = connected_port ? 1 : 0
-	data["pressure"] = round(internal_tank.air_contents.return_pressure() ? internal_tank.air_contents.return_pressure() : 0)
-	data["hasHypernobCrystal"] = has_nob_crystal()
-	data["reactionSuppressionEnabled"] = reaction_suppression_enabled()
+	data["pressureTank"] = round(internal_tank.air_contents.return_pressure() ? internal_tank.air_contents.return_pressure() : 0)
+	data["pressurePump"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
+	data["hasHypernobCrystal"] = nob_crystal_inserted
+	data["reactionSuppressionEnabled"] = suppress_reactions
 
 	data["filterTypes"] = list()
 	for(var/gas_path in GLOB.meta_gas_info)
@@ -126,7 +128,9 @@
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/ui_static_data()
 	var/list/data = list()
-	data["maxPressure"] = PUMP_MAX_PRESSURE
+	data["pumpMaxPressure"] = PUMP_MAX_PRESSURE
+	data["pressureLimitPump"] = pressure_limit
+	data["pressureLimitTank"] = internal_tank.pressure_limit
 	return data
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/ui_act(action, params)
@@ -159,8 +163,11 @@
 			. = TRUE
 	update_appearance()
 
-/obj/machinery/portable_atmospherics/pipe_scrubber/has_nob_crystal()
-	return internal_tank.nob_crystal_inserted
-
 /obj/machinery/portable_atmospherics/pipe_scrubber/insert_nob_crystal()
+	. = ..()
 	internal_tank.nob_crystal_inserted = TRUE
+
+/obj/machinery/portable_atmospherics/pipe_scrubber/proc/toggle_reaction_suppression()
+	var/new_value = !suppress_reactions
+	suppress_reactions = new_value
+	internal_tank.suppress_reactions = new_value
