@@ -95,7 +95,7 @@
 	if(SEND_SIGNAL(target, COMSIG_CLICK_ALT_SECONDARY, src) & COMPONENT_CANCEL_CLICK_ALT_SECONDARY)
 		return
 
-	// If it has a custom click_alt_secondary that do that
+	// If it has a custom click_alt_secondary then do that
 	if(can_perform_action(target, target.interaction_flags_click | SILENT_ADJACENCY))
 		target.click_alt_secondary(src)
 
