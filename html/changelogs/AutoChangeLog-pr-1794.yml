@@ -1,0 +1,4 @@
+author: "Uristthedorf"
+delete-after: True
+changes:
+  - bugfix: "Mounted Chainsaw arm is now treated like it's robotic."
