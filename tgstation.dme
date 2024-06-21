@@ -5840,6 +5840,8 @@
 #include "monkestation\code\game\objects\structures\tables_racks.dm"
 #include "monkestation\code\game\objects\structures\beds_chairs\chair.dm"
 #include "monkestation\code\game\objects\structures\crates_lockers\crates.dm"
+#include "monkestation\code\game\objects\structures\crates_lockers\closets\secure\security.dm"
+#include "monkestation\code\game\objects\structures\crates_lockers\crates\secure.dm"
 #include "monkestation\code\game\turfs\open\water.dm"
 #include "monkestation\code\game\turfs\open\floor\misc_floor.dm"
 #include "monkestation\code\modules\_paperwork\paper_premade.dm"

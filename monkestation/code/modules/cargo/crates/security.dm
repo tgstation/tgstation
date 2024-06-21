@@ -39,6 +39,18 @@
 		)
 	crate_name = ".35 Auto Ammo crate"
 
+/datum/supply_pack/security/blueshirt
+	name = "Blue Shirt Uniform Crate"
+	desc = "Contains an alternative outfit for the station's private security force. Has enough outfits for five security officers. Originally produced for a now defunct research station."
+	cost = CARGO_CRATE_VALUE * 5
+	access_view = ACCESS_SECURITY
+	contains = list(
+		/obj/item/clothing/head/helmet/blueshirt = 5,
+		/obj/item/clothing/suit/armor/vest/blueshirt = 5,
+		/obj/item/clothing/under/rank/security/officer/blueshirt = 5,
+	)
+	crate_name = "\improper Blue Shirt uniform crate"
+
 /datum/supply_pack/security/borer_cage
 	name = "Borer cage"
 	desc = "Ever needed capture those pesky illegal borers to put them on a trial? Well this crate if for you!"
