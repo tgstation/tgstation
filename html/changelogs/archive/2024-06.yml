@@ -355,3 +355,29 @@
   lmenvs:
   - rscadd: Adds Raziaar's plush and pet.  Thank you so much for your patronage!
   - rscadd: donators can get a Charlie plush in their loadout!
+2024-06-21:
+  Absolucy:
+  - admin: Add a version of the "Get Server Logs" and "Get Current Logs" verbs which
+      can only download debug/runtime logs, available to +DEBUG.
+  - admin: View Round Logs is now available to +DEBUG, but it will only show log categories
+      marked in the code as being "available" for debuggers.
+  - bugfix: Fix recipes for same-color crossbreeds requiring 1000u of ooze instead
+      of 500u.
+  Absolucy, Ghommie, SyncIt21:
+  - rscadd: Added a 'Closet Anomaly' station trait, which links and turns a portion
+      of the roundstart closets into impromptu teleporters.
+  CannibalHunter:
+  - rscadd: THE Security Liability Act! Adds in Body cameras in security that can
+      be used by the warden and AI to observe from thier safe space.
+  - balance: AIs and sec get a small buff using this, Ai can see out of the camera's
+  - admin: Body Camera item name is 'bodycam_upgrade'
+  OliverOtter:
+  - rscadd: Malphy's CC tomb!
+  - rscadd: Olivers CC office! Gamer loot included.
+  RikuTheKiller:
+  - bugfix: Reagents will now be removed/transferred consistently from cigarettes,
+      smoke machines, etc. rather than at random.
+  ven1883:
+  - balance: The PTL can now output up to quettawatts of power.
+  - balance: The PTL can now generate up to 5,000,000 credits per tick at max.
+  - balance: Adjusted the PTL money generation curve.
