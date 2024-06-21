@@ -71,6 +71,8 @@
 	var/datum/antagonist/bitrunning_glitch/chosen_role = forced_role || get_antagonist_role()
 	var/role_name = initial(chosen_role.name)
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		question = "<span class='ooc'>A temporary antagonist role is spawning in the virtual domain.</span>\
+		\n<span class='boldnotice'>You will return to your previous body on conclusion.</span>",
 		check_jobban = ROLE_GLITCH,
 		poll_time = 20 SECONDS,
 		checked_target = mutation_target,
