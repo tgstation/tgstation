@@ -239,10 +239,12 @@
 
 /obj/machinery/portable_atmospherics/attackby(obj/item/item, mob/user, params)
 	if(!istype(item, /obj/item/tank))
-		return ..()
+		return try_replace_tank(obj/item/item, mob/user)
+	return ..()
+
+/obj/machinery/portable_atmospherics/proc/try_replace_tank(obj/item/tank/insert_tank, mob/user)
 	if(machine_stat & BROKEN)
 		return FALSE
-	var/obj/item/tank/insert_tank = item
 	if(!user.transferItemToLoc(insert_tank, src))
 		return FALSE
 	to_chat(user, span_notice("[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [insert_tank]" : "You insert [insert_tank] into [src]"]."))

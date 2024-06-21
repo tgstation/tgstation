@@ -56,8 +56,8 @@
 /obj/machinery/portable_atmospherics/pipe_scrubber/click_alt(mob/living/user)
 	return CLICK_ACTION_BLOCKING
 
-/obj/machinery/portable_atmospherics/pipe_scrubber/attackby(obj/item/item, mob/user, params)
-	return TRUE
+/obj/machinery/portable_atmospherics/pipe_scrubber/try_replace_tank(obj/item/tank/insert_tank, mob/user)
+	return FALSE
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/update_icon_state()
 	icon_state = on ? "[initial(icon_state)]_active" : initial(icon_state)
