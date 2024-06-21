@@ -836,7 +836,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define NEED_VENTCRAWL (1<<8)
 /// Skips adjacency checks
 #define BYPASS_ADJACENCY (1<<9)
-/// Skips adjacency checks
+/// Skips reccursive loc checks
 #define NOT_INSIDE_TARGET (1<<10)
 /// Checks for base adjacency, but silences the error
 #define SILENT_ADJACENCY (1<<11)
