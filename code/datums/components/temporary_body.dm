@@ -19,6 +19,7 @@
 	ADD_TRAIT(old_body, TRAIT_MIND_TEMPORARILY_GONE, REF(src))
 	src.old_mind_ref = WEAKREF(old_mind)
 	src.old_body_ref = WEAKREF(old_body)
+	src.delete_on_death = delete_on_death
 
 /datum/component/temporary_body/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_parent_destroy))
