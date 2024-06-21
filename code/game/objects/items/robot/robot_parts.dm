@@ -376,7 +376,7 @@
 			if(!locomotion)
 				O.set_lockcharge(TRUE)
 
-	else if(W.get_writing_implement_details()?["interaction_mode"] == MODE_WRITING)
+	else if(IS_WRITING_UTENSIL(W))
 		to_chat(user, span_warning("You need to use a multitool to name [src]!"))
 	else
 		return ..()

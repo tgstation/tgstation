@@ -34,8 +34,8 @@
 	var/dart_insert_icon = 'icons/obj/weapons/guns/toy.dmi'
 	var/dart_insert_casing_icon_state = "overlay_pen"
 	var/dart_insert_projectile_icon_state = "overlay_pen_proj"
-	var/can_click = TRUE // If this pen can be clicked in order to retract it
-	var/custom_component = FALSE // If this pen has a custom transforming component
+	/// If this pen can be clicked in order to retract it
+	var/can_click = TRUE
 
 /obj/item/pen/Initialize(mapload)
 	. = ..()
@@ -51,9 +51,11 @@
 	RegisterSignal(src, COMSIG_DART_INSERT_REMOVED, PROC_REF(on_removed_from_dart))
 	if (!can_click)
 		return
+	create_transform_component()
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
-	if (custom_component)
-		return
+
+/// Proc that child classes can override to have custom transforms, like edaggers or pendrivers
+/obj/item/pen/proc/create_transform_component()
 	AddComponent( \
 		/datum/component/transforming, \
 		sharpness_on = NONE, \
@@ -243,8 +245,7 @@
 	return TRUE
 
 /obj/item/pen/get_writing_implement_details()
-	var/datum/component/transforming/transform_comp = GetComponent(/datum/component/transforming)
-	if (transform_comp?.active)
+	if (HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return null
 	return list(
 		interaction_mode = MODE_WRITING,
@@ -308,7 +309,6 @@
 	light_color = "#FA8282"
 	light_on = FALSE
 	dart_insert_projectile_icon_state = "overlay_edagger"
-	custom_component = TRUE
 	/// The real name of our item when extended.
 	var/hidden_name = "energy dagger"
 	/// The real desc of our item when extended.
@@ -322,6 +322,9 @@
 	speed = 6 SECONDS, \
 	butcher_sound = 'sound/weapons/blade1.ogg', \
 	)
+	RegisterSignal(src, COMSIG_DETECTIVE_SCANNED, PROC_REF(on_scan))
+
+/obj/item/pen/edagger/create_transform_component()
 	AddComponent( \
 		/datum/component/transforming, \
 		force_on = 18, \
@@ -331,7 +334,6 @@
 		w_class_on = WEIGHT_CLASS_NORMAL, \
 		inhand_icon_change = FALSE, \
 	)
-	RegisterSignal(src, COMSIG_DETECTIVE_SCANNED, PROC_REF(on_scan))
 
 /obj/item/pen/edagger/on_inserted_into_dart(datum/source, obj/item/ammo_casing/dart, mob/user)
 	. = ..()
@@ -483,13 +485,15 @@
 	icon_state = "pendriver"
 	toolspeed = 1.2  // gotta have some downside
 	dart_insert_projectile_icon_state = "overlay_pendriver"
-	custom_component = TRUE
 
 /obj/item/pen/screwdriver/get_all_tool_behaviours()
 	return list(TOOL_SCREWDRIVER)
 
 /obj/item/pen/screwdriver/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/pen/screwdriver/create_transform_component()
 	AddComponent( \
 		/datum/component/transforming, \
 		throwforce_on = 5, \
@@ -497,7 +501,6 @@
 		sharpness_on = TRUE, \
 		inhand_icon_change = FALSE, \
 	)
-	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/pen/screwdriver/on_transform(obj/item/source, mob/user, active)
 	if(user)

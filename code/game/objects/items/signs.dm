@@ -30,7 +30,7 @@
 		desc = "It reads: [label]"
 
 /obj/item/picket_sign/attackby(obj/item/W, mob/user, params)
-	if(W.get_writing_implement_details()?["interaction_mode"] == MODE_WRITING)
+	if(IS_WRITING_UTENSIL(W))
 		retext(user, W)
 	else
 		return ..()

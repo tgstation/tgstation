@@ -12,7 +12,7 @@
 
 /obj/item/bot_assembly/attackby(obj/item/I, mob/user, params)
 	..()
-	if(I.get_writing_implement_details()?["interaction_mode"] == MODE_WRITING)
+	if(IS_WRITING_UTENSIL(I))
 		rename_bot()
 		return
 

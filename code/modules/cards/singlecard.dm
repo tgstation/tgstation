@@ -95,7 +95,7 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Combine cards"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	if(held_item.get_writing_implement_details()?["interaction_mode"] == MODE_WRITING)
+	if(IS_WRITING_UTENSIL(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = blank ? "Write on card" : "Mark card"
 		return CONTEXTUAL_SCREENTIP_SET
 

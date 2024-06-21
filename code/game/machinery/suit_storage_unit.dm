@@ -699,7 +699,7 @@
 		else
 			balloon_alert(user, "set to [choice]")
 
-	else if(!state_open && weapon.get_writing_implement_details()?["interaction_mode"] == MODE_WRITING)
+	else if(!state_open && IS_WRITING_UTENSIL(weapon))
 		if(locked)
 			balloon_alert(user, "unlock first!")
 			return
