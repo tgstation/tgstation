@@ -25,8 +25,8 @@
 	if(isnull(startup_file))
 		return
 
-	cpu.active_program = startup_file
 	cpu.turn_on()
+	cpu.active_program = startup_file
 
 // ===== ENGINEERING CONSOLE =====
 /obj/machinery/modular_computer/preset/engineering
@@ -101,33 +101,31 @@
 	desc = "A stationary computer that comes pre-loaded with software to interface with the cargo department."
 	preinstalled_programs = list(
 		/datum/computer_file/program/chatclient,
+		/datum/computer_file/program/department_order
 	)
+	startup_program = "dept_order"
 	/// What department type is assigned to this console?
 	var/datum/job_department/department_type
 
 /obj/machinery/modular_computer/preset/cargochat/Initialize(mapload)
-	add_starting_software()
 	. = ..()
-	setup_starting_software()
 	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 	if(department_type)
 		name = "[LOWER_TEXT(initial(department_type.department_name))] [name]"
 		cpu.name = name
 
-/obj/machinery/modular_computer/preset/cargochat/proc/add_starting_software()
-	preinstalled_programs += /datum/computer_file/program/department_order
-
-/obj/machinery/modular_computer/preset/cargochat/proc/setup_starting_software()
+/obj/machinery/modular_computer/preset/cargochat/run_startup_program()
+	. = ..()
 	if(!department_type)
 		return
+
+	var/datum/computer_file/program/department_order/orderprogram = cpu.active_program
+	orderprogram.set_linked_department(department_type) // Set department in program dept_order
 
 	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name("ntnrc_client")
 	chatprogram.username = "[LOWER_TEXT(initial(department_type.department_name))]_department"
 	cpu.idle_threads += chatprogram
 
-	var/datum/computer_file/program/department_order/orderprogram = cpu.find_file_by_name("dept_order")
-	orderprogram.set_linked_department(department_type)
-	cpu.active_program = orderprogram
 	update_appearance(UPDATE_ICON)
 
 /obj/machinery/modular_computer/preset/cargochat/service
@@ -149,18 +147,17 @@
 	department_type = /datum/job_department/cargo
 	name = "departmental interfacing console"
 	desc = "A stationary computer that comes pre-loaded with software to interface with incoming departmental cargo requests."
+	startup_program = "ntnrc_client"
 
-/obj/machinery/modular_computer/preset/cargochat/cargo/add_starting_software()
-	preinstalled_programs += /datum/computer_file/program/bounty_board
-	preinstalled_programs += /datum/computer_file/program/budgetorders
-	preinstalled_programs += /datum/computer_file/program/shipping
-	preinstalled_programs += /datum/computer_file/program/restock_tracker
-
-/obj/machinery/modular_computer/preset/cargochat/cargo/setup_starting_software()
-	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name("ntnrc_client")
-	cpu.active_program = chatprogram
-	update_appearance(UPDATE_ICON)
-	// Rest of the chat program setup is done in LateInit
+/obj/machinery/modular_computer/preset/cargochat/cargo
+	preinstalled_programs = list(
+		/datum/computer_file/program/chatclient,
+		/datum/computer_file/program/department_order,
+		/datum/computer_file/program/bounty_board,
+		/datum/computer_file/program/budgetorders,
+		/datum/computer_file/program/shipping,
+		/datum/computer_file/program/restock_tracker
+	)
 
 /obj/machinery/modular_computer/preset/cargochat/cargo/post_machine_initialize()
 	. = ..()
