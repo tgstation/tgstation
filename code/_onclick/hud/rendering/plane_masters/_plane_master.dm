@@ -20,9 +20,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	/// The plane master group we're a member of, our "home"
 	var/datum/plane_master_group/home
 
-	/// If our plane master allows for offsetting
-	/// Mostly used for planes that really don't need to be duplicated, like the hud planes
-	var/allows_offsetting = TRUE
+	/// If our plane master has different offsetting logic
+	/// Possible flags are defined in [_DEFINES/layers.dm]
+	var/offsetting_flags = NONE
 	/// Our offset from our "true" plane, see below
 	var/offset
 	/// When rendering multiz, lower levels get their own set of plane masters
