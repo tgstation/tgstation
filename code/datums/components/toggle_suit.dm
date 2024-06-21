@@ -36,23 +36,18 @@
  * source - the atom being clicked on
  * user - the mob doing the click
  */
-/datum/component/toggle_icon/proc/on_click_alt(atom/source, mob/user)
+/datum/component/toggle_icon/proc/on_click_alt(atom/source, mob/living/living_user)
 	SIGNAL_HANDLER
 
-	if(!isliving(user))
-		return
+	if(!isliving(living_user))
+		return CLICK_ACTION_BLOCKING
 
-	var/mob/living/living_user = user
-
-	if(!living_user.Adjacent(source))
-		return
-
-	if(living_user.incapacitated())
-		source.balloon_alert(user, "you're incapacitated!")
+	if(living_user.can_perform_action(source))
+		source.balloon_alert(living_user, "you're incapacitated!")
 		return CLICK_ACTION_BLOCKING
 
 	if(living_user.usable_hands <= 0)
-		source.balloon_alert(user, "you don't have hands!")
+		source.balloon_alert(living_user, "you don't have hands!")
 		return CLICK_ACTION_BLOCKING
 
 	do_icon_toggle(source, living_user)
