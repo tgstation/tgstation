@@ -47,7 +47,6 @@ type CreateSetPriority = (priority: JobPriority | null) => () => void;
 const createSetPriorityCache: Record<string, CreateSetPriority> = {};
 
 const createCreateSetPriorityFromName = (
-  context,
   jobName: string
 ): CreateSetPriority => {
   if (createSetPriorityCache[jobName] !== undefined) {
@@ -63,7 +62,7 @@ const createCreateSetPriorityFromName = (
     }
 
     const setPriority = () => {
-      const { act } = useBackend<PreferencesMenuData>(context);
+      const { act } = useBackend<PreferencesMenuData>();
 
       act('set_job_preference', {
         job: jobName,
@@ -166,23 +165,16 @@ const PriorityButtons = (props: {
   );
 };
 
-const JobRow = (
-  props: {
-    className?: string;
-    job: Job;
-    name: string;
-  },
-  context
-) => {
-  const { data } = useBackend<PreferencesMenuData>(context);
+const JobRow = (props: { className?: string; job: Job; name: string }) => {
+  const { data } = useBackend<PreferencesMenuData>();
   const { className, job, name } = props;
 
   const isOverflow = data.overflow_role === name;
   const priority = data.job_preferences[name];
 
-  const createSetPriority = createCreateSetPriorityFromName(context, name);
+  const createSetPriority = createCreateSetPriorityFromName(name);
 
-  const { act } = useBackend<PreferencesMenuData>(context);
+  const { act } = useBackend<PreferencesMenuData>();
 
   const experienceNeeded =
     data.job_required_experience && data.job_required_experience[name];
@@ -332,8 +324,8 @@ const Gap = (props: { amount: number }) => {
   return <Box height={`calc(${props.amount}px + 0.2em)`} />;
 };
 
-const JoblessRoleDropdown = (props, context) => {
-  const { act, data } = useBackend<PreferencesMenuData>(context);
+const JoblessRoleDropdown = (props) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
   const selected = data.character_preferences.misc.joblessrole;
 
   const options = [

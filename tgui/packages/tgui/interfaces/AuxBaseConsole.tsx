@@ -27,9 +27,9 @@ const STATUS_COLOR_KEYS = {
   'All Clear': 'good',
 } as const;
 
-export const AuxBaseConsole = (props, context) => {
-  const { data } = useBackend<Data>(context);
-  const [tab, setTab] = useLocalState(context, 'tab', 1);
+export const AuxBaseConsole = (props) => {
+  const { data } = useBackend<Data>();
+  const [tab, setTab] = useLocalState('tab', 1);
   const { type, blind_drop, turrets = [] } = data;
 
   return (
@@ -62,8 +62,8 @@ export const AuxBaseConsole = (props, context) => {
   );
 };
 
-export const AuxBaseConsoleContent = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const AuxBaseConsoleContent = (props) => {
+  const { act, data } = useBackend<Data>();
   const { turrets = [] } = data;
 
   return (

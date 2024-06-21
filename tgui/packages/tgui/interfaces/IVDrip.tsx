@@ -27,8 +27,8 @@ enum MODE {
   injecting,
 }
 
-export const IVDrip = (props, context) => {
-  const { act, data } = useBackend<IVDripData>(context);
+export const IVDrip = (props) => {
+  const { act, data } = useBackend<IVDripData>();
   const {
     hasContainer,
     canRemoveContainer,

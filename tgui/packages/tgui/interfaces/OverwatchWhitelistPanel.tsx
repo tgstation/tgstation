@@ -12,14 +12,10 @@ type Data = {
   displayData: Array<OverwatchDisplayData>;
 };
 
-export const OverwatchWhitelistPanel = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const OverwatchWhitelistPanel = (props) => {
+  const { act, data } = useBackend<Data>();
   const { displayData } = data;
-  const [inputWLCkey, setInputWLCkey] = useLocalState(
-    context,
-    'inputWLCkey',
-    ''
-  );
+  const [inputWLCkey, setInputWLCkey] = useLocalState('inputWLCkey', '');
   return (
     <Window
       width={600}

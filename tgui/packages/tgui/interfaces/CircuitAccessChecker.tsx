@@ -10,8 +10,8 @@ type Data = {
   accesses: string[];
 };
 
-export const CircuitAccessChecker = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const CircuitAccessChecker = (props) => {
+  const { act, data } = useBackend<Data>();
   const { oneAccess, regions = [], accesses = [] } = data;
 
   return (

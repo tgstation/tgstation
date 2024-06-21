@@ -44,8 +44,8 @@ export type HypertorusFuel = {
   temperature_multiplier: number;
 };
 
-const HypertorusMainControls = (props, context) => {
-  const { act, data } = useBackend<HypertorusData>(context);
+const HypertorusMainControls = (props) => {
+  const { act, data } = useBackend<HypertorusData>();
   const {
     start_power,
     start_cooling,
@@ -124,7 +124,7 @@ const HypertorusLayout = () => {
   );
 };
 
-export const Hypertorus = (props, context) => {
+export const Hypertorus = (props) => {
   // The HFR has a ridiculous amount of knobs and information.
   // Ideally we'd display a large window for it all...
   const idealWidth = 850,

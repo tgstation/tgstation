@@ -76,8 +76,8 @@ const BarLabel = (props) => {
   );
 };
 
-export const HypertorusTemperatures = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const HypertorusTemperatures = (props) => {
+  const { data } = useBackend<Data>();
 
   const {
     base_max_temperature,

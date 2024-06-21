@@ -181,10 +181,10 @@ const Footer = (props: { dropdown: any }, _context) => {
   );
 };
 
-const Testmerges = (_props, context) => {
+const Testmerges = (_props) => {
   const {
     data: { testmerges },
-  } = useBackend<ChangelogData>(context);
+  } = useBackend<ChangelogData>();
   if (!testmerges?.length) {
     return null;
   }
@@ -264,7 +264,7 @@ export class Changelog extends Component {
   }
 
   getData = (date: string, attemptNumber = 1) => {
-    const { act } = useBackend(this.context);
+    const { act } = useBackend();
     const self = this;
     const maxAttempts = 6;
 
@@ -296,7 +296,7 @@ export class Changelog extends Component {
   componentDidMount() {
     const {
       data: { dates = [] },
-    } = useBackend<ChangelogData>(this.context);
+    } = useBackend<ChangelogData>();
 
     if (dates) {
       dates.forEach((date) =>
@@ -311,7 +311,7 @@ export class Changelog extends Component {
     const { data, selectedDate, selectedIndex } = this.state;
     const {
       data: { dates, testmerges },
-    } = useBackend<ChangelogData>(this.context);
+    } = useBackend<ChangelogData>();
     const { dateChoices } = this;
 
     const dateDropdown = dateChoices.length > 0 && (

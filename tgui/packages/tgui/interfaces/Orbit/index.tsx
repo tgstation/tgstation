@@ -9,7 +9,7 @@ import { ANTAG2COLOR } from './constants';
 import { getAntagCategories, getDisplayColor, getDisplayName, getMostRelevant, isJobOrNameMatch } from './helpers';
 import type { AntagGroup, Antagonist, Observable, OrbitData } from './types';
 
-export const Orbit = (props, context) => {
+export const Orbit = (props) => {
   return (
     <Window title="Orbit" width={400} height={550}>
       <Window.Content scrollable>
@@ -29,8 +29,8 @@ export const Orbit = (props, context) => {
 };
 
 /** Controls filtering out the list of observables via search */
-const ObservableSearch = (props, context) => {
-  const { act, data } = useBackend<OrbitData>(context);
+const ObservableSearch = (props) => {
+  const { act, data } = useBackend<OrbitData>();
   const {
     alive = [],
     antagonists = [],
@@ -42,17 +42,11 @@ const ObservableSearch = (props, context) => {
   } = data;
 
   const [autoObserve, setAutoObserve] = useLocalState<boolean>(
-    context,
     'autoObserve',
     false
   );
-  const [heatMap, setHeatMap] = useLocalState<boolean>(
-    context,
-    'heatMap',
-    false
-  );
+  const [heatMap, setHeatMap] = useLocalState<boolean>('heatMap', false);
   const [searchQuery, setSearchQuery] = useLocalState<string>(
-    context,
     'searchQuery',
     ''
   );
@@ -133,8 +127,8 @@ const ObservableSearch = (props, context) => {
  * Renders a scrollable section replete with subsections for each
  * observable group.
  */
-const ObservableContent = (props, context) => {
-  const { data } = useBackend<OrbitData>(context);
+const ObservableContent = (props) => {
+  const { data } = useBackend<OrbitData>();
   const {
     alive = [],
     antagonists = [],
@@ -181,21 +175,18 @@ const ObservableContent = (props, context) => {
  * Displays a collapsible with a map of observable items.
  * Filters the results if there is a provided search query.
  */
-const ObservableSection = (
-  props: {
-    color?: string;
-    section: Observable[];
-    title: string;
-  },
-  context
-) => {
+const ObservableSection = (props: {
+  color?: string;
+  section: Observable[];
+  title: string;
+}) => {
   const { color, section = [], title } = props;
 
   if (!section.length) {
     return null;
   }
 
-  const [searchQuery] = useLocalState<string>(context, 'searchQuery', '');
+  const [searchQuery] = useLocalState<string>('searchQuery', '');
 
   const filteredSection: Observable[] = flow([
     filter<Observable>((observable) =>
@@ -228,16 +219,13 @@ const ObservableSection = (
 };
 
 /** Renders an observable button that has tooltip info for living Observables*/
-const ObservableItem = (
-  props: { color?: string; item: Observable },
-  context
-) => {
-  const { act } = useBackend<OrbitData>(context);
+const ObservableItem = (props: { color?: string; item: Observable }) => {
+  const { act } = useBackend<OrbitData>();
   const { color, item } = props;
   const { extra, full_name, job, health, name, orbiters, ref } = item;
 
-  const [autoObserve] = useLocalState<boolean>(context, 'autoObserve', false);
-  const [heatMap] = useLocalState<boolean>(context, 'heatMap', false);
+  const [autoObserve] = useLocalState<boolean>('autoObserve', false);
+  const [heatMap] = useLocalState<boolean>('heatMap', false);
 
   return (
     <Button

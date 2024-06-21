@@ -22,8 +22,8 @@ export const TrainingMachine = () => {
 };
 
 /** Creates a labeledlist of controls */
-const TrainingControls = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const TrainingControls = (props) => {
+  const { act, data } = useBackend<Data>();
   const { movespeed, range, moving } = data;
 
   return (

@@ -72,8 +72,10 @@ export const getRoutedComponent = (store: Store) => {
   const name = config?.interface;
   const interfacePathBuilders = [
     (name: string) => `./${name}.tsx`,
+    (name: string) => `./${name}.jsx`,
     (name: string) => `./${name}.js`,
     (name: string) => `./${name}/index.tsx`,
+    (name: string) => `./${name}/index.jsx`,
     (name: string) => `./${name}/index.js`,
   ];
   let esModule;

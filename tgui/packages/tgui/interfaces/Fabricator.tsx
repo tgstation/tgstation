@@ -7,8 +7,8 @@ import { FabricatorData, Design, MaterialMap } from './Fabrication/Types';
 import { classes } from 'common/react';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 
-export const Fabricator = (props, context) => {
-  const { act, data } = useBackend<FabricatorData>(context);
+export const Fabricator = (props) => {
+  const { act, data } = useBackend<FabricatorData>();
   const { fabName, onHold, designs, busy } = data;
 
   // Reduce the material count array to a map of actually available materials.
@@ -61,8 +61,8 @@ type PrintButtonProps = {
   available: MaterialMap;
 };
 
-const PrintButton = (props: PrintButtonProps, context) => {
-  const { act, data } = useBackend<FabricatorData>(context);
+const PrintButton = (props: PrintButtonProps) => {
+  const { act, data } = useBackend<FabricatorData>();
   const { design, quantity, available } = props;
 
   const canPrint = !Object.entries(design.cost).some(
@@ -97,8 +97,8 @@ type CustomPrintProps = {
   available: MaterialMap;
 };
 
-const CustomPrint = (props: CustomPrintProps, context) => {
-  const { act } = useBackend(context);
+const CustomPrint = (props: CustomPrintProps) => {
+  const { act } = useBackend();
   const { design, available } = props;
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
@@ -126,8 +126,8 @@ const CustomPrint = (props: CustomPrintProps, context) => {
   );
 };
 
-const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
-  const { act, data } = useBackend<FabricatorData>(context);
+const Recipe = (props: { design: Design; available: MaterialMap }) => {
+  const { act, data } = useBackend<FabricatorData>();
   const { design, available } = props;
 
   const canPrint = !Object.entries(design.cost).some(

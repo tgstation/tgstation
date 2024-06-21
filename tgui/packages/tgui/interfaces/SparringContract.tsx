@@ -39,8 +39,8 @@ type Info = {
   possible_areas: Array<string>;
 };
 
-export const SparringContract = (props, context) => {
-  const { data, act } = useBackend<Info>(context);
+export const SparringContract = (props) => {
+  const { data, act } = useBackend<Info>();
   const {
     set_weapon,
     set_area,
@@ -52,9 +52,9 @@ export const SparringContract = (props, context) => {
     no_chaplains,
     stakes_holy_match,
   } = data;
-  const [weapon, setWeapon] = useLocalState(context, 'weapon', set_weapon);
-  const [area, setArea] = useLocalState(context, 'area', set_area);
-  const [stakes, setStakes] = useLocalState(context, 'stakes', set_stakes);
+  const [weapon, setWeapon] = useLocalState('weapon', set_weapon);
+  const [area, setArea] = useLocalState('area', set_area);
+  const [stakes, setStakes] = useLocalState('stakes', set_stakes);
   return (
     <Window width={420} height={380}>
       <Window.Content>

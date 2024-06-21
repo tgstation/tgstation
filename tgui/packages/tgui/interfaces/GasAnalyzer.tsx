@@ -9,10 +9,10 @@ export type GasAnalyzerData = {
   gasmixes: Gasmix[];
 };
 
-export const GasAnalyzerContent = (props, context) => {
-  const { act, data } = useBackend<GasAnalyzerData>(context);
+export const GasAnalyzerContent = (props) => {
+  const { act, data } = useBackend<GasAnalyzerData>();
   const { gasmixes } = data;
-  const [setActiveGasId, setActiveReactionId] = atmosHandbookHooks(context);
+  const [setActiveGasId, setActiveReactionId] = atmosHandbookHooks();
   return (
     <>
       {gasmixes.map((gasmix) => (
@@ -29,7 +29,7 @@ export const GasAnalyzerContent = (props, context) => {
   );
 };
 
-export const GasAnalyzer = (props, context) => {
+export const GasAnalyzer = (props) => {
   return (
     <Window width={500} height={450}>
       <Window.Content scrollable>

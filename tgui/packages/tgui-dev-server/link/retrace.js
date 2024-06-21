@@ -6,9 +6,9 @@
 
 import fs from 'fs';
 import { basename } from 'path';
-import { createLogger } from '../logging.js';
-import { require } from '../require.js';
-import { resolveGlob } from '../util.js';
+import { createLogger } from '../logging';
+import { require } from '../require';
+import { resolveGlob } from '../util';
 
 const SourceMap = require('source-map');
 const { parse: parseStackTrace } = require('stacktrace-parser');

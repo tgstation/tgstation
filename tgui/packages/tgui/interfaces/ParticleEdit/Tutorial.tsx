@@ -2,8 +2,8 @@ import { useLocalState } from '../../backend';
 import { Box, Button, LabeledList, Section, Modal, Stack } from '../../components';
 import { resolveAsset } from '../../assets';
 
-export const ShowDesc = (props, context) => {
-  const [desc, setdesc] = useLocalState(context, 'desc', '');
+export const ShowDesc = (props) => {
+  const [desc, setdesc] = useLocalState('desc', '');
   return (
     <Modal
       width={'60em'}

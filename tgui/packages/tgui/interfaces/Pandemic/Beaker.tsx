@@ -4,8 +4,8 @@ import { Button, LabeledList, NoticeBox, ProgressBar, Section, Stack } from 'tgu
 import { Data } from './types';
 
 /** Displays loaded container info, if it exists */
-export const BeakerDisplay = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const BeakerDisplay = (props) => {
+  const { act, data } = useBackend<Data>();
   const { has_beaker, beaker, has_blood } = data;
   const cant_empty = !has_beaker || !beaker?.volume;
   let content;
@@ -60,8 +60,8 @@ export const BeakerDisplay = (props, context) => {
 };
 
 /** Displays info about the blood type, beaker capacity - volume */
-const Info = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const Info = (props) => {
+  const { data } = useBackend<Data>();
   const { beaker, blood } = data;
   if (!beaker || !blood) {
     return <NoticeBox>No beaker loaded</NoticeBox>;
@@ -101,8 +101,8 @@ const Info = (props, context) => {
 };
 
 /** If antibodies are present, returns buttons to create vaccines */
-const Antibodies = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const Antibodies = (props) => {
+  const { act, data } = useBackend<Data>();
   const { is_ready, resistances = [] } = data;
   if (!resistances) {
     return <NoticeBox>Nothing detected</NoticeBox>;

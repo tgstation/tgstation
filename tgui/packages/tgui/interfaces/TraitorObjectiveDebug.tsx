@@ -127,8 +127,8 @@ const sortingOptions: SortingOption[] = [
   },
 ];
 
-export const TraitorObjectiveDebug = (props, context) => {
-  const { data, act } = useBackend<ObjectiveData>(context);
+export const TraitorObjectiveDebug = (props) => {
+  const { data, act } = useBackend<ObjectiveData>();
   const { objective_data, player_data, current_progression } = data;
   const lines: InfernoNode[] = [];
   lines.sort();
@@ -166,19 +166,13 @@ export const TraitorObjectiveDebug = (props, context) => {
     );
   }
   let objectivesToRender: Objective[] = [];
-  const [currentTab, setCurrentTab] = useLocalState(
-    context,
-    'currentTab',
-    'All'
-  );
+  const [currentTab, setCurrentTab] = useLocalState('currentTab', 'All');
   const [sortingFunc, setSortingFunc] = useLocalState(
-    context,
     'sortingFunc',
     sortingOptions[0].name
   );
   // true = ascending, false = descending
   const [sortDirection, setSortingDirection] = useLocalState(
-    context,
     'sortDirection',
     true
   );
@@ -350,7 +344,7 @@ type ObjectiveBoxProps = {
   objective: Objective;
 };
 
-const ObjectiveBox = (props: ObjectiveBoxProps, context) => {
+const ObjectiveBox = (props: ObjectiveBoxProps) => {
   const { objective } = props;
   let width = `${
     (objective.progression_maximum / sizeLimit) * window.innerWidth

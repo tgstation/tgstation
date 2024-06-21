@@ -3,18 +3,15 @@ import { Button } from '../../components';
 import { useBackend } from '../../backend';
 import { PreferencesMenuData } from './data';
 
-export const PageButton = <P extends unknown>(
-  props: {
-    currentPage: P;
-    page: P;
-    otherActivePages?: P[];
+export const PageButton = <P extends unknown>(props: {
+  currentPage: P;
+  page: P;
+  otherActivePages?: P[];
 
-    setPage: (page: P) => void;
-    children?: InfernoNode;
-  },
-  context
-) => {
-  const { act } = useBackend<PreferencesMenuData>(context);
+  setPage: (page: P) => void;
+  children?: InfernoNode;
+}) => {
+  const { act } = useBackend<PreferencesMenuData>();
   const pageIsActive =
     props.currentPage === props.page ||
     (props.otherActivePages &&

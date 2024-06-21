@@ -17,12 +17,8 @@ const MECHA_MAINT_PANELS = {
   },
 };
 
-export const MaintMode = (props, context) => {
-  const [screen, setPanel] = useLocalState(
-    context,
-    'screen',
-    MECHA_MAINT_PANELS.main
-  );
+export const MaintMode = (props) => {
+  const [screen, setPanel] = useLocalState('screen', MECHA_MAINT_PANELS.main);
   const Component = screen.component();
   return (
     <Stack fill vertical>
@@ -47,13 +43,9 @@ export const MaintMode = (props, context) => {
   );
 };
 
-const MainPanel = (props, context) => {
-  const { act, data } = useBackend<MaintData>(context);
-  const [screen, setPanel] = useLocalState(
-    context,
-    'screen',
-    MECHA_MAINT_PANELS.main
-  );
+const MainPanel = (props) => {
+  const { act, data } = useBackend<MaintData>();
+  const [screen, setPanel] = useLocalState('screen', MECHA_MAINT_PANELS.main);
   const { mecha_flags, mechflag_keys } = data;
   return (
     <Stack fill vertical>
@@ -78,13 +70,9 @@ const MainPanel = (props, context) => {
   );
 };
 
-const MaintEnabled = (props, context) => {
-  const { act, data } = useBackend<MaintData>(context);
-  const [screen, setPanel] = useLocalState(
-    context,
-    'screen',
-    MECHA_MAINT_PANELS.main
-  );
+const MaintEnabled = (props) => {
+  const { act, data } = useBackend<MaintData>();
+  const [screen, setPanel] = useLocalState('screen', MECHA_MAINT_PANELS.main);
   return (
     <>
       <Stack.Item>
@@ -127,8 +115,8 @@ const MaintEnabled = (props, context) => {
   );
 };
 
-const StockPartsPanel = (props, context) => {
-  const { act, data } = useBackend<MaintData>(context);
+const StockPartsPanel = (props) => {
+  const { act, data } = useBackend<MaintData>();
   const { cell, scanning, capacitor } = data;
   return (
     <Stack fill vertical>
@@ -184,8 +172,8 @@ const StockPartsPanel = (props, context) => {
   );
 };
 
-const AccessPanel = (props, context) => {
-  const { act, data } = useBackend<MaintData>(context);
+const AccessPanel = (props) => {
+  const { act, data } = useBackend<MaintData>();
   const { idcard_access, operation_req_access } = data;
   return (
     <Stack fill vertical>

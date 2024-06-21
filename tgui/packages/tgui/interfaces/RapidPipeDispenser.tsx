@@ -119,8 +119,8 @@ type Data = {
   paint_colors: Colors;
 };
 
-export const ColorItem = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const ColorItem = (props) => {
+  const { act, data } = useBackend<Data>();
   const { selected_color, paint_colors } = data;
   const colorNames = Object.keys(paint_colors);
   return (
@@ -150,8 +150,8 @@ export const ColorItem = (props, context) => {
   );
 };
 
-const ModeItem = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const ModeItem = (props) => {
+  const { act, data } = useBackend<Data>();
   const { mode } = data;
   return (
     <LabeledList.Item label="Modes">
@@ -171,8 +171,8 @@ const ModeItem = (props, context) => {
   );
 };
 
-const CategoryItem = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const CategoryItem = (props) => {
+  const { act, data } = useBackend<Data>();
   const { category: rootCategoryIndex } = data;
   return (
     <LabeledList.Item label="Category">
@@ -190,8 +190,8 @@ const CategoryItem = (props, context) => {
   );
 };
 
-const SelectionSection = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const SelectionSection = (props) => {
+  const { act, data } = useBackend<Data>();
   const { category: rootCategoryIndex } = data;
   return (
     <Section fill>
@@ -206,8 +206,8 @@ const SelectionSection = (props, context) => {
 };
 
 // MONKESTATION ADDITION -- added context to layer select and useBackend<Data>()
-const LayerSelect = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const LayerSelect = (props) => {
+  const { act, data } = useBackend<Data>();
   const { pipe_layers } = data;
   const { multi_layer } = data;
   return (
@@ -237,8 +237,8 @@ const LayerSelect = (props, context) => {
   );
 };
 
-const PreviewSelect = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const PreviewSelect = (props) => {
+  const { act, data } = useBackend<Data>();
   return (
     <Box>
       {props.previews.map((preview) => (
@@ -277,11 +277,10 @@ const PreviewSelect = (props, context) => {
   );
 };
 
-const PipeTypeSection = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const PipeTypeSection = (props) => {
+  const { act, data } = useBackend<Data>();
   const { categories = [], selected_category, selected_recipe } = data;
   const [categoryName, setCategoryName] = useLocalState(
-    context,
     'categoryName',
     selected_category
   );
@@ -325,8 +324,8 @@ const PipeTypeSection = (props, context) => {
   );
 };
 
-export const SmartPipeBlockSection = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const SmartPipeBlockSection = (props) => {
+  const { act, data } = useBackend<Data>();
   const { init_directions = [] } = data;
   return (
     <Section fill>
@@ -403,8 +402,8 @@ export const SmartPipeBlockSection = (props, context) => {
   );
 };
 
-export const RapidPipeDispenser = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const RapidPipeDispenser = (props) => {
+  const { act, data } = useBackend<Data>();
   const { category: rootCategoryIndex } = data;
   return (
     <Window width={550} height={580}>

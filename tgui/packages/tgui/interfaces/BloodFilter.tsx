@@ -7,8 +7,8 @@ type Data = {
   whitelist: string[];
 };
 
-export const BloodFilter = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const BloodFilter = (props) => {
+  const { data } = useBackend<Data>();
   const { whitelist = [] } = data;
 
   return (

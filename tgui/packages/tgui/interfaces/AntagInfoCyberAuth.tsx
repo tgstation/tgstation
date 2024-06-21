@@ -17,8 +17,8 @@ const textStyles = {
   },
 } as const;
 
-export const AntagInfoCyberAuth = (props, context) => {
-  const { data } = useBackend<Info>(context);
+export const AntagInfoCyberAuth = (props) => {
+  const { data } = useBackend<Info>();
   const { objectives = [] } = data;
 
   return (

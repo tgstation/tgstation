@@ -25,8 +25,8 @@ type AutolatheData = {
   active: BooleanLike;
 };
 
-export const Autolathe = (props, context) => {
-  const { act, data } = useBackend<AutolatheData>(context);
+export const Autolathe = (props) => {
+  const { act, data } = useBackend<AutolatheData>();
   const { materialtotal, materialsmax, materials, designs, active } = data;
 
   const filteredMaterials = materials.filter((material) => material.amount > 0);
@@ -115,8 +115,8 @@ type PrintButtonProps = {
   availableMaterials: MaterialMap;
 };
 
-const PrintButton = (props: PrintButtonProps, context) => {
-  const { act, data } = useBackend<AutolatheData>(context);
+const PrintButton = (props: PrintButtonProps) => {
+  const { act, data } = useBackend<AutolatheData>();
   const { design, quantity, availableMaterials } = props;
 
   const canPrint = !Object.entries(design.cost).some(
@@ -152,8 +152,8 @@ type AutolatheRecipeProps = {
   availableMaterials: MaterialMap;
 };
 
-const AutolatheRecipe = (props: AutolatheRecipeProps, context) => {
-  const { act, data } = useBackend<AutolatheData>(context);
+const AutolatheRecipe = (props: AutolatheRecipeProps) => {
+  const { act, data } = useBackend<AutolatheData>();
   const { design, availableMaterials } = props;
 
   const canPrint = !Object.entries(design.cost).some(

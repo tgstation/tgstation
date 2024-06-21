@@ -15,9 +15,9 @@ type EquipmentProps = {
   module: MechaUtility;
 };
 
-const Equipment = (props: EquipmentProps, context) => {
+const Equipment = (props: EquipmentProps) => {
   const { module } = props;
-  const { act } = useBackend<OperatorData>(context);
+  const { act } = useBackend<OperatorData>();
 
   return (
     <div className="UtilityModulePane__Equipment">
@@ -47,8 +47,8 @@ const Equipment = (props: EquipmentProps, context) => {
   );
 };
 
-export const UtilityModulesPane = (props, context) => {
-  const { data } = useBackend<OperatorData>(context);
+export const UtilityModulesPane = (props) => {
+  const { data } = useBackend<OperatorData>();
   const { mech_equipment } = data;
   return (
     <Box style={{ 'height': '16rem' }}>
@@ -71,7 +71,7 @@ const MECHA_SNOWFLAKE_ID_EJECTOR = 'ejector_snowflake';
 const MECHA_SNOWFLAKE_ID_EXTINGUISHER = 'extinguisher_snowflake';
 
 // Handles all the snowflake buttons and whatever
-const Snowflake = (props: { module: MechaUtility }, context) => {
+const Snowflake = (props: { module: MechaUtility }) => {
   const { snowflake } = props.module;
   switch (snowflake['snowflake_id']) {
     case MECHA_SNOWFLAKE_ID_EJECTOR:
@@ -83,8 +83,8 @@ const Snowflake = (props: { module: MechaUtility }, context) => {
   }
 };
 
-const SnowflakeEjector = (props: { module: MechaUtility }, context) => {
-  const { act, data } = useBackend<OperatorData>(context);
+const SnowflakeEjector = (props: { module: MechaUtility }) => {
+  const { act, data } = useBackend<OperatorData>();
   const { cargo } = props.module.snowflake;
   return (
     <>
@@ -112,8 +112,8 @@ const SnowflakeEjector = (props: { module: MechaUtility }, context) => {
   );
 };
 
-const SnowflakeExtinguisher = (props: { module: MechaUtility }, context) => {
-  const { act, data } = useBackend<OperatorData>(context);
+const SnowflakeExtinguisher = (props: { module: MechaUtility }) => {
+  const { act, data } = useBackend<OperatorData>();
   return (
     <>
       <ProgressBar

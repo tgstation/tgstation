@@ -355,7 +355,7 @@ type ObjectiveElementProps = {
   handleAbort?: (event: MouseEvent) => void;
 };
 
-export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
+export const ObjectiveElement = (props: ObjectiveElementProps) => {
   const {
     name,
     dangerLevel,

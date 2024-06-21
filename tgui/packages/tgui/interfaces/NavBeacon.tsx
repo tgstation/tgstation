@@ -29,8 +29,8 @@ export type NavBeaconStaticControl = {
   has_codes: BooleanLike;
 };
 
-export const NavBeacon = (props, context) => {
-  const { act, data } = useBackend(context);
+export const NavBeacon = (props) => {
+  const { act, data } = useBackend();
   return (
     <Window title="Nagivational Beacon" width={400} height={350}>
       <Window.Content>
@@ -40,8 +40,8 @@ export const NavBeacon = (props, context) => {
   );
 };
 
-export const NavBeaconContent = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const NavBeaconContent = (props) => {
+  const { act, data } = useBackend<Data>();
   const { controls, static_controls } = data;
   const disabled = data.locked && !data.siliconUser;
   return (
@@ -53,8 +53,8 @@ export const NavBeaconContent = (props, context) => {
   );
 };
 
-export const NavBeaconControlSection = (props: DisabledProps, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const NavBeaconControlSection = (props: DisabledProps) => {
+  const { act, data } = useBackend<Data>();
   const { controls, static_controls } = data;
   return (
     <Section title="Controls">
@@ -112,8 +112,8 @@ export const NavBeaconControlSection = (props: DisabledProps, context) => {
   );
 };
 
-export const NavBeaconMaintenanceSection = (props: DisabledProps, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const NavBeaconMaintenanceSection = (props: DisabledProps) => {
+  const { act, data } = useBackend<Data>();
   const { controls, static_controls } = data;
   return (
     <Section title="Maintenance">

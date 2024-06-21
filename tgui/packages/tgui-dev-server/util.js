@@ -6,7 +6,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import { require } from './require.js';
+import { require } from './require';
 
 const globPkg = require('glob');
 

@@ -15,8 +15,8 @@ type Data = {
   beaker_reagent_color: string;
 };
 
-export const ChemSeparator = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const ChemSeparator = (props) => {
+  const { act, data } = useBackend<Data>();
   return (
     <Window width={470} height={130}>
       <Window.Content>

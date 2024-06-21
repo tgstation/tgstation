@@ -8,11 +8,8 @@ type PrimaryObjectiveMenuProps = {
   can_renegotiate;
 };
 
-export const PrimaryObjectiveMenu = (
-  props: PrimaryObjectiveMenuProps,
-  context
-) => {
-  const { act } = useBackend(context);
+export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
+  const { act } = useBackend();
   const { primary_objectives, final_objective, can_renegotiate } = props;
   return (
     <Section fill>

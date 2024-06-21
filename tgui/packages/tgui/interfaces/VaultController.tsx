@@ -10,8 +10,8 @@ type Data = {
   max: number;
 };
 
-export const VaultController = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const VaultController = (props) => {
+  const { act, data } = useBackend<Data>();
   const { doorstatus, stored, max } = data;
 
   return (
@@ -35,8 +35,8 @@ export const VaultController = (props, context) => {
 };
 
 /** Displays info about the vault in a labeledlist */
-const VaultList = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const VaultList = (props) => {
+  const { data } = useBackend<Data>();
   const { stored, max } = data;
 
   return (

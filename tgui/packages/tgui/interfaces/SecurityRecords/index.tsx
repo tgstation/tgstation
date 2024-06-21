@@ -5,8 +5,8 @@ import { SecurityRecordsData } from './types';
 import { SecurityRecordView } from './RecordView';
 import { SecurityRecordTabs } from './RecordTabs';
 
-export const SecurityRecords = (props, context) => {
-  const { data } = useBackend<SecurityRecordsData>(context);
+export const SecurityRecords = (props) => {
+  const { data } = useBackend<SecurityRecordsData>();
   const { authenticated } = data;
 
   return (
@@ -19,8 +19,8 @@ export const SecurityRecords = (props, context) => {
 };
 
 /** Unauthorized view. User can only log in with ID */
-const RestrictedView = (props, context) => {
-  const { act } = useBackend<SecurityRecordsData>(context);
+const RestrictedView = (props) => {
+  const { act } = useBackend<SecurityRecordsData>();
 
   return (
     <Stack.Item grow>
@@ -48,8 +48,8 @@ const RestrictedView = (props, context) => {
 };
 
 /** Logged in view */
-const AuthView = (props, context) => {
-  const { act } = useBackend<SecurityRecordsData>(context);
+const AuthView = (props) => {
+  const { act } = useBackend<SecurityRecordsData>();
 
   return (
     <>

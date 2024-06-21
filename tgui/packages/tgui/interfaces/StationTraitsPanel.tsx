@@ -28,12 +28,11 @@ enum Tab {
   ViewStationTraits,
 }
 
-const FutureStationTraitsPage = (props, context) => {
-  const { act, data } = useBackend<StationTraitsData>(context);
+const FutureStationTraitsPage = (props) => {
+  const { act, data } = useBackend<StationTraitsData>();
   const { future_station_traits } = data;
 
   const [selectedTrait, setSelectedTrait] = useLocalState<string | null>(
-    context,
     'selectedFutureTrait',
     null
   );
@@ -167,8 +166,8 @@ const FutureStationTraitsPage = (props, context) => {
   );
 };
 
-const ViewStationTraitsPage = (props, context) => {
-  const { act, data } = useBackend<StationTraitsData>(context);
+const ViewStationTraitsPage = (props) => {
+  const { act, data } = useBackend<StationTraitsData>();
 
   return data.current_traits.length > 0 ? (
     <Stack vertical fill>
@@ -205,9 +204,8 @@ const ViewStationTraitsPage = (props, context) => {
   );
 };
 
-export const StationTraitsPanel = (props, context) => {
+export const StationTraitsPanel = (props) => {
   const [currentTab, setCurrentTab] = useLocalState(
-    context,
     'station_traits_tab',
     Tab.ViewStationTraits
   );

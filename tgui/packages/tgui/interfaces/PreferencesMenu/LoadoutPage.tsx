@@ -42,8 +42,8 @@ const CharacterControls = (props: {
   );
 };
 
-export const LoadoutManager = (props, context) => {
-  const { act, data } = useBackend<PreferencesMenuData>(context);
+export const LoadoutManager = (props) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
   const {
     selected_loadout,
     loadout_tabs,
@@ -52,12 +52,10 @@ export const LoadoutManager = (props, context) => {
     selected_unusuals,
   } = data;
   const [multiNameInputOpen, setMultiNameInputOpen] = useLocalState(
-    context,
     'multiNameInputOpen',
     false
   );
   const [selectedTabName, setSelectedTab] = useSharedState(
-    context,
     'tabs',
     loadout_tabs[0]?.name
   );

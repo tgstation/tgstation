@@ -13,8 +13,8 @@ type ExosuitFabricatorData = FabricatorData & {
   processing: BooleanLike;
 };
 
-export const ExosuitFabricator = (props, context) => {
-  const { act, data } = useBackend<ExosuitFabricatorData>(context);
+export const ExosuitFabricator = (props) => {
+  const { act, data } = useBackend<ExosuitFabricatorData>();
 
   const availableMaterials: MaterialMap = {};
 
@@ -69,8 +69,8 @@ export const ExosuitFabricator = (props, context) => {
   );
 };
 
-const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
-  const { act, data } = useBackend<ExosuitFabricatorData>(context);
+const Recipe = (props: { design: Design; available: MaterialMap }) => {
+  const { act, data } = useBackend<ExosuitFabricatorData>();
   const { design, available } = props;
 
   const canPrint = !Object.entries(design.cost).some(
@@ -145,8 +145,8 @@ const Recipe = (props: { design: Design; available: MaterialMap }, context) => {
   );
 };
 
-const Queue = (props: { availableMaterials: MaterialMap }, context) => {
-  const { act, data } = useBackend<ExosuitFabricatorData>(context);
+const Queue = (props: { availableMaterials: MaterialMap }) => {
+  const { act, data } = useBackend<ExosuitFabricatorData>();
   const { availableMaterials } = props;
   const { designs, processing } = data;
 
@@ -216,8 +216,8 @@ const Queue = (props: { availableMaterials: MaterialMap }, context) => {
   );
 };
 
-const QueueList = (props: { availableMaterials: MaterialMap }, context) => {
-  const { act, data } = useBackend<ExosuitFabricatorData>(context);
+const QueueList = (props: { availableMaterials: MaterialMap }) => {
+  const { act, data } = useBackend<ExosuitFabricatorData>();
   const { availableMaterials } = props;
 
   const queue = data.queue || [];

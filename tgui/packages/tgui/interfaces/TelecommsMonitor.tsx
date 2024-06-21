@@ -28,8 +28,8 @@ type LinkedMachinery = {
   name: string;
 };
 
-const MachineScreen = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const MachineScreen = (props) => {
+  const { act, data } = useBackend<Data>();
   const { network, machine } = data;
   const { linked_machinery = [] } = machine;
 
@@ -80,14 +80,10 @@ const MachineScreen = (props, context) => {
   );
 };
 
-const MainScreen = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const MainScreen = (props) => {
+  const { act, data } = useBackend<Data>();
   const { machinery = [], network } = data;
-  const [networkId, setNetworkId] = useLocalState(
-    context,
-    'networkId',
-    network
-  );
+  const [networkId, setNetworkId] = useLocalState('networkId', network);
 
   return (
     <Stack fill vertical>
@@ -143,8 +139,8 @@ const MainScreen = (props, context) => {
   );
 };
 
-export const TelecommsMonitor = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const TelecommsMonitor = (props) => {
+  const { act, data } = useBackend<Data>();
   const { screen, error_message } = data;
   return (
     <Window width={575} height={400}>

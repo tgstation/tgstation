@@ -143,8 +143,8 @@ type Data = {
   nutriments: number;
 };
 
-export const PersonalCrafting = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const PersonalCrafting = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     mode,
     busy,
@@ -153,12 +153,11 @@ export const PersonalCrafting = (props, context) => {
     craftability,
     diet,
   } = data;
-  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
-  const [pages, setPages] = useLocalState(context, 'pages', 1);
+  const [searchText, setSearchText] = useLocalState('searchText', '');
+  const [pages, setPages] = useLocalState('pages', 1);
   const DEFAULT_CAT_CRAFTING = Object.keys(CATEGORY_ICONS_CRAFTING)[1];
   const DEFAULT_CAT_COOKING = Object.keys(CATEGORY_ICONS_COOKING)[1];
   const [activeCategory, setCategory] = useLocalState<string>(
-    context,
     'category',
     Object.keys(craftability).length
       ? 'Can Make'
@@ -167,7 +166,6 @@ export const PersonalCrafting = (props, context) => {
         : DEFAULT_CAT_CRAFTING
   );
   const [activeType, setFoodType] = useLocalState(
-    context,
     'foodtype',
     Object.keys(craftability).length ? 'Can Make' : data.foodtypes[0]
   );
@@ -175,11 +173,10 @@ export const PersonalCrafting = (props, context) => {
     sortBy<Material>((material) => -material.occurences),
   ])(data.material_occurences);
   const [activeMaterial, setMaterial] = useLocalState(
-    context,
     'material',
     material_occurences[0].atom_id
   );
-  const [tabMode, setTabMode] = useLocalState(context, 'tabMode', 0);
+  const [tabMode, setTabMode] = useLocalState('tabMode', 0);
   const searchName = createSearch(searchText, (item: Recipe) => item.name);
   let recipes = flow([
     filter<Recipe>(
@@ -525,9 +522,9 @@ export const PersonalCrafting = (props, context) => {
   );
 };
 
-const MaterialContent = (props, context) => {
+const MaterialContent = (props) => {
   const { atom_id, occurences } = props;
-  const { data } = useBackend<Data>(context);
+  const { data } = useBackend<Data>();
   const name = data.atom_data[atom_id - 1].name;
   const mode = data.mode;
   return (
@@ -599,8 +596,8 @@ const FoodtypeContent = (props) => {
   );
 };
 
-const RecipeContentCompact = ({ item, craftable, busy, mode }, context) => {
-  const { act, data } = useBackend<Data>(context);
+const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
+  const { act, data } = useBackend<Data>();
   return (
     <Section>
       <Stack my={-0.75}>
@@ -716,8 +713,8 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }, context) => {
   );
 };
 
-const RecipeContent = ({ item, craftable, busy, mode, diet }, context) => {
-  const { act } = useBackend<Data>(context);
+const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
+  const { act } = useBackend<Data>();
   return (
     <Section>
       <Stack>
@@ -862,8 +859,8 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }, context) => {
   );
 };
 
-const AtomContent = ({ atom_id, amount }, context) => {
-  const { data } = useBackend<Data>(context);
+const AtomContent = ({ atom_id, amount }) => {
+  const { data } = useBackend<Data>();
   const name = data.atom_data[atom_id - 1]?.name;
   const is_reagent = data.atom_data[atom_id - 1]?.is_reagent;
   const mode = data.mode;

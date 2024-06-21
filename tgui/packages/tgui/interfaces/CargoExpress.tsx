@@ -17,8 +17,8 @@ type Data = {
   message: string;
 };
 
-export const CargoExpress = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const CargoExpress = (props) => {
+  const { data } = useBackend<Data>();
   const { locked } = data;
 
   return (
@@ -31,8 +31,8 @@ export const CargoExpress = (props, context) => {
   );
 };
 
-const CargoExpressContent = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const CargoExpressContent = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     hasBeacon,
     message,

@@ -75,11 +75,8 @@ const SyncedBorgDimmer = (props: { master: string }) => {
   );
 };
 
-export const LawPrintout = (
-  props: { cyborg_ref: string; lawset: Law[] },
-  context
-) => {
-  const { data, act } = useBackend<Law>(context);
+export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
+  const { data, act } = useBackend<Law>();
   const { cyborg_ref, lawset } = props;
 
   let num_of_each_lawtype = [];
@@ -213,8 +210,8 @@ export const LawPrintout = (
   );
 };
 
-export const SiliconReadout = (props: { cyborg: Silicon }, context) => {
-  const { data, act } = useBackend<Silicon>(context);
+export const SiliconReadout = (props: { cyborg: Silicon }) => {
+  const { data, act } = useBackend<Silicon>();
   const { cyborg } = props;
 
   return (
@@ -288,8 +285,8 @@ export const SiliconReadout = (props: { cyborg: Silicon }, context) => {
   );
 };
 
-export const Lawpanel = (props, context) => {
-  const { data, act } = useBackend<Data>(context);
+export const Lawpanel = (props) => {
+  const { data, act } = useBackend<Data>();
   const { all_silicons } = data;
 
   return (

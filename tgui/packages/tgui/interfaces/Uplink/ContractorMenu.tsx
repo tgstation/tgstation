@@ -15,8 +15,8 @@ type ContractorMenuProps = {
   rep: number;
 };
 
-export const ContractorMenu = (props: ContractorMenuProps, context) => {
-  const { act, data } = useBackend(context);
+export const ContractorMenu = (props: ContractorMenuProps) => {
+  const { act, data } = useBackend();
   const contractor_hub_items = props.items || [];
   return (
     <Section>

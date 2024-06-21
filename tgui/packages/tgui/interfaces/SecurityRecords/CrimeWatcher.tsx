@@ -4,13 +4,12 @@ import { getSecurityRecord } from './helpers';
 import { BlockQuote, Box, Button, Collapsible, Icon, Input, LabeledList, NoticeBox, RestrictedInput, Section, Stack, Tabs, TextArea, Tooltip } from 'tgui/components';
 
 /** Displays a list of crimes and allows to add new ones. */
-export const CrimeWatcher = (props, context) => {
-  const foundRecord = getSecurityRecord(context);
+export const CrimeWatcher = (props) => {
+  const foundRecord = getSecurityRecord();
   if (!foundRecord) return <> </>;
 
   const { crimes, citations } = foundRecord;
   const [selectedTab, setSelectedTab] = useLocalState<SECURETAB>(
-    context,
     'selectedTab',
     SECURETAB.Crimes
   );
@@ -52,8 +51,8 @@ export const CrimeWatcher = (props, context) => {
 };
 
 /** Displays the crimes and citations of a record. */
-const CrimeList = (props, context) => {
-  const foundRecord = getSecurityRecord(context);
+const CrimeList = (props) => {
+  const foundRecord = getSecurityRecord();
   if (!foundRecord) return <> </>;
 
   const { citations, crimes } = foundRecord;
@@ -76,12 +75,12 @@ const CrimeList = (props, context) => {
 };
 
 /** Displays an individual crime */
-const CrimeDisplay = ({ item }: { item: Crime }, context) => {
-  const foundRecord = getSecurityRecord(context);
+const CrimeDisplay = ({ item }: { item: Crime }) => {
+  const foundRecord = getSecurityRecord();
   if (!foundRecord) return <> </>;
 
   const { crew_ref } = foundRecord;
-  const { act, data } = useBackend<SecurityRecordsData>(context);
+  const { act, data } = useBackend<SecurityRecordsData>();
   const { current_user, higher_access } = data;
   const { author, crime_ref, details, fine, name, paid, time, valid } = item;
   const showFine = !!fine && fine > 0 ? `: ${fine} cr` : '';
@@ -98,11 +97,7 @@ const CrimeDisplay = ({ item }: { item: Crime }, context) => {
     displayTitle = name.slice(0, 18) + showFine;
   }
 
-  const [editing, setEditing] = useLocalState(
-    context,
-    `editing_${crime_ref}`,
-    false
-  );
+  const [editing, setEditing] = useLocalState(`editing_${crime_ref}`, false);
 
   return (
     <Stack.Item>
@@ -188,22 +183,17 @@ const CrimeDisplay = ({ item }: { item: Crime }, context) => {
 };
 
 /** Writes a new crime. Reducers don't seem to work here, so... */
-const CrimeAuthor = (props, context) => {
-  const foundRecord = getSecurityRecord(context);
+const CrimeAuthor = (props) => {
+  const foundRecord = getSecurityRecord();
   if (!foundRecord) return <> </>;
 
   const { crew_ref } = foundRecord;
-  const { act } = useBackend<SecurityRecordsData>(context);
+  const { act } = useBackend<SecurityRecordsData>();
 
-  const [crimeName, setCrimeName] = useLocalState(context, 'crimeName', '');
-  const [crimeDetails, setCrimeDetails] = useLocalState(
-    context,
-    'crimeDetails',
-    ''
-  );
-  const [crimeFine, setCrimeFine] = useLocalState(context, 'crimeFine', 0);
+  const [crimeName, setCrimeName] = useLocalState('crimeName', '');
+  const [crimeDetails, setCrimeDetails] = useLocalState('crimeDetails', '');
+  const [crimeFine, setCrimeFine] = useLocalState('crimeFine', 0);
   const [selectedTab, setSelectedTab] = useLocalState<SECURETAB>(
-    context,
     'selectedTab',
     SECURETAB.Crimes
   );

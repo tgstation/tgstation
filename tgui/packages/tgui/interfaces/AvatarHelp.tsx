@@ -47,8 +47,8 @@ const boxHelp = [
   },
 ] as const;
 
-export const AvatarHelp = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const AvatarHelp = (props) => {
+  const { data } = useBackend<Data>();
   const { help_text = DEFAULT_HELP } = data;
 
   return (
@@ -96,7 +96,7 @@ export const AvatarHelp = (props, context) => {
 };
 
 // I wish I had media queries
-const BoxHelp = (props: { index: number }, context) => {
+const BoxHelp = (props: { index: number }) => {
   const { index } = props;
 
   return (

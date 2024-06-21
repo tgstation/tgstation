@@ -24,8 +24,8 @@ type FishingSlotProps = {
   current_item_icon: string | null;
 };
 
-const FishingRodSlot = (props: FishingSlotProps, context) => {
-  const { act } = useBackend(context);
+const FishingRodSlot = (props: FishingSlotProps) => {
+  const { act } = useBackend();
 
   const icon_wrapper = (icon) => (
     <Box
@@ -66,8 +66,8 @@ const FishingRodSlot = (props: FishingSlotProps, context) => {
   );
 };
 
-export const FishingRod = (props, context) => {
-  const { act, data } = useBackend<FishingRodData>(context);
+export const FishingRod = (props) => {
+  const { act, data } = useBackend<FishingRodData>();
 
   return (
     <Window>

@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { createCompiler } from './webpack.js';
-import { reloadByondCache } from './reloader.js';
+import { createCompiler } from './webpack';
+import { reloadByondCache } from './reloader';
 
 const noHot = process.argv.includes('--no-hot');
 const noTmp = process.argv.includes('--no-tmp');

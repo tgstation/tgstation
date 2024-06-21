@@ -4,28 +4,23 @@ import { Box, Button, Input, Section, Stack } from 'tgui/components';
 import { getSecurityRecord, getDefaultPrintDescription, getDefaultPrintHeader } from './helpers';
 
 /** Handles printing posters and rapsheets */
-export const RecordPrint = (props, context) => {
-  const foundRecord = getSecurityRecord(context);
+export const RecordPrint = (props) => {
+  const foundRecord = getSecurityRecord();
   if (!foundRecord) return <> </>;
 
   const { crew_ref, crimes, name } = foundRecord;
   const innocent = !crimes?.length;
-  const { act } = useBackend<SecurityRecordsData>(context);
+  const { act } = useBackend<SecurityRecordsData>();
 
-  const [open, setOpen] = useLocalState<boolean>(context, 'printOpen', true);
-  const [alias, setAlias] = useLocalState<string>(context, 'printAlias', name);
+  const [open, setOpen] = useLocalState<boolean>('printOpen', true);
+  const [alias, setAlias] = useLocalState<string>('printAlias', name);
 
   const [printType, setPrintType] = useLocalState<PRINTOUT>(
-    context,
     'printType',
     PRINTOUT.Missing
   );
-  const [header, setHeader] = useLocalState<string>(context, 'printHeader', '');
-  const [description, setDescription] = useLocalState<string>(
-    context,
-    'printDesc',
-    ''
-  );
+  const [header, setHeader] = useLocalState<string>('printHeader', '');
+  const [description, setDescription] = useLocalState<string>('printDesc', '');
 
   /** Prints the record and resets. */
   const printSheet = () => {

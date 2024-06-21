@@ -13,8 +13,8 @@ type Info = {
   objectives: Objective[];
 };
 
-export const AntagInfoClock = (props, context) => {
-  const { data } = useBackend<Info>(context);
+export const AntagInfoClock = (props) => {
+  const { data } = useBackend<Info>();
   const { antag_name } = data;
   return (
     <Window width={620} height={250} theme="clockwork">
@@ -36,8 +36,8 @@ export const AntagInfoClock = (props, context) => {
   );
 };
 
-const ObjectivePrintout = (props, context) => {
-  const { data } = useBackend<Info>(context);
+const ObjectivePrintout = (props) => {
+  const { data } = useBackend<Info>();
   const { objectives } = data;
   return (
     <Stack vertical>

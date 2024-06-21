@@ -28,11 +28,10 @@ type Recipe = {
   name: string;
 };
 
-const PlumbingTypeSection = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const PlumbingTypeSection = (props) => {
+  const { act, data } = useBackend<Data>();
   const { categories = [], selected_category, selected_recipe } = data;
   const [categoryName, setCategoryName] = useLocalState(
-    context,
     'categoryName',
     selected_category
   );
@@ -81,8 +80,8 @@ const PlumbingTypeSection = (props, context) => {
 };
 
 // MONKESTATION ADDITION -- added context to layer select and useBackend<Data>()
-export const LayerSelect = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const LayerSelect = (props) => {
+  const { act, data } = useBackend<Data>();
   const { piping_layer } = data;
   return (
     <LabeledList.Item label="Layer">
@@ -102,8 +101,8 @@ export const LayerSelect = (props, context) => {
   );
 };
 
-const LayerIconSection = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const LayerIconSection = (props) => {
+  const { data } = useBackend<Data>();
   const { layer_icon } = data;
   return (
     <Box
@@ -116,8 +115,8 @@ const LayerIconSection = (props, context) => {
   );
 };
 
-export const RapidPlumbingDevice = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const RapidPlumbingDevice = (props) => {
+  const { data } = useBackend<Data>();
   const { silo_upgraded } = data;
   return (
     <Window width={480} height={575}>

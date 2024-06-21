@@ -30,8 +30,8 @@ const ROTATION_MAP = {
   east: 'rotateZ(-90deg)',
 } as const;
 
-const TilePreview = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const TilePreview = (props) => {
+  const { data } = useBackend<Data>();
   const { selected_icon, selected_direction } = data;
 
   return (
@@ -53,8 +53,8 @@ const TilePreview = (props, context) => {
   );
 };
 
-const DirectionSelect = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const DirectionSelect = (props) => {
+  const { act, data } = useBackend<Data>();
   const { tile_dirs = [], selected_direction } = data;
   return (
     <Section fill vertical>
@@ -78,8 +78,8 @@ const DirectionSelect = (props, context) => {
   );
 };
 
-const TileRotateSection = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const TileRotateSection = (props) => {
+  const { data } = useBackend<Data>();
   const { selected_direction } = data;
   return (
     <Stack fill vertical>
@@ -93,11 +93,10 @@ const TileRotateSection = (props, context) => {
   );
 };
 
-const TileDesignSection = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const TileDesignSection = (props) => {
+  const { act, data } = useBackend<Data>();
   const { categories = [], selected_category, selected_recipe } = data;
   const [categoryName, setCategoryName] = useLocalState(
-    context,
     'categoryName',
     selected_category
   );
@@ -152,7 +151,7 @@ const TileDesignSection = (props, context) => {
   );
 };
 
-export const RapidTilingDevice = (props, context) => {
+export const RapidTilingDevice = (props) => {
   return (
     <Window width={500} height={540}>
       <Window.Content>

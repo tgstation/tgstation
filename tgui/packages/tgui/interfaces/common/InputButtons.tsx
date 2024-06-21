@@ -12,8 +12,8 @@ type InputButtonsProps = {
   message?: string;
 };
 
-export const InputButtons = (props: InputButtonsProps, context) => {
-  const { act, data } = useBackend<InputButtonsData>(context);
+export const InputButtons = (props: InputButtonsProps) => {
+  const { act, data } = useBackend<InputButtonsData>();
   const { large_buttons, swapped_buttons } = data;
   const { input, message } = props;
   const submitButton = (

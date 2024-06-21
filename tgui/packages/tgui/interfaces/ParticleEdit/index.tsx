@@ -7,9 +7,9 @@ import { ShowDesc } from './Tutorial';
 import { EntryFloat, EntryCoord, EntryGradient, EntryTransform, EntryIcon, EntryIconState } from './EntriesBasic';
 import { FloatGenerator, FloatGeneratorColor, EntryGeneratorNumbersList } from './EntriesGenerators';
 
-export const ParticleEdit = (props, context) => {
-  const { act, data } = useBackend<ParticleUIData>(context);
-  const [desc, setdesc] = useLocalState(context, 'desc', '');
+export const ParticleEdit = (props) => {
+  const { act, data } = useBackend<ParticleUIData>();
+  const [desc, setdesc] = useLocalState('desc', '');
 
   const {
     width,
