@@ -243,7 +243,7 @@
 	. = ..()
 
 	if(!IS_HERETIC(examiner))
-		to_chat(examiner, span_hypnophrase("You feel the rust. The rot.")
+		to_chat(examiner, span_hypnophrase("You feel the rust. The rot."))
 		examiner.add_mood_event("rusted_examine", /datum/mood_event/eldritch_painting/rust_examine)
 		return
 
