@@ -119,7 +119,7 @@
 	if(!department_type)
 		return
 
-	var/datum/computer_file/program/department_order/orderprogram = cpu.active_program
+	var/datum/computer_file/program/department_order/orderprogram = cpu.find_file_by_name("dept_order")
 	orderprogram.set_linked_department(department_type) // Set department in program dept_order
 
 	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name("ntnrc_client")
