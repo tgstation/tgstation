@@ -212,8 +212,16 @@
  * * new_tank: the tank we are trying to put in the machine
  */
 /obj/machinery/portable_atmospherics/proc/replace_tank(mob/living/user, close_valve, obj/item/tank/new_tank)
+	if(machine_stat & BROKEN)
+		return FALSE
 	if(!user)
 		return FALSE
+	if(!user.transferItemToLoc(new_tank, src))
+		return FALSE
+
+	investigate_log("had its internal [holding] swapped with [new_tank] by [key_name(user)].", INVESTIGATE_ATMOS)
+	to_chat(user, span_notice("[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [new_tank]" : "You insert [new_tank] into [src]"]."))
+
 	if(holding && new_tank)//for when we are actually switching tanks
 		user.put_in_hands(holding)
 		UnregisterSignal(holding, COMSIG_QDELETING)
@@ -239,18 +247,8 @@
 
 /obj/machinery/portable_atmospherics/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/tank))
-		return try_replace_tank(item, user)
+		return replace_tank(user, FALSE, item)
 	return ..()
-
-/obj/machinery/portable_atmospherics/proc/try_replace_tank(obj/item/tank/insert_tank, mob/user)
-	if(machine_stat & BROKEN)
-		return FALSE
-	if(!user.transferItemToLoc(insert_tank, src))
-		return FALSE
-	to_chat(user, span_notice("[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [insert_tank]" : "You insert [insert_tank] into [src]"]."))
-	investigate_log("had its internal [holding] swapped with [insert_tank] by [key_name(user)].", INVESTIGATE_ATMOS)
-	replace_tank(user, FALSE, insert_tank)
-	update_appearance()
 
 /obj/machinery/portable_atmospherics/wrench_act(mob/living/user, obj/item/wrench)
 	if(machine_stat & BROKEN)
