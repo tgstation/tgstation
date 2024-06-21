@@ -554,7 +554,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /mob/proc/refresh_looping_ambience()
 	var/area/my_area = get_area(src)
 
-	if(!(client?.prefs.read_preference(/datum/preference/toggle/sound_ship_ambience)) || !my_area.ambient_buzz)
+	if(!my_area.ambient_buzz || !(client?.prefs.read_preference(/datum/preference/toggle/sound_ship_ambience)))
+		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
+		return
+
+	if(HAS_TRAIT(src, TRAIT_DEAF))
 		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
 		return
 

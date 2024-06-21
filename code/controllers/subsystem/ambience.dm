@@ -27,6 +27,9 @@ SUBSYSTEM_DEF(ambience)
 			client_old_areas -= client_iterator
 			continue
 
+		if(HAS_TRAIT(client_mob, TRAIT_DEAF)) //WHAT? I CAN'T HEAR YOU
+			continue
+
 		//Check to see if the client-mob is in a valid area
 		var/area/current_area = get_area(client_mob)
 		if(!current_area) //Something's gone horribly wrong
