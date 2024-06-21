@@ -1,8 +1,8 @@
 /obj/machinery/modular_computer/preset
-	///List of programs the computer starts with, given on Initialize.
-	var/list/datum/computer_file/preinstalled_programs = list()
 	///If set, computer will automatically boot and load this program
 	var/startup_program
+	///List of programs the computer starts with, given on Initialize.
+	var/list/datum/computer_file/preinstalled_programs = list()
 
 /obj/machinery/modular_computer/preset/Initialize(mapload)
 	. = ..()
@@ -99,11 +99,11 @@
 /obj/machinery/modular_computer/preset/cargochat
 	name = "cargo interfacing console"
 	desc = "A stationary computer that comes pre-loaded with software to interface with the cargo department."
+	startup_program = "dept_order"
 	preinstalled_programs = list(
 		/datum/computer_file/program/chatclient,
 		/datum/computer_file/program/department_order
 	)
-	startup_program = "dept_order"
 	/// What department type is assigned to this console?
 	var/datum/job_department/department_type
 
@@ -148,8 +148,6 @@
 	name = "departmental interfacing console"
 	desc = "A stationary computer that comes pre-loaded with software to interface with incoming departmental cargo requests."
 	startup_program = "ntnrc_client"
-
-/obj/machinery/modular_computer/preset/cargochat/cargo
 	preinstalled_programs = list(
 		/datum/computer_file/program/chatclient,
 		/datum/computer_file/program/department_order,
