@@ -3,6 +3,8 @@
 	prompt_name = "a virtual domain debug entity"
 	flavour_text = "You probably shouldn't be seeing this, contact a coder!"
 	you_are_text = "You are NOT supposed to be here. How did you let this happen?"
+	important_text = "You must eliminate any bitrunners from the domain."
+	temp_body = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/Initialize(mapload)
 	. = ..()
@@ -12,6 +14,10 @@
 	. = ..()
 
 	spawned_mob.mind.add_antag_datum(/datum/antagonist/domain_ghost_actor)
+
+	var/datum/mind/ghost_mind = mob_possessor.mind
+	if(ghost_mind?.current)
+		spawned_mob.AddComponent(/datum/component/temporary_body, ghost_mind, ghost_mind.current, TRUE)
 
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/pirate
 	name = "Virtual Pirate Remains"
