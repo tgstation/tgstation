@@ -49,7 +49,6 @@
 	return list(cells, corner1, corner2, corner3, corner4, rowjoin1, rowjoin2, closer)
 
 /datum/storage_interface/Destroy(force)
-	. = ..()
 	QDEL_NULL(cells)
 	QDEL_NULL(corner1)
 	QDEL_NULL(corner2)
@@ -57,7 +56,7 @@
 	QDEL_NULL(corner4)
 	QDEL_NULL(rowjoin1)
 	QDEL_NULL(rowjoin2)
-	return .
+	return ..()
 
 /// Updates position of all UI elements
 /datum/storage_interface/proc/update_position(screen_start_x, screen_pixel_x, screen_start_y, screen_pixel_y, columns, rows)
