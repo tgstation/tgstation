@@ -202,7 +202,7 @@
 	result_path = /obj/structure/sign/painting/eldritch/beauty
 
 /obj/structure/sign/painting/eldritch/beauty
-	name = "Lady out of gates"
+	name = "\improper Lady of the Gate"
 	desc = "A painting of an otherworldly being. Its thin, porceline-coloured skin is stretched tight over its strange bone structure. It has an odd beauty. Removable with wirecutters."
 	icon_state = "eldritch_painting_beauty"
 	applied_trauma = /datum/brain_trauma/severe/eldritch_beauty
