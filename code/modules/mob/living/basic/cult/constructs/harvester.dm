@@ -224,14 +224,13 @@
 	overlay_icon_state = "bg_heretic_border"
 	tracking = TRUE
 
-/datum/action/innate/seek_master/heretic/New(Target, master)
+/datum/action/innate/seek_master/heretic/New(Target)
 	. = ..()
 	the_construct = Target
 	the_construct.seeking = TRUE
 	var/datum/antagonist/heretic_monster/antag = IS_HERETIC_MONSTER(the_construct)
-	if(!antag)
-		CRASH("???")
-	the_construct.master = antag.master
+	if(antag)
+		the_construct.master = antag.master
 
 // no real reason for most of this weird oldcode
 /datum/action/innate/seek_master/Activate()
