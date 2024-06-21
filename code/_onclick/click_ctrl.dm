@@ -21,7 +21,7 @@
 		return TRUE
 
 	// If it has a custom click_alt that returns success/block, done.
-	if(!can_perform_action(target, target.interaction_flags_click | SILENT_ADJACENCY))
+	if(can_perform_action(target, target.interaction_flags_click | SILENT_ADJACENCY))
 		return target.click_ctrl(src) & CLICK_ACTION_ANY
 
 	return FALSE
