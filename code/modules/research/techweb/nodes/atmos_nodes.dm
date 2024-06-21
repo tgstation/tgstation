@@ -8,6 +8,7 @@
 		"atmosalerts",
 		"thermomachine",
 		"space_heater",
+		"scrubber",
 		"generic_tank",
 		"oxygen_tank",
 		"plasma_tank",
@@ -27,6 +28,7 @@
 	prereq_ids = list("atmos")
 	design_ids = list(
 		"tank_compressor",
+		"pump",
 		"emergency_oxygen",
 		"emergency_oxygen_engi",
 		"power_turbine_console",
