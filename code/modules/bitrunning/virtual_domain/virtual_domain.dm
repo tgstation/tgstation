@@ -50,7 +50,7 @@
 
 	/// An assoc list of typepath/amount to spawn on completion. Not weighted - the value is the amount
 	var/list/completion_loot
-	/// An accoc list of typepath/amount to spawn from secondary objectives. Not weighted - the value is the total number of items that can be obtained.
+	/// An assoc list of typepath/amount to spawn from secondary objectives. Not weighted - the value is the total number of items that can be obtained.
 	var/list/secondary_loot = list()
 	/// Number of secondary loot boxes generated. Resets when the domain is reloaded.
 	var/secondary_loot_generated

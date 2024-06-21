@@ -42,6 +42,7 @@
 /obj/machinery/button/door/directional/south{
 	id = "BeachBoats"
 	},
+/obj/effect/landmark/bitrunning/curiosity_spawn,
 /turf/open/floor/wood/parquet,
 /area/virtual_domain)
 "am" = (
@@ -494,6 +495,7 @@
 	pixel_y = 6;
 	pixel_x = -7
 	},
+/obj/effect/landmark/bitrunning/curiosity_spawn,
 /turf/open/floor/eighties,
 /area/virtual_domain)
 "fz" = (
@@ -743,6 +745,14 @@
 	},
 /turf/open/floor/wood/large,
 /area/virtual_domain)
+"ir" = (
+/obj/effect/landmark/bitrunning/curiosity_spawn,
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain)
+"iy" = (
+/obj/effect/landmark/bitrunning/curiosity_spawn,
+/turf/open/floor/plastic,
+/area/virtual_domain)
 "iz" = (
 /obj/machinery/door/poddoor/shutters{
 	dir = 4;
@@ -843,6 +853,10 @@
 	dir = 4;
 	pixel_y = 9
 	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"jq" = (
+/obj/effect/landmark/bitrunning/curiosity_spawn,
 /turf/open/floor/wood/large,
 /area/virtual_domain)
 "ju" = (
@@ -1659,6 +1673,13 @@
 	},
 /turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
+"vb" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/landmark/bitrunning/curiosity_spawn,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
 "vf" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/suit/jacket/letterman_syndie,
@@ -1770,8 +1791,8 @@
 /area/virtual_domain)
 "wL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/maintenance,
 /obj/machinery/light/small/directional/west,
+/obj/effect/landmark/bitrunning/curiosity_spawn,
 /turf/open/floor/plating,
 /area/virtual_domain)
 "wU" = (
@@ -3148,6 +3169,10 @@
 	},
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
+"Na" = (
+/obj/effect/landmark/bitrunning/curiosity_spawn,
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
 "Nc" = (
 /turf/open/misc/beach/coast{
 	dir = 8
@@ -3464,6 +3489,10 @@
 "Rb" = (
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
+"Rc" = (
+/obj/effect/landmark/bitrunning/curiosity_spawn,
+/turf/open/floor/iron/dark/herringbone,
+/area/virtual_domain)
 "Rh" = (
 /obj/effect/turf_decal/sand,
 /obj/effect/turf_decal/siding/wood/corner{
@@ -7271,7 +7300,7 @@ ah
 ah
 ah
 ah
-MM
+vb
 vq
 eJ
 ci
@@ -8404,7 +8433,7 @@ KG
 Eo
 HU
 xm
-mY
+Na
 mY
 mY
 mY
@@ -8819,7 +8848,7 @@ hT
 rj
 ab
 Ni
-il
+iy
 il
 rj
 rj
@@ -9111,7 +9140,7 @@ ah
 ah
 YK
 iV
-FI
+ir
 aF
 YK
 ah
@@ -10477,7 +10506,7 @@ qg
 Rb
 MI
 xp
-wr
+jq
 cX
 bi
 nI
@@ -13419,7 +13448,7 @@ Rb
 Rb
 MI
 jw
-Sk
+Rc
 PH
 rj
 SM

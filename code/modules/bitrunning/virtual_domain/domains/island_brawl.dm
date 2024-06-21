@@ -9,6 +9,9 @@
 	key = "island_brawl"
 	map_name = "island_brawl"
 	reward_points = BITRUNNER_REWARD_HIGH
+	secondary_loot = list(
+		/obj/item/storage/box/survival = 1,
+	)
 
 
 /datum/lazy_template/virtual_domain/island_brawl/setup_domain(list/created_atoms)
