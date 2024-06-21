@@ -343,6 +343,9 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 			chat_toggles = prefs.chat_toggles
 			toggles = prefs.toggles
 			ignoring = prefs.ignoring
+		if(admin_only)
+			if(!M.client?.holder)
+				continue
 		var/override = FALSE
 		if(M.client?.holder && (chat_toggles & CHAT_DEAD))
 			override = TRUE
