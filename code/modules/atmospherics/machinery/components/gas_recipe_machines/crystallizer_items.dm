@@ -13,10 +13,10 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(atmos_device))
-		if(atmos_device.nob_crystal_inserted)
+		if(atmos_device.has_nob_crystal())
 			to_chat(user, span_warning("[atmos_device] already has a hypernoblium crystal inserted in it!"))
 			return ITEM_INTERACT_BLOCKING
-		atmos_device.nob_crystal_inserted = TRUE
+		atmos_device.insert_nob_crystal()
 		to_chat(user, span_notice("You insert the [src] into [atmos_device]."))
 
 	if(istype(worn_item))
