@@ -25782,7 +25782,7 @@
 /area/station/engineering/atmos)
 "gqG" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /obj/structure/sign/poster/official/there_is_no_gas_giant/directional/east,
 /turf/open/floor/iron/textured_large,
 /area/station/engineering/atmos/project)
@@ -36975,6 +36975,17 @@
 	dir = 1
 	},
 /area/station/security/execution/transfer)
+"jgU" = (
+/obj/machinery/portable_atmospherics/pipe_scrubber,
+/obj/effect/turf_decal/trimline/neutral,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/box/white,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/science/ordnance)
 "jgZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -130868,7 +130879,7 @@ lOw
 wCh
 cFB
 oQq
-fYa
+jgU
 hqU
 kzc
 qBk

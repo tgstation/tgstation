@@ -257,7 +257,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "afz" = (
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
@@ -7021,7 +7021,7 @@
 /area/station/service/library)
 "cyp" = (
 /obj/machinery/power/apc/auto_name/directional/east,
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /obj/effect/turf_decal/siding/purple{
 	dir = 6
 	},

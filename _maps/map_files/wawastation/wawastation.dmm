@@ -1709,7 +1709,7 @@
 /area/station/security/prison/shower)
 "aCh" = (
 /obj/structure/window/spawner/directional/east,
-/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -17247,6 +17247,14 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
+"ghm" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/purple/visible/layer1,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
+/turf/open/floor/iron/textured,
+/area/station/engineering/atmos)
 "gho" = (
 /obj/structure/table/wood,
 /obj/item/food/grown/harebell{
@@ -108872,7 +108880,7 @@ oRf
 sYU
 hLj
 syl
-nDN
+ghm
 nDN
 nDN
 pPv

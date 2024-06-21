@@ -76230,6 +76230,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
+"tGA" = (
+/obj/effect/turf_decal/tile/neutral/full,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/station/science/ordnance/testlab)
 "tGE" = (
 /turf/open/floor/iron/textured,
 /area/station/command/heads_quarters/qm)
@@ -76285,6 +76291,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured,
 /area/station/commons/fitness)
+"tHB" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "tHH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -135025,7 +135036,7 @@ oIJ
 hRR
 qXk
 hHB
-hHB
+tHB
 gmw
 hOy
 lHR
@@ -315443,7 +315454,7 @@ hHi
 fMc
 gOF
 ddH
-ddH
+tGA
 nPE
 pDq
 vfi
