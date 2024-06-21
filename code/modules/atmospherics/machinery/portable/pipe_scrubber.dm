@@ -71,8 +71,7 @@
 		return ..()
 	if(!on)
 		return ..()
-	if(isnull(connected_port))
-		return ..()
+	excited = TRUE
 	if(direction == PUMP_IN)
 		scrub(air_contents)
 	else
