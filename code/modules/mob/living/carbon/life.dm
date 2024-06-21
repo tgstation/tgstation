@@ -68,7 +68,6 @@
 // Second link in a breath chain, calls [carbon/proc/check_breath()]
 /mob/living/carbon/proc/breathe(seconds_per_tick, times_fired)
 	var/obj/item/organ/internal/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
-	var/is_on_internals = FALSE
 
 	if(SEND_SIGNAL(src, COMSIG_CARBON_ATTEMPT_BREATHE, seconds_per_tick, times_fired) & COMSIG_CARBON_BLOCK_BREATH)
 		return
@@ -113,15 +112,11 @@
 
 				breath = loc.remove_air(breath_moles)
 		else //Breathe from loc as obj again
-			is_on_internals = TRUE
 			if(isobj(loc))
 				var/obj/loc_as_obj = loc
 				loc_as_obj.handle_internal_lifeform(src,0)
 
-	if(check_breath(breath) && is_on_internals)
-		breathing_loop.start()
-	else
-		breathing_loop.stop()
+	check_breath(breath)
 
 	if(breath)
 		loc.assume_air(breath)

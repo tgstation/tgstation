@@ -22,7 +22,6 @@
 		qdel(scar)
 	remove_from_all_data_huds()
 	QDEL_NULL(dna)
-	QDEL_NULL(breathing_loop)
 	GLOB.carbon_list -= src
 
 /mob/living/carbon/item_tending(mob/living/user, obj/item/tool, list/modifiers)
