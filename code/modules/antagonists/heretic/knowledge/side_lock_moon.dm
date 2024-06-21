@@ -44,7 +44,7 @@
 			Lady of the Gate: Requires any pair of Gloves. Clears your mutations, mutates non-heretics and curses them with scratching. \
 			Master of the Rusted Mountain: Requires a piece of Trash. Curses non-heretics to rust the floor they walk on."
 	gain_text = "A wind of inspiration blows through me. Beyond the veil and past the gate great works exist, yet to be painted. \
-				They yearn for mortal eyes, and I shall grant that wish."
+				They yearn for mortal eyes, so I shall give them an audience."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/burglar_finesse,
 		/datum/heretic_knowledge/moon_amulet,
