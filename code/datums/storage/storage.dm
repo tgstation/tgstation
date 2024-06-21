@@ -952,7 +952,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	SIGNAL_HANDLER
 
 	if(!click_alt_open)
-		return CLICK_ACTION_BLOCKING
+		return
 
 	return open_storage_on_signal(source, user) ? CLICK_ACTION_SUCCESS : CLICK_ACTION_BLOCKING
 
