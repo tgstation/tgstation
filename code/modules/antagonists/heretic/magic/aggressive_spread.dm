@@ -36,7 +36,10 @@
 	if(prob(chance_of_not_rusting))
 		return
 
-	caster.do_rust_heretic_act(victim)
+	if(ismob(caster))
+		caster.do_rust_heretic_act(victim)
+	else
+		victim.rust_heretic_act()
 
 /datum/action/cooldown/spell/aoe/rust_conversion/construct
 	name = "Construct Spread"

@@ -414,7 +414,7 @@
 	// Drop all items and splatter them around messily.
 	var/list/dustee_items = source.unequip_everything()
 	for(var/obj/item/loot as anything in dustee_items)
-		loot.throw_at(step_rand(source), 2, 4, pick(invokers), TRUE)
+		loot.throw_at(get_step_rand(source), 2, 4, pick(invokers), TRUE)
 
 	// Create the blade, give it the heretic and a randomly-chosen master for the soul sword component
 	var/obj/item/melee/cultblade/haunted/haunted_blade = new(get_turf(source), source, pick(invokers))
@@ -465,7 +465,7 @@
  * do_float: Lets you disable the sprite floating up and down.
  * do_layer: Lets you disable the layering increase.
  */
-/obj/proc/gender_reveal(outline_color = pick(COLOR_ADMIN_PINK, COLOR_BLUE_LIGHT),\
+/obj/proc/gender_reveal(outline_color = null,\
 	ray_color = null,\
 	anim_time = 10 SECONDS,\
 	do_float = TRUE,\

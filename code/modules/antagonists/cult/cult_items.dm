@@ -108,8 +108,8 @@ Striking a noncultist, however, will tear their flesh."}
 		return
 	..()
 
-#define WIELDER_SPELL "wielder_spell"
-#define SWORD_SPELL "sword_spell"
+#define WIELDER_SPELLS "wielder_spell"
+#define SWORD_SPELLS "sword_spell"
 #define SWORD_PREFIX "sword_prefix"
 
 /obj/item/melee/cultblade/haunted
@@ -125,7 +125,7 @@ Striking a noncultist, however, will tear their flesh."}
 	bare_wound_bonus = 30
 	free_use = TRUE
 	light_color = COLOR_VERY_PALE_LIME_GREEN
-	light_range = 2
+	light_range = 4
 	/// holder for the actual action when created.
 	var/datum/action/cooldown/spell/path_wielder_action
 	var/mob/living/trapped_entity
@@ -135,56 +135,56 @@ Striking a noncultist, however, will tear their flesh."}
 	var/static/list/heretic_paths_to_haunted_sword_abilities = list(
 		// Ash
 		PATH_ASH = list(
-			WIELDER_SPELL = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
-			SWORD_SPELL = /datum/action/cooldown/spell/charged/beam/fire_blast,
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/ash_beams),
 			SWORD_PREFIX = "ashen",
 		),
 		// Flesh
 		PATH_FLESH = list(
-			WIELDER_SPELL = /datum/action/cooldown/spell/pointed/blood_siphon,
-			SWORD_SPELL = /datum/action/cooldown/spell/pointed/cleave,
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/blood_siphon),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/cleave),
 			SWORD_PREFIX = "sanguine",
 		),
 		// Void
 		PATH_VOID = list(
-			WIELDER_SPELL = /datum/action/cooldown/spell/pointed/void_phase,
-			SWORD_SPELL = /datum/action/cooldown/spell/cone/staggered/cone_of_cold/void,
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/void_phase),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/cone/staggered/cone_of_cold/void),
 			SWORD_PREFIX = "tenebrous",
 		),
 		// Blade
 		PATH_BLADE = list(
-			WIELDER_SPELL = /datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted,
-			SWORD_SPELL = /datum/action/cooldown/spell/pointed/projectile/furious_steel/solo,
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/projectile/furious_steel/solo),
 			SWORD_PREFIX = "keen",
 		),
 		// Rust
 		PATH_RUST = list(
-			WIELDER_SPELL = /datum/action/cooldown/spell/cone/staggered/entropic_plume,
-			SWORD_SPELL = list(/datum/action/cooldown/spell/aoe/rust_conversion, /datum/action/cooldown/spell/pointed/rust_construction),
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/cone/staggered/entropic_plume),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/aoe/rust_conversion, /datum/action/cooldown/spell/pointed/rust_construction),
 			SWORD_PREFIX = "rusted",
 		),
 		// Cosmic
 		PATH_COSMIC = list(
-			WIELDER_SPELL = /datum/action/cooldown/spell/conjure/cosmic_expansion,
-			SWORD_SPELL = /datum/action/cooldown/spell/pointed/projectile/star_blast,
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/conjure/cosmic_expansion),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/projectile/star_blast),
 			SWORD_PREFIX = "astral",
 		),
 		// Lock
 		PATH_LOCK = list(
-			WIELDER_SPELL = /datum/action/cooldown/spell/pointed/burglar_finesse,
-			SWORD_SPELL = /datum/action/cooldown/spell/pointed/apetra_vulnera,
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/burglar_finesse),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/apetra_vulnera),
 			SWORD_PREFIX = "incisive",
 		),
 		// Moon
 		PATH_MOON = list(
-			WIELDER_SPELL = /datum/action/cooldown/spell/pointed/projectile/moon_parade,
-			SWORD_SPELL = /datum/action/cooldown/spell/pointed/moon_smile,
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/projectile/moon_parade),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/moon_smile),
 			SWORD_PREFIX = "shimmering",
 		),
 		// Starter
 		PATH_START = list(
-			WIELDER_SPELL = null,
-			SWORD_SPELL = null,
+			WIELDER_SPELLS = null,
+			SWORD_SPELLS = null,
 			SWORD_PREFIX = "nascent", // lol loser
 		) ,
 	)
@@ -237,19 +237,21 @@ Striking a noncultist, however, will tear their flesh."}
 
 	var/list/path_spells = heretic_paths_to_haunted_sword_abilities[heretic_path]
 
-	var/list/wielder_spells = list(path_spells[WIELDER_SPELL])
-	var/list/sword_spells = list(path_spells[SWORD_SPELL])
+	var/list/wielder_spells = path_spells[WIELDER_SPELLS]
+	var/list/sword_spells = path_spells[SWORD_SPELLS]
 
 	name = "[path_spells[SWORD_PREFIX]] [name]"
 
-	// Granting the spells. The sword spirit gains it outright, while it's just defined for wielders to be added on pickup.
+	// Granting the spells. The sword spirit gains it outright, while it's just instanced for wielders to be added on pickup.
 
-	for(var/datum/action/cooldown/spell/sword_spell as anything in sword_spells)
-		sword_spell = new sword_spell(trapped_entity)
-		sword_spell.Grant(trapped_entity)
+	if(sword_spells)
+		for(var/datum/action/cooldown/spell/sword_spell as anything in sword_spells)
+			sword_spell = new sword_spell(trapped_entity)
+			sword_spell.Grant(trapped_entity)
 
-	for(var/datum/action/cooldown/spell/wielder_spell as anything in wielder_spells)
-		path_wielder_action = new wielder_spell(src)
+	if(wielder_spells)
+		for(var/datum/action/cooldown/spell/wielder_spell as anything in wielder_spells)
+			path_wielder_action = new wielder_spell(src)
 
 /obj/item/melee/cultblade/haunted/equipped(mob/user, slot, initial)
 	. = ..()
@@ -261,8 +263,8 @@ Striking a noncultist, however, will tear their flesh."}
 	if(!(slot & ITEM_SLOT_HANDS))
 		path_wielder_action?.Remove(user)
 
-#undef WIELDER_SPELL
-#undef SWORD_SPELL
+#undef WIELDER_SPELLS
+#undef SWORD_SPELLS
 #undef SWORD_PREFIX
 
 /obj/item/melee/cultblade/ghost
@@ -730,7 +732,7 @@ Striking a noncultist, however, will tear their flesh."}
 	icon = 'icons/obj/antags/cult/items.dmi'
 	icon_state = "summoning_orb"
 	light_range = 3
-	light_color = "#ff0000"
+	light_color = COLOR_CULT_RED
 
 /obj/item/proteon_orb/examine(mob/user)
 	. = ..()

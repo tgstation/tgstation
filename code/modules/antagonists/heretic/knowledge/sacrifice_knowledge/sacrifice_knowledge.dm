@@ -204,15 +204,31 @@
 
 	var/feedback = "Your patrons accept your offer"
 	var/sac_job_flag = sacrifice.mind?.assigned_role?.job_flags | sacrifice.last_mind?.assigned_role?.job_flags
+	var/datum/antagonist/cult/cultist_datum = IS_CULTIST(sacrifice)
 	// Heads give 3 points, cultists give 1 point (and a special reward), normal sacrifices give 2 points.
 	heretic_datum.total_sacrifices++
 	if((sac_job_flag & JOB_HEAD_OF_STAFF))
 		heretic_datum.knowledge_points += 3
 		heretic_datum.high_value_sacrifices++
 		feedback += " <i>graciously</i>"
-	else if(IS_CULTIST(sacrifice))
+	else if(cultist_datum)
 		heretic_datum.knowledge_points += 1
 		grant_reward(user, sacrifice, loc)
+		// easier to read
+		var/rewards_given = heretic_datum.rewards_given
+		// Chance for it to send a warning to cultists, higher with each reward. Stops after 5 because they probably got the hint by then.
+		if(prob(min(15 * rewards_given)) && (rewards_given <= 5))
+			for(var/datum/mind/mind as anything in cultist_datum.cult_team.members)
+				if(mind.current)
+					SEND_SOUND(mind.current, 'sound/magic/clockwork/narsie_attack.ogg')
+					var/message = span_narsie("A vile heretic has ") + \
+					span_cult_large(span_hypnophrase("sacrificed")) + \
+					span_narsie(" one of our own. Destroy and sacrifice the infidel before it claims more!")
+					to_chat(mind.current, message)
+			// he(retic) gets a warn too
+			var/message = span_cult_bold("You feel that your action has attracted") + \
+			span_cult_bold_italic(" attention.")
+			to_chat(user, message)
 		return
 	else
 		heretic_datum.knowledge_points += 2
@@ -235,7 +251,7 @@
 	// Drop all items and splatter them around messily.
 	var/list/dustee_items = sacrifice.unequip_everything()
 	for(var/obj/item/loot as anything in dustee_items)
-		loot.throw_at(step_rand(sacrifice), 2, 4, user, TRUE)
+		loot.throw_at(get_step_rand(sacrifice), 2, 4, user, TRUE)
 
 	// The loser is DUSTED.
 	sacrifice.dust(TRUE, TRUE)

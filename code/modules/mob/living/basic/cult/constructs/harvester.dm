@@ -161,6 +161,12 @@
 /mob/living/proc/on_master_death()
 	return
 
+/mob/living/basic/construct/harvester/heretic/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	// They're pretty fragile so this is probably necessary to prevent bullshit deaths.
+	if(user == src)
+		return
+	. = ..()
+
 /mob/living/basic/construct/harvester/heretic/on_master_death()
 	to_chat(src, span_userdanger("Your link to the mansus suddenly snaps as your master perishes! Without its support, your body crumbles..."))
 	visible_message(span_alert("[src] suddenly crumbles to dust!"))

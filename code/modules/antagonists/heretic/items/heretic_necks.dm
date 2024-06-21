@@ -28,7 +28,7 @@
 		var/datum/action/innate/cult/blood_magic/magic_holder = locate() in user.actions
 		team_color = COLOR_CULT_RED
 		magic_holder.magic_enhanced = TRUE
-	if(IS_HERETIC_OR_MONSTER(user) && !active)
+	else if(IS_HERETIC_OR_MONSTER(user) && !active)
 		for(var/datum/action/cooldown/spell/spell_action in user.actions)
 			spell_action.cooldown_time *= 0.5
 			active = TRUE
