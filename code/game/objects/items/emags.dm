@@ -52,6 +52,7 @@
 	if(exploding)
 		playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE, frequency = 2)
 	else if(obj_flags & EMAGGED)
+		log_bomber(user, "triggered", src, "(rigged/emagged)")
 		visible_message(span_boldwarning("[src] begins to heat up!"))
 		playsound(src, 'sound/items/bikehorn.ogg', 100, TRUE, frequency = 0.25)
 		addtimer(CALLBACK(src, PROC_REF(blow_up)), 1 SECONDS, TIMER_DELETE_ME)
@@ -67,12 +68,14 @@
 
 /obj/item/card/emagfake/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	playsound(src, SFX_SPARKS, 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 	desc = /obj/item/card/emag::desc
 	obj_flags |= EMAGGED
 	if(user)
-		balloon_alert(user, "rigged")
+		balloon_alert(user, "rigged to blow")
+		log_bomber(user, "rigged to blow", src, "(emagging)")
+	return TRUE
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()
