@@ -40,11 +40,11 @@
 	SIGNAL_HANDLER
 
 	if(!isliving(living_user) || !living_user.can_perform_action(source))
-		return CLICK_ACTION_BLOCKING
+		return
 
 	if(living_user.usable_hands <= 0)
 		source.balloon_alert(living_user, "you don't have hands!")
-		return CLICK_ACTION_BLOCKING
+		return
 
 	do_icon_toggle(source, living_user)
 	return CLICK_ACTION_SUCCESS

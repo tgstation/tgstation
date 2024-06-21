@@ -83,6 +83,7 @@
 	SIGNAL_HANDLER
 
 	if(!user.can_perform_action(source))
-		return CLICK_ACTION_BLOCKING
+		return
 
 	handle_trigger(source, user, "extra", right)
+	return CLICK_ACTION_SUCCESS

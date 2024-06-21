@@ -105,7 +105,7 @@
 	SIGNAL_HANDLER
 
 	if (!can_teleport(source, target))
-		return COMSIG_MOB_CANCEL_CLICKON
+		return
 
 	INVOKE_ASYNC(src, PROC_REF(perform_teleport), source, target)
 	return COMSIG_MOB_CANCEL_CLICKON
