@@ -280,8 +280,6 @@
 		internal = null
 	target_tank.after_internals_closed(src)
 	update_mob_action_buttons()
-	//To make sure it stops at a timely manner when you turn off internals
-	breathing_loop.stop()
 	return TRUE
 
 /// Close the the currently open external (that's EX-ternal) air tank. Returns TRUE if successful.
