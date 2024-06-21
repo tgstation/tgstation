@@ -5,7 +5,7 @@
 	icon = 'icons/obj/signs.dmi'
 	resistance_flags = FLAMMABLE
 	flags_1 = NONE
-	icon_state = "frame-empty"
+	icon_state = "eldritch_painting_debug"
 	result_path = /obj/structure/sign/painting/eldritch
 	pixel_shift = 30
 
@@ -13,7 +13,7 @@
 	name = "The Blank Canvas: A Study in Default Subtypes"
 	desc = "An impossible painting made of impossible paint. It should not exist in this reality."
 	icon = 'icons/obj/signs.dmi'
-	icon_state = "frame-empty"
+	icon_state = "eldritch_painting_debug"
 	custom_materials = list(/datum/material/wood =SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
 	buildable_sign = FALSE

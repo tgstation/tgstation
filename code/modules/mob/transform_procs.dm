@@ -140,8 +140,8 @@
 	new_borg.gender = gender
 	new_borg.SetInvisibility(INVISIBILITY_NONE)
 
-	if(client)
-		new_borg.updatename(client)
+	if(client?.prefs.read_preference(/datum/preference/name/cyborg) != DEFAULT_CYBORG_NAME)
+		new_borg.apply_pref_name(/datum/preference/name/cyborg, client)
 
 	if(mind) //TODO //TODO WHAT
 		if(!transfer_after)

@@ -1,0 +1,4 @@
+author: "JupiterJaeden"
+delete-after: True
+changes:
+  - bugfix: "Conga lines of more than 2 no longer break when going up and down stairs."
