@@ -33,7 +33,7 @@
 	var/list/datum/computer_file/stored_files = list()
 
 	///Non-static list of programs the computer should receive on Initialize.
-	var/list/datum/computer_file/starting_programs = list()
+	var/list/datum/computer_file/preinstalled_programs = list()
 	///Static list of default programs that come with ALL computers, here so computers don't have to repeat this.
 	var/static/list/datum/computer_file/default_programs = list(
 		/datum/computer_file/program/themeify,
@@ -171,7 +171,7 @@
 
 /obj/item/modular_computer/proc/install_default_programs()
 	SHOULD_CALL_PARENT(FALSE)
-	for(var/programs in default_programs + starting_programs)
+	for(var/programs in default_programs + preinstalled_programs)
 		var/datum/computer_file/program_type = new programs
 		store_file(program_type)
 
@@ -970,5 +970,5 @@
 	max_capacity = INFINITY
 
 /obj/item/modular_computer/debug/Initialize(mapload)
-	starting_programs += subtypesof(/datum/computer_file/program)
+	preinstalled_programs += subtypesof(/datum/computer_file/program)
 	return ..()

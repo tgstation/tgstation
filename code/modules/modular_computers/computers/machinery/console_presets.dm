@@ -1,21 +1,38 @@
 /obj/machinery/modular_computer/preset
 	///List of programs the computer starts with, given on Initialize.
-	var/list/datum/computer_file/starting_programs = list()
+	var/list/datum/computer_file/preinstalled_programs = list()
+	///If set, computer will automatically boot and load this program
+	var/startup_program
 
 /obj/machinery/modular_computer/preset/Initialize(mapload)
 	. = ..()
 	if(!cpu)
 		return
 
-	for(var/programs in starting_programs)
+	for(var/programs in preinstalled_programs)
 		var/datum/computer_file/program_type = new programs
 		cpu.store_file(program_type)
+
+	if(!isnull(startup_program))
+		INVOKE_ASYNC(src, PROC_REF(run_startup_program))
+
+/// If a startup program is specified and exists on the modular computer, run it after init.
+/obj/machinery/modular_computer/preset/proc/run_startup_program()
+	if(isnull(startup_program))
+		CRASH("[src] was requested to run a program on startup, but none is set!")
+
+	var/datum/computer_file/program/startup_file = cpu.find_file_by_name(startup_program)
+	if(isnull(startup_file))
+		return
+
+	cpu.active_program = startup_file
+	cpu.turn_on()
 
 // ===== ENGINEERING CONSOLE =====
 /obj/machinery/modular_computer/preset/engineering
 	name = "engineering console"
 	desc = "A stationary computer. This one comes preloaded with engineering programs."
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/power_monitor,
 		/datum/computer_file/program/alarm_monitor,
 		/datum/computer_file/program/supermatter_monitor,
@@ -25,7 +42,7 @@
 /obj/machinery/modular_computer/preset/research
 	name = "research director's console"
 	desc = "A stationary computer. This one comes preloaded with research programs."
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/ntnetmonitor,
 		/datum/computer_file/program/chatclient,
 		/datum/computer_file/program/ai_restorer,
@@ -37,7 +54,7 @@
 /obj/machinery/modular_computer/preset/command
 	name = "command console"
 	desc = "A stationary computer. This one comes preloaded with command programs."
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/chatclient,
 		/datum/computer_file/program/card_mod,
 	)
@@ -46,12 +63,13 @@
 /obj/machinery/modular_computer/preset/id
 	name = "identification console"
 	desc = "A stationary computer. This one comes preloaded with identification modification programs."
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/chatclient,
 		/datum/computer_file/program/card_mod,
 		/datum/computer_file/program/job_management,
 		/datum/computer_file/program/crew_manifest,
 	)
+	startup_program = "plexagonidwriter"
 
 /obj/machinery/modular_computer/preset/id/centcom
 	desc = "A stationary computer. This one comes preloaded with CentCom identification modification programs."
@@ -65,7 +83,7 @@
 /obj/machinery/modular_computer/preset/civilian
 	name = "civilian console"
 	desc = "A stationary computer. This one comes preloaded with generic programs."
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/chatclient,
 		/datum/computer_file/program/arcade,
 	)
@@ -74,7 +92,7 @@
 /obj/machinery/modular_computer/preset/curator
 	name = "curator console"
 	desc = "A stationary computer. This one comes preloaded with art programs."
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/portrait_printer,
 	)
 
@@ -82,7 +100,7 @@
 /obj/machinery/modular_computer/preset/cargochat
 	name = "cargo interfacing console"
 	desc = "A stationary computer that comes pre-loaded with software to interface with the cargo department."
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/chatclient,
 	)
 	/// What department type is assigned to this console?
@@ -98,7 +116,7 @@
 		cpu.name = name
 
 /obj/machinery/modular_computer/preset/cargochat/proc/add_starting_software()
-	starting_programs += /datum/computer_file/program/department_order
+	preinstalled_programs += /datum/computer_file/program/department_order
 
 /obj/machinery/modular_computer/preset/cargochat/proc/setup_starting_software()
 	if(!department_type)
@@ -134,10 +152,10 @@
 	desc = "A stationary computer that comes pre-loaded with software to interface with incoming departmental cargo requests."
 
 /obj/machinery/modular_computer/preset/cargochat/cargo/add_starting_software()
-	starting_programs += /datum/computer_file/program/bounty_board
-	starting_programs += /datum/computer_file/program/budgetorders
-	starting_programs += /datum/computer_file/program/shipping
-	starting_programs += /datum/computer_file/program/restock_tracker
+	preinstalled_programs += /datum/computer_file/program/bounty_board
+	preinstalled_programs += /datum/computer_file/program/budgetorders
+	preinstalled_programs += /datum/computer_file/program/shipping
+	preinstalled_programs += /datum/computer_file/program/restock_tracker
 
 /obj/machinery/modular_computer/preset/cargochat/cargo/setup_starting_software()
 	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name("ntnrc_client")

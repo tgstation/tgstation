@@ -12,11 +12,11 @@
 	var/list/datum/computer_file/stored_files = list()
 
 	///List of all programs that the disk should start with.
-	var/list/datum/computer_file/starting_programs = list()
+	var/list/datum/computer_file/preinstalled_programs = list()
 
 /obj/item/computer_disk/Initialize(mapload)
 	. = ..()
-	for(var/programs in starting_programs)
+	for(var/programs in preinstalled_programs)
 		var/datum/computer_file/program_type = new programs
 		add_file(program_type)
 
