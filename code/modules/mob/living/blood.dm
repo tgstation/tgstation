@@ -28,8 +28,22 @@
 	// Some effects are halved mid-combat.
 	var/determined_mod = has_status_effect(/datum/status_effect/determined) ? 0.5 : 0
 
+
+	//Bloodloss from wounds
+	var/temp_bleed = 0
+	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
+		var/iter_bleed_rate = iter_part.get_modified_bleed_rate()
+		temp_bleed += iter_bleed_rate * seconds_per_tick
+
+		if(iter_part.generic_bleedstacks) // If you don't have any bleedstacks, don't try and heal them
+			iter_part.adjustBleedStacks(-1, 0)
+
+	if(temp_bleed)
+		bleed(temp_bleed)
+		bleed_warn(temp_bleed)
+
 	//Effects of bloodloss
-	if(sigreturn & HANDLE_BLOOD_NO_EFFECTS)
+	if(sigreturn & HANDLE_BLOOD_NO_OXYLOSS)
 		return
 	var/word = pick("dizzy","woozy","faint")
 	switch(blood_volume)
@@ -99,19 +113,6 @@
 		// At roughly half blood this equals to 3 oxyloss per tick. At 90% blood it's close to 0.5
 		var/rounded_oxyloss = round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume) * seconds_per_tick, 0.25)
 		adjustOxyLoss(rounded_oxyloss, updating_health = TRUE)
-
-	var/temp_bleed = 0
-	//Bleeding out
-	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
-		var/iter_bleed_rate = iter_part.get_modified_bleed_rate()
-		temp_bleed += iter_bleed_rate * seconds_per_tick
-
-		if(iter_part.generic_bleedstacks) // If you don't have any bleedstacks, don't try and heal them
-			iter_part.adjustBleedStacks(-1, 0)
-
-	if(temp_bleed)
-		bleed(temp_bleed)
-		bleed_warn(temp_bleed)
 
 /// Has each bodypart update its bleed/wound overlay icon states
 /mob/living/carbon/proc/update_bodypart_bleed_overlays()
