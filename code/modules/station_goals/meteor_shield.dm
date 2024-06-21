@@ -42,19 +42,26 @@
 	return FALSE
 
 /datum/station_goal/proc/get_coverage()
-	var/list/coverage = list()
+	// monkestation edit: meteor sat refactor
+	/*var/list/coverage = list()
 	for(var/obj/machinery/satellite/meteor_shield/A in GLOB.machines)
 		if(!A.active || !is_station_level(A.z))
 			continue
 		coverage |= view(A.kill_range,A)
 	return coverage.len
+	monkestation end*/
+	return get_meteor_sat_coverage()
 
 /obj/machinery/satellite/meteor_shield
 	name = "\improper Meteor Shield Satellite"
 	desc = "A meteor point-defense satellite."
 	mode = "M-SHIELD"
-	processing_flags = START_PROCESSING_MANUALLY
-	subsystem_type = /datum/controller/subsystem/processing/fastprocess
+
+	// monkestation edit: doesn't use process() anymore
+	//processing_flags = START_PROCESSING_MANUALLY
+	//subsystem_type = /datum/controller/subsystem/processing/fastprocess
+	// monkestation end
+
 	/// the range a meteor shield sat can destroy meteors
 	var/kill_range = 14
 
@@ -80,6 +87,7 @@
 		if(obj_flags & EMAGGED)
 			. += span_warning("But something seems off about it...?")
 
+/* monkestation edit: reworked in [monkestation\code\modules\station_goals\meteor_shield.dm]
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
 	for(var/turf/T in get_line(src,meteor))
 		if(!isspaceturf(T))
@@ -102,6 +110,7 @@
 			beam_from.Beam(get_turf(meteor_to_destroy), icon_state="sat_beam", time = 5)
 			if(meteor_to_destroy.shield_defense(src))
 				qdel(meteor_to_destroy)
+monkestation end */
 
 /obj/machinery/satellite/meteor_shield/toggle(user)
 	if(!..(user))
@@ -163,12 +172,14 @@
 			say("Warning. Warning. Dark Matt-eor on course for station.")
 			force_event_async(/datum/round_event_control/dark_matteor, "an array of tampered meteor satellites")
 
+/* monkestation edit: reworked in [monkestation\code\modules\station_goals\meteor_shield.dm]
 /obj/machinery/satellite/meteor_shield/proc/change_meteor_chance(mod)
 	// Update the weight of all meteor events
 	for(var/datum/round_event_control/meteor_wave/meteors in SSevents.control)
 		meteors.weight *= mod
 	for(var/datum/round_event_control/stray_meteor/stray_meteor in SSevents.control)
 		stray_meteor.weight *= mod
+monkestation end */
 
 #undef EMAGGED_METEOR_SHIELD_THRESHOLD_ONE
 #undef EMAGGED_METEOR_SHIELD_THRESHOLD_TWO
