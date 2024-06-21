@@ -37,7 +37,7 @@
 	/// Changes how much info is available on the domain
 	var/scanner_tier = 1
 	/// Length of time it takes for the server to cool down after resetting. Here to give runners downtime so their faces don't get stuck like that
-	var/server_cooldown_time = 3 MINUTES
+	var/server_cooldown_time = 2 MINUTES
 	/// Applies bonuses to rewards etc
 	var/servo_bonus = 0
 	/// Determines the glitches available to spawn, builds with completion
