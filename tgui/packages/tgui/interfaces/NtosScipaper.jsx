@@ -58,7 +58,7 @@ const PaperPublishing = (props) => {
             label="File (required)"
             buttons={
               <Button
-                tooltip="The selected file containing experimental data for our paper. Must be present in the local filesystem or a data disk to be accesible."
+                tooltip="The selected file containing experimental data for our paper. Must be present in the local file system or a data disk to be accesible."
                 icon="info-circle"
               />
             }
