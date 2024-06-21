@@ -1,3 +1,6 @@
+#define BASE_DISCONNECT_DAMAGE 40
+
+
 /obj/machinery/netpod
 	name = "netpod"
 
@@ -112,3 +115,13 @@
 	. = ..()
 	if(!state_open && user == occupant)
 		container_resist_act(user)
+
+
+/// When the server is upgraded, drops brain damage a little
+/obj/machinery/netpod/proc/on_server_upgraded(obj/machinery/quantum_server/source)
+	SIGNAL_HANDLER
+
+	disconnect_damage = BASE_DISCONNECT_DAMAGE * (1 - source.servo_bonus)
+
+
+#undef BASE_DISCONNECT_DAMAGE

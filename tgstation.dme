@@ -3536,6 +3536,7 @@
 #include "code\modules\bitrunning\virtual_domain\domains\fredingtonfastingbear.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\gondola_asteroid.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\hierophant.dm"
+#include "code\modules\bitrunning\virtual_domain\domains\island_brawl.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\pipedream.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\pirates.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\psyker_shuffle.dm"

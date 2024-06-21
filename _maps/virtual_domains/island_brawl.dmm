@@ -183,6 +183,10 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/virtual_domain)
+"ci" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/carpet,
+/area/virtual_domain)
 "cn" = (
 /obj/effect/turf_decal/sand,
 /obj/structure/bedsheetbin{
@@ -212,7 +216,12 @@
 /obj/structure/closet/gmcloset,
 /turf/open/floor/plastic,
 /area/virtual_domain)
+"cs" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
 "cC" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
 /turf/open/floor/carpet/red,
 /area/virtual_domain/fullbright)
 "cD" = (
@@ -503,6 +512,10 @@
 /obj/structure/closet/secure_closet/personal,
 /turf/open/floor/wood/parquet,
 /area/virtual_domain)
+"fD" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/iron/freezer,
+/area/virtual_domain)
 "fF" = (
 /obj/item/reagent_containers/cup/soda_cans/lemon_lime{
 	pixel_x = -12
@@ -736,7 +749,7 @@
 	id = "BeachGarage"
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
+/area/virtual_domain/fullbright)
 "iA" = (
 /obj/structure/chair/stool/directional/south,
 /obj/machinery/light/directional/north,
@@ -1002,12 +1015,13 @@
 	pixel_x = -13
 	},
 /obj/machinery/light/small/directional/west,
+/obj/effect/baseturf_helper/virtual_domain,
 /turf/open/floor/iron/white,
 /area/virtual_domain)
 "ml" = (
-/obj/effect/landmark/bitrunning/hololadder_spawn,
+/obj/effect/landmark/bitrunning/permanent_exit,
 /turf/open/floor/bitrunning_transport,
-/area/virtual_domain/safehouse)
+/area/virtual_domain/protected_space/fullbright)
 "mx" = (
 /obj/structure/dresser,
 /obj/structure/sign/calendar/directional/north,
@@ -1081,6 +1095,10 @@
 	},
 /turf/open/floor/wood/large,
 /area/virtual_domain)
+"ny" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
 "nz" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/wood/parquet,
@@ -1120,6 +1138,7 @@
 /obj/item/reagent_containers/cup/soda_cans/starkist{
 	pixel_x = -6
 	},
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "oc" = (
@@ -1295,7 +1314,7 @@
 "qo" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/closed/wall/mineral/wood,
-/area/virtual_domain)
+/area/virtual_domain/fullbright)
 "qp" = (
 /obj/structure/table/bronze,
 /obj/item/camera{
@@ -1537,7 +1556,7 @@
 	id = "BeachBoats"
 	},
 /turf/open/water/beach,
-/area/virtual_domain)
+/area/virtual_domain/fullbright)
 "tz" = (
 /obj/machinery/icecream_vat,
 /turf/open/misc/beach/sand,
@@ -1557,6 +1576,10 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/herringbone,
+/area/virtual_domain)
+"tP" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/carpet/cyan,
 /area/virtual_domain)
 "tU" = (
 /obj/item/toy/seashell{
@@ -1641,11 +1664,19 @@
 /obj/item/clothing/suit/jacket/letterman_syndie,
 /turf/open/floor/wood,
 /area/virtual_domain)
+"vh" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/plastic,
+/area/virtual_domain)
 "vk" = (
 /obj/structure/flora/tree/palm/style_2{
 	pixel_y = 4
 	},
 /turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"vq" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
 /area/virtual_domain/fullbright)
 "vu" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1940,6 +1971,7 @@
 /area/virtual_domain/fullbright)
 "zz" = (
 /obj/structure/sign/poster/official/tactical_game_cards/directional/west,
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
 /turf/open/floor/eighties,
 /area/virtual_domain)
 "zD" = (
@@ -1952,7 +1984,7 @@
 	pixel_x = -14
 	},
 /turf/open/floor/wood/parquet,
-/area/virtual_domain)
+/area/virtual_domain/fullbright)
 "zE" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/fullupgrade{
@@ -1995,7 +2027,7 @@
 	id = "BeachBoats"
 	},
 /turf/open/water/beach,
-/area/virtual_domain)
+/area/virtual_domain/fullbright)
 "zP" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/glasses/heat,
@@ -2018,7 +2050,7 @@
 /area/virtual_domain)
 "zZ" = (
 /turf/open/indestructible/binary,
-/area/virtual_domain/safehouse)
+/area/virtual_domain/protected_space/fullbright)
 "Ad" = (
 /obj/structure/table/bronze,
 /obj/item/camera{
@@ -2552,6 +2584,7 @@
 	},
 /obj/structure/sink/directional/west,
 /obj/machinery/light/small/directional/west,
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
 /turf/open/floor/iron/white,
 /area/virtual_domain)
 "GE" = (
@@ -2572,7 +2605,7 @@
 	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/wood/parquet,
-/area/virtual_domain)
+/area/virtual_domain/fullbright)
 "Ha" = (
 /turf/open/misc/beach/coast{
 	dir = 4
@@ -2671,6 +2704,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "Iq" = (
@@ -2724,7 +2758,7 @@
 	pixel_x = -4
 	},
 /turf/open/floor/wood/parquet,
-/area/virtual_domain)
+/area/virtual_domain/fullbright)
 "IR" = (
 /obj/vehicle/ridden/atv{
 	dir = 4
@@ -2816,7 +2850,7 @@
 /obj/effect/landmark/bitrunning/cache_goal_turf,
 /obj/effect/landmark/bitrunning/loot_signal,
 /turf/open/indestructible/binary,
-/area/virtual_domain/safehouse)
+/area/virtual_domain/protected_space/fullbright)
 "Kj" = (
 /turf/open/floor/carpet,
 /area/virtual_domain)
@@ -2825,6 +2859,10 @@
 	pixel_y = 8
 	},
 /turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Km" = (
+/obj/effect/turf_decal/sand,
+/turf/closed/wall/mineral/wood,
 /area/virtual_domain/fullbright)
 "Ks" = (
 /obj/structure/dresser,
@@ -2906,6 +2944,10 @@
 	},
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
+"Lh" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
 "Li" = (
 /obj/structure/flora/tree/palm{
 	pixel_y = 5
@@ -2957,6 +2999,10 @@
 	},
 /turf/open/floor/wood/large,
 /area/virtual_domain)
+"LD" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
 "LE" = (
 /obj/structure/table/wood/fancy,
 /obj/effect/turf_decal/tile/dark_red/full,
@@ -2991,6 +3037,11 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/wood/large,
 /area/virtual_domain)
+"LJ" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
 "LK" = (
 /obj/machinery/door/airlock/wood{
 	name = "Arcade"
@@ -3155,7 +3206,7 @@
 /area/virtual_domain/fullbright)
 "NP" = (
 /turf/open/misc/beach/sand,
-/area/virtual_domain/safehouse)
+/area/virtual_domain/protected_space/fullbright)
 "NQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3276,6 +3327,10 @@
 	},
 /turf/open/floor/wood/large,
 /area/virtual_domain)
+"Pe" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
 "Pf" = (
 /obj/item/cigbutt{
 	pixel_y = -7;
@@ -3355,7 +3410,7 @@
 	},
 /obj/structure/table/glass,
 /turf/open/floor/wood/large,
-/area/virtual_domain)
+/area/virtual_domain/fullbright)
 "QD" = (
 /obj/effect/turf_decal/siding/blue/corner{
 	dir = 1
@@ -3484,7 +3539,7 @@
 	},
 /obj/structure/table/glass,
 /turf/open/floor/wood/large,
-/area/virtual_domain)
+/area/virtual_domain/fullbright)
 "Sp" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/beaker/large{
@@ -3628,6 +3683,8 @@
 	},
 /obj/structure/sink/directional/west,
 /obj/machinery/light/small/directional/west,
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/obj/effect/baseturf_helper/virtual_domain,
 /turf/open/floor/iron/white,
 /area/virtual_domain)
 "Uu" = (
@@ -3738,7 +3795,7 @@
 "VI" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/safehouse)
+/area/virtual_domain/protected_space/fullbright)
 "VM" = (
 /obj/item/reagent_containers/cup/soda_cans/starkist{
 	pixel_x = -12;
@@ -3779,6 +3836,10 @@
 "VU" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/wood,
+/area/virtual_domain)
+"VZ" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/wood/large,
 /area/virtual_domain)
 "Wg" = (
 /obj/effect/turf_decal/siding/wood{
@@ -3844,6 +3905,10 @@
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/virtual_domain)
+"WV" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/carpet/blue,
+/area/virtual_domain/fullbright)
 "WX" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 8
@@ -3887,6 +3952,10 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/virtual_domain)
+"Xx" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
 "XC" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -3993,6 +4062,10 @@
 "YH" = (
 /turf/open/water/beach,
 /area/virtual_domain)
+"YK" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/virtual_domain/fullbright)
 "YP" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -4090,7 +4163,7 @@
 	pixel_x = 4
 	},
 /turf/open/floor/wood/parquet,
-/area/virtual_domain)
+/area/virtual_domain/fullbright)
 "ZG" = (
 /obj/item/flashlight/flare/torch{
 	pixel_x = -11;
@@ -6179,27 +6252,27 @@ ah
 ah
 ah
 ah
-rj
+MI
 AM
-uk
-uk
-rj
+vq
+vq
+MI
 ah
-rj
+MI
 AM
-uk
-uk
-rj
+vq
+vq
+MI
 AM
-uk
-uk
-rj
+vq
+vq
+MI
 ah
-rj
+MI
 AM
-uk
-uk
-rj
+vq
+vq
+MI
 ah
 ah
 ah
@@ -6281,12 +6354,12 @@ ah
 ah
 ah
 ah
-rj
+MI
 VU
 Kj
 Bn
 rj
-rj
+MI
 rj
 Ky
 ST
@@ -6296,12 +6369,12 @@ xv
 Kj
 zP
 rj
-rj
+MI
 rj
 XE
 ST
 Le
-rj
+MI
 ah
 ah
 ah
@@ -6383,27 +6456,27 @@ ah
 ah
 ah
 ah
-rj
+MI
 QR
-Kj
+ci
 xv
 oh
 wr
 rD
 xv
-ST
+tP
 Kz
 rj
 Ve
-Kj
+ci
 xv
 do
 wr
 uG
 xv
-ST
+tP
 KL
-rj
+MI
 ah
 ah
 ah
@@ -6485,7 +6558,7 @@ ah
 ah
 ah
 ah
-rj
+MI
 mx
 xL
 EC
@@ -6505,7 +6578,7 @@ rj
 Vu
 eK
 Tu
-rj
+MI
 ah
 ah
 ah
@@ -6587,7 +6660,7 @@ ah
 ah
 ah
 ah
-rj
+MI
 rj
 rj
 rj
@@ -6607,7 +6680,7 @@ rj
 rj
 rj
 rj
-rj
+MI
 ah
 ah
 ah
@@ -6791,9 +6864,9 @@ ah
 ah
 ah
 MM
-uk
+vq
 mV
-ST
+tP
 xv
 HW
 wr
@@ -6811,7 +6884,7 @@ rj
 rj
 rj
 rj
-rj
+MI
 ah
 ah
 ah
@@ -6893,7 +6966,7 @@ ah
 ah
 ah
 VO
-uk
+vq
 Tu
 eK
 UK
@@ -6913,7 +6986,7 @@ rj
 tW
 Kj
 vf
-rj
+MI
 ah
 xM
 Nc
@@ -6995,7 +7068,7 @@ ah
 ah
 ah
 ah
-rj
+MI
 rj
 Yg
 rj
@@ -7003,19 +7076,19 @@ rj
 wr
 aC
 xv
-Kj
+ci
 KL
 rj
 SN
-ST
+tP
 xv
 gm
 wr
 UM
 xv
-Kj
+ci
 KL
-rj
+MI
 xM
 xW
 cV
@@ -7117,11 +7190,11 @@ rj
 hx
 xL
 ZT
-rj
+MI
 xW
 AC
 Ix
-Rb
+cs
 Sq
 Rb
 PC
@@ -7199,9 +7272,9 @@ ah
 ah
 ah
 MM
-uk
+vq
 eJ
-Kj
+ci
 xv
 Lk
 wr
@@ -7219,7 +7292,7 @@ rj
 rj
 rj
 rj
-rj
+MI
 Li
 Rb
 qa
@@ -7301,7 +7374,7 @@ ah
 ah
 ah
 VO
-uk
+vq
 In
 xL
 iH
@@ -7403,7 +7476,7 @@ ah
 ah
 ah
 ah
-rj
+MI
 rj
 rj
 rj
@@ -7423,7 +7496,7 @@ rj
 rj
 rj
 rj
-rj
+MI
 RB
 qg
 Rb
@@ -7503,8 +7576,8 @@ ah
 ah
 ah
 ah
-rj
-rj
+MI
+MI
 rj
 Mn
 oK
@@ -7525,14 +7598,14 @@ PM
 VQ
 ST
 Ed
-rj
+MI
 Rb
 Rb
-rj
+MI
 bm
-rj
-rj
-rj
+MI
+MI
+MI
 Di
 PC
 Nc
@@ -7607,35 +7680,35 @@ ah
 ah
 ah
 ah
-rj
+MI
 Lx
-wr
+VZ
 be
 rj
 rC
 rj
 xv
-ST
+tP
 KL
 rj
 Bn
-Kj
+ci
 KL
 rj
 wr
 rj
 iR
-ST
+tP
 KL
-rj
+MI
 Kk
-rj
+MI
 rj
 wr
 rs
 wr
 rj
-rj
+MI
 Di
 Rb
 Rb
@@ -7709,7 +7782,7 @@ ah
 ah
 ah
 ah
-rj
+MI
 ek
 wr
 wr
@@ -7730,7 +7803,7 @@ Tu
 eK
 qp
 rj
-rj
+MI
 rj
 ej
 vB
@@ -7738,7 +7811,7 @@ pL
 nd
 Jb
 rj
-rj
+MI
 Jr
 Rb
 Rb
@@ -7811,7 +7884,7 @@ ah
 ah
 ah
 ah
-rj
+MI
 De
 rj
 Iq
@@ -7840,7 +7913,7 @@ sx
 sx
 wr
 qk
-uk
+vq
 Rb
 Ke
 Rb
@@ -7913,7 +7986,7 @@ ah
 ah
 bs
 CM
-rj
+MI
 rj
 rj
 mF
@@ -7942,7 +8015,7 @@ wr
 wr
 wr
 Yo
-uk
+vq
 Rb
 Rb
 Rb
@@ -8043,8 +8116,8 @@ hV
 wr
 wr
 aR
-uk
-uk
+vq
+vq
 Fv
 Rb
 Rb
@@ -8117,7 +8190,7 @@ ah
 JI
 Ak
 bE
-rj
+MI
 rj
 rj
 Ar
@@ -8144,8 +8217,8 @@ AQ
 yd
 wr
 wr
-uk
-uk
+vq
+vq
 Fv
 Fv
 Rb
@@ -8217,9 +8290,9 @@ ah
 ah
 ah
 JI
+Xx
 bE
-bE
-rj
+MI
 co
 BX
 KG
@@ -8230,7 +8303,7 @@ Sd
 rj
 rk
 wC
-Lo
+LD
 Lo
 mY
 Ss
@@ -8246,7 +8319,7 @@ wr
 wr
 wr
 wr
-rj
+MI
 vk
 Fv
 oq
@@ -8259,15 +8332,15 @@ Rb
 Rb
 Rb
 Rb
-rj
-uk
-uk
-rj
+MI
+vq
+vq
+MI
 Rb
-rj
-uk
-uk
-rj
+MI
+vq
+vq
+MI
 EQ
 Rb
 Rb
@@ -8321,7 +8394,7 @@ ah
 TO
 gk
 rm
-rj
+MI
 Vo
 KG
 hO
@@ -8360,21 +8433,21 @@ Rb
 Rb
 Rb
 Rb
-rj
+MI
 rj
 hd
 hd
 rj
-uk
+vq
 rj
 fk
 SA
 rj
-rj
+MI
 qg
 Rb
 Oo
-Oo
+WV
 Rb
 Rb
 FZ
@@ -8423,7 +8496,7 @@ ah
 vw
 XC
 rm
-rj
+MI
 EX
 KG
 jT
@@ -8444,13 +8517,13 @@ ab
 il
 rj
 Kj
-Kj
+ci
 aD
 Kj
 Kj
 Kj
 kC
-rj
+MI
 rP
 rP
 Fv
@@ -8462,7 +8535,7 @@ Rb
 Rb
 Rb
 Rb
-rj
+MI
 mU
 qR
 Mi
@@ -8472,7 +8545,7 @@ zz
 yc
 Kt
 GE
-rj
+MI
 Rb
 Rb
 Rb
@@ -8525,7 +8598,7 @@ ah
 ah
 vw
 Zj
-rj
+MI
 mR
 KG
 LF
@@ -8564,7 +8637,7 @@ Rb
 Rb
 Rb
 Rb
-rj
+MI
 rj
 rf
 fo
@@ -8574,7 +8647,7 @@ rg
 dE
 UF
 wr
-uk
+vq
 Rb
 Rb
 Rb
@@ -8627,16 +8700,16 @@ ah
 ah
 ah
 ah
+MI
 rj
-rj
 KG
 KG
-KG
+Pe
 Pf
 fH
 rj
-rj
-uk
+MI
+vq
 rj
 mY
 mY
@@ -8653,8 +8726,8 @@ Br
 wr
 wr
 wr
-rj
-rj
+MI
+MI
 Bq
 rP
 rP
@@ -8667,8 +8740,8 @@ Rb
 Rb
 Ke
 Rb
-rj
-uk
+MI
+vq
 rj
 qM
 qM
@@ -8676,7 +8749,7 @@ Yv
 wr
 OH
 wr
-rj
+MI
 Rb
 Rb
 Rb
@@ -8730,16 +8803,16 @@ ah
 ah
 ah
 ah
-rj
+MI
 KG
 NT
 XQ
 wA
 rj
-rj
+MI
 Sm
 Qq
-rj
+MI
 Zm
 rj
 hT
@@ -8755,7 +8828,7 @@ eh
 dq
 Pb
 wr
-uk
+vq
 Bq
 LW
 Fv
@@ -8771,14 +8844,14 @@ Rb
 Jr
 Rb
 Fv
-rj
-uk
-uk
+MI
+vq
+vq
 rj
 wr
 Tb
-rj
-rj
+JY
+MI
 RX
 Rb
 Rb
@@ -8832,22 +8905,22 @@ ah
 ah
 ah
 ah
-rj
+MI
 Np
 Ar
 Ar
 rj
-rj
+MI
 NW
 bE
 bE
 bE
 bE
-rj
-uk
+MI
+vq
 rj
 ab
-il
+vh
 il
 il
 il
@@ -8857,8 +8930,8 @@ dZ
 nQ
 hV
 wr
-uk
-uk
+vq
+vq
 LW
 Fv
 Fv
@@ -8876,10 +8949,10 @@ Rb
 Rb
 Rb
 Fv
-rj
+MI
 LK
-uk
-JY
+vq
+MI
 BV
 Fv
 Rb
@@ -8934,20 +9007,20 @@ ah
 ah
 ah
 ah
-rj
+MI
 FI
 FI
 aF
-rj
+MI
 ah
 OR
-bE
+Xx
 bE
 bE
 bE
 rT
 ah
-rj
+MI
 rj
 cp
 cp
@@ -8960,7 +9033,7 @@ Bc
 yd
 wr
 sj
-uk
+vq
 LW
 Fv
 Fv
@@ -9036,11 +9109,11 @@ ah
 ah
 ah
 ah
-Ar
+YK
 iV
 FI
 aF
-Ar
+YK
 ah
 jk
 xH
@@ -9050,7 +9123,7 @@ YV
 ky
 ah
 ah
-rj
+MI
 rj
 rj
 rj
@@ -9062,7 +9135,7 @@ rj
 wr
 wr
 dy
-uk
+vq
 cn
 Fv
 qg
@@ -9138,11 +9211,11 @@ ah
 ah
 ah
 ah
-rj
+MI
 rj
 dW
 rj
-rj
+MI
 ah
 vw
 YP
@@ -9152,7 +9225,7 @@ ky
 ah
 ah
 ah
-rj
+MI
 fJ
 pv
 pv
@@ -9163,8 +9236,8 @@ pv
 rj
 ac
 BB
-rj
 JY
+MI
 Fv
 Rb
 Rb
@@ -9241,9 +9314,9 @@ ah
 ah
 ah
 ah
-rj
-rj
-rj
+MI
+MI
+MI
 ah
 ah
 ah
@@ -9254,7 +9327,7 @@ ah
 ah
 ah
 ah
-rj
+MI
 pv
 Uu
 ri
@@ -9263,9 +9336,9 @@ Ql
 Ka
 NQ
 rj
-rj
-rj
-rj
+MI
+MI
+MI
 Rb
 Rb
 Bi
@@ -9356,15 +9429,15 @@ ah
 ah
 ah
 ah
-rj
+MI
 ri
 pv
 pv
 dR
 pl
 rj
-rj
-rj
+MI
+MI
 qg
 Rb
 Rb
@@ -9384,12 +9457,12 @@ Fv
 Fv
 Rb
 qL
-rj
-rj
-uk
-uk
-rj
-rj
+MI
+MI
+vq
+vq
+MI
+MI
 Gj
 Rb
 Fv
@@ -9458,13 +9531,13 @@ ah
 ah
 ah
 ah
-rj
-rj
+MI
+MI
 rj
 kc
 Wv
 rj
-rj
+MI
 lL
 Rb
 Rb
@@ -9486,12 +9559,12 @@ Rb
 Fv
 Fv
 jb
-rj
+MI
 Ht
 zE
 ES
 QV
-rj
+MI
 YB
 Rb
 Rb
@@ -9562,10 +9635,10 @@ ah
 ah
 ah
 ah
-rj
-rj
-rj
-rj
+MI
+MI
+MI
+MI
 Ha
 eC
 Rb
@@ -9587,7 +9660,7 @@ Rb
 Rb
 Rb
 Fv
-rj
+MI
 rj
 sA
 wr
@@ -9691,7 +9764,7 @@ Rb
 Fv
 Jt
 wr
-wr
+VZ
 Ei
 Ui
 wr
@@ -9776,14 +9849,14 @@ wZ
 Zl
 WZ
 xw
-xw
+LJ
 xw
 WI
 Rb
 Rb
-AV
-AV
-rj
+Km
+Km
+MI
 Fv
 Fv
 Rb
@@ -9791,7 +9864,7 @@ Rb
 Rb
 Rb
 Cv
-rj
+MI
 ns
 Sp
 gW
@@ -9883,7 +9956,7 @@ xw
 WZ
 Ke
 Rb
-AV
+Km
 Df
 Tr
 Fv
@@ -9892,8 +9965,8 @@ qg
 Rb
 Rb
 Rb
-rj
-rj
+MI
+MI
 rC
 pm
 Bv
@@ -9985,16 +10058,16 @@ WZ
 WZ
 Ke
 Rb
+Km
 AV
-AV
-rj
+MI
 Fv
 Fv
 Rb
 Rb
 Rb
 Mg
-rj
+MI
 Xn
 wr
 DU
@@ -10087,7 +10160,7 @@ WZ
 Rb
 Rb
 Rb
-AV
+Km
 GB
 up
 Fv
@@ -10096,10 +10169,10 @@ Rb
 Rb
 Rb
 Rb
-uk
+vq
 hK
 wr
-wr
+ny
 wr
 wr
 kv
@@ -10191,14 +10264,14 @@ Rb
 MI
 AV
 AV
-rj
+MI
 Fv
 Fv
 Rb
 Rb
 Rb
 Rb
-uk
+vq
 vX
 wr
 wr
@@ -10291,7 +10364,7 @@ Rb
 Rb
 Rb
 Rb
-AV
+Km
 mj
 Zf
 Fv
@@ -10300,7 +10373,7 @@ Rb
 Jr
 Rb
 Rb
-uk
+vq
 xp
 wr
 wr
@@ -10393,16 +10466,16 @@ Rb
 Rb
 Rb
 Rb
-JY
-rj
-rj
+MI
+MI
+MI
 Fv
 Fv
 Rb
 Rb
 qg
 Rb
-rj
+MI
 xp
 wr
 cX
@@ -10504,11 +10577,11 @@ Rb
 Rb
 Rb
 Rb
-JY
-rj
-uk
-uk
-rj
+MI
+MI
+vq
+vq
+MI
 pD
 Rb
 Rb
@@ -11207,7 +11280,7 @@ Ha
 de
 Rb
 cP
-Oo
+WV
 Oo
 Rb
 Rb
@@ -12431,10 +12504,10 @@ xW
 Jr
 Rb
 Rb
-rj
-rj
-rj
-JY
+MI
+MI
+MI
+MI
 wU
 Fv
 Fv
@@ -12531,13 +12604,13 @@ ah
 wZ
 Rb
 XP
-rj
-rj
+MI
+MI
 rj
 fA
 fA
-rj
-rj
+JY
+MI
 or
 Rh
 Rb
@@ -12632,7 +12705,7 @@ ah
 xM
 xW
 Rb
-rj
+MI
 rj
 fA
 nz
@@ -12734,7 +12807,7 @@ xM
 xW
 Rb
 Rb
-rj
+MI
 fA
 fS
 fS
@@ -12836,14 +12909,14 @@ wZ
 Ke
 Rb
 Rb
-rj
+MI
 rj
 nH
 rj
 rj
 fA
 fS
-rj
+MI
 Tm
 Tm
 oX
@@ -12938,7 +13011,7 @@ xW
 Rb
 Ke
 Fv
-rj
+MI
 CW
 Cg
 CW
@@ -13038,7 +13111,7 @@ ah
 wZ
 Rb
 Rb
-rj
+MI
 KC
 rj
 rj
@@ -13140,13 +13213,13 @@ ah
 wZ
 Rb
 Rb
-rj
+MI
 Sk
 sO
 rj
 CW
 Cg
-Cg
+fD
 rj
 fS
 IN
@@ -13242,7 +13315,7 @@ ah
 wZ
 Jr
 Rb
-rj
+MI
 Va
 ic
 rj
@@ -13344,7 +13417,7 @@ ah
 wZ
 Rb
 Rb
-rj
+MI
 jw
 Sk
 PH
@@ -13446,15 +13519,15 @@ ah
 Dh
 nk
 Rb
-rj
-rj
+MI
+MI
 Sk
 tN
 rj
 SM
 Cg
 CW
-rj
+MI
 cN
 Rb
 Rb
@@ -13549,14 +13622,14 @@ ah
 wZ
 Ke
 IR
-rj
+MI
 iz
 iz
-rj
+MI
 rj
 CW
 rj
-rj
+MI
 ux
 Rb
 Rb
@@ -13655,9 +13728,9 @@ Rb
 Rb
 Rb
 Rb
-rj
-rj
-rj
+MI
+MI
+MI
 Qa
 Rb
 qD
@@ -13768,13 +13841,13 @@ Rb
 Rb
 Rb
 Rq
-rj
-rj
-rj
-rj
-rj
-rj
-JY
+MI
+MI
+MI
+MI
+MI
+MI
+MI
 Ev
 Rb
 Rb
@@ -13869,15 +13942,15 @@ Rb
 vY
 vY
 wz
-rj
+MI
 rj
 Xr
-fS
+Lh
 nz
 ia
 ch
-rj
-rj
+JY
+MI
 Rb
 Rb
 IA
@@ -13960,9 +14033,9 @@ ah
 wZ
 Jr
 Rb
-AV
-AV
-rj
+Km
+Km
+MI
 Rb
 Rb
 Rb
@@ -13980,7 +14053,7 @@ pr
 aS
 EP
 rj
-rj
+MI
 Ha
 Kv
 ah
@@ -14062,7 +14135,7 @@ ah
 Dh
 nk
 Rb
-AV
+Km
 Uq
 af
 Rb
@@ -14073,7 +14146,7 @@ WX
 WX
 OM
 yB
-rj
+MI
 Hs
 IG
 IG
@@ -14082,7 +14155,7 @@ IG
 IG
 FD
 Yr
-rj
+MI
 ah
 ah
 ah
@@ -14164,9 +14237,9 @@ ah
 ah
 Dh
 nk
-JY
-rj
-rj
+MI
+MI
+MI
 Rb
 UU
 Rb
@@ -14175,7 +14248,7 @@ Rb
 Rb
 Rb
 Rb
-rj
+MI
 rj
 LO
 LO
@@ -14184,7 +14257,7 @@ LO
 LO
 yO
 aj
-rj
+MI
 ah
 ah
 ah
@@ -14278,7 +14351,7 @@ Rb
 gf
 Rb
 KE
-rj
+MI
 aO
 DM
 YH
@@ -14286,7 +14359,7 @@ YH
 YH
 YH
 Ml
-rj
+MI
 ah
 ah
 ah
@@ -14380,7 +14453,7 @@ Fd
 IA
 Zv
 Kv
-rj
+MI
 jl
 Wn
 YH
@@ -14388,7 +14461,7 @@ YH
 YH
 YH
 rj
-rj
+MI
 ah
 ah
 ah
@@ -14482,14 +14555,14 @@ Ha
 Kv
 ah
 ah
-rj
-rj
+MI
+MI
 th
 zO
 zO
 zO
-rj
-rj
+MI
+MI
 ah
 ah
 ah

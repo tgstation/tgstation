@@ -20,6 +20,7 @@
 
 	return rewards_base
 
+
 /// Handles spawning the (new) crate and deleting the former
 /obj/machinery/quantum_server/proc/generate_loot(obj/cache, obj/machinery/byteforge/chosen_forge)
 	SSblackbox.record_feedback("tally", "bitrunning_domain_primary_completed", 1, generated_domain.key)

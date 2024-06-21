@@ -1,6 +1,3 @@
-#define BASE_DISCONNECT_DAMAGE 40
-
-
 /// Machine has been broken - handles signals and reverting sprites
 /obj/machinery/netpod/proc/on_broken(datum/source)
 	SIGNAL_HANDLER
@@ -65,11 +62,3 @@
 	sever_connection()
 
 
-/// When the server is upgraded, drops brain damage a little
-/obj/machinery/netpod/proc/on_server_upgraded(obj/machinery/quantum_server/source)
-	SIGNAL_HANDLER
-
-	disconnect_damage = BASE_DISCONNECT_DAMAGE * (1 - source.servo_bonus)
-
-
-#undef BASE_DISCONNECT_DAMAGE

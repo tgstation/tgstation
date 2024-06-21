@@ -7,6 +7,8 @@
 	map_name = "None"
 	key = "Virtual Domain"
 	place_on_top = TRUE
+	/// Whether to tell observers this map is being used
+	var/announce_to_ghosts = FALSE
 	/// The map file to load
 	var/filename = "virtual_domain.dmm"
 	/// The start time of the map. Used to calculate time taken
@@ -15,7 +17,7 @@
 	var/test_only = FALSE
 
 	/**
-	 * Generic UI
+	 * Generic settings / UI
 	 */
 
 	/// Cost of this map to load
@@ -71,11 +73,9 @@
 	 */
 
 	/// Looks for random landmarks to spawn on.
-	var/randomized_spawns = FALSE
-	/// If this domain has a permanent way out.
-	var/single_hololadder = FALSE
-	/// Useful for maps that have random spawns, etc.
-	var/unlimited_respawns = FALSE
+	var/list/custom_spawns = list()
+	/// Set TRUE if you want reusable custom spawners
+	var/keep_custom_spawns = FALSE
 
 
 /// Sends a point to any loot signals on the map

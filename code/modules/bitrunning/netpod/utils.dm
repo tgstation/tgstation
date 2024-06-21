@@ -78,13 +78,22 @@
 
 	var/mob/living/carbon/current_avatar = avatar_ref?.resolve()
 	if(isnull(current_avatar) || current_avatar.stat != CONSCIOUS) // We need a viable avatar
-		var/obj/structure/hololadder/wayout = server.generate_hololadder()
-		if(isnull(wayout))
+		var/atom/entry_atom = server.get_avatar_destination()
+		if(isnull(entry_atom))
 			balloon_alert(neo, "out of bandwidth!")
 			return
-		current_avatar = server.generate_avatar(wayout, netsuit)
+
+		current_avatar = server.generate_avatar(get_turf(entry_atom), netsuit)
 		avatar_ref = WEAKREF(current_avatar)
 		server.stock_gear(current_avatar, neo, generated_domain)
+
+		// If we're spawning from some other fuckery, no need for this
+		if(istype(entry_atom, /obj/effect/mob_spawn/ghost_role/human/virtual_domain))
+			var/obj/effect/mob_spawn/ghost_role/human/virtual_domain/spawner = entry_atom
+			spawner.artificial_spawn(current_avatar)
+
+		if(!generated_domain.keep_custom_spawns)
+			qdel(entry_atom)
 
 	neo.set_static_vision(3 SECONDS)
 	add_healing(occupant)
