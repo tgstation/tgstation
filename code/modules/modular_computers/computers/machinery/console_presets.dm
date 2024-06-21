@@ -102,7 +102,7 @@
 	startup_program = "dept_order"
 	preinstalled_programs = list(
 		/datum/computer_file/program/chatclient,
-		/datum/computer_file/program/department_order
+		/datum/computer_file/program/department_order,
 	)
 	/// What department type is assigned to this console?
 	var/datum/job_department/department_type
