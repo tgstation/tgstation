@@ -154,7 +154,7 @@
 		/datum/computer_file/program/bounty_board,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/shipping,
-		/datum/computer_file/program/restock_tracker
+		/datum/computer_file/program/restock_tracker,
 	)
 
 /obj/machinery/modular_computer/preset/cargochat/cargo/post_machine_initialize()
