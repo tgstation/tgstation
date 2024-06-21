@@ -16,7 +16,7 @@
 /proc/is_convertable_to_cult(mob/living/target, datum/team/cult/specific_cult)
 	if(!istype(target))
 		return FALSE
-	if(isnull(target.mind) || !GET_CLIENT(target))
+	if(isnull(target.mind))
 		return FALSE
 	if(target.mind.unconvertable)
 		return FALSE

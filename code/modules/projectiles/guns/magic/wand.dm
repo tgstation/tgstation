@@ -318,8 +318,10 @@
 			victim.mind_initialize()
 		if(victim.mind.has_antag_datum(antag))
 			victim.mind.remove_antag_datum(antag)
+			to_chat(world, "removed")
 		else
 			victim.mind.add_antag_datum(antag)
+			to_chat(world, "added")
 
 /obj/item/gun/magic/wand/antag/heretic
 	name = "wand of antag heretic"
