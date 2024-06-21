@@ -39,11 +39,7 @@
 /datum/component/toggle_icon/proc/on_click_alt(atom/source, mob/living/living_user)
 	SIGNAL_HANDLER
 
-	if(!isliving(living_user))
-		return CLICK_ACTION_BLOCKING
-
-	if(living_user.can_perform_action(source))
-		source.balloon_alert(living_user, "you're incapacitated!")
+	if(!isliving(living_user) || !living_user.can_perform_action(source))
 		return CLICK_ACTION_BLOCKING
 
 	if(living_user.usable_hands <= 0)
