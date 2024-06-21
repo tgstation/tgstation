@@ -16,4 +16,5 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	item = /obj/item/neutered_borer_spawner
 	cost = 20
+	surplus = 40
 	refundable = TRUE
