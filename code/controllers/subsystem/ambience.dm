@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(ambience)
 			client_old_areas -= client_iterator
 			continue
 
-		if(HAS_TRAIT(client_mob, TRAIT_DEAF)) //WHAT? I CAN'T HEAR YOU
+		if(!client_mob.can_hear()) //WHAT? I CAN'T HEAR YOU
 			continue
 
 		//Check to see if the client-mob is in a valid area
