@@ -105,6 +105,7 @@
 	if(!isnull(starting_temperature))
 		temperature = starting_temperature
 	perform_exposure()
+	playsound(src, 'sound/effects/fire_puff.ogg', 100)
 	setDir(pick(GLOB.cardinals))
 	air_update_turf(FALSE, FALSE)
 	var/static/list/loc_connections = list(

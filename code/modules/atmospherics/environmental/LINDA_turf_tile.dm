@@ -705,6 +705,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 	var/z_coord
 	var/average_x
 	var/average_y
+	COOLDOWN_DECLARE(update_sound_center)
 
 
 /datum/hot_group/New()
@@ -713,11 +714,13 @@ Then we space some of our heat, and think about if we should stop conducting.
 
 /datum/hot_group/process(seconds_per_tick)
 	. = ..()
-	update_sound()
 	if(turf_list.len <= 0)
 		qdel()
-	average_x = round((max(y_coord) + min(y_coord))/2)
+	average_x = round((max(x_coord) + min(x_coord))/2)
 	average_y = round((max(y_coord) + min(y_coord))/2)
+	if(COOLDOWN_FINISHED(src, update_sound_center) && turf_list.len >= 5)//arbitrary size to start playing the sound
+		update_sound()
+		COOLDOWN_START(src, update_sound_center, 5 SECONDS)
 
 /datum/hot_group/Destroy()
 	. = ..()
@@ -745,19 +748,19 @@ Then we space some of our heat, and think about if we should stop conducting.
 		return
 	if(turf_list == enemy_group.turf_list)
 		random_group = rand(0,1)
-	else if(turf_list.len > enemy_group.turf_list.len || random_group)//we're bigger take all of their territory
+	else if(turf_list.len > enemy_group.turf_list.len || random_group)//we're bigger take all of their territory!
 		for(var/turf/open/reference in enemy_group.turf_list)
 			turf_list += reference
-			x_coord += reference.x
-			y_coord += reference.y
 			reference.our_hot_group = src
+		x_coord += enemy_group.x_coord
+		y_coord += enemy_group.y_coord
 		qdel(enemy_group)
 	else
 		for(var/turf/open/reference in turf_list)
 			enemy_group.turf_list += reference
-			x_coord += reference.x
-			y_coord += reference.y
 			reference.our_hot_group = enemy_group
+		x_coord += enemy_group.x_coord
+		y_coord += enemy_group.y_coord
 		qdel(src)
 
 /datum/hot_group/proc/update_sound()
@@ -771,8 +774,10 @@ Then we space some of our heat, and think about if we should stop conducting.
 		current_sound_loc = sound_turf
 
 /datum/looping_sound/fire
-	mid_sounds = 'sound/vox_fem/fire.ogg'
-	volume = 25
+	mid_sounds = 'sound/effects/roaring_fire.ogg'
+	volume = 100
+	mid_length = 13 SECONDS
+	falloff_distance = 4
 
 #undef LAST_SHARE_CHECK
 #undef PLANET_SHARE_CHECK
