@@ -31,16 +31,20 @@
 	)
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/Initialize(mapload)
-	internal_tank = new(src)
 	. = ..()
+	internal_tank = new(src)
+	RegisterSignal(internal_tank, COMSIG_QDELETING, PROC_REF(tank_destroyed))
 
-/obj/machinery/portable_atmospherics/pipe_scrubber/Destroy()
+/obj/machinery/portable_atmospherics/pipe_scrubber/proc/tank_destroyed()
+	deconstruct()
+
+/obj/machinery/portable_atmospherics/pipe_scrubber/atom_deconstruct(disassembled)
+	. = ..()
 	var/turf/my_turf = get_turf(src)
 	my_turf.assume_air(air_contents)
 	my_turf.assume_air(internal_tank.air_contents)
 	SSair.stop_processing_machine(internal_tank)
 	qdel(internal_tank)
-	return ..()
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/return_analyzable_air()
 	return list(
@@ -53,7 +57,7 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/click_alt(mob/living/user)
-	return FALSE
+	return CLICK_ACTION_BLOCKING
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/attackby(obj/item/item, mob/user, params)
 	return TRUE
@@ -110,16 +114,19 @@
 	data["direction"] = direction
 	data["connected"] = connected_port ? 1 : 0
 	data["pressure"] = round(internal_tank.air_contents.return_pressure() ? internal_tank.air_contents.return_pressure() : 0)
-	data["maxPressure"] = PUMP_MAX_PRESSURE
-
 	data["hasHypernobCrystal"] = has_nob_crystal()
-	data["reactionSuppressionEnabled"] = !!internal_tank.suppress_reactions
+	data["reactionSuppressionEnabled"] = reaction_suppression_enabled()
 
 	data["filterTypes"] = list()
-	for(var/path in GLOB.meta_gas_info)
-		var/list/gas = GLOB.meta_gas_info[path]
-		data["filterTypes"] += list(list("gasId" = gas[META_GAS_ID], "gasName" = gas[META_GAS_NAME], "enabled" = (path in scrubbing)))
+	for(var/gas_path in GLOB.meta_gas_info)
+		var/list/gas = GLOB.meta_gas_info[gas_path]
+		data["filterTypes"] += list(list("gasId" = gas[META_GAS_ID], "gasName" = gas[META_GAS_NAME], "enabled" = (gas_path in scrubbing)))
 
+	return data
+
+/obj/machinery/portable_atmospherics/pipe_scrubber/ui_static_data()
+	var/list/data = list()
+	data["maxPressure"] = PUMP_MAX_PRESSURE
 	return data
 
 /obj/machinery/portable_atmospherics/pipe_scrubber/ui_act(action, params)
