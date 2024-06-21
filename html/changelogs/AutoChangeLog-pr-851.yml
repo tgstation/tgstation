@@ -1,0 +1,5 @@
+author: "The-Black-Screen"
+delete-after: True
+changes:
+  - rscadd: "added `secure.dm` to `monkestation/code/game/objects/structures/crate_lockers/crates`, added `security.dm` to `monkestation/code/game/objects/structures/crate_lockers/closets/secure`"
+  - code_imp: "added onto `security.dm` in `monkestation/code/modules/cargo/crates`"
