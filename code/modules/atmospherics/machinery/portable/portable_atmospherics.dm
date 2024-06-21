@@ -238,8 +238,8 @@
 	return TRUE
 
 /obj/machinery/portable_atmospherics/attackby(obj/item/item, mob/user, params)
-	if(!istype(item, /obj/item/tank))
-		return try_replace_tank(obj/item/item, mob/user)
+	if(istype(item, /obj/item/tank))
+		return try_replace_tank(item, user)
 	return ..()
 
 /obj/machinery/portable_atmospherics/proc/try_replace_tank(obj/item/tank/insert_tank, mob/user)
