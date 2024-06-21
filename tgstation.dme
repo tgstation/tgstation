@@ -5792,6 +5792,7 @@
 #include "monkestation\code\game\objects\effects\random\ai_module.dm"
 #include "monkestation\code\game\objects\effects\spawners\roomspawner.dm"
 #include "monkestation\code\game\objects\effects\spawners\random\fishing.dm"
+#include "monkestation\code\game\objects\items\caneswords.dm"
 #include "monkestation\code\game\objects\items\choice_beacon.dm"
 #include "monkestation\code\game\objects\items\cirno_plush.dm"
 #include "monkestation\code\game\objects\items\gravity_gun.dm"
