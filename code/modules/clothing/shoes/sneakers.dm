@@ -64,7 +64,7 @@
 
 /obj/item/clothing/shoes/sneakers/rainbow
 	name = "rainbow shoes"
-	desc = "Very gay shoes."
+	desc = "Very rainbow shoes." //MASSMETA EDIT - ORIGINAL - "Very gay shoes."
 	icon_state = "rain_bow"
 	inhand_icon_state = "rainbow_sneakers"
 
