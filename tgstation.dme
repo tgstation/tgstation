@@ -388,6 +388,7 @@
 #include "code\__DEFINES\research\anomalies.dm"
 #include "code\__DEFINES\research\research_categories.dm"
 #include "code\__DEFINES\research\slimes.dm"
+#include "code\__DEFINES\research\techweb_nodes.dm"
 #include "code\__DEFINES\traits\_traits.dm"
 #include "code\__DEFINES\traits\declarations.dm"
 #include "code\__DEFINES\traits\macros.dm"

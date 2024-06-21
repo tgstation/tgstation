@@ -4,11 +4,11 @@
 	accepted_experiments = list(/datum/experiment/ordnance/explosive/lowyieldbomb)
 	multipliers = list(SCIPAPER_COOPERATION_INDEX = 0.75, SCIPAPER_FUNDING_INDEX = 0.75)
 	boostable_nodes = list(
-		"bluespace_theory" = 2000,
-		"night_vision" = 1500,
-		"anomaly_research" = 2500,
-		"mining" = 2000,
-		"mining_adv" = 2000,
+		TECHWEB_NODE_BLUESPACE_THEORY = 2000,
+		TECHWEB_NODE_NIGHT_VISION = 1500,
+		TECHWEB_NODE_ANOMALY_RESEARCH = 2500,
+		TECHWEB_NODE_MINING = 2000,
+		TECHWEB_NODE_MINING_ADV = 2000,
 	)
 
 /datum/scientific_partner/baron
@@ -16,8 +16,8 @@
 	flufftext = "A nearby research station ran by a very wealthy captain seems to be struggling with their scientific output. They might reward us handsomely if we ghostwrite for them."
 	multipliers = list(SCIPAPER_COOPERATION_INDEX = 0.25, SCIPAPER_FUNDING_INDEX = 2)
 	boostable_nodes = list(
-		"consoles" = 500,
-		"fundamental_sci" = 500,
+		TECHWEB_NODE_CONSOLES = 500,
+		TECHWEB_NODE_FUNDIMENTAL_SCI = 500,
 	)
 
 /datum/scientific_partner/defense
@@ -29,11 +29,11 @@
 		/datum/experiment/ordnance/explosive/hydrogenbomb,
 	)
 	boostable_nodes = list(
-		"riot_supression" = 5000,
-		"sec_equip" = 1250,
-		"explosives" = 1250,
-		"electric_weapons" = 1250,
-		"beam_weapons" = 1250,
+		TECHWEB_NODE_RIOT_SUPRESSION = 5000,
+		TECHWEB_NODE_SEC_EQUIP = 1250,
+		TECHWEB_NODE_EXPLOSIVES = 1250,
+		TECHWEB_NODE_ELECTRIC_WEAPONS = 1250,
+		TECHWEB_NODE_BEAM_WEAPONS = 1250,
 	)
 
 /datum/scientific_partner/medical
@@ -44,12 +44,12 @@
 		/datum/experiment/ordnance/gaseous/bz,
 	)
 	boostable_nodes = list(
-		"cyber_organs" = 750,
-		"cyber_organs_upgraded" = 1000,
-		"gene_engineering" = 500,
-		"passive_implants" = 1250,
-		"bio_scan" = 1000,
-		"chem_synthesis" = 1000,
+		TECHWEB_NODE_CYBER_ORGANS = 750,
+		TECHWEB_NODE_CYBER_ORGANS_UPGRADED = 1000,
+		TECHWEB_NODE_GENE_ENGINEERING = 500,
+		TECHWEB_NODE_PASSIVE_IMPLANTS = 1250,
+		TECHWEB_NODE_BIO_SCAN = 1000,
+		TECHWEB_NODE_CHEM_SYNTHESIS = 1000,
 	)
 
 /datum/scientific_partner/physics
@@ -60,8 +60,8 @@
 		/datum/experiment/ordnance/explosive/nobliumbomb,
 	)
 	boostable_nodes = list(
-		"parts_upg" = 5000,
-		"exp_tools" = 5000,
-		"parts_bluespace" = 3000,
-		"parts_adv" = 1250,
+		TECHWEB_NODE_PARTS_UPG = 5000,
+		TECHWEB_NODE_EXP_TOOLS = 5000,
+		TECHWEB_NODE_PARTS_BLUESPACE = 3000,
+		TECHWEB_NODE_PARTS_ADV = 1250,
 	)
