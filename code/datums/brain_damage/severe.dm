@@ -390,7 +390,7 @@
 // This one is for "Lady out of gates" or /obj/item/wallframe/painting/eldritch/beauty
 /datum/brain_trauma/severe/eldritch_beauty
 	name = "Obsessive Perfectionism"
-	desc = "Patient is fixated on the percieved 'imperfection' of objects around them. Patient is agitated by the feeling of clothing on their body."
+	desc = "Patient is fixated on the perceived 'imperfection' of objects around them. Patient is agitated by the feeling of clothing on their body."
 	scan_desc = "obsessive personality disorder"
 	gain_text = span_warning("It's all *imperfect*! I can't stand any of it touching me!")
 	lose_text = span_notice("Your mind calms.")
