@@ -11,13 +11,13 @@
 	notify_ghosts("The [name] has been created. The virtual world calls for aid!", src, "Virtual Insanity!")
 
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/special(mob/living/spawned_mob, mob/mob_possessor)
-	. = ..()
+	var/datum/mind/ghost_mind = mob_possessor.mind
+	if(ghost_mind?.current) // Preserves any previous bodies before making the switch
+		spawned_mob.AddComponent(/datum/component/temporary_body, ghost_mind, ghost_mind.current, TRUE)
+
+	..()
 
 	spawned_mob.mind.add_antag_datum(/datum/antagonist/domain_ghost_actor)
-
-	var/datum/mind/ghost_mind = mob_possessor.mind
-	if(ghost_mind?.current)
-		spawned_mob.AddComponent(/datum/component/temporary_body, ghost_mind, ghost_mind.current, TRUE)
 
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/pirate
 	name = "Virtual Pirate Remains"
