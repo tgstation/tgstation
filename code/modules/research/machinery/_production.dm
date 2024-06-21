@@ -3,6 +3,7 @@
 	desc = "Makes researched and prototype items with materials and energy."
 	/// Energy cost per full stack of materials spent. Material insertion is 40% of this.
 	active_power_usage = 0.05 * STANDARD_CELL_RATE
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 
 	/// The efficiency coefficient. Material costs and print times are multiplied by this number;
 	var/efficiency_coeff = 1
@@ -410,14 +411,25 @@
 
 	var/atom/movable/created
 	if(is_stack)
-		created = new design.build_path(target, items_remaining)
+		var/obj/item/stack/stack_item = initial(design.build_path)
+		var/max_stack_amount = initial(stack_item.max_amount)
+		var/number_to_make = (initial(stack_item.amount) * items_remaining)
+		while(number_to_make > max_stack_amount)
+			created = new stack_item(null, max_stack_amount) //it's imporant to spawn things in nullspace, since obj's like stacks qdel when they enter a tile/merge with other stacks of the same type, resulting in runtimes.
+			created.pixel_x = created.base_pixel_x + rand(-6, 6)
+			created.pixel_y = created.base_pixel_y + rand(-6, 6)
+			created.forceMove(target)
+			number_to_make -= max_stack_amount
+
+		created = new stack_item(null, number_to_make)
 	else
-		created = new design.build_path(target)
+		created = new design.build_path(null)
 		split_materials_uniformly(design_materials, material_cost_coefficient, created)
 
 	created.pixel_x = created.base_pixel_x + rand(-6, 6)
 	created.pixel_y = created.base_pixel_y + rand(-6, 6)
 	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[created.type]"))
+	created.forceMove(target)
 
 	if(is_stack)
 		items_remaining = 0
@@ -438,18 +450,17 @@
 	SStgui.update_uis(src)
 	icon_state = initial(icon_state)
 
-/obj/machinery/rnd/production/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
-	. = ..()
-	if(!can_interact(usr) || (!issilicon(usr) && !isAdminGhostAI(usr)) && !Adjacent(usr))
+/obj/machinery/rnd/production/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
 		return
 	if(busy)
-		balloon_alert(usr, "busy printing!")
+		balloon_alert(user, "busy printing!")
 		return
 	var/direction = get_dir(src, over_location)
 	if(!direction)
 		return
 	drop_direction = direction
-	balloon_alert(usr, "dropping [dir2text(drop_direction)]")
+	balloon_alert(user, "dropping [dir2text(drop_direction)]")
 
 /obj/machinery/rnd/production/click_alt(mob/user)
 	if(drop_direction == 0)

@@ -140,7 +140,7 @@
 /area/ruin/space/has_grav/powered/virtual_domain)
 "F" = (
 /obj/structure/table/greyscale,
-/obj/item/gun/energy/beam_rifle,
+/obj/item/gun/energy/xray,
 /obj/item/gun/energy/laser{
 	pixel_x = 4;
 	pixel_y = -6

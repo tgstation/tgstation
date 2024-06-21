@@ -36,6 +36,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/gorilla
 	faction = list(FACTION_MONKEY, FACTION_JUNGLE)
 	butcher_results = list(/obj/item/food/meat/slab/gorilla = 4, /obj/effect/gibspawner/generic/animal = 1)
+	max_grab = GRAB_KILL
 	/// How likely our meaty fist is to stun someone
 	var/paralyze_chance = 20
 	/// A counter for when we can scream again
@@ -54,7 +55,7 @@
 
 /mob/living/basic/gorilla/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP), ROUNDSTART_TRAIT)
+	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_CHUNKYFINGERS), ROUNDSTART_TRAIT)
 	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	AddElement(/datum/element/dextrous)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_BAREFOOT)

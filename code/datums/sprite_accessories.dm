@@ -1700,24 +1700,24 @@
 // MutantParts Definitions //
 /////////////////////////////
 
-/datum/sprite_accessory/body_markings
-	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
+/datum/sprite_accessory/lizard_markings
+	icon = 'icons/mob/human/species/lizard/lizard_markings.dmi'
 
-/datum/sprite_accessory/body_markings/none
+/datum/sprite_accessory/lizard_markings/none
 	name = "None"
 	icon_state = "none"
 
-/datum/sprite_accessory/body_markings/dtiger
+/datum/sprite_accessory/lizard_markings/dtiger
 	name = "Dark Tiger Body"
 	icon_state = "dtiger"
 	gender_specific = TRUE
 
-/datum/sprite_accessory/body_markings/ltiger
+/datum/sprite_accessory/lizard_markings/ltiger
 	name = "Light Tiger Body"
 	icon_state = "ltiger"
 	gender_specific = TRUE
 
-/datum/sprite_accessory/body_markings/lbelly
+/datum/sprite_accessory/lizard_markings/lbelly
 	name = "Light Belly"
 	icon_state = "lbelly"
 	gender_specific = TRUE

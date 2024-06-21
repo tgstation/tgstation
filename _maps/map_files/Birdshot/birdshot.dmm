@@ -12780,6 +12780,9 @@
 /area/station/security/checkpoint/science)
 "fnm" = (
 /obj/structure/filingcabinet/chestdrawer,
+/obj/item/book/manual/wiki/engineering_guide{
+	pixel_y = 6
+	},
 /turf/open/floor/iron/grimy,
 /area/station/engineering/main)
 "fnw" = (
@@ -17534,10 +17537,6 @@
 /obj/structure/table/greyscale,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/wrench,
-/obj/item/multitool{
-	pixel_x = 4;
-	pixel_y = 5
-	},
 /turf/open/floor/iron/grimy,
 /area/station/engineering/main)
 "gUC" = (
@@ -22386,6 +22385,12 @@
 	},
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos/space_catwalk)
+"izw" = (
+/obj/machinery/transport/tram_controller/tcomms{
+	configured_transport_id = "bird_2"
+	},
+/turf/open/floor/circuit,
+/area/station/tcommsat/server)
 "izB" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/sign/painting/library{
@@ -29645,8 +29650,14 @@
 	pixel_y = 4
 	},
 /obj/machinery/light/small/directional/south,
-/obj/item/book/manual/wiki/engineering_guide{
-	pixel_y = 4
+/obj/item/flatpack{
+	board = /obj/item/circuitboard/machine/flatpacker;
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/multitool{
+	pixel_x = 7;
+	pixel_y = -2
 	},
 /turf/open/floor/iron/grimy,
 /area/station/engineering/main)
@@ -45111,7 +45122,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/armory/riot_helmet,
 /obj/effect/spawner/random/armory/bulletproof_helmet,
-/obj/item/gun/energy/e_gun/dragnet,
+/obj/effect/spawner/random/armory/dragnet,
 /turf/open/floor/iron/dark/small,
 /area/station/ai_monitored/security/armory)
 "qaV" = (
@@ -58362,8 +58373,10 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
 "tUD" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/obj/machinery/transport/tram_controller/tcomms{
+	configured_transport_id = "bird_1"
+	},
+/turf/open/floor/circuit,
 /area/station/tcommsat/server)
 "tUH" = (
 /obj/structure/disposalpipe/segment,
@@ -121804,7 +121817,7 @@ wos
 udv
 tSq
 mvo
-tUD
+izw
 bFw
 ulK
 cdn
