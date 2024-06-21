@@ -22,6 +22,7 @@
 	name = "Circuit Tile"
 	result = /obj/item/stack/tile/circuit
 	reqs = list(
+		/obj/item/stack/sheet/iron = 1,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stack/cable_coil = 5,
 		)
