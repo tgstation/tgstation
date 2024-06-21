@@ -954,7 +954,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!click_alt_open)
 		return
 
-	return open_storage_on_signal(source, user) ? CLICK_ACTION_SUCCESS : CLICK_ACTION_BLOCKING
+	return open_storage_on_signal(source, user) ? CLICK_ACTION_SUCCESS : NONE
 
 /// Opens the storage to the mob, showing them the contents to their UI.
 /datum/storage/proc/open_storage(mob/to_show)
