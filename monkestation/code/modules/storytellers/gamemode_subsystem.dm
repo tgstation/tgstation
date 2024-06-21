@@ -276,7 +276,7 @@ SUBSYSTEM_DEF(gamemode)
 			if(no_antags && !isnull(candidate.mind.antag_datums))
 				var/real = FALSE
 				for(var/datum/antagonist/antag_datum as anything in candidate.mind.antag_datums)
-					if(!(antag_datum.antag_flags & FLAG_FAKE_ANTAG))
+					if(antag_datum.count_against_dynamic_roll_chance && !(antag_datum.antag_flags & FLAG_FAKE_ANTAG))
 						real = TRUE
 						break
 				if(real)

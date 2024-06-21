@@ -9,6 +9,7 @@
 	roundend_category = "abductees"
 	antagpanel_category = ANTAG_GROUP_ABDUCTORS
 	antag_hud_name = "abductee"
+	count_against_dynamic_roll_chance = FALSE // monkestation edit
 
 /datum/antagonist/abductee/on_gain()
 	give_objective()
