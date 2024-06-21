@@ -75,7 +75,7 @@
 
 /obj/machinery/modular_computer/preset/id/centcom/Initialize(mapload)
 	. = ..()
-	var/datum/computer_file/program/card_mod/card_mod_centcom = cpu.find_file_by_name("plexagonidwriter")
+	var/datum/computer_file/program/card_mod/card_mod_centcom = cpu.find_file_by_name(/datum/computer_file/program/card_mod::filename)
 	card_mod_centcom.is_centcom = TRUE
 
 // ===== CIVILIAN CONSOLE =====
@@ -99,7 +99,7 @@
 /obj/machinery/modular_computer/preset/cargochat
 	name = "cargo interfacing console"
 	desc = "A stationary computer that comes pre-loaded with software to interface with the cargo department."
-	startup_program = "dept_order"
+	startup_program = /datum/computer_file/program/department_order::filename
 	preinstalled_programs = list(
 		/datum/computer_file/program/chatclient,
 		/datum/computer_file/program/department_order,
@@ -119,10 +119,10 @@
 	if(!department_type)
 		return
 
-	var/datum/computer_file/program/department_order/orderprogram = cpu.find_file_by_name("dept_order")
+	var/datum/computer_file/program/department_order/orderprogram = cpu.find_file_by_name(/datum/computer_file/program/department_order::filename)
 	orderprogram.set_linked_department(department_type) // Set department in program dept_order
 
-	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name("ntnrc_client")
+	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name(/datum/computer_file/program/chatclient::filename)
 	chatprogram.username = "[LOWER_TEXT(initial(department_type.department_name))]_department"
 	cpu.idle_threads += chatprogram
 
@@ -147,7 +147,7 @@
 	department_type = /datum/job_department/cargo
 	name = "departmental interfacing console"
 	desc = "A stationary computer that comes pre-loaded with software to interface with incoming departmental cargo requests."
-	startup_program = "ntnrc_client"
+	startup_program = /datum/computer_file/program/chatclient::filename
 	preinstalled_programs = list(
 		/datum/computer_file/program/chatclient,
 		/datum/computer_file/program/department_order,
@@ -159,13 +159,13 @@
 
 /obj/machinery/modular_computer/preset/cargochat/cargo/post_machine_initialize()
 	. = ..()
-	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name("ntnrc_client")
+	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name(startup_program)
 	chatprogram.username = "cargo_requests_operator"
 
 	var/datum/ntnet_conversation/cargochat = chatprogram.create_new_channel("#cargobus", strong = TRUE)
 	for(var/obj/machinery/modular_computer/preset/cargochat/cargochat_console as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/modular_computer/preset/cargochat))
 		if(cargochat_console == src)
 			continue
-		var/datum/computer_file/program/chatclient/other_chatprograms = cargochat_console.cpu.find_file_by_name("ntnrc_client")
+		var/datum/computer_file/program/chatclient/other_chatprograms = cargochat_console.cpu.find_file_by_name(startup_program)
 		other_chatprograms.active_channel = chatprogram.active_channel
 		cargochat.add_client(other_chatprograms, silent = TRUE)
