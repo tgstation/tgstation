@@ -311,8 +311,6 @@
 
 	return reward
 
-#define TESTING
-
 /**
  * This proc is called from [proc/sacrifice_process] after the heretic successfully sacrifices [sac_target].)
  *
