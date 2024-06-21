@@ -291,7 +291,7 @@
 	return !!locate(/obj/item) in held_items
 
 /mob/proc/drop_all_held_items()
-	. = FALSE
+	. = list()
 	for(var/obj/item/I in held_items)
 		. |= dropItemToGround(I)
 
