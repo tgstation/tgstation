@@ -96,7 +96,6 @@
 /obj/item/reagent_containers/spray/proc/do_spray(atom/target, wait_step, obj/effect/decal/chempuff/reagent_puff, range, puff_reagent_left, mob/user)
 	reagent_puff.user = user
 	reagent_puff.sprayer = src
-	reagent_puff.lifetime = puff_reagent_left
 	reagent_puff.stream = stream_mode
 
 	var/turf/target_turf = get_turf(target)
