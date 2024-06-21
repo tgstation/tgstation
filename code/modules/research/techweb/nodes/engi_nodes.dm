@@ -137,11 +137,6 @@
 		"wirecutters",
 		"light_bulb",
 		"light_tube",
-		"intercom_frame",
-		"newscaster_frame",
-		"status_display_frame",
-		"tram_controller",
-		"tram_display",
 		"crossing_signal",
 		"guideway_sensor",
 	)
