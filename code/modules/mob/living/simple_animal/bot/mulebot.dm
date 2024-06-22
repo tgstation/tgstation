@@ -486,7 +486,8 @@
 	. = ..()
 	if(has_gravity())
 		for(var/mob/living/carbon/human/future_pancake in loc)
-			run_over(future_pancake)
+			if(future_pancake.body_position == LYING_DOWN)
+				run_over(future_pancake)
 
 	diag_hud_set_mulebotcell()
 
