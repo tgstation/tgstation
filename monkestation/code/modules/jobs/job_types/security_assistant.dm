@@ -1,6 +1,6 @@
 /datum/job/security_assistant
 	title = JOB_SECURITY_ASSISTANT
-	description = "Fine people for trivial things. Be an glorified hall monitor."
+	description = "Fine people for trivial things. Be a glorified hall monitor."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list(JOB_HEAD_OF_SECURITY)
 	faction = FACTION_STATION
