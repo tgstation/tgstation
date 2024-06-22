@@ -1,0 +1,4 @@
+author: "RikuTheKiller"
+delete-after: True
+changes:
+  - bugfix: "Satchels can now be crafted out of cloth."
