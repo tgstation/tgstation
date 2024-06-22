@@ -40173,8 +40173,7 @@
 	},
 /obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Cytology Pen";
-	req_access = list("research");
-	
+	req_access = list("research")
 	},
 /turf/open/floor/engine,
 /area/station/science/cytology)
