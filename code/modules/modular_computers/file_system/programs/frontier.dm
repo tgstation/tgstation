@@ -24,13 +24,16 @@
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, computer)
 
-/datum/computer_file/program/scipaper_program/application_attackby(obj/item/attacking_item, mob/living/user)
-	if(!istype(attacking_item, /obj/item/multitool))
-		return FALSE
-	var/obj/item/multitool/attacking_tool = attacking_item
-	if(!QDELETED(attacking_tool.buffer) && istype(attacking_tool.buffer, /datum/techweb))
-		linked_techweb = attacking_tool.buffer
-	return TRUE
+/datum/computer_file/program/scipaper_program/application_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/multitool))
+		return multitool_act(user, tool)
+
+/datum/computer_file/program/scipaper_program/proc/multitool_act(mob/living/user, obj/item/multitool/used_multitool)
+	if(QDELETED(used_multitool.buffer) || !istype(used_multitool.buffer, /datum/techweb))
+		return ITEM_INTERACT_BLOCKING
+	linked_techweb = used_multitool.buffer
+	computer.balloon_alert(user, "buffer linked!")
+	return ITEM_INTERACT_SUCCESS
 
 /datum/computer_file/program/scipaper_program/proc/recheck_file_presence()
 	if(selected_file in computer.stored_files)
