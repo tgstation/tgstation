@@ -339,6 +339,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
+
 /obj/machinery/washing_machine/item_interaction(mob/living/user, obj/item/item, list/modifiers)
 	if(user.combat_mode)
 		return NONE
