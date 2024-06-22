@@ -93,6 +93,7 @@
 			spawner.artificial_spawn(current_avatar)
 
 		if(!generated_domain.keep_custom_spawns)
+			generated_domain.custom_spawns -= entry_atom
 			qdel(entry_atom)
 
 	neo.set_static_vision(3 SECONDS)

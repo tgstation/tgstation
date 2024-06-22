@@ -2,7 +2,7 @@
 	name = "Island Brawl"
 	announce_to_ghosts = TRUE
 	cost = BITRUNNER_COST_HIGH
-	desc = "A peaceful island tucked away in the middle of nowhere. The locals won't be happy to see you."
+	desc = "A 'peaceful' island tucked away in the middle of nowhere. This map will auto-complete after a number of deaths have occurred."
 	difficulty = BITRUNNER_DIFFICULTY_HIGH
 	forced_outfit = /datum/outfit/beachbum_combat
 	help_text = "There may be bounties laid out across the island, but the primary objective is to survive. Deaths on the island will count towards the final score."
@@ -35,7 +35,7 @@
 /datum/lazy_template/virtual_domain/island_brawl/proc/on_death(datum/source, gibbed)
 	SIGNAL_HANDLER
 
-	add_points(0.7)
+	add_points(1)
 
 
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander
