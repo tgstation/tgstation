@@ -37,7 +37,7 @@
 /// I grab the atom here so I can signal it / manipulate spawners etc
 /obj/machinery/quantum_server/proc/get_avatar_destination() as /atom
 	// Branch A: Custom spawns
-	if(generated_domain.custom_spawns)
+	if(length(generated_domain.custom_spawns))
 		var/atom/valid_spawner
 
 		while(isnull(valid_spawner))
