@@ -64,7 +64,10 @@
 			exit_tile = dest_turf
 			break
 
-	var/obj/structure/hololadder/wayout = new(exit_tile)
+	if(isnull(exit_tile))
+		return
+
+	var/obj/structure/hololadder/wayout = new(exit_tile, src)
 	if(isnull(wayout))
 		return
 
@@ -135,6 +138,33 @@
 	var/datum/effect_system/spark_spread/quantum/sparks = new()
 	sparks.set_up(5, location = get_turf(cache))
 	sparks.start()
+
+
+/// Starts building a new avatar for the player.
+/// Called by netpods when they don't have a current avatar.
+/// This is a procedural proc which links several others together.
+/obj/machinery/quantum_server/proc/start_new_connection(mob/living/carbon/human/neo, datum/outfit/netsuit) as /mob/living/carbon/human
+	var/atom/entry_atom = get_avatar_destination()
+	if(isnull(entry_atom))
+		return
+
+	var/mob/living/carbon/new_avatar = generate_avatar(get_turf(entry_atom), netsuit)
+	stock_gear(new_avatar, neo, generated_domain)
+
+	// Cleanup for domains with one time use custom spawns
+	if(!length(generated_domain.custom_spawns))
+		return new_avatar
+
+	// If we're spawning from some other fuckery, no need for this
+	if(istype(entry_atom, /obj/effect/mob_spawn/ghost_role/human/virtual_domain))
+		var/obj/effect/mob_spawn/ghost_role/human/virtual_domain/spawner = entry_atom
+		spawner.artificial_spawn(new_avatar)
+
+	if(!generated_domain.keep_custom_spawns)
+		generated_domain.custom_spawns -= entry_atom
+		qdel(entry_atom)
+
+	return new_avatar
 
 
 /// Toggles broadcast on and off
