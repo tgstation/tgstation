@@ -7,6 +7,8 @@
 
 /// Return value to cancel attaching
 #define ELEMENT_INCOMPATIBLE 1
+/// Returned in PostTransfer to prevent transfer, similar to `COMPONENT_NOTRANSFER`
+#define ELEMENT_NOTRANSFER 2
 
 // /datum/element flags
 /// Causes the detach proc to be called when the host object is being deleted.
