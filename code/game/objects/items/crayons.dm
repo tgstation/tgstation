@@ -428,11 +428,11 @@
 		target = target.loc
 
 	if(!isturf(target))
-		return
+		return FALSE
 
 	if(!isValidSurface(target))
 		target.balloon_alert(user, "can't use there!")
-		return
+		return TRUE
 
 	var/drawing = drawtype
 	switch(drawtype)
@@ -462,7 +462,7 @@
 	if (istagger)
 		cost *= 0.5
 	if(check_empty(user, cost))
-		return
+		return TRUE
 
 	var/temp = "rune"
 	var/ascii = (length(drawing) == 1)
@@ -512,10 +512,10 @@
 		wait_time *= 0.5
 
 	if(!instant && !do_after(user, wait_time, target = target, max_interact_count = 4))
-		return
+		return TRUE
 
 	if(!use_charges(user, cost))
-		return
+		return TRUE
 
 	if(length(text_buffer))
 		drawing = text_buffer[1]
@@ -566,13 +566,15 @@
 		for(var/turf/draw_turf as anything in affected_turfs)
 			reagents.expose(draw_turf, methods = TOUCH, volume_modifier = volume_multiplier)
 	check_empty(user)
+	return TRUE
 
 /obj/item/toy/crayon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (!check_allowed_items(interacting_with))
 		return NONE
 
-	use_on(interacting_with, user, modifiers)
-	return ITEM_INTERACT_BLOCKING
+	if(use_on(interacting_with, user, modifiers))
+		return ITEM_INTERACT_BLOCKING
+	return NONE
 
 /obj/item/toy/crayon/get_writing_implement_details()
 	return list(
