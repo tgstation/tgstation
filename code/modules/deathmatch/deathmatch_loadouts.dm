@@ -553,7 +553,7 @@
 /datum/outfit/deathmatch_loadout/humanity
 	name = "Deathmatch: Human Race"
 	display_name = "Humanity"
-	desc = "The protagonists"
+	desc = "The most ambitious and successful race. Or just the most greedy and rapacious, depending on who you ask."
 
 	uniform = /obj/item/clothing/under/trek/command/next
 	neck = /obj/item/clothing/neck/large_scarf/blue
@@ -566,17 +566,57 @@
 	l_pocket = /obj/item/gun/energy/e_gun/mini
 
 // Lizard: Desert, Soldier, Trash
+
 /datum/outfit/deathmatch_loadout/lizardkind
 	name = "Deathmatch: Lizard Race"
-	display_name = "Lizardkind"
-	desc = "The protagonists"
+	display_name = "Lizardfolk"
+	desc = "They may be janitors on the space station, but many of them still have their roots in the military culture of Tizira."
 
-	uniform = /obj/item/clothing/under/trek/command/next
-	neck = /obj/item/clothing/neck/large_scarf/blue
-	belt = /obj/item/storage/belt/utility/full/inducer
-	ears = /obj/item/radio/headset/headset_com
-	glasses = /obj/item/clothing/glasses/sunglasses
-	gloves = /obj/item/clothing/gloves/fingerless
-	head = /obj/item/clothing/head/soft/black
-	shoes = /obj/item/clothing/shoes/laceup
-	l_pocket = /obj/item/gun/energy/e_gun/mini
+	head = /obj/item/clothing/head/cowboy/brown
+	accessory = /obj/item/clothing/accessory/vest_sheriff
+	suit = /obj/item/clothing/suit/jacket/curator
+	suit_store = /obj/item/gun/ballistic/revolver/c38
+	uniform = /obj/item/clothing/under/rank/civilian/curator/treasure_hunter
+	l_pocket = /obj/item/lighter
+	belt = /obj/item/melee/curator_whip
+	shoes = /obj/item/clothing/shoes/discoshoes
+	r_hand  = /obj/item/spear/bonespear
+	backpack_contents = list(
+		/obj/item/toy/plush/lizard_plushie/green,
+		// AAAAAAAAAAH I'M TIZIIIIIIIRIIIING AAAAAAAAAAAH
+		/obj/item/storage/box/tiziran_meats,
+		/obj/item/storage/box/tiziran_cans,
+		/obj/item/storage/box/tiziran_goods,
+		// reclaiming lizard racism
+		/obj/item/reagent_containers/cup/glass/bottle/lizardwine,
+		/obj/item/tailclub,
+		/obj/item/melee/chainofcommand/tailwhip,
+		/obj/item/reagent_containers/cup/glass/coffee
+	)
+
+/datum/outfit/deathmatch_loadout/mothman
+	name = "Deathmatch: Moth Race"
+	display_name = "Mothmen"
+	desc = "An innocent and fluffy visage hides the craftiness and cleverness of anyone who's ever been in the Nomad Fleet for more than a year."
+
+	head = /obj/item/clothing/head/mothcap/original
+	accessory = /obj/item/clothing/accessory/vest_sheriff
+	suit = /obj/item/clothing/suit/mothcoat/original
+	suit_store = /obj/item/gun/ballistic/revolver/c38
+	uniform = /obj/item/clothing/under/rank/civilian/curator
+	l_pocket = /obj/item/lighter
+	belt = /obj/item/melee/curator_whip
+	shoes = /obj/item/clothing/shoes/discoshoes
+	r_hand  = /obj/item/spear/bonespear
+	backpack_contents = list(
+		/obj/item/toy/plush/lizard_plushie/green,
+		// AAAAAAAAAAH I'M TIZIIIIIIIRIIIING AAAAAAAAAAAH
+		/obj/item/storage/box/tiziran_meats,
+		/obj/item/storage/box/tiziran_cans,
+		/obj/item/storage/box/tiziran_goods,
+		// reclaiming lizard racism
+		/obj/item/reagent_containers/cup/glass/bottle/lizardwine,
+		/obj/item/tailclub,
+		/obj/item/melee/chainofcommand/tailwhip,
+		/obj/item/reagent_containers/cup/glass/coffee
+	)
