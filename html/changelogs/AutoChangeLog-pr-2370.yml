@@ -1,0 +1,4 @@
+author: "RikuTheKiller"
+delete-after: True
+changes:
+  - bugfix: "The secass description now reads \"a\" instead of \"an\", happy now?"
