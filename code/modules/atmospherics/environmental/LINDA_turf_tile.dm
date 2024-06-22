@@ -775,9 +775,9 @@ Then we space some of our heat, and think about if we should stop conducting.
 		current_sound_loc = sound_turf
 
 /datum/looping_sound/fire
-	mid_sounds = 'sound/effects/roaring_fire.ogg'
+	mid_sounds = 'sound/effects/roaring_fire_chopped.ogg'
 	volume = 100
-	mid_length = 13 SECONDS
+	mid_length = 2 SECONDS
 	falloff_distance = 4
 
 #undef LAST_SHARE_CHECK
