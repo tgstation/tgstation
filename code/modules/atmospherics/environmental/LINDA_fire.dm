@@ -58,6 +58,9 @@
 		active_hotspot = new /obj/effect/hotspot(src, exposed_volume*25, exposed_temperature)
 		our_hot_group = new
 		our_hot_group.add_to_group(src)
+		if(COOLDOWN_FINISHED(src, fire_puff_cooldown))
+			playsound(src, 'sound/effects/fire_puff.ogg', 50)
+			COOLDOWN_START(src, fire_puff_cooldown, 5 SECONDS)
 
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
 			//remove just_spawned protection if no longer processing this cell
@@ -105,7 +108,6 @@
 	if(!isnull(starting_temperature))
 		temperature = starting_temperature
 	perform_exposure()
-	playsound(src, 'sound/effects/fire_puff.ogg', 100)
 	setDir(pick(GLOB.cardinals))
 	air_update_turf(FALSE, FALSE)
 	var/static/list/loc_connections = list(

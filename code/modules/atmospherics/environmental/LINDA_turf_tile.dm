@@ -52,6 +52,7 @@
 	///gas IDs of current active gas overlays
 	var/list/atmos_overlay_types
 	var/significant_share_ticker = 0
+	STATIC_COOLDOWN_DECLARE(fire_puff_cooldown)
 	#ifdef TRACK_MAX_SHARE
 	var/max_share = 0
 	#endif
