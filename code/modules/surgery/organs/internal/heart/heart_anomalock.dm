@@ -52,7 +52,7 @@
 	if(target_mob == user && istype(target_mob) && core)
 		if(DOING_INTERACTION(user, "implanting"))
 			return
-		user.balloon_alert(user, "This will hurt...")
+		user.balloon_alert(user, "this will hurt...")
 		to_chat(user, span_userdanger("silver-striped black cyberveins tear your skin apart, pulling the heart into your ribcage. This feels unwise.."))
 		if(!do_after(user, 5 SECONDS, interaction_key = "implanting"))
 			return ..()
