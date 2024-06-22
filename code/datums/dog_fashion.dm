@@ -148,7 +148,7 @@
 	emote_see = list("drools.","looks for donuts.")
 
 /datum/dog_fashion/head/blue_wizard
-	name = "Greybeard %REAL_NAME%"
+	name = "Warlock %REAL_NAME%"
 	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI NATH!")
 
 /datum/dog_fashion/head/red_wizard
