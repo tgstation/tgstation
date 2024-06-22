@@ -1,5 +1,6 @@
 /datum/component/ecologist
 	var/last_damage
+	var/cooldown
 
 /datum/component/ecologist/Initialize(...)
 	. = ..()
@@ -31,6 +32,8 @@
 
 	var/calculate_damage = round((last_damage - man_of_nature.health)/5)
 	if(isnull(calculate_damage))
+		return
+	if(cooldown)
 		return
 	make_vines(man_of_nature, calculate_damage)
 	last_damage = man_of_nature.health
@@ -66,3 +69,5 @@
 						mutations -= add_mutation
 				new /datum/spacevine_controller(around_ecologist, mutations, 20, 20)
 				making_and_making++
+	cooldown = TRUE
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 5 SECONDS)

@@ -75,6 +75,7 @@
 		addtimer(CALLBACK(src, PROC_REF(check_safe_location), user), 10 SECONDS)
 		return
 	user.AddComponent(/datum/component/dejavu/timeline, -1, 60 SECONDS)
+
 /datum/spellbook_entry/perks/ecologist
 	name = "Ecologist"
 	desc = "your body becomes a vessel for rapidly growing vines. \
