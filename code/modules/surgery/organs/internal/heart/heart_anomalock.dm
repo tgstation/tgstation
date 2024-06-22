@@ -1,7 +1,6 @@
 /obj/item/organ/internal/heart/cybernetic/anomalock
-	name = "experimental cybernetic heart"
-	desc = "A top of the line cybernetic heart, designed to protect the user from electromagnetic pulses and electric shocks. \
-	Overcharges itself to grants the user a second wind upon receiving fatal damage."
+	name = "voltaic combat cyberheart"
+	desc = "A cutting-edge cyberheart, originally designed for Nanotrasen killsquad usage but later declassified for normal research. Voltaic technology allows the heart to keep the body upright in dire circumstances, alongside redirecting anomalous flux energy to fully shield the user from shocks and electro-magnetic pulses. Requires a refined Flux core as a power source."
 	icon_state = "anomalock_heart"
 	///Cooldown for the activation of the organ
 	var/survival_cooldown = 5 MINUTES
@@ -54,7 +53,7 @@
 		if(DOING_INTERACTION(user, "implanting"))
 			return
 		user.balloon_alert(user, "This will hurt...")
-		to_chat(user, span_userdanger("You see tendrils opening your ribcage"))
+		to_chat(user, span_userdanger("silver-striped black cyberveins tear your skin apart, pulling the heart into your ribcage. This feels unwise.."))
 		if(!do_after(user, 5 SECONDS, interaction_key = "implanting"))
 			return ..()
 		playsound(target_mob, 'sound/weapons/slice.ogg', 50, TRUE)
@@ -168,6 +167,6 @@
 	update_icon_state()
 
 /atom/movable/screen/alert/anomalock_active
-	name = "experimental cybernetic heart"
+	name = "voltaic cyberheart energy"
 	icon_state = "anomalock_heart"
-	desc = "Granting you a second wind, this is only temporary so find a solution fast!"
+	desc = "Voltaic energy is flooding your muscles, keeping your body upright. You have 30 seconds before it falters!"
