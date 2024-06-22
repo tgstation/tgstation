@@ -1,0 +1,5 @@
+author: "ThePooba"
+delete-after: True
+changes:
+  - bugfix: "Fixed the button not appearing for thermoregulator on hardsuit"
+  - bugfix: "Energy cost for Hardsuits thermoregulator (it would run out in minutes)"
