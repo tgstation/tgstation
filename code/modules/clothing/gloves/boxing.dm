@@ -11,7 +11,7 @@
 
 /obj/item/clothing/gloves/boxing/Initialize(mapload)
 	. = ..()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/extendohand_l, /datum/crafting_recipe/extendohand_r)
+	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/extendohand_l, /datum/crafting_recipe/extendohand_r))
 
 	AddElement(
 		/datum/element/slapcrafting,\

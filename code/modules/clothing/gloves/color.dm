@@ -13,7 +13,7 @@
 
 /obj/item/clothing/gloves/color/black/Initialize(mapload)
 	. = ..()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/radiogloves)
+	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/radiogloves))
 
 	AddElement(
 		/datum/element/slapcrafting,\
@@ -33,9 +33,9 @@
 	undyeable = TRUE
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
-/obj/item/clothing/gloves/color/fingerless/Initialize(mapload)
+/obj/item/clothing/gloves/fingerless/Initialize(mapload)
 	. = ..()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gripperoffbrand)
+	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/gripperoffbrand))
 
 	AddElement(
 		/datum/element/slapcrafting,\

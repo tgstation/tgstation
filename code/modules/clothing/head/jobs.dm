@@ -408,9 +408,9 @@
 /obj/item/clothing/head/hats/hos/cap/Initialize(mapload)
 	. = ..()
 	// Give it a little publicity
-	var/static/list/slapcraft_recipe_list = list(\
+	var/list/slapcraft_recipe_list = string_list(list(\
 		/datum/crafting_recipe/sturdy_shako,\
-		)
+		))
 
 	AddElement(
 		/datum/element/slapcrafting,\

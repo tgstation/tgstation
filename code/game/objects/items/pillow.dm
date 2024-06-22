@@ -33,9 +33,9 @@
 	)
 	AddElement(/datum/element/disarm_attack)
 
-	var/static/list/slapcraft_recipe_list = list(\
+	var/list/slapcraft_recipe_list = string_list(list(\
 		/datum/crafting_recipe/pillow_suit, /datum/crafting_recipe/pillow_hood,\
-		)
+		))
 
 	AddElement(
 		/datum/element/slapcrafting,\

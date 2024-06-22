@@ -143,7 +143,7 @@
 
 /obj/item/shield/riot/Initialize(mapload)
 	. = ..()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/strobeshield)
+	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/strobeshield))
 
 	AddElement(
 		/datum/element/slapcrafting,\

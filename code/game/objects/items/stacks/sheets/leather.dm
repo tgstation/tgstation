@@ -247,9 +247,9 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 
 	// As bone and sinew have just a little too many recipes for this, we'll just split them up.
 	// Sinew slapcrafting will mostly-sinew recipes, and bones will have mostly-bones recipes.
-	var/static/list/slapcraft_recipe_list = list(\
+	var/list/slapcraft_recipe_list = string_list(list(\
 		/datum/crafting_recipe/goliathcloak, /datum/crafting_recipe/skilt, /datum/crafting_recipe/drakecloak,\
-		)
+		))
 
 	AddElement(
 		/datum/element/slapcrafting,\
@@ -309,7 +309,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 /obj/item/stack/sheet/animalhide/ashdrake/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
 
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/drakecloak)
+	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/drakecloak))
 
 	AddElement(
 		/datum/element/slapcrafting,\

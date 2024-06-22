@@ -44,7 +44,7 @@
 	if(toggle_context)
 		RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/flashlight_eyes)
+	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/flashlight_eyes))
 
 	AddElement(
 		/datum/element/slapcrafting,\

@@ -212,7 +212,7 @@
 	if(new_color)
 		set_cable_color(new_color)
 
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/bola, /datum/crafting_recipe/gonbola)
+	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/bola, /datum/crafting_recipe/gonbola))
 
 	AddElement(
 		/datum/element/slapcrafting,\

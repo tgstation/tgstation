@@ -50,7 +50,7 @@
 
 /obj/item/extinguisher/Initialize(mapload)
 	. = ..()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ghettojetpack)
+	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/ghettojetpack))
 
 	AddElement(
 		/datum/element/slapcrafting,\

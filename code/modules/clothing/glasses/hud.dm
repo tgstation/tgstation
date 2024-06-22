@@ -92,7 +92,7 @@
 
 /obj/item/clothing/glasses/hud/health/sunglasses/Initialize(mapload)
 	. = ..()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/hudsunmedremoval)
+	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/hudsunmedremoval))
 
 	AddElement(
 		/datum/element/slapcrafting,\
@@ -129,7 +129,7 @@
 
 /obj/item/clothing/glasses/hud/diagnostic/sunglasses/Initialize(mapload)
 	. = ..()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/hudsundiagremoval)
+	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/hudsundiagremoval))
 
 	AddElement(
 		/datum/element/slapcrafting,\
@@ -173,7 +173,7 @@
 
 /obj/item/clothing/glasses/hud/security/sunglasses/Initialize(mapload)
 	. = ..()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/hudsunsecremoval)
+	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/hudsunsecremoval))
 
 	AddElement(
 		/datum/element/slapcrafting,\

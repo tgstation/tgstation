@@ -25,7 +25,7 @@
 	// Only actual KAs can be converted
 	if(type != /obj/item/gun/energy/recharge/kinetic_accelerator)
 		return
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ebow)
+	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/ebow))
 
 	AddElement(
 		/datum/element/slapcrafting,\

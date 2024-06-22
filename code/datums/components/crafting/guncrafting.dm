@@ -16,7 +16,7 @@
 	icon_state = "receiver"
 
 /obj/item/weaponcrafting/receiver/create_slapcraft_component()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/pipegun)
+	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/pipegun))
 
 	AddElement(
 		/datum/element/slapcrafting,\
@@ -32,7 +32,7 @@
 	icon_state = "riflestock"
 
 /obj/item/weaponcrafting/stock/create_slapcraft_component()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/smoothbore_disabler, /datum/crafting_recipe/laser_musket)
+	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/smoothbore_disabler, /datum/crafting_recipe/laser_musket))
 
 	AddElement(
 		/datum/element/slapcrafting,\
@@ -46,7 +46,7 @@
 	icon_state = "weaponkit_gw"
 
 /obj/item/weaponcrafting/giant_wrench/create_slapcraft_component() // slappycraft
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/giant_wrench)
+	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/giant_wrench))
 
 	AddElement(
 		/datum/element/slapcrafting,\

@@ -38,7 +38,7 @@
 /obj/item/flamethrower/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/flamethrower)
+	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/flamethrower))
 
 	AddElement(
 		/datum/element/slapcrafting,\
