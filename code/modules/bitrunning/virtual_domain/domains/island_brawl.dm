@@ -2,15 +2,18 @@
 	name = "Island Brawl"
 	announce_to_ghosts = TRUE
 	cost = BITRUNNER_COST_HIGH
-	desc = "A deceptively peaceful island with only a few combatants yearning for a fight."
+	desc = "A peaceful island tucked away in the middle of nowhere. The locals won't be happy to see you."
 	difficulty = BITRUNNER_DIFFICULTY_HIGH
-	forced_outfit = /datum/outfit/beachbum/combat
-	help_text = "There may be bounties laid out across the island, but the primary objective is to survive."
+	forced_outfit = /datum/outfit/beachbum_combat
+	help_text = "There may be bounties laid out across the island, but the primary objective is to survive. Deaths on the island will count towards the final score."
 	key = "island_brawl"
 	map_name = "island_brawl"
 	reward_points = BITRUNNER_REWARD_HIGH
 	secondary_loot = list(
-		/obj/item/storage/box/survival = 1,
+		/obj/item/toy/beach_ball = 2,
+		/obj/item/clothing/shoes/sandal = 1,
+		/obj/item/clothing/glasses/sunglasses = 1,
+		/obj/item/gun/ballistic/automatic/mini_uzi = 1,
 	)
 
 

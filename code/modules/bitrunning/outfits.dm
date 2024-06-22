@@ -32,7 +32,7 @@
 	uniform = /obj/item/clothing/under/pants/jeans
 
 
-/datum/outfit/beachbum/combat/post_equip(mob/living/carbon/human/bum, visualsOnly)
+/datum/outfit/beachbum_combat/post_equip(mob/living/carbon/human/bum, visualsOnly)
 	. = ..()
 
 	var/list/ranged_weaps = list(
