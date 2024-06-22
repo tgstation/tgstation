@@ -1,5 +1,6 @@
 /// How much damage you take from an emp when wearing a hardsuit
 #define HARDSUIT_EMP_BURN 2 // a very orange number
+#define THERMAL_REGULATOR_COST 6 // this runs out fast if 18
 
 /obj/item/clothing/suit/space/hardsuit
 	name = "hardsuit"
@@ -12,7 +13,7 @@
 	armor_type = /datum/armor/hardsuit
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/t_scanner, /obj/item/construction/rcd, /obj/item/pipe_dispenser)
 	siemens_coefficient = 0
-	actions_types = list(/datum/action/item_action/toggle_helmet)
+	actions_types = list(/datum/action/item_action/toggle_helmet, /datum/action/item_action/toggle_spacesuit)
 
 	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
 	var/helmettype = /obj/item/clothing/head/helmet/space/hardsuit
@@ -80,8 +81,12 @@
 	else
 		RemoveHelmet()
 
-/obj/item/clothing/suit/space/hardsuit/ui_action_click()
-	ToggleHelmet()
+/// implements button for thermoregulamators, checks if helmet or regulator is being toggled
+/obj/item/clothing/suit/space/hardsuit/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/toggle_spacesuit))
+		toggle_spacesuit(user)
+	else if(istype(actiontype, /datum/action/item_action/toggle_helmet))
+		ToggleHelmet()
 
 /obj/item/clothing/suit/space/hardsuit/attack_self(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
