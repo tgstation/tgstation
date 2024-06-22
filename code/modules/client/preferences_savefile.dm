@@ -368,15 +368,42 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	return TRUE
 
-/datum/preferences/proc/remove_character(slot)
-	SHOULD_NOT_SLEEP(TRUE)
-	if(!slot)
-		return FALSE
-	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
+/datum/preferences/proc/switch_to_slot(new_slot)
+	// SAFETY: `load_character` performs sanitization on the slot number
+	if (!load_character(new_slot))
+		tainted_character_profiles = TRUE
+		randomise_appearance_prefs()
+		save_character()
 
-	var/tree_key = "character[slot]"
-	savefile.remove_entry(tree_key)
-	return TRUE
+	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
+		preference_middleware.on_new_character(usr)
+
+	character_preview_view.update_body()
+
+/datum/preferences/proc/remove_current_slot()
+	PRIVATE_PROC(TRUE)
+
+	var/closest_slot
+	for (var/other_slot in default_slot - 1 to 1 step -1)
+		var/save_data = savefile.get_entry("character[other_slot]")
+		if (!isnull(save_data))
+			closest_slot = other_slot
+			break
+
+	if (isnull(closest_slot))
+		for (var/other_slot in default_slot + 1 to max_save_slots)
+			var/save_data = savefile.get_entry("character[other_slot]")
+			if (!isnull(save_data))
+				closest_slot = other_slot
+				break
+
+	if (isnull(closest_slot))
+		stack_trace("remove_current_slot() being called when there are no slots to go to, the client should prevent this")
+		return
+
+	savefile.remove_entry("character[default_slot]")
+	tainted_character_profiles = TRUE
+	switch_to_slot(closest_slot)
 
 /datum/preferences/proc/sanitize_be_special(list/input_be_special)
 	var/list/output = list()

@@ -1,5 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - rscadd: "Ashwalkers are now better at riding, taming animals, and fishing."
-  - code_imp: "Behavior for the settler trait has been partially atomized into several traits instead."
