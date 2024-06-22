@@ -31,6 +31,8 @@
 /datum/component/virtual_entity/proc/jailbreak_mobs()
 	SIGNAL_HANDLER
 
-	to_chat(parent, span_big("You shiver for a moment, then suddenly feel a sense of clarity you haven't felt before. \
-		You can go anywhere, do anything! You could leave this simulation right now if you wanted!"))
+	to_chat(parent, span_boldannounce("You shiver for a moment with a sense of clarity you haven't felt before."))
+	to_chat(parent, span_notice("You could go <i>anywhere</i>, do <i>anything</i>! You could leave this simulation right now if you wanted!"))
+	to_chat(parent, span_danger("But be warned, quantum entanglement will interfere with any previous lives."))
+	to_chat(parent, span_notice("You'll have just one chance to go nova, and there's no turning back."))
 	qdel(src)
