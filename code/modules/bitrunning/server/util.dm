@@ -47,7 +47,9 @@
 				continue
 
 			valid_spawner = chosen
-			return valid_spawner
+			break
+
+		return valid_spawner
 
 	// Branch B: Hololadders
 	if(!length(exit_turfs))
