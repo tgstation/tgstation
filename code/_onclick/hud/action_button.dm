@@ -94,7 +94,7 @@
 		old_object.MouseExited(over_location, over_control, params)
 
 	last_hovored_ref = WEAKREF(over_object)
-	over_object.MouseEntered(over_location, over_control, params)
+	over_object?.MouseEntered(over_location, over_control, params)
 
 /atom/movable/screen/movable/action_button/MouseEntered(location, control, params)
 	. = ..()

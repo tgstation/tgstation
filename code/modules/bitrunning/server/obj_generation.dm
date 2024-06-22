@@ -110,7 +110,7 @@
 	if(isnull(destination))
 		return
 
-	var/obj/structure/hololadder/wayout = new(destination)
+	var/obj/structure/hololadder/wayout = new(destination, src)
 	if(isnull(wayout))
 		return
 

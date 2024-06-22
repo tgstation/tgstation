@@ -360,7 +360,7 @@
 	. = ..()
 
 	if(href_list["list_armor"])
-		var/list/readout = list("<span class='notice'><u><b>PROTECTION CLASSES</u></b>")
+		var/list/readout = list()
 
 		var/datum/armor/armor = get_armor()
 		var/added_damage_header = FALSE
@@ -369,9 +369,9 @@
 			if(!rating)
 				continue
 			if(!added_damage_header)
-				readout += "\n<b>ARMOR (I-X)</b>"
+				readout += "<b><u>ARMOR (I-X)</u></b>"
 				added_damage_header = TRUE
-			readout += "\n[armor_to_protection_name(damage_key)] [armor_to_protection_class(rating)]"
+			readout += "[armor_to_protection_name(damage_key)] [armor_to_protection_class(rating)]"
 
 		var/added_durability_header = FALSE
 		for(var/durability_key in ARMOR_LIST_DURABILITY())
@@ -379,9 +379,9 @@
 			if(!rating)
 				continue
 			if(!added_durability_header)
-				readout += "\n<b>DURABILITY (I-X)</b>"
+				readout += "<b><u>DURABILITY (I-X)</u></b>"
 				added_damage_header = TRUE
-			readout += "\n[armor_to_protection_name(durability_key)] [armor_to_protection_class(rating)]"
+			readout += "[armor_to_protection_name(durability_key)] [armor_to_protection_class(rating)]"
 
 		if(flags_cover & HEADCOVERSMOUTH || flags_cover & PEPPERPROOF)
 			var/list/things_blocked = list()
@@ -390,12 +390,15 @@
 			if(flags_cover & PEPPERPROOF)
 				things_blocked += "pepperspray"
 			if(length(things_blocked))
-				readout += "\n<b>COVERAGE</b>"
-				readout += "\nIt will block [english_list(things_blocked)]."
+				readout += "<b><u>COVERAGE</u></b>"
+				readout += "It will block [english_list(things_blocked)]."
 
-		readout += "</span>"
 
-		to_chat(usr, "[readout.Join()]")
+		if(!length(readout))
+			readout += "No armor or durability information available."
+
+		var/formatted_readout = span_notice("<b>PROTECTION CLASSES</b><hr>[jointext(readout, "\n")]")
+		to_chat(usr, examine_block(formatted_readout))
 
 /**
  * Rounds armor_value down to the nearest 10, divides it by 10 and then converts it to Roman numerals.
