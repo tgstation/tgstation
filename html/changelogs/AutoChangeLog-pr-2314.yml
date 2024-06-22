@@ -1,0 +1,4 @@
+author: "ThePooba"
+delete-after: True
+changes:
+  - bugfix: "Borers and Alien Larva can now hide on Multiple Z levels instead of just one"
