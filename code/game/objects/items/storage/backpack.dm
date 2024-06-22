@@ -51,7 +51,7 @@
 
 /obj/item/bag_of_holding_inert/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/slapcrafting,\
+	AddElement(/datum/element/slapcrafting,\
 		slapcraft_recipes = list(/datum/crafting_recipe/boh)\
 	)
 
