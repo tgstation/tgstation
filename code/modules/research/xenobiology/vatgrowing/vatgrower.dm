@@ -16,7 +16,6 @@
 	///If the vat will restart the sample upon completion
 	var/resampler_active = FALSE
 
-///Add that sexy demnand component
 /obj/machinery/vatgrower/Initialize(mapload, bolt, layer)
 	. = ..()
 	create_reagents(reagent_volume, reagent_flags)
@@ -83,6 +82,8 @@
 	var/warning = tgui_alert(user, "Are you sure you want to empty the soup container?","Flush soup container?", list("Flush", "Cancel"))
 	if(warning == "Flush" && user.can_perform_action(src))
 		reagents.clear_reagents()
+		if(biological_sample)
+			QDEL_NULL(biological_sample)
 		to_chat(user, span_warning("You empty [src]'s soup container."))
 	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -113,10 +114,6 @@
 	for(var/i in biological_sample.micro_organisms)
 		var/datum/micro_organism/MO = i
 		. += MO.get_details(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER))
-
-/obj/machinery/vatgrower/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
-	. = ..()
-	QDEL_NULL(biological_sample)
 
 /// Call update icon when reagents change to update the reagent content icons. Eats signal args.
 /obj/machinery/vatgrower/proc/on_reagent_change(datum/reagents/holder, ...)
