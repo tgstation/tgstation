@@ -833,7 +833,7 @@
 	on_deconstruction(disassembled)
 	spawn_frame(disassembled)
 
-	if(LAZYLEN(component_parts))
+	if(!LAZYLEN(component_parts))
 		dump_contents() //drop everything inside us
 		return //we don't have any parts.
 
