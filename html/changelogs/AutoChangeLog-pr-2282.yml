@@ -1,8 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - refactor: "Refactored how meteor shields detect meteors to blow up."
-  - bugfix: "Meteor shields are no longer rendered useless by lag."
-  - bugfix: "Meteor shields now properly affect meteor event weights for the storyteller in addition to the normal event subsystem."
-  - qol: "Meteor shields can now be shrunk down into tiny capsules, and deployed from said capsules."
-  - balance: "The meteor shield crate now contains 5 shield sat capsules."

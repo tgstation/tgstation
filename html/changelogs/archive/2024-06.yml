@@ -381,3 +381,38 @@
   - balance: The PTL can now output up to quettawatts of power.
   - balance: The PTL can now generate up to 5,000,000 credits per tick at max.
   - balance: Adjusted the PTL money generation curve.
+2024-06-22:
+  Absolucy:
+  - qol: Roles such as brainwashed, abductee, etc no longer disqualify you from midround
+      antag.
+  - qol: The memories for the Smoker quirk now actually mention the preferred brand.
+  - refactor: Refactored how meteor shields detect meteors to blow up.
+  - bugfix: Meteor shields are no longer rendered useless by lag.
+  - bugfix: Meteor shields now properly affect meteor event weights for the storyteller
+      in addition to the normal event subsystem.
+  - qol: Meteor shields can now be shrunk down into tiny capsules, and deployed from
+      said capsules.
+  - balance: The meteor shield crate now contains 5 shield sat capsules.
+  Absolucy, LemonInTheDark:
+  - balance: Tcomms now works across connected (vertically) zlevels. No more hunting
+      in maint for the relay.
+  MomoBerri:
+  - qol: Removed vague elite lavaland mob text.
+  MrMelbert, NikoTheDude, Ported by Hardly:
+  - rscadd: Added examine text, describe your character in ways that a 32x32 sprite
+      can't!
+  - rscadd: Added temporary examine text alongside an indicator
+  - rscadd: Added character records text
+  - admin: Admins can see all flavor texts of a character
+  TTNT789:
+  - balance: added a surplus discount for borers
+  - rscadd: 3 new cane swords all currently admin spawn only
+  The-Black-Screen:
+  - rscadd: added `secure.dm` to `monkestation/code/game/objects/structures/crate_lockers/crates`,
+      added `security.dm` to `monkestation/code/game/objects/structures/crate_lockers/closets/secure`
+  - code_imp: added onto `security.dm` in `monkestation/code/modules/cargo/crates`
+  Uristthedorf:
+  - rscadd: Adds cybernetic brains for androids.
+  - rscadd: Adds robotic flavor for androids.
+  - image: Adds cybernetic brain sprite.
+  - bugfix: Mounted Chainsaw arm is now treated like it's robotic.

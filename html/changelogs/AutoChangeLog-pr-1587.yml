@@ -1,6 +1,0 @@
-author: "Uristthedorf"
-delete-after: True
-changes:
-  - rscadd: "Adds cybernetic brains for androids."
-  - rscadd: "Adds robotic flavor for androids."
-  - image: "Adds cybernetic brain sprite."
