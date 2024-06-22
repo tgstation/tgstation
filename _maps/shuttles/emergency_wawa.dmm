@@ -766,15 +766,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
-"XC" = (
-/obj/machinery/conveyor/auto{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow/opposingcorners{
-	dir = 8
-	},
-/turf/open/floor/iron/checker,
-/area/shuttle/escape)
 "XE" = (
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
@@ -951,8 +942,8 @@ xg
 xg
 bq
 aC
+jA
 gn
-XC
 bs
 xY
 cY
