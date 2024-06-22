@@ -58,7 +58,7 @@
 		audible_message(pick(list(span_notice("[src] grumbles!"), span_notice("[src] makes a splashing noise!"), span_notice("[src] sloshes!"))))
 	use_energy(active_power_usage * seconds_per_tick)
 
-/obj/machinery/vatgrower/attackby(obj/item/weapon, mob/user)
+/obj/machinery/vatgrower/attackby(obj/item/weapon, mob/living/user)
 	if(user.combat_mode)
 		return ..()
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
