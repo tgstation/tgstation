@@ -111,13 +111,13 @@
 	active = FALSE
 	organ_owner.remove_filter("emp_shield")
 	organ_owner.cut_overlay(lightning_overlay)
-	balloon_alert(organ_owner, "Your heart weakens")
+	balloon_alert(organ_owner, "your heart weakens")
 	organ_owner.clear_alert("anomalock heart")
 	addtimer(CALLBACK(src, PROC_REF(notify_cooldown), organ_owner), last_activation + survival_cooldown)
 
 ///Alerts our owner that the organ is ready to do its thing again
 /obj/item/organ/internal/heart/cybernetic/anomalock/proc/notify_cooldown(mob/living/carbon/organ_owner)
-	balloon_alert(organ_owner, "Your heart strenghtens")
+	balloon_alert(organ_owner, "your heart strenghtens")
 	playsound(organ_owner, 'sound/items/eshield_recharge.ogg', 40)
 
 ///Returns the mob we are implanted in so that the electricity effect doesn't runtime
