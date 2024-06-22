@@ -837,7 +837,7 @@
 	if(istype(tool, /obj/item/photo))
 		return photo_act(user, tool)
 
-	// Check if any Applications need it
+	// Check if any Applications need our item
 	for(var/datum/computer_file/item_holding_app as anything in stored_files)
 		var/app_return = item_holding_app.application_item_interaction(user, tool, modifiers)
 		if(app_return)
