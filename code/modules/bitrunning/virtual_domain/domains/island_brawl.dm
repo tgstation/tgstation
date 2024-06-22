@@ -35,7 +35,7 @@
 /datum/lazy_template/virtual_domain/island_brawl/proc/on_death(datum/source, gibbed)
 	SIGNAL_HANDLER
 
-	add_points(0.5)
+	add_points(0.7)
 
 
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander
