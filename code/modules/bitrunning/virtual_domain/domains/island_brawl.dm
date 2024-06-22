@@ -40,7 +40,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander
 	name = "Islander"
-	outfit = /datum/outfit/beachbum/combat
+	outfit = /datum/outfit/beachbum_combat
 	prompt_name = "a combat beach bum"
 	you_are_text = "You are a virtual islander."
 	flavour_text = "Don't let those pasty bitrunners ruin your idyllic vacation spot. Eliminate them!"
