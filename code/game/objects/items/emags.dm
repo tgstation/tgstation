@@ -26,14 +26,14 @@
 	if(isnull(user) || !istype(emag_card))
 		return FALSE
 	var/emag_count = 0
-	for(var/obj/item/card/emag/emag in contents + emag_card.contents)
+	for(var/obj/item/card/emag/emag in get_all_contents() + emag_card.get_all_contents()) // This is including itself
 		emag_count++
-	if(emag_count >= 6) // 1 uplink's worth is the limit
+	if(emag_count > 6) // 1 uplink's worth is the limit
 		to_chat(user, span_warning("Nope, lesson learned. No more."))
 		return FALSE
 	if(emag_card.loc != loc) // Both have to be in your hand (or TK shenanigans)
 		return FALSE
-	if(!user.transferItemToLoc(emag_card, src))
+	if(!user.transferItemToLoc(emag_card, src, silent = FALSE))
 		return FALSE
 
 	user.visible_message(
@@ -44,14 +44,18 @@
 	)
 	playsound(src, 'sound/effects/bang.ogg', 33, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	addtimer(CALLBACK(src, PROC_REF(contemplation_period), user), 2 SECONDS, TIMER_DELETE_ME)
-	emag_card.pixel_x = pixel_x + 4
-	emag_card.pixel_y = pixel_y + 4
-	emag_card.layer = layer - 0.01
 	emag_card.vis_flags |= VIS_INHERIT_ID|VIS_INHERIT_PLANE
 	vis_contents += emag_card
-	name += "-[emag_card.name]"
-	if(desc == initial(desc))
-		desc += " There seems to be another emag stuck to it...pretty soundly."
+	name = initial(name)
+	desc = initial(desc)
+	var/list/all_emags = get_all_contents_type(/obj/item/card/emag) - src
+	for(var/i in 1 to length(all_emags))
+		var/obj/item/card/emag/other_emag = all_emags[i]
+		other_emag.pixel_x = pixel_x + (4 * i)
+		other_emag.pixel_y = pixel_y + (4 * i)
+		other_emag.layer = layer - (0.01 * i)
+		name += "-[initial(other_emag.name)]"
+		desc += " There seems to be another card stuck to it...pretty soundly."
 	return TRUE
 
 /obj/item/card/emag/proc/contemplation_period(mob/user)
@@ -71,6 +75,8 @@
 		vis_contents -= gone
 		name = initial(name)
 		desc = initial(desc)
+		gone.name = initial(name)
+		gone.desc = initial(desc)
 
 /obj/item/card/emag/bluespace
 	name = "bluespace cryptographic sequencer"
