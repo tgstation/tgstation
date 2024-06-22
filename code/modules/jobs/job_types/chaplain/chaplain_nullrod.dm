@@ -850,7 +850,12 @@
 			user.balloon_alert(living_target, "sneak attack avoided!")
 		return
 
+	// Affecting body part check.
+	var/obj/item/bodypart/affecting = living_target.get_bodypart(user.get_random_valid_zone(user.zone_selected))
+	// Target's armor value. Accounts for armor penetration even though we have no armour_penetration defined on the parent.
+	var/armor_block = living_target.run_armor_check(affecting, MELEE, armour_penetration = armour_penetration)
+
 	// We got a sneak attack!
-	living_target.apply_damage(round(sneak_attack_dice, 1), BRUTE, def_zone = BODY_ZONE_CHEST, wound_bonus = bare_wound_bonus, sharpness = SHARP_EDGED)
+	living_target.apply_damage(round(sneak_attack_dice, 1), BRUTE, def_zone = affecting, blocked = armor_block, wound_bonus = bare_wound_bonus, sharpness = SHARP_EDGED)
 	living_target.balloon_alert(user, "sneak attack!")
 	playsound(living_target, 'sound/weapons/guillotine.ogg', 50, TRUE)
