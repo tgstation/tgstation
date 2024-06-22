@@ -38,7 +38,6 @@
 			/obj/machinery/plumbing/synthesizer = 15,
 			/obj/machinery/plumbing/reaction_chamber/chem = 15,
 			/obj/machinery/plumbing/grinder_chemical = 30,
-			/obj/machinery/plumbing/growing_vat = 20,
 			/obj/machinery/plumbing/fermenter = 30,
 			/obj/machinery/plumbing/liquid_pump = 35, //extracting chemicals from ground is one way of creation
 			/obj/machinery/plumbing/disposer = 10,
@@ -317,7 +316,6 @@
 			/obj/machinery/plumbing/reaction_chamber = 15,
 			/obj/machinery/plumbing/grinder_chemical = 30,
 			/obj/machinery/plumbing/disposer = 10,
-			/obj/machinery/plumbing/growing_vat = 20,
 		),
 
 		//Category 2 Distributors

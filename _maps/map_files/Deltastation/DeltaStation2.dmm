@@ -5381,6 +5381,7 @@
 /area/station/service/theater/abandoned)
 "bpz" = (
 /obj/effect/turf_decal/box/red,
+/obj/machinery/vatgrower,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/xenobiology)
 "bpL" = (

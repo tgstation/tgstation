@@ -21654,9 +21654,6 @@
 /area/station/cargo/miningdock)
 "gFm" = (
 /obj/machinery/light/small/directional/west,
-/obj/machinery/plumbing/input{
-	dir = 8
-	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "gFt" = (
@@ -23828,7 +23825,7 @@
 /area/station/hallway/secondary/service)
 "hwQ" = (
 /obj/effect/turf_decal/box/red,
-/obj/machinery/plumbing/growing_vat{
+/obj/machinery/vatgrower{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -42345,9 +42342,6 @@
 /area/station/hallway/primary/tram/center)
 "nSR" = (
 /obj/machinery/light/small/directional/east,
-/obj/machinery/plumbing/input{
-	dir = 8
-	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "nSV" = (

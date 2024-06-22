@@ -10739,9 +10739,13 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 1
 	},
-/obj/machinery/plumbing/growing_vat{
+/obj/machinery/vatgrower{
 	dir = 4
 	},
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/obj/effect/turf_decal/box/corners,
 /turf/open/floor/engine,
 /area/station/science/cytology)
 "ewt" = (
@@ -40167,6 +40171,11 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
+/obj/machinery/door/window/brigdoor/left/directional/north{
+	name = "Cytology Pen";
+	req_access = list("research");
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/station/science/cytology)
 "oxS" = (
@@ -51633,6 +51642,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 5
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/engine,
 /area/station/science/cytology)
 "rUq" = (
@@ -74007,13 +74017,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "ydH" = (
-/obj/effect/turf_decal/box/corners,
-/obj/effect/turf_decal/box/corners{
-	dir = 8
-	},
-/obj/machinery/plumbing/input{
-	dir = 8
-	},
 /turf/open/floor/engine,
 /area/station/science/cytology)
 "ydI" = (

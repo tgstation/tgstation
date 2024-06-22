@@ -3682,11 +3682,6 @@
 	},
 /turf/closed/wall,
 /area/ruin/space/ancientstation/beta/atmos)
-"qH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/plumbing/input,
-/turf/open/floor/engine,
-/area/ruin/space/ancientstation/delta/biolab)
 "qK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/scrubber,
@@ -7759,9 +7754,7 @@
 "TO" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/plumbing/growing_vat{
-	dir = 1
-	},
+/obj/machinery/vatgrower,
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/delta/biolab)
 "TV" = (
@@ -15103,7 +15096,7 @@ NG
 OE
 UR
 rp
-qH
+CK
 TO
 Xy
 vy
@@ -15169,7 +15162,7 @@ GX
 mF
 AT
 rp
-CK
+vy
 VW
 Wd
 Np

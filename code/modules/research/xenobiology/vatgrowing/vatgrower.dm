@@ -1,33 +1,53 @@
 ///Used to make mobs from microbiological samples. Grow grow grow.
-/obj/machinery/plumbing/growing_vat
+/obj/machinery/vatgrower
 	name = "growing vat"
 	desc = "Tastes just like the chef's soup."
+	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "growing_vat"
-	buffer = 300
-
+	density = TRUE
+	pass_flags_self = PASSMACHINE | LETPASSTHROW
+	circuit = /obj/item/circuitboard/machine/vatgrower
+	use_power = NO_POWER_USE
+	///Soup container reagents
+	var/reagent_volume = 300
+	var/reagent_flags = OPENCONTAINER | DUNKABLE
 	///List of all microbiological samples in this soup.
 	var/datum/biological_sample/biological_sample
 	///If the vat will restart the sample upon completion
 	var/resampler_active = FALSE
 
 ///Add that sexy demnand component
-/obj/machinery/plumbing/growing_vat/Initialize(mapload, bolt, layer)
+/obj/machinery/vatgrower/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
+	create_reagents(reagent_volume, reagent_flags)
 
-/obj/machinery/plumbing/growing_vat/create_reagents(max_vol, flags)
+	AddComponent(/datum/component/simple_rotation)
+	AddComponent(/datum/component/plumbing/simple_demand)
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/petri_dish = list(
+			SCREENTIP_CONTEXT_LMB = "Add Sample",
+		),
+		/obj/item/reagent_containers = list(
+			SCREENTIP_CONTEXT_LMB = "Pour Reagents",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Toggle Resampler", rmb_text = "Flush Soup")
+
+/obj/machinery/vatgrower/create_reagents(max_vol, flags)
 	. = ..()
 	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_change))
 	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
 
 /// Handles properly detaching signal hooks.
-/obj/machinery/plumbing/growing_vat/proc/on_reagents_del(datum/reagents/reagents)
+/obj/machinery/vatgrower/proc/on_reagents_del(datum/reagents/reagents)
 	SIGNAL_HANDLER
 	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_QDELETING))
 	return NONE
 
 ///When we process, we make use of our reagents to try and feed the samples we have.
-/obj/machinery/plumbing/growing_vat/process(seconds_per_tick)
+/obj/machinery/vatgrower/process(seconds_per_tick)
 	if(!is_operational)
 		return
 	if(!biological_sample)
@@ -40,7 +60,7 @@
 	use_energy(active_power_usage * seconds_per_tick)
 
 ///Handles the petri dish depositing into the vat.
-/obj/machinery/plumbing/growing_vat/attacked_by(obj/item/I, mob/living/user)
+/obj/machinery/vatgrower/attacked_by(obj/item/I, mob/living/user)
 	if(!istype(I, /obj/item/petri_dish))
 		return ..()
 
@@ -54,8 +74,26 @@
 		return
 	deposit_sample(user, petri)
 
+/obj/machinery/vatgrower/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!anchored)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	var/warning = tgui_alert(user, "Are you sure you want to empty the soup container?","Flush soup container?", list("Flush", "Cancel"))
+	if(warning == "Flush" && user.can_perform_action(src))
+		reagents.clear_reagents()
+		to_chat(user, span_warning("You empty [src]'s soup container."))
+	update_appearance()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/vatgrower/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return ITEM_INTERACT_SUCCESS
+
 ///Creates a clone of the supplied sample and puts it in the vat
-/obj/machinery/plumbing/growing_vat/proc/deposit_sample(mob/user, obj/item/petri_dish/petri)
+/obj/machinery/vatgrower/proc/deposit_sample(mob/user, obj/item/petri_dish/petri)
 	biological_sample = new
 	for(var/datum/micro_organism/m in petri.sample.micro_organisms)
 		biological_sample.micro_organisms += new m.type()
@@ -67,7 +105,7 @@
 	RegisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED, PROC_REF(on_sample_growth_completed))
 
 ///Adds text for when there is a sample in the vat
-/obj/machinery/plumbing/growing_vat/examine_more(mob/user)
+/obj/machinery/vatgrower/examine(mob/user)
 	. = ..()
 	if(!biological_sample)
 		return
@@ -76,18 +114,18 @@
 		var/datum/micro_organism/MO = i
 		. += MO.get_details(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER))
 
-/obj/machinery/plumbing/growing_vat/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
+/obj/machinery/vatgrower/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	. = ..()
 	QDEL_NULL(biological_sample)
 
 /// Call update icon when reagents change to update the reagent content icons. Eats signal args.
-/obj/machinery/plumbing/growing_vat/proc/on_reagent_change(datum/reagents/holder, ...)
+/obj/machinery/vatgrower/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
 	update_appearance()
 	return NONE
 
 ///Adds overlays to show the reagent contents
-/obj/machinery/plumbing/growing_vat/update_overlays()
+/obj/machinery/vatgrower/update_overlays()
 	. = ..()
 	var/static/image/on_overlay
 	var/static/image/off_overlay
@@ -113,7 +151,7 @@
 		var/mutable_appearance/bubbles_overlay = mutable_appearance(icon, "vat_bubbles")
 		. += bubbles_overlay
 
-/obj/machinery/plumbing/growing_vat/attack_hand(mob/living/user, list/modifiers)
+/obj/machinery/vatgrower/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	if(obj_flags & EMAGGED)
@@ -122,7 +160,7 @@
 	balloon_alert_to_viewers("resampler [resampler_active ? "activated" : "deactivated"]")
 	update_appearance()
 
-/obj/machinery/plumbing/growing_vat/emag_act(mob/user, obj/item/card/emag/emag_card)
+/obj/machinery/vatgrower/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
@@ -131,7 +169,7 @@
 	flick("growing_vat_emagged", src)
 	return TRUE
 
-/obj/machinery/plumbing/growing_vat/proc/on_sample_growth_completed()
+/obj/machinery/vatgrower/proc/on_sample_growth_completed()
 	SIGNAL_HANDLER
 	if(resampler_active)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), get_turf(src), 'sound/effects/servostep.ogg', 100, 1), 1.5 SECONDS)

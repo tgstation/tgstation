@@ -992,6 +992,11 @@
 		/datum/stock_part/micro_laser = 1,
 		/obj/item/stack/sheet/glass = 1)
 
+/obj/item/circuitboard/machine/vatgrower
+	name = "Growing Vat"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/vatgrower
+
 /obj/item/circuitboard/machine/monkey_recycler
 	name = "Monkey Recycler"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE

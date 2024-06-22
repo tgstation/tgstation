@@ -40792,10 +40792,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/item/plunger{
-	pixel_x = -7;
-	pixel_y = 20
-	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/cytology)
 "ouj" = (
@@ -42434,6 +42430,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
+"oYN" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/door/window/left/directional/south{
+	name = "Cytology Pen";
+	req_access = list("research")
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/station/science/cytology)
 "oYZ" = (
 /turf/closed/wall,
 /area/station/command/heads_quarters/rd)
@@ -43061,7 +43067,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/plumbing/growing_vat,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/cytology)
 "pkQ" = (
@@ -52005,7 +52010,6 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "sri" = (
-/obj/machinery/duct,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/cytology)
 "srk" = (
@@ -58455,9 +58459,6 @@
 /area/station/medical/medbay/lobby)
 "uCe" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/plumbing/input{
-	dir = 1
-	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/cytology)
 "uCq" = (
@@ -67982,6 +67983,10 @@
 	},
 /turf/open/floor/iron/white/corner,
 /area/station/hallway/secondary/entry)
+"xOP" = (
+/obj/machinery/vatgrower,
+/turf/open/floor/iron/dark/textured_large,
+/area/station/science/cytology)
 "xOU" = (
 /obj/structure/sink/directional/east,
 /obj/effect/turf_decal/bot,
@@ -111861,7 +111866,7 @@ aaa
 aaa
 oMA
 pkP
-sri
+xOP
 sri
 uCe
 tsy
@@ -112120,7 +112125,7 @@ uaR
 jHX
 oQk
 toR
-toR
+oYN
 syV
 jsi
 eoZ

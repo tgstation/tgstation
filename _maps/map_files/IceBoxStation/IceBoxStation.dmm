@@ -68027,7 +68027,7 @@
 /turf/open/floor/carpet/blue,
 /area/station/security/prison/work)
 "unm" = (
-/obj/machinery/plumbing/growing_vat,
+/obj/machinery/vatgrower,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/cable,

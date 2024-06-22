@@ -43139,7 +43139,9 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "pti" = (
-/obj/machinery/plumbing/growing_vat,
+/obj/machinery/vatgrower{
+	dir = 4
+	},
 /turf/open/misc/asteroid,
 /area/station/asteroid)
 "ptq" = (
