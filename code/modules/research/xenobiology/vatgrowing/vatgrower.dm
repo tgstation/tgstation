@@ -58,20 +58,22 @@
 		audible_message(pick(list(span_notice("[src] grumbles!"), span_notice("[src] makes a splashing noise!"), span_notice("[src] sloshes!"))))
 	use_energy(active_power_usage * seconds_per_tick)
 
-///Handles the petri dish depositing into the vat.
-/obj/machinery/vatgrower/attacked_by(obj/item/I, mob/living/user)
-	if(!istype(I, /obj/item/petri_dish))
+/obj/machinery/vatgrower/attackby(obj/item/weapon, mob/user)
+	if(user.combat_mode)
 		return ..()
-
-	var/obj/item/petri_dish/petri = I
-
-	if(!petri.sample)
-		return ..()
-
-	if(biological_sample)
-		to_chat(user, span_warning("There is already a sample in the vat!"))
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
 		return
-	deposit_sample(user, petri)
+	if(default_deconstruction_crowbar(weapon))
+		return
+	if(istype(weapon, /obj/item/petri_dish))
+		var/obj/item/petri_dish/petri = weapon
+		if(!petri.sample)
+			return ..()
+		if(biological_sample)
+			to_chat(user, span_warning("There is already a sample in the vat!"))
+			return
+		deposit_sample(user, petri)
+	return ..()
 
 /obj/machinery/vatgrower/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
