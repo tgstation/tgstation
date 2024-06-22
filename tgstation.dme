@@ -1028,6 +1028,7 @@
 #include "code\datums\components\basic_inhands.dm"
 #include "code\datums\components\basic_mob_attack_telegraph.dm"
 #include "code\datums\components\basic_ranged_ready_overlay.dm"
+#include "code\datums\components\bayonet_attachable.dm"
 #include "code\datums\components\beetlejuice.dm"
 #include "code\datums\components\blob_minion.dm"
 #include "code\datums\components\blood_walk.dm"

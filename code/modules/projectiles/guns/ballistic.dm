@@ -638,8 +638,9 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	if(sawn_off)
 		balloon_alert(user, "it's already shortened!")
 		return
-	if(bayonet)
-		balloon_alert(user, "[bayonet.name] must be removed!")
+	var/datum/component/bayonet_attachable/bayonet = GetComponent(/datum/component/bayonet_attachable)
+	if(bayonet && bayonet.bayonet)
+		balloon_alert(user, "[bayonet.bayonet.name] must be removed!")
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_notice("[user] begins to shorten [src]."), span_notice("You begin to shorten [src]..."))
