@@ -40171,10 +40171,10 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
-/obj/machinery/door/window/brigdoor/left/directional/north{
+/obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Cytology Pen";
 	req_access = list("research");
-	dir = 8
+	
 	},
 /turf/open/floor/engine,
 /area/station/science/cytology)
