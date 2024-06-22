@@ -55,6 +55,7 @@
 /mob/living/basic/mining/wolf/Initialize(mapload)
 	. = ..()
 
+	ADD_TRAIT(src, TRAIT_WOUND_LICKER, INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/ai_flee_while_injured)
 	AddElement(/datum/element/ai_retaliate)

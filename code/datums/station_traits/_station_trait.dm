@@ -131,3 +131,7 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 		var/datum/hud/using_hud = hud_owner.hud_used
 		using_hud?.show_hud(using_hud?.hud_version)
 	lobby_buttons = list()
+
+/// Called when overriding a pulsar star command report message.
+/datum/station_trait/proc/get_pulsar_message()
+	return

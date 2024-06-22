@@ -3,12 +3,11 @@
 	plural_form = "Mothmen"
 	id = SPECIES_MOTH
 	inherent_traits = list(
-		TRAIT_HAS_MARKINGS,
 		TRAIT_TACKLING_WINGED_ATTACKER,
 		TRAIT_ANTENNAE,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
-	mutant_bodyparts = list("moth_markings" = "None")
+	body_markings = list(/datum/bodypart_overlay/simple/body_marking/moth = "None")
 	external_organs = list(/obj/item/organ/external/wings/moth = "Plain", /obj/item/organ/external/antennae = "Plain")
 	meat = /obj/item/food/meat/slab/human/mutant/moth
 	mutanttongue = /obj/item/organ/internal/tongue/moth
@@ -53,11 +52,11 @@
 	features["moth_markings"] = pick(SSaccessories.moth_markings_list)
 	return features
 
-/datum/species/moth/get_scream_sound(mob/living/carbon/human)
+/datum/species/moth/get_scream_sound(mob/living/carbon/human/moth)
 	return 'sound/voice/moth/scream_moth.ogg'
 
 /datum/species/moth/get_cough_sound(mob/living/carbon/human/moth)
-	if(moth.gender == FEMALE)
+	if(moth.physique == FEMALE)
 		return pick(
 			'sound/voice/human/female_cough1.ogg',
 			'sound/voice/human/female_cough2.ogg',
@@ -77,7 +76,7 @@
 
 
 /datum/species/moth/get_cry_sound(mob/living/carbon/human/moth)
-	if(moth.gender == FEMALE)
+	if(moth.physique == FEMALE)
 		return pick(
 			'sound/voice/human/female_cry1.ogg',
 			'sound/voice/human/female_cry2.ogg',
@@ -90,14 +89,12 @@
 
 
 /datum/species/moth/get_sneeze_sound(mob/living/carbon/human/moth)
-	if(moth.gender == FEMALE)
+	if(moth.physique == FEMALE)
 		return 'sound/voice/human/female_sneeze1.ogg'
 	return 'sound/voice/human/male_sneeze1.ogg'
 
 
-/datum/species/moth/get_laugh_sound(mob/living/carbon/human)
-	if(!istype(human))
-		return
+/datum/species/moth/get_laugh_sound(mob/living/carbon/human/moth)
 	return 'sound/voice/moth/moth_laugh1.ogg'
 
 /datum/species/moth/get_physical_attributes()

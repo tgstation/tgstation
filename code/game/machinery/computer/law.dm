@@ -48,7 +48,7 @@
 		return INITIALIZE_HINT_QDEL
 
 /obj/machinery/computer/upload/ai/interact(mob/user)
-	current = select_active_ai(user, z)
+	current = select_active_ai(user, z, TRUE)
 
 	if (!current)
 		to_chat(user, span_alert("No active AIs detected!"))

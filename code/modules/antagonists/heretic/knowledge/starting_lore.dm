@@ -293,3 +293,28 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	body.do_jitter_animation()
 	body.visible_message(span_danger("An awful ripping sound is heard as [ripped_thing]'s [exterior_text] is ripped straight out, wrapping around [le_book || "the book"], turning into an eldritch shade of blue!"))
 	return ..()
+
+/datum/heretic_knowledge/feast_of_owls
+	name = "Feast of Owls"
+	desc = "Allows you to undergo a ritual that gives you 5 knowledge points but locks you out of ascension. This can only be done once and cannot be reverted."
+	gain_text = "Under the soft glow of unreason there is a beast that stalks the night. I shall bring it forth and let it enter my presence. It will feast upon my amibitions and leave knowledge in its wake."
+	route = PATH_START
+	required_atoms = list()
+
+/datum/heretic_knowledge/feast_of_owls/can_be_invoked(datum/antagonist/heretic/invoker)
+	return !invoker.feast_of_owls
+
+/datum/heretic_knowledge/feast_of_owls/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	var/alert = tgui_alert(user,"Do you really want to forsake your ascension? This action cannot be reverted.", "Feast of Owls", list("Yes I'm sure", "No"), 30 SECONDS)
+	if( alert != "Yes I'm sure")
+		return FALSE
+	user.set_temp_blindness(5 SECONDS)
+	user.AdjustParalyzed(5 SECONDS)
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	for(var/i in 0 to 4)
+		user.emote("scream")
+		playsound(loc, 'sound/items/eatfood.ogg', 100, TRUE)
+		heretic_datum.knowledge_points++
+		sleep(1 SECONDS)
+	to_chat(user,span_danger("You feel different..."))
+	heretic_datum.feast_of_owls = TRUE
