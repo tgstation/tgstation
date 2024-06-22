@@ -1,4 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - bugfix: "Felinids no longer remember losing their tail and regaining it roundstart; you need to do it during the round to get that mood event."

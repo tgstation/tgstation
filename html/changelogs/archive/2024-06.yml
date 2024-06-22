@@ -974,3 +974,23 @@
   r3dj4ck0424:
   - bugfix: puts tiles under the wawa tool storage doors
   - bugfix: allows you to access a door and a fire alarm on wawa's prison second floor
+2024-06-22:
+  AyIong:
+  - qol: Fullscreen mode can now be toggled by pressing F11 or the button at the top
+      right
+  Bisar:
+  - bugfix: Felinids no longer remember losing their tail and regaining it roundstart;
+      you need to do it during the round to get that mood event.
+  FlufflesTheDog:
+  - bugfix: sanitization on citation pda alerts
+  JupiterJaeden:
+  - bugfix: Conga lines of more than 2 no longer break when going up and down stairs.
+  MelokGleb:
+  - image: added sprite for debug heretic painting
+  Mothblocks:
+  - qol: Dramatically improves delete character UI and UX.
+  Thunder12345:
+  - rscdel: Locker staffs have been removed from the Ragin' Mages deathmatch lootcrate
+      pool.
+  mc-oofert:
+  - bugfix: borg factory gives you your preference borg name
