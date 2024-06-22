@@ -239,7 +239,7 @@
 		processed_slime.balloon_alert_to_viewers("crawls free")
 		return
 	var/core_count = processed_slime.cores
-	for(var/i in 1 to (core_count+rating_amount-1))
+	for(var/i in 1 to core_count)
 		var/atom/movable/item = new processed_slime.slime_type.core_type(drop_location())
 		adjust_item_drop_location(item)
 		SSblackbox.record_feedback("tally", "slime_core_harvested", 1, processed_slime.slime_type.colour)

@@ -37,8 +37,7 @@
 
 /datum/surgery_step/extract_core/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/mob/living/basic/slime/target_slime = target
-	if(target_slime.cores > 0)
-		target_slime.cores--
+	if(target_slime.try_extract_cores(count = 1))
 		display_results(
 			user,
 			target,
@@ -46,14 +45,10 @@
 			span_notice("[user] successfully extracts a core from [target]!"),
 			span_notice("[user] successfully extracts a core from [target]!"),
 		)
-
-		new target_slime.slime_type.core_type(target_slime.loc)
-
-		if(target_slime.cores <= 0)
-			target_slime.icon_state = "[target_slime.slime_type.colour] baby slime dead-nocore"
-			return ..()
+		if(target_slime.cores > 0)
+			return FALSE // Continue extracting
 		else
-			return FALSE
+			return TRUE
 	else
 		to_chat(user, span_warning("There aren't any cores left in [target]!"))
-		return ..()
+	return ..()
