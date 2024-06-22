@@ -1,13 +1,18 @@
 /datum/techweb_node/plasma_control
 	required_experiments = list()
-	discount_experiments = list(/datum/experiment/ordnance/gaseous/nitrous_oxide = TECHWEB_TIER_2_POINTS)
+	discount_experiments = list(/datum/experiment/ordnance/gaseous/plasma = TECHWEB_TIER_2_POINTS)
+
 
 /datum/techweb_node/fusion
 	required_experiments = list()
+    discount_experiments = list(
+        /datum/experiment/ordnance/gaseous/bz = TECHWEB_TIER_2_POINTS,
+        /datum/experiment/ordnance/gaseous/nitrous_oxide = TECHWEB_TIER_3_POINTS,
+        )
 
 /datum/techweb_node/xenobiology
 	required_experiments = list()
-	discount_experiments = list(/datum/experiment/ordnance/gaseous/nitrous_oxide = TECHWEB_TIER_3_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/random/cytology = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/cyber/cyber_organs_upgraded
 	required_experiments = list()
@@ -19,6 +24,10 @@
 
 /datum/techweb_node/mech_combat
 	required_experiments = list()
+    discount_experiments = list(
+        /datum/experiment/scanning/random/mecha_equipped_scan = TECHWEB_TIER_1_POINTS,
+        /datum/experiment/scanning/random/mecha_damage_scan = TECHWEB_TIER_2_POINTS,
+        )
 
 /datum/techweb_node/cryostasis
 	required_experiments = list()
@@ -30,6 +39,10 @@
 
 /datum/techweb_node/explosives
 	required_experiments = list()
+    discount_experiments = list(
+        /datum/experiment/ordnance/explosive/lowyieldbomb = TECHWEB_TIER_2_POINTS,
+        /datum/experiment/ordnance/explosive/highyieldbomb = TECHWEB_TIER_3_POINTS,
+        )
 
 /datum/techweb_node/fishing_equip_adv
 	required_experiments = list()
@@ -37,6 +50,10 @@
 
 /datum/techweb_node/selection
 	required_experiments = list()
+    discount_experiments = list(
+        /datum/experiment/scanning/random/plants/wild = TECHWEB_TIER_2_POINTS,
+        /datum/experiment/scanning/random/plants/traits = TECHWEB_TIER_3_POINTS,
+        )
 
 /datum/techweb_node/surgery_adv
 	required_experiments = list()
