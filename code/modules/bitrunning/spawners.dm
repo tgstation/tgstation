@@ -3,7 +3,7 @@
 	prompt_name = "a virtual domain debug entity"
 	flavour_text = "You probably shouldn't be seeing this, contact a coder!"
 	you_are_text = "You are NOT supposed to be here. How did you let this happen?"
-	important_text = "You must eliminate any bitrunners from the domain."
+	important_text = "Bitrunning is a crime, and your primary threat."
 	temp_body = TRUE
 
 
@@ -30,7 +30,7 @@
 	icon_state = "remains"
 	prompt_name = "a virtual skeleton pirate"
 	you_are_text = "You are a virtual pirate. Yarrr!"
-	flavour_text = "You have awoken, without instruction. There's a LANDLUBBER after yer booty. Stop them!"
+	flavour_text = " There's a LANDLUBBER after yer booty. Stop them!"
 
 
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/pirate/special(mob/living/spawned_mob, mob/mob_possessor)
@@ -44,7 +44,7 @@
 	icon_state = "sleeper_s"
 	prompt_name = "a virtual syndicate operative"
 	you_are_text = "You are a virtual syndicate operative."
-	flavour_text = "You have awoken, without instruction. Alarms blare! We are being boarded!"
+	flavour_text = "Alarms blare! We are being boarded!"
 	outfit = /datum/outfit/virtual_syndicate
 	spawner_job_path = /datum/job/space_syndicate
 

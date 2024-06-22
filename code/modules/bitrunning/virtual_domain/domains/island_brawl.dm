@@ -43,4 +43,4 @@
 	outfit = /datum/outfit/beachbum_combat
 	prompt_name = "a combat beach bum"
 	you_are_text = "You are a virtual islander."
-	flavour_text = "Don't let those pasty bitrunners ruin your idyllic vacation spot. Eliminate them!"
+	flavour_text = "Don't let anyone ruin your idyllic vacation spot. Coordinate with others- or don't!"
