@@ -12,13 +12,11 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	name = "\improper Russian revolver cylinder"
-	ammo_type = /obj/item/ammo_casing/a357/spent
+	ammo_type = /obj/item/ammo_casing/a357
 	caliber = CALIBER_357
 	max_ammo = 6
 	multiload = FALSE
 
-/obj/item/ammo_box/magazine/internal/cylinder/rus357/Initialize(mapload)
-	var/first_round = stored_ammo[1]
-	stored_ammo[1] = new ammo_type(src)
-	qdel(first_round)
+/obj/item/ammo_box/magazine/internal/rus357/Initialize(mapload)
+	stored_ammo += new ammo_type(src)
 	. = ..()
