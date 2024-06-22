@@ -17,7 +17,7 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/secbot
-	name = "Secbot"
+	name = "Secbot (Right Arm)"
 	result = /mob/living/simple_animal/bot/secbot
 	reqs = list(
 		/obj/item/assembly/signaler = 1,
@@ -30,8 +30,18 @@
 	time = 6 SECONDS
 	category = CAT_ROBOT
 
+/datum/crafting_recipe/secbot/left_arm
+	name = "Secbot (Left Arm)"
+	reqs = list(
+		/obj/item/assembly/signaler = 1,
+		/obj/item/clothing/head/helmet/sec = 1,
+		/obj/item/melee/baton/security/ = 1,
+		/obj/item/assembly/prox_sensor = 1,
+		/obj/item/bodypart/arm/left/robot = 1,
+	)
+
 /datum/crafting_recipe/cleanbot
-	name = "Cleanbot"
+	name = "Cleanbot (Right Arm)"
 	result = /mob/living/basic/bot/cleanbot
 	reqs = list(
 		/obj/item/reagent_containers/cup/bucket = 1,
@@ -42,8 +52,16 @@
 	time = 4 SECONDS
 	category = CAT_ROBOT
 
+/datum/crafting_recipe/cleanbot/left_arm
+	name = "Cleanbot (Left Arm)"
+	reqs = list(
+		/obj/item/reagent_containers/cup/bucket = 1,
+		/obj/item/assembly/prox_sensor = 1,
+		/obj/item/bodypart/arm/left/robot = 1,
+	)
+
 /datum/crafting_recipe/floorbot
-	name = "Floorbot"
+	name = "Floorbot (Right Arm)"
 	result = /mob/living/simple_animal/bot/floorbot
 	reqs = list(
 		/obj/item/storage/toolbox = 1,
@@ -54,8 +72,17 @@
 	time = 4 SECONDS
 	category = CAT_ROBOT
 
+/datum/crafting_recipe/floorbot/left_arm
+	name = "Floorbot (Left Arm)"
+	reqs = list(
+		/obj/item/storage/toolbox = 1,
+		/obj/item/stack/tile/iron = 10,
+		/obj/item/assembly/prox_sensor = 1,
+		/obj/item/bodypart/arm/left/robot = 1,
+	)
+
 /datum/crafting_recipe/medbot
-	name = "Medbot"
+	name = "Medbot (Right Arm)"
 	result = /mob/living/basic/bot/medbot
 	reqs = list(
 		/obj/item/healthanalyzer = 1,
@@ -69,6 +96,15 @@
 	)
 	time = 4 SECONDS
 	category = CAT_ROBOT
+
+/datum/crafting_recipe/medbot/left_arm
+	name = "Medbot (Left Arm)"
+	reqs = list(
+		/obj/item/healthanalyzer = 1,
+		/obj/item/storage/medkit = 1,
+		/obj/item/assembly/prox_sensor = 1,
+		/obj/item/bodypart/arm/left/robot = 1,
+	)
 
 /datum/crafting_recipe/medbot/on_craft_completion(mob/user, atom/result)
 	var/mob/living/basic/bot/medbot/bot = result
@@ -94,7 +130,7 @@
 	bot.update_appearance()
 
 /datum/crafting_recipe/honkbot
-	name = "Honkbot"
+	name = "Honkbot (Right Arm)"
 	result = /mob/living/basic/bot/honkbot
 	reqs = list(
 		/obj/item/storage/box/clown = 1,
@@ -105,8 +141,17 @@
 	time = 4 SECONDS
 	category = CAT_ROBOT
 
+/datum/crafting_recipe/honkbot/left_arm
+	name = "Honkbot (Left Arm)"
+	reqs = list(
+		/obj/item/storage/box/clown = 1,
+		/obj/item/bodypart/arm/left/robot = 1,
+		/obj/item/assembly/prox_sensor = 1,
+		/obj/item/bikehorn = 1,
+	)
+
 /datum/crafting_recipe/firebot
-	name = "Firebot"
+	name = "Firebot (Right Arm)"
 	result = /mob/living/simple_animal/bot/firebot
 	reqs = list(
 		/obj/item/extinguisher = 1,
@@ -116,6 +161,15 @@
 	)
 	time = 4 SECONDS
 	category = CAT_ROBOT
+
+/datum/crafting_recipe/firebot/left_arm
+	name = "Firebot (Left Arm)"
+	reqs = list(
+		/obj/item/extinguisher = 1,
+		/obj/item/bodypart/arm/left/robot = 1,
+		/obj/item/assembly/prox_sensor = 1,
+		/obj/item/clothing/head/utility/hardhat/red = 1,
+	)
 
 /datum/crafting_recipe/vibebot
 	name = "Vibebot"
