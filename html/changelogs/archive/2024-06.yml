@@ -416,3 +416,12 @@
   - rscadd: Adds robotic flavor for androids.
   - image: Adds cybernetic brain sprite.
   - bugfix: Mounted Chainsaw arm is now treated like it's robotic.
+2024-06-23:
+  RikuTheKiller:
+  - bugfix: Satchels can now be crafted out of cloth.
+  - bugfix: The secass description now reads "a" instead of "an", happy now?
+  ThePooba:
+  - bugfix: Fixed the button not appearing for thermoregulator on hardsuit
+  - bugfix: Energy cost for Hardsuits thermoregulator (it would run out in minutes)
+  - bugfix: Borers and Alien Larva can now hide on Multiple Z levels instead of just
+      one
