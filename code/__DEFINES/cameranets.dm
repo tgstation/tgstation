@@ -30,3 +30,10 @@
 #define CAMERA_NETWORK_CARGO "cargo"
 #define CAMERANET_NETWORK_ABDUCTOR "abductor"
 #define OPERATIVE_CAMERA_NET "operative"
+
+// Ruins/Away missiosn/Misc camera nets
+#define CAMERANET_NETWORK_MOON19_XENO "mo19x"
+#define CAMERANET_NETWORK_MOON19_RESEARCH "mo19r"
+#define CAMERANET_NETWORK_UGO45_RESEARCH "uo45r"
+#define CAMERANET_NETWORK_FSCI "fsci"
+#define CAMERA_NETWORK_BUNKER "bunker1"

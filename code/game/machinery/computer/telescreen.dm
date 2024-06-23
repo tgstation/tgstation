@@ -384,6 +384,54 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/engine_w
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/cargo_sec, 32)
 
+// This is used in moonoutpost19.dmm
+/obj/machinery/computer/security/telescreen/moon_outpost
+
+/obj/machinery/computer/security/telescreen/moon_outpost/research
+	name = "research monitor"
+	desc = "Used for monitoring the research division and the labs within."
+	network = list(CAMERAANET_NETWORK_MOON19_RESEARCH,
+					CAMERANET_NETWORK_MOON19_XENO,
+					)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/moon_outpost/research, 32)
+
+/obj/machinery/computer/security/telescreen/moon_outpost/xenobio
+	name = "xenobiology monitor"
+	desc = "Used for watching the contents of the xenobiology containment pen."
+	network = list(CAMERANET_NETWORK_MOON19_XENO)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/moon_outpost/xenobio, 32)
+
+// This is used in undergroundoutpost45.dmm
+/obj/machinery/computer/security/telescreen/underground_outpost
+
+/obj/machinery/computer/security/telescreen/underground_outpost/research
+	name = "research monitor"
+	desc = "Used for monitoring the research division and the labs within."
+	network = list(CAMERANET_NETWORK_UGO45_RESEARCH)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/underground_outpost/research, 32)
+
+// This is used in forgottenship.dmm
+/obj/machinery/computer/security/telescreen/forgotten_ship
+
+/obj/machinery/computer/security/telescreen/forgotten_ship/sci
+	name = "Cameras monitor"
+	network = list(CAMERANET_NETWORK_FSCI)
+	req_access = list("syndicate")
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/forgotten_ship/sci, 32)
+
+// This is used in deepstorage.dmm
+/obj/machinery/computer/security/telescreen/deep_storage
+
+/obj/machinery/computer/security/telescreen/deep_storage/bunker
+	name = "Bunker Entrance monitor"
+	network = list(CAMERA_NETWORK_BUNKER)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/deep_storage/bunker, 32)
+
 /// A button that adds a camera network to the entertainment monitors
 /obj/machinery/button/showtime
 	name = "thunderdome showtime button"
