@@ -238,7 +238,7 @@
 		processed_slime.forceMove(drop_location())
 		processed_slime.balloon_alert_to_viewers("crawls free")
 		return
-	var/core_count = processed_slime.cores
+
 	for(var/i in 1 to rating_amount)
 		var/atom/movable/item = new processed_slime.slime_type.core_type(drop_location())
 		adjust_item_drop_location(item)
