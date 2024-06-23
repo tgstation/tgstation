@@ -35,7 +35,7 @@
 
 	if(type != /obj/item/analyzer)
 		return
-	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/material_sniffer))
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/material_sniffer)
 
 	AddElement(
 		/datum/element/slapcrafting,\

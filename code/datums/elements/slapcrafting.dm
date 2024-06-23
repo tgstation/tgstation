@@ -15,7 +15,7 @@
  * It will check the area near the user for the rest of the ingredients and tools.
  * *
 **/
-/datum/element/slapcrafting/Attach(datum/target, list/slapcraft_recipes = list())
+/datum/element/slapcrafting/Attach(datum/target, slapcraft_recipes = null)
 	..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
@@ -25,12 +25,12 @@
 	if((target_item.item_flags & ABSTRACT) || (target_item.item_flags & DROPDEL))
 		return ELEMENT_NOTRANSFER
 
-	src.slapcraft_recipes = slapcraft_recipes
-
 	RegisterSignal(target, COMSIG_ATOM_ATTACKBY, PROC_REF(attempt_slapcraft))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(get_examine_info))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(get_examine_more_info))
 	RegisterSignal(target, COMSIG_TOPIC, PROC_REF(topic_handler))
+
+	src.slapcraft_recipes = slapcraft_recipes
 
 /datum/element/slapcrafting/Detach(datum/source, ...)
 	. = ..()
@@ -50,6 +50,7 @@
 		// Gotta instance it to copy the list over.
 		recipe = new recipe()
 		var/list/type_ingredient_list = recipe.reqs
+		qdel(recipe)
 		if(length(type_ingredient_list) == 1) // No ingredients besides itself? We use one of the tools then
 			type_ingredient_list = recipe.tool_paths
 			// Check the tool behaviours differently as they aren't types
@@ -59,7 +60,6 @@
 					break
 		if(is_type_in_list(slapper, type_ingredient_list))
 			LAZYADD(valid_recipes, recipe)
-		//qdel(recipe)
 
 	if(!valid_recipes)
 		return

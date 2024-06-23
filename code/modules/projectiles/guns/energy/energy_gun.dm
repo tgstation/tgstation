@@ -14,8 +14,7 @@
 	// Only actual eguns can be converted
 	if(type != /obj/item/gun/energy/e_gun)
 		return
-
-	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/advancedegun, /datum/crafting_recipe/tempgun, /datum/crafting_recipe/beam_rifle))
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/advancedegun, /datum/crafting_recipe/tempgun, /datum/crafting_recipe/beam_rifle)
 
 	AddElement(
 		/datum/element/slapcrafting,\

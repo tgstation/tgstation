@@ -534,7 +534,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 
 /obj/item/stack/sheet/durathread/Initialize(mapload)
 	. = ..()
-	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/durathread_helmet, /datum/crafting_recipe/durathread_vest))
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/durathread_helmet, /datum/crafting_recipe/durathread_vest)
 
 	AddElement(
 		/datum/element/slapcrafting,\
@@ -668,7 +668,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 
 /obj/item/stack/sheet/cardboard/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
-	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/cardboard_id))
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/cardboard_id)
 
 	AddElement(
 		/datum/element/slapcrafting,\
@@ -802,14 +802,14 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 
 	// As bone and sinew have just a little too many recipes for this, we'll just split them up.
 	// Sinew slapcrafting will mostly-sinew recipes, and bones will have mostly-bones recipes.
-	var/list/slapcraft_recipe_list = string_list(list(\
+	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/bonearmor,
 		/datum/crafting_recipe/boneaxe,
 		/datum/crafting_recipe/bonedagger,
 		/datum/crafting_recipe/bonespear,
 		/datum/crafting_recipe/bracers,
 		/datum/crafting_recipe/skullhelm,
-	))
+	)
 
 	AddElement(
 		/datum/element/slapcrafting,\

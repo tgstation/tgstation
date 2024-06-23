@@ -349,7 +349,7 @@
 	add_glasses_slapcraft_component()
 
 /obj/item/clothing/glasses/sunglasses/proc/add_glasses_slapcraft_component()
-	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/hudsunsec, /datum/crafting_recipe/hudsunmed, /datum/crafting_recipe/hudsundiag, /datum/crafting_recipe/scienceglasses))
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/hudsunsec, /datum/crafting_recipe/hudsunmed, /datum/crafting_recipe/hudsundiag, /datum/crafting_recipe/scienceglasses)
 
 	AddElement(
 		/datum/element/slapcrafting,\
@@ -369,7 +369,7 @@
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_RESEARCH_SCANNER)
 
 /obj/item/clothing/glasses/sunglasses/chemical/add_glasses_slapcraft_component()
-	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/scienceglassesremoval))
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/scienceglassesremoval)
 
 	AddElement(
 		/datum/element/slapcrafting,\

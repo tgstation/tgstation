@@ -59,7 +59,7 @@
 
 // I dunno man
 /obj/item/spear/proc/add_headpike_component()
-	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/headpike))
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/headpike)
 
 	AddElement(
 		/datum/element/slapcrafting,\
@@ -229,7 +229,7 @@
 	sharpness = NONE // we break bones instead of cutting flesh
 
 /obj/item/spear/military/add_headpike_component()
-	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/headpikemilitary))
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/headpikemilitary)
 
 	AddElement(
 		/datum/element/slapcrafting,\
@@ -253,7 +253,7 @@
 	force_wielded = 20
 
 /obj/item/spear/bonespear/add_headpike_component()
-	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/headpikebone))
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/headpikebone)
 
 	AddElement(
 		/datum/element/slapcrafting,\
@@ -277,7 +277,7 @@
 
 
 /obj/item/spear/bamboospear/add_headpike_component()
-	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/headpikebamboo))
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/headpikebamboo)
 
 	AddElement(
 		/datum/element/slapcrafting,\

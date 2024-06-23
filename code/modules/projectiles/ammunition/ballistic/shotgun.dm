@@ -138,7 +138,7 @@
 /obj/item/ammo_casing/shotgun/techshell/Initialize(mapload)
 	. = ..()
 
-	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/meteorslug, /datum/crafting_recipe/pulseslug, /datum/crafting_recipe/dragonsbreath, /datum/crafting_recipe/ionslug))
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/meteorslug, /datum/crafting_recipe/pulseslug, /datum/crafting_recipe/dragonsbreath, /datum/crafting_recipe/ionslug)
 
 	AddElement(
 		/datum/element/slapcrafting,\

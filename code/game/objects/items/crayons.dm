@@ -755,7 +755,7 @@
 
 /obj/item/toy/crayon/spraycan/Initialize(mapload)
 	. = ..()
-	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/improvised_coolant))
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/improvised_coolant)
 
 	AddElement(
 		/datum/element/slapcrafting,\

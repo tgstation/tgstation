@@ -14,8 +14,7 @@
 	// Only actual lasguns can be converted
 	if(type != /obj/item/gun/energy/laser)
 		return
-
-	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/xraylaser, /datum/crafting_recipe/hellgun, /datum/crafting_recipe/ioncarbine))
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/xraylaser, /datum/crafting_recipe/hellgun, /datum/crafting_recipe/ioncarbine)
 
 	AddElement(
 		/datum/element/slapcrafting,\

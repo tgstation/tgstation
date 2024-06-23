@@ -266,7 +266,7 @@
 	butcher_sound = 'sound/weapons/circsawhit.ogg', \
 	)
 	//saws are very accurate and fast at butchering
-	var/list/slapcraft_recipe_list = string_list(list(/datum/crafting_recipe/chainsaw))
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/chainsaw)
 
 	AddElement(
 		/datum/element/slapcrafting,\
