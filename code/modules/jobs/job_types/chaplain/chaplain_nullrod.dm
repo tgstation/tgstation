@@ -747,13 +747,15 @@
 	if(!isliving(target))
 		return
 
-	if(user == target)
+	var/mob/living/living_target = target
+
+	if(user == living_target)
 		return
 
-	if(target.stat == DEAD)
+	if(living_target.stat == DEAD)
 		return
 
-	sneak_attack(target, user)
+	sneak_attack(living_target, user)
 
 /// If our target is incapacitated, unable to protect themselves, or we attack them from behind, we sneak attack!
 /obj/item/nullrod/nullblade/proc/sneak_attack(mob/living/living_target, mob/user)

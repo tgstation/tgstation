@@ -70,7 +70,7 @@
 
 /datum/action/cooldown/spell/pointed/mindread/Remove(mob/remove_from)
 	. = ..()
-	REMOVE_TRAIT(grant_to, TRAIT_MIND_READER, GENETIC_MUTATION)
+	REMOVE_TRAIT(remove_from, TRAIT_MIND_READER, GENETIC_MUTATION)
 
 /datum/action/cooldown/spell/pointed/mindread/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
