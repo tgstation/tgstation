@@ -382,6 +382,8 @@
 	begin_month = JUNE
 	holiday_hat = /obj/item/clothing/head/costume/garland
 
+//MASSMETA EDIT REMOVAL BEGIN
+/*
 /datum/holiday/pride_week
 	name = PRIDE_WEEK
 	begin_month = JUNE
@@ -396,6 +398,8 @@
 		COLOR_PRIDE_ORANGE,
 		COLOR_PRIDE_RED,
 	)
+*/
+//MASSMETA EDIT REMOVAL END
 
 // JULY
 
