@@ -39,6 +39,8 @@
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)
+	register_context()
+	register_item_context()
 
 // Clean up the cell on destroy
 /obj/item/inspector/Exited(atom/movable/gone, direction)
@@ -105,7 +107,10 @@
 	if(!cell || !cell.use(INSPECTOR_ENERGY_USAGE_LOW))
 		balloon_alert(user, "check cell")
 		return
-	var/contraband_status = interacting_with.is_contraband()
+	if(!isitem(interacting_with))
+		return
+	var/obj/item/contraband_item = interacting_with
+	var/contraband_status = contraband_item.is_contraband()
 	if((!contraband_status && scans_correctly) || (contraband_status && !scans_correctly))
 		playsound(src, 'sound/machines/ping.ogg', 20)
 		balloon_alert(user, "clear")
@@ -113,6 +118,27 @@
 
 	playsound(src, 'sound/machines/uplinkerror.ogg', 40)
 	balloon_alert(user, "contraband detected")
+
+/obj/item/inspector/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(cell_cover_open && cell)
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove cell"
+
+	if(cell_cover_open && !cell && istype(held_item, /obj/item/stock_parts/cell))
+		context[SCREENTIP_CONTEXT_LMB] = "Install cell"
+
+	if(held_item?.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "[cell_cover_open ? "close" : "open"] battery panel"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/inspector/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = ..()
+	if(cell_cover_open || !cell)
+		return NONE
+	if(isitem(target))
+		context[SCREENTIP_CONTEXT_LMB] = "Contraband Scan"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
 
 /**
  * Create our report

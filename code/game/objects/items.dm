@@ -1749,7 +1749,9 @@
 /obj/item/proc/is_contraband()
 	if(HAS_TRAIT(src, TRAIT_CONTRABAND))
 		return TRUE
-	for(var/datum/uplink_item/item as anything in subtypesof(/datum/uplink_item))
-		if(!(ispath(initial(item.category), /datum/uplink_category/stealthy_tools) || ispath(initial(item.category), /datum/uplink_category/stealthy)))
+	for(var/datum/uplink_item/traitor_item as anything in subtypesof(/datum/uplink_item))
+		if((ispath(initial(traitor_item.category), /datum/uplink_category/stealthy_tools) || ispath(initial(traitor_item.category), /datum/uplink_category/stealthy)))
+			return FALSE
+		if(ispath(src, traitor_item.item))
 			return TRUE
 	return FALSE
