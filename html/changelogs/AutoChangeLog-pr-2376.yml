@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "Mechcomp teleporters now work across different floors on multi-z maps such as Icebox or Tram."
