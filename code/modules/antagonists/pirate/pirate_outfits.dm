@@ -62,10 +62,12 @@
 	id_trim = /datum/id_trim/pirate/silverscale
 	uniform = /obj/item/clothing/under/syndicate/sniper
 	suit = /obj/item/clothing/suit/armor/vest/alt
+	back = /obj/item/storage/backpack/satchel
 	glasses = /obj/item/clothing/glasses/monocle
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/collectable/tophat
 	shoes = /obj/item/clothing/shoes/laceup
+	implants = list(/obj/item/implant/explosive)
 
 /datum/outfit/pirate/silverscale/captain
 	name = "Silver Scale Captain"
