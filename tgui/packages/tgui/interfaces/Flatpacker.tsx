@@ -74,6 +74,7 @@ export const Flatpacker = (props: any) => {
                   tooltipPosition="left"
                   height="37px"
                   width="37px"
+                  disabled={!design}
                   onClick={() => act('ejectBoard')}
                 >
                   <Icon name="eject" size={1.5} mt="0.8rem" ml="0rem" />
