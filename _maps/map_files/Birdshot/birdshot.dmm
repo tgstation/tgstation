@@ -2167,7 +2167,7 @@
 	pixel_y = -2
 	},
 /turf/open/floor/engine,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "aVX" = (
 /obj/structure/cable,
 /obj/structure/chair,
@@ -20438,7 +20438,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump,
 /turf/open/floor/engine,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "hRF" = (
 /obj/structure/transit_tube/curved{
 	dir = 1
@@ -24447,7 +24447,7 @@
 "jiR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "jiT" = (
 /obj/structure/cable,
 /turf/open/floor/iron/white/corner{
@@ -36105,7 +36105,7 @@
 "naz" = (
 /obj/machinery/igniter/incinerator_ordmix,
 /turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "naC" = (
 /obj/structure/cable,
 /obj/structure/broken_flooring/singular/directional/south,
@@ -38701,7 +38701,7 @@
 "nWh" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /turf/closed/wall/r_wall,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "nWk" = (
 /obj/item/kirbyplants/random/fullysynthetic,
 /obj/structure/sign/poster/contraband/random/directional/north,
@@ -41611,7 +41611,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
 /turf/open/floor/engine,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "oZL" = (
 /obj/structure/table,
 /obj/item/crowbar/large/heavy,
@@ -46288,7 +46288,7 @@
 	dir = 5
 	},
 /turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/freezerchamber)
+/area/station/science/ordnance)
 "qtd" = (
 /turf/open/floor/wood/tile,
 /area/station/command/corporate_showroom)
@@ -48902,7 +48902,7 @@
 "reN" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /turf/closed/wall/r_wall,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "reS" = (
 /obj/effect/spawner/random/trash,
 /obj/effect/decal/cleanable/dirt,
@@ -49407,7 +49407,7 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/air_sensor/ordnance_burn_chamber,
 /turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "rlN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -50985,7 +50985,7 @@
 "rLr" = (
 /obj/machinery/door/poddoor/incinerator_ordmix,
 /turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "rLt" = (
 /obj/item/clothing/head/cone{
 	pixel_x = -8;
@@ -52097,10 +52097,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/maintenance/central/greater)
-"sbq" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/wall/r_wall,
-/area/station/science/ordnance/freezerchamber)
 "sbx" = (
 /obj/structure/chair/sofa/bench/right{
 	dir = 8
@@ -65536,7 +65532,7 @@
 	},
 /obj/machinery/air_sensor/ordnance_freezer_chamber,
 /turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/freezerchamber)
+/area/station/science/ordnance)
 "vTg" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/yellow{
@@ -68976,7 +68972,7 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/components/unary/vent_scrubber,
 /turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/freezerchamber)
+/area/station/science/ordnance)
 "wRg" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -68988,7 +68984,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/ordnance_freezer_chamber_input,
 /turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/freezerchamber)
+/area/station/science/ordnance)
 "wRD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -71133,7 +71129,7 @@
 /area/station/medical/medbay/lobby)
 "xtW" = (
 /turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "xtZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -71405,7 +71401,7 @@
 "xxa" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/ordnance_burn_chamber_input,
 /turf/open/floor/engine/vacuum,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "xxo" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/yellow,
@@ -71943,7 +71939,7 @@
 	pixel_x = 24
 	},
 /turf/open/floor/engine,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "xEo" = (
 /obj/structure/flora/bush/flowers_pp/style_random,
 /obj/structure/flora/bush/flowers_yw,
@@ -71983,7 +71979,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/science/ordnance/freezerchamber)
+/area/station/science/ordnance)
 "xEW" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/syringe/epinephrine{
@@ -72055,7 +72051,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
 /turf/open/floor/iron/dark,
-/area/station/science/ordnance/freezerchamber)
+/area/station/science/ordnance)
 "xFL" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -73676,7 +73672,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "xZN" = (
 /obj/effect/turf_decal/tile/dark_red/anticorner/contrasted{
 	dir = 8
@@ -123339,7 +123335,7 @@ gJQ
 vlq
 vFn
 qNO
-sbq
+aFj
 wRd
 qsV
 xEQ
@@ -123596,7 +123592,7 @@ vvc
 lOG
 xaN
 xCV
-sbq
+aFj
 wRo
 vTf
 xFI
@@ -123853,10 +123849,10 @@ xaN
 xCV
 xaN
 blb
-sbq
-sbq
-sbq
-sbq
+aFj
+aFj
+aFj
+aFj
 aFj
 lkV
 iJL
