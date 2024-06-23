@@ -11406,13 +11406,7 @@
 /obj/structure/table,
 /obj/item/restraints/handcuffs/cable/yellow,
 /obj/item/restraints/handcuffs,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching output from station security cameras.";
-	name = "Security Camera Monitor";
-	network = list("ss13");
-	pixel_x = -30;
-	dir = 4
-	},
+/obj/machinery/computer/security/telescreen/normal/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "ebi" = (
@@ -16674,11 +16668,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/computer/security/telescreen/minisat{
-	dir = 4;
-	pixel_x = -30;
-	pixel_y = 1
-	},
+/obj/machinery/computer/security/telescreen/minisat/directional/west,
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain/private)
 "fWp" = (
@@ -28028,6 +28018,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "jXl" = (
@@ -31825,8 +31816,9 @@
 "lmc" = (
 /obj/machinery/computer/records/medical,
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/computer/security/telescreen/cmo/directional/north{
+	name = "Medbay Monitor"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "lmd" = (
@@ -34215,10 +34207,7 @@
 /turf/open/space/basic,
 /area/space)
 "mgD" = (
-/obj/machinery/computer/security/telescreen/ordnance{
-	dir = 1;
-	pixel_y = -30
-	},
+/obj/machinery/computer/security/telescreen/ordnance/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/testlab)
 "mgH" = (
@@ -36907,10 +36896,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 4
 	},
-/obj/machinery/computer/security/telescreen/cmo{
-	dir = 8;
-	pixel_x = 30
-	},
+/obj/machinery/computer/security/telescreen/cmo/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -38473,10 +38459,7 @@
 /turf/open/floor/catwalk_floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "nHk" = (
-/obj/machinery/computer/security/telescreen/interrogation{
-	dir = 8;
-	pixel_x = 30
-	},
+/obj/machinery/computer/security/telescreen/interrogation/directional/east,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
@@ -39856,13 +39839,7 @@
 	dir = 4
 	},
 /obj/structure/closet/toolcloset,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for the Auxiliary Mining Base.";
-	dir = 8;
-	name = "Auxiliary Base Monitor";
-	network = list("auxbase");
-	pixel_x = 28
-	},
+/obj/machinery/computer/security/telescreen/auxbase/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron,
@@ -47072,10 +47049,7 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/computer/security/telescreen/minisat{
-	dir = 4;
-	pixel_x = -29
-	},
+/obj/machinery/computer/security/telescreen/minisat/directional/west,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "qOP" = (
@@ -48388,10 +48362,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/fore)
 "rjv" = (
-/obj/machinery/computer/security/telescreen/rd{
-	pixel_y = -30;
-	dir = 1
-	},
+/obj/machinery/computer/security/telescreen/rd/directional/south,
 /turf/open/floor/glass/reinforced/plasma,
 /area/station/command/heads_quarters/rd)
 "rjx" = (
@@ -53372,9 +53343,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/machinery/computer/security/telescreen/vault{
-	pixel_y = 30
-	},
+/obj/machinery/computer/security/telescreen/vault/directional/north,
 /obj/machinery/button/door/directional/west{
 	id = "qmprivacy";
 	name = "Privacy Shutters Control"
@@ -59511,13 +59480,7 @@
 /area/station/maintenance/disposal/incinerator)
 "uXk" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching Prison Wing holding areas.";
-	dir = 1;
-	name = "Prison Monitor";
-	network = list("prison");
-	pixel_y = -30
-	},
+/obj/machinery/computer/security/telescreen/prison/directional/south,
 /obj/machinery/modular_computer/preset/cargochat/security{
 	dir = 1
 	},
@@ -60016,6 +59979,13 @@
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/medical/central)
+"vhk" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/machinery/computer/security/telescreen/ordnance/directional/south,
+/turf/open/floor/iron/white,
+/area/station/science/ordnance/testlab)
 "vhz" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -61805,10 +61775,7 @@
 	department = "Chief Engineer's Desk";
 	name = "Chief Engineer's Request Console"
 	},
-/obj/machinery/computer/security/telescreen/ce{
-	dir = 4;
-	pixel_x = -30
-	},
+/obj/machinery/computer/security/telescreen/ce/directional/west,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
@@ -67498,14 +67465,6 @@
 /area/station/maintenance/central/greater)
 "xQY" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for monitoring medbay to ensure patient safety.";
-	dir = 1;
-	name = "Medbay Monitor";
-	network = list("medbay");
-	pixel_x = -2;
-	pixel_y = 3
-	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -67550,11 +67509,6 @@
 /area/station/hallway/primary/central)
 "xSa" = (
 /obj/structure/table,
-/obj/machinery/computer/security/telescreen/ordnance{
-	dir = 1;
-	pixel_y = 4;
-	pixel_x = 1
-	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/testlab)
 "xSE" = (
@@ -180816,7 +180770,7 @@ fDj
 wou
 qSt
 jYT
-hQq
+vhk
 xSa
 fDj
 hhX
