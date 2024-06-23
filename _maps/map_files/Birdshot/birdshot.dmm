@@ -45122,7 +45122,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/armory/riot_helmet,
 /obj/effect/spawner/random/armory/bulletproof_helmet,
-/obj/item/gun/energy/e_gun/dragnet,
+/obj/effect/spawner/random/armory/dragnet,
 /turf/open/floor/iron/dark/small,
 /area/station/ai_monitored/security/armory)
 "qaV" = (

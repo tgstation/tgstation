@@ -32130,12 +32130,11 @@
 /area/station/maintenance/fore)
 "loY" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
+/obj/effect/spawner/random/armory/dragnet,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "lpo" = (
