@@ -523,6 +523,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
 	breakouttime = 2 SECONDS // Cyborgs shouldn't have a strong restraint
+	slowdown = 3
 
 /obj/item/restraints/legcuffs/bola
 	name = "bola"

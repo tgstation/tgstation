@@ -595,7 +595,7 @@
 			stop_pulling()
 		else if(pulling.anchored || pulling.move_resist > move_force)
 			stop_pulling()
-	if(!only_pulling && pulledby && moving_diagonally != FIRST_DIAG_STEP && (get_dist(src, pulledby) > 1 || z != pulledby.z)) //separated from our puller and not in the middle of a diagonal move.
+	if(!only_pulling && pulledby && moving_diagonally != FIRST_DIAG_STEP && (get_dist(src, pulledby) > 1 || (z != pulledby.z && !z_allowed))) //separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
 /atom/movable/proc/set_glide_size(target = 8)
@@ -792,7 +792,14 @@
 
 				if(target_turf != current_turf || (moving_diagonally != SECOND_DIAG_STEP && ISDIAGONALDIR(pull_dir)) || get_dist(src, pulling) > 1)
 					pulling.move_from_pull(src, target_turf, glide_size)
-			check_pulling()
+			if (pulledby)
+				if (pulledby.currently_z_moving)
+					check_pulling(z_allowed = TRUE)
+				//dont call check_pulling() here at all if there is a pulledby that is not currently z moving
+				//because it breaks stair conga lines, for some fucking reason.
+				//it's fine because the pull will be checked when this whole proc is called by the mob doing the pulling anyways
+			else
+				check_pulling()
 
 	//glide_size strangely enough can change mid movement animation and update correctly while the animation is playing
 	//This means that if you don't override it late like this, it will just be set back by the movement update that's called when you move turfs.

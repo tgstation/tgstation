@@ -24,7 +24,7 @@
 	construction_time = 10 SECONDS
 	build_path = /obj/item/stock_parts/cell/high/empty
 	category = list(
-		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_2
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -37,7 +37,7 @@
 	construction_time = 10 SECONDS
 	build_path = /obj/item/stock_parts/cell/super/empty
 	category = list(
-		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_3
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_2
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 

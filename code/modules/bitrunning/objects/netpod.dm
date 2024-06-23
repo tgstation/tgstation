@@ -52,16 +52,24 @@
 		. += span_infoplain("Netpods must be built within 4 tiles of a server.")
 		return
 
-	. += span_infoplain("Drag yourself into the pod to engage the link.")
-	. += span_infoplain("It has limited resuscitation capabilities. Remaining in the pod can heal some injuries.")
-	. += span_infoplain("It has a security system that will alert the occupant if it is tampered with.")
+	if(!isobserver(user))
+		. += span_infoplain("Drag yourself into the pod to engage the link.")
+		. += span_infoplain("It has limited resuscitation capabilities. Remaining in the pod can heal some injuries.")
+		. += span_infoplain("It has a security system that will alert the occupant if it is tampered with.")
 
 	if(isnull(occupant))
-		. += span_notice("It is currently unoccupied.")
+		. += span_infoplain("It's currently unoccupied.")
 		return
 
-	. += span_notice("It is currently occupied by [occupant].")
+	. += span_infoplain("It's currently occupied by [occupant].")
+
+	if(isobserver(user))
+		. += span_notice("As an observer, you can click this netpod to jump to its avatar.")
+		return
+
 	. += span_notice("It can be pried open with a crowbar, but its safety mechanisms will alert the occupant.")
+
+
 
 /obj/machinery/netpod/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -74,7 +82,6 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Pry Open"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/netpod/update_icon_state()
 	if(!is_operational)

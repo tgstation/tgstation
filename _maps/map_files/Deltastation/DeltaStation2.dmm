@@ -882,11 +882,8 @@
 	pixel_x = 3
 	},
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/item/gun/energy/e_gun/dragnet{
-	pixel_y = 4
-	},
-/obj/item/gun/energy/e_gun/dragnet,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/spawner/random/armory/dragnet,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "alG" = (
@@ -78577,6 +78574,15 @@
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/east,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/flatpack{
+	board = /obj/item/circuitboard/machine/flatpacker;
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/multitool{
+	pixel_x = 8
+	},
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "tFG" = (
