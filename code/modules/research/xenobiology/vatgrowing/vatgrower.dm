@@ -58,22 +58,34 @@
 		audible_message(pick(list(span_notice("[src] grumbles!"), span_notice("[src] makes a splashing noise!"), span_notice("[src] sloshes!"))))
 	use_energy(active_power_usage * seconds_per_tick)
 
-/obj/machinery/vatgrower/attackby(obj/item/weapon, mob/living/user)
-	if(user.combat_mode)
-		return ..()
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
+/obj/machinery/vatgrower/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(istype(tool, /obj/item/petri_dish))
+		return deposit_sample(user, tool)
+
+/obj/machinery/vatgrower/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/vatgrower/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/vatgrower/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_unfasten_wrench(user, tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/vatgrower/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+	if(obj_flags & EMAGGED)
 		return
-	if(default_deconstruction_crowbar(weapon))
-		return
-	if(istype(weapon, /obj/item/petri_dish))
-		var/obj/item/petri_dish/petri = weapon
-		if(!petri.sample)
-			return ..()
-		if(biological_sample)
-			to_chat(user, span_warning("There is already a sample in the vat!"))
-			return
-		deposit_sample(user, petri)
-	return ..()
+	resampler_active = !resampler_active
+	balloon_alert_to_viewers("resampler [resampler_active ? "activated" : "deactivated"]")
+	update_appearance()
 
 /obj/machinery/vatgrower/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -90,13 +102,14 @@
 	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/vatgrower/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
-
 ///Creates a clone of the supplied sample and puts it in the vat
 /obj/machinery/vatgrower/proc/deposit_sample(mob/user, obj/item/petri_dish/petri)
+	if(!petri.sample)
+		to_chat(user, span_warning("No sample in the petri dish!"))
+		return ITEM_INTERACT_FAILURE
+	if(biological_sample)
+		to_chat(user, span_warning("There is already a sample in the vat!"))
+		return ITEM_INTERACT_FAILURE
 	biological_sample = new
 	for(var/datum/micro_organism/m in petri.sample.micro_organisms)
 		biological_sample.micro_organisms += new m.type()
@@ -106,6 +119,7 @@
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 	update_appearance()
 	RegisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED, PROC_REF(on_sample_growth_completed))
+	return ITEM_INTERACT_SUCCESS
 
 ///Adds text for when there is a sample in the vat
 /obj/machinery/vatgrower/examine(mob/user)
@@ -149,15 +163,6 @@
 	if(biological_sample && is_operational)
 		var/mutable_appearance/bubbles_overlay = mutable_appearance(icon, "vat_bubbles")
 		. += bubbles_overlay
-
-/obj/machinery/vatgrower/attack_hand(mob/living/user, list/modifiers)
-	. = ..()
-	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-	if(obj_flags & EMAGGED)
-		return
-	resampler_active = !resampler_active
-	balloon_alert_to_viewers("resampler [resampler_active ? "activated" : "deactivated"]")
-	update_appearance()
 
 /obj/machinery/vatgrower/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
