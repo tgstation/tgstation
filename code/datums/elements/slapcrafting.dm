@@ -30,7 +30,8 @@
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(get_examine_more_info))
 	RegisterSignal(target, COMSIG_TOPIC, PROC_REF(topic_handler))
 
-	src.slapcraft_recipes = slapcraft_recipes
+	// You need to turn lists into string lists on attach() for bespoke elements or they'll all be still separate instances
+	src.slapcraft_recipes = string_list(slapcraft_recipes)
 
 /datum/element/slapcrafting/Detach(datum/source, ...)
 	. = ..()
