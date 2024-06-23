@@ -71,6 +71,8 @@
 	var/datum/antagonist/bitrunning_glitch/chosen_role = forced_role || get_antagonist_role()
 	var/role_name = initial(chosen_role.name)
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		question = "<span class='ooc'>A temporary antagonist role is spawning in the virtual domain.</span>\
+		\n<span class='boldnotice'>You will return to your previous body on conclusion.</span>",
 		check_jobban = ROLE_GLITCH,
 		poll_time = 20 SECONDS,
 		checked_target = mutation_target,
@@ -92,26 +94,32 @@
 		return
 
 	var/role_name = initial(chosen_role.name)
-	var/mob/living/antag_mob
+
+	var/mob/living/new_mob
 	switch(role_name)
 		if(ROLE_NETGUARDIAN)
-			antag_mob = new /mob/living/basic/netguardian(mutation_target.loc)
+			new_mob = new /mob/living/basic/netguardian(mutation_target.loc)
 		else // any other humanoid mob
-			antag_mob = new /mob/living/carbon/human(mutation_target.loc)
+			new_mob = new /mob/living/carbon/human(mutation_target.loc)
 
 	mutation_target.gib(DROP_ALL_REMAINS)
 
-	antag_mob.key = ghost.key
-	var/datum/mind/ghost_mind = antag_mob.mind
-	ghost_mind.add_antag_datum(chosen_role)
-	ghost_mind.special_role = ROLE_GLITCH
-	ghost_mind.set_assigned_role(SSjob.GetJobType(/datum/job/bitrunning_glitch))
+	var/datum/mind/ghost_mind = ghost.mind
+	new_mob.key = ghost.key
 
-	playsound(antag_mob, 'sound/magic/ethereal_exit.ogg', 50, vary = TRUE)
-	message_admins("[ADMIN_LOOKUPFLW(antag_mob)] has been made into virtual antagonist by an event.")
-	antag_mob.log_message("was spawned as a virtual antagonist by an event.", LOG_GAME)
+	if(ghost_mind?.current)
+		new_mob.AddComponent(/datum/component/temporary_body, ghost_mind, ghost_mind.current, TRUE)
 
-	add_threats(antag_mob)
+	var/datum/mind/antag_mind = new_mob.mind
+	antag_mind.add_antag_datum(chosen_role)
+	antag_mind.special_role = ROLE_GLITCH
+	antag_mind.set_assigned_role(SSjob.GetJobType(/datum/job/bitrunning_glitch))
+
+	playsound(new_mob, 'sound/magic/ethereal_exit.ogg', 50, vary = TRUE)
+	message_admins("[ADMIN_LOOKUPFLW(new_mob)] has been made into virtual antagonist by an event.")
+	new_mob.log_message("was spawned as a virtual antagonist by an event.", LOG_GAME)
+
+	add_threats(new_mob)
 
 /// Oh boy - transports the antag station side
 /obj/machinery/quantum_server/proc/station_spawn(mob/living/antag, obj/machinery/byteforge/chosen_forge)
@@ -150,6 +158,10 @@
 	var/datum/antagonist/antag_datum = antag.mind?.has_antag_datum(/datum/antagonist/bitrunning_glitch)
 	if(istype(antag_datum))
 		antag_datum.show_in_roundend = TRUE
+
+	var/datum/component/temp_body = antag.GetComponent(/datum/component/temporary_body)
+	if(temp_body)
+		qdel(temp_body)
 
 	do_teleport(antag, get_turf(chosen_forge), forced = TRUE, asoundin = 'sound/magic/ethereal_enter.ogg', asoundout = 'sound/magic/ethereal_exit.ogg', channel = TELEPORT_CHANNEL_QUANTUM)
 

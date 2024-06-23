@@ -32,6 +32,7 @@
 		"scanner_gate",
 		"turret_control",
 		"pepperspray",
+		"dragnet_beacon",
 		"inspector",
 		"evidencebag",
 		"handcuffs_s",
