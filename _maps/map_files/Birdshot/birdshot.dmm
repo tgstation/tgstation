@@ -4823,6 +4823,7 @@
 	dir = 8
 	},
 /obj/machinery/light/cold/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
@@ -7051,9 +7052,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/pdapainter/research,
-/obj/machinery/computer/security/telescreen/rd{
-	pixel_y = 30
-	},
+/obj/machinery/computer/security/telescreen/rd/directional/north,
 /obj/effect/turf_decal/siding/purple{
 	dir = 5
 	},
@@ -9834,13 +9833,7 @@
 /area/station/ai_monitored/turret_protected/aisat/teleporter)
 "edU" = (
 /obj/machinery/porta_turret/ai,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the RD's goons from the safety of his office.";
-	dir = 4;
-	name = "Research Monitor";
-	network = list("rd");
-	pixel_x = -28
-	},
+/obj/machinery/computer/security/telescreen/research/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/iron/smooth,
@@ -12129,10 +12122,7 @@
 /obj/machinery/computer/monitor{
 	dir = 1
 	},
-/obj/machinery/computer/security/telescreen/minisat{
-	dir = 1;
-	pixel_y = -29
-	},
+/obj/machinery/computer/security/telescreen/minisat/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/ai_monitored/turret_protected/aisat/equipment)
 "eYp" = (
@@ -12877,13 +12867,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "fpd" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching Prison Wing holding areas.";
-	dir = 1;
-	name = "Prison Monitor";
-	network = list("prison");
-	pixel_y = -30
-	},
+/obj/machinery/computer/security/telescreen/prison/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "fpg" = (
@@ -13756,10 +13740,7 @@
 /area/station/maintenance/department/engine/atmos)
 "fEV" = (
 /obj/machinery/porta_turret/ai,
-/obj/machinery/computer/security/telescreen/minisat{
-	dir = 8;
-	pixel_x = 28
-	},
+/obj/machinery/computer/security/telescreen/minisat/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/iron/smooth,
@@ -14785,9 +14766,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/dark_red/half/contrasted,
-/obj/machinery/computer/security/telescreen/interrogation{
-	pixel_y = 29
-	},
+/obj/machinery/computer/security/telescreen/interrogation/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security)
@@ -22241,13 +22220,7 @@
 "iwJ" = (
 /obj/structure/table/wood,
 /obj/machinery/light/small/directional/south,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for monitoring the engine.";
-	dir = 4;
-	name = "Engine Monitor";
-	network = list("engine");
-	pixel_x = -32
-	},
+/obj/machinery/computer/security/telescreen/engine/directional/west,
 /obj/machinery/status_display/evac/directional/south,
 /obj/item/radio/off{
 	pixel_x = 1;
@@ -32942,10 +32915,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "lVP" = (
-/obj/machinery/computer/security/telescreen/cmo{
-	dir = 4;
-	pixel_x = -30
-	},
+/obj/machinery/computer/security/telescreen/cmo/directional/west,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/cmo)
 "lVW" = (
@@ -34699,10 +34669,7 @@
 /obj/machinery/computer/cargo{
 	dir = 1
 	},
-/obj/machinery/computer/security/telescreen/vault{
-	dir = 1;
-	pixel_y = -30
-	},
+/obj/machinery/computer/security/telescreen/vault/directional/south,
 /obj/machinery/camera/autoname/directional/south,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/wood,
@@ -36378,12 +36345,7 @@
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/computer/security/telescreen/interrogation{
-	dir = 8;
-	name = "isolation room monitor";
-	network = list("isolation");
-	pixel_x = 30
-	},
+/obj/machinery/computer/security/telescreen/isolation/directional/east,
 /obj/machinery/photobooth/security,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
@@ -37817,12 +37779,7 @@
 "nGd" = (
 /obj/machinery/vending/wardrobe/det_wardrobe,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/security/telescreen{
-	dir = 4;
-	name = "Station Monitor";
-	network = list("ss13");
-	pixel_x = -26
-	},
+/obj/machinery/computer/security/telescreen/normal/directional/west,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "nGe" = (
@@ -46913,13 +46870,7 @@
 /area/station/cargo/boutique)
 "qBD" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the turbine vent.";
-	dir = 1;
-	name = "turbine vent monitor";
-	network = list("turbine");
-	pixel_y = -28
-	},
+/obj/machinery/computer/security/telescreen/turbine/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -50687,12 +50638,7 @@
 "rGm" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/machinery/computer/security,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching Prison Wing holding areas.";
-	name = "Prison Monitor";
-	network = list("prison");
-	pixel_y = 30
-	},
+/obj/machinery/computer/security/telescreen/prison/directional/north,
 /turf/open/floor/iron,
 /area/station/security/warden)
 "rGp" = (
@@ -63583,12 +63529,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "vrt" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching Prison Wing holding areas.";
-	name = "Prison Monitor";
-	network = list("prison");
-	pixel_y = 30
-	},
+/obj/machinery/computer/security/telescreen/prison/directional/north,
 /obj/machinery/computer/records/security,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
@@ -64290,13 +64231,7 @@
 	name = "Private Channel";
 	pixel_x = -26
 	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the ai_upload.";
-	dir = 4;
-	name = "AI Upload Monitor";
-	network = list("aiupload");
-	pixel_x = -29
-	},
+/obj/machinery/computer/security/telescreen/aiupload/directional/west,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
@@ -67740,12 +67675,7 @@
 /area/station/service/chapel/office)
 "wzU" = (
 /obj/effect/landmark/event_spawn,
-/obj/machinery/computer/security/telescreen{
-	dir = 4;
-	name = "Test Chamber Monitor";
-	network = list("xeno");
-	pixel_x = -29
-	},
+/obj/machinery/computer/security/telescreen/test_chamber/directional/west,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -69247,10 +69177,8 @@
 /turf/open/floor/iron/small,
 /area/station/engineering/atmos)
 "wVs" = (
-/obj/machinery/computer/security/telescreen/interrogation{
-	name = "reflection room monitor";
-	network = list("isolation");
-	pixel_y = 31
+/obj/machinery/computer/security/telescreen/isolation/directional/north{
+	name = "reflection room monitor"
 	},
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 1
@@ -72875,10 +72803,7 @@
 /area/station/command/heads_quarters/hop)
 "xQx" = (
 /obj/structure/table,
-/obj/machinery/computer/security/telescreen/ordnance{
-	pixel_y = 2
-	},
-/obj/machinery/newscaster/directional/north,
+/obj/machinery/computer/security/telescreen/ordnance/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
