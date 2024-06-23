@@ -429,6 +429,7 @@
 	. = ..()
 	if(!.)
 		return .
+	ADD_TRAIT(cyborg, TRAIT_FASTMED, REF(src))
 	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_upgrade in cyborg.model.modules)
 		if(omnitool_upgrade.upgraded)
 			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
@@ -440,6 +441,7 @@
 	. = ..()
 	if(!.)
 		return .
+	REMOVE_TRAIT(cyborg, TRAIT_FASTMED, REF(src))
 	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
 		omnitool.downgrade_omnitool()
 

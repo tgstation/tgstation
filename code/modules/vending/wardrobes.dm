@@ -1,3 +1,7 @@
+GLOBAL_VAR_INIT(roaches_deployed, FALSE)
+#define MOTHROACH_START_CHANCE 5
+#define MAX_MOTHROACH_AMOUNT 3
+
 /obj/item/vending_refill/wardrobe
 	icon_state = "refill_clothes"
 
@@ -7,6 +11,29 @@
 	payment_department = NO_FREEBIES
 	panel_type = "panel19"
 	light_mask = "wardrobe-light-mask"
+
+/obj/machinery/vending/wardrobe/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		return
+	if(GLOB.roaches_deployed || !is_station_level(z) || !prob(MOTHROACH_START_CHANCE))
+		return
+	for(var/count in 1 to rand(1, MAX_MOTHROACH_AMOUNT))
+		new /mob/living/basic/mothroach(src)
+	GLOB.roaches_deployed = TRUE
+
+
+/obj/machinery/vending/wardrobe/on_dispense(obj/item/clothing/food)
+	if(!istype(food))
+		return
+	for(var/mob/living/basic/mothroach/roach in contents)
+		food.take_damage(food.get_integrity() * 0.5)
+
+/obj/machinery/vending/wardrobe/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	for(var/mob/living/basic/mothroach/roach in contents)
+		roach.ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEE_TARGET, src) //scatter away!
+		roach.forceMove(drop_location())
 
 /obj/machinery/vending/wardrobe/sec_wardrobe
 	name = "\improper SecDrobe"
@@ -704,3 +731,6 @@
 /obj/item/vending_refill/wardrobe/cent_wardrobe
 	machine_name = "CentDrobe"
 	light_color = LIGHT_COLOR_ELECTRIC_GREEN
+
+#undef MOTHROACH_START_CHANCE
+#undef MAX_MOTHROACH_AMOUNT
