@@ -18,7 +18,7 @@
 
 /datum/uplink_item/role_restricted/mail_counterfeit_kit
 	name = "GLA Brand Mail Counterfeit Kit"
-	desc = "A box of five (5) counterfeit devices. Each single-use device can hold one normal sized object, and impersonate an ordinary postal envelope addressed to whoever you choose. Optionally, can be rigged to activate held items - great for if you want to surpise someone with a primed grenade!"
+	desc = "A box of five (5) counterfeit devices. Each single-use device can hold one normal sized object, and impersonate an ordinary postal envelope addressed to whoever you choose. Optionally, can be rigged to activate held items - great for if you want to surprise someone with a primed grenade!"
 	item = /obj/item/storage/box/syndie_kit/mail_counterfeit
 	cost = 2
 	illegal_tech = FALSE
