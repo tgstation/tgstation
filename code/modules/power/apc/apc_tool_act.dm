@@ -21,6 +21,9 @@
 		. = pseudocircuit_act(user, tool)
 	else if(istype(tool, /obj/item/wallframe/apc))
 		. = wallframe_act(user, tool)
+	else if(istype(tool, /obj/item/kitchen/fork)
+		user.visible_message("[user] sticks [tool] into the plug on [src]!")
+		electrocute_mob(user, src, tool)
 	if(.)
 		return .
 
