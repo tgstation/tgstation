@@ -348,7 +348,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /// Plays the antag stinger sound, if we have one
 /datum/antagonist/proc/play_stinger()
-	if(!stinger_sound)
+	if(isnull(stinger_sound))
 		return
 
 	owner.current.playsound_local(get_turf(owner.current), stinger_sound, 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
