@@ -370,6 +370,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/test_cha
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/engine_waste, 32)
 
+/obj/machinery/computer/security/telescreen/cargo_sec
+	name = "cargo camera monitor"
+	desc = "A telescreen that connects to the cargo and main station camera network."
+	network = list(CAMERANET_NETWORK_SS13,
+					CAMERA_NETWORK_CARGO,
+					)
+	frame_type = /obj/item/wallframe/telescreen/cargo_sec
+
+/obj/item/wallframe/telescreen/cargo_sec
+	name = "cargo telescreen frame"
+	result_path = /obj/machinery/computer/security/telescreen/cargo_sec
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/cargo_sec, 32)
+
 /// A button that adds a camera network to the entertainment monitors
 /obj/machinery/button/showtime
 	name = "thunderdome showtime button"

@@ -27,5 +27,6 @@
 #define CAMERANET_NETWORK_THUNDERDOME "thunder"
 #define CAMERANET_NETWORK_BAR "bar"
 #define CAMERANET_NETWORK_INTERROGATION "interrogation"
+#define CAMERA_NETWORK_CARGO "cargo"
 #define CAMERANET_NETWORK_ABDUCTOR "abductor"
 #define OPERATIVE_CAMERA_NET "operative"
