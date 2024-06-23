@@ -390,7 +390,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/cargo_se
 /obj/machinery/computer/security/telescreen/moon_outpost/research
 	name = "research monitor"
 	desc = "Used for monitoring the research division and the labs within."
-	network = list(CAMERAANET_NETWORK_MOON19_RESEARCH,
+	network = list(CAMERANET_NETWORK_MOON19_RESEARCH,
 					CAMERANET_NETWORK_MOON19_XENO,
 					)
 
