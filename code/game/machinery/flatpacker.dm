@@ -60,15 +60,17 @@
 
 /obj/machinery/flatpacker/examine(mob/user)
 	. += ..()
-	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads:")
-		. += span_notice("Capable of packing up to <b>Tier [max_part_tier]</b>.")
-		. += span_notice("Storing up to <b>[materials.max_amount]</b> material units.")
-		. += span_notice("Material consumption at <b>[creation_efficiency*100]%</b>")
+	if(!in_range(user, src) && isobserver(user))
+		return
 
-		. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"]")
-		if(panel_open)
-			. += span_notice("It can be [EXAMINE_HINT("pried")] apart")
+	. += span_notice("The status display reads:")
+	. += span_notice("Capable of packing up to <b>Tier [max_part_tier]</b>.")
+	. += span_notice("Storing up to <b>[materials.max_amount]</b> material units.")
+	. += span_notice("Material consumption at <b>[creation_efficiency*100]%</b>")
+
+	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"]")
+	if(panel_open)
+		. += span_notice("It can be [EXAMINE_HINT("pried")] apart")
 
 /obj/machinery/flatpacker/update_overlays()
 	. = ..()
@@ -347,15 +349,17 @@
 
 /obj/item/flatpack/examine(mob/user)
 	. = ..()
-	if(in_range(user, src) || isobserver(user))
-		if(loc == user)
-			. += span_warning("You can't deploy while holding it in your hand.")
-		else if(isturf(loc))
-			var/turf/location = loc
-			if(!isopenturf(location))
-				. += span_warning("Can't deploy in this location")
-			else if(location.is_blocked_turf(source_atom = src))
-				. += span_warning("No space for deployment")
+	if(!in_range(user, src) && !isobserver(user))
+		return
+
+	if(loc == user)
+		. += span_warning("You can't deploy while holding it in your hand.")
+	else if(isturf(loc))
+		var/turf/location = loc
+		if(!isopenturf(location))
+			. += span_warning("Can't deploy in this location")
+		else if(location.is_blocked_turf(source_atom = src))
+			. += span_warning("No space for deployment")
 		else
 			. += span_warning("Location is not suitable for deployment")
 
