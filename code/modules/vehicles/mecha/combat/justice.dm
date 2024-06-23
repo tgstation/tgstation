@@ -142,7 +142,7 @@
 	if(!heavy)
 		victim.Knockdown(4 SECONDS)
 		return
-	if(!prob(DISMEMBER_CUALITY_HIGTH))
+	if(!prob(DISMEMBER_CHANCE_HIGH))
 		return
 	var/obj/item/bodypart/cut_bodypart = victim.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG))
 	cut_bodypart?.dismember(BRUTE)
@@ -236,7 +236,7 @@
 	owner.balloon_alert(owner, "invisability is over")
 	Trigger()
 
-/**  
+/**
  * Proc makes an AOE attack after 1 SECOND.
  * Called by the mech pilot when he is in stealth mode and wants to attack.
  * During this, mech cannot move.
@@ -274,7 +274,7 @@
 			continue
 		if(somthing_living == pilot)
 			continue
-		if(prob(DISMEMBER_CUALITY_LOW))
+		if(prob(DISMEMBER_CHANCE_LOW))
 			var/obj/item/bodypart/cut_bodypart = somthing_living.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG))
 			cut_bodypart?.dismember(BRUTE)
 		somthing_living.apply_damage(35, BRUTE)
@@ -395,7 +395,7 @@
 				continue
 			if(somthing_living == charger)
 				continue
-			if(prob(DISMEMBER_CUALITY_LOW))
+			if(prob(DISMEMBER_CHANCE_LOW))
 				var/obj/item/bodypart/cut_bodypart = somthing_living.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_HEAD))
 				cut_bodypart.dismember(BRUTE)
 			somthing_living.apply_damage(35, BRUTE)
@@ -442,8 +442,8 @@
 	servo = new /obj/item/stock_parts/servo/femto(src)
 	update_part_values()
 
-#undef DISMEMBER_CUALITY_HIGTH
-#undef DISMEMBER_CUALITY_LOW
+#undef DISMEMBER_CHANCE_HIGH
+#undef DISMEMBER_CHANCE_LOW
 
 #undef MOVEDELAY_ANGRY
 #undef MOVEDELAY_SAFTY
