@@ -26,7 +26,6 @@
 
 	data["has_dish"] = current_dish ? TRUE : FALSE
 	data["cell_lines"] = list()
-	data["viruses"] = list()
 
 	if(!current_dish)
 		return data
@@ -55,7 +54,7 @@
 				name = virus.name,
 				desc = virus.desc
 			)
-			data["viruses"] += list(virus_data)
+			data["cell_lines"] += list(virus_data)
 
 	return data
 
