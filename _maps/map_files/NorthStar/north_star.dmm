@@ -3252,6 +3252,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/structure/sign/departments/aiupload/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
 "aRz" = (
@@ -4186,6 +4187,7 @@
 "bbN" = (
 /obj/machinery/pdapainter/engineering,
 /obj/machinery/camera/autoname/directional/west,
+/obj/machinery/computer/security/telescreen/engine/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/station/command/heads_quarters/ce)
 "bcb" = (
@@ -7164,9 +7166,7 @@
 /area/station/service/library)
 "bMu" = (
 /obj/effect/turf_decal/tile/purple/opposingcorners,
-/obj/machinery/computer/security/telescreen/rd{
-	pixel_x = -30
-	},
+/obj/machinery/computer/security/telescreen/rd/directional/west,
 /obj/machinery/pdapainter/research,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/rd)
@@ -26340,9 +26340,6 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/cable,
-/obj/machinery/computer/security/telescreen/engine{
-	name = "Engineering and atmospherics monitor"
-	},
 /mob/living/basic/parrot/poly,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/command/heads_quarters/ce)
@@ -32172,11 +32169,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/floor2/starboard/aft)
 "isp" = (
-/obj/machinery/computer/security/telescreen{
-	name = "\improper Engine Waste Monitor";
-	network = list("waste");
-	pixel_y = 26
-	},
+/obj/machinery/computer/security/telescreen/engine_waste/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "isq" = (
@@ -33357,9 +33350,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/machinery/computer/security/telescreen/interrogation{
-	pixel_y = 30
-	},
+/obj/machinery/computer/security/telescreen/interrogation/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "iIm" = (
@@ -33684,10 +33675,7 @@
 	},
 /area/station/hallway/floor2/fore)
 "iNA" = (
-/obj/machinery/computer/security/telescreen/vault{
-	dir = 8;
-	pixel_x = 26
-	},
+/obj/machinery/computer/security/telescreen/vault/directional/east,
 /obj/machinery/computer/security{
 	dir = 8
 	},
@@ -36630,10 +36618,7 @@
 "jAe" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/machinery/computer/security/telescreen/minisat{
-	dir = 4;
-	pixel_x = -32
-	},
+/obj/machinery/computer/security/telescreen/minisat/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "jAl" = (
@@ -40938,12 +40923,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/computer/security/telescreen{
-	dir = 1;
-	name = "\improper Engine Waste Monitor";
-	network = list("waste");
-	pixel_y = -26
-	},
+/obj/machinery/computer/security/telescreen/engine_waste/directional/south,
 /turf/open/floor/catwalk_floor/iron,
 /area/station/engineering/atmos/pumproom)
 "kFp" = (
@@ -41281,12 +41261,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/computer/security/telescreen{
-	dir = 8;
-	name = "\improper Engine Waste Monitor";
-	network = list("waste");
-	pixel_x = 26
-	},
+/obj/machinery/computer/security/telescreen/engine_waste/directional/east,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/atmos/pumproom)
@@ -41548,13 +41523,6 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/spawner/random/aimodule/neutral{
 	pixel_x = 15
-	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the AI Upload.";
-	dir = 4;
-	name = "AI Upload Monitor";
-	network = list("aiupload");
-	pixel_x = -29
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
@@ -42247,10 +42215,7 @@
 /turf/open/floor/engine/hull,
 /area/space/nearstation)
 "kVs" = (
-/obj/machinery/computer/security/telescreen/minisat{
-	dir = 8;
-	pixel_x = 28
-	},
+/obj/machinery/computer/security/telescreen/minisat/directional/east,
 /obj/machinery/camera/directional/south{
 	c_tag = "MiniSat Exterior Access";
 	network = list("minisat")
@@ -49388,13 +49353,7 @@
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/captain)
 "mIV" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for the Auxiliary Mining Base.";
-	dir = 1;
-	name = "Auxiliary Base Monitor";
-	network = list("auxbase");
-	pixel_y = -28
-	},
+/obj/machinery/computer/security/telescreen/auxbase/directional/south,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -58476,12 +58435,6 @@
 /obj/structure/sign/poster/official/random/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/second)
-"oZB" = (
-/obj/structure/sign/departments/aiupload/directional/east,
-/turf/open/floor/iron/dark/side{
-	dir = 4
-	},
-/area/station/hallway/floor2/aft)
 "oZE" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Maintenance Hatch"
@@ -67929,10 +67882,7 @@
 	name = "Private Channel"
 	},
 /obj/machinery/recharge_station,
-/obj/machinery/computer/security/telescreen/minisat{
-	dir = 8;
-	pixel_x = 28
-	},
+/obj/machinery/computer/security/telescreen/minisat/directional/east,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat/service)
 "rxz" = (
@@ -71977,6 +71927,7 @@
 	name = "AI Upload turret control";
 	pixel_y = 28
 	},
+/obj/machinery/computer/security/telescreen/aiupload/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
 "sEA" = (
@@ -82781,9 +82732,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
 	},
-/obj/machinery/computer/security/telescreen/ordnance{
-	pixel_y = 32
-	},
+/obj/machinery/computer/security/telescreen/ordnance/directional/north,
 /obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver,
 /obj/structure/table,
 /obj/item/binoculars{
@@ -202899,7 +202848,7 @@ xDM
 ddA
 pZW
 wCG
-oZB
+jZS
 caF
 dKS
 bsv
