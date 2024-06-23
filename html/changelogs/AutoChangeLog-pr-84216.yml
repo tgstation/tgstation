@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Bloody footprints now go until you run out of blood on your feet instead if only a single tile"
