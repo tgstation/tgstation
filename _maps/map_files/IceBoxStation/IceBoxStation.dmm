@@ -3925,15 +3925,12 @@
 /area/station/engineering/supermatter/room)
 "bjm" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for monitoring medbay to ensure patient safety.";
-	dir = 8;
-	name = "Medbay Monitor";
-	network = list("medbay");
-	pixel_y = 4
-	},
 /obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/turf_decal/tile/red/full,
+/obj/machinery/computer/security/telescreen/cmo{
+	dir = 4;
+	name = "Medbay Monitor"
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/checkpoint/medical)
 "bjn" = (
@@ -8054,9 +8051,7 @@
 /area/station/maintenance/fore)
 "cnU" = (
 /obj/machinery/modular_computer/preset/id,
-/obj/machinery/computer/security/telescreen/vault{
-	pixel_y = 30
-	},
+/obj/machinery/computer/security/telescreen/vault/directional/north,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
@@ -11474,10 +11469,7 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/item/kirbyplants/random/dead/research_director,
-/obj/machinery/computer/security/telescreen/rd{
-	dir = 4;
-	pixel_x = -26
-	},
+/obj/machinery/computer/security/telescreen/rd/directional/west,
 /turf/open/floor/iron/smooth_half,
 /area/station/command/heads_quarters/rd)
 "dnX" = (
@@ -11842,12 +11834,8 @@
 /obj/machinery/computer/station_alert{
 	dir = 4
 	},
-/obj/machinery/computer/security/telescreen/ce{
-	dir = 4;
-	pixel_x = -24;
-	pixel_y = -1
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/computer/security/telescreen/ce/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "dsl" = (
@@ -12721,12 +12709,7 @@
 /area/station/engineering/atmos/pumproom)
 "dFr" = (
 /obj/structure/table,
-/obj/machinery/computer/security/telescreen/interrogation{
-	dir = 1;
-	name = "isolation room monitor";
-	network = list("isolation");
-	pixel_y = -32
-	},
+/obj/machinery/computer/security/telescreen/isolation/directional/south,
 /obj/item/clothing/suit/jacket/straight_jacket,
 /obj/item/clothing/suit/jacket/straight_jacket{
 	pixel_x = 6
@@ -25224,9 +25207,7 @@
 "hCx" = (
 /obj/structure/table,
 /obj/item/binoculars,
-/obj/machinery/computer/security/telescreen/ordnance{
-	pixel_y = 32
-	},
+/obj/machinery/computer/security/telescreen/ordnance/directional/north,
 /turf/open/floor/iron,
 /area/station/science/ordnance/testlab)
 "hCC" = (
@@ -33909,6 +33890,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/small/directional/north,
+/obj/machinery/computer/security/telescreen/engine/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "kjo" = (
@@ -39326,9 +39308,7 @@
 /area/station/engineering/atmos)
 "lMi" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/security/telescreen/prison{
-	pixel_y = 32
-	},
+/obj/machinery/computer/security/telescreen/prison/directional/north,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/fax{
 	fax_name = "Law Office";
@@ -40039,7 +40019,10 @@
 /area/station/science/research)
 "lYz" = (
 /obj/machinery/computer/records/security,
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/directional/north{
+	pixel_x = -16
+	},
+/obj/machinery/computer/security/telescreen/normal/directional/north,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
@@ -41336,10 +41319,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
-/obj/machinery/computer/security/telescreen/cmo{
-	dir = 8;
-	pixel_x = 27
-	},
+/obj/machinery/computer/security/telescreen/cmo/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "mwh" = (
@@ -42268,9 +42248,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/computer/security/telescreen/prison{
-	pixel_y = 32
-	},
+/obj/machinery/computer/security/telescreen/prison/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
 "mNy" = (
@@ -48152,10 +48130,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/computer/security/telescreen/engine{
-	dir = 8;
-	pixel_x = 24
-	},
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "ouP" = (
@@ -49275,14 +49249,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/fore)
 "oLW" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used to access the various cameras on the station.";
-	dir = 1;
-	layer = 3.1;
-	name = "Security Camera Monitor";
-	network = list("ss13");
-	pixel_y = 2
-	},
 /obj/structure/table,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
@@ -55749,9 +55715,7 @@
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
 "qFq" = (
-/obj/machinery/computer/security/telescreen/interrogation{
-	pixel_y = 30
-	},
+/obj/machinery/computer/security/telescreen/interrogation/directional/north,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
 	},
@@ -55845,11 +55809,8 @@
 /obj/effect/turf_decal/trimline/purple/filled/warning{
 	dir = 8
 	},
-/obj/machinery/computer/security/telescreen{
-	dir = 8;
-	name = "Xenobio Monitor";
-	network = list("xeno");
-	pixel_x = 26
+/obj/machinery/computer/security/telescreen/test_chamber/directional/east{
+	name = "Xenobio Monitor"
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -63224,12 +63185,8 @@
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "sKV" = (
-/obj/machinery/computer/security/telescreen{
-	name = "Test Chamber Monitor";
-	network = list("xeno");
-	pixel_y = 26
-	},
 /obj/machinery/light/small/directional/north,
+/obj/machinery/computer/security/telescreen/test_chamber/directional/north,
 /turf/open/floor/iron/white/side{
 	dir = 1
 	},
@@ -65039,12 +64996,10 @@
 /area/icemoon/surface/outdoors/nospawn)
 "trb" = (
 /obj/structure/table,
-/obj/machinery/computer/security/telescreen{
-	dir = 8;
-	name = "Test Chamber Monitor";
-	network = list("test")
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/security/telescreen/test_chamber{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
 "trc" = (
