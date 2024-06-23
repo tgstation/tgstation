@@ -662,7 +662,7 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "Fv" = (
-/obj/machinery/power/supermatter_crystal/hugbox,
+/obj/machinery/power/supermatter_crystal,
 /turf/open/indestructible,
 /area/deathmatch)
 "FM" = (
