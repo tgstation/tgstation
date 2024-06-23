@@ -3439,6 +3439,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/computer/security/telescreen/underground_outpost/research/directional/west,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/research)
 "np" = (
@@ -3449,12 +3450,6 @@
 /area/awaymission/undergroundoutpost45/research)
 "nq" = (
 /obj/structure/table,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for monitoring the research division and the labs within.";
-	dir = 8;
-	name = "research monitor";
-	network = list("uo45r")
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
@@ -3590,11 +3585,6 @@
 "nR" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for monitoring the research division and the labs within.";
-	name = "research monitor";
-	network = list("uo45r")
-	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -4033,6 +4023,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/machinery/computer/security/telescreen/underground_outpost/research/directional/south,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
