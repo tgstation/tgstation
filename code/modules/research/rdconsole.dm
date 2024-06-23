@@ -51,6 +51,17 @@ Nothing else in the console has ID requirements.
 		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
 	if(stored_research)
 		stored_research.consoles_accessing += src
+		RegisterSignal(src, COMSIG_CONSOLE_INFO_QUERIED, PROC_REF(console_query_reply))
+
+/obj/machinery/computer/rdconsole/proc/console_query_reply(datum/source, datum/querying_remote)
+	SIGNAL_HANDLER
+
+	var/query_reply[0]
+	query_reply["console_name"] = src
+	query_reply["console_location"] = get_area(src)
+	query_reply["console_locked"] = locked
+	query_reply["console_ref"] = REF(src)
+	return query_reply
 
 /obj/machinery/computer/rdconsole/Destroy()
 	if(stored_research)

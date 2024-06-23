@@ -51,13 +51,15 @@
 				"server_ref" = REF(server),
 			))
 
-		for(var/obj/machinery/computer/rdconsole/console as anything in stored_research.consoles_accessing)
+		for(var/datum/interface as anything in stored_research.consoles_accessing)
+			var/list/queried_info = SEND_SIGNAL(interface, COMSIG_CONSOLE_INFO_QUERIED, src)
 			data["consoles"] += list(list(
-				"console_name" = console,
-				"console_location" = get_area(console),
-				"console_locked" = console.locked,
-				"console_ref" = REF(console),
+				"console_name" = queried_info["console_name"],
+				"console_location" = queried_info["console_location"],
+				"console_locked" = queried_info["console_locked"],
+				"console_ref" = queried_info["console_ref"],
 			))
+
 
 	return data
 
@@ -78,7 +80,7 @@
 			server_selected.toggle_disable(usr)
 			return TRUE
 		if("lock_console")
-			var/obj/machinery/computer/rdconsole/console_selected = locate(params["selected_console"]) in stored_research.consoles_accessing
+			var/console_selected = locate(params["selected_console"]) in stored_research.consoles_accessing
 			if(!console_selected)
 				return FALSE
 			console_selected.locked = !console_selected.locked

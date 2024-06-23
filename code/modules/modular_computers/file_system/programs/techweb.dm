@@ -20,11 +20,68 @@
 	var/id_cache = list()
 	/// Sequence var for the id cache
 	var/id_cache_seq = 1
+	/// What this will return when a server controller queries it for its info
+	var/query_reply[0]
 
 /datum/computer_file/program/science/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, computer)
+	if(stored_research)
+		stored_research.consoles_accessing += src
+	RegisterSignal(src, COMSIG_CONSOLE_INFO_QUERIED, PROC_REF(console_query_reply))
+	form_query_response()
+
+/* Whenever this program is installed, it puts together a list of relevant data for server controller queries
+* However, it can also update singular fields if needed; current projected use cases are for things that we
+* don't want rebuilding the whole query with respect to performance considerations, or for l33t haxxorz updating
+* their query responses with erroneous information: Science McNotAnAntag says, "RD, look! The AI is researching bombs! You should let me valiantly card it!"
+* single_field - null by default, if not null, the value of the field to update
+* value - null by default, if not null, the value to update the field with
+*/
+/datum/computer_file/program/science/proc/form_query_response(single_field = null, value = null)
+
+	if(single_field) // If we're updating a single field then ONLY update the single field... obviously...
+		query_reply[single_field] = value
+		return
+	query_reply["console_name"] = src
+	query_reply["console_location"] = computer
+	query_reply["console_locked"] = locked
+	query_reply["console_ref"] = REF(src)
+
+
+/* Signal handler for the various interfaces that would query console information.
+* datum/source - The object being queried for its info
+* datum/remote_server - The object doing the query; used for logging purposes
+* queried_field - null by default, if not null return the whole query, else just the field
+*/
+/datum/computer_file/program/science/proc/console_query_reply(datum/source, datum/remote_server, queried_field = null)
+	SIGNAL_HANDLER
+
+	if(queried_field)
+		return query_reply[queried_field]
+
+	return query_reply
+
+/* Handler for locking this console. It will set the required access to unlock it to the highest
+* access level of the user that locked it. If the Captain locks down the RD's PDA, the RD needs the Captain
+* to unlock it, and so forth. We don't call this for being emagged, as that's a different case.
+* datum/lock_caller - The user that (un)locked the console
+* remote_lock - boolean, false by default. If true, most of the logic is handled from the server controller, and this only gets called if successful.
+*/
+/datum/computer_file/program/science/proc/toggle_lock(datum/lock_caller, remote_lock = FALSE)
+	if(remote_lock)
+		locked = !locked
+		if(locked)
+
+
+
+	if(current_lock)
+		if(lock_access in computer?.computer_id_slot?.access)
+			locked = !locked
+			form_query_response("console_locked", locked)
+
+
 
 /datum/computer_file/program/science/application_attackby(obj/item/attacking_item, mob/living/user)
 	if(!istype(attacking_item, /obj/item/multitool))
