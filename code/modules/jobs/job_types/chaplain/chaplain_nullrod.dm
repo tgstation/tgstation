@@ -750,6 +750,9 @@
 	if(user == target)
 		return
 
+	if(target.stat == DEAD)
+		return
+
 	sneak_attack(target, user)
 
 /// If our target is incapacitated, unable to protect themselves, or we attack them from behind, we sneak attack!
@@ -762,9 +765,6 @@
 
 	// The force our sneak attack applies. Starts as 3d6, then changed based on certain factors.
 	var/sneak_attack_dice = roll("3d6")
-
-	if(living_target.stat == DEAD)
-		return
 
 	// Status effects on the target that grant us sneak attacks
 	if(living_target.is_blind())
@@ -823,6 +823,12 @@
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 
+	/// And so we return here if we are not entitled to a sneak attack.
+	if(!successful_sneak_attack)
+		if(sneak_attack_fail_message)
+			user.balloon_alert(living_target, "sneak attack avoided!")
+		return
+
 	/// And now we'll deal with sneak attack damage modifiers.
 
 	// If our target is also unconscious for some reason, we get even more damage. Coup de grace, motherfucker.
@@ -844,18 +850,12 @@
 	if(HAS_TRAIT(living_target, TRAIT_IWASBATONED))
 		sneak_attack_dice *= 0.5
 
-	/// And so we return here if we are not entitled to a sneak attack.
-	if(!successful_sneak_attack)
-		if(sneak_attack_fail_message)
-			user.balloon_alert(living_target, "sneak attack avoided!")
-		return
-
 	// Affecting body part check.
 	var/obj/item/bodypart/affecting = living_target.get_bodypart(user.get_random_valid_zone(user.zone_selected))
 	// Target's armor value. Accounts for armor penetration even though we have no armour_penetration defined on the parent.
 	var/armor_block = living_target.run_armor_check(affecting, MELEE, armour_penetration = armour_penetration)
 
 	// We got a sneak attack!
-	living_target.apply_damage(round(sneak_attack_dice, 1), BRUTE, def_zone = affecting, blocked = armor_block, wound_bonus = bare_wound_bonus, sharpness = SHARP_EDGED)
+	living_target.apply_damage(round(sneak_attack_dice, DAMAGE_PRECISION), BRUTE, def_zone = affecting, blocked = armor_block, wound_bonus = bare_wound_bonus, sharpness = SHARP_EDGED)
 	living_target.balloon_alert(user, "sneak attack!")
 	playsound(living_target, 'sound/weapons/guillotine.ogg', 50, TRUE)

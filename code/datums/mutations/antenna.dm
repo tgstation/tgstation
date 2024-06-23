@@ -64,11 +64,13 @@
 
 /datum/action/cooldown/spell/pointed/mindread/Grant(mob/grant_to)
 	. = ..()
-	grant_to.add_traits(TRAIT_MIND_READER, GENETIC_MUTATION)
+	if (!owner)
+		return
+	ADD_TRAIT(grant_to, TRAIT_MIND_READER, GENETIC_MUTATION)
 
 /datum/action/cooldown/spell/pointed/mindread/Remove(mob/remove_from)
 	. = ..()
-	remove_from.remove_traits(TRAIT_MIND_READER, GENETIC_MUTATION)
+	REMOVE_TRAIT(grant_to, TRAIT_MIND_READER, GENETIC_MUTATION)
 
 /datum/action/cooldown/spell/pointed/mindread/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
