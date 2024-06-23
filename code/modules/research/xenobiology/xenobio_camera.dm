@@ -448,7 +448,7 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 	if(!xeno_console.validate_area(user, remote_eye, target_turf))
 		return
 
-	for(var/mob/M in target_turf)
+	for(var/mob/monkey in target_turf)
 		if(ismonkey(M) && M.stat == DEAD)
 			cleanup = TRUE
 			xeno_console.monkey_recycle(user, M)
