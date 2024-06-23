@@ -358,6 +358,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/tcomms, 
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/test_chamber, 32)
 
+/obj/machinery/computer/security/telescreen/engine_waste
+	name = "\improper Engine Waste Monitor"
+	desc = "A telescreen that connects to the engine waste camera network."
+	network = list(CAMERANET_NETWORK_WASTE)
+	frame_type = /obj/item/wallframe/telescreen/engine_waste
+
+/obj/item/wallframe/telescreen/engine_waste
+	name = "\improper Engine Waste telescreen frame"
+	result_path = /obj/machinery/computer/security/telescreen/engine_waste
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/engine_waste, 32)
+
 /// A button that adds a camera network to the entertainment monitors
 /obj/machinery/button/showtime
 	name = "thunderdome showtime button"
