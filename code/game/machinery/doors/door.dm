@@ -604,4 +604,7 @@
 		return ..()
 	return ..(0)
 
+/obj/machinery/door/spawn_frame(disassembled)
+	return
+
 #undef DOOR_CLOSE_WAIT

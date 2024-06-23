@@ -831,7 +831,9 @@
 		return //Just delete us, no need to call anything else.
 
 	on_deconstruction(disassembled)
-	spawn_frame(disassembled)
+
+	if(density || LAZYLEN(component_parts))
+		spawn_frame(disassembled)
 
 	if(!LAZYLEN(component_parts))
 		dump_contents() //drop everything inside us
