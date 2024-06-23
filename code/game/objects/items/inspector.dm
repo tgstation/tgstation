@@ -105,7 +105,7 @@
 	if(!cell || !cell.use(INSPECTOR_ENERGY_USAGE_LOW))
 		balloon_alert(user, "check cell")
 		return
-	var/contraband_status = HAS_TRAIT(interacting_with, TRAIT_CONTRABAND)
+	var/contraband_status = interacting_with.is_contraband()
 	if((!contraband_status && scans_correctly) || (contraband_status && !scans_correctly))
 		playsound(src, 'sound/machines/ping.ogg', 20)
 		balloon_alert(user, "clear")

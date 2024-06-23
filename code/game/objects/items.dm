@@ -1741,3 +1741,15 @@
 	if(!isnull(loc))
 		SEND_SIGNAL(loc, COMSIG_ATOM_CONTENTS_WEIGHT_CLASS_CHANGED, src, old_w_class, new_w_class)
 	return TRUE
+
+/**
+ * Used to determine if an item should be considered contraband by N-spect scanners or scanner gates.
+ * Returns true when an item has the contraband trait, or is included in the traitor uplink.
+ */
+/obj/item/proc/is_contraband()
+	if(HAS_TRAIT(src, TRAIT_CONTRABAND))
+		return TRUE
+	for(var/datum/uplink_item/item as anything in subtypesof(/datum/uplink_item))
+		if(!(ispath(initial(item.category), /datum/uplink_category/stealthy_tools) || ispath(initial(item.category), /datum/uplink_category/stealthy)))
+			return TRUE
+	return FALSE

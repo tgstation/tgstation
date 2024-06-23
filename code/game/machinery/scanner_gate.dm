@@ -214,7 +214,7 @@
 					beep = TRUE
 		if(SCANGATE_CONTRABAND)
 			for(var/obj/content in M.get_all_contents_skipping_traits(TRAIT_CONTRABAND_BLOCKER))
-				if(HAS_TRAIT(content, TRAIT_CONTRABAND))
+				if(content.is_contraband)
 					beep = TRUE
 					break
 			if(!n_spect.scans_correctly)
