@@ -354,10 +354,11 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(item, src))
 		to_chat(user, span_warning("\The [item] is stuck to your hand, you cannot put it in the washing machine!"))
-		return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
 	if(item.dye_color)
 		color_source = item
 	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/machinery/washing_machine/attack_hand(mob/living/user, list/modifiers)
