@@ -148,6 +148,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	)
 	frame_type = /obj/item/wallframe/telescreen/rd
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/rd, 32)
+
 /obj/item/wallframe/telescreen/rd
 	name = "\improper Research Director's telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/rd
@@ -162,6 +164,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	name = "research telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/research
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/research, 32)
+
 /obj/machinery/computer/security/telescreen/ce
 	name = "\improper Chief Engineer's telescreen"
 	desc = "Used for watching the engine, telecommunications and the minisat."
@@ -171,6 +175,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/item/wallframe/telescreen/ce
 	name = "\improper Chief Engineer's telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/ce
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ce, 32)
 
 /obj/machinery/computer/security/telescreen/cmo
 	name = "\improper Chief Medical Officer's telescreen"
@@ -182,6 +188,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	name = "\improper Chief Engineer'stelescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/cmo
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/cmo, 32)
+
 /obj/machinery/computer/security/telescreen/vault
 	name = "vault monitor"
 	desc = "A telescreen that connects to the vault's camera network."
@@ -191,6 +199,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/item/wallframe/telescreen/vault
 	name = "vault telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/vault
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/vault, 32)
 
 /obj/machinery/computer/security/telescreen/ordnance
 	name = "bomb test site monitor"
@@ -202,6 +212,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	name = "bomb test site telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/ordnance
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ordnance, 32)
+
 /obj/machinery/computer/security/telescreen/engine
 	name = "engine monitor"
 	desc = "A telescreen that connects to the engine's camera network."
@@ -211,6 +223,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/item/wallframe/telescreen/engine
 	name = "engine telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/engine
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/engine, 32)
 
 /obj/machinery/computer/security/telescreen/turbine
 	name = "turbine monitor"
@@ -222,6 +236,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	name = "turbine telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/turbine
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/turbine, 32)
+
 /obj/machinery/computer/security/telescreen/interrogation
 	name = "interrogation room monitor"
 	desc = "A telescreen that connects to the interrogation room's camera."
@@ -231,6 +247,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/item/wallframe/telescreen/interrogation
 	name = "interrogation telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/interrogation
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/interrogation, 32)
 
 /obj/machinery/computer/security/telescreen/prison
 	name = "prison monitor"
@@ -242,6 +260,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	name = "prison telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/prison
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/prison, 32)
+
 /obj/machinery/computer/security/telescreen/auxbase
 	name = "auxiliary base monitor"
 	desc = "A telescreen that connects to the auxiliary base's camera."
@@ -251,6 +271,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/item/wallframe/telescreen/auxbase
 	name = "auxiliary base telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/auxbase
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/auxbase, 32)
 
 /obj/machinery/computer/security/telescreen/minisat
 	name = "minisat monitor"
@@ -262,6 +284,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	name = "minisat telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/minisat
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/minisat, 32)
+
 /obj/machinery/computer/security/telescreen/aiupload
 	name = "\improper AI upload monitor"
 	desc = "A telescreen that connects to the AI upload's camera network."
@@ -272,6 +296,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	name = "\improper AI upload telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/aiupload
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/aiupload, 32)
+
 /obj/machinery/computer/security/telescreen/bar
 	name = "bar monitor"
 	desc = "A telescreen that connects to the bar's camera network. Perfect for checking on customers."
@@ -281,6 +307,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/item/wallframe/telescreen/bar
 	name = "bar telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/bar
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/bar, 32)
 
 
 /// A button that adds a camera network to the entertainment monitors
