@@ -38,6 +38,6 @@
 
 /obj/item/clothing/suit/space/pirate/silverscale
 	name = "designer pirate suit"
-	desc = "A specially-made Cybersun branded space suit; the fine plastisilk exterior is woven from the coccons of black-market Lümlan mothroaches and the trim is lined with the ivory of the critically endagered Zanzibarian dwarf elephant. Baby seal leather boots sold seperately."
+	desc = "A specially-made Cybersun branded space suit; the fine plastisilk exterior is woven from the coccons of black-market Lümlan mothroaches and the trim is lined with the ivory of the critically endagered Zanzibarian dwarf elephant. Baby seal leather boots sold separately."
 	inhand_icon_state = "syndicate-black"
 	icon_state = "syndicate-black-white"
