@@ -84,7 +84,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	resampler_active = !resampler_active
-	balloon_alert_to_viewers("resampler [resampler_active ? "activated" : "deactivated"]")
+	balloon_alert(user, "resampler [resampler_active ? "activated" : "deactivated"]")
 	update_appearance()
 
 /obj/machinery/vatgrower/attack_hand_secondary(mob/user, list/modifiers)
@@ -98,24 +98,24 @@
 		reagents.clear_reagents()
 		if(biological_sample)
 			QDEL_NULL(biological_sample)
-		to_chat(user, span_warning("You empty [src]'s soup container."))
+		balloon_alert(user, "container empty")
 	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 ///Creates a clone of the supplied sample and puts it in the vat
 /obj/machinery/vatgrower/proc/deposit_sample(mob/user, obj/item/petri_dish/petri)
 	if(!petri.sample)
-		to_chat(user, span_warning("No sample in the petri dish!"))
+		balloon_alert(user, "dish empty")
 		return ITEM_INTERACT_FAILURE
 	if(biological_sample)
-		to_chat(user, span_warning("There is already a sample in the vat!"))
+		balloon_alert(user, "already has a sample")
 		return ITEM_INTERACT_FAILURE
 	biological_sample = new
 	for(var/datum/micro_organism/m in petri.sample.micro_organisms)
 		biological_sample.micro_organisms += new m.type()
 	biological_sample.sample_layers = petri.sample.sample_layers
 	biological_sample.sample_color = petri.sample.sample_color
-	to_chat(user, span_warning("You put some of the sample in the vat!"))
+		balloon_alert(user, "added sample")
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 	update_appearance()
 	RegisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED, PROC_REF(on_sample_growth_completed))
