@@ -1750,8 +1750,8 @@
 	if(HAS_TRAIT(src, TRAIT_CONTRABAND))
 		return TRUE
 	for(var/datum/uplink_item/traitor_item as anything in subtypesof(/datum/uplink_item))
-		if((ispath(initial(traitor_item.category), /datum/uplink_category/stealthy_tools) || ispath(initial(traitor_item.category), /datum/uplink_category/stealthy)))
-			return FALSE
-		if(ispath(src, traitor_item.item))
+		if(ispath(src.type, traitor_item.item))
+			if(!(traitor_item.uplink_item_flags & SYNDIE_TRIPS_CONTRABAND))
+				return FALSE
 			return TRUE
 	return FALSE

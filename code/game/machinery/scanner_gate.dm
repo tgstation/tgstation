@@ -58,6 +58,7 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	register_context()
 
 /obj/machinery/scanner_gate/Destroy()
 	qdel(wires)
@@ -78,6 +79,16 @@
 		. += span_notice("The control panel is unlocked. Swipe an ID to lock it.")
 	if(n_spect)
 		. += span_notice("The scanner is equipped with an N-Spect scanner. Use a [span_boldnotice("crowbar")] to uninstall.")
+
+/obj/machinery/scanner_gate/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(n_spect && held_item?.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "Remove N-Spect scanner"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(!n_spect && istype(held_item, /obj/item/inspector))
+		context[SCREENTIP_CONTEXT_LMB] = "Install N-Spect scanner"
+		return CONTEXTUAL_SCREENTIP_SET
+
 
 /obj/machinery/scanner_gate/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
