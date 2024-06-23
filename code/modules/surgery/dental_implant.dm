@@ -4,12 +4,14 @@
 	steps = list(
 		/datum/surgery_step/drill,
 		/datum/surgery_step/insert_pill,
+		/datum/surgery_step/close,
 	)
 
 /datum/surgery_step/insert_pill
 	name = "insert pill"
 	implements = list(/obj/item/reagent_containers/pill = 100)
 	time = 16
+	repeatable = TRUE
 
 /datum/surgery_step/insert_pill/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
