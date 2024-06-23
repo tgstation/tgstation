@@ -238,6 +238,7 @@
 		obj_flags |= EMAGGED
 		StopPlaying()
 		visible_message("<span class='danger'>\The [src] makes a fizzling sound.</span>")
+		set_hacked(1)
 		update_icon()
 		return 1
 
@@ -278,7 +279,7 @@
 		start_stop_song()
 	updateDialog()
 
-//Pre-hacked Jukebox, has the full sond list unlocked
+//Pre-hacked Jukebox, has the full song list unlocked
 /obj/machinery/media/jukebox/hacked
 	name = "DRM free space jukebox"
 	desc = "Filled with songs both past and present! Unlocked for your convenience!"
