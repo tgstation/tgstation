@@ -420,19 +420,22 @@
 	var/static/regex/crayon_regex = new /regex(@"[^\w!?,.=&%#+/\-]", "ig")
 	return LOWER_TEXT(crayon_regex.Replace(text, ""))
 
-/// Attempts to color the target. Returns how many charges were used.
+/// Is this a valid object for use_on to run on?
+/obj/item/toy/crayon/proc/can_use_on(atom/target, mob/user, list/modifiers)
+	if(!isturf(target) && !istype(target, /obj/effect/decal/cleanable))
+		return FALSE
+	return TRUE
+
+/// Attempts to color the target.
 /obj/item/toy/crayon/proc/use_on(atom/target, mob/user, list/modifiers)
 	var/static/list/punctuation = list("!","?",".",",","/","+","-","=","%","#","&")
 
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 
-	if(!isturf(target))
-		return FALSE
-
 	if(!isValidSurface(target))
 		target.balloon_alert(user, "can't use there!")
-		return TRUE
+		return
 
 	var/drawing = drawtype
 	switch(drawtype)
@@ -462,7 +465,7 @@
 	if (istagger)
 		cost *= 0.5
 	if(check_empty(user, cost))
-		return TRUE
+		return
 
 	var/temp = "rune"
 	var/ascii = (length(drawing) == 1)
@@ -512,10 +515,10 @@
 		wait_time *= 0.5
 
 	if(!instant && !do_after(user, wait_time, target = target, max_interact_count = 4))
-		return TRUE
+		return
 
 	if(!use_charges(user, cost))
-		return TRUE
+		return
 
 	if(length(text_buffer))
 		drawing = text_buffer[1]
@@ -566,13 +569,14 @@
 		for(var/turf/draw_turf as anything in affected_turfs)
 			reagents.expose(draw_turf, methods = TOUCH, volume_modifier = volume_multiplier)
 	check_empty(user)
-	return TRUE
+	return
 
 /obj/item/toy/crayon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (!check_allowed_items(interacting_with))
 		return NONE
 
-	if(use_on(interacting_with, user, modifiers))
+	if(can_use_on(interacting_with, user, modifiers))
+		use_on(interacting_with, user, modifiers)
 		return ITEM_INTERACT_BLOCKING
 	return NONE
 
@@ -859,7 +863,7 @@
 
 	else if(actually_paints && target.is_atom_colour(paint_color, min_priority_index = WASHABLE_COLOUR_PRIORITY))
 		balloon_alert(user, "[target.p_theyre()] already that color!")
-		return FALSE
+		return
 
 	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
 		if(actually_paints)
@@ -880,7 +884,7 @@
 
 			if (color_is_dark && !(target.flags_1 & ALLOW_DARK_PAINTS_1))
 				to_chat(user, span_warning("A color that dark on an object like this? Surely not..."))
-				return FALSE
+				return
 
 			if(istype(target, /obj/item/pipe))
 				if(GLOB.pipe_color_name.Find(paint_color))
@@ -890,7 +894,7 @@
 					balloon_alert(user, "painted in [GLOB.pipe_color_name[paint_color]] color")
 				else
 					balloon_alert(user, "invalid pipe color!")
-					return FALSE
+					return
 			else if(istype(target, /obj/machinery/atmospherics))
 				if(GLOB.pipe_color_name.Find(paint_color))
 					var/obj/machinery/atmospherics/target_pipe = target
@@ -898,7 +902,7 @@
 					balloon_alert(user, "painted in  [GLOB.pipe_color_name[paint_color]] color")
 				else
 					balloon_alert(user, "invalid pipe color!")
-					return FALSE
+					return
 			else
 				target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 
