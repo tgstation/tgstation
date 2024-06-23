@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(live_teleporters, list())
 			continue
 		if(!live_teleporter.anchored)
 			continue
-		if((live_teleporter.teleID != teleID) || (live_teleporter.z != src.z) || live_teleporter.send_only)
+		if((live_teleporter.teleID != teleID) || live_teleporter.send_only || !are_zs_connected(src, live_teleporter))
 			continue
 		if(!COOLDOWN_FINISHED(live_teleporter, teleporter_cooldown))
 			continue
