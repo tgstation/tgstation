@@ -62446,6 +62446,15 @@
 "vYz" = (
 /turf/closed/wall/r_wall,
 /area/station/medical/chemistry/minisat)
+"vYH" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/door/poddoor/preopen{
+	id = "rdoffice";
+	name = "Research Director's Shutters"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/command/heads_quarters/rd)
 "vYL" = (
 /obj/machinery/computer/atmos_control/nitrous_tank,
 /obj/effect/turf_decal/tile/yellow{
@@ -176612,7 +176621,7 @@ raz
 raz
 nzk
 fpY
-lsx
+vYH
 ssg
 vtN
 ylR
