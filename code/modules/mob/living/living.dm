@@ -1333,16 +1333,16 @@
 	// Note - AI's and borgs have the MOBILITY_UI bitflag set even though they don't have hands
 	// Also if it is not set, the mob could be incapcitated, knocked out, unconscious, asleep, EMP'd, etc.
 	if(!(mobility_flags & MOBILITY_UI) && !(action_bitflags & ALLOW_RESTING))
-		to_chat(src, span_warning("You can't do that right now!"))
+		to_chat(src, span_warning("You don't have the mobility for this!"))
 		return FALSE
 
 	// NEED_HANDS is already checked by MOBILITY_UI for humans so this is for silicons
 	if((action_bitflags & NEED_HANDS))
 		if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-			to_chat(src, span_warning("You can't do that right now!"))
+			to_chat(src, span_warning("You hands are blocked for this action!"))
 			return FALSE
 		if(!can_hold_items(isitem(target) ? target : null)) // almost redundant if it weren't for mobs
-			to_chat(src, span_warning("You don't have the physical ability to do this!"))
+			to_chat(src, span_warning("You don't have hands to hold any object!"))
 			return FALSE
 
 	if(!(action_bitflags & BYPASS_ADJACENCY) && !recursive_loc_check(src, target) && !CanReach(target))
