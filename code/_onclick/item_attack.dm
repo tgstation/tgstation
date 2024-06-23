@@ -477,4 +477,8 @@
 
 /// Overridable proc so subtypes can have unique targetted strike zone messages, return a string.
 /mob/living/proc/get_hit_area_message(input_area)
-	return " in the [input_area]"
+	if(input_area)
+		return " in the [input_area]"
+
+	return ""
+
