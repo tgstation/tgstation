@@ -268,16 +268,16 @@
 	Trigger()
 	new /obj/effect/temp_visual/mech_attack_aoe_attack(get_turf(chassis))
 	for(var/mob/living/something_living in range(1, get_turf(chassis)))
-		if(somthing_living.stat >= UNCONSCIOUS)
+		if(something_living.stat >= UNCONSCIOUS)
 			continue
-		if(somthing_living.getStaminaLoss() >= 100)
+		if(something_living.getStaminaLoss() >= 100)
 			continue
-		if(somthing_living == pilot)
+		if(something_living == pilot)
 			continue
 		if(prob(DISMEMBER_CHANCE_LOW))
-			var/obj/item/bodypart/cut_bodypart = somthing_living.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG))
+			var/obj/item/bodypart/cut_bodypart = something_living.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG))
 			cut_bodypart?.dismember(BRUTE)
-		somthing_living.apply_damage(35, BRUTE)
+		something_living.apply_damage(35, BRUTE)
 	playsound(chassis, stealth_attack_sound, 75, FALSE)
 	start_attack = FALSE
 	charge = FALSE
@@ -306,6 +306,13 @@
 	var/max_charge_range = 7
 	/// Sound when mech do charge attack.
 	var/charge_attack_sound = 'sound/mecha/mech_charge_attack.ogg'
+	/// What charge attack can't break
+	var/list/discraction_blacklist = list(
+		/obj/machinery/gravity_generator,
+		/obj/machinery/atmospherics/pipe,
+		/obj/structure/disposalpipe,
+		/obj/structure/cable
+	)
 
 /datum/action/vehicle/sealed/mecha/charge_attack/Trigger(trigger_flags)
 	if(chassis.weapons_safety)
@@ -375,30 +382,22 @@
 				var/obj/machinery/power/supermatter_crystal/funny_crystal = break_in
 				funny_crystal.Bumped(chassis)
 				break
-			if(istype(break_in, /obj/machinery/gravity_generator))
-				continue
-			if(istype(break_in, /obj/machinery/atmospherics/pipe))
-				continue
-			if(istype(break_in, /obj/structure/disposalpipe))
-				continue
-			if(istype(break_in, /obj/structure/cable))
+			if(is_type_in_list(break_in, discraction_blacklist))
 				continue
 			if(istype(break_in, /obj/machinery) || istype(break_in, /obj/structure))
 				break_in.atom_destruction(MELEE)
 				continue
-		for(var/mob/living/somthing_living as anything in line_turf.contents)
-			if(!isliving(somthing_living))
+		for(var/mob/living/something_living in line_turf.contents)
+			if(something_living.stat >= UNCONSCIOUS)
 				continue
-			if(somthing_living.stat >= UNCONSCIOUS)
+			if(something_living.getStaminaLoss() >= 100)
 				continue
-			if(somthing_living.getStaminaLoss() >= 100)
-				continue
-			if(somthing_living == charger)
+			if(something_living == charger)
 				continue
 			if(prob(DISMEMBER_CHANCE_LOW))
-				var/obj/item/bodypart/cut_bodypart = somthing_living.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_HEAD))
+				var/obj/item/bodypart/cut_bodypart = something_living.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_HEAD))
 				cut_bodypart.dismember(BRUTE)
-			somthing_living.apply_damage(35, BRUTE)
+			something_living.apply_damage(35, BRUTE)
 		here_we_go = line_turf
 
 	// If the mech didn't move, it didn't charge
