@@ -310,6 +310,53 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/aiupload
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/bar, 32)
 
+/obj/machinery/computer/security/telescreen/isolation
+	name = "isolation cell monitor"
+	desc = "A telescreen that connects to the isolation cells camera network."
+	network = list(CAMERANET_NETWORK_ISOLATION)
+	frame_type = /obj/item/wallframe/telescreen/bar
+
+/obj/item/wallframe/telescreen/isolation
+	name = "isolation telescreen frame"
+	result_path = /obj/machinery/computer/security/telescreen/isolation
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/isolation, 32)
+
+/obj/machinery/computer/security/telescreen/normal
+	name = "security camera monitor"
+	desc = "A telescreen that connects to the stations camera network."
+	network = list(CAMERANET_NETWORK_SS13)
+	frame_type = /obj/item/wallframe/telescreen/normal
+
+/obj/item/wallframe/telescreen/normal
+	name = "security camera telescreen frame"
+	result_path = /obj/machinery/computer/security/telescreen/normal
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/normal, 32)
+
+/obj/machinery/computer/security/telescreen/tcomms
+	name = "tcomms camera monitor"
+	desc = "A telescreen that connects to the tcomms camera network."
+	network = list(CAMERANET_NETWORK_TELECOMMS)
+	frame_type = /obj/item/wallframe/telescreen/tcomms
+
+/obj/item/wallframe/telescreen/tcomms
+	name = "tcomms camera telescreen frame"
+	result_path = /obj/machinery/computer/security/telescreen/tcomms
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/tcomms, 32)
+
+/obj/machinery/computer/security/telescreen/test_chamber
+	name = "xenobiology test chamber camera monitor"
+	desc = "A telescreen that connects to the xenobiology test chamber camera network."
+	network = list(CAMERANET_NETWORK_XENOBIOLOGY)
+	frame_type = /obj/item/wallframe/telescreen/test_chamber
+
+/obj/item/wallframe/telescreen/test_chamber
+	name = "xenobiology test chamber camera telescreen frame"
+	result_path = /obj/machinery/computer/security/telescreen/test_chamber
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/test_chamber, 32)
 
 /// A button that adds a camera network to the entertainment monitors
 /obj/machinery/button/showtime
