@@ -832,7 +832,7 @@
 
 	on_deconstruction(disassembled)
 
-	if(density || LAZYLEN(component_parts))
+	if(circuit)
 		spawn_frame(disassembled)
 
 	if(!LAZYLEN(component_parts))
