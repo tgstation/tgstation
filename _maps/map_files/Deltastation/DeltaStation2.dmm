@@ -11739,10 +11739,6 @@
 /area/station/science/xenobiology)
 "cQT" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/security/telescreen{
-	dir = 4;
-	network = list("xeno")
-	},
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},
@@ -13613,10 +13609,7 @@
 "dqs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/computer/security/telescreen/interrogation{
-	dir = 4;
-	pixel_x = -32
-	},
+/obj/machinery/computer/security/telescreen/interrogation/directional/west,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -17103,9 +17096,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "ejX" = (
-/obj/machinery/computer/security/telescreen/vault{
-	pixel_y = 30
-	},
+/obj/machinery/computer/security/telescreen/vault/directional/north,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
@@ -26172,14 +26163,7 @@
 /area/station/service/lawoffice)
 "guI" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/hidden,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the Engine.";
-	dir = 4;
-	layer = 4;
-	name = "Engine Monitor";
-	network = list("engine");
-	pixel_x = -24
-	},
+/obj/machinery/computer/security/telescreen/engine/directional/west,
 /obj/effect/turf_decal/bot,
 /obj/machinery/computer/atmos_control/nocontrol/master{
 	dir = 4
@@ -29990,6 +29974,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "hup" = (
@@ -30738,13 +30723,7 @@
 /area/station/commons/vacant_room/office)
 "hFx" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the RD's goons and the AI's satellite from the safety of his office.";
-	name = "Research Monitor";
-	network = list("rd","minisat");
-	pixel_y = 2
-	},
-/obj/item/radio/intercom/directional/north,
+/obj/machinery/computer/security/telescreen/research/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "hFP" = (
@@ -32262,7 +32241,7 @@
 /area/station/medical/chemistry)
 "hZb" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
-/obj/machinery/digital_clock/directional/south,
+/obj/machinery/computer/security/telescreen/minisat/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "hZl" = (
@@ -36416,12 +36395,7 @@
 /area/station/medical/chemistry)
 "jbn" = (
 /obj/structure/cable,
-/obj/machinery/computer/security/telescreen{
-	dir = 8;
-	name = "Prisoner Telescreen";
-	network = list("prison");
-	pixel_x = 27
-	},
+/obj/machinery/computer/security/telescreen/prison/directional/east,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "jbr" = (
@@ -36520,10 +36494,7 @@
 /obj/machinery/light/directional/south,
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
-/obj/machinery/computer/security/telescreen/vault{
-	dir = 8;
-	pixel_x = 26
-	},
+/obj/machinery/computer/security/telescreen/vault/directional/east,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "jcg" = (
@@ -45664,6 +45635,7 @@
 	dir = 8
 	},
 /obj/machinery/light/cold/directional/north,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "lpG" = (
@@ -47982,9 +47954,6 @@
 /area/station/cargo/storage)
 "lTh" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/security/telescreen/interrogation{
-	dir = 1
-	},
 /obj/item/pen,
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 4
@@ -51558,7 +51527,7 @@
 /obj/machinery/portable_atmospherics/canister,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/effect/turf_decal/box,
-/obj/machinery/airalarm/directional/north,
+/obj/machinery/computer/security/telescreen/test_chamber/directional/north,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "mPg" = (
@@ -54251,6 +54220,7 @@
 "nBC" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/light/small/directional/north,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "nBF" = (
@@ -54699,7 +54669,7 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/computer/security/telescreen/interrogation/directional/west,
 /turf/open/floor/iron/checker,
 /area/station/security/interrogation)
 "nHB" = (
@@ -57167,6 +57137,7 @@
 /obj/effect/turf_decal/box,
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "onK" = (
@@ -59993,10 +59964,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/security/telescreen/ce{
-	dir = 4;
-	pixel_x = -30
-	},
+/obj/machinery/computer/security/telescreen/ce/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
@@ -62648,12 +62616,7 @@
 /area/station/maintenance/port/aft)
 "pJo" = (
 /obj/structure/cable,
-/obj/machinery/computer/security/telescreen{
-	dir = 8;
-	name = "Prisoner Telescreen";
-	network = list("prison");
-	pixel_x = 27
-	},
+/obj/machinery/computer/security/telescreen/prison/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/red{
@@ -63254,10 +63217,6 @@
 "pPs" = (
 /obj/structure/chair/office/light{
 	dir = 8
-	},
-/obj/machinery/computer/security/telescreen/ordnance{
-	dir = 1;
-	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -64031,12 +63990,7 @@
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "pXI" = (
-/obj/machinery/computer/security/telescreen{
-	dir = 8;
-	name = "Prisoner Telescreen";
-	network = list("prison");
-	pixel_x = 27
-	},
+/obj/machinery/computer/security/telescreen/prison/directional/east,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -66070,9 +66024,7 @@
 "qzK" = (
 /obj/structure/sign/warning/secure_area/directional/south,
 /obj/structure/table/reinforced,
-/obj/machinery/computer/security/telescreen/minisat{
-	dir = 1
-	},
+/obj/machinery/computer/security/telescreen/minisat/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/transit_tube)
 "qzR" = (
@@ -71052,8 +71004,8 @@
 /obj/structure/table,
 /obj/item/binoculars,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/item/radio/intercom/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/computer/security/telescreen/ordnance/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "rMR" = (
@@ -74751,10 +74703,7 @@
 /obj/machinery/computer/mecha{
 	dir = 8
 	},
-/obj/machinery/computer/security/telescreen/rd{
-	dir = 8;
-	pixel_x = 32
-	},
+/obj/machinery/computer/security/telescreen/rd/directional/east,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
@@ -89553,10 +89502,7 @@
 	},
 /obj/item/folder/white,
 /obj/item/pen,
-/obj/machinery/computer/security/telescreen/cmo{
-	dir = 1;
-	pixel_y = -32
-	},
+/obj/machinery/computer/security/telescreen/cmo/directional/south,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
@@ -90710,6 +90656,7 @@
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
 /obj/item/mining_voucher,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "wEy" = (
@@ -90943,12 +90890,7 @@
 /area/station/engineering/atmos/storage/gas)
 "wGQ" = (
 /obj/structure/cable,
-/obj/machinery/computer/security/telescreen{
-	dir = 8;
-	name = "Prisoner Telescreen";
-	network = list("prison");
-	pixel_x = 27
-	},
+/obj/machinery/computer/security/telescreen/prison/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/red{
