@@ -232,6 +232,11 @@
 
 	var/block_text = pick("block", "evade")
 
+	var/mob/living/attacker = GET_ASSAILANT(hitby)
+
+	if(!honor_check(attacker))
+		return NONE
+
 	var/experience_earned = round(damage * 0.25, 0.1)
 
 	if(!damage)
@@ -241,11 +246,6 @@
 	skill_experience_adjustment(boxer, experience_earned) //just getting hit a bunch doesn't net you much experience however
 
 	if(!prob(block_chance))
-		return NONE
-
-	var/mob/living/attacker = GET_ASSAILANT(hitby)
-
-	if(!honor_check(attacker))
 		return NONE
 
 	if(istype(attacker) && boxer.Adjacent(attacker))
