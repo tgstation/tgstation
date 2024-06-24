@@ -13660,9 +13660,7 @@
 	dir = 4
 	},
 /obj/machinery/duct,
-/mob/living/basic/drone/snowflake/bardrone{
-	ghost_controllable = 1
-	},
+/mob/living/basic/drone/snowflake/bardrone,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/nt_rep)
 "cEo" = (

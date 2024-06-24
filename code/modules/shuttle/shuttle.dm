@@ -650,7 +650,7 @@
 		return SHUTTLE_CAN_DOCK
 
 	if(dwidth > stationary_dock.dwidth)
-		return SHUTTLE_DWIDTH_TOO_LARGE
+		return "[SHUTTLE_DWIDTH_TOO_LARGE] [stationary_dock.dwidth] vs [dwidth]"
 
 	if(width-dwidth > stationary_dock.width-stationary_dock.dwidth)
 		return SHUTTLE_WIDTH_TOO_LARGE

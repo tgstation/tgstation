@@ -4932,6 +4932,9 @@
 /obj/structure/closet/crate/cardboard/mothic,
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/control)
+"np" = (
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/ferry)
 "nq" = (
 /obj/structure/stone_tile/slab,
 /turf/open/misc/snow/actually_safe,
@@ -10427,6 +10430,10 @@
 "BR" = (
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation/ship)
+"BS" = (
+/obj/structure/hedge,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/ferry)
 "BT" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -12686,18 +12693,6 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/circuit,
 /area/centcom/central_command_areas/admin)
-"Io" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 10;
-	height = 30;
-	json_key = "ferry";
-	name = "CentCom Ferry Dock";
-	shuttle_id = "ferry_away";
-	width = 21
-	},
-/turf/open/space,
-/area/space)
 "Ip" = (
 /obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/carpet/red,
@@ -13414,6 +13409,18 @@
 	},
 /turf/open/floor/iron/dark/small,
 /area/centcom/central_command_areas/botany)
+"Km" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 12;
+	height = 30;
+	json_key = "ferry";
+	name = "CentCom Ferry Dock";
+	shuttle_id = "ferry_away";
+	width = 21
+	},
+/turf/open/space/basic,
+/area/space)
 "Kn" = (
 /obj/structure/chair/stool/directional/south,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -46736,7 +46743,7 @@ aa
 aa
 aa
 aa
-aa
+Km
 aa
 aa
 aa
@@ -46992,9 +46999,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+GA
+xc
+GA
 aa
 aa
 aa
@@ -47249,9 +47256,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+GA
+xd
+GA
 aa
 aa
 aa
@@ -47505,11 +47512,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+GA
+GA
+Xy
+GA
+GA
 aa
 aa
 aa
@@ -47762,11 +47769,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+GA
+np
+np
+np
+GA
 aa
 aa
 aa
@@ -48019,11 +48026,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+GA
+np
+np
+np
+GA
 aa
 aa
 aa
@@ -48276,11 +48283,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+GA
+np
+np
+np
+GA
 aa
 aa
 aa
@@ -48533,11 +48540,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+GA
+np
+np
+np
+GA
 aa
 aa
 aa
@@ -48790,11 +48797,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+GA
+np
+np
+np
+GA
 aa
 aa
 aa
@@ -49047,11 +49054,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+GA
+np
+np
+np
+GA
 aa
 aa
 aa
@@ -49304,11 +49311,11 @@ mD
 mD
 GA
 GA
-aa
-aa
-aa
-aa
-aa
+GA
+np
+np
+np
+GA
 aa
 aa
 aa
@@ -49561,11 +49568,11 @@ sq
 to
 ZN
 GA
-aa
-aa
-Io
-aa
-aa
+BS
+np
+np
+np
+GA
 aa
 aa
 aa
@@ -49818,11 +49825,11 @@ sr
 tp
 Xr
 mD
-aa
+BS
+np
+np
+np
 GA
-xc
-GA
-aa
 aa
 aa
 aa
@@ -50076,9 +50083,9 @@ tq
 Ir
 mD
 vA
-GA
-xd
-GA
+np
+np
+np
 yn
 mD
 aa
@@ -50333,9 +50340,9 @@ tr
 um
 mD
 vB
-GA
-Xy
-GA
+np
+np
+np
 oU
 mD
 ta
