@@ -88,6 +88,10 @@
 		I.forceMove(loc)
 	new /obj/item/stack/sheet/iron (loc, 2)
 
+/obj/structure/tank_dispenser/examine(mob/user)
+	. = ..()
+	. += span_notice("It has <b>[plasmatanks]</b> plasma tank\s and <b>[oxygentanks]</b> oxygen tank\s left.")
+
 /obj/structure/tank_dispenser/proc/dispense(tank_type, mob/receiver)
 	var/existing_tank = locate(tank_type) in src
 	if (isnull(existing_tank))
