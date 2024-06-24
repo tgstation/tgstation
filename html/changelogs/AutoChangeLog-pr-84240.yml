@@ -1,0 +1,6 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "The Infiltrator module now has the same welding protections as the engineering module."
+  - bugfix: "The infiltrator module now properly protects you from head impacts. Helpful if you wipe out on your hoverboard while fleeing the cops."
+  - code_imp: "Improves the definitions for welding protection values."

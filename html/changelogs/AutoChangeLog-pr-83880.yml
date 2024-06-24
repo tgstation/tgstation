@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes:
+  - bugfix: "Refactored borg omnitool code, fixing most of the unique interaction issues."

@@ -137,6 +137,7 @@
 	starting_programs += /datum/computer_file/program/bounty_board
 	starting_programs += /datum/computer_file/program/budgetorders
 	starting_programs += /datum/computer_file/program/shipping
+	starting_programs += /datum/computer_file/program/restock_tracker
 
 /obj/machinery/modular_computer/preset/cargochat/cargo/setup_starting_software()
 	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name("ntnrc_client")
