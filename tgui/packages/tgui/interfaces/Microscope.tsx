@@ -27,13 +27,9 @@ type CellLine = {
   consumption_rate: number;
   growth_rate: number;
   suspectibility: number;
-  requireds: Reagent[];
-  supplementaries: Reagent[];
-  suppressives: Reagent[];
-};
-
-type Reagent = {
-  [key: string]: number;
+  requireds: Record<string, number>;
+  supplementaries: Record<string, number>;
+  suppressives: Record<string, number>;
 };
 
 export const Microscope = (props) => {
@@ -66,6 +62,9 @@ export const Microscope = (props) => {
 
 const CellList = (props) => {
   const { cell_lines } = props;
+  const fallback = (
+    <Icon name="spinner" size={5} height="64px" width="64px" spin />
+  );
   if (!cell_lines.length) {
     return <NoticeBox>No micro-organisms found</NoticeBox>;
   }
@@ -75,13 +74,14 @@ const CellList = (props) => {
       <Stack key={cell_line.desc} mt={2}>
         <Stack.Item>
           <DmIcon
+            fallback={fallback}
             icon={cell_line.icon}
             icon_state={cell_line.icon_state}
             height="64px"
             width="64px"
           />
         </Stack.Item>
-        <Stack.Item grow>
+        <Stack.Item grow pl={1}>
           <Section
             title={cell_line.desc}
             buttons={
@@ -148,7 +148,7 @@ const CellList = (props) => {
         <Stack.Item>
           <Icon name="viruses" color="bad" size={4} mr={1} />
         </Stack.Item>
-        <Stack.Item grow>
+        <Stack.Item grow pl={1}>
           <Section title={cell_line.desc}>
             <Box my={1}>
               Reduces growth of other cell lines when not suppressed by
@@ -161,7 +161,8 @@ const CellList = (props) => {
   });
 };
 
-const GroupTitle = ({ title }) => {
+const GroupTitle = (props) => {
+  const { title } = props;
   return (
     <Stack my={1}>
       <Stack.Item grow>
