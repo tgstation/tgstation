@@ -1151,6 +1151,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Does this item bypass ranged armor checks?
 #define TRAIT_BYPASS_RANGED_ARMOR "bypass_ranged_armor"
 
+/// Traits given by settler, each with their own specific effects for cases where someone would have that trait, but not the other settler effects
+
+#define TRAIT_EXPERT_FISHER "expert_fisher" // fishing is easier
+#define TRAIT_ROUGHRIDER "roughrider" // you can improve speed on mounted animals with a good mood
+#define TRAIT_STUBBY_BODY "stubby_body" // you have a stubby body that lessens your agility
+#define TRAIT_BEAST_EMPATHY "beast_empathy" // you're good with animals, such as with taming them
+#define TRAIT_STURDY_FRAME "sturdy_frame" // you suffer much lesser effects from equipment that slows you down
+
 /// This item cannot be selected for or used by a theft objective (Spies, Traitors, etc.)
 #define TRAIT_ITEM_OBJECTIVE_BLOCKED "item_objective_blocked"
 /// This trait lets you attach limbs to any player without surgery.
