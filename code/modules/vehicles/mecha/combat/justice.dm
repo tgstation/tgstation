@@ -171,17 +171,22 @@
 
 /datum/action/vehicle/sealed/mecha/invisibility/Trigger(trigger_flags)
 	. = ..()
-	if(chassis.weapons_safety)
-		owner.balloon_alert(owner, "safety is on!")
-		return
-	if(!charge)
-		owner.balloon_alert(owner, "recharging!")
-		return
 	on = !on
 	if(on)
 		invisibility_on()
 	else
 		invisibility_off()
+
+/datum/action/vehicle/sealed/mecha/invisibility/IsAvailable(feedback)
+	. = ..()
+	if(chassis.weapons_safety)
+		owner.balloon_alert(owner, "safety is on!")
+		return FALSE
+	if(!charge)
+		owner.balloon_alert(owner, "recharging!")
+		return FALSE
+
+	return TRUE
 
 ///Called when invisibility activated.
 /datum/action/vehicle/sealed/mecha/invisibility/proc/invisibility_on()
@@ -353,17 +358,22 @@
 	)
 
 /datum/action/vehicle/sealed/mecha/charge_attack/Trigger(trigger_flags)
-	if(chassis.weapons_safety)
-		owner.balloon_alert(owner, "safety is on!")
-		return
-	if(!charge)
-		owner.balloon_alert(owner, "recharging!")
-		return
 	on = !on
 	if(on)
 		charge_attack_on()
 	else
 		charge_attack_off()
+
+/datum/action/vehicle/sealed/mecha/charge_attack/IsAvailable(feedback)
+	. = ..()
+	if(chassis.weapons_safety)
+		owner.balloon_alert(owner, "safety is on!")
+		return FALSE
+	if(!charge)
+		owner.balloon_alert(owner, "recharging!")
+		return FALSE
+
+	return TRUE
 
 ///Called when charge attack activated
 /datum/action/vehicle/sealed/mecha/charge_attack/proc/charge_attack_on()
