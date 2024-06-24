@@ -10,7 +10,7 @@
 		if(current_dish)
 			balloon_alert(user, "already has a dish!")
 			return
-		balloon_alert(user, "added dish")
+		balloon_alert(user, "dish added")
 		current_dish = tool
 		current_dish.forceMove(src)
 		return ITEM_INTERACT_SUCCESS
