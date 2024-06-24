@@ -1,0 +1,16 @@
+The following sounds have been recorded, edited and added by Paxilmaniac:
+
+modular_nova/modules/colony_fabricator/sound/arc_furnace/arc_furnace_mid_(1 - 4).wav
+modular_nova/modules/colony_fabricator/sound/fabricator/fabricator_mid_(1 - 4).wav
+modular_nova/modules/colony_fabricator/sound/fabricator/fabricator_end.wav
+modular_nova/modules/colony_fabricator/sound/fabricator/fabricator_start.wav
+
+The following sounds are from https://pixabay.com/sound-effects/wall-air-conditioner-43901/
+
+modular_nova/modules/colony_fabricator/sound/conditioner/conditioner_(1 - 4).wav
+
+The following sounds are from https://pixabay.com/sound-effects/welder-3-54547/
+
+modular_nova/modules/colony_fabricator/sound/arc_welder/arc_welder.ogg
+
+The sounds at modular_skyrat/modules/colony_fabriactor_event_code/sound/manual_door are from https://pixabay.com/sound-effects/schlonk-107321/

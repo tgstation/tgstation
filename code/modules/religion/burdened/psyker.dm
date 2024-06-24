@@ -141,7 +141,7 @@
 	icon_state = "chaplain"
 	force = 10
 	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev77
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev77
 	obj_flags = UNIQUE_RENAME
 	custom_materials = null
 	actions_types = list(/datum/action/item_action/pray_refill)

@@ -1,0 +1,102 @@
+{
+	"tailored_jacket": [
+		{
+			"type": "icon_state",
+			"icon_state": "longcoat_base_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "longcoat_longsleeves",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "longcoat_collar",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "longcoat_neckfluff_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "longcoat_sidelines",
+			"blend_mode": "overlay",
+			"color_ids": [ 5 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "longcoat_shoulders",
+			"blend_mode": "overlay",
+			"color_ids": [ 6 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "longcoat_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 7 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "longcoat_armstripes_long",
+			"blend_mode": "overlay",
+			"color_ids": [ 8 ]
+		}
+	],
+	"tailored_jacket_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "longcoat_base_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "longcoat_shortsleeves",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "longcoat_collar",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "longcoat_neckfluff_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "longcoat_sidelines",
+			"blend_mode": "overlay",
+			"color_ids": [ 5 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "longcoat_shoulders",
+			"blend_mode": "overlay",
+			"color_ids": [ 6 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "longcoat_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 7 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "longcoat_armstripes_short",
+			"blend_mode": "overlay",
+			"color_ids": [ 8 ]
+		}
+	]
+}

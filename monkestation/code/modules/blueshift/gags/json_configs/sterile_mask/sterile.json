@@ -1,0 +1,18 @@
+{
+	"sterile": [
+		{
+			"type": "icon_state",
+			"icon_state": "sterile_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"sterile_up": [
+		{
+			"type": "icon_state",
+			"icon_state": "sterile_obj_up",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

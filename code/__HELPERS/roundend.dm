@@ -364,6 +364,8 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	//Antagonists
 	parts += antag_report()
 
+	parts += opfor_report()
+
 	parts += hardcore_random_report()
 
 	CHECK_TICK

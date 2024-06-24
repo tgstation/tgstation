@@ -1080,7 +1080,7 @@
 /area/station/commons/lounge)
 "Ap" = (
 /obj/structure/table/wood/fancy/red,
-/obj/item/kirbyplants/fullysynthetic{
+/obj/item/kirbyplants/random/fullysynthetic{
 	pixel_y = 23
 	},
 /turf/open/floor/cult,
@@ -2230,7 +2230,7 @@
 /area/station/commons/lounge)
 "ZD" = (
 /obj/structure/table/wood/fancy/red,
-/obj/item/kirbyplants/fullysynthetic{
+/obj/item/kirbyplants/random/fullysynthetic{
 	pixel_y = 23
 	},
 /obj/item/storage/fancy/heart_box,

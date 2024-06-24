@@ -233,6 +233,7 @@
 
 		humanc.increment_scar_slot()
 		humanc.load_persistent_scars()
+		SSpersistence.load_modular_persistence(humanc.get_organ_slot(ORGAN_SLOT_BRAIN))
 
 		//monkestation edit start
 		if(GLOB.dj_booth)

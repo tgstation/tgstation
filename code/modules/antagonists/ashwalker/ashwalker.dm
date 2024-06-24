@@ -1,6 +1,39 @@
 /datum/team/ashwalkers
 	name = "Ashwalkers"
-	show_roundend_report = FALSE
+	///A list of "worthy" (meat-bearing) sacrifices made to the Necropolis
+	var/sacrifices_made = 0
+	///A list of how many eggs were created by the Necropolis
+	var/eggs_created = 0
+
+/datum/team/ashwalkers/roundend_report()
+	var/list/report = list()
+
+	report += span_header("An Ash Walker Tribe inhabited the wastes...</span><br>")
+	if(length(members)) //The team is generated alongside the tendril, and it's entirely possible that nobody takes the role.
+		report += "The [member_name]s were:"
+		report += printplayerlist(members)
+
+		var/datum/objective/protect_object/necropolis_objective = locate(/datum/objective/protect_object) in objectives
+
+		if(necropolis_objective)
+			objectives -= necropolis_objective //So we don't count it in the check for other objectives.
+			report += "<b>The [name] was tasked with defending the Necropolis:</b>"
+			if(necropolis_objective.check_completion())
+				report += span_greentext("<span class='header'>The nest stands! Glory to the Necropolis!</span><br>")
+			else
+				report += span_redtext("<span class='header'>The Necropolis was destroyed, the tribe has fallen...</span><br>")
+
+		if(length(objectives))
+			report += span_header("The [name]'s other objectives were:")
+			printobjectives(objectives)
+
+		report += "The [name] managed to perform <b>[sacrifices_made]</b> sacrifices to the Necropolis. From this, the Necropolis produced <b>[eggs_created]</b> Ash Walker eggs."
+
+	else
+		report += "<b>But none of its eggs hatched!</b>"
+
+	return "<div class='panel redborder'>[report.Join("<br>")]</div>"
+
 
 /datum/antagonist/ashwalker
 	name = "\improper Ash Walker"

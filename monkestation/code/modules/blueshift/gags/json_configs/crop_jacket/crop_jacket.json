@@ -1,0 +1,42 @@
+{
+	"crop_jacket": [
+		{
+			"type": "icon_state",
+			"icon_state": "crop_jacket",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "crop_jacket_collar",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "crop_jacket_sleeve",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	],
+	"crop_jacket_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "crop_jacket",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "crop_jacket_collar",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "crop_jacket_sleeve_short",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}

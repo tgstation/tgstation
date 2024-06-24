@@ -57,8 +57,6 @@
 	if(!json_config)
 		stack_trace("Greyscale config object [DebugName()] is missing a json configuration, make sure `json_config` has been assigned a value.")
 	string_json_config = "[json_config]"
-	if(findtext(string_json_config, "greyscale/json_configs/") == 0)
-		stack_trace("All greyscale json configuration files should be located within '/greyscale/json_configs/'")
 	if(!icon_file)
 		stack_trace("Greyscale config object [DebugName()] is missing an icon file, make sure `icon_file` has been assigned a value.")
 	string_icon_file = "[icon_file]"

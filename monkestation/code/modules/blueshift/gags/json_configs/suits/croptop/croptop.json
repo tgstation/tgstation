@@ -1,0 +1,10 @@
+{
+	"croptop": [
+		{
+			"type": "icon_state",
+			"icon_state": "croptop",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

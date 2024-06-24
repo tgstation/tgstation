@@ -3,7 +3,7 @@
 	desc = "Does minimal damage but slows down the enemy."
 	icon_state = "revolver"
 	icon = 'monkestation/icons/bloodsuckers/weapons.dmi'
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/bloodsilver
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/bloodsilver
 	initial_caliber = CALIBER_BLOODSILVER
 
 /datum/movespeed_modifier/silver_bullet

@@ -1,0 +1,31 @@
+{
+	"turtleskirt_knit": [
+		{
+			"type": "icon_state",
+			"icon_state": "cableknit_top",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleskirt_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+
+	"turtleskirt_knit_d": [
+		{
+			"type": "icon_state",
+			"icon_state": "cableknit_top_d",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleskirt_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

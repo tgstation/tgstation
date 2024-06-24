@@ -7,7 +7,7 @@
 		/datum/traitor_objective/ultimate/supermatter_cascade = 1,
 		/datum/traitor_objective/ultimate/infect_ai = 1,
 		/datum/traitor_objective/ultimate/dark_matteor = 1,
-		/datum/traitor_objective/ultimate/wizard = 1, //monkestation edit
+//		/datum/traitor_objective/ultimate/wizard = 1, //monkestation edit
 	)
 	weight = 100
 

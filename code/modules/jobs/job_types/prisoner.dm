@@ -27,23 +27,25 @@
 
 /datum/job/prisoner/New()
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(add_pref_crime))
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(handle_prisoner_joining))
 
-/datum/job/prisoner/proc/add_pref_crime(datum/source, mob/living/crewmember, rank)
+/datum/job/prisoner/proc/handle_prisoner_joining(datum/source, mob/living/crewmember, rank)
 	SIGNAL_HANDLER
 	if(rank != title)
 		return //not a prisoner
 
 	var/crime_name = crewmember.client?.prefs?.read_preference(/datum/preference/choiced/prisoner_crime)
 	if(!crime_name)
-		return
-	if(crime_name == "Random")
+		stack_trace("[crewmember] joined as a Prisoner without having a prisoner crime set.")
+		crime_name = pick(assoc_to_keys(GLOB.prisoner_crimes))
+	else if(crime_name == "Random")
 		crime_name = pick(assoc_to_keys(GLOB.prisoner_crimes))
 
 	var/datum/prisoner_crime/crime = GLOB.prisoner_crimes[crime_name]
 	var/datum/record/crew/target_record = crewmember.mind?.crewfile || find_record(crewmember.real_name)
 	var/datum/crime/past_crime = new(crime.name, crime.desc, "Central Command", "Indefinite.")
 	target_record?.crimes += past_crime
+	target_record.recreate_manifest_photos(add_height_chart = TRUE)
 	to_chat(crewmember, span_warning("You are imprisoned for \"[crime_name]\"."))
 	crewmember.add_mob_memory(/datum/memory/key/permabrig_crimes, crimes = crime_name)
 
@@ -100,7 +102,7 @@
 
 /// Iterates over all turfs in the target area and returns the first non-dense one
 /datum/job/prisoner/proc/get_random_open_turf_in_area()
-	var/list/turfs = get_area_turfs(/area/station/security/prison)
+	var/list/turfs = get_area_turfs(/area/station/security/prison/safe)
 	var/turf/open/target_turf = null
 	var/sanity = 0
 	while(!target_turf && sanity < 100)

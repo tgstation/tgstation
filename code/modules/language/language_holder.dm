@@ -286,9 +286,11 @@ Key procs
 
 /datum/language_holder/lizard
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
-								/datum/language/draconic = list(LANGUAGE_ATOM))
+								/datum/language/draconic = list(LANGUAGE_ATOM),
+								/datum/language/ashtongue = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
-							/datum/language/draconic = list(LANGUAGE_ATOM))
+							/datum/language/draconic = list(LANGUAGE_ATOM),
+							/datum/language/ashtongue = list(LANGUAGE_ATOM))
 
 /datum/language_holder/lizard/ash
 	selected_language = /datum/language/draconic

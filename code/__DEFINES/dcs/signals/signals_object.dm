@@ -32,6 +32,8 @@
 #define COMSIG_MACHINERY_STOP_PROCESSING_AIR "stop_processing_air"
 ///from /obj/machinery/RefreshParts: ()
 #define COMSIG_MACHINERY_REFRESH_PARTS "machine_refresh_parts"
+///from /obj/machinery/default_change_direction_wrench: (mob/user, obj/item/wrench)
+#define COMSIG_MACHINERY_DEFAULT_ROTATE_WRENCH "machinery_default_rotate_wrench"
 
 ///from /obj/machinery/can_interact(mob/user): Called on user when attempting to interact with a machine (obj/machinery/machine)
 #define COMSIG_TRY_USE_MACHINE "try_use_machine"
@@ -311,6 +313,12 @@
 #define COMSIG_GUN_CHAMBER_PROCESSED "gun_chamber_processed"
 ///called in /obj/item/gun/ballistic/process_chamber (casing)
 #define COMSIG_CASING_EJECTED "casing_ejected"
+///sent to targets during the process_hit proc of projectiles
+#define COMSIG_FIRE_CASING "fire_casing"
+///from the base of /obj/item/ammo_casing/ready_proj() : (atom/target, mob/living/user, quiet, zone_override, atom/fired_from)
+#define COMSIG_CASING_READY_PROJECTILE "casing_ready_projectile"
+///sent to the projectile after an item is spawned by the projectile_drop element: (new_item)
+#define COMSIG_PROJECTILE_ON_SPAWN_DROP "projectile_on_spawn_drop"
 
 // Jetpack things
 // Please kill me
@@ -446,3 +454,16 @@
 #define COMSIG_ORM_COLLECTED_ORE "orm_collected_ore"
 
 #define COMSIG_RADIATION_RECIEVED "radiation_recieved"
+/// from /obj/plunger_act when an object is being plungered
+#define COMSIG_PLUNGER_ACT "plunger_act"
+
+/// from /obj/structure/cursed_slot_machine/handle_status_effect() when someone pulls the handle on the slot machine
+#define COMSIG_CURSED_SLOT_MACHINE_USE "cursed_slot_machine_use"
+	#define SLOT_MACHINE_USE_CANCEL (1<<0) //! we've used up the number of times we may use this slot machine. womp womp.
+	#define SLOT_MACHINE_USE_POSTPONE (1<<1) //! we haven't used up all our attempts to gamble away our life but we should chill for a few seconds
+
+/// from /obj/structure/cursed_slot_machine/determine_victor() when someone loses.
+#define COMSIG_CURSED_SLOT_MACHINE_LOST "cursed_slot_machine_lost"
+
+/// from /obj/structure/cursed_slot_machine/determine_victor() when someone finally wins.
+#define COMSIG_GLOB_CURSED_SLOT_MACHINE_WON "cursed_slot_machine_won"

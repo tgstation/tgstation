@@ -1,0 +1,22 @@
+{
+	"gags_boat": [
+		{
+			"type": "icon_state",
+			"icon_state": "boat_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "boat_pattern_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "boat_trim_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}

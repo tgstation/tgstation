@@ -17,7 +17,7 @@
 		JOB_CYBORG,
 		ROLE_POSITRONIC_BRAIN,
 	)
-	weight = 4
+	weight = 6
 	max_occurrences = 3
 
 /datum/round_event_control/antagonist/solo/obsessed/midround

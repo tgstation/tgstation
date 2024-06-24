@@ -130,6 +130,7 @@
 #define ORGAN_SLOT_RIGHT_LEG_AUG "r_leg_device"
 #define ORGAN_SLOT_LEFT_LEG_AUG "l_leg_device"
 #define ORGAN_SLOT_SPINAL "spinal_implant"
+#define ORGAN_SLOT_BRAIN_NIF "nif"
 
 /// Organ slot external
 #define ORGAN_SLOT_EXTERNAL_TAIL "tail"

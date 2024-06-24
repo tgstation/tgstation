@@ -1,0 +1,10 @@
+{
+	"blindfoldcolor": [
+		{
+			"type": "icon_state",
+			"icon_state": "blindfoldcolor",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

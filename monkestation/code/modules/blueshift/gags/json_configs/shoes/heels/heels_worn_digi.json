@@ -1,0 +1,10 @@
+{
+	"heels": [
+		{
+			"type": "icon_state",
+			"icon_state": "heels_mob_digi",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

@@ -402,6 +402,7 @@
 
 	if(created)
 		created.setDir(builder.dir)
+		on_item_crafted(builder, created)
 
 	// Use up the material
 	use(recipe.req_amount * multiplier)
@@ -431,6 +432,9 @@
 	//BubbleWrap END
 
 	return TRUE
+/// Run special logic on created items after they've been successfully crafted.
+/obj/item/stack/proc/on_item_crafted(mob/builder, atom/created)
+	return
 
 /obj/item/stack/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, amount))

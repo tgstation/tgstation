@@ -1,0 +1,102 @@
+{
+	"pickup": [
+		"Welcome back, @pick(operator).",
+		"Zǎo shàng hǎo.",
+		"Wǎn shàng hǎo.",
+		"Charge systems operational, entering combat mode.",
+		"@pick(operator), carp migrations have been reported in the sector.",
+		"@pick(operator), having a pleasant day?",
+		"@pick(operator), please maintain good health while performing combat.",
+		"@pick(operator), are you sure I'm not too heavy for you?",
+		"Would you mind cleaning my lens later, @pick(operator)?"
+	],
+
+	"putdown": [
+		"Understood, @pick(operator), entering sleep mode.",
+		"Good night, @pick(operator).",
+		"Wǎn`ān, hǎo mèng.",
+		"Dàjiā ān.",
+		"Good night.",
+		"Entering sleep mode now.",
+		"Entering recharge cycle."
+	],
+
+	"worn": [
+		"Working on your strength will help you keep me steady.",
+		"Investing in backup magnetic slings is a good idea...",
+		"Thank you for observing proper carrying protocols.",
+		"I get a nicer view of your surroundings if you point my barrel upwards.",
+		"I'll watch your back if you watch my stock.",
+		"So much nicer than being in a case~!"
+	],
+
+	"lowcharge": [
+		"Energy reserves low, I can't do much more @pick(operator)...",
+		"I'm out... sorry @pick(operator), I need to rest..."
+	],
+
+	"fullcharge": [
+		"Energy reserves at maximum capacity! Please avoid accidental discharge.",
+		"Energy reserves at maximum capacity! Please follow safety guidelines.",
+		"Energy reserves at maximum capacity! It's nice to not be left at half-charge."
+	],
+
+	"combatmode": [
+		"Biological markers indicate heightened stress response. Combat protocols initiated.",
+		"Adrenaline spike detected. Combat protocols initiated."
+	],
+
+	"kill": [
+		"Switching to burst fire.",
+		"Switching to rapid-pattern assault.",
+		"Moving to dual-shot pattern.",
+		"Moving to close-quarters burst doctrine, lethal.",
+		"@pick(operator), please tightly control my recoil pattern.",
+		"@pick(operator), please hold me firmly to ensure accuracy."
+	],
+
+	"sniper": [
+		"Sighting in, scope extending.",
+		"Sighting in, preparing for long-range combat.",
+		"Sighting in, engaging marksman mode.",
+		"@pick(operator), take deep breaths to improve your aim.",
+		"Extending scope; @pick(operator), make sure it's well-maintained.",
+		"One shot, one kill.",
+		"Assassination doctrine engaged, @pick(operator). Make every shot count.",
+		"Scope extending, please avoid over-penetration in non-terrestrial combat environments.",
+		"Sighting in, please be aware of cross-fire."
+	],
+
+	"disable": [
+		"Preparing to enter full-power stun mode.",
+		"Mass crowd-control mode engaged, non-lethal.",
+		"This should be... fun, right @pick(operator)?",
+		"This is going to be stressful on my battery, but...",
+		"Is this really okay...? This is quite difficult from my usual operation...",
+		"Switching to high output mode.",
+		"Switching to Gatling doctrine, non-lethal."
+	],
+
+	"launcher": [
+		"Forming plasma grenades at your request, @pick(operator)!",
+		"Grenadier mode engaged, @pick(operator)!",
+		"Aim my grenades carefully in an arc, @pick(operator)!",
+		"Energy detonation doctrine engaged.",
+		"Crowd-control mode engaged, lethal. Is this really okay?",
+		"Charging magnetic containment coils, plasma condensing..."
+	],
+
+	"shotgun": [
+		"Close-quarters...? I'm not really the tool for this job...",
+		"I'm more of a rifle, @pick(operator), but I'll try...",
+		"Is this really okay...? This is more of a carbine's job...",
+		"Switching to wide-band spread.",
+		"Changing to diffusion lens, shotgun doctrine engaged.",
+		"Close-quarters mode engaged, lethal."
+	],
+
+	"operator": [
+		"Operator",
+		"Handler"
+	]
+}

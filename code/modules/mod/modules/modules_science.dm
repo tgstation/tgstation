@@ -90,6 +90,9 @@
 /obj/item/mod/module/anomaly_locked/antigrav/prebuilt
 	prebuilt = TRUE
 
+/obj/item/mod/module/anomaly_locked/antigrav/prebuilt/locked
+	core_removable = FALSE
+
 ///Teleporter - Lets the user teleport to a nearby location.
 /obj/item/mod/module/anomaly_locked/teleporter
 	name = "MOD teleporter module"
@@ -128,3 +131,6 @@
 
 /obj/item/mod/module/anomaly_locked/teleporter/prebuilt
 	prebuilt = TRUE
+
+/obj/item/mod/module/anomaly_locked/teleporter/prebuilt/locked
+	core_removable = FALSE

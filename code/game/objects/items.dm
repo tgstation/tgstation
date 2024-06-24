@@ -182,7 +182,8 @@
 	var/sharpness = NONE
 
 	///How a tool acts when you use it on something, such as wirecutters cutting wires while multitools measure power
-	var/tool_behaviour = NONE
+	var/tool_behaviour = null
+
 	///How fast does the tool work
 	var/toolspeed = 1
 
@@ -229,7 +230,8 @@
 	var/override_notes = FALSE
 	/// Used if we want to have a custom verb text for throwing. "John Spaceman flicks the ciggerate" for example.
 	var/throw_verb
-
+	/// Does this use the advanced reskinning setup?
+	var/uses_advanced_reskins = FALSE
 	/// A lazylist used for applying fantasy values, contains the actual modification applied to a variable.
 	var/list/fantasy_modifications = null
 
@@ -252,7 +254,6 @@
 	// Handle adding item associated actions
 	for(var/path in actions_types)
 		add_item_action(path)
-
 	actions_types = null
 
 	if(force_string)
@@ -904,6 +905,13 @@
 		return mutable_appearance(SSgreyscale.GetColoredIconByType(greyscale_config_belt, greyscale_colors), icon_state_to_use)
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state_to_use)
 
+/**
+ * Extend this to give the item an appearance when placed in a surgical tray. Uses an icon state in `medicart.dmi`.
+ * * tray_extended - If true, the surgical tray the item is placed on is in "table mode"
+ */
+/obj/item/proc/get_surgery_tool_overlay(tray_extended)
+	return null
+
 /obj/item/proc/update_slot_icon()
 	if(!ismob(loc))
 		return
@@ -1413,6 +1421,75 @@
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, offerer, taker) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
 
+/obj/item/clothing/glasses	//Code to let you switch the side your eyepatch is on! Woo! Just an explanation, this is added to the base glasses so it works on eyepatch-huds too
+	var/can_switch_eye = FALSE	//Having this default to false means that its easy to make sure this doesnt apply to any pre-existing items
+
+/obj/item/reskin_obj(mob/M)
+	if(!uses_advanced_reskins)
+		return ..()
+	if(!LAZYLEN(unique_reskin))
+		return
+
+	/// Is the obj a glasses icon with swappable item states?
+	var/is_swappable = FALSE
+	/// if the item are glasses, this variable stores the item.
+	var/obj/item/clothing/glasses/reskinned_glasses
+
+	if(istype(src, /obj/item/clothing/glasses)) // TODO - Remove this mess about glasses, it shouldn't be necessary anymore.
+		reskinned_glasses = src
+		if(reskinned_glasses.can_switch_eye)
+			is_swappable = TRUE
+
+	var/list/items = list()
+
+
+	for(var/reskin_option in unique_reskin)
+		var/image/item_image = image(icon = unique_reskin[reskin_option][RESKIN_ICON] ? unique_reskin[reskin_option][RESKIN_ICON] : icon, icon_state = "[unique_reskin[reskin_option][RESKIN_ICON_STATE]]")
+		items += list("[reskin_option]" = item_image)
+	sort_list(items)
+
+	var/pick = show_radial_menu(M, src, items, custom_check = CALLBACK(src, PROC_REF(check_reskin_menu), M), radius = 38, require_near = TRUE)
+	if(!pick)
+		return
+	if(!unique_reskin[pick])
+		return
+	current_skin = pick
+
+	if(unique_reskin[pick][RESKIN_ICON])
+		icon = unique_reskin[pick][RESKIN_ICON]
+
+	if(unique_reskin[pick][RESKIN_ICON_STATE])
+		if(is_swappable)
+			base_icon_state = unique_reskin[pick][RESKIN_ICON_STATE]
+			icon_state = base_icon_state
+		else
+			icon_state = unique_reskin[pick][RESKIN_ICON_STATE]
+
+	if(unique_reskin[pick][RESKIN_WORN_ICON])
+		worn_icon = unique_reskin[pick][RESKIN_WORN_ICON]
+
+	if(unique_reskin[pick][RESKIN_WORN_ICON_STATE])
+		worn_icon_state = unique_reskin[pick][RESKIN_WORN_ICON_STATE]
+
+	if(unique_reskin[pick][RESKIN_INHAND_L])
+		lefthand_file = unique_reskin[pick][RESKIN_INHAND_L]
+	if(unique_reskin[pick][RESKIN_INHAND_R])
+		righthand_file = unique_reskin[pick][RESKIN_INHAND_R]
+	if(unique_reskin[pick][RESKIN_INHAND_STATE])
+		inhand_icon_state = unique_reskin[pick][RESKIN_INHAND_STATE]
+	if(unique_reskin[pick][RESKIN_SUPPORTS_VARIATIONS_FLAGS])
+		supports_variations_flags = unique_reskin[pick][RESKIN_SUPPORTS_VARIATIONS_FLAGS]
+	if(ishuman(M))
+		var/mob/living/carbon/human/wearer = M
+		wearer.regenerate_icons() // update that mf
+	to_chat(M, "[src] is now skinned as '[pick].'")
+	post_reskin(M)
+	return TRUE
+
+/// Automatically called after a reskin, for any extra variable changes.
+/obj/item/proc/post_reskin(mob/our_mob)
+	return
+
 /// Special stuff you want to do when an outfit equips this item.
 /obj/item/proc/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
 	return
@@ -1662,3 +1739,9 @@
 	bare_wound_bonus = reset_fantasy_variable("bare_wound_bonus", bare_wound_bonus)
 	toolspeed = reset_fantasy_variable("toolspeed", toolspeed)
 	SEND_SIGNAL(src, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, bonus)
+
+//automatically finds tool behavior if there is only one. requires an extension of the proc if a tool has multiple behaviors
+/obj/item/proc/get_all_tool_behaviours()
+	if (!isnull(tool_behaviour))
+		return list(tool_behaviour)
+	return null

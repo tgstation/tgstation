@@ -103,6 +103,9 @@
 	toolspeed = 0.7
 	force_opens = TRUE
 
+/obj/item/crowbar/power/get_all_tool_behaviours()
+	return list(TOOL_CROWBAR, TOOL_WIRECUTTER)
+
 /obj/item/crowbar/power/Initialize(mapload)
 	. = ..()
 	AddComponent( \

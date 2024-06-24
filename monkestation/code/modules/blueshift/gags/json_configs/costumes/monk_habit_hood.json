@@ -1,0 +1,44 @@
+{
+	"monkhood": [
+		{
+			"type": "icon_state",
+			"icon_state": "monkhood_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "monkhood_belt",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"nun_hood": [
+		{
+			"type": "icon_state",
+			"icon_state": "nun_hood_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "nun_hood_frills",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"nun_hood_alt": [
+		{
+			"type": "icon_state",
+			"icon_state": "nun_hood_alt_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "nun_hood_alt_frills",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

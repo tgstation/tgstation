@@ -370,6 +370,7 @@
 				ROLE_TRAITOR,
 				ROLE_VAMPIRICACCIDENT,
 				ROLE_WIZARD,
+				BAN_OPFOR,
 			),
 		)
 		for(var/department in long_job_lists)

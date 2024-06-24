@@ -31,9 +31,12 @@
 	var/sound_off = 'sound/weapons/magout.ogg'
 	/// Is the light turned on or off currently
 	var/on = FALSE
+	var/start_on = FALSE
 
 /obj/item/flashlight/Initialize(mapload)
 	. = ..()
+	if(start_on)
+		set_light_on(TRUE)
 	if(icon_state == "[initial(icon_state)]-on")
 		on = TRUE
 	update_brightness()

@@ -434,7 +434,10 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 				var/datum/callback/land_slam = new(collided, TYPE_PROC_REF(/mob/living/, tram_slam_land))
 				collided.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality, callback = land_slam)
 
-				SEND_SIGNAL(src, COMSIG_TRAM_COLLISION, collided)
+				//increment the hit counter signs
+				if(ismob(collided) && collided.client)
+					SSpersistence.tram_hits_this_round++
+					SEND_SIGNAL(src, COMSIG_TRAM_COLLISION, SSpersistence.tram_hits_this_round)
 
 	unset_movement_registrations(exited_locs)
 	group_move(things_to_move, going)

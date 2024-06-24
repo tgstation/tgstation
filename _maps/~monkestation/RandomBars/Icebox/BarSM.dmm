@@ -849,7 +849,7 @@
 /obj/effect/turf_decal/trimline/yellow/warning,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/structure/cable,
-/obj/structure/sign/delamination_counter/directional/north,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/pod/dark,
 /area/station/commons/lounge)
 "CA" = (

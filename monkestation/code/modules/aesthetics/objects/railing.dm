@@ -7,12 +7,15 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 	var/neighbor_status = list() ///list of smoothing we need doing
+	var/standard_smoothing = TRUE
 
 /obj/structure/railing/wood
 	custom_materials = list(/datum/material/wood = 100)
 
 /obj/structure/railing/Initialize(mapload)
 	. = ..()
+	if(!standard_smoothing)
+		material_flags = NONE
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/railing/LateInitialize()
@@ -74,69 +77,65 @@
 
 /obj/structure/railing/update_icon(update_neighbors = TRUE)
 	. = ..()
-	check_neighbors(update_neighbors)
-	overlays.Cut()
+	if(standard_smoothing)
+		check_neighbors(update_neighbors)
+		overlays.Cut()
 
-	var/turf/turf = get_turf(src)
-	if(dir == SOUTH)
-		SET_PLANE(src, GAME_PLANE_FOV_HIDDEN, turf)
-		layer = ABOVE_MOB_LAYER + 0.01
+		var/turf/turf = get_turf(src)
+		if(dir == SOUTH)
+			SET_PLANE(src, GAME_PLANE_FOV_HIDDEN, turf)
+			layer = ABOVE_MOB_LAYER + 0.01
 
-	else if(dir != NORTH)
-		SET_PLANE(src, GAME_PLANE_FOV_HIDDEN, turf)
-	else
-		SET_PLANE(src, GAME_PLANE, turf)
-		layer = initial(layer)
+		else if(dir != NORTH)
+			SET_PLANE(src, GAME_PLANE_FOV_HIDDEN, turf)
+		else
+			SET_PLANE(src, GAME_PLANE, turf)
+			layer = initial(layer)
 
-	if(!neighbor_status || !anchored)
-		icon_state = "railing0-[density]"
-	else
-		icon_state = "railing1-[density]"
+		if(!neighbor_status || !anchored)
+			icon_state = "railing0-[density]"
+		else
+			icon_state = "railing1-[density]"
 
-		if(("corneroverlay_l" in neighbor_status) && ("corneroverlay_r" in neighbor_status))
-			icon_state = "blank"
-
-
-		var/turf/right_turf = get_step(src, turn(src.dir, -90))
-		var/turf/left_turf = get_step(src, turn(src.dir, 90))
-
-		if((!locate(/obj/structure/railing) in right_turf.contents))
-			if(!("mcorneroverlay_l" in neighbor_status))
-				overlays += image(icon, "frontend_r[density]")
-			else
-				overlays += image(icon, "frontoverlay_r[density]")
+			if(("corneroverlay_l" in neighbor_status) && ("corneroverlay_r" in neighbor_status))
+				icon_state = "blank"
 
 
-		if((!locate(/obj/structure/railing) in left_turf.contents))
-			if(!("mcorneroverlay_l" in neighbor_status))
-				overlays += image(icon, "frontend_l[density]")
-			else
+			var/turf/right_turf = get_step(src, turn(src.dir, -90))
+			var/turf/left_turf = get_step(src, turn(src.dir, 90))
+
+			if((!locate(/obj/structure/railing) in right_turf.contents))
+				if(!("mcorneroverlay_l" in neighbor_status))
+					overlays += image(icon, "frontend_r[density]")
+				else
+					overlays += image(icon, "frontoverlay_r[density]")
+
+
+			if((!locate(/obj/structure/railing) in left_turf.contents))
+				if(!("mcorneroverlay_l" in neighbor_status))
+					overlays += image(icon, "frontend_l[density]")
+				else
+					overlays += image(icon, "frontoverlay_l[density]")
+
+
+			if("corneroverlay_l" in neighbor_status)
+				overlays += image(icon, "corneroverlay_l[density]")
+			if("corneroverlay_r" in neighbor_status)
+				overlays += image(icon, "corneroverlay_r[density]")
+			if("frontoverlay_l" in neighbor_status)
 				overlays += image(icon, "frontoverlay_l[density]")
-
-
-		if("corneroverlay_l" in neighbor_status)
-			overlays += image(icon, "corneroverlay_l[density]")
-		if("corneroverlay_r" in neighbor_status)
-			overlays += image(icon, "corneroverlay_r[density]")
-		if("frontoverlay_l" in neighbor_status)
-			overlays += image(icon, "frontoverlay_l[density]")
-		if("frontoverlay_r" in neighbor_status)
-			overlays += image(icon, "frontoverlay_r[density]")
-		if("mcorneroverlay_l" in neighbor_status)
-			var/pix_offset_x = 0
-			var/pix_offset_y = 0
-			switch(dir)
-				if(NORTH)
-					pix_offset_x = 32
-				if(SOUTH)
-					pix_offset_x = -32
-				if(EAST)
-					pix_offset_y = -32
-				if(WEST)
-					pix_offset_y = 32
-			overlays += image(icon, "mcorneroverlay_l[density]", pixel_x = pix_offset_x, pixel_y = pix_offset_y)
-
-/obj/structure/railing/wrestling
-	name = "boxing ring"
-	icon = 'monkestation/code/modules/aesthetics/icons/railing_wrestling.dmi'
-	material_flags = null
+			if("frontoverlay_r" in neighbor_status)
+				overlays += image(icon, "frontoverlay_r[density]")
+			if("mcorneroverlay_l" in neighbor_status)
+				var/pix_offset_x = 0
+				var/pix_offset_y = 0
+				switch(dir)
+					if(NORTH)
+						pix_offset_x = 32
+					if(SOUTH)
+						pix_offset_x = -32
+					if(EAST)
+						pix_offset_y = -32
+					if(WEST)
+						pix_offset_y = 32
+				overlays += image(icon, "mcorneroverlay_l[density]", pixel_x = pix_offset_x, pixel_y = pix_offset_y)

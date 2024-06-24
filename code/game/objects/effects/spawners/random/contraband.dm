@@ -104,3 +104,17 @@
 		/obj/item/restraints/legcuffs/beartrap/prearmed = 5, //not really a landmine, but still a good threat
 		/obj/effect/mine/shrapnel = 5,
 	)
+
+/obj/effect/spawner/random/contraband/plus
+	name = "contraband loot spawner plus"
+	desc = "Where'd ya find this?"
+	loot = list(
+		/obj/item/clothing/under/syndicate = 20,
+		/obj/item/reagent_containers/cup/bottle/thermite = 20,
+		/obj/item/restraints/legcuffs/beartrap = 10,
+		/obj/item/food/drug/saturnx = 5,
+		/obj/item/reagent_containers/cup/blastoff_ampoule = 5,
+		/obj/item/food/drug/moon_rock = 5,
+		/obj/item/grenade/empgrenade = 5,
+		/obj/effect/spawner/random/contraband/armory = 1,
+	)

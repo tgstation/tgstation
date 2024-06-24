@@ -1,0 +1,22 @@
+{
+	"fancy_suit": [
+		{
+			"type": "icon_state",
+			"icon_state": "fancy_suit_worn",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "fancy_suit_undershirt_worn",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "fancy_suit_buttons_worn",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}

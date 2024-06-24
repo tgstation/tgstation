@@ -1,0 +1,41 @@
+{
+	"christmas_male": [
+		{
+			"type": "icon_state",
+			"icon_state": "christmas_male_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "christmas_male_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "christmas_male_belt",
+			"blend_mode": "overlay"
+		}
+	],
+
+	"christmas_female": [
+		{
+			"type": "icon_state",
+			"icon_state": "christmas_female_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "christmas_female_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "christmas_female_belt",
+			"blend_mode": "overlay"
+		}
+	]
+}

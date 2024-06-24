@@ -1,0 +1,22 @@
+{
+	"jean_skirt": [
+		{
+			"type": "icon_state",
+			"icon_state": "skirt_buckle",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "skirt_belt",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "jean_skirt_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}

@@ -1,0 +1,71 @@
+{
+	"catear_headphone": [
+		{
+			"type": "icon_state",
+			"icon_state": "catearphones_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "catearphones_off",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"catear_headphone_on":[
+		{
+			"type": "icon_state",
+			"icon_state": "catearphones_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "catearphones_on",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+
+	],
+	"catear_headphone_tail": [
+		{
+			"type": "icon_state",
+			"icon_state": "catearphones_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "catearphones_off",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "catearphones_tail_on",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"catear_headphone_tail_on": [
+		{
+			"type": "icon_state",
+			"icon_state": "catearphones_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "catearphones_on",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "catearphones_tail_on",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

@@ -1,0 +1,10 @@
+{
+	"maid_headband": [
+		{
+			"type": "icon_state",
+			"icon_state": "maid_headband",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

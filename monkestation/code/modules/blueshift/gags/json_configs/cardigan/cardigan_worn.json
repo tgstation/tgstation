@@ -1,0 +1,18 @@
+{
+	"cardigan": [
+		{
+			"type": "icon_state",
+			"icon_state": "cardigan_mob",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"cardigan_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "cardigan_mob_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

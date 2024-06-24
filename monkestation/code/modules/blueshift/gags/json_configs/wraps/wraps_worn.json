@@ -1,0 +1,16 @@
+{
+	"clothwrap": [
+		{
+			"type": "icon_state",
+			"icon_state": "wrap_mob",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "wrap_mob_digi",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

@@ -267,6 +267,13 @@ GLOBAL_VAR_INIT(starlight_color, pick(COLOR_TEAL, COLOR_GREEN, COLOR_CYAN, COLOR
 	. = ..()
 	AddElement(/datum/element/turf_z_transparency)
 
+/turf/open/space/openspace/Destroy()
+	// Signals persist through destroy, GO HOME
+	var/turf/below = GET_TURF_BELOW(src)
+	if(below)
+		UnregisterSignal(below, COMSIG_TURF_CHANGE)
+	return ..()
+
 /turf/open/space/openspace/zAirIn()
 	return TRUE
 

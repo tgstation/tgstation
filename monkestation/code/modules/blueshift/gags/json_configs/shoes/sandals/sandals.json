@@ -1,0 +1,10 @@
+{
+	"sandals": [
+		{
+			"type": "icon_state",
+			"icon_state": "sandals_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

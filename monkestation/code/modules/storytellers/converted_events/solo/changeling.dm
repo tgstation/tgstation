@@ -20,7 +20,7 @@
 		JOB_CYBORG,
 	)
 	min_players = 20
-	weight = 3
+	weight = 9
 	shared_occurence_type = SHARED_CHANGELING
 
 /datum/round_event_control/antagonist/solo/changeling/roundstart

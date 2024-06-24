@@ -6,6 +6,16 @@
 		html = msg,
 		confidential = TRUE)
 
+/proc/message_high_admins(msg)
+	for(var/client/admin in GLOB.admins)
+		var/datum/admins/D = GLOB.admin_datums[admin.ckey]
+		if(D.check_for_rights(R_BAN))
+			msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
+			to_chat(admin,
+				type = MESSAGE_TYPE_ADMINLOG,
+				html = msg,
+				confidential = TRUE)
+
 /proc/relay_msg_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message\">[msg]</span></span>"
 	to_chat(GLOB.admins,

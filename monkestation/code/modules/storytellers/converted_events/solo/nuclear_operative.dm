@@ -58,19 +58,29 @@
 
 	if(!most_experienced)
 		most_experienced = get_most_experienced(setup_minds, required_role)
-	antag_mind.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
-	antag_mind.special_role = ROLE_NUCLEAR_OPERATIVE
 
 	if(!most_experienced)
 		most_experienced = antag_mind
 
 	if(!set_leader)
 		set_leader = TRUE
+		if(antag_mind != most_experienced)
+			var/mob/living/leader_mob = most_experienced.current
+			SSjob.FreeRole(most_experienced.assigned_role.title)
+			var/list/leader_items = leader_mob.get_equipped_items(TRUE)
+			leader_mob.unequip_everything()
+			for(var/obj/item/item as anything in leader_items)
+				qdel(item)
+		most_experienced.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
+		most_experienced.special_role = ROLE_NUCLEAR_OPERATIVE
 		var/datum/antagonist/nukeop/leader/leader_antag_datum = most_experienced.add_antag_datum(/datum/antagonist/nukeop/leader)
 		nuke_team = leader_antag_datum.nuke_team
 
 	if(antag_mind == most_experienced)
 		return
+
+	antag_mind.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
+	antag_mind.special_role = ROLE_NUCLEAR_OPERATIVE
 
 	var/datum/antagonist/nukeop/new_op = new antag_datum()
 	antag_mind.add_antag_datum(new_op)

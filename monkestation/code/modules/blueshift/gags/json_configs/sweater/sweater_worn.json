@@ -1,0 +1,34 @@
+{
+	"cableknit_sweater": [
+		{
+			"type": "icon_state",
+			"icon_state": "cableknit_mob",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"cableknit_sweater_d": [
+		{
+			"type": "icon_state",
+			"icon_state": "cableknit_mob_d",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"keyhole_sweater": [
+		{
+			"type": "icon_state",
+			"icon_state": "keyhole_mob",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"keyhole_sweater_d": [
+		{
+			"type": "icon_state",
+			"icon_state": "keyhole_mob_d",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

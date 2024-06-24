@@ -5,7 +5,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "moistnugget"
 	worn_icon_state = "moistnugget"
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
 	bolt_wording = "bolt"
 	bolt_type = BOLT_TYPE_LOCKING
 	semi_auto = FALSE
@@ -60,7 +60,7 @@
 	icon_state = "moistnugget"
 	inhand_icon_state = "moistnugget"
 	slot_flags = ITEM_SLOT_BACK
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
 	can_bayonet = TRUE
 	knife_x_offset = 27
 	knife_y_offset = 13
@@ -127,7 +127,7 @@
 	icon_state = "speargun"
 	inhand_icon_state = "speargun"
 	worn_icon_state = "speargun"
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	can_be_sawn_off = FALSE
 
@@ -143,7 +143,7 @@
 		Tiger Co-op assassins, cryo-frozen Space Russians, and security personnel with \
 		little care for professional conduct while making 'arrests' point blank in the back of the head \
 		until the gun clicks. EXTREMELY moist."
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/surplus
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/surplus
 	can_jam = TRUE
 
 /obj/item/gun/ballistic/rifle/boltaction/prime
@@ -173,7 +173,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
 	initial_caliber = CALIBER_SHOTGUN
 	alternative_caliber = CALIBER_A762
 	initial_fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
@@ -195,7 +195,7 @@
 	icon_state = "musket_prime"
 	inhand_icon_state = "musket_prime"
 	worn_icon_state = "musket_prime"
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
 	projectile_damage_multiplier = 1
 
 /// MAGICAL BOLT ACTIONS + ARCANE BARRAGE? ///
@@ -204,7 +204,7 @@
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."
 	var/guns_left = 30
-	mag_type = /obj/item/ammo_box/magazine/internal/enchanted
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/enchanted
 	can_be_sawn_off = FALSE
 
 /obj/item/gun/ballistic/rifle/enchanted/arcane_barrage
@@ -221,7 +221,7 @@
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 	show_bolt_icon = FALSE //It's a magic hand, not a rifle
 
-	mag_type = /obj/item/ammo_box/magazine/internal/arcane_barrage
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/arcane_barrage
 
 /obj/item/gun/ballistic/rifle/enchanted/dropped()
 	. = ..()
@@ -268,7 +268,7 @@
 	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
 	suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
 	recoil = 2
-	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
+	accepted_magazine_type = /obj/item/ammo_box/magazine/sniper_rounds
 	internal_magazine = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BACK

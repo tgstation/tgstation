@@ -6,7 +6,7 @@
 	name = "grenade launcher"
 	icon_state = "dshotgun_sawn"
 	inhand_icon_state = "gun"
-	mag_type = /obj/item/ammo_box/magazine/internal/grenadelauncher
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/grenadelauncher
 	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
 	pin = /obj/item/firing_pin/implant/pindicate
@@ -26,7 +26,7 @@
 	name = "multi grenade launcher"
 	icon = 'icons/mecha/mecha_equipment.dmi'
 	icon_state = "mecha_grenadelnchr"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/grenademulti
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/grenademulti
 	pin = /obj/item/firing_pin
 	gun_flags = GUN_SMOKE_PARTICLES
 
@@ -38,7 +38,7 @@
 	desc = "A prototype pistol designed to fire self propelled rockets."
 	icon_state = "gyropistol"
 	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
-	mag_type = /obj/item/ammo_box/magazine/m75
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m75
 	burst_size = 1
 	fire_delay = 0
 	actions_types = list()
@@ -51,7 +51,7 @@
 	A sticker near the cheek rest reads, \"ENSURE AREA BEHIND IS CLEAR BEFORE FIRING\""
 	icon_state = "rocketlauncher"
 	inhand_icon_state = "rocketlauncher"
-	mag_type = /obj/item/ammo_box/magazine/internal/rocketlauncher
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/rocketlauncher
 	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	can_suppress = FALSE

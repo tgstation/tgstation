@@ -1,0 +1,30 @@
+{
+	"monkfrock": [
+		{
+			"type": "icon_state",
+			"icon_state": "monkfrock_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "monkfrock_belt",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"monkfrock_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "monkfrock_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "monkfrock_belt",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

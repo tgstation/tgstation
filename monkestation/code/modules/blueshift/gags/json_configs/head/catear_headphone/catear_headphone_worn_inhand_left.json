@@ -1,0 +1,31 @@
+{
+	"catear_headphone": [
+		{
+			"type": "icon_state",
+			"icon_state": "catear_headphones_left",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "catear_headphones_left_color",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"catear_headphone_on":[
+		{
+			"type": "icon_state",
+			"icon_state": "catear_headphones_left",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "catear_headphones_left_color",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+
+	]
+}

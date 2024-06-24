@@ -9,7 +9,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	force = 15 //blunt edge and really heavy
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/six
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/six
 	burst_size = 6
 	pb_knockback = 12
 	unique_reskin = null
@@ -43,7 +43,7 @@
 	fire_sound_volume = 100
 	knockback_distance = 100
 	death = 100
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/hundred
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/hundred
 
 
 /obj/item/ammo_box/magazine/internal/shot/six

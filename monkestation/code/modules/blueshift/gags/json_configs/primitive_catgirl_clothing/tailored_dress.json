@@ -1,0 +1,16 @@
+{
+	"tailored_dress": [
+		{
+			"type": "icon_state",
+			"icon_state": "tailored_dress_base_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "tailored_dress_laces_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

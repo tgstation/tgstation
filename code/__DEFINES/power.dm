@@ -1,6 +1,10 @@
+#define CABLE_LAYER_ALL ALL
 #define CABLE_LAYER_1 (1<<0)
+	#define CABLE_LAYER_1_NAME "Red Power Line"
 #define CABLE_LAYER_2 (1<<1)
+	#define CABLE_LAYER_2_NAME "Yellow Power Line"
 #define CABLE_LAYER_3 (1<<2)
+	#define CABLE_LAYER_3_NAME "Blue Power Line"
 
 #define MACHINERY_LAYER_1 1
 

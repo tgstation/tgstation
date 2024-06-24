@@ -1,0 +1,10 @@
+{
+	"thinchoker": [
+		{
+			"type": "icon_state",
+			"icon_state": "thinchoker_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

@@ -1,0 +1,74 @@
+{
+	"helmet_plain": [
+		{
+			"type": "icon_state",
+			"icon_state": "helmet_underlay",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "helmet_greyscale",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"helmet_strap": [
+		{
+			"type": "icon_state",
+			"icon_state": "helmet_underlay",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "helmet_greyscale",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "helmet_strap",
+			"blend_mode": "overlay"
+		}
+	],
+	"helmet_glass": [
+		{
+			"type": "icon_state",
+			"icon_state": "helmet_underlay",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "helmet_greyscale",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "helmet_glass",
+			"blend_mode": "overlay"
+		}
+	],
+	"helmet_both": [
+		{
+			"type": "icon_state",
+			"icon_state": "helmet_underlay",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "helmet_greyscale",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "helmet_strap",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "helmet_glass",
+			"blend_mode": "overlay"
+		}
+	]
+}

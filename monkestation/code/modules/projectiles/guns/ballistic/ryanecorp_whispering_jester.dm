@@ -8,7 +8,7 @@
 	inhand_icon_state = "jester"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
-	mag_type = /obj/item/ammo_box/magazine/whispering_jester_45_magazine
+	accepted_magazine_type = /obj/item/ammo_box/magazine/whispering_jester_45_magazine
 	can_bayonet = FALSE
 	can_suppress = FALSE
 	can_unsuppress = FALSE

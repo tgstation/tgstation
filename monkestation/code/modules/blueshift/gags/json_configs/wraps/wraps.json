@@ -1,0 +1,10 @@
+{
+	"clothwrap": [
+		{
+			"type": "icon_state",
+			"icon_state": "wrap_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

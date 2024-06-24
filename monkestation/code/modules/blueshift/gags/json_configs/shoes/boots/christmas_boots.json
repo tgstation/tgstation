@@ -1,0 +1,16 @@
+{
+	"christmas_boots": [
+		{
+			"type": "icon_state",
+			"icon_state": "christmas_boots_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "christmas_boots_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

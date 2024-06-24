@@ -1,0 +1,10 @@
+{
+	"flatcap": [
+		{
+			"type": "icon_state",
+			"icon_state": "flatcap_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

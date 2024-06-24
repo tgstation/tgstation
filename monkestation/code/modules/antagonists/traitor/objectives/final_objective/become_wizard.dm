@@ -1,3 +1,5 @@
+/* commented out for now until reworked
+
 /datum/traitor_objective/ultimate/wizard
 	name = "Go to %AREA% and invoke a rune of power."
 	description = "Go to %AREA% and draw a rune of power with the provided impliment. Then, invoke the rune to gain great magical power."
@@ -142,3 +144,5 @@
 	icon = 'monkestation/icons/effects/96x96.dmi'
 	icon_state = "traitor_wizard_rune_draw"
 	duration = 4 SECONDS
+
+*/

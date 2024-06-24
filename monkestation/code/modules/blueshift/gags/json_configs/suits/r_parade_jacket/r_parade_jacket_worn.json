@@ -1,0 +1,30 @@
+{
+	"r_parade_jacket": [
+		{
+			"type": "icon_state",
+			"icon_state": "r_parade_jacket_flair",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "r_parade_jacket_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"r_parade_jacket_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "r_parade_jacket_flair_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "r_parade_jacket_base_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

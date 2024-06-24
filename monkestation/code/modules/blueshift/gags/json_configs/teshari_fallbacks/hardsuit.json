@@ -1,0 +1,22 @@
+{
+	"": [
+		{
+			"type": "icon_state",
+			"icon_state": "hardsuit0",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "hardsuit1",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "hardsuit2",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}

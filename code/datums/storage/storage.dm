@@ -31,7 +31,7 @@
 	/// list of all the mobs currently viewing the contents
 	var/list/is_using = list()
 
-	var/locked = FALSE
+	var/locked = STORAGE_NOT_LOCKED
 	/// whether or not we should open when clicked
 	var/attack_hand_interact = TRUE
 	/// whether or not we allow storage objects of the same size inside
@@ -314,7 +314,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * @param messages if TRUE, will print out a message if the item is not valid
  * @param force bypass locked storage
  */
-/datum/storage/proc/can_insert(obj/item/to_insert, mob/user, messages = TRUE, force = FALSE)
+/datum/storage/proc/can_insert(obj/item/to_insert, mob/user, messages = TRUE, force = STORAGE_NOT_LOCKED)
 	var/obj/item/resolve_parent = parent?.resolve()
 	if(!resolve_parent)
 		return
@@ -329,7 +329,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!isitem(to_insert))
 		return FALSE
 
-	if(locked && !force)
+	if(locked > force)
 		return FALSE
 
 	if((to_insert == resolve_parent) || (to_insert == real_location))

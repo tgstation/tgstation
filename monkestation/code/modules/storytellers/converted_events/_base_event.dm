@@ -90,11 +90,20 @@
 
 	var/job_check = 0
 	var/list/enemy_players = list()
-	for(var/enemy in enemy_roles)
-		var/datum/job/enemy_job = SSjob.GetJob(enemy)
-		if(enemy_job && SSjob.assigned_players_by_job[enemy_job.type])
-			job_check += length(SSjob.assigned_players_by_job[enemy_job.type])
-			enemy_players += SSjob.assigned_players_by_job[enemy_job.type]
+	if(roundstart)
+		for(var/enemy in enemy_roles)
+			var/datum/job/enemy_job = SSjob.GetJob(enemy)
+			if(enemy_job && SSjob.assigned_players_by_job[enemy_job.type])
+				job_check += length(SSjob.assigned_players_by_job[enemy_job.type])
+				enemy_players += SSjob.assigned_players_by_job[enemy_job.type]
+
+	else
+		for(var/mob/M in GLOB.alive_player_list)
+			if (M.stat == DEAD)
+				continue // Dead players cannot count as opponents
+			if (M.mind && (M.mind.assigned_role.title in enemy_roles))
+				job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that
+				enemy_players += M
 
 	if(job_check >= required_enemies)
 		return return_players ? enemy_players : TRUE

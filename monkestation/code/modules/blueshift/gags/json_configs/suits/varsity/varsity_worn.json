@@ -1,0 +1,22 @@
+{
+	"varsity_jacket": [
+		{
+			"type": "icon_state",
+			"icon_state": "jacket_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "jacket_sleeves",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "jacket_fabric",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}

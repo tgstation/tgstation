@@ -1,0 +1,134 @@
+{
+	"hoodie_NT": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "trim_obj",
+			"blend_mode": "overlay"
+		}
+	],
+	"hoodie_NT_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "trim_obj",
+			"blend_mode": "overlay"
+		}
+	],
+	"hoodie_NRTI": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "trim_alt_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"hoodie_NRTI_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "trim_alt_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"hoodie_MU": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "mu_logo_obj",
+			"blend_mode": "overlay"
+		}
+	],
+	"hoodie_MU_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "mu_logo_obj",
+			"blend_mode": "overlay"
+		}
+	],
+	"hoodie_CTI": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cti_logo_obj",
+			"blend_mode": "overlay"
+		}
+	],
+	"hoodie_CTI_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cti_logo_obj",
+			"blend_mode": "overlay"
+		}
+	],
+	"hoodie_SMW": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "smw_logo_obj",
+			"blend_mode": "overlay"
+		}
+	],
+	"hoodie_SMW_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "smw_logo_obj",
+			"blend_mode": "overlay"
+		}
+	]
+}

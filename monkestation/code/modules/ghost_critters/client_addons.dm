@@ -56,7 +56,8 @@
 	if(!mob.mind)
 		mob.mind = new /datum/mind(key)
 
-	mob.mind.transfer_to(created_mob, TRUE)
+	var/mob/dead/observer/observe = mob
+	created_mob.key = observe.key
 
 	init_verbs()
 

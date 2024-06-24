@@ -1,4 +1,4 @@
-//These procs handle putting s tuff in your hands
+//These procs handle putting stuff in your hands
 //as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
 
 ///Returns the thing we're currently holding

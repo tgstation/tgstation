@@ -137,6 +137,12 @@
 /obj/item/stock_parts/cell/proc/percent() // return % charge of cell
 	return 100 * charge / maxcharge
 
+/**
+ * Returns the amount of charge used on the cell.
+ */
+/obj/item/stock_parts/cell/proc/used_charge()
+	return maxcharge - charge
+
 // use power from a cell
 /obj/item/stock_parts/cell/use(amount, force)
 	if(rigged && amount > 0)

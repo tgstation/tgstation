@@ -218,6 +218,10 @@
 /obj/item/mod/module/anomaly_locked/kinesis/prebuilt
 	prebuilt = TRUE
 
+/obj/item/mod/module/anomaly_locked/kinesis/prebuilt/locked
+	core_removable = FALSE
+
+
 /obj/item/mod/module/anomaly_locked/kinesis/prebuilt/prototype
 	name = "MOD prototype kinesis module"
 	complexity = 0

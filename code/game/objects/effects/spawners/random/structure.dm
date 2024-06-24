@@ -17,6 +17,48 @@
 		/obj/structure/destructible/cult/pants_altar = 1,
 	)
 
+/obj/effect/spawner/random/structure/closet_empty
+	name = "empty closet spawner"
+	icon_state = "locker"
+	loot = list(
+		/obj/structure/closet = 850,
+		/obj/structure/closet/cabinet = 150,
+		/obj/structure/closet/acloset = 1,
+	)
+
+/obj/effect/spawner/random/structure/closet_empty/make_item(spawn_loc, type_path_to_make)
+	var/obj/structure/closet/peek_a_boo = ..()
+	if(istype(peek_a_boo) && prob(50))
+		peek_a_boo.open() //the crate appears immediatly out of thin air so no need to animate anything
+
+	return peek_a_boo
+
+/obj/effect/spawner/random/structure/closet_empty/crate
+	name = "empty crate spawner"
+	icon_state = "crate"
+	loot = list(
+		/obj/structure/closet/crate = 20,
+		/obj/structure/closet/crate/wooden = 1,
+		/obj/structure/closet/crate/internals = 1,
+		/obj/structure/closet/crate/medical = 1,
+		/obj/structure/closet/crate/freezer = 1,
+		/obj/structure/closet/crate/radiation = 1,
+		/obj/structure/closet/crate/hydroponics = 1,
+		/obj/structure/closet/crate/engineering = 1,
+		/obj/structure/closet/crate/engineering/electrical = 1,
+		/obj/structure/closet/crate/science = 1,
+	)
+
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot
+	name = "crate spawner with maintenance loot"
+	icon_state = "crate"
+
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot/make_item(spawn_loc, type_path_to_make)
+	var/obj/structure/closet/closet_to_fill = ..()
+	closet_to_fill.RegisterSignal(closet_to_fill, COMSIG_CLOSET_POPULATE_CONTENTS, TYPE_PROC_REF(/obj/structure/closet/, populate_with_random_maint_loot))
+
+	return closet_to_fill
+
 /obj/effect/spawner/random/structure/crate_abandoned
 	name = "locked crate spawner"
 	icon_state = "crate_secure"

@@ -428,7 +428,7 @@
 	dir = 4;
 	name = "Gas to Chamber"
 	},
-/obj/structure/sign/delamination_counter/directional/north,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "xe" = (

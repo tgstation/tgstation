@@ -1,0 +1,336 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "0,0"
+	},
+/area/shuttle/arrival)
+"b" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/shuttle/arrivals,
+/area/shuttle/arrival)
+"c" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 1
+	},
+/turf/open/floor/iron/shuttle/arrivals,
+/area/shuttle/arrival)
+"d" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/window/arrivals{
+	icon_state = "8,0"
+	},
+/area/shuttle/arrival)
+"e" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "6,0"
+	},
+/area/shuttle/arrival)
+"f" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "9,0"
+	},
+/area/shuttle/arrival)
+"g" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "12,2"
+	},
+/area/shuttle/arrival)
+"h" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/window/arrivals{
+	icon_state = "4,0"
+	},
+/area/shuttle/arrival)
+"i" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "11,0"
+	},
+/area/shuttle/arrival)
+"j" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "3,4"
+	},
+/area/shuttle/arrival)
+"k" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "0,4"
+	},
+/area/shuttle/arrival)
+"l" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "9,4"
+	},
+/area/shuttle/arrival)
+"m" = (
+/obj/structure/chair/sofa/bench/right,
+/turf/open/floor/iron/shuttle/arrivals,
+/area/shuttle/arrival)
+"n" = (
+/turf/open/floor/iron/shuttle/arrivals{
+	icon_state = "sign_1"
+	},
+/area/shuttle/arrival)
+"o" = (
+/obj/docking_port/mobile/arrivals,
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "12,1"
+	},
+/area/shuttle/arrival)
+"p" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "6,4"
+	},
+/area/shuttle/arrival)
+"q" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "0,2"
+	},
+/area/shuttle/arrival)
+"r" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "1,4"
+	},
+/area/shuttle/arrival)
+"s" = (
+/obj/machinery/door/airlock/silver/glass,
+/turf/open/floor/iron/shuttle/arrivals,
+/area/shuttle/arrival)
+"t" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/window/arrivals{
+	icon_state = "5,0"
+	},
+/area/shuttle/arrival)
+"u" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "9,1"
+	},
+/area/shuttle/arrival)
+"v" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/shuttle/arrivals{
+	icon_state = "sign_2"
+	},
+/area/shuttle/arrival)
+"w" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "11,3"
+	},
+/area/shuttle/arrival)
+"x" = (
+/turf/open/floor/iron/shuttle/arrivals,
+/area/shuttle/arrival)
+"y" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals,
+/area/shuttle/arrival)
+"z" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/window/arrivals{
+	icon_state = "8,4"
+	},
+/area/shuttle/arrival)
+"B" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "3,0"
+	},
+/area/shuttle/arrival)
+"C" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "0,3"
+	},
+/area/shuttle/arrival)
+"D" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "12,0"
+	},
+/area/shuttle/arrival)
+"G" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "1,0"
+	},
+/area/shuttle/arrival)
+"H" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/window/arrivals{
+	icon_state = "7,4"
+	},
+/area/shuttle/arrival)
+"I" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "12,4"
+	},
+/area/shuttle/arrival)
+"J" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/window/arrivals{
+	icon_state = "7,0"
+	},
+/area/shuttle/arrival)
+"K" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "3,3"
+	},
+/area/shuttle/arrival)
+"L" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "1,3"
+	},
+/area/shuttle/arrival)
+"M" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/iron/shuttle/arrivals{
+	icon_state = "sign_1"
+	},
+/area/shuttle/arrival)
+"N" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/shuttle/arrivals{
+	icon_state = "sign_3"
+	},
+/area/shuttle/arrival)
+"O" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 1
+	},
+/turf/open/floor/iron/shuttle/arrivals,
+/area/shuttle/arrival)
+"P" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/window/arrivals{
+	icon_state = "5,4"
+	},
+/area/shuttle/arrival)
+"Q" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/window/arrivals{
+	icon_state = "4,4"
+	},
+/area/shuttle/arrival)
+"R" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "0,1"
+	},
+/area/shuttle/arrival)
+"S" = (
+/obj/structure/chair/sofa/bench/left,
+/turf/open/floor/iron/shuttle/arrivals,
+/area/shuttle/arrival)
+"T" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "2,4"
+	},
+/area/shuttle/arrival)
+"U" = (
+/obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
+/turf/open/floor/iron/shuttle/arrivals,
+/area/shuttle/arrival)
+"V" = (
+/obj/structure/closet/shuttle/emergency/white,
+/turf/open/floor/iron/shuttle/arrivals,
+/area/shuttle/arrival)
+"W" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "12,3"
+	},
+/area/shuttle/arrival)
+"X" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/shuttle/arrivals{
+	icon_state = "sign_2"
+	},
+/area/shuttle/arrival)
+"Y" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "9,3"
+	},
+/area/shuttle/arrival)
+"Z" = (
+/turf/closed/wall/mineral/titanium/shuttle_wall/arrivals{
+	icon_state = "11,4"
+	},
+/area/shuttle/arrival)
+
+(1,1,1) = {"
+k
+C
+q
+R
+a
+"}
+(2,1,1) = {"
+r
+L
+M
+n
+G
+"}
+(3,1,1) = {"
+T
+V
+x
+X
+U
+"}
+(4,1,1) = {"
+j
+K
+s
+y
+B
+"}
+(5,1,1) = {"
+Q
+m
+x
+O
+h
+"}
+(6,1,1) = {"
+P
+S
+x
+c
+t
+"}
+(7,1,1) = {"
+p
+b
+x
+N
+e
+"}
+(8,1,1) = {"
+H
+m
+x
+O
+J
+"}
+(9,1,1) = {"
+z
+S
+x
+c
+d
+"}
+(10,1,1) = {"
+l
+Y
+s
+u
+f
+"}
+(11,1,1) = {"
+j
+V
+x
+v
+U
+"}
+(12,1,1) = {"
+Z
+w
+n
+n
+i
+"}
+(13,1,1) = {"
+I
+W
+g
+o
+D
+"}

@@ -399,7 +399,7 @@
 
 
 /// Returns an atom where the mob should spawn in.
-/datum/job/proc/get_roundstart_spawn_point()
+/datum/job/proc/get_roundstart_spawn_point(chosen_title)
 	if(random_spawns_possible)
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS))
 			return get_latejoin_spawn_point()
@@ -416,22 +416,40 @@
 			return hangover_spawn_point || get_latejoin_spawn_point()
 	if(length(GLOB.jobspawn_overrides[title]))
 		return pick(GLOB.jobspawn_overrides[title])
-	var/obj/effect/landmark/start/spawn_point = get_default_roundstart_spawn_point()
+	var/obj/effect/landmark/start/spawn_point = get_default_roundstart_spawn_point(chosen_title)
 	if(!spawn_point) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
 		return get_latejoin_spawn_point()
 	return spawn_point
 
 
 /// Handles finding and picking a valid roundstart effect landmark spawn point, in case no uncommon different spawning events occur.
-/datum/job/proc/get_default_roundstart_spawn_point()
+/datum/job/proc/get_default_roundstart_spawn_point(chosen_title)
+	var/list/spawn_points_picked = list()
+	var/list/spawn_points_not_picked = list()
 	for(var/obj/effect/landmark/start/spawn_point as anything in GLOB.start_landmarks_list)
 		if(spawn_point.name != title)
 			continue
-		. = spawn_point
-		if(spawn_point.used) //so we can revert to spawning them on top of eachother if something goes wrong
-			continue
-		spawn_point.used = TRUE
-		break
+		if(spawn_point.required_jobtitle && spawn_point.required_jobtitle == chosen_title) // we default to jobtitle spawns first
+			. = spawn_point
+			if(spawn_point.used) //so we can revert to spawning them on top of eachother if something goes wrong
+				continue
+			spawn_point.used = TRUE
+			break
+		else
+
+			if(spawn_point.used)
+				spawn_points_picked += spawn_point
+			else
+				spawn_points_not_picked += spawn_point
+
+	var/obj/effect/landmark/start/picked = pick(spawn_points_not_picked)
+
+	if(!picked)
+		picked = pick(spawn_points_picked)
+
+	. = picked
+	picked.used = TRUE
+
 	if(!.)
 		log_world("Couldn't find a round start spawn point for [title]")
 

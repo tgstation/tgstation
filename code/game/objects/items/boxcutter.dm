@@ -14,6 +14,9 @@
 	resistance_flags = FIRE_PROOF
 	force = 0
 
+/obj/item/boxcutter/get_all_tool_behaviours()
+	return list(TOOL_KNIFE)
+
 /obj/item/boxcutter/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)

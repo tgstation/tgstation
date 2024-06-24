@@ -21533,7 +21533,7 @@
 	receive_ore_updates = 1;
 	can_send_announcements = 1
 	},
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/rd)
@@ -39078,7 +39078,7 @@
 /area/station/science/robotics/mechbay)
 "jnl" = (
 /obj/effect/mapping_helpers/airalarm/engine_access,
-/obj/structure/sign/delamination_counter/directional/west,
+/obj/machinery/incident_display/delam/directional/west,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
 	name = "Gas to Chamber"
@@ -94349,7 +94349,7 @@
 /obj/structure/cable,
 /obj/effect/landmark/start/hangover,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/delamination_counter/directional/north,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "wyN" = (

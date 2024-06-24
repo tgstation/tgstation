@@ -54,3 +54,8 @@ map boxstation
 	minplayers 25
 	votable
 endmap
+
+map blueshift
+	minplayers 75
+	votable
+endmap

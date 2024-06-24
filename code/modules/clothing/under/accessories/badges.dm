@@ -170,6 +170,7 @@
 	else
 		display = span_notice("The dogtag is all scratched up.")
 
+/*
 /// Reskins for the pride pin accessory, mapped by display name to icon state
 GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	"Rainbow Pride" = "pride",
@@ -181,6 +182,7 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	"Intersex Pride" = "pride_intersex",
 	"Lesbian Pride" = "pride_lesbian",
 ))
+*/
 
 /obj/item/clothing/accessory/pride
 	name = "pride pin"

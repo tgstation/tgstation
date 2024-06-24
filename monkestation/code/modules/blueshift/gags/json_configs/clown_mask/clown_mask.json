@@ -1,0 +1,28 @@
+{
+	"gags_mask": [
+		{
+			"type": "icon_state",
+			"icon_state": "mask_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "hair_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "features_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "eyes_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		}
+	]
+}

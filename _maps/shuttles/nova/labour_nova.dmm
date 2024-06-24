@@ -1,0 +1,224 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"d" = (
+/turf/template_noop,
+/area/shuttle/labor)
+"f" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/red/dim/directional/east,
+/turf/open/floor/iron/smooth,
+/area/shuttle/labor)
+"g" = (
+/obj/docking_port/mobile{
+	dir = 8;
+	shuttle_id = "laborcamp";
+	name = "labor camp shuttle";
+	port_direction = 4
+	},
+/obj/machinery/door/airlock/grunge{
+	id_tag = "prisonshuttle";
+	name = "Labour Shuttle Airlock"
+	},
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/labor)
+"h" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/labor)
+"i" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/loading_area/white,
+/obj/machinery/mineral/labor_claim_console{
+	pixel_x = 28
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/labor)
+"k" = (
+/obj/machinery/mineral/stacking_unit_console{
+	pixel_x = 28;
+	pixel_y = 28
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/shuttle/labor)
+"s" = (
+/obj/structure/marker_beacon/olive,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/labor)
+"t" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/labor)
+"y" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/machinery/power/shuttle_engine/heater,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/labor)
+"A" = (
+/obj/machinery/computer/shuttle/labor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/labor)
+"B" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot_white,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/labor)
+"C" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/labor)
+"D" = (
+/obj/machinery/flasher/directional/north{
+	id = "gulagshuttleflasher";
+	pixel_x = 8
+	},
+/obj/structure/chair/comfy/shuttle,
+/obj/effect/turf_decal/bot_white,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/labor)
+"I" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Labour Shuttle Airlock"
+	},
+/obj/effect/turf_decal/delivery/white,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/labor)
+"J" = (
+/turf/closed/wall/mineral/titanium/spaceship,
+/area/shuttle/labor)
+"K" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/shuttle/labor)
+"L" = (
+/obj/machinery/mineral/stacking_machine/laborstacker{
+	input_dir = 2;
+	output_dir = 1
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/labor)
+"M" = (
+/obj/structure/fluff/metalpole/end{
+	dir = 1;
+	pixel_y = 32
+	},
+/obj/structure/marker_beacon/burgundy,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/labor)
+"N" = (
+/obj/structure/fluff/metalpole/end{
+	dir = 1;
+	pixel_y = 32
+	},
+/obj/structure/marker_beacon/olive,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/labor)
+"O" = (
+/turf/closed/wall/mineral/titanium/spaceship/nodiagonal,
+/area/shuttle/labor)
+"P" = (
+/obj/machinery/button/flasher{
+	id = "gulagshuttleflasher";
+	name = "Flash Control";
+	pixel_x = -3;
+	pixel_y = -27;
+	req_access = list("security")
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/labor)
+"Q" = (
+/obj/machinery/computer/security,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/labor)
+"T" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating/airless,
+/area/shuttle/labor)
+"U" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/labor)
+"V" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/fluff/metalpole/end{
+	pixel_y = -32
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/labor)
+"Z" = (
+/obj/item/radio/intercom/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/iron/smooth,
+/area/shuttle/labor)
+
+(1,1,1) = {"
+d
+M
+U
+U
+U
+h
+C
+O
+J
+"}
+(2,1,1) = {"
+t
+U
+Z
+I
+K
+K
+B
+y
+V
+"}
+(3,1,1) = {"
+h
+A
+P
+U
+D
+K
+B
+y
+T
+"}
+(4,1,1) = {"
+h
+Q
+k
+L
+i
+f
+K
+y
+V
+"}
+(5,1,1) = {"
+N
+U
+I
+U
+U
+s
+g
+O
+J
+"}

@@ -1,0 +1,154 @@
+{
+	"hoodie_NT": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "trim",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "nt_logo",
+			"blend_mode": "overlay"
+		}
+	],
+	"hoodie_NT_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "trim_t",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "nt_logo_t",
+			"blend_mode": "overlay"
+		}
+	],
+	"hoodie_NRTI": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "trim_alt",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "nrti_logo",
+			"blend_mode": "overlay"
+		}
+	],
+	"hoodie_NRTI_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "trim_alt_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "nrti_logo_t",
+			"blend_mode": "overlay"
+		}
+	],
+	"hoodie_MU": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "mu_logo",
+			"blend_mode": "overlay"
+		}
+	],
+	"hoodie_MU_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "mu_logo_t",
+			"blend_mode": "overlay"
+		}
+	],
+	"hoodie_CTI": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cti_logo",
+			"blend_mode": "overlay"
+		}
+	],
+	"hoodie_CTI_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cti_logo_t",
+			"blend_mode": "overlay"
+		}
+	],
+	"hoodie_SMW": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "smw_logo",
+			"blend_mode": "overlay"
+		}
+	],
+	"hoodie_SMW_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "hoodie_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "smw_logo_t",
+			"blend_mode": "overlay"
+		}
+	]
+}

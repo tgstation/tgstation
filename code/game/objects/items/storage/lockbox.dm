@@ -30,7 +30,10 @@
 			balloon_alert(user, "broken!")
 			return
 		if(allowed(user))
-			atom_storage.locked = !locked
+			if(atom_storage.locked)
+				atom_storage.locked = STORAGE_NOT_LOCKED
+			else
+				atom_storage.locked = STORAGE_FULLY_LOCKED
 			locked = atom_storage.locked
 			if(locked)
 				icon_state = icon_locked
@@ -52,7 +55,7 @@
 /obj/item/storage/lockbox/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!broken)
 		broken = TRUE
-		atom_storage.locked = FALSE
+		atom_storage.locked = STORAGE_NOT_LOCKED
 		icon_state = src.icon_broken
 		balloon_alert(user, "lock destroyed")
 		if (emag_card && user)
@@ -251,17 +254,22 @@
 	if(!id_card)
 		return ..()
 
-	if(iscarbon(user))
-		add_fingerprint(user)
-
 	if(id_card.registered_account != buyer_account)
 		balloon_alert(user, "incorrect bank account!")
-		return
+		return FALSE
 
-	atom_storage.locked = !privacy_lock
+	if(privacy_lock)
+		atom_storage.locked = STORAGE_NOT_LOCKED
+		icon_state = icon_locked
+	else
+		atom_storage.locked = STORAGE_FULLY_LOCKED
+		icon_state = icon_closed
 	privacy_lock = atom_storage.locked
-	user.visible_message(span_notice("[user] [privacy_lock ? "" : "un"]locks [src]'s privacy lock."),
-					span_notice("You [privacy_lock ? "" : "un"]lock [src]'s privacy lock."))
+	user.visible_message(
+		span_notice("[user] [privacy_lock ? "" : "un"]locks [src]'s privacy lock."),
+		span_notice("You [privacy_lock ? "" : "un"]lock [src]'s privacy lock."),
+	)
+	return FALSE
 
 ///screentips for lockboxes
 /obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)

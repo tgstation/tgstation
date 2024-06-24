@@ -1,0 +1,15 @@
+{
+	"": [
+		{
+			"type": "icon_state",
+			"icon_state": "projector_screen",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "projector",
+			"blend_mode": "overlay"
+		}
+	]
+}

@@ -7,7 +7,7 @@
 	inhand_icon_state = "bow"
 	load_sound = null
 	fire_sound = null
-	mag_type = /obj/item/ammo_box/magazine/internal/bow
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/bow
 	force = 15
 	attack_verb_continuous = list("whipped", "cracked")
 	attack_verb_simple = list("whip", "crack")

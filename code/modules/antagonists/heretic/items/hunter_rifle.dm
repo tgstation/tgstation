@@ -11,7 +11,7 @@
 	icon_state = "moistprime"
 	inhand_icon_state = "moistprime"
 	worn_icon_state = "moistprime"
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/lionhunter
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/lionhunter
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 
 /obj/item/gun/ballistic/rifle/lionhunter/Initialize(mapload)

@@ -1,0 +1,22 @@
+{
+	"undersuit_greyscale": [
+		{
+			"type": "icon_state",
+			"icon_state": "undersuit_greyscale",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "undersuit_greyscale_top",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "undersuit_greyscale_top_mid",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}

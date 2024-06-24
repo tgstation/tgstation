@@ -100,6 +100,9 @@
 	req_access = list()
 	locked = FALSE
 
+/obj/structure/closet/secure_closet/freezer/meat/all_access
+	req_access = null
+
 /obj/structure/closet/secure_closet/freezer/gulag_fridge
 	name = "refrigerator"
 
@@ -146,3 +149,6 @@
 /obj/structure/closet/secure_closet/freezer/cream_pie/PopulateContents()
 	..()
 	new /obj/item/food/pie/cream(src)
+
+/obj/structure/closet/secure_closet/freezer/fridge/all_access
+	req_access = null

@@ -1,0 +1,22 @@
+{
+	"gags_cloak": [
+		{
+			"type": "icon_state",
+			"icon_state": "cloak_mob",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cloak_pattern_mob",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cloak_trim_mob",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}

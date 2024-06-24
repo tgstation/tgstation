@@ -19,6 +19,7 @@
 		JOB_AI,
 		JOB_CYBORG,
 	)
+	weight = 15
 
 /datum/round_event_control/antagonist/solo/traitor/roundstart
 	name = "Traitors"

@@ -148,6 +148,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		var/datum/mind/O = I
 		if(O.late_joiner)
 			try_target_late_joiners = TRUE
+	var/opt_in_disabled = CONFIG_GET(flag/disable_antag_opt_in_preferences)
 	for(var/datum/mind/possible_target in get_crewmember_minds())
 		if(possible_target in owners)
 			continue
@@ -156,6 +157,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		if(possible_target in blacklist)
 			continue
 		if(!is_valid_target(possible_target))
+			continue
+		if (!opt_in_disabled && !opt_in_valid(possible_target))
 			continue
 		possible_targets += possible_target
 	if(try_target_late_joiners)
@@ -830,7 +833,12 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/destroy/find_target(dupe_search_range, list/blacklist)
 	var/list/possible_targets = active_ais(TRUE)
 	possible_targets -= blacklist
-	var/mob/living/silicon/ai/target_ai = pick(possible_targets)
+	var/mob/living/silicon/ai/target_ai
+	var/opt_in_disabled = CONFIG_GET(flag/disable_antag_opt_in_preferences) // NOVA EDIT ADDITION - ANTAG OPT-IN
+	for (var/mob/living/silicon/ai/possible_target as anything in shuffle(possible_targets))
+		if (!opt_in_disabled && !opt_in_valid(possible_target))
+			continue
+		target_ai = possible_target
 	target = target_ai.mind
 	update_explanation_text()
 	return target

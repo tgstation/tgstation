@@ -64,7 +64,7 @@
 	clumsy_check = FALSE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 	gun_flags = NONE
-	mag_type = /obj/item/ammo_box/magazine/fingergun_emote
+	accepted_magazine_type = /obj/item/ammo_box/magazine/fingergun_emote
 	spawnwithmagazine = TRUE
 	internal_magazine = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT

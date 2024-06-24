@@ -1,0 +1,16 @@
+{
+	"heart_sweater": [
+		{
+			"type": "icon_state",
+			"icon_state": "warm_sweater",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "warm_sweater_heart",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

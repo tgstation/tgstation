@@ -292,6 +292,14 @@
 		if("toggleprivate")
 			self_paid = !self_paid
 			. = TRUE
+		if("company_import_window")
+			var/datum/component/armament/company_imports/gun_comp = computer.GetComponent(/datum/component/armament/company_imports)
+			if(!gun_comp)
+				computer.AddComponent(/datum/component/armament/company_imports, subtypesof(/datum/armament_entry/company_import), 0)
+			gun_comp = computer.GetComponent(/datum/component/armament/company_imports)
+			gun_comp.parent_prog ||= src
+			gun_comp.ui_interact(usr)
+			. = TRUE
 	if(.)
 		post_signal(cargo_shuttle)
 

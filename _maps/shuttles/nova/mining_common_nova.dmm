@@ -1,0 +1,240 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/fluff/metalpole/end{
+	dir = 1;
+	pixel_y = 32
+	},
+/obj/structure/marker_beacon/burgundy,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/mining)
+"d" = (
+/obj/effect/turf_decal/shuttle/exploration/hazardstripe{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/mining)
+"h" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/machinery/power/shuttle_engine/heater,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"i" = (
+/turf/closed/wall/mineral/titanium/spaceship,
+/area/shuttle/mining)
+"j" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/shuttle/mining)
+"l" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/mining)
+"m" = (
+/obj/structure/ore_box,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/mining)
+"v" = (
+/turf/open/floor/iron/smooth,
+/area/shuttle/mining)
+"y" = (
+/obj/structure/fluff/metalpole/end{
+	dir = 1;
+	pixel_y = 32
+	},
+/obj/structure/marker_beacon/olive,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/mining)
+"B" = (
+/obj/docking_port/mobile{
+	dir = 8;
+	shuttle_id = "mining_common";
+	name = "lavaland shuttle";
+	port_direction = 4
+	},
+/obj/machinery/door/airlock/grunge{
+	name = "Public Shuttle Airlock"
+	},
+/turf/open/floor/iron/shuttle/exploration/textured_flat{
+	dir = 4
+	},
+/area/shuttle/mining)
+"D" = (
+/obj/structure/marker_beacon/olive,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/mining)
+"I" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"J" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/mining)
+"K" = (
+/turf/template_noop,
+/area/template_noop)
+"L" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/fluff/metalpole/end{
+	pixel_y = -32
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"R" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/mining)
+"T" = (
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/structure/closet/crate/internals,
+/obj/item/pickaxe/emergency,
+/obj/item/pickaxe/emergency,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/mining)
+"U" = (
+/turf/closed/wall/mineral/titanium/spaceship/nodiagonal,
+/area/shuttle/mining)
+"X" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating/airless,
+/area/shuttle/mining)
+"Y" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"Z" = (
+/obj/machinery/computer/shuttle/mining/common{
+	name = "public shuttle console"
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/shuttle/mining)
+
+(1,1,1) = {"
+a
+R
+R
+I
+J
+U
+i
+"}
+(2,1,1) = {"
+I
+Z
+j
+v
+l
+h
+L
+"}
+(3,1,1) = {"
+Y
+R
+T
+v
+l
+h
+X
+"}
+(4,1,1) = {"
+K
+R
+m
+d
+l
+h
+L
+"}
+(5,1,1) = {"
+K
+y
+R
+B
+D
+U
+i
+"}

@@ -1,4 +1,5 @@
 import { classes } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Grid, Icon } from '../components';
 import { Window } from '../layouts';
@@ -7,7 +8,7 @@ import { Window } from '../layouts';
 // and hand made width sets that changing pretty much anything
 // is going to require a lot of tweaking it get it looking correct again
 // I'm sorry, but it looks bangin
-const NukeKeypad = (props) => {
+export const NukeKeypad = (props) => {
   const { act } = useBackend();
   const keypadKeys = [
     ['1', '4', '7', 'C'],

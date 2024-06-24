@@ -3,6 +3,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 #define KEYCARD_RED_ALERT "Red Alert"
 #define KEYCARD_EMERGENCY_MAINTENANCE_ACCESS "Emergency Maintenance Access"
 #define KEYCARD_BSA_UNLOCK "Bluespace Artillery Unlock"
+#define KEYCARD_PIN_UNRESTRICT "Unrestrict Permit Firing Pins"
 
 #define ACCESS_GRANTING_COOLDOWN (30 SECONDS)
 
@@ -82,6 +83,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 				event_source = null
 				update_appearance()
 				. = TRUE
+		if("pin_unrestrict")
+			if(!event_source)
+				sendEvent(KEYCARD_PIN_UNRESTRICT)
+				. = TRUE
 		if("bsa_unlock")
 			if(!event_source)
 				sendEvent(KEYCARD_BSA_UNLOCK)
@@ -157,6 +162,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 			make_maint_all_access()
 		if(KEYCARD_BSA_UNLOCK)
 			toggle_bluespace_artillery()
+		if(KEYCARD_PIN_UNRESTRICT)
+			toggle_permit_pins()
 
 GLOBAL_VAR_INIT(emergency_access, FALSE)
 /proc/make_maint_all_access()
@@ -188,3 +195,4 @@ GLOBAL_VAR_INIT(emergency_access, FALSE)
 #undef KEYCARD_RED_ALERT
 #undef KEYCARD_EMERGENCY_MAINTENANCE_ACCESS
 #undef KEYCARD_BSA_UNLOCK
+#undef KEYCARD_PIN_UNRESTRICT

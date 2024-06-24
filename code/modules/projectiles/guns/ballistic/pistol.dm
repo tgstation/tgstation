@@ -3,7 +3,7 @@
 	desc = "A small, easily concealable 9mm handgun. Has a threaded barrel for suppressors."
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_SMALL
-	mag_type = /obj/item/ammo_box/magazine/m9mm
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m9mm
 	can_suppress = TRUE
 	burst_size = 1
 	fire_delay = 0
@@ -29,7 +29,7 @@
 	spawnwithmagazine = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/fire_mag
-	mag_type = /obj/item/ammo_box/magazine/m9mm/fire
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m9mm/fire
 
 /obj/item/gun/ballistic/automatic/pistol/suppressed/Initialize(mapload)
 	. = ..()
@@ -40,7 +40,7 @@
 	name = "\improper Ansem pistol"
 	desc = "The spiritual successor of the Makarov, or maybe someone just dropped their gun in a bucket of paint. The gun is chambered in 10mm."
 	icon_state = "pistol_evil"
-	mag_type = /obj/item/ammo_box/magazine/m10mm
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m10mm
 	empty_indicator = TRUE
 	suppressor_x_offset = 12
 
@@ -49,7 +49,7 @@
 	desc = "A classic .45 handgun with a small magazine capacity."
 	icon_state = "m1911"
 	w_class = WEIGHT_CLASS_NORMAL
-	mag_type = /obj/item/ammo_box/magazine/m45
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m45
 	can_suppress = FALSE
 	fire_sound = 'sound/weapons/gun/pistol/shot_alt.ogg'
 	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
@@ -64,7 +64,7 @@
 	desc = "A robust .50 AE handgun."
 	icon_state = "deagle"
 	force = 14
-	mag_type = /obj/item/ammo_box/magazine/m50
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m50
 	can_suppress = FALSE
 	mag_display = TRUE
 	fire_sound = 'sound/weapons/gun/rifle/shot.ogg'
@@ -93,7 +93,7 @@
 	fire_delay = 1
 	spread = 10
 	projectile_damage_multiplier = 1.25
-	mag_type = /obj/item/ammo_box/magazine/r10mm
+	accepted_magazine_type = /obj/item/ammo_box/magazine/r10mm
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	obj_flags = UNIQUE_RENAME // if you did the sidequest, you get the customization
 
@@ -105,7 +105,7 @@
 	desc = "An old Soviet machine pistol. It fires quickly, but kicks like a mule. Uses 9mm ammo. Has a threaded barrel for suppressors."
 	icon_state = "aps"
 	w_class = WEIGHT_CLASS_NORMAL
-	mag_type = /obj/item/ammo_box/magazine/m9mm_aps
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m9mm_aps
 	can_suppress = TRUE
 	burst_size = 3
 	fire_delay = 1

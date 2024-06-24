@@ -1,0 +1,28 @@
+{
+	"buttondown_vicvest": [
+		{
+			"type": "icon_state",
+			"icon_state": "buttondown",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "slacks",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "vicvest",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "vicvest_buttons",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		}
+	]
+}

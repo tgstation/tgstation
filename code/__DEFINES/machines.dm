@@ -67,6 +67,8 @@
 /// For wiremod/integrated circuits. Uses various minerals.
 #define COMPONENT_PRINTER (1<<10)
 //Note: More than one of these can be added to a design but imprinter and lathe designs are incompatable.
+/// Can be made by the orderable colony fabricator
+#define COLONY_FABRICATOR (1<<11)
 
 #define FIREDOOR_OPEN 1
 #define FIREDOOR_CLOSED 2

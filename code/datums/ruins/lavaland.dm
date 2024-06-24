@@ -56,6 +56,11 @@
 	allow_duplicates = FALSE
 	always_place = TRUE
 
+/datum/map_template/ruin/lavaland/ash_walker/New()
+	if(rand(50))
+		suffix = "lavaland_surface_ash_walker2.dmm"
+	. = ..()
+
 /datum/map_template/ruin/lavaland/syndicate_base
 	name = "Syndicate Lava Base"
 	id = "lava-base"

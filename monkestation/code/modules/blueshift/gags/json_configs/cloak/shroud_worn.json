@@ -1,0 +1,22 @@
+{
+	"gags_shroud": [
+		{
+			"type": "icon_state",
+			"icon_state": "shroud_mob",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "shroud_pattern_mob",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "shroud_trim_mob",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}

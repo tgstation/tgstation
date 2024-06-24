@@ -58038,7 +58038,7 @@
 /obj/structure/window/reinforced/tinted{
 	dir = 4
 	},
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /turf/open/floor/iron/vaporwave,
 /area/station/command/heads_quarters/rd)
 "ttD" = (

@@ -27,6 +27,8 @@
 	var/spawn_scatter_radius = 0
 	/// Whether the items should have a random pixel_x/y offset (maxium offset distance is ±16 pixels for x/y)
 	var/spawn_random_offset = FALSE
+	/// The pixel x/y divider offsets for spawn_loot_split (spaced 1 pixel apart by default)
+	var/spawn_loot_split_pixel_offsets = 2
 
 /obj/effect/spawner/random/Initialize(mapload)
 	. = ..()
@@ -52,6 +54,7 @@
 
 	if(loot?.len)
 		var/loot_spawned = 0
+		var/pixel_divider = FLOOR(16 / spawn_loot_split_pixel_offsets, 1) // 16 pixels offsets is max that should be allowed in any direction
 		while((spawn_loot_count-loot_spawned) && loot.len)
 			var/lootspawn = pick_weight_recursive(loot)
 			if(!spawn_loot_double)
@@ -75,7 +78,9 @@
 					spawned_loot.pixel_y = rand(-16, 16)
 				else if (spawn_loot_split)
 					if (loot_spawned)
-						spawned_loot.pixel_x = spawned_loot.pixel_y = ((!(loot_spawned%2)*loot_spawned/2)*-1)+((loot_spawned%2)*(loot_spawned+1)/2*1)
+						var/column = FLOOR(loot_spawned / pixel_divider, 1)
+						spawned_loot.pixel_x = spawn_loot_split_pixel_offsets * (loot_spawned % pixel_divider) + (column * spawn_loot_split_pixel_offsets)
+						spawned_loot.pixel_y = spawn_loot_split_pixel_offsets * (loot_spawned % pixel_divider)
 			loot_spawned++
 
 /**

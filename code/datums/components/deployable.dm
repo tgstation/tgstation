@@ -18,7 +18,7 @@
 	/// If the item used to deploy gets deleted on use or not
 	var/delete_on_use = TRUE
 
-/datum/component/deployable/Initialize(deploy_time, thing_to_be_deployed, delete_on_use)
+/datum/component/deployable/Initialize(deploy_time, thing_to_be_deployed, delete_on_use = TRUE)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE

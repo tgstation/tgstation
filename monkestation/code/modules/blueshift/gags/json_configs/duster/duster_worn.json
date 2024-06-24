@@ -1,0 +1,10 @@
+{
+	"duster": [
+		{
+			"type": "icon_state",
+			"icon_state": "duster_mob",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

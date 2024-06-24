@@ -1,0 +1,22 @@
+{
+	"cheongsam": [
+		{
+			"type": "icon_state",
+			"icon_state": "cheongsam_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cheongsam_trim_recolorable",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "cheongsam_pants",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}

@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"map_name": "Blueshift",
+	"map_path": "map_files/Blueshift",
+	"map_file": "Blueshift.dmm",
+	"shuttles": {
+		"cargo": "cargo_nova",
+		"ferry": "ferry_nova",
+		"whiteship": "whiteship_blueshift",
+		"emergency": "emergency_nova"
+	},
+	"traits": [
+		{
+			"Up": true,
+			"Linkage": "Cross"
+		},
+		{
+			"Down": true,
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": "Cross"
+		}
+	],
+	"orbit_shift_replacement": "Attention crew, it appears that someone has shifted your ship into more dangerous territory.",
+	"job_changes": {
+		"Cook": {
+			"additional_cqc_areas": ["/area/station/service/kitchen/diner"]
+		},
+		"Captain": {
+			"special_charter": "ship"
+		}
+	}
+}

@@ -57,6 +57,8 @@
 /// The caliber used by the changeling tentacle mutation.
 #define CALIBER_TENTACLE "tentacle"
 #define CALIBER_A223 "a223"
+/// The caliber used by bolt action rifles.
+#define CALIBER_STRILKA310 ".310_strilka"
 
 /// For gunpoints, how many tiles around the target the shooter can roam without losing their shot
 #define GUNPOINT_SHOOTER_STRAY_RANGE 2

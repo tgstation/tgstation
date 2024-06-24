@@ -10,7 +10,7 @@
 
 	icon_state = "mag_4.35"
 	attachment_icon_state = "well_pistol"
-	mag_type = /obj/item/ammo_box/magazine/m10mm
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m10mm
 
 	fire_multipler = 1.2
 	stability = 1.1
@@ -21,7 +21,7 @@
 
 	icon_state = "mag_2.35"
 	attachment_icon_state = "well_pistol"
-	mag_type = /obj/item/ammo_box/magazine/m50
+	accepted_magazine_type = /obj/item/ammo_box/magazine/m50
 
 	fire_multipler = 0.5
 	noise_multiplier = 1.3

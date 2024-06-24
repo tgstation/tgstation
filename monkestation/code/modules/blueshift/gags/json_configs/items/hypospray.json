@@ -1,0 +1,78 @@
+{
+	"hypo2_normal": [
+		{
+			"type": "icon_state",
+			"icon_state": "hypo2_normal",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "hypo2_accent1",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "hypo2_accent2",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"hypo2_deluxe": [
+		{
+			"type": "icon_state",
+			"icon_state": "hypo2_deluxe",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "hypo2_accent1",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "hypo2_accent2",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"hypo2_cmo": [
+		{
+			"type": "icon_state",
+			"icon_state": "hypo2_cmo",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "hypo2_accent1",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "hypo2_accent2",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"hypo2_tactical": [
+		{
+			"type": "icon_state",
+			"icon_state": "hypo2_tactical",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "hypo2_accent1",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "hypo2_accent2",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

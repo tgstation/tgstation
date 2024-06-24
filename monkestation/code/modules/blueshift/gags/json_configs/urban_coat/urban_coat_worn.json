@@ -1,0 +1,22 @@
+{
+	"urban_coat": [
+		{
+			"type": "icon_state",
+			"icon_state": "coat_mob",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "trim_mob",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "neck_mob",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}

@@ -1,4 +1,4 @@
-/obj/effect/overlay/water
+/obj/effect/overlay/water_arena
 	name = "water"
 	desc = "Looks wet."
 	icon = 'monkestation/code/modules/ghost_players/arena/arena_assets/icons/water_overlay.dmi'

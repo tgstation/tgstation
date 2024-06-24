@@ -1,0 +1,18 @@
+{
+	"peacoat": [
+		{
+			"type": "icon_state",
+			"icon_state": "peacoat_mob",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"peacoat_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "peacoat_mob_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

@@ -1,0 +1,18 @@
+{
+	"flannelgags": [
+		{
+			"type": "icon_state",
+			"icon_state": "flannel_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"flannelgags_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "flannel_obj_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

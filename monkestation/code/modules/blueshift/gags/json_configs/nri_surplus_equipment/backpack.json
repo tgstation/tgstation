@@ -1,0 +1,10 @@
+{
+	"backpack": [
+		{
+			"type": "icon_state",
+			"icon_state": "backpack",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

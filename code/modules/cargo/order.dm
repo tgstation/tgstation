@@ -184,7 +184,14 @@
 
 /datum/supply_order/proc/generateCombo(miscbox, misc_own, misc_contents, misc_cost)
 	for (var/I in misc_contents)
-		new I(miscbox)
+		var/obj/item = new I(miscbox)
+
+		if(istype(item, /obj/item/gun))
+			var/obj/item/gun/gun_actually = item
+			QDEL_NULL(gun_actually.pin)
+			var/obj/item/firing_pin/permit_pin/new_pin = new(gun_actually)
+			gun_actually.pin = new_pin
+
 	generateManifest(miscbox, misc_own, "", misc_cost)
 	return
 

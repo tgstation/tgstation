@@ -1,0 +1,42 @@
+{
+	"winter_coat": [
+		{
+			"type": "icon_state",
+			"icon_state": "winter_coat_body",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "winter_coat_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "winter_coat_detail",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	],
+	"winter_coat_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "winter_coat_body_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "winter_coat_trim_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "winter_coat_detail_t",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}

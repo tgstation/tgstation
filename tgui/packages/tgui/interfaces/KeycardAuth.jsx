@@ -52,6 +52,12 @@ export const KeycardAuth = (props) => {
                     <Button
                       icon="key"
                       fluid
+                      onClick={() => act('pin_unrestrict')}
+                      content="Permit-Locked Firing Pin Unrestriction"
+                    />
+                    <Button
+                      icon="key"
+                      fluid
                       onClick={() => act('give_janitor_access')}
                       content="Grant Janitor Access"
                     />

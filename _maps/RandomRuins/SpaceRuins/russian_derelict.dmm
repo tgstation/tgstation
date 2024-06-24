@@ -839,7 +839,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/secure_storage)
 "kA" = (
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating/airless,
@@ -997,7 +997,7 @@
 /area/ruin/space/ks13/hallway/central)
 "mp" = (
 /obj/structure/sign/departments/medbay/alt/directional/west,
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/central)
 "mq" = (
@@ -3912,7 +3912,7 @@
 "Cn" = (
 /obj/structure/sign/departments/medbay/alt/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/central)
 "Co" = (
@@ -4285,7 +4285,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/tool_storage)
 "Eg" = (
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/hallway/central)
 "Ei" = (
@@ -4642,7 +4642,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/grav_gen)
 "Ge" = (
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/security/court)
@@ -6126,7 +6126,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/science/rnd)
 "Og" = (
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/security/court)
 "Oh" = (
@@ -6519,7 +6519,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
 "PT" = (
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge)
@@ -7293,7 +7293,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/sec)
 "TA" = (
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge_hall)
 "TB" = (
@@ -8024,7 +8024,7 @@
 /area/ruin/space/ks13/science/genetics)
 "Xs" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/service/cafe)
 "Xt" = (

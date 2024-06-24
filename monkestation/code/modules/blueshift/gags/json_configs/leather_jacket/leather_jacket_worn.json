@@ -1,0 +1,10 @@
+{
+	"leather_jacket": [
+		{
+			"type": "icon_state",
+			"icon_state": "jacket_mob",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

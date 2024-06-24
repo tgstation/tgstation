@@ -275,7 +275,7 @@
 	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/security.dmi'
 
 /obj/machinery/door/airlock/security/old
-	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/security2.dmi'
+	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/station/security.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec/old
 
 /obj/machinery/door/airlock/security/old/glass

@@ -22937,7 +22937,7 @@
 	name = "Engineering Security Doors"
 	},
 /obj/effect/turf_decal/caution/stand_clear,
-/obj/structure/sign/delamination_counter/directional/north,
+/obj/machinery/incident_display/delam/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
 "iuc" = (
@@ -43753,7 +43753,7 @@
 /obj/effect/turf_decal/siding{
 	dir = 4
 	},
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
 "pBG" = (
@@ -60367,7 +60367,7 @@
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "vnP" = (
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random/dead,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)

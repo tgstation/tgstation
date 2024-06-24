@@ -71,7 +71,6 @@
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
 
-
 /obj/item/circuitboard/machine/telecomms/broadcaster
 	name = "Subspace Broadcaster"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -1065,6 +1064,19 @@
 	build_path = /obj/machinery/rnd/production/techfab/department/security
 
 //Service
+/obj/item/circuitboard/machine/photobooth
+	name = "Photobooth"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/photobooth
+	req_components = list(
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/manipulator = 1,
+	)
+
+/obj/item/circuitboard/machine/photobooth/security
+	name = "Security Photobooth"
+	greyscale_colors = CIRCUIT_COLOR_SECURITY
+	build_path = /obj/machinery/photobooth/security
 
 /obj/item/circuitboard/machine/biogenerator
 	name = "Biogenerator"

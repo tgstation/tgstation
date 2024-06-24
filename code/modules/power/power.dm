@@ -18,7 +18,9 @@
 	///The powernet our machine is connected to.
 	var/datum/powernet/powernet
 	///Cable layer to which the machine is connected.
-	var/machinery_layer = MACHINERY_LAYER_1
+	var/cable_layer = CABLE_LAYER_2
+	///Can the cable_layer be tweked with a multi tool
+	var/can_change_cable_layer = FALSE
 
 /obj/machinery/power/Initialize(mapload)
 	. = ..()
@@ -43,6 +45,30 @@
 //override this if the machine needs special functionality for making wire nodes appear, ie emitters, generators, etc.
 /obj/machinery/power/proc/should_have_node()
 	return FALSE
+
+/obj/machinery/power/examine(mob/user)
+	. = ..()
+	if(can_change_cable_layer)
+		if(!QDELETED(powernet))
+			. += span_notice("It's operating on the [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].")
+		else
+			. += span_warning("It's disconnected from the [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].")
+		. += span_notice("It's power line can be changed with a [EXAMINE_HINT("multitool")].")
+
+/obj/machinery/power/multitool_act(mob/living/user, obj/item/tool)
+	if(can_change_cable_layer)
+		return cable_layer_act(user, tool)
+
+/// Called on multitool_act when we can change cable layers, override to add more conditions
+/obj/machinery/power/proc/cable_layer_act(mob/living/user, obj/item/tool)
+	var/choice = tgui_input_list(user, "Select Power Line For Operation", "Select Cable Layer", GLOB.cable_name_to_layer)
+	if(isnull(choice) || QDELETED(src) || QDELETED(user) || QDELETED(tool) || !user.Adjacent(src) || !user.is_holding(tool))
+		return
+
+	cable_layer = GLOB.cable_name_to_layer[choice]
+	balloon_alert(user, "now operating on the [choice]")
+	return
+
 
 /obj/machinery/power/proc/add_avail(amount)
 	if(powernet)
@@ -203,7 +229,7 @@
 	if(!T || !istype(T))
 		return FALSE
 
-	var/obj/structure/cable/C = T.get_cable_node(machinery_layer) //check if we have a node cable on the machine turf, the first found is picked
+	var/obj/structure/cable/C = T.get_cable_node(cable_layer) //check if we have a node cable on the machine turf, the first found is picked
 	if(!C || !C.powernet)
 		var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in T
 		if(!term || !term.powernet)
@@ -442,11 +468,12 @@
 ///////////////////////////////////////////////
 
 // return a cable able connect to machinery on layer if there's one on the turf, null if there isn't one
-/turf/proc/get_cable_node(machinery_layer = MACHINERY_LAYER_1)
+/turf/proc/get_cable_node(cable_layer = CABLE_LAYER_ALL)
 	if(!can_have_cabling())
 		return null
 	for(var/obj/structure/cable/C in src)
-		if(C.machinery_layer & machinery_layer)
+		if(C.cable_layer & cable_layer)
 			C.update_appearance() // I hate this. it's here because update_icon_state SCANS nearby turfs for objects to connect to. Wastes cpu time
 			return C
 	return null
+

@@ -355,11 +355,15 @@
 		return
 	var/datum/team/cult/cult = team
 	var/list/target_candidates = list()
+	var/opt_in_disabled = CONFIG_GET(flag/disable_antag_opt_in_preferences)
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
+		if (!opt_in_disabled && !opt_in_valid(player))
+			continue
 		if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && !is_convertable_to_cult(player) && player.stat != DEAD)
 			target_candidates += player.mind
+
 	if(target_candidates.len == 0)
-		message_admins("Cult Sacrifice: Could not find unconvertible target, checking for convertible target.")
+		message_admins("Cult Sacrifice: Could not find unconvertible target, checking for convertible target, this could be because NO ONE was set to Round Remove forcibly picking target.")
 		for(var/mob/living/carbon/human/player in GLOB.player_list)
 			if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && player.stat != DEAD)
 				target_candidates += player.mind

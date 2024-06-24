@@ -146,7 +146,7 @@
 /obj/structure/fireplace{
 	pixel_x = -32
 	},
-/obj/item/kirbyplants/fullysynthetic{
+/obj/item/kirbyplants/random/fullysynthetic{
 	pixel_x = 10;
 	pixel_y = 19
 	},
@@ -1237,7 +1237,7 @@
 /turf/open/floor/iron/dark,
 /area/misc/anomaly_research)
 "Gi" = (
-/obj/item/kirbyplants/fullysynthetic{
+/obj/item/kirbyplants/random/fullysynthetic{
 	pixel_x = -8;
 	pixel_y = 21
 	},

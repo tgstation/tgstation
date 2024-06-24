@@ -1203,7 +1203,7 @@
 
 	if(istype(gun_to_set, /obj/item/gun/ballistic))
 		var/obj/item/gun/ballistic/ball_gun = gun_to_set
-		var/obj/item/ammo_box/ball_ammo = new ball_gun.mag_type(gun_to_set)
+		var/obj/item/ammo_box/ball_ammo = new ball_gun.accepted_magazine_type(gun_to_set)
 		qdel(ball_gun)
 
 		if(!istype(ball_ammo) || !ball_ammo.ammo_type)

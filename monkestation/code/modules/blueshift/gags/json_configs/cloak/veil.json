@@ -1,0 +1,22 @@
+{
+	"gags_veil": [
+		{
+			"type": "icon_state",
+			"icon_state": "veil_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "veil_pattern_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "veil_trim_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}

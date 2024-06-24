@@ -1,0 +1,22 @@
+{
+	"tunic": [
+		{
+			"type": "icon_state",
+			"icon_state": "tunic_white_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "tunic_dark_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "tunic_belt_obj",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}

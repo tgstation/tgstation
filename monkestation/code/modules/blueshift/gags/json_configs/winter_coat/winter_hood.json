@@ -1,0 +1,16 @@
+{
+	"hood_winter": [
+		{
+			"type": "icon_state",
+			"icon_state": "winter_hood_body",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "winter_hood_trim",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}
