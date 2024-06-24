@@ -198,9 +198,13 @@
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "lollipop"
 	toolspeed = 10
+	///List of Omnitool "arms" that the borg has.
 	var/list/omnitools = list()
+	///List of paths for tools. These will be created during Initialize()
 	var/list/toolpaths = list()
+	///Target Toolspeed to set after reciving an omnitool upgrade
 	var/upgraded_toolspeed = 10
+	///Whether we currently have the upgraded speed
 	var/currently_upgraded = FALSE
 
 /obj/item/cyborg_omnitoolbox/Initialize(mapload)
@@ -214,12 +218,13 @@
 		newitem.toolspeed = toolspeed //In case thse have different base speeds as stand-alone tools on other borgs
 		ADD_TRAIT(newitem, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
-/obj/item/cyborg_omnitoolbox/proc/set_upgrade()
+/obj/item/cyborg_omnitoolbox/proc/set_upgrade(upgrade = FALSE)
 	for(var/obj/item/tool in contents)
 		if(currently_upgraded)
 			tool.toolspeed = upgraded_toolspeed
 		else
 			tool.toolspeed = toolspeed
+		currently_upgraded = upgrade
 
 /obj/item/cyborg_omnitoolbox/engineering
 	toolspeed = 0.5
