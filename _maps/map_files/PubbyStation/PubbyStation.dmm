@@ -6,9 +6,6 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
-/obj/machinery/computer/department_orders/security{
-	dir = 8
-	},
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "aak" = (
@@ -1933,9 +1930,6 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
-/obj/machinery/computer/department_orders/service{
-	dir = 1
-	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/service)
 "ahY" = (
@@ -2443,7 +2437,6 @@
 "ajE" = (
 /obj/structure/bed,
 /obj/structure/sign/poster/contraband/random/directional/east,
-/obj/item/bedsheet/dorms,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security/brig)
 "ajG" = (
@@ -2707,7 +2700,6 @@
 /area/station/maintenance/department/security/brig)
 "akt" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/button/door/directional/east{
 	id = "mainthideout";
@@ -5035,6 +5027,7 @@
 /area/station/maintenance/disposal/incinerator)
 "asZ" = (
 /obj/structure/closet/crate/silvercrate,
+/obj/item/piggy_bank/vault,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "ata" = (
@@ -5714,7 +5707,6 @@
 /area/station/commons/dorms)
 "ave" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
 /obj/machinery/button/door/directional/north{
 	id = "Dorm3Shutters";
 	name = "Privacy Shutters Control"
@@ -6604,7 +6596,6 @@
 /area/station/commons/dorms)
 "ayj" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
 /obj/machinery/button/door/directional/north{
 	id = "Dorm2Shutters";
 	name = "Privacy Shutters Control"
@@ -7478,7 +7469,6 @@
 /area/station/commons/dorms)
 "aBM" = (
 /obj/structure/bed,
-/obj/item/bedsheet/dorms,
 /obj/machinery/button/door/directional/north{
 	id = "Dorm1Shutters";
 	name = "Privacy Shutters Control"
@@ -8437,9 +8427,6 @@
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
-	},
-/obj/machinery/computer/department_orders/medical{
-	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/white,
@@ -16703,7 +16690,6 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
-/obj/machinery/computer/department_orders/science,
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
@@ -19164,10 +19150,6 @@
 /obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
-"bBU" = (
-/mob/living/simple_animal/slime,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "bBV" = (
 /obj/structure/transit_tube/curved,
 /turf/open/space,
@@ -24826,7 +24808,6 @@
 /area/station/maintenance/department/engine)
 "ccO" = (
 /obj/structure/bed,
-/obj/item/bedsheet/random,
 /obj/structure/table/optable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
@@ -41290,7 +41271,6 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "oat" = (
-/obj/effect/landmark/start/virologist,
 /obj/structure/chair/office/light{
 	dir = 1
 	},
@@ -53064,9 +53044,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "xiD" = (
-/obj/machinery/computer/department_orders/engineering{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
@@ -54081,7 +54058,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/structure/secure_safe/caps_spare/directional/south,
 /obj/structure/table/glass,
 /obj/item/reagent_containers/cup/glass/mug/nanotrasen{
 	pixel_x = -4;
@@ -100564,7 +100540,7 @@ yet
 uSW
 iSi
 bnh
-bBU
+blX
 blX
 bqH
 bsb
@@ -100574,7 +100550,7 @@ sXV
 bxN
 bzl
 blX
-bBU
+blX
 bDe
 rKi
 dMO
@@ -102887,7 +102863,7 @@ sXV
 bxT
 hiN
 blX
-bBU
+blX
 bDe
 rKi
 efU
