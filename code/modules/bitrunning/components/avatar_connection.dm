@@ -61,11 +61,7 @@
 		action.Grant(avatar)
 
 	var/client/our_client = old_body.client
-	var/alias
-	if(our_client)
-		alias = our_client.prefs?.read_preference(/datum/preference/name/hacker_alias)
-	else
-		alias = pick(GLOB.hacker_aliases)
+	var/alias = our_client?.prefs?.read_preference(/datum/preference/name/hacker_alias) || pick(GLOB.hacker_aliases)
 
 	if(alias && avatar.real_name != alias)
 		avatar.fully_replace_character_name(avatar.real_name, alias)
