@@ -1,0 +1,6 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - rscadd: "The nullblade, a nullrod variant that is weaker outright, but can inflict severe wounds by performing a sneak attack. Debilitate your target or attack from behind."
+  - bugfix: "The shortsword sprite no longer has a misaligned handle."
+  - code_imp: "Organized the nullrod file, and removed some unnecessary subtyping on various types of nullrods."
