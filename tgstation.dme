@@ -6559,6 +6559,7 @@
 #include "monkestation\code\modules\client\preferences\species_features\floran.dm"
 #include "monkestation\code\modules\client\preferences\species_features\goblin.dm"
 #include "monkestation\code\modules\client\preferences\species_features\ipc.dm"
+#include "monkestation\code\modules\client\preferences\species_features\lizard.dm"
 #include "monkestation\code\modules\client\preferences\species_features\secondary_mut_color.dm"
 #include "monkestation\code\modules\client\preferences\species_features\simians.dm"
 #include "monkestation\code\modules\client\verbs\looc.dm"

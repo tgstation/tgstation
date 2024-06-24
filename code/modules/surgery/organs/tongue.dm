@@ -128,6 +128,17 @@
 	modifies_speech = TRUE
 	languages_native = list(/datum/language/draconic, /datum/language/ashtongue)
 
+	//MONKESTATION EDIT START
+
+	/// How long is our hissssssss?
+	var/draw_length = 3
+
+/obj/item/organ/internal/tongue/lizard/Initialize(mapload)
+	. = ..()
+	draw_length = rand(2, 6)
+	if(prob(10))
+		draw_length += 2
+
 /obj/item/organ/internal/tongue/lizard/modify_speech(datum/source, list/speech_args)
 	var/static/regex/lizard_hiss = new("s+", "g")
 	var/static/regex/lizard_hiSS = new("S+", "g")
@@ -137,13 +148,15 @@
 	var/static/regex/lizard_eckS = new(@"\bX([\-|r|R]|\b)", "g")
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
-		message = lizard_hiss.Replace(message, "sss")
-		message = lizard_hiSS.Replace(message, "SSS")
-		message = lizard_kss.Replace(message, "$1kss")
-		message = lizard_kSS.Replace(message, "$1KSS")
-		message = lizard_ecks.Replace(message, "ecks$1")
-		message = lizard_eckS.Replace(message, "ECKS$1")
+		message = lizard_hiss.Replace(message, repeat_string(draw_length, "s"))
+		message = lizard_hiSS.Replace(message, repeat_string(draw_length, "S"))
+		message = lizard_kss.Replace(message, "$1k[repeat_string(max(draw_length - 1, 1), "s")]")
+		message = lizard_kSS.Replace(message, "$1K[repeat_string(max(draw_length - 1, 1), "S")]")
+		message = lizard_ecks.Replace(message, "eck[repeat_string(max(draw_length - 2, 1), "s")]$1")
+		message = lizard_eckS.Replace(message, "ECK[repeat_string(max(draw_length - 2, 1), "S")]$1")
 	speech_args[SPEECH_MESSAGE] = message
+
+	//MONKESTATION EDIT END
 
 /obj/item/organ/internal/tongue/lizard/silver
 	name = "silver tongue"
