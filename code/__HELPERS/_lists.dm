@@ -392,7 +392,7 @@
 **/
 /proc/list_clear_nulls(list/list_to_clear)
 	return (list_to_clear.RemoveAll(null) > 0)
-	
+
 
 /*
  * Returns list containing all the entries from first list that are not present in second.
@@ -434,22 +434,19 @@
  * B would have a 30% chance of being picked,
  * C would have a 10% chance of being picked,
  * and D would have a 0% chance of being picked.
- * You should only pass integers in.
  */
-/proc/pick_weight(list/list_to_pick)
+/proc/pick_weight(list/list_to_pick) // monkestation edit: port superior pick_weight impl
 	var/total = 0
 	var/item
 	for(item in list_to_pick)
-		if(!list_to_pick[item])
-			list_to_pick[item] = 0
+		if(isnull(list_to_pick[item]))
+			stack_trace("weighted_pick given null weight: [json_encode(list_to_pick)]")
 		total += list_to_pick[item]
-
-	total = rand(1, total)
+	total = rand() * total
 	for(item in list_to_pick)
 		total -= list_to_pick[item]
-		if(total <= 0 && list_to_pick[item])
+		if(total <= 0)
 			return item
-
 	return null
 
 /**
