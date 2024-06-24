@@ -19,7 +19,7 @@
 /obj/structure/microscope/attack_hand_secondary(mob/user, list/modifiers)
 	if(current_dish && user.put_in_hands(current_dish))
 		current_dish = null
-		balloon_alert(user, "took dish")
+		balloon_alert(user, "dish removed")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
