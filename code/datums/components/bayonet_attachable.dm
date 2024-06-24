@@ -203,7 +203,7 @@
 
 	if (!bayonet || allow_sawnoff)
 		return
-	source.balloon_alert(user, "[bayonet.bayonet.name] must be removed!")
+	source.balloon_alert(user, "[bayonet.name] must be removed!")
 	return COMPONENT_CANCEL_SAWING_OFF
 
 /datum/component/bayonet_attachable/proc/on_sawn_off(obj/item/source, mob/user)
