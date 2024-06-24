@@ -2,7 +2,7 @@
  * ## Mech melee attack
  * Called when a mech melees a target with fists
  * Handles damaging the target & associated effects
- * return value is number of damage dealt
+ * return value is number of damage dealt. returning a value puts our mech onto attack cooldown.
  * Arguments:
  * * mecha_attacker: Mech attacking this target
  * * user: mob that initiated the attack from inside the mech as a controller
