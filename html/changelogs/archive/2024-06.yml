@@ -425,3 +425,9 @@
   - bugfix: Energy cost for Hardsuits thermoregulator (it would run out in minutes)
   - bugfix: Borers and Alien Larva can now hide on Multiple Z levels instead of just
       one
+2024-06-24:
+  Absolucy:
+  - qol: Mechcomp teleporters now work across different floors on multi-z maps such
+      as Icebox or Tram.
+  Tractor Mann:
+  - rscadd: You can emag jukeboxes! you always could, but now it enables Hacked songs!
