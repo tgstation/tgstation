@@ -11,7 +11,7 @@
 			balloon_alert(user, "already has a dish!")
 			return ITEM_INTERACT_FAILURE
 		current_dish = tool
-		current_dish.forceMove(src)
+		user.transferItemToLoc(tool, src)
 		update_static_data_for_all_viewers()
 		balloon_alert(user, "dish added")
 		return ITEM_INTERACT_SUCCESS
