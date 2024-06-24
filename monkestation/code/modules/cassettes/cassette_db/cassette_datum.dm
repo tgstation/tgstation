@@ -11,6 +11,7 @@
 
 	var/list/song_names
 
+	var/cassette_id
 	var/approved
 	var/file_name
 
@@ -33,6 +34,8 @@
 
 	cassette_author = data["author_name"]
 	cassette_author_ckey = data["author_ckey"]
+
+	cassette_id = file_id
 
 	approved = data["approved"]
 
