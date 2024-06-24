@@ -469,6 +469,7 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
+// Hold your horses sparky
 /obj/effect/decal/cleanable/fuel_pool/LateInitialize()
 	RegisterSignal(src, COMSIG_ATOM_TOUCHED_SPARKS, PROC_REF(ignition_trigger))
 
