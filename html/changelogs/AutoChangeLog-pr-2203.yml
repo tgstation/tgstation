@@ -1,0 +1,4 @@
+author: "AlbertNanotracen"
+delete-after: True
+changes:
+  - bugfix: "fixed the advanced watering can"
