@@ -3,5 +3,5 @@
 	var/requires_process = FALSE
 
 ///called whenever a reagent container processes its internal chemicals
-/datum/reagent/proc/on_container_process(obj/item/reagent_containers/host)
+/datum/reagent/proc/reagent_fire(obj/item/reagent_containers/host)
 	return

@@ -321,10 +321,9 @@
 	SIGNAL_HANDLER
 	update_appearance()
 
-	if(reasses_processing())
-		START_PROCESSING(SSobj, src)
-	else if(datum_flags & DF_ISPROCESSING)
-		STOP_PROCESSING(SSobj, src)
+	//Monkestation Addition: For Australium
+	reagent_processing()
+	//End Monkestation Addition
 
 	return NONE
 
