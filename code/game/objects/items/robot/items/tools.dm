@@ -220,11 +220,11 @@
 
 /obj/item/cyborg_omnitoolbox/proc/set_upgrade(upgrade = FALSE)
 	for(var/obj/item/tool in contents)
-		if(currently_upgraded)
+		if(upgrade)
 			tool.toolspeed = upgraded_toolspeed
 		else
 			tool.toolspeed = toolspeed
-		currently_upgraded = upgrade
+	currently_upgraded = upgrade
 
 /obj/item/cyborg_omnitoolbox/engineering
 	toolspeed = 0.5
