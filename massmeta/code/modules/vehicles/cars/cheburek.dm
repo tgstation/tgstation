@@ -43,7 +43,7 @@
 	/// blood layer if you made a good Strike!!! [0..3]
 	var/blood_layer_intensity = 0
 	var/number_of_bumped_mobs = 0
-	///yea, some meme here
+	/// yea, some meme here
 	var/last_chosen_meme
 
 
@@ -133,6 +133,8 @@
 
 /obj/effect/immovablerod/driveshaft
 	name = "hyperspaced driveshaft"
+	desc = "What the fuck is that?"
+	icon = 'massmeta/icons/obj/anomaly.dmi'
 	icon_state = "driveshaft"
 	notify = FALSE
 	loopy_rod = TRUE
