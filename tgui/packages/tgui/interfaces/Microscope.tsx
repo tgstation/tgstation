@@ -1,11 +1,11 @@
 import { BooleanLike } from 'common/react';
-import { classes } from 'common/react';
 
 import { useBackend } from '../backend';
 import {
   Box,
   Button,
   Divider,
+  DmIcon,
   Icon,
   NoticeBox,
   Section,
@@ -23,6 +23,7 @@ type CellLine = {
   name: string;
   desc: string;
   icon: string;
+  icon_state: string;
   consumption_rate: number;
   growth_rate: number;
   suspectibility: number;
@@ -73,12 +74,11 @@ const CellList = (props) => {
     return cell_line.type !== 'virus' ? (
       <Stack key={cell_line.desc} mt={2}>
         <Stack.Item>
-          <Box
-            m={'16px'}
-            style={{
-              transform: 'scale(2)',
-            }}
-            className={classes(['cell_line32x32', cell_line.icon])}
+          <DmIcon
+            icon={cell_line.icon}
+            icon_state={cell_line.icon_state}
+            height="64px"
+            width="64px"
           />
         </Stack.Item>
         <Stack.Item grow>

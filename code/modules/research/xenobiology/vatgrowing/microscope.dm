@@ -44,12 +44,12 @@
 		if(istype(organism, /datum/micro_organism/cell_line))
 			var/datum/micro_organism/cell_line/cell_line = organism
 			var/atom/resulting_atom = cell_line.resulting_atom
-			var/atom_icon = resulting_atom ? sanitize_css_class_name("[initial(resulting_atom.icon)][initial(resulting_atom.icon_state)]") : ""
 			var/list/organism_data = list(
 				type = "cell line",
 				name = cell_line.name,
 				desc = cell_line.desc,
-				icon = atom_icon,
+				icon = resulting_atom ? initial(resulting_atom.icon) : "",
+				icon_state = resulting_atom ? initial(resulting_atom.icon_state) : "",
 				consumption_rate = cell_line.consumption_rate * SSMACHINES_DT,
 				growth_rate = cell_line.growth_rate * SSMACHINES_DT,
 				suspectibility = cell_line.virus_suspectibility * SSMACHINES_DT,
@@ -90,11 +90,6 @@
 			current_dish = null
 			. = TRUE
 	update_appearance()
-
-/obj/structure/microscope/ui_assets(mob/user)
-	return list(
-		get_asset_datum(/datum/asset/spritesheet/cell_line)
-	)
 
 /datum/crafting_recipe/microscope
 	name = "Microscope"
