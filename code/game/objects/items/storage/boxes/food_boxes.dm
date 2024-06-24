@@ -95,7 +95,7 @@
 	return ..()
 
 /obj/item/storage/box/papersack/tool_act(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/pen))
+	if(IS_WRITING_UTENSIL(tool))
 		var/choice = show_radial_menu(user, src , papersack_designs, custom_check = CALLBACK(src, PROC_REF(check_menu), user, tool), radius = 36, require_near = TRUE)
 		if(!choice || choice == design_choice)
 			return ITEM_INTERACT_BLOCKING

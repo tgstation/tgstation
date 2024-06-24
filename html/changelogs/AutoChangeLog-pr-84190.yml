@@ -1,0 +1,4 @@
+author: "GoblinBackwards"
+delete-after: True
+changes:
+  - bugfix: "Fixed ctrl-click not dragging the bluespace gas sender or hydroponics trays."

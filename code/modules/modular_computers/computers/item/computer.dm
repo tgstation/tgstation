@@ -962,6 +962,12 @@
 	update_appearance(UPDATE_ICON)
 	return TRUE
 
+/// Get all stored files, including external disk files optionaly
+/obj/item/modular_computer/proc/get_files(include_disk_files = FALSE)
+	if(!include_disk_files || !inserted_disk)
+		return stored_files
+	return stored_files + inserted_disk.stored_files
+
 /**
  * Debug ModPC
  * Used to spawn all programs for Create and Destroy unit test.
