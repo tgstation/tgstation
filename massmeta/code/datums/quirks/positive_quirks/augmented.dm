@@ -1,7 +1,7 @@
 /datum/quirk/augmented
 	name = "Augmented"
 	desc = "All your limbs are replaced with robotic ones, which are more durable, but are vulnerable to EMPs and can be healed only by welding tools and cable coils."
-	icon = "tg-prosthetic-full"
+	icon = "tg-augmented-full"
 	value = 4
 	medical_record_text = "During physical examination, patient was found to have all robotic limbs."
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_CHANGES_APPEARANCE
