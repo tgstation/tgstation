@@ -747,7 +747,6 @@
 	name = "NTNet Relay Board"
 	desc = "The circuit board for a wireless network relay."
 	id = "ntnet_relay"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/ntnet_relay
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_TELECOMMS
@@ -1178,3 +1177,23 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/bookbinder
+	name = "Book Binder"
+	desc = "The circuit board for a book binder"
+	id = "bookbinder"
+	build_path = /obj/item/circuitboard/machine/bookbinder
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_SERVICE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/board/libraryscanner
+	name = "Book Scanner"
+	desc = "The circuit board for a book scanner"
+	id = "libraryscanner"
+	build_path = /obj/item/circuitboard/machine/libraryscanner
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_SERVICE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE

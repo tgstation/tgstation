@@ -480,21 +480,6 @@
 	charge_light_type = null
 	connector_type = "slimecore"
 
-/obj/item/stock_parts/cell/beam_rifle
-	name = "beam rifle capacitor"
-	desc = "A high powered capacitor that can provide huge amounts of energy in an instant."
-	maxcharge = STANDARD_CELL_CHARGE * 50
-	chargerate = STANDARD_CELL_RATE * 2.5 //Extremely energy intensive
-
-/obj/item/stock_parts/cell/beam_rifle/corrupt()
-	return
-
-/obj/item/stock_parts/cell/beam_rifle/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	charge = clamp((charge-(10000/severity)),0,maxcharge)
-
 /obj/item/stock_parts/cell/emergency_light
 	name = "miniature power cell"
 	desc = "A tiny power cell with a very low power capacity. Used in light fixtures to power them in the event of an outage."

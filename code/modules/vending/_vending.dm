@@ -271,7 +271,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 				 */
 				var/max_amount = rand(CEILING(product_record.amount * 0.5, 1), product_record.amount)
 				product_record.amount = rand(0, max_amount)
-				credits_contained += rand(0, 1) //randomly add a few credits to the machine to make it look like it's been used, proportional to the amount missing.
+				credits_contained += rand(1, 5) //randomly add a few credits to the machine to make it look like it's been used, proportional to the amount missing.
 			if(tiltable && prob(6)) // 1 in 17 chance to start tilted (as an additional hint to the station trait behind it)
 				INVOKE_ASYNC(src, PROC_REF(tilt), loc)
 				credits_contained = 0 // If it's tilted, it's been looted, so no credits for you.
@@ -1652,6 +1652,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		return
 	var/credits_to_remove = min(CREDITS_DUMP_THRESHOLD, round(credits_contained))
 	var/obj/item/holochip/holochip = new(loc, credits_to_remove)
+	playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
 	credits_contained = max(0, credits_contained - credits_to_remove)
 	SSblackbox.record_feedback("amount", "vending machine looted", holochip.credits)
 
@@ -1777,7 +1778,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			speak("\The [src] has been linked to [card_used].")
 
 	if(compartmentLoadAccessCheck(user))
-		if(istype(attack_item, /obj/item/pen))
+		if(IS_WRITING_UTENSIL(attack_item))
 			name = tgui_input_text(user, "Set name", "Name", name, 20)
 			desc = tgui_input_text(user, "Set description", "Description", desc, 60)
 			slogan_list += tgui_input_text(user, "Set slogan", "Slogan", "Epic", 60)

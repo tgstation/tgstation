@@ -9214,7 +9214,7 @@
 /area/station/medical/virology)
 "dpf" = (
 /obj/structure/transport/linear/public,
-/obj/machinery/light/floor,
+/obj/machinery/light/floor/transport,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/medical/treatment_center)
 "dpj" = (
@@ -13544,12 +13544,11 @@
 /area/station/maintenance/department/medical)
 "eQJ" = (
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/south,
+/obj/effect/spawner/random/armory/dragnet,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "eQQ" = (
@@ -16057,9 +16056,7 @@
 /area/station/security/breakroom)
 "fLM" = (
 /obj/structure/transport/linear/public,
-/obj/machinery/light/floor{
-	_status_traits = list("underfloor" = list("innate"))
-	},
+/obj/machinery/light/floor/transport,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/cargo/storage)
 "fLU" = (
@@ -35473,6 +35470,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "mBY" = (
@@ -49264,7 +49262,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "ryG" = (
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Break Room"
@@ -49273,6 +49270,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "ryP" = (
@@ -60993,13 +60992,6 @@
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
-"vBA" = (
-/obj/machinery/light/floor{
-	_status_traits = list("underfloor" = list("innate"))
-	},
-/obj/structure/transport/linear/public,
-/turf/open/floor/plating/elevatorshaft,
-/area/station/cargo/storage)
 "vBD" = (
 /obj/structure/chair/office/light{
 	dir = 1
@@ -61606,6 +61598,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "vMN" = (
@@ -82693,8 +82686,8 @@ dgR
 uPg
 bui
 yit
-yit
 dpf
+yit
 dKw
 miD
 dFY
@@ -83678,7 +83671,7 @@ uDB
 uDB
 uDB
 sdc
-vBA
+fLM
 soZ
 jCX
 jCX

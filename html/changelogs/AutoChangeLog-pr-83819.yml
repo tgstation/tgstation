@@ -1,0 +1,11 @@
+author: "Fluffles"
+delete-after: True
+changes:
+  - bugfix: "emoji show up in the messenger UI"
+  - bugfix: "emoji show up in the message server monitor UI"
+  - bugfix: "you can adjust your pda ringtone in-game"
+  - bugfix: "having an empty pAI in your pda doesn't break ringtones"
+  - bugfix: "pdas specifically set to not consume power don't constantly switch to messenger"
+  - bugfix: "you can use the quick-reply button for messages while resting"
+  - bugfix: "deadchat pda messages show the imprinted sender's name instead of whoever is holding the pda"
+  - bugfix: "emoji show up in deadchat pda messages"
