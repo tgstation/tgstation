@@ -20,16 +20,22 @@
 	return (armorval/max(organnum, 1))
 
 
+/**
+ * Gets the stacked armour rating of a body part, including the clothes covering that body part.
+ * Arguments:
+ * * obj/item/bodypart/def_zone: The body part to check for.
+ * * damage_type: The damage flag to check the rating for. code\__DEFINES\combat.dm
+ * Returns: The armour rating value of the body part and armour surrounding it.
+ */
 /mob/living/carbon/human/proc/check_armor(obj/item/bodypart/def_zone, damage_type)
 	if(!damage_type)
 		return 0
-	var/protection = 100
+	var/protection = min(physiology.armor.get_rating(damage_type), 100)
 	var/list/covering_clothing = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
 	for(var/obj/item/clothing/clothing_item in covering_clothing)
 		if(clothing_item.body_parts_covered & def_zone.body_part)
-			protection *= (100 - min(clothing_item.get_armor_rating(damage_type), 100)) * 0.01
-	protection *= (100 - min(physiology.armor.get_rating(damage_type), 100)) * 0.01
-	return 100 - protection
+			protection = STACK_ARMOUR(protection, min(clothing_item.get_armor_rating(damage_type), 100))
+	return protection
 
 ///Get all the clothing on a specific body part
 /mob/living/carbon/human/proc/get_clothing_on_part(obj/item/bodypart/def_zone)

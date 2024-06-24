@@ -106,7 +106,7 @@
 		damage = hitting_projectile.damage,
 		damagetype = hitting_projectile.damage_type,
 		def_zone = def_zone,
-		blocked = min(ARMOR_MAX_BLOCK, armor_check),  //cap damage reduction at 90%
+		blocked = armor_check,
 		wound_bonus = hitting_projectile.wound_bonus,
 		bare_wound_bonus = hitting_projectile.bare_wound_bonus,
 		sharpness = hitting_projectile.sharpness,
