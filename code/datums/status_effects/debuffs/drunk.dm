@@ -135,6 +135,7 @@
 		owner.apply_status_effect(/datum/status_effect/inebriated/tipsy, drunk_value)
 
 /datum/status_effect/inebriated/drunk/on_tick_effects()
+	var/is_alcoholic = HAS_TRAIT(owner, TRAIT_ALCOHOL_TOLERANCE) // monkestation edit: alcoholism
 	// Handle the Ballmer Peak.
 	// If our owner is a scientist (has the trait "TRAIT_BALLMER_SCIENTIST"), there's a 5% chance
 	// that they'll say one of the special "ballmer message" lines, depending their drunk-ness level.
@@ -146,16 +147,13 @@
 		if(drunk_value > BALLMER_PEAK_WINDOWS_ME) // by this point you're into windows ME territory
 			owner.say(pick_list_replacements(VISTA_FILE, "ballmer_windows_me_msg"), forced = "ballmer")
 
-	// There's always a 30% chance to gain some drunken slurring
-	if(prob(30))
-		owner.adjust_slurring(4 SECONDS)
+	// Drunk slurring scales in intensity based on how drunk we are -at 16 you will likely not even notice it,
+	// but when we start to scale up you definitely will
+	if(drunk_value >= 16)
+		owner.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/drunk, max_duration = 20 SECONDS)
 
 	// And drunk people will always lose jitteriness
 	owner.adjust_jitter(-6 SECONDS)
-
-	// Over 11, we will constantly gain slurring up to 10 seconds of slurring.
-	if(drunk_value >= 11)
-		owner.adjust_slurring_up_to(2.4 SECONDS, 10 SECONDS)
 
 	// Over 41, we have a 30% chance to gain confusion, and we will always have 20 seconds of dizziness.
 	if(drunk_value >= 41)
@@ -178,26 +176,27 @@
 		owner.set_eye_blur_if_lower((drunk_value * 2 SECONDS) - 140 SECONDS)
 
 	// Over 81, we will gain constant toxloss
-	if(drunk_value >= 81)
+	if(!is_alcoholic && drunk_value >= 81) // monkestation edit: alcoholism
 		owner.adjustToxLoss(1)
 		if(owner.stat == CONSCIOUS && prob(5))
 			to_chat(owner, span_warning("Maybe you should lie down for a bit..."))
 
 	// Over 91, we gain even more toxloss, brain damage, and have a chance of dropping into a long sleep
 	if(drunk_value >= 91)
-		owner.adjustToxLoss(1)
-		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.4)
-		if(owner.stat == CONSCIOUS && prob(20))
+		if(!is_alcoholic) // monkestation edit: alcoholism
+			owner.adjustToxLoss(1)
+			owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.4)
+		if(owner.stat == CONSCIOUS && prob(is_alcoholic ? 5 : 20)) // monkestation edit: alcoholism
 			// Don't put us in a deep sleep if the shuttle's here. QoL, mainly.
 			if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(owner.z))
 				to_chat(owner, span_warning("You're so tired... but you can't miss that shuttle..."))
 
 			else
 				to_chat(owner, span_warning("Just a quick nap..."))
-				owner.Sleeping(90 SECONDS)
+				owner.Sleeping(is_alcoholic ? rand(25 SECONDS, 45 SECONDS) : (90 SECONDS)) // monkestation edit: alcoholism
 
 	// And finally, over 100 - let's be honest, you shouldn't be alive by now.
-	if(drunk_value >= 101)
+	if(!is_alcoholic && drunk_value >= 101) // monkestation edit: alcoholism
 		owner.adjustToxLoss(2)
 
 /// Status effect for being fully drunk (not tipsy).

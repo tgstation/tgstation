@@ -62,7 +62,7 @@
 		if(boozepwr > 0 && !HAS_TRAIT(drinker, TRAIT_LIVING_DRUNK))
 			var/obj/item/organ/internal/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 			if (istype(liver))
-				liver.apply_organ_damage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * liver.alcohol_tolerance * seconds_per_tick, 0))/150))
+				liver.apply_organ_damage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * liver.alcohol_tolerance * seconds_per_tick, 0))/150), maximum = HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE) ? (STANDARD_ORGAN_THRESHOLD - 10) : null)
 	return ..()
 
 /datum/reagent/consumable/ethanol/expose_obj(obj/exposed_obj, reac_volume)
