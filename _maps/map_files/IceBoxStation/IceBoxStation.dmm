@@ -49456,11 +49456,11 @@
 /obj/item/device/antibody_scanner,
 /obj/item/device/antibody_scanner,
 /obj/item/device/antibody_scanner,
-/obj/item/storage/box/vials{
+/obj/item/storage/box/tube{
 	pixel_y = 10;
 	pixel_x = -10
 	},
-/obj/item/storage/box/vials{
+/obj/item/storage/box/tube{
 	pixel_y = 10;
 	pixel_x = -10
 	},

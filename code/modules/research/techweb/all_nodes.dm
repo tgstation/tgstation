@@ -298,7 +298,7 @@
 		"swab",
 		"syringe",
 		"xlarge_beaker",
-		"vial",
+		"tube",
 		"synth_eyes",
 		"synth_tongue",
 		"synth_liver",

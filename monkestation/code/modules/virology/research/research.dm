@@ -49,12 +49,12 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/vial
-	name = "Vial"
-	id = "vial"
+/datum/design/tube
+	name = "Tube"
+	id = "tube"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 200)
-	build_path = /obj/item/reagent_containers/cup/beaker/vial
+	build_path = /obj/item/reagent_containers/cup/tube
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MEDICAL
 	)

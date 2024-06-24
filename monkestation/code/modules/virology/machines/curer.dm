@@ -4,10 +4,10 @@
 	var/curing
 	var/virusing
 
-	var/obj/item/reagent_containers/cup/beaker/vial/container = null
+	var/obj/item/reagent_containers/cup/tube/container = null
 
 /obj/machinery/computer/curer/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/reagent_containers/cup/beaker/vial))
+	if(istype(I, /obj/item/reagent_containers/cup/tube))
 		var/mob/living/carbon/C = user
 		if(!container)
 			if(C.forceMove(I, src))
@@ -16,7 +16,7 @@
 		if(virusing)
 			to_chat(user, "<b>The pathogen materializer is still recharging..")
 			return
-		var/obj/item/reagent_containers/cup/beaker/vial/product = new(src.loc)
+		var/obj/item/reagent_containers/cup/tube/product = new(src.loc)
 
 		var/list/data = list("viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"viruses"=list(),"immunity"=0)
 		data["viruses"] |= I:viruses
@@ -88,12 +88,12 @@
 
 
 /obj/machinery/computer/curer/proc/createcure(obj/item/reagent_containers/cup/beaker/container)
-	var/obj/item/reagent_containers/cup/beaker/vial/product = new(src.loc)
+	var/obj/item/reagent_containers/cup/tube/product = new(src.loc)
 
 	var/datum/reagent/blood/B = locate() in container.reagents.reagent_list
 
 	var/list/data = list()
 	data["antigen"] = B.data["immunity"]
-	
+
 	product.reagents.add_reagent(/datum/reagent/vaccine , 30, data)
 

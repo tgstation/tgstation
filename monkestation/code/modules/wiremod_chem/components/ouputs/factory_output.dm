@@ -18,7 +18,7 @@
 	///prefix for the product name
 	var/product_name = "factory"
 	///the icon_state number for the pill.
-	var/pill_number = RANDOM_PILL_STYLE
+	var/pill_style = -1
 	///list of id's and icons for the pill selection of the ui
 	var/list/pill_styles
 	/// Currently selected patch style
@@ -26,15 +26,20 @@
 	/// List of available patch styles for UI
 	var/list/patch_styles
 
+/obj/structure/chemical_tank/factory/Initialize(mapload)
+	. = ..()
+	load_styles()
+
 /obj/structure/chemical_tank/factory/proc/load_styles()
 	//expertly copypasted from chemmasters
 	pill_styles = list()
-	for (var/x in 1 to PILL_STYLE_COUNT)
-		pill_styles += list("[x]" = image(icon = 'icons/obj/medical/chemical.dmi', icon_state = "pill[x]"))
-
 	patch_styles = list()
-	for (var/raw_patch_style in PATCH_STYLE_LIST)
-		patch_styles += list("[raw_patch_style]" = image(icon = 'icons/obj/medical/chemical.dmi', icon_state = raw_patch_style))
+	for(var/category in GLOB.chem_master_containers)
+		for(var/obj/item/reagent_containers/style as anything in GLOB.chem_master_containers[category])
+			if(category == CAT_PILLS)
+				pill_styles += list("[style.icon_state]" = image(icon = style.icon, icon_state = style.icon_state))
+			if(category == CAT_PATCHES)
+				patch_styles += list("[style.icon_state]" = image(icon = style.icon, icon_state = style.icon_state))
 
 /obj/structure/chemical_tank/factory/proc/generate_product(mob/user)
 	if(reagents.total_volume < current_volume)
@@ -44,10 +49,10 @@
 		reagents.trans_to(P, current_volume)
 		P.name = trim("[product_name] pill")
 		user.put_in_hands(P)
-		if(pill_number == RANDOM_PILL_STYLE)
-			P.icon_state = "pill[rand(1,21)]"
+		if(pill_style == -1)
+			P.icon_state = pick(pill_styles)
 		else
-			P.icon_state = "pill[pill_number]"
+			P.icon_state = "[pill_style]"
 		if(P.icon_state == "pill4") //mirrored from chem masters
 			P.desc = "A tablet or capsule, but not just any, a red one, one taken by the ones not scared of knowledge, freedom, uncertainty and the brutal truths of reality."
 	else if (product == "patch")
@@ -56,17 +61,15 @@
 		P.name = trim("[product_name] patch")
 		P.icon_state = patch_style
 		user.put_in_hands(P)
-	else if (product == "bottle")
-		var/obj/item/reagent_containers/cup/bottle/P = new(get_turf(src))
+	else if (product == "tube")
+		var/obj/item/reagent_containers/cup/tube/P = new(get_turf(src))
 		reagents.trans_to(P, current_volume)
 		P.name = trim("[product_name] bottle")
 		user.put_in_hands(P)
 
 /obj/structure/chemical_tank/factory/AltClick(mob/user)
 	. = ..()
-	if(!length(pill_styles) || !length(patch_styles))
-		load_styles()
-	var/choice_product = tgui_input_list(user, "Pick Product", "[name]", list("pill", "patch", "bottle"))
+	var/choice_product = tgui_input_list(user, "Pick Product", "[name]", list("pill", "patch", "tube"))
 	if(choice_product)
 		product = choice_product
 
@@ -86,8 +89,7 @@
 	if(choice_product == "pill")
 		var/pill_choice = show_radial_menu(user, src, pill_styles)
 		if(pill_choice)
-			pill_number = text2num(pill_choice)
-
+			pill_style = pill_choice
 
 /obj/structure/chemical_tank/factory/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

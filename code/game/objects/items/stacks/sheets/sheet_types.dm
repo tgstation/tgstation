@@ -344,6 +344,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("bonfire", /obj/structure/bonfire, 10, time = 6 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_TOOLS), \
 	new/datum/stack_recipe("easel", /obj/structure/easel, 5, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("noticeboard", /obj/item/wallframe/noticeboard, 1, time = 1 SECONDS, one_per_turf = FALSE, on_solid_ground = FALSE, check_density = FALSE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("test tube rack", /obj/item/storage/test_tube_rack, 1, time = 1 SECONDS, check_density = FALSE, category = CAT_CHEMISTRY), \
 	null, \
 	new/datum/stack_recipe_list("pews", list(
 		new /datum/stack_recipe("pew (middle)", /obj/structure/chair/pew, 3, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE),

@@ -25,6 +25,7 @@
 	atom_storage.set_holdable(list(
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/cup/glass/waterbottle,
 		/obj/item/reagent_containers/condiment,
 	))

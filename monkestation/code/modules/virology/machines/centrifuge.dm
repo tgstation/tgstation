@@ -5,7 +5,7 @@
 
 /obj/machinery/disease2/centrifuge
 	name = "isolation centrifuge"
-	desc = "Used to isolate pathogen and antibodies in blood. Make sure to keep the vials balanced when spinning for optimal efficiency."
+	desc = "Used to isolate pathogen and antibodies in blood. Make sure to keep the tubes balanced when spinning for optimal efficiency."
 	icon = 'monkestation/code/modules/virology/icons/virology.dmi'
 	icon_state = "centrifuge"
 	density = TRUE
@@ -15,9 +15,9 @@
 
 	var/on = 0
 
-	var/list/vials = list(null,null,null,null)
-	var/list/vial_valid = list(0,0,0,0)
-	var/list/vial_task = list(
+	var/list/tubes = list(null,null,null,null)
+	var/list/tube_valid = list(0,0,0,0)
+	var/list/tube_task = list(
 		list(0,0,0,0,0,),
 		list(0,0,0,0,0,),
 		list(0,0,0,0,0,),
@@ -63,33 +63,33 @@
 	if(.)
 		return
 
-	if (istype(I, /obj/item/reagent_containers/cup/beaker/vial))
+	if (istype(I, /obj/item/reagent_containers/cup/tube))
 		special = CENTRIFUGE_LIGHTSPECIAL_OFF
 		if (on)
-			to_chat(user,span_warning("You cannot add or remove vials while the centrifuge is active. Turn it Off first.") )
+			to_chat(user,span_warning("You cannot add or remove tubes while the centrifuge is active. Turn it Off first.") )
 			return
-		var/obj/item/reagent_containers/cup/beaker/vial/vial = I
-		for (var/i = 1 to vials.len)
-			if(!vials[i])
-				vials[i] = vial
-				vial_valid[i] = vial_has_antibodies(vial)
-				visible_message(span_notice("\The [user] adds \the [vial] to \the [src]."),span_notice("You add \the [vial] to \the [src]."))
+		var/obj/item/reagent_containers/cup/tube/tube = I
+		for (var/i = 1 to tubes.len)
+			if(!tubes[i])
+				tubes[i] = tube
+				tube_valid[i] = tube_has_antibodies(tube)
+				visible_message(span_notice("\The [user] adds \the [tube] to \the [src]."),span_notice("You add \the [tube] to \the [src]."))
 				playsound(loc, 'sound/machines/click.ogg', 50, 1)
-				user.transferItemToLoc(vial, loc)
-				vial.forceMove(src)
+				user.transferItemToLoc(tube, loc)
+				tube.forceMove(src)
 				update_appearance()
 				updateUsrDialog()
 				return TRUE
 
-		to_chat(user,span_warning("There is no room for more vials.") )
+		to_chat(user,span_warning("There is no room for more tubes.") )
 		return FALSE
 
 
-/obj/machinery/disease2/centrifuge/proc/vial_has_antibodies(obj/item/reagent_containers/cup/beaker/vial/vial)
-	if (!vial)
+/obj/machinery/disease2/centrifuge/proc/tube_has_antibodies(obj/item/reagent_containers/cup/tube/tube)
+	if (!tube)
 		return FALSE
 
-	var/datum/reagent/blood/blood = locate() in vial.reagents.reagent_list
+	var/datum/reagent/blood/blood = locate() in tube.reagents.reagent_list
 	if (blood && blood.data && blood.data["immunity"])
 		var/list/immune_system = blood.data["immunity"]
 		if (istype(immune_system) && immune_system.len > 0)
@@ -142,50 +142,50 @@
 				.+= emissive_appearance(icon,"centrifuge_special",src)
 				.+= mutable_appearance(icon,"centrifuge_special_update",src)
 
-	for (var/i = 1 to vials.len)
-		if(vials[i])
-			var/obj/item/reagent_containers/cup/beaker/vial/vial = vials[i]
+	for (var/i = 1 to tubes.len)
+		if(tubes[i])
+			var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
 			.+= mutable_appearance(icon, "centrifuge_vial[i][on ? "_moving" : ""]",src)
-			if(vial.reagents.total_volume)
+			if(tube.reagents.total_volume)
 				var/mutable_appearance/filling = mutable_appearance(icon, "centrifuge_vial[i]_filling[on ? "_moving" : ""]",src)
-				filling.icon += mix_color_from_reagents(vial.reagents.reagent_list)
+				filling.icon += mix_color_from_reagents(tube.reagents.reagent_list)
 				.+= filling
 
-/obj/machinery/disease2/centrifuge/proc/add_vial_dat(obj/item/reagent_containers/cup/beaker/vial/vial, list/vial_task = list(0,0,0,0,0), slot = 1)
+/obj/machinery/disease2/centrifuge/proc/add_tube_dat(obj/item/reagent_containers/cup/tube/tube, list/tube_task = list(0,0,0,0,0), slot = 1)
 	var/dat = ""
-	var/valid = vial_valid[slot]
+	var/valid = tube_valid[slot]
 
-	var/datum/reagent/blood/blood = locate() in vial.reagents.reagent_list
+	var/datum/reagent/blood/blood = locate() in tube.reagents.reagent_list
 	if (!blood)
-		var/datum/reagent/vaccine/vaccine = locate() in vial.reagents.reagent_list
+		var/datum/reagent/vaccine/vaccine = locate() in tube.reagents.reagent_list
 		if (!vaccine)
-			dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[vial.name] (no blood detected)</a>"
+			dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[tube.name] (no blood detected)</a>"
 		else
 			var/vaccines = ""
 			for (var/A in vaccine.data["antigen"])
 				vaccines += "[A]"
 			if (vaccines == "")
 				vaccines = "blank"
-			dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[vial.name] (Vaccine ([vaccines]))</a>"
+			dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[tube.name] (Vaccine ([vaccines]))</a>"
 	else
-		if (vial_task[1])
-			switch (vial_task[1])
+		if (tube_task[1])
+			switch (tube_task[1])
 				if ("dish")
-					var/target = vial_task[2]
-					var/progress = vial_task[3]
-					dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[vial.name] (isolating [target]: [round(progress)]%)</a> <A href='?src=\ref[src];interrupt=[slot]'>X</a>"
+					var/target = tube_task[2]
+					var/progress = tube_task[3]
+					dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[tube.name] (isolating [target]: [round(progress)]%)</a> <A href='?src=\ref[src];interrupt=[slot]'>X</a>"
 				if ("vaccine")
-					var/target = vial_task[2]
-					var/progress = vial_task[3]
-					dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[vial.name] (synthesizing vaccine ([target]): [round(progress)]%)</a> <A href='?src=\ref[src];interrupt=[slot]'>X</a>"
+					var/target = tube_task[2]
+					var/progress = tube_task[3]
+					dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[tube.name] (synthesizing vaccine ([target]): [round(progress)]%)</a> <A href='?src=\ref[src];interrupt=[slot]'>X</a>"
 
 		else
 			if(blood.data && blood.data["viruses"])
 				var/list/blood_diseases = blood.data["viruses"]
 				if (blood_diseases && blood_diseases.len > 0)
-					dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[vial.name] (pathogen detected)</a> <A href='?src=\ref[src];isolate=[slot]'>ISOLATE TO DISH</a> [valid ? "<A href='?src=\ref[src];synthvaccine=[slot]'>SYNTHESIZE VACCINE</a>" : "(not enough antibodies for a vaccine)"]"
+					dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[tube.name] (pathogen detected)</a> <A href='?src=\ref[src];isolate=[slot]'>ISOLATE TO DISH</a> [valid ? "<A href='?src=\ref[src];synthvaccine=[slot]'>SYNTHESIZE VACCINE</a>" : "(not enough antibodies for a vaccine)"]"
 				else
-					dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[vial.name] (no pathogen detected)</a> [valid ? "<A href='?src=\ref[src];synthvaccine=[slot]'>SYNTHESIZE VACCINE</a>" : "(not enough antibodies for a vaccine)"]"
+					dat += "<A href='?src=\ref[src];ejectvial=[slot]'>[tube.name] (no pathogen detected)</a> [valid ? "<A href='?src=\ref[src];synthvaccine=[slot]'>SYNTHESIZE VACCINE</a>" : "(not enough antibodies for a vaccine)"]"
 	return dat
 
 /obj/machinery/disease2/centrifuge/attack_hand(mob/user, list/modifiers)
@@ -196,14 +196,14 @@
 
 	if(machine_stat & (NOPOWER))
 		to_chat(user, span_notice("Deprived of power, \the [src] is unresponsive.") )
-		for (var/i = 1 to vials.len)
-			if(vials[i])
-				var/obj/item/reagent_containers/cup/beaker/vial/vial = vials[i]
+		for (var/i = 1 to tubes.len)
+			if(tubes[i])
+				var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
 				playsound(loc, 'sound/machines/click.ogg', 50, 1)
-				vial.forceMove(loc)
-				vials[i] = null
-				vial_valid[i] = 0
-				vial_task[i] = list(0,0,0,0,0)
+				tube.forceMove(loc)
+				tubes[i] = null
+				tube_valid[i] = 0
+				tube_task[i] = list(0,0,0,0,0)
 				update_appearance()
 				sleep(1)
 		return
@@ -218,12 +218,12 @@
 	var/dat = ""
 	dat += "Power status: <A href='?src=\ref[src];power=1'>[on?"On":"Off"]</a>"
 	dat += "<hr>"
-	for (var/i = 1 to vials.len)
-		if(vials[i])
-			dat += add_vial_dat(vials[i],vial_task[i],i)
+	for (var/i = 1 to tubes.len)
+		if(tubes[i])
+			dat += add_tube_dat(tubes[i],tube_task[i],i)
 		else
-			dat += "<A href='?src=\ref[src];insertvial=[i]'>Insert a vial</a>"
-		if(i < vials.len)
+			dat += "<A href='?src=\ref[src];insertvial=[i]'>Insert a tube</a>"
+		if(i < tubes.len)
 			dat += "<BR>"
 	dat += "<hr>"
 
@@ -239,43 +239,43 @@
 	if(on)
 		use_power = 2
 
-		//first of all, let's see how (un)balanced are those vials.
+		//first of all, let's see how (un)balanced are those tubes.
 		//we're not taking reagent density into account because even my autism has its limits
-		var/obj/item/reagent_containers/cup/beaker/vial/vial1 = vials[1]//left
-		var/obj/item/reagent_containers/cup/beaker/vial/vial2 = vials[2]//up
-		var/obj/item/reagent_containers/cup/beaker/vial/vial3 = vials[3]//right
-		var/obj/item/reagent_containers/cup/beaker/vial/vial4 = vials[4]//down
-		var/vial_unbalance_X = 0
-		if (vial1)
-			vial_unbalance_X += 5 + vial1.reagents.total_volume
-		if (vial3)
-			vial_unbalance_X -= 5 + vial3.reagents.total_volume
-		var/vial_unbalance_Y = 0
-		if (vial2)
-			vial_unbalance_Y += 5 + vial2.reagents.total_volume
-		if (vial4)
-			vial_unbalance_Y -= 5 + vial4.reagents.total_volume
+		var/obj/item/reagent_containers/cup/tube/tube1 = tubes[1]//left
+		var/obj/item/reagent_containers/cup/tube/tube2 = tubes[2]//up
+		var/obj/item/reagent_containers/cup/tube/tube3 = tubes[3]//right
+		var/obj/item/reagent_containers/cup/tube/tube4 = tubes[4]//down
+		var/tube_unbalance_X = 0
+		if (tube1)
+			tube_unbalance_X += 5 + tube1.reagents.total_volume
+		if (tube3)
+			tube_unbalance_X -= 5 + tube3.reagents.total_volume
+		var/tube_unbalance_Y = 0
+		if (tube2)
+			tube_unbalance_Y += 5 + tube2.reagents.total_volume
+		if (tube4)
+			tube_unbalance_Y -= 5 + tube4.reagents.total_volume
 
-		var/vial_unbalance = abs(vial_unbalance_X) + abs(vial_unbalance_Y) // vials can contain up to 25 units, so maximal unbalance is 60.
+		var/tube_unbalance = abs(tube_unbalance_X) + abs(tube_unbalance_Y) // tubes can contain up to 30 units, so maximal unbalance is 70.
 
-		efficiency = base_efficiency / (1 + vial_unbalance / 60) // which will at most double the time taken.
+		efficiency = base_efficiency / (1 + tube_unbalance / 70) // which will at most double the time taken.
 
-		for (var/i = 1 to vials.len)
-			if(vials[i])
-				var/list/v_task = vial_task[i]
+		for (var/i = 1 to tubes.len)
+			if(tubes[i])
+				var/list/v_task = tube_task[i]
 				if(v_task[1])
-					vial_task[i] = centrifuge_act(vials[i],vial_task[i])
+					tube_task[i] = centrifuge_act(tubes[i],tube_task[i])
 	else
 		use_power = 1
 
 	update_appearance()
 	updateUsrDialog()
 
-/obj/machinery/disease2/centrifuge/proc/centrifuge_act(obj/item/reagent_containers/cup/beaker/vial/vial, list/vial_task = list(0,0,0,0,0))
+/obj/machinery/disease2/centrifuge/proc/centrifuge_act(obj/item/reagent_containers/cup/tube/tube, list/tube_task = list(0,0,0,0,0))
 	var/list/result = list(0,0,0,0,0)
-	if (!vial)
+	if (!tube)
 		return result
-	result = vial_task
+	result = tube_task
 	switch (result[1])
 		if ("dish")
 			result[3] += (efficiency * 2) / (1 + 0.3 * result[5])//additional pathogen in the sample will lengthen the process
@@ -291,10 +291,10 @@
 				result[3] += (efficiency * 2)
 			if (result[3] >= 100)
 				special = CENTRIFUGE_LIGHTSPECIAL_BLINKING
-				var/amt= vial.reagents.get_reagent_amount(/datum/reagent/blood)
-				vial.reagents.remove_reagent(/datum/reagent/blood, amt)
+				var/amt= tube.reagents.get_reagent_amount(/datum/reagent/blood)
+				tube.reagents.remove_reagent(/datum/reagent/blood, amt)
 				var/data = list("antigen" = list(result[2]))
-				vial.reagents.add_reagent(/datum/reagent/vaccine, amt,data)
+				tube.reagents.add_reagent(/datum/reagent/vaccine, amt,data)
 				result = list(0,0,0,0,0)
 	return result
 
@@ -315,63 +315,63 @@
 			user = usr
 		if (!user)
 			return
-		var/obj/item/reagent_containers/cup/beaker/vial/vial = user.get_active_hand()
-		if (istype(vial))
+		var/obj/item/reagent_containers/cup/tube/tube = user.get_active_hand()
+		if (istype(tube))
 			if (on)
-				to_chat(user,span_warning("You cannot add or remove vials while the centrifuge is active. Turn it Off first."))
+				to_chat(user,span_warning("You cannot add or remove tubes while the centrifuge is active. Turn it Off first."))
 				return
 			else
 				var/i = text2num(href_list["insertvial"])
-				if (!vials[i])
-					vials[i] = vial
-					vial_valid[i] = vial_has_antibodies(vial)
-					visible_message(span_notice("\The [user] adds \the [vial] to \the [src]."),span_notice("You add \the [vial] to \the [src]."))
+				if (!tubes[i])
+					tubes[i] = tube
+					tube_valid[i] = tube_has_antibodies(tube)
+					visible_message(span_notice("\The [user] adds \the [tube] to \the [src]."),span_notice("You add \the [tube] to \the [src]."))
 					playsound(loc, 'sound/machines/click.ogg', 50, 1)
-					user.transferItemToLoc(vial, loc)
-					vial.forceMove(src)
+					user.transferItemToLoc(tube, loc)
+					tube.forceMove(src)
 				else
-					to_chat(user,span_warning("There is already a vial in that slot."))
+					to_chat(user,span_warning("There is already a tube in that slot."))
 					return
 
 	else if (href_list["ejectvial"])
 		if (on)
-			to_chat(usr,span_warning("You cannot add or remove vials while the centrifuge is active. Turn it Off first."))
+			to_chat(usr,span_warning("You cannot add or remove tubes while the centrifuge is active. Turn it Off first."))
 			return
 		else
 			var/i = text2num(href_list["ejectvial"])
-			if (vials[i])
-				var/obj/item/reagent_containers/cup/beaker/vial/vial = vials[i]
-				vial.forceMove(src.loc)
+			if (tubes[i])
+				var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
+				tube.forceMove(src.loc)
 				if (Adjacent(usr))
-					vial.forceMove(usr.loc)
-					usr.put_in_hands(vial)
-				vials[i] = null
-				vial_valid[i] = 0
-				vial_task[i] = list(0,0,0,0,0)
+					tube.forceMove(usr.loc)
+					usr.put_in_hands(tube)
+				tubes[i] = null
+				tube_valid[i] = 0
+				tube_task[i] = list(0,0,0,0,0)
 
 	else if (href_list["interrupt"])
 		var/i = text2num(href_list["interrupt"])
-		vial_task[i] = list(0,0,0,0,0)
+		tube_task[i] = list(0,0,0,0,0)
 
 	else if (href_list["isolate"])
 		var/i = text2num(href_list["isolate"])
-		vial_task[i] = isolate(vials[i],usr)
+		tube_task[i] = isolate(tubes[i],usr)
 
 	else if (href_list["synthvaccine"])
 		var/i = text2num(href_list["synthvaccine"])
-		vial_task[i] = cure(vials[i],usr)
+		tube_task[i] = cure(tubes[i],usr)
 
 	update_appearance()
 	add_fingerprint(usr)
 	updateUsrDialog()
 	attack_hand(usr)
 
-/obj/machinery/disease2/centrifuge/proc/isolate(obj/item/reagent_containers/cup/beaker/vial/vial, mob/user)
+/obj/machinery/disease2/centrifuge/proc/isolate(obj/item/reagent_containers/cup/tube/tube, mob/user)
 	var/list/result = list(0,0,0,0,0)
-	if (!vial)
+	if (!tube)
 		return result
 
-	var/datum/reagent/blood/blood = locate() in vial.reagents.reagent_list
+	var/datum/reagent/blood/blood = locate() in tube.reagents.reagent_list
 	if (blood && blood.data && blood.data["viruses"])
 		var/list/blood_viruses = blood.data["viruses"]
 		if (istype(blood_viruses) && blood_viruses.len > 0)
@@ -398,12 +398,12 @@
 
 	return result
 
-/obj/machinery/disease2/centrifuge/proc/cure(obj/item/reagent_containers/cup/beaker/vial/vial, mob/user)
+/obj/machinery/disease2/centrifuge/proc/cure(obj/item/reagent_containers/cup/tube/tube, mob/user)
 	var/list/result = list(0,0,0,0,0)
-	if (!vial)
+	if (!tube)
 		return result
 
-	var/datum/reagent/blood/blood = locate() in vial.reagents.reagent_list
+	var/datum/reagent/blood/blood = locate() in tube.reagents.reagent_list
 	if (blood && blood.data && blood.data["immunity"])
 		var/list/immune_system = blood.data["immunity"]
 		if (istype(immune_system) && immune_system.len > 0)
@@ -460,13 +460,13 @@
 
 
 /obj/machinery/disease2/centrifuge/Destroy()
-	for (var/i = 1 to vials.len)
-		if(vials[i])
-			var/obj/item/reagent_containers/cup/beaker/vial/vial = vials[i]
-			vial.forceMove(loc)
-	vials = list(null,null,null,null)
-	vial_valid = list(0,0,0,0)
-	vial_task = list(
+	for (var/i = 1 to tubes.len)
+		if(tubes[i])
+			var/obj/item/reagent_containers/cup/tube/tube = tubes[i]
+			tube.forceMove(loc)
+	tubes = list(null,null,null,null)
+	tube_valid = list(0,0,0,0)
+	tube_task = list(
 		list(0,0,0,0,0,),
 		list(0,0,0,0,0,),
 		list(0,0,0,0,0,),
