@@ -37,19 +37,22 @@
 
 /obj/structure/tank_dispenser/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	if (plasmatanks)
-		dispense(/obj/item/tank/internals/plasma, user)
-		plasmatanks--
-		update_appearance()
+	if (!plasmatanks)
+		balloon_alert(user, "no plasma tanks")
 		return
+	dispense(/obj/item/tank/internals/plasma, user)
+	plasmatanks--
+	update_appearance()
 
 /obj/structure/tank_dispenser/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if (oxygentanks)
-		dispense(/obj/item/tank/internals/oxygen, user)
-		oxygentanks--
-		update_appearance()
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if (!oxygentanks)
+		balloon_alert(user, "no oxygen tanks")
+		return
+	dispense(/obj/item/tank/internals/oxygen, user)
+	oxygentanks--
+	update_appearance()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/tank_dispenser/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -69,17 +72,17 @@
 		else
 			full = TRUE
 	else if(!user.combat_mode)
-		to_chat(user, span_notice("[I] does not fit into [src]."))
+		balloon_alert(user, "can't insert")
 		return
 	else
 		return ..()
 	if(full)
-		to_chat(user, span_notice("[src] can't hold any more of [I]."))
+		balloon_alert(user, "it is full")
 		return
 
 	if(!user.transferItemToLoc(I, src))
 		return
-	to_chat(user, span_notice("You put [I] in [src]."))
+	balloon_alert(user, "tank inserted")
 	update_appearance()
 
 /obj/structure/tank_dispenser/atom_deconstruct(disassembled = TRUE)
@@ -97,5 +100,6 @@
 	if (isnull(existing_tank))
 		existing_tank = new tank_type
 	receiver.put_in_hands(existing_tank)
+	balloon_alert(user, "tank received")
 
 #undef TANK_DISPENSER_CAPACITY
