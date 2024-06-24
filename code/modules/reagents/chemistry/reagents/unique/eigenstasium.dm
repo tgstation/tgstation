@@ -69,7 +69,7 @@
 	to_chat(living_mob, span_userdanger("You feel like part of yourself has split off!"))
 
 	//Teleports you home if it's pure enough
-	if(creation_purity > 0.9 && location_created && data["ingested"])
+	if(/* creation_purity > 0.9 && */ location_created && data["ingested"]) // monkestation edit: begone purity
 		do_sparks(5,FALSE,living_mob)
 		do_teleport(living_mob, location_created, 0, asoundin = 'sound/effects/phasein.ogg')
 		do_sparks(5,FALSE,living_mob)
@@ -111,8 +111,10 @@
 ///Lets you link lockers together
 /datum/reagent/eigenstate/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
+	/* monkestation start - get rid of purity bs
 	if(creation_purity < 0.8)
 		return
+	monkestation end*/
 	var/list/lockers = list()
 	for(var/obj/structure/closet/closet in exposed_turf.contents)
 		lockers += closet
