@@ -1,8 +1,3 @@
-
-/obj/item/clothing/under/rank/medical/doctor
-	icon = 'massmeta/icons/obj/clothing/under/medical.dmi'
-	worn_icon = 'massmeta/icons/mob/clothing/under/medical.dmi'
-
 /obj/item/clothing/under/rank/medical/doctor/skirt
 	icon = 'massmeta/icons/obj/clothing/under/medical.dmi'
 	worn_icon = 'massmeta/icons/mob/clothing/under/medical.dmi'
