@@ -650,7 +650,7 @@
 	name = "Medical"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
-		/obj/item/healthanalyzer,
+		/obj/item/healthanalyzer/advanced,
 		/obj/item/reagent_containers/borghypo/medical,
 		/obj/item/borg/apparatus/beaker,
 		/obj/item/reagent_containers/dropper,
