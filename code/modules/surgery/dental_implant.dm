@@ -72,7 +72,7 @@
 /datum/surgery_step/search_teeth
 	name = "search teeth (hand)"
 	accept_hand = TRUE
-	time = 20
+	time = 2 SECONDS
 	repeatable = TRUE
 
 /datum/surgery_step/search_teeth/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
