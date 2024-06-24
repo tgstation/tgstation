@@ -264,6 +264,39 @@
 	attack_verb_simple = list("roast", "scorch", "burn")
 	grind_results = list(/datum/reagent/consumable/capsaicin = 0, /datum/reagent/consumable/condensedcapsaicin = 0)
 
+// Peaceflower
+/obj/item/seeds/sunflower/peaceflower
+	name = "pack of peaceflower seeds"
+	desc = "These seeds grow into peaceflowers."
+	icon_state = "seed-peaceflower"
+	species = "peaceflower"
+	plantname = "Peaceflowers"
+	icon_grow = "peaceflower-grow"
+	icon_dead = "sunflower-dead"
+	product = /obj/item/grown/peaceflower
+	genes = list(/datum/plant_gene/trait/stinging, /datum/plant_gene/trait/preserved)
+	mutatelist = null
+	reagents_add = list(/datum/reagent/consumable/pax = 1, /datum/reagent/consumable/laughter = 0.5, /datum/reagent/consumable/nutriment = 0)
+	rarity = 420
+
+/obj/item/grown/peaceflower
+	seed = /obj/item/seeds/sunflower/peaceflower
+	name = "\improper peaceflower"
+	desc = "These beautiful flowers make you feel happy and tranquil just smelling them... hey, are those thorns?"
+	icon_state = "peaceflower"
+	inhand_icon_state = "peaceflower"
+	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
+	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
+	throwforce = 0
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 1
+	throw_range = 3
+	attack_verb_continuous = list("peaces", "flowers", "pacifies")
+	attack_verb_simple = list("peace", "flower", "pacify")
+	grind_results = list(/datum/reagent/consumable/pax = 0, /datum/reagent/consumable/laughter = 0, /datum/reagent/consumable/nutriment = 0)
+
 // Rose
 /obj/item/seeds/rose
 	name = "pack of rose seeds"
