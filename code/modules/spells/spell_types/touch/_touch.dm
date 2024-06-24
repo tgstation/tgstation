@@ -127,7 +127,8 @@
 /datum/action/cooldown/spell/touch/proc/register_hand_signals()
 	SHOULD_CALL_PARENT(TRUE)
 
-	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_hand_hit))
+	RegisterSignal(attached_hand, COMSIG_ITEM_INTERACTING_WITH_ATOM, PROC_REF(on_hand_hit))
+	RegisterSignal(attached_hand, COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY, PROC_REF(on_hand_hit_secondary))
 	RegisterSignal(attached_hand, COMSIG_ITEM_DROPPED, PROC_REF(on_hand_dropped))
 	RegisterSignal(attached_hand, COMSIG_QDELETING, PROC_REF(on_hand_deleted))
 
@@ -140,7 +141,8 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	UnregisterSignal(attached_hand, list(
-		COMSIG_ITEM_AFTERATTACK,
+		COMSIG_ITEM_INTERACTING_WITH_ATOM,
+		COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY,
 		COMSIG_ITEM_DROPPED,
 		COMSIG_QDELETING,
 		COMSIG_ITEM_OFFER_TAKEN,
@@ -159,29 +161,45 @@
 	return ..()
 
 /**
- * Signal proc for [COMSIG_ITEM_AFTERATTACK] from our attached hand.
+ * Signal proc for [COMSIG_ITEM_INTERACTING_WITH_ATOM] from our attached hand.
  *
  * When our hand hits an atom, we can cast do_hand_hit() on them.
  */
-/datum/action/cooldown/spell/touch/proc/on_hand_hit(datum/source, atom/victim, mob/caster, click_parameters)
+/datum/action/cooldown/spell/touch/proc/on_hand_hit(datum/source, mob/living/caster, atom/target, click_parameters)
 	SIGNAL_HANDLER
 	SHOULD_NOT_OVERRIDE(TRUE) // DEFINITELY don't put effects here, put them in cast_on_hand_hit
 
-	if(!can_hit_with_hand(victim, caster))
+	if(!can_hit_with_hand(target, caster))
 		return
 
-	if(LAZYACCESS(params2list(click_parameters), RIGHT_CLICK))
-		INVOKE_ASYNC(src, PROC_REF(do_secondary_hand_hit), source, victim, caster)
-	else
-		INVOKE_ASYNC(src, PROC_REF(do_hand_hit), source, victim, caster)
+	INVOKE_ASYNC(src, PROC_REF(do_hand_hit), source, target, caster)
+	return ITEM_INTERACT_SUCCESS
+
+/**
+ * Signal proc for [COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY] from our attached hand.
+ *
+ * When our hand hits an atom, we can cast do_hand_hit() on them.
+ */
+/datum/action/cooldown/spell/touch/proc/on_hand_hit_secondary(datum/source, mob/living/caster, atom/target, click_parameters)
+	SIGNAL_HANDLER
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	if(!can_hit_with_hand(target, caster))
+		return
+
+	INVOKE_ASYNC(src, PROC_REF(do_secondary_hand_hit), source, target, caster)
+	return ITEM_INTERACT_SUCCESS
 
 /// Checks if the passed victim can be cast on by the caster.
-/datum/action/cooldown/spell/touch/proc/can_hit_with_hand(atom/victim, mob/caster)
+/datum/action/cooldown/spell/touch/proc/can_hit_with_hand(atom/victim, mob/living/caster)
 	if(!can_cast_on_self && victim == caster)
 		return FALSE
 	if(!is_valid_target(victim))
 		return FALSE
 	if(!can_cast_spell(feedback = TRUE))
+		return FALSE
+	if(!(caster.mobility_flags & MOBILITY_USE))
+		caster.balloon_alert(caster, "can't reach out!")
 		return FALSE
 
 	return TRUE
@@ -206,6 +224,9 @@
 
 	log_combat(caster, victim, "cast the touch spell [name] on", hand)
 	spell_feedback(caster)
+	caster.do_attack_animation(victim)
+	caster.changeNext_move(CLICK_CD_MELEE)
+	victim.add_fingerprint(caster)
 	remove_hand(caster)
 
 /**
@@ -223,6 +244,9 @@
 		if(SECONDARY_ATTACK_CONTINUE_CHAIN)
 			log_combat(caster, victim, "cast the touch spell [name] on", hand, "(secondary / alt cast)")
 			spell_feedback(caster)
+			caster.do_attack_animation(victim)
+			caster.changeNext_move(CLICK_CD_MELEE)
+			victim.add_fingerprint(caster)
 			remove_hand(caster)
 
 		// Call normal will call the normal cast proc
@@ -328,14 +352,6 @@
 
 	if(spell)
 		spell_which_made_us = WEAKREF(spell)
-
-/obj/item/melee/touch_attack/attack(mob/target, mob/living/carbon/user)
-	if(!iscarbon(user)) //Look ma, no hands
-		return TRUE
-	if(!(user.mobility_flags & MOBILITY_USE))
-		user.balloon_alert(user, "can't reach out!")
-		return TRUE
-	return ..()
 
 /**
  * When the hand component of a touch spell is qdel'd, (the hand is dropped or otherwise lost),

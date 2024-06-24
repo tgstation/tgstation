@@ -170,7 +170,7 @@
 			organ_list += (O.gender == "plural" ? O.name : "\an [O.name]")
 
 	var/pill_count = 0
-	for(var/datum/action/item_action/hands_free/activate_pill/AP in M.actions)
+	for(var/datum/action/item_action/activate_pill/AP in M.actions)
 		pill_count++
 
 	if(M == user)//if we're looking on our own mouth
