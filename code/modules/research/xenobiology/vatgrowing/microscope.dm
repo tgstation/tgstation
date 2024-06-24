@@ -35,10 +35,13 @@
 	for(var/organism in current_dish.sample.micro_organisms) //All the microorganisms in the dish
 		if(istype(organism, /datum/micro_organism/cell_line))
 			var/datum/micro_organism/cell_line/cell_line = organism
+			var/atom/resulting_atom = cell_line.resulting_atom
+			var/atom_icon = resulting_atom ? sanitize_css_class_name("[initial(resulting_atom.icon)][initial(resulting_atom.icon_state)]") : ""
 			var/list/organism_data = list(
 				type = "cell line",
 				name = cell_line.name,
 				desc = cell_line.desc,
+				icon = atom_icon,
 				growth_rate = cell_line.growth_rate,
 				suspectibility = cell_line.virus_suspectibility,
 				requireds = get_reagent_list(cell_line.required_reagents),
@@ -78,6 +81,11 @@
 			current_dish = null
 			. = TRUE
 	update_appearance()
+
+/obj/structure/microscope/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/cell_line)
+	)
 
 /datum/crafting_recipe/microscope
 	name = "Microscope"

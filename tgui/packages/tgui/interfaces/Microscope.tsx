@@ -1,7 +1,15 @@
 import { BooleanLike } from 'common/react';
+import { classes } from 'common/react';
 
 import { useBackend } from '../backend';
-import { Button, LabeledList, NoticeBox, Section } from '../components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -13,6 +21,7 @@ type CellLine = {
   type: string;
   name: string;
   desc: string;
+  icon: string;
   growth_rate: number;
   suspectibility: number;
   requireds: string[];
@@ -57,30 +66,46 @@ const CellList = (props) => {
 
   return cell_lines.map((cell_line) => {
     return (
-      <Section key={cell_line.desc} title={cell_line.name}>
-        <LabeledList>
-          <LabeledList.Item label="Type">{cell_line.type}</LabeledList.Item>
-          <LabeledList.Item label="Name">{cell_line.name}</LabeledList.Item>
-          <LabeledList.Item label="Description">
-            {cell_line.desc}
-          </LabeledList.Item>
-          <LabeledList.Item label="Growth Rate">
-            {cell_line.growth_rate}
-          </LabeledList.Item>
-          <LabeledList.Item label="Virus Suspectibility">
-            {cell_line.suspectibility}
-          </LabeledList.Item>
-          <LabeledList.Item label="Required Reagents">
-            {cell_line.requireds}
-          </LabeledList.Item>
-          <LabeledList.Item label="Supplementary Reagents">
-            {cell_line.supplementaries}
-          </LabeledList.Item>
-          <LabeledList.Item label="Suppresive reagents">
-            {cell_line.suppressives}
-          </LabeledList.Item>
-        </LabeledList>
-      </Section>
+      <Stack key={cell_line.desc}>
+        <Stack.Item>
+          <Box
+            m={'16px'}
+            style={{
+              transform: 'scale(2)',
+            }}
+            className={classes(['cell_line32x32', cell_line.icon])}
+          />
+        </Stack.Item>
+        <Stack.Item>
+          <Section
+            title={cell_line.desc}
+            style={{ textTransform: 'capitalize' }}
+          >
+            <LabeledList>
+              {/* <LabeledList.Item label="Type">{cell_line.type}</LabeledList.Item>
+              <LabeledList.Item label="Name">{cell_line.name}</LabeledList.Item>
+              <LabeledList.Item label="Description">
+                {cell_line.desc}
+              </LabeledList.Item> */}
+              <LabeledList.Item label="Growth Rate">
+                {cell_line.growth_rate}
+              </LabeledList.Item>
+              <LabeledList.Item label="Virus Suspectibility">
+                {cell_line.suspectibility}
+              </LabeledList.Item>
+              <LabeledList.Item label="Required Reagents">
+                {cell_line.requireds}
+              </LabeledList.Item>
+              <LabeledList.Item label="Supplementary Reagents">
+                {cell_line.supplementaries}
+              </LabeledList.Item>
+              <LabeledList.Item label="Suppresive reagents">
+                {cell_line.suppressives}
+              </LabeledList.Item>
+            </LabeledList>
+          </Section>
+        </Stack.Item>
+      </Stack>
     );
   });
 };

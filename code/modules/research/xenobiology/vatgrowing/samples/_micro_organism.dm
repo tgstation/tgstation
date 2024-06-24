@@ -23,8 +23,10 @@
 	var/virus_suspectibility = 1
 	///This var defines how much % the organism grows per process(), without modifiers, if you have all required reagents
 	var/growth_rate = 4
-	///Resulting atoms from growing this cell line. List is assoc atom type || amount
-	var/list/resulting_atoms = list()
+	///Resulting atom from growing this cell line
+	var/atom/resulting_atom
+	///The number of resulting atoms
+	var/resulting_atom_count = 1
 
 ///Handles growth of the micro_organism. This only runs if the micro organism is in the growing vat. Reagents is the growing vats reagents
 /datum/micro_organism/cell_line/proc/handle_growth(obj/machinery/plumbing/growing_vat/vat)
@@ -98,11 +100,10 @@
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(0, holder = vat, location = vat.loc)
 	smoke.start()
-	for(var/created_thing in resulting_atoms)
-		for(var/x in 1 to resulting_atoms[created_thing])
-			var/atom/thing = new created_thing(get_turf(vat))
-			ADD_TRAIT(thing, TRAIT_VATGROWN, "vatgrowing")
-			vat.visible_message(span_nicegreen("[thing] pops out of [vat]!"))
+	for(var/x in 1 to resulting_atom_count)
+		var/atom/thing = new resulting_atom(get_turf(vat))
+		ADD_TRAIT(thing, TRAIT_VATGROWN, "vatgrowing")
+		vat.visible_message(span_nicegreen("[thing] pops out of [vat]!"))
 	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
 		return
 	QDEL_NULL(vat.biological_sample)
