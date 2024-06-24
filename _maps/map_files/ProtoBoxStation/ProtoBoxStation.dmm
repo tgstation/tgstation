@@ -27133,9 +27133,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "bUE" = (
@@ -30382,7 +30382,8 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "ciP" = (
-/obj/machinery/conveyor/inverted{
+/obj/machinery/conveyor{
+	dir = 1;
 	id = "mining"
 	},
 /turf/open/floor/plating,
@@ -35113,15 +35114,15 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "dyk" = (
-/obj/machinery/turretid{
-	control_area = "/area/ai_monitored/turret_protected/ai_upload";
-	name = "AI Upload turret control";
-	pixel_y = -25
-	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Bridge Center"
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/machinery/turretid{
+	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
+	name = "AI Upload turret control";
+	pixel_y = -25
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "dyw" = (
@@ -35307,7 +35308,8 @@
 /area/station/maintenance/port/aft)
 "dDH" = (
 /obj/machinery/bouldertech/refinery/smelter,
-/obj/machinery/conveyor/inverted{
+/obj/machinery/conveyor{
+	dir = 1;
 	id = "mining"
 	},
 /turf/open/floor/plating,
@@ -40150,8 +40152,8 @@
 "iBK" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "iBZ" = (
@@ -41962,11 +41964,12 @@
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "ktJ" = (
-/obj/machinery/conveyor/inverted{
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor{
+	dir = 1;
 	id = "mining"
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/station/cargo/miningoffice)
 "kui" = (
 /obj/machinery/announcement_system,
@@ -51722,7 +51725,8 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "uHA" = (
-/obj/machinery/conveyor/inverted{
+/obj/machinery/conveyor{
+	dir = 1;
 	id = "QMLoad2"
 	},
 /turf/open/floor/iron,
@@ -53630,7 +53634,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/pile,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "wLh" = (
