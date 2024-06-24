@@ -39,7 +39,7 @@ export const Flatpacker = (props: any) => {
   const { SHEET_MATERIAL_AMOUNT, materials, design, busy } = data;
 
   return (
-    <Window width={400} height={445} title="Flatpacker">
+    <Window width={670} height={400} title="Flatpacker">
       <Window.Content>
         {!!busy && (
           <Dimmer
@@ -168,7 +168,7 @@ const CostPreview = (props: CostPreviewProps) => {
   const { materials, SHEET_MATERIAL_AMOUNT } = props;
 
   return (
-    <Section fill>
+    <Section fill scrollable>
       {materials ? (
         <Table>
           {materials.map((material) => (

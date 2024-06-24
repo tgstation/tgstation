@@ -48,29 +48,36 @@
 
 /obj/machinery/flatpacker/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
-	if(isnull(held_item))
-		return
+	if(!QDELETED(inserted_board))
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Eject board"
+		. = CONTEXTUAL_SCREENTIP_SET
 
-	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
-		return CONTEXTUAL_SCREENTIP_SET
-	else if(held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
-		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
-		return CONTEXTUAL_SCREENTIP_SET
+	if(!isnull(held_item))
+		if(istype(held_item, /obj/item/circuitboard/machine))
+			context[SCREENTIP_CONTEXT_LMB] = "Insert board"
+			return CONTEXTUAL_SCREENTIP_SET
+		else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+			return CONTEXTUAL_SCREENTIP_SET
+		else if(held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
+			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+			return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/flatpacker/examine(mob/user)
 	. += ..()
-	if(!in_range(user, src) && isobserver(user))
+	if(!in_range(user, src) && !isobserver(user))
 		return
 
 	. += span_notice("The status display reads:")
 	. += span_notice("Capable of packing up to <b>Tier [max_part_tier]</b>.")
 	. += span_notice("Storing up to <b>[materials.max_amount]</b> material units.")
-	. += span_notice("Material consumption at <b>[creation_efficiency*100]%</b>")
+	. += span_notice("Material consumption at <b>[creation_efficiency * 100]%</b>")
 
 	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"]")
 	if(panel_open)
 		. += span_notice("It can be [EXAMINE_HINT("pried")] apart")
+	if(!QDELETED(inserted_board))
+		. += span_notice("The board can be ejected via [EXAMINE_HINT("Ctrl Click")]")
 
 /obj/machinery/flatpacker/update_overlays()
 	. = ..()
@@ -82,7 +89,7 @@
 	. = ..()
 	if(gone == inserted_board)
 		inserted_board = null
-		needed_mats = null
+		needed_mats.Cut()
 		print_tier = 1
 		update_appearance(UPDATE_OVERLAYS)
 
@@ -175,12 +182,10 @@
 			inserted_board.forceMove(drop_location())
 
 		inserted_board = attacking_item
-		// 5 sheets of iron and 5 of cable coil
-		needed_mats = list()
 		for(var/type as anything in inserted_board.req_components)
 			needed_mats = analyze_cost(type, needed_mats)
 
-		//covers the cost of a machine frame & cable
+		// 5 sheets of iron and 5 of cable coil
 		CREATE_AND_INCREMENT(needed_mats, /datum/material/iron, (SHEET_MATERIAL_AMOUNT * 5 + (SHEET_MATERIAL_AMOUNT / 20)))
 		CREATE_AND_INCREMENT(needed_mats, /datum/material/glass, (SHEET_MATERIAL_AMOUNT / 20))
 
@@ -213,10 +218,10 @@
 	return materials.ui_static_data()
 
 /obj/machinery/flatpacker/ui_data(mob/user)
-	var/list/data = list()
+	. = list()
 
-	data["materials"] = materials.ui_data()
-	data["busy"] = busy
+	.["materials"] = materials.ui_data()
+	.["busy"] = busy
 
 	var/list/design
 	if(!QDELETED(inserted_board))
@@ -242,11 +247,9 @@
 			"canPrint" = has_materials && print_tier <= max_part_tier,
 			"disableReason" = disableReason
 		)
-	data["design"] = design
+	.["design"] = design
 
-	return data
-
-/obj/machinery/flatpacker/ui_act(action, list/params)
+/obj/machinery/flatpacker/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -272,7 +275,7 @@
 			return TRUE
 
 		if("ejectBoard")
-			inserted_board.forceMove(drop_location())
+			try_put_in_hand(inserted_board, ui.user)
 			return TRUE
 
 		if("eject")
@@ -306,6 +309,14 @@
 	new /obj/item/flatpack(drop_location(), board)
 
 	SStgui.update_uis(src)
+
+/obj/machinery/flatpacker/click_ctrl(mob/user)
+	if(QDELETED(inserted_board) || busy)
+		return CLICK_ACTION_BLOCKING
+
+	try_put_in_hand(inserted_board, user)
+
+	return CLICK_ACTION_SUCCESS
 
 #undef CREATE_AND_INCREMENT
 
@@ -360,8 +371,6 @@
 			. += span_warning("Can't deploy in this location")
 		else if(location.is_blocked_turf(source_atom = src))
 			. += span_warning("No space for deployment")
-		else
-			. += span_warning("Location is not suitable for deployment")
 
 /obj/item/flatpack/multitool_act(mob/living/user, obj/item/tool)
 	. = NONE
@@ -409,10 +418,9 @@
 
 	AddElement(/datum/element/noisy_movement, volume = 45) // i hate noise
 
-/obj/structure/flatpack_cart/atom_destruction(damage_flag)
+/obj/structure/flatpack_cart/atom_deconstruct(disassembled)
 	for(var/atom/movable/content as anything in contents)
 		content.forceMove(drop_location())
-	return ..()
 
 /obj/structure/flatpack_cart/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
@@ -425,6 +433,9 @@
 
 /obj/structure/flatpack_cart/examine(mob/user)
 	. = ..()
+	if(!in_range(user, src) && !isobserver(user))
+		return
+
 	. += "From bottom to top, this cart contains:"
 	for(var/obj/item/flatpack as anything in contents)
 		. += flatpack.name
