@@ -38,7 +38,7 @@
 /obj/structure/tank_dispenser/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if (!plasmatanks)
-		balloon_alert(user, "no plasma tanks")
+		balloon_alert(user, "no plasma tanks!")
 		return
 	dispense(/obj/item/tank/internals/plasma, user)
 	plasmatanks--
@@ -47,7 +47,7 @@
 /obj/structure/tank_dispenser/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if (!oxygentanks)
-		balloon_alert(user, "no oxygen tanks")
+		balloon_alert(user, "no oxygen tanks!")
 		return
 	dispense(/obj/item/tank/internals/oxygen, user)
 	oxygentanks--
@@ -72,12 +72,12 @@
 		else
 			full = TRUE
 	else if(!user.combat_mode)
-		balloon_alert(user, "can't insert")
+		balloon_alert(user, "can't insert!")
 		return
 	else
 		return ..()
 	if(full)
-		balloon_alert(user, "it is full")
+		balloon_alert(user, "it is full!")
 		return
 
 	if(!user.transferItemToLoc(I, src))
@@ -100,6 +100,6 @@
 	if (isnull(existing_tank))
 		existing_tank = new tank_type
 	receiver.put_in_hands(existing_tank)
-	balloon_alert(user, "tank received")
+	balloon_alert(receiver, "tank received")
 
 #undef TANK_DISPENSER_CAPACITY
