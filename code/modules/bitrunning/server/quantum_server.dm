@@ -54,7 +54,7 @@
 	. = ..()
 
 	radio = new(src)
-	radio.set_frequency(FREQ_SUPPLY)
+	radio.set_frequency(FREQ_SECURITY) //MONKESTATION EDIT
 	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
 	radio.recalculateChannels()

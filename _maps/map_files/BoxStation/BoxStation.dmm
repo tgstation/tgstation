@@ -6112,29 +6112,6 @@
 /obj/effect/landmark/start/head_of_personnel,
 /turf/open/floor/iron/dark,
 /area/station/command/meeting_room)
-"caj" = (
-/obj/effect/turf_decal/trimline/green/filled/line,
-/obj/structure/table/glass,
-/obj/item/healthanalyzer,
-/obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/gloves/latex,
-/obj/item/storage/box/beakers,
-/obj/item/storage/box/syringes{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/box/tube{
-	pixel_y = 4;
-	pixel_x = -2
-	},
-/obj/machinery/firealarm/directional/south,
-/obj/item/storage/box/monkeycubes/mousecubes,
-/obj/item/storage/box/monkeycubes/mousecubes{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/turf/open/floor/iron/white,
-/area/station/medical/virology)
 "cau" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
@@ -14346,6 +14323,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
+"eNH" = (
+/obj/structure/cable,
+/obj/machinery/duct,
+/obj/structure/ghost_critter_spawn,
+/turf/open/floor/plating,
+/area/station/security/prison)
 "eNK" = (
 /obj/effect/turf_decal/trimline/brown/filled/warning,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -23272,14 +23255,6 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
-"hLe" = (
-/obj/structure/rack,
-/obj/item/mop,
-/obj/item/reagent_containers/cup/bottle/ammonia,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/clothing/mask/breath,
-/turf/open/floor/plating,
-/area/station/security/prison)
 "hLt" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 9
@@ -24640,6 +24615,29 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/primary/central)
+"ilj" = (
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/structure/table/glass,
+/obj/item/healthanalyzer,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/gloves/latex,
+/obj/item/storage/box/beakers,
+/obj/item/storage/box/syringes{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/box/tube{
+	pixel_y = 4;
+	pixel_x = -2
+	},
+/obj/machinery/newscaster/directional/south,
+/obj/item/storage/box/monkeycubes/mousecubes,
+/obj/item/storage/box/monkeycubes/mousecubes{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/virology)
 "iln" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -26174,29 +26172,6 @@
 /obj/structure/sign/departments/security/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/fore)
-"iIn" = (
-/obj/effect/turf_decal/trimline/green/filled/line,
-/obj/structure/table/glass,
-/obj/item/healthanalyzer,
-/obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/gloves/latex,
-/obj/item/storage/box/beakers,
-/obj/item/storage/box/syringes{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/box/tube{
-	pixel_y = 4;
-	pixel_x = -2
-	},
-/obj/machinery/newscaster/directional/south,
-/obj/item/storage/box/monkeycubes/mousecubes,
-/obj/item/storage/box/monkeycubes/mousecubes{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/turf/open/floor/iron/white,
-/area/station/medical/virology)
 "iIr" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
@@ -31112,6 +31087,15 @@
 	dir = 4
 	},
 /area/station/cargo/miningoffice)
+"kqX" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Bitrunner Den"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/showroomfloor,
+/area/station/security/bitden)
 "krD" = (
 /obj/machinery/camera/autoname/directional/west,
 /obj/machinery/atmospherics/components/unary/passive_vent{
@@ -37306,16 +37290,6 @@
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/engineering/transit_tube)
-"mtq" = (
-/obj/effect/decal/cleanable/oil/slippery,
-/obj/machinery/door/airlock/grunge{
-	name = "Bitrunner Den"
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/showroomfloor,
-/area/station/security/bitden)
 "mtH" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer2{
 	dir = 5
@@ -37830,6 +37804,13 @@
 "mDv" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/engine)
+"mDz" = (
+/obj/structure/window/reinforced/tinted{
+	dir = 4
+	},
+/obj/item/kirbyplants/random/dead,
+/turf/open/floor/iron/vaporwave,
+/area/station/command/heads_quarters/rd)
 "mDR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/graffiti,
@@ -44808,6 +44789,29 @@
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet,
 /area/station/service/chapel)
+"oTl" = (
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/structure/table/glass,
+/obj/item/healthanalyzer,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/gloves/latex,
+/obj/item/storage/box/beakers,
+/obj/item/storage/box/syringes{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/box/tube{
+	pixel_y = 4;
+	pixel_x = -2
+	},
+/obj/machinery/firealarm/directional/south,
+/obj/item/storage/box/monkeycubes/mousecubes,
+/obj/item/storage/box/monkeycubes/mousecubes{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/virology)
 "oTy" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/effect/turf_decal/trimline/red/line{
@@ -46930,6 +46934,17 @@
 /obj/structure/chair,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
+"pDL" = (
+/obj/structure/rack,
+/obj/item/mop,
+/obj/item/reagent_containers/cup/bottle/ammonia,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/storage/box/lights/mixed{
+	pixel_x = 7
+	},
+/turf/open/floor/plating,
+/area/station/security/prison)
 "pDN" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/sign/warning/radiation/directional/east,
@@ -58034,13 +58049,6 @@
 	dir = 1
 	},
 /area/station/security/prison/workout)
-"ttC" = (
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
-/obj/item/kirbyplants/random/dead,
-/turf/open/floor/iron/vaporwave,
-/area/station/command/heads_quarters/rd)
 "ttD" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -90948,7 +90956,7 @@ qgq
 cbB
 uoF
 iBo
-hLe
+pDL
 ybj
 ksa
 xXP
@@ -91203,7 +91211,7 @@ xAx
 jou
 rDd
 lfm
-bhf
+eNH
 bhf
 lBB
 ybj
@@ -95555,7 +95563,7 @@ kFk
 apg
 vIP
 uQv
-mtq
+kqX
 mcU
 jhR
 ybm
@@ -110266,7 +110274,7 @@ jEw
 mVt
 yjH
 dUx
-ttC
+mDz
 kaP
 qvC
 mkl
@@ -111099,7 +111107,7 @@ gCT
 exJ
 gzt
 fJd
-caj
+oTl
 oqK
 oqK
 oqK
@@ -111877,7 +111885,7 @@ mGb
 sNb
 lYg
 mGb
-iIn
+ilj
 oqK
 wGN
 nCa
