@@ -29,6 +29,8 @@
 	var/flatpack_time = 4.5 SECONDS
 
 /obj/machinery/flatpacker/Initialize(mapload)
+	register_context()
+
 	materials = AddComponent( \
 		/datum/component/material_container, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
@@ -36,8 +38,6 @@
 		MATCONTAINER_EXAMINE, \
 		container_signals = list(COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/flatpacker, AfterMaterialInsert)) \
 	)
-
-	register_context()
 
 	return ..()
 
@@ -180,8 +180,9 @@
 		// If insertion was successful and there's already a diskette in the console, eject the old one.
 		if(inserted_board)
 			inserted_board.forceMove(drop_location())
-
 		inserted_board = attacking_item
+
+		//compute the needed mats from its stock parts
 		for(var/type as anything in inserted_board.req_components)
 			needed_mats = analyze_cost(type, needed_mats)
 
@@ -299,7 +300,12 @@
 			materials.retrieve_sheets(amount, material)
 			return TRUE
 
-/// turns the supplied board into a flatpack, and sets the machine as not busy
+/**
+ * Turns the supplied board into a flatpack, and sets the machine as not busy
+ * Arguments
+ *
+ * * board - the board to put inside the flatpack
+ */
 /obj/machinery/flatpacker/proc/finish_build(board)
 	PRIVATE_PROC(TRUE)
 

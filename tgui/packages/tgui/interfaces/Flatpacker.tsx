@@ -174,16 +174,22 @@ const CostPreview = (props: CostPreviewProps) => {
           {materials.map((material) => (
             <Table.Row key={material.name} className="candystripe">
               <Table.Cell verticalAlign="middle">
-                <MaterialIcon
-                  materialName={material.name}
-                  sheets={material.amount / SHEET_MATERIAL_AMOUNT}
-                />
+                <div style={{ width: '200px' }}>
+                  <MaterialIcon
+                    materialName={material.name}
+                    sheets={material.amount / SHEET_MATERIAL_AMOUNT}
+                  />
+                </div>
               </Table.Cell>
               <TableCell verticalAlign="middle">
-                {toTitleCase(material.name)}
+                <div style={{ width: '200px' }}>
+                  {toTitleCase(material.name)}
+                </div>
               </TableCell>
               <Table.Cell verticalAlign="middle">
-                &times;{(material.amount / SHEET_MATERIAL_AMOUNT).toFixed(2)}
+                <div style={{ width: '200px' }}>
+                  {(material.amount / SHEET_MATERIAL_AMOUNT).toFixed(2)}
+                </div>
               </Table.Cell>
             </Table.Row>
           ))}
