@@ -1,0 +1,4 @@
+author: "MrDas"
+delete-after: True
+changes:
+  - bugfix: "Fixed the duration of wizard's mutate spell."

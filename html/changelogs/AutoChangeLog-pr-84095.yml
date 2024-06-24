@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - image: "Foam darts in the magazine of a toy/riot C20R45 will now show the correct color corresponding to the type of said dart loaded in it instead of a generic bullet sprite."
