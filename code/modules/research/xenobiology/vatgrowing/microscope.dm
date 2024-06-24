@@ -9,11 +9,11 @@
 	. = ..()
 	var/static/list/hovering_item_typechecks = list(
 		/obj/item/petri_dish = list(
-			SCREENTIP_CONTEXT_LMB = "Add Petri Dish",
+			SCREENTIP_CONTEXT_LMB = "Add petri dish",
 		),
 	)
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
-	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Remove Petri Dish")
+	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Remove petri dish")
 
 /obj/structure/microscope/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/petri_dish))
