@@ -1,0 +1,6 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed some assorted runtime errors."
+  - bugfix: "Fixed some overlay sprite issues with the disease splicer."
+  - bugfix: "Fixed curing diseases via aheals or such actually WORK."
