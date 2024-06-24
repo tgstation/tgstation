@@ -16,7 +16,6 @@
 		current_dish = tool
 		update_static_data_for_all_viewers()
 		balloon_alert(user, "dish added")
-		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /obj/structure/microscope/attack_hand_secondary(mob/user, list/modifiers)
