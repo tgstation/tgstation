@@ -194,6 +194,7 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = -20
 	bare_wound_bonus = 20
+	resistance_flags = FLAMMABLE //MONKESTATION ADDITION
 	var/can_drop = FALSE
 	var/fake = FALSE
 
@@ -288,6 +289,7 @@
 	throw_range = 0
 	throw_speed = 0
 	can_hold_up = FALSE
+	resistance_flags = FLAMMABLE //MONKESTATION ADDITION
 
 /obj/item/gun/magic/tentacle/Initialize(mapload, silent)
 	. = ..()
@@ -493,6 +495,7 @@
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	block_chance = 50
+	resistance_flags = FLAMMABLE //MONKESTATION ADDITION
 
 	var/remaining_uses //Set by the changeling ability.
 
@@ -542,6 +545,7 @@
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0
 	heat_protection = 0
+	resistance_flags = FLAMMABLE //MONKESTATION ADDITION
 
 /datum/armor/armor_changeling
 	melee = 40
@@ -550,7 +554,7 @@
 	energy = 50
 	bomb = 10
 	bio = 10
-	fire = 90
+	/*fire = 90*/ //MONKESTATION REMOVAL
 	acid = 90
 
 /obj/item/clothing/suit/armor/changeling/Initialize(mapload)
@@ -567,6 +571,7 @@
 	item_flags = DROPDEL
 	armor_type = /datum/armor/helmet_changeling
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
+	resistance_flags = FLAMMABLE //MONKESTATION ADDITION
 
 /datum/armor/helmet_changeling
 	melee = 40
@@ -575,7 +580,7 @@
 	energy = 50
 	bomb = 10
 	bio = 10
-	fire = 90
+	/*fire = 90*/ //MONKESTATION REMOVAL
 	acid = 90
 
 /obj/item/clothing/head/helmet/changeling/Initialize(mapload)

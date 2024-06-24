@@ -7,6 +7,7 @@
 	dna_cost = 2
 	req_human = TRUE
 	req_stat = UNCONSCIOUS
+	disabled_by_fire = FALSE
 
 //Recover from stuns.
 /datum/action/changeling/adrenaline/sting_action(mob/living/user)
