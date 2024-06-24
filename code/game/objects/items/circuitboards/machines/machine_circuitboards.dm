@@ -1627,9 +1627,15 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/portable_atmospherics/scrubber
 	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/pipe/directional/scrubber = 1,
+	)
 
 /obj/item/circuitboard/machine/pump
 	name = "Portable Air Pump"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/portable_atmospherics/pump
 	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/pipe/directional/vent = 1,
+	)
