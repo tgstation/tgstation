@@ -7,15 +7,20 @@
 
 /obj/structure/microscope/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/petri_dish))
+		var/obj/item/petri_dish/old_dish
 		if(current_dish)
-			balloon_alert(user, "already has a dish!")
-			return ITEM_INTERACT_FAILURE
+			old_dish = current_dish
 		if(!user.transferItemToLoc(tool, src))
 			balloon_alert(user, "couldn't add!")
 			return ITEM_INTERACT_FAILURE
 		current_dish = tool
 		update_static_data_for_all_viewers()
-		balloon_alert(user, "dish added")
+		if(old_dish)
+			if(!user.put_in_hands(old_dish))
+				old_dish.forceMove(get_turf(src))
+			balloon_alert(user, "dish swapped")
+		else
+			balloon_alert(user, "dish added")
 	return ..()
 
 /obj/structure/microscope/attack_hand_secondary(mob/user, list/modifiers)
