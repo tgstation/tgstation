@@ -35,10 +35,6 @@
 		MECHA_ARMOR = 2,
 	)
 	step_energy_drain = 2
-	///Looking for parent of invisibility action in occupant abilities to check its status
-	var/datum/action/vehicle/sealed/mecha/invisibility/stealth_action
-	///Looking for parent of charge attack action in occupant abilities to check its status
-	var/datum/action/vehicle/sealed/mecha/charge_attack/charge_action
 
 /datum/armor/mecha_justice
 	melee = 30
@@ -65,17 +61,6 @@
 	if(!has_gravity())
 		icon_state = "[icon_state]-fly"
 
-/obj/vehicle/sealed/mecha/justice/process(seconds_per_tick)
-	. = ..()
-	for(var/mob/living/occupant in occupants)
-		stealth_action = LAZYACCESSASSOC(occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/invisibility)
-		charge_action = LAZYACCESSASSOC(occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/charge_attack)
-		if(alpha == 255)
-			stealth_action.on = FALSE
-		else if(alpha == 0)
-			stealth_action.on = TRUE
-	update_appearance(UPDATE_ICON_STATE)
-
 /obj/vehicle/sealed/mecha/justice/set_safety(mob/user)
 	weapons_safety = !weapons_safety
 
@@ -91,7 +76,7 @@
 	update_appearance(UPDATE_ICON_STATE)
 
 /obj/vehicle/sealed/mecha/justice/Move(newloc, dir)
-	if(stealth_action.start_attack)
+	if(HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 		return
 	. = ..()
 	update_appearance(UPDATE_ICON_STATE)
@@ -101,39 +86,46 @@
 	SIGNAL_HANDLER
 
 	if(!isliving(target))
-		return
+		return FALSE
 	var/mob/living/live_or_dead = target
 	if(live_or_dead.stat < UNCONSCIOUS && live_or_dead.getStaminaLoss() < 100)
 		return FALSE
-	if(charge_action?.on)
+	var/obj/item/bodypart/check_head = live_or_dead.get_bodypart(BODY_ZONE_HEAD)
+	if(!check_head)
 		return FALSE
+	var/datum/action/vehicle/sealed/mecha/invisibility/stealth_action = LAZYACCESSASSOC(src.occupant_actions, pilot, /datum/action/vehicle/sealed/mecha/invisibility)
 	if(stealth_action?.on)
+		return FALSE
+	var/datum/action/vehicle/sealed/mecha/charge_attack/charge_action = LAZYACCESSASSOC(src.occupant_actions, pilot, /datum/action/vehicle/sealed/mecha/charge_attack)
+	if(charge_action?.on)
 		return FALSE
 	say(pick("Take my Justice-Slash!", "A falling leaf...", "Justice is quite a lonely path"), forced = "Justice Mech")
 	playsound(src, 'sound/mecha/mech_stealth_pre_attack.ogg', 75, FALSE)
-	addtimer(CALLBACK(src, PROC_REF(finish_him), pilot, live_or_dead), 1 SECONDS)
+	if(!do_after(pilot, 1 SECONDS, live_or_dead))
+		return FALSE
+	finish_him(pilot, live_or_dead)
 	return TRUE
 
 /**
  * ## finish_him
  *
- * Target's head is cut off (if it has one),
- * Otherwise it deals 100 damage.
- * Attack from invisability and charged attack have higher priority.
+ * Target's head is cut off (if it has one)
+ * Attack from invisibility and charged attack have higher priority.
  * Arguments:
  * * finisher - Mech pilot who makes an attack.
  * * him - Target at which the mech makes an attack.
  */
 /obj/vehicle/sealed/mecha/justice/proc/finish_him(mob/finisher, mob/living/him)
+	if(QDELETED(finisher))
+		return
+	if(QDELETED(him))
+		return
 	/// turf where we end attack
 	var/turf/finish_turf = get_step(him, get_dir(finisher, him))
 	/// turf where we start attack
 	var/turf/for_line_turf = get_turf(finisher)
 	var/obj/item/bodypart/in_your_head = him.get_bodypart(BODY_ZONE_HEAD)
-	if(in_your_head)
-		in_your_head.dismember(BRUTE)
-	else
-		him.apply_damage(100, BRUTE)
+	in_your_head?.dismember(BRUTE)
 	playsound(src, brute_attack_sound, 75, FALSE)
 	for_line_turf.Beam(src, icon_state = "mech_charge", time = 8)
 	forceMove(finish_turf)
@@ -150,33 +142,12 @@
 
 /obj/vehicle/sealed/mecha/justice/mob_exit(mob/M, silent, randomstep, forced)
 	. = ..()
-	if(!stealth_action?.on)
-		return
-	animate(src, alpha = 255, time = 0.5 SECONDS)
-	playsound(src, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
-
-/obj/vehicle/sealed/mecha/justice/Bump(atom/obstacle)
-	. = ..()
-	if(!isliving(obstacle))
-		return
-	if(!stealth_action?.on)
-		return
-	animate(src, alpha = 255, time = 0.5 SECONDS)
-	playsound(src, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
-
-/obj/vehicle/sealed/mecha/justice/Bumped(atom/movable/bumped_atom)
-	. = ..()
-	if(!isliving(bumped_atom))
-		return
-	if(!stealth_action?.on)
+	if(alpha == 255)
 		return
 	animate(src, alpha = 255, time = 0.5 SECONDS)
 	playsound(src, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
 
 /obj/vehicle/sealed/mecha/justice/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
-	if(stealth_action?.on)
-		animate(src, alpha = 255, time = 0.5 SECONDS)
-		playsound(src, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
 	if(LAZYLEN(occupants))
 		if(prob(60))
 			new /obj/effect/temp_visual/mech_sparks(get_turf(src))
@@ -191,8 +162,8 @@
 	var/on = FALSE
 	/// Recharge check.
 	var/charge = TRUE
-	/// Block movement if we start aoe attack from invisibility.
-	var/start_attack = FALSE
+	/// varset for invisibility timer
+	var/invisibility_timer
 	/// Aoe pre attack sound.
 	var/stealth_pre_attack_sound = 'sound/mecha/mech_stealth_pre_attack.ogg'
 	/// Aoe attack sound.
@@ -206,35 +177,102 @@
 	if(!charge)
 		owner.balloon_alert(owner, "recharging!")
 		return
-	new /obj/effect/temp_visual/mech_sparks(get_turf(chassis))
 	on = !on
-	playsound(chassis, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
 	if(on)
-		for(var/mob/living/occupant in chassis.occupants)
-			var/datum/action/vehicle/sealed/mecha/charge_attack/charge_action = LAZYACCESSASSOC(chassis.occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/charge_attack)
-			if(charge_action?.on)
-				charge_action.on = FALSE
-		animate(chassis, alpha = 0, time = 0.5 SECONDS)
-		button_icon_state = "mech_stealth_on"
-		addtimer(CALLBACK(src, PROC_REF(end_stealth)), 20 SECONDS)
-		RegisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK, PROC_REF(stealth_attack_aoe))
+		invisibility_on()
 	else
-		addtimer(CALLBACK(src, PROC_REF(charge)), 5 SECONDS)
-		animate(chassis, alpha = 255, time = 0.5 SECONDS)
-		button_icon_state = "mech_stealth_off"
-		UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)
+		invisibility_off()
+
+///Called when invisibility activated.
+/datum/action/vehicle/sealed/mecha/invisibility/proc/invisibility_on()
+	new /obj/effect/temp_visual/mech_sparks(get_turf(chassis))
+	playsound(chassis, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
+	check_charge_attack()
+	animate(chassis, alpha = 0, time = 0.5 SECONDS)
+	button_icon_state = "mech_stealth_on"
+	invisibility_timer = addtimer(CALLBACK(src, PROC_REF(end_stealth)), 20 SECONDS)
+	RegisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK, PROC_REF(stealth_attack_aoe))
+	RegisterSignal(chassis, COMSIG_MOVABLE_BUMP, PROC_REF(bumb_on))
+	RegisterSignal(chassis, COMSIG_ATOM_BUMPED, PROC_REF(bumbed_on))
+	RegisterSignal(chassis, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(take_damage))
 	build_all_button_icons()
 
+///Called when invisibility deactivated.
+/datum/action/vehicle/sealed/mecha/invisibility/proc/invisibility_off()
+	new /obj/effect/temp_visual/mech_sparks(get_turf(chassis))
+	playsound(chassis, 'sound/mecha/mech_stealth_effect.ogg' , 75, FALSE)
+	invisibility_timer = null
+	charge = FALSE
+	addtimer(CALLBACK(src, PROC_REF(charge)), 5 SECONDS)
+	button_icon_state = "mech_stealth_cooldown"
+	animate(chassis, alpha = 255, time = 0.5 SECONDS)
+	UnregisterSignal(chassis, list(
+		COMSIG_MECHA_MELEE_CLICK,
+		COMSIG_MOVABLE_BUMP,
+		COMSIG_ATOM_BUMPED,
+		COMSIG_ATOM_TAKE_DAMAGE
+		))
+	build_all_button_icons()
+
+///Check if mech use charge attack and deactivate it when we activate invisibility.
+/datum/action/vehicle/sealed/mecha/invisibility/proc/check_charge_attack()
+	for(var/mob/living/occupant in chassis.occupants)
+		var/datum/action/vehicle/sealed/mecha/charge_attack/charge_action = LAZYACCESSASSOC(chassis.occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/charge_attack)
+		if(charge_action?.on)
+			charge_action.on = !on
+			charge_action.charge_attack_off()
 /**
  * ## end_stealth
  *
  * Called when mech runs out of invisibility time.
  */
 /datum/action/vehicle/sealed/mecha/invisibility/proc/end_stealth()
+	make_visible()
+
+/**
+ * ## bumb_on
+ *
+ * Called when mech bumb on somthing. If is living somthing shutdown mech invisibility.
+ */
+/datum/action/vehicle/sealed/mecha/invisibility/proc/bumb_on(obj/vehicle/sealed/mecha/our_mech, atom/obstacle)
+	SIGNAL_HANDLER
+
+	if(!isliving(obstacle))
+		return
+	make_visible()
+
+/**
+ * ## bumbed_on
+ *
+ * Called when somthing bumbed on mech. If is living somthing shutdown mech invisibility.
+ */
+/datum/action/vehicle/sealed/mecha/invisibility/proc/bumbed_on(obj/vehicle/sealed/mecha/our_mech, atom/movable/bumped_atom)
+	SIGNAL_HANDLER
+
+	if(!isliving(bumped_atom))
+		return
+	make_visible()
+
+/**
+ * ## take_damage
+ *
+ * Called when mech take damage. Shutdown mech invisibility.
+ */
+/datum/action/vehicle/sealed/mecha/invisibility/proc/take_damage(obj/vehicle/sealed/mecha/our_mech)
+	SIGNAL_HANDLER
+
+	make_visible()
+
+/**
+ * ## make_visible
+ *
+ * Called when somthing force invisibility shutdown.
+ */
+/datum/action/vehicle/sealed/mecha/invisibility/proc/make_visible()
 	if(!on)
 		return
-	owner.balloon_alert(owner, "invisability is over")
-	Trigger()
+	on = !on
+	invisibility_off()
 
 /**
  * Proc makes an AOE attack after 1 SECOND.
@@ -251,7 +289,7 @@
 		return FALSE
 	UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)
 	new /obj/effect/temp_visual/mech_attack_aoe_charge(get_turf(chassis))
-	start_attack = TRUE
+	ADD_TRAIT(chassis, TRAIT_IMMOBILIZED, REF(src))
 	playsound(chassis, stealth_pre_attack_sound, 75, FALSE)
 	addtimer(CALLBACK(src, PROC_REF(attack_in_aoe), pilot), 1 SECONDS)
 	return TRUE
@@ -265,7 +303,7 @@
  * * pilot - occupant inside mech.
  */
 /datum/action/vehicle/sealed/mecha/invisibility/proc/attack_in_aoe(mob/living/pilot)
-	Trigger()
+	invisibility_off()
 	new /obj/effect/temp_visual/mech_attack_aoe_attack(get_turf(chassis))
 	for(var/mob/living/something_living in range(1, get_turf(chassis)))
 		if(something_living.stat >= UNCONSCIOUS)
@@ -279,7 +317,7 @@
 			cut_bodypart?.dismember(BRUTE)
 		something_living.apply_damage(35, BRUTE)
 	playsound(chassis, stealth_attack_sound, 75, FALSE)
-	start_attack = FALSE
+	REMOVE_TRAIT(chassis, TRAIT_IMMOBILIZED, REF(src))
 	charge = FALSE
 	button_icon_state = "mech_stealth_cooldown"
 	build_all_button_icons()
@@ -298,7 +336,7 @@
 /datum/action/vehicle/sealed/mecha/charge_attack
 	name = "Charge Attack"
 	button_icon_state = "mech_charge_off"
-	/// Is invisibility activated.
+	/// Is charge attack activated.
 	var/on = FALSE
 	/// Recharge check.
 	var/charge = TRUE
@@ -323,18 +361,30 @@
 		return
 	on = !on
 	if(on)
-		for(var/who_inside in chassis.occupants)
-			var/mob/living/occupant = who_inside
-			var/datum/action/vehicle/sealed/mecha/charge_attack/stealth_action = LAZYACCESSASSOC(chassis.occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/invisibility)
-			if(stealth_action)
-				if(stealth_action.on)
-					stealth_action.Trigger()
-		button_icon_state = "mech_charge_on"
-		RegisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK, PROC_REF(click_try_charge))
+		charge_attack_on()
 	else
-		button_icon_state = "mech_charge_off"
-		UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)
+		charge_attack_off()
+
+///Called when charge attack activated
+/datum/action/vehicle/sealed/mecha/charge_attack/proc/charge_attack_on()
+	check_visability()
+	button_icon_state = "mech_charge_on"
+	RegisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK, PROC_REF(click_try_charge))
 	build_all_button_icons()
+
+///Called when charge attack deactivated
+/datum/action/vehicle/sealed/mecha/charge_attack/proc/charge_attack_off()
+	button_icon_state = "mech_charge_off"
+	UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)
+	build_all_button_icons()
+
+///Check if mech use invisibility and deactivate it when we activate charge attack.
+/datum/action/vehicle/sealed/mecha/charge_attack/proc/check_visability()
+	for(var/who_inside in chassis.occupants)
+		var/mob/living/occupant = who_inside
+		var/datum/action/vehicle/sealed/mecha/invisibility/stealth_action = LAZYACCESSASSOC(chassis.occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/invisibility)
+		if(stealth_action?.on)
+			stealth_action.make_visible()
 
 ///Called when mech attacks with charge attack enabled.
 /datum/action/vehicle/sealed/mecha/charge_attack/proc/click_try_charge(datum/source, mob/living/pilot, atom/target, on_cooldown, is_adjacent)
@@ -358,8 +408,8 @@
 /**
  * ## charge_attack
  *
- * Brings mech out of invisibility.
- * Deal everyone in range 3x3 35 damage and 25 chanse to cut off limb.
+ * Deal everyone in line for mech location to mouse location 35 damage and 25 chanse to cut off limb.
+ * Break walls and teleport mech to the end of line.
  * Arguments:
  * * charger - occupant inside mech.
  * * target - occupant inside mech.
