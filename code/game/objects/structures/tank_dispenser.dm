@@ -19,6 +19,7 @@
 
 /obj/structure/tank_dispenser/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Take Plasma Tank", rmb_text = "Take Oxygen Tank")
 	update_appearance()
 
 /obj/structure/tank_dispenser/update_overlays()
@@ -33,6 +34,22 @@
 			. += "plasma-[plasmatanks]"
 		if(5 to TANK_DISPENSER_CAPACITY)
 			. += "plasma-5"
+
+/obj/structure/tank_dispenser/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if (plasmatanks)
+		dispense(/obj/item/tank/internals/plasma, user)
+		plasmatanks--
+		update_appearance()
+		return
+
+/obj/structure/tank_dispenser/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if (oxygentanks)
+		dispense(/obj/item/tank/internals/oxygen, user)
+		oxygentanks--
+		update_appearance()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/tank_dispenser/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -64,44 +81,6 @@
 		return
 	to_chat(user, span_notice("You put [I] in [src]."))
 	update_appearance()
-
-/obj/structure/tank_dispenser/ui_state(mob/user)
-	return GLOB.physical_state
-
-/obj/structure/tank_dispenser/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "TankDispenser", name)
-		ui.open()
-
-/obj/structure/tank_dispenser/ui_data(mob/user)
-	var/list/data = list()
-	data["oxygen"] = oxygentanks
-	data["plasma"] = plasmatanks
-
-	return data
-
-/obj/structure/tank_dispenser/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
-	switch(action)
-		if("plasma")
-			if (plasmatanks == 0)
-				return TRUE
-
-			dispense(/obj/item/tank/internals/plasma, usr)
-			plasmatanks--
-		if("oxygen")
-			if (oxygentanks == 0)
-				return TRUE
-
-			dispense(/obj/item/tank/internals/oxygen, usr)
-			oxygentanks--
-
-	update_appearance()
-	return TRUE
-
 
 /obj/structure/tank_dispenser/atom_deconstruct(disassembled = TRUE)
 	for(var/X in src)
