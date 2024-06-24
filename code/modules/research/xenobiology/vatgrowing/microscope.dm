@@ -5,6 +5,16 @@
 	icon_state = "microscope"
 	var/obj/item/petri_dish/current_dish
 
+/obj/structure/microscope/Initialize(mapload)
+	. = ..()
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/petri_dish = list(
+			SCREENTIP_CONTEXT_LMB = "Add Petri Dish",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Remove Petri Dish")
+
 /obj/structure/microscope/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/petri_dish))
 		var/obj/item/petri_dish/old_dish
