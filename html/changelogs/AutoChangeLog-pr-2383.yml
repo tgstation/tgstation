@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Eigenstasium no longer cares about purity, a mechanic which we do not even use."
