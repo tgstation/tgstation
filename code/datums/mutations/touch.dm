@@ -189,7 +189,7 @@
 
 /datum/action/cooldown/spell/touch/lay_on_hands/proc/do_simple_heal(mob/living/carbon/mendicant, mob/living/hurtguy, heal_multiplier, pain_multiplier)
 	// Did the transfer work?
-	var/transferred = FALSE
+	. = FALSE
 
 	// Damage to heal
 	var/brute_to_heal = min(hurtguy.getBruteLoss(), 35 * heal_multiplier)
@@ -203,7 +203,7 @@
 			mendicant_organic_limbs += possible_limb
 	// None? Gtfo
 	if(isnull(mendicant_organic_limbs))
-		return transferred
+		return .
 
 	// Try to use our active hand, otherwise pick at random
 	var/obj/item/bodypart/mendicant_transfer_limb = mendicant.get_active_hand()
@@ -213,18 +213,18 @@
 
 	if(brute_to_heal)
 		hurtguy.adjustBruteLoss(brute_to_heal)
-		transferred = TRUE
+		. = TRUE
 
 	if(burn_to_heal)
 		hurtguy.adjustFireLoss(burn_to_heal)
-		transferred = TRUE
+		. = TRUE
 
-	return transferred
+	return .
 
 /datum/action/cooldown/spell/touch/lay_on_hands/proc/do_complicated_heal(mob/living/carbon/mendicant, mob/living/carbon/hurtguy, heal_multiplier, pain_multiplier)
 
 	// Did the transfer work?
-	var/transferred = FALSE
+	. = FALSE
 	// Get the hurtguy's limbs and the mendicant's limbs to attempt a 1-1 transfer.
 	var/list/hurt_limbs = hurtguy.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC) + hurtguy.get_wounded_bodyparts(BODYTYPE_ORGANIC)
 	var/list/mendicant_organic_limbs = list()
@@ -251,7 +251,7 @@
 		var/burn_damage = min(affected_limb.burn_dam, (35 * heal_multiplier) - brute_damage)
 		if((brute_damage || burn_damage) && total_damage_healed < (35 * heal_multiplier))
 			total_damage_healed = brute_damage + burn_damage
-			transferred = TRUE
+			. = TRUE
 			// Heal!
 			affected_limb.heal_damage(brute_damage * heal_multiplier, burn_damage * heal_multiplier, required_bodytype = BODYTYPE_ORGANIC)
 			// Hurt!
@@ -261,12 +261,12 @@
 		for(var/datum/wound/iter_wound as anything in affected_limb.wounds)
 			if(iter_wound.severity > WOUND_SEVERITY_MODERATE)
 				continue
-			transferred = TRUE
+			. = TRUE
 			iter_wound.remove_wound()
 			iter_wound.apply_wound(mendicant_transfer_limb)
 
 
-	return transferred
+	return .
 
 /obj/item/melee/touch_attack/lay_on_hands
 	name = "mending touch"
