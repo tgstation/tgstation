@@ -1183,6 +1183,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "aeq" = (
@@ -25151,6 +25152,7 @@
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/machinery/chem_master,
 /obj/effect/turf_decal/siding/purple,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "bMp" = (
@@ -25168,6 +25170,7 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/glasses/science,
 /obj/effect/turf_decal/siding/purple,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "bMr" = (
@@ -27705,9 +27708,9 @@
 /area/station/tcommsat/server)
 "bWF" = (
 /obj/machinery/light/directional/north,
-/obj/effect/mapping_helpers/apc/cell_5k,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
 "bWG" = (
@@ -38522,8 +38525,10 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "gGM" = (
-/turf/closed/wall/r_wall,
-/area/station/medical/morgue)
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/security/prison)
 "gHi" = (
 /obj/effect/turf_decal/siding/purple/corner{
 	dir = 4
@@ -40058,6 +40063,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "iiD" = (
@@ -48416,6 +48422,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "qnO" = (
@@ -53920,6 +53927,10 @@
 /obj/item/plant_analyzer,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
+"wiR" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "wiZ" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/directional/east,
@@ -54010,7 +54021,6 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "wqu" = (
-/obj/structure/sign/departments/chemistry/directional/south,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 8
 	},
@@ -80539,7 +80549,7 @@ rMs
 acd
 bTv
 taa
-acd
+gGM
 qng
 pSA
 fyS
@@ -81567,7 +81577,7 @@ fVX
 acd
 qkN
 esv
-acd
+gGM
 qng
 vYA
 afD
@@ -82595,7 +82605,7 @@ tgK
 acd
 lDH
 qMU
-acd
+gGM
 aeo
 ajx
 lhi
@@ -92435,7 +92445,7 @@ bfL
 bfL
 tce
 bfL
-gGM
+bfL
 bzs
 cyh
 gMV
@@ -92693,7 +92703,7 @@ cTO
 gSZ
 knt
 wqu
-bKy
+bzs
 tYM
 bzs
 bzs
@@ -98347,7 +98357,7 @@ bEm
 bEm
 bEm
 bEm
-bEm
+wiR
 bIx
 bJJ
 bKY
@@ -99375,7 +99385,7 @@ bEm
 bEm
 bEm
 bEm
-bEm
+wiR
 bIx
 bJJ
 bLc
