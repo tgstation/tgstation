@@ -115,32 +115,6 @@
 		qdel(filler)
 	return ..()
 
-/obj/machinery/dna_vault/attackby(obj/item/our_item, mob/user, params)
-	if(istype(our_item, /obj/item/dna_probe))
-		var/obj/item/dna_probe/our_probe = our_item
-		var/uploaded = 0
-		var/plant_dna_length = length(our_probe.stored_dna_plants)
-		var/human_dna_length = length(our_probe.stored_dna_human)
-		var/animal_dna_length = length(our_probe.stored_dna_animal)
-		if(plant_dna_length)
-			uploaded += plant_dna_length
-			plant_dna += our_probe.stored_dna_plants
-			our_probe.stored_dna_plants.Cut()
-		if(human_dna_length)
-			uploaded += human_dna_length
-			human_dna += our_probe.stored_dna_human
-			our_probe.stored_dna_human.Cut()
-		if(animal_dna_length)
-			uploaded += animal_dna_length
-			animal_dna += our_probe.stored_dna_animal
-			our_probe.stored_dna_animal.Cut()
-		check_goal()
-		playsound(src, 'sound/misc/compiler-stage1.ogg', 50)
-		to_chat(user, span_notice("[uploaded] new datapoints uploaded."))
-		return
-
-	return ..()
-
 /obj/machinery/dna_vault/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
