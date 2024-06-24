@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Smartfridge will now correctly respond 'no power' instead of 'forbidden item' when it doesn't have power"

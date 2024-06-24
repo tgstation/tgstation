@@ -1,4 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - balance: "Sparks have been heavily adjusted; they only affect items made of plasma, pools of welding fuel, flammable people, cigarettes, and items that contain reagents... for now. Their long-standing behavior of igniting flammable gas has been untouched."

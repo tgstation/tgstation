@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixed plate shards not randomizing icon correctly"
-  - qol: "Gives plate sharts a more fitting hitsound / caltrop sound, gives them a set caltrop stun duration (instead of default)"

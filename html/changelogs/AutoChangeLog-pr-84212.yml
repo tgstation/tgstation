@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Admin-only deadchat broadcasts don't append a second \"this message is for admins only\" string for every admin online."

@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Touch Spells now apply click CD again"
-  - bugfix: "Touch Spells now apply fingerprints again"
-  - bugfix: "Touch Spells now check if your hands are blocked again"
