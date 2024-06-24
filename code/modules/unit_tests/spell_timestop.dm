@@ -15,8 +15,11 @@
 	jotaro.forceMove(out_of_range)
 
 	var/datum/action/cooldown/spell/timestop/timestop = new(dio)
+	timestop.spell_requirements = NONE
 	timestop.Grant(dio)
 	timestop.Trigger()
+	var/obj/effect/timestop/time_effect = locate() in center
+	TEST_ASSERT(time_effect, "Failed to create timestop effect")
 	sleep(0.1 SECONDS) // timestop is invoked async so let's just wait
 
 	TEST_ASSERT(!dio.IsStun(), "Timestopper should not have frozen themselves when using timestop")
@@ -24,6 +27,5 @@
 	TEST_ASSERT(!jotaro.IsStun(), "Timestopper should not have frozen the target outside of 2 tiles of range when using timestop")
 
 	// cleanup
-	var/obj/effect/timestop/time_effect = locate() in center
 	qdel(time_effect)
 	TEST_ASSERT(!kakyoin.IsStun(), "Timestopper should have unfrozen the any frozen targets after the effect expires")
