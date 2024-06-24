@@ -449,7 +449,7 @@
 
 /obj/item/storage/box/syndie_kit/mail_counterfeit
 	name = "mail counterfeit kit"
-	desc = "A box full of mail counterfeit devices. Nothing stops the mail."
+	desc = "A GLA Postal Service branded box. It's emblazoned with the motto: *Nothing stops the mail*."
 
 /obj/item/storage/box/syndie_kit/mail_counterfeit/PopulateContents()
 	for(var/i in 1 to 6)
