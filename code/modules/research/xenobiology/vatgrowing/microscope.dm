@@ -9,16 +9,18 @@
 	if(istype(tool, /obj/item/petri_dish))
 		if(current_dish)
 			balloon_alert(user, "already has a dish!")
-			return
-		balloon_alert(user, "dish added")
+			return ITEM_INTERACT_FAILURE
 		current_dish = tool
 		current_dish.forceMove(src)
+		update_static_data_for_all_viewers()
+		balloon_alert(user, "dish added")
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /obj/structure/microscope/attack_hand_secondary(mob/user, list/modifiers)
 	if(current_dish && user.put_in_hands(current_dish))
 		current_dish = null
+		update_static_data_for_all_viewers()
 		balloon_alert(user, "dish removed")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
@@ -29,7 +31,7 @@
 		ui = new(user, src, "Microscope", name)
 		ui.open()
 
-/obj/structure/microscope/ui_data(mob/user)
+/obj/structure/microscope/ui_static_data(mob/user)
 	var/list/data = list()
 
 	data["has_dish"] = current_dish ? TRUE : FALSE
@@ -88,6 +90,7 @@
 			if(!ui.user.put_in_hands(current_dish))
 				current_dish.forceMove(get_turf(src))
 			current_dish = null
+			update_static_data_for_all_viewers()
 			. = TRUE
 	update_appearance()
 
