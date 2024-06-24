@@ -71,7 +71,7 @@
 		H.vomit(0,1)//hope you're wearing a biosuit or you'll get reinfected from your vomit, lol
 	for(var/ID in host.diseases)
 		var/datum/disease/advanced/D = host.diseases[ID]
-		D.cure(host,2)
+		D.cure(target = host)
 	strength = 0
 	overloaded = TRUE
 

@@ -134,7 +134,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 		requests[C.ckey] = list()
 	requests[C.ckey] += request
 	requests_by_id.len++
-	requests_by_id[request.id] = request
+	requests_by_id["[request.id]"] = request
 
 /datum/request_manager/mentor/request_for_client(client/C, type, message, additional_info)
 	var/datum/request/request = new(C, type, message, additional_info)
@@ -164,7 +164,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 	// Get the request this relates to
 	var/id = params["id"] != null ? text2num(params["id"]) : null
 	if (!id)
-		to_chat(usr, "Failed to find a request ID in your action, please report this", confidential = TRUE)
+		to_chat(usr, span_danger("Failed to find a request ID in your action, please report this!"), confidential = TRUE)
 		CRASH("Received an action without a request ID, this shouldn't happen!")
 	var/datum/request/request = !id ? null : requests_by_id[id]
 

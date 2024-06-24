@@ -373,7 +373,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 	//Searing body temperatures cure diseases, on top of killing you.
 	if(mob.bodytemperature > max_bodytemperature)
-		cure(mob,1)
+		cure(target = mob)
 		return
 
 	if(!(infectable_biotypes & mob.mob_biotypes))
@@ -384,7 +384,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 			mob.immune_system.NaturalImmune()
 
 	if(!mob.immune_system.CanInfect(src))
-		cure(mob)
+		cure(target = mob)
 		return
 
 	//Freezing body temperatures halt diseases completely
@@ -418,7 +418,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 		if ((enemy_pathogen.form in can_kill) && strength > enemy_pathogen.strength)
 			log += "<br />[ROUND_TIME()] destroyed enemy [enemy_pathogen.form] #[enemy_pathogen.uniqueID]-[enemy_pathogen.subID] ([strength] > [enemy_pathogen.strength])"
-			enemy_pathogen.cure(mob)
+			enemy_pathogen.cure(target = mob)
 
 	// This makes it so that <mob> only ever gets affected by the equivalent of one virus so antags don't just stack a bunch
 	if(starved)
@@ -474,20 +474,14 @@ GLOBAL_LIST_INIT(virusDB, list())
 		L += D.Copy()
 	return L
 
-/datum/disease/advanced/cure(mob/living/carbon/mob, condition=0)
-	/* TODO
-	switch (condition)
-		if (0)
-			log_debug("[form] [uniqueID]-[subID] in [key_name(mob)] has been cured, and is being removed from their body.")
-		if (1)
-			log_debug("[form] [uniqueID]-[subID] in [key_name(mob)] has died from extreme temperature inside their host, and is being removed from their body.")
-		if (2)
-			log_debug("[form] [uniqueID]-[subID] in [key_name(mob)] has been wiped out by an immunity overload.")
-	*/
-	for(var/datum/symptom/e in symptoms)
-		e.disable_effect(mob, src)
-	mob.diseases -= src
-	logger.Log(LOG_CATEGORY_VIRUS, "[mob.name] was cured of virus [real_name()] at [loc_name(mob.loc)]", list("disease_data" = admin_details(), "location" = loc_name(mob.loc)))
+/datum/disease/advanced/cure(add_resistance = TRUE, mob/living/carbon/target)
+	target = target || affected_mob || usr
+	if(!istype(affected_mob) || QDELING(affected_mob))
+		return
+	for(var/datum/symptom/symptom in symptoms)
+		symptom.disable_effect(target, src)
+	target.diseases -= src
+	logger.Log(LOG_CATEGORY_VIRUS, "[affected_mob.name] was cured of virus [real_name()] at [loc_name(affected_mob.loc)]", list("disease_data" = admin_details(), "location" = loc_name(affected_mob.loc)))
 	//--Plague Stuff--
 	/*
 	var/datum/faction/plague_mice/plague = find_active_faction_by_type(/datum/faction/plague_mice)
@@ -495,13 +489,25 @@ GLOBAL_LIST_INIT(virusDB, list())
 		plague.update_hud_icons()
 	*/
 	//----------------
-	var/list/V = filter_disease_by_spread(mob.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
-	if (V && V.len <= 0)
-		GLOB.infected_contact_mobs -= mob
-		if (mob.pathogen)
-			for (var/mob/living/L in GLOB.science_goggles_wearers)
-				if (L.client)
-					L.client.images -= mob.pathogen
+	var/list/pathogen_info = filter_disease_by_spread(affected_mob.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
+	if(!length(pathogen_info))
+		GLOB.infected_contact_mobs -= affected_mob
+		if(affected_mob.pathogen)
+			for(var/mob/living/goggle_wearer in GLOB.science_goggles_wearers)
+				goggle_wearer.client?.images -= affected_mob.pathogen
+	// Add resistance by boosting whichever antigen is needed
+	if(add_resistance && target.immune_system)
+		var/boosted_antigen
+		var/boosted_antigen_level
+		for(var/antigen in src.antigen)
+			var/level = target.immune_system.antibodies[antigen]
+			if(level >= strength)
+				return
+			else if(!boosted_antigen || (boosted_antigen_level > level))
+				boosted_antigen = antigen
+				boosted_antigen_level = level
+		if(boosted_antigen)
+			target.immune_system.antibodies[boosted_antigen] = max(strength + 10, boosted_antigen_level)
 
 
 /datum/disease/advanced/proc/GetImmuneData(mob/living/mob)

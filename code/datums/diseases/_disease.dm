@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(inspectable_diseases, list())
 		return TRUE
 	return FALSE
 
-/datum/disease/proc/cure(add_resistance = TRUE)
+/datum/disease/proc/cure(add_resistance = TRUE, mob/living/carbon/target) // monkestation edit: AAAAAAAAAAAAA
 	if(affected_mob)
 		if(add_resistance && (disease_flags & CAN_RESIST))
 			LAZYOR(affected_mob.disease_resistances, GetDiseaseID())
