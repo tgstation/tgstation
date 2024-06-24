@@ -23,6 +23,8 @@
 	var/virus_suspectibility = 1
 	///This var defines how much % the organism grows per process(), without modifiers, if you have all required reagents
 	var/growth_rate = 4
+	///This var defines how many units of every reagent is consumed during growth per process()
+	var/consumption_rate = REAGENTS_METABOLISM
 	///Resulting atom from growing this cell line
 	var/atom/resulting_atom
 	///The number of resulting atoms
@@ -43,7 +45,7 @@
 		if(!reagents.has_reagent(i))
 			return FALSE
 	for(var/i in required_reagents) //Delete the required reagents if used
-		reagents.remove_reagent(i, REAGENTS_METABOLISM)
+		reagents.remove_reagent(i, consumption_rate)
 	return TRUE
 
 ///Apply modifiers on growth_rate based on supplementary and supressive reagents. Reagents is the growing vats reagents
@@ -52,22 +54,22 @@
 
 	//Handle growth based on supplementary reagents here.
 	for(var/i in supplementary_reagents)
-		if(!reagents.has_reagent(i, REAGENTS_METABOLISM))
+		if(!reagents.has_reagent(i, consumption_rate))
 			continue
 		. += supplementary_reagents[i]
-		reagents.remove_reagent(i, REAGENTS_METABOLISM)
+		reagents.remove_reagent(i, consumption_rate)
 
 	//Handle degrowth based on supressive reagents here.
 	for(var/i in suppressive_reagents)
-		if(!reagents.has_reagent(i, REAGENTS_METABOLISM))
+		if(!reagents.has_reagent(i, consumption_rate))
 			continue
 		. += suppressive_reagents[i]
-		reagents.remove_reagent(i, REAGENTS_METABOLISM)
+		reagents.remove_reagent(i, consumption_rate)
 
 	//Handle debuffing growth based on viruses here.
 	for(var/datum/micro_organism/virus/active_virus in biological_sample.micro_organisms)
-		if(reagents.has_reagent(/datum/reagent/medicine/spaceacillin, REAGENTS_METABOLISM))
-			reagents.remove_reagent(/datum/reagent/medicine/spaceacillin, REAGENTS_METABOLISM)
+		if(reagents.has_reagent(/datum/reagent/medicine/spaceacillin, consumption_rate))
+			reagents.remove_reagent(/datum/reagent/medicine/spaceacillin, consumption_rate)
 			continue //This virus is stopped, We have antiviral stuff
 		. -= virus_suspectibility
 

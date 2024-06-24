@@ -5,7 +5,8 @@ import { useBackend } from '../backend';
 import {
   Box,
   Button,
-  LabeledList,
+  Divider,
+  Icon,
   NoticeBox,
   Section,
   Stack,
@@ -22,11 +23,16 @@ type CellLine = {
   name: string;
   desc: string;
   icon: string;
+  consumption_rate: number;
   growth_rate: number;
   suspectibility: number;
-  requireds: string[];
-  supplementaries: string[];
-  suppressives: string[];
+  requireds: Reagent[];
+  supplementaries: Reagent[];
+  suppressives: Reagent[];
+};
+
+type Reagent = {
+  [key: string]: number;
 };
 
 export const Microscope = (props) => {
@@ -34,7 +40,7 @@ export const Microscope = (props) => {
   const { has_dish, cell_lines = [] } = data;
 
   return (
-    <Window width={600} height={600}>
+    <Window width={620} height={620}>
       <Window.Content scrollable>
         <Section
           title={has_dish ? 'Petri Dish Sample' : 'No Petri Dish'}
@@ -59,14 +65,13 @@ export const Microscope = (props) => {
 
 const CellList = (props) => {
   const { cell_lines } = props;
-  const { act, data } = useBackend<Data>();
   if (!cell_lines.length) {
     return <NoticeBox>No micro-organisms found</NoticeBox>;
   }
 
   return cell_lines.map((cell_line) => {
-    return (
-      <Stack key={cell_line.desc}>
+    return cell_line.type !== 'virus' ? (
+      <Stack key={cell_line.desc} mt={2}>
         <Stack.Item>
           <Box
             m={'16px'}
@@ -76,36 +81,103 @@ const CellList = (props) => {
             className={classes(['cell_line32x32', cell_line.icon])}
           />
         </Stack.Item>
-        <Stack.Item>
+        <Stack.Item grow>
           <Section
             title={cell_line.desc}
-            style={{ textTransform: 'capitalize' }}
+            buttons={
+              <Button
+                color="transparent"
+                icon="circle-question"
+                tooltip="Put the sample into a Growing Vat and pour the required reagents."
+              />
+            }
           >
-            <LabeledList>
-              {/* <LabeledList.Item label="Type">{cell_line.type}</LabeledList.Item>
-              <LabeledList.Item label="Name">{cell_line.name}</LabeledList.Item>
-              <LabeledList.Item label="Description">
-                {cell_line.desc}
-              </LabeledList.Item> */}
-              <LabeledList.Item label="Growth Rate">
-                {cell_line.growth_rate}
-              </LabeledList.Item>
-              <LabeledList.Item label="Virus Suspectibility">
-                {cell_line.suspectibility}
-              </LabeledList.Item>
-              <LabeledList.Item label="Required Reagents">
-                {cell_line.requireds}
-              </LabeledList.Item>
-              <LabeledList.Item label="Supplementary Reagents">
-                {cell_line.supplementaries}
-              </LabeledList.Item>
-              <LabeledList.Item label="Suppresive reagents">
-                {cell_line.suppressives}
-              </LabeledList.Item>
-            </LabeledList>
+            <Box my={1}>
+              Consume {cell_line.consumption_rate} units of every nutrient per
+              second to grow by {cell_line.growth_rate}%.
+            </Box>
+            {cell_line.suspectibility > 0 && (
+              <Box my={1}>
+                Reduced by {cell_line.suspectibility}% when infected with
+                viruses.
+              </Box>
+            )}
+            <Stack fill>
+              <Stack.Item grow>
+                <GroupTitle title="Required Reagents" />
+                {Object.keys(cell_line.requireds).map((reagent) => (
+                  <Button fluid key={reagent}>
+                    {reagent}
+                  </Button>
+                ))}
+              </Stack.Item>
+              <Stack.Item grow>
+                <GroupTitle title="Supplements" />
+                {Object.keys(cell_line.supplementaries).map((reagent) => (
+                  <Button
+                    fluid
+                    color="good"
+                    key={reagent}
+                    tooltip={
+                      '+' + cell_line.supplementaries[reagent] + '% growth/sec.'
+                    }
+                  >
+                    {reagent}
+                  </Button>
+                ))}
+              </Stack.Item>
+              <Stack.Item grow>
+                <GroupTitle title="Supressives" />
+                {Object.keys(cell_line.suppressives).map((reagent) => (
+                  <Button
+                    fluid
+                    color="bad"
+                    key={reagent}
+                    tooltip={cell_line.suppressives[reagent] + '% growth/sec.'}
+                  >
+                    {reagent}
+                  </Button>
+                ))}
+              </Stack.Item>
+            </Stack>
+          </Section>
+        </Stack.Item>
+      </Stack>
+    ) : (
+      <Stack key={cell_line.desc} mt={2}>
+        <Stack.Item>
+          <Icon name="viruses" size={4} mr={1} />
+        </Stack.Item>
+        <Stack.Item grow>
+          <Section title={cell_line.desc}>
+            <Box my={1}>
+              Reduces growth of other cell lines when not suppressed by
+              Spaceacillin.
+            </Box>
           </Section>
         </Stack.Item>
       </Stack>
     );
   });
+};
+
+const GroupTitle = ({ title }) => {
+  return (
+    <Stack my={1}>
+      <Stack.Item grow>
+        <Divider />
+      </Stack.Item>
+      <Stack.Item
+        style={{
+          textTransform: 'capitalize',
+        }}
+        color={'gray'}
+      >
+        {title}
+      </Stack.Item>
+      <Stack.Item grow>
+        <Divider />
+      </Stack.Item>
+    </Stack>
+  ) as any;
 };

@@ -5,15 +5,23 @@
 	icon_state = "microscope"
 	var/obj/item/petri_dish/current_dish
 
-/obj/structure/microscope/attacked_by(obj/item/I, mob/living/user)
-	if(!istype(I, /obj/item/petri_dish))
-		return ..()
-	if(current_dish)
-		to_chat(user, span_warning("There is already a petridish in \the [src]."))
-		return
-	to_chat(user, span_notice("You put [I] into \the [src]."))
-	current_dish = I
-	current_dish.forceMove(src)
+/obj/structure/microscope/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/petri_dish))
+		if(current_dish)
+			balloon_alert(user, "already has a dish!")
+			return
+		balloon_alert(user, "added dish")
+		current_dish = tool
+		current_dish.forceMove(src)
+		return ITEM_INTERACT_SUCCESS
+	return ..()
+
+/obj/structure/microscope/attack_hand_secondary(mob/user, list/modifiers)
+	if(current_dish && user.put_in_hands(current_dish))
+		current_dish = null
+		balloon_alert(user, "took dish")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
 
 /obj/structure/microscope/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -42,8 +50,9 @@
 				name = cell_line.name,
 				desc = cell_line.desc,
 				icon = atom_icon,
-				growth_rate = cell_line.growth_rate,
-				suspectibility = cell_line.virus_suspectibility,
+				consumption_rate = cell_line.consumption_rate * SSMACHINES_DT,
+				growth_rate = cell_line.growth_rate * SSMACHINES_DT,
+				suspectibility = cell_line.virus_suspectibility * SSMACHINES_DT,
 				requireds = get_reagent_list(cell_line.required_reagents),
 				supplementaries = get_reagent_list(cell_line.supplementary_reagents),
 				suppressives = get_reagent_list(cell_line.suppressive_reagents)
@@ -65,11 +74,10 @@
 	var/list/reagent_list = list()
 	for(var/i in reagents) //Convert from assoc to normal. Yeah very shit.
 		var/datum/reagent/reagent = i
-		reagent_list += initial(reagent.name)
-	return reagent_list.Join(", ")
+		reagent_list["[initial(reagent.name)]"] = reagents[i] * SSMACHINES_DT
+	return reagent_list
 
-
-/obj/structure/microscope/ui_act(action, params)
+/obj/structure/microscope/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
@@ -77,7 +85,8 @@
 		if("eject_petridish")
 			if(!current_dish)
 				return FALSE
-			current_dish.forceMove(get_turf(src))
+			if(!ui.user.put_in_hands(current_dish))
+				current_dish.forceMove(get_turf(src))
 			current_dish = null
 			. = TRUE
 	update_appearance()
