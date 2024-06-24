@@ -553,8 +553,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Given by /obj/item/virgin_mary, mobs that used this can no longer use it again ever
 #define TRAIT_MAFIAINITIATE "mafiainitiate"
 
+/// Our mob has the mind reading genetic mutation.
+#define TRAIT_MIND_READER "mind reader"
+
 ///Makes the player appear as their respective job in Binary Talk rather than being a 'Default Cyborg'.
-#define DISPLAYS_JOB_IN_BINARY "display_job_in_binary"
+#define TRAIT_DISPLAY_JOB_IN_BINARY "display job in binary"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
