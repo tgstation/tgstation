@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes an issue that was causing the quirk config tooltips to render behind the window, making them nearly impossible to read."

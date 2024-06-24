@@ -1,0 +1,7 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "you can piggyback on players again"
+  - bugfix: "you can strip someone while lying down"
+  - bugfix: "paraplegics can buckle others & themselves to chairs & mobs"
+  - qol: "improved feedback messages when an action cannot be done"

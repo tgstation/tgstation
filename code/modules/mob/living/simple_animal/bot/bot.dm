@@ -1215,3 +1215,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/spawn_gibs(drop_bitflags = NONE)
 	new /obj/effect/gibspawner/robot(drop_location(), src)
+
+/mob/living/simple_animal/bot/get_hit_area_message(input_area)
+	// we just get hit, there's no complexity for hitting an arm (if it exists) or anything.
+	// we also need to return an empty string as otherwise it would falsely say that we get hit in the chest or something strange like that (bots don't have "chests")
+	return ""

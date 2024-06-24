@@ -103,7 +103,7 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/supplypod_beacon/attackby(obj/item/W, mob/user)
-	if(!istype(W, /obj/item/pen)) //give a tag that is visible from the linked express console
+	if(IS_WRITING_UTENSIL(W)) //give a tag that is visible from the linked express console
 		return ..()
 	var/new_beacon_name = tgui_input_text(user, "What would you like the tag to be?", "Beacon Tag", max_length = MAX_NAME_LEN)
 	if(isnull(new_beacon_name))

@@ -376,7 +376,7 @@
 			if(!locomotion)
 				O.set_lockcharge(TRUE)
 
-	else if(istype(W, /obj/item/pen))
+	else if(IS_WRITING_UTENSIL(W))
 		to_chat(user, span_warning("You need to use a multitool to name [src]!"))
 	else
 		return ..()

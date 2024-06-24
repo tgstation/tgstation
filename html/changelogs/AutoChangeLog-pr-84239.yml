@@ -1,0 +1,5 @@
+author: "IsaacExists"
+delete-after: True
+changes:
+  - spellcheck: "Shrapnel removal messages now have closing parenthesis, removed unnecessary punctuation."
+  - spellcheck: "The nutriment pump implant's description in the lathes are no longer typo'd."
