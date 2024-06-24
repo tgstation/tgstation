@@ -101,8 +101,6 @@
 		return FALSE
 	say(pick("Take my Justice-Slash!", "A falling leaf...", "Justice is quite a lonely path"), forced = "Justice Mech")
 	playsound(src, 'sound/mecha/mech_stealth_pre_attack.ogg', 75, FALSE)
-	if(!do_after(pilot, 1 SECONDS, live_or_dead))
-		return FALSE
 	finish_him(pilot, live_or_dead)
 	return TRUE
 
@@ -116,6 +114,8 @@
  * * him - Target at which the mech makes an attack.
  */
 /obj/vehicle/sealed/mecha/justice/proc/finish_him(mob/finisher, mob/living/him)
+	if(!do_after(finisher, 1 SECONDS, him))
+		return
 	if(QDELETED(finisher))
 		return
 	if(QDELETED(him))
