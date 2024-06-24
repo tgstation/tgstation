@@ -146,7 +146,7 @@ const CellList = (props) => {
     ) : (
       <Stack key={cell_line.desc} mt={2}>
         <Stack.Item>
-          <Icon name="viruses" size={4} mr={1} />
+          <Icon name="viruses" color="bad" size={4} mr={1} />
         </Stack.Item>
         <Stack.Item grow>
           <Section title={cell_line.desc}>
