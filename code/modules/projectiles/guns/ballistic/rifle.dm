@@ -71,7 +71,6 @@
 	. = ..()
 	if(.)
 		spread = 36
-		qdel(GetComponent(/datum/component/bayonet_attachable))
 		SET_BASE_PIXEL(0, 0)
 		update_appearance()
 

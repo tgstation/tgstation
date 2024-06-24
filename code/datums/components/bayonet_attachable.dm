@@ -16,6 +16,8 @@
 	/// Offsets for the bayonet overlay
 	var/offset_x = 0
 	var/offset_y = 0
+	/// If this component allows sawing off the parent gun/should be deleted when the parent gun is sawn off
+	var/allow_sawnoff = FALSE
 
 	// Internal vars
 	/// Currently attached bayonet
@@ -30,7 +32,8 @@
 	removable = TRUE,
 	bayonet_icon_state = null,
 	bayonet_overlay = "bayonet",
-	bayonet_overlay_icon = 'icons/obj/weapons/guns/bayonets.dmi'
+	bayonet_overlay_icon = 'icons/obj/weapons/guns/bayonets.dmi',
+	allow_sawnoff = FALSE
 )
 
 	if(!isitem(parent))
@@ -42,6 +45,7 @@
 	src.bayonet_overlay_icon = bayonet_overlay_icon
 	src.offset_x = offset_x
 	src.offset_y = offset_y
+	src.allow_sawnoff = allow_sawnoff
 
 	if (istype(starting_bayonet))
 		add_bayonet(starting_bayonet)
@@ -61,6 +65,8 @@
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_parent_deleted))
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(on_pre_attack))
+	RegisterSignal(parent, COMSIG_GUN_BEING_SAWNOFF, PROC_REF(on_being_sawnoff))
+	RegisterSignal(parent, COMSIG_GUN_SAWN_OFF, PROC_REF(on_sawn_off))
 
 /datum/component/bayonet_attachable/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -72,7 +78,9 @@
 		COMSIG_ATOM_ATTACKBY,
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_QDELETING,
-		COMSIG_ITEM_PRE_ATTACK
+		COMSIG_ITEM_PRE_ATTACK,
+		COMSIG_GUN_BEING_SAWNOFF,
+		COMSIG_GUN_SAWN_OFF,
 	))
 
 /datum/component/bayonet_attachable/proc/on_examine(obj/item/source, mob/examiner, list/examine_list)
@@ -84,7 +92,7 @@
 
 	examine_list += "It has \a [bayonet] [removable ? "" : "permanently "]affixed to it."
 	if(removable)
-		examine_list += span_info("[bayonet] looks like it can be <b>unscrewed</b> from [src].")
+		examine_list += span_info("[bayonet] looks like it can be <b>unscrewed</b> from [bayonet].")
 
 /datum/component/bayonet_attachable/proc/on_pre_attack(obj/item/source, atom/target, mob/living/user, params)
 	SIGNAL_HANDLER
@@ -189,3 +197,16 @@
 /datum/component/bayonet_attachable/proc/on_parent_deleted(obj/item/source)
 	SIGNAL_HANDLER
 	QDEL_NULL(bayonet)
+
+/datum/component/bayonet_attachable/proc/on_being_sawnoff(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
+	if (!bayonet || allow_sawnoff)
+		return
+	source.balloon_alert(user, "[bayonet.bayonet.name] must be removed!")
+	return COMPONENT_CANCEL_SAWING_OFF
+
+/datum/component/bayonet_attachable/proc/on_sawn_off(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+	if (!allow_sawnoff)
+		qdel(src)
