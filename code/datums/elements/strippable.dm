@@ -52,6 +52,11 @@
 	if (!isnull(should_strip_proc_path) && !call(source, should_strip_proc_path)(user))
 		return
 
+	if (isliving(source))
+		var/mob/living/mob = source
+		if (mob.can_be_held && (user.grab_state == GRAB_AGGRESSIVE) && (user.pulling == source))
+			return
+
 	var/datum/strip_menu/strip_menu = LAZYACCESS(strip_menus, source)
 
 	if (isnull(strip_menu))
