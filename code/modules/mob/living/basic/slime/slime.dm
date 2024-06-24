@@ -187,6 +187,8 @@
 
 /mob/living/basic/slime/regenerate_icons()
 	cut_overlays()
+	if(slime_type.transparent)
+		alpha = SLIME_TRANSPARENCY_ALPHA
 	var/icon_text = "[slime_type.colour]-[life_stage]"
 	icon_dead = "[icon_text]-dead"
 	if(stat != DEAD)

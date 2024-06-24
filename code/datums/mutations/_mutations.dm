@@ -1,3 +1,23 @@
+
+/// Negatives that are virtually harmless and mostly just funny (language)
+// Set to 0 because munchkinning via miscommunication = bad
+#define NEGATIVE_STABILITY_MINI 0
+/// Negatives that are slightly annoying (unused)
+#define NEGATIVE_STABILITY_MINOR -20
+/// Negatives that present an uncommon or weak, consistent hindrance to gameplay (cough, paranoia)
+#define NEGATIVE_STABILITY_MODERATE -30
+/// Negatives that present a major consistent hindrance to gameplay (deaf, mute, acid flesh)
+#define NEGATIVE_STABILITY_MAJOR -40
+
+/// Positives that provide basically no benefit (glowy)
+#define POSITIVE_INSTABILITY_MINI 5
+/// Positives that are niche in application or useful in rare circumstances (parlor tricks, geladikinesis, autotomy)
+#define POSITIVE_INSTABILITY_MINOR 10
+/// Positives that provide a new ability that's roughly par with station equipment (insulated, cryokinesis)
+#define POSITIVE_INSTABILITY_MODERATE 25
+/// Positives that are unique, very powerful, and noticeably change combat/gameplay (hulk, tk)
+#define POSITIVE_INSTABILITY_MAJOR 35
+
 /datum/mutation
 	var/name
 

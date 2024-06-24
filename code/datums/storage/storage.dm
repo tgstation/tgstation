@@ -735,12 +735,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
 	else if(!istype(over_object, /atom/movable/screen))
-		var/action_status
-		if(isturf(over_object))
-			action_status = user.can_perform_turf_action(over_object)
-		else
-			action_status = user.can_perform_action(over_object, FORBID_TELEKINESIS_REACH)
-		if(!action_status)
+		if(!user.can_perform_action(over_object, FORBID_TELEKINESIS_REACH))
 			return
 
 		parent.add_fingerprint(user)
@@ -791,7 +786,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/on_mousedropped_onto(datum/source, obj/item/dropping, mob/user)
 	SIGNAL_HANDLER
 
-	. = COMPONENT_CANCEL_MOUSEDROPPED_ONTO
 	if(!istype(dropping))
 		return
 	if(dropping != user.get_active_held_item())
@@ -804,6 +798,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	attempt_insert(dropping, user)
+	return COMPONENT_CANCEL_MOUSEDROPPED_ONTO
 
 /// Signal handler for whenever we're attacked by an object.
 /datum/storage/proc/on_item_interact(datum/source, mob/user, obj/item/thing, params)

@@ -55,6 +55,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A [initial(name)]. This one is lit."
 	attack_verb_continuous = string_list(list("burns", "singes"))
 	attack_verb_simple = string_list(list("burn", "singe"))
+	if(isliving(loc))
+		var/mob/living/male_model = loc
+		if(male_model.fire_stacks && !(male_model.on_fire))
+			male_model.ignite_mob()
 	START_PROCESSING(SSobj, src)
 	update_appearance()
 
@@ -185,6 +189,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		light()
 	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), slot_flags) //90% to knock off when wearing a mask
 	AddElement(/datum/element/update_icon_updates_onmob)
+	RegisterSignal(src, COMSIG_ATOM_TOUCHED_SPARKS, PROC_REF(sparks_touched))
 	icon_state = icon_off
 	inhand_icon_state = inhand_icon_off
 
@@ -282,7 +287,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/obj/item/reagent_containers/cup/glass = interacting_with
 	if(!istype(glass)) //you can dip cigarettes into beakers
 		return NONE
-
+	if(istype(glass, /obj/item/reagent_containers/cup/mortar))
+		return NONE
 	if(glass.reagents.trans_to(src, chem_volume, transferred_by = user)) //if reagents were transferred, show the message
 		to_chat(user, span_notice("You dip \the [src] into \the [glass]."))
 	//if not, either the beaker was empty, or the cigarette was full
@@ -300,6 +306,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		icon_state = icon_off
 		inhand_icon_state = inhand_icon_off
+
+
+/obj/item/clothing/mask/cigarette/proc/sparks_touched(datum/source, obj/effect/particle_effect)
+	SIGNAL_HANDLER
+
+	if(lit)
+		return
+	light()
 
 /// Lights the cigarette with given flavor text.
 /obj/item/clothing/mask/cigarette/proc/light(flavor_text = null)
@@ -875,6 +889,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		attack_verb_continuous = string_list(list("burns", "singes"))
 		attack_verb_simple = string_list(list("burn", "singe"))
 		START_PROCESSING(SSobj, src)
+		if(isliving(loc))
+			var/mob/living/male_model = loc
+			if(male_model.fire_stacks && !(male_model.on_fire))
+				male_model.ignite_mob()
 	else
 		hitsound = SFX_SWING_HIT
 		force = 0
