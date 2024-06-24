@@ -2,15 +2,15 @@
 //Projectile dampening field that slows projectiles and lowers their damage for an energy cost deducted every 1/5 second.
 //Only use square radius for this!
 /datum/proximity_monitor/advanced/projectile_dampener
-	var/static/image/edgeturf_south = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_south")
-	var/static/image/edgeturf_north = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_north")
-	var/static/image/edgeturf_west = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_west")
-	var/static/image/edgeturf_east = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_east")
-	var/static/image/northwest_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_northwest")
-	var/static/image/southwest_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southwest")
-	var/static/image/northeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_northeast")
-	var/static/image/southeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southeast")
-	var/static/image/generic_edge = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_generic")
+	var/static/image/edgeturf_south = image('icons/effects/fields48x.dmi', icon_state = "projectile_dampen_south")
+	var/static/image/edgeturf_north = image('icons/effects/fields48x.dmi', icon_state = "projectile_dampen_north")
+	var/static/image/edgeturf_west = image('icons/effects/fields48x.dmi', icon_state = "projectile_dampen_west")
+	var/static/image/edgeturf_east = image('icons/effects/fields48x.dmi', icon_state = "projectile_dampen_east")
+	var/static/image/northwest_corner = image('icons/effects/fields48x.dmi', icon_state = "projectile_dampen_northwest")
+	var/static/image/southwest_corner = image('icons/effects/fields48x.dmi', icon_state = "projectile_dampen_southwest")
+	var/static/image/northeast_corner = image('icons/effects/fields48x.dmi', icon_state = "projectile_dampen_northeast")
+	var/static/image/southeast_corner = image('icons/effects/fields48x.dmi', icon_state = "projectile_dampen_southeast")
+	var/static/image/generic_edge = image('icons/effects/fields48x.dmi', icon_state = "projectile_dampen_generic")
 	var/list/obj/projectile/tracked = list()
 	var/list/obj/projectile/staging = list()
 	// lazylist that keeps track of the overlays added to the edge of the field
