@@ -1,0 +1,8 @@
+author: "KnigTheThrasher"
+delete-after: True
+changes:
+  - rscadd: "security gets spammed each time a bitrunner finishes their job because they forget to take crates from perma"
+  - rscdel: "Deleted few doors in delta transfer area for easier access to the escape pod"
+  - rscdel: "Deleted that oil stain under boxstation bit den door"
+  - bugfix: "fixed missing pipes in delta visitation area"
+  - bugfix: "fixed a backwards bench in delta perma"
