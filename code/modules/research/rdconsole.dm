@@ -35,6 +35,8 @@ Nothing else in the console has ID requirements.
 	var/id_cache = list()
 	/// Sequence var for the id cache
 	var/id_cache_seq = 1
+	/// The contents of the reply this will give to any querying servers
+	var/list/query_reply = list()
 
 /proc/CallMaterialName(ID)
 	if (istype(ID, /datum/material))
@@ -49,18 +51,50 @@ Nothing else in the console has ID requirements.
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
+	RegisterSignal(src, COMSIG_RESEARCH_CONSOLE_INFO_QUERIED, PROC_REF(validate_console_query))
 	if(stored_research)
 		stored_research.consoles_accessing += src
-		RegisterSignal(src, COMSIG_CONSOLE_INFO_QUERIED, PROC_REF(console_query_reply))
+	update_query_reply()
 
-/obj/machinery/computer/rdconsole/proc/console_query_reply(datum/source, datum/querying_remote)
+/* Signal handler for verifying this can respond to a query. Currently just a yes/no check.
+* No scenarios to return an invalid response for now, to facilitate server controller access locking
+* even if the PDA is out of signal.
+* datum/source - src
+* datum/inquirer - The object doing the query; for validation of query access in the future
+*/
+/obj/machinery/computer/rdconsole/proc/validate_console_query(datum/source, datum/inquirer)
 	SIGNAL_HANDLER
 
-	var/query_reply[0]
-	query_reply["console_name"] = src
-	query_reply["console_location"] = get_area(src)
-	query_reply["console_locked"] = locked
-	query_reply["console_ref"] = REF(src)
+	return RESEARCH_CONSOLE_QUERY_VALID
+
+/* Whenever this program is installed, it puts together a list of relevant data for server controller queries
+* However, it can also update singular fields if needed; current projected use cases are for things that we
+* don't want rebuilding the whole query with respect to performance considerations, or for l33t haxxorz updating
+* their query responses with erroneous information: Science McNotAnAntag says, "RD, look! The AI is researching bombs! You should let me valiantly card it!"
+* single_field - null by default, if not null, the value of the field to update
+* value - null by default, if not null, the value to update the field with
+*/
+/obj/machinery/computer/rdconsole/proc/update_query_reply(single_field = null, value = null)
+
+	if(single_field) // If we're updating a single field then ONLY update the single field... obviously...
+		query_reply[single_field] = value
+	else
+		query_reply["console_name"] = src
+		query_reply["console_location"] = get_area(src)
+		query_reply["console_locked"] = locked
+		query_reply["console_ref"] = REF(src)
+	if(stored_research)
+		stored_research.consoles_accessing[src] = console_query_reply()
+
+/* Handler for the various interfaces that would query console information.
+* queried_field - null by default, if not null return the whole query, else just the field
+* datum/inquirer - The object doing the query; to be used for logging purposes
+*/
+/obj/machinery/computer/rdconsole/proc/console_query_reply(queried_field = null, datum/inquirer = null)
+
+	if(queried_field)
+		return query_reply[queried_field]
+
 	return query_reply
 
 /obj/machinery/computer/rdconsole/Destroy()

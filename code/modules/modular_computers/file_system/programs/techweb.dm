@@ -21,16 +21,51 @@
 	/// Sequence var for the id cache
 	var/id_cache_seq = 1
 	/// What this will return when a server controller queries it for its info
-	var/query_reply[0]
+	var/list/query_reply = list()
 
 /datum/computer_file/program/science/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, computer)
-	if(stored_research)
-		stored_research.consoles_accessing += src
-	RegisterSignal(src, COMSIG_CONSOLE_INFO_QUERIED, PROC_REF(console_query_reply))
-	form_query_response()
+	RegisterSignal(computer, COMSIG_RESEARCH_CONSOLE_INFO_QUERIED, PROC_REF(validate_console_query))
+	RegisterSignal(computer, COMSIG_RESEARCH_CONSOLE_TOGGLE_LOCK, PROC_REF(toggleLock)
+
+/datum/computer_file/program/science/can_run(mob/living/user)
+	. = ..()
+	if(!.)
+		return
+	if(stored_research.users_accessing[user])
+		var/user_record = stored_research.users_accessing[user]
+		if(user_record["locked"])
+			return FALSE
+	return TRUE
+
+/datum/computer_file/program/science/on_start(mob/living/user)
+	. = ..()
+	if(!.)
+		return
+	if(stored_research && !stored_research.consoles_accessing[computer])
+		stored_research.consoles_accessing += computer
+
+	update_query_reply()
+
+	if(!stored_research.users_accessing[user]) // emagged consoles and admin abuse doesn't get logged
+		if(computer.obj_flags & EMAGGED)
+			return
+		if(isAdminGhostAI(user))
+			return
+		stored_research.register_user(user)
+
+/* Signal handler for verifying this can respond to a query. Currently just a yes/no check.
+* No scenarios to return an invalid response for now, to facilitate server controller access locking
+* even if the PDA is out of signal.
+* datum/source - src
+* datum/inquirer - The object doing the query; used for logging purposes, and for validation of query access in the future
+*/
+/datum/computer_file/program/science/proc/validate_console_query(datum/source, datum/inquirer)
+	SIGNAL_HANDLER
+
+	return RESEARCH_CONSOLE_QUERY_VALID
 
 /* Whenever this program is installed, it puts together a list of relevant data for server controller queries
 * However, it can also update singular fields if needed; current projected use cases are for things that we
@@ -39,48 +74,41 @@
 * single_field - null by default, if not null, the value of the field to update
 * value - null by default, if not null, the value to update the field with
 */
-/datum/computer_file/program/science/proc/form_query_response(single_field = null, value = null)
+/datum/computer_file/program/science/proc/update_query_reply(single_field = null, value = null)
 
 	if(single_field) // If we're updating a single field then ONLY update the single field... obviously...
 		query_reply[single_field] = value
-		return
-	query_reply["console_name"] = src
-	query_reply["console_location"] = computer
-	query_reply["console_locked"] = locked
-	query_reply["console_ref"] = REF(src)
+	else
+		query_reply["console_name"] = computer
+		query_reply["console_location"] = "NTNet Connection"
+		query_reply["console_locked"] = locked
+		query_reply["console_ref"] = REF(computer)
+	if(stored_research)
+		stored_research.consoles_accessing[computer] = console_query_reply()
 
 
-/* Signal handler for the various interfaces that would query console information.
-* datum/source - The object being queried for its info
-* datum/remote_server - The object doing the query; used for logging purposes
+
+/* Handler for the various interfaces that would query console information.
 * queried_field - null by default, if not null return the whole query, else just the field
+* datum/inquirer - The object doing the query; to be used for logging purposes
 */
-/datum/computer_file/program/science/proc/console_query_reply(datum/source, datum/remote_server, queried_field = null)
-	SIGNAL_HANDLER
+/datum/computer_file/program/science/proc/console_query_reply(queried_field = null, datum/inquirer = null)
 
 	if(queried_field)
 		return query_reply[queried_field]
 
 	return query_reply
 
-/* Handler for locking this console. It will set the required access to unlock it to the highest
-* access level of the user that locked it. If the Captain locks down the RD's PDA, the RD needs the Captain
-* to unlock it, and so forth. We don't call this for being emagged, as that's a different case.
-* datum/lock_caller - The user that (un)locked the console
-* remote_lock - boolean, false by default. If true, most of the logic is handled from the server controller, and this only gets called if successful.
+/* Signal handler for toggling the lock on the program. Can be called remotely at the server controller, or locally.
+*  Either way, the access required to unlock it is the highest possessed by the person setting the lock:area
+*  Captain -> RD -> Scientist
+*  datum/source - the source of the signal, typically the host modular computer
+*  datum/lock_setter - the person setting the lock
 */
-/datum/computer_file/program/science/proc/toggle_lock(datum/lock_caller, remote_lock = FALSE)
-	if(remote_lock)
-		locked = !locked
-		if(locked)
+/datum/computer_file/program/science/proc/toggleLock(datum/source, mob/living/lock_setter, remote_operation = FALSE)
+	SIGNAL_HANDLER
 
-
-
-	if(current_lock)
-		if(lock_access in computer?.computer_id_slot?.access)
-			locked = !locked
-			form_query_response("console_locked", locked)
-
+	if(!locked)
 
 
 /datum/computer_file/program/science/application_attackby(obj/item/attacking_item, mob/living/user)
@@ -159,8 +187,9 @@
 				return TRUE
 			if(lock_access in computer?.computer_id_slot?.access)
 				locked = !locked
+				locked ? 0 : lock_access = ACCESS_RESEARCH // reset to ACCESS_RESEARCH when unlocked
 			else
-				to_chat(usr, span_boldwarning("Unauthorized Access. Please insert research ID card."))
+				to_chat(usr, span_boldwarning("Unauthorized Access. Please insert ID card: [lock_access]."))
 			return TRUE
 		if ("researchNode")
 			research_node(params["node_id"], usr)

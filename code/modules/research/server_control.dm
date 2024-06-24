@@ -52,13 +52,19 @@
 			))
 
 		for(var/datum/interface as anything in stored_research.consoles_accessing)
-			var/list/queried_info = SEND_SIGNAL(interface, COMSIG_CONSOLE_INFO_QUERIED, src)
-			data["consoles"] += list(list(
-				"console_name" = queried_info["console_name"],
-				"console_location" = queried_info["console_location"],
-				"console_locked" = queried_info["console_locked"],
-				"console_ref" = queried_info["console_ref"],
-			))
+			var/query_validation = SEND_SIGNAL(interface, COMSIG_RESEARCH_CONSOLE_INFO_QUERIED, src)
+			if(query_validation & RESEARCH_CONSOLE_QUERY_INVALID)
+				continue // in cases where we don't want some research interface to show up for the server controller
+			else if(query_validation & RESEARCH_CONSOLE_QUERY_VALID)
+				var/list/queried_info = stored_research.consoles_accessing[interface]
+				data["consoles"] += list(list(
+					"console_name" = queried_info["console_name"],
+					"console_location" = queried_info["console_location"],
+					"console_locked" = queried_info["console_locked"],
+					"console_ref" = queried_info["console_ref"],
+				))
+			else
+				stack_trace("Invalid console query validation from " + interface)
 
 
 	return data
@@ -80,8 +86,8 @@
 			server_selected.toggle_disable(usr)
 			return TRUE
 		if("lock_console")
-			var/console_selected = locate(params["selected_console"]) in stored_research.consoles_accessing
+			var/datum/console_selected = stored_research.consoles_accessing[params["selected_console"]]
 			if(!console_selected)
 				return FALSE
-			console_selected.locked = !console_selected.locked
+			SEND_SIGNAL(console_selected, COMSIG_RESEARCH_CONSOLE_TOGGLE_LOCK, src)
 			return TRUE

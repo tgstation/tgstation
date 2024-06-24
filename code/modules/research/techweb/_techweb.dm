@@ -48,7 +48,7 @@
 	var/list/datum/experiment/skipped_experiment_types = list()
 
 	///All RD consoles connected to this individual techweb.
-	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
+	var/list/datum/consoles_accessing = list()
 	///All research servers connected to this individual techweb.
 	var/list/obj/machinery/rnd/server/techweb_servers = list()
 
