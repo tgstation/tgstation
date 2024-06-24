@@ -15,7 +15,6 @@
 		TRAIT_QUICK_BUILD,
 		TRAIT_EASILY_WOUNDED,
 		TRAIT_NIGHT_VISION,
-		TRAIT_FREERUNNING
 		// TRAIT_pickpocketing?
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID
@@ -27,7 +26,7 @@
 	liked_food = GORE | MEAT | GROSS
 	species_language_holder = /datum/language_holder/goblin
 	maxhealthmod = 0.75
-	stunmod = 0.75
+	stunmod = 1.2
 	speedmod = -0.25
 	payday_modifier = 1
 	bodypart_overrides = list(
