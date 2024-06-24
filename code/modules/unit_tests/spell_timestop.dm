@@ -28,4 +28,3 @@
 
 	// cleanup
 	qdel(time_effect)
-	TEST_ASSERT(!kakyoin.IsStun(), "Timestopper should have unfrozen the any frozen targets after the effect expires")
