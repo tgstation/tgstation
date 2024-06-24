@@ -288,6 +288,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/effect/timestop)
 	//Only you can prevent CI fires
 	returnable_list += typesof(/obj/effect/particle_effect/sparks)
+	//See above
+	returnable_list += typesof(/obj/effect/decal/cleanable/fuel_pool)
 	//Invoke async in init, skippppp
 	returnable_list += typesof(/mob/living/silicon/robot/model)
 	//This lad also sleeps
