@@ -124,7 +124,7 @@ Striking a noncultist, however, will tear their flesh."}
 	wound_bonus = -25
 	bare_wound_bonus = 30
 	free_use = TRUE
-	light_color = COLOR_VERY_PALE_LIME_GREEN
+	light_color = COLOR_HERETIC_GREEN
 	light_range = 4
 	/// holder for the actual action when created.
 	var/datum/action/cooldown/spell/path_wielder_action

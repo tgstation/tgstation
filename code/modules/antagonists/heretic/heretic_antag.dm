@@ -422,13 +422,13 @@
 	// Cool effect for the rune as well as the item
 	var/obj/effect/rune/convert/conversion_rune = locate() in get_turf(source)
 	if(conversion_rune)
-		conversion_rune.gender_reveal(outline_color = COLOR_VERY_PALE_LIME_GREEN,\
+		conversion_rune.gender_reveal(outline_color = COLOR_HERETIC_GREEN,\
 		ray_color = null,\
 		do_float = FALSE,\
 		do_layer = FALSE,\
 		)
 
-	haunted_blade.gender_reveal(outline_color = null, ray_color = COLOR_VERY_PALE_LIME_GREEN)
+	haunted_blade.gender_reveal(outline_color = null, ray_color = COLOR_HERETIC_GREEN)
 
 	for(var/mob/living/culto as anything in invokers)
 		to_chat(culto, span_cult_large("\"A follower of the forgotten gods! You must be rewarded for such a valuable sacrifice.\""))

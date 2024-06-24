@@ -280,6 +280,8 @@
 
 // Wand of debugging
 
+#define TESTING
+
 #ifdef TESTING
 
 /obj/item/gun/magic/wand/antag
