@@ -31,6 +31,7 @@
 	mail_goodies = list(
 		/obj/item/storage/box/lights/mixed = 20,
 		/obj/item/lightreplacer = 10,
+		/obj/item/spess_knife = 10,
 		/obj/item/holosign_creator/engineering = 8,
 		/obj/item/wrench/bolter = 8,
 		/obj/item/clothing/head/utility/hardhat/red/upgraded = 1
@@ -78,8 +79,3 @@
 	head = null
 	mask = /obj/item/clothing/mask/breath
 	internals_slot = ITEM_SLOT_SUITSTORE
-
-/datum/job/engineer/get_mail_goodies(mob/recipient)
-	. = ..()
-	// A multi-tool for station work
-	. += list(/obj/item/spess_knife = 20)
