@@ -8,7 +8,7 @@
 	anchored = FALSE
 	use_power = NO_POWER_USE
 	req_access = list(ACCESS_KITCHEN)
-	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
+	obj_flags = parent_type::obj_flags | NO_DEBRIS_AFTER_DECONSTRUCTION
 	var/unpacked = FALSE
 	var/obj/machinery/griddle/stand/cart_griddle
 	var/obj/machinery/smartfridge/food/cart_smartfridge

@@ -39,7 +39,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	melee_attack_cooldown = CLICK_CD_MELEE
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 3
 	light_on = FALSE
 

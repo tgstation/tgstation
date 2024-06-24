@@ -192,6 +192,10 @@ GLOBAL_VAR(round_default_lawset)
 	var/datum/ai_laws/default_laws = get_round_default_lawset()
 	default_laws = new default_laws()
 	inherent = default_laws.inherent
+	var/datum/job/human_ai_job = SSjob.GetJob(JOB_HUMAN_AI)
+	if(human_ai_job && human_ai_job.current_positions && !zeroth) //there is a human AI so we "slave" to that.
+		zeroth = "Follow the orders of Big Brother."
+		protected_zeroth = TRUE
 
 /**
  * Gets the number of how many laws this AI has

@@ -12,11 +12,19 @@
 	display_timer = FALSE
 	w_class = WEIGHT_CLASS_SMALL
 	gender = PLURAL
+	/// What the charge is stuck to
 	var/atom/target = null
+	/// C4 overlay to put on target
 	var/mutable_appearance/plastic_overlay
+	/// Do we do a directional explosion when target is a a dense atom?
 	var/directional = FALSE
+	/// When doing a directional explosion, what arc does the explosion cover
+	var/directional_arc = 120
+	/// For directional charges, which cardinal direction is the charge facing?
 	var/aim_dir = NORTH
+	/// List of explosion radii (DEV, HEAVY, LIGHT)
 	var/boom_sizes = list(0, 0, 3)
+	/// Do we apply the full force of a heavy ex_act() to mob targets
 	var/full_damage_on_mobs = FALSE
 	/// Minimum timer for c4 charges
 	var/minimum_timer = 10
@@ -68,18 +76,20 @@
 
 	. = ..()
 	var/turf/location
+	var/target_density
 	if(target)
 		if(!QDELETED(target))
 			location = get_turf(target)
+			target_density = target.density // We're about to blow target up, so need to save this value for later
 			target.cut_overlay(plastic_overlay, TRUE)
 			if(!ismob(target) || full_damage_on_mobs)
 				EX_ACT(target, EXPLODE_HEAVY, target)
 	else
 		location = get_turf(src)
 	if(location)
-		if(directional && target?.density)
-			var/turf/turf = get_step(location, aim_dir)
-			explosion(get_step(turf, aim_dir), devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3], explosion_cause = src)
+		if(directional && target_density)
+			var/angle = dir2angle(aim_dir)
+			explosion(location, devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3], explosion_cause = src, explosion_direction = angle, explosion_arc = directional_arc)
 		else
 			explosion(location, devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3], explosion_cause = src)
 	qdel(src)
@@ -95,58 +105,56 @@
 	det_time = newtime
 	to_chat(user, "Timer set for [det_time] seconds.")
 
-/obj/item/grenade/c4/afterattack(atom/movable/bomb_target, mob/user, flag)
-	. = ..()
-	aim_dir = get_dir(user, bomb_target)
-	if(isdead(bomb_target))
-		return
-	if(!flag)
-		return
+/obj/item/grenade/c4/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	// Here lies C4 ghosts. We hardly knew ye
+	if(isdead(interacting_with))
+		return NONE
+	aim_dir = get_dir(user, interacting_with)
+	return plant_c4(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
-	. |= AFTERATTACK_PROCESSED_ITEM
-
+/obj/item/grenade/c4/proc/plant_c4(atom/bomb_target, mob/living/user)
 	if(bomb_target != user && HAS_TRAIT(user, TRAIT_PACIFISM) && isliving(bomb_target))
 		to_chat(user, span_warning("You don't want to harm other living beings!"))
-		return .
+		return FALSE
 
 	to_chat(user, span_notice("You start planting [src]. The timer is set to [det_time]..."))
 
-	if(do_after(user, 30, target = bomb_target))
-		if(!user.temporarilyRemoveItemFromInventory(src))
-			return .
-		target = bomb_target
-		active = TRUE
+	if(!do_after(user, 3 SECONDS, target = bomb_target))
+		return FALSE
+	if(!user.temporarilyRemoveItemFromInventory(src))
+		return FALSE
+	target = bomb_target
+	active = TRUE
 
-		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_VERBOSEJMP(target)] with [det_time] second fuse")
-		user.log_message("planted [name] on [target.name] with a [det_time] second fuse.", LOG_ATTACK)
-		var/icon/target_icon = icon(bomb_target.icon, bomb_target.icon_state)
-		target_icon.Blend(icon(icon, icon_state), ICON_OVERLAY)
-		var/mutable_appearance/bomb_target_image = mutable_appearance(target_icon)
-		notify_ghosts(
-			"[user] has planted \a [src] on [target] with a [det_time] second fuse!",
-			source = bomb_target,
-			header = "Explosive Planted",
-			alert_overlay = bomb_target_image,
-			notify_flags = NOTIFY_CATEGORY_NOFLASH,
-		)
+	message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_VERBOSEJMP(target)] with [det_time] second fuse")
+	user.log_message("planted [name] on [target.name] with a [det_time] second fuse.", LOG_ATTACK)
+	var/icon/target_icon = icon(bomb_target.icon, bomb_target.icon_state)
+	target_icon.Blend(icon(icon, icon_state), ICON_OVERLAY)
+	var/mutable_appearance/bomb_target_image = mutable_appearance(target_icon)
+	notify_ghosts(
+		"[user] has planted \a [src] on [target] with a [det_time] second fuse!",
+		source = bomb_target,
+		header = "Explosive Planted",
+		alert_overlay = bomb_target_image,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+	)
 
-		moveToNullspace() //Yep
+	moveToNullspace() //Yep
 
-		if(isitem(bomb_target)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
-			var/obj/item/thrown_weapon = bomb_target
-			thrown_weapon.throw_speed = max(1, (thrown_weapon.throw_speed - 3))
-			thrown_weapon.throw_range = max(1, (thrown_weapon.throw_range - 3))
-			if(thrown_weapon.embedding)
-				thrown_weapon.embedding["embed_chance"] = 0
-				thrown_weapon.updateEmbedding()
-		else if(isliving(bomb_target))
-			plastic_overlay.layer = FLOAT_LAYER
+	if(isitem(bomb_target)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
+		var/obj/item/thrown_weapon = bomb_target
+		thrown_weapon.throw_speed = max(1, (thrown_weapon.throw_speed - 3))
+		thrown_weapon.throw_range = max(1, (thrown_weapon.throw_range - 3))
+		if(thrown_weapon.embedding)
+			thrown_weapon.embedding["embed_chance"] = 0
+			thrown_weapon.updateEmbedding()
+	else if(isliving(bomb_target))
+		plastic_overlay.layer = FLOAT_LAYER
 
-		target.add_overlay(plastic_overlay)
-		to_chat(user, span_notice("You plant the bomb. Timer counting down from [det_time]."))
-		addtimer(CALLBACK(src, PROC_REF(detonate)), det_time*10)
-
-	return .
+	target.add_overlay(plastic_overlay)
+	to_chat(user, span_notice("You plant the bomb. Timer counting down from [det_time]."))
+	addtimer(CALLBACK(src, PROC_REF(detonate)), det_time*10)
+	return TRUE
 
 /obj/item/grenade/c4/proc/shout_syndicate_crap(mob/player)
 	if(!player)

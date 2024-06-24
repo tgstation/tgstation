@@ -859,7 +859,7 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "Nw" = (
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	dir = 4
 	},
 /obj/structure/bed{

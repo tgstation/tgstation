@@ -3,17 +3,17 @@
 
 ///Draws power from its rightful source (area if its a computer, the cell otherwise)
 ///Takes into account special cases, like silicon PDAs through override, and nopower apps.
-/obj/item/modular_computer/proc/use_power(amount = 0, check_programs = TRUE)
+/obj/item/modular_computer/proc/use_energy(amount = 0, check_programs = TRUE)
 	if(check_power_override(amount))
 		return TRUE
 
 	if(!internal_cell)
 		return FALSE
-	if(internal_cell.use(amount JOULES))
+	if(internal_cell.use(amount))
 		return TRUE
 	if(!check_programs)
 		return FALSE
-	internal_cell.use(min(amount JOULES, internal_cell.charge)) //drain it anyways.
+	internal_cell.use(min(amount, internal_cell.charge)) //drain it anyways.
 	if(active_program?.program_flags & PROGRAM_RUNS_WITHOUT_POWER)
 		return TRUE
 	INVOKE_ASYNC(src, PROC_REF(close_all_programs))
@@ -53,7 +53,7 @@
 		if(open_programs in idle_threads)
 			power_usage += (open_programs.power_cell_use / 2)
 
-	if(use_power(power_usage * seconds_per_tick))
+	if(use_energy(power_usage * seconds_per_tick))
 		return TRUE
 	power_failure()
 	return FALSE

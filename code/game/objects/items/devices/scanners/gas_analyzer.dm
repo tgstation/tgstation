@@ -17,10 +17,16 @@
 	tool_behaviour = TOOL_ANALYZER
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 0.3, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 0.2)
 	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
+	interaction_flags_click = NEED_LITERACY|NEED_LIGHT|ALLOW_RESTING
+	/// Boolean whether this has a CD
 	var/cooldown = FALSE
-	var/cooldown_time = 250
-	var/barometer_accuracy // 0 is the best accuracy.
+	/// The time in deciseconds
+	var/cooldown_time = 25 SECONDS
+	/// 0 is best accuracy
+	var/barometer_accuracy
+	/// Cached gasmix data from ui_interact
 	var/list/last_gasmix_data
+	/// Max scan distance
 	var/ranged_scan_distance = 1
 
 /obj/item/analyzer/Initialize(mapload)
@@ -53,19 +59,14 @@
 	user.visible_message(span_suicide("[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!"))
 	return BRUTELOSS
 
-/obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
-	..()
-
-	if(!user.can_perform_action(src, NEED_LITERACY|NEED_LIGHT))
-		return
-
+/obj/item/analyzer/click_alt(mob/user) //Barometer output for measuring when the next storm happens
 	if(cooldown)
 		to_chat(user, span_warning("[src]'s barometer function is preparing itself."))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	var/turf/T = get_turf(user)
 	if(!T)
-		return
+		return CLICK_ACTION_BLOCKING
 
 	playsound(src, 'sound/effects/pop.ogg', 100)
 	var/area/user_area = T.loc
@@ -73,7 +74,7 @@
 
 	if(!user_area.outdoors)
 		to_chat(user, span_warning("[src]'s barometer function won't work indoors!"))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	for(var/V in SSweather.processing)
 		var/datum/weather/W = V
@@ -84,7 +85,7 @@
 	if(ongoing_weather)
 		if((ongoing_weather.stage == MAIN_STAGE) || (ongoing_weather.stage == WIND_DOWN_STAGE))
 			to_chat(user, span_warning("[src]'s barometer function can't trace anything while the storm is [ongoing_weather.stage == MAIN_STAGE ? "already here!" : "winding down."]"))
-			return
+			return CLICK_ACTION_BLOCKING
 
 		to_chat(user, span_notice("The next [ongoing_weather] will hit in [butchertime(ongoing_weather.next_hit_time - world.time)]."))
 		if(ongoing_weather.aesthetic)
@@ -98,6 +99,7 @@
 			to_chat(user, span_warning("[src]'s barometer function says a storm will land in approximately [butchertime(fixed)]."))
 	cooldown = TRUE
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/analyzer, ping)), cooldown_time)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/analyzer/proc/ping()
 	if(isliving(loc))
@@ -143,12 +145,13 @@
 
 	ui_interact(user)
 
-/obj/item/analyzer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!can_see(user, target, ranged_scan_distance))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	atmos_scan(user, (target.return_analyzable_air() ? target : get_turf(target)))
+/obj/item/analyzer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/analyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(can_see(user, interacting_with, ranged_scan_distance))
+		atmos_scan(user, (interacting_with.return_analyzable_air() ? interacting_with : get_turf(interacting_with)))
+	return NONE // Non-blocking
 
 /// Called when our analyzer is used on something
 /obj/item/analyzer/proc/on_analyze(datum/source, atom/target)
@@ -159,7 +162,7 @@
 	var/list/airs = islist(mixture) ? mixture : list(mixture)
 	var/list/new_gasmix_data = list()
 	for(var/datum/gas_mixture/air as anything in airs)
-		var/mix_name = capitalize(lowertext(target.name))
+		var/mix_name = capitalize(LOWER_TEXT(target.name))
 		if(airs.len != 1) //not a unary gas mixture
 			mix_name += " - Node [airs.Find(air)]"
 		new_gasmix_data += list(gas_mixture_parser(air, mix_name))
@@ -184,7 +187,7 @@
 
 	var/list/airs = islist(mixture) ? mixture : list(mixture)
 	for(var/datum/gas_mixture/air as anything in airs)
-		var/mix_name = capitalize(lowertext(target.name))
+		var/mix_name = capitalize(LOWER_TEXT(target.name))
 		if(airs.len > 1) //not a unary gas mixture
 			var/mix_number = airs.Find(air)
 			message += span_boldnotice("Node [mix_number]")
@@ -207,8 +210,8 @@
 			message += span_notice("Temperature: [round(temperature - T0C,0.01)] &deg;C ([round(temperature, 0.01)] K)")
 			message += span_notice("Volume: [volume] L")
 			message += span_notice("Pressure: [round(pressure, 0.01)] kPa")
-			message += span_notice("Heat Capacity: [display_joules(heat_capacity)] / K")
-			message += span_notice("Thermal Energy: [display_joules(thermal_energy)]")
+			message += span_notice("Heat Capacity: [display_energy(heat_capacity)] / K")
+			message += span_notice("Thermal Energy: [display_energy(thermal_energy)]")
 		else
 			message += airs.len > 1 ? span_notice("This node is empty!") : span_notice("[target] is empty!")
 			message += span_notice("Volume: [volume] L") // don't want to change the order volume appears in, suck it

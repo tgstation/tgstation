@@ -1,27 +1,28 @@
+#define SPELLBOOK_CATEGORY_OFFENSIVE "Offensive"
 // Offensive wizard spells
 /datum/spellbook_entry/fireball
 	name = "Fireball"
 	desc = "Fires an explosive fireball at a target. Considered a classic among all wizards."
 	spell_type = /datum/action/cooldown/spell/pointed/projectile/fireball
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/spell_cards
 	name = "Spell Cards"
 	desc = "Blazing hot rapid-fire homing cards. Send your foes to the shadow realm with their mystical power!"
 	spell_type = /datum/action/cooldown/spell/pointed/projectile/spell_cards
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/rod_form
 	name = "Rod Form"
 	desc = "Take on the form of an immovable rod, destroying all in your path. Purchasing this spell multiple times will also increase the rod's damage and travel range."
 	spell_type = /datum/action/cooldown/spell/rod_form
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/disintegrate
 	name = "Smite"
 	desc = "Charges your hand with an unholy energy that can be used to cause a touched victim to violently explode."
 	spell_type = /datum/action/cooldown/spell/touch/smite
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/summon_simians
 	name = "Summon Simians"
@@ -29,45 +30,45 @@
 		summons primal monkeys and lesser gorillas that will promptly flip out and attack everything in sight. Fun! \
 		Their lesser, easily manipulable minds will be convinced you are one of their allies, but only for a minute. Unless you also are a monkey."
 	spell_type = /datum/action/cooldown/spell/conjure/simian
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/blind
 	name = "Blind"
 	desc = "Temporarily blinds a single target."
 	spell_type = /datum/action/cooldown/spell/pointed/blind
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 	cost = 1
 
 /datum/spellbook_entry/mutate
 	name = "Mutate"
 	desc = "Causes you to turn into a hulk and gain laser vision for a short while."
 	spell_type = /datum/action/cooldown/spell/apply_mutations/mutate
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/fleshtostone
 	name = "Flesh to Stone"
 	desc = "Charges your hand with the power to turn victims into inert statues for a long period of time."
 	spell_type = /datum/action/cooldown/spell/touch/flesh_to_stone
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/teslablast
 	name = "Tesla Blast"
 	desc = "Charge up a tesla arc and release it at a random nearby target! You can move freely while it charges. The arc jumps between targets and can knock them down."
 	spell_type = /datum/action/cooldown/spell/charged/beam/tesla
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/lightningbolt
 	name = "Lightning Bolt"
 	desc = "Fire a lightning bolt at your foes! It will jump between targets, but can't knock them down."
 	spell_type = /datum/action/cooldown/spell/pointed/projectile/lightningbolt
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 	cost = 1
 
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"
 	desc = "Why reload when you have infinite guns? Summons an unending stream of bolt action rifles that deal little damage, but will knock targets down. Requires both hands free to use. Learning this spell makes you unable to learn Arcane Barrage."
 	spell_type = /datum/action/cooldown/spell/conjure_item/infinite_guns/gun
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 	cost = 3
 	no_coexistance_typecache = list(/datum/action/cooldown/spell/conjure_item/infinite_guns/arcane_barrage)
 
@@ -75,7 +76,7 @@
 	name = "Arcane Barrage"
 	desc = "Fire a torrent of arcane energy at your foes with this (powerful) spell. Deals much more damage than Lesser Summon Guns, but won't knock targets down. Requires both hands free to use. Learning this spell makes you unable to learn Lesser Summon Gun."
 	spell_type = /datum/action/cooldown/spell/conjure_item/infinite_guns/arcane_barrage
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 	cost = 3
 	no_coexistance_typecache = list(/datum/action/cooldown/spell/conjure_item/infinite_guns/gun)
 
@@ -83,68 +84,77 @@
 	name = "Barnyard Curse"
 	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
 	spell_type = /datum/action/cooldown/spell/pointed/barnyardcurse
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/splattercasting
 	name = "Splattercasting"
 	desc = "Dramatically lowers the cooldown on all spells, but each one will cost blood, as well as it naturally \
 		draining from you over time. You can replenish it from your victims, specifically their necks."
 	spell_type =  /datum/action/cooldown/spell/splattercasting
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 	no_coexistance_typecache = list(/datum/action/cooldown/spell/lichdom)
 
 /datum/spellbook_entry/sanguine_strike
 	name = "Exsanguinating Strike"
 	desc = "Sanguine spell that enchants your next weapon strike to deal more damage, heal you for damage dealt, and refill blood."
 	spell_type =  /datum/action/cooldown/spell/sanguine_strike
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/scream_for_me
 	name = "Scream For Me"
 	desc = "Sadistic sanguine spell that inflicts numerous severe blood wounds all over the victim's body."
 	spell_type =  /datum/action/cooldown/spell/touch/scream_for_me
 	cost = 1
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/item/staffchaos
 	name = "Staff of Chaos"
 	desc = "A caprious tool that can fire all sorts of magic without any rhyme or reason. Using it on people you care about is not recommended."
 	item_path = /obj/item/gun/magic/staff/chaos
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/item/staffchange
 	name = "Staff of Change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
 	item_path = /obj/item/gun/magic/staff/change
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/item/mjolnir
 	name = "Mjolnir"
 	desc = "A mighty hammer on loan from Thor, God of Thunder. It crackles with barely contained power."
 	item_path = /obj/item/mjollnir
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/item/singularity_hammer
 	name = "Singularity Hammer"
 	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everything nearby to the point of impact."
 	item_path = /obj/item/singularityhammer
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/item/spellblade
 	name = "Spellblade"
 	desc = "A sword capable of firing blasts of energy which rip targets limb from limb."
 	item_path = /obj/item/gun/magic/staff/spellblade
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/item/highfrequencyblade
 	name = "High Frequency Blade"
 	desc = "An incredibly swift enchanted blade resonating at a frequency high enough to be able to slice through anything."
 	item_path = /obj/item/highfrequencyblade/wizard
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
 	cost = 3
 
 /datum/spellbook_entry/item/frog_contract
 	name = "Frog Contract"
 	desc = "Sign a pact with the frogs to have your own destructive pet guardian!"
 	item_path = /obj/item/frog_contract
-	category = "Offensive"
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
+
+/datum/spellbook_entry/item/staffshrink
+	name = "Staff of Shrinking"
+	desc = "An artefact that can shrink anything for a reasonable duration. Small structures can be walked over, and small people are very vulnerable (often because their armour no longer fits)."
+	item_path = /obj/item/gun/magic/staff/shrink
+	category = SPELLBOOK_CATEGORY_OFFENSIVE
+
+
+#undef SPELLBOOK_CATEGORY_OFFENSIVE

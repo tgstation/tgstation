@@ -35,6 +35,7 @@
 
 	id_trim = /datum/id_trim/job/shaft_miner
 	uniform = /obj/item/clothing/under/rank/cargo/miner/lavaland
+	skillchips = list(/obj/item/skillchip/job/miner)
 	backpack_contents = list(
 		/obj/item/flashlight/seclite = 1,
 		/obj/item/knife/combat/survival = 1,

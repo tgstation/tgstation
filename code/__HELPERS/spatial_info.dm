@@ -468,5 +468,8 @@
 		if(possible_spawn in inner)
 			continue
 		peel += possible_spawn
+
+	if(!length(peel))
+		return center //Offer the center only as a default case when we don't have a valid circle.
 	return peel
 

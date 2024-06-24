@@ -42,36 +42,6 @@ type ByondType = {
   windowId: string;
 
   /**
-   * True if javascript is running in BYOND.
-   */
-  IS_BYOND: boolean;
-
-  /**
-   * Version of Trident engine of Internet Explorer. Null if N/A.
-   */
-  TRIDENT: number | null;
-
-  /**
-   * True if browser is IE8 or lower.
-   */
-  IS_LTE_IE8: boolean;
-
-  /**
-   * True if browser is IE9 or lower.
-   */
-  IS_LTE_IE9: boolean;
-
-  /**
-   * True if browser is IE10 or lower.
-   */
-  IS_LTE_IE10: boolean;
-
-  /**
-   * True if browser is IE11 or lower.
-   */
-  IS_LTE_IE11: boolean;
-
-  /**
    * If `true`, unhandled errors and common mistakes result in a blue screen
    * of death, which stops this window from handling incoming messages and
    * closes the active instance of tgui datum if there was one.

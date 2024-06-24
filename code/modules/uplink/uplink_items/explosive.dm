@@ -57,6 +57,12 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		cost *= 3
 
+/datum/uplink_item/explosives/smoke
+	name = "Smoke Grenades"
+	desc = "A box that contains five smoke grenades. Useful for vanishing and ninja fans with katana."
+	item = /obj/item/storage/box/syndie_kit/smoke
+	cost = 2
+
 /datum/uplink_item/explosives/pizza_bomb
 	name = "Pizza Bomb"
 	desc = "A pizza box with a bomb cunningly attached to the lid. The timer needs to be set by opening the box; afterwards, \

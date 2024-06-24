@@ -1,8 +1,6 @@
 import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
-import { multiline } from 'common/string';
 
 import { useBackend } from '../backend';
 import {
@@ -50,10 +48,10 @@ export const BluespaceVendor = (props) => {
     tank_full,
   } = data;
 
-  const gases: Gas[] = flow([
-    filter<Gas>((gas) => gas.amount >= 0.01),
-    sortBy<Gas>((gas) => -gas.amount),
-  ])(bluespace_network_gases);
+  const gases: Gas[] = sortBy(
+    filter(bluespace_network_gases, (gas) => gas.amount >= 0.01),
+    (gas) => -gas.amount,
+  );
 
   const gasMax = Math.max(1, ...gases.map((gas) => gas.amount));
 
@@ -88,11 +86,12 @@ export const BluespaceVendor = (props) => {
                   <NumberInput
                     animated
                     value={tank_filling_amount}
+                    step={1}
                     width="63px"
                     unit="% tank filling goal"
                     minValue={0}
                     maxValue={100}
-                    onDrag={(e, value) =>
+                    onDrag={(value) =>
                       act('pumping_rate', {
                         rate: value,
                       })
@@ -124,7 +123,7 @@ export const BluespaceVendor = (props) => {
                   color="transparent"
                   icon="info"
                   tooltipPosition="bottom-start"
-                  tooltip={multiline`
+                  tooltip={`
                   Quick guide for machine use: Prepare a tank to create a
                   new one in the machine, pick how much you want it filled,
                   and finally press start on the gas of your choice!

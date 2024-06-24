@@ -43,6 +43,9 @@
 	using.icon = ui_style
 	static_inventory += using
 
+	healthdoll = new /atom/movable/screen/healthdoll/living(null, src)
+	infodisplay += healthdoll
+
 	mymob.canon_client?.clear_screen()
 
 	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))

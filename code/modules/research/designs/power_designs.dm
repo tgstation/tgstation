@@ -24,7 +24,7 @@
 	construction_time = 10 SECONDS
 	build_path = /obj/item/stock_parts/cell/high/empty
 	category = list(
-		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_2
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -37,7 +37,7 @@
 	construction_time = 10 SECONDS
 	build_path = /obj/item/stock_parts/cell/super/empty
 	category = list(
-		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_3
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_2
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -98,6 +98,16 @@
 	build_path = /obj/item/circuitboard/machine/pacman
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/bioelec_gen
+	name = "Aquarium Bioelectricity Kit"
+	desc = "The required components to convert an aquarium into a bioelectricity generator."
+	id = "bioelec_gen"
+	build_path = /obj/item/aquarium_upgrade/bioelec_gen
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 

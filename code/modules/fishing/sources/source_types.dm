@@ -7,6 +7,7 @@
 		/obj/item/fish/cardinal = 15,
 		/obj/item/fish/greenchromis = 15,
 		/obj/item/fish/lanternfish = 5,
+		/obj/item/fish/zipzap = 5,
 		/obj/item/fish/clownfish/lube = 3,
 	)
 	fish_counts = list(
@@ -67,6 +68,7 @@
 		/obj/item/fish/gunner_jellyfish = 5,
 		/obj/item/fish/needlefish = 5,
 		/obj/item/fish/armorfish = 5,
+		/obj/item/fish/zipzap = 5,
 	)
 	catalog_description = "Ocean dimension (Fishing portal generator)"
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 10
@@ -97,6 +99,7 @@
 		FISHING_DUD = 5,
 		/obj/item/fish/donkfish = 5,
 		/obj/item/fish/emulsijack = 5,
+		/obj/item/fish/jumpercable = 5,
 	)
 	catalog_description = "Syndicate dimension (Fishing portal generator)"
 	radial_name = "Syndicate"
@@ -193,6 +196,13 @@
 
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 5
 
+/datum/fish_source/chasm/on_start_fishing(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
+	. = ..()
+	if(istype(rod.hook, /obj/item/fishing_hook/rescue))
+		to_chat(fisherman, span_notice("The rescue hook falls straight down the chasm! Hopefully it catches a corpse."))
+		return
+	to_chat(fisherman, span_danger("Your fishing hook makes a soft 'thud' noise as it gets stuck on the wall of the chasm. It doesn't look like it's going to catch much of anything, except maybe some detritus."))
+
 /datum/fish_source/chasm/roll_reward(obj/item/fishing_rod/rod, mob/fisherman)
 	var/rolled_reward = ..()
 
@@ -201,12 +211,15 @@
 
 	return rod.hook.chasm_detritus_type
 
+/datum/fish_source/chasm
+
 /datum/fish_source/lavaland
 	catalog_description = "Lava vents"
 	background = "background_lavaland"
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/stack/ore/slag = 20,
+		/obj/item/fish/lavaloop = 15,
 		/obj/structure/closet/crate/necropolis/tendril = 1,
 		/obj/effect/mob_spawn/corpse/human/charredskeleton = 1
 	)
@@ -229,16 +242,17 @@
 	fish_table = list(
 		FISHING_DUD = 5,
 		/obj/item/fish/chasm_crab/ice = 15,
+		/obj/item/fish/lavaloop/plasma_river = 15,
 		/obj/item/coin/plasma = 3,
 		/obj/item/stack/ore/plasma = 3,
 		/mob/living/basic/mining/lobstrosity = 1,
 		/obj/effect/decal/remains/plasma = 1,
-		/obj/item/stack/sheet/mineral/mythril = 1,
+		/obj/item/stack/sheet/mineral/runite = 1,
 		/obj/item/stack/sheet/mineral/adamantine = 1,
 	)
 	fish_counts = list(
 		/obj/item/stack/sheet/mineral/adamantine = 3,
-		/obj/item/stack/sheet/mineral/mythril = 2,
+		/obj/item/stack/sheet/mineral/runite = 2,
 	)
 
 /datum/fish_source/moisture_trap
@@ -262,7 +276,7 @@
 	fish_counts = list(
 		/obj/item/storage/wallet/money = 2,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY - 5 //For beginners
+	fishing_difficulty = FISHING_EASY_DIFFICULTY //For beginners
 
 /datum/fish_source/holographic
 	catalog_description = "Holographic water"
@@ -275,7 +289,7 @@
 		/obj/item/fish/holo/checkered = 5,
 		/obj/item/fish/holo/halffish = 5,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY - 5
+	fishing_difficulty = FISHING_EASY_DIFFICULTY
 
 /datum/fish_source/holographic/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	. = ..()
@@ -332,7 +346,7 @@
 		/mob/living/basic/frog = 1,
 		/mob/living/basic/axolotl = 1,
 	)
-	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY - 10
+	fishing_difficulty = FISHING_EASY_DIFFICULTY - 5
 
 /datum/fish_source/hydro_tray/reason_we_cant_fish(obj/item/fishing_rod/rod, mob/fisherman, atom/parent)
 	if(!istype(parent, /obj/machinery/hydroponics/constructable))

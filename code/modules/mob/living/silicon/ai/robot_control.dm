@@ -14,7 +14,7 @@
 		return FALSE
 	return TRUE
 
-/datum/robot_control/ui_status(mob/user)
+/datum/robot_control/ui_status(mob/user, datum/ui_state/state)
 	if(is_interactable(user))
 		return ..()
 	return UI_CLOSE

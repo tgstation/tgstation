@@ -32,6 +32,10 @@
 	using.screen_loc = ui_alien_language_menu
 	static_inventory += using
 
+	using = new /atom/movable/screen/floor_menu(null, src)
+	using.screen_loc = ui_alien_floor_menu
+	static_inventory += using
+
 	using = new /atom/movable/screen/navigate(null, src)
 	using.screen_loc = ui_alien_navigate_menu
 	static_inventory += using

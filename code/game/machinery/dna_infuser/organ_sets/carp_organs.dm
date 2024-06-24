@@ -27,7 +27,7 @@
 
 /obj/item/organ/internal/lungs/carp/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "neck has odd gills.", BODY_ZONE_HEAD)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their neck has odd gills.", BODY_ZONE_HEAD)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
 	ADD_TRAIT(src, TRAIT_SPACEBREATHING, REF(src))
 
@@ -45,7 +45,7 @@
 
 /obj/item/organ/internal/tongue/carp/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "teeth are big and sharp.", BODY_ZONE_PRECISE_MOUTH)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their teeth are big and sharp.", BODY_ZONE_PRECISE_MOUTH)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
 
 /obj/item/organ/internal/tongue/carp/on_mob_insert(mob/living/carbon/tongue_owner, special, movement_flags)
@@ -113,7 +113,7 @@
 /obj/item/organ/internal/brain/carp/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
-	AddElement(/datum/element/noticable_organ, "seem%PRONOUN_S unable to stay still.")
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_They seem%PRONOUN_s unable to stay still.")
 
 /obj/item/organ/internal/brain/carp/on_mob_insert(mob/living/carbon/brain_owner)
 	. = ..()
@@ -151,8 +151,9 @@
 
 /obj/item/organ/internal/heart/carp/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "skin has small patches of scales growing on it.", BODY_ZONE_CHEST)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their skin has small patches of scales growing on it.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
+	AddElement(/datum/element/update_icon_blocker)
 
 #undef CARP_ORGAN_COLOR
 #undef CARP_SCLERA_COLOR

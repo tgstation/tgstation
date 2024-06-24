@@ -20,6 +20,18 @@
 	if(dummy_tail.wag_flags & WAG_WAGGING)
 		TEST_FAIL("Tail did not stop wagging when it should have!")
 
+	// TESTING WAG EMOTE
+
+	// start wagging
+	dummy.emote("wag")
+	if(!(dummy_tail.wag_flags & WAG_WAGGING))
+		TEST_FAIL("Tail did not start wagging after using the *wag emote!")
+
+	// stop wagging
+	dummy.emote("wag")
+	if(dummy_tail.wag_flags & WAG_WAGGING)
+		TEST_FAIL("Tail did not stop wagging after using the *wag emote!")
+
 	// TESTING WAG_ABLE FLAG
 
 	// flip the wag flag to unwaggable

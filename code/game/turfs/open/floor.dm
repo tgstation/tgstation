@@ -201,7 +201,6 @@
 /turf/open/floor/acid_melt()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
-/// if you are updating this make to to update /turf/open/misc/rcd_vals() too
 /turf/open/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_TURF)
@@ -363,6 +362,12 @@
 				return FALSE
 			return TRUE
 	return FALSE
+
+/turf/open/floor/rust_turf()
+	if(HAS_TRAIT(src, TRAIT_RUSTY))
+		return
+	ChangeTurf(/turf/open/floor/plating)
+	return ..()
 
 /turf/open/floor/material
 	name = "floor"

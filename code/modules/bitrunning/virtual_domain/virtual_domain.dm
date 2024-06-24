@@ -6,6 +6,7 @@
 	map_dir = "_maps/virtual_domains"
 	map_name = "None"
 	key = "Virtual Domain"
+	place_on_top = TRUE
 
 	/// Cost of this map to load
 	var/cost = BITRUNNER_COST_NONE
@@ -28,7 +29,11 @@
 	/// Byond will look for modular mob segment landmarks then choose from here at random. You can make them unique also.
 	var/list/datum/modular_mob_segment/mob_modules = list()
 	/// An assoc list of typepath/amount to spawn on completion. Not weighted - the value is the amount
-	var/list/extra_loot
+	var/list/completion_loot
+	/// An accoc list of typepath/amount to spawn from secondary objectives. Not weighted - the value is the total number of items that can be obtained.
+	var/list/secondary_loot = list()
+	/// Number of secondary loot boxes generated. Resets when the domain is reloaded.
+	var/secondary_loot_generated
 	/// Forces all mob modules to only load once
 	var/modular_unique_mobs = FALSE
 	// Name to show in the UI
@@ -39,6 +44,8 @@
 	var/start_time
 	/// This map is specifically for unit tests. Shouldn't display in game
 	var/test_only = FALSE
+	/// Has this domain been beaten with high enough score to spawn a tech disk?
+	var/disk_reward_spawned = FALSE
 
 /// Sends a point to any loot signals on the map
 /datum/lazy_template/virtual_domain/proc/add_points(points_to_add)

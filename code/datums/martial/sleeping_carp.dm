@@ -323,6 +323,21 @@
 		return ..()
 	return FALSE
 
+/obj/item/clothing/gloves/the_sleeping_carp
+	name = "carp gloves"
+	desc = "These gloves are capable of making people use The Sleeping Carp."
+	icon_state = "black"
+	greyscale_colors = COLOR_BLACK
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = NONE
+
+/obj/item/clothing/gloves/the_sleeping_carp/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/martial_art_giver, /datum/martial_art/the_sleeping_carp)
+
 #undef STRONG_PUNCH_COMBO
 #undef LAUNCH_KICK_COMBO
 #undef DROP_KICK_COMBO

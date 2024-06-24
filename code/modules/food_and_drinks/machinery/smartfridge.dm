@@ -173,7 +173,7 @@
 			tool_tip_set = TRUE
 
 	else if(held_item.tool_behaviour == TOOL_WRENCH)
-		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]anchore"
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Una" : "A"]nchor"
 		tool_tip_set = TRUE
 
 	return tool_tip_set ? CONTEXTUAL_SCREENTIP_SET : NONE
@@ -302,6 +302,10 @@
 				to_chat(user, span_warning("There is nothing in [weapon] to put in [src]!"))
 				return FALSE
 
+	if(!powered())
+		to_chat(user, span_warning("\The [src]'s magnetic door won't open without power!"))
+		return FALSE
+
 	if(!user.combat_mode)
 		to_chat(user, span_warning("\The [src] smartly refuses [weapon]."))
 		return FALSE
@@ -411,7 +415,7 @@
 					if(!living_mob.put_in_hands(dispensed_item))
 						dispensed_item.forceMove(drop_location())
 						adjust_item_drop_location(dispensed_item)
-					use_power(active_power_usage)
+					use_energy(active_power_usage)
 					desired--
 
 			if (visible_contents)
@@ -546,7 +550,7 @@
 
 		SStgui.update_uis(src)
 		update_appearance()
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 
 /obj/machinery/smartfridge/drying_rack/accept_check(obj/item/O)
 	return HAS_TRAIT(O, TRAIT_DRYABLE)

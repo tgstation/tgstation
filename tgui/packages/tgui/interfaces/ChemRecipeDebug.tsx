@@ -126,7 +126,7 @@ export const ChemRecipeDebug = (props) => {
                         value={forced_temp}
                         minValue={0}
                         maxValue={1000}
-                        onDrag={(e, value) =>
+                        onDrag={(value) =>
                           act('forced_temp', {
                             target: value,
                           })
@@ -173,7 +173,7 @@ export const ChemRecipeDebug = (props) => {
                         value={forced_ph}
                         minValue={0}
                         maxValue={14}
-                        onDrag={(e, value) =>
+                        onDrag={(value) =>
                           act('forced_ph', {
                             target: value,
                           })
@@ -206,7 +206,7 @@ export const ChemRecipeDebug = (props) => {
                         value={forced_purity}
                         minValue={0}
                         maxValue={1}
-                        onDrag={(e, value) =>
+                        onDrag={(value) =>
                           act('forced_purity', {
                             target: value,
                           })
@@ -240,7 +240,7 @@ export const ChemRecipeDebug = (props) => {
                         minValue={1}
                         maxValue={1000}
                         unit="x"
-                        onDrag={(e, value) =>
+                        onDrag={(value) =>
                           act('volume_multiplier', {
                             target: value,
                           })
@@ -368,10 +368,10 @@ export const ChemRecipeDebug = (props) => {
                         step={0.1}
                         stepPixelSize={3}
                         value={editReaction?.editValue || 0}
-                        minValue={0}
+                        minValue={-1000}
                         maxValue={1000}
                         disabled={editReaction === null}
-                        onDrag={(e, value) =>
+                        onDrag={(value) =>
                           act('edit_value', {
                             target: value,
                           })

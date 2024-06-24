@@ -37,29 +37,36 @@
 	balloon_alert(user, "not enough gold")
 
 // Siphon gold from a victim, recharging our gun & removing their Midas Blight debuff in the process.
-/obj/item/gun/magic/midas_hand/afterattack_secondary(mob/living/victim, mob/living/user, proximity_flag, click_parameters)
-	if(!isliving(victim) || !IN_GIVEN_RANGE(user, victim, gold_suck_range))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(victim == user)
-		balloon_alert(user, "can't siphon from self")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(!victim.reagents)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/gun/magic/midas_hand/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with) || !IN_GIVEN_RANGE(user, interacting_with, gold_suck_range))
+		return ITEM_INTERACT_BLOCKING
+	if(interacting_with == user)
+		balloon_alert(user, "can't siphon from self!")
+		return ITEM_INTERACT_BLOCKING
+	if(!interacting_with.reagents)
+		return ITEM_INTERACT_BLOCKING
 
-	var/gold_amount = victim.reagents.get_reagent_amount(/datum/reagent/gold, type_check = REAGENT_SUB_TYPE)
+	var/gold_amount = interacting_with.reagents.get_reagent_amount(/datum/reagent/gold, type_check = REAGENT_SUB_TYPE)
 	if(!gold_amount)
-		balloon_alert(user, "no gold in bloodstream")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	var/gold_beam = user.Beam(victim, icon_state="drain_gold")
-	if(!do_after(user = user, delay = 1 SECONDS, target = victim, timed_action_flags = (IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE), extra_checks = CALLBACK(src, PROC_REF(check_gold_range), user, victim)))
+		balloon_alert(user, "no gold in bloodstream!")
+		return ITEM_INTERACT_BLOCKING
+	var/mob/living/victim = interacting_with
+	var/gold_beam = user.Beam(victim, icon_state = "drain_gold")
+	if(!do_after(
+		user = user,
+		delay = 1 SECONDS,
+		target = victim,
+		timed_action_flags = (IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE),
+		extra_checks = CALLBACK(src, PROC_REF(check_gold_range), user, victim),
+	))
 		qdel(gold_beam)
-		balloon_alert(user, "link broken")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		balloon_alert(user, "link broken!")
+		return ITEM_INTERACT_BLOCKING
 	handle_gold_charges(user, gold_amount)
 	victim.reagents.remove_reagent(/datum/reagent/gold, gold_amount, include_subtypes = TRUE)
 	victim.remove_status_effect(/datum/status_effect/midas_blight)
 	qdel(gold_beam)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
 
 // If we botch a shot, we have to start over again by inserting gold coins into the gun. Can only be done if it has no charges or gold.
 /obj/item/gun/magic/midas_hand/attackby(obj/item/I, mob/living/user, params)
@@ -100,7 +107,7 @@
 	armour_penetration = 50
 	hitsound = 'sound/effects/coin2.ogg'
 	icon_state = "pellet"
-	color = "#FFD700"
+	color = COLOR_GOLD
 	/// The gold charge in this pellet
 	var/gold_charge = 0
 

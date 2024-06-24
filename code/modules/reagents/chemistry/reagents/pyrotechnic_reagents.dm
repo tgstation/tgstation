@@ -20,7 +20,7 @@
 /datum/reagent/nitroglycerin
 	name = "Nitroglycerin"
 	description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
-	color = "#808080" // rgb: 128, 128, 128
+	color = COLOR_GRAY
 	taste_description = "oil"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -28,7 +28,7 @@
 	name = "Stabilizing Agent"
 	description = "Keeps unstable chemicals stable. This does not work on everything."
 	reagent_state = LIQUID
-	color = "#FFFF00"
+	color = COLOR_YELLOW
 	taste_description = "metal"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -95,7 +95,7 @@
 	name = "Gunpowder"
 	description = "Explodes. Violently."
 	reagent_state = LIQUID
-	color = "#000000"
+	color = COLOR_BLACK
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	taste_description = "salt"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -124,7 +124,7 @@
 	name = "RDX"
 	description = "Military grade explosive"
 	reagent_state = SOLID
-	color = "#FFFFFF"
+	color = COLOR_WHITE
 	taste_description = "salt"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -132,7 +132,7 @@
 	name = "TaTP"
 	description = "Suicide grade explosive"
 	reagent_state = SOLID
-	color = "#FFFFFF"
+	color = COLOR_WHITE
 	taste_description = "death"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -261,7 +261,7 @@
 	. = ..()
 	if(reac_volume < 5)
 		return
-	for(var/mob/living/simple_animal/slime/exposed_slime in exposed_turf)
+	for(var/mob/living/basic/slime/exposed_slime in exposed_turf)
 		exposed_slime.adjustToxLoss(rand(15,30))
 
 #undef CRYO_SPEED_PREFACTOR
@@ -336,7 +336,7 @@
 	if(!isjellyperson(affected_mob)) //everyone but jellypeople get shocked as normal.
 		return ..()
 	affected_mob.AdjustAllImmobility(-40  *REM * seconds_per_tick)
-	if(affected_mob.adjustStaminaLoss(-2 * REM * seconds_per_tick, updating_stamina = FALSE))
+	if(affected_mob.adjustStaminaLoss(-10 * REM * seconds_per_tick, updating_stamina = FALSE))
 		. = UPDATE_MOB_HEALTH
 	if(is_species(affected_mob, /datum/species/jelly/luminescent))
 		var/mob/living/carbon/human/affected_human = affected_mob

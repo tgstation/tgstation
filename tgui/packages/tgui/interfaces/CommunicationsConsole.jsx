@@ -29,10 +29,12 @@ const SWIPE_NEEDED = 'SWIPE_NEEDED';
 const EMAG_SHUTTLE_NOTICE =
   'This shuttle is deemed significantly dangerous to the crew, and is only supplied by the Syndicate.';
 
-const sortShuttles = sortBy(
-  (shuttle) => !shuttle.emagOnly,
-  (shuttle) => shuttle.initial_cost,
-);
+const sortShuttles = (shuttles) =>
+  sortBy(
+    shuttles,
+    (shuttle) => !shuttle.emagOnly,
+    (shuttle) => shuttle.initial_cost,
+  );
 
 const AlertButton = (props) => {
   const { act, data } = useBackend();

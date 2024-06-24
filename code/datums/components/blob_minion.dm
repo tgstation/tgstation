@@ -55,7 +55,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, PROC_REF(on_burned))
 	RegisterSignal(parent, COMSIG_ATOM_TRIED_PASS, PROC_REF(on_attempted_pass))
 	RegisterSignal(parent, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(on_space_move))
-	RegisterSignal(parent, COMSIG_LIVING_TRY_SPEECH, PROC_REF(on_try_speech))
+	RegisterSignal(parent, COMSIG_MOB_TRY_SPEECH, PROC_REF(on_try_speech))
 	RegisterSignal(parent, COMSIG_MOB_CHANGED_TYPE, PROC_REF(on_transformed))
 	living_parent.update_appearance(UPDATE_ICON)
 	GLOB.blob_telepathy_mobs |= parent
@@ -73,7 +73,7 @@
 		COMSIG_ATOM_FIRE_ACT,
 		COMSIG_ATOM_TRIED_PASS,
 		COMSIG_ATOM_UPDATE_ICON,
-		COMSIG_LIVING_TRY_SPEECH,
+		COMSIG_MOB_TRY_SPEECH,
 		COMSIG_MOB_CHANGED_TYPE,
 		COMSIG_MOB_GET_STATUS_TAB_ITEMS,
 		COMSIG_MOB_MIND_INITIALIZED,

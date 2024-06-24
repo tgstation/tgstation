@@ -58,17 +58,16 @@
 	icon_state = "[choice]"
 	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 
-/obj/item/universal_scanner/afterattack(obj/object, mob/user, proximity)
-	. = ..()
-	if(!istype(object) || !proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/universal_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isobj(interacting_with))
+		return NONE
 	if(scanning_mode == SCAN_EXPORTS)
-		export_scan(object, user)
-		return .
+		export_scan(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
 	if(scanning_mode == SCAN_PRICE_TAG)
-		price_tag(target = object, user = user)
-	return .
+		price_tag(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/universal_scanner/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
@@ -123,21 +122,22 @@
 		new_custom_price = chosen_price
 		to_chat(user, span_notice("[src] will now give things a [new_custom_price] cr tag."))
 
-/obj/item/universal_scanner/CtrlClick(mob/user)
-	. = ..()
+/obj/item/universal_scanner/item_ctrl_click(mob/user)
+	. = CLICK_ACTION_BLOCKING
 	if(scanning_mode == SCAN_SALES_TAG)
 		payments_acc = null
 		to_chat(user, span_notice("You clear the registered account."))
+		return CLICK_ACTION_SUCCESS
 
-/obj/item/universal_scanner/AltClick(mob/user)
-	. = ..()
+/obj/item/universal_scanner/click_alt(mob/user)
 	if(!scanning_mode == SCAN_SALES_TAG)
-		return
+		return CLICK_ACTION_BLOCKING
 	var/potential_cut = input("How much would you like to pay out to the registered card?","Percentage Profit ([round(cut_min*100)]% - [round(cut_max*100)]%)") as num|null
 	if(!potential_cut)
 		cut_multiplier = initial(cut_multiplier)
 	cut_multiplier = clamp(round(potential_cut/100, cut_min), cut_min, cut_max)
 	to_chat(user, span_notice("[round(cut_multiplier*100)]% profit will be received if a package with a barcode is sold."))
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/universal_scanner/examine(mob/user)
 	. = ..()

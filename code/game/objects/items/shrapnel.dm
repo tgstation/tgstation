@@ -31,9 +31,13 @@
 	shrapnel_type = /obj/item/shrapnel
 	ricochet_incidence_leeway = 60
 	hit_prone_targets = TRUE
+	ignore_range_hit_prone_targets = TRUE
 	sharpness = SHARP_EDGED
 	wound_bonus = 30
 	embedding = list(embed_chance=70, ignore_throwspeed_threshold=TRUE, fall_chance=1)
+
+/obj/projectile/bullet/shrapnel/short_range
+	range = 5
 
 /obj/projectile/bullet/shrapnel/mega
 	name = "flying shrapnel hunk"
@@ -43,6 +47,15 @@
 	ricochet_chance = 130
 	ricochet_incidence_leeway = 0
 	ricochet_decay_chance = 0.9
+
+/obj/projectile/bullet/shrapnel/ied
+	name = "flying glass shrapnel"
+	damage = 15
+	range = 6
+	ricochets_max = 1
+	ricochet_chance = 40
+	shrapnel_type = /obj/item/shard
+	ricochet_incidence_leeway = 60
 
 /obj/projectile/bullet/pellet/stingball
 	name = "stingball pellet"
@@ -61,6 +74,7 @@
 
 /obj/projectile/bullet/pellet/stingball/on_ricochet(atom/A)
 	hit_prone_targets = TRUE // ducking will save you from the first wave, but not the rebounds
+	ignore_range_hit_prone_targets = TRUE
 
 /obj/projectile/bullet/pellet/stingball/mega
 	name = "megastingball pellet"

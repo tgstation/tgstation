@@ -11,7 +11,7 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*3, /datum/material/glass = SMALL_MATERIAL_AMOUNT*3)
-	light_system = MOVABLE_LIGHT //Used as a flash here.
+	light_system = OVERLAY_LIGHT //Used as a flash here.
 	light_range = FLASH_LIGHT_RANGE
 	light_color = COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
@@ -43,7 +43,7 @@
 	flashing = flash
 	. = ..()
 	if(flash)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_icon)), 5)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_icon)), 0.5 SECONDS)
 	holder?.update_icon(updates)
 
 /obj/item/assembly/flash/update_overlays()
@@ -171,7 +171,7 @@
 			visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
 			//easy way to make sure that you can only long stun someone who is facing in your direction
 			flashed.adjustStaminaLoss(rand(80, 120) * (1 - (deviation * 0.5)))
-			flashed.Paralyze(rand(25, 50) * (1 - (deviation * 0.5)))
+			flashed.Knockdown(rand(25, 50) * (1 - (deviation * 0.5)))
 			SEND_SIGNAL(user, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, flashed, src, deviation)
 
 		else if(user)

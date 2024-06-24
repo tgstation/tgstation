@@ -88,7 +88,7 @@
 		return
 
 	var/mob/living/current_user = usr
-	if(!issilicon(current_user))
+	if(!HAS_SILICON_ACCESS(current_user))
 		if(!istype(current_user.get_active_held_item(), /obj/item/multitool))
 			return
 
@@ -248,7 +248,7 @@
 /obj/machinery/telecomms/proc/get_multitool(mob/user)
 	var/obj/item/multitool/multitool = null
 	// Let's double check
-	if(!issilicon(user) && istype(user.get_active_held_item(), /obj/item/multitool))
+	if(!HAS_SILICON_ACCESS(user) && istype(user.get_active_held_item(), /obj/item/multitool))
 		multitool = user.get_active_held_item()
 	else if(isAI(user))
 		var/mob/living/silicon/ai/U = user
@@ -259,6 +259,6 @@
 	return multitool
 
 /obj/machinery/telecomms/proc/canAccess(mob/user)
-	if(issilicon(user) || in_range(user, src))
+	if(HAS_SILICON_ACCESS(user) || in_range(user, src))
 		return TRUE
 	return FALSE

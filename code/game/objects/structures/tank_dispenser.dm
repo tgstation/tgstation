@@ -103,13 +103,11 @@
 	return TRUE
 
 
-/obj/structure/tank_dispenser/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		for(var/X in src)
-			var/obj/item/I = X
-			I.forceMove(loc)
-		new /obj/item/stack/sheet/iron (loc, 2)
-	qdel(src)
+/obj/structure/tank_dispenser/atom_deconstruct(disassembled = TRUE)
+	for(var/X in src)
+		var/obj/item/I = X
+		I.forceMove(loc)
+	new /obj/item/stack/sheet/iron (loc, 2)
 
 /obj/structure/tank_dispenser/proc/dispense(tank_type, mob/receiver)
 	var/existing_tank = locate(tank_type) in src

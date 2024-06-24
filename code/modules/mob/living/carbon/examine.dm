@@ -34,33 +34,25 @@
 			. += span_deadsay("It appears that [t_his] brain is missing...")
 
 	var/list/msg = list("<span class='warning'>")
-	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
-	var/list/disabled = list()
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		if(BP.bodypart_disabled)
-			disabled += BP
-		missing -= BP.body_zone
-		for(var/obj/item/I in BP.embedded_objects)
-			if(I.isEmbedHarmless())
-				msg += "<B>[t_He] [t_has] [icon2html(I, user)] \a [I] stuck to [t_his] [BP.name]!</B>\n"
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		for(var/obj/item/embedded_item as anything in bodypart.embedded_objects)
+			if(embedded_item.isEmbedHarmless())
+				msg += "<B>[t_He] [t_has] [icon2html(embedded_item, user)] \a [embedded_item] stuck to [t_his] [bodypart.name]!</B>\n"
 			else
-				msg += "<B>[t_He] [t_has] [icon2html(I, user)] \a [I] embedded in [t_his] [BP.name]!</B>\n"
-		for(var/i in BP.wounds)
-			var/datum/wound/W = i
-			msg += "[W.get_examine_description(user)]\n"
+				msg += "<B>[t_He] [t_has] [icon2html(embedded_item, user)] \a [embedded_item] embedded in [t_his] [bodypart.name]!</B>\n"
+		for(var/datum/wound/bodypart_wound as anything in bodypart.wounds)
+			msg += "[bodypart_wound.get_examine_description(user)]\n"
 
-	for(var/X in disabled)
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/disabled_limb as anything in get_disabled_limbs())
 		var/damage_text
-		damage_text = (BP.brute_dam >= BP.burn_dam) ? BP.heavy_brute_msg : BP.heavy_burn_msg
-		msg += "<B>[capitalize(t_his)] [BP.name] is [damage_text]!</B>\n"
+		damage_text = (disabled_limb.brute_dam >= disabled_limb.burn_dam) ? disabled_limb.heavy_brute_msg : disabled_limb.heavy_burn_msg
+		msg += "<B>[t_His] [disabled_limb.name] is [damage_text]!</B>\n"
 
-	for(var/t in missing)
-		if(t == BODY_ZONE_HEAD)
-			msg += "[span_deadsay("<B>[t_His] [parse_zone(t)] is missing!</B>")]\n"
+	for(var/obj/item/bodypart/missing_limb as anything in get_missing_limbs())
+		if(missing_limb == BODY_ZONE_HEAD)
+			msg += "[span_deadsay("<B>[t_His] [parse_zone(missing_limb)] is missing!</B>")]\n"
 			continue
-		msg += "[span_warning("<B>[t_His] [parse_zone(t)] is missing!</B>")]\n"
+		msg += "[span_warning("<B>[t_His] [parse_zone(missing_limb)] is missing!</B>")]\n"
 
 
 	var/temp = getBruteLoss()

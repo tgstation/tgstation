@@ -57,10 +57,8 @@
 		var/turf/T = get_turf(src)
 		return T.attackby(C, user) //hand this off to the turf instead (for building plating, catwalks, etc)
 
-/obj/structure/lattice/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new build_material(get_turf(src), number_of_mats)
-	qdel(src)
+/obj/structure/lattice/atom_deconstruct(disassembled = TRUE)
+	new build_material(get_turf(src), number_of_mats)
 
 /obj/structure/lattice/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_TURF)
@@ -113,11 +111,11 @@
 		C.deconstruct()
 	..()
 
-/obj/structure/lattice/catwalk/deconstruct()
+/obj/structure/lattice/catwalk/atom_deconstruct(disassembled = TRUE)
+	..()
 	var/turf/T = loc
 	for(var/obj/structure/cable/C in T)
 		C.deconstruct()
-	..()
 
 /obj/structure/lattice/catwalk/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)

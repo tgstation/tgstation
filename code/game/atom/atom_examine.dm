@@ -75,13 +75,16 @@
  * [COMSIG_ATOM_GET_EXAMINE_NAME] signal
  */
 /atom/proc/get_examine_name(mob/user)
-	. = "\a <b>[src]</b>"
-	var/list/override = list(gender == PLURAL ? "some" : "a", " ", "[name]")
-	if(article)
-		. = "[article] <b>[src]</b>"
-		override[EXAMINE_POSITION_ARTICLE] = article
-	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
-		. = override.Join("")
+	var/list/override = list(article, null, "<b>[name]</b>")
+	SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override)
+
+	if(!isnull(override[EXAMINE_POSITION_ARTICLE]))
+		override -= null // IF there is no "before", don't try to join it
+		return jointext(override, " ")
+	if(!isnull(override[EXAMINE_POSITION_BEFORE]))
+		override -= null // There is no article, don't try to join it
+		return "\a [jointext(override, " ")]"
+	return "\a <b>[src]</b>"
 
 ///Generate the full examine string of this atom (including icon for goonchat)
 /atom/proc/get_examine_string(mob/user, thats = FALSE)

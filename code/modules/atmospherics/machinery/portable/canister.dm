@@ -71,7 +71,6 @@
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddElement(/datum/element/volatile_gas_storage)
 	AddComponent(/datum/component/gas_leaker, leak_rate=0.01)
-	register_context()
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
 	. = ..()
@@ -103,12 +102,15 @@
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	. += span_notice("A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]; MAX SAFE TEMPERATURE: [siunit(temp_limit, "K", 0)]</b>.")
+	. += span_notice("The hull is <b>welded</b> together and can be cut apart.")
 	if(internal_cell)
 		. += span_notice("The internal cell has [internal_cell.percent()]% of its total charge.")
 	else
 		. += span_notice("Warning, no cell installed, use a screwdriver to open the hatch and insert one.")
 	if(panel_open)
 		. += span_notice("Hatch open, close it with a screwdriver.")
+	if(integrity_failure)
+		. += span_notice("Integrity compromised, repair hull with a welding tool.")
 
 // Please keep the canister types sorted
 // Basic canister per gas below here
@@ -410,22 +412,6 @@
 
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return
-	if(atom_integrity >= max_integrity || (machine_stat & BROKEN) || !tool.tool_start_check(user, amount = 1))
-		return ITEM_INTERACT_SUCCESS
-
-	to_chat(user, span_notice("You begin repairing cracks in [src]..."))
-	while(tool.use_tool(src, user, 2.5 SECONDS, volume=40))
-		atom_integrity = min(atom_integrity + 25, max_integrity)
-		if(atom_integrity >= max_integrity)
-			to_chat(user, span_notice("You've finished repairing [src]."))
-			return ITEM_INTERACT_SUCCESS
-		to_chat(user, span_notice("You repair some of the cracks in [src]..."))
-
-	return ITEM_INTERACT_BLOCKING
-
 /obj/machinery/portable_atmospherics/canister/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == internal_cell)
@@ -479,11 +465,11 @@
 	var/our_temperature = air_contents.return_temperature()
 
 	if(shielding_powered)
-		var/power_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - temp_limit, 1)))
-		var/power_consumed = power_factor * 250 * seconds_per_tick
+		var/energy_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - temp_limit, 1)))
+		var/energy_consumed = energy_factor * 250 * seconds_per_tick
 		if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
-			use_power(power_consumed, AREA_USAGE_EQUIP)
-		else if(!internal_cell?.use(power_consumed * 0.025))
+			use_energy(energy_consumed, channel = AREA_USAGE_EQUIP)
+		else if(!internal_cell?.use(energy_consumed * 0.025))
 			shielding_powered = FALSE
 			SSair.start_processing_machine(src)
 			investigate_log("shielding turned off due to power loss")

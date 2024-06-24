@@ -149,9 +149,8 @@
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(droppoint)
 
-/obj/structure/votebox/deconstruct(disassembled)
+/obj/structure/votebox/atom_deconstruct(disassembled)
 	dump_contents()
-	. = ..()
 
 /obj/structure/votebox/proc/raffle(mob/user)
 	var/list/options = list()

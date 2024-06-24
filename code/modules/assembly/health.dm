@@ -7,11 +7,10 @@
 
 	var/scanning = FALSE
 	var/health_scan
-	var/alarm_health = HEALTH_THRESHOLD_CRIT
+	var/health_target = HEALTH_THRESHOLD_CRIT
 
 /obj/item/assembly/health/examine(mob/user)
 	. = ..()
-	. += "Use it in hand to turn it off/on and Alt-click to swap between \"detect death\" mode and \"detect critical state\" mode."
 	. += "[src.scanning ? "The sensor is on and you can see [health_scan] displayed on the screen" : "The sensor is off"]."
 
 /obj/item/assembly/health/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
@@ -37,17 +36,6 @@
 	update_appearance()
 	return secured
 
-/obj/item/assembly/health/AltClick(mob/living/user)
-	if(!can_interact(user))
-		return
-
-	if(alarm_health == HEALTH_THRESHOLD_CRIT)
-		alarm_health = HEALTH_THRESHOLD_DEAD
-		to_chat(user, span_notice("You toggle [src] to \"detect death\" mode."))
-	else
-		alarm_health = HEALTH_THRESHOLD_CRIT
-		to_chat(user, span_notice("You toggle [src] to \"detect critical state\" mode."))
-
 /obj/item/assembly/health/process()
 	//not ready yet
 	if(!scanning || !secured)
@@ -65,7 +53,7 @@
 	//only do the pulse if we are within alarm thresholds
 	var/mob/living/target_mob = object
 	health_scan = target_mob.health
-	if(health_scan > alarm_health)
+	if(health_scan > health_target)
 		return
 
 	//do the pulse & the scan
@@ -84,14 +72,43 @@
 		STOP_PROCESSING(SSobj, src)
 	return
 
-/obj/item/assembly/health/attack_self(mob/user)
-	. = ..()
-	if (secured)
-		balloon_alert(user, "scanning [scanning ? "disabled" : "enabled"]")
+/obj/item/assembly/health/proc/toggle_target()
+	if(health_target == HEALTH_THRESHOLD_CRIT)
+		health_target = HEALTH_THRESHOLD_DEAD
 	else
-		balloon_alert(user, "secure it first!")
-	toggle_scan()
+		health_target = HEALTH_THRESHOLD_CRIT
+	return
 
 /obj/item/assembly/health/proc/get_status_tab_item(mob/living/carbon/source, list/items)
 	SIGNAL_HANDLER
 	items += "Health: [round((source.health / source.maxHealth) * 100)]%"
+
+
+/obj/item/assembly/health/ui_status(mob/user, datum/ui_state/state)
+	return is_secured(user) ? ..() : UI_CLOSE
+
+/obj/item/assembly/health/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "HealthSensor", name)
+		ui.open()
+
+/obj/item/assembly/health/ui_data(mob/user)
+	var/list/data = list()
+	data["health"] = health_scan
+	data["scanning"] = scanning
+	data["target"] = health_target
+	return data
+
+/obj/item/assembly/health/ui_act(action, params)
+	. = ..()
+	if(.)
+		return .
+
+	switch(action)
+		if("scanning")
+			toggle_scan()
+			return TRUE
+		if("target")
+			toggle_target()
+			return TRUE

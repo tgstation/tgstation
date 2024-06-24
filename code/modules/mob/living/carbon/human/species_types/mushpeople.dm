@@ -5,7 +5,6 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	fixed_mut_color = "#DBBF92"
-	hair_color = "#FF4B19" //cap color, spot color uses eye color
 
 	external_organs = list(/obj/item/organ/external/mushroom_cap = "Round")
 
@@ -58,6 +57,9 @@
 	if(chem.type == /datum/reagent/toxin/plantbgone/weedkiller)
 		affected.adjustToxLoss(3 * REM * seconds_per_tick)
 
+/datum/species/mush/get_fixed_hair_color(mob/living/carbon/human/for_mob)
+	return "#FF4B19" //cap color, spot color uses eye color
+
 /// A mushpersons mushroom cap organ
 /obj/item/organ/external/mushroom_cap
 	name = "mushroom cap"
@@ -81,7 +83,7 @@
 	feature_key = "caps"
 
 /datum/bodypart_overlay/mutant/mushroom_cap/get_global_feature_list()
-	return GLOB.caps_list
+	return SSaccessories.caps_list
 
 /datum/bodypart_overlay/mutant/mushroom_cap/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))

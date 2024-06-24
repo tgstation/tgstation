@@ -1,4 +1,5 @@
-#define THERMAL_REGULATOR_COST 18 // the cost per tick for the thermal regulator
+/// Charge per tick consumed by the thermal regulator
+#define THERMAL_REGULATOR_COST (0.018 * STANDARD_CELL_CHARGE)
 
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
 //      Meaning the the suit is defined directly after the corrisponding helmet. Just like below!
@@ -12,7 +13,7 @@
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | STACKABLE_HELMET_EXEMPT | HEADINTERNALS
 	armor_type = /datum/armor/helmet_space
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-
+	interaction_flags_click = NEED_DEXTERITY
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -57,11 +58,17 @@
 	equip_delay_other = 80
 	resistance_flags = NONE
 	actions_types = list(/datum/action/item_action/toggle_spacesuit)
-	var/temperature_setting = BODYTEMP_NORMAL /// The default temperature setting
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high /// If this is a path, this gets created as an object in Initialize.
-	var/cell_cover_open = FALSE /// Status of the cell cover on the suit
-	var/thermal_on = FALSE /// Status of the thermal regulator
-	var/show_hud = TRUE /// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
+	/// The default temperature setting
+	var/temperature_setting = BODYTEMP_NORMAL
+	/// If this is a path, this gets created as an object in Initialize.
+	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
+	/// Status of the cell cover on the suit
+	var/cell_cover_open = FALSE
+	/// Status of the thermal regulator
+	var/thermal_on = FALSE
+	/// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
+	var/show_hud = TRUE
 
 /datum/armor/suit_space
 	bio = 100
@@ -189,18 +196,16 @@
 		return
 
 /// Open the cell cover when ALT+Click on the suit
-/obj/item/clothing/suit/space/AltClick(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return ..()
+/obj/item/clothing/suit/space/click_alt(mob/living/user)
 	toggle_spacesuit_cell(user)
+	return CLICK_ACTION_SUCCESS
 
 /// Remove the cell whent he cover is open on CTRL+Click
-/obj/item/clothing/suit/space/CtrlClick(mob/living/user)
-	if(user.can_perform_action(src, NEED_DEXTERITY))
-		if(cell_cover_open && cell)
-			remove_cell(user)
-			return
-	return ..()
+/obj/item/clothing/suit/space/item_ctrl_click(mob/user)
+	. = CLICK_ACTION_BLOCKING
+	if(cell_cover_open && cell)
+		remove_cell(user)
+		return CLICK_ACTION_SUCCESS
 
 // Remove the cell when using the suit on its self
 /obj/item/clothing/suit/space/attack_self(mob/user)

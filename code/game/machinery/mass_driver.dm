@@ -14,10 +14,6 @@
 	. = ..()
 	wires = new /datum/wires/mass_driver(src)
 
-/obj/machinery/mass_driver/Destroy()
-	QDEL_NULL(wires)
-	. = ..()
-
 /obj/machinery/mass_driver/chapelgun
 	name = "holy driver"
 	id = MASSDRIVER_CHAPEL
@@ -35,6 +31,7 @@
 	for(var/obj/machinery/computer/pod/control as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/pod))
 		if(control.id == id)
 			control.connected = null
+	QDEL_NULL(wires)
 	return ..()
 
 /obj/machinery/mass_driver/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
@@ -43,7 +40,7 @@
 /obj/machinery/mass_driver/proc/drive(amount)
 	if(machine_stat & (BROKEN|NOPOWER) || panel_open)
 		return
-	use_power(power_per_obj)
+	use_energy(power_per_obj)
 	var/O_limit
 	var/atom/target = get_edge_target_turf(src, dir)
 	for(var/atom/movable/O in loc)
@@ -54,7 +51,7 @@
 			if(O_limit >= 20)
 				audible_message(span_notice("[src] lets out a screech, it doesn't seem to be able to handle the load."))
 				break
-			use_power(power_per_obj)
+			use_energy(power_per_obj)
 			O.throw_at(target, drive_range * power, power)
 	flick("mass_driver1", src)
 

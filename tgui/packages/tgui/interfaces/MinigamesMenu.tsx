@@ -1,14 +1,14 @@
 import { useBackend } from '../backend';
-import { Button, Section, Stack } from '../components';
+import { Button, Divider, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const MinigamesMenu = (props) => {
   const { act } = useBackend();
 
   return (
-    <Window title="Minigames Menu" width={700} height={200}>
+    <Window title="Minigames Menu" width={530} height={320}>
       <Window.Content>
-        <Section title="Select Minigame" textAlign="center">
+        <Section title="Select Minigame" textAlign="center" fill>
           <Stack>
             <Stack.Item grow>
               <Button
@@ -30,6 +30,9 @@ export const MinigamesMenu = (props) => {
                 onClick={() => act('mafia')}
               />
             </Stack.Item>
+          </Stack>
+          <Divider />
+          <Stack>
             <Stack.Item grow>
               <Button
                 content="Basketball"
@@ -38,6 +41,16 @@ export const MinigamesMenu = (props) => {
                 textAlign="center"
                 lineHeight="3"
                 onClick={() => act('basketball')}
+              />
+            </Stack.Item>
+            <Stack.Item grow>
+              <Button
+                content="Deathmatch"
+                fluid
+                fontSize={3}
+                textAlign="center"
+                lineHeight="3"
+                onClick={() => act('deathmatch')}
               />
             </Stack.Item>
           </Stack>

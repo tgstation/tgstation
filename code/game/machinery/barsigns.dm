@@ -36,8 +36,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	if(!istype(sign))
 		return
 
+	var/area/bar_area = get_area(src)
 	if(change_area_name && sign.rename_area)
-		rename_area(src, sign.name)
+		rename_area(bar_area, sign.name)
 
 	chosen_sign = sign
 	update_appearance()
@@ -88,7 +89,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /obj/machinery/barsign/atom_break(damage_flag)
 	. = ..()
-	if((machine_stat & BROKEN) && !(obj_flags & NO_DECONSTRUCTION))
+	if(machine_stat & BROKEN)
 		set_sign(new /datum/barsign/hiddensigns/signoff)
 
 /obj/machinery/barsign/on_deconstruction(disassembled)
@@ -152,7 +153,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /obj/machinery/barsign/attackby(obj/item/attacking_item, mob/user)
 
-	if(istype(attacking_item, /obj/item/areaeditor/blueprints) && !change_area_name)
+	if(istype(attacking_item, /obj/item/blueprints) && !change_area_name)
 		if(!panel_open)
 			balloon_alert(user, "open the panel first!")
 			return TRUE

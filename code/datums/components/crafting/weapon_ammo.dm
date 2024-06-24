@@ -12,6 +12,15 @@
 	time = 0.5 SECONDS
 	category = CAT_WEAPON_AMMO
 
+/datum/crafting_recipe/paperball
+	name = "Paper Ball"
+	result = /obj/item/ammo_casing/rebar/paperball
+	reqs = list(
+		/obj/item/paper = 1,
+	)
+	time = 0.1 SECONDS
+	category = CAT_WEAPON_AMMO
+
 /datum/crafting_recipe/rebarsyndie
 	name = "jagged iron rod"
 	result = /obj/item/ammo_casing/rebar/syndie
@@ -19,9 +28,19 @@
 		/obj/item/stack/rods = 1,
 	)
 	tool_behaviors = list(TOOL_WIRECUTTER)
-	time = 0.5 SECONDS
-	always_available = FALSE
+	time = 0.1 SECONDS
 	category = CAT_WEAPON_AMMO
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
+
+/datum/crafting_recipe/healium_bolt
+	name = "healium crystal crossbow bolt"
+	result = /obj/item/ammo_casing/rebar/healium
+	reqs = list(
+		/obj/item/grenade/gas_crystal/healium_crystal = 1
+	)
+	time = 0.1 SECONDS
+	category = CAT_WEAPON_AMMO
+	crafting_flags = CRAFT_CHECK_DENSITY
 
 /datum/crafting_recipe/pulseslug
 	name = "Pulse Slug Shell"
@@ -71,8 +90,8 @@
 	category = CAT_WEAPON_AMMO
 
 /datum/crafting_recipe/improvisedslug
-	name = "Improvised Shotgun Shell"
-	result = /obj/item/ammo_casing/shotgun/improvised
+	name = "Junk Shell"
+	result = /obj/effect/spawner/random/junk_shell
 	reqs = list(
 		/obj/item/stack/sheet/iron = 2,
 		/obj/item/stack/cable_coil = 1,
@@ -85,10 +104,10 @@
 
 /datum/crafting_recipe/trashball
 	name = "Trashball"
-	always_available = FALSE
 	result = /obj/item/stack/cannonball/trashball
 	reqs = list(
 		/obj/item/stack/sheet = 5,
 		/datum/reagent/consumable/space_cola = 10,
 	)
 	category = CAT_WEAPON_AMMO
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED

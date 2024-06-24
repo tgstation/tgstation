@@ -40,11 +40,26 @@
 	/// This is gross and will probably easily be outdated in some time but c'est la vie.
 	/// Maybe if someone datumizes heretic paths or something this can be improved
 	var/static/list/ascension_bodies = list(
-		"Fear the blaze, for the Ashlord, %FAKENAME% has ascended! The flames shall consume all!",
-		"Master of blades, the Torn Champion's disciple, %FAKENAME% has ascended! Their steel is that which will cut reality in a maelstom of silver!",
-		"Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, %FAKENAME% has ascended! Fear the ever twisting hand!",
-		"Fear the decay, for the Rustbringer, %FAKENAME% has ascended! None shall escape the corrosion!",
-		"The nobleman of void %FAKENAME% has arrived, stepping along the Waltz that ends worlds!",
+		list(
+			"text" = "Fear the blaze, for the Ashlord, %FAKENAME% has ascended! The flames shall consume all!",
+			"sound" = 'sound/ambience/antag/heretic/ascend_blade.ogg',
+		),
+		list(
+			"text" = "Master of blades, the Torn Champion's disciple, %FAKENAME% has ascended! Their steel is that which will cut reality in a maelstom of silver!",
+			"sound" = 'sound/ambience/antag/heretic/ascend_blade.ogg',
+		),
+		list(
+			"text" = "Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, %FAKENAME% has ascended! Fear the ever twisting hand!",
+			"sound" = 'sound/ambience/antag/heretic/ascend_flesh.ogg',
+		),
+		list(
+			"text" = "Fear the decay, for the Rustbringer, %FAKENAME% has ascended! None shall escape the corrosion!",
+			"sound" = 'sound/ambience/antag/heretic/ascend_rust.ogg',
+		),
+		list(
+			"text" = "The nobleman of void %FAKENAME% has arrived, stepping along the Waltz that ends worlds!",
+			"sound" = 'sound/ambience/antag/heretic/ascend_void.ogg',
+		)
 	)
 
 /datum/hallucination/station_message/heretic/start()
@@ -53,12 +68,12 @@
 	if(!totally_real_heretic)
 		return FALSE
 
-	var/message_with_name = pick(ascension_bodies)
-	message_with_name = replacetext(message_with_name, "%FAKENAME%", totally_real_heretic.real_name)
+	var/list/fake_ascension = pick(ascension_bodies)
+	var/announcement_text = replacetext(fake_ascension["text"], "%FAKENAME%", totally_real_heretic.real_name)
 	priority_announce(
-		text = "[generate_heretic_text()] [message_with_name] [generate_heretic_text()]",
+		text = "[generate_heretic_text()] [announcement_text] [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
-		sound = ANNOUNCER_SPANOMALIES,
+		sound = fake_ascension["sound"],
 		players = list(hallucinator),
 		color_override = "pink",
 	)

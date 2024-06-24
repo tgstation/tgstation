@@ -1,5 +1,3 @@
-import { filter, map, reduce, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 import { clamp } from 'common/math';
 import { createSearch } from 'common/string';
 import { useState } from 'react';
@@ -49,8 +47,7 @@ type RecipeBoxProps = {
 };
 
 // RecipeList converted via Object.entries() for filterRecipeList
-type RecipeListEntry = [string, RecipeList | Recipe];
-type RecipeListFilterableEntry = [string, RecipeList | Recipe | undefined];
+type RecipeListFilterableEntry = [string, RecipeList | Recipe];
 
 /**
  * Type guard for recipe vs recipe list
@@ -70,30 +67,29 @@ function isRecipeList(value: Recipe | RecipeList): value is RecipeList {
 const filterRecipeList = (
   list: RecipeList,
   keyFilter: (key: string) => boolean,
-) => {
-  const filteredList: RecipeList = flow([
-    map((entry: RecipeListEntry): RecipeListFilterableEntry => {
-      const [key, recipe] = entry;
+): RecipeList | undefined => {
+  const filteredList = Object.fromEntries(
+    Object.entries(list)
+      .flatMap((entry): RecipeListFilterableEntry[] => {
+        const [key, recipe] = entry;
 
-      if (isRecipeList(recipe)) {
         // If category name matches, return the whole thing.
         if (keyFilter(key)) {
-          return entry;
+          return [entry];
         }
 
-        // otherwise, filter sub-entries.
-        return [key, filterRecipeList(recipe, keyFilter)];
-      }
+        if (isRecipeList(recipe)) {
+          // otherwise, filter sub-entries.
+          const subEntries = filterRecipeList(recipe, keyFilter);
+          if (subEntries !== undefined) {
+            return [[key, subEntries]];
+          }
+        }
 
-      return keyFilter(key) ? entry : [key, undefined];
-    }),
-    filter((entry: RecipeListFilterableEntry) => entry[1] !== undefined),
-    sortBy((entry: RecipeListEntry) => entry[0].toLowerCase()),
-    reduce((obj: RecipeList, entry: RecipeListEntry) => {
-      obj[entry[0]] = entry[1];
-      return obj;
-    }, {}),
-  ])(Object.entries(list));
+        return [];
+      })
+      .sort(([a], [b]) => (a < b ? -1 : a !== b ? 1 : 0)),
+  );
 
   return Object.keys(filteredList).length ? filteredList : undefined;
 };

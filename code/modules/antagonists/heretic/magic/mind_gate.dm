@@ -24,7 +24,7 @@
 /datum/action/cooldown/spell/pointed/mind_gate/is_valid_target(atom/cast_on)
 	return ..() && ishuman(cast_on)
 
-/datum/action/cooldown/spell/pointed/mind_gate/cast(mob/living/carbon/human/cast_on, mob/living/carbon/human/owner)
+/datum/action/cooldown/spell/pointed/mind_gate/cast(mob/living/carbon/human/cast_on)
 	. = ..()
 	if(cast_on.can_block_magic(antimagic_flags))
 		to_chat(cast_on, span_notice("Your mind feels closed."))
@@ -36,4 +36,6 @@
 	cast_on.cause_hallucination(get_random_valid_hallucination_subtype(/datum/hallucination/body), "Mind gate, cast by [owner]")
 	cast_on.cause_hallucination(/datum/hallucination/delusion/preset/heretic/gate, "Caused by mindgate")
 	cast_on.adjustOrganLoss(ORGAN_SLOT_BRAIN, 30)
-	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 140)
+
+	var/mob/living/living_owner = owner
+	living_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 140)

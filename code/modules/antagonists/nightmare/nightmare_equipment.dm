@@ -64,7 +64,7 @@
 	remove_crit()
 
 /obj/item/light_eater/proc/prepare_crit_timer()
-	crit_timer = addtimer(CALLBACK(src, PROC_REF(add_crit)), 15 SECONDS, TIMER_DELETE_ME | TIMER_STOPPABLE)
+	crit_timer = addtimer(CALLBACK(src, PROC_REF(add_crit)), 7 SECONDS, TIMER_DELETE_ME | TIMER_STOPPABLE)
 
 /obj/item/light_eater/proc/stop_crit_timer()
 	deltimer(crit_timer)
@@ -73,7 +73,7 @@
 	if(has_crit)
 		return
 	has_crit = TRUE
-	add_filter("crit_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
+	add_filter("crit_glow", 3, list("type" = "outline", "color" = COLOR_CARP_RIFT_RED, "size" = 5))
 	if(ismob(loc))
 		loc.balloon_alert(loc, "critical strike ready")
 

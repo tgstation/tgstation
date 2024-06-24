@@ -67,14 +67,10 @@
 					message_admins(span_notice("[key_name(usr)] has added [amount] units of [chosen_id] to [src]"))
 
 	if(href_list[VV_HK_TRIGGER_EXPLOSION])
-		if(!check_rights(R_FUN))
-			return
-		usr.client.cmd_admin_explosion(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/admin_explosion, src)
 
 	if(href_list[VV_HK_TRIGGER_EMP])
-		if(!check_rights(R_FUN))
-			return
-		usr.client.cmd_admin_emp(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/admin_emp, src)
 
 	if(href_list[VV_HK_SHOW_HIDDENPRINTS])
 		if(!check_rights(R_ADMIN))
@@ -222,37 +218,37 @@
 	light_flags &= ~LIGHT_FROZEN
 	switch(var_name)
 		if(NAMEOF(src, light_range))
-			if(light_system == STATIC_LIGHT)
+			if(light_system == COMPLEX_LIGHT)
 				set_light(l_range = var_value)
 			else
 				set_light_range(var_value)
 			. = TRUE
 		if(NAMEOF(src, light_power))
-			if(light_system == STATIC_LIGHT)
+			if(light_system == COMPLEX_LIGHT)
 				set_light(l_power = var_value)
 			else
 				set_light_power(var_value)
 			. = TRUE
 		if(NAMEOF(src, light_color))
-			if(light_system == STATIC_LIGHT)
+			if(light_system == COMPLEX_LIGHT)
 				set_light(l_color = var_value)
 			else
 				set_light_color(var_value)
 			. = TRUE
 		if(NAMEOF(src, light_angle))
-			if(light_system == STATIC_LIGHT)
+			if(light_system == COMPLEX_LIGHT)
 				set_light(l_angle = var_value)
 				. = TRUE
 		if(NAMEOF(src, light_dir))
-			if(light_system == STATIC_LIGHT)
+			if(light_system == COMPLEX_LIGHT)
 				set_light(l_dir = var_value)
 				. = TRUE
 		if(NAMEOF(src, light_height))
-			if(light_system == STATIC_LIGHT)
+			if(light_system == COMPLEX_LIGHT)
 				set_light(l_height = var_value)
 				. = TRUE
 		if(NAMEOF(src, light_on))
-			if(light_system == STATIC_LIGHT)
+			if(light_system == COMPLEX_LIGHT)
 				set_light(l_on = var_value)
 			else
 				set_light_on(var_value)

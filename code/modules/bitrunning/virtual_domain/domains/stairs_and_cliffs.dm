@@ -6,7 +6,8 @@
 	instead of ladders its stairs and instead of snakes its a steep drop down a \
 	cliff into rough rocks or liquid plasma."
 	difficulty = BITRUNNER_DIFFICULTY_LOW
-	extra_loot = list(/obj/item/clothing/suit/costume/snowman = 2)
+	completion_loot = list(/obj/item/clothing/suit/costume/snowman = 2)
+	secondary_loot = list(/obj/item/clothing/shoes/wheelys/skishoes = 2, /obj/item/clothing/head/costume/ushanka/polar = 1)
 	forced_outfit = /datum/outfit/job/virtual_domain_iceclimber
 	key = "stairs_and_cliffs"
 	map_name = "stairs_and_cliffs"

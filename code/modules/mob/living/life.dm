@@ -53,10 +53,6 @@
 		if (QDELETED(src)) // diseases can qdel the mob via transformations
 			return
 
-		if(stat != DEAD)
-			//Random events (vomiting etc)
-			handle_random_events(seconds_per_tick, times_fired)
-
 		//Handle temperature/pressure differences between body and environment
 		var/datum/gas_mixture/environment = loc.return_air()
 		if(environment)
@@ -65,9 +61,6 @@
 		handle_gravity(seconds_per_tick, times_fired)
 
 	handle_wounds(seconds_per_tick, times_fired)
-
-	if(machine)
-		machine.check_eye(src)
 
 	if(stat != DEAD)
 		return 1
@@ -83,9 +76,6 @@
 	return
 
 /mob/living/proc/handle_wounds(seconds_per_tick, times_fired)
-	return
-
-/mob/living/proc/handle_random_events(seconds_per_tick, times_fired)
 	return
 
 // Base mob environment handler for body temperature

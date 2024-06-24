@@ -162,10 +162,8 @@
 	if(attacking_blob && attacking_blob.loc == loc)
 		qdel(src)
 
-/obj/structure/light_construct/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(loc, sheets_refunded)
-	qdel(src)
+/obj/structure/light_construct/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/iron(loc, sheets_refunded)
 
 /obj/structure/light_construct/small
 	name = "small light fixture frame"

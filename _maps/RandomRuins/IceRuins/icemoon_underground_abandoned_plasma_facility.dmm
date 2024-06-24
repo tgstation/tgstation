@@ -1016,7 +1016,7 @@
 /area/ruin/plasma_facility/commons)
 "pE" = (
 /obj/structure/bed/maint,
-/obj/item/bedsheet/dorms,
+/obj/effect/spawner/random/bedsheet,
 /obj/item/flashlight/flare/candle{
 	pixel_x = 12;
 	pixel_y = 9
@@ -2601,9 +2601,7 @@
 	pixel_x = 15;
 	pixel_y = 14
 	},
-/mob/living/basic/frog{
-	name = "Peter Jr."
-	},
+/mob/living/basic/frog/icemoon_facility,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
 "TK" = (

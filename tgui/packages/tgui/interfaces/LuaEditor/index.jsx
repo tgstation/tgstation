@@ -38,7 +38,7 @@ export class LuaEditor extends Component {
 
     this.handleSectionScroll = () => {
       const { showJumpToBottomButton } = this.state;
-      const scrollableCurrent = this.sectionRef.current?.scrollableRef.current;
+      const scrollableCurrent = this.sectionRef.current;
       if (
         !showJumpToBottomButton &&
         scrollableCurrent?.scrollHeight >
@@ -157,6 +157,7 @@ export class LuaEditor extends Component {
         break;
       }
     }
+
     return (
       <Window width={1280} height={720}>
         <Window.Content>
@@ -181,14 +182,7 @@ export class LuaEditor extends Component {
                   title="Input"
                   buttons={
                     <>
-                      <Button.File
-                        onSelectFiles={(file) =>
-                          this.setState({ scriptInput: file })
-                        }
-                        accept=".lua,.luau"
-                      >
-                        Import
-                      </Button.File>
+                      <Button onClick={() => act('runCodeFile')}>Import</Button>
                       <Button onClick={() => setModal('documentation')}>
                         Help
                       </Button>
@@ -201,7 +195,7 @@ export class LuaEditor extends Component {
                     height="100%"
                     value={scriptInput}
                     fontFamily="Consolas"
-                    onChange={(_, value) =>
+                    onInput={(_, value) =>
                       this.setState({ scriptInput: value })
                     }
                     displayedValue={
@@ -334,10 +328,8 @@ export class LuaEditor extends Component {
                           width="100%"
                           onClick={() => {
                             const sectionCurrent = this.sectionRef.current;
-                            const scrollableCurrent =
-                              sectionCurrent.scrollableRef.current;
-                            scrollableCurrent.scrollTop =
-                              scrollableCurrent.scrollHeight;
+                            sectionCurrent.scrollTop =
+                              sectionCurrent.scrollHeight;
                           }}
                         >
                           Jump to Bottom

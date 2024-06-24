@@ -13,6 +13,16 @@
 	..()
 	blacklist |= subtypesof(/obj/item/shield/riot)
 
+/datum/crafting_recipe/improvisedshield
+	name = "Improvised Shield"
+	result = /obj/item/shield/improvised
+	reqs = list(
+		/obj/item/stack/sheet/iron = 10,
+		/obj/item/stack/sticky_tape = 2,
+	)
+	time = 4 SECONDS
+	category = CAT_EQUIPMENT
+
 /datum/crafting_recipe/radiogloves
 	name = "Radio Gloves"
 	result = /obj/item/clothing/gloves/radio
@@ -71,6 +81,17 @@
 		/obj/item/electronics/airlock = 1,
 	)
 	time = 5 SECONDS
+	category = CAT_EQUIPMENT
+
+/datum/crafting_recipe/barbeque_grill
+	name = "Barbeque grill"
+	result = /obj/machinery/grill
+	reqs = list(
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/rods = 5,
+		/obj/item/assembly/igniter = 1,
+	)
+	time = 7 SECONDS
 	category = CAT_EQUIPMENT
 
 /datum/crafting_recipe/secure_closet
@@ -228,3 +249,14 @@
 	tool_paths = list(/obj/item/bikehorn)
 	time = 40 SECONDS
 	category = CAT_EQUIPMENT
+
+/datum/crafting_recipe/rebar_quiver
+	name = "Rebar Storage Quiver"
+	result = /obj/item/storage/bag/rebar_quiver
+	time = 10
+	reqs = list(
+		/obj/item/tank/internals/oxygen = 1,
+		/obj/item/stack/cable_coil = 15,
+	)
+	category = CAT_EQUIPMENT
+	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER)

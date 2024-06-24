@@ -10,15 +10,16 @@
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 
+/obj/item/gun/energy/ionrifle/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
+
 /obj/item/gun/energy/ionrifle/add_seclight_point()
 	AddComponent(/datum/component/seclite_attachable, \
 		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
 		light_overlay = "flight", \
 		overlay_x = 17, \
 		overlay_y = 9)
-
-/obj/item/gun/energy/ionrifle/emp_act(severity)
-	return
 
 /obj/item/gun/energy/ionrifle/carbine
 	name = "ion carbine"
@@ -77,6 +78,9 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
 	ammo_x_offset = 2
 
+/// amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
+#define PLASMA_CUTTER_CHARGE_WELD (0.025 * STANDARD_CELL_CHARGE)
+
 /obj/item/gun/energy/plasmacutter
 	name = "plasma cutter"
 	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off xenos! Or, you know, mine stuff."
@@ -90,12 +94,10 @@
 	sharpness = SHARP_EDGED
 	can_charge = FALSE
 	gun_flags = NOT_A_REAL_GUN
-
 	heat = 3800
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
-	var/charge_weld = 25 //amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
 
 /obj/item/gun/energy/plasmacutter/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
@@ -124,15 +126,13 @@
 			balloon_alert(user, "already fully charged!")
 			return
 		I.use(1)
-		cell.give(500*charge_multiplier)
+		cell.give(0.5 * STANDARD_CELL_CHARGE * charge_multiplier)
 		balloon_alert(user, "cell recharged")
 	else
 		..()
 
 /obj/item/gun/energy/plasmacutter/emp_act(severity)
-	if(!cell.charge)
-		return
-	cell.use(cell.charge/3)
+	. = ..()
 	if(isliving(loc))
 		var/mob/living/user = loc
 		user.visible_message(span_danger("Concentrated plasma discharges from [src] onto [user], burning them!"), span_userdanger("[src] malfunctions, spewing concentrated plasma onto you! It burns!"))
@@ -148,14 +148,14 @@
 	// Amount cannot be used if drain is made continuous, e.g. amount = 5, charge_weld = 25
 	// Then it'll drain 125 at first and 25 periodically, but fail if charge dips below 125 even though it still can finish action
 	// Alternately it'll need to drain amount*charge_weld every period, which is either obscene or makes it free for other uses
-	if(amount ? cell.charge < charge_weld * amount : cell.charge < charge_weld)
+	if(amount ? cell.charge < PLASMA_CUTTER_CHARGE_WELD * amount : cell.charge < PLASMA_CUTTER_CHARGE_WELD)
 		balloon_alert(user, "not enough charge!")
 		return FALSE
 
 	return TRUE
 
 /obj/item/gun/energy/plasmacutter/use(used)
-	return (!QDELETED(cell) && cell.use(used ? used * charge_weld : charge_weld))
+	return (!QDELETED(cell) && cell.use(used ? used * PLASMA_CUTTER_CHARGE_WELD : PLASMA_CUTTER_CHARGE_WELD))
 
 /obj/item/gun/energy/plasmacutter/use_tool(atom/target, mob/living/user, delay, amount=1, volume=0, datum/callback/extra_checks)
 
@@ -168,6 +168,8 @@
 		target.cut_overlay(sparks)
 	else
 		. = ..(amount=1)
+
+#undef PLASMA_CUTTER_CHARGE_WELD
 
 /obj/item/gun/energy/plasmacutter/adv
 	name = "advanced plasma cutter"
@@ -229,16 +231,14 @@
 			if(istype(WH))
 				WH.gun = WEAKREF(src)
 
-/obj/item/gun/energy/wormhole_projector/afterattack(atom/target, mob/living/user, flag, params)
-	if(select == AMMO_SELECT_ORANGE) //Last fired in right click mode. Switch to blue wormhole (left click).
-		select_fire()
+/obj/item/gun/energy/wormhole_projector/try_fire_gun(atom/target, mob/living/user, params)
+	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+		if(select == AMMO_SELECT_BLUE) //Last fired in left click mode. Switch to orange wormhole (right click).
+			select_fire()
+	else
+		if(select == AMMO_SELECT_ORANGE) //Last fired in right click mode. Switch to blue wormhole (left click).
+			select_fire()
 	return ..()
-
-/obj/item/gun/energy/wormhole_projector/afterattack_secondary(atom/target, mob/living/user, flag, params)
-	if(select == AMMO_SELECT_BLUE) //Last fired in left click mode. Switch to orange wormhole (right click).
-		select_fire()
-	fire_gun(target, user, flag, params)
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/gun/energy/wormhole_projector/proc/on_portal_destroy(obj/effect/portal/P)
 	SIGNAL_HANDLER
@@ -282,6 +282,7 @@
 		qdel(p_blue)
 		p_blue = new_portal
 	crosslink()
+	playsound(new_portal, SFX_PORTAL_CREATED, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/gun/energy/wormhole_projector/core_inserted
 	firing_core = TRUE
@@ -305,9 +306,7 @@
 	AddElement(/datum/element/update_icon_blocker)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)
-
-/obj/item/gun/energy/printer/emp_act()
-	return
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/gun/energy/temperature
 	name = "temperature gun"
@@ -408,13 +407,15 @@
 		coin_count++
 		COOLDOWN_START(src, coin_regen_cd, coin_regen_rate)
 
-/obj/item/gun/energy/marksman_revolver/afterattack_secondary(atom/target, mob/living/user, params)
-	if(!can_see(user, get_turf(target), length = 9))
+/obj/item/gun/energy/marksman_revolver/try_fire_gun(atom/target, mob/living/user, params)
+	if(!LAZYACCESS(params2list(params), RIGHT_CLICK))
 		return ..()
+	if(!CAN_THEY_SEE(target, user))
+		return ITEM_INTERACT_BLOCKING
 
 	if(max_coins && coin_count <= 0)
 		to_chat(user, span_warning("You don't have any coins right now!"))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
 	if(max_coins)
 		START_PROCESSING(SSobj, src)
@@ -426,5 +427,4 @@
 	var/obj/projectile/bullet/coin/new_coin = new(get_turf(user), target_turf, user)
 	new_coin.preparePixelProjectile(target_turf, user)
 	new_coin.fire()
-
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS

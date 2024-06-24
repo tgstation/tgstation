@@ -23,11 +23,6 @@
 	/// Are we currently playing?
 	var/playing = FALSE
 
-	/// Are we currently editing?
-	var/editing = TRUE
-	/// Is the help screen open?
-	var/help = FALSE
-
 	/// Repeats left
 	var/repeat = 0
 	/// Maximum times we can repeat
@@ -107,7 +102,6 @@
 	var/note_shift = 0
 	var/note_shift_min = -100
 	var/note_shift_max = 100
-	var/can_noteshift = TRUE
 	/// The kind of sustain we're using
 	var/sustain_mode = SUSTAIN_LINEAR
 	/// When a note is considered dead if it is below this in volume
@@ -129,7 +123,7 @@
 	tempo = sanitize_tempo(tempo, TRUE)
 	src.parent = parent
 	if(instrument_ids)
-		allowed_instrument_ids = islist(instrument_ids)? instrument_ids : list(instrument_ids)
+		allowed_instrument_ids = islist(instrument_ids) ? instrument_ids : list(instrument_ids)
 	if(length(allowed_instrument_ids))
 		set_instrument(allowed_instrument_ids[1])
 	hearing_mobs = list()
@@ -217,8 +211,6 @@
 	delay_by = 0
 	current_chord = 1
 	music_player = user
-	if(ismob(music_player))
-		updateDialog(music_player)
 	START_PROCESSING(SSinstruments, src)
 
 /**
@@ -328,12 +320,6 @@
 /datum/song/proc/set_bpm(bpm)
 	tempo = sanitize_tempo(600 / bpm)
 
-/**
- * Updates the window for our users. Override down the line.
- */
-/datum/song/proc/updateDialog(mob/user)
-	ui_interact(user)
-
 /datum/song/process(wait)
 	if(!playing)
 		return PROCESS_KILL
@@ -359,7 +345,6 @@
 /datum/song/proc/set_volume(volume)
 	src.volume = clamp(round(volume, 1), max(0, min_volume), min(100, max_volume))
 	update_sustain()
-	updateDialog()
 
 /**
  * Setter for setting how low the volume has to get before a note is considered "dead" and dropped
@@ -367,7 +352,6 @@
 /datum/song/proc/set_dropoff_volume(volume)
 	sustain_dropoff_volume = clamp(round(volume, 0.01), INSTRUMENT_MIN_SUSTAIN_DROPOFF, 100)
 	update_sustain()
-	updateDialog()
 
 /**
  * Setter for setting exponential falloff factor.
@@ -375,7 +359,6 @@
 /datum/song/proc/set_exponential_drop_rate(drop)
 	sustain_exponential_dropoff = clamp(round(drop, 0.00001), INSTRUMENT_EXP_FALLOFF_MIN, INSTRUMENT_EXP_FALLOFF_MAX)
 	update_sustain()
-	updateDialog()
 
 /**
  * Setter for setting linear falloff duration.
@@ -383,7 +366,6 @@
 /datum/song/proc/set_linear_falloff_duration(duration)
 	sustain_linear_duration = clamp(round(duration * 10, world.tick_lag), world.tick_lag, INSTRUMENT_MAX_TOTAL_SUSTAIN)
 	update_sustain()
-	updateDialog()
 
 /datum/song/vv_edit_var(var_name, var_value)
 	. = ..()
@@ -401,9 +383,6 @@
 // subtype for handheld instruments, like violin
 /datum/song/handheld
 
-/datum/song/handheld/updateDialog(mob/user)
-	parent.ui_interact(user || usr)
-
 /datum/song/handheld/should_stop_playing(atom/player)
 	. = ..()
 	if(. == STOP_PLAYING || . == IGNORE_INSTRUMENT_CHECKS)
@@ -413,9 +392,6 @@
 
 // subtype for stationary structures, like pianos
 /datum/song/stationary
-
-/datum/song/stationary/updateDialog(mob/user)
-	parent.ui_interact(user || usr)
 
 /datum/song/stationary/should_stop_playing(atom/player)
 	. = ..()

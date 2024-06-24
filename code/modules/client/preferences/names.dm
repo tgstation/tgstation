@@ -45,12 +45,11 @@
 	target.log_mob_tag("TAG: [target.tag] RENAMED: [key_name(target)]")
 
 /datum/preference/name/real_name/create_informed_default_value(datum/preferences/preferences)
-	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
-	var/gender = preferences.read_preference(/datum/preference/choiced/gender)
-
-	var/datum/species/species = new species_type
-
-	return species.random_name(gender, unique = TRUE)
+	return generate_random_name_species_based(
+		preferences.read_preference(/datum/preference/choiced/gender),
+		TRUE,
+		preferences.read_preference(/datum/preference/choiced/species),
+	)
 
 /datum/preference/name/real_name/deserialize(input, datum/preferences/preferences)
 	input = ..(input)
@@ -73,9 +72,7 @@
 	savefile_key = "human_name"
 
 /datum/preference/name/backup_human/create_informed_default_value(datum/preferences/preferences)
-	var/gender = preferences.read_preference(/datum/preference/choiced/gender)
-
-	return random_unique_name(gender)
+	return generate_random_name(preferences.read_preference(/datum/preference/choiced/gender))
 
 /datum/preference/name/clown
 	savefile_key = "clown_name"

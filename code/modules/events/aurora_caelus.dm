@@ -92,14 +92,14 @@
 	var/start_color = hsl_gradient(1, 0, "#A2FF80", 1, "#A2FFEE")
 	var/start_range = 1
 	var/start_power = 0.75
-	var/end_color = "#000000"
+	var/end_color = COLOR_BLACK
 	var/end_range = 0.5
 	var/end_power = 0
 	if(fade_in)
 		end_color = hsl_gradient(0, 0, "#A2FF80", 1, "#A2FFEE")
 		end_range = start_range
 		end_power = start_power
-		start_color = "#000000"
+		start_color = COLOR_BLACK
 		start_range = 0.5
 		start_power = 0
 

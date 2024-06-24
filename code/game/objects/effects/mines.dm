@@ -76,7 +76,7 @@
 
 	return TRUE
 
-/obj/effect/mine/proc/on_entered(datum/source, atom/movable/arrived)
+/obj/effect/mine/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc)
 	SIGNAL_HANDLER
 
 	if(!can_trigger(arrived))
@@ -85,15 +85,35 @@
 	if(foot_on_mine?.resolve())
 		return
 
-	foot_on_mine = WEAKREF(arrived)
+	var/gonna_blow
+	if(arrived.flags_1 & ON_BORDER_1)
+		if(arrived.dir == get_dir(old_loc, src)) //see if a partial tile atom has passed the mine
+			gonna_blow = TRUE
+		else
+			return //it didn't actually touch the mine, don't blow
+
 	visible_message(span_danger("[icon2html(src, viewers(src))] *click*"))
 	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
+	if(gonna_blow)
+		RegisterSignal(arrived, COMSIG_MOVABLE_MOVED, PROC_REF(triggermine)) //wait for it to finish the movement before blowing so it takes proper damage
+		return
 
-/obj/effect/mine/proc/on_exited(datum/source, atom/movable/gone)
+	foot_on_mine = WEAKREF(arrived)
+
+
+/obj/effect/mine/proc/on_exited(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 
 	if(!can_trigger(gone))
 		return
+
+	if(!foot_on_mine && gone.flags_1 & ON_BORDER_1)
+		if(gone.dir == REVERSE_DIR(direction)) //see if a north facing border atom (ie window) travels south (and other directions as needed)
+			visible_message(span_danger("[icon2html(src, viewers(src))] *click*"))
+			playsound(src, 'sound/machines/click.ogg', 60, TRUE)
+			triggermine() //it "passed" over the mine briefly, triggering it in the process
+		return //either it blew up the mine, or it didn't and we don't have to worry about anything else.
+
 	// Check that the guy who's on it is stepping off
 	if(foot_on_mine && !IS_WEAKREF_OF(gone, foot_on_mine))
 		return
@@ -107,6 +127,7 @@
 
 /// When something sets off a mine
 /obj/effect/mine/proc/triggermine(atom/movable/triggerer)
+	SIGNAL_HANDLER
 	if(triggered) //too busy detonating to detonate again
 		return
 	if(triggerer)

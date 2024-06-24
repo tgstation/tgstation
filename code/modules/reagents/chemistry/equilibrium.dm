@@ -390,11 +390,15 @@
 	reaction_quality = purity
 
 	//post reaction checks
-	if(!(check_fail_states(total_step_added)))
+	if(!check_fail_states(total_step_added))
 		to_delete = TRUE
 		return
 
 	//If the volume of reagents created(total_step_added) >= volume of reagents still to be created(step_target_vol) then end
 	//i.e. we have created all the reagents needed for this reaction
-	if(total_step_added >= step_target_vol)
+	//This is only accurate when a single reaction is present and we don't have multiple reactions where
+	//reaction B consumes the products formed from reaction A(which can happen in add_reagent() as it also triggers handle_reactions() which can consume the reagent just added)
+	//because total_step_added will be higher than the actual volume that was created leading to the reaction ending early
+	//and yielding less products than intended
+	if(total_step_added >= step_target_vol && length(holder.reaction_list) == 1)
 		to_delete = TRUE

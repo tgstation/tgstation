@@ -62,7 +62,7 @@
 		if(HAS_TRAIT_FROM(affected_mob, TRAIT_NO_TRANSFORM, REF(src)))
 			return
 		ADD_TRAIT(affected_mob, TRAIT_NO_TRANSFORM, REF(src))
-		for(var/obj/item/W in affected_mob.get_equipped_items(include_pockets = TRUE))
+		for(var/obj/item/W in affected_mob.get_equipped_items(INCLUDE_POCKETS))
 			affected_mob.dropItemToGround(W)
 		for(var/obj/item/I in affected_mob.held_items)
 			affected_mob.dropItemToGround(I)
@@ -84,13 +84,12 @@
 /datum/disease/transformation/proc/replace_banned_player(mob/living/new_mob) // This can run well after the mob has been transferred, so need a handle on the new mob to kill it if needed.
 	set waitfor = FALSE
 
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as [affected_mob.real_name]?", check_jobban = bantype, role = bantype, poll_time = 5 SECONDS, target_mob = affected_mob, pic_source = affected_mob, role_name_text = "transformation victim")
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_notice(affected_mob.real_name)]?", check_jobban = bantype, role = bantype, poll_time = 5 SECONDS, checked_target = affected_mob, alert_pic = affected_mob, role_name_text = "transformation victim")
+	if(chosen_one)
 		to_chat(affected_mob, span_userdanger("Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"))
-		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbanned player.")
+		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbanned player.")
 		affected_mob.ghostize(FALSE)
-		affected_mob.key = C.key
+		affected_mob.key = chosen_one.key
 	else
 		to_chat(new_mob, span_userdanger("Your mob has been claimed by death! Appeal your job ban if you want to avoid this in the future!"))
 		new_mob.investigate_log("has been killed because there was no one to replace them as a job-banned player.", INVESTIGATE_DEATHS)
@@ -149,7 +148,6 @@
 				affected_mob.say(pick("Eeee!", "Eeek, ook ook!", "Eee-eeek!", "Ungh, ungh."), forced = "jungle fever")
 
 /datum/disease/transformation/robot
-
 	name = "Robotic Transformation"
 	cure_text = "An injection of copper."
 	cures = list(/datum/reagent/copper)
@@ -170,7 +168,6 @@
 	new_form = /mob/living/silicon/robot
 	infectable_biotypes = MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC
 	bantype = JOB_CYBORG
-
 
 /datum/disease/transformation/robot/stage_act(seconds_per_tick, times_fired)
 	. = ..()
@@ -245,7 +242,7 @@
 	stage3 = list(span_danger("Your appendages are melting away."), span_danger("Your limbs begin to lose their shape."))
 	stage4 = list(span_danger("You are turning into a slime."))
 	stage5 = list(span_danger("You have become a slime."))
-	new_form = /mob/living/simple_animal/slime
+	new_form = /mob/living/basic/slime
 
 
 /datum/disease/transformation/slime/stage_act(seconds_per_tick, times_fired)
@@ -269,7 +266,7 @@
 	if(affected_mob.client && ishuman(affected_mob)) // if they are a human who's not a monkey and are sentient, then let them have the old fun
 		var/mob/living/carbon/human/human = affected_mob
 		if(!ismonkey(human))
-			new_form = /mob/living/simple_animal/slime/random
+			new_form = /mob/living/basic/slime/random
 	return ..()
 
 /datum/disease/transformation/corgi
@@ -338,7 +335,7 @@
 	)
 	stage4 = list(span_danger("You can't feel your arms. It does not bother you anymore."), span_danger("You forgive the clown for hurting you."))
 	stage5 = list(span_danger("You have become a Gondola."))
-	new_form = /mob/living/simple_animal/pet/gondola
+	new_form = /mob/living/basic/pet/gondola
 
 
 /datum/disease/transformation/gondola/stage_act(seconds_per_tick, times_fired)

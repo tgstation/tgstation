@@ -2,6 +2,7 @@
 #define HEATER_MODE_HEAT "heat"
 #define HEATER_MODE_COOL "cool"
 #define HEATER_MODE_AUTO "auto"
+#define BASE_HEATING_ENERGY (40 KILO JOULES)
 
 /obj/machinery/space_heater
 	anchored = FALSE
@@ -15,6 +16,7 @@
 	max_integrity = 250
 	armor_type = /datum/armor/machinery_space_heater
 	circuit = /obj/item/circuitboard/machine/space_heater
+	interaction_flags_click = ALLOW_SILICON_REACH
 	//We don't use area power, we always use the cell
 	use_power = NO_POWER_USE
 	///The cell we spawn with
@@ -28,9 +30,9 @@
 	///The temperature we trying to get to
 	var/target_temperature = T20C
 	///How much heat/cold we can deliver
-	var/heating_power = 40000
+	var/heating_energy = 40 KILO JOULES
 	///How efficiently we can deliver that heat/cold (higher indicates less cell consumption)
-	var/efficiency = 20000
+	var/efficiency = 20
 	///The amount of degrees above and below the target temperature for us to change mode to heater or cooler
 	var/temperature_tolerance = 1
 	///What's the middle point of our settable temperature (30 °C)
@@ -93,10 +95,17 @@
 	if(cell)
 		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
 	else
-		. += "There is no power cell installed."
+		. += span_warning("There is no power cell installed.")
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Temperature range at <b>[settable_temperature_range]°C</b>.<br>Heating power at <b>[siunit(heating_power, "W", 1)]</b>.<br>Power consumption at <b>[(efficiency*-0.0025)+150]%</b>.") //100%, 75%, 50%, 25%
+		. += heating_examine()
 		. += span_notice("<b>Right-click</b> to toggle [on ? "off" : "on"].")
+
+///Returns the heating power of this machine as an examine
+/obj/machinery/space_heater/proc/heating_examine()
+	var/target_temp = round(target_temperature - T0C, 1)
+	var/min_temp = max(settable_temperature_median - settable_temperature_range, TCMB) - T0C
+	var/max_temp = settable_temperature_median + settable_temperature_range - T0C
+	return span_notice("The status display reads:<br>Heating power: <b>[display_power(heating_energy, convert = TRUE, scheduler = SSair)] at [(efficiency / 20) * 100]% efficiency.</b><br>Target temperature: <b>[target_temp]°C [min_temp]°C - [max_temp]°C]</b>\n")
 
 /obj/machinery/space_heater/update_icon_state()
 	. = ..()
@@ -112,14 +121,10 @@
 	return ..()
 
 /obj/machinery/space_heater/process_atmos()
-	if(!on || !is_operational)
+	if(!on || !is_operational || QDELETED(cell) || cell.charge <= 1)
 		if (on) // If it's broken, turn it off too
 			on = FALSE
-		return PROCESS_KILL
-
-	if(!cell || cell.charge <= 1)
-		on = FALSE
-		update_appearance()
+			update_appearance()
 		return PROCESS_KILL
 
 	var/turf/local_turf = loc
@@ -144,22 +149,23 @@
 	if(mode == HEATER_MODE_STANDBY)
 		return
 
-	var/heat_capacity = enviroment.heat_capacity()
-	var/required_energy = abs(enviroment.temperature - target_temperature) * heat_capacity
-	required_energy = min(required_energy, heating_power)
-
+	var/list/turfs = (local_turf.atmos_adjacent_turfs || list()) + local_turf
+	var/required_energy = abs(enviroment.temperature - target_temperature) * enviroment.heat_capacity()
+	required_energy = min(required_energy, heating_energy, (cell.charge * efficiency) / length(turfs))
 	if(required_energy < 1)
 		return
 
-	var/delta_temperature = required_energy / heat_capacity
+	var/delta_energy = required_energy
 	if(mode == HEATER_MODE_COOL)
-		delta_temperature *= -1
-	if(delta_temperature)
-		for (var/turf/open/turf in ((local_turf.atmos_adjacent_turfs || list()) + local_turf))
-			var/datum/gas_mixture/turf_gasmix = turf.return_air()
-			turf_gasmix.temperature += delta_temperature
-			air_update_turf(FALSE, FALSE)
-	cell.use(required_energy / efficiency)
+		delta_energy *= -1
+	if(delta_energy == 0)
+		return
+
+	for(var/turf/open/turf in turfs)
+		var/datum/gas_mixture/turf_gasmix = turf.return_air()
+		turf_gasmix.temperature += delta_energy / turf_gasmix.heat_capacity()
+		air_update_turf(FALSE, FALSE)
+	cell.use((required_energy * length(turfs)) / efficiency, force = TRUE)
 
 /obj/machinery/space_heater/RefreshParts()
 	. = ..()
@@ -170,10 +176,10 @@
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		cap += capacitor.tier
 
-	heating_power = laser * 40000
+	heating_energy = laser * BASE_HEATING_ENERGY
 
 	settable_temperature_range = cap * 30
-	efficiency = (cap + 1) * 10000
+	efficiency = (cap + 1) * 10
 
 	target_temperature = clamp(target_temperature,
 		max(settable_temperature_median - settable_temperature_range, TCMB),
@@ -303,6 +309,7 @@
 	panel_open = TRUE //This is always open - since we've injected wires in the panel
 	//We inherit the cell from the heater prior
 	cell = null
+	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	///The beaker within the heater
 	var/obj/item/reagent_containers/beaker = null
 	///How powerful the heating is, upgrades with parts. (ala chem_heater.dm's method, basically the same level of heating, but this is restricted)
@@ -313,38 +320,52 @@
 	. = ..()
 	QDEL_NULL(beaker)
 
+/obj/machinery/space_heater/improvised_chem_heater/heating_examine()
+	. = ..()
+
+	var/power_mod = 0.1 * chem_heating_power
+	if(set_mode == HEATER_MODE_AUTO)
+		power_mod *= 0.5
+	. += span_notice("Heating power for beaker: <b>[display_power(heating_energy * power_mod, convert = TRUE)]</b>")
+
+/obj/machinery/space_heater/improvised_chem_heater/toggle_power(user)
+	. = ..()
+	if(on)
+		begin_processing()
+
 /obj/machinery/space_heater/improvised_chem_heater/process(seconds_per_tick)
-	if(!on)
-		update_appearance()
+	if(!on || !is_operational || QDELETED(cell) || cell.charge <= 1 || QDELETED(beaker))
+		if (on) // If it's broken, turn it off too
+			on = FALSE
+			update_appearance()
 		return PROCESS_KILL
-
-	if(!is_operational || !cell || cell.charge <= 0)
-		on = FALSE
-		update_appearance()
-		return PROCESS_KILL
-
-	if(!beaker)//No beaker to heat
-		update_appearance()
-		return
 
 	if(beaker.reagents.total_volume)
 		var/power_mod = 0.1 * chem_heating_power
 		switch(set_mode)
 			if(HEATER_MODE_AUTO)
 				power_mod *= 0.5
-				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
-				beaker.reagents.handle_reactions()
 			if(HEATER_MODE_HEAT)
 				if(target_temperature < beaker.reagents.chem_temp)
 					return
-				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			if(HEATER_MODE_COOL)
 				if(target_temperature > beaker.reagents.chem_temp)
 					return
-				beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
-		var/required_energy = heating_power * seconds_per_tick * (power_mod * 4)
-		cell.use(required_energy / efficiency)
+
+		var/required_energy = abs(target_temperature - beaker.reagents.chem_temp) * power_mod * seconds_per_tick * beaker.reagents.heat_capacity()
+		required_energy = min(required_energy, heating_energy, cell.charge * efficiency)
+		if(required_energy < 1)
+			return
+
+		var/delta_energy = required_energy
+		if(mode == HEATER_MODE_COOL)
+			delta_energy *= -1
+		if(delta_energy == 0)
+			return
+
+		beaker.reagents.adjust_thermal_energy(delta_energy)
 		beaker.reagents.handle_reactions()
+		cell.use(required_energy / efficiency, force = TRUE)
 	update_appearance()
 
 /obj/machinery/space_heater/improvised_chem_heater/ui_data()
@@ -392,9 +413,8 @@
 	//Dropper tools
 	if(beaker)
 		if(is_type_in_list(item, list(/obj/item/reagent_containers/dropper, /obj/item/ph_meter, /obj/item/ph_paper, /obj/item/reagent_containers/syringe)))
-			item.afterattack(beaker, user, 1)
+			item.interact_with_atom(beaker, user)
 		return
-
 
 /obj/machinery/space_heater/improvised_chem_heater/on_deconstruction(disassembled = TRUE)
 	. = ..()
@@ -422,11 +442,9 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/space_heater/improvised_chem_heater/AltClick(mob/living/user)
-	. = ..()
-	if(!can_interact(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+/obj/machinery/space_heater/improvised_chem_heater/click_alt(mob/living/user)
 	replace_beaker(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/space_heater/improvised_chem_heater/update_icon_state()
 	. = ..()
@@ -450,18 +468,19 @@
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		capacitors_rating += capacitor.tier
 
-	heating_power = lasers_rating * 20000
+	heating_energy = lasers_rating * 20000
 
 	settable_temperature_range = capacitors_rating * 50 //-20 - 80 at base
-	efficiency = (capacitors_rating + 1) * 10000
+	efficiency = (capacitors_rating + 1) * 10
 
 	target_temperature = clamp(target_temperature,
 		max(settable_temperature_median - settable_temperature_range, TCMB),
 		settable_temperature_median + settable_temperature_range)
 
-	chem_heating_power = efficiency/20000 //1-2.5
+	chem_heating_power = efficiency / 20
 
 #undef HEATER_MODE_STANDBY
 #undef HEATER_MODE_HEAT
 #undef HEATER_MODE_COOL
 #undef HEATER_MODE_AUTO
+#undef BASE_HEATING_ENERGY

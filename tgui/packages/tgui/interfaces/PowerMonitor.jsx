@@ -48,18 +48,22 @@ export const PowerMonitorContent = (props) => {
   const maxValue = Math.max(PEAK_DRAW, ...history.supply, ...history.demand);
   // Process area data
   const areas = flow([
-    map((area, i) => ({
-      ...area,
-      // Generate a unique id
-      id: area.name + i,
-    })),
-    sortByField === 'name' && sortBy((area) => area.name),
-    sortByField === 'charge' && sortBy((area) => -area.charge),
+    (areas) =>
+      map(areas, (area, i) => ({
+        ...area,
+        // Generate a unique id
+        id: area.name + i,
+      })),
+    sortByField === 'name' && ((areas) => sortBy(areas, (area) => area.name)),
+    sortByField === 'charge' &&
+      ((areas) => sortBy(areas, (area) => -area.charge)),
     sortByField === 'draw' &&
-      sortBy(
-        (area) => -powerRank(area.load),
-        (area) => -parseFloat(area.load),
-      ),
+      ((areas) =>
+        sortBy(
+          areas,
+          (area) => -powerRank(area.load),
+          (area) => -parseFloat(area.load),
+        )),
   ])(data.areas);
   return (
     <>

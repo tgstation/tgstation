@@ -64,7 +64,9 @@
 				. = TRUE
 
 /obj/machinery/computer/aifixer/proc/Fix()
-	use_power(1000)
+	if(!use_energy(active_power_usage, force = TRUE))
+		say("Not enough energy. Restoration cancelled.")
+		return FALSE
 	var/need_mob_update = FALSE
 	need_mob_update += occupier.adjustOxyLoss(-5, updating_health = FALSE)
 	need_mob_update += occupier.adjustFireLoss(-5, updating_health = FALSE)

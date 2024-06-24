@@ -36,8 +36,6 @@
 	var/reinforcements_range = 15
 
 /datum/ai_behavior/call_reinforcements/perform(seconds_per_tick, datum/ai_controller/controller)
-	. = ..()
-
 	var/mob/pawn_mob = controller.pawn
 	for(var/mob/other_mob in oview(reinforcements_range, pawn_mob))
 		if(pawn_mob.faction_check_atom(other_mob) && !isnull(other_mob.ai_controller))
@@ -46,5 +44,6 @@
 			other_mob.ai_controller.set_blackboard_key(BB_BASIC_MOB_REINFORCEMENT_TARGET, pawn_mob)
 
 	controller.set_blackboard_key(BB_BASIC_MOB_REINFORCEMENTS_COOLDOWN, world.time + REINFORCEMENTS_COOLDOWN)
+	return AI_BEHAVIOR_DELAY
 
 #undef REINFORCEMENTS_COOLDOWN

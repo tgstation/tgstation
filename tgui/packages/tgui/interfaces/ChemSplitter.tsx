@@ -29,7 +29,7 @@ export const ChemSplitter = (props) => {
                 format={(value) => toFixed(value, 2)}
                 step={0.05}
                 stepPixelSize={4}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_amount', {
                     target: 'straight',
                     amount: value,
@@ -47,7 +47,7 @@ export const ChemSplitter = (props) => {
                 format={(value) => toFixed(value, 2)}
                 step={0.05}
                 stepPixelSize={4}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('set_amount', {
                     target: 'side',
                     amount: value,

@@ -1,6 +1,3 @@
-// zap needs to be over this amount to get power
-#define TESLA_COIL_THRESHOLD 32000
-
 /obj/machinery/power/energy_accumulator/tesla_coil
 	name = "tesla coil"
 	desc = "For the union!"
@@ -37,11 +34,13 @@
 	. = ..()
 	set_wires(new /datum/wires/tesla_coil(src))
 
-/obj/machinery/power/energy_accumulator/tesla_coil/cable_layer_change_checks(mob/living/user, obj/item/tool)
+/obj/machinery/power/energy_accumulator/tesla_coil/cable_layer_act(mob/living/user, obj/item/tool)
+	if(panel_open)
+		return NONE
 	if(anchored)
 		balloon_alert(user, "unanchor first!")
-		return FALSE
-	return TRUE
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 /obj/machinery/power/energy_accumulator/tesla_coil/RefreshParts()
 	. = ..()
@@ -58,8 +57,8 @@
 		. += span_notice("The status display reads:<br>" + \
 		  "Power generation at <b>[input_power_multiplier*100]%</b>.<br>" + \
 			"Shock interval at <b>[zap_cooldown*0.1]</b> seconds.<br>" + \
-			"Stored <b>[display_joules(get_stored_joules())]</b>.<br>" + \
-			"Processing <b>[display_power(get_power_output())]</b>.")
+			"Stored <b>[display_energy(get_stored_joules())]</b>.<br>" + \
+			"Processing <b>[display_power(processed_energy)]</b>.")
 
 /obj/machinery/power/energy_accumulator/tesla_coil/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	. = ..()
@@ -90,8 +89,8 @@
 
 /obj/machinery/power/energy_accumulator/tesla_coil/process(seconds_per_tick)
 	. = ..()
-	zap_sound_volume = min(energy_to_joules(stored_energy)/200000, 100)
-	zap_sound_range = min(energy_to_joules(stored_energy)/4000000, 10)
+	zap_sound_volume = min(energy_to_power(processed_energy) / (4 KILO WATTS), 100) // 1 sound volume per 4kW.
+	zap_sound_range = min(energy_to_power(processed_energy) / (80 KILO WATTS), 10) // 1 sound range per 80kW.
 
 /obj/machinery/power/energy_accumulator/tesla_coil/zap_act(power, zap_flags)
 	if(!anchored || panel_open)
@@ -105,7 +104,7 @@
 		power /= 10
 	zap_buckle_check(power)
 	var/power_removed = powernet ? power * input_power_multiplier : power
-	stored_energy += max(joules_to_energy(power_removed - TESLA_COIL_THRESHOLD), 0)
+	stored_energy += max(power_removed, 0)
 	return max(power - power_removed, 0) //You get back the amount we didn't use
 
 /obj/machinery/power/energy_accumulator/tesla_coil/proc/zap()
@@ -139,8 +138,8 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads:<br>" + \
-		  "Recently grounded <b>[display_joules(get_stored_joules())]</b>.<br>" + \
-			"This energy would sustainably release <b>[display_power(get_power_output())]</b>.")
+			"Recently grounded <b>[display_energy(get_stored_joules())]</b>.<br>" + \
+			"This energy would sustainably release <b>[display_power(calculate_sustainable_power(), convert = FALSE)]</b>.")
 
 /obj/machinery/power/energy_accumulator/grounding_rod/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	. = ..()
@@ -164,13 +163,15 @@
 
 	return ..()
 
-/obj/machinery/power/energy_accumulator/grounding_rod/zap_act(power, zap_flags)
+/obj/machinery/power/energy_accumulator/grounding_rod/zap_act(energy, zap_flags)
 	if(anchored && !panel_open)
 		flick("grounding_rodhit", src)
-		zap_buckle_check(power)
-		stored_energy += joules_to_energy(power)
+		zap_buckle_check(energy)
+		stored_energy += energy
 		return 0
 	else
 		. = ..()
-
-#undef TESLA_COIL_THRESHOLD
+/obj/machinery/power/energy_accumulator/grounding_rod/release_energy(joules = 0)
+	stored_energy -= joules
+	processed_energy = joules
+	return FALSE //Grounding rods don't release energy to the grid.

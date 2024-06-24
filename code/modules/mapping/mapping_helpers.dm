@@ -138,7 +138,6 @@
 		payload(airlock)
 
 /obj/effect/mapping_helpers/airlock/LateInitialize()
-	. = ..()
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
 	if(!airlock)
 		qdel(src)
@@ -283,7 +282,6 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/mapping_helpers/airalarm/LateInitialize()
-	. = ..()
 	var/obj/machinery/airalarm/target = locate(/obj/machinery/airalarm) in loc
 
 	if(isnull(target))
@@ -442,7 +440,6 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/mapping_helpers/apc/LateInitialize()
-	. = ..()
 	var/obj/machinery/power/apc/target = locate(/obj/machinery/power/apc) in loc
 
 	if(isnull(target))
@@ -588,6 +585,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	. = ..()
 	var/turf/T = get_turf(src)
 	T.turf_flags |= NO_LAVA_GEN
+
+INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
+/obj/effect/mapping_helpers/no_atoms_ontop
+	icon_state = "no_atoms_ontop"
+
+/obj/effect/mapping_helpers/no_atoms_ontop/Initialize(mapload)
+	. = ..()
+	var/turf/loc_turf = get_turf(src)
+	loc_turf.turf_flags |= TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES
 
 ///Helpers used for injecting stuff into atoms on the map.
 /obj/effect/mapping_helpers/atom_injector
@@ -917,8 +923,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 					var/datum/species/new_human_species = GLOB.species_list[species_to_pick]
 					if(new_human_species)
 						new_human.set_species(new_human_species)
-						new_human_species = new_human.dna.species
-						new_human.fully_replace_character_name(new_human.real_name, new_human_species.random_name(new_human.gender, TRUE, TRUE))
+						new_human.fully_replace_character_name(new_human.real_name, new_human.generate_random_mob_name())
 					else
 						stack_trace("failed to spawn cadaver with species ID [species_to_pick]") //if it's invalid they'll just be a human, so no need to worry too much aside from yelling at the server owner lol.
 		else
@@ -1067,7 +1072,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/airlock_note_placer/LateInitialize()
 	var/turf/turf = get_turf(src)
-	if(note_path && !istype(note_path, /obj/item/paper)) //don't put non-paper in the paper slot thank you
+	if(note_path && !ispath(note_path, /obj/item/paper)) //don't put non-paper in the paper slot thank you
 		log_mapping("[src] at [x],[y] had an improper note_path path, could not place paper note.")
 		qdel(src)
 		return
@@ -1106,8 +1111,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
  */
 /obj/effect/mapping_helpers/trapdoor_placer
 	name = "trapdoor placer"
-	late = TRUE
 	icon_state = "trapdoor"
+	late = TRUE
 
 /obj/effect/mapping_helpers/trapdoor_placer/LateInitialize()
 	var/turf/component_target = get_turf(src)
@@ -1187,12 +1192,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	name = "broken floor"
 	icon = 'icons/turf/damaged.dmi'
 	icon_state = "damaged1"
-	late = TRUE
 	layer = ABOVE_NORMAL_TURF_LAYER
-
-/obj/effect/mapping_helpers/broken_floor/Initialize(mapload)
-	.=..()
-	return INITIALIZE_HINT_LATELOAD
+	late = TRUE
 
 /obj/effect/mapping_helpers/broken_floor/LateInitialize()
 	var/turf/open/floor/floor = get_turf(src)
@@ -1203,12 +1204,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	name = "burnt floor"
 	icon = 'icons/turf/damaged.dmi'
 	icon_state = "floorscorched1"
-	late = TRUE
 	layer = ABOVE_NORMAL_TURF_LAYER
-
-/obj/effect/mapping_helpers/burnt_floor/Initialize(mapload)
-	.=..()
-	return INITIALIZE_HINT_LATELOAD
+	late = TRUE
 
 /obj/effect/mapping_helpers/burnt_floor/LateInitialize()
 	var/turf/open/floor/floor = get_turf(src)
@@ -1237,7 +1234,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/mapping_helpers/broken_machine/LateInitialize()
-	. = ..()
 	var/obj/machinery/target = locate(/obj/machinery) in loc
 
 	if(isnull(target))
@@ -1271,7 +1267,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/mapping_helpers/damaged_window/LateInitialize()
-	. = ..()
 	var/obj/structure/window/target = locate(/obj/structure/window) in loc
 
 	if(isnull(target))
@@ -1304,7 +1299,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/mapping_helpers/requests_console/LateInitialize(mapload)
+/obj/effect/mapping_helpers/requests_console/LateInitialize()
 	var/obj/machinery/airalarm/target = locate(/obj/machinery/requests_console) in loc
 	if(isnull(target))
 		var/area/target_area = get_area(target)
@@ -1414,13 +1409,67 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			continue
 
 		if(isliving(possible_buckle))
-			mobs += possible_buckle 
-	
+			mobs += possible_buckle
+
 	if(isnull(buckle_to))
 		log_mapping("[type] at [x] [y] [z] did not find anything to buckle to")
 		return INITIALIZE_HINT_QDEL
-		
+
 	for(var/mob/living/mob as anything in mobs)
 		buckle_to.buckle_mob(mob, force = force_buckle)
-	
+
 	return INITIALIZE_HINT_QDEL
+
+///Basic mob flag helpers for things like deleting on death.
+/obj/effect/mapping_helpers/basic_mob_flags
+	name = "Basic mob flags helper"
+	desc = "Used to apply basic_mob_flags to basic mobs on the same turf."
+	late = TRUE
+
+	///The basic mob flag that we're adding to all basic mobs on the turf.
+	var/flag_to_give
+
+/obj/effect/mapping_helpers/basic_mob_flags/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return INITIALIZE_HINT_QDEL
+
+/obj/effect/mapping_helpers/basic_mob_flags/LateInitialize()
+	var/had_any_mobs = FALSE
+	for(var/mob/living/basic/basic_mobs in loc)
+		had_any_mobs = TRUE
+		basic_mobs.basic_mob_flags |= flag_to_give
+	if(!had_any_mobs)
+		CRASH("[src] called on a turf without any basic mobs.")
+	qdel(src)
+
+/obj/effect/mapping_helpers/basic_mob_flags/del_on_death
+	name = "Basic mob del on death flag helper"
+	icon_state = "basic_mob_del_on_death"
+	flag_to_give = DEL_ON_DEATH
+
+/obj/effect/mapping_helpers/basic_mob_flags/flip_on_death
+	name = "Basic mob flip on death flag helper"
+	icon_state = "basic_mob_flip_on_death"
+	flag_to_give = FLIP_ON_DEATH
+
+/obj/effect/mapping_helpers/basic_mob_flags/remain_dense_while_dead
+	name = "Basic mob remain dense while dead flag helper"
+	icon_state = "basic_mob_remain_dense_while_dead"
+	flag_to_give = REMAIN_DENSE_WHILE_DEAD
+
+/obj/effect/mapping_helpers/basic_mob_flags/flammable_mob
+	name = "Basic mob flammable flag helper"
+	icon_state = "basic_mob_flammable"
+	flag_to_give = FLAMMABLE_MOB
+
+/obj/effect/mapping_helpers/basic_mob_flags/immune_to_fists
+	name = "Basic mob immune to fists flag helper"
+	icon_state = "basic_mob_immune_to_fists"
+	flag_to_give = IMMUNE_TO_FISTS
+
+/obj/effect/mapping_helpers/basic_mob_flags/immune_to_getting_wet
+	name = "Basic mob immune to getting wet flag helper"
+	icon_state = "basic_mob_immune_to_getting_wet"
+	flag_to_give = IMMUNE_TO_GETTING_WET

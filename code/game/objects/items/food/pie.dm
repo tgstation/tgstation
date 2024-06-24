@@ -484,3 +484,30 @@
 	tastes = list("pie" = 1, "the far off year of 2010" = 1)
 	foodtypes = GRAIN
 	crafting_complexity = FOOD_COMPLEXITY_2
+
+/obj/item/food/pie/bacid_pie
+	name = "battery acid pie"
+	desc = "Ooh it's a pie made of... battery acid? You suppose an ethereal could find some enjoyement in eating this."
+	icon_state = "bacid_pie"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 18,
+		/datum/reagent/consumable/liquidelectricity/enriched = 18
+	)
+	tastes = list("battery acid" = 2, "electricity" = 2, "a cyber world" = 2)
+	foodtypes = TOXIC
+	slice_type = /obj/item/food/pieslice/bacid_pie
+	yield = 4
+	crafting_complexity = FOOD_COMPLEXITY_3
+
+
+/obj/item/food/pieslice/bacid_pie
+	name = "battery acid pie slice"
+	desc = "The battery acid filling has a concerningly appealing bright green color"
+	icon_state = "bacid_pie_slice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 4.5,
+		/datum/reagent/consumable/liquidelectricity/enriched = 4.5
+	)
+	tastes = list("battery acid" = 1, "electricity" = 1, "a cyber world" = 1)
+	foodtypes = TOXIC
+	crafting_complexity = FOOD_COMPLEXITY_3

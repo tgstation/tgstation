@@ -98,9 +98,7 @@
 		if(!check_rights(NONE))
 			return
 		var/mass_remove = href_list[VV_HK_MASS_REMOVECOMPONENT]
-		var/list/components = list()
-		for(var/datum/component/component in target.GetComponents(/datum/component))
-			components += component.type
+		var/list/components = target._datum_components.Copy()
 		var/list/names = list()
 		names += "---Components---"
 		if(length(components))
@@ -142,6 +140,7 @@
 			return
 		var/datum/greyscale_modify_menu/menu = new(target, usr, SSgreyscale.configurations, unlocked = TRUE)
 		menu.ui_interact(usr)
+
 	if(href_list[VV_HK_CALLPROC])
-		usr.client.callproc_datum(target)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/call_proc_datum, target)
 

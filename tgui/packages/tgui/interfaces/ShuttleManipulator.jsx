@@ -104,7 +104,7 @@ export const ShuttleManipulatorTemplates = (props) => {
       <Flex>
         <Flex.Item>
           <Tabs vertical>
-            {map((template, templateId) => (
+            {map(templateObject, (template, templateId) => (
               <Tabs.Tab
                 key={templateId}
                 selected={selectedTemplateId === templateId}
@@ -112,7 +112,7 @@ export const ShuttleManipulatorTemplates = (props) => {
               >
                 {template.port_id}
               </Tabs.Tab>
-            ))(templateObject)}
+            ))}
           </Tabs>
         </Flex.Item>
         <Flex.Item grow={1} basis={0}>

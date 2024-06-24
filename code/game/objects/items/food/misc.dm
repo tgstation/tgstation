@@ -184,7 +184,7 @@
 
 /obj/item/food/melonfruitbowl
 	name = "melon fruit bowl"
-	desc = "For people who wants edible fruit bowls."
+	desc = "For people who want to experience an explosion of flavour."
 	icon_state = "melonfruitbowl"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 6,
@@ -246,6 +246,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	tastes = list("cherry" = 1, "crepe" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/branrequests

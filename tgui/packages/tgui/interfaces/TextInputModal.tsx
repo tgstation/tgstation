@@ -1,4 +1,4 @@
-import { KEY } from 'common/keys';
+import { isEscape, KEY } from 'common/keys';
 import { KeyboardEvent, useState } from 'react';
 
 import { useBackend } from '../backend';
@@ -67,7 +67,7 @@ export const TextInputModal = (props) => {
           ) {
             act('submit', { entry: input });
           }
-          if (event.key === KEY.Escape) {
+          if (isEscape(event.key)) {
             act('cancel');
           }
         }}
@@ -78,7 +78,7 @@ export const TextInputModal = (props) => {
               <Box color="label">{message}</Box>
             </Stack.Item>
             <Stack.Item grow>
-              <InputArea input={input} onType={onType} />
+              <InputArea key={title} input={input} onType={onType} />
             </Stack.Item>
             <Stack.Item>
               <InputButtons

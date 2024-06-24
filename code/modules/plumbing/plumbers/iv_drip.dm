@@ -6,6 +6,7 @@
 	base_icon_state = "plumb"
 	density = TRUE
 	use_internal_storage = TRUE
+	processing_flags = START_PROCESSING_MANUALLY
 
 /obj/machinery/iv_drip/plumbing/Initialize(mapload, bolt, layer)
 	. = ..()
@@ -23,18 +24,20 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/iv_drip/plumbing/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
-	to_chat(user, span_notice("You start furiously plunging [name]."))
-	if(do_after(user, 30, target = src))
-		to_chat(user, span_notice("You finish plunging the [name]."))
+	user.balloon_alert_to_viewers("furiously plunging...", "plunging iv drip...")
+	if(do_after(user, 3 SECONDS, target = src))
+		user.balloon_alert_to_viewers("finished plunging")
 		reagents.expose(get_turf(src), TOUCH) //splash on the floor
 		reagents.clear_reagents()
 
-/obj/machinery/iv_drip/plumbing/can_use_alt_click(mob/user)
-	return FALSE //Alt click is used for rotation
-
 /obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/tool)
-	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
-		return ITEM_INTERACT_SUCCESS
+	if(user.combat_mode)
+		return NONE
 
-/obj/machinery/iv_drip/plumbing/on_deconstruction(disassembled)
-	qdel(src)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
+		if(anchored)
+			begin_processing()
+		else
+			end_processing()
+		return ITEM_INTERACT_SUCCESS

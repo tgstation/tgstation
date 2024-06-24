@@ -1,3 +1,6 @@
+///Energy used to say an error message.
+#define ENERGY_TO_SPEAK (0.001 * STANDARD_CELL_CHARGE)
+
 /**
  * # N-spect scanner
  *
@@ -14,6 +17,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
+	interaction_flags_click = NEED_DEXTERITY
 	throw_range = 1
 	throw_speed = 1
 	///How long it takes to print on time each mode, ordered NORMAL, FAST, HONK
@@ -26,10 +30,8 @@
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/crap
 	///Cell cover status
 	var/cell_cover_open = FALSE
-	///Power used per print in cell units
-	var/power_per_print = INSPECTOR_POWER_USAGE_NORMAL
-	///Power used to say an error message
-	var/power_to_speak = 1
+	///Energy used per print.
+	var/energy_per_print = INSPECTOR_ENERGY_USAGE_NORMAL
 
 /obj/item/inspector/Initialize(mapload)
 	. = ..()
@@ -70,14 +72,15 @@
 			return
 	return ..()
 
-/obj/item/inspector/CtrlClick(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY) || !cell_cover_open || !cell)
-		return ..()
+/obj/item/inspector/item_ctrl_click(mob/user)
+	if(!cell_cover_open || !cell)
+		return CLICK_ACTION_BLOCKING
 	user.visible_message(span_notice("[user] removes \the [cell] from [src]!"), \
 		span_notice("You remove [cell]."))
 	cell.add_fingerprint(user)
 	user.put_in_hands(cell)
 	cell = null
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/inspector/examine(mob/user)
 	. = ..()
@@ -111,8 +114,8 @@
 	if(cell.charge == 0)
 		to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
 		return
-	if(!cell.use(power_per_print))
-		if(cell.use(power_to_speak))
+	if(!cell.use(energy_per_print))
+		if(cell.use(ENERGY_TO_SPEAK))
 			say("ERROR! POWER CELL CHARGE LEVEL TOO LOW TO PRINT REPORT!")
 		return
 
@@ -238,8 +241,8 @@
  *
  * Can print things way faster, at full power the reports printed by this will destroy
  * themselves and leave water behind when folding is attempted by someone who isn't an
- * origami master. Printing at full power costs INSPECTOR_POWER_USAGE_HONK cell units
- * instead of INSPECTOR_POWER_USAGE_NORMAL cell units.
+ * origami master. Printing at full power costs INSPECTOR_ENERGY_USAGE_HONK cell units
+ * instead of INSPECTOR_ENERGY_USAGE_NORMAL cell units.
  */
 /obj/item/inspector/clown/bananium
 	name = "\improper Bananium HONK-spect scanner"
@@ -258,11 +261,11 @@
 
 /obj/item/inspector/clown/bananium/proc/check_settings_legality()
 	if(print_sound_mode == INSPECTOR_PRINT_SOUND_MODE_NORMAL && time_mode == INSPECTOR_TIME_MODE_HONK)
-		if(cell.use(power_to_speak))
+		if(cell.use(ENERGY_TO_SPEAK))
 			say("Setting combination forbidden by Geneva convention revision CCXXIII selected, reverting to defaults")
 		time_mode = INSPECTOR_TIME_MODE_SLOW
 		print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_NORMAL
-		power_per_print = INSPECTOR_POWER_USAGE_NORMAL
+		energy_per_print = INSPECTOR_ENERGY_USAGE_NORMAL
 
 /obj/item/inspector/clown/bananium/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -296,7 +299,7 @@
 	if(time_mode != INSPECTOR_TIME_MODE_HONK)
 		return ..()
 	if(paper_charges == 0)
-		if(cell.use(power_to_speak))
+		if(cell.use(ENERGY_TO_SPEAK))
 			say("ERROR! OUT OF PAPER! MAXIMUM PRINTING SPEED UNAVAIBLE! SWITCH TO A SLOWER SPEED TO OR PROVIDE PAPER!")
 		else
 			to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
@@ -308,7 +311,7 @@
 	var/message
 	switch(time_mode)
 		if(INSPECTOR_TIME_MODE_HONK)
-			power_per_print = INSPECTOR_POWER_USAGE_NORMAL
+			energy_per_print = INSPECTOR_ENERGY_USAGE_NORMAL
 			time_mode = INSPECTOR_TIME_MODE_SLOW
 			message = "SLOW."
 		if(INSPECTOR_TIME_MODE_SLOW)
@@ -316,7 +319,7 @@
 			message = "LIGHTNING FAST."
 		else
 			time_mode = INSPECTOR_TIME_MODE_HONK
-			power_per_print = INSPECTOR_POWER_USAGE_HONK
+			energy_per_print = INSPECTOR_ENERGY_USAGE_HONK
 			message = "HONK!"
 	balloon_alert(user, "scanning speed set to [message]")
 
@@ -372,15 +375,17 @@
  */
 /obj/item/paper/fake_report/water
 	grind_results = list(/datum/reagent/water = 5)
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 
-/obj/item/paper/fake_report/water/AltClick(mob/living/user, obj/item/I)
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return
+/obj/item/paper/fake_report/water/click_alt(mob/living/user)
 	var/datum/action/innate/origami/origami_action = locate() in user.actions
 	if(origami_action?.active) //Origami masters can fold water
-		make_plane(user, I, /obj/item/paperplane/syndicate)
+		make_plane(user, /obj/item/paperplane/syndicate)
 	else if(do_after(user, 1 SECONDS, target = src, progress=TRUE))
 		var/turf/open/target = get_turf(src)
 		target.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 		to_chat(user, span_notice("As you try to fold [src] into the shape of a plane, it disintegrates into water!"))
 		qdel(src)
+	return CLICK_ACTION_SUCCESS
+
+#undef ENERGY_TO_SPEAK

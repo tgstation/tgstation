@@ -122,10 +122,10 @@
 	. += span_notice("Alt-click to toggle cup lid.")
 	return
 
-/obj/item/reagent_containers/cup/glass/coffee/AltClick(mob/user)
+/obj/item/reagent_containers/cup/glass/coffee/click_alt(mob/user)
 	lid_open = !lid_open
 	update_icon_state()
-	return ..()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/cup/glass/coffee/update_icon_state()
 	if(lid_open)
@@ -248,11 +248,10 @@
 	else
 		. += span_notice("The cap has been taken off. Alt-click to put a cap on.")
 
-/obj/item/reagent_containers/cup/glass/waterbottle/AltClick(mob/user)
-	. = ..()
+/obj/item/reagent_containers/cup/glass/waterbottle/click_alt(mob/user)
 	if(cap_lost)
 		to_chat(user, span_warning("The cap seems to be missing! Where did it go?"))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	var/fumbled = HAS_TRAIT(user, TRAIT_CLUMSY) && prob(5)
 	if(cap_on || fumbled)
@@ -270,6 +269,7 @@
 		spillable = FALSE
 		to_chat(user, span_notice("You put the cap on [src]."))
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/cup/glass/waterbottle/is_refillable()
 	if(cap_on)
@@ -291,20 +291,18 @@
 
 	return ..()
 
-/obj/item/reagent_containers/cup/glass/waterbottle/afterattack(obj/target, mob/living/user, proximity)
-	. |= AFTERATTACK_PROCESSED_ITEM
-
+/obj/item/reagent_containers/cup/glass/waterbottle/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && !user.combat_mode)))
 		to_chat(user, span_warning("You must remove the cap before you can do that!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	else if(istype(target, /obj/item/reagent_containers/cup/glass/waterbottle))
+	if(istype(target, /obj/item/reagent_containers/cup/glass/waterbottle))
 		var/obj/item/reagent_containers/cup/glass/waterbottle/other_bottle = target
 		if(other_bottle.cap_on)
 			to_chat(user, span_warning("[other_bottle] has a cap firmly twisted on!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 
-	return . | ..()
+	return ..()
 
 // heehoo bottle flipping
 /obj/item/reagent_containers/cup/glass/waterbottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -436,6 +434,7 @@
 	amount_per_transfer_from_this = 10
 	volume = 100
 	isGlass = FALSE
+	interaction_flags_click = NEED_HANDS|FORBID_TELEKINESIS_REACH
 	/// Whether or not poured drinks should use custom names and descriptions
 	var/using_custom_drinks = FALSE
 	/// Name custom drinks will have
@@ -463,34 +462,30 @@
 		. += span_notice("Drinks poured from this shaker will have the following name: [custom_drink_name]")
 		. += span_notice("Drinks poured from this shaker will have the following description: [custom_drink_desc]")
 
-/obj/item/reagent_containers/cup/glass/shaker/AltClick(mob/user)
-	. = ..()
-	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
-		return
-
+/obj/item/reagent_containers/cup/glass/shaker/click_alt(mob/user)
 	if(using_custom_drinks)
 		using_custom_drinks = FALSE
 		disable_custom_drinks()
 		balloon_alert(user, "custom drinks disabled")
-		return
+		return CLICK_ACTION_BLOCKING
 
 	var/new_name = reject_bad_text(tgui_input_text(user, "Drink name", "Set drink name", custom_drink_name, 45, FALSE), 64)
 	if(!new_name)
 		balloon_alert(user, "invalid drink name!")
 		using_custom_drinks = FALSE
-		return
+		return CLICK_ACTION_BLOCKING
 
 	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	var/new_desc = reject_bad_text(tgui_input_text(user, "Drink description", "Set drink description", custom_drink_desc, 64, TRUE), 128)
 	if(!new_desc)
 		balloon_alert(user, "invalid drink description!")
 		using_custom_drinks = FALSE
-		return
+		return CLICK_ACTION_BLOCKING
 
 	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	using_custom_drinks = TRUE
 	custom_drink_name = new_name
@@ -498,6 +493,7 @@
 
 	enable_custom_drinks()
 	balloon_alert(user, "now pouring custom drinks")
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/cup/glass/shaker/proc/enable_custom_drinks()
 	RegisterSignal(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, PROC_REF(handle_transfer))

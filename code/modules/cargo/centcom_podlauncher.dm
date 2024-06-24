@@ -16,11 +16,8 @@
 //The user can change properties of the supplypod using the UI, and change the way that items are taken from the bay (One at a time, ordered, random, etc)
 //Many of the effects of the supplypod set here are put into action in supplypod.dm
 
-/client/proc/centcom_podlauncher() //Creates a verb for admins to open up the ui
-	set name = "Config/Launch Supplypod"
-	set desc = "Configure and launch a CentCom supplypod full of whatever your heart desires!"
-	set category = "Admin.Events"
-	new /datum/centcom_podlauncher(usr)//create the datum
+ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure and launch a CentCom supplypod full of whatever your heart desires!", ADMIN_CATEGORY_EVENTS)
+	new /datum/centcom_podlauncher(user.mob)
 
 //Variables declared to change how items in the launch bay are picked and launched. (Almost) all of these are changed in the ui_act proc
 //Some effect groups are choices, while other are booleans. This is because some effects can stack, while others dont (ex: you can stack explosion and quiet, but you cant stack ordered launch and random launch)

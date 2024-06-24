@@ -49,7 +49,7 @@
 			opening = FALSE
 			return
 	update_appearance()
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/structure/falsewall, toggle_open)), 5)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/structure/falsewall, toggle_open)), 0.5 SECONDS)
 
 /obj/structure/falsewall/proc/toggle_open()
 	if(!QDELETED(src))
@@ -91,9 +91,9 @@
 		qdel(src)
 	return T
 
-/obj/structure/falsewall/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+/obj/structure/falsewall/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!opening || !tool.tool_behaviour)
-		return ..()
+		return NONE
 	to_chat(user, span_warning("You must wait until the door has stopped moving!"))
 	return ITEM_INTERACT_BLOCKING
 
@@ -133,14 +133,12 @@
 		playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 	deconstruct(disassembled)
 
-/obj/structure/falsewall/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(disassembled)
-			new girder_type(loc)
-		if(mineral_amount)
-			for(var/i in 1 to mineral_amount)
-				new mineral(loc)
-	qdel(src)
+/obj/structure/falsewall/atom_deconstruct(disassembled = TRUE)
+	if(disassembled)
+		new girder_type(loc)
+	if(mineral_amount)
+		for(var/i in 1 to mineral_amount)
+			new mineral(loc)
 
 /obj/structure/falsewall/get_dumping_location()
 	return null
@@ -387,14 +385,12 @@
 	canSmoothWith = SMOOTH_GROUP_MATERIAL_WALLS
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
-/obj/structure/falsewall/material/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(disassembled)
-			new girder_type(loc)
-		for(var/material in custom_materials)
-			var/datum/material/material_datum = material
-			new material_datum.sheet_type(loc, FLOOR(custom_materials[material_datum] / SHEET_MATERIAL_AMOUNT, 1))
-	qdel(src)
+/obj/structure/falsewall/material/atom_deconstruct(disassembled = TRUE)
+	if(disassembled)
+		new girder_type(loc)
+	for(var/material in custom_materials)
+		var/datum/material/material_datum = material
+		new material_datum.sheet_type(loc, FLOOR(custom_materials[material_datum] / SHEET_MATERIAL_AMOUNT, 1))
 
 /obj/structure/falsewall/material/mat_update_desc(mat)
 	desc = "A huge chunk of [mat] used to separate rooms."

@@ -4,17 +4,10 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_infuser_entries())
 /// Global proc that sets up each [/datum/infuser_entry] sub-type as singleton instances in a list, and returns it.
 /proc/prepare_infuser_entries()
 	var/list/entries = list()
-	// Regardless of names, we want the fly/failed mutant case to show first.
-	var/prepended
 	for(var/datum/infuser_entry/entry_type as anything in subtypesof(/datum/infuser_entry))
 		var/datum/infuser_entry/entry = new entry_type()
-		if(entry.type == /datum/infuser_entry/fly)
-			prepended = entry
-			continue
-		entries += entry
-	var/list/sorted = sort_names(entries)
-	sorted.Insert(1, prepended)
-	return sorted
+		entries[entry_type] = entry
+	return entries
 
 /datum/infuser_entry
 	//-- Vars for DNA Infusion Book --//

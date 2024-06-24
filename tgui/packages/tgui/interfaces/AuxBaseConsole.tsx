@@ -49,16 +49,16 @@ export const AuxBaseConsole = (props) => {
           <Tabs.Tab
             icon="list"
             lineHeight="23px"
-            selected={tab === 1}
-            onClick={() => setTab(1)}
+            selected={tab === TAB.Shuttle}
+            onClick={() => setTab(TAB.Shuttle)}
           >
             {type === 'shuttle' ? 'Shuttle Launch' : 'Base Launch'}
           </Tabs.Tab>
           <Tabs.Tab
             icon="list"
             lineHeight="23px"
-            selected={tab === 2}
-            onClick={() => setTab(2)}
+            selected={tab === TAB.Aux}
+            onClick={() => setTab(TAB.Aux)}
           >
             Turrets ({turrets.length})
           </Tabs.Tab>
@@ -78,21 +78,21 @@ export const AuxBaseConsoleContent = (props) => {
 
   return (
     <Section
-      title={'Turret Control'}
+      fill
+      scrollable
+      title="Turret Control"
       buttons={
         !!turrets.length && (
-          <Button
-            icon="power-off"
-            content={'Toggle Power'}
-            onClick={() => act('turrets_power')}
-          />
+          <Button icon="power-off" onClick={() => act('turrets_power')}>
+            Toggle Power
+          </Button>
         )
       }
     >
       {!turrets.length ? (
         <NoticeBox>No connected turrets</NoticeBox>
       ) : (
-        <Table cellpadding="3" textAlign="center">
+        <Table>
           <Table.Row header>
             <Table.Cell>Unit</Table.Cell>
             <Table.Cell>Condition</Table.Cell>
@@ -113,13 +113,14 @@ export const AuxBaseConsoleContent = (props) => {
               <Table.Cell>
                 <Button
                   icon="power-off"
-                  content="Toggle"
                   onClick={() =>
                     act('single_turret_power', {
                       single_turret_power: turret.ref,
                     })
                   }
-                />
+                >
+                  Toggle
+                </Button>
               </Table.Cell>
             </Table.Row>
           ))}

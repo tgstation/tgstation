@@ -52,20 +52,16 @@
 /datum/ai_behavior/find_hunt_target
 
 /datum/ai_behavior/find_hunt_target/perform(seconds_per_tick, datum/ai_controller/controller, hunting_target_key, types_to_hunt, hunt_range)
-	. = ..()
-
 	var/mob/living/living_mob = controller.pawn
 
 	for(var/atom/possible_dinner as anything in typecache_filter_list(range(hunt_range, living_mob), types_to_hunt))
-		if(!valid_dinner(living_mob, possible_dinner, hunt_range))
+		if(!valid_dinner(living_mob, possible_dinner, hunt_range, controller, seconds_per_tick))
 			continue
 		controller.set_blackboard_key(hunting_target_key, possible_dinner)
-		finish_action(controller, TRUE, hunting_target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	finish_action(controller, FALSE, hunting_target_key)
-
-/datum/ai_behavior/find_hunt_target/proc/valid_dinner(mob/living/source, atom/dinner, radius)
+/datum/ai_behavior/find_hunt_target/proc/valid_dinner(mob/living/source, atom/dinner, radius, datum/ai_controller/controller, seconds_per_tick)
 	if(isliving(dinner))
 		var/mob/living/living_target = dinner
 		if(living_target.stat == DEAD) //bitch is dead
@@ -90,15 +86,13 @@
 	set_movement_target(controller, hunt_target)
 
 /datum/ai_behavior/hunt_target/perform(seconds_per_tick, datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
-	. = ..()
 	var/mob/living/hunter = controller.pawn
 	var/atom/hunted = controller.blackboard[hunting_target_key]
 
 	if(QDELETED(hunted))
-		finish_action(controller, FALSE, hunting_target_key)
-	else
-		target_caught(hunter, hunted)
-		finish_action(controller, TRUE, hunting_target_key, hunting_cooldown_key)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	target_caught(hunter, hunted)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/hunt_target/proc/target_caught(mob/living/hunter, atom/hunted)
 	if(isliving(hunted)) // Are we hunting a living mob?
@@ -153,7 +147,7 @@
 /datum/ai_behavior/hunt_target/use_ability_on_target/perform(seconds_per_tick, datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
 	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
 	if(!ability?.IsAvailable())
-		finish_action(controller, FALSE, hunting_target_key)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	return ..()
 
 /datum/ai_behavior/hunt_target/use_ability_on_target/target_caught(mob/living/hunter, atom/hunted)

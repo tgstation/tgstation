@@ -9,15 +9,15 @@
 	name = "MOD health analyzer module"
 	desc = "A module installed into the glove of the suit. This is a high-tech biological scanning suite, \
 		allowing the user indepth information on the vitals and injuries of others even at a distance, \
-		all with the flick of the wrist. Data is displayed in a convenient package on HUD in the helmet, \
-		but it's up to you to do something with it."
+		all with the flick of the wrist. Data is displayed in a convenient package, but it's up to you to do something with it."
 	icon_state = "health"
 	module_type = MODULE_ACTIVE
 	complexity = 1
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/health_analyzer)
 	cooldown_time = 0.5 SECONDS
 	tgui_id = "health_analyzer"
+	required_slots = list(ITEM_SLOT_GLOVES)
 	/// Scanning mode, changes how we scan something.
 	var/mode = HEALTH_SCAN
 
@@ -48,7 +48,7 @@
 			woundscan(mod.wearer, target)
 		if(CHEM_SCAN)
 			chemscan(mod.wearer, target)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/item/mod/module/health_analyzer/get_configuration()
 	. = ..()
@@ -74,6 +74,7 @@
 	complexity = 1
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/constructor)
+	required_slots = list(ITEM_SLOT_GLOVES)
 	var/quick_carry_trait = TRAIT_QUICK_CARRY
 
 /obj/item/mod/module/quick_carry/on_suit_activation()
@@ -105,6 +106,7 @@
 	device = /obj/item/reagent_containers/syringe/mod
 	incompatible_modules = list(/obj/item/mod/module/injector)
 	cooldown_time = 0.5 SECONDS
+	required_slots = list(ITEM_SLOT_GLOVES)
 
 /obj/item/reagent_containers/syringe/mod
 	name = "MOD injector syringe"
@@ -128,9 +130,10 @@
 	icon_state = "organ_thrower"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/organ_thrower, /obj/item/mod/module/microwave_beam)
 	cooldown_time = 0.5 SECONDS
+	required_slots = list(ITEM_SLOT_GLOVES)
 	/// How many organs the module can hold.
 	var/max_organs = 5
 	/// A list of all our organs.
@@ -152,7 +155,7 @@
 		organ.forceMove(src)
 		balloon_alert(mod.wearer, "picked up [organ]")
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
-		drain_power(use_power_cost)
+		drain_power(use_energy_cost)
 		return
 	if(!length(organ_list))
 		return
@@ -162,7 +165,7 @@
 	projectile.firer = mod.wearer
 	playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 	INVOKE_ASYNC(projectile, TYPE_PROC_REF(/obj/projectile, fire))
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/projectile/organ
 	name = "organ"
@@ -241,12 +244,13 @@
 	icon_state = "defibrillator"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 25
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 25
 	device = /obj/item/shockpaddles/mod
 	overlay_state_inactive = "module_defibrillator"
 	overlay_state_active = "module_defibrillator_active"
 	incompatible_modules = list(/obj/item/mod/module/defibrillator)
 	cooldown_time = 0.5 SECONDS
+	required_slots = list(ITEM_SLOT_GLOVES)
 	var/defib_cooldown = 5 SECONDS
 
 /obj/item/mod/module/defibrillator/Initialize(mapload)
@@ -254,7 +258,7 @@
 	RegisterSignal(device, COMSIG_DEFIBRILLATOR_SUCCESS, PROC_REF(on_defib_success))
 
 /obj/item/mod/module/defibrillator/proc/on_defib_success(obj/item/shockpaddles/source)
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 	source.recharge(defib_cooldown)
 	return COMPONENT_DEFIB_STOP
 
@@ -304,10 +308,11 @@
 	icon_state = "thread_ripper"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/thread_ripper)
 	cooldown_time = 1.5 SECONDS
 	overlay_state_inactive = "module_threadripper"
+	required_slots = list(ITEM_SLOT_GLOVES)
 	/// An associated list of ripped clothing and the body part covering slots they covered before
 	var/list/ripped_clothing = list()
 
@@ -328,7 +333,7 @@
 		balloon_alert(mod.wearer, "interrupted!")
 		return
 	var/target_zones = body_zone2cover_flags(mod.wearer.zone_selected)
-	for(var/obj/item/clothing as anything in carbon_target.get_all_worn_items())
+	for(var/obj/item/clothing as anything in carbon_target.get_equipped_items())
 		if(!clothing)
 			continue
 		var/shared_flags = target_zones & clothing.body_parts_covered
@@ -357,7 +362,7 @@
 		playsound(src, 'sound/items/zip.ogg', 25, TRUE)
 		balloon_alert(mod.wearer, "clothing mended")
 
-/obj/item/mod/module/thread_ripper/on_suit_deactivation(deleting)
+/obj/item/mod/module/thread_ripper/on_suit_deactivation(deleting = FALSE)
 	if(!length(ripped_clothing))
 		return
 	for(var/obj/item/clothing as anything in ripped_clothing)

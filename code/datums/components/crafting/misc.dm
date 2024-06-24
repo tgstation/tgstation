@@ -11,8 +11,8 @@
 	time = 3 SECONDS
 	reqs = list(/obj/item/stack/sheet/bone = 5)
 	result = /obj/item/skeleton_key
-	always_available = FALSE
 	category = CAT_MISC
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/coffee_cartridge
 	name = "Bootleg Coffee Cartridge"

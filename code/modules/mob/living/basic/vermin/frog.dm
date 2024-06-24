@@ -52,13 +52,7 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 	if(prob(1))
-		name = "rare frog"
-		desc = "They seem a little smug."
-		icon_state = "rare_frog"
-		icon_living = "rare_frog"
-		icon_dead = "rare_frog_dead"
-		butcher_results = list(/obj/item/food/nugget = 5)
-		poison_type = /datum/reagent/drug/mushroomhallucinogen
+		make_rare()
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -68,12 +62,33 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_FROG, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
+/mob/living/basic/frog/proc/make_rare()
+	name = "rare frog"
+	desc = "They seem a little smug."
+	icon_state = "rare_[icon_state]"
+	icon_living = "rare_[icon_living]"
+	icon_dead = "rare_[icon_dead]"
+	butcher_results = list(/obj/item/food/nugget = 5)
+	poison_type = /datum/reagent/drug/mushroomhallucinogen
+
 /mob/living/basic/frog/proc/on_entered(datum/source, AM as mob|obj)
 	SIGNAL_HANDLER
 	if(!stat && isliving(AM))
 		var/mob/living/L = AM
 		if(L.mob_size > MOB_SIZE_TINY)
 			playsound(src, stepped_sound, 50, TRUE)
+
+/mob/living/basic/frog/icemoon_facility
+	name = "Peter Jr."
+	desc = "They seem a little cold."
+	minimum_survivable_temperature = BODYTEMP_COLD_ICEBOX_SAFE
+	pressure_resistance = 200
+	habitable_atmos = null
+	gold_core_spawnable = NO_SPAWN
+
+/mob/living/basic/frog/icemoon_facility/make_rare()
+	. = ..()
+	name = "Peter Sr." //make him senior.
 
 /mob/living/basic/frog/frog_suicide
 	name = "suicide frog"

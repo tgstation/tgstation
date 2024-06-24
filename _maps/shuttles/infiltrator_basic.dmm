@@ -587,7 +587,7 @@
 /area/shuttle/syndicate/medical)
 "fB" = (
 /obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/shuttle/syndicate/airlock)
 "gt" = (
 /obj/item/storage/box/handcuffs{
@@ -1096,7 +1096,7 @@
 	},
 /area/shuttle/syndicate/eva)
 "Xy" = (
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/shuttle/syndicate/airlock)
 "YN" = (
 /turf/open/floor/iron/dark/smooth_corner{

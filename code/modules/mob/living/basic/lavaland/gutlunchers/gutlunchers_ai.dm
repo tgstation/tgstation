@@ -44,12 +44,9 @@
 			continue
 		living_pawn.befriend(potential_friend)
 		to_chat(potential_friend, span_nicegreen("[living_pawn] looks at you with endearing eyes!"))
-		finish_action(controller, TRUE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-	finish_action(controller, FALSE)
-	return
-
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 
 /datum/ai_controller/basic_controller/gutlunch/gutlunch_baby
@@ -78,7 +75,7 @@
 	target_key = BB_TROUGH_TARGET
 	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/food_trough
 	finding_behavior = /datum/ai_behavior/find_hunt_target/food_trough
-	hunt_targets = list(/obj/structure/ore_container/gutlunch_trough)
+	hunt_targets = list(/obj/structure/ore_container/food_trough/gutlunch_trough)
 	hunt_chance = 75
 	hunt_range = 9
 

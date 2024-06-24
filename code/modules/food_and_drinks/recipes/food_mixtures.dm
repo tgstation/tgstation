@@ -1,4 +1,5 @@
 /datum/crafting_recipe/food
+	mass_craftable = TRUE
 
 /datum/crafting_recipe/food/on_craft_completion(mob/user, atom/result)
 	SHOULD_CALL_PARENT(TRUE)
@@ -263,7 +264,7 @@
 	required_reagents = list(/datum/reagent/consumable/olivepaste = 4, /datum/reagent/water = 1)
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/vinegar
+/datum/chemical_reaction/food/wine_vinegar
 	results = list(/datum/reagent/consumable/vinegar = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/wine = 1, /datum/reagent/water = 1, /datum/reagent/consumable/sugar = 1)
 	reaction_flags = REACTION_INSTANT
@@ -276,12 +277,12 @@
 	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/martian_batter
-	results = list(/datum/reagent/consumable/martian_batter = 2)
-	required_reagents = list(/datum/reagent/consumable/flour = 1, /datum/reagent/consumable/nutriment/soup/dashi = 1)
+	results = list(/datum/reagent/consumable/martian_batter = 10)
+	required_reagents = list(/datum/reagent/consumable/flour = 5, /datum/reagent/consumable/nutriment/soup/dashi = 5)
 	mix_message = "A smooth batter forms."
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/vinegar
+/datum/chemical_reaction/food/grape_vinegar
 	results = list(/datum/reagent/consumable/vinegar = 5)
 	required_reagents = list(/datum/reagent/consumable/grapejuice = 5)
 	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)

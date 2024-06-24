@@ -23,6 +23,7 @@
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	use_power = NO_POWER_USE
+	interaction_flags_mouse_drop = NEED_HANDS
 
 	///What are we sticking our needle in?
 	var/atom/attached
@@ -161,25 +162,22 @@
 		filling.color = mix_color_from_reagents(container_reagents.reagent_list)
 		. += filling
 
-/obj/machinery/iv_drip/MouseDrop(atom/target)
-	. = ..()
-	if(!Adjacent(target) || !usr.can_perform_action(src))
-		return
-	if(!isliving(usr))
-		to_chat(usr, span_warning("You can't do that!"))
+/obj/machinery/iv_drip/mouse_drop_dragged(atom/target, mob/user)
+	if(!isliving(user))
+		to_chat(user, span_warning("You can't do that!"))
 		return
 	if(!get_reagents())
-		to_chat(usr, span_warning("There's nothing attached to the IV drip!"))
+		to_chat(user, span_warning("There's nothing attached to the IV drip!"))
 		return
-	if(!target.is_injectable(usr))
-		to_chat(usr, span_warning("Can't inject into this!"))
+	if(!target.is_injectable(user))
+		to_chat(user, span_warning("Can't inject into this!"))
 		return
 	if(attached)
 		visible_message(span_warning("[attached] is detached from [src]."))
 		attached = null
 		update_appearance(UPDATE_ICON)
-	usr.visible_message(span_warning("[usr] attaches [src] to [target]."), span_notice("You attach [src] to [target]."))
-	attach_iv(target, usr)
+	user.visible_message(span_warning("[user] attaches [src] to [target]."), span_notice("You attach [src] to [target]."))
+	attach_iv(target, user)
 
 /obj/machinery/iv_drip/attackby(obj/item/W, mob/user, params)
 	if(use_internal_storage)
@@ -207,15 +205,10 @@
 	else
 		return ..()
 
-/// Checks whether the IV drip transfer rate can be modified with AltClick
-/obj/machinery/iv_drip/proc/can_use_alt_click(mob/user)
-	if(!can_interact(user))
-		return FALSE
 
-/obj/machinery/iv_drip/AltClick(mob/user)
-	if(!can_use_alt_click(user))
-		return ..()
+/obj/machinery/iv_drip/click_alt(mob/user)
 	set_transfer_rate(transfer_rate > MIN_IV_TRANSFER_RATE ? MIN_IV_TRANSFER_RATE : MAX_IV_TRANSFER_RATE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/iv_drip/on_deconstruction(disassembled = TRUE)
 	new /obj/item/stack/sheet/iron(loc)

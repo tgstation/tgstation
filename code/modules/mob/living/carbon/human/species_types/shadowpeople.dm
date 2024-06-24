@@ -95,6 +95,7 @@
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
 	color_cutoffs = list(20, 10, 40)
 	pepperspray_protect = TRUE
+	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /// the key to some of their powers
 /obj/item/organ/internal/brain/shadow

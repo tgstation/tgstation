@@ -11,14 +11,18 @@
 
 /obj/structure/aquarium
 	name = "aquarium"
-	desc = "A vivivarium in which aquatic fuana and flora are usually kept and displayed."
+	desc = "A vivarium in which aquatic fauna and flora are usually kept and displayed."
 	density = TRUE
 	anchored = TRUE
 
-	icon = 'icons/obj/aquarium.dmi'
+	icon = 'icons/obj/aquarium/tanks.dmi'
 	icon_state = "aquarium_map"
 
 	integrity_failure = 0.3
+
+	/// The icon state is used for mapping so mappers know what they're placing. This prefixes the real icon used in game.
+	/// For an example, "aquarium" gives the base sprite of "aquarium_base", the glass is "aquarium_glass_water", and so on.
+	var/icon_prefix = "aquarium"
 
 	var/fluid_type = AQUARIUM_FLUID_FRESHWATER
 	var/fluid_temp = DEFAULT_AQUARIUM_TEMP
@@ -138,20 +142,20 @@
 /obj/structure/aquarium/update_icon()
 	. = ..()
 	///"aquarium_map" is used for mapping, so mappers can tell what it's.
-	icon_state = "aquarium_base"
+	icon_state = icon_prefix + "_base"
 
 /obj/structure/aquarium/update_overlays()
 	. = ..()
 	if(panel_open)
-		. += "panel"
+		. += icon_prefix + "_panel"
 
 	///The glass overlay
 	var/suffix = fluid_type == AQUARIUM_FLUID_AIR ? "air" : "water"
 	if(broken)
 		suffix += "_broken"
-		. += mutable_appearance(icon, "aquarium_glass_cracks", layer = layer + AQUARIUM_BORDERS_LAYER)
-	. += mutable_appearance(icon, "aquarium_glass_[suffix]", layer = layer + AQUARIUM_GLASS_LAYER)
-	. += mutable_appearance(icon, "aquarium_borders", layer = layer + AQUARIUM_BORDERS_LAYER)
+		. += mutable_appearance(icon, icon_prefix + "_glass_cracks", layer = layer + AQUARIUM_BORDERS_LAYER)
+	. += mutable_appearance(icon, icon_prefix + "_glass_[suffix]", layer = layer + AQUARIUM_GLASS_LAYER)
+	. += mutable_appearance(icon, icon_prefix + "_borders", layer = layer + AQUARIUM_BORDERS_LAYER)
 
 /obj/structure/aquarium/examine(mob/user)
 	. = ..()
@@ -159,10 +163,7 @@
 	if(panel_open && reagents.total_volume)
 		. += span_notice("You can use a plunger to empty the feed storage.")
 
-/obj/structure/aquarium/AltClick(mob/living/user)
-	. = ..()
-	if(!user.can_perform_action(src))
-		return
+/obj/structure/aquarium/click_alt(mob/living/user)
 	panel_open = !panel_open
 	balloon_alert(user, "panel [panel_open ? "open" : "closed"]")
 	if(panel_open)
@@ -170,6 +171,7 @@
 	else
 		reagents.flags &= ~(TRANSPARENT|REFILLABLE)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/aquarium/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -179,9 +181,9 @@
 /obj/structure/aquarium/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	if(!panel_open)
 		return
-	to_chat(user, span_notice("You start plunging [name]."))
+	user.balloon_alert_to_viewers("plunging...")
 	if(do_after(user, 3 SECONDS, target = src))
-		to_chat(user, span_notice("You finish plunging the [name]."))
+		user.balloon_alert_to_viewers("finished plunging")
 		reagents.expose(get_turf(src), TOUCH) //splash on the floor
 		reagents.clear_reagents()
 
@@ -214,6 +216,21 @@
 			fish.feed(item.reagents)
 		balloon_alert(user, "fed the fish")
 		return TRUE
+	if(istype(item, /obj/item/aquarium_upgrade))
+		var/obj/item/aquarium_upgrade/upgrade = item
+		if(upgrade.upgrade_from_type != type)
+			balloon_alert(user, "wrong kind of aquarium!")
+			return
+		balloon_alert(user, "upgrading...")
+		if(!do_after(user, 5 SECONDS, src))
+			return
+		var/obj/structure/aquarium/upgraded_aquarium = new upgrade.upgrade_to_type(loc)
+		for(var/atom/movable/moving in contents)
+			moving.forceMove(upgraded_aquarium)
+		balloon_alert(user, "upgraded")
+		qdel(upgrade)
+		qdel(src)
+		return
 	return ..()
 
 /obj/structure/aquarium/proc/on_attacked(datum/source, mob/attacker, attack_flags)
@@ -356,6 +373,16 @@
 #undef AQUARIUM_GLASS_LAYER
 #undef AQUARIUM_BORDERS_LAYER
 #undef AQUARIUM_BELOW_GLASS_LAYER
+
+/obj/structure/aquarium/lawyer/Initialize(mapload)
+	. = ..()
+
+	new /obj/item/aquarium_prop/sand(src)
+	new /obj/item/aquarium_prop/seaweed(src)
+
+	new /obj/item/fish/goldfish/gill(src)
+
+	reagents.add_reagent(/datum/reagent/consumable/nutriment, 2)
 
 /obj/structure/aquarium/prefilled/Initialize(mapload)
 	. = ..()

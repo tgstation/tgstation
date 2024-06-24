@@ -27,13 +27,11 @@
 	var/can_attack_dense_objects = FALSE
 
 /datum/ai_behavior/attack_obstructions/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/mob/living/basic/basic_mob = controller.pawn
 	var/atom/target = controller.blackboard[target_key]
 
 	if (QDELETED(target))
-		finish_action(controller, succeeded = FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/turf/next_step = get_step_towards(basic_mob, target)
 	var/dir_to_next_step = get_dir(basic_mob, next_step)
@@ -48,8 +46,8 @@
 
 	for (var/direction in dirs_to_move)
 		if (attack_in_direction(controller, basic_mob, direction))
-			return
-	finish_action(controller, succeeded = TRUE)
+			return AI_BEHAVIOR_DELAY
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/attack_obstructions/proc/attack_in_direction(datum/ai_controller/controller, mob/living/basic/basic_mob, direction)
 	var/turf/next_step = get_step(basic_mob, direction)

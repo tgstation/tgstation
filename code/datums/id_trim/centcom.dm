@@ -163,7 +163,7 @@
 /datum/id_trim/centcom/ert/chaplain
 	assignment = JOB_ERT_CHAPLAIN
 	trim_state = "trim_chaplain"
-	subdepartment_color = "#58C800"
+	subdepartment_color = COLOR_SERVICE_LIME
 	sechud_icon_state = SECHUD_RELIGIOUS_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/chaplain/New()

@@ -148,3 +148,34 @@
 	glasses = null
 	suit = /obj/item/clothing/suit/jacket/oversized
 	head = /obj/item/clothing/head/costume/crown
+
+/datum/outfit/pirate/medieval
+	name = "Medieval Warmonger"
+
+	id = null
+	glasses = null
+	uniform = /obj/item/clothing/under/costume/gamberson/military
+	suit = /obj/item/clothing/suit/armor/vest/military
+	suit_store = /obj/item/spear/military
+	back = /obj/item/storage/backpack/satchel/leather
+	gloves = /obj/item/clothing/gloves/color/brown
+	head = /obj/item/clothing/head/helmet/military
+	mask = /obj/item/clothing/mask/balaclava
+	shoes = /obj/item/clothing/shoes/workboots
+	belt = /obj/item/claymore/shortsword
+	l_pocket = /obj/item/flashlight/flare/torch
+
+/datum/outfit/pirate/medieval/warlord
+	name = "Medieval Warlord"
+
+	neck = /obj/item/bedsheet/pirate
+	suit = /obj/item/clothing/suit/armor/riot/knight/warlord
+	suit_store = null
+	back = /obj/item/fireaxe/boardingaxe
+	gloves = /obj/item/clothing/gloves/combat
+	head = /obj/item/clothing/head/helmet/knight/warlord
+	mask = /obj/item/clothing/mask/breath
+	shoes = /obj/item/clothing/shoes/bronze
+	belt = /obj/item/gun/magic/hook
+	l_pocket = /obj/item/tank/internals/emergency_oxygen
+	r_pocket = /obj/item/flashlight/lantern

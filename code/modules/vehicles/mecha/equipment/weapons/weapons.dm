@@ -370,7 +370,7 @@
 	if(!action_checks(target))
 		return
 	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT(type), equip_cooldown)
-	chassis.use_power(energy_drain)
+	chassis.use_energy(energy_drain)
 	var/newtonian_target = turn(chassis.dir,180)
 	var/obj/O = new projectile(chassis.loc)
 	playsound(chassis, fire_sound, 50, TRUE)
@@ -552,6 +552,7 @@
 	range = MECHA_MELEE
 	toolspeed = 0.8
 	mech_flags = EXOSUIT_MODULE_PADDY
+	projectiles_per_shot = 0
 	///Chassis but typed for the cargo_hold var
 	var/obj/vehicle/sealed/mecha/ripley/secmech
 	///Audio for using the hydraulic clamp
@@ -570,16 +571,19 @@
 	secmech = null
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/action(mob/living/source, atom/target, list/modifiers)
+/obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/action(mob/source, atom/target, list/modifiers)
 	if(!secmech.cargo_hold) //We did try
 		CRASH("Mech [chassis] has a claw device, but no internal storage. This should be impossible.")
-	if(ismob(target))
+	if(!action_checks(target))
+		return
+	if(isliving(target))
+		. = ..()
 		var/mob/living/mobtarget = target
 		if(mobtarget.move_resist == MOVE_FORCE_OVERPOWERING) //No megafauna or bolted AIs, please.
-			to_chat(source, "[span_warning("[src] is unable to lift [mobtarget].")]")
+			balloon_alert(source, "too strong!")
 			return
 		if(secmech.cargo_hold.contents.len >= secmech.cargo_hold.cargo_capacity)
-			to_chat(source, "[icon2html(src, source)][span_warning("Not enough room in cargo compartment!")]")
+			balloon_alert(source, "no room!")
 			return
 
 		playsound(chassis, clampsound, 50, FALSE, -6)
@@ -596,11 +600,12 @@
 			carbontarget.update_handcuffed()
 		return
 
-	if(!istype(target, /obj/machinery/door))
+	if(istype(target, /obj/machinery/door))
+		. = ..()
+		var/obj/machinery/door/target_door = target
+		playsound(chassis, clampsound, 50, FALSE, -6)
+		target_door.try_to_crowbar(src, source)
 		return
-	var/obj/machinery/door/target_door = target
-	playsound(chassis, clampsound, 50, FALSE, -6)
-	target_door.try_to_crowbar(src, source)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw/get_snowflake_data()
 	return list(

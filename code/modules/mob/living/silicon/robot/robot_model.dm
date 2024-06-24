@@ -82,6 +82,8 @@
 	for(var/module in get_usable_modules())
 		if(!(module in cyborg.held_items))
 			. += module
+	if(!cyborg.emagged)
+		. += emag_modules
 
 /obj/item/robot_model/proc/add_module(obj/item/added_module, nonstandard, requires_rebuild)
 	if(isstack(added_module))
@@ -121,44 +123,57 @@
 	var/active_module = cyborg.module_active
 	cyborg.drop_all_held_items()
 	modules = list()
-	for(var/obj/item/module in basic_modules)
+	for(var/obj/item/module as anything in basic_modules)
 		add_module(module, FALSE, FALSE)
 	if(cyborg.emagged)
-		for(var/obj/item/module in emag_modules)
+		for(var/obj/item/module as anything in emag_modules)
 			add_module(module, FALSE, FALSE)
-	for(var/obj/item/module in added_modules)
+	for(var/obj/item/module as anything in added_modules)
 		add_module(module, FALSE, FALSE)
-	for(var/module in held_modules)
-		if(module)
-			cyborg.equip_module_to_slot(module, held_modules.Find(module))
+	for(var/obj/item/module as anything in held_modules & modules)
+		cyborg.equip_module_to_slot(module, held_modules.Find(module))
 	if(active_module)
 		cyborg.select_module(held_modules.Find(active_module))
 	if(cyborg.hud_used)
 		cyborg.hud_used.update_robot_modules_display()
 
+
+///Restocks things that don't take mats, generally at a power cost. Returns True if anything was restocked/replaced, and False otherwise.
 /obj/item/robot_model/proc/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	SHOULD_CALL_PARENT(TRUE)
+
+	///If anything was actually replaced/refilled/recharged. If not, we won't draw power.
+	. = FALSE
 
 	for(var/datum/robot_energy_storage/storage_datum in storages)
 		if(storage_datum.renewable == FALSE)
 			continue
-		storage_datum.energy = min(storage_datum.max_energy, storage_datum.energy + coeff * storage_datum.recharge_rate)
+		if(storage_datum.energy < storage_datum.max_energy)
+			. = TRUE
+			storage_datum.energy = min(storage_datum.max_energy, storage_datum.energy + coeff * storage_datum.recharge_rate)
 
 	for(var/obj/item/module in get_usable_modules())
 		if(istype(module, /obj/item/assembly/flash))
 			var/obj/item/assembly/flash/flash = module
+			if(flash.burnt_out)
+				. = TRUE
 			flash.times_used = 0
 			flash.burnt_out = FALSE
 			flash.update_appearance()
 		else if(istype(module, /obj/item/melee/baton/security))
 			var/obj/item/melee/baton/security/baton = module
-			baton.cell?.charge = baton.cell.maxcharge
+			if(baton.cell?.charge < baton.cell.maxcharge)
+				. = TRUE //if sec borgs ever make a mainstream return, we should probably do this differntly.
+				baton.cell?.charge = baton.cell.maxcharge
 		else if(istype(module, /obj/item/gun/energy))
 			var/obj/item/gun/energy/gun = module
 			if(!gun.chambered)
+				. = TRUE
 				gun.recharge_newshot() //try to reload a new shot.
 
-	cyborg.toner = cyborg.tonermax
+	if(cyborg.toner < cyborg.tonermax)
+		. = TRUE
+		cyborg.toner = cyborg.tonermax
 
 /**
  * Refills consumables that require materials, rather than being given for free.
@@ -349,6 +364,7 @@
 	if(!soap)
 		return
 	if(soap.uses < initial(soap.uses))
+		. = TRUE
 		soap.uses += ROUND_UP(initial(soap.uses) / 100) * coeff
 
 /obj/item/robot_model/engineering
@@ -360,15 +376,12 @@
 		/obj/item/pipe_dispenser,
 		/obj/item/extinguisher,
 		/obj/item/weldingtool/largetank/cyborg,
-		/obj/item/screwdriver/cyborg,
-		/obj/item/wrench/cyborg,
-		/obj/item/crowbar/cyborg,
-		/obj/item/wirecutters/cyborg,
-		/obj/item/multitool/cyborg,
+		/obj/item/borg/cyborg_omnitool/engineering,
+		/obj/item/borg/cyborg_omnitool/engineering,
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
 		/obj/item/assembly/signaler/cyborg,
-		/obj/item/areaeditor/blueprints/cyborg,
+		/obj/item/blueprints/cyborg,
 		/obj/item/electroadaptive_pseudocircuit,
 		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/glass,
@@ -600,7 +613,7 @@
 
 	reagents.expose(our_turf, TOUCH, min(1, 10 / reagents.total_volume))
 	// We use more water doing this then mopping
-	reagents.remove_any(2) //reaction() doesn't use up the reagents
+	reagents.remove_all(2) //reaction() doesn't use up the reagents
 
 /datum/action/toggle_buffer/update_button_name(atom/movable/screen/movable/action_button/current_button, force)
 	if(buffer_on)
@@ -629,21 +642,29 @@
 	..()
 	var/obj/item/lightreplacer/light_replacer = locate(/obj/item/lightreplacer) in basic_modules
 	if(light_replacer)
-		for(var/charge in 1 to coeff)
-			light_replacer.Charge(cyborg)
+		if(light_replacer.uses < light_replacer.max_uses)
+			. = TRUE
+			light_replacer.Charge(cyborg, coeff)
 
 	var/obj/item/reagent_containers/spray/cyborg_drying/drying_agent = locate(/obj/item/reagent_containers/spray/cyborg_drying) in basic_modules
 	if(drying_agent)
-		drying_agent.reagents.add_reagent(/datum/reagent/drying_agent, 5 * coeff)
+		var/datum/reagents/anti_water = drying_agent.reagents
+		if(anti_water.total_volume < anti_water.maximum_volume)
+			. = TRUE
+			drying_agent.reagents.add_reagent(/datum/reagent/drying_agent, 5 * coeff)
 
 	var/obj/item/reagent_containers/spray/cyborg_lube/lube = locate(/obj/item/reagent_containers/spray/cyborg_lube) in emag_modules
 	if(lube)
-		lube.reagents.add_reagent(/datum/reagent/lube, 2 * coeff)
+		var/datum/reagents/anti_friction = lube.reagents
+		if(anti_friction.total_volume < anti_friction.maximum_volume)
+			. = TRUE
+			lube.reagents.add_reagent(/datum/reagent/lube, 2 * coeff)
 
 	var/obj/item/soap/nanotrasen/cyborg/soap = locate(/obj/item/soap/nanotrasen/cyborg) in basic_modules
 	if(!soap)
 		return
 	if(soap.uses < initial(soap.uses))
+		. = TRUE
 		soap.uses += ROUND_UP(initial(soap.uses) / 100) * coeff
 
 /obj/item/robot_model/medical
@@ -655,14 +676,8 @@
 		/obj/item/borg/apparatus/beaker,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/surgical_drapes,
-		/obj/item/retractor,
-		/obj/item/hemostat,
-		/obj/item/cautery,
-		/obj/item/surgicaldrill,
-		/obj/item/scalpel,
-		/obj/item/circular_saw,
-		/obj/item/bonesetter,
+		/obj/item/borg/cyborg_omnitool/medical,
+		/obj/item/borg/cyborg_omnitool/medical,
 		/obj/item/blood_filter,
 		/obj/item/extinguisher/mini,
 		/obj/item/emergency_bed/silicon,
@@ -769,6 +784,7 @@
 	var/obj/item/gun/energy/e_gun/advtaser/cyborg/taser = locate(/obj/item/gun/energy/e_gun/advtaser/cyborg) in basic_modules
 	if(taser)
 		if(taser.cell.charge < taser.cell.maxcharge)
+			. = TRUE
 			var/obj/item/ammo_casing/energy/shot = taser.ammo_type[taser.select]
 			taser.cell.give(shot.e_cost * coeff)
 			taser.update_appearance()
@@ -820,7 +836,10 @@
 	..()
 	var/obj/item/reagent_containers/enzyme = locate(/obj/item/reagent_containers/condiment/enzyme) in basic_modules
 	if(enzyme)
-		enzyme.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
+		var/datum/reagents/spicyketchup = enzyme.reagents
+		if(spicyketchup.total_volume < spicyketchup.maximum_volume)
+			. = TRUE
+			enzyme.reagents.add_reagent(/datum/reagent/consumable/enzyme, 2 * coeff)
 
 /obj/item/robot_model/syndicate
 	name = "Syndicate Assault"
@@ -856,15 +875,10 @@
 		/obj/item/reagent_containers/borghypo/syndicate,
 		/obj/item/shockpaddles/syndicate/cyborg,
 		/obj/item/healthanalyzer,
-		/obj/item/surgical_drapes,
-		/obj/item/retractor,
-		/obj/item/hemostat,
-		/obj/item/cautery,
-		/obj/item/surgicaldrill,
-		/obj/item/scalpel,
-		/obj/item/melee/energy/sword/cyborg/saw,
-		/obj/item/bonesetter,
+		/obj/item/borg/cyborg_omnitool/medical,
+		/obj/item/borg/cyborg_omnitool/medical,
 		/obj/item/blood_filter,
+		/obj/item/melee/energy/sword/cyborg/saw,
 		/obj/item/emergency_bed/silicon,
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
@@ -889,12 +903,9 @@
 		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/extinguisher,
 		/obj/item/weldingtool/largetank/cyborg,
-		/obj/item/screwdriver/nuke,
-		/obj/item/wrench/cyborg,
-		/obj/item/crowbar/cyborg,
-		/obj/item/wirecutters/cyborg,
 		/obj/item/analyzer,
-		/obj/item/multitool/cyborg,
+		/obj/item/borg/cyborg_omnitool/engineering,
+		/obj/item/borg/cyborg_omnitool/engineering,
 		/obj/item/stack/sheet/iron,
 		/obj/item/stack/sheet/glass,
 		/obj/item/borg/apparatus/sheet_manipulator,

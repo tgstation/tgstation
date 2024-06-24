@@ -7,30 +7,36 @@ import { useBackend } from '../backend';
 import { Box, Button, Icon, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';
 
-const coordsToVec = (coords) => map(parseFloat)(coords.split(', '));
+const coordsToVec = (coords) => map(coords.split(', '), parseFloat);
 
 export const Gps = (props) => {
   const { act, data } = useBackend();
   const { currentArea, currentCoords, globalmode, power, tag, updating } = data;
   const signals = flow([
-    map((signal, index) => {
-      // Calculate distance to the target. BYOND distance is capped to 127,
-      // that's why we roll our own calculations here.
-      const dist =
-        signal.dist &&
-        Math.round(
-          vecLength(
-            vecSubtract(coordsToVec(currentCoords), coordsToVec(signal.coords)),
-          ),
-        );
-      return { ...signal, dist, index };
-    }),
-    sortBy(
-      // Signals with distance metric go first
-      (signal) => signal.dist === undefined,
-      // Sort alphabetically
-      (signal) => signal.entrytag,
-    ),
+    (signals) =>
+      map(signals, (signal, index) => {
+        // Calculate distance to the target. BYOND distance is capped to 127,
+        // that's why we roll our own calculations here.
+        const dist =
+          signal.dist &&
+          Math.round(
+            vecLength(
+              vecSubtract(
+                coordsToVec(currentCoords),
+                coordsToVec(signal.coords),
+              ),
+            ),
+          );
+        return { ...signal, dist, index };
+      }),
+    (signals) =>
+      sortBy(
+        signals,
+        // Signals with distance metric go first
+        (signal) => signal.dist === undefined,
+        // Sort alphabetically
+        (signal) => signal.entrytag,
+      ),
   ])(data.signals || []);
   return (
     <Window title="Global Positioning System" width={470} height={700}>

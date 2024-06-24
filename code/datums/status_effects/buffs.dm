@@ -114,6 +114,7 @@
 	id = "fleshmend"
 	duration = 10 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/fleshmend
+	show_duration = TRUE
 
 /datum/status_effect/fleshmend/on_apply()
 	. = ..()
@@ -195,6 +196,9 @@
 	if(HAS_TRAIT(new_owner, TRAIT_HULK))
 		modifier += 0.5
 
+	if(HAS_TRAIT(new_owner, TRAIT_STIMMED)) // Naturally produces stimulants to help get you PUMPED
+		modifier += 1
+
 	if(HAS_TRAIT(new_owner, TRAIT_FAT)) // less xp until you get into shape
 		modifier -= 0.5
 
@@ -209,10 +213,10 @@
 		if(new_owner.reagents.has_reagent(workout_reagent))
 			food_boost += supplementary_reagents_bonus[workout_reagent]
 
-	var/skill_level_boost = (new_owner.mind.get_skill_level(/datum/skill/fitness) - 1) * 2 SECONDS
+	var/skill_level_boost = (new_owner.mind.get_skill_level(/datum/skill/athletics) - 1) * 2 SECONDS
 	bonus_time = (bonus_time + food_boost + skill_level_boost) * modifier
 
-	var/exhaustion_limit = new_owner.mind.get_skill_modifier(/datum/skill/fitness, SKILL_VALUE_MODIFIER) + world.time
+	var/exhaustion_limit = new_owner.mind.get_skill_modifier(/datum/skill/athletics, SKILL_VALUE_MODIFIER) + world.time
 	if(duration + bonus_time >= exhaustion_limit)
 		duration = exhaustion_limit
 		to_chat(new_owner, span_userdanger("Your muscles are exhausted! Might be a good idea to sleep..."))
@@ -228,10 +232,10 @@
 /datum/status_effect/exercised/refresh(mob/living/new_owner, bonus_time)
 	duration += workout_duration(new_owner, bonus_time)
 	new_owner.clear_mood_event("exercise") // we need to reset the old mood event in case our fitness skill changes
-	new_owner.add_mood_event("exercise", /datum/mood_event/exercise, new_owner.mind.get_skill_level(/datum/skill/fitness))
+	new_owner.add_mood_event("exercise", /datum/mood_event/exercise, new_owner.mind.get_skill_level(/datum/skill/athletics))
 
 /datum/status_effect/exercised/on_apply()
-	owner.add_mood_event("exercise", /datum/mood_event/exercise, owner.mind.get_skill_level(/datum/skill/fitness))
+	owner.add_mood_event("exercise", /datum/mood_event/exercise, owner.mind.get_skill_level(/datum/skill/athletics))
 	return ..()
 
 /datum/status_effect/exercised/on_remove()
@@ -335,7 +339,7 @@
 			need_mob_update += itemUser.adjustFireLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
 			need_mob_update += itemUser.adjustToxLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE) //Because Slime People are people too
 			need_mob_update += itemUser.adjustOxyLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-			need_mob_update += itemUser.adjustStaminaLoss(-0.6 * seconds_between_ticks, updating_stamina = FALSE, forced = TRUE)
+			need_mob_update += itemUser.adjustStaminaLoss(-3 * seconds_between_ticks, updating_stamina = FALSE, forced = TRUE)
 			need_mob_update += itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.6 * seconds_between_ticks)
 			if(need_mob_update)
 				itemUser.updatehealth()
@@ -376,6 +380,7 @@
 	duration = 1 MINUTES
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /atom/movable/screen/alert/status_effect/regenerative_core
+	show_duration = TRUE
 
 /datum/status_effect/regenerative_core/on_apply()
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
@@ -395,6 +400,7 @@
 	id = "Lightning Orb"
 	duration = 30 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/lightningorb
+	show_duration = TRUE
 
 /datum/status_effect/lightningorb/on_apply()
 	. = ..()
@@ -457,6 +463,7 @@
 	id = "speed_boost"
 	duration = 2 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
+	show_duration = TRUE
 
 /datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -594,3 +601,24 @@
 
 /datum/status_effect/jump_jet/on_remove()
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
+
+/// Makes the mob immune to radiation for a short bit to help with safely spawning in hazardous areas
+/datum/status_effect/radiation_immunity
+	id = "radiation_immunity"
+	duration = 1 MINUTES
+	show_duration = TRUE
+
+/datum/status_effect/radiation_immunity/on_apply()
+	ADD_TRAIT(owner, TRAIT_RADIMMUNE, type)
+	return TRUE
+
+/datum/status_effect/radiation_immunity/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_RADIMMUNE, type)
+
+/datum/status_effect/radiation_immunity/radnebula
+	alert_type = /atom/movable/screen/alert/status_effect/radiation_immunity
+
+/atom/movable/screen/alert/status_effect/radiation_immunity
+	name = "Radiation shielding"
+	desc = "You're immune to radiation, get settled quick!"
+	icon_state = "radiation_shield"

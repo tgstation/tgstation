@@ -23,6 +23,7 @@
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 
+	ADD_TRAIT(target, TRAIT_MOB_EATER, REF(src))
 	src.heal_amt = heal_amt
 	src.damage_amount = damage_amount
 	src.damage_type = damage_type
@@ -35,6 +36,7 @@
 	RegisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_pre_attackingtarget))
 
 /datum/element/basic_eating/Detach(datum/target)
+	REMOVE_TRAIT(target, TRAIT_MOB_EATER, REF(src))
 	UnregisterSignal(target, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
 	return ..()
 
@@ -53,6 +55,8 @@
 
 /datum/element/basic_eating/proc/try_eating(mob/living/eater, atom/target)
 	if(!is_type_in_list(target, food_types))
+		return FALSE
+	if(SEND_SIGNAL(eater, COMSIG_MOB_PRE_EAT, target) & COMSIG_MOB_CANCEL_EAT)
 		return FALSE
 	var/eat_verb
 	if(drinking)
@@ -79,8 +83,15 @@
 	return TRUE
 
 /datum/element/basic_eating/proc/finish_eating(mob/living/eater, atom/target)
+	set waitfor = FALSE
+	SEND_SIGNAL(eater, COMSIG_MOB_ATE)
 	if(drinking)
 		playsound(eater.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	else
 		playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	qdel(target)
+	var/atom/final_target = target
+	if(isstack(target)) //if stack, only consume 1
+		var/obj/item/stack/food_stack = target
+		final_target = food_stack.split_stack(eater, 1)
+	eater.log_message("has eaten [target]!", LOG_ATTACK)
+	qdel(final_target)

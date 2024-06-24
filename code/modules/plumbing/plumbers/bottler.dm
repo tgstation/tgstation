@@ -4,10 +4,8 @@
 	icon_state = "bottler"
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
-
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 100
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 
 	///how much do we fill
 	var/wanted_amount = 10
@@ -71,7 +69,7 @@
 	to_chat(user, span_notice(" The [src] will now fill for [wanted_amount]u."))
 
 /obj/machinery/plumbing/bottler/process(seconds_per_tick)
-	if(machine_stat & NOPOWER)
+	if(!is_operational)
 		return
 	// Sanity check the result locations and stop processing if they don't exist
 	if(goodspot == null || badspot == null || inputspot == null)
@@ -80,7 +78,7 @@
 
 	///see if machine has enough to fill, is anchored down and has any inputspot objects to pick from
 	if(reagents.total_volume >= wanted_amount && anchored && length(inputspot.contents))
-		use_power(active_power_usage * seconds_per_tick)
+		use_energy(active_power_usage * seconds_per_tick)
 		var/obj/AM = pick(inputspot.contents)///pick a reagent_container that could be used
 		//allowed containers
 		var/static/list/allowed_containers = list(

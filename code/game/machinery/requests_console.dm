@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/obj/machinery/requests_console/ui_act(action, params)
+/obj/machinery/requests_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -213,7 +213,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			var/recipient = params["reply_recipient"]
 
 			var/reply_message = reject_bad_text(tgui_input_text(usr, "Write a quick reply to [recipient]", "Awaiting Input"), ascii_only = FALSE)
-
+			if(QDELETED(ui) || ui.status != UI_INTERACTIVE)
+				return
 			if(!reply_message)
 				has_mail_send_error = TRUE
 				playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)

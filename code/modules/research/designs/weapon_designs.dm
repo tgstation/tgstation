@@ -204,9 +204,22 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	autolathe_exportable = FALSE
 
+/datum/design/ballistic_shield
+	name = "Ballistic Shield"
+	desc = "A heavy shield designed for blocking projectiles, weaker to melee."
+	id = "ballistic_shield"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/titanium =SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/shield/ballistic
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_MELEE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+	autolathe_exportable = FALSE
+
 /datum/design/beamrifle
-	name = "Beam Marksman Rifle Part Kit (Lethal)"
-	desc = "The gunkit for a powerful long ranged anti-material rifle that fires charged particle beams to obliterate targets."
+	name = "Event Horizon Anti-Existential Beam Rifle Part Kit (DOOMSDAY DEVICE)"
+	desc = "The kit that produces a weapon made to end your foes on an existential level. Why the fuck can you make this?"
 	id = "beamrifle"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/diamond =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2.25, /datum/material/gold =SHEET_MATERIAL_AMOUNT * 2.5)
@@ -216,7 +229,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	autolathe_exportable = FALSE
-
 
 /datum/design/rapidsyringe
 	name = "Rapid Syringe Gun"

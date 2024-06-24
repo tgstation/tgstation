@@ -28,7 +28,7 @@
 	/// If the cell can be removed via screwdriver
 	var/cell_removable = TRUE
 	var/obj/item/shockpaddles/paddles
-	var/obj/item/stock_parts/cell/high/cell
+	var/obj/item/stock_parts/cell/cell
 	/// If true, revive through space suits, allow for combat shocking
 	var/combat = FALSE
 	/// How long does it take to recharge
@@ -136,11 +136,10 @@
 		ui_action_click() //checks for this are handled in defibrillator.mount.dm
 	return ..()
 
-/obj/item/defibrillator/MouseDrop(obj/over_object)
-	. = ..()
+/obj/item/defibrillator/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
 	if(ismob(loc))
 		var/mob/M = loc
-		if(!M.incapacitated() && istype(over_object, /atom/movable/screen/inventory/hand))
+		if(istype(over_object, /atom/movable/screen/inventory/hand))
 			var/atom/movable/screen/inventory/hand/H = over_object
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
@@ -187,7 +186,7 @@
 /obj/item/defibrillator/emp_act(severity)
 	. = ..()
 	if(cell && !(. & EMP_PROTECT_CONTENTS))
-		deductcharge(1000 / severity)
+		deductcharge(STANDARD_CELL_CHARGE / severity)
 	if (. & EMP_PROTECT_SELF)
 		return
 
@@ -239,15 +238,15 @@
 	return ..()
 
 /obj/item/defibrillator/proc/deductcharge(chrgdeductamt)
-	if(cell)
-		if(cell.charge < (paddles.revivecost+chrgdeductamt))
-			powered = FALSE
-			update_power()
-		if(cell.use(chrgdeductamt))
-			update_power()
-			return TRUE
-		else
-			return FALSE
+	if(QDELETED(cell))
+		return
+
+	if(cell.charge < (paddles.revivecost + chrgdeductamt))
+		powered = FALSE
+	if(!cell.use(chrgdeductamt))
+		powered = FALSE
+
+	update_power()
 
 /obj/item/defibrillator/proc/cooldowncheck()
 		addtimer(CALLBACK(src, PROC_REF(finish_charging)), cooldown_duration)
@@ -346,7 +345,7 @@
 	resistance_flags = INDESTRUCTIBLE
 	base_icon_state = "defibpaddles"
 
-	var/revivecost = 1000
+	var/revivecost = STANDARD_CELL_CHARGE * 0.1
 	var/cooldown = FALSE
 	var/busy = FALSE
 	var/obj/item/defibrillator/defib
@@ -368,6 +367,7 @@
 	if(!req_defib)
 		return
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(check_range))
+	RegisterSignal(defib.loc, COMSIG_MOVABLE_MOVED, PROC_REF(check_range))
 
 /obj/item/shockpaddles/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
@@ -434,6 +434,7 @@
 	. = ..()
 	if(user)
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(defib.loc, COMSIG_MOVABLE_MOVED)
 	if(req_defib)
 		if(user)
 			to_chat(user, span_notice("The paddles snap back into the main unit."))

@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 26
+#define DB_MINOR_VERSION 27
 
 
 //! ## Timing subsystem
@@ -137,6 +137,7 @@
 #define INIT_ORDER_BLACKBOX 94
 #define INIT_ORDER_SERVER_MAINT 93
 #define INIT_ORDER_INPUT 85
+#define INIT_ORDER_ADMIN_VERBS 84 // needs to be pretty high, admins cant do much without it
 #define INIT_ORDER_SOUNDS 83
 #define INIT_ORDER_INSTRUMENTS 82
 #define INIT_ORDER_GREYSCALE 81
@@ -193,7 +194,6 @@
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 
 #define FIRE_PRIORITY_PING 10
-#define FIRE_PRIORITY_IDLE_NPC 10
 #define FIRE_PRIORITY_SERVER_MAINT 10
 #define FIRE_PRIORITY_RESEARCH 10
 #define FIRE_PRIORITY_VIS 10
@@ -297,6 +297,11 @@
 #define SSEXPLOSIONS_MOVABLES 2
 #define SSEXPLOSIONS_THROWS 3
 
+// Machines subsystem subtasks.
+#define SSMACHINES_APCS_EARLY 1
+#define SSMACHINES_MACHINES 2
+#define SSMACHINES_APCS_LATE 3
+
 // Wardrobe subsystem tasks
 #define SSWARDROBE_STOCK 1
 #define SSWARDROBE_INSPECT 2
@@ -341,3 +346,6 @@
 #define VOTE_WINNER_METHOD_WEIGHTED_RANDOM "Weighted Random"
 /// There is no winner for this vote.
 #define VOTE_WINNER_METHOD_NONE "None"
+
+/// Returned by [/datum/vote/proc/can_be_initiated] to denote the vote is valid and can be initiated.
+#define VOTE_AVAILABLE "Vote Available"

@@ -107,9 +107,9 @@
 	merge_type = /obj/item/stack/ore/glass
 
 GLOBAL_LIST_INIT(sand_recipes, list(\
-		new /datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_TOOLS), \
-		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50, check_density = FALSE, category = CAT_MISC),\
-		new /datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 1, 50, check_density = FALSE, category = CAT_TILES)\
+		new /datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 1 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_TOOLS), \
+		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50, crafting_flags = NONE, category = CAT_MISC),\
+		new /datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 1, 50, crafting_flags = NONE, category = CAT_TILES)\
 ))
 
 /obj/item/stack/ore/glass/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
@@ -197,6 +197,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 10
 	scan_state = "rock_Diamond"
 	merge_type = /obj/item/stack/ore/diamond
+
+/obj/item/stack/ore/diamond/five
+	amount = 5
 
 /obj/item/stack/ore/bananium
 	name = "bananium ore"
@@ -453,7 +456,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if (!attack_self(user))
 		user.visible_message(span_suicide("[user] couldn't flip \the [src]!"))
 		return SHAME
-	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 10)//10 = time takes for flip animation
+	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 1 SECONDS)//10 = time takes for flip animation
 	return MANUAL_SUICIDE_NONLETHAL
 
 /obj/item/coin/proc/manual_suicide(mob/living/user)
@@ -614,7 +617,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/coin/eldritch
 	name = "eldritch coin"
-	desc = "Everytime it lands it bolts or opens doors, except for you."
+	desc = "A surprisingly heavy, ornate coin. Its sides seem to depict a different image each time you look."
 	icon_state = "coin_heretic"
 	custom_materials = list(/datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT)
 	sideslist = list("heretic", "blade")
@@ -646,20 +649,18 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			continue
 		target_airlock.lock()
 
-/obj/item/coin/eldritch/afterattack(atom/target_atom, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
+/obj/item/coin/eldritch/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /obj/machinery/door/airlock))
+		return NONE
 	if(!IS_HERETIC(user))
-		var/mob/living/living_user = user
-		living_user.adjustBruteLoss(5)
-		living_user.adjustFireLoss(5)
-		return
-	if(istype(target_atom, /obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/target_airlock = target_atom
-		to_chat(user, span_warning("You insert [src] into the airlock."))
-		target_airlock.emag_act(user, src)
-		qdel(src)
+		user.adjustBruteLoss(5)
+		user.adjustFireLoss(5)
+		return ITEM_INTERACT_BLOCKING
+	var/obj/machinery/door/airlock/target_airlock = interacting_with
+	to_chat(user, span_warning("You insert [src] into the airlock."))
+	target_airlock.emag_act(user, src)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 #undef GIBTONITE_QUALITY_HIGH
 #undef GIBTONITE_QUALITY_LOW

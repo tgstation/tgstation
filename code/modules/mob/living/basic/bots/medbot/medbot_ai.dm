@@ -53,11 +53,10 @@
 	action_cooldown = 2 SECONDS
 
 /datum/ai_behavior/find_suitable_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, threshold, heal_type, mode_flags, access_flags)
-	. = ..()
 	search_range = (mode_flags & MEDBOT_STATIONARY_MODE) ? 1 : initial(search_range)
 	var/list/ignore_keys = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/mob/living/carbon/human/treatable_target in oview(search_range, controller.pawn))
-		if(LAZYACCESS(ignore_keys, REF(treatable_target)) || treatable_target.stat == DEAD)
+		if(LAZYACCESS(ignore_keys, treatable_target) || treatable_target.stat == DEAD)
 			continue
 		if((access_flags & BOT_COVER_EMAGGED) && treatable_target.stat == CONSCIOUS)
 			controller.set_if_can_reach(BB_PATIENT_TARGET, treatable_target, distance =BOT_PATIENT_PATH_LIMIT, bypass_add_to_blacklist = (search_range == 1))
@@ -71,7 +70,10 @@
 			controller.set_if_can_reach(BB_PATIENT_TARGET, treatable_target, distance = BOT_PATIENT_PATH_LIMIT, bypass_add_to_blacklist = (search_range == 1))
 			break
 
-	finish_action(controller, controller.blackboard_key_exists(BB_PATIENT_TARGET))
+	if(controller.blackboard_key_exists(BB_PATIENT_TARGET))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	else
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 /datum/ai_behavior/find_suitable_patient/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
@@ -91,35 +93,32 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/tend_to_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key, threshold, damage_type_healer, access_flags, is_stationary)
-	. = ..()
 	var/mob/living/carbon/human/patient = controller.blackboard[target_key]
 	if(QDELETED(patient) || patient.stat == DEAD)
-		finish_action(controller, FALSE, target_key, is_stationary)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	if(check_if_healed(patient, threshold, damage_type_healer, access_flags))
-		finish_action(controller, TRUE, target_key, is_stationary, healed_target = TRUE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	if(patient.stat >= HARD_CRIT && prob(5))
 		var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[BB_ANNOUNCE_ABILITY]
 		announcement?.announce(pick(controller.blackboard[BB_NEAR_DEATH_SPEECH]))
 	bot_pawn.melee_attack(patient)
-	finish_action(controller, TRUE, target_key, is_stationary)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 // only clear the target if they get healed
-/datum/ai_behavior/tend_to_patient/finish_action(datum/ai_controller/controller, succeeded, target_key, is_stationary, healed_target = FALSE)
+/datum/ai_behavior/tend_to_patient/finish_action(datum/ai_controller/controller, succeeded, target_key, threshold, damage_type_healer, access_flags, is_stationary)
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 	if(!succeeded)
 
 		if(!isnull(target) && !is_stationary)
-			controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(target), TRUE)
+			controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
 
 		controller.clear_blackboard_key(target_key)
 		return
 
-	if(QDELETED(target) || !healed_target)
+	if(QDELETED(target) || !check_if_healed(target, threshold, damage_type_healer, access_flags))
 		return
 
 	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[BB_ANNOUNCE_ABILITY]
@@ -171,11 +170,10 @@
 		speech_to_pick_from += MEDIBOT_VOICED_CHICKEN
 
 	if(!length(speech_to_pick_from))
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	announcement.announce(pick(speech_to_pick_from))
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_planning_subtree/find_and_hunt_target/patients_in_crit
 	target_key = BB_PATIENT_IN_CRIT
@@ -202,18 +200,15 @@
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/announce_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
-	. = ..()
 	var/mob/living/living_target = controller.blackboard[target_key]
 	if(QDELETED(living_target))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[BB_ANNOUNCE_ABILITY]
 	if(QDELETED(announcement))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/text_to_announce = "Medical emergency! [living_target] is in critical condition at [get_area(living_target)]!"
 	announcement.announce(text_to_announce, controller.blackboard[BB_RADIO_CHANNEL])
-	finish_action(controller, TRUE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/announce_patient/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()

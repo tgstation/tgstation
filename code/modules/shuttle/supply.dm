@@ -30,6 +30,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/structure/blob,
 		/obj/structure/checkoutmachine,
 		/obj/structure/disposalpipe,
+		/obj/structure/disposaloutlet,
 		/obj/structure/extraction_point,
 		/obj/structure/guardian_beacon,
 		/obj/tear_in_reality,

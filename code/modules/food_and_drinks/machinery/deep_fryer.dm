@@ -12,6 +12,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	/obj/item/reagent_containers/condiment,
 	/obj/item/reagent_containers/cup,
 	/obj/item/reagent_containers/syringe,
+	/obj/item/reagent_containers/hypospray/medipen, //letting medipens become edible opens them to being injected/drained with IV drip & saltshakers
 )))
 
 /obj/machinery/deepfryer
@@ -146,9 +147,13 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		audible_message(span_notice("[src] dings!"))
 	else if (cook_time >= DEEPFRYER_BURNTIME && !frying_burnt)
 		frying_burnt = TRUE
-		visible_message(span_warning("[src] emits an acrid smell!"))
+		var/list/asomnia_hadders = list()
+		for(var/mob/smeller in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src))
+			if(HAS_TRAIT(smeller, TRAIT_ANOSMIA))
+				asomnia_hadders += smeller
+		visible_message(span_warning("[src] emits an acrid smell!"), ignored_mobs = asomnia_hadders)
 
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/machinery/deepfryer/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -224,7 +229,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 			cold_multiplier += round(target_temp * 1.5 / T0C, 0.01)
 		dunking_target.apply_damage(min(30 * bio_multiplier * cold_multiplier, reagents.total_volume), BURN, BODY_ZONE_HEAD)
 		if(reagents.reagent_list) //This can runtime if reagents has nothing in it.
-			reagents.remove_any((reagents.total_volume/2))
+			reagents.remove_all((reagents.total_volume/2))
 		dunking_target.Paralyze(60)
 		user.changeNext_move(CLICK_CD_MELEE)
 	return ..()

@@ -1,10 +1,3 @@
-// Skillchip categories
-//Various skillchip categories. Use these when setting which categories a skillchip restricts being paired with
-//while using the SKILLCHIP_RESTRICTED_CATEGORIES flag
-/// General related skillchip category
-#define SKILLCHIP_CATEGORY_GENERAL "general"
-
-
 /obj/item/skillchip
 	name = "skillchip"
 	desc = "This biochip integrates with user's brain to enable mastery of specific skill. Consult certified Nanotrasen neurosurgeon before use."
@@ -491,9 +484,9 @@
 
 /obj/item/skillchip/master_angler
 	name = "Mast-Angl-Er skillchip"
-	auto_traits = list(TRAIT_REVEAL_FISH)
+	auto_traits = list(TRAIT_REVEAL_FISH, TRAIT_EXAMINE_FISHING_SPOT)
 	skill_name = "Fisherman's Discernment"
-	skill_description = "While fishing, it'll make a smidge easier to guess whatever you're trying to catch."
+	skill_description = "Lists fishes when examining a fishing spot, and gives a hint of whatever thing's biting the hook."
 	skill_icon = "fish"
 	activate_message = span_notice("You feel the knowledge and passion of several sunbaked, seasoned fishermen burn within you.")
 	deactivate_message = span_notice("You no longer feel like casting a fishing rod by the sunny riverside.")
@@ -507,4 +500,27 @@
 	activate_message = span_notice("You think of your favourite food and realise that you can rotate its flavour in your mind.")
 	deactivate_message = span_notice("You feel your food-based mind palace crumbling...")
 
-#undef SKILLCHIP_CATEGORY_GENERAL
+/obj/item/skillchip/matrix_flip
+	name = "BULLET_DODGER skillchip"
+	skill_name = "Flip 2 Dodge"
+	skill_description = "At the cost of stamina, your flips can also be used to dodge incoming projectiles."
+	skill_icon = FA_ICON_SPINNER
+	activate_message = span_notice("You feel the urge to flip scenically as if you are the 'Chosen One'.")
+	deactivate_message = span_notice("The urge to flip goes away.")
+
+/obj/item/skillchip/matrix_flip/on_activate(mob/living/carbon/user, silent = FALSE)
+	. = ..()
+	RegisterSignal(user, COMSIG_MOB_EMOTED("flip"), PROC_REF(on_flip))
+
+/obj/item/skillchip/matrix_flip/on_deactivate(mob/living/carbon/user, silent=FALSE)
+	UnregisterSignal(user, COMSIG_MOB_EMOTED("flip"))
+	return ..()
+
+/obj/item/skillchip/matrix_flip/proc/on_flip(mob/living/source)
+	SIGNAL_HANDLER
+	if(HAS_TRAIT_FROM(source, TRAIT_UNHITTABLE_BY_PROJECTILES, SKILLCHIP_TRAIT))
+		return
+	playsound(source, 'sound/weapons/fwoosh.ogg', 90, FALSE)
+	ADD_TRAIT(source, TRAIT_UNHITTABLE_BY_PROJECTILES, SKILLCHIP_TRAIT)
+	source.adjustStaminaLoss(20)
+	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_UNHITTABLE_BY_PROJECTILES, SKILLCHIP_TRAIT), FLIP_EMOTE_DURATION + 0.1 SECONDS)

@@ -36,8 +36,14 @@
 	/// The default color for the reel overlay if no line is equipped.
 	var/default_line_color = "gray"
 
+	///should there be a fishing line?
+	var/display_fishing_line = TRUE
+
 	///The name of the icon state of the reel overlay
 	var/reel_overlay = "reel_overlay"
+
+	///Prevents spamming the line casting, without affecting the player's click cooldown.
+	COOLDOWN_DECLARE(casting_cd)
 
 /obj/item/fishing_rod/Initialize(mapload)
 	. = ..()
@@ -139,21 +145,13 @@
 	. = ..()
 	ui_interact(user)
 
-/obj/item/fishing_rod/pre_attack(atom/targeted_atom, mob/living/user, params)
-	. = ..()
-	/// Reel in if able
-	if(currently_hooked)
-		reel(user)
-		return TRUE
-	if(!hook)
-		balloon_alert(user, "install a hook first!")
-	SEND_SIGNAL(targeted_atom, COMSIG_PRE_FISHING)
-
 /// Generates the fishing line visual from the current user to the target and updates inhands
 /obj/item/fishing_rod/proc/create_fishing_line(atom/movable/target, target_py = null)
+	if(!display_fishing_line)
+		return null
 	var/mob/user = loc
 	if(!istype(user))
-		return
+		return null
 	if(fishing_line)
 		QDEL_NULL(fishing_line)
 	var/beam_color = line?.line_color || default_line_color
@@ -197,22 +195,26 @@
 		qdel(source)
 		return BEAM_CANCEL_DRAW
 
-/obj/item/fishing_rod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/fishing_rod/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
-	/// Reel in if able
+/obj/item/fishing_rod/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!hook)
+		balloon_alert(user, "install a hook first!")
+		return ITEM_INTERACT_BLOCKING
+
+	// Reel in if able
 	if(currently_hooked)
 		reel(user)
-		return .
+		return ITEM_INTERACT_BLOCKING
 
-	cast_line(target, user, proximity_flag)
+	SEND_SIGNAL(interacting_with, COMSIG_PRE_FISHING)
+	cast_line(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
-	return .
-
-///Called by afterattack(). If the line to whatever that is is clear and we're not already busy, try fishing in it
-/obj/item/fishing_rod/proc/cast_line(atom/target, mob/user, proximity_flag)
-	if(casting || currently_hooked || proximity_flag)
+/// If the line to whatever that is is clear and we're not already busy, try fishing in it
+/obj/item/fishing_rod/proc/cast_line(atom/target, mob/user)
+	if(casting || currently_hooked)
 		return
 	if(!hook)
 		balloon_alert(user, "install a hook first!")
@@ -220,8 +222,8 @@
 	if(!CheckToolReach(user, target, cast_range))
 		balloon_alert(user, "cannot reach there!")
 		return
-	/// Annoyingly pre attack is only called in melee
-	SEND_SIGNAL(target, COMSIG_PRE_FISHING)
+	if(!COOLDOWN_FINISHED(src, casting_cd))
+		return
 	casting = TRUE
 	var/obj/projectile/fishing_cast/cast_projectile = new(get_turf(src))
 	cast_projectile.range = cast_range
@@ -229,9 +231,10 @@
 	cast_projectile.original = target
 	cast_projectile.fired_from = src
 	cast_projectile.firer = user
-	cast_projectile.impacted = list(user = TRUE)
+	cast_projectile.impacted = list(WEAKREF(user) = TRUE)
 	cast_projectile.preparePixelProjectile(target, user)
 	cast_projectile.fire()
+	COOLDOWN_START(src, casting_cd, 1 SECONDS)
 
 /// Called by hook projectile when hitting things
 /obj/item/fishing_rod/proc/hook_hit(atom/atom_hit_by_hook_projectile)
@@ -274,6 +277,8 @@
 		if(istype(bait, /obj/item/food/bait))
 			var/obj/item/food/bait/real_bait = bait
 			bait_state = real_bait.rod_overlay_icon_state
+		if(istype(bait, /obj/item/stock_parts/cell/lead))
+			bait_state = "battery_overlay"
 		. += bait_state
 
 /obj/item/fishing_rod/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
@@ -361,9 +366,7 @@
 		if("slot_action")
 			// Simple click with empty hand to remove, click with item to insert/switch
 			var/obj/item/held_item = user.get_active_held_item()
-			if(held_item == src)
-				return
-			use_slot(params["slot"], user, held_item)
+			use_slot(params["slot"], user, held_item == src ? null : held_item)
 			return TRUE
 
 /// Ideally this will be replaced with generic slotted storage datum + display
@@ -403,6 +406,9 @@
 					line = new_item
 		user.put_in_hands(current_item)
 		balloon_alert(user, "[slot] swapped")
+
+	if(new_item)
+		SEND_SIGNAL(new_item, COMSIG_FISHING_EQUIPMENT_SLOTTED, src)
 
 	update_icon()
 	playsound(src, 'sound/items/click.ogg', 50, TRUE)

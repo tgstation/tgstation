@@ -18,22 +18,9 @@
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
 
-	var/static/list/materials_list = list(
-		/datum/material/iron,
-		/datum/material/glass,
-		/datum/material/silver,
-		/datum/material/gold,
-		/datum/material/diamond,
-		/datum/material/plasma,
-		/datum/material/uranium,
-		/datum/material/bananium,
-		/datum/material/titanium,
-		/datum/material/bluespace,
-		/datum/material/plastic,
-		)
 	materials = AddComponent( \
 		/datum/component/material_container, \
-		materials_list, \
+		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
 		INFINITY, \
 		MATCONTAINER_EXAMINE, \
 		container_signals = list( \
@@ -136,8 +123,8 @@
 				"icon" = icon2base64(icon(initial(parent.icon), initial(parent.icon_state), frame = 1)),
 				"name" = parent.name,
 				"onHold" = !!holds[remote],
-				"location" = get_area_name(parent, TRUE)
-				)
+				"location" = get_area_name(parent, TRUE),
+			)
 		)
 
 	data["logs"] = list()
@@ -150,7 +137,7 @@
 				"action" = entry.action,
 				"amount" = entry.amount,
 				"time" = entry.timestamp,
-				"noun" = entry.noun
+				"noun" = entry.noun,
 			)
 		)
 

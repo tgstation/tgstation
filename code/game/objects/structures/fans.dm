@@ -10,21 +10,15 @@
 	var/buildstackamount = 5
 	can_atmos_pass = ATMOS_PASS_NO
 
-/obj/structure/fans/deconstruct()
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(buildstacktype)
-			new buildstacktype(loc,buildstackamount)
-	qdel(src)
+/obj/structure/fans/atom_deconstruct(disassembled = TRUE)
+	if(buildstacktype)
+		new buildstacktype(loc,buildstackamount)
 
 /obj/structure/fans/wrench_act(mob/living/user, obj/item/I)
-	..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return TRUE
-
 	user.visible_message(span_warning("[user] disassembles [src]."),
 		span_notice("You start to disassemble [src]..."), span_hear("You hear clanking and banging noises."))
 	if(I.use_tool(src, user, 20, volume=50))
-		deconstruct()
+		deconstruct(TRUE)
 	return TRUE
 
 /obj/structure/fans/tiny
@@ -54,6 +48,6 @@
 	desc = "An tenuously thin energy shield only capable of holding in air, but not solid objects or people."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield-old" // We should probably get these their own icon at some point
-	light_color = "#6496FA"
+	light_color = LIGHT_COLOR_BLUE
 	light_range = 4
 

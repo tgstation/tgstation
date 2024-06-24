@@ -391,8 +391,8 @@
 				ROLE_REV,
 				ROLE_REVENANT,
 				ROLE_REV_HEAD,
-				ROLE_SENTIENT_DISEASE,
 				ROLE_SPIDER,
+				ROLE_SPY,
 				ROLE_SYNDICATE,
 				ROLE_TRAITOR,
 				ROLE_WIZARD,
@@ -577,7 +577,7 @@
 	duration = text2num(duration)
 	if (!(interval in list("SECOND", "MINUTE", "HOUR", "DAY", "WEEK", "MONTH", "YEAR")))
 		interval = "MINUTE"
-	var/time_message = "[duration] [lowertext(interval)]" //no DisplayTimeText because our duration is of variable interval type
+	var/time_message = "[duration] [LOWER_TEXT(interval)]" //no DisplayTimeText because our duration is of variable interval type
 	if(duration > 1) //pluralize the interval if necessary
 		time_message += "s"
 	var/is_server_ban = (roles_to_ban[1] == "Server")
@@ -799,7 +799,7 @@
 		return
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
-	var/change_message = "[usr.client.key] unbanned [target] from [role] on [SQLtime()] during round #[GLOB.round_id]<hr>"
+	var/change_message = "[usr.client.key] unbanned [target] from [role] on [ISOtime()] during round #[GLOB.round_id]<hr>"
 	var/datum/db_query/query_unban = SSdbcore.NewQuery({"
 		UPDATE [format_table_name("ban")] SET
 			unbanned_datetime = NOW(),
@@ -844,7 +844,7 @@
 
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
-	var/change_message = "[usr.client.key] re-activated ban of [target] from [role] on [SQLtime()] during round #[GLOB.round_id]<hr>"
+	var/change_message = "[usr.client.key] re-activated ban of [target] from [role] on [ISOtime()] during round #[GLOB.round_id]<hr>"
 	var/datum/db_query/query_reban = SSdbcore.NewQuery({"
 		UPDATE [format_table_name("ban")] SET
 			unbanned_datetime = NULL,

@@ -6,8 +6,6 @@
 #define BB_NEXT_HUNGRY "BB_NEXT_HUNGRY"
 ///what we're going to eat next
 #define BB_FOOD_TARGET "bb_food_target"
-///Path we should use next time we use the JPS movement datum
-#define BB_PATH_TO_USE "BB_path_to_use"
 ///How close a mob must be for us to select it as a target, if that is less than how far we can maintain it as a target
 #define BB_AGGRO_RANGE "BB_aggro_range"
 ///are we hungry? determined by the udder compnent
@@ -16,6 +14,16 @@
 #define BB_BREED_READY "BB_breed_ready"
 ///maximum kids we can have
 #define BB_MAX_CHILDREN "BB_max_children"
+///our current happiness level
+#define BB_BASIC_HAPPINESS "BB_basic_happiness"
+///can this mob heal?
+#define BB_BASIC_MOB_HEALER "BB_basic_mob_healer"
+
+///the owner we will try to play with
+#define BB_OWNER_TARGET "BB_owner_target"
+///the list of interactions we can have with the owner
+#define BB_INTERACTIONS_WITH_OWNER "BB_interactions_with_owner"
+
 
 /// Store a single or list of emotes at this key
 #define BB_EMOTE_KEY "BB_emotes"
@@ -146,3 +154,11 @@
 
 ///Text we display when we befriend someone
 #define BB_FRIENDLY_MESSAGE "friendly_message"
+
+///our fishing target
+#define BB_FISHING_TARGET "fishing_target"
+
+// Keys used by one and only one behavior
+// Used to hold state without making bigass lists
+/// For /datum/ai_behavior/find_potential_targets, what if any field are we using currently
+#define BB_FIND_TARGETS_FIELD(type) "bb_find_targets_field_[type]"

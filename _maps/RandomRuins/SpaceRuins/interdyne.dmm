@@ -852,7 +852,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "JM" = (
-/obj/machinery/computer/arcade{
+/obj/effect/spawner/random/entertainment/arcade{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -973,12 +973,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/interdyne)
 "NU" = (
-/obj/structure/fluff{
-	desc = "Ew, I think I see a hairball.";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/machinery/shower/directional/east,
 /obj/item/soap/syndie,
 /obj/machinery/light/blacklight/directional/north,

@@ -71,7 +71,7 @@
 	/// If this uplink item is only available to certain roles. Roles are dependent on the frequency chip or stored ID.
 	var/list/restricted_roles = list()
 	/// The species able to purchase this uplink item.
-	var/restricted_species = list()
+	var/list/restricted_species = list()
 	/// The minimum amount of progression needed for this item to be added to uplinks.
 	var/progression_minimum = 0
 	/// Whether this purchase is visible in the purchase log.
@@ -125,6 +125,7 @@
 /datum/uplink_item/proc/purchase(mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/atom/spawned_item = spawn_item(item, user, uplink_handler, source)
 	log_uplink("[key_name(user)] purchased [src] for [cost] telecrystals from [source]'s uplink")
+	user.playsound_local(get_turf(user), 'sound/effects/kaching.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	if(purchase_log_vis && uplink_handler.purchase_log)
 		uplink_handler.purchase_log.LogPurchase(spawned_item, src, cost)
 	if(lock_other_purchases)
@@ -149,6 +150,34 @@
 	SEND_SIGNAL(uplink_handler, COMSIG_ON_UPLINK_PURCHASE, spawned_item, user)
 	return spawned_item
 
+/// Used to create the uplink's item for generic use, rather than use by a Syndie specifically
+/// Can be used to "de-restrict" some items, such as Nukie guns spawning with Syndicate pins
+/datum/uplink_item/proc/spawn_item_for_generic_use(mob/user)
+	var/atom/movable/created = new item(user.loc)
+
+	if(isgun(created))
+		replace_pin(created)
+	else if(istype(created, /obj/item/storage/toolbox/guncase))
+		for(var/obj/item/gun/gun in created)
+			replace_pin(gun)
+
+	if(isobj(created))
+		var/obj/created_obj = created
+		LAZYREMOVE(created_obj.req_access, ACCESS_SYNDICATE)
+		LAZYREMOVE(created_obj.req_one_access, ACCESS_SYNDICATE)
+
+	return created
+
+/// Used by spawn_item_for_generic_use to replace the pin of a gun with a normal one
+/datum/uplink_item/proc/replace_pin(obj/item/gun/gun_reward)
+	PRIVATE_PROC(TRUE)
+
+	if(!istype(gun_reward.pin, /obj/item/firing_pin/implant/pindicate))
+		return
+
+	QDEL_NULL(gun_reward.pin)
+	gun_reward.pin = new /obj/item/firing_pin(gun_reward)
+
 ///For special overrides if an item can be bought or not.
 /datum/uplink_item/proc/can_be_bought(datum/uplink_handler/source)
 	return TRUE
@@ -168,6 +197,7 @@
 //Discounts (dynamically filled above)
 /datum/uplink_item/discounts
 	category = /datum/uplink_category/discounts
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Probably not necessary but just in case
 
 // Special equipment (Dynamically fills in uplink component)
 /datum/uplink_item/special_equipment
@@ -176,6 +206,7 @@
 	desc = "Equipment necessary for accomplishing specific objectives. If you are seeing this, something has gone wrong."
 	limited_stock = 1
 	illegal_tech = FALSE
+	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Ditto
 
 /datum/uplink_item/special_equipment/purchase(mob/user, datum/component/uplink/U)
 	..()

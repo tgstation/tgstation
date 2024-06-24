@@ -12,55 +12,51 @@
 
 	controller.clear_blackboard_key(BB_MONKEY_PICKUPTARGET)
 
+/// Equips an item on the monkey
+/// Returns TRUE if it works out, FALSE otherwise
 /datum/ai_behavior/monkey_equip/proc/equip_item(datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 
 	var/obj/item/target = controller.blackboard[BB_MONKEY_PICKUPTARGET]
 	var/best_force = controller.blackboard[BB_MONKEY_BEST_FORCE_FOUND]
-
 	if(!isturf(living_pawn.loc))
-		finish_action(controller, FALSE)
-		return
+		return FALSE
 
 	if(!target)
-		finish_action(controller, FALSE)
-		return
+		return FALSE
 
 	if(target.anchored) //Can't pick it up, so stop trying.
-		finish_action(controller, FALSE)
-		return
+		return FALSE
 
 	// Strong weapon
 	else if(target.force > best_force)
 		living_pawn.drop_all_held_items()
 		living_pawn.put_in_hands(target)
 		controller.set_blackboard_key(BB_MONKEY_BEST_FORCE_FOUND, target.force)
-		finish_action(controller, TRUE)
-		return
+		return TRUE
 
 	else if(target.slot_flags) //Clothing == top priority
 		living_pawn.dropItemToGround(target, TRUE)
 		living_pawn.update_icons()
 		if(!living_pawn.equip_to_appropriate_slot(target))
-			finish_action(controller, FALSE)
-			return //Already wearing something, in the future this should probably replace the current item but the code didn't actually do that, and I dont want to support it right now.
-		finish_action(controller, TRUE)
-		return
+			return FALSE //Already wearing something, in the future this should probably replace the current item but the code didn't actually do that, and I dont want to support it right now.
+		return TRUE
 
 	// EVERYTHING ELSE
 	else if(living_pawn.get_empty_held_indexes())
 		living_pawn.put_in_hands(target)
-		finish_action(controller, TRUE)
-		return
+		return TRUE
 
-	finish_action(controller, FALSE)
+	return FALSE
 
 /datum/ai_behavior/monkey_equip/ground
 	required_distance = 0
 
 /datum/ai_behavior/monkey_equip/ground/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
-	equip_item(controller)
+	if(equip_item(controller))
+		return . | AI_BEHAVIOR_SUCCEEDED
+	return . | AI_BEHAVIOR_FAILED
 
 /datum/ai_behavior/monkey_equip/pickpocket
 
@@ -110,13 +106,10 @@
 /datum/ai_behavior/monkey_flee
 
 /datum/ai_behavior/monkey_flee/perform(seconds_per_tick, datum/ai_controller/controller)
-	. = ..()
-
 	var/mob/living/living_pawn = controller.pawn
 
-	if(living_pawn.health >= MONKEY_FLEE_HEALTH)
-		finish_action(controller, TRUE) //we're back in bussiness
-		return
+	if(living_pawn.health >= MONKEY_FLEE_HEALTH) //we're back in bussiness
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 	var/mob/living/target = null
 
@@ -127,9 +120,9 @@
 			break
 
 	if(target)
-		SSmove_manager.move_away(living_pawn, target, max_dist=MONKEY_ENEMY_VISION, delay=5)
-	else
-		finish_action(controller, TRUE)
+		GLOB.move_manager.move_away(living_pawn, target, max_dist=MONKEY_ENEMY_VISION, delay=5)
+		return AI_BEHAVIOR_DELAY
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/monkey_attack_mob
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM //performs to increase frustration
@@ -139,29 +132,28 @@
 	set_movement_target(controller, controller.blackboard[target_key])
 
 /datum/ai_behavior/monkey_attack_mob/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
-
 	var/mob/living/target = controller.blackboard[target_key]
 	var/mob/living/living_pawn = controller.pawn
 
-	if(!target || target.stat != CONSCIOUS)
-		finish_action(controller, TRUE) //Target == owned
-		return
+	if(!target || target.stat != CONSCIOUS) //Target == owned
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-	if(isturf(target.loc) && !IS_DEAD_OR_INCAP(living_pawn)) // Check if they're a valid target
-		// check if target has a weapon
-		var/obj/item/W
-		for(var/obj/item/I in target.held_items)
-			if(!(I.item_flags & ABSTRACT))
-				W = I
-				break
+	if(!isturf(target.loc) || IS_DEAD_OR_INCAP(living_pawn)) // Check if they're a valid target
+		return AI_BEHAVIOR_DELAY
+	// check if target has a weapon
+	var/obj/item/W
+	for(var/obj/item/I in target.held_items)
+		if(!(I.item_flags & ABSTRACT))
+			W = I
+			break
 
-		// if the target has a weapon, chance to disarm them
-		if(W && SPT_PROB(MONKEY_ATTACK_DISARM_PROB, seconds_per_tick))
-			monkey_attack(controller, target, seconds_per_tick, TRUE)
-		else
-			monkey_attack(controller, target, seconds_per_tick, FALSE)
-
+	// if the target has a weapon, chance to disarm them
+	var/perform_flags = NONE
+	if(W && SPT_PROB(MONKEY_ATTACK_DISARM_PROB, seconds_per_tick))
+		perform_flags = monkey_attack(controller, target, seconds_per_tick, TRUE)
+	else
+		perform_flags = monkey_attack(controller, target, seconds_per_tick, FALSE)
+	return AI_BEHAVIOR_DELAY | perform_flags
 
 /datum/ai_behavior/monkey_attack_mob/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
@@ -169,14 +161,14 @@
 	controller.clear_blackboard_key(target_key)
 	if(QDELETED(living_pawn)) // pawn can be null at this point
 		return
-	SSmove_manager.stop_looping(living_pawn)
+	GLOB.move_manager.stop_looping(living_pawn)
 
 /// attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
 /datum/ai_behavior/monkey_attack_mob/proc/monkey_attack(datum/ai_controller/controller, mob/living/target, seconds_per_tick, disarm)
 	var/mob/living/living_pawn = controller.pawn
 
 	if(living_pawn.next_move > world.time)
-		return
+		return NONE
 
 	living_pawn.changeNext_move(CLICK_CD_MELEE) //We play fair
 
@@ -205,7 +197,7 @@
 		var/can_shoot = gun?.can_shoot() || FALSE
 		if(gun && controller.blackboard[BB_MONKEY_GUN_WORKED] && prob(95))
 			// We attempt to attack even if we can't shoot so we get the effects of pulling the trigger
-			gun.afterattack(real_target, living_pawn, FALSE)
+			gun.melee_attack_chain(living_pawn, real_target)
 			controller.set_blackboard_key(BB_MONKEY_GUN_WORKED, can_shoot ? TRUE : prob(80)) // Only 20% likely to notice it didn't work
 			if(can_shoot)
 				controller.set_blackboard_key(BB_MONKEY_GUN_NEURONS_ACTIVATED, TRUE)
@@ -215,7 +207,7 @@
 
 	// no de-aggro
 	if(controller.blackboard[BB_MONKEY_AGGRESSIVE])
-		return
+		return NONE
 
 	// we've queued up a monkey attack on a mob which isn't already an enemy, so give them 1 threat to start
 	// note they might immediately reduce threat and drop from the list.
@@ -238,7 +230,8 @@
 	if(controller.blackboard[BB_MONKEY_ENEMIES][target] <= 0)
 		controller.remove_thing_from_blackboard_key(BB_MONKEY_ENEMIES, target)
 		if(controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] == target)
-			finish_action(controller, TRUE)
+			return AI_BEHAVIOR_SUCCEEDED
+	return NONE
 
 /datum/ai_behavior/disposal_mob
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM //performs to increase frustration
@@ -254,10 +247,8 @@
 	controller.clear_blackboard_key(disposal_target_key) //No target disposal
 
 /datum/ai_behavior/disposal_mob/perform(seconds_per_tick, datum/ai_controller/controller, attack_target_key, disposal_target_key)
-	. = ..()
-
 	if(controller.blackboard[BB_MONKEY_DISPOSING]) //We are disposing, don't do ANYTHING!!!!
-		return
+		return AI_BEHAVIOR_DELAY
 
 	var/mob/living/target = controller.blackboard[attack_target_key]
 	var/mob/living/living_pawn = controller.pawn
@@ -265,25 +256,24 @@
 	set_movement_target(controller, target)
 
 	if(!target)
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	if(target.pulledby != living_pawn && !HAS_AI_CONTROLLER_TYPE(target.pulledby, /datum/ai_controller/monkey)) //Dont steal from my fellow monkeys.
 		if(living_pawn.Adjacent(target) && isturf(target.loc))
 			target.grabbedby(living_pawn)
-		return //Do the rest next turn
+		return AI_BEHAVIOR_DELAY //Do the rest next turn
 
 	var/obj/machinery/disposal/disposal = controller.blackboard[disposal_target_key]
 	set_movement_target(controller, disposal)
 
 	if(!disposal)
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	if(living_pawn.Adjacent(disposal))
 		INVOKE_ASYNC(src, PROC_REF(try_disposal_mob), controller, attack_target_key, disposal_target_key) //put him in!
-	else //This means we might be getting pissed!
-		return
+		return AI_BEHAVIOR_DELAY
+	//This means we might be getting pissed!
+	return AI_BEHAVIOR_DELAY
 
 /datum/ai_behavior/disposal_mob/proc/try_disposal_mob(datum/ai_controller/controller, attack_target_key, disposal_target_key)
 	var/mob/living/living_pawn = controller.pawn
@@ -298,8 +288,6 @@
 
 
 /datum/ai_behavior/recruit_monkeys/perform(seconds_per_tick, datum/ai_controller/controller)
-	. = ..()
-
 	controller.set_blackboard_key(BB_MONKEY_RECRUIT_COOLDOWN, world.time + MONKEY_RECRUIT_COOLDOWN)
 	var/mob/living/living_pawn = controller.pawn
 
@@ -313,7 +301,7 @@
 		// Other monkeys now also hate the guy we're currently targeting
 		nearby_monkey.ai_controller.add_blackboard_key_assoc(BB_MONKEY_ENEMIES, controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET], MONKEY_RECRUIT_HATED_AMOUNT)
 
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/monkey_set_combat_target/perform(seconds_per_tick, datum/ai_controller/controller, set_key, enemies_key)
 	var/list/enemies = controller.blackboard[enemies_key]
@@ -330,8 +318,7 @@
 		valids[possible_enemy] = CEILING(100 / (get_dist(controller.pawn, possible_enemy) || 1), 1)
 
 	if(!length(valids))
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	controller.set_blackboard_key(set_key, pick_weight(valids))
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED

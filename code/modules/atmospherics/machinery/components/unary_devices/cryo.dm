@@ -80,6 +80,7 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.75
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 1.5
 	flags_1 = PREVENT_CLICK_UNDER_1
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 
 	///If TRUE will eject the mob once healing is complete
 	var/autoeject = TRUE
@@ -133,12 +134,17 @@
 
 	return ..()
 
-/obj/machinery/cryo_cell/on_deconstruction(disassembled)
-	if(occupant)
+/obj/machinery/cryo_cell/handle_deconstruct(disassembled)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	if(!QDELETED(occupant))
 		occupant.vis_flags &= ~VIS_INHERIT_PLANE
 		REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
 		REMOVE_TRAIT(occupant, TRAIT_FORCED_STANDING, CRYO_TRAIT)
 
+	return ..()
+
+/obj/machinery/cryo_cell/on_deconstruction(disassembled)
 	if(beaker)
 		beaker.forceMove(drop_location())
 
@@ -155,25 +161,32 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += beaker
 
-/obj/machinery/cryo_cell/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+/obj/machinery/cryo_cell/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(same_z_layer)
-		return
-	SET_PLANE(occupant_vis, PLANE_TO_TRUE(occupant_vis.plane), new_turf)
+	if(gone == beaker)
+		beaker = null
 
-/obj/machinery/cryo_cell/set_occupant(atom/movable/new_occupant)
-	. = ..()
-	update_appearance()
+/obj/machinery/cryo_cell/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "[state_open ? "Close" : "Open"] door"
+	if(isnull(held_item))
+		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/cryo_cell/RefreshParts()
-	. = ..()
-	var/C
-	for(var/datum/stock_part/matter_bin/M in component_parts)
-		C += M.tier
+	if(QDELETED(beaker) && istype(held_item, /obj/item/reagent_containers/cup))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert beaker"
+		return CONTEXTUAL_SCREENTIP_SET
 
-	efficiency = initial(efficiency) * C
-	heat_capacity = initial(heat_capacity) / C
-	conduction_coefficient = initial(conduction_coefficient) * C
+	switch(held_item.tool_behaviour)
+		if(TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+		if(TOOL_CROWBAR)
+			if(!state_open && !panel_open && !is_operational)
+				context[SCREENTIP_CONTEXT_LMB] = "Pry Open"
+			else if(panel_open)
+				context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		if(TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Rotate" : ""]"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/cryo_cell/examine(mob/user) //this is leaving out everything but efficiency since they follow the same idea of "better beaker, better results"
 	. = ..()
@@ -201,28 +214,6 @@
 		else if(machine_stat & NOPOWER)
 			. += span_notice("[src] can be [EXAMINE_HINT("pried")] open.")
 
-/obj/machinery/cryo_cell/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "[state_open ? "Close" : "Open"] door"
-	if(isnull(held_item))
-		return CONTEXTUAL_SCREENTIP_SET
-
-	if(QDELETED(beaker) && istype(held_item, /obj/item/reagent_containers/cup))
-		context[SCREENTIP_CONTEXT_LMB] = "Insert beaker"
-		return CONTEXTUAL_SCREENTIP_SET
-
-	switch(held_item.tool_behaviour)
-		if(TOOL_SCREWDRIVER)
-			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
-		if(TOOL_CROWBAR)
-			if(!state_open && !panel_open && !is_operational)
-				context[SCREENTIP_CONTEXT_LMB] = "Pry Open"
-			else if(panel_open)
-				context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
-		if(TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Rotate" : ""]"
-	return CONTEXTUAL_SCREENTIP_SET
-
 /obj/machinery/cryo_cell/update_icon()
 	SET_PLANE_IMPLICIT(src, initial(plane))
 	return ..()
@@ -239,16 +230,128 @@
 		return
 	. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-[on && is_operational ? "on" : "off"]", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
 
+/obj/machinery/cryo_cell/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
+	if(user.combat_mode || (tool.item_flags & ABSTRACT) || (tool.flags_1 & HOLOGRAM_1) || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	if(!istype(tool, /obj/item/reagent_containers/cup))
+		return
+	if(!QDELETED(beaker))
+		balloon_alert(user, "beaker present!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+
+	beaker = tool
+	balloon_alert(user, "beaker inserted")
+	user.log_message("added an [tool] to cryo containing [pretty_string_from_reagent_list(tool.reagents.reagent_list)].", LOG_GAME)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/cryo_cell/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(on)
+		balloon_alert(user, "turn off!")
+		return
+	if(occupant)
+		balloon_alert(user, "occupant inside!")
+		return
+
+	if(default_deconstruction_screwdriver(user, "pod-off", "pod-off", tool))
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/cryo_cell/crowbar_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(on)
+		balloon_alert(user, "turn off!")
+		return
+
+	var/can_crowbar = FALSE
+	if(!state_open && !panel_open && !is_operational) //can pry open
+		can_crowbar = TRUE
+	else if(panel_open) //can deconstruct
+		can_crowbar = TRUE
+	if(!can_crowbar)
+		return
+
+	var/obj/machinery/atmospherics/node = internal_connector.gas_connector.nodes[1]
+	var/internal_pressure = 0
+
+	if(istype(node, /obj/machinery/atmospherics/components/unary/portables_connector))
+		var/obj/machinery/atmospherics/components/unary/portables_connector/portable_devices_connector = node
+		internal_pressure = !portable_devices_connector.connected_device ? 1 : 0
+
+	var/datum/gas_mixture/inside_air = internal_connector.gas_connector.airs[1]
+	if(inside_air.total_moles() > 0)
+		if(!node || internal_pressure > 0)
+			var/datum/gas_mixture/environment_air = loc.return_air()
+			internal_pressure = inside_air.return_pressure() - environment_air.return_pressure()
+
+	var/unsafe_release = FALSE
+	if(internal_pressure > 2 * ONE_ATMOSPHERE)
+		to_chat(user, span_warning("As you begin prying \the [src] a gush of air blows in your face... maybe you should reconsider?"))
+		if(!do_after(user, 2 SECONDS, target = src))
+			return
+		unsafe_release = TRUE
+
+	var/deconstruct = FALSE
+	if(!default_pry_open(tool))
+		if(!default_deconstruction_crowbar(tool, custom_deconstruct = TRUE))
+			return
+		else
+			deconstruct = TRUE
+
+	if(unsafe_release)
+		internal_connector.gas_connector.unsafe_pressure_release(user, internal_pressure)
+
+	tool.play_tool_sound(src, 50)
+	if(deconstruct)
+		deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/cryo_cell/wrench_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(on)
+		balloon_alert(user, "turn off!")
+		return
+	if(occupant)
+		balloon_alert(user, "occupant inside!")
+		return
+	if(state_open)
+		balloon_alert(user, "close first!")
+		return
+
+	if(default_change_direction_wrench(user, tool))
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/cryo_cell/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	SET_PLANE(occupant_vis, PLANE_TO_TRUE(occupant_vis.plane), new_turf)
+
+/obj/machinery/cryo_cell/set_occupant(atom/movable/new_occupant)
+	. = ..()
+	update_appearance()
+
+/obj/machinery/cryo_cell/RefreshParts()
+	. = ..()
+
+	var/max_tier = 0
+	for(var/datum/stock_part/matter_bin/bin in component_parts)
+		max_tier += bin.tier
+
+	efficiency = initial(efficiency) * max_tier
+	heat_capacity = initial(heat_capacity) / max_tier
+	conduction_coefficient = initial(conduction_coefficient) * max_tier
+
 /obj/machinery/cryo_cell/dump_inventory_contents(list/subset = list())
 	//only drop mobs when opening the machine
 	for (var/mob/living/living_guy in contents)
 		subset += living_guy
 	return ..(subset)
-
-/obj/machinery/cryo_cell/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone == beaker)
-		beaker = null
 
 /**
  * Turns the machine on/off
@@ -429,118 +532,12 @@
 	user.visible_message(span_notice("You see [user] kicking against the glass of [src]!"), \
 		span_notice("You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(CRYO_BREAKOUT_TIME)].)"), \
 		span_hear("You hear a thump from [src]."))
-	if(do_after(user, CRYO_BREAKOUT_TIME, target = src))
+	if(do_after(user, CRYO_BREAKOUT_TIME, target = src, hidden = TRUE))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
 		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
 			span_notice("You successfully break out of [src]!"))
 		open_machine()
-
-/obj/machinery/cryo_cell/MouseDrop_T(mob/target, mob/user)
-	if(user.incapacitated() || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
-		return
-	if(isliving(target))
-		var/mob/living/L = target
-		if(L.incapacitated())
-			close_machine(target)
-	else
-		user.visible_message(span_notice("[user] starts shoving [target] inside [src]."), span_notice("You start shoving [target] inside [src]."))
-		if (do_after(user, 2.5 SECONDS, target=target))
-			close_machine(target)
-
-/obj/machinery/cryo_cell/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(on)
-		balloon_alert(user, "turn off!")
-		return
-	if(occupant)
-		balloon_alert(user, "occupant inside!")
-		return
-
-	if(default_deconstruction_screwdriver(user, "pod-off", "pod-off", tool))
-		update_appearance()
-		return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/cryo_cell/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(on)
-		balloon_alert(user, "turn off!")
-		return
-
-	var/can_crowbar = FALSE
-	if(!state_open && !panel_open && !is_operational) //can pry open
-		can_crowbar = TRUE
-	else if(panel_open) //can deconstruct
-		can_crowbar = TRUE
-	if(!can_crowbar)
-		return
-
-	var/obj/machinery/atmospherics/node = internal_connector.gas_connector.nodes[1]
-	var/internal_pressure = 0
-
-	if(istype(node, /obj/machinery/atmospherics/components/unary/portables_connector))
-		var/obj/machinery/atmospherics/components/unary/portables_connector/portable_devices_connector = node
-		internal_pressure = !portable_devices_connector.connected_device ? 1 : 0
-
-	var/datum/gas_mixture/inside_air = internal_connector.gas_connector.airs[1]
-	if(inside_air.total_moles() > 0)
-		if(!node || internal_pressure > 0)
-			var/datum/gas_mixture/environment_air = loc.return_air()
-			internal_pressure = inside_air.return_pressure() - environment_air.return_pressure()
-
-	var/unsafe_release = FALSE
-	if(internal_pressure > 2 * ONE_ATMOSPHERE)
-		to_chat(user, span_warning("As you begin prying \the [src] a gush of air blows in your face... maybe you should reconsider?"))
-		if(!do_after(user, 2 SECONDS, target = src))
-			return
-		unsafe_release = TRUE
-
-	var/deconstruct = FALSE
-	if(!default_pry_open(tool))
-		if(!default_deconstruction_crowbar(tool, custom_deconstruct = TRUE))
-			return
-		else
-			deconstruct = TRUE
-
-	if(unsafe_release)
-		internal_connector.gas_connector.unsafe_pressure_release(user, internal_pressure)
-
-	tool.play_tool_sound(src, 50)
-	if(deconstruct)
-		deconstruct(TRUE)
-	return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/cryo_cell/wrench_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(on)
-		balloon_alert(user, "turn off!")
-		return
-	if(occupant)
-		balloon_alert(user, "occupant inside!")
-		return
-	if(state_open)
-		balloon_alert(user, "close first!")
-		return
-
-	if(default_change_direction_wrench(user, tool))
-		update_appearance()
-		return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/cryo_cell/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/cup))
-		. = TRUE //no afterattack
-		if(beaker)
-			balloon_alert(user, "beaker present!")
-			return
-		if(!user.transferItemToLoc(I, src))
-			return
-		beaker = I
-		balloon_alert(user, "beaker inserted")
-		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
-		user.log_message("added an [I] to cryo containing [reagentlist].", LOG_GAME)
-		return
-
-	return ..()
 
 /obj/machinery/cryo_cell/ui_state(mob/user)
 	return GLOB.notcontained_state
@@ -591,11 +588,11 @@
 	if(!QDELETED(beaker))
 		beaker_data = list()
 		beaker_data["maxVolume"] = beaker.volume
-		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, 0.01)
+		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)
 		var/list/beakerContents = list()
 		if(length(beaker.reagents.reagent_list))
 			for(var/datum/reagent/reagent in beaker.reagents.reagent_list)
-				beakerContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))) // list in a list because Byond merges the first list...
+				beakerContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING))) // list in a list because Byond merges the first list...
 		beaker_data["contents"] = beakerContents
 	.["beaker"] = beaker_data
 
@@ -638,20 +635,38 @@
 		return FALSE
 	return ..()
 
-/obj/machinery/cryo_cell/CtrlClick(mob/user)
-	if(can_interact(user) && !state_open)
+/obj/machinery/cryo_cell/click_ctrl(mob/user)
+	if(is_operational && !state_open)
 		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
-	return ..()
+		return CLICK_ACTION_SUCCESS
+	return CLICK_ACTION_BLOCKING
 
-/obj/machinery/cryo_cell/AltClick(mob/user)
-	if(can_interact(user))
-		if(state_open)
-			close_machine()
-		else
-			open_machine()
-		balloon_alert(user, "door [state_open ? "opened" : "closed"]")
-	return ..()
+/obj/machinery/cryo_cell/click_alt(mob/user)
+	//Required so players don't close the cryo on themselves without a doctor's help
+	if(get_turf(user) == get_turf(src))
+		return CLICK_ACTION_BLOCKING
+
+	if(state_open )
+		close_machine()
+	else
+		open_machine()
+	balloon_alert(user, "door [state_open ? "opened" : "closed"]")
+	return CLICK_ACTION_SUCCESS
+
+/obj/machinery/cryo_cell/mouse_drop_receive(mob/target, mob/user, params)
+	if(!iscarbon(target))
+		return
+
+	if(isliving(target))
+		var/mob/living/living_mob = target
+		if(living_mob.incapacitated())
+			close_machine(target)
+		return
+
+	user.visible_message(span_notice("[user] starts shoving [target] inside [src]."), span_notice("You start shoving [target] inside [src]."))
+	if (do_after(user, 2.5 SECONDS, target=target))
+		close_machine(target)
 
 /obj/machinery/cryo_cell/get_remote_view_fullscreens(mob/user)
 	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)

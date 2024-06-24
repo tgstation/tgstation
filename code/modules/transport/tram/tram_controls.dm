@@ -54,7 +54,7 @@
 	var/obj/item/circuitboard/computer/tram_controls/my_circuit = circuit
 	split_mode = my_circuit.split_mode
 
-/obj/machinery/computer/tram_controls/LateInitialize()
+/obj/machinery/computer/tram_controls/post_machine_initialize()
 	. = ..()
 	if(!id_tag)
 		id_tag = assign_random_name()
@@ -83,7 +83,7 @@
 /obj/machinery/computer/tram_controls/ui_state(mob/user)
 	return GLOB.not_incapacitated_state
 
-/obj/machinery/computer/tram_controls/ui_status(mob/user,/datum/tgui/ui)
+/obj/machinery/computer/tram_controls/ui_status(mob/user, datum/tgui/ui)
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
 
 	if(tram?.controller_active)

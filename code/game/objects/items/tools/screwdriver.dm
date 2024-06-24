@@ -22,6 +22,7 @@
 	attack_verb_simple = list("stab")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
+	operating_sound = 'sound/items/screwdriver_operating.ogg'
 	tool_behaviour = TOOL_SCREWDRIVER
 	toolspeed = 1
 	armor_type = /datum/armor/item_screwdriver
@@ -148,7 +149,7 @@
 	name = "automated screwdriver"
 	desc = "A powerful automated screwdriver, designed to be both precise and quick."
 	icon = 'icons/obj/items_cyborg.dmi'
-	icon_state = "screwdriver_cyborg"
+	icon_state = "toolkit_engiborg_screwdriver"
 	hitsound = 'sound/items/drill_hit.ogg'
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.5

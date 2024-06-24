@@ -10,6 +10,7 @@
 	icon_state = "lipstick"
 	inhand_icon_state = "lipstick"
 	w_class = WEIGHT_CLASS_TINY
+	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	var/open = FALSE
 	/// Actual color of the lipstick, also gets applied to the human
 	var/lipstick_color = COLOR_RED
@@ -45,15 +46,9 @@
 	colored_overlay.color = lipstick_color
 	. += colored_overlay
 
-/obj/item/lipstick/AltClick(mob/user)
-	. = ..()
-	if(.)
-		return TRUE
-
-	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING))
-		return FALSE
-
-	return display_radial_menu(user)
+/obj/item/lipstick/click_alt(mob/user)
+	display_radial_menu(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/lipstick/proc/display_radial_menu(mob/living/carbon/human/user)
 	var/style_options = list(
@@ -176,7 +171,7 @@
 
 	user.visible_message(span_warning("[user] begins to wipe [target]'s lipstick off with \the [src]."), \
 		span_notice("You begin to wipe off [target]'s lipstick..."))
-	if(!do_after(user, 10, target = target))
+	if(!do_after(user, 1 SECONDS, target = target))
 		return
 	user.visible_message(span_notice("[user] wipes [target]'s lipstick off with \the [src]."), \
 		span_notice("You wipe off [target]'s lipstick."))
@@ -222,7 +217,7 @@
 					return
 				if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 					return
-				var/new_style = tgui_input_list(user, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
+				var/new_style = tgui_input_list(user, "Select a facial hairstyle", "Grooming", SSaccessories.facial_hairstyles_list)
 				if(isnull(new_style))
 					return
 				if(!get_location_accessible(human_target, location))
@@ -275,7 +270,7 @@
 				return
 			if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 				return
-			var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
+			var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", SSaccessories.hairstyles_list)
 			if(isnull(new_style))
 				return
 			if(!get_location_accessible(human_target, location))

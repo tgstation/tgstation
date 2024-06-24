@@ -32,7 +32,6 @@ GLOBAL_LIST_INIT(abstract_mob_types, list(
 	/mob/living/simple_animal/hostile/mimic, // Cannot exist if spawned without being passed an item reference
 	/mob/living/simple_animal/hostile/retaliate,
 	/mob/living/simple_animal/hostile,
-	/mob/living/simple_animal/pet,
 	/mob/living/simple_animal/soulscythe, // As mimic, can't exist if spawned outside an item
 	/mob/living/simple_animal,
 ))
@@ -59,7 +58,7 @@ GLOBAL_LIST_EMPTY(human_list) //all instances of /mob/living/carbon/human and su
 GLOBAL_LIST_EMPTY(ai_list)
 GLOBAL_LIST_EMPTY(pai_list)
 GLOBAL_LIST_EMPTY(available_ai_shells)
-GLOBAL_LIST_INIT(simple_animals, list(list(),list(),list(),list())) // One for each AI_* status define
+GLOBAL_LIST_INIT(simple_animals, list(list(),list(),list())) // One for each AI_* status define
 GLOBAL_LIST_EMPTY(spidermobs) //all sentient spider mobs
 GLOBAL_LIST_EMPTY(bots_list)
 GLOBAL_LIST_EMPTY(aiEyes)
@@ -85,11 +84,54 @@ GLOBAL_LIST_EMPTY(revenant_relay_mobs)
 
 ///underages who have been reported to security for trying to buy things they shouldn't, so they can't spam
 GLOBAL_LIST_EMPTY(narcd_underages)
+/// List of language prototypes to reference, assoc [type] = prototype
+GLOBAL_LIST_INIT_TYPED(language_datum_instances, /datum/language, init_language_prototypes())
+/// List if all language typepaths learnable, IE, those with keys
+GLOBAL_LIST_INIT(all_languages, init_all_languages())
+// /List of language prototypes to reference, assoc "name" = typepath
+GLOBAL_LIST_INIT(language_types_by_name, init_language_types_by_name())
 
-GLOBAL_LIST_EMPTY(language_datum_instances)
-GLOBAL_LIST_EMPTY(all_languages)
-///List of all languages ("name" = type)
-GLOBAL_LIST_EMPTY(language_types_by_name)
+/proc/init_language_prototypes()
+	var/list/lang_list = list()
+	for(var/datum/language/lang_type as anything in typesof(/datum/language))
+		if(!initial(lang_type.key))
+			continue
+
+		lang_list[lang_type] = new lang_type()
+	return lang_list
+
+/proc/init_all_languages()
+	var/list/lang_list = list()
+	for(var/datum/language/lang_type as anything in typesof(/datum/language))
+		if(!initial(lang_type.key))
+			continue
+		lang_list += lang_type
+	return lang_list
+
+/proc/init_language_types_by_name()
+	var/list/lang_list = list()
+	for(var/datum/language/lang_type as anything in typesof(/datum/language))
+		if(!initial(lang_type.key))
+			continue
+		lang_list[initial(lang_type.name)] = lang_type
+	return lang_list
+
+/// An assoc list of species IDs to type paths
+GLOBAL_LIST_INIT(species_list, init_species_list())
+/// List of all species prototypes to reference, assoc [type] = prototype
+GLOBAL_LIST_INIT_TYPED(species_prototypes, /datum/species, init_species_prototypes())
+
+/proc/init_species_list()
+	var/list/species_list = list()
+	for(var/datum/species/species_path as anything in subtypesof(/datum/species))
+		species_list[initial(species_path.id)] = species_path
+	return species_list
+
+/proc/init_species_prototypes()
+	var/list/species_list = list()
+	for(var/species_type in subtypesof(/datum/species))
+		species_list[species_type] = new species_type()
+	return species_list
 
 GLOBAL_LIST_EMPTY(sentient_disease_instances)
 

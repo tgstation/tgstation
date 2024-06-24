@@ -28,6 +28,24 @@ $zebra-background-color: base.$color-bg-section !default;
   }
 }
 
+.Stack--reverse > .Stack__item {
+  margin-left: 0;
+  margin-right: 0.5em;
+
+  &:first-child {
+    margin-right: 0;
+  }
+}
+
+.Stack--reverse--vertical > .Stack__item {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+
+  &:first-child {
+    margin-bottom: 0;
+  }
+}
+
 .Stack--zebra > .Stack__item:nth-child(even) {
   background-color: $zebra-background-color;
 }

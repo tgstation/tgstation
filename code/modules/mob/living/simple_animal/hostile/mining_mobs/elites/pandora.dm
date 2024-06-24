@@ -136,7 +136,7 @@
 	new /obj/effect/temp_visual/hierophant/telegraph(turf_target, src)
 	new /obj/effect/temp_visual/hierophant/telegraph(source, src)
 	playsound(source,'sound/machines/airlockopen.ogg', 200, 1)
-	addtimer(CALLBACK(src, PROC_REF(pandora_teleport_2), turf_target, source), 2)
+	addtimer(CALLBACK(src, PROC_REF(pandora_teleport_2), turf_target, source), 0.2 SECONDS)
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/pandora_teleport_2(turf/T, turf/source)
 	new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, src)
@@ -148,7 +148,7 @@
 	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
 	visible_message(span_hierophant_warning("[src] fades out!"))
 	ADD_TRAIT(src, TRAIT_UNDENSE, VANISHING_TRAIT)
-	addtimer(CALLBACK(src, PROC_REF(pandora_teleport_3), T), 2)
+	addtimer(CALLBACK(src, PROC_REF(pandora_teleport_3), T), 0.2 SECONDS)
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/pandora_teleport_3(turf/T)
 	forceMove(T)
@@ -161,7 +161,7 @@
 	var/turf/T = get_turf(target)
 	new /obj/effect/temp_visual/hierophant/blast/damaging/pandora(T, src)
 	var/max_size = 3
-	addtimer(CALLBACK(src, PROC_REF(aoe_squares_2), T, 0, max_size), 2)
+	addtimer(CALLBACK(src, PROC_REF(aoe_squares_2), T, 0, max_size), 0.2 SECONDS)
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/aoe_squares_2(turf/T, ring, max_size)
 	if(ring > max_size)

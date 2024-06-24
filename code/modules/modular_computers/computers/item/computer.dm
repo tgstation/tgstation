@@ -7,10 +7,12 @@
 	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "laptop"
 	light_on = FALSE
+	light_power = 1.2
 	integrity_failure = 0.5
 	max_integrity = 100
 	armor_type = /datum/armor/item_modular_computer
-	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL
+	interaction_flags_mouse_drop = NEED_HANDS | ALLOW_RESTING
 
 	///The ID currently stored in the computer.
 	var/obj/item/card/id/computer_id_slot
@@ -70,7 +72,7 @@
 	/// How far the computer's light can reach, is not editable by players.
 	var/comp_light_luminosity = 3
 	/// The built-in light's color, editable by players.
-	var/comp_light_color = "#FFFFFF"
+	var/comp_light_color = COLOR_WHITE
 
 	///Power usage when the computer is open (screen is active) and can be interacted with.
 	var/base_active_power_usage = 125
@@ -155,12 +157,12 @@
 
 /obj/item/modular_computer/proc/on_circuit_attached(datum/source)
 	SIGNAL_HANDLER
-	RegisterSignal(shell.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE, PROC_REF(use_power_for_circuits))
+	RegisterSignal(shell.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE, PROC_REF(use_energy_for_circuits))
 
 ///Try to draw power from our internal cell first, before switching to that of the circuit.
-/obj/item/modular_computer/proc/use_power_for_circuits(datum/source, power_usage_per_input)
+/obj/item/modular_computer/proc/use_energy_for_circuits(datum/source, energy_usage_per_input)
 	SIGNAL_HANDLER
-	if(use_power(power_usage_per_input, check_programs = FALSE))
+	if(use_energy(energy_usage_per_input, check_programs = FALSE))
 		return COMPONENT_OVERRIDE_POWER_USAGE
 
 /obj/item/modular_computer/proc/on_circuit_removed(datum/source)
@@ -222,19 +224,18 @@
 /obj/item/modular_computer/get_cell()
 	return internal_cell
 
-/obj/item/modular_computer/AltClick(mob/user)
-	. = ..()
+/obj/item/modular_computer/click_alt(mob/user)
 	if(issilicon(user))
-		return FALSE
-	if(!user.can_perform_action(src))
-		return FALSE
+		return NONE
 
 	if(RemoveID(user))
-		return TRUE
+		return CLICK_ACTION_SUCCESS
 
 	if(istype(inserted_pai)) // Remove pAI
 		remove_pai(user)
-		return TRUE
+		return CLICK_ACTION_SUCCESS
+
+	return CLICK_ACTION_BLOCKING
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
 /obj/item/modular_computer/GetAccess()
@@ -267,30 +268,34 @@
 
 /**
  * InsertID
- * Attempt to insert the ID in either card slot.
+ * Attempt to insert the ID in either card slot, if ID is present - attempts swap
  * Args:
  * inserting_id - the ID being inserted
  * user - The person inserting the ID
  */
 /obj/item/modular_computer/InsertID(obj/item/card/inserting_id, mob/user)
-	//all slots taken
-	if(computer_id_slot)
+	if(!isnull(user) && !user.transferItemToLoc(inserting_id, src))
 		return FALSE
 
-	if(user)
-		if(!user.transferItemToLoc(inserting_id, src))
-			return FALSE
-		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
 	else
 		inserting_id.forceMove(src)
 
+	if(!isnull(computer_id_slot))
+		RemoveID(user, silent = TRUE)
+
 	computer_id_slot = inserting_id
 
+	if(!isnull(user))
+		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
+		balloon_alert(user, "inserted ID")
+
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
 		if(human_wearer.wear_id == src)
 			human_wearer.sec_hud_set_ID()
+
 	update_appearance()
 	update_slot_icon()
 	SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_INSERTED_ID, inserting_id, user)
@@ -300,8 +305,9 @@
  * Removes the ID card from the computer, and puts it in loc's hand if it's a mob
  * Args:
  * user - The mob trying to remove the ID, if there is one
+ * silent - Boolean, determines whether fluff text would be printed
  */
-/obj/item/modular_computer/RemoveID(mob/user)
+/obj/item/modular_computer/RemoveID(mob/user, silent = FALSE)
 	if(!computer_id_slot)
 		return ..()
 
@@ -314,23 +320,24 @@
 		computer_id_slot.forceMove(drop_location())
 
 	computer_id_slot = null
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-	balloon_alert(user, "removed ID")
-	to_chat(user, span_notice("You remove the card from the card slot."))
+
+	if(!silent && !isnull(user))
+		to_chat(user, span_notice("You remove the card from the card slot."))
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		balloon_alert(user, "removed ID")
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_wearer = loc
 		if(human_wearer.wear_id == src)
 			human_wearer.sec_hud_set_ID()
+
 	update_slot_icon()
 	update_appearance()
 	return TRUE
 
-/obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
-	var/mob/M = usr
-	if((!istype(over_object, /atom/movable/screen)) && usr.can_perform_action(src))
-		return attack_self(M)
-	return ..()
+/obj/item/modular_computer/mouse_drop_dragged(atom/over_object, mob/user)
+	if(!istype(over_object, /atom/movable/screen))
+		return attack_self(user)
 
 /obj/item/modular_computer/attack_ai(mob/user)
 	return attack_self(user)
@@ -389,6 +396,9 @@
 			. += "Its identification card slot is currently occupied."
 		. += span_info("Alt-click [src] to eject the identification card.")
 
+	if(internal_cell)
+		. += span_info("Right-click it with a screwdriver to eject the [internal_cell]")
+
 /obj/item/modular_computer/examine_more(mob/user)
 	. = ..()
 	. += "Storage capacity: [used_capacity]/[max_capacity]GQ"
@@ -402,6 +412,10 @@
 
 /obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
+
+	if(computer_id_slot && isidcard(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Swap ID"
+		. = CONTEXTUAL_SCREENTIP_SET
 
 	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER && internal_cell)
 		context[SCREENTIP_CONTEXT_RMB] = "Remove Cell"
@@ -443,7 +457,7 @@
 /obj/item/modular_computer/Exited(atom/movable/gone, direction)
 	if(internal_cell == gone)
 		internal_cell = null
-		if(enabled && !use_power())
+		if(enabled && !use_energy())
 			shutdown_computer()
 	if(computer_id_slot == gone)
 		computer_id_slot = null
@@ -458,10 +472,7 @@
 		update_appearance(UPDATE_ICON)
 	return ..()
 
-/obj/item/modular_computer/CtrlShiftClick(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/modular_computer/click_ctrl_shift(mob/user)
 	if(!inserted_disk)
 		return
 	user.put_in_hands(inserted_disk)
@@ -469,7 +480,10 @@
 	playsound(src, 'sound/machines/card_slide.ogg', 50)
 
 /obj/item/modular_computer/proc/turn_on(mob/user, open_ui = TRUE)
-	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
+	var/issynth = FALSE // Robots and AIs get different activation messages.
+	if(user)
+		issynth = HAS_SILICON_ACCESS(user)
+
 	if(atom_integrity <= integrity_failure * max_integrity)
 		if(user)
 			if(issynth)
@@ -478,7 +492,7 @@
 				to_chat(user, span_warning("You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again."))
 		return FALSE
 
-	if(use_power()) // checks if the PC is powered
+	if(use_energy(base_active_power_usage)) // checks if the PC is powered
 		if(looping_sound)
 			soundloop.start()
 		enabled = TRUE
@@ -543,7 +557,7 @@
 	physical.loc.visible_message(span_notice("[icon2html(physical, viewers(physical.loc))] \The [src] displays a [caller.filedesc] notification: [alerttext]"))
 
 /obj/item/modular_computer/proc/ring(ringtone) // bring bring
-	if(!use_power())
+	if(!use_energy())
 		return
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
 		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
@@ -888,20 +902,18 @@
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/modular_computer/deconstruct(disassembled = TRUE)
+/obj/item/modular_computer/atom_deconstruct(disassembled = TRUE)
 	remove_pai()
 	eject_aicard()
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if (disassembled)
-			internal_cell?.forceMove(drop_location())
-			computer_id_slot?.forceMove(drop_location())
-			inserted_disk?.forceMove(drop_location())
-			new /obj/item/stack/sheet/iron(drop_location(), steel_sheet_cost)
-		else
-			physical.visible_message(span_notice("\The [src] breaks apart!"))
-			new /obj/item/stack/sheet/iron(drop_location(), round(steel_sheet_cost * 0.5))
+	if (disassembled)
+		internal_cell?.forceMove(drop_location())
+		computer_id_slot?.forceMove(drop_location())
+		inserted_disk?.forceMove(drop_location())
+		new /obj/item/stack/sheet/iron(drop_location(), steel_sheet_cost)
+	else
+		physical.visible_message(span_notice("\The [src] breaks apart!"))
+		new /obj/item/stack/sheet/iron(drop_location(), round(steel_sheet_cost * 0.5))
 	relay_qdel()
-	return ..()
 
 // Ejects the inserted intellicard, if one exists. Used when the computer is deconstructed.
 /obj/item/modular_computer/proc/eject_aicard()

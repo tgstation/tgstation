@@ -117,7 +117,7 @@ const AnnouncementColor = (props) => {
     <Section title="Set announcement color" textAlign="center">
       <Dropdown
         width="100%"
-        displayText={announcement_color}
+        selected={announcement_color}
         options={announcement_colors}
         onSelected={(value) =>
           act('update_announcement_color', {
@@ -138,7 +138,7 @@ const AnnouncementSound = (props) => {
     <Section title="Set announcement sound" textAlign="center">
       <Dropdown
         width="100%"
-        displayText={played_sound}
+        selected={played_sound}
         options={announcer_sounds}
         onSelected={(value) =>
           act('set_report_sound', {

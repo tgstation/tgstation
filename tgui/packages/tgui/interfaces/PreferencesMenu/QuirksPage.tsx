@@ -1,4 +1,4 @@
-import { filterMap } from 'common/collections';
+import { filter } from 'common/collections';
 import { useState } from 'react';
 
 import { useBackend } from '../../backend';
@@ -8,10 +8,10 @@ import { getRandomization, PreferenceList } from './MainPage';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 import { useRandomToggleState } from './useRandomToggleState';
 
-function getValueClass(value: number) {
-  if (value > 0) {
+function getColorValueClass(quirk: Quirk) {
+  if (quirk.value > 0) {
     return 'positive';
-  } else if (value < 0) {
+  } else if (quirk.value < 0) {
     return 'negative';
   } else {
     return 'neutral';
@@ -23,13 +23,9 @@ function getCorrespondingPreferences(
   relevant_preferences: Record<string, string>,
 ) {
   return Object.fromEntries(
-    filterMap(Object.keys(relevant_preferences), (key) => {
-      if (!customization_options.includes(key)) {
-        return undefined;
-      }
-
-      return [key, relevant_preferences[key]];
-    }),
+    filter(Object.entries(relevant_preferences), ([key, value]) =>
+      customization_options.includes(key),
+    ),
   );
 }
 
@@ -131,7 +127,7 @@ function QuirkDisplay(props: QuirkDisplayProps) {
         >
           <Stack vertical fill>
             <Stack.Item
-              className={`${className}--${getValueClass(value)}`}
+              className={`${className}--${getColorValueClass(quirk)}`}
               style={{
                 borderBottom: '1px solid black',
                 padding: '2px',

@@ -30,21 +30,24 @@ Passive gate is similar to the regular pump except:
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize target pressure"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/binary/passive_gate/CtrlClick(mob/user)
-	if(can_interact(user))
+/obj/machinery/atmospherics/components/binary/passive_gate/click_ctrl(mob/user)
+	if(is_operational)
 		on = !on
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		update_appearance()
-	return ..()
+		return CLICK_ACTION_SUCCESS
+	return CLICK_ACTION_BLOCKING
 
-/obj/machinery/atmospherics/components/binary/passive_gate/AltClick(mob/user)
-	if(can_interact(user))
-		target_pressure = MAX_OUTPUT_PRESSURE
-		investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
-		balloon_alert(user, "pressure output set to [target_pressure] kPa")
-		update_appearance()
-	return ..()
+/obj/machinery/atmospherics/components/binary/passive_gate/click_alt(mob/user)
+	if(target_pressure == MAX_OUTPUT_PRESSURE)
+		return CLICK_ACTION_BLOCKING
+
+	target_pressure = MAX_OUTPUT_PRESSURE
+	investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "pressure output set to [target_pressure] kPa")
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/binary/passive_gate/update_icon_nopipes()
 	cut_overlays()

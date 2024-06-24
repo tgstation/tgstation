@@ -643,7 +643,7 @@
 
 /datum/memory/playing_cards/get_starts()
 	return list(
-		"[formatted_players_list] are waiting for [protagonist_name] to start the [game]",
+		"[formatted_players_list] waiting for [protagonist_name] to start the [game]",
 		"The [game] has been setup by [deuteragonist_name]",
 		"[deuteragonist_name] starts shuffling the deck for the [game]",
 	)
@@ -668,7 +668,7 @@
 
 /datum/memory/playing_card_pickup/get_starts()
 	return list(
-		"[protagonist_name] tosses the [antagonist_name] at [deuteragonist_name] spilling cards all over the floor",
+		"[protagonist_name] tossing the [antagonist_name] at [deuteragonist_name] spilling cards all over the floor",
 		"A [antagonist_name] thrown by [protagonist_name] splatters across [deuteragonist_name] face",
 	)
 

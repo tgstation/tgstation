@@ -149,7 +149,7 @@
 /datum/station_trait/overflow_job_bureaucracy/proc/set_overflow_job_override(datum/source)
 	SIGNAL_HANDLER
 	var/datum/job/picked_job = pick(SSjob.get_valid_overflow_jobs())
-	chosen_job_name = lowertext(picked_job.title) // like Chief Engineers vs like chief engineers
+	chosen_job_name = LOWER_TEXT(picked_job.title) // like Chief Engineers vs like chief engineers
 	SSjob.set_overflow_role(picked_job.type)
 
 /datum/station_trait/slow_shuttle
@@ -285,7 +285,7 @@
 	weight = 0
 
 	/// The path to the round_event_control that we modify.
-	var/event_control_path
+	var/datum/round_event_control/event_control_path
 	/// Multiplier applied to the weight of the event.
 	var/weight_multiplier = 1
 	/// Flat modifier added to the amount of max occurances the random event can have.
@@ -307,6 +307,11 @@
 	weight = 3
 	event_control_path = /datum/round_event_control/ion_storm
 	weight_multiplier = 2
+
+/datum/station_trait/random_event_weight_modifier/ion_storms/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>ERROR</b></center><BR>"
+	advisory_string += scramble_message_replace_chars("Your sector's advisory level is ERROR. An electromagnetic field has stormed through nearby surveillance equipment, causing major data loss. Partial data was recovered and showed no credible threats to Nanotrasen assets within the Spinward Sector; however, the Department of Intelligence advises maintaining high alert against potential threats due to the lack of complete data.", 35)
+	return advisory_string
 
 /datum/station_trait/random_event_weight_modifier/rad_storms
 	name = "Radiation Stormfront"
@@ -570,6 +575,8 @@
 /datum/station_trait/nebula/hostile/radiation/New()
 	. = ..()
 
+	RegisterSignal(SSdcs, COMSIG_RULESET_BODY_GENERATED_FROM_GHOSTS, PROC_REF(on_spawned_mob))
+
 	for(var/area/target as anything in get_areas(radioactive_areas))
 		RegisterSignal(target, COMSIG_AREA_ENTERED, PROC_REF(on_entered))
 		RegisterSignal(target, COMSIG_AREA_EXITED, PROC_REF(on_exited))
@@ -591,7 +598,7 @@
 		//if engineering isnt valid, just send it to the bridge
 		send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/command/bridge, /obj/structure/closet/supplypod/centcompod)
 
-	// Let the viro know resistence is futile
+	// Let medical know resistence is futile
 	send_fax_to_area(new /obj/item/paper/fluff/radiation_nebula_virologist(), /area/station/medical/virology, "NT Virology Department", \
 	force = TRUE, force_pod_type = /obj/structure/closet/supplypod/centcompod)
 
@@ -616,6 +623,19 @@
 	SSradioactive_nebula.fake_unirradiate(exiter)
 
 	// The component handles its own removal
+
+/// When a mob is spawned by dynamic, intercept and give it a little radiation shield. Only works for dynamic mobs!
+/datum/station_trait/nebula/hostile/radiation/proc/on_spawned_mob(datum/source, mob/spawned_mob)
+	SIGNAL_HANDLER
+
+	if(!istype(get_area(spawned_mob), radioactive_areas)) //only if you're spawned in the radioactive areas
+		return
+
+	if(!isliving(spawned_mob)) // Dynamic shouldnt spawn non-living but uhhhhhhh why not
+		return
+
+	var/mob/living/spawnee = spawned_mob
+	spawnee.apply_status_effect(/datum/status_effect/radiation_immunity/radnebula)
 
 /datum/station_trait/nebula/hostile/radiation/apply_nebula_effect(effect_strength = 0)
 	//big bombad now
@@ -704,7 +724,11 @@
 	weight = 3
 	show_in_report = TRUE
 	report_message = "It looks like the storm is not gonna calm down anytime soon, stay safe out there."
-
 	storm_type = /datum/weather/snow_storm/forever_storm
+
+/datum/station_trait/storm/foreverstorm/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>Ice Giant</b></center><BR>"
+	advisory_string += "The ongoing blizzard has interfered with our surveillance equipment, and we cannot provide an accurate threat summary at this time. We advise you to stay safe and avoid traversing the area around the station."
+	return advisory_string
 
 #undef GLOW_NEBULA

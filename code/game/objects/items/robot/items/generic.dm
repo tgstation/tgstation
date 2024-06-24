@@ -12,12 +12,13 @@
 /obj/item/borg
 	icon = 'icons/mob/silicon/robot_items.dmi'
 
+/// Cost to use the stun arm
+#define CYBORG_STUN_CHARGE_COST (0.2 * STANDARD_CELL_CHARGE)
+
 /obj/item/borg/stun
 	name = "electrically-charged arm"
 	icon_state = "elecarm"
 	var/stamina_damage = 60 //Same as normal batong
-	/// Cost to use the stun arm
-	var/charge_cost = 200
 	var/cooldown_check = 0
 	/// cooldown between attacks
 	var/cooldown = 4 SECONDS // same as baton
@@ -33,7 +34,7 @@
 			return FALSE
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
-		if(!robot_user.cell.use(charge_cost))
+		if(!robot_user.cell.use(CYBORG_STUN_CHARGE_COST))
 			return
 
 	user.do_attack_animation(attacked_mob)
@@ -56,6 +57,8 @@
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	cooldown_check = world.time + cooldown
 	log_combat(user, attacked_mob, "stunned", src, "(Combat mode: [user.combat_mode ? "On" : "Off"])")
+
+#undef CYBORG_STUN_CHARGE_COST
 
 /obj/item/borg/cyborghug
 	name = "hugging module"
@@ -182,7 +185,7 @@
 						span_danger("You shock [attacked_mob] to no effect."),
 					)
 			playsound(loc, 'sound/effects/sparks2.ogg', 50, TRUE, -1)
-			user.cell.charge -= 500
+			user.cell.use(0.5 * STANDARD_CELL_CHARGE, force = TRUE)
 			COOLDOWN_START(src, shock_cooldown, HUG_SHOCK_COOLDOWN)
 		if(HUG_MODE_CRUSH)
 			if (!COOLDOWN_FINISHED(src, crush_cooldown))
@@ -199,7 +202,7 @@
 				)
 			playsound(loc, 'sound/weapons/smash.ogg', 50, TRUE, -1)
 			attacked_mob.adjustBruteLoss(15)
-			user.cell.charge -= 300
+			user.cell.use(0.3 * STANDARD_CELL_CHARGE, force = TRUE)
 			COOLDOWN_START(src, crush_cooldown, HUG_CRUSH_COOLDOWN)
 
 /obj/item/borg/cyborghug/peacekeeper
@@ -231,11 +234,11 @@
 	to_chat(user, span_notice("You toggle [src] to \"[mode]\" mode."))
 	update_appearance()
 
-/obj/item/borg/charger/afterattack(obj/item/target, mob/living/silicon/robot/user, proximity_flag)
-	. = ..()
-	if(!proximity_flag || !iscyborg(user))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/borg/charger/interact_with_atom(atom/target, mob/living/silicon/robot/user, list/modifiers)
+	if(!iscyborg(user))
+		return NONE
+
+	. = ITEM_INTERACT_BLOCKING
 	if(mode == "draw")
 		if(is_type_in_list(target, charge_machines))
 			var/obj/machinery/target_machine = target
@@ -244,17 +247,14 @@
 				return
 
 			to_chat(user, span_notice("You connect to [target_machine]'s power line..."))
-			while(do_after(user, 15, target = target_machine, progress = 0))
+			while(do_after(user, 1.5 SECONDS, target = target_machine, progress = FALSE))
 				if(!user || !user.cell || mode != "draw")
 					return
 
 				if((target_machine.machine_stat & (NOPOWER|BROKEN)) || !target_machine.anchored)
 					break
 
-				if(!user.cell.give(150))
-					break
-
-				target_machine.use_power(200)
+				target_machine.charge_cell(0.15 * STANDARD_CELL_CHARGE, user.cell)
 
 			to_chat(user, span_notice("You stop charging yourself."))
 
@@ -278,7 +278,7 @@
 
 			to_chat(user, span_notice("You connect to [target]'s power port..."))
 
-			while(do_after(user, 15, target = target, progress = 0))
+			while(do_after(user, 1.5 SECONDS, target = target, progress = FALSE))
 				if(!user || !user.cell || mode != "draw")
 					return
 
@@ -316,7 +316,7 @@
 
 		to_chat(user, span_notice("You connect to [target]'s power port..."))
 
-		while(do_after(user, 15, target = target, progress = 0))
+		while(do_after(user, 1.5 SECONDS, target = target, progress = FALSE))
 			if(!user || !user.cell || mode != "charge")
 				return
 

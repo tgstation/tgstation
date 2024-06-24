@@ -46,7 +46,7 @@
 	if(noticable_organ_examines[possibly_noticable.slot])
 		make_organ_noticable(possibly_noticable.slot, possibly_noticable)
 
-/datum/element/ai_control_examine/proc/make_organ_noticable(organ_slot, obj/item/organ/noticable_organ)
+/datum/element/ai_control_examine/proc/make_organ_noticable(organ_slot, obj/item/organ/noticable_organ, mob/living/carbon/human/human_pawn)
 	var/examine_text = noticable_organ_examines[organ_slot]
 	var/body_zone = organ_slot != ORGAN_SLOT_BRAIN ? noticable_organ.zone : null
 	noticable_organ.AddElement(/datum/element/noticable_organ/ai_control, examine_text, body_zone)

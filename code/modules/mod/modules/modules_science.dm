@@ -12,17 +12,12 @@
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/reagent_scanner)
 	cooldown_time = 0.5 SECONDS
+	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
 
 /obj/item/mod/module/reagent_scanner/on_activation()
-	. = ..()
-	if(!.)
-		return
 	ADD_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, MOD_TRAIT)
 
 /obj/item/mod/module/reagent_scanner/on_deactivation(display_message = TRUE, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
 	REMOVE_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, MOD_TRAIT)
 
 /obj/item/mod/module/reagent_scanner/advanced
@@ -32,16 +27,10 @@
 	var/explosion_detection_dist = 21
 
 /obj/item/mod/module/reagent_scanner/advanced/on_activation()
-	. = ..()
-	if(!.)
-		return
 	ADD_TRAIT(mod.wearer, TRAIT_RESEARCH_SCANNER, MOD_TRAIT)
 	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, PROC_REF(sense_explosion))
 
 /obj/item/mod/module/reagent_scanner/advanced/on_deactivation(display_message = TRUE, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
 	REMOVE_TRAIT(mod.wearer, TRAIT_RESEARCH_SCANNER, MOD_TRAIT)
 	UnregisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION)
 
@@ -66,20 +55,15 @@
 	incompatible_modules = list(/obj/item/mod/module/anomaly_locked, /obj/item/mod/module/atrocinator)
 	cooldown_time = 0.5 SECONDS
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 
 /obj/item/mod/module/anomaly_locked/antigrav/on_activation()
-	. = ..()
-	if(!.)
-		return
 	if(mod.wearer.has_gravity())
 		new /obj/effect/temp_visual/mook_dust(get_turf(src))
 	mod.wearer.AddElement(/datum/element/forced_gravity, 0)
 	playsound(src, 'sound/effects/gravhit.ogg', 50)
 
 /obj/item/mod/module/anomaly_locked/antigrav/on_deactivation(display_message = TRUE, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
 	mod.wearer.RemoveElement(/datum/element/forced_gravity, 0)
 	if(deleting)
 		return
@@ -100,9 +84,10 @@
 	icon_state = "teleporter"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	cooldown_time = 5 SECONDS
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/bluespace)
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
 	/// Time it takes to teleport
 	var/teleport_time = 3 SECONDS
 
@@ -127,7 +112,7 @@
 	animate(mod.wearer, teleport_time*0.1, color = null, transform = post_matrix.Multiply(mod.wearer.transform), easing = SINE_EASING|EASE_IN)
 	if(!do_teleport(mod.wearer, target_turf, asoundin = 'sound/effects/phasein.ogg'))
 		return
-	drain_power(use_power_cost)
+	drain_power(use_energy_cost)
 
 /obj/item/mod/module/anomaly_locked/teleporter/prebuilt
 	prebuilt = TRUE

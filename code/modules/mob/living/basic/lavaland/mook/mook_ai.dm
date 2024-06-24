@@ -26,6 +26,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 		/datum/ai_planning_subtree/mine_walls/mook,
 		/datum/ai_planning_subtree/wander_away_from_village,
 	)
+	can_idle = FALSE // these guys are intended to operate even if nobody's around
 
 ///check for faction if not a ash walker, otherwise just attack
 /datum/targeting_strategy/basic/mook/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
@@ -116,15 +117,13 @@ GLOBAL_LIST_INIT(mook_commands, list(
 /datum/ai_behavior/find_village
 
 /datum/ai_behavior/find_village/perform(seconds_per_tick, datum/ai_controller/controller, village_key)
-	. = ..()
 
 	var/obj/effect/landmark/home_marker = locate(/obj/effect/landmark/mook_village) in GLOB.landmarks_list
 	if(isnull(home_marker))
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	controller.set_blackboard_key(village_key, home_marker)
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 ///explore the lands away from the village to look for ore
 /datum/ai_planning_subtree/wander_away_from_village
@@ -189,8 +188,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	return return_turf
 
 /datum/ai_behavior/wander/perform(seconds_per_tick, datum/ai_controller/controller, target_key, hiding_location_key)
-	. = ..()
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_planning_subtree/mine_walls/mook
 	find_wall_behavior = /datum/ai_behavior/find_mineral_wall/mook
@@ -366,23 +364,20 @@ GLOBAL_LIST_INIT(mook_commands, list(
 	action_cooldown = 5 SECONDS
 
 /datum/ai_behavior/issue_commands/perform(seconds_per_tick, datum/ai_controller/controller, target_key, command_path)
-	. = ..()
 	var/mob/living/basic/living_pawn = controller.pawn
 	var/atom/target = controller.blackboard[target_key]
 
 	if(isnull(target))
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/datum/pet_command/to_command = locate(command_path) in GLOB.mook_commands
 	if(isnull(to_command))
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/issue_command = pick(to_command.speech_commands)
 	living_pawn.say(issue_command, forced = "controller")
 	living_pawn._pointed(target)
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 
 ///find an ore, only pick it up when a mook brings it close to us

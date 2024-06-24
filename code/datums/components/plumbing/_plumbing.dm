@@ -375,7 +375,7 @@
 		return
 
 	// Defer to later frame because pixel_* is actually updated after all callbacks
-	addtimer(CALLBACK(parent_obj, TYPE_PROC_REF(/atom/, update_appearance)), 1)
+	addtimer(CALLBACK(parent_obj, TYPE_PROC_REF(/atom/, update_appearance)), 0.1 SECONDS)
 
 ///has one pipe input that only takes, example is manual output pipe
 /datum/component/plumbing/simple_demand

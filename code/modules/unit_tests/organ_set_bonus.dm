@@ -22,7 +22,7 @@
 		/datum/infuser_entry/fly,
 	))
 	// Fetch the globally instantiated DNA Infuser entries.
-	for(var/datum/infuser_entry/infuser_entry as anything in GLOB.infuser_entries)
+	for(var/datum/infuser_entry/infuser_entry as anything in flatten_list(GLOB.infuser_entries))
 		var/output_organs = infuser_entry.output_organs
 		var/mob/living/carbon/human/lab_rat = allocate(/mob/living/carbon/human/consistent)
 		var/list/obj/item/organ/inserted_organs = list()

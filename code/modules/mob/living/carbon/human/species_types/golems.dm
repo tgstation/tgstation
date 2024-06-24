@@ -51,18 +51,19 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem,
 	)
 
-	/// Chance that we will generate a human surname, for lore reasons
-	var/human_surname_chance = 3
-
-/datum/species/golem/random_name(gender,unique,lastname)
-	var/name = pick(GLOB.golem_names)
-	if (prob(human_surname_chance))
-		name += " [pick(GLOB.last_names)]"
-	return name
-
 /datum/species/golem/get_physical_attributes()
 	return "Golems are hardy creatures made out of stone, which are thus naturally resistant to many dangers, including asphyxiation, fire, radiation, electricity, and viruses.\
 		They gain special abilities depending on the type of material consumed, but they need to consume material to keep their body animated."
+
+/datum/species/golem/get_species_description()
+	return "Golems are lithoid creatures who eat rocks and minerals to survive and adapt."
+
+/datum/species/golem/get_species_lore()
+	return list(
+		"While Golems have long been commonly found on frontier worlds, peacefully mining and otherwise living in harmony with the environment, \
+		it is believed they were originally constructed in Nanotrasen laboratories as a form of cheap labor. Whatever happened up to this point is unknown, \
+		but they have since gained freedom and are now a rare sight in the galaxy.",
+	)
 
 /datum/species/golem/create_pref_unique_perks()
 	var/list/to_add = list()

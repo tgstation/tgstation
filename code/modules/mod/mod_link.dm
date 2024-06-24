@@ -187,6 +187,8 @@
 
 /obj/item/clothing/neck/link_scryer/attack_self(mob/user, modifiers)
 	var/new_label = reject_bad_text(tgui_input_text(user, "Change the visible name", "Set Name", label, MAX_NAME_LEN))
+	if(!user.is_holding(src))
+		return
 	if(!new_label)
 		balloon_alert(user, "invalid name!")
 		return
@@ -197,7 +199,7 @@
 /obj/item/clothing/neck/link_scryer/process(seconds_per_tick)
 	if(!mod_link.link_call)
 		return
-	cell.use(min(20 * seconds_per_tick, cell.charge))
+	cell.use(0.02 * STANDARD_CELL_RATE * seconds_per_tick, force = TRUE)
 
 /obj/item/clothing/neck/link_scryer/attackby(obj/item/attacked_by, mob/user, params)
 	. = ..()

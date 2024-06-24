@@ -14,14 +14,13 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative/proc/core_effect_before(mob/living/carbon/human/target, mob/user)
 	return
 
-/obj/item/slimecross/regenerative/afterattack(atom/target,mob/user,prox)
-	. = ..()
-	if(!prox || !isliving(target))
+/obj/item/slimecross/regenerative/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
 		return
-	var/mob/living/H = target
+	var/mob/living/H = interacting_with
 	if(H.stat == DEAD)
 		to_chat(user, span_warning("[src] will not work on the dead!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(H != user)
 		user.visible_message(span_notice("[user] crushes [src] over [H], the milky goo quickly regenerating all of [H.p_their()] injuries!"),
 			span_notice("You squeeze [src], and it bursts over [H], the milky goo regenerating [H.p_their()] injuries."))
@@ -29,10 +28,12 @@ Regenerative extracts:
 		user.visible_message(span_notice("[user] crushes [src] over [user.p_them()]self, the milky goo quickly regenerating all of [user.p_their()] injuries!"),
 			span_notice("You squeeze [src], and it bursts in your hand, splashing you with milky goo which quickly regenerates your injuries!"))
 	core_effect_before(H, user)
+	user.do_attack_animation(interacting_with)
 	H.revive(HEAL_ALL)
 	core_effect(H, user)
-	playsound(target, 'sound/effects/splat.ogg', 40, TRUE)
+	playsound(H, 'sound/effects/splat.ogg', 40, TRUE)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/slimecross/regenerative/grey
 	colour = SLIME_TYPE_GREY //Has no bonus effect.
@@ -125,7 +126,7 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative/darkblue/proc/fireproof(obj/item/clothing/C)
 	C.name = "fireproofed [C.name]"
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	C.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
+	C.add_atom_colour(COLOR_NAVY, FIXED_COLOUR_PRIORITY)
 	C.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	C.heat_protection = C.body_parts_covered
 	C.resistance_flags |= FIRE_PROOF
@@ -197,7 +198,7 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative/green/core_effect(mob/living/target, mob/user)
 	if(isslime(target))
 		target.visible_message(span_warning("The [target] suddenly changes color!"))
-		var/mob/living/simple_animal/slime/target_slime = target
+		var/mob/living/basic/slime/target_slime = target
 		target_slime.random_colour()
 	if(isjellyperson(target))
 		target.reagents.add_reagent(/datum/reagent/mutationtoxin/jelly,5)
@@ -237,7 +238,7 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative/black/core_effect_before(mob/living/target, mob/user)
 	var/dummytype = target.type
 	if(ismegafauna(target)) //Prevents megafauna duping in a lame way
-		dummytype = /mob/living/simple_animal/slime
+		dummytype = /mob/living/basic/slime
 		to_chat(user, span_warning("The milky goo flows over [target], falling into a weak puddle."))
 	var/mob/living/dummy = new dummytype(target.loc)
 	to_chat(target, span_notice("The milky goo flows from your skin, forming an imperfect copy of you."))

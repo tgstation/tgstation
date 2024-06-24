@@ -14,6 +14,11 @@
 		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = /datum/reagent/medicine/oxandrolone,
 		/obj/item/reagent_containers/hypospray/medipen/salacid = /datum/reagent/medicine/sal_acid,
 		/obj/item/reagent_containers/hypospray/medipen/penacid = /datum/reagent/medicine/pen_acid,
+		/obj/item/reagent_containers/hypospray/medipen/mutadone = /datum/reagent/medicine/mutadone,
+		/obj/item/reagent_containers/hypospray/medipen/methamphetamine = /datum/reagent/drug/methamphetamine,
+		/obj/item/reagent_containers/hypospray/medipen/survival = /datum/reagent/medicine/c2/libital,
+		/obj/item/reagent_containers/hypospray/medipen/survival/luxury = /datum/reagent/medicine/c2/penthrite,
+		/obj/item/reagent_containers/hypospray/medipen/invisibility = /datum/reagent/drug/saturnx,
 	)
 
 /obj/machinery/medipen_refiller/Initialize(mapload)
@@ -80,15 +85,15 @@
 			medipen.add_initial_reagents()
 			reagents.remove_reagent(allowed_pens[medipen.type], 10)
 			balloon_alert(user, "refilled")
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 		cut_overlays()
 		return
 	return ..()
 
 /obj/machinery/medipen_refiller/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
-	to_chat(user, span_notice("You start furiously plunging [name]."))
-	if(do_after(user, 30, target = src))
-		to_chat(user, span_notice("You finish plunging the [name]."))
+	user.balloon_alert_to_viewers("furiously plunging...", "plunging medipen refiller...")
+	if(do_after(user, 3 SECONDS, target = src))
+		user.balloon_alert_to_viewers("finished plunging")
 		reagents.expose(get_turf(src), TOUCH)
 		reagents.clear_reagents()
 

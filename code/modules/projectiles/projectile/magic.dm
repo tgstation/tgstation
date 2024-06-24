@@ -110,7 +110,7 @@
 		return BULLET_ACT_HIT
 
 	var/turf/origin_turf = get_turf(target)
-	var/turf/destination_turf = find_safe_turf()
+	var/turf/destination_turf = find_safe_turf(extended_safety_checks = TRUE)
 
 	if(do_teleport(target, destination_turf, channel=TELEPORT_CHANNEL_MAGIC))
 		for(var/t in list(origin_turf, destination_turf))
@@ -362,24 +362,23 @@
 
 /obj/projectile/magic/wipe/proc/possession_test(mob/living/carbon/target)
 	var/datum/brain_trauma/special/imaginary_friend/trapped_owner/trauma = target.gain_trauma(/datum/brain_trauma/special/imaginary_friend/trapped_owner)
-	var/poll_message = "Do you want to play as [target.real_name]?"
+	var/poll_message = "Do you want to play as [span_danger(target.real_name)]?"
 	if(target.mind)
-		poll_message = "[poll_message] Job:[target.mind.assigned_role.title]."
+		poll_message = "[poll_message] Job:[span_notice(target.mind.assigned_role.title)]."
 	if(target.mind && target.mind.special_role)
-		poll_message = "[poll_message] Status:[target.mind.special_role]."
+		poll_message = "[poll_message] Status:[span_boldnotice(target.mind.special_role)]."
 	else if(target.mind)
 		var/datum/antagonist/A = target.mind.has_antag_datum(/datum/antagonist/)
 		if(A)
-			poll_message = "[poll_message] Status:[A.name]."
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(poll_message, check_jobban = ROLE_PAI, poll_time = 10 SECONDS, target_mob = target, pic_source = target, role_name_text = "bolt of possession")
+			poll_message = "[poll_message] Status:[span_boldnotice(A.name)]."
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(poll_message, check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = target, alert_pic = target, role_name_text = "bolt of possession")
 	if(target.stat == DEAD)//boo.
 		return
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/ghost = pick(candidates)
+	if(chosen_one)
 		to_chat(target, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
 		var/oldkey = target.key
 		target.ghostize(FALSE)
-		target.key = ghost.key
+		target.key = chosen_one.key
 		trauma.friend.key = oldkey
 		trauma.friend.reset_perspective(null)
 		trauma.friend.Show()
@@ -581,3 +580,31 @@
 	damage_type = BURN
 	damage = 2
 	antimagic_charge_cost = 0 // since the cards gets spammed like a shotgun
+
+//a shrink ray that shrinks stuff, which grows back after a short while.
+/obj/projectile/magic/shrink
+	name = "shrink ray"
+	icon_state = "blue_laser"
+	hitsound = 'sound/weapons/shrink_hit.ogg'
+	damage = 0
+	damage_type = STAMINA
+	armor_flag = ENERGY
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/shrink
+	light_color = LIGHT_COLOR_BLUE
+	var/shrink_time = -1
+
+/obj/projectile/magic/shrink/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	if(isopenturf(target) || isindestructiblewall(target))//shrunk floors wouldnt do anything except look weird, i-walls shouldn't be bypassable
+		return
+	target.AddComponent(/datum/component/shrink, shrink_time)
+
+/obj/projectile/magic/shrink/is_hostile_projectile()
+	return TRUE
+
+/obj/projectile/magic/shrink/wand
+	shrink_time = 90 SECONDS
+
+/obj/projectile/magic/shrink/wand/on_hit(atom/target, blocked = 0, pierce_hit)
+	shrink_time = rand(60 SECONDS, 90 SECONDS)
+	return ..()

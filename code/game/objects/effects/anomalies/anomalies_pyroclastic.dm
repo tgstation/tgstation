@@ -5,7 +5,7 @@
 	var/ticks = 0
 	/// How many seconds between each gas release
 	var/releasedelay = 10
-	aSignal = /obj/item/assembly/signaler/anomaly/pyro
+	anomaly_core = /obj/item/assembly/signaler/anomaly/pyro
 
 /obj/effect/anomaly/pyro/Initialize(mapload, new_lifespan, drops_core)
 	. = ..()
@@ -32,19 +32,13 @@
 		tile.atmos_spawn_air("[GAS_O2]=500;[GAS_PLASMA]=500;[TURF_TEMPERATURE(1000)]") //Make it hot and burny for the new slime
 
 	var/new_colour = pick(/datum/slime_type/red, /datum/slime_type/orange)
-	var/mob/living/simple_animal/slime/pyro = new(tile, new_colour)
-	pyro.rabid = TRUE
-	pyro.amount_grown = SLIME_EVOLUTION_THRESHOLD
-	pyro.Evolve()
-	var/datum/action/innate/slime/reproduce/repro_action = new
-	repro_action.Grant(pyro)
+	var/mob/living/basic/slime/pyro = new(tile, new_colour, SLIME_LIFE_STAGE_ADULT)
+	pyro.set_enraged_behaviour()
 
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as a pyroclastic anomaly slime?", check_jobban = ROLE_SENTIENCE, poll_time = 10 SECONDS, target_mob = pyro, ignore_category = POLL_IGNORE_PYROSLIME, pic_source = pyro, role_name_text = "pyroclastic anomaly slime")
-	if(!LAZYLEN(candidates))
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_SENTIENCE, poll_time = 10 SECONDS, checked_target = pyro, ignore_category = POLL_IGNORE_PYROSLIME, alert_pic = pyro, role_name_text = "pyroclastic anomaly slime")
+	if(isnull(chosen_one))
 		return
-
-	var/mob/dead/observer/chosen = pick(candidates)
-	pyro.key = chosen.key
+	pyro.key = chosen_one.key
 	pyro.mind.special_role = ROLE_PYROCLASTIC_SLIME
 	pyro.mind.add_antag_datum(/datum/antagonist/pyro_slime)
 	pyro.log_message("was made into a slime by pyroclastic anomaly", LOG_GAME)
@@ -52,7 +46,7 @@
 ///Bigger, meaner, immortal pyro anomaly
 /obj/effect/anomaly/pyro/big
 	immortal = TRUE
-	aSignal = null
+	anomaly_core = null
 	releasedelay = 2
 	move_force = MOVE_FORCE_OVERPOWERING
 

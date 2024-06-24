@@ -36,14 +36,14 @@
 	if(visualsOnly)
 		return
 	equipped_on.fully_replace_character_name(null, "Waldo")
-	equipped_on.eye_color_left = "#000000"
-	equipped_on.eye_color_right = "#000000"
+	equipped_on.eye_color_left = COLOR_BLACK
+	equipped_on.eye_color_right = COLOR_BLACK
 	equipped_on.gender = MALE
 	equipped_on.skin_tone = "caucasian3"
 	equipped_on.hairstyle = "Business Hair 3"
 	equipped_on.facial_hairstyle = "Shaved"
-	equipped_on.hair_color = "#000000"
-	equipped_on.facial_hair_color = "#000000"
+	equipped_on.hair_color = COLOR_BLACK
+	equipped_on.facial_hair_color = COLOR_BLACK
 	equipped_on.update_body(is_creating = TRUE)
 
 	var/list/no_drops = list()

@@ -197,23 +197,13 @@
 	for(var/atom/movable/thing as anything in stomach_contents)
 		if(!digestable_cache[thing.type])
 			continue
-		thing.reagents.trans_to(src, 4)
-
-		if(isliving(thing))
-			var/mob/living/lad = thing
-			lad.adjustBruteLoss(6)
-		else if(!thing.reagents.total_volume) // Mobs can't get dusted like this, too important
-			qdel(thing)
+		thing.acid_act(75, 10)
 
 /obj/item/organ/internal/stomach/alien/proc/consume_thing(atom/movable/thing)
 	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(content_moved))
 	RegisterSignal(thing, COMSIG_QDELETING, PROC_REF(content_deleted))
 	if(isliving(thing))
-		var/mob/living/lad = thing
 		RegisterSignal(thing, COMSIG_LIVING_DEATH, PROC_REF(content_died))
-		if(lad.stat == DEAD)
-			qdel(lad)
-			return
 	stomach_contents += thing
 	thing.forceMove(owner || src) // We assert that if we have no owner, we will not be nullspaced
 

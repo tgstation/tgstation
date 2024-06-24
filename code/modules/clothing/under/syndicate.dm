@@ -8,7 +8,6 @@
 	alt_covers_chest = TRUE
 	icon = 'icons/obj/clothing/under/syndicate.dmi'
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
-	supports_variations_flags = CLOTHING_MONKEY_VARIATION
 
 /datum/armor/clothing_under/syndicate
 	melee = 10
@@ -108,6 +107,15 @@
 	desc = "A green military camouflage uniform."
 	icon_state = "camogreen"
 	inhand_icon_state = "g_suit"
+	can_adjust = FALSE
+	supports_variations_flags = NONE
+
+/obj/item/clothing/under/syndicate/floortilecamo
+	name = "floortile camouflage fatigues"
+	desc = "The newest floortile camouflage fatigues used for hallway warfare. \
+		The best breathability, flexibility and comfort. Designed by Camo-J's."
+	icon_state = "camofloortile"
+	inhand_icon_state = "gy_suit"
 	can_adjust = FALSE
 	supports_variations_flags = NONE
 

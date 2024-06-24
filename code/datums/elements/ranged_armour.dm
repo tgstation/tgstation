@@ -53,7 +53,7 @@
 /// Ignore thrown damage based on projectile properties. There's no elegant way to multiply the damage because throwforce is persistent.
 /datum/element/ranged_armour/proc/pre_thrown_impact(atom/parent, obj/item/hit_atom, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
-	if (!isitem(hit_atom))
+	if (!isitem(hit_atom) || HAS_TRAIT(hit_atom, TRAIT_BYPASS_RANGED_ARMOR))
 		return
 	if (hit_atom.throwforce >= minimum_thrown_force)
 		return

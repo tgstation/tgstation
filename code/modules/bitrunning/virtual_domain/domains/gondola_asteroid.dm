@@ -11,9 +11,13 @@
 /obj/structure/closet/crate/secure/bitrunning/encrypted/gondola
 	move_resist = MOVE_FORCE_STRONG
 
-/mob/living/simple_animal/pet/gondola/virtual_domain
+/mob/living/basic/pet/gondola/virtual_domain
 	health = 50
-	loot = list(/obj/effect/decal/cleanable/blood/gibs, /obj/item/stack/sheet/animalhide/gondola = 1, /obj/item/food/meat/slab/gondola/virtual_domain = 1)
+	loot = list(
+		/obj/effect/decal/cleanable/blood/gibs = 1,
+		/obj/item/stack/sheet/animalhide/gondola = 1,
+		/obj/item/food/meat/slab/gondola/virtual_domain = 1,
+	)
 	maxHealth = 50
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_STRONG
@@ -30,4 +34,4 @@
 
 /datum/disease/transformation/gondola/virtual_domain
 	stage_prob = 9
-	new_form = /mob/living/simple_animal/pet/gondola/virtual_domain
+	new_form = /mob/living/basic/pet/gondola/virtual_domain

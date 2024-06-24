@@ -12,6 +12,7 @@
 	foodtypes = GRAIN | DAIRY | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	crafting_complexity = FOOD_COMPLEXITY_2
+	crafted_food_buff = /datum/status_effect/food/chilling
 
 /obj/item/food/strawberryicecreamsandwich
 	name = "strawberry ice cream sandwich"
@@ -27,7 +28,7 @@
 	foodtypes = FRUIT | DAIRY | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	crafting_complexity = FOOD_COMPLEXITY_3
-
+	crafted_food_buff = /datum/status_effect/food/chilling
 
 /obj/item/food/spacefreezy
 	name = "space freezy"
@@ -43,6 +44,7 @@
 	tastes = list("blue cherries" = 2, "ice cream" = 2)
 	foodtypes = FRUIT | DAIRY | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_3
+	crafted_food_buff = /datum/status_effect/food/chilling
 
 /obj/item/food/spacefreezy/make_edible()
 	. = ..()
@@ -62,6 +64,7 @@
 	tastes = list("ice cream" = 1, "banana" = 1)
 	foodtypes = FRUIT | DAIRY | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_3
+	crafted_food_buff = /datum/status_effect/food/chilling
 
 /obj/item/food/sundae/make_edible()
 	. = ..()
@@ -81,6 +84,7 @@
 	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
 	foodtypes = FRUIT | DAIRY | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_4
+	crafted_food_buff = /datum/status_effect/food/chilling
 
 /obj/item/food/honkdae/make_edible()
 	. = ..()
@@ -104,6 +108,7 @@
 	foodtypes = SUGAR //We use SUGAR as a base line to act in as junkfood, other wise we use fruit
 	food_flags = FOOD_FINGER_FOOD
 	crafting_complexity = FOOD_COMPLEXITY_2
+	crafted_food_buff = /datum/status_effect/food/chilling
 
 /obj/item/food/snowcones/lime
 	name = "lime snowcone"
@@ -330,6 +335,7 @@
 	foodtypes = DAIRY | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	crafting_complexity = FOOD_COMPLEXITY_3
+	crafted_food_buff = /datum/status_effect/food/chilling
 
 	var/overlay_state = "creamsicle_o" //This is the edible part of the popsicle.
 	var/bite_states = 4 //This value value is used for correctly setting the bite_consumption to ensure every bite changes the sprite. Do not set to zero.
@@ -434,6 +440,7 @@
 	foodtypes = DAIRY | SUGAR
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	crafted_food_buff = /datum/status_effect/food/chilling
 
 /obj/item/food/popsicle/meatsicle
 	name = "Meatsicle"

@@ -7,7 +7,9 @@
 	icon_state = "lpad-idle"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.5
 	hud_possible = list(DIAG_LAUNCHPAD_HUD)
+	interaction_flags_mouse_drop = NEED_DEXTERITY | NEED_HANDS
 	circuit = /obj/item/circuitboard/machine/launchpad
+
 	/// The beam icon
 	var/icon_teleport = "lpad-beam"
 	/// To prevent briefcase pad deconstruction and such
@@ -152,7 +154,7 @@
 		return "ERROR: Launchpad busy."
 
 	var/area/surrounding = get_area(src)
-	if(is_centcom_level(z) || istype(surrounding, /area/shuttle))
+	if(is_centcom_level(z) || istype(surrounding, /area/shuttle/supply) ||istype(surrounding, /area/shuttle/transport))
 		return "ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible."
 
 	return null
@@ -203,7 +205,7 @@
 		playsound(target, 'sound/weapons/emitter2.ogg', 25, TRUE)
 
 	// use a lot of power
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 	var/turf/source = target
 	var/list/log_msg = list()
@@ -298,14 +300,13 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/launchpad/briefcase/MouseDrop(over_object, src_location, over_location)
-	. = ..()
-	if(over_object == usr)
-		if(!briefcase || !usr.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+/obj/machinery/launchpad/briefcase/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
+	if(over_object == user)
+		if(!briefcase)
 			return
-		usr.visible_message(span_notice("[usr] starts closing [src]..."), span_notice("You start closing [src]..."))
-		if(do_after(usr, 30, target = usr))
-			usr.put_in_hands(briefcase)
+		user.visible_message(span_notice("[usr] starts closing [src]..."), span_notice("You start closing [src]..."))
+		if(do_after(user, 3 SECONDS, target = user))
+			user.put_in_hands(briefcase)
 			moveToNullspace() //hides it from suitcase contents
 			closed = TRUE
 			update_indicator()
@@ -343,22 +344,22 @@
 		return
 	add_fingerprint(user)
 	user.visible_message(span_notice("[user] starts setting down [src]..."), span_notice("You start setting up [pad]..."))
-	if(do_after(user, 30, target = user))
+	if(do_after(user, 3 SECONDS, target = user))
 		pad.forceMove(get_turf(src))
 		pad.update_indicator()
 		pad.closed = FALSE
 		user.transferItemToLoc(src, pad, TRUE)
 		atom_storage.close_all()
 
-/obj/item/storage/briefcase/launchpad/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/launchpad_remote))
-		var/obj/item/launchpad_remote/L = I
-		if(L.pad == WEAKREF(src.pad)) //do not attempt to link when already linked
-			return ..()
-		L.pad = WEAKREF(src.pad)
-		to_chat(user, span_notice("You link [pad] to [L]."))
-	else
-		return ..()
+/obj/item/storage/briefcase/launchpad/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
+	if(istype(inserted, /obj/item/launchpad_remote))
+		var/obj/item/launchpad_remote/remote = inserted
+		if(remote.pad == WEAKREF(src.pad))
+			return TRUE
+		remote.pad = WEAKREF(src.pad)
+		to_chat(user, span_notice("You link [pad] to [remote]."))
+		return FALSE // no insert
+	return TRUE
 
 /obj/item/launchpad_remote
 	name = "folder"

@@ -128,6 +128,10 @@
 #define BB_MINEBOT_DUMP_ABILITY "minebot_dump_ability"
 /// key that stores our target turf
 #define BB_TARGET_MINERAL_TURF "target_mineral_turf"
+///key that holds our missile ability
+#define BB_MINEBOT_MISSILE_ABILITY "minebot_missile_ability"
+///key that holds our landmine ability
+#define BB_MINEBOT_LANDMINE_ABILITY "minebot_landmine_ability"
 /// key that stores list of the turfs we ignore
 #define BB_BLACKLIST_MINERAL_TURFS "blacklist_mineral_turfs"
 /// key that stores the previous blocked wall
@@ -136,6 +140,20 @@
 #define BB_AUTOMATED_MINING "automated_mining"
 /// key that stores the nearest dead human
 #define BB_NEARBY_DEAD_MINER "nearby_dead_miner"
+///key that holds the drone we defend
+#define BB_DRONE_DEFEND "defend_drone"
+///key that holds the minimum distance before we flee
+#define BB_MINIMUM_SHOOTING_DISTANCE "minimum_shooting_distance"
+///key that holds the miner we must befriend
+#define BB_MINER_FRIEND "miner_friend"
+///key that holds the missile target
+#define BB_MINEBOT_MISSILE_TARGET "minebot_missile_target"
+///should we auto protect?
+#define BB_MINEBOT_AUTO_DEFEND "minebot_auto_defend"
+///should we repair drones?
+#define BB_MINEBOT_REPAIR_DRONE "minebot_repair_drone"
+///should we plant mines?
+#define BB_MINEBOT_PLANT_MINES "minebot_plant_mines"
 
 //seedling keys
 /// the water can we will pick up

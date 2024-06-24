@@ -9,7 +9,6 @@
 	icon_state = "reaction_chamber"
 	buffer = 200
 	reagent_flags = TRANSPARENT | NO_REACT
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 
 	/**
 	* list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
@@ -49,22 +48,17 @@
 	return NONE
 
 /obj/machinery/plumbing/reaction_chamber/process(seconds_per_tick)
-	//half the power for getting reagents in
-	var/power_usage = active_power_usage * 0.5
+	if(!is_operational || !reagents.total_volume)
+		return
 
 	if(!emptying || reagents.is_reacting)
 		//adjust temperature of final solution
-		var/temp_diff = target_temperature - reagents.chem_temp
-		if(abs(temp_diff) > 0.01) //if we are not close enough keep going
-			reagents.adjust_thermal_energy(temp_diff * HEATER_COEFFICIENT * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
+		var/energy = (target_temperature - reagents.chem_temp) * HEATER_COEFFICIENT * seconds_per_tick * reagents.heat_capacity()
+		reagents.adjust_thermal_energy(energy)
+		use_energy(active_power_usage + abs(ROUND_UP(energy) / 120))
 
 		//do other stuff with final solution
 		handle_reagents(seconds_per_tick)
-
-		//full power for doing reactions
-		power_usage *= 2
-
-	use_power(power_usage * seconds_per_tick)
 
 ///For subtypes that want to do additional reagent handling
 /obj/machinery/plumbing/reaction_chamber/proc/handle_reagents(seconds_per_tick)
@@ -106,6 +100,8 @@
 		if("add")
 			var/selected_reagent = tgui_input_list(ui.user, "Select reagent", "Reagent", GLOB.name2reagent)
 			if(!selected_reagent)
+				return FALSE
+			if(QDELETED(ui) || ui.status != UI_INTERACTIVE)
 				return FALSE
 
 			var/datum/reagent/input_reagent = GLOB.name2reagent[selected_reagent]
@@ -198,7 +194,7 @@
 			return
 
 		//some power for accurate ph balancing & keep track of attempts made
-		use_power(active_power_usage * 0.03 * buffer_amount)
+		use_energy(active_power_usage * 0.03 * buffer_amount)
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

@@ -173,13 +173,14 @@ export const BountyBoardContent = (props) => {
               />
               <Box>
                 <NumberInput
-                  animate
+                  animated
                   unit="cr"
                   minValue={1}
                   maxValue={1000}
                   value={bountyValue}
+                  step={1}
                   width="80px"
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     act('bountyVal', {
                       bountyval: value,
                     })

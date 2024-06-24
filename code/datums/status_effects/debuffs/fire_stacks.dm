@@ -30,8 +30,7 @@
 		qdel(src)
 		return
 	if(isbasicmob(owner))
-		var/mob/living/basic/basic_owner = owner
-		if(!(basic_owner.basic_mob_flags & FLAMMABLE_MOB))
+		if(!check_basic_mob_immunity(owner))
 			qdel(src)
 			return
 
@@ -94,6 +93,10 @@
 	stacks = max(0, min(stack_limit, stacks + new_stacks))
 	cache_stacks()
 
+/// Checks if the applicable basic mob is immune to the status effect we're trying to apply. Returns TRUE if it is, FALSE if it isn't.
+/datum/status_effect/fire_handler/proc/check_basic_mob_immunity(mob/living/basic/basic_owner)
+	return (basic_owner.basic_mob_flags & FLAMMABLE_MOB)
+
 /**
  * Refresher for mob's fire_stacks
  */
@@ -132,6 +135,18 @@
 	var/obj/effect/dummy/lighting_obj/moblight
 	/// Type of mob light emitter we use when on fire
 	var/moblight_type = /obj/effect/dummy/lighting_obj/moblight/fire
+
+/datum/status_effect/fire_handler/fire_stacks/proc/owner_touched_sparks()
+	SIGNAL_HANDLER
+
+	ignite()
+
+/datum/status_effect/fire_handler/fire_stacks/on_creation(mob/living/new_owner, new_stacks, forced = FALSE)
+	. = ..()
+	RegisterSignal(owner, COMSIG_ATOM_TOUCHED_SPARKS, PROC_REF(owner_touched_sparks))
+
+/datum/status_effect/fire_handler/fire_stacks/on_remove()
+	UnregisterSignal(owner, COMSIG_ATOM_TOUCHED_SPARKS)
 
 /datum/status_effect/fire_handler/fire_stacks/tick(seconds_between_ticks)
 	if(stacks <= 0)
@@ -244,7 +259,7 @@
 	owner.clear_mood_event("on_fire")
 	SEND_SIGNAL(owner, COMSIG_LIVING_EXTINGUISHED, owner)
 	cache_stacks()
-	for(var/obj/item/equipped in owner.get_equipped_items())
+	for(var/obj/item/equipped in (owner.get_equipped_items(INCLUDE_HELD)))
 		equipped.extinguish()
 
 /datum/status_effect/fire_handler/fire_stacks/on_remove()
@@ -258,6 +273,7 @@
 /datum/status_effect/fire_handler/fire_stacks/on_apply()
 	. = ..()
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_fire_overlay))
+	RegisterSignal(owner, COMSIG_ATOM_EXTINGUISH, PROC_REF(extinguish))
 	owner.update_appearance(UPDATE_OVERLAYS)
 
 /datum/status_effect/fire_handler/fire_stacks/proc/add_fire_overlay(mob/living/source, list/overlays)
@@ -271,11 +287,6 @@
 		return
 
 	overlays |= created_overlay
-
-/obj/effect/dummy/lighting_obj/moblight/fire
-	name = "fire"
-	light_color = LIGHT_COLOR_FIRE
-	light_range = LIGHT_RANGE_FIRE
 
 /datum/status_effect/fire_handler/wet_stacks
 	id = "wet_stacks"
@@ -292,3 +303,6 @@
 	if(particle_effect)
 		return
 	particle_effect = new(owner, /particles/droplets)
+
+/datum/status_effect/fire_handler/wet_stacks/check_basic_mob_immunity(mob/living/basic/basic_owner)
+	return !(basic_owner.basic_mob_flags & IMMUNE_TO_GETTING_WET)

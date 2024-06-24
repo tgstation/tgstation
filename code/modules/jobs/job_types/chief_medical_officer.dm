@@ -56,7 +56,7 @@
 
 	id = /obj/item/card/id/advanced/silver
 	id_trim = /datum/id_trim/job/chief_medical_officer
-	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer/scrubs
+	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
 	suit_store = /obj/item/flashlight/pen/paramedic
 	backpack_contents = list(
@@ -64,7 +64,6 @@
 		)
 	belt = /obj/item/modular_computer/pda/heads/cmo
 	ears = /obj/item/radio/headset/heads/cmo
-	head = /obj/item/clothing/head/utility/surgerycap/cmo
 	shoes = /obj/item/clothing/shoes/sneakers/blue
 	l_pocket = /obj/item/laser_pointer/blue
 	r_pocket = /obj/item/pinpointer/crew

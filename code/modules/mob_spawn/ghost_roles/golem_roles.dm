@@ -36,8 +36,7 @@
 	if(forced_name || !iscarbon(spawned_mob))
 		return ..()
 
-	var/datum/species/golem/golem_species = new()
-	forced_name = golem_species.random_name()
+	forced_name = generate_random_name_species_based(spawned_mob.gender, TRUE, species_type = /datum/species/golem)
 	return ..()
 
 /obj/effect/mob_spawn/ghost_role/human/golem/special(mob/living/new_spawn, mob/mob_possessor)

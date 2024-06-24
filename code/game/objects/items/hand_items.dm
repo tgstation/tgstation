@@ -41,7 +41,7 @@
 
 	if(!istype(sucker) || !in_range(owner, sucker))
 		return
-	addtimer(CALLBACK(src, PROC_REF(waitASecond), owner, sucker), 4)
+	addtimer(CALLBACK(src, PROC_REF(waitASecond), owner, sucker), 0.4 SECONDS)
 
 /// Stage 2: Fear sets in
 /obj/item/hand_item/circlegame/proc/waitASecond(mob/living/owner, mob/living/sucker)
@@ -50,10 +50,10 @@
 
 	if(owner == sucker) // big mood
 		to_chat(owner, span_danger("Wait a second... you just looked at your own [src.name]!"))
-		addtimer(CALLBACK(src, PROC_REF(selfGottem), owner), 10)
+		addtimer(CALLBACK(src, PROC_REF(selfGottem), owner), 1 SECONDS)
 	else
 		to_chat(sucker, span_danger("Wait a second... was that a-"))
-		addtimer(CALLBACK(src, PROC_REF(GOTTEM), owner, sucker), 6)
+		addtimer(CALLBACK(src, PROC_REF(GOTTEM), owner, sucker), 0.6 SECONDS)
 
 /// Stage 3A: We face our own failures
 /obj/item/hand_item/circlegame/proc/selfGottem(mob/living/owner)
@@ -475,9 +475,10 @@
 	/// TRUE if the user was aiming anywhere but the mouth when they offer the kiss, if it's offered
 	var/cheek_kiss
 
-/obj/item/hand_item/kisser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/hand_item/kisser/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/hand_item/kisser/ranged_interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
 		kiss_type = /obj/projectile/kiss/french
 
@@ -491,10 +492,11 @@
 	blown_kiss.original = target
 	blown_kiss.fired_from = user
 	blown_kiss.firer = user // don't hit ourself that would be really annoying
-	blown_kiss.impacted = list(user = TRUE) // just to make sure we don't hit the wearer
+	blown_kiss.impacted = list(WEAKREF(user) = TRUE) // just to make sure we don't hit the wearer
 	blown_kiss.preparePixelProjectile(target, user)
 	blown_kiss.fire()
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/hand_item/kisser/on_offered(mob/living/carbon/offerer, mob/living/carbon/offered)
 	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
@@ -517,7 +519,7 @@
 	blown_kiss.original = taker
 	blown_kiss.fired_from = offerer
 	blown_kiss.firer = offerer // don't hit ourself that would be really annoying
-	blown_kiss.impacted = list(offerer = TRUE) // just to make sure we don't hit the wearer
+	blown_kiss.impacted = list(WEAKREF(offerer) = TRUE) // just to make sure we don't hit the wearer
 	blown_kiss.preparePixelProjectile(taker, offerer)
 	blown_kiss.suppressed = SUPPRESSED_VERY // this also means it's a direct offer
 	blown_kiss.fire()

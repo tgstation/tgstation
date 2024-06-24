@@ -7,11 +7,7 @@
 	value = 0
 	mail_goodies = list(/obj/item/clothing/glasses/eyepatch)
 
-// Only your first eyes are heterochromatic
-// If someone comes and says "well mr coder you can have DNA bound heterochromia so it's not unrealistic
-// to allow all inserted replacement eyes to become heterochromatic or for it to transfer between mobs"
-// Then just change this to [proc/add] I really don't care
-/datum/quirk/heterochromatic/add_unique(client/client_source)
+/datum/quirk/heterochromatic/add(client/client_source)
 	var/color = client_source?.prefs.read_preference(/datum/preference/color/heterochromatic)
 	if(!color)
 		return
@@ -24,6 +20,7 @@
 	var/was_not_hetero = !human_holder.eye_color_heterochromatic
 	human_holder.eye_color_heterochromatic = TRUE
 	human_holder.eye_color_right = color
+	human_holder.dna.update_ui_block(DNA_EYE_COLOR_RIGHT_BLOCK)
 
 	var/obj/item/organ/internal/eyes/eyes_of_the_holder = quirk_holder.get_organ_by_type(/obj/item/organ/internal/eyes)
 	if(!eyes_of_the_holder)

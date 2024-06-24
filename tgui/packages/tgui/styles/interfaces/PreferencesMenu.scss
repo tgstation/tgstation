@@ -2,6 +2,7 @@
 @use 'sass:map';
 @use '../components/Button.scss';
 @use '../colors.scss';
+@use '../base.scss';
 
 $department_map: (
   'Assistant': colors.$grey,
@@ -15,6 +16,10 @@ $department_map: (
   'Service': colors.$green,
   'Silicon': colors.$pink,
 );
+
+.ChoicedSelection {
+  background-color: base.$color-bg;
+}
 
 .PreferencesMenu {
   &__Antags {

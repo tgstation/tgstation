@@ -132,7 +132,7 @@
 	SIGNAL_HANDLER
 	return is_shy(target) && COMPONENT_CANT_STRIP
 
-/datum/component/shy/proc/on_try_alt_action(datum/source, atom/target)
+/datum/component/shy/proc/on_try_alt_action(datum/source, atom/target, action_key)
 	SIGNAL_HANDLER
 	return is_shy(target) && COMPONENT_CANT_ALT_ACTION
 

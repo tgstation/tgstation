@@ -2,6 +2,14 @@
 /datum/unit_test/cardboard_cutouts
 
 /datum/unit_test/cardboard_cutouts/Run()
+	for(var/datum/cardboard_cutout/cutout as anything in subtypesof(/datum/cardboard_cutout))
+		var/direct_icon = initial(cutout.direct_icon)
+		if(isnull(direct_icon)) //these are dynamically generated.
+			continue
+		var/direct_state = initial(cutout.direct_icon_state)
+		if(!icon_exists(direct_icon, direct_state))
+			TEST_FAIL("[cutout] has a non-existant icon state at: [direct_icon] - [direct_state]")
+
 	var/obj/item/cardboard_cutout/normal_cutout = new
 	test_screenshot("normal_cutout", getFlatIcon(normal_cutout))
 
@@ -17,9 +25,3 @@
 
 	var/obj/item/cardboard_cutout/xenomorph/xenomorph_cutout = new
 	test_screenshot("xenomorph_cutout", getFlatIcon(xenomorph_cutout))
-
-/obj/item/cardboard_cutout/nuclear_operative
-	starting_cutout = "Nuclear Operative"
-
-/obj/item/cardboard_cutout/xenomorph
-	starting_cutout = "Xenomorph"

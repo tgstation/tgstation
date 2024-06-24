@@ -1,5 +1,6 @@
 /obj/structure/spider/eggcluster
 	name = "egg cluster"
+	icon = 'icons/effects/effects.dmi'
 	desc = "There's something alive in there, and sooner or later it's going to find its way out."
 	icon_state = "eggs"
 	/// Mob spawner handling the actual spawn of the spider
@@ -154,7 +155,7 @@
 	cluster_type = /obj/structure/spider/eggcluster/abnormal
 	potentialspawns = list(
 		/mob/living/basic/spider/growing/spiderling/tank,
-		/mob/living/basic/spider/growing/spiderling/breacher,
+		/mob/living/basic/spider/growing/spiderling/viper,
 	)
 	flash_window = TRUE
 
@@ -165,7 +166,7 @@
 	cluster_type = /obj/structure/spider/eggcluster/enriched
 	potentialspawns = list(
 		/mob/living/basic/spider/growing/spiderling/tarantula,
-		/mob/living/basic/spider/growing/spiderling/viper,
+		/mob/living/basic/spider/growing/spiderling/breacher,
 		/mob/living/basic/spider/growing/spiderling/midwife,
 	)
 	flash_window = TRUE

@@ -24,9 +24,8 @@ at the cost of risking a vicious bite.**/
 		/obj/item/restraints/handcuffs/cable/green = 1,
 		/obj/item/restraints/handcuffs/cable/pink = 1,
 		/obj/item/restraints/handcuffs/alien = 2,
-		/obj/item/coin/bananium = 9,
+		/obj/item/coin/bananium = 10,
 		/obj/item/knife/butcher = 5,
-		/obj/item/coin/mythril = 1,
 	)
 
 
@@ -304,11 +303,9 @@ at the cost of risking a vicious bite.**/
 		deconstruct()
 		return TRUE
 
-/obj/structure/steam_vent/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(loc, 1)
-		new /obj/item/stock_parts/water_recycler(loc, 1)
-	qdel(src)
+/obj/structure/steam_vent/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/iron(loc, 1)
+	new /obj/item/stock_parts/water_recycler(loc, 1)
 
 /**
  * Creates "steam" smoke, and determines when the vent needs to block line of sight via reset_opacity.

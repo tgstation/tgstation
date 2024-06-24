@@ -1,7 +1,7 @@
 /obj/item/key
 	name = "key"
 	desc = "A small grey key."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "key"
 	w_class = WEIGHT_CLASS_TINY
 
@@ -20,7 +20,7 @@
 		return SHAME
 	user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] ear and starts [user.p_their()] motor! It looks like [user.p_theyre()] trying to commit suicide!"))
 	user.say("Vroom vroom!!", forced="secway key suicide") //Not doing a shamestate here, because even if they fail to speak they're spinning.
-	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/, gib)), 20)
+	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/, gib)), 2 SECONDS)
 	return MANUAL_SUICIDE
 
 /obj/item/key/janitor
@@ -46,7 +46,7 @@
 		if(SKILL_LEVEL_APPRENTICE to SKILL_LEVEL_JOURNEYMAN) //At least they tried
 			user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] mouth and has inefficiently become one with the janicart! It looks like [user.p_theyre()] trying to commit suicide!"))
 			user.AddElement(/datum/element/cleaning)
-			addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 51)
+			addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 5.1 SECONDS)
 			return MANUAL_SUICIDE
 		if(SKILL_LEVEL_EXPERT to SKILL_LEVEL_MASTER) //They are worthy enough, but can it go even further beyond?
 			user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] mouth and has skillfully become one with the janicart! It looks like [user.p_theyre()] trying to commit suicide!"))
