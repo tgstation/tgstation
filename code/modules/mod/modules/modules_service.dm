@@ -27,7 +27,7 @@
 		allowing them to cook food from a distance, with the greatest of ease. Not recommended for use against grapes."
 	icon_state = "microwave_beam"
 	module_type = MODULE_ACTIVE
-	complexity = 2
+	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/microwave_beam, /obj/item/mod/module/organ_thrower)
 	cooldown_time = 10 SECONDS

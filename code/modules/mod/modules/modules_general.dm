@@ -38,9 +38,12 @@
 /obj/item/mod/module/storage/proc/on_chestplate_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
 	if(QDELETED(source) || !mod.wearer || newloc == mod.wearer || !mod.wearer.s_store)
 		return
-	to_chat(mod.wearer, span_notice("[src] tries to store [mod.wearer.s_store] inside itself."))
-	if(atom_storage?.attempt_insert(mod.wearer.s_store, mod.wearer, override = TRUE))
-		mod.wearer.temporarilyRemoveItemFromInventory(mod.wearer.s_store)
+	if(!atom_storage?.attempt_insert(mod.wearer.s_store, mod.wearer, override = TRUE))
+		balloon_alert(mod.wearer, "storage failed!")
+		to_chat(mod.wearer, span_warning("[src] fails to store [mod.wearer.s_store] inside itself!"))
+		return
+	to_chat(mod.wearer, span_notice("[src] stores [mod.wearer.s_store] inside itself."))
+	mod.wearer.temporarilyRemoveItemFromInventory(mod.wearer.s_store)
 
 /obj/item/mod/module/storage/large_capacity
 	name = "MOD expanded storage module"
@@ -163,6 +166,68 @@
 	overlay_state_active = "module_jetpackadv_on"
 	full_speed = TRUE
 
+///Status Readout - Puts a lot of information including health, nutrition, fingerprints, temperature to the suit TGUI.
+/obj/item/mod/module/status_readout
+	name = "MOD status readout module"
+	desc = "A once-common module, this technology unfortunately went out of fashion in the safer regions of space; \
+		and found new life in the research networks of the Periphery. This particular unit hooks into the suit's spine, \
+		capable of capturing and displaying all possible biometric data of the wearer; sleep, nutrition, fitness, fingerprints, \
+		and even useful information such as their overall health and wellness. The vitals monitor also comes with a speaker, loud enough \
+		to alert anyone nearby that someone has, in fact, died."
+	icon_state = "status"
+	complexity = 1
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
+	incompatible_modules = list(/obj/item/mod/module/status_readout)
+	tgui_id = "status_readout"
+	/// Does this show the round ID and shift time?
+	var/show_time = FALSE
+	/// Death sound. May or may not be funny. Vareditable at your own risk.
+	var/death_sound = 'sound/effects/flatline3.ogg'
+	/// Death sound volume. Please be responsible with this.
+	var/death_sound_volume = 50
+
+/obj/item/mod/module/status_readout/add_ui_data()
+	. = ..()
+	.["show_time"] = show_time
+	.["statustime"] = station_time_timestamp()
+	.["statusid"] = GLOB.round_id
+	.["statushealth"] = mod.wearer?.health || 0
+	.["statusmaxhealth"] = mod.wearer?.getMaxHealth() || 0
+	.["statusbrute"] = mod.wearer?.getBruteLoss() || 0
+	.["statusburn"] = mod.wearer?.getFireLoss() || 0
+	.["statustoxin"] = mod.wearer?.getToxLoss() || 0
+	.["statusoxy"] = mod.wearer?.getOxyLoss() || 0
+	.["statustemp"] = mod.wearer?.bodytemperature || 0
+	.["statusnutrition"] = mod.wearer?.nutrition || 0
+	.["statusfingerprints"] = mod.wearer ? md5(mod.wearer.dna.unique_identity) : null
+	.["statusdna"] = mod.wearer?.dna.unique_enzymes
+	.["statusviruses"] = null
+	if(!length(mod.wearer?.diseases))
+		return .
+	var/list/viruses = list()
+	for(var/datum/disease/virus as anything in mod.wearer.diseases)
+		var/list/virus_data = list()
+		virus_data["name"] = virus.name
+		virus_data["type"] = virus.spread_text
+		virus_data["stage"] = virus.stage
+		virus_data["maxstage"] = virus.max_stages
+		virus_data["cure"] = virus.cure_text
+		viruses += list(virus_data)
+	.["statusviruses"] = viruses
+
+	return .
+
+/obj/item/mod/module/status_readout/on_suit_activation()
+	RegisterSignal(mod.wearer, COMSIG_LIVING_DEATH, PROC_REF(death_sound))
+
+/obj/item/mod/module/status_readout/on_suit_deactivation(deleting)
+	UnregisterSignal(mod.wearer, COMSIG_LIVING_DEATH)
+
+/obj/item/mod/module/status_readout/proc/death_sound(mob/living/carbon/human/wearer)
+	SIGNAL_HANDLER
+	if(death_sound && death_sound_volume)
+		playsound(wearer, death_sound, death_sound_volume, FALSE)
+
 ///Eating Apparatus - Lets the user eat/drink with the suit on.
 /obj/item/mod/module/mouthhole
 	name = "MOD eating apparatus module"
@@ -181,8 +246,8 @@
 /obj/item/mod/module/mouthhole/on_install()
 	former_flags = mod.helmet.flags_cover
 	former_visor_flags = mod.helmet.visor_flags_cover
-	mod.helmet.flags_cover &= ~HEADCOVERSMOUTH|PEPPERPROOF
-	mod.helmet.visor_flags_cover &= ~HEADCOVERSMOUTH|PEPPERPROOF
+	mod.helmet.flags_cover &= ~(HEADCOVERSMOUTH|PEPPERPROOF)
+	mod.helmet.visor_flags_cover &= ~(HEADCOVERSMOUTH|PEPPERPROOF)
 
 /obj/item/mod/module/mouthhole/on_uninstall(deleting = FALSE)
 	if(deleting)
@@ -358,7 +423,7 @@
 		ensuring they're comfortable; even if they're some that like it hot."
 	icon_state = "regulator"
 	module_type = MODULE_TOGGLE
-	complexity = 2
+	complexity = 1
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/thermal_regulator)
 	cooldown_time = 0.5 SECONDS
@@ -389,7 +454,7 @@
 		however, this incredibly sensitive module is shorted out by EMPs. Luckily, cloning has been outlawed."
 	icon_state = "dnalock"
 	module_type = MODULE_USABLE
-	complexity = 2
+	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/dna_lock, /obj/item/mod/module/eradication_lock)
 	cooldown_time = 0.5 SECONDS
@@ -472,6 +537,11 @@
 	incompatible_modules = list(/obj/item/mod/module/plasma_stabilizer)
 	overlay_state_inactive = "module_plasma"
 
+/obj/item/mod/module/plasma_stabilizer/generate_worn_overlay()
+	if(locate(/obj/item/mod/module/infiltrator) in mod.modules)
+		return list()
+	return ..()
+
 /obj/item/mod/module/plasma_stabilizer/on_equip()
 	ADD_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION_HEAD_ONLY, MOD_TRAIT)
 
@@ -484,7 +554,7 @@
 /obj/item/mod/module/hat_stabilizer
 	name = "MOD hat stabilizer module"
 	desc = "A simple set of deployable stands, directly atop one's head; \
-		these will deploy under a select few hats to keep them from falling off, allowing them to be worn atop the sealed helmet. \
+		these will deploy under a hat to keep it from falling off, allowing them to be worn atop the sealed helmet. \
 		You still need to take the hat off your head while the helmet deploys, though. \
 		This is a must-have for Nanotrasen Captains, enabling them to show off their authoritative hat even while in their MODsuit."
 	icon_state = "hat_holder"
@@ -493,36 +563,9 @@
 	even though it comes inbuilt into the Magnate/Corporate MODS and spawns in maints, I like the idea of stealing them*/
 	/// Currently "stored" hat. No armor or function will be inherited, ONLY the icon.
 	var/obj/item/clothing/head/attached_hat
-	/// Whitelist of attachable hats, read note in Initialize() below this line
-	var/static/list/attachable_hats_list
-
-/obj/item/mod/module/hat_stabilizer/Initialize(mapload)
-	. = ..()
-	attachable_hats_list = typecacheof(
-	//List of attachable hats. Make sure these and their subtypes are all tested, so they dont appear janky.
-	//This list should also be gimmicky, so captains can have fun. I.E. the Santahat, Pirate hat, Tophat, Chefhat...
-	//Yes, I said it, the captain should have fun.
-		list(
-			/obj/item/clothing/head/hats/caphat,
-			/obj/item/clothing/head/costume/crown,
-			/obj/item/clothing/head/hats/centhat,
-			/obj/item/clothing/head/hats/centcom_cap,
-			/obj/item/clothing/head/costume/pirate,
-			/obj/item/clothing/head/costume/santa,
-			/obj/item/clothing/head/utility/hardhat/reindeer,
-			/obj/item/clothing/head/costume/sombrero/green,
-			/obj/item/clothing/head/costume/kitty,
-			/obj/item/clothing/head/costume/rabbitears,
-			/obj/item/clothing/head/costume/festive,
-			/obj/item/clothing/head/costume/powdered_wig,
-			/obj/item/clothing/head/costume/weddingveil,
-			/obj/item/clothing/head/hats/tophat,
-			/obj/item/clothing/head/costume/nursehat,
-			/obj/item/clothing/head/utility/chefhat,
-			/obj/item/clothing/head/costume/papersack,
-			/obj/item/clothing/head/caphat/beret,
-			/obj/item/clothing/head/helmet/space/beret,
-			))
+	/// Original cover flags for the MOD helmet, before a hat is placed
+	var/former_flags
+	var/former_visor_flags
 
 /obj/item/mod/module/hat_stabilizer/on_suit_activation()
 	RegisterSignal(mod.helmet, COMSIG_ATOM_EXAMINE, PROC_REF(add_examine))
@@ -552,14 +595,15 @@
 	if(!mod.active)
 		balloon_alert(user, "suit must be active!")
 		return
-	if(!is_type_in_typecache(hitting_item, attachable_hats_list))
-		balloon_alert(user, "this hat won't fit!")
-		return
 	if(attached_hat)
 		balloon_alert(user, "hat already attached!")
 		return
 	if(mod.wearer.transferItemToLoc(hitting_item, src, force = FALSE, silent = TRUE))
 		attached_hat = hitting_item
+		former_flags = mod.helmet.flags_cover
+		former_visor_flags = mod.helmet.visor_flags_cover
+		mod.helmet.flags_cover |= attached_hat.flags_cover
+		mod.helmet.visor_flags_cover |= attached_hat.visor_flags_cover
 		balloon_alert(user, "hat attached, right-click to remove")
 		mod.wearer.update_clothing(mod.slot_flags)
 
@@ -579,6 +623,8 @@
 	else
 		balloon_alert_to_viewers("the hat falls to the floor!")
 	attached_hat = null
+	mod.helmet.flags_cover = former_flags
+	mod.helmet.visor_flags_cover = former_visor_flags
 	mod.wearer.update_clothing(mod.slot_flags)
 
 ///Sign Language Translator - allows people to sign over comms using the modsuit's gloves.

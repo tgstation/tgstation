@@ -13,24 +13,30 @@
 		but it's up to you to do something with it."
 	icon_state = "health"
 	module_type = MODULE_ACTIVE
-	complexity = 2
+	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/health_analyzer)
 	cooldown_time = 0.5 SECONDS
 	tgui_id = "health_analyzer"
 	/// Scanning mode, changes how we scan something.
 	var/mode = HEALTH_SCAN
+	/// Do we relay the wearer's health data to the info tab? Mainly useful for turning off if you also have a status readout.
+	var/show_vitals = TRUE
 	/// List of all scanning modes.
 	var/static/list/modes = list(HEALTH_SCAN, WOUND_SCAN, CHEM_SCAN)
 
 /obj/item/mod/module/health_analyzer/add_ui_data()
 	. = ..()
-	.["userhealth"] = mod.wearer?.health || 0
-	.["usermaxhealth"] = mod.wearer?.getMaxHealth() || 0
-	.["userbrute"] = mod.wearer?.getBruteLoss() || 0
-	.["userburn"] = mod.wearer?.getFireLoss() || 0
-	.["usertoxin"] = mod.wearer?.getToxLoss() || 0
-	.["useroxy"] = mod.wearer?.getOxyLoss() || 0
+	.["show_vitals"] = show_vitals
+	if(show_vitals)
+		.["userhealth"] = mod.wearer?.health || 0
+		.["usermaxhealth"] = mod.wearer?.getMaxHealth() || 0
+		.["userbrute"] = mod.wearer?.getBruteLoss() || 0
+		.["userburn"] = mod.wearer?.getFireLoss() || 0
+		.["usertoxin"] = mod.wearer?.getToxLoss() || 0
+		.["useroxy"] = mod.wearer?.getOxyLoss() || 0
+		
+	return .
 
 /obj/item/mod/module/health_analyzer/on_select_use(atom/target)
 	. = ..()
@@ -50,11 +56,16 @@
 /obj/item/mod/module/health_analyzer/get_configuration()
 	. = ..()
 	.["mode"] = add_ui_configuration("Scan Mode", "list", mode, modes)
+	.["show_vitals"] = add_ui_configuration("Self Vitals Display", "bool", show_vitals)
+	
+	return .
 
 /obj/item/mod/module/health_analyzer/configure_edit(key, value)
 	switch(key)
 		if("mode")
 			mode = value
+		if("show_vitals")
+			show_vitals = value
 
 #undef HEALTH_SCAN
 #undef WOUND_SCAN
