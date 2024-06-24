@@ -10,7 +10,7 @@
 		if(current_dish)
 			balloon_alert(user, "already has a dish!")
 			return
-		balloon_alert(user, "added dish")
+		balloon_alert(user, "dish added")
 		current_dish = tool
 		current_dish.forceMove(src)
 		return ITEM_INTERACT_SUCCESS
@@ -19,7 +19,7 @@
 /obj/structure/microscope/attack_hand_secondary(mob/user, list/modifiers)
 	if(current_dish && user.put_in_hands(current_dish))
 		current_dish = null
-		balloon_alert(user, "took dish")
+		balloon_alert(user, "dish removed")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
