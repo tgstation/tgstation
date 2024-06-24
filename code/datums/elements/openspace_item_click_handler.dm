@@ -19,7 +19,7 @@
 	SIGNAL_HANDLER
 	if((target.z == 0) || (user.z == 0) || target.z == user.z)
 		return NONE
-	var/turf/target_turf = parse_caught_click_modifiers(modifiers, get_turf(user.client ? user.client.eye : user), user.client)
+	var/turf/target_turf = parse_caught_click_modifiers(modifiers, get_turf(user.client?.eye || user), user.client)
 	if(target_turf?.z == user.z && user.CanReach(target_turf, source))
 		INVOKE_ASYNC(source, TYPE_PROC_REF(/obj/item, handle_openspace_click), target_turf, user, modifiers)
 		return ITEM_INTERACT_BLOCKING
