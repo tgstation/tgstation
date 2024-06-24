@@ -165,8 +165,6 @@
 		var/atom/AT = A
 		if(!QDELETED(AT) && AT != src)
 			AT.fire_act(temperature, volume)
-	if(!location.our_hot_group.current_sound_loc in view(6, loccation))
-		location.our_hot_group.remove_from_group(location)
 	return
 
 /// Mathematics to be used for color calculation.
