@@ -161,7 +161,8 @@
 	if(bumpsmash && !on_cooldown)
 		// Our pilot for this evening
 		var/list/mob/mobster = return_drivers()
-		obstacle.mech_melee_attack(src, mobster[1], melee_cooldown * 0.3)
+		if(obstacle.mech_melee_attack(src, mobster[1]))
+			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown * 0.3)
 		if(!obstacle || obstacle.CanPass(src, get_dir(obstacle, src) || dir)) // The else is in case the obstacle is in the same turf.
 			step(src,dir)
 	if(isobj(obstacle))

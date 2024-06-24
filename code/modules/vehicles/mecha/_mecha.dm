@@ -701,7 +701,8 @@
 	use_energy(melee_energy_drain)
 
 	SEND_SIGNAL(user, COMSIG_MOB_USED_CLICK_MECH_MELEE, src)
-	target.mech_melee_attack(src, user, melee_cooldown)
+	if(target.mech_melee_attack(src, user))
+		TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
 
 /// Driver alt clicks anything while in mech
 /obj/vehicle/sealed/mecha/proc/on_click_alt(mob/user, atom/target, params)
