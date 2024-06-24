@@ -1,0 +1,5 @@
+author: "Glyphee"
+delete-after: True
+changes:
+  - balance: "removed freerunning from goblins by default"
+  - balance: "raised stunmod\n:cl:"
