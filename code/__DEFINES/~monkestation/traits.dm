@@ -36,5 +36,11 @@
 
 #define ABDUCTOR_GLAND_VENTCRAWLING_TRAIT "abductor_gland_ventcrawling"
 #define TRAIT_BETTER_CYBERCONNECTOR "better_cyberconnector_hacking"
+
 /// Allows the user to instantly reload.
 #define TRAIT_INSTANT_RELOAD "instant_reload"
+
+
+// /turf/open
+/// If a trait is considered as having "coverage" by a meteor shield.
+#define TRAIT_COVERED_BY_METEOR_SHIELD		"covered_by_meteor_shield"

@@ -17,6 +17,9 @@
 #define HOLOMAP_ROCK "#66666644"	// Color of mineral walls
 #define HOLOMAP_HOLOFIER "#0096bb"	// Whole map is multiplied by this to give it a green holoish look
 
+#define HOLOMAP_AREACOLOR_SHIELD_1 rgb(0, 119, 255, 64)
+#define HOLOMAP_AREACOLOR_SHIELD_2 rgb(0, 255, 255, 64)
+
 #define HOLOMAP_AREACOLOR_COMMAND "#3434d499"
 #define HOLOMAP_AREACOLOR_SECURITY "#AE121299"
 #define HOLOMAP_AREACOLOR_MEDICAL "#447bc299"
