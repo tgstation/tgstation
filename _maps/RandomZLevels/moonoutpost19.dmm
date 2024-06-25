@@ -3045,7 +3045,7 @@
 "ty" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/siding/thinplating_new/light,
 /turf/open/floor/iron,
 /area/awaymission/moonoutpost19/arrivals)
@@ -5428,7 +5428,7 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/machinery/light/small/directional/west,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/paper/fluff/awaymissions/moonoutpost19/engineering,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -5728,7 +5728,7 @@
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/radio/off{
 	pixel_x = 8;
 	pixel_y = 17
@@ -5775,7 +5775,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "MW" = (
 /obj/structure/table,
-/obj/item/stock_parts/cell/crap/empty{
+/obj/item/stock_parts/power_store/cell/crap/empty{
 	pixel_x = -4
 	},
 /turf/open/floor/pod/dark,
@@ -6525,9 +6525,9 @@
 /area/awaymission/moonoutpost19/arrivals)
 "Ro" = (
 /obj/structure/table,
-/obj/item/stock_parts/cell/crap/empty,
-/obj/item/stock_parts/cell/crap/empty,
-/obj/item/stock_parts/cell/crap/empty{
+/obj/item/stock_parts/power_store/cell/crap/empty,
+/obj/item/stock_parts/power_store/cell/crap/empty,
+/obj/item/stock_parts/power_store/cell/crap/empty{
 	pixel_x = -16;
 	pixel_y = 4
 	},

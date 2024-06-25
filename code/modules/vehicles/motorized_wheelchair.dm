@@ -20,7 +20,7 @@
 		/datum/stock_part/capacitor,
 	)
 	///power cell we draw power from
-	var/obj/item/stock_parts/cell/power_cell
+	var/obj/item/stock_parts/power_store/power_cell
 	///stock parts for this chair
 	var/list/component_parts = list()
 
@@ -34,7 +34,7 @@
 	component_parts += GLOB.stock_part_datums[/datum/stock_part/capacitor]
 	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo]
 	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo]
-	power_cell = new /obj/item/stock_parts/cell(src)
+	power_cell = new /obj/item/stock_parts/power_store/cell(src)
 
 /obj/vehicle/ridden/wheelchair/motorized/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/motorized)
@@ -45,7 +45,7 @@
 	component_parts = list()
 
 	for(var/obj/item/stock_parts/part in parts_list)
-		if(istype(part, /obj/item/stock_parts/cell)) // power cell, physically moves into the wheelchair
+		if(istype(part, /obj/item/stock_parts/power_store/cell)) // power cell, physically moves into the wheelchair
 			power_cell = part
 			part.forceMove(src)
 			continue
@@ -109,7 +109,7 @@
 	if(!panel_open)
 		return ..()
 
-	if(istype(attacking_item, /obj/item/stock_parts/cell))
+	if(istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		if(power_cell)
 			to_chat(user, span_warning("There is a power cell already installed."))
 		else
@@ -232,4 +232,4 @@
 	component_parts += GLOB.stock_part_datums[/datum/stock_part/capacitor]
 	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo/tier2]
 	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo]
-	power_cell = new /obj/item/stock_parts/cell/upgraded/plus(src)
+	power_cell = new /obj/item/stock_parts/power_store/cell/upgraded/plus(src)
