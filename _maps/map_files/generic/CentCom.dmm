@@ -13412,7 +13412,7 @@
 "Km" = (
 /obj/docking_port/stationary{
 	dir = 8;
-	dwidth = 12;
+	dwidth = 10;
 	height = 30;
 	json_key = "ferry";
 	name = "CentCom Ferry Dock";

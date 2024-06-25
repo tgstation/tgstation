@@ -5,7 +5,6 @@
 	"map_file": "Blueshift.dmm",
 	"shuttles": {
 		"cargo": "cargo_nova",
-		"ferry": "ferry_nova",
 		"whiteship": "whiteship_blueshift",
 		"emergency": "emergency_nova"
 	},

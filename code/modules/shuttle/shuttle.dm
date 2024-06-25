@@ -653,7 +653,7 @@
 		return "[SHUTTLE_DWIDTH_TOO_LARGE] [stationary_dock.dwidth] vs [dwidth]"
 
 	if(width-dwidth > stationary_dock.width-stationary_dock.dwidth)
-		return SHUTTLE_WIDTH_TOO_LARGE
+		return "[SHUTTLE_WIDTH_TOO_LARGE] [stationary_dock.dwidth] vs [dwidth] + [width]"
 
 	if(dheight > stationary_dock.dheight)
 		return SHUTTLE_DHEIGHT_TOO_LARGE
