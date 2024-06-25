@@ -32232,7 +32232,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "lqh" = (
-/obj/machinery/light/small/directional/south,
 /obj/structure/table,
 /obj/item/multitool/circuit{
 	pixel_x = 7
