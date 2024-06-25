@@ -39,16 +39,18 @@
 	if(slot & ITEM_SLOT_ID)
 		user.client?.mouse_override_icon = sword_icon
 		RegisterSignal(user, COMSIG_MOB_LOGIN, PROC_REF(update_mouse), override = TRUE)
+		RegisterSignal(user, COMSIG_MOB_LOGOUT, PROC_REF(stop_mouse), override = TRUE)
 	else
+		// Shouldn't be necessary w/ dropped but just to be safe
 		user.client?.mouse_override_icon = null
-		UnregisterSignal(user, COMSIG_MOB_LOGIN, PROC_REF(update_mouse))
+		UnregisterSignal(user, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT))
 	user.update_mouse_pointer()
 
 /datum/computer_file/program/maintenance/cool_sword/proc/host_dropped(datum/source, mob/user)
 	SIGNAL_HANDLER
 
 	user.client?.mouse_override_icon = null
-	UnregisterSignal(user, COMSIG_MOB_LOGIN, PROC_REF(update_mouse))
+	UnregisterSignal(user, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT))
 	user.update_mouse_pointer()
 
 /datum/computer_file/program/maintenance/cool_sword/proc/update_mouse(mob/source)
@@ -56,6 +58,12 @@
 
 	source.client?.mouse_override_icon = sword_icon
 	source.update_mouse_pointer()
+
+/datum/computer_file/program/maintenance/cool_sword/proc/stop_mouse(mob/source)
+	SIGNAL_HANDLER
+
+	source.canon_client?.mouse_override_icon = null
+	source.canon_client?.mob?.update_mouse_pointer()
 
 /datum/computer_file/program/maintenance/cool_sword/ui_static_data(mob/user)
 	var/list/data = list()
