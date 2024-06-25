@@ -30357,13 +30357,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"kGs" = (
-/obj/effect/mapping_helpers/airlock/abandoned,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/lesser)
 "kGv" = (
 /obj/structure/cable,
 /obj/effect/landmark/start/hangover,
@@ -105206,7 +105199,7 @@ urE
 kmN
 tUn
 tUn
-kGs
+kmN
 wXF
 wXF
 wXF
