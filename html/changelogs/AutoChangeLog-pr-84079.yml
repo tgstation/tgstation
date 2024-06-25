@@ -1,0 +1,6 @@
+author: "Watermelon, Mayhazah"
+delete-after: True
+changes:
+  - balance: "Drastically reduces the power consumption and max charge of power cells"
+  - balance: "Added a new stock part called the battery, used primarily in the construction of APCs and SMESs."
+  - rscadd: "Suiciding with a cell/battery will shock you and potentially dust you/shock the people around you if the charge is great enough."

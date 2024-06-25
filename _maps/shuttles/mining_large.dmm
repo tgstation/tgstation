@@ -128,7 +128,7 @@
 "p" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/screwdriver{
 	pixel_y = 18
 	},

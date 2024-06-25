@@ -1537,8 +1537,8 @@
 		else
 			speedies += thing.slowdown
 
-	//if our movespeed mod is in the negatives, we don't modify it since that's a benefit
-	if(speedies > 0 && HAS_TRAIT(src, TRAIT_SETTLER))
+	//if  we have TRAIT_STURDY_FRAME, we reduce our overall speed penalty UNLESS that penalty would be a negative value, and therefore a speed boost.
+	if(speedies > 0 && HAS_TRAIT(src, TRAIT_STURDY_FRAME))
 		speedies *= 0.2
 
 	if(immutable_speedies)
