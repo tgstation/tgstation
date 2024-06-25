@@ -1057,11 +1057,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /// Updates views of all objects in storage and stretches UI to appropriate size
 /datum/storage/proc/orient_storage()
-	var/adjusted_contents = real_location.contents.len
+	var/adjusted_contents = length(real_location.contents)
 	var/list/datum/numbered_display/numbered_contents
 	if(numerical_stacking)
 		numbered_contents = process_numerical_display()
-		adjusted_contents = numbered_contents.len
+		adjusted_contents = length(numbered_contents)
 
 	//if the ammount of contents reaches some multiplier of the final column (and its not the last slot), let the player view an additional row
 	var/additional_row = (!(adjusted_contents % screen_max_columns) && adjusted_contents < max_slots)
@@ -1076,30 +1076,19 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/current_y = screen_start_y
 	var/turf/our_turf = get_turf(real_location)
 
-	if(islist(numbered_contents))
+	var/list/obj/storage_contents = list()
+	if (islist(numbered_contents))
 		for(var/content_type in numbered_contents)
 			var/datum/numbered_display/numberdisplay = numbered_contents[content_type]
+			storage_contents[numberdisplay.sample_object] = MAPTEXT("<font color='white'>[(numberdisplay.number > 1)? "[numberdisplay.number]" : ""]</font>")
+	else
+		for(var/obj/item as anything in real_location)
+			storage_contents[item] = ""
 
-			var/obj/item/display_sample = numberdisplay.sample_object
-			display_sample.mouse_opacity = MOUSE_OPACITY_OPAQUE
-			display_sample.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
-			display_sample.maptext = MAPTEXT("<font color='white'>[(numberdisplay.number > 1)? "[numberdisplay.number]" : ""]</font>")
-			SET_PLANE(display_sample, ABOVE_HUD_PLANE, our_turf)
-			current_x++
-			if(current_x - screen_start_x < columns)
-				continue
-			current_x = screen_start_x
-
-			current_y++
-			if(current_y - screen_start_y >= rows)
-				break
-
-		return
-
-	for(var/obj/item as anything in real_location)
+	for(var/obj/item as anything in storage_contents)
 		item.mouse_opacity = MOUSE_OPACITY_OPAQUE
 		item.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
-		item.maptext = ""
+		item.maptext = storage_contents[item]
 		item.plane = ABOVE_HUD_PLANE
 		SET_PLANE(item, ABOVE_HUD_PLANE, our_turf)
 		current_x++
