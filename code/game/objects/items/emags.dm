@@ -22,6 +22,62 @@
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
 	add_fingerprint(user)
 
+/obj/item/card/emag/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(isnull(user) || !istype(emag_card))
+		return FALSE
+	var/emag_count = 0
+	for(var/obj/item/card/emag/emag in get_all_contents() + emag_card.get_all_contents()) // This is including itself
+		emag_count++
+	if(emag_count > 6) // 1 uplink's worth is the limit
+		to_chat(user, span_warning("Nope, lesson learned. No more."))
+		return FALSE
+	if(emag_card.loc != loc) // Both have to be in your hand (or TK shenanigans)
+		return FALSE
+	if(!user.transferItemToLoc(emag_card, src, silent = FALSE))
+		return FALSE
+
+	user.visible_message(
+		span_notice("[user] holds [emag_card] to [src], getting the two cards stuck together!"),
+		span_notice("As you hold [emag_card] to [src], [emag_card.p_their()] magnets attract to one another, \
+			and [emag_card.p_they()] become stuck together!"),
+		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+	)
+	playsound(src, 'sound/effects/bang.ogg', 33, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	addtimer(CALLBACK(src, PROC_REF(contemplation_period), user), 2 SECONDS, TIMER_DELETE_ME)
+	emag_card.vis_flags |= VIS_INHERIT_ID|VIS_INHERIT_PLANE
+	vis_contents += emag_card
+	name = initial(name)
+	desc = initial(desc)
+	var/list/all_emags = get_all_contents_type(/obj/item/card/emag) - src
+	for(var/i in 1 to length(all_emags))
+		var/obj/item/card/emag/other_emag = all_emags[i]
+		other_emag.pixel_x = pixel_x + (4 * i)
+		other_emag.pixel_y = pixel_y + (4 * i)
+		other_emag.layer = layer - (0.01 * i)
+		name += "-[initial(other_emag.name)]"
+		desc += " There seems to be another card stuck to it...pretty soundly."
+	return TRUE
+
+/obj/item/card/emag/proc/contemplation_period(mob/user)
+	if(QDELETED(user))
+		return
+	if(QDELETED(src))
+		to_chat(user, span_notice("Oh, well."))
+	else
+		to_chat(user, span_warning("Well, shit. Those are never coming apart now."))
+
+/obj/item/card/emag/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(istype(gone, /obj/item/card/emag))
+		// This is here so if(when) admins fish it out of contents it doesn't become glitchy
+		gone.layer = initial(gone.layer)
+		gone.vis_flags = initial(gone.vis_flags)
+		vis_contents -= gone
+		name = initial(name)
+		desc = initial(desc)
+		gone.name = initial(name)
+		gone.desc = initial(desc)
+
 /obj/item/card/emag/bluespace
 	name = "bluespace cryptographic sequencer"
 	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
@@ -34,11 +90,14 @@
 	icon_state = "hack_o_lantern"
 
 /obj/item/card/emagfake
-	desc = "It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica, with a \"Donk Co.\" logo stamped on the back."
-	name = "cryptographic sequencer"
-	icon_state = "emag"
+	name = /obj/item/card/emag::name
+	desc = /obj/item/card/emag::desc + " Closer inspection shows that this card is a poorly made replica, with a \"Donk Co.\" logo stamped on the back."
+	icon = /obj/item/card/emag::icon
+	icon_state = /obj/item/card/emag::icon_state
+	worn_icon_state = /obj/item/card/emag::worn_icon_state
 	slot_flags = ITEM_SLOT_ID
-	worn_icon_state = "emag"
+	/// Whether we are exploding
+	var/exploding = FALSE
 
 /obj/item/card/emagfake/attack_self(mob/user) //for assistants with balls of plasteel
 	if(Adjacent(user))
@@ -46,8 +105,33 @@
 	add_fingerprint(user)
 
 /obj/item/card/emagfake/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
+	if(exploding)
+		playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE, frequency = 2)
+	else if(obj_flags & EMAGGED)
+		log_bomber(user, "triggered", src, "(rigged/emagged)")
+		visible_message(span_boldwarning("[src] begins to heat up!"))
+		playsound(src, 'sound/items/bikehorn.ogg', 100, TRUE, frequency = 0.25)
+		addtimer(CALLBACK(src, PROC_REF(blow_up)), 1 SECONDS, TIMER_DELETE_ME)
+		exploding = TRUE
+	else
+		playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
 	return ITEM_INTERACT_SKIP_TO_ATTACK // So it does the attack animation.
+
+/obj/item/card/emagfake/proc/blow_up()
+	visible_message(span_boldwarning("[src] explodes!"))
+	explosion(src, light_impact_range = 1, explosion_cause = src)
+	qdel(src)
+
+/obj/item/card/emagfake/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	playsound(src, SFX_SPARKS, 50, TRUE, SILENCED_SOUND_EXTRARANGE)
+	desc = /obj/item/card/emag::desc
+	obj_flags |= EMAGGED
+	if(user)
+		balloon_alert(user, "rigged to blow")
+		log_bomber(user, "rigged to blow", src, "(emagging)")
+	return TRUE
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()

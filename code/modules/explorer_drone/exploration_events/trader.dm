@@ -61,7 +61,7 @@
 	required_site_traits = list(EXPLORATION_SITE_TECHNOLOGY)
 	band_values = list(EXOSCANNER_BAND_TECH=2)
 	requires_translator = FALSE
-	required_path = /obj/item/stock_parts/cell/high
+	required_path = /obj/item/stock_parts/power_store/cell/high
 	traded_path = /obj/item/storage/pill_bottle/happy
 	amount = 3
 
@@ -80,7 +80,7 @@
 	deep_scan_description = "You spot a giant \"FRESH FISH\" sign on site."
 	required_site_traits = list(EXPLORATION_SITE_HABITABLE,EXPLORATION_SITE_SURFACE)
 	band_values = list(EXOSCANNER_BAND_LIFE=2)
-	required_path = /obj/item/stock_parts/cell/high
+	required_path = /obj/item/stock_parts/power_store/cell/high
 	traded_path = /obj/item/storage/fish_case/random
 	amount = 3
 

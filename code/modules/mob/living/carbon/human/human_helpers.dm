@@ -293,6 +293,11 @@
 			return MONKEY_HEIGHT_DWARF
 		else
 			return HUMAN_HEIGHT_DWARF
+	if(HAS_TRAIT(src, TRAIT_TOO_TALL))
+		if(ismonkey(src))
+			return MONKEY_HEIGHT_TALL
+		else
+			return HUMAN_HEIGHT_TALLEST
 
 	else if(ismonkey(src))
 		return MONKEY_HEIGHT_MEDIUM
@@ -360,3 +365,30 @@
 	var/damage = ((min_damage / 4) + (max_damage / 4)) / 2 // We expect you to have 4 functional limbs- if you have fewer you're probably not going to be so good at lifting
 
 	return ceil(damage * (ceil(athletics_level / 2)) * fitness_modifier * maxHealth)
+
+/mob/living/carbon/human/proc/item_heal(mob/user, brute_heal, burn_heal, heal_message_brute, heal_message_burn, required_bodytype)
+	var/obj/item/bodypart/affecting = src.get_bodypart(check_zone(user.zone_selected))
+	if (!affecting || !(affecting.bodytype & required_bodytype))
+		to_chat(user, span_warning("[affecting] is already in good condition!"))
+		return FALSE
+
+	var/brute_damaged = affecting.brute_dam > 0
+	var/burn_damaged = affecting.burn_dam > 0
+
+	var/nothing_to_heal = ((brute_heal <= 0 || !brute_damaged) && (burn_heal <= 0 || !burn_damaged))
+	if (nothing_to_heal)
+		to_chat(user, span_notice("[affecting] is already in good condition!"))
+		return FALSE
+
+	src.update_damage_overlays()
+	var/message
+	if ((brute_damaged && brute_heal > 0) && (burn_damaged && burn_heal > 0))
+		message = "[heal_message_brute] and [heal_message_burn] on"
+	else if (brute_damaged && brute_heal > 0)
+		message = "[heal_message_brute] on"
+	else
+		message = "[heal_message_burn] on"
+	affecting.heal_damage(brute_heal, burn_heal, required_bodytype)
+	user.visible_message(span_notice("[user] fixes some of the [message] [src]'s [affecting.name]."), \
+		span_notice("You fix some of the [message] [src == user ? "your" : "[src]'s"] [affecting.name]."))
+	return TRUE
