@@ -48,7 +48,7 @@
 	. = ..()
 	if (!oxygentanks)
 		balloon_alert(user, "no oxygen tanks!")
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	dispense(/obj/item/tank/internals/oxygen, user)
 	oxygentanks--
 	update_appearance()
