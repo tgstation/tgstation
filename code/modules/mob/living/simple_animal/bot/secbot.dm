@@ -121,7 +121,7 @@
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/atom/Tsec = drop_location()
-	new /obj/item/stock_parts/cell/potato(Tsec)
+	new /obj/item/stock_parts/power_store/cell/potato(Tsec)
 	var/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/drinking_oil = new(Tsec)
 	drinking_oil.reagents.add_reagent(/datum/reagent/consumable/ethanol/whiskey, 15)
 	return ..()
