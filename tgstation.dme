@@ -5256,6 +5256,7 @@
 #include "code\modules\modular_computers\file_system\programs\chatroom\ntnrc_client.dm"
 #include "code\modules\modular_computers\file_system\programs\maintenance\_maintenance_program.dm"
 #include "code\modules\modular_computers\file_system\programs\maintenance\camera.dm"
+#include "code\modules\modular_computers\file_system\programs\maintenance\cool_sword.dm"
 #include "code\modules\modular_computers\file_system\programs\maintenance\modsuit.dm"
 #include "code\modules\modular_computers\file_system\programs\maintenance\phys_scanner.dm"
 #include "code\modules\modular_computers\file_system\programs\maintenance\spectre_meter.dm"
