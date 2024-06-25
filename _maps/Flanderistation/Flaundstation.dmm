@@ -3488,17 +3488,17 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/service/kitchen)
 "aUg" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/red/corner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	name = "supermatter air scrubber";
 	tag = "sm_out"
 	},
 /obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "aUk" = (
@@ -4401,6 +4401,12 @@
 	tag = "sm_in"
 	},
 /obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "bfH" = (
@@ -8232,14 +8238,17 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/red/corner{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	name = "supermatter air scrubber";
 	tag = "sm_out"
 	},
 /obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/red/corner{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "cvz" = (
@@ -9726,12 +9735,12 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "cSv" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/corporate_dock)
@@ -22254,7 +22263,10 @@
 /obj/structure/cable,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner{
-	dir = 6
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port)
@@ -24127,6 +24139,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
 /turf/open/floor/circuit/green{
 	luminosity = 2
 	},
@@ -28935,7 +28950,7 @@
 /area/station/science/ordnance/office)
 "ixm" = (
 /obj/effect/turf_decal/stripes/corner{
-	dir = 8
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/station/cargo/miningfoundry)
@@ -33759,7 +33774,7 @@
 /obj/machinery/light/small/directional/west,
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/stripes/corner{
-	dir = 1
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/station/cargo/miningfoundry)
@@ -37435,7 +37450,7 @@
 /area/station/science/ordnance/burnchamber)
 "lcI" = (
 /obj/effect/turf_decal/stripes/corner{
-	dir = 1
+	dir = 4
 	},
 /turf/open/floor/catwalk_floor,
 /turf/open/floor/plating,
@@ -38598,7 +38613,7 @@
 "lrt" = (
 /obj/structure/marker_beacon/olive,
 /obj/effect/turf_decal/stripes/corner{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/catwalk_floor,
 /turf/open/floor/plating/airless{
@@ -48753,7 +48768,7 @@
 /area/station/command/gateway)
 "ouU" = (
 /obj/effect/turf_decal/stripes/corner{
-	dir = 1
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -49772,6 +49787,9 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 5
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
@@ -51828,10 +51846,10 @@
 	},
 /area/station/hallway/primary/aft)
 "ptR" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
 /obj/machinery/portable_atmospherics/canister/plasma,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "ptW" = (
@@ -55023,6 +55041,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/small,
 /area/station/science/auxlab/firing_range)
 "qmT" = (
@@ -55536,9 +55557,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 5
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)
@@ -56563,11 +56581,10 @@
 /obj/item/stack/spacecash/c500,
 /obj/item/stack/spacecash/c500,
 /obj/item/stack/spacecash/c500,
-/obj/item/gun/ballistic/automatic/pistol/deagle/gold,
-/obj/item/ammo_box/magazine/m50,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 10
 	},
+/obj/item/gun/ballistic/automatic/plastikov,
 /turf/open/floor/engine,
 /area/station/ai_monitored/command/nuke_storage)
 "qIB" = (
@@ -61899,6 +61916,9 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port)
 "shz" = (
@@ -62832,7 +62852,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/corner{
-	dir = 1
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/station/science/explab)
@@ -62989,10 +63009,10 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden/abandoned)
 "szo" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/corporate_dock)
 "szp" = (
@@ -64546,12 +64566,12 @@
 /turf/open/floor/carpet/red,
 /area/station/maintenance/starboard/fore)
 "sXI" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/machinery/light/directional/west,
 /obj/item/radio/intercom{
 	pixel_x = -28
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/science)
@@ -64622,7 +64642,7 @@
 "sYN" = (
 /obj/effect/turf_decal/box/corners,
 /obj/effect/turf_decal/stripes/corner{
-	dir = 8
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/station/science/explab)
@@ -70454,6 +70474,9 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 10
 	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
 /turf/open/floor/vault,
 /area/station/engineering/break_room)
 "uEV" = (
@@ -71913,11 +71936,11 @@
 	},
 /area/station/cargo/sorting)
 "uYG" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
 /obj/machinery/camera/autoname/directional/west,
 /obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -72039,6 +72062,9 @@
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 5
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
 /turf/open/floor/vault,
 /area/station/engineering/break_room)
@@ -74116,7 +74142,10 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/corner{
-	dir = 9
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
 	},
 /turf/open/floor/vault,
 /area/station/engineering/break_room)
@@ -79944,6 +79973,9 @@
 	},
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/corporate_dock)
 "xcm" = (
@@ -81346,7 +81378,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/corner{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/station/science/explab)
@@ -81712,9 +81744,6 @@
 /area/centcom/asteroid/nearstation/bomb_site)
 "xxI" = (
 /obj/effect/landmark/start/scientist,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 6
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
@@ -81854,10 +81883,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "xzr" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/machinery/power/port_gen/pacman,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "xzx" = (
@@ -82252,10 +82281,10 @@
 /area/station/ai_monitored/security/armory)
 "xDp" = (
 /obj/structure/marker_beacon/olive,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/catwalk_floor,
 /turf/open/floor/plating/airless{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -103202,7 +103231,7 @@ tNJ
 djY
 eiU
 xub
-lrt
+nZl
 jnd
 jnd
 jnd
@@ -103212,7 +103241,7 @@ jnd
 jnd
 jnd
 jnd
-nZl
+lrt
 xub
 xOJ
 djY
