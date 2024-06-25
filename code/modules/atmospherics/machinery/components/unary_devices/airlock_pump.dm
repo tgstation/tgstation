@@ -23,6 +23,12 @@
 	var/target_pressure = ONE_ATMOSPHERE
 	///Allowed error in pressure checks
 	var/target_pressure_error = ONE_ATMOSPHERE / 100
+	///Rate of the pump to remove gases from the air
+	var/volume_rate = 200
+	///is this pump acting on the 3x3 area around it.
+	var/widenet = TRUE
+	///List of the turfs near the pump, used for widenet
+	var/list/turf/adjacent_turfs = list()
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/update_icon_nopipes()
 	cut_overlays()
@@ -38,7 +44,10 @@
 	else
 		icon_state = pump_direction ? "vent_out" : "vent_in"
 
-/obj/machinery/atmospherics/components/unary/airlock_pump/update_icon_underlays(var/tmp/list/underlays)
+/obj/machinery/atmospherics/components/unary/airlock_pump/update_icon()
+	underlays.Cut()
+	if(!showpipe)
+		return ..()
 	if(nodes[1])
 		var/mutable_appearance/pipe_appearance = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_[dir]_[4]")
 		pipe_appearance.color = COLOR_BLUE
@@ -47,8 +56,7 @@
 		var/mutable_appearance/pipe_appearance = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_[dir]_[2]")
 		pipe_appearance.color = COLOR_RED
 		underlays += pipe_appearance
-	return underlays
-
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/atmos_init()
 	nodes = list()
@@ -86,7 +94,10 @@
 		var/pressure_delta = target_pressure - tile_air_pressure
 
 		if(pressure_delta <= target_pressure_error)
+			on = FALSE
+			pump_direction = !pump_direction
 			say("Pressurization complete.")
+			update_appearance()
 			return //Target pressure reached
 
 		var/transfer_moles = (pressure_delta * tile_air.volume) / (distro_air.temperature * R_IDEAL_GAS_EQUATION)
@@ -102,10 +113,14 @@
 		var/pressure_delta = tile_air_pressure
 
 		if(pressure_delta <= target_pressure_error)
+			on = FALSE
+			pump_direction = !pump_direction
 			say("Depressurization complete.")
+			update_appearance()
 			return //Target pressure reached
 
-		var/transfer_moles = (pressure_delta * waste_air.volume) / (tile_air.temperature * R_IDEAL_GAS_EQUATION)
+		var/removal_ratio =  min(1, volume_rate / tile_air.volume)
+		var/transfer_moles = (pressure_delta * tile_air.volume) / (tile_air.temperature * R_IDEAL_GAS_EQUATION)
 		var/datum/gas_mixture/removed_air = loc.remove_air(transfer_moles)
 
 		if(!removed_air)
@@ -117,5 +132,6 @@
 /obj/machinery/atmospherics/components/unary/airlock_pump/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!on)
-		pump_direction = !pump_direction
 		on = TRUE
+		say(pump_direction ? "Pressurizing." : "Depressurizing.")
+		update_appearance()
