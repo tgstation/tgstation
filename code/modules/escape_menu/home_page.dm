@@ -17,7 +17,7 @@
 			src,
 			"Character",
 			/* offset = */ 2,
-			CALLBACK(src, PROC_REF(home_open_charater_settings)),
+			CALLBACK(src, PROC_REF(home_open_character_settings)),
 		)
 	)
 
@@ -56,7 +56,7 @@
 /datum/escape_menu/proc/home_resume()
 	qdel(src)
 
-/datum/escape_menu/proc/home_open_charater_settings()
+/datum/escape_menu/proc/home_open_character_settings()
 	client?.prefs.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
 	client?.prefs.update_static_data(client?.mob)
 	client?.prefs.ui_interact(client?.mob)

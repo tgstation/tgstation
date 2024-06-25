@@ -40,7 +40,7 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 	w_class = WEIGHT_CLASS_NORMAL
 	allowed = list(/obj/item/gun, /obj/item/melee/baton, /obj/item/melee/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	armor_type = /datum/armor/space_syndicate
-	cell = /obj/item/stock_parts/cell/hyper
+	cell = /obj/item/stock_parts/power_store/cell/hyper
 	var/helmet_type = /obj/item/clothing/head/helmet/space/syndicate
 
 //Green syndicate space suit
