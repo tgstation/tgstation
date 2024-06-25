@@ -4092,6 +4092,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
 "bJn" = (
@@ -12605,6 +12606,14 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/ai_monitored/turret_protected/aisat/teleporter)
+"eUu" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/aft)
 "eUC" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -29579,6 +29588,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "kqy" = (
@@ -58001,14 +58011,6 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/stone,
 /area/station/command/heads_quarters/hos)
-"tvH" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/landmark/start/hangover,
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/aft)
 "tvM" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/flowers_br/style_random,
@@ -100131,7 +100133,7 @@ xmt
 qKE
 wEp
 qye
-sko
+eUu
 dFL
 dDB
 hPb
@@ -100388,7 +100390,7 @@ xCu
 asN
 ogU
 cGF
-tvH
+sko
 dFL
 blb
 blb
