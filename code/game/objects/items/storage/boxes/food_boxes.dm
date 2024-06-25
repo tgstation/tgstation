@@ -95,7 +95,7 @@
 	return ..()
 
 /obj/item/storage/box/papersack/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(istype(inserted, /obj/item/pen))
+	if(IS_WRITING_UTENSIL(inserted))
 		var/choice = show_radial_menu(user, src , papersack_designs, custom_check = CALLBACK(src, PROC_REF(check_menu), user, inserted), radius = 36, require_near = TRUE)
 		if(!choice || choice == design_choice)
 			return FALSE

@@ -76,7 +76,7 @@
 	id = "miniature_power_cell"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
-	build_path = /obj/item/stock_parts/cell/emergency_light
+	build_path = /obj/item/stock_parts/power_store/cell/emergency_light
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_LIGHTING,

@@ -653,7 +653,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	gloves = /obj/item/clothing/gloves/cut
 	l_pocket = /obj/item/reagent_containers/hypospray/medipen/methamphetamine
-	r_pocket = /obj/item/stock_parts/cell/high
+	r_pocket = /obj/item/stock_parts/power_store/cell/high
 	belt = /obj/item/storage/belt/utility/full
 
 /datum/outfit/deathmatch_loadout/abductor

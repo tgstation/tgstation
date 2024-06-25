@@ -262,7 +262,7 @@
 	required_container = /obj/item/slime_extract/yellow
 
 /datum/chemical_reaction/slime/slimecell/on_reaction(datum/reagents/holder, created_volume)
-	new /obj/item/stock_parts/cell/emproof/slime(get_turf(holder.my_atom))
+	new /obj/item/stock_parts/power_store/cell/emproof/slime(get_turf(holder.my_atom))
 	..()
 
 /datum/chemical_reaction/slime/slimeglow

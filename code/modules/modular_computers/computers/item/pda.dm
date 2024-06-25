@@ -141,7 +141,9 @@
 	return . || NONE
 
 /obj/item/modular_computer/pda/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-
+	. = ..()
+	if(.)
+		return .
 	if(!is_type_in_list(tool, contained_item))
 		return NONE
 	if(tool.w_class >= WEIGHT_CLASS_SMALL) // Anything equal to or larger than small won't work

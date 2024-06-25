@@ -231,6 +231,10 @@
 			materials.retrieve_sheets(amount, ejecting, drop_location())
 			return TRUE
 
+/obj/machinery/flatpacker/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/flatpacker/Destroy()
 	QDEL_NULL(inserted_board)
@@ -238,7 +242,7 @@
 
 /obj/item/flatpack
 	name = "flatpack"
-	desc = "A box containing a compacted packed machine. Use multitool to deploy."
+	desc = "A box containing a compactly packed machine. Use multitool to deploy."
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "flatpack"
 	w_class = WEIGHT_CLASS_HUGE //cart time
@@ -249,13 +253,25 @@
 	/// The board we deploy
 	var/obj/item/circuitboard/machine/board
 
-/obj/item/flatpack/Initialize(mapload, obj/item/circuitboard/machine/board)
+/obj/item/flatpack/Initialize(mapload, obj/item/circuitboard/machine/new_board)
 	. = ..()
-	if(!isnull(board))
-		src.board = board // i got board
+	var/static/list/tool_behaviors
+	if(!tool_behaviors)
+		tool_behaviors = string_assoc_nested_list(list(
+			TOOL_MULTITOOL = list(
+				SCREENTIP_CONTEXT_LMB = "Deploy",
+			),
+		))
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+	if(isnull(board) && isnull(new_board))
+		return INITIALIZE_HINT_QDEL //how
+
+	board = !isnull(new_board) ? new_board : new board(src) // i got board
+	if(board.loc != src)
 		board.forceMove(src)
-		var/obj/machinery/build = initial(board.build_path)
-		name += " ([initial(build.name)])"
+	var/obj/machinery/build = initial(board.build_path)
+	name += " ([initial(build.name)])"
+
 
 /obj/item/flatpack/Destroy()
 	QDEL_NULL(board)
