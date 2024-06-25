@@ -92,3 +92,30 @@ GLOBAL_LIST_INIT(possible_monsters, list(
 /datum/holy_bounty/seal_portal
 	name = "Seal Portal"
 	reward_points = 600
+
+/////bounty contract
+/obj/item/bounty_contract
+	name = "bounty contract"
+	icon = 'icons/obj/scrolls.dmi'
+	icon_state = "bounty_paper"
+	item_flags = NOBLUDGEON
+	var/datum/holy_bounty/eliminate_monster/our_bounty
+
+/obj/item/bounty_contract/Initialize(mapload)
+	. = ..()
+	our_bounty = new()
+
+/obj/item/bounty_contract/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "bountypaper")
+		ui.open()
+
+/obj/item/bounty_contract/ui_static_data(mob/user)
+	var/list/data = list()
+	var/list/static_controls = list()
+	data["bounty_name"] = our_bounty.bounty_name
+	data["bounty_icon"] = icon2base64(our_bounty.bounty_icon)
+	data["bounty_reward"] = our_bounty.reward_points
+	data["bounty_gps"] = our_bounty.gps_location
+	return data
