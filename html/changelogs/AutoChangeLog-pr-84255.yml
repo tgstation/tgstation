@@ -1,0 +1,4 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "multi-z hole repair works better, especially when the turf below is blocked by items"

@@ -109,3 +109,16 @@ DEFINE_BITFIELD(honkbot_flags, list(
 ///key that holds our honk ability
 #define BB_HONK_ABILITY "honk_ability"
 
+//vibebots
+///key that holds our partying ability
+#define BB_VIBEBOT_PARTY_ABILITY "party_ability"
+///key that holds our birthday song
+#define BB_VIBEBOT_BIRTHDAY_SONG "birthday_song"
+///key that holds happy songs we play to depressed targets
+#define BB_VIBEBOT_HAPPY_SONG "happy_song"
+///key that holds grim song we play when emagged
+#define BB_VIBEBOT_GRIM_SONG "GRIM_song"
+///key that holds neutral targets we vibe with
+#define BB_VIBEBOT_PARTY_TARGET "party_target"
+///key that holds our instrument
+#define BB_VIBEBOT_INSTRUMENT "instrument"

@@ -20,7 +20,7 @@
 	//We don't use area power, we always use the cell
 	use_power = NO_POWER_USE
 	///The cell we spawn with
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell
+	var/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell
 	///Is the machine on?
 	var/on = FALSE
 	///What is the mode we are in now?
@@ -208,7 +208,7 @@
 	if(default_deconstruction_crowbar(I))
 		return TRUE
 
-	if(istype(I, /obj/item/stock_parts/cell))
+	if(istype(I, /obj/item/stock_parts/power_store/cell))
 		if(!panel_open)
 			to_chat(user, span_warning("The hatch must be open to insert a power cell!"))
 			return
@@ -389,7 +389,7 @@
 	add_fingerprint(user)
 	if(default_deconstruction_crowbar(item))
 		return
-	if(istype(item, /obj/item/stock_parts/cell))
+	if(istype(item, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			to_chat(user, span_warning("There is already a power cell inside!"))
 			return
