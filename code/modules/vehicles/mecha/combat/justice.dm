@@ -84,16 +84,14 @@
 	SIGNAL_HANDLER
 
 	if(!isliving(target))
-		return
+		return FALSE
 	var/mob/living/live_or_dead = target
 	if(live_or_dead.stat < UNCONSCIOUS && live_or_dead.getStaminaLoss() < 100)
 		return FALSE
 	var/obj/item/bodypart/check_head = live_or_dead.get_bodypart(BODY_ZONE_HEAD)
 	if(!check_head)
 		return FALSE
-	say(pick("Take my Justice-Slash!", "A falling leaf...", "Justice is quite a lonely path"), forced = "Justice Mech")
-	playsound(src, 'sound/mecha/mech_stealth_pre_attack.ogg', 75, FALSE)
-	finish_him(pilot, live_or_dead)
+	INVOKE_ASYNC(src, PROC_REF(finish_him), src, pilot, live_or_dead)
 	return TRUE
 
 /**
@@ -105,17 +103,21 @@
  * * finisher - Mech pilot who makes an attack.
  * * him - Target at which the mech makes an attack.
  */
-/obj/vehicle/sealed/mecha/justice/proc/finish_him(mob/finisher, mob/living/him)
+/obj/vehicle/sealed/mecha/justice/proc/finish_him(obj/vehicle/sealed/mecha/my_mech, mob/finisher, mob/living/him)
+	say(pick("Take my Justice-Slash!", "A falling leaf...", "Justice is quite a lonely path"), forced = "Justice Mech")
+	playsound(src, 'sound/mecha/mech_stealth_pre_attack.ogg', 75, FALSE)
 	if(!do_after(finisher, 1 SECONDS, him))
 		return
 	if(QDELETED(finisher))
 		return
 	if(QDELETED(him))
 		return
-	/// turf where we end attack
-	var/turf/finish_turf = get_step(him, get_dir(finisher, him))
-	/// turf where we start attack
-	var/turf/for_line_turf = get_turf(finisher)
+	if(QDELETED(my_mech))
+		return
+	if(!LAZYLEN(my_mech.occupants))
+		return
+	var/turf/finish_turf = get_step(him, get_dir(my_mech, him))
+	var/turf/for_line_turf = get_turf(my_mech)
 	var/obj/item/bodypart/in_your_head = him.get_bodypart(BODY_ZONE_HEAD)
 	in_your_head?.dismember(BRUTE)
 	playsound(src, brute_attack_sound, 75, FALSE)
