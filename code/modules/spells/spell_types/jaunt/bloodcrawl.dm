@@ -127,9 +127,9 @@
 		return
 	if(isnull(jaunt_damage_timer))
 		return
-	lazy_demon.apply_damage(lazy_demon.maxHealth*0.05, BRUTE)
+	lazy_demon.apply_damage(lazy_demon.maxHealth * 0.05, BRUTE)
 	jaunt_damage_timer = addtimer(CALLBACK(src, PROC_REF(damage_for_lazy_demon), lazy_demon), 20 SECONDS)
-	to_chat(lazy_demon, span_warning("You feel like you are dissolving in bloodsea. You shouldn't stay in bloodcrawl for too long!"))
+	to_chat(lazy_demon, span_warning("You feel your flesh dissolving into the sea of blood. You shouldn't stay in Blood Crawl for too long!"))
 
 
 /**
