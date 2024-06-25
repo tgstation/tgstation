@@ -9878,7 +9878,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "dVQ" = (
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/mail_sorting/service/library,
 /turf/open/floor/wood/parquet,
 /area/station/service/library)
 "dVW" = (
@@ -11928,7 +11931,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/turf/open/floor/grass,
+/turf/open/floor/grass/Airless,
 /area/station/hallway/primary/central/aft)
 "eFV" = (
 /obj/effect/decal/cleanable/dirt,
@@ -18396,10 +18399,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/steam_vent,
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "gRX" = (
@@ -20474,8 +20477,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/mail_sorting/service/library,
-/obj/structure/disposalpipe/sorting/mail{
+/obj/structure/disposalpipe/junction{
 	dir = 1
 	},
 /turf/open/floor/wood/parquet,
@@ -21568,7 +21570,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
-/turf/open/floor/grass,
+/turf/open/floor/grass/Airless,
 /area/station/hallway/primary/central/aft)
 "hPd" = (
 /obj/structure/hedge,
@@ -22912,7 +22914,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/turf/open/floor/grass,
+/turf/open/floor/grass/Airless,
 /area/station/hallway/primary/central/aft)
 "inR" = (
 /obj/structure/disposalpipe/segment,
@@ -25006,7 +25008,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/turf/open/floor/grass,
+/turf/open/floor/grass/Airless,
 /area/station/hallway/primary/central/aft)
 "iUT" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -30017,7 +30019,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
-/turf/open/floor/grass,
+/turf/open/floor/grass/Airless,
 /area/station/hallway/primary/central/aft)
 "kvI" = (
 /obj/docking_port/stationary/random{
@@ -35653,7 +35655,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 5
+	dir = 4
 	},
 /turf/open/floor/wood/parquet,
 /area/station/service/library)
@@ -36330,7 +36332,7 @@
 /obj/effect/dummy/lighting_obj,
 /obj/effect/light_emitter/fake_outdoors,
 /obj/effect/turf_decal/siding/wood,
-/turf/open/floor/grass,
+/turf/open/floor/grass/Airless,
 /area/station/hallway/primary/central/aft)
 "myM" = (
 /obj/structure/window/spawner/directional/north,
@@ -55927,8 +55929,8 @@
 	},
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/junction/flip{
-	dir = 1
+/obj/structure/disposalpipe/segment{
+	dir = 9
 	},
 /turf/open/floor/wood/parquet,
 /area/station/service/library)
