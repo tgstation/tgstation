@@ -24,6 +24,7 @@
 	layer = MOB_LAYER
 	max_integrity = 100
 	item_flags = XENOMORPH_HOLDABLE
+	slowdown = 2
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
 	var/sterile = FALSE
@@ -186,7 +187,8 @@
 
 	if(!sterile)
 		victim.take_bodypart_damage(strength,0) //done here so that humans in helmets take damage
-
+	if(real && !sterile)
+		victim.Knockdown(5 SECONDS)
 	GoIdle() //so it doesn't jump the people that tear it off
 
 	addtimer(CALLBACK(src, PROC_REF(Impregnate), victim), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
@@ -297,6 +299,7 @@
 	name = "Lamarr"
 	desc = "The Research Director's pet, a domesticated and debeaked xenomorph facehugger. Friendly, but may still try to couple with your head."
 	sterile = TRUE
+	slowdown = 1.5 //lamarr is too fat after being fed in captivity to effectively slow people down or something
 
 /obj/item/clothing/mask/facehugger/dead
 	icon_state = "facehugger_dead"
@@ -316,6 +319,7 @@
 	real = FALSE
 	sterile = TRUE
 	tint = 3 //Makes it feel more authentic when it latches on
+	slowdown = 0
 
 /obj/item/clothing/mask/facehugger/toy/Die()
 	return
