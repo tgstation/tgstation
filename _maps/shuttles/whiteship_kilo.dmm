@@ -570,7 +570,7 @@
 /obj/machinery/cell_charger,
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/cell/emproof/empty{
+/obj/item/stock_parts/power_store/cell/emproof/empty{
 	pixel_y = 7;
 	pixel_x = 5
 	},

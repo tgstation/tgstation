@@ -1088,11 +1088,11 @@
 			user.examinate(src)
 
 /obj/machinery/hydroponics/click_ctrl(mob/user)
+	if(!anchored)
+		return NONE
 	if(!powered())
 		to_chat(user, span_warning("[name] has no power."))
 		update_use_power(NO_POWER_USE)
-		return CLICK_ACTION_BLOCKING
-	if(!anchored)
 		return CLICK_ACTION_BLOCKING
 	set_self_sustaining(!self_sustaining)
 	to_chat(user, span_notice("You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""]."))

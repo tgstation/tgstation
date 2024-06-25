@@ -82,6 +82,8 @@
 		"idcard",
 		"c-reader",
 		"libraryconsole",
+		"libraryscanner",
+		"bookbinder",
 		"barcode_scanner",
 		"vendor",
 		"custom_vendor_refill",

@@ -321,7 +321,7 @@
 /obj/structure/closet/crate,
 /obj/item/wallframe/apc,
 /obj/item/electronics/apc,
-/obj/item/stock_parts/cell/empty,
+/obj/item/stock_parts/power_store/cell/empty,
 /obj/item/stack/cable_coil/five,
 /obj/item/wallframe/apc,
 /obj/item/electronics/apc,
