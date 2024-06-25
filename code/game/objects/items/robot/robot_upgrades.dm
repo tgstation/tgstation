@@ -431,7 +431,7 @@
 			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
 			return FALSE
 	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in cyborg.model.modules)
-		omnitool.upgrade_omnitool()
+		omnitool.set_upgraded(TRUE)
 
 /obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
@@ -439,7 +439,7 @@
 		return .
 	REMOVE_TRAIT(cyborg, TRAIT_FASTMED, REF(src))
 	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
-		omnitool.downgrade_omnitool()
+		omnitool.set_upgraded(FALSE)
 
 /obj/item/borg/upgrade/engineering_omnitool
 	name = "cyborg engineering omni-tool upgrade"
@@ -459,14 +459,14 @@
 			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
 			return FALSE
 	for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool in cyborg.model.modules)
-		omnitool.upgrade_omnitool()
+		omnitool.set_upgraded(TRUE)
 
 /obj/item/borg/upgrade/engineering_omnitool/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
 	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
-		omnitool.downgrade_omnitool()
+		omnitool.set_upgraded(FALSE)
 
 /obj/item/borg/upgrade/defib
 	name = "medical cyborg defibrillator"
