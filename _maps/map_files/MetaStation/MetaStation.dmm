@@ -32693,7 +32693,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/white,
 /area/station/science/auxlab)
 "lzJ" = (
@@ -67895,6 +67894,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "xML" = (
@@ -97273,7 +97273,7 @@ xXM
 rhU
 rhU
 tXU
-jVZ
+cWu
 tew
 cWu
 orK
