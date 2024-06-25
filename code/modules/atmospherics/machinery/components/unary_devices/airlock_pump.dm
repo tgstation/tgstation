@@ -30,33 +30,28 @@
 	///List of the turfs near the pump, used for widenet
 	var/list/turf/adjacent_turfs = list()
 
+	COOLDOWN_DECLARE(check_turfs_cooldown)
+
 /obj/machinery/atmospherics/components/unary/airlock_pump/update_icon_nopipes()
-	cut_overlays()
-
-	if(showpipe)
-		var/image/cap_distro = get_pipe_image(icon, "vent_cap", dir, COLOR_BLUE, piping_layer = 4)
-		var/image/cap_waste = get_pipe_image(icon, "vent_cap", dir, COLOR_RED, piping_layer = 2)
-		add_overlay(cap_distro)
-		add_overlay(cap_waste)
-
 	if(!on || !is_operational)
 		icon_state = "vent_off"
 	else
 		icon_state = pump_direction ? "vent_out" : "vent_in"
 
-/obj/machinery/atmospherics/components/unary/airlock_pump/update_icon()
-	underlays.Cut()
+/obj/machinery/atmospherics/components/unary/airlock_pump/update_overlays()
+	. = ..()
 	if(!showpipe)
-		return ..()
+		return
 	if(nodes[1])
-		var/mutable_appearance/pipe_appearance = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_[dir]_[4]")
-		pipe_appearance.color = COLOR_BLUE
-		underlays += pipe_appearance
+		var/mutable_appearance/distro_pipe_appearance = get_pipe_image(icon, "airlock_pump_pipe", dir, COLOR_BLUE, piping_layer = 4)
+		. += distro_pipe_appearance
 	if(nodes[2])
-		var/mutable_appearance/pipe_appearance = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_[dir]_[2]")
-		pipe_appearance.color = COLOR_RED
-		underlays += pipe_appearance
-	return ..()
+		var/mutable_appearance/waste_pipe_appearance = get_pipe_image(icon, "airlock_pump_pipe", dir, COLOR_RED, piping_layer = 2)
+		. += waste_pipe_appearance
+	var/mutable_appearance/distro_cap_appearance = get_pipe_image(icon, "vent_cap", dir, COLOR_BLUE, piping_layer = 4)
+	. += distro_cap_appearance
+	var/mutable_appearance/waste_cap_appearance = get_pipe_image(icon, "vent_cap", dir, COLOR_RED, piping_layer = 2)
+	. += waste_cap_appearance
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/atmos_init()
 	nodes = list()
@@ -83,10 +78,14 @@
 	if(isclosedturf(location))
 		return
 
-	var/datum/gas_mixture/distro_air = airs[1]
-	var/datum/gas_mixture/waste_air = airs[2]
+	if(COOLDOWN_FINISHED(src, check_turfs_cooldown))
+		check_turfs()
+		COOLDOWN_START(src, check_turfs_cooldown, 2 SECONDS)
+
 	var/datum/pipeline/distro_pipe = parents[1]
 	var/datum/pipeline/waste_pipe = parents[2]
+	var/datum/gas_mixture/distro_air = airs[1]
+	var/datum/gas_mixture/waste_air = airs[2]
 	var/datum/gas_mixture/tile_air = loc.return_air()
 	var/tile_air_pressure = tile_air.return_pressure()
 
@@ -100,15 +99,16 @@
 			update_appearance()
 			return //Target pressure reached
 
-		var/transfer_moles = (pressure_delta * tile_air.volume) / (distro_air.temperature * R_IDEAL_GAS_EQUATION)
-		var/datum/gas_mixture/removed_air = distro_air.remove(transfer_moles)
+		for(var/turf/tile in adjacent_turfs)
+			var/datum/gas_mixture/temp_air = tile.return_air()
+			var/transfer_moles = (pressure_delta * temp_air.volume) / (distro_air.temperature * R_IDEAL_GAS_EQUATION)
+			var/datum/gas_mixture/removed_air = distro_air.remove(transfer_moles)
 
-		if(!removed_air)
-			return //No air in distro
+			if(!removed_air)
+				return //No air in distro
 
-		loc.assume_air(removed_air)
+			tile.assume_air(removed_air)
 		distro_pipe.update = TRUE
-
 	else //tile -> waste node
 		var/pressure_delta = tile_air_pressure
 
@@ -119,14 +119,17 @@
 			update_appearance()
 			return //Target pressure reached
 
-		var/removal_ratio =  min(1, volume_rate / tile_air.volume)
-		var/transfer_moles = (pressure_delta * tile_air.volume) / (tile_air.temperature * R_IDEAL_GAS_EQUATION)
-		var/datum/gas_mixture/removed_air = loc.remove_air(transfer_moles)
+		for(var/turf/tile in adjacent_turfs)
+			var/datum/gas_mixture/temp_air = tile.return_air()
+			var/removal_ratio =  min(1, volume_rate / temp_air.volume)
+			var/transfer_moles = (pressure_delta * removal_ratio) / (tile_air.temperature * R_IDEAL_GAS_EQUATION)
+			var/datum/gas_mixture/removed_air = tile.remove_air(transfer_moles)
 
-		if(!removed_air)
-			return //No air on the tile
+			if(!removed_air)
+				continue //No air on the tile
 
-		waste_air.merge(removed_air)
+			waste_air.merge(removed_air)
+
 		waste_pipe.update = TRUE
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/attack_hand(mob/living/user, list/modifiers)
@@ -135,3 +138,10 @@
 		on = TRUE
 		say(pump_direction ? "Pressurizing." : "Depressurizing.")
 		update_appearance()
+
+///we populate a list of turfs with nonatmos-blocked cardinal turfs AND
+/// diagonal turfs that can share atmos with *both* of the cardinal turfs
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/check_turfs()
+	adjacent_turfs.Cut()
+	var/turf/local_turf = get_turf(src)
+	adjacent_turfs = local_turf.get_atmos_adjacent_turfs(alldir = TRUE)
