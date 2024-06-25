@@ -1,14 +1,12 @@
 /datum/computer_file/program/ai_restorer
 	filename = "ai_restore"
 	filedesc = "AI Manager & Restorer"
-	category = PROGRAM_CATEGORY_SCI
-	program_icon_state = "generic"
+	downloader_category = PROGRAM_CATEGORY_SCIENCE
+	program_open_overlay = "generic"
 	extended_desc = "Firmware Restoration Kit, capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
 	size = 12
-	requires_ntnet = FALSE
-	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
-	transfer_access = list(ACCESS_RD)
-	available_on_ntnet = TRUE
+	can_run_on_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
+	download_access = list(ACCESS_RD)
 	tgui_id = "NtosAiRestorer"
 	program_icon = "laptop-code"
 
@@ -59,22 +57,22 @@
 
 	return TRUE
 
-/datum/computer_file/program/ai_restorer/application_attackby(obj/item/attacking_item, mob/living/user)
+/datum/computer_file/program/ai_restorer/application_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/aicard))
+		return aicard_act(user, tool)
+
+/datum/computer_file/program/ai_restorer/proc/aicard_act(mob/living/user, obj/item/aicard/used_aicard)
 	if(!computer)
-		return FALSE
-	if(!istype(attacking_item, /obj/item/aicard))
-		return FALSE
-
+		return NONE
 	if(stored_card)
-		to_chat(user, span_warning("You try to insert \the [attacking_item] into \the [computer.name], but the slot is occupied."))
-		return FALSE
-	if(user && !user.transferItemToLoc(attacking_item, computer))
-		return FALSE
+		to_chat(user, span_warning("You try to insert \the [used_aicard] into \the [computer.name], but the slot is occupied."))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(used_aicard, computer))
+		return ITEM_INTERACT_BLOCKING
 
-	stored_card = attacking_item
-	to_chat(user, span_notice("You insert \the [attacking_item] into \the [computer.name]."))
-
-	return TRUE
+	stored_card = used_aicard
+	to_chat(user, span_notice("You insert \the [used_aicard] into \the [computer.name]."))
+	return ITEM_INTERACT_SUCCESS
 
 /datum/computer_file/program/ai_restorer/try_eject(mob/living/user, forced = FALSE)
 	if(!stored_card)
@@ -99,6 +97,7 @@
 
 
 /datum/computer_file/program/ai_restorer/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("PRG_beginReconstruction")
 			if(!stored_card || !stored_card.AI)
@@ -106,7 +105,7 @@
 			var/mob/living/silicon/ai/A = stored_card.AI
 			if(A && A.health < 100)
 				restoring = TRUE
-				A.notify_ghost_cloning("Your core files are being restored!", source = computer)
+				A.notify_revival("Your core files are being restored!", source = computer)
 			return TRUE
 		if("PRG_eject")
 			if(stored_card)

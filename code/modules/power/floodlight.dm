@@ -247,11 +247,11 @@
 	if(user)
 		to_chat(user, span_notice("You set [src] to [setting_text]."))
 
-/obj/machinery/power/floodlight/cable_layer_change_checks(mob/living/user, obj/item/tool)
+/obj/machinery/power/floodlight/cable_layer_act(mob/living/user, obj/item/tool)
 	if(anchored)
 		balloon_alert(user, "unanchor first!")
-		return FALSE
-	return TRUE
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 /obj/machinery/power/floodlight/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -261,7 +261,7 @@
 		connect_to_network()
 	else
 		disconnect_from_network()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/floodlight/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()

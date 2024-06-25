@@ -54,7 +54,7 @@
 	jitter = 40 SECONDS
 	range = 7
 	icon_state = "spark"
-	color = "#FFFF00"
+	color = COLOR_YELLOW
 	embedding = null
 
 /obj/projectile/bullet/shotgun_frag12
@@ -70,17 +70,7 @@
 
 /obj/projectile/bullet/pellet
 	icon_state = "pellet"
-	var/tile_dropoff = 0.45
-	var/tile_dropoff_s = 0.25
-
-/obj/projectile/bullet/pellet/Range()
-	..()
-	if(damage > 0)
-		damage -= tile_dropoff
-	if(stamina > 0)
-		stamina -= tile_dropoff_s
-	if(damage < 0 && stamina < 0)
-		qdel(src)
+	damage_falloff_tile = -0.45
 
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
@@ -96,6 +86,7 @@
 	sharpness = NONE
 	embedding = null
 	speed = 1.2
+	stamina_falloff_tile = -0.25
 	ricochets_max = 4
 	ricochet_chance = 120
 	ricochet_decay_chance = 0.9
@@ -116,19 +107,6 @@
 	damage = 1
 	stamina = 6
 	embedding = null
-
-/obj/projectile/bullet/pellet/shotgun_improvised
-	damage = 5
-	wound_bonus = -5
-	demolition_mod = 3 //Very good at acts of vandalism
-
-/obj/projectile/bullet/pellet/shotgun_improvised/Initialize(mapload)
-	. = ..()
-	range = rand(3, 8)
-
-/obj/projectile/bullet/pellet/shotgun_improvised/on_range()
-	do_sparks(1, TRUE, src)
-	..()
 
 // Mech Scattershot
 

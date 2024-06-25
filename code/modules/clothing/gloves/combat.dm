@@ -11,6 +11,7 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 	armor_type = /datum/armor/gloves_combat
+	clothing_traits = list(TRAIT_FAST_CUFFING)
 
 /datum/armor/gloves_combat
 	bio = 90
@@ -23,3 +24,9 @@
 	icon_state = "wizard"
 	greyscale_colors = null
 	inhand_icon_state = null
+
+/obj/item/clothing/gloves/combat/floortile
+	name = "floortile camouflage gloves"
+	desc = "Is it just me or is there a pair of gloves on the floor?"
+	icon_state = "ftc_gloves"
+	inhand_icon_state = "greyscale_gloves"

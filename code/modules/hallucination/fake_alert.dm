@@ -63,10 +63,6 @@
 	alert_category = ALERT_TOO_MUCH_CO2
 	alert_type = /atom/movable/screen/alert/too_much_co2
 
-/datum/hallucination/fake_alert/nutrition
-	alert_category = ALERT_NUTRITION
-	alert_type = list(/atom/movable/screen/alert/fat, /atom/movable/screen/alert/starving)
-
 /datum/hallucination/fake_alert/gravity
 	alert_category = ALERT_GRAVITY
 	alert_type = /atom/movable/screen/alert/weightless

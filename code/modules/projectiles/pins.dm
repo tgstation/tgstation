@@ -1,11 +1,11 @@
 /obj/item/firing_pin
 	name = "electronic firing pin"
 	desc = "A small authentication device, to be inserted into a firearm receiver to allow operation. NT safety regulations require all new designs to incorporate one."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/gunmod.dmi'
 	icon_state = "firing_pin"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("pokes")
 	attack_verb_simple = list("poke")
@@ -25,32 +25,31 @@
 	if(isgun(newloc))
 		gun = newloc
 
-/obj/item/firing_pin/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(proximity_flag)
-		if(isgun(target))
-			. |= AFTERATTACK_PROCESSED_ITEM
-			var/obj/item/gun/targetted_gun = target
-			var/obj/item/firing_pin/old_pin = targetted_gun.pin
-			if(old_pin?.pin_removable && (force_replace || old_pin.pin_hot_swappable))
-				if(Adjacent(user))
-					user.put_in_hands(old_pin)
-				else
-					old_pin.forceMove(targetted_gun.drop_location())
-				old_pin.gun_remove(user)
+/obj/item/firing_pin/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isgun(interacting_with))
+		return NONE
 
-			if(!targetted_gun.pin)
-				if(!user.temporarilyRemoveItemFromInventory(src))
-					return .
-				if(gun_insert(user, targetted_gun))
-					if(old_pin)
-						balloon_alert(user, "swapped firing pin")
-					else
-						balloon_alert(user, "inserted firing pin")
-			else
-				to_chat(user, span_notice("This firearm already has a firing pin installed."))
+	var/obj/item/gun/targeted_gun = interacting_with
+	var/obj/item/firing_pin/old_pin = targeted_gun.pin
+	if(old_pin?.pin_removable && (force_replace || old_pin.pin_hot_swappable))
+		if(Adjacent(user))
+			user.put_in_hands(old_pin)
+		else
+			old_pin.forceMove(targeted_gun.drop_location())
+		old_pin.gun_remove(user)
 
+	if(!targeted_gun.pin)
+		if(!user.temporarilyRemoveItemFromInventory(src))
 			return .
+		if(gun_insert(user, targeted_gun))
+			if(old_pin)
+				balloon_alert(user, "swapped firing pin")
+			else
+				balloon_alert(user, "inserted firing pin")
+	else
+		to_chat(user, span_notice("This firearm already has a firing pin installed."))
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/firing_pin/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -137,7 +136,7 @@
 /obj/item/firing_pin/clown
 	name = "hilarious firing pin"
 	desc = "Advanced clowntech that can convert any firearm into a far more useful object."
-	color = "#FFFF00"
+	color = COLOR_YELLOW
 	fail_message = "honk!"
 	force_replace = TRUE
 
@@ -190,13 +189,15 @@
 	fail_message = "dna check failed!"
 	var/unique_enzymes = null
 
-/obj/item/firing_pin/dna/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(proximity_flag && iscarbon(target))
-		var/mob/living/carbon/M = target
+/obj/item/firing_pin/dna/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(iscarbon(interacting_with))
+		var/mob/living/carbon/M = interacting_with
 		if(M.dna && M.dna.unique_enzymes)
 			unique_enzymes = M.dna.unique_enzymes
 			balloon_alert(user, "dna lock set")
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 /obj/item/firing_pin/dna/pin_auth(mob/living/carbon/user)
 	if(user && user.dna && user.dna.unique_enzymes)
@@ -221,7 +222,7 @@
 /obj/item/firing_pin/paywall
 	name = "paywall firing pin"
 	desc = "A firing pin with a built-in configurable paywall."
-	color = "#FFD700"
+	color = COLOR_GOLD
 	fail_message = ""
 	///list of account IDs which have accepted the license prompt. If this is the multi-payment pin, then this means they accepted the waiver that each shot will cost them money
 	var/list/gun_owners = list()
@@ -373,7 +374,19 @@
 	suit_requirement = /obj/item/clothing/suit/bluetag
 	tagcolor = "blue"
 
+/obj/item/firing_pin/monkey
+	name = "monkeylock firing pin"
+	desc = "This firing pin prevents non-monkeys from firing a gun."
+	fail_message = "not a monkey!"
+
+/obj/item/firing_pin/monkey/pin_auth(mob/living/user)
+	if(!is_simian(user))
+		playsound(src, SFX_SCREECH, 75, TRUE)
+		return FALSE
+	return TRUE
+
 /obj/item/firing_pin/Destroy()
 	if(gun)
 		gun.pin = null
+		gun = null
 	return ..()

@@ -11,6 +11,7 @@
 	canSmoothWith = SMOOTH_GROUP_TURF_CHASM
 	density = TRUE //This will prevent hostile mobs from pathing into chasms, while the canpass override will still let it function like an open turf
 	bullet_bounce_sound = null //abandon all hope ye who enter
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 
 /turf/open/chasm/Initialize(mapload)
 	. = ..()
@@ -42,12 +43,11 @@
 
 /turf/open/chasm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF && rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
-		PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+		place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
 	return FALSE
 
-/turf/open/chasm/rust_heretic_act()
-	return FALSE
+
 
 /turf/open/chasm/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
@@ -75,6 +75,9 @@
 /// Handles adding the chasm component to the turf (So stuff falls into it!)
 /turf/open/chasm/proc/apply_components(mapload)
 	AddComponent(/datum/component/chasm, GET_TURF_BELOW(src), mapload)
+
+/turf/open/chasm/can_cross_safely(atom/movable/crossing)
+	return HAS_TRAIT(src, TRAIT_CHASM_STOPPED) || HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
 
 // Chasms for Lavaland, with planetary atmos and lava glow
 /turf/open/chasm/lavaland
@@ -116,3 +119,19 @@
 
 /turf/open/chasm/true/apply_components(mapload)
 	AddComponent(/datum/component/chasm, null, mapload) //Don't pass anything for below_turf.
+
+/turf/open/chasm/true/no_smooth
+	smoothing_flags = NONE
+
+/turf/open/chasm/true/no_smooth/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	return FALSE
+
+/turf/open/chasm/true/no_smooth/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	return FALSE
+
+/turf/open/chasm/true/no_smooth/attackby(obj/item/item, mob/user, params, area/area_restriction)
+	if(istype(item, /obj/item/stack/rods))
+		return
+	else if(istype(item, /obj/item/stack/tile/iron))
+		return
+	return ..()

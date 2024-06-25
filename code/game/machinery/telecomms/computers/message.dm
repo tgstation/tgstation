@@ -74,7 +74,8 @@
 	GLOB.telecomms_list += src
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/message_monitor/LateInitialize()
+/obj/machinery/computer/message_monitor/post_machine_initialize()
+	. = ..()
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
 	if(!linkedServer)
 		for(var/obj/machinery/telecomms/message_server/message_server in GLOB.telecomms_list)
@@ -267,6 +268,9 @@
 		ui = new(user, src, "MessageMonitor", name)
 		ui.open()
 
+/obj/machinery/computer/message_monitor/ui_assets(mob/user)
+	. = ..()
+	. += get_asset_datum(/datum/asset/spritesheet/chat)
 
 #undef MSG_MON_SCREEN_MAIN
 #undef MSG_MON_SCREEN_LOGS
@@ -280,12 +284,11 @@
 	name = "monitor decryption key"
 
 /obj/item/paper/monitorkey/Initialize(mapload, obj/machinery/telecomms/message_server/server)
-	..()
+	. = ..()
 	if (server)
 		print(server)
 		return INITIALIZE_HINT_NORMAL
-	else
-		return INITIALIZE_HINT_LATELOAD
+	return INITIALIZE_HINT_LATELOAD
 
 /**
  * Handles printing the monitor key for a given server onto this piece of paper.

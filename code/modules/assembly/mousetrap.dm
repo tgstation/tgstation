@@ -89,7 +89,7 @@
 					to_chat(user, span_warning("Your hand slips, setting off the trigger!"))
 					pulse()
 		update_appearance()
-		playsound(src, 'sound/weapons/handcuffs.ogg', 30, TRUE, -3)
+		playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, -3)
 
 /obj/item/assembly/mousetrap/update_icon_state()
 	icon_state = "mousetrap[armed ? "armed" : ""]"
@@ -189,7 +189,7 @@
 	if(armed)
 		if(ismob(AM))
 			var/mob/MM = AM
-			if(!(MM.movement_type & FLYING))
+			if(!(MM.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
 				if(ishuman(AM))
 					var/mob/living/carbon/H = AM
 					if(H.move_intent == MOVE_INTENT_RUN)

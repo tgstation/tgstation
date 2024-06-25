@@ -33,11 +33,11 @@
 	SIGNAL_HANDLER
 	if(!buffer_net)
 		return
-	if(reagents.total_volume + CHEMICAL_QUANTISATION_LEVEL >= activation_volume && mode == UNREADY)
+	if(reagents.total_volume >= activation_volume && mode == UNREADY)
 		mode = IDLE
 		buffer_net.check_active()
 
-	else if(reagents.total_volume + CHEMICAL_QUANTISATION_LEVEL < activation_volume && mode != UNREADY)
+	else if(reagents.total_volume < activation_volume && mode != UNREADY)
 		mode = UNREADY
 		buffer_net.check_active()
 
@@ -68,7 +68,7 @@
 					neighbour.attempt_connect() //technically this would runtime if you made about 200~ buffers
 
 	add_overlay(icon_state + "_alert")
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, cut_overlay), icon_state + "_alert"), 20)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, cut_overlay), icon_state + "_alert"), 2 SECONDS)
 
 /obj/machinery/plumbing/buffer/attack_hand_secondary(mob/user, modifiers)
 	. = ..()

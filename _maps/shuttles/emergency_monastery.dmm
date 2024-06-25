@@ -507,14 +507,11 @@
 /area/shuttle/escape)
 "ig" = (
 /obj/machinery/light/small/directional/west,
-/obj/machinery/door/window/right/directional/north{
-	base_state = "left";
-	dir = 2;
-	icon_state = "left";
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/door/window/left/directional/south{
 	name = "Curator Desk Door";
 	req_access = list("library")
 	},
-/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "it" = (
@@ -1016,9 +1013,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "oX" = (
-/obj/machinery/door/window/right/directional/north{
-	base_state = "left";
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/north{
 	name = "Secure Art Exhibit";
 	req_access = list("library")
 	},
@@ -1198,10 +1193,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "rL" = (
-/obj/machinery/door/window/left/directional/east{
-	base_state = "right";
-	dir = 1;
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/north{
 	name = "Coffin Storage";
 	req_access = list("chapel_office")
 	},
@@ -1565,8 +1557,7 @@
 /turf/closed/wall/mineral/iron,
 /area/shuttle/escape)
 "yd" = (
-/obj/machinery/door/window/left/directional/east{
-	dir = 1;
+/obj/machinery/door/window/left/directional/north{
 	name = "Coffin Storage";
 	req_access = list("chapel_office")
 	},
@@ -2411,9 +2402,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Jf" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/full,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -2442,16 +2431,12 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "Ju" = (
-/obj/structure/rack{
-	icon = 'icons/obj/fluff/general.dmi';
-	icon_state = "minibar";
-	name = "skeletal minibar"
-	},
 /obj/item/book/codex_gigas,
 /obj/machinery/camera/directional/south{
 	c_tag = "Monastery Archives Aft";
 	network = list("ss13","monastery")
 	},
+/obj/structure/rack/skeletal,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Jv" = (
@@ -3139,8 +3124,7 @@
 /area/shuttle/escape)
 "RM" = (
 /obj/machinery/mass_driver/chapelgun,
-/obj/machinery/door/window/left/directional/east{
-	dir = 8;
+/obj/machinery/door/window/left/directional/west{
 	name = "Mass Driver"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3297,8 +3281,7 @@
 /area/shuttle/escape)
 "Tb" = (
 /obj/machinery/light/small/directional/east,
-/obj/machinery/door/window/right/directional/north{
-	dir = 2;
+/obj/machinery/door/window/right/directional/south{
 	name = "Curator Desk Door";
 	req_access = list("library")
 	},
@@ -3797,8 +3780,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Zh" = (
-/obj/machinery/door/window/brigdoor{
-	dir = 4;
+/obj/machinery/door/window/brigdoor/left/directional/east{
 	req_access = list("security")
 	},
 /turf/open/floor/mineral/plastitanium/red,

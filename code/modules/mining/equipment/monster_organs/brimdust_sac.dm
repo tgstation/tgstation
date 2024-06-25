@@ -141,7 +141,7 @@
 	return COMPONENT_CLEANED
 
 /// When you take brute damage, schedule an explosion
-/datum/status_effect/stacking/brimdust_coating/proc/on_take_damage(datum/source, damage, damagetype)
+/datum/status_effect/stacking/brimdust_coating/proc/on_take_damage(datum/source, damage, damagetype, ...)
 	SIGNAL_HANDLER
 	if(damagetype != BRUTE)
 		return

@@ -181,7 +181,7 @@
 	var/datum/objective/summon_carp/main_objective = locate() in objectives
 	main_objective?.completed = TRUE
 	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds. \
-		Remaining crew are advised to evacuate as soon as possible.", "Central Command Wildlife Observations", has_important_message = TRUE)
+		Remaining crew are advised to evacuate as soon as possible.", "[command_name()] Wildlife Observations", has_important_message = TRUE)
 	sound_to_playing_players('sound/creatures/space_dragon_roar.ogg', volume = 75)
 	for(var/obj/structure/carp_rift/rift as anything in rift_list)
 		rift.carp_stored = 999999
@@ -196,7 +196,7 @@
  */
 /datum/antagonist/space_dragon/proc/permanant_empower()
 	owner.current.fully_heal()
-	owner.current.add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
+	owner.current.add_filter("anger_glow", 3, list("type" = "outline", "color" = COLOR_CARP_RIFT_RED, "size" = 5))
 	owner.current.add_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
 
 /**
@@ -207,7 +207,7 @@
  */
 /datum/antagonist/space_dragon/proc/rift_empower()
 	owner.current.fully_heal()
-	owner.current.add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
+	owner.current.add_filter("anger_glow", 3, list("type" = "outline", "color" = COLOR_CARP_RIFT_RED, "size" = 5))
 	owner.current.add_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
 	addtimer(CALLBACK(src, PROC_REF(rift_depower)), 30 SECONDS)
 
@@ -263,7 +263,7 @@
 			players_to_carp_taken[carpy.key] += 1
 		var/list = ""
 		for(var/carp_user in players_to_carp_taken)
-			list += "<li><b>[carp_user]<b>, who played <b>[players_to_carp_taken[carp_user]]</b> space carps.</li>"
+			list += "<li><b>[carp_user]</b>, who played <b>[players_to_carp_taken[carp_user]]</b> space carps.</li>"
 		parts += list
 		parts += "</ul>"
 

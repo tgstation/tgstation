@@ -57,6 +57,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_cover = MASKCOVERSMOUTH
 	tint = 0
 	has_fov = FALSE
+	unique_death = 'sound/voice/sec_death.ogg'
 	COOLDOWN_DECLARE(hailer_cooldown)
 	///Decides the phrases available for use; defines used are the last index of a category of available phrases
 	var/aggressiveness = AGGR_BAD_COP
@@ -97,7 +98,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer/cyborg
 	name = "security hailer"
 	desc = "A set of recognizable pre-recorded messages for cyborgs to use when apprehending criminals."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "taperecorder_idle"
 	slot_flags = null
 	aggressiveness = AGGR_GOOD_COP // Borgs are nicecurity!
@@ -123,7 +124,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	if(istype(action, /datum/action/item_action/halt))
 		halt()
 	else
-		adjustmask(user)
+		adjust_visor(user)
 
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()

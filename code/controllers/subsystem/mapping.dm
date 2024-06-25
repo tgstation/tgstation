@@ -173,7 +173,7 @@ SUBSYSTEM_DEF(mapping)
 	// Cache for sonic speed
 	var/list/unused_turfs = src.unused_turfs
 	var/list/world_contents = GLOB.areas_by_type[world.area].contents
-	var/list/world_turf_contents = GLOB.areas_by_type[world.area].contained_turfs
+	var/list/world_turf_contents_by_z = GLOB.areas_by_type[world.area].turfs_by_zlevel
 	var/list/lists_to_reserve = src.lists_to_reserve
 	var/index = 0
 	while(index < length(lists_to_reserve))
@@ -189,10 +189,12 @@ SUBSYSTEM_DEF(mapping)
 			LAZYINITLIST(unused_turfs["[T.z]"])
 			unused_turfs["[T.z]"] |= T
 			var/area/old_area = T.loc
-			old_area.turfs_to_uncontain += T
+			LISTASSERTLEN(old_area.turfs_to_uncontain_by_zlevel, T.z, list())
+			old_area.turfs_to_uncontain_by_zlevel[T.z] += T
 			T.turf_flags = UNUSED_RESERVATION_TURF
 			world_contents += T
-			world_turf_contents += T
+			LISTASSERTLEN(world_turf_contents_by_z, T.z, list())
+			world_turf_contents_by_z[T.z] += T
 			packet.len--
 			packetlen = length(packet)
 
@@ -245,23 +247,23 @@ SUBSYSTEM_DEF(mapping)
 	// Generate mining ruins
 	var/list/lava_ruins = levels_by_trait(ZTRAIT_LAVA_RUINS)
 	if (lava_ruins.len)
-		seedRuins(lava_ruins, CONFIG_GET(number/lavaland_budget), list(/area/lavaland/surface/outdoors/unexplored), themed_ruins[ZTRAIT_LAVA_RUINS], clear_below = TRUE)
+		seedRuins(lava_ruins, CONFIG_GET(number/lavaland_budget), list(/area/lavaland/surface/outdoors/unexplored), themed_ruins[ZTRAIT_LAVA_RUINS], clear_below = TRUE, mineral_budget = 15, mineral_budget_update = OREGEN_PRESET_LAVALAND)
 
 	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
 	if (ice_ruins.len)
 		// needs to be whitelisted for underground too so place_below ruins work
-		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS], clear_below = TRUE)
+		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS], clear_below = TRUE, mineral_budget = 4, mineral_budget_update = OREGEN_PRESET_TRIPLE_Z)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
 	if (ice_ruins_underground.len)
-		seedRuins(ice_ruins_underground, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS_UNDERGROUND], clear_below = TRUE)
+		seedRuins(ice_ruins_underground, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS_UNDERGROUND], clear_below = TRUE, mineral_budget = 21)
 
 	// Generate deep space ruins
 	var/list/space_ruins = levels_by_trait(ZTRAIT_SPACE_RUINS)
 	if (space_ruins.len)
 		// Create a proportional budget by multiplying the amount of space ruin levels in the current map over the default amount
 		var/proportional_budget = round(CONFIG_GET(number/space_budget) * (space_ruins.len / DEFAULT_SPACE_RUIN_LEVELS))
-		seedRuins(space_ruins, proportional_budget, list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS])
+		seedRuins(space_ruins, proportional_budget, list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS], mineral_budget = 0)
 
 /// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
 /// It is important that this happens AFTER generating mineral walls and such, since we rely on them for river logic
@@ -641,46 +643,38 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		holodeck_templates[holo_template.template_id] = holo_template
 
-//Manual loading of away missions.
-/client/proc/admin_away()
-	set name = "Load Away Mission"
-	set category = "Admin.Events"
-
-	if(!holder || !check_rights(R_FUN))
-		return
-
-
+ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away mission for the station.", ADMIN_CATEGORY_EVENTS)
 	if(!GLOB.the_gateway)
-		if(tgui_alert(usr, "There's no home gateway on the station. You sure you want to continue ?", "Uh oh", list("Yes", "No")) != "Yes")
+		if(tgui_alert(user, "There's no home gateway on the station. You sure you want to continue ?", "Uh oh", list("Yes", "No")) != "Yes")
 			return
 
 	var/list/possible_options = GLOB.potentialRandomZlevels + "Custom"
 	var/away_name
 	var/datum/space_level/away_level
 	var/secret = FALSE
-	if(tgui_alert(usr, "Do you want your mission secret? (This will prevent ghosts from looking at your map in any way other than through a living player's eyes.)", "Are you $$$ekret?", list("Yes", "No")) == "Yes")
+	if(tgui_alert(user, "Do you want your mission secret? (This will prevent ghosts from looking at your map in any way other than through a living player's eyes.)", "Are you $$$ekret?", list("Yes", "No")) == "Yes")
 		secret = TRUE
-	var/answer = input("What kind?","Away") as null|anything in possible_options
+	var/answer = input(user, "What kind?","Away") as null|anything in possible_options
 	switch(answer)
 		if("Custom")
-			var/mapfile = input("Pick file:", "File") as null|file
+			var/mapfile = input(user, "Pick file:", "File") as null|file
 			if(!mapfile)
 				return
 			away_name = "[mapfile] custom"
-			to_chat(usr,span_notice("Loading [away_name]..."))
+			to_chat(user,span_notice("Loading [away_name]..."))
 			var/datum/map_template/template = new(mapfile, "Away Mission")
 			away_level = template.load_new_z(secret)
 		else
 			if(answer in GLOB.potentialRandomZlevels)
 				away_name = answer
-				to_chat(usr,span_notice("Loading [away_name]..."))
+				to_chat(user,span_notice("Loading [away_name]..."))
 				var/datum/map_template/template = new(away_name, "Away Mission")
 				away_level = template.load_new_z(secret)
 			else
 				return
 
-	message_admins("Admin [key_name_admin(usr)] has loaded [away_name] away mission.")
-	log_admin("Admin [key_name(usr)] has loaded [away_name] away mission.")
+	message_admins("Admin [key_name_admin(user)] has loaded [away_name] away mission.")
+	log_admin("Admin [key_name(user)] has loaded [away_name] away mission.")
 	if(!away_level)
 		message_admins("Loading [away_name] failed!")
 		return
@@ -827,12 +821,14 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	// Faster
 	if(space_guaranteed)
 		var/area/global_area = GLOB.areas_by_type[world.area]
-		global_area.contained_turfs += Z_TURFS(z_level)
+		LISTASSERTLEN(global_area.turfs_by_zlevel, z_level, list())
+		global_area.turfs_by_zlevel[z_level] = Z_TURFS(z_level)
 		return
 
 	for(var/turf/to_contain as anything in Z_TURFS(z_level))
 		var/area/our_area = to_contain.loc
-		our_area.contained_turfs += to_contain
+		LISTASSERTLEN(our_area.turfs_by_zlevel, z_level, list())
+		our_area.turfs_by_zlevel[z_level] += to_contain
 
 /datum/controller/subsystem/mapping/proc/update_plane_tracking(datum/space_level/update_with)
 	// We're essentially going to walk down the stack of connected z levels, and set their plane offset as we go

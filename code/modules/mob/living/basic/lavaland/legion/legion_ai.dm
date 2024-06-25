@@ -1,7 +1,7 @@
 /// Keep away and launch skulls at every opportunity, prioritising injured allies
 /datum/ai_controller/basic_controller/legion
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/legion,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/legion,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_AGGRO_RANGE = 5, // Unobservant
 		BB_BASIC_MOB_FLEE_DISTANCE = 6,
@@ -16,10 +16,10 @@
 		/datum/ai_planning_subtree/flee_target/legion,
 	)
 
-/// Chase and attack whatever we are targetting, if it's friendly we will heal them
+/// Chase and attack whatever we are targeting, if it's friendly we will heal them
 /datum/ai_controller/basic_controller/legion_brood
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/legion,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/legion,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
@@ -31,9 +31,9 @@
 	)
 
 /// Target nearby friendlies if they are hurt (and are not themselves Legions)
-/datum/targetting_datum/basic/legion
+/datum/targeting_strategy/basic/legion
 
-/datum/targetting_datum/basic/legion/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
+/datum/targeting_strategy/basic/legion/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
 	if (!living_mob.faction_check_atom(the_target, exact_match = check_factions_exactly))
 		return FALSE
 	if (istype(the_target, living_mob.type))

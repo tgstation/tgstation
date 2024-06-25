@@ -42,7 +42,7 @@
 	item_generation_time = item_generation_wait
 	START_PROCESSING(SSobj, src)
 
-/datum/component/mob_harvest/Destroy(force, silent)
+/datum/component/mob_harvest/Destroy(force)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 

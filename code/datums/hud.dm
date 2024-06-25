@@ -18,6 +18,7 @@ GLOBAL_LIST_INIT(huds, list(
 	DATA_HUD_SENTIENT_DISEASE = new/datum/atom_hud/sentient_disease(),
 	DATA_HUD_AI_DETECT = new/datum/atom_hud/ai_detector(),
 	DATA_HUD_FAN = new/datum/atom_hud/data/human/fan_hud(),
+	DATA_HUD_MALF_APC = new/datum/atom_hud/data/malf_apc(),
 ))
 
 /datum/atom_hud

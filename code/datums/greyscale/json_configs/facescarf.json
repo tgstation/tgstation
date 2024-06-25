@@ -1,0 +1,18 @@
+{
+    "facescarf": [
+        {
+            "type": "icon_state",
+            "icon_state": "facescarf",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        }
+    ],
+	"facescarf_up": [
+        {
+            "type": "icon_state",
+            "icon_state": "facescarf_up",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        }
+    ]
+}

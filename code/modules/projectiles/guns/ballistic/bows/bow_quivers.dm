@@ -15,9 +15,7 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
 	atom_storage.max_slots = 40
 	atom_storage.max_total_storage = 100
-	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/arrow,
-	))
+	atom_storage.set_holdable(/obj/item/ammo_casing/arrow)
 
 /obj/item/storage/bag/quiver/PopulateContents()
 	. = ..()

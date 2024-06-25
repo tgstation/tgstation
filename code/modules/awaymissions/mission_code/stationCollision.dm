@@ -122,16 +122,23 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 			Your assigned ship is designed specifically for penetrating the hull of another station or ship with minimal damage to operatives.
 			It is completely fly-by-wire meaning you have just have to enjoy the ride and when the red light comes on... find something to hold onto!
 			"}
+
 /*
  * Captain's safe
  */
-/obj/item/storage/secure/safe/sc_ssafe
+/obj/structure/secure_safe/sc_ssafe
 	name = "Captain's secure safe"
 
-/obj/item/storage/secure/safe/sc_ssafe/Initialize(mapload)
+/obj/structure/secure_safe/sc_ssafe/Initialize(mapload)
 	. = ..()
-	lock_code = "[GLOB.sc_safecode1][GLOB.sc_safecode2][GLOB.sc_safecode3][GLOB.sc_safecode4][GLOB.sc_safecode5]"
-	lock_set = TRUE
+	var/lock_code = "[GLOB.sc_safecode1][GLOB.sc_safecode2][GLOB.sc_safecode3][GLOB.sc_safecode4][GLOB.sc_safecode5]"
+	AddComponent(/datum/component/lockable_storage, \
+		lock_code = lock_code, \
+		can_hack_open = FALSE, \
+	)
+
+/obj/structure/secure_safe/sc_ssafe/PopulateContents()
+	. = ..()
 	new /obj/item/gun/energy/mindflayer(src)
 	new /obj/item/soulstone(src)
 	new /obj/item/clothing/suit/hooded/cultrobes/hardened(src)

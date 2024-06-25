@@ -122,8 +122,6 @@ SUBSYSTEM_DEF(tgui)
 	for(var/datum/tgui/ui in user.tgui_open_uis)
 		if(ui.window && ui.window.id == window_id)
 			ui.close(can_be_suspended = FALSE)
-	// Unset machine just to be sure.
-	user.unset_machine()
 	// Close window directly just to be sure.
 	user << browse(null, "window=[window_id]")
 

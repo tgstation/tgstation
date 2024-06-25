@@ -12,8 +12,11 @@
 #define COMSIG_ORGAN_BEING_REPLACED "organ_being_replaced"
 /// Called when an organ gets surgically removed (mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
 #define COMSIG_ORGAN_SURGICALLY_REMOVED "organ_surgically_removed"
-/// Called when using the *wag emote
-#define COMSIG_ORGAN_WAG_TAIL "wag_tail"
+/// Called when an organ gets surgically removed (mob/living/user, mob/living/carbon/new_owner, target_zone, obj/item/tool)
+#define COMSIG_ORGAN_SURGICALLY_INSERTED "organ_surgically_inserted"
+
+///Called when movement intent is toggled.
+#define COMSIG_MOVE_INTENT_TOGGLED "move_intent_toggled"
 
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
@@ -28,6 +31,8 @@
 #define COMSIG_LIVING_EXTINGUISHED "living_extinguished"
 ///from base of mob/living/electrocute_act(): (shock_damage, source, siemens_coeff, flags)
 #define COMSIG_LIVING_ELECTROCUTE_ACT "living_electrocute_act"
+	/// Block the electrocute_act() proc from proceeding
+	#define COMPONENT_LIVING_BLOCK_SHOCK (1<<0)
 ///sent when items with siemen coeff. of 0 block a shock: (power_source, source, siemens_coeff, dist_check)
 #define COMSIG_LIVING_SHOCK_PREVENTED "living_shock_prevented"
 ///sent by stuff like stunbatons and tasers: ()
@@ -38,8 +43,12 @@
 #define COMSIG_LIVING_SET_BUCKLED "living_set_buckled"
 ///from base of mob/living/set_body_position()
 #define COMSIG_LIVING_SET_BODY_POSITION  "living_set_body_position"
-///From post-can inject check of syringe after attack (mob/user)
-#define COMSIG_LIVING_TRY_SYRINGE "living_try_syringe"
+/// Sent to a mob being injected with a syringe when the do_after initiates
+#define COMSIG_LIVING_TRY_SYRINGE_INJECT "living_try_syringe_inject"
+/// Sent to a mob being withdrawn from with a syringe when the do_after initiates
+#define COMSIG_LIVING_TRY_SYRINGE_WITHDRAW "living_try_syringe_withdraw"
+///from base of mob/living/set_usable_legs()
+#define COMSIG_LIVING_LIMBLESS_SLOWDOWN  "living_limbless_slowdown"
 ///From living/Life(). (deltatime, times_fired)
 #define COMSIG_LIVING_LIFE "living_life"
 	/// Block the Life() proc from proceeding... this should really only be done in some really wacky situations.
@@ -69,8 +78,6 @@
 #define COMSIG_LIVING_ADJUST_OXY_DAMAGE "living_adjust_oxy_damage"
 /// Send when toxloss is modified (type, amount, forced)
 #define COMSIG_LIVING_ADJUST_TOX_DAMAGE "living_adjust_tox_damage"
-/// Send when cloneloss is modified (type, amount, forced)
-#define COMSIG_LIVING_ADJUST_CLONE_DAMAGE "living_adjust_clone_damage"
 /// Send when staminaloss is modified (type, amount, forced)
 #define COMSIG_LIVING_ADJUST_STAMINA_DAMAGE "living_adjust_stamina_damage"
 
@@ -78,7 +85,6 @@
 #define COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES list(\
 	COMSIG_LIVING_ADJUST_BRUTE_DAMAGE,\
 	COMSIG_LIVING_ADJUST_BURN_DAMAGE,\
-	COMSIG_LIVING_ADJUST_CLONE_DAMAGE,\
 	COMSIG_LIVING_ADJUST_OXY_DAMAGE,\
 	COMSIG_LIVING_ADJUST_TOX_DAMAGE,\
 )
@@ -139,20 +145,30 @@
 #define COMSIG_LIVING_EARLY_UNARMED_ATTACK "human_pre_attack_hand"
 /// from mob/living/*/UnarmedAttack(): (mob/living/source, atom/target, proximity, modifiers)
 #define COMSIG_LIVING_UNARMED_ATTACK "living_unarmed_attack"
+///From base of mob/living/MobBump(): (mob/bumped, mob/living/bumper)
+#define COMSIG_LIVING_PRE_MOB_BUMP "movable_pre_bump"
+	#define COMPONENT_LIVING_BLOCK_PRE_MOB_BUMP (1<<0)
 ///From base of mob/living/MobBump() (mob/living)
 #define COMSIG_LIVING_MOB_BUMP "living_mob_bump"
+///From base of mob/living/MobBump() (mob/living)
+#define COMSIG_LIVING_MOB_BUMPED "living_mob_bumped"
 ///From base of mob/living/Bump() (turf/closed)
 #define COMSIG_LIVING_WALL_BUMP "living_wall_bump"
 ///From base of turf/closed/Exited() (turf/closed)
 #define COMSIG_LIVING_WALL_EXITED "living_wall_exited"
 ///From base of mob/living/ZImpactDamage() (mob/living, levels, turf/t)
 #define COMSIG_LIVING_Z_IMPACT "living_z_impact"
-	#define NO_Z_IMPACT_DAMAGE (1<<0)
+	/// Just for the signal return, does not run normal living handing of z fall damage for mobs
+	#define ZIMPACT_CANCEL_DAMAGE (1<<0)
+	/// Do not show default z-impact message
+	#define ZIMPACT_NO_MESSAGE (1<<1)
+	/// Do not do the spin animation when landing
+	#define ZIMPACT_NO_SPIN (1<<2)
 
 /// From mob/living/try_speak(): (message, ignore_spam, forced)
-#define COMSIG_LIVING_TRY_SPEECH "living_vocal_speech"
-	/// Return if the mob can speak the message, regardless of any other signal returns or checks.
-	#define COMPONENT_CAN_ALWAYS_SPEAK (1<<0)
+#define COMSIG_MOB_TRY_SPEECH "living_vocal_speech"
+	/// Return to skip can_speak check, IE, forcing success. Overrides below.
+	#define COMPONENT_IGNORE_CAN_SPEAK (1<<0)
 	/// Return if the mob cannot speak.
 	#define COMPONENT_CANNOT_SPEAK (1<<1)
 
@@ -165,6 +181,9 @@
 
 ///From obj/item/toy/crayon/spraycan
 #define COMSIG_LIVING_MOB_PAINTED "living_mob_painted"
+
+///From obj/closet/supplypod/return_victim: (turf/destination)
+#define COMSIG_LIVING_RETURN_FROM_CAPTURE "living_return_from_capture"
 
 ///From mob/living/proc/wabbajack(): (randomize_type)
 #define COMSIG_LIVING_PRE_WABBAJACKED "living_mob_wabbajacked"
@@ -219,9 +238,49 @@
 /// From /datum/ai/behavior/climb_tree/perform() : (mob/living/basic/living_pawn)
 #define COMSIG_LIVING_CLIMB_TREE "living_climb_tree"
 
+///from /mob/living/proc/check_block(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration, damage_type)
+#define COMSIG_LIVING_CHECK_BLOCK "living_check_block"
+	#define SUCCESSFUL_BLOCK (1<<0)
+
+///Hit by successful disarm attack (mob/living/attacker, zone_targeted, item/weapon)
+#define COMSIG_LIVING_DISARM_HIT "living_disarm_hit"
+///Before a living mob is shoved, sent to the turf we're trying to shove onto (mob/living/shover, mob/living/target)
+#define COMSIG_LIVING_DISARM_PRESHOVE "living_disarm_preshove"
+	#define COMSIG_LIVING_ACT_SOLID (1<<0) //Tells disarm code to act as if the mob was shoved into something solid, even we we're not
+///When a living mob is disarmed, this is sent to the turf we're trying to shove onto (mob/living/shover, mob/living/target, shove_blocked)
+#define COMSIG_LIVING_DISARM_COLLIDE "living_disarm_collision"
+	#define COMSIG_LIVING_SHOVE_HANDLED (1<<0)
+
 /// Sent on a mob from /datum/component/mob_chain when component is attached with it as the "front" : (mob/living/basic/tail)
 #define COMSIG_MOB_GAINED_CHAIN_TAIL "living_gained_chain_tail"
 /// Sent on a mob from /datum/component/mob_chain when component is detached from it as the "front" : (mob/living/basic/tail)
 #define COMSIG_MOB_LOST_CHAIN_TAIL "living_detached_chain_tail"
 /// Sent from a 'contract chain' button on a mob chain
 #define COMSIG_MOB_CHAIN_CONTRACT "living_chain_contracted"
+
+/// Sent from `obj/item/reagent_containers/pill/on_consumption`: (obj/item/reagent_containers/pill/pill, mob/feeder)
+#define COMSIG_LIVING_PILL_CONSUMED "living_pill_consumed"
+
+/// Sent from a mob to their loc when starting to remove cuffs on itself
+#define COMSIG_MOB_REMOVING_CUFFS "living_removing_cuffs"
+	/// Sent as a reply to above from any atom that wishs to stop self-cuff removal
+	#define COMSIG_MOB_BLOCK_CUFF_REMOVAL (1<<0)
+
+/// Sent to a mob grabbing another mob: (mob/living/grabbing)
+#define COMSIG_LIVING_GRAB "living_grab"
+	// Return COMPONENT_CANCEL_ATTACK_CHAIN / COMPONENT_SKIP_ATTACK_CHAIN to stop the grab
+
+/// From /datum/element/basic_eating/try_eating()
+#define COMSIG_MOB_PRE_EAT "mob_pre_eat"
+	///cancel eating attempt
+	#define COMSIG_MOB_CANCEL_EAT (1<<0)
+
+/// From /datum/element/basic_eating/finish_eating()
+#define COMSIG_MOB_ATE "mob_ate"
+
+///From mob/living/carbon/proc/throw_mode_on and throw_mode_off
+#define COMSIG_LIVING_THROW_MODE_TOGGLE "living_throw_mode_toggle"
+///From /datum/component/happiness()
+#define COMSIG_MOB_HAPPINESS_CHANGE "happiness_change"
+/// From /obj/item/melee/baton/baton_effect(): (datum/source, mob/living/user, /obj/item/melee/baton)
+#define COMSIG_MOB_BATONED "mob_batoned"

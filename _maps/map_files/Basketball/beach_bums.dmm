@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "af" = (
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	pixel_x = 6;
 	pixel_y = 11
 	},
@@ -344,7 +344,7 @@
 /turf/open/misc/beach/sand,
 /area/centcom/basketball)
 "Jb" = (
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	pixel_x = 6;
 	pixel_y = 11
 	},
@@ -360,7 +360,7 @@
 /turf/open/misc/beach/sand,
 /area/centcom/basketball)
 "Lu" = (
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	pixel_x = 6;
 	pixel_y = 11
 	},

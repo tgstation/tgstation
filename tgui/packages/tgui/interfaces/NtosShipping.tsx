@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section } from '../components';
 import { NtosWindow } from '../layouts';
@@ -11,7 +12,7 @@ type Data = {
   has_id_slot: BooleanLike;
 };
 
-export const NtosShipping = (props, context) => {
+export const NtosShipping = (props) => {
   return (
     <NtosWindow width={450} height={350}>
       <NtosWindow.Content scrollable>
@@ -23,8 +24,8 @@ export const NtosShipping = (props, context) => {
 };
 
 /** Returns information about the current user, available paper, etc */
-const ShippingHub = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const ShippingHub = (props) => {
+  const { act, data } = useBackend<Data>();
   const { current_user, card_owner, paperamt, barcode_split } = data;
 
   return (
@@ -36,7 +37,8 @@ const ShippingHub = (props, context) => {
           content="Eject Id"
           onClick={() => act('ejectid')}
         />
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Current User">
           {current_user || 'N/A'}
@@ -54,8 +56,8 @@ const ShippingHub = (props, context) => {
 };
 
 /** Returns shipping options */
-const ShippingOptions = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const ShippingOptions = (props) => {
+  const { act, data } = useBackend<Data>();
   const { has_id_slot, current_user } = data;
 
   return (

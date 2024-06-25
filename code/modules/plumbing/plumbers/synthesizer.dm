@@ -2,10 +2,8 @@
 /obj/machinery/plumbing/synthesizer
 	name = "chemical synthesizer"
 	desc = "Produces a single chemical at a given volume. Must be plumbed. Most effective when working in unison with other chemical synthesizers, heaters and filters."
-
 	icon_state = "synthesizer"
 	icon = 'icons/obj/pipes_n_cables/hydrochem/plumbers.dmi'
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 
 	///Amount we produce for every process. Ideally keep under 5 since thats currently the standard duct capacity
 	var/amount = 1
@@ -50,12 +48,15 @@
 	dispensable_reagents = default_reagents
 
 /obj/machinery/plumbing/synthesizer/process(seconds_per_tick)
-	if(machine_stat & NOPOWER || !reagent_id || !amount)
+	if(!is_operational || !reagent_id || !amount)
 		return
-	if(reagents.total_volume >= amount*seconds_per_tick*0.5) //otherwise we get leftovers, and we need this to be precise
+
+	//otherwise we get leftovers, and we need this to be precise
+	if(reagents.total_volume >= amount)
 		return
-	reagents.add_reagent(reagent_id, amount*seconds_per_tick*0.5)
-	use_power(active_power_usage * amount * seconds_per_tick * 0.5)
+	reagents.add_reagent(reagent_id, amount)
+
+	use_energy(active_power_usage * seconds_per_tick)
 
 /obj/machinery/plumbing/synthesizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -63,8 +64,13 @@
 		ui = new(user, src, "ChemSynthesizer", name)
 		ui.open()
 
+/obj/machinery/plumbing/synthesizer/ui_static_data(mob/user)
+	. = ..()
+	.["possible_amounts"] = possible_amounts
+
 /obj/machinery/plumbing/synthesizer/ui_data(mob/user)
-	var/list/data = list()
+	. = list()
+	.["amount"] = amount
 
 	var/is_hallucinating = FALSE
 	if(isliving(user))
@@ -72,43 +78,42 @@
 		is_hallucinating = !!living_user.has_status_effect(/datum/status_effect/hallucination)
 	var/list/chemicals = list()
 
-	for(var/A in dispensable_reagents)
-		var/datum/reagent/R = GLOB.chemical_reagents_list[A]
-		if(R)
-			var/chemname = R.name
+	for(var/reagentID in dispensable_reagents)
+		var/datum/reagent/reagent = GLOB.chemical_reagents_list[reagentID]
+		if(reagent)
+			var/chemname = reagent.name
 			if(is_hallucinating && prob(5))
 				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
-			chemicals.Add(list(list("title" = chemname, "id" = ckey(R.name))))
-	data["chemicals"] = chemicals
-	data["amount"] = amount
-	data["possible_amounts"] = possible_amounts
+			chemicals += list(list("title" = chemname, "id" = reagent.name))
+	.["chemicals"] = chemicals
 
-	data["current_reagent"] = ckey(initial(reagent_id.name))
-	return data
+	.["current_reagent"] = initial(reagent_id.name)
 
 /obj/machinery/plumbing/synthesizer/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
-	. = TRUE
+
 	switch(action)
 		if("amount")
 			var/new_amount = text2num(params["target"])
 			if(new_amount in possible_amounts)
 				amount = new_amount
 				. = TRUE
+
 		if("select")
 			var/new_reagent = GLOB.name2reagent[params["reagent"]]
 			if(new_reagent in dispensable_reagents)
 				reagent_id = new_reagent
 				. = TRUE
+
 	update_appearance()
 	reagents.clear_reagents()
 
 /obj/machinery/plumbing/synthesizer/update_overlays()
 	. = ..()
 	var/mutable_appearance/r_overlay = mutable_appearance(icon, "[icon_state]_overlay")
-	r_overlay.color = reagent_id ? initial(reagent_id.color) : "#FFFFFF"
+	r_overlay.color = reagent_id ? initial(reagent_id.color) : COLOR_WHITE
 	. += r_overlay
 
 /obj/machinery/plumbing/synthesizer/soda

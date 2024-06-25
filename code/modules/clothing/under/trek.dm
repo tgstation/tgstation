@@ -65,7 +65,6 @@
 /obj/item/clothing/under/trek/command/ent
 	icon_state = "trek_ent"
 	//Greyscale sprite note, the base of it can't be greyscaled lest I make a whole new .json, but the color bands are greyscale at least.
-	//I've left a greyscale version of it in color.dmi in case someone wants a pocketed-jumpsuit/'coveralls' without the color bands - Orion_the_Fox
 	inhand_icon_state = "bl_suit"
 
 /obj/item/clothing/under/trek/engsec/ent

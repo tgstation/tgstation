@@ -2,8 +2,8 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
 	pressure_resistance = 10
-
 	hud_type = /datum/hud/living
+	interaction_flags_mouse_drop = ALLOW_RESTING
 
 	///Tracks the current size of the mob in relation to its original size. Use update_transform(resize) to change it.
 	var/current_size = RESIZE_DEFAULT_SIZE
@@ -30,8 +30,6 @@
 	var/toxloss = 0
 	///Burn damage caused by being way too hot, too cold or burnt.
 	var/fireloss = 0
-	///Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
-	var/cloneloss = 0
 
 	/// The movement intent of the mob (run/wal)
 	var/move_intent = MOVE_INTENT_RUN
@@ -216,6 +214,9 @@
 	///what multiplicative slowdown we get from turfs currently.
 	var/current_turf_slowdown = 0
 
+	/// Is the mob looking vertically
+	var/looking_vertically = FALSE
+
 	/// Living mob's mood datum
 	var/datum/mood/mob_mood
 
@@ -226,5 +227,5 @@
 	/// What our current gravity state is. Used to avoid duplicate animates and such
 	var/gravity_state = null
 
-	/// Whether this mob can be mutated into a cybercop via quantum server get_valid_domain_targets(). Specifically dodges megafauna
-	var/can_be_cybercop = TRUE
+	/// How long it takes to return to 0 stam
+	var/stamina_regen_time = 10 SECONDS

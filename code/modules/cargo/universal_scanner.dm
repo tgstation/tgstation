@@ -3,9 +3,10 @@
 /obj/item/universal_scanner
 	name = "universal scanner"
 	desc = "A device used to check objects against Nanotrasen exports database, assign price tags, or ready an item for a custom vending machine."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "export scanner"
-	inhand_icon_state = "radio"
+	worn_icon_state = "electronic"
+	inhand_icon_state = "export_scanner"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	item_flags = NOBLUDGEON
@@ -57,17 +58,16 @@
 	icon_state = "[choice]"
 	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 
-/obj/item/universal_scanner/afterattack(obj/object, mob/user, proximity)
-	. = ..()
-	if(!istype(object) || !proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/universal_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isobj(interacting_with))
+		return NONE
 	if(scanning_mode == SCAN_EXPORTS)
-		export_scan(object, user)
-		return .
+		export_scan(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
 	if(scanning_mode == SCAN_PRICE_TAG)
-		price_tag(target = object, user = user)
-	return .
+		price_tag(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/universal_scanner/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
@@ -122,21 +122,22 @@
 		new_custom_price = chosen_price
 		to_chat(user, span_notice("[src] will now give things a [new_custom_price] cr tag."))
 
-/obj/item/universal_scanner/CtrlClick(mob/user)
-	. = ..()
+/obj/item/universal_scanner/item_ctrl_click(mob/user)
+	. = CLICK_ACTION_BLOCKING
 	if(scanning_mode == SCAN_SALES_TAG)
 		payments_acc = null
 		to_chat(user, span_notice("You clear the registered account."))
+		return CLICK_ACTION_SUCCESS
 
-/obj/item/universal_scanner/AltClick(mob/user)
-	. = ..()
+/obj/item/universal_scanner/click_alt(mob/user)
 	if(!scanning_mode == SCAN_SALES_TAG)
-		return
+		return CLICK_ACTION_BLOCKING
 	var/potential_cut = input("How much would you like to pay out to the registered card?","Percentage Profit ([round(cut_min*100)]% - [round(cut_max*100)]%)") as num|null
 	if(!potential_cut)
 		cut_multiplier = initial(cut_multiplier)
 	cut_multiplier = clamp(round(potential_cut/100, cut_min), cut_min, cut_max)
 	to_chat(user, span_notice("[round(cut_multiplier*100)]% profit will be received if a package with a barcode is sold."))
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/universal_scanner/examine(mob/user)
 	. = ..()
@@ -167,17 +168,52 @@
  * Scans an object, target, and provides it's export value based on selling to the cargo shuttle, to mob/user.
  */
 /obj/item/universal_scanner/proc/export_scan(obj/target, mob/user)
-	// Before you fix it:
-	// yes, checking manifests is a part of intended functionality.
 	var/datum/export_report/report = export_item_and_contents(target, dry_run = TRUE)
 	var/price = 0
 	for(var/exported_datum in report.total_amount)
 		price += report.total_value[exported_datum]
-	if(price)
-		to_chat(user, span_notice("Scanned [target], value: <b>[price]</b> credits[target.contents.len ? " (contents included)" : ""]."))
-		playsound(src, 'sound/machines/terminal_select.ogg', 50, vary = TRUE)
+
+	var/message = "Scanned [target]"
+	var/warning = FALSE
+	if(length(target.contents))
+		message = "Scanned [target] and its contents"
+		if(price)
+			message += ", total value: <b>[price]</b> credits"
+		else
+			message += ", no export values"
+			warning = TRUE
+		if(!report.all_contents_scannable)
+			message += " (Undeterminable value detected, final value may differ)"
+		message += "."
 	else
-		to_chat(user, span_warning("Scanned [target], no export value."))
+		if(!report.all_contents_scannable)
+			message += ", unable to determine value."
+			warning = TRUE
+		else if(price)
+			message += ", value: <b>[price]</b> credits."
+		else
+			message += ", no export value."
+			warning = TRUE
+	if(warning)
+		to_chat(user, span_warning(message))
+	else
+		to_chat(user, span_notice(message))
+
+	if(price)
+		playsound(src, 'sound/machines/terminal_select.ogg', 50, vary = TRUE)
+
+	if(istype(target, /obj/item/delivery))
+		var/obj/item/delivery/parcel = target
+		if(!parcel.sticker)
+			return
+		var/obj/item/barcode/our_code = parcel.sticker
+		to_chat(user, span_notice("Export barcode detected! This parcel, upon export, will pay out to [our_code.payments_acc.account_holder], \
+			with a [our_code.cut_multiplier * 100]% split to them (already reflected in above recorded value)."))
+
+	if(istype(target, /obj/item/barcode))
+		var/obj/item/barcode/our_code = target
+		to_chat(user, span_notice("Export barcode detected! This barcode, if attached to a parcel, will pay out to [our_code.payments_acc.account_holder], \
+			with a [our_code.cut_multiplier * 100]% split to them."))
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/scan_human = user

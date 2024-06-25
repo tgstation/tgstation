@@ -12,16 +12,14 @@
 	maxHealth = 150
 	faction = list(FACTION_MINING, FACTION_NEUTRAL)
 	health = 150
-	move_resist = MOVE_FORCE_OVERPOWERING
+	move_resist = MOVE_FORCE_VERY_STRONG
 	melee_damage_lower = 8
 	melee_damage_upper = 8
-	pass_flags_self = LETPASSTHROW
 	attack_sound = 'sound/weapons/rapierhit.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	death_sound = 'sound/voice/mook_death.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/mook/support
 	speed = 5
-
 	pixel_x = -16
 	base_pixel_x = -16
 	pixel_y = -16
@@ -43,21 +41,23 @@
 	var/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/point_targetting/attack,
-		/datum/pet_command/point_targetting/fetch,
+		/datum/pet_command/point_targeting/attack,
+		/datum/pet_command/point_targeting/fetch,
 	)
 
 /mob/living/basic/mining/mook/Initialize(mapload)
 	. = ..()
+	AddElement(\
+		/datum/element/change_force_on_death,\
+		move_resist = MOVE_RESIST_DEFAULT,\
+	)
 	AddComponent(/datum/component/ai_retaliate_advanced, CALLBACK(src, PROC_REF(attack_intruder)))
-	var/datum/action/cooldown/mob_cooldown/mook_ability/mook_jump/jump = new(src)
-	jump.Grant(src)
-	ai_controller.set_blackboard_key(BB_MOOK_JUMP_ABILITY, jump)
+	grant_actions_by_list(get_innate_abilities())
 
 	ore_overlay = mutable_appearance(icon, "mook_ore_overlay")
 
 	AddComponent(/datum/component/ai_listen_to_weather)
-	AddElement(/datum/element/wall_smasher)
+	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(drop_ore))
 
@@ -65,6 +65,13 @@
 		grant_healer_abilities()
 
 	AddComponent(/datum/component/obeys_commands, pet_commands)
+
+/// Returns a list of actions and blackboard keys to pass into `grant_actions_by_list`.
+/mob/living/basic/mining/mook/proc/get_innate_abilities()
+	var/static/list/innate_abilities = list(
+		/datum/action/cooldown/mob_cooldown/mook_ability/mook_jump = BB_MOOK_JUMP_ABILITY,
+	)
+	return innate_abilities
 
 /mob/living/basic/mining/mook/proc/grant_healer_abilities()
 	AddComponent(\
@@ -100,7 +107,7 @@
 		ore_target.forceMove(src)
 		return COMPONENT_HOSTILE_NO_ATTACK
 
-	if(istype(target, /obj/structure/material_stand))
+	if(istype(target, /obj/structure/ore_container/material_stand))
 		if(held_ore)
 			held_ore.forceMove(target)
 		return COMPONENT_HOSTILE_NO_ATTACK
@@ -154,6 +161,9 @@
 /mob/living/basic/mining/mook/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 
+	if(.)
+		return TRUE
+
 	if(!istype(mover, /mob/living/basic/mining/mook))
 		return FALSE
 
@@ -193,9 +203,18 @@
 	neutral_stance = mutable_appearance(icon, "mook_axe_overlay")
 	attack_stance = mutable_appearance(icon, "axe_strike_overlay")
 	update_appearance()
-	var/datum/action/cooldown/mob_cooldown/mook_ability/mook_leap/leap = new(src)
-	leap.Grant(src)
-	ai_controller.set_blackboard_key(BB_MOOK_LEAP_ABILITY, leap)
+
+/mob/living/basic/mining/mook/worker/get_innate_abilities()
+	var/static/list/worker_innate_abilites = null
+
+	if(isnull(worker_innate_abilites))
+		worker_innate_abilites = list()
+		worker_innate_abilites += ..()
+		worker_innate_abilites += list(
+			/datum/action/cooldown/mob_cooldown/mook_ability/mook_leap = BB_MOOK_LEAP_ABILITY,
+		)
+
+	return worker_innate_abilites
 
 /mob/living/basic/mining/mook/worker/attack_sequence(atom/target)
 	. = ..()

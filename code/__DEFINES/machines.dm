@@ -6,7 +6,8 @@
 #define AREA_USAGE_STATIC_EQUIP 4
 #define AREA_USAGE_STATIC_LIGHT 5
 #define AREA_USAGE_STATIC_ENVIRON 6
-#define AREA_USAGE_LEN AREA_USAGE_STATIC_ENVIRON // largest idx
+#define AREA_USAGE_APC_CHARGE 7
+#define AREA_USAGE_LEN AREA_USAGE_APC_CHARGE // largest idx
 
 /// Index of the first dynamic usage channel
 #define AREA_USAGE_DYNAMIC_START AREA_USAGE_EQUIP
@@ -21,15 +22,14 @@
 #define DYNAMIC_TO_STATIC_CHANNEL(dyn_channel) (dyn_channel + (AREA_USAGE_STATIC_START - AREA_USAGE_DYNAMIC_START))
 #define STATIC_TO_DYNAMIC_CHANNEL(static_channel) (static_channel - (AREA_USAGE_STATIC_START - AREA_USAGE_DYNAMIC_START))
 
-
 //Power use
 #define NO_POWER_USE 0
 #define IDLE_POWER_USE 1
 #define ACTIVE_POWER_USE 2
 
 ///Base global power consumption for idling machines
-#define BASE_MACHINE_IDLE_CONSUMPTION 100
-///Base global power consumption for active machines
+#define BASE_MACHINE_IDLE_CONSUMPTION (100 WATTS)
+///Base global power consumption for active machines. The unit is ambiguous (joules or watts) depending on the use case for dynamic users.
 #define BASE_MACHINE_ACTIVE_CONSUMPTION (BASE_MACHINE_IDLE_CONSUMPTION * 10)
 
 /// Bitflags for a machine's preferences on when it should start processing. For use with machinery's `processing_flags` var.
@@ -52,6 +52,7 @@
 #define BYPASS_DOOR_CHECKS 2
 
 //used in design to specify which machine can build it
+//Note: More than one of these can be added to a design but imprinter and lathe designs are incompatable.
 #define IMPRINTER (1<<0) //For circuits. Uses glass/chemicals.
 #define PROTOLATHE (1<<1) //New stuff. Uses various minerals
 #define AUTOLATHE (1<<2) //Prints basic designs without research
@@ -65,10 +66,6 @@
 #define AWAY_IMPRINTER (1<<9)
 /// For wiremod/integrated circuits. Uses various minerals.
 #define COMPONENT_PRINTER (1<<10)
-//Note: More than one of these can be added to a design but imprinter and lathe designs are incompatable.
-
-#define FIREDOOR_OPEN 1
-#define FIREDOOR_CLOSED 2
 
 #define HYPERTORUS_INACTIVE 0 // No or minimal energy
 #define HYPERTORUS_NOMINAL 1 // Normal operation

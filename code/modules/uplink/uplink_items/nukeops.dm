@@ -42,6 +42,21 @@
 
 // ~~ Weapon Categories ~~
 
+// Core Gear Box: This contains all the 'fundamental' equipment that most nuclear operatives probably should be buying. It isn't cheaper, but it is a quick and convenient method of acquiring all the gear necessary immediately.
+// Only allows one purchase, and doesn't prevent the purchase of the contained items. Focused on newer players to help them understand what items they need to succeed, and to help older players quickly purchase the baseline gear they need.
+
+/datum/uplink_item/weapon_kits/core
+	name = "Core Equipment Box (Essential)"
+	desc = "This box contains an airlock authentification override card, a MODsuit energy shield module, a C-4 explosive charge, a freedom implant and a stimpack injector. \
+		The most important support items for most operatives to succeed in their mission, bundled together. It is highly recommend you buy this kit. \
+		Note: This bundle is not at a discount. You can purchase all of these items separately. You do not NEED these items, but most operatives fail WITHOUT at \
+		least SOME of these items. More experienced operatives can do without."
+	item = /obj/item/storage/box/syndie_kit/core_gear
+	cost = 22 //freedom 5, doormag 3, c-4 1, stimpack 5, shield modsuit module 8
+	limited_stock = 1
+	cant_discount = TRUE
+	purchasable_from = UPLINK_NUKE_OPS
+
 //Low-cost firearms: Around 8 TC each. Meant for easy squad weapon purchases
 
 /datum/uplink_item/weapon_kits/low_cost
@@ -53,7 +68,7 @@
 
 /datum/uplink_item/weapon_kits/low_cost/shotgun
 	name = "Bulldog Shotgun Case (Moderate)"
-	desc = "A fully-loaded semi-automatic drum-fed shotgun, complete with a secondary magazine you can hotswap. The gun has a handy label to explain how. \
+	desc = "A fully-loaded 2-round burst fire drum-fed shotgun, complete with a secondary magazine you can hotswap. The gun has a handy label to explain how. \
 		Compatible with all 12g rounds. Designed for close quarter anti-personnel engagements. Comes with three spare magazines."
 	item = /obj/item/storage/toolbox/guncase/bulldog
 
@@ -61,26 +76,28 @@
 	name = "12g Buckshot Drum (Bulldog)"
 	desc = "An additional 8-round buckshot magazine for use with the Bulldog shotgun. Front towards enemy."
 	item = /obj/item/ammo_box/magazine/m12g
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo_nuclear/basic/slug
 	name = "12g Slug Drum (Bulldog)"
 	desc = "An additional 8-round slug magazine for use with the Bulldog shotgun. \
 		Now 8 times less likely to shoot your pals."
 	item = /obj/item/ammo_box/magazine/m12g/slug
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo_nuclear/incendiary/dragon
 	name = "12g Dragon's Breath Drum (Bulldog)"
 	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. \
 		'I'm a fire starter, twisted fire starter!'"
 	item = /obj/item/ammo_box/magazine/m12g/dragon
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo_nuclear/special/meteor
 	name = "12g Meteorslug Shells (Bulldog)"
 	desc = "An alternative 8-round meteorslug magazine for use in the Bulldog shotgun. \
 		Great for blasting holes into the hull and knocking down enemies."
 	item = /obj/item/ammo_box/magazine/m12g/meteor
-	purchasable_from = UPLINK_NUKE_OPS
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 // ~~ Ansem Pistol ~~
 
@@ -94,24 +111,28 @@
 	name = "10mm Handgun Magazine (Ansem)"
 	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol."
 	item = /obj/item/ammo_box/magazine/m10mm
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo_nuclear/ap/m10mm
 	name = "10mm Armour Piercing Magazine (Ansem)"
 	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol. \
 		These rounds are less effective at injuring the target but penetrate protective gear."
 	item = /obj/item/ammo_box/magazine/m10mm/ap
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo_nuclear/hp/m10mm
 	name = "10mm Hollow Point Magazine (Ansem)"
 	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol. \
 		These rounds are more damaging but ineffective against armour."
 	item = /obj/item/ammo_box/magazine/m10mm/hp
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo_nuclear/incendiary/m10mm
 	name = "10mm Incendiary Magazine (Ansem)"
 	desc = "An additional 8-round 10mm magazine, compatible with the Ansem pistol. \
 		Loaded with incendiary rounds which inflict less damage, but ignite the target."
 	item = /obj/item/ammo_box/magazine/m10mm/fire
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 //Medium-cost: 14 TC each. Meant for more expensive purchases with a goal in mind.
 
@@ -153,13 +174,20 @@
 	cost = 4
 	purchasable_from = UPLINK_NUKE_OPS
 
-// ~~ Energy Sword and Shield ~~
+// ~~ Energy Sword and Shield & CQC ~~
 
 /datum/uplink_item/weapon_kits/medium_cost/sword_and_board
 	name = "Energy Shield and Sword Case (Very Hard)"
-	desc = "A case containing an energy sword and energy shield. The shield is capable of deflecting \
-		energy and laser projectiles, and the sword most forms of attack. Perfect for the enterprising nuclear knight. "
+	desc = "A case containing an energy sword and energy shield. Paired together, it provides considerable defensive power without lethal potency. \
+		Perfect for the enterprising nuclear knight. Comes with a medieval helmet for your MODsuit!"
 	item = /obj/item/storage/toolbox/guncase/sword_and_board
+
+/datum/uplink_item/weapon_kits/medium_cost/cqc
+	name = "CQC Equipment Case (Very Hard)"
+	desc = "Contains a manual that instructs you in the ways of CQC, or Close Quarters Combat. Comes with a stealth implant, a pack of smokes and a snazzy bandana (use it with the hat stabilizers in your MODsuit)."
+	item = /obj/item/storage/toolbox/guncase/cqc
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	surplus = 0
 
 // ~~ Syndicate Revolver ~~
 // Nuclear operatives get a special deal on their revolver purchase compared to traitors.
@@ -175,6 +203,7 @@
 	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
 		For when you really need a lot of things dead. Operatives get a discount from most of our agents!"
 	item = /obj/item/ammo_box/a357
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo_nuclear/special/revolver/phasic
 	name = ".357 Phasic Speed Loader (Revolver)"
@@ -182,6 +211,7 @@
 		These bullets are made from an experimental alloy, 'Ghost Lead', that allows it to pass through almost any non-organic material. \
 		The name is a misnomer. It doesn't contain any lead whatsoever!"
 	item = /obj/item/ammo_box/a357/phasic
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo_nuclear/special/revolver/heartseeker
 	name = ".357 Heartseeker Speed Loader (Revolver)"
@@ -190,12 +220,13 @@
 		Brought to you by Roseus Galactic!"
 	item = /obj/item/ammo_box/a357/heartseeker
 	cost = 3
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 // ~~ Grenade Launcher ~~
 // 'If god had wanted you to live, he would not have created ME!'
 
 /datum/uplink_item/weapon_kits/medium_cost/rawketlawnchair
-	name = "84mm Rocket Propelled Grenade Launcher (Hard)"
+	name = "Dardo-RE Rocket Propelled Grenade Launcher (Hard)"
 	desc = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm HE round. \
 		Guaranteed to send your target out with a bang or your money back! Comes with a bouquet of additional rockets!"
 	item = /obj/item/storage/toolbox/guncase/rocketlauncher
@@ -331,16 +362,9 @@
 		Blast your enemies with instant shots! Just watch out for the rebound..."
 	item = /obj/item/ammo_box/magazine/sniper_rounds/marksman
 
-/datum/uplink_item/weapon_kits/high_cost/cqc
-	name = "CQC Equipment Case (Very Hard)"
-	desc = "Contains a manual that instructs you in the ways of CQC, or Close Quarters Combat. Comes with a stealth implant and a snazzy bandana (and a hat stabilizer to go with it)."
-	item = /obj/item/storage/toolbox/guncase/cqc
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-	surplus = 0
-
 /datum/uplink_item/weapon_kits/high_cost/doublesword
-	name = "Double-Energy Sword Case (Very Hard)"
-	desc = "A case containing a double-energy sword, anti-slip module, meth autoinjector, and a bar of soap. \
+	name = "Double-Bladed Energy Sword Case (Very Hard)"
+	desc = "A case containing a double-bladed energy sword, anti-slip module, meth autoinjector, and a bar of soap. \
 		Some say the most infamous nuclear operatives utilized this combination of equipment to slaughter hundreds \
 		of Nanotrasen employees. However, some also say this is an embellishment from the Tiger Co-operative. \
 		The soap did most of the work. Comes with a prisoner uniform so you fit the part."
@@ -451,6 +475,14 @@
 		Its chameleon projector lets it disguise itself as a Nanotrasen cyborg, on top it has thermal vision and a pinpointer."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
 
+/datum/uplink_item/reinforcements/overwatch_agent
+	name = "Overwatch Intelligence Agent"
+	desc = "An Overwatch Intelligence Agent is assigned to your operation. They can view your progress and help coordinate using your \
+		operative team's body-cams. They can also pilot the shuttle remotely and view the station's camera net. \
+		If you're a meathead who's just here to kill people and don't care about strategising or intel, you'll still have someone to bear witness to your murder-spree!"
+	item = /obj/item/antag_spawner/nuke_ops/overwatch
+	cost = 12
+
 // ~~ Disposable Sentry Gun ~~
 // Technically not a spawn but it is a kind of reinforcement...I guess.
 
@@ -525,14 +557,14 @@
 /datum/uplink_item/mech/gygax
 	name = "Dark Gygax Exosuit"
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent \
-		for hit-and-run style attacks. Features a scattershot shotgun, armor boosters against melee and ranged attacks, ion thrusters and a Tesla energy array."
+		for hit-and-run style attacks. Features a scattershot shotgun, armor boosters against melee and ranged attacks, and ion thrusters."
 	item = /obj/vehicle/sealed/mecha/gygax/dark/loaded
 	cost = 60
 
 /datum/uplink_item/mech/mauler
 	name = "Mauler Exosuit"
 	desc = "A massive and incredibly deadly military-grade exosuit. Features long-range targeting, thrust vectoring \
-		and deployable smoke. Comes equipped with an LMG, scattershot carbine, missile rack, an antiprojectile armor booster and a Tesla energy array."
+		and deployable smoke. Comes equipped with an LMG, scattershot carbine, missile rack, and an antiprojectile armor booster."
 	item = /obj/vehicle/sealed/mecha/marauder/mauler/loaded
 	cost = 100
 
@@ -576,36 +608,36 @@
 	desc = "An upgraded, elite version of the Syndicate MODsuit. It features fireproofing, and also \
 		provides the user with superior armor and mobility compared to the standard Syndicate MODsuit."
 	item = /obj/item/mod/control/pre_equipped/elite
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/suits/energy_shield
 	name = "MODsuit Energy Shield Module"
-	desc = "An energy shield module for a MODsuit. The shields can handle up to three impacts \
-		within a short duration and will rapidly recharge while not under fire."
+	desc = "An energy shield module for a MODsuit. The shields can stop a single impact \
+		before needing to recharge. Used wisely, this module will keep you alive for a lot longer."
 	item = /obj/item/mod/module/energy_shield
-	cost = 15
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	cost = 8
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/suits/emp_shield
 	name = "MODsuit Advanced EMP Shield Module"
 	desc = "An advanced EMP shield module for a MODsuit. It protects your entire body from electromagnetic pulses."
 	item = /obj/item/mod/module/emp_shield/advanced
 	cost = 5
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/suits/injector
 	name = "MODsuit Injector Module"
 	desc = "An injector module for a MODsuit. It is an extendable piercing injector with 30u capacity."
 	item = /obj/item/mod/module/injector
 	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/suits/holster
 	name = "MODsuit Holster Module"
 	desc = "A holster module for a MODsuit. It can stealthily store any not too heavy gun inside it."
 	item = /obj/item/mod/module/holster
 	cost = 2
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/device_tools/medgun_mod
 	name = "Medbeam Gun Module"
@@ -650,7 +682,7 @@
 		In its crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or its departments."
 	item = /obj/item/crowbar/power/syndicate
 	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Combat Medic Kit"
@@ -677,7 +709,7 @@
 	desc = "A potion recovered at great risk by undercover Syndicate operatives and then subsequently modified with Syndicate technology. \
 		Using it will make any animal sentient, and bound to serve you, as well as implanting an internal radio for communication and an internal ID card for opening doors."
 	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY
 	restricted = TRUE
 
 // Implants
@@ -689,7 +721,7 @@
 /datum/uplink_item/implants/nuclear/deathrattle
 	name = "Box of Deathrattle Implants"
 	desc = "A collection of implants (and one reusable implanter) that should be injected into the team. When one of the team \
-		dies, all other implant holders recieve a mental message informing them of their teammates' name \
+		dies, all other implant holders receive a mental message informing them of their teammates' name \
 		and the location of their death. Unlike most implants, these are designed to be implanted \
 		in any creature, biological or mechanical."
 	item = /obj/item/storage/box/syndie_kit/imp_deathrattle
@@ -702,6 +734,7 @@
 		This will permanently destroy your body, however."
 	item = /obj/item/storage/box/syndie_kit/imp_microbomb
 	cost = 2
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_SPY
 
 /datum/uplink_item/implants/nuclear/macrobomb
 	name = "Macrobomb Implant"
@@ -717,8 +750,9 @@
 			Prevents collapsing from critical condition, but explodes after a while."
 	item = /obj/item/storage/box/syndie_kit/imp_deniability
 	cost = 6
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_SPY
 
-/datum/uplink_item/implants/nuclear/reviverplus
+/datum/uplink_item/implants/nuclear/reviver
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive and heal you if you lose consciousness. Comes with an autosurgeon."
 	item = /obj/item/autosurgeon/syndicate/reviver
@@ -803,7 +837,7 @@
 
 /datum/uplink_item/badass/hats
 	name = "Hat Crate"
-	desc = "Hat crate! Contains hats, along with hat stabilizers to wear your hats while you're in your suit! HATS!!!"
+	desc = "Hat crate! Contains hats! HATS!!!"
 	item = /obj/structure/closet/crate/large/hats
 	cost = 5
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS

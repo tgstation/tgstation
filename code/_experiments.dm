@@ -3,32 +3,20 @@
 // Any flag you see here can be flipped with the `-D` CLI argument.
 // For example, if you want to enable EXPERIMENT_MY_COOL_FEATURE, compile with -DEXPERIMENT_MY_COOL_FEATURE
 
-// EXPERIMENT_515_QDEL_HARD_REFERENCE
-// - Hold a hard reference for qdeleted items, and check ref_count, rather than using refs. Requires 515+.
-
-// EXPERIMENT_515_DONT_CACHE_REF
-// - Avoids `text_ref` caching, aided by improvements to ref() speed in 515.
+// EXPERIMENT_MY_COOL_FEATURE
+// - Does something really cool, just so neat, absolutely banging, gaming and chill
 
 #if DM_VERSION < 515
 
-// You can't X-macro custom names :(
-#ifdef EXPERIMENT_515_QDEL_HARD_REFERENCE
-#warn EXPERIMENT_515_QDEL_HARD_REFERENCE is only available on 515+
-#undef EXPERIMENT_515_QDEL_HARD_REFERENCE
-#endif
-
-#ifdef EXPERIMENT_515_DONT_CACHE_REF
-#warn EXPERIMENT_515_DONT_CACHE_REF is only available on 515+
-#undef EXPERIMENT_515_DONT_CACHE_REF
-#endif
-
+	// You can't X-macro custom names :(
+	#ifdef EXPERIMENT_MY_COOL_FEATURE
+		#warn EXPERIMENT_MY_COOL_FEATURE is only available on 515+
+		#undef EXPERIMENT_MY_COOL_FEATURE
+	#endif
 #elif defined(UNIT_TESTS)
-
-#define EXPERIMENT_515_QDEL_HARD_REFERENCE
-#define EXPERIMENT_515_DONT_CACHE_REF
-
+	#define EXPERIMENT_MY_COOL_FEATURE
 #endif
 
 #if DM_VERSION >= 516
-#error "Remove all 515 experiments"
+	#error "Remove all 515 experiments"
 #endif

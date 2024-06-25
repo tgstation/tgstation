@@ -32,6 +32,8 @@
 	var/list/jobs = list()
 
 	for (var/datum/job/job as anything in SSjob.joinable_occupations)
+		if (job.job_flags & JOB_LATEJOIN_ONLY)
+			continue
 		var/datum/job_department/department_type = job.department_for_prefs || job.departments_list?[1]
 		if (isnull(department_type))
 			stack_trace("[job] does not have a department set, yet is a joinable occupation!")
@@ -86,6 +88,8 @@
 	var/list/job_required_experience = list()
 
 	for (var/datum/job/job as anything in SSjob.all_occupations)
+		if (job.job_flags & JOB_LATEJOIN_ONLY)
+			continue
 		var/required_playtime_remaining = job.required_playtime_remaining(user.client)
 		if (required_playtime_remaining)
 			job_required_experience[job.title] = list(

@@ -29,7 +29,6 @@ Difficulty: Medium
 	health_doll_icon = "miner"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	light_color = COLOR_LIGHT_GRAYISH_RED
-	movement_type = GROUND
 	speak_emote = list("roars")
 	speed = 3
 	move_to_delay = 3
@@ -67,21 +66,23 @@ Difficulty: Medium
 	. = ..()
 	miner_saw = new(src)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
-	dash = new /datum/action/cooldown/mob_cooldown/dash()
-	kinetic_accelerator = new /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator()
-	dash_attack = new /datum/action/cooldown/mob_cooldown/dash_attack()
-	transform_weapon = new /datum/action/cooldown/mob_cooldown/transform_weapon()
+
+	dash = new /datum/action/cooldown/mob_cooldown/dash
+	kinetic_accelerator = new /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator
+	dash_attack = new /datum/action/cooldown/mob_cooldown/dash_attack
+	transform_weapon = new /datum/action/cooldown/mob_cooldown/transform_weapon
 	dash.Grant(src)
 	kinetic_accelerator.Grant(src)
 	dash_attack.Grant(src)
 	transform_weapon.Grant(src)
+
 	AddComponent(/datum/component/boss_music, 'sound/lavaland/bdm_boss.ogg', 167 SECONDS)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Destroy()
-	QDEL_NULL(dash)
-	QDEL_NULL(kinetic_accelerator)
-	QDEL_NULL(dash_attack)
-	QDEL_NULL(transform_weapon)
+	dash = null
+	kinetic_accelerator = null
+	dash_attack = null
+	transform_weapon = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()
@@ -121,7 +122,7 @@ Difficulty: Medium
 		new /obj/effect/temp_visual/dir_setting/miner_death(loc, dir)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Move(atom/newloc)
-	if(newloc && newloc.z == z && (islava(newloc) || ischasm(newloc))) //we're not stupid!
+	if(newloc && newloc.z == z && ischasm(newloc)) //we're not stupid!
 		return FALSE
 	return ..()
 
@@ -188,7 +189,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(. && prob(12))
-		INVOKE_ASYNC(dash, TYPE_PROC_REF(/datum/action, Trigger), target)
+		INVOKE_ASYNC(dash, TYPE_PROC_REF(/datum/action, Trigger), NONE, target)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom
 	name = "hostile-environment miner"

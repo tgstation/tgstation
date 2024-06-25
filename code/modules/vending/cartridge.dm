@@ -13,7 +13,7 @@
 		/obj/item/computer_disk/ordnance = 10,
 		/obj/item/computer_disk/quartermaster = 10,
 		/obj/item/computer_disk/command/captain = 3,
-		/obj/item/modular_computer/pda/heads = 10,
+		/obj/item/modular_computer/pda = 10,
 	)
 	refill_canister = /obj/item/vending_refill/cart
 	default_price = PAYCHECK_COMMAND

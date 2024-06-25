@@ -1,4 +1,4 @@
-///Called on user, from base of /datum/strippable_item/alternate_action() (atom/target)
+///Called on user, from base of /datum/strippable_item/perform_alternate_action() (atom/target, action_key)
 #define COMSIG_TRY_ALT_ACTION "try_alt_action"
 	#define COMPONENT_CANT_ALT_ACTION (1<<0)
 ///Called on /basic when updating its speed, from base of /mob/living/basic/update_basic_mob_varspeed(): ()
@@ -39,6 +39,11 @@
 	/// Should we stop the current living movement attempt
 	#define COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
+/// From base of /client/Move(), invoked when a non-living mob is attempting to move: (list/move_args)
+#define COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE "mob_client_move_possessed_object"
+	/// Cancels the move attempt
+	#define COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+
 /// From base of /client/Move(): (new_loc, direction)
 #define COMSIG_MOB_CLIENT_PRE_MOVE "mob_client_pre_move"
 	/// Should always match COMPONENT_MOVABLE_BLOCK_PRE_MOVE as these are interchangeable and used to block movement.
@@ -65,6 +70,8 @@
 
 ///from mind/transfer_to. Sent to the receiving mob.
 #define COMSIG_MOB_MIND_TRANSFERRED_INTO "mob_mind_transferred_into"
+///from mind/transfer_from. Sent to the mob the mind is being transferred out of.
+#define COMSIG_MOB_MIND_TRANSFERRED_OUT_OF "mob_mind_transferred_out_of"
 /// From /mob/proc/ghostize() Called when a mob sucessfully ghosts
 #define COMSIG_MOB_GHOSTIZED "mob_ghostized"
 
@@ -73,6 +80,9 @@
 	#define ACCESS_ALLOWED (1<<0)
 	#define ACCESS_DISALLOWED (1<<1)
 	#define LOCKED_ATOM_INCOMPATIBLE (1<<2)
+
+///from the component /datum/component/simple_access
+#define	COMSIG_MOB_RETRIEVE_SIMPLE_ACCESS "retrieve_simple_access"
 
 ///from base of mob/can_cast_magic(): (mob/user, magic_flags, charge_cost)
 #define COMSIG_MOB_RESTRICT_MAGIC "mob_cast_magic"
@@ -90,15 +100,22 @@
 ///from base of mob/set_invis_see(): (new_invis, old_invis)
 #define COMSIG_MOB_SEE_INVIS_CHANGE "mob_see_invis_change"
 
-
-///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+/// from /mob/living/proc/apply_damage(): (list/damage_mods, damage, damagetype, def_zone, sharpness, attack_direction, attacking_item)
+/// allows you to add multiplicative damage modifiers to the damage mods argument to adjust incoming damage
+/// not sent if the apply damage call was forced
+#define COMSIG_MOB_APPLY_DAMAGE_MODIFIERS "mob_apply_damage_modifiers"
+/// from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
 #define COMSIG_MOB_APPLY_DAMAGE "mob_apply_damage"
-///from /mob/living/proc/apply_damage(), works like above but after the damage is actually inflicted: (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+/// from /mob/living/proc/apply_damage(): (damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+/// works like above but after the damage is actually inflicted
 #define COMSIG_MOB_AFTER_APPLY_DAMAGE "mob_after_apply_damage"
+
 ///from base of /mob/living/attack_alien(): (user)
 #define COMSIG_MOB_ATTACK_ALIEN "mob_attack_alien"
 ///from base of /mob/throw_item(): (atom/target)
 #define COMSIG_MOB_THROW "mob_throw"
+///from base of /mob/verb/examinate(): (atom/target, list/examine_strings)
+#define COMSIG_MOB_EXAMINING "mob_examining"
 ///from base of /mob/verb/examinate(): (atom/target)
 #define COMSIG_MOB_EXAMINATE "mob_examinate"
 ///from /mob/living/handle_eye_contact(): (mob/living/other_mob)
@@ -164,18 +181,14 @@
 #define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"
 ///from base of /obj/item/attack(): (mob/M, mob/user)
 #define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"
-///from base of obj/item/afterattack(): (atom/target, obj/item/weapon, proximity_flag, click_parameters)
-#define COMSIG_MOB_ITEM_AFTERATTACK "mob_item_afterattack"
-///from base of obj/item/afterattack_secondary(): (atom/target, obj/item/weapon, proximity_flag, click_parameters)
-#define COMSIG_MOB_ITEM_AFTERATTACK_SECONDARY "mob_item_afterattack_secondary"
-///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, proximity_flag, click_parameters)
-#define COMSIG_MOB_ITEM_ATTACK_QDELETED "mob_item_attack_qdeleted"
 ///from base of mob/RangedAttack(): (atom/A, modifiers)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
 ///from base of mob/ranged_secondary_attack(): (atom/target, modifiers)
 #define COMSIG_MOB_ATTACK_RANGED_SECONDARY "mob_attack_ranged_secondary"
-///From base of atom/ctrl_click(): (atom/A)
+///From base of /mob/base_click_ctrl: (atom/A)
 #define COMSIG_MOB_CTRL_CLICKED "mob_ctrl_clicked"
+///From base of /mob/base_click_ctrl_shift: (atom/A)
+#define COMSIG_MOB_CTRL_SHIFT_CLICKED "mob_ctrl_shift_clicked"
 ///From base of mob/update_movespeed():area
 #define COMSIG_MOB_MOVESPEED_UPDATED "mob_update_movespeed"
 /// From /atom/movable/screen/zone_sel/proc/set_selected_zone.
@@ -207,6 +220,7 @@
 	/// Return to stop the flash entirely
 	#define STOP_FLASH (1<<3)
 /// from /obj/item/assembly/flash/flash_carbon, to the mob flashing another carbon
+/// (mob/living/carbon/flashed, obj/item/assembly/flash/flash, deviation (from code/__DEFINES/mobs.dm))
 #define COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON "mob_success_flashed_carbon"
 
 /// from mob/get_status_tab_items(): (list/items)
@@ -220,5 +234,14 @@
 /// from mob/proc/dropItemToGround()
 #define COMSIG_MOB_DROPPING_ITEM "mob_dropping_item"
 
+/// from /mob/proc/change_mob_type() : ()
+#define COMSIG_PRE_MOB_CHANGED_TYPE "mob_changed_type"
+	#define COMPONENT_BLOCK_MOB_CHANGE (1<<0)
 /// from /mob/proc/change_mob_type_unchecked() : ()
 #define COMSIG_MOB_CHANGED_TYPE "mob_changed_type"
+
+/// from /mob/proc/slip(): (knockdown_amonut, obj/slipped_on, lube_flags [mobs.dm], paralyze, force_drop)
+#define COMSIG_MOB_SLIPPED "mob_slipped"
+
+/// from /mob/proc/key_down(): (key, client/client, full_key)
+#define COMSIG_MOB_KEYDOWN "mob_key_down"

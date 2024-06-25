@@ -131,8 +131,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 /datum/anonymous_theme/proc/anonymous_name(mob/target)
 	var/datum/client_interface/client = GET_CLIENT(target)
 	var/species_type = client.prefs.read_preference(/datum/preference/choiced/species)
-	var/datum/species/species = new species_type
-	return species.random_name(target.gender,1)
+	return generate_random_name_species_based(target.gender, TRUE, species_type)
 
 /**
  * anonymous_ai_name: generates a random name, based off of whatever the round's anonymousnames is set to (but for sillycones).
@@ -155,7 +154,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 	priority_announce("As punishment for this station's poor productivity when compared to neighbor stations, names and identities will be restricted until further notice.", "Finance Report", SSstation.announcer.get_rand_alert_sound())
 
 /datum/anonymous_theme/employees/anonymous_name(mob/target)
-	var/is_head_of_staff = target.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND
+	var/is_head_of_staff = target.mind.assigned_role.job_flags & JOB_HEAD_OF_STAFF
 	var/name = "[is_head_of_staff ? "Manager" : "Employee"] "
 	for(var/i in 1 to 6)
 		if(prob(30) || i == 1)

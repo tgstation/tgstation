@@ -877,7 +877,7 @@
 /turf/open/floor/eighties,
 /area/awaymission/beach)
 "lb" = (
-/obj/structure/railing/corner/end{
+/obj/structure/railing/corner/end/flip{
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
@@ -1758,7 +1758,7 @@
 	pixel_y = -8;
 	pixel_x = -3
 	},
-/obj/structure/railing/corner/end{
+/obj/structure/railing/corner/end/flip{
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
@@ -2619,7 +2619,7 @@
 	pixel_y = -6;
 	pixel_x = -12
 	},
-/obj/structure/railing/corner/end{
+/obj/structure/railing/corner/end/flip{
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
@@ -2976,7 +2976,7 @@
 "La" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance/two,
 /obj/item/storage/toolbox/fishing{
 	pixel_y = 2

@@ -10,6 +10,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pathing_pass_method = TURF_PATHING_PASS_PROC
 	plane = TRANSPARENT_FLOOR_PLANE
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
@@ -32,7 +33,6 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/openspace/LateInitialize()
-	. = ..()
 	AddElement(/datum/element/turf_z_transparency)
 
 /turf/open/openspace/ChangeTurf(path, list/new_baseturfs, flags)
@@ -145,11 +145,8 @@
 
 /turf/open/openspace/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF && rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
-		PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+		place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
-	return FALSE
-
-/turf/open/openspace/rust_heretic_act()
 	return FALSE
 
 /turf/open/openspace/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
@@ -163,8 +160,11 @@
 		ChangeTurf(new_floor_path, flags = flags)
 		return
 	// Create plating under tiled floor we try to create directly onto the air
-	PlaceOnTop(/turf/open/floor/plating, flags = flags)
-	PlaceOnTop(new_floor_path, flags = flags)
+	place_on_top(/turf/open/floor/plating, flags = flags)
+	place_on_top(new_floor_path, flags = flags)
+
+/turf/open/openspace/can_cross_safely(atom/movable/crossing)
+	return HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
 
 /turf/open/openspace/icemoon
 	name = "ice chasm"
@@ -185,7 +185,9 @@
 	if(!T)
 		return
 	if(T.turf_flags & NO_RUINS && protect_ruin)
-		ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
+		var/turf/newturf = ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
+		if(!isopenspaceturf(newturf)) // only openspace turfs should be returning INITIALIZE_HINT_LATELOAD
+			return INITIALIZE_HINT_NORMAL
 		return
 	if(!ismineralturf(T) || !drill_below)
 		return
@@ -200,3 +202,6 @@
 /turf/open/openspace/icemoon/ruins
 	protect_ruin = FALSE
 	drill_below = FALSE
+
+/turf/open/openspace/telecomms
+	initial_gas_mix = TCOMMS_ATMOS

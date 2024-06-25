@@ -14,16 +14,19 @@
 	///Store our old datum here for if our burned wings are healed
 	var/original_sprite_datum
 
-/obj/item/organ/external/wings/moth/on_insert(mob/living/carbon/receiver)
+/obj/item/organ/external/wings/moth/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()
 	RegisterSignal(receiver, COMSIG_HUMAN_BURNING, PROC_REF(try_burn_wings))
 	RegisterSignal(receiver, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(heal_wings))
 	RegisterSignal(receiver, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(update_float_move))
 
-/obj/item/organ/external/wings/moth/on_remove(mob/living/carbon/organ_owner)
+/obj/item/organ/external/wings/moth/on_mob_remove(mob/living/carbon/organ_owner)
 	. = ..()
 	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOVABLE_PRE_MOVE))
 	REMOVE_TRAIT(organ_owner, TRAIT_FREE_FLOAT_MOVEMENT, REF(src))
+
+/obj/item/organ/external/wings/moth/make_flap_sound(mob/living/carbon/wing_owner)
+	playsound(wing_owner, 'sound/voice/moth/moth_flutter.ogg', 50, TRUE)
 
 /obj/item/organ/external/wings/moth/can_soften_fall()
 	return !burnt
@@ -84,7 +87,7 @@
 	burn_datum = fetch_sprite_datum(burn_datum)
 
 /datum/bodypart_overlay/mutant/wings/moth/get_global_feature_list()
-	return GLOB.moth_wings_list
+	return SSaccessories.moth_wings_list
 
 /datum/bodypart_overlay/mutant/wings/moth/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!(human.wear_suit?.flags_inv & HIDEMUTWINGS))

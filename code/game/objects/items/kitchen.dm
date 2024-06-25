@@ -27,7 +27,7 @@
 	throw_speed = 3
 	throw_range = 5
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.8)
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	attack_verb_continuous = list("attacks", "stabs", "pokes")
 	attack_verb_simple = list("attack", "stab", "poke")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -169,7 +169,7 @@
 	icon_state = "metal_rolling_pin"
 	inhand_icon_state = "metal_rolling_pin"
 	force = 12
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 1.5)
 	custom_price = PAYCHECK_CREW * 2
 	bare_wound_bonus = 14
@@ -185,7 +185,7 @@
 	icon_state = "spoon"
 	base_icon_state = "spoon"
 	w_class = WEIGHT_CLASS_TINY
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 2
 	throw_speed = 3
 	throw_range = 5
@@ -234,6 +234,13 @@
 /obj/item/kitchen/spoon/attack(mob/living/target_mob, mob/living/user, params)
 	if(!target_mob.reagents || reagents.total_volume <= 0)
 		return  ..()
+
+	if(target_mob.is_mouth_covered(ITEM_SLOT_HEAD) || target_mob.is_mouth_covered(ITEM_SLOT_MASK))
+		if(target_mob == user)
+			target_mob.balloon_alert(user, "can't eat with mouth covered!")
+		else
+			target_mob.balloon_alert(user, "[target_mob.p_their()] mouth is covered!")
+		return TRUE
 
 	if(target_mob == user)
 		user.visible_message(

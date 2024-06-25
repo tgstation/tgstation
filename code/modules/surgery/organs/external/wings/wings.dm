@@ -13,6 +13,10 @@
 /obj/item/organ/external/wings/proc/can_soften_fall()
 	return TRUE
 
+///Implement as needed to play a sound effect on *flap emote
+/obj/item/organ/external/wings/proc/make_flap_sound(mob/living/carbon/wing_owner)
+	return
+
 ///Bodypart overlay of default wings. Does not have any wing functionality
 /datum/bodypart_overlay/mutant/wings
 	layers = ALL_EXTERNAL_OVERLAYS

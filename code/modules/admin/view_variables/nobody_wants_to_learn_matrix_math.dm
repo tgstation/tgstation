@@ -15,7 +15,7 @@
 	src.target = target
 	testing_matrix = matrix(target.transform)
 
-/datum/nobody_wants_to_learn_matrix_math/Destroy(force, ...)
+/datum/nobody_wants_to_learn_matrix_math/Destroy(force)
 	QDEL_NULL(testing_matrix)
 	return ..()
 

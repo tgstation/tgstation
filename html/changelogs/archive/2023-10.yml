@@ -809,3 +809,371 @@
   vinylspiders:
   - bugfix: Fixes a bug where your mother would delete your species after calling
       you a disappointment, rendering you a broken husk of a mob
+2023-10-21:
+  Ben10Omintrix:
+  - rscadd: added a new syndicate item - the bee smoker
+  GPeckman:
+  - qol: Nonhuman autopsy, Tier Two Lasers, and several other experiments can now
+      be completed earlier.
+  - balance: Advanced robotics techweb node no longer requires neural programming
+      node.
+  - rscdel: Protolathe/circuit imprinter/techfab designs costing reagents is now totally
+      deprecated.
+  Ical92:
+  - bugfix: connected Meta's Cytology equipment properly
+  Jacquerel:
+  - bugfix: Blobbernauts will once again take damage when not on blob tiles.
+  LT3, san7890:
+  - rscadd: Announcements have gotten a fresh coat of paint! They should be popping
+      with splendid new colors and should have a lot less ugly linebreaks, while still
+      managing to keep your attention at the screen.
+  OrionTheFox:
+  - bugfix: '[Tramstation] fixed an unlinked Disposals Bin in the Pod Bay'
+  Paxilmaniac:
+  - code_imp: Bitrunner domains can now have spells or items from disks disabled if
+      the domain maker wants such a thing
+  Pickle-Coding:
+  - bugfix: Fixed tesla coil zaps cutting off too early.
+  SyncIt21:
+  - bugfix: plumbing pill press & bottler won't stop when processing 50 unit bottles
+  - code_imp: 'made a lot of variables defines and lists static to save memory for
+      plumbing pill press. Moved global lists to it''s rightful
+
+      place'
+  - code_imp: copied over chem master pill & patch designs over to plumbing pill press
+      and removed the old designs. resized UI
+  - bugfix: RCD & RTD ui updates when switching between root categories
+  Watermelon914:
+  - admin: Added SS13.get_runner_ckey() and SS13.get_runner_client() which stores
+      the ckey and returns the client of the user who ran the lua script. Can be unreliable
+      if accessed after sleeping.
+  - admin: Added timer loop helpers to the SS13.lua module, check the docs
+  - admin: The SS13.lua module can now be made local without causing any errors.
+  lizardqueenlexi:
+  - refactor: Artificer constructs have been converted to the basic mob framework.
+      This should change very little about them, but please report any bugs. NPC artificers
+      are now smarter, and will focus on healing nearby wounded constructs - if you
+      see them, take them out first!
+  mc-oofert:
+  - bugfix: making assembly activated bombs works again
+  nikothedude:
+  - bugfix: Scream for me, the spell, now works
+  - bugfix: Non-random puncture wounds can now be applied
+  ninjanomnom:
+  - balance: It damages your eyes to look at the supermatter singularity
+  san7890:
+  - refactor: Holodeck monkeys have been moved to the same system as old monkeys,
+      and should retain the similar "ephermeal" behavior, while being a whole lot
+      smarter by leveraging new AI. Please report anything that is completely wack
+      about this.
+  - balance: Slimes can't eat holodeck monkeys anymore, because apparently they could
+      and that is wack.
+  timothymtorres:
+  - rscadd: Add new fitness skill and mechanics for weight machines and punching bags.  Working
+      out with a proper diet and good sleep will result in massive fitness gains.  As
+      your fitness increases, so does your mass.
+2023-10-22:
+  Ben10Omintrix:
+  - bugfix: fixes not being able to walk over or pull mook corpses
+  BlueMemesauce:
+  - balance: Export scanner no longer shows value of shipping manifests, now you actually
+      have to read them.
+  - balance: Shipping manifest penalty is now only half crate cost as well as capped
+      to 500 credits.
+  - balance: Shipping manifests for private orders or locked crates can no longer
+      have the incorrect contents error. Shipping manifests for departmental orders
+      can n longer have any error.
+  FlufflesTheDog:
+  - bugfix: Kisses and emitters no longer make the SM crystal scream so much.
+  Ghommie:
+  - bugfix: Cooked meat no longer spreads blood around as if it weren't cooked.
+  Ical92:
+  - rscadd: Demonic-Frost Miner's ruin gets an aesthetic refresh
+  Jacquerel:
+  - bugfix: Meatwheat Clumps, Bungo Pits, and Eggplant Eggs should once again inherit
+      reagent purity from the grown item which produces them.
+  - bugfix: You should be revived properly when entering the mansus realm following
+      a heretic sacrifice
+  - bugfix: The buff which is supposed to heal you in the mansus realm will now do
+      that instead of unavoidably damaging you
+  - balance: The mansus realm's healing buff heals for 25% as much as it did before
+      it was broken
+  JohnFulpWillard, sprites by CoiledLamb:
+  - rscadd: You can now play Mafia on your PDA.
+  - balance: Mafia changelings can now only talk to eachother during the night.
+  - bugfix: Mafia abilities can't be repeatedly used on people.
+  Jolly:
+  - image: Colored labcoats have been GAGSed! Please report any weird oddities on
+      Github.
+  - bugfix: The coroners lab coat is no longer offset by one pixel.
+  LT3:
+  - bugfix: Fixed tram cabinet LMB/RMB actions being reversed
+  - bugfix: Tram cabinet can now read IDs inside PDAs and wallets
+  - bugfix: Crossing signals now correctly indicate broken/no power
+  - bugfix: Trying to repair tram (weld) without welding fuel fails
+  - bugfix: You can actually unbolt the tram controller from the wall
+  - qol: Tram spoilers now have visual and examine hints about being malfunctioning/emagged
+  - qol: Improved some tram error messages
+  - image: Added Halloween themed floor/tram tiles
+  LemonInTheDark:
+  - rscadd: Starlight should be a bit more intense, and flow better onto non space
+      tiles
+  MTandi:
+  - qol: changed wording of a popup in the admin dressing menu
+  - rscadd: Gygax type mechs now have an option to disable overclock when overheated.
+  - bugfix: Fixed overclocking having no effect on Ripley.
+  Melbert:
+  - rscadd: Adds Food Allergies as a -2 quirk. You can select which food you're allergic
+      to or rock a random option.
+  SyncIt21:
+  - bugfix: cryo and stuff that transfers reagents with a multiplier should transfer
+      correct volumes as expected.
+  Treach:
+  - bugfix: Skeleton Keys now fit in the Explorer's Webbing.
+  ZephyrTFA:
+  - qol: signalers now tell you their cooldown and also use balloon alerts
+  jlsnow301:
+  - rscadd: Adds a subtle ghost poll. This pings in dead chat and gives a screen alert,
+      but no TGUI popup. Orbit the point of interest to be selected for the role.
+  - refactor: A number of ghost spawns now feature this alert. Write an issue report
+      if anything breaks.
+  lizardqueenlexi:
+  - refactor: Maintenance Drones now use the basic mob framework. This shouldn't come
+      with any noticeable gameplay changes, but please report any bugs.
+  - bugfix: Drones can now interact normally with electrified doors.
+  - bugfix: Drones' built-in tools can no longer be placed in storage objects and/or
+      thrown on the floor.
+  - bugfix: Drones can now perform right-click interactions correctly, such as deconstructing
+      reinforced windows.
+  - bugfix: Drones can now reboot or cannibalize other drones without being in combat
+      mode.
+  ninjanomnom:
+  - rscadd: New dream that plays sound at you
+  timothymtorres:
+  - bugfix: Fix holodeck items from being eaten, crafted, recycled, juiced, or grinded.
+  - bugfix: Fix cqc kicks to only cause staminaloss when target is on the floor
+  vinylspiders:
+  - bugfix: admin triggering the Revenant event now works again
+  xXPawnStarrXx:
+  - rscadd: Most pies can now be sliced rather than being consumed whole.
+  - rscadd: Rootdough can be crafted using soy milk in place of eggs.
+  - rscadd: Two new lizard-safe rootbread sandwiches can be crafted.
+2023-10-23:
+  SyncIt21:
+  - bugfix: items that require reagent containers & the reagents inside it for crafting(e.g.
+      molotov) now crafts properly.
+  - bugfix: most crafting recipes should work now
+  jlsnow301:
+  - rscadd: Just in time for Halloween- ghost notifications have been upgraded to
+      their own announcements. Boo!
+  san7890:
+  - qol: Adminwho messages are now in an examine block for heightened clarity.
+2023-10-24:
+  DrDiasyl:
+  - qol: The Command intercom now has a High-Volume setting like command headsets
+  - qol: A memo telling frequencies of station radio channels are now present near
+      the Command intercom and T-Comms room
+  - image: Station, Command, and Prison intercoms have received new sprites
+  - spellcheck: Station and Command intercom descriptions have been changed to tell
+      about their functionality
+  Fikou:
+  - bugfix: surgical trays no longer animate when opened
+  Ghommie:
+  - bugfix: The polymorphic belt shouldn't work on animated objects. Logically wouldn't
+      have DNA.
+  Jacquerel:
+  - bugfix: Food created by mixing chemicals once again has a reagent purity based
+      on the component chemicals.
+  SyncIt21:
+  - bugfix: plastic sheet produces 4 tiles via the tiles option without using the
+      crafting menu
+  cnleth:
+  - bugfix: Replaced error spaghetti in thunderdome kitchen with regular cooked spaghetti
+  exdal:
+  - bugfix: hallucination announcements use new announcement style
+  jlsnow301:
+  - bugfix: Entering a virtual domain should no longer give you a message that it
+      doesn't forbid items
+2023-10-25:
+  CoiledLamb:
+  - image: resprites air alarms
+  DrDiasyl:
+  - rscadd: New automatic weapon for the crew - Disabler SMG. Capable of rapidly firing
+      weak disabler beams.
+  - image: Muzzle flashes got a new sprite, each direction included!
+  - image: Temperature Gun "BAKE" beams are now lava colored
+  Hatterhat:
+  - qol: Universal scanners are now capable of recognizing the account owners and
+      assigned profit splits on barcodes. Cargo technicians are asked to do their
+      due diligence when matters call for it.
+  - rscadd: Anomaly-locked MODsuit modules can now be varedited to have unremovable
+      cores, or can be spawned with this functionality by using the /prebuilt/locked
+      subtype.
+  Jacquerel:
+  - bugfix: You will no longer be asked to construct meteor shields on stations which
+      cannot be hit by meteors.
+  Melbert:
+  - refactor: Refactored zombies to use the regenerator component. Now they'll have
+      a slight glow/animation when the regeneration actually kicks in.
+  - qol: Monkey cubes have a slight animation associated now.
+  - bugfix: Cooking Deserts 101 grants all intended recipes
+  OrionTheFox:
+  - qol: Railings now have Examine hints for how to deconstruct them
+  - bugfix: '[Tramstation] fixed a missing Scrubber in the Civilian Radiation Shelter'
+  Rhials:
+  - bugfix: The Infected Domain should no longer fill up with smelly, poisonous gas
+      over time.
+  TheBoondock:
+  - qol: improves blackout drunk character gameplay
+  - bugfix: fixed improper prob() placement that caused blackout character to be forced
+      sleep
+  - sound: added hiccup sound
+  jlsnow301:
+  - bugfix: Ghost alerts have been tuned down a bit.
+  lizardqueenlexi:
+  - refactor: Hostile skeleton NPCs now use the basic mob framework. They're a little
+      smarter, and they also have a slightly improved set of attack effects and sounds.
+      They love to drink milk, but will be harmed greatly if any heartless spaceman
+      tricks them into drinking soymilk instead. Please report any bugs.
+  - refactor: Hostile Nanotrasen mobs now use the basic mob framework. This should
+      make them a little smarter and more dangerous. Please report any bugs.
+  - bugfix: Russian mobs will now actually use those knives they're holding.
+  - refactor: Juggernaut constructs now use the basic mob framework. Please report
+      any bugs.
+  mc-oofert:
+  - bugfix: you may not enter knock path caretakers last refuge with the nuke disk
+  - bugfix: you can no longer cuff knock heretics in refuge
+  necromanceranne:
+  - bugfix: The nanites inside of thermal pistols are once again angry, and aggressively
+      want to burn/puncture people.
+2023-10-26:
+  Cruix:
+  - bugfix: fixed hair gradients not applying correctly to huge afros
+  - bugfix: fixed hair gradients not applying properly on dismembered heads.
+  Xackii:
+  - bugfix: Fixed gorilla attack cooldown. Now attacking speed to mobs is the same
+      as attacking speed to objects.
+  carlarctg:
+  - refactor: Adds charges to omens and omen smiting rather than only being permanent
+      or one-use. Mirrors now grant seven bad luckers.
+  - qol: Reduces omen bad luck if nobody's nearby to witness the funny. (Ghosts are
+      included in the check!)
+  - bugfix: Fixed an issue where a monkey check in doorcrushing was never actually
+      able to pass. Also they screech now.
+  timothymtorres:
+  - qol: Add smoke particles to burning fireplace
+2023-10-27:
+  FlufflesTheDog:
+  - bugfix: Wigs now properly follow your head when you're any non-standard height
+  Hatterhat:
+  - qol: Examining an ammo box (incl. magazines) now tells you the top loaded round,
+      so if you have different ammo types in different magazines, you can at least
+      try to figure out which one is which.
+  - spellcheck: Ammo boxes (incl. magazines) can now be set to use different phrasing
+      for their ammunition (e.g. cartridges, shells, etc. instead of just mixing "rounds"
+      and "shells").
+  Jacquerel:
+  - bugfix: Dying when using (most) shapeshift spells will now kill you rather than
+      having you pop out of the corpse of your previous form.
+  - bugfix: Damage will now be accurately carried between forms rather than being
+      slightly reduced upon each transformation.
+  Watermelon914:
+  - rscadd: Reworked the colour schemes for the minor and major announcements as well
+      as their layout
+  - rscdel: Rolled back changes to deadchat notifications
+  - admin: Admins can now select the colour of their announcements as well as the
+      subheader when creating a command report.
+  mc-oofert:
+  - bugfix: venus human traps no longer die when on weeds
+2023-10-28:
+  GPeckman:
+  - bugfix: The health bar on the mech diagnostic hud display should update consistently
+      now.
+  Jacquerel:
+  - bugfix: If a mob you are shapeshifted into attempts to grow up into a different
+      kind of mob then you will stop being shapeshifted
+  Melbert:
+  - bugfix: Disablers and Lasers now show their on-impact effects on hit mobs again.
+  - bugfix: People held at gunpoint can now flinch when being hit.
+  - bugfix: Regenerating mobs no longer stop regenerating no matter hit with what.
+  - bugfix: Pressure damage is now properly modified by a mob's brute damage modifier.
+  - bugfix: Fixes some occasions which some effects (glass jaw, explodable worn items)
+      won't respond to hits.
+  - refactor: Refactored core code related to mobs sustaining damage.
+  Xackii:
+  - balance: Sutures now heal a percentage of basic/animal max health instead of a
+      flat amount.
+  lizardqueenlexi:
+  - bugfix: Mobs without the "advanced tool user" trait - such as monkeys - are no
+      longer able to interact with camera consoles.
+  - bugfix: Monkeys can now properly attack parrots.
+  - bugfix: The Demonic Frost-Miner will no longer run around destroying the corpses
+      in its arena the moment the round begins.
+  unit0016:
+  - bugfix: Every misaligned railing ending has been corrected by the Nanotrasen Hall
+      Monitor's Lunchclub.
+2023-10-29:
+  DrDiasyl:
+  - sound: Dying with a SecHailer on your face will make a unique death sound
+  Ghommie:
+  - rscadd: Added a few fish related bounties.
+  - rscadd: Fish cases to store and preserve life fish within can be now printed from
+      the service techfab and the autolathe.
+  GoldenAlpharex:
+  - code_imp: Added support to the wet_floor component to make it so the wet overlay
+      could not be applied to certain turfs if desired.
+  - bugfix: Ice turfs no longer look tiled, and instead look smooth when placed next
+      to one-another.
+  Melbert:
+  - bugfix: Fixes being unable to open airlocks with telekinesis
+  Paxilmaniac:
+  - code_imp: the deployable component has been tweaked and improved with some new
+      options to it
+  Profakos:
+  - bugfix: Gnomes no longer runtime if they explode while sinking into the ground
+  necromanceranne:
+  - bugfix: Every person on the station now no longer has the Tranquility Evades the
+      Shield Pinky Finger Shovegrab unarmed combat technique, an ancient and forbidden
+      strike that allows anyone (literally anyone) to bypass all forms of blocking
+      defense by simply not being in combat mode when they shove or grab their target.
+      As a direct result, the chakra energy of the Spinward Sector has become severely
+      misaligned. Oh well.
+2023-10-30:
+  GPeckman:
+  - bugfix: Light-Eaten objects can no longer emit light after being turned off and
+      then back on.
+  - code_imp: Flashlights now use light_on instead of defining their own variable.
+      Please report buggy behavior.
+  - bugfix: Removed rare hard delete involving telecomms machines.
+2023-10-31:
+  CRITAWAKETS:
+  - rscadd: Corn oil is now produced from corn instead of regular vegetable oil.
+  - balance: Glycerol now uses corn oil instead of vegetable oil in it's recipe.
+  - bugfix: Grinding corn now produces oil when it previously only made cornmeal despite
+      having oil in it's reagents.
+  Mothblocks:
+  - spellcheck: Changed candy description to read better
+  Toastgoats:
+  - rscadd: The Ethereal Vintner's Union has been "convinced" to trade their signature
+      Lanternfruit with Nanotrasen!
+  - image: Sprites for the aforementioned fruit.
+  jlsnow301:
+  - bugfix: Fixed an invisibility exploit on large mobs. Probably better this way
+  lizardqueenlexi:
+  - refactor: Wraith constructs have been converted to the basic mob framework. NPC
+      wraiths are now extra cruel and will attack the lowest-health mob they can see
+      at any given time. Make sure this isn't you! Please report any bugs.
+  - bugfix: Artificers and juggernauts no longer attack significantly more slowly
+      than intended.
+  - refactor: Pirate NPCs now use the basic mob framework. They'll be a little smarter
+      in combat, and if you're wearing your ID they'll siphon your bank account with
+      every melee attack! Beware! Please report any bugs.
+  mc-oofert:
+  - rscadd: living floor, living flesh, and other stuff for the bioresearch outpost
+      ruin
+  - rscadd: bioresearch outpost ruin
+  - bugfix: you may not defeat indestructible grilles and windows with mere tools
+  san7890:
+  - bugfix: Bitrunners can no longer get mass-mindswapped out of their avatar when
+      the wizard does the event. Something about machinery and magic not going well
+      together.

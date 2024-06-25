@@ -172,7 +172,7 @@
 	game.say("A new floor suddenly appears around [game]. What the hell?")
 	playsound(game, 'sound/weapons/genhit.ogg', 100, TRUE)
 	for(var/turf/open/space/fixed in orange(1, game))
-		fixed.PlaceOnTop(/turf/open/floor/plating)
+		fixed.place_on_top(/turf/open/floor/plating)
 
 #define BUTTON_EXPLORE_SHIP "Explore Ship"
 #define BUTTON_LEAVE_THE_DERELICT "Leave the Derelict"
@@ -438,7 +438,7 @@
 		game.say("A miniature black hole suddenly appears in front of [game], devouring [gamer] alive!")
 		gamer.Stun(200, ignore_canstun = TRUE) //you can't run :^)
 		var/black_hole = new /obj/singularity/orion(gamer.loc)
-		addtimer(CALLBACK(game, TYPE_PROC_REF(/atom/movable, say), "[black_hole] winks out, just as suddenly as it appeared."), 50)
+		addtimer(CALLBACK(game, TYPE_PROC_REF(/atom/movable, say), "[black_hole] winks out, just as suddenly as it appeared."), 5 SECONDS)
 		QDEL_IN(black_hole, 5 SECONDS)
 
 #define BUTTON_DOCK "Dock"
@@ -525,7 +525,7 @@
 				game.say("WEEWOO! WEEWOO! Spaceport security en route!")
 				playsound(game, 'sound/items/weeoo1.ogg', 100, FALSE)
 				for(var/i in 1 to 3)
-					var/mob/living/basic/syndicate/ranged/smg/orion/spaceport_security = new(get_turf(game))
+					var/mob/living/basic/trooper/syndicate/ranged/smg/orion/spaceport_security = new(get_turf(game))
 					spaceport_security.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, usr)
 	game.fuel += fuel
 	game.food += food

@@ -1,0 +1,21 @@
+#comment Repathing for Transport Subsystem
+
+/obj/structure/industrial_lift{specific_lift_id=@ANY} : /obj/structure/transport/linear{@OLD; specific_lift_id=@SKIP; specific_transport_id=@OLD:specific_lift_id}
+/obj/structure/industrial_lift/public{specific_lift_id=@ANY} : /obj/structure/transport/linear/public{@OLD; specific_lift_id=@SKIP; specific_transport_id=@OLD:specific_lift_id}
+/obj/structure/industrial_lift/debug{specific_lift_id=@ANY} : /obj/structure/transport/linear/debug{@OLD; specific_lift_id=@SKIP; specific_transport_id=@OLD:specific_lift_id}
+/obj/structure/industrial_lift/tram{specific_lift_id=@ANY} : /obj/structure/transport/linear/tram{@OLD; specific_lift_id=@SKIP; specific_transport_id=@OLD:specific_lift_id}
+/obj/effect/landmark/lift_id{specific_lift_id=@ANY} : /obj/effect/landmark/transport/transport_id{@OLD; specific_lift_id=@SKIP; specific_transport_id=@OLD:specific_lift_id}
+/obj/effect/landmark/tram/nav/immovable_rod{specific_lift_id=@ANY} : /obj/effect/landmark/transport/nav_beacon/tram/nav/immovable_rod{@OLD; specific_lift_id=@SKIP; specific_transport_id=@OLD:specific_lift_id}
+/turf/open/floor/noslip/tram_plate : /turf/open/floor/tram/plate{@OLD}
+/turf/open/floor/noslip/tram_plate/energized : /turf/open/floor/tram/plate/energized{@OLD}
+/turf/open/floor/noslip/tram_platform : /turf/open/floor/tram{@OLD}
+/obj/machinery/door/window/elevator/left{elevator_linked_id=@ANY} : /obj/machinery/door/window/elevator/left{@OLD; elevator_linked_id=@SKIP; transport_linked_id=@OLD:elevator_linked_id}
+/obj/machinery/door/window/elevator/left/directional/north{elevator_linked_id=@ANY} : /obj/machinery/door/window/elevator/left/directional/north{@OLD; elevator_linked_id=@SKIP; transport_linked_id=@OLD:elevator_linked_id}
+/obj/machinery/door/window/elevator/left/directional/south{elevator_linked_id=@ANY} : /obj/machinery/door/window/elevator/left/directional/south{@OLD; elevator_linked_id=@SKIP; transport_linked_id=@OLD:elevator_linked_id}
+/obj/machinery/door/window/elevator/left/directional/east{elevator_linked_id=@ANY} : /obj/machinery/door/window/elevator/left/directional/east{@OLD; elevator_linked_id=@SKIP; transport_linked_id=@OLD:elevator_linked_id}
+/obj/machinery/door/window/elevator/left/directional/west{elevator_linked_id=@ANY} : /obj/machinery/door/window/elevator/left/directional/west{@OLD; elevator_linked_id=@SKIP; transport_linked_id=@OLD:elevator_linked_id}
+/obj/machinery/door/window/elevator/right{elevator_linked_id=@ANY} : /obj/machinery/door/window/elevator/right{@OLD; elevator_linked_id=@SKIP; transport_linked_id=@OLD:elevator_linked_id}
+/obj/machinery/door/window/elevator/right/directional/north{elevator_linked_id=@ANY} : /obj/machinery/door/window/elevator/right/directional/north{@OLD; elevator_linked_id=@SKIP; transport_linked_id=@OLD:elevator_linked_id}
+/obj/machinery/door/window/elevator/right/directional/south{elevator_linked_id=@ANY} : /obj/machinery/door/window/elevator/right/directional/south{@OLD; elevator_linked_id=@SKIP; transport_linked_id=@OLD:elevator_linked_id}
+/obj/machinery/door/window/elevator/right/directional/east{elevator_linked_id=@ANY} : /obj/machinery/door/window/elevator/right/directional/east{@OLD; elevator_linked_id=@SKIP; transport_linked_id=@OLD:elevator_linked_id}
+/obj/machinery/door/window/elevator/right/directional/west{elevator_linked_id=@ANY} : /obj/machinery/door/window/elevator/right/directional/west{@OLD; elevator_linked_id=@SKIP; transport_linked_id=@OLD:elevator_linked_id}

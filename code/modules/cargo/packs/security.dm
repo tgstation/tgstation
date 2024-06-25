@@ -140,6 +140,7 @@
 					/obj/item/clothing/mask/gas/sechailer,
 				)
 	crate_name = "security clothing crate"
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /datum/supply_pack/security/baton
 	name = "Stun Batons Crate"
@@ -168,6 +169,8 @@
 					/obj/item/clothing/mask/whistle,
 					/obj/item/conversion_kit,
 				)
+	crate_name = "traditional equipment crate"
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /// Armory packs
 
@@ -211,9 +214,12 @@
 /datum/supply_pack/security/armory/dragnet
 	name = "DRAGnet Crate"
 	desc = "Contains three \"Dynamic Rapid-Apprehension of the Guilty\" netting devices, \
-		a recent breakthrough in law enforcement prisoner management technology."
+		a recent breakthrough in law enforcement prisoner management technology. Includes a DRAGnet beacon."
 	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/obj/item/gun/energy/e_gun/dragnet = 3)
+	contains = list(
+		/obj/item/gun/energy/e_gun/dragnet = 3,
+		/obj/item/dragnet_beacon = 1
+	)
 	crate_name = "\improper DRAGnet crate"
 
 /datum/supply_pack/security/armory/energy
@@ -231,6 +237,14 @@
 	cost = CARGO_CRATE_VALUE * 9
 	contains = list(/obj/item/gun/energy/laser/carbine = 3)
 	crate_name = "laser carbine crate"
+	crate_type = /obj/structure/closet/crate/secure/plasma
+
+/datum/supply_pack/security/armory/disabler_smg
+	name = "Disabler SMG Crate"
+	desc = "Contains three disabler SMGs, capable of rapidly firing weak disabler beams."
+	cost = CARGO_CRATE_VALUE * 7
+	contains = list(/obj/item/gun/energy/disabler/smg = 3)
+	crate_name = "disabler smg crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
 /datum/supply_pack/security/armory/exileimp
@@ -320,8 +334,8 @@
 /datum/supply_pack/security/armory/thermal
 	name = "Thermal Pistol Crate"
 	desc = "Contains a pair of holsters each with two experimental thermal pistols, \
-		using nanites as the basis for their ammo."
-	cost = CARGO_CRATE_VALUE * 7
+		using nanites as the basis for their ammo. Can be shaken to reload."
+	cost = CARGO_CRATE_VALUE * 10
 	contains = list(/obj/item/storage/belt/holster/energy/thermal = 2)
 	crate_name = "thermal pistol crate"
 

@@ -18,10 +18,12 @@
 /datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
-	. = ..()
-	if(. && (needs_update_stat || issilicon(owner)))
-		owner.update_stat()
+	return ..()
 
+/datum/status_effect/incapacitating/on_apply()
+	if(needs_update_stat || issilicon(owner))
+		owner.update_stat()
+	return TRUE
 
 /datum/status_effect/incapacitating/on_remove()
 	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
@@ -224,7 +226,7 @@
 				var/datum/status_effect/exercised/exercised = carbon_owner.has_status_effect(/datum/status_effect/exercised)
 				if(exercised && carbon_owner.mind)
 					// the better you sleep, the more xp you gain
-					carbon_owner.mind.adjust_experience(/datum/skill/fitness, seconds_between_ticks * sleep_quality * SLEEP_QUALITY_WORKOUT_MULTIPLER)
+					carbon_owner.mind.adjust_experience(/datum/skill/athletics, seconds_between_ticks * sleep_quality * SLEEP_QUALITY_WORKOUT_MULTIPLER)
 					carbon_owner.adjust_timed_status_effect(-1 * seconds_between_ticks * sleep_quality * SLEEP_QUALITY_WORKOUT_MULTIPLER, /datum/status_effect/exercised)
 					if(prob(2))
 						to_chat(carbon_owner, span_notice("You feel your fitness improving!"))
@@ -343,7 +345,7 @@
 /datum/status_effect/crusher_mark
 	id = "crusher_mark"
 	duration = 300 //if you leave for 30 seconds you lose the mark, deal with it
-	status_type = STATUS_EFFECT_REPLACE
+	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = null
 	var/mutable_appearance/marked_underlay
 	var/obj/item/kinetic_crusher/hammer_synced
@@ -370,9 +372,9 @@
 	QDEL_NULL(marked_underlay)
 	return ..()
 
-/datum/status_effect/crusher_mark/be_replaced()
-	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
-	..()
+//we will only clear ourselves if the crusher is the one that owns us.
+/datum/status_effect/crusher_mark/before_remove(obj/item/kinetic_crusher/attacking_hammer)
+	return (attacking_hammer == hammer_synced)
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
@@ -601,7 +603,7 @@
 	// The brain trauma itself does its own set of logging, but this is the only place the source of the hypnosis phrase can be found.
 	hearing_speaker.log_message("hypnotised [key_name(C)] with the phrase '[hearing_args[HEARING_RAW_MESSAGE]]'", LOG_ATTACK, color="red")
 	C.log_message("has been hypnotised by the phrase '[hearing_args[HEARING_RAW_MESSAGE]]' spoken by [key_name(hearing_speaker)]", LOG_VICTIM, color="orange", log_globally = FALSE)
-	addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/living/carbon, gain_trauma), /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 10)
+	addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/living/carbon, gain_trauma), /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 1 SECONDS)
 	addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/living, Stun), 60, TRUE, TRUE), 15) //Take some time to think about it
 	qdel(src)
 
@@ -663,6 +665,7 @@
 	duration = 150
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/convulsing
+	show_duration = TRUE
 
 /datum/status_effect/convulsing/on_creation(mob/living/zappy_boy)
 	. = ..()
@@ -738,6 +741,13 @@
 	alert_type = null
 	var/msg_stage = 0//so you dont get the most intense messages immediately
 
+/datum/status_effect/fake_virus/on_apply()
+	if(HAS_TRAIT(owner, TRAIT_VIRUSIMMUNE))
+		return FALSE
+	if(owner.stat != CONSCIOUS)
+		return FALSE
+	return TRUE
+
 /datum/status_effect/fake_virus/tick(seconds_between_ticks)
 	var/fake_msg = ""
 	var/fake_emote = ""
@@ -767,7 +777,10 @@
 					span_userdanger(pick("Your lungs hurt!", "It hurts to breathe!")),
 					span_warning(pick("You feel nauseated.", "You feel like you're going to throw up!")))
 				else
-					fake_emote = pick("cough", "sniff", "sneeze")
+					if(prob(40))
+						fake_emote = "cough"
+					else
+						owner.sneeze()
 
 	if(fake_emote)
 		owner.emote(fake_emote)
@@ -785,6 +798,8 @@
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	/// Will act as the main timer as well as changing how much damage the ants do.
 	var/ants_remaining = 0
+	/// Amount of damage done per ant on the victim
+	var/damage_per_ant = 0.0016
 	/// Common phrases people covered in ants scream
 	var/static/list/ant_debuff_speech = list(
 		"GET THEM OFF ME!!",
@@ -831,7 +846,7 @@
 /datum/status_effect/ants/tick(seconds_between_ticks)
 	var/mob/living/carbon/human/victim = owner
 	var/need_mob_update
-	need_mob_update = victim.adjustBruteLoss(max(0.1, round((ants_remaining * 0.0016) * seconds_between_ticks,0.1)), updating_health = FALSE) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
+	need_mob_update = victim.adjustBruteLoss(max(0.1, round((ants_remaining * damage_per_ant) * seconds_between_ticks,0.1)), updating_health = FALSE) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
 	if(victim.stat <= SOFT_CRIT) //Makes sure people don't scratch at themselves while they're in a critical condition
 		if(prob(15))
 			switch(rand(1,2))
@@ -861,7 +876,7 @@
 	if(need_mob_update)
 		victim.updatehealth()
 	if(ants_remaining <= 0 || victim.stat >= HARD_CRIT)
-		victim.remove_status_effect(/datum/status_effect/ants) //If this person has no more ants on them or are dead, they are no longer affected.
+		victim.remove_status_effect(type) //If this person has no more ants on them or are dead, they are no longer affected.
 
 /atom/movable/screen/alert/status_effect/ants
 	name = "Ants!"
@@ -869,6 +884,9 @@
 	icon_state = "antalert"
 
 /atom/movable/screen/alert/status_effect/ants/Click()
+	. = ..()
+	if(!.)
+		return
 	var/mob/living/living = owner
 	if(!istype(living) || !living.can_resist() || living != owner)
 		return
@@ -879,25 +897,34 @@
 		to_chat(living, span_notice("You manage to get some of the ants off!"))
 		ant_covered.ants_remaining -= 10 // 5 Times more ants removed per second than just waiting in place
 
-/datum/status_effect/stagger
-	id = "stagger"
+/datum/status_effect/ants/fire
+	id = "fire_ants"
+	alert_type = /atom/movable/screen/alert/status_effect/ants/fire
+	damage_per_ant = 0.0064
+
+/atom/movable/screen/alert/status_effect/ants/fire
+	name = "Fire Ants!"
+	desc = span_warning("JESUS FUCKING CHRIST IT BURNS! CLICK TO GET THOSE THINGS OFF!")
+
+/datum/status_effect/rebuked
+	id = "rebuked"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 30 SECONDS
 	tick_interval = 1 SECONDS
 	alert_type = null
 
-/datum/status_effect/stagger/on_apply()
-	owner.next_move_modifier *= 1.5
+/datum/status_effect/rebuked/on_apply()
+	owner.next_move_modifier *= 2
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/simple_owner = owner
 		simple_owner.ranged_cooldown_time *= 2.5
 	return TRUE
 
-/datum/status_effect/stagger/on_remove()
+/datum/status_effect/rebuked/on_remove()
 	. = ..()
 	if(QDELETED(owner))
 		return
-	owner.next_move_modifier /= 1.5
+	owner.next_move_modifier *= 0.5
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/simple_owner = owner
 		simple_owner.ranged_cooldown_time /= 2.5
@@ -1003,7 +1030,7 @@
 		victim.blood_volume -= 5 * seconds_between_ticks
 	// This has been hell to try and balance so that you'll actually get anything out of it
 	victim.reagents.add_reagent(/datum/reagent/gold/cursed, amount = seconds_between_ticks * goldscale, no_react = TRUE)
-	var/current_gold_amount = victim.reagents.get_reagent_amount(/datum/reagent/gold, include_subtypes = TRUE)
+	var/current_gold_amount = victim.reagents.get_reagent_amount(/datum/reagent/gold, type_check = REAGENT_SUB_TYPE)
 	switch(current_gold_amount)
 		if(-INFINITY to 50)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/midas_blight/soft, update = TRUE)

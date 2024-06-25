@@ -51,23 +51,17 @@
 	pull_force = MOVE_FORCE_EXTREMELY_STRONG
 
 	ai_controller = /datum/ai_controller/basic_controller/statue
-	/// Stores the creator in here if it has one.
-	var/mob/living/creator = null
 
-/mob/living/basic/statue/Initialize(mapload, mob/living/creator)
+/mob/living/basic/statue/Initialize(mapload)
 	. = ..()
+	add_traits(list(TRAIT_MUTE, TRAIT_UNOBSERVANT), INNATE_TRAIT)
 	AddComponent(/datum/component/unobserved_actor, unobserved_flags = NO_OBSERVED_MOVEMENT | NO_OBSERVED_ATTACKS)
-	ADD_TRAIT(src, TRAIT_UNOBSERVANT, INNATE_TRAIT)
 
-	// Give spells
-	var/datum/action/cooldown/spell/aoe/flicker_lights/flicker = new(src)
-	flicker.Grant(src)
-	var/datum/action/cooldown/spell/aoe/blindness/blind = new(src)
-	blind.Grant(src)
-
-	// Set creator
-	if(creator)
-		src.creator = creator
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/spell/aoe/blindness,
+		/datum/action/cooldown/spell/aoe/flicker_lights,
+	)
+	grant_actions_by_list(innate_actions)
 
 /mob/living/basic/statue/med_hud_set_health()
 	return //we're a statue we're invincible
@@ -75,13 +69,7 @@
 /mob/living/basic/statue/med_hud_set_status()
 	return //we're a statue we're invincible
 
-/mob/living/basic/statue/can_speak(allow_mimes = FALSE)
-	return FALSE // We're a statue, of course we can't talk.
-
 // Cannot talk
-
-/mob/living/basic/statue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
-	return
 
 // Turn to dust when gibbed
 
@@ -141,8 +129,7 @@
 
 /datum/ai_controller/basic_controller/statue
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-		BB_LOW_PRIORITY_HUNTING_TARGET = null, // lights
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

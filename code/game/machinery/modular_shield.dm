@@ -1,6 +1,6 @@
 /obj/machinery/modular_shield_generator
-	name = "Modular Shield Generator"
-	desc = "A forcefield generator, it seems more stationary than its cousins."
+	name = "modular shield generator"
+	desc = "A forcefield generator, it seems more stationary than its cousins. It cant handle G-force and will require frequent reboots when built on mobile craft."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "gen_recovering_closed"
 	density = TRUE
@@ -162,6 +162,10 @@
 		return
 	activate_shields()
 
+/obj/machinery/modular_shield_generator/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	if(active)
+		deactivate_shields()
 
 ///generates the forcefield based on the given radius and calls calculate_regen to update the regen value accordingly
 /obj/machinery/modular_shield_generator/proc/activate_shields()
@@ -378,7 +382,7 @@
 ///The general code used for machines that want to connect to the network
 /obj/machinery/modular_shield/module
 
-	name = "Modular Shield Debugger" //Filler name and sprite for testing
+	name = "modular shield debugger" //Filler name and sprite for testing
 	desc = "This is filler for testing you shouldn`t see this."
 	icon = 'icons/obj/machines/mech_bay.dmi'
 	icon_state = "recharge_port"
@@ -438,17 +442,21 @@
 /obj/machinery/modular_shield/module/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 
-	if(default_change_direction_wrench(user, tool))
-		if(shield_generator)
-			LAZYREMOVE(shield_generator.connected_modules, (src))
-			shield_generator.calculate_boost()
-			shield_generator = null
-			update_icon_state()
-		if(connected_node)
-			LAZYREMOVE(connected_node.connected_through_us, (src))
-			connected_node = null
-		connected_turf = get_step(loc, dir)
-		return TRUE
+	if(!default_change_direction_wrench(user, tool))
+		return FALSE
+
+	if(shield_generator)
+		LAZYREMOVE(shield_generator.connected_modules, (src))
+		shield_generator.calculate_boost()
+		shield_generator = null
+		update_icon_state()
+
+	if(connected_node)
+		LAZYREMOVE(connected_node.connected_through_us, (src))
+		connected_node = null
+
+	connected_turf = get_step(loc, dir)
+	return TRUE
 
 /obj/machinery/modular_shield/module/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -498,7 +506,7 @@
 
 /obj/machinery/modular_shield/module/node
 
-	name = "Modular Shield Node"
+	name = "modular shield node"
 	desc = "A waist high mess of humming pipes and wires that extend the modular shield network."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "node_off_closed"
@@ -514,16 +522,26 @@
 		return
 	icon_state = "node_on_[panel_open ? "open" : "closed"]"
 
-/obj/machinery/modular_shield/module/node/setDir(new_dir)
-	. = ..()
+
+/obj/machinery/modular_shield/module/node/wrench_act(mob/living/user, obj/item/tool)
+
+	if(!default_change_direction_wrench(user, tool))
+		return FALSE
 
 	disconnect_connected_through_us()
-	if(isnull(shield_generator))
-		return
-	LAZYREMOVE(shield_generator.connected_modules, (src))
-	shield_generator.calculate_boost()
-	shield_generator = null
-	update_icon_state()
+
+	if(shield_generator)
+		LAZYREMOVE(shield_generator.connected_modules, (src))
+		shield_generator.calculate_boost()
+		shield_generator = null
+		update_icon_state()
+
+	if(connected_node)
+		LAZYREMOVE(connected_node.connected_through_us, (src))
+		connected_node = null
+
+	connected_turf = get_step(loc, dir)
+	return TRUE
 
 //after trying to connect to a machine infront of us, we will try to link anything connected to us to a generator
 /obj/machinery/modular_shield/module/node/try_connect(user)
@@ -569,7 +587,7 @@
 
 /obj/machinery/modular_shield/module/charger
 
-	name = "Modular Shield Charger"
+	name = "modular shield charger"
 	desc = "A machine that somehow fabricates hardlight using electrons."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "charger_off_closed"
@@ -597,7 +615,7 @@
 
 /obj/machinery/modular_shield/module/relay
 
-	name = "Modular Shield Relay"
+	name = "modular shield relay"
 	desc = "It helps the shield generator project farther out."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "relay_off_closed"
@@ -625,7 +643,7 @@
 
 /obj/machinery/modular_shield/module/well
 
-	name = "Modular Shield Well"
+	name = "modular shield well"
 	desc = "A device used to hold more hardlight for the modular shield generator."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "well_off_closed"
@@ -654,12 +672,13 @@
 
 //The shield itself
 /obj/structure/emergency_shield/modular
-	name = "Modular energy shield"
+	name = "modular energy shield"
 	desc = "An energy shield with varying configurations."
 	color = "#00ffff"
 	density = FALSE
 	alpha = 100
 	resistance_flags = INDESTRUCTIBLE //the shield itself is indestructible or atleast should be
+	no_damage_feedback = "weakening the generator sustaining it"
 
 	///The shield generator sustaining us
 	var/obj/machinery/modular_shield_generator/shield_generator
@@ -693,6 +712,7 @@
 
 //Damage from emp
 /obj/structure/emergency_shield/modular/emp_act(severity)
+	. = ..()
 	if(isnull(shield_generator))
 		qdel(src)
 		return

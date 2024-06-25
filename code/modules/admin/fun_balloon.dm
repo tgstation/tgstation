@@ -38,6 +38,8 @@
 	desc = "When this pops, things are gonna get more aware around here."
 	var/group_name = "a bunch of giant spiders"
 	var/effect_range = 3
+	var/antag_type = null
+	var/make_antag = FALSE
 
 /obj/effect/fun_balloon/sentience/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -49,12 +51,13 @@
 	var/list/data = list()
 	data["group_name"] = group_name
 	data["range"] = effect_range
+	data["antag"] = make_antag
 	return data
 
 /obj/effect/fun_balloon/sentience/ui_state(mob/user)
 	return GLOB.admin_state
 
-/obj/effect/fun_balloon/sentience/ui_status(mob/user)
+/obj/effect/fun_balloon/sentience/ui_status(mob/user, datum/ui_state/state)
 	if(popped)
 		return UI_CLOSE
 	if(isAdminObserver(user)) // ignore proximity if we're an admin
@@ -73,6 +76,11 @@
 		if("effect_range")
 			effect_range = params["updated_range"]
 
+		if("select_antag")
+			var/list/paths = subtypesof(/datum/antagonist)
+			antag_type = input(usr,"Select antag", "Antagonist selection") as null|anything in sort_list(paths)
+			make_antag = TRUE
+
 		if("pop")
 			if(!popped)
 				popped = TRUE
@@ -87,8 +95,17 @@
 		if (!possessable.ckey && possessable.stat == CONSCIOUS) // Only assign ghosts to living, non-occupied mobs!
 			bodies += possessable
 
-	var/question = "Would you like to be [group_name]?"
-	var/list/candidates = poll_candidates_for_mobs(question, ROLE_SENTIENCE, ROLE_SENTIENCE, 10 SECONDS, bodies, POLL_IGNORE_SHUTTLE_DENIZENS)
+	var/list/candidates = SSpolling.poll_ghosts_for_targets(
+		question = "Would you like to be [span_notice(group_name)]?",
+		role = ROLE_SENTIENCE,
+		check_jobban = ROLE_SENTIENCE,
+		poll_time = 10 SECONDS,
+		checked_targets = bodies,
+		ignore_category = POLL_IGNORE_SHUTTLE_DENIZENS,
+		alert_pic = src,
+		role_name_text = "sentience fun balloon",
+	)
+
 	while(LAZYLEN(candidates) && LAZYLEN(bodies))
 		var/mob/dead/observer/C = pick_n_take(candidates)
 		var/mob/living/body = pick_n_take(bodies)
@@ -96,6 +113,9 @@
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(body)])")
 		body.ghostize(FALSE)
 		body.key = C.key
+		if (make_antag)
+			body.mind.add_antag_datum(antag_type)
+			continue
 		new /obj/effect/temp_visual/gravpush(get_turf(body))
 
 // ----------- Emergency Shuttle Balloon
@@ -116,7 +136,7 @@
 
 /obj/effect/fun_balloon/scatter/effect()
 	for(var/mob/living/M in range(effect_range, get_turf(src)))
-		var/turf/T = find_safe_turf()
+		var/turf/T = find_safe_turf(zlevel = src.z)
 		new /obj/effect/temp_visual/gravpush(get_turf(M))
 		M.forceMove(T)
 		to_chat(M, span_notice("Pop!"), confidential = TRUE)

@@ -11,6 +11,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
+
 	var/obj/item/gun/energy/minigun/gun
 	var/obj/item/stock_parts/cell/minigun/battery
 	var/armed = FALSE //whether the gun is attached, FALSE is attached, TRUE is the gun is wielded.
@@ -63,22 +64,14 @@
 	if(armed)
 		user.dropItemToGround(gun, TRUE)
 
-/obj/item/minigunpack/MouseDrop(atom/over_object)
-	. = ..()
+/obj/item/minigunpack/mouse_drop_dragged(atom/over_object, mob/user)
 	if(armed)
 		return
-	if(iscarbon(usr))
-		var/mob/M = usr
 
-		if(!over_object)
-			return
-
-		if(!M.incapacitated())
-
-			if(istype(over_object, /atom/movable/screen/inventory/hand))
-				var/atom/movable/screen/inventory/hand/H = over_object
-				M.putItemFromInventoryInHandIfPossible(src, H.held_index)
-
+	if(iscarbon(user))
+		if(istype(over_object, /atom/movable/screen/inventory/hand))
+			var/atom/movable/screen/inventory/hand/H = over_object
+			user.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 /obj/item/minigunpack/update_icon_state()
 	icon_state = armed ? "notholstered" : "holstered"
@@ -145,18 +138,18 @@
 	..()
 	ammo_pack.overheat++
 	if(ammo_pack.battery)
-		var/totransfer = min(100, ammo_pack.battery.charge)
-		var/transferred = cell.give(totransfer)
-		ammo_pack.battery.use(transferred)
+		var/transferred = ammo_pack.battery.use(cell.maxcharge - cell.charge, force = TRUE)
+		cell.give(transferred)
 
 
-/obj/item/gun/energy/minigun/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/gun/energy/minigun/try_fire_gun(atom/target, mob/living/user, params)
 	if(!ammo_pack || ammo_pack.loc != user)
 		to_chat(user, span_warning("You need the backpack power source to fire the gun!"))
-	. = ..()
+		return FALSE
+	return ..()
 
 /obj/item/stock_parts/cell/minigun
 	name = "gatling gun fusion core"
 	desc = "Where did these come from?"
-	maxcharge = 500000
-	chargerate = 5000
+	maxcharge = 500 * STANDARD_CELL_CHARGE
+	chargerate = 5 * STANDARD_CELL_CHARGE

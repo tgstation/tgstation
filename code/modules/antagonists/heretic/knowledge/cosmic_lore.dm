@@ -22,7 +22,6 @@
  * Cosmic Expansion
  * > Sidepaths:
  *   Eldritch Coin
- *   Rusted Ritual
  *
  * Creators's Gift
  */
@@ -42,7 +41,8 @@
 
 /datum/heretic_knowledge/cosmic_grasp
 	name = "Grasp of Cosmos"
-	desc = "Your Mansus Grasp will give people a star mark (cosmic ring) and create a cosmic field where you stand."
+	desc = "Your Mansus Grasp will give people a star mark (cosmic ring) and create a cosmic field where you stand. \
+		People with a star mark can not pass cosmic fields."
 	gain_text = "Some stars dimmed, others' magnitude increased. \
 		With newfound strength I could channel the nebula's power into myself."
 	next_knowledge = list(/datum/heretic_knowledge/spell/cosmic_runes)
@@ -70,11 +70,10 @@
 		However, people with a star mark will get transported along with another person using the rune."
 	gain_text = "The distant stars crept into my dreams, roaring and screaming without reason. \
 		I spoke, and heard my own words echoed back."
-	adds_sidepath_points = 1
 	next_knowledge = list(
+		/datum/heretic_knowledge/summon/fire_shark,
 		/datum/heretic_knowledge/mark/cosmic_mark,
 		/datum/heretic_knowledge/essence,
-		/datum/heretic_knowledge/summon/fire_shark,
 	)
 	spell_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 1
@@ -83,7 +82,8 @@
 /datum/heretic_knowledge/mark/cosmic_mark
 	name = "Mark of Cosmos"
 	desc = "Your Mansus Grasp now applies the Mark of Cosmos. The mark is triggered from an attack with your Cosmic Blade. \
-		When triggered, the victim is returned to the location where the mark was originally applied to them. \
+		When triggered, the victim is returned to the location where the mark was originally applied to them, \
+		leaving a cosmic field in their place. \
 		They will then be paralyzed for 2 seconds."
 	gain_text = "The Beast now whispered to me occasionally, only small tidbits of their circumstances. \
 		I can help them, I have to help them."
@@ -99,8 +99,7 @@
 	name = "Star Touch"
 	desc = "Grants you Star Touch, a spell which places a star mark upon your target \
 		and creates a cosmic field at your feet and to the turfs next to you. Targets which already have a star mark \
-		will be forced to sleep for 4 seconds. When the victim is hit it also creates a beam that \
-		deals a bit of fire damage and damages the cells. \
+		will be forced to sleep for 4 seconds. When the victim is hit it also creates a beam that burns them. \
 		The beam lasts a minute, until the beam is obstructed or until a new target has been found."
 	gain_text = "After waking in a cold sweat I felt a palm on my scalp, a sigil burned onto me. \
 		My veins now emitted a strange purple glow, the Beast knows I will surpass its expectations."
@@ -111,14 +110,14 @@
 
 /datum/heretic_knowledge/spell/star_blast
 	name = "Star Blast"
-	desc = "Fires a projectile that moves very slowly and creates cosmic fields on impact. \
-		Anyone hit by the projectile will recieve burn damage, a knockdown, and give people in a three tile range a star mark."
+	desc = "Fires a projectile that moves very slowly, raising a short-lived wall of cosmic fields where it goes. \
+		Anyone hit by the projectile will receive burn damage, a knockdown, and give people in a three tile range a star mark."
 	gain_text = "The Beast was behind me now at all times, with each sacrifice words of affirmation coursed through me."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/cosmic,
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/curse/corrosion,
+		/datum/heretic_knowledge/summon/rusty,
 		/datum/heretic_knowledge/spell/space_phase,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
@@ -127,10 +126,10 @@
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
 	name = "Cosmic Blade"
-	desc = "Your blade now deals damage to people's cells through cosmic radiation. \
+	desc = "Your blade now deals damage to people's organs through cosmic radiation. \
 		Your attacks will chain bonus damage to up to two previous victims. \
 		The combo is reset after two seconds without making an attack, \
-		or if you attack someone already marked. If you combo more than four attacks you will recieve, \
+		or if you attack someone already marked. If you combo more than four attacks you will receive, \
 		a cosmic trail and increase your combo timer up to ten seconds."
 	gain_text = "The Beast took my blades in their hand, I kneeled and felt a sharp pain. \
 		The blades now glistened with fragmented power. I fell to the ground and wept at the beast's feet."
@@ -154,6 +153,15 @@
 	var/combo_counter = 0
 
 /datum/heretic_knowledge/blade_upgrade/cosmic/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+	var/static/list/valid_organ_slots = list(
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_STOMACH,
+		ORGAN_SLOT_EYES,
+		ORGAN_SLOT_EARS,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_BRAIN
+	)
 	if(source == target)
 		return
 	if(combo_timer)
@@ -162,8 +170,8 @@
 	var/mob/living/second_target_resolved = second_target?.resolve()
 	var/mob/living/third_target_resolved = third_target?.resolve()
 	var/need_mob_update = FALSE
-	need_mob_update += target.adjustFireLoss(4, updating_health = FALSE)
-	need_mob_update += target.adjustCloneLoss(2, updating_health = FALSE)
+	need_mob_update += target.adjustFireLoss(5, updating_health = FALSE)
+	need_mob_update += target.adjustOrganLoss(pick(valid_organ_slots), 8)
 	if(need_mob_update)
 		target.updatehealth()
 	if(target == second_target_resolved || target == third_target_resolved)
@@ -175,18 +183,18 @@
 		new /obj/effect/temp_visual/cosmic_explosion(get_turf(second_target_resolved))
 		playsound(get_turf(second_target_resolved), 'sound/magic/cosmic_energy.ogg', 25, FALSE)
 		need_mob_update = FALSE
-		need_mob_update += second_target_resolved.adjustFireLoss(10, updating_health = FALSE)
-		need_mob_update += second_target_resolved.adjustCloneLoss(6, updating_health = FALSE)
+		need_mob_update += second_target_resolved.adjustFireLoss(14, updating_health = FALSE)
+		need_mob_update += second_target_resolved.adjustOrganLoss(pick(valid_organ_slots), 12)
 		if(need_mob_update)
-			target.updatehealth()
+			second_target_resolved.updatehealth()
 		if(third_target_resolved)
 			new /obj/effect/temp_visual/cosmic_domain(get_turf(third_target_resolved))
 			playsound(get_turf(third_target_resolved), 'sound/magic/cosmic_energy.ogg', 50, FALSE)
 			need_mob_update = FALSE
-			need_mob_update += third_target_resolved.adjustFireLoss(20, updating_health = FALSE)
-			need_mob_update += third_target_resolved.adjustCloneLoss(12, updating_health = FALSE)
+			need_mob_update += third_target_resolved.adjustFireLoss(28, updating_health = FALSE)
+			need_mob_update += third_target_resolved.adjustOrganLoss(pick(valid_organ_slots), 14)
 			if(need_mob_update)
-				target.updatehealth()
+				third_target_resolved.updatehealth()
 			if(combo_counter > 3)
 				target.apply_status_effect(/datum/status_effect/star_mark, source)
 				if(target.mind && target.stat != DEAD)
@@ -218,11 +226,9 @@
 	desc = "Grants you Cosmic Expansion, a spell that creates a 3x3 area of cosmic fields around you. \
 		Nearby beings will also receive a star mark."
 	gain_text = "The ground now shook beneath me. The Beast inhabited me, and their voice was intoxicating."
-	adds_sidepath_points = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/cosmic_final,
 		/datum/heretic_knowledge/eldritch_coin,
-		/datum/heretic_knowledge/summon/rusty,
 	)
 	spell_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion
 	cost = 1
@@ -237,7 +243,8 @@
 		You can also give it commands through speech. \
 		The Star Gazer is a strong ally who can even break down reinforced walls. \
 		The Star Gazer has an aura that will heal you and damage opponents. \
-		Star Touch can now teleport you to the Star Gazer when activated in your hand."
+		Star Touch can now teleport you to the Star Gazer when activated in your hand. \
+		Your cosmic expansion spell and your blades also become greatly empowered."
 	gain_text = "The Beast held out its hand, I grabbed hold and they pulled me to them. Their body was towering, but it seemed so small and feeble after all their tales compiled in my head. \
 		I clung on to them, they would protect me, and I would protect it. \
 		I closed my eyes with my head laid against their form. I was safe. \
@@ -248,7 +255,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack/star_gazer
+		/datum/pet_command/point_targeting/attack/star_gazer
 	)
 
 /datum/heretic_knowledge/ultimate/cosmic_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
@@ -260,7 +267,12 @@
 
 /datum/heretic_knowledge/ultimate/cosmic_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] A Star Gazer has arrived into the station, [user.real_name] has ascended! This station is the domain of the Cosmos! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce(
+		text = "[generate_heretic_text()] A Star Gazer has arrived into the station, [user.real_name] has ascended! This station is the domain of the Cosmos! [generate_heretic_text()]",
+		title = "[generate_heretic_text()]",
+		sound = 'sound/ambience/antag/heretic/ascend_cosmic.ogg',
+		color_override = "pink",
+	)
 	var/mob/living/basic/heretic_summon/star_gazer/star_gazer_mob = new /mob/living/basic/heretic_summon/star_gazer(loc)
 	star_gazer_mob.maxHealth = INFINITY
 	star_gazer_mob.health = INFINITY

@@ -1,4 +1,7 @@
 #define PKBORG_DAMPEN_CYCLE_DELAY (2 SECONDS)
+#define POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER (0.0004 * STANDARD_CELL_RATE)
+#define NO_TOOL "deactivated"
+#define TOOL_DRAPES "surgical_drapes"
 
 /obj/item/cautery/prt //it's a subtype of cauteries so that it inherits the cautery sprites and behavior and stuff, because I'm too lazy to make sprites for this thing
 	name = "plating repair tool"
@@ -15,7 +18,7 @@
 /obj/item/borg/projectile_dampen
 	name = "\improper Hyperkinetic Dampening projector"
 	desc = "A device that projects a dampening field that weakens kinetic energy above a certain threshold. <span class='boldnotice'>Projects a field that drains power per second while active, that will weaken and slow damaging projectiles inside its field.</span> Still being a prototype, it tends to induce a charge on ungrounded metallic surfaces."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "shield0"
 	base_icon_state = "shield"
 	/// Max energy this dampener can hold
@@ -24,8 +27,6 @@
 	var/energy = 1500
 	/// Recharging rate in energy per second
 	var/energy_recharge = 37.5
-	/// Charge draining right
-	var/energy_recharge_cyborg_drain_coefficient = 0.4
 	/// Critical power level percentage
 	var/cyborg_cell_critical_percentage = 0.05
 	/// The owner of the dampener
@@ -156,7 +157,7 @@
 			energy = clamp(energy + energy_recharge * seconds_per_tick, 0, maxenergy)
 			return
 	if(host.cell && (host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
-		host.cell.use(energy_recharge * seconds_per_tick * energy_recharge_cyborg_drain_coefficient)
+		host.cell.use(energy_recharge * seconds_per_tick * POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER)
 		energy += energy_recharge * seconds_per_tick
 
 /obj/item/borg/projectile_dampen/proc/dampen_projectile(datum/source, obj/projectile/projectile)
@@ -175,4 +176,147 @@
 	projectile.speed *= (1 / projectile_speed_coefficient)
 	projectile.cut_overlay(projectile_effect)
 
+//////////////////////
+///CYBORG OMNITOOLS///
+//////////////////////
+
+/**
+	Onmi Toolboxs act as a cache of tools for a particular borg's omnitools. Not all borg
+	get a toolbox (as not all borgs use omnitools), and those that do can only have one
+	toolbox. The toolbox keeps track of a borg's omnitool arms, and handles speed upgrades.
+
+	Omnitools are the actual tool arms for the cyborg to interact with. When attack_self
+	is called, they can select a tool from the toolbox. The tool is not moved, and instead
+	only referenced in place of the omnitool's own attacks. The omnitool also takes on
+	the tool's sprite, which completes the illusion. In this way, multiple tools are
+	shared between multiple omnitool arms. A multitool's buffer, for example, will not
+	depend on which omnitool arm was used to set it.
+*/
+/obj/item/cyborg_omnitoolbox
+	name = "broken cyborg toolbox"
+	desc = "Some internal part of a broken cyborg."
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "lollipop"
+	toolspeed = 10
+	///List of Omnitool "arms" that the borg has.
+	var/list/omnitools = list()
+	///List of paths for tools. These will be created during Initialize()
+	var/list/toolpaths = list()
+	///Target Toolspeed to set after reciving an omnitool upgrade
+	var/upgraded_toolspeed = 10
+	///Whether we currently have the upgraded speed
+	var/currently_upgraded = FALSE
+
+/obj/item/cyborg_omnitoolbox/Initialize(mapload)
+	. = ..()
+	if(!toolpaths.len)
+		return
+
+	var/obj/item/newitem
+	for(var/newpath in toolpaths)
+		newitem = new newpath(src)
+		newitem.toolspeed = toolspeed //In case thse have different base speeds as stand-alone tools on other borgs
+		ADD_TRAIT(newitem, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+
+/obj/item/cyborg_omnitoolbox/proc/set_upgrade(upgrade = FALSE)
+	for(var/obj/item/tool in contents)
+		if(upgrade)
+			tool.toolspeed = upgraded_toolspeed
+		else
+			tool.toolspeed = toolspeed
+	currently_upgraded = upgrade
+
+/obj/item/cyborg_omnitoolbox/engineering
+	toolspeed = 0.5
+	upgraded_toolspeed = 0.3
+	toolpaths = list(
+		/obj/item/wrench/cyborg,
+		/obj/item/wirecutters/cyborg,
+		/obj/item/screwdriver/cyborg,
+		/obj/item/crowbar/cyborg,
+		/obj/item/multitool/cyborg,
+	)
+
+/obj/item/cyborg_omnitoolbox/medical
+	toolspeed = 1
+	upgraded_toolspeed = 0.7
+	toolpaths = list(
+		/obj/item/scalpel/cyborg,
+		/obj/item/surgicaldrill/cyborg,
+		/obj/item/hemostat/cyborg,
+		/obj/item/retractor/cyborg,
+		/obj/item/cautery/cyborg,
+		/obj/item/circular_saw/cyborg,
+		/obj/item/bonesetter/cyborg,
+	)
+
+/obj/item/borg/cyborg_omnitool
+	name = "broken cyborg tool arm"
+	desc = "Some internal part of a broken cyborg."
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "lollipop"
+	///Ref to the toolbox, since our own loc will be changing
+	var/obj/item/cyborg_omnitoolbox/toolbox
+	///Ref to currently selected tool, if any
+	var/obj/item/selected
+
+/obj/item/borg/cyborg_omnitool/Initialize(mapload)
+	. = ..()
+	if(!iscyborg(loc.loc))
+		return
+	var/obj/item/robot_model/model = loc
+	var/obj/item/cyborg_omnitoolbox/chassis_toolbox = model.toolbox
+	if(!chassis_toolbox)
+		return
+	toolbox = chassis_toolbox
+	toolbox.omnitools += src
+
+/obj/item/borg/cyborg_omnitool/attack_self(mob/user)
+	var/list/radial_menu_options = list()
+	for(var/obj/item/borgtool in toolbox.contents)
+		radial_menu_options[borgtool] = image(icon = borgtool.icon, icon_state = borgtool.icon_state)
+	var/obj/item/potential_new_tool = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
+	if(!potential_new_tool)
+		return ..()
+	if(potential_new_tool == selected)
+		return ..()
+	for(var/obj/item/borg/cyborg_omnitool/coworker in toolbox.omnitools)
+		if(coworker.selected == potential_new_tool)
+			coworker.deselect() //Can I borrow that please
+			break
+	selected = potential_new_tool
+	icon_state = selected.icon_state
+	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
+	return ..()
+
+/obj/item/borg/cyborg_omnitool/proc/deselect()
+	if(!selected)
+		return
+	selected = null
+	icon_state = initial(icon_state)
+	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
+
+/obj/item/borg/cyborg_omnitool/cyborg_unequip()
+	deselect()
+	return ..()
+
+/obj/item/borg/cyborg_omnitool/pre_attack(atom/atom, mob/living/user, params)
+	if(selected)
+		selected.melee_attack_chain(user, atom, params)
+		return TRUE
+	return ..()
+
+/obj/item/borg/cyborg_omnitool/engineering
+	name = "engineering omni-toolset"
+	desc = "A set of engineering tools used by cyborgs to conduct various engineering tasks."
+	icon_state = "toolkit_engiborg"
+
+/obj/item/borg/cyborg_omnitool/medical
+	name = "surgical omni-toolset"
+	desc = "A set of surgical tools used by cyborgs to operate on various surgical operations."
+	icon_state = "toolkit_medborg"
+
 #undef PKBORG_DAMPEN_CYCLE_DELAY
+#undef POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER
+#undef NO_TOOL
+#undef TOOL_DRAPES

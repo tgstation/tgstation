@@ -85,9 +85,6 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/atmospherics/components/binary/circulator/get_node_connects()
-	return list(REVERSE_DIR(dir), dir) // airs[2] is input which is facing dir, airs[1] is output which is facing the other side of dir
-
 /obj/machinery/atmospherics/components/binary/tank_compressor/screwdriver_act(mob/living/user, obj/item/tool)
 	if(active || inserted_tank)
 		return FALSE
@@ -241,7 +238,7 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/tank_compressor/on_deconstruction()
+/obj/machinery/atmospherics/components/binary/tank_compressor/on_deconstruction(disassembled)
 	eject_tank()
 	eject_disk()
 	return ..()
@@ -323,10 +320,6 @@
 	data["active"] = active
 	data["transferRate"] = transfer_rate
 	data["lastPressure"] = last_recorded_pressure
-
-	data["inputData"] = gas_mixture_parser(airs[2], "Input Port")
-	data["outputData"] = gas_mixture_parser(airs[1], "Ouput Port")
-	data["bufferData"] = gas_mixture_parser(leaked_gas_buffer, "Gas Buffer")
 
 	data["disk"] = inserted_disk?.name
 	data["storage"] = "[inserted_disk?.used_capacity] / [inserted_disk?.max_capacity] GQ"

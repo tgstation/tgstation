@@ -22,7 +22,7 @@
 	health = 10
 	minimum_survivable_temperature = TCMB
 	maximum_survivable_temperature = T0C + 1250
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	death_message = "falls to the ground, its shard dulling to a miserable grey!"
 
 	faction = list(FACTION_HOSTILE)
@@ -82,7 +82,7 @@
 
 /datum/ai_controller/basic_controller/supermatter_spider
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

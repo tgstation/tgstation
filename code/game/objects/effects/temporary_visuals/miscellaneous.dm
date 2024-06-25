@@ -21,7 +21,6 @@
 		if(SOUTH)
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 		if(EAST)
 			target_pixel_x = 16
 		if(WEST)
@@ -36,12 +35,10 @@
 			target_pixel_x = 16
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 		if(SOUTHWEST)
 			target_pixel_x = -16
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter
@@ -58,7 +55,7 @@
 /obj/effect/temp_visual/dir_setting/firing_effect
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "firing_effect"
-	duration = 2
+	duration = 3
 
 /obj/effect/temp_visual/dir_setting/firing_effect/setDir(newdir)
 	switch(newdir)
@@ -74,8 +71,14 @@
 			pixel_y = rand(-1,1)
 	..()
 
-/obj/effect/temp_visual/dir_setting/firing_effect/energy
-	icon_state = "firing_effect_energy"
+/obj/effect/temp_visual/dir_setting/firing_effect/blue
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "firing_effect_blue"
+	duration = 3
+
+/obj/effect/temp_visual/dir_setting/firing_effect/red
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "firing_effect_red"
 	duration = 3
 
 /obj/effect/temp_visual/dir_setting/firing_effect/magic
@@ -281,6 +284,10 @@
 	icon_state = "bluestream_fade"
 	duration = 9
 
+/obj/effect/temp_visual/bluespace_fissure/Initialize(mapload)
+	. = ..()
+	apply_wibbly_filters(src)
+
 /obj/effect/temp_visual/gib_animation
 	icon = 'icons/mob/simple/mob.dmi'
 	duration = 15
@@ -485,7 +492,7 @@
 	duration = 2 SECONDS
 
 /obj/effect/constructing_effect
-	icon = 'icons/effects/effects_rcd.dmi'
+	icon = 'icons/effects/rcd.dmi'
 	icon_state = ""
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
@@ -548,7 +555,7 @@
 		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		obj_flags &= ~CAN_BE_HIT
 		icon_state = "rcd_end"
-		addtimer(CALLBACK(src, PROC_REF(end)), 15)
+		addtimer(CALLBACK(src, PROC_REF(end)), 1.5 SECONDS)
 
 /obj/effect/constructing_effect/proc/end()
 	qdel(src)
@@ -676,11 +683,11 @@
 	duration = 0.4 SECONDS
 
 /// Plays a dispersing animation on hivelord and legion minions so they don't just vanish
-/obj/effect/temp_visual/hive_spawn_wither
+/obj/effect/temp_visual/despawn_effect
 	name = "withering spawn"
 	duration = 1 SECONDS
 
-/obj/effect/temp_visual/hive_spawn_wither/Initialize(mapload, atom/copy_from)
+/obj/effect/temp_visual/despawn_effect/Initialize(mapload, atom/copy_from)
 	if (isnull(copy_from))
 		. = ..()
 		return INITIALIZE_HINT_QDEL

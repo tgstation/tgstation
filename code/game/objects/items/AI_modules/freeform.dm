@@ -9,7 +9,7 @@
 
 /obj/item/ai_module/core/freeformcore/attack_self(mob/user)
 	var/targName = tgui_input_text(user, "Enter a new core law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len), TRUE)
-	if(!targName)
+	if(!targName || !user.is_holding(src))
 		return
 	if(is_ic_filtered(targName))
 		to_chat(user, span_warning("Error: Law contains invalid text."))
@@ -34,11 +34,11 @@
 
 /obj/item/ai_module/supplied/freeform/attack_self(mob/user)
 	var/newpos = tgui_input_number(user, "Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority ", lawpos, 50, 15)
-	if(!newpos || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+	if(!newpos || !user.is_holding(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	lawpos = newpos
 	var/targName = tgui_input_text(user, "Enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len), TRUE)
-	if(!targName)
+	if(!targName || !user.is_holding(src))
 		return
 	if(is_ic_filtered(targName))
 		to_chat(user, span_warning("Error: Law contains invalid text.")) // AI LAW 2 SAY U W U WITHOUT THE SPACES

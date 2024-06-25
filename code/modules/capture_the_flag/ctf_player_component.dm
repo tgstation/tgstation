@@ -74,7 +74,7 @@
 		player_mob.dust()
 	qdel(src)
 
-/datum/component/ctf_player/Destroy(force, silent)
+/datum/component/ctf_player/Destroy(force)
 	if(player_mob)
 		UnregisterSignal(player_mob, list(COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_MOB_GHOSTIZED))
 	return ..()

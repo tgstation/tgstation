@@ -9,8 +9,8 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	flags_1 = NO_SCREENTIPS_1
-	turf_flags = CAN_BE_DIRTY_1 | IS_SOLID
+	flags_1 = NO_SCREENTIPS_1 | CAN_BE_DIRTY_1
+	turf_flags = IS_SOLID
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_OPEN_FLOOR
 	canSmoothWith = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_OPEN_FLOOR
 
@@ -201,7 +201,6 @@
 /turf/open/floor/acid_melt()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
-/// if you are updating this make to to update /turf/open/misc/rcd_vals() too
 /turf/open/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_TURF)
@@ -274,7 +273,7 @@
 			if(girder)
 				return girder.rcd_act(user, the_rcd, rcd_data)
 
-			PlaceOnTop(/turf/closed/wall)
+			place_on_top(/turf/closed/wall)
 			return TRUE
 		if(RCD_WINDOWGRILLE)
 			//check if we are building a window
@@ -363,6 +362,12 @@
 				return FALSE
 			return TRUE
 	return FALSE
+
+/turf/open/floor/rust_turf()
+	if(HAS_TRAIT(src, TRAIT_RUSTY))
+		return
+	ChangeTurf(/turf/open/floor/plating)
+	return ..()
 
 /turf/open/floor/material
 	name = "floor"

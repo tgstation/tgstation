@@ -184,9 +184,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 /obj/machinery/shower/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
-		return
-
 	I.play_tool_sound(src)
 	deconstruct()
 	return TRUE
@@ -197,7 +194,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		return
 	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
 	water_falling.color = mix_color_from_reagents(reagents.reagent_list)
-	SET_PLANE_EXPLICIT(water_falling, GAME_PLANE_UPPER, src)
 	switch(dir)
 		if(NORTH)
 			water_falling.pixel_y += pixel_shift
@@ -314,13 +310,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
 			wash_atom(movable_content) // Reagent exposure is handled in wash_atom
 
-	reagents.remove_any(SHOWER_SPRAY_VOLUME)
+	reagents.remove_all(SHOWER_SPRAY_VOLUME)
 
-/obj/machinery/shower/deconstruct(disassembled = TRUE)
+/obj/machinery/shower/on_deconstruction(disassembled = TRUE)
 	new /obj/item/stack/sheet/iron(drop_location(), 2)
 	if(has_water_reclaimer)
 		new /obj/item/stock_parts/water_recycler(drop_location())
-	qdel(src)
 
 /obj/machinery/shower/proc/check_heat(mob/living/L)
 	var/mob/living/carbon/C = L
@@ -371,8 +366,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	deconstruct()
 	return TRUE
 
-/obj/structure/showerframe/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/effect/mist
 	name = "mist"

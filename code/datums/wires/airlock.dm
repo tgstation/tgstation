@@ -38,6 +38,10 @@
 	dictionary_key = /datum/wires/airlock/ai
 	proper_name = "AI Airlock"
 
+/datum/wires/airlock/cargo
+	dictionary_key = /datum/wires/airlock/cargo
+	proper_name = "Cargo Airlock"
+
 /datum/wires/airlock/New(atom/holder)
 	wires = list(
 		WIRE_AI,
@@ -61,7 +65,7 @@
 
 /datum/wires/airlock/interact(mob/user)
 	var/obj/machinery/door/airlock/airlock_holder = holder
-	if (!issilicon(user) && airlock_holder.isElectrified() && airlock_holder.shock(user, 100))
+	if (!HAS_SILICON_ACCESS(user) && airlock_holder.isElectrified() && airlock_holder.shock(user, 100))
 		return
 
 	return ..()
@@ -69,14 +73,14 @@
 /datum/wires/airlock/interactable(mob/user)
 	if(!..())
 		return FALSE
-	var/obj/machinery/door/airlock/A = holder
-	if(!issilicon(user) && A.isElectrified())
+	var/obj/machinery/door/airlock/airlock = holder
+	if(!HAS_SILICON_ACCESS(user) && !isdrone(user) && airlock.isElectrified() && airlock.hasPower())
 		var/mob/living/carbon/carbon_user = user
-		if (!istype(carbon_user) || carbon_user.should_electrocute(src))
+		if (!istype(carbon_user) || carbon_user.should_electrocute(get_area(airlock)))
 			return FALSE
-	if(A.is_secure())
+	if(airlock.is_secure())
 		return FALSE
-	if(A.panel_open)
+	if(airlock.panel_open)
 		return TRUE
 
 /datum/wires/airlock/get_status()

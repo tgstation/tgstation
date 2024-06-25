@@ -1,14 +1,14 @@
 /datum/computer_file/program/scipaper_program
 	filename = "ntfrontier"
 	filedesc = "NT Frontier"
-	category = PROGRAM_CATEGORY_SCI
+	downloader_category = PROGRAM_CATEGORY_SCIENCE
 	extended_desc = "Scientific paper publication and navigation software."
-	requires_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 12
-	program_icon_state = "research"
+	program_open_overlay = "research"
 	tgui_id = "NtosScipaper"
 	program_icon = "paper-plane"
-	transfer_access = list(ACCESS_ORDNANCE)
+	download_access = list(ACCESS_ORDNANCE, ACCESS_SCIENCE, ACCESS_AWAY_SCIENCE)
 
 	var/datum/techweb/linked_techweb
 	/// Unpublished, temporary paper datum.
@@ -18,25 +18,25 @@
 	/// The file under consideration.
 	var/datum/computer_file/data/ordnance/selected_file
 
-/datum/computer_file/program/scipaper_program/New()
+/datum/computer_file/program/scipaper_program/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
 	. = ..()
 	paper_to_be = new
-
-/datum/computer_file/program/scipaper_program/on_start(mob/living/user)
-	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, computer)
 
-/datum/computer_file/program/scipaper_program/application_attackby(obj/item/attacking_item, mob/living/user)
-	if(!istype(attacking_item, /obj/item/multitool))
-		return FALSE
-	var/obj/item/multitool/attacking_tool = attacking_item
-	if(!QDELETED(attacking_tool.buffer) && istype(attacking_tool.buffer, /datum/techweb))
-		linked_techweb = attacking_tool.buffer
-	return TRUE
+/datum/computer_file/program/scipaper_program/application_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/multitool))
+		return multitool_act(user, tool)
+
+/datum/computer_file/program/scipaper_program/proc/multitool_act(mob/living/user, obj/item/multitool/used_multitool)
+	if(QDELETED(used_multitool.buffer) || !istype(used_multitool.buffer, /datum/techweb))
+		return ITEM_INTERACT_BLOCKING
+	linked_techweb = used_multitool.buffer
+	computer.balloon_alert(user, "buffer linked!")
+	return ITEM_INTERACT_SUCCESS
 
 /datum/computer_file/program/scipaper_program/proc/recheck_file_presence()
-	if(selected_file in computer.stored_files)
+	if(selected_file in computer.get_files(include_disk_files = TRUE))
 		return FALSE
 	UnregisterSignal(selected_file, COMSIG_COMPUTER_FILE_DELETE)
 	selected_file = null
@@ -68,9 +68,9 @@
 		singular_partner["path"] = partner.type
 		singular_partner["boostedNodes"] = list()
 		singular_partner["acceptedExperiments"] = list()
-		for (var/node_id in partner.boosted_nodes)
+		for (var/node_id in partner.boostable_nodes)
 			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_id)
-			singular_partner["boostedNodes"] += list(list("name" = node.display_name, "discount" = partner.boosted_nodes[node_id], "id"=node_id))
+			singular_partner["boostedNodes"] += list(list("name" = node.display_name, "discount" = partner.boostable_nodes[node_id], "id" = node_id))
 		for (var/datum/experiment/ordnance/ordnance_experiment as anything in partner.accepted_experiments)
 			singular_partner["acceptedExperiments"] += initial(ordnance_experiment.name)
 		parsed_partners += list(singular_partner)
@@ -95,7 +95,7 @@
 			data["allowedTiers"] = list()
 			data["allowedPartners"] =  list()
 			// Both the file and experiment list are assoc lists. ID as value, display name as keys.
-			for(var/datum/computer_file/data/ordnance/ordnance_file in computer.stored_files)
+			for(var/datum/computer_file/data/ordnance/ordnance_file in computer.get_files(include_disk_files = TRUE))
 				data["fileList"] += list(ordnance_file.filename = ordnance_file.uid)
 			if(selected_file)
 				for (var/possible_experiment in selected_file.possible_experiments)
@@ -157,7 +157,7 @@
 				data["purchaseableBoosts"][partner.type] = list()
 				for(var/node_id in linked_techweb.get_available_nodes())
 					// Not from our partner
-					if(!(node_id in partner.boosted_nodes))
+					if(!(node_id in partner.boostable_nodes))
 						continue
 					if(!partner.allowed_to_boost(linked_techweb, node_id))
 						continue
@@ -165,6 +165,7 @@
 	return data
 
 /datum/computer_file/program/scipaper_program/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("et_alia")
 			paper_to_be.et_alia = !paper_to_be.et_alia
@@ -191,7 +192,7 @@
 			if(selected_file)
 				UnregisterSignal(selected_file, COMSIG_COMPUTER_FILE_DELETE)
 			paper_to_be.set_experiment() // Clears the paper info.
-			for(var/datum/computer_file/data/ordnance/ordnance_data in computer.stored_files)
+			for(var/datum/computer_file/data/ordnance/ordnance_data in computer.get_files(include_disk_files = TRUE))
 				if(ordnance_data.uid == params["selected_uid"])
 					selected_file = ordnance_data
 					RegisterSignal(selected_file, COMSIG_COMPUTER_FILE_DELETE, PROC_REF(recheck_file_presence))

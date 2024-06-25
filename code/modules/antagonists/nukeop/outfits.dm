@@ -77,6 +77,7 @@
 	backpack_contents = list(
 		/obj/item/gun/ballistic/automatic/pistol/clandestine = 1,
 		/obj/item/pen/edagger = 1,
+		/obj/item/ammo_box/magazine/m12g = 3,
 	)
 
 /datum/outfit/syndicate/full/plasmaman
@@ -112,6 +113,14 @@
 	uniform = /obj/item/clothing/under/plasmaman/syndicate
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	tc = 0
+
+/datum/outfit/syndicate/support/plasmaman
+	name = "Nuclear Operative Overwatch Agent (Plasmaman)"
+	back = /obj/item/storage/backpack/satchel
+	head = /obj/item/clothing/head/helmet/space/plasmaman/syndie
+	uniform = /obj/item/clothing/under/plasmaman/syndicate
+	glasses = /obj/item/clothing/glasses/overwatch
+	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 
 /datum/outfit/syndicate/reinforcement/gorlex
 	name = "Syndicate Operative - Gorlex Reinforcement"
@@ -163,3 +172,41 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	glasses = /obj/item/clothing/glasses/sunglasses/big
 	faction = "MI13"
+
+/datum/outfit/nuclear_operative
+	name = "Nuclear Operative (Preview only)"
+
+	back = /obj/item/mod/control/pre_equipped/empty/syndicate
+	uniform = /obj/item/clothing/under/syndicate
+
+/datum/outfit/nuclear_operative/post_equip(mob/living/carbon/human/H, visualsOnly)
+	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
+	booster.active = TRUE
+	H.update_worn_back()
+
+/datum/outfit/nuclear_operative_elite
+	name = "Nuclear Operative (Elite, Preview only)"
+
+	back = /obj/item/mod/control/pre_equipped/empty/elite
+	uniform = /obj/item/clothing/under/syndicate
+	l_hand = /obj/item/modular_computer/pda/nukeops
+	r_hand = /obj/item/shield/energy
+
+/datum/outfit/nuclear_operative_elite/post_equip(mob/living/carbon/human/H, visualsOnly)
+	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
+	booster.active = TRUE
+	H.update_worn_back()
+	var/obj/item/shield/energy/shield = locate() in H.held_items
+	shield.icon_state = "[shield.base_icon_state]1"
+	H.update_held_items()
+
+/datum/outfit/syndicate/support
+	name = "Nuclear Operative Overwatch Agent"
+	back = /obj/item/storage/backpack/satchel
+	uniform = /obj/item/clothing/under/syndicate/tacticool
+	glasses = /obj/item/clothing/glasses/overwatch
+	suit = /obj/item/clothing/suit/jacket/letterman_syndie
+	shoes = /obj/item/clothing/shoes/sandal
+	command_radio = TRUE
+	tc = 0
+	uplink_type = null

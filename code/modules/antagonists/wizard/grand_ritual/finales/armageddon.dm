@@ -31,7 +31,7 @@
 	)
 
 /datum/grand_finale/armageddon/trigger(mob/living/carbon/human/invoker)
-	priority_announce(pick(possible_last_words), null, 'sound/magic/voidblink.ogg', sender_override = "[invoker.real_name]")
+	priority_announce(pick(possible_last_words), null, 'sound/magic/voidblink.ogg', sender_override = "[invoker.real_name]", color_override = "purple")
 	var/turf/current_location = get_turf(invoker)
 	invoker.gib(DROP_ALL_REMAINS)
 
@@ -51,8 +51,7 @@
 		if (DOOM_METEORS)
 			var/datum/dynamic_ruleset/roundstart/meteor/meteors = new()
 			meteors.meteordelay = 0
-			var/datum/game_mode/dynamic/mode = SSticker.mode
-			mode.execute_roundstart_rule(meteors) // Meteors will continue until morale is crushed.
+			SSdynamic.execute_roundstart_rule(meteors) // Meteors will continue until morale is crushed.
 			priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", ANNOUNCER_METEORS)
 
 #undef DOOM_SINGULARITY

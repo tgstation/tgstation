@@ -12,7 +12,7 @@
 /turf/template_noop,
 /area/space/nearstation)
 "f" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/south{
 	name = "Kitchen Coldroom"
 	},
 /turf/open/floor/iron/freezer,

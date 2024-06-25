@@ -37,8 +37,7 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/item/assembly/control/transport/call_button/LateInitialize(mapload)
-	. = ..()
+/obj/item/assembly/control/transport/call_button/LateInitialize()
 	if(!id_tag)
 		id_tag = assign_random_name()
 	SStransport.hello(src, name, id_tag)
@@ -58,17 +57,17 @@
 				if(BROKEN_BEYOND_REPAIR)
 					say("The tram has suffered a catastrophic failure. Please seek alternate modes of travel.")
 				if(NOT_IN_SERVICE) //tram has no power or other fault, but it's not broken forever
-					say("The tram is not in service. Please contact the nearest engineer.")
+					say("The tram is not in service due to loss of power or system problems. Please contact the nearest engineer to check power and controller.")
 				if(INVALID_PLATFORM) //engineer needs to fix button
 					say("Button configuration error. Please contact the nearest engineer.")
 				if(TRANSPORT_IN_USE)
 					say("The tram is tramversing the station, please wait.")
 				if(INTERNAL_ERROR)
-					say("Tram controller error. Please contact the nearest engineer.")
+					say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
 				if(NO_CALL_REQUIRED) //already here
 					say("The tram is already here. Please board the tram and select a destination.")
 				else
-					say("Tram controller error. Please contact the nearest engineer.")
+					say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
 
 /obj/item/assembly/control/transport/call_button/activate()
 	if(cooldown)
@@ -91,6 +90,17 @@
 	id = 0
 	/// The ID of the tram we're linked to
 	var/specific_transport_id = TRAMSTATION_LINE_1
+
+/// We allow borgs to use the button locally, but not the AI remotely
+/obj/machinery/button/transport/tram/attack_ai(mob/user)
+	if(isAI(user) || panel_open)
+		return
+	if(HAS_SILICON_ACCESS(user) && !issilicon(user)) //admins and remote controls can use it at a distance
+		return attack_hand(user)
+	if(in_range(user, src))
+		return attack_hand(user)
+	else
+		to_chat(user, span_warning("You are too far away to activate the button!"))
 
 /obj/machinery/button/transport/tram/setup_device()
 	var/obj/item/assembly/control/transport/call_button/tram_device = device

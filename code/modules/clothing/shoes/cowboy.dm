@@ -4,8 +4,10 @@
 	icon_state = "cowboy_brown"
 	armor_type = /datum/armor/shoes_cowboy
 	custom_price = PAYCHECK_CREW
-	var/max_occupants = 4
 	can_be_tied = FALSE
+	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
+
+	var/max_occupants = 4
 	/// Do these boots have spur sounds?
 	var/has_spurs = FALSE
 	/// The jingle jangle jingle of our spurs
@@ -38,11 +40,7 @@
 			occupant.forceMove(user.drop_location())
 			user.visible_message(span_warning("[user] recoils as something slithers out of [src]."), span_userdanger("You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!"))
 			user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
-			user.apply_damage(5, BRUTE, target_zone)
-			if(istype(occupant, /mob/living/simple_animal/hostile/retaliate))
-				user.reagents.add_reagent(/datum/reagent/toxin, 7)
-
-
+			occupant.UnarmedAttack(user, proximity_flag = TRUE)
 
 /obj/item/clothing/shoes/cowboy/dropped(mob/living/user)
 	. = ..()
@@ -56,9 +54,9 @@
 	user.say(pick("Hot damn!", "Hoo-wee!", "Got-dang!"), spans = list(SPAN_YELL), forced=TRUE)
 	user.client?.give_award(/datum/award/achievement/misc/hot_damn, user)
 
-/obj/item/clothing/shoes/cowboy/MouseDrop_T(mob/living/target, mob/living/user)
+/obj/item/clothing/shoes/cowboy/mouse_drop_receive(mob/living/target, mob/living/user, params)
 	. = ..()
-	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !Adjacent(user) || !isliving(target) || !user.Adjacent(target) || target.stat == DEAD)
+	if(!(user.mobility_flags & MOBILITY_USE) || !isliving(target))
 		return
 	if(contents.len >= max_occupants)
 		to_chat(user, span_warning("[src] are full!"))
@@ -68,7 +66,7 @@
 		to_chat(user, span_notice("[target] slithers into [src]."))
 
 /obj/item/clothing/shoes/cowboy/container_resist_act(mob/living/user)
-	if(!do_after(user, 10, target = user))
+	if(!do_after(user, 1 SECONDS, target = user))
 		return
 	user.forceMove(drop_location())
 

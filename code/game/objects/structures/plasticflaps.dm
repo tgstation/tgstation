@@ -36,7 +36,7 @@
 
 /obj/structure/plasticflaps/proc/gen_overlay()
 	var/turf/our_turf = get_turf(src)
-	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE_UPPER, our_turf), dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
 
 /obj/structure/plasticflaps/examine(mob/user)
 	. = ..()
@@ -124,10 +124,8 @@
 			return FALSE //If you're not laying down, or a small creature, or a ventcrawler, then no pass.
 
 
-/obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/plastic/five(loc)
-	qdel(src)
+/obj/structure/plasticflaps/atom_deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/plastic/five(loc)
 
 /obj/structure/plasticflaps/Initialize(mapload)
 	. = ..()

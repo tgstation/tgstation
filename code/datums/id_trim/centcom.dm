@@ -6,6 +6,7 @@
 	sechud_icon_state = SECHUD_CENTCOM
 	department_color = COLOR_CENTCOM_BLUE
 	subdepartment_color = COLOR_CENTCOM_BLUE
+	threat_modifier = -10 // Centcom are legally allowed to do whatever they want
 
 /// Trim for Centcom VIPs
 /datum/id_trim/centcom/vip
@@ -162,7 +163,7 @@
 /datum/id_trim/centcom/ert/chaplain
 	assignment = JOB_ERT_CHAPLAIN
 	trim_state = "trim_chaplain"
-	subdepartment_color = "#58C800"
+	subdepartment_color = COLOR_SERVICE_LIME
 	sechud_icon_state = SECHUD_RELIGIOUS_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/chaplain/New()

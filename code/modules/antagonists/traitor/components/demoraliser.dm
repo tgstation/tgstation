@@ -13,7 +13,7 @@
 	src.moods = moods
 	RegisterSignal(host, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
-/datum/proximity_monitor/advanced/demoraliser/field_turf_crossed(atom/movable/crossed, turf/location)
+/datum/proximity_monitor/advanced/demoraliser/field_turf_crossed(atom/movable/crossed, turf/old_location, turf/new_location)
 	if (!isliving(crossed))
 		return
 	if (!can_see(crossed, host, current_range))

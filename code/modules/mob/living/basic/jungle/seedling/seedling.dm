@@ -56,12 +56,12 @@
 
 /mob/living/basic/seedling/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/seedling/seed_attack = new(src)
-	seed_attack.Grant(src)
-	ai_controller.set_blackboard_key(BB_RAPIDSEEDS_ABILITY, seed_attack)
-	var/datum/action/cooldown/mob_cooldown/solarbeam/beam_attack = new(src)
-	beam_attack.Grant(src)
-	ai_controller.set_blackboard_key(BB_SOLARBEAM_ABILITY, beam_attack)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/seedling = BB_RAPIDSEEDS_ABILITY,
+		/datum/action/cooldown/mob_cooldown/solarbeam = BB_SOLARBEAM_ABILITY,
+	)
+
+	grant_actions_by_list(innate_actions)
 
 	var/petal_color = pick(possible_colors)
 
@@ -77,7 +77,7 @@
 	petal_dead = mutable_appearance(icon, "[icon_state]_dead_overlay")
 	petal_dead.color = petal_color
 
-	AddElement(/datum/element/wall_smasher)
+	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	AddComponent(/datum/component/obeys_commands, seedling_commands)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(drop_can))
@@ -212,9 +212,9 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack,
-		/datum/pet_command/point_targetting/use_ability/solarbeam,
-		/datum/pet_command/point_targetting/use_ability/rapidseeds,
+		/datum/pet_command/point_targeting/attack,
+		/datum/pet_command/point_targeting/use_ability/solarbeam,
+		/datum/pet_command/point_targeting/use_ability/rapidseeds,
 	)
 
 //abilities

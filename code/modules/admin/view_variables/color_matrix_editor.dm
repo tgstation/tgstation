@@ -12,9 +12,9 @@
 	else if(istext(_target?.color))
 		current_color = color_hex2color_matrix(_target.color)
 	else
-		current_color = color_matrix_identity()
+		current_color = COLOR_MATRIX_IDENTITY
 
-	var/mutable_appearance/view = image('icons/misc/colortest.dmi', "colors")
+	var/mutable_appearance/view = image('icons/testing/colortest.dmi', "colors")
 	if(_target)
 		target = WEAKREF(_target)
 		if(!(_target.appearance_flags & PLANE_MASTER))
@@ -27,7 +27,7 @@
 	proxy_view.color = current_color
 	proxy_view.display_to(owner.mob)
 
-/datum/color_matrix_editor/Destroy(force, ...)
+/datum/color_matrix_editor/Destroy(force)
 	QDEL_NULL(proxy_view)
 	return ..()
 

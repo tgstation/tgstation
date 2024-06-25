@@ -13,13 +13,6 @@
 ///Called from /mob/living/carbon/help_shake_act on the helper, after any hugs have ocurred. (mob/living/helped)
 #define COMSIG_CARBON_HELPED "carbon_helped_someone"
 
-///Before a carbon mob is shoved, sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target)
-#define COMSIG_CARBON_DISARM_PRESHOVE "carbon_disarm_preshove"
-	#define COMSIG_CARBON_ACT_SOLID (1<<0) //Tells disarm code to act as if the mob was shoved into something solid, even we we're not
-///When a carbon mob is disarmed, this is sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
-#define COMSIG_CARBON_DISARM_COLLIDE "carbon_disarm_collision"
-	#define COMSIG_CARBON_SHOVE_HANDLED (1<<0)
-
 ///When a carbon slips. Called on /turf/open/handle_slip()
 #define COMSIG_ON_CARBON_SLIP "carbon_slip"
 // /mob/living/carbon physiology signals
@@ -57,13 +50,15 @@
 /// Called from /obj/item/bodypart/check_for_injuries (obj/item/bodypart/examined, list/check_list)
 #define COMSIG_CARBON_CHECKING_BODYPART "carbon_checking_injury"
 
-/// Called from carbon losing a limb /obj/item/bodypart/proc/drop_limb(obj/item/bodypart/lost_limb, dismembered)
+/// Called from carbon losing a limb /obj/item/bodypart/proc/drop_limb(obj/item/bodypart/lost_limb, special, dismembered)
 #define COMSIG_CARBON_REMOVE_LIMB "carbon_remove_limb"
-/// Called from carbon losing a limb /obj/item/bodypart/proc/drop_limb(obj/item/bodypart/lost_limb, dismembered)
+/// Called from carbon losing a limb /obj/item/bodypart/proc/drop_limb(obj/item/bodypart/lost_limb, special, dismembered)
 #define COMSIG_CARBON_POST_REMOVE_LIMB "carbon_post_remove_limb"
-/// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, dismembered)
+/// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, special, dismembered)
 #define COMSIG_BODYPART_REMOVED "bodypart_removed"
 
+/// from /mob/living/carbon/enter_stamcrit()
+#define COMSIG_CARBON_ENTER_STAMCRIT "carbon_enter_stamcrit"
 ///from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"
 ///from /item/organ/proc/Insert() (/obj/item/organ/)
@@ -83,6 +78,7 @@
 #define COMSIG_CARBON_EMBED_REMOVAL "item_embed_remove_safe"
 ///Called when someone attempts to cuff a carbon
 #define COMSIG_CARBON_CUFF_ATTEMPTED "carbon_attempt_cuff"
+	#define COMSIG_CARBON_CUFF_PREVENT (1<<0)
 ///Called when a carbon mutates (source = dna, mutation = mutation added)
 #define COMSIG_CARBON_GAIN_MUTATION "carbon_gain_mutation"
 ///Called when a carbon loses a mutation (source = dna, mutation = mutation lose)
@@ -124,17 +120,12 @@
 
 ///Applied preferences to a human
 #define COMSIG_HUMAN_PREFS_APPLIED "human_prefs_applied"
-///Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
-#define COMSIG_HUMAN_DISARM_HIT "human_disarm_hit"
 ///Whenever EquipRanked is called, called after job is set
 #define COMSIG_JOB_RECEIVED "job_received"
 ///from /mob/living/carbon/human/proc/set_coretemperature(): (oldvalue, newvalue)
 #define COMSIG_HUMAN_CORETEMP_CHANGE "human_coretemp_change"
 ///from /datum/species/handle_fire. Called when the human is set on fire and burning clothes and stuff
 #define COMSIG_HUMAN_BURNING "human_burning"
-///from /mob/living/carbon/human/proc/check_shields(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration, damage_type)
-#define COMSIG_HUMAN_CHECK_SHIELDS "human_check_shields"
-	#define SHIELD_BLOCK (1<<0)
 ///from /mob/living/carbon/human/proc/force_say(): ()
 #define COMSIG_HUMAN_FORCESAY "human_forcesay"
 
@@ -159,3 +150,16 @@
 
 ///from /atom/movable/screen/alert/give/proc/handle_transfer(): (taker, item)
 #define COMSIG_CARBON_ITEM_GIVEN "carbon_item_given"
+
+/// Sent from /mob/living/carbon/human/handle_blood(): (seconds_per_tick, times_fired)
+#define COMSIG_HUMAN_ON_HANDLE_BLOOD "human_on_handle_blood"
+	/// Return to prevent all default blood handling
+	#define HANDLE_BLOOD_HANDLED (1<<0)
+	/// Return to skip default nutrition -> blood conversion
+	#define HANDLE_BLOOD_NO_NUTRITION_DRAIN (1<<1)
+	/// Return to skip oxyloss and similar effecst from blood level
+	#define HANDLE_BLOOD_NO_EFFECTS (1<<2)
+
+/// from /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced) iodk where it shuld go
+#define COMSIG_CARBON_LIMPING "mob_limp_check"
+	#define COMPONENT_CANCEL_LIMP (1<<0)

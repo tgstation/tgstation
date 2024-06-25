@@ -15,10 +15,9 @@
 
 /datum/surgery/hepatectomy/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/liver/target_liver = target.get_organ_slot(ORGAN_SLOT_LIVER)
-	if(target_liver)
-		if(target_liver.damage > 50 && !target_liver.operated)
-			return TRUE
-	return FALSE
+	if(isnull(target_liver) || target_liver.damage < 50 || target_liver.operated)
+		return FALSE
+	return ..()
 
 ////hepatectomy, removes damaged parts of the liver so that the liver may regenerate properly
 //95% chance of success, not 100 because organs are delicate
@@ -33,6 +32,7 @@
 	preop_sound = 'sound/surgery/scalpel1.ogg'
 	success_sound = 'sound/surgery/organ1.ogg'
 	failure_sound = 'sound/surgery/organ2.ogg'
+	surgery_effects_mood = TRUE
 
 /datum/surgery_step/hepatectomy/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(

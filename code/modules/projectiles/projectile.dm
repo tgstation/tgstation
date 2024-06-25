@@ -1,6 +1,7 @@
 
 #define MOVES_HITSCAN -1 //Not actually hitscan but close as we get without actual hitscan.
 #define MUZZLE_EFFECT_PIXEL_INCREMENT 17 //How many pixels to move the muzzle flash up so your character doesn't look like they're shitting out lasers.
+#define MAX_RANGE_HIT_PRONE_TARGETS 10 //How far do the projectile hits the prone mob
 
 /obj/projectile
 	name = "projectile"
@@ -14,7 +15,6 @@
 	generic_canpass = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	layer = MOB_LAYER
-	plane = GAME_PLANE_FOV_HIDDEN
 	//The sound this plays on impact.
 	var/hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
@@ -146,7 +146,7 @@
 	var/homing_offset_y = 0
 
 	var/damage = 10
-	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
+	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY are the only things that should be in here
 
 	///Defines what armor to use when it hits things.  Must be set to bullet, laser, energy, or bomb
 	var/armor_flag = BULLET
@@ -183,6 +183,8 @@
 	var/catastropic_dismemberment = FALSE //If TRUE, this projectile deals its damage to the chest if it dismembers a limb.
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
+	/// If true, the projectile won't cause any logging. Used for hallucinations and shit.
+	var/do_not_log = FALSE
 	/// We ignore mobs with these factions.
 	var/list/ignored_factions
 
@@ -190,10 +192,16 @@
 	var/shrapnel_type
 	///If we have a shrapnel_type defined, these embedding stats will be passed to the spawned shrapnel type, which will roll for embedding on the target
 	var/list/embedding
-	///If TRUE, hit mobs even if they're on the floor and not our target
+	///If TRUE, hit mobs, even if they are lying on the floor and are not our target within MAX_RANGE_HIT_PRONE_TARGETS tiles
 	var/hit_prone_targets = FALSE
+	///if TRUE, ignores the range of MAX_RANGE_HIT_PRONE_TARGETS tiles of hit_prone_targets
+	var/ignore_range_hit_prone_targets = FALSE
 	///For what kind of brute wounds we're rolling for, if we're doing such a thing. Lasers obviously don't care since they do burn instead.
 	var/sharpness = NONE
+	///How much we want to drop damage per tile as it travels through the air
+	var/damage_falloff_tile
+	///How much we want to drop stamina damage (defined by the stamina variable) per tile as it travels through the air
+	var/stamina_falloff_tile
 	///How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
 	var/wound_falloff_tile
 	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
@@ -221,8 +229,16 @@
 		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
 	if(embedding)
 		embedding["embed_chance"] += embed_falloff_tile
+	if(damage_falloff_tile && damage >= 0)
+		damage += damage_falloff_tile
+	if(stamina_falloff_tile && stamina >= 0)
+		stamina += stamina_falloff_tile
+
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_RANGE)
 	if(range <= 0 && loc)
+		on_range()
+
+	if(damage_falloff_tile && damage <= 0 || stamina_falloff_tile && stamina <= 0)
 		on_range()
 
 /obj/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
@@ -266,8 +282,8 @@
 		var/mob/living/L = target
 		hit_limb_zone = L.check_hit_limb_zone_name(def_zone)
 	if(fired_from)
-		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle, hit_limb_zone)
-	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, hit_limb_zone)
+		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle, hit_limb_zone, blocked)
+	SEND_SIGNAL(src, COMSIG_PROJECTILE_SELF_ON_HIT, firer, target, Angle, hit_limb_zone, blocked)
 
 	if(QDELETED(src)) // in case one of the above signals deleted the projectile for whatever reason
 		return BULLET_ACT_BLOCK
@@ -305,8 +321,8 @@
 
 	if(blocked != 100) // not completely blocked
 		var/obj/item/bodypart/hit_bodypart = living_target.get_bodypart(hit_limb_zone)
-		if (damage)
-			if (living_target.blood_volume && damage_type == BRUTE && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
+		if (damage && damage_type == BRUTE)
+			if (living_target.blood_volume && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
 				var/splatter_dir = dir
 				if(starting)
 					splatter_dir = get_dir(starting, target_turf)
@@ -316,7 +332,7 @@
 					new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_turf, splatter_dir)
 				if(prob(33))
 					living_target.add_splatter_floor(target_turf)
-			else if (!isnull(hit_bodypart) && (hit_bodypart.biological_state & (BIO_METAL|BIO_WIRED)))
+			else if (hit_bodypart?.biological_state & (BIO_METAL|BIO_WIRED))
 				var/random_damage_mult = RANDOM_DECIMAL(0.85, 1.15) // SOMETIMES you can get more or less sparks
 				var/damage_dealt = ((damage / (1 - (blocked / 100))) * random_damage_mult)
 
@@ -329,7 +345,7 @@
 
 		var/organ_hit_text = ""
 		if(hit_limb_zone)
-			organ_hit_text = " in \the [parse_zone(hit_limb_zone)]"
+			organ_hit_text = " in \the [living_target.parse_zone_with_bodypart(hit_limb_zone)]"
 		if(suppressed == SUPPRESSED_VERY)
 			playsound(loc, hitsound, 5, TRUE, -1)
 		else if(suppressed)
@@ -348,7 +364,7 @@
 	if(reagents?.reagent_list)
 		reagent_note = "REAGENTS: [pretty_string_from_reagent_list(reagents.reagent_list)]"
 
-	if(ismob(firer))
+	if(ismob(firer) && !do_not_log)
 		log_combat(firer, living_target, "shot", src, reagent_note)
 		return BULLET_ACT_HIT
 
@@ -358,11 +374,12 @@
 		var/list/logging_mobs = firing_vehicle.return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)
 		if(!LAZYLEN(logging_mobs))
 			logging_mobs = firing_vehicle.return_drivers()
-		for(var/mob/logged_mob as anything in logging_mobs)
-			log_combat(logged_mob, living_target, "shot", src, "from inside [firing_vehicle][logging_mobs.len > 1 ? " with multiple occupants" : null][reagent_note ? " and contained [reagent_note]" : null]")
+		if(!do_not_log)
+			for(var/mob/logged_mob as anything in logging_mobs)
+				log_combat(logged_mob, living_target, "shot", src, "from inside [firing_vehicle][logging_mobs.len > 1 ? " with multiple occupants" : null][reagent_note ? " and contained [reagent_note]" : null]")
 		return BULLET_ACT_HIT
-
-	living_target.log_message("has been shot by [firer] with [src][reagent_note ? " containing [reagent_note]" : null]", LOG_ATTACK, color="orange")
+	if(!do_not_log)
+		living_target.log_message("has been shot by [firer] with [src][reagent_note ? " containing [reagent_note]" : null]", LOG_ATTACK, color="orange")
 	return BULLET_ACT_HIT
 
 /obj/projectile/proc/vol_by_damage()
@@ -443,7 +460,7 @@
 	if(!trajectory)
 		qdel(src)
 		return FALSE
-	if(impacted[A]) // NEVER doublehit
+	if(impacted[A.weak_reference]) // NEVER doublehit
 		return FALSE
 	var/datum/point/point_cache = trajectory.copy_to()
 	var/turf/T = get_turf(A)
@@ -496,7 +513,7 @@
 	if(QDELETED(src) || !T || !target)
 		return
 	// 2.
-	impacted[target] = TRUE //hash lookup > in for performance in hit-checking
+	impacted[WEAKREF(target)] = TRUE //hash lookup > in for performance in hit-checking
 	// 3.
 	var/mode = prehit_pierce(target)
 	if(mode == PROJECTILE_DELETE_WITHOUT_HITTING)
@@ -573,12 +590,14 @@
 //Returns true if the target atom is on our current turf and above the right layer
 //If direct target is true it's the originally clicked target.
 /obj/projectile/proc/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)
-	if(QDELETED(target) || impacted[target])
+	if(QDELETED(target) || impacted[target.weak_reference])
 		return FALSE
 	if(!ignore_loc && (loc != target.loc) && !(can_hit_turfs && direct_target && loc == target))
 		return FALSE
 	// if pass_flags match, pass through entirely - unless direct target is set.
 	if((target.pass_flags_self & pass_flags) && !direct_target)
+		return FALSE
+	if(HAS_TRAIT(target, TRAIT_UNHITTABLE_BY_PROJECTILES))
 		return FALSE
 	if(!ignore_source_check && firer)
 		var/mob/M = firer
@@ -605,12 +624,17 @@
 			return FALSE
 		if(HAS_TRAIT(living_target, TRAIT_IMMOBILIZED) && HAS_TRAIT(living_target, TRAIT_FLOORED) && HAS_TRAIT(living_target, TRAIT_HANDS_BLOCKED))
 			return FALSE
-		if(!hit_prone_targets)
+		if(hit_prone_targets)
 			var/mob/living/buckled_to = living_target.lowest_buckled_mob()
-			if(!buckled_to.density) // Will just be us if we're not buckled to another mob
-				return FALSE
-			if(living_target.body_position != LYING_DOWN)
+			if((decayedRange - range) <= MAX_RANGE_HIT_PRONE_TARGETS) // after MAX_RANGE_HIT_PRONE_TARGETS tiles, auto-aim hit for mobs on the floor turns off
 				return TRUE
+			if(ignore_range_hit_prone_targets) // doesn't apply to projectiles that must hit the target in combat mode or something else, no matter what
+				return TRUE
+			if(buckled_to.density) // Will just be us if we're not buckled to another mob
+				return TRUE
+			return FALSE
+		else if(living_target.body_position == LYING_DOWN)
+			return FALSE
 	return TRUE
 
 /**
@@ -659,7 +683,7 @@
  * Used to not even attempt to Bump() or fail to Cross() anything we already hit.
  */
 /obj/projectile/CanPassThrough(atom/blocker, movement_dir, blocker_opinion)
-	return impacted[blocker] ? TRUE : ..()
+	return ..() || impacted[blocker.weak_reference]
 
 /**
  * Projectile moved:
@@ -693,7 +717,7 @@
 	if(ismovable(A))
 		var/atom/movable/AM = A
 		if(AM.throwing)
-			return (projectile_phasing & LETPASSTHROW)? PROJECTILE_PIERCE_PHASE : ((projectile_piercing & LETPASSTHROW)? PROJECTILE_PIERCE_HIT : PROJECTILE_PIERCE_NONE)
+			return (projectile_phasing & LETPASSTHROW) ? PROJECTILE_PIERCE_PHASE : ((projectile_piercing & LETPASSTHROW)? PROJECTILE_PIERCE_HIT : PROJECTILE_PIERCE_NONE)
 	return PROJECTILE_PIERCE_NONE
 
 /obj/projectile/proc/check_ricochet(atom/A)
@@ -760,7 +784,7 @@
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
 	if(firer)
 		SEND_SIGNAL(firer, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, src, fired_from, original)
-	if(!log_override && firer && original)
+	if(!log_override && firer && original && !do_not_log)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
 			//note: mecha projectile logging is handled in /obj/item/mecha_parts/mecha_equipment/weapon/action(). try to keep these messages roughly the sameish just for consistency's sake.
 	if(direct_target && (get_dist(direct_target, get_turf(src)) <= 1)) // point blank shots
@@ -781,9 +805,7 @@
 		set_angle(get_angle(src, target))
 	original_angle = Angle
 	if(!nondirectional_sprite)
-		var/matrix/matrix = new
-		matrix.Turn(Angle)
-		transform = matrix
+		transform = transform.Turn(Angle)
 	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
 	trajectory_ignore_forcemove = FALSE
@@ -795,16 +817,16 @@
 	RegisterSignal(src, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attempt_parry))
 	if(hitscan)
 		process_hitscan()
+		if(QDELETED(src))
+			return
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
 	pixel_move(pixel_speed_multiplier, FALSE) //move it now!
 
 /obj/projectile/proc/set_angle(new_angle) //wrapper for overrides.
-	Angle = new_angle
 	if(!nondirectional_sprite)
-		var/matrix/matrix = new
-		matrix.Turn(Angle)
-		transform = matrix
+		transform = transform.TurnTo(Angle, new_angle)
+	Angle = new_angle
 	if(trajectory)
 		trajectory.set_angle(new_angle)
 	if(fired && hitscan && isloc(loc) && (loc != last_angle_set_hitscan_store))
@@ -816,11 +838,9 @@
 
 /// Same as set_angle, but the reflection continues from the center of the object that reflects it instead of the side
 /obj/projectile/proc/set_angle_centered(new_angle)
-	Angle = new_angle
 	if(!nondirectional_sprite)
-		var/matrix/matrix = new
-		matrix.Turn(Angle)
-		transform = matrix
+		transform = transform.TurnTo(Angle, new_angle)
+	Angle = new_angle
 	if(trajectory)
 		trajectory.set_angle(new_angle)
 
@@ -893,15 +913,14 @@
 				qdel(src)
 			return //Kill!
 		pixel_move(1, TRUE)
+		// No kevinz I do not care that this is a hitscan weapon, it is not allowed to travel 100 turfs in a tick
+		if(CHECK_TICK && QDELETED(src))
+			return
 
 /obj/projectile/proc/pixel_move(trajectory_multiplier, hitscanning = FALSE)
 	if(!loc || !trajectory)
 		return
 	last_projectile_move = world.time
-	if(!nondirectional_sprite && !hitscanning)
-		var/matrix/matrix = new
-		matrix.Turn(Angle)
-		transform = matrix
 	if(homing)
 		process_homing()
 	var/forcemoved = FALSE
@@ -1150,8 +1169,28 @@
 /obj/projectile/proc/can_embed_into(atom/hit)
 	return embedding && shrapnel_type && iscarbon(hit) && !HAS_TRAIT(hit, TRAIT_PIERCEIMMUNE)
 
+/// Reflects the projectile off of something
+/obj/projectile/proc/reflect(atom/hit_atom)
+	if(!starting)
+		return
+	var/new_x = starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+	var/new_y = starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+	var/turf/current_tile = get_turf(hit_atom)
+
+	// redirect the projectile
+	original = locate(new_x, new_y, z)
+	starting = current_tile
+	firer = hit_atom
+	yo = new_y - current_tile.y
+	xo = new_x - current_tile.x
+	var/new_angle_s = Angle + rand(120,240)
+	while(new_angle_s > 180) // Translate to regular projectile degrees
+		new_angle_s -= 360
+	set_angle(new_angle_s)
+
 #undef MOVES_HITSCAN
 #undef MUZZLE_EFFECT_PIXEL_INCREMENT
+#undef MAX_RANGE_HIT_PRONE_TARGETS
 
 /// Fire a projectile from this atom at another atom
 /atom/proc/fire_projectile(projectile_type, atom/target, sound, firer, list/ignore_targets = list())
@@ -1161,10 +1200,8 @@
 	var/turf/startloc = get_turf(src)
 	var/obj/projectile/bullet = new projectile_type(startloc)
 	bullet.starting = startloc
-	var/list/ignore = list()
 	for (var/atom/thing as anything in ignore_targets)
-		ignore[thing] = TRUE
-	bullet.impacted += ignore
+		bullet.impacted[WEAKREF(thing)] = TRUE
 	bullet.firer = firer || src
 	bullet.fired_from = src
 	bullet.yo = target.y - startloc.y

@@ -20,7 +20,7 @@
 	req_access = list("syndicate")
 	},
 /obj/structure/cable,
-/mob/living/basic/syndicate/ranged/smg/pilot{
+/mob/living/basic/trooper/syndicate/ranged/smg/pilot{
 	environment_smash = 0
 	},
 /turf/open/floor/mineral/plastitanium/red,

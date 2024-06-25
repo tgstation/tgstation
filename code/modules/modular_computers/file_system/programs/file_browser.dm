@@ -2,10 +2,9 @@
 	filename = "filemanager"
 	filedesc = "File Manager"
 	extended_desc = "This program allows management of files."
-	program_icon_state = "generic"
+	program_open_overlay = "generic"
 	size = 8
-	requires_ntnet = FALSE
-	available_on_ntnet = FALSE
+	program_flags = NONE
 	undeletable = TRUE
 	tgui_id = "NtosFileManager"
 	program_icon = "folder"
@@ -14,6 +13,7 @@
 	var/error
 
 /datum/computer_file/program/filemanager/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("PRG_deletefile")
 			var/datum/computer_file/file = computer.find_file_by_name(params["name"])

@@ -11,16 +11,11 @@
 	bare_wound_bonus = 15
 	sharpness = SHARP_EDGED
 
-/obj/item/mutant_hand/zombie/afterattack(atom/target, mob/living/user, proximity_flag)
-	. = ..()
-	if(!proximity_flag)
-		return
+/obj/item/mutant_hand/zombie/afterattack(atom/target, mob/user, click_parameters)
+	if(ishuman(target))
+		try_to_zombie_infect(target, user, user.zone_selected)
 	else if(isliving(target))
-		if(ishuman(target))
-			try_to_zombie_infect(target, user, user.zone_selected)
-		else
-			. |= AFTERATTACK_PROCESSED_ITEM
-			check_feast(target, user)
+		check_feast(target, user)
 
 /proc/try_to_zombie_infect(mob/living/carbon/human/target, mob/living/user, def_zone = BODY_ZONE_CHEST)
 	CHECK_DNA_AND_SPECIES(target)
@@ -79,7 +74,6 @@
 		need_mob_update = user.adjustBruteLoss(-hp_gained, updating_health = FALSE)
 		need_mob_update += user.adjustToxLoss(-hp_gained, updating_health = FALSE)
 		need_mob_update += user.adjustFireLoss(-hp_gained, updating_health = FALSE)
-		need_mob_update += user.adjustCloneLoss(-hp_gained, updating_health = FALSE)
 		need_mob_update += user.adjustOrganLoss(ORGAN_SLOT_BRAIN, -hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
 		user.set_nutrition(min(user.nutrition + hp_gained, NUTRITION_LEVEL_FULL))
 		if(need_mob_update)

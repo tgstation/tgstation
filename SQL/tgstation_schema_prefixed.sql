@@ -172,7 +172,7 @@ CREATE TABLE `SS13_death` (
   `fireloss` smallint(5) unsigned NOT NULL,
   `oxyloss` smallint(5) unsigned NOT NULL,
   `toxloss` smallint(5) unsigned NOT NULL,
-  `cloneloss` smallint(5) unsigned NOT NULL,
+  `cloneloss` smallint(5) unsigned DEFAULT '0',
   `staminaloss` smallint(5) unsigned NOT NULL,
   `last_words` varchar(255) DEFAULT NULL,
   `suicide` tinyint(1) NOT NULL DEFAULT '0',
@@ -212,6 +212,19 @@ CREATE TABLE `SS13_ipintel` (
   `intel` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`ip`),
   KEY `idx_ipintel` (`ip`,`intel`,`date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+--
+-- Table structure for table `ipintel_whitelist`
+--
+
+DROP TABLE IF EXISTS `SS13_ipintel_whitelist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SS13_ipintel_whitelist` (
+	`ckey` varchar(32) NOT NULL,
+	`admin_ckey` varchar(32) NOT NULL,
+	PRIMARY KEY (`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

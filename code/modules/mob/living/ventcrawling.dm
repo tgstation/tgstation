@@ -31,7 +31,7 @@
 			to_chat(src, span_warning("You can't vent crawl while buckled!"))
 		return
 	if(iscarbon(src) && required_nudity)
-		if(length(get_equipped_items(include_pockets = TRUE)) || get_num_held_items())
+		if(length(get_equipped_items(INCLUDE_POCKETS)) || get_num_held_items())
 			if(provide_feedback)
 				to_chat(src, span_warning("You can't crawl around in the ventilation ducts with items!"))
 			return
@@ -88,7 +88,7 @@
 		else
 			to_chat(src, span_warning("This ventilation duct is not connected to anything!"))
 
-/mob/living/simple_animal/slime/can_enter_vent(obj/machinery/atmospherics/components/ventcrawl_target, provide_feedback = TRUE)
+/mob/living/basic/slime/can_enter_vent(obj/machinery/atmospherics/components/ventcrawl_target, provide_feedback = TRUE)
 	if(buckled)
 		if(provide_feedback)
 			to_chat(src, span_warning("You can't vent crawl while feeding!"))

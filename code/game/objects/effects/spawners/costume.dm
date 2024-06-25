@@ -2,7 +2,7 @@
 	name = "costume spawner"
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x2"
-	color = "#00FF00"
+	color = COLOR_VIBRANT_LIME
 
 	var/list/items
 

@@ -24,7 +24,7 @@
 	var/turf/our_turf = get_turf(src)
 	if(use_vis_overlay)
 		alpha = 0
-		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE_UPPER, our_turf), dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
 	if(source_projector)
 		projector = source_projector
 		LAZYADD(projector.signs, src)
@@ -45,6 +45,7 @@
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.changeNext_move(CLICK_CD_MELEE)
 	take_damage(5 , BRUTE, MELEE, 1)
+	log_combat(user, src, "swatted")
 
 /obj/structure/holosign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -111,6 +112,20 @@
 	rad_insulation = RAD_LIGHT_INSULATION
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
 
+/obj/structure/holosign/barrier/atmos/proc/clearview_transparency()
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	alpha = 25
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	var/turf/our_turf = get_turf(src)
+	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir)
+
+/obj/structure/holosign/barrier/atmos/proc/reset_transparency()
+	mouse_opacity = initial(mouse_opacity)
+	alpha = initial(alpha)
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	var/turf/our_turf = get_turf(src)
+	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir, add_appearance_flags = RESET_ALPHA)
+
 /obj/structure/holosign/barrier/atmos/sturdy
 	name = "sturdy holofirelock"
 	max_integrity = 150
@@ -153,17 +168,10 @@
 	icon_state = "holo_medical"
 	alpha = 125 //lazy :)
 	max_integrity = 1
-	var/force_allaccess = FALSE
 	var/buzzcd = 0
-
-/obj/structure/holosign/barrier/medical/examine(mob/user)
-	. = ..()
-	. += span_notice("The biometric scanners are <b>[force_allaccess ? "off" : "on"]</b>.")
 
 /obj/structure/holosign/barrier/medical/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(force_allaccess)
-		return TRUE
 	if(istype(mover, /obj/vehicle/ridden))
 		for(var/M in mover.buckled_mobs)
 			if(ishuman(M))
@@ -188,13 +196,6 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/holosign/barrier/medical/attack_hand(mob/living/user, list/modifiers)
-	if(!user.combat_mode && CanPass(user, get_dir(src, user)))
-		force_allaccess = !force_allaccess
-		to_chat(user, span_warning("You [force_allaccess ? "deactivate" : "activate"] the biometric scanners.")) //warning spans because you can make the station sick!
-	else
-		return ..()
-
 /obj/structure/holosign/barrier/cyborg/hacked
 	name = "Charged Energy Field"
 	desc = "A powerful energy field that blocks movement. Energy arcs off it."
@@ -214,7 +215,7 @@
 			var/mob/living/M = user
 			M.electrocute_act(15,"Energy Barrier")
 			shockcd = TRUE
-			addtimer(CALLBACK(src, PROC_REF(cooldown)), 5)
+			addtimer(CALLBACK(src, PROC_REF(cooldown)), 0.5 SECONDS)
 
 /obj/structure/holosign/barrier/cyborg/hacked/Bumped(atom/movable/AM)
 	if(shockcd)
@@ -226,4 +227,4 @@
 	var/mob/living/M = AM
 	M.electrocute_act(15,"Energy Barrier")
 	shockcd = TRUE
-	addtimer(CALLBACK(src, PROC_REF(cooldown)), 5)
+	addtimer(CALLBACK(src, PROC_REF(cooldown)), 0.5 SECONDS)

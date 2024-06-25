@@ -12,6 +12,7 @@
 	var/transformed = 0
 	desc = "This disease transplants the genetic code of the initial vector into new hosts."
 	severity = DISEASE_SEVERITY_MEDIUM
+	bypasses_immunity = TRUE
 
 
 /datum/disease/dnaspread/stage_act(seconds_per_tick, times_fired)
@@ -39,7 +40,7 @@
 	switch(stage)
 		if(2, 3) //Pretend to be a cold and give time to spread.
 			if(SPT_PROB(4, seconds_per_tick))
-				affected_mob.emote("sneeze")
+				affected_mob.sneeze()
 			if(SPT_PROB(4, seconds_per_tick))
 				affected_mob.emote("cough")
 			if(SPT_PROB(0.5, seconds_per_tick))

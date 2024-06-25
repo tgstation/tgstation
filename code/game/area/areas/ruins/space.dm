@@ -33,7 +33,7 @@
 // Ruins of "onehalf" ship
 
 /area/ruin/space/has_grav/onehalf/hallway
-	name = "\improper Hallway"
+	name = "\improper Half-Station Hallway"
 
 /area/ruin/space/has_grav/onehalf/drone_bay
 	name = "\improper Mining Drone Bay"
@@ -42,7 +42,7 @@
 	name = "\improper Crew Quarters"
 
 /area/ruin/space/has_grav/onehalf/bridge
-	name = "\improper Bridge"
+	name = "\improper Half-Station Bridge"
 
 /area/ruin/space/has_grav/powered/dinner_for_two
 	name = "Dinner for Two"
@@ -598,6 +598,13 @@
 /area/ruin/space/has_grav/derelictsulaco
 	name = "\improper Derelict Sulaco"
 
+/area/ruin/space/has_grav/powered/biooutpost
+	name = "\improper Bioresearch Outpost"
+	area_flags = UNIQUE_AREA | NOTELEPORT
+
+/area/ruin/space/has_grav/powered/biooutpost/vault
+	name = "\improper Bioresearch Outpost Secure Testing"
+
 // Space Ghost Kitchen
 /area/ruin/space/space_ghost_restaurant
 	name = "\improper Space Ghost Restaurant"
@@ -631,25 +638,25 @@
 	name = "Waystation Maintenance"
 
 /area/ruin/space/has_grav/waystation/qm
-	name = "Quartermaster Office"
+	name = "Waystation Quartermaster Office"
 
 /area/ruin/space/has_grav/waystation/dorms
-	name = "Living Space"
+	name = "Waystation Living Space"
 
 /area/ruin/space/has_grav/waystation/kitchen
-	name = "Kitchen"
+	name = "Waystation Kitchen"
 
 /area/ruin/space/has_grav/waystation/cargobay
-	name = "Cargo Bay"
+	name = "Waystation Cargo Bay"
 
 /area/ruin/space/has_grav/waystation/securestorage
-	name = "Secure Storage"
+	name = "Waystation Secure Storage"
 
 /area/ruin/space/has_grav/waystation/cargooffice
-	name = "Cargo Office"
+	name = "Waystation Cargo Office"
 
 /area/ruin/space/has_grav/powered/waystation/assaultpod
-	name = "Assault Pod"
+	name = "Waystation Assault Pod"
 
 /area/ruin/space/has_grav/waystation/power
 	name = "Waystation Electrical"
@@ -682,3 +689,13 @@
 //SYN-C Brutus, derelict frigate
 /area/ruin/space/has_grav/infested_frigate
 	name = "SYN-C Brutus"
+
+//garbage trucks
+/area/ruin/space/has_grav/garbagetruck
+	name = "Decommissioned Garbage Truck"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	ambience_index = AMBIENCE_MAINT
+/area/ruin/space/has_grav/garbagetruck/foodwaste
+/area/ruin/space/has_grav/garbagetruck/medicalwaste
+/area/ruin/space/has_grav/garbagetruck/squat
+/area/ruin/space/has_grav/garbagetruck/toystore

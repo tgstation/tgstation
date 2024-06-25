@@ -50,8 +50,8 @@
 	anchored = TRUE
 	/// Does this decal change colors on holidays
 	var/use_holiday_colors = FALSE
-	/// The pattern used when recoloring the decal
-	var/pattern = PATTERN_DEFAULT
+	/// The pattern used when recoloring the decal. If null, it'll use the def of the station or holiday.
+	var/pattern
 
 // This is with the intent of optimizing mapload
 // See spawners for more details since we use the same pattern

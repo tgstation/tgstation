@@ -48,7 +48,7 @@
 	))
 	parent.remove_traits(list(TRAIT_DISK_VERIFIER, TRAIT_CAN_STRIP, TRAIT_CAN_USE_NUKE), NUKE_OP_MINION_TRAIT)
 
-/datum/component/nuclear_bomb_operator/Destroy(force, silent)
+/datum/component/nuclear_bomb_operator/Destroy(force)
 	QDEL_NULL(disky)
 	on_disk_collected = null
 	add_disk_overlays = null

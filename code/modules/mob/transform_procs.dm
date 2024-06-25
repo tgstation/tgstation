@@ -35,6 +35,7 @@
 	RemoveInvisibility(type)
 	set_species(/datum/species/monkey)
 	name = "monkey"
+	regenerate_icons()
 	set_name()
 	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE)
 	uncuff()
@@ -127,8 +128,6 @@
 /mob/living/carbon/human/AIize(client/preference_source, transfer_after = TRUE)
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
-	for(var/t in bodyparts)
-		qdel(t)
 
 	return ..()
 
@@ -141,8 +140,8 @@
 	new_borg.gender = gender
 	new_borg.SetInvisibility(INVISIBILITY_NONE)
 
-	if(client)
-		new_borg.updatename(client)
+	if(client?.prefs.read_preference(/datum/preference/name/cyborg) != DEFAULT_CYBORG_NAME)
+		new_borg.apply_pref_name(/datum/preference/name/cyborg, client)
 
 	if(mind) //TODO //TODO WHAT
 		if(!transfer_after)
@@ -173,11 +172,8 @@
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
 	Paralyze(1, ignore_canstun = TRUE)
 
-	for(var/obj/item/W in src)
-		if(delete_items)
-			qdel(W)
-		else
-			dropItemToGround(W)
+	drop_everything(delete_items)
+
 	regenerate_icons()
 	icon = null
 	SetInvisibility(INVISIBILITY_MAXIMUM)
@@ -189,11 +185,10 @@
 	to_chat(src, "<b>You are job banned from cyborg! Appeal your job ban if you want to avoid this in the future!</b>")
 	ghostize(FALSE)
 
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [src]?", "Cyborg", null, 5 SECONDS, src)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/chosen_candidate = pick(candidates)
-		message_admins("[key_name_admin(chosen_candidate)] has taken control of ([key_name_admin(src)]) to replace a jobbanned player.")
-		key = chosen_candidate.key
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_notice(name)]?", check_jobban = JOB_CYBORG, poll_time = 5 SECONDS, checked_target = src, alert_pic = src, role_name_text = "cyborg")
+	if(chosen_one)
+		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(src)]) to replace a jobbanned player.")
+		key = chosen_one.key
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize()
@@ -239,18 +234,18 @@
 	for(var/t in bodyparts)
 		qdel(t)
 
-	var/mob/living/simple_animal/slime/new_slime
+	var/mob/living/basic/slime/new_slime
 	if(reproduce)
 		var/number = pick(14;2,3,4) //reproduce (has a small chance of producing 3 or 4 offspring)
 		var/list/babies = list()
 		for(var/i in 1 to number)
-			var/mob/living/simple_animal/slime/M = new/mob/living/simple_animal/slime(loc)
+			var/mob/living/basic/slime/M = new/mob/living/basic/slime(loc)
 			M.set_nutrition(round(nutrition/number))
 			step_away(M,src)
 			babies += M
 		new_slime = pick(babies)
 	else
-		new_slime = new /mob/living/simple_animal/slime(loc)
+		new_slime = new /mob/living/basic/slime(loc)
 	new_slime.set_combat_mode(TRUE)
 	new_slime.key = key
 
@@ -286,6 +281,29 @@
 	qdel(src)
 	return new_corgi
 
+/**
+ * Turns the source atom into a crab crab, the peak of evolutionary design.
+ */
+/mob/living/carbon/human/proc/crabize()
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+		return
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
+	Paralyze(1, ignore_canstun = TRUE)
+	for(var/obj/item/objeto in src)
+		dropItemToGround(objeto)
+	regenerate_icons()
+	icon = null
+	SetInvisibility(INVISIBILITY_MAXIMUM)
+
+	var/mob/living/basic/crab/new_crab = new (loc)
+	new_crab.set_combat_mode(TRUE) // snip snip
+	if(mind)
+		mind.transfer_to(new_crab)
+
+	to_chat(new_crab, span_boldnotice("You have evolved into a crab!"))
+	qdel(src)
+	return new_crab
+
 /mob/living/carbon/proc/gorillize()
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
@@ -294,7 +312,7 @@
 
 	SSblackbox.record_feedback("amount", "gorillas_created", 1)
 
-	var/Itemlist = get_equipped_items(include_pockets = TRUE)
+	var/Itemlist = get_equipped_items(INCLUDE_POCKETS)
 	Itemlist += held_items
 	for(var/obj/item/W in Itemlist)
 		dropItemToGround(W, TRUE)
@@ -376,11 +394,11 @@
 	if(!MP)
 		return FALSE //Sanity, this should never happen.
 
-	if(ispath(MP, /mob/living/simple_animal/hostile/construct) || ispath(MP, /mob/living/basic/construct))
+	if(ispath(MP, /mob/living/basic/construct))
 		return FALSE //Verbs do not appear for players.
 
 //Good mobs!
-	if(ispath(MP, /mob/living/simple_animal/pet/cat))
+	if(ispath(MP, /mob/living/basic/pet/cat))
 		return TRUE
 	if(ispath(MP, /mob/living/basic/pet/dog/corgi))
 		return TRUE
@@ -390,7 +408,7 @@
 		return TRUE
 	if(ispath(MP, /mob/living/basic/mushroom))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/shade))
+	if(ispath(MP, /mob/living/basic/shade))
 		return TRUE
 	if(ispath(MP, /mob/living/basic/killer_tomato))
 		return TRUE
@@ -398,7 +416,7 @@
 		return TRUE
 	if(ispath(MP, /mob/living/basic/bear))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/parrot))
+	if(ispath(MP, /mob/living/basic/parrot))
 		return TRUE //Parrots are no longer unfinished! -Nodrak
 
 	//Not in here? Must be untested!

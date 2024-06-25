@@ -1,4 +1,4 @@
-GLOBAL_LIST(labor_sheet_values)
+#define SHEET_POINT_VALUE 33
 
 /**********************Prisoners' Console**************************/
 
@@ -22,14 +22,6 @@ GLOBAL_LIST(labor_sheet_values)
 	if(!stacking_machine)
 		return INITIALIZE_HINT_QDEL
 
-	if(!GLOB.labor_sheet_values)
-		var/sheet_list = list()
-		for(var/obj/item/stack/sheet/sheet as anything in subtypesof(/obj/item/stack/sheet))
-			if(!initial(sheet.point_value) || (initial(sheet.merge_type) && initial(sheet.merge_type) != sheet)) //ignore no-value sheets and x/fifty subtypes
-				continue
-			sheet_list += list(list("ore" = initial(sheet.name), "value" = initial(sheet.point_value)))
-		GLOB.labor_sheet_values = sort_list(sheet_list, GLOBAL_PROC_REF(cmp_sheet_list))
-
 /obj/machinery/mineral/labor_claim_console/Destroy()
 	QDEL_NULL(security_radio)
 	if(stacking_machine)
@@ -45,11 +37,6 @@ GLOBAL_LIST(labor_sheet_values)
 	if(!ui)
 		ui = new(user, src, "LaborClaimConsole", name)
 		ui.open()
-
-/obj/machinery/mineral/labor_claim_console/ui_static_data(mob/user)
-	var/list/data = list()
-	data["ores"] = GLOB.labor_sheet_values
-	return data
 
 /obj/machinery/mineral/labor_claim_console/ui_data(mob/user)
 	var/list/data = list()
@@ -119,7 +106,10 @@ GLOBAL_LIST(labor_sheet_values)
 				else
 					if(!(obj_flags & EMAGGED))
 						security_radio.set_frequency(FREQ_SECURITY)
-						security_radio.talk_into(src, "A prisoner has returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY)
+						var/datum/record/crew/target = find_record(user_mob.real_name)
+						target?.wanted_status = WANTED_PAROLE
+
+						security_radio.talk_into(src, "[user_mob.name] returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY)
 					user_mob.log_message("has completed their labor points goal and is now sending the gulag shuttle back to the station.", LOG_GAME)
 					to_chat(user_mob, span_notice("Shuttle received message and will be sent shortly."))
 					return TRUE
@@ -155,8 +145,9 @@ GLOBAL_LIST(labor_sheet_values)
 		labor_console = null
 	return ..()
 
-/obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/inp)
-	points += inp.point_value * inp.amount
+/obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/input)
+	if (input.manufactured && input.gulag_valid)
+		points += SHEET_POINT_VALUE * input.amount
 	return ..()
 
 /obj/machinery/mineral/stacking_machine/laborstacker/attackby(obj/item/weapon, mob/user, params)
@@ -190,3 +181,5 @@ GLOBAL_LIST(labor_sheet_values)
 	say("ID: [prisoner_id.registered_name].")
 	say("Points Collected: [prisoner_id.points] / [prisoner_id.goal].")
 	say("Collect points by bringing smelted minerals to the Labor Shuttle stacking machine. Reach your quota to earn your release.")
+
+#undef SHEET_POINT_VALUE

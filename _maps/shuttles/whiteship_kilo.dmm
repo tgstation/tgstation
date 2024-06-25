@@ -403,9 +403,9 @@
 	dir = 4;
 	name = "Old Mining Turret";
 	lethal_projectile = /obj/projectile/kinetic/miner;
-	lethal_projectile_sound = 'sound/weapons/kenetic_accel.ogg';
+	lethal_projectile_sound = 'sound/weapons/kinetic_accel.ogg';
 	stun_projectile = /obj/projectile/kinetic/miner;
-	stun_projectile_sound = 'sound/weapons/kenetic_accel.ogg'
+	stun_projectile_sound = 'sound/weapons/kinetic_accel.ogg'
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/bar)
@@ -1136,9 +1136,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "Yh" = (
-/obj/machinery/door/window/survival_pod{
-	dir = 4
-	},
+/obj/machinery/door/window/survival_pod/left/directional/east,
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
@@ -1171,16 +1169,14 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "YU" = (
-/obj/machinery/door/window/survival_pod{
-	dir = 4
-	},
+/obj/machinery/door/window/survival_pod/left/directional/east,
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
 /obj/structure/bed/pod{
 	dir = 1
 	},
-/obj/item/bedsheet/dorms{
+/obj/effect/spawner/random/bedsheet{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,

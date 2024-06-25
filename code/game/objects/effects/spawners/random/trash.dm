@@ -28,6 +28,32 @@
 		/obj/item/shard/plasma = 1,
 	)
 
+/obj/effect/spawner/random/trash/deluxe_garbage
+	name = "fancy deluxe garbage spawner"
+	loot = list(
+		/obj/effect/spawner/random/trash/garbage = 25,
+		/obj/effect/spawner/random/trash/food_packaging = 10,
+		/obj/effect/spawner/random/entertainment/money = 10,
+		/obj/effect/spawner/random/trash/crushed_can = 10,
+		/obj/item/shard/plasma = 5,
+		/obj/item/reagent_containers/pill/maintenance = 5,
+		/obj/item/mail/junkmail = 5,
+		/obj/effect/spawner/random/food_or_drink/snack = 5,
+		/obj/effect/spawner/random/trash/soap = 3,
+		/obj/item/reagent_containers/cup/glass/sillycup = 3,
+		/obj/item/broken_bottle = 3,
+		/obj/item/reagent_containers/cup/soda_cans/grey_bull = 1,
+		/obj/effect/spawner/random/engineering/tool = 1,
+		/mob/living/basic/mouse = 1,
+		/obj/item/food/grown/cannabis = 1,
+		/obj/item/reagent_containers/cup/rag = 1,
+		/obj/effect/spawner/random/entertainment/drugs= 1,
+		/obj/item/modular_computer/pda = 1,
+		/obj/item/reagent_containers/syringe = 1,
+		/obj/effect/spawner/random/entertainment/cigar = 1,
+		/obj/item/stack/ore/gold = 1,
+	)
+
 /obj/effect/spawner/random/trash/cigbutt
 	name = "cigarette butt spawner"
 	loot = list(
@@ -134,6 +160,13 @@
 		/obj/effect/spawner/random/trash/cigbutt = 2,
 	)
 
+/obj/effect/spawner/random/trash/grime/Initialize(mapload)
+	if(mapload)
+		var/turf/location = get_turf(loc)
+		if(location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
+			loot -= /mob/living/basic/cockroach
+	return ..()
+
 /obj/effect/spawner/random/trash/moisture
 	name = "water hazard spawner"
 	icon_state = "caution"
@@ -149,6 +182,13 @@
 		/obj/structure/mop_bucket = 2,
 		/mob/living/basic/axolotl = 1,
 	)
+
+/obj/effect/spawner/random/trash/moisture/Initialize(mapload)
+	if(mapload)
+		var/turf/location = get_turf(loc)
+		if(location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
+			loot -= list(/mob/living/basic/frog, /mob/living/basic/axolotl)
+	return ..()
 
 /obj/effect/spawner/random/trash/graffiti
 	name = "random graffiti spawner"

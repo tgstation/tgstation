@@ -125,6 +125,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	GLOB.air_alarms += src
 	update_appearance()
 	find_and_hang_on_wall()
+	register_context()
 
 /obj/machinery/airalarm/process()
 	if(!COOLDOWN_FINISHED(src, warning_cooldown))
@@ -141,10 +142,17 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	GLOB.air_alarms -= src
 	return ..()
 
-/obj/machinery/airalarm/power_change()
+/obj/machinery/airalarm/proc/check_enviroment()
 	var/turf/our_turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
 	var/datum/gas_mixture/environment = our_turf.return_air()
 	check_danger(our_turf, environment, environment.temperature)
+
+/obj/machinery/airalarm/proc/get_enviroment()
+	var/turf/our_turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
+	return our_turf.return_air()
+
+/obj/machinery/airalarm/power_change()
+	check_enviroment()
 	return ..()
 
 /obj/machinery/airalarm/on_enter_area(datum/source, area/area_to_register)
@@ -178,8 +186,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		if(AIR_ALARM_BUILD_COMPLETE)
 			. += span_notice("Right-click to [locked ? "unlock" : "lock"] the interface.")
 
-/obj/machinery/airalarm/ui_status(mob/user)
-	if(user.has_unlimited_silicon_privilege && aidisabled)
+/obj/machinery/airalarm/ui_status(mob/user, datum/ui_state/state)
+	if(HAS_SILICON_ACCESS(user) && aidisabled)
 		to_chat(user, "AI control has been disabled.")
 	else if(!shorted)
 		return ..()
@@ -194,10 +202,10 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
 		if(!allow_link_change)
 			balloon_alert(user, "linking disabled")
-			return TOOL_ACT_SIGNAL_BLOCKING
+			return ITEM_INTERACT_BLOCKING
 		connect_sensor(multi_tool.buffer)
 		balloon_alert(user, "connected sensor")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/airalarm/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -220,16 +228,17 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	var/data = list()
 
 	data["locked"] = locked
-	data["siliconUser"] = user.has_unlimited_silicon_privilege
+	data["siliconUser"] = HAS_SILICON_ACCESS(user)
 	data["emagged"] = (obj_flags & EMAGGED ? 1 : 0)
 	data["dangerLevel"] = danger_level
 	data["atmosAlarm"] = !!my_area.active_alarms[ALARM_ATMOS]
 	data["fireAlarm"] = my_area.fire
+	data["faultStatus"] = my_area.fault_status
+	data["faultLocation"] = my_area.fault_location
 	data["sensor"] = !!connected_sensor
 	data["allowLinkChange"] = allow_link_change
 
-	var/turf/turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
-	var/datum/gas_mixture/environment = turf.return_air()
+	var/datum/gas_mixture/environment = get_enviroment()
 	var/total_moles = environment.total_moles()
 	var/temp = environment.temperature
 	var/pressure = environment.return_pressure()
@@ -280,7 +289,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		singular_tlv["hazard_max"] = tlv.hazard_max
 		data["tlvSettings"] += list(singular_tlv)
 
-	if(!locked || user.has_unlimited_silicon_privilege)
+	if(!locked || HAS_SILICON_ACCESS(user))
 		data["vents"] = list()
 		for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
 			data["vents"] += list(list(
@@ -337,7 +346,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	if(. || buildstage != AIR_ALARM_BUILD_COMPLETE)
 		return
-	if((locked && !usr.has_unlimited_silicon_privilege) || (usr.has_unlimited_silicon_privilege && aidisabled))
+	if((locked && !HAS_SILICON_ACCESS(usr)) || (HAS_SILICON_ACCESS(usr) && aidisabled))
 		return
 
 	var/mob/user = usr
@@ -362,7 +371,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		if("overclock")
 			if(isnull(vent))
 				return TRUE
-			vent.toggle_overclock()
+			vent.toggle_overclock(source = key_name(user))
 			vent.update_appearance(UPDATE_ICON)
 			return TRUE
 
@@ -457,9 +466,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			tlv.set_value(threshold_type, value)
 			investigate_log("threshold value for [threshold]:[threshold_type] was set to [value] by [key_name(usr)]", INVESTIGATE_ATMOS)
 
-			var/turf/our_turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
-			var/datum/gas_mixture/environment = our_turf.return_air()
-			check_danger(our_turf, environment, environment.temperature)
+			check_enviroment()
 
 		if("reset_threshold")
 			var/threshold = text2path(params["threshold"]) || params["threshold"]
@@ -470,9 +477,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			tlv.reset_value(threshold_type)
 			investigate_log("threshold value for [threshold]:[threshold_type] was reset by [key_name(usr)]", INVESTIGATE_ATMOS)
 
-			var/turf/our_turf = connected_sensor ? get_turf(connected_sensor) : get_turf(src)
-			var/datum/gas_mixture/environment = our_turf.return_air()
-			check_danger(our_turf, environment, environment.temperature)
+			check_enviroment()
 
 		if ("alarm")
 			if (alarm_manager.send_alarm(ALARM_ATMOS))
@@ -485,6 +490,10 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		if ("disconnect_sensor")
 			if(allow_link_change)
 				disconnect_sensor()
+
+		if ("lock")
+			togglelock(usr)
+			return TRUE
 
 	update_appearance()
 
@@ -680,9 +689,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 	RegisterSignal(connected_sensor, COMSIG_QDELETING, PROC_REF(disconnect_sensor))
 	my_area = get_area(connected_sensor)
 
-	var/turf/our_turf = get_turf(connected_sensor)
-	var/datum/gas_mixture/environment = our_turf.return_air()
-	check_danger(our_turf, environment, environment.temperature)
+	check_enviroment()
 
 	update_appearance()
 	update_name()
@@ -693,9 +700,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 	connected_sensor = null
 	my_area = get_area(src)
 
-	var/turf/our_turf = get_turf(src)
-	var/datum/gas_mixture/environment = our_turf.return_air()
-	check_danger(our_turf, environment, environment.temperature)
+	check_enviroment()
 
 	update_appearance()
 	update_name()

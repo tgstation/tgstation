@@ -370,7 +370,7 @@
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	atom_storage.max_slots = 2
-	atom_storage.set_holdable(list(/obj/item/gun/energy/dueling))
+	atom_storage.set_holdable(/obj/item/gun/energy/dueling)
 
 /obj/item/storage/lockbox/dueling/update_icon_state()
 	if(atom_storage?.locked)

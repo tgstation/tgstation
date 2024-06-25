@@ -125,8 +125,8 @@
 
 # tralezab
 /code/__DEFINES/basic_mobs.dm @tralezab
-/code/datums/ai @tralezab
-/code/modules/mob/living/basic/ @tralezab
+/code/datums/ai/ @tralezab
+/code/modules/religion/ @tralezab
 
 # Watermelon914
 
@@ -187,19 +187,29 @@
 /SQL/ @Jordie0608 @MrStonedOne
 
 /_maps/ @EOBGames @Maurukas @MMMiracles @san7890 @ShizCalev
+
 /icons/ @Imaginos16 @Krysonism @Twaticus @Wallemations
 /icons/ass/ @Ghilker @tralezab
 
 /code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark
+
 /code/__HELPERS/logging/ @dragomagol @ZephyrTFA
+
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
+
 /code/modules/atmospherics/ @Ghilker @LemonInTheDark
+
 /code/modules/client/preferences.dm @Mothblocks @ZephyrTFA
 /code/modules/client/preferences_savefile.dm @Mothblocks @ZephyrTFA
+
 /code/modules/jobs/job_types/chief_medical_officer.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/medical_doctor.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/paramedic.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
+
+/code/modules/mob/living/basic/ @Jacquerel @san7890 @tralezab
+
 /code/modules/surgery/ @ExcessiveUseOfCobblestone @Ryll-Ryll
+
 /tools/build/ @MrStonedOne @stylemistake
 /tools/tgs_scripts/ @Cyberboss @MrStonedOne
 

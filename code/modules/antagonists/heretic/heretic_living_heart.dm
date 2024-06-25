@@ -19,7 +19,7 @@
 	action = new(src)
 	action.Grant(organ_parent.owner)
 
-/datum/component/living_heart/Destroy(force, silent)
+/datum/component/living_heart/Destroy(force)
 	QDEL_NULL(action)
 	return ..()
 

@@ -1,37 +1,25 @@
-/datum/component/netpod_healing
-	/// Brute damage to heal over a second
-	var/brute_heal = 0
-	/// Burn damage to heal over a second
-	var/burn_heal = 0
-	/// Toxin damage to heal over a second
-	var/toxin_heal = 0
-	/// Amount of cloning damage to heal over a second
-	var/clone_heal = 0
-	/// Amount of blood to heal over a second
-	var/blood_heal = 0
+#define BASE_HEAL 4
 
-/datum/component/netpod_healing/Initialize(
-	brute_heal = 0,
-	burn_heal = 0,
-	toxin_heal = 0,
-	clone_heal = 0,
-	blood_heal = 0,
-)
-	var/mob/living/carbon/player = parent
-	if (!iscarbon(player))
+/datum/component/netpod_healing
+
+/datum/component/netpod_healing/Initialize(obj/machinery/netpod/pod)
+	if (!iscarbon(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	RegisterSignals(
+		pod,
+		list(COMSIG_MACHINERY_BROKEN, COMSIG_QDELETING, COMSIG_BITRUNNER_NETPOD_OPENED),
+		PROC_REF(on_remove),
+	)
+
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_remove))
+
+	var/mob/living/carbon/player = parent
 	player.apply_status_effect(/datum/status_effect/embryonic, STASIS_NETPOD_EFFECT)
 
 	START_PROCESSING(SSmachines, src)
 
-	src.brute_heal = brute_heal
-	src.burn_heal = burn_heal
-	src.toxin_heal = toxin_heal
-	src.clone_heal = clone_heal
-	src.blood_heal = blood_heal
-
-/datum/component/netpod_healing/Destroy(force, silent)
+/datum/component/netpod_healing/Destroy(force)
 	STOP_PROCESSING(SSmachines, src)
 
 	var/mob/living/carbon/player = parent
@@ -46,16 +34,21 @@
 		return
 
 	var/need_mob_update = FALSE
-	need_mob_update += owner.adjustBruteLoss(-brute_heal * seconds_per_tick, updating_health = FALSE)
-	need_mob_update += owner.adjustFireLoss(-burn_heal * seconds_per_tick, updating_health = FALSE)
-	need_mob_update += owner.adjustToxLoss(-toxin_heal * seconds_per_tick, updating_health = FALSE, forced = TRUE)
-	need_mob_update += owner.adjustCloneLoss(-clone_heal * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += owner.adjustBruteLoss(-BASE_HEAL * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += owner.adjustFireLoss(-BASE_HEAL * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += owner.adjustToxLoss(-BASE_HEAL * seconds_per_tick, updating_health = FALSE, forced = TRUE)
 
 	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-		owner.blood_volume += blood_heal * seconds_per_tick
+		owner.blood_volume += BASE_HEAL * seconds_per_tick
 
 	if(need_mob_update)
 		owner.updatehealth()
+
+/// Deletes itself when the machine was opened
+/datum/component/netpod_healing/proc/on_remove()
+	SIGNAL_HANDLER
+
+	qdel(src)
 
 /datum/status_effect/embryonic
 	id = "embryonic"
@@ -72,3 +65,5 @@
 	name = "Embryonic Stasis"
 	icon_state = "netpod_stasis"
 	desc = "You feel like you're in a dream."
+
+#undef BASE_HEAL

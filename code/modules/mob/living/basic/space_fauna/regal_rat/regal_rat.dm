@@ -52,9 +52,10 @@
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_MOB_LOGIN, PROC_REF(on_login))
 
-	AddElement(/datum/element/waddling)
+	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/door_pryer, pry_time = 5 SECONDS, interaction_key = REGALRAT_INTERACTION)
+	AddElement(/datum/element/poster_tearer, interaction_key = REGALRAT_INTERACTION)
 	AddComponent(\
 		/datum/component/ghost_direct_control,\
 		poll_candidates = poll_ghosts,\
@@ -62,15 +63,21 @@
 		poll_ignore_key = POLL_IGNORE_REGAL_RAT,\
 		assumed_control_message = "You are an independent, invasive force on the station! Hoard coins, trash, cheese, and the like from the safety of darkness!",\
 		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
+		poll_chat_border_icon = /obj/item/food/cheese/wedge,\
 	)
 
-	var/datum/action/cooldown/mob_cooldown/domain/domain = new(src)
-	domain.Grant(src)
-	ai_controller.set_blackboard_key(BB_DOMAIN_ABILITY, domain)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/domain = BB_DOMAIN_ABILITY,
+		/datum/action/cooldown/mob_cooldown/riot = BB_RAISE_HORDE_ABILITY,
+	)
 
-	var/datum/action/cooldown/mob_cooldown/riot/riot = new(src)
-	riot.Grant(src)
-	ai_controller.set_blackboard_key(BB_RAISE_HORDE_ABILITY, riot)
+	grant_actions_by_list(innate_actions)
+
+/mob/living/basic/regal_rat/death(gibbed)
+	var/datum/component/potential_component = GetComponent(/datum/component/ghost_direct_control)
+	if(!QDELETED(potential_component))
+		qdel(potential_component)
+	return ..()
 
 /mob/living/basic/regal_rat/examine(mob/user)
 	. = ..()
@@ -103,9 +110,8 @@
 	notify_ghosts(
 		"All rise for [name], ascendant to the throne in \the [get_area(src)].",
 		source = src,
-		action = NOTIFY_ORBIT,
-		flashwindow = FALSE,
 		header = "Sentient Rat Created",
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 	)
 
 /// Supplementary work we do when we login. Done this way so we synchronize with the ai controller shutting off and all that jazz as well as allowing more shit to be passed in if need be in future.

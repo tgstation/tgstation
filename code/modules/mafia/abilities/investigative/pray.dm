@@ -14,5 +14,5 @@
 	if(!.)
 		return FALSE
 
-	to_chat(host_role.body, span_warning("You invoke spirit of [target_role.body.real_name] and learn their role was <b>[target_role.name]<b>."))
+	host_role.send_message_to_player(span_warning("You invoke spirit of [target_role.body.real_name] and learn their role was <b>[target_role.name]<b>."))
 	return TRUE

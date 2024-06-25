@@ -2,8 +2,14 @@
 	max_total_storage = 30
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 	max_slots = 14
+	animated = FALSE
 
-/datum/storage/surgery_tray/New()
+/datum/storage/surgery_tray/New(
+	atom/parent,
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+)
 	. = ..()
 	set_holdable(list(
 		/obj/item/autopsy_scanner,

@@ -36,7 +36,7 @@
 	death_message = "screams in agony as it sublimates into a sulfurous smoke."
 	death_sound = 'sound/magic/demon_dies.ogg'
 
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	minimum_survivable_temperature = T0C - 25 //Weak to cold
 	maximum_survivable_temperature = INFINITY
 
@@ -61,8 +61,9 @@
 	return list()
 
 /// Proc that just sets up the demon's antagonism status.
-/mob/living/basic/demon/proc/generate_antagonist_status()
-	if(isnull(antag_type))
+/mob/living/basic/demon/mind_initialize()
+	. = ..()
+	if(isnull(antag_type) || mind.has_antag_datum(antag_type))
 		return // we weren't built for this proc to run
 
 	mind.set_assigned_role(SSjob.GetJobType(/datum/job/slaughter_demon))

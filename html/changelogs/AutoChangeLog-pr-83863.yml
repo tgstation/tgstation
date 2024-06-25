@@ -1,0 +1,4 @@
+author: "Goat"
+delete-after: True
+changes:
+  - rscadd: "Added boards for the library's book binder and scanner, printable at the service fabricator once computer tech is researched. Spritework done by lepiromano."

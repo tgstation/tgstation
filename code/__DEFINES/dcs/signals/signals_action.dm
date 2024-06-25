@@ -48,3 +48,6 @@
 
 /// From /datum/action/cooldown/manual_heart/Activate(): ()
 #define COMSIG_HEART_MANUAL_PULSE "heart_manual_pulse"
+
+/// From /datum/action/cooldown/mob_cooldown/capture_photo/Activate():
+#define COMSIG_ACTION_PHOTO_CAPTURED "action_photo_captured"

@@ -28,26 +28,31 @@
 	finding_candidate = FALSE
 	return TRUE
 
+/// Sets up the ghost poll
 /obj/item/aicard/syndie/loaded/proc/procure_ai(mob/user)
 	var/datum/antagonist/nukeop/op_datum = user.mind?.has_antag_datum(/datum/antagonist/nukeop,TRUE)
 	if(isnull(op_datum))
 		balloon_alert(user, "invalid access!")
 		return
-	var/list/nuke_candidates = poll_ghost_candidates(
-		question = "Do you want to play as a nuclear operative MODsuit AI?",
-		jobban_type = ROLE_OPERATIVE,
-		be_special_flag = ROLE_OPERATIVE_MIDROUND,
-		poll_time = 15 SECONDS,
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		check_jobban = ROLE_OPERATIVE,
+		poll_time = 20 SECONDS,
+		checked_target = src,
 		ignore_category = POLL_IGNORE_SYNDICATE,
+		alert_pic = src,
+		role_name_text = "Nuclear Operative Modsuit AI",
+		chat_text_border_icon = mutable_appearance(icon, "syndicard-full"),
 	)
-	if(QDELETED(src))
-		return
-	if(!LAZYLEN(nuke_candidates))
+	on_poll_concluded(user, op_datum, chosen_one)
+
+/// Poll has concluded with a ghost, create the AI
+/obj/item/aicard/syndie/loaded/proc/on_poll_concluded(mob/user, datum/antagonist/nukeop/op_datum, mob/dead/observer/ghost)
+	if(isnull(ghost))
 		to_chat(user, span_warning("Unable to connect to S.E.L.F. dispatch. Please wait and try again later or use the intelliCard on your uplink to get your points refunded."))
 		return
+
 	// pick ghost, create AI and transfer
-	var/mob/dead/observer/ghos = pick(nuke_candidates)
-	var/mob/living/silicon/ai/weak_syndie/new_ai = new /mob/living/silicon/ai/weak_syndie(get_turf(src), new /datum/ai_laws/syndicate_override, ghos)
+	var/mob/living/silicon/ai/weak_syndie/new_ai = new /mob/living/silicon/ai/weak_syndie(get_turf(src), new /datum/ai_laws/syndicate_override, ghost)
 	// create and apply syndie datum
 	var/datum/antagonist/nukeop/nuke_datum = new()
 	nuke_datum.send_to_spawnpoint = FALSE
@@ -57,6 +62,11 @@
 	// Make it look evil!!!
 	new_ai.hologram_appearance = mutable_appearance('icons/mob/silicon/ai.dmi',"xeno_queen") //good enough
 	new_ai.icon_state = resolve_ai_icon("hades")
+	// Hide PDA from messenger
+	var/datum/computer_file/program/messenger/msg = locate() in new_ai.modularInterface.stored_files
+	if(msg)
+		msg.invisible = TRUE
+
 	// Transfer the AI from the core we created into the card, then delete the core
 	capture_ai(new_ai, user)
 	var/obj/structure/ai_core/deactivated/detritus = locate() in get_turf(src)

@@ -1,7 +1,7 @@
 /obj/item/encryptionkey
 	name = "standard encryption key"
 	desc = "An encryption key for a radio headset."
-	icon = 'icons/obj/radio.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "cypherkey_basic"
 	w_class = WEIGHT_CLASS_TINY
 	/// Can this radio key access the binary radio channel?
@@ -21,7 +21,7 @@
 	if(LAZYLEN(channels) || translate_binary)
 		var/list/examine_text_list = list()
 		for(var/i in channels)
-			examine_text_list += "[GLOB.channel_tokens[i]] - [lowertext(i)]"
+			examine_text_list += "[GLOB.channel_tokens[i]] - [LOWER_TEXT(i)]"
 
 		if(translate_binary)
 			examine_text_list += "[GLOB.channel_tokens[MODE_BINARY]] - [MODE_BINARY]"
@@ -188,7 +188,31 @@
 	greyscale_colors = "#24a157#dca01b"
 
 /obj/item/encryptionkey/ai //ported from NT, this goes 'inside' the AI.
-	channels = list(RADIO_CHANNEL_COMMAND = 1, RADIO_CHANNEL_SECURITY = 1, RADIO_CHANNEL_ENGINEERING = 1, RADIO_CHANNEL_SCIENCE = 1, RADIO_CHANNEL_MEDICAL = 1, RADIO_CHANNEL_SUPPLY = 1, RADIO_CHANNEL_SERVICE = 1, RADIO_CHANNEL_AI_PRIVATE = 1)
+	channels = list(
+		RADIO_CHANNEL_COMMAND = 1,
+		RADIO_CHANNEL_SECURITY = 1,
+		RADIO_CHANNEL_ENGINEERING = 1,
+		RADIO_CHANNEL_SCIENCE = 1,
+		RADIO_CHANNEL_MEDICAL = 1,
+		RADIO_CHANNEL_SUPPLY = 1,
+		RADIO_CHANNEL_SERVICE = 1,
+		RADIO_CHANNEL_AI_PRIVATE = 1,
+	)
+
+/obj/item/encryptionkey/ai_with_binary
+	name = "ai encryption key"
+	channels = list(
+		RADIO_CHANNEL_COMMAND = 1,
+		RADIO_CHANNEL_SECURITY = 1,
+		RADIO_CHANNEL_ENGINEERING = 1,
+		RADIO_CHANNEL_SCIENCE = 1,
+		RADIO_CHANNEL_MEDICAL = 1,
+		RADIO_CHANNEL_SUPPLY = 1,
+		RADIO_CHANNEL_SERVICE = 1,
+		RADIO_CHANNEL_AI_PRIVATE = 1,
+	)
+	translate_binary = TRUE
+	translated_language = /datum/language/machine
 
 /obj/item/encryptionkey/ai/evil //ported from NT, this goes 'inside' the AI.
 	name = "syndicate binary encryption key"

@@ -26,6 +26,7 @@
 
 /obj/projectile/temp/hot
 	name = "heat beam"
+	icon_state = "lava"
 	temperature = 100 // Raise the body temp by 100 points
 
 /obj/projectile/temp/cryo

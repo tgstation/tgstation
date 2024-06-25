@@ -2,7 +2,7 @@
 "a" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "u" = (
@@ -28,7 +28,7 @@
 "O" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
@@ -39,7 +39,7 @@
 "T" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)

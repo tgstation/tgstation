@@ -21,7 +21,7 @@
 /obj/machinery/light/small/blacklight/directional/south,
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/virtual_domain/powered)
+/area/virtual_domain)
 "i" = (
 /obj/structure/marker_beacon/jade,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
@@ -35,7 +35,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "q" = (
-/mob/living/simple_animal/hostile/megafauna/dragon/virtual_domain,
+/mob/living/simple_animal/hostile/megafauna/dragon,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "s" = (
@@ -56,7 +56,9 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
 "L" = (
-/obj/effect/landmark/bitrunning/safehouse_spawn,
+/obj/modular_map_root/safehouse{
+	key = "lavaland_boss"
+	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "P" = (

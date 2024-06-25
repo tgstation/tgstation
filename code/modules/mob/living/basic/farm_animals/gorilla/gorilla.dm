@@ -16,17 +16,19 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	maxHealth = 220
 	health = 220
+	initial_language_holder = /datum/language_holder/monkey
 	response_help_continuous = "prods"
 	response_help_simple = "prod"
 	response_disarm_continuous = "challenges"
 	response_disarm_simple = "challenge"
 	response_harm_continuous = "thumps"
 	response_harm_simple = "thump"
-	speed = 0.5
-	melee_damage_lower = 15
-	melee_damage_upper = 18
-	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1.5, CLONE = 0, STAMINA = 0, OXY = 1.5)
-	obj_damage = 20
+	speed = -0.1
+	melee_attack_cooldown = CLICK_CD_MELEE
+	melee_damage_lower = 25
+	melee_damage_upper = 30
+	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1.5, STAMINA = 0, OXY = 1.5)
+	obj_damage = 40
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummel"
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -34,6 +36,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/gorilla
 	faction = list(FACTION_MONKEY, FACTION_JUNGLE)
 	butcher_results = list(/obj/item/food/meat/slab/gorilla = 4, /obj/effect/gibspawner/generic/animal = 1)
+	max_grab = GRAB_KILL
 	/// How likely our meaty fist is to stun someone
 	var/paralyze_chance = 20
 	/// A counter for when we can scream again
@@ -52,8 +55,8 @@
 
 /mob/living/basic/gorilla/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP), ROUNDSTART_TRAIT)
-	AddElement(/datum/element/wall_smasher)
+	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_CHUNKYFINGERS), ROUNDSTART_TRAIT)
+	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	AddElement(/datum/element/dextrous)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_BAREFOOT)
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = gorilla_food)
@@ -64,7 +67,14 @@
 	)
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/basic_inhands, y_offset = -1)
-	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, gorilla_food)
+	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, typecacheof(gorilla_food))
+
+/mob/living/basic/gorilla/examine(mob/user)
+	. = ..()
+	if (!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FITNESS))
+		return
+	. += span_notice("This animal appears to be in peak physical condition and yet it has probably never worked out a day in its life. \
+		The untapped potential is almost frightening.")
 
 /mob/living/basic/gorilla/update_overlays()
 	. = ..()
@@ -122,7 +132,7 @@
 /// Gorillas are slower when carrying something
 /datum/movespeed_modifier/gorilla_standing
 	blacklisted_movetypes = (FLYING|FLOATING)
-	multiplicative_slowdown = 0.5
+	multiplicative_slowdown = 1.2
 
 /// A smaller gorilla summoned via magic
 /mob/living/basic/gorilla/lesser
@@ -156,26 +166,5 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
 	AddComponent(/datum/component/crate_carrier)
-
-/**
- * Poll ghosts for control of the gorilla. Not added in init because we only want to poll when the round starts.
- * Preferably in future we can replace this with a popup on the lobby to queue to become a gorilla.
- */
-/mob/living/basic/gorilla/cargorilla/proc/poll_for_gorilla()
-	AddComponent(\
-		/datum/component/ghost_direct_control,\
-		poll_candidates = TRUE,\
-		poll_length = 30 SECONDS,\
-		role_name = "Cargorilla",\
-		assumed_control_message = "You are Cargorilla, a pacifist friend of the station and carrier of freight.",\
-		poll_ignore_key = POLL_IGNORE_CARGORILLA,\
-		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
-	)
-
-/// Called once a ghost assumes control
-/mob/living/basic/gorilla/cargorilla/proc/became_player_controlled()
-	mind.set_assigned_role(SSjob.GetJobType(/datum/job/cargo_technician))
-	mind.special_role = "Cargorilla"
-	to_chat(src, span_notice("You can pick up crates by clicking on them, and drop them by clicking on the ground."))
 
 #undef GORILLA_HANDS_LAYER

@@ -4,11 +4,10 @@
  * @license MIT
  */
 
-import { Store } from 'common/redux';
-import { Window } from './layouts';
-import { selectBackend } from './backend';
-import { selectDebug } from './debug/selectors';
+import { useBackend } from './backend';
+import { useDebug } from './debug';
 import { LoadingScreen } from './interfaces/common/LoadingToolbox';
+import { Window } from './layouts';
 
 const requireInterface = require.context('./interfaces');
 
@@ -53,28 +52,29 @@ const RefreshingWindow = () => {
 };
 
 // Get the component for the current route
-export const getRoutedComponent = (store: Store) => {
-  const state = store.getState();
-  const { suspended, config } = selectBackend(state);
+export const getRoutedComponent = () => {
+  const { suspended, config } = useBackend();
+  const { kitchenSink = false } = useDebug();
+
   if (suspended) {
     return SuspendedWindow;
   }
-  if (config.refreshing) {
+  if (config?.refreshing) {
     return RefreshingWindow;
   }
   if (process.env.NODE_ENV !== 'production') {
-    const debug = selectDebug(state);
     // Show a kitchen sink
-    if (debug.kitchenSink) {
+    if (kitchenSink) {
       return require('./debug').KitchenSink;
     }
   }
+
   const name = config?.interface;
   const interfacePathBuilders = [
     (name: string) => `./${name}.tsx`,
-    (name: string) => `./${name}.js`,
+    (name: string) => `./${name}.jsx`,
     (name: string) => `./${name}/index.tsx`,
-    (name: string) => `./${name}/index.js`,
+    (name: string) => `./${name}/index.jsx`,
   ];
   let esModule;
   while (!esModule && interfacePathBuilders.length > 0) {

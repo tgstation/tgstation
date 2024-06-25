@@ -25,48 +25,7 @@
 		/obj/item/toner = 2)
 	crate_name = "tattoo crate"
 	crate_type = /obj/structure/closet/crate/wooden
-
-/datum/supply_pack/misc/aquarium_kit
-	name = "Aquarium Kit"
-	desc = "Everything you need to start your own aquarium. Contains aquarium construction kit, \
-		fish catalog, fish food and three freshwater fish from our collection."
-	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/obj/item/book/fish_catalog,
-					/obj/item/storage/fish_case/random/freshwater = 3,
-					/obj/item/fish_feed,
-					/obj/item/storage/box/aquarium_props,
-					/obj/item/aquarium_kit,
-				)
-	crate_name = "aquarium kit crate"
-	crate_type = /obj/structure/closet/crate/wooden
-
-/datum/supply_pack/misc/aquarium_fish
-	name = "Aquarium Fish Case"
-	desc = "An aquarium fish bundle handpicked by monkeys from our collection. Contains two random fish."
-	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/storage/fish_case/random = 2)
-	crate_name = "aquarium fish crate"
-
-/datum/supply_pack/misc/freshwater_fish
-	name = "Freshwater Fish Case"
-	desc = "Aquarium fish that have had most of their mud cleaned off."
-	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/storage/fish_case/random/freshwater = 2)
-	crate_name = "freshwater fish crate"
-
-/datum/supply_pack/misc/saltwater_fish
-	name = "Saltwater Fish Case"
-	desc = "Aquarium fish that fill the room with the smell of salt."
-	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/storage/fish_case/random/saltwater = 2)
-	crate_name = "saltwater fish crate"
-
-/datum/supply_pack/misc/tiziran_fish
-	name = "Tiziran Fish Case"
-	desc = "Tiziran saltwater fish imported from the Zagos Sea."
-	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/storage/fish_case/tiziran = 2)
-	crate_name = "tiziran fish crate"
+	discountable = SUPPLY_PACK_STD_DISCOUNTABLE
 
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"
@@ -75,6 +34,7 @@
 	contains = list(/obj/vehicle/ridden/bicycle)
 	crate_name = "bicycle crate"
 	crate_type = /obj/structure/closet/crate/large
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /datum/supply_pack/misc/bigband
 	name = "Big Band Instrument Collection"
@@ -114,7 +74,7 @@
 	access = ACCESS_COMMAND
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/encryptionkey/headset_com = 3)
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/centcom
 	crate_name = "command encryption key crate"
 
 /datum/supply_pack/misc/exploration_drone

@@ -29,7 +29,7 @@
 
 /obj/machinery/nuclearbomb/beer/attackby(obj/item/weapon, mob/user, params)
 	if(weapon.is_refillable())
-		weapon.afterattack(keg, user, TRUE) // redirect refillable containers to the keg, allowing them to be filled
+		weapon.interact_with_atom(keg, user) // redirect refillable containers to the keg, allowing them to be filled
 		return TRUE // pretend we handled the attack, too.
 
 	if(istype(weapon, /obj/item/nuke_core_container))

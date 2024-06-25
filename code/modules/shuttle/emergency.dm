@@ -88,6 +88,11 @@
 	if(!isliving(usr))
 		return
 
+	var/area/my_area = get_area(src)
+	if(!istype(my_area, /area/shuttle/escape))
+		say("Error - Network connectivity: Console has lost connection to the shuttle.")
+		return
+
 	var/mob/living/user = usr
 	. = FALSE
 
@@ -196,15 +201,21 @@
 			shuttle.setTimer(shuttle.timeLeft(1) + hijack_flight_time_increase) //give the guy more time to hijack if it's already in flight.
 	return shuttle.hijack_status
 
-/obj/machinery/computer/emergency_shuttle/AltClick(user)
-	if(isliving(user))
-		attempt_hijack_stage(user)
+/obj/machinery/computer/emergency_shuttle/click_alt(mob/living/user)
+	if(!isliving(user))
+		return NONE
+	attempt_hijack_stage(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/computer/emergency_shuttle/proc/attempt_hijack_stage(mob/living/user)
 	if(!user.CanReach(src))
 		return
 	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		to_chat(user, span_warning("You need your hands free before you can manipulate [src]."))
+		return
+	var/area/my_area = get_area(src)
+	if(!istype(my_area, /area/shuttle/escape))
+		say("Error - Network connectivity: Console has lost connection to the shuttle.")
 		return
 	if(!user?.mind?.get_hijack_speed())
 		to_chat(user, span_warning("You manage to open a user-mode shell on [src], and hundreds of lines of debugging output fly through your vision. It is probably best to leave this alone."))
@@ -282,13 +293,12 @@
 
 	obj_flags |= EMAGGED
 	SSshuttle.emergency.movement_force = list("KNOCKDOWN" = 60, "THROW" = 20)//YOUR PUNY SEATBELTS can SAVE YOU NOW, MORTAL
-	var/datum/species/S = new
 	for(var/i in 1 to 10)
 		// the shuttle system doesn't know who these people are, but they
 		// must be important, surely
 		var/obj/item/card/id/ID = new(src)
 		var/datum/job/J = pick(SSjob.joinable_occupations)
-		ID.registered_name = S.random_name(pick(MALE, FEMALE))
+		ID.registered_name = generate_random_name_species_based(species_type = /datum/species/human)
 		ID.assignment = J.title
 
 		authorized += ID
@@ -358,7 +368,13 @@
 	else
 		SSshuttle.emergency_last_call_loc = null
 
-	priority_announce("The emergency shuttle has been called. [red_alert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergency_last_call_loc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ][SSshuttle.admin_emergency_no_recall ? "\n\nWarning: Shuttle recall subroutines disabled; Recall not possible." : ""]", null, ANNOUNCER_SHUTTLECALLED, "Priority")
+	priority_announce(
+		text = "The emergency shuttle has been called. [red_alert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [(timeLeft(60 SECONDS))] minutes.[reason][SSshuttle.emergency_last_call_loc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ][SSshuttle.admin_emergency_no_recall ? "\n\nWarning: Shuttle recall subroutines disabled; Recall not possible." : ""]",
+		title = "Emergency Shuttle Dispatched",
+		sound = ANNOUNCER_SHUTTLECALLED,
+		sender_override = "Emergency Shuttle Uplink Alert",
+		color_override = "orange",
+		)
 
 /obj/docking_port/mobile/emergency/cancel(area/signalOrigin)
 	if(mode != SHUTTLE_CALL)
@@ -373,7 +389,13 @@
 		SSshuttle.emergency_last_call_loc = signalOrigin
 	else
 		SSshuttle.emergency_last_call_loc = null
-	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergency_last_call_loc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, ANNOUNCER_SHUTTLERECALLED, "Priority")
+	priority_announce(
+		text = "The emergency shuttle has been recalled.[SSshuttle.emergency_last_call_loc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]",
+		title = "Emergency Shuttle Recalled",
+		sound = ANNOUNCER_SHUTTLERECALLED,
+		sender_override = "Emergency Shuttle Uplink Alert",
+		color_override = "orange",
+		)
 
 	SSticker.emergency_reason = null
 
@@ -462,7 +484,13 @@
 				mode = SHUTTLE_DOCKED
 				setTimer(SSshuttle.emergency_dock_time)
 				send2adminchat("Server", "The Emergency Shuttle has docked with the station.")
-				priority_announce("[SSshuttle.emergency] has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, ANNOUNCER_SHUTTLEDOCK, "Priority")
+				priority_announce(
+					text = "[SSshuttle.emergency] has docked with the station. You have [DisplayTimeText(SSshuttle.emergency_dock_time)] to board the emergency shuttle.",
+					title = "Emergency Shuttle Arrival",
+					sound = ANNOUNCER_SHUTTLEDOCK,
+					sender_override = "Emergency Shuttle Uplink Alert",
+					color_override = "orange",
+				)
 				ShuttleDBStuff()
 				addtimer(CALLBACK(src, PROC_REF(announce_shuttle_events)), 20 SECONDS)
 
@@ -514,7 +542,12 @@
 				mode = SHUTTLE_ESCAPE
 				launch_status = ENDGAME_LAUNCHED
 				setTimer(SSshuttle.emergency_escape_time * engine_coeff)
-				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
+				priority_announce(
+					text = "The emergency shuttle has left the station. Estimate [timeLeft(60 SECONDS)] minutes until the shuttle docks at [command_name()].",
+					title = "Emergency Shuttle Departure",
+					sender_override = "Emergency Shuttle Uplink Alert",
+					color_override = "orange",
+				)
 				INVOKE_ASYNC(SSticker, TYPE_PROC_REF(/datum/controller/subsystem/ticker, poll_hearts))
 				SSmapping.mapvote() //If no map vote has been run yet, start one.
 
@@ -579,7 +612,12 @@
 	mode = SHUTTLE_ESCAPE
 	launch_status = ENDGAME_LAUNCHED
 	setTimer(SSshuttle.emergency_escape_time)
-	priority_announce("The Emergency Shuttle is preparing for direct jump. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
+	priority_announce(
+		text = "The emergency shuttle is preparing for direct jump. Estimate [timeLeft(60 SECONDS)] minutes until the shuttle docks at [command_name()].",
+		title = "Emergency Shuttle Transit Failure",
+		sender_override = "Emergency Shuttle Uplink Alert",
+		color_override = "orange",
+	)
 
 ///Generate a list of events to run during the departure
 /obj/docking_port/mobile/emergency/proc/setup_shuttle_events()
@@ -708,7 +746,7 @@
 	return INITIALIZE_HINT_QDEL
 
 /obj/docking_port/stationary/random/icemoon
-	target_area = /area/icemoon/surface/outdoors
+	target_area = /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters
 
 //Pod suits/pickaxes
 
@@ -759,33 +797,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/pod, 32)
 	new /obj/item/bodybag/environmental(src)
 	new /obj/item/bodybag/environmental(src)
 
-/obj/item/storage/pod/attackby(obj/item/W, mob/user, params)
-	if (can_interact(user))
-		return ..()
-
-/obj/item/storage/pod/attackby_secondary(obj/item/weapon, mob/user, params)
-	if (!can_interact(user))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	return ..()
+/obj/item/storage/pod/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
+	return can_interact(user)
 
 /obj/item/storage/pod/attack_hand(mob/user, list/modifiers)
 	if (can_interact(user))
 		atom_storage?.show_contents(user)
 	return TRUE
 
-/obj/item/storage/pod/MouseDrop(over_object, src_location, over_location)
-	if(can_interact(usr))
-		return ..()
-
 /obj/item/storage/pod/attack_hand_secondary(mob/user, list/modifiers)
 	if(!can_interact(user))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
-/obj/item/storage/pod/AltClick(mob/user)
-	if(!can_interact(user))
-		return
-	return ..()
+/obj/item/storage/pod/click_alt(mob/user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/pod/can_interact(mob/user)
 	if(!..())

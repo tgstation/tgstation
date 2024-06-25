@@ -23,7 +23,6 @@
 	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attack_hand))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(mousedrop_receive))
-	RegisterSignal(target, COMSIG_ATOM_BUMPED, PROC_REF(try_speedrun))
 	ADD_TRAIT(target, TRAIT_CLIMBABLE, ELEMENT_TRAIT(type))
 
 /datum/element/climbable/Detach(datum/target)
@@ -70,7 +69,7 @@
 	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
 		adjusted_climb_time *= 0.8
 		adjusted_climb_stun *= 0.8
-	if(HAS_TRAIT(user, TRAIT_SETTLER)) //hold on, gimme a moment, my tiny legs can't get over the goshdamn table
+	if(HAS_TRAIT(user, TRAIT_STUBBY_BODY)) //hold on, gimme a moment, my tiny legs can't get over the goshdamn table
 		adjusted_climb_time *= 1.5
 		adjusted_climb_stun *= 1.5
 	LAZYADDASSOCLIST(current_climbers, climbed_thing, user)
@@ -83,6 +82,10 @@
 			log_combat(user, climbed_thing, "climbed onto")
 			if(adjusted_climb_stun)
 				user.Stun(adjusted_climb_stun)
+			var/atom/movable/buckle_target = climbed_thing
+			if(istype(buckle_target))
+				if(buckle_target.is_buckle_possible(user))
+					buckle_target.buckle_mob(user)
 		else
 			to_chat(user, span_warning("You fail to climb onto [climbed_thing]."))
 	LAZYREMOVEASSOC(current_climbers, climbed_thing, user)
@@ -104,8 +107,6 @@
 				var/x_dist = (text2num(LAZYACCESS(modifiers, ICON_X)) - world.icon_size/2) * (climbed_thing.dir & WEST ? -1 : 1)
 				var/y_dist = (text2num(LAZYACCESS(modifiers, ICON_Y)) - world.icon_size/2) * (climbed_thing.dir & SOUTH ? -1 : 1)
 				dir_step = (x_dist >= y_dist ? (EAST|WEST) : (NORTH|SOUTH)) & climbed_thing.dir
-			else //user is being moved by a forced_movement datum. dir_step will be the direction to the forced movement target.
-				dir_step = get_dir(user, user.force_moving.target)
 		else
 			dir_step = get_dir(user, get_step(climbed_thing, climbed_thing.dir))
 	. = step(user, dir_step)
@@ -114,6 +115,7 @@
 ///Handles climbing onto the atom when you click-drag
 /datum/element/climbable/proc/mousedrop_receive(atom/climbed_thing, atom/movable/dropped_atom, mob/user, params)
 	SIGNAL_HANDLER
+
 	if(user != dropped_atom || !isliving(dropped_atom))
 		return
 	if(!HAS_TRAIT(dropped_atom, TRAIT_FENCE_CLIMBER) && !HAS_TRAIT(dropped_atom, TRAIT_CAN_HOLD_ITEMS)) // If you can hold items you can probably climb a fence
@@ -121,11 +123,4 @@
 	var/mob/living/living_target = dropped_atom
 	if(living_target.mobility_flags & MOBILITY_MOVE)
 		INVOKE_ASYNC(src, PROC_REF(climb_structure), climbed_thing, living_target, params)
-
-///Tries to climb onto the target if the forced movement of the mob allows it
-/datum/element/climbable/proc/try_speedrun(datum/source, mob/bumpee)
-	SIGNAL_HANDLER
-	if(!istype(bumpee))
-		return
-	if(bumpee.force_moving?.allow_climbing)
-		do_climb(source, bumpee)
+	return COMPONENT_CANCEL_MOUSEDROPPED_ONTO

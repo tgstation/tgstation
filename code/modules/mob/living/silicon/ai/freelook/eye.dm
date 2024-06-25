@@ -154,35 +154,44 @@
 		return
 	var/mob/living/silicon/ai/AI = usr
 	if(AI.eyeobj && (AI.multicam_on || (AI.client.eye == AI.eyeobj)) && (AI.eyeobj.z == z))
-		if(AI.ai_tracking_tool.tracking)
-			AI.ai_tracking_tool.set_tracking(FALSE)
+		AI.ai_tracking_tool.reset_tracking()
 		if (isturf(loc) || isturf(src))
 			AI.eyeobj.setLoc(src)
 
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
 // This is handled in the proc below this one.
+#define SPRINT_PER_TICK 0.5
+#define MAX_SPRINT 50
+#define SPRINT_PER_STEP 20
+/mob/living/silicon/ai/proc/AIMove(direction)
+	if(last_moved && last_moved + 1 < world.timeofday)
+		// Decay sprint based off how long it took us to input this next move
+		var/missed_sprint = max((world.timeofday + 1) - last_moved, 0) * SPRINT_PER_TICK
+		sprint = max(sprint - missed_sprint * 7, initial(sprint))
 
-/client/proc/AIMove(n, direct, mob/living/silicon/ai/user)
-
-	var/initial = initial(user.sprint)
-	var/max_sprint = 50
-
-	if(user.cooldown && user.cooldown < world.timeofday) // 3 seconds
-		user.sprint = initial
-
-	for(var/i = 0; i < max(user.sprint, initial); i += 20)
-		var/turf/step = get_turf(get_step(user.eyeobj, direct))
+	// We move a full step, at least. Can't glide more with our current movement mode, so this is how I have to live
+	var/step_count = 0
+	for(var/i = 0; i < max(sprint, initial(sprint)); i += SPRINT_PER_STEP)
+		step_count += 1
+		var/turf/step = get_turf(get_step(eyeobj, direction))
 		if(step)
-			user.eyeobj.setLoc(step)
+			eyeobj.setLoc(step)
 
-	user.cooldown = world.timeofday + 5
-	if(user.acceleration)
-		user.sprint = min(user.sprint + 0.5, max_sprint)
+	// I'd like to make this scale with the steps we take, but it like, just can't
+	// So we're doin this instead
+	eyeobj.glide_size = world.icon_size
+
+	last_moved = world.timeofday
+	if(acceleration)
+		sprint = min(sprint + SPRINT_PER_TICK, MAX_SPRINT)
 	else
-		user.sprint = initial
+		sprint = initial(sprint)
 
-	if(user.ai_tracking_tool.tracking)
-		user.ai_tracking_tool.set_tracking(FALSE)
+	ai_tracking_tool.reset_tracking()
+
+#undef SPRINT_PER_STEP
+#undef MAX_SPRINT
+#undef SPRINT_PER_TICK
 
 // Return to the Core.
 /mob/living/silicon/ai/proc/view_core()
@@ -191,9 +200,8 @@
 		H.clear_holo(src)
 	else
 		current = null
-	if(ai_tracking_tool && ai_tracking_tool.tracking)
-		ai_tracking_tool.set_tracking(FALSE)
-	unset_machine()
+	if(ai_tracking_tool)
+		ai_tracking_tool.reset_tracking()
 
 	if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
 		to_chat(src, "ERROR: Eyeobj not found. Creating new eye...")

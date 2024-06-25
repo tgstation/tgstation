@@ -50,7 +50,7 @@
 	genes = list(/datum/plant_gene/trait/glow/yellow, /datum/plant_gene/trait/anti_magic)
 	mutatelist = null
 	reagents_add = list(/datum/reagent/water/holywater = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 	graft_gene = /datum/plant_gene/trait/glow/yellow
 
 /obj/item/food/grown/holymelon

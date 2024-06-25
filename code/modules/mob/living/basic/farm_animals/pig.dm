@@ -37,9 +37,9 @@
 
 ///wrapper for the tameable component addition so you can have non tamable cow subtypes
 /mob/living/basic/pig/proc/make_tameable()
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/carrot), tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, PROC_REF(tamed)))
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/carrot), tame_chance = 25, bonus_tame_chance = 15)
 
-/mob/living/basic/pig/proc/tamed(mob/living/tamer)
+/mob/living/basic/pig/tamed(mob/living/tamer, atom/food)
 	can_buckle = TRUE
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/pig)
@@ -47,7 +47,7 @@
 
 /datum/ai_controller/basic_controller/pig
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

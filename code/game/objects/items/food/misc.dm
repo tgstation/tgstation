@@ -83,7 +83,7 @@
 	)
 	tastes = list("caramel" = 2, "popcorn" = 1)
 	foodtypes = JUNKFOOD | SUGAR
-	trash_type = /obj/item/trash/popcorn/
+	trash_type = /obj/item/trash/popcorn
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/soydope
@@ -184,7 +184,7 @@
 
 /obj/item/food/melonfruitbowl
 	name = "melon fruit bowl"
-	desc = "For people who wants edible fruit bowls."
+	desc = "For people who want to experience an explosion of flavour."
 	icon_state = "melonfruitbowl"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 6,
@@ -246,6 +246,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	tastes = list("cherry" = 1, "crepe" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/branrequests
@@ -431,6 +432,18 @@
 /obj/item/food/seaweedsheet/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/sushi/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
+
+/obj/item/food/seaweedsheet/saltcane
+	name = "dried saltcane sheathe"
+	desc = "A dried sheet of saltcane sheathe can used for making sushi. Use an ingredient on it to start making custom sushi!"
+	icon_state = "seaweedsheet"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+	)
+	tastes = list("seaweed" = 1)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/granola_bar
 	name = "granola bar"

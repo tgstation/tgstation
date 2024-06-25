@@ -156,8 +156,9 @@
 	ammo_x_offset = 2
 	shaded_charge = FALSE
 
-/obj/item/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
-	return
+/obj/item/gun/energy/laser/instakill/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/gun/energy/laser/instakill/ctf/Initialize(mapload)
 	. = ..()
@@ -207,12 +208,18 @@
 	var/lose_multiple_charges = TRUE
 	var/show_charge_as_alpha = TRUE
 
-/obj/item/clothing/suit/armor/vest/ctf/equipped(mob/user, slot)
+/obj/item/clothing/suit/armor/vest/ctf/Initialize(mapload)
 	. = ..()
-	if(!slot || slot & ITEM_SLOT_HANDS)
-		return
-	AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
-	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, show_charge_as_alpha = show_charge_as_alpha, shield_icon = team_shield_icon)
+	AddComponent( \
+		/datum/component/shielded, \
+		max_charges = max_charges, \
+		recharge_start_delay = recharge_start_delay, \
+		charge_increment_delay = charge_increment_delay, \
+		charge_recovery = charge_recovery, \
+		lose_multiple_charges = lose_multiple_charges, \
+		show_charge_as_alpha = show_charge_as_alpha, \
+		shield_icon = team_shield_icon, \
+	)
 
 // LIGHT SHIELDED VEST
 

@@ -35,8 +35,7 @@
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/plaque/static_plaque/tram/LateInitialize(mapload)
-	. = ..()
+/obj/structure/plaque/static_plaque/tram/LateInitialize()
 	link_tram()
 	set_tram_serial()
 
@@ -125,6 +124,10 @@
 // Tramstation: added Mar 11, 2021 (#56509)
 /obj/structure/plaque/static_plaque/golden/commission/tram
 	desc = "Spinward Sector Station SS-13\n'Tram' Class Outpost\nCommissioned 11/03/2561\n'Making Moves'"
+
+// Wawastation: added add date here
+/obj/structure/plaque/static_plaque/golden/commission/wawa
+	desc = "Spinward Sector Station SS-13\n'Wawa' Class Outpost\nCommissioned 11/03/add here\n'Forever Vertical'"
 
 // North Star: added Apr 13, 2023 (#74371)
 /obj/structure/plaque/static_plaque/golden/commission/northstar

@@ -2,7 +2,7 @@
 	name = "generic ammo box"
 	desc = "A box of ammo for an unknown weapon."
 	w_class = WEIGHT_CLASS_BULKY
-	icon = 'icons/mob/mecha_ammo.dmi'
+	icon = 'icons/obj/weapons/guns/mecha_ammo.dmi'
 	icon_state = "empty"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'

@@ -34,8 +34,8 @@
 /datum/action/cooldown/mob_cooldown/slippery_ice_floors
 	name = "Iced Floors"
 	desc = "Summon slippery ice floors all around!"
-	button_icon = 'icons/turf/floors/ice_turf.dmi'
-	button_icon_state = "ice_turf-6"
+	button_icon = 'icons/effects/freeze.dmi'
+	button_icon_state = "ice_cube"
 	cooldown_time = 2 SECONDS
 	click_to_activate = FALSE
 	melee_cooldown_time = 0 SECONDS
@@ -82,8 +82,9 @@
 /obj/effect/temp_visual/slippery_ice/proc/add_slippery_component()
 	AddComponent(/datum/component/slippery, 2 SECONDS)
 
-/datum/action/cooldown/spell/conjure/create_afterimages
+/datum/action/cooldown/spell/conjure/limit_summons/create_afterimages
 	name = "Create After Images"
+	desc = "Creates two illusionary doubles to increase your firepower, but which share some of your life force."
 	button_icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	button_icon_state = "ice_demon"
 	spell_requirements = NONE
@@ -91,27 +92,8 @@
 	summon_type = list(/mob/living/basic/mining/demon_afterimage)
 	summon_radius = 1
 	summon_amount = 2
-	///max number of after images
-	var/max_afterimages = 2
-	///How many clones do we have summoned
-	var/number_of_afterimages = 0
+	max_summons = 2
 
-/datum/action/cooldown/spell/conjure/create_afterimages/can_cast_spell(feedback = TRUE)
+/datum/action/cooldown/spell/conjure/limit_summons/create_afterimages/post_summon(atom/summoned_object, atom/cast_on)
 	. = ..()
-	if(!.)
-		return FALSE
-	if(number_of_afterimages >= max_afterimages)
-		return FALSE
-	return TRUE
-
-/datum/action/cooldown/spell/conjure/create_afterimages/post_summon(atom/summoned_object, atom/cast_on)
-	var/mob/living/basic/created_copy = summoned_object
-	created_copy.AddComponent(/datum/component/joint_damage, overlord_mob = owner)
-	RegisterSignals(created_copy, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(delete_copy))
-	number_of_afterimages++
-
-/datum/action/cooldown/spell/conjure/create_afterimages/proc/delete_copy(mob/source)
-	SIGNAL_HANDLER
-
-	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
-	number_of_afterimages--
+	summoned_object.AddComponent(/datum/component/joint_damage, overlord_mob = owner)

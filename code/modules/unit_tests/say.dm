@@ -58,12 +58,15 @@
 
 /// This runs some simple speech tests on a speaker and listener and determines if a person can hear whispering or speaking as they are moved a distance away
 /datum/unit_test/speech
-	var/list/handle_speech_result = null
-	var/list/handle_hearing_result = null
 	var/mob/living/carbon/human/speaker
 	var/mob/living/carbon/human/listener
+	var/list/handle_speech_result = null
+	var/list/handle_hearing_result = null
+
 	var/obj/item/radio/speaker_radio
 	var/obj/item/radio/listener_radio
+	var/speaker_radio_heard_message = FALSE
+	var/listener_radio_received_message = FALSE
 
 /datum/unit_test/speech/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
@@ -99,6 +102,16 @@
 	handle_hearing_result = list()
 	handle_hearing_result += hearing_args
 
+/datum/unit_test/speech/proc/handle_radio_hearing(datum/source, mob/living/user, message, channel)
+	SIGNAL_HANDLER
+
+	speaker_radio_heard_message = TRUE
+
+/datum/unit_test/speech/proc/handle_radio_speech(datum/source, list/data)
+	SIGNAL_HANDLER
+
+	listener_radio_received_message = TRUE
+
 /datum/unit_test/speech/Run()
 	speaker = allocate(/mob/living/carbon/human/consistent)
 	// Name changes to make understanding breakpoints easier
@@ -114,7 +127,10 @@
 	listener.mock_client = mock_client
 
 	RegisterSignal(speaker, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	RegisterSignal(speaker_radio, COMSIG_RADIO_NEW_MESSAGE, PROC_REF(handle_radio_hearing))
+
 	RegisterSignal(listener, COMSIG_MOVABLE_HEAR, PROC_REF(handle_hearing))
+	RegisterSignal(listener_radio, COMSIG_RADIO_RECEIVE_MESSAGE, PROC_REF(handle_radio_speech))
 
 	// speaking and whispering should be hearable
 	conversation(distance = 1)
@@ -169,6 +185,9 @@
 	handle_hearing_result = null
 
 /datum/unit_test/speech/proc/radio_test()
+	speaker_radio_heard_message = FALSE
+	listener_radio_received_message = FALSE
+
 	speaker.forceMove(run_loc_floor_bottom_left)
 	listener.forceMove(locate((run_loc_floor_bottom_left.x + 10), run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
@@ -186,11 +205,15 @@
 
 	speaker.say(pangram_quote)
 	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired (radio test)")
-	TEST_ASSERT(islist(handle_hearing_result), "Listener failed to hear radio message (radio test)")
+	TEST_ASSERT(speaker_radio_heard_message, "Speaker's radio did not hear them speak (radio test)")
 	TEST_ASSERT_EQUAL(speaker_radio.get_frequency(), listener_radio.get_frequency(), "Radio frequencies were not equal (radio test)")
+	TEST_ASSERT(listener_radio_received_message, "Listener's radio did not receive the broadcast (radio test)")
+	TEST_ASSERT(islist(handle_hearing_result), "Listener failed to hear radio message (radio test)")
 
 	handle_speech_result = null
 	handle_hearing_result = null
+	speaker_radio_heard_message = FALSE
+	listener_radio_received_message = FALSE
 
 	speaker_radio.set_frequency(FREQ_CTF_RED)
 	speaker.say(pangram_quote)
@@ -200,6 +223,8 @@
 
 	handle_speech_result = null
 	handle_hearing_result = null
+	speaker_radio_heard_message = FALSE
+	listener_radio_received_message = FALSE
 	speaker_radio.set_broadcasting(FALSE)
 
 #undef NORMAL_HEARING_RANGE

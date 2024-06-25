@@ -13,7 +13,7 @@
 export const debounce = <F extends (...args: any[]) => any>(
   fn: F,
   time: number,
-  immediate = false
+  immediate = false,
 ): ((...args: Parameters<F>) => void) => {
   let timeout: ReturnType<typeof setTimeout> | null;
   return (...args: Parameters<F>) => {
@@ -38,7 +38,7 @@ export const debounce = <F extends (...args: any[]) => any>(
  */
 export const throttle = <F extends (...args: any[]) => any>(
   fn: F,
-  time: number
+  time: number,
 ): ((...args: Parameters<F>) => void) => {
   let previouslyRun: number | null,
     queuedToRun: ReturnType<typeof setTimeout> | null;
@@ -53,7 +53,7 @@ export const throttle = <F extends (...args: any[]) => any>(
     } else {
       queuedToRun = setTimeout(
         () => invokeFn(...args),
-        time - (now - (previouslyRun ?? 0))
+        time - (now - (previouslyRun ?? 0)),
       );
     }
   };

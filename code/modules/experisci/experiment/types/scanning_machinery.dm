@@ -12,7 +12,7 @@
 	. = ..()
 	.[1] = EXPERIMENT_PROG_INT("Scan samples of the following machines built with parts of tier [required_tier] or better.", points, required_points)[1]
 
-/datum/experiment/scanning/points/machinery_tiered_scan/final_contributing_index_checks(atom/target, typepath)
+/datum/experiment/scanning/points/machinery_tiered_scan/final_contributing_index_checks(datum/component/experiment_handler/experiment_handler, atom/target, typepath)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -26,6 +26,7 @@
 	for(var/datum/stock_part/datum_stock_part in machine.component_parts)
 		if(datum_stock_part.tier >= required_tier)
 			return TRUE
+	experiment_handler.announce_message("Scanned machine is missing high enough quality parts. Expecting tier [required_tier] parts or better.")
 	return FALSE
 
 //This experiment type will turn up TRUE if there is a specific part in the scanned machine
@@ -42,7 +43,7 @@
 	. = ..()
 	.[1] = EXPERIMENT_PROG_INT("Scan samples of the following machines upgraded with \a [initial(required_stock_part.name)] to accumulate enough points to complete this experiment.", points, required_points)[1]
 
-/datum/experiment/scanning/points/machinery_pinpoint_scan/final_contributing_index_checks(atom/target, typepath)
+/datum/experiment/scanning/points/machinery_pinpoint_scan/final_contributing_index_checks(datum/component/experiment_handler/experiment_handler, atom/target, typepath)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -56,4 +57,5 @@
 	for(var/datum/stock_part/datum_stock_part in machine.component_parts)
 		if(istype(datum_stock_part.physical_object_reference, required_stock_part))
 			return TRUE
+	experiment_handler.announce_message("Scanned machine is missing an exact quality part. Expecting tier [required_stock_part.name] part.")
 	return FALSE

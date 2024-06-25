@@ -42,7 +42,7 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 /// A version of armor that cannot be modified and will always return itself when attempted to be modified
 /datum/armor/immune
 
-/datum/armor/Destroy(force, ...)
+/datum/armor/Destroy(force)
 	if(!force && tag)
 		return QDEL_HINT_LETMELIVE
 

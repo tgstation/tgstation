@@ -124,7 +124,7 @@ GLOBAL_VAR(station_nuke_source)
 			if(istype(weapon, /obj/item/nuke_core_container))
 				var/obj/item/nuke_core_container/core_box = weapon
 				to_chat(user, span_notice("You start loading the plutonium core into [core_box]..."))
-				if(do_after(user, 5 SECONDS, target=src))
+				if(do_after(user, 5 SECONDS, target = src, hidden = TRUE))
 					if(core_box.load(core, user))
 						to_chat(user, span_notice("You load the plutonium core into [core_box]."))
 						deconstruction_state = NUKESTATE_CORE_REMOVED
@@ -463,7 +463,6 @@ GLOBAL_VAR(station_nuke_source)
 		"A nuclear device has been armed in [get_area_name(src)]!",
 		source = src,
 		header = "Nuke Armed",
-		action = NOTIFY_ORBIT,
 	)
 	update_appearance()
 
@@ -524,7 +523,7 @@ GLOBAL_VAR(station_nuke_source)
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_DETONATING, src)
 
-	if(SSticker?.mode)
+	if(SSticker.HasRoundStarted())
 		SSticker.roundend_check_paused = TRUE
 	addtimer(CALLBACK(src, PROC_REF(actually_explode)), 10 SECONDS)
 	return TRUE

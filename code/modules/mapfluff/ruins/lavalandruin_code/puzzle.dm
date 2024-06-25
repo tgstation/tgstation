@@ -173,7 +173,7 @@
 	//Setup random empty tile
 	empty_tile_id = pick_n_take(left_ids)
 	var/turf/empty_tile_turf = get_turf_for_id(empty_tile_id)
-	empty_tile_turf.PlaceOnTop(floor_type,null,CHANGETURF_INHERIT_AIR)
+	empty_tile_turf.place_on_top(floor_type, CHANGETURF_INHERIT_AIR)
 	var/mutable_appearance/MA = new(puzzle_pieces["[empty_tile_id]"])
 	MA.layer = empty_tile_turf.layer + 0.1
 	empty_tile_turf.add_overlay(MA)
@@ -182,7 +182,7 @@
 	var/list/empty_spots = left_ids.Copy()
 	for(var/spot_id in empty_spots)
 		var/turf/T = get_turf_for_id(spot_id)
-		T = T.PlaceOnTop(floor_type,null,CHANGETURF_INHERIT_AIR)
+		T = T.place_on_top(floor_type, CHANGETURF_INHERIT_AIR)
 		var/obj/structure/puzzle_element/E = new element_type(T)
 		elements += E
 		var/chosen_id = pick_n_take(left_ids)
@@ -320,21 +320,23 @@
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "prison_cube"
 
-/obj/item/prisoncube/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag || !isliving(target))
-		return
-	var/mob/living/victim = target
-	var/mob/living/carbon/carbon_victim = victim
+/obj/item/prisoncube/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
+		return NONE
+
+	var/mob/living/carbon/carbon_victim = interacting_with
 	//Handcuffed or unconscious
-	if(istype(carbon_victim) && carbon_victim.handcuffed || victim.stat != CONSCIOUS)
-		if(!puzzle_imprison(target))
-			to_chat(user,span_warning("[src] does nothing."))
-			return
-		to_chat(user,span_warning("You trap [victim] in the prison cube!"))
+	if(istype(carbon_victim) && (carbon_victim.handcuffed || carbon_victim.stat != CONSCIOUS))
+		user.do_attack_animation(carbon_victim)
+		if(!puzzle_imprison(carbon_victim))
+			to_chat(user, span_warning("[src] does nothing."))
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_warning("You trap [carbon_victim] in the prison cube!"))
 		qdel(src)
-	else
-		to_chat(user,span_notice("[src] only accepts restrained or unconscious prisoners."))
+		return ITEM_INTERACT_SUCCESS
+
+	to_chat(user, span_notice("[src] only accepts restrained or unconscious prisoners."))
+	return ITEM_INTERACT_BLOCKING
 
 /proc/puzzle_imprison(mob/living/prisoner)
 	var/turf/T = get_turf(prisoner)

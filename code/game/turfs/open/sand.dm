@@ -8,6 +8,7 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/misc/beach/ex_act(severity, target)
 	return FALSE
@@ -53,6 +54,7 @@
 	name = "dirt"
 	desc = "Upon closer examination, it's still dirt."
 	icon = 'icons/turf/floors.dmi'
+	damaged_dmi = 'icons/turf/damaged.dmi'
 	icon_state = "sand"
 	base_icon_state = "sand"
 	bullet_bounce_sound = null
@@ -61,10 +63,14 @@
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/misc/sandy_dirt/break_tile()
 	. = ..()
 	icon_state = "sand_damaged"
+
+/turf/open/misc/sandy_dirt/broken_states()
+	return list("sand_damaged")
 
 /turf/open/misc/ironsand
 	gender = PLURAL

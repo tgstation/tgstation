@@ -31,7 +31,7 @@
 
 /datum/chemical_reaction/glycerol
 	results = list(/datum/reagent/glycerol = 1)
-	required_reagents = list(/datum/reagent/consumable/nutriment/fat/oil = 3, /datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/consumable/nutriment/fat/oil/corn = 3, /datum/reagent/toxin/acid = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_EXPLOSIVE
 
 /datum/chemical_reaction/sodiumchloride
@@ -577,6 +577,7 @@
 
 /datum/chemical_reaction/monkey
 	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/water = 1)
+	reaction_flags = REACTION_INSTANT
 	mix_message = "<span class='danger'>Expands into a brown mass before shaping itself into a monkey!.</span>"
 
 /datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
@@ -730,7 +731,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/metalgen_imprint/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/datum/reagent/metalgen/MM = holder.get_reagent(/datum/reagent/metalgen)
+	var/datum/reagent/metalgen/MM = holder.has_reagent(/datum/reagent/metalgen)
 	for(var/datum/reagent/R in holder.reagent_list)
 		if(R.material && R.volume >= 40)
 			MM.data["material"] = R.material
@@ -945,7 +946,7 @@
 	optimal_ph_min = 3
 	optimal_ph_max = 12
 	required_temp = 50
-	reaction_flags = REACTION_INSTANT
+	reaction_flags = REACTION_INSTANT | REAGENT_SPLITRETAINVOL
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/ant_slurry // We're basically gluing ants together with synthflesh & maint sludge to make a bigger ant.

@@ -11,7 +11,7 @@
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
-	power_usage_per_input = 10 //Normal components have 1
+	energy_usage_per_input = 0.01 * STANDARD_CELL_CHARGE //Normal components have 0.001 * STANDARD_CELL_CHARGE
 
 	///Allows setting the range of the view sensor
 	var/datum/port/input/range
@@ -37,7 +37,7 @@
 	if(!parent.shell)
 		return
 
-	if(TIMER_COOLDOWN_CHECK(parent.shell, COOLDOWN_CIRCUIT_VIEW_SENSOR))
+	if(TIMER_COOLDOWN_RUNNING(parent.shell, COOLDOWN_CIRCUIT_VIEW_SENSOR))
 		result.set_output(null)
 		cooldown.set_output(COMPONENT_SIGNAL)
 		return

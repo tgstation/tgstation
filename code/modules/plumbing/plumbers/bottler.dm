@@ -4,10 +4,8 @@
 	icon_state = "bottler"
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
-
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 100
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 
 	///how much do we fill
 	var/wanted_amount = 10
@@ -71,7 +69,7 @@
 	to_chat(user, span_notice(" The [src] will now fill for [wanted_amount]u."))
 
 /obj/machinery/plumbing/bottler/process(seconds_per_tick)
-	if(machine_stat & NOPOWER)
+	if(!is_operational)
 		return
 	// Sanity check the result locations and stop processing if they don't exist
 	if(goodspot == null || badspot == null || inputspot == null)
@@ -79,22 +77,25 @@
 		return PROCESS_KILL
 
 	///see if machine has enough to fill, is anchored down and has any inputspot objects to pick from
-	if(reagents.total_volume + (CHEMICAL_QUANTISATION_LEVEL * 10) >= wanted_amount && anchored && length(inputspot.contents))
-		use_power(active_power_usage * seconds_per_tick)
+	if(reagents.total_volume >= wanted_amount && anchored && length(inputspot.contents))
+		use_energy(active_power_usage * seconds_per_tick)
 		var/obj/AM = pick(inputspot.contents)///pick a reagent_container that could be used
-		if((is_reagent_container(AM) && !istype(AM, /obj/item/reagent_containers/hypospray/medipen)) || istype(AM, /obj/item/ammo_casing/shotgun/dart))
-			var/obj/item/reagent_containers/B = AM
+		//allowed containers
+		var/static/list/allowed_containers = list(
+			/obj/item/reagent_containers/cup,
+			/obj/item/ammo_casing/shotgun/dart,
+		)
+		if(is_type_in_list(AM, allowed_containers))
+			var/obj/item/B = AM
 			///see if it would overflow else inject
 			if((B.reagents.total_volume + wanted_amount) <= B.reagents.maximum_volume)
-				reagents.trans_to(B, wanted_amount, transferred_by = src)
+				reagents.trans_to(B, wanted_amount)
 				B.forceMove(goodspot)
 				return
 			///glass was full so we move it away
 			AM.forceMove(badspot)
-		if(istype(AM, /obj/item/slime_extract)) ///slime extracts need inject
+		else if(istype(AM, /obj/item/slime_extract)) ///slime extracts need inject
 			AM.forceMove(goodspot)
-			reagents.trans_to(AM, wanted_amount, transferred_by = src, methods = INJECT)
-			return
-		if(istype(AM, /obj/item/slimecross/industrial)) ///no need to move slimecross industrial things
-			reagents.trans_to(AM, wanted_amount, transferred_by = src, methods = INJECT)
-			return
+			reagents.trans_to(AM, wanted_amount, methods = INJECT)
+		else if(istype(AM, /obj/item/slimecross/industrial)) ///no need to move slimecross industrial things
+			reagents.trans_to(AM, wanted_amount, methods = INJECT)

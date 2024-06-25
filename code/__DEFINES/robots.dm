@@ -34,6 +34,10 @@
 
 /// Special value to reset cyborg's lamp_cooldown
 #define BORG_LAMP_CD_RESET -1
+/// How many watts per lamp power is consumed while the lamp is on.
+#define BORG_LAMP_POWER_CONSUMPTION (1000 WATTS)
+/// The minimum power consumption of a cyborg.
+#define BORG_MINIMUM_POWER_CONSUMPTION (500 WATTS)
 
 //Module slot define
 ///The third module slots is disabed.
@@ -96,13 +100,29 @@
 
 //Bot cover defines indicating the Bot's status
 ///The Bot's cover is open and can be modified/emagged by anyone.
-#define BOT_COVER_OPEN (1<<0)
+#define BOT_COVER_MAINTS_OPEN (1<<0)
 ///The Bot's cover is locked, and cannot be opened without unlocking it.
 #define BOT_COVER_LOCKED (1<<1)
 ///The Bot is emagged.
 #define BOT_COVER_EMAGGED (1<<2)
 ///The Bot has been hacked by a Silicon, emagging them, but revertable.
 #define BOT_COVER_HACKED (1<<3)
+
+///bitfield, used by basic bots, for our access flags
+DEFINE_BITFIELD(bot_access_flags, list(
+	"MAINTS_OPEN" = BOT_COVER_MAINTS_OPEN,
+	"COVER_OPEN" = BOT_COVER_LOCKED,
+	"COVER_EMAGGED" = BOT_COVER_EMAGGED,
+	"COVER_HACKED" = BOT_COVER_HACKED,
+))
+
+///bitfield, used by simple bots, for our access flags
+DEFINE_BITFIELD(bot_cover_flags, list(
+	"MAINTS_OPEN" = BOT_COVER_MAINTS_OPEN,
+	"COVER_OPEN" = BOT_COVER_LOCKED,
+	"COVER_EMAGGED" = BOT_COVER_EMAGGED,
+	"COVER_HACKED" = BOT_COVER_HACKED,
+))
 
 //Bot types
 /// Secutritrons (Beepsky)
@@ -131,8 +151,6 @@
 #define BOT_IDLE "Idle"
 /// Found target, hunting
 #define BOT_HUNT "In Pursuit"
-/// Currently tipped over.
-#define BOT_TIPPED "Tipped"
 /// Start patrol
 #define BOT_START_PATROL "Beginning Patrol"
 /// Patrolling
@@ -175,6 +193,13 @@
 #define JUDGE_IDCHECK (1<<1)
 #define JUDGE_WEAPONCHECK (1<<2)
 #define JUDGE_RECORDCHECK (1<<3)
+///lowered threat level
+#define JUDGE_CHILLOUT (1<<4)
+
+/// Above this level of assessed threat, Beepsky will attack you
+#define THREAT_ASSESS_DANGEROUS 4
+/// Above this level of assessed threat, you are extremely threatening
+#define THREAT_ASSESS_MAXIMUM 10
 
 //SecBOT defines on arresting
 ///Whether arrests should be broadcasted over the Security radio
@@ -187,6 +212,8 @@
 #define SECBOT_CHECK_RECORDS (1<<3)
 ///Whether we will stun & cuff or endlessly stun
 #define SECBOT_HANDCUFF_TARGET (1<<4)
+///if it's currently affected by a saboteur bolt (lowered perp threat level)
+#define SECBOT_SABOTEUR_AFFECTED (1<<5)
 
 DEFINE_BITFIELD(security_mode_flags, list(
 	"SECBOT_DECLARE_ARRESTS" = SECBOT_DECLARE_ARRESTS,
@@ -194,6 +221,7 @@ DEFINE_BITFIELD(security_mode_flags, list(
 	"SECBOT_CHECK_WEAPONS" = SECBOT_CHECK_WEAPONS,
 	"SECBOT_CHECK_RECORDS" = SECBOT_CHECK_RECORDS,
 	"SECBOT_HANDCUFF_TARGET" = SECBOT_HANDCUFF_TARGET,
+	"SECBOT_SABOTEUR_AFFECTED" = SECBOT_SABOTEUR_AFFECTED,
 ))
 
 //MedBOT defines
@@ -203,11 +231,17 @@ DEFINE_BITFIELD(security_mode_flags, list(
 #define MEDBOT_STATIONARY_MODE (1<<1)
 ///Whether the bot will randomly speak from time to time. This will not actually prevent all speech.
 #define MEDBOT_SPEAK_MODE (1<<2)
+/// is the bot currently tipped over?
+#define MEDBOT_TIPPED_MODE (1<<3)
+
+///can we heal all damage?
+#define HEAL_ALL_DAMAGE "all_damage"
 
 DEFINE_BITFIELD(medical_mode_flags, list(
 	"MEDBOT_DECLARE_CRIT" = MEDBOT_DECLARE_CRIT,
 	"MEDBOT_STATIONARY_MODE" = MEDBOT_STATIONARY_MODE,
 	"MEDBOT_SPEAK_MODE" = MEDBOT_SPEAK_MODE,
+	"MEDBOT_TIPPED_MODE" = MEDBOT_TIPPED_MODE,
 ))
 
 //cleanBOT defines on what to clean
@@ -300,3 +334,4 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 #define MEDIBOT_VOICED_THIS_HURTS "This hurts, my pain is real!"
 #define MEDIBOT_VOICED_THE_END "Is this the end?"
 #define MEDIBOT_VOICED_NOOO	"Nooo!"
+#define MEDIBOT_VOICED_CHICKEN "LOOK AT ME?! I am a chicken."

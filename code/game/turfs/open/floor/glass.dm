@@ -33,7 +33,6 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/floor/glass/LateInitialize()
-	. = ..()
 	AddElement(/datum/element/turf_z_transparency)
 	setup_glow()
 
@@ -56,7 +55,7 @@
 		RegisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED, PROC_REF(starlight_changed))
 	else
 		UnregisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED)
-	set_light(2, 0.75, starlight_color || GLOB.starlight_color)
+	set_light(2, 1, starlight_color || GLOB.starlight_color, l_height = LIGHTING_HEIGHT_SPACE)
 
 /turf/open/floor/glass/proc/starlight_changed(datum/source, old_star, new_star)
 	if(light_color == old_star)
@@ -79,6 +78,9 @@
 	base_icon_state = "reinf_glass"
 	floor_tile = /obj/item/stack/tile/rglass
 	alpha_to_leave = 206
+
+/turf/open/floor/glass/reinforced/telecomms
+	initial_gas_mix = TCOMMS_ATMOS
 
 /turf/open/floor/glass/reinforced/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS

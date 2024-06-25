@@ -28,6 +28,8 @@
 #define COMSIG_FISHING_ROD_CAUGHT_FISH "fishing_rod_caught_fish"
 /// From /obj/item/fishing_rod/proc/hook_item(): (reward, user)
 #define COMSIG_FISHING_ROD_HOOKED_ITEM "fishing_rod_hooked_item"
+/// From /datum/fish_source/proc/use_slot(), sent to the slotted item: (obj/item/fishing_rod/rod)
+#define COMSIG_FISHING_EQUIPMENT_SLOTTED "fishing_equipment_slotted"
 
 /// Sent when the challenge is to be interrupted: (reason)
 #define COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE "fishing_spot_interrupt_challenge"

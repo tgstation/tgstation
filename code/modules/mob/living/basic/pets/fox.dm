@@ -39,8 +39,8 @@
 /datum/ai_controller/basic_controller/fox
 	blackboard = list(
 		BB_ALWAYS_IGNORE_FACTION = TRUE,
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/ours_or_smaller,
-		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/ours_or_smaller,
+		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -72,3 +72,10 @@
 // A more docile subtype that won't attack other animals.
 /mob/living/basic/pet/fox/docile
 	ai_controller = /datum/ai_controller/basic_controller/fox/docile
+
+/mob/living/basic/pet/fox/icemoon
+	name = "icemoon fox"
+	desc = "A fox, scraping by the icemoon hostile atmosphere."
+	gold_core_spawnable = NO_SPAWN
+	habitable_atmos = null
+	minimum_survivable_temperature = ICEBOX_MIN_TEMPERATURE

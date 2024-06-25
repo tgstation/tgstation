@@ -4,7 +4,7 @@
 	desc = "You can't contain the colorful beauty of the cosmos inside."
 	form = "Condition"
 	agent = "Stars"
-	cures = list(/datum/reagent/bluespace)
+	cures = list(/datum/reagent/space_cleaner)
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	severity = DISEASE_SEVERITY_MEDIUM
@@ -19,6 +19,9 @@
 	cures = list(pick(cures))
 	var/datum/reagent/cure = GLOB.chemical_reagents_list[cures[1]]
 	cure_text = cure.name
+
+/datum/disease/advance/nebula_nausea/GetDiseaseID()
+	return "[type]"
 
 /datum/disease/advance/nebula_nausea/stage_act(seconds_per_tick, times_fired)
 	. = ..()

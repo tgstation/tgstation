@@ -33,7 +33,7 @@
 			return
 	return COMPONENT_INCOMPATIBLE
 
-/datum/component/pinata/proc/damage_inflicted(obj/target, damage, damage_type)
+/datum/component/pinata/proc/damage_inflicted(obj/target, damage, damage_type, ...)
 	SIGNAL_HANDLER
 	if(damage < minimum_damage || damage_type == STAMINA || damage_type == OXY)
 		return
@@ -52,7 +52,7 @@
 		new dropped_item(get_turf(parent))
 	qdel(src)
 
-/datum/component/pinata/Destroy(force, silent)
+/datum/component/pinata/Destroy(force)
 	UnregisterSignal(parent, list(
 		COMSIG_MOB_APPLY_DAMAGE,
 		COMSIG_LIVING_DEATH,

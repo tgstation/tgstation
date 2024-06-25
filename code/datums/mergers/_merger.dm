@@ -28,7 +28,7 @@
 	src.attempt_merge_proc = attempt_merge_proc
 	Refresh()
 
-/datum/merger/Destroy(force, ...)
+/datum/merger/Destroy(force)
 	for(var/atom/thing as anything in members)
 		RemoveMember(thing)
 	return ..()

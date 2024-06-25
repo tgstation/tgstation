@@ -41,3 +41,10 @@ DEFINE_BITFIELD(check_flags, list(
 #define UPDATE_BUTTON_BACKGROUND (1<<2)
 #define UPDATE_BUTTON_OVERLAY (1<<3)
 #define UPDATE_BUTTON_STATUS (1<<4)
+
+/// Takes in a typepath of a `/datum/action` and adds it to `src`.
+/// Only useful if you want to add the action and never desire to reference it again ever.
+#define GRANT_ACTION(typepath) do {\
+	var/datum/action/_ability = new typepath(src);\
+	_ability.Grant(src);\
+} while (FALSE)

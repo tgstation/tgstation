@@ -1,0 +1,2 @@
+/mob/living/simple_animal/hostile/skeleton/eskimo : /mob/living/basic/skeleton/settler{@OLD}
+/mob/living/simple_animal/hostile/skeleton/@SUBTYPES : /mob/living/basic/skeleton/@SUBTYPES{@OLD}

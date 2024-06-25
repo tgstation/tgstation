@@ -31,9 +31,9 @@
 		/datum/gas/halon,
 	)
 
-/obj/machinery/portable_atmospherics/scrubber/Destroy()
-	var/turf/T = get_turf(src)
-	T.assume_air(air_contents)
+/obj/machinery/portable_atmospherics/scrubber/on_deconstruction(disassembled)
+	var/turf/local_turf = get_turf(src)
+	local_turf.assume_air(air_contents)
 	return ..()
 
 /obj/machinery/portable_atmospherics/scrubber/update_icon_state()
@@ -219,5 +219,5 @@
 	if(default_unfasten_wrench(user, tool))
 		if(!movable)
 			on = FALSE
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return FALSE

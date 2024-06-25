@@ -11,11 +11,11 @@
 /obj/item/storage/belt/holster/equipped(mob/user, slot)
 	. = ..()
 	if(slot & (ITEM_SLOT_BELT|ITEM_SLOT_SUITSTORE))
-		ADD_TRAIT(user, TRAIT_GUNFLIP, CLOTHING_TRAIT)
+		ADD_CLOTHING_TRAIT(user, TRAIT_GUNFLIP)
 
 /obj/item/storage/belt/holster/dropped(mob/user)
 	. = ..()
-	REMOVE_TRAIT(user, TRAIT_GUNFLIP, CLOTHING_TRAIT)
+	REMOVE_CLOTHING_TRAIT(user, TRAIT_GUNFLIP)
 
 /obj/item/storage/belt/holster/Initialize(mapload)
 	. = ..()
@@ -195,7 +195,9 @@
 
 /obj/item/storage/belt/holster/nukie/cowboy/full/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/gun/ballistic/revolver/syndicate/cowboy = 1,
+		/obj/item/gun/ballistic/revolver/syndicate/cowboy/nuclear = 1,
 		/obj/item/ammo_box/a357 = 2,
 	), src)
+
+
 

@@ -31,8 +31,7 @@ GLOBAL_LIST_EMPTY(deliverybeacontags)
 /// List of all singularity components that exist
 GLOBAL_LIST_EMPTY_TYPED(singularities, /datum/component/singularity)
 
-/// list of all /datum/tech datums indexed by id.
-GLOBAL_LIST_EMPTY(tech_list)
+GLOBAL_LIST_EMPTY(item_to_design_list)
 /// list of all surgeries by name, associated with their path.
 GLOBAL_LIST_INIT(surgeries_list, init_surgeries())
 
@@ -50,10 +49,6 @@ GLOBAL_LIST_EMPTY(cooking_recipes_atoms)
 GLOBAL_LIST_EMPTY(rcd_list)
 /// list of wallmounted intercom radios.
 GLOBAL_LIST_EMPTY(intercoms_list)
-/// list of all current implants that are tracked to work out what sort of trek everyone is on. Sadly not on lavaworld not implemented...
-GLOBAL_LIST_EMPTY(tracked_implants)
-/// list of implants the prisoner console can track and send inject commands too
-GLOBAL_LIST_EMPTY(tracked_chem_implants)
 /// list of all pinpointers. Used to change stuff they are pointing to all at once.
 GLOBAL_LIST_EMPTY(pinpointer_list)
 /// A list of all zombie_infection organs, for any mass "animation"

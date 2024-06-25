@@ -81,8 +81,8 @@
 /proc/_log(X, Y)
 	return log(X, Y)
 
-/proc/_lowertext(T)
-	return lowertext(T)
+/proc/_LOWER_TEXT(T)
+	return LOWER_TEXT(T)
 
 /proc/_matrix(a, b, c, d, e, f)
 	return matrix(a, b, c, d, e, f)

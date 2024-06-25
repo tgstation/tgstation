@@ -716,7 +716,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "nQ" = (
-/mob/living/simple_animal/bot/hygienebot,
+/mob/living/basic/bot/hygienebot,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "nV" = (
@@ -1385,7 +1385,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/mob/living/simple_animal/bot/cleanbot,
+/mob/living/basic/bot/cleanbot,
 /obj/machinery/vending/wallmed/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
@@ -1750,7 +1750,7 @@
 "Gs" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/table/wood,
-/obj/item/book/fish_catalog{
+/obj/item/book/manual/fish_catalog{
 	pixel_x = -4
 	},
 /obj/item/food/grown/poppy/lily{
@@ -2131,7 +2131,7 @@
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 4
 	},
-/mob/living/simple_animal/bot/medbot,
+/mob/living/basic/bot/medbot,
 /turf/open/floor/iron/herringbone,
 /area/shuttle/escape)
 "NC" = (

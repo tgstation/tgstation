@@ -19,8 +19,8 @@
 	ph = 3.7
 	purity = 0.5
 	creation_purity = 0.5
-	inverse_chem = /datum/reagent/impurity/eigenswap
-	inverse_chem_val = 0
+	inverse_chem = /datum/reagent/inverse/eigenswap
+	inverse_chem_val = 0.1
 	chemical_flags = REAGENT_DEAD_PROCESS //So if you die with it in your body, you still get teleported back to the location as a corpse
 	data = list("location_created" = null, "ingested" = FALSE)//So we retain the target location and creator between reagent instances
 	///The creation point assigned during the reaction
@@ -116,6 +116,6 @@
 	var/list/lockers = list()
 	for(var/obj/structure/closet/closet in exposed_turf.contents)
 		lockers += closet
-	if(!length(lockers))
+	if(!lockers.len)
 		return
-	SSeigenstates.create_new_link(lockers)
+	GLOB.eigenstate_manager.create_new_link(lockers, subtle = FALSE)

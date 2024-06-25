@@ -9,7 +9,7 @@
 	worn_icon_state = "welder"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 3
 	throwforce = 5
@@ -17,9 +17,9 @@
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	drop_sound = 'sound/items/handling/weldingtool_drop.ogg'
 	pickup_sound = 'sound/items/handling/weldingtool_pickup.ogg'
-	light_system = MOVABLE_LIGHT
+	light_system = OVERLAY_LIGHT
 	light_range = 2
-	light_power = 0.75
+	light_power = 1.5
 	light_color = LIGHT_COLOR_FIRE
 	light_on = FALSE
 	throw_speed = 3
@@ -112,7 +112,7 @@
 
 /obj/item/weldingtool/screwdriver_act(mob/living/user, obj/item/tool)
 	flamethrower_screwdriver(tool, user)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/weldingtool/attackby(obj/item/tool, mob/user, params)
 	if(istype(tool, /obj/item/stack/rods))
@@ -134,59 +134,47 @@
 	LAZYREMOVE(update_overlays_on_z, sparks)
 	target.cut_overlay(sparks)
 
-/obj/item/weldingtool/attack(mob/living/carbon/human/attacked_humanoid, mob/living/user)
-	if(!istype(attacked_humanoid))
-		return ..()
-
-	var/obj/item/bodypart/affecting = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))
-
-	if(affecting && IS_ROBOTIC_LIMB(affecting) && !user.combat_mode)
-		if(src.use_tool(attacked_humanoid, user, 0, volume=50, amount=1))
-			if(user == attacked_humanoid)
-				user.visible_message(span_notice("[user] starts to fix some of the dents on [attacked_humanoid]'s [affecting.name]."),
-					span_notice("You start fixing some of the dents on [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
-				if(!do_after(user, 5 SECONDS, attacked_humanoid))
-					return
-			item_heal_robotic(attacked_humanoid, user, 15, 0)
-	else
-		return ..()
-
-/obj/item/weldingtool/afterattack(atom/attacked_atom, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-
-	if(isOn())
-		. |= AFTERATTACK_PROCESSED_ITEM
-		if (!QDELETED(attacked_atom) && isliving(attacked_atom)) // can't ignite something that doesn't exist
-			handle_fuel_and_temps(1, user)
-			var/mob/living/attacked_mob = attacked_atom
-			if(attacked_mob.ignite_mob())
-				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
-				user.log_message("set [key_name(attacked_mob)] on fire with [src].", LOG_ATTACK)
-
-	if(!status && attacked_atom.is_refillable())
-		. |= AFTERATTACK_PROCESSED_ITEM
-		reagents.trans_to(attacked_atom, reagents.total_volume, transferred_by = user)
-		to_chat(user, span_notice("You empty [src]'s fuel tank into [attacked_atom]."))
+/obj/item/weldingtool/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!status && interacting_with.is_refillable())
+		reagents.trans_to(interacting_with, reagents.total_volume, transferred_by = user)
+		to_chat(user, span_notice("You empty [src]'s fuel tank into [interacting_with]."))
 		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+	if(!ishuman(interacting_with))
+		return NONE
+	if(user.combat_mode)
+		return NONE
 
-	return .
+	var/mob/living/carbon/human/attacked_humanoid = interacting_with
+	var/obj/item/bodypart/affecting = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))
+	if(isnull(affecting) || !IS_ROBOTIC_LIMB(affecting))
+		return NONE
 
-/obj/item/weldingtool/attack_qdeleted(atom/attacked_atom, mob/user, proximity)
-	. = ..()
-	if(!proximity)
+	var/use_delay = 0
+
+	if(user == attacked_humanoid)
+		user.visible_message(span_notice("[user] starts to fix some of the dents on [attacked_humanoid]'s [affecting.name]."),
+			span_notice("You start fixing some of the dents on [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
+		use_delay = 5 SECONDS
+
+	if(!use_tool(attacked_humanoid, user, use_delay, volume=50, amount=1))
+		return ITEM_INTERACT_BLOCKING
+
+	attacked_humanoid.item_heal(user, brute_heal = 15, burn_heal = 0, heal_message_brute = "dents", heal_message_burn = "burnt wires", required_bodytype = BODYTYPE_ROBOTIC)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/weldingtool/afterattack(atom/target, mob/user, click_parameters)
+	if(!isOn())
 		return
-
-	if(isOn())
-		handle_fuel_and_temps(1, user)
-
-		if(!QDELETED(attacked_atom) && isliving(attacked_atom)) // can't ignite something that doesn't exist
-			var/mob/living/attacked_mob = attacked_atom
-			if(attacked_mob.ignite_mob())
-				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)].")
-				user.log_message("set [key_name(attacked_mob)] on fire with [src]", LOG_ATTACK)
-
+	use(1)
+	var/turf/location = get_turf(user)
+	location.hotspot_expose(700, 50, 1)
+	if(QDELETED(target) || !isliving(target)) // can't ignite something that doesn't exist
+		return
+	var/mob/living/attacked_mob = target
+	if(attacked_mob.ignite_mob())
+		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
+		user.log_message("set [key_name(attacked_mob)] on fire with [src].", LOG_ATTACK)
 
 /obj/item/weldingtool/attack_self(mob/user)
 	if(src.reagents.has_reagent(/datum/reagent/toxin/plasma))
@@ -196,11 +184,6 @@
 	switched_on(user)
 
 	update_appearance()
-
-/obj/item/weldingtool/proc/handle_fuel_and_temps(used = 0, mob/living/user)
-	use(used)
-	var/turf/location = get_turf(user)
-	location.hotspot_expose(700, 50, 1)
 
 /// Returns the amount of fuel in the welder
 /obj/item/weldingtool/proc/get_fuel()

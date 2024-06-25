@@ -1,7 +1,25 @@
 import { BooleanLike } from 'common/react';
-import { formatSiUnit } from '../format';
-import { useBackend, useLocalState } from '../backend';
-import { Button, ColorBox, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table, Dimmer, NumberInput, AnimatedNumber, Dropdown, NoticeBox } from '../components';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Collapsible,
+  ColorBox,
+  Dimmer,
+  Dropdown,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  NumberInput,
+  ProgressBar,
+  Section,
+  Stack,
+  Table,
+} from '../components';
+import { formatEnergy, formatPower, formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
 type MODsuitData = {
@@ -9,15 +27,17 @@ type MODsuitData = {
   ui_theme: string;
   control: string;
   complexity_max: number;
-  helmet: string;
-  chestplate: string;
-  gauntlets: string;
-  boots: string;
+  parts: PartData[];
   // Dynamic
   suit_status: SuitStatus;
   user_status: UserStatus;
   module_custom_status: ModuleCustomStatus;
   module_info: Module[];
+};
+
+type PartData = {
+  slot: string;
+  name: string;
 };
 
 type SuitStatus = {
@@ -80,7 +100,7 @@ type Module = {
   pinned: BooleanLike;
   idle_power: number;
   active_power: number;
-  use_power: number;
+  use_energy: number;
   module_complexity: number;
   cooldown_time: number;
   cooldown: number;
@@ -96,17 +116,17 @@ type ModuleConfig = {
   values: [];
 };
 
-export const MODsuit = (props, context) => {
-  const { act, data } = useBackend<MODsuitData>(context);
+export const MODsuit = (props) => {
+  const { act, data } = useBackend<MODsuitData>();
   const { ui_theme } = data;
   const { interface_break } = data.suit_status;
   return (
     <Window
-      width={600}
-      height={600}
+      width={800}
+      height={640}
       theme={ui_theme}
       title="MOD Interface Panel"
-      resizable>
+    >
       <Window.Content scrollable={!interface_break}>
         <MODsuitContent />
       </Window.Content>
@@ -114,8 +134,8 @@ export const MODsuit = (props, context) => {
   );
 };
 
-export const MODsuitContent = (props, context) => {
-  const { act, data } = useBackend<MODsuitData>(context);
+export const MODsuitContent = (props) => {
+  const { act, data } = useBackend<MODsuitData>();
   const { interface_break } = data.suit_status;
   return (
     <Box>
@@ -145,55 +165,56 @@ export const MODsuitContent = (props, context) => {
   );
 };
 
-const ConfigureNumberEntry = (props, context) => {
+const ConfigureNumberEntry = (props) => {
   const { name, value, module_ref } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend();
   return (
     <NumberInput
       value={value}
       minValue={-50}
       maxValue={50}
+      step={1}
       stepPixelSize={5}
       width="39px"
-      onChange={(e, value) =>
+      onChange={(value) =>
         act('configure', {
-          'key': name,
-          'value': value,
-          'ref': module_ref,
+          key: name,
+          value: value,
+          ref: module_ref,
         })
       }
     />
   );
 };
 
-const ConfigureBoolEntry = (props, context) => {
+const ConfigureBoolEntry = (props) => {
   const { name, value, module_ref } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend();
   return (
     <Button.Checkbox
       checked={value}
       onClick={() =>
         act('configure', {
-          'key': name,
-          'value': !value,
-          'ref': module_ref,
+          key: name,
+          value: !value,
+          ref: module_ref,
         })
       }
     />
   );
 };
 
-const ConfigureColorEntry = (props, context) => {
+const ConfigureColorEntry = (props) => {
   const { name, value, module_ref } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend();
   return (
     <>
       <Button
         icon="paint-brush"
         onClick={() =>
           act('configure', {
-            'key': name,
-            'ref': module_ref,
+            key: name,
+            ref: module_ref,
           })
         }
       />
@@ -202,31 +223,48 @@ const ConfigureColorEntry = (props, context) => {
   );
 };
 
-const ConfigureListEntry = (props, context) => {
+const ConfigureListEntry = (props) => {
   const { name, value, values, module_ref } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend();
   return (
     <Dropdown
-      displayText={value}
+      selected={value}
       options={values}
       onSelected={(value) =>
         act('configure', {
-          'key': name,
-          'value': value,
-          'ref': module_ref,
+          key: name,
+          value: value,
+          ref: module_ref,
         })
       }
     />
   );
 };
 
-const ConfigureDataEntry = (props, context) => {
+const ConfigurePinEntry = (props) => {
+  const { name, value, module_ref } = props;
+  const { act } = useBackend();
+  return (
+    <Button
+      onClick={() =>
+        act('configure', { key: name, value: !value, ref: module_ref })
+      }
+      icon="thumbtack"
+      selected={value}
+      tooltip="Pin"
+      tooltipPosition="left"
+    />
+  );
+};
+
+const ConfigureDataEntry = (props) => {
   const { name, display_name, type, value, values, module_ref } = props;
   const configureEntryTypes = {
     number: <ConfigureNumberEntry {...props} />,
     bool: <ConfigureBoolEntry {...props} />,
     color: <ConfigureColorEntry {...props} />,
     list: <ConfigureListEntry {...props} />,
+    pin: <ConfigurePinEntry {...props} />,
   };
   return (
     <LabeledList.Item label={display_name}>
@@ -244,8 +282,8 @@ const LockedInterface = () => (
   </Section>
 );
 
-const LockedModule = (props, context) => {
-  const { act, data } = useBackend(context);
+const LockedModule = (props) => {
+  const { act, data } = useBackend();
   return (
     <Dimmer>
       <Stack>
@@ -257,7 +295,7 @@ const LockedModule = (props, context) => {
   );
 };
 
-const ConfigureScreen = (props, context) => {
+const ConfigureScreen = (props) => {
   const { configuration_data, module_ref, module_name } = props;
   const configuration_keys = Object.keys(configuration_data);
   return (
@@ -306,8 +344,8 @@ const radiationLevels = (param) => {
   }
 };
 
-const SuitStatusSection = (props, context) => {
-  const { act, data } = useBackend<MODsuitData>(context);
+const SuitStatusSection = (props) => {
+  const { act, data } = useBackend<MODsuitData>();
   const {
     core_name,
     cell_charge_current,
@@ -331,7 +369,7 @@ const SuitStatusSection = (props, context) => {
       ? 'Active'
       : 'Inactive';
   const charge_percent = Math.round(
-    (100 * cell_charge_current) / cell_charge_max
+    (100 * cell_charge_current) / cell_charge_max,
   );
 
   return (
@@ -345,7 +383,8 @@ const SuitStatusSection = (props, context) => {
           content={status}
           onClick={() => act('activate')}
         />
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Charge">
           <ProgressBar
@@ -356,8 +395,9 @@ const SuitStatusSection = (props, context) => {
               bad: [-Infinity, 0.3],
             }}
             style={{
-              'text-shadow': '1px 1px 0 black',
-            }}>
+              textShadow: '1px 1px 0 black',
+            }}
+          >
             {!core_name
               ? 'No Core Detected'
               : cell_charge_max === 1
@@ -365,14 +405,14 @@ const SuitStatusSection = (props, context) => {
                 : cell_charge_current === 1e31
                   ? 'Infinite'
                   : `${formatSiUnit(
-                    cell_charge_current * 1000,
-                    0,
-                    'J'
-                  )} of ${formatSiUnit(
-                    cell_charge_max * 1000,
-                    0,
-                    'J'
-                  )} (${charge_percent}%)`}
+                      cell_charge_current,
+                      0,
+                      'J',
+                    )} of ${formatSiUnit(
+                      cell_charge_max,
+                      0,
+                      'J',
+                    )} (${charge_percent}%)`}
           </ProgressBar>
         </LabeledList.Item>
         <LabeledList.Item label="ID Lock">
@@ -437,12 +477,12 @@ const SuitStatusSection = (props, context) => {
   );
 };
 
-const HardwareSection = (props, context) => {
-  const { act, data } = useBackend<MODsuitData>(context);
-  const { control, helmet, chestplate, gauntlets, boots } = data;
+const HardwareSection = (props) => {
+  const { act, data } = useBackend<MODsuitData>();
+  const { control } = data;
   const { ai_name, core_name } = data.suit_status;
   return (
-    <Section title="Hardware" style={{ 'text-transform': 'capitalize' }}>
+    <Section title="Hardware" style={{ textTransform: 'capitalize' }}>
       <LabeledList>
         <LabeledList.Item label="AI Assistant">
           {ai_name || 'No AI Detected'}
@@ -451,21 +491,30 @@ const HardwareSection = (props, context) => {
           {core_name || 'No Core Detected'}
         </LabeledList.Item>
         <LabeledList.Item label="Control Unit">{control}</LabeledList.Item>
-        <LabeledList.Item label="Helmet">{helmet || 'None'}</LabeledList.Item>
-        <LabeledList.Item label="Chestplate">
-          {chestplate || 'None'}
-        </LabeledList.Item>
-        <LabeledList.Item label="Gauntlets">
-          {gauntlets || 'None'}
-        </LabeledList.Item>
-        <LabeledList.Item label="Boots">{boots || 'None'}</LabeledList.Item>
+        <ModParts />
       </LabeledList>
     </Section>
   );
 };
 
-const UserStatusSection = (props, context) => {
-  const { act, data } = useBackend<MODsuitData>(context);
+const ModParts = (props) => {
+  const { act, data } = useBackend<MODsuitData>();
+  const { parts } = data;
+  return (
+    <>
+      {parts.map((part) => {
+        return (
+          <LabeledList.Item key={part.slot} label={part.slot + ' Slot'}>
+            {part.name}
+          </LabeledList.Item>
+        );
+      })}
+    </>
+  );
+};
+
+const UserStatusSection = (props) => {
+  const { act, data } = useBackend<MODsuitData>();
   const { active } = data.suit_status;
   const { user_name, user_assignment } = data.user_status;
   const {
@@ -495,7 +544,8 @@ const UserStatusSection = (props, context) => {
                 good: [0.5, Infinity],
                 average: [0.2, 0.5],
                 bad: [-Infinity, 0.2],
-              }}>
+              }}
+            >
               <AnimatedNumber value={active ? health : 0} />
             </ProgressBar>
           </LabeledList.Item>
@@ -508,7 +558,8 @@ const UserStatusSection = (props, context) => {
                 good: [-Infinity, 0.2],
                 average: [0.2, 0.5],
                 bad: [0.5, Infinity],
-              }}>
+              }}
+            >
               <AnimatedNumber value={active ? loss_brute : 0} />
             </ProgressBar>
           </LabeledList.Item>
@@ -521,7 +572,8 @@ const UserStatusSection = (props, context) => {
                 good: [-Infinity, 0.2],
                 average: [0.2, 0.5],
                 bad: [0.5, Infinity],
-              }}>
+              }}
+            >
               <AnimatedNumber value={active ? loss_fire : 0} />
             </ProgressBar>
           </LabeledList.Item>
@@ -534,7 +586,8 @@ const UserStatusSection = (props, context) => {
                 good: [-Infinity, 0.2],
                 average: [0.2, 0.5],
                 bad: [0.5, Infinity],
-              }}>
+              }}
+            >
               <AnimatedNumber value={active ? loss_oxy : 0} />
             </ProgressBar>
           </LabeledList.Item>
@@ -547,7 +600,8 @@ const UserStatusSection = (props, context) => {
                 good: [-Infinity, 0.2],
                 average: [0.2, 0.5],
                 bad: [0.5, Infinity],
-              }}>
+              }}
+            >
               <AnimatedNumber value={active ? loss_tox : 0} />
             </ProgressBar>
           </LabeledList.Item>
@@ -585,9 +639,10 @@ const UserStatusSection = (props, context) => {
           <LabeledList.Item label="Fingerprints">
             <Box
               style={{
-                'word-break': 'break-all',
-                'word-wrap': 'break-word',
-              }}>
+                wordBreak: 'break-all',
+                wordWrap: 'break-word',
+              }}
+            >
               {active ? dna_unique_identity : '???'}
             </Box>
           </LabeledList.Item>
@@ -596,9 +651,10 @@ const UserStatusSection = (props, context) => {
           <LabeledList.Item label="Enzymes">
             <Box
               style={{
-                'word-break': 'break-all',
-                'word-wrap': 'break-word',
-              }}>
+                wordBreak: 'break-all',
+                wordWrap: 'break-word',
+              }}
+            >
               {active ? dna_unique_enzymes : '???'}
             </Box>
           </LabeledList.Item>
@@ -627,26 +683,24 @@ const UserStatusSection = (props, context) => {
   );
 };
 
-const ModuleSection = (props, context) => {
-  const { act, data } = useBackend<MODsuitData>(context);
+const ModuleSection = (props) => {
+  const { act, data } = useBackend<MODsuitData>();
   const { complexity_max, module_info } = data;
   const { complexity } = data.suit_status;
-  const [configureState, setConfigureState] = useLocalState(
-    context,
-    'module_configuration',
-    ''
-  );
+  const [configureState, setConfigureState] = useState('');
+
   return (
     <Section
       title="Modules"
       fill
-      buttons={`${complexity} of ${complexity_max} complexity used`}>
+      buttons={`${complexity} of ${complexity_max} complexity used`}
+    >
       {!module_info.length ? (
         <NoticeBox>No Modules Detected</NoticeBox>
       ) : (
         <Table>
           <Table.Row header>
-            <Table.Cell colspan={3}>Actions</Table.Cell>
+            <Table.Cell colSpan={3}>Actions</Table.Cell>
             <Table.Cell>Name</Table.Cell>
             <Table.Cell width={1} textAlign="center">
               <Button
@@ -668,7 +722,7 @@ const ModuleSection = (props, context) => {
               <Button
                 color="transparent"
                 icon="bolt"
-                tooltip="Use Power Cost"
+                tooltip="Use Energy Cost"
                 tooltipPosition="top"
               />
             </Table.Cell>
@@ -686,7 +740,7 @@ const ModuleSection = (props, context) => {
               <Table.Row key={module.ref}>
                 <Table.Cell width={1}>
                   <Button
-                    onClick={() => act('select', { 'ref': module.ref })}
+                    onClick={() => act('select', { ref: module.ref })}
                     icon={
                       module.module_type === 3
                         ? module.module_active
@@ -704,7 +758,7 @@ const ModuleSection = (props, context) => {
                   <Button
                     onClick={() =>
                       setConfigureState(
-                        configureState === module.ref ? '' : module.ref
+                        configureState === module.ref ? '' : module.ref,
                       )
                     }
                     icon="cog"
@@ -716,7 +770,7 @@ const ModuleSection = (props, context) => {
                 </Table.Cell>
                 <Table.Cell width={1}>
                   <Button
-                    onClick={() => act('pin', { 'ref': module.ref })}
+                    onClick={() => act('pin', { ref: module.ref })}
                     icon="thumbtack"
                     selected={module.pinned}
                     tooltip="Pin"
@@ -727,7 +781,8 @@ const ModuleSection = (props, context) => {
                 <Table.Cell>
                   <Collapsible
                     title={module.module_name}
-                    color={module.module_active ? 'green' : 'default'}>
+                    color={module.module_active ? 'green' : 'default'}
+                  >
                     <Section mr={-19}>{module.description}</Section>
                   </Collapsible>
                   {configureState === module.ref && (
@@ -738,13 +793,45 @@ const ModuleSection = (props, context) => {
                     />
                   )}
                 </Table.Cell>
-                <Table.Cell textAlign="center">{module.idle_power}</Table.Cell>
                 <Table.Cell textAlign="center">
-                  {module.active_power}
+                  <div
+                    style={{
+                      display: 'inline-block',
+                      width: '60px',
+                    }}
+                  >
+                    {formatPower(module.idle_power)}
+                  </div>
                 </Table.Cell>
-                <Table.Cell textAlign="center">{module.use_power}</Table.Cell>
                 <Table.Cell textAlign="center">
-                  {module.module_complexity}
+                  <div
+                    style={{
+                      display: 'inline-block',
+                      width: '60px',
+                    }}
+                  >
+                    {formatPower(module.active_power)}
+                  </div>
+                </Table.Cell>
+                <Table.Cell textAlign="center">
+                  <div
+                    style={{
+                      display: 'inline-block',
+                      width: '60px',
+                    }}
+                  >
+                    {formatEnergy(module.use_energy)}
+                  </div>
+                </Table.Cell>
+                <Table.Cell textAlign="center">
+                  <div
+                    style={{
+                      display: 'inline-block',
+                      width: '10px',
+                    }}
+                  >
+                    {module.module_complexity}
+                  </div>
                 </Table.Cell>
               </Table.Row>
             );

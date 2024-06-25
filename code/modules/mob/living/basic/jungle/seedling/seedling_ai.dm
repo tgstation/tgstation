@@ -1,7 +1,7 @@
 /datum/ai_controller/basic_controller/seedling
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_WEEDLEVEL_THRESHOLD = 3,
 		BB_WATERLEVEL_THRESHOLD = 90,
 	)
@@ -141,8 +141,8 @@
 
 /datum/ai_controller/basic_controller/seedling/meanie
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
@@ -161,7 +161,7 @@
 	finish_planning = FALSE
 
 ///pet commands
-/datum/pet_command/point_targetting/use_ability/solarbeam
+/datum/pet_command/point_targeting/use_ability/solarbeam
 	command_name = "Launch solarbeam"
 	command_desc = "Command your pet to launch a solarbeam at your target!"
 	radial_icon = 'icons/effects/beam.dmi'
@@ -169,7 +169,7 @@
 	speech_commands = list("beam", "solar")
 	pet_ability_key = BB_SOLARBEAM_ABILITY
 
-/datum/pet_command/point_targetting/use_ability/rapidseeds
+/datum/pet_command/point_targeting/use_ability/rapidseeds
 	command_name = "Rapid seeds"
 	command_desc = "Command your pet to launch a volley of seeds at your target!"
 	radial_icon = 'icons/obj/weapons/guns/projectiles.dmi'

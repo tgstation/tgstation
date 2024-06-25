@@ -28,15 +28,13 @@
 
 /mob/living/basic/mining/ice_demon/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/mob_cooldown/slippery_ice_floors/ice_floor = new(src)
-	ice_floor.Grant(src)
-	ai_controller.set_blackboard_key(BB_DEMON_SLIP_ABILITY, ice_floor)
-	var/datum/action/cooldown/mob_cooldown/ice_demon_teleport/demon_teleport = new(src)
-	demon_teleport.Grant(src)
-	ai_controller.set_blackboard_key(BB_DEMON_TELEPORT_ABILITY, demon_teleport)
-	var/datum/action/cooldown/spell/conjure/create_afterimages/afterimage = new(src)
-	afterimage.Grant(src)
-	ai_controller.set_blackboard_key(BB_DEMON_CLONE_ABILITY, afterimage)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/slippery_ice_floors = BB_DEMON_SLIP_ABILITY,
+		/datum/action/cooldown/mob_cooldown/ice_demon_teleport = BB_DEMON_TELEPORT_ABILITY,
+		/datum/action/cooldown/spell/conjure/limit_summons/create_afterimages = BB_DEMON_CLONE_ABILITY,
+	)
+	grant_actions_by_list(innate_actions)
+
 	AddComponent(\
 		/datum/component/ranged_attacks,\
 		projectile_type = /obj/projectile/temp/ice_demon,\

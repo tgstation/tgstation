@@ -9,6 +9,7 @@
 	stage_prob = 0.5
 	disease_flags = CURABLE
 	cures = list(/datum/reagent/consumable/salt,  /datum/reagent/medicine/mutadone)
+	bypasses_immunity = TRUE
 
 
 /datum/disease/gastrolosis/stage_act(seconds_per_tick, times_fired)
@@ -39,7 +40,7 @@
 			var/obj/item/organ/internal/eyes/eyes = locate(/obj/item/organ/internal/eyes/snail) in affected_mob.organs
 			if(!eyes && SPT_PROB(2.5, seconds_per_tick))
 				var/obj/item/organ/internal/eyes/snail/new_eyes = new()
-				new_eyes.Insert(affected_mob, drop_if_replaced = TRUE)
+				new_eyes.Insert(affected_mob)
 				affected_mob.visible_message(span_warning("[affected_mob]'s eyes fall out, with snail eyes taking its place!"), \
 				span_userdanger("You scream in pain as your eyes are pushed out by your new snail eyes!"))
 				affected_mob.emote("scream")
@@ -79,7 +80,7 @@
 					OT.MakeSlippery(TURF_WET_LUBE, 100)
 
 
-/datum/disease/gastrolosis/cure()
+/datum/disease/gastrolosis/cure(add_resistance = TRUE)
 	. = ..()
 	if(affected_mob && !is_species(affected_mob, /datum/species/snail)) //undo all the snail fuckening
 		var/mob/living/carbon/human/H = affected_mob

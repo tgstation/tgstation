@@ -48,37 +48,23 @@
 		icon_state = "gizmo_scan"
 	to_chat(user, span_notice("You switch the device to [mode == GIZMO_SCAN? "SCAN": "MARK"] MODE"))
 
-/obj/item/abductor/gizmo/attack(mob/living/target, mob/user)
+/obj/item/abductor/gizmo/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ScientistCheck(user))
-		return
+		return ITEM_INTERACT_SKIP_TO_ATTACK // So you slap them with it
 	if(!console)
 		to_chat(user, span_warning("The device is not linked to console!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	switch(mode)
 		if(GIZMO_SCAN)
-			scan(target, user)
+			scan(interacting_with, user)
 		if(GIZMO_MARK)
-			mark(target, user)
+			mark(interacting_with, user)
 
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/abductor/gizmo/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
-	if(flag)
-		return
-	if(!ScientistCheck(user))
-		return .
-	if(!console)
-		to_chat(user, span_warning("The device is not linked to console!"))
-		return .
-
-	switch(mode)
-		if(GIZMO_SCAN)
-			scan(target, user)
-		if(GIZMO_MARK)
-			mark(target, user)
-
-	return .
+/obj/item/abductor/gizmo/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/abductor/gizmo/proc/scan(atom/target, mob/living/user)
 	if(ishuman(target))
@@ -101,7 +87,7 @@
 		to_chat(user, span_warning("You need to be next to the specimen to prepare it for transport!"))
 		return
 	to_chat(user, span_notice("You begin preparing [target] for transport..."))
-	if(do_after(user, 100, target = target))
+	if(do_after(user, 10 SECONDS, target = target))
 		marked_target_weakref = WEAKREF(target)
 		to_chat(user, span_notice("You finish preparing [target] for transport."))
 
@@ -118,20 +104,15 @@
 	icon_state = "silencer"
 	inhand_icon_state = "gizmo"
 
-/obj/item/abductor/silencer/attack(mob/living/target, mob/user)
+/obj/item/abductor/silencer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!AbductorCheck(user))
-		return
-	radio_off(target, user)
+		return ITEM_INTERACT_SKIP_TO_ATTACK // So you slap them with it
 
-/obj/item/abductor/silencer/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
-	if(flag)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(!AbductorCheck(user))
-		return .
-	radio_off(target, user)
-	return .
+	radio_off(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/abductor/silencer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/abductor/silencer/proc/radio_off(atom/target, mob/living/user)
 	if( !(user in (viewers(7,target))) )
@@ -174,17 +155,19 @@
 		icon_state = "mind_device_message"
 	to_chat(user, span_notice("You switch the device to [mode == MIND_DEVICE_MESSAGE? "TRANSMISSION": "COMMAND"] MODE"))
 
-/obj/item/abductor/mind_device/afterattack(atom/target, mob/living/user, flag, params)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/abductor/mind_device/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/abductor/mind_device/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ScientistCheck(user))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	switch(mode)
 		if(MIND_DEVICE_CONTROL)
-			mind_control(target, user)
+			mind_control(interacting_with, user)
 		if(MIND_DEVICE_MESSAGE)
-			mind_message(target, user)
+			mind_message(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/abductor/mind_device/proc/mind_control(atom/target, mob/living/user)
 	if(iscarbon(target))
@@ -250,7 +233,7 @@
 /obj/item/gun/energy/alien
 	name = "alien pistol"
 	desc = "A complicated gun that fires bursts of high-intensity radiation."
-	ammo_type = list(/obj/item/ammo_casing/energy/declone)
+	ammo_type = list(/obj/item/ammo_casing/energy/radiation)
 	pin = /obj/item/firing_pin/abductor
 	icon_state = "alienpistol"
 	inhand_icon_state = "alienpistol"
@@ -292,8 +275,8 @@
 <br>
 Congratulations! You are now trained for invasive xenobiology research!"}
 
-/obj/item/paper/guides/antag/abductor/AltClick()
-	return //otherwise it would fold into a paperplane.
+/obj/item/paper/guides/antag/abductor/click_alt()
+	return CLICK_ACTION_BLOCKING //otherwise it would fold into a paperplane.
 
 /obj/item/melee/baton/abductor
 	name = "advanced baton"
@@ -453,7 +436,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	if(ishuman(victim))
 		var/mob/living/carbon/human/human_victim = victim
 		species = span_notice("[human_victim.dna.species.name]")
-		if(human_victim.mind && human_victim.mind.has_antag_datum(/datum/antagonist/changeling))
+		if(IS_CHANGELING(human_victim))
 			species = span_warning("Changeling lifeform")
 		var/obj/item/organ/internal/heart/gland/temp = locate() in human_victim.organs
 		if(temp)
@@ -515,7 +498,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 // Stops humans from disassembling abductor headsets.
 /obj/item/radio/headset/abductor/screwdriver_act(mob/living/user, obj/item/tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/abductor_machine_beacon
 	name = "machine beacon"
@@ -530,7 +513,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	user.visible_message(span_notice("[user] places down [src] and activates it."), span_notice("You place down [src] and activate it."))
 	user.dropItemToGround(src)
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50)
-	addtimer(CALLBACK(src, PROC_REF(try_spawn_machine)), 30)
+	addtimer(CALLBACK(src, PROC_REF(try_spawn_machine)), 3 SECONDS)
 
 /obj/item/abductor_machine_beacon/proc/try_spawn_machine()
 	var/viable = FALSE

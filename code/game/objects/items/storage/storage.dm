@@ -2,6 +2,7 @@
 	name = "storage"
 	icon = 'icons/obj/storage/storage.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
+	interaction_flags_click = ALLOW_RESTING|FORBID_TELEKINESIS_REACH
 	var/rummage_if_nodrop = TRUE
 	/// Should we preload the contents of this type?
 	/// BE CAREFUL, THERE'S SOME REALLY NASTY SHIT IN THIS TYPEPATH
@@ -53,17 +54,12 @@
 	max_slots,
 	max_specific_storage,
 	max_total_storage,
-	numerical_stacking,
-	allow_quick_gather,
-	allow_quick_empty,
-	collection_mode,
-	attack_hand_interact,
 	list/canhold,
 	list/canthold,
 	storage_type,
-	)
-	if(!storage_type) // If no type was passed in, default to what we already have
-		storage_type = src.storage_type
+)
+	// If no type was passed in, default to what we already have
+	storage_type ||= src.storage_type
 	return ..()
 
 

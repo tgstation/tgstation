@@ -10,12 +10,12 @@
 	hitsound = 'sound/weapons/emitter2.ogg'
 	impact_type = /obj/effect/projectile/impact/xray
 	var/static/list/particle_colors = list(
-		"red" = "#FF0000",
-		"blue" = "#00FF00",
-		"green" = "#0000FF",
-		"yellow" = "#FFFF00",
-		"cyan" = "#00FFFF",
-		"purple" = "#FF00FF"
+		"red" = COLOR_RED,
+		"blue" = COLOR_VIBRANT_LIME,
+		"green" = COLOR_BLUE,
+		"yellow" = COLOR_YELLOW,
+		"cyan" = COLOR_CYAN,
+		"purple" = COLOR_MAGENTA
 	)
 
 /obj/projectile/energy/nuclear_particle/Initialize(mapload)

@@ -41,7 +41,7 @@
 	log_admin(msg)
 	message_admins(msg)
 	admin_ticket_log(object, msg)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Atom ProcCall") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Atom ProcCall")
 
 	var/returnval = WrapAdminProcCall(object, proc_name, proc_args) // Pass the lst as an argument list to the proc
 	. = target_client.get_callproc_returnval(returnval, proc_name)

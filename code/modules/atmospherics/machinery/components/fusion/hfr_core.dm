@@ -199,3 +199,18 @@
 	QDEL_NULL(soundloop)
 	machine_parts = null
 	return..()
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/on_deconstruction(disassembled)
+	var/turf/local_turf = get_turf(loc)
+	var/datum/gas_mixture/to_release = moderator_internal || internal_fusion
+	if(to_release == moderator_internal)
+		to_release.merge(internal_fusion)
+	if(to_release)
+		local_turf.assume_air(to_release)
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/crowbar_deconstruction_act(mob/living/user, obj/item/tool, internal_pressure = 0)
+	internal_pressure = max(internal_fusion.return_pressure(), moderator_internal.return_pressure())
+	if(internal_pressure)
+		say("WARNING - Core can contain hazardous gases, deconstruct with caution!")
+	return ..(user, tool, internal_pressure)

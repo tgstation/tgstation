@@ -25,7 +25,7 @@
 		if(cult_examine_tip)
 			. += span_cult(cult_examine_tip)
 		if(!COOLDOWN_FINISHED(src, use_cooldown_duration))
-			. += span_cultitalic("The magic in [src] is too weak, it will be ready to use again in <b>[DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown_duration))]</b>.")
+			. += span_cult_italic("The magic in [src] is too weak, it will be ready to use again in <b>[DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown_duration))]</b>.")
 
 /obj/structure/destructible/cult/set_anchored(anchorvalue)
 	. = ..()
@@ -36,26 +36,6 @@
 /obj/structure/destructible/cult/update_icon_state()
 	icon_state = "[initial(icon_state)][anchored ? "" : "_off"]"
 	return ..()
-
-/obj/structure/destructible/cult/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(!isconstruct(user))
-		return ..()
-
-	var/mob/living/simple_animal/hostile/construct/healer = user
-	if(!healer.can_repair)
-		return ..()
-
-	if(atom_integrity >= max_integrity)
-		to_chat(user, span_cult("You cannot repair [src], as it's undamaged!"))
-		return
-
-	user.changeNext_move(CLICK_CD_MELEE)
-	atom_integrity = min(max_integrity, atom_integrity + 5)
-	Beam(user, icon_state = "sendbeam", time = 0.4 SECONDS)
-	user.visible_message(
-		span_danger("[user] repairs [src]."),
-		span_cult("You repair [src], leaving it at <b>[round(atom_integrity * 100 / max_integrity)]%</b> stability.")
-		)
 
 /*
  * Proc for use with the concealing spell. Hides the building (makes it invisible).
@@ -98,10 +78,10 @@
 		to_chat(user, span_warning("You're pretty sure you know exactly what this is used for and you can't seem to touch it."))
 		return
 	if(!anchored)
-		to_chat(user, span_cultitalic("You need to anchor [src] to the floor first."))
+		to_chat(user, span_cult_italic("You need to anchor [src] to the floor first."))
 		return
 	if(!COOLDOWN_FINISHED(src, use_cooldown))
-		to_chat(user, span_cultitalic("The magic in [src] is too weak, it will be ready to use again in <b>[DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown))]</b>."))
+		to_chat(user, span_cult_italic("The magic in [src] is too weak, it will be ready to use again in <b>[DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown))]</b>."))
 		return
 
 	var/list/spawned_items = get_items_to_spawn(user)
@@ -162,7 +142,7 @@
  * Override for unique feedback messages on item spawn.
  */
 /obj/structure/destructible/cult/item_dispenser/proc/succcess_message(mob/living/user, obj/item/spawned_item)
-	to_chat(user, span_cultitalic("[src] produces a [spawned_item.name]."))
+	to_chat(user, span_cult_italic("[src] produces a [spawned_item.name]."))
 
 /*
  * Simple proc intended for use in callbacks to determine if [user] can continue to use a radial menu.

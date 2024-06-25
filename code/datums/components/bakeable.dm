@@ -26,6 +26,8 @@
 	src.required_bake_time = required_bake_time
 	src.positive_result = positive_result
 	src.added_reagents = added_reagents
+	if(positive_result)
+		ADD_TRAIT(parent, TRAIT_BAKEABLE, REF(src))
 
 // Inherit the new values passed to the component
 /datum/component/bakeable/InheritComponent(datum/component/bakeable/new_comp, original, bake_result, required_bake_time, positive_result, use_large_steam_sprite)
@@ -45,6 +47,7 @@
 
 /datum/component/bakeable/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_OVEN_PLACED_IN, COMSIG_ITEM_OVEN_PROCESS, COMSIG_ATOM_EXAMINE))
+	REMOVE_TRAIT(parent, TRAIT_BAKEABLE, REF(src))
 
 /// Signal proc for [COMSIG_ITEM_OVEN_PLACED_IN] when baking starts (parent enters an oven)
 /datum/component/bakeable/proc/on_baking_start(datum/source, atom/used_oven, mob/baker)
@@ -87,11 +90,24 @@
 	baked_result.pixel_y = original_object.pixel_y
 	used_tray.AddToPlate(baked_result)
 
+	var/list/asomnia_hadders = list()
+	for(var/mob/smeller in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, used_oven))
+		if(HAS_TRAIT(smeller, TRAIT_ANOSMIA))
+			asomnia_hadders += smeller 
+
 	if(positive_result)
-		used_oven.visible_message(span_notice("You smell something great coming from [used_oven]."), blind_message = span_notice("You smell something great..."))
+		used_oven.visible_message(
+			span_notice("You smell something great coming from [used_oven]."), 
+			blind_message = span_notice("You smell something great..."),
+			ignored_mobs = asomnia_hadders,
+		)
 		BLACKBOX_LOG_FOOD_MADE(baked_result.type)
 	else
-		used_oven.visible_message(span_warning("You smell a burnt smell coming from [used_oven]."), blind_message = span_warning("You smell a burnt smell..."))
+		used_oven.visible_message(
+			span_warning("You smell a burnt smell coming from [used_oven]."),
+			blind_message = span_warning("You smell a burnt smell..."),
+			ignored_mobs = asomnia_hadders,
+		)
 	SEND_SIGNAL(parent, COMSIG_ITEM_BAKED, baked_result)
 	qdel(parent)
 
