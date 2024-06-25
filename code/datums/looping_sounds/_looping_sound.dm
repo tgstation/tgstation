@@ -170,7 +170,7 @@
 	if(!each_once)
 		. = play_from
 		while(!isfile(.) && !isnull(.))
-			. = pick_weight(.)
+			. = pick_weight(fill_with_ones(.))
 		return .
 
 
@@ -182,7 +182,7 @@
 		// Tree is a list of lists containign files
 		// If an entry in the tree goes to 0 length, we cut it from the list
 		tree += list(.)
-		. = pick_weight(.)
+		. = pick_weight(fill_with_ones(.))
 
 	if(!isfile(.))
 		return
