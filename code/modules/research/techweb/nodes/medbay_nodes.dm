@@ -27,6 +27,11 @@
 		"dropper",
 		"pillbottle",
 	)
+	experiments_to_unlock = list(
+		/datum/experiment/autopsy/human,
+		/datum/experiment/autopsy/nonhuman,
+		/datum/experiment/autopsy/xenomorph,
+	)
 
 /datum/techweb_node/chem_synthesis
 	id = "chem_synthesis"

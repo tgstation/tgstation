@@ -287,7 +287,7 @@ if [ "$pcre2_support" -eq 1 ]; then
 		st=1
 	fi
 	part "datum stockpart sanity"
-	if $grep -P 'for\b.*/obj/item/stock_parts/(?!cell)(?![\w_]+ in )' $code_files; then
+	if $grep -P 'for\b.*/obj/item/stock_parts/(?!power_store)(?![\w_]+ in )' $code_files; then
 		echo
 		echo -e "${RED}ERROR: Should be using datum/stock_part instead"
 		st=1

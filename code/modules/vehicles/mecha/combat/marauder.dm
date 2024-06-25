@@ -48,7 +48,7 @@
 	)
 
 /obj/vehicle/sealed/mecha/marauder/loaded/populate_parts()
-	cell = new /obj/item/stock_parts/cell/bluespace(src)
+	cell = new /obj/item/stock_parts/power_store/cell/bluespace(src)
 	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
 	servo = new /obj/item/stock_parts/servo/femto(src)
@@ -169,7 +169,7 @@
 	max_ammo()
 
 /obj/vehicle/sealed/mecha/marauder/mauler/loaded/populate_parts()
-	cell = new /obj/item/stock_parts/cell/bluespace(src)
+	cell = new /obj/item/stock_parts/power_store/cell/bluespace(src)
 	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
 	servo = new /obj/item/stock_parts/servo/femto(src)

@@ -1953,7 +1953,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Sn" = (
 /obj/structure/table/wood,
-/obj/item/stock_parts/cell/bluespace{
+/obj/item/stock_parts/power_store/cell/bluespace{
 	pixel_y = 4
 	},
 /obj/machinery/cell_charger{
