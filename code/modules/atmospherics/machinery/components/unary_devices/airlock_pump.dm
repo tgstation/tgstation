@@ -82,10 +82,7 @@
 		check_turfs()
 		COOLDOWN_START(src, check_turfs_cooldown, 2 SECONDS)
 
-	var/datum/pipeline/distro_pipe = parents[1]
-	var/datum/pipeline/waste_pipe = parents[2]
 	var/datum/gas_mixture/distro_air = airs[1]
-	var/datum/gas_mixture/waste_air = airs[2]
 	var/datum/gas_mixture/tile_air = loc.return_air()
 	var/tile_air_pressure = tile_air.return_pressure()
 
@@ -99,16 +96,13 @@
 			update_appearance()
 			return //Target pressure reached
 
+		var/available_moles = distro_air.total_moles()
+		var/total_tiles = adjacent_turfs.len + 1
+		var/split_moles = QUANTIZE(available_moles / total_tiles)
+
+		fill_tile(loc, split_moles, pressure_delta)
 		for(var/turf/tile in adjacent_turfs)
-			var/datum/gas_mixture/temp_air = tile.return_air()
-			var/transfer_moles = (pressure_delta * temp_air.volume) / (distro_air.temperature * R_IDEAL_GAS_EQUATION)
-			var/datum/gas_mixture/removed_air = distro_air.remove(transfer_moles)
-
-			if(!removed_air)
-				return //No air in distro
-
-			tile.assume_air(removed_air)
-		distro_pipe.update = TRUE
+			fill_tile(tile, split_moles, pressure_delta)
 	else //tile -> waste node
 		var/pressure_delta = tile_air_pressure
 
@@ -119,18 +113,38 @@
 			update_appearance()
 			return //Target pressure reached
 
+		siphon_tile(loc)
 		for(var/turf/tile in adjacent_turfs)
-			var/datum/gas_mixture/temp_air = tile.return_air()
-			var/removal_ratio =  min(1, volume_rate / temp_air.volume)
-			var/transfer_moles = (pressure_delta * removal_ratio) / (tile_air.temperature * R_IDEAL_GAS_EQUATION)
-			var/datum/gas_mixture/removed_air = tile.remove_air(transfer_moles)
+			siphon_tile(tile)
 
-			if(!removed_air)
-				continue //No air on the tile
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/fill_tile(turf/tile, moles, pressure_delta)
+	var/datum/pipeline/distro_pipe = parents[1]
+	var/datum/gas_mixture/distro_air = airs[1]
+	var/datum/gas_mixture/tile_air = tile.return_air()
+	var/transfer_moles = (pressure_delta * tile_air.volume) / (distro_air.temperature * R_IDEAL_GAS_EQUATION)
+	moles = min(moles, transfer_moles)
 
-			waste_air.merge(removed_air)
+	var/datum/gas_mixture/removed_air = distro_air.remove(moles)
 
-		waste_pipe.update = TRUE
+	if(!removed_air)
+		return //No air in distro
+
+	tile.assume_air(removed_air)
+	distro_pipe.update = TRUE
+
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/siphon_tile(turf/tile)
+	var/datum/pipeline/waste_pipe = parents[2]
+	var/datum/gas_mixture/waste_air = airs[2]
+	var/datum/gas_mixture/tile_air = tile.return_air()
+
+	var/transfer_moles = tile_air.total_moles() * (volume_rate / tile_air.volume)
+	var/datum/gas_mixture/removed_air = tile.remove_air(transfer_moles)
+
+	if(!removed_air)
+		return //No air on the tile
+
+	waste_air.merge(removed_air)
+	waste_pipe.update = TRUE
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -139,8 +153,6 @@
 		say(pump_direction ? "Pressurizing." : "Depressurizing.")
 		update_appearance()
 
-///we populate a list of turfs with nonatmos-blocked cardinal turfs AND
-/// diagonal turfs that can share atmos with *both* of the cardinal turfs
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/check_turfs()
 	adjacent_turfs.Cut()
 	var/turf/local_turf = get_turf(src)
