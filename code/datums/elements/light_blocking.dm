@@ -25,12 +25,6 @@
 		return
 	for(var/turf/turf_loc as anything in movable_target.locs)
 		turf_loc.remove_opacity_source(target)
-		for(var/atom/elem in turf_loc.contents)
-			for(var/datum/light_source/source in elem.light_sources)
-				if(!source)
-					continue
-				if(!source.effect_str)
-					source.update_corners()
 
 
 ///Updates old and new turf loc opacities.
