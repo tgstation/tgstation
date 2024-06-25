@@ -271,7 +271,7 @@
 	if(!istype(wearer) || user != wearer)
 		return
 	if(!real || sterile || user.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo))
-		return
+		return ..()
 	if(wearer.get_item_by_slot(slot_flags) == src && stat != DEAD)
 		to_chat(user, span_userdanger("[src] is latched on too tight! Get help or wait for it to let go!"))
 		return
