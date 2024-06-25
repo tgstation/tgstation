@@ -11924,10 +11924,10 @@
 	pixel_y = -5;
 	pixel_x = 3
 	},
+/obj/effect/light_emitter/fake_outdoors,
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/effect/light_emitter/fake_outdoors,
 /turf/open/floor/grass,
 /area/station/hallway/primary/central/aft)
 "eFV" = (
@@ -12484,7 +12484,7 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/grille,
-/turf/open/floor/grass,
+/turf/open/floor/plating,
 /area/station/hallway/primary/central/fore)
 "eQQ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -21563,11 +21563,11 @@
 	pixel_y = -5;
 	pixel_x = -3
 	},
+/obj/machinery/light/floor,
+/obj/effect/light_emitter/fake_outdoors,
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
-/obj/machinery/light/floor,
-/obj/effect/light_emitter/fake_outdoors,
 /turf/open/floor/grass,
 /area/station/hallway/primary/central/aft)
 "hPd" = (
@@ -22907,11 +22907,11 @@
 	},
 /obj/structure/flora/bush/flowers_pp,
 /obj/structure/flora/bush/flowers_br/style_3,
+/obj/effect/dummy/lighting_obj,
+/obj/effect/light_emitter/fake_outdoors,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/effect/dummy/lighting_obj,
-/obj/effect/light_emitter/fake_outdoors,
 /turf/open/floor/grass,
 /area/station/hallway/primary/central/aft)
 "inR" = (
@@ -23327,7 +23327,7 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/grille,
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/grass,
+/turf/open/floor/plating,
 /area/station/hallway/primary/central/fore)
 "itv" = (
 /obj/structure/transit_tube/horizontal{
@@ -25002,10 +25002,10 @@
 	pixel_x = -3;
 	pixel_y = 4
 	},
+/obj/effect/light_emitter/fake_outdoors,
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/obj/effect/light_emitter/fake_outdoors,
 /turf/open/floor/grass,
 /area/station/hallway/primary/central/aft)
 "iUT" = (
@@ -27285,11 +27285,10 @@
 /area/station/maintenance/fore/lesser)
 "jFN" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/flora/bush/flowers_pp,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/grille,
 /obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/grass,
+/turf/open/floor/plating,
 /area/station/hallway/primary/central/fore)
 "jGc" = (
 /obj/structure/window/spawner/directional/east,
@@ -30013,12 +30012,11 @@
 	pixel_x = 3;
 	pixel_y = 2
 	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/wood,
 /obj/machinery/light/floor,
 /obj/effect/light_emitter/fake_outdoors,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
 /turf/open/floor/grass,
 /area/station/hallway/primary/central/aft)
 "kvI" = (
@@ -36329,9 +36327,9 @@
 /obj/structure/flora/bush/flowers_pp{
 	pixel_y = 3
 	},
-/obj/effect/turf_decal/siding/wood,
 /obj/effect/dummy/lighting_obj,
 /obj/effect/light_emitter/fake_outdoors,
+/obj/effect/turf_decal/siding/wood,
 /turf/open/floor/grass,
 /area/station/hallway/primary/central/aft)
 "myM" = (
