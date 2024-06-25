@@ -113,7 +113,7 @@
 			sort_tag = dest_tagger.currTag
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 			update_appearance()
-	else if(istype(item, /obj/item/pen))
+	else if(IS_WRITING_UTENSIL(item))
 		if(!user.can_write(item))
 			return
 		var/str = tgui_input_text(user, "Label text?", "Set label", max_length = MAX_NAME_LEN)

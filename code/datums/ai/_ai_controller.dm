@@ -625,7 +625,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/post_blackboard_key_set(key)
 	if (isnull(pawn))
 		return
-	SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_SET(key))
+	SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_SET(key), key)
 
 /**
  * Adds the passed "thing" to the associated key

@@ -83,7 +83,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 	var/static/list/display_emote = list(
 		BB_EMOTE_SAY = list("Chirp chirp chirp!", "Kweh!", "Bwark!"),
-		BB_EMOTE_SEE = list("shakes its feathers!", "stretches!", "flaps it's wings!", "pecks at the ground!"),
+		BB_EMOTE_SEE = list("shakes its feathers!", "stretches!", "flaps its wings!", "pecks at the ground!"),
 		BB_EMOTE_SOUND = list(
 			'sound/creatures/raptor_1.ogg',
 			'sound/creatures/raptor_2.ogg',
