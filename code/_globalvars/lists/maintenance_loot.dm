@@ -379,7 +379,7 @@ GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 			/obj/item/instrument/trumpet/spectral = 1,
 			) = 1,
 		/obj/item/toy/cards/deck/tarot/haunted = 1,
-		/obj/item/organ/internal/butt/atomic = 1, //massmeta edit
+		/obj/item/organ/internal/butt/atomic = 1, //MASSMETA ADDITION (butts)
 	))
 
 //Maintenance loot spawner pools

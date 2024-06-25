@@ -440,7 +440,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/circuitboard/machine/dish_drive = 1,
 		/obj/item/reagent_containers/cup/rag = 2,
 		/obj/item/radio/headset/headset_srv = 2,
-		/obj/item/clothing/under/artisan = 2, // MASSMETA ADITION (oguzok)
+		/obj/item/clothing/under/artisan = 2, // MASSMETA EDIT ADITION (oguzok)
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 	payment_department = ACCOUNT_SRV

@@ -8,9 +8,8 @@
 /tmp/**/*
 /cache/**/*
 
-#Ignore config folders.
+#Ignore byond config folder.
 /cfg/**/*
-
 
 #Ignore IDE files we don't need in the repo.
 /.vs/**/*

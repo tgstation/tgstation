@@ -87,6 +87,6 @@
 	additional_displayed_text = list("Contains pens")
 
 /datum/loadout_item/accessory/pride
-	name = "Patriotic Pin" //MASSMETA EDIT - ORIGINAL - "Pride Pin"
+	name = "Patriotic Pin" //MASSMETA EDIT CHANGE - ORIGINAL: "Pride Pin"
 	item_path = /obj/item/clothing/accessory/pride
 	can_be_reskinned = TRUE
