@@ -449,9 +449,9 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 		return
 
 	for(var/mob/monkey in target_turf)
-		if(ismonkey(M) && M.stat == DEAD)
+		if(ismonkey(monkey) && monkey.stat == DEAD)
 			cleanup = TRUE
-			xeno_console.monkey_recycle(user, M)
+			xeno_console.monkey_recycle(user, monkey)
 
 	if(!cleanup)
 		xeno_console.feed_slime(user, target_turf)
