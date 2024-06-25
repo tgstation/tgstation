@@ -266,15 +266,12 @@
 			return FALSE
 	return ..()
 
-/obj/item/clothing/mask/facehugger/MouseDrop(atom/over)
-	var/mob/living/user = usr
+/obj/item/clothing/mask/facehugger/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	var/mob/living/carbon/human/wearer = loc
-	if(!istype(user) || !istype(wearer))
-		return..()
-	if(user != wearer)
-		return ..()
+	if(!istype(wearer) || user != wearer)
+		return
 	if(!real || sterile || user.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo))
-		return ..()
+		return
 	if(wearer.get_item_by_slot(slot_flags) == src && stat != DEAD)
 		to_chat(user, span_userdanger("[src] is latched on too tight! Get help or wait for it to let go!"))
 		return
