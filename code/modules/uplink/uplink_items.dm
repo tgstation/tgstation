@@ -87,6 +87,8 @@
 	/// Uses the purchase log, so items purchased that are not visible in the purchase log will not count towards this.
 	/// However, they won't be purchasable afterwards.
 	var/lock_other_purchases = FALSE
+	/// Can we be bought by lone operatives?
+	var/not_for_loneops = FALSE
 
 /datum/uplink_item/New()
 	. = ..()
@@ -180,6 +182,9 @@
 
 ///For special overrides if an item can be bought or not.
 /datum/uplink_item/proc/can_be_bought(datum/uplink_handler/source)
+	if(source.loneop_restricted && not_for_loneops)
+		return FALSE
+
 	return TRUE
 
 /datum/uplink_category/discounts

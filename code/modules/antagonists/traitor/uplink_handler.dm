@@ -54,6 +54,8 @@
 	var/datum/callback/replace_objectives
 	///Reference to a contractor hub that the infiltrator can run, if they purchase it.
 	var/datum/contractor_hub/contractor_hub
+	/// Do we have extra considerations for whether or not non-loneop items can be bought.
+	var/loneop_restricted = FALSE
 
 /datum/uplink_handler/New()
 	. = ..()
