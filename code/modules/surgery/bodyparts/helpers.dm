@@ -50,7 +50,7 @@
 
 /// Gets the inactive hand of the mob. Returns FALSE on non-carbons, otherwise returns the /obj/item/bodypart.
 /mob/proc/get_inactive_hand()
-	return FALSE
+	return null
 
 /mob/living/carbon/get_inactive_hand()
 	var/which_hand = BODY_ZONE_PRECISE_R_HAND
