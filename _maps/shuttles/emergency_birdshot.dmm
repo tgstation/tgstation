@@ -697,7 +697,7 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell,
+/obj/item/stock_parts/power_store/cell,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "Id" = (
