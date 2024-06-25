@@ -24,10 +24,12 @@
 	///Allowed error in pressure checks
 	var/target_pressure_error = ONE_ATMOSPHERE / 100
 	///Rate of the pump to remove gases from the air
-	var/volume_rate = 200
-	///is this pump acting on the 3x3 area around it.
-	var/widenet = TRUE
-	///List of the turfs near the pump, used for widenet
+	var/volume_rate = 1000
+	///The start time of the current cycle to calculate cycle duration
+	var/cycle_start_time
+	///Max duration of cycle, after which the pump will unlock the airlocks with a warning
+	var/cycle_timeout = 10 SECONDS
+	///List of the turfs adjacent to the pump for faster cycling and avoiding wind
 	var/list/turf/adjacent_turfs = list()
 
 	COOLDOWN_DECLARE(check_turfs_cooldown)
@@ -82,6 +84,11 @@
 		check_turfs()
 		COOLDOWN_START(src, check_turfs_cooldown, 2 SECONDS)
 
+	if(world.time - cycle_start_time > cycle_timeout)
+		say("Cycling timed out!")
+		stop_cycle()
+		return //Couldn't complete the cycle before timeout
+
 	var/datum/gas_mixture/distro_air = airs[1]
 	var/datum/gas_mixture/tile_air = loc.return_air()
 	var/tile_air_pressure = tile_air.return_pressure()
@@ -89,11 +96,8 @@
 	if(pump_direction == ATMOS_DIRECTION_RELEASING) //distro node -> tile
 		var/pressure_delta = target_pressure - tile_air_pressure
 
-		if(pressure_delta <= target_pressure_error)
-			on = FALSE
-			pump_direction = !pump_direction
+		if(pressure_delta <= target_pressure_error && stop_cycle())
 			say("Pressurization complete.")
-			update_appearance()
 			return //Target pressure reached
 
 		var/available_moles = distro_air.total_moles()
@@ -106,11 +110,8 @@
 	else //tile -> waste node
 		var/pressure_delta = tile_air_pressure
 
-		if(pressure_delta <= target_pressure_error)
-			on = FALSE
-			pump_direction = !pump_direction
+		if(pressure_delta <= target_pressure_error && stop_cycle())
 			say("Depressurization complete.")
-			update_appearance()
 			return //Target pressure reached
 
 		siphon_tile(loc)
@@ -146,14 +147,29 @@
 	waste_air.merge(removed_air)
 	waste_pipe.update = TRUE
 
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/start_cycle()
+	if(on)
+		return FALSE
+	on = TRUE
+	cycle_start_time = world.time
+	say(pump_direction ? "Pressurizing." : "Depressurizing.")
+	update_appearance()
+	return TRUE
+
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/stop_cycle()
+	if(!on)
+		return FALSE
+	on = FALSE
+	pump_direction = !pump_direction
+	update_appearance()
+	return TRUE
+
 /obj/machinery/atmospherics/components/unary/airlock_pump/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	if(!on)
-		on = TRUE
-		say(pump_direction ? "Pressurizing." : "Depressurizing.")
-		update_appearance()
+	start_cycle()
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/check_turfs()
 	adjacent_turfs.Cut()
 	var/turf/local_turf = get_turf(src)
 	adjacent_turfs = local_turf.get_atmos_adjacent_turfs(alldir = TRUE)
+
