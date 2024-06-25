@@ -188,7 +188,6 @@
 
 /datum/heretic_knowledge/ultimate/moon_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	priority_announce(
 		text = "[generate_heretic_text()] Laugh, for the ringleader [user.real_name] has ascended! \
 				The truth shall finally devour the lie! [generate_heretic_text()]",
@@ -199,8 +198,7 @@
 
 	user.client?.give_award(/datum/award/achievement/misc/moon_ascension, user)
 	ADD_TRAIT(user, TRAIT_MADNESS_IMMUNE, REF(src))
-	heretic_datum.add_team_hud(user, /datum/antagonist/lunatic)
-
+	user.mind.add_antag_datum(/datum/antagonist/lunatic/master)
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
 	// Roughly 1/5th of the station will rise up as lunatics to the heretic

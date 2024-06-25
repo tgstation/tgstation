@@ -422,7 +422,7 @@
 
 	var/duration = time / speed
 
-	Shake(duration = duration)
+	Shake(pixelshiftx = 1, pixelshifty = 0, duration = duration)
 	operating = TRUE
 	if(!juicing)
 		playsound(src, 'sound/machines/blender.ogg', 50, TRUE)
@@ -490,7 +490,7 @@
 
 	var/duration = time / speed
 
-	Shake(duration = duration)
+	Shake(pixelshiftx = 1, pixelshifty = 0, duration = duration)
 	operating = TRUE
 	playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
 
