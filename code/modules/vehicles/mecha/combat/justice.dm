@@ -27,6 +27,7 @@
 	brute_attack_sound = 'sound/mecha/mech_blade_attack.ogg'
 	attack_verbs = list("cut", "cuts", "cutting")
 	weapons_safety = TRUE
+	sefty_sound_custom = TRUE
 	max_equip_by_category = list(
 		MECHA_L_ARM = null,
 		MECHA_R_ARM = null,
@@ -62,16 +63,13 @@
 		icon_state = "[icon_state]-fly"
 
 /obj/vehicle/sealed/mecha/justice/set_safety(mob/user)
-	weapons_safety = !weapons_safety
-
+	. = ..()
 	if(weapons_safety)
 		movedelay = MOVEDELAY_SAFTY
 	else
 		movedelay = MOVEDELAY_ANGRY
+
 	playsound(src, 'sound/mecha/mech_blade_safty.ogg', 75, FALSE) //everyone need to hear this sound
-	balloon_alert(user, "justice [weapons_safety ? "calm and focused" : "is ready for battle"]")
-	SEND_SIGNAL(src, COMSIG_MECH_SAFETIES_TOGGLE, user, weapons_safety)
-	set_mouse_pointer()
 
 	update_appearance(UPDATE_ICON_STATE)
 
@@ -81,7 +79,7 @@
 	. = ..()
 	update_appearance(UPDATE_ICON_STATE)
 
-///Says 1 of 3 epic phrases before attacking and make a finishing blow to targets in stun or crit after 1 SECOND.
+/// Says 1 of 3 epic phrases before attacking and make a finishing blow to targets in stun or crit after 1 SECOND.
 /obj/vehicle/sealed/mecha/justice/proc/justice_fatality(datum/source, mob/living/pilot, atom/target, on_cooldown, is_adjacent)
 	SIGNAL_HANDLER
 
@@ -92,12 +90,6 @@
 		return FALSE
 	var/obj/item/bodypart/check_head = live_or_dead.get_bodypart(BODY_ZONE_HEAD)
 	if(!check_head)
-		return FALSE
-	var/datum/action/vehicle/sealed/mecha/invisibility/stealth_action = LAZYACCESSASSOC(src.occupant_actions, pilot, /datum/action/vehicle/sealed/mecha/invisibility)
-	if(stealth_action?.on)
-		return FALSE
-	var/datum/action/vehicle/sealed/mecha/charge_attack/charge_action = LAZYACCESSASSOC(src.occupant_actions, pilot, /datum/action/vehicle/sealed/mecha/charge_attack)
-	if(charge_action?.on)
 		return FALSE
 	say(pick("Take my Justice-Slash!", "A falling leaf...", "Justice is quite a lonely path"), forced = "Justice Mech")
 	playsound(src, 'sound/mecha/mech_stealth_pre_attack.ogg', 75, FALSE)
@@ -169,8 +161,20 @@
 	/// Aoe attack sound.
 	var/stealth_attack_sound = 'sound/mecha/mech_stealth_attack.ogg'
 
+/datum/action/vehicle/sealed/mecha/invisibility/set_chassis(passed_chassis)
+	. = ..()
+	RegisterSignal(chassis, COMSIG_MECH_SAFETIES_TOGGLE, PROC_REF(on_toggle_safety))
+
+/// update button icon when toggle safety.
+/datum/action/vehicle/sealed/mecha/invisibility/proc/on_toggle_safety()
+	SIGNAL_HANDLER
+
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
 /datum/action/vehicle/sealed/mecha/invisibility/Trigger(trigger_flags)
 	. = ..()
+	if(!.)
+		return
 	on = !on
 	if(on)
 		invisibility_on()
@@ -179,11 +183,15 @@
 
 /datum/action/vehicle/sealed/mecha/invisibility/IsAvailable(feedback)
 	. = ..()
+	if(!.)
+		return
 	if(chassis.weapons_safety)
-		owner.balloon_alert(owner, "safety is on!")
+		if(feedback)
+			owner.balloon_alert(owner, "safety is on!")
 		return FALSE
 	if(!charge)
-		owner.balloon_alert(owner, "recharging!")
+		if(feedback)
+			owner.balloon_alert(owner, "recharging!")
 		return FALSE
 
 	return TRUE
@@ -323,6 +331,7 @@
 		something_living.apply_damage(35, BRUTE)
 	playsound(chassis, stealth_attack_sound, 75, FALSE)
 	REMOVE_TRAIT(chassis, TRAIT_IMMOBILIZED, REF(src))
+	on = !on
 	charge = FALSE
 	button_icon_state = "mech_stealth_cooldown"
 	build_all_button_icons()
@@ -357,7 +366,20 @@
 		/obj/structure/cable
 	)
 
+/datum/action/vehicle/sealed/mecha/charge_attack/set_chassis(passed_chassis)
+	. = ..()
+	RegisterSignal(chassis, COMSIG_MECH_SAFETIES_TOGGLE, PROC_REF(on_toggle_safety))
+
+/// update button icon when toggle safety.
+/datum/action/vehicle/sealed/mecha/charge_attack/proc/on_toggle_safety()
+	SIGNAL_HANDLER
+
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
 /datum/action/vehicle/sealed/mecha/charge_attack/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return
 	on = !on
 	if(on)
 		charge_attack_on()
@@ -366,11 +388,15 @@
 
 /datum/action/vehicle/sealed/mecha/charge_attack/IsAvailable(feedback)
 	. = ..()
+	if(!.)
+		return FALSE
 	if(chassis.weapons_safety)
-		owner.balloon_alert(owner, "safety is on!")
+		if(feedback)
+			owner.balloon_alert(owner, "safety is on!")
 		return FALSE
 	if(!charge)
-		owner.balloon_alert(owner, "recharging!")
+		if(feedback)
+			owner.balloon_alert(owner, "recharging!")
 		return FALSE
 
 	return TRUE
