@@ -84,7 +84,7 @@
 	SIGNAL_HANDLER
 
 	if(!isliving(target))
-		return FALSE
+		return
 	var/mob/living/live_or_dead = target
 	if(live_or_dead.stat < UNCONSCIOUS && live_or_dead.getStaminaLoss() < 100)
 		return FALSE
@@ -521,7 +521,7 @@
 	)
 
 /obj/vehicle/sealed/mecha/justice/loaded/populate_parts()
-	cell = new /obj/item/stock_parts/cell/bluespace(src)
+	cell = new /obj/item/stock_parts/power_store/cell/bluespace(src)
 	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
 	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
 	servo = new /obj/item/stock_parts/servo/femto(src)

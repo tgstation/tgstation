@@ -141,6 +141,9 @@
 /obj/machinery/mecha_part_fabricator/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
+	if(user.job != JOB_ROBOTICIST)
+		to_chat(user, span_warning("You clicking and typing but don’t understand what to do with it"))
+		return FALSE
 	obj_flags |= EMAGGED
 	for(var/found_illegal_mech_nods in SSresearch.techweb_nodes)
 		var/datum/techweb_node/illegal_mech_node = SSresearch.techweb_nodes[found_illegal_mech_nods]
