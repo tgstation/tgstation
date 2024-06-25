@@ -98,13 +98,15 @@
 	/// The ref of the mob that owns this button. Only the owner can click on it.
 	var/owner
 	var/requires_discord = TRUE //MASSMETA ADDITION
+
 /atom/movable/screen/lobby/button/Click(location, control, params)
 	//MASSMETA EDIT START
 	var/force_verification = CONFIG_GET(number/force_verification)
 	var/discord = SSdiscord.lookup_id(usr.ckey)
 	if (force_verification && !discord && requires_discord)
-		to_chat(usr, span_warning("This server requires linked discord account to play! Use OOC - Verify Discord."))
-		return
+		if(tgui_alert(usr, "Для игры на сервере нужен привязанный аккаунт дискорда(OOC - Verify Discord). Желаете ли Вы открыть ссылку в браузере?",, list("Да","Нет"))!="Да")
+			return
+		DIRECT_OUTPUT(usr, link("https://discord.gg/KBsjSv7Kh9"))
 	else
 		if(owner != REF(usr))
 			return
