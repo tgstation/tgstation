@@ -431,3 +431,94 @@
       as Icebox or Tram.
   Tractor Mann:
   - rscadd: You can emag jukeboxes! you always could, but now it enables Hacked songs!
+2024-06-25:
+  Absolucy:
+  - bugfix: Eigenstasium no longer cares about purity, a mechanic which we do not
+      even use.
+  - bugfix: Fixed some assorted runtime errors.
+  - bugfix: Fixed some overlay sprite issues with the disease splicer.
+  - bugfix: Fixed curing diseases via aheals or such actually WORK.
+  - refactor: Made `pick_weight` more robust and performant.
+  - balance: '(carlarctg) Reduced the complexity cost of a lot of MODules: Pathfinder
+      2 -> 1, Tether 3 -> 2, Temperature Regulator 2 -> 1, DNA lock 2 -> 1, Health
+      analyzer 2 -> 1, Sonar 2 -> 1, Microwave beam 2 -> 1, Drill 2 -> 1, All visors
+      (including NV and thermals) 2 -> 1, Circuit Adapter 2 -> 1'
+  - balance: (carlarctg) The Mining MODsuit has had its complexity increased to 13
+      and now starts with the eating apparatus module, with a total base complexity
+      of 10/13 now.
+  - balance: (carlarctg) The Prototype MODsuit's active slowdown has been decreased
+      from 1.5 (!) to 1.
+  - spellcheck: (carlarctg) Fixed a type on the energy net module.
+  - rscadd: (Hatterhat) A really old data disk with the MOD module designs for the
+      status readout was recovered, and has been haphazardly hotpatched into the research
+      networks.
+  - rscadd: (Hatterhat) Also, the status readout module now plays a sound on death.
+  - qol: (Hatterhat) The MODsuit health analyzer's info tab health readout can now
+      be disabled in its settings.
+  - rscadd: (Melbert) The Atrocinator will now flip you even more.
+  - qol: (StaringGasMask) Now plasmamen can use the infiltrator MODsuit without having
+      their species revealed. The helmet's still not sealed, so remember your mask.
+  - qol: (Hatterhat) When a MOD fails to store something in itself when retracting,
+      you're now notified in both the chat and by a balloon alert.
+  - qol: (Momo8289) You can now use any hat with the hat stabilizer MOD.
+  - bugfix: (Momo8289) The MOD eating apparatus module now properly disables pepper
+      spray protection.
+  Absolucy, Melbert:
+  - balance: The alcohol tolerance quirk now prevents alcohol from killing you (on
+      its own). Now your character can be an alcoholic trainwreck without dying from
+      liver failure just for being yourself! You'll still be, well, a drunken wreck,
+      tho.
+  - rscadd: When you are drunk, the strength of your slurring now varies based on
+      how drunk you are. Being "a little drunk" only rarely slurs your words, being
+      average drunk is the same as the old effect, while being very drunk now slurs
+      your words even more.
+  - rscadd: Some non-alcohol sources of slurring, such as concussions, now give "generic
+      slurring" rather than "drunk slurring", which less resemble being drunk (ie,
+      no burping).
+  - rscadd: Mind restoration now heals ALL slurring, rather than only drunk slurring
+      (which includes cult / heretic slurring).
+  AlbertNanotracen:
+  - admin: Added an spawn mixtape verb to the admin tab.
+  - qol: Chemmaster UI tweaked
+  - qol: Chemical Press UI tweaked
+  - bugfix: Fixed chem master showing wrong data during reagent analysis
+  - bugfix: Fixed chem master not working with fermented drinks
+  - image: Chemmaster resprited, now has an indicator for buffer reagents
+  - refactor: Refactored chemmaster code, it now uses reagent containers instead of
+      styles
+  - balance: Chemmaster has printing animation of 0.75 second duration. Outputs 1
+      container or up to 2 pills/patches per cycle by default. Can be upgraded to
+      output up to 4 and 8 with t4 manipulators.
+  - image: Resprited many condiment containers
+  - image: Added a sprite for cooking oil / corn oil container
+  - image: Replaced old condiment bottles with the newer bottles in Condi Master
+  - rscadd: Added test tubes and racks for them
+  - balance: All 30u bottles now have 50u volume and chem master/factory output/chemical
+      press/pandemic spawn tubes instead of bottles
+  - bugfix: fixed the advanced watering can
+  Glyphee:
+  - balance: removed freerunning from goblins by default
+  - balance: 'raised stunmod
+
+      :cl:'
+  HimKobold:
+  - rscadd: Added the ability for hair dye spray to fully change your hair color by
+      selecting "None" in the "Choose Gradient" popup list.
+  - bugfix: '#2062
+
+      \:cl:'
+  JackEnoff, KnigTheThrasher:
+  - balance: Certain changeling abilities won't work while on fire.
+  - balance: Changeling stuff will burn down when lit on fire (can be regenerated
+      when you aren't burning)
+  KnigTheThrasher:
+  - rscadd: security gets spammed each time a bitrunner finishes their job because
+      they forget to take crates from perma
+  - rscdel: Deleted few doors in delta transfer area for easier access to the escape
+      pod
+  - rscdel: Deleted that oil stain under boxstation bit den door
+  - bugfix: fixed missing pipes in delta visitation area
+  - bugfix: fixed a backwards bench in delta perma
+  MrMelbert, KnigTheThrasher:
+  - rscadd: Lizards can customize their lisp
+  - code_imp: Added a modular file for species features

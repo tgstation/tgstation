@@ -1,5 +1,0 @@
-author: "HimKobold"
-delete-after: True
-changes:
-  - rscadd: "Added the ability for hair dye spray to fully change your hair color by selecting \"None\" in the \"Choose Gradient\" popup list."
-  - bugfix: "#2062\n\\:cl:"
