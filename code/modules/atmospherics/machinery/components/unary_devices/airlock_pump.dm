@@ -19,14 +19,10 @@
 
 	///Indicates that the direction of the pump, if ATMOS_DIRECTION_SIPHONING is siphoning, if ATMOS_DIRECTION_RELEASING is releasing
 	var/pump_direction = ATMOS_DIRECTION_RELEASING
-	///Set the maximum allowed external pressure
-	var/external_pressure_bound = ONE_ATMOSPHERE
-	///Set the maximum pressure at the input port
-	var/input_pressure_min = 0
-	///Set the maximum pressure at the output port
-	var/output_pressure_max = 0
-	///Set the flag for the pressure bound
-	var/pressure_checks = ATMOS_EXTERNAL_BOUND
+	///Set pressure target during pressurization cycle
+	var/target_pressure = ONE_ATMOSPHERE
+	///Allowed error in pressure checks
+	var/target_pressure_error = ONE_ATMOSPHERE / 100
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/update_icon_nopipes()
 	cut_overlays()
@@ -63,3 +59,63 @@
 	if(node_waste && !QDELETED(node_waste))
 		nodes += node_waste
 	update_appearance()
+
+/obj/machinery/atmospherics/components/unary/airlock_pump/New()
+	. = ..()
+	var/datum/gas_mixture/distro_air = airs[1]
+	var/datum/gas_mixture/waste_air = airs[2]
+	distro_air.volume = 1000
+	waste_air.volume = 1000
+
+/obj/machinery/atmospherics/components/unary/airlock_pump/process_atmos()
+	if(!on)
+		return
+
+	var/turf/location = get_turf(loc)
+	if(isclosedturf(location))
+		return
+
+	var/datum/gas_mixture/distro_air = airs[1]
+	var/datum/gas_mixture/waste_air = airs[2]
+	var/datum/pipeline/distro_pipe = parents[1]
+	var/datum/pipeline/waste_pipe = parents[2]
+	var/datum/gas_mixture/tile_air = loc.return_air()
+	var/tile_air_pressure = tile_air.return_pressure()
+
+	if(pump_direction == ATMOS_DIRECTION_RELEASING) //distro node -> tile
+		var/pressure_delta = target_pressure - tile_air_pressure
+
+		if(pressure_delta <= target_pressure_error)
+			say("Pressurization complete.")
+			return //Target pressure reached
+
+		var/transfer_moles = (pressure_delta * tile_air.volume) / (distro_air.temperature * R_IDEAL_GAS_EQUATION)
+		var/datum/gas_mixture/removed_air = distro_air.remove(transfer_moles)
+
+		if(!removed_air)
+			return //No air in distro
+
+		loc.assume_air(removed_air)
+		distro_pipe.update = TRUE
+
+	else //tile -> waste node
+		var/pressure_delta = tile_air_pressure
+
+		if(pressure_delta <= target_pressure_error)
+			say("Depressurization complete.")
+			return //Target pressure reached
+
+		var/transfer_moles = (pressure_delta * waste_air.volume) / (tile_air.temperature * R_IDEAL_GAS_EQUATION)
+		var/datum/gas_mixture/removed_air = loc.remove_air(transfer_moles)
+
+		if(!removed_air)
+			return //No air on the tile
+
+		waste_air.merge(removed_air)
+		waste_pipe.update = TRUE
+
+/obj/machinery/atmospherics/components/unary/airlock_pump/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(!on)
+		pump_direction = !pump_direction
+		on = TRUE
