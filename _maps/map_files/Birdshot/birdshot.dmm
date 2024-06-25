@@ -29588,7 +29588,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/disposalpipe/segment,
-/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "kqy" = (
@@ -65544,6 +65543,7 @@
 	codes_txt = "patrol;next_patrol=1.5-PNexus-Vault";
 	location = "1.0-Security-PNexus"
 	},
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "vEa" = (
