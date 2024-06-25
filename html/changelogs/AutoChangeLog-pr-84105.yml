@@ -1,6 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "wawa ordnance air alarms dont send alerts roundstart"
-  - qol: "wawa ordnance gets more portable atmos machines to compensate for having next to no actual portable atmos machines"
-  - bugfix: "wawa ordnance gets 3 random roundstart cores (forgor to add)"

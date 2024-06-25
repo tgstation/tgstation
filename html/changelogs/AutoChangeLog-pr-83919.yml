@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Minebots, Tamed Wolves, and Regal Rat Minions will now give you some space if you start attacking yourself, rather than joining in."

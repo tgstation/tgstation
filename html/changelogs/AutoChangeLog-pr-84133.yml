@@ -1,4 +1,0 @@
-author: "Guestify"
-delete-after: True
-changes:
-  - bugfix: "Fixed secbots and mulebots bold text"
