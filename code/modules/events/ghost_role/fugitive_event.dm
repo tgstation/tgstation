@@ -170,7 +170,7 @@
 			announcement_title += "Unregistered Signal"
 		if(HUNTER_PACK_PSYKER)
 			announcement_text_list += "HEY, CAN YOU HEAR US? We're coming to your station. There's a bad guy down there, really bad guy. We need to arrest them."
-			announcement_text_list += "We're also offering fortune telling services out from the front door, if you have paying customers."
+			announcement_text_list += "We're also offering fortune telling services out of the front door if you have paying customers."
 			announcement_title += "Fortune-Telling Entertainment Shuttle"
 
 	if(!length(announcement_text_list))
