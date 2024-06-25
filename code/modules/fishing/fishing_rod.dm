@@ -277,7 +277,7 @@
 		if(istype(bait, /obj/item/food/bait))
 			var/obj/item/food/bait/real_bait = bait
 			bait_state = real_bait.rod_overlay_icon_state
-		if(istype(bait, /obj/item/stock_parts/cell/lead))
+		if(istype(bait, /obj/item/stock_parts/power_store/cell/lead))
 			bait_state = "battery_overlay"
 		. += bait_state
 

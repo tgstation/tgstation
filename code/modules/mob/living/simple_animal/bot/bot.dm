@@ -555,8 +555,8 @@
 		item_to_drop = drop_item
 		item_to_drop.forceMove(dropzone)
 
-	if(istype(item_to_drop, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/dropped_cell = item_to_drop
+	if(istype(item_to_drop, /obj/item/stock_parts/power_store/cell))
+		var/obj/item/stock_parts/power_store/cell/dropped_cell = item_to_drop
 		dropped_cell.charge = 0
 		dropped_cell.update_appearance()
 

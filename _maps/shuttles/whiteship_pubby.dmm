@@ -406,7 +406,7 @@
 "qS" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/siding/purple{
 	dir = 9

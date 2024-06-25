@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "You can now click pens! Clickity clickery click!"
-  - bugfix: "E-Daggers can now break lockers/other renamable objects, and pendrivers can now extract their electronics."
-  - code_imp: "Most pen typechecks now check for writing implements."

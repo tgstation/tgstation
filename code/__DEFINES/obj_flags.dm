@@ -87,6 +87,8 @@
 #define INEDIBLE_CLOTHING (1<<16)
 /// Headgear/helmet allows internals
 #define HEADINTERNALS (1<<17)
+/// Prevents masks from getting adjusted from enabling internals
+#define INTERNALS_ADJUST_EXEMPT (1<<18)
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing

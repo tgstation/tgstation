@@ -53,9 +53,9 @@
 	/// If we use a cell instead of powernet
 	var/cell_powered = FALSE
 	/// The cell we charge with
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 	/// The cell we're charging
-	var/obj/item/stock_parts/cell/vampire_cell
+	var/obj/item/stock_parts/power_store/vampire_cell
 	/// Capable of vampire charging PDAs
 	var/vampire_charging_capable = FALSE
 	/// Charge contents of microwave instead of cook
@@ -123,7 +123,7 @@
 	if(cell_powered)
 		if(!isnull(cell))
 			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove cell"
-		else if(held_item && istype(held_item, /obj/item/stock_parts/cell))
+		else if(held_item && istype(held_item, /obj/item/stock_parts/power_store/cell))
 			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Insert cell"
 
 	if(held_item?.tool_behaviour == TOOL_WRENCH)
@@ -385,7 +385,7 @@
 			return TRUE
 		return ..()
 
-	if(istype(item, /obj/item/stock_parts/cell) && cell_powered)
+	if(istype(item, /obj/item/stock_parts/power_store/cell) && cell_powered)
 		var/swapped = FALSE
 		if(!isnull(cell))
 			cell.forceMove(drop_location())
@@ -903,12 +903,12 @@
 /obj/machinery/microwave/engineering/Initialize(mapload)
 	. = ..()
 	if(mapload)
-		cell = new /obj/item/stock_parts/cell/upgraded/plus
+		cell = new /obj/item/stock_parts/power_store/cell/upgraded/plus
 	update_appearance()
 
 /obj/machinery/microwave/engineering/cell_included/Initialize(mapload)
 	. = ..()
-	cell = new /obj/item/stock_parts/cell/upgraded/plus
+	cell = new /obj/item/stock_parts/power_store/cell/upgraded/plus
 	update_appearance()
 
 #undef MICROWAVE_NORMAL
