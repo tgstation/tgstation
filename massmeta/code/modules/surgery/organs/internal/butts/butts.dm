@@ -286,7 +286,7 @@
 		butt.atmos_spawn_air("miasma=5;TEMP=310.15")
 		playsound(src, pick('massmeta/sounds/fartts/fart1.ogg', 'massmeta/sounds/fartts/fart2.ogg', 'massmeta/sounds/fartts/fart3.ogg', 'massmeta/sounds/fartts/fart4.ogg'), 100 ,use_reverb = TRUE)
 
-/mob/living/basic/bot/buttbot/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods)
+/mob/living/basic/bot/buttbot/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods, message_range)
 	. = ..()
 	if(!cooling_down && prob(listen_probability) && ishuman(speaker))
 		cooling_down = TRUE
