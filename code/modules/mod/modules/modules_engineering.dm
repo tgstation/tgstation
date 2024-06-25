@@ -16,7 +16,7 @@
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
 	if(istype(head_cover))
 		//this is a screen that displays an image, so flash sensitives can use this to protect against flashes.
-		head_cover.flash_protect = FLASH_PROTECTION_MAXIMUM
+		head_cover.flash_protect = FLASH_PROTECTION_WELDER_HYPER_SENSITIVE
 
 /obj/item/mod/module/welding/on_suit_deactivation(deleting = FALSE)
 	if(deleting)

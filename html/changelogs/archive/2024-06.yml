@@ -994,3 +994,55 @@
       pool.
   mc-oofert:
   - bugfix: borg factory gives you your preference borg name
+2024-06-23:
+  Donglesplonge:
+  - balance: most livestock crates, with some exception, have been made cheaper to
+      facilitate healthier mental states in the crew, go build a farm!
+  jlsnow301:
+  - bugfix: 'Bitrunning made more illegal: Increased the rate at which antags spawn.'
+  - bugfix: '"Temporary" bitrunning antagonists and spawners are made actually temporary.
+      You will return to your original body after death, just like CTF.'
+  - rscadd: Added more examine text for ghosts to bitrunning equipment.
+  - balance: Server cooldown reduced by 1 minute at base level.
+  - rscadd: As an observer, you can now switch views between station and virtual domain
+      by clicking the hololadder and netpod respectively.
+  - rscdel: Removed the starfront saloon BR map.
+  - bugfix: 'Syndicate assault map: Added pistols, reduced exploits.'
+2024-06-24:
+  Bisar:
+  - balance: Sparks have been heavily adjusted; they only affect items made of plasma,
+      pools of welding fuel, flammable people, cigarettes, and items that contain
+      reagents... for now. Their long-standing behavior of igniting flammable gas
+      has been untouched.
+  DATA, with sounds by Beebblie:
+  - sound: Added sounds for turning on and off internals.
+  GoblinBackwards:
+  - rscadd: Breathing nitrium now has a chance to make you burp.
+  Kocma-san:
+  - bugfix: you can hold Ian in your arms
+  LT3:
+  - bugfix: Smartfridge will now correctly respond 'no power' instead of 'forbidden
+      item' when it doesn't have power
+  LucyGrind:
+  - bugfix: crayons interact with washing machine once again
+  Melbert:
+  - bugfix: Touch Spells now apply click CD again
+  - bugfix: Touch Spells now apply fingerprints again
+  - bugfix: Touch Spells now check if your hands are blocked again
+  - bugfix: Fixed plate shards not randomizing icon correctly
+  - qol: Gives plate sharts a more fitting hitsound / caltrop sound, gives them a
+      set caltrop stun duration (instead of default)
+  - bugfix: Fix DNA vault probes
+  - bugfix: Bloody footprints now go until you run out of blood on your feet instead
+      if only a single tile
+  - rscadd: Adds an effect for emagging an emag
+  - rscadd: Adds an effect for emagging a fake emag
+  Paxilmaniac:
+  - rscadd: Electric eels now prefer used car batteries for bait.
+  Rhials:
+  - bugfix: Admin-only deadchat broadcasts don't append a second "this message is
+      for admins only" string for every admin online.
+  ShizCalev:
+  - qol: Oven trays now count as valid trays to cut food on.
+  - rscadd: The game settings menu can now actually be accessed through the escape
+      menu.

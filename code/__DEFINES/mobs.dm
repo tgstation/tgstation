@@ -443,13 +443,14 @@
 #define REM REAGENTS_EFFECT_MULTIPLIER //! Shorthand for the above define for ease of use in equations and the like
 
 // Eye protection
+// THese values are additive to determine your overall flash protection.
 #define FLASH_PROTECTION_HYPER_SENSITIVE -2
 #define FLASH_PROTECTION_SENSITIVE -1
 #define FLASH_PROTECTION_NONE 0
 #define FLASH_PROTECTION_FLASH 1
 #define FLASH_PROTECTION_WELDER 2
-#define FLASH_PROTECTION_WELDER_PLUS 3
-#define FLASH_PROTECTION_MAXIMUM 4
+#define FLASH_PROTECTION_WELDER_SENSITIVE 3
+#define FLASH_PROTECTION_WELDER_HYPER_SENSITIVE 4
 
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY 5

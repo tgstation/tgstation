@@ -262,7 +262,7 @@
 		if(HAS_TRAIT(user, TRAIT_PACIFISM))
 			user.visible_message(span_notice("[user] taunts [src], daring [p_them()] to give chase!"), \
 				span_notice("You taunt [src], daring [p_them()] to chase you!"), span_hear("You hear someone shout a daring taunt!"), DEFAULT_MESSAGE_RANGE, user)
-			speak("Taunted by pacifist scumbag <b>[user]</b> in [get_area(src)].", radio_channel)
+			speak("Taunted by pacifist scumbag [RUNECHAT_BOLD("[user]")] in [get_area(src)].", radio_channel)
 
 			// Interrupt the attack chain. We've already handled this scenario for pacifists.
 			return
@@ -374,7 +374,7 @@
 	log_combat(src, current_target, "stunned")
 	if(security_mode_flags & SECBOT_DECLARE_ARRESTS)
 		var/area/location = get_area(src)
-		speak("[security_mode_flags & SECBOT_HANDCUFF_TARGET ? "Arresting" : "Detaining"] level [threat] scumbag <b>[current_target]</b> in [location].", radio_channel)
+		speak("[security_mode_flags & SECBOT_HANDCUFF_TARGET ? "Arresting" : "Detaining"] level [threat] scumbag [RUNECHAT_BOLD("[current_target]")] in [location].", radio_channel)
 	current_target.visible_message(span_danger("[src] stuns [current_target]!"),\
 							span_userdanger("[src] stuns you!"))
 

@@ -43,3 +43,4 @@
 	. = ..()
 	var/initial_percent = rand(20, 80) / 100
 	charge = initial_percent * maxcharge
+	ADD_TRAIT(src, TRAIT_FISHING_BAIT, INNATE_TRAIT)

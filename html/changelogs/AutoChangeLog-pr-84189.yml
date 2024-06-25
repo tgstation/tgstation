@@ -1,0 +1,4 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - qol: "NT Frontier app now allows to select experiments from inserted data disks"
