@@ -4,7 +4,7 @@
 
 /datum/unit_test/cyborg_tool/Run()
 	var/mob/living/carbon/human/consistent/not_a_borg = allocate(__IMPLIED_TYPE__)
-	var/obj/item/borg/cyborg_omnitool/tool = allocate(__IMPLIED_TYPE__)
+	var/obj/item/borg/cyborg_omnitool/engineering/tool = allocate(__IMPLIED_TYPE__)
 	tool.selected = locate(/obj/item/wrench/cyborg) in tool.toolbox.omnitools
 
 	not_a_borg.put_in_active_hand(tool)
