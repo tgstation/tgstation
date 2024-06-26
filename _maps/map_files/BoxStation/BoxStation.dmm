@@ -4589,7 +4589,15 @@
 	},
 /obj/machinery/camera/autoname/directional/west,
 /obj/machinery/light_switch/directional/west,
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/rack,
+/obj/item/storage/medkit/regular{
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/obj/item/storage/medkit/regular{
+	pixel_y = 3
+	},
+/obj/item/storage/box/bodybags,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "bBO" = (
@@ -4616,8 +4624,6 @@
 /obj/effect/turf_decal/stripes/end,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/shower/directional/south,
-/obj/machinery/iv_drip,
-/obj/item/reagent_containers/blood,
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "bCg" = (
@@ -11206,17 +11212,16 @@
 	dir = 9
 	},
 /obj/machinery/airalarm/directional/north,
-/obj/structure/table/glass,
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/item/storage/medkit/regular{
-	pixel_y = 3
+/obj/structure/table/reinforced/rglass,
+/obj/item/reagent_containers/syringe{
+	name = "steel point"
 	},
-/obj/item/storage/medkit/regular{
-	pixel_x = 3;
-	pixel_y = 7
-	},
-/obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
+/obj/item/reagent_containers/cup/bottle/epinephrine,
+/obj/item/reagent_containers/cup/bottle/multiver,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/clothing/gloves/latex,
 /obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
@@ -24394,9 +24399,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "iiQ" = (
-/obj/structure/chair{
-	dir = 1
-	},
+/obj/structure/chair/office,
+/obj/effect/landmark/start/brig_physician,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "ija" = (
@@ -33442,7 +33446,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/table/glass,
+/obj/structure/table/reinforced/rglass,
 /obj/item/paper_bin{
 	pixel_y = 6
 	},
@@ -33454,6 +33458,7 @@
 	pixel_y = 2
 	},
 /obj/item/pen,
+/obj/item/roller,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "lfg" = (
@@ -37888,6 +37893,9 @@
 /area/station/hallway/primary/aft)
 "mFi" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/machinery/defibrillator_mount/directional/south,
+/obj/machinery/iv_drip,
+/obj/item/reagent_containers/blood,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "mFK" = (
@@ -48870,16 +48878,8 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/west,
-/obj/structure/table/glass,
-/obj/item/storage/box/bodybags,
-/obj/item/reagent_containers/syringe{
-	name = "steel point"
-	},
-/obj/item/reagent_containers/cup/bottle/epinephrine,
-/obj/item/reagent_containers/cup/bottle/multiver,
-/obj/item/storage/backpack/duffelbag/sec/surgery,
-/obj/item/clothing/neck/stethoscope,
-/obj/machinery/defibrillator_mount/directional/west,
+/obj/structure/closet/secure_closet/brig_physician,
+/obj/item/clothing/suit/jacket/straight_jacket,
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "qpi" = (
@@ -69761,7 +69761,7 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/north,
-/obj/structure/table/glass,
+/obj/structure/table/reinforced/rglass,
 /obj/machinery/computer/records/medical/laptop,
 /turf/open/floor/iron/white,
 /area/station/security/medical)

@@ -129,3 +129,10 @@
 /obj/effect/landmark/start/security_assistant
 	name = "Security Assistant"
 	icon_state = "Security Officer"
+
+//Brig Physician Spawn Location Marker - Dexee, 4/13/24
+
+/obj/effect/landmark/start/brig_physician
+	name = "Brig Physician"
+	icon = 'monkestation/icons/mob/landmarks.dmi'
+	icon_state = "Brig Physician"

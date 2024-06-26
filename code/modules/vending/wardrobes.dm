@@ -34,6 +34,10 @@
 		/obj/item/clothing/head/helmet/hat/cowboy = 3,
 		/obj/item/clothing/head/costume/constable = 3, //monkestation edit
 		/obj/item/clothing/under/rank/security/constable = 3, //Monkestation edit
+		/obj/item/clothing/under/rank/security/brig_physician = 3, //Monkestation edit
+		/obj/item/clothing/under/rank/security/brig_physician/skirt = 3, //Monkestation edit
+		/obj/item/clothing/suit/toggle/labcoat/brig_physician = 3, //Monkestation edit
+		/obj/item/clothing/shoes/sneakers/secred = 3, //Monkestation edit
 	)
 	premium = list(
 		/obj/item/clothing/under/rank/security/officer/formal = 3,

@@ -106,12 +106,13 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_SECURITY_OFFICER_SUPPLY = 16,
 		JOB_DETECTIVE = 17,
 		JOB_SECURITY_ASSISTANT = 18, // monkestation edit: add security assistants
+		JOB_BRIG_PHYSICIAN = 19, // monkestation edit: add brig physician
 		// 20-29: Medbay
-		JOB_CHIEF_MEDICAL_OFFICER = 20,
-		JOB_CHEMIST = 21,
-		JOB_VIROLOGIST = 22,
-		JOB_MEDICAL_DOCTOR = 23,
-		JOB_PARAMEDIC = 24,
+		JOB_CHIEF_MEDICAL_OFFICER = 21,
+		JOB_CHEMIST = 22,
+		JOB_VIROLOGIST = 23,
+		JOB_MEDICAL_DOCTOR = 24,
+		JOB_PARAMEDIC = 25,
 		// 30-39: Science
 		JOB_RESEARCH_DIRECTOR = 30,
 		JOB_SCIENTIST = 31,
