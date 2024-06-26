@@ -1,5 +1,18 @@
 import { useBackend, useLocalState } from '../backend';
-import { BlockQuote, Box, Button, Collapsible, Dropdown, Flex, Icon, Input, LabeledList, ProgressBar, Section, Table } from '../components';
+import {
+  BlockQuote,
+  Box,
+  Button,
+  Collapsible,
+  Dropdown,
+  Flex,
+  Icon,
+  Input,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Table,
+} from '../components';
 import { TableCell, TableRow } from '../components/Table';
 import { Window } from '../layouts';
 
@@ -20,7 +33,8 @@ export const NifPanel = (props) => {
       width={500}
       height={400}
       resizable
-      theme={current_theme}>
+      theme={current_theme}
+    >
       <Window.Content>
         <Section
           title={`Welcome to your NIF, ${linked_mob_name}`}
@@ -32,14 +46,16 @@ export const NifPanel = (props) => {
               selected={settingsOpen}
               onClick={() => setSettingsOpen(!settingsOpen)}
             />
-          }>
+          }
+        >
           {(settingsOpen && <NifSettings />) || <NifStats />}
           {(!settingsOpen && (
             <Section
               title={`NIFSoft Programs (${
                 max_nifsofts - loaded_nifsofts.length
               } Slots Remaining)`}
-              right>
+              right
+            >
               {(loaded_nifsofts.length && (
                 <Flex direction="column">
                   {loaded_nifsofts.map((nifsoft) => (
@@ -61,7 +77,8 @@ export const NifPanel = (props) => {
                               })
                             }
                           />
-                        }>
+                        }
+                      >
                         <Table>
                           <TableRow>
                             <TableCell>
@@ -73,8 +90,8 @@ export const NifPanel = (props) => {
                               {nifsoft.activation_cost === 0
                                 ? ' No activation cost'
                                 : ' ' +
-                                (nifsoft.activation_cost / max_power) * 100 +
-                                '% per activation'}
+                                  (nifsoft.activation_cost / max_power) * 100 +
+                                  '% per activation'}
                             </TableCell>
                             <TableCell>
                               <Button
@@ -86,8 +103,8 @@ export const NifPanel = (props) => {
                               {nifsoft.active_cost === 0
                                 ? ' No active drain'
                                 : ' ' +
-                                (nifsoft.active_cost / max_power) * 100 +
-                                '% consumed while active'}
+                                  (nifsoft.active_cost / max_power) * 100 +
+                                  '% consumed while active'}
                             </TableCell>
                             <TableCell>
                               <Button
@@ -231,7 +248,8 @@ const NifSettings = (props) => {
             icon="info"
             tooltip="Rewards points are an alternative currency gained by purchasing NIFSofts, rewards points carry between shifts."
           />
-        }>
+        }
+      >
         {stored_points}
       </LabeledList.Item>
     </LabeledList>
@@ -282,7 +300,8 @@ const NifStats = (props) => {
               average: [max_power * 0.33, max_power * 0.66],
               bad: [0, max_power * 0.33],
             }}
-            alertAfter={max_power * 0.1}>
+            alertAfter={max_power * 0.1}
+          >
             {(power_level / max_power) * 100 +
               '%' +
               ' (' +

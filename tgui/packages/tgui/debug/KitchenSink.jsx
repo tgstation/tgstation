@@ -38,7 +38,8 @@ export const KitchenSink = (props) => {
                   key={i}
                   color="transparent"
                   selected={i === pageIndex}
-                  onClick={() => setPageIndex(i)}>
+                  onClick={() => setPageIndex(i)}
+                >
                   {story.meta.title}
                 </Tabs.Tab>
               ))}

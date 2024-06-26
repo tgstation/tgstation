@@ -69,7 +69,8 @@ const AuthView = (props) => {
                 icon="lock"
                 color="good"
                 ml={2}
-                onClick={() => act('logout')}>
+                onClick={() => act('logout')}
+              >
                 Log Out
               </Button>
             </NoticeBox>

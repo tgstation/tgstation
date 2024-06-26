@@ -139,14 +139,15 @@ export class InfinitePlane extends Component {
             overflow: 'hidden',
             position: 'relative',
           },
-        })}>
+        })}
+      >
         <div
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
           style={{
-            'position': 'fixed',
-            'height': '100%',
-            'width': '100%',
+            position: 'fixed',
+            height: '100%',
+            width: '100%',
             'background-image': `url("${backgroundImage}")`,
             'background-position': `${finalLeft}px ${finalTop}px`,
             'background-repeat': 'repeat',
@@ -157,12 +158,13 @@ export class InfinitePlane extends Component {
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
           style={{
-            'position': 'fixed',
-            'transform': `translate(${finalLeft}px, ${finalTop}px) scale(${zoom})`,
+            position: 'fixed',
+            transform: `translate(${finalLeft}px, ${finalTop}px) scale(${zoom})`,
             'transform-origin': 'top left',
-            'height': '100%',
-            'width': '100%',
-          }}>
+            height: '100%',
+            width: '100%',
+          }}
+        >
           {children}
         </div>
 
@@ -174,7 +176,8 @@ export class InfinitePlane extends Component {
             <ProgressBar
               minValue={ZOOM_MIN_VAL}
               value={zoom}
-              maxValue={ZOOM_MAX_VAL}>
+              maxValue={ZOOM_MAX_VAL}
+            >
               {zoom}x
             </ProgressBar>
           </Stack.Item>

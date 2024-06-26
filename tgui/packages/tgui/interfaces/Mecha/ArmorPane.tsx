@@ -16,7 +16,7 @@ export const ArmorPane = (props) => {
               <Box
                 className={classes(['mechaarmor76x76', module.iconstate_name])}
                 style={{
-                  'transform': 'scale(0.8)',
+                  transform: 'scale(0.8)',
                 }}
               />
             </Stack.Item>

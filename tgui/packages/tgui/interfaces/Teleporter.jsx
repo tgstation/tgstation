@@ -48,7 +48,8 @@ export const Teleporter = (props) => {
                       content="Calibrate"
                       onClick={() => act('calibrate')}
                     />
-                  }>
+                  }
+                >
                   {(calibrating && <Box color="average">In Progress</Box>) ||
                     (calibrated && <Box color="good">Optimal</Box>) || (
                       <Box color="bad">Sub-Optimal</Box>

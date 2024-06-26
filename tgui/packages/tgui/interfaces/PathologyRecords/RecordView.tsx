@@ -1,4 +1,12 @@
-import { Input, Box, Stack, Section, NoticeBox, LabeledList, Button } from 'tgui/components';
+import {
+  Input,
+  Box,
+  Stack,
+  Section,
+  NoticeBox,
+  LabeledList,
+  Button,
+} from 'tgui/components';
 import { getMedicalRecord } from './helpers';
 import { useBackend, useLocalState } from '../../backend';
 import { MedicalRecordData } from './types';
@@ -43,7 +51,8 @@ export const MedicalRecordView = (props) => {
           fill
           scrollable
           title={name}
-          wrap>
+          wrap
+        >
           <LabeledList>
             <LabeledList.Item label="Name">
               <EditableText
@@ -91,7 +100,7 @@ const EditableText = (props: Props) => {
   const { act } = useBackend();
   const [editing, setEditing] = useLocalState<boolean>(
     `editing_${field}`,
-    false
+    false,
   );
 
   return editing ? (
@@ -119,7 +128,8 @@ const EditableText = (props: Props) => {
             'text-decoration-thickness': '1px',
             'text-underline-offset': '1px',
           }}
-          onClick={() => setEditing(true)}>
+          onClick={() => setEditing(true)}
+        >
           {!text ? '(none)' : text}
         </Box>
       </Stack.Item>

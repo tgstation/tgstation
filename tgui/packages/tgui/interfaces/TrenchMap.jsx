@@ -23,11 +23,11 @@ const MapInfo = (props) => {
         <div>
           <div
             style={{
-              'float': 'left',
-              'height': '15px',
-              'width': '15px',
-              'clear': 'both',
-              'border': '1px solid black',
+              float: 'left',
+              height: '15px',
+              width: '15px',
+              clear: 'both',
+              border: '1px solid black',
               'background-color': '#0000FF',
             }}
           />
@@ -38,11 +38,11 @@ const MapInfo = (props) => {
         <div>
           <div
             style={{
-              'float': 'left',
-              'height': '15px',
-              'width': '15px',
-              'clear': 'both',
-              'border': '1px solid black',
+              float: 'left',
+              height: '15px',
+              width: '15px',
+              clear: 'both',
+              border: '1px solid black',
               'background-color': '#00FF95',
             }}
           />
@@ -53,11 +53,11 @@ const MapInfo = (props) => {
         <div>
           <div
             style={{
-              'float': 'left',
-              'height': '15px',
-              'width': '15px',
-              'clear': 'both',
-              'border': '1px solid black',
+              float: 'left',
+              height: '15px',
+              width: '15px',
+              clear: 'both',
+              border: '1px solid black',
               'background-color': '#FF0000',
             }}
           />
@@ -68,11 +68,11 @@ const MapInfo = (props) => {
         <div>
           <div
             style={{
-              'float': 'left',
-              'height': '15px',
-              'width': '15px',
-              'clear': 'both',
-              'border': '1px solid black',
+              float: 'left',
+              height: '15px',
+              width: '15px',
+              clear: 'both',
+              border: '1px solid black',
               'background-color': '#FF7878',
             }}
           />
@@ -83,11 +83,11 @@ const MapInfo = (props) => {
         <div>
           <div
             style={{
-              'float': 'left',
-              'height': '15px',
-              'width': '15px',
-              'clear': 'both',
-              'border': '1px solid black',
+              float: 'left',
+              height: '15px',
+              width: '15px',
+              clear: 'both',
+              border: '1px solid black',
               'background-color': '#49A0C2',
             }}
           />
@@ -108,19 +108,19 @@ const HotspotRender = (props) => {
         <div
           key={hotspot.center_y + hotspot.center_x}
           style={{
-            'bottom': `${hotspot.center_y * 2 + 60}px`,
-            'left': `${hotspot.center_x * 2}px`,
-            'width': `${hotspot.radius * 4 + 2}px`,
-            'height': `${hotspot.radius * 4 + 2}px`,
-            'background': `${
+            bottom: `${hotspot.center_y * 2 + 60}px`,
+            left: `${hotspot.center_x * 2}px`,
+            width: `${hotspot.radius * 4 + 2}px`,
+            height: `${hotspot.radius * 4 + 2}px`,
+            background: `${
               hotspot.locked
                 ? 'rgba(255, 120, 120, 0.6)'
                 : 'rgba(255, 0, 0, 0.8)'
             }`,
             'margin-left': `-${hotspot.radius * 2}px`,
             'margin-bottom': `-${hotspot.radius * 2}px`,
-            'alpha': '150',
-            'position': 'absolute',
+            alpha: '150',
+            position: 'absolute',
           }}
         />
       ))}

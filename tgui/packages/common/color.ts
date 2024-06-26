@@ -30,7 +30,7 @@ export class Color {
       this.r - this.r * percent,
       this.g - this.g * percent,
       this.b - this.b * percent,
-      this.a
+      this.a,
     );
   }
 
@@ -47,7 +47,7 @@ export class Color {
     return new Color(
       parseInt(hex.substr(1, 2), 16),
       parseInt(hex.substr(3, 2), 16),
-      parseInt(hex.substr(5, 2), 16)
+      parseInt(hex.substr(5, 2), 16),
     );
   }
 
@@ -59,7 +59,7 @@ export class Color {
       (c2.r - c1.r) * n + c1.r,
       (c2.g - c1.g) * n + c1.g,
       (c2.b - c1.b) * n + c1.b,
-      (c2.a - c1.a) * n + c1.a
+      (c2.a - c1.a) * n + c1.a,
     );
   }
 
@@ -102,7 +102,7 @@ export class Color {
 const round = (
   number: number,
   digits = 0,
-  base = Math.pow(10, digits)
+  base = Math.pow(10, digits),
 ): number => {
   return Math.round(base * number) / base;
 };
@@ -222,7 +222,7 @@ export const hsvaToHsla = ({ h, s, v, a }: HsvaColor): HslaColor => {
     s: round(
       hh > 0 && hh < 200
         ? ((s * v) / 100 / (hh <= 100 ? hh : 200 - hh)) * 100
-        : 0
+        : 0,
     ),
     l: round(hh / 2),
     a: round(a, 2),
@@ -386,7 +386,7 @@ export const luminance = (rgb: RgbColor): number => {
 
 export const contrast = (
   foreground: RgbColor,
-  background: RgbColor
+  background: RgbColor,
 ): number => {
   const foreground_luminance = luminance(foreground);
   const background_luminance = luminance(background);

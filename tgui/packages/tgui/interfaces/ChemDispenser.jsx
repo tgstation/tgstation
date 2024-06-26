@@ -2,7 +2,15 @@ import { toFixed } from 'common/math';
 import { toTitleCase } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { AnimatedNumber, Box, Button, Icon, LabeledList, ProgressBar, Section } from '../components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 export const ChemDispenser = (props) => {
@@ -59,7 +67,8 @@ export const ChemDispenser = (props) => {
                 onClick={() => setHasCol(!hasCol)}
               />
             </>
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Energy">
               <ProgressBar value={data.energy / data.maxEnergy}>
@@ -106,7 +115,8 @@ export const ChemDispenser = (props) => {
                 />
               )}
             </>
-          }>
+          }
+        >
           <Box mr={-1}>
             {recipes.map((recipe) => (
               <Button
@@ -139,7 +149,8 @@ export const ChemDispenser = (props) => {
                 })
               }
             />
-          ))}>
+          ))}
+        >
           <Box mr={-1}>
             {data.chemicals.map((chemical) => (
               <Button
@@ -177,7 +188,8 @@ export const ChemDispenser = (props) => {
               content={amount}
               onClick={() => act('remove', { amount })}
             />
-          ))}>
+          ))}
+        >
           <LabeledList>
             <LabeledList.Item
               label="Beaker"
@@ -190,7 +202,8 @@ export const ChemDispenser = (props) => {
                     onClick={() => act('eject')}
                   />
                 )
-              }>
+              }
+            >
               {(recording && 'Virtual beaker') ||
                 (data.isBeakerLoaded && (
                   <>

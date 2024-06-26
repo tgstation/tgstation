@@ -26,7 +26,7 @@ export const MixtapeSpawner = (props) => {
   const { approved_cassettes } = data;
   const [selected_cassette, setSelectedCassette] = useLocalState(
     'selected_cassette',
-    approved_cassettes[0]
+    approved_cassettes[0],
   );
   return (
     <Window title="Mixtape Spawner" width={500} height={488}>
@@ -42,7 +42,8 @@ export const MixtapeSpawner = (props) => {
                     ellipsis
                     color="transparent"
                     selected={cassette.id === selected_cassette.id}
-                    onClick={() => setSelectedCassette(cassette)}>
+                    onClick={() => setSelectedCassette(cassette)}
+                  >
                     {cassette.name}
                   </Tabs.Tab>
                 ))}
@@ -84,7 +85,8 @@ export const MixtapeSpawner = (props) => {
                     act('spawn', {
                       id: selected_cassette.id,
                     })
-                  }>
+                  }
+                >
                   Spawn
                 </Button>
               </Stack.Item>

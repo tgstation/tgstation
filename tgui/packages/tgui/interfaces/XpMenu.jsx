@@ -81,11 +81,12 @@ export const XpMenu = (props) => {
               value={job_xp[job]}
               minValue={0}
               maxValue={job_xp_for_level[job]}
-              key={job}>
+              key={job}
+            >
               Level {job_levels[job]} {job}
             </ProgressBar>
           </Section>
-        </Stack.Item>
+        </Stack.Item>,
       );
     }
   }

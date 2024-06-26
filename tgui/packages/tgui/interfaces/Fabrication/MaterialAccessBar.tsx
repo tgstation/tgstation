@@ -9,17 +9,17 @@ import { Material } from './Types';
 // by popular demand of discord people (who are always right and never wrong)
 // this is completely made up
 const MATERIAL_RARITY: Record<string, number> = {
-  'glass': 0,
-  'iron': 1,
-  'plastic': 2,
-  'titanium': 3,
-  'plasma': 4,
-  'silver': 5,
-  'gold': 6,
-  'uranium': 7,
-  'diamond': 8,
+  glass: 0,
+  iron: 1,
+  plastic: 2,
+  titanium: 3,
+  plasma: 4,
+  silver: 5,
+  gold: 6,
+  uranium: 7,
+  diamond: 8,
   'bluespace crystal': 9,
-  'bananium': 10,
+  bananium: 10,
 };
 
 export type MaterialAccessBarProps = {
@@ -59,7 +59,7 @@ export const MaterialAccessBar = (props: MaterialAccessBarProps) => {
               }
             />
           </Flex.Item>
-        )
+        ),
       )}
     </Flex>
   );
@@ -75,7 +75,7 @@ const MaterialCounter = (props: MaterialCounterProps) => {
 
   const [hovering, setHovering] = useLocalState(
     `MaterialCounter__${material.name}`,
-    false
+    false,
   );
 
   const canEject = material.amount > 2_000;
@@ -88,13 +88,15 @@ const MaterialCounter = (props: MaterialCounterProps) => {
         'MaterialDock',
         hovering && 'MaterialDock--active',
         !canEject && 'MaterialDock--disabled',
-      ])}>
+      ])}
+    >
       <Stack vertial direction={'column-reverse'}>
         <Flex
           direction="column"
           textAlign="center"
           onClick={() => onEjectRequested(1)}
-          className="MaterialDock__Label">
+          className="MaterialDock__Label"
+        >
           <Flex.Item>
             <MaterialIcon
               materialName={material.name}
@@ -158,7 +160,8 @@ const EjectButton = (props: EjectButtonProps) => {
         'Fabricator__PrintAmount',
         amount * 2_000 > available && 'Fabricator__PrintAmount--disabled',
       ])}
-      onClick={() => onEject(amount)}>
+      onClick={() => onEject(amount)}
+    >
       &times;{amount}
     </Button>
   );

@@ -17,21 +17,24 @@ export const XenobioMarket = (_) => {
             key={1}
             selected={tabIndex === 1}
             icon="flask"
-            onClick={() => setTabIndex(1)}>
+            onClick={() => setTabIndex(1)}
+          >
             Slime Market
           </Tabs.Tab>
           <Tabs.Tab
             key={2}
             selected={tabIndex === 2}
             icon="flask"
-            onClick={() => setTabIndex(2)}>
+            onClick={() => setTabIndex(2)}
+          >
             Active Requests
           </Tabs.Tab>
           <Tabs.Tab
             key={3}
             selected={tabIndex === 3}
             icon="sack-dollar"
-            onClick={() => setTabIndex(3)}>
+            onClick={() => setTabIndex(3)}
+          >
             View Shop
           </Tabs.Tab>
           <Button icon={'sack-dollar'} color="green">
@@ -93,7 +96,7 @@ const RequestViewer = (_) => {
             <Stack.Item>
               <Box
                 style={{
-                  'transform': 'scale(2)',
+                  transform: 'scale(2)',
                 }}
                 className={classes(['xenobio_market32x32', request.icon])}
               />
@@ -126,7 +129,7 @@ const StoreViewer = (_) => {
             <Stack.Item>
               <Box
                 style={{
-                  'transform': 'scale(2)',
+                  transform: 'scale(2)',
                 }}
                 className={classes(['xenobio_market32x32', item.icon_state])}
               />
@@ -148,7 +151,8 @@ const StoreViewer = (_) => {
                 mt="7px"
                 icon={'sack-dollar'}
                 color="green"
-                onClick={() => act('buy', { path: item.item_path })}>
+                onClick={() => act('buy', { path: item.item_path })}
+              >
                 {item.cost + ' Xenobiology Points'}
               </Button>
             </Stack.Item>

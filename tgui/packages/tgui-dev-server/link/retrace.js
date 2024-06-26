@@ -6,9 +6,9 @@
 
 import fs from 'fs';
 import { basename } from 'path';
-import { createLogger } from '../logging';
-import { require } from '../require';
-import { resolveGlob } from '../util';
+import { createLogger } from '../logging.js';
+import { require } from '../require.js';
+import { resolveGlob } from '../util.js';
 
 const SourceMap = require('source-map');
 const { parse: parseStackTrace } = require('stacktrace-parser');
@@ -30,7 +30,7 @@ export const loadSourceMaps = async (bundleDir) => {
     try {
       const file = basename(path).replace('.map', '');
       const consumer = await new SourceMapConsumer(
-        JSON.parse(fs.readFileSync(path, 'utf8'))
+        JSON.parse(fs.readFileSync(path, 'utf8')),
       );
       sourceMaps.push({ file, consumer });
     } catch (err) {

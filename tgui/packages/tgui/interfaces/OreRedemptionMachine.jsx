@@ -1,6 +1,17 @@
 import { createSearch, toTitleCase } from 'common/string';
 import { useBackend, useLocalState, useSharedState } from '../backend';
-import { BlockQuote, Box, Button, Table, Tabs, Input, Stack, Icon, Section, LabeledList } from '../components';
+import {
+  BlockQuote,
+  Box,
+  Button,
+  Table,
+  Tabs,
+  Input,
+  Stack,
+  Icon,
+  Section,
+  LabeledList,
+} from '../components';
 import { Window } from '../layouts';
 import { formatSiUnit } from '../format';
 
@@ -89,7 +100,8 @@ export const OreRedemptionMachine = (props) => {
                 if (searchItem.length > 0) {
                   setSearchItem('');
                 }
-              }}>
+              }}
+            >
               Materials
             </Tabs.Tab>
             <Tabs.Tab
@@ -102,7 +114,8 @@ export const OreRedemptionMachine = (props) => {
                 if (searchItem.length > 0) {
                   setSearchItem('');
                 }
-              }}>
+              }}
+            >
               Alloys
             </Tabs.Tab>
             <Input
@@ -162,7 +175,7 @@ const MaterialRow = (props) => {
   const [compact, setCompact] = useLocalState('compact', false);
 
   const display = material_icons.find(
-    (mat_icon) => mat_icon.id === material.id
+    (mat_icon) => mat_icon.id === material.id,
   );
 
   const sheet_amounts = Math.floor(material.amount);

@@ -16,10 +16,11 @@ export const Connections = (props) => {
       width="100%"
       height="100%"
       style={{
-        'position': 'absolute',
+        position: 'absolute',
         'pointer-events': 'none',
         'z-index': -1,
-      }}>
+      }}
+    >
       {connections.map((val, index) => {
         const from = val.from;
         const to = val.to;

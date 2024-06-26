@@ -9,11 +9,11 @@ $border-color: #7b86ff;
 @use '../colors.scss' with (
   $fg-map-keys: (),
   $bg-map-keys: (),
-  $primary: $accent,
+  $primary: $accent
 );
 @use '../base.scss' with (
   $color-bg: color.scale($generic, $lightness: -45%),
-  $border-radius: 2px,
+  $border-radius: 2px
 );
 
 .theme-generic {

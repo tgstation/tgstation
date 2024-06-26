@@ -97,7 +97,7 @@ const EvolutionList = (props) => {
                 tooltip={
                   toLearn.exclusive
                     ? toLearn.desc +
-                    ` By taking this, you cannot take other T3+ gneomes.`
+                      ` By taking this, you cannot take other T3+ gneomes.`
                     : toLearn.desc
                 }
                 onClick={() => act('evolve', { path: toLearn.path })}

@@ -1,5 +1,13 @@
 import { useBackend, useLocalState } from '../backend';
-import { Section, Flex, Stack, Button, Box, Input, NoticeBox } from '../components';
+import {
+  Section,
+  Flex,
+  Stack,
+  Button,
+  Box,
+  Input,
+  NoticeBox,
+} from '../components';
 import { Window } from '../layouts';
 
 type OverwatchDisplayData = {
@@ -21,7 +29,8 @@ export const OverwatchWhitelistPanel = (props) => {
       width={600}
       height={500}
       title="Overwatch Whitelist Panel"
-      theme="admin">
+      theme="admin"
+    >
       <Window.Content scrollable>
         <Section title="Add CKEY to Overwatch Whitelist">
           <Flex>

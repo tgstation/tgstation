@@ -1,6 +1,16 @@
 import { useBackend } from '../backend';
 import { UserDetails } from './Vending';
-import { BlockQuote, Box, Button, Collapsible, Flex, NumberInput, Section, Stack, TextArea } from '../components';
+import {
+  BlockQuote,
+  Box,
+  Button,
+  Collapsible,
+  Flex,
+  NumberInput,
+  Section,
+  Stack,
+  TextArea,
+} from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -36,7 +46,8 @@ export const BountyBoardContent = (props) => {
             content="Reset Account"
             onClick={() => act('clear')}
           />
-        }>
+        }
+      >
         <UserDetails />
       </Section>
       <Flex mb={1}>
@@ -92,7 +103,8 @@ export const BountyBoardContent = (props) => {
                             textAlign="center"
                             style={{
                               border: `2px solid ${color}`,
-                            }}>
+                            }}
+                          >
                             {applicant.name}
                           </Flex.Item>
                           <Flex.Item align="end">
@@ -110,7 +122,7 @@ export const BountyBoardContent = (props) => {
                             />
                           </Flex.Item>
                         </Flex>
-                      )
+                      ),
                   )}
                 </Section>
               </Section>

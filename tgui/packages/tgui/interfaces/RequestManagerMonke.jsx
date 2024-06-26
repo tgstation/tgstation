@@ -16,14 +16,14 @@ export const RequestManagerMonke = (props) => {
   const [filteredTypes, _] = useLocalState(
     'filteredTypes',
     Object.fromEntries(
-      Object.entries(displayTypeMap).map(([type, _]) => [type, true])
-    )
+      Object.entries(displayTypeMap).map(([type, _]) => [type, true]),
+    ),
   );
   const [searchText, setSearchText] = useLocalState('searchText');
 
   // Handle filtering
   let displayedRequests = requests.filter(
-    (request) => filteredTypes[request.req_type]
+    (request) => filteredTypes[request.req_type],
   );
   if (searchText) {
     const filterText = searchText.toLowerCase();
@@ -32,7 +32,7 @@ export const RequestManagerMonke = (props) => {
         decodeHtmlEntities(request.message)
           .toLowerCase()
           .includes(filterText) ||
-        request.owner_name.toLowerCase().includes(filterText)
+        request.owner_name.toLowerCase().includes(filterText),
     );
   }
 
@@ -51,7 +51,8 @@ export const RequestManagerMonke = (props) => {
               />
               <FilterPanel />
             </>
-          }>
+          }
+        >
           {displayedRequests.map((request) => (
             <div className="RequestManager__row" key={request.id}>
               <div className="RequestManager__rowContents">
@@ -79,7 +80,7 @@ export const RequestManagerMonke = (props) => {
 };
 
 const displayTypeMap = {
-  'request_mentorhelp': 'MENTORHELP',
+  request_mentorhelp: 'MENTORHELP',
 };
 
 const RequestType = (props) => {
@@ -107,13 +108,13 @@ const RequestControls = (props) => {
 const FilterPanel = (_) => {
   const [filterVisible, setFilterVisible] = useLocalState(
     'filterVisible',
-    false
+    false,
   );
   const [filteredTypes, setFilteredTypes] = useLocalState(
     'filteredTypes',
     Object.fromEntries(
-      Object.entries(displayTypeMap).map(([type, _]) => [type, true])
-    )
+      Object.entries(displayTypeMap).map(([type, _]) => [type, true]),
+    ),
   );
 
   return (
@@ -126,7 +127,8 @@ const FilterPanel = (_) => {
           className="RequestManager__filterPanel"
           style={{
             display: filterVisible ? 'block' : 'none',
-          }}>
+          }}
+        >
           <Table width="0">
             {Object.keys(displayTypeMap).map((type) => {
               return (
@@ -149,7 +151,8 @@ const FilterPanel = (_) => {
             })}
           </Table>
         </div>
-      }>
+      }
+    >
       <Button icon="cog" onClick={() => setFilterVisible(!filterVisible)}>
         Type Filter
       </Button>

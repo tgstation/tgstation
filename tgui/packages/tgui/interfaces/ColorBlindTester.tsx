@@ -69,7 +69,8 @@ const ColorBlindCategory = (props: Props) => {
               })
             }
           />
-        }>
+        }
+      >
         {details[category]}
       </Section>
     );
@@ -85,7 +86,8 @@ const ColorBlindCategory = (props: Props) => {
           color="bad"
           onClick={() => act('clear_matrix')}
         />
-      }>
+      }
+    >
       {details[category]}
     </Section>
   );

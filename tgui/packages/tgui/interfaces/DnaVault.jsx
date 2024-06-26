@@ -1,5 +1,12 @@
 import { useBackend } from '../backend';
-import { Box, Button, Grid, LabeledList, ProgressBar, Section } from '../components';
+import {
+  Box,
+  Button,
+  Grid,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 export const DnaVault = (props) => {

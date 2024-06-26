@@ -2,17 +2,17 @@
 @use 'sass:meta';
 
 @use '../colors.scss' with (
-  $good: #CFBA47,
-  $primary: #B18B25,
-  $average: #896B19,
-  $bad: #5F380E,
+  $good: #cfba47,
+  $primary: #b18b25,
+  $average: #896b19,
+  $bad: #5f380e
 );
 @use '../base.scss' with (
-  $color-bg: #5F380E,
-  $color-bg-start: #B18B25,
-  $color-bg-end: #5F380E,
+  $color-bg: #5f380e,
+  $color-bg-start: #b18b25,
+  $color-bg-end: #5f380e,
   $color-bg-grad-spread: 6%,
-  $border-radius: 2px,
+  $border-radius: 2px
 );
 
 .theme-clockwork {

@@ -24,7 +24,8 @@ export const ArtifactXray = (props) => {
               selected={!is_open}
               onClick={() => act('toggleopen')}
             />
-          }>
+          }
+        >
           {(!artifact_name && <NoticeBox>No artifact detected.</NoticeBox>) || (
             <>
               <Box color="label" mt={1}>

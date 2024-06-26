@@ -1,6 +1,12 @@
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { Button, LabeledControls, NumberInput, RoundGauge, Section } from '../components';
+import {
+  Button,
+  LabeledControls,
+  NumberInput,
+  RoundGauge,
+  Section,
+} from '../components';
 import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
@@ -35,9 +41,9 @@ export const Tank = (props) => {
                 maxValue={fragmentPressure * 1.15}
                 alertAfter={leakPressure}
                 ranges={{
-                  'good': [0, leakPressure],
-                  'average': [leakPressure, fragmentPressure],
-                  'bad': [fragmentPressure, fragmentPressure * 1.15],
+                  good: [0, leakPressure],
+                  average: [leakPressure, fragmentPressure],
+                  bad: [fragmentPressure, fragmentPressure * 1.15],
                 }}
                 format={formatPressure}
                 size={2}

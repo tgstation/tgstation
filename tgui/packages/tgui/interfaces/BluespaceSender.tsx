@@ -4,7 +4,16 @@ import { toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
 import { useBackend } from '../backend';
-import { Button, Divider, NumberInput, ProgressBar, Section, Box, LabeledList, Stack } from '../components';
+import {
+  Button,
+  Divider,
+  NumberInput,
+  ProgressBar,
+  Section,
+  Box,
+  LabeledList,
+  Stack,
+} from '../components';
 import { getGasColor } from '../constants';
 import { Window } from '../layouts';
 
@@ -92,7 +101,8 @@ export const BluespaceSender = (props) => {
                 onClick={() => act('retrieve')}
               />
             </>
-          }>
+          }
+        >
           <Box>{'The vendors have made ' + credits + ' credits so far.'}</Box>
           <Divider />
           <LabeledList>

@@ -22,7 +22,8 @@ export const Hacking = (props) => {
                   <Section
                     key={i}
                     title={'HACKING IN PROGRESS [ ' + i + ' ]'}
-                    level={2}>
+                    level={2}
+                  >
                     <Minigame
                       key={i}
                       array={game}

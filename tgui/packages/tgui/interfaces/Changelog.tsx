@@ -1,7 +1,16 @@
 import { classes } from 'common/react';
 import { useBackend } from '../backend';
 import { Component, Fragment } from 'inferno';
-import { Box, Button, Collapsible, Dropdown, Icon, Section, Stack, Table } from '../components';
+import {
+  Box,
+  Button,
+  Collapsible,
+  Dropdown,
+  Icon,
+  Section,
+  Stack,
+  Table,
+} from '../components';
 import { Window } from '../layouts';
 import { resolveAsset } from '../assets';
 import dateformat from 'dateformat';
@@ -52,7 +61,8 @@ const ChangeRow = (props: { kind: string; content: string }, _context) => {
   return (
     <Table.Row>
       <Table.Cell
-        className={classes(['Changelog__Cell', 'Changelog__Cell--Icon'])}>
+        className={classes(['Changelog__Cell', 'Changelog__Cell--Icon'])}
+      >
         <Icon
           color={
             icons[props.kind] ? icons[props.kind].color : icons['unknown'].color
@@ -132,7 +142,8 @@ const Footer = (props: { dropdown: any }, _context) => {
           href={
             'https://github.com/tgstation/tgstation/commit/' +
             '333c566b88108de218d882840e61928a9b759d8f'
-          }>
+          }
+        >
           commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38
           PM PST
         </a>
@@ -157,7 +168,8 @@ const Footer = (props: { dropdown: any }, _context) => {
           href={
             'https://github.com/tgstation/tgstation/blob/master' +
             '/code/__DEFINES/tgs.dm'
-          }>
+          }
+        >
           code/__DEFINES/tgs.dm
         </a>
         {' and '}
@@ -165,7 +177,8 @@ const Footer = (props: { dropdown: any }, _context) => {
           href={
             'https://github.com/tgstation/tgstation/blob/master' +
             '/code/modules/tgs/LICENSE'
-          }>
+          }
+        >
           code/modules/tgs/LICENSE
         </a>
         {' for the MIT license.'}
@@ -219,7 +232,7 @@ const Testmerges = (_props) => {
                               kind={kind}
                               content={desc}
                             />
-                          ))
+                          )),
                       )}
                     </Table>
                   </Box>
@@ -270,7 +283,7 @@ export class Changelog extends Component {
 
     if (attemptNumber > maxAttempts) {
       return this.setData(
-        'Failed to load data after ' + maxAttempts + ' attempts'
+        'Failed to load data after ' + maxAttempts + ' attempts',
       );
     }
 
@@ -300,7 +313,7 @@ export class Changelog extends Component {
 
     if (dates) {
       dates.forEach((date) =>
-        this.dateChoices.push(dateformat(date, 'mmmm yyyy', true))
+        this.dateChoices.push(dateformat(date, 'mmmm yyyy', true)),
       );
       this.setSelectedDate(this.dateChoices[0]);
       this.getData(dates[0]);
@@ -330,7 +343,7 @@ export class Changelog extends Component {
               window.scrollTo(
                 0,
                 document.body.scrollHeight ||
-                  document.documentElement.scrollHeight
+                  document.documentElement.scrollHeight,
               );
               return this.getData(dates[index]);
             }}
@@ -349,7 +362,7 @@ export class Changelog extends Component {
               window.scrollTo(
                 0,
                 document.body.scrollHeight ||
-                  document.documentElement.scrollHeight
+                  document.documentElement.scrollHeight,
               );
               return this.getData(dates[index]);
             }}
@@ -371,7 +384,7 @@ export class Changelog extends Component {
               window.scrollTo(
                 0,
                 document.body.scrollHeight ||
-                  document.documentElement.scrollHeight
+                  document.documentElement.scrollHeight,
               );
               return this.getData(dates[index]);
             }}
@@ -415,7 +428,8 @@ export class Changelog extends Component {
       <Window
         title="Changelog"
         width={testmerges?.length ? 1000 : 675}
-        height={650}>
+        height={650}
+      >
         <Window.Content scrollable>
           <Header dropdown={dateDropdown} />
           <Stack>

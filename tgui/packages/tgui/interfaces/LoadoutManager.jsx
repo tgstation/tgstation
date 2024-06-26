@@ -8,7 +8,7 @@ export const LoadoutManager = (props) => {
 
   const [selectedTabName, setSelectedTab] = useSharedState(
     'tabs',
-    loadout_tabs[0]?.name
+    loadout_tabs[0]?.name,
   );
   const selectedTab = loadout_tabs.find((curTab) => {
     return curTab.name === selectedTabName;
@@ -29,7 +29,8 @@ export const LoadoutManager = (props) => {
                   content="Tutorial"
                   onClick={() => act('toggle_tutorial')}
                 />
-              }>
+              }
+            >
               <Button
                 icon="check-double"
                 color="good"
@@ -67,7 +68,8 @@ export const LoadoutManager = (props) => {
                         width={10}
                         onClick={() => act('clear_all_items')}
                       />
-                    }>
+                    }
+                  >
                     <Stack grow vertical>
                       {selectedTab.contents.map((item) => (
                         <Stack.Item key={item.name}>
@@ -148,7 +150,7 @@ export const LoadoutManager = (props) => {
                                   act('select_item', {
                                     path: item.path,
                                     deselect: selected_loadout.includes(
-                                      item.path
+                                      item.path,
                                     ),
                                   })
                                 }

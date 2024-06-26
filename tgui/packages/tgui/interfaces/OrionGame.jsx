@@ -28,8 +28,8 @@ const variousButtonIcons = {
   'Restore Hull': 'wrench',
   'Fix Engine': 'rocket',
   'Repair Electronics': 'server',
-  'Wait': 'clock',
-  'Continue': 'arrow-right',
+  Wait: 'clock',
+  Continue: 'arrow-right',
   'Explore Ship': 'door-open',
   'Leave the Derelict': 'arrow-right',
   'Welcome aboard.': 'user-plus',
@@ -41,7 +41,7 @@ const variousButtonIcons = {
   'Speed Past': 'tachometer-alt',
   'Go Around': 'redo',
   'Oh...': 'circle',
-  'Dock': 'dollar-sign',
+  Dock: 'dollar-sign',
 };
 
 const STATUS2COMPONENT = [
@@ -129,7 +129,8 @@ const AdventureStatus = (props) => {
             onClick={() => act('random_kill')}
           />
         )
-      }>
+      }
+    >
       <Stack mb={-1} fill>
         <Stack.Item grow mb={-0.5}>
           {settlers?.map((settler) => (
@@ -258,7 +259,8 @@ const ORION_STATUS_INSTRUCTIONS = (props) => {
             content="Back to Main Menu"
             onClick={() => act('back_to_menu')}
           />
-        }>
+        }
+      >
         <Box fontSize="11px">
           In the 2200&apos;s, the Orion trail was established as a dangerous yet
           opportunistic trail through space for those willing to risk it. Many
@@ -485,7 +487,8 @@ const ORION_STATUS_MARKET = (props) => {
                 onClick={() => act('leave_spaceport')}
               />
             </>
-          }>
+          }
+        >
           <Stack fill textAlign="center" vertical>
             <Stack.Item grow>
               <Box mb={-2} bold fontSize="15px">

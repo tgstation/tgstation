@@ -1,9 +1,20 @@
 import { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
 import { useBackend, useSharedState } from '../backend';
-import { Button, Dimmer, Dropdown, Section, Stack, NoticeBox } from '../components';
+import {
+  Button,
+  Dimmer,
+  Dropdown,
+  Section,
+  Stack,
+  NoticeBox,
+} from '../components';
 import { Window } from '../layouts';
-import { ObjectivePrintout, Objective, ReplaceObjectivesButton } from './common/Objectives';
+import {
+  ObjectivePrintout,
+  Objective,
+  ReplaceObjectivesButton,
+} from './common/Objectives';
 
 const hivestyle = {
   fontWeight: 'bold',
@@ -59,8 +70,9 @@ export const AntagInfoChangeling = (props) => {
     <Window width={720} height={750}>
       <Window.Content
         style={{
-          'backgroundImage': 'none',
-        }}>
+          backgroundImage: 'none',
+        }}
+      >
         <Stack vertical fill>
           <Stack.Item maxHeight={16}>
             <IntroductionSection />
@@ -122,7 +134,8 @@ const IntroductionSection = (props) => {
     <Section
       fill
       title="Intro"
-      scrollable={!!objectives && objectives.length > 4}>
+      scrollable={!!objectives && objectives.length > 4}
+    >
       <Stack vertical fill>
         <Stack.Item fontSize="25px">
           You are {true_name} from the
@@ -200,7 +213,7 @@ const MemoriesSection = (props) => {
   const { memories } = data;
   const [selectedMemory, setSelectedMemory] = useSharedState(
     'memory',
-    (!!memories && memories[0]) || null
+    (!!memories && memories[0]) || null,
   );
   const memoryMap = {};
   for (const index in memories) {
@@ -222,7 +235,8 @@ const MemoriesSection = (props) => {
             help you impersonate your target!
           `}
         />
-      }>
+      }
+    >
       {(!!memories && !memories.length && (
         <Dimmer fontSize="20px">Absorb a victim first!</Dimmer>
       )) || (
@@ -251,7 +265,8 @@ const VictimPatternsSection = (props) => {
     <Section
       fill
       scrollable={!!stolen_antag_info}
-      title="Additional Stolen Information">
+      title="Additional Stolen Information"
+    >
       {(!!stolen_antag_info && stolen_antag_info) || (
         <Dimmer fontSize="20px">Absorb a victim first!</Dimmer>
       )}

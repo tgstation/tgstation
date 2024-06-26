@@ -139,7 +139,7 @@ const CrewTableEntry = (props) => {
               toxdam,
               burndam,
               brutedam,
-              HEALTH_COLOR_BY_LEVEL
+              HEALTH_COLOR_BY_LEVEL,
             )}
             size={1}
           />

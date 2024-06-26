@@ -9,7 +9,8 @@ export const SmartVend = (props) => {
     <Window
       width={440}
       height={550}
-      {...(data.ui_theme && { theme: data.ui_theme })}>
+      {...(data.ui_theme && { theme: data.ui_theme })}
+    >
       <Window.Content scrollable>
         <Section
           title="Storage"
@@ -17,11 +18,13 @@ export const SmartVend = (props) => {
             !!data.isdryer && (
               <Button
                 icon={data.drying ? 'stop' : 'tint'}
-                onClick={() => act('Dry')}>
+                onClick={() => act('Dry')}
+              >
                 {data.drying ? 'Stop drying' : 'Dry'}
               </Button>
             )
-          }>
+          }
+        >
           {(data.contents.length === 0 && (
             <NoticeBox>Unfortunately, this {data.name} is empty.</NoticeBox>
           )) || (

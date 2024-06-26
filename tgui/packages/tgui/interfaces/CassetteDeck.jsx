@@ -19,7 +19,8 @@ export const CassetteDeck = (props) => {
               content={'Remove Song From Cassette'}
               onClick={() => act('remove')}
             />
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Track Selected">
               <Dropdown

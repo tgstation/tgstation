@@ -2,19 +2,28 @@ import { BooleanLike, classes } from 'common/react';
 import { multiline } from 'common/string';
 import { capitalizeAll } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, ColorBox, LabeledList, Section, Stack, Tabs, Table } from '../components';
+import {
+  Box,
+  Button,
+  ColorBox,
+  LabeledList,
+  Section,
+  Stack,
+  Tabs,
+  Table,
+} from '../components';
 import { Window } from '../layouts';
 
 const ROOT_CATEGORIES = ['Atmospherics', 'Disposals', 'Transit Tubes'];
 
 export const ICON_BY_CATEGORY_NAME = {
-  'Atmospherics': 'wrench',
-  'Disposals': 'trash-alt',
+  Atmospherics: 'wrench',
+  Disposals: 'trash-alt',
   'Transit Tubes': 'bus',
-  'Pipes': 'grip-lines',
-  'Binary': 'arrows-left-right',
+  Pipes: 'grip-lines',
+  Binary: 'arrows-left-right',
   'Disposal Pipes': 'grip-lines',
-  'Devices': 'microchip',
+  Devices: 'microchip',
   'Heat Exchange': 'thermometer-half',
   'Station Equipment': 'microchip',
   'Air Sensors': 'microchip',
@@ -131,7 +140,7 @@ export const ColorItem = (props) => {
           height="20px"
           width="20px"
           style={{
-            'border':
+            border:
               '3px solid ' +
               (colorName === selected_color ? '#20b142' : '#222'),
           }}
@@ -182,7 +191,8 @@ const CategoryItem = (props) => {
           selected={rootCategoryIndex === i}
           icon={ICON_BY_CATEGORY_NAME[categoryName]}
           color="transparent"
-          onClick={() => act('category', { category: i })}>
+          onClick={() => act('category', { category: i })}
+        >
           {categoryName}
         </Button>
       ))}
@@ -261,7 +271,8 @@ const PreviewSelect = (props) => {
               dir: preview.dir,
               flipped: preview.flipped,
             });
-          }}>
+          }}
+        >
           <Box
             className={classes([
               'pipes32x32',
@@ -282,7 +293,7 @@ const PipeTypeSection = (props) => {
   const { categories = [], selected_category, selected_recipe } = data;
   const [categoryName, setCategoryName] = useLocalState(
     'categoryName',
-    selected_category
+    selected_category,
   );
   const shownCategory =
     categories.find((category) => category.cat_name === categoryName) ||
@@ -296,7 +307,8 @@ const PipeTypeSection = (props) => {
             key={category.cat_name}
             icon={ICON_BY_CATEGORY_NAME[category.cat_name]}
             selected={category.cat_name === shownCategory.cat_name}
-            onClick={() => setCategoryName(category.cat_name)}>
+            onClick={() => setCategoryName(category.cat_name)}
+          >
             {category.cat_name}
           </Tabs.Tab>
         ))}
@@ -305,7 +317,8 @@ const PipeTypeSection = (props) => {
         {shownCategory?.recipes.map((recipe) => (
           <Table.Row
             key={recipe.pipe_index}
-            style={{ 'border-bottom': '1px solid #333' }}>
+            style={{ 'border-bottom': '1px solid #333' }}
+          >
             <Table.Cell collapsing py="2px" pb="1px">
               <PreviewSelect
                 previews={recipe.previews}

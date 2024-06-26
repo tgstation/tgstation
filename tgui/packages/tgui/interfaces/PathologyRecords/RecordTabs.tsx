@@ -64,7 +64,8 @@ const CrewTab = (props: { record: MedicalRecord }) => {
       className="candystripe"
       label={nickname ? nickname : name}
       onClick={() => selectRecord(record)}
-      selected={selectedRecord?.crew_ref === crew_ref}>
+      selected={selectedRecord?.crew_ref === crew_ref}
+    >
       <Box wrap>
         <Icon name={'question'} /> {nickname ? nickname : name}
       </Box>

@@ -1,7 +1,18 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, LabeledList, NumberInput, Dropdown, Section, Stack } from '../components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NumberInput,
+  Dropdown,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
-import { AtmosHandbookContent, atmosHandbookHooks } from './common/AtmosHandbook';
+import {
+  AtmosHandbookContent,
+  atmosHandbookHooks,
+} from './common/AtmosHandbook';
 import { Gasmix, GasmixParser } from './common/GasmixParser';
 
 type Chamber = {
@@ -39,7 +50,7 @@ export const AtmosControlConsole = (props) => {
               onSelected={(value) =>
                 setChamberId(
                   chambers.find((chamber) => chamber.name === value)?.id ||
-                    chambers[0].id
+                    chambers[0].id,
                 )
               }
             />
@@ -55,7 +66,8 @@ export const AtmosControlConsole = (props) => {
                 onClick={() => act('reconnect')}
               />
             )
-          }>
+          }
+        >
           {!!selectedChamber && !!selectedChamber.gasmix ? (
             <GasmixParser
               gasmix={selectedChamber.gasmix}

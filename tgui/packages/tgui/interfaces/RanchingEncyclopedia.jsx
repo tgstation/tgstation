@@ -15,7 +15,8 @@ export const RanchingEncyclopedia = (props) => {
       title="Ranching Encyclopedia"
       theme="chicken_book"
       width={600}
-      height={450}>
+      height={450}
+    >
       <Window.Content>
         <Stack class="content">
           <Stack class="book">
@@ -155,7 +156,7 @@ const ChickenTabs = (props) => {
   const { chicken_list = [] } = data;
   const [selectedChicken, setSelectedChicken] = useLocalState(
     'chicken',
-    chicken_list[0]
+    chicken_list[0],
   );
   return (
     <Tabs vertical>
@@ -163,7 +164,8 @@ const ChickenTabs = (props) => {
         <Tabs.Tab
           key={chicken}
           selected={chicken === selectedChicken}
-          onClick={() => setSelectedChicken(chicken)}>
+          onClick={() => setSelectedChicken(chicken)}
+        >
           {chicken.name}
         </Tabs.Tab>
       ))}

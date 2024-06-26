@@ -1,10 +1,16 @@
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Collapsible, LabeledList, Section } from '../../components';
+import {
+  Box,
+  Button,
+  Collapsible,
+  LabeledList,
+  Section,
+} from '../../components';
 
 const RefRegex = RegExp('^.+ \\[0x[0-9a-fA-F]+]$');
 const FunctionRegex = RegExp('^function: 0x[0-9a-fA-F]+$');
 const UnconvertibleLuaValueRegex = RegExp(
-  '^(table|function|thread): 0x[0-9a-fA-F]+$'
+  '^(table|function|thread): 0x[0-9a-fA-F]+$',
 );
 
 export const ListMapper = (props) => {
@@ -51,7 +57,8 @@ export const ListMapper = (props) => {
                 },
               });
               setModal('call');
-            }}>
+            }}
+          >
             {thing.charAt(0).toUpperCase() + thing.substring(1)}
           </Button>
         );
@@ -128,7 +135,8 @@ export const ListMapper = (props) => {
               />
             </>
           )
-        }>
+        }
+      >
         {valueNode}
       </LabeledList.Item>
     );

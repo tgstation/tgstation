@@ -1,5 +1,12 @@
 import { useBackend, useLocalState } from '../backend';
-import { Button, Collapsible, Input, NoticeBox, Section, Stack } from '../components';
+import {
+  Button,
+  Collapsible,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
 type LogViewerData = {
@@ -35,7 +42,7 @@ export const LogViewer = (_: any) => {
 
   const [activeCategory, setActiveCategory] = useLocalState(
     'activeCategory',
-    ''
+    '',
   );
 
   let viewerData: LogViewerCategoryData = {
@@ -85,7 +92,7 @@ const CategoryBar = (props: CategoryBarProps) => {
   const sorted = [...props.options].sort();
   const [categorySearch, setCategorySearch] = useLocalState(
     'categorySearch',
-    ''
+    '',
   );
 
   return (
@@ -99,7 +106,8 @@ const CategoryBar = (props: CategoryBarProps) => {
           value={categorySearch}
           onChange={(_: any, value: string) => setCategorySearch(value)}
         />
-      }>
+      }
+    >
       <Stack scrollableHorizontal>
         {/** these are not in stack items to have them directly next to eachother */}
         <Button
@@ -200,7 +208,8 @@ const CategoryViewer = (props: CategoryViewerProps) => {
             }}
           />
         </>
-      }>
+      }
+    >
       <Stack vertical>
         {!searchRegex || regexValidation === true ? (
           props.data?.entries.map((entry) => {
@@ -230,7 +239,8 @@ const CategoryViewer = (props: CategoryViewerProps) => {
                 <Collapsible
                   fitted
                   tooltip={entry.timestamp}
-                  title={`[${entry.id}] - ${entry.message}`}>
+                  title={`[${entry.id}] - ${entry.message}`}
+                >
                   <Stack vertical fill>
                     <Stack.Item>
                       <p font-family="Courier">{entry.message}</p>

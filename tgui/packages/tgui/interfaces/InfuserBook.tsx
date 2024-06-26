@@ -77,7 +77,7 @@ export const InfuserBook = (props) => {
     {
       chapter: 0,
       pageInChapter: 0,
-    }
+    },
   );
   const { chapter, pageInChapter } = bookPosition;
 
@@ -144,7 +144,8 @@ export const InfuserBook = (props) => {
                       selected={chapter === tabIndex}
                       onClick={
                         tabIndex === 4 ? null : () => switchChapter(tabIndex)
-                      }>
+                      }
+                    >
                       <Box color={tabIndex === 4 && 'red'}>{tab}</Box>
                     </Tabs.Tab>
                   );
@@ -176,7 +177,8 @@ export const InfuserBook = (props) => {
                 <Button
                   color={restrictedNext && 'black'}
                   onClick={() => setPage(pageInChapter + 1)}
-                  fluid>
+                  fluid
+                >
                   {restrictedNext ? 'RESTRICTED' : 'Next Page'}
                 </Button>
               </Stack.Item>
@@ -242,7 +244,8 @@ const InfuserEntry = (props: InfuserEntryProps) => {
         <Button tooltip={tierData.desc} icon={tierData.icon}>
           {tierData.name}
         </Button>
-      }>
+      }
+    >
       <Stack vertical fill>
         <Stack.Item>
           <BlockQuote>

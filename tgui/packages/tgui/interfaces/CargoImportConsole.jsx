@@ -18,7 +18,8 @@ export const CargoImportConsole = (props) => {
       theme="armament"
       title="Company Import Requisition Console"
       width={1000}
-      height={600}>
+      height={600}
+    >
       <Window.Content>
         <Section grow height="100%" title="Company Import Requisition Console">
           <Stack>
@@ -63,7 +64,8 @@ export const CargoImportConsole = (props) => {
                     armament_category.subcategories.map((subcat) => (
                       <Section
                         key={subcat.subcategory}
-                        title={subcat.subcategory}>
+                        title={subcat.subcategory}
+                      >
                         <Stack vertical>
                           {subcat.items.map((item) => (
                             <Stack.Item key={item.ref}>
@@ -74,7 +76,8 @@ export const CargoImportConsole = (props) => {
                                 color={item.cant_purchase ? 'bad' : 'default'}
                                 width="100%"
                                 key={item.ref}
-                                onClick={() => setArmament(item.ref)}>
+                                onClick={() => setArmament(item.ref)}
+                              >
                                 <img
                                   src={`data:image/jpeg;base64,${item.icon}`}
                                   style={{
@@ -88,7 +91,7 @@ export const CargoImportConsole = (props) => {
                           ))}
                         </Stack>
                       </Section>
-                    ))
+                    )),
                 )}
               </Section>
             </Stack.Item>
@@ -127,7 +130,8 @@ export const CargoImportConsole = (props) => {
                             <Stack.Item
                               textColor={
                                 item.cost > budget_points ? 'red' : 'green'
-                              }>
+                              }
+                            >
                               {'Cost: ' + item.cost}
                             </Stack.Item>
                             <Stack.Item>
@@ -147,9 +151,9 @@ export const CargoImportConsole = (props) => {
                               />
                             </Stack.Item>
                           </Stack>
-                        )
-                    )
-                  )
+                        ),
+                    ),
+                  ),
                 )}
               </Section>
             </Stack.Item>

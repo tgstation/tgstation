@@ -1,6 +1,13 @@
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { NoticeBox, Section, Stack, Button, LabeledList, ProgressBar } from '../components';
+import {
+  NoticeBox,
+  Section,
+  Stack,
+  Button,
+  LabeledList,
+  ProgressBar,
+} from '../components';
 import { Window } from '../layouts';
 
 export const MicrofusionGunControl = (props) => {
@@ -20,7 +27,8 @@ export const MicrofusionGunControl = (props) => {
     <Window
       title={'Micron Control Systems Incorporated: ' + gun_name}
       width={500}
-      height={700}>
+      height={700}
+    >
       <Window.Content>
         <Stack vertical grow>
           <Stack.Item>
@@ -46,7 +54,8 @@ export const MicrofusionGunControl = (props) => {
                   disabled={!has_cell}
                   onClick={() => act('eject_cell')}
                 />
-              }>
+              }
+            >
               {has_cell ? (
                 <LabeledList>
                   <LabeledList.Item label="Cell Type">
@@ -61,16 +70,17 @@ export const MicrofusionGunControl = (props) => {
                       minValue={0}
                       maxValue={cell_data.max_charge}
                       ranges={{
-                        'good': [
+                        good: [
                           cell_data.max_charge * 0.85,
                           cell_data.max_charge,
                         ],
-                        'average': [
+                        average: [
                           cell_data.max_charge * 0.25,
                           cell_data.max_charge * 0.85,
                         ],
-                        'bad': [0, cell_data.max_charge * 0.25],
-                      }}>
+                        bad: [0, cell_data.max_charge * 0.25],
+                      }}
+                    >
                       {cell_data.charge + '/' + cell_data.max_charge + 'MF'}
                     </ProgressBar>
                   </LabeledList.Item>
@@ -97,7 +107,8 @@ export const MicrofusionGunControl = (props) => {
                   disabled={!has_emitter}
                   onClick={() => act('eject_emitter')}
                 />
-              }>
+              }
+            >
               {has_emitter ? (
                 phase_emitter_data.damaged ? (
                   <NoticeBox color="bad">Phase emitter is damaged!</NoticeBox>
@@ -112,16 +123,17 @@ export const MicrofusionGunControl = (props) => {
                         minValue={0}
                         maxValue={phase_emitter_data.max_heat}
                         ranges={{
-                          'bad': [
+                          bad: [
                             phase_emitter_data.max_heat * 0.85,
                             phase_emitter_data.max_heat * 2,
                           ],
-                          'average': [
+                          average: [
                             phase_emitter_data.max_heat * 0.25,
                             phase_emitter_data.max_heat * 0.85,
                           ],
-                          'good': [0, phase_emitter_data.max_heat * 0.25],
-                        }}>
+                          good: [0, phase_emitter_data.max_heat * 0.25],
+                        }}
+                      >
                         {toFixed(phase_emitter_data.current_heat) +
                           ' C' +
                           ' (' +
@@ -166,12 +178,12 @@ export const MicrofusionGunControl = (props) => {
                     <LabeledList.Item label="Total Heat Dissipation">
                       {phase_emitter_data.cooling_system
                         ? phase_emitter_data.heat_dissipation_per_tick +
-                        gun_heat_dissipation +
-                        phase_emitter_data.cooling_system_rate +
-                        ' C/s'
+                          gun_heat_dissipation +
+                          phase_emitter_data.cooling_system_rate +
+                          ' C/s'
                         : phase_emitter_data.heat_dissipation_per_tick +
-                        gun_heat_dissipation +
-                        ' C/s'}
+                          gun_heat_dissipation +
+                          ' C/s'}
                     </LabeledList.Item>
                     <LabeledList.Item label="Integrity">
                       <ProgressBar
@@ -179,10 +191,11 @@ export const MicrofusionGunControl = (props) => {
                         minValue={0}
                         maxValue={100}
                         ranges={{
-                          'good': [85, 100],
-                          'average': [25, 85],
-                          'bad': [0, 25],
-                        }}>
+                          good: [85, 100],
+                          average: [25, 85],
+                          bad: [0, 25],
+                        }}
+                      >
                         {phase_emitter_data.integrity + '%'}
                       </ProgressBar>
                     </LabeledList.Item>
@@ -192,10 +205,11 @@ export const MicrofusionGunControl = (props) => {
                         minValue={0}
                         maxValue={5}
                         ranges={{
-                          'good': [0, 1],
-                          'average': [1, 3],
-                          'bad': [3, 5],
-                        }}>
+                          good: [0, 1],
+                          average: [1, 3],
+                          bad: [3, 5],
+                        }}
+                      >
                         {phase_emitter_data.process_time / 10 + 's'}
                       </ProgressBar>
                     </LabeledList.Item>
@@ -237,7 +251,8 @@ export const MicrofusionGunControl = (props) => {
                           })
                         }
                       />
-                    }>
+                    }
+                  >
                     <LabeledList>
                       <LabeledList.Item label="Description">
                         {attachment.desc}

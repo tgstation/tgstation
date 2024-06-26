@@ -1,5 +1,16 @@
 import { useBackend, useLocalState } from '../backend';
-import { InfinitePlane, Stack, Box, Button, Modal, Dropdown, Section, LabeledList, Tooltip, Slider } from '../components';
+import {
+  InfinitePlane,
+  Stack,
+  Box,
+  Button,
+  Modal,
+  Dropdown,
+  Section,
+  LabeledList,
+  Tooltip,
+  Slider,
+} from '../components';
 import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes, shallowDiffers } from 'common/react';
@@ -150,14 +161,14 @@ const planeToPosition = function (plane: Plane, index, is_incoming): Position {
 const getPlaneNodeHeight = function (plane: Plane): number {
   return Math.max(
     plane.incoming_relays.length + plane.incoming_filters.length,
-    plane.outgoing_relays.length + plane.outgoing_filters.length
+    plane.outgoing_relays.length + plane.outgoing_filters.length,
   );
 };
 
 const sortConnectionRefs = function (
   refs: ConnectionRef[],
   direction: ConnectionDirection,
-  connectSources: AssocConnected
+  connectSources: AssocConnected,
 ) {
   refs = sortBy((connection: ConnectionRef) => connection.sort_by)(refs);
   refs.map((connection, index) => {
@@ -176,7 +187,7 @@ const addConnectionRefs = function (
   add_type: ConnectionDirection,
   add_to: ConnectionRef[],
   reference: AssocConnected,
-  plane_info: AssocPlane
+  plane_info: AssocPlane,
 ) {
   for (const ref of read_from) {
     const connected = reference[ref];
@@ -224,38 +235,38 @@ const positionPlanes = function (connectSources: AssocConnected) {
       ConnectionDirection.Incoming,
       incoming_conct,
       relay_info,
-      plane_info
+      plane_info,
     );
     addConnectionRefs(
       our_plane.incoming_filters,
       ConnectionDirection.Incoming,
       incoming_conct,
       filter_connect,
-      plane_info
+      plane_info,
     );
     addConnectionRefs(
       our_plane.outgoing_relays,
       ConnectionDirection.Outgoing,
       outgoing_conct,
       relay_info,
-      plane_info
+      plane_info,
     );
     addConnectionRefs(
       our_plane.outgoing_filters,
       ConnectionDirection.Outgoing,
       outgoing_conct,
       filter_connect,
-      plane_info
+      plane_info,
     );
     our_plane.incoming_connections = sortConnectionRefs(
       incoming_conct,
       ConnectionDirection.Incoming,
-      connectSources
+      connectSources,
     );
     our_plane.outgoing_connections = sortConnectionRefs(
       outgoing_conct,
       ConnectionDirection.Outgoing,
-      connectSources
+      connectSources,
     );
   }
 
@@ -273,7 +284,7 @@ const positionPlanes = function (connectSources: AssocConnected) {
         }
         return read_from.plane;
       }),
-    ])(Object.keys(layer))
+    ])(Object.keys(layer)),
   );
 
   let base_x = 0;
@@ -351,11 +362,11 @@ export class PlaneMasterDebug extends Component {
       let target_plane = plane_info[connection.source_ref];
       source_plane.outgoing_relays = arrayRemove(
         source_plane.outgoing_relays,
-        connection.our_ref
+        connection.our_ref,
       );
       target_plane.incoming_relays = arrayRemove(
         target_plane.incoming_relays,
-        connection.our_ref
+        connection.our_ref,
       );
     } else if (connection.connect_type === ConnectionType.Filter) {
       // Close the connection
@@ -368,11 +379,11 @@ export class PlaneMasterDebug extends Component {
       let target_plane = plane_info[connection.source_ref];
       source_plane.outgoing_filters = arrayRemove(
         source_plane.outgoing_filters,
-        connection.our_ref
+        connection.our_ref,
       );
       target_plane.incoming_filters = arrayRemove(
         target_plane.incoming_filters,
-        connection.our_ref
+        connection.our_ref,
       );
     }
   }
@@ -384,7 +395,7 @@ export class PlaneMasterDebug extends Component {
 
     const [connectSources, setConnectSouces] = useLocalState<AssocConnected>(
       'connectionSources',
-      {}
+      {},
     );
 
     positionPlanes(connectSources);
@@ -408,14 +419,16 @@ export class PlaneMasterDebug extends Component {
         <Window.Content
           style={{
             'background-image': 'none',
-          }}>
+          }}
+        >
           <InfinitePlane
             width="100%"
             height="100%"
             backgroundImage={resolveAsset('grid_background.png')}
             imageWidth={900}
             initialLeft={800}
-            initialTop={-740}>
+            initialTop={-740}
+          >
             {Object.keys(plane_info).map(
               (plane_key, index) =>
                 plane_key && (
@@ -427,7 +440,7 @@ export class PlaneMasterDebug extends Component {
                     onPortMouseDown={this.handlePortClick}
                     act={act}
                   />
-                )
+                ),
             )}
             <Connections connections={connections} />
           </InfinitePlane>
@@ -490,7 +503,8 @@ class PlaneMaster extends Component<PlaneMasterProps> {
           backgroundColor={our_plane.intended_hidden ? '#191919' : '#000000'}
           py={1}
           px={1}
-          className="ObjectComponent__Titlebar">
+          className="ObjectComponent__Titlebar"
+        >
           {name}
           <Button
             ml={2}
@@ -507,7 +521,8 @@ class PlaneMaster extends Component<PlaneMasterProps> {
           }
           unselectable="on"
           py={1}
-          px={1}>
+          px={1}
+        >
           <Stack>
             <Stack.Item>
               <Stack vertical fill>
@@ -591,14 +606,16 @@ class Port extends Component<PortProps> {
           <Box
             className={classes(['ObjectComponent__Port'])}
             onMouseDown={this.handlePortMouseDown}
-            textAlign="center">
+            textAlign="center"
+          >
             <svg
               style={{
                 width: '100%',
                 height: '100%',
                 position: 'absolute',
               }}
-              viewBox="0, 0, 100, 100">
+              viewBox="0, 0, 100, 100"
+            >
               <circle
                 stroke={connection.connect_color}
                 strokeDasharray={`${100 * Math.PI}`}
@@ -685,42 +702,48 @@ const PlaneWindow = (props) => {
           <VVButton no_position />
           <RefreshButton no_position />
         </>
-      }>
+      }
+    >
       <Section title="Information">
         <Box dangerouslySetInnerHTML={doc_html} />
         <LabeledList>
           <LabeledList.Divider />
           <Tooltip
             content="Any atoms in the world with the same plane will be drawn to this plane master"
-            position="right">
+            position="right"
+          >
             <LabeledList.Item label="Plane">
               {workingPlane.plane}
             </LabeledList.Item>
           </Tooltip>
           <Tooltip
             content="You can think of this as the 'layer' this plane is on. We make duplicates of each plane for each layer, so we can make multiz work"
-            position="right">
+            position="right"
+          >
             <LabeledList.Item label="Offset">
               {workingPlane.offset}
             </LabeledList.Item>
           </Tooltip>
           <Tooltip
             content="Render targets can be used to either reference or draw existing drawn items on the map. For plane masters, we use these for either relays (the blue lines), or filters (the pink ones)"
-            position="right">
+            position="right"
+          >
             <LabeledList.Item label="Render Target">
               {workingPlane.render_target || '""'}
             </LabeledList.Item>
           </Tooltip>
           <Tooltip
             content="Defines how this plane draws to the things it is relay'd onto. Check the byond ref for more details"
-            position="right">
+            position="right"
+          >
             <LabeledList.Item label="Blend Mode">
               {workingPlane.blend_mode}
             </LabeledList.Item>
           </Tooltip>
           <Tooltip
             content="If this is 1, the plane master is being forced to hide from its mob. This is most often done as an optimization tactic, since some planes only rarely need to be used"
-            position="right">
+            position="right"
+          >
             <LabeledList.Item label="Forced Hidden">
               {workingPlane.intended_hidden}
             </LabeledList.Item>
@@ -734,7 +757,8 @@ const PlaneWindow = (props) => {
             act('vv_plane', {
               edit: workingPlane.our_ref,
             })
-          }>
+          }
+        >
           View Variables
         </Button>
         <Button
@@ -743,7 +767,8 @@ const PlaneWindow = (props) => {
             act('edit_filters', {
               edit: workingPlane.our_ref,
             })
-          }>
+          }
+        >
           Edit Filters
         </Button>
         <Button
@@ -752,7 +777,8 @@ const PlaneWindow = (props) => {
             act('edit_color_matrix', {
               edit: workingPlane.our_ref,
             })
-          }>
+          }
+        >
           Edit Color Matrix
         </Button>
         <Slider
@@ -772,7 +798,8 @@ const PlaneWindow = (props) => {
               edit: workingPlane.our_ref,
               alpha: value,
             })
-          }>
+          }
+        >
           Alpha ({workingPlane.alpha})
         </Slider>
       </Section>
@@ -868,7 +895,8 @@ const GroupDropdown = (props) => {
     <Box top={'30px'} left={'28px'} position={'absolute'}>
       <Tooltip
         content="Plane masters are stored in groups, based off where they came from. MAIN is the main group, but if you open something that displays atoms in a new window, it'll show up here"
-        position="right">
+        position="right"
+      >
         <Dropdown
           options={present_groups}
           selected={our_group}
@@ -912,11 +940,11 @@ const AddModal = (props) => {
   const [showAdd, setShowAdd] = useLocalState('showAdd', false);
   const [currentPlane, setCurrentPlane] = useLocalState<Plane>(
     'currentPlane',
-    {} as Plane
+    {} as Plane,
   );
   const [currentTarget, setCurrentTarget] = useLocalState<Plane>(
     'currentTarget',
-    {} as Plane
+    {} as Plane,
   );
 
   const plane_list = Object.keys(plane_info).map((plane) => plane_info[plane]);
@@ -945,7 +973,8 @@ const AddModal = (props) => {
                   target: currentTarget.plane,
                 });
                 setShowAdd(false);
-              }}>
+              }}
+            >
               Confirm
             </Button>
           </Stack.Item>
@@ -972,7 +1001,8 @@ const InfoModal = (props) => {
       top="100px"
       right="180px"
       left="180px"
-      bottom="100px">
+      bottom="100px"
+    >
       <Section
         fill
         scrollable
@@ -983,7 +1013,8 @@ const InfoModal = (props) => {
             tooltip="Close"
             onClick={() => setShowInfo(false)}
           />
-        }>
+        }
+      >
         <Box dangerouslySetInnerHTML={display} />
         <h3>What is all this?</h3>
         This UI exists to help visualize plane masters, the backbone of our

@@ -1,5 +1,14 @@
 import { useBackend } from '../backend';
-import { Box, Button, Collapsible, Grid, LabeledList, NoticeBox, NumberInput, Section } from '../components';
+import {
+  Box,
+  Button,
+  Collapsible,
+  Grid,
+  LabeledList,
+  NoticeBox,
+  NumberInput,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 export const NaniteChamberControl = (props) => {
@@ -42,7 +51,8 @@ export const NaniteChamberControlContent = (props) => {
           color={locked ? 'bad' : 'default'}
           onClick={() => act('toggle_lock')}
         />
-      }>
+      }
+    >
       {!has_nanites ? (
         <>
           <Box bold color="bad" textAlign="center" fontSize="30px" mb={1}>
@@ -72,7 +82,8 @@ export const NaniteChamberControlContent = (props) => {
                 color="bad"
                 onClick={() => act('remove_nanites')}
               />
-            }>
+            }
+          >
             <Grid>
               <Grid.Column>
                 <LabeledList>
@@ -198,7 +209,8 @@ export const NaniteChamberControlContent = (props) => {
                           {extra_settings.map((extra_setting) => (
                             <LabeledList.Item
                               key={extra_setting.name}
-                              label={extra_setting.name}>
+                              label={extra_setting.name}
+                            >
                               {extra_setting.value}
                             </LabeledList.Item>
                           ))}

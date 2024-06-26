@@ -1,6 +1,14 @@
 import { round } from 'common/math';
 import { useBackend } from '../backend';
-import { Box, Button, Collapsible, LabeledList, ProgressBar, Section, Slider } from '../components';
+import {
+  Box,
+  Button,
+  Collapsible,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Slider,
+} from '../components';
 import { Window } from '../layouts';
 
 export const MediaJukebox = (props) => {
@@ -46,13 +54,15 @@ export const MediaJukebox = (props) => {
               <Button
                 icon="play"
                 disabled={playing}
-                onClick={() => act('play')}>
+                onClick={() => act('play')}
+              >
                 Play
               </Button>
               <Button
                 icon="stop"
                 disabled={!playing}
-                onClick={() => act('stop')}>
+                onClick={() => act('stop')}
+              >
                 Stop
               </Button>
             </LabeledList.Item>
@@ -60,25 +70,29 @@ export const MediaJukebox = (props) => {
               <Button
                 icon="play"
                 onClick={() => act('loopmode', { loopmode: 1 })}
-                selected={loop_mode === 1}>
+                selected={loop_mode === 1}
+              >
                 Next
               </Button>
               <Button
                 icon="random"
                 onClick={() => act('loopmode', { loopmode: 2 })}
-                selected={loop_mode === 2}>
+                selected={loop_mode === 2}
+              >
                 Shuffle
               </Button>
               <Button
                 icon="redo"
                 onClick={() => act('loopmode', { loopmode: 3 })}
-                selected={loop_mode === 3}>
+                selected={loop_mode === 3}
+              >
                 Repeat
               </Button>
               <Button
                 icon="step-forward"
                 onClick={() => act('loopmode', { loopmode: 4 })}
-                selected={loop_mode === 4}>
+                selected={loop_mode === 4}
+              >
                 Once
               </Button>
             </LabeledList.Item>
@@ -113,7 +127,8 @@ export const MediaJukebox = (props) => {
                   title={genre}
                   key={genre}
                   color={true_genre === genre ? 'green' : 'default'}
-                  child_mt={0}>
+                  child_mt={0}
+                >
                   <div style={{ 'margin-left': '1em' }}>
                     {genre_songs[genre].map((track) => (
                       <Button
@@ -123,7 +138,8 @@ export const MediaJukebox = (props) => {
                         selected={current_track_ref === track.ref}
                         onClick={() =>
                           act('change_track', { change_track: track.ref })
-                        }>
+                        }
+                      >
                         {track.title}
                       </Button>
                     ))}

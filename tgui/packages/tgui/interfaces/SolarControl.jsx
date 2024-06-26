@@ -1,5 +1,13 @@
 import { useBackend } from '../backend';
-import { Box, Button, Grid, LabeledList, NumberInput, ProgressBar, Section } from '../components';
+import {
+  Box,
+  Button,
+  Grid,
+  LabeledList,
+  NumberInput,
+  ProgressBar,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 export const SolarControl = (props) => {
@@ -25,18 +33,21 @@ export const SolarControl = (props) => {
               content="Scan for new hardware"
               onClick={() => act('refresh')}
             />
-          }>
+          }
+        >
           <Grid>
             <Grid.Column>
               <LabeledList>
                 <LabeledList.Item
                   label="Solar tracker"
-                  color={connected_tracker ? 'good' : 'bad'}>
+                  color={connected_tracker ? 'good' : 'bad'}
+                >
                   {connected_tracker ? 'OK' : 'N/A'}
                 </LabeledList.Item>
                 <LabeledList.Item
                   label="Solar panels"
-                  color={connected_panels > 0 ? 'good' : 'bad'}>
+                  color={connected_panels > 0 ? 'good' : 'bad'}
+                >
                   {connected_panels}
                 </LabeledList.Item>
               </LabeledList>
@@ -52,7 +63,8 @@ export const SolarControl = (props) => {
                     }}
                     minValue={0}
                     maxValue={1}
-                    value={generated_ratio}>
+                    value={generated_ratio}
+                  >
                     {generated + ' W'}
                   </ProgressBar>
                 </LabeledList.Item>

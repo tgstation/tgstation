@@ -74,19 +74,22 @@ const SystemInfo = (props) => {
             disabled={!master_dna}
             icon="dna"
             onClick={() => act('check dna')}
-            tooltip="Verifies your master's DNA. Must be carried in hand.">
+            tooltip="Verifies your master's DNA. Must be carried in hand."
+          >
             Verify
           </Button>
           <Button
             icon={ICON_MAP[image]}
             onClick={() => act('change image')}
-            tooltip="Change your display image.">
+            tooltip="Change your display image."
+          >
             Display
           </Button>
         </>
       }
       fill
-      title="System Info">
+      title="System Info"
+    >
       <LabeledList>
         <LabeledList.Item label="Master">
           {master_name || 'None.'}

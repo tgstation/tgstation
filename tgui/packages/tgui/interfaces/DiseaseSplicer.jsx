@@ -1,5 +1,13 @@
 import { useBackend } from '../backend';
-import { Button, Dimmer, LabeledList, Icon, Slider, NoticeBox, Section } from '../components';
+import {
+  Button,
+  Dimmer,
+  LabeledList,
+  Icon,
+  Slider,
+  NoticeBox,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 export const DiseaseSplicer = (props) => {
@@ -49,7 +57,8 @@ export const DiseaseSplicer = (props) => {
                 onClick={() => act('erase_buffer')}
               />
             </>
-          }>
+          }
+        >
           {!dish_error && <NoticeBox info>No Error Present</NoticeBox>}
           {dish_error && <NoticeBox warn>ERROR: {dish_error}</NoticeBox>}
           <LabeledList>
@@ -79,7 +88,8 @@ export const DiseaseSplicer = (props) => {
                 stepPixelSize={50}
                 value={target_stage}
                 onDrag={(e, stage) => act('target_stage', { stage })}
-                onChange={(e, stage) => act('target_stage', { stage })}>
+                onChange={(e, stage) => act('target_stage', { stage })}
+              >
                 {target_stage}
               </Slider>
               <Button

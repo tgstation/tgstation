@@ -33,7 +33,7 @@ const altRegex = /(.*)(Alt)(.*)/;
 const addColorModifier = (
   content: string,
   regex: RegExp,
-  color: string
+  color: string,
 ): InfernoNode | null => {
   const match = content.match(regex);
 
@@ -116,7 +116,8 @@ export const HotkeysHelp = (props) => {
                       <Tooltip
                         key={binding.name}
                         content={binding.desc}
-                        position="bottom">
+                        position="bottom"
+                      >
                         <Box p={1} m={1} inline className="HotkeysHelp__pill">
                           {binding.name}
                         </Box>
@@ -125,7 +126,7 @@ export const HotkeysHelp = (props) => {
                       <Box p={1} m={1} inline className="HotkeysHelp__pill">
                         {binding.name}
                       </Box>
-                    )
+                    ),
                   )}
                 </Table.Cell>
               </Table.Row>

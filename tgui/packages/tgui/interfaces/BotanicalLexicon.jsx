@@ -15,7 +15,8 @@ export const BotanicalLexicon = (props) => {
       title="Botanical Encyclopedia"
       theme="chicken_book"
       width={600}
-      height={450}>
+      height={450}
+    >
       <Window.Content>
         <Stack class="content">
           <Stack class="book">
@@ -117,7 +118,7 @@ const PlantTabs = (props) => {
   const { plant_list = [] } = data;
   const [selectedPlant, setSelectedPlant] = useLocalState(
     'plant',
-    plant_list[0]
+    plant_list[0],
   );
   return (
     <Tabs vertical>
@@ -125,7 +126,8 @@ const PlantTabs = (props) => {
         <Tabs.Tab
           key={plant}
           selected={plant === selectedPlant}
-          onClick={() => setSelectedPlant(plant)}>
+          onClick={() => setSelectedPlant(plant)}
+        >
           {plant.name}
         </Tabs.Tab>
       ))}

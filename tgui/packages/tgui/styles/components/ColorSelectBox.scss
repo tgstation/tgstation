@@ -23,11 +23,15 @@ $color-selected: colors.bg(colors.$green) !default;
   }
 
   &:hover {
-    transition: color 0ms, border-color 0ms;
+    transition:
+      color 0ms,
+      border-color 0ms;
   }
 
   &:focus {
-    transition: color 100ms, border-color 100ms;
+    transition:
+      color 100ms,
+      border-color 100ms;
   }
 
   &:hover,

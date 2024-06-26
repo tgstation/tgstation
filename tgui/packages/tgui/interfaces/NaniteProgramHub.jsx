@@ -1,6 +1,13 @@
 import { map } from 'common/collections';
 import { useBackend, useSharedState } from '../backend';
-import { Button, Flex, LabeledList, NoticeBox, Section, Tabs } from '../components';
+import {
+  Button,
+  Flex,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Tabs,
+} from '../components';
 import { Window } from '../layouts';
 
 export const NaniteProgramHub = (props) => {
@@ -26,7 +33,8 @@ export const NaniteProgramHub = (props) => {
                 onClick={() => act('clear')}
               />
             </>
-          }>
+          }
+        >
           {has_disk ? (
             has_program ? (
               <LabeledList>
@@ -59,7 +67,8 @@ export const NaniteProgramHub = (props) => {
                 onClick={() => act('refresh')}
               />
             </>
-          }>
+          }
+        >
           {programs !== null ? (
             <Flex>
               <Flex.Item minWidth="110px">
@@ -73,7 +82,8 @@ export const NaniteProgramHub = (props) => {
                       <Tabs.Tab
                         key={category}
                         selected={category === selectedCategory}
-                        onClick={() => setSelectedCategory(category)}>
+                        onClick={() => setSelectedCategory(category)}
+                      >
                         {tabLabel}
                       </Tabs.Tab>
                     );
@@ -98,7 +108,8 @@ export const NaniteProgramHub = (props) => {
                             })
                           }
                         />
-                      }>
+                      }
+                    >
                       {program.desc}
                     </Section>
                   ))

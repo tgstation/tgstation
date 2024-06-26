@@ -93,7 +93,7 @@ export const computeFlexItemProps = (props: FlexItemProps) => {
       'flex-grow': grow !== undefined && Number(grow),
       'flex-shrink': shrink !== undefined && Number(shrink),
       'flex-basis': unit(computedBasis),
-      'order': order,
+      order: order,
       'align-self': align,
     },
     ...rest,

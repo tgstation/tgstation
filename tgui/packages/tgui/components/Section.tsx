@@ -82,7 +82,8 @@ export class Section extends Component<SectionProps> {
           className,
           computeBoxClassName(rest),
         ])}
-        {...computeBoxProps(rest)}>
+        {...computeBoxProps(rest)}
+      >
         {hasTitle && (
           <div className="Section__title">
             <span className="Section__titleText">{title}</span>
@@ -93,7 +94,8 @@ export class Section extends Component<SectionProps> {
           <div
             ref={this.scrollableRef}
             onScroll={onScroll}
-            className="Section__content">
+            className="Section__content"
+          >
             {children}
           </div>
         </div>

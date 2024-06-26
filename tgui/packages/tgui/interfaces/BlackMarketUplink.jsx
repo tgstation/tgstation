@@ -1,6 +1,15 @@
 import { round } from 'common/math';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Modal, Section, Stack, Tabs, Slider } from '../components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Modal,
+  Section,
+  Stack,
+  Tabs,
+  Slider,
+} from '../components';
 import { formatMoney, formatTime } from '../format';
 import { Window } from '../layouts';
 
@@ -40,7 +49,8 @@ export const BlackMarketUplink = (props) => {
                   act('set_market', {
                     market: market.id,
                   })
-                }>
+                }
+              >
                 {market.name}
               </Tabs.Tab>
             ))}
@@ -120,7 +130,8 @@ const NormalMarket = (props) => {
                 act('set_category', {
                   category: category,
                 })
-              }>
+              }
+            >
               {category}
             </Tabs.Tab>
           ))}
@@ -211,7 +222,8 @@ const AuctionMarket = (props) => {
                   {' '}
                   Past Bidders
                 </Box>
-              }>
+              }
+            >
               {bidders.map((item) => (
                 <Box key={item.name} className="candystripe" p={1} pb={2}>
                   <Stack align="baseline">
@@ -292,7 +304,8 @@ const AuctionMarket = (props) => {
                   {' '}
                   Upcoming Auctions
                 </Box>
-              }>
+              }
+            >
               {queued_items.map((item) => (
                 <Box key={item.name} className="candystripe" p={1} pb={2}>
                   <Stack align="baseline">

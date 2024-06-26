@@ -5,11 +5,24 @@ import { Component, Fragment } from 'inferno';
 import { fetchRetry } from '../../http';
 import { resolveAsset } from '../../assets';
 import { BooleanLike } from 'common/react';
-import { Box, Tabs, Button, Stack, Section, Tooltip, Dimmer } from '../../components';
+import {
+  Box,
+  Tabs,
+  Button,
+  Stack,
+  Section,
+  Tooltip,
+  Dimmer,
+} from '../../components';
 import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
 import { Objective, ObjectiveMenu } from './ObjectiveMenu';
 import { ContractorItem, ContractorMenu } from './ContractorMenu';
-import { calculateProgression, calculateDangerLevel, dangerDefault, dangerLevelsTooltip } from './calculateDangerLevel';
+import {
+  calculateProgression,
+  calculateDangerLevel,
+  dangerDefault,
+  dangerLevelsTooltip,
+} from './calculateDangerLevel';
 
 type UplinkItem = {
   id: string;
@@ -102,7 +115,7 @@ export class Uplink extends Component<{}, UplinkState> {
   async populateServerData() {
     if (!fetchServerData) {
       fetchServerData = fetchRetry(resolveAsset('uplink.json')).then(
-        (response) => response.json()
+        (response) => response.json(),
       );
     }
     const { data } = useBackend<UplinkData>();
@@ -151,7 +164,7 @@ export class Uplink extends Component<{}, UplinkState> {
     });
 
     uplinkData.categories = uplinkData.categories.filter((value) =>
-      availableCategories.includes(value)
+      availableCategories.includes(value),
     );
 
     this.setState({
@@ -260,7 +273,7 @@ export class Uplink extends Component<{}, UplinkState> {
     // Clamp it down between 0 and 2
     progressionPercentage = Math.min(
       Math.max(progressionPercentage / progression_scaling_deviance, -1),
-      1
+      1,
     );
     // Round it and convert it into a percentage
     progressionPercentage = Math.round(progressionPercentage * 1000) / 10;
@@ -300,7 +313,7 @@ export class Uplink extends Component<{}, UplinkState> {
                                   Threat passively increases by{' '}
                                   <Box color="green" as="span">
                                     {calculateProgression(
-                                      current_progression_scaling
+                                      current_progression_scaling,
                                     )}
                                   </Box>
                                   &nbsp;every minute
@@ -320,7 +333,8 @@ export class Uplink extends Component<{}, UplinkState> {
                                           : 'green'
                                       }
                                       ml={1}
-                                      mr={1}>
+                                      mr={1}
+                                    >
                                       {progressionPercentage}%
                                     </Box>
                                     {progressionPercentage < 0
@@ -334,7 +348,8 @@ export class Uplink extends Component<{}, UplinkState> {
                             </Box>
                           )) ||
                           "Your current threat level. You are a killing machine and don't need to improve your threat level."
-                        }>
+                        }
+                      >
                         {/* If we have no progression,
                       just give them a generic title */}
                         {has_progression
@@ -358,12 +373,14 @@ export class Uplink extends Component<{}, UplinkState> {
                         <Fragment>
                           <Tabs.Tab
                             selected={currentTab === 0}
-                            onClick={() => this.setState({ currentTab: 0 })}>
+                            onClick={() => this.setState({ currentTab: 0 })}
+                          >
                             Primary Objectives
                           </Tabs.Tab>
                           <Tabs.Tab
                             selected={currentTab === 1}
-                            onClick={() => this.setState({ currentTab: 1 })}>
+                            onClick={() => this.setState({ currentTab: 1 })}
+                          >
                             Secondary Objectives
                           </Tabs.Tab>
                         </Fragment>
@@ -371,13 +388,15 @@ export class Uplink extends Component<{}, UplinkState> {
                       {!!is_contractor && (
                         <Tabs.Tab
                           selected={currentTab === 2}
-                          onClick={() => this.setState({ currentTab: 2 })}>
+                          onClick={() => this.setState({ currentTab: 2 })}
+                        >
                           Contractor Market
                         </Tabs.Tab>
                       )}
                       <Tabs.Tab
                         selected={currentTab === 3 || !has_objectives}
-                        onClick={() => this.setState({ currentTab: 3 })}>
+                        onClick={() => this.setState({ currentTab: 3 })}
+                      >
                         Market
                       </Tabs.Tab>
                     </Tabs>
@@ -464,7 +483,8 @@ export class Uplink extends Component<{}, UplinkState> {
                           fontFamily={'Bahnschrift'}
                           fontSize={3}
                           align={'top'}
-                          as="span">
+                          as="span"
+                        >
                           SHOP LOCKED
                         </Box>
                       </Dimmer>

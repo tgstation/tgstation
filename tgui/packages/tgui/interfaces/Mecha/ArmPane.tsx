@@ -1,6 +1,12 @@
 import { toFixed } from 'common/math';
 import { useBackend } from '../../backend';
-import { Button, LabeledList, Stack, Section, ProgressBar } from '../../components';
+import {
+  Button,
+  LabeledList,
+  Stack,
+  Section,
+  ProgressBar,
+} from '../../components';
 import { MechWeapon, OperatorData } from './data';
 
 export const ArmPane = (props: { weapon: MechWeapon }) => {
@@ -101,7 +107,8 @@ const BallisticStats = (props: { weapon: MechWeapon }) => {
                     ref: ref,
                     gear_action: 'reload',
                   })
-                }>
+                }
+              >
                 Reload
               </Button>
             </LabeledList.Item>

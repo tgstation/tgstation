@@ -1,4 +1,11 @@
-import { FeatureColorInput, Feature, FeatureChoiced, FeatureValueProps, FeatureDropdownInput, StandardizedPalette } from './base';
+import {
+  FeatureColorInput,
+  Feature,
+  FeatureChoiced,
+  FeatureValueProps,
+  FeatureDropdownInput,
+  StandardizedPalette,
+} from './base';
 
 const eyePresets = {
   // these need to be short color (3 byte) compatible

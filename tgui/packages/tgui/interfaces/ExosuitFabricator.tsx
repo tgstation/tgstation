@@ -42,7 +42,8 @@ export const ExosuitFabricator = (props) => {
                         act('build', {
                           designs: category.children.map((design) => design.id),
                         });
-                      }}>
+                      }}
+                    >
                       Queue All
                     </Button>
                   )}
@@ -75,7 +76,7 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
-      !available[material] || amount > (available[material] ?? 0)
+      !available[material] || amount > (available[material] ?? 0),
   );
 
   return (
@@ -86,7 +87,8 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
             'FabricatorRecipe__Button',
             'FabricatorRecipe__Button--icon',
             !canPrint && 'FabricatorRecipe__Button--disabled',
-          ])}>
+          ])}
+        >
           <Icon name="question-circle" />
         </div>
       </Tooltip>
@@ -98,13 +100,15 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
             amount={1}
             available={available}
           />
-        }>
+        }
+      >
         <div
           className={classes([
             'FabricatorRecipe__Title',
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
-          onClick={() => act('build', { designs: [design.id], now: true })}>
+          onClick={() => act('build', { designs: [design.id], now: true })}
+        >
           <div className="FabricatorRecipe__Icon">
             <Box
               width={'32px'}
@@ -124,7 +128,8 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
             !canPrint && 'FabricatorRecipe__Button--disabled',
           ])}
           color={'transparent'}
-          onClick={() => act('build', { designs: [design.id] })}>
+          onClick={() => act('build', { designs: [design.id] })}
+        >
           <Icon name="plus-circle" />
         </div>
       </Tooltip>
@@ -137,7 +142,8 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
             !canPrint && 'FabricatorRecipe__Button--disabled',
           ])}
           color={'transparent'}
-          onClick={() => act('build', { designs: [design.id], now: true })}>
+          onClick={() => act('build', { designs: [design.id], now: true })}
+        >
           <Icon name="play" />
         </div>
       </Tooltip>
@@ -199,7 +205,8 @@ const Queue = (props: { availableMaterials: MaterialMap }) => {
                   />
                 )}
               </>
-            }>
+            }
+          >
             <MaterialCostSequence
               available={availableMaterials}
               costMap={materialCosts}
@@ -207,7 +214,7 @@ const Queue = (props: { availableMaterials: MaterialMap }) => {
           </Section>
         </Stack.Item>
         <Stack.Item grow>
-          <Section fill style={{ 'overflow': 'auto' }}>
+          <Section fill style={{ overflow: 'auto' }}>
             <QueueList availableMaterials={availableMaterials} />
           </Section>
         </Stack.Item>
@@ -273,12 +280,14 @@ const QueueList = (props: { availableMaterials: MaterialMap }) => {
                   amount={1}
                   available={availableMaterials}
                 />
-              }>
+              }
+            >
               <div
                 className={classes([
                   'FabricatorRecipe__Title',
                   !entry.canPrint && 'FabricatorRecipe__Title--disabled',
-                ])}>
+                ])}
+              >
                 <div className="FabricatorRecipe__Icon">
                   <Box
                     width={'32px'}
@@ -305,7 +314,8 @@ const QueueList = (props: { availableMaterials: MaterialMap }) => {
                   act('del_queue_part', {
                     index: entry.index + (queue[0]!.processing ? 0 : 1),
                   });
-                }}>
+                }}
+              >
                 <Tooltip content={'Remove from Queue'}>
                   <Icon name="minus-circle" />
                 </Tooltip>

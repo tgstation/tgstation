@@ -63,7 +63,8 @@ export class ServerPreferencesFetcher extends Component<
         style={{
           'background-color': 'rgba(0, 0, 0, 0.75)',
           'font-weight': 'bold',
-        }}>
+        }}
+      >
         Error: Unable to fetch preferences clientside data.
         <br />
         (Your character data is OK, this is a UI error)
@@ -75,7 +76,8 @@ export class ServerPreferencesFetcher extends Component<
           textAlign="left"
           fontSize="12px"
           textColor="white"
-          style={{ 'white-space': 'pre-wrap' }}>
+          style={{ 'white-space': 'pre-wrap' }}
+        >
           Error Details:{'\n'}
           {typeof lastError === 'object' &&
           Object.keys(lastError).includes('stack')

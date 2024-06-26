@@ -36,7 +36,8 @@ export const Electrolyzer = (props) => {
                 onClick={() => act('power')}
               />
             </>
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Cell" color={!hasPowercell && 'bad'}>
               {(hasPowercell && (

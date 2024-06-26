@@ -28,7 +28,8 @@ export const LaborClaimConsole = (props) => {
                   disabled={!unclaimed_points}
                   onClick={() => act('claim_points')}
                 />
-              }>
+              }
+            >
               {unclaimed_points}
             </LabeledList.Item>
           </LabeledList>

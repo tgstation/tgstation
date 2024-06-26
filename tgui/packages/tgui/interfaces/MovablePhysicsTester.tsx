@@ -121,7 +121,8 @@ export const MovablePhysicsTester = (props) => {
                     width="100%"
                     height="100%"
                     color={!(physics_flags & 2) ? 'bad' : 'good'}
-                    onClick={() => act('pause')}>
+                    onClick={() => act('pause')}
+                  >
                     {!(physics_flags & 2) ? 'Paused' : 'Running'}
                   </Button>
                 </Stack.Item>
@@ -129,7 +130,8 @@ export const MovablePhysicsTester = (props) => {
                   <Button
                     width="100%"
                     height="100%"
-                    onClick={() => act('physics_chungus_deluxe')}>
+                    onClick={() => act('physics_chungus_deluxe')}
+                  >
                     PCD
                   </Button>
                 </Stack.Item>

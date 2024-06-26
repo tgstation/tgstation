@@ -21,7 +21,8 @@ export const BasicOffsetEditor = (properties) => {
                     <Box
                       fontSize="1.25rem"
                       color="label"
-                      mt={key > 0 && '0.5rem'}>
+                      mt={key > 0 && '0.5rem'}
+                    >
                       North
                     </Box>
                   </Flex.Item>
@@ -80,7 +81,8 @@ export const BasicOffsetEditor = (properties) => {
                     <Box
                       fontSize="1.25rem"
                       color="label"
-                      mt={key > 0 && '0.5rem'}>
+                      mt={key > 0 && '0.5rem'}
+                    >
                       South
                     </Box>
                   </Flex.Item>
@@ -139,7 +141,8 @@ export const BasicOffsetEditor = (properties) => {
                     <Box
                       fontSize="1.25rem"
                       color="label"
-                      mt={key > 0 && '0.5rem'}>
+                      mt={key > 0 && '0.5rem'}
+                    >
                       East
                     </Box>
                   </Flex.Item>
@@ -198,7 +201,8 @@ export const BasicOffsetEditor = (properties) => {
                     <Box
                       fontSize="1.25rem"
                       color="label"
-                      mt={key > 0 && '0.5rem'}>
+                      mt={key > 0 && '0.5rem'}
+                    >
                       West
                     </Box>
                   </Flex.Item>

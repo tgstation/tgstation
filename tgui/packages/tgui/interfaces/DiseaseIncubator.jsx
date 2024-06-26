@@ -16,7 +16,8 @@ export const DiseaseIncubator = (props) => {
             color={on ? 'green' : 'red'}
             onClick={() => act('power')}
           />
-        }>
+        }
+      >
         <Section context="Dishes">
           {dishes.map((dish) => (
             <Section
@@ -50,7 +51,8 @@ export const DiseaseIncubator = (props) => {
                     onClick={() => act('changefocus', { slot: dish.dish_slot })}
                   />
                 </>
-              }>
+              }
+            >
               <LabeledList key={dish.name}>
                 <LabeledList.Item label="Growth">
                   {dish.growth}

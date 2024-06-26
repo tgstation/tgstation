@@ -26,7 +26,7 @@ export const EditableText = (props: Props) => {
   const { act } = useBackend();
   const [editing, setEditing] = useLocalState<boolean>(
     `editing_${field}`,
-    false
+    false,
   );
 
   return editing ? (
@@ -54,7 +54,8 @@ export const EditableText = (props: Props) => {
             'text-decoration-thickness': '1px',
             'text-underline-offset': '1px',
           }}
-          onClick={() => setEditing(true)}>
+          onClick={() => setEditing(true)}
+        >
           {!text ? '(none)' : text}
         </Box>
       </Stack.Item>

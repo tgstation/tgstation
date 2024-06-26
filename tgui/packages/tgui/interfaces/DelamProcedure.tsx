@@ -8,7 +8,8 @@ export const DelamProcedure = () => {
       title="Safety Moth - Delamination Emergency Procedure"
       width={666}
       height={865}
-      theme="dark">
+      theme="dark"
+    >
       <Window.Content>
         <Section title="NT-approved delam emergency procedure">
           <NoticeBox danger m={2}>

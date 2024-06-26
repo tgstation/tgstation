@@ -11,7 +11,7 @@ export type FeatureMultilineProps = FeatureValueProps<
 export const MultilineText = (
   props: FeatureMultilineProps & {
     box_height: string | null;
-  }
+  },
 ) => {
   if (!props.serverData) {
     return <Box>Loading...</Box>;

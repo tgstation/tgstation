@@ -47,7 +47,8 @@ export const ContractorMenu = (props: ContractorMenuProps) => {
                   }
                 />
               </>
-            }>
+            }
+          >
             <Table>
               <Table.Row>
                 <Table.Cell>

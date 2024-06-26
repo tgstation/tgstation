@@ -135,7 +135,8 @@ export const ServerControl = (props) => {
                   <Table.Row
                     mt={1}
                     key={server_log.node_name}
-                    className="candystripe">
+                    className="candystripe"
+                  >
                     <Table.Cell>{server_log.node_name}</Table.Cell>
                     <Table.Cell>{server_log.node_cost}</Table.Cell>
                     <Table.Cell>{server_log.node_researcher}</Table.Cell>

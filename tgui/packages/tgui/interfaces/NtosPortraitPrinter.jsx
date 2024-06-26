@@ -48,7 +48,8 @@ export const NtosPortraitPrinter = (props) => {
                 height="100%"
                 align="center"
                 justify="center"
-                direction="column">
+                direction="column"
+              >
                 {got_paintings ? (
                   <>
                     <Stack.Item>

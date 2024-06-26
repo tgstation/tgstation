@@ -1,6 +1,19 @@
 import { toTitleCase } from 'common/string';
 import { useBackend, useSharedState, useLocalState } from '../backend';
-import { Box, Button, NumberInput, NoticeBox, ProgressBar, Section, Flex, Stack, RoundGauge, Tabs, Table, Tooltip } from '../components';
+import {
+  Box,
+  Button,
+  NumberInput,
+  NoticeBox,
+  ProgressBar,
+  Section,
+  Flex,
+  Stack,
+  RoundGauge,
+  Tabs,
+  Table,
+  Tooltip,
+} from '../components';
 import { Window } from '../layouts';
 
 export const AmmoWorkbench = (props) => {
@@ -10,7 +23,8 @@ export const AmmoWorkbench = (props) => {
       width={600}
       height={600}
       theme="hackerman"
-      title="Ammunitions Workbench">
+      title="Ammunitions Workbench"
+    >
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab selected={tab === 1} onClick={() => setTab(1)}>
@@ -69,7 +83,8 @@ export const AmmunitionsTab = (props) => {
         <Button.Checkbox
           textAlign="right"
           checked={turboBoost}
-          onClick={() => act('turboBoost')}>
+          onClick={() => act('turboBoost')}
+        >
           Turbo Boost
         </Button.Checkbox>
       </Section>
@@ -93,7 +108,8 @@ export const AmmunitionsTab = (props) => {
               onClick={() => act('EjectMag')}
             />
           </>
-        }>
+        }
+      >
         {!!mag_loaded && <Box>{mag_name}</Box>}
         {!!mag_loaded && (
           <Box bold textAlign="right">
@@ -109,11 +125,13 @@ export const AmmunitionsTab = (props) => {
                 key={available_round.name}
                 className="candystripe"
                 p={1}
-                pb={2}>
+                pb={2}
+              >
                 <Stack.Item>
                   <Tooltip
                     content={available_round.mats_list}
-                    position={'right'}>
+                    position={'right'}
+                  >
                     <Button
                       content={available_round.name}
                       disabled={system_busy}
@@ -198,7 +216,8 @@ export const DatadiskTab = (props) => {
               onClick={() => act('EjectDisk')}
             />
           </>
-        }>
+        }
+      >
         {!!datadisk_loaded && (
           <Box>
             Inserted Datadisk: {datadisk_name}

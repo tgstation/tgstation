@@ -2,7 +2,7 @@
 export const editKeyOf = (
   icon_state: { [key: string]: number },
   old_key: string,
-  new_key: string
+  new_key: string,
 ) => {
   let returnval = {};
   Object.keys(icon_state).forEach((key) => {
@@ -20,7 +20,7 @@ export const editKeyOf = (
 export const editWeightOf = (
   icon_state: { [key: string]: number },
   key: string,
-  weight: number
+  weight: number,
 ) => {
   icon_state[key] = weight;
   return icon_state;
@@ -37,7 +37,7 @@ export const isStringArray = (value: any): value is string[] => {
 /** sets the "space" keys value on  an object, then returns that object*/
 export const setGradientSpace = (
   gradient: (number | string)[],
-  space: number
+  space: number,
 ) => {
   gradient['space'] = space;
   return gradient;

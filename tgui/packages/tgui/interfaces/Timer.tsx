@@ -34,7 +34,8 @@ export const Timer = (props) => {
                 onClick={() => act('time')}
               />
             </>
-          }>
+          }
+        >
           <TimerContent />
         </Section>
       </Window.Content>

@@ -1,6 +1,15 @@
 import { capitalizeAll, multiline } from 'common/string';
 import { useBackend } from 'tgui/backend';
-import { Button, Icon, LabeledControls, NoticeBox, Section, Slider, Stack, Tooltip } from 'tgui/components';
+import {
+  Button,
+  Icon,
+  LabeledControls,
+  NoticeBox,
+  Section,
+  Slider,
+  Stack,
+  Tooltip,
+} from 'tgui/components';
 import { Window } from 'tgui/layouts';
 
 type SimpleBotContext = {
@@ -65,7 +74,8 @@ const TabDisplay = (props) => {
         color="transparent"
         icon="fa-poll-h"
         onClick={() => act('rename')}
-        tooltip="Update the bot's name registration.">
+        tooltip="Update the bot's name registration."
+      >
         Rename
       </Button>
       <Button
@@ -74,7 +84,8 @@ const TabDisplay = (props) => {
         icon={locked ? 'lock' : 'lock-open'}
         onClick={() => act('lock')}
         selected={locked}
-        tooltip={`${locked ? 'Unlock' : 'Lock'} the control panel.`}>
+        tooltip={`${locked ? 'Unlock' : 'Lock'} the control panel.`}
+      >
         Controls Lock
       </Button>
     </>
@@ -97,7 +108,8 @@ const HackButton = (props) => {
         !emagged
           ? 'Unlocks the safety protocols.'
           : 'Resets the bot operating system.'
-      }>
+      }
+    >
       {emagged ? 'Malfunctional' : 'Safety Lock'}
     </Button>
   );
@@ -132,7 +144,8 @@ const SettingsDisplay = (props) => {
         <Tooltip
           content={`${
             !airplane_mode ? 'Disables' : 'Enables'
-          } remote access via console.`}>
+          } remote access via console.`}
+        >
           <Icon
             size={2}
             name="plane"
@@ -145,7 +158,8 @@ const SettingsDisplay = (props) => {
         <Tooltip
           content={`${
             patrol_station ? 'Disables' : 'Enables'
-          } automatic station patrol.`}>
+          } automatic station patrol.`}
+        >
           <Icon
             size={2}
             name="map-signs"
@@ -160,7 +174,8 @@ const SettingsDisplay = (props) => {
             maintenance_lock
               ? 'Opens the maintenance hatch for repairs.'
               : 'Closes the maintenance hatch.'
-          }>
+          }
+        >
           <Icon
             size={2}
             name="toolbox"
@@ -176,7 +191,8 @@ const SettingsDisplay = (props) => {
               possession_enabled
                 ? 'Resets personality to factory default.'
                 : 'Enables download of a unique personality.'
-            }>
+            }
+          >
             <Icon
               size={2}
               name="robot"
@@ -204,7 +220,8 @@ const ControlsDisplay = (props) => {
           <LabeledControls.Item
             pb={2}
             key={control[0]}
-            label={capitalizeAll(control[0].replace('_', ' '))}>
+            label={capitalizeAll(control[0].replace('_', ' '))}
+          >
             <ControlHelper control={control} />
           </LabeledControls.Item>
         );
@@ -249,7 +266,8 @@ const MedbotSync = (props) => {
   return (
     <Tooltip
       content={multiline`Synchronize surgical data with research network.
-       Improves Tending Efficiency.`}>
+       Improves Tending Efficiency.`}
+    >
       <Icon
         color="purple"
         name="cloud-download-alt"
@@ -294,7 +312,8 @@ const FloorbotTiles = (props) => {
       disabled={!control[1]}
       icon={control[1] ? 'eject' : ''}
       onClick={() => act('eject_tiles')}
-      tooltip="Number of floor tiles contained in the bot.">
+      tooltip="Number of floor tiles contained in the bot."
+    >
       {control[1] ? `${control[1]}` : 'Empty'}
     </Button>
   );
@@ -311,14 +330,10 @@ const FloorbotLine = (props) => {
         color={control[1] ? 'good' : 'gray'}
         name={control[1] ? 'compass' : 'toggle-off'}
         onClick={() => act('line_mode')}
-        size={!control[1] ? 2 : 1.5}>
+        size={!control[1] ? 2 : 1.5}
+      >
         {' '}
-        {control[1]
-          ? control[1]
-            .toString()
-            .charAt(0)
-            .toUpperCase()
-          : ''}
+        {control[1] ? control[1].toString().charAt(0).toUpperCase() : ''}
       </Icon>
     </Tooltip>
   );

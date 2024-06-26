@@ -36,7 +36,7 @@ export const ComponentPrinter = (props) => {
               buildRecipeElement={(
                 design,
                 availableMaterials,
-                _onPrintDesign
+                _onPrintDesign,
               ) => <Recipe design={design} available={availableMaterials} />}
             />
           </Stack.Item>
@@ -62,7 +62,7 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
-      !available[material] || amount > (available[material] ?? 0)
+      !available[material] || amount > (available[material] ?? 0),
   );
 
   return (
@@ -73,7 +73,8 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
             'FabricatorRecipe__Button',
             'FabricatorRecipe__Button--icon',
             !canPrint && 'FabricatorRecipe__Button--disabled',
-          ])}>
+          ])}
+        >
           <Icon name="question-circle" />
         </div>
       </Tooltip>
@@ -84,13 +85,15 @@ const Recipe = (props: { design: Design; available: MaterialMap }) => {
             amount={1}
             available={available}
           />
-        }>
+        }
+      >
         <div
           className={classes([
             'FabricatorRecipe__Title',
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
-          onClick={() => act('print', { designId: design.id, amount: 1 })}>
+          onClick={() => act('print', { designId: design.id, amount: 1 })}
+        >
           <div className="FabricatorRecipe__Icon">
             <Box
               width={'32px'}

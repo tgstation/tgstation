@@ -5,13 +5,13 @@ import { PRINTOUT, SecurityRecordsData, SecurityRecord } from './types';
 export const getSecurityRecord = () => {
   const [selectedRecord] = useLocalState<SecurityRecord | undefined>(
     'securityRecord',
-    undefined
+    undefined,
   );
   if (!selectedRecord) return;
   const { data } = useBackend<SecurityRecordsData>();
   const { records = [] } = data;
   const foundRecord = records.find(
-    (record) => record.crew_ref === selectedRecord.crew_ref
+    (record) => record.crew_ref === selectedRecord.crew_ref,
   );
   if (!foundRecord) return;
 
@@ -58,7 +58,7 @@ export const getDefaultPrintHeader = (printType: PRINTOUT) => {
 /** Returns a string description based on print type */
 export const getDefaultPrintDescription = (
   name: string,
-  printType: PRINTOUT
+  printType: PRINTOUT,
 ) => {
   switch (printType) {
     case PRINTOUT.Rapsheet:

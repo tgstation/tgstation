@@ -112,7 +112,8 @@ const PowerSection = (props: any) => {
           tooltipPosition="left"
           tooltip={'Select a Power to explain.'}
         />
-      }>
+      }
+    >
       <Stack>
         <Stack.Item grow>
           <Dropdown
@@ -122,7 +123,7 @@ const PowerSection = (props: any) => {
             options={power.map((powers) => powers.power_name)}
             onSelected={(powerName: string) =>
               setSelectedPower(
-                power.find((p) => p.power_name === powerName) || power[0]
+                power.find((p) => p.power_name === powerName) || power[0],
               )
             }
           />

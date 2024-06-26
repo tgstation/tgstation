@@ -1,9 +1,9 @@
 export const ANTAG2COLOR = {
-  'Abductors': 'pink',
+  Abductors: 'pink',
   'Ash Walkers': 'olive',
-  'Biohazards': 'brown',
+  Biohazards: 'brown',
   'Bounty Hunters': 'yellow',
-  'CentCom': 'teal',
+  CentCom: 'teal',
   'Cyber Authority': 'teal',
   'Emergency Response Team': 'teal',
   'Escaped Fugitives': 'orange',

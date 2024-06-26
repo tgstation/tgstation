@@ -1,5 +1,13 @@
 import { useBackend } from '../backend';
-import { Button, Dropdown, Flex, Input, LabeledList, ProgressBar, Section } from '../components';
+import {
+  Button,
+  Dropdown,
+  Flex,
+  Input,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
@@ -46,7 +54,8 @@ export const Mule = (props) => {
                 />
               )}
             </>
-          }>
+          }
+        >
           <ProgressBar
             value={cell ? cellPercent / 100 : 0}
             color={cell ? 'good' : 'bad'}
@@ -63,7 +72,8 @@ export const Mule = (props) => {
               <LabeledList>
                 <LabeledList.Item
                   label="Load"
-                  color={load ? 'good' : 'average'}>
+                  color={load ? 'good' : 'average'}
+                >
                   {load || 'None'}
                 </LabeledList.Item>
               </LabeledList>
@@ -81,7 +91,8 @@ export const Mule = (props) => {
                   onClick={() => act('unload')}
                 />
               )
-            }>
+            }
+          >
             <LabeledList>
               <LabeledList.Item label="ID">
                 <Input

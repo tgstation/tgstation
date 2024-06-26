@@ -1,6 +1,13 @@
 import { BooleanLike } from '../../common/react';
 import { useBackend } from '../backend';
-import { Button, ColorBox, Input, LabeledList, NumberInput, Section } from '../components';
+import {
+  Button,
+  ColorBox,
+  Input,
+  LabeledList,
+  NumberInput,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 type EyeColorData = {
@@ -167,7 +174,8 @@ export const HighLuminosityEyesMenu = (props) => {
     <Window
       title="High Luminosity Eyes"
       width={eyeColor.hasOwner ? 262 : 225}
-      height={eyeColor.hasOwner ? (eyeColor.mode ? 170 : 220) : 135}>
+      height={eyeColor.hasOwner ? (eyeColor.mode ? 170 : 220) : 135}
+    >
       <Window.Content>
         <Section fill title="Settings">
           <LabeledList>

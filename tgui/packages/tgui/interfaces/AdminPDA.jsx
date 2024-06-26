@@ -108,7 +108,7 @@ export const MessageInput = (props) => {
           tooltip={
             blocked
               ? 'Fill in the following lines: ' +
-              tooltipText(name, job, messageText)
+                tooltipText(name, job, messageText)
               : 'Send message to user(s)'
           }
           fluid
@@ -122,7 +122,8 @@ export const MessageInput = (props) => {
               message: messageText,
               spam: spam,
             })
-          }>
+          }
+        >
           Send Message
         </Button>
       </Box>

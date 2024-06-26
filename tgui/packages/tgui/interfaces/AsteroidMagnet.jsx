@@ -9,7 +9,8 @@ export const AsteroidMagnet = (props) => {
     <Window
       title="Asteroid Magnetic Traction computer"
       width="400"
-      height="485">
+      height="485"
+    >
       <Window.Content>
         <InputX />
         <InputY />

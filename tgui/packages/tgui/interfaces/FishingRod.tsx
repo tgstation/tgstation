@@ -47,7 +47,8 @@ const FishingRodSlot = (props: FishingSlotProps) => {
         <Stack.Item grow>
           <Button
             fluid
-            onClick={() => act('slot_action', { slot: props.slot })}>
+            onClick={() => act('slot_action', { slot: props.slot })}
+          >
             <Flex>
               <Flex.Item>
                 {!!props.current_item_icon &&

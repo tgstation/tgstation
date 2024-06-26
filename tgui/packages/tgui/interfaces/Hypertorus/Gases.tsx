@@ -1,4 +1,11 @@
-import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from 'tgui/components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NumberInput,
+  ProgressBar,
+  Section,
+} from 'tgui/components';
 import { HelpDummy, HoverHelp } from './helpers';
 import { HypertorusFuel, HypertorusGas } from '.';
 import { filter, sortBy } from 'common/collections';
@@ -100,7 +107,8 @@ const GasList = (props: GasListProps) => {
             <HoverHelp content={rateHelp} />
             Injection control:
           </>
-        }>
+        }
+      >
         <Button
           disabled={start_power === 0 || start_cooling === 0}
           icon={data[input_switch] ? 'power-off' : 'times'}
@@ -130,12 +138,14 @@ const GasList = (props: GasListProps) => {
                 {labelPrefix}
                 {getGasLabel(gas.id)}:
               </>
-            }>
+            }
+          >
             <ProgressBar
               color={getGasColor(gas.id)}
               value={gas.amount}
               minValue={0}
-              maxValue={minimumScale}>
+              maxValue={minimumScale}
+            >
               {toFixed(gas.amount, 2) + ' moles'}
             </ProgressBar>
           </LabeledList.Item>

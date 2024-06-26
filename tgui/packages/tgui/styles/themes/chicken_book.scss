@@ -7,17 +7,17 @@
 @use 'sass:meta';
 
 @use '../colors.scss' with (
-   $primary: #ffffff,
-   $bg-lightness: -25%,
-   $fg-lightness: -10%,
- );
+  $primary: #ffffff,
+  $bg-lightness: -25%,
+  $fg-lightness: -10%
+);
 @use '../base.scss' with (
-   // $color-fg: #000000,
-   // $color-bg: darkblue,
-   $color-bg-start: lightblue,
-   $color-bg-end: darkblue,
-   // $color-bg-grad-spread: 50%,
- );
+    // $color-fg: #000000,
+    // $color-bg: darkblue,
+    $color-bg-start: lightblue,
+    $color-bg-end: darkblue,
+    // $color-bg-grad-spread: 50%,
+  );
 
 $font-size: 24px;
 
@@ -90,7 +90,9 @@ $font-size: 24px;
     border-radius: 1%;
     text-align: center;
     justify-content: space-between;
-    box-shadow: 2px 3px 20px black, 0 0 125px #8f5922 inset;
+    box-shadow:
+      2px 3px 20px black,
+      0 0 125px #8f5922 inset;
     overflow-y: hidden;
   }
   .navbar {

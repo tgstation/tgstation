@@ -10,8 +10,8 @@ export const NtosEmojipedia = (props) => {
 
   let filtered_emoji_list = filter
     ? emoji_list.filter((emoji) => {
-      return emoji.name.toLowerCase().includes(filter.toLowerCase());
-    })
+        return emoji.name.toLowerCase().includes(filter.toLowerCase());
+      })
     : emoji_list;
   if (filtered_emoji_list.length === 0) {
     filtered_emoji_list = emoji_list;
@@ -37,7 +37,8 @@ export const NtosEmojipedia = (props) => {
                 icon="circle-question"
               />
             </>
-          }>
+          }
+        >
           {filtered_emoji_list.map((emoji) => (
             <Box
               key={emoji.name}
@@ -58,7 +59,8 @@ export const NtosEmojipedia = (props) => {
                   document.body.removeChild(input);
                   resolve();
                 });
-              }}>
+              }}
+            >
               {emoji.name}
             </Box>
           ))}

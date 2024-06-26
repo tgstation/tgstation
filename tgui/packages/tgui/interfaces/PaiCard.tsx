@@ -1,7 +1,15 @@
 import { decodeHtmlEntities } from 'common/string';
 import { BooleanLike } from '../../common/react';
 import { useBackend } from '../backend';
-import { BlockQuote, Box, Button, LabeledList, NoticeBox, Section, Stack } from '../components';
+import {
+  BlockQuote,
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -58,7 +66,8 @@ const PaiDownload = (props) => {
                 color="good"
                 icon="bell"
                 onClick={() => act('request')}
-                tooltip="Request more candidates from beyond.">
+                tooltip="Request more candidates from beyond."
+              >
                 Request
               </Button>
             </Stack.Item>
@@ -94,7 +103,8 @@ const CandidateDisplay = (props: { candidate: Candidate; index: number }) => {
         </Button>
       }
       overflow="hidden"
-      title={`Candidate ${index}`}>
+      title={`Candidate ${index}`}
+    >
       <Stack vertical>
         <Stack.Item>
           <Box color="label" mb={1}>
@@ -163,7 +173,8 @@ const PaiOptions = (props) => {
           <Button
             icon={can_holo ? 'toggle-on' : 'toggle-off'}
             onClick={() => act('toggle_holo')}
-            selected={can_holo}>
+            selected={can_holo}
+          >
             Toggle
           </Button>
         </LabeledList.Item>
@@ -171,7 +182,8 @@ const PaiOptions = (props) => {
           <Button
             icon={transmit ? 'toggle-on' : 'toggle-off'}
             onClick={() => act('toggle_radio', { option: 'transmit' })}
-            selected={transmit}>
+            selected={transmit}
+          >
             Toggle
           </Button>
         </LabeledList.Item>
@@ -179,7 +191,8 @@ const PaiOptions = (props) => {
           <Button
             icon={receive ? 'toggle-on' : 'toggle-off'}
             onClick={() => act('toggle_radio', { option: 'receive' })}
-            selected={receive}>
+            selected={receive}
+          >
             Toggle
           </Button>
         </LabeledList.Item>
@@ -202,7 +215,8 @@ const PaiOptions = (props) => {
           color="bad"
           icon="bug"
           mt={1}
-          onClick={() => act('reset_software')}>
+          onClick={() => act('reset_software')}
+        >
           Malicious Software Detected
         </Button>
       )}

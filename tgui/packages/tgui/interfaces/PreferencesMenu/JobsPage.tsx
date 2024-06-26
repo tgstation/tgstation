@@ -3,13 +3,19 @@ import { classes } from 'common/react';
 import { InfernoNode, Inferno } from 'inferno';
 import { useBackend } from '../../backend';
 import { Box, Button, Dropdown, Stack, Tooltip } from '../../components';
-import { createSetPreference, Job, JoblessRole, JobPriority, PreferencesMenuData } from './data';
+import {
+  createSetPreference,
+  Job,
+  JoblessRole,
+  JobPriority,
+  PreferencesMenuData,
+} from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
 const sortJobs = (entries: [string, Job][], head?: string) =>
   sortBy<[string, Job]>(
     ([key, _]) => (key === head ? -1 : 1),
-    ([key, _]) => key
+    ([key, _]) => key,
   )(entries);
 
 const PRIORITY_BUTTON_SIZE = '18px';
@@ -47,7 +53,7 @@ type CreateSetPriority = (priority: JobPriority | null) => () => void;
 const createSetPriorityCache: Record<string, CreateSetPriority> = {};
 
 const createCreateSetPriorityFromName = (
-  jobName: string
+  jobName: string,
 ): CreateSetPriority => {
   if (createSetPriorityCache[jobName] !== undefined) {
     return createSetPriorityCache[jobName];
@@ -108,10 +114,11 @@ const PriorityButtons = (props: {
     <Stack
       style={{
         'align-items': 'center',
-        'height': '100%',
+        height: '100%',
         'justify-content': 'flex-end',
         'padding-left': '0.3em',
-      }}>
+      }}
+    >
       {isOverflow ? (
         <>
           <PriorityButton
@@ -228,7 +235,8 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
       className={className}
       style={{
         'margin-top': 0,
-      }}>
+      }}
+    >
       <Stack>
         <Tooltip content={job.description} position="right">
           <Stack.Item
@@ -237,7 +245,8 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
             width="50%"
             style={{
               'padding-left': '0.3em',
-            }}>
+            }}
+          >
             {' '}
             {!job.alt_titles ? (
               name
@@ -286,7 +295,7 @@ const Department: Inferno.SFC<{ department: string }> = (props) => {
 
         const jobsForDepartment = sortJobs(
           Object.entries(jobs).filter(([_, job]) => job.department === name),
-          department.head
+          department.head,
         );
 
         return (

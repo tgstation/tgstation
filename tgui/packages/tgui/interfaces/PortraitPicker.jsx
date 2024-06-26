@@ -47,7 +47,8 @@ export const PortraitPicker = (props) => {
                 height="100%"
                 align="center"
                 justify="center"
-                direction="column">
+                direction="column"
+              >
                 {got_paintings ? (
                   <>
                     <Flex.Item>

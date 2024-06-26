@@ -1,5 +1,11 @@
 import { sortBy } from 'common/collections';
-import { Feature, FeatureChoicedServerData, FeatureValueProps, HexValue, StandardizedPalette } from '../base';
+import {
+  Feature,
+  FeatureChoicedServerData,
+  FeatureValueProps,
+  HexValue,
+  StandardizedPalette,
+} from '../base';
 
 type SkinToneServerData = FeatureChoicedServerData & {
   display_names: NonNullable<FeatureChoicedServerData['display_names']>;
@@ -7,7 +13,7 @@ type SkinToneServerData = FeatureChoicedServerData & {
 };
 
 const sortHexValues = sortBy<[string, HexValue]>(
-  ([_, hexValue]) => -hexValue.lightness
+  ([_, hexValue]) => -hexValue.lightness,
 );
 
 export const skin_tone: Feature<string, string, SkinToneServerData> = {
@@ -22,13 +28,13 @@ export const skin_tone: Feature<string, string, SkinToneServerData> = {
     return (
       <StandardizedPalette
         choices={sortHexValues(Object.entries(serverData.to_hex)).map(
-          ([key]) => key
+          ([key]) => key,
         )}
         choices_to_hex={Object.fromEntries(
           Object.entries(serverData.to_hex).map(([key, hex]) => [
             key,
             hex.value,
-          ])
+          ]),
         )}
         displayNames={serverData.display_names}
         onSetValue={handleSetValue}

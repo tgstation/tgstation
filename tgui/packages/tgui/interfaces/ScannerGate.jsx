@@ -132,7 +132,8 @@ const ScannerGateControl = (props) => {
             onClick={() => act('set_mode', { new_mode: 'Off' })}
           />
         )
-      }>
+      }
+    >
       <Component />
     </Section>
   );

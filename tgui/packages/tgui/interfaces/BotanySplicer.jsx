@@ -1,6 +1,16 @@
 import { toFixed } from 'common/math';
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, Flex, LabeledList, NoticeBox, ProgressBar, Section, Table, Tabs } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  LabeledList,
+  NoticeBox,
+  ProgressBar,
+  Section,
+  Table,
+  Tabs,
+} from '../components';
 import { Window } from '../layouts';
 
 export const TimeFormat = (props) => {
@@ -9,11 +19,11 @@ export const TimeFormat = (props) => {
   const seconds = toFixed(Math.floor((value / 10) % 60)).padStart(2, '0');
   const minutes = toFixed(Math.floor((value / (10 * 60)) % 60)).padStart(
     2,
-    '0'
+    '0',
   );
   const hours = toFixed(Math.floor((value / (10 * 60 * 60)) % 24)).padStart(
     2,
-    '0'
+    '0',
   );
   const formattedValue = `${hours}:${minutes}:${seconds}`;
   return formattedValue;
@@ -36,7 +46,8 @@ export const InsertedSeedOne = (props) => {
           onClick={() => act('eject_seed_one')}
           content="Eject Seed"
         />
-      }>
+      }
+    >
       {!seed_1.length && 'No Seed detected.'}
       {!!seed_1.length && (
         <Table>
@@ -104,7 +115,8 @@ export const InsertedSeedOneInfusion = (props) => {
           onClick={() => act('eject_seed_one')}
           content="Eject Seed"
         />
-      }>
+      }
+    >
       {!seed_1.length && 'No Seed detected.'}
       {!!seed_1.length && (
         <Table>
@@ -188,7 +200,8 @@ export const InsertedSeedTwo = (props) => {
           onClick={() => act('eject_seed_two')}
           content="Eject Seed"
         />
-      }>
+      }
+    >
       {!seed_2.length && 'No Seed detected.'}
       {!!seed_2.length && (
         <Table>
@@ -256,7 +269,8 @@ export const InsertedBeaker = (props) => {
           onClick={() => act('eject_beaker')}
           content="Eject Beaker"
         />
-      }>
+      }
+    >
       {!held_beaker && 'No Beaker detected.'}
       {!!held_beaker && 'Beaker detected.'}
     </Section>
@@ -307,7 +321,8 @@ export const DamageBar = (props) => {
       <ProgressBar
         color={combined_damage >= 60 ? 'bad' : 'good'}
         value={data.combined_damage / 100}
-        align="center">
+        align="center"
+      >
         {'Infusion Damage: ' + toFixed(data.combined_damage) + '/ 100'}
       </ProgressBar>
     </Section>
@@ -336,12 +351,14 @@ export const BotanySplicer = (props) => {
           <Tabs>
             <Tabs.Tab
               selected={tab === 'splicing'}
-              onClick={() => setTab('splicing')}>
+              onClick={() => setTab('splicing')}
+            >
               Splicing
             </Tabs.Tab>
             <Tabs.Tab
               selected={tab === 'infusion'}
-              onClick={() => setTab('infusion')}>
+              onClick={() => setTab('infusion')}
+            >
               Infusion
             </Tabs.Tab>
           </Tabs>
