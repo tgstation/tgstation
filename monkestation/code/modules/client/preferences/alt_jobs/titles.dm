@@ -83,6 +83,7 @@
 		"Station Commander",
 		"Commanding Officer",
 		"Site Manager",
+		"Criminally Underpaid Babysitter",
 	)
 
 /datum/job/cargo_technician
