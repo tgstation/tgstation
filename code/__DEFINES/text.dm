@@ -75,7 +75,9 @@
 /// File location for brain damage traumas
 #define BRAIN_DAMAGE_FILE "massmeta/traumas.json" //MASSMETA EDIT CHANGE - ORIGINAL: "traumas.json"
 /// File location for kvass phrases, mmmmm kvass
-#define KVASS_PHRASES_FILE "massmeta/kvass.json" //MASSMETA ADDITION (kvass)
+#define KVASS_PHRASES_FILE "massmeta/kvass.json" //MASSMETA EDIT ADDITION (kvass)
+/// File location for oguzok phrases
+#define OGUZOK_PHRASES_FILE "massmeta/oguzok.json" //MASSMETA EDIT ADDITION (oguzok)
 /// File location for AI ion laws
 #define ION_FILE "ion_laws.json"
 /// File location for pirate names

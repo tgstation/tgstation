@@ -2,16 +2,16 @@
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
 		var/static/regex/words = new(@"(?<![a-zA-Zа-яёА-ЯЁ])[a-zA-Zа-яёА-ЯЁ]+?(?![a-zA-Zа-яёА-ЯЁ])", "g")
-		message = replacetext(message, words, GLOBAL_PROC_REF(italian_moustache_words_replace_ru))
+		message = replacetext(message, words, GLOBAL_PROC_REF(oguzok_moustache_words_replace_ru))
 
 	speech_args[SPEECH_MESSAGE] = trim(message)
 
-/proc/italian_moustache_words_replace_ru(word)
-	var/static/list/italian_words
-	if(!italian_words)
-		italian_words = strings("massmeta/italian_replacement_ru.json", "italian")
+/proc/oguzok_moustache_words_replace_ru(word)
+	var/static/list/oguzok_words
+	if(!oguzok_words)
+		oguzok_words = strings(OGUZOK_PHRASES_FILE, "oguzok")
 
-	var/match = italian_words[lowertext(word)]
+	var/match = oguzok_words[lowertext(word)]
 	if(!match)
 		return word
 
