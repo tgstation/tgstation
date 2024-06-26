@@ -18988,6 +18988,7 @@
 	pixel_x = 5
 	},
 /obj/item/storage/fancy/egg_box,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
 "hcv" = (

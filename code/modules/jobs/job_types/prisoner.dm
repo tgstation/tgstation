@@ -102,7 +102,7 @@
 
 /// Iterates over all turfs in the target area and returns the first non-dense one
 /datum/job/prisoner/proc/get_random_open_turf_in_area()
-	var/list/turfs = get_area_turfs(/area/station/security/prison/safe)
+	var/list/turfs = get_area_turfs(/area/station/security/prison/)
 	var/turf/open/target_turf = null
 	var/sanity = 0
 	while(!target_turf && sanity < 100)
