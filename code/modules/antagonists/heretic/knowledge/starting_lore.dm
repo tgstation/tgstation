@@ -207,6 +207,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY - 2 // Not as important as making a heart or sacrificing, but important enough.
 	route = PATH_START
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "eye_medalion"
 
 /datum/heretic_knowledge/spell/cloak_of_shadows
 	name = "Cloak of Shadow"
@@ -241,6 +243,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	route = PATH_START
 	priority = MAX_KNOWLEDGE_PRIORITY - 3 // Least priority out of the starting knowledges, as it's an optional boon.
 	var/static/list/non_mob_bindings = typecacheof(list(/obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide))
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "book"
 
 /datum/heretic_knowledge/codex_cicatrix/parse_required_item(atom/item_path, number_of_things)
 	if(item_path == /obj/item/pen)

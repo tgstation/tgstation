@@ -16,6 +16,8 @@
 	result_atoms = list(/obj/item/clothing/neck/eldritch_amulet)
 	cost = 1
 	route = PATH_SIDE
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "eye_medalion"
 	depth = 4
 
 /datum/heretic_knowledge/curse/paralysis

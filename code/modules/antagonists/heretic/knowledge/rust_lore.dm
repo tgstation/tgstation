@@ -42,6 +42,8 @@
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
 	route = PATH_RUST
+	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_state = "rust_blade"
 
 /datum/heretic_knowledge/rust_fist
 	name = "Grasp of Rust"

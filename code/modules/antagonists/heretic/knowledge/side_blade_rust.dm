@@ -16,6 +16,9 @@
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch)
 	cost = 1
 	route = PATH_SIDE
+	research_tree_icon_path = 'icons/obj/clothing/suits/armor.dmi'
+	research_tree_icon_state = "eldritch_armor"
+	research_tree_icon_frame = 12
 	depth = 4
 
 /datum/heretic_knowledge/crucible
@@ -35,6 +38,8 @@
 	result_atoms = list(/obj/structure/destructible/eldritch_crucible)
 	cost = 1
 	route = PATH_SIDE
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "crucible"
 	depth = 8
 
 /datum/heretic_knowledge/rifle
@@ -62,7 +67,6 @@
 	cost = 1
 	route = PATH_SIDE
 	depth = 8
-	//rectangular icons cause trouble, let's override by a similar looking gun with a smaller sprite and hope no one notices
 	research_tree_icon_path = 'icons/obj/weapons/guns/ballistic.dmi'
 	research_tree_icon_state = "goldrevolver"
 
@@ -80,6 +84,8 @@
 	result_atoms = list(/obj/item/ammo_box/strilka310/lionhunter)
 	cost = 0
 	route = PATH_SIDE
+	research_tree_icon_path = 'icons/obj/weapons/guns/ammo.dmi'
+	research_tree_icon_state = "310_strip"
 	depth = 8
 	/// A list of calibers that the ritual will deny. Only ballistic calibers are allowed.
 	var/static/list/caliber_blacklist = list(

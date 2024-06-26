@@ -39,6 +39,8 @@
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
 	route = PATH_ASH
+	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_state = "ash_blade"
 
 /datum/heretic_knowledge/ashen_grasp
 	name = "Grasp of Ash"
@@ -148,6 +150,8 @@
 	result_atoms = list(/obj/item/clothing/mask/madness_mask)
 	cost = 1
 	route = PATH_ASH
+	research_tree_icon_path = 'icons/obj/clothing/masks.dmi'
+	research_tree_icon_state = "mad_mask"
 	depth = 8
 
 /datum/heretic_knowledge/blade_upgrade/ash

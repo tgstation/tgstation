@@ -19,6 +19,8 @@
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/void)
 	cost = 1
 	route = PATH_SIDE
+	research_tree_icon_path = 'icons/obj/clothing/suits/armor.dmi'
+	research_tree_icon_state = "void_cloak"
 	depth = 4
 
 /datum/heretic_knowledge/spell/blood_siphon

@@ -37,6 +37,8 @@
 	required_atoms = list(/obj/item/knife = 1)
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
 	route = PATH_VOID
+	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_state = "void_blade"
 
 /datum/heretic_knowledge/limited_amount/starting/base_void/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(!isopenturf(loc))

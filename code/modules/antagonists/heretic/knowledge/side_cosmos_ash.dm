@@ -55,4 +55,6 @@
 	result_atoms = list(/obj/item/coin/eldritch)
 	cost = 1
 	route = PATH_SIDE
+	research_tree_icon_path = 'icons/obj/economy.dmi'
+	research_tree_icon_state = "coin_heretic"
 	depth = 10

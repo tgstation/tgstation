@@ -43,6 +43,8 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/dark)
 	limit = 5 // It's the blade path, it's a given
 	route = PATH_BLADE
+	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_state = "dark_blade"
 
 /datum/heretic_knowledge/blade_grasp
 	name = "Grasp of the Blade"

@@ -34,6 +34,8 @@
 	result_atoms = list(/obj/item/storage/belt/unfathomable_curio)
 	cost = 1
 	route = PATH_SIDE
+	research_tree_icon_path = 'icons/obj/clothing/belts.dmi'
+	research_tree_icon_state = "unfathomable_curio"
 	depth = 8
 
 /datum/heretic_knowledge/painting

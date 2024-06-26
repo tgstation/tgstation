@@ -143,6 +143,8 @@
 	cost = 1
 	route = PATH_SIDE
 	depth = 8
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "rune_carver"
 
 /datum/heretic_knowledge/summon/maid_in_mirror
 	name = "Maid in the Mirror"

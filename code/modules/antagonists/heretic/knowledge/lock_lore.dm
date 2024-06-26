@@ -39,6 +39,8 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/lock)
 	limit = 2
 	route = PATH_LOCK
+	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_state = "lock_blade"
 
 /datum/heretic_knowledge/lock_grasp
 	name = "Grasp of Lock"
@@ -114,6 +116,8 @@
 	)
 	cost = 1
 	route = PATH_LOCK
+	research_tree_icon_path = 'icons/obj/card.dmi'
+	research_tree_icon_state = "card_gold"
 	depth = 4
 
 /datum/heretic_knowledge/mark/lock_mark
@@ -144,6 +148,8 @@
 	next_knowledge = list(/datum/heretic_knowledge/spell/burglar_finesse)
 	cost = 1
 	route = PATH_LOCK
+	research_tree_icon_path = 'icons/obj/service/library.dmi'
+	research_tree_icon_state = "heretichandbook"
 	depth = 7
 
 /datum/heretic_knowledge/spell/burglar_finesse

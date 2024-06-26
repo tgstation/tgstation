@@ -39,6 +39,8 @@
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/moon)
 	route = PATH_MOON
+	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_state = "moon_blade"
 
 /datum/heretic_knowledge/base_moon/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	add_traits(user ,TRAIT_EMPATH, REF(src))
@@ -136,6 +138,8 @@
 	cost = 1
 	route = PATH_MOON
 	depth = 8
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "moon_amulette"
 	research_tree_icon_frame = 9
 
 /datum/heretic_knowledge/blade_upgrade/moon

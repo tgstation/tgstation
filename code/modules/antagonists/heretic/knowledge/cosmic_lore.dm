@@ -38,6 +38,8 @@
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/cosmic)
 	route = PATH_COSMIC
+	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_state = "cosmic_blade"
 
 /datum/heretic_knowledge/cosmic_grasp
 	name = "Grasp of Cosmos"

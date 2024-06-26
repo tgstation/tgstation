@@ -18,6 +18,8 @@
 	cost = 1
 	route = PATH_SIDE
 	depth = 4
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "eldritch_flask"
 
 /datum/heretic_knowledge/entropy_pulse
 	name = "Pulse of Entropy"
