@@ -97,7 +97,7 @@
 	cost = 1
 	route = PATH_SIDE
 	poll_ignore_define = POLL_IGNORE_RUST_SPIRIT
-	depth = 10
+	depth = 8
 
 /datum/heretic_knowledge/summon/rusty/cleanup_atoms(list/selected_atoms)
 	var/obj/item/bodypart/head/ritual_head = locate() in selected_atoms
