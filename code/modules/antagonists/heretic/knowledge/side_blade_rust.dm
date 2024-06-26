@@ -62,6 +62,7 @@
 	cost = 1
 	route = PATH_SIDE
 	depth = 8
+	research_tree_icon = icon('icons/obj/weapons/guns/ballistic.dmi',"goldrevolver")
 
 /datum/heretic_knowledge/rifle_ammo
 	name = "Lionhunter Rifle Ammunition"
