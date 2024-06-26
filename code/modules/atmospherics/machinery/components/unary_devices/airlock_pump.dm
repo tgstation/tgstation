@@ -1,7 +1,7 @@
 /// A vent, scrubber and a sensor in a single device meant specifically for cycling airlocks. Ideal for airlocks of up to 3x3 tiles in size to avoid wind and timing out.
 /obj/machinery/atmospherics/components/unary/airlock_pump
-	name = "airlock pump"
-	desc = "A pump for cycling airlock that vents, siphons the air and controls the connected airlocks. Can be configured with a multitool."
+	name = "external airlock pump"
+	desc = "A pump for cycling an external airlock controlled by the connected doors."
 	icon = 'icons/obj/machines/atmospherics/unary_devices.dmi'
 	icon_state = "airlock_pump"
 	pipe_state = "airlock_pump"
@@ -35,6 +35,8 @@
 	var/list/turf/adjacent_turfs = list()
 	///Max distance between the airlock and the pump. Used to set up cycling.
 	var/airlock_distance_limit = 2
+	///Type of airlocks required for automatic cycling setup. To avoid hacking bridge doors.
+	var/valid_airlock_typepath = /obj/machinery/door/airlock/external
 	///Station-facing airlock used in cycling
 	var/obj/machinery/door/airlock/internal_airlock
 	///Space-facing airlock used in cycling
@@ -77,13 +79,7 @@
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/Initialize(mapload)
 	. = ..()
-	internal_airlock = find_airlock(dir)
-	external_airlock = find_airlock(REVERSE_DIR(dir))
-	if(internal_airlock && external_airlock)
-		internal_airlock.cycle_pump = src
-		external_airlock.cycle_pump = src
-		external_airlock.bolt()
-		cycling_set_up = TRUE
+	set_links()
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/New()
 	. = ..()
@@ -91,6 +87,11 @@
 	var/datum/gas_mixture/waste_air = airs[2]
 	distro_air.volume = 1000
 	waste_air.volume = 1000
+
+/obj/machinery/atmospherics/components/unary/airlock_pump/on_deconstruction(disassembled)
+	. = ..()
+	if(cycling_set_up)
+		break_links()
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/process_atmos()
 	if(!on)
@@ -106,7 +107,7 @@
 
 	if(world.time - cycle_start_time > cycle_timeout)
 		say("Cycling timed out, bolts unlocked.")
-		stop_cycle()
+		stop_cycle(timed_out = TRUE)
 		return //Couldn't complete the cycle before timeout
 
 	var/datum/gas_mixture/distro_air = airs[1]
@@ -142,7 +143,7 @@
 	var/datum/pipeline/distro_pipe = parents[1]
 	var/datum/gas_mixture/distro_air = airs[1]
 	var/datum/gas_mixture/tile_air = tile.return_air()
-	var/transfer_moles = (pressure_delta * tile_air.volume) / (distro_air.temperature * R_IDEAL_GAS_EQUATION)
+	var/transfer_moles = (volume_rate / tile_air.volume) * (pressure_delta * tile_air.volume) / (distro_air.temperature * R_IDEAL_GAS_EQUATION)
 	moles = min(moles, transfer_moles)
 
 	var/datum/gas_mixture/removed_air = distro_air.remove(moles)
@@ -192,16 +193,16 @@
 	external_airlock.secure_close()
 
 	if(pump_direction == ATMOS_DIRECTION_RELEASING)
-		internal_airlock.say("Pressurizing.")
+		internal_airlock.say("Pressurizing airlock.")
 	else
-		external_airlock.say("Decompressing.")
+		external_airlock.say("Decompressing airlock.")
 
 	on = TRUE
 	cycle_start_time = world.time
 	update_appearance()
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/airlock_pump/proc/stop_cycle()
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/stop_cycle(timed_out = FALSE)
 	if(!on)
 		return FALSE
 
@@ -214,14 +215,49 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/airlock_pump/attack_hand(mob/living/user, list/modifiers)
-	. = ..()
-	start_cycle()
-
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/check_turfs()
 	adjacent_turfs.Cut()
 	var/turf/local_turf = get_turf(src)
 	adjacent_turfs = local_turf.get_atmos_adjacent_turfs(alldir = TRUE)
+
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/set_up()
+	adjacent_turfs.Cut()
+	var/turf/local_turf = get_turf(src)
+	adjacent_turfs = local_turf.get_atmos_adjacent_turfs(alldir = TRUE)
+
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/set_links()
+	internal_airlock = find_airlock(dir)
+	external_airlock = find_airlock(REVERSE_DIR(dir))
+
+	if(internal_airlock && external_airlock)
+		internal_airlock.set_cycle_pump(src)
+		external_airlock.set_cycle_pump(src)
+		external_airlock.bolt()
+
+		RegisterSignal(internal_airlock, COMSIG_QDELETING, PROC_REF(break_links))
+		RegisterSignal(external_airlock, COMSIG_QDELETING, PROC_REF(break_links))
+
+		cycling_set_up = TRUE
+		say("Cycling setup complete.")
+		return
+
+	say("Cycling setup failed. No opposite airlocks found.")
+	external_airlock = null
+	internal_airlock = null
+
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/break_links()
+	if(!QDELETED(external_airlock) && external_airlock.locked)
+		external_airlock.unbolt()
+	if(!QDELETED(internal_airlock) && internal_airlock.locked)
+		internal_airlock.unbolt()
+
+	UnregisterSignal(external_airlock, COMSIG_QDELETING)
+	UnregisterSignal(internal_airlock, COMSIG_QDELETING)
+
+	external_airlock = null
+	internal_airlock = null
+	cycling_set_up = FALSE
+	say("Link broken, unbolting doors.")
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/find_airlock(direction)
 	var/turf/next_turf = get_turf(src)
@@ -232,3 +268,11 @@
 		var/obj/machinery/door/airlock/found_airlock = locate() in next_turf
 		if (found_airlock && !found_airlock.cycle_pump)
 			return found_airlock
+
+/obj/machinery/atmospherics/components/unary/airlock_pump/any_airlock_type
+	name = "airlock pump"
+	desc = "A pump for cycling an airlock controlled by the connected doors."
+	var/valid_airlock_typepath = /obj/machinery/door/airlock
+
+/obj/machinery/atmospherics/components/unary/airlock_pump/lavaland
+	var/external_pressure_target = LAVALAND_EQUIPMENT_EFFECT_PRESSURE

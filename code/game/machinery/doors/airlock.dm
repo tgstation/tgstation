@@ -1201,6 +1201,10 @@
 		INVOKE_ASYNC(src, density ? PROC_REF(open) : PROC_REF(close), BYPASS_DOOR_CHECKS)
 
 /obj/machinery/door/airlock/open(forced = DEFAULT_DOOR_CHECKS)
+	if(cycle_pump && !operating && !welded && !seal && locked)
+		cycle_pump.airlock_act(src)
+		return FALSE // The rest will be handled by the pump
+
 	if( operating || welded || locked || seal )
 		return FALSE
 
@@ -1724,8 +1728,8 @@
 		bolt()
 		log_combat(user, src, "bolted")
 
-/obj/machinery/door/airlock/proc/toggle_emergency(mob/user)
-	if(!user_allowed(user))
+/obj/machinery/door/airlock/proc/toggle_emergency(mob/user, forced = FALSE)
+	if(!user_allowed(user) && !forced)
 		return
 	emergency = !emergency
 	update_appearance()
@@ -1736,11 +1740,7 @@
 	if(welded)
 		to_chat(user, span_warning("The airlock has been welded shut!"))
 	else if(locked)
-		if(cycle_pump)
-			cycle_pump.airlock_act(src)
-			return FALSE // The rest will be handled by the pump
-		else
-			to_chat(user, span_warning("The door bolts are down!"))
+		to_chat(user, span_warning("The door bolts are down!"))
 	else if(!density)
 		close()
 	else
@@ -1798,6 +1798,14 @@
 
 /obj/structure/fluff/airlock_filler/singularity_pull(S, current_size)
 	return
+
+/obj/machinery/door/airlock/proc/set_cycle_pump(obj/machinery/atmospherics/components/unary/airlock_pump/pump)
+	RegisterSignal(pump, COMSIG_QDELETING, PROC_REF(unset_cycle_pump))
+	cycle_pump = pump
+
+/obj/machinery/door/airlock/proc/unset_cycle_pump()
+	SIGNAL_HANDLER
+	cycle_pump = null
 
 // Station Airlocks Regular
 
