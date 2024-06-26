@@ -122,14 +122,6 @@
 	if(mapload)
 		auto_align()
 
-/**
- * Sets the offset for the warning lights.
- *
- * Used for special firelocks with light overlays that don't line up to their sprite.
- */
-/obj/machinery/door/firedoor/proc/adjust_lights_starting_offset()
-	return
-
 /obj/machinery/door/firedoor/Destroy()
 	remove_from_areas()
 	unregister_adjacent_turfs(loc)
@@ -731,30 +723,24 @@
 
 /obj/machinery/door/firedoor/border_only/Initialize(mapload)
 	. = ..()
-	adjust_lights_starting_offset()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 
+	// Needed because render targets seem to shift larger then 32x32 icons down constantly. This is a known side effect that should? be changed by 516
+	pixel_y = 0
+	pixel_z = 12
+	AddElement(/datum/element/render_over_keep_hitbox, TRUE, NORTH|WEST|EAST)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/machinery/door/firedoor/border_only/adjust_lights_starting_offset()
-	light_xoffset = 0
-	light_yoffset = 0
-	switch(dir)
-		if(NORTH)
-			light_yoffset = 2
-		if(SOUTH)
-			light_yoffset = -2
-		if(EAST)
-			light_xoffset = 2
-		if(WEST)
-			light_xoffset = -2
-	update_appearance(UPDATE_ICON)
-
-/obj/machinery/door/firedoor/border_only/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	adjust_lights_starting_offset()
+/obj/machinery/door/firedoor/border_only/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 0.7 SECONDS
+		if("closing")
+			return 0.7 SECONDS
+		if("deny")
+			return 0.4 SECONDS
 
 /obj/machinery/door/firedoor/border_only/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
