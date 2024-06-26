@@ -665,8 +665,8 @@
 	base_message_chance = 0.2
 	passive_message = "You feel energized!" //random message to infected but not actively healing people
 	threshold_descs = list(
-		"Resistance 10" = "Reduces all stun times by 40% rather than the usual 20%.",
-		"Stage Speed 5" = "Doubles stamina regeneration.",
+		"Resistance 10" = "Reduces all stun times by 20% rather than the usual 10%.",
+		"Stage Speed 5" = "Doubles the symptom's stamina regeneration.",
 		"Stealth 5" = "The virus produces chemicals that allow the host to be able to move even while in critical condition.",
 		"Transmission 6" = "The virus produces chemicals that allow the host will move 5% faster when they have no fatigue."
 	)
@@ -703,9 +703,9 @@
 
 /datum/symptom/heal/fatigue/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 
-	M.adjustStaminaLoss(-(2.5*power))
+	M.adjustStaminaLoss(-(1*power))
 
-	M.AdjustAllImmobility(-(20*resistmult), FALSE)
+	M.AdjustAllImmobility(-(10*resistmult), FALSE)
 
 	if(softcrit && !M.reagents.has_reagent(/datum/reagent/antihardcrit,0.1))
 		M.reagents.add_reagent(/datum/reagent/antihardcrit, 0.1)
