@@ -93,7 +93,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	light_system = OVERLAY_LIGHT
-	light_outer_range = 1
+	light_outer_range = 1.5
 	light_color = COLOR_SOFT_RED
 
 /obj/item/cautery/advanced/get_all_tool_behaviours()
@@ -119,7 +119,13 @@
 /obj/item/cautery/advanced/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
-	tool_behaviour = (active ? TOOL_DRILL : TOOL_CAUTERY)
+	if(active)
+		tool_behaviour = TOOL_DRILL
+		set_light_color(LIGHT_COLOR_BLUE)
+	else
+		tool_behaviour = TOOL_CAUTERY
+		set_light_color(LIGHT_COLOR_ORANGE)
+
 	balloon_alert(user, "lenses set to [active ? "drill" : "mend"]")
 	playsound(user ? user : src, 'sound/weapons/tap.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
@@ -372,7 +378,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	light_system = OVERLAY_LIGHT
-	light_outer_range = 1
+	light_outer_range = 1.5
 	light_color = LIGHT_COLOR_BLUE
 	sharpness = SHARP_EDGED
 
@@ -403,10 +409,10 @@
 
 	if(active)
 		tool_behaviour = TOOL_SAW
-		set_light_range(2)
+		set_light_color(LIGHT_COLOR_ORANGE)
 	else
 		tool_behaviour = TOOL_SCALPEL
-		set_light_range(1)
+		set_light_color(LIGHT_COLOR_BLUE)
 
 	balloon_alert(user, "[active ? "enabled" : "disabled"] bone-cutting mode")
 	playsound(user ? user : src, 'sound/machines/click.ogg', 50, TRUE)
