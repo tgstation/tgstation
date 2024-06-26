@@ -124,7 +124,7 @@
 	datum/saymode/saymode,
 	list/message_mods = list(),
 )
-	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = capitalize(trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN)))
 	if(!message || message == "")
 		return
 
