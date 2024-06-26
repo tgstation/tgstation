@@ -90,10 +90,6 @@
 	return ..()
 
 /datum/antagonist/heretic/proc/get_icon_of_knowledge(datum/heretic_knowledge/knowledge)
-	if(ispath(knowledge))
-		//if the argument is a typepath, we need to make a dummy so we can access some of its properties
-		knowledge = new knowledge()
-
 	//basic icon parameters
 	var/icon_path = 'icons/mob/actions/actions_ecult.dmi'
 	var/icon_state = "eye"
@@ -106,12 +102,12 @@
 	if(!isnull(knowledge.research_tree_icon_path))
 		icon_path = knowledge.research_tree_icon_path
 		icon_state = knowledge.research_tree_icon_state
-
+/*
 	//if the knowledge is a transmutation, use the result
 	else if(!isnull(knowledge.result_atoms) && knowledge.result_atoms.len)
 		var/atom/result_thing = knowledge.result_atoms[1]
 		icon_path = result_thing.icon
-		icon_state = result_thing.icon_state
+		icon_state = result_thing.icon_state*/
 
 	//if the knowledge is a spell, use the spell's button
 	else if(istype(knowledge,/datum/heretic_knowledge/spell))
