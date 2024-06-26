@@ -97,21 +97,31 @@
 	var/highlighted = FALSE
 	/// The ref of the mob that owns this button. Only the owner can click on it.
 	var/owner
+	var/requires_discord = TRUE //MASSMETA EDIT ADDITION (discord verification)
 
 /atom/movable/screen/lobby/button/Click(location, control, params)
-	if(owner != REF(usr))
-		return
+	//MASSMETA EDIT CHANGE START (discord verification)
+	var/force_verification = CONFIG_GET(number/force_verification)
+	var/discord = SSdiscord.lookup_id(usr.ckey)
+	if (force_verification && !discord && requires_discord)
+		if(tgui_alert(usr, "Для игры на сервере нужен привязанный аккаунт дискорда(OOC - Verify Discord). Желаете ли Вы открыть ссылку в браузере?",, list("Да","Нет"))!="Да")
+			return
+		DIRECT_OUTPUT(usr, link("https://discord.gg/KBsjSv7Kh9"))
+	else
+		if(owner != REF(usr))
+			return
 
-	if(!usr.client || usr.client.interviewee)
-		return
+		if(!usr.client || usr.client.interviewee)
+			return
 
-	. = ..()
+		. = ..()
 
-	if(!enabled)
-		return
-	flick("[base_icon_state]_pressed", src)
-	update_appearance(UPDATE_ICON)
-	return TRUE
+		if(!enabled)
+			return
+		flick("[base_icon_state]_pressed", src)
+		update_appearance(UPDATE_ICON)
+		return TRUE
+	//MASSMETA EDIT CHANGE END
 
 /atom/movable/screen/lobby/button/MouseEntered(location,control,params)
 	if(owner != REF(usr))
@@ -329,6 +339,7 @@
 	icon_state = "settings"
 	base_icon_state = "settings"
 	screen_loc = "TOP:-122,CENTER:+29"
+	requires_discord = FALSE //MASSMETA EDIT ADDITION (discord verification)
 
 /atom/movable/screen/lobby/button/bottom/settings/Click(location, control, params)
 	. = ..()
@@ -345,6 +356,7 @@
 	icon_state = "changelog"
 	base_icon_state = "changelog"
 	screen_loc ="TOP:-122,CENTER:+57"
+	requires_discord = FALSE //MASSMETA EDIT ADDITION (discord verification)
 
 /atom/movable/screen/lobby/button/bottom/changelog_button/Click(location, control, params)
 	. = ..()
@@ -452,6 +464,7 @@
 	layer = LOBBY_BELOW_MENU_LAYER
 	screen_loc = "TOP:-82,CENTER:-54"
 	always_shown = TRUE
+	requires_discord = FALSE //MASSMETA EDIT ADDITION (discord verification)
 
 	var/blip_enabled = TRUE
 
