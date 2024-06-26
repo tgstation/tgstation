@@ -247,57 +247,73 @@
 /obj/item/seeds/proc/harvest(mob/user)
 	///Reference to the tray/soil the seeds are planted in.
 	var/atom/movable/parent = loc //for ease of access
-	///Count used for creating the correct amount of results to the harvest.
-	var/t_amount = 0
 	///List of plants all harvested from the same batch.
 	var/list/result = list()
 	///Tile of the harvester to deposit the growables.
 	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
 	///Name of the grown products.
 	var/product_name
-	///The Number of products produced by the plant, typically the yield. Modified by certain traits.
-	var/product_count = getYield()
-
-	if(product_count >= 10)
-		product_count = 10 + log(1.02) * (getYield() - 1)
+	var/seed_harvest_ratio = 0.2
+	///the value of yield that the harvest amount stops being linear and slows down
+	var/yield_linearity_breakpoint = 100
+	///linear region growth coeff
+	var/harvest_linear_coeff = 0.1
+	///harvest amount gets close to 20 as yield gets close to +infinity
+	var/maximum_harvest_amount = 20
+	///to be calculated later based on yield
+	var/harvest_amount = 0
+	var/harvest_counter = 0
+	var/maximum_seed_production = 0
+	var/seed_counter = 0
+	var/plant_yield = getYield()
 
 	if(user.client)
 		add_jobxp_chance(user.client, 1, JOB_BOTANIST, 20)
 
-	while(t_amount < product_count)
-		if(prob(25))
+	if(plant_yield >= yield_linearity_breakpoint)
+		harvest_amount = qp_sigmoid(yield_linearity_breakpoint, maximum_harvest_amount, plant_yield)
+		maximum_seed_production = floor(harvest_amount * seed_harvest_ratio)
+	else
+		harvest_amount = floor(plant_yield * harvest_linear_coeff)
+		maximum_seed_production = floor(harvest_amount * seed_harvest_ratio)
+		if ((plant_yield > 0 && maximum_seed_production == 0) && prob(50))
+			maximum_seed_production = 1
+	
+	while(harvest_counter < harvest_amount)
+		while(seed_counter < maximum_seed_production)
 			var/obj/item/seeds/seed_prod
-			if(prob(50) && has_viable_mutations())
+			if(prob(65) && has_viable_mutations())
 				seed_prod = create_valid_mutation(output_loc, TRUE)
 				ADD_TRAIT(seed_prod, TRAIT_PLANT_WILDMUTATE, "mutated")
 			else
 				seed_prod = src.Copy_drop(output_loc)
-			result.Add(seed_prod) // User gets a consumable
-			t_amount++
+			result.Add(seed_prod)
+			harvest_counter++
+			seed_counter++
+		var/obj/item/food/grown/item_grown
+		if(prob(10) && has_viable_mutations())
+			item_grown = create_valid_mutation(output_loc)
 		else
-			var/obj/item/food/grown/t_prod
-			if(prob(10) && has_viable_mutations())
-				t_prod = create_valid_mutation(output_loc)
-			else
-				if(!product)
-					t_amount++
-					continue
-				t_prod = new product(output_loc, src)
-				if(plantname != initial(plantname))
-					t_prod.name = plantname
-				if(istype(t_prod))
-					t_prod.seed.name = name
-					t_prod.seed.desc = desc
-					t_prod.seed.plantname = plantname
-			result.Add(t_prod) // User gets a consumable
-			if(!t_prod)
-				return
-			t_amount++
-			if(istype(t_prod))
-				product_name = t_prod.seed.plantname
-	if(product_count >= 1)
-		SSblackbox.record_feedback("tally", "food_harvested", product_count, product_name)
+			if(!product)
+				harvest_counter++
+				continue
+			item_grown = new product(output_loc, src)
+			if(plantname != initial(plantname))
+				item_grown.name = plantname
+			if(istype(item_grown))
+				item_grown.seed.name = name
+				item_grown.seed.desc = desc
+				item_grown.seed.plantname = plantname
+		result.Add(item_grown) // User gets a consumable
+		if(!item_grown)
+			return
+		harvest_counter++
+		if(istype(item_grown))
+			product_name = item_grown.seed.plantname
+	if(harvest_amount >= 1)
+		SSblackbox.record_feedback("tally", "food_harvested", harvest_amount, product_name)
 	return result
+		
 
 /**
  * This is where plant chemical products are handled.

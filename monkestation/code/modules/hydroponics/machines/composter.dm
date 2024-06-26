@@ -91,7 +91,7 @@
 			biomatter_added++
 			qdel(composter)
 		else if(istype(composter, /obj/item/food))
-			biomatter_added += 4
+			biomatter_added += 5
 			qdel(composter)
 		else if(istype(composter, /mob/living/carbon) && allow_carbons)
 			var/mob/living/carbon/carbon_target = composter
