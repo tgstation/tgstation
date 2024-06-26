@@ -8,6 +8,7 @@
 	sheet_type = /obj/item/stack/sheet/iron
 	ore_type = /obj/item/stack/ore/iron
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
+	mat_rust_resistance = RUST_RESISTANCE_BASIC
 	mineral_rarity = MATERIAL_RARITY_COMMON
 	points_per_unit = 1 / SHEET_MATERIAL_AMOUNT
 	minimum_value_override = 0
@@ -268,6 +269,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
 	beauty_modifier = 0.05
 	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 1.25, BIO = 1, FIRE = 0.7, ACID = 1)
+	mat_rust_resistance = RUST_RESISTANCE_TITANIUM
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	texture_layer_icon_state = "shine"
 

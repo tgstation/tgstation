@@ -271,7 +271,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 				 */
 				var/max_amount = rand(CEILING(product_record.amount * 0.5, 1), product_record.amount)
 				product_record.amount = rand(0, max_amount)
-				credits_contained += rand(0, 1) //randomly add a few credits to the machine to make it look like it's been used, proportional to the amount missing.
+				credits_contained += rand(1, 5) //randomly add a few credits to the machine to make it look like it's been used, proportional to the amount missing.
 			if(tiltable && prob(6)) // 1 in 17 chance to start tilted (as an additional hint to the station trait behind it)
 				INVOKE_ASYNC(src, PROC_REF(tilt), loc)
 				credits_contained = 0 // If it's tilted, it's been looted, so no credits for you.
@@ -1417,7 +1417,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		if(isliving(usr))
 			living_user = usr
 			card_used = living_user.get_idcard(TRUE)
-		else if(age_restrictions && item_record.age_restricted && (!card_used.registered_age || card_used.registered_age < AGE_MINOR))
+		if(age_restrictions && item_record.age_restricted && (!card_used.registered_age || card_used.registered_age < AGE_MINOR))
 			speak("You are not of legal age to purchase [item_record.name].")
 			if(!(usr in GLOB.narcd_underages))
 				if (isnull(sec_radio))
@@ -1458,7 +1458,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(usr.CanReach(src) && usr.put_in_hands(vended_item))
 		to_chat(usr, span_notice("You take [item_record.name] out of the slot."))
 	else
-		to_chat(usr, span_warning("[capitalize(item_record.name)] falls onto the floor!"))
+		to_chat(usr, span_warning("[capitalize(format_text(item_record.name))] falls onto the floor!"))
 	SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[item_record.product_path]"))
 	vend_ready = TRUE
 
@@ -1652,6 +1652,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		return
 	var/credits_to_remove = min(CREDITS_DUMP_THRESHOLD, round(credits_contained))
 	var/obj/item/holochip/holochip = new(loc, credits_to_remove)
+	playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
 	credits_contained = max(0, credits_contained - credits_to_remove)
 	SSblackbox.record_feedback("amount", "vending machine looted", holochip.credits)
 
@@ -1777,7 +1778,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			speak("\The [src] has been linked to [card_used].")
 
 	if(compartmentLoadAccessCheck(user))
-		if(istype(attack_item, /obj/item/pen))
+		if(IS_WRITING_UTENSIL(attack_item))
 			name = tgui_input_text(user, "Set name", "Name", name, 20)
 			desc = tgui_input_text(user, "Set description", "Description", desc, 60)
 			slogan_list += tgui_input_text(user, "Set slogan", "Slogan", "Epic", 60)
@@ -1846,7 +1847,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(user.CanReach(src) && user.put_in_hands(dispensed_item))
 		to_chat(user, span_notice("You take [dispensed_item.name] out of the slot."))
 	else
-		to_chat(user, span_warning("[capitalize(dispensed_item.name)] falls onto the floor!"))
+		to_chat(user, span_warning("[capitalize(format_text(dispensed_item.name))] falls onto the floor!"))
 	return TRUE
 
 /obj/machinery/vending/custom/unbreakable

@@ -150,7 +150,7 @@
  * Admin spawned meteors will not grant the user an achievement.
  *
  * Arguments:
- * * user - the person who will be recieving the examine award.
+ * * user - the person who will be receiving the examine award.
  */
 
 /obj/effect/meteor/proc/check_examine_award(mob/user)

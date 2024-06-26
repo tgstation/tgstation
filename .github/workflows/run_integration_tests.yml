@@ -16,9 +16,11 @@ on:
       max_required_byond_client:
         required: true
         type: string
+
 jobs:
   run_integration_tests:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     services:
       mysql:
         image: mysql:latest

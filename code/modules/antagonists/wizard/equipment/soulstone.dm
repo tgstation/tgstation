@@ -77,7 +77,7 @@
 			whatever spark it once held long extinguished."
 
 ///signal called whenever a soulstone is smacked by a bible
-/obj/item/soulstone/proc/on_bible_smacked(datum/source, mob/living/user, direction)
+/obj/item/soulstone/proc/on_bible_smacked(datum/source, mob/living/user, ...)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(attempt_exorcism), user)
 
@@ -119,7 +119,7 @@
 	for(var/mob/shade_to_convert in contents)
 		if(IS_CULTIST(shade_to_convert))
 			continue
-		shade_to_convert.mind?.add_antag_datum(/datum/antagonist/cult)
+		shade_to_convert.mind?.add_antag_datum(/datum/antagonist/cult/shade)
 
 	RegisterSignal(src, COMSIG_BIBLE_SMACKED)
 	return TRUE
@@ -219,7 +219,9 @@
 				to_chat(captured_shade, span_bold("You have been released from your prison, \
 					but you are still bound to [user.real_name]'s will. Help [user.p_them()] succeed in \
 					[user.p_their()] goals at all costs."))
-
+		var/datum/antagonist/cult/shade/shade_datum = captured_shade.mind?.has_antag_datum(/datum/antagonist/cult/shade)
+		if(shade_datum)
+			shade_datum.release_time = world.time
 		on_release_spirits()
 
 /obj/item/soulstone/pre_attack(atom/A, mob/living/user, params)
@@ -340,6 +342,10 @@
 	to_chat(shade, span_notice("Your soul has been captured by [src]. \
 		Its arcane energies are reknitting your ethereal form."))
 
+	var/datum/antagonist/cult/shade/shade_datum = shade.mind?.has_antag_datum(/datum/antagonist/cult/shade)
+	if(shade_datum)
+		shade_datum.release_time = null
+
 	if(user != shade)
 		to_chat(user, "[span_info("<b>Capture successful!</b>:")] [shade.real_name]'s soul \
 			has been captured and stored within [src].")
@@ -356,8 +362,8 @@
 	var/construct_class = show_radial_menu(user, src, GLOB.construct_radial_images, custom_check = CALLBACK(src, PROC_REF(check_menu), user, shell), require_near = TRUE, tooltips = TRUE)
 	if(QDELETED(shell) || !construct_class)
 		return FALSE
-	make_new_construct_from_class(construct_class, theme, shade, user, FALSE, shell.loc)
 	shade.mind?.remove_antag_datum(/datum/antagonist/cult)
+	make_new_construct_from_class(construct_class, theme, shade, user, FALSE, shell.loc)
 	qdel(shell)
 	qdel(src)
 	return TRUE
@@ -393,7 +399,7 @@
 	if(user)
 		soulstone_spirit.faction |= "[REF(user)]" //Add the master as a faction, allowing inter-mob cooperation
 		if(IS_CULTIST(user))
-			soulstone_spirit.mind.add_antag_datum(/datum/antagonist/cult)
+			soulstone_spirit.mind.add_antag_datum(/datum/antagonist/cult/shade)
 			SSblackbox.record_feedback("tally", "cult_shade_created", 1)
 
 	soulstone_spirit.cancel_camera()
@@ -423,7 +429,7 @@
 	// Cult shades get cult datum
 	if (user.mind.has_antag_datum(/datum/antagonist/cult))
 		shade.mind.remove_antag_datum(/datum/antagonist/shade_minion)
-		shade.mind.add_antag_datum(/datum/antagonist/cult)
+		shade.mind.add_antag_datum(/datum/antagonist/cult/shade)
 		return
 
 	// Only blessed soulstones can de-cult shades
@@ -502,7 +508,11 @@
 		newstruct.master = stoner
 		var/datum/action/innate/seek_master/seek_master = new
 		seek_master.Grant(newstruct)
-	target.mind?.transfer_to(newstruct, force_key_move = TRUE)
+
+	if (isnull(target.mind))
+		newstruct.key = target.key
+	else
+		target.mind.transfer_to(newstruct, force_key_move = TRUE)
 	var/atom/movable/screen/alert/bloodsense/sense_alert
 	if(newstruct.mind && !IS_CULTIST(newstruct) && ((stoner && IS_CULTIST(stoner)) || cultoverride) && SSticker.HasRoundStarted())
 		newstruct.mind.add_antag_datum(/datum/antagonist/cult/construct)

@@ -277,7 +277,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Sloth",
 			"rarity": "common",
-			"summon_icon_file": "icons/mob/pets.dmi",
+			"summon_icon_file": "icons/mob/simple/pets.dmi",
 			"summon_icon_state": "cool_sloth"
 		},
 		{
@@ -1006,7 +1006,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Cat",
 			"rarity": "uncommon",
-			"summon_icon_file": "icons/mob/pets.dmi",
+			"summon_icon_file": "icons/mob/simple/pets.dmi",
 			"summon_icon_state": "cat"
 		},
 		{

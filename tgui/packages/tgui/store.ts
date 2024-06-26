@@ -44,7 +44,7 @@ export const configureStore = (options: ConfigureStoreOptions = {}): Store => {
       debug: debugReducer,
       backend: backendReducer,
     }),
-    reducer,
+    reducer as any,
   ]);
 
   const middlewares: Middleware[] = !sideEffects

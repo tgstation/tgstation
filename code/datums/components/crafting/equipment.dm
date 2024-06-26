@@ -58,12 +58,12 @@
 		/obj/item/stack/rods = 8,
 		/obj/item/stock_parts/servo = 2,
 		/obj/item/stock_parts/capacitor = 1,
-		/obj/item/stock_parts/cell = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 	)
 	parts = list(
 		/obj/item/stock_parts/servo = 2,
 		/obj/item/stock_parts/capacitor = 1,
-		/obj/item/stock_parts/cell = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 	)
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
 	time = 20 SECONDS
@@ -249,3 +249,14 @@
 	tool_paths = list(/obj/item/bikehorn)
 	time = 40 SECONDS
 	category = CAT_EQUIPMENT
+
+/datum/crafting_recipe/rebar_quiver
+	name = "Rebar Storage Quiver"
+	result = /obj/item/storage/bag/rebar_quiver
+	time = 10
+	reqs = list(
+		/obj/item/tank/internals/oxygen = 1,
+		/obj/item/stack/cable_coil = 15,
+	)
+	category = CAT_EQUIPMENT
+	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER)

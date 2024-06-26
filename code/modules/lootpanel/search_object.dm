@@ -50,6 +50,7 @@
 	var/build = owner.byond_build
 	var/version = owner.byond_version
 	if(build < 515 || (build == 515 && version < 1635))
+		icon = "n/a"
 		return
 
 	icon = "[item.icon]"
@@ -64,10 +65,7 @@
 
 /// Generates the icon for the search object. This is the expensive part.
 /datum/search_object/proc/generate_icon(client/owner)
-	if(ismob(item) || length(item.overlays) > 2)
-		icon = costly_icon2html(item, owner, sourceonly = TRUE)
-	else // our pre 515.1635 fallback for normal items
-		icon = icon2html(item, owner, sourceonly = TRUE)
+	icon = costly_icon2html(item, owner, sourceonly = TRUE)
 
 
 /// Parent item has been altered, search object no longer valid

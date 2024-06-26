@@ -82,10 +82,11 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/Destroy()
 	if(bodypart_owner && !owner && !QDELETED(bodypart_owner))
 		bodypart_remove(bodypart_owner)
-	else if(owner)
-		// The special flag is important, because otherwise mobs can die
-		// while undergoing transformation into different mobs.
+	else if(owner && QDESTROYING(owner))
+		// The mob is being deleted, don't update the mob
 		Remove(owner, special=TRUE)
+	else if(owner)
+		Remove(owner)
 	else
 		STOP_PROCESSING(SSobj, src)
 	return ..()
@@ -317,18 +318,23 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		replacement.set_organ_damage(damage)
 
 /// Called by medical scanners to get a simple summary of how healthy the organ is. Returns an empty string if things are fine.
-/obj/item/organ/proc/get_status_text()
-	var/status = ""
-	if(owner.has_reagent(/datum/reagent/inverse/technetium))
-		status = "<font color='#E42426'>[round((damage/maxHealth)*100, 1)]% damaged.</font>"
-	else if(organ_flags & ORGAN_FAILING)
-		status = "<font color='#cc3333'>Non-Functional</font>"
-	else if(damage > high_threshold)
-		status = "<font color='#ff9933'>Severely Damaged</font>"
-	else if (damage > low_threshold)
-		status = "<font color='#ffcc33'>Mildly Damaged</font>"
+/obj/item/organ/proc/get_status_text(advanced)
+	if(advanced && (organ_flags & ORGAN_PROMINENT))
+		return "<font color='#cc3333'>Harmful Foreign Body</font>"
 
-	return status
+	if(owner.has_reagent(/datum/reagent/inverse/technetium))
+		return "<font color='#E42426'>[round((damage/maxHealth)*100, 1)]% damaged.</font>"
+
+	if(organ_flags & ORGAN_FAILING)
+		return "<font color='#cc3333'>Non-Functional</font>"
+
+	if(damage > high_threshold)
+		return "<font color='#ff9933'>Severely Damaged</font>"
+
+	if (damage > low_threshold)
+		return "<font color='#ffcc33'>Mildly Damaged</font>"
+
+	return ""
 
 /// Tries to replace the existing organ on the passed mob with this one, with special handling for replacing a brain without ghosting target
 /obj/item/organ/proc/replace_into(mob/living/carbon/new_owner)

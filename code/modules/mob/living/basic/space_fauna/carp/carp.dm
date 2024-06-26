@@ -20,7 +20,6 @@
 	icon_gib = "carp_gib"
 	gold_core_spawnable = HOSTILE_SPAWN
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
-	movement_type = FLYING
 	health = 25
 	maxHealth = 25
 	pressure_resistance = 200

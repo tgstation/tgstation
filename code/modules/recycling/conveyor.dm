@@ -40,8 +40,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/Initialize(mapload, new_dir, new_id)
 	. = ..()
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_CONVEYOR_PRIORITY)
-	var/static/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN)
-	AddElement(/datum/element/give_turf_traits, give_turf_traits)
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_TURF_IGNORE_SLOWDOWN)))
 	register_context()
 
 	if(new_dir)
@@ -446,17 +445,33 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	else
 		position = CONVEYOR_OFF
 
-/// Called when a user clicks on this switch with an open hand.
-/obj/machinery/conveyor_switch/attack_hand(mob/living/user, list/modifiers)
+/obj/machinery/conveyor_switch/proc/on_user_activation(mob/user, direction)
 	add_fingerprint(user)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		update_position(CONVEYOR_BACKWARDS)
-	else
-		update_position(CONVEYOR_FORWARD)
+	update_position(direction)
 	update_appearance()
 	update_linked_conveyors()
 	update_linked_switches()
-	return TRUE
+
+/// Called when a user clicks on this switch with an open hand.
+/obj/machinery/conveyor_switch/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	on_user_activation(user, CONVEYOR_FORWARD)
+
+/obj/machinery/conveyor_switch/attack_hand_secondary(mob/user, list/modifiers)
+	on_user_activation(user, CONVEYOR_BACKWARDS)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/conveyor_switch/attack_ai(mob/user)
+	return attack_hand(user)
+
+/obj/machinery/conveyor_switch/attack_ai_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
+
+/obj/machinery/conveyor_switch/attack_robot(mob/user)
+	return attack_hand(user)
+
+/obj/machinery/conveyor_switch/attack_robot_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
 
 /obj/machinery/conveyor_switch/attackby(obj/item/attacking_item, mob/user, params)
 	if(is_wire_tool(attacking_item))
@@ -528,10 +543,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		belt.id = id
 	to_chat(user, span_notice("You have linked all nearby conveyor belt assemblies to this switch."))
 
-/obj/item/conveyor_switch_construct/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity || user.stat || !isfloorturf(target) || istype(target, /area/shuttle))
-		return
+/obj/item/conveyor_switch_construct/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isfloorturf(interacting_with))
+		return NONE
 
 	var/found = FALSE
 	for(var/obj/machinery/conveyor/belt in view())
@@ -540,10 +554,11 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			break
 	if(!found)
 		to_chat(user, "[icon2html(src, user)]" + span_notice("The conveyor switch did not detect any linked conveyor belts in range."))
-		return
-	var/obj/machinery/conveyor_switch/built_switch = new/obj/machinery/conveyor_switch(target, id)
+		return ITEM_INTERACT_BLOCKING
+	var/obj/machinery/conveyor_switch/built_switch = new/obj/machinery/conveyor_switch(interacting_with, id)
 	transfer_fingerprints_to(built_switch)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/conveyor
 	name = "conveyor belt assembly"
@@ -561,17 +576,17 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	id = _id
 
-/obj/item/stack/conveyor/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity || user.stat || !isfloorturf(target) || istype(target, /area/shuttle))
-		return
-	var/belt_dir = get_dir(target, user)
-	if(target == user.loc)
+/obj/item/stack/conveyor/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isfloorturf(interacting_with))
+		return NONE
+	var/belt_dir = get_dir(interacting_with, user)
+	if(interacting_with == user.loc)
 		to_chat(user, span_warning("You cannot place a conveyor belt under yourself!"))
-		return
-	var/obj/machinery/conveyor/belt = new/obj/machinery/conveyor(target, belt_dir, id)
+		return ITEM_INTERACT_BLOCKING
+	var/obj/machinery/conveyor/belt = new/obj/machinery/conveyor(interacting_with, belt_dir, id)
 	transfer_fingerprints_to(belt)
 	use(1)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/conveyor/attackby(obj/item/item_used, mob/user, params)
 	..()

@@ -41,15 +41,33 @@
 /turf/open/update_overlays()
 	if(isnull(damaged_dmi))
 		return ..()
+
 	. = ..()
+
 	if(broken)
-		. += mutable_appearance(damaged_dmi, pick(broken_states()))
+		var/mutable_appearance/broken_appearance = mutable_appearance(damaged_dmi, pick(broken_states()))
+
+		if(smoothing_flags && !(smoothing_flags & SMOOTH_BROKEN_TURF))
+			var/matrix/translation = new
+			translation.Translate(-LARGE_TURF_SMOOTHING_X_OFFSET, -LARGE_TURF_SMOOTHING_Y_OFFSET)
+			broken_appearance.transform = translation
+
+		. += broken_appearance
+
 	else if(burnt)
 		var/list/burnt_states = burnt_states()
+		var/mutable_appearance/burnt_appearance
 		if(burnt_states.len)
-			. += mutable_appearance(damaged_dmi, pick(burnt_states))
+			burnt_appearance = mutable_appearance(damaged_dmi, pick(burnt_states))
 		else
-			. += mutable_appearance(damaged_dmi, pick(broken_states()))
+			burnt_appearance = mutable_appearance(damaged_dmi, pick(broken_states()))
+
+		if(smoothing_flags && !(smoothing_flags & SMOOTH_BURNT_TURF))
+			var/matrix/translation = new
+			translation.Translate(-LARGE_TURF_SMOOTHING_X_OFFSET, -LARGE_TURF_SMOOTHING_Y_OFFSET)
+			burnt_appearance.transform = translation
+
+		. += burnt_appearance
 
 //direction is direction of travel of A
 /turf/open/zPassIn(direction)
@@ -139,6 +157,9 @@
 
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
+	light_range = 3
+	light_color = LIGHT_COLOR_CYAN
+	light_on = TRUE
 
 /turf/open/indestructible/permalube
 	icon_state = "darkfull"
@@ -297,7 +318,7 @@
 			I.AddElement(/datum/element/frozen)
 
 	for(var/mob/living/L in contents)
-		if(L.bodytemperature <= 50)
+		if(L.bodytemperature <= 50 && !HAS_TRAIT(L, TRAIT_RESISTCOLD))
 			L.apply_status_effect(/datum/status_effect/freon)
 	MakeSlippery(TURF_WET_PERMAFROST, 50)
 	return TRUE

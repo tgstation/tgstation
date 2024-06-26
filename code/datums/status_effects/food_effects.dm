@@ -4,6 +4,7 @@
 	duration = 5 MINUTES // Same as food mood buffs
 	status_type = STATUS_EFFECT_REPLACE // Only one food buff allowed
 	alert_type = /atom/movable/screen/alert/status_effect/food
+	show_duration = TRUE
 	/// Buff power
 	var/strength
 

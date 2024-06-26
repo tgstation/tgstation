@@ -64,6 +64,9 @@ function parseChangelogBody(lines, openTag) {
 }
 
 export function parseChangelog(text) {
+	if(text == null) {
+		return undefined;
+	}
 	const lines = text.split("\n").map((line) => line.trim());
 
 	for (let index = 0; index < lines.length; index++) {

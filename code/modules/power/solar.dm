@@ -42,6 +42,8 @@
 
 /obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer
+	QDEL_NULL(panel)
+	QDEL_NULL(panel_edge)
 	return ..()
 
 /obj/machinery/power/solar/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)

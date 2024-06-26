@@ -193,7 +193,6 @@
 
 	// The true movement is here
 	moveToNullspace()
-	bodypart_owner.contents -= src
 	bodypart_owner = null
 
 	on_bodypart_remove(limb)

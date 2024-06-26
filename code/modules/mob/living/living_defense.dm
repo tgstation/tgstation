@@ -202,7 +202,7 @@
 					span_userdanger("You're hit by [thrown_item]!"))
 	if(!thrown_item.throwforce)
 		return
-	var/armor = run_armor_check(zone, MELEE, "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].", thrown_item.armour_penetration, "", FALSE, thrown_item.weak_against_armour)
+	var/armor = run_armor_check(zone, MELEE, "Your armor has protected your [parse_zone_with_bodypart(zone)].", "Your armor has softened hit to your [parse_zone_with_bodypart(zone)].", thrown_item.armour_penetration, "", FALSE, thrown_item.weak_against_armour)
 	apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND))
 	if(QDELETED(src)) //Damage can delete the mob.
 		return
@@ -254,22 +254,23 @@
 /mob/living/proc/grabbedby(mob/living/user, supress_message = FALSE)
 	if(user == src || anchored || !isturf(user.loc))
 		return FALSE
+
 	if(!user.pulling || user.pulling != src)
 		user.start_pulling(src, supress_message = supress_message)
 		return
-	// This line arbitrarily prevents any non-carbon from upgrading grabs
-	if(!iscarbon(user))
-		return
+
 	if(!(status_flags & CANPUSH) || HAS_TRAIT(src, TRAIT_PUSHIMMUNE))
 		to_chat(user, span_warning("[src] can't be grabbed more aggressively!"))
 		return FALSE
+
 	if(user.grab_state >= GRAB_AGGRESSIVE && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to risk hurting [src]!"))
 		return FALSE
+
 	grippedby(user)
 
 //proc to upgrade a simple pull into a more aggressive grab.
-/mob/living/proc/grippedby(mob/living/carbon/user, instant = FALSE)
+/mob/living/proc/grippedby(mob/living/user, instant = FALSE)
 	if(user.grab_state >= user.max_grab)
 		return
 	user.changeNext_move(CLICK_CD_GRABBING)

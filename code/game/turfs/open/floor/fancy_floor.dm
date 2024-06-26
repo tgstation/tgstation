@@ -13,11 +13,11 @@
 	icon_state = "wood"
 	floor_tile = /obj/item/stack/tile/wood
 	footstep = FOOTSTEP_WOOD
-	turf_flags = NO_RUST
 	barefootstep = FOOTSTEP_WOOD_BAREFOOT
 	clawfootstep = FOOTSTEP_WOOD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 /turf/open/floor/wood/broken_states()
 	return list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
@@ -149,6 +149,7 @@
 	clawfootstep = FOOTSTEP_GRASS
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/floor/grass/broken_states()
 	return list("[initial(icon_state)]_damaged")
@@ -197,13 +198,14 @@
 	initial_gas_mix = FROZEN_ATMOS
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
-
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 	slowdown = 1.5
 	bullet_sizzle = TRUE
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
 
 /turf/open/floor/fake_snow/Initialize(mapload)
 	. = ..()
@@ -256,6 +258,7 @@
 	clawfootstep = FOOTSTEP_CARPET_BAREFOOT
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 /turf/open/floor/carpet/examine(mob/user)
 	. = ..()

@@ -196,6 +196,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/tcgcard_deck/Initialize(mapload)
 	. = ..()
 	create_storage(storage_type = /datum/storage/tcg)
+	RegisterSignal(atom_storage, COMSIG_STORAGE_REMOVED_ITEM, PROC_REF(on_item_removed))
 
 /obj/item/tcgcard_deck/update_icon_state()
 	if(!flipped)
@@ -313,6 +314,21 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		nu_card.flipped = flipped
 		nu_card.update_icon_state()
 	update_icon_state()
+
+/**
+ * Signal handler for COMSIG_STORAGE_REMOVED_ITEM. Qdels src if contents are empty, flips the removed card if needed.
+ */
+/obj/item/tcgcard_deck/proc/on_item_removed(datum/storage/storage_datum, obj/item/thing, atom/remove_to_loc, silent = FALSE)
+	SIGNAL_HANDLER
+
+	if (!istype(thing, /obj/item/tcgcard))
+		return
+	var/obj/item/tcgcard/card = thing
+	card.flipped = flipped
+	card.update_appearance(UPDATE_ICON_STATE)
+
+	if(length(contents) == 0)
+		qdel(src)
 
 /obj/item/cardpack
 	name = "Trading Card Pack: Coder"

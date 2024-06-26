@@ -220,7 +220,7 @@
 	/// Whitelist of charging machines
 	var/static/list/charge_machines = typecacheof(list(/obj/machinery/cell_charger, /obj/machinery/recharger, /obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port))
 	/// Whitelist of chargable items
-	var/static/list/charge_items = typecacheof(list(/obj/item/stock_parts/cell, /obj/item/gun/energy))
+	var/static/list/charge_items = typecacheof(list(/obj/item/stock_parts/power_store, /obj/item/gun/energy))
 
 /obj/item/borg/charger/update_icon_state()
 	icon_state = "charger_[mode]"
@@ -234,11 +234,11 @@
 	to_chat(user, span_notice("You toggle [src] to \"[mode]\" mode."))
 	update_appearance()
 
-/obj/item/borg/charger/afterattack(obj/item/target, mob/living/silicon/robot/user, proximity_flag)
-	. = ..()
-	if(!proximity_flag || !iscyborg(user))
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/borg/charger/interact_with_atom(atom/target, mob/living/silicon/robot/user, list/modifiers)
+	if(!iscyborg(user))
+		return NONE
+
+	. = ITEM_INTERACT_BLOCKING
 	if(mode == "draw")
 		if(is_type_in_list(target, charge_machines))
 			var/obj/machinery/target_machine = target
@@ -259,9 +259,9 @@
 			to_chat(user, span_notice("You stop charging yourself."))
 
 		else if(is_type_in_list(target, charge_items))
-			var/obj/item/stock_parts/cell/cell = target
+			var/obj/item/stock_parts/power_store/cell = target
 			if(!istype(cell))
-				cell = locate(/obj/item/stock_parts/cell) in target
+				cell = locate(/obj/item/stock_parts/power_store) in target
 			if(!cell)
 				to_chat(user, span_warning("[target] has no power cell!"))
 				return
@@ -298,9 +298,9 @@
 			to_chat(user, span_notice("You stop charging yourself."))
 
 	else if(is_type_in_list(target, charge_items))
-		var/obj/item/stock_parts/cell/cell = target
+		var/obj/item/stock_parts/power_store/cell = target
 		if(!istype(cell))
-			cell = locate(/obj/item/stock_parts/cell) in target
+			cell = locate(/obj/item/stock_parts/power_store) in target
 		if(!cell)
 			to_chat(user, span_warning("[target] has no power cell!"))
 			return

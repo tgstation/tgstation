@@ -113,7 +113,7 @@
 			sort_tag = dest_tagger.currTag
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 			update_appearance()
-	else if(istype(item, /obj/item/pen))
+	else if(IS_WRITING_UTENSIL(item))
 		if(!user.can_write(item))
 			return
 		var/str = tgui_input_text(user, "Label text?", "Set label", max_length = MAX_NAME_LEN)
@@ -252,7 +252,7 @@
 
 	unwrap_contents()
 	post_unwrap_contents(user)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/dest_tagger
 	name = "destination tagger"
@@ -395,10 +395,10 @@
 	new_barcode.cut_multiplier = cut_multiplier		// Also the registered percent cut.
 	user.put_in_hands(new_barcode)
 
-/obj/item/sales_tagger/CtrlClick(mob/user)
-	. = ..()
+/obj/item/sales_tagger/item_ctrl_click(mob/user)
 	payments_acc = null
 	to_chat(user, span_notice("You clear the registered account."))
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/sales_tagger/click_alt(mob/user)
 	var/potential_cut = input("How much would you like to pay out to the registered card?","Percentage Profit ([round(cut_min*100)]% - [round(cut_max*100)]%)") as num|null

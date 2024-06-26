@@ -21,7 +21,7 @@
 	paycheck = null
 	paycheck_department = null
 
-	mind_traits = list(DISPLAYS_JOB_IN_BINARY)
+	mind_traits = list(TRAIT_DISPLAY_JOB_IN_BINARY)
 	liver_traits = list(TRAIT_HUMAN_AI_METABOLISM)
 
 	departments_list = list(
@@ -83,7 +83,7 @@
 /datum/job/human_ai/announce_job(mob/living/joining_mob)
 	. = ..()
 	if(SSticker.HasRoundStarted())
-		minor_announce("Due to a research mishaps, [joining_mob] has been sent to be your replacement AI at [AREACOORD(joining_mob)]. Please treat them with respect.")
+		minor_announce("Due to a research mishap, [joining_mob] has been sent to be your replacement AI at [AREACOORD(joining_mob)]. Please treat them with respect.")
 
 /datum/job/human_ai/get_radio_information()
 	return "<b>Prefix your message with :b to speak with cyborgs.</b>"

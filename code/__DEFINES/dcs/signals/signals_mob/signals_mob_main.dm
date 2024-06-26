@@ -81,6 +81,9 @@
 	#define ACCESS_DISALLOWED (1<<1)
 	#define LOCKED_ATOM_INCOMPATIBLE (1<<2)
 
+///from the component /datum/component/simple_access
+#define	COMSIG_MOB_RETRIEVE_SIMPLE_ACCESS "retrieve_simple_access"
+
 ///from base of mob/can_cast_magic(): (mob/user, magic_flags, charge_cost)
 #define COMSIG_MOB_RESTRICT_MAGIC "mob_cast_magic"
 ///from base of mob/can_block_magic(): (mob/user, casted_magic_flags, charge_cost)
@@ -178,16 +181,14 @@
 #define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"
 ///from base of /obj/item/attack(): (mob/M, mob/user)
 #define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"
-///from base of obj/item/afterattack(): (atom/target, obj/item/weapon, proximity_flag, click_parameters)
-#define COMSIG_MOB_ITEM_AFTERATTACK "mob_item_afterattack"
-///from base of obj/item/afterattack_secondary(): (atom/target, obj/item/weapon, proximity_flag, click_parameters)
-#define COMSIG_MOB_ITEM_AFTERATTACK_SECONDARY "mob_item_afterattack_secondary"
 ///from base of mob/RangedAttack(): (atom/A, modifiers)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
 ///from base of mob/ranged_secondary_attack(): (atom/target, modifiers)
 #define COMSIG_MOB_ATTACK_RANGED_SECONDARY "mob_attack_ranged_secondary"
-///From base of atom/ctrl_click(): (atom/A)
+///From base of /mob/base_click_ctrl: (atom/A)
 #define COMSIG_MOB_CTRL_CLICKED "mob_ctrl_clicked"
+///From base of /mob/base_click_ctrl_shift: (atom/A)
+#define COMSIG_MOB_CTRL_SHIFT_CLICKED "mob_ctrl_shift_clicked"
 ///From base of mob/update_movespeed():area
 #define COMSIG_MOB_MOVESPEED_UPDATED "mob_update_movespeed"
 /// From /atom/movable/screen/zone_sel/proc/set_selected_zone.

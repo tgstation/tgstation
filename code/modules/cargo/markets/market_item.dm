@@ -16,6 +16,9 @@
 	/// Path to or the item itself what this entry is for, this should be set even if you override spawn_item to spawn your item.
 	var/atom/movable/item
 
+	/// Used to exclude abstract/special paths from the unit test if the value matches the type itself.
+	var/abstract_path
+
 	/// Minimum price for the item if generated randomly.
 	var/price_min = 0
 	/// Maximum price for the item if generated randomly.
@@ -25,7 +28,7 @@
 	/// Maximum amount that there should be of this item in the market if generated randomly.
 	var/stock_max = 0
 	/// Probability for this item to be available. Used by SSblackmarket on init.
-	var/availability_prob = 0
+	var/availability_prob
 
 	///The identifier for the market item, generated on runtime and used to access them in the market categories.
 	var/identifier

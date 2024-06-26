@@ -29,7 +29,7 @@
 		return
 	var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - APC_POWER_GAIN
 	var/obj/item/organ/internal/stomach/ethereal/stomach = maybe_stomach
-	var/obj/item/stock_parts/cell/stomach_cell = stomach.cell
+	var/obj/item/stock_parts/power_store/stomach_cell = stomach.cell
 	if(!((stomach?.drain_time < world.time) && LAZYACCESS(modifiers, RIGHT_CLICK)))
 		return
 	if(ethereal.combat_mode)
@@ -85,7 +85,7 @@
 		return
 
 /obj/machinery/power/apc/blob_act(obj/structure/blob/B)
-	set_broken()
+	atom_break()
 
 /obj/machinery/power/apc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armor_penetration = 0)
 	// APC being at 0 integrity doesnt delete it outright. Combined with take_damage this might cause runtimes.
@@ -100,38 +100,20 @@
 		return damage_amount
 	. = ..()
 
-/obj/machinery/power/apc/atom_break(damage_flag)
-	. = ..()
-	if(.)
-		set_broken()
-
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
 	if(isAdminGhostAI(user))
 		return TRUE
 	if(!HAS_SILICON_ACCESS(user))
 		return TRUE
 	. = TRUE
-	var/mob/living/silicon/ai/AI = user
-	var/mob/living/silicon/robot/robot = user
-	if(istype(AI) || istype(robot))
+	if(isAI(user) || iscyborg(user))
 		if(aidisabled)
 			. = FALSE
-		else if(istype(malfai) && (malfai != AI || !(robot in malfai.connected_robots)))
-			. = FALSE 
+		else if(istype(malfai) && !(malfai == user || (user in malfai.connected_robots)))
+			. = FALSE
 	if (!. && !loud)
 		balloon_alert(user, "it's disabled!")
 	return .
-
-/obj/machinery/power/apc/proc/set_broken()
-	if(machine_stat & BROKEN)
-		return
-	if(malfai && operating)
-		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
-	operating = FALSE
-	atom_break()
-	if(occupier)
-		malfvacate(TRUE)
-	update()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))

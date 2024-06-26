@@ -1,6 +1,7 @@
 ///A special category for mobs captured by pirates, tots and contractors, should someone ever want to get them back in advance.
 /datum/market_item/hostage
 	category = "Hostages"
+	abstract_path = /datum/market_item/hostage
 	stock = 1
 	availability_prob = 100
 	shipping_override = list(SHIPPING_METHOD_LTSRBT = 0, SHIPPING_METHOD_SUPPLYPOD = 350)

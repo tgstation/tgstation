@@ -101,9 +101,8 @@
 	playsound(target_plating, 'sound/weapons/genhit.ogg', 50, TRUE)
 	return target_plating
 
-/obj/item/stack/tile/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
-	if(proximity_flag)
-		target.attackby(src, user, click_parameters)
+/obj/item/stack/tile/handle_openspace_click(turf/target, mob/user, list/modifiers)
+	target.attackby(src, user, list2params(modifiers))
 
 //Grass
 /obj/item/stack/tile/grass

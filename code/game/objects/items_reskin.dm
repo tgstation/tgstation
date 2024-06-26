@@ -11,12 +11,41 @@
 	INVOKE_ASYNC(src, PROC_REF(reskin_obj), user)
 	return CLICK_ACTION_SUCCESS
 
+/**
+ * Checks if we should set up reskinning,
+ * by default if unique_reskin is set.
+ *
+ * Called on setup_reskinning().
+ * Inheritors should override this to add their own checks.
+ */
+/obj/item/proc/check_setup_reskinning()
+	SHOULD_CALL_PARENT(TRUE)
+	if(unique_reskin)
+		return TRUE
+
+	return FALSE
+
+/**
+ * Registers signals and context for reskinning,
+ * if check_setup_reskinning() passes.
+ *
+ * Called on Initialize(...).
+ * Inheritors should override this to add their own setup steps,
+ * or to avoid double calling register_context().
+ */
+/obj/item/proc/setup_reskinning()
+	SHOULD_CALL_PARENT(FALSE)
+	if(!check_setup_reskinning())
+		return
+
+	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
+	register_context()
 
 /**
  * Reskins object based on a user's choice
  *
  * Arguments:
- * * M The mob choosing a reskin option
+ * * user The mob choosing a reskin option
  */
 /obj/item/proc/reskin_obj(mob/user)
 	if(!LAZYLEN(unique_reskin))

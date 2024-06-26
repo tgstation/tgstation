@@ -61,7 +61,6 @@
 	else if(adjacent)
 		try_move_adjacent(tunnel)
 
-	playsound(src,'sound/effects/sparks4.ogg',50,TRUE)
 	qdel(src)
 	return FALSE // used for chasm code
 

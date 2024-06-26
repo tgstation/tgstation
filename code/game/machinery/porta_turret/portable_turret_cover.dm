@@ -82,9 +82,6 @@
 /obj/machinery/porta_turret_cover/attack_hulk(mob/living/carbon/human/user)
 	return parent_turret.attack_hulk(user)
 
-/obj/machinery/porta_turret_cover/can_be_overridden()
-	. = 0
-
 /obj/machinery/porta_turret_cover/emag_act(mob/user, obj/item/card/emag/emag_card)
 
 	if((parent_turret.obj_flags & EMAGGED))

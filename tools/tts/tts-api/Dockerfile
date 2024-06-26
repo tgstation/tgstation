@@ -2,7 +2,7 @@
 FROM debian:bullseye-slim
 
 # install required packages
-RUN apt-get update && apt-get upgrade && apt-get install -y ffmpeg wget curl &&\
+RUN apt-get update && apt-get upgrade -y && apt-get install -y ffmpeg wget curl &&\
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 

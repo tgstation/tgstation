@@ -30,6 +30,13 @@
 	. = ..()
 	register_context()
 
+/obj/item/clothing/accessory/setup_reskinning()
+	if(!check_setup_reskinning())
+		return
+
+	// We already register context regardless in Initialize.
+	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
+
 /**
  * Can we be attached to the passed clothing article?
  */
@@ -158,11 +165,12 @@
 	SIGNAL_HANDLER
 
 	accessory_dropped(source, user)
-	user.update_clothing(ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
+	user.update_clothing(ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK)
 
 /// Called when the uniform this accessory is pinned to is equipped in a valid slot
 /obj/item/clothing/accessory/proc/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	equipped(user, user.get_slot_by_item(clothes)) // so we get any actions, item_flags get set, etc
+	user.update_clothing(ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK)
 	return
 
 /// Called when the uniform this accessory is pinned to is dropped
@@ -203,8 +211,9 @@
 	. += "It can be worn above or below your suit. Right-click to toggle."
 
 /obj/item/clothing/accessory/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(!isnull(held_item))
-		return NONE
+	. = ..()
+	if(held_item != source)
+		return .
 
 	context[SCREENTIP_CONTEXT_RMB] = "Wear [above_suit ? "below" : "above"] suit"
 	return CONTEXTUAL_SCREENTIP_SET

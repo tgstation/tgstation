@@ -1,7 +1,7 @@
 /**
  * Sound Player component
  *
- * Component that will play a sound upon recieving some signal
+ * Component that will play a sound upon receiving some signal
  */
 /datum/component/sound_player
 	///Volume of the sound when played

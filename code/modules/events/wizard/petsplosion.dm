@@ -18,7 +18,6 @@ GLOBAL_LIST_INIT(petsplosion_candidates, typecacheof(list(
 	/mob/living/basic/snake,
 	/mob/living/basic/spider/giant/sgt_araneus,
 	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
-	/mob/living/simple_animal/pet,
 )))
 
 /datum/round_event_control/wizard/petsplosion //the horror

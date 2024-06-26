@@ -22,6 +22,7 @@
 	// Handles our references with our brain
 	brain?.remove_trauma_from_traumas(src)
 	if(owner)
+		log_game("[key_name_and_tag(owner)] has lost the following brain trauma: [type]")
 		on_lose()
 		owner = null
 	return ..()

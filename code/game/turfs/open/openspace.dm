@@ -10,6 +10,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pathing_pass_method = TURF_PATHING_PASS_PROC
 	plane = TRANSPARENT_FLOOR_PLANE
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
@@ -146,9 +147,6 @@
 	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF && rcd_data["[RCD_DESIGN_PATH]"] == /turf/open/floor/plating/rcd)
 		place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
-	return FALSE
-
-/turf/open/openspace/rust_heretic_act()
 	return FALSE
 
 /turf/open/openspace/CanAStarPass(to_dir, datum/can_pass_info/pass_info)

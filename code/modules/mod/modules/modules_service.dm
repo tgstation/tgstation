@@ -13,36 +13,17 @@
 	cooldown_time = 1 SECONDS
 
 /obj/item/mod/module/bikehorn/on_use()
-	. = ..()
-	if(!.)
-		return
 	playsound(src, 'sound/items/bikehorn.ogg', 100, FALSE)
 	drain_power(use_energy_cost)
 
 ///Advanced Balloon Blower - Blows a long balloon.
-/obj/item/mod/module/balloon_advanced
+/obj/item/mod/module/balloon/advanced
 	name = "MOD advanced balloon blower module"
 	desc = "A relatively new piece of technology developed by finest clown engineers to make long balloons and balloon animals \
-	at party-appropriate rate."
-	icon_state = "bloon"
-	module_type = MODULE_USABLE
-	complexity = 1
-	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.5
-	incompatible_modules = list(/obj/item/mod/module/balloon_advanced)
-	cooldown_time = 15 SECONDS
-
-/obj/item/mod/module/balloon_advanced/on_use()
-	. = ..()
-	if(!.)
-		return
-	if(!do_after(mod.wearer, 15 SECONDS, target = mod))
-		return FALSE
-	mod.wearer.adjustOxyLoss(20)
-	playsound(src, 'sound/items/modsuit/inflate_bloon.ogg', 50, TRUE)
-	var/obj/item/toy/balloon/long/l_balloon = new(get_turf(src))
-	mod.wearer.put_in_hands(l_balloon)
-	drain_power(use_energy_cost)
-
+		at party-appropriate rate."
+	cooldown_time = 20 SECONDS
+	balloon_path = /obj/item/toy/balloon/long
+	blowing_time = 15 SECONDS
 
 ///Microwave Beam - Microwaves items instantly.
 /obj/item/mod/module/microwave_beam
@@ -56,6 +37,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/microwave_beam, /obj/item/mod/module/organ_thrower)
 	cooldown_time = 10 SECONDS
+	required_slots = list(ITEM_SLOT_GLOVES)
 
 /obj/item/mod/module/microwave_beam/on_select_use(atom/target)
 	. = ..()
@@ -84,7 +66,7 @@
 /obj/item/mod/module/waddle
 	name = "MOD waddle module"
 	desc = "Some of the most primitive technology in use by Honk Co. This module works off an automatic intention system, \
-		utilizing its' sensitivity to the pilot's often-limited brainwaves to directly read their next step, \
+		utilizing its sensitivity to the pilot's often-limited brainwaves to directly read their next step, \
 		affecting the boots they're installed in. Employing a twin-linked gravitonic drive to create \
 		miniaturized etheric blasts of space-time beneath the user's feet, this enables them to... \
 		to waddle around, bouncing to and fro with a pep in their step."
@@ -92,16 +74,20 @@
 	complexity = 1
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/waddle)
+	required_slots = list(ITEM_SLOT_FEET)
 
 /obj/item/mod/module/waddle/on_suit_activation()
-	mod.boots.AddComponent(/datum/component/squeak, list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
+	var/obj/item/shoes = mod.get_part_from_slot(ITEM_SLOT_FEET)
+	if(shoes)
+		shoes.AddComponent(/datum/component/squeak, list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
 	mod.wearer.AddElementTrait(TRAIT_WADDLING, MOD_TRAIT, /datum/element/waddling)
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		mod.wearer.add_mood_event("clownshoes", /datum/mood_event/clownshoes)
 
 /obj/item/mod/module/waddle/on_suit_deactivation(deleting = FALSE)
-	if(!deleting)
-		qdel(mod.boots.GetComponent(/datum/component/squeak))
+	var/obj/item/shoes = mod.get_part_from_slot(ITEM_SLOT_FEET)
+	if(shoes && !deleting)
+		qdel(shoes.GetComponent(/datum/component/squeak))
 	REMOVE_TRAIT(mod.wearer, TRAIT_WADDLING, MOD_TRAIT)
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		mod.wearer.clear_mood_event("clownshoes")

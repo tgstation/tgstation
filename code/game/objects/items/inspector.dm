@@ -17,6 +17,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
+	interaction_flags_click = NEED_DEXTERITY
 	throw_range = 1
 	throw_speed = 1
 	///How long it takes to print on time each mode, ordered NORMAL, FAST, HONK
@@ -26,7 +27,7 @@
 	///determines the sound that plays when printing a report
 	var/print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_NORMAL
 	///Power cell used to power the scanner. Paths g
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/crap
+	var/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/crap
 	///Cell cover status
 	var/cell_cover_open = FALSE
 	///Energy used per print.
@@ -61,7 +62,7 @@
 	return TRUE
 
 /obj/item/inspector/attackby(obj/item/I, mob/user, params)
-	if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
+	if(cell_cover_open && istype(I, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell installed."))
 			return
@@ -71,14 +72,15 @@
 			return
 	return ..()
 
-/obj/item/inspector/CtrlClick(mob/living/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY) || !cell_cover_open || !cell)
-		return ..()
+/obj/item/inspector/item_ctrl_click(mob/user)
+	if(!cell_cover_open || !cell)
+		return CLICK_ACTION_BLOCKING
 	user.visible_message(span_notice("[user] removes \the [cell] from [src]!"), \
 		span_notice("You remove [cell]."))
 	cell.add_fingerprint(user)
 	user.put_in_hands(cell)
 	cell = null
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/inspector/examine(mob/user)
 	. = ..()

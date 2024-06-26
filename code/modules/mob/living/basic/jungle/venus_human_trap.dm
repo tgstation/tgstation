@@ -216,15 +216,19 @@
 	QDEL_LIST(vines)
 	return ..()
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle/Activate(atom/target_atom)
-	if(isturf(target_atom) || istype(target_atom, /obj/structure/spacevine))
+/datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle/Activate(atom/movable/target_atom)
+	if(!ismovable(target_atom) || istype(target_atom, /obj/structure/spacevine))
+		return
+	if(target_atom.anchored)
+		owner.balloon_alert(owner, "can't pull!")
 		return
 	if(get_dist(owner, target_atom) > vine_grab_distance)
 		owner.balloon_alert(owner, "too far!")
 		return
-	for(var/turf/blockage in get_line(owner, target_atom))
+	var/list/target_turfs = get_line(owner, target_atom) - list(get_turf(owner), get_turf(target_atom))
+	for(var/turf/blockage in target_turfs)
 		if(blockage.is_blocked_turf(exclude_mobs = TRUE))
-			owner.balloon_alert(owner, "something's in the way!")
+			owner.balloon_alert(owner, "path blocked!")
 			return
 
 	var/datum/beam/new_vine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration * (ismob(target_atom) ? 1 : 2), beam_type = /obj/effect/ebeam/vine, emissive = FALSE)

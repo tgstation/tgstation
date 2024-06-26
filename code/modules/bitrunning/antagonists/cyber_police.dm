@@ -9,11 +9,10 @@
 		stack_trace("humans only for this position")
 		return
 
-	var/mob/living/player = owner.current
-	convert_agent(player, /datum/outfit/cyber_police)
+	convert_agent()
 
 	var/datum/martial_art/the_sleeping_carp/carp = new()
-	carp.teach(player)
+	carp.teach(owner.current)
 
 /datum/outfit/cyber_police
 	name = ROLE_CYBER_POLICE

@@ -244,10 +244,13 @@
 
 /datum/fishing_challenge/proc/start(mob/living/user)
 	/// Create fishing line visuals
-	fishing_line = used_rod.create_fishing_line(lure, target_py = 5)
+	if(used_rod.display_fishing_line)
+		fishing_line = used_rod.create_fishing_line(lure, target_py = 5)
+		RegisterSignal(fishing_line, COMSIG_QDELETING, PROC_REF(on_line_deleted))
+	else //if the rod doesnt have a fishing line, then it ends when they move away
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_user_move))
 	active_effects = bitfield_to_list(special_effects & FISHING_MINIGAME_ACTIVE_EFFECTS)
 	// If fishing line breaks los / rod gets dropped / deleted
-	RegisterSignal(fishing_line, COMSIG_QDELETING, PROC_REF(on_line_deleted))
 	RegisterSignal(used_rod, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
 	ADD_TRAIT(user, TRAIT_GONE_FISHING, REF(src))
 	user.add_mood_event("fishing", /datum/mood_event/fishing)
@@ -263,10 +266,18 @@
 	user.balloon_alert(user, user.is_holding(used_rod) ? "line snapped" : "rod dropped")
 	interrupt()
 
+/datum/fishing_challenge/proc/on_user_move(datum/source)
+	SIGNAL_HANDLER
+
+	user.balloon_alert(user, "too far!")
+	interrupt()
+
 /datum/fishing_challenge/proc/handle_click(mob/source, atom/target, modifiers)
 	SIGNAL_HANDLER
 	//You need to be holding the rod to use it.
-	if(!source.get_active_held_item(used_rod) || LAZYACCESS(modifiers, SHIFT_CLICK) || LAZYACCESS(modifiers, CTRL_CLICK) || LAZYACCESS(modifiers, ALT_CLICK))
+	if(LAZYACCESS(modifiers, SHIFT_CLICK) || LAZYACCESS(modifiers, CTRL_CLICK) || LAZYACCESS(modifiers, ALT_CLICK))
+		return
+	if(!source.get_active_held_item(used_rod) && !HAS_TRAIT(source, TRAIT_PROFOUND_FISHER))
 		return
 	if(phase == WAIT_PHASE) //Reset wait
 		send_alert("miss!")
@@ -644,8 +655,12 @@
 	hud_completion = new(null, null, challenge)
 	vis_contents += list(hud_bait, hud_fish, hud_completion)
 	challenge.user.client.screen += src
+	master_ref = WEAKREF(challenge)
 
 /atom/movable/screen/fishing_hud/Destroy()
+	var/datum/fishing_challenge/challenge = master_ref?.resolve()
+	if(!isnull(challenge))
+		challenge.user.client.screen -= src
 	QDEL_NULL(hud_fish)
 	QDEL_NULL(hud_bait)
 	QDEL_NULL(hud_completion)
@@ -699,6 +714,8 @@
 		RegisterSignal(spot, COMSIG_MOVABLE_MOVED, PROC_REF(follow_movable))
 
 /obj/effect/fishing_lure/proc/follow_movable(atom/movable/source)
+	SIGNAL_HANDLER
+
 	set_glide_size(source.glide_size)
 	forceMove(source.loc)
 

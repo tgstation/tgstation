@@ -62,7 +62,7 @@
 /obj/machinery/power/multitool_act_secondary(mob/living/user, obj/item/tool)
 	return multitool_act(user, tool)
 
-/// Called on multitool_act when we can change cable layers, override to add more conditions 
+/// Called on multitool_act when we can change cable layers, override to add more conditions
 /obj/machinery/power/proc/cable_layer_act(mob/living/user, obj/item/tool)
 	var/choice = tgui_input_list(user, "Select Power Line For Operation", "Select Cable Layer", GLOB.cable_name_to_layer)
 	if(isnull(choice) || QDELETED(src) || QDELETED(user) || QDELETED(tool) || !user.Adjacent(src) || !user.is_holding(tool))
@@ -117,8 +117,6 @@
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel
 /obj/machinery/proc/powered(chan = power_channel, ignore_use_power = FALSE)
-	if(!loc)
-		return FALSE
 	if(!use_power && !ignore_use_power)
 		return TRUE
 
@@ -176,7 +174,7 @@
 	var/surplus = local_apc.surplus()
 	var/grid_used = min(surplus, amount)
 	var/apc_used = 0
-	if((amount > grid_used) && !ignore_apc) // Use from the APC's cell if there isn't enough energy from the grid.
+	if((amount > grid_used) && !ignore_apc && !QDELETED(local_apc.cell)) // Use from the APC's cell if there isn't enough energy from the grid.
 		apc_used = local_apc.cell.use(amount - grid_used, force = force)
 
 	if(!force && (amount < grid_used + apc_used)) // If we aren't forcing it and there isn't enough energy to supply demand, return nothing.
@@ -204,7 +202,7 @@
 		return amount
 
 	var/obj/machinery/power/apc/my_apc = my_area.apc
-	if(isnull(my_apc))
+	if(isnull(my_apc) || QDELETED(my_apc.cell))
 		return FALSE
 	return my_apc.cell.use(amount, force = force)
 
@@ -251,7 +249,7 @@
  * - channel: The power channel to use.
  * Returns: The amount of energy the cell received.
  */
-/obj/machinery/proc/charge_cell(amount, obj/item/stock_parts/cell/cell, grid_only = FALSE, channel = AREA_USAGE_EQUIP)
+/obj/machinery/proc/charge_cell(amount, obj/item/stock_parts/power_store/cell, grid_only = FALSE, channel = AREA_USAGE_EQUIP)
 	var/demand = use_energy(min(amount, cell.used_charge()), channel = channel, ignore_apc = grid_only)
 	var/power_given = cell.give(demand)
 	return power_given
@@ -451,11 +449,11 @@
 		power_source = Cable.powernet
 
 	var/datum/powernet/PN
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 
 	if (istype(power_source, /datum/powernet))
 		PN = power_source
-	else if (istype(power_source, /obj/item/stock_parts/cell))
+	else if (istype(power_source, /obj/item/stock_parts/power_store))
 		cell = power_source
 	else if (istype(power_source, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/apc = power_source
@@ -494,7 +492,7 @@
 		return FALSE
 
 	var/datum/powernet/PN = powernet_info["powernet"]
-	var/obj/item/stock_parts/cell/cell = powernet_info["cell"]
+	var/obj/item/stock_parts/power_store/cell = powernet_info["cell"]
 
 	var/PN_damage = 0
 	var/cell_damage = 0
@@ -519,7 +517,7 @@
 		source_area.apc?.terminal?.use_energy(drained_energy)
 	else if (istype(power_source, /datum/powernet))
 		PN.delayedload += (min(drained_energy, max(PN.newavail - PN.delayedload, 0)))
-	else if (istype(power_source, /obj/item/stock_parts/cell))
+	else if (istype(power_source, /obj/item/stock_parts/power_store))
 		cell.use(drained_energy)
 	return drained_energy
 

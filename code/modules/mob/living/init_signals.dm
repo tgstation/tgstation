@@ -87,7 +87,7 @@
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, TRAIT_DEATHCOMA)
 
-/// Updates medhud when recieving relevant signals.
+/// Updates medhud when receiving relevant signals.
 /mob/living/proc/update_medhud_on_signal(datum/source)
 	SIGNAL_HANDLER
 	med_hud_set_health()

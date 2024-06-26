@@ -1,10 +1,3 @@
-// Skillchip categories
-//Various skillchip categories. Use these when setting which categories a skillchip restricts being paired with
-//while using the SKILLCHIP_RESTRICTED_CATEGORIES flag
-/// General related skillchip category
-#define SKILLCHIP_CATEGORY_GENERAL "general"
-
-
 /obj/item/skillchip
 	name = "skillchip"
 	desc = "This biochip integrates with user's brain to enable mastery of specific skill. Consult certified Nanotrasen neurosurgeon before use."
@@ -531,5 +524,3 @@
 	ADD_TRAIT(source, TRAIT_UNHITTABLE_BY_PROJECTILES, SKILLCHIP_TRAIT)
 	source.adjustStaminaLoss(20)
 	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_UNHITTABLE_BY_PROJECTILES, SKILLCHIP_TRAIT), FLIP_EMOTE_DURATION + 0.1 SECONDS)
-
-#undef SKILLCHIP_CATEGORY_GENERAL

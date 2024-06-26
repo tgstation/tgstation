@@ -33,13 +33,14 @@
 	var/need_mob_update = FALSE
 	switch(affected_mob.stat)
 		if(CONSCIOUS) //bad
-			thou_shall_heal = death_is_coming/50
+			thou_shall_heal = max(death_is_coming/20, 3)
 			need_mob_update += affected_mob.adjustOxyLoss(2 * REM * seconds_per_tick, TRUE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		if(SOFT_CRIT) //meh convert
-			thou_shall_heal = round(death_is_coming/47,0.1)
+			thou_shall_heal = round(death_is_coming/13,0.1)
 			need_mob_update += affected_mob.adjustOxyLoss(1 * REM * seconds_per_tick, TRUE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+			good_kind_of_healing = TRUE
 		else //no convert
-			thou_shall_heal = round(death_is_coming/45, 0.1)
+			thou_shall_heal = round(death_is_coming/10, 0.1)
 			good_kind_of_healing = TRUE
 	need_mob_update += affected_mob.adjustBruteLoss(-thou_shall_heal * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	if(need_mob_update)
@@ -91,6 +92,12 @@
 	if(helbent)
 		affected_mob.remove_status_effect(/datum/status_effect/necropolis_curse)
 
+/datum/reagent/medicine/c2/helbital/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	if(current_cycle >= 50) //greater than 10u in the system
+		affected_mob.AddComponent(/datum/component/omen, incidents_left = min(round(current_cycle/51), 3)) //no more than 3 bad incidents for dropping more than 10u
+		to_chat(affected_mob, span_hierophant_warning("You feel a sense of heavy dread and grave misfortune settle in as the substance leaves your body."))
+
 /datum/reagent/medicine/c2/libital //messes with your liber
 	name = "Libital"
 	description = "A bruise reliever. Does minor liver damage."
@@ -124,7 +131,7 @@
 /datum/reagent/medicine/c2/probital/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustBruteLoss(-2.25 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update = affected_mob.adjustBruteLoss(-3 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	var/ooo_youaregettingsleepy = 3.5
 	switch(round(affected_mob.getStaminaLoss()))
 		if(10 to 40)
@@ -177,7 +184,7 @@
 /datum/reagent/medicine/c2/lenturi/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustFireLoss(-3 * REM * normalise_creation_purity() * seconds_per_tick, required_bodytype = affected_bodytype)
+	need_mob_update = affected_mob.adjustFireLoss(-3.75 * REM * normalise_creation_purity() * seconds_per_tick, required_bodytype = affected_bodytype)
 	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.4 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -218,9 +225,9 @@
 	. = ..()
 	var/need_mob_update
 	if(affected_mob.getFireLoss() > 50)
-		need_mob_update = affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update = affected_mob.adjustFireLoss(-3 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
 	else
-		need_mob_update = affected_mob.adjustFireLoss(-1.25 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update = affected_mob.adjustFireLoss(-2.25 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjust_bodytemperature(rand(-25,-5) * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 50)
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/humi = affected_mob
@@ -289,7 +296,7 @@
 	color = "#FF6464"
 	ph = 5.6
 	inverse_chem = /datum/reagent/inverse/healing/tirimol
-	inverse_chem_val = 0.4
+	inverse_chem_val = 0.25
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 	/// A cooldown for spacing bursts of stamina damage
@@ -298,7 +305,7 @@
 /datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustOxyLoss(-3 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update = affected_mob.adjustOxyLoss(-4.5 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	need_mob_update += affected_mob.adjustStaminaLoss(2 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	if(drowsycd && COOLDOWN_FINISHED(src, drowsycd))
 		affected_mob.adjust_drowsiness(20 SECONDS)
@@ -386,6 +393,8 @@
 		if(the_reagent2 == src)
 			continue
 		var/amount2purge = 3
+		if(holder.has_reagent(/datum/reagent/toxin/anacea))
+			amount2purge = 0
 		if(medibonus >= 3 && istype(the_reagent2, /datum/reagent/medicine)) //3 unique meds (2+multiver) | (1 + pure multiver) will make it not purge medicines
 			continue
 		affected_mob.reagents.remove_reagent(the_reagent2.type, amount2purge * REM * seconds_per_tick)
@@ -413,8 +422,8 @@
 	if(!(methods & INJECT) || !iscarbon(A))
 		return
 	var/mob/living/carbon/C = A
-	if(trans_volume >= 0.6) //prevents cheesing with ultralow doses.
-		C.adjustToxLoss((-1.5 * min(2, trans_volume) * REM) * normalise_creation_purity(), required_biotype = affected_biotype) //This is to promote iv pole use for that chemotherapy feel.
+	if(trans_volume >= 0.4) //prevents cheesing with ultralow doses.
+		C.adjustToxLoss((-3 * min(2, trans_volume) * REM) * normalise_creation_purity(), required_biotype = affected_biotype) //This is to promote iv pole use for that chemotherapy feel.
 	var/obj/item/organ/internal/liver/L = C.organs_slot[ORGAN_SLOT_LIVER]
 	if(!L || L.organ_flags & ORGAN_FAILING)
 		return
@@ -427,7 +436,7 @@
 	. = ..()
 	var/need_mob_update
 	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.8 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
-	need_mob_update += affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update += affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	for(var/datum/reagent/R in affected_mob.reagents.reagent_list)
 		if(issyrinormusc(R))
 			continue
@@ -458,7 +467,7 @@
 	. = ..()
 	var/need_mob_update
 	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
-	need_mob_update += affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update += affected_mob.adjustToxLoss(-1.5 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype)
 	for(var/datum/reagent/R in affected_mob.reagents.reagent_list)
 		if(issyrinormusc(R))
 			continue

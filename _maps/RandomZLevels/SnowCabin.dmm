@@ -1147,7 +1147,7 @@
 /turf/open/indestructible/binary{
 	density = 1;
 	desc = "No, I am not going through this.";
-	icon = 'icons/misc/beach.dmi';
+	icon = 'icons/obj/fluff/beach.dmi';
 	icon_state = "water";
 	name = "dirty water"
 	},
@@ -3392,7 +3392,8 @@
 /area/awaymission/cabin/caves)
 "wq" = (
 /obj/machinery/recycler/lumbermill{
-	desc = "Is better at killing people than cutting logs, for some reason."
+	desc = "Is better at killing people than cutting logs, for some reason.";
+	dir = 8
 	},
 /obj/machinery/conveyor{
 	dir = 4;

@@ -164,7 +164,7 @@
 	user.visible_message(span_notice("[user.name] places \the [I] into \the [src]."), span_notice("You place \the [I] into \the [src]."))
 
 /// Mouse drop another mob or self
-/obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)
+/obj/machinery/disposal/mouse_drop_receive(mob/living/target, mob/living/user, params)
 	if(istype(target))
 		stuff_mob_in(target, user)
 
@@ -241,7 +241,7 @@
 	flushing = TRUE
 	flushAnimation()
 	sleep(1 SECONDS)
-	if(last_sound < world.time + 1)
+	if(last_sound < world.time - 1) //Prevents piles of items from playing a dozen sounds at once
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, FALSE)
 		last_sound = world.time
 	sleep(0.5 SECONDS)

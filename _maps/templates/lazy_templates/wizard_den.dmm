@@ -536,7 +536,7 @@
 /turf/open/floor/iron,
 /area/centcom/wizard_station)
 "AW" = (
-/mob/living/simple_animal/pet/gondola{
+/mob/living/basic/pet/gondola{
 	name = "Jommy";
 	faction = list("gondola", "Wizard")
 	},

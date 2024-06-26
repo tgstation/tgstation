@@ -68,7 +68,7 @@
 /obj/item/photo/attackby(obj/item/P, mob/user, params)
 	if(burn_paper_product_attackby_check(P, user))
 		return
-	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
+	if(IS_WRITING_UTENSIL(P))
 		if(!user.can_write(P))
 			return
 		var/txt = tgui_input_text(user, "What would you like to write on the back?", "Photo Writing", max_length = 128)

@@ -11,6 +11,8 @@
 	max_integrity = 300
 	obj_flags = BLOCKS_CONSTRUCTION
 	state_open = TRUE
+	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
+
 	/// Whether we have an ongoing connection
 	var/connected = FALSE
 	/// A player selected outfit by clicking the netpod
@@ -50,16 +52,24 @@
 		. += span_infoplain("Netpods must be built within 4 tiles of a server.")
 		return
 
-	. += span_infoplain("Drag yourself into the pod to engage the link.")
-	. += span_infoplain("It has limited resuscitation capabilities. Remaining in the pod can heal some injuries.")
-	. += span_infoplain("It has a security system that will alert the occupant if it is tampered with.")
+	if(!isobserver(user))
+		. += span_infoplain("Drag yourself into the pod to engage the link.")
+		. += span_infoplain("It has limited resuscitation capabilities. Remaining in the pod can heal some injuries.")
+		. += span_infoplain("It has a security system that will alert the occupant if it is tampered with.")
 
 	if(isnull(occupant))
-		. += span_notice("It is currently unoccupied.")
+		. += span_infoplain("It's currently unoccupied.")
 		return
 
-	. += span_notice("It is currently occupied by [occupant].")
+	. += span_infoplain("It's currently occupied by [occupant].")
+
+	if(isobserver(user))
+		. += span_notice("As an observer, you can click this netpod to jump to its avatar.")
+		return
+
 	. += span_notice("It can be pried open with a crowbar, but its safety mechanisms will alert the occupant.")
+
+
 
 /obj/machinery/netpod/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -72,7 +82,6 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Pry Open"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/netpod/update_icon_state()
 	if(!is_operational)
@@ -93,12 +102,10 @@
 
 	return ..()
 
-/obj/machinery/netpod/MouseDrop_T(mob/target, mob/user)
+/obj/machinery/netpod/mouse_drop_receive(mob/target, mob/user, params)
 	var/mob/living/carbon/player = user
-	if(!iscarbon(player) || !Adjacent(player) || !ISADVANCEDTOOLUSER(player) || !is_operational || !state_open)
-		return
 
-	if(player.buckled || HAS_TRAIT(player, TRAIT_HANDS_BLOCKED))
+	if(!iscarbon(player) || !is_operational || !state_open || player.buckled)
 		return
 
 	close_machine(target)
@@ -263,7 +270,7 @@
 		open_machine()
 		return
 
-	mob_occupant.playsound_local(src, "sound/magic/blink.ogg", 25, TRUE)
+	mob_occupant.playsound_local(src, 'sound/magic/blink.ogg', 25, TRUE)
 	mob_occupant.set_static_vision(2 SECONDS)
 	mob_occupant.set_temp_blindness(1 SECONDS)
 	mob_occupant.Paralyze(2 SECONDS)

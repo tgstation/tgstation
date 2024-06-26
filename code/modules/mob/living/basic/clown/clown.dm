@@ -88,7 +88,7 @@
 
 /mob/living/basic/clown/lube/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/snailcrawl)
+	AddElement(/datum/element/lube_walking)
 
 /mob/living/basic/clown/honkling
 	name = "Honkling"

@@ -51,9 +51,12 @@
 		is_ready = TRUE
 		return FALSE
 
+	SSblackbox.record_feedback("tally", "bitrunning_domain_loaded", 1, map_key)
+
 	is_ready = TRUE
 
-	if(prob(clamp((threat * glitch_chance), 1, 10)))
+	var/spawn_chance = clamp((threat * glitch_chance), 5, threat_prob_max)
+	if(prob(spawn_chance))
 		setup_glitch()
 
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, vary = TRUE)

@@ -25,6 +25,9 @@
 	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOVABLE_PRE_MOVE))
 	REMOVE_TRAIT(organ_owner, TRAIT_FREE_FLOAT_MOVEMENT, REF(src))
 
+/obj/item/organ/external/wings/moth/make_flap_sound(mob/living/carbon/wing_owner)
+	playsound(wing_owner, 'sound/voice/moth/moth_flutter.ogg', 50, TRUE)
+
 /obj/item/organ/external/wings/moth/can_soften_fall()
 	return !burnt
 

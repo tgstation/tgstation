@@ -313,7 +313,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	name = "Aggressive"
 	inheritability = 80
 	diff_traits_inheritability = 40
-	catalog_description = "This fish is agressively territorial, and may attack fish that come close to it."
+	catalog_description = "This fish is aggressively territorial, and may attack fish that come close to it."
 
 /datum/fish_trait/aggressive/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(try_attack_fish))
@@ -364,7 +364,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	catalog_description = "This fish is capable of substaining itself by producing its own sources of energy (food)."
 	incompatible_traits = list(/datum/fish_trait/predator, /datum/fish_trait/necrophage)
 
-/datum/fish_trait/antigrav/apply_to_fish(obj/item/fish/fish)
+/datum/fish_trait/mixotroph/apply_to_fish(obj/item/fish/fish)
 	ADD_TRAIT(fish, TRAIT_FISH_NO_HUNGER, FISH_TRAIT_DATUM)
 
 /datum/fish_trait/antigrav
@@ -379,3 +379,53 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/antigrav/apply_to_fish(obj/item/fish/fish)
 	fish.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
+
+///Anxiety means the fish will die if in a location with more than 3 fish (including itself)
+///This is just barely enough to crossbreed out of anxiety, but it severely limits the potential of
+/datum/fish_trait/anxiety
+	name = "Anxiety"
+	inheritability = 100
+	diff_traits_inheritability = 70
+	catalog_description = "This fish tends to die of stress when forced to be around too many other fish."
+
+/datum/fish_trait/anxiety/apply_to_fish(obj/item/fish/fish)
+	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(on_fish_life))
+
+///signal sent when the anxiety fish is fed, killing it if sharing contents with too many fish.
+/datum/fish_trait/anxiety/proc/on_fish_life(obj/item/fish/fish, seconds_per_tick)
+	SIGNAL_HANDLER
+	var/fish_tolerance = 3
+	if(!fish.loc || fish.status == FISH_DEAD)
+		return
+	for(var/obj/item/fish/other_fish in fish.loc.contents)
+		if(fish_tolerance <= 0)
+			fish.loc.visible_message(span_warning("[fish] seems to freak out for a moment, then it stops moving..."))
+			fish.set_status(FISH_DEAD)
+			return
+		fish_tolerance -= 1
+
+/datum/fish_trait/electrogenesis
+	name = "Electrogenesis"
+	inheritability = 60
+	diff_traits_inheritability = 30
+	catalog_description = "This fish is electroreceptive, and will generate electric fields. Can be harnessed inside a bioelectric generator."
+
+/datum/fish_trait/electrogenesis/apply_to_fish(obj/item/fish/fish)
+	ADD_TRAIT(fish, TRAIT_FISH_ELECTROGENESIS, FISH_TRAIT_DATUM)
+	RegisterSignal(fish, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
+
+/datum/fish_trait/electrogenesis/proc/on_item_attack(obj/item/fish/fish, mob/living/target, mob/living/user)
+	SIGNAL_HANDLER
+
+	if(fish.status == FISH_ALIVE)
+		fish.force = 16
+		fish.damtype = BURN
+		fish.attack_verb_continuous = list("shocks", "zaps")
+		fish.attack_verb_simple = list("shock", "zap")
+		fish.hitsound = 'sound/effects/sparks4.ogg'
+	else
+		fish.force = fish::force
+		fish.damtype = fish::damtype
+		fish.attack_verb_continuous = fish::attack_verb_continuous
+		fish.attack_verb_simple = fish::attack_verb_simple
+		fish.hitsound = fish::hitsound
