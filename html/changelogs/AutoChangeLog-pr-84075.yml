@@ -1,4 +1,0 @@
-author: "GoblinBackwards"
-delete-after: True
-changes:
-  - bugfix: "Interacting with an assembly bomb in hand will now allow you to interact with the attached assembly instead of opening the gas tank UI. Right-clicking will display the gas tank UI instead."

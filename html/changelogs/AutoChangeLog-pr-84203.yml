@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "alt click runtime no more when using style meter"
-  - code_imp: "improved alt & ctrl click code"
