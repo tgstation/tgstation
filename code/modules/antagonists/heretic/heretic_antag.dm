@@ -192,6 +192,9 @@
 		if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
 			knowledge_data["disabled"] = !can_ascend()
 
+		while(knowledge.depth > tiers.len)
+			tiers += list(list("nodes"=list()))
+
 		tiers[initial(knowledge.depth)]["nodes"] += list(knowledge_data)
 
 	data["knowledge_tiers"] = tiers
