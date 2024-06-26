@@ -29,6 +29,7 @@
 
 #define COMPANY_REMOVED "It has had <b>[span_grey("all identifying marks scrubbed off")].</b>"
 
+#define COMPANY_ASHENFORGE "It has a <b>[span_green("unlit forge")]</b> engraved into it along with the words <b>[span_grey("The Ashen Forge")] below it."
 
 #define span_emote(str) ("<span class='emote'>" + str + "</span>")
 #define span_maptext(str) ("<span class='maptext'>" + str + "</span>")

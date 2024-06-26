@@ -111,5 +111,13 @@
         "roundend_report": "was a terrorist from Waffle Corporation.",
         "ui_theme": "syndicate",
         "uplink": "You have been provided with a standard uplink to accomplish your task."
+    },
+	"The Ashen Forge Member": {
+        "allies": "The Forge trusts all who are willing to work... but the second a fraction of hostility is up all ties are cut and betrayal is expected.",
+        "goal": "The Boss still hasn't forgiven Nanotrasen, give 'em hell and show them what we are capable of...",
+        "introduction": "You are the Ashen Forge Member.",
+        "roundend_report": "was a Member of The Ashen Forge.",
+        "ui_theme": "syndicate",
+        "uplink": "You have been provided with a standard uplink to accomplish your task."
     }
 }
