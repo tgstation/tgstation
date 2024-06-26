@@ -138,7 +138,13 @@
 			icon_path = achievement.icon
 			icon_state = achievement.icon_state
 
-	return list("icon"=icon_path,"state"=icon_state,"frame"=icon_frame,"dir"=icon_dir,"moving"=icon_moving)
+	var/list/result_parameters = list()
+	result_parameters["icon"] = icon_path
+	result_parameters["state"] = icon_state
+	result_parameters["frame"] = icon_frame
+	result_parameters["dir"] = icon_dir
+	result_parameters["moving"] = icon_moving
+	return result_parameters
 
 /datum/antagonist/heretic/ui_data(mob/user)
 	var/list/data = list()
