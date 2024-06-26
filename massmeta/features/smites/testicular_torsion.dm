@@ -9,8 +9,10 @@
 		return
 
 	var/mob/living/carbon/carbon_target = target
-	carbon_target.apply_damage(rand(25, 40), BRUTE, BODY_ZONE_L_LEG, wound_bonus = rand(50,75), forced = TRUE)
-	carbon_target.apply_damage(rand(25, 40), BRUTE, BODY_ZONE_R_LEG, wound_bonus = rand(50,75), forced = TRUE)
+	carbon_target.apply_damage(rand(25, 40), BRUTE, BODY_ZONE_L_LEG, wound_bonus = rand(35,60), forced = TRUE)
+	carbon_target.apply_damage(rand(25, 40), BRUTE, BODY_ZONE_R_LEG, wound_bonus = rand(35,60), forced = TRUE)
+	carbon_target.emote("scream")
+	carbon_target.say("MY BALLZ!!!")
 	carbon_target.Paralyze(15 SECONDS)
 
 	playsound(target, 'massmeta/sounds/smites/testicular_torsion.ogg', 60)
