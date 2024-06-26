@@ -257,7 +257,7 @@ const KnowledgeTree = (props) => {
                         m="8px"
                       >
                         <Box
-                          className={classes([(node.ascension ? 'heretic_knowledge76x76' : 'heretic_knowledge32x32'), node.icon_id])}
+                          className={classes([(node.ascension ? 'heretic_knowledge128x128' : 'heretic_knowledge64x64'), node.icon_id])}
                           height={node.ascension?"128px":"64px"}
                           width={node.ascension?"128px":"64px"}
                           position="absolute"
