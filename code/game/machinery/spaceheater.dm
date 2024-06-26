@@ -2,7 +2,7 @@
 #define HEATER_MODE_HEAT "heat"
 #define HEATER_MODE_COOL "cool"
 #define HEATER_MODE_AUTO "auto"
-#define BASE_HEATING_ENERGY (STANDARD_CELL_CHARGE * 0.1)
+#define BASE_HEATING_ENERGY (STANDARD_CELL_RATE * 0.1)
 
 /obj/machinery/space_heater
 	anchored = FALSE
