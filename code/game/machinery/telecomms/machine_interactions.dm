@@ -254,7 +254,7 @@
 	var/obj/item/held_item = user.get_active_held_item()
 	if(QDELETED(held_item))
 		return
-	held_item = held_item.get_proxy_for(src, user) //for borgs omni tool
+	held_item = held_item.get_proxy_attacker_for(src, user) //for borgs omni tool
 	if(held_item.tool_behaviour != TOOL_MULTITOOL)
 		return
 

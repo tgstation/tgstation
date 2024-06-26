@@ -200,7 +200,7 @@
 		. += initial(tool.tool_behaviour)
 
 ///The omnitool interacts with real world objects based on the state it has assumed
-/obj/item/borg/cyborg_omnitool/get_proxy_for(atom/target, mob/user)
+/obj/item/borg/cyborg_omnitool/get_proxy_attacker_for(atom/target, mob/user)
 	if(!reference)
 		return src
 
@@ -262,8 +262,7 @@
 	name = "surgical omni-toolset"
 	desc = "A set of surgical tools used by cyborgs to operate on various surgical operations."
 
-	///Cached list of tools for the medical toolkit
-	var/static/list/omni_medical_toolbox = list(
+	omni_toolkit = list(
 		/obj/item/surgical_drapes/cyborg,
 		/obj/item/scalpel/cyborg,
 		/obj/item/surgicaldrill/cyborg,
@@ -274,11 +273,6 @@
 		/obj/item/bonesetter/cyborg,
 	)
 
-/obj/item/borg/cyborg_omnitool/medical/Initialize(mapload)
-	omni_toolkit = omni_medical_toolbox
-
-	return ..()
-
 //Toolset for engineering cyborgs, this is all of the tools except for the welding tool. since it's quite hard to implement (read:can't be arsed to)
 /obj/item/borg/cyborg_omnitool/engineering
 	name = "engineering omni-toolset"
@@ -286,19 +280,13 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg"
 
-	///Cached list of tools for the engineering toolkit
-	var/static/list/omni_engineering_toolbox = list(
+	omni_toolkit = list(
 		/obj/item/wrench/cyborg,
 		/obj/item/wirecutters/cyborg,
 		/obj/item/screwdriver/cyborg,
 		/obj/item/crowbar/cyborg,
 		/obj/item/multitool/cyborg,
 	)
-
-/obj/item/borg/cyborg_omnitool/engineering/Initialize(mapload)
-	omni_toolkit = omni_engineering_toolbox
-
-	return ..()
 
 #undef PKBORG_DAMPEN_CYCLE_DELAY
 #undef POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER
