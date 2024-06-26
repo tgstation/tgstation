@@ -970,14 +970,14 @@ DEFINE_BITFIELD(turret_flags, list(
 		. += {"[span_notice("Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.")]
 					[span_notice("Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].")]"}
 
-/obj/machinery/turretid/multitool_act(mob/living/user, obj/item/multitool/M)
+/obj/machinery/turretid/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = NONE
 	if(machine_stat & BROKEN)
 		return
 
-	if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
-		turrets |= WEAKREF(M.buffer)
-		to_chat(user, span_notice("You link \the [M.buffer] with \the [src]."))
+	if(multi_tool.buffer && istype(multi_tool.buffer, /obj/machinery/porta_turret))
+		turrets |= WEAKREF(multi_tool.buffer)
+		to_chat(user, span_notice("You link \the [multi_tool.buffer] with \the [src]."))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/turretid/attackby(obj/item/attacking_item, mob/user, params)

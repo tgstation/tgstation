@@ -36,12 +36,12 @@
 /obj/machinery/porta_turret_cover/attack_ghost(mob/user)
 	return ..() || parent_turret.attack_ghost(user)
 
-/obj/machinery/porta_turret_cover/multitool_act(mob/living/user, obj/item/multitool/M)
+/obj/machinery/porta_turret_cover/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = NONE
 	if(parent_turret.locked)
 		return
 
-	M.set_buffer(parent_turret)
+	multi_tool.set_buffer(parent_turret)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
 

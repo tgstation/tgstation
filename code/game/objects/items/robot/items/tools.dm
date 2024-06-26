@@ -248,12 +248,12 @@
  * * upgrade - TRUE/FALSE for upgraded
  */
 /obj/item/borg/cyborg_omnitool/proc/set_upgraded(upgrade)
+	name = initial(name)
+	desc = initial(desc)
+
 	if(upgraded)
 		name = "advanced [name]"
 		desc += "\nIt seems that this one has been upgraded to perform tasks faster."
-	else
-		name = initial(name)
-		desc = initial(desc)
 
 	upgraded = upgraded
 	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)

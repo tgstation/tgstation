@@ -37,7 +37,8 @@
 	if(buffered_remote == connected_botpad)
 		to_chat(user, span_warning("Controller cannot connect to its own botpad!"))
 		return ITEM_INTERACT_BLOCKING
-	else if(!connected_botpad && istype(buffered_remote, /obj/machinery/botpad))
+
+	if(!connected_botpad && istype(buffered_remote, /obj/machinery/botpad))
 		connected_botpad = buffered_remote
 		connected_botpad.connected_remote = src
 		connected_botpad.id = id
