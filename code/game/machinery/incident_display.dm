@@ -23,6 +23,8 @@ DEFINE_BITFIELD(sign_features, list(
 #define DISPLAY_PIXEL_1_Z -2
 #define DISPLAY_PIXEL_2_W 16
 #define DISPLAY_PIXEL_2_Z -2
+#define DISPLAY_BASE_ALPHA 64
+#define DISPLAY_PIXEL_ALPHA 128
 
 /**
  * List of safety statistic signs on the map that have delam counting enabled.
@@ -180,26 +182,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		icon_state = "display_normal"
 		set_light(l_range = 1.7, l_power = 1.5, l_color = LIGHT_COLOR_FAINT_CYAN, l_on = TRUE)
 
-GLOBAL_VAR_INIT(incident_pixel_w_1, 12)
-GLOBAL_VAR_INIT(incident_pixel_z_1, 4)
-
 /obj/machinery/incident_display/update_overlays()
 	. = ..()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 
-	//var/mutable_appearance/base_emissive = emissive_appearance(icon, "display_emissive", src, alpha = 64)
-	//. += base_emissive
+	. += emissive_appearance(icon, "display_emissive", src, alpha = DISPLAY_BASE_ALPHA)
 
 	if(sign_features & DISPLAY_DELAM)
-		var/mutable_appearance/delam_base_overlay = mutable_appearance(icon, "overlay_delam")
-		var/mutable_appearance/delam_base_emissive = emissive_appearance(icon, "overlay_delam", src, alpha = 128)
-		. += delam_base_overlay
-		. += delam_base_emissive
+		. += mutable_appearance(icon, "overlay_delam")
+		. += emissive_appearance(icon, "overlay_delam", src, alpha = DISPLAY_PIXEL_ALPHA)
 
 		var/delam_pos1 = clamp(last_delam, 0, 199) % 10
 		var/mutable_appearance/delam_pos1_overlay = mutable_appearance(icon, "num_[delam_pos1]")
-		var/mutable_appearance/delam_pos1_emissive = emissive_appearance(icon, "num_[delam_pos1]_e", src, alpha = src.alpha)
+		var/mutable_appearance/delam_pos1_emissive = emissive_appearance(icon, "num_[delam_pos1]", src, alpha = DISPLAY_PIXEL_ALPHA)
 		delam_pos1_overlay.color = delam_display_color
 		delam_pos1_overlay.pixel_w = DISPLAY_PIXEL_1_W
 		delam_pos1_emissive.pixel_w = DISPLAY_PIXEL_1_W
@@ -210,7 +206,7 @@ GLOBAL_VAR_INIT(incident_pixel_z_1, 4)
 
 		var/delam_pos2 = (clamp(last_delam, 0, 199) / 10) % 10
 		var/mutable_appearance/delam_pos2_overlay = mutable_appearance(icon, "num_[delam_pos2]")
-		var/mutable_appearance/delam_pos2_emissive = emissive_appearance(icon, "num_[delam_pos2]_e", src, alpha = src.alpha)
+		var/mutable_appearance/delam_pos2_emissive = emissive_appearance(icon, "num_[delam_pos2]", src, alpha = DISPLAY_PIXEL_ALPHA)
 		delam_pos2_overlay.color = delam_display_color
 		delam_pos2_overlay.pixel_w = DISPLAY_PIXEL_2_W
 		delam_pos2_emissive.pixel_w = DISPLAY_PIXEL_2_W
@@ -221,68 +217,66 @@ GLOBAL_VAR_INIT(incident_pixel_z_1, 4)
 
 		if(last_delam >= 100)
 			. += mutable_appearance(icon, "num_100_red")
+			. += emissive_appearance(icon, "num_100_red", src, alpha = DISPLAY_BASE_ALPHA)
 
 		if(last_delam == delam_record)
 			var/mutable_appearance/delam_trend_overlay = mutable_appearance(icon, TREND_RISING)
-			var/mutable_appearance/delam_trend_emissive = emissive_appearance(icon, "[TREND_RISING]_e", src, alpha = src.alpha)
+			var/mutable_appearance/delam_trend_emissive = emissive_appearance(icon, "[TREND_RISING]", src, alpha = DISPLAY_PIXEL_ALPHA)
 			delam_trend_overlay.color = COLOR_DISPLAY_GREEN
 			. += delam_trend_overlay
 			. += delam_trend_emissive
 		else
 			var/mutable_appearance/delam_trend_overlay = mutable_appearance(icon, TREND_FALLING)
-			var/mutable_appearance/delam_trend_emissive = emissive_appearance(icon, "[TREND_FALLING]_e", src, alpha = src.alpha)
+			var/mutable_appearance/delam_trend_emissive = emissive_appearance(icon, "[TREND_FALLING]", src, alpha = DISPLAY_PIXEL_ALPHA)
 			delam_trend_overlay.color = COLOR_DISPLAY_RED
 			. += delam_trend_overlay
 			. += delam_trend_emissive
 
 	if(sign_features & DISPLAY_TRAM)
-		var/mutable_appearance/tram_base_overlay = mutable_appearance(icon, "overlay_tram")
-		var/mutable_appearance/tram_base_emissive = emissive_appearance(icon, "overlay_tram", src, alpha = src.alpha)
-		. += tram_base_overlay
-		. += tram_base_emissive
+		. += mutable_appearance(icon, "overlay_tram")
+		. += emissive_appearance(icon, "overlay_tram", src, alpha = DISPLAY_PIXEL_ALPHA)
 
 		var/tram_pos1 = hit_count % 10
 		var/mutable_appearance/tram_pos1_overlay = mutable_appearance(icon, "num_[tram_pos1]")
-		var/mutable_appearance/tram_pos1_emissive = emissive_appearance(icon, "num_[tram_pos1]_e", src, alpha = src.alpha)
+		var/mutable_appearance/tram_pos1_emissive = emissive_appearance(icon, "num_[tram_pos1]", src, alpha = DISPLAY_PIXEL_ALPHA)
 		tram_pos1_overlay.color = tram_display_color
-		tram_pos1_overlay.pixel_w = 21
-		tram_pos1_emissive.pixel_w = 21
-		tram_pos1_overlay.pixel_z = -2
-		tram_pos1_emissive.pixel_z = -2
+		tram_pos1_overlay.pixel_w = DISPLAY_PIXEL_1_W
+		tram_pos1_emissive.pixel_w = DISPLAY_PIXEL_1_W
+		tram_pos1_overlay.pixel_z = DISPLAY_PIXEL_1_Z
+		tram_pos1_emissive.pixel_z = DISPLAY_PIXEL_1_Z
 		. += tram_pos1_overlay
 		. += tram_pos1_emissive
 
 		var/tram_pos2 = (hit_count / 10) % 10
 		var/mutable_appearance/tram_pos2_overlay = mutable_appearance(icon, "num_[tram_pos2]")
-		var/mutable_appearance/tram_pos2_emissive = emissive_appearance(icon, "num_[tram_pos2]_e", src, alpha = src.alpha)
+		var/mutable_appearance/tram_pos2_emissive = emissive_appearance(icon, "num_[tram_pos2]", src, alpha = DISPLAY_PIXEL_ALPHA)
 		tram_pos2_overlay.color = tram_display_color
-		tram_pos2_overlay.pixel_w = 16
-		tram_pos2_emissive.pixel_w = 16
-		tram_pos2_overlay.pixel_z = -2
-		tram_pos2_emissive.pixel_z = -2
+		tram_pos2_overlay.pixel_w = DISPLAY_PIXEL_2_W
+		tram_pos2_emissive.pixel_w = DISPLAY_PIXEL_2_W
+		tram_pos2_overlay.pixel_z = DISPLAY_PIXEL_2_Z
+		tram_pos2_emissive.pixel_z = DISPLAY_PIXEL_2_Z
 		. += tram_pos2_overlay
 		. += tram_pos2_emissive
 
 		if(hit_count >= 100)
 			. += mutable_appearance(icon, "num_100_blue")
-			. += emissive_appearance(icon, "num_100_blue", src, alpha = src.alpha)
+			. += emissive_appearance(icon, "num_100_blue", src, alpha = DISPLAY_BASE_ALPHA)
 
 		if(hit_count > SSpersistence.tram_hits_last_round)
 			var/mutable_appearance/tram_trend_overlay = mutable_appearance(icon, TREND_RISING)
-			var/mutable_appearance/tram_trend_emissive = emissive_appearance(icon, "[TREND_RISING]_e", src, alpha = src.alpha)
+			var/mutable_appearance/tram_trend_emissive = emissive_appearance(icon, "[TREND_RISING]_e", src, alpha = DISPLAY_PIXEL_ALPHA)
 			tram_trend_overlay.color = COLOR_DISPLAY_RED
 			. += tram_trend_overlay
 			. += tram_trend_emissive
 		else
 			var/mutable_appearance/tram_trend_overlay = mutable_appearance(icon, TREND_FALLING)
-			var/mutable_appearance/tram_trend_emissive = emissive_appearance(icon, "[TREND_FALLING]_e", src, alpha = src.alpha)
+			var/mutable_appearance/tram_trend_emissive = emissive_appearance(icon, "[TREND_FALLING]_e", src, alpha = DISPLAY_PIXEL_ALPHA)
 			tram_trend_overlay.color = COLOR_DISPLAY_GREEN
 			. += tram_trend_overlay
 			. += tram_trend_emissive
 
 /obj/machinery/incident_display/examine(mob/user)
 	. = ..()
-
 	if(sign_features & DISPLAY_DELAM)
 		if(last_delam >= 0)
 			. += span_info("It has been [last_delam] shift\s since the last delamination event at this Nanotrasen facility.")
@@ -332,3 +326,5 @@ GLOBAL_VAR_INIT(incident_pixel_z_1, 4)
 #undef DISPLAY_PIXEL_1_Z
 #undef DISPLAY_PIXEL_2_W
 #undef DISPLAY_PIXEL_2_Z
+#undef DISPLAY_BASE_ALPHA
+#undef DISPLAY_PIXEL_ALPHA
