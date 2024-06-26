@@ -92,7 +92,7 @@
 		for(var/atom/elem in src.contents)
 			for(var/datum/light_source/source in elem.light_sources)
 				if(!source?.effect_str)
-					source.vis_update()
+					source.force_update()
 	if(. != directional_opacity && (. == ALL_CARDINALS || directional_opacity == ALL_CARDINALS))
 		reconsider_lights() //The lighting system only cares whether the tile is fully concealed from all directions or not.
 
