@@ -52,7 +52,7 @@
 			var/datum/antagonist/changeling/antag_datum = C.mind.has_antag_datum(/datum/antagonist/changeling)
 			if(istype(antag_datum))
 				var/their_loc = get_turf(C)
-				var/distance = get_dist_euclidian(my_loc, their_loc)
+				var/distance = get_dist_euclidean(my_loc, their_loc)
 				if (distance < CHANGELING_PHEROMONE_MAX_DISTANCE)
 					changelings[C] = (CHANGELING_PHEROMONE_MAX_DISTANCE ** 2) - (distance ** 2)
 

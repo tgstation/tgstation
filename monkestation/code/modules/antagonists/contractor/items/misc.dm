@@ -120,14 +120,14 @@
 	var/closest_turf_range = 255
 	if(!door_mode)
 		for(var/turf/open/floor as anything in tracked_area_turfs) // Lets go over every turf and check their distances for the closest tile
-			if(get_dist_euclidian(pinpointer_turf, floor) < closest_turf_range)
-				closest_turf_range = get_dist_euclidian(pinpointer_turf, floor)
+			if(get_dist_euclidean(pinpointer_turf, floor) < closest_turf_range)
+				closest_turf_range = get_dist_euclidean(pinpointer_turf, floor)
 				closest_turf = floor
 
 	else // if door_mode is TRUE, we instead want to track the nearest airlock instead of all turfs
 		for(var/turf/open/floor as anything in door_turfs) // Lets go over every door and check their distances for the closest tile
-			if(get_dist_euclidian(pinpointer_turf, floor) < closest_turf_range)
-				closest_turf_range = get_dist_euclidian(pinpointer_turf, floor)
+			if(get_dist_euclidean(pinpointer_turf, floor) < closest_turf_range)
+				closest_turf_range = get_dist_euclidean(pinpointer_turf, floor)
 				closest_turf = floor
 
 	target = closest_turf
