@@ -62,6 +62,7 @@
 	cost = 1
 	route = PATH_SIDE
 	depth = 8
+	//rectangular icons cause trouble, let's override by a similar looking gun with a smaller sprite and hope no one notices
 	research_tree_icon = icon('icons/obj/weapons/guns/ballistic.dmi',"goldrevolver")
 
 /datum/heretic_knowledge/rifle_ammo
