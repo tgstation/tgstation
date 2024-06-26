@@ -99,12 +99,7 @@
 
 /datum/asset/spritesheet/heretic_knowledge/create_spritesheets()
 	for(var/datum/heretic_knowledge/path as anything in subtypesof(/datum/heretic_knowledge))
-		var/icon/icon_of_knowledge = get_icon_of_knowledge(path)
-		if(istype(path,/datum/heretic_knowledge/ultimate))
-			icon_of_knowledge.Scale(152,152)
-		else
-			icon_of_knowledge.Scale(64,64)
-		Insert(sanitize_css_class_name("[path]"), icon_of_knowledge)
+		Insert(sanitize_css_class_name("[path]"), get_icon_of_knowledge(path))
 
 /datum/asset/spritesheet/heretic_knowledge/proc/get_icon_of_knowledge(datum/heretic_knowledge/knowledge)
 	if(ispath(knowledge))

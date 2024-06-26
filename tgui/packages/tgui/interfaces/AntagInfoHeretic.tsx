@@ -252,17 +252,20 @@ const KnowledgeTree = (props) => {
                           ${node.desc}`
                         }
                         onClick={node.finished ? (() => null) : () => act('research', { path: node.path })}
-                        width={node.ascension?"128px":"64px"}
-                        height={node.ascension?"128px":"64px"}
+                        width={node.ascension?"192px":"64px"}
+                        height={node.ascension?"192px":"64px"}
                         m="8px"
                       >
                         <Box
-                          className={classes([(node.ascension ? 'heretic_knowledge152x152' : 'heretic_knowledge64x64'), node.icon_id])}
-                          height={node.ascension?"152px":"64px"}
-                          width={node.ascension?"152px":"64px"}
+                          className={classes([(node.ascension ? 'heretic_knowledge76x76' : 'heretic_knowledge32x32'), node.icon_id])}
+                          style={{
+                            transform: 'scale(2)',
+                          }}
+                          height={node.ascension?"76px":"32px"}
+                          width={node.ascension?"76px":"32px"}
                           position="absolute"
-                          top="0px"
-                          left="0px"
+                          top={node.ascension?"58px":"16px"}
+                          left={node.ascension?"58px":"16px"}
                         />
                         <Box
                           position="absolute"
