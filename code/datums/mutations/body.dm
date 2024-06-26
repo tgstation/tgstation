@@ -4,6 +4,7 @@
 /datum/mutation/human/epilepsy
 	name = "Epilepsy"
 	desc = "A genetic defect that sporadically causes seizures."
+	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You get a headache.</span>"
 	synchronizer_coeff = 1
@@ -50,6 +51,7 @@
 /datum/mutation/human/bad_dna
 	name = "Unstable DNA"
 	desc = "Strange mutation that causes the holder to randomly mutate."
+	instability = NEGATIVE_STABILITY_MAJOR
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel strange.</span>"
 	locked = TRUE
@@ -79,6 +81,7 @@
 /datum/mutation/human/cough
 	name = "Cough"
 	desc = "A chronic cough."
+	instability = NEGATIVE_STABILITY_MODERATE
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You start coughing.</span>"
 	synchronizer_coeff = 1
@@ -96,6 +99,7 @@
 /datum/mutation/human/paranoia
 	name = "Paranoia"
 	desc = "Subject is easily terrified, and may suffer from hallucinations."
+	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel screams echo through your mind...</span>"
 	text_lose_indication = "<span class='notice'>The screaming in your mind fades.</span>"
@@ -112,8 +116,8 @@
 	desc = "A mutation believed to be the cause of dwarfism."
 	quality = POSITIVE
 	difficulty = 16
-	instability = 5
-	conflicts = list(/datum/mutation/human/gigantism)
+	instability = POSITIVE_INSTABILITY_MINOR
+	conflicts = list(/datum/mutation/human/gigantism, /datum/mutation/human/acromegaly)
 	locked = TRUE // Default intert species for now, so locked from regular pool.
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
@@ -128,10 +132,71 @@
 	REMOVE_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
 
+/datum/mutation/human/acromegaly
+	name = "Acromegaly"
+	desc = "A mutation believed to be the cause of acromegaly, or 'being unusually tall'."
+	quality = MINOR_NEGATIVE
+	difficulty = 16
+	instability = NEGATIVE_STABILITY_MODERATE
+	synchronizer_coeff = 1
+	conflicts = list(/datum/mutation/human/dwarfism)
+
+/datum/mutation/human/acromegaly/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	ADD_TRAIT(owner, TRAIT_TOO_TALL, GENETIC_MUTATION)
+	owner.visible_message(span_danger("[owner] suddenly grows tall!"), span_notice("You feel a small strange urge to fight small men with slingshots. Or maybe play some basketball."))
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(head_bonk))
+	owner.regenerate_icons()
+
+/datum/mutation/human/acromegaly/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	REMOVE_TRAIT(owner, TRAIT_TOO_TALL, GENETIC_MUTATION)
+	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("You return to your usual height."))
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(head_bonk))
+	owner.regenerate_icons()
+
+// This is specifically happening because they're not used to their new height and are stumbling around into machinery made for normal humans
+/datum/mutation/human/acromegaly/proc/head_bonk(mob/living/parent)
+	SIGNAL_HANDLER
+	var/turf/airlock_turf = get_turf(parent)
+	var/atom/movable/whacked_by = locate(/obj/machinery/door/airlock) in airlock_turf || locate(/obj/machinery/door/firedoor) in airlock_turf || locate(/obj/structure/mineral_door) in airlock_turf
+	if(!whacked_by || prob(100 - (8 *  GET_MUTATION_SYNCHRONIZER(src))))
+		return
+	to_chat(parent, span_danger("You hit your head on \the [whacked_by]'s header!"))
+	var/dmg = HAS_TRAIT(parent, TRAIT_HEAD_INJURY_BLOCKED) ? rand(1,4) : rand(2,9)
+	parent.apply_damage(dmg, BRUTE, BODY_ZONE_HEAD)
+	parent.do_attack_animation(whacked_by, ATTACK_EFFECT_PUNCH)
+	playsound(whacked_by, 'sound/effects/bang.ogg', 10, TRUE)
+	parent.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
+
+/datum/mutation/human/gigantism
+	name = "Gigantism" //negative version of dwarfism
+	desc = "The cells within the subject spread out to cover more area, making the subject appear larger."
+	quality = MINOR_NEGATIVE
+	difficulty = 12
+	conflicts = list(/datum/mutation/human/dwarfism)
+
+/datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	ADD_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
+	owner.update_transform(1.25)
+	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
+
+/datum/mutation/human/gigantism/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	REMOVE_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
+	owner.update_transform(0.8)
+	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
+
 //Clumsiness has a very large amount of small drawbacks depending on item.
 /datum/mutation/human/clumsy
 	name = "Clumsiness"
 	desc = "A genome that inhibits certain brain functions, causing the holder to appear clumsy. Honk!"
+	instability = NEGATIVE_STABILITY_MAJOR
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel lightheaded.</span>"
 
@@ -151,6 +216,7 @@
 	name = "Tourette's Syndrome"
 	desc = "A chronic twitch that forces the user to scream bad words." //definitely needs rewriting
 	quality = NEGATIVE
+	instability = 0
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
 	synchronizer_coeff = 1
 
@@ -173,6 +239,7 @@
 /datum/mutation/human/deaf
 	name = "Deafness"
 	desc = "The holder of this genome is completely deaf."
+	instability = NEGATIVE_STABILITY_MAJOR
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You can't seem to hear anything.</span>"
 
@@ -194,6 +261,7 @@
 	text_gain_indication = "You feel unusually monkey-like."
 	text_lose_indication = "You feel like your old self."
 	quality = NEGATIVE
+	instability = NEGATIVE_STABILITY_MAJOR // mmmonky
 	remove_on_aheal = FALSE
 	locked = TRUE //Species specific, keep out of actual gene pool
 	mutadone_proof = TRUE
@@ -219,7 +287,7 @@
 	desc = "You permanently emit a light with a random color and intensity."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your skin begins to glow softly.</span>"
-	instability = 5
+	instability = POSITIVE_INSTABILITY_MINI
 	power_coeff = 1
 	conflicts = list(/datum/mutation/human/glow/anti)
 	var/glow_power = 2
@@ -257,6 +325,7 @@
 	desc = "Your skin seems to attract and absorb nearby light creating 'darkness' around you."
 	text_gain_indication = "<span class='notice'>The light around you seems to disappear.</span>"
 	conflicts = list(/datum/mutation/human/glow)
+	instability = POSITIVE_INSTABILITY_MINOR
 	locked = TRUE
 	glow_power = -1.5
 
@@ -265,10 +334,10 @@
 
 /datum/mutation/human/strong
 	name = "Strength"
-	desc = "The user's muscles slightly expand."
+	desc = "The user's muscles slightly expand. Commonly seen in top-ranking boxers."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You feel strong.</span>"
-	instability = 5
+	instability = POSITIVE_INSTABILITY_MINI
 	difficulty = 16
 
 /datum/mutation/human/strong/on_acquiring(mob/living/carbon/human/owner)
@@ -286,10 +355,10 @@
 
 /datum/mutation/human/stimmed
 	name = "Stimmed"
-	desc = "The user's chemical balance is more robust."
+	desc = "The user's chemical balance is more robust. This mutation is known to slightly improve workout efficiency."
 	quality = POSITIVE
+	instability = POSITIVE_INSTABILITY_MINI
 	text_gain_indication = "<span class='notice'>You feel stimmed.</span>"
-	instability = 5
 	difficulty = 16
 
 /datum/mutation/human/stimmed/on_acquiring(mob/living/carbon/human/owner)
@@ -311,7 +380,7 @@
 	text_gain_indication = "<span class='notice'>Your fingertips go numb.</span>"
 	text_lose_indication = "<span class='notice'>Your fingertips regain feeling.</span>"
 	difficulty = 16
-	instability = 25
+	instability = POSITIVE_INSTABILITY_MODERATE
 
 /datum/mutation/human/insulated/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -355,7 +424,7 @@
 	text_gain_indication = "<span class='warning'>The space around you twists sickeningly.</span>"
 	text_lose_indication = "<span class='notice'>The space around you settles back to normal.</span>"
 	difficulty = 18//high so it's hard to unlock and abuse
-	instability = 10
+	instability = NEGATIVE_STABILITY_MODERATE
 	synchronizer_coeff = 1
 	energy_coeff = 1
 	power_coeff = 1
@@ -381,6 +450,7 @@
 /datum/mutation/human/acidflesh
 	name = "Acidic Flesh"
 	desc = "Subject has acidic chemicals building up underneath the skin. This is often lethal."
+	instability = NEGATIVE_STABILITY_MAJOR
 	quality = NEGATIVE
 	text_gain_indication = "<span class='userdanger'>A horrible burning sensation envelops you as your flesh turns to acid!</span>"
 	text_lose_indication = "<span class='notice'>A feeling of relief fills you as your flesh goes back to normal.</span>"
@@ -398,30 +468,10 @@
 			owner.visible_message(span_warning("[owner]'s skin bubbles and pops."), span_userdanger("Your bubbling flesh pops! It burns!"))
 			playsound(owner,'sound/weapons/sear.ogg', 50, TRUE)
 
-/datum/mutation/human/gigantism
-	name = "Gigantism"//negative version of dwarfism
-	desc = "The cells within the subject spread out to cover more area, making the subject appear larger."
-	quality = MINOR_NEGATIVE
-	difficulty = 12
-	conflicts = list(/datum/mutation/human/dwarfism)
-
-/datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
-	ADD_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
-	owner.update_transform(1.25)
-	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
-
-/datum/mutation/human/gigantism/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	REMOVE_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
-	owner.update_transform(0.8)
-	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
-
 /datum/mutation/human/spastic
 	name = "Spastic"
 	desc = "Subject suffers from muscle spasms."
+	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>You flinch.</span>"
 	text_lose_indication = "<span class='notice'>Your flinching subsides.</span>"
@@ -440,6 +490,7 @@
 /datum/mutation/human/extrastun
 	name = "Two Left Feet"
 	desc = "A mutation that replaces the right foot with another left foot. Symptoms include kissing the floor when taking a step."
+	instability = NEGATIVE_STABILITY_MODERATE
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>Your right foot feels... left.</span>"
 	text_lose_indication = "<span class='notice'>Your right foot feels alright.</span>"
@@ -471,6 +522,7 @@
 /datum/mutation/human/martyrdom
 	name = "Internal Martyrdom"
 	desc = "A mutation that makes the body destruct when near death. Not damaging, but very, VERY disorienting."
+	instability = NEGATIVE_STABILITY_MAJOR // free stability >:)
 	locked = TRUE
 	quality = POSITIVE //not that cloning will be an option a lot but generally lets keep this around i guess?
 	text_gain_indication = "<span class='warning'>You get an intense feeling of heartburn.</span>"
@@ -518,6 +570,7 @@
 /datum/mutation/human/headless
 	name = "H.A.R.S."
 	desc = "A mutation that makes the body reject the head, the brain receding into the chest. Stands for Head Allergic Rejection Syndrome. Warning: Removing this mutation is very dangerous, though it will regenerate non-vital head organs."
+	instability = NEGATIVE_STABILITY_MAJOR
 	difficulty = 12 //pretty good for traitors
 	quality = NEGATIVE //holy shit no eyes or tongue or ears
 	text_gain_indication = "<span class='warning'>Something feels off.</span>"

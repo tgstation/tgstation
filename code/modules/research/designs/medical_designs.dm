@@ -568,7 +568,7 @@
 
 /datum/design/cyberimp_nutriment
 	name = "Nutriment Pump Implant"
-	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
+	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	id = "ci-nutriment"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 4 SECONDS
@@ -585,7 +585,7 @@
 
 /datum/design/cyberimp_nutriment_plus
 	name = "Nutriment Pump Implant PLUS"
-	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
+	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
 	id = "ci-nutrimentplus"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 5 SECONDS
