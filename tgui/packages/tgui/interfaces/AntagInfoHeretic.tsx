@@ -1,8 +1,8 @@
-import { BooleanLike, classes } from 'common/react';
+import { BooleanLike } from 'common/react';
 import { useState } from 'react';
 
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Section, Stack, Tabs } from '../components';
+import { Box, Button, DmIcon, Flex, Section, Stack, Tabs } from '../components';
 import { CssColor } from '../constants';
 import { Window } from '../layouts';
 import {
@@ -35,9 +35,17 @@ const hereticYellow = {
   color: 'yellow',
 };
 
+type Icon = {
+  icon: string;
+  state: string;
+  frame: number;
+  dir: number;
+  moving: boolean;
+};
+
 type Knowledge = {
   path: string;
-  icon_id: string;
+  icon_params: Icon;
   name: string;
   desc: string;
   gainFlavor: string;
@@ -256,8 +264,12 @@ const KnowledgeTree = (props) => {
                         height={node.ascension?"192px":"64px"}
                         m="8px"
                       >
-                        <Box
-                          className={classes([(node.ascension ? 'heretic_knowledge76x76' : 'heretic_knowledge32x32'), node.icon_id])}
+                        <DmIcon
+                          icon={node.icon_params.icon}
+                          icon_state={node.icon_params.state}
+                          frame={node.icon_params.frame}
+                          direction={node.icon_params.dir}
+                          movement={node.icon_params.moving}
                           style={{
                             transform: 'scale(2)',
                           }}

@@ -89,19 +89,7 @@
 	LAZYNULL(sac_targets)
 	return ..()
 
-/datum/antagonist/heretic/ui_assets(mob/user)
-	return list(
-		get_asset_datum(/datum/asset/spritesheet/heretic_knowledge),
-	)
-
-/datum/asset/spritesheet/heretic_knowledge
-	name = "heretic_knowledge"
-
-/datum/asset/spritesheet/heretic_knowledge/create_spritesheets()
-	for(var/datum/heretic_knowledge/path as anything in subtypesof(/datum/heretic_knowledge))
-		Insert(sanitize_css_class_name("[path]"), get_icon_of_knowledge(path))
-
-/datum/asset/spritesheet/heretic_knowledge/proc/get_icon_of_knowledge(datum/heretic_knowledge/knowledge)
+/datum/antagonist/heretic/proc/get_icon_of_knowledge(datum/heretic_knowledge/knowledge)
 	if(ispath(knowledge))
 		//if the argument is a typepath, we need to make a dummy so we can access some of its properties
 		knowledge = new knowledge()
@@ -154,7 +142,7 @@
 			icon_path = achievement.icon
 			icon_state = achievement.icon_state
 
-	return icon(icon_path,icon_state,frame=icon_frame,dir=icon_dir,moving=icon_moving)
+	return list("icon"=icon_path,"state"=icon_state,"frame"=icon_frame,"dir"=icon_dir,"moving"=icon_moving)
 
 /datum/antagonist/heretic/ui_data(mob/user)
 	var/list/data = list()
@@ -172,7 +160,7 @@
 		var/list/knowledge_data = list()
 		var/datum/heretic_knowledge/found_knowledge = researched_knowledge[path]
 		knowledge_data["path"] = path
-		knowledge_data["icon_id"] = sanitize_css_class_name("[path]")
+		knowledge_data["icon_params"] = get_icon_of_knowledge(path)
 		knowledge_data["name"] = found_knowledge.name
 		knowledge_data["desc"] = found_knowledge.desc
 		knowledge_data["gainFlavor"] = found_knowledge.gain_text
@@ -190,7 +178,7 @@
 	for(var/datum/heretic_knowledge/knowledge as anything in get_researchable_knowledge())
 		var/list/knowledge_data = list()
 		knowledge_data["path"] = knowledge
-		knowledge_data["icon_id"] = sanitize_css_class_name("[knowledge]")
+		knowledge_data["icon_params"] = get_icon_of_knowledge(knowledge)
 		knowledge_data["name"] = initial(knowledge.name)
 		knowledge_data["desc"] = initial(knowledge.desc)
 		knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
