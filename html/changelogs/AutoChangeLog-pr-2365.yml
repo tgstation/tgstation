@@ -1,0 +1,7 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - image: "(intercepti0n) Resprites t-ray scanner, gas analyzer, geiger counter and hand drill."
+  - image: "(LT3) Medical and improvised gauze are visibly different from cloth."
+  - image: "(Alecksohs) Updated the Advanced Surgical Tool's sprites."
+  - code_imp: "(Alecksohs) Updated the Advanced Surgical Tool's light code."
