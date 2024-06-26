@@ -28,6 +28,8 @@
 
 ///called on liquid creation
 #define COMSIG_TURF_LIQUIDS_CREATION "turf_liquids_creation"
+	/// Blocks the liquid from being created.
+	#define BLOCK_LIQUID_CREATION (1 << 0)
 
 #define COMSIG_TURF_MOB_FALL "turf_mob_fall"
 

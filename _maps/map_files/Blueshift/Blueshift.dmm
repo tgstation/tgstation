@@ -9605,6 +9605,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "bSa" = (
@@ -26074,6 +26075,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron/freezer,
 /area/station/science/xenobiology)
 "eYC" = (
@@ -32762,9 +32764,6 @@
 	pixel_x = 6;
 	pixel_y = 16
 	},
-/obj/item/reagent_containers/cup/beaker/vial,
-/obj/item/reagent_containers/cup/beaker/vial,
-/obj/item/reagent_containers/cup/beaker/vial,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "gpr" = (
@@ -51019,6 +51018,7 @@
 /area/station/maintenance/fore/upper)
 "jUX" = (
 /obj/machinery/door/window/left/directional/north,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "jVd" = (
@@ -64403,6 +64403,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/liquid_barrier,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "mDi" = (
@@ -83098,6 +83099,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "qkR" = (
@@ -84015,6 +84017,7 @@
 	name = "Xenobiology Controll Room Shutters"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/control)
 "qtm" = (
@@ -84931,6 +84934,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron,
 /area/station/science/xenobiology/hallway)
 "qCg" = (
@@ -85455,6 +85459,7 @@
 /area/station/science)
 "qGA" = (
 /obj/structure/sign/departments/xenobio/directional/north,
+/obj/structure/liquid_barrier,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/upper)
 "qGC" = (
@@ -88416,6 +88421,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "rjO" = (
@@ -89294,6 +89300,7 @@
 	name = "Toxins Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "rsO" = (
@@ -93519,6 +93526,7 @@
 	name = "Creature Pen";
 	req_access = list("research")
 	},
+/obj/structure/liquid_barrier,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "skx" = (
@@ -104876,6 +104884,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/control)
 "uqt" = (
@@ -105851,6 +105860,7 @@
 	name = "Secure Pen"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "uzz" = (
@@ -113720,10 +113730,6 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
 /obj/machinery/disease2/centrifuge,
-/obj/item/reagent_containers/cup/beaker/vial,
-/obj/item/reagent_containers/cup/beaker/vial,
-/obj/item/reagent_containers/cup/beaker/vial,
-/obj/item/reagent_containers/cup/beaker/vial,
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "wax" = (
@@ -115150,6 +115156,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
 "wmV" = (

@@ -26171,6 +26171,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "iwz" = (
@@ -52331,6 +52332,7 @@
 	req_access = list("xenobiology")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/structure/liquid_barrier,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "qLX" = (
@@ -73165,6 +73167,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/structure/cable,
 /obj/machinery/duct,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "xyx" = (

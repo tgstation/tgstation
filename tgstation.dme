@@ -6755,6 +6755,7 @@
 #include "monkestation\code\modules\library\skill_learning\job_skillchips\shaft_miner.dm"
 #include "monkestation\code\modules\liquids\drains.dm"
 #include "monkestation\code\modules\liquids\height_floors.dm"
+#include "monkestation\code\modules\liquids\liquid_barrier.dm"
 #include "monkestation\code\modules\liquids\liquid_controller.dm"
 #include "monkestation\code\modules\liquids\liquid_effect.dm"
 #include "monkestation\code\modules\liquids\liquid_groups.dm"

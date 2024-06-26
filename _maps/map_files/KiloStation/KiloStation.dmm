@@ -16441,6 +16441,7 @@
 	},
 /obj/effect/turf_decal/tile/purple/full,
 /obj/effect/mapping_helpers/airlock/access/any/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
 "fnu" = (
@@ -22076,6 +22077,7 @@
 	name = "Xenobiology Lab"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "hbf" = (
@@ -41623,6 +41625,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/science/xenobio,
 /obj/effect/mapping_helpers/airlock/access/any/science/genetics,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "nml" = (
@@ -53462,6 +53465,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "reT" = (

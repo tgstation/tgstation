@@ -44,3 +44,5 @@
 // /turf/open
 /// If a trait is considered as having "coverage" by a meteor shield.
 #define TRAIT_COVERED_BY_METEOR_SHIELD		"covered_by_meteor_shield"
+/// Liquids cannot spread over this turf.
+#define TRAIT_BLOCK_LIQUID_SPREAD			"block_liquid_spread"

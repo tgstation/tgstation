@@ -16289,6 +16289,7 @@
 	name = "Xenobiology Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "ggi" = (
@@ -17331,6 +17332,7 @@
 	name = "Xenobio Pen 8 Blast Door"
 	},
 /obj/machinery/duct,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "gyK" = (
@@ -20910,6 +20912,7 @@
 	name = "Xenobio Pen 1 Blast Door"
 	},
 /obj/machinery/duct,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "hMy" = (
@@ -29894,6 +29897,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
 "kLF" = (
@@ -39945,6 +39949,7 @@
 	name = "Xenobio Pen 6 Blast Door"
 	},
 /obj/machinery/duct,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "ohE" = (
@@ -46562,6 +46567,7 @@
 	name = "Xenobiology Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "qAA" = (
@@ -46607,6 +46613,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
 "qBq" = (
@@ -48820,6 +48827,7 @@
 	name = "Xenobio Pen 4 Blast Door"
 	},
 /obj/machinery/duct,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "rrT" = (
@@ -49088,6 +49096,7 @@
 	name = "Maximum Security Test Chamber";
 	req_access = list("xenobiology")
 	},
+/obj/structure/liquid_barrier,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "rvL" = (
@@ -49148,6 +49157,7 @@
 	name = "Xenobio Pen 3 Blast Door"
 	},
 /obj/machinery/duct,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "rwE" = (
@@ -52545,6 +52555,7 @@
 	name = "Xenobio Pen 5 Blast Door"
 	},
 /obj/machinery/duct,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "sCz" = (
@@ -65509,6 +65520,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/liquid_barrier,
 /turf/open/floor/engine,
 /area/station/science/cytology)
 "xfD" = (

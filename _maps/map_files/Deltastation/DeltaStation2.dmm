@@ -6366,6 +6366,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/science/xenobio,
 /obj/structure/cable,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "bxp" = (
@@ -14125,6 +14126,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "dpQ" = (
@@ -67000,6 +67002,7 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "pWd" = (
@@ -97846,6 +97849,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/delivery,
+/obj/structure/liquid_barrier,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "xsP" = (

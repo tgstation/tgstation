@@ -200,7 +200,8 @@
 	RegisterSignal(my_turf, COMSIG_TURF_MOB_FALL, PROC_REF(mob_fall))
 	RegisterSignal(my_turf, COMSIG_ATOM_EXAMINE, PROC_REF(examine_turf))
 
-	SEND_SIGNAL(my_turf, COMSIG_TURF_LIQUIDS_CREATION, src)
+	if(SEND_SIGNAL(my_turf, COMSIG_TURF_LIQUIDS_CREATION, src) & BLOCK_LIQUID_CREATION)
+		return INITIALIZE_HINT_QDEL
 
 	if(z)
 		QUEUE_SMOOTH(src)
