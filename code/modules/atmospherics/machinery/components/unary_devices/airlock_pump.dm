@@ -118,7 +118,6 @@
 		COOLDOWN_START(src, check_turfs_cooldown, 2 SECONDS)
 
 	if(world.time - cycle_start_time > cycle_timeout)
-		say("Cycling timed out, bolts unlocked.")
 		stop_cycle(timed_out = TRUE)
 		return //Couldn't complete the cycle before timeout
 
@@ -218,10 +217,11 @@
 	if(!on)
 		return FALSE
 
-	if(pump_direction == ATMOS_DIRECTION_RELEASING)
-		internal_airlock.unbolt()
-	else
-		external_airlock.unbolt()
+	var/obj/machinery/door/airlock/unlocked_airlock = pump_direction == ATMOS_DIRECTION_RELEASING ? internal_airlock : external_airlock
+
+	unlocked_airlock.unbolt()
+	if(timed_out)
+		unlocked_airlock.say("Cycling timed out, bolts unlocked.")
 
 	on = FALSE
 	update_appearance()
