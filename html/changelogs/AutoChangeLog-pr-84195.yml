@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "You should no longer attack mobs that don't have a chest in the chest (bots)."

@@ -340,9 +340,9 @@
 	build_path = /obj/machinery/power/smes
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
-		/obj/item/stock_parts/cell = 5,
+		/obj/item/stock_parts/power_store/battery = 5,
 		/datum/stock_part/capacitor = 1)
-	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high/empty)
+	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/high/empty)
 
 /obj/item/circuitboard/machine/techfab/department/engineering
 	name = "\improper Departmental Techfab - Engineering"
@@ -350,7 +350,7 @@
 	build_path = /obj/machinery/rnd/production/techfab/department/engineering
 
 /obj/item/circuitboard/machine/smes/super
-	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/super/empty)
+	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/super/empty)
 
 /obj/item/circuitboard/machine/thermomachine
 	name = "Thermomachine"
@@ -757,8 +757,8 @@
 		/datum/stock_part/capacitor = 1,
 		/datum/stock_part/servo = 1,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell = 1)
-	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
+		/obj/item/stock_parts/power_store/cell = 1)
+	def_components = list(/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/high)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/chem_dispenser/fullupgrade
@@ -769,7 +769,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/servo/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 
 /obj/item/circuitboard/machine/chem_dispenser/mutagensaltpeter
@@ -780,7 +780,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/servo/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 
 /obj/item/circuitboard/machine/chem_dispenser/abductor
@@ -794,7 +794,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/servo/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 	needs_anchored = FALSE
 
@@ -974,9 +974,9 @@
 	build_path = /obj/machinery/recharge_station
 	req_components = list(
 		/datum/stock_part/capacitor = 2,
-		/obj/item/stock_parts/cell = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 		/datum/stock_part/servo = 1)
-	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
+	def_components = list(/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/high)
 
 /obj/item/circuitboard/machine/destructive_analyzer
 	name = "Destructive Analyzer"
@@ -1173,7 +1173,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/servo/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 
 /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
@@ -1188,7 +1188,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/servo/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 
 /obj/item/circuitboard/machine/chem_master/condi
@@ -1461,7 +1461,7 @@
 	req_components = list(
 		/datum/stock_part/capacitor = 1,
 		/datum/stock_part/micro_laser = 1,
-		/obj/item/stock_parts/cell/infinite/abductor = 1)
+		/obj/item/stock_parts/power_store/cell/infinite/abductor = 1)
 	def_components = list(
 		/datum/stock_part/capacitor = /datum/stock_part/capacitor/tier4,
 		/datum/stock_part/micro_laser = /datum/stock_part/micro_laser/tier4)

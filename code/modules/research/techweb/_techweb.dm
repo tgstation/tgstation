@@ -108,7 +108,7 @@
 /datum/techweb/proc/add_point_list(list/pointlist)
 	for(var/i in pointlist)
 		if((i in SSresearch.point_types) && pointlist[i] > 0)
-			research_points[i] += pointlist[i]
+			research_points[i] = FLOOR(research_points[i] + pointlist[i], 0.1)
 
 /datum/techweb/proc/add_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -119,7 +119,7 @@
 /datum/techweb/proc/remove_point_list(list/pointlist)
 	for(var/i in pointlist)
 		if((i in SSresearch.point_types) && pointlist[i] > 0)
-			research_points[i] = max(0, research_points[i] - pointlist[i])
+			research_points[i] = FLOOR(max(0, research_points[i] - pointlist[i]), 0.1)
 
 /datum/techweb/proc/remove_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()
@@ -130,7 +130,7 @@
 /datum/techweb/proc/modify_point_list(list/pointlist)
 	for(var/i in pointlist)
 		if((i in SSresearch.point_types) && pointlist[i] != 0)
-			research_points[i] = max(0, research_points[i] + pointlist[i])
+			research_points[i] = FLOOR(max(0, research_points[i] + pointlist[i]), 0.1)
 
 /datum/techweb/proc/modify_points_all(amount)
 	var/list/l = SSresearch.point_types.Copy()

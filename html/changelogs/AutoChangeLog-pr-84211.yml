@@ -1,4 +1,0 @@
-author: "norsvenska"
-delete-after: True
-changes:
-  - bugfix: "[IceBox] The Head of Personnel's Requests Console announcements now correctly display the HoP as the announcer, rather than \"Unknown\""
