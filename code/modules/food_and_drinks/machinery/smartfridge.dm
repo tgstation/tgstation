@@ -750,6 +750,7 @@
 	initial_contents = list(
 		/obj/item/reagent_containers/pill/epinephrine = 12,
 		/obj/item/reagent_containers/pill/multiver = 5,
+		/obj/item/reagent_containers/pill/antiviral = 3,
 		/obj/item/reagent_containers/cup/bottle/epinephrine = 1,
 		/obj/item/reagent_containers/cup/bottle/multiver = 1)
 
@@ -766,13 +767,24 @@
 	initial_contents = list(
 		/obj/item/storage/pill_bottle/sansufentanyl = 2,
 		/obj/item/reagent_containers/syringe/antiviral = 4,
-		/obj/item/reagent_containers/cup/bottle/cold = 1,
-		/obj/item/reagent_containers/cup/bottle/flu_virion = 1,
-		/obj/item/reagent_containers/cup/bottle/mutagen = 1,
 		/obj/item/reagent_containers/cup/bottle/sugar = 1,
+		/obj/item/reagent_containers/cup/bottle/synaptizinevirusfood = 1,
+		/obj/item/reagent_containers/cup/bottle/mutagenvirusfood = 1,
+		/obj/item/reagent_containers/cup/bottle/mutagen = 1,
+		/obj/item/reagent_containers/cup/bottle/mutagenvirusfoodsugar = 1,
+		/obj/item/reagent_containers/cup/bottle/plasmavirusfoodweak = 1,
 		/obj/item/reagent_containers/cup/bottle/plasma = 1,
-		/obj/item/reagent_containers/cup/bottle/synaptizine = 1,
-		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1)
+		/obj/item/reagent_containers/cup/bottle/plasmavirusfood = 1,
+		/obj/item/reagent_containers/cup/bottle/uranium = 1,
+		/obj/item/reagent_containers/cup/bottle/uraniumvirusfoodunstable = 1,
+		/obj/item/reagent_containers/cup/bottle/uraniumvirusfood = 1,
+		/obj/item/reagent_containers/cup/bottle/uraniumvirusfoodstable = 1,
+		/obj/item/reagent_containers/cup/bottle/synaptizine = 2,
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 2,
+		/obj/item/reagent_containers/cup/bottle/random_symptom = 10,
+		/obj/item/reagent_containers/cup/bottle/random_virus = 3,
+		/obj/item/reagent_containers/cup/bottle/cold = 1,
+		/obj/item/reagent_containers/cup/bottle/flu_virion = 1)
 
 // ----------------------------
 // Disk """fridge"""

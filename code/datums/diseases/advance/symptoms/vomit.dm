@@ -15,7 +15,7 @@ and your disease can spread via people walking on vomit.
 	resistance = -1
 	stage_speed = -1
 	transmittable = 2
-	level = 3
+	level = 2
 	severity = 3
 	base_message_chance = 100
 	symptom_delay_min = 25

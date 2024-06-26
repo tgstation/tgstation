@@ -12,6 +12,8 @@
 	var/internal_type = /obj/item/tank/internals/emergency_oxygen
 	/// What medipen should be present in this box?
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
+	/// What medical pill should be present in this box?
+	var/pill_type = /obj/item/reagent_containers/pill/antiviral
 	/// Are we crafted?
 	var/crafted = FALSE
 
@@ -35,6 +37,9 @@
 
 	if(!isnull(medipen_type))
 		new medipen_type(src)
+
+	if(!isnull(pill_type))
+		new pill_type(src)
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
 		new /obj/item/flashlight/flare(src)

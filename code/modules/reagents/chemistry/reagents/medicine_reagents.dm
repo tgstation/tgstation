@@ -252,6 +252,17 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	added_traits = list(TRAIT_VIRUS_RESISTANCE)
 
+/datum/reagent/medicine/spaceacillin/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+	M.adjustToxLoss(-0.1, FALSE)
+
+	if((M.mob_biotypes & MOB_ORGANIC) && prob(0.2))
+		for(var/thing in M.diseases) // can clean viruses from organic lifeforms.
+			var/datum/disease/D = thing
+			D.cure()
+
+	..()
+	. = TRUE
+
 //Goon Chems. Ported mainly from Goonstation. Easily mixable (or not so easily) and provide a variety of effects.
 
 /datum/reagent/medicine/oxandrolone
@@ -1764,3 +1775,31 @@
 		if(affected_mob.adjustStaminaLoss(10 * REM * seconds_per_tick, updating_stamina = FALSE))
 			. = UPDATE_MOB_HEALTH
 	affected_mob.adjust_disgust(-10 * REM * seconds_per_tick)
+
+/datum/reagent/antihardcrit
+	name = "Conscience Stabilizers"
+	description = "A reagent specifically used to stabilize critical patients to allow them to move despite the severity of their injuries. Impossible to synthesize outside of virology."
+	color = "#78008C"
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+
+/datum/reagent/antihardcrit/on_mob_metabolize(mob/living/L)
+	..()
+	ADD_TRAIT(L,TRAIT_NOHARDCRIT,type)
+
+/datum/reagent/antihardcrit/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L,TRAIT_NOHARDCRIT,type)
+	..()
+
+/datum/reagent/diseasensstim
+	name = "Neurological Stimulants"
+	description = "A minor neurological sitmulant capable of boosting the host's movement speed. Impossible to synthesize outside of virology."
+	color = "#78008C"
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+
+/datum/reagent/diseasensstim/on_mob_metabolize(mob/living/L)
+	..()
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/diseasestim)
+
+/datum/reagent/diseasensstim/on_mob_end_metabolize(mob/living/L)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/diseasestim)
+	..()

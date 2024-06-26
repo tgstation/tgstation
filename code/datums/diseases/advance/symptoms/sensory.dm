@@ -12,7 +12,7 @@
 	resistance = -2
 	stage_speed = 1
 	transmittable = -3
-	level = 5
+	level = 6
 	symptom_delay_min = 5
 	symptom_delay_max = 10
 	var/purge_alcohol = FALSE
@@ -82,7 +82,7 @@
 	resistance = 1
 	stage_speed = -2
 	transmittable = 2
-	level = 4
+	level = 5
 	base_message_chance = 7
 	symptom_delay_min = 1
 	symptom_delay_max = 1
