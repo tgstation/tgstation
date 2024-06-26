@@ -522,3 +522,19 @@
   MrMelbert, KnigTheThrasher:
   - rscadd: Lizards can customize their lisp
   - code_imp: Added a modular file for species features
+2024-06-26:
+  Absolucy:
+  - rscadd: Holomaps now show meteor defense coverage, visualized by a blue grid.
+  - sound: Meteor defense zap sounds should be able to be heard from further away
+      now.
+  - balance: Meteor defense sats can now always be ordered from cargo, regardless
+      of station goal.
+  - balance: Meteor defense sats now cover upwards and downwards too, making them
+      less of a pain on multi-Z stations.
+  - refactor: Tracking which tiles are covered by meteor defense sats is now much
+      more intuitive and efficient.
+  - qol: Meteors now drop debris when zapped by meteor defense sats.
+  - qol: Examining meteor defense sats now also shows how many meteors have been zapped
+      overall by all sats.
+  - balance: Slightly boosted the range of meteor defense satellite from 14 to 16
+      tiles.
