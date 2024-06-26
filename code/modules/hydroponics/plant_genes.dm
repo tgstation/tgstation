@@ -974,13 +974,13 @@
 /datum/plant_gene/trait/never_mutate
 	name = "Prosophobic Inclination"
 	description = "The plant does not mutate normally, but may give a mutated produce."
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_GRAFTABLE
 
 /// Prevents stat mutation caused by instability.  Trait acts as a tag for hydroponics.dm to recognise.
 /datum/plant_gene/trait/stable_stats
 	name = "Symbiotic Resilience"
 	description = "High instability does not affect the plant stats."
-	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_GRAFTABLE
 
 /// Traits for flowers, makes plants not decompose.
 /datum/plant_gene/trait/preserved
@@ -1025,3 +1025,8 @@
 /datum/plant_gene/trait/plant_type/alien_properties
 	name ="?????"
 	icon = "reddit-alien"
+
+/datum/plant_gene/trait/seedless
+	name = "Seedless"
+	description = "The plant is unable to produce seeds"
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE

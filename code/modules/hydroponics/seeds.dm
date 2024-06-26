@@ -254,6 +254,7 @@
 	///Name of the grown products.
 	var/product_name
 	var/seed_harvest_ratio = 0.2
+	var/seedless = get_gene(/datum/plant_gene/trait/seedless)
 	///the value of yield that the harvest amount stops being linear and slows down
 	var/yield_linearity_breakpoint = 100
 	///linear region growth coeff
@@ -272,12 +273,15 @@
 
 	if(plant_yield >= yield_linearity_breakpoint)
 		harvest_amount = qp_sigmoid(yield_linearity_breakpoint, maximum_harvest_amount, plant_yield)
-		maximum_seed_production = floor(harvest_amount * seed_harvest_ratio)
+		if(!seedless)
+			maximum_seed_production = floor(harvest_amount * seed_harvest_ratio)
+
 	else
 		harvest_amount = floor(plant_yield * harvest_linear_coeff)
-		maximum_seed_production = floor(harvest_amount * seed_harvest_ratio)
-		if ((plant_yield > 0 && maximum_seed_production == 0) && prob(50))
-			maximum_seed_production = 1
+		if(!seedless)
+			maximum_seed_production = floor(harvest_amount * seed_harvest_ratio)
+			if ((plant_yield > 0 && maximum_seed_production == 0) && prob(50))
+				maximum_seed_production = 1
 	
 	while(harvest_counter < harvest_amount)
 		while(seed_counter < maximum_seed_production)
