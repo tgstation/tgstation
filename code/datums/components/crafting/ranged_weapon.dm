@@ -79,7 +79,7 @@
 		/obj/item/assembly/signaler/anomaly/grav = 1,
 		/obj/item/assembly/signaler/anomaly/vortex = MAX_CORES_VORTEX,
 		/obj/item/assembly/signaler/anomaly/bluespace = 1,
-		/obj/item/weaponcrafting/gunkit/beam_rifle = 1,
+		1 = 1,
 	)
 	time = 30 SECONDS //Maybe the delay will make you reconsider your choices
 	category = CAT_WEAPON_RANGED
