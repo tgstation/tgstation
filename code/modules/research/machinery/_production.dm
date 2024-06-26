@@ -74,7 +74,7 @@
 		return
 
 	. += span_notice("Material usage cost at <b>[efficiency_coeff * 100]%</b>")
-	. += span_notice("Build time reduced by <b>[efficiency_coeff * 100]%</b>")
+	. += span_notice("Build time at <b>[efficiency_coeff * 100]%</b>")
 	if(drop_direction)
 		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
 		. += span_notice("[EXAMINE_HINT("Alt-click")] to reset.")
