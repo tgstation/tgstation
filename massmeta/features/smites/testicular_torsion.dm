@@ -12,7 +12,22 @@
 	carbon_target.apply_damage(rand(20, 40), BRUTE, BODY_ZONE_L_LEG, wound_bonus = rand(35,60), forced = TRUE)
 	carbon_target.apply_damage(rand(20, 40), BRUTE, BODY_ZONE_R_LEG, wound_bonus = rand(35,60), forced = TRUE)
 	carbon_target.emote("scream")
-	var/list/phrase = list("МОИ ЯЙКИ!!!", "МОИ ШАРЫ!!!", "МОИ ЯЙЦА!!!")
+	var/list/phrase = list(
+    "МОИ ЯЙКИ!!!",
+    "МОИ ШАРЫ!!!",
+    "МОИ ЯЙЦА!!!",
+    "О, НЕТ, МОИ ОРЕХИ!",
+    "ЗА ЧТО МОИ ЯЙЦА?",
+    "МОИ ГОНАДЫ!!!",
+    "МОИ ДРАГОЦЕННОСТИ!!!",
+    "КАКАЯ БОЛЬ!!!",
+    "ПОЧЕМУ МОИ ЯЙЦА?",
+    "О, БОЖЕ, МОИ ЯЙЦА!!!",
+    "МОИ ДРАГОЦЕННЫЕ!!!",
+    "МОИ КАМУШКИ!!!",
+    "О, НЕТ, МОИ ЯЙКИ!",
+    "Я НЕ МОГУ ПОВЕРИТЬ, МОИ ШАРЫ!",
+)
 	carbon_target.say(pick(phrase))
 	carbon_target.Paralyze(15 SECONDS)
 
