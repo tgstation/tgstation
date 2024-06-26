@@ -20,7 +20,7 @@ on:
 jobs:
   run_integration_tests:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30 # Monkestation edit: Our CI takes nearly twice as long, so the timeout is twice as long
     services:
       mysql:
         image: mysql:latest
