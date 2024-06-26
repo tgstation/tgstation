@@ -399,7 +399,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			screentip_change = TRUE
 
 	if(!locked && !opened)
-		if(id_card && istype(held_item, /obj/item/pen))
+		if(id_card && IS_WRITING_UTENSIL(held_item))
 			context[SCREENTIP_CONTEXT_LMB] = "Rename"
 			screentip_change = TRUE
 		if(secure && card_reader_installed && !broken)
@@ -817,7 +817,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		else
 			balloon_alert(user, "set to [choice]")
 
-	else if(!opened && istype(weapon, /obj/item/pen))
+	else if(!opened && IS_WRITING_UTENSIL(weapon))
 		if(locked)
 			balloon_alert(user, "unlock first!")
 			return

@@ -210,7 +210,7 @@
 	if(!user.cell)
 		return
 
-	var/obj/item/stock_parts/cell/our_cell = user.cell
+	var/obj/item/stock_parts/power_store/our_cell = user.cell
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && !(our_cell.use(hitcost)))
 		attack_self(user)
 		to_chat(user, span_notice("It's out of charge!"))

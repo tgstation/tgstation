@@ -111,6 +111,10 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_OWNER_SELF_HARM_RESPONSES = list(
+			"*me licks its own eyeballs in disapproval.",
+			"*me croaks sadly."
+		)
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

@@ -416,6 +416,11 @@
 		BB_BASIC_MOB_CURRENT_TARGET = null, // heathen
 		BB_CURRENT_HUNTING_TARGET = null, // cheese
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // cable
+		BB_OWNER_SELF_HARM_RESPONSES = list(
+			"*me cleans its whiskers in disapproval.",
+			"*me squeaks sadly.",
+			"*me sheds a single small tear."
+		)
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
