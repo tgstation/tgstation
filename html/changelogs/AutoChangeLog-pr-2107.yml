@@ -1,0 +1,13 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Engineers now have an RCD round start."
+  - balance: "RCD construction/deconstruction effects can now be attacked in order to cancel them. You can get the anti-disruption upgrade disk to prevent this."
+  - balance: "RCD construction/deconstruction is now slower if you already have another effect up. This does not effect reconstruction."
+  - balance: "Both of the above effects do not effect the CE's roundstart RCD, nor any other RCDs such as combat RCDs."
+  - rscadd: "RCDs can make girders now."
+  - bugfix: "Some RCD constructs took more material than manual construction. The RCD cost should be consistent in comparison to manual construction now."
+  - bugfix: "RCDs can build wallmounts on reinforced walls."
+  - qol: "RCDs can build directional windows without requiring/building a grill."
+  - bugfix: "You should be able to click on lattices on icebox with the RCD and construct a floor now"
+  - balance: "Maintenance drones now can use RPED, RCD, holosigns, and spray bottles."
