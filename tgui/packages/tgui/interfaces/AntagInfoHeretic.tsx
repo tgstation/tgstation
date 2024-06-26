@@ -35,7 +35,7 @@ const hereticYellow = {
   color: 'yellow',
 };
 
-type Icon = {
+type IconParams = {
   icon: string;
   state: string;
   frame: number;
@@ -45,7 +45,7 @@ type Icon = {
 
 type Knowledge = {
   path: string;
-  icon_params: Icon;
+  icon_params: IconParams;
   name: string;
   desc: string;
   gainFlavor: string;
@@ -270,14 +270,11 @@ const KnowledgeTree = (props) => {
                           frame={node.icon_params.frame}
                           direction={node.icon_params.dir}
                           movement={node.icon_params.moving}
-                          style={{
-                            transform: 'scale(2)',
-                          }}
-                          height={node.ascension?"76px":"32px"}
-                          width={node.ascension?"76px":"32px"}
+                          height={node.ascension?"152px":"64px"}
+                          width={node.ascension?"152px":"64px"}
+                          top={node.ascension?"20px":"0px"}
+                          left={node.ascension?"20px":"0px"}
                           position="absolute"
-                          top={node.ascension?"58px":"16px"}
-                          left={node.ascension?"58px":"16px"}
                         />
                         <Box
                           position="absolute"
