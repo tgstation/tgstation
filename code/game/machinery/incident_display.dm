@@ -61,6 +61,14 @@ DEFINE_BITFIELD(sign_features, list(
 	var/last_delam = 0
 	/// Delam record high-score
 	var/delam_record = 0
+	/// If the display is currently running live updated content
+	var/live_display = FALSE
+	/// How often to show an advert
+	var/advert_frequency = 30 SECONDS
+	/// Timer for sign currently showing an advert
+	COOLDOWN_DECLARE(active_advert)
+	/// Cooldown until next advert
+	COOLDOWN_DECLARE(advert_cooldown)
 
 /obj/machinery/incident_display/delam
 	name = NAME_DELAM
@@ -89,6 +97,26 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 
 /obj/machinery/incident_display/Destroy()
 	GLOB.map_delamination_counters -= src
+	return ..()
+
+/obj/machinery/incident_display/process()
+	if(!live_display)
+		return
+
+	if(machine_stat & (NOPOWER|BROKEN|MAINT))
+		return
+
+	if(COOLDOWN_FINISHED(src, active_advert))
+		COOLDOWN_RESET(src, active_advert)
+		live_display = FALSE
+		update_appearance()
+
+/obj/machinery/incident_display/delam/process()
+	if(COOLDOWN_FINISHED(src, advert_cooldown))
+		show_advert(advert = "advert_meson", duration = 7 SECONDS)
+		COOLDOWN_START(src, advert_cooldown, rand(advert_frequency - 5 SECONDS, advert_frequency + 5 SECONDS))
+		return
+
 	return ..()
 
 /obj/machinery/incident_display/welder_act(mob/living/user, obj/item/tool)
@@ -169,6 +197,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	hit_count = min(tram_collisions, 199)
 	update_appearance()
 
+/obj/machinery/incident_display/proc/show_advert(advert, duration = 7 SECONDS)
+	COOLDOWN_START(src, active_advert, duration)
+	live_display = TRUE
+	update_appearance()
+	flick(advert, src)
+
 /obj/machinery/incident_display/update_appearance(updates = ALL)
 	. = ..()
 	if(machine_stat & NOPOWER)
@@ -191,6 +225,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		return
 
 	. += emissive_appearance(icon, "display_emissive", src, alpha = DISPLAY_BASE_ALPHA)
+
+	if(COOLDOWN_STARTED(src, active_advert))
+		return
 
 	if(sign_features & DISPLAY_DELAM)
 		. += mutable_appearance(icon, "overlay_delam")
