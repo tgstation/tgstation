@@ -476,3 +476,38 @@
 			return relay
 
 	return null
+
+/**
+ * Offsets our relays in place using the given parameter by adjusting their plane and
+ * layer values, avoiding changing the layer for relays with custom-set layers.
+ *
+ * Used in [proc/transform_lower_turfs] to make the relays for non-offsetting planes
+ * match the highest rendering plane that matches the target, to avoid them rendering
+ * on the highest level above things that should be visible.
+ *
+ * Parameters:
+ * - new_offset: the offset we will adjust our relays to
+ */
+/atom/movable/screen/plane_master/proc/offset_relays_in_place(new_offset)
+	for(var/atom/movable/render_plane_relay/rpr in relays)
+		offset_relay(rpr, new_offset)
+
+/**
+ * Offsets a given render relay using the given parameter by adjusting its plane and
+ * layer values, avoiding changing the layer if it has a custom-set layer.
+ *
+ * Parameters:
+ * - rpr: the render plane relay we will offset
+ * - new_offset: the offset we will adjust it by
+ */
+/atom/movable/screen/plane_master/proc/offset_relay(atom/movable/render_plane_relay/rpr, new_offset)
+	var/base_relay_plane = PLANE_TO_TRUE(rpr.plane)
+	rpr.plane = GET_NEW_PLANE(base_relay_plane, new_offset)
+
+	var/old_layer = (plane + abs(LOWEST_EVER_PLANE * 30))
+	if(rpr.layer != old_layer) // Avoid overriding custom-set layers
+		return
+
+	var/offset_plane = real_plane - (PLANE_RANGE * new_offset)
+	var/new_layer = (offset_plane + abs(LOWEST_EVER_PLANE * 30))
+	rpr.layer = new_layer
