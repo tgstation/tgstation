@@ -746,7 +746,7 @@
 		if(!M.reagents.has_reagent(/datum/reagent/medicine/metafactor, 1))
 			M.reagents.add_reagent(/datum/reagent/medicine/metafactor, 0.1)
 
-	if(fatregen && (!HAS_TRAIT_FROM(M, TRAIT_FAT, OBESITY)))
+	if(fatregen && (HAS_TRAIT_FROM(M, TRAIT_FAT, OBESITY)))
 		M.adjustBruteLoss(-0.2)
 		M.adjustFireLoss(-0.2)
 		M.adjustToxLoss(-0.1)
