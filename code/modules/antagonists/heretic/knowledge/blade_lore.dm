@@ -53,7 +53,8 @@
 	cost = 1
 	route = PATH_BLADE
 	depth = 3
-	research_tree_icon = icon('icons/ui_icons/antags/heretic/knowledge.dmi',"grasp_blade")
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "grasp_blade"
 
 /datum/heretic_knowledge/blade_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -114,7 +115,8 @@
 	cost = 1
 	route = PATH_BLADE
 	depth = 4
-	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"shatter",frame=1)
+	research_tree_icon_path = 'icons/mob/actions/actions_ecult.dmi'
+	research_tree_icon_state = "shatter"
 	/// Whether the counter-attack is ready or not.
 	/// Used instead of cooldowns, so we can give feedback when it's ready again
 	var/riposte_ready = TRUE
@@ -257,7 +259,9 @@
 	cost = 1
 	route = PATH_BLADE
 	depth = 8
-	research_tree_icon = icon('icons/effects/blood.dmi',"suitblood",dir=SOUTH)
+	research_tree_icon_path = 'icons/effects/blood.dmi'
+	research_tree_icon_state = "suitblood"
+	research_tree_icon_dir = SOUTH
 	/// Whether we're currently in duelist stance, gaining certain buffs (low health)
 	var/in_duelist_stance = FALSE
 
@@ -317,7 +321,8 @@
 		a flurry of blades, neither hitting their mark, for the Champion was indomitable."
 	next_knowledge = list(/datum/heretic_knowledge/spell/furious_steel)
 	route = PATH_BLADE
-	research_tree_icon = icon('icons/ui_icons/antags/heretic/knowledge.dmi',"blade_upgrade_blade")
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "blade_upgrade_blade"
 	/// How much force do we apply to the offhand?
 	var/offand_force_decrement = 0
 	/// How much force was the last weapon we offhanded with? If it's different, we need to re-calculate the decrement

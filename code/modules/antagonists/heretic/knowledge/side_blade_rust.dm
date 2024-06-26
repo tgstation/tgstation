@@ -63,7 +63,8 @@
 	route = PATH_SIDE
 	depth = 8
 	//rectangular icons cause trouble, let's override by a similar looking gun with a smaller sprite and hope no one notices
-	research_tree_icon = icon('icons/obj/weapons/guns/ballistic.dmi',"goldrevolver")
+	research_tree_icon_path = 'icons/obj/weapons/guns/ballistic.dmi'
+	research_tree_icon_state = "goldrevolver"
 
 /datum/heretic_knowledge/rifle_ammo
 	name = "Lionhunter Rifle Ammunition"

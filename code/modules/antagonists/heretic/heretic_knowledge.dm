@@ -39,8 +39,11 @@
 	/// What path is this on. If set to "null", assumed to be unreachable (or abstract).
 	var/route
 	/// In case we want to override the default UI icon getter and plug in our own icon instead.
-	/// If set to "null", the icon of result_atom or spell_to_add is used.
-	var/icon/research_tree_icon
+	/// if research_tree_icon_path is not null, research_tree_icon_state must also be specified or things may break
+	var/research_tree_icon_path
+	var/research_tree_icon_state
+	var/research_tree_icon_frame = 1
+	var/research_tree_icon_dir = SOUTH
 	/// Level of knowledge tree where this knowledge should be in the UI
 	var/depth = 1
 
@@ -586,7 +589,8 @@
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 10 // A pretty important midgame ritual.
 	depth = 6
-	research_tree_icon = icon('icons/obj/antags/eldritch.dmi',"book")
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "book"
 	/// Whether we've done the ritual. Only doable once.
 	var/was_completed = FALSE
 
@@ -667,7 +671,6 @@
 	desc += " (Completed!)"
 	log_heretic_knowledge("[key_name(user)] completed a [name] at [worldtime2text()].")
 	user.add_mob_memory(/datum/memory/heretic_knowledge_ritual)
-	research_tree_icon = icon('icons/obj/antags/eldritch.dmi',"book_open")
 	return TRUE
 
 #undef KNOWLEDGE_RITUAL_POINTS

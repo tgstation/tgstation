@@ -59,7 +59,8 @@
 	cost = 1
 	route = PATH_VOID
 	depth = 3
-	research_tree_icon = icon('icons/ui_icons/antags/heretic/knowledge.dmi',"grasp_void")
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "grasp_void"
 
 /datum/heretic_knowledge/void_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -90,7 +91,8 @@
 	)
 	cost = 1
 	route = PATH_VOID
-	research_tree_icon = icon('icons/effects/effects.dmi',"the_freezer")
+	research_tree_icon_path = 'icons/effects/effects.dmi'
+	research_tree_icon_state = "the_freezer"
 	depth = 4
 
 /datum/heretic_knowledge/cold_snap/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -141,7 +143,7 @@
 	cost = 1
 	route = PATH_VOID
 	depth = 8
-	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"voidblink",frame=7)
+	research_tree_icon_frame = 7
 
 /datum/heretic_knowledge/blade_upgrade/void
 	name = "Seeking Blade"
@@ -149,7 +151,8 @@
 	gain_text = "Fleeting memories, fleeting feet. I mark my way with frozen blood upon the snow. Covered and forgotten."
 	next_knowledge = list(/datum/heretic_knowledge/spell/void_pull)
 	route = PATH_VOID
-	research_tree_icon = icon('icons/ui_icons/antags/heretic/knowledge.dmi',"blade_upgrade_void")
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "blade_upgrade_void"
 
 /datum/heretic_knowledge/blade_upgrade/void/do_ranged_effects(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(!target.has_status_effect(/datum/status_effect/eldritch))
@@ -177,7 +180,7 @@
 	cost = 1
 	route = PATH_VOID
 	depth = 10
-	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"voidpull",frame=6)
+	research_tree_icon_frame = 6
 
 /datum/heretic_knowledge/ultimate/void_final
 	name = "Waltz at the End of Time"

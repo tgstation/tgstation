@@ -52,7 +52,8 @@
 	cost = 1
 	route = PATH_MOON
 	depth = 3
-	research_tree_icon = icon('icons/ui_icons/antags/heretic/knowledge.dmi',"grasp_moon")
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "grasp_moon"
 
 /datum/heretic_knowledge/moon_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -135,7 +136,7 @@
 	cost = 1
 	route = PATH_MOON
 	depth = 8
-	research_tree_icon = icon('icons/obj/antags/eldritch.dmi',"moon_amulette",frame=9)
+	research_tree_icon_frame = 9
 
 /datum/heretic_knowledge/blade_upgrade/moon
 	name = "Moonlight Blade"
@@ -143,7 +144,8 @@
 	gain_text = "His wit was sharp as a blade, cutting through the lie to bring us joy."
 	next_knowledge = list(/datum/heretic_knowledge/spell/moon_ringleader)
 	route = PATH_MOON
-	research_tree_icon = icon('icons/ui_icons/antags/heretic/knowledge.dmi',"blade_upgrade_moon")
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "blade_upgrade_moon"
 
 /datum/heretic_knowledge/blade_upgrade/moon/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(source == target)
@@ -172,7 +174,7 @@
 	cost = 1
 	route = PATH_MOON
 	depth = 10
-	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"moon_ringleader",frame=5)
+	research_tree_icon_frame = 5
 
 /datum/heretic_knowledge/ultimate/moon_final
 	name = "The Last Act"

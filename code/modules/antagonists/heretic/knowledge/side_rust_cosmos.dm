@@ -29,7 +29,9 @@
 	)
 	cost = 0
 	route = PATH_SIDE
-	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"corrode",frame=10)
+	research_tree_icon_path = 'icons/mob/actions/actions_ecult.dmi'
+	research_tree_icon_state = "corrode"
+	research_tree_icon_frame = 10
 	depth = 4
 	var/rusting_range = 8
 
@@ -63,7 +65,8 @@
 	curse_color = "#c1ffc9"
 	cost = 1
 	route = PATH_SIDE
-	research_tree_icon = icon('icons/ui_icons/antags/heretic/knowledge.dmi',"curse_corrosion")
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "curse_corrosion"
 	depth = 8
 
 /datum/heretic_knowledge/curse/corrosion/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)

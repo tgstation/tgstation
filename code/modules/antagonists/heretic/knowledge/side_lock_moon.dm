@@ -55,7 +55,8 @@
 	result_atoms = list(/obj/item/canvas)
 	cost = 1
 	route = PATH_SIDE
-	research_tree_icon = icon('icons/obj/signs.dmi',"eldritch_painting_weeping")
+	research_tree_icon_path = 'icons/obj/signs.dmi'
+	research_tree_icon_state = "eldritch_painting_weeping"
 	depth = 8
 
 /datum/heretic_knowledge/painting/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)

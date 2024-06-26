@@ -53,7 +53,8 @@
 	cost = 1
 	route = PATH_RUST
 	depth = 3
-	research_tree_icon = icon('icons/ui_icons/antags/heretic/knowledge.dmi',"grasp_rust")
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "grasp_rust"
 
 /datum/heretic_knowledge/rust_fist/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -95,7 +96,8 @@
 	)
 	cost = 1
 	route = PATH_RUST
-	research_tree_icon = icon('icons/effects/eldritch.dmi',"cloud_swirl",frame=1)
+	research_tree_icon_path = 'icons/effects/eldritch.dmi'
+	research_tree_icon_state = "cloud_swirl"
 	depth = 4
 
 /datum/heretic_knowledge/rust_regen/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -197,7 +199,7 @@
 	cost = 1
 	route = PATH_RUST
 	depth = 8
-	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"corrode",frame=5)
+	research_tree_icon_frame = 5
 
 /datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -210,7 +212,8 @@
 		The heavy rust weights it down. You stare deeply into it. The Rusted Hills call for you, now."
 	next_knowledge = list(/datum/heretic_knowledge/spell/entropic_plume)
 	route = PATH_RUST
-	research_tree_icon = icon('icons/ui_icons/antags/heretic/knowledge.dmi',"blade_upgrade_rust")
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "blade_upgrade_rust"
 
 /datum/heretic_knowledge/blade_upgrade/rust/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()

@@ -106,42 +106,55 @@
 		//if the argument is a typepath, we need to make a dummy so we can access some of its properties
 		knowledge = new knowledge()
 
+	//basic icon parameters
+	var/icon_path = 'icons/mob/actions/actions_ecult.dmi'
+	var/icon_state = "eye"
+	var/icon_frame = knowledge.research_tree_icon_frame
+	var/icon_dir = knowledge.research_tree_icon_dir
+	//can't imagine why you would want this one, so it can't be overridden by the knowledge
+	var/icon_moving = 0
+
 	//if the knowledge has a special icon, use that
-	if(!isnull(knowledge.research_tree_icon))
-		return knowledge.research_tree_icon
+	if(!isnull(knowledge.research_tree_icon_path))
+		icon_path = knowledge.research_tree_icon_path
+		icon_state = knowledge.research_tree_icon_state
 
 	//if the knowledge is a transmutation, use the result
-	if(!isnull(knowledge.result_atoms) && knowledge.result_atoms.len)
+	else if(!isnull(knowledge.result_atoms) && knowledge.result_atoms.len)
 		var/atom/result_thing = knowledge.result_atoms[1]
-		return icon(result_thing.icon,result_thing.icon_state,frame=1)
+		icon_path = result_thing.icon
+		icon_state = result_thing.icon_state
 
 	//if the knowledge is a spell, use the spell's button
-	if(istype(knowledge,/datum/heretic_knowledge/spell))
+	else if(istype(knowledge,/datum/heretic_knowledge/spell))
 		var/datum/heretic_knowledge/spell/spell_knowledge = knowledge
 		var/datum/action/cooldown/spell/result_spell = spell_knowledge.spell_to_add
-		return icon(result_spell.button_icon,result_spell.button_icon_state,frame=1)
+		icon_path = result_spell.button_icon
+		icon_state = result_spell.button_icon_state
 
 	//if the knowledge is a summon, use the mob sprite
-	if(istype(knowledge,/datum/heretic_knowledge/summon))
+	else if(istype(knowledge,/datum/heretic_knowledge/summon))
 		var/datum/heretic_knowledge/summon/summon_knowledge = knowledge
 		var/mob/living/result_mob = summon_knowledge.mob_to_summon
-		return icon(result_mob.icon,result_mob.icon_state,frame=1,dir=SOUTH,moving=0)
+		icon_path = result_mob.icon
+		icon_state = result_mob.icon_state
 
 	//if the knowledge is an eldritch mark, use the mark sprite
-	if(istype(knowledge,/datum/heretic_knowledge/mark))
+	else if(istype(knowledge,/datum/heretic_knowledge/mark))
 		var/datum/heretic_knowledge/mark/mark_knowledge = knowledge
 		var/datum/status_effect/eldritch/mark_effect = mark_knowledge.mark_type
-		return icon(mark_effect.effect_icon,mark_effect.effect_icon_state,frame=1)
+		icon_path = mark_effect.effect_icon
+		icon_state = mark_effect.effect_icon_state
 
 	//if the knowledge is an ascension, use the achievement sprite
-	if(istype(knowledge,/datum/heretic_knowledge/ultimate))
+	else if(istype(knowledge,/datum/heretic_knowledge/ultimate))
 		var/datum/heretic_knowledge/ultimate/ascension_knowledge = knowledge
 		var/datum/award/achievement/misc/achievement = ascension_knowledge.ascension_achievement
 		if(!isnull(achievement))
-			return icon(achievement.icon,achievement.icon_state)
+			icon_path = achievement.icon
+			icon_state = achievement.icon_state
 
-	//if all else fails, use a default icon
-	return icon('icons/mob/actions/actions_ecult.dmi',"eye")
+	return icon(icon_path,icon_state,frame=icon_frame,dir=icon_dir,moving=icon_moving)
 
 /datum/antagonist/heretic/ui_data(mob/user)
 	var/list/data = list()

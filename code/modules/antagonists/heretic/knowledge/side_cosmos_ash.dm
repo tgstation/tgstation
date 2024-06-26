@@ -20,7 +20,7 @@
 	route = PATH_SIDE
 	poll_ignore_define = POLL_IGNORE_FIRE_SHARK
 	depth = 4
-	research_tree_icon = icon('icons/mob/nonhuman-player/eldritch_mobs.dmi',"fire_shark",dir=EAST,moving=FALSE)
+	research_tree_icon_dir = EAST
 
 /datum/heretic_knowledge/spell/space_phase
 	name = "Space Phase"
@@ -35,7 +35,7 @@
 	cost = 1
 	route = PATH_SIDE
 	depth = 8
-	research_tree_icon = icon('icons/mob/actions/actions_ecult.dmi',"space_crawl",frame=6)
+	research_tree_icon_frame = 6
 
 /datum/heretic_knowledge/eldritch_coin
 	name = "Eldritch Coin"
