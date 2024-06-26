@@ -263,6 +263,9 @@ const KnowledgeTree = (props) => {
                         width={node.ascension?"192px":"64px"}
                         height={node.ascension?"192px":"64px"}
                         m="8px"
+                        style={{
+                          borderRadius: node.ascension?'50%':'16px',
+                        }}
                       >
                         <DmIcon
                           icon={node.icon_params.icon}
@@ -275,6 +278,9 @@ const KnowledgeTree = (props) => {
                           top={node.ascension?"20px":"0px"}
                           left={node.ascension?"20px":"0px"}
                           position="absolute"
+                          style={{
+                            borderRadius: node.ascension?"50%":"16px",
+                          }}
                         />
                         <Box
                           position="absolute"
