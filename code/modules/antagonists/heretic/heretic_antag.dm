@@ -102,12 +102,15 @@
 	if(!isnull(knowledge.research_tree_icon_path))
 		icon_path = knowledge.research_tree_icon_path
 		icon_state = knowledge.research_tree_icon_state
-/*
+
 	//if the knowledge is a transmutation, use the result
+	//this does not work, since we can not access a list of a typepath without instantiating - all transmutation icons should just be defined in the override variables
+	/*
 	else if(!isnull(knowledge.result_atoms) && knowledge.result_atoms.len)
 		var/atom/result_thing = knowledge.result_atoms[1]
 		icon_path = result_thing.icon
-		icon_state = result_thing.icon_state*/
+		icon_state = result_thing.icon_state
+	*/
 
 	//if the knowledge is a spell, use the spell's button
 	else if(ispath(knowledge,/datum/heretic_knowledge/spell))
