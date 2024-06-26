@@ -739,3 +739,6 @@
 /obj/machinery/light/floor/transport
 	name = "transport light"
 	break_if_moved = FALSE
+	// has to render above tram things (trams are stupid)
+	layer = BELOW_OPEN_DOOR_LAYER
+	plane = GAME_PLANE
