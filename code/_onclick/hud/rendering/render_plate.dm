@@ -454,6 +454,8 @@
 	// That's what this is for
 	if(show_to)
 		show_to.screen += relay
+	if(offsetting_flags & OFFSET_RELAYS_MATCH_HIGHEST && home.our_hud)
+		offset_relay(relay, home.our_hud.current_plane_offset)
 	return relay
 
 /// Breaks a connection between this plane master, and the passed in place
