@@ -138,6 +138,7 @@
 #include "leash.dm"
 #include "lesserform.dm"
 #include "limbsanity.dm"
+#include "linked_xenobio_pens.dm"
 #include "load_map_security.dm"
 #include "lungs.dm"
 #include "machine_disassembly.dm"

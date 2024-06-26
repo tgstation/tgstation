@@ -2,6 +2,8 @@
 #define SUCKER_UPGRADE_BALANCER "balancer"
 #define SUCKER_UPGRADE_CAPACITY "capacity"
 
+GLOBAL_LIST_EMPTY_TYPED(ooze_suckers, /obj/machinery/plumbing/ooze_sucker)
+
 ///this cannablizes floor_pump code but rips specific reagents and and such just does stuff itself so it can be expanded easier in the future
 /obj/machinery/plumbing/ooze_sucker
 	name = "ooze sucker"
@@ -45,12 +47,17 @@
 
 /obj/machinery/plumbing/ooze_sucker/Initialize(mapload, bolt, layer)
 	. = ..()
+	GLOB.ooze_suckers += src
 	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/plumbing/ooze_sucker/LateInitialize()
 	. = ..()
 	locate_machinery()
+
+/obj/machinery/plumbing/ooze_sucker/Destroy()
+	GLOB.ooze_suckers -= src
+	return ..()
 
 /obj/machinery/plumbing/ooze_sucker/locate_machinery(multitool_connection)
 	if(!mapping_id)

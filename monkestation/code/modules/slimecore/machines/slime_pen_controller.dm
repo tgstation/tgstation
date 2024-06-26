@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY_TYPED(slime_pen_controllers, /obj/machinery/slime_pen_controller)
+
 /obj/item/wallframe/slime_pen_controller
 	name = "slime pen management frame"
 	desc = "Used for building slime pen consoles."
@@ -21,12 +23,17 @@
 
 /obj/machinery/slime_pen_controller/Initialize(mapload)
 	. = ..()
+	GLOB.slime_pen_controllers += src
 	register_context()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/slime_pen_controller/LateInitialize()
 	. = ..()
 	locate_machinery()
+
+/obj/machinery/slime_pen_controller/Destroy()
+	GLOB.slime_pen_controllers -= src
+	return ..()
 
 /obj/machinery/slime_pen_controller/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
