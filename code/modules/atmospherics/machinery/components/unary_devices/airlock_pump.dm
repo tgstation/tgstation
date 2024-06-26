@@ -1,4 +1,4 @@
-/// A vent, scrubber and a sensor in a single device meant specifically for cycling airlocks
+/// A vent, scrubber and a sensor in a single device meant specifically for cycling airlocks. Ideal for airlocks of up to 3x3 tiles in size to avoid wind and timing out.
 /obj/machinery/atmospherics/components/unary/airlock_pump
 	name = "airlock pump"
 	desc = "A pump for cycling airlock that vents, siphons the air and controls the connected airlocks. Can be configured with a multitool."
@@ -19,10 +19,12 @@
 
 	///Indicates that the direction of the pump, if ATMOS_DIRECTION_SIPHONING is siphoning, if ATMOS_DIRECTION_RELEASING is releasing
 	var/pump_direction = ATMOS_DIRECTION_RELEASING
-	///Set pressure target during pressurization cycle
-	var/target_pressure = ONE_ATMOSPHERE
+	///Target pressure for pressurization cycle
+	var/internal_pressure_target = ONE_ATMOSPHERE
+	///Target pressure for depressurization cycle
+	var/external_pressure_target = 0
 	///Allowed error in pressure checks
-	var/target_pressure_error = ONE_ATMOSPHERE / 100
+	var/allowed_pressure_error = ONE_ATMOSPHERE / 100
 	///Rate of the pump to remove gases from the air
 	var/volume_rate = 1000
 	///The start time of the current cycle to calculate cycle duration
@@ -31,6 +33,14 @@
 	var/cycle_timeout = 10 SECONDS
 	///List of the turfs adjacent to the pump for faster cycling and avoiding wind
 	var/list/turf/adjacent_turfs = list()
+	///Max distance between the airlock and the pump. Used to set up cycling.
+	var/airlock_distance_limit = 2
+	///Station-facing airlock used in cycling
+	var/obj/machinery/door/airlock/internal_airlock
+	///Space-facing airlock used in cycling
+	var/obj/machinery/door/airlock/external_airlock
+	///Whether both airlocks are specified and cycling is available
+	var/cycling_set_up = FALSE
 
 	COOLDOWN_DECLARE(check_turfs_cooldown)
 
@@ -65,6 +75,16 @@
 		nodes += node_waste
 	update_appearance()
 
+/obj/machinery/atmospherics/components/unary/airlock_pump/Initialize(mapload)
+	. = ..()
+	internal_airlock = find_airlock(dir)
+	external_airlock = find_airlock(REVERSE_DIR(dir))
+	if(internal_airlock && external_airlock)
+		internal_airlock.cycle_pump = src
+		external_airlock.cycle_pump = src
+		external_airlock.bolt()
+		cycling_set_up = TRUE
+
 /obj/machinery/atmospherics/components/unary/airlock_pump/New()
 	. = ..()
 	var/datum/gas_mixture/distro_air = airs[1]
@@ -85,7 +105,7 @@
 		COOLDOWN_START(src, check_turfs_cooldown, 2 SECONDS)
 
 	if(world.time - cycle_start_time > cycle_timeout)
-		say("Cycling timed out!")
+		say("Cycling timed out, bolts unlocked.")
 		stop_cycle()
 		return //Couldn't complete the cycle before timeout
 
@@ -94,10 +114,10 @@
 	var/tile_air_pressure = tile_air.return_pressure()
 
 	if(pump_direction == ATMOS_DIRECTION_RELEASING) //distro node -> tile
-		var/pressure_delta = target_pressure - tile_air_pressure
+		var/pressure_delta = internal_pressure_target - tile_air_pressure
 
-		if(pressure_delta <= target_pressure_error && stop_cycle())
-			say("Pressurization complete.")
+		if(pressure_delta <= allowed_pressure_error && stop_cycle())
+			internal_airlock.say("Pressurization complete.")
 			return //Target pressure reached
 
 		var/available_moles = distro_air.total_moles()
@@ -108,10 +128,10 @@
 		for(var/turf/tile in adjacent_turfs)
 			fill_tile(tile, split_moles, pressure_delta)
 	else //tile -> waste node
-		var/pressure_delta = tile_air_pressure
+		var/pressure_delta = tile_air_pressure - external_pressure_target
 
-		if(pressure_delta <= target_pressure_error && stop_cycle())
-			say("Depressurization complete.")
+		if(pressure_delta <= allowed_pressure_error && stop_cycle())
+			external_airlock.say("Decompression complete.")
 			return //Target pressure reached
 
 		siphon_tile(loc)
@@ -147,20 +167,50 @@
 	waste_air.merge(removed_air)
 	waste_pipe.update = TRUE
 
-/obj/machinery/atmospherics/components/unary/airlock_pump/proc/start_cycle()
+/// Proc for triggering cycle by clicking on a bolted airlock that has a pump assigned
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/airlock_act(obj/machinery/door/airlock/airlock)
 	if(on)
+		airlock.say("Busy cycling.")
+		return
+	if(!cycling_set_up)
+		airlock.say("Airlock pair not found.")
+		return
+	if(airlock == external_airlock)
+		start_cycle(ATMOS_DIRECTION_SIPHONING)
+	else if(airlock == internal_airlock)
+		start_cycle(ATMOS_DIRECTION_RELEASING)
+
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/start_cycle(force_direction)
+	if(on || !cycling_set_up)
 		return FALSE
+	if(force_direction)
+		pump_direction = force_direction
+	else
+		pump_direction = !pump_direction
+
+	internal_airlock.secure_close()
+	external_airlock.secure_close()
+
+	if(pump_direction == ATMOS_DIRECTION_RELEASING)
+		internal_airlock.say("Pressurizing.")
+	else
+		external_airlock.say("Decompressing.")
+
 	on = TRUE
 	cycle_start_time = world.time
-	say(pump_direction ? "Pressurizing." : "Depressurizing.")
 	update_appearance()
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/stop_cycle()
 	if(!on)
 		return FALSE
+
+	if(pump_direction == ATMOS_DIRECTION_RELEASING)
+		internal_airlock.unbolt()
+	else
+		external_airlock.unbolt()
+
 	on = FALSE
-	pump_direction = !pump_direction
 	update_appearance()
 	return TRUE
 
@@ -173,3 +223,12 @@
 	var/turf/local_turf = get_turf(src)
 	adjacent_turfs = local_turf.get_atmos_adjacent_turfs(alldir = TRUE)
 
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/find_airlock(direction)
+	var/turf/next_turf = get_turf(src)
+	var/limit = max(1, airlock_distance_limit)
+	while(limit)
+		limit--
+		next_turf = get_step(next_turf, direction)
+		var/obj/machinery/door/airlock/found_airlock = locate() in next_turf
+		if (found_airlock && !found_airlock.cycle_pump)
+			return found_airlock

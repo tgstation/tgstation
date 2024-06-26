@@ -139,6 +139,9 @@
 	/// Used for papers and photos pinned to the airlock
 	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 
+	/// Airlock pump that overrides airlock controlls when set up for cycling
+	var/obj/machinery/atmospherics/components/unary/airlock_pump/cycle_pump
+
 	var/cyclelinkeddir = 0
 	var/obj/machinery/door/airlock/cyclelinkedairlock
 	var/shuttledocked = 0
@@ -1733,7 +1736,11 @@
 	if(welded)
 		to_chat(user, span_warning("The airlock has been welded shut!"))
 	else if(locked)
-		to_chat(user, span_warning("The door bolts are down!"))
+		if(cycle_pump)
+			cycle_pump.airlock_act(src)
+			return FALSE // The rest will be handled by the pump
+		else
+			to_chat(user, span_warning("The door bolts are down!"))
 	else if(!density)
 		close()
 	else
