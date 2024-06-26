@@ -1,4 +1,8 @@
-GLOBAL_LIST_EMPTY(map_delamination_counters)
+/**
+ * List of incident displays on the map
+ * Required as persistence subsystem loads after the ones present at mapload, and to reset to 0 upon explosion.
+ */
+GLOBAL_LIST_EMPTY(map_incident_displays)
 
 /// Display days since last delam on incident sign
 #define DISPLAY_DELAM (1<<0)
@@ -28,11 +32,6 @@ DEFINE_BITFIELD(sign_features, list(
 
 #define LIGHT_COLOR_NORMAL "#4b4290"
 #define LIGHT_COLOR_SHAME "#e24e76"
-
-/**
- * List of safety statistic signs on the map that have delam counting enabled.
- * Required as persistence subsystem loads after the ones present at mapload, and to reset to 0 upon explosion.
- */
 
 /obj/machinery/incident_display
 	name = NAME_DELAM
@@ -89,30 +88,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 
 /obj/machinery/incident_display/post_machine_initialize()
 	. = ..()
-	GLOB.map_delamination_counters += src
+	GLOB.map_incident_displays += src
 	update_delam_count(SSpersistence.rounds_since_engine_exploded, SSpersistence.delam_highscore)
 	RegisterSignal(SStransport, COMSIG_TRAM_COLLISION, PROC_REF(update_tram_count))
 
 	update_appearance()
 
 /obj/machinery/incident_display/Destroy()
-	GLOB.map_delamination_counters -= src
+	GLOB.map_incident_displays -= src
 	return ..()
 
 /obj/machinery/incident_display/process()
-	if(!live_display)
+	if(!live_display) // displaying static content, no processing required
 		return
 
 	if(machine_stat & (NOPOWER|BROKEN|MAINT))
 		return
 
-	if(COOLDOWN_FINISHED(src, active_advert))
+	if(COOLDOWN_FINISHED(src, active_advert)) // advert finished, revert to static content
 		COOLDOWN_RESET(src, active_advert)
 		live_display = FALSE
 		update_appearance()
 
 /obj/machinery/incident_display/delam/process()
-	if(COOLDOWN_FINISHED(src, advert_cooldown))
+	if(COOLDOWN_FINISHED(src, advert_cooldown)) // time to show an advert
 		show_advert(advert = "advert_meson", duration = 7 SECONDS)
 		COOLDOWN_START(src, advert_cooldown, rand(advert_frequency - 5 SECONDS, advert_frequency + 5 SECONDS))
 		return
@@ -186,17 +185,40 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	new /obj/item/shard(drop_location())
 	new /obj/item/shard(drop_location())
 
+/**
+ * Update the delamination count on the display
+ *
+ * Use the provided args to update the incident display when in delam mode.
+ * Arguments:
+ * * new_count - number of shifts without a delam
+ * * record - current high score for the delam count
+ */
 /obj/machinery/incident_display/proc/update_delam_count(new_count, record)
 	delam_record = record
 	last_delam = min(new_count, 199)
 	update_appearance()
 
+/**
+ * Update the tram hit count on the display
+ *
+ * Sign receives a signal from SStransport that the tram has hit someone, and updates the count.
+ * Arguments:
+ * * source - hopefully is the transport subsystem
+ * * tram_collisions - current number of tram hits
+ */
 /obj/machinery/incident_display/proc/update_tram_count(source, tram_collisions)
 	SIGNAL_HANDLER
 
 	hit_count = min(tram_collisions, 199)
 	update_appearance()
 
+/**
+ * Run an animated advert on the display
+ *
+ * Arguments:
+ * * advert - icon state to flick to
+ * * duration - length of the advert animation
+ */
 /obj/machinery/incident_display/proc/show_advert(advert, duration = 7 SECONDS)
 	COOLDOWN_START(src, active_advert, duration)
 	live_display = TRUE
@@ -212,7 +234,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	else if(machine_stat & BROKEN)
 		icon_state = "display_broken"
 		set_light(l_range = 1.7, l_power = 1.5, l_color = LIGHT_COLOR_NORMAL, l_on = TRUE)
-	else if((sign_features & DISPLAY_DELAM) && last_delam <= 0)
+	else if((sign_features & DISPLAY_DELAM) && last_delam <= 0) // you done fucked up
 		icon_state = "display_shame"
 		set_light(l_range = 1.7, l_power = 1.5, l_color = LIGHT_COLOR_SHAME, l_on = TRUE)
 	else
@@ -226,7 +248,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 
 	. += emissive_appearance(icon, "display_emissive", src, alpha = DISPLAY_BASE_ALPHA)
 
-	if(COOLDOWN_STARTED(src, active_advert))
+	if(COOLDOWN_STARTED(src, active_advert)) // we don't show the static content during adverts
 		return
 
 	if(sign_features & DISPLAY_DELAM)
