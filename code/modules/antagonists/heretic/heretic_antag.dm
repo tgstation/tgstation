@@ -110,28 +110,28 @@
 		icon_state = result_thing.icon_state*/
 
 	//if the knowledge is a spell, use the spell's button
-	else if(istype(knowledge,/datum/heretic_knowledge/spell))
+	else if(ispath(knowledge,/datum/heretic_knowledge/spell))
 		var/datum/heretic_knowledge/spell/spell_knowledge = knowledge
 		var/datum/action/cooldown/spell/result_spell = spell_knowledge.spell_to_add
 		icon_path = result_spell.button_icon
 		icon_state = result_spell.button_icon_state
 
 	//if the knowledge is a summon, use the mob sprite
-	else if(istype(knowledge,/datum/heretic_knowledge/summon))
+	else if(ispath(knowledge,/datum/heretic_knowledge/summon))
 		var/datum/heretic_knowledge/summon/summon_knowledge = knowledge
 		var/mob/living/result_mob = summon_knowledge.mob_to_summon
 		icon_path = result_mob.icon
 		icon_state = result_mob.icon_state
 
 	//if the knowledge is an eldritch mark, use the mark sprite
-	else if(istype(knowledge,/datum/heretic_knowledge/mark))
+	else if(ispath(knowledge,/datum/heretic_knowledge/mark))
 		var/datum/heretic_knowledge/mark/mark_knowledge = knowledge
 		var/datum/status_effect/eldritch/mark_effect = mark_knowledge.mark_type
 		icon_path = mark_effect.effect_icon
 		icon_state = mark_effect.effect_icon_state
 
 	//if the knowledge is an ascension, use the achievement sprite
-	else if(istype(knowledge,/datum/heretic_knowledge/ultimate))
+	else if(ispath(knowledge,/datum/heretic_knowledge/ultimate))
 		var/datum/heretic_knowledge/ultimate/ascension_knowledge = knowledge
 		var/datum/award/achievement/misc/achievement = ascension_knowledge.ascension_achievement
 		if(!isnull(achievement))
