@@ -191,7 +191,12 @@
 	var/upgraded = FALSE
 
 /obj/item/borg/cyborg_omnitool/Destroy(force)
-	QDEL_LIST_ASSOC_VAL(atoms)
+	for(var/obj/item/tool_path as anything in atoms)
+		var/obj/item/tool = atoms[tool_path]
+		if(!QDELETED(tool)) //if we are sharing tools from our other omnitool brothers we don't want to re delete them if they got deleted first
+			qdel(tool)
+	atoms.Cut()
+
 	return ..()
 
 /obj/item/borg/cyborg_omnitool/get_all_tool_behaviours()
@@ -204,13 +209,25 @@
 	if(!reference)
 		return src
 
+	//first check if we have the tool
 	var/obj/item/tool = atoms[reference]
+	if(!QDELETED(tool))
+		return tool
 
-	if(QDELETED(tool))
-		tool = new reference(src)
-		ADD_TRAIT(tool, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-		atoms[reference] = tool
+	//else try to borrow an in-built tool from our other omnitool brothers to save & share memory & such
+	var/mob/living/silicon/robot/borg = user
+	for(var/obj/item/borg/cyborg_omnitool/omni_tool in borg.model.basic_modules)
+		if(omni_tool == src)
+			continue
+		tool = omni_tool.atoms[reference]
+		if(!QDELETED(tool))
+			atoms[reference] = tool
+			return tool
 
+	//if all else fails just make a new one from scratch
+	tool = new reference(user)
+	ADD_TRAIT(tool, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	atoms[reference] = tool
 	return tool
 
 /obj/item/borg/cyborg_omnitool/attack_self(mob/user)
@@ -242,20 +259,14 @@
 	return ..()
 
 /**
- * Is this omni tool upgraded or not, upgraded changes the name & description
+ * Is this omni tool upgraded or not
  * Arguments
  *
  * * upgrade - TRUE/FALSE for upgraded
  */
 /obj/item/borg/cyborg_omnitool/proc/set_upgraded(upgrade)
-	name = initial(name)
-	desc = initial(desc)
-
-	if(upgraded)
-		name = "advanced [name]"
-		desc += "\nIt seems that this one has been upgraded to perform tasks faster."
-
 	upgraded = upgraded
+
 	playsound(src, 'sound/items/change_jaws.ogg', 50, TRUE)
 
 /obj/item/borg/cyborg_omnitool/medical
@@ -287,6 +298,14 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/multitool/cyborg,
 	)
+
+/obj/item/borg/cyborg_omnitool/engineering/examine(mob/user)
+	. = ..()
+
+	if(tool_behaviour == TOOL_MULTITOOL)
+		for(var/obj/item/multitool/tool in atoms)
+			. += "Its multitool buffer contains [tool.buffer]"
+			break
 
 #undef PKBORG_DAMPEN_CYCLE_DELAY
 #undef POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER

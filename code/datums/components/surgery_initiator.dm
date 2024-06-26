@@ -259,7 +259,8 @@
 		return FALSE
 
 	// The item was moved somewhere else
-	if (!recursive_loc_check(parent, user))
+	var/atom/movable/tool = parent
+	if (tool.loc != user)
 		return FALSE
 
 	// While we were choosing, another surgery was started at the same location
