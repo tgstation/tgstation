@@ -150,10 +150,7 @@
 	data["total_sacrifices"] = total_sacrifices
 	data["ascended"] = ascended
 
-	//setup tiers
 	var/list/tiers = list()
-	for(var/i in 0 to 10)
-		tiers += list(list("nodes"=list()))
 
 	// This should be cached in some way, but the fact that final knowledge
 	// has to update its disabled state based on whether all objectives are complete,
@@ -171,6 +168,9 @@
 		knowledge_data["color"] = "black"
 		knowledge_data["finished"] = TRUE
 		knowledge_data["ascension"] = istype(found_knowledge,/datum/heretic_knowledge/ultimate)
+
+		while(found_knowledge.depth > tiers.len)
+			tiers += list(list("nodes"=list()))
 
 		tiers[found_knowledge.depth]["nodes"] += list(knowledge_data)
 
