@@ -101,7 +101,7 @@
 	for(var/datum/heretic_knowledge/path as anything in subtypesof(/datum/heretic_knowledge))
 		var/icon/icon_of_knowledge = get_icon_of_knowledge(path)
 		if(istype(path,/datum/heretic_knowledge/ultimate))
-			icon_of_knowledge.Scale(128,128)
+			icon_of_knowledge.Scale(152,152)
 		else
 			icon_of_knowledge.Scale(64,64)
 		Insert(sanitize_css_class_name("[path]"), icon_of_knowledge)
