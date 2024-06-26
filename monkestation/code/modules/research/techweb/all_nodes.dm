@@ -133,6 +133,7 @@
 		"fakedeath_nanites",
 		"purging_plus_nanites",
 		"regenerative_plus_nanites",
+		"oxygen_rush_nanites",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000, TECHWEB_POINT_TYPE_NANITES = 3000)
 

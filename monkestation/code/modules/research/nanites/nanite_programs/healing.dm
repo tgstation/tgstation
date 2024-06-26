@@ -231,3 +231,41 @@
 		log_game("[C] has been successfully defibrillated by nanites.")
 	else
 		playsound(C, 'sound/machines/defib_failed.ogg', 50, FALSE)
+
+
+//heard you like smoking
+/datum/nanite_program/oxygen_rush
+	name = "Alveolic Deoxidation"
+	desc = "The nanites deoxidze the carbon dioxide carried within the blood inside of the host's lungs through rapid electrical stimulus. \
+			However, this process is extremely dangerous, leaving carbon deposits within the lungs as well as causing severe organ damage."
+	use_rate = 10
+	rogue_types = list(/datum/nanite_program/suffocating)
+
+	COOLDOWN_DECLARE(warning_cooldown)
+	COOLDOWN_DECLARE(ending_cooldown)
+
+/datum/nanite_program/oxygen_rush/check_conditions()
+	var/obj/item/organ/internal/lungs/lungs = host_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
+	if(!lungs)
+		return FALSE
+	return ..() && !(lungs.organ_flags & ORGAN_FAILING)
+
+/datum/nanite_program/oxygen_rush/active_effect()
+	host_mob.adjustOxyLoss(-10, TRUE)
+	host_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 4)
+	var/mob/living/carbon/carbon_host = host_mob
+	if(prob(8) && istype(carbon_host))
+		to_chat(host_mob, span_userdanger("You feel a sudden flood of pain in your chest!"))
+		carbon_host.vomit(blood = TRUE, harm = FALSE)
+
+/datum/nanite_program/oxygen_rush/enable_passive_effect()
+	. = ..()
+	if(COOLDOWN_FINISHED(src, warning_cooldown))
+		to_chat(host_mob, span_warning("You feel a hellish burning in your chest!"))
+		COOLDOWN_START(src, warning_cooldown, 10 SECONDS)
+
+/datum/nanite_program/oxygen_rush/disable_passive_effect()
+	. = ..()
+	if(COOLDOWN_FINISHED(src, ending_cooldown))
+		to_chat(host_mob, span_notice("The fire in your chest subsides."))
+		COOLDOWN_START(src, ending_cooldown, 10 SECONDS)
