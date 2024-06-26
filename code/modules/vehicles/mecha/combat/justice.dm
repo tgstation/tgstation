@@ -2,7 +2,7 @@
 #define DISMEMBER_CHANCE_LOW 25
 
 #define MOVEDELAY_ANGRY 4.5
-#define MOVEDELAY_SAFTY 2.5
+#define MOVEDELAY_SAFETY 2.5
 
 /obj/vehicle/sealed/mecha/justice
 	desc = "Black and red syndicate mech designed for execution orders. \
@@ -10,7 +10,7 @@
 	name = "\improper Justice"
 	icon_state = "justice"
 	base_icon_state = "justice"
-	movedelay = MOVEDELAY_SAFTY // fast
+	movedelay = MOVEDELAY_SAFETY // fast
 	max_integrity = 200 // but weak
 	accesses = list(ACCESS_SYNDICATE)
 	armor_type = /datum/armor/mecha_justice
@@ -27,7 +27,7 @@
 	brute_attack_sound = 'sound/mecha/mech_blade_attack.ogg'
 	attack_verbs = list("cut", "cuts", "cutting")
 	weapons_safety = TRUE
-	sefty_sound_custom = TRUE
+	safety_sound_custom = TRUE
 	max_equip_by_category = list(
 		MECHA_L_ARM = null,
 		MECHA_R_ARM = null,
@@ -65,7 +65,7 @@
 /obj/vehicle/sealed/mecha/justice/set_safety(mob/user)
 	. = ..()
 	if(weapons_safety)
-		movedelay = MOVEDELAY_SAFTY
+		movedelay = MOVEDELAY_SAFETY
 	else
 		movedelay = MOVEDELAY_ANGRY
 
@@ -533,4 +533,4 @@
 #undef DISMEMBER_CHANCE_LOW
 
 #undef MOVEDELAY_ANGRY
-#undef MOVEDELAY_SAFTY
+#undef MOVEDELAY_SAFETY

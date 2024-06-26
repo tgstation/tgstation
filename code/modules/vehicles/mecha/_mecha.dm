@@ -160,8 +160,8 @@
 	var/is_currently_ejecting = FALSE
 	///Safety for weapons. Won't fire if enabled, and toggled by middle click.
 	var/weapons_safety = FALSE
-	///Don't play standard sound when set safty if TRUE.
-	var/sefty_sound_custom = FALSE
+	///Don't play standard sound when set safety if TRUE.
+	var/safety_sound_custom = FALSE
 
 	var/datum/effect_system/fluid_spread/smoke/smoke_system
 
@@ -379,7 +379,7 @@
  */
 /obj/vehicle/sealed/mecha/proc/set_safety(mob/user)
 	weapons_safety = !weapons_safety
-	if(!sefty_sound_custom)
+	if(!safety_sound_custom)
 		SEND_SOUND(user, sound('sound/machines/beep.ogg', volume = 25))
 	balloon_alert(user, "equipment [weapons_safety ? "safe" : "ready"]")
 	set_mouse_pointer()
