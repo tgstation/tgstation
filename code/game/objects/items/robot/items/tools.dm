@@ -181,7 +181,7 @@
 	icon = 'icons/mob/silicon/robot_items.dmi'
 	icon_state = "toolkit_medborg"
 
-	///our tools
+	///our tools (list of item typepaths)
 	var/list/obj/item/omni_toolkit = list()
 	///Map of solid objects internally used by the omni tool
 	var/list/obj/item/atoms = list()
