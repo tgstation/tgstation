@@ -74,6 +74,7 @@
 		return
 
 	. += span_notice("Material usage cost at <b>[efficiency_coeff * 100]%</b>")
+	. += span_notice("Build time reduced by <b>[efficiency_coeff * 100]%</b>")
 	if(drop_direction)
 		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
 		. += span_notice("[EXAMINE_HINT("Alt-click")] to reset.")
@@ -341,7 +342,7 @@
 			for(var/material in design.materials)
 				charge_per_item += design.materials[material]
 			charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * coefficient * active_power_usage)
-			var/build_time_per_item = (design.construction_time * design.lathe_time_factor) ** 0.8
+			var/build_time_per_item = (design.construction_time * design.lathe_time_factor * efficiency_coeff) ** 0.8
 
 			//start production
 			busy = TRUE
