@@ -63,21 +63,15 @@
 /obj/structure/grille/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 2 SECONDS, "cost" = 5)
 		if(RCD_WINDOWGRILLE)
 			var/cost = 0
 			var/delay = 0
-			if(the_rcd.window_type  == /obj/structure/window)
-				cost = 6
-				delay = 2 SECONDS
-			else if(the_rcd.window_type  == /obj/structure/window/reinforced)
-				cost = 9
-				delay = 2.5 SECONDS
-			else if(the_rcd.window_type  == /obj/structure/window/fulltile)
-				cost = 12
+			if(the_rcd.window_type  == /obj/structure/window/fulltile)
+				cost = 8
 				delay = 3 SECONDS
 			else if(the_rcd.window_type  == /obj/structure/window/reinforced/fulltile)
-				cost = 15
+				cost = 12
 				delay = 4 SECONDS
 			if(!cost)
 				return FALSE
@@ -101,15 +95,13 @@
 
 			if(repair_grille())
 				balloon_alert(user, "grille rebuilt")
-
 			if(!clear_tile(user))
 				return FALSE
 
 			var/obj/structure/window/window_path = the_rcd.window_type
 			if(!ispath(window_path))
 				CRASH("Invalid window path type in RCD: [window_path]")
-			if(!valid_build_direction(T, user.dir, is_fulltile = initial(window_path.fulltile)))
-				balloon_alert(user, "window already here!")
+			if(!initial(window_path.fulltile)) //only fulltile windows can be built here
 				return FALSE
 			var/obj/structure/window/WD = new the_rcd.window_type(T, user.dir)
 			WD.set_anchored(TRUE)

@@ -190,12 +190,15 @@ GLOBAL_LIST_INIT(crafting_category, list(
 #define RCD_FLOODLIGHT 8
 #define RCD_WALLFRAME 9
 #define RCD_REFLECTOR 10
+#define RCD_GIRDER 11
 
 
 #define RCD_UPGRADE_FRAMES (1<<0)
 #define RCD_UPGRADE_SIMPLE_CIRCUITS (1<<1)
 #define RCD_UPGRADE_SILO_LINK (1<<2)
 #define RCD_UPGRADE_FURNISHING (1<<3)
+#define RCD_UPGRADE_ANTI_INTERRUPT (1<<4)
+#define RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN (1<<5)
 
 #define RPD_UPGRADE_UNWRENCH (1<<0)
 
@@ -212,6 +215,9 @@ GLOBAL_LIST_INIT(crafting_category, list(
 
 /// How much less resources the RCD uses when reconstructing
 #define RCD_MEMORY_COST_BUFF 8
+
+/// If set to TRUE in rcd_vals, will bypass the cooldown on slowing down frequent use
+#define RCD_RESULT_BYPASS_FREQUENT_USE_COOLDOWN "bypass_frequent_use_cooldown"
 
 // Defines for the construction component
 #define FORWARD 1

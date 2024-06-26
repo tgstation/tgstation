@@ -5,6 +5,7 @@
 		return defaults + list(
 			"cost" = defaults["cost"] / RCD_MEMORY_COST_BUFF,
 			"delay" = defaults["delay"] / RCD_MEMORY_SPEED_BUFF,
+			RCD_RESULT_BYPASS_FREQUENT_USE_COOLDOWN = TRUE,
 		)
 	else
 		return defaults

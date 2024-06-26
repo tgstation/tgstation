@@ -260,7 +260,6 @@
 		door = new airlock_type( loc )
 	door.setDir(dir)
 	door.unres_sides = electronics.unres_sides
-	//door.req_access = req_access
 	door.electronics = electronics
 	door.heat_proof = heat_proof_finished
 	door.security_level = 0
@@ -288,9 +287,12 @@
 		door.unres_sensor = TRUE
 	door.previous_airlock = previous_assembly
 	electronics.forceMove(door)
+	door.autoclose = TRUE
+	door.close()
+	door.auto_dir_align() // monkestation edit: ensure doors get aligned properly on creation
 	door.update_appearance()
+
 	qdel(src)
-	return door
 
 /obj/structure/door_assembly/update_overlays()
 	. = ..()
@@ -350,7 +352,7 @@
 
 /obj/structure/door_assembly/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
-		return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 16)
+		return list("mode" = RCD_DECONSTRUCT, "delay" = 5 SECONDS, "cost" = 16)
 	return FALSE
 
 /obj/structure/door_assembly/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
