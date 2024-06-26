@@ -40,7 +40,7 @@
 	limit = 2
 	route = PATH_LOCK
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
-	research_tree_icon_state = "lock_blade"
+	research_tree_icon_state = "key_blade"
 
 /datum/heretic_knowledge/lock_grasp
 	name = "Grasp of Lock"
