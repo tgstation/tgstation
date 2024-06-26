@@ -1,0 +1,49 @@
+#define MULTIPLY_PIXELSPEED 0.8
+
+/obj/projectile/energy/photon
+	name = "photon bolt"
+	icon_state = "solarflare"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
+	damage = 5 //It's literally a weaker tesla bolt, which is already weak. Don't worry, we'll fix that.
+	range = 14
+	speed = 1
+	pixel_speed_multiplier = 1
+	projectile_piercing = PASSMOB
+	light_color = LIGHT_COLOR_DEFAULT
+	light_system = OVERLAY_LIGHT
+	light_power = 5
+	light_range = 6
+
+
+/obj/projectile/energy/photon/Initialize(mapload)
+	. = ..()
+	RegisterSignals(src, list(COMSIG_MOVABLE_CROSS, COMSIG_MOVABLE_CROSS_OVER), PROC_REF(blast_touched))
+	RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(scorch_earth))
+	set_light_on(TRUE)
+
+/obj/projectile/energy/photon/proc/blast_touched(datum/source, atom/flashed)
+	if(isliving(flashed))
+		var/mob/living/flashed_creature = flashed
+		flashed_creature.flash_act(intensity = 3, affect_silicon = TRUE, length = 6)
+	if(issilicon(flashed))
+		do_sparks(rand(1, 4), FALSE, src)
+
+/obj/projectile/energy/photon/proc/scorch_earth(turf/open/floor/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(prob(40))
+		new /obj/effect/hotspot(arrived)
+
+/obj/projectile/energy/photon/Range()
+	. = ..()
+	pixel_speed_multiplier *= MULTIPLY_PIXELSPEED
+
+/obj/projectile/energy/photon/on_range()
+	do_sparks(rand(4, 9), FALSE, src)
+	playsound(loc, 'sound/weapons/solarflare.ogg', 100, TRUE, 8, 0.9)
+	for(var/mob/flashed_mob in viewers(5, loc))
+		if(!isliving(flashed_mob))
+			continue
+		var/mob/living/flashed_living_mob = flashed_mob
+		flashed_living_mob.flash_act()
+	return ..()
+
+#undef MULTIPLY_PIXELSPEED
