@@ -67,17 +67,15 @@
 	var/mutable_appearance/waste_cap_appearance = get_pipe_image(icon, "vent_cap", dir, COLOR_RED, piping_layer = 2)
 	. += waste_cap_appearance
 
-/obj/machinery/atmospherics/components/unary/airlock_pump/atmos_init()
-	nodes = list()
-	var/obj/machinery/atmospherics/node_distro = find_connecting(dir, 4)
-	var/obj/machinery/atmospherics/node_waste = find_connecting(dir, 2)
-	if(node_distro && !QDELETED(node_distro))
-		nodes += node_distro
-	if(node_waste && !QDELETED(node_waste))
-		nodes += node_waste
+/obj/machinery/atmospherics/components/unary/airlock_pump/atmos_init(list/node_connects)
+	for(var/obj/machinery/atmospherics/target in get_step(src, dir))
+		if(connection_check(target, 4) && !nodes[1])
+			nodes[1] = target // Distro
+		if(connection_check(target, 2) && !nodes[2])
+			nodes[2] = target // Waste
 	update_appearance()
 
-/obj/machinery/atmospherics/components/unary/airlock_pump/Initialize(mapload)
+/obj/machinery/atmospherics/components/unary/airlock_pump/post_machine_initialize()
 	. = ..()
 	set_links()
 
@@ -92,6 +90,20 @@
 	. = ..()
 	if(cycling_set_up)
 		break_links()
+
+/obj/machinery/atmospherics/components/unary/airlock_pump/is_connectable(obj/machinery/atmospherics/target, given_layer)
+	if(target.loc == loc)
+		return FALSE
+
+	//The target cant connect to distro layer
+	if(given_layer == 2 && ((target.piping_layer != 2 && !(target.pipe_flags & PIPING_ALL_LAYER)) || (target.pipe_color != COLOR_RED && !(target.pipe_flags & PIPING_ALL_COLORS) && target.pipe_color != COLOR_VERY_LIGHT_GRAY)))
+		return FALSE
+
+	//The target cant connect to waste layer
+	if(given_layer == 4 && ((target.piping_layer != 4 && !(target.pipe_flags & PIPING_ALL_LAYER)) || (target.pipe_color != COLOR_BLUE && !(target.pipe_flags & PIPING_ALL_COLORS) && target.pipe_color != COLOR_VERY_LIGHT_GRAY)))
+		return FALSE
+
+	return TRUE
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/process_atmos()
 	if(!on)
@@ -232,7 +244,7 @@
 	if(internal_airlock && external_airlock)
 		internal_airlock.set_cycle_pump(src)
 		external_airlock.set_cycle_pump(src)
-		external_airlock.bolt()
+		external_airlock.secure_close()
 
 		RegisterSignal(internal_airlock, COMSIG_QDELETING, PROC_REF(break_links))
 		RegisterSignal(external_airlock, COMSIG_QDELETING, PROC_REF(break_links))
@@ -246,18 +258,12 @@
 	internal_airlock = null
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/break_links()
-	if(!QDELETED(external_airlock) && external_airlock.locked)
-		external_airlock.unbolt()
-	if(!QDELETED(internal_airlock) && internal_airlock.locked)
-		internal_airlock.unbolt()
-
 	UnregisterSignal(external_airlock, COMSIG_QDELETING)
 	UnregisterSignal(internal_airlock, COMSIG_QDELETING)
 
 	external_airlock = null
 	internal_airlock = null
 	cycling_set_up = FALSE
-	say("Link broken, unbolting doors.")
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/find_airlock(direction)
 	var/turf/next_turf = get_turf(src)
@@ -272,7 +278,7 @@
 /obj/machinery/atmospherics/components/unary/airlock_pump/any_airlock_type
 	name = "airlock pump"
 	desc = "A pump for cycling an airlock controlled by the connected doors."
-	var/valid_airlock_typepath = /obj/machinery/door/airlock
+	valid_airlock_typepath = /obj/machinery/door/airlock
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/lavaland
-	var/external_pressure_target = LAVALAND_EQUIPMENT_EFFECT_PRESSURE
+	external_pressure_target = LAVALAND_EQUIPMENT_EFFECT_PRESSURE

@@ -1805,6 +1805,9 @@
 
 /obj/machinery/door/airlock/proc/unset_cycle_pump()
 	SIGNAL_HANDLER
+	if(locked)
+		unbolt()
+		say("Link broken, unbolting.")
 	cycle_pump = null
 
 // Station Airlocks Regular

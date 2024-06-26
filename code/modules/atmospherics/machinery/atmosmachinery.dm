@@ -326,9 +326,13 @@
 	if(target.loc == loc)
 		return FALSE
 
-	//if the target can connect to both layers 2 and 4 and we have niether
-	if((target.pipe_flags & PIPING_DISTRO_AND_WASTE_LAYERS) && (given_layer == 2 || given_layer == 4))
-		return TRUE
+	//if the target can connect to distro and waste layers
+	if(target.pipe_flags & PIPING_DISTRO_AND_WASTE_LAYERS)
+		if(given_layer == 2 && (pipe_color == COLOR_RED || pipe_color == COLOR_VERY_LIGHT_GRAY))
+			return TRUE
+		if(given_layer == 4 && (pipe_color == COLOR_BLUE || pipe_color == COLOR_VERY_LIGHT_GRAY))
+			return TRUE
+		return FALSE
 
 	//if the target is not in the same piping layer & it does not have the all layer connection flag[which allows it to be connected regardless of layer] then we are out
 	if(target.piping_layer != given_layer && !(target.pipe_flags & PIPING_ALL_LAYER))
