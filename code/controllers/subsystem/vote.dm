@@ -293,6 +293,7 @@ SUBSYSTEM_DEF(vote)
 
 	data["user"] = list(
 		"ckey" = user.client?.ckey,
+		"isGhost" = CONFIG_GET(flag/no_dead_vote) && user.stat == DEAD && !user.client?.holder,
 		"isLowerAdmin" = is_lower_admin,
 		"isUpperAdmin" = is_upper_admin,
 		// What the current user has selected in any ongoing votes.
