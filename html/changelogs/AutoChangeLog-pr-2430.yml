@@ -1,0 +1,4 @@
+author: "RafRoq"
+delete-after: True
+changes:
+  - rscadd: "Added new botany plant trait, seedless, can be found in money tree seeds\n:cl:"
