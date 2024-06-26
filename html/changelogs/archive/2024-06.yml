@@ -1153,3 +1153,57 @@
       the window, making them nearly impossible to read.
   zxaber:
   - bugfix: Refactored borg omnitool code, fixing most of the unique interaction issues.
+2024-06-26:
+  Ben10Omintrix:
+  - refactor: vibebots are not basic bots
+  - rscadd: vibebots will now seek out the depressed and cheer them up
+  FlufflesTheDog:
+  - bugfix: multi-z hole repair works better, especially when the turf below is blocked
+      by items
+  GPeckman:
+  - bugfix: Analyzers should work on bioscrambler anomalies again.
+  GoblinBackwards:
+  - bugfix: Interacting with an assembly bomb in hand will now allow you to interact
+      with the attached assembly instead of opening the gas tank UI. Right-clicking
+      will display the gas tank UI instead.
+  Guestify:
+  - bugfix: The visor of the welding mask no longer goes down when you enable internals
+  NewyearnewmeUwu:
+  - qol: ' The xenobio console''s monkey placing command also clears dead monkeys
+      on the tile.'
+  SmArtKar:
+  - bugfix: Spraycans can once more paint things.
+  - bugfix: RND console now properly rounds research points
+  SyncIt21:
+  - bugfix: alt click runtime no more when using style meter
+  - code_imp: improved alt & ctrl click code
+  Vekter:
+  - balance: The Event Horizon Anti-Existential Beam Rifle now requires Unregulated
+      Bluespace Research to be constructed.
+  Watermelon, Mayhazah:
+  - balance: Drastically reduces the power consumption and max charge of power cells
+  - balance: Added a new stock part called the battery, used primarily in the construction
+      of APCs and SMESs.
+  - rscadd: Suiciding with a cell/battery will shock you and potentially dust you/shock
+      the people around you if the charge is great enough.
+  carlarctg:
+  - bugfix: There's now a limit to how many dental implants you can cram into your
+      mouth, which is governed by your species' teeth limit.
+  - refactor: Most species have 32 teeth, due to being based on humans, weirding me
+      out when thinking about their teeth, or lack of enough information
+  - refactor: Moths and flypeople have NO teeth. They CAN'T get dental implants. I'm
+      NERFING moths.
+  - refactor: Lizards have seventy-five (!!!) teeth. Lizards are weird.
+  hyperjll:
+  - balance: Thanks to incredible strides in selective slime breeding, slimes require
+      substantially less nutrients to grow into adults, and split into children.
+  jlsnow301:
+  - rscadd: 'Bitrunning: You can now choose your hacker alias in prefs.'
+  - rscadd: Bit avatars get orbit icons.
+  mc-oofert:
+  - qol: space dragon can see in the dark and the invalid rift location alert is more
+      informative
+  - rscadd: wawastation stand-in shuttle
+  - bugfix: durand shield doesnt immediately depower the mech when taking stamina
+      damage
+  - balance: durand shield is a bit stronger
