@@ -24,7 +24,10 @@ DEFINE_BITFIELD(sign_features, list(
 #define DISPLAY_PIXEL_2_W 16
 #define DISPLAY_PIXEL_2_Z -2
 #define DISPLAY_BASE_ALPHA 64
-#define DISPLAY_PIXEL_ALPHA 128
+#define DISPLAY_PIXEL_ALPHA 96
+
+#define LIGHT_COLOR_NORMAL "#4b4290"
+#define LIGHT_COLOR_SHAME "#e24e76"
 
 /**
  * List of safety statistic signs on the map that have delam counting enabled.
@@ -174,13 +177,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		return
 	else if(machine_stat & BROKEN)
 		icon_state = "display_broken"
-		set_light(l_range = 1.7, l_power = 1.5, l_color = LIGHT_COLOR_FAINT_CYAN, l_on = TRUE)
+		set_light(l_range = 1.7, l_power = 1.5, l_color = LIGHT_COLOR_NORMAL, l_on = TRUE)
 	else if((sign_features & DISPLAY_DELAM) && last_delam <= 0)
 		icon_state = "display_shame"
-		set_light(l_range = 1.7, l_power = 1.5, l_color = COLOR_BIOLUMINESCENCE_PINK, l_on = TRUE)
+		set_light(l_range = 1.7, l_power = 1.5, l_color = LIGHT_COLOR_SHAME, l_on = TRUE)
 	else
 		icon_state = "display_normal"
-		set_light(l_range = 1.7, l_power = 1.5, l_color = LIGHT_COLOR_FAINT_CYAN, l_on = TRUE)
+		set_light(l_range = 1.7, l_power = 1.5, l_color = LIGHT_COLOR_NORMAL, l_on = TRUE)
 
 /obj/machinery/incident_display/update_overlays()
 	. = ..()
@@ -328,3 +331,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 #undef DISPLAY_PIXEL_2_Z
 #undef DISPLAY_BASE_ALPHA
 #undef DISPLAY_PIXEL_ALPHA
+
+#undef LIGHT_COLOR_NORMAL
+#undef LIGHT_COLOR_SHAME
