@@ -37,7 +37,6 @@
 	name = "old research console"
 	desc = "An old computer used for writing research papers."
 	starting_programs = list(
-		/datum/computer_file/program/ntnetmonitor,
 		/datum/computer_file/program/scipaper_program,
 	)
 
