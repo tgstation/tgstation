@@ -467,12 +467,14 @@
 	if(shielding_powered)
 		var/energy_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - temp_limit, 1)))
 		var/energy_consumed = energy_factor * 250 * seconds_per_tick
-		if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
-			use_energy(energy_consumed, channel = AREA_USAGE_EQUIP)
-		else if(!internal_cell?.use(energy_consumed * 0.025))
-			shielding_powered = FALSE
-			SSair.start_processing_machine(src)
-			investigate_log("shielding turned off due to power loss")
+		if(energy_consumed)
+			if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
+				use_energy(energy_consumed, channel = AREA_USAGE_EQUIP)
+			else if(!internal_cell?.use(energy_consumed * 0.025))
+				shielding_powered = FALSE
+				SSair.start_processing_machine(src)
+				investigate_log("shielding turned off due to power loss")
+				update_appearance()
 
 ///return the icon_state component for the canister's indicator light based on its current pressure reading
 /obj/machinery/portable_atmospherics/canister/proc/get_pressure_state()
