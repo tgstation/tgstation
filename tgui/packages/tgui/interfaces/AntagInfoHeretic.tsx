@@ -242,7 +242,6 @@ const KnowledgeTree = (props) => {
           knowledge_tiers.map((tier, i) => (
             <Stack.Item key={i}>
               <Flex
-                direction="row"
                 justify="center"
                 align="center"
                 backgroundColor="transparent"
