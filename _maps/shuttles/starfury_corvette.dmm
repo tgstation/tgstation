@@ -290,8 +290,7 @@
 /area/shuttle/sbc_corvette)
 "aO" = (
 /obj/machinery/door/poddoor/preopen{
-	id = "SBC_corvette_blast";
-	layer = 3
+	id = "SBC_corvette_blast"
 	},
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,

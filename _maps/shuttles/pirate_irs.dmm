@@ -1027,9 +1027,7 @@
 /obj/structure/railing{
 	dir = 10
 	},
-/obj/machinery/shower/directional/south{
-	layer = 4
-	},
+/obj/machinery/shower/directional/south,
 /obj/effect/turf_decal/box,
 /obj/structure/fluff/shower_drain,
 /turf/open/floor/iron/dark,

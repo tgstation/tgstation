@@ -210,8 +210,7 @@
 	},
 /obj/structure/fans/tiny/shield{
 	max_integrity = 400;
-	name = "recycling shield";
-	layer = 2.61
+	name = "recycling shield"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -573,8 +572,7 @@
 	},
 /obj/structure/fans/tiny/shield{
 	max_integrity = 400;
-	name = "recycling shield";
-	layer = 2.61
+	name = "recycling shield"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
