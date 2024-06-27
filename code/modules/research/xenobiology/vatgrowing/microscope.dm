@@ -3,6 +3,7 @@
 	desc = "A simple microscope, allowing you to examine micro-organisms."
 	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "microscope"
+	///Analyzed dish
 	var/obj/item/petri_dish/current_dish
 
 /obj/structure/microscope/Initialize(mapload)
@@ -16,22 +17,9 @@
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Remove petri dish")
 
 /obj/structure/microscope/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
 	if(istype(tool, /obj/item/petri_dish))
-		var/obj/item/petri_dish/old_dish
-		if(current_dish)
-			old_dish = current_dish
-		if(!user.transferItemToLoc(tool, src))
-			balloon_alert(user, "couldn't add!")
-			return ITEM_INTERACT_FAILURE
-		current_dish = tool
-		update_static_data_for_all_viewers()
-		if(old_dish)
-			if(!user.put_in_hands(old_dish))
-				old_dish.forceMove(get_turf(src))
-			balloon_alert(user, "dish swapped")
-		else
-			balloon_alert(user, "dish added")
-	return ..()
+		return add_dish(user, tool)
 
 /obj/structure/microscope/attack_hand_secondary(mob/user, list/modifiers)
 	if(current_dish && user.put_in_hands(current_dish))
@@ -58,7 +46,7 @@
 	if(!current_dish.sample)
 		return data
 
-	for(var/organism in current_dish.sample.micro_organisms) //All the microorganisms in the dish
+	for(var/organism in current_dish.sample.micro_organisms)
 		if(istype(organism, /datum/micro_organism/cell_line))
 			var/datum/micro_organism/cell_line/cell_line = organism
 			var/atom/resulting_atom = cell_line.resulting_atom
@@ -109,6 +97,24 @@
 			update_static_data_for_all_viewers()
 			. = TRUE
 	update_appearance()
+
+/// Insert a new dish, swapping the inserted one
+/obj/structure/microscope/proc/add_dish(mob/living/user, obj/item/petri_dish/new_dish)
+	var/obj/item/petri_dish/old_dish
+	if(current_dish)
+		old_dish = current_dish
+	if(!user.transferItemToLoc(new_dish, src))
+		balloon_alert(user, "couldn't add!")
+		return ITEM_INTERACT_FAILURE
+	current_dish = new_dish
+	update_static_data_for_all_viewers()
+	if(old_dish)
+		if(!user.put_in_hands(old_dish))
+			old_dish.forceMove(get_turf(src))
+		balloon_alert(user, "dish swapped")
+	else
+		balloon_alert(user, "dish added")
+	return ITEM_INTERACT_SUCCESS
 
 /datum/crafting_recipe/microscope
 	name = "Microscope"
