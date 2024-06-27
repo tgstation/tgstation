@@ -1,5 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - refactor: "Modular computers (PDAs, laptops, etc) and their applications have had their item interaction logic refactored. Please report any issues."
-  - bugfix: "You can deposit cash into IDs inside of PDAs by slapping it against the PDA again."

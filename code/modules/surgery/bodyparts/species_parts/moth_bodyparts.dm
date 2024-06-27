@@ -6,6 +6,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	head_flags = HEAD_LIPS|HEAD_EYESPRITES|HEAD_EYEHOLES|HEAD_DEBRAIN //what the fuck, moths have lips?
+	teeth_count = 0
 
 /obj/item/bodypart/chest/moth
 	icon = 'icons/mob/human/species/moth/bodyparts.dmi'

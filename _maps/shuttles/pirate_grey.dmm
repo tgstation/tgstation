@@ -861,7 +861,7 @@
 /area/shuttle/pirate)
 "Bu" = (
 /obj/machinery/power/apc/auto_name/directional/north{
-	cell_type = /obj/item/stock_parts/cell/bluespace
+	cell_type = /obj/item/stock_parts/power_store/battery/bluespace
 	},
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/bot,
@@ -927,7 +927,7 @@
 "De" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/pirate)

@@ -137,7 +137,7 @@
 
 ///Try to recharge our internal cell if it isn't fully charged.
 /obj/machinery/modular_computer/process(seconds_per_tick)
-	var/obj/item/stock_parts/cell/cell = get_cell()
+	var/obj/item/stock_parts/power_store/cell = get_cell()
 	if(isnull(cell) || cell.percent() >= 100)
 		return
 	charge_cell(idle_power_usage * seconds_per_tick, cell)

@@ -76,6 +76,9 @@
 	///Current lipstick trait, if any (such as TRAIT_KISS_OF_DEATH)
 	var/stored_lipstick_trait
 
+	/// How many teeth the head's species has, humans have 32 so that's the default. Used for a limit to dental pill implants.
+	var/teeth_count = 32
+
 	/// Offset to apply to equipment worn on the ears
 	var/datum/worn_feature_offset/worn_ears_offset
 	/// Offset to apply to equipment worn on the eyes
