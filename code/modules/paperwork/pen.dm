@@ -60,6 +60,7 @@
 		/datum/component/transforming, \
 		sharpness_on = NONE, \
 		inhand_icon_change = FALSE, \
+		w_class_on = w_class, \
 	)
 
 /*
