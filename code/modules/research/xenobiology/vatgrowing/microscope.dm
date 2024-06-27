@@ -22,12 +22,9 @@
 		return add_dish(user, tool)
 
 /obj/structure/microscope/attack_hand_secondary(mob/user, list/modifiers)
-	if(current_dish && user.put_in_hands(current_dish))
-		current_dish = null
-		update_static_data_for_all_viewers()
-		balloon_alert(user, "dish removed")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	return ..()
+	. = ..()
+	if(current_dish)
+		return remove_dish(user)
 
 /obj/structure/microscope/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -89,16 +86,12 @@
 		return
 	switch(action)
 		if("eject_petridish")
-			if(!current_dish)
-				return FALSE
-			if(!ui.user.put_in_hands(current_dish))
-				current_dish.forceMove(get_turf(src))
-			current_dish = null
-			update_static_data_for_all_viewers()
-			. = TRUE
+			if(current_dish)
+				remove_dish(ui.user)
+				. = TRUE
 	update_appearance()
 
-/// Insert a new dish, swapping the inserted one
+///Insert a new dish, swapping the inserted one
 /obj/structure/microscope/proc/add_dish(mob/living/user, obj/item/petri_dish/new_dish)
 	var/obj/item/petri_dish/old_dish
 	if(current_dish)
@@ -115,6 +108,17 @@
 	else
 		balloon_alert(user, "dish added")
 	return ITEM_INTERACT_SUCCESS
+
+///Take the inserted dish, or drop it on the floor
+/obj/structure/microscope/proc/remove_dish(mob/living/user)
+	if(!current_dish)
+		retrun SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(!user.put_in_hands(current_dish))
+		current_dish.forceMove(get_turf(src))
+	current_dish = null
+	update_static_data_for_all_viewers()
+	balloon_alert(user, "dish removed")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /datum/crafting_recipe/microscope
 	name = "Microscope"
