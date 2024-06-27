@@ -129,7 +129,7 @@
 	if(current_range > 0)
 		local_field_turfs += RANGE_TURFS(current_range - 1, center)
 	if(current_range > 1)
-		local_edge_turfs = local_field_turfs - RANGE_TURFS(current_range, center)
+		local_edge_turfs = RANGE_TURFS(current_range, center) - local_field_turfs
 	return list(FIELD_TURFS_KEY = local_field_turfs, EDGE_TURFS_KEY = local_edge_turfs)
 
 //Gets edge direction/corner, only works with square radius/WDH fields!
@@ -169,6 +169,7 @@
 	name = "strange multitool"
 	desc = "Seems to project a colored field!"
 	var/operating = FALSE
+	var/range_to_use = 5
 	var/datum/proximity_monitor/advanced/debug/current = null
 
 /obj/item/multitool/field_debug/Destroy()
@@ -176,7 +177,7 @@
 	return ..()
 
 /obj/item/multitool/field_debug/proc/setup_debug_field()
-	current = new(src, 5, FALSE)
+	current = new(src, range_to_use, FALSE)
 	current.set_fieldturf_color = "#aaffff"
 	current.set_edgeturf_color = "#ffaaff"
 	current.recalculate_field(full_recalc = TRUE)
