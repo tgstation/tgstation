@@ -358,7 +358,7 @@
 	return NONE
 
 /obj/item/mod/control/get_cell()
-	var/obj/item/stock_parts/cell/cell = get_charge_source()
+	var/obj/item/stock_parts/power_store/cell = get_charge_source()
 	if(!istype(cell))
 		return null
 	return cell
