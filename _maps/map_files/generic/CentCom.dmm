@@ -914,8 +914,7 @@
 /area/centcom/central_command_areas/control)
 "ec" = (
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/dark{
@@ -2091,14 +2090,12 @@
 "jy" = (
 /obj/machinery/button/door/indestructible{
 	id = "XCCQMLoaddoor";
-	layer = 4;
 	name = "Loading Doors";
 	pixel_x = -27;
 	pixel_y = -5
 	},
 /obj/machinery/button/door/indestructible{
 	id = "XCCQMLoaddoor2";
-	layer = 4;
 	name = "Loading Doors";
 	pixel_x = -27;
 	pixel_y = 5
@@ -2798,7 +2795,6 @@
 /obj/machinery/recharger,
 /obj/machinery/button/door/indestructible{
 	id = "XCCsecdepartment";
-	layer = 3;
 	name = "CC Security Checkpoint Control";
 	pixel_x = 24;
 	pixel_y = 24
@@ -4044,8 +4040,7 @@
 /area/centcom/central_command_areas/ferry)
 "sw" = (
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/dark{
@@ -4910,14 +4905,12 @@
 	},
 /obj/machinery/button/door/indestructible{
 	id = "XCCcustoms1";
-	layer = 3.5;
 	name = "CC Customs 1 Control";
 	pixel_x = 8;
 	pixel_y = -24
 	},
 /obj/machinery/button/door/indestructible{
 	id = "XCCcustoms2";
-	layer = 3.5;
 	name = "CC Customs 2 Control";
 	pixel_x = -8;
 	pixel_y = -24
@@ -6450,8 +6443,7 @@
 "CT" = (
 /obj/structure/table/reinforced,
 /obj/structure/railing{
-	dir = 8;
-	layer = 4.1
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/dark{
@@ -7319,8 +7311,7 @@
 /area/centcom/central_command_areas/control)
 "HZ" = (
 /obj/structure/railing{
-	dir = 6;
-	layer = 3.1
+	dir = 6
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/dark{
@@ -7798,8 +7789,7 @@
 /area/centcom/central_command_areas/evacuation)
 "Lz" = (
 /obj/structure/railing{
-	dir = 10;
-	layer = 3.1
+	dir = 10
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/dark{
@@ -8931,8 +8921,7 @@
 "QB" = (
 /obj/structure/table/reinforced,
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/dark{
@@ -10090,7 +10079,6 @@
 	},
 /obj/machinery/button/door/indestructible{
 	id = "XCCcustoms1";
-	layer = 3;
 	name = "CC Emergency Docks Control";
 	pixel_x = 24;
 	pixel_y = 24
