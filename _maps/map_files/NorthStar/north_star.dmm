@@ -18802,10 +18802,10 @@
 /area/station/service/kitchen)
 "eSq" = (
 /obj/structure/railing/corner,
-/obj/machinery/atmospherics/pipe/smart/simple/purple,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer4{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "eSw" = (
@@ -28830,7 +28830,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/purple,
+/obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "hAI" = (
@@ -37314,7 +37314,7 @@
 /area/station/maintenance/floor4/starboard)
 "jJM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/purple/visible/layer2,
-/obj/machinery/atmospherics/pipe/smart/simple/purple,
+/obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "jJP" = (
