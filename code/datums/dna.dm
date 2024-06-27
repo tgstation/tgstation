@@ -60,9 +60,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/datum/species/species = new /datum/species/human
 	/// Assoc list of feature keys to their value
 	/// Note if you set these manually, and do not update [unique_features] afterwards, it will likely be reset.
-
 	var/list/features = list("mcolor" = COLOR_WHITE)
-
 	///Stores the hashed values of the person's non-human features
 	var/unique_features
 	///Stores the real name of the person who originally got this dna datum. Used primarely for changelings,

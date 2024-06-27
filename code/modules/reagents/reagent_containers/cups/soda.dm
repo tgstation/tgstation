@@ -75,10 +75,10 @@
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(M.loc)
 		crushed_can.icon_state = icon_state
 
-		// MASSMETA ADDITION (kvass)
+		//MASSMETA EDIT ADDITION BEGIN (kvass)
 		if(icon_state == "kvass")
 			crushed_can.icon = 'massmeta/icons/items/janitor.dmi'
-		// EDIT END
+		//MASSMETA EDIT ADDITION END
 
 		qdel(src)
 		return TRUE
@@ -92,10 +92,10 @@
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)
 		crushed_can.icon_state = icon_state
 
-		// MASSMETA ADDITION (kvass)
+		//MASSMETA EDIT ADDITION BEGIN (kvass)
 		if(icon_state == "kvass")
 			crushed_can.icon = 'massmeta/icons/items/janitor.dmi'
-		// EDIT END
+		//MASSMETA EDIT ADDITION END
 
 		var/atom/throw_target = get_edge_target_turf(crushed_can, pick(GLOB.alldirs))
 		crushed_can.throw_at(throw_target, rand(1,2), 7)
@@ -155,10 +155,10 @@
 	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)
 	crushed_can.icon_state = icon_state
 
-	// MASSMETA ADDITION (kvass)
+	//MASSMETA EDIT ADDITION BEGIN (kvass)
 	if(icon_state == "kvass")
 		crushed_can.icon = 'massmeta/icons/items/janitor.dmi'
-	// EDIT END
+	//MASSMETA EDIT ADDITION END
 
 	moveToNullspace()
 	QDEL_IN(src, 1 SECONDS) // give it a second so it can still be logged for the throw impact

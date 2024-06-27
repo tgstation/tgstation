@@ -478,7 +478,7 @@ Example config:
 	if (isnull(banned_words) || banned_words.len == 0)
 		return null
 
-	var/static/regex/should_join_on_word_bounds = regex(@"^[\wа-яё]+$", "i") //MASSMETA EDIT
+	var/static/regex/should_join_on_word_bounds = regex(@"^[\wа-яё]+$", "i") //MASSMETA EDIT CHANGE - ORIGINAL: = regex(@"^\w+$")
 
 	// Stuff like emoticons needs another split, since there's no way to get ":)" on a word bound.
 	// Furthermore, normal words need to be on word bounds, so "(adminhelp)" gets filtered.
@@ -493,7 +493,7 @@ Example config:
 
 	// We don't want a whitespace_split part if there's no stuff that requires it
 	var/whitespace_split = to_join_on_whitespace_splits.len > 0 ? @"(?:(?:^|\s+)(" + jointext(to_join_on_whitespace_splits, "|") + @")(?:$|\s+))" : ""
-	var/word_bounds = @"((" + jointext(to_join_on_word_bounds, "|") + @"))" //MASSMETA EDIT
+	var/word_bounds = @"((" + jointext(to_join_on_word_bounds, "|") + @"))" //MASSMETA EDIT CHANGE - ORIGINAL: = @"(\b(" + jointext(to_join_on_word_bounds, "|") + @")\b)"
 	var/regex_filter = whitespace_split != "" ? "([whitespace_split]|[word_bounds])" : word_bounds
 	return regex(regex_filter, "i")
 
