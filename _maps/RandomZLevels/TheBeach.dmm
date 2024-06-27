@@ -1919,7 +1919,7 @@
 	pixel_y = 12;
 	pixel_x = 3
 	},
-/obj/item/stock_parts/cell/emproof{
+/obj/item/stock_parts/power_store/cell/emproof{
 	pixel_x = -4;
 	pixel_y = 6
 	},

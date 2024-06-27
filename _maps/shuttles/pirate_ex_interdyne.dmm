@@ -154,7 +154,7 @@
 /area/shuttle/pirate)
 "aD" = (
 /obj/machinery/power/apc/auto_name/directional/north{
-	cell_type = /obj/item/stock_parts/cell/bluespace;
+	cell_type = /obj/item/stock_parts/power_store/battery/bluespace;
 	start_charge = 100
 	},
 /obj/effect/mapping_helpers/apc/cut_AI_wire,

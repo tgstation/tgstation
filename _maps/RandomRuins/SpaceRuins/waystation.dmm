@@ -1505,7 +1505,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "zd" = (
 /obj/structure/table,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/cell_charger,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/power)

@@ -1,0 +1,4 @@
+author: "GPeckman"
+delete-after: True
+changes:
+  - bugfix: "Protolathes/Circuit Imprinters/Techfabs with better parts should now print items faster again."
