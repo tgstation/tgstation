@@ -191,7 +191,7 @@
 
 		// Final knowledge can't be learned until all objectives are complete.
 		if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
-			knowledge_data["disabled"] = !can_ascend()
+			knowledge_data["disabled"] ||= !can_ascend()
 
 		while(initial(knowledge.depth) > tiers.len)
 			tiers += list(list("nodes"=list()))
