@@ -197,13 +197,11 @@
 	else if(airlock == internal_airlock)
 		start_cycle(ATMOS_DIRECTION_RELEASING)
 
-/obj/machinery/atmospherics/components/unary/airlock_pump/proc/start_cycle(force_direction)
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/start_cycle(cycle_direction)
 	if(on || !cycling_set_up)
 		return FALSE
-	if(force_direction)
-		pump_direction = force_direction
-	else
-		pump_direction = !pump_direction
+
+	pump_direction = cycle_direction
 
 	internal_airlock.secure_close()
 	external_airlock.secure_close()
