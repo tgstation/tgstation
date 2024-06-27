@@ -237,6 +237,9 @@ const KnowledgeTree = (props) => {
 
   return (
     <Section title="Research Tree" fill scrollable>
+      <Box textAlign="center" fontSize="32px">
+        <span style={hereticYellow}>DAWN</span>
+      </Box>
       <Stack vertical>
         {knowledge_tiers.length === 0
           ? 'None!'
@@ -309,6 +312,13 @@ const KnowledgeTree = (props) => {
                               : 'FREE'}
                         </Box>
                       </Button>
+                      {node.ascension ? (
+                        <Box textAlign="center" fontSize="32px">
+                          <span style={hereticPurple}>DUSK</span>
+                        </Box>
+                      ) : (
+                        ''
+                      )}
                     </Flex.Item>
                   ))}
                 </Flex>
