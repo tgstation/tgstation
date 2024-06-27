@@ -76,7 +76,7 @@
 ///lowers bloody_shoes[index] by adjust_by
 /datum/component/bloodysoles/proc/adjust_bloody_shoes(index, adjust_by)
 	bloody_shoes[index] = max(bloody_shoes[index] - adjust_by, 0)
-	on_changed_bloody_shoes()
+	on_changed_bloody_shoes(index)
 
 /datum/component/bloodysoles/proc/set_bloody_shoes(index, new_value)
 	bloody_shoes[index] = new_value

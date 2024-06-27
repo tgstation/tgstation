@@ -282,7 +282,7 @@
 	update_mob_action_buttons()
 	return TRUE
 
-/// Close the the currently open external (that's EX-ternal) air tank. Returns TREUE if successful.
+/// Close the the currently open external (that's EX-ternal) air tank. Returns TRUE if successful.
 /mob/living/carbon/proc/close_externals()
 	return close_internals(TRUE)
 
