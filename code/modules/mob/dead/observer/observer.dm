@@ -146,8 +146,12 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	grant_all_languages()
 	show_data_huds()
 	data_huds_on = 1
-
 	SSpoints_of_interest.make_point_of_interest(src)
+
+	/// Ambiant sound prefrence check. Why does this exist? Because ambience relies on Area code. Ghosts are outside the AREA_PLANE. This will run the needed check on Initialize()
+	if(!(client?.prefs.read_preference(/datum/preference/toggle/sound_ship_ambience)))
+		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
+
 	ADD_TRAIT(src, TRAIT_HEAR_THROUGH_DARKNESS, ref(src))
 	ADD_TRAIT(src, TRAIT_SECURITY_HUD, ref(src))
 
