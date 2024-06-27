@@ -86,7 +86,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	updateallghostimages()
 
 	var/turf/T
-
 	var/mob/body = loc
 	if(ismob(body))
 		T = get_turf(body) //Where is the body located?
