@@ -296,16 +296,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"ki" = (
-/obj/structure/table/reinforced,
-/obj/machinery/computer/security/telescreen/interrogation{
-	name = "Cameras monitor";
-	network = list("fsci");
-	req_access = list("syndicate");
-	screen_loc = ""
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "kI" = (
 /obj/machinery/computer/atmos_alert{
 	dir = 8
@@ -864,6 +854,7 @@
 /obj/structure/table/reinforced,
 /obj/item/paper,
 /obj/item/pen,
+/obj/machinery/computer/security/telescreen/forgotten_ship/sci/directional/south,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "IH" = (
@@ -2460,7 +2451,7 @@ ru
 Lo
 ru
 tv
-ki
+hD
 nU
 wb
 EB
