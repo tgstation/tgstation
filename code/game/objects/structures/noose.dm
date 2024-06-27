@@ -110,27 +110,34 @@
 	if(!has_buckled_mobs())
 		return PROCESS_KILL
 	var/mob/living/buckled_mob = buckled_mobs[1] //this is a noose how are you tying two people
+
+	if(!buckled_mob.get_bodypart(BODY_ZONE_HEAD)) //you need a neck to get hanged
+		buckled_mob.visible_message(span_danger("[buckled_mob] drops from the noose!"))
+		unbuckle_all_mobs(force=TRUE)
+		return
+
+	if(!buckled_mob.has_gravity()) //entirely skip swaying in no gravity; swaying is a motion that requires gravity
+		return //also hanging someone needs gravity so it just skips that
+
+	// animate our swaying motion
 	if(pixel_x >= 0)
 		animate(src, pixel_x = -3, time = 4.5 SECONDS, easing = ELASTIC_EASING)
 		animate(buckled_mob, pixel_x = -3, time = 4.5 SECONDS, easing = ELASTIC_EASING)
 	else
 		animate(src, pixel_x = 3, time = 4.5 SECONDS, easing = ELASTIC_EASING)
 		animate(buckled_mob, pixel_x = 3, time = 4.5 SECONDS, easing = ELASTIC_EASING)
-	if(buckled_mob.has_gravity())
-		if(buckled_mob.get_bodypart(BODY_ZONE_HEAD))
-			if(buckled_mob.stat != DEAD)
-				if(!HAS_TRAIT(buckled_mob, TRAIT_NOBREATH))
-					buckled_mob.adjustOxyLoss(5)
-					if(prob(30))
-						buckled_mob.emote("gasp")
-				if(prob(20))
-					var/flavor_text = list(span_suicide("[buckled_mob]'s legs flail for anything to stand on."),\
-											span_suicide("[buckled_mob]'s hands are desperately clutching the noose."),\
-											span_suicide("[buckled_mob]'s limbs sway back and forth with diminishing strength."))
-					buckled_mob.visible_message(pick(flavor_text))
-			playsound(buckled_mob.loc, 'sound/effects/noose_idle.ogg', 25, 1, -3)
-		else
-			buckled_mob.visible_message(span_danger("[buckled_mob] drops from the noose!"))
-			unbuckle_all_mobs(force=TRUE)
+
+	playsound(buckled_mob.loc, 'sound/effects/noose_idle.ogg', 25, 1, -3)
 
 
+	if(buckled_mob.stat == DEAD || HAS_TRAIT(buckled_mob, TRAIT_NOBREATH))
+		return
+
+	buckled_mob.adjustOxyLoss(5)
+	if(prob(30))
+		buckled_mob.emote("gasp")
+	if(prob(20))
+		var/flavor_text = list(span_suicide("[buckled_mob]'s legs flail for anything to stand on."),\
+								span_suicide("[buckled_mob]'s hands are desperately clutching the noose."),\
+								span_suicide("[buckled_mob]'s limbs sway back and forth with diminishing strength."))
+		buckled_mob.visible_message(pick(flavor_text))
