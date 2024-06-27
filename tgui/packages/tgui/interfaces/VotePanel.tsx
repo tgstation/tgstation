@@ -243,7 +243,9 @@ const ChoicesPanel = (props) => {
                   textAlign="right"
                   buttons={
                     <Button
-                      tooltip={user.isGhost && 'Voting is off for the dead.'}
+                      tooltip={
+                        user.isGhost && 'Ghost voting was disabled by an admin.'
+                      }
                       disabled={
                         user.singleSelection === choice.name || user.isGhost
                       }
@@ -287,7 +289,9 @@ const ChoicesPanel = (props) => {
                   textAlign="right"
                   buttons={
                     <Button
-                      tooltip={user.isGhost && 'Voting is off for the dead.'}
+                      tooltip={
+                        user.isGhost && 'Ghost voting was disabled by an admin.'
+                      }
                       disabled={user.isGhost}
                       onClick={() => {
                         act('voteMulti', { voteOption: choice.name });
