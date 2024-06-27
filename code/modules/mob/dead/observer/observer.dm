@@ -86,6 +86,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	updateallghostimages()
 
 	var/turf/T
+	var/area/area
+
 	var/mob/body = loc
 	if(ismob(body))
 		T = get_turf(body) //Where is the body located?
@@ -148,7 +150,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	data_huds_on = 1
 	SSpoints_of_interest.make_point_of_interest(src)
 
-	/// Ambiant sound prefrence check. Why does this exist? Because ambience relies on Area code. Ghosts are outside the AREA_PLANE. This will run the needed check on Initialize()
+	/// Ambiant sound prefrence check. Why does this exist here? Because ambience relies on Area code. Ghosts are outside the AREA_PLANE. This will run the needed check on Initialize()
 	if(!(client?.prefs.read_preference(/datum/preference/toggle/sound_ship_ambience)))
 		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
 
