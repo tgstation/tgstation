@@ -794,6 +794,15 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
+"ds" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/table,
+/obj/machinery/door/window/brigdoor/right/directional/east,
+/obj/item/computer_disk,
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "dt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -3121,11 +3130,14 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/hall)
 "ng" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/pipedispenser/disposal/transit_tube,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/obj/structure/fluff/broken_canister_frame,
+/obj/effect/decal/cleanable/plasma,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "nk" = (
@@ -3419,6 +3431,11 @@
 /obj/effect/decal/cleanable/xenoblood/xgibs/core,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
+"oK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/pipedispenser,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ancientstation/beta/hall)
 "oL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -3639,7 +3656,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/mining)
 "qk" = (
-/obj/machinery/pipedispenser,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -5407,6 +5423,7 @@
 	dir = 1
 	},
 /obj/machinery/light/small/directional/south,
+/obj/machinery/atmospherics/components/binary/tank_compressor,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "DI" = (
@@ -5825,10 +5842,13 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "GP" = (
-/obj/machinery/pipedispenser/disposal,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "GX" = (
@@ -10177,7 +10197,7 @@ gJ
 Ax
 Ax
 kQ
-Cj
+oK
 Sf
 Cj
 VF
@@ -14245,7 +14265,7 @@ ag
 aM
 NS
 bh
-cz
+ds
 cz
 cz
 ad
