@@ -71,7 +71,7 @@
 
 	if(!(updates & UPDATE_SMOOTHING))
 		return
-	if(old_smoothing_flags == smoothing_flags && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
+	if(old_smoothing_flags == smoothing_flags && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS)))
 		if(old_icon != icon)
 			QUEUE_SMOOTH(src)
 		return

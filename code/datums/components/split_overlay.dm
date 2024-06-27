@@ -15,7 +15,7 @@
 	. = ..()
 	// Needs to use bitmask smoothing or we won't have anything to apply onto
 	var/atom/parent_atom = parent
-	if(!(parent_atom.smoothing_flags & SMOOTH_BITMASK))
+	if(!(parent_atom.smoothing_flags & (SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS)))
 		CRASH("We tried to splitvis [parent.type] without bitmask smoothing. What?")
 
 	// Ensure the overlay won't accidentially inherit stuff from the floor it's potentially applied to

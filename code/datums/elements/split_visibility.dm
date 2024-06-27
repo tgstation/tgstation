@@ -85,7 +85,7 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 		return ELEMENT_INCOMPATIBLE
 	. = ..()
 	var/atom/target_atom = target
-	if(!(target_atom.smoothing_flags & SMOOTH_BITMASK))
+	if(!(target_atom.smoothing_flags & (SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS)))
 		CRASH("We tried to splitvis [target.type] without bitmask smoothing. What?")
 
 	target_atom.add_overlay(mutable_appearance('wall_blackness.dmi', "wall_background", UNDER_WALL_LAYER, target_atom, GAME_PLANE))
