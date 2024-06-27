@@ -306,7 +306,6 @@
 	},
 /obj/machinery/telecomms/server{
 	pixel_z = 12;
-	layer = 2.91;
 	name = "tgsv3";
 	desc = "It's, uh... pending an upgrade."
 	},

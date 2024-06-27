@@ -195,9 +195,7 @@
 /obj/structure/chair/plastic{
 	dir = 1
 	},
-/obj/structure/railing{
-	layer = 4
-	},
+/obj/structure/railing,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plastic,
 /area/template_noop)
