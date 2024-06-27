@@ -106,7 +106,7 @@
 	if (force_verification && !discord && requires_discord)
 		if(tgui_alert(usr, "Для игры на сервере нужен привязанный аккаунт дискорда(OOC - Verify Discord). Желаете ли Вы открыть ссылку в браузере?",, list("Да","Нет"))!="Да")
 			return
-		DIRECT_OUTPUT(usr, link("https://discord.gg/KBsjSv7Kh9"))
+		DIRECT_OUTPUT(usr, link("https://discord.gg/WRJ8bns7X7"))
 	else
 		if(owner != REF(usr))
 			return
