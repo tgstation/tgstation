@@ -1160,6 +1160,7 @@
  * * ALLOW_VENTCRAWL - Mobs with ventcrawl traits can alt-click this to vent
  * * BYPASS_ADJACENCY - The target does not have to be adjacent
  * * SILENT_ADJACENCY - Adjacency is required but errors are not printed
+ * * NOT_INSIDE_TARGET - The target maybe adjacent but the mob should not be inside the target
  *
  * silence_adjacency: Sometimes we want to use this proc to check interaction without allowing it to throw errors for base case adjacency
  * Alt click uses this, as otherwise you can detect what is interactable from a distance via the error message

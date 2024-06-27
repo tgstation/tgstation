@@ -954,8 +954,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!click_alt_open)
 		return
 
-	return open_storage_on_signal(source, user)
-
+	return open_storage_on_signal(source, user) ? CLICK_ACTION_SUCCESS : NONE
 
 /// Opens the storage to the mob, showing them the contents to their UI.
 /datum/storage/proc/open_storage(mob/to_show)
@@ -963,11 +962,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		show_contents(to_show)
 		return FALSE
 
-	if(!to_show.CanReach(parent))
-		parent.balloon_alert(to_show, "can't reach!")
-		return FALSE
-
-	if(!isliving(to_show) || to_show.incapacitated())
+	if(!isliving(to_show) || !to_show.can_perform_action(parent))
 		return FALSE
 
 	if(locked)
