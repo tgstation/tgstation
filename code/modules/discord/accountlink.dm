@@ -34,3 +34,5 @@
 	var/datum/browser/window = new/datum/browser(usr, "discordverification", "Discord Verification")
 	window.set_content("<div>[message]</div>")
 	window.open()
+
+
