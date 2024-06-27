@@ -707,6 +707,8 @@ Then we space some of our heat, and think about if we should stop conducting.
 	var/average_x
 	var/average_y
 	COOLDOWN_DECLARE(update_sound_center)
+	//use to prevent hot group from expanding outside a room, a group spandin multiple rooms may have issue when they are cutoff and rebuilding groups like zas is too expensive
+	var/list/turf/open/our_airtight_room = list()
 
 
 /datum/hot_group/New()
@@ -717,9 +719,10 @@ Then we space some of our heat, and think about if we should stop conducting.
 	. = ..()
 	if(turf_list.len <= 0)
 		qdel()
+	//we can draw a cross around the average middle of any globs of group, curves or hollow groups may cause issues with this
 	average_x = round((max(x_coord) + min(x_coord))/2)
 	average_y = round((max(y_coord) + min(y_coord))/2)
-	if(COOLDOWN_FINISHED(src, update_sound_center) && turf_list.len >= 5)//arbitrary size to start playing the sound
+	if(COOLDOWN_FINISHED(src, update_sound_center) && turf_list.len >= 3)//arbitrary size to start playing the sound
 		update_sound()
 		COOLDOWN_START(src, update_sound_center, 5 SECONDS)
 
@@ -747,6 +750,8 @@ Then we space some of our heat, and think about if we should stop conducting.
 	z_coord = turf_list[1].z
 	if(turf_list.len >= tiles_limit || enemy_group.turf_list.len >= tiles_limit)
 		return
+	if(our_airtight_room && !(enemy_group.turf_list in our_airtight_room))
+		return
 	if(turf_list == enemy_group.turf_list)
 		random_group = rand(0,1)
 	else if(turf_list.len > enemy_group.turf_list.len || random_group)//we're bigger take all of their territory!
@@ -773,6 +778,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 	else
 		sound = new(sound_turf, TRUE)
 		current_sound_loc = sound_turf
+		our_airtight_room = create_atmos_zone(sound_turf)
 
 /datum/looping_sound/fire
 	mid_sounds = 'sound/effects/roaring_fire_chopped.ogg'
