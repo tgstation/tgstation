@@ -2023,7 +2023,6 @@
 "Aa" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/condiment/enzyme{
-	layer = 5;
 	pixel_x = 9;
 	pixel_y = 5
 	},
@@ -2510,9 +2509,7 @@
 /area/awaymission/beach)
 "Ft" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/chair/stool/directional/south,
 /obj/item/clothing/glasses/sunglasses{
 	pixel_y = -2;
