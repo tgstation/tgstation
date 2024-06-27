@@ -1173,7 +1173,10 @@
 
 			if(!density)//already open
 				return
-
+			if(!HAS_TRAIT(user, TRAIT_KNOW_ENGI_WIRES))
+				user.balloon_alert(user, "don't know wires!")
+				to_chat(user, span_warning("You don't know which wires to avoid when forcing open the airlock safely!"))
+				return
 			if(!prying_so_hard)
 				var/time_to_open = 50
 				playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE) //is it aliens or just the CE being a dick?
