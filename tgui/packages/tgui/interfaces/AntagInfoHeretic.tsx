@@ -238,82 +238,83 @@ const KnowledgeTree = (props) => {
   return (
     <Section title="Research Tree" fill scrollable>
       <Stack vertical>
-        {(!knowledge_tiers.length && 'None!') ||
-          knowledge_tiers.map((tier, i) => (
-            <Stack.Item key={i}>
-              <Flex
-                justify="center"
-                align="center"
-                backgroundColor="transparent"
-                wrap="wrap"
-              >
-                {tier.nodes.map((node) => (
-                  <Flex.Item key={node.name}>
-                    <Button
-                      key={node.name}
-                      color="transparent"
-                      tooltip={`${node.name}:
+        {!knowledge_tiers.length
+          ? 'None!'
+          : knowledge_tiers.map((tier, i) => (
+              <Stack.Item key={i}>
+                <Flex
+                  justify="center"
+                  align="center"
+                  backgroundColor="transparent"
+                  wrap="wrap"
+                >
+                  {tier.nodes.map((node) => (
+                    <Flex.Item key={node.name}>
+                      <Button
+                        key={node.name}
+                        color="transparent"
+                        tooltip={`${node.name}:
                           ${node.desc}`}
-                      onClick={
-                        node.disabled
-                          ? () => null
-                          : () => act('research', { path: node.path })
-                      }
-                      width={node.ascension ? '192px' : '64px'}
-                      height={node.ascension ? '192px' : '64px'}
-                      m="8px"
-                      style={{
-                        borderRadius: '50%',
-                      }}
-                    >
-                      <DmIcon
-                        icon="icons/ui_icons/antags/heretic/knowledge.dmi"
-                        icon_state={
+                        onClick={
                           node.disabled
-                            ? 'node_locked'
-                            : node.finished
-                              ? 'node_finished'
-                              : node.bgr
+                            ? () => null
+                            : () => act('research', { path: node.path })
                         }
-                        height={node.ascension ? '192px' : '64px'}
                         width={node.ascension ? '192px' : '64px'}
-                        top="0px"
-                        left="0px"
-                        position="absolute"
-                      />
-                      <DmIcon
-                        icon={node.icon_params.icon}
-                        icon_state={node.icon_params.state}
-                        frame={node.icon_params.frame}
-                        direction={node.icon_params.dir}
-                        movement={node.icon_params.moving}
-                        height={node.ascension ? '152px' : '64px'}
-                        width={node.ascension ? '152px' : '64px'}
-                        top={node.ascension ? '20px' : '0px'}
-                        left={node.ascension ? '20px' : '0px'}
-                        position="absolute"
-                      />
-                      <Box
-                        position="absolute"
-                        top="0px"
-                        left="0px"
-                        backgroundColor="black"
-                        textColor="white"
-                        bold
+                        height={node.ascension ? '192px' : '64px'}
+                        m="8px"
+                        style={{
+                          borderRadius: '50%',
+                        }}
                       >
-                        {node.finished
-                          ? ''
-                          : node.cost > 0
-                            ? node.cost
-                            : 'FREE'}
-                      </Box>
-                    </Button>
-                  </Flex.Item>
-                ))}
-              </Flex>
-              <hr />
-            </Stack.Item>
-          ))}
+                        <DmIcon
+                          icon="icons/ui_icons/antags/heretic/knowledge.dmi"
+                          icon_state={
+                            node.disabled
+                              ? 'node_locked'
+                              : node.finished
+                                ? 'node_finished'
+                                : node.bgr
+                          }
+                          height={node.ascension ? '192px' : '64px'}
+                          width={node.ascension ? '192px' : '64px'}
+                          top="0px"
+                          left="0px"
+                          position="absolute"
+                        />
+                        <DmIcon
+                          icon={node.icon_params.icon}
+                          icon_state={node.icon_params.state}
+                          frame={node.icon_params.frame}
+                          direction={node.icon_params.dir}
+                          movement={node.icon_params.moving}
+                          height={node.ascension ? '152px' : '64px'}
+                          width={node.ascension ? '152px' : '64px'}
+                          top={node.ascension ? '20px' : '0px'}
+                          left={node.ascension ? '20px' : '0px'}
+                          position="absolute"
+                        />
+                        <Box
+                          position="absolute"
+                          top="0px"
+                          left="0px"
+                          backgroundColor="black"
+                          textColor="white"
+                          bold
+                        >
+                          {node.finished
+                            ? ''
+                            : node.cost > 0
+                              ? node.cost
+                              : 'FREE'}
+                        </Box>
+                      </Button>
+                    </Flex.Item>
+                  ))}
+                </Flex>
+                <hr />
+              </Stack.Item>
+            ))}
       </Stack>
     </Section>
   );
