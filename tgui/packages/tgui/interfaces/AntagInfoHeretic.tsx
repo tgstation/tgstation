@@ -39,7 +39,7 @@ type IconParams = {
   state: string;
   frame: number;
   dir: number;
-  moving: boolean;
+  moving: BooleanLike;
 };
 
 type Knowledge = {
