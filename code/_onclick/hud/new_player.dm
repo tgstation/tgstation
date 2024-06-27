@@ -104,9 +104,9 @@
 	var/force_verification = CONFIG_GET(number/force_verification)
 	var/discord = SSdiscord.lookup_id(usr.ckey)
 	if (force_verification && !discord && requires_discord)
-		if(tgui_alert(usr, "Для игры на сервере нужен привязанный аккаунт дискорда(OOC - Verify Discord). Желаете ли Вы открыть ссылку в браузере?",, list("Да","Нет"))!="Да")
+		if(tgui_alert(usr, "Для игры на сервере МассМета нужен привязанный аккаунт дискорда(OOC → Verify Discord). Желаете ли Вы открыть ссылку в браузере?",, list("Да","Нет"))!="Да")
 			return
-		DIRECT_OUTPUT(usr, link("https://discord.gg/KBsjSv7Kh9"))
+		DIRECT_OUTPUT(usr, link("https://discord.gg/WRJ8bns7X7")) //прямая ссылка в канал верификации
 	else
 		if(owner != REF(usr))
 			return
