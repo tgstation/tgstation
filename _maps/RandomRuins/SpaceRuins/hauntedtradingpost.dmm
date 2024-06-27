@@ -849,7 +849,7 @@
 "hx" = (
 /obj/structure/cable/layer1,
 /obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
+	cell_type = /obj/item/stock_parts/power_store/cell/lead;
 	start_charge = 20000;
 	pixel_x = 25;
 	dir = 4
@@ -1596,7 +1596,7 @@
 "nJ" = (
 /obj/structure/cable/layer1,
 /obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
+	cell_type = /obj/item/stock_parts/power_store/cell/lead;
 	start_charge = 20000;
 	pixel_x = -25;
 	dir = 8;
@@ -2109,7 +2109,7 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/spawner/random/exotic/technology,
 /obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
+	cell_type = /obj/item/stock_parts/power_store/cell/lead;
 	locked = 0;
 	pixel_y = -25;
 	start_charge = 20000
@@ -2157,12 +2157,14 @@
 /obj/structure/cable/layer1,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/bluespace,
 /obj/machinery/button/door{
 	pixel_y = 23;
 	pixel_x = 10;
 	id = "donk_office_peek";
 	name = "shutter button"
+	},
+/obj/item/stock_parts/power_store/cell/bluespace{
+	pixel_y = 2
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
@@ -2189,7 +2191,7 @@
 "sM" = (
 /obj/structure/cable/layer1,
 /obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
+	cell_type = /obj/item/stock_parts/power_store/cell/lead;
 	pixel_y = -25;
 	start_charge = 20000
 	},
@@ -2291,17 +2293,6 @@
 /obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
-"tk" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	pipe_color = "#FF7B00";
-	color = "#FF7B00"
-	},
-/mob/living/simple_animal/bot/firebot{
-	bot_mode_flags = 3
-	},
-/turf/open/floor/catwalk_floor/iron_smooth,
-/area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "tl" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
@@ -2994,7 +2985,7 @@
 "zO" = (
 /obj/structure/cable/layer1,
 /obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
+	cell_type = /obj/item/stock_parts/power_store/cell/lead;
 	pixel_y = -25;
 	start_charge = 20000;
 	full_charge = 1
@@ -3249,7 +3240,7 @@
 "Ct" = (
 /obj/structure/cable/layer1,
 /obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
+	cell_type = /obj/item/stock_parts/power_store/cell/lead;
 	pixel_y = -25;
 	start_charge = 20000
 	},
@@ -3835,7 +3826,7 @@
 "Ht" = (
 /obj/structure/cable/layer1,
 /obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
+	cell_type = /obj/item/stock_parts/power_store/cell/lead;
 	start_charge = 20000;
 	pixel_y = 25;
 	dir = 1;
@@ -4497,6 +4488,9 @@
 	location = "hall1";
 	codes_txt = "patrol;next_patrol=hall2"
 	},
+/mob/living/basic/bot/firebot{
+	additional_access = /datum/id_trim/away/hauntedtradingpost
+	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "MJ" = (
@@ -4509,7 +4503,7 @@
 "MN" = (
 /obj/structure/cable/layer1,
 /obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
+	cell_type = /obj/item/stock_parts/power_store/cell/lead;
 	start_charge = 20000;
 	pixel_x = -25;
 	dir = 8
@@ -4891,7 +4885,7 @@
 "Qy" = (
 /obj/structure/cable/layer1,
 /obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
+	cell_type = /obj/item/stock_parts/power_store/cell/lead;
 	start_charge = 20000;
 	pixel_y = 25;
 	dir = 1
@@ -4973,7 +4967,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "Ri" = (
 /obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
+	cell_type = /obj/item/stock_parts/power_store/cell/lead;
 	start_charge = 20000;
 	pixel_x = 25;
 	dir = 4
@@ -5035,7 +5029,7 @@
 "RC" = (
 /obj/structure/cable/layer1,
 /obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
+	cell_type = /obj/item/stock_parts/power_store/cell/lead;
 	start_charge = 20000;
 	pixel_y = 25;
 	dir = 1;
@@ -5148,7 +5142,7 @@
 "Sx" = (
 /obj/structure/cable/layer1,
 /obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
+	cell_type = /obj/item/stock_parts/power_store/cell/lead;
 	start_charge = 20000;
 	pixel_x = -25;
 	dir = 8;
@@ -5553,7 +5547,7 @@
 "VJ" = (
 /obj/structure/cable/layer1,
 /obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
+	cell_type = /obj/item/stock_parts/power_store/cell/lead;
 	start_charge = 20000;
 	pixel_x = -25;
 	dir = 8;
@@ -5567,9 +5561,6 @@
 /obj/machinery/navbeacon{
 	location = "hall3";
 	codes_txt = "patrol;next_patrol=hall4"
-	},
-/mob/living/simple_animal/bot/firebot{
-	bot_mode_flags = 3
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
@@ -5596,6 +5587,9 @@
 /obj/machinery/navbeacon{
 	location = "hall4";
 	codes_txt = "patrol;next_patrol=lounge"
+	},
+/mob/living/basic/bot/firebot{
+	additional_access = /datum/id_trim/away/hauntedtradingpost
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
@@ -7248,7 +7242,7 @@ pT
 tG
 xV
 XT
-tk
+tG
 xV
 tG
 sD
