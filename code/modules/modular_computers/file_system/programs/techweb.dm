@@ -14,102 +14,42 @@
 	var/datum/techweb/stored_research
 	/// Access needed to lock/unlock the console
 	var/lock_access = ACCESS_RESEARCH
-	/// Determines if the console is locked, and consequently if actions can be performed with it
-	var/locked = FALSE
 	/// Used for compressing data sent to the UI via static_data as payload size is of concern
 	var/id_cache = list()
 	/// Sequence var for the id cache
 	var/id_cache_seq = 1
-	/// What this will return when a server controller queries it for its info
-	var/list/query_reply = list()
+
+/datum/computer_file/program/science/Destroy()
+	..()
+	UnregisterSignal(computer, COMSIG_MODULAR_COMPUTER_INSERTED_ID)
 
 /datum/computer_file/program/science/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, computer)
-	RegisterSignal(computer, COMSIG_RESEARCH_CONSOLE_INFO_QUERIED, PROC_REF(validate_console_query))
-	RegisterSignal(computer, COMSIG_RESEARCH_CONSOLE_TOGGLE_LOCK, PROC_REF(toggleLock)
+	RegisterSignal(computer, COMSIG_MODULAR_COMPUTER_INSERTED_ID, PROC_REF(notify_techweb))
 
-/datum/computer_file/program/science/can_run(mob/living/user)
+/datum/computer_file/program/science/proc/notify_techweb(datum/source, obj/item/card/inserting_id, mob/user)
+	SIGNAL_HANDLER
+
+	if(!stored_research) // we can't notify a techweb we don't have
+		return
+	if(stored_research.consoles_accessing[computer] && stored_research.users_accessing[inserting_id]) // we already have a record of both this terminal and that user
+		return
+	if(can_run(user))
+		SEND_SIGNAL(stored_research, COMSIG_TECHWEB_NEW_CONNECTION, src, inserting_id, user)
+
+
+/datum/computer_file/program/science/can_run(mob/living/user) // we check off of IDs deliberately; silicons can always access the research web
 	. = ..()
 	if(!.)
-		return
-	if(stored_research.users_accessing[user])
-		var/user_record = stored_research.users_accessing[user]
-		if(user_record["locked"])
+		return FALSE
+	var/accessing_id = computer?.computer_id_slot
+	if(stored_research && stored_research.users_accessing[accessing_id])
+		var/user_record = stored_research.users_accessing[accessing_id]
+		if(user_record["locked"] == TRUE)
 			return FALSE
 	return TRUE
-
-/datum/computer_file/program/science/on_start(mob/living/user)
-	. = ..()
-	if(!.)
-		return
-	if(stored_research && !stored_research.consoles_accessing[computer])
-		stored_research.consoles_accessing += computer
-
-	update_query_reply()
-
-	if(!stored_research.users_accessing[user]) // emagged consoles and admin abuse doesn't get logged
-		if(computer.obj_flags & EMAGGED)
-			return
-		if(isAdminGhostAI(user))
-			return
-		stored_research.register_user(user)
-
-/* Signal handler for verifying this can respond to a query. Currently just a yes/no check.
-* No scenarios to return an invalid response for now, to facilitate server controller access locking
-* even if the PDA is out of signal.
-* datum/source - src
-* datum/inquirer - The object doing the query; used for logging purposes, and for validation of query access in the future
-*/
-/datum/computer_file/program/science/proc/validate_console_query(datum/source, datum/inquirer)
-	SIGNAL_HANDLER
-
-	return RESEARCH_CONSOLE_QUERY_VALID
-
-/* Whenever this program is installed, it puts together a list of relevant data for server controller queries
-* However, it can also update singular fields if needed; current projected use cases are for things that we
-* don't want rebuilding the whole query with respect to performance considerations, or for l33t haxxorz updating
-* their query responses with erroneous information: Science McNotAnAntag says, "RD, look! The AI is researching bombs! You should let me valiantly card it!"
-* single_field - null by default, if not null, the value of the field to update
-* value - null by default, if not null, the value to update the field with
-*/
-/datum/computer_file/program/science/proc/update_query_reply(single_field = null, value = null)
-
-	if(single_field) // If we're updating a single field then ONLY update the single field... obviously...
-		query_reply[single_field] = value
-	else
-		query_reply["console_name"] = computer
-		query_reply["console_location"] = "NTNet Connection"
-		query_reply["console_locked"] = locked
-		query_reply["console_ref"] = REF(computer)
-	if(stored_research)
-		stored_research.consoles_accessing[computer] = console_query_reply()
-
-
-
-/* Handler for the various interfaces that would query console information.
-* queried_field - null by default, if not null return the whole query, else just the field
-* datum/inquirer - The object doing the query; to be used for logging purposes
-*/
-/datum/computer_file/program/science/proc/console_query_reply(queried_field = null, datum/inquirer = null)
-
-	if(queried_field)
-		return query_reply[queried_field]
-
-	return query_reply
-
-/* Signal handler for toggling the lock on the program. Can be called remotely at the server controller, or locally.
-*  Either way, the access required to unlock it is the highest possessed by the person setting the lock:area
-*  Captain -> RD -> Scientist
-*  datum/source - the source of the signal, typically the host modular computer
-*  datum/lock_setter - the person setting the lock
-*/
-/datum/computer_file/program/science/proc/toggleLock(datum/source, mob/living/lock_setter, remote_operation = FALSE)
-	SIGNAL_HANDLER
-
-	if(!locked)
-
 
 /datum/computer_file/program/science/application_attackby(obj/item/attacking_item, mob/living/user)
 	if(!istype(attacking_item, /obj/item/multitool))
@@ -140,7 +80,7 @@
 		"sec_protocols" = !(computer.obj_flags & EMAGGED),
 		"t_disk" = null, //Not doing disk operations on the app, use the console for that.
 		"d_disk" = null, //See above.
-		"locked" = locked,
+		"locked" = stored_research.consoles_accessing[computer]["locked"],
 	)
 
 	// Serialize all nodes to display
@@ -175,6 +115,17 @@
 
 /datum/computer_file/program/science/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
+	var/locked = FALSE // barring someone locking us out, we're not locked
+	var/card_access = computer?.computer_id_slot?.access
+	if(!card_access)
+		card_access = null // just to be sure we don't end up in some undefined circumstance
+	var/user_data = card_access ? stored_research.users_accessing[computer?.computer_id_slot] : null
+	var/console_data = stored_research.consoles_accessing[computer]
+	if(computer.obj_flags & EMAGGED) // emagged doesn't give a shit about being locked by the server controller
+		locked = FALSE
+	else
+		if((user_data && user_data["locked"] == TRUE) || console_data["locked"] == TRUE) // make sure we have user data in case a silicon uses this program on a modular computer
+			locked = TRUE
 	// Check if the console is locked to block any actions occuring
 	if (locked && action != "toggleLock")
 		computer.say("Console is locked, cannot perform further actions.")
@@ -185,9 +136,8 @@
 			if(computer.obj_flags & EMAGGED)
 				to_chat(usr, span_boldwarning("Security protocol error: Unable to access locking protocols."))
 				return TRUE
-			if(lock_access in computer?.computer_id_slot?.access)
-				locked = !locked
-				locked ? 0 : lock_access = ACCESS_RESEARCH // reset to ACCESS_RESEARCH when unlocked
+			if((lock_access in card_access)  || HAS_SILICON_ACCESS(usr)) // 'in' operator on a null always returns false
+				SEND_SIGNAL(stored_research, COMSIG_RESEARCH_CONSOLE_TOGGLE_LOCK, src, list(card_access))
 			else
 				to_chat(usr, span_boldwarning("Unauthorized Access. Please insert ID card: [lock_access]."))
 			return TRUE

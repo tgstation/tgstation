@@ -70,6 +70,8 @@
 	  * Filled with nulls on init, populated only on publication.
 	*/
 	var/list/published_papers
+	/// A list of ID cards that have been used to permit access to the techweb for research, for access control
+	var/list/obj/item/card/id/users_accessing
 
 /datum/techweb/New()
 	SSresearch.techwebs += src
@@ -525,3 +527,73 @@
 			handler.announce_message_to_all(announcetext)
 
 	return TRUE
+
+/* A proc that returns whether a console is locked or not, if you can't tell.
+ * Consoles can currently either be an actual computer, or a program on a PDA (which does most of its logic off the PDA in question), so we can't strictly type the first
+ * argument (yet).
+ * In most cases, a user is hoping that this returns FALSE, denoting the console is NOT locked.
+ * obj/console - The console to check
+ * mob/living/user - The user to check; a user can be locked out if the entire console itself isn't
+ */
+/datum/techweb/proc/is_console_locked(obj/console, mob/living/user)
+	. = FALSE // let's assume a permissive use of research consoles
+	if (console.obj_flags & EMAGGED) // goddamnit their GUI is decrypting our firewall!! we need more kilobytes!
+		return .
+	if(!consoles_accessing[console])
+		stack_trace("[console] was not properly added to [src]'s list of consoles_accessing.")
+		return TRUE // your eldritch bugged out console is locked in that case, guy...
+	if(consoles_accessing[console]["locked"]) // they've locked down our motherboard... we'll have to go in through MAC addressing
+		. = TRUE
+		return .
+	if(HAS_SILICON_ACCESS(user)) // silicons can't be added to locked out users so we won't get to checking for them
+		return .
+	/// The ID card in question that should serve as a user entry for whatever console.
+	var/obj/item/id/id_card = user.get_idcard()
+	if(!id_card) // Can't access the research web without an ID
+		. = TRUE
+		return .
+	if(users_access[id_card]["locked"]) // the RD, Captain, or AI have specifically locked you out?! all you did was blow the budget on combat mechs!
+		. = TRUE
+		return .
+	return . // if you have gotten through the gauntlet of locked cases, you can blow the research budget to your heart's content (ADVANCED SANITATION TECH BABY)
+
+/* Signal handler for verifying this can respond to a query. Currently just a yes/no check.
+* No scenarios to return an invalid response for now, to facilitate server controller access locking
+* even if the PDA is out of signal.
+* datum/source - src
+* datum/inquirer - The object doing the query; for validation of query access in the future
+*/
+/obj/machinery/computer/rdconsole/proc/validate_console_query(datum/source, datum/inquirer)
+	SIGNAL_HANDLER
+
+	return RESEARCH_CONSOLE_QUERY_VALID
+
+/* Whenever this program is installed, it puts together a list of relevant data for server controller queries
+* However, it can also update singular fields if needed; current projected use cases are for things that we
+* don't want rebuilding the whole query with respect to performance considerations, or for l33t haxxorz updating
+* their query responses with erroneous information: Science McNotAnAntag says, "RD, look! The AI is researching bombs! You should let me valiantly card it!"
+* single_field - null by default, if not null, the value of the field to update
+* value - null by default, if not null, the value to update the field with
+*/
+/obj/machinery/computer/rdconsole/proc/update_query_reply(single_field = null, value = null)
+
+	if(single_field) // If we're updating a single field then ONLY update the single field... obviously...
+		query_reply[single_field] = value
+	else
+		query_reply["console_name"] = src
+		query_reply["console_location"] = get_area(src)
+		query_reply["console_locked"] = locked
+		query_reply["console_ref"] = REF(src)
+	if(stored_research)
+		stored_research.consoles_accessing[src] = console_query_reply()
+
+/* Handler for the various interfaces that would query console information.
+* queried_field - null by default, if not null return the whole query, else just the field
+* datum/inquirer - The object doing the query; to be used for logging purposes
+*/
+/obj/machinery/computer/rdconsole/proc/console_query_reply(queried_field = null, datum/inquirer = null)
+
+	if(queried_field)
+		return query_reply[queried_field]
+
+	return query_reply

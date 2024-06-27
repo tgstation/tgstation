@@ -6,6 +6,15 @@
 
 /* Signals for research interfaces, which are currently just the research consoles and PDA programs. */
 
+
+/* Called when a research interface successfully communicates with a techweb for the first time; whether it's a new console, new user, or both
+* datum/source - the techweb
+* obj/item/card/inserting_id - when the interface was accessed by an ID card
+* mob/user - when the interface was accessed by something with inherent access
+*/
+#define COMSIG_TECHWEB_NEW_CONNECTION "research_console_new_connection"
+
+
 /// Called when a research interface is queried by the server controller; validates that this is returning queries
 #define COMSIG_RESEARCH_CONSOLE_INFO_QUERIED "console_info_queried"
 #define RESEARCH_CONSOLE_QUERY_VALID (1<<0)

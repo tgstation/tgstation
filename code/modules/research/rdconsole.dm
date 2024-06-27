@@ -29,14 +29,11 @@ Nothing else in the console has ID requirements.
 	var/obj/item/disk/tech_disk/t_disk
 	/// The stored design disk, if present
 	var/obj/item/disk/design_disk/d_disk
-	/// Determines if the console is locked, and consequently if actions can be performed with it
-	var/locked = FALSE
 	/// Used for compressing data sent to the UI via static_data as payload size is of concern
 	var/id_cache = list()
 	/// Sequence var for the id cache
 	var/id_cache_seq = 1
 	/// The contents of the reply this will give to any querying servers
-	var/list/query_reply = list()
 
 /proc/CallMaterialName(ID)
 	if (istype(ID, /datum/material))
@@ -56,46 +53,6 @@ Nothing else in the console has ID requirements.
 		stored_research.consoles_accessing += src
 	update_query_reply()
 
-/* Signal handler for verifying this can respond to a query. Currently just a yes/no check.
-* No scenarios to return an invalid response for now, to facilitate server controller access locking
-* even if the PDA is out of signal.
-* datum/source - src
-* datum/inquirer - The object doing the query; for validation of query access in the future
-*/
-/obj/machinery/computer/rdconsole/proc/validate_console_query(datum/source, datum/inquirer)
-	SIGNAL_HANDLER
-
-	return RESEARCH_CONSOLE_QUERY_VALID
-
-/* Whenever this program is installed, it puts together a list of relevant data for server controller queries
-* However, it can also update singular fields if needed; current projected use cases are for things that we
-* don't want rebuilding the whole query with respect to performance considerations, or for l33t haxxorz updating
-* their query responses with erroneous information: Science McNotAnAntag says, "RD, look! The AI is researching bombs! You should let me valiantly card it!"
-* single_field - null by default, if not null, the value of the field to update
-* value - null by default, if not null, the value to update the field with
-*/
-/obj/machinery/computer/rdconsole/proc/update_query_reply(single_field = null, value = null)
-
-	if(single_field) // If we're updating a single field then ONLY update the single field... obviously...
-		query_reply[single_field] = value
-	else
-		query_reply["console_name"] = src
-		query_reply["console_location"] = get_area(src)
-		query_reply["console_locked"] = locked
-		query_reply["console_ref"] = REF(src)
-	if(stored_research)
-		stored_research.consoles_accessing[src] = console_query_reply()
-
-/* Handler for the various interfaces that would query console information.
-* queried_field - null by default, if not null return the whole query, else just the field
-* datum/inquirer - The object doing the query; to be used for logging purposes
-*/
-/obj/machinery/computer/rdconsole/proc/console_query_reply(queried_field = null, datum/inquirer = null)
-
-	if(queried_field)
-		return query_reply[queried_field]
-
-	return query_reply
 
 /obj/machinery/computer/rdconsole/Destroy()
 	if(stored_research)
@@ -192,7 +149,6 @@ Nothing else in the console has ID requirements.
 	balloon_alert(user, "security protocols disabled")
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	obj_flags |= EMAGGED
-	locked = FALSE
 	return TRUE
 
 /obj/machinery/computer/rdconsole/ui_interact(mob/user, datum/tgui/ui = null)
@@ -211,9 +167,9 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/ui_data(mob/user)
 	var/list/data = list()
 	data["stored_research"] = !!stored_research
-	data["locked"] = locked
 	if(!stored_research) //lack of a research node is all we care about.
 		return data
+	data["locked"] = stored_research.is_console_locked(src, user)
 	data += list(
 		"nodes" = list(),
 		"experiments" = list(),
@@ -360,7 +316,7 @@ Nothing else in the console has ID requirements.
 				to_chat(usr, span_boldwarning("Security protocol error: Unable to access locking protocols."))
 				return TRUE
 			if(allowed(usr))
-				locked = !locked
+				SEND_SIGNAL(stored_research, COMSIG_RESEARCH_CONSOLE_TOGGLE_LOCK, src, usr)
 			else
 				to_chat(usr, span_boldwarning("Unauthorized Access."))
 			return TRUE
