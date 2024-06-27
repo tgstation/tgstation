@@ -102,7 +102,7 @@
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	if(atom_integrity < max_integrity)
-		. . += span_notice("Integrity compromised, repair hull with a welding tool.")
+		. += span_notice("Integrity compromised, repair hull with a welding tool.")
 	. += span_notice("A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]; MAX SAFE TEMPERATURE: [siunit(temp_limit, "K", 0)]</b>.")
 	. += span_notice("The hull is <b>welded</b> together and can be cut apart.")
 	if(internal_cell)
