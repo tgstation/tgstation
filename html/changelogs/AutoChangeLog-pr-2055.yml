@@ -1,5 +1,0 @@
-author: "ven1883"
-delete-after: True
-changes:
-  - rscadd: "Adds Alveolic Deoxidation, a nanite program that heals suffocation."
-  - rscadd: "Adds Alveolic Deoxidation to the tech tree."

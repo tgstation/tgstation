@@ -1,5 +1,0 @@
-author: "Kapu1178"
-delete-after: True
-changes:
-  - bugfix: "Fixed stuff relating to the MODsuit pathfinder module."
-  - code_imp: "AI pathfinding should produce slightly better paths."

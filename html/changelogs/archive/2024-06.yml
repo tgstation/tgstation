@@ -538,3 +538,70 @@
       overall by all sats.
   - balance: Slightly boosted the range of meteor defense satellite from 14 to 16
       tiles.
+2024-06-27:
+  Absolucy:
+  - rscadd: Engineers now have an RCD round start.
+  - balance: RCD construction/deconstruction effects can now be attacked in order
+      to cancel them. You can get the anti-disruption upgrade disk to prevent this.
+  - balance: RCD construction/deconstruction is now slower if you already have another
+      effect up. This does not effect reconstruction.
+  - balance: Both of the above effects do not effect the CE's roundstart RCD, nor
+      any other RCDs such as combat RCDs.
+  - rscadd: RCDs can make girders now.
+  - bugfix: Some RCD constructs took more material than manual construction. The RCD
+      cost should be consistent in comparison to manual construction now.
+  - bugfix: RCDs can build wallmounts on reinforced walls.
+  - qol: RCDs can build directional windows without requiring/building a grill.
+  - bugfix: You should be able to click on lattices on icebox with the RCD and construct
+      a floor now
+  - balance: Maintenance drones now can use RPED, RCD, holosigns, and spray bottles.
+  - rscadd: Added liquid barriers, currently mapped into xenobio, which block all
+      liquid flow across them, hopefully preventing the dreaded station-wide ooze
+      floods.
+  - image: (intercepti0n) Resprites t-ray scanner, gas analyzer, geiger counter and
+      hand drill.
+  - image: (LT3) Medical and improvised gauze are visibly different from cloth.
+  - image: (Alecksohs) Updated the Advanced Surgical Tool's sprites.
+  - code_imp: (Alecksohs) Updated the Advanced Surgical Tool's light code.
+  - qol: Placing someone on an operating table now actually buckles them.
+  - qol: Prettied up the Chemical Analyzer's output in chat, making it easier to read,
+      especially when scanning multiple things.
+  DexeeXI:
+  - rscadd: New Title for Captains
+  DustanHache:
+  - rscadd: Egg bags are now craftable using cloth, like many other bags.
+  Kapu1178:
+  - bugfix: Fixed stuff relating to the MODsuit pathfinder module.
+  - code_imp: AI pathfinding should produce slightly better paths.
+  KnigTheThrasher:
+  - bugfix: fixed latejoin prisoner spawns
+  - bugfix: :)
+  RafRoq:
+  - rscadd: 'Added new botany plant trait, seedless, can be found in money tree seeds
+
+      :cl:'
+  Rex9001, DexeeXI:
+  - rscadd: Brig Physician as a job
+  - rscadd: 'Clothing items for Brig Physician: jumpsuit, skirt, scrubs, shoes, backpacks
+      of all kinds.'
+  - rscadd: Plasmaman support for Brig Physician. Sprites provided directly by DimWhat.
+  - rscadd: Alternative job title support for Brig Physician
+  - rscadd: SECHUD, Crew Monitor and ID card support for Brig Physician
+  - rscadd: Locker specifically for Brig Physician
+  - rscadd: Digi-legs support for new clothes for Lizards.
+  - rscadd: Most new items have inhand sprites
+  - rscadd: Brig Physician start markers in Prison Medbays.
+  - rscadd: Requested alternative title for Medical Doctor. (Admin Team Request)
+  - balance: All prison medbays overhauled to provide proper support. The old tram
+      medbay was completely bare while Box was mostly "feature complete". All medbays
+      should have very similar capability.
+  - bugfix: Head of Personnel's supervisor is now the Captain properly.
+  - rscdel: Virus extrapolator in the CMO's locker is now gone. (I don't know how
+      I missed this one)
+  TTNT789:
+  - rscadd: The Ashen Forge as a traitor faction
+  Uristthedorf:
+  - qol: You can craft plastitanium shards.
+  ven1883:
+  - rscadd: Adds Alveolic Deoxidation, a nanite program that heals suffocation.
+  - rscadd: Adds Alveolic Deoxidation to the tech tree.

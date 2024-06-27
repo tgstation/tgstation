@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - rscadd: "Added liquid barriers, currently mapped into xenobio, which block all liquid flow across them, hopefully preventing the dreaded station-wide ooze floods."
