@@ -235,11 +235,6 @@
 	var/turf/local_turf = get_turf(src)
 	adjacent_turfs = local_turf.get_atmos_adjacent_turfs(alldir = TRUE)
 
-/obj/machinery/atmospherics/components/unary/airlock_pump/proc/set_up()
-	adjacent_turfs.Cut()
-	var/turf/local_turf = get_turf(src)
-	adjacent_turfs = local_turf.get_atmos_adjacent_turfs(alldir = TRUE)
-
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/set_links()
 	internal_airlock = find_airlock(dir)
 	external_airlock = find_airlock(REVERSE_DIR(dir))
