@@ -103,10 +103,12 @@
 /// Try and teleport something to our beacon
 /datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon/proc/try_teleporting(mob/living/source, atom/target)
 	SIGNAL_HANDLER
+
 	if (!can_teleport(source, target))
 		return
+
 	INVOKE_ASYNC(src, PROC_REF(perform_teleport), source, target)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+	return COMSIG_MOB_CANCEL_CLICKON
 
 /// Validate whether we can teleport this object
 /datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon/proc/can_teleport(mob/living/source, atom/movable/target)
@@ -118,7 +120,7 @@
 		if (!guardian_mob.is_deployed())
 			source.balloon_alert(source, "manifest yourself!")
 			return FALSE
-	if (!source.Adjacent(target))
+	if (!source.can_perform_action(target))
 		target.balloon_alert(source, "too far!")
 		return FALSE
 	if (target.anchored)

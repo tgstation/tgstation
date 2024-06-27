@@ -261,7 +261,7 @@
 		balloon_alert(user, "open the panel first!")
 		return
 
-	if(istype(weapon, /obj/item/stock_parts/cell))
+	if(istype(weapon, /obj/item/stock_parts/power_store/cell))
 		if(!cell)
 			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
 				return

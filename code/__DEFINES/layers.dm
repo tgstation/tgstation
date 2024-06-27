@@ -281,7 +281,7 @@
 
 ///Layer for lobby menu collapse button
 #define LOBBY_BELOW_MENU_LAYER 2
-///Layer for lobby menu background image and main buttons (Join/Ready, Observe, Charater Prefs)
+///Layer for lobby menu background image and main buttons (Join/Ready, Observe, Character Prefs)
 #define LOBBY_MENU_LAYER 3
 ///Layer for lobby menu shutter, which covers up the menu to collapse/expand it
 #define LOBBY_SHUTTER_LAYER 4

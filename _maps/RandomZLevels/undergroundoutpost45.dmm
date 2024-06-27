@@ -555,6 +555,19 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/undergroundoutpost45/central)
+"cM" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/stack/cable_coil{
+	pixel_x = 3;
+	pixel_y = -7
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/undergroundoutpost45/gateway)
 "cS" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/structure/window/spawner/directional/west,
@@ -2158,14 +2171,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/awaymission/undergroundoutpost45/gateway)
-"iY" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/white,
-/area/awaymission/undergroundoutpost45/research)
 "iZ" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -2622,6 +2627,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/undergroundoutpost45/gateway)
+"kN" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/turf/open/floor/iron,
+/area/awaymission/undergroundoutpost45/engineering)
 "kO" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2982,6 +2994,15 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/crew_quarters)
+"lV" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/machinery/computer/security/telescreen/underground_outpost/research/directional/south,
+/turf/open/floor/iron/cafeteria{
+	dir = 5
+	},
+/area/awaymission/undergroundoutpost45/research)
 "lW" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -2991,16 +3012,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/crew_quarters)
-"lX" = (
-/obj/structure/closet/crate,
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 26
-	},
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/awaymission/undergroundoutpost45/engineering)
 "lY" = (
 /obj/machinery/light/small/directional/north,
 /obj/machinery/camera/directional/north{
@@ -3016,19 +3027,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/engineering)
-"ma" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
-/obj/item/stack/cable_coil{
-	pixel_x = 3;
-	pixel_y = -7
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/undergroundoutpost45/gateway)
 "mb" = (
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/gateway)
@@ -3431,33 +3429,9 @@
 	dir = 5
 	},
 /area/awaymission/undergroundoutpost45/research)
-"no" = (
-/obj/machinery/computer/security{
-	dir = 4;
-	network = list("uo45")
-	},
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/awaymission/undergroundoutpost45/research)
 "np" = (
 /obj/structure/chair/office{
 	dir = 1
-	},
-/turf/open/floor/iron,
-/area/awaymission/undergroundoutpost45/research)
-"nq" = (
-/obj/structure/table,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for monitoring the research division and the labs within.";
-	dir = 8;
-	name = "research monitor";
-	network = list("uo45r")
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
 	},
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/research)
@@ -3583,18 +3557,6 @@
 	pixel_y = 9
 	},
 /obj/item/pen,
-/turf/open/floor/iron/cafeteria{
-	dir = 5
-	},
-/area/awaymission/undergroundoutpost45/research)
-"nR" = (
-/obj/structure/table/reinforced,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for monitoring the research division and the labs within.";
-	name = "research monitor";
-	network = list("uo45r")
-	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -4025,14 +3987,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/cafeteria{
-	dir = 5
-	},
-/area/awaymission/undergroundoutpost45/research)
-"pf" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -4899,6 +4853,17 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
+"sc" = (
+/obj/machinery/computer/security{
+	dir = 4;
+	network = list("uo45")
+	},
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/computer/security/telescreen/underground_outpost/research/directional/west,
+/turf/open/floor/iron,
+/area/awaymission/undergroundoutpost45/research)
 "sd" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
@@ -5954,13 +5919,6 @@
 	dir = 8
 	},
 /area/awaymission/undergroundoutpost45/engineering)
-"vW" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
-/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
-/turf/open/floor/iron,
-/area/awaymission/undergroundoutpost45/engineering)
 "vY" = (
 /obj/structure/closet/emcloset,
 /obj/item/clothing/mask/breath,
@@ -5991,6 +5949,16 @@
 /obj/item/bedsheet,
 /turf/open/floor/carpet,
 /area/awaymission/undergroundoutpost45/mining)
+"we" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 26
+	},
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/awaymission/undergroundoutpost45/engineering)
 "wf" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron{
@@ -6749,6 +6717,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
+"CM" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/white,
+/area/awaymission/undergroundoutpost45/research)
 "CT" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -6758,6 +6734,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
+"CW" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/awaymission/undergroundoutpost45/research)
 "De" = (
 /obj/machinery/computer/monitor{
 	name = "primary power monitoring console"
@@ -6893,6 +6877,13 @@
 	dir = 5
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
+"ET" = (
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/iron/cafeteria{
+	dir = 5
+	},
+/area/awaymission/undergroundoutpost45/research)
 "Fd" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/command/glass{
@@ -27483,7 +27474,7 @@ jG
 gw
 ky
 DB
-ma
+cM
 mB
 gK
 ad
@@ -33131,7 +33122,7 @@ gX
 hB
 ig
 ze
-iY
+CM
 jr
 jO
 mU
@@ -34427,7 +34418,7 @@ mP
 nn
 nQ
 oz
-pf
+lV
 gy
 ql
 qT
@@ -34682,7 +34673,7 @@ lL
 mj
 mP
 mP
-nR
+ET
 oA
 pg
 gy
@@ -35452,7 +35443,7 @@ Mg
 lM
 hH
 mR
-no
+sc
 RC
 oC
 ph
@@ -35966,7 +35957,7 @@ kV
 lM
 hH
 mT
-nq
+CW
 nV
 WG
 lu
@@ -48059,7 +48050,7 @@ rr
 qb
 RF
 vy
-vW
+kN
 ni
 ln
 ni
@@ -48813,7 +48804,7 @@ ad
 ad
 ad
 ln
-lX
+we
 mz
 ln
 nK

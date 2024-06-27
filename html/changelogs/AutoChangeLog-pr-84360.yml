@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Space heaters do not completely drain their starting cell while trying to change their room temperature by a few degrees."

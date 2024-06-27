@@ -1168,7 +1168,7 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/stack/cable_coil,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/multitool{
 	pixel_y = -13
 	},
@@ -1819,7 +1819,7 @@
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = 3;
 	pixel_y = -1
 	},

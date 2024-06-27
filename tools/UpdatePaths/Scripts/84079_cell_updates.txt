@@ -1,0 +1,2 @@
+/obj/item/stock_parts/cell : /obj/item/stock_parts/power_store/cell{@OLD}
+/obj/item/stock_parts/cell/@SUBTYPES : /obj/item/stock_parts/power_store/cell/@SUBTYPES{@OLD}
