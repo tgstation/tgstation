@@ -60,17 +60,17 @@
 	/// Wether we are allowed to ascend
 	var/feast_of_owls = FALSE
 	/// Static list of what each path converts to in the UI (colors are TGUI colors)
-	var/static/list/path_to_ui_color = list(
-		PATH_START = "grey",
-		PATH_SIDE = "green",
-		PATH_RUST = "brown",
-		PATH_FLESH = "red",
-		PATH_ASH = "white",
-		PATH_VOID = "violet",
-		PATH_BLADE = "label", // my favorite color is label
-		PATH_COSMIC = "purple",
-		PATH_LOCK = "yellow",
-		PATH_MOON = "blue",
+	var/static/list/path_to_ui_bgr = list(
+		PATH_START = "node_side",
+		PATH_SIDE = "node_side",
+		PATH_RUST = "node_rust",
+		PATH_FLESH = "node_flesh",
+		PATH_ASH = "node_ash",
+		PATH_VOID = "node_void",
+		PATH_BLADE = "node_blade",
+		PATH_COSMIC = "node_cosmos",
+		PATH_LOCK = "node_lock",
+		PATH_MOON = "node_moon",
 	)
 
 	var/static/list/path_to_rune_color = list(
@@ -160,7 +160,7 @@
 	knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
 	knowledge_data["cost"] = initial(knowledge.cost)
 	knowledge_data["disabled"] = (!done) && (initial(knowledge.cost) > knowledge_points)
-	knowledge_data["color"] = done ? "black" : (path_to_ui_color[initial(knowledge.route)] || "grey")
+	knowledge_data["bgr"] = (path_to_ui_bgr[initial(knowledge.route)] || "side")
 	knowledge_data["finished"] = done
 	knowledge_data["ascension"] = ispath(knowledge,/datum/heretic_knowledge/ultimate)
 
