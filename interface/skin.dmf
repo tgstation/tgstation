@@ -54,7 +54,7 @@ menu "menu"
 		category = "&Help"
 		saved-params = "is-checked"
 
-// MASSMETA ADDITION (lil bit better ui)
+//MASSMETA EDIT ADDITION BEGIN (better ui)
 	elem
 		name = "Refresh TGUI"
 		command = "refresh-tgui"
@@ -85,7 +85,7 @@ menu "menu"
 		category = "&Players"
 		saved-params = "is-checked"
 
-// EDIT END
+//MASSMETA EDIT ADDITION END
 
 window "mainwindow"
 	elem "mainwindow"
@@ -97,7 +97,7 @@ window "mainwindow"
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
 		statusbar = false
-		icon = 'massmeta\\icons\\ui_icons\\common\\massmeta_64.png'
+		icon = 'massmeta\\icons\\ui_icons\\common\\massmeta_64.png' //MASSMETA EDIT CHANGE (server main icon)
 		macro = "default"
 		menu = "menu"
 	elem "split"
@@ -157,7 +157,7 @@ window "mapwindow"
 		is-default = true
 		right-click = true
 		saved-params = "zoom;letterbox;zoom-mode"
-		style = ".center { text-align: center; } .maptext { font-family: 'MS Serif'; font-size: 7pt; -dm-text-outline: 1px black; color: white; line-height: 1.0; } .command_headset { font-weight: bold; } .context { font-family: 'Pixellari'; font-size: 12pt; -dm-text-outline: 1px black; }  .subcontext { font-family: 'TinyUnicode'; font-size: 12pt; line-height: 0.75; } .small { font-family: 'Spess Font'; font-size: 6pt; line-height: 1.4; } .big { font-family: 'Pixellari'; font-size: 12pt; } .reallybig { font-size: 12pt; } .extremelybig { font-size: 12pt; } .greentext { color: #00FF00; font-size: 6pt; } .redtext { color: #FF0000; font-size: 6pt; } .clown { color: #FF69BF; font-weight: bold; } .his_grace { color: #15D512; } .hypnophrase { color: #0d0d0d; font-weight: bold; } .yell { font-weight: bold; } .italics { font-size: 6px; }"
+		style = ".center { text-align: center; } .maptext { font-family: 'MS Serif'; font-size: 7pt; -dm-text-outline: 1px black; color: white; line-height: 1.0; } .command_headset { font-weight: bold; } .context { font-family: 'Pixellari'; font-size: 12pt; -dm-text-outline: 1px black; }  .subcontext { font-family: 'TinyUnicode'; font-size: 12pt; line-height: 0.75; } .small { font-family: 'Spess Font'; font-size: 6pt; line-height: 1.4; } .big { font-family: 'Pixellari'; font-size: 12pt; } .reallybig { font-size: 12pt; } .extremelybig { font-size: 12pt; } .greentext { color: #00FF00; font-size: 6pt; } .redtext { color: #FF0000; font-size: 6pt; } .clown { color: #FF69BF; font-weight: bold; } .his_grace { color: #15D512; } .hypnophrase { color: #0d0d0d; font-weight: bold; } .yell { font-weight: bold; } .italics { font-size: 6px; }" //MASSMETA EDIT CHANGE (cyrillic)
 	elem "status_bar"
 		type = LABEL
 		pos = 0,464
@@ -216,6 +216,7 @@ window "infowindow"
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "wiki"
+	//MASSMETA EDIT CHANGE BEGIN (forum -> discord)
 	elem "discord"
 		type = BUTTON
 		pos = 275,5
@@ -225,6 +226,7 @@ window "infowindow"
 		saved-params = "is-checked"
 		text = "Discord"
 		command = "discord"
+	//MASSMETA EDIT CHANGE END
 	elem "github"
 		type = BUTTON
 		pos = 365,5

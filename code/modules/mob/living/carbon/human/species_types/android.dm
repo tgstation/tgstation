@@ -35,7 +35,7 @@
 	mutantlungs = null
 	mutanteyes = /obj/item/organ/internal/eyes/robotic
 	mutantears = /obj/item/organ/internal/ears/cybernetic
-	mutantbutt = /obj/item/organ/internal/butt/cyber //massmeta edit
+	mutantbutt = /obj/item/organ/internal/butt/cyber //MASSMETA EDIT ADDITION (butts)
 	species_language_holder = /datum/language_holder/synthetic
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 

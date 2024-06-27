@@ -36,7 +36,7 @@
 /// Runs byond's html encoding sanitization proc, after replacing new-lines and tabs for the # character.
 /proc/sanitize(text)
 	var/static/regex/regex = regex(@"[\n\t]", "g")
-	return html_encode(regex.Replace_char(text, "#")) //MASSMETA EDIT
+	return html_encode(regex.Replace_char(text, "#")) //MASSMETA EDIT CHANGE - ORIGINAL: return html_encode(regex.Replace(text, "#"))
 
 
 /// Runs STRIP_HTML_SIMPLE and sanitize.
@@ -66,14 +66,14 @@
  */
 /proc/htmlrendertext(t)
 	// Trim "whitespace" by lazily capturing word characters in the middle
-	var/static/regex/matchMiddle = new(@"^\s*([\W\wа-яё]*?)\s*$", "i") //MASSMETA EDIT
-	if(matchMiddle.Find_char(t) == 0) //MASSMETA EDIT
+	var/static/regex/matchMiddle = new(@"^\s*([\W\wа-яё]*?)\s*$", "i") //MASSMETA EDIT CHANGE (cyrillic) - ORIGINAL: = new(@"^\s*([\W\w]*?)\s*$")
+	if(matchMiddle.Find_char(t) == 0) //MASSMETA EDIT CHANGE - ORIGINAL: if(matchMiddle.Find(t) == 0)
 		return t
 	t = matchMiddle.group[1]
 
 	// Replace any non-space whitespace characters with spaces, and also multiple occurences with just one space
 	var/static/regex/matchSpacing = new(@"\s+", "g")
-	t = replacetext_char(t, matchSpacing, " ") //MASSMETA EDIT
+	t = replacetext_char(t, matchSpacing, " ") //MASSMETA EDIT CHANGE (cyrillic) - ORIGINAL: if(matchMiddle.Find(t) == 0)
 
 	return t
 
@@ -92,7 +92,7 @@
 	if(ascii_only)
 		if(length(text) > max_length)
 			return null
-		var/static/regex/non_ascii = regex(@"[^\x20-\x7E\t\n\u0400-\u04FF]") // MASSMETA EDIT: Allow cyrillic symbols
+		var/static/regex/non_ascii = regex(@"[^\x20-\x7E\t\n\u0400-\u04FF]") //MASSMETA EDIT CHANGE (cyrillic) - ORIGINAL: = regex(@"[^\x20-\x7E\t\n]")
 		if(non_ascii.Find(text))
 			return null
 	else if(length_char(text) > max_length)
@@ -121,7 +121,7 @@
 	if(isnull(user_input)) // User pressed cancel
 		return
 	if(no_trim)
-		return copytext_char(html_encode(user_input), 1, max_length) //MASSMETA EDIT
+		return copytext_char(html_encode(user_input), 1, max_length) //MASSMETA EDIT CHANGE - ORIGINAL: return copytext(html_encode(user_input), 1, max_length)
 	else
 		return trim(html_encode(user_input), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
 
@@ -297,16 +297,20 @@
 
 //Returns a string with reserved characters and spaces before the first letter removed
 /proc/trim_left(text)
-	for (var/i = 1 to length_char(text)) //MASSMETA EDIT
-		if (text2ascii_char(text, i) > 32) //MASSMETA EDIT
-			return copytext_char(text, i) //MASSMETA EDIT
+	//MASSMETA EDIT CHANGE BEGIN
+	for (var/i = 1 to length_char(text)) //ORIGINAL: for (var/i = 1 to length(text))
+		if (text2ascii_char(text, i) > 32) //ORIGINAL: if (text2ascii(text, i) > 32)
+			return copytext_char(text, i) //ORIGINAL: return copytext(text, i)
+	//MASSMETA EDIT CHANGE END
 	return ""
 
 //Returns a string with reserved characters and spaces after the last letter removed
 /proc/trim_right(text)
-	for (var/i = length_char(text), i > 0, i--) //MASSMETA EDIT
-		if (text2ascii_char(text, i) > 32) //MASSMETA EDIT
-			return copytext_char(text, 1, i + 1) //MASSMETA EDIT
+	//MASSMETA EDIT CHANGE BEGIN
+	for (var/i = length_char(text), i > 0, i--) //ORIGINAL: for (var/i = length(text), i > 0, i--)
+		if (text2ascii_char(text, i) > 32) //ORIGINAL: if (text2ascii(text, i) > 32)
+			return copytext_char(text, 1, i + 1) //ORIGINAL: return copytext(text, 1, i + 1)
+	//MASSMETA EDIT CHANGE END
 	return ""
 
 //Returns a string with reserved characters and spaces after the first and last letters removed
@@ -339,8 +343,10 @@
  * * max_length - integer length to truncate at
  */
 /proc/truncate(text, max_length)
-	if(length_char(text) > max_length) //MASSMETA EDIT
-		return copytext_char(text, 1, max_length) //MASSMETA EDIT
+	//MASSMETA EDIT CHANGE BEGIN
+	if(length_char(text) > max_length) //ORIGINAL: if(length(text) > max_length)
+		return copytext_char(text, 1, max_length) //ORIGINAL: return copytext(text, 1, max_length)
+	//MASSMETA EDIT CHANGE END
 	return text
 
 //Returns a string with reserved characters and spaces before the first word and after the last word removed.
@@ -354,7 +360,7 @@
 	. = t
 	if(t)
 		. = t[1]
-		return uppertext(.) + copytext_char(t, 1 + length_char(.)) //MASSMETA EDIT
+		return uppertext(.) + copytext_char(t, 1 + length_char(.)) //MASSMETA EDIT CHANGE - ORIGINAL: return uppertext(.) + copytext(t, 1 + length(.))
 
 ///Returns a string with the first letter of each word capitialized
 /proc/full_capitalize(input)
