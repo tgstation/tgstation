@@ -4,5 +4,5 @@
 #ifdef CBT
 #define MAP_SWITCH(compile_time, map_time) ##compile_time
 #else
-#define MAP_SWITCH(compile_time, map_time) ##map_time
+#define MAP_SWITCH(compile_time, map_time) ##compile_time
 #endif
