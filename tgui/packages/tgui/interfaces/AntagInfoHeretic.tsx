@@ -325,7 +325,7 @@ const ResearchInfo = (props) => {
   const { charges } = data;
 
   return (
-    <Stack vertical height="100%" width="100%">
+    <Stack vertical fill>
       <Stack.Item fontSize="20px" textAlign="center">
         You have <b>{charges || 0}</b>&nbsp;
         <span style={hereticBlue}>
