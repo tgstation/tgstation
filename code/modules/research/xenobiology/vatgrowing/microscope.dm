@@ -112,7 +112,7 @@
 ///Take the inserted dish, or drop it on the floor
 /obj/structure/microscope/proc/remove_dish(mob/living/user)
 	if(!current_dish)
-		retrun SECONDARY_ATTACK_CONTINUE_CHAIN
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(!user.put_in_hands(current_dish))
 		current_dish.forceMove(get_turf(src))
 	current_dish = null
