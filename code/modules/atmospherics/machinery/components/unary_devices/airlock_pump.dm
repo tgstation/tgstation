@@ -5,8 +5,8 @@
 	icon = 'icons/obj/machines/atmospherics/unary_devices.dmi'
 	icon_state = "airlock_pump"
 	pipe_state = "airlock_pump"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.15
+	use_power = ACTIVE_POWER_USE
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
 	can_unwrench = TRUE
 	welded = FALSE
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
@@ -18,7 +18,7 @@
 	device_type = BINARY // Even though it is unary, it has two nodes on one side - used in node count checks
 
 	///Indicates that the direction of the pump, if ATMOS_DIRECTION_SIPHONING is siphoning, if ATMOS_DIRECTION_RELEASING is releasing
-	var/pump_direction = ATMOS_DIRECTION_RELEASING
+	var/pump_direction = ATMOS_DIRECTION_SIPHONING
 	///Target pressure for pressurization cycle
 	var/internal_pressure_target = ONE_ATMOSPHERE
 	///Target pressure for depressurization cycle
@@ -47,7 +47,7 @@
 	COOLDOWN_DECLARE(check_turfs_cooldown)
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/update_icon_nopipes()
-	if(!on || !is_operational)
+	if(!on || !is_operational || !powered())
 		icon_state = "vent_off"
 	else
 		icon_state = pump_direction ? "vent_out" : "vent_in"
@@ -91,6 +91,11 @@
 	if(cycling_set_up)
 		break_links()
 
+/obj/machinery/atmospherics/components/unary/airlock_pump/power_change()
+	. = ..()
+	if(on && !powered())
+		stop_cycle("No power. Aborting cycle.")
+
 /obj/machinery/atmospherics/components/unary/airlock_pump/is_connectable(obj/machinery/atmospherics/target, given_layer)
 	if(target.loc == loc)
 		return FALSE
@@ -118,7 +123,7 @@
 		COOLDOWN_START(src, check_turfs_cooldown, 2 SECONDS)
 
 	if(world.time - cycle_start_time > cycle_timeout)
-		stop_cycle(timed_out = TRUE)
+		stop_cycle("Cycling timed out, bolts unlocked.")
 		return //Couldn't complete the cycle before timeout
 
 	var/datum/gas_mixture/distro_air = airs[1]
@@ -182,7 +187,7 @@
 /// Proc for triggering cycle by clicking on a bolted airlock that has a pump assigned
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/airlock_act(obj/machinery/door/airlock/airlock)
 	if(on)
-		airlock.say("Busy cycling.")
+		airlock.do_animate("deny") // Already cycling
 		return
 	if(!cycling_set_up)
 		airlock.say("Airlock pair not found.")
@@ -213,15 +218,15 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/airlock_pump/proc/stop_cycle(timed_out = FALSE)
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/stop_cycle(message = null)
 	if(!on)
 		return FALSE
 
 	var/obj/machinery/door/airlock/unlocked_airlock = pump_direction == ATMOS_DIRECTION_RELEASING ? internal_airlock : external_airlock
 
 	unlocked_airlock.unbolt()
-	if(timed_out)
-		unlocked_airlock.say("Cycling timed out, bolts unlocked.")
+	if(message)
+		unlocked_airlock.say(message)
 
 	on = FALSE
 	update_appearance()
