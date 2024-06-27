@@ -144,9 +144,6 @@
 	if(active)
 		. += span_notice("Charge: [core ? "[get_charge_percent()]%" : "No core"].")
 		. += span_notice("Selected module: [selected_module || "None"].")
-	if(atom_storage)
-		. += span_notice("<i>While the suit's panel is open, \
-			being on <b>combat mode</b> will prevent you from inserting items into it when clicking on it.</i>")
 	if(!open && !active)
 		if(!wearer)
 			. += span_notice("You could equip it to turn it on.")
@@ -306,6 +303,16 @@
 	balloon_alert(user, "no modules!")
 	playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	return ITEM_INTERACT_BLOCKING
+
+/obj/item/mod/control/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
+	// Hack. revisit later
+	if(istype(inserted, /obj/item/aicard))
+		var/obj/item/aicard/ai_card = inserted
+		if(ai_card.AI)
+			return FALSE // we want to get an AI assistant, try uploading instead of insertion
+		if(ai_assistant)
+			return FALSE // we already have an AI assistant, try withdrawing instead of insertion
+	return TRUE
 
 // Makes use of tool act to prevent shoving stuff into our internal storage
 /obj/item/mod/control/tool_act(mob/living/user, obj/item/tool, list/modifiers)
