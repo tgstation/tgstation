@@ -189,6 +189,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		light()
 	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), slot_flags) //90% to knock off when wearing a mask
 	AddElement(/datum/element/update_icon_updates_onmob)
+	RegisterSignal(src, COMSIG_ATOM_TOUCHED_SPARKS, PROC_REF(sparks_touched))
 	icon_state = icon_off
 	inhand_icon_state = inhand_icon_off
 
@@ -305,6 +306,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		icon_state = icon_off
 		inhand_icon_state = inhand_icon_off
+
+
+/obj/item/clothing/mask/cigarette/proc/sparks_touched(datum/source, obj/effect/particle_effect)
+	SIGNAL_HANDLER
+
+	if(lit)
+		return
+	light()
 
 /// Lights the cigarette with given flavor text.
 /obj/item/clothing/mask/cigarette/proc/light(flavor_text = null)

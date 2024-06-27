@@ -70,6 +70,7 @@
 	construction_mode = mode
 
 	GLOB.rcd_list += src
+	AddElement(/datum/element/openspace_item_click_handler)
 
 /obj/item/construction/rcd/Destroy()
 	QDEL_NULL(airlock_electronics)
@@ -419,6 +420,9 @@
 	mode = RCD_DECONSTRUCT
 	rcd_create(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/construction/rcd/handle_openspace_click(turf/target, mob/user, list/modifiers)
+	interact_with_atom(target, user, modifiers)
 
 /obj/item/construction/rcd/proc/detonate_pulse()
 	audible_message("<span class='danger'><b>[src] begins to vibrate and \

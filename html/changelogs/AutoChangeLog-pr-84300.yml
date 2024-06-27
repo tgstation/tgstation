@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - qol: "polypore mycelium no longer contains sugar, preventing it from instantly creating fringe weaver beverage when ground up. qol: sugar may be acquired from grinding fireblossoms instead of polypore mycelium."
