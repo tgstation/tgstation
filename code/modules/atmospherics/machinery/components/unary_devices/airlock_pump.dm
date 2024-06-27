@@ -259,6 +259,16 @@
 		if (found_airlock && !found_airlock.cycle_pump)
 			return found_airlock
 
+/obj/machinery/atmospherics/components/unary/airlock_pump/relaymove(mob/living/user, direction)
+	if(initialize_directions & direction)
+		return ..()
+	if((NORTH|EAST) & direction)
+		user.ventcrawl_layer = clamp(user.ventcrawl_layer + 2, PIPING_LAYER_DEFAULT - 1, PIPING_LAYER_DEFAULT + 1)
+	if((SOUTH|WEST) & direction)
+		user.ventcrawl_layer = clamp(user.ventcrawl_layer - 2, PIPING_LAYER_DEFAULT - 1, PIPING_LAYER_DEFAULT + 1)
+	to_chat(user, "You align yourself with the [user.ventcrawl_layer == 2 ? 1 : 2]\th output.")
+
+
 /obj/machinery/atmospherics/components/unary/airlock_pump/any_airlock_type
 	name = "airlock pump"
 	desc = "A pump for cycling an airlock controlled by the connected doors."
