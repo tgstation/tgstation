@@ -6,7 +6,7 @@
 /obj/item/circuitboard/machine/space_heater,
 /obj/item/stack/cable_coil/five,
 /obj/structure/frame/machine,
-/obj/item/stock_parts/cell/super,
+/obj/item/stock_parts/power_store/cell/super,
 /turf/open/floor/wood,
 /area/ruin/smoking_room/house)
 "d" = (

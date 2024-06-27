@@ -5,7 +5,7 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /datum/preference/toggle/sound_ambience/apply_to_client(client/client, value)
-	client.update_ambience_pref()
+	client.update_ambience_pref(value)
 
 /// Controls hearing announcement sounds
 /datum/preference/toggle/sound_announcements

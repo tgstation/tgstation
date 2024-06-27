@@ -1,7 +1,8 @@
 // Ye old forbidden book, the Codex Cicatrix.
 /obj/item/codex_cicatrix
 	name = "Codex Cicatrix"
-	desc = "This book describes the secrets of the veil between worlds."
+	desc = "This heavy tome is full of cryptic scribbles and impossible diagrams. \
+	According to legend, it can be deciphered to reveal the secrets of the veil between worlds."
 	icon = 'icons/obj/antags/eldritch.dmi'
 	base_icon_state = "book"
 	icon_state = "book"
@@ -29,7 +30,7 @@
 
 	. += span_notice("Can be used to tap influences for additional knowledge points.")
 	. += span_notice("Can also be used to draw or remove transmutation runes with ease.")
-	. += span_notice("Additionally, it can work as a focus for your spells in a pinch, though a more specialized relic is recommended, as this may get dropped in combat.")
+	. += span_notice("Additionally, it can work as a focus for your spells when held.")
 
 /obj/item/codex_cicatrix/attack_self(mob/user, modifiers)
 	. = ..()

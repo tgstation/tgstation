@@ -32,6 +32,7 @@
 		"scanner_gate",
 		"turret_control",
 		"pepperspray",
+		"dragnet_beacon",
 		"inspector",
 		"evidencebag",
 		"handcuffs_s",
@@ -100,7 +101,6 @@
 	description = "So advanced, even engineers are baffled by its operational principles."
 	prereq_ids = list("electric_weapons")
 	design_ids = list(
-		"beamrifle",
 		"xray_laser",
 		"nuclear_gun",
 	)
