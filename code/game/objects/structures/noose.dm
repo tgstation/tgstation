@@ -5,7 +5,7 @@
 	icon = 'icons/obj/structures.dmi'
 	layer = FLY_LAYER
 	can_buckle = TRUE
-	buckle_lying = NO_BUCKLE_LYING
+	buckle_lying = 0
 	anchored = TRUE
 	density = FALSE
 	/// our noose overlay
@@ -37,10 +37,14 @@
 /obj/structure/noose/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/stack/cable_coil/thirty(drop_location())
 
-/obj/structure/noose/post_buckle_mob(mob/living/buckled)
+/obj/structure/noose/post_buckle_mob(mob/living/carbon/buckled)
 	layer = MOB_LAYER
 	START_PROCESSING(SSobj, src)
-	animate(buckled, pixel_y = initial(pixel_y) + 8, time = 8, easing = LINEAR_EASING)
+	var/height_offset = 8 //kinda messes up at basically most extreme heights but its more accurate
+	if(ishuman(buckled))
+		var/mob/living/carbon/human/buckled_human = buckled
+		height_offset += /mob/living/carbon/human::mob_height - buckled_human.get_mob_height()
+	animate(buckled, pixel_y = initial(pixel_y) + height_offset, time = 8, easing = LINEAR_EASING)
 	ADD_TRAIT(buckled, TRAIT_NO_STAGGER, BUCKLED_TRAIT) //messes with the animation, also youre hanging how you gonna stagger
 
 /obj/structure/noose/post_unbuckle_mob(mob/living/buckled)
