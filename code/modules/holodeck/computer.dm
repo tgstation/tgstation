@@ -294,7 +294,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 		if(isstructure(holo_object))
 			holo_object.obj_flags |= NO_DEBRIS_AFTER_DECONSTRUCTION
 			if(istype(holo_object, /obj/structure/closet))
-				RegisterSignal(holo_object, COMSIG_CLOSET_POPULATE_CONTENTS, PROC_REF(register_contents))
+				RegisterSignal(holo_object, COMSIG_CLOSET_CONTENTS_INITIALIZED, PROC_REF(register_contents))
 			return
 
 		if(ismachinery(holo_object))

@@ -452,7 +452,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if (!contents_initialized)
 		contents_initialized = TRUE
 		PopulateContents()
-		SEND_SIGNAL(src, COMSIG_CLOSET_POPULATE_CONTENTS)
+		SEND_SIGNAL(src, COMSIG_CLOSET_CONTENTS_INITIALIZED)
 
 	var/atom/L = drop_location()
 	for(var/atom/movable/AM in src)
