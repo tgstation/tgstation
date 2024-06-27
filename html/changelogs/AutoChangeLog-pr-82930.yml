@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "Eigenstasium exposed & Anomaly station trait affected closets work again. Eigenstasium closets are tainted blue"
