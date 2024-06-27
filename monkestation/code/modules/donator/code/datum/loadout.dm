@@ -469,6 +469,12 @@
 	donator_only = TRUE
 	requires_purchase = FALSE
 
+/datum/loadout_item/toys/elliethedarksunplush
+	name = "Ellie plush"
+	item_path = /obj/item/toy/plush/elliethedarksun
+	donator_only = TRUE
+	requires_purchase = FALSE
+
 //ThePooba
 /datum/loadout_item/mask/poob_mask
 	name = "Yellow gas mask"
