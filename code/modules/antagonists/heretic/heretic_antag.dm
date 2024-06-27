@@ -149,7 +149,7 @@
 	result_parameters["moving"] = icon_moving
 	return result_parameters
 
-/datum/antagonist/heretic/proc/get_knowledge_data(datum/heretic_knowledge/knowledge, var/done)
+/datum/antagonist/heretic/proc/get_knowledge_data(datum/heretic_knowledge/knowledge, done)
 
 	var/list/knowledge_data = list()
 
