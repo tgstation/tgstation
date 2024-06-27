@@ -3591,6 +3591,7 @@
 #include "code\modules\cargo\universal_scanner.dm"
 #include "code\modules\cargo\bounties\assistant.dm"
 #include "code\modules\cargo\bounties\atmos.dm"
+#include "code\modules\cargo\bounties\bitrunning.dm"
 #include "code\modules\cargo\bounties\botany.dm"
 #include "code\modules\cargo\bounties\chef.dm"
 #include "code\modules\cargo\bounties\engineering.dm"
