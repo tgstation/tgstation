@@ -107,7 +107,7 @@
 
 /datum/crafting_recipe/firebot
 	name = "Firebot"
-	result = /mob/living/simple_animal/bot/firebot
+	result = /mob/living/basic/bot/firebot
 	reqs = list(
 		/obj/item/extinguisher = 1,
 		/obj/item/bodypart/arm/right/robot = 1,
