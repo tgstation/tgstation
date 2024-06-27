@@ -238,7 +238,7 @@ const KnowledgeTree = (props) => {
   return (
     <Section title="Research Tree" fill scrollable>
       <Stack vertical>
-        {!knowledge_tiers.length
+        {knowledge_tiers.length === 0
           ? 'None!'
           : knowledge_tiers.map((tier, i) => (
               <Stack.Item key={i}>
