@@ -96,20 +96,6 @@
 	if(on && !powered())
 		stop_cycle("No power. Aborting cycle.")
 
-/obj/machinery/atmospherics/components/unary/airlock_pump/is_connectable(obj/machinery/atmospherics/target, given_layer)
-	if(target.loc == loc)
-		return FALSE
-
-	//The target cant connect to distro layer
-	if(given_layer == 2 && ((target.piping_layer != 2 && !(target.pipe_flags & PIPING_ALL_LAYER)) || (target.pipe_color != COLOR_RED && !(target.pipe_flags & PIPING_ALL_COLORS) && target.pipe_color != COLOR_VERY_LIGHT_GRAY)))
-		return FALSE
-
-	//The target cant connect to waste layer
-	if(given_layer == 4 && ((target.piping_layer != 4 && !(target.pipe_flags & PIPING_ALL_LAYER)) || (target.pipe_color != COLOR_BLUE && !(target.pipe_flags & PIPING_ALL_COLORS) && target.pipe_color != COLOR_VERY_LIGHT_GRAY)))
-		return FALSE
-
-	return TRUE
-
 /obj/machinery/atmospherics/components/unary/airlock_pump/process_atmos()
 	if(!on)
 		return
