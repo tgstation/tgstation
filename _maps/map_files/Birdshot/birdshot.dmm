@@ -2075,12 +2075,14 @@
 /obj/structure/toilet{
 	dir = 4
 	},
-/obj/machinery/button/door/directional/north{
-	name = "Lock Control";
-	id = "Toilet1"
-	},
 /obj/machinery/light/small/directional/west,
 /obj/structure/sign/poster/official/random/directional/west,
+/obj/machinery/button/door/directional/north{
+	id = "Toilet1";
+	specialfunctions = 4;
+	name = "Lock Control";
+	normaldoorcontrol = 1
+	},
 /turf/open/floor/iron/white/small,
 /area/station/commons/toilet/restrooms)
 "aTc" = (
@@ -5214,7 +5216,9 @@
 	},
 /obj/machinery/button/door/directional/north{
 	id = "CabinS";
-	name = "Bolt Control"
+	name = "Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /turf/open/floor/carpet/green,
 /area/station/commons/dorms)
@@ -13962,7 +13966,9 @@
 	},
 /obj/machinery/button/door/directional/north{
 	name = "Lock Control";
-	id = "Toilet2"
+	id = "Toilet2";
+	specialfunctions = 4;
+	normaldoorcontrol = 1
 	},
 /obj/machinery/light/small/directional/west,
 /obj/structure/sign/poster/contraband/random/directional/west,
@@ -17362,6 +17368,14 @@
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/freezer,
 /area/station/command/heads_quarters/captain/private)
+"gRH" = (
+/obj/machinery/button/door/directional/north{
+	id = "Cabin4";
+	name = "Cabin Bolt Control";
+	normaldoorcontrol = 1
+	},
+/turf/closed/wall,
+/area/station/service/abandoned_gambling_den)
 "gRL" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -22463,7 +22477,7 @@
 	name = "Cabin Bolt Control";
 	normaldoorcontrol = 1;
 	specialfunctions = 4;
-	id = "Cabin4"
+	id = "Cabin1"
 	},
 /turf/open/floor/carpet/orange,
 /area/station/commons/dorms)
@@ -49463,8 +49477,10 @@
 	dir = 4
 	},
 /obj/machinery/button/door/directional/north{
-	id = "Cabin4";
-	name = "Cabin Bolt Control"
+	id = "Cabin3";
+	name = "Cabin Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /turf/open/floor/carpet/blue,
 /area/station/commons/dorms)
@@ -60853,6 +60869,10 @@
 "uDE" = (
 /obj/structure/window/spawner/directional/north,
 /obj/structure/flora/bush/flowers_yw/style_random,
+/obj/machinery/door/airlock{
+	id_tag = "Toilet1";
+	name = "Unit 1"
+	},
 /turf/open/misc/sandy_dirt,
 /area/station/commons/fitness/locker_room)
 "uDF" = (
@@ -63947,7 +63967,9 @@
 	},
 /obj/machinery/button/door/directional/south{
 	id = "Cabin4";
-	name = "Cabin Bolt Control"
+	name = "Cabin Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
 	},
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
@@ -67143,7 +67165,9 @@
 "wrx" = (
 /obj/machinery/button/door/directional/north{
 	name = "Lock Control";
-	id = "Toilet3"
+	id = "Toilet3";
+	specialfunctions = 4;
+	normaldoorcontrol = 1
 	},
 /obj/machinery/recharge_station,
 /obj/structure/sign/poster/official/random/directional/east,
@@ -116105,7 +116129,7 @@ aJq
 aJq
 aJq
 wOp
-wOp
+gRH
 wOp
 wOp
 nWk
