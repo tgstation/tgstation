@@ -18173,9 +18173,6 @@
 /area/station/maintenance/port/aft)
 "gzO" = (
 /obj/machinery/firealarm/directional/west,
-/obj/machinery/camera/directional/west{
-	c_tag = "Restrooms"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
 /turf/open/floor/iron/freezer,
@@ -61481,9 +61478,6 @@
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/camera/directional/west{
-	c_tag = "Auxilary Restrooms"
-	},
 /obj/structure/sign/poster/official/random/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/toilet/auxiliary)
