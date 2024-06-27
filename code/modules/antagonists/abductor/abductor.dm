@@ -7,6 +7,7 @@
 	show_in_antagpanel = FALSE //should only show subtypes
 	show_to_ghosts = TRUE
 	suicide_cry = "FOR THE MOTHERSHIP!!" // They can't even talk but y'know
+	stinger_sound = 'sound/ambience/antag/ayylien.ogg'
 	var/datum/team/abductor_team/team
 	var/sub_role
 	var/outfit
@@ -74,7 +75,6 @@
 	objectives += team.objectives
 	finalize_abductor()
 	ADD_TRAIT(owner, TRAIT_ABDUCTOR_TRAINING, ABDUCTOR_ANTAGONIST)
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ayylien.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	return ..()
 
 /datum/antagonist/abductor/on_removal()
