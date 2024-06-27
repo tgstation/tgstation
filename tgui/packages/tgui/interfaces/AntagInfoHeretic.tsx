@@ -246,7 +246,7 @@ const KnowledgeTree = (props) => {
                 direction="row"
                 justify="center"
                 align="center"
-                backgroundColor="#303030"
+                backgroundColor="transparent"
                 wrap="wrap"
               >
                 {
@@ -297,6 +297,7 @@ const KnowledgeTree = (props) => {
                   ))
                 }
               </Flex>
+              <hr />
             </Stack.Item>
           ))}
       </Stack>
