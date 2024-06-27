@@ -2256,7 +2256,6 @@
 "aKU" = (
 /obj/effect/landmark/start/ai/secondary,
 /obj/machinery/door/window/brigdoor/left/directional/north{
-	layer = 4.1;
 	name = "Tertiary AI Core Access";
 	req_access = list("ai_upload");
 	pixel_y = 3
@@ -10111,9 +10110,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/eva)
 "dCv" = (
-/obj/structure/railing{
-	layer = 3.01
-	},
+/obj/structure/railing,
 /obj/structure/dresser,
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/carpet/red,
@@ -13296,8 +13293,7 @@
 /area/station/engineering/supermatter/room)
 "eIo" = (
 /obj/structure/statue/sandstone/venus{
-	dir = 1;
-	layer = 3.3
+	dir = 1
 	},
 /turf/open/floor/grass,
 /area/station/science/research)
@@ -14485,9 +14481,7 @@
 /area/station/construction/mining/aux_base)
 "fjb" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "fjg" = (
@@ -17947,14 +17941,12 @@
 	},
 /obj/machinery/button/door/directional/west{
 	id = "QMLoaddoor";
-	layer = 4;
 	name = "Loading Doors";
 	pixel_y = -8;
 	req_access = list("cargo")
 	},
 /obj/machinery/button/door/directional/west{
 	id = "QMLoaddoor2";
-	layer = 4;
 	name = "Loading Doors";
 	pixel_y = 8;
 	req_access = list("cargo")
@@ -22402,9 +22394,7 @@
 /obj/item/reagent_containers/cup/beaker{
 	pixel_x = 5
 	},
-/obj/item/reagent_containers/condiment/enzyme{
-	layer = 5
-	},
+/obj/item/reagent_containers/condiment/enzyme,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "hUm" = (
@@ -23455,7 +23445,6 @@
 "ipq" = (
 /obj/structure/table,
 /obj/item/reagent_containers/condiment/saltshaker{
-	layer = 3.1;
 	pixel_x = -2;
 	pixel_y = 2
 	},
@@ -23574,7 +23563,6 @@
 "irf" = (
 /obj/structure/ladder,
 /obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9;
 	pixel_x = 3
 	},
 /obj/machinery/door/window/brigdoor/left/directional/south{
@@ -29493,12 +29481,9 @@
 "krz" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 4;
-	name = "euthanization chamber freezer";
-	layer = 2.89
+	name = "euthanization chamber freezer"
 	},
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
@@ -32078,9 +32063,7 @@
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
 "lny" = (
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/light/directional/south,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -34813,9 +34796,7 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/engine)
 "mnm" = (
-/obj/machinery/chem_dispenser{
-	layer = 2.7
-	},
+/obj/machinery/chem_dispenser,
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -38061,8 +38042,7 @@
 /area/station/service/chapel)
 "nur" = (
 /obj/structure/chair/wood{
-	dir = 1;
-	layer = 2.89
+	dir = 1
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/carpet,
@@ -44295,9 +44275,7 @@
 "pKI" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/science/research)
 "pLd" = (
@@ -44484,9 +44462,7 @@
 /area/station/maintenance/department/cargo)
 "pNW" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/machinery/chem_dispenser{
-	layer = 2.7
-	},
+/obj/machinery/chem_dispenser,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
@@ -44931,8 +44907,7 @@
 /area/station/commons/storage/art)
 "pVd" = (
 /obj/structure/chair/wood{
-	dir = 1;
-	layer = 2.89
+	dir = 1
 	},
 /obj/structure/railing,
 /turf/open/floor/carpet,
@@ -48132,9 +48107,7 @@
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
 "rdP" = (
-/obj/machinery/chem_dispenser{
-	layer = 2.7
-	},
+/obj/machinery/chem_dispenser,
 /obj/machinery/newscaster/directional/east,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 6
@@ -52835,9 +52808,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "sDq" = (
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/light/directional/north,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -56094,9 +56065,7 @@
 /turf/open/floor/plating/reinforced,
 /area/station/command/emergency_closet)
 "tMu" = (
-/obj/structure/railing{
-	layer = 3.01
-	},
+/obj/structure/railing,
 /obj/effect/spawner/random/structure/closet_private,
 /turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/qm)
@@ -57663,9 +57632,7 @@
 /area/station/hallway/primary/starboard)
 "umA" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "umK" = (
@@ -61393,9 +61360,7 @@
 "vFG" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/stairs/north,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/storage/tech)
 "vFH" = (
@@ -61655,9 +61620,7 @@
 /area/station/maintenance/department/cargo)
 "vLa" = (
 /obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/science/research)
 "vLs" = (
@@ -66665,9 +66628,7 @@
 "xxO" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/flora/bush/fullgrass/style_random,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/grass,
 /area/station/science/research)
 "xxT" = (
@@ -67887,7 +67848,6 @@
 "xWR" = (
 /obj/effect/landmark/start/ai/secondary,
 /obj/machinery/door/window/brigdoor/right/directional/south{
-	layer = 4.1;
 	name = "Secondary AI Core Access";
 	req_access = list("ai_upload");
 	pixel_y = -4
