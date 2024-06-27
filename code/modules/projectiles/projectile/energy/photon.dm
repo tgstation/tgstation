@@ -21,6 +21,10 @@
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(scorch_earth))
 	set_light_on(TRUE)
 
+/**
+ * Handle side effects for the phonon bolt.
+ * behaves like a higher power direct flash if hit, and sparks silicons like they're getting microwaved.
+ */
 /obj/projectile/energy/photon/proc/blast_touched(datum/source, atom/flashed)
 	if(isliving(flashed))
 		var/mob/living/flashed_creature = flashed
@@ -28,6 +32,9 @@
 	if(issilicon(flashed))
 		do_sparks(rand(1, 4), FALSE, src)
 
+/**
+ * When traveling to a new turf, throws a probability to generate a hotspot across it's path.
+ */
 /obj/projectile/energy/photon/proc/scorch_earth(turf/open/floor/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(prob(40))
 		new /obj/effect/hotspot(arrived)
