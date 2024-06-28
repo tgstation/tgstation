@@ -2240,26 +2240,7 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Engineering - storage"
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/table/greyscale,
-/obj/item/pen{
-	pixel_x = 13;
-	pixel_y = 4
-	},
 /obj/machinery/light/small/directional/south,
-/obj/item/flatpack{
-	board = /obj/item/circuitboard/machine/flatpacker;
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/multitool{
-	pixel_x = 7;
-	pixel_y = -2
-	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
 "aVc" = (
@@ -8961,10 +8942,6 @@
 /area/station/service/library)
 "dAX" = (
 /obj/structure/table,
-/obj/item/stack/cable_coil{
-	pixel_x = 3;
-	pixel_y = -7
-	},
 /obj/item/stack/cable_coil,
 /obj/item/electronics/airlock,
 /obj/item/electronics/airlock,
@@ -8979,16 +8956,7 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/item/stock_parts/cell/emproof{
-	pixel_x = -4;
-	pixel_y = 6
-	},
 /obj/machinery/light/cold/dim/directional/west,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/table/greyscale,
 /obj/item/screwdriver,
 /obj/item/stack/cable_coil/cut{
@@ -8997,10 +8965,6 @@
 	},
 /obj/machinery/camera/directional/west{
 	c_tag = "Engineering - Office"
-	},
-/obj/item/stock_parts/power_store/cell/emproof{
-	pixel_x = -6;
-	pixel_y = 9
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
@@ -10653,22 +10617,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
-"ejE" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/computer/security/telescreen/turbine/directional/south,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "ejL" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden,
 /obj/effect/turf_decal/tile/yellow,
@@ -17956,25 +17904,14 @@
 /area/station/security/lockers)
 "gLw" = (
 /obj/structure/table,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/crowbar,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/item/stock_parts/cell/emproof{
+/obj/item/flatpack{
+	board = /obj/item/circuitboard/machine/flatpacker;
 	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/item/stock_parts/cell/emproof{
-	pixel_x = 4;
-	pixel_y = 6
+	pixel_y = 5
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
@@ -26114,13 +26051,6 @@
 	pixel_x = -4;
 	pixel_y = 8
 	},
-/obj/item/stock_parts/cell/high{
-	pixel_y = -4
-	},
-/obj/item/stock_parts/cell/high{
-	pixel_x = -4;
-	pixel_y = -6
-	},
 /obj/machinery/light/no_nightlight/directional/east,
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/wood,
@@ -30703,9 +30633,6 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/effect/turf_decal/bot{
-	dir = 1
-	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
 "kRt" = (
@@ -31477,22 +31404,6 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/security/prison)
-"lfD" = (
-/obj/machinery/suit_storage_unit/engine,
-/obj/effect/turf_decal/bot{
-	dir = 1
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/filingcabinet/chestdrawer,
-/obj/item/stock_parts/power_store/cell/emproof{
-	pixel_y = 9
-	},
-/turf/open/floor/iron/smooth,
-/area/station/engineering/main)
 "lfU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -63740,15 +63651,6 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/filingcabinet/chestdrawer,
-/obj/item/book/manual/wiki/engineering_guide{
-	pixel_y = 6
-	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
 "vTx" = (
@@ -69620,6 +69522,7 @@
 "xEE" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/machinery/firealarm/directional/north,
+/obj/machinery/atmospherics/components/unary/bluespace_sender,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/office)
 "xEM" = (
@@ -70618,20 +70521,7 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/effect/turf_decal/bot{
-	dir = 1
-	},
-/obj/item/kirbyplants/organic/plant20{
-	pixel_y = 3
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/table/greyscale,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/wrench,
+/obj/item/kirbyplants/organic/plant22,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
 "xSV" = (
@@ -81664,7 +81554,7 @@ cwf
 pjk
 qTW
 pjk
-ejE
+nLP
 pjk
 pjk
 pjk
@@ -88107,7 +87997,7 @@ sHO
 drI
 mCm
 xxy
-lfD
+kRc
 czJ
 kRc
 vTw
