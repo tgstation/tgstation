@@ -22,7 +22,7 @@
 /obj/machinery/plumbing/Initialize(mapload, bolt = TRUE)
 	. = ..()
 	set_anchored(bolt)
-	create_reagents(buffer, TRANSPARENT)
+	create_reagents(buffer, reagent_flags)
 	AddComponent(/datum/component/simple_rotation)
 	register_context()
 
