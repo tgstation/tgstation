@@ -16991,7 +16991,7 @@
 /area/station/holodeck/rec_center)
 "gjy" = (
 /obj/machinery/door/airlock{
-	name = "Kitchen"
+	name = "Hydroponics Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/service/hydroponics,
 /turf/open/floor/plating,
