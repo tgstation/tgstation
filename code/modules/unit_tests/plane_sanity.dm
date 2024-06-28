@@ -1,7 +1,6 @@
 /// Ensures we have no invalid plane/layer combos post init
 /datum/unit_test/plane_layer_sanity
 
-TEST_FOCUS(/datum/unit_test/plane_layer_sanity)
 /datum/unit_test/plane_layer_sanity/Run()
 	// This fucker's gonna be slow, I'm sorry
 	for(var/mutable_appearance/appearance)
