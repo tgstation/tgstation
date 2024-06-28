@@ -86,7 +86,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 			if(!event_source)
 				sendEvent(KEYCARD_BSA_UNLOCK)
 				. = TRUE
-		if("enable_access_keys")
+		if("give_keyring_access")
 			var/mob/living/living_user = usr
 			if(!living_user || !istype(living_user))
 				return TRUE

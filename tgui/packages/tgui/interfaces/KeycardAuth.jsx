@@ -52,8 +52,8 @@ export const KeycardAuth = (props) => {
                     <Button
                       icon="key"
                       fluid
-                      onClick={() => act('enable_access_keys')}
-                      content="Enable Access Keys"
+                      onClick={() => act('give_keyring_access')}
+                      content="Give Keyring Access"
                     />
                   </>
                 )}
