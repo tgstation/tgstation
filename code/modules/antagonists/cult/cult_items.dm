@@ -162,6 +162,7 @@ Striking a noncultist, however, will tear their flesh."}
 	else
 		to_chat(user, span_warning("The bola seems to take on a life of its own!"))
 		ensnare(user)
+		user.update_held_items()
 #undef CULT_BOLA_PICKUP_STUN
 
 
