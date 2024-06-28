@@ -1915,11 +1915,6 @@
 /obj/machinery/door/airlock,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
-"qi" = (
-/turf/closed/wall/r_wall,
-/turf/closed/wall/r_wall,
-/turf/closed/wall/r_wall,
-/area/station/cargo/storage)
 "qx" = (
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -8851,7 +8846,7 @@ pI
 rO
 ck
 aa
-qi
+et
 fB
 fh
 fh
