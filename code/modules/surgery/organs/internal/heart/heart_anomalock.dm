@@ -121,7 +121,7 @@
 		balloon_alert(user, "core already in!")
 		return
 	if(!user.transferItemToLoc(tool, src))
-		return
+		return ITEM_INTERACT_BLOCKING
 	core = tool
 	balloon_alert(user, "core installed")
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
