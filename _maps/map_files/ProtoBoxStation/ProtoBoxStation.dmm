@@ -5419,9 +5419,6 @@
 /obj/machinery/light/small/directional/east,
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/potato{
-	name = "\improper Beepsky's emergency battery"
-	},
 /turf/open/floor/plating,
 /area/station/security/processing)
 "aqW" = (
@@ -7468,7 +7465,6 @@
 /area/station/ai_monitored/command/storage/eva)
 "ayR" = (
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
 /obj/item/radio/intercom/directional/north,
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
@@ -7647,6 +7643,10 @@
 /obj/item/storage/medkit/regular,
 /turf/open/floor/iron,
 /area/station/commons/fitness)
+"azq" = (
+/obj/structure/flora/bush/jungle/a/style_random,
+/turf/open/misc/sandy_dirt,
+/area/space)
 "azr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -18192,8 +18192,6 @@
 /obj/machinery/cell_charger{
 	pixel_y = 5
 	},
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high,
 /turf/open/floor/iron/checker,
 /area/station/science/lab)
 "bhF" = (
@@ -20582,8 +20580,6 @@
 "bpU" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "bpW" = (
@@ -23113,6 +23109,10 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/carpet/blue,
 /area/station/medical/psychology)
+"bAr" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/space)
 "bAu" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -31273,10 +31273,6 @@
 	pixel_y = 2
 	},
 /obj/item/stack/sheet/glass/fifty,
-/obj/item/stock_parts/cell/emproof{
-	pixel_x = 6;
-	pixel_y = -2
-	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/dark/smooth_half{
@@ -31772,7 +31768,6 @@
 /obj/item/storage/box/lights/mixed,
 /obj/item/stack/cable_coil,
 /obj/item/stack/cable_coil,
-/obj/item/stock_parts/cell/emproof,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
@@ -32266,10 +32261,6 @@
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/stock_parts/cell/emproof{
-	pixel_x = -4;
-	pixel_y = -1
-	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
@@ -32740,7 +32731,6 @@
 "cqR" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/empty,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage)
 "cqS" = (
@@ -35395,6 +35385,12 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/external,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"cPO" = (
+/obj/structure/flora/bush/jungle/a/style_random,
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/flora/bush/large/style_random,
+/turf/open/misc/sandy_dirt,
+/area/space)
 "cQb" = (
 /obj/machinery/camera{
 	c_tag = "Medbay Storage";
@@ -42165,6 +42161,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"jaq" = (
+/obj/structure/flora/bush/jungle/a/style_random,
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/sandy_dirt,
+/area/space)
 "jat" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -42500,14 +42501,6 @@
 	pixel_x = -4
 	},
 /obj/item/multitool/circuit,
-/obj/item/stock_parts/cell/high{
-	pixel_x = 8;
-	pixel_y = 9
-	},
-/obj/item/stock_parts/cell/high{
-	pixel_x = 8;
-	pixel_y = -2
-	},
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/white/side{
 	dir = 4
@@ -42632,6 +42625,11 @@
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/large,
 /area/station/medical/medbay/aft)
+"jvv" = (
+/obj/structure/flora/bush/jungle/a/style_random,
+/obj/structure/flora/bush/large/style_random,
+/turf/open/misc/sandy_dirt,
+/area/space)
 "jvw" = (
 /turf/closed/wall,
 /area/station/cargo/sorting)
@@ -50860,7 +50858,6 @@
 "qZA" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/empty,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "qZQ" = (
@@ -52690,7 +52687,6 @@
 /area/space/nearstation)
 "sRK" = (
 /obj/structure/table,
-/obj/item/stock_parts/cell/high,
 /obj/machinery/cell_charger{
 	pixel_y = 5
 	},
@@ -83759,8 +83755,8 @@ aLX
 cJU
 aOE
 aJn
-aaa
-aaa
+jvv
+jaq
 aPR
 aVd
 eAI
@@ -84016,8 +84012,8 @@ aJs
 cJU
 aOE
 aJn
-aaa
-aaa
+jaq
+jaq
 aPR
 aVb
 aWH
@@ -84273,8 +84269,8 @@ aJs
 cJU
 bJx
 aJn
-aaa
-aaa
+jaq
+cPO
 aPR
 sXh
 aWJ
@@ -84530,8 +84526,8 @@ aJs
 cJU
 aOE
 aJn
-aaa
-aaa
+cPO
+azq
 aPR
 aVc
 aWI
@@ -84787,7 +84783,7 @@ aJr
 cJU
 aOE
 aJn
-aaa
+bAr
 aPR
 aPR
 aPR
@@ -89413,7 +89409,7 @@ aMj
 oSA
 oKd
 aJn
-aaa
+bAr
 aPR
 aPR
 aPR
@@ -89670,8 +89666,8 @@ aLO
 etB
 aOE
 aJn
-aaa
-aaa
+jaq
+cPO
 aPR
 aVt
 aXb
@@ -89927,8 +89923,8 @@ aLR
 etB
 aOE
 aJn
-aaa
-aaa
+jvv
+jaq
 aPR
 sXh
 aXe
@@ -90184,8 +90180,8 @@ aLQ
 etB
 aOE
 aJn
-aaa
-aaa
+jaq
+cPO
 aPR
 aVu
 aXd
@@ -90441,8 +90437,8 @@ blf
 etB
 aOE
 aJn
-aaa
-aaa
+jaq
+jaq
 aPR
 aVv
 siG
