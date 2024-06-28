@@ -297,9 +297,9 @@
 /obj/effect/hotspot/Destroy()
 	SSair.hotspots -= src
 	var/turf/open/T = loc
-	if(istype(T) && T.active_hotspot == src && T.our_hot_group)
+	if(istype(T) && T.active_hotspot == src)
 		T.active_hotspot = null
-		T.our_hot_group.remove_from_group(T)
+		T?.our_hot_group.remove_from_group(T)
 	return ..()
 
 /obj/effect/hotspot/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
