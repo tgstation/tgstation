@@ -6421,7 +6421,14 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/shutters/preopen,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchenshutters";
+	name = "Kitchen Shutters"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchenshutters";
+	name = "Kitchen Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/service/kitchen)
 "cvk" = (
@@ -8099,7 +8106,10 @@
 "dbd" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/right/directional/south,
-/obj/machinery/door/poddoor/shutters/preopen,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchenshutters";
+	name = "Kitchen Shutters"
+	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "dbo" = (
@@ -9994,9 +10004,6 @@
 /area/station/ai_monitored/aisat/exterior)
 "dNx" = (
 /obj/effect/landmark/event_spawn,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
 	pixel_y = 9;
@@ -10012,16 +10019,9 @@
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/structure/table,
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "dNy" = (
@@ -12652,33 +12652,8 @@
 	},
 /area/station/maintenance/starboard/greater)
 "eKw" = (
-/obj/machinery/light_switch/directional/north,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/table,
 /obj/machinery/microwave{
 	pixel_y = 5
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/item/holosign_creator/robot_seat/restaurant,
-/obj/item/book/manual/chef_recipes,
-/obj/item/stack/package_wrap{
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/condiment/enzyme{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/condiment/saltshaker{
-	pixel_x = -3
-	},
-/obj/item/reagent_containers/condiment/peppermill{
-	pixel_x = 3
 	},
 /obj/machinery/light_switch/directional/north,
 /obj/structure/disposalpipe/segment{
@@ -24625,7 +24600,10 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/shutters/preopen,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchenshutters";
+	name = "Kitchen Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/service/kitchen)
 "iEk" = (
@@ -41872,7 +41850,10 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/shutters/preopen,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchenshutters";
+	name = "Kitchen Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/service/kitchen)
 "obH" = (
@@ -50623,17 +50604,6 @@
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/supply)
-"qSX" = (
-/obj/machinery/griddle,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/griddle,
-/turf/open/floor/iron/kitchen/small,
-/area/station/service/kitchen)
 "qSZ" = (
 /obj/structure/hedge,
 /obj/machinery/light/cold/directional/west,
@@ -58558,7 +58528,10 @@
 	pixel_y = 8;
 	pixel_x = 3
 	},
-/obj/machinery/door/poddoor/shutters/preopen,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchenshutters";
+	name = "Kitchen Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/service/kitchen)
 "tqV" = (
@@ -63868,7 +63841,10 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/right/directional/west,
-/obj/machinery/door/poddoor/shutters/preopen,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchenshutters";
+	name = "Kitchen Shutters"
+	},
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "uZk" = (
@@ -66011,18 +65987,11 @@
 /turf/open/floor/iron/grimy,
 /area/station/engineering/main)
 "vDh" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/table,
 /obj/item/book/manual/chef_recipes,
 /obj/item/stack/package_wrap{
 	pixel_y = 2
 	},
 /obj/item/holosign_creator/robot_seat/restaurant,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table,
 /turf/open/floor/iron/kitchen/small,
@@ -70601,7 +70570,10 @@
 /area/station/engineering/atmos)
 "wWQ" = (
 /obj/machinery/smartfridge,
-/obj/machinery/door/poddoor/shutters/preopen,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchenshutters";
+	name = "Kitchen Shutters"
+	},
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "wWR" = (
@@ -100652,7 +100624,7 @@ aTg
 dNx
 paF
 itB
-qSX
+ckC
 aTg
 aTg
 dbd
