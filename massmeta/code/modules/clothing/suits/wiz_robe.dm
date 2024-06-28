@@ -3,8 +3,8 @@
 /obj/item/clothing/suit/space/hardsuit/shielded/wizard
 	name = "battlemage armour"
 	desc = "Not all wizards are afraid of getting up close and personal."
-	icon_state = "battlemage"
-	inhand_icon_state = "battlemage"
+	icon_state = "hardsuit-wiz"
+	inhand_icon_state = "wiz_hardsuit"
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
@@ -19,8 +19,9 @@
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
 	name = "battlemage helmet"
 	desc = "A suitably impressive helmet."
-	icon_state = "battlemage"
-	inhand_icon_state = "battlemage"
+	icon_state = "hardsuit0-wiz"
+	hardsuit_type = "wiz"
+	inhand_icon_state = null
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	armor_type = /datum/armor/hardsuit_wizard_shielded

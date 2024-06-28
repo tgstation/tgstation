@@ -219,6 +219,8 @@
 			continue
 		if(!is_station_level(thing_turf.z) && !is_mining_level(thing_turf.z))
 			continue
+		if(HAS_TRAIT(existing_thing, TRAIT_ITEM_OBJECTIVE_BLOCKED))
+			continue
 		all_valid_existing_things += existing_thing
 
 	if(!length(all_valid_existing_things))
@@ -253,16 +255,14 @@
 		return FALSE
 
 	desired_item = pick(valid_possible_items)
-	// We need to do some snowflake for items that do exist vs generic items
-	var/list/obj/item/existing_items = GLOB.steal_item_handler.objectives_by_path[desired_item.targetitem]
-	var/obj/item/the_item = length(existing_items) ? pick(existing_items) : desired_item.targetitem
-	var/the_item_name = istype(the_item) ? the_item.name : initial(the_item.name)
-	name = "[the_item_name] [difficulty == SPY_DIFFICULTY_HARD ? "Grand ":""]Theft"
-	help = "Steal any [the_item_name][desired_item.steal_hint ? ": [desired_item.steal_hint]" : "."]"
+	name = "[desired_item.name] [difficulty == SPY_DIFFICULTY_HARD ? "Grand ":""]Theft"
+	help = "Steal [desired_item.name][desired_item.steal_hint ? ": [desired_item.steal_hint]" : "."]"
 	return TRUE
 
 /datum/spy_bounty/objective_item/is_stealable(atom/movable/stealing)
-	return istype(stealing, desired_item.targetitem) && desired_item.check_special_completion(stealing)
+	return istype(stealing, desired_item.targetitem) \
+		&& !HAS_TRAIT(stealing, TRAIT_ITEM_OBJECTIVE_BLOCKED) \
+		&& desired_item.check_special_completion(stealing)
 
 /datum/spy_bounty/objective_item/random_easy
 	difficulty = SPY_DIFFICULTY_EASY

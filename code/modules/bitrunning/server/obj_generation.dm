@@ -76,9 +76,6 @@
 
 	var/obj/item/card/id/outfit_id = avatar.wear_id
 	if(outfit_id)
-		outfit_id.assignment = "Bit Avatar"
-		outfit_id.registered_name = avatar.real_name
-
 		outfit_id.registered_account = new()
 		outfit_id.registered_account.replaceable = FALSE
 
@@ -110,7 +107,7 @@
 	if(isnull(destination))
 		return
 
-	var/obj/structure/hololadder/wayout = new(destination)
+	var/obj/structure/hololadder/wayout = new(destination, src)
 	if(isnull(wayout))
 		return
 

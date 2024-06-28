@@ -5,8 +5,8 @@
 	icon = 'icons/obj/weapons/guns/energy.dmi'
 
 	/// What type of power cell this uses
-	var/obj/item/stock_parts/cell/cell
-	var/cell_type = /obj/item/stock_parts/cell
+	var/obj/item/stock_parts/power_store/cell
+	var/cell_type = /obj/item/stock_parts/power_store/cell
 	///if the weapon has custom icons for individual ammo types it can switch between. ie disabler beams, taser, laser/lethals, ect.
 	var/modifystate = FALSE
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
@@ -26,13 +26,22 @@
 	var/single_shot_type_overlay = TRUE
 	///Should we give an overlay to empty guns?
 	var/display_empty = TRUE
-	var/selfcharge = 0
-	var/charge_timer = 0
-	var/charge_delay = 8
+
 	///whether the gun's cell drains the cyborg user's cell to recharge
 	var/use_cyborg_cell = FALSE
 	///set to true so the gun is given an empty cell
 	var/dead_cell = FALSE
+
+	// Self charging vars
+
+	/// Whether or not our gun charges its own cell on a timer.
+	var/selfcharge = 0
+	/// The amount of time between instances of cell self recharge
+	var/charge_timer = 0
+	/// The amount of seconds_per_tick during process() before the gun charges itself
+	var/charge_delay = 8
+	/// The amount restored by the gun to the cell per self charge tick
+	var/self_charge_amount = STANDARD_ENERGY_GUN_SELF_CHARGE_RATE
 
 /obj/item/gun/energy/fire_sounds()
 	// What frequency the energy gun's sound will make
@@ -153,7 +162,7 @@
 		if(charge_timer < charge_delay)
 			return
 		charge_timer = 0
-		cell.give(STANDARD_ENERGY_GUN_SELF_CHARGE_RATE * seconds_per_tick)
+		cell.give(self_charge_amount * seconds_per_tick)
 		if(!chambered) //if empty chamber we try to charge a new shot
 			recharge_newshot(TRUE)
 		update_appearance()

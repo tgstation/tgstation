@@ -66,3 +66,6 @@
 	if(updating_stamina)
 		update_stamina()
 	. -= staminaloss
+
+/mob/living/basic/received_stamina_damage(current_level, amount_actual, amount)
+	return

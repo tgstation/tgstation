@@ -9,7 +9,7 @@
 	command_desc = "Command your pet to stay idle in this location."
 	radial_icon = 'icons/obj/bed.dmi'
 	radial_icon_state = "dogbed"
-	speech_commands = list("sit", "stay", "stop", "сидеть", "лежать", "место", "фу", "стоп", "стой", "стоять")
+	speech_commands = list("sit", "stay", "stop", "сидеть", "лежать", "место", "фу", "стоп", "стой", "стоять") //MASSMETA EDIT CHANGE (add ru commands)
 	command_feedback = "sits"
 
 /datum/pet_command/idle/execute_action(datum/ai_controller/controller)
@@ -24,7 +24,7 @@
 	command_desc = "Allow your pet to resume its natural behaviours."
 	radial_icon = 'icons/mob/actions/actions_spells.dmi'
 	radial_icon_state = "repulse"
-	speech_commands = list("free", "loose", "гулять", "вон", "свобод", "брысь")
+	speech_commands = list("free", "loose", "гулять", "вон", "свобод", "брысь") //MASSMETA EDIT CHANGE (add ru commands)
 	command_feedback = "relaxes"
 
 /datum/pet_command/free/execute_action(datum/ai_controller/controller)
@@ -40,7 +40,7 @@
 	command_desc = "Command your pet to accompany you."
 	radial_icon = 'icons/testing/turf_analysis.dmi'
 	radial_icon_state = "red_arrow"
-	speech_commands = list("heel", "follow", "за мной", "след", "охран", "к ноге", "ко мне")
+	speech_commands = list("heel", "follow", "за мной", "след", "охран", "к ноге", "ко мне") //MASSMETA EDIT CHANGE (add ru commands)
 	///the behavior we use to follow
 	var/follow_behavior = /datum/ai_behavior/pet_follow_friend
 
@@ -61,7 +61,7 @@
 	command_desc = "Play a macabre trick."
 	radial_icon = 'icons/mob/simple/pets.dmi'
 	radial_icon_state = "puppy_dead"
-	speech_commands = list("play dead", "притворись", "мертв", "умри") // Don't get too creative here, people talk about dying pretty often
+	speech_commands = list("play dead", "притворись", "мертв", "умри") // Don't get too creative here, people talk about dying pretty often //MASSMETA EDIT CHANGE (add ru commands)
 
 /datum/pet_command/play_dead/execute_action(datum/ai_controller/controller)
 	controller.queue_behavior(/datum/ai_behavior/play_dead)
@@ -124,7 +124,7 @@
 	radial_icon = 'icons/effects/effects.dmi'
 	radial_icon_state = "bite"
 
-	speech_commands = list("attack", "sic", "kill", "апорт", "фас", "бить", "атак")
+	speech_commands = list("attack", "sic", "kill", "апорт", "фас", "бить", "атак") //MASSMETA EDIT CHANGE (add ru commands)
 	command_feedback = "growl"
 	pointed_reaction = "and growls"
 	/// Balloon alert to display if providing an invalid target
@@ -165,7 +165,7 @@
 	command_desc = "Command your pet to attempt to breed with a partner."
 	radial_icon = 'icons/mob/simple/animal.dmi'
 	radial_icon_state = "heart"
-	speech_commands = list("breed", "consummate", "размножайся", "ебитес")
+	speech_commands = list("breed", "consummate", "размножайся", "ебитес") //MASSMETA EDIT CHANGE (add ru commands)
 	var/datum/ai_behavior/reproduce_behavior = /datum/ai_behavior/make_babies
 
 /datum/pet_command/point_targeting/breed/set_command_target(mob/living/parent, atom/target)
@@ -197,7 +197,7 @@
 	command_desc = "Command your pet to use one of its special skills on something that you point out to it."
 	radial_icon = 'icons/mob/actions/actions_spells.dmi'
 	radial_icon_state = "projectile"
-	speech_commands = list("shoot", "blast", "cast", "стреля", "выстрел", "пиу", "паф", "каст")
+	speech_commands = list("shoot", "blast", "cast", "стреля", "выстрел", "пиу", "паф", "каст") //MASSMETA EDIT CHANGE (add ru commands)
 	command_feedback = "growl"
 	pointed_reaction = "and growls"
 	/// Blackboard key where a reference to some kind of mob ability is stored
@@ -222,6 +222,8 @@
 	var/protect_range = 9
 	///the behavior we will use when he is attacked
 	var/protect_behavior = /datum/ai_behavior/basic_melee_attack
+	///message cooldown to prevent too many people from telling you not to commit suicide
+	COOLDOWN_DECLARE(self_harm_message_cooldown)
 
 /datum/pet_command/protect_owner/add_new_friend(mob/living/tamer)
 	RegisterSignal(tamer, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(set_attacking_target))
@@ -251,6 +253,13 @@
 
 	var/mob/living/basic/owner = weak_parent.resolve()
 	if(isnull(owner))
+		return
+	if(source == attacker)
+		var/list/interventions = owner.ai_controller?.blackboard[BB_OWNER_SELF_HARM_RESPONSES] || list()
+		if (length(interventions) && COOLDOWN_FINISHED(src, self_harm_message_cooldown) && prob(30))
+			COOLDOWN_START(src, self_harm_message_cooldown, 5 SECONDS)
+			var/chosen_statement = pick(interventions)
+			INVOKE_ASYNC(owner, TYPE_PROC_REF(/atom/movable, say), chosen_statement)
 		return
 	var/mob/living/current_target = owner.ai_controller?.blackboard[BB_CURRENT_PET_TARGET]
 	if(attacker == current_target) //we are already dealing with this target

@@ -14,12 +14,12 @@
 	id = "comp_advanced_interacts"
 	display_name = "Advanced Action Components"
 	description = "Grants access to more advanced action components for the drone shell."
-	prereq_ids = list("movable_shells")
+	prereq_ids = list("circuit_shells")
 	design_ids = list(
 		"comp_mine",
 		"comp_iinteract",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 //Target Scanner Component
 /datum/design/component/radar_scanner
@@ -37,9 +37,9 @@
 	id = "comp_advanced_sensors"
 	display_name = "Advanced Sensor Components"
 	description = "Grants access to advanced sensor components component for shells."
-	prereq_ids = list("adv_shells")
+	prereq_ids = list("circuit_shells")
 	design_ids = list(
 		"comp_tscanner",
 		"comp_ccharge",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)

@@ -220,7 +220,7 @@
 //Buttbot Production
 /obj/item/organ/internal/butt/attackby(obj/item/I, mob/living/user)
 	if(istype(I, /obj/item/bodypart/arm/left/robot) || istype(I, /obj/item/bodypart/arm/right/robot))
-		var/mob/living/simple_animal/bot/buttbot/new_butt = new(get_turf(src))
+		var/mob/living/basic/bot/buttbot/new_butt = new(get_turf(src))
 		qdel(I)
 		switch(src.type) //A BUTTBOT FOR EVERYONE!
 			if(/obj/item/organ/internal/butt/atomic)
@@ -260,7 +260,7 @@
 		playsound(src, pick('massmeta/sounds/fartts/fart1.ogg', 'massmeta/sounds/fartts/fart2.ogg', 'massmeta/sounds/fartts/fart3.ogg', 'massmeta/sounds/fartts/fart4.ogg'), 25 ,use_reverb = TRUE, channel = CHANNEL_MOB_SOUNDS)
 		qdel(src)
 
-/mob/living/simple_animal/bot/buttbot
+/mob/living/basic/bot/buttbot
 	name = "\improper buttbot"
 	desc = "butts"
 	icon = 'massmeta/icons/obj/butts.dmi'
@@ -276,17 +276,17 @@
 	var/butt_probability = 15
 	var/listen_probability = 30
 
-/mob/living/simple_animal/bot/buttbot/emag_act(mob/user)
-	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
+/mob/living/basic/bot/buttbot/emag_act(mob/user)
+	if(!(bot_access_flags & BOT_COVER_EMAGGED))
 		visible_message("<span class='warning'>[user] swipes a card through the [src]'s crack!</span>", "<span class='notice'>You swipe a card through the [src]'s crack.</span>")
 		listen_probability = 75
 		butt_probability = 30
-		bot_cover_flags |= BOT_COVER_EMAGGED
+		bot_access_flags |= BOT_COVER_EMAGGED
 		var/turf/butt = get_turf(src)
 		butt.atmos_spawn_air("miasma=5;TEMP=310.15")
 		playsound(src, pick('massmeta/sounds/fartts/fart1.ogg', 'massmeta/sounds/fartts/fart2.ogg', 'massmeta/sounds/fartts/fart3.ogg', 'massmeta/sounds/fartts/fart4.ogg'), 100 ,use_reverb = TRUE)
 
-/mob/living/simple_animal/bot/buttbot/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods)
+/mob/living/basic/bot/buttbot/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods, message_range)
 	. = ..()
 	if(!cooling_down && prob(listen_probability) && ishuman(speaker))
 		cooling_down = TRUE
@@ -294,7 +294,7 @@
 		for (var/i in 1 to length(split_message))
 			if(prob(butt_probability))
 				split_message[i] = pick("butt", "butts")
-		if((bot_cover_flags & BOT_COVER_EMAGGED))
+		if((bot_access_flags & BOT_COVER_EMAGGED))
 			var/turf/butt = get_turf(src)
 			butt.atmos_spawn_air("miasma=5;TEMP=310.15")
 		var/joined_text = jointext(split_message, " ")

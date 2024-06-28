@@ -63,7 +63,7 @@
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 
 /mob/living/basic/alien/get_butt_sprite()
-	return BUTT_SPRITE_XENOMORPH
+	return icon('icons/mob/butts.dmi', BUTT_SPRITE_XENOMORPH)
 
 ///Places alien weeds on the turf the mob is currently standing on.
 /mob/living/basic/alien/proc/place_weeds()

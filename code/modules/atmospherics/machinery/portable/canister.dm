@@ -35,7 +35,7 @@
 	///Is shielding turned on/off
 	var/shielding_powered = FALSE
 	///The powercell used to enable shielding
-	var/obj/item/stock_parts/cell/internal_cell
+	var/obj/item/stock_parts/power_store/internal_cell
 	///used while processing to update appearance only when its pressure state changes
 	var/current_pressure_state
 
@@ -52,7 +52,7 @@
 	. = ..()
 
 	if(mapload)
-		internal_cell = new /obj/item/stock_parts/cell/high(src)
+		internal_cell = new /obj/item/stock_parts/power_store/cell/high(src)
 
 	if(existing_mixture)
 		air_contents.copy_from(existing_mixture)
@@ -71,7 +71,6 @@
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddElement(/datum/element/volatile_gas_storage)
 	AddComponent(/datum/component/gas_leaker, leak_rate=0.01)
-	register_context()
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
 	. = ..()
@@ -86,7 +85,7 @@
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove tank"
 	if(!held_item)
 		return CONTEXTUAL_SCREENTIP_SET
-	if(istype(held_item, /obj/item/stock_parts/cell))
+	if(istype(held_item, /obj/item/stock_parts/power_store/cell))
 		context[SCREENTIP_CONTEXT_LMB] = "Insert cell"
 	switch(held_item.tool_behaviour)
 		if(TOOL_SCREWDRIVER)
@@ -368,8 +367,8 @@
 		internal_cell.forceMove(drop_location())
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/active_cell = item
+	if(istype(item, /obj/item/stock_parts/power_store/cell))
+		var/obj/item/stock_parts/power_store/cell/active_cell = item
 		if(!panel_open)
 			balloon_alert(user, "open hatch first!")
 			return TRUE
@@ -412,22 +411,6 @@
 		deconstruct(TRUE)
 
 	return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return
-	if(atom_integrity >= max_integrity || (machine_stat & BROKEN) || !tool.tool_start_check(user, amount = 1))
-		return ITEM_INTERACT_SUCCESS
-
-	to_chat(user, span_notice("You begin repairing cracks in [src]..."))
-	while(tool.use_tool(src, user, 2.5 SECONDS, volume=40))
-		atom_integrity = min(atom_integrity + 25, max_integrity)
-		if(atom_integrity >= max_integrity)
-			to_chat(user, span_notice("You've finished repairing [src]."))
-			return ITEM_INTERACT_SUCCESS
-		to_chat(user, span_notice("You repair some of the cracks in [src]..."))
-
-	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/portable_atmospherics/canister/Exited(atom/movable/gone, direction)
 	. = ..()
