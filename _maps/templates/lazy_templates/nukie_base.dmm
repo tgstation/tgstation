@@ -2451,12 +2451,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
-"Ci" = (
-/obj/structure/cable,
-/obj/machinery/door/airlock/highsecurity/syndicate,
-/obj/machinery/door/airlock/highsecurity/syndicate,
-/turf/closed/indestructible/syndicate,
-/area/centcom/syndicate_mothership/control)
 "Ct" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Closet"
@@ -7752,7 +7746,7 @@ DZ
 qp
 NY
 NY
-Ci
+Oi
 DZ
 DZ
 DZ
