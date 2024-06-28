@@ -1,4 +1,5 @@
 /datum/movespeed_modifier/obesity
+	// large weight slows even if flying and floating
 	multiplicative_slowdown = 1.5
 
 /datum/movespeed_modifier/monkey_reagent_speedmod
@@ -11,6 +12,7 @@
 	variable = TRUE
 
 /datum/movespeed_modifier/hunger
+	movetypes = GROUND|FLYING
 	variable = TRUE
 
 /datum/movespeed_modifier/golem_hunger
@@ -89,7 +91,7 @@
 /datum/movespeed_modifier/limbless
 	variable = TRUE
 	movetypes = GROUND
-	blacklisted_movetypes = FLOATING
+	blacklisted_movetypes = FLOATING|FLYING
 	flags = IGNORE_NOSLOW
 
 /datum/movespeed_modifier/simplemob_varspeed

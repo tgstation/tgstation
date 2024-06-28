@@ -421,6 +421,9 @@
 	model_type = list(/obj/item/robot_model/medical,  /obj/item/robot_model/syndicate_medical)
 	model_flags = BORG_MODEL_MEDICAL
 
+	items_to_add = list(/obj/item/healthanalyzer/advanced)
+	items_to_remove = list(/obj/item/healthanalyzer)
+
 /obj/item/borg/upgrade/surgery_omnitool/action(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
 	if(!.)
