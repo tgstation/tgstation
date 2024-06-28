@@ -19,7 +19,7 @@
 /area/shuttle/syndicate/hallway)
 "ae" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/syndicate{
 	id = "syndieshutters";
 	name = "Blast Shutters"
 	},
@@ -382,11 +382,11 @@
 "bK" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
 /obj/effect/mapping_helpers/airlock/autoname,
-/obj/machinery/door/airlock/hatch,
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/highsecurity/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/medical)
 "bM" = (
@@ -397,8 +397,8 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/autoname,
-/obj/machinery/door/airlock/hatch,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/highsecurity/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/engineering)
 "bO" = (
@@ -625,12 +625,12 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/engineering)
 "lm" = (
-/obj/machinery/door/airlock/hatch,
 /obj/effect/mapping_helpers/airlock/autoname,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/highsecurity/syndicate,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/bridge)
 "lo" = (
@@ -641,8 +641,8 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/autoname,
-/obj/machinery/door/airlock/hatch,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/highsecurity/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/eva)
 "lJ" = (
@@ -1064,9 +1064,9 @@
 /area/shuttle/syndicate/airlock)
 "Tu" = (
 /obj/effect/mapping_helpers/airlock/autoname,
-/obj/machinery/door/airlock/hatch,
 /obj/effect/turf_decal/stripes/red/line,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/highsecurity/syndicate,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/hallway)
 "TD" = (

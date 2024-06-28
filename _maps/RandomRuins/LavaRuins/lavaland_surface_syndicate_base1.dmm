@@ -9,11 +9,11 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/testlab)
 "ai" = (
-/obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/fullupgrade{
 	dir = 1
 	},
-/turf/open/floor/wood,
+/obj/structure/table/reinforced/plastitanium,
+/turf/open/floor/iron/syndicate_bar,
 /area/ruin/syndicate_lava_base/bar)
 "aj" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1421,17 +1421,17 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "lh" = (
-/obj/structure/table/wood,
-/turf/open/floor/wood,
+/obj/structure/table/reinforced/plastitanium,
+/turf/open/floor/iron/syndicate_bar,
 /area/ruin/syndicate_lava_base/bar)
 "li" = (
-/obj/structure/table/wood,
 /obj/item/toy/cards/deck/syndicate{
 	pixel_x = -6;
 	pixel_y = 6
 	},
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/wood,
+/obj/structure/table/reinforced/plastitanium,
+/turf/open/floor/iron/syndicate_bar,
 /area/ruin/syndicate_lava_base/bar)
 "lj" = (
 /obj/machinery/door/firedoor,
@@ -1487,16 +1487,16 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
 "lA" = (
-/turf/open/floor/wood,
+/turf/open/floor/iron/syndicate_bar,
 /area/ruin/syndicate_lava_base/bar)
 "lC" = (
-/obj/structure/table/wood,
 /obj/machinery/reagentgrinder,
 /obj/item/kitchen/rollingpin,
 /obj/item/knife/kitchen{
 	pixel_x = 6
 	},
-/turf/open/floor/wood,
+/obj/structure/table/reinforced/plastitanium,
+/turf/open/floor/iron/syndicate_bar,
 /area/ruin/syndicate_lava_base/bar)
 "lF" = (
 /obj/structure/sign/warning/vacuum/external/directional/west,
@@ -1560,7 +1560,7 @@
 /area/ruin/syndicate_lava_base/bar)
 "mw" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood,
+/turf/open/floor/iron/syndicate_bar,
 /area/ruin/syndicate_lava_base/bar)
 "mA" = (
 /obj/machinery/light/small/directional/west,
@@ -1729,7 +1729,6 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/engineering)
 "nI" = (
-/obj/structure/table/wood,
 /obj/machinery/light/small/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 1
@@ -1741,7 +1740,8 @@
 /obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/cup/glass/shaker,
 /obj/machinery/computer/security/telescreen/entertainment/directional/east,
-/turf/open/floor/wood,
+/obj/structure/table/reinforced/plastitanium,
+/turf/open/floor/iron/syndicate_bar,
 /area/ruin/syndicate_lava_base/bar)
 "nK" = (
 /obj/machinery/door/airlock/public/glass{
@@ -1952,9 +1952,9 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
 "pV" = (
-/obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood,
+/obj/structure/table/reinforced/plastitanium,
+/turf/open/floor/iron/syndicate_bar,
 /area/ruin/syndicate_lava_base/bar)
 "pW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -2677,7 +2677,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/syndicate{
 	id = "syndicate_lavaland_warehouse"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -2739,14 +2739,14 @@
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/engineering)
 "AJ" = (
-/obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
 	dir = 1
 	},
 /obj/machinery/barsign/all_access/directional/south{
 	chosen_sign = "/datum/barsign/hiddensigns/syndibarsign"
 	},
-/turf/open/floor/wood,
+/obj/structure/table/reinforced/plastitanium,
+/turf/open/floor/iron/syndicate_bar,
 /area/ruin/syndicate_lava_base/bar)
 "AO" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3016,7 +3016,6 @@
 /turf/open/floor/carpet/red,
 /area/ruin/syndicate_lava_base/dormitories)
 "Ev" = (
-/obj/structure/table/wood,
 /obj/item/reagent_containers/cup/rag{
 	pixel_x = -4;
 	pixel_y = 9
@@ -3026,7 +3025,8 @@
 	pixel_y = -2
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood,
+/obj/structure/table/reinforced/plastitanium,
+/turf/open/floor/iron/syndicate_bar,
 /area/ruin/syndicate_lava_base/bar)
 "EC" = (
 /obj/machinery/door/firedoor,
@@ -3110,7 +3110,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/duct,
-/turf/open/floor/wood,
+/turf/open/floor/iron/syndicate_bar,
 /area/ruin/syndicate_lava_base/bar)
 "Gd" = (
 /obj/machinery/light/small/directional/east,
@@ -3133,7 +3133,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/duct,
-/turf/open/floor/wood,
+/turf/open/floor/iron/syndicate_bar,
 /area/ruin/syndicate_lava_base/bar)
 "Gu" = (
 /obj/effect/turf_decal/stripes/line{
@@ -3249,7 +3249,7 @@
 /area/ruin/syndicate_lava_base/engineering)
 "Ih" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/syndicate{
 	id = "syndicate_lavaland_warehouse"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -3966,7 +3966,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
-/turf/open/floor/wood,
+/turf/open/floor/iron/syndicate_bar,
 /area/ruin/syndicate_lava_base/bar)
 "Tq" = (
 /obj/effect/turf_decal/stripes/line,
@@ -4035,9 +4035,9 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
 "TN" = (
-/obj/structure/table/wood,
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/wood,
+/obj/structure/table/reinforced/plastitanium,
+/turf/open/floor/iron/syndicate_bar,
 /area/ruin/syndicate_lava_base/bar)
 "TO" = (
 /obj/machinery/portable_atmospherics/canister,
@@ -4173,9 +4173,9 @@
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/dormitories)
 "VH" = (
-/obj/structure/table/wood,
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/wood,
+/obj/structure/table/reinforced/plastitanium,
+/turf/open/floor/iron/syndicate_bar,
 /area/ruin/syndicate_lava_base/bar)
 "VL" = (
 /obj/effect/decal/cleanable/dirt,

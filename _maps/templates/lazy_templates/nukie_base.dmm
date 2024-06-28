@@ -55,7 +55,7 @@
 /obj/machinery/microwave,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "aX" = (
 /obj/machinery/shower/directional/south,
@@ -432,10 +432,10 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "eF" = (
-/obj/structure/table/wood,
 /obj/item/reagent_containers/cup/rag,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
+/obj/structure/table/reinforced/plastitanium,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "eK" = (
 /obj/effect/turf_decal/delivery,
@@ -598,7 +598,7 @@
 "gE" = (
 /obj/structure/sink/kitchen/directional/south,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "gJ" = (
 /obj/structure/rack,
@@ -660,7 +660,7 @@
 	},
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "gV" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/end,
@@ -792,10 +792,10 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/syndicate_mothership/control)
 "is" = (
-/obj/structure/table/wood,
 /obj/item/storage/box/drinkingglasses,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
+/obj/structure/table/reinforced/plastitanium,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "iA" = (
 /obj/effect/turf_decal/siding/thinplating{
@@ -1127,7 +1127,7 @@
 "my" = (
 /obj/effect/landmark/start/nukeop_leader,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "mz" = (
 /obj/machinery/vending/cola,
@@ -1180,11 +1180,12 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
-/obj/machinery/door/poddoor/shutters{
-	id = "FBBZ1";
-	name = "Security Shutters"
-	},
 /obj/structure/fans/tiny,
+/obj/machinery/door/poddoor/shutters/syndicate{
+	name = "Security Shutters";
+	id = "FBBZ1";
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
 "nk" = (
@@ -1252,7 +1253,7 @@
 /obj/machinery/oven/range,
 /obj/structure/sign/poster/contraband/eat/directional/west,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "oc" = (
 /obj/structure/fence{
@@ -1292,10 +1293,8 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wideplating/dark,
-/obj/machinery/door/airlock/hatch{
-	name = "Gangway"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/highsecurity/syndicate,
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
 "os" = (
@@ -1344,10 +1343,10 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership)
 "oR" = (
-/obj/structure/table/wood,
 /obj/item/storage/box/donkpockets,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
+/obj/structure/table/reinforced/plastitanium,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "oT" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -1591,7 +1590,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wideplating,
-/obj/machinery/door/poddoor/shutters/indestructible{
+/obj/machinery/door/poddoor/shutters/syndicate{
 	name = "Subterrainian Cargo Lift"
 	},
 /turf/open/floor/iron/dark/textured_half,
@@ -1608,7 +1607,7 @@
 /obj/item/knife/kitchen,
 /obj/structure/sign/poster/contraband/self_ai_liberation/directional/west,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "rL" = (
 /obj/structure/table/glass/plasmaglass,
@@ -2004,13 +2003,13 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bombthreat)
 "wN" = (
-/obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks{
 	dir = 1
 	},
 /obj/structure/sign/poster/contraband/andromeda_bitters/directional/south,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
+/obj/structure/table/reinforced/plastitanium,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "wO" = (
 /turf/open/floor/iron/dark/textured_half{
@@ -2304,12 +2303,13 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
-/obj/machinery/door/poddoor/shutters/window{
-	id = "FBBZ1";
-	name = "Security Shutters"
-	},
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/machinery/door/poddoor/shutters/syndicate{
+	name = "Security Shutters";
+	id = "FBBZ1";
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
 "AO" = (
@@ -2440,7 +2440,7 @@
 /obj/machinery/light/directional/west,
 /obj/item/reagent_containers/cup/glass/shaker,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "Cg" = (
 /obj/machinery/computer/mech_bay_power_console{
@@ -2450,6 +2450,12 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
+/area/centcom/syndicate_mothership/control)
+"Ci" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/highsecurity/syndicate,
+/obj/machinery/door/airlock/highsecurity/syndicate,
+/turf/closed/indestructible/syndicate,
 /area/centcom/syndicate_mothership/control)
 "Ct" = (
 /obj/machinery/door/airlock/hatch{
@@ -3083,7 +3089,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "IK" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -3124,13 +3130,13 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/syndicate_mothership/control)
 "Jc" = (
-/obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer{
 	dir = 1
 	},
 /obj/structure/sign/poster/contraband/space_cube/directional/south,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
+/obj/structure/table/reinforced/plastitanium,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "Jf" = (
 /obj/structure/table/glass/plasmaglass,
@@ -3507,7 +3513,7 @@
 /obj/machinery/griddle,
 /obj/structure/sign/poster/contraband/syndiemoth/directional/north,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "NH" = (
 /obj/effect/turf_decal/stripes/line{
@@ -3527,10 +3533,8 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
-/obj/machinery/door/airlock/highsecurity{
-	name = "Sky Bridge"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/highsecurity/syndicate,
 /turf/open/floor/iron/textured_large,
 /area/centcom/syndicate_mothership/control)
 "Oc" = (
@@ -3664,11 +3668,9 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
-/obj/machinery/door/airlock/highsecurity{
-	name = "Sky Bridge"
-	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/highsecurity/syndicate,
 /turf/open/floor/iron/textured_large,
 /area/centcom/syndicate_mothership/control)
 "OX" = (
@@ -3837,13 +3839,13 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
 "Qy" = (
-/obj/structure/table/wood,
 /obj/item/food/nachos{
 	pixel_x = 7;
 	pixel_y = -14
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
+/obj/structure/table/reinforced/plastitanium,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "QD" = (
 /obj/item/flashlight{
@@ -4029,7 +4031,7 @@
 	},
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "Sv" = (
 /obj/structure/mop_bucket,
@@ -4138,11 +4140,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "Tw" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Gangway"
-	},
 /obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/highsecurity/syndicate,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "Tz" = (
@@ -4195,11 +4195,9 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
-/obj/machinery/door/airlock/highsecurity{
-	name = "Sky Bridge"
-	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/highsecurity/syndicate,
 /turf/open/floor/iron/textured_large,
 /area/centcom/syndicate_mothership/control)
 "TS" = (
@@ -4256,6 +4254,10 @@
 "UE" = (
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/plating,
+/area/centcom/syndicate_mothership/control)
+"UL" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "Va" = (
 /obj/effect/turf_decal/syndicateemblem/middle/left{
@@ -6519,9 +6521,9 @@ VK
 iX
 DZ
 ND
-uX
-uX
-uX
+UL
+UL
+UL
 ig
 BK
 ek
@@ -6620,9 +6622,9 @@ VK
 qE
 ZZ
 Lx
-uX
-uX
-uX
+UL
+UL
+UL
 wN
 ek
 zS
@@ -6724,7 +6726,7 @@ ZZ
 DZ
 gE
 my
-uX
+UL
 Jc
 ek
 Id
@@ -7750,7 +7752,7 @@ DZ
 qp
 NY
 NY
-Oi
+Ci
 DZ
 DZ
 DZ

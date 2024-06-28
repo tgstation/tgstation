@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/obj/machinery/door/poddoor/shutters/preopen{
+/obj/machinery/door/poddoor/shutters/syndicate/preopen{
 	dir = 8;
 	id = "interdynebridge"
 	},
@@ -43,7 +43,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ag" = (
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/shuttle/interdyne{
 	id_tag = "piratebridgebolt";
 	name = "Bridge";
 	req_access = null
@@ -441,7 +441,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "dV" = (
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/shuttle/interdyne{
 	req_access = null
 	},
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
@@ -450,7 +450,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ek" = (
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/shuttle/interdyne{
 	req_access = null
 	},
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
@@ -565,8 +565,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "ne" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "interdynebridge"
+/obj/machinery/door/poddoor/shutters/syndicate/preopen{
+	id = "interdynebridge";
+	dir = 4
 	},
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
@@ -591,7 +592,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "vz" = (
-/obj/machinery/door/poddoor/shutters/preopen{
+/obj/machinery/door/poddoor/shutters/syndicate/preopen{
 	dir = 1;
 	id = "interdynebridge"
 	},
@@ -675,7 +676,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "yi" = (
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/shuttle/interdyne{
 	id_tag = "piratebridgebolt";
 	name = "Bridge";
 	req_access = null
@@ -702,7 +703,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "DD" = (
-/obj/machinery/door/poddoor/shutters/preopen{
+/obj/machinery/door/poddoor/shutters/syndicate/preopen{
 	dir = 4;
 	id = "interdynebridge"
 	},
@@ -760,7 +761,7 @@
 /area/shuttle/pirate)
 "Ks" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/machinery/door/poddoor/shutters/preopen{
+/obj/machinery/door/poddoor/shutters/syndicate/preopen{
 	dir = 8;
 	id = "interdynebridge"
 	},
@@ -795,7 +796,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "SD" = (
-/obj/machinery/door/airlock/hatch{
+/obj/machinery/door/airlock/shuttle/interdyne{
 	req_access = null
 	},
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
