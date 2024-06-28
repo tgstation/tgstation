@@ -82,6 +82,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	user.visible_message(span_notice("[user] unscrews [src]!"), span_notice("You detach [src] from the wall."))
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	deconstruct()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/light_switch/proc/set_lights(status)
 	if(area.lightswitch == status)
