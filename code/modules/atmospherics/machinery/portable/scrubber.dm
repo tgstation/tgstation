@@ -1,5 +1,6 @@
 /obj/machinery/portable_atmospherics/scrubber
 	name = "portable air scrubber"
+	desc = "A portable variant of the station scrubbers, capable of filtering gas from the air around it or inserted tank. May also be wrenched into a port."
 	icon_state = "scrubber"
 	density = TRUE
 	max_integrity = 250
