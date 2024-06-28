@@ -2,7 +2,7 @@
 #define HEATER_MODE_HEAT "heat"
 #define HEATER_MODE_COOL "cool"
 #define HEATER_MODE_AUTO "auto"
-#define BASE_HEATING_ENERGY (40 KILO JOULES)
+#define BASE_HEATING_ENERGY (STANDARD_CELL_RATE * 0.1)
 
 /obj/machinery/space_heater
 	anchored = FALSE
@@ -20,7 +20,7 @@
 	//We don't use area power, we always use the cell
 	use_power = NO_POWER_USE
 	///The cell we spawn with
-	var/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell
+	var/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/high
 	///Is the machine on?
 	var/on = FALSE
 	///What is the mode we are in now?
@@ -30,7 +30,7 @@
 	///The temperature we trying to get to
 	var/target_temperature = T20C
 	///How much heat/cold we can deliver
-	var/heating_energy = 40 KILO JOULES
+	var/heating_energy = BASE_HEATING_ENERGY
 	///How efficiently we can deliver that heat/cold (higher indicates less cell consumption)
 	var/efficiency = 20
 	///The amount of degrees above and below the target temperature for us to change mode to heater or cooler
@@ -468,7 +468,7 @@
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		capacitors_rating += capacitor.tier
 
-	heating_energy = lasers_rating * 20000
+	heating_energy = lasers_rating * BASE_HEATING_ENERGY
 
 	settable_temperature_range = capacitors_rating * 50 //-20 - 80 at base
 	efficiency = (capacitors_rating + 1) * 10

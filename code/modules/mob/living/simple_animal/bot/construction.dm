@@ -494,8 +494,8 @@
 				if(!can_finish_build(I, user))
 					return
 				to_chat(user, span_notice("You add the [I] to [src]! Beep Boop!"))
-				var/mob/living/simple_animal/bot/firebot/F = new(drop_location())
-				F.name = created_name
+				var/mob/living/basic/bot/firebot/firebot = new(drop_location())
+				firebot.name = created_name
 				qdel(I)
 				qdel(src)
 
