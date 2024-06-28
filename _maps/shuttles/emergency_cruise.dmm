@@ -1648,7 +1648,7 @@
 /turf/open/floor/carpet/executive,
 /area/shuttle/escape)
 "Jl" = (
-/mob/living/simple_animal/bot/vibebot,
+/mob/living/basic/bot/vibebot,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Jo" = (

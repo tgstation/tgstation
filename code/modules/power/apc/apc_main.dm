@@ -30,11 +30,11 @@
 	///Mapper helper to tie an apc to another area
 	var/areastring = null
 	///Reference to our internal cell
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 	///Initial cell charge %
 	var/start_charge = 90
 	///Type of cell we start with
-	var/cell_type = /obj/item/stock_parts/cell/upgraded //Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
+	var/cell_type = /obj/item/stock_parts/power_store/battery/upgraded //Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
 	///State of the cover (closed, opened, removed)
 	var/opened = APC_COVER_CLOSED
 	///Is the APC shorted and not working?
@@ -689,12 +689,12 @@
 
 ///Used for cell_5k apc helper, which installs 5k cell into apc.
 /obj/machinery/power/apc/proc/install_cell_5k()
-	cell_type = /obj/item/stock_parts/cell/upgraded/plus
+	cell_type = /obj/item/stock_parts/power_store/battery/upgraded
 	cell = new cell_type(src)
 
 /// Used for cell_10k apc helper, which installs 10k cell into apc.
 /obj/machinery/power/apc/proc/install_cell_10k()
-	cell_type = /obj/item/stock_parts/cell/high
+	cell_type = /obj/item/stock_parts/power_store/battery/high
 	cell = new cell_type(src)
 
 /// Used for unlocked apc helper, which unlocks the apc.
