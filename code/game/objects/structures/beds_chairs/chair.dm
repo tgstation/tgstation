@@ -285,6 +285,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
+/obj/structure/chair/stool/bar/syndicate_light
+	icon_state = "bar_syndie_light"
+	item_chair = /obj/item/chair/stool/bar/syndicate_light
+
+/obj/structure/chair/stool/bar/syndicate_dark
+	icon_state = "bar_syndie_dark"
+	item_chair = /obj/item/chair/stool/bar/syndicate_dark
+
 /obj/structure/chair/stool/bamboo
 	name = "bamboo stool"
 	desc = "A makeshift bamboo stool with a rustic look."
@@ -393,6 +401,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	icon_state = "bar_toppled"
 	inhand_icon_state = "stool_bar"
 	origin_type = /obj/structure/chair/stool/bar
+
+/obj/item/chair/stool/bar/syndicate_light
+	name = "bar stool"
+	icon_state = "bar_syndie_light_toppled"
+	inhand_icon_state = "stool_bar"
+	origin_type = /obj/structure/chair/stool/bar/syndicate_light
+
+/obj/item/chair/stool/bar/syndicate_dark
+	name = "bar stool"
+	icon_state = "bar_syndie_dark_toppled"
+	inhand_icon_state = "stool_bar"
+	origin_type = /obj/structure/chair/stool/bar/syndicate_dark
 
 /obj/item/chair/stool/bamboo
 	name = "bamboo stool"

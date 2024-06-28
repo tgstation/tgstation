@@ -445,6 +445,11 @@
 	tiled_dirt = FALSE
 	floor_tile = /obj/item/stack/tile/iron/grimy
 
+/turf/open/floor/iron/syndicate_bar
+	icon_state = "syndicate_bar"
+	base_icon_state = "syndicate_bar"
+	floor_tile = /obj/item/stack/tile/iron/syndicate_bar
+
 /turf/open/floor/iron/vaporwave
 	icon_state = "pinkblack"
 	base_icon_state = "pinkblack"

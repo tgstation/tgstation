@@ -720,6 +720,16 @@
 	buildstack = /obj/item/stack/sheet/plastitaniumglass
 	max_integrity = 300
 
+/obj/structure/table/reinforced/plastitanium
+	name = "plastitanium table"
+	desc = "A table made of titanium-plasma composite. About as durable as it sounds."
+	icon = 'icons/obj/smooth_structures/syndicaterose_table.dmi'
+	icon_state = "syndicaterose_table-0"
+	base_icon_state = "syndicaterose_table"
+	custom_materials = list(/datum/material/alloy/plastitanium =SHEET_MATERIAL_AMOUNT)
+	buildstack = /obj/item/stack/sheet/mineral/plastitanium
+	max_integrity = 300
+
 /*
  * Surgery Tables
  */

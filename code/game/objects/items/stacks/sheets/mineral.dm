@@ -317,6 +317,7 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/plastitanium
 	material_flags = NONE
 	walltype = /turf/closed/wall/mineral/plastitanium
+	tableVariant = /obj/structure/table/reinforced/plastitanium
 
 GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	new/datum/stack_recipe("plastitanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \

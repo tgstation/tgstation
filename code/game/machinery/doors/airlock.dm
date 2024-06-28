@@ -2257,6 +2257,10 @@
 	security_level = 1
 	damage_deflection = 30
 
+/obj/machinery/door/airlock/highsecurity/syndicate
+	icon = 'icons/obj/doors/airlocks/syndicate/highsec.dmi'
+	overlays_file = null
+
 // Shuttle Airlocks
 
 /obj/machinery/door/airlock/shuttle
@@ -2282,6 +2286,10 @@
 	aiControlDisabled = AI_WIRE_DISABLED
 	normal_integrity = 700
 	security_level = 1
+
+/obj/machinery/door/airlock/shuttle/interdyne
+	icon = 'icons/obj/doors/airlocks/syndicate/interdyne.dmi'
+	overlays_file = null
 
 // Cult Airlocks
 

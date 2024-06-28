@@ -102,7 +102,7 @@
 	you_are_text = "You are an Ex-Interdyne pharmacyst now turned space pirate."
 	flavour_text = "The station has refused to fund your research, so you will 'convince' them to donate to your charitable cause."
 	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
+	icon_state = "sleeper_interdyne"
 	prompt_name = "An Ex-Interdyne employee"
 	outfit = /datum/outfit/pirate/interdyne
 	rank = "Pharmacist"
