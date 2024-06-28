@@ -103,6 +103,9 @@
 	savefile_key = "sound_ship_ambience"
 	savefile_identifier = PREFERENCE_PLAYER
 
+/datum/preference/toggle/sound_ship_ambience/apply_to_client_updated(client/client, value)
+	client.mob.refresh_looping_ambience()
+
 /// Controls hearing elevator music
 /datum/preference/toggle/sound_elevator
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
