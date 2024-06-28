@@ -446,11 +446,12 @@
 		/obj/item/crowbar = 15, // long is the way, and hard, that out of maint leads up to the light
 		/obj/item/wirecutters = 15, // doorhacking is patient and kind; it does not rcd or shock.
 		)
-	custom_sacrifice_description = "organic slurry, and the tools of the tide: yellow gloves... \
+	custom_sacrifice_description = "\
+	organic slurry, and the tools of the tide: yellow gloves... \
 	 Maintenance pump up, but also the baton of those who make it necessary, or your own improvised stunprods. \
-	  Spears: pointed with glass from windows that blocked the way of your gospel.\
-	    Crowbars -- or even the hallowed jaws of life -- and the wirecutters that make them the locus of your power...\
-	    GREYTIDE STATIONWIDE"
+	 Spears: pointed with glass from windows that blocked the way of your gospel. \
+	 Crowbars -- or even the hallowed jaws of life -- and the wirecutters that make them the locus of your power... \
+	 GREYTIDE STATIONWIDE"
 
 	var/list/tide_whispers = list(
 		"comdom",
