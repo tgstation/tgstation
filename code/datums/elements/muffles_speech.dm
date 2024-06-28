@@ -28,6 +28,7 @@
 		source.audible_message("makes a [pick("strong ", "weak ", "")]noise.", audible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE)
 		return COMPONENT_CANT_EMOTE
 	return NONE
+
 /datum/element/muffles_speech/proc/muzzle_talk(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
