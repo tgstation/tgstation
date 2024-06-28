@@ -57,3 +57,11 @@
 	desc = "A .50AE bullet casing."
 	caliber = CALIBER_50AE
 	projectile_type = /obj/projectile/bullet/a50ae
+
+// 40N&R (SP-8)
+
+/obj/item/ammo_casing/fortynr
+	name = "40nr bullet casing."
+	desc = "A 40nr bullet casing."
+	caliber = CALIBER_40NR
+	projectile_type = /obj/projectile/bullet/fortynr

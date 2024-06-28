@@ -210,3 +210,15 @@
 	else
 		to_chat(user, span_notice("..and falls into view. Whew, that was a close one."))
 		user.dropItemToGround(src)
+
+/obj/item/gun/ballistic/automatic/pistol/sp8
+	name = "SP-8"
+	desc = "Basic version of the latest pistol of security. Use 40nr ammo. It has good stopping power."
+	icon_state = "sp8"
+	fire_sound_volume = 80
+	accepted_magazine_type = /obj/item/ammo_box/magazine/sp8
+	can_suppress = TRUE
+	fire_sound = 'sound/weapons/gun/pistol/sp8.ogg'
+
+/obj/item/gun/ballistic/automatic/pistol/sp8/nomag
+	spawnwithmagazine = FALSE

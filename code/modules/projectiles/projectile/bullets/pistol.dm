@@ -61,3 +61,9 @@
 	impact_light_intensity = 5
 	impact_light_range = 1
 	impact_light_color_override = LIGHT_COLOR_DIM_YELLOW
+
+/obj/projectile/bullet/fortynr
+	name = "40nr bullet"
+	damage = 20
+	stamina = 30
+	weak_against_armour = TRUE

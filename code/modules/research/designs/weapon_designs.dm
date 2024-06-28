@@ -59,6 +59,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
+/datum/design/fortynr
+	name = "40nr magazine (Lethal)"
+	desc = "Magazine designed for SP-8 pistol. Bullets have good stopping power."
+	id = "fortynr"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10)
+	build_path = /obj/item/ammo_box/magazine/sp8
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
 /datum/design/rubbershot/sec
 	id = "sec_rshot"
 	desc = "Rubbershot shotgun shells. Fires a cloud of pellets. Rubber bullets are bouncy and less-than-lethal."

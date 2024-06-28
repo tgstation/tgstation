@@ -40,6 +40,8 @@
 #define CALIBER_SHOTGUN "shotgun"
 /// The caliber used by grenade launchers.
 #define CALIBER_40MM "40mm"
+/// The caliber used by SP-8
+#define CALIBER_40NR "40nr"
 /// The caliber used by rocket launchers.
 #define CALIBER_84MM "84mm"
 /// The caliber used by laser guns.

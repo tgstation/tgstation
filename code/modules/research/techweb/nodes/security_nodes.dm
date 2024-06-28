@@ -13,6 +13,7 @@
 		"sec_dart",
 		"sec_Islug",
 		"sec_rshot",
+		"fortynr",
 	)
 
 /datum/techweb_node/sec_equip

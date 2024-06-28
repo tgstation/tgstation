@@ -115,3 +115,16 @@
 	max_ammo = 8
 	multiple_sprites = AMMO_BOX_PER_BULLET
 	multiple_sprite_use_base = TRUE
+
+/obj/item/ammo_box/magazine/sp8
+	name = "handgun magazine 40N&R"
+	icon_state = "sp8mag-10"
+	base_icon_state = "sp8mag"
+	ammo_type = /obj/item/ammo_casing/fortynr
+	caliber = CALIBER_40NR
+	max_ammo = 10
+	multiple_sprite_use_base = TRUE
+
+/obj/item/ammo_box/magazine/sp8/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]-[round(ammo_count(), 2)]"
