@@ -18,7 +18,7 @@
 	var/gulp_size = 5
 	///Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it.
 	var/isGlass = FALSE
-	var/list/transfer_sound = list('sound/effects/liquid_pour1.ogg', 'sound/effects/liquid_pour2.ogg', 'sound/effects/liquid_pour3.ogg')
+	var/static/list/transfer_sound = list('sound/effects/liquid_pour1.ogg', 'sound/effects/liquid_pour2.ogg', 'sound/effects/liquid_pour3.ogg')
 
 /obj/item/reagent_containers/cup/examine(mob/user)
 	. = ..()
