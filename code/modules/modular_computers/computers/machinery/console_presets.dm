@@ -25,7 +25,6 @@
 	if(isnull(startup_file))
 		return
 
-	cpu.turn_on()
 	cpu.active_program = startup_file
 
 // ===== ENGINEERING CONSOLE =====
