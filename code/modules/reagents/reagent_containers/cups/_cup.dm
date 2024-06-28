@@ -18,7 +18,6 @@
 	var/gulp_size = 5
 	///Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it.
 	var/isGlass = FALSE
-	var/static/list/transfer_sound = list('sound/effects/liquid_pour1.ogg', 'sound/effects/liquid_pour2.ogg', 'sound/effects/liquid_pour3.ogg')
 
 /obj/item/reagent_containers/cup/examine(mob/user)
 	. = ..()
@@ -118,7 +117,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
-		playsound(target.loc, pick(transfer_sound), 50)
+		playsound(target.loc, pick('sound/effects/liquid_pour1.ogg', 'sound/effects/liquid_pour2.ogg', 'sound/effects/liquid_pour3.ogg'), 50)
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
 		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, target)
 		target.update_appearance()
