@@ -13798,6 +13798,9 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
+/obj/machinery/keycard_auth/directional/north{
+	pixel_x = -5
+	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/qm)
 "eTI" = (
@@ -59573,12 +59576,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/research)
-"uVG" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/machinery/door/poddoor/preopen,
-/turf/open/floor/plating,
-/area/station/command/heads_quarters/qm)
 "uVJ" = (
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/girder,
@@ -90609,7 +90606,7 @@ cNg
 kQP
 kQP
 mXO
-uVG
+mXO
 kQP
 kQP
 kQP
