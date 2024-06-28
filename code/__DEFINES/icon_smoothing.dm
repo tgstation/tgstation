@@ -18,10 +18,6 @@
 /// it represents the sides of our directional border object that have a neighbor
 /// Is incompatible with SMOOTH_CORNERS because border objects don't have corners
 #define SMOOTH_BORDER_OBJECT (1<<7)
-/// Has a smooth broken sprite, used to decide whether to apply an offset to the broken overlay or not. For /turf/open only.
-#define SMOOTH_BROKEN_TURF (1<<8)
-/// Has a smooth burnt sprite, used to decide whether to apply an offset to the burnt overlay or not. For /turf/open only.
-#define SMOOTH_BURNT_TURF (1<<9)
 
 #define USES_SMOOTHING (SMOOTH_CORNERS|SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS)
 
@@ -34,8 +30,6 @@ DEFINE_BITFIELD(smoothing_flags, list(
 	"SMOOTH_QUEUED" = SMOOTH_QUEUED,
 	"SMOOTH_OBJ" = SMOOTH_OBJ,
 	"SMOOTH_BORDER_OBJECT" = SMOOTH_BORDER_OBJECT,
-	"SMOOTH_BROKEN_TURF" = SMOOTH_BROKEN_TURF,
-	"SMOOTH_BURNT_TURF" = SMOOTH_BURNT_TURF,
 ))
 
 /// Components of a smoothing junction
