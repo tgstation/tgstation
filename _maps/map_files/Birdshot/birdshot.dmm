@@ -2319,18 +2319,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
-"aTb" = (
-/obj/structure/toilet{
-	dir = 4
-	},
-/obj/machinery/button/door/directional/north{
-	name = "Lock Control";
-	id = "Toilet1"
-	},
-/obj/machinery/light/small/directional/west,
-/obj/structure/sign/poster/official/random/directional/west,
-/turf/open/floor/iron/white/small,
-/area/station/commons/toilet/restrooms)
 "aTc" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -5816,16 +5804,6 @@
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
-"ckb" = (
-/obj/structure/chair/comfy/beige{
-	dir = 4
-	},
-/obj/machinery/button/door/directional/north{
-	id = "CabinS";
-	name = "Bolt Control"
-	},
-/turf/open/floor/carpet/green,
-/area/station/commons/dorms)
 "cks" = (
 /obj/structure/hedge,
 /obj/effect/turf_decal/tile/yellow{
@@ -6412,21 +6390,6 @@
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron,
 /area/station/security/prison/rec)
-"cuJ" = (
-/obj/structure/table/reinforced,
-/obj/structure/desk_bell{
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "kitchenshutters";
-	name = "Kitchen Shutters"
-	},
-/turf/open/floor/plating,
-/area/station/service/kitchen)
 "cvk" = (
 /obj/effect/spawner/random/structure/crate,
 /obj/effect/spawner/random/maintenance,
@@ -12418,6 +12381,21 @@
 	dir = 1
 	},
 /area/station/science/lobby)
+"eGk" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/effect/spawner/random/bedsheet{
+	dir = 4
+	},
+/obj/machinery/button/door/directional/north{
+	id = "Cabin3";
+	name = "Cabin Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/carpet/blue,
+/area/station/commons/dorms)
 "eGw" = (
 /obj/machinery/camera/directional/west{
 	c_tag = "Engineering - Public Desk"
@@ -14019,6 +13997,21 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/station/security/prison/work)
+"fmG" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/effect/spawner/random/bedsheet{
+	dir = 4
+	},
+/obj/machinery/button/door/directional/west{
+	name = "Cabin Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4;
+	id = "Cabin1"
+	},
+/turf/open/floor/carpet/orange,
+/area/station/commons/dorms)
 "fmH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -15259,18 +15252,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/smooth_large,
 /area/station/engineering/storage_shared)
-"fHK" = (
-/obj/structure/toilet{
-	dir = 4
-	},
-/obj/machinery/button/door/directional/north{
-	name = "Lock Control";
-	id = "Toilet2"
-	},
-/obj/machinery/light/small/directional/west,
-/obj/structure/sign/poster/contraband/random/directional/west,
-/turf/open/floor/iron/white/small,
-/area/station/commons/toilet/restrooms)
 "fHN" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -21179,6 +21160,21 @@
 /obj/machinery/digital_clock/directional/north,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
+"hyu" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/effect/spawner/random/bedsheet{
+	dir = 4
+	},
+/obj/machinery/button/door/directional/south{
+	id = "Cabin4";
+	name = "Cabin Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/carpet,
+/area/station/commons/dorms)
 "hyv" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -22500,6 +22496,18 @@
 	},
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos/space_catwalk)
+"hXJ" = (
+/obj/structure/chair/comfy/beige{
+	dir = 4
+	},
+/obj/machinery/button/door/directional/north{
+	id = "CabinS";
+	name = "Bolt Control";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/carpet/green,
+/area/station/commons/dorms)
 "hXU" = (
 /turf/closed/wall,
 /area/station/security/execution/education)
@@ -24306,21 +24314,6 @@
 /obj/machinery/field/generator,
 /turf/open/floor/iron/dark/small,
 /area/station/engineering/storage_shared)
-"iAu" = (
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/effect/spawner/random/bedsheet{
-	dir = 4
-	},
-/obj/machinery/button/door/directional/west{
-	name = "Cabin Bolt Control";
-	normaldoorcontrol = 1;
-	specialfunctions = 4;
-	id = "Cabin4"
-	},
-/turf/open/floor/carpet/orange,
-/area/station/commons/dorms)
 "iAv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash,
@@ -24699,6 +24692,20 @@
 "iGl" = (
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_command)
+"iGo" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/machinery/button/door/directional/north{
+	name = "Lock Control";
+	id = "Toilet2";
+	specialfunctions = 4;
+	normaldoorcontrol = 1
+	},
+/obj/machinery/light/small/directional/west,
+/obj/structure/sign/poster/contraband/random/directional/west,
+/turf/open/floor/iron/white/small,
+/area/station/commons/toilet/restrooms)
 "iGp" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/external{
@@ -35240,6 +35247,20 @@
 	dir = 8
 	},
 /area/station/engineering/supermatter/room)
+"lPX" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/west,
+/obj/structure/sign/poster/official/random/directional/west,
+/obj/machinery/button/door/directional/north{
+	id = "Toilet1";
+	specialfunctions = 4;
+	name = "Lock Control";
+	normaldoorcontrol = 1
+	},
+/turf/open/floor/iron/white/small,
+/area/station/commons/toilet/restrooms)
 "lQh" = (
 /turf/open/floor/iron/small,
 /area/station/maintenance/port/aft)
@@ -39812,6 +39833,21 @@
 	},
 /turf/open/floor/iron/white/small,
 /area/station/service/hydroponics)
+"nrk" = (
+/obj/structure/table/reinforced,
+/obj/structure/desk_bell{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchenshutters";
+	name = "Kitchen Shutters"
+	},
+/turf/open/floor/plating,
+/area/station/service/kitchen)
 "nrp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/flashlight/lantern/on,
@@ -45429,6 +45465,15 @@
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den/gaming)
+"plE" = (
+/obj/structure/window/spawner/directional/north,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/machinery/door/airlock{
+	id_tag = "Toilet1";
+	name = "Unit 1"
+	},
+/turf/open/misc/sandy_dirt,
+/area/station/commons/fitness/locker_room)
 "plJ" = (
 /obj/machinery/photocopier,
 /obj/effect/turf_decal/siding/wood{
@@ -49714,6 +49759,17 @@
 	},
 /turf/open/floor/wood/tile,
 /area/station/tcommsat/server)
+"qCZ" = (
+/obj/machinery/button/door/directional/north{
+	name = "Lock Control";
+	id = "Toilet3";
+	specialfunctions = 4;
+	normaldoorcontrol = 1
+	},
+/obj/machinery/recharge_station,
+/obj/structure/sign/poster/official/random/directional/east,
+/turf/open/floor/iron/white/small,
+/area/station/commons/toilet/restrooms)
 "qDd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -51857,19 +51913,6 @@
 /obj/structure/sign/warning/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics_engine)
-"rlq" = (
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/effect/spawner/random/bedsheet{
-	dir = 4
-	},
-/obj/machinery/button/door/directional/north{
-	id = "Cabin4";
-	name = "Cabin Bolt Control"
-	},
-/turf/open/floor/carpet/blue,
-/area/station/commons/dorms)
 "rlr" = (
 /turf/closed/wall,
 /area/station/medical/storage)
@@ -58998,6 +59041,14 @@
 /obj/effect/landmark/transport/nav_beacon/tram/nav/birdshot/prison,
 /turf/open/floor/tram,
 /area/station/security/tram)
+"tzg" = (
+/obj/machinery/button/door/directional/north{
+	id = "Cabin4";
+	name = "Cabin Bolt Control";
+	normaldoorcontrol = 1
+	},
+/turf/closed/wall,
+/area/station/service/abandoned_gambling_den)
 "tzh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
 	dir = 4
@@ -62485,11 +62536,6 @@
 	dir = 8
 	},
 /area/station/commons/fitness/locker_room)
-"uDE" = (
-/obj/structure/window/spawner/directional/north,
-/obj/structure/flora/bush/flowers_yw/style_random,
-/turf/open/misc/sandy_dirt,
-/area/station/commons/fitness/locker_room)
 "uDF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -65454,19 +65500,6 @@
 /obj/item/clothing/shoes/cowboy/lizard/masterwork,
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/station/maintenance/starboard/central)
-"vvd" = (
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/effect/spawner/random/bedsheet{
-	dir = 4
-	},
-/obj/machinery/button/door/directional/south{
-	id = "Cabin4";
-	name = "Cabin Bolt Control"
-	},
-/turf/open/floor/carpet,
-/area/station/commons/dorms)
 "vve" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Aft Corridor"
@@ -68416,15 +68449,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/recreation)
-"wrx" = (
-/obj/machinery/button/door/directional/north{
-	name = "Lock Control";
-	id = "Toilet3"
-	},
-/obj/machinery/recharge_station,
-/obj/structure/sign/poster/official/random/directional/east,
-/turf/open/floor/iron/white/small,
-/area/station/commons/toilet/restrooms)
 "wrD" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -101133,7 +101157,7 @@ xmt
 ohy
 wWQ
 tqI
-cuJ
+nrk
 iEj
 obE
 xmt
@@ -107293,9 +107317,9 @@ skd
 ciV
 rrp
 wqj
-aTb
+lPX
 wqj
-fHK
+iGo
 qUt
 roD
 xDS
@@ -108838,7 +108862,7 @@ wqj
 uPM
 cPp
 wqj
-wrx
+qCZ
 qUt
 hdZ
 qUt
@@ -110893,7 +110917,7 @@ rqw
 fcU
 rem
 xvM
-uDE
+plE
 qUt
 lhi
 brw
@@ -111128,7 +111152,7 @@ sJR
 usd
 nFW
 tuY
-iAu
+fmG
 rqw
 qAj
 jsU
@@ -114213,13 +114237,13 @@ iVr
 nFW
 xUy
 nFW
-rlq
+eGk
 fjQ
 rqw
-ckb
+hXJ
 rqw
 oRp
-vvd
+hyu
 pzd
 bqy
 bqy
@@ -117042,7 +117066,7 @@ aJq
 aJq
 aJq
 wOp
-wOp
+tzg
 wOp
 wOp
 nWk
