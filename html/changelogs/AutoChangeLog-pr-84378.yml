@@ -1,0 +1,4 @@
+author: "aaaa1023"
+delete-after: True
+changes:
+  - bugfix: "Removed a bush trapped inside a wall above morgue on Tramstation"
