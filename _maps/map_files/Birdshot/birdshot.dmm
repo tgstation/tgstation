@@ -8941,7 +8941,6 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/library)
 "dAX" = (
-/obj/structure/table,
 /obj/item/stack/cable_coil,
 /obj/item/electronics/airlock,
 /obj/item/electronics/airlock,
@@ -52594,12 +52593,12 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/atmos/glass{
-	name = "Distribution access"
+	name = "Distro access"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
-/turf/open/floor/plating,
+/turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
 "sul" = (
 /obj/effect/turf_decal/siding{
@@ -60092,7 +60091,7 @@
 /area/station/engineering/supermatter/room)
 "uSx" = (
 /obj/machinery/door/airlock/atmos/glass{
-	name = "Distribution access"
+	name = "Distro access"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/hidden,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
