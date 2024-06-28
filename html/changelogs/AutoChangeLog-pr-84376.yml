@@ -1,0 +1,4 @@
+author: "junkgle01"
+delete-after: True
+changes:
+  - bugfix: "added a keycard auth to QM room"
