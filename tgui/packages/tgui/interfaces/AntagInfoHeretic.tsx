@@ -260,7 +260,7 @@ const KnowledgeTree = (props) => {
                           ${node.desc}`}
                         onClick={
                           node.disabled
-                            ? () => null
+                            ? undefined
                             : () => act('research', { path: node.path })
                         }
                         width={node.ascension ? '192px' : '64px'}
