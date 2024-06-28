@@ -14888,6 +14888,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/locker)
+"aXq" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/fireaxecabinet/mechremoval/directional/south,
+/turf/open/floor/iron/white,
+/area/station/science/robotics/lab)
 "aXs" = (
 /obj/machinery/light/small/directional/north,
 /obj/effect/spawner/random/trash/garbage{
@@ -37533,11 +37540,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "fsm" = (
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/fireaxecabinet/mechremoval/directional/south,
-/turf/open/floor/iron/white,
+/turf/open/floor/plating,
 /area/station/science/robotics/lab)
 "fsD" = (
 /obj/machinery/door/firedoor/heavy,
@@ -37805,7 +37810,6 @@
 "fGF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -43074,11 +43078,6 @@
 	},
 /turf/open/floor/carpet/blue,
 /area/station/service/lawoffice)
-"kNo" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/science/robotics/lab)
 "kOT" = (
 /obj/structure/rack,
 /obj/item/crowbar/red,
@@ -100353,7 +100352,7 @@ bbD
 aYV
 kXf
 aYV
-kNo
+fsm
 bhv
 biK
 blz
@@ -100610,7 +100609,7 @@ aFu
 aYV
 kXf
 aYV
-kNo
+fsm
 bhx
 biL
 biL
@@ -100619,7 +100618,7 @@ flN
 vFr
 cHV
 bsA
-fsm
+aXq
 box
 bWr
 bvc
@@ -100867,7 +100866,7 @@ bbD
 aYV
 kXf
 aYV
-kNo
+fsm
 ada
 cHM
 biL
