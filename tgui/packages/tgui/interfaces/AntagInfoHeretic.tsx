@@ -259,7 +259,7 @@ const KnowledgeTree = (props) => {
                         tooltip={`${node.name}:
                           ${node.desc}`}
                         onClick={
-                          node.disabled
+                          node.disabled || node.finished
                             ? undefined
                             : () => act('research', { path: node.path })
                         }
