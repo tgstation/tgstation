@@ -1,8 +1,0 @@
-author: "hyperjll"
-delete-after: True
-changes:
-  - balance: "Due to selective breeding of slimes, some species require roughly 3x more plasma than normal to activate a plasma reaction. Slime extracts affected are: Oil, Adamantine, Orange, and Gold. Yellow slimes require 3x more blood to activate a blood reaction."
-  - balance: "Oil slime extracts have become less potent during a plasma reaction due to selective breeding conditions."
-  - balance: "Gold slime extracts give rise to one less monster during a plasma reaction due to selective breeding conditions."
-  - balance: "Yellow slime extracts have become less potent during a blood reaction due to selective breeding conditions."
-  - balance: "Adamantine golem shells require 3 sheets rather than 1, due to unknown circumstances."
