@@ -65,14 +65,3 @@
 	rowjoin_right.alpha = (rows > 1) * 255
 
 	closer.screen_loc = "[screen_start_x + columns]:[screen_pixel_x - 5],[screen_start_y]:[screen_pixel_y]"
-
-/proc/spanning_screen_loc(start_px, start_py, end_px, end_py)
-	var/starting_tile_x = round(start_px / 32)
-	start_px -= starting_tile_x * 32
-	var/starting_tile_y = round(start_py/ 32)
-	start_py -= starting_tile_y * 32
-	var/ending_tile_x = round(end_px / 32)
-	end_px -= ending_tile_x * 32
-	var/ending_tile_y = round(end_py / 32)
-	end_py -= ending_tile_y * 32
-	return "[starting_tile_x]:[start_px],[starting_tile_y]:[start_py] to [ending_tile_x]:[end_px],[ending_tile_y]:[end_py]"

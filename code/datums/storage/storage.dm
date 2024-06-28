@@ -1089,7 +1089,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		item.mouse_opacity = MOUSE_OPACITY_OPAQUE
 		item.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
 		item.maptext = storage_contents[item]
-		item.plane = ABOVE_HUD_PLANE
 		SET_PLANE(item, ABOVE_HUD_PLANE, our_turf)
 		current_x++
 		if(current_x - screen_start_x < columns)
