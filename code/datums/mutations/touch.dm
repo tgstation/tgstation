@@ -138,18 +138,17 @@
 
 	var/mob/living/hurtguy = victim
 
-
 	// Heal more, hurt a bit more.
 	// If you crunch the numbers it sounds crazy good,
 	// but I think that's a fair reward for combining the efforts of Genetics, Medbay, and Mining to reach a hidden mechanic.
-	if(HAS_TRAIT_FROM(mendicant, TRAIT_PACIFISM, HIPPOCRATIC_OATH_TRAIT))
+	if(HAS_TRAIT_FROM(mendicant, TRAIT_HIPPOCRATIC_OATH, HIPPOCRATIC_OATH_TRAIT))
 		heal_multiplier *= 2
 		pain_multiplier *= 0.5
 		to_chat(mendicant, span_green("You can feel the magic of the Rod of Aesculapius aiding your efforts!"))
 		beam_icon = "sendbeam"
 		var/obj/item/rod_of_asclepius/rod = locate() in mendicant.contents
 		if(rod)
-			rod.add_filter("cool_glow", 2, list("type" = "outline", "color" = COLOR_VERY_PALE_LIME_GREEN, "size" = 1))
+			rod.add_filter("cool_glow", 2, list("type" = "outline", "color" = COLOR_VERY_PALE_LIME_GREEN, "size" = 1.25))
 			addtimer(CALLBACK(rod, TYPE_PROC_REF(/datum, remove_filter), "cool_glow"), 6 SECONDS)
 
 

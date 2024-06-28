@@ -69,6 +69,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Antagonizes the above.
 #define TRAIT_DISCOORDINATED_TOOL_USER "discoordinated_tool_user"
 #define TRAIT_PACIFISM "pacifism"
+// Trait added to the user of a hippocratic oath status effect
+#define TRAIT_HIPPOCRATIC_OATH "hippocratic_oath"
 #define TRAIT_IGNORESLOWDOWN "ignoreslow"
 #define TRAIT_IGNOREDAMAGESLOWDOWN "ignoredamageslowdown"
 /// Makes it so the mob can use guns regardless of tool user status
