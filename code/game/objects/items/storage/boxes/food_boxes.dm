@@ -94,27 +94,27 @@
 			desc = "A paper sack with a crude smile etched onto the side."
 	return ..()
 
-/obj/item/storage/box/papersack/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(IS_WRITING_UTENSIL(inserted))
-		var/choice = show_radial_menu(user, src , papersack_designs, custom_check = CALLBACK(src, PROC_REF(check_menu), user, inserted), radius = 36, require_near = TRUE)
+/obj/item/storage/box/papersack/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(IS_WRITING_UTENSIL(tool))
+		var/choice = show_radial_menu(user, src , papersack_designs, custom_check = CALLBACK(src, PROC_REF(check_menu), user, tool), radius = 36, require_near = TRUE)
 		if(!choice || choice == design_choice)
-			return FALSE
+			return ITEM_INTERACT_BLOCKING
 		design_choice = choice
 		balloon_alert(user, "modified")
 		update_appearance()
-		return FALSE
-	if(inserted.get_sharpness() && !contents.len)
+		return ITEM_INTERACT_SUCCESS
+	if(tool.get_sharpness() && !contents.len)
 		if(design_choice == "None")
 			user.show_message(span_notice("You cut eyeholes into [src]."), MSG_VISUAL)
 			new /obj/item/clothing/head/costume/papersack(drop_location())
 			qdel(src)
-			return FALSE
+			return ITEM_INTERACT_SUCCESS
 		else if(design_choice == "SmileyFace")
 			user.show_message(span_notice("You cut eyeholes into [src] and modify the design."), MSG_VISUAL)
 			new /obj/item/clothing/head/costume/papersack/smiley(drop_location())
 			qdel(src)
-			return FALSE
-	return TRUE
+			return ITEM_INTERACT_SUCCESS
+	return ..()
 
 /**
  * check_menu: Checks if we are allowed to interact with a radial menu
