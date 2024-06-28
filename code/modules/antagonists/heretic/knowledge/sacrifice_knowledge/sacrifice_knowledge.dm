@@ -277,7 +277,6 @@
 
 	addtimer(CALLBACK(src, PROC_REF(deposit_reward), user, loc, null, rune), 5 SECONDS)
 
-/mob/var/AArunesize = 0.5
 
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/deposit_reward(mob/user, turf/loc, loop = 0, obj/rune)
 	if(loop > 5) // Max limit for retrying a reward

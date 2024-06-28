@@ -706,7 +706,7 @@
 			log_combat(src, target, "shoved", "knocking them down[weapon ? " with [weapon]" : ""]")
 			return
 
-	if(shove_flags & SHOVE_CAN_KICK_SIDE && (!HAS_TRAIT(target, TRAIT_NO_SIDE_KICK))) //KICK HIM IN THE NUTS
+	if(shove_flags & SHOVE_CAN_KICK_SIDE) //KICK HIM IN THE NUTS
 		target.Paralyze(SHOVE_CHAIN_PARALYZE)
 		target.visible_message(span_danger("[name] kicks [target.name] onto [target.p_their()] side!"),
 						span_userdanger("You're kicked onto your side by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
@@ -748,6 +748,8 @@
 			. |= SHOVE_CAN_HIT_SOMETHING
 	if(HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
 		. |= SHOVE_KNOCKDOWN_BLOCKED
+	if(HAS_TRAIT(src, TRAIT_NO_SIDE_KICK))
+		. &= ~SHOVE_CAN_KICK_SIDE
 
 ///Send the chat feedback message for shoving
 /mob/living/proc/get_shoving_message(mob/living/shover, obj/item/weapon, shove_flags)

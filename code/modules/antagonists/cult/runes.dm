@@ -326,7 +326,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	return TRUE
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers, datum/team/cult/cult_team)
-	var/big_sac = FALSE
+	var/target_sac = FALSE
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || cult_team.is_sacrifice_target(sacrificial.mind)) && length(invokers) < 3)
 		for(var/invoker in invokers)
 			to_chat(invoker, span_cult_italic("[sacrificial] is too greatly linked to the world! You need three acolytes!"))
@@ -339,7 +339,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 				sac_objective.sacced = TRUE
 				sac_objective.clear_sacrifice()
 				sac_objective.update_explanation_text()
-				big_sac = TRUE
+				target_sac = TRUE
 	else
 		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial))
 
@@ -347,10 +347,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	var/signal_result = SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers, cult_team)
 
-	// big sac overrides it
-	if(!(signal_result & SILENCE_SACRIFICE_MESSAGE) || big_sac)
+	var/do_message = TRUE
+	if(signal_result & SILENCE_SACRIFICE_MESSAGE)
+		do_message = FALSE
+	if((signal_result & SILENCE_NONTARGET_SACRIFICE_MESSAGE) && !(target_sac))
+		do_message = FALSE
+
+	if(do_message)
 		for(var/invoker in invokers)
-			if(big_sac)
+			if(target_sac)
 				to_chat(invoker, span_cult_large("\"Yes! This is the one I desire! You have done well.\""))
 				continue
 			if(ishuman(sacrificial) || iscyborg(sacrificial))

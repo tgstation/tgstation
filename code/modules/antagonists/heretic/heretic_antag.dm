@@ -239,8 +239,8 @@
 	if (!issilicon(our_mob))
 		GLOB.reality_smash_track.add_tracked_mind(owner)
 
-	ADD_TRAIT(owner.current, TRAIT_MANSUS_TOUCHED, REF(src))
-	RegisterSignal(owner.current, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
+	ADD_TRAIT(our_mob, TRAIT_MANSUS_TOUCHED, REF(src))
+	RegisterSignal(our_mob, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
 	RegisterSignals(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), PROC_REF(on_spell_cast))
 	RegisterSignal(our_mob, COMSIG_USER_ITEM_INTERACTION, PROC_REF(on_item_use))
 	RegisterSignal(our_mob, COMSIG_MOB_LOGIN, PROC_REF(fix_influence_network))
@@ -254,7 +254,7 @@
 	if (owner in GLOB.reality_smash_track.tracked_heretics)
 		GLOB.reality_smash_track.remove_tracked_mind(owner)
 
-	REMOVE_TRAIT(owner, TRAIT_MANSUS_TOUCHED, REF(src))
+	REMOVE_TRAIT(our_mob, TRAIT_MANSUS_TOUCHED, REF(src))
 	UnregisterSignal(our_mob, list(
 		COMSIG_MOB_BEFORE_SPELL_CAST,
 		COMSIG_MOB_SPELL_ACTIVATED,
@@ -427,10 +427,11 @@
 	// Cool effect for the rune as well as the item
 	var/obj/effect/rune/convert/conversion_rune = locate() in get_turf(source)
 	if(conversion_rune)
-		conversion_rune.gender_reveal(outline_color = COLOR_HERETIC_GREEN,\
-		ray_color = null,\
-		do_float = FALSE,\
-		do_layer = FALSE,\
+		conversion_rune.gender_reveal(
+			outline_color = COLOR_HERETIC_GREEN,
+			ray_color = null,
+			do_float = FALSE,
+			do_layer = FALSE,
 		)
 
 	haunted_blade.gender_reveal(outline_color = null, ray_color = COLOR_HERETIC_GREEN)
@@ -464,18 +465,19 @@
 /**
  * Creates an animation of the item slowly lifting up from the floor with a colored outline, then slowly drifting back down.
  * Arguments:
- * outline_color: Default is between pink and light blue, is the color of the outline filter.
- * ray_color: Null by default. If not set, just copies outline. Used for the ray filter.
- * anim_time: Total time of the animation. Split into two different calls.
- * do_float: Lets you disable the sprite floating up and down.
- * do_layer: Lets you disable the layering increase.
+ * * outline_color: Default is between pink and light blue, is the color of the outline filter.
+ * * ray_color: Null by default. If not set, just copies outline. Used for the ray filter.
+ * * anim_time: Total time of the animation. Split into two different calls.
+ * * do_float: Lets you disable the sprite floating up and down.
+ * * do_layer: Lets you disable the layering increase.
  */
-/obj/proc/gender_reveal(outline_color = null,\
-	ray_color = null,\
-	anim_time = 10 SECONDS,\
-	do_float = TRUE,\
-	do_layer = TRUE,\
-	)
+/obj/proc/gender_reveal(
+	outline_color = null,
+	ray_color = null,
+	anim_time = 10 SECONDS,
+	do_float = TRUE,
+	do_layer = TRUE,
+)
 
 	var/og_layer
 	if(do_layer)
@@ -490,22 +492,22 @@
 
 	// Adding a cool outline effect
 	if(outline_color)
-		add_filter("ready_outline", 3, list("type" = "outline", "color" = outline_color, "size" = 0.5))
+		add_filter("gender_reveal_outline", 3, list("type" = "outline", "color" = outline_color, "size" = 0.5))
 		// Animating it!
-		var/gay_filter = get_filter("ready_outline")
+		var/gay_filter = get_filter("gender_reveal_outline")
 		animate(gay_filter, alpha = 110, time = 1.5 SECONDS, loop = -1)
 		animate(alpha = 40, time = 2.5 SECONDS)
 
 	// Adding a cool ray effect
 	if(ray_color)
-		add_filter(name = "ray", priority = 1, params = list(
+		add_filter(name = "gender_reveal_ray", priority = 1, params = list(
 				type = "rays",
 				size = 45,
 				color = ray_color,
 				density = 6
 			))
 		// Animating it!
-		var/ray_filter = get_filter("ray")
+		var/ray_filter = get_filter("gender_reveal_ray")
 		// I understand nothing but copypaste saves lives
 		animate(ray_filter, offset = 100, time = 30 SECONDS, loop = -1, flags = ANIMATION_PARALLEL)
 
@@ -515,7 +517,7 @@
  * Removes the non-animate effects from above proc
  */
 /obj/proc/remove_gender_reveal_fx(og_layer)
-	remove_filter(list("ready_outline", "ray"))
+	remove_filter(list("gender_reveal_outline", "gender_reveal_ray"))
 	layer = og_layer
 
 /**

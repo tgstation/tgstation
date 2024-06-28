@@ -532,9 +532,9 @@
 /**
  * Creates the ritual mob and grabs a ghost for it
  *
- * user - the mob doing the summoning
- * loc - where the summon is happening
- * mob_to_summon - either a mob instance or a mob typepath
+ * * user - the mob doing the summoning
+ * * loc - where the summon is happening
+ * * mob_to_summon - either a mob instance or a mob typepath
  */
 /datum/heretic_knowledge/proc/summon_ritual_mob(mob/living/user, turf/loc, mob/living/mob_to_summon)
 	var/mob/living/summoned

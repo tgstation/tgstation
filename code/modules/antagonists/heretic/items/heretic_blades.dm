@@ -24,18 +24,28 @@
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	var/after_use_message = ""
 
+/obj/item/melee/sickly_blade/examine(mob/user)
+	. = ..()
+	if(!check_usability(user))
+		return
+
+	. += span_notice("You can shatter the blade to teleport to a random, (mostly) safe location by <b>activating it in-hand</b>.")
+
 /// Checks if the passed mob can use this blade without being stunned
 /obj/item/melee/sickly_blade/proc/check_usability(mob/living/user)
 	return IS_HERETIC_OR_MONSTER(user)
 
-/obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
+/obj/item/melee/sickly_blade/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(.)
+		return .
 	if(!check_usability(user))
 		to_chat(user, span_danger("You feel a pulse of alien intellect lash out at your mind!"))
 		var/mob/living/carbon/human/human_user = user
 		human_user.AdjustParalyzed(5 SECONDS)
 		return TRUE
 
-	return ..()
+	return .
 
 /obj/item/melee/sickly_blade/attack_self(mob/user)
 	seek_safety(user)
@@ -54,22 +64,14 @@
 	playsound(src, SFX_SHATTER, 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
 	qdel(src)
 
-/obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!isliving(target))
-		return
-
-	if(proximity_flag)
+/obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, click_parameters)
+	if(isliving(target))
 		SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target, src)
-	else
-		SEND_SIGNAL(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, target, src)
 
-/obj/item/melee/sickly_blade/examine(mob/user)
-	. = ..()
-	if(!check_usability(user))
-		return
-
-	. += span_notice("You can shatter the blade to teleport to a random, (mostly) safe location by <b>activating it in-hand</b>.")
+/obj/item/melee/sickly_blade/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isliving(interacting_with))
+		SEND_SIGNAL(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, interacting_with, src)
+		return ITEM_INTERACT_BLOCKING
 
 // Path of Rust's blade
 /obj/item/melee/sickly_blade/rust

@@ -16,11 +16,15 @@
 	spell_requirements = NONE
 
 	cast_range = 4
-	// If the caster clicks on the guy instead of the spell we just reroute to the turf
-	aim_assist_list = list(/turf)
 
 	/// How long does the filter last on walls we make?
 	var/filter_duration = 2 MINUTES
+
+/**
+ * Overrides 'aim assist' because we always want to hit just the turf we clicked on.
+ */
+/datum/action/cooldown/spell/pointed/rust_construction/aim_assist(mob/living/caller, atom/target)
+	return get_turf(target)
 
 /datum/action/cooldown/spell/pointed/rust_construction/is_valid_target(atom/cast_on)
 	if(!isturf(cast_on))
@@ -75,8 +79,8 @@
 	// but I guess a fading filter will have to do for now as walls have 0 depth (currently)
 	// damn though with 3/4ths walls this'll look sick just imagine it
 	new_wall.add_filter("rust_wall", 2, list("type" = "outline", "color" = "#85be299c", "size" = 2))
-	addtimer(CALLBACK(src, PROC_REF(fade_wall_filter), new_wall), filter_duration * 0.66)
-	addtimer(CALLBACK(src, PROC_REF(remove_wall_filter), new_wall), filter_duration * 0.33)
+	addtimer(CALLBACK(src, PROC_REF(fade_wall_filter), new_wall), filter_duration * 0.5)
+	addtimer(CALLBACK(src, PROC_REF(remove_wall_filter), new_wall), filter_duration)
 
 	var/message_shown = FALSE
 	for(var/mob/living/living_mob in cast_on)

@@ -22,6 +22,10 @@
 	. = ..()
 	flinged_sword = to_fling
 
+/datum/action/cooldown/spell/pointed/sword_fling/Destroy()
+	flinged_sword = null
+	. = ..()
+
 /datum/action/cooldown/spell/pointed/sword_fling/is_valid_target(atom/cast_on)
 	return isatom(cast_on)
 

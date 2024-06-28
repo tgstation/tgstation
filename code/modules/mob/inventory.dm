@@ -319,8 +319,8 @@
 
 /**
  * Used to drop an item (if it exists) to the ground.
- * * Will pass as TRUE is successfully dropped, or if there is no item to drop.
- * * Will pass FALSE if the item can not be dropped due to TRAIT_NODROP via doUnEquip()
+ * * Will return null if the item wasn't dropped.
+ * * If it was, returns the item.
  * If the item can be dropped, it will be forceMove()'d to the ground and the turf's Entered() will be called.
 */
 /mob/proc/dropItemToGround(obj/item/I, force = FALSE, silent = FALSE, invdrop = TRUE)
@@ -328,9 +328,9 @@
 		return
 
 	SEND_SIGNAL(src, COMSIG_MOB_DROPPING_ITEM)
-	. = doUnEquip(I, force, drop_location(), FALSE, invdrop = invdrop, silent = silent)
+	var/try_uneqip = doUnEquip(I, force, drop_location(), FALSE, invdrop = invdrop, silent = silent)
 
-	if(!. || !I) //ensure the item exists and that it was dropped properly.
+	if(!try_uneqip || !I) //ensure the item exists and that it was dropped properly.
 		return
 
 	if(!(I.item_flags & NO_PIXEL_RANDOM_DROP))

@@ -22,7 +22,7 @@
 
 	// Also converts things right next to you.
 	for(var/atom/movable/nearby_movable in view(1, center))
-		if(nearby_movable == owner || (!isstructure(nearby_movable)) )
+		if(nearby_movable == owner || !isstructure(nearby_movable) )
 			continue
 		things_to_convert += nearby_movable
 

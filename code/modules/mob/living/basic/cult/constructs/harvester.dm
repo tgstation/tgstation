@@ -158,6 +158,11 @@
 	ADD_TRAIT(src, TRAIT_MANSUS_TOUCHED, REF(src))
 	add_filter("rusted_harvester", 3, list("type" = "outline", "color" = COLOR_GREEN, "size" = 2, "alpha" = 40))
 
+
+/**
+ * Somewhat janky proc called when a heretic monster's master dies
+ * Used to kill any living Rusted Harvester
+ */
 /mob/living/proc/on_master_death()
 	return
 
@@ -165,7 +170,7 @@
 	// They're pretty fragile so this is probably necessary to prevent bullshit deaths.
 	if(user == src)
 		return
-	. = ..()
+	return ..()
 
 /mob/living/basic/construct/harvester/heretic/on_master_death()
 	to_chat(src, span_userdanger("Your link to the mansus suddenly snaps as your master perishes! Without its support, your body crumbles..."))
@@ -193,7 +198,7 @@
 		damage_message = span_boldwarning("Your body wilts and withers as it comes near [src]'s aura."),\
 		message_probability = 7,\
 		current_owner = src,\
-		)
+	)
 	var/datum/action/innate/seek_master/heretic/seek = new(src)
 	seek.Grant(src)
 	seek.Activate()
@@ -208,7 +213,7 @@
 	var/turf/adjacent = get_step(src, pick(GLOB.alldirs))
 	// 90% chance to be directional, otherwise what we're on top of
 	var/turf/open/land = (isopenturf(adjacent) && prob(90)) ? adjacent : get_turf(src)
-	land.rust_heretic_act()
+	do_rust_heretic_act(land)
 
 	if(prob(7))
 		to_chat(src, span_notice("Eldritch energies emanate from your body."))

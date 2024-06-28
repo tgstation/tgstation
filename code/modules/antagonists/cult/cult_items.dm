@@ -254,24 +254,23 @@ Striking a noncultist, however, will tear their flesh."}
 	if(sword_spells)
 		for(var/datum/action/cooldown/spell/sword_spell as anything in sword_spells)
 			sword_spell = new sword_spell(trapped_entity)
-			sword_spell.Grant(trapped_entity)
-			sword_spell.overlay_icon_state = "bg_cult_border" // for flavor, and also helps distinguish
+			sword_spell?.Grant(trapped_entity)
+			sword_spell?.overlay_icon_state = "bg_cult_border" // for flavor, and also helps distinguish
 
 
 	if(wielder_spells)
 		for(var/datum/action/cooldown/spell/wielder_spell as anything in wielder_spells)
 			path_wielder_action = new wielder_spell(src)
-			wielder_spell.overlay_icon_state = "bg_cult_border"
+			wielder_spell?.overlay_icon_state = "bg_cult_border"
 
 /obj/item/melee/cultblade/haunted/equipped(mob/user, slot, initial)
 	. = ..()
 	if(slot & ITEM_SLOT_HANDS)
 		path_wielder_action?.Grant(user)
 
-/obj/item/melee/cultblade/haunted/dropped(mob/user, slot, initial)
+/obj/item/melee/cultblade/haunted/dropped(mob/user, silent)
 	. = ..()
-	if(!(slot & ITEM_SLOT_HANDS))
-		path_wielder_action?.Remove(user)
+	path_wielder_action?.Remove(user)
 
 #undef WIELDER_SPELLS
 #undef SWORD_SPELLS

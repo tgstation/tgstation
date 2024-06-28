@@ -143,9 +143,9 @@
 	if (extra_control_checks && !extra_control_checks.Invoke(harbinger))
 		return
 
+	harbinger.log_message("took control of [new_body].", LOG_GAME)
 	// doesn't transfer mind because that transfers antag datum as well
 	new_body.key = harbinger.key
-	harbinger.log_message("took control of [new_body].", LOG_GAME)
 
 	// Already qdels due to below proc but just in case
 	qdel(src)
