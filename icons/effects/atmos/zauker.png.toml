@@ -1,2 +1,6 @@
 output_name = ""
-template = "bitmask/cardinal_32x32.toml"
+template = "bitmask/gas.toml"
+
+[animation]
+delays = [1, 1, 1, 1, 1]
+
