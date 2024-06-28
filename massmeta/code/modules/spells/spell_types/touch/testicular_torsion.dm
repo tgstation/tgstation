@@ -1,8 +1,8 @@
 /// Weaker smite, not outright gibbing your target, but a lot more bloody, and Sanguine school, so doesn't get affected by splattercasting.
 /datum/action/cooldown/spell/touch/testicular_torsion
 	name = "Testicular Torsion"
-	desc = "This wicked spell inflicts many severe wounds on your target, causing them to \
-		likely bleed to death unless they receive immediate medical attention."
+	desc = "This wicked spell twistes and crushes victim's balls \
+	causing them to feel immense pain, may also break their legs."
 	button_icon_state = "gib"
 	sound =  "massmeta/sounds/magic/testicular_torsion.ogg"
 
@@ -29,6 +29,9 @@
 	var/mob/living/carbon/human/human_victim = victim
 	human_victim.apply_damage(rand(25, 40), BRUTE, BODY_ZONE_L_LEG, wound_bonus = rand(50,75), forced = TRUE)
 	human_victim.apply_damage(rand(25, 40), BRUTE, BODY_ZONE_R_LEG, wound_bonus = rand(50,75), forced = TRUE)
+	var/list/phrase = world.file2list("massmeta/strings/balls_phrases.txt")
+	human_victim.say(pick(phrase))
+	human_victim.emote("screech")
 	return TRUE
 
 /obj/item/melee/touch_attack/testicular_torsion
