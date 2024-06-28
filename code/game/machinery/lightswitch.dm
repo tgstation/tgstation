@@ -69,6 +69,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 /obj/machinery/light_switch/examine(mob/user)
 	. = ..()
 	. += "It is [(machine_stat & NOPOWER) ? "unpowered" : (area.lightswitch ? "on" : "off")]."
+	. += span_notice("It's <b>screwed</b> and secured to the wall.")
 
 /obj/machinery/light_switch/interact(mob/user)
 	. = ..()
