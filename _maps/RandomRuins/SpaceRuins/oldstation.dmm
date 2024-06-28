@@ -1544,7 +1544,6 @@
 "gM" = (
 /obj/machinery/rnd/production/circuit_imprinter/offstation,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/dropper,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "gP" = (
@@ -1928,6 +1927,7 @@
 /obj/item/folder/white,
 /obj/item/reagent_containers/cup/beaker,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/dropper,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "ip" = (
@@ -2953,7 +2953,7 @@
 /obj/machinery/shower/directional/west{
 	has_water_reclaimer = 0
 	},
-/turf/open/floor/vault,
+/turf/open/floor/pod/dark,
 /area/ruin/space/ancientstation/delta/biolab)
 "mG" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3149,7 +3149,9 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
 	},
-/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen{
+	pixel_x = 1
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "np" = (
@@ -4451,7 +4453,7 @@
 /obj/structure/closet/crate/secure/weapon{
 	req_access = list("away_sec")
 	},
-/obj/item/knife/combat,
+/obj/item/spess_knife,
 /obj/item/clothing/suit/armor/vest/old,
 /obj/item/gun/ballistic/rifle/boltaction,
 /obj/item/ammo_box/strilka310,
@@ -8233,8 +8235,14 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/tank/internals/oxygen,
-/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen{
+	pixel_y = -8;
+	pixel_x = 8
+	},
+/obj/item/tank/internals/oxygen{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "XD" = (
