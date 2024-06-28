@@ -1,4 +1,3 @@
-
 ///We can empty beakers in here and everything
 /obj/machinery/plumbing/input
 	name = "input gate"
