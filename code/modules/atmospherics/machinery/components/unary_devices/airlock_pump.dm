@@ -275,6 +275,8 @@
 	var/obj/machinery/door/airlock/external_airlock = find_airlock(get_turf(src), REVERSE_DIR(dir))
 
 	if(!internal_airlock || !external_airlock)
+		if(!can_unwrench) //maploaded pump
+			CRASH("[type] called couldn't find airlocks to cycle with!")
 		external_airlock = null
 		internal_airlock = null
 		say("Cycling setup failed. No opposite airlocks found.")
