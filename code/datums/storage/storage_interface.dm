@@ -44,20 +44,35 @@
 
 /// Updates position of all UI elements
 /datum/storage_interface/proc/update_position(screen_start_x, screen_pixel_x, screen_start_y, screen_pixel_y, columns, rows)
-	var/screen_end_x = screen_start_x + columns - 1
-	var/screen_end_y = screen_start_y + rows - 1
+	var/start_pixel_x = screen_start_x * 32 + screen_pixel_x
+	var/start_pixel_y = screen_start_y * 32 + screen_pixel_y
+	var/end_pixel_x = start_pixel_x + (columns - 1) * 32
+	var/end_pixel_y = start_pixel_y + (rows - 1) * 32
 
-	cells.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_end_x]:[screen_pixel_x],[screen_end_y]:[screen_pixel_y]"
+	cells.screen_loc = spanning_screen_loc(start_pixel_x, start_pixel_y, end_pixel_x, end_pixel_y)
+	var/left_edge_loc = spanning_screen_loc(start_pixel_x + 32, start_pixel_y, end_pixel_x, end_pixel_y)
+	var/right_edge_loc = spanning_screen_loc(start_pixel_x, start_pixel_y, end_pixel_x + max(0, (columns - 2)) * 32, end_pixel_y)
+	corner_top_left.screen_loc = left_edge_loc
+	corner_top_right.screen_loc = right_edge_loc
+	corner_bottom_left.screen_loc = left_edge_loc
+	corner_bottom_right.screen_loc = right_edge_loc
 
-	corner_top_left.screen_loc = "[screen_start_x + 1]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_end_x]:[screen_pixel_x],[screen_end_y]:[screen_pixel_y]"
-	corner_top_right.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x + max(0, columns - 2)]:[screen_pixel_x],[screen_end_y]:[screen_pixel_y]"
-	corner_bottom_left.screen_loc = "[screen_start_x + 1]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_end_x]:[screen_pixel_x],[screen_end_y]:[screen_pixel_y]"
-	corner_bottom_right.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x + max(0, columns - 2)]:[screen_pixel_x],[screen_end_y]:[screen_pixel_y]"
-
-	rowjoin_left.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y + 27] to [screen_start_x]:[screen_pixel_x],[screen_start_y + max(0, rows - 2)]:[screen_pixel_y + 27]"
+	var/row_loc = spanning_screen_loc(start_pixel_x, start_pixel_y + 27, end_pixel_x, end_pixel_y + 27 + max(0, rows - 2) * 32)
+	rowjoin_left.screen_loc = row_loc
 	rowjoin_left.alpha = (rows > 1) * 255
 
-	rowjoin_right.screen_loc = "[screen_end_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y + 27] to [screen_end_x]:[screen_pixel_x],[screen_start_y + max(0, rows - 2)]:[screen_pixel_y + 27]"
+	rowjoin_right.screen_loc = row_loc
 	rowjoin_right.alpha = (rows > 1) * 255
 
 	closer.screen_loc = "[screen_start_x + columns]:[screen_pixel_x - 5],[screen_start_y]:[screen_pixel_y]"
+
+/proc/spanning_screen_loc(start_px, start_py, end_px, end_py)
+	var/starting_tile_x = round(start_px / 32)
+	start_px -= starting_tile_x * 32
+	var/starting_tile_y = round(start_py/ 32)
+	start_py -= starting_tile_y * 32
+	var/ending_tile_x = round(end_px / 32)
+	end_px -= ending_tile_x * 32
+	var/ending_tile_y = round(end_py / 32)
+	end_py -= ending_tile_y * 32
+	return "[starting_tile_x]:[start_px],[starting_tile_y]:[start_py] to [ending_tile_x]:[end_px],[ending_tile_y]:[end_py]"
