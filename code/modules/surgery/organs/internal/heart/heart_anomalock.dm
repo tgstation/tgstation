@@ -115,7 +115,7 @@
 	return owner
 
 /obj/item/organ/internal/heart/cybernetic/anomalock/attackby(obj/item/item, mob/living/user, params)
-	if(!istype(item.type, required_anomaly))
+	if(!istype(item, required_anomaly))
 		return ..()
 	if(core)
 		balloon_alert(user, "core already in!")
