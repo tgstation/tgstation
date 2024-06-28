@@ -537,9 +537,7 @@
 	gender = NEUTER
 	///Amount of time to knock the target down for once it's hit in deciseconds.
 	var/knockdown = 0
-	///Used for ensnaring the target when hit in after_throw override
-	var/is_mob_hit = FALSE
-	///Weakref of the mob we will attempt to snare
+	///Reference of the mob we will attempt to snare
 	var/datum/weakref/ensnare_mob_ref
 
 /obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE, quickstart = TRUE)
@@ -550,18 +548,16 @@
 /obj/item/restraints/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
-	// Update the flag so we will ensnare the mob after the after_throw proc
-	is_mob_hit = TRUE
+	//The mob has been hit, save the reference for ensnaring
 	ensnare_mob_ref = WEAKREF(hit_atom)
 
 /obj/item/restraints/legcuffs/bola/after_throw(datum/callback/callback)
 	. = ..()
-	if (!is_mob_hit && !ensnare_mob_ref)
+	if (isnull(ensnare_mob_ref))
 		return
 	var/atom/ensnare_mob = ensnare_mob_ref.resolve()
-	if (is_mob_hit && !isnull(ensnare_mob))
+	if (!isnull(ensnare_mob))
 		ensnare(ensnare_mob)
-	is_mob_hit = FALSE
 	ensnare_mob_ref = null
 
 /**
