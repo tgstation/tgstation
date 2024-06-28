@@ -63,9 +63,6 @@
  *
  */
 /atom/New(loc, ...)
-	if(PERFORM_ALL_TESTS(focus_only/topdown_filtering))
-		check_topdown_validity(src)
-
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && src.type == GLOB._preloader_path)//in case the instanciated atom is creating other atoms in New()
 		world.preloader_load(src)
