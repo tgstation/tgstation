@@ -7,6 +7,7 @@
 		/datum/crafting_recipe/plastic_arrow,
 		/datum/crafting_recipe/shortbow,
 		/datum/crafting_recipe/holy_arrow,
+		/datum/crafting_recipe/arrow_quiver,
 		/datum/crafting_recipe/violin,
 	)
 	icon_state = "book4"
