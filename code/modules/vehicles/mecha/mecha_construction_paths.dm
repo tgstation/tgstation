@@ -209,7 +209,7 @@
 			"backward_message" = "removed servo"
 		),
 		list(
-			"key" = /obj/item/stock_parts/cell,
+			"key" = /obj/item/stock_parts/power_store/cell,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "Servo is secured, and the <b>power cell</b> can be added.",
@@ -542,7 +542,7 @@
 			"desc" = "HONK!!!!!!"
 		),
 		list(
-			"key" = /obj/item/stock_parts/cell,
+			"key" = /obj/item/stock_parts/power_store/cell,
 			"action" = ITEM_MOVE_INSIDE,
 			"desc" = "Laughter <b>cell</b> can be added!",
 			"forward_message" = "added laughter"
@@ -715,7 +715,7 @@
 			"backward_message" = "disconnected bluespace crystal"
 		),
 		list(
-			"key" = /obj/item/stock_parts/cell,
+			"key" = /obj/item/stock_parts/power_store/cell,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "The bluespace crystal is engaged, and the <b>power cell</b> can be added.",

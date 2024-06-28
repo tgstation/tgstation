@@ -62,6 +62,16 @@
 
 	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
 
+/datum/action/cooldown/spell/pointed/mindread/Grant(mob/grant_to)
+	. = ..()
+	if (!owner)
+		return
+	ADD_TRAIT(grant_to, TRAIT_MIND_READER, GENETIC_MUTATION)
+
+/datum/action/cooldown/spell/pointed/mindread/Remove(mob/remove_from)
+	. = ..()
+	REMOVE_TRAIT(remove_from, TRAIT_MIND_READER, GENETIC_MUTATION)
+
 /datum/action/cooldown/spell/pointed/mindread/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
 		return FALSE

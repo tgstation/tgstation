@@ -166,7 +166,8 @@
 		if("PDA_ringSet")
 			var/mob/living/user = usr
 			var/new_ringtone = tgui_input_text(user, "Enter a new ringtone", "Ringtone", ringtone, encode = FALSE)
-			if(!in_range(computer, user) || computer.loc != user)
+			if(!computer.can_interact(user))
+				computer.balloon_alert(user, "can't reach!")
 				return FALSE
 			return set_ringtone(new_ringtone, user)
 
@@ -381,6 +382,10 @@
 		data["sending_virus"] = sending_virus
 	return data
 
+/datum/computer_file/program/messenger/ui_assets(mob/user)
+	. = ..()
+	. += get_asset_datum(/datum/asset/spritesheet/chat)
+
 //////////////////////
 // MESSAGE HANDLING //
 //////////////////////
@@ -463,7 +468,7 @@
 	if(sender && !check_pda_message_against_filter(message, sender))
 		return null
 
-	return message
+	return emoji_parse(message)
 
 /// Sends a message to targets via PDA. When sending to everyone, set `everyone` to true so the message is formatted accordingly
 /datum/computer_file/program/messenger/proc/send_message(atom/source, message, list/targets, everyone = FALSE)
@@ -628,10 +633,8 @@
 	if(rigged)
 		log_bomber(sender, "sent a rigged PDA message (Name: [fake_name]. Job: [fake_job]) to [english_list(stringified_targets)] [!is_special_character(sender) ? "(SENT BY NON-ANTAG)" : ""]")
 
-	message = emoji_parse(message) //already sent- this just shows the sent emoji as one to the sender in the to_chat
-
 	// Show it to ghosts
-	var/ghost_message = span_game_say("[span_name("[source]")] [rigged ? "(as [span_name(fake_name)]) Rigged " : ""]PDA Message --> [span_name("[signal.format_target()]")]: \"[signal.format_message()]\"")
+	var/ghost_message = span_game_say("[span_name(signal.format_sender())] [rigged ? "(as [span_name(fake_name)]) Rigged " : ""]PDA Message --> [span_name("[signal.format_target()]")]: \"[signal.format_message()]\"")
 	var/list/message_listeners = GLOB.dead_player_list + GLOB.current_observers_list
 	for(var/mob/listener as anything in message_listeners)
 		if(!(get_chat_toggles(listener) & CHAT_GHOSTPDA))
@@ -678,7 +681,7 @@
 			viewing_messages_of = REF(chat)
 
 	var/list/mob/living/receievers = list()
-	if(computer.inserted_pai)
+	if(computer.inserted_pai && computer.inserted_pai.pai)
 		receievers += computer.inserted_pai.pai
 	if(computer.loc && isliving(computer.loc))
 		receievers += computer.loc
@@ -708,7 +711,6 @@
 			sender_title = "<a href='?src=[REF(messaged_mob)];track=[html_encode(sender_name)]'>[sender_title]</a>"
 
 		var/inbound_message = "[signal.format_message()]"
-		inbound_message = emoji_parse(inbound_message)
 
 		var/photo_message = signal.data["photo"] ? " (<a href='byond://?src=[REF(src)];choice=[photo_href];skiprefresh=1;target=[REF(chat)]'>Photo Attached</a>)" : ""
 		to_chat(messaged_mob, span_infoplain("[icon2html(computer, messaged_mob)] <b>PDA message from [sender_title], </b>\"[inbound_message]\"[photo_message] [reply]"))
@@ -727,7 +729,7 @@
 
 	if(QDELETED(src))
 		return
-	if(!usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH))
+	if(!usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
 		return
 
 	// send an activation message and open the messenger

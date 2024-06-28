@@ -74,6 +74,7 @@
 		return
 
 	. += span_notice("Material usage cost at <b>[efficiency_coeff * 100]%</b>")
+	. += span_notice("Build time at <b>[efficiency_coeff * 100]%</b>")
 	if(drop_direction)
 		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
 		. += span_notice("[EXAMINE_HINT("Alt-click")] to reset.")
@@ -341,7 +342,7 @@
 			for(var/material in design.materials)
 				charge_per_item += design.materials[material]
 			charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * coefficient * active_power_usage)
-			var/build_time_per_item = (design.construction_time * design.lathe_time_factor) ** 0.8
+			var/build_time_per_item = (design.construction_time * design.lathe_time_factor * efficiency_coeff) ** 0.8
 
 			//start production
 			busy = TRUE
@@ -411,14 +412,27 @@
 
 	var/atom/movable/created
 	if(is_stack)
-		created = new design.build_path(target, items_remaining)
+		var/obj/item/stack/stack_item = initial(design.build_path)
+		var/max_stack_amount = initial(stack_item.max_amount)
+		var/number_to_make = (initial(stack_item.amount) * items_remaining)
+		while(number_to_make > max_stack_amount)
+			created = new stack_item(null, max_stack_amount) //it's imporant to spawn things in nullspace, since obj's like stacks qdel when they enter a tile/merge with other stacks of the same type, resulting in runtimes.
+			if(isitem(created))
+				created.pixel_x = created.base_pixel_x + rand(-6, 6)
+				created.pixel_y = created.base_pixel_y + rand(-6, 6)
+			created.forceMove(target)
+			number_to_make -= max_stack_amount
+
+		created = new stack_item(null, number_to_make)
 	else
-		created = new design.build_path(target)
+		created = new design.build_path(null)
 		split_materials_uniformly(design_materials, material_cost_coefficient, created)
 
-	created.pixel_x = created.base_pixel_x + rand(-6, 6)
-	created.pixel_y = created.base_pixel_y + rand(-6, 6)
+	if(isitem(created))
+		created.pixel_x = created.base_pixel_x + rand(-6, 6)
+		created.pixel_y = created.base_pixel_y + rand(-6, 6)
 	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[created.type]"))
+	created.forceMove(target)
 
 	if(is_stack)
 		items_remaining = 0

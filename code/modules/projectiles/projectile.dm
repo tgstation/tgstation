@@ -930,6 +930,8 @@
 		trajectory.increment(trajectory_multiplier)
 		var/turf/T = trajectory.return_turf()
 		if(!istype(T))
+			// step back to the last valid turf before we Destroy
+			trajectory.increment(-trajectory_multiplier)
 			qdel(src)
 			return
 		if(T.z != loc.z)
