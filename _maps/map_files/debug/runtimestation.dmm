@@ -574,10 +574,13 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/medical/medbay)
 "cz" = (
-/obj/structure/fans/tiny,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/medical/medbay)
 "cA" = (
@@ -896,6 +899,7 @@
 /area/station/commons/storage/primary)
 "dH" = (
 /obj/machinery/door/airlock,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/department/bridge)
 "dI" = (
@@ -1777,7 +1781,14 @@
 /area/station/construction)
 "is" = (
 /obj/structure/sign/warning/vacuum/external/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
+/area/station/medical/medbay)
+"ja" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	name = "Medbay Airlock"
+	},
+/turf/open/floor/plating,
 /area/station/medical/medbay)
 "jb" = (
 /obj/machinery/door/airlock,
@@ -1894,10 +1905,9 @@
 /turf/closed/wall/r_wall,
 /area/station/science)
 "pI" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+/obj/machinery/atmospherics/components/unary/airlock_pump{
 	dir = 8
 	},
-/obj/machinery/door/airlock/external/glass/ruin,
 /turf/open/floor/plating,
 /area/station/medical/medbay)
 "qb" = (
@@ -1930,6 +1940,9 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"rO" = (
+/turf/open/floor/plating,
+/area/station/medical/medbay)
 "rT" = (
 /turf/open/floor/circuit/green,
 /area/station/cargo/bitrunning/den)
@@ -2037,6 +2050,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"wE" = (
+/obj/machinery/atmospherics/pipe/layer_manifold{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/medical/medbay)
 "wM" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -2044,6 +2063,18 @@
 "wU" = (
 /turf/closed/wall/r_wall,
 /area/station/science/explab)
+"xW" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/department/bridge)
+"ye" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 8
+	},
+/turf/open/space,
+/area/space)
 "yA" = (
 /obj/docking_port/stationary/laborcamp_home{
 	dir = 8
@@ -2082,6 +2113,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/science)
+"Bs" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/medical/medbay)
 "BD" = (
 /obj/structure/closet/secure_closet/chief_medical{
 	locked = 0
@@ -2102,6 +2137,10 @@
 /obj/structure/closet/syndicate/resources/everything,
 /turf/open/floor/iron,
 /area/station/science)
+"CM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/maintenance/department/bridge)
 "CQ" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/stripes/line{
@@ -2195,6 +2234,18 @@
 /obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"Gm" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/iron/white/corner{
+	dir = 1
+	},
+/area/station/medical/medbay)
 "HW" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -2316,6 +2367,9 @@
 "Ns" = (
 /obj/machinery/door/airlock/public/glass,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/medical/medbay)
 "NZ" = (
@@ -2372,10 +2426,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "Qt" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
+/obj/machinery/door/airlock/external/glass/ruin{
+	name = "Medbay Airlock"
 	},
-/obj/machinery/door/airlock/external/glass/ruin,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/medical/medbay)
 "Qu" = (
@@ -2495,6 +2550,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"Wc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/medical/medbay)
 "We" = (
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
@@ -7992,7 +8051,7 @@ by
 Ot
 cl
 cl
-cl
+Gm
 cH
 cu
 cJ
@@ -8084,7 +8143,7 @@ by
 bV
 cm
 cm
-cm
+wE
 cm
 cm
 Sj
@@ -8176,7 +8235,7 @@ by
 bW
 cm
 cm
-cm
+Wc
 cm
 cm
 cL
@@ -8266,7 +8325,7 @@ av
 av
 by
 bX
-cm
+Bs
 is
 cy
 Ut
@@ -8450,7 +8509,7 @@ af
 af
 af
 af
-af
+CM
 by
 cz
 by
@@ -8542,7 +8601,7 @@ ad
 ad
 ad
 ad
-ad
+xW
 by
 pI
 by
@@ -8634,10 +8693,10 @@ fg
 fg
 fg
 fg
-fg
-fg
-fg
-fg
+ye
+ck
+rO
+ck
 fg
 fg
 et
@@ -8727,9 +8786,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+by
+ja
+by
 aa
 aa
 et
