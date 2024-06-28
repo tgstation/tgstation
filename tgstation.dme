@@ -3059,6 +3059,7 @@
 #include "code\modules\antagonists\cult\cult_turf_overlay.dm"
 #include "code\modules\antagonists\cult\rune_spawn_action.dm"
 #include "code\modules\antagonists\cult\runes.dm"
+#include "code\modules\antagonists\cult\sword_fling.dm"
 #include "code\modules\antagonists\cult\datums\constructs.dm"
 #include "code\modules\antagonists\cult\datums\cult_team.dm"
 #include "code\modules\antagonists\cult\datums\cultist.dm"

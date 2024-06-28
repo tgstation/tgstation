@@ -12,3 +12,13 @@
 	description = "They trapped me! I can't escape!"
 	mood_change = -20
 
+// always failure obj
+/datum/objective/heretic_trapped
+	name = "soultrapped failure"
+	explanation_text = "Help the cult. Kill the cult. Help the crew. Kill the crew. Help your wielder. Kill your wielder. Kill everyone. Rattle your chains."
+
+/datum/antagonist/soultrapped_heretic/on_gain()
+	..()
+	var/datum/objective/epic_fail = new /datum/objective/heretic_trapped()
+	epic_fail.completed = FALSE
+	objectives += epic_fail

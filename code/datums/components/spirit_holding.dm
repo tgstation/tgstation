@@ -91,10 +91,6 @@
 
 	bind_the_soule(ghost, awakener)
 
-	//Add new signals for parent and stop attempting to awaken
-	RegisterSignal(parent, COMSIG_ATOM_RELAYMOVE, PROC_REF(block_buckle_message))
-	RegisterSignal(parent, COMSIG_BIBLE_SMACKED, PROC_REF(on_bible_smacked))
-
 	attempting_awakening = FALSE
 
 	if(!allow_renaming)
@@ -109,6 +105,9 @@
 	chosen_spirit.transfer_to(bound_spirit)
 	bound_spirit.fully_replace_character_name(null, "The spirit of [name_override ? name_override : parent]")
 	bound_spirit.get_language_holder().omnitongue = TRUE //Grants omnitongue
+
+	RegisterSignal(parent, COMSIG_ATOM_RELAYMOVE, PROC_REF(block_buckle_message))
+	RegisterSignal(parent, COMSIG_BIBLE_SMACKED, PROC_REF(on_bible_smacked))
 
 /**
  * custom_name : Simply sends a tgui input text box to the blade asking what name they want to be called, and retries it if the input is invalid.

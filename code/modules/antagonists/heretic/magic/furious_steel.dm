@@ -141,7 +141,10 @@
 
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/solo
 	name = "Lesser Furious Steel"
+	cooldown_time = 20 SECONDS
 	projectile_amount = 1
+	active_msg = "You summon forth a blade of furious silver."
+	deactive_msg = "You conceal the blade of furious silver."
 
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted
 	name = "Cursed Steel"

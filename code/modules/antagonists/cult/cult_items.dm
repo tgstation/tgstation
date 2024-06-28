@@ -119,7 +119,7 @@ Striking a noncultist, however, will tear their flesh."}
 	inhand_icon_state = "hauntedblade"
 	worn_icon_state = "hauntedblade"
 	force = 35
-	throwforce = 15
+	throwforce = 35
 	block_chance = 55
 	wound_bonus = -25
 	bare_wound_bonus = 30
@@ -185,7 +185,7 @@ Striking a noncultist, however, will tear their flesh."}
 		PATH_START = list(
 			WIELDER_SPELLS = null,
 			SWORD_SPELLS = null,
-			SWORD_PREFIX = "nascent", // lol loser
+			SWORD_PREFIX = "stillborn", // lol loser
 		) ,
 	)
 
@@ -214,9 +214,15 @@ Striking a noncultist, however, will tear their flesh."}
 
 	// Get the heretic's new body and antag datum.
 	trapped_entity = trapped_mind?.current
+	trapped_entity.key = trapped_mind?.key
 	var/datum/antagonist/heretic/heretic_holder = IS_HERETIC(trapped_entity)
 	if(!heretic_holder)
-		CRASH("[soul_to_bind] in but not a heretic on the heretic soul blade.")
+		stack_trace("[soul_to_bind] in but not a heretic on the heretic soul blade.")
+
+	// Give the spirit a spell that lets them try to fly around.
+	var/datum/action/cooldown/spell/pointed/sword_fling/fling_act = \
+	new /datum/action/cooldown/spell/pointed/sword_fling(trapped_mind, to_fling = src)
+	fling_act.Grant(trapped_entity)
 
 	// Set the sword's path for spell selection.
 	heretic_path = heretic_holder.heretic_path
@@ -227,9 +233,9 @@ Striking a noncultist, however, will tear their flesh."}
 
 	// Add the fallen antag datum, give them a heads-up of what's happening.
 	var/datum/antagonist/soultrapped_heretic/bozo = new()
-	bozo.objectives = copied_objectives
+	bozo.objectives |= copied_objectives
 	trapped_entity.mind.add_antag_datum(bozo)
-	to_chat(trapped_entity, span_alert("You've been sacrificed to the Enemy, and trapped inside a haunted blade! While you cannot escape, you may decide by yourself to be a nuisance with the few abilities you still have, or aid whoever wields it."))
+	to_chat(trapped_entity, span_userdanger("You've been sacrificed to the Enemy, and trapped inside a haunted blade! While you cannot escape, you may help the Cult, your current wielder, or even pester everyone with what few abilities you kept."))
 
 	// Assigning the spells to give to the wielder and spirit.
 	// Let them cast the given spell.
@@ -242,16 +248,20 @@ Striking a noncultist, however, will tear their flesh."}
 
 	name = "[path_spells[SWORD_PREFIX]] [name]"
 
-	// Granting the spells. The sword spirit gains it outright, while it's just instanced for wielders to be added on pickup.
+
+	// Granting the path spells. The sword spirit gains it outright, while it's just instanced for wielders to be added on pickup.
 
 	if(sword_spells)
 		for(var/datum/action/cooldown/spell/sword_spell as anything in sword_spells)
 			sword_spell = new sword_spell(trapped_entity)
 			sword_spell.Grant(trapped_entity)
+			sword_spell.overlay_icon_state = "bg_cult_border" // for flavor, and also helps distinguish
+
 
 	if(wielder_spells)
 		for(var/datum/action/cooldown/spell/wielder_spell as anything in wielder_spells)
 			path_wielder_action = new wielder_spell(src)
+			wielder_spell.overlay_icon_state = "bg_cult_border"
 
 /obj/item/melee/cultblade/haunted/equipped(mob/user, slot, initial)
 	. = ..()
