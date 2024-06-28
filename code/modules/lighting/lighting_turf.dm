@@ -89,10 +89,8 @@
 				directional_opacity = ALL_CARDINALS
 				break
 	else
-		for(var/atom/elem in src.contents)
-			for(var/datum/light_source/source in elem.light_sources)
-				if(!source?.effect_str)
-					source.force_update()
+		for(var/atom/content in contents)
+			SEND_SIGNAL(content, COMSIG_TURF_NO_LONGER_BLOCK_LIGHT)
 	if(. != directional_opacity && (. == ALL_CARDINALS || directional_opacity == ALL_CARDINALS))
 		reconsider_lights() //The lighting system only cares whether the tile is fully concealed from all directions or not.
 
