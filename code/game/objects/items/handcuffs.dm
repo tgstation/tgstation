@@ -537,8 +537,9 @@
 	gender = NEUTER
 	///Amount of time to knock the target down for once it's hit in deciseconds.
 	var/knockdown = 0
-	///Used for ensnaring when target is hit in after_throw override
+	///Used for ensnaring the target when hit in after_throw override
 	var/is_mob_hit = FALSE
+	///Weakref of the mob we will attempt to snare
 	var/datum/weakref/ensnare_mob_ref
 
 /obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE, quickstart = TRUE)
@@ -549,7 +550,7 @@
 /obj/item/restraints/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
-	// Set up flags so we will ensnare the mob after the after_throw proc
+	// Update the flag so we will ensnare the mob after the after_throw proc
 	is_mob_hit = TRUE
 	ensnare_mob_ref = WEAKREF(hit_atom)
 
@@ -568,15 +569,15 @@
  * Attempts to legcuff someone with the bola
  *
  * Arguments:
- * * C - the carbon that we will try to ensnare
+ * * snared_mob - the carbon that we will try to ensnare
  */
-/obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/C)
-	if(C.legcuffed || C.num_legs < 2)
+/obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/snared_mob)
+	if(snared_mob.legcuffed || snared_mob.num_legs < 2)
 		return
-	visible_message(span_danger("\The [src] ensnares [C]!"), span_userdanger("\The [src] ensnares you!"))
-	C.equip_to_slot(src, ITEM_SLOT_LEGCUFFED)
+	visible_message(span_danger("\The [src] ensnares [snared_mob]!"), span_userdanger("\The [src] ensnares you!"))
+	snared_mob.equip_to_slot(src, ITEM_SLOT_LEGCUFFED)
 	SSblackbox.record_feedback("tally", "handcuffs", 1, type)
-	C.Knockdown(knockdown)
+	snared_mob.Knockdown(knockdown)
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
 /**
