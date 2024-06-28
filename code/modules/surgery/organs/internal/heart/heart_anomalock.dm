@@ -180,7 +180,7 @@
 	to_chat(owner, span_revendanger("You feel a burst of energy! It's do or die!"))
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.gain_trauma(/datum/brain_trauma/special/tenacity)
+		carbon_owner.gain_trauma(/datum/brain_trauma/special/tenacity, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/status_effect/voltaic_overdrive/on_remove()
 	. = ..()
@@ -189,7 +189,7 @@
 	owner.balloon_alert(owner, "your heart weakens")
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.cure_trauma_type(/datum/brain_trauma/special/tenacity)
+		carbon_owner.cure_trauma_type(/datum/brain_trauma/special/tenacity, TRAUMA_RESILIENCE_ABSOLUTE)
 
 
 /atom/movable/screen/alert/status_effect/anomalock_active
