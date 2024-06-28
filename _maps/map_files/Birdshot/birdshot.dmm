@@ -6425,10 +6425,6 @@
 	id = "kitchenshutters";
 	name = "Kitchen Shutters"
 	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "kitchenshutters";
-	name = "Kitchen Shutters"
-	},
 /turf/open/floor/plating,
 /area/station/service/kitchen)
 "cvk" = (
