@@ -38,7 +38,6 @@
 	var/ui_reaction_index = 1
 	///If we're syncing with the beaker - so return reactions that are actively happening
 	var/ui_beaker_sync = FALSE
-	var/list/transfer_sound = list('sound/effects/liquid_pour1.ogg', 'sound/effects/liquid_pour2.ogg', 'sound/effects/liquid_pour3.ogg')
 
 /datum/reagents/New(maximum = 100, new_flags = 0)
 	maximum_volume = maximum
@@ -505,7 +504,7 @@
 		log_target.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
 		log_combat(transferred_by, log_target, "transferred reagents to", my_atom, "which had [get_external_reagent_log_string(transfer_log)]")
 
-	playsound(my_atom.loc, pick(transfer_sound), 50)
+
 	update_total()
 	target_holder.update_total()
 	if(!no_react)
