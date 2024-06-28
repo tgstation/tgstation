@@ -130,7 +130,7 @@
 		COOLDOWN_START(src, check_turfs_cooldown, 2 SECONDS)
 
 	if(world.time - cycle_start_time > cycle_timeout)
-		returnstop_cycle("Cycling timed out, bolts unlocked.")
+		stop_cycle("Cycling timed out, bolts unlocked.")
 		return //Couldn't complete the cycle before timeout
 
 	var/datum/gas_mixture/distro_air = airs[1]
