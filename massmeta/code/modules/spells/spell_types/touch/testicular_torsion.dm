@@ -4,7 +4,7 @@
 	desc = "This wicked spell twistes and crushes victim's balls \
 	causing them to feel immense pain, may also break their legs."
 	button_icon_state = "gib"
-	sound =  "massmeta/sounds/magic/testicular_torsion.ogg"
+	sound =  "massmeta/sounds/smites/testicular_torsion.ogg"
 
 	school = SCHOOL_SANGUINE
 	invocation_type = INVOCATION_SHOUT
