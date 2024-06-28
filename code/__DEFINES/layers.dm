@@ -132,23 +132,30 @@
 // this allows larger then bound floors to layer as we'd expect
 // ANYTHING on the floor plane needs TOPDOWN_LAYER, and nothing that isn't on the floor plane can have it
 
+#ifdef OPENDREAM
+#ifdef TOPDOWN_LAYER
+#error opendream supports topdown_layer now we don't need this anymore
+#else
+#define TOPDOWN_LAYER 10000
+#endif
+#endif
 //FLOOR_PLANE layers
 // NOTICE: we break from the pattern of increasing in steps of like 0.01 here
 // Because TOPDOWN_LAYER is 10000 and that's enough to floating point our modifications away
-#define LOW_FLOOR_LAYER 1 + TOPDOWN_LAYER
-#define TURF_PLATING_DECAL_LAYER 2 + TOPDOWN_LAYER
-#define TURF_DECAL_LAYER 3 + TOPDOWN_LAYER //Makes turf decals appear in DM how they will look inworld.
-#define CULT_OVERLAY_LAYER 4 + TOPDOWN_LAYER
-#define MID_TURF_LAYER 5 + TOPDOWN_LAYER
-#define HIGH_TURF_LAYER 6 + TOPDOWN_LAYER
-#define LATTICE_LAYER 7 + TOPDOWN_LAYER
-#define DISPOSAL_PIPE_LAYER 8 + TOPDOWN_LAYER
-#define WIRE_LAYER 9 + TOPDOWN_LAYER
-#define GLASS_FLOOR_LAYER 10 + TOPDOWN_LAYER
-#define TRAM_RAIL_LAYER 11 + TOPDOWN_LAYER
+#define LOW_FLOOR_LAYER (1 + TOPDOWN_LAYER)
+#define TURF_PLATING_DECAL_LAYER (2 + TOPDOWN_LAYER)
+#define TURF_DECAL_LAYER (3 + TOPDOWN_LAYER) //Makes turf decals appear in DM how they will look inworld.
+#define CULT_OVERLAY_LAYER (4 + TOPDOWN_LAYER)
+#define MID_TURF_LAYER (5 + TOPDOWN_LAYER)
+#define HIGH_TURF_LAYER (6 + TOPDOWN_LAYER)
+#define LATTICE_LAYER (7 + TOPDOWN_LAYER)
+#define DISPOSAL_PIPE_LAYER (8 + TOPDOWN_LAYER)
+#define WIRE_LAYER (9 + TOPDOWN_LAYER)
+#define GLASS_FLOOR_LAYER (10 + TOPDOWN_LAYER)
+#define TRAM_RAIL_LAYER (11 + TOPDOWN_LAYER)
 ///catwalk overlay of /turf/open/floor/plating/catwalk_floor
-#define CATWALK_LAYER 12 + TOPDOWN_LAYER
-#define ABOVE_OPEN_TURF_LAYER 13 + TOPDOWN_LAYER
+#define CATWALK_LAYER (12 + TOPDOWN_LAYER)
+#define ABOVE_OPEN_TURF_LAYER (13 + TOPDOWN_LAYER)
 
 //WALL_PLANE layers
 #define BELOW_CLOSED_TURF_LAYER 2.053
