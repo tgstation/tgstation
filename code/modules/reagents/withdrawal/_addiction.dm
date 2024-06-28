@@ -78,6 +78,9 @@
 		else
 			withdrawal_stage = 0
 
+	if(withdrawal_stage && (SEND_SIGNAL(affected_carbon, COMSIG_CARBON_BEGIN_WITHDRAWAL, src) & COMPONENT_WITHDRAWAL_BEGIN_PREVENT))
+		withdrawal_stage = 0
+
 	if(!on_drug_of_this_addiction && !HAS_TRAIT(affected_carbon, TRAIT_HOPELESSLY_ADDICTED))
 		if(affected_carbon.mind.remove_addiction_points(type, addiction_loss_per_stage[withdrawal_stage + 1] * seconds_per_tick)) //If true was returned, we lost the addiction!
 			return
@@ -117,6 +120,8 @@
 	affected_carbon.add_mood_event("[type]_addiction", severe_withdrawal_moodlet, name)
 
 /datum/addiction/proc/end_withdrawal(mob/living/carbon/affected_carbon)
+	if(SEND_SIGNAL(affected_carbon, COMSIG_CARBON_END_WITHDRAWAL, src) & COMPONENT_WITHDRAWAL_END_PREVENT)
+		return
 	LAZYSET(affected_carbon.mind.active_addictions, type, 1) //Keeps withdrawal at first cycle.
 	affected_carbon.clear_mood_event("[type]_addiction")
 

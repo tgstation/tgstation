@@ -30,6 +30,8 @@
 	var/list/desired_items
 	/// Autopopulated by `desired_items`
 	var/list/desired_items_typecache
+	/// A custom message for their sacrifice list, if any
+	var/custom_sacrifice_description = null
 	/// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
 	var/list/rites_list
 	/// Changes the Altar of Gods icon
@@ -425,14 +427,59 @@
 #define MINIMUM_YUCK_REQUIRED 5
 
 /datum/religion_sect/maintenance
-	name = "Maintenance God"
-	quote = "Your kingdom in the darkness."
-	desc = "Sacrifice the organic slurry created from rats dipped in welding fuel to gain favor. Exchange favor to adapt to the maintenance shafts."
+	name = "Greytide God"
+	quote = "You feel something fumbling with your spirituality..."
+	desc = "Sacrifice organic slurry and trophies of greytiders to gain favor: insulated gloves, stunprods or batons, pumpup, improvised spears, jaws of life, crowbars, or wirecutters. Exchange favor to adapt to the maintenance shafts."
 	tgui_icon = "eye"
 	altar_icon_state = "convertaltar-maint"
-	alignment = ALIGNMENT_EVIL //while maint is more neutral in my eyes, the flavor of it kinda pertains to rotting and becoming corrupted by the maints
+	alignment = ALIGNMENT_EVIL //ontologically evil
 	rites_list = list(/datum/religion_rites/maint_adaptation, /datum/religion_rites/adapted_eyes, /datum/religion_rites/adapted_food, /datum/religion_rites/ritual_totem)
-	desired_items = list(/obj/item/reagent_containers = "holding organic slurry")
+	desired_items = list(
+		/obj/item/reagent_containers = null,
+		/obj/item/clothing/gloves/color/yellow = 100, // lo, i walk through the tunnel of the aft maint of sec
+		/obj/item/clothing/gloves/chief_engineer = 250, // i fear no doorshock, for thou art with me
+		/obj/item/reagent_containers/hypospray/medipen/pumpup = 60, // and the pumpup resisted the baton, and the baton comprehended it not
+		/obj/item/melee/baton/security = 250, // the way of the shitsec is like darkness, they do not know what has robusted them
+		/obj/item/melee/baton/security/cattleprod = 80, // i can do everything through tide that give me stuns
+		/obj/item/spear = 50, // therefore go and make valids of all antags, robusting them in the name of the greytide
+		/obj/item/crowbar/power = 75, // "i am the way and the through"; no one comes to the airlock except through me
+		/obj/item/crowbar = 15, // long is the way, and hard, that out of maint leads up to the light
+		/obj/item/wirecutters = 15, // doorhacking is patient and kind; it does not rcd or shock.
+		)
+	custom_sacrifice_description = "organic slurry, and the tools of the tide: yellow gloves... \
+	 Maintenance pump up, but also the baton of those who make it necessary, or your own improvised stunprods. \
+	  Spears: pointed with glass from windows that blocked the way of your gospel.\
+	    Crowbars -- or even the hallowed jaws of life -- and the wirecutters that make them the locus of your power...\
+	    GREYTIDE STATIONWIDE"
+
+	var/list/tide_whispers = list(
+		"comdom",
+		"shitcurity",
+		"craptain",
+		"stationwide",
+		"greytide",
+		"for no raisin",
+		"insuls",
+		"unknown",
+		"hop to line",
+		"shitsec",
+		"MAINT",
+		"one day while",
+		"switch hands?",
+	)
+
+	var/list/songs_of_your_people = list(
+		'sound/effects/adminhelp.ogg',
+		'sound/effects/woodhit.ogg',
+		'sound/weapons/egloves.ogg',
+		'sound/items/wirecutter.ogg',
+		'sound/machines/airlockforced.ogg',
+		'sound/effects/Glasshit.ogg',
+		'sound/items/welder2.ogg',
+		'sound/items/welder.ogg',
+		'sound/machines/deniedbeep.ogg',
+		'sound/weapons/empty.ogg',
+	)
 
 /datum/religion_sect/maintenance/sect_bless(mob/living/blessed_living, mob/living/chap)
 	if(!ishuman(blessed_living))
@@ -444,22 +491,34 @@
 	blessed.reagents.add_reagent(/datum/reagent/drug/maint/sludge, 5)
 	blessed.visible_message(span_notice("[chap] empowers [blessed] with the power of [GLOB.deity]!"))
 	to_chat(blessed, span_boldnotice("The power of [GLOB.deity] has made you harder to wound for a while!"))
-	playsound(chap, SFX_PUNCH, 25, TRUE, -1)
+	playsound(chap, pick(songs_of_your_people), 25, TRUE, -1)
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return TRUE //trust me, you'll be feeling the pain from the maint drugs all well enough
 
-/datum/religion_sect/maintenance/on_sacrifice(obj/item/reagent_containers/offering, mob/living/user)
+/datum/religion_sect/maintenance/on_sacrifice(obj/item/offering, mob/living/user)
 	if(!istype(offering))
 		return
-	var/datum/reagent/yuck/wanted_yuck = offering.reagents.has_reagent(/datum/reagent/yuck, MINIMUM_YUCK_REQUIRED)
-	var/favor_earned = offering.reagents.get_reagent_amount(/datum/reagent/yuck)
-	if(!wanted_yuck)
-		to_chat(user, span_warning("[offering] does not have enough organic slurry for [GLOB.deity] to enjoy."))
+	. = FALSE
+	var/favor_earned
+	if(is_reagent_container(offering))
+		var/datum/reagent/yuck/wanted_yuck = offering.reagents.has_reagent(/datum/reagent/yuck, MINIMUM_YUCK_REQUIRED)
+		if(!wanted_yuck)
+			to_chat(user, span_warning("[offering] does not have enough organic slurry for [GLOB.deity] to enjoy."))
+			return
+		favor_earned = offering.reagents.get_reagent_amount(/datum/reagent/yuck)
+		. = TRUE
+		to_chat(user, span_notice("[GLOB.deity] loves organic slurry."))
+		playsound(get_turf(offering), 'sound/items/drink.ogg', 50, TRUE)
+		offering.reagents.clear_reagents()
+	else if(offering.type in desired_items && !is_reagent_container(offering))
+		favor_earned = desired_items[offering.type]
+		. = TRUE
+		qdel(offering)
+	if(!.)
 		return
-	to_chat(user, span_notice("[GLOB.deity] loves organic slurry."))
 	adjust_favor(favor_earned, user)
-	playsound(get_turf(offering), 'sound/items/drink.ogg', 50, TRUE)
-	offering.reagents.clear_reagents()
+	to_chat(user, span_grey(" ...  [pick(tide_whispers)]  ...  [pick(tide_whispers)]  ... "))
+	playsound(get_turf(offering), pick(songs_of_your_people), 50, TRUE)
 	return TRUE
 
 #undef MINIMUM_YUCK_REQUIRED

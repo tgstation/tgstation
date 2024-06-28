@@ -87,6 +87,12 @@
 #define COMSIG_CARBON_GAIN_ADDICTION "carbon_gain_addiction"
 ///Called when a carbon is no longer addicted (source = what addiction datum was lost, addicted_mind = mind of the freed carbon)
 #define COMSIG_CARBON_LOSE_ADDICTION "carbon_lose_addiction"
+///Called when a carbon starts going into withdrawals
+#define COMSIG_CARBON_BEGIN_WITHDRAWAL "carbon_begin_withdrawal"
+	#define COMPONENT_WITHDRAWAL_BEGIN_PREVENT (1<<0)
+///Callend when a carbon is no longer in withdrawals
+#define COMSIG_CARBON_END_WITHDRAWAL "carbon_end_withdrawal"
+	#define COMPONENT_WITHDRAWAL_END_PREVENT (1<<0)
 ///Called when a carbon gets a brain trauma (source = carbon, trauma = what trauma was added) - this is before on_gain()
 #define COMSIG_CARBON_GAIN_TRAUMA "carbon_gain_trauma"
 ///Called when a carbon loses a brain trauma (source = carbon, trauma = what trauma was removed)

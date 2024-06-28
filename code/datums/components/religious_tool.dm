@@ -226,6 +226,8 @@
  * Generates an english list (so string) of wanted sac items. Returns null if no targets!
  */
 /datum/component/religious_tool/proc/generate_sacrifice_list()
+	if(easy_access_sect?.custom_sacrifice_description)
+		return easy_access_sect.custom_sacrifice_description
 	if(!length(easy_access_sect?.desired_items))
 		return //specifically null so the data sends as such
 	var/list/item_names = list()

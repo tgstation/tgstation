@@ -240,15 +240,30 @@
 	to_chat(user, span_warning("You feel your genes rattled and reshaped. <b>You're becoming something new.</b>"))
 	user.emote("laugh")
 	ADD_TRAIT(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation")
+	ADD_TRAIT(user, TRAIT_TOXINLOVER, "maint_adaptation")
 	//addiction sends some nasty mood effects but we want the maint adaption to be enjoyed like a fine wine
 	user.add_mood_event("maint_adaptation", /datum/mood_event/maintenance_adaptation)
+	user.mind.add_addiction_points(/datum/addiction/maintenance_drugs, 1000)
+	var/datum/addiction/maintenance_drugs/maint_addiction = SSaddiction.all_addictions[/datum/addiction/maintenance_drugs]
+	maint_addiction.withdrawal_enters_stage_1(user)
+	maint_addiction.withdrawal_enters_stage_2(user)
+	maint_addiction.withdrawal_enters_stage_3(user) // stay in the tunnels, you horrible little creature
+	//then we forcibly jump their maintenance addiction withdrawal and register to our proc to cancel ending withdrawal
+	//we use LAZYSET type because that's how addictions are built
+	LAZYSET(user.mind.active_addictions, maint_addiction.type, 1000)
+	RegisterSignal(user, COMSIG_CARBON_END_WITHDRAWAL, PROC_REF(remain_maint_adapted))
 	if(iscarbon(user))
 		var/mob/living/carbon/vomitorium = user
 		vomitorium.vomit(VOMIT_CATEGORY_DEFAULT)
 		var/datum/dna/dna = vomitorium.has_dna()
 		dna?.add_mutation(/datum/mutation/human/stimmed) //some fluff mutations
 		dna?.add_mutation(/datum/mutation/human/strong)
-	user.mind.add_addiction_points(/datum/addiction/maintenance_drugs, 1000)//ensure addiction
+
+/datum/religion_rites/maint_adaptation/proc/remain_maint_adapted(datum/source, datum/addiction)
+	SIGNAL_HANDLER
+
+	if(istype(addiction, /datum/addiction/maintenance_drugs))
+		return COMPONENT_WITHDRAWAL_END_PREVENT
 
 /datum/religion_rites/adapted_eyes
 	name = "Adapted Eyes"
