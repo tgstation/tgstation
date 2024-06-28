@@ -7,7 +7,7 @@
 	name = "elite"
 	desc = "An elite monster, found in one of the strange tumors on lavaland."
 	icon = 'icons/mob/simple/lavaland/lavaland_elites.dmi'
-	faction = list(FACTION_BOSS)
+	faction = list(FACTION_MINING, FACTION_BOSS)
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
 	ranged = TRUE

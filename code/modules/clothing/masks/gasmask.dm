@@ -221,6 +221,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	visor_flags_cover = MASKCOVERSEYES
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	resistance_flags = FIRE_PROOF
+	clothing_flags = parent_type::clothing_flags | INTERNALS_ADJUST_EXEMPT
 
 /datum/armor/gas_welding
 	melee = 10

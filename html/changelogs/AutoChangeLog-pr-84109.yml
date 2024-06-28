@@ -1,4 +1,0 @@
-author: "grungussuss"
-delete-after: True
-changes:
-  - bugfix: "mimes can now break their vow while borged or an MMI"

@@ -60,7 +60,7 @@
 
 /obj/machinery/rnd/experimentor/proc/generate_valid_items_and_item_reactions()
 	var/static/list/banned_typecache = typecacheof(list(
-		/obj/item/stock_parts/cell/infinite,
+		/obj/item/stock_parts/power_store/cell/infinite,
 		/obj/item/grenade/chem_grenade/tuberculosis
 	))
 
