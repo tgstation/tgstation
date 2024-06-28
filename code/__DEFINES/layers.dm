@@ -132,13 +132,6 @@
 // this allows larger then bound floors to layer as we'd expect
 // ANYTHING on the floor plane needs TOPDOWN_LAYER, and nothing that isn't on the floor plane can have it
 
-#ifdef OPENDREAM
-#ifdef TOPDOWN_LAYER
-#error opendream supports topdown_layer now we don't need this anymore
-#else
-#define TOPDOWN_LAYER 10000
-#endif
-#endif
 //FLOOR_PLANE layers
 // NOTICE: we break from the pattern of increasing in steps of like 0.01 here
 // Because TOPDOWN_LAYER is 10000 and that's enough to floating point our modifications away
