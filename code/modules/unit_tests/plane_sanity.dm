@@ -1,5 +1,6 @@
 /// Ensures we have no invalid plane/layer combos post init
 /datum/unit_test/plane_layer_sanity
+	priority = TEST_LONGER
 
 /datum/unit_test/plane_layer_sanity/Run()
 	// This fucker's gonna be slow, I'm sorry
