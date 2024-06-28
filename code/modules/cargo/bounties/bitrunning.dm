@@ -5,13 +5,6 @@
 	required_count = 1
 	wanted_types = list(/obj/item/toy/plush/abductor/agent = TRUE)
 
-/datum/bounty/item/bitrunning/beach_ball
-	name = "Beach Ball"
-	description = "We're having a beach party this weekend and need as many beach balls as we can get!"
-	reward = CARGO_CRATE_VALUE * 5
-	required_count = 1
-	wanted_types = list(/obj/item/toy/beach_ball = TRUE)
-
 /datum/bounty/item/bitrunning/bubblegum
 	name = "Bubblegum Plush"
 	description = "Some of the miners have been talking about the breakroom being too sterile. We need something cute to spruce the place up a bit."
