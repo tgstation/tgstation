@@ -1177,4 +1177,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This trait lets you attach limbs to any player without surgery.
 #define TRAIT_EASY_ATTACH "easy_attach"
 
+///Trait given to the birthday boy
+#define TRAIT_BIRTHDAY_BOY "birthday_boy"
 // END TRAIT DEFINES

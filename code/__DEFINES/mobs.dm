@@ -309,7 +309,7 @@
 #define SLIME_EVOLUTION_THRESHOLD 10
 
 //Slime evolution cost in nutrition
-#define SLIME_EVOLUTION_COST 200
+#define SLIME_EVOLUTION_COST 100
 
 //Slime extract crossing. Controls how many extracts is required to feed to a slime to core-cross.
 #define SLIME_EXTRACT_CROSSING_REQUIRED 10
@@ -837,8 +837,10 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define NEED_VENTCRAWL (1<<8)
 /// Skips adjacency checks
 #define BYPASS_ADJACENCY (1<<9)
+/// Skips reccursive loc checks
+#define NOT_INSIDE_TARGET (1<<10)
 /// Checks for base adjacency, but silences the error
-#define SILENT_ADJACENCY (1<<10)
+#define SILENT_ADJACENCY (1<<11)
 
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1

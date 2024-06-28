@@ -1,4 +1,0 @@
-author: "the-orange-cow"
-delete-after: True
-changes:
-  - bugfix: "Medicated suture, advanced regenerative mesh, and mourning poultice reactions should more consistently spawn the items they are meant to produce."
