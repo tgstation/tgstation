@@ -116,7 +116,7 @@
 
 /obj/item/organ/internal/heart/cybernetic/anomalock/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, required_anomaly))
-		return ITEM_INTERACT_BLOCKING
+		return NONE
 	if(core)
 		balloon_alert(user, "core already in!")
 		return ITEM_INTERACT_BLOCKING
