@@ -189,8 +189,7 @@
 		transfer_amount = data["T"]
 		remove_reagent(reagent.type, transfer_amount)
 
-	update_total()
-	target_holder.update_total()
+	//handle reactions
 	target_holder.handle_reactions()
 	src.handle_reactions()
 
