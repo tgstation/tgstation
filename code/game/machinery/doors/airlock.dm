@@ -1728,8 +1728,8 @@
 		bolt()
 		log_combat(user, src, "bolted")
 
-/obj/machinery/door/airlock/proc/toggle_emergency(mob/user, forced = FALSE)
-	if(!user_allowed(user) && !forced)
+/obj/machinery/door/airlock/proc/toggle_emergency(mob/user)
+	if(!user_allowed(user))
 		return
 	emergency = !emergency
 	update_appearance()
