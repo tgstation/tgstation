@@ -2459,6 +2459,7 @@
 #include "code\game\objects\items\granters\crafting\combat_baking.dm"
 #include "code\game\objects\items\granters\crafting\death_sandwich.dm"
 #include "code\game\objects\items\granters\crafting\desserts.dm"
+#include "code\game\objects\items\granters\crafting\fletching.dm"
 #include "code\game\objects\items\granters\crafting\pipegun.dm"
 #include "code\game\objects\items\granters\crafting\rebarxbowsyndie.dm"
 #include "code\game\objects\items\granters\crafting\regal_condor.dm"
