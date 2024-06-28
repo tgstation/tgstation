@@ -11232,6 +11232,13 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/carpet,
 /area/station/commons/vacant_room/office)
+"aKX" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/fireaxecabinet/mechremoval/directional/south,
+/turf/open/floor/iron/white,
+/area/station/science/robotics/lab)
 "aKY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/garbage{
@@ -15869,9 +15876,6 @@
 /obj/structure/rack,
 /obj/item/stock_parts/cell{
 	maxcharge = 2000
-	},
-/obj/effect/turf_decal/siding/thinplating_new{
-	dir = 1
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -24875,8 +24879,7 @@
 /area/station/maintenance/starboard)
 "bKf" = (
 /obj/machinery/door/window/left/directional/south{
-	name = "Mass Driver Door";
-	req_access_txt = "8"
+	name = "Mass Driver Door"
 	},
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/iron,
@@ -32758,6 +32761,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
+"cyr" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/science/robotics/lab)
 "cyt" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -35580,19 +35588,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"dAO" = (
-/obj/docking_port/stationary{
-	dheight = 1;
-	dir = 8;
-	dwidth = 12;
-	height = 17;
-	id = "syndicate_ne";
-	name = "northeast of station";
-	width = 23
-	},
-/turf/open/space/basic,
-/area/space,
-/area/space/nearstation)
 "dAS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/reagent_dispensers/plumbed{
@@ -37552,11 +37547,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"fsm" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/science/robotics/lab)
 "fsD" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -48219,9 +48209,6 @@
 /obj/structure/rack,
 /obj/item/stack/sheet/cardboard,
 /obj/item/stack/rods/fifty,
-/obj/effect/turf_decal/siding/thinplating_new{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -49051,7 +49038,6 @@
 "qvu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/sign/warning/secure_area/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
@@ -49314,13 +49300,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/commons/locker)
-"qLX" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/fireaxecabinet/mechremoval/directional/south,
-/turf/open/floor/iron/white,
-/area/station/science/robotics/lab)
 "qMk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -100378,7 +100357,7 @@ bbD
 aYV
 kXf
 aYV
-fsm
+cyr
 bhv
 biK
 blz
@@ -100635,7 +100614,7 @@ aFu
 aYV
 kXf
 aYV
-fsm
+cyr
 bhx
 biL
 biL
@@ -100644,7 +100623,7 @@ flN
 vFr
 cHV
 bsA
-qLX
+aKX
 box
 bWr
 bvc
@@ -100892,7 +100871,7 @@ bbD
 aYV
 kXf
 aYV
-fsm
+cyr
 ada
 cHM
 biL
@@ -108269,7 +108248,7 @@ aaa
 aaa
 aaa
 aaa
-dAO
+aaa
 aaa
 aaa
 aaa
