@@ -10,7 +10,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 70 SECONDS
 
-	invocation = "EIDR ELDR!!!"
+	invocation = "EID'R-ELDR!!!"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
@@ -72,7 +72,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
 
-	invocation = "ILLA'LASARA-FOSS!!!"
+	invocation = "ILLA-LASARA'FOSS!!!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
