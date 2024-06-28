@@ -43,6 +43,8 @@
 	var/obj/machinery/door/airlock/external_airlock
 	///Whether both airlocks are specified and cycling is available
 	var/cycling_set_up = FALSE
+	///Whether the pump opens the airlocks up instead of simpy unbolting them on cycle
+	var/open_airlock_on_cycle = TRUE
 
 	COOLDOWN_DECLARE(check_turfs_cooldown)
 
@@ -111,14 +113,13 @@
 		to_chat(user, span_warning("You cannot unwrench [src], wait for the cycle completion!"))
 		return FALSE
 
-/obj/machinery/atmospherics/components/unary/airlock_pump/power_change()
-	. = ..()
-	if(on && !powered())
-		stop_cycle("No power. Aborting cycle.")
-
 /obj/machinery/atmospherics/components/unary/airlock_pump/process_atmos()
 	if(!on)
 		return
+
+	if(!powered())
+		stop_cycle("No power. Aborting cycle.")
+		return //Couldn't complete the cycle due to power outage
 
 	var/turf/location = get_turf(loc)
 	if(isclosedturf(location))
@@ -129,7 +130,7 @@
 		COOLDOWN_START(src, check_turfs_cooldown, 2 SECONDS)
 
 	if(world.time - cycle_start_time > cycle_timeout)
-		stop_cycle("Cycling timed out, bolts unlocked.")
+		returnstop_cycle("Cycling timed out, bolts unlocked.")
 		return //Couldn't complete the cycle before timeout
 
 	var/datum/gas_mixture/distro_air = airs[1]
@@ -141,7 +142,7 @@
 
 		if(pressure_delta <= allowed_pressure_error && stop_cycle())
 			internal_airlock.say("Pressurization complete.")
-			return //Target pressure reached
+			return //Internal target pressure reached
 
 		var/available_moles = distro_air.total_moles()
 		var/total_tiles = adjacent_turfs.len + 1
@@ -155,7 +156,7 @@
 
 		if(pressure_delta <= allowed_pressure_error && stop_cycle())
 			external_airlock.say("Decompression complete.")
-			return //Target pressure reached
+			return //External target pressure reached
 
 		siphon_tile(loc)
 		for(var/turf/tile in adjacent_turfs)
@@ -204,13 +205,14 @@
 		start_cycle(ATMOS_DIRECTION_RELEASING)
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/start_cycle(cycle_direction)
-	if(on || !cycling_set_up)
+	if(on || !cycling_set_up || !powered())
 		return FALSE
 
 	pump_direction = cycle_direction
 
 	internal_airlock.secure_close()
 	external_airlock.secure_close()
+	stoplag(0.2 SECONDS)
 
 	if(pump_direction == ATMOS_DIRECTION_RELEASING)
 		internal_airlock.say("Pressurizing airlock.")
@@ -229,6 +231,9 @@
 	var/obj/machinery/door/airlock/unlocked_airlock = pump_direction == ATMOS_DIRECTION_RELEASING ? internal_airlock : external_airlock
 
 	unlocked_airlock.unbolt()
+	if(open_airlock_on_cycle)
+		unlocked_airlock.secure_open() //Can unbolt, but without audio
+
 	if(message)
 		unlocked_airlock.say(message)
 
@@ -248,7 +253,10 @@
 	if(internal_airlock && external_airlock)
 		internal_airlock.set_cycle_pump(src)
 		external_airlock.set_cycle_pump(src)
+
 		external_airlock.secure_close()
+		if(open_airlock_on_cycle)
+			internal_airlock.secure_open()
 
 		RegisterSignal(internal_airlock, COMSIG_QDELETING, PROC_REF(break_links))
 		RegisterSignal(external_airlock, COMSIG_QDELETING, PROC_REF(break_links))
