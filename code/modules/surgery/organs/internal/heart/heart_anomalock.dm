@@ -115,8 +115,6 @@
 	return owner
 
 /obj/item/organ/internal/heart/cybernetic/anomalock/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = NONE
-
 	if(!istype(tool, required_anomaly))
 		return ITEM_INTERACT_BLOCKING
 	if(core)
