@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fix timestop being 1 tile too small again, and fixes a lot of other field effects from being 1-small as well"

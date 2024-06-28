@@ -125,7 +125,6 @@
 		ui = new(user, src, "Autolathe")
 		ui.open()
 
-
 /**
  * Converts all the designs supported by this autolathe into UI data
  * Arguments
@@ -186,7 +185,6 @@
 		data["designs"] += handle_designs(stored_research.hacked_designs)
 
 	return data
-
 
 /obj/machinery/autolathe/ui_assets(mob/user)
 	return list(
