@@ -42,8 +42,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = area.lightswitch ? "Flick off" : "Flick on"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(held_item.tool_behaviour != TOOL_SCREWDRIVER)
-		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 		return CONTEXTUAL_SCREENTIP_SET
 	return .
 
