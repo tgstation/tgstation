@@ -13691,15 +13691,6 @@
 /obj/structure/sign/warning/vacuum/external/directional/north,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
-"aTo" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
-	},
-/turf/open/floor/plating,
-/area/station/hallway/secondary/exit/departure_lounge)
 "aTr" = (
 /obj/machinery/status_display/evac{
 	pixel_x = 32
@@ -32751,6 +32742,15 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
+"cyr" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock"
+	},
+/turf/open/floor/plating,
+/area/station/hallway/secondary/exit/departure_lounge)
 "cyt" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -35573,13 +35573,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"dAO" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/fireaxecabinet/mechremoval/directional/south,
-/turf/open/floor/iron/white,
-/area/station/science/robotics/lab)
 "dAS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/reagent_dispensers/plumbed{
@@ -37539,6 +37532,13 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"fsm" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/fireaxecabinet/mechremoval/directional/south,
+/turf/open/floor/iron/white,
+/area/station/science/robotics/lab)
 "fsD" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -38997,7 +38997,6 @@
 /turf/closed/wall/r_wall,
 /area/station/service/abandoned_gambling_den)
 "gMV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -43075,6 +43074,11 @@
 	},
 /turf/open/floor/carpet/blue,
 /area/station/service/lawoffice)
+"kNo" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/science/robotics/lab)
 "kOT" = (
 /obj/structure/rack,
 /obj/item/crowbar/red,
@@ -49292,11 +49296,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/commons/locker)
-"qLX" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/science/robotics/lab)
 "qMk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -100354,7 +100353,7 @@ bbD
 aYV
 kXf
 aYV
-qLX
+kNo
 bhv
 biK
 blz
@@ -100611,7 +100610,7 @@ aFu
 aYV
 kXf
 aYV
-qLX
+kNo
 bhx
 biL
 biL
@@ -100620,7 +100619,7 @@ flN
 vFr
 cHV
 bsA
-dAO
+fsm
 box
 bWr
 bvc
@@ -100868,7 +100867,7 @@ bbD
 aYV
 kXf
 aYV
-qLX
+kNo
 ada
 cHM
 biL
@@ -108309,17 +108308,17 @@ aaa
 aaa
 aaa
 aNa
-aTo
+cyr
 roD
-aTo
+cyr
 aNa
 aaa
 aaf
 aaa
 aNa
-aTo
+cyr
 roD
-aTo
+cyr
 rrY
 aaa
 aaa
