@@ -79,6 +79,8 @@
 /datum/uplink_handler/proc/check_if_restricted(datum/uplink_item/to_purchase)
 	if(!to_purchase.can_be_bought(src))
 		return FALSE
+	if(loneop_restricted && to_purchase.not_for_loneops)
+		return FALSE
 	if((to_purchase in extra_purchasable))
 		return TRUE
 	if(!(to_purchase.purchasable_from & uplink_flag))

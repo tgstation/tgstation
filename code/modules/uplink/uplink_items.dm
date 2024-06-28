@@ -182,9 +182,6 @@
 
 ///For special overrides if an item can be bought or not.
 /datum/uplink_item/proc/can_be_bought(datum/uplink_handler/source)
-	if(source.loneop_restricted && not_for_loneops)
-		return FALSE
-
 	return TRUE
 
 /datum/uplink_category/discounts
