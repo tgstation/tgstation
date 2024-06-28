@@ -75,12 +75,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	. = ..()
 	set_lights(!area.lightswitch)
 
-/obj/machinery/light_switch/attackby_secondary(obj/item/weapon, mob/user, params)
-	if(weapon.tool_behaviour == TOOL_SCREWDRIVER)
-		to_chat(user, "You pop \the [src] off the wall.")
-		deconstruct()
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-	return ..()
+/obj/machinery/light_switch/screwdriver_act(mob/living/user, obj/item/tool)
+	user.visible_message(span_notice("[user] starts unscrewing [src]..."), span_notice("You start unscrewing [src]..."))
+	if(!tool.use_tool(src, user, 40, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("[user] unscrews [src]!"), span_notice("You detach [src] from the wall."))
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	deconstruct()
 
 /obj/machinery/light_switch/proc/set_lights(status)
 	if(area.lightswitch == status)
