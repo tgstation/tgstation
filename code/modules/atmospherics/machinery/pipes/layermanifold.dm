@@ -67,7 +67,7 @@
 		return
 	if(istype(machine_check, /obj/machinery/atmospherics/components/unary/airlock_pump))
 		. += get_attached_image(get_dir(src, machine_check), 4, COLOR_BLUE)
-		//. += get_attached_image(get_dir(src, machine_check), 2, COLOR_RED) // TODO: Only the distro node is added currently to the pipenet, it doesn't merge the pipenet with the waste node
+		//. += get_attached_image(get_dir(src, machine_check), 2, COLOR_RED) // Only the distro node is added currently to the pipenet, it doesn't merge the pipenet with the waste node
 		return
 	. += get_attached_image(get_dir(src, machine_check), machine_check.piping_layer, machine_check.pipe_color)
 
