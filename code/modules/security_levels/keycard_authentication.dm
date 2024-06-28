@@ -8,7 +8,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 
 /obj/machinery/keycard_auth
 	name = "Keycard Authentication Device"
-	desc = "This device is used to trigger station functions, which require more than one ID card to authenticate, or to give the Janitor access to a department."
+	desc = "This device is used to trigger station functions, which require more than one ID card to authenticate, or allow access keys to grant access to a department."
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "auth_off"
 	power_channel = AREA_USAGE_ENVIRON
@@ -86,7 +86,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 			if(!event_source)
 				sendEvent(KEYCARD_BSA_UNLOCK)
 				. = TRUE
-		if("give_janitor_access")
+		if("enable_access_keys")
 			var/mob/living/living_user = usr
 			if(!living_user || !istype(living_user))
 				return TRUE
