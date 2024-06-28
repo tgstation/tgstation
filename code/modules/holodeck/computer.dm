@@ -310,6 +310,8 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	SIGNAL_HANDLER
 
 	for(var/atom/movable/item as anything in storage.get_all_contents_type(/atom/movable))
+		if(item == storage)
+			continue
 		add_to_spawned(item)
 
 /**
