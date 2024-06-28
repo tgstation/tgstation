@@ -558,8 +558,7 @@
 	. = ..()
 	if (!is_mob_hit && !ensnare_mob_ref)
 		return
-	/var/atom/ensnare_mob
-	ensnare_mob = ensnare_mob_ref.resolve()
+	var/atom/ensnare_mob = ensnare_mob_ref.resolve()
 	if (is_mob_hit && !isnull(ensnare_mob))
 		ensnare(ensnare_mob)
 	is_mob_hit = FALSE
