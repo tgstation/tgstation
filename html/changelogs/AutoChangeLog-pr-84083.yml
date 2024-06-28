@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fixed modsuit interactions slightly. No longer requires combat mode to use tools on it, plasma core works as intended as well. (Using combat mode, however, will make you insert the item)"
+  - refactor: "Refactored lockboxes"
+  - refactor: "Refactored medbot skin application"

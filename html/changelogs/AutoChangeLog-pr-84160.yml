@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - code_imp: "Rewrote a portion of storage UI code to allow it to be influenced by UI style."
+  - image: "Prettified storage UI and made it affected by UI theme."

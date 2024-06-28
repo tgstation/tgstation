@@ -1,0 +1,5 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - rscadd: "Reworked blood loss effects on the user to be much more noticeable."
+  - code_imp: "Changed the blood volume defines to be based on the BLOOD_VOLUME_NORMAL define, with a multiplier of blood loss applied, to be more understandable."

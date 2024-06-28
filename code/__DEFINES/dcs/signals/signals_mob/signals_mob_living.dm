@@ -178,6 +178,7 @@
 	#define TREAT_MESSAGE_ARG 1
 	#define TREAT_TTS_MESSAGE_ARG 2
 	#define TREAT_TTS_FILTER_ARG 3
+	#define TREAT_CAPITALIZE_MESSAGE 4
 
 ///From obj/item/toy/crayon/spraycan
 #define COMSIG_LIVING_MOB_PAINTED "living_mob_painted"
