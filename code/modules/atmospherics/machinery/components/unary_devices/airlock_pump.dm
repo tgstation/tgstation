@@ -81,6 +81,11 @@
 			nodes[2] = target // Waste
 	update_appearance()
 
+/obj/machinery/atmospherics/components/unary/airlock_pump/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		can_unwrench = FALSE
+
 /obj/machinery/atmospherics/components/unary/airlock_pump/post_machine_initialize()
 	. = ..()
 	set_links()
@@ -96,6 +101,15 @@
 	. = ..()
 	if(cycling_set_up)
 		break_links()
+
+/obj/machinery/atmospherics/components/unary/airlock_pump/can_unwrench(mob/user)
+	. = ..()
+	if(!.)
+		to_chat(user, span_warning("You cannot unwrench [src], it is secured firmly in place!"))
+		return FALSE
+	if(. && on)
+		to_chat(user, span_warning("You cannot unwrench [src], wait for the cycle completion!"))
+		return FALSE
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/power_change()
 	. = ..()
@@ -240,7 +254,8 @@
 		RegisterSignal(external_airlock, COMSIG_QDELETING, PROC_REF(break_links))
 
 		cycling_set_up = TRUE
-		say("Cycling setup complete.")
+		if(can_unwrench)
+			say("Cycling setup complete.")
 		return
 
 	say("Cycling setup failed. No opposite airlocks found.")
@@ -276,6 +291,8 @@
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/any_airlock_type
 	valid_airlock_typepath = /obj/machinery/door/airlock
+	can_unwrench = FALSE
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/lavaland
 	external_pressure_target = LAVALAND_EQUIPMENT_EFFECT_PRESSURE
+	can_unwrench = FALSE
