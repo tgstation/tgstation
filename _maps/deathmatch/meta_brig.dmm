@@ -451,12 +451,7 @@
 /area/deathmatch)
 "hS" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching Prison Wing holding areas.";
-	name = "Prison Monitor";
-	network = list("prison");
-	pixel_y = 30
-	},
+/obj/machinery/computer/security/telescreen/prison/directional/north,
 /obj/item/flashlight/lamp/green{
 	pixel_x = 1;
 	pixel_y = 5
@@ -2880,13 +2875,7 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "PV" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching Prison Wing holding areas.";
-	dir = 1;
-	name = "Prison Monitor";
-	network = list("prison");
-	pixel_y = -30
-	},
+/obj/machinery/computer/security/telescreen/prison/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red{
 	dir = 8

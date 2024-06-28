@@ -216,7 +216,7 @@
 			if(SPT_PROB(pukeprob, seconds_per_tick)) //iT hAndLeS mOrE ThaN PukInG
 				disgusted.adjust_confusion(2.5 SECONDS)
 				disgusted.adjust_stutter(2 SECONDS)
-				disgusted.vomit(VOMIT_CATEGORY_DEFAULT, distance = 0)
+				disgusted.vomit(VOMIT_CATEGORY_KNOCKDOWN, distance = 0)
 			disgusted.set_dizzy_if_lower(10 SECONDS)
 		if(disgust >= DISGUST_LEVEL_DISGUSTED)
 			if(SPT_PROB(13, seconds_per_tick))

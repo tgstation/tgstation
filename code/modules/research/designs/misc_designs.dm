@@ -720,7 +720,7 @@
 // Armour
 
 /datum/design/reactive_armour
-	name = "Reactive Armour Shell"
+	name = "Reactive Armor Shell"
 	desc = "An experimental suit of armour capable of utilizing an implanted anomaly core to protect the user."
 	id = "reactive_armour"
 	build_type = PROTOLATHE | AWAY_LATHE
@@ -731,7 +731,7 @@
 		/datum/material/silver = SHEET_MATERIAL_AMOUNT*2.5,
 		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 2.5,
 	)
-	build_path = /obj/item/reactive_armour_shell
+	build_path = /obj/item/reactive_armor_shell
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
 	)
@@ -813,6 +813,19 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/evidencebag
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+
+/datum/design/dragnet_beacon
+	name = "DRAGnet Beacon"
+	desc = "A beacon that can be used as a teleport destination for DRAGnet snare rounds. Remember to sync it with your DRAGnet first!"
+	id = "dragnet_beacon"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
+	build_path = /obj/item/dragnet_beacon
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
 	)

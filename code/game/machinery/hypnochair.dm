@@ -7,13 +7,20 @@
 	circuit = /obj/item/circuitboard/machine/hypnochair
 	density = TRUE
 	opacity = FALSE
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 
-	var/mob/living/carbon/victim = null ///Keeps track of the victim to apply effects if it teleports away
-	var/interrogating = FALSE ///Is the device currently interrogating someone?
-	var/start_time = 0 ///Time when the interrogation was started, to calculate effect in case of interruption
-	var/trigger_phrase = "" ///Trigger phrase to implant
-	var/timerid = 0 ///Timer ID for interrogations
-	var/message_cooldown = 0 ///Cooldown for breakout message
+	///Keeps track of the victim to apply effects if it teleports away
+	var/mob/living/carbon/victim = null
+	///Is the device currently interrogating someone?
+	var/interrogating = FALSE
+	///Time when the interrogation was started, to calculate effect in case of interruption
+	var/start_time = 0
+	///Trigger phrase to implant
+	var/trigger_phrase = ""
+	///Timer ID for interrogations
+	var/timerid = 0
+	///Cooldown for breakout message
+	var/message_cooldown = 0
 
 /obj/machinery/hypnochair/Initialize(mapload)
 	. = ..()
@@ -194,8 +201,7 @@
 		to_chat(user, span_warning("[src]'s door won't budge!"))
 
 
-/obj/machinery/hypnochair/MouseDrop_T(mob/target, mob/user)
-	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !ISADVANCEDTOOLUSER(user))
+/obj/machinery/hypnochair/mouse_drop_receive(atom/target, mob/user, params)
+	if(!isliving(target))
 		return
-
 	close_machine(target)

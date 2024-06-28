@@ -28,7 +28,7 @@
 	/// If the cell can be removed via screwdriver
 	var/cell_removable = TRUE
 	var/obj/item/shockpaddles/paddles
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 	/// If true, revive through space suits, allow for combat shocking
 	var/combat = FALSE
 	/// How long does it take to recharge
@@ -111,7 +111,7 @@
 
 /obj/item/defibrillator/CheckParts(list/parts_list)
 	..()
-	cell = locate(/obj/item/stock_parts/cell) in contents
+	cell = locate(/obj/item/stock_parts/power_store) in contents
 	update_power()
 
 /obj/item/defibrillator/ui_action_click()
@@ -136,11 +136,10 @@
 		ui_action_click() //checks for this are handled in defibrillator.mount.dm
 	return ..()
 
-/obj/item/defibrillator/MouseDrop(obj/over_object)
-	. = ..()
+/obj/item/defibrillator/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
 	if(ismob(loc))
 		var/mob/M = loc
-		if(!M.incapacitated() && istype(over_object, /atom/movable/screen/inventory/hand))
+		if(istype(over_object, /atom/movable/screen/inventory/hand))
 			var/atom/movable/screen/inventory/hand/H = over_object
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
@@ -159,8 +158,8 @@
 /obj/item/defibrillator/attackby(obj/item/W, mob/user, params)
 	if(W == paddles)
 		toggle_paddles()
-	else if(istype(W, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/C = W
+	else if(istype(W, /obj/item/stock_parts/power_store/cell))
+		var/obj/item/stock_parts/power_store/cell/C = W
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell!"))
 		else
@@ -312,7 +311,7 @@
 
 /obj/item/defibrillator/compact/combat/loaded/Initialize(mapload)
 	. = ..()
-	cell = new /obj/item/stock_parts/cell/infinite(src)
+	cell = new /obj/item/stock_parts/power_store/cell/infinite(src)
 	update_power()
 
 /obj/item/defibrillator/compact/combat/loaded/attackby(obj/item/W, mob/user, params)
