@@ -119,7 +119,7 @@
 		return ITEM_INTERACT_BLOCKING
 	if(core)
 		balloon_alert(user, "core already in!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 	core = tool
