@@ -2,8 +2,8 @@
 	name = "\improper Event Horizon anti-existential beam rifle"
 	desc = "The deranged minds of Nanotrasen, in their great hubris and spite, have birthed forth the definitive conclusion to the arms race. Weaponized black holes, and a platform to deliver them.\
 		To look upon this existential maleficence is to know that the pursuit of profit has consigned all life to this pathetic conclusion; the destruction of reality itself."
-	icon = 'icons/obj/weapons/guns/energy.dmi'
-	icon_state = "esniper"
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	icon_state = "event_horizon"
 	inhand_icon_state = null
 	worn_icon_state = null
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
