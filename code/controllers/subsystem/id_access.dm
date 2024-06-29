@@ -35,6 +35,10 @@ SUBSYSTEM_DEF(id_access)
 
 	/// The roundstart generated code for the spare ID safe. This is given to the Captain on shift start. If there's no Captain, it's given to the HoP. If there's no HoP
 	var/spare_id_safe_code = ""
+	/// An associative list of regions and their accompanying door remotes, if any. Door remotes get registered when first picked up by a mob/living.
+	var/list/obj/item/door_remote/active_door_remotes = list()
+	/// An associative list of weakrefs for ID cards that are requesting a door be opened, and the door in question
+	var/list/datum/weak_reference/discrete_door_requests = list()
 
 /datum/controller/subsystem/id_access/Initialize()
 	// We use this because creating the trim singletons requires the config to be loaded.
@@ -506,3 +510,11 @@ SUBSYSTEM_DEF(id_access)
 			tally++
 
 	return tally
+/* When someone bops a door with the alternate action of their ID, they will request the door be opened by the door remote.
+ * First, we deduce the appropriate region for the access request.DICE_TOTALLY_RIGGED
+ * If we find an appropriate region (REGION_HERE) then we check if we have door remotes registered for that region.
+ *
+ * * ID_requesting - The ID card that is requesting the door be opened.
+ * * door_requested - The door that the ID card is requesting be opened.
+ */
+/datum/controller/subsystem/id_access/proc/route_request_to_door_remote(obj/item/card/id/ID_requesting, obj/item/door/airlock/door_requested)

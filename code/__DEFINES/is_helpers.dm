@@ -245,6 +245,10 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define ismachinery(A) (istype(A, /obj/machinery))
 
+#define isdoor(A) (istype(A, /obj/machinery/door))
+
+#define isairlock(A) (istype(A, /obj/machinery/door/airlock))
+
 #define istramwall(A) (istype(A, /obj/structure/tram))
 
 #define isvendor(A) (istype(A, /obj/machinery/vending))
