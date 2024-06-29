@@ -38,3 +38,7 @@
 	owner.announce_objectives()
 	to_chat(owner, span_boldnotice("You are a [ishuman(owner.current) ? "shambling corpse returned":"horrible creation brought"] to this plane through the Gates of the Mansus."))
 	to_chat(owner, span_notice("Your master is [master]. Assist them to all ends."))
+
+	if(istype(owner.current, /mob/living/basic/construct/harvester/heretic))
+		var/mob/living/basic/construct/harvester/heretic/shitcode = owner.current
+		shitcode.master = master

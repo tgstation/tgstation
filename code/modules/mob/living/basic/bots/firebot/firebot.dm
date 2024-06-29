@@ -8,7 +8,7 @@
 	light_color = "#8cffc9"
 	light_power = 0.8
 
-	req_access = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
+	req_one_access = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FIRE_BOT

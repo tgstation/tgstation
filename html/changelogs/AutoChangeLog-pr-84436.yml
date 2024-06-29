@@ -1,0 +1,4 @@
+author: "grungususs"
+delete-after: True
+changes:
+  - bugfix: "fixed the name of a request console in the medical sec outpost on metastation"
