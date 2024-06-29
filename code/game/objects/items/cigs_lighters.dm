@@ -333,13 +333,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	force = 4
 	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0)
+		e.set_up(round(log(1.3, reagents.get_reagent_amount(/datum/reagent/toxin/plasma)), 1), get_turf(src), 0, 0)
 		e.start(src)
 		qdel(src)
 		return
 	if(reagents.get_reagent_amount(/datum/reagent/fuel)) // the fuel explodes, too, but much less violently
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/fuel) / 5, 1), get_turf(src), 0, 0)
+		e.set_up(round(log(1.5, reagents.get_reagent_amount(/datum/reagent/fuel)), 1), get_turf(src), 0, 0)
 		e.start(src)
 		qdel(src)
 		return
@@ -1230,7 +1230,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.flags |= NO_REACT
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/clothing/mask/vape/proc/handle_reagents()
+/obj/item/clothing/mask/vape/proc/handle_reagents(seconds_per_tick)
 	if(!reagents.total_volume)
 		return
 
@@ -1246,12 +1246,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0)
+		e.set_up(round(log(1.3, reagents.get_reagent_amount(/datum/reagent/toxin/plasma)), 1), get_turf(src), 0, 0)
 		e.start(src)
 		qdel(src)
 
-	if(!reagents.trans_to(vaper, REAGENTS_METABOLISM, methods = INGEST, ignore_stomach = TRUE))
-		reagents.remove_all(REAGENTS_METABOLISM)
+	if(!reagents.trans_to(vaper, REM * seconds_per_tick, methods = INGEST, ignore_stomach = TRUE))
+		reagents.remove_all(REM * seconds_per_tick)
 
 /obj/item/clothing/mask/vape/process(seconds_per_tick)
 	var/mob/living/M = loc
@@ -1290,7 +1290,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		puff.set_up(1, holder = src, location = loc, carry = reagents, efficiency = 24)
 		puff.start()
 
-	handle_reagents()
+	handle_reagents(seconds_per_tick)
 
 /obj/item/clothing/mask/vape/red
 	greyscale_colors = "#A02525"
