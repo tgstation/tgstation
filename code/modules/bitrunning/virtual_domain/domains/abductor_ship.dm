@@ -8,7 +8,7 @@
 	They are currently preparing to escape the area with their gear and loot including \
 	the crate. 	Be careful, they are known for their advanced weaponry."
 	is_modular = TRUE
-	key = "abductor_ship
+	key = "abductor_ship"
 	map_name = "abductor_ship"
 	mob_modules = list(/datum/modular_mob_segment/abductor_agents)
 	reward_points = BITRUNNER_REWARD_MEDIUM
