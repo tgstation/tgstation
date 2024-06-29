@@ -88,7 +88,7 @@ SUBSYSTEM_DEF(ambience)
 	return ..()
 
 /**
- * Ambience buzz handling called by either area/Enter() or refresh_looping_ambience
+ * Ambience buzz handling called by either area/Enter() or refresh_looping_ambience()
  */
 
 /mob/proc/update_ambience_area(area/new_area)
