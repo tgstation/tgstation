@@ -7770,11 +7770,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
-"cku" = (
-/obj/effect/landmark/event_spawn,
-/obj/effect/spawner/random/engineering/tracking_beacon,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "ckN" = (
 /obj/structure/cable,
 /obj/machinery/newscaster/directional/south,
@@ -16063,10 +16058,6 @@
 	dir = 8
 	},
 /area/station/maintenance/port/fore)
-"eLb" = (
-/obj/machinery/iv_drip,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "eLl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -16287,10 +16278,6 @@
 	dir = 4
 	},
 /area/station/ai_monitored/command/storage/eva)
-"eOS" = (
-/obj/structure/table,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "ePd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/grille/broken,
@@ -39852,11 +39839,6 @@
 	dir = 4
 	},
 /area/station/engineering/storage_shared)
-"lVs" = (
-/obj/structure/table,
-/obj/item/clothing/mask/surgical,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "lVt" = (
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/light/floor,
@@ -55692,14 +55674,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/service/janitor,
 /turf/open/floor/iron,
 /area/station/service/janitor)
-"qGe" = (
-/obj/structure/table,
-/obj/item/scalpel{
-	pixel_x = 2;
-	pixel_y = 6
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "qGg" = (
 /obj/structure/rack,
 /obj/item/pickaxe,
@@ -69158,6 +69132,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/structure/sign/warning/gas_mask/directional/north,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "uHV" = (
@@ -69931,7 +69906,6 @@
 	},
 /area/station/service/chapel)
 "uUn" = (
-/obj/structure/table/optable,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -79471,8 +79445,8 @@
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/ai_monitored/command/storage/eva)
 "xNa" = (
-/obj/effect/landmark/blobstart,
-/turf/open/floor/engine,
+/obj/effect/spawner/random/engineering/tracking_beacon,
+/turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "xNn" = (
 /obj/effect/turf_decal/stripes/line{
@@ -189027,12 +189001,12 @@ xMq
 alM
 oxO
 ffe
-lVs
+abe
 abe
 abe
 biI
 abe
-eOS
+abe
 qLY
 eGN
 lZX
@@ -189284,12 +189258,12 @@ xMq
 alM
 oxO
 ffe
-qGe
 abe
-cku
+abe
+abe
 uUn
-xNa
-eOS
+abe
+abe
 qLY
 vfe
 tsa
@@ -189546,7 +189520,7 @@ abe
 abe
 bOT
 abe
-eLb
+abe
 qLY
 tkP
 fPv
@@ -189799,7 +189773,7 @@ alM
 nsp
 ffe
 qLY
-ctF
+qLY
 uHS
 ujp
 abe
@@ -191086,7 +191060,7 @@ ffe
 oqd
 vHq
 aZk
-pMF
+xNa
 pMF
 rdl
 iQM
