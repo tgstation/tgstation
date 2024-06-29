@@ -69,8 +69,9 @@
 /obj/item/ammo_casing/arrow/plastic
 	name = "plastic arrow"
 	desc = "The earliest mining teams within the Spinward Sector were the somewhat stout ancestors of the modern settlers. These teams \
-		found themselves often unable to access the quality materials they were digging up for equipment maintenance. Left with  few options \
-		to defend themselves with in many hostile mines in the Spinward, they turned to the one material they had in abundance."
+		found themselves often unable to access the quality materials they were digging up for equipment maintenance, all of being sent off-site. \
+		Left with few options, and in need of a way to protect themselves in the hostile work enviroments of the Spinward, they turned \
+		to the one material they had in abundance."
 	icon_state = "plastic_arrow"
 	base_icon_state = "plastic_arrow"
 	projectile_type = /obj/projectile/bullet/arrow/plastic
