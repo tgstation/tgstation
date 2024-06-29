@@ -9,6 +9,11 @@
 	SHOULD_CALL_PARENT(TRUE)
 	PROTECTED_PROC(TRUE)
 
+	if(!user.combat_mode)
+		var/tool_return = tool_act(user, tool, modifiers)
+		if(tool_return)
+			return tool_return
+
 	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 	var/is_left_clicking = !is_right_clicking
 	var/early_sig_return = NONE
@@ -45,9 +50,35 @@
 	if(interact_return)
 		return interact_return
 
+	return NONE
+
+/**
+ *
+ * ## Tool Act
+ *
+ * Handles using specific tools on this atom directly.
+ * Only called when combat mode is off.
+ *
+ * Handles the tool_acts in particular, such as wrenches and screwdrivers.
+ *
+ * This can be overriden to handle unique "tool interactions"
+ * IE using an item like a tool (when it's not actually one)
+ * This is particularly useful for things that shouldn't be inserted into storage
+ * (because tool acting runs before storage checks)
+ * but otherwise does nothing that [item_interaction] doesn't already do.
+ *
+ * In other words, use sparingly. It's harder to use (correctly) than [item_interaction].
+ */
+/atom/proc/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	SHOULD_CALL_PARENT(TRUE)
+	PROTECTED_PROC(TRUE)
+
 	var/tool_type = tool.tool_behaviour
-	if(!tool_type) // here on only deals with ... tools
+	if(!tool_type)
 		return NONE
+
+	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
+	var/is_left_clicking = !is_right_clicking
 
 	var/list/processing_recipes = list()
 	var/signal_result = is_left_clicking \
@@ -57,6 +88,7 @@
 		return signal_result
 	if(length(processing_recipes))
 		process_recipes(user, tool, processing_recipes)
+		return ITEM_INTERACT_SUCCESS
 	if(QDELETED(tool))
 		return ITEM_INTERACT_SUCCESS // Safe-ish to assume that if we deleted our item something succeeded
 
@@ -291,3 +323,23 @@
 /// Called on an object when a tool with analyzer capabilities is used to right click an object
 /atom/proc/analyzer_act_secondary(mob/living/user, obj/item/tool)
 	return
+
+/**
+ * Called before this item is placed into a storage container
+ * via the item clicking on the target atom
+ *
+ * Returning FALSE will prevent the item from being stored.
+ */
+/obj/item/proc/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
+	return TRUE
+
+/**
+ * Called before an item is put into this atom's storage datum via the item clicking on this atom
+ *
+ * This can be used to add item-atom interactions that you want handled before inserting something into storage
+ * (But it's also fairly snowflakey)
+ *
+ * Returning FALSE will block that item from being put into our storage.
+ */
+/atom/proc/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
+	return TRUE

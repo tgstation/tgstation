@@ -1,5 +1,0 @@
-author: "ShizCalev, SpaceLove"
-delete-after: True
-changes:
-  - refactor: "Techweb strings are defined now so to maintain modularity"
-  - balance: "Research papers will have less overall point generation."
