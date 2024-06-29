@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Holodeck closet & crate items are marked as holograms as well"
-  - bugfix: "Holodeck closet & crate items delete themselves when the program is changed"

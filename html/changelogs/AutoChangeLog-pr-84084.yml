@@ -1,5 +1,0 @@
-author: "JackEnoff"
-delete-after: True
-changes:
-  - balance: "Changelings regenerate chemicals faster when not on fire"
-  - balance: "Changelings regenerate chemicals slower when on fire"
