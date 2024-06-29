@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed cat ears disappearing from slimes with the gooey cat mutation across Z-levels."
