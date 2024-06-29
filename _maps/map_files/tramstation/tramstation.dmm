@@ -6454,6 +6454,10 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics_engine)
+"bhf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/turf/open/floor/engine/xenobio,
+/area/station/science/xenobiology)
 "bhr" = (
 /turf/closed/wall/rock/porous,
 /area/station/security/prison/workout)
@@ -10499,7 +10503,7 @@
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/machinery/light/directional/north,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "cBo" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -32857,7 +32861,7 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "kGA" = (
 /obj/structure/railing,
@@ -38730,7 +38734,7 @@
 /obj/machinery/sparker/directional/west{
 	id = "Xenobio"
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "mFo" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -57722,10 +57726,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
-"ttj" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "tto" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/line{
@@ -58185,6 +58185,9 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"tBo" = (
+/turf/open/floor/engine/xenobio,
+/area/station/science/xenobiology)
 "tBu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{
@@ -58351,7 +58354,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "tED" = (
 /obj/effect/turf_decal/tile/neutral/tram,
@@ -181927,8 +181930,8 @@ umu
 qVr
 qVr
 mFh
-bfH
-bfH
+tBo
+tBo
 qVr
 gYw
 cHY
@@ -182183,9 +182186,9 @@ mAL
 nKU
 qVr
 tEx
-bfH
-bfH
-bfH
+tBo
+tBo
+tBo
 qVr
 pNa
 eiy
@@ -182439,11 +182442,11 @@ pbH
 bmz
 pIx
 qVr
-ttj
-bfH
-bfH
-bfH
-bfH
+bhf
+tBo
+tBo
+tBo
+tBo
 pNa
 qNk
 xmY
@@ -182697,10 +182700,10 @@ chE
 pHX
 qVr
 cAK
-ttj
-ttj
-ttj
-ttj
+bhf
+bhf
+bhf
+bhf
 nzg
 cwj
 ksk
@@ -182953,10 +182956,10 @@ pbH
 kBo
 kJA
 qVr
-bfH
-bfH
-bfH
-bfH
+tBo
+tBo
+tBo
+tBo
 kGv
 qSS
 cFQ
@@ -183210,10 +183213,10 @@ pbH
 mAL
 nKU
 qVr
-bfH
-bfH
-bfH
-bfH
+tBo
+tBo
+tBo
+tBo
 qVr
 jqK
 ijR
@@ -183468,9 +183471,9 @@ vSa
 cJR
 qVr
 qVr
-bfH
-bfH
-bfH
+tBo
+tBo
+tBo
 qVr
 gYw
 vav
