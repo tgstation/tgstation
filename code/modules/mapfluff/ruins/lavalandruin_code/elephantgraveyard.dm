@@ -289,7 +289,7 @@
 		deconstruct(TRUE)
 		return TRUE
 
-/obj/structure/closet/crate/grave/container_resist_act(mob/living/user)
+/obj/structure/closet/crate/grave/container_resist_act(mob/living/user, loc_required = TRUE)
 	if(opened)
 		return
 	// The player is trying to dig themselves out of an early grave

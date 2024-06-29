@@ -98,6 +98,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_IWASBATONED "iwasbatoned"
 #define TRAIT_SLEEPIMMUNE "sleep_immunity"
 #define TRAIT_PUSHIMMUNE "push_immunity"
+/// can't be kicked to the side
+#define TRAIT_NO_SIDE_KICK "no_side_kick"
 /// Are we immune to shocks?
 #define TRAIT_SHOCKIMMUNE "shock_immunity"
 /// Are we immune to specifically tesla / SM shocks?
@@ -1089,6 +1091,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Note this doesn't mean all spells are guaranteed to work or the mob is guaranteed to cast
 #define TRAIT_CASTABLE_LOC "castable_loc"
 
+/// Needs above trait to work.
+/// This trait makes it so that any cast spells will attempt to transfer to the location's location.
+/// For example, a heretic inside the haunted blade's spells would emanate from the mob wielding the sword.
+#define TRAIT_SPELLS_TRANSFER_TO_LOC "spells_transfer_to_loc"
+
 ///Trait given by /datum/element/relay_attacker
 #define TRAIT_RELAYING_ATTACKER "relaying_attacker"
 
@@ -1150,6 +1157,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
 #define TRAIT_BOULDER_BREAKER "boulder_breaker"
+
+/// Trait given to anything linked to, not necessarily allied to, the mansus
+#define TRAIT_MANSUS_TOUCHED "mansus_touched"
 
 /// Trait given to mobs wearing the clown mask
 #define TRAIT_PERCEIVED_AS_CLOWN "perceived_as_clown"
