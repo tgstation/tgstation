@@ -195,9 +195,7 @@
 	controller.id = null
 	balloon_alert(user, "linked to [tool.buffer]")
 
-/obj/machinery/button/photobooth/table
-	icon_state = "button_table"
-	base_icon_state = "button_table"
+BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/photobooth)
 
 /obj/item/assembly/control/photobooth_control
 	name = "photobooth controller"

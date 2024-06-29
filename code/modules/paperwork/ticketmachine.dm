@@ -117,9 +117,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine)
 		controller.id = null
 		to_chat(user, span_warning("You've linked [src] to [M.buffer]."))
 
-/obj/machinery/button/ticket_machine/table
-	icon_state = "button_table"
-	base_icon_state = "button_table"
+BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/ticket_machine)
 
 /obj/item/assembly/control/ticket_machine
 	name = "ticket machine controller"

@@ -90,7 +90,7 @@
 }
 
 #define MAPPING_DIRECTIONAL_HELPERS_EMPTY(path) \
-##path/directional/north {\
+##path/directional/north {
 	dir = NORTH; \
 } \
 ##path/directional/south {\
@@ -102,3 +102,11 @@
 ##path/directional/west {\
 	dir = WEST; \
 }
+
+#define BUTTON_DIRECTIONAL_HELPERS(path) \
+##path/table { \
+	on_table = TRUE; \
+	icon_state = parent_type::icon_state + "_table"; \
+	base_icon_state = parent_type::icon_state + "_table"; \
+} \
+WALL_MOUNT_DIRECTIONAL_HELPERS(path)
