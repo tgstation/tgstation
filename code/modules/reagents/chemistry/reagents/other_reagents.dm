@@ -129,7 +129,7 @@
 
 /datum/reagent/blood/get_taste_description(mob/living/taster)
 	if(isnull(taster))
-		return
+		return ..()
 	if(!HAS_TRAIT(taster, TRAIT_DETECTIVES_TASTE))
 		return ..()
 	var/blood_type = data?["blood_type"]
