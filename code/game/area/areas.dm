@@ -541,8 +541,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		SEND_SIGNAL(recipient, COMSIG_ENTER_AREA, src)
 
 	if(ismob(arrived))
-		var/mob/M = arrived
-		M.update_ambience_area(src)
+		var/mob/mob = arrived
+		mob.update_ambience_area(src)
 
 /**
  * Called when an atom exits an area

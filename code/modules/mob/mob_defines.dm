@@ -192,7 +192,5 @@
 	///the icon currently used for the thinking indicator's bubble
 	var/active_thinking_indicator
 
-	/// Keeps track of what ambience we are playing.
-	var/playing_ambience
 	/// A ref of the area we're taking our ambient loop from.
 	var/area/ambience_tracked_area
