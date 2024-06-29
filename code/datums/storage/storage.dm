@@ -138,14 +138,17 @@
 	src.max_total_storage = max_total_storage
 
 /datum/storage/Destroy()
-	parent = null
-	real_location = null
 
 	for(var/mob/person in is_using)
 		hide_contents(person)
 
 	is_using.Cut()
-	QDEL_LAZYLIST(storage_interfaces)
+	if (!isnull(storage_interfaces))
+		for (var/i in storage_interfaces)
+			QDEL_NULL(storage_interfaces[i])
+
+	parent = null
+	real_location = null
 
 	return ..()
 
@@ -995,6 +998,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	var/ui_style = ui_style2icon(to_show.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 
+	to_chat(to_show, "[to_show] [storage_interfaces.len] [isnull(storage_interfaces[to_show])] [storage_interfaces[to_show]]")
 	if (isnull(storage_interfaces[to_show]))
 		storage_interfaces[to_show] = new /datum/storage_interface(ui_style, src)
 
@@ -1031,6 +1035,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	to_hide.client.screen -= storage_interfaces[to_hide].list_ui_elements()
 	to_hide.client.screen -= real_location.contents
 	QDEL_NULL(storage_interfaces[to_hide])
+	storage_interfaces -= to_hide
 
 	return TRUE
 
