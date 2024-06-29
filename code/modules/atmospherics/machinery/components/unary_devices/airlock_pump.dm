@@ -172,6 +172,7 @@
 			siphon_tile(tile)
 
 
+/// Fill a tile with air from the distro node
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/fill_tile(turf/tile, moles, pressure_delta)
 	var/datum/pipeline/distro_pipe = parents[1]
 	var/datum/gas_mixture/distro_air = airs[1]
@@ -188,6 +189,7 @@
 	distro_pipe.update = TRUE
 
 
+/// Siphon air from the tile to the waste node within the volume rate limit
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/siphon_tile(turf/tile)
 	var/datum/pipeline/waste_pipe = parents[2]
 	var/datum/gas_mixture/waste_air = airs[2]
@@ -217,6 +219,7 @@
 		start_cycle(ATMOS_DIRECTION_RELEASING)
 
 
+///Start decompression or pressurization cycle depending on the passed direction
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/start_cycle(cycle_direction)
 	if(on || !cycling_set_up || !powered())
 		return FALSE
@@ -230,7 +233,6 @@
 
 	on = TRUE
 	cycle_start_time = world.time
-	update_appearance()
 
 	if(pump_direction == ATMOS_DIRECTION_RELEASING)
 		cycle_pressure_target = internal_pressure_target
@@ -243,9 +245,11 @@
 		cycle_pressure_target = external_pressure_target
 		external_airlocks[1].say("Decompressing airlock.")
 
+	update_appearance()
 	return TRUE
 
 
+///Complete/Abort cycle with the passed message
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/stop_cycle(message = null)
 	if(!on)
 		return FALSE
@@ -275,20 +279,19 @@
 
 ///Find airlocks and link up with them
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/set_links()
-	var/obj/machinery/door/airlock/internal_airlock = find_airlock(get_turf(src), dir)
-	var/obj/machinery/door/airlock/external_airlock = find_airlock(get_turf(src), REVERSE_DIR(dir))
+	var/perpendicular_dirs = NSCOMPONENT(dir) ? WEST|EAST : NORTH|SOUTH
+	var/turf/internal_airlocks_origin = find_density(get_turf(src), dir)
+	var/turf/external_airlocks_origin = find_density(get_turf(src), REVERSE_DIR(dir))
+	internal_airlocks = get_adjacent_airlocks(internal_airlocks_origin, perpendicular_dirs)
+	external_airlocks = get_adjacent_airlocks(external_airlocks_origin, perpendicular_dirs)
 
-	if(!internal_airlock || !external_airlock)
+	if(!internal_airlocks.len || !internal_airlocks.len)
 		if(!can_unwrench) //maploaded pump
-			CRASH("[type] called couldn't find airlocks to cycle with!")
-		external_airlock = null
-		internal_airlock = null
+			CRASH("[type] couldn't find airlocks to cycle with!")
+		internal_airlocks = list()
+		external_airlocks = list()
 		say("Cycling setup failed. No opposite airlocks found.")
 		return
-
-	var/perpendicular_dirs = NSCOMPONENT(dir) ? WEST|EAST : NORTH|SOUTH
-	internal_airlocks = get_adjacent_airlocks(internal_airlock, perpendicular_dirs)
-	external_airlocks = get_adjacent_airlocks(external_airlock, perpendicular_dirs)
 
 	for(var/obj/machinery/door/airlock/airlock in (internal_airlocks + external_airlocks))
 		airlock.set_cycle_pump(src)
@@ -303,37 +306,52 @@
 		say("Cycling setup complete.")
 
 
-///Find the first airlock within the allowed range
-/obj/machinery/atmospherics/components/unary/airlock_pump/proc/find_airlock(turf/origin, direction, max_distance = airlock_pump_distance_limit)
+///Get the turf of the first found airlock or an airtight structure (walls) within the allowed range
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/find_density(turf/origin, direction, max_distance = airlock_pump_distance_limit)
 	var/turf/next_turf = origin
 	var/limit = max(1, max_distance)
 	while(limit)
 		limit--
 		next_turf = get_step(next_turf, direction)
 		var/obj/machinery/door/airlock/found_airlock = locate() in next_turf
-		if (found_airlock && !found_airlock.cycle_pump && (!can_unwrench || istype(found_airlock, valid_airlock_typepath)))
-			return found_airlock
+		if(is_valid_airlock(found_airlock))
+			return found_airlock.loc
+		if(!next_turf.can_atmos_pass)
+			return next_turf
 
 
 ///Find airlocks adjacent to the central one, lined up along the provided directions
-/obj/machinery/atmospherics/components/unary/airlock_pump/proc/get_adjacent_airlocks(central_airlock, directions)
-	var/list/airlocks = list(central_airlock)
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/get_adjacent_airlocks(origin_turf, directions)
+	var/list/airlocks = list()
+
+	var/obj/machinery/door/airlock/origin_airlock = locate() in origin_turf
+	if(is_valid_airlock(origin_airlock))
+		airlocks.Add(origin_airlock)
 
 	for(var/direction in GLOB.cardinals)
 		if(!(direction & directions))
 			continue
-		var/turf/next_turf = get_turf(central_airlock)
+		var/turf/next_turf = origin_turf
 		var/limit = max(0, airlock_group_distance_limit)
 		while(limit)
 			limit--
 			next_turf = get_step(next_turf, direction)
 			var/obj/machinery/door/airlock/found_airlock = locate() in next_turf
-			if (found_airlock && !found_airlock.cycle_pump)
+			if (is_valid_airlock(found_airlock))
 				airlocks.Add(found_airlock)
 			else
 				limit = 0
 
 	return airlocks
+
+
+///Whether the passed airlock can be linked with
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/is_valid_airlock(obj/machinery/door/airlock/airlock)
+	if(airlock.cycle_pump)
+		return FALSE // Already linked
+	if(can_unwrench && !istype(airlock, valid_airlock_typepath))
+		return FALSE // Invalid airlock type and the pump is not mapspawn
+	return TRUE
 
 
 ///Find airlocks and link up with them
@@ -349,6 +367,7 @@
 		break_all_links()
 
 
+///Break the cycling setup
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/break_all_links()
 	for(var/obj/machinery/door/airlock/airlock in (internal_airlocks + external_airlocks))
 		UnregisterSignal(airlock, COMSIG_QDELETING)
