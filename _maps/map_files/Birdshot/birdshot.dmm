@@ -3409,7 +3409,6 @@
 "bqX" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/machinery/light/no_nightlight/directional/south,
-/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
 "brb" = (
@@ -6519,7 +6518,7 @@
 	c_tag = "Atmospherics Tank - Mix"
 	},
 /turf/open/floor/engine/vacuum,
-/area/station/maintenance/department/electrical)
+/area/station/engineering/atmos)
 "cEn" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
@@ -6791,14 +6790,6 @@
 	dir = 4
 	},
 /area/station/science/xenobiology)
-"cJS" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/smart/simple/orange{
-	dir = 5
-	},
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "cJT" = (
 /obj/effect/turf_decal/bot_white,
 /obj/structure/closet/crate{
@@ -10618,6 +10609,9 @@
 	},
 /obj/effect/turf_decal/siding/wideplating{
 	dir = 8
+	},
+/obj/structure/chair/office{
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/station/engineering/atmos/office)
@@ -17969,7 +17963,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine/vacuum,
-/area/station/maintenance/department/electrical)
+/area/station/engineering/atmos)
 "gKp" = (
 /obj/machinery/light/warm/dim,
 /obj/structure/disposalpipe/segment{
@@ -19309,8 +19303,8 @@
 /turf/closed/wall,
 /area/station/hallway/primary/fore)
 "hes" = (
-/obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
 "heB" = (
@@ -23016,7 +23010,7 @@
 /obj/structure/lattice,
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/space/basic,
-/area/station/engineering/atmos)
+/area/space/nearstation)
 "irp" = (
 /obj/machinery/door/airlock/external{
 	name = "Tram Maintenance"
@@ -28240,9 +28234,7 @@
 /area/station/hallway/primary/central/fore)
 "jZG" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
-/obj/machinery/computer/atmos_alert{
-	dir = 1
-	},
+/obj/machinery/atmospherics/components/unary/bluespace_sender,
 /turf/open/floor/iron/small,
 /area/station/engineering/atmos/office)
 "jZJ" = (
@@ -37971,7 +37963,7 @@
 /obj/structure/lattice,
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/space/basic,
-/area/station/engineering/atmos)
+/area/space/nearstation)
 "noe" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -44022,7 +44014,7 @@
 /obj/structure/lattice,
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/space/basic,
-/area/station/engineering/atmos)
+/area/space/nearstation)
 "pxA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -52963,7 +52955,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/atmos/glass{
-	name = "Distro access"
+	name = "Distro Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
@@ -60522,7 +60514,7 @@
 /area/station/engineering/supermatter/room)
 "uSx" = (
 /obj/machinery/door/airlock/atmos/glass{
-	name = "Distro access"
+	name = "Distro Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/hidden,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
@@ -69038,7 +69030,7 @@
 	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/engine/vacuum,
-/area/station/maintenance/department/electrical)
+/area/station/engineering/atmos)
 "xqv" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -70024,7 +70016,7 @@
 "xEE" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/machinery/firealarm/directional/north,
-/obj/machinery/atmospherics/components/unary/bluespace_sender,
+/obj/machinery/computer/atmos_alert,
 /turf/open/floor/iron/small,
 /area/station/engineering/atmos/office)
 "xEM" = (
@@ -81832,7 +81824,7 @@ qSm
 igW
 ybO
 tYT
-tYT
+aJq
 aJq
 aJq
 aJq
@@ -82090,9 +82082,9 @@ igW
 ybO
 ybO
 bNq
-gBh
-gBh
-gBh
+aJq
+aJq
+aJq
 aJq
 aJq
 aJq
@@ -82347,9 +82339,9 @@ bFe
 vTT
 iGC
 bNq
-gBh
-gBh
-gBh
+aJq
+aJq
+aJq
 aJq
 aJq
 tYT
@@ -82605,9 +82597,9 @@ tQb
 dMF
 ecq
 fYU
-gBh
-knv
-knv
+aJq
+gcs
+gcs
 vmL
 dDB
 dDB
@@ -83331,7 +83323,7 @@ dDB
 dDB
 dDB
 vtf
-cJS
+xfv
 vmL
 kGn
 pFK
@@ -83604,7 +83596,7 @@ ybO
 pxz
 nob
 pxz
-ybO
+jZl
 jZl
 vlF
 pdg
@@ -83861,7 +83853,7 @@ ybO
 vle
 kbT
 duV
-ybO
+jZl
 jHf
 jHf
 jHf
@@ -83891,8 +83883,8 @@ hYp
 beq
 ybs
 knv
-gBh
-gBh
+aJq
+aJq
 aJq
 tYT
 dDB
@@ -84114,7 +84106,7 @@ wzv
 wzv
 kVa
 wzv
-pnl
+ybO
 gKm
 cEm
 xqt
@@ -84149,7 +84141,7 @@ beq
 liX
 jqd
 lxP
-gBh
+aJq
 aJq
 aJq
 dDB
@@ -84371,10 +84363,10 @@ pWm
 pWm
 enQ
 fCM
-pnl
-pnl
-pnl
-pnl
+ybO
+ybO
+ybO
+ybO
 jZl
 kot
 qMS
@@ -84406,7 +84398,7 @@ beq
 olj
 cmf
 gBh
-gBh
+aJq
 aJq
 aJq
 dDB
@@ -84663,7 +84655,7 @@ eKU
 olj
 gBh
 gBh
-gBh
+aJq
 gcs
 blb
 blb
