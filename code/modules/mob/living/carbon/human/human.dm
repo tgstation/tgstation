@@ -58,6 +58,9 @@
 /mob/living/carbon/human/proc/setup_human_dna()
 	randomize_human(src, randomize_mutations = TRUE)
 
+/mob/living/carbon/human/species/setup_human_dna()
+	randomize_human_sane(src, randomize_mutations = TRUE)
+
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
 	GLOB.human_list -= src
