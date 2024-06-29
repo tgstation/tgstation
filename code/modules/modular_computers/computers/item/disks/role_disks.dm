@@ -21,7 +21,7 @@
 	name = "captain data disk"
 	desc = "Removable disk used to download essential Captain tablet apps."
 	icon_state = "datadisk10"
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/records/medical,
 	)
@@ -29,14 +29,14 @@
 /obj/item/computer_disk/command/cmo
 	name = "chief medical officer data disk"
 	desc = "Removable disk used to download essential CMO tablet apps."
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/records/medical,
 	)
 
 /obj/item/computer_disk/command/rd
 	name = "research director data disk"
 	desc = "Removable disk used to download essential RD tablet apps."
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/signal_commander,
 	)
 
@@ -44,14 +44,14 @@
 	name = "head of security data disk"
 	desc = "Removable disk used to download essential HoS tablet apps."
 	icon_state = "datadisk9"
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/records/security,
 	)
 
 /obj/item/computer_disk/command/hop
 	name = "head of personnel data disk"
 	desc = "Removable disk used to download essential HoP tablet apps."
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/job_management,
 	)
@@ -59,7 +59,7 @@
 /obj/item/computer_disk/command/ce
 	name = "chief engineer data disk"
 	desc = "Removable disk used to download essential CE tablet apps."
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/supermatter_monitor,
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/alarm_monitor,
@@ -72,7 +72,7 @@
 	name = "security officer data disk"
 	desc = "Removable disk used to download security-related tablet apps."
 	icon_state = "datadisk9"
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/crew_manifest,
 	)
@@ -84,7 +84,7 @@
 	name = "medical doctor data disk"
 	desc = "Removable disk used to download medical-related tablet apps."
 	icon_state = "datadisk7"
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/records/medical,
 	)
 
@@ -95,7 +95,7 @@
 	name = "cargo data disk"
 	desc = "Removable disk used to download cargo-related tablet apps."
 	icon_state = "cargodisk"
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/shipping,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/restock_tracker,
@@ -108,7 +108,7 @@
 	name = "ordnance data disk"
 	desc = "Removable disk used to download ordnance-related tablet apps."
 	icon_state = "datadisk5"
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/signal_commander,
 		/datum/computer_file/program/scipaper_program,
 	)
@@ -120,7 +120,7 @@
 	name = "engineering data disk"
 	desc = "Removable disk used to download engineering-related tablet apps."
 	icon_state = "datadisk6"
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/alarm_monitor,
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/supermatter_monitor,

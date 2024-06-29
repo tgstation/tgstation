@@ -63,7 +63,7 @@
 	var/list/apps_to_download = list()
 	if(has_pda_programs)
 		apps_to_download += default_programs + pda_programs
-	apps_to_download += starting_programs
+	apps_to_download += preinstalled_programs
 
 	for(var/programs as anything in apps_to_download)
 		var/datum/computer_file/program/program_type = new programs
@@ -256,7 +256,7 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#a80001#5C070F#000000"
 	long_ranged = TRUE
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/radar/fission360,
 	)
 
@@ -276,7 +276,7 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_double
 	greyscale_colors = "#696969#000000#FFA500"
 
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/contract_uplink,
 		/datum/computer_file/program/secureye/syndicate,
 	)
@@ -297,7 +297,7 @@
 	comp_light_luminosity = 0
 	inserted_item = null
 	has_pda_programs = FALSE
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/messenger,
 	)
 
@@ -309,7 +309,7 @@
 	var/mob/living/silicon/silicon_owner
 
 /obj/item/modular_computer/pda/silicon/cyborg
-	starting_programs = list(
+	preinstalled_programs = list(
 		/datum/computer_file/program/filemanager,
 		/datum/computer_file/program/robotact,
 	)

@@ -5,10 +5,10 @@
 	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT)
 
 /obj/item/computer_disk/syndicate/camera_app
-	starting_programs = list(/datum/computer_file/program/secureye/syndicate)
+	preinstalled_programs = list(/datum/computer_file/program/secureye/syndicate)
 
 /obj/item/computer_disk/syndicate/contractor
-	starting_programs = list(/datum/computer_file/program/contract_uplink)
+	preinstalled_programs = list(/datum/computer_file/program/contract_uplink)
 
 /obj/item/computer_disk/black_market
 	desc = "Removable disk used to store data. This one has a smudged piece of paper glued to it, reading \"PC softwarez\"."
@@ -32,7 +32,7 @@
 	for(var/i in 1 to rand(2, 4))
 		var/datum/computer_file/program/to_add = pick_n_take(potential_programs)
 		total_programs_size += initial(to_add.size)
-		starting_programs += to_add
+		preinstalled_programs += to_add
 	///Make sure the disk has enough space for all the programs
 	max_capacity = max(total_programs_size, max_capacity)
 	return ..()
