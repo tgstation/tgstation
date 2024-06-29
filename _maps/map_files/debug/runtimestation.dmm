@@ -80,7 +80,8 @@
 "aC" = (
 /obj/machinery/door/airlock/external/glass/ruin,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/full,
+/turf/open/floor/iron,
 /area/station/engineering/main)
 "aD" = (
 /turf/open/floor/iron,
@@ -2448,7 +2449,7 @@
 /obj/machinery/atmospherics/components/unary/airlock_pump{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron,
 /area/station/engineering/main)
 "Wc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2478,7 +2479,8 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/full,
+/turf/open/floor/iron,
 /area/station/engineering/main)
 "WW" = (
 /obj/machinery/door/airlock/external/glass/ruin,
