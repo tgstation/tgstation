@@ -1,4 +1,0 @@
-author: "hyperjll"
-delete-after: True
-changes:
-  - bugfix: "Inducers now accept megacells AND regular cells."

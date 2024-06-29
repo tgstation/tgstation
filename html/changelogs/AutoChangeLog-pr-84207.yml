@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Deafened mobs will no longer hear the station's ambient sounds."
-  - bugfix: "Fixed ambient sounds resetting their loop when entering different bodies (ie admin ghosting, being moved to other mobs, ect.)"

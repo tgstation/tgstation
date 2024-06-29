@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Airlocks will now correctly said what other airlock they are cyclelinked with."
