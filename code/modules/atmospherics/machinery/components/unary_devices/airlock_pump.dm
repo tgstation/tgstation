@@ -27,6 +27,8 @@
 	var/cycle_pressure_target
 	///Allowed error in pressure checks
 	var/allowed_pressure_error = ONE_ATMOSPHERE / 100
+	///Minimal distro pressure to start cycling
+	var/min_distro_pressure = ONE_ATMOSPHERE / 10
 	///Rate of the pump to remove gases from the air
 	var/volume_rate = 1000
 	///The start time of the current cycle to calculate cycle duration
@@ -244,6 +246,11 @@
 			stop_cycle("Pressure nominal, skipping cycle.")
 			return TRUE
 
+		var/datum/gas_mixture/distro_air = airs[1]
+		if(distro_air.return_pressure() < min_distro_pressure)
+			stop_cycle("Low pipe pressure, skipping cycle. Proceed with caution.", unbolt_only = TRUE)
+			return TRUE
+
 		if(source_airlock)
 			source_airlock = internal_airlocks[1]
 		source_airlock.say("Pressurizing airlock.")
@@ -268,7 +275,7 @@
 
 
 ///Complete/Abort cycle with the passed message
-/obj/machinery/atmospherics/components/unary/airlock_pump/proc/stop_cycle(message = null)
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/stop_cycle(message = null, unbolt_only = FALSE)
 	if(!on)
 		return FALSE
 	on = FALSE
@@ -276,7 +283,7 @@
 	var/list/obj/machinery/door/airlock/unlocked_airlocks = pump_direction == ATMOS_DIRECTION_RELEASING ? internal_airlocks : external_airlocks
 	for(var/obj/machinery/door/airlock/airlock in unlocked_airlocks)
 		airlock.unbolt()
-		if(open_airlock_on_cycle)
+		if(open_airlock_on_cycle && !unbolt_only)
 			INVOKE_ASYNC(airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, secure_open)) //Can unbolt, but without audio
 
 	stoplag(0.2 SECONDS) // Wait for opening animation
