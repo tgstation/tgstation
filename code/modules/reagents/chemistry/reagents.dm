@@ -250,7 +250,7 @@ Primarily used in reagents/reaction_agents
 
 /// Should return a associative list where keys are taste descriptions and values are strength ratios
 /datum/reagent/proc/get_taste_description(mob/living/taster)
-	return list("[taste_description]" = 1)
+	return list("[(HAS_TRAIT(taster,TRAIT_DETECTIVES_TASTE)) ? lowertext(name) : taste_description]" = 1)
 
 /**
  * Used when you want the default reagents purity to be equal to the normal effects

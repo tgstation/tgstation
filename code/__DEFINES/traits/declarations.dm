@@ -615,6 +615,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CHEF_KISS "chefs_kiss"
 /// Allows clowns to bend balloons into animals
 #define TRAIT_BALLOON_SUTRA "balloon_sutra"
+/// Allows detectives to identify chemicals by taste
+#define TRAIT_DETECTIVES_TASTE "detectives_taste"
 
 ///Movement type traits for movables. See elements/movetype_handler.dm
 #define TRAIT_MOVE_GROUND "move_ground"
