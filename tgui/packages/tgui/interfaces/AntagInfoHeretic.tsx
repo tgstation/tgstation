@@ -254,7 +254,6 @@ const KnowledgeTree = (props) => {
                   {tier.nodes.map((node) => (
                     <Flex.Item key={node.name}>
                       <Button
-                        key={node.name}
                         color="transparent"
                         tooltip={`${node.name}:
                           ${node.desc}`}
