@@ -3433,8 +3433,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet,
 /obj/effect/decal/remains/human{
-	desc = "They look like human remains. The skeleton is laid out on its side and there seems to have been no sign of struggle.";
-	layer = 4.1
+	desc = "They look like human remains. The skeleton is laid out on its side and there seems to have been no sign of struggle."
 	},
 /obj/machinery/button/door/directional/west{
 	id = "awaydorm3";
