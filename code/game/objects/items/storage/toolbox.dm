@@ -273,9 +273,9 @@
 	new /obj/item/gun_maintenance_supplies(src)
 
 //floorbot assembly
-/obj/item/storage/toolbox/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(!istype(inserted, /obj/item/stack/tile/iron))
-		return TRUE
+/obj/item/storage/toolbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/tile/iron))
+		return ..()
 	var/static/list/allowed_toolbox = list(
 		/obj/item/storage/toolbox/artistic,
 		/obj/item/storage/toolbox/electrical,
@@ -285,11 +285,11 @@
 	)
 
 	if(!is_type_in_list(src, allowed_toolbox) && (type != /obj/item/storage/toolbox))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	if(contents.len >= 1)
 		balloon_alert(user, "not empty!")
-		return FALSE
-	if(inserted.use(10))
+		return ITEM_INTERACT_BLOCKING
+	if(tool.use(10))
 		var/obj/item/bot_assembly/floorbot/B = new
 		B.toolbox = type
 		switch(B.toolbox)
@@ -307,9 +307,9 @@
 		B.update_appearance()
 		B.balloon_alert(user, "tiles added")
 		qdel(src)
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "needs 10 tiles!")
-	return FALSE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/storage/toolbox/haunted
 	name = "old toolbox"

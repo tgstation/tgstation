@@ -1288,3 +1288,84 @@
   - qol: 'polypore mycelium no longer contains sugar, preventing it from instantly
       creating fringe weaver beverage when ground up. qol: sugar may be acquired from
       grinding fireblossoms instead of polypore mycelium.'
+2024-06-29:
+  Bisar:
+  - rscadd: Ashwalkers now start out allied to lavaland fauna (except for raptors).
+      Attacking the fauna will break this alliance with the attacked beast and any
+      who witness it.
+  - bugfix: Ashwalkers are now actually in the ashwalker faction, instead of the neutral
+      one.
+  EnterTheJake:
+  - rscadd: A new Anomaly organ has been introduced, The Voltaic Combat Cyberheart!
+  Higgin:
+  - bugfix: Mood buffs/penalties are now properly equal on both positive/negative
+      sides.
+  JackEnoff:
+  - balance: Changelings regenerate chemicals faster when not on fire
+  - balance: Changelings regenerate chemicals slower when on fire
+  MGOOOOOO:
+  - qol: The "Dental Implant" surgery no longer forces itself to restart after implanting
+      one pill. Now implanting pills in the surgery has another step to either search
+      the patient's mouth for another tooth to implant, or cauterization to end the
+      surgery.
+  Melbert:
+  - bugfix: Fixed modsuit interactions slightly. No longer requires combat mode to
+      use tools on it, plasma core works as intended as well. (Using combat mode,
+      however, will make you insert the item)
+  - refactor: Refactored lockboxes
+  - refactor: Refactored medbot skin application
+  Moonlit2000:
+  - bugfix: peg legs can't bleed
+  ShizCalev:
+  - bugfix: Toggling ambient ship sounds will now instantly turn it on/off.
+  - bugfix: Deafened mobs will no longer hear the station's ambient sounds.
+  - bugfix: Fixed ambient sounds resetting their loop when entering different bodies
+      (ie admin ghosting, being moved to other mobs, ect.)
+  - bugfix: Monkeys that become sentient through the sentience helmet will no longer
+      be notified that they can ventcrawl.
+  - bugfix: Airlocks will now correctly said what other airlock they are cyclelinked
+      with.
+  - bugfix: Portaturrets no longer go invisible when unwrenched from the ground.
+  SmArtKar:
+  - code_imp: Rewrote a portion of storage UI code to allow it to be influenced by
+      UI style.
+  - image: Prettified storage UI and made it affected by UI theme.
+  - image: Ripley and Ripley-based mechs now have consistent outlines
+  SyncIt21:
+  - bugfix: Holodeck closet & crate items are marked as holograms as well
+  - bugfix: Holodeck closet & crate items delete themselves when the program is changed
+  - bugfix: you can access your inventory when lying down
+  TheBoondock:
+  - sound: added liquid pouring sounds to pouring of any reagents
+  Thlumyn:
+  - bugfix: fixed active turfs in icebox listening post
+  Vekter:
+  - bugfix: Fixed the visibility of a pipe in Northstar's ordnance lab
+  - rscadd: Bitrunners can now access specific bounties asking for the item rewards
+      from specific bitrunning domains.
+  - bugfix: Fixed bitrunner pulling from a pool of literally every bounty available.
+  - bugfix: Fixes the door-bolting buttons in the dorms and bathrooms on Birdshot.
+  aaaa1023:
+  - bugfix: Removed a bush trapped inside a wall above morgue on Tramstation
+  carlarctg:
+  - rscadd: Reworked blood loss effects on the user to be much more noticeable.
+  - code_imp: Changed the blood volume defines to be based on the BLOOD_VOLUME_NORMAL
+      define, with a multiplier of blood loss applied, to be more understandable.
+  - rscadd: Added tons of new mutations to Genetics, alongside some recipes!
+  - rscadd: Thermal Adaptation has been made a combination mutation from the stronger
+      but narrower Cold and Heat adaptations.
+  - balance: Cryobeams have 9 tile range, and fiery sweat doesn't cause spread on
+      contact.
+  - image: Added some neat new sprites for the new mutations, and added a greyscale
+      version of the magic hand sprites.
+  - code_imp: Infinitesmally improved mutation code.
+  delingar:
+  - bugfix: Lavaland elite are at lavaland fauna faction now
+  hyperjll:
+  - bugfix: Inducers now accept megacells AND regular cells.
+  junkgle01:
+  - bugfix: added a keycard auth to QM room
+  necromanceranne:
+  - bugfix: Emergency firesuits no longer hide your gloves.
+  - qol: Punching bags are now a equal method of training to the fitness machinery.
+  - qol: Boxing grants more experience overall for participation.
