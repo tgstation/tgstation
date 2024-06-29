@@ -83,3 +83,45 @@ SUBSYSTEM_DEF(ambience)
 	if(!M.has_light_nearby() && prob(0.5))
 		return ..(M, pick(minecraft_cave_noises))
 	return ..()
+
+/mob/proc/update_ambience_area(area/new_area)
+	var/old_tracked_area = ambience_tracked_area
+
+	if(old_tracked_area)
+		UnregisterSignal(old_tracked_area, COMSIG_AREA_POWER_CHANGE)
+		ambience_tracked_area = null
+
+	if(!client)
+		playing_ambience = null
+		return
+
+	if(new_area)
+		ambience_tracked_area = new_area
+		RegisterSignal(ambience_tracked_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(refresh_looping_ambience), TRUE)
+
+	refresh_looping_ambience()
+
+/mob/proc/refresh_looping_ambience()
+	SIGNAL_HANDLER
+
+	if(!client)
+		return
+
+	var/area/my_area = get_area(src)
+
+	if(!(client?.prefs.read_preference(/datum/preference/toggle/sound_ship_ambience)) || !my_area?.ambient_buzz)
+		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
+		playing_ambience = null
+		return
+
+	//Station ambience is dependant on a functioning and charged APC with enviorment power enabled.
+	if(!is_mining_level(my_area.z) && ((!my_area.apc || !my_area.apc.operating || !my_area.apc.cell?.charge && my_area.requires_power || !my_area.power_environ)))
+		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
+		playing_ambience = null
+		return
+	else
+		if(playing_ambience == ambience_tracked_area?.ambient_buzz)
+			return
+
+		playing_ambience = my_area.ambient_buzz
+		SEND_SOUND(src, sound(my_area.ambient_buzz, repeat = 1, wait = 0, volume = my_area.ambient_buzz_vol, channel = CHANNEL_BUZZ))

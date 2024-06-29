@@ -99,7 +99,7 @@
 
 	update_client_colour()
 	update_mouse_pointer()
-	refresh_looping_ambience()
+	update_ambience_area(get_area(src))
 
 	if(client)
 		if(client.view_size)
