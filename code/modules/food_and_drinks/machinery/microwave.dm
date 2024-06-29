@@ -675,7 +675,7 @@
 	if(cycles == 1) //Only needs to try to shock mobs once, towards the end of the loop
 		var/successful_shock
 		var/list/microwave_contents = list()
-		microwave_contents += src.get_all_contents() //Mobs are often hid inside of mob holders, which could be fried and made into a burger...
+		microwave_contents += get_all_contents() //Mobs are often hid inside of mob holders, which could be fried and made into a burger...
 		for(var/mob/living/victim in microwave_contents)
 			if(victim.electrocute_act(shock_damage = 100, source = src, siemens_coeff = 1, flags = SHOCK_NOGLOVES))
 				successful_shock = TRUE
