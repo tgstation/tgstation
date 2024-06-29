@@ -52,32 +52,34 @@ export const Window = (props: Props) => {
   const { config, suspended } = useBackend();
   const { debugLayout = false } = useDebug();
 
-  useEffect(() => {
-    const updateGeometry = () => {
-      const options = {
-        ...config.window,
-        size: DEFAULT_SIZE,
+  if (!suspended) {
+    useEffect(() => {
+      const updateGeometry = () => {
+        const options = {
+          ...config.window,
+          size: DEFAULT_SIZE,
+        };
+
+        if (width && height) {
+          options.size = [width, height];
+        }
+        if (config.window?.key) {
+          setWindowKey(config.window.key);
+        }
+        recallWindowGeometry(options);
       };
 
-      if (width && height) {
-        options.size = [width, height];
-      }
-      if (config.window?.key) {
-        setWindowKey(config.window.key);
-      }
-      recallWindowGeometry(options);
-    };
+      Byond.winset(Byond.windowId, {
+        'can-close': Boolean(canClose),
+      });
+      logger.log('mounting');
+      updateGeometry();
 
-    Byond.winset(Byond.windowId, {
-      'can-close': Boolean(canClose),
-    });
-    logger.log('mounting');
-    updateGeometry();
-
-    return () => {
-      logger.log('unmounting');
-    };
-  }, [width, height]);
+      return () => {
+        logger.log('unmounting');
+      };
+    }, [width, height]);
+  }
 
   const dispatch = globalStore.dispatch;
   const fancy = config.window?.fancy;
