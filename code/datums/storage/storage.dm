@@ -998,7 +998,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	var/ui_style = ui_style2icon(to_show.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 
-	to_chat(to_show, "[to_show] [storage_interfaces.len] [isnull(storage_interfaces[to_show])] [storage_interfaces[to_show]]")
 	if (isnull(storage_interfaces[to_show]))
 		storage_interfaces[to_show] = new /datum/storage_interface(ui_style, src)
 
