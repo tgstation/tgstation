@@ -84,6 +84,9 @@ SUBSYSTEM_DEF(ambience)
 		return ..(M, pick(minecraft_cave_noises))
 	return ..()
 
+/**
+ * Ambience handling called by /area/Enter.
+ */
 /mob/proc/update_ambience_area(area/new_area)
 	var/old_tracked_area = ambience_tracked_area
 
