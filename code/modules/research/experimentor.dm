@@ -555,26 +555,40 @@
 
 //////////////////////////////////SPECIAL ITEMS////////////////////////////////////////
 
-/obj/item/relic
+/obj/item/artifact
 	name = "strange object"
 	desc = "What mysteries could this hold? Maybe Research & Development could find out."
 	icon = 'icons/obj/devices/assemblies.dmi'
-	var/realName = "defined object"
-	var/revealed = FALSE
+	//The name this artifact will have when it's activated.
+	var/hidden_name = "artifact"
+	//Has this artifact been activated?
+	var/activated = FALSE
+	//What effect this artifact has when used. Randomly determined when activated.
 	var/realProc
-	var/reset_timer = 60
+	//Base cooldown timer.
+	var/reset_timer = 6 SECONDS
 	COOLDOWN_DECLARE(cooldown)
+
+	var/list/artifact_theme = list(
+		THEME_CULT = list(/obj/item/ectoplasm/construct),
+		THEME_HOLY = list(/obj/item/ectoplasm/angelic),
+		THEME_WIZARD = list(/obj/item/ectoplasm/mystic),
+	)
 
 /obj/item/relic/Initialize(mapload)
 	. = ..()
+	name = "strange [pick(themed_name_suffix)]"
 	icon_state = pick("shock_kit","armor-igniter-analyzer","infra-igniter0","infra-igniter1","radio-multitool","prox-radio1","radio-radio","timer-multitool0","radio-igniter-tank")
-	realName = "[pick("broken","twisted","spun","improved","silly","regular","badly made")] [pick("device","object","toy","illegal tech","weapon")]"
+	hidden_name = themed_name_prefix,"[pick("prototype","","spun","improved","silly","regular","badly made")] [pick("device","object","toy","illegal tech","weapon")]"
 
+/obj/item/artifact/lavaland
+	name = "strange relic"
+	theme = "lavaland"
 
 /obj/item/relic/proc/reveal()
-	if(revealed) //Re-rolling your relics seems a bit overpowered, yes?
+	if(activated) //no rerolling
 		return
-	revealed = TRUE
+	activated = TRUE
 	name = realName
 	reset_timer = rand(reset_timer, reset_timer * 5)
 	realProc = pick(PROC_REF(teleport), PROC_REF(explode), PROC_REF(rapidDupe), PROC_REF(petSpray), PROC_REF(flash), PROC_REF(clean), PROC_REF(corgicannon))
