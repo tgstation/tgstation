@@ -51,6 +51,8 @@
 	var/cycling_set_up = FALSE
 	///Whether the pump opens the airlocks up instead of simpy unbolting them on cycle
 	var/open_airlock_on_cycle = TRUE
+	///Airlocks currently animating
+	var/airlocks_animating = FALSE
 
 	COOLDOWN_DECLARE(check_turfs_cooldown)
 
@@ -145,7 +147,7 @@
 		COOLDOWN_START(src, check_turfs_cooldown, 2 SECONDS)
 
 	if(world.time - cycle_start_time > cycle_timeout)
-		stop_cycle("Cycling timed out, bolts unlocked.")
+		stop_cycle("Cycling timed out, bolts unlocked.", unbolt_only = TRUE)
 		return //Couldn't complete the cycle before timeout
 
 	var/datum/gas_mixture/distro_air = airs[1]
@@ -223,7 +225,7 @@
 
 ///Start decompression or pressurization cycle depending on the passed direction
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/start_cycle(cycle_direction, obj/machinery/door/airlock/source_airlock = null)
-	if(on || !cycling_set_up || !powered())
+	if(on || !cycling_set_up || airlocks_animating || !powered())
 		return FALSE
 
 	pump_direction = cycle_direction
@@ -231,7 +233,9 @@
 	for(var/obj/machinery/door/airlock/airlock in (internal_airlocks + external_airlocks))
 		INVOKE_ASYNC(airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, secure_close))
 
-	stoplag(0.2 SECONDS) // Wait for closing animation
+	airlocks_animating = TRUE
+	stoplag(1 SECONDS) // Wait for closing animation
+	airlocks_animating = FALSE
 
 	on = TRUE
 	cycle_start_time = world.time
@@ -251,7 +255,7 @@
 			stop_cycle("Low pipe pressure, skipping cycle. Proceed with caution.", unbolt_only = TRUE)
 			return TRUE
 
-		if(source_airlock)
+		if(!source_airlock)
 			source_airlock = internal_airlocks[1]
 		source_airlock.say("Pressurizing airlock.")
 	else
@@ -266,7 +270,7 @@
 				stop_cycle("Shuttle docked, skipping cycle.")
 				return TRUE
 
-		if(source_airlock)
+		if(!source_airlock)
 			source_airlock = external_airlocks[1]
 		source_airlock.say("Decompressing airlock.")
 
@@ -286,7 +290,9 @@
 		if(open_airlock_on_cycle && !unbolt_only)
 			INVOKE_ASYNC(airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, secure_open)) //Can unbolt, but without audio
 
-	stoplag(0.2 SECONDS) // Wait for opening animation
+	airlocks_animating = TRUE
+	stoplag(1 SECONDS) // Wait for opening animation
+	airlocks_animating = FALSE
 
 	if(message)
 		unlocked_airlocks[1].say(message)
