@@ -31,7 +31,7 @@
 
 /obj/projectile/temp/cryo
 	name = "cryo beam"
-	range = 3
+	range = 9
 	temperature = -240 // Single slow shot reduces temp greatly
 
 /obj/projectile/temp/cryo/on_range()
@@ -40,3 +40,24 @@
 		var/turf/open/O = T
 		O.freeze_turf()
 	return ..()
+
+/obj/projectile/temp/pyro
+	name = "hot beam"
+	icon_state = "firebeam" // sets on fire, diff sprite!
+	range = 9
+	temperature = 240
+
+/obj/projectile/temp/pyro/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/living_target = target
+	if(!istype(living_target))
+		return
+	living_target.adjust_fire_stacks(2)
+	living_target.ignite_mob()
+
+/obj/projectile/temp/pyro/on_range()
+	var/turf/location = get_turf(src)
+	new /obj/effect/hotspot(location)
+	location.hotspot_expose(700, 50, 1)
