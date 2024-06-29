@@ -1050,9 +1050,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "eR" = (
-/obj/machinery/door/airlock/external/ruin{
-	name = "Supply Dock Airlock"
-	},
+/obj/machinery/door/airlock/external/glass/ruin,
 /obj/effect/turf_decal/stripes/full,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -1573,6 +1571,16 @@
 /obj/item/melee/energy/axe,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"jW" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/warning/vacuum/external/directional/east,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/white/corner,
+/area/station/medical/medbay)
 "kj" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
@@ -1607,9 +1615,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "my" = (
-/obj/machinery/door/airlock/external/ruin{
-	name = "Supply Dock Airlock"
-	},
+/obj/machinery/door/airlock/external/glass/ruin,
 /obj/effect/turf_decal/stripes/full,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2197,16 +2203,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
-"NH" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/light/directional/east,
-/obj/structure/sign/warning/vacuum/external/directional/east,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white/corner,
-/area/station/medical/medbay)
 "NN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -8389,8 +8385,8 @@ Jf
 Ks
 Bn
 uD
+jW
 yr
-NH
 es
 by
 eu
@@ -8481,7 +8477,7 @@ by
 by
 Of
 tj
-Of
+by
 by
 by
 by
@@ -8573,8 +8569,8 @@ aa
 ck
 rO
 cz
-rO
 ck
+aa
 aa
 et
 ev
@@ -8665,8 +8661,8 @@ aa
 ck
 rO
 pI
-rO
 ck
+aa
 aa
 et
 et
@@ -8757,8 +8753,8 @@ aa
 ck
 rO
 rO
-rO
 ck
+aa
 aa
 aa
 aa
@@ -8849,8 +8845,8 @@ aa
 by
 ja
 ja
-ja
 by
+aa
 aa
 aa
 aa
