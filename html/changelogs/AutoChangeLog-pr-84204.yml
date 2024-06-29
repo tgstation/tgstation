@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Toggling ambient ship sounds will now instantly turn it on/off."

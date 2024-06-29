@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Monkeys that become sentient through the sentience helmet will no longer be notified that they can ventcrawl."
