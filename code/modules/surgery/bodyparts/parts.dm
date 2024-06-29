@@ -396,11 +396,13 @@
 	unarmed_damage_low = 7
 	unarmed_damage_high = 15
 	unarmed_effectiveness = 15
+	biological_state = BIO_STANDARD_JOINTED
 	/// Datum describing how to offset things worn on the foot of this leg, note that an x offset won't do anything here
 	var/datum/worn_feature_offset/worn_foot_offset
 	/// Used by the bloodysoles component to make footprints
 	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
-	biological_state = BIO_STANDARD_JOINTED
+	/// What does our footsteps (barefoot) sound like?
+	var/footstep_type = FOOTSTEP_MOB_BAREFOOT
 
 /obj/item/bodypart/leg/Destroy()
 	QDEL_NULL(worn_foot_offset)
