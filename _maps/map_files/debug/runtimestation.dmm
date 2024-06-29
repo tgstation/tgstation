@@ -1102,7 +1102,6 @@
 /turf/open/floor/plating,
 /area/station/cargo/storage)
 "fe" = (
-/obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/button/door/directional/east{
@@ -1116,6 +1115,9 @@
 	layer = 4;
 	name = "Unloading Doors";
 	pixel_y = 8
+	},
+/obj/machinery/computer/cargo{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -1185,9 +1187,6 @@
 /area/space)
 "fq" = (
 /obj/machinery/camera/autoname/directional/west,
-/obj/machinery/computer/cargo{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "fr" = (
@@ -1668,8 +1667,10 @@
 /turf/open/floor/plating,
 /area/station/commons/storage/primary)
 "oY" = (
-/obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "pa" = (
@@ -2404,8 +2405,10 @@
 /turf/closed/wall/r_wall,
 /area/station/cargo/bitrunning/den)
 "UG" = (
-/obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "Va" = (
