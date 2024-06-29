@@ -330,7 +330,7 @@
 	to_chat(eater, span_notice("You feel energized as you bite into [our_plant]."))
 	var/batteries_recharged = FALSE
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	for(var/obj/item/stock_parts/cell/found_cell in eater.get_all_contents())
+	for(var/obj/item/stock_parts/power_store/found_cell in eater.get_all_contents())
 		var/newcharge = min(our_seed.potency * 0.01 * found_cell.maxcharge, found_cell.maxcharge)
 		if(found_cell.charge < newcharge)
 			found_cell.charge = newcharge
@@ -586,7 +586,7 @@
 		return
 
 	to_chat(user, span_notice("You add some cable to [our_plant] and slide it inside the battery encasing."))
-	var/obj/item/stock_parts/cell/potato/pocell = new /obj/item/stock_parts/cell/potato(user.loc)
+	var/obj/item/stock_parts/power_store/cell/potato/pocell = new /obj/item/stock_parts/power_store/cell/potato(user.loc)
 	pocell.icon = our_plant.icon // Just in case the plant icons get spread out in different files eventually, this trait won't cause error sprites (also yay downstreams)
 	pocell.icon_state = our_plant.icon_state
 	pocell.maxcharge = our_seed.potency * 0.02 * STANDARD_CELL_CHARGE
