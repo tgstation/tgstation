@@ -315,6 +315,7 @@
 		else if(open_airlock_on_cycle)
 			INVOKE_ASYNC(airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, secure_open))
 
+	cycle_timeout *= round((internal_airlocks.len + external_airlocks.len) / 2)
 	cycling_set_up = TRUE
 	if(can_unwrench)
 		say("Cycling setup complete.")
@@ -388,6 +389,7 @@
 
 	external_airlocks = list()
 	internal_airlocks = list()
+	cycle_timeout = initial(cycle_timeout)
 	cycling_set_up = FALSE
 
 
@@ -400,6 +402,8 @@
 		user.ventcrawl_layer = clamp(user.ventcrawl_layer - 2, PIPING_LAYER_DEFAULT - 1, PIPING_LAYER_DEFAULT + 1)
 	to_chat(user, "You align yourself with the [user.ventcrawl_layer == 2 ? 1 : 2]\th output.")
 
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only
+	open_airlock_on_cycle = FALSE
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/lavaland
 	external_pressure_target = LAVALAND_EQUIPMENT_EFFECT_PRESSURE

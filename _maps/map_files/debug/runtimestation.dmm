@@ -1041,11 +1041,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"eR" = (
-/obj/machinery/door/airlock/external/glass/ruin,
-/obj/effect/turf_decal/stripes/full,
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "eT" = (
 /obj/machinery/conveyor{
 	dir = 5;
@@ -1547,12 +1542,6 @@
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron,
 /area/station/construction)
-"ja" = (
-/obj/machinery/door/airlock/external/glass/ruin{
-	name = "Medbay Airlock"
-	},
-/turf/open/floor/plating,
-/area/station/medical/medbay)
 "jb" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
@@ -1582,7 +1571,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/warning/vacuum/external/directional/east,
-/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white/corner,
 /area/station/medical/medbay)
 "kj" = (
@@ -1623,6 +1611,11 @@
 /obj/machinery/chem_mass_spec,
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
+"nc" = (
+/obj/machinery/door/airlock/external/glass/ruin,
+/obj/effect/turf_decal/stripes/full,
+/turf/open/floor/iron/dark,
+/area/station/cargo/storage)
 "nn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -1650,10 +1643,6 @@
 /obj/machinery/status_display/supply,
 /turf/closed/wall/r_wall,
 /area/station/commons/storage/primary)
-"ob" = (
-/obj/machinery/light/small/red/dim/directional/east,
-/turf/open/floor/iron/dark,
-/area/station/cargo/storage)
 "od" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1689,11 +1678,10 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
-"pI" = (
-/obj/machinery/atmospherics/components/unary/airlock_pump{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
+"pW" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor,
 /area/station/medical/medbay)
 "qb" = (
 /obj/machinery/door/airlock,
@@ -1736,12 +1724,12 @@
 /turf/open/floor/iron/dark,
 /area/station/construction)
 "tj" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/stripes/full,
 /obj/machinery/door/airlock/external/glass/ruin{
 	name = "Medbay Airlock"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/medical/medbay)
 "tE" = (
@@ -1845,6 +1833,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"wd" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	name = "Medbay Airlock"
+	},
+/obj/effect/turf_decal/stripes/full,
+/turf/open/floor/iron/dark,
+/area/station/medical/medbay)
 "wB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -1924,6 +1919,13 @@
 /obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"BT" = (
+/obj/machinery/atmospherics/components/unary/airlock_pump{
+	dir = 8
+	},
+/obj/machinery/light/small/red/dim/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/medical/medbay)
 "BW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -2144,13 +2146,6 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/station/medical/medbay)
-"Ks" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/white/corner,
 /area/station/medical/medbay)
 "Kx" = (
 /obj/structure/table,
@@ -2571,6 +2566,7 @@
 /obj/machinery/atmospherics/components/unary/airlock_pump{
 	dir = 8
 	},
+/obj/machinery/light/small/red/dim/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/cargo/storage)
 "Zz" = (
@@ -8429,7 +8425,7 @@ af
 af
 Aq
 Jf
-Ks
+Bn
 Bn
 uD
 jW
@@ -8525,7 +8521,7 @@ by
 Of
 tj
 by
-by
+ck
 by
 by
 eu
@@ -8616,10 +8612,10 @@ aa
 ck
 rO
 cz
-ck
-aa
-aa
-et
+pW
+rO
+rO
+by
 ev
 eA
 eA
@@ -8707,11 +8703,11 @@ aa
 aa
 ck
 rO
-pI
-ck
-aa
-aa
-et
+rO
+BT
+rO
+rO
+by
 et
 fh
 fh
@@ -8798,12 +8794,12 @@ aa
 aa
 aa
 by
-ja
-ja
+ck
+ck
 by
-aa
-aa
-aa
+wd
+wd
+by
 aa
 aa
 aa
@@ -8899,13 +8895,13 @@ aa
 aa
 aa
 aa
-fB
+fh
 eC
 SI
 Zr
 SI
 fl
-fB
+fh
 aa
 aa
 aa
@@ -8991,13 +8987,13 @@ aa
 aa
 aa
 aa
-fh
-eC
-SI
-ob
-SI
-fl
-fh
+et
+eY
+nc
+fB
+nc
+fc
+et
 aa
 aa
 aa
@@ -9083,13 +9079,13 @@ aa
 aa
 aa
 aa
-et
-eY
-eR
-et
-eR
-fc
-et
+aa
+aa
+eJ
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -9177,7 +9173,7 @@ aa
 aa
 aa
 aa
-eJ
+aa
 aa
 aa
 aa
