@@ -4676,13 +4676,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningfoundry)
-"bPv" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 1
-	},
-/turf/closed/wall,
-/area/station/maintenance/central/greater)
 "bPU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple/visible,
 /turf/open/floor/iron,
@@ -9681,6 +9674,7 @@
 	name = "Bar Backroom"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/textured_half{
 	dir = 8
 	},
@@ -10915,10 +10909,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
-"efC" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/station/service/bar)
 "efK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -31992,6 +31982,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/stone,
 /area/station/service/bar)
 "kTt" = (
@@ -38203,13 +38194,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
-"mMO" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
-/area/station/maintenance/central/greater)
 "mMY" = (
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
 	dir = 1
@@ -98835,7 +98819,7 @@ avp
 bFO
 avp
 csZ
-mMO
+avp
 obi
 jVM
 jVM
@@ -100370,7 +100354,7 @@ xMY
 dCu
 wIX
 eBC
-bPv
+jVM
 jVM
 jVM
 jVM
@@ -104237,7 +104221,7 @@ dGm
 vkh
 vkh
 vkh
-efC
+fap
 vkh
 mib
 vfM
