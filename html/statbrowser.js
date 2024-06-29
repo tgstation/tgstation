@@ -28,6 +28,7 @@ var interviewManager = { status: "", interviews: [] };
 var sdql2 = [];
 var permanent_tabs = []; // tabs that won't be cleared by wipes
 var turfcontents = [];
+var info_rows = "";
 var turfname = "";
 var imageRetryDelay = 500;
 var imageRetryLimit = 50;
@@ -263,6 +264,8 @@ function tab_change(tab) {
 		draw_interviews();
 	} else if (tab == "SDQL2") {
 		draw_sdql2();
+	} else if (tab == "Info") {
+		draw_info();
 	} else if (tab == turfname) {
 		draw_listedturf();
 	} else {
@@ -566,6 +569,10 @@ function draw_tickets() {
 	document.getElementById("statcontent").appendChild(table);
 }
 
+function draw_info() {
+	statcontentdiv.innerHTML = info_rows;
+}
+
 function draw_interviews() {
 	var body = document.createElement("div");
 	var header = document.createElement("h3");
@@ -800,6 +807,8 @@ document.addEventListener("keyup", restoreFocus);
 if (!current_tab) {
 	addPermanentTab("Status");
 	tab_change("Status");
+
+	addPermanentTab("Info");
 }
 
 window.onload = function () {
@@ -942,6 +951,15 @@ Byond.subscribeTo('update_listedturf', function (TC) {
 	turfcontents = TC;
 	if (current_tab == turfname) {
 		draw_listedturf();
+	}
+});
+
+Byond.subscribeTo('update_info', function (IR) {
+	info_rows = IR;
+	if (current_tab == "Info") {
+		draw_info();
+	} else {
+		tab_change("Info")
 	}
 });
 

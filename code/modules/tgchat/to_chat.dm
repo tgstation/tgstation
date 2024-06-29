@@ -55,11 +55,17 @@
 	type = null,
 	text = null,
 	avoid_highlighting = FALSE,
+	to_info_tab = FALSE,
 	// FIXME: These flags are now pointless and have no effect
 	handle_whitespace = TRUE,
 	trailing_newline = TRUE,
 	confidential = FALSE
 )
+	if(to_info_tab)
+		var/client/client = CLIENT_FROM_VAR(target)
+		client?.stat_panel.send_message("update_info", html);
+		return
+
 	if(isnull(Master) || !SSchat?.initialized || !MC_RUNNING(SSchat.init_stage))
 		to_chat_immediate(target, html, type, text, avoid_highlighting)
 		return
