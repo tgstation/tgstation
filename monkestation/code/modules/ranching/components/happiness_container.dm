@@ -30,8 +30,9 @@
 	src.unhappy_callbacks = unhappy_callbacks
 
 /datum/component/happiness_container/Destroy(force, silent)
-	. = ..()
+	unhappy_callbacks = null
 	QDEL_NULL(applied_visual)
+	return ..()
 
 /datum/component/happiness_container/RegisterWithParent()
 	. = ..()

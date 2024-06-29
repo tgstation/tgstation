@@ -45,6 +45,10 @@
 
 	START_PROCESSING(SSobj, src)
 
+/datum/component/hatching/Destroy(force, silent)
+	hatch_callback = null
+	return ..()
+
 /datum/component/hatching/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, failed_cooldown))
 		return

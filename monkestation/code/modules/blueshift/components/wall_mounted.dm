@@ -15,6 +15,10 @@
 	hanging_wall_turf = target_wall
 	on_drop = on_drop_callback
 
+/datum/component/wall_mounted/Destroy(force, silent)
+	on_drop = null
+	return ..()
+
 /datum/component/wall_mounted/RegisterWithParent()
 	ADD_TRAIT(parent, TRAIT_WALLMOUNTED, REF(src))
 	RegisterSignal(hanging_wall_turf, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))

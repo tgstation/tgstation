@@ -25,6 +25,10 @@
 
 	add_movespeed_modifier(/datum/movespeed_modifier/alien_quick)
 
+/mob/living/carbon/alien/adult/nova/runner/Destroy()
+	QDEL_NULL(evade_ability)
+	return ..()
+
 /mob/living/carbon/alien/adult/nova/runner/create_internal_organs()
 	organs += new /obj/item/organ/internal/alien/plasmavessel/small/tiny
 	..()

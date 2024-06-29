@@ -34,6 +34,11 @@
 	created_amount = amount
 	src.created = created
 
+/datum/component/shearable/Destroy(force, silent)
+	regrow = null
+	post_shear = null
+	return ..()
+
 /datum/component/shearable/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_MOB_SHEARED, PROC_REF(try_shear))

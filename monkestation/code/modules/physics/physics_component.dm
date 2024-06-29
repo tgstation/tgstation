@@ -122,10 +122,10 @@
 	set_angle(angle)
 
 /datum/component/movable_physics/Destroy(force, silent)
-	. = ..()
 	bounce_callback = null
 	stop_callback = null
 	cached_transform = null
+	return ..()
 
 /datum/component/movable_physics/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(on_bump))

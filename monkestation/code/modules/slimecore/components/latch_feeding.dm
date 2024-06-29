@@ -34,9 +34,9 @@
 
 /datum/component/latch_feeding/Destroy(force, silent)
 	REMOVE_TRAIT(parent, TRAIT_FEEDING, LATCH_TRAIT)
-	. = ..()
 	target = null
 	check_and_replace = null
+	return ..()
 
 /datum/component/latch_feeding/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_LIVING_SET_BUCKLED, PROC_REF(check_buckled))

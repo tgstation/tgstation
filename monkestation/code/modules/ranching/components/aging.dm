@@ -19,6 +19,10 @@
 
 	START_PROCESSING(SSobj, src)
 
+/datum/component/aging/Destroy(force, silent)
+	death_callback = null
+	return ..()
+
 /datum/component/aging/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_AGE_ADJUSTMENT, PROC_REF(adjust_age))
