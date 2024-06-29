@@ -730,7 +730,7 @@
 		return add_item_to_steal(src, /obj/item/gun/energy/e_gun)
 
 /datum/objective_item/steal/spy/laser_gun
-	name = "an X-03 laser gun"
+	name = "an X-03 Laser Gun"
 	targetitem = /obj/item/gun/energy/laser
 	excludefromjob = list(
 		JOB_CAPTAIN,

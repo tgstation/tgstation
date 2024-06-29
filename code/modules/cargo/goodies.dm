@@ -74,7 +74,7 @@
 	contains = list(/obj/item/gun/energy/e_gun)
 
 /datum/supply_pack/goody/laser_single
-	name = "X-03 laser gun Single-Pack"
+	name = "X-03 Laser Gun Single-Pack"
 	desc = "Contains one X-03 laser gun, the lethal workhorse of Nanotrasen security everywhere."
 	cost = PAYCHECK_COMMAND * 6
 	access_view = ACCESS_WEAPONS

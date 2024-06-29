@@ -72,8 +72,8 @@
 	desc = "A suitcase containing the necessary gun parts to construct a tesla cannon around a stabilized flux anomaly. Handle with care."
 
 /obj/item/weaponcrafting/gunkit/xray
-	name = "X-06 x-ray laser gun parts kit (lethal)"
-	desc = "A suitcase containing the necessary gun parts to turn an X-03 laser gun into an X-06 x-ray laser gun. Do not point most parts directly towards face."
+	name = "X-07 x-ray laser gun parts kit (lethal)"
+	desc = "A suitcase containing the necessary gun parts to turn an X-03 laser gun into an X-07 x-ray laser gun. Do not point most parts directly towards face."
 
 /obj/item/weaponcrafting/gunkit/ion
 	name = "ion carbine parts kit (nonlethal/highly destructive/very lethal (silicons))"

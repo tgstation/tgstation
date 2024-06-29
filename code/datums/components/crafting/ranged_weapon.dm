@@ -96,7 +96,7 @@
 	category = CAT_WEAPON_RANGED
 
 /datum/crafting_recipe/xraylaser
-	name = "X-ray Laser Gun"
+	name = "X-07 x-ray Laser Gun"
 	result = /obj/item/gun/energy/xray
 	reqs = list(
 		/obj/item/gun/energy/laser = 1,

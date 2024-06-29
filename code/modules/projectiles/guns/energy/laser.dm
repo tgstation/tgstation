@@ -1,5 +1,5 @@
 /obj/item/gun/energy/laser
-	name = "laser gun"
+	name = "X-03 Laser Gun"
 	desc = "A basic energy-based laser gun that fires concentrated beams of light which pass through glass and thin metal."
 	icon_state = "laser"
 	inhand_icon_state = "laser"
@@ -116,7 +116,7 @@
 ///Laser Cannon
 
 /obj/item/gun/energy/lasercannon
-	name = "accelerator laser cannon"
+	name = "X-06 accelerator laser cannon"
 	desc = "An advanced laser cannon that does more damage the farther away the target is."
 	icon_state = "lasercannon"
 	inhand_icon_state = "laser"
