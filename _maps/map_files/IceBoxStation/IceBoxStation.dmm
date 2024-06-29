@@ -3900,7 +3900,7 @@
 	network = list("ss13","test","rd","xeno")
 	},
 /obj/machinery/light/directional/west,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "biR" = (
 /obj/structure/table/glass,
@@ -6274,7 +6274,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "bOX" = (
 /obj/structure/cable,
@@ -54974,6 +54974,9 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
+"qvN" = (
+/turf/open/floor/engine/xenobio,
+/area/station/science/xenobiology)
 "qvQ" = (
 /obj/structure/closet/secure_closet/atmospherics,
 /turf/open/floor/iron/dark,
@@ -67710,7 +67713,7 @@
 /area/station/maintenance/port/aft)
 "ujp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "ujs" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -69133,7 +69136,7 @@
 	dir = 4
 	},
 /obj/structure/sign/warning/gas_mask/directional/north,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "uHV" = (
 /obj/structure/disposalpipe/trunk/multiz{
@@ -69907,7 +69910,7 @@
 /area/station/service/chapel)
 "uUn" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "uUq" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
@@ -70712,7 +70715,7 @@
 /area/station/command/heads_quarters/captain)
 "viR" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "viV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -189001,12 +189004,12 @@ xMq
 alM
 oxO
 ffe
-abe
-abe
-abe
+qvN
+qvN
+qvN
 biI
-abe
-abe
+qvN
+qvN
 qLY
 eGN
 lZX
@@ -189258,12 +189261,12 @@ xMq
 alM
 oxO
 ffe
-abe
-abe
-abe
+qvN
+qvN
+qvN
 uUn
-abe
-abe
+qvN
+qvN
 qLY
 vfe
 tsa
@@ -189516,11 +189519,11 @@ alM
 oxO
 ffe
 viR
-abe
-abe
+qvN
+qvN
 bOT
-abe
-abe
+qvN
+qvN
 qLY
 tkP
 fPv
@@ -189776,7 +189779,7 @@ qLY
 qLY
 uHS
 ujp
-abe
+qvN
 ctF
 qLY
 qLY
