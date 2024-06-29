@@ -21,6 +21,8 @@
 	var/list/modifiers = list()
 	/// Is the modifiers modal menu open (for the host)
 	var/mod_menu_open = FALSE
+	/// artificial time padding when we start loading to give lighting a breather (admin starts will set this to 0)
+	var/start_time = 8 SECONDS
 
 /datum/deathmatch_lobby/New(mob/player)
 	. = ..()
@@ -79,7 +81,7 @@
 
 	UnregisterSignal(source, COMSIG_LAZY_TEMPLATE_LOADED)
 	map.template_in_use = FALSE
-	addtimer(CALLBACK(src, PROC_REF(start_game_after_delay)), 8 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(start_game_after_delay)), start_time)
 
 /datum/deathmatch_lobby/proc/start_game_after_delay()
 	if (!length(player_spawns) || length(player_spawns) < length(players))
@@ -152,7 +154,8 @@
 		GLOB.deathmatch_game.modifiers[modifier].apply(new_player, src)
 
 	// register death handling.
-	RegisterSignals(new_player, list(COMSIG_LIVING_DEATH, COMSIG_MOB_GHOSTIZED, COMSIG_QDELETING), PROC_REF(player_died))
+	RegisterSignals(new_player, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(player_died))
+	RegisterSignal(new_player, COMSIG_MOB_GHOSTIZED, PROC_REF(player_ghosted))
 
 /datum/deathmatch_lobby/proc/game_took_too_long()
 	if (!location || QDELING(src))
@@ -184,6 +187,14 @@
 	clear_reservation()
 	GLOB.deathmatch_game.remove_lobby(host)
 	log_game("Deathmatch game [host] ended.")
+
+/datum/deathmatch_lobby/proc/player_ghosted(mob/living/player)
+	SIGNAL_HANDLER
+	var/mob/dead/observer/observer = GLOB.directory[player.ckey].mob
+	if(istype(observer))
+		player_died(player)
+		return
+	players[player.mind.key]["mob"] = player.mind.current
 
 /datum/deathmatch_lobby/proc/player_died(mob/living/player, gibbed)
 	SIGNAL_HANDLER
@@ -499,12 +510,13 @@
 
 		if ("admin") // Admin functions
 			if (!check_rights(R_ADMIN))
-				message_admins("[usr.key] has attempted to use admin functions in a deathmatch lobby!")
+				message_admins("[usr.key] has attempted to use admin functions in a deathmatch lobby without being an admin!")
 				log_admin("[key_name(usr)] tried to use the deathmatch lobby admin functions without authorization.")
 				return
 			switch (params["func"])
 				if ("Force start")
 					log_admin("[key_name(usr)] force started deathmatch lobby [host].")
+					start_time = 0
 					start_game()
 
 	return FALSE
