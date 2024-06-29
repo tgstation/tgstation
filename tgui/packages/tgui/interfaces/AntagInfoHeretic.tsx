@@ -304,19 +304,14 @@ const KnowledgeTree = (props) => {
                           textColor="white"
                           bold
                         >
-                          {node.finished
-                            ? ''
-                            : node.cost > 0
-                              ? node.cost
-                              : 'FREE'}
+                          {!node.finished &&
+                            (node.cost > 0 ? node.cost : 'FREE')}
                         </Box>
                       </Button>
-                      {node.ascension ? (
+                      {!!node.ascension && (
                         <Box textAlign="center" fontSize="32px">
                           <span style={hereticPurple}>DUSK</span>
                         </Box>
-                      ) : (
-                        ''
                       )}
                     </Flex.Item>
                   ))}
