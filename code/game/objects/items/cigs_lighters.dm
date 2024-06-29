@@ -333,13 +333,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	force = 4
 	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(log(1.3, reagents.get_reagent_amount(/datum/reagent/toxin/plasma)), 1), get_turf(src), 0, 0)
+		e.set_up(round(log(1.5, reagents.get_reagent_amount(/datum/reagent/toxin/plasma)), 1), get_turf(src), 0, 0)
 		e.start(src)
 		qdel(src)
 		return
 	if(reagents.get_reagent_amount(/datum/reagent/fuel)) // the fuel explodes, too, but much less violently
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(log(1.5, reagents.get_reagent_amount(/datum/reagent/fuel)), 1), get_turf(src), 0, 0)
+		e.set_up(round(log(2, reagents.get_reagent_amount(/datum/reagent/fuel)), 1), get_turf(src), 0, 0)
 		e.start(src)
 		qdel(src)
 		return
@@ -1246,7 +1246,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
-		e.set_up(round(log(1.3, reagents.get_reagent_amount(/datum/reagent/toxin/plasma)), 1), get_turf(src), 0, 0)
+		e.set_up(round(log(1.5, reagents.get_reagent_amount(/datum/reagent/toxin/plasma)), 1), get_turf(src), 0, 0)
 		e.start(src)
 		qdel(src)
 
