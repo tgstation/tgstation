@@ -126,7 +126,7 @@
 	if(!rust_filter)
 		return
 
-	animate(rust_filter, alpha = 0, time = filter_duration * (19/20))
+	animate(rust_filter, alpha = 0, time = filter_duration * (9/20))
 
 /datum/action/cooldown/spell/pointed/rust_construction/proc/remove_wall_filter(turf/closed/wall)
 	if(QDELETED(wall))

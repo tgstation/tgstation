@@ -364,8 +364,8 @@
 
 	#ifdef TESTING
 	if(turfsSkipped)
-	#endif
 		testing("Skipped loading [turfsSkipped] default turfs")
+	#endif
 
 	return sucessful
 

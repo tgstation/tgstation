@@ -269,10 +269,11 @@
 	// Cool effect for the rune as well as the item
 	var/obj/effect/heretic_rune/rune = locate() in range(2, user)
 	if(rune)
-		rune.gender_reveal(outline_color = COLOR_CULT_RED,\
-		ray_color = null,\
-		do_float = FALSE,\
-		do_layer = FALSE,\
+		rune.gender_reveal(
+			outline_color = COLOR_CULT_RED,
+			ray_color = null,
+			do_float = FALSE,
+			do_layer = FALSE,
 		)
 
 	addtimer(CALLBACK(src, PROC_REF(deposit_reward), user, loc, null, rune), 5 SECONDS)

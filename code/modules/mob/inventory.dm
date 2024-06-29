@@ -290,6 +290,10 @@
 /mob/proc/is_holding_items()
 	return !!locate(/obj/item) in held_items
 
+/**
+ * Returns a list of all dropped held items.
+ * If none were dropped, returns an empty list.
+ */
 /mob/proc/drop_all_held_items()
 	. = list()
 	for(var/obj/item/I in held_items)

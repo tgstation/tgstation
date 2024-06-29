@@ -40,5 +40,5 @@
 	to_chat(owner, span_notice("Your master is [master]. Assist them to all ends."))
 
 	if(istype(owner.current, /mob/living/basic/construct/harvester/heretic))
-		var/mob/living/basic/construct/harvester/heretic/shitcode = owner
+		var/mob/living/basic/construct/harvester/heretic/shitcode = owner.current
 		shitcode.master = master

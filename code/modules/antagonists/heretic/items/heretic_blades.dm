@@ -226,16 +226,15 @@
 	else
 		after_use_message = null
 
-/obj/item/melee/sickly_blade/cursed/afterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
+/obj/item/melee/sickly_blade/cursed/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	. = ..()
-	if(!proximity_flag)
-		return
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	if(!heretic_datum)
-		return
+		return NONE
 
 	// Can only carve runes with it if off combat mode.
 	if(isopenturf(target) && !user.combat_mode)
 		heretic_datum.try_draw_rune(user, target, drawing_time = 14 SECONDS) // Faster than pen, slower than cicatrix
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
+	return NONE
