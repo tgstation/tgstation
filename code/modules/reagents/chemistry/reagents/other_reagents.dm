@@ -128,6 +128,8 @@
 		bloodsplatter.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 /datum/reagent/blood/get_taste_description(mob/living/taster)
+	if(isnull(taster))
+		return
 	if(!HAS_TRAIT(taster, TRAIT_DETECTIVES_TASTE))
 		return ..()
 	var/blood_type = data?["blood_type"]
