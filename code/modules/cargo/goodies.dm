@@ -67,22 +67,22 @@
 	contains = list(/obj/item/storage/belt/holster/energy/disabler)
 
 /datum/supply_pack/goody/energy_single
-	name = "Energy Gun Single-Pack"
+	name = "E-05 Energy Gun Single-Pack"
 	desc = "Contains one energy gun, capable of firing both non-lethal and lethal blasts of light."
 	cost = PAYCHECK_COMMAND * 12
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/energy/e_gun)
 
 /datum/supply_pack/goody/laser_single
-	name = "Laser Gun Single-Pack"
-	desc = "Contains one laser gun, the lethal workhorse of Nanotrasen security everywhere."
+	name = "X-03 laser gun Single-Pack"
+	desc = "Contains one X-03 laser gun, the lethal workhorse of Nanotrasen security everywhere."
 	cost = PAYCHECK_COMMAND * 6
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/energy/laser)
 
 /datum/supply_pack/goody/hell_single
 	name = "Hellgun Kit Single-Pack"
-	desc = "Contains one hellgun degradation kit, an old pattern of laser gun infamous for its ability to horribly disfigure targets with burns. Technically violates the Space Geneva Convention when used on humanoids."
+	desc = "Contains one hellgun degradation kit, an older model of the X-03 laser gun infamous for its ability to horribly disfigure targets with burns. Technically violates the Space Geneva Convention when used on humanoids."
 	cost = PAYCHECK_CREW * 2
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/weaponcrafting/gunkit/hellgun)

@@ -58,7 +58,7 @@
 
 /datum/supply_pack/security/laser
 	name = "Lasers Crate"
-	desc = "Contains three lethal, high-energy laser guns."
+	desc = "Contains three lethal, high-energy X-03 laser guns."
 	cost = CARGO_CRATE_VALUE * 4
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/gun/energy/laser = 3)
@@ -223,7 +223,7 @@
 	crate_name = "\improper DRAGnet crate"
 
 /datum/supply_pack/security/armory/energy
-	name = "Energy Guns Crate"
+	name = "E-05 Energy Guns Crate"
 	desc = "Contains two Energy Guns, capable of firing both nonlethal and lethal \
 		blasts of light."
 	cost = CARGO_CRATE_VALUE * 18

@@ -68,7 +68,7 @@
 	maxcharge = STANDARD_CELL_CHARGE * 0.6
 
 /obj/item/stock_parts/power_store/cell/hos_gun
-	name = "X-01 multiphase energy gun power cell"
+	name = "multiphase energy gun power cell"
 	maxcharge = STANDARD_CELL_CHARGE * 1.2
 
 /obj/item/stock_parts/power_store/cell/pulse //200 pulse shots

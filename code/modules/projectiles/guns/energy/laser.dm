@@ -23,21 +23,21 @@
 
 /obj/item/gun/energy/laser/practice
 	name = "practice laser gun"
-	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
+	desc = "A modified version of the basic X-03 laser gun, this one fires less concentrated energy bolts designed for target practice."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = FALSE
 	item_flags = NONE
 	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/laser/retro
-	name ="retro laser gun"
+	name ="X-01 laser gun"
 	icon_state = "retro"
-	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
+	desc = "An older model of the basic X-03 laser gun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 	ammo_x_offset = 3
 
 /obj/item/gun/energy/laser/carbine
-	name = "laser carbine"
-	desc = "A modified laser gun which can shoot far faster, but each shot is far less damaging."
+	name = "X-04 laser carbine"
+	desc = "A modified X-03 laser gun which can shoot far faster, but each shot is far less damaging."
 	icon_state = "laser_carbine"
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/carbine)
 
@@ -47,21 +47,21 @@
 
 /obj/item/gun/energy/laser/carbine/practice
 	name = "practice laser carbine"
-	desc = "A modified version of the laser carbine, this one fires even less concentrated energy bolts designed for target practice."
+	desc = "A modified version of the X-04 laser carbine, this one fires even less concentrated energy bolts designed for target practice."
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/carbine/practice)
 	clumsy_check = FALSE
 	item_flags = NONE
 	gun_flags = NOT_A_REAL_GUN
 
 /obj/item/gun/energy/laser/retro/old
-	name ="laser gun"
+	name ="X-01 laser gun"
 	icon_state = "retro"
 	desc = "First generation lasergun, developed by Nanotrasen. Suffers from ammo issues but its unique ability to recharge its ammo without the need of a magazine helps compensate. You really hope someone has developed a better lasergun while you were in cryo."
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/old)
 	ammo_x_offset = 3
 
 /obj/item/gun/energy/laser/hellgun
-	name ="hellfire laser gun"
+	name ="X-02 Hellfire Laser Gun"
 	desc = "A relic of a weapon, built before NT began installing regulators on its laser weaponry. This pattern of laser gun became infamous for the gruesome burn wounds it caused, and was quietly discontinued once it began to affect NT's reputation."
 	icon_state = "hellgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire)
@@ -71,7 +71,7 @@
 	icon_state = "caplaser"
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = null
-	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
+	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding. No one knows who made it or how it came to be."
 	force = 10
 	ammo_x_offset = 3
 	selfcharge = 1
@@ -98,8 +98,8 @@
 	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 /obj/item/gun/energy/laser/scatter
-	name = "scatter laser gun"
-	desc = "A laser gun equipped with a refraction kit that spreads bolts."
+	name = "X-05 scatter laser gun"
+	desc = "An X-03 laser gun equipped with a refraction kit that spreads bolts."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
 
 /obj/item/gun/energy/laser/scatter/shotty
@@ -196,6 +196,6 @@
 	payment_amount = 20
 
 /obj/item/gun/energy/laser/luxurypaywall
-	name = "luxurious laser gun"
-	desc = "A laser gun modified to cost 20 credits to fire. Point towards poor people."
+	name = "luxurious X-03 laser gun"
+	desc = "An X-03 laser gun modified to cost 20 credits to fire. Point towards poor people."
 	pin = /obj/item/firing_pin/paywall/luxury

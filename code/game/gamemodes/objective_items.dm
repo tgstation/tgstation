@@ -704,7 +704,7 @@
 	steal_hint = "A hand-held disabler, often found in the possession of Security Officers."
 
 /datum/objective_item/steal/spy/energy_gun
-	name = "an energy gun"
+	name = "a E-05 energy gun"
 	targetitem = /obj/item/gun/energy/e_gun
 	excludefromjob = list(
 		JOB_CAPTAIN,
@@ -730,7 +730,7 @@
 		return add_item_to_steal(src, /obj/item/gun/energy/e_gun)
 
 /datum/objective_item/steal/spy/laser_gun
-	name = "a laser gun"
+	name = "an X-03 laser gun"
 	targetitem = /obj/item/gun/energy/laser
 	excludefromjob = list(
 		JOB_CAPTAIN,

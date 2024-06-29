@@ -110,7 +110,7 @@
 	blacklist += subtypesof(/obj/item/gun/energy/laser)
 
 /datum/crafting_recipe/hellgun
-	name = "Hellfire Laser Gun"
+	name = "X-02 Hellfire Laser Gun"
 	result = /obj/item/gun/energy/laser/hellgun
 	reqs = list(
 		/obj/item/gun/energy/laser = 1,

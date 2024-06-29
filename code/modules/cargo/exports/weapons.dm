@@ -79,4 +79,4 @@
 	cost = CARGO_CRATE_VALUE * 1.5
 	unit_name = "WT-550 automatic rifle"
 	export_types = list(/obj/item/gun/ballistic/automatic/wt550)
-	
+

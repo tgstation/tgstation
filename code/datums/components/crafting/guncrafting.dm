@@ -72,12 +72,12 @@
 	desc = "A suitcase containing the necessary gun parts to construct a tesla cannon around a stabilized flux anomaly. Handle with care."
 
 /obj/item/weaponcrafting/gunkit/xray
-	name = "x-ray laser gun parts kit (lethal)"
-	desc = "A suitcase containing the necessary gun parts to turn a laser gun into a x-ray laser gun. Do not point most parts directly towards face."
+	name = "X-06 x-ray laser gun parts kit (lethal)"
+	desc = "A suitcase containing the necessary gun parts to turn an X-03 laser gun into an X-06 x-ray laser gun. Do not point most parts directly towards face."
 
 /obj/item/weaponcrafting/gunkit/ion
 	name = "ion carbine parts kit (nonlethal/highly destructive/very lethal (silicons))"
-	desc = "A suitcase containing the necessary gun parts to transform a standard laser gun into a ion carbine. Perfect against lockers you don't have access to."
+	desc = "A suitcase containing the necessary gun parts to transform a standard X-03 laser gun into a ion carbine. Perfect against lockers you don't have access to."
 
 /obj/item/weaponcrafting/gunkit/temperature
 	name = "temperature gun parts kit (less lethal/very lethal (lizardpeople))"
@@ -92,5 +92,5 @@
 	desc = "Highly illegal weapons refurbishment kit that allows you to turn the standard proto-kinetic accelerator into a near-duplicate energy crossbow. Almost like the real thing!"
 
 /obj/item/weaponcrafting/gunkit/hellgun
-	name = "hellfire laser gun degradation kit (warcrime lethal)"
+	name = "X-02 "Hellfire" Laser Gun degradation kit (warcrime lethal)"
 	desc = "Take a perfectly functioning laser gun. Butcher the inside of the gun so it runs hot and mean. You now have a hellfire laser. You monster."
