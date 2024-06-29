@@ -220,7 +220,7 @@
 
 
 ///Start decompression or pressurization cycle depending on the passed direction
-/obj/machinery/atmospherics/components/unary/airlock_pump/proc/start_cycle(cycle_direction, obj/machinery/door/airlock/airlock/source_airlock = null)
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/start_cycle(cycle_direction, obj/machinery/door/airlock/source_airlock = null)
 	if(on || !cycling_set_up || !powered())
 		return FALSE
 
