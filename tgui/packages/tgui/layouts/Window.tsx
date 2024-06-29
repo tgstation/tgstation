@@ -52,8 +52,8 @@ export const Window = (props: Props) => {
   const { config, suspended } = useBackend();
   const { debugLayout = false } = useDebug();
 
-  if (!suspended) {
-    useEffect(() => {
+  useEffect(() => {
+    if (!suspended) {
       const updateGeometry = () => {
         const options = {
           ...config.window,
@@ -78,8 +78,8 @@ export const Window = (props: Props) => {
       return () => {
         logger.log('unmounting');
       };
-    }, [width, height]);
-  }
+    }
+  }, [width, height]);
 
   const dispatch = globalStore.dispatch;
   const fancy = config.window?.fancy;
