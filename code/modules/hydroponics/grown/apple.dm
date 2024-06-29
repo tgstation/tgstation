@@ -8,7 +8,7 @@
 	product = /obj/item/food/grown/apple
 	lifespan = 55
 	endurance = 35
-	yield = 5
+	yield = 50
 	harvest_age = 200
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "apple-grow"

@@ -8,7 +8,7 @@
 	product = /obj/item/food/grown/cucumber
 	maturation = 10
 	production = 1
-	yield = 5
+	yield = 50
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "cucumber-grow"
 	icon_dead = "cucumber-dead"

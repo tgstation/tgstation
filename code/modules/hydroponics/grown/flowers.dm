@@ -8,7 +8,7 @@
 	product = /obj/item/food/grown/poppy
 	endurance = 10
 	maturation = 8
-	yield = 6
+	yield = 60
 	potency = 20
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
@@ -65,7 +65,7 @@
 	production = 5
 	endurance = 10
 	maturation = 12
-	yield = 4
+	yield = 40
 	potency = 20
 	growthstages = 4
 	weed_rate = 2
@@ -140,7 +140,7 @@
 	endurance = 20
 	maturation = 7
 	production = 1
-	yield = 2
+	yield = 20
 	potency = 30
 	growthstages = 4
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/preserved)
@@ -169,7 +169,7 @@
 	genes = list(/datum/plant_gene/trait/attack/sunflower_attack, /datum/plant_gene/trait/preserved)
 	endurance = 20
 	production = 2
-	yield = 2
+	yield = 20
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "sunflower-grow"

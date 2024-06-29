@@ -10,7 +10,7 @@
 	endurance = 25
 	maturation = 15
 	production = 1
-	yield = 2
+	yield = 20
 	potency = 50
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing.dmi'
@@ -68,7 +68,7 @@
 	endurance = 50
 	maturation = 15
 	production = 1
-	yield = 2
+	yield = 20
 	potency = 50
 	//growthstages = 3
 	//growing_icon = 'icons/obj/hydroponics/growing.dmi'

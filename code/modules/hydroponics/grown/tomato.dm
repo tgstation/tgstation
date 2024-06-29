@@ -82,7 +82,7 @@
 	species = "bluespacetomato"
 	plantname = "Bluespace Tomato Plants"
 	product = /obj/item/food/grown/tomato/blue/bluespace
-	yield = 2
+	yield = 20
 	possible_mutations = list()
 	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/backfire/bluespace)
 	reagents_add = list(/datum/reagent/lube = 0.2, /datum/reagent/bluespace = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
@@ -106,7 +106,7 @@
 	species = "killertomato"
 	plantname = "Killer-Tomato Plants"
 	product = /obj/item/food/grown/tomato/killer
-	yield = 2
+	yield = 20
 	genes = list(/datum/plant_gene/trait/mob_transformation/tomato)
 	growthstages = 2
 	icon_grow = "killertomato-grow"

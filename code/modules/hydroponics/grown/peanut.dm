@@ -8,7 +8,7 @@
 	product = /obj/item/food/grown/peanut
 	lifespan = 55
 	endurance = 35
-	yield = 5
+	yield = 50
 	growing_icon = 'icons/obj/hydroponics/growing.dmi'
 	icon_grow = "peanut-grow"
 	icon_dead = "peanut-dead"

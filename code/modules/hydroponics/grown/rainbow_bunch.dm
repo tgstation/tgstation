@@ -10,7 +10,7 @@
 	endurance = 10
 	maturation = 6
 	production = 3
-	yield = 5
+	yield = 50
 	potency = 20
 	growthstages = 4
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'

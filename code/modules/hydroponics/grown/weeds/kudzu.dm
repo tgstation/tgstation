@@ -11,7 +11,7 @@
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy)
 	lifespan = 20
 	endurance = 10
-	yield = 4
+	yield = 40
 	growthstages = 4
 	rarity = 30
 	var/list/mutations = list()

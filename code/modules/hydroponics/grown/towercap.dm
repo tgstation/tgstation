@@ -9,7 +9,7 @@
 	endurance = 50
 	maturation = 15
 	production = 1
-	yield = 5
+	yield = 50
 	potency = 50
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'

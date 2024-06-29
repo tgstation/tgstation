@@ -12,7 +12,7 @@
 	endurance = 25
 	maturation = 30
 	production = 5
-	yield = 4
+	yield = 40
 	growthstages = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
@@ -41,7 +41,7 @@
 	endurance = 8
 	maturation = 10
 	production = 1
-	yield = 1 //seeds if there isn't a dna inside
+	yield = 10
 	potency = 30
 	var/volume = 5
 	var/ckey

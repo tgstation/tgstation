@@ -9,7 +9,7 @@
 	lifespan = 20
 	maturation = 35
 	production = 5
-	yield = 10
+	yield = 100
 	growthstages = 3
 	icon_dead = "tobacco-dead"
 	possible_mutations = list(/datum/hydroponics/plant_mutation/space_tobacco)

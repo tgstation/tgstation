@@ -9,7 +9,7 @@
 	endurance = 30
 	maturation = 12
 	production = 6
-	yield = 2
+	yield = 20
 	growthstages = 3
 	reagents_add = list()
 	possible_mutations = list(/datum/hydroponics/plant_mutation/kudzu_vines)

@@ -9,7 +9,7 @@
 	lifespan = 20
 	maturation = 25
 	production = 5
-	yield = 2
+	yield = 20
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "berry-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "berry-dead" // Same for the dead icon
@@ -118,7 +118,7 @@
 	endurance = 25
 	maturation = 30
 	production = 5
-	yield = 4
+	yield = 40
 	growthstages = 2
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "grape-grow"
@@ -171,7 +171,7 @@
 	lifespan = 20
 	maturation = 25
 	production = 5
-	yield = 2
+	yield = 20
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "toechtauese-grow"
 	icon_dead = "toechtauese-dead"

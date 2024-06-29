@@ -5,7 +5,7 @@
 	species = "garlic"
 	plantname = "Garlic Sprouts"
 	product = /obj/item/food/grown/garlic
-	yield = 6
+	yield = 60
 	potency = 25
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'

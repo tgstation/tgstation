@@ -12,7 +12,7 @@
 	endurance = 50
 	maturation = 15
 	production = 5
-	yield = 5
+	yield = 50
 
 	plant_icon_offset = 0
 	growing_icon = 'goon/icons/obj/hydroponics/plants_crop.dmi'

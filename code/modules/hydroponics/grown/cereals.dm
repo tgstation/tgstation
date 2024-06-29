@@ -7,7 +7,7 @@
 	plantname = "Wheat Stalks"
 	product = /obj/item/food/grown/wheat
 	production = 1
-	yield = 4
+	yield = 40
 	potency = 15
 	icon_dead = "wheat-dead"
 	possible_mutations = list(/datum/hydroponics/plant_mutation/oat_wheat, /datum/hydroponics/plant_mutation/meat_wheat)

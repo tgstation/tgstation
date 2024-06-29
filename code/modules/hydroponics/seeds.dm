@@ -35,7 +35,7 @@
 	/// Changes the amount of time needed for a plant to become harvestable.
 	var/production = 25
 	/// Amount of growns created per harvest. If is -1, the plant/shroom/weed is never meant to be harvested.
-	var/yield = 3
+	var/yield = 30
 	/// The 'power' of a plant. Generally effects the amount of reagent in a plant, also used in other ways.
 	var/potency = 10
 	/// Amount of growth sprites the plant has.

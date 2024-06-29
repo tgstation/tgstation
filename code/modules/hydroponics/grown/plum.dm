@@ -8,7 +8,7 @@
 	product = /obj/item/food/grown/plum
 	lifespan = 55
 	endurance = 35
-	yield = 5
+	yield = 50
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "plum-grow"
 	icon_dead = "plum-dead"

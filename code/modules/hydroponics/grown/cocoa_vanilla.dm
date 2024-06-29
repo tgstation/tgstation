@@ -9,7 +9,7 @@
 	lifespan = 20
 	maturation = 25
 	production = 25
-	yield = 2
+	yield = 20
 	growthstages = 5
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "cocoapod-grow"
@@ -60,7 +60,7 @@
 	product = /obj/item/food/grown/bungofruit
 	lifespan = 30
 	maturation = 12
-	yield = 3
+	yield = 30
 	production = 7
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	possible_mutations = list()

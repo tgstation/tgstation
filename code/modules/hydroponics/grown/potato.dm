@@ -9,7 +9,7 @@
 	lifespan = 30
 	maturation = 10
 	production = 1
-	yield = 4
+	yield = 40
 	growthstages = 4
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "potato-grow"

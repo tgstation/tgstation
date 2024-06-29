@@ -9,7 +9,7 @@
 	lifespan = 20
 	maturation = 20
 	production = 20
-	yield = 4
+	yield = 40
 	potency = 20
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "chili-grow" // Uses one growth icons set for all the subtypes
@@ -67,7 +67,7 @@
 	endurance = 10
 	maturation = 10
 	production = 10
-	yield = 3
+	yield = 30
 	rarity = 20
 	genes = list(/datum/plant_gene/trait/chem_heating, /datum/plant_gene/trait/backfire/chili_heat)
 	possible_mutations = list()
@@ -96,7 +96,7 @@
 	endurance = 10
 	maturation = 10
 	production = 10
-	yield = 3
+	yield = 30
 	rarity = 20
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	possible_mutations = list()

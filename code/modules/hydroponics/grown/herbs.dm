@@ -7,7 +7,7 @@
 	plantname = "Herbs"
 	product = /obj/item/food/grown/herbs
 	growthstages = 2
-	yield = 5
+	yield = 50
 	potency = 20
 	growing_icon = 'icons/obj/hydroponics/growing.dmi'
 	icon_grow = "herbs-grow"

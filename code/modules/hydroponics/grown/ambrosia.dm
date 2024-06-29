@@ -20,7 +20,7 @@
 	product = /obj/item/food/grown/ambrosia/vulgaris
 	lifespan = 60
 	endurance = 25
-	yield = 6
+	yield = 60
 	potency = 5
 	icon_dead = "ambrosia-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)

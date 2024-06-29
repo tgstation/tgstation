@@ -8,7 +8,7 @@
 	product = /obj/item/food/grown/carrot
 	maturation = 10
 	production = 1
-	yield = 5
+	yield = 50
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	possible_mutations = list(/datum/hydroponics/plant_mutation/parsnip)
@@ -66,7 +66,7 @@
 	product = /obj/item/food/grown/whitebeet
 	lifespan = 60
 	endurance = 50
-	yield = 6
+	yield = 60
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	possible_mutations = list(/datum/hydroponics/plant_mutation/redbeet)
@@ -91,7 +91,7 @@
 	product = /obj/item/food/grown/redbeet
 	lifespan = 60
 	endurance = 50
-	yield = 5
+	yield = 50
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	genes = list(/datum/plant_gene/trait/maxchem)

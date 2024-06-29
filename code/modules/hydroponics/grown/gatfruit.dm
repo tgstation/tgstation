@@ -12,7 +12,7 @@
 	endurance = 20
 	maturation = 1
 	production = 10
-	yield = 2
+	yield = 20
 	potency = 60
 	growthstages = 2
 	rarity = 60 // Obtainable only with xenobio+superluck.

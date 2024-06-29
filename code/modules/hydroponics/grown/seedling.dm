@@ -12,7 +12,7 @@
 	maturation = 10
 	production = 1
 	growthstages = 2
-	yield = 1
+	yield = 10
 	potency = 30
 
 /obj/item/seeds/seedling/harvest(mob/harvester)

@@ -11,7 +11,7 @@
 	lifespan = 60
 	endurance = 50
 	maturation = 30
-	yield = 4
+	yield = 40
 	growthstages = 2
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04, /datum/reagent/consumable/sugar = 0.25)
 	possible_mutations = list(/datum/hydroponics/plant_mutation/bamboo)
