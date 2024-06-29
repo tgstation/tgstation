@@ -3739,7 +3739,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,
@@ -11253,12 +11252,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
-"dXh" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/station/cargo/storage)
 "dXN" = (
 /obj/machinery/door/airlock/research{
 	name = "Robotics Lab Storage"
@@ -47568,7 +47561,6 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
@@ -55717,7 +55709,6 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
@@ -145998,7 +145989,7 @@ wli
 aJP
 iaN
 sdc
-dXh
+sdc
 fVZ
 fVZ
 sdc
