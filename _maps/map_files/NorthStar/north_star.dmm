@@ -284,7 +284,7 @@
 /area/station/maintenance/floor3/starboard/fore)
 "acL" = (
 /obj/structure/table/wood,
-/obj/item/clothing/mask/cigarette/cigar/cohiba,
+/obj/item/cigarette/cigar/cohiba,
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 1
 	},
@@ -52999,7 +52999,7 @@
 /obj/item/fishing_rod,
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/three,
-/obj/item/clothing/mask/cigarette/pipe,
+/obj/item/cigarette/pipe,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor2/starboard/fore)
 "nEO" = (
@@ -92288,7 +92288,7 @@
 /area/station/maintenance/floor3/port)
 "xJX" = (
 /obj/structure/table,
-/obj/item/clothing/mask/cigarette/candy{
+/obj/item/cigarette/candy{
 	pixel_x = 4
 	},
 /turf/open/floor/iron/dark/smooth_large,
