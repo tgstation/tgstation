@@ -306,7 +306,7 @@
 
 /datum/supply_pack/service/bowmaking
 	name = "Fletching and Bow-Making Starter Kit"
-	desc = "A fairly outdated copy of 'Whittle Me This: Fletching for the Modern Spacer', along iwth some useful materials. \
+	desc = "A fairly outdated copy of 'Whittle Me This: Fletching for the Modern Spacer', along with some useful materials. \
 		For those looking to get into bow-making, or give their LARPing a little more edge, you can't go wrong. Also has \
 		instructions for making violins."
 	cost = CARGO_CRATE_VALUE * 5
