@@ -143,9 +143,7 @@
 		hide_contents(person)
 
 	is_using.Cut()
-	if (!isnull(storage_interfaces))
-		for (var/i in storage_interfaces)
-			QDEL_NULL(storage_interfaces[i])
+	QDEL_LIST_ASSOC_VAL(storage_interfaces)
 
 	parent = null
 	real_location = null
