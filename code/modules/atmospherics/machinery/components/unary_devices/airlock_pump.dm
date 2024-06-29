@@ -234,15 +234,29 @@
 	on = TRUE
 	cycle_start_time = world.time
 
+	var/turf/local_turf = get_turf(src)
+	var/tile_air_pressure = max(0, local_turf.return_air().return_pressure())
+
 	if(pump_direction == ATMOS_DIRECTION_RELEASING)
 		cycle_pressure_target = internal_pressure_target
+		var/pressure_delta = cycle_pressure_target - tile_air_pressure
+		if(pressure_delta <= allowed_pressure_error)
+			stop_cycle("Pressure nominal, skipping cycle.")
+			return TRUE
+
 		internal_airlocks[1].say("Pressurizing airlock.")
 	else
+		cycle_pressure_target = external_pressure_target
+		var/pressure_delta = tile_air_pressure - cycle_pressure_target
+		if(pressure_delta <= allowed_pressure_error)
+			stop_cycle("Pressure nominal, skipping cycle.")
+			return TRUE
+
 		for(var/obj/machinery/door/airlock/airlock in external_airlocks)
 			if(airlock.shuttledocked)
 				stop_cycle("Shuttle docked, skipping cycle.")
 				return TRUE
-		cycle_pressure_target = external_pressure_target
+
 		external_airlocks[1].say("Decompressing airlock.")
 
 	update_appearance()
