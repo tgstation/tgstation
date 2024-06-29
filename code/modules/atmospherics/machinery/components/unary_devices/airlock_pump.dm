@@ -23,6 +23,8 @@
 	var/internal_pressure_target = ONE_ATMOSPHERE
 	///Target pressure for depressurization cycle
 	var/external_pressure_target = 0
+	///Target pressure for the current cycle
+	var/cycle_pressure_target
 	///Allowed error in pressure checks
 	var/allowed_pressure_error = ONE_ATMOSPHERE / 100
 	///Rate of the pump to remove gases from the air
@@ -37,7 +39,7 @@
 	var/airlock_pump_distance_limit = 2
 	///Max distance between the central airlock and the side airlocks in a group
 	var/airlock_group_distance_limit = 2
-	///Type of airlocks required for automatic cycling setup. To avoid hacking bridge doors.
+	///Type of airlocks required for automatic cycling setup. To avoid hacking bridge doors. Ignored for mapspawn pump.
 	var/valid_airlock_typepath = /obj/machinery/door/airlock/external
 	///Station-facing airlocks used in cycling
 	var/list/obj/machinery/door/airlock/internal_airlocks
@@ -149,10 +151,8 @@
 	var/tile_air_pressure = tile_air.return_pressure()
 
 	if(pump_direction == ATMOS_DIRECTION_RELEASING) //distro node -> tile
-		var/pressure_delta = internal_pressure_target - tile_air_pressure
-
-		if(pressure_delta <= allowed_pressure_error && stop_cycle())
-			internal_airlocks[1].say("Pressurization complete.")
+		var/pressure_delta = cycle_pressure_target - tile_air_pressure
+		if(pressure_delta <= allowed_pressure_error && stop_cycle("Pressurization complete."))
 			return //Internal target pressure reached
 
 		var/available_moles = distro_air.total_moles()
@@ -163,10 +163,8 @@
 		for(var/turf/tile in adjacent_turfs)
 			fill_tile(tile, split_moles, pressure_delta)
 	else //tile -> waste node
-		var/pressure_delta = tile_air_pressure - external_pressure_target
-
-		if(pressure_delta <= allowed_pressure_error && stop_cycle())
-			external_airlocks[1].say("Decompression complete.")
+		var/pressure_delta = tile_air_pressure - cycle_pressure_target
+		if(pressure_delta <= allowed_pressure_error && stop_cycle("Decompression complete."))
 			return //External target pressure reached
 
 		siphon_tile(loc)
@@ -230,23 +228,30 @@
 
 	stoplag(0.2 SECONDS) // Wait for closing animation
 
-	if(pump_direction == ATMOS_DIRECTION_RELEASING)
-		internal_airlocks[1].say("Pressurizing airlock.")
-	else
-		external_airlocks[1].say("Decompressing airlock.")
-
 	on = TRUE
 	cycle_start_time = world.time
 	update_appearance()
+
+	if(pump_direction == ATMOS_DIRECTION_RELEASING)
+		cycle_pressure_target = internal_pressure_target
+		internal_airlocks[1].say("Pressurizing airlock.")
+	else
+		for(var/obj/machinery/door/airlock/airlock in external_airlocks)
+			if(airlock.shuttledocked)
+				stop_cycle("Shuttle docked, skipping cycle.")
+				return TRUE
+		cycle_pressure_target = external_pressure_target
+		external_airlocks[1].say("Decompressing airlock.")
+
 	return TRUE
 
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/stop_cycle(message = null)
 	if(!on)
 		return FALSE
+	on = FALSE
 
 	var/list/obj/machinery/door/airlock/unlocked_airlocks = pump_direction == ATMOS_DIRECTION_RELEASING ? internal_airlocks : external_airlocks
-
 	for(var/obj/machinery/door/airlock/airlock in unlocked_airlocks)
 		airlock.unbolt()
 		if(open_airlock_on_cycle)
@@ -257,7 +262,6 @@
 	if(message)
 		unlocked_airlocks[1].say(message)
 
-	on = FALSE
 	update_appearance()
 	return TRUE
 
@@ -307,7 +311,7 @@
 		limit--
 		next_turf = get_step(next_turf, direction)
 		var/obj/machinery/door/airlock/found_airlock = locate() in next_turf
-		if (found_airlock && !found_airlock.cycle_pump)
+		if (found_airlock && !found_airlock.cycle_pump && (!can_unwrench || istype(found_airlock, valid_airlock_typepath)))
 			return found_airlock
 
 
@@ -362,10 +366,6 @@
 	if((SOUTH|WEST) & direction)
 		user.ventcrawl_layer = clamp(user.ventcrawl_layer - 2, PIPING_LAYER_DEFAULT - 1, PIPING_LAYER_DEFAULT + 1)
 	to_chat(user, "You align yourself with the [user.ventcrawl_layer == 2 ? 1 : 2]\th output.")
-
-
-/obj/machinery/atmospherics/components/unary/airlock_pump/any_airlock_type
-	valid_airlock_typepath = /obj/machinery/door/airlock
 
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/lavaland
