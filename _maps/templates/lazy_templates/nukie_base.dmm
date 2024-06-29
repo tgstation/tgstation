@@ -654,12 +654,14 @@
 	},
 /area/centcom/syndicate_mothership/control)
 "gT" = (
-/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/chair/stool/bar/syndicate_dark{
+	dir = 8
+	},
 /turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "gV" = (
@@ -976,6 +978,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer5,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
+/area/centcom/syndicate_mothership/control)
+"kL" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/chair/stool/bar/syndicate_dark{
+	dir = 8
+	},
+/turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "kQ" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -3078,11 +3090,13 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
 "IC" = (
-/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/chair/stool/bar/syndicate_light{
+	dir = 8
+	},
 /turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "IK" = (
@@ -4019,12 +4033,14 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership)
 "Su" = (
-/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 4
 	},
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/chair/stool/bar/syndicate_light{
+	dir = 8
+	},
 /turf/open/floor/iron/syndicate_bar,
 /area/centcom/syndicate_mothership/control)
 "Sv" = (
@@ -6923,7 +6939,7 @@ ZZ
 iG
 DZ
 Su
-IC
+kL
 IC
 gT
 ek
