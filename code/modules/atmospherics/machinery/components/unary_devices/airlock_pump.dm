@@ -379,6 +379,8 @@
 
 ///Whether the passed airlock can be linked with
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/is_valid_airlock(obj/machinery/door/airlock/airlock)
+	if(!airlock)
+		return FALSE
 	if(airlock.cycle_pump)
 		return FALSE // Already linked
 	if(can_unwrench && !istype(airlock, valid_airlock_typepath))
