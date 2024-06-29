@@ -94,7 +94,7 @@
 		eyes.set_organ_damage(eyes.low_threshold)
 
 	// At over 10 damage, there is a 50% chance they drop all their items
-	if (prob(50 && target.stat != DEAD))
+	if (prob(50) && target.stat != DEAD)
 		var/list/dropped = target.drop_all_held_items()
 		if(length(dropped))
 			to_chat(target, span_danger("You drop what you're holding and clutch at your eyes!"))
