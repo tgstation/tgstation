@@ -20,11 +20,18 @@
 /obj/structure/closet/secure_closet/engineering_welding,
 /turf/open/indestructible,
 /area/deathmatch)
+"cl" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/cable,
+/turf/open/indestructible,
+/area/deathmatch)
 "cA" = (
 /turf/open/indestructible,
 /area/deathmatch)
 "cR" = (
-/obj/machinery/field/generator/starts_on,
+/obj/machinery/field/generator/starts_on/magic,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
 /turf/open/indestructible,
@@ -36,7 +43,7 @@
 "dt" = (
 /obj/machinery/light/no_nightlight/directional/north,
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/field/generator/starts_on,
+/obj/machinery/field/generator/starts_on/magic,
 /obj/structure/cable,
 /turf/open/indestructible,
 /area/deathmatch)
@@ -581,7 +588,7 @@
 /area/deathmatch)
 "Bv" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/field/generator/starts_on,
+/obj/machinery/field/generator/starts_on/magic,
 /obj/structure/cable,
 /turf/open/indestructible,
 /area/deathmatch)
@@ -683,6 +690,13 @@
 	dir = 8
 	},
 /obj/machinery/light/no_nightlight/directional/west,
+/turf/open/indestructible,
+/area/deathmatch)
+"Gw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/cable,
 /turf/open/indestructible,
 /area/deathmatch)
 "Gx" = (
@@ -849,7 +863,7 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "Pg" = (
-/obj/machinery/field/generator/starts_on,
+/obj/machinery/field/generator,
 /obj/machinery/light/no_nightlight/directional/north,
 /turf/open/indestructible,
 /area/deathmatch)
@@ -980,7 +994,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/field/generator/starts_on,
+/obj/machinery/field/generator/starts_on/magic,
 /obj/structure/cable,
 /turf/open/indestructible,
 /area/deathmatch)
@@ -1042,8 +1056,11 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "YA" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
 /obj/structure/cable,
-/turf/closed/indestructible/fakeglass,
+/turf/open/indestructible,
 /area/deathmatch)
 "YJ" = (
 /obj/structure/cable,
@@ -1062,7 +1079,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/field/generator/starts_on,
+/obj/machinery/field/generator/starts_on/magic,
 /obj/structure/cable,
 /turf/open/indestructible,
 /area/deathmatch)
@@ -1070,6 +1087,12 @@
 /obj/structure/sign/poster/official/random/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/turf/open/indestructible,
+/area/deathmatch)
+"Zq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
 /turf/open/indestructible,
 /area/deathmatch)
@@ -1387,7 +1410,7 @@ sa
 sa
 je
 ai
-YA
+cl
 ai
 gN
 cA
@@ -2008,7 +2031,7 @@ sa
 sa
 je
 ai
-bl
+Zq
 ai
 ai
 Bf
@@ -2026,7 +2049,7 @@ Bf
 Bf
 ai
 ai
-bl
+Gw
 ai
 je
 sa

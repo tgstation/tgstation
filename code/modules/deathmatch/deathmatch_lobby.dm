@@ -154,8 +154,14 @@
 		GLOB.deathmatch_game.modifiers[modifier].apply(new_player, src)
 
 	// register death handling.
-	RegisterSignals(new_player, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(player_died))
-	RegisterSignal(new_player, COMSIG_MOB_GHOSTIZED, PROC_REF(player_ghosted))
+	register_player_signals(new_player)
+
+/datum/deathmatch_lobby/proc/register_player_signals(new_player)
+	RegisterSignals(new_player, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING, COMSIG_MOB_GHOSTIZED), PROC_REF(player_died))
+	RegisterSignal(new_player, COMSIG_LIVING_ON_WABBAJACKED, PROC_REF(player_wabbajacked))
+
+/datum/deathmatch_lobby/proc/unregister_player_signals(new_player)
+	UnregisterSignal(new_player, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING, COMSIG_MOB_GHOSTIZED, COMSIG_LIVING_ON_WABBAJACKED))
 
 /datum/deathmatch_lobby/proc/game_took_too_long()
 	if (!location || QDELING(src))
@@ -176,9 +182,9 @@
 
 	for(var/ckey in players)
 		var/mob/loser = players[ckey]["mob"]
-		UnregisterSignal(loser, list(COMSIG_MOB_GHOSTIZED, COMSIG_QDELETING))
+		unregister_player_signals(loser)
 		players[ckey]["mob"] = null
-		loser.ghostize()
+		loser.ghostize(can_reenter_corpse = FALSE)
 		qdel(loser)
 
 	for(var/datum/deathmatch_modifier/modifier in modifiers)
@@ -188,20 +194,18 @@
 	GLOB.deathmatch_game.remove_lobby(host)
 	log_game("Deathmatch game [host] ended.")
 
-/datum/deathmatch_lobby/proc/player_ghosted(mob/living/player)
+/datum/deathmatch_lobby/proc/player_wabbajacked(mob/living/player, mob/living/new_mob)
 	SIGNAL_HANDLER
-	var/mob/dead/observer/observer = GLOB.directory[player.ckey].mob
-	if(istype(observer))
-		player_died(player)
-		return
-	players[player.mind.key]["mob"] = player.mind.current
+	unregister_player_signals(player)
+	players[player.ckey]["mob"] = new_mob
+	register_player_signals(new_mob)
 
 /datum/deathmatch_lobby/proc/player_died(mob/living/player, gibbed)
 	SIGNAL_HANDLER
-	if(isnull(player) || QDELING(src))
+	if(isnull(player) || QDELING(src) || HAS_TRAIT_FROM(player, TRAIT_NO_TRANSFORM, MAGIC_TRAIT)) //this trait check fixes polymorphing
 		return
 
-	var/ckey = player.ckey
+	var/ckey = player.ckey ? player.ckey : player.mind?.key
 	if(!islist(players[ckey])) // potentially the player info could hold a reference to this mob so we can figure the ckey out without worrying about ghosting and suicides n such
 		for(var/potential_ckey in players)
 			var/list/player_info = players[potential_ckey]
@@ -220,8 +224,9 @@
 
 	announce(span_reallybig("[player.real_name] HAS DIED.<br>[players.len] REMAIN."))
 
-	if(!gibbed && !QDELING(player))
+	if(!gibbed && !QDELING(player) && !isdead(player))
 		if(!HAS_TRAIT(src, TRAIT_DEATHMATCH_EXPLOSIVE_IMPLANTS))
+			unregister_player_signals(player)
 			player.dust(TRUE, TRUE, TRUE)
 	if (players.len <= 1)
 		end_game()
@@ -349,6 +354,7 @@
 	.["maps"] = list()
 	for (var/map_key in GLOB.deathmatch_game.maps)
 		.["maps"] += map_key
+	.["maps"] = sort_list(.["maps"])
 
 
 /datum/deathmatch_lobby/ui_data(mob/user)
