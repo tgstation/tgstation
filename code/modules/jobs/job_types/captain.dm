@@ -67,6 +67,7 @@
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,
 		/obj/item/station_charter = 1,
+		/obj/item/door_remote/omni = 1,
 		)
 	belt = /obj/item/modular_computer/pda/heads/captain
 	ears = /obj/item/radio/headset/heads/captain/alt
@@ -106,7 +107,16 @@
 
 /datum/outfit/job/captain/post_equip(mob/living/carbon/human/equipped, visualsOnly)
 	. = ..()
-	if(visualsOnly || !special_charter)
+	if(visualsOnly)
+		return
+
+	var/obj/item/door_remote/omni/cap_remote = locate() in equipped.get_item_by_slot(ITEM_SLOT_BACK)
+	if(isnull(cap_remote))
+		// failed to give out the remote, plop on the ground
+		cap_remote = new(get_turf(equipped))
+	cap_remote.name = "Captain's door remote"
+
+	if(!special_charter)
 		return
 
 	var/obj/item/station_charter/banner/celestial_charter = locate() in equipped.held_items

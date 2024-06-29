@@ -16,7 +16,6 @@
 	new /obj/item/computer_disk/command/captain(src)
 	new /obj/item/radio/headset/heads/captain/alt(src)
 	new /obj/item/radio/headset/heads/captain(src)
-	new /obj/item/door_remote/captain(src)
 	new /obj/item/storage/photo_album/captain(src)
 
 /obj/structure/closet/secure_closet/captains/populate_contents_immediate()
