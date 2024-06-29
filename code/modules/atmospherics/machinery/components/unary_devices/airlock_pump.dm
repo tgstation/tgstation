@@ -214,13 +214,13 @@
 		airlock.say("Airlock pair not found.")
 		return
 	if(airlock in external_airlocks)
-		start_cycle(ATMOS_DIRECTION_SIPHONING)
+		start_cycle(ATMOS_DIRECTION_SIPHONING, airlock)
 	else if(airlock in internal_airlocks)
-		start_cycle(ATMOS_DIRECTION_RELEASING)
+		start_cycle(ATMOS_DIRECTION_RELEASING, airlock)
 
 
 ///Start decompression or pressurization cycle depending on the passed direction
-/obj/machinery/atmospherics/components/unary/airlock_pump/proc/start_cycle(cycle_direction)
+/obj/machinery/atmospherics/components/unary/airlock_pump/proc/start_cycle(cycle_direction, obj/machinery/door/airlock/airlock/source_airlock = null)
 	if(on || !cycling_set_up || !powered())
 		return FALSE
 
@@ -244,7 +244,9 @@
 			stop_cycle("Pressure nominal, skipping cycle.")
 			return TRUE
 
-		internal_airlocks[1].say("Pressurizing airlock.")
+		if(source_airlock)
+			source_airlock = internal_airlocks[1]
+		source_airlock.say("Pressurizing airlock.")
 	else
 		cycle_pressure_target = external_pressure_target
 		var/pressure_delta = tile_air_pressure - cycle_pressure_target
@@ -257,7 +259,9 @@
 				stop_cycle("Shuttle docked, skipping cycle.")
 				return TRUE
 
-		external_airlocks[1].say("Decompressing airlock.")
+		if(source_airlock)
+			source_airlock = external_airlocks[1]
+		source_airlock.say("Decompressing airlock.")
 
 	update_appearance()
 	return TRUE
