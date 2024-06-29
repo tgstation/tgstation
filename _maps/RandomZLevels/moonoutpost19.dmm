@@ -6029,7 +6029,7 @@
 /obj/structure/table/wood,
 /obj/item/lighter,
 /obj/machinery/newscaster/directional/east,
-/obj/item/clothing/mask/cigarette/cigar,
+/obj/item/cigarette/cigar,
 /turf/open/floor/carpet/orange,
 /area/awaymission/moonoutpost19/arrivals)
 "Ov" = (
