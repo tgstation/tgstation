@@ -25,34 +25,55 @@
 		host.update_overlays()
 		host.update_appearance()
 
+/datum/slime_trait/proc/apply_overlays(obj/item/source, list/overlays)
+	SIGNAL_HANDLER
+	return NONE
+
 /datum/slime_trait/proc/on_remove(mob/living/basic/slime/parent)
-	return
+	if(trait_flags & TRAIT_ON_DEATH)
+		UnregisterSignal(host, COMSIG_LIVING_DEATH)
+	if(trait_flags & TRAIT_VISUAL)
+		UnregisterSignal(host, COMSIG_ATOM_UPDATE_OVERLAYS)
+		host.update_overlays()
+		host.update_appearance()
 
 /datum/slime_trait/proc/on_death()
 	return
 
-/datum/slime_trait/proc/apply_overlays(obj/item/source, list/overlays)
-	return
-
-
 /datum/slime_trait/visual
-
 	trait_flags = (TRAIT_VISUAL)
-	//the visual icon_state of the trait
+	// The visual icon_state of the trait.
 	var/trait_icon_state
-	///the icon path of the trait
+	/// The icon path of the trait.
 	var/trait_icon
+	/// The mutable_appearance object that will be created.
+	var/mutable_appearance/slime_visual
 
+/datum/slime_trait/visual/Destroy()
+	if(slime_visual)
+		QDEL_NULL(slime_visual)
+	return ..()
+
+/datum/slime_trait/visual/on_add(mob/living/basic/slime/parent)
+	. = ..()
+	if(!host)
+		return
+	if(trait_icon && trait_icon_state)
+		slime_visual = mutable_appearance(trait_icon, trait_icon_state, host.layer)
+		LAZYADD(host.update_overlays_on_z, slime_visual)
+
+/datum/slime_trait/visual/on_remove(mob/living/basic/slime/parent)
+	. = ..()
+	if(slime_visual)
+		LAZYREMOVE(host.update_overlays_on_z, slime_visual)
+		QDEL_NULL(slime_visual)
 
 /datum/slime_trait/visual/apply_overlays(obj/item/source, list/overlays)
-	if(!trait_icon || !trait_icon_state)
+	if(!slime_visual)
 		return
-
-	var/mutable_appearance/slime_visual = mutable_appearance(trait_icon, trait_icon_state, host.layer, host, host.plane)
-
+	SET_PLANE_EXPLICIT(slime_visual, PLANE_TO_TRUE(host.plane), host)
 	if(!host.overwrite_color)
 		slime_visual.color = host.current_color.slime_color
 	else
 		slime_visual.color = host.overwrite_color
-
 	overlays += slime_visual
