@@ -477,7 +477,7 @@
 /obj/structure/closet/cardboard,
 /obj/item/toy/plush/snakeplushie,
 /obj/item/clothing/glasses/eyepatch,
-/obj/item/clothing/mask/cigarette/cigar/havana,
+/obj/item/cigarette/cigar/havana,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "wR" = (

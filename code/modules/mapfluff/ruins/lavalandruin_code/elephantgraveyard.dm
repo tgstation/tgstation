@@ -209,7 +209,7 @@
 			new /obj/item/clothing/glasses/science(src)
 		if(7)
 			new /obj/item/clothing/glasses/sunglasses/big(src)
-			new /obj/item/clothing/mask/cigarette/rollie(src)
+			new /obj/item/cigarette/rollie(src)
 		else
 			//empty grave
 			return
