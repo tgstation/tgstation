@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - qol: "Punching bags are now a equal method of training to the fitness machinery."
+  - qol: "Boxing grants more experience overall for participation."
