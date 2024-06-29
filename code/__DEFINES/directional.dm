@@ -90,7 +90,7 @@
 }
 
 #define MAPPING_DIRECTIONAL_HELPERS_EMPTY(path) \
-##path/directional/north {
+##path/directional/north {\
 	dir = NORTH; \
 } \
 ##path/directional/south {\
