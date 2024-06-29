@@ -3789,7 +3789,7 @@
 /obj/item/clothing/mask/animal/horsehead,
 /obj/structure/table/wood,
 /obj/machinery/airalarm/directional/south,
-/obj/item/clothing/mask/cigarette/pipe,
+/obj/item/cigarette/pipe,
 /obj/item/clothing/mask/fakemoustache,
 /obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/wood,
@@ -3812,7 +3812,7 @@
 /area/station/engineering/atmospherics_engine)
 "bqC" = (
 /obj/structure/table/wood,
-/obj/item/clothing/mask/cigarette/pipe,
+/obj/item/cigarette/pipe,
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "bqJ" = (
@@ -7224,7 +7224,7 @@
 	pixel_x = 6;
 	pixel_y = -4
 	},
-/obj/item/clothing/mask/cigarette/rollie/cannabis{
+/obj/item/cigarette/rollie/cannabis{
 	pixel_y = -3
 	},
 /turf/open/space/basic,
@@ -13788,15 +13788,18 @@
 	pixel_x = -7;
 	pixel_y = 8
 	},
-/obj/item/clothing/mask/cigarette/cigar{
+/obj/item/cigarette/cigar{
 	pixel_x = 4;
 	pixel_y = 3
 	},
-/obj/item/clothing/mask/cigarette/cigar{
+/obj/item/cigarette/cigar{
 	pixel_x = 8
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
+	},
+/obj/machinery/keycard_auth/directional/north{
+	pixel_x = -5
 	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/qm)
@@ -37477,7 +37480,7 @@
 	pixel_x = -4;
 	pixel_y = 2
 	},
-/obj/item/clothing/mask/cigarette/cigar,
+/obj/item/cigarette/cigar,
 /obj/item/reagent_containers/cup/glass/flask/gold,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
@@ -50551,7 +50554,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/structure/table/reinforced,
 /obj/machinery/requests_console/directional/north{
-	department = "Quartermaster's Desk";
+	department = "Security";
 	name = "Security Requests Console"
 	},
 /obj/effect/mapping_helpers/requests_console/assistance,
@@ -56550,7 +56553,7 @@
 /obj/machinery/firealarm/directional/south,
 /obj/structure/rack,
 /obj/item/storage/briefcase/secure,
-/obj/item/clothing/mask/cigarette/cigar,
+/obj/item/cigarette/cigar,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
@@ -59573,12 +59576,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/research)
-"uVG" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/machinery/door/poddoor/preopen,
-/turf/open/floor/plating,
-/area/station/command/heads_quarters/qm)
 "uVJ" = (
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/girder,
@@ -61137,7 +61134,7 @@
 /area/station/hallway/secondary/entry)
 "vwi" = (
 /obj/structure/table,
-/obj/item/clothing/mask/cigarette/pipe,
+/obj/item/cigarette/pipe,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "vwn" = (
@@ -63772,15 +63769,15 @@
 	pixel_x = -2;
 	pixel_y = 3
 	},
-/obj/item/clothing/mask/cigarette/cigar{
+/obj/item/cigarette/cigar{
 	pixel_x = 4;
 	pixel_y = 1
 	},
-/obj/item/clothing/mask/cigarette/cigar{
+/obj/item/cigarette/cigar{
 	pixel_x = -4;
 	pixel_y = 1
 	},
-/obj/item/clothing/mask/cigarette/cigar/cohiba,
+/obj/item/cigarette/cigar/cohiba,
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/station/command/corporate_showroom)
@@ -90609,7 +90606,7 @@ cNg
 kQP
 kQP
 mXO
-uVG
+mXO
 kQP
 kQP
 kQP

@@ -1,0 +1,4 @@
+author: "grungussuss , Kayozz"
+delete-after: True
+changes:
+  - sound: "exosuit fabricators, Autolathes and Techfabs will now produce sounds when printing items"

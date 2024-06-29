@@ -544,7 +544,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		var/mob/M = arrived
 		M.update_ambience_area(src)
 
-
 /**
  * Called when an atom exits an area
  *
