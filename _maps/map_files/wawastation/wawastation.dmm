@@ -26364,11 +26364,6 @@
 "jsC" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/medical/central)
-"jsI" = (
-/turf/closed/mineral/random/stationside/asteroid/porus{
-	mineralChance = 20
-	},
-/area/space/nearstation)
 "jsL" = (
 /obj/effect/turf_decal/bot{
 	dir = 1
@@ -90776,9 +90771,9 @@ uZx
 paa
 lqf
 rnk
-jsI
-jsI
-jsI
+vxX
+vxX
+vxX
 cLf
 cLf
 bwC
@@ -91033,8 +91028,8 @@ uZx
 paa
 pDQ
 rnk
-jsI
-jsI
+vxX
+vxX
 rnk
 rnk
 rnk
