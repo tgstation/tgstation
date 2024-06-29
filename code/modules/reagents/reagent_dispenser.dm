@@ -204,6 +204,7 @@
 	if(leaking && reagents && reagents.total_volume >= amount_to_leak)
 		reagents.expose(get_turf(src), TOUCH, amount_to_leak / max(amount_to_leak, reagents.total_volume))
 		reagents.remove_reagent(reagent_id, amount_to_leak)
+		playsound(src, 'sound/effects/glug.ogg', 33, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return TRUE
 	return FALSE
 
@@ -221,7 +222,7 @@
 	if(!openable)
 		return FALSE
 	leaking = !leaking
-	balloon_alert(user, "[leaking ? "opened" : "closed"] [src]'s tap")
+	balloon_alert(user, "[leaking ? "opened" : "closed"] tap")
 	user.log_message("[leaking ? "opened" : "closed"] [src].", LOG_GAME)
 	tank_leak()
 	return ITEM_INTERACT_SUCCESS

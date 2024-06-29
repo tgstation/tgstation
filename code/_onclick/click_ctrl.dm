@@ -20,17 +20,11 @@
 	if(SEND_SIGNAL(target, COMSIG_CLICK_CTRL, src) & CLICK_ACTION_ANY)
 		return TRUE
 
-	var/can_use_click_action = FALSE
-	if(isturf(target))
-		// Turfs are special because they can't be used with can_perform_action
-		can_use_click_action = can_perform_turf_action(target)
-	else
-		can_use_click_action = can_perform_action(target, target.interaction_flags_click | SILENT_ADJACENCY)
-	if(!can_use_click_action)
-		return TRUE
-
 	// If it has a custom click_alt that returns success/block, done.
-	return target.click_ctrl(src) & CLICK_ACTION_ANY
+	if(can_perform_action(target, target.interaction_flags_click | SILENT_ADJACENCY))
+		return target.click_ctrl(src) & CLICK_ACTION_ANY
+
+	return FALSE
 
 /**
  * Ctrl click
@@ -40,7 +34,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	. = ..()
-	if(. || world.time < next_move || !CanReach(target))
+	if(. || world.time < next_move || !can_perform_action(target, NOT_INSIDE_TARGET | SILENT_ADJACENCY))
 		return
 
 	. = TRUE
@@ -99,17 +93,9 @@
 	if(SEND_SIGNAL(target, COMSIG_CLICK_CTRL_SHIFT, src) & CLICK_ACTION_ANY)
 		return
 
-	var/can_use_click_action = FALSE
-	if(isturf(target))
-		// Turfs are special because they can't be used with can_perform_action
-		can_use_click_action = can_perform_turf_action(target)
-	else
-		can_use_click_action = can_perform_action(target, target.interaction_flags_click | SILENT_ADJACENCY)
-	if(!can_use_click_action)
-		return
-
 	// Proceed with ctrl shift click
-	target.click_ctrl_shift(src)
+	if(can_perform_action(target, target.interaction_flags_click | SILENT_ADJACENCY))
+		target.click_ctrl_shift(src)
 
 /**
  * ## Custom ctrl shift click interaction

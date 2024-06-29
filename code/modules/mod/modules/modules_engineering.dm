@@ -15,7 +15,8 @@
 /obj/item/mod/module/welding/on_suit_activation()
 	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
 	if(istype(head_cover))
-		head_cover.flash_protect = FLASH_PROTECTION_WELDER
+		//this is a screen that displays an image, so flash sensitives can use this to protect against flashes.
+		head_cover.flash_protect = FLASH_PROTECTION_WELDER_HYPER_SENSITIVE
 
 /obj/item/mod/module/welding/on_suit_deactivation(deleting = FALSE)
 	if(deleting)
@@ -217,10 +218,10 @@
 	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/infiltrator)
 	required_slots = list(ITEM_SLOT_HEAD)
 
-/obj/item/mod/module/constructor/on_suit_activation()
+/obj/item/mod/module/headprotector/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, MOD_TRAIT)
 
-/obj/item/mod/module/constructor/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/headprotector/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, MOD_TRAIT)
 
 ///Mister - Sprays water over an area.

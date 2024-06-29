@@ -80,11 +80,11 @@
 		diode = null
 		return TRUE
 
-/obj/item/laser_pointer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/item/laser_pointer/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(isnull(crystal_lens))
-		return NONE
+		return ..()
 	if(tool_behaviour != TOOL_WIRECUTTER && tool_behaviour != TOOL_HEMOSTAT)
-		return NONE
+		return ..()
 	tool.play_tool_sound(src)
 	balloon_alert(user, "removed crystal lens")
 	crystal_lens.forceMove(drop_location())

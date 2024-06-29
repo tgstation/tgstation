@@ -564,7 +564,7 @@
 /obj/item/clothing/shoes/cowboy,
 /obj/item/clothing/under/costume/dutch,
 /obj/item/clothing/suit/costume/poncho,
-/obj/item/clothing/mask/cigarette/cigar,
+/obj/item/cigarette/cigar,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/west,

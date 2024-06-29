@@ -64,7 +64,7 @@
 	suit = /obj/item/clothing/suit/jacket/det_suit
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/fedora/det_hat
-	mask = /obj/item/clothing/mask/cigarette
+	mask = /obj/item/cigarette
 
 /datum/outfit/mafia/psychologist
 	name = "Mafia Psychologist"
@@ -155,7 +155,7 @@
 	suit = /obj/item/clothing/suit/apron
 
 /datum/outfit/mafia/obsessed/post_equip(mob/living/carbon/human/H)
-	for(var/obj/item/carried_item in H.get_equipped_items(include_pockets = TRUE, include_accessories = TRUE))
+	for(var/obj/item/carried_item in H.get_equipped_items(INCLUDE_POCKETS | INCLUDE_ACCESSORIES))
 		carried_item.add_mob_blood(H)//Oh yes, there will be blood...
 	H.regenerate_icons()
 
