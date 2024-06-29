@@ -139,7 +139,7 @@
 /turf/open/floor/iron/white/textured,
 /area/shuttle/arrival)
 "tF" = (
-/obj/machinery/light/warm/dim/directional/east,
+/obj/machinery/light/warm/directional/east,
 /turf/open/floor/iron/stairs{
 	dir = 1
 	},
@@ -157,12 +157,6 @@
 "tW" = (
 /turf/template_noop,
 /area/template_noop)
-"uJ" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/structure/fans/tiny/invisible,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/shuttle/arrival)
 "xc" = (
 /obj/machinery/computer{
 	name = "Shuttle computer"
@@ -173,7 +167,7 @@
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "xr" = (
-/obj/machinery/light/warm/dim/directional/west,
+/obj/machinery/light/warm/directional/west,
 /turf/open/floor/iron/stairs{
 	dir = 1
 	},
@@ -506,7 +500,7 @@
 	department = "Arrival Shuttle"
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
-/obj/machinery/light/red/dim/directional/south,
+/obj/machinery/light/small/red/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "WQ" = (
@@ -635,7 +629,7 @@ tW
 iv
 Fj
 OD
-uJ
+zf
 zf
 zf
 zf
