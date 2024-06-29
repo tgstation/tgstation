@@ -2269,9 +2269,8 @@
 "jP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/backpack/duffelbag,
 /obj/structure/closet,
-/obj/effect/spawner/random/clothing/backpack,
+/obj/item/storage/backpack/duffelbag/sec,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "jU" = (
@@ -2913,9 +2912,9 @@
 "mz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/backpack/old,
 /obj/structure/closet,
-/obj/effect/spawner/random/clothing/backpack,
+/obj/item/storage/backpack/industrial,
+/obj/item/storage/backpack/messenger/eng,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "mA" = (
@@ -5411,6 +5410,14 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
+"DA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/item/storage/backpack/science,
+/obj/item/storage/backpack/messenger/science,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/charlie/dorms)
 "DB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
@@ -12255,7 +12262,7 @@ wb
 bR
 aG
 nk
-mz
+DA
 gZ
 kN
 Mt
