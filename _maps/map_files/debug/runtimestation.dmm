@@ -1573,10 +1573,6 @@
 /obj/item/melee/energy/axe,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
-"jY" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/space)
 "kj" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
@@ -1657,9 +1653,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
-"oi" = (
-/turf/open/floor/plating,
-/area/space)
 "oH" = (
 /obj/machinery/door/airlock,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1688,14 +1681,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/medical/medbay)
-"pN" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "cargoload"
-	},
-/obj/structure/plasticflaps,
-/turf/open/floor/plating,
-/area/space)
 "qb" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/plating,
@@ -1844,17 +1829,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
-"vW" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "cargoload"
-	},
-/obj/machinery/door/poddoor{
-	id = "cargoload";
-	name = "Supply Dock Loading Door"
-	},
-/turf/open/floor/plating,
-/area/space)
 "wb" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -2051,9 +2025,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
-"HS" = (
-/turf/closed/wall/r_wall,
-/area/space)
 "HW" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -2324,13 +2295,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
-"Rd" = (
-/obj/machinery/door/airlock/external/ruin{
-	name = "Supply Dock Airlock"
-	},
-/obj/effect/turf_decal/stripes/full,
-/turf/open/floor/iron,
-/area/space)
 "Re" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -2377,17 +2341,6 @@
 	},
 /turf/open/floor/iron/white/corner,
 /area/station/medical/medbay)
-"Ss" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "cargounload"
-	},
-/obj/machinery/door/poddoor{
-	id = "cargounload";
-	name = "Supply Dock Unloading Door"
-	},
-/turf/open/floor/plating,
-/area/space)
 "SC" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/south,
@@ -2501,14 +2454,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
-"Xj" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "cargounload"
-	},
-/obj/structure/plasticflaps,
-/turf/open/floor/plating,
-/area/space)
 "Xp" = (
 /obj/machinery/light/directional/south,
 /obj/structure/tank_dispenser{
@@ -9003,13 +8948,13 @@ aa
 aa
 aa
 aa
-jY
-Xj
-oi
-oi
-oi
-pN
-jY
+fh
+eC
+fF
+fF
+fF
+fl
+fh
 aa
 aa
 aa
@@ -9095,13 +9040,13 @@ aa
 aa
 aa
 aa
-HS
-Ss
-Rd
-Rd
-Rd
-vW
-HS
+et
+eY
+eR
+eR
+eR
+fc
+et
 aa
 aa
 aa
