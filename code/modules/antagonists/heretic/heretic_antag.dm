@@ -149,13 +149,19 @@
 	knowledge_data["path"] = knowledge
 	knowledge_data["icon_params"] = get_icon_of_knowledge(knowledge)
 	knowledge_data["name"] = initial(knowledge.name)
-	knowledge_data["desc"] = initial(knowledge.desc)
 	knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
 	knowledge_data["cost"] = initial(knowledge.cost)
 	knowledge_data["disabled"] = (!done) && (initial(knowledge.cost) > knowledge_points)
 	knowledge_data["bgr"] = (path_to_ui_bgr[initial(knowledge.route)] || "side")
 	knowledge_data["finished"] = done
 	knowledge_data["ascension"] = ispath(knowledge,/datum/heretic_knowledge/ultimate)
+
+	//description of a knowledge might change, make sure we are not shown the initial() value in that case
+	if(done)
+		var/datum/heretic_knowledge/knowledge_instance = researched_knowledge[knowledge]
+		knowledge_data["desc"] = knowledge_instance.desc
+	else
+		knowledge_data["desc"] = initial(knowledge.desc)
 
 	return knowledge_data
 
