@@ -1,0 +1,4 @@
+author: "RafRoq"
+delete-after: True
+changes:
+  - bugfix: "Fixes botany early game yield\n:cl:"
