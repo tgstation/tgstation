@@ -1181,4 +1181,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Trait given to the birthday boy
 #define TRAIT_BIRTHDAY_BOY "birthday_boy"
+
+/// Trait given by the easily disembowlable quirk. Makes it so you can be disembowled and suffer a cranial fissure outside of hardcrit
+#define TRAIT_EASILY_DISEMBOWELABLE "easily_disembowlable"
 // END TRAIT DEFINES
