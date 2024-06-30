@@ -25,5 +25,5 @@
 		/obj/item/stack/sheet/iron = 1,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stack/cable_coil = 5,
-		)
+	)
 	category = CAT_TILES
