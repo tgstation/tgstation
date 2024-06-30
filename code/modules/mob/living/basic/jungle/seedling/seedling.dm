@@ -207,7 +207,7 @@
 /mob/living/basic/seedling/meanie
 	maxHealth = 400
 	health = 400
-	faction = list(FACTION_JUNGLE)
+	faction = list(FACTION_JUNGLE, FACTION_PLANTS)
 	ai_controller = /datum/ai_controller/basic_controller/seedling/meanie
 	seedling_commands = list(
 		/datum/pet_command/idle,
