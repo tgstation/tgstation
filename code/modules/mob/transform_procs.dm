@@ -67,6 +67,7 @@
 
 	transformation_timer = addtimer(CALLBACK(src, PROC_REF(finish_humanize), species), TRANSFORMATION_DURATION, TIMER_UNIQUE)
 
+
 /mob/living/carbon/proc/finish_humanize(species = /datum/species/human)
 	transformation_timer = null
 	to_chat(src, span_boldnotice("You are now a human."))
@@ -76,6 +77,12 @@
 	set_species(species)
 	SEND_SIGNAL(src, COMSIG_MONKEY_HUMANIZE)
 	return src
+
+/mob/living/carbon/human/finish_humanize(species = /datum/species/human, instant = FALSE)
+	underwear = "Nude"
+	undershirt = "Nude"
+	socks = "Nude"
+	return ..()
 
 /mob/proc/AIize(client/preference_source, move = TRUE)
 	var/list/turf/landmark_loc = list()
