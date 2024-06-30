@@ -290,7 +290,7 @@
 	if(!anchored)
 		. += span_notice("\The [src] can be [span_boldnotice("wrenched")] down.")
 		. += span_notice("\The [src] could also be [span_boldnotice("cut apart")] with a [span_boldnotice("welder")].")
-		returnx
+		return
 	switch(state)
 		if("01")
 			. += span_notice("\The [src] needs [span_boldnotice("wiring")], or could be [span_boldnotice("un-wrenched")] from the floor.")
