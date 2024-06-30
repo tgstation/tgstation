@@ -351,15 +351,15 @@
 		user.transferItemToLoc(src, pad, TRUE)
 		atom_storage.close_all()
 
-/obj/item/storage/briefcase/launchpad/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(istype(inserted, /obj/item/launchpad_remote))
-		var/obj/item/launchpad_remote/remote = inserted
-		if(remote.pad == WEAKREF(src.pad))
-			return TRUE
-		remote.pad = WEAKREF(src.pad)
-		to_chat(user, span_notice("You link [pad] to [remote]."))
-		return FALSE // no insert
-	return TRUE
+/obj/item/storage/briefcase/launchpad/tool_act(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/launchpad_remote))
+		return ..()
+	var/obj/item/launchpad_remote/remote = tool
+	if(remote.pad == WEAKREF(src.pad))
+		return ..()
+	remote.pad = WEAKREF(src.pad)
+	to_chat(user, span_notice("You link [pad] to [remote]."))
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/launchpad_remote
 	name = "folder"

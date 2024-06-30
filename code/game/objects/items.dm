@@ -1426,7 +1426,7 @@
 		mob_loc.update_clothing(slot_flags)
 
 /// Called on [/datum/element/openspace_item_click_handler/proc/on_afterattack]. Check the relative file for information.
-/obj/item/proc/handle_openspace_click(turf/target, mob/user, click_parameters)
+/obj/item/proc/handle_openspace_click(turf/target, mob/user, list/modifiers)
 	stack_trace("Undefined handle_openspace_click() behaviour. Ascertain the openspace_item_click_handler element has been attached to the right item and that its proc override doesn't call parent.")
 
 /**
@@ -1459,15 +1459,6 @@
 /obj/item/proc/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED_AS_OUTFIT, outfit_wearer, visuals_only, item_slot)
-
-/**
- * Called before this item is placed into a storage container
- * via the item clicking on the target atom
- *
- * Returning FALSE will prevent the item from being stored
- */
-/obj/item/proc/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
-	return TRUE
 
 /obj/item/proc/do_pickup_animation(atom/target, turf/source)
 	if(!source)

@@ -51,8 +51,8 @@
 	name = "void hood"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
-	desc = "Black like tar, doesn't reflect any light. Runic symbols line the outside, \
-		with each flash you loose comprehension of what you are seeing."
+	desc = "Black like tar, reflecting no light. Runic symbols line the outside. \
+		With each flash you lose comprehension of what you are seeing."
 	icon_state = "void_cloak"
 	flags_inv = NONE
 	flags_cover = NONE
@@ -73,8 +73,8 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/void
 	name = "void cloak"
-	desc = "Black like tar, doesn't reflect any light. Runic symbols line the outside, \
-		with each flash you loose comprehension of what you are seeing."
+	desc = "Black like tar, reflecting no light. Runic symbols line the outside. \
+		With each flash you lose comprehension of what you are seeing."
 	icon_state = "void_cloak"
 	inhand_icon_state = null
 	allowed = list(/obj/item/melee/sickly_blade)

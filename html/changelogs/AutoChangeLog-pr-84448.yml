@@ -1,0 +1,4 @@
+author: "thegrb93"
+delete-after: True
+changes:
+  - bugfix: "Game not refocusing after closing a TGUI"
