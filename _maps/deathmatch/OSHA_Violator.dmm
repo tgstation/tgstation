@@ -252,9 +252,6 @@
 /obj/structure/cable,
 /turf/open/indestructible,
 /area/deathmatch)
-"sa" = (
-/turf/cordon,
-/area/template_noop)
 "sb" = (
 /obj/structure/frame/machine/secured,
 /turf/open/indestructible,
@@ -1087,61 +1084,31 @@
 /area/template_noop)
 
 (1,1,1) = {"
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
+je
+je
+je
+je
+je
+je
+je
+je
+je
+ai
+ai
+ai
+ai
+ai
+je
+je
+je
+je
+je
+je
+je
+je
+je
 "}
 (2,1,1) = {"
-sa
-je
-je
-je
-je
-je
-je
-je
-je
-je
-ai
-ai
-ai
-ai
-ai
-je
-je
-je
-je
-je
-je
-je
-je
-je
-sa
-"}
-(3,1,1) = {"
-sa
 je
 ai
 ai
@@ -1165,10 +1132,8 @@ je
 je
 je
 je
-sa
 "}
-(4,1,1) = {"
-sa
+(3,1,1) = {"
 je
 ai
 bW
@@ -1192,10 +1157,8 @@ je
 je
 je
 je
-sa
 "}
-(5,1,1) = {"
-sa
+(4,1,1) = {"
 je
 ai
 cA
@@ -1219,10 +1182,8 @@ je
 je
 je
 je
-sa
 "}
-(6,1,1) = {"
-sa
+(5,1,1) = {"
 je
 aE
 cA
@@ -1246,10 +1207,8 @@ je
 je
 je
 je
-sa
 "}
-(7,1,1) = {"
-sa
+(6,1,1) = {"
 je
 aE
 cA
@@ -1273,10 +1232,8 @@ ai
 ai
 ai
 je
-sa
 "}
-(8,1,1) = {"
-sa
+(7,1,1) = {"
 je
 ai
 cA
@@ -1300,10 +1257,8 @@ cA
 cA
 aE
 je
-sa
 "}
-(9,1,1) = {"
-sa
+(8,1,1) = {"
 je
 ai
 cA
@@ -1327,10 +1282,8 @@ cA
 cA
 aE
 je
-sa
 "}
-(10,1,1) = {"
-sa
+(9,1,1) = {"
 je
 ai
 aE
@@ -1354,10 +1307,8 @@ ai
 aE
 ai
 je
-sa
 "}
-(11,1,1) = {"
-sa
+(10,1,1) = {"
 je
 ai
 cR
@@ -1381,10 +1332,8 @@ ai
 cR
 ai
 je
-sa
 "}
-(12,1,1) = {"
-sa
+(11,1,1) = {"
 je
 ai
 YA
@@ -1408,10 +1357,8 @@ ai
 YA
 ai
 je
-sa
 "}
-(13,1,1) = {"
-sa
+(12,1,1) = {"
 je
 ai
 Ea
@@ -1435,10 +1382,8 @@ Xp
 yo
 ai
 je
-sa
 "}
-(14,1,1) = {"
-sa
+(13,1,1) = {"
 je
 ai
 do
@@ -1462,10 +1407,8 @@ gN
 Px
 ai
 je
-sa
 "}
-(15,1,1) = {"
-sa
+(14,1,1) = {"
 je
 ai
 dt
@@ -1489,10 +1432,8 @@ gN
 YY
 ai
 je
-sa
 "}
-(16,1,1) = {"
-sa
+(15,1,1) = {"
 je
 ai
 do
@@ -1516,10 +1457,8 @@ gN
 Px
 ai
 je
-sa
 "}
-(17,1,1) = {"
-sa
+(16,1,1) = {"
 je
 ai
 do
@@ -1543,10 +1482,8 @@ gN
 Px
 ai
 je
-sa
 "}
-(18,1,1) = {"
-sa
+(17,1,1) = {"
 je
 ai
 dy
@@ -1570,10 +1507,8 @@ gN
 Px
 ai
 je
-sa
 "}
-(19,1,1) = {"
-sa
+(18,1,1) = {"
 je
 bl
 do
@@ -1597,10 +1532,8 @@ gN
 Px
 bl
 je
-sa
 "}
-(20,1,1) = {"
-sa
+(19,1,1) = {"
 je
 bl
 do
@@ -1624,10 +1557,8 @@ XU
 Px
 bl
 Zr
-sa
 "}
-(21,1,1) = {"
-sa
+(20,1,1) = {"
 je
 bl
 do
@@ -1651,10 +1582,8 @@ Yn
 Px
 bl
 Zz
-sa
 "}
-(22,1,1) = {"
-sa
+(21,1,1) = {"
 je
 bl
 Bv
@@ -1678,10 +1607,8 @@ Yn
 UI
 bl
 je
-sa
 "}
-(23,1,1) = {"
-sa
+(22,1,1) = {"
 je
 bl
 do
@@ -1705,10 +1632,8 @@ Yz
 Px
 bl
 je
-sa
 "}
-(24,1,1) = {"
-sa
+(23,1,1) = {"
 je
 bl
 do
@@ -1732,10 +1657,8 @@ YJ
 Px
 bl
 ZD
-sa
 "}
-(25,1,1) = {"
-sa
+(24,1,1) = {"
 ac
 bl
 do
@@ -1759,10 +1682,8 @@ gN
 Px
 bl
 je
-sa
 "}
-(26,1,1) = {"
-sa
+(25,1,1) = {"
 ae
 ai
 do
@@ -1786,10 +1707,8 @@ gN
 Px
 ai
 je
-sa
 "}
-(27,1,1) = {"
-sa
+(26,1,1) = {"
 je
 ai
 do
@@ -1813,10 +1732,8 @@ gN
 Zi
 ai
 je
-sa
 "}
-(28,1,1) = {"
-sa
+(27,1,1) = {"
 je
 ai
 do
@@ -1840,10 +1757,8 @@ gN
 Px
 ai
 je
-sa
 "}
-(29,1,1) = {"
-sa
+(28,1,1) = {"
 je
 ai
 dt
@@ -1867,10 +1782,8 @@ gN
 YY
 ai
 je
-sa
 "}
-(30,1,1) = {"
-sa
+(29,1,1) = {"
 je
 ai
 do
@@ -1894,10 +1807,8 @@ gN
 Px
 ai
 je
-sa
 "}
-(31,1,1) = {"
-sa
+(30,1,1) = {"
 je
 ai
 do
@@ -1921,10 +1832,8 @@ ig
 Px
 ai
 je
-sa
 "}
-(32,1,1) = {"
-sa
+(31,1,1) = {"
 je
 ai
 do
@@ -1948,10 +1857,8 @@ ig
 Px
 ai
 je
-sa
 "}
-(33,1,1) = {"
-sa
+(32,1,1) = {"
 je
 ai
 do
@@ -1975,10 +1882,8 @@ gN
 Px
 ai
 je
-sa
 "}
-(34,1,1) = {"
-sa
+(33,1,1) = {"
 je
 ai
 do
@@ -2002,10 +1907,8 @@ YU
 Px
 ai
 je
-sa
 "}
-(35,1,1) = {"
-sa
+(34,1,1) = {"
 je
 ai
 bl
@@ -2029,10 +1932,8 @@ ai
 bl
 ai
 je
-sa
 "}
-(36,1,1) = {"
-sa
+(35,1,1) = {"
 je
 ai
 cR
@@ -2056,64 +1957,58 @@ gC
 cR
 ai
 je
-sa
+"}
+(36,1,1) = {"
+je
+aE
+cA
+gN
+ai
+ai
+GV
+ai
+gN
+cA
+cA
+gN
+ai
+ai
+ai
+ai
+GV
+ai
+ai
+gN
+cA
+aE
+je
 "}
 (37,1,1) = {"
-sa
 je
-aE
-cA
+ai
+fH
 gN
-ai
-ai
-GV
-ai
 gN
-cA
-cA
 gN
-ai
-ai
-ai
-ai
-GV
-ai
-ai
+hU
+gN
 gN
 cA
-aE
+cA
+hU
+gN
+gN
+gN
+gN
+hU
+gN
+gN
+gN
+fH
+ai
 je
-sa
 "}
 (38,1,1) = {"
-sa
-je
-ai
-fH
-gN
-gN
-gN
-hU
-gN
-gN
-cA
-cA
-hU
-gN
-gN
-gN
-gN
-hU
-gN
-gN
-gN
-fH
-ai
-je
-sa
-"}
-(39,1,1) = {"
-sa
 je
 ai
 ai
@@ -2137,32 +2032,4 @@ ai
 ai
 ai
 je
-sa
-"}
-(40,1,1) = {"
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
 "}
