@@ -115,7 +115,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	holder_obj = new(get_turf(thing))
 	holder_obj.appearance = thing.appearance
 	thing.forceMove(holder_obj)
-	balloon2 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_expand")
+	balloon2 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_expand", layer = VEHICLE_LAYER)
 	balloon2.pixel_y = 10
 	balloon2.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	holder_obj.add_overlay(balloon2)
@@ -123,7 +123,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/extraction_pack/proc/create_balloon(atom/movable/thing, mob/living/user)
-	balloon = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_balloon")
+	balloon = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_balloon", layer = VEHICLE_LAYER)
 	balloon.pixel_y = 10
 	balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	holder_obj.cut_overlay(balloon2)
@@ -166,7 +166,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 	sleep(7 SECONDS)
 
-	balloon3 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_retract")
+	balloon3 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_retract", layer = VEHICLE_LAYER)
 	balloon3.pixel_y = 10
 	balloon3.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	holder_obj.cut_overlay(balloon)
