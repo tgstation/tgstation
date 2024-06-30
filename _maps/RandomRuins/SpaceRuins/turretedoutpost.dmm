@@ -15,7 +15,7 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "ae" = (
 /obj/structure/table/reinforced,
-/obj/item/stock_parts/cell/hyper,
+/obj/item/stock_parts/power_store/cell/hyper,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "af" = (

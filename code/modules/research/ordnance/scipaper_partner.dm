@@ -4,12 +4,11 @@
 	accepted_experiments = list(/datum/experiment/ordnance/explosive/lowyieldbomb)
 	multipliers = list(SCIPAPER_COOPERATION_INDEX = 0.75, SCIPAPER_FUNDING_INDEX = 0.75)
 	boostable_nodes = list(
-		"bluespace_basic" = 2000,
-		"NVGtech" = 1500,
-		"practical_bluespace" = 2500,
-		"basic_plasma" = 2000,
-		"basic_mining" = 2000,
-		"adv_mining" = 2000,
+		TECHWEB_NODE_BLUESPACE_THEORY = TECHWEB_TIER_3_POINTS,
+		TECHWEB_NODE_NIGHT_VISION = TECHWEB_TIER_2_POINTS,
+		TECHWEB_NODE_ANOMALY_RESEARCH = TECHWEB_TIER_2_POINTS,
+		TECHWEB_NODE_MINING = TECHWEB_TIER_1_POINTS,
+		TECHWEB_NODE_MINING_ADV = TECHWEB_TIER_2_POINTS,
 	)
 
 /datum/scientific_partner/baron
@@ -17,8 +16,8 @@
 	flufftext = "A nearby research station ran by a very wealthy captain seems to be struggling with their scientific output. They might reward us handsomely if we ghostwrite for them."
 	multipliers = list(SCIPAPER_COOPERATION_INDEX = 0.25, SCIPAPER_FUNDING_INDEX = 2)
 	boostable_nodes = list(
-		"comp_recordkeeping" = 500,
-		"computer_data_disks" = 500,
+		TECHWEB_NODE_CONSOLES = TECHWEB_TIER_1_POINTS,
+		TECHWEB_NODE_FUNDIMENTAL_SCI = TECHWEB_TIER_1_POINTS,
 	)
 
 /datum/scientific_partner/defense
@@ -30,14 +29,11 @@
 		/datum/experiment/ordnance/explosive/hydrogenbomb,
 	)
 	boostable_nodes = list(
-		"adv_weaponry" = 5000,
-		"weaponry" = 2500,
-		"sec_basic" = 1250,
-		"explosive_weapons" = 1250,
-		"electronic_weapons" = 1250,
-		"radioactive_weapons" = 1250,
-		"beam_weapons" = 1250,
-		"explosive_weapons" = 1250,
+		TECHWEB_NODE_RIOT_SUPRESSION = TECHWEB_TIER_3_POINTS,
+		TECHWEB_NODE_SEC_EQUIP = TECHWEB_TIER_1_POINTS,
+		TECHWEB_NODE_EXPLOSIVES = TECHWEB_TIER_2_POINTS,
+		TECHWEB_NODE_ELECTRIC_WEAPONS = TECHWEB_TIER_2_POINTS,
+		TECHWEB_NODE_BEAM_WEAPONS = TECHWEB_TIER_3_POINTS,
 	)
 
 /datum/scientific_partner/medical
@@ -48,12 +44,12 @@
 		/datum/experiment/ordnance/gaseous/bz,
 	)
 	boostable_nodes = list(
-		"cyber_organs" = 750,
-		"cyber_organs_upgraded" = 1000,
-		"genetics" = 500,
-		"subdermal_implants" = 1250,
-		"adv_biotech" = 1000,
-		"biotech" = 1000,
+		TECHWEB_NODE_CYBER_ORGANS = TECHWEB_TIER_1_POINTS,
+		TECHWEB_NODE_CYBER_ORGANS_UPGRADED = TECHWEB_TIER_2_POINTS,
+		TECHWEB_NODE_GENE_ENGINEERING = TECHWEB_TIER_1_POINTS,
+		TECHWEB_NODE_PASSIVE_IMPLANTS = TECHWEB_TIER_1_POINTS,
+		TECHWEB_NODE_BIO_SCAN = TECHWEB_TIER_1_POINTS,
+		TECHWEB_NODE_CHEM_SYNTHESIS = TECHWEB_TIER_2_POINTS,
 	)
 
 /datum/scientific_partner/physics
@@ -64,11 +60,8 @@
 		/datum/experiment/ordnance/explosive/nobliumbomb,
 	)
 	boostable_nodes = list(
-		"engineering" = 5000,
-		"adv_engi" = 5000,
-		"emp_super" = 3000,
-		"emp_adv" = 1250,
-		"high_efficiency" = 5000,
-		"micro_bluespace" = 5000,
-		"adv_power" = 1500,
+		TECHWEB_NODE_PARTS_UPG = TECHWEB_TIER_2_POINTS,
+		TECHWEB_NODE_EXP_TOOLS = TECHWEB_TIER_4_POINTS,
+		TECHWEB_NODE_PARTS_BLUESPACE = TECHWEB_TIER_3_POINTS,
+		TECHWEB_NODE_PARTS_ADV = TECHWEB_TIER_1_POINTS,
 	)

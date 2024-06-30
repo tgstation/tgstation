@@ -50,7 +50,7 @@ const PaperPublishing = (props) => {
       <Section title="Submission Form">
         {fileList.length === 0 && (
           <NoticeBox>
-            Use the File Manager app to download files from a disk.
+            Use data disk to download files from compressor or doppler array.
           </NoticeBox>
         )}
         <LabeledList>
@@ -58,7 +58,7 @@ const PaperPublishing = (props) => {
             label="File (required)"
             buttons={
               <Button
-                tooltip="The selected file containing experimental data for our paper. Must be present in the HDD to be accesible. Transfer files with the File Manager program."
+                tooltip="The selected file containing experimental data for our paper. Must be present in the local file system or a data disk to be accesible."
                 icon="info-circle"
               />
             }

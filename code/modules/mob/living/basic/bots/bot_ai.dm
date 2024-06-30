@@ -276,3 +276,17 @@
 
 /datum/ai_behavior/bot_search/proc/valid_target(datum/ai_controller/basic_controller/bot/controller, atom/my_target)
 	return TRUE
+
+///behavior to make our bot talk
+/datum/ai_behavior/bot_speech
+	action_cooldown = 5 SECONDS
+	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+
+/datum/ai_behavior/bot_speech/perform(seconds_per_tick, datum/ai_controller/controller, list/list_to_pick_from, announce_key)
+	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[announce_key]
+
+	if(isnull(announcement) || !length(list_to_pick_from))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
+	announcement.announce(pick(list_to_pick_from))
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
