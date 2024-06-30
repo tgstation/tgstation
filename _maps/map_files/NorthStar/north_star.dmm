@@ -72,6 +72,13 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/commons/toilet)
+"aaN" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer4{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/science/ordnance/testlab)
 "aaO" = (
 /obj/machinery/computer/atmos_alert{
 	dir = 4
@@ -284,7 +291,7 @@
 /area/station/maintenance/floor3/starboard/fore)
 "acL" = (
 /obj/structure/table/wood,
-/obj/item/clothing/mask/cigarette/cigar/cohiba,
+/obj/item/cigarette/cigar/cohiba,
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 1
 	},
@@ -6879,6 +6886,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible/layer4{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "bJQ" = (
@@ -14447,6 +14455,7 @@
 /area/station/maintenance/floor1/starboard/fore)
 "dIJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/testlab)
 "dIO" = (
@@ -24699,6 +24708,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/testlab)
 "gwl" = (
@@ -35289,6 +35299,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/testlab)
 "jjo" = (
@@ -52999,7 +53010,7 @@
 /obj/item/fishing_rod,
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/three,
-/obj/item/clothing/mask/cigarette/pipe,
+/obj/item/cigarette/pipe,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor2/starboard/fore)
 "nEO" = (
@@ -59547,6 +59558,10 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 4
 	},
+/obj/machinery/power/apc/auto_name/directional/north{
+	areastring = "/area/station/science/ordnance/burnchamber"
+	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "pqO" = (
@@ -60773,6 +60788,10 @@
 	dir = 8
 	},
 /area/station/security/office)
+"pGz" = (
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/science/ordnance/testlab)
 "pGG" = (
 /obj/structure/ladder,
 /obj/structure/lattice/catwalk,
@@ -91253,6 +91272,7 @@
 /area/station/commons/vacant_room/office)
 "xxA" = (
 /obj/machinery/holopad,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/testlab)
 "xxC" = (
@@ -92288,7 +92308,7 @@
 /area/station/maintenance/floor3/port)
 "xJX" = (
 /obj/structure/table,
-/obj/item/clothing/mask/cigarette/candy{
+/obj/item/cigarette/candy{
 	pixel_x = 4
 	},
 /turf/open/floor/iron/dark/smooth_large,
@@ -315655,8 +315675,8 @@ dWz
 lYx
 unQ
 wMU
-oUW
-rDL
+aaN
+pGz
 jjj
 dIJ
 oTq

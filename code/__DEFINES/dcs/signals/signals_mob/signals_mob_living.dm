@@ -204,6 +204,10 @@
 	#define STOP_SACRIFICE (1<<0)
 	/// Don't send a message for sacrificing this thing, we have our own
 	#define SILENCE_SACRIFICE_MESSAGE (1<<1)
+	/// Don't send a message for sacrificing this thing UNLESS it's the cult target
+	#define SILENCE_NONTARGET_SACRIFICE_MESSAGE (1<<2)
+	/// Dusts the target instead of gibbing them (no soulstone)
+	#define DUST_SACRIFICE (1<<3)
 
 /// From /mob/living/befriend() : (mob/living/new_friend)
 #define COMSIG_LIVING_BEFRIENDED "living_befriended"
