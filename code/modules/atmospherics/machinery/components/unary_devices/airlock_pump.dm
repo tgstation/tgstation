@@ -1,3 +1,22 @@
+/**
+ * The pump looks up for the airlocks automatically based on airlock_pump_distance_limit and airlock_group_distance_limit values.
+ * When placed, the dir value (direction where the pipes are coming from) is considered as a direction towards the station (internal). The opposite direction is external.
+ * The airlock then tries to find airlocks or walls towards these directions until airlock_pump_distance_limit number of tiles reached.
+ * When it finds a valid object, then it tries to find airlocks, in directions perpendicular to the found tiles.
+ * And then adds them to the corresponding group (external/internal) until airlock_group_distance_limit number of tiles reached
+ *
+ * Example scheme of a valid configuration:
+ * A-----W
+ * A-----A
+ * W--P--A
+ * W-----W
+ * A-----W
+ *
+ * Where:
+ * A - airlocks
+ * W - walls
+ * P - pump
+ */
 /// A vent, scrubber and a sensor in a single device meant specifically for cycling airlocks. Ideal for airlocks of up to 3x3 tiles in size to avoid wind and timing out.
 /obj/machinery/atmospherics/components/unary/airlock_pump
 	name = "external airlock pump"
@@ -135,7 +154,7 @@
 		return
 
 	if(!powered())
-		stop_cycle("No power. Aborting cycle.")
+		stop_cycle("No power. Cycle aborted.", unbolt_only = TRUE)
 		return //Couldn't complete the cycle due to power outage
 
 	var/turf/location = get_turf(loc)
@@ -247,12 +266,12 @@
 		cycle_pressure_target = internal_pressure_target
 		var/pressure_delta = cycle_pressure_target - tile_air_pressure
 		if(pressure_delta <= allowed_pressure_error)
-			stop_cycle("Pressure nominal, skipping cycle.")
+			stop_cycle("Pressure nominal, cycle skipped.")
 			return TRUE
 
 		var/datum/gas_mixture/distro_air = airs[1]
 		if(distro_air.return_pressure() < min_distro_pressure)
-			stop_cycle("Low pipe pressure, skipping cycle. Proceed with caution.", unbolt_only = TRUE)
+			stop_cycle("Low pipe pressure, cycle skipped. Proceed with caution.", unbolt_only = TRUE)
 			return TRUE
 
 		if(!source_airlock)
@@ -262,12 +281,12 @@
 		cycle_pressure_target = external_pressure_target
 		var/pressure_delta = tile_air_pressure - cycle_pressure_target
 		if(pressure_delta <= allowed_pressure_error)
-			stop_cycle("Pressure nominal, skipping cycle.")
+			stop_cycle("Pressure nominal, cycle skipped.")
 			return TRUE
 
 		for(var/obj/machinery/door/airlock/airlock in external_airlocks)
 			if(airlock.shuttledocked)
-				stop_cycle("Shuttle docked, skipping cycle.")
+				stop_cycle("Shuttle docked, cycle skipped.")
 				return TRUE
 
 		if(!source_airlock)
