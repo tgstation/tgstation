@@ -39,6 +39,8 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/lock)
 	limit = 2
 	route = PATH_LOCK
+	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_state = "key_blade"
 
 /datum/heretic_knowledge/lock_grasp
 	name = "Grasp of Lock"
@@ -49,6 +51,9 @@
 	next_knowledge = list(/datum/heretic_knowledge/key_ring)
 	cost = 1
 	route = PATH_LOCK
+	depth = 3
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "grasp_lock"
 
 /datum/heretic_knowledge/lock_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_secondary_mansus_grasp))
@@ -111,6 +116,9 @@
 	)
 	cost = 1
 	route = PATH_LOCK
+	research_tree_icon_path = 'icons/obj/card.dmi'
+	research_tree_icon_state = "card_gold"
+	depth = 4
 
 /datum/heretic_knowledge/mark/lock_mark
 	name = "Mark of Lock"
@@ -140,6 +148,9 @@
 	next_knowledge = list(/datum/heretic_knowledge/spell/burglar_finesse)
 	cost = 1
 	route = PATH_LOCK
+	research_tree_icon_path = 'icons/obj/service/library.dmi'
+	research_tree_icon_state = "heretichandbook"
+	depth = 7
 
 /datum/heretic_knowledge/spell/burglar_finesse
 	name = "Burglar's Finesse"
@@ -156,6 +167,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
 	cost = 1
 	route = PATH_LOCK
+	depth = 8
 
 /datum/heretic_knowledge/blade_upgrade/flesh/lock //basically a chance-based weeping avulsion version of the former
 	name = "Opening Blade"
@@ -164,6 +176,8 @@
 	next_knowledge = list(/datum/heretic_knowledge/spell/caretaker_refuge)
 	route = PATH_LOCK
 	wound_type = /datum/wound/slash/flesh/critical
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "blade_upgrade_lock"
 	var/chance = 35
 
 /datum/heretic_knowledge/blade_upgrade/flesh/lock/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
@@ -183,6 +197,7 @@
 	route = PATH_LOCK
 	spell_to_add = /datum/action/cooldown/spell/caretaker
 	cost = 1
+	depth = 10
 
 /datum/heretic_knowledge/ultimate/lock_final
 	name = "Unlock the Labyrinth"
@@ -199,6 +214,7 @@
 		The Labyrinth will be Locked no more, and freedom will be ours! WITNESS US!"
 	required_atoms = list(/mob/living/carbon/human = 3)
 	route = PATH_LOCK
+	ascension_achievement = /datum/award/achievement/misc/lock_ascension
 
 /datum/heretic_knowledge/ultimate/lock_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
@@ -227,13 +243,11 @@
 		sound = 'sound/ambience/antag/heretic/ascend_knock.ogg',
 		color_override = "pink",
 	)
-	user.client?.give_award(/datum/award/achievement/misc/lock_ascension, user)
 
 	// buffs
 	var/datum/action/cooldown/spell/shapeshift/eldritch/ascension/transform_spell = new(user.mind)
 	transform_spell.Grant(user)
 
-	user.client?.give_award(/datum/award/achievement/misc/lock_ascension, user)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	var/datum/heretic_knowledge/blade_upgrade/flesh/lock/blade_upgrade = heretic_datum.get_knowledge(/datum/heretic_knowledge/blade_upgrade/flesh/lock)
 	blade_upgrade.chance += 30
