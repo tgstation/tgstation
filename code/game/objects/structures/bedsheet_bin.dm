@@ -601,19 +601,21 @@ LINEN BINS
 			return CONTEXTUAL_SCREENTIP_SET
 		return
 
-	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
-		context[SCREENTIP_CONTEXT_LMB] = "Disassemble"
-		return CONTEXTUAL_SCREENTIP_SET
-	if(held_item.tool_behaviour == TOOL_WRENCH)
-		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Una" : "A"]nchor"
-		return CONTEXTUAL_SCREENTIP_SET
 	if(istype(held_item, /obj/item/bedsheet))
 		context[SCREENTIP_CONTEXT_LMB] = "Put in"
 		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_RMB] = "Disassemble"
+		. = CONTEXTUAL_SCREENTIP_SET
+	else if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = "[anchored ? "Una" : "A"]nchor"
+		. = CONTEXTUAL_SCREENTIP_SET
+
 	if(amount && held_item.w_class < WEIGHT_CLASS_BULKY)
 		context[SCREENTIP_CONTEXT_LMB] = "Hide item in"
-		return CONTEXTUAL_SCREENTIP_SET
-
+		. = CONTEXTUAL_SCREENTIP_SET
+	return .
 
 /obj/structure/bedsheetbin/update_icon_state()
 	switch(amount)
@@ -631,7 +633,7 @@ LINEN BINS
 		update_appearance()
 	..()
 
-/obj/structure/bedsheetbin/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/structure/bedsheetbin/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	if(amount)
 		to_chat(user, span_warning("The [src] must be empty first!"))
 		return ITEM_INTERACT_SUCCESS
@@ -641,7 +643,7 @@ LINEN BINS
 		qdel(src)
 		return ITEM_INTERACT_SUCCESS
 
-/obj/structure/bedsheetbin/wrench_act(mob/living/user, obj/item/tool)
+/obj/structure/bedsheetbin/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool, time = 0.5 SECONDS)
 	return ITEM_INTERACT_SUCCESS
