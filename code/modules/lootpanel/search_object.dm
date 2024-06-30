@@ -30,9 +30,7 @@
 			COMSIG_ATOM_EXITED,
 			), PROC_REF(on_item_moved))
 	else
-		RegisterSignals(item, list(
-			COMSIG_QDELETING,
-			), PROC_REF(on_item_moved))
+		RegisterSignal(item, COMSIG_QDELETING, PROC_REF(on_item_moved))
 
 	// Icon generation conditions //////////////
 	// Condition 1: Icon is complex
