@@ -25,10 +25,12 @@
 
 	if(isturf(item))
 		RegisterSignal(item, COMSIG_TURF_CHANGE, PROC_REF(on_turf_change))
+		RegisterSignals(item, list(
+			COMSIG_ATOM_ENTERED,
+			COMSIG_ATOM_EXITED,
+			), PROC_REF(on_item_moved))
 	else
 		RegisterSignals(item, list(
-			COMSIG_ITEM_PICKUP,
-			COMSIG_MOVABLE_MOVED,
 			COMSIG_QDELETING,
 			), PROC_REF(on_item_moved))
 
