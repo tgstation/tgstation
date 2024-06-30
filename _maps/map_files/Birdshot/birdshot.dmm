@@ -2028,7 +2028,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/break_room)
 "aQD" = (
-/obj/machinery/atmospherics/components/unary/bluespace_sender,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/storage)
 "aQF" = (
@@ -51560,7 +51560,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "rVJ" = (
-/obj/structure/table,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/storage)
 "rVQ" = (
