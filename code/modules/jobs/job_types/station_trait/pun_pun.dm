@@ -7,8 +7,11 @@
 	spawn_positions = 0
 	supervisors = "the Bartender"
 	spawn_type = /mob/living/carbon/human/species/monkey/punpun
+	outfit = /datum/outfit/job/pun_pun
 	config_tag = "PUN_PUN"
 	random_spawns_possible = FALSE
+	paycheck = PAYCHECK_LOWER
+	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_PUN_PUN
 	departments_list = list(/datum/job_department/service)
 	exclusive_mail_goodies = TRUE
@@ -29,16 +32,15 @@
 	var/mob/living/monky = new spawn_type(get_turf(spawn_point))
 	return monky
 
+/datum/job/pun_pun/after_spawn(mob/living/carbon/human/monkey, client/player_client)
+	. = ..()
+	monkey.make_clever_and_no_dna_scramble()
+
 /datum/outfit/job/pun_pun
 	name = "Pun Pun"
 	jobtype = /datum/job/pun_pun
 
 	id_trim = /datum/id_trim/job/assistant
 	belt = /obj/item/modular_computer/pda/pun_pun
-	uniform = null //pun pun is already equipped with a waiter dress on spawn.
+	uniform = /obj/item/clothing/under/suit/waiter
 	shoes = null //monkeys cannot equip shoes
-
-
-/datum/job/pun_pun/after_spawn(mob/living/carbon/human/monkey, client/player_client)
-	. = ..()
-	monkey.make_clever_and_no_dna_scramble()
