@@ -70,7 +70,7 @@
 
 	var/datum/gas_mixture/input_air = airs[1]
 	var/datum/gas_mixture/output_air = airs[2]
-	var/datum/gas_mixture/output_pipenet_air = parents[2]?.air
+	var/datum/gas_mixture/output_pipenet_air = parents[2].air
 
 	if(!inverted)
 		if(input_air.temperature < target_temperature)

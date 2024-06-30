@@ -61,7 +61,7 @@ Passive gate is similar to the regular pump except:
 
 	var/datum/gas_mixture/input_air = airs[1]
 	var/datum/gas_mixture/output_air = airs[2]
-	var/datum/gas_mixture/output_pipenet_air = parents[2]?.air
+	var/datum/gas_mixture/output_pipenet_air = parents[2].air
 
 	if(input_air.release_gas_to(output_air, target_pressure, output_pipenet_air = output_pipenet_air))
 		update_parents()

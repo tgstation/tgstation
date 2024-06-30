@@ -56,7 +56,7 @@
 
 	var/datum/gas_mixture/input_air = airs[1]
 	var/datum/gas_mixture/output_air = airs[2]
-	var/datum/gas_mixture/output_pipenet_air = parents[2]?.air
+	var/datum/gas_mixture/output_pipenet_air = parents[2].air
 
 	if(input_air.return_pressure() > target_pressure)
 		if(input_air.release_gas_to(output_air, input_air.return_pressure(), output_pipenet_air = output_pipenet_air))
