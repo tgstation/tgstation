@@ -437,6 +437,8 @@
 		return
 	if (isandroid(check))
 		return TRUE
+	if (check.organs < 6 || check.bodyparts < 6)
+		return FALSE
 
 	var/static/list/augmented_organ_slots = list(
 		ORGAN_SLOT_HEART,
@@ -447,9 +449,13 @@
 		ORGAN_SLOT_STOMACH,
 	)
 	for (var/obj/item/organ/organ as anything in check.organs)
-		if (organ.slot in augmented_organ_slots && IS_ORGANIC_ORGAN(organ))
+		if (!organ)
+			return FALSE
+		if (organ.slot in augmented_organ_slots && !IS_ROBOTIC_ORGAN(organ))
 			return FALSE
 	for (var/obj/item/bodypart/bodypart as anything in check.bodyparts)
+		if (!bodypart)
+			return FALSE
 		if (bodypart.bodytype != BODYTYPE_ROBOTIC)
 			return FALSE
 	return TRUE
@@ -457,6 +463,7 @@
 /datum/experiment/scanning/reagent/cryostylane
 	name = "Pure Cryostylane Scan"
 	description = "It appears that the Cryostylane reagent can potentially halt all physiological processes in the human body. Produce Cryostylane with at least 99% purity and scan the beaker."
+	performance_hint = "Keep the temperature as high as possible during the reaction."
 	required_reagent = /datum/reagent/cryostylane
 	min_purity = 0.99
 
