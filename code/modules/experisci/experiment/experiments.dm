@@ -399,11 +399,8 @@
 	)
 
 	for (var/obj/item/organ/organ as anything in check.organs)
-		if (IS_ORGANIC_ORGAN(organ))
-			continue
-		if (!(organ.slot in vital_organ_slots))
-			continue
-		return TRUE
+		if (organ.slot in vital_organ_slots && IS_ROBOTIC_ORGAN(organ))
+			return TRUE
 	return FALSE
 
 /// Scan for skillchips
@@ -438,8 +435,23 @@
 	. = ..()
 	if (!.)
 		return
-	if (!isandroid(check))
-		return FALSE
+	if (isandroid(check))
+		return TRUE
+
+	var/static/list/augmented_organ_slots = list(
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_EYES,
+		ORGAN_SLOT_EARS,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_STOMACH,
+	)
+	for (var/obj/item/organ/organ as anything in check.organs)
+		if (organ.slot in augmented_organ_slots && !IS_ORGANIC_ORGAN(organ))
+			return FALSE
+	for (var/obj/item/bodypart/bodypart as anything in check.bodyparts)
+		if (bodypart.bodytype != BODYTYPE_ROBOTIC)
+			return FALSE
 	return TRUE
 
 /datum/experiment/scanning/reagent/cryostylane
