@@ -581,6 +581,10 @@ LINEN BINS
 	anchored = FALSE
 
 
+/obj/structure/bedsheetbin/Initialize(mapload)
+	. = ..()
+	register_context()
+
 /obj/structure/bedsheetbin/examine(mob/user)
 	. = ..()
 	if(amount < 1)
@@ -589,6 +593,26 @@ LINEN BINS
 		. += "There is one bed sheet in the bin."
 	else
 		. += "There are [amount] bed sheets in the bin."
+
+/obj/structure/bedsheetbin/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		if(amount)
+			context[SCREENTIP_CONTEXT_LMB] = "Take bedsheet"
+			return CONTEXTUAL_SCREENTIP_SET
+		return
+
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "Disassemble"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Una" : "A"]nchor"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/bedsheet))
+		context[SCREENTIP_CONTEXT_LMB] = "Put in"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(amount && held_item.w_class < WEIGHT_CLASS_BULKY)
+		context[SCREENTIP_CONTEXT_LMB] = "Hide item in"
+		return CONTEXTUAL_SCREENTIP_SET
 
 
 /obj/structure/bedsheetbin/update_icon_state()
