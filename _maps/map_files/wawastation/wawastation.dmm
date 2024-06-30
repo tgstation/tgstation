@@ -40447,7 +40447,7 @@
 /area/station/hallway/secondary/service)
 "otH" = (
 /obj/structure/closet/crate/cardboard,
-/obj/item/artefact,
+/obj/item/relic,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/department/bridge)

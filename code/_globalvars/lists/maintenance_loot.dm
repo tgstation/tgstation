@@ -195,7 +195,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		) = 8,
 
 	list(//strange objects
-		/obj/item/artefact = 5,
+		/obj/item/relic = 5,
 		) = 8,
 
 	list(//construction and crafting

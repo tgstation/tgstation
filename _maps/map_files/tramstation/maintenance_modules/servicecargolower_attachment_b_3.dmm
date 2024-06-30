@@ -6,7 +6,7 @@
 /turf/closed/wall/rust,
 /area/station/maintenance/starboard/greater)
 "d" = (
-/obj/item/artefact,
+/obj/item/relic,
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid/dug,
 /area/station/maintenance/starboard/greater)

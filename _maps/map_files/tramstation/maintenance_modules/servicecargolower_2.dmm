@@ -352,7 +352,7 @@
 /area/station/maintenance/starboard/greater)
 "ST" = (
 /obj/item/stack/ore/glass,
-/obj/item/artefact,
+/obj/item/relic,
 /turf/open/misc/asteroid/dug,
 /area/station/asteroid)
 "Ui" = (

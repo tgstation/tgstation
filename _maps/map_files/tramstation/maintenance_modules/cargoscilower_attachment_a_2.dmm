@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/item/artefact,
+/obj/item/relic,
 /turf/open/misc/asteroid/dug,
 /area/station/asteroid)
 "b" = (

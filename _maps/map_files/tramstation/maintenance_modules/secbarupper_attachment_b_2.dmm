@@ -32,7 +32,7 @@
 "p" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
-/obj/item/artefact,
+/obj/item/relic,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "r" = (

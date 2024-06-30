@@ -68,7 +68,7 @@
 	valid_items = list()
 
 	for(var/I in typesof(/obj/item))
-		if(ispath(I, /obj/item/artefact))
+		if(ispath(I, /obj/item/relic))
 			item_reactions["[I]"] = SCANTYPE_DISCOVER
 		else
 			item_reactions["[I]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
@@ -151,7 +151,7 @@
 
 		item_data["name"] = loaded_item.name
 		item_data["icon"] = icon2base64(getFlatIcon(loaded_item, no_anim = TRUE))
-		item_data["isRelic"] = istype(loaded_item, /obj/item/artefact)
+		item_data["isRelic"] = istype(loaded_item, /obj/item/relic)
 
 		item_data["associatedNodes"] = list()
 		var/list/unlockable_nodes = techweb_item_unlock_check(loaded_item)
@@ -461,7 +461,7 @@
 	if(exp == SCANTYPE_DISCOVER)
 		visible_message(span_notice("[src] scans the [exp_on], revealing its true nature!"))
 		playsound(src, 'sound/effects/supermatter.ogg', 50, 3, -1)
-		var/obj/item/artefact/loaded_artifact = loaded_item
+		var/obj/item/relic/loaded_artifact = loaded_item
 		loaded_artifact.reveal()
 		investigate_log("Experimentor has revealed a relic with [span_danger("[loaded_artifact.hidden_power]")] effect.", INVESTIGATE_EXPERIMENTOR)
 		ejectItem()
@@ -553,9 +553,9 @@
 #undef FAIL
 
 
-// Artefacts \\
+// Relic \\
 
-/obj/item/artefact
+/obj/item/relic
 	name = "strange object"
 	desc = "What mysteries could this hold? Maybe Research & Development could find out."
 	icon = 'icons/obj/devices/artefacts.dmi'
@@ -576,11 +576,11 @@
 	//What visual theme this artefact has. Current possible choices: "prototype", "necrotech"
 	var/artifact_theme = "prototype"
 
-/obj/item/artefact/Initialize(mapload)
+/obj/item/relic/Initialize(mapload)
 	. = ..()
 	random_themed_appearance()
 
-/obj/item/artefact/proc/random_themed_appearance()
+/obj/item/relic/proc/random_themed_appearance()
 	var/themed_name_prefix
 	var/themed_name_suffix
 	if(artifact_theme == "prototype")
@@ -597,11 +597,11 @@
 		name = "strange relic"
 	update_appearance()
 
-/obj/item/artefact/lavaland
+/obj/item/relic/lavaland
 	name = "strange relic"
 	artifact_theme = "necrotech"
 
-/obj/item/artefact/proc/reveal()
+/obj/item/relic/proc/reveal()
 	if(activated) //no rerolling
 		return
 	activated = TRUE
@@ -619,7 +619,7 @@
 			PROC_REF(rapid_self_dupe),
 			)
 
-/obj/item/artefact/attack_self(mob/user)
+/obj/item/relic/attack_self(mob/user)
 	if(!activated)
 		to_chat(user, span_notice("You aren't quite sure what this is. Maybe R&D knows what to do with it?"))
 		return
@@ -631,33 +631,33 @@
 	COOLDOWN_START(src, cooldown, cooldown_timer)
 	call(src, hidden_power)(user)
 
-/obj/item/artefact/proc/throw_smoke(turf/where)
+/obj/item/relic/proc/throw_smoke(turf/where)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(0, holder = src, location = get_turf(where))
 	smoke.start()
 
 // Artefact Powers \\
 
-/obj/item/artefact/proc/corgi_cannon(mob/user)
+/obj/item/relic/proc/corgi_cannon(mob/user)
 	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/mob/living/basic/pet/dog/corgi/sad_corgi = new(get_turf(user))
 	sad_corgi.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, PROC_REF(throw_smoke), sad_corgi))
 	warn_admins(user, "Corgi Cannon", 0)
 
-/obj/item/artefact/proc/cleaning_foam(mob/user)
+/obj/item/relic/proc/cleaning_foam(mob/user)
 	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/obj/item/grenade/chem_grenade/cleaner/spawned_foamer = new/obj/item/grenade/chem_grenade/cleaner(get_turf(user))
 	spawned_foamer.detonate()
 	qdel(spawned_foamer)
 	warn_admins(user, "Foam", 0)
 
-/obj/item/artefact/proc/flashbanger(mob/user)
+/obj/item/relic/proc/flashbanger(mob/user)
 	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/obj/item/grenade/flashbang/spawned_flashbang = new/obj/item/grenade/flashbang(user.loc)
 	spawned_flashbang.detonate()
 	warn_admins(user, "Flash")
 
-/obj/item/artefact/proc/summon_animals(mob/user)
+/obj/item/relic/proc/summon_animals(mob/user)
 	var/message = span_danger("[src] begins to shake, and in the distance the sound of rampaging animals arises!")
 	visible_message(message)
 	to_chat(user, message)
@@ -683,11 +683,11 @@
 		to_chat(user, span_warning("[src] falls apart!"))
 		qdel(src)
 
-/obj/item/artefact/proc/rapid_self_dupe(mob/user)
+/obj/item/relic/proc/rapid_self_dupe(mob/user)
 	audible_message("[src] emits a loud pop!")
 	var/list/dummy_artifacts = list()
 	for(var/counter in 1 to rand(5,10))
-		var/obj/item/artefact/duped = new type(get_turf(src))
+		var/obj/item/relic/duped = new type(get_turf(src))
 		duped.name = name
 		duped.desc = desc
 		duped.real_name = real_name
@@ -698,22 +698,22 @@
 	QDEL_LIST_IN(dummy_artifacts, rand(1 SECONDS, 10 SECONDS))
 	warn_admins(user, "Rapid duplicator", 0)
 
-/obj/item/artefact/proc/heat_and_explode(mob/user)
+/obj/item/relic/proc/heat_and_explode(mob/user)
 	to_chat(user, span_danger("[src] begins to heat up!"))
 	addtimer(CALLBACK(src, PROC_REF(blow_up), user), rand(3.5 SECONDS, 10 SECONDS))
 
-/obj/item/artefact/proc/blow_up(mob/user)
+/obj/item/relic/proc/blow_up(mob/user)
 	if(loc == user)
 		visible_message(span_notice("\The [src]'s top opens, releasing a powerful blast!"))
 		explosion(src, heavy_impact_range = rand(1,5), light_impact_range = rand(1,5), flame_range = 2, flash_range = rand(1,5), adminlog = TRUE)
 		warn_admins(user, "Explosion")
 		qdel(src) //Comment this line to produce a light grenade (the bomb that keeps on exploding when used)!!
 
-/obj/item/artefact/proc/uncontrolled_teleport(mob/user)
+/obj/item/relic/proc/uncontrolled_teleport(mob/user)
 	to_chat(user, span_notice("[src] begins to vibrate!"))
 	addtimer(CALLBACK(src, PROC_REF(do_the_teleport), user), rand(1 SECONDS, 3 SECONDS))
 
-/obj/item/artefact/proc/do_the_teleport(mob/user)
+/obj/item/relic/proc/do_the_teleport(mob/user)
 	var/turf/userturf = get_turf(user)
 	if(loc == user && !is_centcom_level(userturf.z)) //Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
 		visible_message(span_notice("[src] twists and bends, relocating itself!"))
@@ -723,10 +723,10 @@
 		warn_admins(user, "Teleport", 0)
 
 //Admin Warning proc for relics
-/obj/item/artefact/proc/warn_admins(mob/user, artefact_type, priority = 1)
+/obj/item/relic/proc/warn_admins(mob/user, relic_type, priority = 1)
 	var/turf/location = get_turf(src)
-	var/log_msg = "[artefact_type] relic used by [key_name(user)] in [AREACOORD(location)]"
+	var/log_msg = "[relic_type] relic used by [key_name(user)] in [AREACOORD(location)]"
 	if(priority) //For truly dangerous relics that may need an admin's attention. BWOINK!
-		message_admins("[artefact_type] artefact activated by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(location)]")
+		message_admins("[relic_type] relic activated by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(location)]")
 	log_game(log_msg)
 	investigate_log(log_msg, "experimentor")
