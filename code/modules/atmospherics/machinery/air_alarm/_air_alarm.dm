@@ -556,7 +556,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	if((machine_stat & (NOPOWER|BROKEN)) || shorted)
 		return
 
-
+	if(!environment)
+		return
 
 	var/old_danger = danger_level
 	danger_level = AIR_ALARM_ALERT_NONE
