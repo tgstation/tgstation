@@ -2998,12 +2998,12 @@
 /area/station/security/prison/mess)
 "bie" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/machinery/status_display/ai/directional/west,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/light/cold/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "biB" = (
@@ -18500,7 +18500,10 @@
 "gIO" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/right/directional/east,
+/obj/machinery/door/window/right/directional/east{
+	req_access = list("hydroponics");
+	name = "Hydroponics Service Desk"
+	},
 /turf/open/floor/iron/textured_half{
 	dir = 8
 	},
