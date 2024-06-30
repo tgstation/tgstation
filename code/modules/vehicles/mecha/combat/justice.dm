@@ -454,7 +454,7 @@
  */
 /datum/action/vehicle/sealed/mecha/charge_attack/proc/charge_attack(mob/living/charger, turf/target)
 	var/turf/start_charge_here = get_turf(charger)
-	var/charge_range = min(get_dist_euclidian(start_charge_here, target), max_charge_range)
+	var/charge_range = min(get_dist_euclidean(start_charge_here, target), max_charge_range)
 	var/turf/but_we_gonna_here = get_ranged_target_turf(start_charge_here, get_dir(start_charge_here, target), floor(charge_range))
 	var/turf/here_we_go = start_charge_here
 	for(var/turf/line_turf in get_line(get_step(start_charge_here, get_dir(start_charge_here, target)), but_we_gonna_here))
