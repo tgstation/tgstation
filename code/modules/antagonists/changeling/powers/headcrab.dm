@@ -40,10 +40,11 @@
 		user.investigate_log("has been gibbed by headslug burst.", INVESTIGATE_DEATHS)
 	user.gib(DROP_ALL_REMAINS)
 	. = TRUE
-	spawn_headcrab(stored_mind, user_turf, organs)
+	addtimer(CALLBACK(src, PROC_REF(spawn_headcrab), stored_mind, organs, user_turf.x, user_turf.y, user_turf.z), 1 SECONDS)
 
 /// Creates the headrab to occupy
-/datum/action/changeling/headcrab/proc/spawn_headcrab(datum/mind/stored_mind, turf/spawn_location, list/organs)
+/datum/action/changeling/headcrab/proc/spawn_headcrab(datum/mind/stored_mind, list/organs, new_x, new_y, new_z)
+	var/turf/spawn_location = locate(new_x, new_y, new_z)
 	var/mob/living/basic/headslug/crab = new(spawn_location)
 	for(var/obj/item/organ/I in organs)
 		I.forceMove(crab)
