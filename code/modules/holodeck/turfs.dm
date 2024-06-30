@@ -11,6 +11,9 @@
 /turf/open/floor/holofloor/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	return ITEM_INTERACT_BLOCKING // Fuck you
 
+/turf/open/floor/holofloor/crowbar_act(mob/living/user, obj/item/I)
+	return NONE // Fuck you
+
 /turf/open/floor/holofloor/burn_tile()
 	return //you can't burn a hologram!
 
