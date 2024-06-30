@@ -3756,8 +3756,6 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/drone_bay)
 "axC" = (
@@ -23824,7 +23822,6 @@
 /turf/open/floor/iron/dark/smooth_corner,
 /area/station/commons/fitness)
 "hze" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
@@ -23832,6 +23829,9 @@
 	pixel_x = -22;
 	pixel_y = -8
 	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/iron,
 /area/station/cargo/drone_bay)
 "hzk" = (
@@ -57804,6 +57804,7 @@
 /obj/structure/closet/crate/preopen,
 /obj/item/stock_parts/power_store/cell/empty,
 /obj/effect/spawner/random/engineering/flashlight,
+/obj/structure/sign/departments/exodrone/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "tuf" = (

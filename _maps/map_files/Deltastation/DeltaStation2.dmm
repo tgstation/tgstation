@@ -17281,6 +17281,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "env" = (
@@ -89425,13 +89426,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "wpO" = (
-/obj/machinery/status_display/ai/directional/north,
 /obj/structure/table,
 /obj/item/paper_bin,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
 /obj/item/papercutter,
+/obj/structure/sign/departments/exodrone/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "wpQ" = (

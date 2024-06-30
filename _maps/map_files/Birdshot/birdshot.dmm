@@ -53857,6 +53857,14 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
+"rTi" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/departments/exodrone/directional/west,
+/turf/open/floor/plating,
+/area/station/maintenance/port/greater)
 "rTl" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/neutral/line{
@@ -87260,7 +87268,7 @@ fLF
 ahr
 nFX
 nFX
-ozn
+rTi
 pSP
 mhk
 mhk
