@@ -130,7 +130,7 @@
 /turf/open/misc/asteroid,
 /area/station/asteroid)
 "D" = (
-/obj/item/relic,
+/obj/item/artefact,
 /turf/open/misc/asteroid/dug,
 /area/station/asteroid)
 "F" = (

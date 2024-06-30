@@ -233,7 +233,7 @@
 /area/ruin/space/unpowered)
 "pl" = (
 /obj/structure/table,
-/obj/item/relic{
+/obj/item/artefact{
 	pixel_y = 5
 	},
 /turf/open/floor/mineral/plastitanium/red/airless,

@@ -7369,8 +7369,8 @@
 "yj" = (
 /obj/machinery/light/directional/west,
 /obj/structure/closet/crate,
-/obj/item/relic,
-/obj/item/relic,
+/obj/item/artefact,
+/obj/item/artefact,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
@@ -7449,9 +7449,9 @@
 /area/awaymission/snowdin/outside)
 "yx" = (
 /obj/structure/closet/crate,
-/obj/item/relic,
-/obj/item/relic,
-/obj/item/relic,
+/obj/item/artefact,
+/obj/item/artefact,
+/obj/item/artefact,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "yy" = (
@@ -10859,9 +10859,9 @@
 /area/awaymission/snowdin/cave)
 "Pc" = (
 /obj/structure/closet/crate,
-/obj/item/relic,
-/obj/item/relic,
-/obj/item/relic,
+/obj/item/artefact,
+/obj/item/artefact,
+/obj/item/artefact,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_dock)
@@ -11610,7 +11610,7 @@
 /area/awaymission/snowdin/post/engineering)
 "SN" = (
 /obj/structure/closet/crate,
-/obj/item/relic,
+/obj/item/artefact,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_dock)

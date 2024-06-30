@@ -3,13 +3,13 @@
 	name = "E.X.P.E.R.I-MENTORially Discovered Devices"
 	description = "Psst, hey. Don't tell the assistants, but we're undercutting them on the value of those 'strange objects' they've been finding. Fish one up and send us a discovered one by using the E.X.P.E.R.I-MENTOR."
 	reward = CARGO_CRATE_VALUE * 8
-	wanted_types = list(/obj/item/relic = TRUE)
+	wanted_types = list(/obj/item/artefact = TRUE)
 
 /datum/bounty/item/science/relic/applies_to(obj/O)
 	if(!..())
 		return FALSE
-	var/obj/item/relic/experiment = O
-	if(experiment.revealed)
+	var/obj/item/artefact/experiment = O
+	if(experiment.activated)
 		return TRUE
 	return
 

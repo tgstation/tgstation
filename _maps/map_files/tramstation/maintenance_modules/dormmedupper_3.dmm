@@ -435,7 +435,7 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "XV" = (
 /obj/item/stack/ore/glass,
-/obj/item/relic,
+/obj/item/artefact,
 /turf/open/misc/asteroid/dug,
 /area/station/maintenance/department/crew_quarters/dorms)
 "ZJ" = (

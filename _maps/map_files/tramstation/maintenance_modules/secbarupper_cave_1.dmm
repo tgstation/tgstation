@@ -23,7 +23,7 @@
 /turf/open/misc/asteroid/dug,
 /area/station/asteroid)
 "v" = (
-/obj/item/relic,
+/obj/item/artefact,
 /turf/open/misc/asteroid/dug,
 /area/station/asteroid)
 "w" = (

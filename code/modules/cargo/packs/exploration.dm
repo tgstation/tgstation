@@ -8,7 +8,7 @@
 	name = "Scrapyard Crate"
 	desc = "Outsourced crate containing various junk."
 	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/obj/item/relic,
+	contains = list(/obj/item/artefact,
 					/obj/item/broken_bottle,
 					/obj/item/pickaxe/rusted)
 	crate_name = "scrapyard crate"
