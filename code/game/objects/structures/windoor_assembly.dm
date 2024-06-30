@@ -293,10 +293,10 @@
 		returnx
 	switch(state)
 		if("01")
-			. += span_notice("\The [src] needs [span_boldnotice("wiring")].")
+			. += span_notice("\The [src] needs [span_boldnotice("wiring")], or could be [span_boldnotice("un-wrenched")] from the floor.")
 		if("02")
 			if(!electronics)
-				. += span_notice("\The [src] needs [span_boldnotice("airlock electronics")] to continue installation.")
+				. += span_notice("\The [src] needs [span_boldnotice("airlock electronics")] to continue installation, or [span_boldnotice("wirecutters")] to take apart.")
 			else
 				. += span_notice("\The [src] is ready to be [span_boldnotice("levered")] into place with a [span_boldnotice("crowbar")].")
 
