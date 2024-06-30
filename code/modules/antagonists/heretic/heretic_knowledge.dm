@@ -38,6 +38,8 @@
 	var/priority = 0
 	/// What path is this on. If set to "null", assumed to be unreachable (or abstract).
 	var/route
+	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
+	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
 
 /datum/heretic_knowledge/New()
 	if(!mutually_exclusive)
@@ -523,11 +525,23 @@
 	abstract_parent_type = /datum/heretic_knowledge/summon
 	/// Typepath of a mob to summon when we finish the recipe.
 	var/mob/living/mob_to_summon
-	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
-	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
 
 /datum/heretic_knowledge/summon/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/mob/living/summoned = new mob_to_summon(loc)
+	summon_ritual_mob(user, loc, mob_to_summon)
+
+/**
+ * Creates the ritual mob and grabs a ghost for it
+ *
+ * * user - the mob doing the summoning
+ * * loc - where the summon is happening
+ * * mob_to_summon - either a mob instance or a mob typepath
+ */
+/datum/heretic_knowledge/proc/summon_ritual_mob(mob/living/user, turf/loc, mob/living/mob_to_summon)
+	var/mob/living/summoned
+	if(isliving(mob_to_summon))
+		summoned = mob_to_summon
+	else
+		summoned = new mob_to_summon(loc)
 	summoned.ai_controller?.set_ai_status(AI_STATUS_OFF)
 	// Fade in the summon while the ghost poll is ongoing.
 	// Also don't let them mess with the summon while waiting
@@ -557,6 +571,7 @@
 
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	heretic_monster.set_owner(user.mind)
+	summoned.RegisterSignal(user, COMSIG_LIVING_DEATH, TYPE_PROC_REF(/mob/living/, on_master_death))
 
 	var/datum/objective/heretic_summon/summon_objective = locate() in user.mind.get_all_objectives()
 	summon_objective?.num_summoned++

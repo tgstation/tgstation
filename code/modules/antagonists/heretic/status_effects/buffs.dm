@@ -118,6 +118,8 @@
 	var/time_between_initial_blades = 0.25 SECONDS
 	/// If TRUE, we self-delete our status effect after all the blades are deleted.
 	var/delete_on_blades_gone = TRUE
+	/// What blade type to create
+	var/blade_type = /obj/effect/floating_blade
 	/// A list of blade effects orbiting / protecting our owner
 	var/list/obj/effect/floating_blade/blades = list()
 
@@ -127,12 +129,14 @@
 	max_num_blades = 4,
 	blade_orbit_radius = 20,
 	time_between_initial_blades = 0.25 SECONDS,
+	blade_type = /obj/effect/floating_blade,
 )
 
 	src.duration = new_duration
 	src.max_num_blades = max_num_blades
 	src.blade_orbit_radius = blade_orbit_radius
 	src.time_between_initial_blades = time_between_initial_blades
+	src.blade_type = blade_type
 	return ..()
 
 /datum/status_effect/protective_blades/on_apply()
@@ -157,7 +161,7 @@
 	if(QDELETED(src) || QDELETED(owner))
 		return
 
-	var/obj/effect/floating_blade/blade = new(get_turf(owner))
+	var/obj/effect/floating_blade/blade = new blade_type(get_turf(owner))
 	blades += blade
 	blade.orbit(owner, blade_orbit_radius)
 	RegisterSignal(blade, COMSIG_QDELETING, PROC_REF(remove_blade))

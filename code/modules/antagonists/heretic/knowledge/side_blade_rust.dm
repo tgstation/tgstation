@@ -20,7 +20,7 @@
 /datum/heretic_knowledge/crucible
 	name = "Mawed Crucible"
 	desc = "Allows you to transmute a portable water tank and a table to create a Mawed Crucible. \
-		The Mawed Crubile can brew powerful potions for combat and utility, but must be fed bodyparts and organs between uses."
+		The Mawed Crucible can brew powerful potions for combat and utility, but must be fed bodyparts and organs between uses."
 	gain_text = "This is pure agony. I wasn't able to summon the figure of the Aristocrat, \
 		but with the Priest's attention I stumbled upon a different recipe..."
 	next_knowledge = list(
@@ -43,7 +43,7 @@
 		These shots function as normal, albeit weak high caliber mutitions when fired from \
 		close range or at inanimate objects. You can aim the rifle at distant foes, \
 		causing the shot to deal massively increased damage and hone in on them."
-	gain_text = "I met an old man in an anique shop who wielded a very unusual weapon. \
+	gain_text = "I met an old man in an antique shop who wielded a very unusual weapon. \
 		I could not purchase it at the time, but they showed me how they made it ages ago."
 	next_knowledge = list(
 		/datum/heretic_knowledge/duel_stance,

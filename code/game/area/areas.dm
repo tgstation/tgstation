@@ -552,13 +552,26 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 ///Tries to play looping ambience to the mobs.
 /mob/proc/refresh_looping_ambience()
+	if(!client) //if a tree falls in the woods...
+		return
 	var/area/my_area = get_area(src)
+	var/sound_to_use = my_area.ambient_buzz
 
-	if(!(client?.prefs.read_preference(/datum/preference/toggle/sound_ship_ambience)) || !my_area.ambient_buzz)
+	if(!sound_to_use || !(client.prefs.read_preference(/datum/preference/toggle/sound_ship_ambience)))
 		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
+		client.current_ambient_sound = null
 		return
 
-	SEND_SOUND(src, sound(my_area.ambient_buzz, repeat = 1, wait = 0, volume = my_area.ambient_buzz_vol, channel = CHANNEL_BUZZ))
+	if(!can_hear())
+		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
+		client.current_ambient_sound = null
+		return
+
+	if(sound_to_use == client.current_ambient_sound)
+		return //don't reset current loops.
+
+	client.current_ambient_sound = sound_to_use
+	SEND_SOUND(src, sound(sound_to_use, repeat = 1, wait = 0, volume = my_area.ambient_buzz_vol, channel = CHANNEL_BUZZ))
 
 
 /**
