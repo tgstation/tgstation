@@ -2931,7 +2931,7 @@
 /area/virtual_domain)
 "Ld" = (
 /obj/structure/table/wood,
-/obj/item/clothing/mask/cigarette/cigar{
+/obj/item/cigarette/cigar{
 	pixel_y = 16;
 	pixel_x = -2
 	},
