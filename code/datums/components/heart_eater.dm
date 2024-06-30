@@ -1,6 +1,6 @@
 /datum/component/heart_eater
 	var/heart_eated
-	var/bites_done
+	var/bites_taken = 0
 	var/obj/item/organ/internal/heart/last_heart_we_ate
 	var/list/datum/mutation/human/mutations_list = list(
 		/datum/mutation/human/telekinesis,

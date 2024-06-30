@@ -45,7 +45,7 @@
 	/datum/slime_type/silver,
 	/datum/slime_type/yellow)
 	var/mob/living/basic/slime/new_friend = new(where, new_colour, SLIME_LIFE_STAGE_ADULT)
-	new_friend.faction = friend.faction
+	new_friend.faction = friend.faction.Copy()
 	new_friend.set_enraged_behaviour()
 	friend.nutrition -= 50
 	timer = addtimer(CALLBACK(src, PROC_REF(make_slime_friend), friend), 20 SECONDS)
