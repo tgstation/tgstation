@@ -256,7 +256,7 @@
 /area/station/medical/virology)
 "agp" = (
 /obj/structure/table/wood,
-/obj/item/clothing/mask/cigarette/cigar/cohiba,
+/obj/item/cigarette/cigar/cohiba,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "agy" = (
@@ -592,9 +592,7 @@
 	dir = 6
 	},
 /obj/structure/cable,
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 2
-	},
+/obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen/coldroom)
 "anJ" = (
@@ -3804,7 +3802,7 @@
 /obj/structure/rack,
 /obj/item/weldingtool/mini,
 /obj/item/tank/internals/emergency_oxygen/empty,
-/obj/item/clothing/mask/cigarette/rollie,
+/obj/item/cigarette/rollie,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/maintenance/central/lesser)
 "bxl" = (
@@ -4027,7 +4025,7 @@
 /obj/item/stock_parts/power_store/cell/crap{
 	pixel_y = 5
 	},
-/obj/item/clothing/mask/cigarette/pipe/cobpipe{
+/obj/item/cigarette/pipe/cobpipe{
 	pixel_x = 1;
 	pixel_y = -2
 	},
@@ -5449,7 +5447,7 @@
 	pixel_y = 9;
 	pixel_x = 14
 	},
-/obj/item/clothing/mask/cigarette{
+/obj/item/cigarette{
 	pixel_y = 2
 	},
 /turf/open/floor/iron/small,
@@ -10568,7 +10566,7 @@
 	pixel_x = -6;
 	pixel_y = 3
 	},
-/obj/item/clothing/mask/cigarette{
+/obj/item/cigarette{
 	pixel_x = 5;
 	pixel_y = 2
 	},
@@ -10781,6 +10779,10 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /obj/machinery/camera/autoname/directional/east,
 /obj/machinery/light/cold/directional/east,
+/obj/machinery/power/apc/auto_name/directional/east{
+	areastring = "/area/station/science/ordnance/burnchamber"
+	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "ebE" = (
@@ -18583,7 +18585,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/stack/spacecash/c1,
-/obj/item/clothing/mask/cigarette/cigar/havana,
+/obj/item/cigarette/cigar/havana,
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/station/maintenance/starboard/central)
 "gJS" = (
@@ -21650,9 +21652,7 @@
 "hHn" = (
 /obj/effect/turf_decal/weather/snow,
 /obj/structure/closet/secure_closet/freezer/fridge,
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 2
-	},
+/obj/effect/turf_decal/weather/snow/corner,
 /obj/item/food/meat/bacon,
 /obj/item/food/meat/bacon,
 /obj/item/food/meat/slab/monkey,
@@ -28888,7 +28888,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison/rec)
 "jUr" = (
-/obj/item/clothing/mask/cigarette,
+/obj/item/cigarette,
 /obj/item/storage/fancy/cigarettes/cigpack_robust{
 	pixel_y = 5;
 	pixel_x = 6
@@ -32622,7 +32622,7 @@
 	pixel_x = 5;
 	pixel_y = 9
 	},
-/obj/item/clothing/mask/cigarette/candy{
+/obj/item/cigarette/candy{
 	pixel_x = -3;
 	pixel_y = 10
 	},
@@ -35129,11 +35129,11 @@
 /area/station/engineering/atmos)
 "lNF" = (
 /obj/effect/spawner/random/entertainment/lighter,
-/obj/item/clothing/mask/cigarette/rollie/mindbreaker{
+/obj/item/cigarette/rollie/mindbreaker{
 	pixel_x = -2;
 	pixel_y = 6
 	},
-/obj/item/clothing/mask/cigarette/rollie/trippy{
+/obj/item/cigarette/rollie/trippy{
 	pixel_x = 4
 	},
 /obj/effect/mapping_helpers/burnt_floor,
@@ -35657,7 +35657,7 @@
 	pixel_x = 5;
 	pixel_y = -5
 	},
-/obj/item/clothing/mask/cigarette/cigar/cohiba{
+/obj/item/cigarette/cigar/cohiba{
 	pixel_y = 4
 	},
 /turf/open/floor/iron/dark/small,
@@ -35833,7 +35833,7 @@
 	pixel_x = -3;
 	pixel_y = 10
 	},
-/obj/item/clothing/mask/cigarette/cigar{
+/obj/item/cigarette/cigar{
 	pixel_x = -1;
 	pixel_y = -2
 	},
@@ -37813,7 +37813,7 @@
 	pixel_y = 2
 	},
 /obj/item/wrench,
-/obj/item/clothing/mask/cigarette/xeno{
+/obj/item/cigarette/xeno{
 	pixel_x = -3;
 	pixel_y = -9
 	},
@@ -40204,9 +40204,7 @@
 	},
 /obj/effect/turf_decal/weather/snow,
 /obj/structure/closet/secure_closet/freezer/meat,
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 2
-	},
+/obj/effect/turf_decal/weather/snow/corner,
 /obj/item/food/meat/slab/monkey,
 /obj/item/food/meat/slab/monkey,
 /obj/item/food/meat/slab/monkey,
@@ -45658,7 +45656,7 @@
 /area/station/command/corporate_suite)
 "pot" = (
 /obj/structure/table/wood,
-/obj/item/clothing/mask/cigarette/cigar/premium{
+/obj/item/cigarette/cigar/premium{
 	pixel_y = 5
 	},
 /turf/open/floor/stone,
@@ -46919,6 +46917,7 @@
 /area/station/commons/fitness/recreation)
 "pHS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "pHY" = (
@@ -51419,7 +51418,7 @@
 	pixel_y = -3;
 	pixel_x = -2
 	},
-/obj/item/clothing/mask/cigarette{
+/obj/item/cigarette{
 	pixel_x = 6;
 	pixel_y = 4
 	},
@@ -51686,7 +51685,7 @@
 	dir = 10
 	},
 /obj/structure/table,
-/obj/item/clothing/mask/cigarette,
+/obj/item/cigarette,
 /obj/item/toy/toy_dagger,
 /obj/item/clothing/head/collectable/paper,
 /obj/item/toy/figure/roboticist{
@@ -59590,7 +59589,7 @@
 	pixel_x = -2;
 	pixel_y = -3
 	},
-/obj/item/clothing/mask/cigarette/cigar,
+/obj/item/cigarette/cigar,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/smooth,
@@ -63821,9 +63820,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 2
-	},
+/obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen/coldroom)
 "uZA" = (
@@ -73246,6 +73243,10 @@
 /obj/effect/spawner/random/trash,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
+"xHb" = (
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/science/ordnance)
 "xHc" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -125322,9 +125323,9 @@ oZz
 xZJ
 aVT
 enG
-enG
-enG
-enG
+xHb
+xHb
+xHb
 pHS
 xpR
 kQt

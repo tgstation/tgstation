@@ -93,7 +93,7 @@
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 
-	//Determines damage dealt on a punch. Against a boxing defender, we apply our skill bonus.
+	// Determines damage dealt on a punch. Against a boxing defender, we apply our skill bonus.
 	var/damage = rand(lower_force, upper_force)
 
 	if(honor_check(defender))
@@ -134,6 +134,9 @@
 	)
 
 	to_chat(attacker, span_danger("You [current_atk_verbed] [defender]!"))
+
+	// Determines the total amount of experience earned per punch
+	var/experience_earned = round(damage * 0.25, 0.1)
 
 	defender.apply_damage(damage, damage_type, affecting, armor_block)
 
@@ -181,9 +184,11 @@
 		to_chat(attacker, span_danger("You stagger [defender] with a haymaker!"))
 		log_combat(attacker, defender, "staggered (boxing) ")
 
+	experience_earned *= 2 //Double our experience gain on a crit hit
+
 	playsound(defender, 'sound/effects/coin2.ogg', 40, TRUE)
 	new /obj/effect/temp_visual/crit(get_turf(defender))
-	skill_experience_adjustment(attacker, (damage/lower_force)) //double experience for a successful crit
+	skill_experience_adjustment(attacker, experience_earned) //double experience for a successful crit
 
 	return TRUE
 
@@ -203,7 +208,7 @@
 	var/gravity_modifier = boxer.has_gravity() > STANDARD_GRAVITY ? 1 : 0.5
 
 	//You gotta sleep before you get any experience!
-	boxer.mind?.adjust_experience(/datum/skill/athletics, experience_value * gravity_modifier)
+	boxer.mind?.adjust_experience(/datum/skill/athletics, round(experience_value * gravity_modifier, 0.1))
 	boxer.apply_status_effect(/datum/status_effect/exercised)
 
 /// Handles our blocking signals, similar to hit_reaction() on items. Only blocks while the boxer is in throw mode.
@@ -227,12 +232,20 @@
 
 	var/block_text = pick("block", "evade")
 
-	if(!prob(block_chance))
-		return NONE
-
 	var/mob/living/attacker = GET_ASSAILANT(hitby)
 
 	if(!honor_check(attacker))
+		return NONE
+
+	var/experience_earned = round(damage * 0.25, 0.1)
+
+	if(!damage)
+		experience_earned = 2
+
+	// WE reward experience for getting punched while boxing
+	skill_experience_adjustment(boxer, experience_earned) //just getting hit a bunch doesn't net you much experience however
+
+	if(!prob(block_chance))
 		return NONE
 
 	if(istype(attacker) && boxer.Adjacent(attacker))
@@ -245,8 +258,6 @@
 	)
 	if(block_text == "evade")
 		playsound(boxer.loc, active_arm.unarmed_miss_sound, 25, TRUE, -1)
-
-	skill_experience_adjustment(boxer, 1) //just getting hit a bunch doesn't net you much experience
 
 	return SUCCESSFUL_BLOCK
 
