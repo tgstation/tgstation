@@ -21,8 +21,11 @@
 	var/stripe_color = null
 	///direction we output onto (if 0, on top of us)
 	var/drop_direction = 0
+	//looping sound for printing items
+	var/datum/looping_sound/lathe_print/print_sound
 
 /obj/machinery/rnd/production/Initialize(mapload)
+	print_sound = new(src,  FALSE)
 	materials = AddComponent(
 		/datum/component/remote_materials, \
 		mapload, \
@@ -48,6 +51,7 @@
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/machinery/rnd/production/Destroy()
+	QDEL_NULL(print_sound)
 	materials = null
 	cached_designs = null
 	return ..()
@@ -74,6 +78,7 @@
 		return
 
 	. += span_notice("Material usage cost at <b>[efficiency_coeff * 100]%</b>")
+	. += span_notice("Build time at <b>[efficiency_coeff * 100]%</b>")
 	if(drop_direction)
 		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
 		. += span_notice("[EXAMINE_HINT("Alt-click")] to reset.")
@@ -341,11 +346,12 @@
 			for(var/material in design.materials)
 				charge_per_item += design.materials[material]
 			charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * coefficient * active_power_usage)
-			var/build_time_per_item = (design.construction_time * design.lathe_time_factor) ** 0.8
+			var/build_time_per_item = (design.construction_time * design.lathe_time_factor * efficiency_coeff) ** 0.8
 
 			//start production
 			busy = TRUE
 			SStgui.update_uis(src)
+			print_sound.start()
 			if(production_animation)
 				icon_state = production_animation
 			var/turf/target_location
@@ -416,8 +422,9 @@
 		var/number_to_make = (initial(stack_item.amount) * items_remaining)
 		while(number_to_make > max_stack_amount)
 			created = new stack_item(null, max_stack_amount) //it's imporant to spawn things in nullspace, since obj's like stacks qdel when they enter a tile/merge with other stacks of the same type, resulting in runtimes.
-			created.pixel_x = created.base_pixel_x + rand(-6, 6)
-			created.pixel_y = created.base_pixel_y + rand(-6, 6)
+			if(isitem(created))
+				created.pixel_x = created.base_pixel_x + rand(-6, 6)
+				created.pixel_y = created.base_pixel_y + rand(-6, 6)
 			created.forceMove(target)
 			number_to_make -= max_stack_amount
 
@@ -426,8 +433,9 @@
 		created = new design.build_path(null)
 		split_materials_uniformly(design_materials, material_cost_coefficient, created)
 
-	created.pixel_x = created.base_pixel_x + rand(-6, 6)
-	created.pixel_y = created.base_pixel_y + rand(-6, 6)
+	if(isitem(created))
+		created.pixel_x = created.base_pixel_x + rand(-6, 6)
+		created.pixel_y = created.base_pixel_y + rand(-6, 6)
 	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[created.type]"))
 	created.forceMove(target)
 
@@ -445,7 +453,7 @@
 /// Called at the end of do_make_item's timer loop
 /obj/machinery/rnd/production/proc/finalize_build()
 	PROTECTED_PROC(TRUE)
-
+	print_sound.stop()
 	busy = FALSE
 	SStgui.update_uis(src)
 	icon_state = initial(icon_state)

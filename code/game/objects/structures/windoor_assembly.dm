@@ -246,7 +246,7 @@
 					electronics = null
 					ae.forceMove(drop_location())
 
-			else if(istype(W, /obj/item/pen))
+			else if(IS_WRITING_UTENSIL(W))
 				var/t = tgui_input_text(user, "Enter the name for the door", "Windoor Renaming", created_name, MAX_NAME_LEN)
 				if(!t)
 					return

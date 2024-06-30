@@ -35,9 +35,9 @@
 /// Special value to reset cyborg's lamp_cooldown
 #define BORG_LAMP_CD_RESET -1
 /// How many watts per lamp power is consumed while the lamp is on.
-#define BORG_LAMP_POWER_CONSUMPTION (1000 WATTS)
+#define BORG_LAMP_POWER_CONSUMPTION (5 WATTS)
 /// The minimum power consumption of a cyborg.
-#define BORG_MINIMUM_POWER_CONSUMPTION (500 WATTS)
+#define BORG_MINIMUM_POWER_CONSUMPTION (1 WATTS)
 
 //Module slot define
 ///The third module slots is disabed.
@@ -244,6 +244,21 @@ DEFINE_BITFIELD(medical_mode_flags, list(
 	"MEDBOT_TIPPED_MODE" = MEDBOT_TIPPED_MODE,
 ))
 
+///Whether we are stationary or not
+#define FIREBOT_STATIONARY_MODE (1<<0)
+///If we will extinguish people
+#define FIREBOT_EXTINGUISH_PEOPLE (1<<1)
+///if we will extinguish turfs on flames
+#define FIREBOT_EXTINGUISH_FLAMES (1<<2)
+
+DEFINE_BITFIELD(firebot_mode_flags, list(
+	"FIREBOT_STATIONARY_MODE" = FIREBOT_STATIONARY_MODE,
+	"FIREBOT_EXTINGUISH_PEOPLE" = FIREBOT_EXTINGUISH_PEOPLE,
+	"FIREBOT_EXTINGUISH_FLAMES" = FIREBOT_EXTINGUISH_FLAMES,
+))
+
+
+
 //cleanBOT defines on what to clean
 #define CLEANBOT_CLEAN_BLOOD (1<<0)
 #define CLEANBOT_CLEAN_TRASH (1<<1)
@@ -284,6 +299,9 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 #define FIREBOT_VOICED_ONLY_YOU "Only you can prevent station fires."
 #define FIREBOT_VOICED_TEMPERATURE_NOMINAL "Temperature nominal."
 #define FIREBOT_VOICED_KEEP_COOL "Keep it cool."
+#define FIREBOT_VOICED_CANDLE_TIP "Keep candles near curtains for cozy night lights!"
+#define FIREBOT_VOICED_ELECTRIC_FIRE "Keep full buckets of water near outlets in case of an electric fire!"
+#define FIREBOT_VOICED_FUEL_TIP "Pouring fuel on fire makes it burn out faster!"
 
 #define HYGIENEBOT_VOICED_UNHYGIENIC "Unhygienic client found. Please stand still so I can clean you."
 #define HYGIENEBOT_VOICED_ENJOY_DAY "Enjoy your clean and tidy day!"
