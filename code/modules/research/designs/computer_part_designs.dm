@@ -5,7 +5,7 @@
 /datum/design/portabledrive/basic
 	name = "Data Disk"
 	id = "portadrive_basic"
-	build_type = IMPRINTER | AWAY_IMPRINTER
+	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*8)
 	build_path = /obj/item/computer_disk
 	category = list(
@@ -16,7 +16,7 @@
 /datum/design/portabledrive/advanced
 	name = "Advanced Data Disk"
 	id = "portadrive_advanced"
-	build_type = IMPRINTER | AWAY_IMPRINTER
+	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*1.5)
 	build_path = /obj/item/computer_disk/advanced
 	category = list(
@@ -27,7 +27,7 @@
 /datum/design/portabledrive/super
 	name = "Super Data Disk"
 	id = "portadrive_super"
-	build_type = IMPRINTER | AWAY_IMPRINTER
+	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT*1.5)
 	build_path = /obj/item/computer_disk/super
 	category = list(
