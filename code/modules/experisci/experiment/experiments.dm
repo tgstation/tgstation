@@ -380,7 +380,7 @@
 /// Scan for cybernetic organs
 /datum/experiment/scanning/people/augmented_organs
 	name = "Human Field Research: Augmented Organs"
-	description = "We need to gather data on how cybernetic vital organs integrate with human biology. Conduct a scan on a human with these implants to help us understand their compatibility"
+	description = "We need to gather data on how cybernetic vital organs integrate with human biology. Conduct a scan on a human with these implants to help us understand their compatibility."
 	performance_hint = "Perform an organ manipulation surgery to replace one of the vital organs with a cybernetic variant."
 	required_traits_desc = "augmented vital organs"
 	required_count = 1
@@ -423,6 +423,21 @@
 		return FALSE
 	if (scanned_brain.get_used_skillchip_slots() == 0)
 		experiment_handler.announce_message("No skill chips found!")
+		return FALSE
+	return TRUE
+
+/// Scan an android
+/datum/experiment/scanning/people/android
+	name = "Human Field Research: Full Augmentation"
+	description = "Perform a full cybernetic augmentation on a crewmate then scan them to test their newfound capabilities and new sensory and cognitive functions."
+	performance_hint = "Achieve full augmentation by performing a set of surgery operations."
+	required_traits_desc = "fully augmented android"
+
+/datum/experiment/scanning/people/android/is_valid_scan_target(mob/living/carbon/human/check, datum/component/experiment_handler/experiment_handler)
+	. = ..()
+	if (!.)
+		return
+	if (!isandroid(check))
 		return FALSE
 	return TRUE
 
