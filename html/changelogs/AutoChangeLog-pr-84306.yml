@@ -1,0 +1,4 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - balance: "raptors will now knock off their rider and disable them if hit by any energy projectiles or if they recieve any stamina damage"
