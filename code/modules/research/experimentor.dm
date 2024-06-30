@@ -629,7 +629,7 @@
 	if(loc != user)
 		return
 	COOLDOWN_START(src, cooldown, cooldown_timer)
-	call(src,hidden_power)(user)
+	call(src, hidden_power)(user)
 
 /obj/item/artefact/proc/throw_smoke(turf/where)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
@@ -646,9 +646,9 @@
 
 /obj/item/artefact/proc/cleaning_foam(mob/user)
 	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	var/obj/item/grenade/chem_grenade/cleaner/CL = new/obj/item/grenade/chem_grenade/cleaner(get_turf(user))
-	CL.detonate()
-	qdel(CL)
+	var/obj/item/grenade/chem_grenade/cleaner/spawned_foamer = new/obj/item/grenade/chem_grenade/cleaner(get_turf(user))
+	spawned_foamer.detonate()
+	qdel(spawned_foamer)
 	warn_admins(user, "Foam", 0)
 
 /obj/item/artefact/proc/flashbanger(mob/user)
@@ -723,10 +723,10 @@
 		warn_admins(user, "Teleport", 0)
 
 //Admin Warning proc for relics
-/obj/item/artefact/proc/warn_admins(mob/user, RelicType, priority = 1)
-	var/turf/T = get_turf(src)
-	var/log_msg = "[RelicType] relic used by [key_name(user)] in [AREACOORD(T)]"
+/obj/item/artefact/proc/warn_admins(mob/user, artefact_type, priority = 1)
+	var/turf/location = get_turf(src)
+	var/log_msg = "[artefact_type] relic used by [key_name(user)] in [AREACOORD(location)]"
 	if(priority) //For truly dangerous relics that may need an admin's attention. BWOINK!
-		message_admins("[RelicType] relic activated by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
+		message_admins("[artefact_type] artefact activated by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(location)]")
 	log_game(log_msg)
 	investigate_log(log_msg, "experimentor")
