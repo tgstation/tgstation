@@ -1,8 +1,0 @@
-author: "aaaa1023"
-delete-after: True
-changes:
-  - bugfix: "Fixed the camera offset for the navigation console on a handful of Whiteships."
-  - bugfix: "Fixed the Pubby Whiteship drifting sideways through hyperspace when in flight."
-  - bugfix: "Fixed the Kilo Whiteship flying backwards through hyperspace when in flight."
-  - bugfix: "The Birdshot Whiteship should actually be able to spawn now."
-  - spellcheck: "fixed spelling of \"aggressive\" in the shuttle manipulator description for the Birdshot Whiteship."

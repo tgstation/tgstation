@@ -1,0 +1,5 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - qol: "Windoors now stay open for 8 seconds instead of 5"
+  - qol: "Secure windoors now stay open for 5 seconds instead of 2"
