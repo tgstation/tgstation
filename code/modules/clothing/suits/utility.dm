@@ -57,6 +57,7 @@
 /obj/item/clothing/suit/utility/fire/firefighter
 	icon_state = "firesuit"
 	inhand_icon_state = "firefighter"
+	flags_inv = HIDESHOES|HIDEJUMPSUIT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS

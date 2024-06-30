@@ -72,7 +72,7 @@
 
 	id_trim = /datum/id_trim/pirate/captain/silverscale
 	head = /obj/item/clothing/head/costume/crown
-	mask = /obj/item/clothing/mask/cigarette/cigar/havana
+	mask = /obj/item/cigarette/cigar/havana
 	l_pocket = /obj/item/lighter
 
 /datum/outfit/pirate/interdyne
