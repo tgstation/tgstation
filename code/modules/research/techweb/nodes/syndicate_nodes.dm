@@ -1,8 +1,8 @@
 /datum/techweb_node/syndicate_basic
-	id = "syndicate_basic"
+	id = TECHWEB_NODE_SYNDICATE_BASIC
 	display_name = "Illegal Technology"
 	description = "Dangerous research used to create dangerous objects."
-	prereq_ids = list("exp_tools", "exotic_ammo")
+	prereq_ids = list(TECHWEB_NODE_EXP_TOOLS, TECHWEB_NODE_EXOTIC_AMMO)
 	design_ids = list(
 		"advanced_camera",
 		"ai_cam_upgrade",
@@ -38,11 +38,12 @@
 		required_items_to_unlock |= item.item //allows deconning to unlock.
 
 /datum/techweb_node/unregulated_bluespace
-	id = "unregulated_bluespace"
+	id = TECHWEB_NODE_UNREGULATED_BLUESPACE
 	display_name = "Unregulated Bluespace Research"
 	description = "Bluespace technology using unstable or unbalanced procedures, prone to damaging the fabric of bluespace. Outlawed by galactic conventions."
-	prereq_ids = list("parts_bluespace", "syndicate_basic")
+	prereq_ids = list(TECHWEB_NODE_PARTS_BLUESPACE, TECHWEB_NODE_SYNDICATE_BASIC)
 	design_ids = list(
 		"desynchronizer",
+		"beamrifle",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)

@@ -206,7 +206,7 @@
 /obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "mQ" = (
 /obj/structure/cable,
@@ -271,14 +271,14 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "ot" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
 	dir = 4;
 	view_range = 14;
-	x_offset = -3;
-	y_offset = -3
+	x_offset = -2;
+	y_offset = -7
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/dark_blue/anticorner{
@@ -438,7 +438,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "zj" = (
 /obj/structure/cable,
@@ -699,7 +699,7 @@
 /obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "PR" = (
 /obj/structure/table/wood,
