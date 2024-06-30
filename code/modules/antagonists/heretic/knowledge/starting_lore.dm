@@ -207,8 +207,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY - 2 // Not as important as making a heart or sacrificing, but important enough.
 	route = PATH_START
-	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
-	research_tree_icon_state = "eye_medalion"
+	research_tree_icon_path = 'icons/obj/clothing/neck.dmi'
+	research_tree_icon_state = "eldritch_necklace"
 
 /datum/heretic_knowledge/spell/cloak_of_shadows
 	name = "Cloak of Shadow"
