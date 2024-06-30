@@ -28,8 +28,8 @@
 	if(!ishuman(victim))
 		return
 	var/mob/living/carbon/human/human_victim = victim
-	human_victim.apply_damage(rand(40, 55), BRUTE, BODY_ZONE_L_LEG, wound_bonus = rand(75,100), forced = TRUE)
-	human_victim.apply_damage(rand(40, 55), BRUTE, BODY_ZONE_R_LEG, wound_bonus = rand(75,100), forced = TRUE)
+	human_victim.apply_damage(rand(40, 55), BRUTE, BODY_ZONE_L_LEG, wound_bonus = rand(45, 75), forced = TRUE)
+	human_victim.apply_damage(rand(40, 55), BRUTE, BODY_ZONE_R_LEG, wound_bonus = rand(45, 75), forced = TRUE)
 	var/list/phrase = world.file2list("massmeta/strings/balls_phrases.txt")
 	human_victim.say(pick(phrase))
 	human_victim.emote("screech")
@@ -38,7 +38,7 @@
 /obj/item/melee/touch_attack/testicular_torsion
 	name = "\improper Bloody hand"
 	desc = "Why would you even inspect this hand? Do people even read this text? What would you expect to see here, do you want me to describe this item? Surely I will do.. \
-	This hand is glowing with dark power, appears that it may explode victim's balls and break their legs. Is that what you wanted to hear?" /// Ломаем четвертую стену, потому что
+	This hand is glowing with dark power, appears that it may explode victim's balls and break their legs. Is that what you wanted to hear?" /// Ломаем четвертую стену, потому что могу :)
 	icon = 'icons/obj/weapons/hand.dmi'
 	icon_state = "disintegrate"
 	inhand_icon_state = "disintegrate"
