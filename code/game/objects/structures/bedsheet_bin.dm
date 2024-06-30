@@ -59,20 +59,38 @@ LINEN BINS
 
 	return NONE
 
-/obj/item/bedsheet/attack_secondary(mob/living/target, mob/living/user, params)
-	if(!user.CanReach(target))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(target.body_position != LYING_DOWN)
-		return ..()
+/obj/item/bedsheet/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
+		return NONE
+	var/mob/living/to_cover = interacting_with
+	if(to_cover.body_position != LYING_DOWN)
+		return ITEM_INTERACT_BLOCKING
 	if(!user.dropItemToGround(src))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
-	forceMove(get_turf(target))
+	forceMove(get_turf(to_cover))
 	balloon_alert(user, "covered")
-	coverup(target)
+	coverup(to_cover)
 	add_fingerprint(user)
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/bedsheet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	// Handle wirecutters here so we still tear it up in combat mode
+	if(tool.tool_behaviour != TOOL_WIRECUTTER && !tool.get_sharpness())
+		return NONE
+
+	// We cannot get free cloth from holograms
+	if(flags_1 & HOLOGRAM_1)
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/shreds = new stack_type(get_turf(src), stack_amount)
+	if(!QDELETED(shreds)) // Stacks merged
+		transfer_fingerprints_to(shreds)
+		shreds.add_fingerprint(user)
+	to_chat(user, span_notice("You tear [src] up."))
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/bedsheet/attack_self(mob/living/user)
 	if(!user.CanReach(src)) //No telekinetic grabbing.
@@ -84,6 +102,10 @@ LINEN BINS
 
 	coverup(user)
 	add_fingerprint(user)
+
+/obj/item/bedsheet/click_alt(mob/living/user)
+	dir = REVERSE_DIR(dir)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/bedsheet/proc/coverup(mob/living/sleeper)
 	layer = ABOVE_MOB_LAYER
@@ -123,22 +145,6 @@ LINEN BINS
 	UnregisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION)
 	UnregisterSignal(sleeper, COMSIG_QDELETING)
 	signal_sleeper = null
-
-/obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
-		if (!(flags_1 & HOLOGRAM_1))
-			var/obj/item/stack/shreds = new stack_type(get_turf(src), stack_amount)
-			if(!QDELETED(shreds)) //stacks merged
-				transfer_fingerprints_to(shreds)
-				shreds.add_fingerprint(user)
-		qdel(src)
-		to_chat(user, span_notice("You tear [src] up."))
-	else
-		return ..()
-
-/obj/item/bedsheet/click_alt(mob/living/user)
-	dir = REVERSE_DIR(dir)
-	return CLICK_ACTION_SUCCESS
 
 /obj/item/bedsheet/blue
 	icon_state = "sheetblue"
