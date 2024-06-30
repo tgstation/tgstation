@@ -124,7 +124,7 @@
 	if(cell_cover_open && cell)
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove cell"
 
-	if(cell_cover_open && !cell && istype(held_item, /obj/item/stock_parts/cell))
+	if(cell_cover_open && !cell && istype(held_item, /obj/item/stock_parts/power_store/cell))
 		context[SCREENTIP_CONTEXT_LMB] = "Install cell"
 
 	if(held_item?.tool_behaviour == TOOL_CROWBAR)
