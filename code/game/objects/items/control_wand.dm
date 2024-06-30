@@ -17,11 +17,31 @@
 	var/mode = WAND_OPEN
 	var/region_access = REGION_GENERAL
 	var/list/access_list
+	/// A list of paired items, the first being the ID card requesting access, the second being the door that access is requested for.
+	var/open_requests = list()
 
 /obj/item/door_remote/Initialize(mapload)
 	. = ..()
 	access_list = SSid_access.get_region_access_list(list(region_access))
 	update_icon_state()
+	if(get(loc, /mob/living))
+		set_listen_for_requests(src)
+	else
+		RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(set_listen_for_requests))
+
+/obj/item/door_remote/proc/set_listen_for_requests(datum/source, toggle_state = TRUE)
+	SIGNAL_HANDLER
+
+	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(eventually_stop_listening))
+
+/obj/item/door_remote/proc/set_listen_for_requests(datum/source)
+	SIGNAL_HANDLER
+
+	var/time_to_stop_listening = 5 MINUTES
+	ADD_TIMER
+
+/obj/item/door_remote/proc/add_open_request(datum/source, obj/item/card/id/ID_requesting, obj/machinery/door/airlock/requested_door)
+
 
 /obj/item/door_remote/attack_self(mob/user)
 	var/static/list/desc = list(WAND_OPEN = "Open Door", WAND_BOLT = "Toggle Bolts", WAND_EMERGENCY = "Toggle Emergency Access")
