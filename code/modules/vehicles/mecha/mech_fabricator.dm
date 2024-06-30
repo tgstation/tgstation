@@ -49,14 +49,22 @@
 	/// All designs in the techweb that can be fabricated by this machine, since the last update.
 	var/list/datum/design/cached_designs
 
+	//looping sound for printing items
+	var/datum/looping_sound/lathe_print/print_sound
+
 	/// Local designs that only this mechfab have(using when mechfab emaged so it's illegal designs).
 	var/list/datum/design/illegal_local_designs
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
+	print_sound = new(src,  FALSE)
 	rmat = AddComponent(/datum/component/remote_materials, mapload && link_on_init)
 	cached_designs = list()
 	illegal_local_designs = list()
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
+	return ..()
+
+/obj/machinery/mecha_part_fabricator/Destroy()
+	QDEL_NULL(print_sound)
 	return ..()
 
 /obj/machinery/mecha_part_fabricator/post_machine_initialize()
@@ -187,7 +195,7 @@
 /obj/machinery/mecha_part_fabricator/proc/on_start_printing()
 	add_overlay("fab-active")
 	update_use_power(ACTIVE_POWER_USE)
-
+	print_sound.start()
 /**
  * Intended to be called when the exofab has stopped working and is no longer printing items.
  *
@@ -198,6 +206,7 @@
 	update_use_power(IDLE_POWER_USE)
 	desc = initial(desc)
 	process_queue = FALSE
+	print_sound.stop()
 
 /**
  * Attempts to build the next item in the build queue.
