@@ -1,9 +1,10 @@
-/// Weaker smite, not outright gibbing your target, but a lot more bloody, and Sanguine school, so doesn't get affected by splattercasting.
+/// Слабый Scream for me, ломает ноги, заставляет людей выкрикивать фразы, а ещё имеет прикольный звук применения.
 /datum/action/cooldown/spell/touch/testicular_torsion
 	name = "Testicular Torsion"
 	desc = "This wicked spell twistes and crushes victim's balls \
 	causing them to feel immense pain, may also break their legs."
-	button_icon_state = "gib"
+	button_icon = 'massmeta/icons/mob/actions/actions_spells.dmi'
+	button_icon_state = "torsion"
 	sound =  "massmeta/sounds/smites/testicular_torsion.ogg"
 
 	school = SCHOOL_SANGUINE
@@ -27,16 +28,17 @@
 	if(!ishuman(victim))
 		return
 	var/mob/living/carbon/human/human_victim = victim
-	human_victim.apply_damage(rand(25, 40), BRUTE, BODY_ZONE_L_LEG, wound_bonus = rand(50,75), forced = TRUE)
-	human_victim.apply_damage(rand(25, 40), BRUTE, BODY_ZONE_R_LEG, wound_bonus = rand(50,75), forced = TRUE)
+	human_victim.apply_damage(rand(40, 55), BRUTE, BODY_ZONE_L_LEG, wound_bonus = rand(75,100), forced = TRUE)
+	human_victim.apply_damage(rand(40, 55), BRUTE, BODY_ZONE_R_LEG, wound_bonus = rand(75,100), forced = TRUE)
 	var/list/phrase = world.file2list("massmeta/strings/balls_phrases.txt")
 	human_victim.say(pick(phrase))
 	human_victim.emote("screech")
 	return TRUE
 
 /obj/item/melee/touch_attack/testicular_torsion
-	name = "\improper bloody touch"
-	desc = "Guaranteed to make your victims scream, or your money back!"
+	name = "\improper Bloody hand"
+	desc = "Why would you even inspect this hand? Do people even read this text? What would you expect to see here, do you want me to describe this item? Surely I will do.. \
+	This hand is glowing with dark power, appears that it may explode victim's balls and break their legs. Is that what you wanted to hear?" /// Ломаем четвертую стену, потому что
 	icon = 'icons/obj/weapons/hand.dmi'
 	icon_state = "disintegrate"
 	inhand_icon_state = "disintegrate"
