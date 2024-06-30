@@ -1021,6 +1021,17 @@
 	if(use_random_name)
 		fully_replace_character_name(real_name, generate_random_mob_name())
 
+///Proc used to prevent syndicate monkeys and player-selectable Pun Pun able to use objects while stuck in monkey mode.
+/mob/living/carbon/human/proc/make_clever_and_no_dna_scramble()
+	dna.add_mutation(/datum/mutation/human/clever)
+	// Can't make them human or nonclever. At least not with the easy and boring way out.
+	for(var/datum/mutation/human/mutation as anything in dna.mutations)
+		mutation.mutadone_proof = TRUE
+		mutation.instability = 0
+
+	// Extra backup!
+	ADD_TRAIT(src, TRAIT_NO_DNA_SCRAMBLE, SPECIES_TRAIT)
+
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor
 
