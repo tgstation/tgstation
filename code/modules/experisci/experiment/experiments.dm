@@ -432,6 +432,7 @@
 	description = "Perform a full cybernetic augmentation on a crewmate then scan them to test their newfound capabilities and new sensory and cognitive functions."
 	performance_hint = "Achieve full augmentation by performing a set of surgery operations."
 	required_traits_desc = "fully augmented android"
+	required_count = 1
 
 /datum/experiment/scanning/people/android/is_valid_scan_target(mob/living/carbon/human/check, datum/component/experiment_handler/experiment_handler)
 	. = ..()
