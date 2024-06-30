@@ -205,7 +205,7 @@
 ///Sent by pilot of mech in /obj/vehicle/sealed/mecha/on_mouseclick when using mech equipment : (/obj/vehicle/sealed/mecha/mech)
 #define COMSIG_MOB_USED_MECH_EQUIPMENT "mob_used_mech_equipment"
 ///Sent by pilot of mech in /obj/vehicle/sealed/mecha/on_mouseclick when triggering mech punch : (/obj/vehicle/sealed/mecha/mech)
-#define COMSIG_MOB_USED_MECH_MELEE "mob_used_mech_melee"
+#define COMSIG_MOB_USED_CLICK_MECH_MELEE "mob_used_click_mech_melee"
 
 ///from living/flash_act(), when a mob is successfully flashed.
 #define COMSIG_MOB_FLASHED "mob_flashed"
