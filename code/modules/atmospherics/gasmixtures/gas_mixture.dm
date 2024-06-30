@@ -682,7 +682,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/datum/gas_mixture/removed
 
 	var/transfer_moles_output = input_air.gas_pressure_calculate(output_air, target_pressure, temperature_delta <= 5)
-	var/transfer_moles_pipenet = output_pipenet_air ? input_air.gas_pressure_calculate(output_pipenet_air, target_pressure, temperature_delta <= 5) : 0
+	var/transfer_moles_pipenet = output_pipenet_air.volume ? input_air.gas_pressure_calculate(output_pipenet_air, target_pressure, temperature_delta <= 5) : 0
 	var/transfer_moles = max(transfer_moles_output, transfer_moles_pipenet)
 
 	if(specific_gas)
@@ -710,7 +710,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/temperature_delta = abs(temperature - output_air.temperature)
 
 	var/transfer_moles_output = gas_pressure_calculate(output_air, target_pressure, temperature_delta <= 5)
-	var/transfer_moles_pipenet = output_pipenet_air ? gas_pressure_calculate(output_pipenet_air, target_pressure, temperature_delta <= 5) : 0
+	var/transfer_moles_pipenet = output_pipenet_air.volume ? gas_pressure_calculate(output_pipenet_air, target_pressure, temperature_delta <= 5) : 0
 	var/transfer_moles = max(transfer_moles_output, transfer_moles_pipenet)
 
 	//Actually transfer the gas
