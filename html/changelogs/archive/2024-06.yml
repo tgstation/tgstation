@@ -1369,3 +1369,49 @@
   - bugfix: Emergency firesuits no longer hide your gloves.
   - qol: Punching bags are now a equal method of training to the fitness machinery.
   - qol: Boxing grants more experience overall for participation.
+2024-06-30:
+  Exester509:
+  - spellcheck: Fixed two typos in the heretic lore
+  Ghommie:
+  - bugfix: cigarettes and vapes are no longer treated as clothing (eg. They no longer
+      get shredded and need to be repaired with... cloth).
+  GoblinBackwards:
+  - bugfix: Fixed gas canister shields turning themselves off in unpowered areas when
+      they weren't drawing any cell power.
+  LT3:
+  - code_imp: Blood filter only pings and says finished when it's actually finished
+  Sadboysuss:
+  - bugfix: fixed cyborgs and monkeys not being able to buckle to chairs
+  SmArtKar:
+  - bugfix: Storage no longer deletes all of its viewers upon being deleted
+  - bugfix: Storage UI now renders properly
+  - bugfix: Guns no longer can be overfilled by 1 bullet
+  - bugfix: Russian revolvers now spawn with only 1 live round as originally intended,
+      and click when firing a blank.
+  Xander3359:
+  - bugfix: Fix being unable to add a flux core to new the combat heart cybernetic
+  aaaa1023:
+  - bugfix: Fixed the camera offset for the navigation console on a handful of Whiteships.
+  - bugfix: Fixed the Pubby Whiteship drifting sideways through hyperspace when in
+      flight.
+  - bugfix: Fixed the Kilo Whiteship flying backwards through hyperspace when in flight.
+  - bugfix: The Birdshot Whiteship should actually be able to spawn now.
+  - spellcheck: fixed spelling of "aggressive" in the shuttle manipulator description
+      for the Birdshot Whiteship.
+  carlarctg:
+  - spellcheck: Syndicate jaws of life are now jaws of death!
+  - spellcheck: Made its desc. more descriptive, stating that its faster.
+  - rscadd: Heretics can now sacrifice Cultists for sweet loot.
+  - rscadd: Cultists can now sacrifice Heretics for sick trinkets.
+  - rscdel: Removed Bastard Blade from the game, code, and life
+  - balance: Aggressive Spread now rusts non-turfs next to you as well
+  - balance: Raise Construction cd raised to 7, now breaks rust walls as well, improved
+      autoaim making it actually usable midfight
+  - refactor: Auto-aim code now works on any atoms if configured
+  grungussuss , Kayozz:
+  - sound: exosuit fabricators, Autolathes and Techfabs will now produce sounds when
+      printing items
+  grungususs:
+  - bugfix: fixed the name of a request console in the medical sec outpost on metastation
+  mc-oofert:
+  - bugfix: both engineers and roboticists may now access the controls of a firebot
