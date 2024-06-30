@@ -31,7 +31,7 @@
 	if(istype(parent, /obj/item/gun/energy))
 		var/obj/item/gun/energy/energy_gun = parent
 		if(energy_gun.cell)
-			RegisterSignal(energy_gun.cell, COMSIG_CELL_GIVE, PROC_REF(update_hud))
+			RegisterSignal(energy_gun.cell, COMSIG_POWER_STORE_GIVE, PROC_REF(update_hud))
 
 	hud.turn_on()
 	update_hud()
@@ -43,7 +43,7 @@
 	if(istype(parent, /obj/item/gun/energy))
 		var/obj/item/gun/energy/energy_gun = parent
 		if(energy_gun.cell)
-			UnregisterSignal(energy_gun.cell, COMSIG_CELL_GIVE)
+			UnregisterSignal(energy_gun.cell, COMSIG_POWER_STORE_GIVE)
 
 	if(hud)
 		hud.turn_off()

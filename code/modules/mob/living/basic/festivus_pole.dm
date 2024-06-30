@@ -68,8 +68,8 @@
 		return
 	visible_message(span_warning("[src] crackles with static electricity!"))
 	for(var/atom/affected in range(2, get_turf(src)))
-		if(istype(affected, /obj/item/stock_parts/cell))
-			var/obj/item/stock_parts/cell/cell = affected
+		if(istype(affected, /obj/item/stock_parts/power_store/cell))
+			var/obj/item/stock_parts/power_store/cell/cell = affected
 			cell.give(FESTIVUS_RECHARGE_VALUE)
 			cell.update_appearance()
 		if(istype(affected, /mob/living/silicon/robot))
@@ -112,7 +112,7 @@
 		var/obj/machinery/power/apc/apc_target = dinner
 		if(!apc_target.cell)
 			return FALSE
-		var/obj/item/stock_parts/cell/apc_cell = apc_target.cell
+		var/obj/item/stock_parts/power_store/cell/apc_cell = apc_target.cell
 		if(apc_cell.charge == apc_cell.maxcharge) //if its full charge we no longer feed it
 			return FALSE
 
