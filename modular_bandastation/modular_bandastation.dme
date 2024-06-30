@@ -25,3 +25,4 @@
 #include "whitelist220/_whitelist220.dme"
 #include "world_topics/_world_topics.dme"
 #include "preferences/_preferences.dme"
+#include "drinks/_drinks.dme"
