@@ -43,7 +43,7 @@
 /area/template_noop)
 "h" = (
 /obj/structure/table/wood,
-/obj/item/clothing/mask/cigarette/pipe,
+/obj/item/cigarette/pipe,
 /obj/effect/holodeck_effect/random_book,
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
@@ -256,7 +256,7 @@
 /area/template_noop)
 "T" = (
 /obj/structure/table/wood/poker,
-/obj/item/clothing/mask/cigarette/pipe,
+/obj/item/cigarette/pipe,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"

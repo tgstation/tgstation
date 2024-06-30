@@ -468,7 +468,7 @@
 	},
 /obj/item/kirbyplants/organic/plant21,
 /obj/structure/sign/warning/hot_temp/directional/west,
-/obj/item/clothing/mask/cigarette/rollie/cannabis,
+/obj/item/cigarette/rollie/cannabis,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
 "yg" = (

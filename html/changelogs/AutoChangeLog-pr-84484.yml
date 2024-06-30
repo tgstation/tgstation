@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Pyrokinesis bolts no longer have infinite range and create trails of fiery doom."

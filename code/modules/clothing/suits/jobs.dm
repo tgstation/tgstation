@@ -61,7 +61,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(
 		/obj/item/assembly/flash/handheld,
-		/obj/item/clothing/mask/cigarette,
+		/obj/item/cigarette,
 		/obj/item/disk,
 		/obj/item/lighter,
 		/obj/item/melee,
@@ -384,27 +384,6 @@
 	inhand_icon_state = null
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
-
-// Research Director
-
-/obj/item/clothing/suit/jacket/research_director
-	name = "research director's coat"
-	desc = "A mix between a labcoat and just a regular coat. It's made out of a special anti-bacterial, anti-acidic, and anti-biohazardous synthetic fabric."
-	icon_state = "labcoat_rd"
-	armor_type = /datum/armor/jacket_research_director
-	body_parts_covered = CHEST|GROIN|ARMS
-
-/datum/armor/jacket_research_director
-	bio = 75
-	fire = 75
-	acid = 75
-
-/obj/item/clothing/suit/jacket/research_director/Initialize(mapload)
-	. = ..()
-	allowed += list(
-		/obj/item/storage/bag/xeno,
-		/obj/item/melee/baton/telescopic,
-	)
 
 // Atmos
 /obj/item/clothing/suit/atmos_overalls

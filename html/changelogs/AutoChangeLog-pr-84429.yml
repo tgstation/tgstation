@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "brig cell timer ui works properly now"
