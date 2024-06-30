@@ -310,7 +310,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	insert_on_attack = FALSE
 
 /datum/storage/raptor_storage/on_mousedropped_onto(datum/source, obj/item/dropping, mob/user)
-	. = ..()
+	..()
 	return NONE
 
 #undef HAPPINESS_BOOST_DAMPENER
