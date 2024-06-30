@@ -5,7 +5,7 @@
  * Step 4: Wrench the assembly in place
  * Step 5: Add cables to the assembly
  * Step 6: Set access for the door.
- * Step 7: Screwdriver the door to complete
+ * Step 7: Crowbar the door to complete
  */
 
 
@@ -20,15 +20,21 @@
 	dir = NORTH
 	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR
 	set_dir_on_move = FALSE
+	can_atmos_pass = ATMOS_PASS_PROC
 
+	/// Reference to the airlock electronics inside for determining window access.
 	var/obj/item/electronics/airlock/electronics = null
+	/// Player generated name string from renaming.
 	var/created_name = null
 
 	//Vars to help with the icon's name
-	var/facing = "l" //Does the windoor open to the left or right?
-	var/secure = FALSE //Whether or not this creates a secure windoor
-	var/state = "01" //How far the door assembly has progressed
-	can_atmos_pass = ATMOS_PASS_PROC
+	///Does the windoor open to the left or right?
+	var/facing = "l"
+	///Whether or not this creates a secure windoor
+	var/secure = FALSE
+	///How far the door assembly has progressed. See above comment for what each step is.
+	var/state = "01"
+
 
 /obj/structure/windoor_assembly/Initialize(mapload, set_dir)
 	. = ..()
@@ -278,6 +284,21 @@
 
 	//Update to reflect changes(if applicable)
 	update_appearance()
+
+/obj/structure/windoor_assembly/examine(mob/user)
+	. = ..()
+	if(!anchored)
+		. += span_notice("\The [src] can be [span_boldnotice("wrenched")] down.")
+		. += span_notice("\The [src] could also be [span_boldnotice("cut apart")] with a [span_boldnotice("welder")].")
+		returnx
+	switch(state)
+		if("01")
+			. += span_notice("\The [src] needs [span_boldnotice("wiring")].")
+		if("02")
+			if(!electronics)
+				. += span_notice("\The [src] needs [span_boldnotice("airlock electronics")] to continue installation.")
+			else
+				. += span_notice("\The [src] is ready to be [span_boldnotice("levered")] into place with a [span_boldnotice("crowbar")].")
 
 /obj/structure/windoor_assembly/proc/finish_door()
 	var/obj/machinery/door/window/windoor

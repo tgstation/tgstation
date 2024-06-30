@@ -19,12 +19,16 @@
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	set_dir_on_move = FALSE
 	opens_with_door_remote = TRUE
+	/// Reference to the airlock electronics inside for determining window access.
 	var/obj/item/electronics/airlock/electronics = null
+	/// If the door is considered reinforced. If TRUE, the door will resist twice as much heat (1600 deg C vs 800 deg C).
 	var/reinf = 0
+	/// On deconstruction, how many shards to drop.
 	var/shards = 2
+	/// On deconstruction, how many rods to drop.
 	var/rods = 2
+	/// On deconstruction, how much cable to drop.
 	var/cable = 1
-	var/list/debris = list()
 
 /datum/armor/door_window
 	melee = 20
@@ -349,6 +353,10 @@
 	. = ..()
 	if(obj_flags & EMAGGED)
 		. += span_warning("Its access panel is smoking slightly.")
+	if(!density)
+		if(panel_open)
+			. += span_notice("The [span_boldnotice("airlock electronics")] could be [span_boldnotice("levered")] out.")
+
 
 /obj/machinery/door/window/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
