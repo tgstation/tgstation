@@ -180,9 +180,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	thing.set_anchored(FALSE) // An item has to be unanchored to be extracted in the first place.
 	thing.set_density(initial(thing.density))
 	animate(holder_obj, pixel_z = -10, time = 0.5 SECONDS, flags = ANIMATION_RELATIVE)
-	addtimer(CALLBACK(src, PROC_REF(remove_holder), thing, user), 0.6 SECONDS)
-
-/obj/item/extraction_pack/proc/remove_holder(atom/movable/thing, mob/living/user)
+	sleep(0.5 SECONDS)
 	thing.forceMove(holder_obj.loc)
 	qdel(holder_obj)
 	if(uses_left <= 0)
