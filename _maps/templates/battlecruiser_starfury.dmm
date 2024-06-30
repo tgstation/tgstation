@@ -2518,7 +2518,7 @@
 	pixel_x = -5;
 	pixel_y = 2
 	},
-/obj/item/clothing/mask/cigarette/cigar{
+/obj/item/cigarette/cigar{
 	pixel_x = 5;
 	pixel_y = 7
 	},
