@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(possible_monsters, list(
 	///details of the contract
 	var/bounty_description = "some bounty"
 	///associated icon
-	var/bounty_icon
+	var/icon/bounty_icon
 	///the gps location of our bounty
 	var/gps_location
 	///type to create
@@ -39,8 +39,9 @@ GLOBAL_LIST_INIT(possible_monsters, list(
 	var/atom/bounty_target = create_bounty()
 	if(isnull(bounty_target))
 		return
-
-	bounty_icon = getFlatIcon(image(icon = bounty_target.icon, icon_state = bounty_target.icon_state))
+	var/image/bounty_image = image(icon = bounty_target.icon, icon_state = bounty_target.icon_state)
+	bounty_image.color = "#642600"
+	bounty_icon = getFlatIcon(bounty_image)
 	register_bounty_signals(bounty_target)
 	GLOB.assigned_bounties[REF(user)] = world.time + BOUNTY_COOLDOWN
 	assignee = WEAKREF(user)
@@ -82,15 +83,17 @@ GLOBAL_LIST_INIT(possible_monsters, list(
 	assignee = null
 
 /datum/holy_bounty/eliminate_monster
-	name = "Eliminate Monster"
+	bounty_name = "Eliminate Monster"
 	reward_points = 500
 
 /datum/holy_bounty/eliminate_monster/New()
 	. = ..()
-	bounty_typepath = pick(GLOB.possible_monsters)
+	var/mob/living/picked_path = pick(GLOB.possible_monsters)
+	bounty_typepath = picked_path
+	bounty_name = "[picked_path::name]"
 
 /datum/holy_bounty/seal_portal
-	name = "Seal Portal"
+	bounty_name = "Seal Portal"
 	reward_points = 600
 
 /////bounty contract
@@ -111,9 +114,15 @@ GLOBAL_LIST_INIT(possible_monsters, list(
 		ui = new(user, src, "bountypaper")
 		ui.open()
 
+/obj/item/bounty_contract/attack_self(mob/user)
+	. = ..()
+	if(.)
+		return TRUE
+	our_bounty.assign_bounty(user)
+	return TRUE
+
 /obj/item/bounty_contract/ui_static_data(mob/user)
 	var/list/data = list()
-	var/list/static_controls = list()
 	data["bounty_name"] = our_bounty.bounty_name
 	data["bounty_icon"] = icon2base64(our_bounty.bounty_icon)
 	data["bounty_reward"] = our_bounty.reward_points

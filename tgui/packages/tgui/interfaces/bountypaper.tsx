@@ -1,5 +1,14 @@
 import { useBackend } from '../backend';
-import { Image, LabeledList, ProgressBar, Section, Stack } from '../components';
+import {
+  Image,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Stack,
+  Box,
+  Icon,
+  Flex,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -11,103 +20,122 @@ type Data = {
 
 export const bountypaper = (props) => {
   const { act, data } = useBackend<Data>();
-  const {
-    raptor_attack,
-    raptor_health,
-    raptor_speed,
-    raptor_image,
-    raptor_gender,
-    inherited_attack,
-    inherited_attack_max,
-    inherited_health,
-    inherited_health_max,
-    raptor_happiness,
-    inherited_traits,
-    raptor_description,
-    raptor_color,
-  } = data;
+  const { bounty_name, bounty_icon, bounty_reward, bounty_gps } = data;
   return (
-    <Window title="Raptor Data" width={300} height={600} theme="bountypaper">
+    <Window title="Bounty Contract" width={300} height={440} theme="hackerman">
       <Window.Content>
-        <Stack>
+        <Stack vertical textAlign="center" fontFamily="playbill">
           <Stack.Item>
-            <Box                   style={{
-                    borderRight: '1px solid white',
-                  }}>
+            <Box
+              style={{
+                borderTop: '2px solid #642600',
+                fontSize: '50px',
+                color: '#642600',
+              }}
+            >
               WANTED
             </Box>
           </Stack.Item>
-          <Stack.Item width="33%" textAlign="center">
-            <Section title="Stats">
-              <LabeledList>
-                <LabeledList.Item label="Health">
-                  {raptor_health}
-                </LabeledList.Item>
-                <LabeledList.Item label="Attack">
-                  {raptor_attack}
-                </LabeledList.Item>
-                <LabeledList.Item label="Speed">
-                  {10 - raptor_speed}
-                </LabeledList.Item>
-                <LabeledList.Item label="Gender">
-                  {raptor_gender}
-                </LabeledList.Item>
-              </LabeledList>
-            </Section>
-            <Section title="Inherit Modifiers">
-              <LabeledList>
-                <LabeledList.Item label="Health">
-                  <ProgressBar
-                    value={inherited_health}
-                    maxValue={inherited_health_max}
-                    ranges={{
-                      good: [0.7 * inherited_health_max, inherited_health_max],
-                      average: [
-                        0.4 * inherited_health_max,
-                        inherited_health_max,
-                      ],
-                      bad: [-Infinity, inherited_health_max],
-                    }}
-                  />
-                </LabeledList.Item>
-                <LabeledList.Item label="Attack">
-                  <ProgressBar
-                    value={inherited_attack}
-                    maxValue={inherited_attack_max}
-                    ranges={{
-                      good: [0.7 * inherited_attack_max, inherited_attack_max],
-                      average: [
-                        0.4 * inherited_attack_max,
-                        inherited_attack_max,
-                      ],
-                      bad: [-Infinity, inherited_attack_max],
-                    }}
-                  />
-                </LabeledList.Item>
-              </LabeledList>
-            </Section>
+          <Stack.Item
+            mt={-1}
+            style={{
+              borderBottom: '2px solid #642600',
+            }}
+          >
+            {Array.from({ length: 5 }, (_, index) => (
+              <Icon color={'#642600'} name={'star'} />
+            ))}
           </Stack.Item>
-          <Stack.Item width="33%">
-            <Section textAlign="center" title="Friendship bond">
-              <Image
-                mt={-7}
-                src={`data:image/jpeg;base64,${raptor_happiness}`}
-                height="72px"
-                width="72px"
-              />
-            </Section>
-            <Section textAlign="center" title="Inherited Traits">
-              <Stack vertical>
-                {inherited_traits.map((trait, index) => (
-                  <Stack.Item key={index}>{trait}</Stack.Item>
-                ))}
+          <Stack.Item>
+            <Box
+              style={{
+                fontSize: '35px',
+                color: '#642600',
+              }}
+            >
+              DEAD{' '}
+              <span style={{ textDecoration: 'underline', fontSize: '35px' }}>
+                OR
+              </span>{' '}
+              ALIVE
+            </Box>
+          </Stack.Item>
+          <Stack.Item>
+            <Image
+              m={1}
+              src={`data:image/jpeg;base64,${bounty_icon}`}
+              height="160px"
+              width="160px"
+              style={{
+                verticalAlign: 'middle',
+                borderRadius: '1em',
+                border: '1px solid #642600',
+              }}
+            />
+          </Stack.Item>
+          <Stack.Item>
+            <Section
+              style={{
+                color: '#642600',
+              }}
+            >
+              <Stack vertical fontFamily="serif">
+                <Stack.Item
+                  mt={-3}
+                  style={{
+                    fontSize: '35px',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  <Stack
+                    style={{
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Stack.Item
+                      width="80px"
+                      style={{
+                        borderRight: '2px solid #642600',
+                      }}
+                    >
+                      <Box
+                        style={{
+                          fontSize: '15px',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        <div style={{ display: 'block' }}>CASH</div>
+                        <div style={{ display: 'block' }}>REWARD</div>
+                      </Box>
+                    </Stack.Item>
+                    <Stack.Item mt={0.2}>{bounty_reward}$</Stack.Item>
+                  </Stack>
+                </Stack.Item>
+                <Stack.Item
+                  mt={-0.5}
+                  fontFamily="playbill"
+                  style={{
+                    fontSize: '35px',
+                  }}
+                >
+                  <Icon color={'#642600'} name={'hand-point-right'} />
+                  LOBSTROSITY
+                  <Icon color={'#642600'} name={'hand-point-left'} />
+                </Stack.Item>
+                <Stack.Item
+                  mt={1}
+                  fontFamily="playbill"
+                  style={{
+                    borderTop: '2px solid #642600',
+                    fontSize: '40px',
+                  }}
+                >
+                  {bounty_gps}
+                </Stack.Item>
               </Stack>
             </Section>
           </Stack.Item>
         </Stack>
-        <Section fill title="Desc">
-          {raptor_description}
-        </Section>
       </Window.Content>
     </Window>
   );
