@@ -141,7 +141,7 @@
 			new /obj/item/lighter(src)
 			new /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium(src)
 			for(var/i in 1 to 3)
-				new /obj/item/clothing/mask/cigarette/rollie(src)
+				new /obj/item/cigarette/rollie(src)
 		if(6 to 10)
 			new /obj/item/melee/skateboard/pro(src)
 		if(11 to 15)
