@@ -586,7 +586,7 @@
 	if(artifact_theme == "prototype")
 		icon_state = pick("prototype1", "prototype2", "prototype3", "prototype4", "prototype5", "prototype6", "prototype7", "prototype8","prototype9")
 		themed_name_prefix = pick("experimental","prototype","artificial","handcrafted","ramshackle","odd")
-		themed_name_suffix = pick("device","assembly","gadget","gizmo","contraption","machine","widget")
+		themed_name_suffix = pick("device","assembly","gadget","gizmo","contraption","machine","widget","object")
 		real_name = "[pick(themed_name_prefix)] [pick(themed_name_suffix)]"
 		name = "strange [pick(themed_name_suffix)]"
 	if(artifact_theme == "necrotech")
