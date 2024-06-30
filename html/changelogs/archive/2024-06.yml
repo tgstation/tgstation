@@ -605,3 +605,11 @@
   ven1883:
   - rscadd: Adds Alveolic Deoxidation, a nanite program that heals suffocation.
   - rscadd: Adds Alveolic Deoxidation to the tech tree.
+2024-06-30:
+  Absolucy:
+  - bugfix: Fixed cat ears disappearing from slimes with the gooey cat mutation across
+      Z-levels.
+  RafRoq:
+  - bugfix: 'Fixes botany early game yield
+
+      :cl:'
