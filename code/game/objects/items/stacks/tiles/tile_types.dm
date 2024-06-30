@@ -1079,7 +1079,7 @@
 		/obj/item/stack/tile/circuit,
 		/obj/item/stack/tile/circuit/green,
 		/obj/item/stack/tile/circuit/red,
-		)
+	)
 
 /obj/item/stack/tile/circuit/green
 	name = "green circuit tile"
