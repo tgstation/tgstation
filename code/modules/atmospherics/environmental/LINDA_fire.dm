@@ -98,6 +98,8 @@
 	var/visual_update_tick = 0
 	///Are we burning freon?
 	var/cold_fire = FALSE
+	///the group of hotspots we are a part of
+	var/datum/hot_group/our_hot_group
 
 
 /obj/effect/hotspot/Initialize(mapload, starting_volume, starting_temperature)
@@ -115,6 +117,14 @@
 		COMSIG_ATOM_ABSTRACT_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	our_hot_group = new
+	our_hot_group.add_to_group(src)
+	var/turf/open/our_turf = loc
+	for(var/turf/open/to_check as anything in our_turf.atmos_adjacent_turfs)
+		if(to_check.active_hotspot)
+			var/hot_group/enemy_group = to_check.active_hotspot.our_hot_group
+			merge_hot_groups(enemy_group)
+
 
 /**
  * Perform interactions between the hotspot and the gasmixture.
@@ -311,4 +321,98 @@
 /obj/effect/hotspot/singularity_pull()
 	return
 
+//handle the grouping of hotspot and then determining an average center to play sound in
+/datum/hot_group
+	var/list/obj/effect/hotspot/spot_list = list()
+	var/turf/open/current_sound_loc
+	var/datum/looping_sound/fire/sound
+	var/tiles_limit = 50
+	//these lists and average var are to find the average center of a group
+	var/list/x_coord = list()
+	var/list/y_coord = list()
+	var/list/z_coord = list()
+	var/average_x
+	var/average_y
+	COOLDOWN_DECLARE(update_sound_center)
+	//use to prevent hot group from expanding outside a room, a group spandin multiple rooms may have issue when they are cutoff and rebuilding groups like zas is too expensive
+	var/list/turf/open/our_airtight_room = list()
+
+
+/datum/hot_group/New()
+	. = ..()
+	SSair.hot_groups += src
+
+/datum/hot_group/process(seconds_per_tick)
+	. = ..()
+	if(spot_list.len <= 0)
+		qdel(src)
+		return
+	//we can draw a cross around the average middle of any globs of group, curves or hollow groups may cause issues with this
+	average_x = round((max(x_coord) + min(x_coord))/2)
+	average_y = round((max(y_coord) + min(y_coord))/2)
+	if(COOLDOWN_FINISHED(src, update_sound_center) && spot_list.len >= 3)//arbitrary size to start playing the sound
+		update_sound()
+		COOLDOWN_START(src, update_sound_center, 5 SECONDS)
+
+/datum/hot_group/Destroy()
+	. = ..()
+	SSair.hot_groups -= src
+	current_sound_loc = null
+	spot_list = null
+	qdel(sound)
+
+/datum/hot_group/proc/remove_from_group(obj/effect/hotspot/target)
+	target.our_hot_group.spot_list -= target
+	target.our_hot_group = null
+	x_coord -= target.x
+	y_coord -= target.y
+
+/datum/hot_group/proc/add_to_group(obj/effect/hotspot/target)
+	spot_list += target
+	target.our_hot_group = src
+	x_coord += target.x
+	y_coord += target.y
+
+/datum/hot_group/proc/merge_hot_groups(datum/hot_group/enemy_group)
+	var/random_group
+
+
+	if(spot_list.len >= tiles_limit || enemy_group.spot_list.len >= tiles_limit)
+		return
+	if(our_airtight_room && !(enemy_group.spot_list in our_airtight_room))
+		return
+	if(spot_list == enemy_group.spot_list)
+		random_group = rand(0,1)
+	else if(spot_list.len > enemy_group.spot_list.len || random_group)//we're bigger take all of their territory!
+		for(var/turf/open/reference in enemy_group.spot_list)
+			spot_list += reference
+			reference.our_hot_group = src
+		x_coord += enemy_group.x_coord
+		y_coord += enemy_group.y_coord
+		qdel(enemy_group)
+	else
+		for(var/turf/open/reference in spot_list)
+			enemy_group.spot_list += reference
+			reference.our_hot_group = enemy_group
+		x_coord += enemy_group.x_coord
+		y_coord += enemy_group.y_coord
+		qdel(src)
+
+/datum/hot_group/proc/update_sound()
+	var/turf/open/sound_turf = locate(average_x, average_y, z_coord)
+	if(sound_turf == current_sound_loc)
+		return
+	else if(sound)
+		sound.parent = sound_turf
+		return
+
+	sound = new(sound_turf, TRUE)
+	current_sound_loc = sound_turf
+	our_airtight_room = create_atmos_zone(sound_turf)
+
+/datum/looping_sound/fire
+	mid_sounds = 'sound/effects/roaring_fire_chopped.ogg'
+	volume = 100
+	mid_length = 2 SECONDS
+	falloff_distance = 4
 #undef INSUFFICIENT
