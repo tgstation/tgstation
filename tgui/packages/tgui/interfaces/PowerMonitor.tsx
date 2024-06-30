@@ -39,13 +39,13 @@ type PowerHistory = {
   supply: number[];
 };
 
-export function powerRank(str) {
+export function powerRank(str: string): number {
   const unit = String(str.split(' ')[1]).toLowerCase();
   return ['w', 'kw', 'mw', 'gw'].indexOf(unit);
 }
 
 // Oh no not another sorting algorithm
-function powerSort(a: Area, b: Area) {
+function powerSort(a: Area, b: Area): number {
   const sortedByRank = powerRank(a.load) - powerRank(b.load);
   const sortedByLoad = parseFloat(a.load) - parseFloat(b.load);
 
@@ -55,7 +55,7 @@ function powerSort(a: Area, b: Area) {
   return sortedByLoad;
 }
 
-function nameSort(a: Area, b: Area) {
+function nameSort(a: Area, b: Area): number {
   if (a.name < b.name) {
     return -1;
   }
@@ -175,7 +175,7 @@ function StationAreas(props) {
         return a.charge - b.charge;
       }
       if (sortByField === 'draw') {
-        return powerSort(a, b);
+        return powerSort(b, a);
       }
       return 0;
     });
@@ -219,9 +219,15 @@ function StationAreas(props) {
               <Table.Cell textAlign="right" width={7}>
                 Draw
               </Table.Cell>
-              <Table.Cell collapsing>Eqp</Table.Cell>
-              <Table.Cell collapsing>Lgt</Table.Cell>
-              <Table.Cell collapsing>Env</Table.Cell>
+              <Tooltip content="Equipment power">
+                <Table.Cell collapsing>Eqp</Table.Cell>
+              </Tooltip>
+              <Tooltip content="Lighting power">
+                <Table.Cell collapsing>Lgt</Table.Cell>
+              </Tooltip>
+              <Tooltip content="Environment power">
+                <Table.Cell collapsing>Env</Table.Cell>
+              </Tooltip>
             </Table.Row>
             {areas.map((area) => (
               <tr key={area.id} className="Table__row candystripe">
