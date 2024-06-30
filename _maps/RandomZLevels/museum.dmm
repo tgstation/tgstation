@@ -4755,7 +4755,7 @@
 /obj/structure/lattice/catwalk/mining,
 /obj/structure/railing,
 /obj/structure/table,
-/obj/item/clothing/mask/cigarette/cigar{
+/obj/item/cigarette/cigar{
 	icon_state = "cigaron";
 	lit = 1
 	},
