@@ -178,7 +178,7 @@
 	if(!.)
 		return
 
-	jaunt_damage_timer = addtimer(CALLBACK(src, PROC_REF(damage_for_lazy_demon), jaunter), 20 SECONDS)
+	jaunt_damage_timer = addtimer(CALLBACK(src, PROC_REF(damage_for_lazy_demon), jaunter), 20 SECONDS, TIMER_STOPPABLE)
 
 	var/turf/jaunt_turf = get_turf(jaunter)
 	// if we're not pulling anyone, or we can't what we're pulling
@@ -229,7 +229,7 @@
 	if(isnull(jaunt_damage_timer))
 		return
 	lazy_demon.apply_damage(lazy_demon.maxHealth * 0.05, BRUTE)
-	jaunt_damage_timer = addtimer(CALLBACK(src, PROC_REF(damage_for_lazy_demon), lazy_demon), 20 SECONDS)
+	jaunt_damage_timer = addtimer(CALLBACK(src, PROC_REF(damage_for_lazy_demon), lazy_demon), 20 SECONDS, TIMER_STOPPABLE)
 	to_chat(lazy_demon, span_warning("You feel your flesh dissolving into the sea of blood. You shouldn't stay in Blood Crawl for too long!"))
 
 /**
