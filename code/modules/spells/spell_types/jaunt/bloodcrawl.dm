@@ -211,7 +211,7 @@
 	return TRUE
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/on_jaunt_exited(obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
-	jaunt_damage_timer = null
+	deltimer(jaunt_damage_timer)
 	resist_jaunt_damage = FALSE
 	return ..()
 
@@ -266,7 +266,7 @@
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/proc/on_victim_start_consume(mob/living/victim, mob/living/jaunter)
 	if(!iscarbon(jaunter))
 		resist_jaunt_damage = TRUE
-		jaunt_damage_timer = null
+		deltimer(jaunt_damage_timer)
 	to_chat(jaunter, span_danger("You begin to feast on [victim]... You can not move while you are doing this."))
 
 /**
@@ -275,7 +275,7 @@
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/proc/on_victim_consumed(mob/living/victim, mob/living/jaunter)
 	if(!iscarbon(jaunter))
 		resist_jaunt_damage = FALSE
-		jaunt_damage_timer = addtimer(CALLBACK(src, PROC_REF(damage_for_lazy_demon), jaunter), 20 SECONDS)
+		jaunt_damage_timer = addtimer(CALLBACK(src, PROC_REF(damage_for_lazy_demon), jaunter), 20 SECONDS, TIMER_STOPPABLE)
 	to_chat(jaunter, span_danger("You devour [victim]. Your health is fully restored."))
 	qdel(victim)
 
