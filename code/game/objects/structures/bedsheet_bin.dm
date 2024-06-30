@@ -146,6 +146,7 @@ LINEN BINS
 	UnregisterSignal(sleeper, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION)
 	UnregisterSignal(sleeper, COMSIG_QDELETING)
+	pixel_z = 0
 	signal_sleeper = null
 
 /obj/item/bedsheet/blue
