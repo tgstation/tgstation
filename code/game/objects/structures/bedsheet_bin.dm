@@ -622,22 +622,40 @@ LINEN BINS
 	default_unfasten_wrench(user, tool, time = 0.5 SECONDS)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/bedsheet))
-		if(!user.transferItemToLoc(I, src))
-			return
-		sheets.Add(I)
-		amount++
-		to_chat(user, span_notice("You put [I] in [src]."))
-		update_appearance()
+/obj/structure/bedsheetbin/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/bedsheet))
+		return bedsheet_act(user, tool)
 
-	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY) //make sure there's sheets to hide it among, make sure nothing else is hidden in there.
-		if(!user.transferItemToLoc(I, src))
-			to_chat(user, span_warning("\The [I] is stuck to your hand, you cannot hide it among the sheets!"))
-			return
-		hidden = I
-		to_chat(user, span_notice("You hide [I] among the sheets."))
+	// Everything else we try to hide
+	return hide_item_act(user, tool)
 
+/obj/structure/bedsheetbin/proc/bedsheet_act(mob/living/user, obj/item/tool)
+	if(!user.transferItemToLoc(tool, src, silent = FALSE))
+		return ITEM_INTERACT_BLOCKING
+	sheets.Add(tool)
+	amount++
+	to_chat(user, span_notice("You put [tool] in [src]."))
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/bedsheetbin/proc/hide_item_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+	if(tool.w_class >= WEIGHT_CLASS_BULKY)
+		balloon_alert(user, "too big!")
+		return ITEM_INTERACT_BLOCKING
+	if(!amount)
+		balloon_alert(user, "nothing to hide under!")
+		return ITEM_INTERACT_BLOCKING
+	if(hidden)
+		balloon_alert(user, "already something there!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src, silent = FALSE))
+		to_chat(user, span_warning("\The [tool] is stuck to your hand, you cannot hide it among the sheets!"))
+		return ITEM_INTERACT_BLOCKING
+	hidden = tool
+	to_chat(user, span_notice("You hide [tool] among the sheets."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/bedsheetbin/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
