@@ -447,7 +447,7 @@
 		ORGAN_SLOT_STOMACH,
 	)
 	for (var/obj/item/organ/organ as anything in check.organs)
-		if (organ.slot in augmented_organ_slots && !IS_ORGANIC_ORGAN(organ))
+		if (organ.slot in augmented_organ_slots && IS_ORGANIC_ORGAN(organ))
 			return FALSE
 	for (var/obj/item/bodypart/bodypart as anything in check.bodyparts)
 		if (bodypart.bodytype != BODYTYPE_ROBOTIC)
