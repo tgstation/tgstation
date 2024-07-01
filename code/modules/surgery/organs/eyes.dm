@@ -228,7 +228,7 @@
 			color_cutoffs = high_light_cutoff.Copy()
 			light_level = NIGHTVISION_LIGHT_HIG
 		else
-			color_cutoffs = list()
+			color_cutoffs = null
 			light_level = NIGHTVISION_LIGHT_OFF
 	owner.update_sight()
 

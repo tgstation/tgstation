@@ -7,10 +7,13 @@
 	/// What this packs into
 	var/packed_type = /obj/item/flatpacked_machine/ore_silo
 
+/obj/machinery/ore_silo/colony_lathe/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/repackable, packed_type, 10 SECONDS)
+
 /obj/machinery/ore_silo/colony_lathe/silo_log(obj/machinery/machinery_in_question, action, amount, noun, list/mats)
 	. = ..()
 	playsound(src, 'sound/machines/beep.ogg', 30, TRUE)
-	AddElement(/datum/element/repackable, packed_type, 10 SECONDS)
 
 /obj/machinery/ore_silo/colony_lathe/default_deconstruction_crowbar()
 	return
