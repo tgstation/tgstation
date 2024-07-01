@@ -39,9 +39,3 @@
 				return TRUE
 
 	return FALSE
-
-
-/obj/machinery/netpod/attack_ghost(mob/dead/observer/our_observer)
-	var/our_target = avatar_ref?.resolve()
-	if(isnull(our_target) || !our_observer.orbit(our_target))
-		return ..()

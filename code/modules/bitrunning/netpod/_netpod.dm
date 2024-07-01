@@ -121,6 +121,12 @@
 		container_resist_act(user)
 
 
+/obj/machinery/netpod/attack_ghost(mob/dead/observer/our_observer)
+	var/our_target = avatar_ref?.resolve()
+	if(isnull(our_target) || !our_observer.orbit(our_target))
+		return ..()
+
+
 /// When the server is upgraded, drops brain damage a little
 /obj/machinery/netpod/proc/on_server_upgraded(obj/machinery/quantum_server/source)
 	SIGNAL_HANDLER
