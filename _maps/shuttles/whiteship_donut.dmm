@@ -468,7 +468,9 @@
 /area/shuttle/abandoned)
 "XY" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
-	dir = 1
+	dir = 1;
+	x_offset = 0;
+	y_offset = 9
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/disk/holodisk/donutstation/whiteship,
