@@ -100,7 +100,7 @@
 
 		// Random caps
 		if(prob(10))
-			editing_word = prob(85) ? uppertext(editing_word) : lowertext(editing_word)
+			editing_word = prob(85) ? uppertext(editing_word) : LOWER_TEXT(editing_word)
 		// some times....... we add DOTS...
 		if(prob(10))
 			for(var/dotnum in 1 to rand(2, 8))
