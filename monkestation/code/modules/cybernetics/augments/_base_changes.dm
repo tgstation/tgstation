@@ -82,16 +82,19 @@
 		add_to_limb(ownerlimb)
 
 /obj/item/organ/internal/cyberimp/add_to_limb(obj/item/bodypart/bodypart)
-	bodypart_overlay = new bodypart_overlay()
-	bodypart_overlay.unique_properties(src)
 	ownerlimb = bodypart
-	ownerlimb.add_bodypart_overlay(bodypart_overlay)
+	var/bodypart_overlay_path = src::bodypart_overlay
+	if(ispath(bodypart_overlay_path))
+		bodypart_overlay = new bodypart_overlay_path
+		bodypart_overlay.unique_properties(src)
+		ownerlimb.add_bodypart_overlay(bodypart_overlay)
 	owner.update_body_parts()
 	return ..()
 
 /obj/item/organ/internal/cyberimp/remove_from_limb()
-	ownerlimb.remove_bodypart_overlay(bodypart_overlay)
-	QDEL_NULL(bodypart_overlay)
+	if(istype(bodypart_overlay))
+		ownerlimb.remove_bodypart_overlay(bodypart_overlay)
+		QDEL_NULL(bodypart_overlay)
 	ownerlimb = null
 	owner.update_body_parts()
 	return ..()
