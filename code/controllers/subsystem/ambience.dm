@@ -27,6 +27,9 @@ SUBSYSTEM_DEF(ambience)
 			client_old_areas -= client_iterator
 			continue
 
+		if(!client_mob.can_hear()) //WHAT? I CAN'T HEAR YOU
+			continue
+
 		//Check to see if the client-mob is in a valid area
 		var/area/current_area = get_area(client_mob)
 		if(!current_area) //Something's gone horribly wrong
@@ -83,3 +86,52 @@ SUBSYSTEM_DEF(ambience)
 	if(!M.has_light_nearby() && prob(0.5))
 		return ..(M, pick(minecraft_cave_noises))
 	return ..()
+
+/**
+ * Ambience buzz handling called by either area/Enter() or refresh_looping_ambience()
+ */
+
+/mob/proc/update_ambience_area(area/new_area)
+
+	var/old_tracked_area = ambience_tracked_area
+	if(old_tracked_area)
+		UnregisterSignal(old_tracked_area, COMSIG_AREA_POWER_CHANGE)
+		ambience_tracked_area = null
+	if(!client)
+		return
+	if(new_area)
+		ambience_tracked_area = new_area
+		RegisterSignal(ambience_tracked_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(refresh_looping_ambience), TRUE)
+
+	refresh_looping_ambience()
+
+/mob/proc/refresh_looping_ambience()
+	SIGNAL_HANDLER
+
+	if(!client) // If a tree falls in the woods.
+		return
+
+	var/area/my_area = get_area(src)
+	var/sound_to_use = my_area.ambient_buzz
+
+	if(!sound_to_use || !(client.prefs.read_preference(/datum/preference/toggle/sound_ship_ambience)))
+		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
+		client.current_ambient_sound = null
+		return
+
+	if(!can_hear()) // Can the mob hear?
+		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
+		client.current_ambient_sound = null
+		return
+
+	//Station ambience is dependant on a functioning and charged APC with enviorment power enabled.
+	if(!is_mining_level(my_area.z) && ((!my_area.apc || !my_area.apc.operating || !my_area.apc.cell?.charge && my_area.requires_power || !my_area.power_environ)))
+		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
+		client.current_ambient_sound = null
+		return
+	else
+		if(sound_to_use == client.current_ambient_sound) // Don't reset current loops
+			return
+
+		client.current_ambient_sound = sound_to_use
+		SEND_SOUND(src, sound(my_area.ambient_buzz, repeat = 1, wait = 0, volume = my_area.ambient_buzz_vol, channel = CHANNEL_BUZZ))

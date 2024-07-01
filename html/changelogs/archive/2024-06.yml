@@ -1288,3 +1288,130 @@
   - qol: 'polypore mycelium no longer contains sugar, preventing it from instantly
       creating fringe weaver beverage when ground up. qol: sugar may be acquired from
       grinding fireblossoms instead of polypore mycelium.'
+2024-06-29:
+  Bisar:
+  - rscadd: Ashwalkers now start out allied to lavaland fauna (except for raptors).
+      Attacking the fauna will break this alliance with the attacked beast and any
+      who witness it.
+  - bugfix: Ashwalkers are now actually in the ashwalker faction, instead of the neutral
+      one.
+  EnterTheJake:
+  - rscadd: A new Anomaly organ has been introduced, The Voltaic Combat Cyberheart!
+  Higgin:
+  - bugfix: Mood buffs/penalties are now properly equal on both positive/negative
+      sides.
+  JackEnoff:
+  - balance: Changelings regenerate chemicals faster when not on fire
+  - balance: Changelings regenerate chemicals slower when on fire
+  MGOOOOOO:
+  - qol: The "Dental Implant" surgery no longer forces itself to restart after implanting
+      one pill. Now implanting pills in the surgery has another step to either search
+      the patient's mouth for another tooth to implant, or cauterization to end the
+      surgery.
+  Melbert:
+  - bugfix: Fixed modsuit interactions slightly. No longer requires combat mode to
+      use tools on it, plasma core works as intended as well. (Using combat mode,
+      however, will make you insert the item)
+  - refactor: Refactored lockboxes
+  - refactor: Refactored medbot skin application
+  Moonlit2000:
+  - bugfix: peg legs can't bleed
+  ShizCalev:
+  - bugfix: Toggling ambient ship sounds will now instantly turn it on/off.
+  - bugfix: Deafened mobs will no longer hear the station's ambient sounds.
+  - bugfix: Fixed ambient sounds resetting their loop when entering different bodies
+      (ie admin ghosting, being moved to other mobs, ect.)
+  - bugfix: Monkeys that become sentient through the sentience helmet will no longer
+      be notified that they can ventcrawl.
+  - bugfix: Airlocks will now correctly said what other airlock they are cyclelinked
+      with.
+  - bugfix: Portaturrets no longer go invisible when unwrenched from the ground.
+  SmArtKar:
+  - code_imp: Rewrote a portion of storage UI code to allow it to be influenced by
+      UI style.
+  - image: Prettified storage UI and made it affected by UI theme.
+  - image: Ripley and Ripley-based mechs now have consistent outlines
+  SyncIt21:
+  - bugfix: Holodeck closet & crate items are marked as holograms as well
+  - bugfix: Holodeck closet & crate items delete themselves when the program is changed
+  - bugfix: you can access your inventory when lying down
+  TheBoondock:
+  - sound: added liquid pouring sounds to pouring of any reagents
+  Thlumyn:
+  - bugfix: fixed active turfs in icebox listening post
+  Vekter:
+  - bugfix: Fixed the visibility of a pipe in Northstar's ordnance lab
+  - rscadd: Bitrunners can now access specific bounties asking for the item rewards
+      from specific bitrunning domains.
+  - bugfix: Fixed bitrunner pulling from a pool of literally every bounty available.
+  - bugfix: Fixes the door-bolting buttons in the dorms and bathrooms on Birdshot.
+  aaaa1023:
+  - bugfix: Removed a bush trapped inside a wall above morgue on Tramstation
+  carlarctg:
+  - rscadd: Reworked blood loss effects on the user to be much more noticeable.
+  - code_imp: Changed the blood volume defines to be based on the BLOOD_VOLUME_NORMAL
+      define, with a multiplier of blood loss applied, to be more understandable.
+  - rscadd: Added tons of new mutations to Genetics, alongside some recipes!
+  - rscadd: Thermal Adaptation has been made a combination mutation from the stronger
+      but narrower Cold and Heat adaptations.
+  - balance: Cryobeams have 9 tile range, and fiery sweat doesn't cause spread on
+      contact.
+  - image: Added some neat new sprites for the new mutations, and added a greyscale
+      version of the magic hand sprites.
+  - code_imp: Infinitesmally improved mutation code.
+  delingar:
+  - bugfix: Lavaland elite are at lavaland fauna faction now
+  hyperjll:
+  - bugfix: Inducers now accept megacells AND regular cells.
+  junkgle01:
+  - bugfix: added a keycard auth to QM room
+  necromanceranne:
+  - bugfix: Emergency firesuits no longer hide your gloves.
+  - qol: Punching bags are now a equal method of training to the fitness machinery.
+  - qol: Boxing grants more experience overall for participation.
+2024-06-30:
+  Exester509:
+  - spellcheck: Fixed two typos in the heretic lore
+  Ghommie:
+  - bugfix: cigarettes and vapes are no longer treated as clothing (eg. They no longer
+      get shredded and need to be repaired with... cloth).
+  GoblinBackwards:
+  - bugfix: Fixed gas canister shields turning themselves off in unpowered areas when
+      they weren't drawing any cell power.
+  LT3:
+  - code_imp: Blood filter only pings and says finished when it's actually finished
+  Sadboysuss:
+  - bugfix: fixed cyborgs and monkeys not being able to buckle to chairs
+  SmArtKar:
+  - bugfix: Storage no longer deletes all of its viewers upon being deleted
+  - bugfix: Storage UI now renders properly
+  - bugfix: Guns no longer can be overfilled by 1 bullet
+  - bugfix: Russian revolvers now spawn with only 1 live round as originally intended,
+      and click when firing a blank.
+  Xander3359:
+  - bugfix: Fix being unable to add a flux core to new the combat heart cybernetic
+  aaaa1023:
+  - bugfix: Fixed the camera offset for the navigation console on a handful of Whiteships.
+  - bugfix: Fixed the Pubby Whiteship drifting sideways through hyperspace when in
+      flight.
+  - bugfix: Fixed the Kilo Whiteship flying backwards through hyperspace when in flight.
+  - bugfix: The Birdshot Whiteship should actually be able to spawn now.
+  - spellcheck: fixed spelling of "aggressive" in the shuttle manipulator description
+      for the Birdshot Whiteship.
+  carlarctg:
+  - spellcheck: Syndicate jaws of life are now jaws of death!
+  - spellcheck: Made its desc. more descriptive, stating that its faster.
+  - rscadd: Heretics can now sacrifice Cultists for sweet loot.
+  - rscadd: Cultists can now sacrifice Heretics for sick trinkets.
+  - rscdel: Removed Bastard Blade from the game, code, and life
+  - balance: Aggressive Spread now rusts non-turfs next to you as well
+  - balance: Raise Construction cd raised to 7, now breaks rust walls as well, improved
+      autoaim making it actually usable midfight
+  - refactor: Auto-aim code now works on any atoms if configured
+  grungussuss , Kayozz:
+  - sound: exosuit fabricators, Autolathes and Techfabs will now produce sounds when
+      printing items
+  grungususs:
+  - bugfix: fixed the name of a request console in the medical sec outpost on metastation
+  mc-oofert:
+  - bugfix: both engineers and roboticists may now access the controls of a firebot

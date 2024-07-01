@@ -79,10 +79,6 @@
 /obj/effect/turf_decal/trimline/yellow/warning,
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
-"eK" = (
-/obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/floor/plating/airless,
-/area/shuttle/pirate)
 "eU" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/carpet/royalblack,
@@ -337,7 +333,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/shuttle/pirate)
 "xj" = (
 /obj/structure/table/glass,
 /obj/item/storage/medkit/brute,
@@ -462,7 +458,7 @@
 	width = 26
 	},
 /obj/docking_port/mobile/pirate{
-	dir = 4;
+	dir = 8;
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "Silverscale Cruiser";
@@ -652,8 +648,9 @@
 "Mo" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
 	dir = 8;
-	x_offset = 10;
-	y_offset = 5
+	x_offset = 12;
+	y_offset = 5;
+	view_range = 10
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 8
@@ -1022,7 +1019,7 @@ rB
 Ww
 Ww
 Ww
-eK
+Ww
 Ww
 Ww
 Ww

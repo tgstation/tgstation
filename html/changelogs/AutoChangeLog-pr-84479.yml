@@ -1,0 +1,5 @@
+author: "Kapu (ported by StrangeWeirdKitten)"
+delete-after: True
+changes:
+  - bugfix: "Ambience buzz will now respect ship ambience prefrences for observers."
+  - sound: "Ambience buzz requires APC enviorment power to function"

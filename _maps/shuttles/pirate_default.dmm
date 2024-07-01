@@ -475,7 +475,7 @@
 	pixel_x = 6;
 	pixel_y = 12
 	},
-/obj/item/clothing/mask/cigarette/cigar,
+/obj/item/cigarette/cigar,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/wood,

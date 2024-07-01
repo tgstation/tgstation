@@ -560,7 +560,7 @@
 			boss_string = "A giant, armored behemoth"
 		if(/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner)
 			boss_string = "A bloody drillmark"
-		if(/mob/living/simple_animal/hostile/megafauna/wendigo)
+		if(/mob/living/simple_animal/hostile/megafauna/wendigo/noportal)
 			boss_string = "A chilling skull"
 	. += span_notice("[boss_string] is etched onto the side of the vent.")
 
@@ -585,7 +585,7 @@
 	icon_state_tapped = "ore_vent_ice_active"
 	defending_mobs = list(
 		/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner,
-		/mob/living/simple_animal/hostile/megafauna/wendigo,
+		/mob/living/simple_animal/hostile/megafauna/wendigo/noportal,
 		/mob/living/simple_animal/hostile/megafauna/colossus,
 	)
 

@@ -2712,15 +2712,15 @@
 	pixel_x = -2;
 	pixel_y = 3
 	},
-/obj/item/clothing/mask/cigarette/cigar{
+/obj/item/cigarette/cigar{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/clothing/mask/cigarette/cigar/cohiba{
+/obj/item/cigarette/cigar/cohiba{
 	pixel_x = 3;
 	pixel_y = 1
 	},
-/obj/item/clothing/mask/cigarette/cigar{
+/obj/item/cigarette/cigar{
 	pixel_x = 4
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -3024,10 +3024,6 @@
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
-"aKU" = (
-/obj/structure/sign/warning/electric_shock/directional/west,
-/turf/open/space/basic,
-/area/space)
 "aLv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -6189,15 +6185,15 @@
 "bAS" = (
 /obj/structure/table/wood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/clothing/mask/cigarette/cigar/havana{
+/obj/item/cigarette/cigar/havana{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/clothing/mask/cigarette/cigar/cohiba{
+/obj/item/cigarette/cigar/cohiba{
 	pixel_x = 6;
 	pixel_y = 2
 	},
-/obj/item/clothing/mask/cigarette/cigar{
+/obj/item/cigarette/cigar{
 	pixel_x = -2;
 	pixel_y = 2
 	},
@@ -6674,6 +6670,17 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/herringbone,
 /area/station/cargo/miningoffice)
+"bFD" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/science/ordnance)
 "bFS" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /obj/structure/cable,
@@ -13184,7 +13191,7 @@
 "djY" = (
 /obj/structure/sign/warning/secure_area/directional/east,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "dka" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -13910,7 +13917,7 @@
 /area/station/commons/vacant_room/office)
 "dtk" = (
 /obj/structure/table/wood/poker,
-/obj/item/clothing/mask/cigarette/pipe,
+/obj/item/cigarette/pipe,
 /turf/open/floor/carpet/green,
 /area/station/commons/lounge)
 "dtn" = (
@@ -14666,6 +14673,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
+"dDB" = (
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/science/ordnance)
 "dDT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/trinary/filter{
@@ -15953,7 +15964,7 @@
 	pixel_y = -32
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "dUb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -20741,7 +20752,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "fff" = (
-/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north{
+	areastring = "/area/station/science/ordnance/burnchamber"
+	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/visible{
@@ -27875,6 +27888,7 @@
 	dir = 6
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "gQH" = (
@@ -28613,7 +28627,7 @@
 "haF" = (
 /obj/structure/sign/warning/secure_area/directional/west,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "haG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -33613,6 +33627,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/full,
 /obj/machinery/holopad,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/ordnance)
 "iqj" = (
@@ -34758,6 +34773,11 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
+"iFt" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/science/ordnance)
 "iFD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
@@ -40148,9 +40168,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "jUT" = (
-/obj/structure/lattice,
+/obj/structure/sign/warning/electric_shock/directional/west,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "jUU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -44521,6 +44541,8 @@
 "lcP" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible/layer2,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "lcT" = (
@@ -47595,6 +47617,7 @@
 /obj/machinery/meter/layer2,
 /obj/structure/sign/warning/no_smoking/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "lOA" = (
@@ -52036,13 +52059,13 @@
 "mXr" = (
 /obj/structure/cable,
 /obj/structure/table/wood,
-/obj/item/clothing/mask/cigarette/cigar/cohiba{
+/obj/item/cigarette/cigar/cohiba{
 	pixel_x = 3
 	},
-/obj/item/clothing/mask/cigarette/cigar/havana{
+/obj/item/cigarette/cigar/havana{
 	pixel_x = -3
 	},
-/obj/item/clothing/mask/cigarette/cigar,
+/obj/item/cigarette/cigar,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/captain)
 "mXy" = (
@@ -54381,7 +54404,7 @@
 "nET" = (
 /obj/structure/sign/warning/electric_shock/directional/east,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "nEZ" = (
 /turf/closed/wall/r_wall,
 /area/station/security/mechbay)
@@ -54527,13 +54550,13 @@
 /area/station/commons/vacant_room/commissary)
 "nHc" = (
 /obj/structure/table/wood,
-/obj/item/clothing/mask/cigarette/cigar/cohiba{
+/obj/item/cigarette/cigar/cohiba{
 	pixel_x = 3
 	},
-/obj/item/clothing/mask/cigarette/cigar/havana{
+/obj/item/cigarette/cigar/havana{
 	pixel_x = -3
 	},
-/obj/item/clothing/mask/cigarette/cigar,
+/obj/item/cigarette/cigar,
 /turf/open/floor/wood,
 /area/station/command/meeting_room/council)
 "nHd" = (
@@ -58243,7 +58266,7 @@
 	dir = 8
 	},
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "oFC" = (
 /obj/machinery/airalarm/directional/west,
 /obj/structure/tank_dispenser,
@@ -62020,6 +62043,16 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
+"pDx" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/science/ordnance)
 "pDz" = (
 /obj/machinery/quantum_server,
 /obj/effect/turf_decal/bot/left,
@@ -64001,7 +64034,7 @@
 	dir = 10
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "pZc" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -73798,13 +73831,13 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/mask/cigarette/cigar/cohiba{
+/obj/item/cigarette/cigar/cohiba{
 	pixel_x = 6
 	},
-/obj/item/clothing/mask/cigarette/cigar/havana{
+/obj/item/cigarette/cigar/havana{
 	pixel_x = 2
 	},
-/obj/item/clothing/mask/cigarette/cigar{
+/obj/item/cigarette/cigar{
 	pixel_x = 4.5
 	},
 /obj/structure/table/reinforced,
@@ -75748,7 +75781,7 @@
 /obj/structure/lattice,
 /obj/structure/sign/warning/electric_shock/directional/east,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "sVC" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 4
@@ -77225,14 +77258,14 @@
 /obj/item/restraints/handcuffs{
 	pixel_y = 6
 	},
-/obj/item/clothing/mask/cigarette/cigar/cohiba{
+/obj/item/cigarette/cigar/cohiba{
 	pixel_x = 7;
 	pixel_y = -7
 	},
-/obj/item/clothing/mask/cigarette/cigar/havana{
+/obj/item/cigarette/cigar/havana{
 	pixel_x = -3
 	},
-/obj/item/clothing/mask/cigarette/cigar{
+/obj/item/cigarette/cigar{
 	pixel_x = -1;
 	pixel_y = -7
 	},
@@ -84050,7 +84083,7 @@
 "uXF" = (
 /obj/structure/sign/warning/secure_area/directional/south,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "uXK" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
@@ -90121,7 +90154,7 @@
 	dir = 10
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "wzb" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
@@ -129272,7 +129305,7 @@ nJK
 yex
 iML
 tgI
-uUG
+iFt
 djT
 kzc
 kzc
@@ -129786,7 +129819,7 @@ hGI
 esH
 owX
 asW
-nSb
+bFD
 nSb
 jHm
 ucu
@@ -130043,7 +130076,7 @@ hNW
 hNW
 hNW
 hNW
-hNW
+dDB
 hNW
 nLP
 hNW
@@ -130300,7 +130333,7 @@ lzo
 vbO
 uXN
 eqB
-eyH
+pDx
 eyH
 pwD
 eyH
@@ -132131,7 +132164,7 @@ gqm
 qYo
 aaa
 lvw
-jUT
+qYo
 qYo
 aaa
 aaa
@@ -151820,7 +151853,7 @@ aaa
 qYo
 aaa
 qYo
-aKU
+jUT
 qYo
 aaa
 qYo
@@ -154635,13 +154668,13 @@ gJk
 aaa
 aad
 aaa
-aKU
+jUT
 aad
 aaa
 aad
 aaa
 aad
-aKU
+jUT
 aaa
 qYo
 aaa
