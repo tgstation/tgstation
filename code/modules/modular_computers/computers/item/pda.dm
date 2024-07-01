@@ -186,10 +186,6 @@
 		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
 
 /obj/item/modular_computer/pda/proc/swap_pen(mob/user, obj/item/tool)
-
-	if(issilicon(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH)) //TK doesn't work even with this removed but here for readability
-		return
-
 	if(inserted_item)
 		balloon_alert(user, "swapped pens")
 		user.put_in_hands(inserted_item)
