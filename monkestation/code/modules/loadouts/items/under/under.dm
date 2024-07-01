@@ -485,3 +485,577 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 /datum/loadout_item/under/miscellaneous/shrine
 	name = "Shrine Priestess Kimono"
 	item_path = /obj/item/clothing/under/dress/shrine_priestess
+
+/// EVERYTHING NOVA RELATED
+//NOTES
+//Jumpskirt prefs overrides jumpsuits (ex.qm's formal jumpsuit becomes a skirt)
+//From now on I'm marking every new purchasable item as BUYABLE for my own sanity
+//Here be dragons (literally)
+
+/datum/loadout_item/under/jumpsuit/frontier
+	name = "Frontier Jumpsuit"
+	item_path = /obj/item/clothing/under/frontier_colonist
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/impcap
+	name = "Captain's Naval Jumpsuit"
+	item_path = /obj/item/clothing/under/rank/captain/nova/imperial
+	restricted_roles = list(JOB_CAPTAIN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/imphop
+	name = "Head of Personnel's Naval Jumpsuit"
+	item_path = /obj/item/clothing/under/rank/civilian/head_of_personnel/nova/imperial
+	restricted_roles = list(JOB_HEAD_OF_PERSONNEL)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/imphos
+	name = "Head of Security's Naval Uniform"
+	item_path = /obj/item/clothing/under/rank/security/head_of_security/nova/imperial
+	restricted_roles = list(JOB_HEAD_OF_SECURITY)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/impcmo
+	name = "Chief Medical Officer's Naval Uniform"
+	item_path = /obj/item/clothing/under/rank/medical/chief_medical_officer/nova/imperial
+	restricted_roles = list(JOB_CHIEF_MEDICAL_OFFICER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/impce
+	name = "Chief Engineer's Naval Uniform"
+	item_path = /obj/item/clothing/under/rank/engineering/chief_engineer/nova/imperial
+	restricted_roles = list(JOB_CHIEF_ENGINEER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/imprd
+	name = "Research Director's Naval Uniform"
+	item_path = /obj/item/clothing/under/rank/rnd/research_director/nova/imperial
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/impcommand
+	name = "Light Grey Officer's Naval Jumpsuit"
+	item_path = /obj/item/clothing/under/rank/captain/nova/imperial/generic
+	restricted_roles = list(JOB_CAPTAIN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/impcom
+	name = "Grey Officer's Naval Jumpsuit"
+	item_path = /obj/item/clothing/under/rank/captain/nova/imperial/generic/grey
+	restricted_roles = list(JOB_CAPTAIN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/impred
+	name = "Red Officer's Naval Jumpsuit"
+	item_path = /obj/item/clothing/under/rank/captain/nova/imperial/generic/red
+	restricted_roles = list(JOB_CAPTAIN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/impcomtrous
+	name = "Grey Officer's Naval Jumpsuit (Trousers)"
+	item_path = /obj/item/clothing/under/rank/captain/nova/imperial/generic/pants
+	restricted_roles = list(JOB_CAPTAIN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/security_dress
+	name = "Security Battle Dress"
+	item_path = /obj/item/clothing/under/rank/security/peacekeeper/dress
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/security_trousers
+	name = "Security Trousers"
+	item_path = /obj/item/clothing/under/rank/security/peacekeeper/trousers
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/security_shorts
+	name = "Security Shorts"
+	item_path = /obj/item/clothing/under/rank/security/peacekeeper/trousers/shorts
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/security_jumpskirt
+	name = "Security Jumpskirt"
+	item_path = /obj/item/clothing/under/rank/security/officer/skirt
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/security_plain_skirt
+	name = "Security Plain Skirt"
+	item_path = /obj/item/clothing/under/rank/security/peacekeeper/plain_skirt
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/security_miniskirt
+	name = "Security Miniskirt"
+	item_path = /obj/item/clothing/under/rank/security/peacekeeper/miniskirt
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/security_jumpsuit
+	name = "Security Jumpsuit"
+	item_path = /obj/item/clothing/under/rank/security/peacekeeper/jumpsuit
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/security_peacekeeper
+	name = "Security Peacekeeper Uniform"
+	item_path = /obj/item/clothing/under/rank/security/peacekeeper
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/imperial_police_uniform //BUYABLE
+	name = "Imperial Police Uniform"
+	item_path = /obj/item/clothing/under/colonial/nri_police
+
+/datum/loadout_item/under/jumpsuit/sol_peacekeeper //BUYABLE
+	name = "Sol Peacekeeper Uniform"
+	item_path = /obj/item/clothing/under/sol_peacekeeper
+
+/datum/loadout_item/under/jumpsuit/sol_emt
+	name = "Sol Emergency Medical Uniform"
+	item_path = /obj/item/clothing/under/sol_emt
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_CHEMIST, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/paramed_light
+	name = "Light Paramedic Uniform"
+	item_path = /obj/item/clothing/under/rank/medical/paramedic/nova/light
+	restricted_roles = list(JOB_PARAMEDIC)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/paramed_light_skirt
+	name = "Light Paramedic Skirt"
+	item_path = /obj/item/clothing/under/rank/medical/paramedic/nova/light/skirt
+	restricted_roles = list(JOB_PARAMEDIC)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/chemist_formal
+	name = "Chemist's Formal Jumpsuit"
+	item_path = /obj/item/clothing/under/rank/medical/chemist/nova/formal
+	restricted_roles = list(JOB_CHEMIST)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/chemist_formal_skirt
+	name = "Chemist's Formal Jumpskirt"
+	item_path = /obj/item/clothing/under/rank/medical/chemist/nova/formal/skirt
+	restricted_roles = list(JOB_CHEMIST)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/hlscientist
+	name = "Ridiculous Scientist Outfit"
+	item_path = /obj/item/clothing/under/rank/rnd/scientist/nova/hlscience
+	restricted_roles = list(JOB_SCIENTIST)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/utility	//BUYABLE
+	name = "Utility Uniform"
+	item_path = /obj/item/clothing/under/misc/nova/utility
+
+/datum/loadout_item/under/jumpsuit/utility_eng
+	name = "Engineering Utility Uniform"
+	item_path = /obj/item/clothing/under/rank/engineering/engineer/nova/utility
+	restricted_roles = list(JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN, JOB_CHIEF_ENGINEER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/utility_med
+	name = "Medical Utility Uniform"
+	item_path = /obj/item/clothing/under/rank/medical/doctor/nova/utility
+	restricted_roles = list(JOB_PARAMEDIC, JOB_MEDICAL_DOCTOR, JOB_CHEMIST, JOB_VIROLOGIST, JOB_GENETICIST ,JOB_CHIEF_MEDICAL_OFFICER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/utility_sci
+	name = "Science Utility Uniform"
+	item_path = /obj/item/clothing/under/rank/rnd/scientist/nova/utility
+	restricted_roles = list(JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/utility_cargo
+	name = "Supply Utility Uniform"
+	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/utility
+	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/utility_sec
+	name = "Security Utility Uniform"
+	item_path = /obj/item/clothing/under/rank/security/nova/utility
+	restricted_roles = list(JOB_SECURITY_OFFICER, JOB_DETECTIVE, JOB_WARDEN, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT, JOB_HEAD_OF_SECURITY) //i dunno about the blueshield, they're a weird combo of sec and command, thats why they arent in the loadout pr im making
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/jumpsuit/utility_com
+	name = "Command Utility Uniform"
+	item_path = /obj/item/clothing/under/rank/captain/nova/utility
+	restricted_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_PERSONNEL, JOB_HEAD_OF_SECURITY, JOB_RESEARCH_DIRECTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_CHIEF_ENGINEER)
+	requires_purchase = FALSE
+
+/*
+ *	MISC UNDERSUITS
+ */
+
+/datum/loadout_item/under/miscellaneous
+
+
+/datum/loadout_item/under/miscellaneous/vicvest //BUYABLE
+	name = "Recolorable Buttondown Shirt with Double-Breasted Vest"
+	item_path = /obj/item/clothing/under/pants/nova/vicvest
+
+/datum/loadout_item/under/miscellaneous/slacks //BUYABLE
+	name = "Recolorable Slacks"
+	item_path = /obj/item/clothing/under/pants/slacks //BUYABLE
+
+/datum/loadout_item/under/miscellaneous/jeans //BUYABLE
+	name = "Recolorable Jeans"
+	item_path = /obj/item/clothing/under/pants/jeans
+
+/datum/loadout_item/under/miscellaneous/jeansripped //BUYABLE
+	name = "Recolorable Ripped Jeans"
+	item_path = /obj/item/clothing/under/pants/nova/jeans_ripped //BUYABLE
+
+/datum/loadout_item/under/miscellaneous/yoga //BUYABLE
+	name = "Recolorable Yoga Pants"
+	item_path = /obj/item/clothing/under/pants/nova/yoga
+
+/datum/loadout_item/under/miscellaneous/track //BUYABLE
+	name = "Track Pants"
+	item_path = /obj/item/clothing/under/pants/track
+
+/datum/loadout_item/under/miscellaneous/camo //BUYABLE
+	name = "Camo Pants"
+	item_path = /obj/item/clothing/under/pants/camo
+
+/datum/loadout_item/under/miscellaneous/jeanshorts //BUYABLE
+	name = "Recolorable Jean Shorts"
+	item_path = /obj/item/clothing/under/shorts/jeanshorts
+
+/datum/loadout_item/under/miscellaneous/pants_blackshorts //BUYABLE
+	name = "Recolorable Ripped Jean Shorts"
+	item_path = /obj/item/clothing/under/shorts/nova/shorts_ripped
+
+/datum/loadout_item/under/miscellaneous/shortershorts //BUYABLE
+	name = "Recolorable Shorter Shorts"
+	item_path = /obj/item/clothing/under/shorts/nova/shortershorts
+
+/datum/loadout_item/under/miscellaneous/shorts //BUYABLE
+	name = "Recolorable Shorts"
+	item_path = /obj/item/clothing/under/shorts
+
+/datum/loadout_item/under/miscellaneous/red_short //BUYABLE
+	name = "Red Shorts"
+	item_path = /obj/item/clothing/under/shorts/red
+
+/datum/loadout_item/under/miscellaneous/green_short //BUYABLE
+	name = "Green Shorts"
+	item_path = /obj/item/clothing/under/shorts/green
+
+/datum/loadout_item/under/miscellaneous/blue_short //BUYABLE
+	name = "Blue Shorts"
+	item_path = /obj/item/clothing/under/shorts/blue
+
+/datum/loadout_item/under/miscellaneous/black_short //BUYABLE
+	name = "Black Shorts"
+	item_path = /obj/item/clothing/under/shorts/black
+
+/datum/loadout_item/under/miscellaneous/grey_short //BUYABLE
+	name = "Grey Shorts"
+	item_path = /obj/item/clothing/under/shorts/grey
+
+/datum/loadout_item/under/miscellaneous/purple_short //BUYABLE
+	name = "Purple Shorts"
+	item_path = /obj/item/clothing/under/shorts/purple
+
+/datum/loadout_item/under/miscellaneous/recolorable_kilt //BUYABLE
+	name = "Recolorable Kilt"
+	item_path = /obj/item/clothing/under/pants/nova/kilt
+
+/datum/loadout_item/under/miscellaneous/dress_striped //BUYABLE
+	name = "Striped Dress"
+	item_path = /obj/item/clothing/under/dress/striped
+
+/datum/loadout_item/under/miscellaneous/skirt_cableknit //BUYABLE
+	name = "Recolorable Cableknit Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/nova/turtleskirt_knit
+
+/datum/loadout_item/under/miscellaneous/straplessdress //BUYABLE
+	name = "Recolorable Strapless Dress"
+	item_path = /obj/item/clothing/under/dress/nova/strapless
+
+/datum/loadout_item/under/miscellaneous/pentagramdress //BUYABLE
+	name = "Recolorable Pentagram Strapped Dress"
+	item_path = /obj/item/clothing/under/dress/nova/pentagram
+
+/datum/loadout_item/under/miscellaneous/jacarta_dress //BUYABLE
+	name = "Jacarta Dress"
+	item_path = /obj/item/clothing/under/dress/nova/jute
+
+/datum/loadout_item/under/miscellaneous/red_skirt //BUYABLE
+	name = "Red Bra and Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/nova/red_skirt
+
+/datum/loadout_item/under/miscellaneous/striped_skirt //BUYABLE
+	name = "Red Bra and Striped Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/nova/striped_skirt
+
+/datum/loadout_item/under/miscellaneous/black_skirt //BUYABLE
+	name = "Black Bra and Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/nova/black_skirt
+
+/datum/loadout_item/under/miscellaneous/swept_skirt //BUYABLE
+	name = "Swept Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/nova/swept
+
+/datum/loadout_item/under/miscellaneous/lone_skirt //BUYABLE
+	name = "Recolorable Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/nova/lone_skirt
+
+/datum/loadout_item/under/miscellaneous/medium_skirt //BUYABLE
+	name = "Medium Colourable Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/nova/medium
+
+/datum/loadout_item/under/miscellaneous/long_skirt //BUYABLE
+	name = "Long Colourable Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/nova/long
+
+/datum/loadout_item/under/miscellaneous/denim_skirt //BUYABLE
+	name = "Jean Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/nova/jean
+
+/datum/loadout_item/under/miscellaneous/littleblack //BUYABLE
+	name = "Short Black Dress"
+	item_path = /obj/item/clothing/under/dress/nova/short_dress
+
+/datum/loadout_item/under/miscellaneous/pinktutu //BUYABLE
+	name = "Pink Tutu"
+	item_path = /obj/item/clothing/under/dress/nova/pinktutu
+
+/datum/loadout_item/under/miscellaneous/flowerdress //BUYABLE
+	name = "Flower Dress"
+	item_path = /obj/item/clothing/under/dress/nova/flower
+
+/datum/loadout_item/under/miscellaneous/tactical_hawaiian_orange //BUYABLE
+	name = "Tactical Hawaiian Outfit - Orange"
+	item_path = /obj/item/clothing/under/tachawaiian
+
+/datum/loadout_item/under/miscellaneous/tactical_hawaiian_blue //BUYABLE
+	name = "Tactical Hawaiian Outfit - Blue"
+	item_path = /obj/item/clothing/under/tachawaiian/blue
+
+/datum/loadout_item/under/miscellaneous/tactical_hawaiian_purple //BUYABLE
+	name = "Tactical Hawaiian Outfit - Purple"
+	item_path = /obj/item/clothing/under/tachawaiian/purple
+
+/datum/loadout_item/under/miscellaneous/tactical_hawaiian_green //BUYABLE
+	name = "Tactical Hawaiian Outfit - Green"
+	item_path = /obj/item/clothing/under/tachawaiian/green
+
+/datum/loadout_item/under/miscellaneous/yukata //BUYABLE
+	name = "Yukata"
+	item_path = /obj/item/clothing/under/costume/nova/yukata
+
+/datum/loadout_item/under/miscellaneous/qipao_black //BUYABLE
+	name = "Qipao"
+	item_path = /obj/item/clothing/under/costume/nova/qipao
+
+/datum/loadout_item/under/miscellaneous/qipao_recolorable //BUYABLE
+	name = "Qipao, Custom Trim"
+	item_path = /obj/item/clothing/under/costume/nova/qipao/customtrim
+
+/datum/loadout_item/under/miscellaneous/cheongsam //BUYABLE
+	name = "Cheongsam"
+	item_path = /obj/item/clothing/under/costume/nova/cheongsam
+
+/datum/loadout_item/under/miscellaneous/cheongsam_recolorable //BUYABLE
+	name = "Cheongsam, Custom Trim"
+	item_path = /obj/item/clothing/under/costume/nova/cheongsam/customtrim
+
+/datum/loadout_item/under/miscellaneous/kimono //BUYABLE
+	name = "Fancy Kimono"
+	item_path =  /obj/item/clothing/under/costume/nova/kimono
+
+/datum/loadout_item/under/miscellaneous/chaps //BUYABLE
+	name = "Black Chaps"
+	item_path = /obj/item/clothing/under/pants/nova/chaps
+
+/datum/loadout_item/under/miscellaneous/tracky //BUYABLE
+	name = "Blue Tracksuit"
+	item_path = /obj/item/clothing/under/misc/bluetracksuit
+
+/datum/loadout_item/under/miscellaneous/cybersleek //BUYABLE
+	name = "Sleek Modern Coat"
+	item_path = /obj/item/clothing/under/costume/cybersleek
+
+/datum/loadout_item/under/miscellaneous/cybersleek_long //BUYABLE
+	name = "Long Modern Coat"
+	item_path = /obj/item/clothing/under/costume/cybersleek/long
+
+/datum/loadout_item/under/miscellaneous/dutch //BUYABLE
+	name = "Dutch Suit"
+	item_path = /obj/item/clothing/under/costume/dutch
+
+/datum/loadout_item/under/miscellaneous/cavalry //BUYABLE
+	name = "Cavalry Uniform"
+	item_path = /obj/item/clothing/under/costume/nova/cavalry
+
+/datum/loadout_item/under/miscellaneous/expeditionary_corps //BUYABLE
+	name = "Expeditionary Corps Uniform"
+	item_path = /obj/item/clothing/under/rank/expeditionary_corps
+
+/datum/loadout_item/under/miscellaneous/tactical_pants //BUYABLE
+	name = "Tactical Pants"
+	item_path = /obj/item/clothing/under/pants/tactical
+
+/datum/loadout_item/under/miscellaneous/jabroni //BUYABLE
+	name = "Jabroni Outfit"
+	item_path = /obj/item/clothing/under/costume/jabroni
+
+/datum/loadout_item/under/miscellaneous/blacknwhite
+	name = "Classic Prisoner Jumpsuit"
+	item_path = /obj/item/clothing/under/rank/prisoner/classic
+	restricted_roles = list(JOB_PRISONER)
+
+/datum/loadout_item/under/miscellaneous/redscrubs
+	name = "Red Scrubs"
+	item_path = /obj/item/clothing/under/rank/medical/scrubs/nova/red
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_VIROLOGIST, JOB_GENETICIST ,JOB_CHIEF_MEDICAL_OFFICER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/whitescrubs
+	name = "White Scrubs"
+	item_path = /obj/item/clothing/under/rank/medical/scrubs/nova/white
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_PARAMEDIC, JOB_VIROLOGIST, JOB_GENETICIST ,JOB_CHIEF_MEDICAL_OFFICER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/taccas //BUYABLE
+	name = "Tacticasual Uniform"
+	item_path = /obj/item/clothing/under/misc/nova/taccas
+
+/datum/loadout_item/under/miscellaneous/cargo_casual
+	name = "Cargo Tech Casualwear"
+	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/casualman
+	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/cargo_turtle
+	name = "Cargo Turtleneck"
+	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/turtleneck
+	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/cargo_gorka
+	name = "Cargo Gorka"
+	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/gorka
+	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/cargo_skirtle
+	name = "Cargo Skirtleneck"
+	item_path = /obj/item/clothing/under/rank/cargo/tech/nova/turtleneck/skirt
+	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/qm_skirtle
+	name = "Quartermaster's Skirtleneck"
+	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/turtleneck/skirt
+	restricted_roles = list(JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/qm_gorka
+	name = "Quartermaster's Gorka Uniform"
+	item_path = /obj/item/clothing/under/rank/cargo/qm/nova/gorka
+	restricted_roles = list(JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/*
+*	FORMAL UNDERSUITS
+*/
+
+/datum/loadout_item/under/formal
+
+/datum/loadout_item/under/formal/formaldressred //BUYABLE
+	name = "Formal Red Dress"
+	item_path = /obj/item/clothing/under/dress/nova/redformal
+
+/datum/loadout_item/under/formal/countessdress //BUYABLE
+	name = "Countess Dress"
+	item_path = /obj/item/clothing/under/dress/nova/countess
+
+/datum/loadout_item/under/formal/executive_suit_alt //BUYABLE
+	name = "Wide-collared Executive Suit"
+	item_path = /obj/item/clothing/under/suit/nova/black_really_collared
+
+/datum/loadout_item/under/formal/executive_skirt_alt //BUYABLE
+	name = "Wide-collared Executive Suitskirt"
+	item_path = /obj/item/clothing/under/suit/nova/black_really_collared/skirt
+
+/datum/loadout_item/under/formal/navy_suit //BUYABLE
+	name = "Navy Suit"
+	item_path = /obj/item/clothing/under/suit/navy
+
+/datum/loadout_item/under/formal/helltaker //BUYABLE
+	name = "Red Shirt with White Trousers"
+	item_path = /obj/item/clothing/under/suit/nova/helltaker
+
+/datum/loadout_item/under/formal/helltaker/skirt //BUYABLE
+	name = "Red Shirt with White Skirt"
+	item_path = /obj/item/clothing/under/suit/nova/helltaker/skirt
+
+/datum/loadout_item/under/formal/fancy_suit //BUYABLE
+	name = "Fancy Suit"
+	item_path = /obj/item/clothing/under/suit/fancy
+
+/datum/loadout_item/under/formal/recolorable_suit //BUYABLE
+	name = "Recolorable Formal Suit"
+	item_path = /obj/item/clothing/under/suit/nova/recolorable
+
+/datum/loadout_item/under/formal/recolorable_suitskirt //BUYABLE
+	name = "Recolorable Formal Suitskirt"
+	item_path = /obj/item/clothing/under/suit/nova/recolorable/skirt
+
+/datum/loadout_item/under/formal/recolorable_suit/casual //BUYABLE
+	name = "Office Casual Suit"
+	item_path = /obj/item/clothing/under/suit/nova/recolorable/casual
+
+/datum/loadout_item/under/formal/recolorable_suit/executive //BUYABLE
+	name = "Executive Casual Suit"
+	item_path = /obj/item/clothing/under/suit/nova/recolorable/executive
+
+/datum/loadout_item/under/formal/pencil //BUYABLE
+	name = "Pencilskirt with Shirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil
+
+/datum/loadout_item/under/formal/pencil/noshirt //BUYABLE
+	name = "Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil/noshirt
+
+/datum/loadout_item/under/formal/pencil/black_really //BUYABLE
+	name = "Executive Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil/black_really
+
+/datum/loadout_item/under/formal/pencil/charcoal //BUYABLE
+	name = "Charcoal Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil/charcoal
+
+/datum/loadout_item/under/formal/pencil/navy //BUYABLE
+	name = "Navy Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil/navy
+
+/datum/loadout_item/under/formal/pencil/burgandy //BUYABLE
+	name = "Burgandy Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil/burgandy
+
+/datum/loadout_item/under/formal/pencil/checkered //BUYABLE
+	name = "Checkered Pencilskirt with Shirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil/checkered
+
+/datum/loadout_item/under/formal/pencil/checkered/noshirt //BUYABLE
+	name = "Checkered Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil/checkered/noshirt
+
+/datum/loadout_item/under/formal/pencil/tan //BUYABLE
+	name = "Tan Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil/tan
+
+/datum/loadout_item/under/formal/pencil/green //BUYABLE
+	name = "Green Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil/green
+

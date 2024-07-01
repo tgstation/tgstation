@@ -116,3 +116,25 @@ GLOBAL_LIST_INIT(store_shoes, generate_store_items(/datum/store_item/shoes))
 	name = "Jester Shoes"
 	item_path = /obj/item/clothing/shoes/clown_shoes/clown_jester_shoes
 	item_cost = 4000
+
+/// EVERYTHING NOVA RELATED
+
+/datum/store_item/shoes/nova/wraps/swag
+	name = "gilded foot wraps"
+	item_path = /obj/item/clothing/shoes/wraps
+	item_cost = 4000 //The price of kissing glass shards
+
+/datum/store_item/shoes/nova/wraps/drip
+	name = "silver leg wraps"
+	item_path = /obj/item/clothing/shoes/wraps/silver
+	item_cost = 3000 //The price of kissing glass shards
+
+/datum/store_item/shoes/nova/jungleboots
+	name = "jungle boots"
+	item_path = /obj/item/clothing/shoes/jungleboots
+	item_cost = 4000
+
+/datum/store_item/shoes/nova/kimshoes
+	name = "aerostatic boots"
+	item_path = /obj/item/clothing/shoes/kimshoes
+	item_cost = 2500

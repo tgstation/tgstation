@@ -464,3 +464,400 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 	name = "Shrine Priestess Kimono"
 	item_path = /obj/item/clothing/under/dress/shrine_priestess
 	item_cost = 5000
+
+/// EVERYTHING NOVA RELATED
+
+/datum/store_item/under/jumpsuit/imperial_police_uniform //BUYABLE
+	name = "Imperial Police Uniform"
+	item_path = /obj/item/clothing/under/colonial/nri_police
+	item_cost = 4000
+
+/datum/store_item/under/jumpsuit/sol_peacekeeper //BUYABLE
+	name = "Sol Peacekeeper Uniform"
+	item_path = /obj/item/clothing/under/sol_peacekeeper
+	item_cost = 4000
+
+/datum/store_item/under/jumpsuit/utility	//BUYABLE
+	name = "Utility Uniform"
+	item_path = /obj/item/clothing/under/misc/nova/utility
+	item_cost = 3000
+
+/datum/store_item/under/miscellaneous/vicvest //BUYABLE
+	name = "Recolorable Buttondown Shirt with Double-Breasted Vest"
+	item_path = /obj/item/clothing/under/pants/nova/vicvest
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/slacks //BUYABLE
+	name = "Recolorable Slacks"
+	item_path = /obj/item/clothing/under/pants/slacks //BUYABLE
+	item_cost = 2500
+
+/datum/store_item/under/miscellaneous/jeans //BUYABLE
+	name = "Recolorable Jeans"
+	item_path = /obj/item/clothing/under/pants/jeans
+	item_cost = 2500
+
+/datum/store_item/under/miscellaneous/jeansripped //BUYABLE
+	name = "Recolorable Ripped Jeans"
+	item_path = /obj/item/clothing/under/pants/nova/jeans_ripped //BUYABLE
+	item_cost = 2500
+
+/datum/store_item/under/miscellaneous/yoga //BUYABLE
+	name = "Recolorable Yoga Pants"
+	item_path = /obj/item/clothing/under/pants/nova/yoga
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/track //BUYABLE
+	name = "Track Pants"
+	item_path = /obj/item/clothing/under/pants/track
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/camo //BUYABLE
+	name = "Camo Pants"
+	item_path = /obj/item/clothing/under/pants/camo
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/jeanshorts //BUYABLE
+	name = "Recolorable Jean Shorts"
+	item_path = /obj/item/clothing/under/shorts/jeanshorts
+	item_cost = 2500
+
+/datum/store_item/under/miscellaneous/pants_blackshorts //BUYABLE
+	name = "Recolorable Ripped Jean Shorts"
+	item_path = /obj/item/clothing/under/shorts/nova/shorts_ripped
+	item_cost = 2500
+
+/datum/store_item/under/miscellaneous/shortershorts //BUYABLE
+	name = "Recolorable Shorter Shorts"
+	item_path = /obj/item/clothing/under/shorts/nova/shortershorts
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/shorts //BUYABLE
+	name = "Recolorable Shorts"
+	item_path = /obj/item/clothing/under/shorts
+	item_cost = 2500
+
+/datum/store_item/under/miscellaneous/red_short //BUYABLE
+	name = "Red Shorts"
+	item_path = /obj/item/clothing/under/shorts/red
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/green_short //BUYABLE
+	name = "Green Shorts"
+	item_path = /obj/item/clothing/under/shorts/green
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/blue_short //BUYABLE
+	name = "Blue Shorts"
+	item_path = /obj/item/clothing/under/shorts/blue
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/black_short //BUYABLE
+	name = "Black Shorts"
+	item_path = /obj/item/clothing/under/shorts/black
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/grey_short //BUYABLE
+	name = "Grey Shorts"
+	item_path = /obj/item/clothing/under/shorts/grey
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/purple_short //BUYABLE
+	name = "Purple Shorts"
+	item_path = /obj/item/clothing/under/shorts/purple
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/recolorable_kilt //BUYABLE
+	name = "Recolorable Kilt"
+	item_path = /obj/item/clothing/under/pants/nova/kilt
+	item_cost = 2000
+
+/datum/store_item/under/miscellaneous/dress_striped //BUYABLE
+	name = "Striped Dress"
+	item_path = /obj/item/clothing/under/dress/striped
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/skirt_cableknit //BUYABLE
+	name = "Recolorable Cableknit Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/nova/turtleskirt_knit
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/straplessdress //BUYABLE
+	name = "Recolorable Strapless Dress"
+	item_path = /obj/item/clothing/under/dress/nova/strapless
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/pentagramdress //BUYABLE
+	name = "Recolorable Pentagram Strapped Dress"
+	item_path = /obj/item/clothing/under/dress/nova/pentagram
+	item_cost = 2000
+
+/datum/store_item/under/miscellaneous/jacarta_dress //BUYABLE
+	name = "Jacarta Dress"
+	item_path = /obj/item/clothing/under/dress/nova/jute
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/red_skirt //BUYABLE
+	name = "Red Bra and Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/nova/red_skirt
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/striped_skirt //BUYABLE
+	name = "Red Bra and Striped Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/nova/striped_skirt
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/black_skirt //BUYABLE
+	name = "Black Bra and Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/nova/black_skirt
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/swept_skirt //BUYABLE
+	name = "Swept Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/nova/swept
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/lone_skirt //BUYABLE
+	name = "Recolorable Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/nova/lone_skirt
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/medium_skirt //BUYABLE
+	name = "Medium Colourable Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/nova/medium
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/long_skirt //BUYABLE
+	name = "Long Colourable Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/nova/long
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/denim_skirt //BUYABLE
+	name = "Jean Skirt"
+	item_path = /obj/item/clothing/under/dress/skirt/nova/jean
+	item_cost = 1000
+
+/datum/store_item/under/miscellaneous/littleblack //BUYABLE
+	name = "Short Black Dress"
+	item_path = /obj/item/clothing/under/dress/nova/short_dress
+	item_cost = 1000
+
+/datum/store_item/under/miscellaneous/pinktutu //BUYABLE
+	name = "Pink Tutu"
+	item_path = /obj/item/clothing/under/dress/nova/pinktutu
+	item_cost = 1000
+
+/datum/store_item/under/miscellaneous/flowerdress //BUYABLE
+	name = "Flower Dress"
+	item_path = /obj/item/clothing/under/dress/nova/flower
+	item_cost = 1000
+
+/datum/store_item/under/miscellaneous/tactical_hawaiian_orange //BUYABLE
+	name = "Tactical Hawaiian Outfit - Orange"
+	item_path = /obj/item/clothing/under/tachawaiian
+	item_cost = 3000
+
+/datum/store_item/under/miscellaneous/tactical_hawaiian_blue //BUYABLE
+	name = "Tactical Hawaiian Outfit - Blue"
+	item_path = /obj/item/clothing/under/tachawaiian/blue
+	item_cost = 3000
+
+/datum/store_item/under/miscellaneous/tactical_hawaiian_purple //BUYABLE
+	name = "Tactical Hawaiian Outfit - Purple"
+	item_path = /obj/item/clothing/under/tachawaiian/purple
+	item_cost = 3000
+
+/datum/store_item/under/miscellaneous/tactical_hawaiian_green //BUYABLE
+	name = "Tactical Hawaiian Outfit - Green"
+	item_path = /obj/item/clothing/under/tachawaiian/green
+	item_cost = 3000
+
+/datum/store_item/under/miscellaneous/yukata //BUYABLE
+	name = "Yukata"
+	item_path = /obj/item/clothing/under/costume/nova/yukata
+	item_cost = 2500
+
+/datum/store_item/under/miscellaneous/qipao_black //BUYABLE
+	name = "Qipao"
+	item_path = /obj/item/clothing/under/costume/nova/qipao
+	item_cost = 2500
+
+/datum/store_item/under/miscellaneous/qipao_recolorable //BUYABLE
+	name = "Qipao, Custom Trim"
+	item_path = /obj/item/clothing/under/costume/nova/qipao/customtrim
+	item_cost = 2500
+
+/datum/store_item/under/miscellaneous/cheongsam //BUYABLE
+	name = "Cheongsam"
+	item_path = /obj/item/clothing/under/costume/nova/cheongsam
+	item_cost = 2500
+
+/datum/store_item/under/miscellaneous/cheongsam_recolorable //BUYABLE
+	name = "Cheongsam, Custom Trim"
+	item_path = /obj/item/clothing/under/costume/nova/cheongsam/customtrim
+	item_cost = 2500
+
+/datum/store_item/under/miscellaneous/kimono //BUYABLE
+	name = "Fancy Kimono"
+	item_path =  /obj/item/clothing/under/costume/nova/kimono
+	item_cost = 2500
+
+/datum/store_item/under/miscellaneous/chaps //BUYABLE
+	name = "Black Chaps"
+	item_path = /obj/item/clothing/under/pants/nova/chaps
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/tracky //BUYABLE
+	name = "Blue Tracksuit"
+	item_path = /obj/item/clothing/under/misc/bluetracksuit
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/cybersleek //BUYABLE
+	name = "Sleek Modern Coat"
+	item_path = /obj/item/clothing/under/costume/cybersleek
+	item_cost = 4000
+
+/datum/store_item/under/miscellaneous/cybersleek_long //BUYABLE
+	name = "Long Modern Coat"
+	item_path = /obj/item/clothing/under/costume/cybersleek/long
+	item_cost = 4000
+
+/datum/store_item/under/miscellaneous/dutch //BUYABLE
+	name = "Dutch Suit"
+	item_path = /obj/item/clothing/under/costume/dutch
+	item_cost = 5000
+
+/datum/store_item/under/miscellaneous/cavalry //BUYABLE
+	name = "Cavalry Uniform"
+	item_path = /obj/item/clothing/under/costume/nova/cavalry
+	item_cost = 5000
+
+/datum/store_item/under/miscellaneous/expeditionary_corps //BUYABLE
+	name = "Expeditionary Corps Uniform"
+	item_path = /obj/item/clothing/under/rank/expeditionary_corps
+	item_cost = 3000
+
+/datum/store_item/under/miscellaneous/tactical_pants //BUYABLE
+	name = "Tactical Pants"
+	item_path = /obj/item/clothing/under/pants/tactical
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/jabroni //BUYABLE
+	name = "Jabroni Outfit"
+	item_path = /obj/item/clothing/under/costume/jabroni
+	item_cost = 1500
+
+/datum/store_item/under/miscellaneous/taccas //BUYABLE
+	name = "Tacticasual Uniform"
+	item_path = /obj/item/clothing/under/misc/nova/taccas
+	item_cost = 3000
+
+/datum/store_item/under/formal/formaldressred //BUYABLE
+	name = "Formal Red Dress"
+	item_path = /obj/item/clothing/under/dress/nova/redformal
+	item_cost = 3000
+
+/datum/store_item/under/formal/countessdress //BUYABLE
+	name = "Countess Dress"
+	item_path = /obj/item/clothing/under/dress/nova/countess
+	item_cost = 5000
+
+/datum/store_item/under/formal/executive_suit_alt //BUYABLE
+	name = "Wide-collared Executive Suit"
+	item_path = /obj/item/clothing/under/suit/nova/black_really_collared
+	item_cost = 5000
+
+/datum/store_item/under/formal/executive_skirt_alt //BUYABLE
+	name = "Wide-collared Executive Suitskirt"
+	item_path = /obj/item/clothing/under/suit/nova/black_really_collared/skirt
+	item_cost = 5000
+
+/datum/store_item/under/formal/navy_suit //BUYABLE
+	name = "Navy Suit"
+	item_path = /obj/item/clothing/under/suit/navy
+	item_cost = 5000
+
+/datum/store_item/under/formal/helltaker //BUYABLE
+	name = "Red Shirt with White Trousers"
+	item_path = /obj/item/clothing/under/suit/nova/helltaker
+	item_cost = 1500
+
+/datum/store_item/under/formal/helltaker/skirt //BUYABLE
+	name = "Red Shirt with White Skirt"
+	item_path = /obj/item/clothing/under/suit/nova/helltaker/skirt
+	item_cost = 1500
+
+/datum/store_item/under/formal/fancy_suit //BUYABLE
+	name = "Fancy Suit"
+	item_path = /obj/item/clothing/under/suit/fancy
+	item_cost = 1500
+
+/datum/store_item/under/formal/recolorable_suit //BUYABLE
+	name = "Recolorable Formal Suit"
+	item_path = /obj/item/clothing/under/suit/nova/recolorable
+	item_cost = 4000
+
+/datum/store_item/under/formal/recolorable_suitskirt //BUYABLE
+	name = "Recolorable Formal Suitskirt"
+	item_path = /obj/item/clothing/under/suit/nova/recolorable/skirt
+	item_cost = 4000
+
+/datum/store_item/under/formal/recolorable_suit/casual //BUYABLE
+	name = "Office Casual Suit"
+	item_path = /obj/item/clothing/under/suit/nova/recolorable/casual
+	item_cost = 2000
+
+/datum/store_item/under/formal/recolorable_suit/executive //BUYABLE
+	name = "Executive Casual Suit"
+	item_path = /obj/item/clothing/under/suit/nova/recolorable/executive
+	item_cost = 2000
+
+/datum/store_item/under/formal/pencil //BUYABLE
+	name = "Pencilskirt with Shirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil
+	item_cost = 1500
+
+/datum/store_item/under/formal/pencil/noshirt //BUYABLE
+	name = "Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil/noshirt
+	item_cost = 1500
+
+/datum/store_item/under/formal/pencil/black_really //BUYABLE
+	name = "Executive Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil/black_really
+	item_cost = 1500
+
+/datum/store_item/under/formal/pencil/charcoal //BUYABLE
+	name = "Charcoal Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil/charcoal
+	item_cost = 1500
+
+/datum/store_item/under/formal/pencil/navy //BUYABLE
+	name = "Navy Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil/navy
+	item_cost = 1500
+
+/datum/store_item/under/formal/pencil/burgandy //BUYABLE
+	name = "Burgandy Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil/burgandy
+	item_cost = 1500
+
+/datum/store_item/under/formal/pencil/checkered //BUYABLE
+	name = "Checkered Pencilskirt with Shirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil/checkered
+	item_cost = 1500
+
+/datum/store_item/under/formal/pencil/checkered/noshirt //BUYABLE
+	name = "Checkered Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil/checkered/noshirt
+	item_cost = 1500
+
+/datum/store_item/under/formal/pencil/tan //BUYABLE
+	name = "Tan Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil/tan
+	item_cost = 1500
+
+/datum/store_item/under/formal/pencil/green //BUYABLE
+	name = "Green Pencilskirt"
+	item_path = /obj/item/clothing/under/suit/nova/pencil/green
+	item_cost = 1500

@@ -19,9 +19,9 @@
 /obj/item/bodypart/leg/left/satyr
 	icon_greyscale = 'monkestation/code/modules/ranching/icons/bodyparts.dmi'
 	limb_id = SPECIES_SATYR
-	bodytype = BODYTYPE_DIGITIGRADE
+	bodytype = BODYTYPE_DIGITIGRADE | BODYTYPE_ORGANIC
 
 /obj/item/bodypart/leg/right/satyr
 	icon_greyscale = 'monkestation/code/modules/ranching/icons/bodyparts.dmi'
 	limb_id = SPECIES_SATYR
-	bodytype = BODYTYPE_DIGITIGRADE
+	bodytype = BODYTYPE_DIGITIGRADE | BODYTYPE_ORGANIC
