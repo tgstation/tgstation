@@ -18,6 +18,8 @@
 
 	for(var/atom/thing as anything in source_turf.contents)
 		// validate
+		if(!istype(thing))
+			continue
 		if(thing.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
 			continue
 		if(thing.IsObscured())
