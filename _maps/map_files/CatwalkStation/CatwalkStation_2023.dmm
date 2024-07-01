@@ -26750,11 +26750,6 @@
 	},
 /turf/open/openspace,
 /area/station/security/brig)
-"jTb" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "jTf" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -27471,8 +27466,7 @@
 /area/station/maintenance/solars/port/aft)
 "kfX" = (
 /obj/vehicle/sealed/mecha/ripley/cargo{
-	name = "\improper APLU \";
-	\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tCargostormer 3\""=None
+	name = "\improper APLU \";\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tCargostormer 3\""=None
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -47334,18 +47328,6 @@
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
-"rEY" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "cargounload"
-	},
-/obj/machinery/door/poddoor{
-	id = "cargounload";
-	name = "supply dock unloading door"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "rFi" = (
 /obj/structure/chair{
 	dir = 4;
@@ -54457,7 +54439,6 @@
 /obj/machinery/door/airlock/external{
 	name = "Supply Dock Airlock"
 	},
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -61831,13 +61812,11 @@
 	},
 /obj/machinery/button/door/directional/east{
 	id = "cargounload";
-	layer = 4;
 	name = "Loading Doors";
 	pixel_y = 6
 	},
 /obj/machinery/button/door/directional/east{
 	id = "cargoload";
-	layer = 4;
 	name = "Loading Doors";
 	pixel_y = -6
 	},
@@ -63829,19 +63808,6 @@
 /obj/machinery/vending/wardrobe/science_wardrobe,
 /turf/open/floor/iron,
 /area/station/science/research)
-"xWW" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "cargoload"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/poddoor{
-	id = "cargoload";
-	name = "supply dock loading door"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "xWY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/turf_decal/tile/green/opposingcorners{
@@ -174560,7 +174526,7 @@ cjh
 cjh
 wwE
 csK
-uKP
+cjh
 kLe
 kPd
 cjh
@@ -175072,11 +175038,11 @@ hRj
 hRj
 hRj
 uKP
-rEY
+wwE
 utG
-jTb
+cjh
 utG
-xWW
+kPd
 uKP
 hRj
 hRj
@@ -176624,7 +176590,7 @@ hRj
 hRj
 hRj
 hRj
-uHD
+hRj
 aCL
 pFb
 oLO
@@ -176880,8 +176846,8 @@ hRj
 hRj
 hRj
 hRj
-xky
-psi
+hRj
+hRj
 aCL
 cFc
 oOm
@@ -177138,7 +177104,7 @@ hRj
 hRj
 hRj
 hRj
-tzv
+uHD
 aCL
 aXn
 oOm
@@ -177394,8 +177360,8 @@ hRj
 hRj
 hRj
 hRj
-hRj
-hRj
+xky
+psi
 aCL
 iBj
 oOm
@@ -177652,7 +177618,7 @@ hRj
 hRj
 hRj
 hRj
-hRj
+tzv
 aCL
 hnU
 bLG
