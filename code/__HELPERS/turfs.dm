@@ -400,8 +400,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 /**
  * Checks whether or not a particular typepath or subtype of it is present on a turf
  *
- * Returns TRUE if an instance of the desired type or a subtype of it is found
- * Returns FALSE if the type is not found, or if no turf is supplied
+ * Returns the first instance located if an instance of the desired type or a subtype of it is found
+ * Returns null if the type is not found, or if no turf is supplied
  *
  * Arguments:
  * * location - The turf to be checked for the desired type
@@ -409,10 +409,9 @@ Turf and target are separate in case you want to teleport some distance from a t
  */
 /proc/is_type_on_turf(turf/location, type_to_find)
 	if(!location)
-		return FALSE
-	if(locate(type_to_find) in location)
-		return TRUE
-	return FALSE
+		return
+	var/found_type = locate(type_to_find) in location
+	return found_type
 
 /**
  * get_blueprint_data

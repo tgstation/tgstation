@@ -1,0 +1,4 @@
+author: "Jolly"
+delete-after: True
+changes:
+  - code_imp: "Behind the scenes, maps had a little bit of tweaking. If you see things rendering in weird ways, or they don't look like how they used to/supposed to, please report them on GitHub!"

@@ -216,7 +216,7 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 	desc = "Will generate electrical zaps."
 
 /datum/sm_gas/zauker/extra_effects(obj/machinery/power/supermatter_crystal/sm)
-	if(!prob(sm.gas_percentage[/datum/gas/zauker]))
+	if(!prob(sm.gas_percentage[/datum/gas/zauker] * 100))
 		return
 	playsound(sm.loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
 	sm.supermatter_zap(
