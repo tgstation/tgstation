@@ -1,0 +1,79 @@
+2024-07-01:
+  Ben10Omintrix:
+  - balance: raptors will now knock off their rider and disable them if hit by any
+      energy projectiles or if they recieve any stamina damage
+  Chestlet:
+  - bugfix: Nanotrasen sent us a batch of faulty canisters. They've been recalled
+      and replaced with less faulty canisters.
+  - bugfix: Zauker SM interaction works correctly now.
+  DaCoolBoss:
+  - image: Relics ("strange objects") now have unique sprites.
+  Iajret:
+  - bugfix: fixed blood loss knocking you down at somewhat safe (~80%) blood levels
+  LemonInTheDark:
+  - rscadd: Shield generators and shield gen walls now glow a light blue. Pretty!
+  MTandi:
+  - qol: Made light tiles available in the crafting menu
+  - qol: Circuit tile variants can be cycled in-hand
+  - rscadd: Moved loose tiles and wall frames from lathe designs to other tiles and
+      frames in the crafting menu
+  Melbert:
+  - rscadd: Humanizing a monkey removes undergarments such as socks
+  - qol: Handheld Genetic Scanners fit in Geneticist equipment suit storage
+  Pickle-Coding:
+  - code_imp: Supermatter zap power generation takes perspective of the machines subsystem.
+  Rhials:
+  - rscadd: Bounty Hunter teams now have personalized announcements for when they
+      are spawned in.
+  ShizCalev:
+  - bugfix: The power for all science burn chambers across all maps now works properly.
+  SmArtKar:
+  - image: Captain's spare safe received a new texture
+  - bugfix: Vent-born wendigos no longer create one-way portals
+  - image: Decluttered card textures
+  - bugfix: You can grind slime extracts in reagent grinders once more.
+  - bugfix: Pyrokinesis bolts no longer have infinite range and create trails of fiery
+      doom.
+  - qol: RD's labcoat is now classified as an actual labcoat instead of a glorified
+      jacket, allowing them to put science-related stuffs into it
+  - image: You can now toggle RD's labcoat
+  ViktorKoL:
+  - rscadd: Added a new UI for heretic research.
+  Wallem:
+  - rscadd: The detective now starts with the DET.ekt Skillchip, which allows them
+      to identify chemicals and bloodtypes by taste.
+  YesterdaysPromise:
+  - image: updated halloween metoer sprites.
+  aaaa1023:
+  - qol: 'Increased the viewrange in the navigation camera console on the following
+      shuttles: Silverscale pirate shuttle, the Flying Dutchman pirate shuttle, the
+      IRS pirate shuttle, and the Greytide pirate shuttle.'
+  - bugfix: Fixed the Battlecruiser corvette, Silverscale pirate shuttle, and the
+      Greytide pirate shuttle flying in incorrect directions in hyperspace.
+  - bugfix: Fixed the Navigation console camera eye on various pirate ships being
+      off centre.
+  carlarctg:
+  - spellcheck: Heretic spell invocations now use one dead language per path. Altered
+      a few invocation types.
+  grungussuss:
+  - qol: Windoors now stay open for 8 seconds instead of 5
+  - qol: Secure windoors now stay open for 5 seconds instead of 2
+  mc-oofert:
+  - bugfix: brig cell timer ui works properly now
+  - bugfix: wawastation arrivals has firealarms so you may now leave
+  necromanceranne:
+  - bugfix: Mecha weaponry is capable, for the first time ever, of experiencing recoil.
+      This was an intended mechanic, I promise. The code just literally never worked.
+  - bugfix: Mecha bump melee attacks and click melee attacks are now on the same cooldown,
+      but have varying cooldown timers. You will always bump attack faster than you
+      will click.
+  - bugfix: You must be in combat mode to punch objects and to bumpsmash into objects.
+  - bugfix: Stops mecha being able to punch literally any object and damage them.
+  - code_imp: Tidies up some of the autodoc comments for mech weapons.
+  spockye:
+  - bugfix: fixed Wawastation areas
+  - bugfix: fixed wawastation disposals
+  thegrb93:
+  - bugfix: Game not refocusing after closing a TGUI
+  xXPawnStarrXx:
+  - rscdel: Removed cordons on deathmatch maps, since they're autoadded now.

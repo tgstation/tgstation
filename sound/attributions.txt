@@ -193,6 +193,16 @@ valve_opening.ogg was made by mixing water flowing samples from:
 https://freesound.org/people/scriotxstudios/sounds/349111/?attribution=1 and squeaky scrape sound from:
 https://freesound.org/people/Department64/sounds/669028/ which was modified with lower pitch
 
+liquid_pour2.ogg and liquid_pour3.ogg were cut from
+https://freesound.org/people/MattRuthSound/sounds/561896/
+https://freesound.org/people/MattRuthSound/sounds/561895/
+
 ayylien.ogg was made by remixing:
 SCIRetro_Energy Swells Synth_Funky Audio_Sonics Spices by Funky_Audio under CC0 -- https://freesound.org/people/realtheremin/sounds/119011/
 scifi_scare_a.aiff by realtheremin under CC0 -- https://freesound.org/people/Funky_Audio/sounds/729392/
+
+
+beaker_pickup.ogg was made by lowering pitch:
+Bottle Tap.wav by alex_alexalex -- https://freesound.org/s/395492/ -- License: Attribution NonCommercial 3.0
+beaker_place.ogg was made by cutting and lowering pitch:
+place glass object.wav by milpower -- https://freesound.org/s/353105/ -- License: Creative Commons 0
