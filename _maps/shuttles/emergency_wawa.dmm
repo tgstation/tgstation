@@ -111,7 +111,7 @@
 /obj/structure/lattice,
 /obj/structure/marker_beacon/burgundy,
 /turf/template_noop,
-/area/template_noop)
+/area/shuttle/escape)
 "au" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -728,7 +728,7 @@
 "Pw" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/shuttle/escape)
 "QP" = (
 /obj/machinery/conveyor/auto/inverted{
 	dir = 1

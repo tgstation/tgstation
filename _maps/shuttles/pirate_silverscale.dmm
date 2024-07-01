@@ -333,7 +333,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/shuttle/pirate)
 "xj" = (
 /obj/structure/table/glass,
 /obj/item/storage/medkit/brute,
