@@ -247,7 +247,7 @@
 		return
 	var/turf/open/our_turf = movable.loc
 	var/turf/turf_below = GET_TURF_BELOW(our_turf)
-	if(our_turf.zPassOut(DOWN) && (isnull(turf_below) || (isopenspaceturf(turf_below) && turf_below.zPassIn(DOWN) && turf_below.zPassOut(DOWN))))
+	if(isnull(turf_below) || (our_turf.zPassOut(DOWN) && isopenspaceturf(turf_below) && turf_below.zPassIn(DOWN) && turf_below.zPassOut(DOWN)))
 		override_allow_spacemove = FALSE
 		if(turf_below)
 			our_turf.zFall(movable, falling_from_move = is_moving)
