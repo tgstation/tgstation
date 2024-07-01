@@ -26,13 +26,16 @@
 
 /mob/living/basic/construct/harvester/Initialize(mapload)
 	. = ..()
-	AddElement(\
-		/datum/element/amputating_limbs,\
+	grant_abilities()
+
+/mob/living/basic/construct/harvester/proc/grant_abilities()
+	AddElement(/datum/element/wall_walker, /turf/closed/wall/mineral/cult)
+	AddComponent(\
+		/datum/component/amputating_limbs,\
 		surgery_time = 0,\
 		surgery_verb = "slicing",\
 		minimum_stat = CONSCIOUS,\
 	)
-	AddElement(/datum/element/wall_walker, /turf/closed/wall/mineral/cult)
 	var/datum/action/innate/seek_prey/seek = new(src)
 	seek.Grant(src)
 	seek.Activate()
@@ -59,7 +62,7 @@
 	overlay_icon_state = "bg_demon_border"
 
 	buttontooltipstyle = "cult"
-	button_icon = "icons/mob/actions/actions_cult.dmi"
+	button_icon = 'icons/mob/actions/actions_cult.dmi'
 	button_icon_state = "cult_mark"
 	/// Where is nar nar? Are we even looking?
 	var/tracking = FALSE
@@ -93,7 +96,6 @@
 		the_construct.seeking = TRUE
 		to_chat(the_construct, span_cult_italic("You are now tracking your master."))
 
-
 /datum/action/innate/seek_prey
 	name = "Seek the Harvest"
 	desc = "None can hide from Nar'Sie, activate to track a survivor attempting to flee the red harvest!"
@@ -126,3 +128,115 @@
 	desc = "Activate to track Nar'Sie!"
 	button_icon_state = "sintouch"
 	the_construct.seeking = TRUE
+
+/mob/living/basic/construct/harvester/heretic
+	name = "Rusted Harvester"
+	real_name = "Rusted Harvester"
+	desc = "A long, thin, decrepit construct originally built to herald Nar'Sie's rise, corrupted and rusted by the forces of the Mansus to spread its will instead."
+	icon_state = "harvester"
+	icon_living = "harvester"
+	construct_spells = list(
+		/datum/action/cooldown/spell/aoe/rust_conversion,
+		/datum/action/cooldown/spell/pointed/rust_construction,
+	)
+	can_repair = FALSE
+	slowed_by_drag = FALSE
+	faction = list(FACTION_HERETIC)
+	maxHealth = 35
+	health = 35
+	melee_damage_lower = 20
+	melee_damage_upper = 25
+	// Dim green
+	lighting_cutoff_red = 10
+	lighting_cutoff_green = 20
+	lighting_cutoff_blue = 5
+	playstyle_string = "<B>You are a Rusted Harvester, built to serve the Sanguine Apostate, twisted to work the will of the Mansus. You are fragile and weak, but you rend cultists (only) apart on each attack. Follow your Master's orders!<B>"
+	theme = THEME_HERETIC
+
+/mob/living/basic/construct/harvester/heretic/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_MANSUS_TOUCHED, REF(src))
+	add_filter("rusted_harvester", 3, list("type" = "outline", "color" = COLOR_GREEN, "size" = 2, "alpha" = 40))
+
+
+/**
+ * Somewhat janky proc called when a heretic monster's master dies
+ * Used to kill any living Rusted Harvester
+ */
+/mob/living/proc/on_master_death()
+	return
+
+/mob/living/basic/construct/harvester/heretic/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	// They're pretty fragile so this is probably necessary to prevent bullshit deaths.
+	if(user == src)
+		return
+	return ..()
+
+/mob/living/basic/construct/harvester/heretic/on_master_death()
+	to_chat(src, span_userdanger("Your link to the mansus suddenly snaps as your master perishes! Without its support, your body crumbles..."))
+	visible_message(span_alert("[src] suddenly crumbles to dust!"))
+	death()
+
+/mob/living/basic/construct/harvester/heretic/grant_abilities()
+	AddElement(/datum/element/wall_walker, or_trait = TRAIT_RUSTY)
+	AddElement(/datum/element/leeching_walk)
+	AddComponent(\
+		/datum/component/amputating_limbs,\
+		surgery_time = 1.5 SECONDS,\
+		surgery_verb = "slicing",\
+		minimum_stat = CONSCIOUS,\
+		pre_hit_callback = CALLBACK(src, PROC_REF(is_cultist_handler)),\
+	)
+	AddComponent(/datum/component/damage_aura,\
+		range = 3,\
+		brute_damage = 0.5,\
+		burn_damage = 0.5,\
+		toxin_damage = 0.5,\
+		stamina_damage = 4,\
+		simple_damage = 1.5,\
+		immune_factions = list(FACTION_HERETIC),\
+		damage_message = span_boldwarning("Your body wilts and withers as it comes near [src]'s aura."),\
+		message_probability = 7,\
+		current_owner = src,\
+	)
+	var/datum/action/innate/seek_master/heretic/seek = new(src)
+	seek.Grant(src)
+	seek.Activate()
+
+// These aren't friends they're assholes
+// Don't let them be near you!
+/mob/living/basic/construct/harvester/heretic/Life(seconds_per_tick, times_fired)
+	. = ..()
+	if(!SPT_PROB(7, seconds_per_tick))
+		return
+
+	var/turf/adjacent = get_step(src, pick(GLOB.alldirs))
+	// 90% chance to be directional, otherwise what we're on top of
+	var/turf/open/land = (isopenturf(adjacent) && prob(90)) ? adjacent : get_turf(src)
+	do_rust_heretic_act(land)
+
+	if(prob(7))
+		to_chat(src, span_notice("Eldritch energies emanate from your body."))
+
+/mob/living/basic/construct/harvester/heretic/proc/is_cultist_handler(mob/victim)
+	return IS_CULTIST(victim)
+
+/datum/action/innate/seek_master/heretic
+	name = "Seek your Master"
+	desc = "Use your direct link to the Mansus to sense where your master is located via the arrow on the top-right of your HUD."
+	button_icon = 'icons/mob/actions/actions_cult.dmi'
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	tracking = TRUE
+
+/datum/action/innate/seek_master/heretic/New(Target)
+	. = ..()
+	the_construct = Target
+	the_construct.seeking = TRUE
+	var/datum/antagonist/heretic_monster/antag = IS_HERETIC_MONSTER(the_construct)
+	if(antag)
+		the_construct.master = antag.master
+
+// no real reason for most of this weird oldcode
+/datum/action/innate/seek_master/Activate()
+	return

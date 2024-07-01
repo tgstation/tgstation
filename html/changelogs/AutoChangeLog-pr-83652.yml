@@ -1,8 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - rscadd: "Added tons of new mutations to Genetics, alongside some recipes!"
-  - rscadd: "Thermal Adaptation has been made a combination mutation from the stronger but narrower Cold and Heat adaptations."
-  - balance: "Cryobeams have 9 tile range, and fiery sweat doesn't cause spread on contact."
-  - image: "Added some neat new sprites for the new mutations, and added a greyscale version of the magic hand sprites."
-  - code_imp: "Infinitesmally improved mutation code."

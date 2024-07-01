@@ -16,6 +16,7 @@
  * Clicks are wither translated into mech_melee_attack (see mech_melee_attack.dm)
  * Or are used to call action() on equipped gear
  * Cooldown for gear is on the mech because exploits
+ * Cooldown for melee is on mech_melee_attack also because exploits
  */
 /obj/vehicle/sealed/mecha
 	name = "exosuit"
@@ -28,7 +29,6 @@
 	movedelay = 1 SECONDS
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
-	COOLDOWN_DECLARE(mecha_bump_smash)
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
 	light_range = 6
@@ -139,7 +139,7 @@
 	var/turnsound = 'sound/mecha/mechturn.ogg'
 
 	///Cooldown duration between melee punches
-	var/melee_cooldown = 10
+	var/melee_cooldown = CLICK_CD_SLOW
 
 	///TIme taken to leave the mech
 	var/exit_delay = 2 SECONDS
@@ -193,9 +193,6 @@
 
 	///Wether we are strafing
 	var/strafe = FALSE
-
-	///Cooldown length between bumpsmashes
-	var/smashcooldown = 3
 
 	///Bool for whether this mech can only be used on lavaland
 	var/lavaland_only = FALSE
@@ -703,10 +700,9 @@
 		return
 	use_energy(melee_energy_drain)
 
-	SEND_SIGNAL(user, COMSIG_MOB_USED_MECH_MELEE, src)
-	target.mech_melee_attack(src, user)
-	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
-
+	SEND_SIGNAL(user, COMSIG_MOB_USED_CLICK_MECH_MELEE, src)
+	if(target.mech_melee_attack(src, user))
+		TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
 
 /// Driver alt clicks anything while in mech
 /obj/vehicle/sealed/mecha/proc/on_click_alt(mob/user, atom/target, params)

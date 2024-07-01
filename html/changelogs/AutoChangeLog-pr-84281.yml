@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Portaturrets no longer go invisible when unwrenched from the ground."

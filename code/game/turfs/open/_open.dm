@@ -11,7 +11,11 @@
 	/// Determines the type of damage overlay that will be used for the tile
 	var/damaged_dmi = null
 	var/broken = FALSE
+	/// Are broken overlays smoothed? if they are we have to change a little bit about how we render them
+	var/smooth_broken = FALSE
 	var/burnt = FALSE
+	/// Are burnt overlays smoothed? if they are we have to change a little bit about how we render them
+	var/smooth_burnt = FALSE
 
 
 /// Returns a list of every turf state considered "broken".
@@ -47,7 +51,7 @@
 	if(broken)
 		var/mutable_appearance/broken_appearance = mutable_appearance(damaged_dmi, pick(broken_states()))
 
-		if(smoothing_flags && !(smoothing_flags & SMOOTH_BROKEN_TURF))
+		if(smoothing_flags && !smooth_broken)
 			var/matrix/translation = new
 			translation.Translate(-LARGE_TURF_SMOOTHING_X_OFFSET, -LARGE_TURF_SMOOTHING_Y_OFFSET)
 			broken_appearance.transform = translation
@@ -62,7 +66,7 @@
 		else
 			burnt_appearance = mutable_appearance(damaged_dmi, pick(broken_states()))
 
-		if(smoothing_flags && !(smoothing_flags & SMOOTH_BURNT_TURF))
+		if(smoothing_flags && !smooth_burnt)
 			var/matrix/translation = new
 			translation.Translate(-LARGE_TURF_SMOOTHING_X_OFFSET, -LARGE_TURF_SMOOTHING_Y_OFFSET)
 			burnt_appearance.transform = translation

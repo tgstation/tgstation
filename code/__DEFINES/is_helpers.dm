@@ -231,6 +231,8 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define islandmine(A) (istype(A, /obj/effect/mine))
 
+#define iscloset(A) (istype(A, /obj/structure/closet))
+
 #define issupplypod(A) (istype(A, /obj/structure/closet/supplypod))
 
 #define isammocasing(A) (istype(A, /obj/item/ammo_casing))
