@@ -58,7 +58,7 @@
 	implements = list(/obj/item/blood_filter = 95)
 	repeatable = TRUE
 	time = 2.5 SECONDS
-	success_sound = 'sound/machines/fan_loop.ogg'
+	success_sound = 'sound/machines/card_slide.ogg'
 
 /datum/surgery_step/filter_blood/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_pain(target, "You feel a throbbing pain in your chest!")
