@@ -2338,14 +2338,14 @@
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY
 	)
 
-/datum/design/module/mod_organ_thrower
-	name = "Organ Thrower Module"
-	id = "mod_organ_thrower"
+/datum/design/module/mod_organizer
+	name = "Organizer Module"
+	id = "mod_organizer"
 	materials = list(
 		/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	build_path = /obj/item/mod/module/organ_thrower
+	build_path = /obj/item/mod/module/organizer
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)
