@@ -57,7 +57,7 @@
 	human.eye_color_right = human.eye_color_left
 	human.skin_tone = pick(GLOB.skin_tones)
 	// No underwear generation handled here
-	var/picked_color = pick(nautural_hair_colors)
+	var/picked_color = pick(natural_hair_colors)
 	human.set_haircolor(picked_color, update = FALSE)
 	human.set_facial_haircolor(picked_color, update = FALSE)
 	var/datum/sprite_accessory/hairstyle = SSaccessories.hairstyles_list[random_hairstyle(human.gender)]
