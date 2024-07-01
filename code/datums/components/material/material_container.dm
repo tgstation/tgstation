@@ -207,7 +207,7 @@
  * - [weapon][obj/item]: the item you are trying to insert
  * - multiplier: The multiplier for the materials being inserted
  * - context: the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_ITEM_CONSUMED and is used mostly for silo logging
- * * - delete_item: should we delete the item after its materials are consumed
+ * * - delete_item: should we delete the item after its materials are consumed. does not apply to stacks if they were split due to lack of space
  */
 /datum/component/material_container/proc/insert_item(obj/item/weapon, multiplier = 1, atom/context = parent, delete_item = TRUE)
 	if(QDELETED(weapon))
@@ -233,14 +233,10 @@
 		material_amount = get_item_material_amount(target) * multiplier
 	material_amount = OPTIMAL_COST(material_amount)
 
-	//not enough space, time to bail
-	if(!has_space(material_amount))
-		return MATERIAL_INSERT_ITEM_NO_SPACE
-
 	//do the insert
 	var/last_inserted_id = insert_item_materials(target, multiplier, context)
 	if(!isnull(last_inserted_id))
-		if(delete_item)
+		if(delete_item || target != weapon) //we could have split the stack ourself
 			qdel(target) //item gone
 		return material_amount
 	else if(!isnull(item_stack) && item_stack != target) //insertion failed, merge the split stack back into the original
@@ -354,7 +350,7 @@
 		//is this item a stack and was it split by the player?
 		var/was_stack_split = !isnull(item_stack) && item_stack != target_item
 		//if it was split then item_stack has the reference to the original stack/item
-		var/original_item = was_stack_split ? item_stack : target_item
+		var/obj/item/original_item = was_stack_split ? item_stack : target_item
 		//if this item is not the one the player is holding then don't remove it from their hand
 		if(original_item != active_held)
 			original_item = null
@@ -365,30 +361,18 @@
 		var/item_name = target_item.name
 		var/item_count = 1
 		var/is_stack = FALSE
+		var/obj/item/stack/the_stack
 		if(isstack(target_item))
-			var/obj/item/stack/the_stack = target_item
+			the_stack = target_item
 			item_name = the_stack.singular_name
 			item_count = the_stack.amount
 			is_stack = TRUE
 
 		//we typically don't want to consume bags, boxes but only their contents. so we skip processing
-		inserted = !target_item.atom_storage ? insert_item(target_item, 1, context, FALSE) : 0
+		inserted = !target_item.atom_storage ? insert_item(target_item, 1, context, is_stack) : 0
 		if(inserted > 0)
 			. += inserted
 			inserted /= SHEET_MATERIAL_AMOUNT // display units inserted as sheets for improved readability
-
-			//stack was either split by the container(!QDELETED(target_item) means the container only consumed a part of it) or by the player, put whats left back of the original stack back in players hand
-			if((!QDELETED(target_item) || was_stack_split))
-
-				//stack was split by player and that portion was not fully consumed, merge whats left back with the original stack
-				if(!QDELETED(target_item) && was_stack_split)
-					var/obj/item/stack/inserting_stack = target_item
-					item_stack.add(inserting_stack.amount)
-					qdel(inserting_stack)
-
-				//was this the original item in the players hand? put what's left back in the player's hand
-				if(!isnull(original_item))
-					user.put_in_active_hand(original_item)
 
 			//collect all messages to print later
 			var/list/status_data = chat_msgs["[MATERIAL_INSERT_ITEM_SUCCESS]"] || list()
@@ -399,7 +383,22 @@
 			status_data[item_name] = item_data
 			chat_msgs["[MATERIAL_INSERT_ITEM_SUCCESS]"] = status_data
 
-			//if any mats were consumed from our held item then we can delete it
+			//delete the item or merge stacks if any left over
+			if(is_stack)
+				//player split it & machine further split that due to lack of space? merge with remaining stack
+				if(!QDELETED(target_item) && was_stack_split)
+					var/obj/item/stack/inserting_stack = target_item
+					item_stack.add(inserting_stack.amount)
+					qdel(inserting_stack)
+
+				//was this the original item in the players hand? put what's left back in the player's hand
+				if(!QDELETED(original_item))
+					user.put_in_active_hand(original_item)
+
+				//skip processing children & other stuff. irrelevant for stacks
+				continue
+
+			//queue the object for deletion
 			to_delete += target_item
 		else
 			//collect all messages to print later
@@ -410,13 +409,13 @@
 			chat_msgs["[inserted]"] = status_data
 
 			//player split the stack by the requested amount but even that split amount could not be salvaged. merge it back with the original
-			if(!isnull(item_stack) && was_stack_split)
+			if(was_stack_split)
 				var/obj/item/stack/inserting_stack = target_item
 				item_stack.add(inserting_stack.amount)
 				qdel(inserting_stack)
 
 			//was this the original item in the players hand? put it back because we coudn't salvage it
-			if(!isnull(original_item))
+			if(!QDELETED(original_item))
 				user.put_in_active_hand(original_item)
 
 			//we can stop here as remaining items will fail to insert as well
