@@ -67,7 +67,7 @@
 	var/current_mood = SLIME_MOOD_NONE
 
 	///The number of /obj/item/slime_extract's the slime has left inside
-	var/cores = 2
+	var/cores = 1
 	///Chance of mutating, should be between 25 and 35
 	var/mutation_chance = 30
 	///1-10 controls how much electricity they are generating
