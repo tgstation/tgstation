@@ -565,9 +565,12 @@ LINEN BINS
 	desc = "It looks rather cosy."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
+	base_icon_state = "linenbin"
 	anchored = TRUE
+	pass_flags = PASSTABLE
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
+	anchored_tabletop_offset = 6
 	/// The number of bedsheets in the bin
 	var/amount = 10
 	/// A list of actual sheets within the bin
@@ -580,7 +583,6 @@ LINEN BINS
 	icon_state = "linenbin-empty"
 	anchored = FALSE
 
-
 /obj/structure/bedsheetbin/examine(mob/user)
 	. = ..()
 	if(amount < 1)
@@ -590,15 +592,14 @@ LINEN BINS
 	else
 		. += "There are [amount] bed sheets in the bin."
 
-
 /obj/structure/bedsheetbin/update_icon_state()
 	switch(amount)
 		if(0)
-			icon_state = "linenbin-empty"
+			icon_state = "[base_icon_state]-empty"
 		if(1 to 5)
-			icon_state = "linenbin-half"
+			icon_state = "[base_icon_state]-half"
 		else
-			icon_state = "linenbin-full"
+			icon_state = "[base_icon_state]-full"
 	return ..()
 
 /obj/structure/bedsheetbin/fire_act(exposed_temperature, exposed_volume)
@@ -696,3 +697,13 @@ LINEN BINS
 
 	add_fingerprint(user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/obj/structure/bedsheetbin/basket
+	name = "linen basket"
+	icon_state = "linenbasket-full"
+	base_icon_state = "linenbasket"
+
+/obj/structure/bedsheetbin/empty/basket
+	name = "linen basket"
+	icon_state = "linenbasket-empty"
+	base_icon_state = "linenbasket"
