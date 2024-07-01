@@ -164,12 +164,39 @@
 
 /datum/client_colour/glass_colour
 	priority = PRIORITY_LOW
+	///stuff like initial(color_matrix_list) won't work well, so we better cache the og colour
+	var/initial_colour
+	/**
+	 * Some glass colours (especially forced one like mesons and NVs) may be a bit tiresome to have around
+	 * mining, especially lavaland. So while we these glass colours, we aknowledge they need to be toned down a little
+	 * around miners stuff.
+	 */
+	var/mining_level_colour
+
+/datum/client_colour/glass_colour/New(mob/owner)
+	. = ..()
+	if(!owner || !mining_level_colour)
+		return
+	initial_colour = colour
+	var/turf/owner_turf = get_turf(owner)
+	if(is_mining_level(owner_turf.z))
+		colour = mining_level_colour
+	RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_changed_z_level))
+
+/datum/client_colour/glass_colour/proc/on_changed_z_level(datum/source, turf/old_turf, turf/new_turf, same_z_layer)
+	SIGNAL_HANDLER
+	if(colour == initial(colour) && is_mining_level(new_turf.z))
+		update_colour(mining_level_colour, 2 SECONDS)
+	else if(colour == mining_level_colour && !is_mining_level(new_turf.z))
+		update_colour(initial_colour, 2 SECONDS)
 
 /datum/client_colour/glass_colour/green
 	colour = "#aaffaa"
+	mining_level_colour = "#ccffcc"
 
 /datum/client_colour/glass_colour/lightgreen
 	colour = "#ccffcc"
+	mining_level_colour = "#eaffea"
 
 /datum/client_colour/glass_colour/blue
 	colour = "#aaaaff"

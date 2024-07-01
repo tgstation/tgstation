@@ -18,7 +18,6 @@
 	inhand_icon_state = "trayson-meson"
 	actions_types = list(/datum/action/item_action/toggle_mode)
 	glass_colour_type = /datum/client_colour/glass_colour/gray
-	forced_glass_color = TRUE
 	gender = PLURAL
 
 	vision_flags = NONE
