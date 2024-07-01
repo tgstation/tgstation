@@ -170,7 +170,7 @@
 	if(owner.health <= owner.crit_threshold)
 		owner.heal_overall_damage(5, 5)
 		owner.adjustOxyLoss(-5)
-		owner.adjustToxLoss(-5)
+		owner.adjustToxLoss(-5, forced = TRUE)
 
 /datum/status_effect/voltaic_overdrive/on_apply()
 	. = ..()
