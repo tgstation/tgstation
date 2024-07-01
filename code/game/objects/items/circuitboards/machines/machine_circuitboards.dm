@@ -703,6 +703,13 @@
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/vending_refill/donksoft = 1)
 
+/obj/item/circuitboard/machine/vending/donksnackvendor
+	name = "Donk Co Snack Vendor"
+	build_path = /obj/machinery/vending/donksnack
+	req_components = list(
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/vending_refill/donksnackvendor = 1)
+
 /obj/item/circuitboard/machine/bountypad
 	name = "Civilian Bounty Pad"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
