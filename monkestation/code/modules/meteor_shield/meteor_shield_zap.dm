@@ -42,5 +42,6 @@
 		creaking = FALSE,
 		near_sound = sound('sound/weapons/lasercannonfire.ogg'),
 		far_sound = sound('sound/weapons/marauder.ogg'),
-		pressure_affected = FALSE
+		pressure_affected = FALSE,
+		disable_shaking = TRUE
 	)
