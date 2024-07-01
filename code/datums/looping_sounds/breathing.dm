@@ -6,3 +6,4 @@
 	//spess station-
 	volume = 13
 	pressure_affected = FALSE
+	direct = TRUE

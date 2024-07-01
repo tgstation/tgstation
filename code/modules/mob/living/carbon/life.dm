@@ -114,17 +114,21 @@
 				breath = loc.remove_air(breath_moles)
 		else //Breathe from loc as obj again
 			is_on_internals = TRUE
+
 			if(isobj(loc))
 				var/obj/loc_as_obj = loc
 				loc_as_obj.handle_internal_lifeform(src,0)
 
-	if(check_breath(breath) && is_on_internals)
+	try_breathing_sound(is_on_internals, breath)
+	if(breath)
+		loc.assume_air(breath)
+
+//Tries to play the carbon a breathing sound when using internals, also invokes check_breath
+/mob/living/carbon/proc/try_breathing_sound(internals, breathing)
+	if(check_breath(breathing) && internals && canon_client.prefs.read_preference(/datum/preference/toggle/sound_breathing))
 		breathing_loop.start()
 	else
 		breathing_loop.stop()
-
-	if(breath)
-		loc.assume_air(breath)
 
 /mob/living/carbon/proc/has_smoke_protection()
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
