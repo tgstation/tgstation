@@ -90,9 +90,6 @@
 #include "code\game\objects\structures\crates_lockers\crates\large.dm"
 #include "code\modules\cargo\packs\imports.dm"
 
-//features
-#include "features\additional_circuit\includes.dm"
-
 //buts
 #include "code\modules\surgery\organs\internal\butts\butts.dm"
 #include "code\modules\surgery\organs\internal\butts\butts_init.dm"
