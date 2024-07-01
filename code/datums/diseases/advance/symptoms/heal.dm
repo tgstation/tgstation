@@ -154,7 +154,7 @@
 	if(M.getToxLoss() && prob(5))
 		to_chat(M, span_notice("Your skin tingles as the starlight seems to heal you."))
 
-	M.adjustToxLoss(-(4 * heal_amt)) //most effective on toxins
+	M.adjustToxLoss(-(4 * heal_amt), forced = TRUE) //most effective on toxins
 
 	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)
 
