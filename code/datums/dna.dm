@@ -877,7 +877,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/nonfatal = prob(max(70-instability,0))
 
 	for (var/datum/instability_meltdown/meltdown_type as anything in dna.meltdown_cache)
-		if (initial(meltdown_type.fatal) != nonfatal)
+		if (initial(meltdown_type.fatal) != nonfatal && initial(meltdown_type.abstract_type) != meltdown_type)
 			valid_meltdowns[meltdown_type] = initial(meltdown_type.meltdown_weight)
 
 	var/picked_type = pick_weight(valid_meltdowns)

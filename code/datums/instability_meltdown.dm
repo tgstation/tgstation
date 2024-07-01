@@ -1,8 +1,10 @@
 /datum/instability_meltdown
 	/// How likely a meltdown is to be picked
-	var/meltdown_weight = 0
+	var/meltdown_weight = 1
 	/// If this meltdown is considered "fatal" or not
 	var/fatal = FALSE
+	/// Used to ensure that abstract subtypes do not get picked
+	var/abstract_type = /datum/instability_meltdown
 
 /// Code that runs when this meltdown is picked
 /datum/instability_meltdown/proc/meltdown(mob/living/carbon/human/victim)
@@ -12,14 +14,12 @@
 
 /// Turns you into a monkey
 /datum/instability_meltdown/monkey
-	meltdown_weight = 1
 
 /datum/instability_meltdown/monkey/meltdown(mob/living/carbon/human/victim)
 	victim.monkeyize()
 
 /// Gives you brain trauma that makes your legs disfunctional and gifts you a wheelchair
 /datum/instability_meltdown/paraplegic
-	meltdown_weight = 1
 
 /datum/instability_meltdown/paraplegic/meltdown(mob/living/carbon/human/victim)
 	victim.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
@@ -28,21 +28,18 @@
 
 /// Turns you into a corgi
 /datum/instability_meltdown/corgi
-	meltdown_weight = 1
 
 /datum/instability_meltdown/corgi/meltdown(mob/living/carbon/human/victim)
 	victim.corgize()
 
 /// Does nothing
 /datum/instability_meltdown/alright
-	meltdown_weight = 1
 
 /datum/instability_meltdown/alright/meltdown(mob/living/carbon/human/victim)
 	to_chat(victim, span_notice("Oh, I actually feel quite alright!"))
 
 /// Gives you the same text as above but now when you're hit you take 200 times more damage
 /datum/instability_meltdown/not_alright
-	meltdown_weight = 1
 
 /datum/instability_meltdown/not_alright/meltdown(mob/living/carbon/human/victim)
 	to_chat(victim, span_notice("Oh, I actually feel quite alright!"))
@@ -50,7 +47,6 @@
 
 /// Turns you into a slime
 /datum/instability_meltdown/slime
-	meltdown_weight = 1
 
 /datum/instability_meltdown/slime/meltdown(mob/living/carbon/human/victim)
 	to_chat(victim, span_notice("Oh, I actually feel quite alright!"))
@@ -58,14 +54,12 @@
 
 /// Makes you phase through walls into a random direction
 /datum/instability_meltdown/yeet
-	meltdown_weight = 1
 
 /datum/instability_meltdown/yeet/meltdown(mob/living/carbon/human/victim)
 	victim.apply_status_effect(/datum/status_effect/go_away)
 
 /// Makes you take cell damage and gibs you after some time
 /datum/instability_meltdown/decloning
-	meltdown_weight = 1
 
 /datum/instability_meltdown/decloning/meltdown(mob/living/carbon/human/victim)
 	to_chat(src, span_notice("Oh, I actually feel quite alright!"))
@@ -73,7 +67,6 @@
 
 /// Makes you vomit up a random organ
 /datum/instability_meltdown/organ_vomit
-	meltdown_weight = 1
 
 /datum/instability_meltdown/organ_vomit/meltdown(mob/living/carbon/human/victim)
 	var/list/elligible_organs = list()
@@ -82,12 +75,12 @@
 	victim.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 10)
 	if(!elligible_organs.len)
 		return
-	var/obj/item/organ/O = pick(elligible_organs)
-	O.Remove(src)
-	victim.visible_message(span_danger("[victim] vomits up [p_their()] [O.name]!"), span_danger("You vomit up your [O.name]")) //no "vomit up your heart"
-	O.forceMove(victim.drop_location())
+	var/obj/item/organ/picked_organ = pick(elligible_organs)
+	picked_organ.Remove(src)
+	victim.visible_message(span_danger("[victim] vomits up [p_their()] [picked_organ.name]!"), span_danger("You vomit up your [picked_organ.name]")) //no "vomit up your heart"
+	picked_organ.forceMove(victim.drop_location())
 	if(prob(20))
-		O.animate_atom_living()
+		picked_organ.animate_atom_living()
 
 /// Turns you into a snail
 /datum/instability_meltdown/snail
@@ -99,7 +92,6 @@
 
 /// Turns you into the ultimate lifeform
 /datum/instability_meltdown/crab
-	meltdown_weight = 1
 
 /datum/instability_meltdown/crab/meltdown(mob/living/carbon/human/victim)
 	to_chat(victim, span_notice("Your DNA mutates into the ultimate biological form!"))
@@ -109,10 +101,10 @@
 
 /datum/instability_meltdown/fatal
 	fatal = TRUE
+	abstract_type = /datum/instability_meltdown/fatal
 
 /// Instantly gibs you
 /datum/instability_meltdown/fatal/gib
-	meltdown_weight = 1
 
 /datum/instability_meltdown/fatal/gib/meltdown(mob/living/carbon/human/victim)
 	victim.investigate_log("has been gibbed by DNA instability.", INVESTIGATE_DEATHS)
@@ -120,7 +112,6 @@
 
 /// Dusts you
 /datum/instability_meltdown/fatal/dust
-	meltdown_weight = 1
 
 /datum/instability_meltdown/fatal/dust/meltdown(mob/living/carbon/human/victim)
 	victim.investigate_log("has been dusted by DNA instability.", INVESTIGATE_DEATHS)
@@ -128,7 +119,6 @@
 
 /// Turns you into a statue
 /datum/instability_meltdown/fatal/petrify
-	meltdown_weight = 1
 
 /datum/instability_meltdown/fatal/petrify/meltdown(mob/living/carbon/human/victim)
 	victim.investigate_log("has been transformed into a statue by DNA instability.", INVESTIGATE_DEATHS)
@@ -138,7 +128,6 @@
 
 /// Either dismembers you, or if unable to, gibs you
 /datum/instability_meltdown/fatal/dismember
-	meltdown_weight = 1
 
 /datum/instability_meltdown/fatal/dismember/meltdown(mob/living/carbon/human/victim)
 	var/obj/item/bodypart/BP = victim.get_bodypart(pick(BODY_ZONE_CHEST,BODY_ZONE_HEAD))
@@ -150,7 +139,6 @@
 
 /// Turns you into a skeleton, with a high chance of killing you soon after
 /datum/instability_meltdown/fatal/skeletonize
-	meltdown_weight = 1
 
 /datum/instability_meltdown/fatal/skeletonize/meltdown(mob/living/carbon/human/victim)
 	victim.visible_message(span_warning("[victim]'s skin melts off!"), span_boldwarning("Your skin melts off!"))
@@ -161,7 +149,6 @@
 
 /// Makes you look up and melts out your eyes
 /datum/instability_meltdown/fatal/ceiling
-	meltdown_weight = 1
 
 /datum/instability_meltdown/fatal/ceiling/meltdown(mob/living/carbon/human/victim)
 	to_chat(victim, span_phobia("LOOK UP!"))
@@ -169,7 +156,6 @@
 
 /// Slowly turns you into a psyker
 /datum/instability_meltdown/fatal/psyker
-	meltdown_weight = 1
 
 /datum/instability_meltdown/fatal/psyker/meltdown(mob/living/carbon/human/victim)
 	victim.slow_psykerize()
