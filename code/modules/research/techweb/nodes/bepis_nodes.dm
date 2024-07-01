@@ -5,6 +5,7 @@
 	design_ids = list(
 		"bright_helmet",
 		"rld_mini",
+		"photon_cannon",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	hidden = TRUE
