@@ -119,3 +119,17 @@
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "elliethedarksun"
 	squeak_override = list('monkestation/code/modules/donator/sounds/elliethedarksunPlushSqueak-1.ogg'=1,'monkestation/code/modules/donator/sounds/elliethedarksunPlushSqueak-2.ogg'=1,'monkestation/code/modules/donator/sounds/elliethedarksunPlushSqueak-3.ogg'=1)
+
+/obj/item/clothing/head/sheep_plush_av4l0n
+	name = "sheep plushie"
+	desc = "What a silly little guy."
+	attack_verb_continuous = list("thumps", "whomps", "bumps")
+	attack_verb_simple = list("thump", "whomp", "bump")
+	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = FLAMMABLE
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/plushes.dmi'
+	icon_state = "av4l0n_sheep"
+	inhand_icon_state = "av4l0n_sheep"
+	lefthand_file = 'monkestation/code/modules/donator/icons/mob/inhands/plushes_inhand_left.dmi'
+	righthand_file = 'monkestation/code/modules/donator/icons/mob/inhands/plushes_inhand_right.dmi'

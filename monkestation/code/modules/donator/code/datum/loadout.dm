@@ -508,3 +508,10 @@
 	item_path = /obj/item/toy/plush/cowlephant
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+//av4l0n
+/datum/loadout_item/toys/sheep_plush_av4l0n
+	name = "Sheep Plush"
+	item_path = /obj/item/clothing/head/sheep_plush_av4l0n
+	donator_only = TRUE
+	requires_purchase = FALSE
