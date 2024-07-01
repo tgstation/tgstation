@@ -1,5 +1,0 @@
-author: "spockye"
-delete-after: True
-changes:
-  - bugfix: "fixed Wawastation areas"
-  - bugfix: "fixed wawastation disposals"

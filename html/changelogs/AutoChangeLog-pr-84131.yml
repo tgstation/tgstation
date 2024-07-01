@@ -1,5 +1,0 @@
-author: "Chestlet"
-delete-after: True
-changes:
-  - bugfix: "Nanotrasen sent us a batch of faulty canisters. They've been recalled and replaced with less faulty canisters."
-  - bugfix: "Zauker SM interaction works correctly now."
