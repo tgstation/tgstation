@@ -107,6 +107,12 @@
 		return
 	return ..(ceiling)
 
+///Used for marking mapping errors. These should only be created by cases explicitly caught by unit tests, and should NEVER actually appear in production.
+/obj/effect/mapping_error
+	name = "I AM ERROR"
+	desc = "IF YOU SEE ME, YELL AT A MAPPER!!!"
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = "mapping_error"
 
 /obj/effect/mapping_helpers
 	icon = 'icons/effects/mapping_helpers.dmi'
