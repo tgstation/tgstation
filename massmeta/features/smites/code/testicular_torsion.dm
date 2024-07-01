@@ -20,7 +20,7 @@
 	carbon_target.say(pick(phrase))
 	carbon_target.Paralyze(15 SECONDS)
 
-	playsound(target, 'massmeta/sounds/smites/testicular_torsion.ogg', 60)
+	playsound(target, 'massmeta/features/smites/sound/testicular_torsion.ogg', 60)
 	carbon_target.visible_message(
 		span_danger("You can see [carbon_target]'s balls being crushed by an unknown force! You can feel the pain just by looking at it."),
 		span_userdanger("You can feel like your balls are being crushed!"),
