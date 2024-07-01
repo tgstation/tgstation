@@ -1231,7 +1231,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.flags |= NO_REACT
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/mask/vape/proc/handle_reagents(seconds_per_tick)
+/obj/item/vape/proc/handle_reagents(seconds_per_tick)
 	if(!reagents.total_volume)
 		return
 
