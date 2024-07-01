@@ -1,8 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "Mecha weaponry is capable, for the first time ever, of experiencing recoil. This was an intended mechanic, I promise. The code just literally never worked."
-  - bugfix: "Mecha bump melee attacks and click melee attacks are now on the same cooldown, but have varying cooldown timers. You will always bump attack faster than you will click."
-  - bugfix: "You must be in combat mode to punch objects and to bumpsmash into objects."
-  - bugfix: "Stops mecha being able to punch literally any object and damage them."
-  - code_imp: "Tidies up some of the autodoc comments for mech weapons."
