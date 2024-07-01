@@ -286,6 +286,10 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/effect/anomaly/grav/high)
 	//See above
 	returnable_list += typesof(/obj/effect/timestop)
+	//Sparks can ignite a number of things, causing a fire to burn the floor away. Only you can prevent CI fires
+	returnable_list += typesof(/obj/effect/particle_effect/sparks)
+	//See above - These are one of those things.
+	returnable_list += typesof(/obj/effect/decal/cleanable/fuel_pool)
 	//Invoke async in init, skippppp
 	returnable_list += typesof(/mob/living/silicon/robot/model)
 	//This lad also sleeps
