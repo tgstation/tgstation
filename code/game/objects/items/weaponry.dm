@@ -768,6 +768,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "hoverboard_holy_held"
 	inhand_icon_state = "hoverboard_holy"
 	force = 18
+	throwforce = 6
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("bashes", "crashes", "grinds", "skates")
 	attack_verb_simple = list("bash", "crash", "grind", "skate")
