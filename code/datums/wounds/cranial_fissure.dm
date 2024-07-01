@@ -15,7 +15,7 @@
 	if (isnull(limb.owner))
 		return ..()
 
-	if (HAS_TRAIT(limb.owner, TRAIT_EASILY_DISEMBOWELABLE) && (limb.get_mangled_state() & BODYPART_MANGLED_INTERIOR))
+	if (HAS_TRAIT(limb.owner, TRAIT_CURSED) && (limb.get_mangled_state() & BODYPART_MANGLED_INTERIOR))
 		return ..()
 
 	if (limb.owner.stat >= HARD_CRIT)
