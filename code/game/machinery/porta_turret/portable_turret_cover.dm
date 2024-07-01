@@ -43,12 +43,12 @@
 		if(!parent_turret.anchored)
 			parent_turret.set_anchored(TRUE)
 			to_chat(user, span_notice("You secure the exterior bolts on the turret."))
-			parent_turret.SetInvisibility(INVISIBILITY_NONE, id=type, priority=INVISIBILITY_PRIORITY_TURRET_COVER)
+			parent_turret.SetInvisibility(INVISIBILITY_MAXIMUM, id=parent_turret.type, priority=INVISIBILITY_PRIORITY_TURRET_COVER)
 			parent_turret.update_appearance()
 		else
 			parent_turret.set_anchored(FALSE)
 			to_chat(user, span_notice("You unsecure the exterior bolts on the turret."))
-			parent_turret.SetInvisibility(INVISIBILITY_MAXIMUM, id=type, priority=INVISIBILITY_PRIORITY_TURRET_COVER)
+			parent_turret.SetInvisibility(INVISIBILITY_NONE, id=parent_turret.type, priority=INVISIBILITY_PRIORITY_TURRET_COVER)
 			parent_turret.update_appearance()
 			qdel(src)
 		return

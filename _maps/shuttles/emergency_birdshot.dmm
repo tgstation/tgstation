@@ -99,7 +99,7 @@
 	pixel_x = 3;
 	pixel_y = 2
 	},
-/obj/item/clothing/mask/cigarette/dromedary{
+/obj/item/cigarette/dromedary{
 	pixel_x = 8;
 	pixel_y = 15
 	},

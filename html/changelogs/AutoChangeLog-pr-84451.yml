@@ -1,0 +1,6 @@
+author: "aaaa1023"
+delete-after: True
+changes:
+  - qol: "Increased the viewrange in the navigation camera console on the following shuttles: Silverscale pirate shuttle, the Flying Dutchman pirate shuttle, the IRS pirate shuttle, and the Greytide pirate shuttle."
+  - bugfix: "Fixed the Battlecruiser corvette, Silverscale pirate shuttle, and the Greytide pirate shuttle flying in incorrect directions in hyperspace."
+  - bugfix: "Fixed the Navigation console camera eye on various pirate ships being off centre."

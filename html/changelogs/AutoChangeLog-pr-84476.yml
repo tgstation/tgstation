@@ -1,0 +1,4 @@
+author: "Iajret"
+delete-after: True
+changes:
+  - bugfix: "fixed blood loss knocking you down at somewhat safe (~80%) blood levels"
