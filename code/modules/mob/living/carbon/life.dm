@@ -121,7 +121,7 @@
 
 //Tries to play the carbon a breathing sound when using internals, also invokes check_breath
 /mob/living/carbon/proc/try_breathing_sound(internals, breathing)
-	if(check_breath(breathing) && internals && canon_client.prefs.read_preference(/datum/preference/toggle/sound_breathing))
+	if(check_breath(breathing) && internals && canon_client?.prefs?.read_preference(/datum/preference/toggle/sound_breathing))
 		breathing_loop.start()
 	else
 		breathing_loop.stop()
