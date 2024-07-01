@@ -693,8 +693,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/mouse_drop_dragged(atom/over, mob/user)
 	if (isobserver(user) && user.client.holder && (isliving(over) || iscameramob(over)))
-		if (user.client.holder.cmd_ghost_drag(src,over))
-			return
+		user.client.holder.cmd_ghost_drag(src, over)
 
 /mob/dead/observer/Topic(href, href_list)
 	..()
@@ -982,6 +981,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!game)
 		game = create_mafia_game()
 	game.ui_interact(usr)
+
+/mob/dead/observer/AltClickOn(atom/target)
+	client.loot_panel.open(get_turf(target))
+
+/mob/dead/observer/AltClickSecondaryOn(atom/target)
+	if(client && check_rights_for(client, R_DEBUG))
+		client.toggle_tag_datum(src)
 
 /mob/dead/observer/CtrlShiftClickOn(atom/target)
 	if(isobserver(target) && check_rights(R_SPAWN))

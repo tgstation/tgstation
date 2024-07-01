@@ -300,10 +300,9 @@
 	deselect()
 	return ..()
 
-/obj/item/borg/cyborg_omnitool/pre_attack(atom/atom, mob/living/user, params)
+/obj/item/borg/cyborg_omnitool/melee_attack_chain(mob/user, atom/target, params)
 	if(selected)
-		selected.melee_attack_chain(user, atom, params)
-		return TRUE
+		return selected.melee_attack_chain(user, target, params)
 	return ..()
 
 /obj/item/borg/cyborg_omnitool/engineering

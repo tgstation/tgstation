@@ -1460,15 +1460,6 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED_AS_OUTFIT, outfit_wearer, visuals_only, item_slot)
 
-/**
- * Called before this item is placed into a storage container
- * via the item clicking on the target atom
- *
- * Returning FALSE will prevent the item from being stored
- */
-/obj/item/proc/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
-	return TRUE
-
 /obj/item/proc/do_pickup_animation(atom/target, turf/source)
 	if(!source)
 		if(!istype(loc, /turf))

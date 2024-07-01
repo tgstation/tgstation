@@ -1,7 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - bugfix: "There's now a limit to how many dental implants you can cram into your mouth, which is governed by your species' teeth limit."
-  - refactor: "Most species have 32 teeth, due to being based on humans, weirding me out when thinking about their teeth, or lack of enough information"
-  - refactor: "Moths and flypeople have NO teeth. They CAN'T get dental implants. I'm NERFING moths."
-  - refactor: "Lizards have seventy-five (!!!) teeth. Lizards are weird."

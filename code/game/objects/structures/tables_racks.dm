@@ -225,11 +225,6 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
-	if(tool.tool_behaviour == TOOL_SCREWDRIVER || tool.tool_behaviour == TOOL_WRENCH)
-		// continue to tool act
-		// ...we need a better way to do this natively.
-		// maybe flag to call tool acts before item interaction specifically?
-		return NONE
 	if(istype(tool, /obj/item/construction/rcd))
 		return NONE
 
@@ -863,12 +858,6 @@
 	tool.play_tool_sound(src)
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
-
-/obj/structure/rack/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
-	if(tool.tool_behaviour == TOOL_WRENCH)
-		return NONE
-
-	return item_interaction(user, tool, modifiers)
 
 /obj/structure/rack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if((tool.item_flags & ABSTRACT) || user.combat_mode)
