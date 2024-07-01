@@ -2,7 +2,7 @@
 	name = "Lone Operative"
 	always_new_team = TRUE
 	send_to_spawnpoint = FALSE //Handled by event
-	nukeop_outfit = /datum/outfit/syndicate/full
+	nukeop_outfit = /datum/outfit/syndicate/full/loneop
 	preview_outfit = /datum/outfit/nuclear_operative
 	preview_outfit_behind = null
 	nuke_icon_state = null
