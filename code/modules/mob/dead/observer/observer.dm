@@ -362,7 +362,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	var/area/new_area = get_area(src)
-	update_ambience_area(new_area)
+	if(new_area != ambience_tracked_area)
+		update_ambience_area(new_area)
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
