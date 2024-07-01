@@ -2590,7 +2590,7 @@
 	pixel_x = 3;
 	pixel_y = 6
 	},
-/obj/item/clothing/mask/cigarette/robust{
+/obj/item/cigarette/robust{
 	pixel_x = -4;
 	pixel_y = 1
 	},
