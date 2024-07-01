@@ -155,7 +155,7 @@
 ///Mob is trying to open the wires of a target [/atom], from /datum/wires/interactable(): (atom/target)
 #define COMSIG_TRY_WIRES_INTERACT "try_wires_interact"
 	#define COMPONENT_CANT_INTERACT_WIRES (1<<0)
-///Mob is trying to emote, from /datum/emote/proc/run_emote(): (key, params, type_override, intentional)
+///Mob is trying to emote, from /datum/emote/proc/run_emote(): (key, params, type_override, intentional, emote)
 #define COMSIG_MOB_PRE_EMOTED "mob_pre_emoted"
 	#define COMPONENT_CANT_EMOTE (1<<0)
 #define COMSIG_MOB_EMOTED(emote_key) "mob_emoted_[emote_key]"

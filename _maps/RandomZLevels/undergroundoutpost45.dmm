@@ -629,9 +629,7 @@
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/central)
 "do" = (
-/obj/item/kirbyplants{
-	layer = 5
-	},
+/obj/item/kirbyplants,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron,
@@ -1360,9 +1358,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/undergroundoutpost45/central)
 "fT" = (
-/obj/item/kirbyplants{
-	layer = 5
-	},
+/obj/item/kirbyplants,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -1723,9 +1719,7 @@
 "hq" = (
 /obj/structure/table,
 /obj/item/stack/package_wrap,
-/obj/item/reagent_containers/condiment/enzyme{
-	layer = 5
-	},
+/obj/item/reagent_containers/condiment/enzyme,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -2459,9 +2453,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "kh" = (
-/obj/item/kirbyplants{
-	layer = 5
-	},
+/obj/item/kirbyplants,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/awaymission/undergroundoutpost45/research)
@@ -3270,9 +3262,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "mQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants{
-	layer = 5
-	},
+/obj/item/kirbyplants,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -4019,9 +4009,7 @@
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/research)
 "pl" = (
-/obj/item/kirbyplants{
-	layer = 5
-	},
+/obj/item/kirbyplants,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
@@ -4232,7 +4220,6 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "qd" = (
 /obj/machinery/meter{
-	layer = 3.3;
 	name = "Mixed Air Tank Out"
 	},
 /obj/machinery/atmospherics/pipe/layer_manifold/supply,
@@ -4241,7 +4228,6 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "qe" = (
 /obj/machinery/meter{
-	layer = 3.3;
 	name = "Mixed Air Tank In"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general,
@@ -4354,9 +4340,7 @@
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
 "qI" = (
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/closet/secure_closet/engineering_personal{
 	req_access = list("away_maintenance")
 	},
@@ -4535,9 +4519,7 @@
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
 "rk" = (
-/obj/item/kirbyplants{
-	layer = 5
-	},
+/obj/item/kirbyplants,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
 	},
@@ -4937,9 +4919,7 @@
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
 "sq" = (
-/obj/machinery/meter{
-	layer = 3.3
-	},
+/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -5108,9 +5088,7 @@
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
 "td" = (
-/obj/machinery/meter{
-	layer = 3.3
-	},
+/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/layer_manifold/orange{
 	dir = 4
 	},
@@ -5197,9 +5175,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "tw" = (
 /obj/machinery/light/small/directional/south,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -5548,17 +5524,13 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/undergroundoutpost45/engineering)
 "uI" = (
-/obj/machinery/meter{
-	layer = 3.3
-	},
+/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/layer_manifold/orange,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/undergroundoutpost45/engineering)
 "uJ" = (
-/obj/machinery/meter{
-	layer = 3.3
-	},
+/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -5967,9 +5939,7 @@
 /area/awaymission/undergroundoutpost45/mining)
 "wg" = (
 /obj/machinery/light/small/directional/north,
-/obj/item/kirbyplants{
-	layer = 5
-	},
+/obj/item/kirbyplants,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -6104,9 +6074,7 @@
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "xd" = (
-/obj/machinery/meter{
-	layer = 3.3
-	},
+/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
