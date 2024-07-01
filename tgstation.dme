@@ -1528,6 +1528,7 @@
 #include "code\datums\elements\wall_walker.dm"
 #include "code\datums\elements\watery_tile.dm"
 #include "code\datums\elements\weapon_description.dm"
+#include "code\datums\elements\wearable_client_colour.dm"
 #include "code\datums\elements\weather_listener.dm"
 #include "code\datums\elements\web_walker.dm"
 #include "code\datums\elements\wheel.dm"
