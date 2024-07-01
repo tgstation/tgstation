@@ -9266,7 +9266,7 @@
 	pixel_x = 18;
 	pixel_y = 5
 	},
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /obj/structure/table,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/arcade)

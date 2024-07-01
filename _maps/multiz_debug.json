@@ -3,6 +3,9 @@
 	"map_name": "MultiZ Debug",
 	"map_path": "map_files/debug",
 	"map_file": "multiz.dmm",
+	"ignored_unit_tests": [
+		"/datum/unit_test/required_map_items"
+	],
 	"traits": [
 		{
 			"Up": true,

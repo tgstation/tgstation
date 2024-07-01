@@ -33,6 +33,8 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 
 /obj/machinery/computer/department_orders/Initialize(mapload, obj/item/circuitboard/board)
 	. = ..()
+	// All maps should have ONLY ONE of each order console roundstart
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
 	if (radio_channel && radio_key_typepath)
 		radio = new(src)

@@ -395,7 +395,7 @@
 /turf/open/floor/mineral/fake_abductor,
 /area/station/commons/lounge)
 "sH" = (
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/mineral/fake_abductor,
 /area/station/commons/lounge)
 "tL" = (

@@ -1119,7 +1119,7 @@
 /turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
 "uQ" = (
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "uV" = (

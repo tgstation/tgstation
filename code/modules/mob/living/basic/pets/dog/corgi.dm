@@ -353,6 +353,7 @@
 
 /mob/living/basic/pet/dog/corgi/ian/Initialize(mapload)
 	. = ..()
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 	//parent call must happen first to ensure IAN
 	//is not in nullspace when child puppies spawn
 	Read_Memory()

@@ -47,6 +47,7 @@
 
 /obj/structure/cassette_rack/prefilled/Initialize(mapload)
 	. = ..()
+	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 	for(var/i in 1 to spawn_blanks)
 		new /obj/item/device/cassette_tape/blank(src)
 	for(var/id in unique_random_tapes(spawn_random))

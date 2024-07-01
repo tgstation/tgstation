@@ -851,7 +851,7 @@
 "CU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron{
 	base_icon_state = "basalt0";
 	icon_state = "basalt0";

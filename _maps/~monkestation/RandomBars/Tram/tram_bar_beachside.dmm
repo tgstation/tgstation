@@ -1667,7 +1667,7 @@
 /turf/open/floor/fakesand,
 /area/station/commons/lounge)
 "Wq" = (
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /obj/effect/turf_decal/sand,
 /turf/open/misc/beach/sand,
 /area/station/commons/lounge)

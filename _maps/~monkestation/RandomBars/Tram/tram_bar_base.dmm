@@ -823,7 +823,7 @@
 "wu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/wood/large,
 /area/station/service/theater)
 "wx" = (
@@ -1784,7 +1784,7 @@
 "Vq" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/commons/lounge)
 "Vs" = (

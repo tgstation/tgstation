@@ -35,6 +35,7 @@ GLOBAL_VAR(dj_booth)
 
 /obj/machinery/cassette/dj_station/Initialize(mapload)
 	. = ..()
+	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 	GLOB.dj_booth = src
 	register_context()
 

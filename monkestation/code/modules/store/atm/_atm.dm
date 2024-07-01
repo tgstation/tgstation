@@ -7,8 +7,6 @@
 
 	max_integrity = 10000
 
-	pixel_y = 30
-
 	icon = 'monkestation/icons/obj/machines/atm.dmi'
 	icon_state = "atm"
 
@@ -21,8 +19,11 @@
 	///static variable to check if a lottery is running
 	var/static/lottery_running = FALSE
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/atm, 30)
+
 /obj/machinery/atm/Initialize(mapload)
 	. = ..()
+	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
 	if(!lottery_running)
 		lottery_running = TRUE
 		addtimer(CALLBACK(src, PROC_REF(pull_lottery_winner)), 20 MINUTES)

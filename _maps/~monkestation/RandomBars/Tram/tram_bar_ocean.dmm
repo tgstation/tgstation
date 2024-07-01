@@ -795,7 +795,7 @@
 /turf/open/floor/fake_seafloor/ironsand,
 /area/station/service/theater)
 "JI" = (
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/fake_seafloor/spawning,
 /area/station/commons/lounge)
 "Kh" = (

@@ -269,9 +269,12 @@
 	icon_state = "station_map_engi"
 	circuit = /obj/item/circuitboard/machine/station_map/engineering
 
+/obj/machinery/station_map/engineering/Initialize(mapload)
+	. = ..()
+	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
+
 /obj/machinery/station_map/engineering/attack_hand(mob/user)
 	. = ..()
-
 	if(.)
 		holomap_datum.update_map(handle_overlays())
 

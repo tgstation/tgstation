@@ -10,6 +10,10 @@
 	anchored = TRUE
 	density = TRUE
 
+/obj/machinery/cassette/mailbox/Initialize(mapload)
+	. = ..()
+	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
+
 
 /obj/machinery/cassette/mailbox/attackby(obj/item/weapon, mob/user, params)
 	if(!istype(weapon, /obj/item/device/cassette_tape) || !user.client)

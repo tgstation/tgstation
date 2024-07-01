@@ -967,7 +967,7 @@
 "wu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/service/theater)
@@ -2083,7 +2083,7 @@
 /area/station/commons/lounge)
 "Vq" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /obj/item/shard{
 	pixel_x = 14
 	},

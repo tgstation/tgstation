@@ -1962,7 +1962,7 @@
 /turf/open/floor/stone,
 /area/station/service/bar)
 "Tm" = (
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /obj/structure/window/reinforced/plasma{
 	dir = 1;
 	alpha = 0

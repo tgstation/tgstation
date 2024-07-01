@@ -1,0 +1,5 @@
+/obj/machinery/atm{pixel_x=@UNSET;pixel_y=30} : /obj/machinery/atm/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/machinery/atm{pixel_x=@UNSET;pixel_y=-30} : /obj/machinery/atm/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/machinery/atm{pixel_x=-30;pixel_y=0} : /obj/machinery/atm/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/machinery/atm{pixel_x=30;pixel_y=0} : /obj/machinery/atm/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/machinery/atm : /obj/machinery/atm/directional/north

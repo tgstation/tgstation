@@ -2904,7 +2904,7 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/folder/white,
-/obj/item/stamp/rd{
+/obj/item/stamp/head/rd{
 	pixel_x = 3;
 	pixel_y = -2
 	},

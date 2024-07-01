@@ -534,7 +534,7 @@
 "CF" = (
 /obj/machinery/restaurant_portal/bar,
 /obj/machinery/camera/directional/north,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/station/service/bar)
 "Ds" = (

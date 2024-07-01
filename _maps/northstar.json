@@ -12,6 +12,9 @@
 	},
 	"space_ruin_levels": 0,
 	"space_empty_levels": 2,
+	"ignored_unit_tests": [
+		"/datum/unit_test/required_map_items"
+	],
 	"traits": [
 		{
 			"Up": true,

@@ -204,7 +204,7 @@
 /area/station/service/bar)
 "jP" = (
 /obj/machinery/light/directional/north,
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},

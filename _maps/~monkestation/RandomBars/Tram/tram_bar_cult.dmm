@@ -1418,9 +1418,7 @@
 /turf/open/floor/cult,
 /area/station/service/theater)
 "FA" = (
-/obj/machinery/atm{
-	pixel_y = -30
-	},
+/obj/machinery/atm/directional/south,
 /obj/effect/turf_decal/arrows{
 	pixel_x = -8
 	},
@@ -1946,10 +1944,7 @@
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "Ud" = (
-/obj/machinery/atm{
-	pixel_x = -30;
-	pixel_y = 0
-	},
+/obj/machinery/atm/directional/west,
 /turf/open/floor/cult,
 /area/station/service/theater)
 "Uf" = (

@@ -467,7 +467,7 @@
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "Vd" = (
-/obj/machinery/atm,
+/obj/machinery/atm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
