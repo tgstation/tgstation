@@ -92,7 +92,7 @@
 		INVOKE_ASYNC(armament, TYPE_PROC_REF(/obj/item/mecha_parts/mecha_equipment, action), mecha, target)
 		mecha.equipment_disabled = disabled
 		return
-	if(mecha.Adjacent(target) && target.mech_melee_attack(mecha))
+	if(mecha.Adjacent(target) && !TIMER_COOLDOWN_RUNNING(mecha, COOLDOWN_MECHA_MELEE_ATTACK) && target.mech_melee_attack(mecha))
 		TIMER_COOLDOWN_START(mecha, COOLDOWN_MECHA_MELEE_ATTACK, mecha.melee_cooldown)
 
 /datum/wires/mecha/ui_act(action, params)
