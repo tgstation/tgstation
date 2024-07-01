@@ -165,7 +165,7 @@
 		success = do_simple_heal(mendicant, hurtguy, heal_multiplier, pain_multiplier)
 
 	// Both types can be ignited (technically at least), so we can just do this here.
-	if(hurtguy.has_status_effect(/datum/status_effect/fire_handler/fire_stacks))
+	if(hurtguy.fire_stacks)
 		mendicant.set_fire_stacks(hurtguy.fire_stacks * pain_multiplier, remove_wet_stacks = TRUE)
 		if(hurtguy.on_fire)
 			mendicant.ignite_mob()
