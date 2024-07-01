@@ -127,6 +127,13 @@
 	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT
 	crafting_complexity = FOOD_COMPLEXITY_3
 
+/obj/item/food/pizzaslice/meat/pizzeria //Reward for pizzeria bitrunning domain
+	name = "pizzeria meatpizza slice"
+	desc = "An ostensibly nutritious slice of meatpizza from a long-closed pizzeria."
+	food_reagents = null
+	tastes = list("crust" = 1, "ketchup" = 1, "'cheese'" = 1, "mystery meat" = 1, "glue" = 1)
+	foodtypes = null
+
 /obj/item/food/pizza/mushroom
 	name = "mushroom pizza"
 	desc = "Very special pizza."

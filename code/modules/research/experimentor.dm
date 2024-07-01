@@ -60,7 +60,7 @@
 
 /obj/machinery/rnd/experimentor/proc/generate_valid_items_and_item_reactions()
 	var/static/list/banned_typecache = typecacheof(list(
-		/obj/item/stock_parts/cell/infinite,
+		/obj/item/stock_parts/power_store/cell/infinite,
 		/obj/item/grenade/chem_grenade/tuberculosis
 	))
 
@@ -558,7 +558,7 @@
 /obj/item/relic
 	name = "strange object"
 	desc = "What mysteries could this hold? Maybe Research & Development could find out."
-	icon = 'icons/obj/devices/assemblies.dmi'
+	icon = 'icons/obj/devices/artifacts.dmi'
 	var/realName = "defined object"
 	var/revealed = FALSE
 	var/realProc
@@ -567,7 +567,7 @@
 
 /obj/item/relic/Initialize(mapload)
 	. = ..()
-	icon_state = pick("shock_kit","armor-igniter-analyzer","infra-igniter0","infra-igniter1","radio-multitool","prox-radio1","radio-radio","timer-multitool0","radio-igniter-tank")
+	icon_state = pick("prototype1","prototype2","prototype3","prototype4","prototype5","prototype6","prototype7","prototype8","prototype9")
 	realName = "[pick("broken","twisted","spun","improved","silly","regular","badly made")] [pick("device","object","toy","illegal tech","weapon")]"
 
 

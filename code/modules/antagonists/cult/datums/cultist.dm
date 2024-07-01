@@ -7,6 +7,7 @@
 	preview_outfit = /datum/outfit/cultist
 	job_rank = ROLE_CULTIST
 	antag_hud_name = "cult"
+	stinger_sound = 'sound/ambience/antag/bloodcult/bloodcult_gain.ogg'
 
 	///The vote ability Cultists have to elect someone to be the leader.
 	var/datum/action/innate/cult/mastervote/vote_ability
@@ -23,7 +24,6 @@
 
 /datum/antagonist/cult/greet()
 	. = ..()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/bloodcult/bloodcult_gain.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
 	owner.announce_objectives()
 
 /datum/antagonist/cult/on_gain()
