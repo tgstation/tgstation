@@ -72,6 +72,8 @@
 	var/open_airlock_on_cycle = TRUE
 	///Airlocks currently animating
 	var/airlocks_animating = FALSE
+	///Whether the airlocks comment the cycling details to the chat
+	var/is_cycling_audible = TRUE
 
 	COOLDOWN_DECLARE(check_turfs_cooldown)
 
@@ -276,7 +278,8 @@
 
 		if(!source_airlock)
 			source_airlock = internal_airlocks[1]
-		source_airlock.say("Pressurizing airlock.")
+		if(is_cycling_audible)
+			source_airlock.say("Pressurizing airlock.")
 	else
 		cycle_pressure_target = external_pressure_target
 		var/pressure_delta = tile_air_pressure - cycle_pressure_target
@@ -291,7 +294,8 @@
 
 		if(!source_airlock)
 			source_airlock = external_airlocks[1]
-		source_airlock.say("Decompressing airlock.")
+		if(is_cycling_audible)
+			source_airlock.say("Decompressing airlock.")
 
 	update_appearance()
 	return TRUE
@@ -313,7 +317,7 @@
 	stoplag(1 SECONDS) // Wait for opening animation
 	airlocks_animating = FALSE
 
-	if(message)
+	if(message && is_cycling_audible)
 		unlocked_airlocks[1].say(message)
 
 	update_appearance()
@@ -442,6 +446,9 @@
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only
 	open_airlock_on_cycle = FALSE
+
+/obj/machinery/atmospherics/components/unary/airlock_pump/silent
+	is_cycling_audible = FALSE
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/lavaland
 	external_pressure_target = LAVALAND_EQUIPMENT_EFFECT_PRESSURE
