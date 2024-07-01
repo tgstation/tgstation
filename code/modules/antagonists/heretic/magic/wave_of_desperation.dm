@@ -11,8 +11,8 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 5 MINUTES
 
-	invocation = "F'K 'FF."
-	invocation_type = INVOCATION_WHISPER
+	invocation = "Kher' Sekh-em waaef'k!"
+	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
 	aoe_radius = 3

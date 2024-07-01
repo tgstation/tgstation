@@ -29,10 +29,7 @@
 /obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "ce" = (
 /obj/machinery/modular_computer/preset{
@@ -65,17 +62,11 @@
 /area/ruin/comms_agent)
 "dP" = (
 /obj/structure/closet/crate/secure/freezer/commsagent,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "eE" = (
 /obj/structure/cable,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "eT" = (
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/icemoon{
@@ -135,10 +126,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "ig" = (
 /obj/effect/turf_decal/siding/wood,
@@ -148,17 +136,11 @@
 /obj/effect/turf_decal/siding/wideplating/light/corner{
 	dir = 8
 	},
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "in" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "iZ" = (
 /obj/effect/turf_decal/siding/wood{
@@ -174,10 +156,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "ka" = (
 /obj/machinery/seed_extractor,
@@ -213,19 +192,13 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/storage/bag/trash,
 /obj/structure/closet/crate/bin,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "kL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "la" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -250,10 +223,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "mr" = (
 /obj/effect/turf_decal/siding/wood{
@@ -262,10 +232,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "mM" = (
 /obj/structure/ore_box,
@@ -351,6 +318,9 @@
 /obj/structure/filingcabinet,
 /obj/item/paperwork,
 /obj/item/paper/monitorkey,
+/obj/item/paper/fluff/ruins/listeningstation/briefing{
+	pixel_x = -2
+	},
 /turf/open/floor/wood/tile,
 /area/ruin/comms_agent)
 "sc" = (
@@ -395,10 +365,7 @@
 	pixel_x = 6;
 	pixel_y = 4
 	},
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "ud" = (
 /obj/effect/decal/cleanable/dirt,
@@ -406,9 +373,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/turf/open/floor/plating/snowed{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/plating/snowed/standard_air,
 /area/ruin/comms_agent)
 "uk" = (
 /obj/structure/cable,
@@ -423,17 +388,11 @@
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/tank_holder/extinguisher,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "up" = (
 /obj/effect/decal/cleanable/food/flour,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "uY" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -444,19 +403,21 @@
 "vB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
-/obj/item/paper/fluff/ruins/listeningstation/briefing{
-	pixel_x = -2
+/obj/item/pen/survival{
+	pixel_x = 8;
+	pixel_y = 8
 	},
-/obj/item/pen/survival,
+/obj/machinery/button/door{
+	id = "syndie_lpost_icemoon_windows";
+	name = "Window Shutters";
+	req_access = list("syndicate")
+	},
 /turf/open/floor/wood/tile,
 /area/ruin/comms_agent)
 "vK" = (
 /obj/effect/turf_decal/siding/wideplating/light,
 /obj/machinery/computer/arcade/orion_trail,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "vV" = (
 /obj/structure/toilet{
@@ -554,10 +515,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "zJ" = (
 /obj/machinery/biogenerator,
@@ -571,10 +529,7 @@
 /obj/machinery/coffeemaker/impressa{
 	pixel_y = 4
 	},
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "Bx" = (
 /obj/effect/baseturf_helper/asteroid/snow,
@@ -669,10 +624,7 @@
 "FZ" = (
 /obj/effect/baseturf_helper/reinforced_plating/ceiling,
 /obj/structure/cable,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "Gp" = (
 /obj/structure/fluff/empty_sleeper/syndicate{
@@ -687,10 +639,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "GI" = (
 /obj/structure/closet/crate/hydroponics,
@@ -752,10 +701,7 @@
 	pixel_y = 4
 	},
 /obj/item/storage/box/coffeepack,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "JD" = (
 /obj/structure/closet/cabinet,
@@ -813,9 +759,7 @@
 /obj/structure/cable,
 /obj/item/cultivator/rake,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating/snowed{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/plating/snowed/standard_air,
 /area/ruin/comms_agent)
 "Ll" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -894,10 +838,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "MH" = (
 /turf/closed/mineral/snowmountain/icemoon,
@@ -922,9 +863,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/turf/open/floor/plating/snowed{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/plating/snowed/standard_air,
 /area/ruin/comms_agent)
 "NJ" = (
 /obj/item/storage/medkit/regular,
@@ -947,9 +886,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating/snowed{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/plating/snowed/standard_air,
 /area/ruin/comms_agent)
 "OB" = (
 /turf/open/lava/plasma/ice_moon,
@@ -979,10 +916,7 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/structure/cable,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "Qx" = (
 /obj/structure/cable,
@@ -999,10 +933,7 @@
 /obj/item/pipe/trinary/flippable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "QT" = (
 /obj/structure/table,
@@ -1011,10 +942,7 @@
 	pixel_y = 4
 	},
 /obj/item/crowbar/red,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "QU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1127,6 +1055,9 @@
 /area/ruin/comms_agent)
 "XU" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "syndie_lpost_icemoon_windows"
+	},
 /turf/open/floor/plating,
 /area/ruin/comms_agent)
 "Yz" = (
@@ -1157,10 +1088,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS";
-	name = "bridge"
-	},
+/turf/open/floor/wood,
 /area/ruin/comms_agent)
 "ZE" = (
 /obj/structure/sink/directional/east,

@@ -53,7 +53,7 @@
 
 /obj/item/circuit_component/controller/proc/handle_trigger(atom/source, user, port_name, datum/port/output/port_signal)
 	source.balloon_alert(user, "clicked [port_name] button")
-	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+	playsound(source, SFX_TERMINAL_TYPE, 25, FALSE)
 	entity.set_output(user)
 	port_signal.set_output(COMPONENT_SIGNAL)
 
@@ -81,6 +81,9 @@
  */
 /obj/item/circuit_component/controller/proc/send_right_signal(atom/source, mob/user)
 	SIGNAL_HANDLER
-	if(!user.Adjacent(source))
+
+	if(!user.can_perform_action(source))
 		return
+
 	handle_trigger(source, user, "extra", right)
+	return CLICK_ACTION_SUCCESS

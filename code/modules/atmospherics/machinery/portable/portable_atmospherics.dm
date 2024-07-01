@@ -32,6 +32,9 @@
 	var/suppress_reactions = FALSE
 	/// Is there a hypernoblium crystal inserted into this
 	var/nob_crystal_inserted = FALSE
+	var/insert_sound = 'sound/effects/tank_insert_clunky.ogg'
+	var/remove_sound = 'sound/effects/tank_remove_thunk.ogg'
+	var/sound_vol = 50
 
 /datum/armor/machinery_portable_atmospherics
 	energy = 100
@@ -46,6 +49,7 @@
 	SSair.start_processing_machine(src)
 	AddElement(/datum/element/climbable, climb_time = 3 SECONDS, climb_stun = 3 SECONDS)
 	AddElement(/datum/element/elevation, pixel_shift = 8)
+	register_context()
 
 /obj/machinery/portable_atmospherics/on_deconstruction(disassembled)
 	if(nob_crystal_inserted)
@@ -83,6 +87,29 @@
 	if(!excited)
 		return PROCESS_KILL
 	excited = FALSE
+
+/obj/machinery/portable_atmospherics/welder_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	if(atom_integrity >= max_integrity || (machine_stat & BROKEN) || !tool.tool_start_check(user, amount = 1))
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "repairing...")
+	while(tool.use_tool(src, user, 2.5 SECONDS, volume=40))
+		atom_integrity = min(atom_integrity + 25, max_integrity)
+		if(atom_integrity >= max_integrity)
+			balloon_alert(user, "repaired")
+			return ITEM_INTERACT_SUCCESS
+		balloon_alert(user, "partially repaired...")
+
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/portable_atmospherics/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(!isliving(user) || !Adjacent(user))
+		return .
+	if(held_item?.tool_behaviour == TOOL_WELDER)
+		context[SCREENTIP_CONTEXT_LMB] = "Repair"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /// Take damage if a variable is exceeded. Damage is equal to temp/limit * heat/limit.
 /// The damage multiplier is treated as 1 if something is being ignored while the other one is exceeded.
@@ -187,15 +214,23 @@
 /obj/machinery/portable_atmospherics/proc/replace_tank(mob/living/user, close_valve, obj/item/tank/new_tank)
 	if(!user)
 		return FALSE
-	if(holding)
+	if(holding && new_tank)//for when we are actually switching tanks
+		user.put_in_hands(holding)
+		UnregisterSignal(holding, COMSIG_QDELETING)
+		holding = new_tank
+		RegisterSignal(holding, COMSIG_QDELETING, PROC_REF(unregister_holding))
+		playsound(src, list(insert_sound,remove_sound), sound_vol)
+	else if(holding)//we remove a tank
 		if(Adjacent(user))
 			user.put_in_hands(holding)
 		else
 			holding.forceMove(get_turf(src))
+		playsound(src, remove_sound, sound_vol)
 		UnregisterSignal(holding, COMSIG_QDELETING)
 		holding = null
-	if(new_tank)
+	else if(new_tank)//we insert the tank
 		holding = new_tank
+		playsound(src, insert_sound, sound_vol)
 		RegisterSignal(holding, COMSIG_QDELETING, PROC_REF(unregister_holding))
 
 	SSair.start_processing_machine(src)

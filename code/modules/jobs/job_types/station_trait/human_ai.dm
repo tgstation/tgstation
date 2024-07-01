@@ -21,7 +21,7 @@
 	paycheck = null
 	paycheck_department = null
 
-	mind_traits = list(DISPLAYS_JOB_IN_BINARY)
+	mind_traits = list(TRAIT_DISPLAY_JOB_IN_BINARY)
 	liver_traits = list(TRAIT_HUMAN_AI_METABOLISM)
 
 	departments_list = list(

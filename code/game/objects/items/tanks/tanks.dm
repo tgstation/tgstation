@@ -415,6 +415,16 @@
 	if(tank_assembly)
 		tank_assembly.attack_hand()
 
+/obj/item/tank/attack_self(mob/user, modifiers)
+	if (tank_assembly)
+		tank_assembly.attack_self(user)
+		return TRUE
+	return ..()
+
+/obj/item/tank/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	ui_interact(user)
+
 /obj/item/tank/Move()
 	. = ..()
 	if(tank_assembly)
@@ -447,7 +457,7 @@
 		balloon_alert(user, "can't reach!")
 		return
 
-	if((src in user.get_equipped_items(include_pockets = TRUE, include_accessories = TRUE)) && !user.canUnEquip(src))
+	if((src in user.get_equipped_items(INCLUDE_POCKETS | INCLUDE_ACCESSORIES)) && !user.canUnEquip(src))
 		balloon_alert(user, "it's stuck!")
 		return
 

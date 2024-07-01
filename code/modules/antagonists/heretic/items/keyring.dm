@@ -118,12 +118,12 @@
 	var/obj/item/card/id/card = fused_ids[cardname]
 	shapeshift(card)
 
-/obj/item/card/id/advanced/heretic/CtrlClick(mob/user)
-	. = ..()
+/obj/item/card/id/advanced/heretic/item_ctrl_click(mob/user)
 	if(!IS_HERETIC(user))
-		return
+		return CLICK_ACTION_BLOCKING
 	inverted = !inverted
 	balloon_alert(user, "[inverted ? "now" : "no longer"] creating inverted rifts")
+	return CLICK_ACTION_SUCCESS
 
 ///Changes our appearance to the passed ID card
 /obj/item/card/id/advanced/heretic/proc/shapeshift(obj/item/card/id/advanced/card)
@@ -171,29 +171,27 @@
 	playsound(drop_location(),'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	access += card.access
 
-/obj/item/card/id/advanced/heretic/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag || !IS_HERETIC(user))
-		return
+/obj/item/card/id/advanced/heretic/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	if(!IS_HERETIC(user))
+		return NONE
 	if(istype(target, /obj/effect/lock_portal))
 		clear_portals()
-		return
-
+		return ITEM_INTERACT_SUCCESS
 	if(!istype(target, /obj/machinery/door))
-		return
-
+		return NONE
 	var/reference_resolved = link?.resolve()
 	if(reference_resolved == target)
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(reference_resolved)
 		make_portal(user, reference_resolved, target)
-		to_chat(user, span_notice("You use [src], to link [link] and [target] together."))
+		to_chat(user, span_notice("You use [src], to link [reference_resolved] and [target] together."))
 		link = null
 		balloon_alert(user, "link 2/2")
 	else
 		link = WEAKREF(target)
 		balloon_alert(user, "link 1/2")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/card/id/advanced/heretic/Destroy()
 	QDEL_LIST_ASSOC(fused_ids)
