@@ -114,6 +114,7 @@
 	else
 		ADD_TRAIT(clicker, TRAIT_SEE_WORN_COLOURS, CLOTHING_TRAIT)
 		clicker.balloon_alert(clicker, "glasses colors enabled")
+	return CLICK_ACTION_SUCCESS
 
 /datum/element/wearable_client_colour/proc/on_examine(obj/item/source, mob/user, list/examine_texts)
 	SIGNAL_HANDLER
