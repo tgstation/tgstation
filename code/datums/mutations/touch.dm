@@ -186,7 +186,7 @@
 	new /obj/effect/temp_visual/heal(get_turf(hurtguy), COLOR_VERY_PALE_LIME_GREEN)
 	return success
 
-/datum/action/cooldown/spell/touch/lay_on_hands/proc/do_simple_heals(mob/living/carbon/mendicant, mob/living/hurtguy, heal_multiplier, pain_multiplier)
+/datum/action/cooldown/spell/touch/lay_on_hands/proc/do_simple_heal(mob/living/carbon/mendicant, mob/living/hurtguy, heal_multiplier, pain_multiplier)
 	// Did the transfer work?
 	. = FALSE
 
