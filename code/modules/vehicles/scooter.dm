@@ -218,7 +218,7 @@
 
 /obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded/post_unbuckle_mob(mob/living/M)
 	if(!has_buckled_mobs())
-	qdel (M.GetComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY))
+		qdel (M.GetComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY))
 	return ..()
 
 /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
