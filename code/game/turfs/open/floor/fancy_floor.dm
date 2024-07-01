@@ -276,11 +276,11 @@
 	if(!. || !(updates & UPDATE_SMOOTHING))
 		return
 	if(!broken && !burnt)
-		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		if(smoothing_flags & USES_SMOOTHING)
 			QUEUE_SMOOTH(src)
 	else
 		make_plating()
-		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		if(smoothing_flags & USES_SMOOTHING)
 			QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/open/floor/carpet/lone
