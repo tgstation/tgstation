@@ -186,7 +186,7 @@
 	new /obj/effect/temp_visual/heal(get_turf(hurtguy), COLOR_VERY_PALE_LIME_GREEN)
 	return success
 
-/datum/action/cooldown/spell/touch/lay_on_hands/proc/do_simple_heal(mob/living/carbon/mendicant, mob/living/hurtguy, heal_multiplier, pain_multiplier)
+/datum/action/cooldown/spell/touch/lay_on_hands/proc/do_simple_heals(mob/living/carbon/mendicant, mob/living/hurtguy, heal_multiplier, pain_multiplier)
 	// Did the transfer work?
 	. = FALSE
 
@@ -211,11 +211,11 @@
 		mendicant_transfer_limb.receive_damage(brute_to_heal * pain_multiplier, burn_to_heal * pain_multiplier, forced = TRUE, wound_bonus = CANT_WOUND)
 
 	if(brute_to_heal)
-		hurtguy.adjustBruteLoss(brute_to_heal)
+		hurtguy.adjustBruteLoss(-brute_to_heal)
 		. = TRUE
 
 	if(burn_to_heal)
-		hurtguy.adjustFireLoss(burn_to_heal)
+		hurtguy.adjustFireLoss(-burn_to_heal)
 		. = TRUE
 
 	return .
