@@ -2957,7 +2957,6 @@
 /area/station/security/checkpoint/engineering)
 "aoN" = (
 /obj/machinery/elevator_control_panel{
-	layer = 3.1;
 	pixel_y = 2;
 	linked_elevator_id = "tram_xeno_lift";
 	preset_destination_names = list("2"="Lower                                                                Deck", "3"="Upper                                                                Deck")
@@ -66505,8 +66504,7 @@
 /area/station/science/explab)
 "wrJ" = (
 /obj/structure/railing{
-	dir = 4;
-	layer = 3.1
+	dir = 4
 	},
 /obj/machinery/netpod,
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -69603,7 +69601,6 @@
 /area/station/cargo/storage)
 "xAM" = (
 /obj/machinery/elevator_control_panel{
-	layer = 3.1;
 	pixel_y = 2;
 	linked_elevator_id = "tram_xeno_lift";
 	preset_destination_names = list("2"="Lower                                                                Deck", "3"="Upper                                                                Deck")

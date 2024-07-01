@@ -7276,13 +7276,11 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/button/door/directional/east{
 	id = "cargounload";
-	layer = 4;
 	name = "Loading Doors";
 	pixel_y = 6
 	},
 /obj/machinery/button/door/directional/east{
 	id = "cargoload";
-	layer = 4;
 	name = "Loading Doors";
 	pixel_y = -6
 	},
@@ -36159,9 +36157,7 @@
 /area/station/commons/toilet/locker)
 "iYp" = (
 /obj/structure/cable,
-/obj/machinery/nuclearbomb/selfdestruct{
-	layer = 2
-	},
+/obj/machinery/nuclearbomb/selfdestruct,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
@@ -58314,9 +58310,7 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/door/window/right/directional/east{
-	layer = 3
-	},
+/obj/machinery/door/window/right/directional/east,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal)
 "oGr" = (
@@ -64121,9 +64115,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/disposal/bin{
-	layer = 3.21
-	},
+/obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -77284,9 +77276,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "trC" = (
-/obj/item/reagent_containers/condiment/enzyme{
-	layer = 5
-	},
+/obj/item/reagent_containers/condiment/enzyme,
 /obj/item/kitchen/rollingpin,
 /obj/structure/table,
 /obj/item/reagent_containers/cup/bowl,
@@ -94419,7 +94409,6 @@
 /obj/item/reagent_containers/blood/random,
 /obj/effect/turf_decal/bot,
 /obj/item/reagent_containers/condiment/enzyme{
-	layer = 5;
 	pixel_x = -6;
 	pixel_y = 8
 	},
