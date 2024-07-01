@@ -1,0 +1,5 @@
+author: "ancient-engineer"
+delete-after: True
+changes:
+  - qol: "Gets rid of the fov effect of the swat mask"
+  - qol: "Gets rid of the vignette around your vision while wearing the spacepol mask"
