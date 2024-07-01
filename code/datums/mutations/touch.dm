@@ -201,7 +201,7 @@
 		if(IS_ORGANIC_LIMB(possible_limb))
 			mendicant_organic_limbs += possible_limb
 	// None? Gtfo
-	if(isnull(mendicant_organic_limbs))
+	if(!length(mendicant_organic_limbs))
 		return .
 
 	// Try to use our active hand, otherwise pick at random
