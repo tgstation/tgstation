@@ -1,0 +1,4 @@
+author: "lorwp"
+delete-after: True
+changes:
+  - bugfix: "extinguishers now can be filled with subtypes of water again (Namely, holy water)"

@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - bugfix: "Some varieties of snow now visually melt properly again when burned"

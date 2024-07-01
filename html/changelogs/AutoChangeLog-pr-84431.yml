@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - code_imp: "Blood filter only pings and says finished when it's actually finished"
