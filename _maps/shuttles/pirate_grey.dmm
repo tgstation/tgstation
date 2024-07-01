@@ -1232,7 +1232,7 @@
 /area/shuttle/pirate)
 "Pn" = (
 /turf/closed/wall,
-/area/template_noop)
+/area/shuttle/pirate)
 "PM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/grille_or_waste,

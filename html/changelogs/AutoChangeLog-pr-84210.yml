@@ -1,6 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - qol: "Made light tiles available in the crafting menu"
-  - qol: "Circuit tile variants can be cycled in-hand"
-  - rscadd: "Moved loose tiles and wall frames from lathe designs to other tiles and frames in the crafting menu"

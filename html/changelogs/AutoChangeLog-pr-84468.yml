@@ -1,4 +1,0 @@
-author: "xXPawnStarrXx"
-delete-after: True
-changes:
-  - rscdel: "Removed cordons on deathmatch maps, since they're autoadded now."

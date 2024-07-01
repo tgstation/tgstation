@@ -97,13 +97,10 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(uses_left <= 0)
 		user.transferItemToLoc(src, thing, TRUE)
 
-	var/mutable_appearance/balloon
-	var/mutable_appearance/balloon2
-	var/mutable_appearance/balloon3
-
 	if(isliving(thing))
 		var/mob/living/creature = thing
 		creature.Paralyze(32 SECONDS) // Keep them from moving during the duration of the extraction
+		ADD_TRAIT(creature, TRAIT_FORCED_STANDING, FULTON_PACK_TRAIT) // Prevents animation jank from happening
 		if(creature.buckled)
 			creature.buckled.unbuckle_mob(creature, TRUE) // Unbuckle them to prevent anchoring problems
 	else
@@ -113,14 +110,15 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	var/obj/effect/extraction_holder/holder_obj = new(get_turf(thing))
 	holder_obj.appearance = thing.appearance
 	thing.forceMove(holder_obj)
-	balloon2 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_expand")
+	var/mutable_appearance/balloon2 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_expand", layer = VEHICLE_LAYER)
 	balloon2.pixel_y = 10
 	balloon2.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	holder_obj.add_overlay(balloon2)
+	addtimer(CALLBACK(src, PROC_REF(create_balloon), thing, user, holder_obj, balloon2), 0.4 SECONDS)
+	return ITEM_INTERACT_SUCCESS
 
-	sleep(0.4 SECONDS)
-
-	balloon = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_balloon")
+/obj/item/extraction_pack/proc/create_balloon(atom/movable/thing, mob/living/user, obj/effect/extraction_holder/holder_obj, mutable_appearance/balloon2)
+	var/mutable_appearance/balloon = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_balloon", layer = VEHICLE_LAYER)
 	balloon.pixel_y = 10
 	balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	holder_obj.cut_overlay(balloon2)
@@ -132,6 +130,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	animate(pixel_z = -5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
 	animate(pixel_z = 5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
 	animate(pixel_z = -5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+
 	sleep(6 SECONDS)
 
 	playsound(holder_obj.loc, 'sound/items/fultext_launch.ogg', vol = 50, vary = TRUE, extrarange = -3)
@@ -146,7 +145,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	sleep(3 SECONDS)
 
 	var/turf/flooring_near_beacon = list()
-	var/turf/beacon_turf = get_turf(beacon)
+	var/turf/beacon_turf = get_turf(beacon_ref.resolve())
 	for(var/turf/floor as anything in RANGE_TURFS(1, beacon_turf))
 		if(!floor.is_blocked_turf())
 			flooring_near_beacon += floor
@@ -159,26 +158,28 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	animate(holder_obj, pixel_z = -990, time = 5 SECONDS, flags = ANIMATION_RELATIVE)
 	animate(pixel_z = 5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
 	animate(pixel_z = -5, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+
 	sleep(7 SECONDS)
 
-	balloon3 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_retract")
+	var/mutable_appearance/balloon3 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_retract", layer = VEHICLE_LAYER)
 	balloon3.pixel_y = 10
 	balloon3.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	holder_obj.cut_overlay(balloon)
 	holder_obj.add_overlay(balloon3)
+
 	sleep(0.4 SECONDS)
 
 	holder_obj.cut_overlay(balloon3)
+	if (isliving(thing))
+		REMOVE_TRAIT(thing, TRAIT_FORCED_STANDING, FULTON_PACK_TRAIT)
 	thing.set_anchored(FALSE) // An item has to be unanchored to be extracted in the first place.
 	thing.set_density(initial(thing.density))
 	animate(holder_obj, pixel_z = -10, time = 0.5 SECONDS, flags = ANIMATION_RELATIVE)
 	sleep(0.5 SECONDS)
-
 	thing.forceMove(holder_obj.loc)
 	qdel(holder_obj)
 	if(uses_left <= 0)
 		qdel(src)
-	return ITEM_INTERACT_SUCCESS
 
 /obj/item/fulton_core
 	name = "extraction beacon assembly kit"
