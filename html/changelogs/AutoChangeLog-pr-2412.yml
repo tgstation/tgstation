@@ -1,0 +1,5 @@
+author: "KnigTheThrasher"
+delete-after: True
+changes:
+  - rscadd: "Added novastation clothes to our loadouts and store"
+  - bugfix: "Fixed satyr legs being unhealable"
