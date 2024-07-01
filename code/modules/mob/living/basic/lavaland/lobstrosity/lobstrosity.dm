@@ -43,8 +43,8 @@
 	AddElement(/datum/element/mob_grabber)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/basic_eating, food_types = target_foods)
-	AddElement(\
-		/datum/element/amputating_limbs,\
+	AddComponent(\
+		/datum/component/amputating_limbs,\
 		surgery_verb = "begins snipping",\
 		target_zones = GLOB.arm_zones,\
 	)
