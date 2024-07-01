@@ -98,6 +98,11 @@
 
 	if(honor_check(defender))
 		var/strength_bonus = HAS_TRAIT(attacker, TRAIT_STRENGTH) ? 2 : 0 //Investing into genetic strength improvements makes you a better boxer
+
+		var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = attacker.get_organ_slot(ORGAN_SLOT_SPINE) //Getting a cyberspine also pushes you further than just mere meat
+		if(istype(potential_spine))
+			strength_bonus *= potential_spine.strength_bonus
+
 		damage += round(athletics_skill * check_streak(attacker, defender) + strength_bonus)
 		grant_experience = TRUE
 
