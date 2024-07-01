@@ -1,0 +1,4 @@
+author: "hyperjll"
+delete-after: True
+changes:
+  - bugfix: "Hostile plant monsters (EX: Killer Tomatoes) no longer act hostile toward Seedlings."
