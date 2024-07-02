@@ -137,6 +137,15 @@
 	var/stepsound = 'sound/mecha/mechstep.ogg'
 	///Sound played when the mech walks
 	var/turnsound = 'sound/mecha/mechturn.ogg'
+	///Sounds for types of melee attack
+	var/brute_attack_sound = 'sound/weapons/punch4.ogg'
+	var/burn_attack_sound = 'sound/items/welder.ogg'
+	var/tox_attack_sound = 'sound/effects/spray2.ogg'
+	///Sound on wall destroying
+	var/destroy_wall_sound = 'sound/effects/meteorimpact.ogg'
+
+	///Melee attack verb
+	var/list/attack_verbs = list("hit", "hits", "hitting")
 
 	///Cooldown duration between melee punches
 	var/melee_cooldown = CLICK_CD_SLOW
@@ -151,6 +160,8 @@
 	var/is_currently_ejecting = FALSE
 	///Safety for weapons. Won't fire if enabled, and toggled by middle click.
 	var/weapons_safety = FALSE
+	///Don't play standard sound when set safety if TRUE.
+	var/safety_sound_custom = FALSE
 
 	var/datum/effect_system/fluid_spread/smoke/smoke_system
 
@@ -365,7 +376,8 @@
  */
 /obj/vehicle/sealed/mecha/proc/set_safety(mob/user)
 	weapons_safety = !weapons_safety
-	SEND_SOUND(user, sound('sound/machines/beep.ogg', volume = 25))
+	if(!safety_sound_custom)
+		SEND_SOUND(user, sound('sound/machines/beep.ogg', volume = 25))
 	balloon_alert(user, "equipment [weapons_safety ? "safe" : "ready"]")
 	set_mouse_pointer()
 	SEND_SIGNAL(src, COMSIG_MECH_SAFETIES_TOGGLE, user, weapons_safety)
@@ -905,3 +917,9 @@
 			act.button_icon_state = "mech_lights_off"
 		balloon_alert(occupant, "lights [mecha_flags & LIGHTS_ON ? "on":"off"]")
 		act.build_all_button_icons()
+
+/obj/vehicle/sealed/mecha/proc/melee_attack_effect(mob/living/victim, heavy)
+	if(heavy)
+		victim.Unconscious(2 SECONDS)
+	else
+		victim.Knockdown(4 SECONDS)
