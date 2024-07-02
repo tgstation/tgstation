@@ -67,7 +67,7 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	flags_cover = GLASSESCOVERSEYES
 	// Blue green, dark
-	color_cutoffs = list(15, 15, 45)
+	color_cutoffs = list(20, 20, 45)
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 	actions_types = list(/datum/action/item_action/toggle_nv)
 	forced_glass_color = TRUE
