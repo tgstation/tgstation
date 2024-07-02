@@ -566,6 +566,24 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/cyberimp_herculean
+	name = "Herculean Gravitronic Spinal Implant"
+	desc = "This gravitronic spinal interface allows the user to reduce the impact of gravity on their body, effectively improving athletic performance."
+	id = "ci-herculean"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 4 SECONDS
+	materials = list(
+		/datum/material/iron =SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/titanium=SMALL_MATERIAL_AMOUNT*3,
+		/datum/material/gold=SMALL_MATERIAL_AMOUNT*3,
+		/datum/material/diamond =SMALL_MATERIAL_AMOUNT*5,
+	)
+	build_path = /obj/item/organ/internal/cyberimp/chest/spine
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_HEALTH
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /datum/design/cyberimp_nutriment
 	name = "Nutriment Pump Implant"
 	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are starving."

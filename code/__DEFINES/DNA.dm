@@ -86,6 +86,7 @@
 #define ORGAN_SLOT_MONSTER_CORE "monstercore"
 #define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
 #define ORGAN_SLOT_LEFT_ARM_AUG "l_arm_device" //This one ignores alphabetical order cause the arms should be together
+#define ORGAN_SLOT_SPINE "spine"
 #define ORGAN_SLOT_STOMACH "stomach"
 #define ORGAN_SLOT_STOMACH_AID "stomach_aid"
 #define ORGAN_SLOT_THRUSTERS "thrusters"

@@ -62,6 +62,12 @@
 	. = SEND_SIGNAL(src, COMSIG_LIVING_Z_IMPACT, levels, impacted_turf)
 	if(. & ZIMPACT_CANCEL_DAMAGE)
 		return .
+	// multiplier for the damage taken from falling
+	var/damage_softening_multiplier = 1
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		damage_softening_multiplier *= potential_spine.athletics_boost_multiplier
 
 	// If you are incapped, you probably can't brace yourself
 	var/can_help_themselves = !incapacitated(IGNORE_RESTRAINTS)
@@ -108,7 +114,7 @@
 		new /obj/effect/temp_visual/mook_dust(impacted_turf)
 
 	if(body_position == STANDING_UP)
-		var/damage_for_each_leg = round(incoming_damage / 2)
+		var/damage_for_each_leg = round((incoming_damage / 2) * damage_softening_multiplier)
 		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_L_LEG, wound_bonus = -2.5 * levels)
 		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_R_LEG, wound_bonus = -2.5 * levels)
 	else
@@ -678,6 +684,13 @@
 
 /mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
+
+	var/get_up_time = 1 SECONDS
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		get_up_time *= potential_spine.athletics_boost_multiplier
+
 	if(!instant && !do_after(src, 1 SECONDS, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP, hidden = TRUE))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
