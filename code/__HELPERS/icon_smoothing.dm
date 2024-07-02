@@ -493,7 +493,7 @@ xxx xxx xxx
 			var/junction_dir = reverse_ndir(smoothing_junction)
 			var/turned_adjacency = REVERSE_DIR(junction_dir)
 			var/turf/neighbor_turf = get_step(src, turned_adjacency & (NORTH|SOUTH))
-			var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
+			var/mutable_appearance/underlay_appearance = mutable_appearance(layer = LOW_FLOOR_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
 			if(!neighbor_turf.get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency))
 				neighbor_turf = get_step(src, turned_adjacency & (EAST|WEST))
 

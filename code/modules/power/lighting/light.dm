@@ -722,7 +722,7 @@
 	icon_state = "floor"
 	brightness = 4
 	light_angle = 360
-	layer = LOW_OBJ_LAYER
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"
@@ -739,4 +739,6 @@
 /obj/machinery/light/floor/transport
 	name = "transport light"
 	break_if_moved = FALSE
+	// has to render above tram things (trams are stupid)
 	layer = BELOW_OPEN_DOOR_LAYER
+	plane = GAME_PLANE

@@ -871,6 +871,7 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = "space"
 	floor_tile = /obj/item/stack/tile/fakespace
+	layer = SPACE_LAYER
 	plane = PLANE_SPACE
 	tiled_dirt = FALSE
 	damaged_dmi = 'icons/turf/space.dmi'

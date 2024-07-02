@@ -19,14 +19,10 @@
 	rust_resistance = RUST_RESISTANCE_BASIC
 	var/covered = TRUE
 	var/catwalk_type = "maint"
-	var/static/list/catwalk_underlays = list()
 
 /turf/open/floor/catwalk_floor/Initialize(mapload)
 	. = ..()
-	if(!catwalk_underlays[catwalk_type])
-		var/mutable_appearance/plating_underlay = mutable_appearance(icon, "[catwalk_type]_below", TURF_LAYER)
-		catwalk_underlays[catwalk_type] = plating_underlay
-	underlays += catwalk_underlays[catwalk_type]
+	underlays += mutable_appearance(icon, "[catwalk_type]_below", LOW_FLOOR_LAYER, src, FLOOR_PLANE)
 	update_appearance()
 
 /turf/open/floor/catwalk_floor/examine(mob/user)
@@ -43,7 +39,7 @@
 	covered = !covered
 	if(!covered)
 		underfloor_accessibility = UNDERFLOOR_INTERACTABLE
-		layer = TURF_LAYER
+		layer = LOW_FLOOR_LAYER
 		icon_state = "[catwalk_type]_below"
 	else
 		underfloor_accessibility = UNDERFLOOR_VISIBLE

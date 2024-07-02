@@ -122,23 +122,37 @@
 // PLANE_SPACE layer(s)
 #define SPACE_LAYER 1.8
 
-//#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define. Most floors (FLOOR_PLANE) and walls (WALL_PLANE) use this.
+// placed here for documentation. Byond's default turf layer
+// We do not use it, as different turfs render on different planes
+// #define TURF_LAYER 2
+#define TURF_LAYER 2 #error TURF_LAYER is no longer supported, please be more specific
+
+// FLOOR_PLANE layer(s)
+// We need to force this plane to render as if we were not using sidemap
+// this allows larger then bound floors to layer as we'd expect
+// ANYTHING on the floor plane needs TOPDOWN_LAYER, and nothing that isn't on the floor plane can have it
 
 //FLOOR_PLANE layers
-#define TURF_PLATING_DECAL_LAYER 2.001
-#define TURF_DECAL_LAYER 2.009 //Makes turf decals appear in DM how they will look inworld.
-#define CULT_OVERLAY_LAYER 2.01
-#define MID_TURF_LAYER 2.02
-#define HIGH_TURF_LAYER 2.03
-#define LATTICE_LAYER 2.04
-#define DISPOSAL_PIPE_LAYER 2.042
-#define WIRE_LAYER 2.044
-#define GLASS_FLOOR_LAYER 2.046
-#define TRAM_RAIL_LAYER 2.047
-#define ABOVE_OPEN_TURF_LAYER 2.049
+// NOTICE: we break from the pattern of increasing in steps of like 0.01 here
+// Because TOPDOWN_LAYER is 10000 and that's enough to floating point our modifications away
+#define LOW_FLOOR_LAYER (1 + TOPDOWN_LAYER)
+#define TURF_PLATING_DECAL_LAYER (2 + TOPDOWN_LAYER)
+#define TURF_DECAL_LAYER (3 + TOPDOWN_LAYER) //Makes turf decals appear in DM how they will look inworld.
+#define CULT_OVERLAY_LAYER (4 + TOPDOWN_LAYER)
+#define MID_TURF_LAYER (5 + TOPDOWN_LAYER)
+#define HIGH_TURF_LAYER (6 + TOPDOWN_LAYER)
+#define LATTICE_LAYER (7 + TOPDOWN_LAYER)
+#define DISPOSAL_PIPE_LAYER (8 + TOPDOWN_LAYER)
+#define WIRE_LAYER (9 + TOPDOWN_LAYER)
+#define GLASS_FLOOR_LAYER (10 + TOPDOWN_LAYER)
+#define TRAM_RAIL_LAYER (11 + TOPDOWN_LAYER)
+///catwalk overlay of /turf/open/floor/plating/catwalk_floor
+#define CATWALK_LAYER (12 + TOPDOWN_LAYER)
+#define ABOVE_OPEN_TURF_LAYER (13 + TOPDOWN_LAYER)
 
 //WALL_PLANE layers
-#define CLOSED_TURF_LAYER 2.05
+#define BELOW_CLOSED_TURF_LAYER 2.053
+#define CLOSED_TURF_LAYER 2.058
 
 // GAME_PLANE layers
 #define BULLET_HOLE_LAYER 2.06
@@ -153,8 +167,6 @@
 #define PLUMBING_PIPE_VISIBILE_LAYER 2.495//layer = initial(layer) + ducting_layer / 3333 in atmospherics/handle_layer() to determine order of duct overlap
 #define BOT_PATH_LAYER 2.497
 #define LOW_OBJ_LAYER 2.5
-///catwalk overlay of /turf/open/floor/plating/catwalk_floor
-#define CATWALK_LAYER 2.51
 #define LOW_SIGIL_LAYER 2.52
 #define SIGIL_LAYER 2.53
 #define HIGH_PIPE_LAYER 2.54

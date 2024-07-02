@@ -86,3 +86,19 @@
 // This is solvable with lowspec preferences, which would not be hard to implement
 // Player popups will now render their effects, like overlay lights. this is fixable, but I've not gotten to it
 // I think overlay lights can render on the wrong z layer. s fucked
+
+/// Whitelist of planes allowed to use TOPDOWN_LAYER
+GLOBAL_LIST_INIT(topdown_planes, list(
+		"[FLOOR_PLANE]" = TRUE,
+	))
+
+/// Checks if a passed in MA or atom is allowed to have its current plane/layer matchup
+/proc/check_topdown_validity(mutable_appearance/thing_to_check)
+	if(istype(thing_to_check, /atom/movable/screen/plane_master))
+		return
+	var/topdown_plane = GLOB.topdown_planes["[PLANE_TO_TRUE(thing_to_check.plane)]"]
+	if(topdown_plane)
+		if(thing_to_check.layer - TOPDOWN_LAYER < 0 || thing_to_check.layer >= BACKGROUND_LAYER)
+			stack_trace("[thing_to_check] ([thing_to_check.type]) was expected to have a TOPDOWN_LAYER layer due to its plane, but it DID NOT! layer: ([thing_to_check.layer]) plane: ([thing_to_check.plane])")
+	else if(thing_to_check.layer - TOPDOWN_LAYER >= 0 && thing_to_check.layer < BACKGROUND_LAYER)
+		stack_trace("[thing_to_check] ([thing_to_check.type] is NOT ALLOWED to have a TOPDOWN_LAYER layer due to its plane, but it did! layer: ([thing_to_check.layer]) plane: ([thing_to_check.plane])")

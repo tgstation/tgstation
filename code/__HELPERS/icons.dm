@@ -420,6 +420,10 @@ world
 				} \
 				current_layer = base_layer + appearance.layer + current_layer / 1000; \
 			} \
+			/* If we are using topdown rendering, chop that part off so things layer together as expected */ \
+			if((current_layer >= TOPDOWN_LAYER && current_layer < EFFECTS_LAYER) || current_layer > TOPDOWN_LAYER + EFFECTS_LAYER) { \
+				current_layer -= TOPDOWN_LAYER; \
+			} \
 			for (var/index_to_compare_to in 1 to layers.len) { \
 				var/compare_to = layers[index_to_compare_to]; \
 				if (current_layer < layers[compare_to]) { \

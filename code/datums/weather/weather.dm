@@ -56,7 +56,7 @@
 	/// The list of z-levels that this weather is actively affecting
 	var/impacted_z_levels
 
-	/// Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
+	/// Since it's above everything else, this is the layer used by default.
 	var/overlay_layer = AREA_LAYER
 	/// Plane for the overlay
 	var/overlay_plane = AREA_PLANE

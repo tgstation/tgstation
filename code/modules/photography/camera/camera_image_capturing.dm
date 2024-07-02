@@ -57,7 +57,7 @@
 		var/atom/c = atoms[i]
 		for(j = sorted.len, j > 0, --j)
 			var/atom/c2 = sorted[j]
-			if((c2.plane <= c.plane) && (c2.layer <= c.layer))
+			if((c2.plane <= c.plane) || (c2.layer <= c.layer))
 				break
 		sorted.Insert(j+1, c)
 		CHECK_TICK

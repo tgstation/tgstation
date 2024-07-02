@@ -120,7 +120,7 @@
 	hitsound = 'sound/weapons/batonextend.ogg'
 	hitsound_wall = 'sound/weapons/batonextend.ogg'
 	suppressed = SUPPRESSED_VERY
-	hit_threshhold = LATTICE_LAYER
+	hit_threshhold = ABOVE_NORMAL_TURF_LAYER
 	/// Reference to the beam following the projectile.
 	var/line
 
