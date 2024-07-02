@@ -11,7 +11,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 1 MINUTES
 
-	invocation = "GL'RY T' TH' N'GHT'W'TCH'ER"
+	invocation = "Dyrth-a Vaktry'ggjandi"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = SPELL_REQUIRES_HUMAN
 

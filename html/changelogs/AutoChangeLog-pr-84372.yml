@@ -1,4 +1,0 @@
-author: "Thlumyn"
-delete-after: True
-changes:
-  - bugfix: "fixed active turfs in icebox listening post"
