@@ -1,0 +1,5 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - qol: "Loot panels should update more predictably and informatively now."
+  - code_imp: "Lootpanels have more consistent logic on when they automatically update."
