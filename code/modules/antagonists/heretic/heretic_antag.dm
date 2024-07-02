@@ -60,17 +60,17 @@
 	/// Wether we are allowed to ascend
 	var/feast_of_owls = FALSE
 	/// Static list of what each path converts to in the UI (colors are TGUI colors)
-	var/static/list/path_to_ui_color = list(
-		PATH_START = "grey",
-		PATH_SIDE = "green",
-		PATH_RUST = "brown",
-		PATH_FLESH = "red",
-		PATH_ASH = "white",
-		PATH_VOID = "blue",
-		PATH_BLADE = "label", // my favorite color is label
-		PATH_COSMIC = "purple",
-		PATH_LOCK = "yellow",
-		PATH_MOON = "blue",
+	var/static/list/path_to_ui_bgr = list(
+		PATH_START = "node_side",
+		PATH_SIDE = "node_side",
+		PATH_RUST = "node_rust",
+		PATH_FLESH = "node_flesh",
+		PATH_ASH = "node_ash",
+		PATH_VOID = "node_void",
+		PATH_BLADE = "node_blade",
+		PATH_COSMIC = "node_cosmos",
+		PATH_LOCK = "node_lock",
+		PATH_MOON = "node_moon",
 	)
 
 	var/static/list/path_to_rune_color = list(
@@ -85,9 +85,94 @@
 		PATH_MOON = COLOR_BLUE_LIGHT,
 	)
 
+	/// List that keeps track of which items have been gifted to the heretic after a cultist was sacrificed. Used to alter drop chances to reduce dupes.
+	var/list/unlocked_heretic_items = list(
+		/obj/item/melee/sickly_blade/cursed = 0,
+		/obj/item/clothing/neck/heretic_focus/crimson_focus = 0,
+		/mob/living/basic/construct/harvester/heretic = 0,
+	)
+	/// Simpler version of above used to limit amount of loot that can be hoarded
+	var/rewards_given = 0
+
 /datum/antagonist/heretic/Destroy()
 	LAZYNULL(sac_targets)
 	return ..()
+
+/datum/antagonist/heretic/proc/get_icon_of_knowledge(datum/heretic_knowledge/knowledge)
+	//basic icon parameters
+	var/icon_path = 'icons/mob/actions/actions_ecult.dmi'
+	var/icon_state = "eye"
+	var/icon_frame = knowledge.research_tree_icon_frame
+	var/icon_dir = knowledge.research_tree_icon_dir
+	//can't imagine why you would want this one, so it can't be overridden by the knowledge
+	var/icon_moving = 0
+
+	//item transmutation knowledge does not generate its own icon due to implementation difficulties, the icons have to be specified in the override vars
+
+	//if the knowledge has a special icon, use that
+	if(!isnull(knowledge.research_tree_icon_path))
+		icon_path = knowledge.research_tree_icon_path
+		icon_state = knowledge.research_tree_icon_state
+
+	//if the knowledge is a spell, use the spell's button
+	else if(ispath(knowledge,/datum/heretic_knowledge/spell))
+		var/datum/heretic_knowledge/spell/spell_knowledge = knowledge
+		var/datum/action/cooldown/spell/result_spell = spell_knowledge.spell_to_add
+		icon_path = result_spell.button_icon
+		icon_state = result_spell.button_icon_state
+
+	//if the knowledge is a summon, use the mob sprite
+	else if(ispath(knowledge,/datum/heretic_knowledge/summon))
+		var/datum/heretic_knowledge/summon/summon_knowledge = knowledge
+		var/mob/living/result_mob = summon_knowledge.mob_to_summon
+		icon_path = result_mob.icon
+		icon_state = result_mob.icon_state
+
+	//if the knowledge is an eldritch mark, use the mark sprite
+	else if(ispath(knowledge,/datum/heretic_knowledge/mark))
+		var/datum/heretic_knowledge/mark/mark_knowledge = knowledge
+		var/datum/status_effect/eldritch/mark_effect = mark_knowledge.mark_type
+		icon_path = mark_effect.effect_icon
+		icon_state = mark_effect.effect_icon_state
+
+	//if the knowledge is an ascension, use the achievement sprite
+	else if(ispath(knowledge,/datum/heretic_knowledge/ultimate))
+		var/datum/heretic_knowledge/ultimate/ascension_knowledge = knowledge
+		var/datum/award/achievement/misc/achievement = ascension_knowledge.ascension_achievement
+		if(!isnull(achievement))
+			icon_path = achievement.icon
+			icon_state = achievement.icon_state
+
+	var/list/result_parameters = list()
+	result_parameters["icon"] = icon_path
+	result_parameters["state"] = icon_state
+	result_parameters["frame"] = icon_frame
+	result_parameters["dir"] = icon_dir
+	result_parameters["moving"] = icon_moving
+	return result_parameters
+
+/datum/antagonist/heretic/proc/get_knowledge_data(datum/heretic_knowledge/knowledge, done)
+
+	var/list/knowledge_data = list()
+
+	knowledge_data["path"] = knowledge
+	knowledge_data["icon_params"] = get_icon_of_knowledge(knowledge)
+	knowledge_data["name"] = initial(knowledge.name)
+	knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
+	knowledge_data["cost"] = initial(knowledge.cost)
+	knowledge_data["disabled"] = (!done) && (initial(knowledge.cost) > knowledge_points)
+	knowledge_data["bgr"] = (path_to_ui_bgr[initial(knowledge.route)] || "side")
+	knowledge_data["finished"] = done
+	knowledge_data["ascension"] = ispath(knowledge,/datum/heretic_knowledge/ultimate)
+
+	//description of a knowledge might change, make sure we are not shown the initial() value in that case
+	if(done)
+		var/datum/heretic_knowledge/knowledge_instance = researched_knowledge[knowledge]
+		knowledge_data["desc"] = knowledge_instance.desc
+	else
+		knowledge_data["desc"] = initial(knowledge.desc)
+
+	return knowledge_data
 
 /datum/antagonist/heretic/ui_data(mob/user)
 	var/list/data = list()
@@ -96,26 +181,32 @@
 	data["total_sacrifices"] = total_sacrifices
 	data["ascended"] = ascended
 
+	var/list/tiers = list()
+
 	// This should be cached in some way, but the fact that final knowledge
 	// has to update its disabled state based on whether all objectives are complete,
 	// makes this very difficult. I'll figure it out one day maybe
+	for(var/datum/heretic_knowledge/knowledge as anything in researched_knowledge)
+		var/list/knowledge_data = get_knowledge_data(knowledge,TRUE)
+
+		while(initial(knowledge.depth) > tiers.len)
+			tiers += list(list("nodes"=list()))
+
+		tiers[initial(knowledge.depth)]["nodes"] += list(knowledge_data)
+
 	for(var/datum/heretic_knowledge/knowledge as anything in get_researchable_knowledge())
-		var/list/knowledge_data = list()
-		knowledge_data["path"] = knowledge
-		knowledge_data["name"] = initial(knowledge.name)
-		knowledge_data["desc"] = initial(knowledge.desc)
-		knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
-		knowledge_data["cost"] = initial(knowledge.cost)
-		knowledge_data["disabled"] = initial(knowledge.cost) > knowledge_points
+		var/list/knowledge_data = get_knowledge_data(knowledge,FALSE)
 
 		// Final knowledge can't be learned until all objectives are complete.
 		if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
-			knowledge_data["disabled"] = !can_ascend()
+			knowledge_data["disabled"] ||= !can_ascend()
 
-		knowledge_data["hereticPath"] = initial(knowledge.route)
-		knowledge_data["color"] = path_to_ui_color[initial(knowledge.route)] || "grey"
+		while(initial(knowledge.depth) > tiers.len)
+			tiers += list(list("nodes"=list()))
 
-		data["learnableKnowledge"] += list(knowledge_data)
+		tiers[initial(knowledge.depth)]["nodes"] += list(knowledge_data)
+
+	data["knowledge_tiers"] = tiers
 
 	return data
 
@@ -124,18 +215,6 @@
 
 	data["objectives"] = get_objectives()
 	data["can_change_objective"] = can_assign_self_objectives
-
-	for(var/path in researched_knowledge)
-		var/list/knowledge_data = list()
-		var/datum/heretic_knowledge/found_knowledge = researched_knowledge[path]
-		knowledge_data["name"] = found_knowledge.name
-		knowledge_data["desc"] = found_knowledge.desc
-		knowledge_data["gainFlavor"] = found_knowledge.gain_text
-		knowledge_data["cost"] = found_knowledge.cost
-		knowledge_data["hereticPath"] = found_knowledge.route
-		knowledge_data["color"] = path_to_ui_color[found_knowledge.route] || "grey"
-
-		data["learnedKnowledge"] += list(knowledge_data)
 
 	return data
 
@@ -230,6 +309,8 @@
 	if (!issilicon(our_mob))
 		GLOB.reality_smash_track.add_tracked_mind(owner)
 
+	ADD_TRAIT(our_mob, TRAIT_MANSUS_TOUCHED, REF(src))
+	RegisterSignal(our_mob, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
 	RegisterSignals(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), PROC_REF(on_spell_cast))
 	RegisterSignal(our_mob, COMSIG_USER_ITEM_INTERACTION, PROC_REF(on_item_use))
 	RegisterSignal(our_mob, COMSIG_MOB_LOGIN, PROC_REF(fix_influence_network))
@@ -243,12 +324,14 @@
 	if (owner in GLOB.reality_smash_track.tracked_heretics)
 		GLOB.reality_smash_track.remove_tracked_mind(owner)
 
+	REMOVE_TRAIT(our_mob, TRAIT_MANSUS_TOUCHED, REF(src))
 	UnregisterSignal(our_mob, list(
 		COMSIG_MOB_BEFORE_SPELL_CAST,
 		COMSIG_MOB_SPELL_ACTIVATED,
 		COMSIG_USER_ITEM_INTERACTION,
 		COMSIG_MOB_LOGIN,
 		COMSIG_LIVING_POST_FULLY_HEAL,
+		COMSIG_LIVING_CULT_SACRIFICED,
 	))
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
@@ -394,6 +477,118 @@
 	if(heal_flags & (HEAL_REFRESH_ORGANS|HEAL_ADMIN))
 		var/datum/heretic_knowledge/living_heart/heart_knowledge = get_knowledge(/datum/heretic_knowledge/living_heart)
 		heart_knowledge.on_research(source, src)
+
+/// Signal proc for [COMSIG_LIVING_CULT_SACRIFICED] to reward cultists for sacrificing a heretic
+/datum/antagonist/heretic/proc/on_cult_sacrificed(mob/living/source, list/invokers)
+	SIGNAL_HANDLER
+
+	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) // uhh let's find the guy to shove him back in
+		if((ghost.mind?.current == source) && ghost.client) // is it the same guy and do they have the same client
+			ghost.reenter_corpse() // shove them in! it doesnt do it automatically
+
+	// Drop all items and splatter them around messily.
+	var/list/dustee_items = source.unequip_everything()
+	for(var/obj/item/loot as anything in dustee_items)
+		loot.throw_at(get_step_rand(source), 2, 4, pick(invokers), TRUE)
+
+	// Create the blade, give it the heretic and a randomly-chosen master for the soul sword component
+	var/obj/item/melee/cultblade/haunted/haunted_blade = new(get_turf(source), source, pick(invokers))
+
+	// Cool effect for the rune as well as the item
+	var/obj/effect/rune/convert/conversion_rune = locate() in get_turf(source)
+	if(conversion_rune)
+		conversion_rune.gender_reveal(
+			outline_color = COLOR_HERETIC_GREEN,
+			ray_color = null,
+			do_float = FALSE,
+			do_layer = FALSE,
+		)
+
+	haunted_blade.gender_reveal(outline_color = null, ray_color = COLOR_HERETIC_GREEN)
+
+	for(var/mob/living/culto as anything in invokers)
+		to_chat(culto, span_cult_large("\"A follower of the forgotten gods! You must be rewarded for such a valuable sacrifice.\""))
+
+	// Locate a cultist team (Is there a better way??)
+	var/mob/living/random_cultist = pick(invokers)
+	var/datum/antagonist/cult/antag = random_cultist.mind.has_antag_datum(/datum/antagonist/cult)
+	ASSERT(antag)
+	var/datum/team/cult/cult_team = antag.get_team()
+
+	// Unlock one of 3 special items!
+	var/list/possible_unlocks
+	for(var/i in cult_team.unlocked_heretic_items)
+		if(cult_team.unlocked_heretic_items[i])
+			continue
+		LAZYADD(possible_unlocks, i)
+	if(length(possible_unlocks))
+		var/result = pick(possible_unlocks)
+		cult_team.unlocked_heretic_items[result] = TRUE
+
+		for(var/datum/mind/mind as anything in cult_team.members)
+			if(mind.current)
+				SEND_SOUND(mind.current, 'sound/magic/clockwork/narsie_attack.ogg')
+				to_chat(mind.current, span_cult_large(span_warning("Arcane and forbidden knowledge floods your forges and archives. The cult has learned how to create the ")) + span_cult_large(span_hypnophrase("[result]!")))
+
+	return SILENCE_SACRIFICE_MESSAGE|DUST_SACRIFICE
+
+/**
+ * Creates an animation of the item slowly lifting up from the floor with a colored outline, then slowly drifting back down.
+ * Arguments:
+ * * outline_color: Default is between pink and light blue, is the color of the outline filter.
+ * * ray_color: Null by default. If not set, just copies outline. Used for the ray filter.
+ * * anim_time: Total time of the animation. Split into two different calls.
+ * * do_float: Lets you disable the sprite floating up and down.
+ * * do_layer: Lets you disable the layering increase.
+ */
+/obj/proc/gender_reveal(
+	outline_color = null,
+	ray_color = null,
+	anim_time = 10 SECONDS,
+	do_float = TRUE,
+	do_layer = TRUE,
+)
+
+	var/og_layer
+	if(do_layer)
+		// Layering above to stand out!
+		og_layer = layer
+		layer = ABOVE_MOB_LAYER
+
+	// Slowly floats up, then slowly goes down.
+	if(do_float)
+		animate(src, pixel_y = 12, time = anim_time * 0.5, easing = QUAD_EASING | EASE_OUT)
+		animate(pixel_y = 0, time = anim_time * 0.5, easing = QUAD_EASING | EASE_IN)
+
+	// Adding a cool outline effect
+	if(outline_color)
+		add_filter("gender_reveal_outline", 3, list("type" = "outline", "color" = outline_color, "size" = 0.5))
+		// Animating it!
+		var/gay_filter = get_filter("gender_reveal_outline")
+		animate(gay_filter, alpha = 110, time = 1.5 SECONDS, loop = -1)
+		animate(alpha = 40, time = 2.5 SECONDS)
+
+	// Adding a cool ray effect
+	if(ray_color)
+		add_filter(name = "gender_reveal_ray", priority = 1, params = list(
+				type = "rays",
+				size = 45,
+				color = ray_color,
+				density = 6
+			))
+		// Animating it!
+		var/ray_filter = get_filter("gender_reveal_ray")
+		// I understand nothing but copypaste saves lives
+		animate(ray_filter, offset = 100, time = 30 SECONDS, loop = -1, flags = ANIMATION_PARALLEL)
+
+	addtimer(CALLBACK(src, PROC_REF(remove_gender_reveal_fx), og_layer), anim_time)
+
+/**
+ * Removes the non-animate effects from above proc
+ */
+/obj/proc/remove_gender_reveal_fx(og_layer)
+	remove_filter(list("gender_reveal_outline", "gender_reveal_ray"))
+	layer = og_layer
 
 /**
  * Create our objectives for our heretic.
