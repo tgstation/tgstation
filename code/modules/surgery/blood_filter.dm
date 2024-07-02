@@ -40,7 +40,7 @@
  */
 /datum/surgery_step/filter_blood/proc/has_filterable_chems(mob/living/carbon/target, obj/item/blood_filter/bloodfilter)
 	if(!length(target.reagents?.reagent_list))
-		bloodfilter.audible_message(span_notice("The [bloodfilter] pings as it reports no chemicals detected in [target]'s blood."))
+		bloodfilter.audible_message(span_notice("[bloodfilter] pings as it reports no chemicals detected in [target]'s blood."))
 		playsound(get_turf(target), 'sound/machines/ping.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
 		return FALSE
 
@@ -58,7 +58,7 @@
 	implements = list(/obj/item/blood_filter = 95)
 	repeatable = TRUE
 	time = 2.5 SECONDS
-	success_sound = 'sound/machines/fan_loop.ogg'
+	success_sound = 'sound/machines/card_slide.ogg'
 
 /datum/surgery_step/filter_blood/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_pain(target, "You feel a throbbing pain in your chest!")
@@ -68,7 +68,7 @@
 	if(target.reagents?.total_volume)
 		for(var/datum/reagent/chem as anything in target.reagents.reagent_list)
 			if(!length(bloodfilter.whitelist) || (chem.type in bloodfilter.whitelist))
-				target.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
+				target.reagents.remove_reagent(chem.type, min(round(chem.volume * 0.22, 0.2), 10))
 	display_results(
 		user,
 		target,
