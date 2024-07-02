@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;avatar_connection - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/avatar_connection.html#var">Var Details</a> - <a href="datum/component/avatar_connection.html#proc">Proc Details</a></header>
+<main>
+<h1>avatar_connection <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/avatar_connection.html">avatar_connection</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L5">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 5"/></a></h1>
+
+<p>Essentially temporary body with a twist - the virtual domain variant uses damage connections,
+listens for vdom relevant signals.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/avatar_connection.html#var/netpod_ref">netpod_ref</a></th><td>The netpod the avatar is in</td></tr>
+            <tr><th><a href="datum/component/avatar_connection.html#var/old_body_ref">old_body_ref</a></th><td>The person in the netpod</td></tr>
+            <tr><th><a href="datum/component/avatar_connection.html#var/old_mind_ref">old_mind_ref</a></th><td>The mind of the person in the netpod</td></tr>
+            <tr><th><a href="datum/component/avatar_connection.html#var/server_ref">server_ref</a></th><td>The server connected to the netpod</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/avatar_connection.html#proc/PostTransfer">PostTransfer</a></th><td>Things that will disconnect forcefully:</td></tr>
+            <tr><th><a href="datum/component/avatar_connection.html#proc/UnregisterFromParent">UnregisterFromParent</a></th><td>Things that cause safe disconnection:</td></tr>
+            <tr><th><a href="datum/component/avatar_connection.html#proc/full_avatar_disconnect">full_avatar_disconnect</a></th><td>Disconnects the avatar and returns the mind to the old_body.</td></tr>
+            <tr><th><a href="datum/component/avatar_connection.html#proc/on_domain_completed">on_domain_completed</a></th><td>Triggers whenever the server gets a loot crate pushed to goal area</td></tr>
+            <tr><th><a href="datum/component/avatar_connection.html#proc/on_linked_damage">on_linked_damage</a></th><td>Transfers damage from the avatar to the old_body</td></tr>
+            <tr><th><a href="datum/component/avatar_connection.html#proc/on_mind_transfer">on_mind_transfer</a></th><td>Handles minds being swapped around in subsequent avatars</td></tr>
+            <tr><th><a href="datum/component/avatar_connection.html#proc/on_netpod_crowbar">on_netpod_crowbar</a></th><td>Triggers when someone starts prying open our netpod</td></tr>
+            <tr><th><a href="datum/component/avatar_connection.html#proc/on_netpod_damaged">on_netpod_damaged</a></th><td>Triggers when the netpod is taking damage and is under 50%</td></tr>
+            <tr><th><a href="datum/component/avatar_connection.html#proc/on_safe_disconnect">on_safe_disconnect</a></th><td>Triggers when a safe disconnect is called</td></tr>
+            <tr><th><a href="datum/component/avatar_connection.html#proc/on_sever_connection">on_sever_connection</a></th><td>Received message to sever connection</td></tr>
+            <tr><th><a href="datum/component/avatar_connection.html#proc/on_shutting_down">on_shutting_down</a></th><td>Triggers when the server is shutting down</td></tr>
+            <tr><th><a href="datum/component/avatar_connection.html#proc/on_station_spawn">on_station_spawn</a></th><td>Triggers whenever an antag steps onto an exit turf and the server is emagged</td></tr>
+            <tr><th><a href="datum/component/avatar_connection.html#proc/on_threat_created">on_threat_created</a></th><td>Server has spawned a ghost role threat</td></tr>
+            <tr><th><a href="datum/component/avatar_connection.html#proc/return_to_old_body">return_to_old_body</a></th><td>Returns the mind to the old body</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/netpod_ref"><aside class="declaration">var </aside>netpod_ref
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/weakref.html">weakref</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 15"/></a></h3>
+        <p>The netpod the avatar is in</p><h3 id="var/old_body_ref"><aside class="declaration">var </aside>old_body_ref
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/weakref.html">weakref</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 7"/></a></h3>
+        <p>The person in the netpod</p><h3 id="var/old_mind_ref"><aside class="declaration">var </aside>old_mind_ref
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/weakref.html">weakref</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 9"/></a></h3>
+        <p>The mind of the person in the netpod</p><h3 id="var/server_ref"><aside class="declaration">var </aside>server_ref
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/weakref.html">weakref</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 11"/></a></h3>
+        <p>The server connected to the netpod</p><h2 id="proc">Proc Details</h2><h3 id="proc/PostTransfer"><aside class="parent"><a title="/datum/component" href="datum/component.html#proc/PostTransfer">&uarr;</a></aside>PostTransfer<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L74">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 74"/></a></aside>
+        </h3>
+        <p>Things that will disconnect forcefully:</p>
+<ul>
+<li>Server shutdown / broken</li>
+<li>Netpod power loss / broken</li>
+<li>Pilot dies/ is moved / falls unconscious</li>
+</ul><h3 id="proc/UnregisterFromParent"><aside class="parent"><a title="/datum/component" href="datum/component.html#proc/UnregisterFromParent">&uarr;</a></aside>UnregisterFromParent<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L99">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 99"/></a></aside>
+        </h3>
+        <p>Things that cause safe disconnection:</p>
+<ul>
+<li>Click the alert</li>
+<li>Mailed in a cache</li>
+<li>Click / Stand on the ladder</li>
+</ul><h3 id="proc/full_avatar_disconnect"><aside class="declaration">proc </aside>full_avatar_disconnect<aside>(cause_damage, /<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L112">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 112"/></a></aside>
+        </h3>
+        <p>Disconnects the avatar and returns the mind to the old_body.</p><h3 id="proc/on_domain_completed"><aside class="declaration">proc </aside>on_domain_completed<aside>(/<a href="datum.html">datum</a>/source, /<a href="atom.html">atom</a>/entered) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L130">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 130"/></a></aside>
+        </h3>
+        <p>Triggers whenever the server gets a loot crate pushed to goal area</p><h3 id="proc/on_linked_damage"><aside class="declaration">proc </aside>on_linked_damage<aside>(/<a href="datum.html">datum</a>/source, damage, damage_type, def_zone, blocked, ...) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L143">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 143"/></a></aside>
+        </h3>
+        <p>Transfers damage from the avatar to the old_body</p><h3 id="proc/on_mind_transfer"><aside class="declaration">proc </aside>on_mind_transfer<aside>(/<a href="datum.html">datum</a>/<a href="datum/mind.html">mind</a>/source, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/previous_body) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L164">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 164"/></a></aside>
+        </h3>
+        <p>Handles minds being swapped around in subsequent avatars</p><h3 id="proc/on_netpod_crowbar"><aside class="declaration">proc </aside>on_netpod_crowbar<aside>(/<a href="datum.html">datum</a>/source, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/intruder) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L175">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 175"/></a></aside>
+        </h3>
+        <p>Triggers when someone starts prying open our netpod</p><h3 id="proc/on_netpod_damaged"><aside class="declaration">proc </aside>on_netpod_damaged<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L190">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 190"/></a></aside>
+        </h3>
+        <p>Triggers when the netpod is taking damage and is under 50%</p><h3 id="proc/on_safe_disconnect"><aside class="declaration">proc </aside>on_safe_disconnect<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L211">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 211"/></a></aside>
+        </h3>
+        <p>Triggers when a safe disconnect is called</p><h3 id="proc/on_sever_connection"><aside class="declaration">proc </aside>on_sever_connection<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L218">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 218"/></a></aside>
+        </h3>
+        <p>Received message to sever connection</p><h3 id="proc/on_shutting_down"><aside class="declaration">proc </aside>on_shutting_down<aside>(/<a href="datum.html">datum</a>/source, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/hackerman) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L225">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 225"/></a></aside>
+        </h3>
+        <p>Triggers when the server is shutting down</p><h3 id="proc/on_station_spawn"><aside class="declaration">proc </aside>on_station_spawn<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L240">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 240"/></a></aside>
+        </h3>
+        <p>Triggers whenever an antag steps onto an exit turf and the server is emagged</p><h3 id="proc/on_threat_created"><aside class="declaration">proc </aside>on_threat_created<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L255">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 255"/></a></aside>
+        </h3>
+        <p>Server has spawned a ghost role threat</p><h3 id="proc/return_to_old_body"><aside class="declaration">proc </aside>return_to_old_body<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/bitrunning/components/avatar_connection.dm#L269">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;bitrunning&#x2F;components&#x2F;avatar_connection.dm 269"/></a></aside>
+        </h3>
+        <p>Returns the mind to the old body</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

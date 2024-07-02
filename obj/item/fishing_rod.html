@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;fishing_rod - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/fishing_rod.html#var">Var Details</a> - <a href="obj/item/fishing_rod.html#proc">Proc Details</a></header>
+<main>
+<h1>fishing_rod <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fishing_rod.html">fishing_rod</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 3"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#var/cast_range">cast_range</a></th><td>How far can you cast this</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#var/casting">casting</a></th><td>Are we currently casting</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#var/casting_cd">casting_cd</a></th><td>Prevents spamming the line casting, without affecting the player's click cooldown.</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#var/currently_hooked">currently_hooked</a></th><td>Currently hooked item for item reeling</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#var/default_line_color">default_line_color</a></th><td>The default color for the reel overlay if no line is equipped.</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#var/difficulty_modifier">difficulty_modifier</a></th><td>Fishing minigame difficulty modifier (additive)</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#var/display_fishing_line">display_fishing_line</a></th><td>should there be a fishing line?</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#var/fishing_line">fishing_line</a></th><td>Fishing line visual for the hooked item</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#var/reel_overlay">reel_overlay</a></th><td>The name of the icon state of the reel overlay</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#var/ui_description">ui_description</a></th><td>Explaination of rod functionality shown in the ui</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#proc/attackby">attackby</a></th><td>if we don't have anything hooked show the dangling hook &amp; line</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#proc/cast_line">cast_line</a></th><td>If the line to whatever that is is clear and we're not already busy, try fishing in it</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#proc/create_fishing_line">create_fishing_line</a></th><td>Generates the fishing line visual from the current user to the target and updates inhands</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#proc/hook_hit">hook_hit</a></th><td>Called by hook projectile when hitting things</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#proc/hook_item">hook_item</a></th><td>Hooks the item</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#proc/reason_we_cant_fish">reason_we_cant_fish</a></th><td>Is there a reason why this fishing rod couldn't fish in target_fish_source?
+If so, return the denial reason as a string, otherwise return <code>null</code>.</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#proc/set_slot">set_slot</a></th><td>Trying to swap item
+assign an item to the given slot and its standard effects, while Exited() should handle unsetting the slot.</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#proc/slot_check">slot_check</a></th><td>Checks if the item fits the slot</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#proc/ui_interact">ui_interact</a></th><td>If you can't fish in it, try hooking it</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#proc/use_slot">use_slot</a></th><td>Ideally this will be replaced with generic slotted storage datum + display</td></tr>
+            <tr><th><a href="obj/item/fishing_rod.html#proc/worn_overlays">worn_overlays</a></th><td>Line part by the rod, always visible</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/cast_range"><aside class="declaration">var </aside>cast_range
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 17"/></a></h3>
+        <p>How far can you cast this</p><h3 id="var/casting"><aside class="declaration">var </aside>casting
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 34"/></a></h3>
+        <p>Are we currently casting</p><h3 id="var/casting_cd"><aside class="declaration">var </aside>casting_cd
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 46"/></a></h3>
+        <p>Prevents spamming the line casting, without affecting the player's click cooldown.</p><h3 id="var/currently_hooked"><aside class="declaration">var </aside>currently_hooked
+            <aside>&ndash; /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 28"/></a></h3>
+        <p>Currently hooked item for item reeling</p><h3 id="var/default_line_color"><aside class="declaration">var </aside>default_line_color
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 37"/></a></h3>
+        <p>The default color for the reel overlay if no line is equipped.</p><h3 id="var/difficulty_modifier"><aside class="declaration">var </aside>difficulty_modifier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 19"/></a></h3>
+        <p>Fishing minigame difficulty modifier (additive)</p><h3 id="var/display_fishing_line"><aside class="declaration">var </aside>display_fishing_line
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 40"/></a></h3>
+        <p>should there be a fishing line?</p><h3 id="var/fishing_line"><aside class="declaration">var </aside>fishing_line
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/beam.html">beam</a>/fishing_line</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 31"/></a></h3>
+        <p>Fishing line visual for the hooked item</p><h3 id="var/reel_overlay"><aside class="declaration">var </aside>reel_overlay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 43"/></a></h3>
+        <p>The name of the icon state of the reel overlay</p><h3 id="var/ui_description"><aside class="declaration">var </aside>ui_description
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 21"/></a></h3>
+        <p>Explaination of rod functionality shown in the ui</p><h2 id="proc">Proc Details</h2><h3 id="proc/attackby"><aside class="parent"><a title="/atom" href="atom.html#proc/attackby">&uarr;</a></aside>attackby<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/attacking_item, /<a href="mob.html">mob</a>/user, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L303">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 303"/></a></aside>
+        </h3>
+        <p>if we don't have anything hooked show the dangling hook &amp; line</p><h3 id="proc/cast_line"><aside class="declaration">proc </aside>cast_line<aside>(/<a href="atom.html">atom</a>/target, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L216">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 216"/></a></aside>
+        </h3>
+        <p>If the line to whatever that is is clear and we're not already busy, try fishing in it</p><h3 id="proc/create_fishing_line"><aside class="declaration">proc </aside>create_fishing_line<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/target, target_py) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L149">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 149"/></a></aside>
+        </h3>
+        <p>Generates the fishing line visual from the current user to the target and updates inhands</p><h3 id="proc/hook_hit"><aside class="declaration">proc </aside>hook_hit<aside>(/<a href="atom.html">atom</a>/atom_hit_by_hook_projectile) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L240">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 240"/></a></aside>
+        </h3>
+        <p>Called by hook projectile when hitting things</p><h3 id="proc/hook_item"><aside class="declaration">proc </aside>hook_item<aside>(/<a href="mob.html">mob</a>/user, /<a href="atom.html">atom</a>/target_atom) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L179">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 179"/></a></aside>
+        </h3>
+        <p>Hooks the item</p><h3 id="proc/reason_we_cant_fish"><aside class="declaration">proc </aside>reason_we_cant_fish<aside>(/<a href="datum.html">datum</a>/<a href="datum/fish_source.html">fish_source</a>/target_fish_source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L98">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 98"/></a></aside>
+        </h3>
+        <p>Is there a reason why this fishing rod couldn't fish in target_fish_source?
+If so, return the denial reason as a string, otherwise return <code>null</code>.</p>
+<p>Arguments:</p>
+<ul>
+<li>target_fish_source - The /datum/fish_source we're trying to fish in.</li>
+</ul><h3 id="proc/set_slot"><aside class="declaration">proc </aside>set_slot<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/equipment, slot) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L417">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 417"/></a></aside>
+        </h3>
+        <p>Trying to swap item
+assign an item to the given slot and its standard effects, while Exited() should handle unsetting the slot.</p><h3 id="proc/slot_check"><aside class="declaration">proc </aside>slot_check<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/item, slot) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L345">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 345"/></a></aside>
+        </h3>
+        <p>Checks if the item fits the slot</p><h3 id="proc/ui_interact"><aside class="parent"><a title="/datum" href="datum.html#proc/ui_interact">&uarr;</a></aside>ui_interact<aside>(/<a href="mob.html">mob</a>/user, /<a href="datum.html">datum</a>/<a href="datum/tgui.html">tgui</a>/ui) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L249">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 249"/></a></aside>
+        </h3>
+        <p>If you can't fish in it, try hooking it</p><h3 id="proc/use_slot"><aside class="declaration">proc </aside>use_slot<aside>(slot, /<a href="mob.html">mob</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/new_item) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L373">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 373"/></a></aside>
+        </h3>
+        <p>Ideally this will be replaced with generic slotted storage datum + display</p><h3 id="proc/worn_overlays">worn_overlays<aside>(/mutable_appearance/standing, isinhands, icon_file) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_rod.dm#L284">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_rod.dm 284"/></a></aside>
+        </h3>
+        <p>Line part by the rod, always visible</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

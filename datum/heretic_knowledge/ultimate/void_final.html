@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;heretic_knowledge&#x2F;ultimate&#x2F;void_final - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/heretic_knowledge/ultimate/void_final.html#var">Var Details</a> - <a href="datum/heretic_knowledge/ultimate/void_final.html#proc">Proc Details</a></header>
+<main>
+<h1>void_final <aside>/<a href="datum.html">datum</a>/<a href="datum/heretic_knowledge.html">heretic_knowledge</a>/<a href="datum/heretic_knowledge/ultimate.html">ultimate</a>/<a href="datum/heretic_knowledge/ultimate/void_final.html">void_final</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/knowledge/void_lore.dm#L189">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;knowledge&#x2F;void_lore.dm 189"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/heretic_knowledge/ultimate/void_final.html#var/sound_loop">sound_loop</a></th><td>soundloop for the void theme</td></tr>
+            <tr><th><a href="datum/heretic_knowledge/ultimate/void_final.html#var/storm">storm</a></th><td>Reference to the ongoing voidstrom that surrounds the heretic</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/heretic_knowledge/ultimate/void_final.html#proc/on_death">on_death</a></th><td>Signal proc for <a href="code/__DEFINES/dcs/signals/signals_mob/signals_mob_living.html#define/COMSIG_LIVING_DEATH" title="COMSIG_LIVING_DEATH">COMSIG_LIVING_DEATH</a>.</td></tr>
+            <tr><th><a href="datum/heretic_knowledge/ultimate/void_final.html#proc/on_life">on_life</a></th><td>Signal proc for <a href="code/__DEFINES/dcs/signals/signals_mob/signals_mob_living.html#define/COMSIG_LIVING_LIFE" title="COMSIG_LIVING_LIFE">COMSIG_LIVING_LIFE</a>.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/sound_loop"><aside class="declaration">var </aside>sound_loop
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/looping_sound.html">looping_sound</a>/void_loop</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/knowledge/void_lore.dm#L202">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;knowledge&#x2F;void_lore.dm 202"/></a></h3>
+        <p>soundloop for the void theme</p><h3 id="var/storm"><aside class="declaration">var </aside>storm
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/weather.html">weather</a>/<a href="datum/weather/void_storm.html">void_storm</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/knowledge/void_lore.dm#L206">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;knowledge&#x2F;void_lore.dm 206"/></a></h3>
+        <p>Reference to the ongoing voidstrom that surrounds the heretic</p><h2 id="proc">Proc Details</h2><h3 id="proc/on_death"><aside class="declaration">proc </aside>on_death<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/knowledge/void_lore.dm#L272">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;knowledge&#x2F;void_lore.dm 272"/></a></aside>
+        </h3>
+        <p>Signal proc for <a href="code/__DEFINES/dcs/signals/signals_mob/signals_mob_living.html#define/COMSIG_LIVING_DEATH" title="COMSIG_LIVING_DEATH">COMSIG_LIVING_DEATH</a>.</p>
+<p>Stop the storm when the heretic passes away.</p><h3 id="proc/on_life"><aside class="declaration">proc </aside>on_life<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/source, seconds_per_tick, times_fired) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/knowledge/void_lore.dm#L245">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;knowledge&#x2F;void_lore.dm 245"/></a></aside>
+        </h3>
+        <p>Signal proc for <a href="code/__DEFINES/dcs/signals/signals_mob/signals_mob_living.html#define/COMSIG_LIVING_LIFE" title="COMSIG_LIVING_LIFE">COMSIG_LIVING_LIFE</a>.</p>
+<p>Any non-heretics nearby the heretic ([source])
+are constantly silenced and battered by the storm.</p>
+<p>Also starts storms in any area that doesn't have one.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

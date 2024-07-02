@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;fish_trait - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/fish_trait.html#var">Var Details</a> - <a href="datum/fish_trait.html#proc">Proc Details</a></header>
+<main>
+<h1>fish_trait <aside>/<a href="datum.html">datum</a>/<a href="datum/fish_trait.html">fish_trait</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fish/fish_traits.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fish&#x2F;fish_traits.dm 3"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/fish_trait.html#var/added_difficulty">added_difficulty</a></th><td>Depending on the value, fish with trait will be reported as more or less difficult in the catalog.</td></tr>
+            <tr><th><a href="datum/fish_trait.html#var/catalog_description">catalog_description</a></th><td>Description of the trait in the fishing catalog and scanner</td></tr>
+            <tr><th><a href="datum/fish_trait.html#var/diff_traits_inheritability">diff_traits_inheritability</a></th><td>Same as above, but for when only one has it.</td></tr>
+            <tr><th><a href="datum/fish_trait.html#var/guaranteed_inheritance_types">guaranteed_inheritance_types</a></th><td>fishes of types within this list are granted to have this trait, no matter the probability</td></tr>
+            <tr><th><a href="datum/fish_trait.html#var/incompatible_traits">incompatible_traits</a></th><td>A list of traits fish cannot have in conjunction with this trait.</td></tr>
+            <tr><th><a href="datum/fish_trait.html#var/inheritability">inheritability</a></th><td>The probability this trait can be inherited by offsprings when both mates have it</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/fish_trait.html#proc/apply_to_fish">apply_to_fish</a></th><td>Applies some special qualities to the fish that has been spawned</td></tr>
+            <tr><th><a href="datum/fish_trait.html#proc/catch_weight_mod">catch_weight_mod</a></th><td>Catch weight table modifier from this mod, needs to return a list with two values</td></tr>
+            <tr><th><a href="datum/fish_trait.html#proc/difficulty_mod">difficulty_mod</a></th><td>Difficulty modifier from this mod, needs to return a list with two values</td></tr>
+            <tr><th><a href="datum/fish_trait.html#proc/eat_fish">eat_fish</a></th><td>Proc used by both the predator and necrophage traits.</td></tr>
+            <tr><th><a href="datum/fish_trait.html#proc/minigame_mod">minigame_mod</a></th><td>Returns special minigame rules and effects applied by this trait</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/added_difficulty"><aside class="declaration">var </aside>added_difficulty
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fish/fish_traits.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fish&#x2F;fish_traits.dm 16"/></a></h3>
+        <p>Depending on the value, fish with trait will be reported as more or less difficult in the catalog.</p><h3 id="var/catalog_description"><aside class="declaration">var </aside>catalog_description
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fish/fish_traits.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fish&#x2F;fish_traits.dm 6"/></a></h3>
+        <p>Description of the trait in the fishing catalog and scanner</p><h3 id="var/diff_traits_inheritability"><aside class="declaration">var </aside>diff_traits_inheritability
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fish/fish_traits.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fish&#x2F;fish_traits.dm 12"/></a></h3>
+        <p>Same as above, but for when only one has it.</p><h3 id="var/guaranteed_inheritance_types"><aside class="declaration">var </aside>guaranteed_inheritance_types
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fish/fish_traits.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fish&#x2F;fish_traits.dm 14"/></a></h3>
+        <p>fishes of types within this list are granted to have this trait, no matter the probability</p><h3 id="var/incompatible_traits"><aside class="declaration">var </aside>incompatible_traits
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fish/fish_traits.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fish&#x2F;fish_traits.dm 8"/></a></h3>
+        <p>A list of traits fish cannot have in conjunction with this trait.</p><h3 id="var/inheritability"><aside class="declaration">var </aside>inheritability
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fish/fish_traits.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fish&#x2F;fish_traits.dm 10"/></a></h3>
+        <p>The probability this trait can be inherited by offsprings when both mates have it</p><h2 id="proc">Proc Details</h2><h3 id="proc/apply_to_fish"><aside class="declaration">proc </aside>apply_to_fish<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fish.html">fish</a>/fish) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fish/fish_traits.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fish&#x2F;fish_traits.dm 33"/></a></aside>
+        </h3>
+        <p>Applies some special qualities to the fish that has been spawned</p><h3 id="proc/catch_weight_mod"><aside class="declaration">proc </aside>catch_weight_mod<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fishing_rod.html">fishing_rod</a>/rod, /<a href="mob.html">mob</a>/fisherman) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fish/fish_traits.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fish&#x2F;fish_traits.dm 24"/></a></aside>
+        </h3>
+        <p>Catch weight table modifier from this mod, needs to return a list with two values</p><h3 id="proc/difficulty_mod"><aside class="declaration">proc </aside>difficulty_mod<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fishing_rod.html">fishing_rod</a>/rod, /<a href="mob.html">mob</a>/fisherman) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fish/fish_traits.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fish&#x2F;fish_traits.dm 19"/></a></aside>
+        </h3>
+        <p>Difficulty modifier from this mod, needs to return a list with two values</p><h3 id="proc/eat_fish"><aside class="declaration">proc </aside>eat_fish<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fish.html">fish</a>/predator, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fish.html">fish</a>/prey) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fish/fish_traits.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fish&#x2F;fish_traits.dm 37"/></a></aside>
+        </h3>
+        <p>Proc used by both the predator and necrophage traits.</p><h3 id="proc/minigame_mod"><aside class="declaration">proc </aside>minigame_mod<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fishing_rod.html">fishing_rod</a>/rod, /<a href="mob.html">mob</a>/fisherman, /<a href="datum.html">datum</a>/<a href="datum/fishing_challenge.html">fishing_challenge</a>/minigame) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fish/fish_traits.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fish&#x2F;fish_traits.dm 29"/></a></aside>
+        </h3>
+        <p>Returns special minigame rules and effects applied by this trait</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

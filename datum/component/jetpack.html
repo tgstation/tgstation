@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;jetpack - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/jetpack.html#var">Var Details</a> - <a href="datum/component/jetpack.html#proc">Proc Details</a></header>
+<main>
+<h1>jetpack <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/jetpack.html">jetpack</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/jetpack.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;jetpack.dm 4"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/jetpack.html#var/activation_signal">activation_signal</a></th><td>The signal we listen for as an activation</td></tr>
+            <tr><th><a href="datum/component/jetpack.html#var/check_on_move">check_on_move</a></th><td>Checks to ensure if we can move &amp; if we can activate</td></tr>
+            <tr><th><a href="datum/component/jetpack.html#var/deactivation_signal">deactivation_signal</a></th><td>The signal we listen for as a de-activation</td></tr>
+            <tr><th><a href="datum/component/jetpack.html#var/effect_type">effect_type</a></th><td>The typepath to instansiate our trail as, when we need it</td></tr>
+            <tr><th><a href="datum/component/jetpack.html#var/return_flag">return_flag</a></th><td>The return flag our parent expects for a failed activation</td></tr>
+            <tr><th><a href="datum/component/jetpack.html#var/stabilize">stabilize</a></th><td>If we should stabilize ourselves when not drifting</td></tr>
+            <tr><th><a href="datum/component/jetpack.html#var/trail">trail</a></th><td>The effect system for the jet pack trail</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/jetpack.html#proc/Initialize">Initialize</a></th><td>Arguments:</td></tr>
+            <tr><th><a href="datum/component/jetpack.html#proc/block_starting_visuals">block_starting_visuals</a></th><td>Basically, tell the drift component not to do its starting visuals, because they look dumb for us</td></tr>
+            <tr><th><a href="datum/component/jetpack.html#proc/ignore_ending_block">ignore_ending_block</a></th><td>If we're on, don't let the drift component block movements at the end since we can speed</td></tr>
+            <tr><th><a href="datum/component/jetpack.html#proc/thrust">thrust</a></th><td>Returns true if the thrust went well, false otherwise</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/activation_signal"><aside class="declaration">var </aside>activation_signal
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/jetpack.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;jetpack.dm 11"/></a></h3>
+        <p>The signal we listen for as an activation</p><h3 id="var/check_on_move"><aside class="declaration">var </aside>check_on_move
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/callback.html">callback</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/jetpack.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;jetpack.dm 7"/></a></h3>
+        <p>Checks to ensure if we can move &amp; if we can activate</p><h3 id="var/deactivation_signal"><aside class="declaration">var </aside>deactivation_signal
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/jetpack.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;jetpack.dm 13"/></a></h3>
+        <p>The signal we listen for as a de-activation</p><h3 id="var/effect_type"><aside class="declaration">var </aside>effect_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/jetpack.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;jetpack.dm 21"/></a></h3>
+        <p>The typepath to instansiate our trail as, when we need it</p><h3 id="var/return_flag"><aside class="declaration">var </aside>return_flag
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/jetpack.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;jetpack.dm 15"/></a></h3>
+        <p>The return flag our parent expects for a failed activation</p><h3 id="var/stabilize"><aside class="declaration">var </aside>stabilize
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/jetpack.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;jetpack.dm 9"/></a></h3>
+        <p>If we should stabilize ourselves when not drifting</p><h3 id="var/trail"><aside class="declaration">var </aside>trail
+            <aside>&ndash; /<a href="datum.html">datum</a>/effect_system/trail_follow</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/jetpack.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;jetpack.dm 17"/></a></h3>
+        <p>The effect system for the jet pack trail</p><h2 id="proc">Proc Details</h2><h3 id="proc/Initialize"><aside class="parent"><a title="/datum/component" href="datum/component.html#proc/Initialize">&uarr;</a></aside>Initialize<aside>(stabilize, activation_signal, deactivation_signal, return_flag, /<a href="datum.html">datum</a>/<a href="datum/callback.html">callback</a>/check_on_move, /<a href="datum.html">datum</a>/effect_system/trail_follow/effect_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/jetpack.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;jetpack.dm 30"/></a></aside>
+        </h3>
+        <p>Arguments:</p>
+<ul>
+<li>stabilize - If we should drift when we finish moving, or sit stable in space]</li>
+<li>activation_signal - Signal we activate on</li>
+<li>deactivation_signal - Signal we deactivate on</li>
+<li>return_flag - Flag to return if activation fails</li>
+<li>check_on_move - Callback we call each time we attempt a move, we expect it to retun true if the move is ok, false otherwise. It expects an arg, TRUE if fuel should be consumed, FALSE othewise</li>
+<li>effect_type - Type of trail_follow to spawn</li>
+</ul><h3 id="proc/block_starting_visuals"><aside class="declaration">proc </aside>block_starting_visuals<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/jetpack.dm#L145">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;jetpack.dm 145"/></a></aside>
+        </h3>
+        <p>Basically, tell the drift component not to do its starting visuals, because they look dumb for us</p><h3 id="proc/ignore_ending_block"><aside class="declaration">proc </aside>ignore_ending_block<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/jetpack.dm#L150">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;jetpack.dm 150"/></a></aside>
+        </h3>
+        <p>If we're on, don't let the drift component block movements at the end since we can speed</p><h3 id="proc/thrust"><aside class="declaration">proc </aside>thrust<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/jetpack.dm#L138">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;jetpack.dm 138"/></a></aside>
+        </h3>
+        <p>Returns true if the thrust went well, false otherwise</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

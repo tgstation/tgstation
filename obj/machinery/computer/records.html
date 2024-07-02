@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;computer&#x2F;records - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/computer/records.html#var">Var Details</a> - <a href="obj/machinery/computer/records.html#proc">Proc Details</a></header>
+<main>
+<h1>records <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/computer.html">computer</a>/<a href="obj/machinery/computer/records.html">records</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/game/machinery/computer/records/records.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;records&#x2F;records.dm 4"/></a></h1>
+
+<p>Records subtype for the shared functionality between medical/security/warrant consoles.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/computer/records.html#var/character_preview_view">character_preview_view</a></th><td>The character preview view for the UI.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/computer/records.html#proc/create_character_preview_view">create_character_preview_view</a></th><td>Creates a character preview view for the UI.</td></tr>
+            <tr><th><a href="obj/machinery/computer/records.html#proc/expunge_record_info">expunge_record_info</a></th><td>Expunges info from a record.</td></tr>
+            <tr><th><a href="obj/machinery/computer/records.html#proc/insert_new_record">insert_new_record</a></th><td>Inserts a new record into GLOB.manifest.general. Requires a photo to be taken.</td></tr>
+            <tr><th><a href="obj/machinery/computer/records.html#proc/secure_login">secure_login</a></th><td>Secure login</td></tr>
+            <tr><th><a href="obj/machinery/computer/records.html#proc/update_preview">update_preview</a></th><td>Takes a record and updates the character preview view to match it.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/character_preview_view"><aside class="declaration">var </aside>character_preview_view
+            <aside>&ndash; /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/<a href="atom/movable/screen.html">screen</a>/<a href="atom/movable/screen/map_view.html">map_view</a>/<a href="atom/movable/screen/map_view/char_preview.html">char_preview</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/game/machinery/computer/records/records.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;records&#x2F;records.dm 8"/></a></h3>
+        <p>The character preview view for the UI.</p><h2 id="proc">Proc Details</h2><h3 id="proc/create_character_preview_view"><aside class="declaration">proc </aside>create_character_preview_view<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/game/machinery/computer/records/records.dm#L110">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;records&#x2F;records.dm 110"/></a></aside>
+        </h3>
+        <p>Creates a character preview view for the UI.</p><h3 id="proc/expunge_record_info"><aside class="declaration">proc </aside>expunge_record_info<aside>(/<a href="datum.html">datum</a>/<a href="datum/record.html">record</a>/<a href="datum/record/crew.html">crew</a>/target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/game/machinery/computer/records/records.dm#L133">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;records&#x2F;records.dm 133"/></a></aside>
+        </h3>
+        <p>Expunges info from a record.</p><h3 id="proc/insert_new_record"><aside class="declaration">proc </aside>insert_new_record<aside>(/<a href="mob.html">mob</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/photo.html">photo</a>/mugshot) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/game/machinery/computer/records/records.dm#L137">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;records&#x2F;records.dm 137"/></a></aside>
+        </h3>
+        <p>Inserts a new record into GLOB.manifest.general. Requires a photo to be taken.</p><h3 id="proc/secure_login"><aside class="declaration">proc </aside>secure_login<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/game/machinery/computer/records/records.dm#L166">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;records&#x2F;records.dm 166"/></a></aside>
+        </h3>
+        <p>Secure login</p><h3 id="proc/update_preview"><aside class="declaration">proc </aside>update_preview<aside>(/<a href="mob.html">mob</a>/user, assigned_view, /<a href="datum.html">datum</a>/<a href="datum/record.html">record</a>/<a href="datum/record/crew.html">crew</a>/target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/game/machinery/computer/records/records.dm#L121">
+        <img src="git.png" width="16" height="16" title="code&#x2F;game&#x2F;machinery&#x2F;computer&#x2F;records&#x2F;records.dm 121"/></a></aside>
+        </h3>
+        <p>Takes a record and updates the character preview view to match it.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

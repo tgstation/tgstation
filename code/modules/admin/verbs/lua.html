@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;modules&#x2F;admin&#x2F;verbs&#x2F;lua&#x2F;README.md - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+</header>
+<main>
+<h1>Auxlua <aside>code/modules/admin/verbs/lua/README.md</aside> 
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/admin/verbs/lua/README.md">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;admin&#x2F;verbs&#x2F;lua&#x2F;README.md"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><td colspan="2"><hr />
+<hh2 id="datums">Datums</hh2>
+<p>DM datums are treated as lua userdata, and can be stored in fields. Due to fundamental limitations in lua, userdata is inherently truthy. Since datum userdata can correspond to a deleted datum, which would evaluate to <code>null</code> in DM, the function <a href="#datumisnull"><code>datum:is_null()</code></a> is provided to offer a truthiness test consistent with DM.</p>
+<p>Keep in mind that BYOND can't see that a datum is referenced in a lua field, and will garbage collect it if it is not referenced anywhere in DM.</p>
+<hh3 id="datum-get-var-var">datum:get_var(var)</hh3>
+<p>Equivalent to DM's <code>datum.var</code></p>
+<hh3 id="datum-set-var-var-value">datum:set_var(var, value)</hh3>
+<p>Equivalent to DM's <code>datum.var = value</code></p>
+<hh3 id="datum-call-proc-procname">datum:call_proc(procName, ...)</hh3>
+<p>Equivalent to DM's <code>datum.procName(...)</code></p>
+<hh3 id="datum-is-null">datum:is_null()</hh3>
+<p>This function is used to evaluate the truthiness of a DM var. The lua statement <code>if datum:is_null() then</code> is equivalent to the DM statement <code>if(datum)</code>.</p>
+<hh3 id="datum-vars">datum.vars</hh3>
+<p>Returns a userdatum that allows you to access and modifiy the vars of a DM datum by index. <code>datum.vars.foo</code> is equivalent to <code>datum:get_var(&quot;foo&quot;)</code>, while <code>datum.vars.foo = bar</code> is equivalent to <code>datum:set_var(&quot;foo&quot;, bar)</code></p>
+<hr />
+<hh2 id="lists">Lists</hh2>
+<p>In order to allow lists to be modified in-place across the DM-to-lua language barrier, lists are treated as userdata. Whenever running code that expects a DM value, auxlua will attempt to convert tables into lists.</p>
+<p>List references are subject to the same limitations as datum userdata, but you are less likely to encounter these limitations for regular lists.</p>
+<p>Some lists (<code>vars</code>, <code>contents</code>, <code>overlays</code>, <code>underlays</code>, <code>vis_contents</code>, and <code>vis_locs</code>) are inherently attached to datums, and as such, their corresponding userdata contains a weak reference to the containing datum. Use <a href="#listisnull"><code>list:is_null</code></a> to validate these types of lists.</p>
+<hh3 id="list-len">list.len</hh3>
+<p>Equivalent to DM's <code>list.len</code></p>
+<hh3 id="list-get-index">list:get(index)</hh3>
+<p>Equivalent to DM's <code>list[index]</code></p>
+<hh3 id="list-set-index-value">list:set(index, value)</hh3>
+<p>Equivalent to DM's <code>list[index] = value</code></p>
+<hh3 id="list-add-value">list:add(value)</hh3>
+<p>Equivalent to DM's <code>list.Add(value)</code></p>
+<hh3 id="list-remove-value">list:remove(value)</hh3>
+<p>Equivalent to DM's <code>list.Remove(value)</code></p>
+<hh3 id="list-to-table">list:to_table()</hh3>
+<p>Converts a DM list into a lua table.</p>
+<hh3 id="list-of-type-type-path">list:of_type(type_path)</hh3>
+<p>Will extract only values of type <code>type_path</code>.</p>
+<hh3 id="list-is-null">list:is_null()</hh3>
+<p>A similar truthiness test to <a href="#datumisnull"><code>datum:is_null()</code></a>. This function only has the possibility of returning <code>false</code> for lists that are inherently attached to a datum (<code>vars</code>, <code>contents</code>, <code>overlays</code>, <code>underlays</code>, <code>vis_contents</code>, and <code>vis_locs</code>).</p>
+<hh3 id="list-entries">list.entries</hh3>
+<p>Returns a userdatum that allows you to access and modifiy the entries of the list by index. <code>list.entries.foo</code> is equivalent to <code>list:get(&quot;foo&quot;)</code>, while <code>list.entries.foo = bar</code> is equivalent to <code>list:set(&quot;foo&quot;, bar)</code></p>
+<hr />
+<hh2 id="the-dm-table">The dm table</hh2>
+<p>The <code>dm</code> table consists of the basic hooks into the DM language.</p>
+<hh3 id="dm-state-id">dm.state_id</hh3>
+<p>The address of the lua state in memory. This is a copy of the internal value used by auxlua to locate the lua state in a global hash map. <code>state_id</code> is a registry value that is indirectly obtained using the <code>dm</code> table's <code>__index</code> metamethod.</p>
+<hh3 id="dm-global-proc-proc">dm.global_proc(proc, ...)</hh3>
+<p>Calls the global proc <code>/proc/[proc]</code> with <code>...</code> as its arguments.</p>
+<hh3 id="dm-world">dm.world</hh3>
+<p>A reference to DM's <code>world</code>, in the form of datum userdata. This reference is always valid, since <code>world</code> always exists.</p>
+<p>Due to limitations inherent in the wrapper functions used on tgstation, <code>world:set_var</code> and <code>world:call_proc</code> will raise an error.</p>
+<hh3 id="dm-global-vars">dm.global_vars</hh3>
+<p>A reference to DM's <code>global</code>, in the form of datum userdata. Subject to the same limitations as <code>dm.world</code></p>
+<hh3 id="dm-usr">dm.usr</hh3>
+<p>A weak reference to DM's <code>usr</code>. As a rule of thumb, this is a reference to the mob of the client who triggered the chain of procs leading to the execution of Lua code. The following is a list of what <code>usr</code> is for the most common ways of executing Lua code:</p>
+<ul>
+<li>For resumes and awakens, which are generally executed by the MC, <code>usr</code> is (most likely) null.</li>
+<li><code>SS13.wait</code> queues a resume, which gets executed by the MC. Therefore, <code>usr</code> is null after <code>SS13.wait</code> finishes.</li>
+<li>For chunk loads, <code>usr</code> is generally the current mob of the admin that loaded that chunk.</li>
+<li>For function calls done from the Lua editor, <code>usr</code> is the current mob of the admin calling the function.</li>
+<li><code>SS13.register_signal</code> creates a <code>/datum/callback</code> that gets executed by the <code>SEND_SIGNAL</code> macro for the corresponding signal. As such, <code>usr</code> is the mob that triggered the chain of procs leading to the invocation of <code>SEND_SIGNAL</code>.</li>
+</ul>
+<hr />
+<hh2 id="execution-limit">Execution Limit</hh2>
+<p>In order to prevent freezing the server with infinite loops, auxlua enforces an execution limit, defaulting to 100ms. When a single lua state has been executing for longer than this limit, it will eventually stop and produce an error.</p>
+<p>To avoid exceeding the execution limit, call <code>sleep()</code> or <code>coroutine.yield()</code> before the execution limit is reached.</p>
+<hh3 id="over-exec-usage-fraction-0-95">over_exec_usage(fraction = 0.95)</hh3>
+<p>This function returns whether the current run of the Lua VM has executed for longer than the specified fraction of the execution limit. You can use this function to branch to a call to <code>sleep()</code> or <code>coroutine.yield()</code> to maximize the amount of work done in a single run of the Lua VM. If nil, <code>fraction</code> will default to 0.95, otherwise, it will be clamped to the range [0, 1].</p>
+<hr />
+<hh2 id="task-management">Task management</hh2>
+<p>The Lua Scripting subsystem manages the execution of tasks for each Lua state. A single fire of the subsystem behaves as follows:</p>
+<ul>
+<li>All tasks that slept since the last fire are resumed in the order they slept.</li>
+<li>For each queued resume, the corresponding task is resumed.</li>
+</ul>
+<hh3 id="sleep">sleep()</hh3>
+<p>Yields the current thread, scheduling it to be resumed during the next fire of SSlua. Use this function to prevent your Lua code from exceeding its allowed execution duration. Under the hood, <code>sleep</code> performs the following:</p>
+<ul>
+<li>Sets the <a href="#sleep_flag"><code>sleep_flag</code></a></li>
+<li>Calls <code>coroutine.yield()</code></li>
+<li>Clears the sleep flag when determining whether the task slept or yielded</li>
+<li>Ignores the return values of <code>coroutine.yield()</code> once resumed</li>
+</ul>
+<hr />
+<hh2 id="the-ss13-package">The SS13 package</hh2>
+<p>The <code>SS13</code> package contains various helper functions that use code specific to tgstation.</p>
+<hh3 id="ss13-state">SS13.state</hh3>
+<p>A reference to the state datum (<code>/datum/lua_state</code>) handling this Lua state.</p>
+<hh3 id="ss13-get-runner-ckey">SS13.get_runner_ckey()</hh3>
+<p>The ckey of the user who ran the lua script in the current context. Can be unreliable if accessed after sleeping.</p>
+<hh3 id="ss13-get-runner-client">SS13.get_runner_client()</hh3>
+<p>Returns the client of the user who ran the lua script in the current context. Can be unreliable if accessed after sleeping.</p>
+<hh3 id="ss13-global-proc">SS13.global_proc</hh3>
+<p>A wrapper for the magic string used to tell <code>WrapAdminProcCall</code> to call a global proc.
+For instance, <code>/datum/callback</code> must be instantiated with <code>SS13.global_proc</code> as its first argument to specify that it will be invoking a global proc.
+The following example declares a callback which will execute the global proc <code>to_chat</code>:</p>
+<pre><code class="language-lua">local callback = SS13.new(&quot;/datum/callback&quot;, SS13.global_proc, &quot;to_chat&quot;, dm.world, &quot;Hello World&quot;)
+</code></pre>
+<hh3 id="ss13-istype-thing-type">SS13.istype(thing, type)</hh3>
+<p>Equivalent to the DM statement <code>istype(thing, text2path(type))</code>.</p>
+<hh3 id="ss13-new-type">SS13.new(type, ...)</hh3>
+<p>Instantiates a datum of type <code>type</code> with <code>...</code> as the arguments passed to <code>/proc/_new</code>
+The following example spawns a singularity at the caller's current turf:</p>
+<pre><code class="language-lua">SS13.new(&quot;/obj/singularity&quot;, dm.global_proc(&quot;_get_step&quot;, dm.usr, 0))
+</code></pre>
+<hh3 id="ss13-new-untracked-type">SS13.new_untracked(type, ...)</hh3>
+<p>Works exactly like SS13.new but it does not store the value to the lua state's <code>references</code> list variable. This means that the variable could end up deleted if nothing holds a reference to it. </p>
+<hh3 id="ss13-is-valid-datum">SS13.is_valid(datum)</hh3>
+<p>Can be used to determine if the datum passed is not nil, not undefined and not qdel'd all in one. A helper function that allows you to check the validity from only one function.
+Example usage:</p>
+<pre><code class="language-lua">local datum = SS13.new(&quot;/datum&quot;)
+dm.global_proc(&quot;qdel&quot;, datum)
+print(SS13.is_valid(datum)) -- false
+
+local null = nil
+print(SS13.is_valid(null)) -- false
+
+local datum = SS13.new(&quot;/datum&quot;)
+print(SS13.is_valid(datum)) -- true
+</code></pre>
+<hh3 id="ss13-type-string">SS13.type(string)</hh3>
+<p>Converts a string into a type. Equivalent to doing <code>dm.global_proc(&quot;_text2path&quot;, &quot;/path/to/type&quot;)</code></p>
+<hh3 id="ss13-qdel-datum">SS13.qdel(datum)</hh3>
+<p>Deletes a datum. You shouldn't try to reference it after calling this function. Equivalent to doing <code>dm.global_proc(&quot;qdel&quot;, datum)</code></p>
+<hh3 id="ss13-await-thing-to-call-proc-to-call">SS13.await(thing_to_call, proc_to_call, ...)</hh3>
+<p>Calls <code>proc_to_call</code> on <code>thing_to_call</code>, with <code>...</code> as its arguments, and sleeps until that proc returns.
+Returns two return values - the first is the return value of the proc, and the second is the message of any runtime exception thrown by the called proc.
+The following example calls and awaits the return of <code>poll_ghost_candidates</code>:</p>
+<pre><code class="language-lua">local ghosts, runtime = SS13.await(SS13.global_proc, &quot;poll_ghost_candidates&quot;, &quot;Would you like to be considered for something?&quot;)
+</code></pre>
+<hh3 id="ss13-wait-time-timer">SS13.wait(time, timer)</hh3>
+<p>Waits for a number of <strong>seconds</strong> specified with the <code>time</code> argument. You can optionally specify a timer subsystem using the <code>timer</code> argument.</p>
+<p>Internally, this function creates a timer that will resume the current task after <code>time</code> seconds, then yields the current task by calling <code>coroutine.yield</code> with no arguments and ignores the return values. If the task is prematurely resumed, the timer will be safely deleted.</p>
+<hh3 id="ss13-register-signal-datum-signal-func-make-easy-clear-function">SS13.register_signal(datum, signal, func, make_easy_clear_function)</hh3>
+<p>Registers the Lua function <code>func</code> as a handler for <code>signal</code> on <code>datum</code>.</p>
+<p>Like with signal handlers written in DM, Lua signal handlers should not sleep (either by calling <code>sleep</code> or <code>coroutine.yield</code>).</p>
+<p>If <code>make_easy_clear_function</code> is truthy, a member function taking no arguments will be created in the <code>SS13</code> table to easily unregister the signal handler.</p>
+<p>This function returns the <code>/datum/callback</code> created to call <code>func</code> from DM.</p>
+<p>The following example defines a function which will register a signal that makes <code>target</code> make a honking sound any time it moves:</p>
+<pre><code class="language-lua">function honk(target)
+	SS13.register_signal(target, &quot;movable_moved&quot;, function(source)
+		dm.global_proc(&quot;playsound&quot;, target, &quot;sound/items/bikehorn.ogg&quot;, 100, true)
+	end)
+end
+</code></pre>
+<hh3 id="ss13-unregister-signal-datum-signal-callback">SS13.unregister_signal(datum, signal, callback)</hh3>
+<p>Unregister a signal previously registered using <code>SS13.register_signal</code>. <code>callback</code> should be a <code>datum/callback</code> previously returned by <code>SS13.register_signal</code>. If <code>callback</code> is not specified, <strong>ALL</strong> signal handlers registered on <code>datum</code> for <code>signal</code> will be unregistered.</p>
+<hh3 id="ss13-set-timeout-time-func">SS13.set_timeout(time, func)</hh3>
+<p>Creates a timer which will execute <code>func</code> after <code>time</code> <strong>seconds</strong>. <code>func</code> should not expect to be passed any arguments, as it will not be passed any. Unlike <code>SS13.wait</code>, <code>SS13.set_timeout</code> does not yield or sleep the current task, making it suitable for use in signal handlers for <code>SS13.register_signal</code></p>
+<p>The following example will output a message to chat after 5 seconds:</p>
+<pre><code class="language-lua">SS13.set_timeout(5, function()
+	dm.global_proc(&quot;to_chat&quot;, dm.world, &quot;Hello World!&quot;)
+end)
+</code></pre>
+<hh3 id="ss13-start-loop-time-amount-func">SS13.start_loop(time, amount, func)</hh3>
+<p>Creates a timer which will execute <code>func</code> after <code>time</code> <strong>seconds</strong>. <code>func</code> should not expect to be passed any arguments, as it will not be passed any. Works exactly the same as <code>SS13.set_timeout</code> except it will loop the timer <code>amount</code> times. If <code>amount</code> is set to -1, it will loop indefinitely. Returns a number value, which represents the timer's id. Can be stopped with <code>SS13.end_loop</code>
+Returns a number, the timer id, which is needed to stop indefinite timers.
+The following example will output a message to chat every 5 seconds, repeating 10 times:</p>
+<pre><code class="language-lua">SS13.start_loop(5, 10, function()
+	dm.global_proc(&quot;to_chat&quot;, dm.world, &quot;Hello World!&quot;)
+end)
+</code></pre>
+<p>The following example will output a message to chat every 5 seconds, until <code>SS13.end_loop(timerid)</code> is called:</p>
+<pre><code class="language-lua">local timerid = SS13.start_loop(5, -1, function()
+	dm.global_proc(&quot;to_chat&quot;, dm.world, &quot;Hello World!&quot;)
+end)
+</code></pre>
+<hh3 id="ss13-end-loop-id">SS13.end_loop(id)</hh3>
+<p>Prematurely ends a loop that hasn't ended yet, created with <code>SS13.start_loop</code>. Silently fails if there is no started loop with the specified id.
+The following example will output a message to chat every 5 seconds and delete it after it has repeated 20 times:</p>
+<pre><code class="language-lua">local repeated_amount = 0
+-- timerid won't be in the looping function's scope if declared before the function is declared.
+local timerid
+timerid = SS13.start_loop(5, -1, function()
+	dm.global_proc(&quot;to_chat&quot;, dm.world, &quot;Hello World!&quot;)
+	repeated_amount += 1
+	if repeated_amount &gt;= 20 then
+		SS13.end_loop(timerid)
+	end
+end)
+</code></pre>
+<hh3 id="ss13-stop-all-loops">SS13.stop_all_loops()</hh3>
+<p>Stops all current running loops that haven't ended yet.
+Useful in case you accidentally left a indefinite loop running without storing the id anywhere.</p>
+<hh3 id="ss13-stop-tracking-datum">SS13.stop_tracking(datum)</hh3>
+<p>Stops tracking a datum that was created via <code>SS13.new</code> so that it can be garbage collected and deleted without having to qdel. Should be used for things like callbacks and other such datums where the reference to the variable is no longer needed.</p>
+<hr />
+<hh2 id="internal-globals">Internal globals</hh2>
+<p>Auxlua defines several registry values for each state. Note that there is no way to access registry values from lua code.</p>
+<hh3 id="sleep-flag">sleep_flag</hh3>
+<p>This flag is used to designate that a yielding task should be put in the sleep queue instead of the yield table. Once auxlua determines that a task should sleep, <code>sleep_flag</code> is cleared.</p>
+<hh3 id="sleep-queue">sleep_queue</hh3>
+<p>A sequence of threads, each corresponding to a task that has slept. When calling <code>/proc/__lua_awaken</code>, auxlua will dequeue the first thread from the sequence and resume it.</p>
+<hh3 id="yield-table">yield_table</hh3>
+<p>A table of threads, each corresponding to a coroutine that has yielded. When calling <code>/proc/__lua_resume</code>, auxlua will look for a thread at the index specified in the <code>index</code> argument, and resume it with the arguments specified in the <code>arguments</code> argument.</p>
+<hh3 id="task-info">task_info</hh3>
+<p>A table of key-value-pairs, where the keys are threads, and the values are tables consisting of the following fields:</p>
+<ul>
+<li>name: A string containing the name of the task</li>
+<li>status: A string, either &quot;sleep&quot; or &quot;yield&quot;</li>
+<li>index: The task's index in <code>sleep_queue</code> or <code>yield_table</code></li>
+</ul></td></tr></table></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

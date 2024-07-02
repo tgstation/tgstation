@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;blobstrain - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/blobstrain.html#var">Var Details</a> - <a href="datum/blobstrain.html#proc">Proc Details</a></header>
+<main>
+<h1>blobstrain <aside>/<a href="datum.html">datum</a>/<a href="datum/blobstrain.html">blobstrain</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L3">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 3"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/analyzerdescdamage">analyzerdescdamage</a></th><td>Short descriptor of what the strain does damage-wise, generally seen in the reroll menu</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/analyzerdesceffect">analyzerdesceffect</a></th><td>Short descriptor of what the strain does in general, generally seen in the reroll menu</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/base_core_regen">base_core_regen</a></th><td>The amount of health regenned on core_process</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/blobbernaut_message">blobbernaut_message</a></th><td>Blobbernaut attack verb</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/blobbernaut_reagentatk_bonus">blobbernaut_reagentatk_bonus</a></th><td>Makes blobbernauts inject a bonus amount of reagents, making their attacks more powerful</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/complementary_color">complementary_color</a></th><td>The color that stuff like healing effects and the overmind camera gets</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/core_range_bonus">core_range_bonus</a></th><td>Adds to claim, pulse, and expand range</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/core_reflector_reinforcement_range_bonus">core_reflector_reinforcement_range_bonus</a></th><td>Extra range up to which the core reinforces blobs into reflectors</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/core_regen_bonus">core_regen_bonus</a></th><td>HP regen bonus added by strain</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/core_strong_reinforcement_range_bonus">core_strong_reinforcement_range_bonus</a></th><td>Extra range up to which the core reinforces blobs</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/effectdesc">effectdesc</a></th><td>Any long, blob-tile specific effects</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/factory_spore_bonus">factory_spore_bonus</a></th><td>Extra spores produced by factories with this strain</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/fire_based">fire_based</a></th><td>For blob-mobs and extinguishing-based effects</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/max_mob_health_multiplier">max_mob_health_multiplier</a></th><td>Multiplies the max and current health of every mob with this value upon selecting this strain.</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/max_structure_health_multiplier">max_structure_health_multiplier</a></th><td>Multiplies the max and current health of every blob with this value upon selecting this strain.</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/message">message</a></th><td>Message sent to any mob hit by the blob</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/message_living">message_living</a></th><td>Gets added onto 'message' if the mob stuck is of type living</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/node_range_bonus">node_range_bonus</a></th><td>Adds to claim, pulse, and expand range</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/node_reflector_reinforcement_range_bonus">node_reflector_reinforcement_range_bonus</a></th><td>Extra range up to which the node reinforces blobs into reflectors</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/node_spore_bonus">node_spore_bonus</a></th><td>Nodes can sustain this any extra spores with this strain</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/node_strong_reinforcement_range_bonus">node_strong_reinforcement_range_bonus</a></th><td>Extra range up to which the node reinforces blobs</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/point_rate">point_rate</a></th><td>The amount of points gained on core_process</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/point_rate_bonus">point_rate_bonus</a></th><td>resource point bonus added by strain</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/resource_delay">resource_delay</a></th><td>Stores world.time to figure out when to next give resources</td></tr>
+            <tr><th><a href="datum/blobstrain.html#var/shortdesc">shortdesc</a></th><td>A short description of the power and its effects</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/blobstrain.html#proc/blobbernaut_attack">blobbernaut_attack</a></th><td>When this blob's blobbernaut attacks any atom</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/analyzerdescdamage"><aside class="declaration">var </aside>analyzerdescdamage
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 14"/></a></h3>
+        <p>Short descriptor of what the strain does damage-wise, generally seen in the reroll menu</p><h3 id="var/analyzerdesceffect"><aside class="declaration">var </aside>analyzerdesceffect
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 16"/></a></h3>
+        <p>Short descriptor of what the strain does in general, generally seen in the reroll menu</p><h3 id="var/base_core_regen"><aside class="declaration">var </aside>base_core_regen
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 29"/></a></h3>
+        <p>The amount of health regenned on core_process</p><h3 id="var/blobbernaut_message"><aside class="declaration">var </aside>blobbernaut_message
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 18"/></a></h3>
+        <p>Blobbernaut attack verb</p><h3 id="var/blobbernaut_reagentatk_bonus"><aside class="declaration">var </aside>blobbernaut_reagentatk_bonus
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 64"/></a></h3>
+        <p>Makes blobbernauts inject a bonus amount of reagents, making their attacks more powerful</p><h3 id="var/complementary_color"><aside class="declaration">var </aside>complementary_color
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L8">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 8"/></a></h3>
+        <p>The color that stuff like healing effects and the overmind camera gets</p><h3 id="var/core_range_bonus"><aside class="declaration">var </aside>core_range_bonus
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 40"/></a></h3>
+        <p>Adds to claim, pulse, and expand range</p><h3 id="var/core_reflector_reinforcement_range_bonus"><aside class="declaration">var </aside>core_reflector_reinforcement_range_bonus
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 44"/></a></h3>
+        <p>Extra range up to which the core reinforces blobs into reflectors</p><h3 id="var/core_regen_bonus"><aside class="declaration">var </aside>core_regen_bonus
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 35"/></a></h3>
+        <p>HP regen bonus added by strain</p><h3 id="var/core_strong_reinforcement_range_bonus"><aside class="declaration">var </aside>core_strong_reinforcement_range_bonus
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 42"/></a></h3>
+        <p>Extra range up to which the core reinforces blobs</p><h3 id="var/effectdesc"><aside class="declaration">var </aside>effectdesc
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 12"/></a></h3>
+        <p>Any long, blob-tile specific effects</p><h3 id="var/factory_spore_bonus"><aside class="declaration">var </aside>factory_spore_bonus
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 56"/></a></h3>
+        <p>Extra spores produced by factories with this strain</p><h3 id="var/fire_based"><aside class="declaration">var </aside>fire_based
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 26"/></a></h3>
+        <p>For blob-mobs and extinguishing-based effects</p><h3 id="var/max_mob_health_multiplier"><aside class="declaration">var </aside>max_mob_health_multiplier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 61"/></a></h3>
+        <p>Multiplies the max and current health of every mob with this value upon selecting this strain.</p><h3 id="var/max_structure_health_multiplier"><aside class="declaration">var </aside>max_structure_health_multiplier
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 59"/></a></h3>
+        <p>Multiplies the max and current health of every blob with this value upon selecting this strain.</p><h3 id="var/message"><aside class="declaration">var </aside>message
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 20"/></a></h3>
+        <p>Message sent to any mob hit by the blob</p><h3 id="var/message_living"><aside class="declaration">var </aside>message_living
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 22"/></a></h3>
+        <p>Gets added onto 'message' if the mob stuck is of type living</p><h3 id="var/node_range_bonus"><aside class="declaration">var </aside>node_range_bonus
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 47"/></a></h3>
+        <p>Adds to claim, pulse, and expand range</p><h3 id="var/node_reflector_reinforcement_range_bonus"><aside class="declaration">var </aside>node_reflector_reinforcement_range_bonus
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 53"/></a></h3>
+        <p>Extra range up to which the node reinforces blobs into reflectors</p><h3 id="var/node_spore_bonus"><aside class="declaration">var </aside>node_spore_bonus
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 49"/></a></h3>
+        <p>Nodes can sustain this any extra spores with this strain</p><h3 id="var/node_strong_reinforcement_range_bonus"><aside class="declaration">var </aside>node_strong_reinforcement_range_bonus
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 51"/></a></h3>
+        <p>Extra range up to which the node reinforces blobs</p><h3 id="var/point_rate"><aside class="declaration">var </aside>point_rate
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 31"/></a></h3>
+        <p>The amount of points gained on core_process</p><h3 id="var/point_rate_bonus"><aside class="declaration">var </aside>point_rate_bonus
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 37"/></a></h3>
+        <p>resource point bonus added by strain</p><h3 id="var/resource_delay"><aside class="declaration">var </aside>resource_delay
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 24"/></a></h3>
+        <p>Stores world.time to figure out when to next give resources</p><h3 id="var/shortdesc"><aside class="declaration">var </aside>shortdesc
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 10"/></a></h3>
+        <p>A short description of the power and its effects</p><h2 id="proc">Proc Details</h2><h3 id="proc/blobbernaut_attack"><aside class="declaration">proc </aside>blobbernaut_attack<aside>(/<a href="atom.html">atom</a>/attacking, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/basic.html">basic</a>/blobbernaut) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/blob/blobstrains/_blobstrain.dm#L149">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;blob&#x2F;blobstrains&#x2F;_blobstrain.dm 149"/></a></aside>
+        </h3>
+        <p>When this blob's blobbernaut attacks any atom</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

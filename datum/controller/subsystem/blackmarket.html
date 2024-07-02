@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;controller&#x2F;subsystem&#x2F;blackmarket - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/controller/subsystem/blackmarket.html#var">Var Details</a> - <a href="datum/controller/subsystem/blackmarket.html#proc">Proc Details</a></header>
+<main>
+<h1>blackmarket <aside>/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/blackmarket.html">blackmarket</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/controllers/subsystem/blackmarket.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;blackmarket.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/blackmarket.html#var/markets">markets</a></th><td>List of all existing markets.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/blackmarket.html#var/queued_purchases">queued_purchases</a></th><td>Currently queued purchases.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/blackmarket.html#var/shipping_method_descriptions">shipping_method_descriptions</a></th><td>Descriptions for each shipping methods.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/blackmarket.html#var/telepads">telepads</a></th><td>List of existing ltsrbts.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/blackmarket.html#proc/fake_teleport">fake_teleport</a></th><td>Used to make a teleportation effect as do_teleport does not like moving items from nullspace.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/blackmarket.html#proc/queue_item">queue_item</a></th><td>Used to add /datum/market_purchase to queued_purchases var. Returns TRUE when queued.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/markets"><aside class="declaration">var </aside>markets
+            <aside>&ndash; /list/datum/market</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/controllers/subsystem/blackmarket.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;blackmarket.dm 15"/></a></h3>
+        <p>List of all existing markets.</p><h3 id="var/queued_purchases"><aside class="declaration">var </aside>queued_purchases
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/controllers/subsystem/blackmarket.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;blackmarket.dm 19"/></a></h3>
+        <p>Currently queued purchases.</p><h3 id="var/shipping_method_descriptions"><aside class="declaration">var </aside>shipping_method_descriptions
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/controllers/subsystem/blackmarket.dm#L7">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;blackmarket.dm 7"/></a></h3>
+        <p>Descriptions for each shipping methods.</p><h3 id="var/telepads"><aside class="declaration">var </aside>telepads
+            <aside>&ndash; /list/obj/machinery/ltsrbt</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/controllers/subsystem/blackmarket.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;blackmarket.dm 17"/></a></h3>
+        <p>List of existing ltsrbts.</p><h2 id="proc">Proc Details</h2><h3 id="proc/fake_teleport"><aside class="declaration">proc </aside>fake_teleport<aside>(/<a href="datum.html">datum</a>/<a href="datum/market_purchase.html">market_purchase</a>/purchase, /<a href="turf.html">turf</a>/target) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/controllers/subsystem/blackmarket.dm#L108">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;blackmarket.dm 108"/></a></aside>
+        </h3>
+        <p>Used to make a teleportation effect as do_teleport does not like moving items from nullspace.</p><h3 id="proc/queue_item"><aside class="declaration">proc </aside>queue_item<aside>(/<a href="datum.html">datum</a>/<a href="datum/market_purchase.html">market_purchase</a>/purchase) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/controllers/subsystem/blackmarket.dm#L120">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;blackmarket.dm 120"/></a></aside>
+        </h3>
+        <p>Used to add /datum/market_purchase to queued_purchases var. Returns TRUE when queued.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

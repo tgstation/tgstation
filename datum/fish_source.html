@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;fish_source - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/fish_source.html#var">Var Details</a> - <a href="datum/fish_source.html#proc">Proc Details</a></header>
+<main>
+<h1>fish_source <aside>/<a href="datum.html">datum</a>/<a href="datum/fish_source.html">fish_source</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 40"/></a></h1>
+
+<p>Where the fish actually come from - every fishing spot has one assigned but multiple fishing holes
+can share single source, ie single shared one for ocean/lavaland river</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/fish_source.html#var/background">background</a></th><td>Background image name from /datum/asset/simple/fishing_minigame</td></tr>
+            <tr><th><a href="datum/fish_source.html#var/catalog_description">catalog_description</a></th><td>How the spot type is described in fish catalog section about fish sources, will be skipped if null</td></tr>
+            <tr><th><a href="datum/fish_source.html#var/duds">duds</a></th><td>Text shown as baloon alert when you roll a dud in the table</td></tr>
+            <tr><th><a href="datum/fish_source.html#var/fish_counts">fish_counts</a></th><td>If a key from fish_table is present here, that fish is availible in limited quantity and is reduced by one on successful fishing</td></tr>
+            <tr><th><a href="datum/fish_source.html#var/fish_table">fish_table</a></th><td>Fish catch weight table - these are relative weights</td></tr>
+            <tr><th><a href="datum/fish_source.html#var/fishing_difficulty">fishing_difficulty</a></th><td>Baseline difficulty for fishing in this spot</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/fish_source.html#proc/calculate_difficulty">calculate_difficulty</a></th><td>Calculates the difficulty of the minigame:</td></tr>
+            <tr><th><a href="datum/fish_source.html#proc/dispense_reward">dispense_reward</a></th><td>Gives out the reward if possible</td></tr>
+            <tr><th><a href="datum/fish_source.html#proc/get_modified_fish_table">get_modified_fish_table</a></th><td>Builds a fish weights table modified by bait/rod/user properties</td></tr>
+            <tr><th><a href="datum/fish_source.html#proc/interrupt_challenge">interrupt_challenge</a></th><td>Proc called when the challenge is interrupted within the fish source code.</td></tr>
+            <tr><th><a href="datum/fish_source.html#proc/is_matching_bait">is_matching_bait</a></th><td>Checks if bait matches identifier from fav/disliked bait list</td></tr>
+            <tr><th><a href="datum/fish_source.html#proc/on_challenge_completed">on_challenge_completed</a></th><td>Proc called when the COMSIG_FISHING_CHALLENGE_COMPLETED signal is sent.
+Check if we've succeeded. If so, write into memory and dispense the reward.</td></tr>
+            <tr><th><a href="datum/fish_source.html#proc/on_fishing_spot_init">on_fishing_spot_init</a></th><td>Called when src is set as the fish source of a fishing spot component</td></tr>
+            <tr><th><a href="datum/fish_source.html#proc/on_start_fishing">on_start_fishing</a></th><td>Called below above proc, in case the fishing source has anything to do that isn't denial</td></tr>
+            <tr><th><a href="datum/fish_source.html#proc/pre_challenge_started">pre_challenge_started</a></th><td>Used to register signals or add traits and the such right after conditions have been cleared
+and before the minigame starts.</td></tr>
+            <tr><th><a href="datum/fish_source.html#proc/reason_we_cant_fish">reason_we_cant_fish</a></th><td>Can we fish in this spot at all. Returns DENIAL_REASON or null if we're good to go</td></tr>
+            <tr><th><a href="datum/fish_source.html#proc/roll_reward">roll_reward</a></th><td>In case you want more complex rules for specific spots</td></tr>
+            <tr><th><a href="datum/fish_source.html#proc/spawn_reward">spawn_reward</a></th><td>Spawns a reward from a atom path right where the fisherman is. Part of the dispense_reward() logic.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/background"><aside class="declaration">var </aside>background
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 55"/></a></h3>
+        <p>Background image name from /datum/asset/simple/fishing_minigame</p><h3 id="var/catalog_description"><aside class="declaration">var </aside>catalog_description
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 53"/></a></h3>
+        <p>How the spot type is described in fish catalog section about fish sources, will be skipped if null</p><h3 id="var/duds"><aside class="declaration">var </aside>duds
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 49"/></a></h3>
+        <p>Text shown as baloon alert when you roll a dud in the table</p><h3 id="var/fish_counts"><aside class="declaration">var </aside>fish_counts
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 47"/></a></h3>
+        <p>If a key from fish_table is present here, that fish is availible in limited quantity and is reduced by one on successful fishing</p><h3 id="var/fish_table"><aside class="declaration">var </aside>fish_table
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 45"/></a></h3>
+        <p>Fish catch weight table - these are relative weights</p><h3 id="var/fishing_difficulty"><aside class="declaration">var </aside>fishing_difficulty
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 51"/></a></h3>
+        <p>Baseline difficulty for fishing in this spot</p><h2 id="proc">Proc Details</h2><h3 id="proc/calculate_difficulty"><aside class="declaration">proc </aside>calculate_difficulty<aside>(result, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fishing_rod.html">fishing_rod</a>/rod, /<a href="mob.html">mob</a>/fisherman, /<a href="datum.html">datum</a>/<a href="datum/fishing_challenge.html">fishing_challenge</a>/challenge) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L84">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 84"/></a></aside>
+        </h3>
+        <p>Calculates the difficulty of the minigame:</p>
+<p>This includes the source's fishing difficulty, that of the fish, the rod,
+favorite and disliked baits, fish traits and the fisherman skill.</p>
+<p>For non-fish, it's just the source's fishing difficulty minus the fisherman skill.</p><h3 id="proc/dispense_reward"><aside class="declaration">proc </aside>dispense_reward<aside>(reward_path, /<a href="mob.html">mob</a>/fisherman, /<a href="turf.html">turf</a>/fishing_spot) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L168">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 168"/></a></aside>
+        </h3>
+        <p>Gives out the reward if possible</p><h3 id="proc/get_modified_fish_table"><aside class="declaration">proc </aside>get_modified_fish_table<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fishing_rod.html">fishing_rod</a>/rod, /<a href="mob.html">mob</a>/fisherman) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L240">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 240"/></a></aside>
+        </h3>
+        <p>Builds a fish weights table modified by bait/rod/user properties</p><h3 id="proc/interrupt_challenge"><aside class="declaration">proc </aside>interrupt_challenge<aside>(reason) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L147">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 147"/></a></aside>
+        </h3>
+        <p>Proc called when the challenge is interrupted within the fish source code.</p><h3 id="proc/is_matching_bait"><aside class="declaration">proc </aside>is_matching_bait<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/bait, identifier) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L223">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 223"/></a></aside>
+        </h3>
+        <p>Checks if bait matches identifier from fav/disliked bait list</p><h3 id="proc/on_challenge_completed"><aside class="declaration">proc </aside>on_challenge_completed<aside>(/<a href="datum.html">datum</a>/<a href="datum/fishing_challenge.html">fishing_challenge</a>/source, /<a href="mob.html">mob</a>/user, success) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L154">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 154"/></a></aside>
+        </h3>
+        <p>Proc called when the COMSIG_FISHING_CHALLENGE_COMPLETED signal is sent.
+Check if we've succeeded. If so, write into memory and dispense the reward.</p><h3 id="proc/on_fishing_spot_init"><aside class="declaration">proc </aside>on_fishing_spot_init<aside>(/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/fishing_spot.html">fishing_spot</a>/spot) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 65"/></a></aside>
+        </h3>
+        <p>Called when src is set as the fish source of a fishing spot component</p><h3 id="proc/on_start_fishing"><aside class="declaration">proc </aside>on_start_fishing<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fishing_rod.html">fishing_rod</a>/rod, /<a href="mob.html">mob</a>/fisherman, /<a href="atom.html">atom</a>/parent) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L73">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 73"/></a></aside>
+        </h3>
+        <p>Called below above proc, in case the fishing source has anything to do that isn't denial</p><h3 id="proc/pre_challenge_started"><aside class="declaration">proc </aside>pre_challenge_started<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fishing_rod.html">fishing_rod</a>/rod, /<a href="mob.html">mob</a>/user, /<a href="datum.html">datum</a>/<a href="datum/fishing_challenge.html">fishing_challenge</a>/challenge) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L143">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 143"/></a></aside>
+        </h3>
+        <p>Used to register signals or add traits and the such right after conditions have been cleared
+and before the minigame starts.</p><h3 id="proc/reason_we_cant_fish"><aside class="declaration">proc </aside>reason_we_cant_fish<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fishing_rod.html">fishing_rod</a>/rod, /<a href="mob.html">mob</a>/fisherman, /<a href="atom.html">atom</a>/parent) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 69"/></a></aside>
+        </h3>
+        <p>Can we fish in this spot at all. Returns DENIAL_REASON or null if we're good to go</p><h3 id="proc/roll_reward"><aside class="declaration">proc </aside>roll_reward<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fishing_rod.html">fishing_rod</a>/rod, /<a href="mob.html">mob</a>/fisherman) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L136">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 136"/></a></aside>
+        </h3>
+        <p>In case you want more complex rules for specific spots</p><h3 id="proc/spawn_reward"><aside class="declaration">proc </aside>spawn_reward<aside>(reward_path, /<a href="mob.html">mob</a>/fisherman, /<a href="turf.html">turf</a>/fishing_spot) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/sources/_fish_source.dm#L192">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;sources&#x2F;_fish_source.dm 192"/></a></aside>
+        </h3>
+        <p>Spawns a reward from a atom path right where the fisherman is. Part of the dispense_reward() logic.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

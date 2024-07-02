@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;structure&#x2F;holopay - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/structure/holopay.html#var">Var Details</a> - <a href="obj/structure/holopay.html#proc">Proc Details</a></header>
+<main>
+<h1>holopay <aside>/<a href="obj.html">obj</a>/<a href="obj/structure.html">structure</a>/<a href="obj/structure/holopay.html">holopay</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/economy/holopay.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;economy&#x2F;holopay.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/structure/holopay.html#var/force_fee">force_fee</a></th><td>Replaces the &quot;pay whatever&quot; functionality with a set amount when non-zero.</td></tr>
+            <tr><th><a href="obj/structure/holopay.html#var/linked_card">linked_card</a></th><td>ID linked to the holopay</td></tr>
+            <tr><th><a href="obj/structure/holopay.html#var/max_holo_range">max_holo_range</a></th><td>Max range at which the hologram can be projected before it deletes</td></tr>
+            <tr><th><a href="obj/structure/holopay.html#var/shop_logo">shop_logo</a></th><td>The holopay shop icon displayed in the UI</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/structure/holopay.html#proc/alert_buyer">alert_buyer</a></th><td>Account checks
+If the user has enough money, ask them the amount or charge the force fee
+Exit checks in case the user cancelled or entered an invalid amount
+Success: Alert the buyer
+Alerts the owner of the transaction.</td></tr>
+            <tr><th><a href="obj/structure/holopay.html#proc/assign_card">assign_card</a></th><td>Links the source card to the holopay. Begins checking if its in range.</td></tr>
+            <tr><th><a href="obj/structure/holopay.html#proc/attackby_secondary">attackby_secondary</a></th><td>Users can pay with an ID to skip the UI
+Users can also pay by holochip
+Account checks
+Charges force fee or uses pay what you want
+Exit sanity checks
+Success: Alert buyer
+Throws errors if they try to use space cash</td></tr>
+            <tr><th><a href="obj/structure/holopay.html#proc/dissipate">dissipate</a></th><td>Creates holopay vanishing effects.
+Deletes the holopay thereafter.</td></tr>
+            <tr><th><a href="obj/structure/holopay.html#proc/handle_move">handle_move</a></th><td>A periodic check to see if the projecting card is nearby.
+Deletes the holopay if not.</td></tr>
+            <tr><th><a href="obj/structure/holopay.html#proc/process_payment">process_payment</a></th><td>Initiates a transaction between accounts.</td></tr>
+            <tr><th><a href="obj/structure/holopay.html#proc/track">track</a></th><td>Start checking if the source projection is in range</td></tr>
+            <tr><th><a href="obj/structure/holopay.html#proc/ui_interact">ui_interact</a></th><td>Can kill it by right-clicking with ID because it seems useful and intuitive, to me, at least</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/force_fee"><aside class="declaration">var </aside>force_fee
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/economy/holopay.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;economy&#x2F;holopay.dm 18"/></a></h3>
+        <p>Replaces the &quot;pay whatever&quot; functionality with a set amount when non-zero.</p><h3 id="var/linked_card"><aside class="declaration">var </aside>linked_card
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/card.html">card</a>/<a href="obj/item/card/id.html">id</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/economy/holopay.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;economy&#x2F;holopay.dm 12"/></a></h3>
+        <p>ID linked to the holopay</p><h3 id="var/max_holo_range"><aside class="declaration">var </aside>max_holo_range
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/economy/holopay.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;economy&#x2F;holopay.dm 14"/></a></h3>
+        <p>Max range at which the hologram can be projected before it deletes</p><h3 id="var/shop_logo"><aside class="declaration">var </aside>shop_logo
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/economy/holopay.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;economy&#x2F;holopay.dm 16"/></a></h3>
+        <p>The holopay shop icon displayed in the UI</p><h2 id="proc">Proc Details</h2><h3 id="proc/alert_buyer"><aside class="declaration">proc </aside>alert_buyer<aside>(payee, amount) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/economy/holopay.dm#L288">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;economy&#x2F;holopay.dm 288"/></a></aside>
+        </h3>
+        <p>Account checks
+If the user has enough money, ask them the amount or charge the force fee
+Exit checks in case the user cancelled or entered an invalid amount
+Success: Alert the buyer
+Alerts the owner of the transaction.</p>
+<p>Parameters:</p>
+<ul>
+<li>payee - The user who initiated the transaction.</li>
+<li>amount - The amount of money that was paid.
+Returns:</li>
+<li>TRUE - alert was successful.</li>
+</ul><h3 id="proc/assign_card"><aside class="declaration">proc </aside>assign_card<aside>(/<a href="turf.html">turf</a>/target, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/card.html">card</a>/<a href="obj/item/card/id.html">id</a>/card) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/economy/holopay.dm#L198">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;economy&#x2F;holopay.dm 198"/></a></aside>
+        </h3>
+        <p>Links the source card to the holopay. Begins checking if its in range.</p>
+<p>Parameters:</p>
+<ul>
+<li>turf/target - The tile to project the holopay onto</li>
+<li>obj/item/card/id/card - The card to link to the holopay
+Returns:</li>
+<li>TRUE - the card was linked</li>
+</ul><h3 id="proc/attackby_secondary"><aside class="parent"><a title="/atom" href="atom.html#proc/attackby_secondary">&uarr;</a></aside>attackby_secondary<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/weapon, /<a href="mob.html">mob</a>/user, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/economy/holopay.dm#L117">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;economy&#x2F;holopay.dm 117"/></a></aside>
+        </h3>
+        <p>Users can pay with an ID to skip the UI
+Users can also pay by holochip
+Account checks
+Charges force fee or uses pay what you want
+Exit sanity checks
+Success: Alert buyer
+Throws errors if they try to use space cash</p><h3 id="proc/dissipate"><aside class="declaration">proc </aside>dissipate<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/economy/holopay.dm#L240">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;economy&#x2F;holopay.dm 240"/></a></aside>
+        </h3>
+        <p>Creates holopay vanishing effects.
+Deletes the holopay thereafter.</p><h3 id="proc/handle_move"><aside class="declaration">proc </aside>handle_move<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/source, /<a href="atom.html">atom</a>/old_loc, dir, forced, /list/old_locs) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/economy/holopay.dm#L227">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;economy&#x2F;holopay.dm 227"/></a></aside>
+        </h3>
+        <p>A periodic check to see if the projecting card is nearby.
+Deletes the holopay if not.</p><h3 id="proc/process_payment"><aside class="declaration">proc </aside>process_payment<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/economy/holopay.dm#L253">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;economy&#x2F;holopay.dm 253"/></a></aside>
+        </h3>
+        <p>Initiates a transaction between accounts.</p>
+<p>Parameters:</p>
+<ul>
+<li>mob/living/user - The user who initiated the transaction.
+Returns:</li>
+<li>TRUE - transaction was successful</li>
+</ul><h3 id="proc/track"><aside class="declaration">proc </aside>track<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/thing) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/economy/holopay.dm#L211">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;economy&#x2F;holopay.dm 211"/></a></aside>
+        </h3>
+        <p>Start checking if the source projection is in range</p><h3 id="proc/ui_interact"><aside class="parent"><a title="/datum" href="datum.html#proc/ui_interact">&uarr;</a></aside>ui_interact<aside>(/<a href="mob.html">mob</a>/user, /<a href="datum.html">datum</a>/<a href="datum/tgui.html">tgui</a>/ui) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/economy/holopay.dm#L127">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;economy&#x2F;holopay.dm 127"/></a></aside>
+        </h3>
+        <p>Can kill it by right-clicking with ID because it seems useful and intuitive, to me, at least</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

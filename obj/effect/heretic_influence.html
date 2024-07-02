@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;effect&#x2F;heretic_influence - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/effect/heretic_influence.html#var">Var Details</a> - <a href="obj/effect/heretic_influence.html#proc">Proc Details</a></header>
+<main>
+<h1>heretic_influence <aside>/<a href="obj.html">obj</a>/<a href="obj/effect/heretic_influence.html">effect/heretic_influence</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/influences.dm#L193">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;influences.dm 193"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/effect/heretic_influence.html#var/being_drained">being_drained</a></th><td>Whether we're currently being drained or not.</td></tr>
+            <tr><th><a href="obj/effect/heretic_influence.html#var/heretic_image">heretic_image</a></th><td>The image shown to heretics</td></tr>
+            <tr><th><a href="obj/effect/heretic_influence.html#var/minds">minds</a></th><td>A list of all minds that can see us.</td></tr>
+            <tr><th><a href="obj/effect/heretic_influence.html#var/on_turf">on_turf</a></th><td>We hold the turf we're on so we can remove and add the 'no prints' flag.</td></tr>
+            <tr><th><a href="obj/effect/heretic_influence.html#var/real_icon_state">real_icon_state</a></th><td>The icon state applied to the image created for this influence.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/effect/heretic_influence.html#proc/drain_influence">drain_influence</a></th><td>Begin to drain the influence, setting being_drained,
+registering an examine signal, and beginning a do_after.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/being_drained"><aside class="declaration">var </aside>being_drained
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/influences.dm#L201">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;influences.dm 201"/></a></h3>
+        <p>Whether we're currently being drained or not.</p><h3 id="var/heretic_image"><aside class="declaration">var </aside>heretic_image
+            <aside>&ndash; /<a href="image.html">image</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/influences.dm#L207">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;influences.dm 207"/></a></h3>
+        <p>The image shown to heretics</p><h3 id="var/minds"><aside class="declaration">var </aside>minds
+            <aside>&ndash; /list/datum/mind</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/influences.dm#L205">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;influences.dm 205"/></a></h3>
+        <p>A list of all minds that can see us.</p><h3 id="var/on_turf"><aside class="declaration">var </aside>on_turf
+            <aside>&ndash; /<a href="turf.html">turf</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/influences.dm#L211">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;influences.dm 211"/></a></h3>
+        <p>We hold the turf we're on so we can remove and add the 'no prints' flag.</p><h3 id="var/real_icon_state"><aside class="declaration">var </aside>real_icon_state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/influences.dm#L203">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;influences.dm 203"/></a></h3>
+        <p>The icon state applied to the image created for this influence.</p><h2 id="proc">Proc Details</h2><h3 id="proc/drain_influence"><aside class="declaration">proc </aside>drain_influence<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, knowledge_to_gain) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/influences.dm#L280">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;influences.dm 280"/></a></aside>
+        </h3>
+        <p>Begin to drain the influence, setting being_drained,
+registering an examine signal, and beginning a do_after.</p>
+<p>If successful, the influence is drained and deleted.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

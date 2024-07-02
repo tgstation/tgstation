@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;_helpers.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/_helpers.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/_helpers.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/_helpers.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_helpers.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/_helpers.html#define/STRINGIFY">STRINGIFY</a></th><td>Stringifies whatever you put into it.</td></tr>
+        <tr><th><a href="code/__DEFINES/_helpers.html#define/subtypesof">subtypesof</a></th><td>subtypesof(), typesof() without the parent path</td></tr>
+        <tr><th><a href="code/__DEFINES/_helpers.html#define/UNTIL">UNTIL</a></th><td>Until a condition is true, sleep</td></tr>
+        <tr><th><a href="code/__DEFINES/_helpers.html#define/SLEEP_NOT_DEL">SLEEP_NOT_DEL</a></th><td>Sleep if we haven't been deleted
+Otherwise, return</td></tr>
+        <tr><th><a href="code/__DEFINES/_helpers.html#define/text_ref">text_ref</a></th><td>Takes a datum as input, returns its ref string</td></tr>
+        <tr><th><a href="code/__DEFINES/_helpers.html#define/EMPTY_BLOCK_GUARD">EMPTY_BLOCK_GUARD</a></th><td>A null statement to guard against EmptyBlock lint without necessitating the use of pass()
+Used to avoid proc-call overhead. But use sparingly. Probably pointless in most places.</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/EMPTY_BLOCK_GUARD"><aside class="declaration">#define </aside>EMPTY_BLOCK_GUARD
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/_helpers.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_helpers.dm 38"/></a>
+    </h3>
+    <p>A null statement to guard against EmptyBlock lint without necessitating the use of pass()
+Used to avoid proc-call overhead. But use sparingly. Probably pointless in most places.</p><h3 id="define/SLEEP_NOT_DEL"><aside class="declaration">#define </aside>SLEEP_NOT_DEL
+            <aside>(time)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/_helpers.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_helpers.dm 22"/></a>
+    </h3>
+    <p>Sleep if we haven't been deleted
+Otherwise, return</p><h3 id="define/STRINGIFY"><aside class="declaration">#define </aside>STRINGIFY
+            <aside>(argument)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/_helpers.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_helpers.dm 12"/></a>
+    </h3>
+    <p>Stringifies whatever you put into it.</p><h3 id="define/UNTIL"><aside class="declaration">#define </aside>UNTIL
+            <aside>(X)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/_helpers.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_helpers.dm 18"/></a>
+    </h3>
+    <p>Until a condition is true, sleep</p><h3 id="define/subtypesof"><aside class="declaration">#define </aside>subtypesof
+            <aside>(typepath)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/_helpers.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_helpers.dm 15"/></a>
+    </h3>
+    <p>subtypesof(), typesof() without the parent path</p><h3 id="define/text_ref"><aside class="declaration">#define </aside>text_ref
+            <aside>(datum)</aside>
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/_helpers.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;_helpers.dm 29"/></a>
+    </h3>
+    <p>Takes a datum as input, returns its ref string</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

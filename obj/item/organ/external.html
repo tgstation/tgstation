@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;organ&#x2F;external - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/organ/external.html#var">Var Details</a> - <a href="obj/item/organ/external.html#proc">Proc Details</a></header>
+<main>
+<h1>external <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/organ.html">organ</a>/<a href="obj/item/organ/external.html">external</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/surgery/organs/external/_external_organ.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;external&#x2F;_external_organ.dm 6"/></a></h1>
+
+<p>System for drawing organs with overlays. These overlays are drawn directly on the bodypart, attached to a person or not
+Works in tandem with the /datum/sprite_accessory datum to generate sprites
+Unlike normal organs, we're actually inside a persons limbs at all times</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/organ/external.html#var/bodypart_overlay">bodypart_overlay</a></th><td>The overlay datum that actually draws stuff on the limb</td></tr>
+            <tr><th><a href="obj/item/organ/external.html#var/dna_block">dna_block</a></th><td>With what DNA block do we mutate in mutate_feature() ? For genetics</td></tr>
+            <tr><th><a href="obj/item/organ/external.html#var/external_bodyshapes">external_bodyshapes</a></th><td>Does this organ have any bodyshapes to pass to it's bodypart_owner?</td></tr>
+            <tr><th><a href="obj/item/organ/external.html#var/external_bodytypes">external_bodytypes</a></th><td>Does this organ have any bodytypes to pass to it's bodypart_owner?</td></tr>
+            <tr><th><a href="obj/item/organ/external.html#var/preference">preference</a></th><td>The savefile_key of the preference this relates to. Used for the preferences UI.</td></tr>
+            <tr><th><a href="obj/item/organ/external.html#var/restyle_flags">restyle_flags</a></th><td>Which flags does a 'modification tool' need to have to restyle us, if it all possible (located in code/_DEFINES/mobs)</td></tr>
+            <tr><th><a href="obj/item/organ/external.html#var/sprite_accessory_override">sprite_accessory_override</a></th><td>If not null, overrides the appearance with this sprite accessory datum</td></tr>
+            <tr><th><a href="obj/item/organ/external.html#var/use_mob_sprite_as_obj_sprite">use_mob_sprite_as_obj_sprite</a></th><td>Set to EXTERNAL_BEHIND, EXTERNAL_FRONT or EXTERNAL_ADJACENT if you want to draw one of those layers as the object sprite. FALSE to use your own
+This will not work if it doesn't have a limb to generate it's icon with</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/organ/external.html#proc/Initialize">Initialize</a></th><td>mob_sprite is optional if you havent set sprite_datums for the object, and is used mostly to generate sprite_datums from a persons DNA
+For _mob_sprite we make a distinction between &quot;Round Snout&quot; and &quot;round&quot;. Round Snout is the name of the sprite datum, while &quot;round&quot; would be part of the sprite
+I'm sorry</td></tr>
+            <tr><th><a href="obj/item/organ/external.html#proc/attempt_feature_restyle">attempt_feature_restyle</a></th><td>Restyles the external organ from a list of valid options</td></tr>
+            <tr><th><a href="obj/item/organ/external.html#proc/get_valid_restyles">get_valid_restyles</a></th><td>Helper proc to fetch a list of styles a player might want to restyle their features into during the round : returns list(&quot;Cabbage&quot; = /datum/sprite_accessory/cabbage)</td></tr>
+            <tr><th><a href="obj/item/organ/external.html#proc/mutate_feature">mutate_feature</a></th><td>Update our features after something changed our appearance</td></tr>
+            <tr><th><a href="obj/item/organ/external.html#proc/on_attempt_feature_restyle">on_attempt_feature_restyle</a></th><td>Invoke async so we dont break signals</td></tr>
+            <tr><th><a href="obj/item/organ/external.html#proc/simple_change_sprite">simple_change_sprite</a></th><td>If you need to change an external_organ for simple one-offs, use this. Pass the accessory type : /datum/accessory/something</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/bodypart_overlay"><aside class="declaration">var </aside>bodypart_overlay
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/bodypart_overlay.html">bodypart_overlay</a>/<a href="datum/bodypart_overlay/mutant.html">mutant</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/surgery/organs/external/_external_organ.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;external&#x2F;_external_organ.dm 14"/></a></h3>
+        <p>The overlay datum that actually draws stuff on the limb</p><h3 id="var/dna_block"><aside class="declaration">var </aside>dna_block
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/surgery/organs/external/_external_organ.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;external&#x2F;_external_organ.dm 21"/></a></h3>
+        <p>With what DNA block do we mutate in mutate_feature() ? For genetics</p><h3 id="var/external_bodyshapes"><aside class="declaration">var </aside>external_bodyshapes
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/surgery/organs/external/_external_organ.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;external&#x2F;_external_organ.dm 29"/></a></h3>
+        <p>Does this organ have any bodyshapes to pass to it's bodypart_owner?</p><h3 id="var/external_bodytypes"><aside class="declaration">var </aside>external_bodytypes
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/surgery/organs/external/_external_organ.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;external&#x2F;_external_organ.dm 27"/></a></h3>
+        <p>Does this organ have any bodytypes to pass to it's bodypart_owner?</p><h3 id="var/preference"><aside class="declaration">var </aside>preference
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/surgery/organs/external/_external_organ.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;external&#x2F;_external_organ.dm 19"/></a></h3>
+        <p>The savefile_key of the preference this relates to. Used for the preferences UI.</p><h3 id="var/restyle_flags"><aside class="declaration">var </aside>restyle_flags
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/surgery/organs/external/_external_organ.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;external&#x2F;_external_organ.dm 31"/></a></h3>
+        <p>Which flags does a 'modification tool' need to have to restyle us, if it all possible (located in code/_DEFINES/mobs)</p><h3 id="var/sprite_accessory_override"><aside class="declaration">var </aside>sprite_accessory_override
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/surgery/organs/external/_external_organ.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;external&#x2F;_external_organ.dm 16"/></a></h3>
+        <p>If not null, overrides the appearance with this sprite accessory datum</p><h3 id="var/use_mob_sprite_as_obj_sprite"><aside class="declaration">var </aside>use_mob_sprite_as_obj_sprite
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/surgery/organs/external/_external_organ.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;external&#x2F;_external_organ.dm 25"/></a></h3>
+        <p>Set to EXTERNAL_BEHIND, EXTERNAL_FRONT or EXTERNAL_ADJACENT if you want to draw one of those layers as the object sprite. FALSE to use your own
+This will not work if it doesn't have a limb to generate it's icon with</p><h2 id="proc">Proc Details</h2><h3 id="proc/Initialize"><aside class="parent"><a title="/atom" href="atom.html#proc/Initialize">&uarr;</a></aside>Initialize<aside>(mapload, accessory_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/surgery/organs/external/_external_organ.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;external&#x2F;_external_organ.dm 37"/></a></aside>
+        </h3>
+        <p>mob_sprite is optional if you havent set sprite_datums for the object, and is used mostly to generate sprite_datums from a persons DNA
+For _mob_sprite we make a distinction between &quot;Round Snout&quot; and &quot;round&quot;. Round Snout is the name of the sprite datum, while &quot;round&quot; would be part of the sprite
+I'm sorry</p><h3 id="proc/attempt_feature_restyle"><aside class="declaration">proc </aside>attempt_feature_restyle<aside>(/<a href="atom.html">atom</a>/source, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/trimmer, /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/original_target, body_zone, restyle_type, style_speed) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/surgery/organs/external/restyling.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;external&#x2F;restyling.dm 69"/></a></aside>
+        </h3>
+        <p>Restyles the external organ from a list of valid options</p><h3 id="proc/get_valid_restyles"><aside class="declaration">proc </aside>get_valid_restyles<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/surgery/organs/external/restyling.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;external&#x2F;restyling.dm 4"/></a></aside>
+        </h3>
+        <p>Helper proc to fetch a list of styles a player might want to restyle their features into during the round : returns list(&quot;Cabbage&quot; = /datum/sprite_accessory/cabbage)</p><h3 id="proc/mutate_feature"><aside class="declaration">proc </aside>mutate_feature<aside>(features, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/carbon.html">carbon</a>/<a href="mob/living/carbon/human.html">human</a>/human) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/surgery/organs/external/_external_organ.dm#L125">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;external&#x2F;_external_organ.dm 125"/></a></aside>
+        </h3>
+        <p>Update our features after something changed our appearance</p><h3 id="proc/on_attempt_feature_restyle"><aside class="declaration">proc </aside>on_attempt_feature_restyle<aside>(/<a href="atom.html">atom</a>/source, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/trimmer, /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/original_target, body_zone, restyle_type, style_speed) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/surgery/organs/external/restyling.dm#L60">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;external&#x2F;restyling.dm 60"/></a></aside>
+        </h3>
+        <p>Invoke async so we dont break signals</p><h3 id="proc/simple_change_sprite"><aside class="declaration">proc </aside>simple_change_sprite<aside>(accessory_type) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/surgery/organs/external/_external_organ.dm#L134">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;surgery&#x2F;organs&#x2F;external&#x2F;_external_organ.dm 134"/></a></aside>
+        </h3>
+        <p>If you need to change an external_organ for simple one-offs, use this. Pass the accessory type : /datum/accessory/something</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

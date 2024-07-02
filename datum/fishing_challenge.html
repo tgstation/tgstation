@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;fishing_challenge - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/fishing_challenge.html#var">Var Details</a> - <a href="datum/fishing_challenge.html#proc">Proc Details</a></header>
+<main>
+<h1>fishing_challenge <aside>/<a href="datum.html">datum</a>/<a href="datum/fishing_challenge.html">fishing_challenge</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 43"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/active_effect_cd">active_effect_cd</a></th><td>The cooldown between switching active effects</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/active_effects">active_effects</a></th><td>A list of possible active minigame effects. If not empty, one will be picked from time to time.</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/background">background</a></th><td>Background icon state from fishing_hud.dmi</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/bait_bounce_mult">bait_bounce_mult</a></th><td>By how much the bait recoils back when hitting the bounds of the slider while idle</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/bait_height">bait_height</a></th><td>How much space the bait takes on the minigame slider</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/bait_pixel_height">bait_pixel_height</a></th><td>The height in pixels of the bait bar</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/bait_position">bait_position</a></th><td>The position of the bait on the minigame slider</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/bait_velocity">bait_velocity</a></th><td>The current speed the bait is moving at</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/can_interrupt_move">can_interrupt_move</a></th><td>If true, the fish can jump while a target position is set, thus overriding it</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/completed">completed</a></th><td>Is it finished (either by win/lose or window closing)</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/completion">completion</a></th><td>The completion score. If it reaches 100, it's a win. If it reaches 0, it's a loss.</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/completion_gain">completion_gain</a></th><td>How much completion is gained per second when the bait area is intersecting with the fish's</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/completion_loss">completion_loss</a></th><td>How much completion is lost per second when the bait area is not intersecting with the fish's</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/current_active_effect">current_active_effect</a></th><td>The current active effect</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/current_velocity_limit">current_velocity_limit</a></th><td>The current speed limit used</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/difficulty">difficulty</a></th><td>Minigame difficulty</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/fish_ai">fish_ai</a></th><td>Fish AI type to use</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/fish_height">fish_height</a></th><td>How much space the fish takes on the minigame slider</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/fish_icon">fish_icon</a></th><td>Fish icon state from fishing_hud.dmi</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/fish_idle_velocity">fish_idle_velocity</a></th><td>The base velocity of the fish, which may affect jump distances and falling speed.</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/fish_pixel_height">fish_pixel_height</a></th><td>The height in pixels of the fish</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/fish_position">fish_position</a></th><td>The position of the fish on the minigame slider</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/fish_velocity">fish_velocity</a></th><td>The current speed the fish is moving at</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/fishing_hud">fishing_hud</a></th><td>The background as shown in the minigame, and the holder of the other visual overlays</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/fishing_line">fishing_line</a></th><td>Fishing line visual</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/gravity_velocity">gravity_velocity</a></th><td>The acceleration of the bait while not reeling</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/long_jump_chance">long_jump_chance</a></th><td>How likely the fish is to perform a long jump, then multiplied by difficulty</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/long_jump_velocity_limit">long_jump_velocity_limit</a></th><td>The speed limit for the long jump</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/lure">lure</a></th><td>Lure visual</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/reeling_state">reeling_state</a></th><td>Whether the bait is idle or reeling up or down (left and right click)</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/reeling_velocity">reeling_velocity</a></th><td>The acceleration of the bait while reeling</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/reward_path">reward_path</a></th><td>Result path</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/short_jump_chance">short_jump_chance</a></th><td>How likely the fish is to perform a standard jump, then multiplied by difficulty</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/short_jump_velocity_limit">short_jump_velocity_limit</a></th><td>The speed limit for the short jump</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/special_effects">special_effects</a></th><td>Rule modifiers (eg weighted bait)</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/start_time">start_time</a></th><td>When the ui minigame phase started</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/target_position">target_position</a></th><td>A position on the slider the fish wants to get to</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/used_rod">used_rod</a></th><td>Rod that is used for the challenge</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#var/user">user</a></th><td>Fishing mob</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#proc/Destroy">Destroy</a></th><td>Fish minigame properties
+Enable special parameters
+If the chances are higher than 1% (100% at maximum difficulty), they'll scale
+less than proportionally (exponent less than 1) instead.
+This way we ensure fish with high jump chances won't get TOO jumpy until
+they near the maximum difficulty, at which they hit 100%</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#proc/interrupt">interrupt</a></th><td>Challenge interrupted by something external</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#proc/move_bait">move_bait</a></th><td>Move at least 0.75 to full of the availible bar in given direction,
+and more likely to move in the direction where there's more space
+The proc that moves the bait around, just like in the old TGUI, mostly.</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#proc/move_fish">move_fish</a></th><td>bring forth an active effect
+go back to normal
+The proc that moves the fish around, just like in the old TGUI, mostly.</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#proc/on_line_deleted">on_line_deleted</a></th><td>Create fishing line visuals</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#proc/on_user_logout">on_user_logout</a></th><td>The player is no longer around to play the minigame, so we interrupt it.</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#proc/on_user_move">on_user_move</a></th><td>The lure may be out of sight if the user has moed around a corner, so the message should be displayed over him instead.</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#proc/prepare_minigame_hud">prepare_minigame_hud</a></th><td>Initialize the minigame hud and register some signals to make it work.</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#proc/process">process</a></th><td>Update the state of the fish, the bait and the hud</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#proc/remove_minigame_hud">remove_minigame_hud</a></th><td>Stop processing and remove references to the minigame hud</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#proc/select_active_effect">select_active_effect</a></th><td>The proc that handles fancy effects like flipping the hud or skewing movement</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#proc/start_reeling">start_reeling</a></th><td>While the mouse button is held down, the bait will be reeling up (or down on r-click if the bidirectional rule is enabled)</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#proc/stop_reeling">stop_reeling</a></th><td>Reset the reeling state to idle once the mouse button is released</td></tr>
+            <tr><th><a href="datum/fishing_challenge.html#proc/update_visuals">update_visuals</a></th><td>Pull the brake on the velocity if the current velocity and the acceleration
+have different directions, making the bait less slippery, thus easier to control
+bidirectional baits stay bouyant while idle
+update the vertical pixel position of both fish and bait, and the icon state of the completion bar</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/active_effect_cd"><aside class="declaration">var </aside>active_effect_cd
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 55"/></a></h3>
+        <p>The cooldown between switching active effects</p><h3 id="var/active_effects"><aside class="declaration">var </aside>active_effects
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 53"/></a></h3>
+        <p>A list of possible active minigame effects. If not empty, one will be picked from time to time.</p><h3 id="var/background"><aside class="declaration">var </aside>background
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L73">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 73"/></a></h3>
+        <p>Background icon state from fishing_hud.dmi</p><h3 id="var/bait_bounce_mult"><aside class="declaration">var </aside>bait_bounce_mult
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L130">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 130"/></a></h3>
+        <p>By how much the bait recoils back when hitting the bounds of the slider while idle</p><h3 id="var/bait_height"><aside class="declaration">var </aside>bait_height
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L85">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 85"/></a></h3>
+        <p>How much space the bait takes on the minigame slider</p><h3 id="var/bait_pixel_height"><aside class="declaration">var </aside>bait_pixel_height
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L87">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 87"/></a></h3>
+        <p>The height in pixels of the bait bar</p><h3 id="var/bait_position"><aside class="declaration">var </aside>bait_position
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L93">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 93"/></a></h3>
+        <p>The position of the bait on the minigame slider</p><h3 id="var/bait_velocity"><aside class="declaration">var </aside>bait_velocity
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L97">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 97"/></a></h3>
+        <p>The current speed the bait is moving at</p><h3 id="var/can_interrupt_move"><aside class="declaration">var </aside>can_interrupt_move
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L121">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 121"/></a></h3>
+        <p>If true, the fish can jump while a target position is set, thus overriding it</p><h3 id="var/completed"><aside class="declaration">var </aside>completed
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 47"/></a></h3>
+        <p>Is it finished (either by win/lose or window closing)</p><h3 id="var/completion"><aside class="declaration">var </aside>completion
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L100">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 100"/></a></h3>
+        <p>The completion score. If it reaches 100, it's a win. If it reaches 0, it's a loss.</p><h3 id="var/completion_gain"><aside class="declaration">var </aside>completion_gain
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L104">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 104"/></a></h3>
+        <p>How much completion is gained per second when the bait area is intersecting with the fish's</p><h3 id="var/completion_loss"><aside class="declaration">var </aside>completion_loss
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L102">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 102"/></a></h3>
+        <p>How much completion is lost per second when the bait area is not intersecting with the fish's</p><h3 id="var/current_active_effect"><aside class="declaration">var </aside>current_active_effect
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 57"/></a></h3>
+        <p>The current active effect</p><h3 id="var/current_velocity_limit"><aside class="declaration">var </aside>current_velocity_limit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L115">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 115"/></a></h3>
+        <p>The current speed limit used</p><h3 id="var/difficulty"><aside class="declaration">var </aside>difficulty
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 61"/></a></h3>
+        <p>Minigame difficulty</p><h3 id="var/fish_ai"><aside class="declaration">var </aside>fish_ai
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 49"/></a></h3>
+        <p>Fish AI type to use</p><h3 id="var/fish_height"><aside class="declaration">var </aside>fish_height
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L83">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 83"/></a></h3>
+        <p>How much space the fish takes on the minigame slider</p><h3 id="var/fish_icon"><aside class="declaration">var </aside>fish_icon
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L75">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 75"/></a></h3>
+        <p>Fish icon state from fishing_hud.dmi</p><h3 id="var/fish_idle_velocity"><aside class="declaration">var </aside>fish_idle_velocity
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L117">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 117"/></a></h3>
+        <p>The base velocity of the fish, which may affect jump distances and falling speed.</p><h3 id="var/fish_pixel_height"><aside class="declaration">var </aside>fish_pixel_height
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L89">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 89"/></a></h3>
+        <p>The height in pixels of the fish</p><h3 id="var/fish_position"><aside class="declaration">var </aside>fish_position
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L91">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 91"/></a></h3>
+        <p>The position of the fish on the minigame slider</p><h3 id="var/fish_velocity"><aside class="declaration">var </aside>fish_velocity
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L95">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 95"/></a></h3>
+        <p>The current speed the fish is moving at</p><h3 id="var/fishing_hud"><aside class="declaration">var </aside>fishing_hud
+            <aside>&ndash; /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/<a href="atom/movable/screen.html">screen</a>/<a href="atom/movable/screen/fishing_hud.html">fishing_hud</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L135">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 135"/></a></h3>
+        <p>The background as shown in the minigame, and the holder of the other visual overlays</p><h3 id="var/fishing_line"><aside class="declaration">var </aside>fishing_line
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/beam.html">beam</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L78">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 78"/></a></h3>
+        <p>Fishing line visual</p><h3 id="var/gravity_velocity"><aside class="declaration">var </aside>gravity_velocity
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L126">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 126"/></a></h3>
+        <p>The acceleration of the bait while not reeling</p><h3 id="var/long_jump_chance"><aside class="declaration">var </aside>long_jump_chance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L109">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 109"/></a></h3>
+        <p>How likely the fish is to perform a long jump, then multiplied by difficulty</p><h3 id="var/long_jump_velocity_limit"><aside class="declaration">var </aside>long_jump_velocity_limit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L113">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 113"/></a></h3>
+        <p>The speed limit for the long jump</p><h3 id="var/lure"><aside class="declaration">var </aside>lure
+            <aside>&ndash; /<a href="obj.html">obj</a>/effect/fishing_lure</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L71">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 71"/></a></h3>
+        <p>Lure visual</p><h3 id="var/reeling_state"><aside class="declaration">var </aside>reeling_state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L124">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 124"/></a></h3>
+        <p>Whether the bait is idle or reeling up or down (left and right click)</p><h3 id="var/reeling_velocity"><aside class="declaration">var </aside>reeling_velocity
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L128">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 128"/></a></h3>
+        <p>The acceleration of the bait while reeling</p><h3 id="var/reward_path"><aside class="declaration">var </aside>reward_path
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 59"/></a></h3>
+        <p>Result path</p><h3 id="var/short_jump_chance"><aside class="declaration">var </aside>short_jump_chance
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L107">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 107"/></a></h3>
+        <p>How likely the fish is to perform a standard jump, then multiplied by difficulty</p><h3 id="var/short_jump_velocity_limit"><aside class="declaration">var </aside>short_jump_velocity_limit
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L111">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 111"/></a></h3>
+        <p>The speed limit for the short jump</p><h3 id="var/special_effects"><aside class="declaration">var </aside>special_effects
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 51"/></a></h3>
+        <p>Rule modifiers (eg weighted bait)</p><h3 id="var/start_time"><aside class="declaration">var </aside>start_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 45"/></a></h3>
+        <p>When the ui minigame phase started</p><h3 id="var/target_position"><aside class="declaration">var </aside>target_position
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L119">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 119"/></a></h3>
+        <p>A position on the slider the fish wants to get to</p><h3 id="var/used_rod"><aside class="declaration">var </aside>used_rod
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fishing_rod.html">fishing_rod</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L69">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 69"/></a></h3>
+        <p>Rod that is used for the challenge</p><h3 id="var/user"><aside class="declaration">var </aside>user
+            <aside>&ndash; /<a href="mob.html">mob</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 67"/></a></h3>
+        <p>Fishing mob</p><h2 id="proc">Proc Details</h2><h3 id="proc/Destroy"><aside class="parent"><a title="/datum" href="datum.html#proc/Destroy">&uarr;</a></aside>Destroy<aside>(force) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L217">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 217"/></a></aside>
+        </h3>
+        <p>Fish minigame properties
+Enable special parameters
+If the chances are higher than 1% (100% at maximum difficulty), they'll scale
+less than proportionally (exponent less than 1) instead.
+This way we ensure fish with high jump chances won't get TOO jumpy until
+they near the maximum difficulty, at which they hit 100%</p><h3 id="proc/interrupt"><aside class="declaration">proc </aside>interrupt<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L290">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 290"/></a></aside>
+        </h3>
+        <p>Challenge interrupted by something external</p><h3 id="proc/move_bait"><aside class="declaration">proc </aside>move_bait<aside>(seconds_per_tick) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L554">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 554"/></a></aside>
+        </h3>
+        <p>Move at least 0.75 to full of the availible bar in given direction,
+and more likely to move in the direction where there's more space
+The proc that moves the bait around, just like in the old TGUI, mostly.</p><h3 id="proc/move_fish"><aside class="declaration">proc </aside>move_fish<aside>(seconds_per_tick) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L502">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 502"/></a></aside>
+        </h3>
+        <p>bring forth an active effect
+go back to normal
+The proc that moves the fish around, just like in the old TGUI, mostly.</p><h3 id="proc/on_line_deleted"><aside class="declaration">proc </aside>on_line_deleted<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L262">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 262"/></a></aside>
+        </h3>
+        <p>Create fishing line visuals</p><h3 id="proc/on_user_logout"><aside class="declaration">proc </aside>on_user_logout<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L382">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 382"/></a></aside>
+        </h3>
+        <p>The player is no longer around to play the minigame, so we interrupt it.</p><h3 id="proc/on_user_move"><aside class="declaration">proc </aside>on_user_move<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L269">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 269"/></a></aside>
+        </h3>
+        <p>The lure may be out of sight if the user has moed around a corner, so the message should be displayed over him instead.</p><h3 id="proc/prepare_minigame_hud"><aside class="declaration">proc </aside>prepare_minigame_hud<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L427">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 427"/></a></aside>
+        </h3>
+        <p>Initialize the minigame hud and register some signals to make it work.</p><h3 id="proc/process"><aside class="parent"><a title="/datum" href="datum.html#proc/process">&uarr;</a></aside>process<aside>(seconds_per_tick) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L462">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 462"/></a></aside>
+        </h3>
+        <p>Update the state of the fish, the bait and the hud</p><h3 id="proc/remove_minigame_hud"><aside class="declaration">proc </aside>remove_minigame_hud<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L442">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 442"/></a></aside>
+        </h3>
+        <p>Stop processing and remove references to the minigame hud</p><h3 id="proc/select_active_effect"><aside class="declaration">proc </aside>select_active_effect<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L471">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 471"/></a></aside>
+        </h3>
+        <p>The proc that handles fancy effects like flipping the hud or skewing movement</p><h3 id="proc/start_reeling"><aside class="declaration">proc </aside>start_reeling<aside>(/<a href="client.html">client</a>/source, /<a href="datum.html">datum</a>/object, location, control, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L447">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 447"/></a></aside>
+        </h3>
+        <p>While the mouse button is held down, the bait will be reeling up (or down on r-click if the bidirectional rule is enabled)</p><h3 id="proc/stop_reeling"><aside class="declaration">proc </aside>stop_reeling<aside>(/<a href="client.html">client</a>/source, /<a href="datum.html">datum</a>/object, location, control, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L457">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 457"/></a></aside>
+        </h3>
+        <p>Reset the reeling state to idle once the mouse button is released</p><h3 id="proc/update_visuals"><aside class="declaration">proc </aside>update_visuals<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/fishing_minigame.dm#L628">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;fishing_minigame.dm 628"/></a></aside>
+        </h3>
+        <p>Pull the brake on the velocity if the current velocity and the acceleration
+have different directions, making the bait less slippery, thus easier to control
+bidirectional baits stay bouyant while idle
+update the vertical pixel position of both fish and bait, and the icon state of the completion bar</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

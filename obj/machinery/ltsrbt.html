@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;ltsrbt - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/ltsrbt.html#var">Var Details</a> - <a href="obj/machinery/ltsrbt.html#proc">Proc Details</a></header>
+<main>
+<h1>ltsrbt <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/ltsrbt.html">ltsrbt</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/cargo/markets/market_telepad.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;cargo&#x2F;markets&#x2F;market_telepad.dm 12"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/ltsrbt.html#var/base_recharge_time">base_recharge_time</a></th><td>Base recharge time in seconds which is used to get recharge_time.</td></tr>
+            <tr><th><a href="obj/machinery/ltsrbt.html#var/energy_usage_per_teleport">energy_usage_per_teleport</a></th><td>Power used per teleported which gets divided by power_efficiency.</td></tr>
+            <tr><th><a href="obj/machinery/ltsrbt.html#var/power_efficiency">power_efficiency</a></th><td>Divider for energy_usage_per_teleport.</td></tr>
+            <tr><th><a href="obj/machinery/ltsrbt.html#var/queue">queue</a></th><td>Queue for purchases that the machine should receive and send.</td></tr>
+            <tr><th><a href="obj/machinery/ltsrbt.html#var/receiving">receiving</a></th><td>Current /datum/market_purchase being received.</td></tr>
+            <tr><th><a href="obj/machinery/ltsrbt.html#var/recharge_cooldown">recharge_cooldown</a></th><td>Current recharge progress.</td></tr>
+            <tr><th><a href="obj/machinery/ltsrbt.html#var/recharge_time">recharge_time</a></th><td>The time it takes for the machine to recharge before being able to send or receive items.</td></tr>
+            <tr><th><a href="obj/machinery/ltsrbt.html#var/transmitting">transmitting</a></th><td>Current /datum/market_purchase being sent to the target uplink.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/ltsrbt.html#proc/add_to_queue">add_to_queue</a></th><td>Adds /datum/market_purchase to queue unless the machine is free, then it sets the purchase to be instantly received</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/base_recharge_time"><aside class="declaration">var </aside>base_recharge_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/cargo/markets/market_telepad.dm#L31">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;cargo&#x2F;markets&#x2F;market_telepad.dm 31"/></a></h3>
+        <p>Base recharge time in seconds which is used to get recharge_time.</p><h3 id="var/energy_usage_per_teleport"><aside class="declaration">var </aside>energy_usage_per_teleport
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/cargo/markets/market_telepad.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;cargo&#x2F;markets&#x2F;market_telepad.dm 25"/></a></h3>
+        <p>Power used per teleported which gets divided by power_efficiency.</p><h3 id="var/power_efficiency"><aside class="declaration">var </aside>power_efficiency
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/cargo/markets/market_telepad.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;cargo&#x2F;markets&#x2F;market_telepad.dm 23"/></a></h3>
+        <p>Divider for energy_usage_per_teleport.</p><h3 id="var/queue"><aside class="declaration">var </aside>queue
+            <aside>&ndash; /list/datum/market_purchase</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/cargo/markets/market_telepad.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;cargo&#x2F;markets&#x2F;market_telepad.dm 37"/></a></h3>
+        <p>Queue for purchases that the machine should receive and send.</p><h3 id="var/receiving"><aside class="declaration">var </aside>receiving
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/market_purchase.html">market_purchase</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/cargo/markets/market_telepad.dm#L33">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;cargo&#x2F;markets&#x2F;market_telepad.dm 33"/></a></h3>
+        <p>Current /datum/market_purchase being received.</p><h3 id="var/recharge_cooldown"><aside class="declaration">var </aside>recharge_cooldown
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/cargo/markets/market_telepad.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;cargo&#x2F;markets&#x2F;market_telepad.dm 29"/></a></h3>
+        <p>Current recharge progress.</p><h3 id="var/recharge_time"><aside class="declaration">var </aside>recharge_time
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/cargo/markets/market_telepad.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;cargo&#x2F;markets&#x2F;market_telepad.dm 27"/></a></h3>
+        <p>The time it takes for the machine to recharge before being able to send or receive items.</p><h3 id="var/transmitting"><aside class="declaration">var </aside>transmitting
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/market_purchase.html">market_purchase</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/cargo/markets/market_telepad.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;cargo&#x2F;markets&#x2F;market_telepad.dm 35"/></a></h3>
+        <p>Current /datum/market_purchase being sent to the target uplink.</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_to_queue"><aside class="declaration">proc </aside>add_to_queue<aside>(/<a href="datum.html">datum</a>/<a href="datum/market_purchase.html">market_purchase</a>/purchase) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/cargo/markets/market_telepad.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;cargo&#x2F;markets&#x2F;market_telepad.dm 67"/></a></aside>
+        </h3>
+        <p>Adds /datum/market_purchase to queue unless the machine is free, then it sets the purchase to be instantly received</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

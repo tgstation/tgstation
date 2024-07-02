@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;storage&#x2F;portable_chem_mixer - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/storage/portable_chem_mixer.html#var">Var Details</a> - <a href="obj/item/storage/portable_chem_mixer.html#proc">Proc Details</a></header>
+<main>
+<h1>portable_chem_mixer <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/storage.html">storage</a>/<a href="obj/item/storage/portable_chem_mixer.html">portable_chem_mixer</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/reagents/chemistry/machinery/portable_chem_mixer.dm#L1">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;portable_chem_mixer.dm 1"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/storage/portable_chem_mixer.html#var/amount">amount</a></th><td>The amount of reagent that is to be dispensed currently</td></tr>
+            <tr><th><a href="obj/item/storage/portable_chem_mixer.html#var/beaker">beaker</a></th><td>Creating an empty slot for a beaker that can be added to dispense into</td></tr>
+            <tr><th><a href="obj/item/storage/portable_chem_mixer.html#var/dispensable_reagents">dispensable_reagents</a></th><td>List in which all currently dispensable reagents go</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/storage/portable_chem_mixer.html#proc/replace_beaker">replace_beaker</a></th><td>Replaces the beaker of the portable chemical mixer with another beaker, or simply adds the new beaker if none is in currently</td></tr>
+            <tr><th><a href="obj/item/storage/portable_chem_mixer.html#proc/update_contents">update_contents</a></th><td>Reload dispensable reagents from new contents</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/amount"><aside class="declaration">var </aside>amount
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/reagents/chemistry/machinery/portable_chem_mixer.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;portable_chem_mixer.dm 18"/></a></h3>
+        <p>The amount of reagent that is to be dispensed currently</p><h3 id="var/beaker"><aside class="declaration">var </aside>beaker
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/reagent_containers.html">reagent_containers</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/reagents/chemistry/machinery/portable_chem_mixer.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;portable_chem_mixer.dm 16"/></a></h3>
+        <p>Creating an empty slot for a beaker that can be added to dispense into</p><h3 id="var/dispensable_reagents"><aside class="declaration">var </aside>dispensable_reagents
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/reagents/chemistry/machinery/portable_chem_mixer.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;portable_chem_mixer.dm 20"/></a></h3>
+        <p>List in which all currently dispensable reagents go</p><h2 id="proc">Proc Details</h2><h3 id="proc/replace_beaker"><aside class="declaration">proc </aside>replace_beaker<aside>(/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/reagent_containers.html">reagent_containers</a>/new_beaker) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/reagents/chemistry/machinery/portable_chem_mixer.dm#L131">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;portable_chem_mixer.dm 131"/></a></aside>
+        </h3>
+        <p>Replaces the beaker of the portable chemical mixer with another beaker, or simply adds the new beaker if none is in currently</p>
+<p>Checks if a valid user and a valid new beaker exist and attempts to replace the current beaker in the portable chemical mixer with the one in hand. Simply places the new beaker in if no beaker is currently loaded
+Arguments:</p>
+<ul>
+<li>mob/living/user - The user who is trying to exchange beakers</li>
+<li>obj/item/reagent_containers/new_beaker - The new beaker that the user wants to put into the device</li>
+</ul><h3 id="proc/update_contents"><aside class="declaration">proc </aside>update_contents<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/reagents/chemistry/machinery/portable_chem_mixer.dm#L85">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;reagents&#x2F;chemistry&#x2F;machinery&#x2F;portable_chem_mixer.dm 85"/></a></aside>
+        </h3>
+        <p>Reload dispensable reagents from new contents</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

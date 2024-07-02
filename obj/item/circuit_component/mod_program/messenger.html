@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;circuit_component&#x2F;mod_program&#x2F;messenger - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/circuit_component/mod_program/messenger.html#var">Var Details</a> - <a href="obj/item/circuit_component/mod_program/messenger.html#proc">Proc Details</a></header>
+<main>
+<h1>messenger <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/circuit_component.html">circuit_component</a>/<a href="obj/item/circuit_component/mod_program.html">mod_program</a>/<a href="obj/item/circuit_component/mod_program/messenger.html">messenger</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/modular_computers/file_system/programs/messenger/messenger_circuit.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;messenger&#x2F;messenger_circuit.dm 6"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/circuit_component/mod_program/messenger.html#var/message">message</a></th><td>A message to be sent when triggered</td></tr>
+            <tr><th><a href="obj/item/circuit_component/mod_program/messenger.html#var/received">received</a></th><td>Pinged whenever a message is received.</td></tr>
+            <tr><th><a href="obj/item/circuit_component/mod_program/messenger.html#var/received_message">received_message</a></th><td>Contents of the last received message</td></tr>
+            <tr><th><a href="obj/item/circuit_component/mod_program/messenger.html#var/ring">ring</a></th><td>Plays the ringtone when the input is received</td></tr>
+            <tr><th><a href="obj/item/circuit_component/mod_program/messenger.html#var/ring_cd">ring_cd</a></th><td>the cooldown of the ringtone.</td></tr>
+            <tr><th><a href="obj/item/circuit_component/mod_program/messenger.html#var/sender_device">sender_device</a></th><td>Reference to the device that sent the message. Usually a PDA.</td></tr>
+            <tr><th><a href="obj/item/circuit_component/mod_program/messenger.html#var/sender_job">sender_job</a></th><td>Job title of the sender of the above</td></tr>
+            <tr><th><a href="obj/item/circuit_component/mod_program/messenger.html#var/sender_name">sender_name</a></th><td>Name of the sender of the above</td></tr>
+            <tr><th><a href="obj/item/circuit_component/mod_program/messenger.html#var/set_ring">set_ring</a></th><td>Set the ringtone to the input</td></tr>
+            <tr><th><a href="obj/item/circuit_component/mod_program/messenger.html#var/targets">targets</a></th><td>A list of PDA targets for the message to be sent</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/circuit_component/mod_program/messenger.html#proc/message_sent">message_sent</a></th><td>Set the cooldown after the message was sent (by us)</td></tr>
+            <tr><th><a href="obj/item/circuit_component/mod_program/messenger.html#proc/register_shell">register_shell</a></th><td>We need to async send_message() because some tcomms devices might sleep. Also because of (non-existent) user tgui alerts.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/message"><aside class="declaration">var </aside>message
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/port.html">port</a>/<a href="datum/port/input.html">input</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/modular_computers/file_system/programs/messenger/messenger_circuit.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;messenger&#x2F;messenger_circuit.dm 22"/></a></h3>
+        <p>A message to be sent when triggered</p><h3 id="var/received"><aside class="declaration">var </aside>received
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/port.html">port</a>/<a href="datum/port/output.html">output</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/modular_computers/file_system/programs/messenger/messenger_circuit.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;messenger&#x2F;messenger_circuit.dm 19"/></a></h3>
+        <p>Pinged whenever a message is received.</p><h3 id="var/received_message"><aside class="declaration">var </aside>received_message
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/port.html">port</a>/<a href="datum/port/output.html">output</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/modular_computers/file_system/programs/messenger/messenger_circuit.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;messenger&#x2F;messenger_circuit.dm 11"/></a></h3>
+        <p>Contents of the last received message</p><h3 id="var/ring"><aside class="declaration">var </aside>ring
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/port.html">port</a>/<a href="datum/port/input.html">input</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/modular_computers/file_system/programs/messenger/messenger_circuit.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;messenger&#x2F;messenger_circuit.dm 27"/></a></h3>
+        <p>Plays the ringtone when the input is received</p><h3 id="var/ring_cd"><aside class="declaration">var </aside>ring_cd
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/modular_computers/file_system/programs/messenger/messenger_circuit.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;messenger&#x2F;messenger_circuit.dm 32"/></a></h3>
+        <p>the cooldown of the ringtone.</p><h3 id="var/sender_device"><aside class="declaration">var </aside>sender_device
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/port.html">port</a>/<a href="datum/port/output.html">output</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/modular_computers/file_system/programs/messenger/messenger_circuit.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;messenger&#x2F;messenger_circuit.dm 17"/></a></h3>
+        <p>Reference to the device that sent the message. Usually a PDA.</p><h3 id="var/sender_job"><aside class="declaration">var </aside>sender_job
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/port.html">port</a>/<a href="datum/port/output.html">output</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/modular_computers/file_system/programs/messenger/messenger_circuit.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;messenger&#x2F;messenger_circuit.dm 15"/></a></h3>
+        <p>Job title of the sender of the above</p><h3 id="var/sender_name"><aside class="declaration">var </aside>sender_name
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/port.html">port</a>/<a href="datum/port/output.html">output</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/modular_computers/file_system/programs/messenger/messenger_circuit.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;messenger&#x2F;messenger_circuit.dm 13"/></a></h3>
+        <p>Name of the sender of the above</p><h3 id="var/set_ring"><aside class="declaration">var </aside>set_ring
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/port.html">port</a>/<a href="datum/port/input.html">input</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/modular_computers/file_system/programs/messenger/messenger_circuit.dm#L29">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;messenger&#x2F;messenger_circuit.dm 29"/></a></h3>
+        <p>Set the ringtone to the input</p><h3 id="var/targets"><aside class="declaration">var </aside>targets
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/port.html">port</a>/<a href="datum/port/input.html">input</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/modular_computers/file_system/programs/messenger/messenger_circuit.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;messenger&#x2F;messenger_circuit.dm 24"/></a></h3>
+        <p>A list of PDA targets for the message to be sent</p><h2 id="proc">Proc Details</h2><h3 id="proc/message_sent"><aside class="declaration">proc </aside>message_sent<aside>(/<a href="datum.html">datum</a>/source, /<a href="atom.html">atom</a>/origin, /<a href="datum.html">datum</a>/<a href="datum/signal.html">signal</a>/<a href="datum/signal/subspace.html">subspace</a>/<a href="datum/signal/subspace/messaging/tablet_message.html">messaging/tablet_message</a>/signal) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/modular_computers/file_system/programs/messenger/messenger_circuit.dm#L97">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;messenger&#x2F;messenger_circuit.dm 97"/></a></aside>
+        </h3>
+        <p>Set the cooldown after the message was sent (by us)</p><h3 id="proc/register_shell"><aside class="parent"><a title="/obj/item/circuit_component" href="obj/item/circuit_component.html#proc/register_shell">&uarr;</a></aside>register_shell<aside>(/<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/shell) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/modular_computers/file_system/programs/messenger/messenger_circuit.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;modular_computers&#x2F;file_system&#x2F;programs&#x2F;messenger&#x2F;messenger_circuit.dm 65"/></a></aside>
+        </h3>
+        <p>We need to async send_message() because some tcomms devices might sleep. Also because of (non-existent) user tgui alerts.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

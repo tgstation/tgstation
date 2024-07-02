@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;plumbing&#x2F;pill_press - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/plumbing/pill_press.html#var">Var Details</a> - <a href="obj/machinery/plumbing/pill_press.html#proc">Proc Details</a></header>
+<main>
+<h1>pill_press <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/plumbing.html">plumbing</a>/<a href="obj/machinery/plumbing/pill_press.html">pill_press</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/pill_press.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 9"/></a></h1>
+
+<p>We take a constant input of reagents, and produce a pill once a set volume is reached</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/current_volume">current_volume</a></th><td>selected size of the product</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/packaging_category">packaging_category</a></th><td>Category of packaging</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/packaging_type">packaging_type</a></th><td>The type of packaging to use</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/packaging_types">packaging_types</a></th><td>All packaging types wrapped up in 1 big list</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/product">product</a></th><td>current operating product (pills or patches)</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/product_name">product_name</a></th><td>prefix for the product name</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#var/stored_products">stored_products</a></th><td>list of products stored in the machine, so we dont have 610 pills on one tile</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/plumbing/pill_press.html#proc/decode_category">decode_category</a></th><td>decode product category from it's type path and returns the decoded typepath</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/current_volume"><aside class="declaration">var </aside>current_volume
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/pill_press.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 17"/></a></h3>
+        <p>selected size of the product</p><h3 id="var/packaging_category"><aside class="declaration">var </aside>packaging_category
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/pill_press.dm#L25">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 25"/></a></h3>
+        <p>Category of packaging</p><h3 id="var/packaging_type"><aside class="declaration">var </aside>packaging_type
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/pill_press.dm#L23">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 23"/></a></h3>
+        <p>The type of packaging to use</p><h3 id="var/packaging_types"><aside class="declaration">var </aside>packaging_types
+            <aside>&ndash; /static/list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/pill_press.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 21"/></a></h3>
+        <p>All packaging types wrapped up in 1 big list</p><h3 id="var/product"><aside class="declaration">var </aside>product
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/pill_press.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 15"/></a></h3>
+        <p>current operating product (pills or patches)</p><h3 id="var/product_name"><aside class="declaration">var </aside>product_name
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/pill_press.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 19"/></a></h3>
+        <p>prefix for the product name</p><h3 id="var/stored_products"><aside class="declaration">var </aside>stored_products
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/pill_press.dm#L27">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 27"/></a></h3>
+        <p>list of products stored in the machine, so we dont have 610 pills on one tile</p><h2 id="proc">Proc Details</h2><h3 id="proc/decode_category"><aside class="declaration">proc </aside>decode_category<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/pill_press.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;pill_press.dm 65"/></a></aside>
+        </h3>
+        <p>decode product category from it's type path and returns the decoded typepath</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

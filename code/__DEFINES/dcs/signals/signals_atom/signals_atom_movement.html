@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_ATOM_CAN_BE_PULLED">COMSIG_ATOM_CAN_BE_PULLED</a></th><td>signal sent out by an atom when it checks if it can be pulled, for additional checks</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_ATOM_NO_LONGER_PULLED">COMSIG_ATOM_NO_LONGER_PULLED</a></th><td>signal sent out by an atom when it is no longer being pulled by something else : (atom/puller)</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_ATOM_NO_LONGER_PULLING">COMSIG_ATOM_NO_LONGER_PULLING</a></th><td>signal sent out by an atom when it is no longer pulling something : (atom/pulling)</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_ATOM_INTERCEPT_Z_FALL">COMSIG_ATOM_INTERCEPT_Z_FALL</a></th><td>called for each movable in a turf contents on /turf/zImpact(): (atom/movable/A, levels)</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_ATOM_ON_Z_IMPACT">COMSIG_ATOM_ON_Z_IMPACT</a></th><td>signal sent out by an atom upon onZImpact : (turf/impacted_turf, levels)</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_ATOM_AFTER_SHUTTLE_MOVE">COMSIG_ATOM_AFTER_SHUTTLE_MOVE</a></th><td>Signal sent after an atom movable moves on shuttle.</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_ATOM_START_PULL">COMSIG_ATOM_START_PULL</a></th><td>called on a movable (NOT living) when it starts pulling (atom/movable/pulled, state, force)</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_ATOM_TRIED_PASS">COMSIG_ATOM_TRIED_PASS</a></th><td>called on /atom when something attempts to pass through it (atom/movable/source, atom/movable/passing, dir)</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_LIVING_START_PULL">COMSIG_LIVING_START_PULL</a></th><td>called on /living when someone starts pulling (atom/movable/pulled, state, force)</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_LIVING_GET_PULLED">COMSIG_LIVING_GET_PULLED</a></th><td>called on /living when someone is pulled (mob/living/puller)</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_LIVING_TRY_PULL">COMSIG_LIVING_TRY_PULL</a></th><td>called on /living, when pull is attempted, but before it completes, from base of [/mob/living/start_pulling]: (atom/movable/thing, force)</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_LIVING_UPDATING_PULL_MOVESPEED">COMSIG_LIVING_UPDATING_PULL_MOVESPEED</a></th><td>Called from /mob/living/update_pull_movespeed</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_LIVING_PUSHING_MOVABLE">COMSIG_LIVING_PUSHING_MOVABLE</a></th><td>Called from /mob/living/PushAM -- Called when this mob is about to push a movable, but before it moves
+(aotm/movable/being_pushed)</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_ATOM_UI_INTERACT">COMSIG_ATOM_UI_INTERACT</a></th><td>from base of [/atom/proc/interact]: (mob/user)</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_ATOM_RELAYMOVE">COMSIG_ATOM_RELAYMOVE</a></th><td>from base of atom/relaymove(): (mob/living/user, direction)</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_BLOCK_RELAYMOVE">COMSIG_BLOCK_RELAYMOVE</a></th><td>prevents the &quot;you cannot move while buckled! message&quot;</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_ATOM_PRE_DIR_CHANGE">COMSIG_ATOM_PRE_DIR_CHANGE</a></th><td>From base of atom/setDir(): (old_dir, new_dir). Called before the direction changes</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_ATOM_DIR_CHANGE">COMSIG_ATOM_DIR_CHANGE</a></th><td>from base of atom/setDir(): (old_dir, new_dir). Called before the direction changes.</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_ATOM_POST_DIR_CHANGE">COMSIG_ATOM_POST_DIR_CHANGE</a></th><td>from base of atom/setDir(): (old_dir, new_dir). Called after the direction changes.</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_MOVABLE_KEYBIND_FACE_DIR">COMSIG_MOVABLE_KEYBIND_FACE_DIR</a></th><td>from base of atom/movable/keybind_face_direction(): (dir). Called before turning with the movement lock key.</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_IGNORE_MOVEMENT_LOCK">COMSIG_IGNORE_MOVEMENT_LOCK</a></th><td>ignores the movement lock key, used for turning while strafing in a mech</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_ATOM_SINGULARITY_TRY_MOVE">COMSIG_ATOM_SINGULARITY_TRY_MOVE</a></th><td>from /datum/component/singularity/proc/can_move(), as well as /obj/energy_ball/proc/can_move()
+if a callback returns <code>SINGULARITY_TRY_MOVE_BLOCK</code>, then the singularity will not move to that turf</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/SINGULARITY_TRY_MOVE_BLOCK">SINGULARITY_TRY_MOVE_BLOCK</a></th><td>When returned from <code>COMSIG_ATOM_SINGULARITY_TRY_MOVE</code>, the singularity will move to that turf</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_ATOM_PRE_PRESSURE_PUSH">COMSIG_ATOM_PRE_PRESSURE_PUSH</a></th><td>from base of atom/experience_pressure_difference(): (pressure_difference, direction, pressure_resistance_prob_delta)</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_ATOM_BLOCKS_PRESSURE">COMSIG_ATOM_BLOCKS_PRESSURE</a></th><td>prevents pressure movement</td></tr>
+        <tr><th><a href="code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.html#define/COMSIG_MOVABLE_MOVED_FROM_LOOP">COMSIG_MOVABLE_MOVED_FROM_LOOP</a></th><td>From base of /datum/move_loop/process() after attempting to move a movable: (datum/move_loop/loop, old_dir)</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/COMSIG_ATOM_AFTER_SHUTTLE_MOVE"><aside class="declaration">#define </aside>COMSIG_ATOM_AFTER_SHUTTLE_MOVE
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L17">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 17"/></a>
+    </h3>
+    <p>Signal sent after an atom movable moves on shuttle.</p><h3 id="define/COMSIG_ATOM_BLOCKS_PRESSURE"><aside class="declaration">#define </aside>COMSIG_ATOM_BLOCKS_PRESSURE
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L63">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 63"/></a>
+    </h3>
+    <p>prevents pressure movement</p><h3 id="define/COMSIG_ATOM_CAN_BE_PULLED"><aside class="declaration">#define </aside>COMSIG_ATOM_CAN_BE_PULLED
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L6">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 6"/></a>
+    </h3>
+    <p>signal sent out by an atom when it checks if it can be pulled, for additional checks</p><h3 id="define/COMSIG_ATOM_DIR_CHANGE"><aside class="declaration">#define </aside>COMSIG_ATOM_DIR_CHANGE
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 47"/></a>
+    </h3>
+    <p>from base of atom/setDir(): (old_dir, new_dir). Called before the direction changes.</p><h3 id="define/COMSIG_ATOM_INTERCEPT_Z_FALL"><aside class="declaration">#define </aside>COMSIG_ATOM_INTERCEPT_Z_FALL
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L13">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 13"/></a>
+    </h3>
+    <p>called for each movable in a turf contents on /turf/zImpact(): (atom/movable/A, levels)</p><h3 id="define/COMSIG_ATOM_NO_LONGER_PULLED"><aside class="declaration">#define </aside>COMSIG_ATOM_NO_LONGER_PULLED
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 9"/></a>
+    </h3>
+    <p>signal sent out by an atom when it is no longer being pulled by something else : (atom/puller)</p><h3 id="define/COMSIG_ATOM_NO_LONGER_PULLING"><aside class="declaration">#define </aside>COMSIG_ATOM_NO_LONGER_PULLING
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 11"/></a>
+    </h3>
+    <p>signal sent out by an atom when it is no longer pulling something : (atom/pulling)</p><h3 id="define/COMSIG_ATOM_ON_Z_IMPACT"><aside class="declaration">#define </aside>COMSIG_ATOM_ON_Z_IMPACT
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L15">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 15"/></a>
+    </h3>
+    <p>signal sent out by an atom upon onZImpact : (turf/impacted_turf, levels)</p><h3 id="define/COMSIG_ATOM_POST_DIR_CHANGE"><aside class="declaration">#define </aside>COMSIG_ATOM_POST_DIR_CHANGE
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 49"/></a>
+    </h3>
+    <p>from base of atom/setDir(): (old_dir, new_dir). Called after the direction changes.</p><h3 id="define/COMSIG_ATOM_PRE_DIR_CHANGE"><aside class="declaration">#define </aside>COMSIG_ATOM_PRE_DIR_CHANGE
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 44"/></a>
+    </h3>
+    <p>From base of atom/setDir(): (old_dir, new_dir). Called before the direction changes</p><h3 id="define/COMSIG_ATOM_PRE_PRESSURE_PUSH"><aside class="declaration">#define </aside>COMSIG_ATOM_PRE_PRESSURE_PUSH
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 61"/></a>
+    </h3>
+    <p>from base of atom/experience_pressure_difference(): (pressure_difference, direction, pressure_resistance_prob_delta)</p><h3 id="define/COMSIG_ATOM_RELAYMOVE"><aside class="declaration">#define </aside>COMSIG_ATOM_RELAYMOVE
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L39">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 39"/></a>
+    </h3>
+    <p>from base of atom/relaymove(): (mob/living/user, direction)</p><h3 id="define/COMSIG_ATOM_SINGULARITY_TRY_MOVE"><aside class="declaration">#define </aside>COMSIG_ATOM_SINGULARITY_TRY_MOVE
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 57"/></a>
+    </h3>
+    <p>from /datum/component/singularity/proc/can_move(), as well as /obj/energy_ball/proc/can_move()
+if a callback returns <code>SINGULARITY_TRY_MOVE_BLOCK</code>, then the singularity will not move to that turf</p><h3 id="define/COMSIG_ATOM_START_PULL"><aside class="declaration">#define </aside>COMSIG_ATOM_START_PULL
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L19">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 19"/></a>
+    </h3>
+    <p>called on a movable (NOT living) when it starts pulling (atom/movable/pulled, state, force)</p><h3 id="define/COMSIG_ATOM_TRIED_PASS"><aside class="declaration">#define </aside>COMSIG_ATOM_TRIED_PASS
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L21">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 21"/></a>
+    </h3>
+    <p>called on /atom when something attempts to pass through it (atom/movable/source, atom/movable/passing, dir)</p><h3 id="define/COMSIG_ATOM_UI_INTERACT"><aside class="declaration">#define </aside>COMSIG_ATOM_UI_INTERACT
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 37"/></a>
+    </h3>
+    <p>from base of [/atom/proc/interact]: (mob/user)</p><h3 id="define/COMSIG_BLOCK_RELAYMOVE"><aside class="declaration">#define </aside>COMSIG_BLOCK_RELAYMOVE
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 41"/></a>
+    </h3>
+    <p>prevents the &quot;you cannot move while buckled! message&quot;</p><h3 id="define/COMSIG_IGNORE_MOVEMENT_LOCK"><aside class="declaration">#define </aside>COMSIG_IGNORE_MOVEMENT_LOCK
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 53"/></a>
+    </h3>
+    <p>ignores the movement lock key, used for turning while strafing in a mech</p><h3 id="define/COMSIG_LIVING_GET_PULLED"><aside class="declaration">#define </aside>COMSIG_LIVING_GET_PULLED
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 26"/></a>
+    </h3>
+    <p>called on /living when someone is pulled (mob/living/puller)</p><h3 id="define/COMSIG_LIVING_PUSHING_MOVABLE"><aside class="declaration">#define </aside>COMSIG_LIVING_PUSHING_MOVABLE
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 35"/></a>
+    </h3>
+    <p>Called from /mob/living/PushAM -- Called when this mob is about to push a movable, but before it moves
+(aotm/movable/being_pushed)</p><h3 id="define/COMSIG_LIVING_START_PULL"><aside class="declaration">#define </aside>COMSIG_LIVING_START_PULL
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 24"/></a>
+    </h3>
+    <p>called on /living when someone starts pulling (atom/movable/pulled, state, force)</p><h3 id="define/COMSIG_LIVING_TRY_PULL"><aside class="declaration">#define </aside>COMSIG_LIVING_TRY_PULL
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 28"/></a>
+    </h3>
+    <p>called on /living, when pull is attempted, but before it completes, from base of [/mob/living/start_pulling]: (atom/movable/thing, force)</p><h3 id="define/COMSIG_LIVING_UPDATING_PULL_MOVESPEED"><aside class="declaration">#define </aside>COMSIG_LIVING_UPDATING_PULL_MOVESPEED
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 32"/></a>
+    </h3>
+    <p>Called from /mob/living/update_pull_movespeed</p><h3 id="define/COMSIG_MOVABLE_KEYBIND_FACE_DIR"><aside class="declaration">#define </aside>COMSIG_MOVABLE_KEYBIND_FACE_DIR
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 51"/></a>
+    </h3>
+    <p>from base of atom/movable/keybind_face_direction(): (dir). Called before turning with the movement lock key.</p><h3 id="define/COMSIG_MOVABLE_MOVED_FROM_LOOP"><aside class="declaration">#define </aside>COMSIG_MOVABLE_MOVED_FROM_LOOP
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 65"/></a>
+    </h3>
+    <p>From base of /datum/move_loop/process() after attempting to move a movable: (datum/move_loop/loop, old_dir)</p><h3 id="define/SINGULARITY_TRY_MOVE_BLOCK"><aside class="declaration">#define </aside>SINGULARITY_TRY_MOVE_BLOCK
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/dcs/signals/signals_atom/signals_atom_movement.dm#L59">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;dcs&#x2F;signals&#x2F;signals_atom&#x2F;signals_atom_movement.dm 59"/></a>
+    </h3>
+    <p>When returned from <code>COMSIG_ATOM_SINGULARITY_TRY_MOVE</code>, the singularity will move to that turf</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

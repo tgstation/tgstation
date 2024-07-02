@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;machinery&#x2F;plumbing&#x2F;growing_vat - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/machinery/plumbing/growing_vat.html#var">Var Details</a> - <a href="obj/machinery/plumbing/growing_vat.html#proc">Proc Details</a></header>
+<main>
+<h1>growing_vat <aside>/<a href="obj.html">obj</a>/<a href="obj/machinery.html">machinery</a>/<a href="obj/machinery/plumbing.html">plumbing</a>/<a href="obj/machinery/plumbing/growing_vat.html">growing_vat</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/vatgrower.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;vatgrower.dm 2"/></a></h1>
+
+<p>Used to make mobs from microbiological samples. Grow grow grow.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/machinery/plumbing/growing_vat.html#var/biological_sample">biological_sample</a></th><td>List of all microbiological samples in this soup.</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/growing_vat.html#var/resampler_active">resampler_active</a></th><td>If the vat will restart the sample upon completion</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/machinery/plumbing/growing_vat.html#proc/Initialize">Initialize</a></th><td>Add that sexy demnand component</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/growing_vat.html#proc/attacked_by">attacked_by</a></th><td>Handles the petri dish depositing into the vat.</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/growing_vat.html#proc/deposit_sample">deposit_sample</a></th><td>Creates a clone of the supplied sample and puts it in the vat</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/growing_vat.html#proc/examine_more">examine_more</a></th><td>Adds text for when there is a sample in the vat</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/growing_vat.html#proc/on_reagent_change">on_reagent_change</a></th><td>Call update icon when reagents change to update the reagent content icons. Eats signal args.</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/growing_vat.html#proc/on_reagents_del">on_reagents_del</a></th><td>Handles properly detaching signal hooks.</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/growing_vat.html#proc/process">process</a></th><td>When we process, we make use of our reagents to try and feed the samples we have.</td></tr>
+            <tr><th><a href="obj/machinery/plumbing/growing_vat.html#proc/update_overlays">update_overlays</a></th><td>Adds overlays to show the reagent contents</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/biological_sample"><aside class="declaration">var </aside>biological_sample
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/biological_sample.html">biological_sample</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/vatgrower.dm#L9">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;vatgrower.dm 9"/></a></h3>
+        <p>List of all microbiological samples in this soup.</p><h3 id="var/resampler_active"><aside class="declaration">var </aside>resampler_active
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/vatgrower.dm#L11">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;vatgrower.dm 11"/></a></h3>
+        <p>If the vat will restart the sample upon completion</p><h2 id="proc">Proc Details</h2><h3 id="proc/Initialize"><aside class="parent"><a title="/atom" href="atom.html#proc/Initialize">&uarr;</a></aside>Initialize<aside>(mapload, bolt, layer) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/vatgrower.dm#L14">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;vatgrower.dm 14"/></a></aside>
+        </h3>
+        <p>Add that sexy demnand component</p><h3 id="proc/attacked_by"><aside class="parent"><a title="/atom" href="atom.html#proc/attacked_by">&uarr;</a></aside>attacked_by<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/I, /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/vatgrower.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;vatgrower.dm 43"/></a></aside>
+        </h3>
+        <p>Handles the petri dish depositing into the vat.</p><h3 id="proc/deposit_sample"><aside class="declaration">proc </aside>deposit_sample<aside>(/<a href="mob.html">mob</a>/user, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/petri_dish.html">petri_dish</a>/petri) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/vatgrower.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;vatgrower.dm 58"/></a></aside>
+        </h3>
+        <p>Creates a clone of the supplied sample and puts it in the vat</p><h3 id="proc/examine_more"><aside class="parent"><a title="/atom" href="atom.html#proc/examine_more">&uarr;</a></aside>examine_more<aside>(/<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/vatgrower.dm#L70">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;vatgrower.dm 70"/></a></aside>
+        </h3>
+        <p>Adds text for when there is a sample in the vat</p><h3 id="proc/on_reagent_change"><aside class="declaration">proc </aside>on_reagent_change<aside>(/<a href="datum.html">datum</a>/<a href="datum/reagents.html">reagents</a>/holder, ...) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/vatgrower.dm#L84">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;vatgrower.dm 84"/></a></aside>
+        </h3>
+        <p>Call update icon when reagents change to update the reagent content icons. Eats signal args.</p><h3 id="proc/on_reagents_del"><aside class="declaration">proc </aside>on_reagents_del<aside>(/<a href="datum.html">datum</a>/<a href="datum/reagents.html">reagents</a>/reagents) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/vatgrower.dm#L24">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;vatgrower.dm 24"/></a></aside>
+        </h3>
+        <p>Handles properly detaching signal hooks.</p><h3 id="proc/process"><aside class="parent"><a title="/datum" href="datum.html#proc/process">&uarr;</a></aside>process<aside>(seconds_per_tick) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/vatgrower.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;vatgrower.dm 30"/></a></aside>
+        </h3>
+        <p>When we process, we make use of our reagents to try and feed the samples we have.</p><h3 id="proc/update_overlays"><aside class="parent"><a title="/atom/movable" href="atom/movable.html#proc/update_overlays">&uarr;</a></aside>update_overlays<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/plumbing/plumbers/vatgrower.dm#L90">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;plumbing&#x2F;plumbers&#x2F;vatgrower.dm 90"/></a></aside>
+        </h3>
+        <p>Adds overlays to show the reagent contents</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

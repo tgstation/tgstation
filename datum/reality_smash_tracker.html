@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;reality_smash_tracker - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/reality_smash_tracker.html#var">Var Details</a> - <a href="datum/reality_smash_tracker.html#proc">Proc Details</a></header>
+<main>
+<h1>reality_smash_tracker <aside>/<a href="datum.html">datum</a>/<a href="datum/reality_smash_tracker.html">reality_smash_tracker</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/influences.dm#L16">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;influences.dm 16"/></a></h1>
+
+<p>#Reality smash tracker</p>
+<p>A global singleton data that tracks all the heretic
+influences (&quot;reality smashes&quot;) that we've created,
+and all of the heretics (minds) that can see them.</p>
+<p>Handles ensuring all minds can see influences, generating
+new influences for new heretic minds, and allowing heretics
+to see new influences that are created.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/reality_smash_tracker.html#var/num_drained">num_drained</a></th><td>The total number of influences that have been drained, for tracking.</td></tr>
+            <tr><th><a href="datum/reality_smash_tracker.html#var/smashes">smashes</a></th><td>List of tracked influences (reality smashes)</td></tr>
+            <tr><th><a href="datum/reality_smash_tracker.html#var/tracked_heretics">tracked_heretics</a></th><td>List of minds with the ability to see influences</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/reality_smash_tracker.html#proc/add_to_smashes">add_to_smashes</a></th><td>Allow [to_add] to see all tracked reality smashes.</td></tr>
+            <tr><th><a href="datum/reality_smash_tracker.html#proc/add_tracked_mind">add_tracked_mind</a></th><td>Adds a mind to the list of people that can see the reality smashes</td></tr>
+            <tr><th><a href="datum/reality_smash_tracker.html#proc/generate_new_influences">generate_new_influences</a></th><td>Generates a set amount of reality smashes
+based on the number of already existing smashes
+and the number of minds we're tracking.</td></tr>
+            <tr><th><a href="datum/reality_smash_tracker.html#proc/remove_from_smashes">remove_from_smashes</a></th><td>Stop [to_remove] from seeing any tracked reality smashes.</td></tr>
+            <tr><th><a href="datum/reality_smash_tracker.html#proc/remove_tracked_mind">remove_tracked_mind</a></th><td>Removes a mind from the list of people that can see the reality smashes</td></tr>
+            <tr><th><a href="datum/reality_smash_tracker.html#proc/rework_network">rework_network</a></th><td>Automatically fixes the target and smash network</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/num_drained"><aside class="declaration">var </aside>num_drained
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/influences.dm#L18">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;influences.dm 18"/></a></h3>
+        <p>The total number of influences that have been drained, for tracking.</p><h3 id="var/smashes"><aside class="declaration">var </aside>smashes
+            <aside>&ndash; /list/obj/effect/heretic_influence</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/influences.dm#L20">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;influences.dm 20"/></a></h3>
+        <p>List of tracked influences (reality smashes)</p><h3 id="var/tracked_heretics"><aside class="declaration">var </aside>tracked_heretics
+            <aside>&ndash; /list/datum/mind</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/influences.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;influences.dm 22"/></a></h3>
+        <p>List of minds with the ability to see influences</p><h2 id="proc">Proc Details</h2><h3 id="proc/add_to_smashes"><aside class="declaration">proc </aside>add_to_smashes<aside>(/<a href="datum.html">datum</a>/<a href="datum/mind.html">mind</a>/to_add) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/influences.dm#L51">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;influences.dm 51"/></a></aside>
+        </h3>
+        <p>Allow [to_add] to see all tracked reality smashes.</p><h3 id="proc/add_tracked_mind"><aside class="declaration">proc </aside>add_tracked_mind<aside>(/<a href="datum.html">datum</a>/<a href="datum/mind.html">mind</a>/heretic) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/influences.dm#L93">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;influences.dm 93"/></a></aside>
+        </h3>
+        <p>Adds a mind to the list of people that can see the reality smashes</p>
+<p>Use this whenever you want to add someone to the list</p><h3 id="proc/generate_new_influences"><aside class="declaration">proc </aside>generate_new_influences<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/influences.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;influences.dm 67"/></a></aside>
+        </h3>
+        <p>Generates a set amount of reality smashes
+based on the number of already existing smashes
+and the number of minds we're tracking.</p><h3 id="proc/remove_from_smashes"><aside class="declaration">proc </aside>remove_from_smashes<aside>(/<a href="datum.html">datum</a>/<a href="datum/mind.html">mind</a>/to_remove) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/influences.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;influences.dm 58"/></a></aside>
+        </h3>
+        <p>Stop [to_remove] from seeing any tracked reality smashes.</p><h3 id="proc/remove_tracked_mind"><aside class="declaration">proc </aside>remove_tracked_mind<aside>(/<a href="datum.html">datum</a>/<a href="datum/mind.html">mind</a>/heretic) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/influences.dm#L108">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;influences.dm 108"/></a></aside>
+        </h3>
+        <p>Removes a mind from the list of people that can see the reality smashes</p>
+<p>Use this whenever you want to remove someone from the list</p><h3 id="proc/rework_network"><aside class="declaration">proc </aside>rework_network<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/antagonists/heretic/influences.dm#L37">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;antagonists&#x2F;heretic&#x2F;influences.dm 37"/></a></aside>
+        </h3>
+        <p>Automatically fixes the target and smash network</p>
+<p>Fixes any bugs that are caused by late Generate() or exchanging clients</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

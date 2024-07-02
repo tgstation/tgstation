@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="mob/living/simple_animal/bot/mulebot.html#var">Var Details</a> - <a href="mob/living/simple_animal/bot/mulebot.html#proc">Proc Details</a></header>
+<main>
+<h1>mulebot <aside>/<a href="mob.html">mob</a>/<a href="mob/living.html">living</a>/<a href="mob/living/simple_animal.html">simple_animal</a>/<a href="mob/living/simple_animal/bot.html">bot</a>/<a href="mob/living/simple_animal/bot/mulebot.html">mulebot</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 12"/></a></h1>
+
+<table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/mulebot.html#var/auto_pickup">auto_pickup</a></th><td>true if auto return to home beacon after unload</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/mulebot.html#var/blockcount">blockcount</a></th><td>true if already reached the target
+Number of times retried a blocked path</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/mulebot.html#var/cell">cell</a></th><td>true if bot will announce an arrival to a location.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/mulebot.html#var/cell_move_power_usage">cell_move_power_usage</a></th><td>Internal Powercell</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/mulebot.html#var/home_destination">home_destination</a></th><td>this the direction to unload onto/load from</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/mulebot.html#var/id">id</a></th><td>unique identifier in case there are multiple mulebots.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/mulebot.html#var/load">load</a></th><td>icon_state to use in update_icon_state</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/mulebot.html#var/loaddir">loaddir</a></th><td>this is turf to navigate to (location of beacon)</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/mulebot.html#var/num_steps">num_steps</a></th><td>How much power we use when we move.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/mulebot.html#var/passenger">passenger</a></th><td>what we're transporting</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/mulebot.html#var/reached_target">reached_target</a></th><td>tag of home delivery beacon</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/mulebot.html#var/report_delivery">report_delivery</a></th><td>true if auto-pickup at beacon</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/mulebot.html#var/target">target</a></th><td>who's riding us</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/mulebot.html#proc/Initialize">Initialize</a></th><td>The amount of steps we should take until we rest for a time.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/mulebot.html#proc/check_pre_step">check_pre_step</a></th><td>Checks whether the bot can complete a step_towards, checking whether the bot is on and has the charge to do the move. Returns COMPONENT_MOB_BOT_CANCELSTEP if the bot should not step.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/mulebot.html#proc/get_load_name">get_load_name</a></th><td>resolves the name to display for the loaded mob. primarily needed for the paranormal subtype since we don't want to show the name of ghosts riding it.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/mulebot.html#proc/has_power">has_power</a></th><td>returns true if the bot is fully powered.</td></tr>
+            <tr><th><a href="mob/living/simple_animal/bot/mulebot.html#proc/on_bot_step">on_bot_step</a></th><td>Uses power from the cell when the bot steps.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/auto_pickup"><aside class="declaration">var </aside>auto_pickup
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L52">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 52"/></a></h3>
+        <p>true if auto return to home beacon after unload</p><h3 id="var/blockcount"><aside class="declaration">var </aside>blockcount
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 49"/></a></h3>
+        <p>true if already reached the target
+Number of times retried a blocked path</p><h3 id="var/cell"><aside class="declaration">var </aside>cell
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/stock_parts.html">stock_parts</a>/<a href="obj/item/stock_parts/power_store.html">power_store</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 55"/></a></h3>
+        <p>true if bot will announce an arrival to a location.</p><h3 id="var/cell_move_power_usage"><aside class="declaration">var </aside>cell_move_power_usage
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L56">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 56"/></a></h3>
+        <p>Internal Powercell</p><h3 id="var/home_destination"><aside class="declaration">var </aside>home_destination
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L45">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 45"/></a></h3>
+        <p>this the direction to unload onto/load from</p><h3 id="var/id"><aside class="declaration">var </aside>id
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 38"/></a></h3>
+        <p>unique identifier in case there are multiple mulebots.</p><h3 id="var/load"><aside class="declaration">var </aside>load
+            <aside>&ndash; /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L41">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 41"/></a></h3>
+        <p>icon_state to use in update_icon_state</p><h3 id="var/loaddir"><aside class="declaration">var </aside>loaddir
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 44"/></a></h3>
+        <p>this is turf to navigate to (location of beacon)</p><h3 id="var/num_steps"><aside class="declaration">var </aside>num_steps
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L57">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 57"/></a></h3>
+        <p>How much power we use when we move.</p><h3 id="var/passenger"><aside class="declaration">var </aside>passenger
+            <aside>&ndash; /<a href="mob.html">mob</a>/<a href="mob/living.html">living</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 42"/></a></h3>
+        <p>what we're transporting</p><h3 id="var/reached_target"><aside class="declaration">var </aside>reached_target
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L47">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 47"/></a></h3>
+        <p>tag of home delivery beacon</p><h3 id="var/report_delivery"><aside class="declaration">var </aside>report_delivery
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L53">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 53"/></a></h3>
+        <p>true if auto-pickup at beacon</p><h3 id="var/target"><aside class="declaration">var </aside>target
+            <aside>&ndash; /<a href="turf.html">turf</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L43">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 43"/></a></h3>
+        <p>who's riding us</p><h2 id="proc">Proc Details</h2><h3 id="proc/Initialize"><aside class="parent"><a title="/mob" href="mob.html#proc/Initialize">&uarr;</a></aside>Initialize<aside>(mapload) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L61">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 61"/></a></aside>
+        </h3>
+        <p>The amount of steps we should take until we rest for a time.</p><h3 id="proc/check_pre_step"><aside class="declaration">proc </aside>check_pre_step<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L783">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 783"/></a></aside>
+        </h3>
+        <p>Checks whether the bot can complete a step_towards, checking whether the bot is on and has the charge to do the move. Returns COMPONENT_MOB_BOT_CANCELSTEP if the bot should not step.</p><h3 id="proc/get_load_name"><aside class="declaration">proc </aside>get_load_name<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L424">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 424"/></a></aside>
+        </h3>
+        <p>resolves the name to display for the loaded mob. primarily needed for the paranormal subtype since we don't want to show the name of ghosts riding it.</p><h3 id="proc/has_power"><aside class="declaration">proc </aside>has_power<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L129">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 129"/></a></aside>
+        </h3>
+        <p>returns true if the bot is fully powered.</p><h3 id="proc/on_bot_step"><aside class="declaration">proc </aside>on_bot_step<aside>(/<a href="datum.html">datum</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/mob/living/simple_animal/bot/mulebot.dm#L794">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;mob&#x2F;living&#x2F;simple_animal&#x2F;bot&#x2F;mulebot.dm 794"/></a></aside>
+        </h3>
+        <p>Uses power from the cell when the bot steps.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

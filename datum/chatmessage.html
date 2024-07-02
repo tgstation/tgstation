@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;chatmessage - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/chatmessage.html#var">Var Details</a> - <a href="datum/chatmessage.html#proc">Proc Details</a></header>
+<main>
+<h1>Chat Message Overlay <aside>/<a href="datum.html">datum</a>/<a href="datum/chatmessage.html">chatmessage</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/chatmessage.dm#L34">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;chatmessage.dm 34"/></a></h1>
+
+<p>Datum for generating a message overlay on the map</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/chatmessage.html#var/animate_lifespan">animate_lifespan</a></th><td>Our animation lifespan, how long this message will last</td></tr>
+            <tr><th><a href="datum/chatmessage.html#var/animate_start">animate_start</a></th><td>When we started animating the message</td></tr>
+            <tr><th><a href="datum/chatmessage.html#var/approx_lines">approx_lines</a></th><td>Contains the approximate amount of lines for height decay</td></tr>
+            <tr><th><a href="datum/chatmessage.html#var/current_z_idx">current_z_idx</a></th><td>The current index used for adjusting the layer of each sequential chat message such that recent messages will overlay older ones</td></tr>
+            <tr><th><a href="datum/chatmessage.html#var/eol_complete">eol_complete</a></th><td>Contains the time that the EOL for the message will be complete, used for qdel scheduling</td></tr>
+            <tr><th><a href="datum/chatmessage.html#var/message">message</a></th><td>The visual element of the chat message</td></tr>
+            <tr><th><a href="datum/chatmessage.html#var/message_loc">message_loc</a></th><td>The location in which the message is appearing</td></tr>
+            <tr><th><a href="datum/chatmessage.html#var/owned_by">owned_by</a></th><td>The client who heard this message</td></tr>
+            <tr><th><a href="datum/chatmessage.html#var/scheduled_destruction">scheduled_destruction</a></th><td>Contains the scheduled destruction time, used for scheduling EOL</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/chatmessage.html#proc/New">New</a></th><td>Constructs a chat message overlay</td></tr>
+            <tr><th><a href="datum/chatmessage.html#proc/colorize_string">colorize_string</a></th><td>Gets a color for a name, will return the same color for a given string consistently within a round.atom</td></tr>
+            <tr><th><a href="datum/chatmessage.html#proc/finish_image_generation">finish_image_generation</a></th><td>Cached icons to show what language the user is speaking
+finishes the image generation after the MeasureText() call in generate_image().
+necessary because after that call the proc can resume at the end of the tick and cause overtime.</td></tr>
+            <tr><th><a href="datum/chatmessage.html#proc/generate_image">generate_image</a></th><td>Generates a chat message image representation</td></tr>
+            <tr><th><a href="datum/chatmessage.html#proc/on_parent_qdel">on_parent_qdel</a></th><td>Calls qdel on the chatmessage when its parent is deleted, used to register qdel signal</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/animate_lifespan"><aside class="declaration">var </aside>animate_lifespan
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/chatmessage.dm#L52">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;chatmessage.dm 52"/></a></h3>
+        <p>Our animation lifespan, how long this message will last</p><h3 id="var/animate_start"><aside class="declaration">var </aside>animate_start
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/chatmessage.dm#L50">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;chatmessage.dm 50"/></a></h3>
+        <p>When we started animating the message</p><h3 id="var/approx_lines"><aside class="declaration">var </aside>approx_lines
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/chatmessage.dm#L46">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;chatmessage.dm 46"/></a></h3>
+        <p>Contains the approximate amount of lines for height decay</p><h3 id="var/current_z_idx"><aside class="declaration">var </aside>current_z_idx
+            <aside>&ndash; /static</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/chatmessage.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;chatmessage.dm 48"/></a></h3>
+        <p>The current index used for adjusting the layer of each sequential chat message such that recent messages will overlay older ones</p><h3 id="var/eol_complete"><aside class="declaration">var </aside>eol_complete
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/chatmessage.dm#L44">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;chatmessage.dm 44"/></a></h3>
+        <p>Contains the time that the EOL for the message will be complete, used for qdel scheduling</p><h3 id="var/message"><aside class="declaration">var </aside>message
+            <aside>&ndash; /<a href="image.html">image</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/chatmessage.dm#L36">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;chatmessage.dm 36"/></a></h3>
+        <p>The visual element of the chat message</p><h3 id="var/message_loc"><aside class="declaration">var </aside>message_loc
+            <aside>&ndash; /<a href="atom.html">atom</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/chatmessage.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;chatmessage.dm 38"/></a></h3>
+        <p>The location in which the message is appearing</p><h3 id="var/owned_by"><aside class="declaration">var </aside>owned_by
+            <aside>&ndash; /<a href="client.html">client</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/chatmessage.dm#L40">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;chatmessage.dm 40"/></a></h3>
+        <p>The client who heard this message</p><h3 id="var/scheduled_destruction"><aside class="declaration">var </aside>scheduled_destruction
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/chatmessage.dm#L42">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;chatmessage.dm 42"/></a></h3>
+        <p>Contains the scheduled destruction time, used for scheduling EOL</p><h2 id="proc">Proc Details</h2><h3 id="proc/New">New<aside>(text, /<a href="atom.html">atom</a>/target, /<a href="mob.html">mob</a>/owner, /<a href="datum.html">datum</a>/<a href="datum/language.html">language</a>/language, /list/extra_classes, lifespan) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/chatmessage.dm#L65">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;chatmessage.dm 65"/></a></aside>
+        </h3>
+        <p>Constructs a chat message overlay</p>
+<p>Arguments:</p>
+<ul>
+<li>text - The text content of the overlay</li>
+<li>target - The target atom to display the overlay at</li>
+<li>owner - The mob that owns this overlay, only this mob will be able to view it</li>
+<li>language - The language this message was spoken in</li>
+<li>extra_classes - Extra classes to apply to the span that holds the text</li>
+<li>lifespan - The lifespan of the message in deciseconds</li>
+</ul><h3 id="proc/colorize_string"><aside class="declaration">proc </aside>colorize_string<aside>(name, sat_shift, lum_shift) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/chatmessage.dm#L343">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;chatmessage.dm 343"/></a></aside>
+        </h3>
+        <p>Gets a color for a name, will return the same color for a given string consistently within a round.atom</p>
+<p>Note that this proc aims to produce pastel-ish colors using the HSL colorspace. These seem to be favorable for displaying on the map.</p>
+<p>Arguments:</p>
+<ul>
+<li>name - The name to generate a color for</li>
+<li>sat_shift - A value between 0 and 1 that will be multiplied against the saturation</li>
+<li>lum_shift - A value between 0 and 1 that will be multiplied against the luminescence</li>
+</ul><h3 id="proc/finish_image_generation"><aside class="declaration">proc </aside>finish_image_generation<aside>(mheight, /<a href="atom.html">atom</a>/target, /<a href="mob.html">mob</a>/owner, complete_text, lifespan) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/chatmessage.dm#L197">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;chatmessage.dm 197"/></a></aside>
+        </h3>
+        <p>Cached icons to show what language the user is speaking
+finishes the image generation after the MeasureText() call in generate_image().
+necessary because after that call the proc can resume at the end of the tick and cause overtime.</p><h3 id="proc/generate_image"><aside class="declaration">proc </aside>generate_image<aside>(text, /<a href="atom.html">atom</a>/target, /<a href="mob.html">mob</a>/owner, /<a href="datum.html">datum</a>/<a href="datum/language.html">language</a>/language, /list/extra_classes, lifespan) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/chatmessage.dm#L107">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;chatmessage.dm 107"/></a></aside>
+        </h3>
+        <p>Generates a chat message image representation</p>
+<p>Arguments:</p>
+<ul>
+<li>text - The text content of the overlay</li>
+<li>target - The target atom to display the overlay at</li>
+<li>owner - The mob that owns this overlay, only this mob will be able to view it</li>
+<li>language - The language this message was spoken in</li>
+<li>extra_classes - Extra classes to apply to the span that holds the text</li>
+<li>lifespan - The lifespan of the message in deciseconds</li>
+</ul><h3 id="proc/on_parent_qdel"><aside class="declaration">proc </aside>on_parent_qdel<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/chatmessage.dm#L92">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;chatmessage.dm 92"/></a></aside>
+        </h3>
+        <p>Calls qdel on the chatmessage when its parent is deleted, used to register qdel signal</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

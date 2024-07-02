@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;obj&#x2F;item&#x2F;fish_analyzer - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="obj/item/fish_analyzer.html#var">Var Details</a> - <a href="obj/item/fish_analyzer.html#proc">Proc Details</a></header>
+<main>
+<h1>fish_analyzer <aside>/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fish_analyzer.html">fish_analyzer</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/aquarium/fish_analyzer.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;fish_analyzer.dm 2"/></a></h1>
+
+<p>An item that can be used to gather information on the fish, such as but not limited to: health, hunger and traits.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="obj/item/fish_analyzer.html#var/case_color">case_color</a></th><td>The color of the case. Used by grayscale configs and update_overlays()</td></tr>
+            <tr><th><a href="obj/item/fish_analyzer.html#var/fish_menu">fish_menu</a></th><td>The radial menu shown when analyzing aquariums. Having a persistent one allows us
+to update it whenever fish come and go, and is also required since we have a select callback
+used to check right clicks for scanning traits instead of status.</td></tr>
+            <tr><th><a href="obj/item/fish_analyzer.html#var/radial_choices">radial_choices</a></th><td>A cached list of the current choices for the aforedefined radial menu.</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="obj/item/fish_analyzer.html#proc/analyze_status">analyze_status</a></th><td>Called when a fish or a menu choice is left-clicked.
+This returns the fish's status, size, weight, feed type, hunger, breeding timeout.</td></tr>
+            <tr><th><a href="obj/item/fish_analyzer.html#proc/analyze_traits">analyze_traits</a></th><td>Called when a fish or a menu choice is left-clicked.
+This returns the fish's progenitors, traits and their inheritability.</td></tr>
+            <tr><th><a href="obj/item/fish_analyzer.html#proc/can_select_fish">can_select_fish</a></th><td>Whether the item should continue to show its radial menu or delete it.</td></tr>
+            <tr><th><a href="obj/item/fish_analyzer.html#proc/choice_selected">choice_selected</a></th><td>Called when the user has selected a choice. If it's a right click, analyze the traits, else the status</td></tr>
+            <tr><th><a href="obj/item/fish_analyzer.html#proc/delete_radial">delete_radial</a></th><td>Unregisters signals, delete the radial menu, unsets the choices.</td></tr>
+            <tr><th><a href="obj/item/fish_analyzer.html#proc/on_aquarium_entered">on_aquarium_entered</a></th><td>Called when something enters the aquarium. If it's a fish, update the choices.</td></tr>
+            <tr><th><a href="obj/item/fish_analyzer.html#proc/on_aquarium_exited">on_aquarium_exited</a></th><td>Called when something exits the aquarium. If it's a fish, update the choices.</td></tr>
+            <tr><th><a href="obj/item/fish_analyzer.html#proc/radial_choices">radial_choices</a></th><td>Instantiates a radial menu choice datum for the current fish and adds it to the list of choices.</td></tr>
+            <tr><th><a href="obj/item/fish_analyzer.html#proc/scan_aquarium">scan_aquarium</a></th><td>Instantiates the radial menu, populates the list of choices, shows it and register signals on the aquarium.</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/case_color"><aside class="declaration">var </aside>case_color
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/aquarium/fish_analyzer.dm#L22">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;fish_analyzer.dm 22"/></a></h3>
+        <p>The color of the case. Used by grayscale configs and update_overlays()</p><h3 id="var/fish_menu"><aside class="declaration">var </aside>fish_menu
+            <aside>&ndash; /<a href="datum.html">datum</a>/<a href="datum/radial_menu.html">radial_menu</a>/<a href="datum/radial_menu/persistent.html">persistent</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/aquarium/fish_analyzer.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;fish_analyzer.dm 28"/></a></h3>
+        <p>The radial menu shown when analyzing aquariums. Having a persistent one allows us
+to update it whenever fish come and go, and is also required since we have a select callback
+used to check right clicks for scanning traits instead of status.</p><h3 id="var/radial_choices"><aside class="declaration">var </aside>radial_choices
+            <aside>&ndash; /list</aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/aquarium/fish_analyzer.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;fish_analyzer.dm 32"/></a></h3>
+        <p>A cached list of the current choices for the aforedefined radial menu.</p><h2 id="proc">Proc Details</h2><h3 id="proc/analyze_status"><aside class="declaration">proc </aside>analyze_status<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fish.html">fish</a>/fish, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/aquarium/fish_analyzer.dm#L181">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;fish_analyzer.dm 181"/></a></aside>
+        </h3>
+        <p>Called when a fish or a menu choice is left-clicked.
+This returns the fish's status, size, weight, feed type, hunger, breeding timeout.</p><h3 id="proc/analyze_traits"><aside class="declaration">proc </aside>analyze_traits<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fish.html">fish</a>/fish, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/aquarium/fish_analyzer.dm#L228">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;fish_analyzer.dm 228"/></a></aside>
+        </h3>
+        <p>Called when a fish or a menu choice is left-clicked.
+This returns the fish's progenitors, traits and their inheritability.</p><h3 id="proc/can_select_fish"><aside class="declaration">proc </aside>can_select_fish<aside>(/<a href="mob.html">mob</a>/user, /<a href="obj.html">obj</a>/<a href="obj/structure.html">structure</a>/<a href="obj/structure/aquarium.html">aquarium</a>/aquarium) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/aquarium/fish_analyzer.dm#L146">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;fish_analyzer.dm 146"/></a></aside>
+        </h3>
+        <p>Whether the item should continue to show its radial menu or delete it.</p><h3 id="proc/choice_selected"><aside class="declaration">proc </aside>choice_selected<aside>(/<a href="mob.html">mob</a>/user, /<a href="obj.html">obj</a>/<a href="obj/structure.html">structure</a>/<a href="obj/structure/aquarium.html">aquarium</a>/aquarium, /<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fish.html">fish</a>/choice, params) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/aquarium/fish_analyzer.dm#L134">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;fish_analyzer.dm 134"/></a></aside>
+        </h3>
+        <p>Called when the user has selected a choice. If it's a right click, analyze the traits, else the status</p><h3 id="proc/delete_radial"><aside class="declaration">proc </aside>delete_radial<aside>(/<a href="obj.html">obj</a>/<a href="obj/structure.html">structure</a>/<a href="obj/structure/aquarium.html">aquarium</a>/source) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/aquarium/fish_analyzer.dm#L171">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;fish_analyzer.dm 171"/></a></aside>
+        </h3>
+        <p>Unregisters signals, delete the radial menu, unsets the choices.</p><h3 id="proc/on_aquarium_entered"><aside class="declaration">proc </aside>on_aquarium_entered<aside>(/<a href="obj.html">obj</a>/<a href="obj/structure.html">structure</a>/<a href="obj/structure/aquarium.html">aquarium</a>/source, /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/arrived) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/aquarium/fish_analyzer.dm#L153">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;fish_analyzer.dm 153"/></a></aside>
+        </h3>
+        <p>Called when something enters the aquarium. If it's a fish, update the choices.</p><h3 id="proc/on_aquarium_exited"><aside class="declaration">proc </aside>on_aquarium_exited<aside>(/<a href="obj.html">obj</a>/<a href="obj/structure.html">structure</a>/<a href="obj/structure/aquarium.html">aquarium</a>/source, /<a href="atom.html">atom</a>/<a href="atom/movable.html">movable</a>/gone) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/aquarium/fish_analyzer.dm#L160">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;fish_analyzer.dm 160"/></a></aside>
+        </h3>
+        <p>Called when something exits the aquarium. If it's a fish, update the choices.</p><h3 id="proc/radial_choices"><aside class="declaration">proc </aside>radial_choices<aside>(/<a href="obj.html">obj</a>/<a href="obj/item.html">item</a>/<a href="obj/item/fish.html">fish</a>/fish) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/aquarium/fish_analyzer.dm#L123">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;fish_analyzer.dm 123"/></a></aside>
+        </h3>
+        <p>Instantiates a radial menu choice datum for the current fish and adds it to the list of choices.</p><h3 id="proc/scan_aquarium"><aside class="declaration">proc </aside>scan_aquarium<aside>(/<a href="obj.html">obj</a>/<a href="obj/structure.html">structure</a>/<a href="obj/structure/aquarium.html">aquarium</a>/aquarium, /<a href="mob.html">mob</a>/user) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/modules/fishing/aquarium/fish_analyzer.dm#L106">
+        <img src="git.png" width="16" height="16" title="code&#x2F;modules&#x2F;fishing&#x2F;aquarium&#x2F;fish_analyzer.dm 106"/></a></aside>
+        </h3>
+        <p>Instantiates the radial menu, populates the list of choices, shows it and register signals on the aquarium.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

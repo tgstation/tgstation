@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>code&#x2F;__DEFINES&#x2F;food.dm - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="code/__DEFINES/food.html#define">Define Details</a></header>
+<main>
+<h1>code/__DEFINES/food.dm 
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm"/></a></h1>
+
+<table class="summary" cellspacing="0">
+        <tr><th><a href="code/__DEFINES/food.html#define/FOOD_FLAGS">FOOD_FLAGS</a></th><td>A list of food type names, in order of their flags</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/FOOD_FLAGS_IC">FOOD_FLAGS_IC</a></th><td>IC meaning (more or less) for food flags</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/DISLIKED_FOOD_QUALITY_CHANGE">DISLIKED_FOOD_QUALITY_CHANGE</a></th><td>Food quality change according to species diet</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/TOXIC_FOOD_QUALITY_THRESHOLD">TOXIC_FOOD_QUALITY_THRESHOLD</a></th><td>Threshold for food to give a toxic reaction</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/FOOD_QUALITY_DANGEROUS">FOOD_QUALITY_DANGEROUS</a></th><td>Food is dangerous to consume</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/FOOD_IN_CONTAINER">FOOD_IN_CONTAINER</a></th><td>Food is &quot;in a container&quot;, not in a code sense, but in a literal sense (canned foods)</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/FOOD_FINGER_FOOD">FOOD_FINGER_FOOD</a></th><td>Finger food can be eaten while walking / running around</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/FOOD_TRASH_POPABLE">FOOD_TRASH_POPABLE</a></th><td>Food trash flags</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/FOOD_LIKED">FOOD_LIKED</a></th><td>Food preference enums</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/VENUE_BAR_MINIMUM_REAGENTS">VENUE_BAR_MINIMUM_REAGENTS</a></th><td>Venue reagent requirement</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/FOOD_PRICE_WORTHLESS">FOOD_PRICE_WORTHLESS</a></th><td><em><strong>Food price classes</strong></em>
+Foods that are meant to have no value, such as lollypops from medborgs.</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/FOOD_PRICE_TRASH">FOOD_PRICE_TRASH</a></th><td>cheap and quick foods, like those from vending machines.</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/FOOD_PRICE_CHEAP">FOOD_PRICE_CHEAP</a></th><td>In line with prices of cheap snacks and foods you find in vending machine, practically disposable.</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/FOOD_PRICE_NORMAL">FOOD_PRICE_NORMAL</a></th><td>Half a crate of profit, selling 4 of these lets you buy a kitchen crate from cargo.</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/FOOD_PRICE_EXOTIC">FOOD_PRICE_EXOTIC</a></th><td>Making one of these should be worth the time investment, solid chunk of profit.</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/FOOD_PRICE_LEGENDARY">FOOD_PRICE_LEGENDARY</a></th><td>Large windfall for making something from this list.</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/DRINK_PRICE_STOCK">DRINK_PRICE_STOCK</a></th><td><em><strong>Drink price classes</strong></em>
+Drinks that are only limited by a single click of the dispenser.</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/DRINK_PRICE_EASY">DRINK_PRICE_EASY</a></th><td>Drinks that are made through very basic processing.</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/DRINK_PRICE_MEDIUM">DRINK_PRICE_MEDIUM</a></th><td>Drinks that are made through more basic processing, or multiple steps.</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/DRINK_PRICE_HIGH">DRINK_PRICE_HIGH</a></th><td>Drinks that are made through rare ingredients, or high levels of processing.</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/ICE_CREAM_VANILLA">ICE_CREAM_VANILLA</a></th><td>Flavour defines (also names) for GLOB.ice_cream_flavours list access. Safer from mispelling than plain text.</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/WATER_BOILING_POINT">WATER_BOILING_POINT</a></th><td>Point water boils at</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/SOUP_BURN_TEMP">SOUP_BURN_TEMP</a></th><td>Point at which soups begin to burn at</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/SOUP_SERVING_SIZE">SOUP_SERVING_SIZE</a></th><td>Serving size of soup. Plus or minus five units.</td></tr>
+        <tr><th><a href="code/__DEFINES/food.html#define/MILK_TO_BUTTER_COEFF">MILK_TO_BUTTER_COEFF</a></th><td>How much milk is needed to make butter on a reagent grinder</td></tr></table><h2 id="define">Define Details</h2>
+<h3 id="define/DISLIKED_FOOD_QUALITY_CHANGE"><aside class="declaration">#define </aside>DISLIKED_FOOD_QUALITY_CHANGE
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L164">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 164"/></a>
+    </h3>
+    <p>Food quality change according to species diet</p><h3 id="define/DRINK_PRICE_EASY"><aside class="declaration">#define </aside>DRINK_PRICE_EASY
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L220">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 220"/></a>
+    </h3>
+    <p>Drinks that are made through very basic processing.</p><h3 id="define/DRINK_PRICE_HIGH"><aside class="declaration">#define </aside>DRINK_PRICE_HIGH
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L224">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 224"/></a>
+    </h3>
+    <p>Drinks that are made through rare ingredients, or high levels of processing.</p><h3 id="define/DRINK_PRICE_MEDIUM"><aside class="declaration">#define </aside>DRINK_PRICE_MEDIUM
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L222">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 222"/></a>
+    </h3>
+    <p>Drinks that are made through more basic processing, or multiple steps.</p><h3 id="define/DRINK_PRICE_STOCK"><aside class="declaration">#define </aside>DRINK_PRICE_STOCK
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L218">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 218"/></a>
+    </h3>
+    <p><em><strong>Drink price classes</strong></em>
+Drinks that are only limited by a single click of the dispenser.</p><h3 id="define/FOOD_FINGER_FOOD"><aside class="declaration">#define </aside>FOOD_FINGER_FOOD
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L174">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 174"/></a>
+    </h3>
+    <p>Finger food can be eaten while walking / running around</p><h3 id="define/FOOD_FLAGS"><aside class="declaration">#define </aside>FOOD_FLAGS
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L48">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 48"/></a>
+    </h3>
+    <p>A list of food type names, in order of their flags</p><h3 id="define/FOOD_FLAGS_IC"><aside class="declaration">#define </aside>FOOD_FLAGS_IC
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L73">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 73"/></a>
+    </h3>
+    <p>IC meaning (more or less) for food flags</p><h3 id="define/FOOD_IN_CONTAINER"><aside class="declaration">#define </aside>FOOD_IN_CONTAINER
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L172">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 172"/></a>
+    </h3>
+    <p>Food is &quot;in a container&quot;, not in a code sense, but in a literal sense (canned foods)</p><h3 id="define/FOOD_LIKED"><aside class="declaration">#define </aside>FOOD_LIKED
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L194">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 194"/></a>
+    </h3>
+    <p>Food preference enums</p><h3 id="define/FOOD_PRICE_CHEAP"><aside class="declaration">#define </aside>FOOD_PRICE_CHEAP
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L208">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 208"/></a>
+    </h3>
+    <p>In line with prices of cheap snacks and foods you find in vending machine, practically disposable.</p><h3 id="define/FOOD_PRICE_EXOTIC"><aside class="declaration">#define </aside>FOOD_PRICE_EXOTIC
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L212">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 212"/></a>
+    </h3>
+    <p>Making one of these should be worth the time investment, solid chunk of profit.</p><h3 id="define/FOOD_PRICE_LEGENDARY"><aside class="declaration">#define </aside>FOOD_PRICE_LEGENDARY
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L214">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 214"/></a>
+    </h3>
+    <p>Large windfall for making something from this list.</p><h3 id="define/FOOD_PRICE_NORMAL"><aside class="declaration">#define </aside>FOOD_PRICE_NORMAL
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L210">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 210"/></a>
+    </h3>
+    <p>Half a crate of profit, selling 4 of these lets you buy a kitchen crate from cargo.</p><h3 id="define/FOOD_PRICE_TRASH"><aside class="declaration">#define </aside>FOOD_PRICE_TRASH
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L206">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 206"/></a>
+    </h3>
+    <p>cheap and quick foods, like those from vending machines.</p><h3 id="define/FOOD_PRICE_WORTHLESS"><aside class="declaration">#define </aside>FOOD_PRICE_WORTHLESS
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L204">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 204"/></a>
+    </h3>
+    <p><em><strong>Food price classes</strong></em>
+Foods that are meant to have no value, such as lollypops from medborgs.</p><h3 id="define/FOOD_QUALITY_DANGEROUS"><aside class="declaration">#define </aside>FOOD_QUALITY_DANGEROUS
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L169">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 169"/></a>
+    </h3>
+    <p>Food is dangerous to consume</p><h3 id="define/FOOD_TRASH_POPABLE"><aside class="declaration">#define </aside>FOOD_TRASH_POPABLE
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L190">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 190"/></a>
+    </h3>
+    <p>Food trash flags</p><h3 id="define/ICE_CREAM_VANILLA"><aside class="declaration">#define </aside>ICE_CREAM_VANILLA
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L228">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 228"/></a>
+    </h3>
+    <p>Flavour defines (also names) for GLOB.ice_cream_flavours list access. Safer from mispelling than plain text.</p><h3 id="define/MILK_TO_BUTTER_COEFF"><aside class="declaration">#define </aside>MILK_TO_BUTTER_COEFF
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L263">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 263"/></a>
+    </h3>
+    <p>How much milk is needed to make butter on a reagent grinder</p><h3 id="define/SOUP_BURN_TEMP"><aside class="declaration">#define </aside>SOUP_BURN_TEMP
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L253">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 253"/></a>
+    </h3>
+    <p>Point at which soups begin to burn at</p><h3 id="define/SOUP_SERVING_SIZE"><aside class="declaration">#define </aside>SOUP_SERVING_SIZE
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L256">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 256"/></a>
+    </h3>
+    <p>Serving size of soup. Plus or minus five units.</p><h3 id="define/TOXIC_FOOD_QUALITY_THRESHOLD"><aside class="declaration">#define </aside>TOXIC_FOOD_QUALITY_THRESHOLD
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L167">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 167"/></a>
+    </h3>
+    <p>Threshold for food to give a toxic reaction</p><h3 id="define/VENUE_BAR_MINIMUM_REAGENTS"><aside class="declaration">#define </aside>VENUE_BAR_MINIMUM_REAGENTS
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L200">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 200"/></a>
+    </h3>
+    <p>Venue reagent requirement</p><h3 id="define/WATER_BOILING_POINT"><aside class="declaration">#define </aside>WATER_BOILING_POINT
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/__DEFINES/food.dm#L251">
+        <img src="git.png" width="16" height="16" title="code&#x2F;__DEFINES&#x2F;food.dm 251"/></a>
+    </h3>
+    <p>Point water boils at</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

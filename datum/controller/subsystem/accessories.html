@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;controller&#x2F;subsystem&#x2F;accessories - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/controller/subsystem/accessories.html#proc">Proc Details</a></header>
+<main>
+<h1>accessories <aside>/<a href="datum.html">datum</a>/<a href="datum/controller/subsystem.html">controller/subsystem</a>/<a href="datum/controller/subsystem/accessories.html">accessories</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/controllers/subsystem/sprite_accessories.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;sprite_accessories.dm 10"/></a></h1>
+
+<p>stores /datum/sprite_accessory/hair indexed by name
+stores only hair names
+stores only hair names
+stores /datum/sprite_accessory/facial_hair indexed by name
+stores only hair names
+stores only hair names
+stores /datum/sprite_accessory/hair_gradient indexed by name
+stores /datum/sprite_accessory/facial_hair_gradient indexed by name
+stores /datum/sprite_accessory/underwear indexed by name
+stores only underwear name
+stores only underwear name
+stores /datum/sprite_accessory/undershirt indexed by name
+stores only undershirt name
+stores only undershirt name
+stores /datum/sprite_accessory/socks indexed by name</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/controller/subsystem/accessories.html#proc/init_hair_gradients">init_hair_gradients</a></th><td>This proc just intializes all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name</td></tr>
+            <tr><th><a href="datum/controller/subsystem/accessories.html#proc/init_sprite_accessory_subtypes">init_sprite_accessory_subtypes</a></th><td>This reads the applicable sprite accessory datum's subtypes and adds it to the subsystem's list of sprite accessories.
+The boolean <code>add_blank</code> argument just adds a &quot;None&quot; option to the list of sprite accessories, like if a felinid doesn't want a tail or something, typically good for gated-off things.</td></tr>
+            <tr><th><a href="datum/controller/subsystem/accessories.html#proc/setup_lists">setup_lists</a></th><td>Sets up all of the lists for later utilization in the round and building sprites.
+In an ideal world we could tack everything that just needed <code>DEFAULT_SPRITE_LIST</code> into static variables on the top, but due to the initialization order
+where this subsystem will initialize BEFORE statics, it's just not feasible since this all needs to be ready for actual subsystems to use.
+Sorry.</td></tr></table><h2 id="proc">Proc Details</h2><h3 id="proc/init_hair_gradients"><aside class="declaration">proc </aside>init_hair_gradients<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/controllers/subsystem/sprite_accessories.dm#L110">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;sprite_accessories.dm 110"/></a></aside>
+        </h3>
+        <p>This proc just intializes all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name</p><h3 id="proc/init_sprite_accessory_subtypes"><aside class="declaration">proc </aside>init_sprite_accessory_subtypes<aside>(prototype, add_blank) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/controllers/subsystem/sprite_accessories.dm#L122">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;sprite_accessories.dm 122"/></a></aside>
+        </h3>
+        <p>This reads the applicable sprite accessory datum's subtypes and adds it to the subsystem's list of sprite accessories.
+The boolean <code>add_blank</code> argument just adds a &quot;None&quot; option to the list of sprite accessories, like if a felinid doesn't want a tail or something, typically good for gated-off things.</p><h3 id="proc/setup_lists"><aside class="declaration">proc </aside>setup_lists<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/controllers/subsystem/sprite_accessories.dm#L67">
+        <img src="git.png" width="16" height="16" title="code&#x2F;controllers&#x2F;subsystem&#x2F;sprite_accessories.dm 67"/></a></aside>
+        </h3>
+        <p>Sets up all of the lists for later utilization in the round and building sprites.
+In an ideal world we could tack everything that just needed <code>DEFAULT_SPRITE_LIST</code> into static variables on the top, but due to the initialization order
+where this subsystem will initialize BEFORE statics, it's just not feasible since this all needs to be ready for actual subsystems to use.
+Sorry.</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>

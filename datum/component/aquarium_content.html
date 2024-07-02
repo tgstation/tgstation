@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <base href="../../" />
+    <link rel="stylesheet" href="dmdoc.css" />
+    <title>&#x2F;datum&#x2F;component&#x2F;aquarium_content - &#x2F;tg&#x2F; Station 13</title>
+</head>
+<body>
+<header>
+    <a href="index.html">&#x2F;tg&#x2F; Station 13</a> -
+    <a href="index.html#modules">Modules</a> -
+    <a href="index.html#types">Types</a>
+ &mdash; <a href="datum/component/aquarium_content.html#var">Var Details</a> - <a href="datum/component/aquarium_content.html#proc">Proc Details</a></header>
+<main>
+<h1>aquarium_content <aside>/<a href="datum.html">datum</a>/<a href="datum/component.html">component</a>/<a href="datum/component/aquarium_content.html">aquarium_content</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L2">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 2"/></a></h1>
+
+<p>Allows movables to be inserted/displayed in aquariums.</p><table class="summary" cellspacing="0"><tr><td colspan="2"><h2>Vars</h2></td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#var/animation_getter">animation_getter</a></th><td>Proc used to retrieve current animation state from the parent, optional</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#var/animation_update_signals">animation_update_signals</a></th><td>Signals of the parent that will trigger animation update</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#var/aquarium_vc_color">aquarium_vc_color</a></th><td>Applied to vc object only for use with greyscaled icons.</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#var/base_px">base_px</a></th><td>Base px offset of the visual object in current aquarium aka current base position</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#var/base_py">base_py</a></th><td>Base px offset of the visual object in current aquarium aka current base position</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#var/base_transform">base_transform</a></th><td>Transformation applied to the visual holder - used when scaled down sprites are used as in aquarium visual</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#var/current_animation">current_animation</a></th><td>Currently playing animation</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#var/current_aquarium">current_aquarium</a></th><td>Keeps track of our current aquarium.</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#var/icon">icon</a></th><td>Fish sprite how to:
+Need to be centered on 16,16 in the dmi and facing left by default.
+sprite_height/sprite_width is the size it will have in aquarium and used to control animation boundaries.
+source_height/source_width is the size of the original icon (ideally only the non-empty parts)
+Icon used for in aquarium sprite</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#var/icon_state">icon_state</a></th><td>If this is set this icon state will be used for the holder while icon_state will only be used for item/catalog. Transformation from source_width/height WON'T be applied.</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#var/layer_mode">layer_mode</a></th><td>How the thing will be layered</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#var/processing">processing</a></th><td>Does this behviour need additional processing in aquarium, will be added to SSobj processing on insertion</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#var/randomize_position">randomize_position</a></th><td>If the starting position is randomised within bounds when inserted into aquarium.</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#var/unique">unique</a></th><td>TODO: Change this into trait checked on aquarium insertion</td></tr><tr><td colspan="2"><h2>Procs</h2></td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#proc/InitializeFromFish">InitializeFromFish</a></th><td>Sets visuals properties for fish</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#proc/InitializeFromProp">InitializeFromProp</a></th><td>Sets visuals properties for fish</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#proc/InitializeOther">InitializeOther</a></th><td>Mostly for admin abuse</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#proc/apply_appearance">apply_appearance</a></th><td>Applies icon,color and base scaling to our visual holder</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#proc/generate_animation">generate_animation</a></th><td>Actually animates the vc holder</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#proc/generate_base_vc">generate_base_vc</a></th><td>Generates common visual object, propeties that don't depend on aquarium surface</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#proc/on_surface_changed">on_surface_changed</a></th><td>Aquarium surface changed in some way, we need to recalculate base position and aninmation</td></tr>
+            <tr><th><a href="datum/component/aquarium_content.html#proc/swim_animation">swim_animation</a></th><td>Create looping random path animation, pixel offsets parameters include offsets already</td></tr></table>
+    <h2 id="var">Var Details</h2><h3 id="var/animation_getter"><aside class="declaration">var </aside>animation_getter
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L58">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 58"/></a></h3>
+        <p>Proc used to retrieve current animation state from the parent, optional</p><h3 id="var/animation_update_signals"><aside class="declaration">var </aside>animation_update_signals
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L64">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 64"/></a></h3>
+        <p>Signals of the parent that will trigger animation update</p><h3 id="var/aquarium_vc_color"><aside class="declaration">var </aside>aquarium_vc_color
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L30">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 30"/></a></h3>
+        <p>Applied to vc object only for use with greyscaled icons.</p><h3 id="var/base_px"><aside class="declaration">var </aside>base_px
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L10">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 10"/></a></h3>
+        <p>Base px offset of the visual object in current aquarium aka current base position</p><h3 id="var/base_py"><aside class="declaration">var </aside>base_py
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L12">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 12"/></a></h3>
+        <p>Base px offset of the visual object in current aquarium aka current base position</p><h3 id="var/base_transform"><aside class="declaration">var </aside>base_transform
+            <aside>&ndash; /<a href="matrix.html">matrix</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L32">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 32"/></a></h3>
+        <p>Transformation applied to the visual holder - used when scaled down sprites are used as in aquarium visual</p><h3 id="var/current_animation"><aside class="declaration">var </aside>current_animation
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L49">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 49"/></a></h3>
+        <p>Currently playing animation</p><h3 id="var/current_aquarium"><aside class="declaration">var </aside>current_aquarium
+            <aside>&ndash; /<a href="obj.html">obj</a>/<a href="obj/structure.html">structure</a>/<a href="obj/structure/aquarium.html">aquarium</a></aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L4">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 4"/></a></h3>
+        <p>Keeps track of our current aquarium.</p><h3 id="var/icon"><aside class="declaration">var </aside>icon
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L26">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 26"/></a></h3>
+        <p>Fish sprite how to:
+Need to be centered on 16,16 in the dmi and facing left by default.
+sprite_height/sprite_width is the size it will have in aquarium and used to control animation boundaries.
+source_height/source_width is the size of the original icon (ideally only the non-empty parts)
+Icon used for in aquarium sprite</p><h3 id="var/icon_state"><aside class="declaration">var </aside>icon_state
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L28">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 28"/></a></h3>
+        <p>If this is set this icon state will be used for the holder while icon_state will only be used for item/catalog. Transformation from source_width/height WON'T be applied.</p><h3 id="var/layer_mode"><aside class="declaration">var </aside>layer_mode
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L35">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 35"/></a></h3>
+        <p>How the thing will be layered</p><h3 id="var/processing"><aside class="declaration">var </aside>processing
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L52">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 52"/></a></h3>
+        <p>Does this behviour need additional processing in aquarium, will be added to SSobj processing on insertion</p><h3 id="var/randomize_position"><aside class="declaration">var </aside>randomize_position
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L38">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 38"/></a></h3>
+        <p>If the starting position is randomised within bounds when inserted into aquarium.</p><h3 id="var/unique"><aside class="declaration">var </aside>unique
+            <aside>&ndash; </aside>
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L55">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 55"/></a></h3>
+        <p>TODO: Change this into trait checked on aquarium insertion</p><h2 id="proc">Proc Details</h2><h3 id="proc/InitializeFromFish"><aside class="declaration">proc </aside>InitializeFromFish<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L89">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 89"/></a></aside>
+        </h3>
+        <p>Sets visuals properties for fish</p><h3 id="proc/InitializeFromProp"><aside class="declaration">proc </aside>InitializeFromProp<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L113">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 113"/></a></aside>
+        </h3>
+        <p>Sets visuals properties for fish</p><h3 id="proc/InitializeOther"><aside class="declaration">proc </aside>InitializeOther<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L126">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 126"/></a></aside>
+        </h3>
+        <p>Mostly for admin abuse</p><h3 id="proc/apply_appearance"><aside class="declaration">proc </aside>apply_appearance<aside>(/<a href="obj.html">obj</a>/effect/holder) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L206">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 206"/></a></aside>
+        </h3>
+        <p>Applies icon,color and base scaling to our visual holder</p><h3 id="proc/generate_animation"><aside class="declaration">proc </aside>generate_animation<aside>(reset) 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L215">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 215"/></a></aside>
+        </h3>
+        <p>Actually animates the vc holder</p><h3 id="proc/generate_base_vc"><aside class="declaration">proc </aside>generate_base_vc<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L199">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 199"/></a></aside>
+        </h3>
+        <p>Generates common visual object, propeties that don't depend on aquarium surface</p><h3 id="proc/on_surface_changed"><aside class="declaration">proc </aside>on_surface_changed<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L184">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 184"/></a></aside>
+        </h3>
+        <p>Aquarium surface changed in some way, we need to recalculate base position and aninmation</p><h3 id="proc/swim_animation"><aside class="declaration">proc </aside>swim_animation<aside>() 
+        
+    
+            <a href="https://github.com/tgstation/tgstation/blob/6517c39a58f036fd9d66d55b6a12d90e1339280a/code/datums/components/aquarium_content.dm#L232">
+        <img src="git.png" width="16" height="16" title="code&#x2F;datums&#x2F;components&#x2F;aquarium_content.dm 232"/></a></aside>
+        </h3>
+        <p>Create looping random path animation, pixel offsets parameters include offsets already</p></main>
+<footer>
+    tgstation.dme
+    <a href="https://github.com/tgstation/tgstation/tree/6517c39a58f036fd9d66d55b6a12d90e1339280a">6517c39</a>
+        (master) &mdash; <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.8.0</a></footer>
+</body>
+</html>
