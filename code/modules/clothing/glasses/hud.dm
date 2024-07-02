@@ -73,6 +73,7 @@
 	forced_glass_color = TRUE
 
 /obj/item/clothing/glasses/hud/health/night/update_icon_state()
+	. = ..()
 	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
 
 /obj/item/clothing/glasses/hud/health/night/meson
@@ -121,12 +122,13 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	flags_cover = GLASSESCOVERSEYES
 	// Pale yellow
-	color_cutoffs = list(30, 20, 5)
+	color_cutoffs = list(25, 15, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/lightyellow
 	actions_types = list(/datum/action/item_action/toggle_nv)
 	forced_glass_color = TRUE
 
 /obj/item/clothing/glasses/hud/diagnostic/night/update_icon_state()
+	. = ..()
 	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
 
 /obj/item/clothing/glasses/hud/diagnostic/sunglasses
@@ -204,6 +206,7 @@
 	forced_glass_color = TRUE
 
 /obj/item/clothing/glasses/hud/security/night/update_icon_state()
+	. = ..()
 	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars
