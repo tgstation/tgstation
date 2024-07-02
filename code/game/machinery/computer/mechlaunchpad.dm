@@ -86,28 +86,32 @@
 			continue
 		return found_mechpad
 
-/obj/machinery/computer/mechpad/multitool_act(mob/living/user, obj/item/tool)
-	if(!multitool_check_buffer(user, tool))
+/obj/machinery/computer/mechpad/multitool_act(mob/living/user, obj/item/multitool/multitool)
+	. = NONE
+	if(!istype(multitool.buffer, /obj/machinery/mechpad))
 		return
-	var/obj/item/multitool/multitool = tool
-	if(istype(multitool.buffer, /obj/machinery/mechpad))
-		var/obj/machinery/mechpad/buffered_pad = multitool.buffer
-		if(!(mechpads.len < maximum_pads))
-			to_chat(user, span_warning("[src] cannot handle any more connections!"))
-			return TRUE
-		if(buffered_pad == connected_mechpad)
-			to_chat(user, span_warning("[src] cannot connect to its own mechpad!"))
-		else if(!connected_mechpad && buffered_pad == find_pad())
-			if(buffered_pad in mechpads)
-				remove_pad(buffered_pad)
-			connect_launchpad(buffered_pad)
-			multitool.set_buffer(null)
-			to_chat(user, span_notice("You connect the console to the pad with data from the [multitool.name]'s buffer."))
-		else
-			add_pad(buffered_pad)
-			multitool.set_buffer(null)
-			to_chat(user, span_notice("You upload the data from the [multitool.name]'s buffer."))
-	return TRUE
+
+	var/obj/machinery/mechpad/buffered_pad = multitool.buffer
+	if(!(mechpads.len < maximum_pads))
+		to_chat(user, span_warning("[src] cannot handle any more connections!"))
+		return ITEM_INTERACT_SUCCESS
+
+	if(buffered_pad == connected_mechpad)
+		to_chat(user, span_warning("[src] cannot connect to its own mechpad!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!connected_mechpad && buffered_pad == find_pad())
+		if(buffered_pad in mechpads)
+			remove_pad(buffered_pad)
+		connect_launchpad(buffered_pad)
+		multitool.set_buffer(null)
+		to_chat(user, span_notice("You connect the console to the pad with data from the [multitool.name]'s buffer."))
+		return ITEM_INTERACT_SUCCESS
+
+	add_pad(buffered_pad)
+	multitool.set_buffer(null)
+	to_chat(user, span_notice("You upload the data from the [multitool.name]'s buffer."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/mechpad/proc/add_pad(obj/machinery/mechpad/pad)
 	mechpads += pad
