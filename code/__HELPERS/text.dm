@@ -241,12 +241,7 @@
 	if(last_char_group == SPACES_DETECTED)
 		t_out = copytext_char(t_out, 1, -1) //removes the last character (in this case a space)
 
-	for(var/bad_name in list("space","floor","wall","r-wall","monkey","unknown","inactive ai")) //prevents these common metagamey names
-		if(cmptext(t_out,bad_name))
-			return //(not case sensitive)
-
-	// Protects against names containing IC chat prohibited words.
-	if(is_ic_filtered(t_out) || is_soft_ic_filtered(t_out))
+	if(!filter_name_ic(t_out))
 		return
 
 	return t_out
@@ -256,6 +251,39 @@
 #undef NUMBERS_DETECTED
 #undef LETTERS_DETECTED
 
+
+/// Much more permissive version of reject_bad_name().
+/// Returns a trimmed string or null if the name is invalid.
+/// Allows most characters except for IC chat prohibited words.
+/proc/permissive_sanitize_name(value)
+	if(!istext(value)) // Not a string
+		return
+
+	var/name_length = length(value)
+	if(name_length < 3) // Too short
+		return
+
+	if(name_length > 3 * MAX_NAME_LEN) // Bad input
+		return
+
+	var/trimmed = trim(value, MAX_NAME_LEN)
+	if(!filter_name_ic(trimmed)) // Contains IC chat prohibited words
+		return
+
+	return trim_reduced(trimmed)
+
+
+/// Helper proc to check if a name is valid for the IC filter
+/proc/filter_name_ic(name)
+	for(var/bad_name in list("space", "floor", "wall", "r-wall", "monkey", "unknown", "inactive ai")) //prevents these common metagamey names
+		if(cmptext(name, bad_name))
+			return FALSE //(not case sensitive)
+
+	// Protects against names containing IC chat prohibited words.
+	if(is_ic_filtered(name) || is_soft_ic_filtered(name))
+		return FALSE
+
+	return TRUE
 
 
 //html_encode helper proc that returns the smallest non null of two numbers
