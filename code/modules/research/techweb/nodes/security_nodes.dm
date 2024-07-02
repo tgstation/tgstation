@@ -4,6 +4,8 @@
 	display_name = "Basic Arms"
 	description = "Ballistics can be unpredictable in space."
 	design_ids = list(
+		"toy_armblade",
+		"clown_firing_pin",
 		"toygun",
 		"c38_rubber",
 		"sec_38",

@@ -52,19 +52,6 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/janitor_trash = TECHWEB_TIER_2_POINTS)
 
-/datum/techweb_node/toys
-	id = TECHWEB_NODE_TOYS
-	display_name = "New Toys"
-	description = "For new pranks."
-	prereq_ids = list(TECHWEB_NODE_OFFICE_EQUIP)
-	design_ids = list(
-		"smoke_machine",
-		"toy_armblade",
-		"air_horn",
-		"clown_firing_pin",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
-
 /datum/techweb_node/consoles
 	id = TECHWEB_NODE_CONSOLES
 	display_name = "Civilian Consoles"
@@ -96,7 +83,7 @@
 	id = TECHWEB_NODE_GAMING
 	display_name = "Gaming"
 	description = "For the slackers on the station."
-	prereq_ids = list(TECHWEB_NODE_TOYS, TECHWEB_NODE_CONSOLES)
+	prereq_ids = list(TECHWEB_NODE_CONSOLES)
 	design_ids = list(
 		"arcade_battle",
 		"arcade_orion",
