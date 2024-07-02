@@ -1,0 +1,16 @@
+2024-07-02:
+  Absolucy:
+  - bugfix: TramStation now has the CMO's stamp properly mapped in.
+  - bugfix: KiloStation now has the CMO's stamp, prefilled cassette rack, and the
+      curator's radio "properly" mapped in.
+  - rscadd: Mapped ATMs and holomaps into Blueshift.
+  - refactor: Fixed up some code relating to the bodypart overlays of cybernetics.
+  - bugfix: Meteor satellites now longer shake the camera.
+  Absolucy, mc-oofert:
+  - qol: You may alt-click action buttons to bind them to a key.
+  KnigTheThrasher:
+  - rscadd: Added novastation clothes to our loadouts and store
+  - bugfix: Fixed satyr legs being unhealable
+  ancient-engineer:
+  - qol: Gets rid of the fov effect of the swat mask
+  - qol: Gets rid of the vignette around your vision while wearing the spacepol mask

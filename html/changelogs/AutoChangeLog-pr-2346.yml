@@ -1,6 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "TramStation now has the CMO's stamp properly mapped in."
-  - bugfix: "KiloStation now has the CMO's stamp, prefilled cassette rack, and the curator's radio \"properly\" mapped in."
-  - rscadd: "Mapped ATMs and holomaps into Blueshift."
