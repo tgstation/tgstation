@@ -117,11 +117,19 @@
 	. = ..(TRUE)
 	// Now if we were't ACTUALLY gibbed, spawn the dead mouse
 	if(!gibbed)
-		var/obj/item/food/deadmouse/mouse = new(loc)
-		mouse.copy_corpse(src)
-		if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
-			mouse.desc = "They're toast."
-			mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
+		var/make_a_corpse = TRUE
+		var/place_to_make_corpse = loc
+		if(istype(loc, /obj/item/clothing/head/mob_holder))//If our mouse is dying in place holder we want to put the dead mouse where the place holder was
+			var/obj/item/clothing/head/mob_holder/found_holder = loc
+			place_to_make_corpse = found_holder.loc
+			if(istype(found_holder.loc, /obj/machinery/microwave))//Microwaves gib things that die when cooked, so we don't need to make a dead body too
+				make_a_corpse = FALSE
+		if(make_a_corpse)
+			var/obj/item/food/deadmouse/mouse = new(place_to_make_corpse)
+			mouse.copy_corpse(src)
+			if(HAS_TRAIT(src, TRAIT_BEING_SHOCKED))
+				mouse.desc = "They're toast."
+				mouse.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
 	qdel(src)
 
 /mob/living/basic/mouse/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
