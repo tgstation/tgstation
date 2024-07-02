@@ -24478,7 +24478,6 @@
 /area/station/commons/storage/tools)
 "iII" = (
 /obj/machinery/shower/directional/east,
-/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/station/cargo/storage)
 "iIR" = (
@@ -37997,7 +37996,6 @@
 /turf/open/floor/iron/white,
 /area/station/hallway/secondary/entry)
 "ntd" = (
-/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/qm)
 "ntQ" = (

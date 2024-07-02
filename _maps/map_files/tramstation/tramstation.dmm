@@ -48252,12 +48252,6 @@
 /obj/structure/sign/calendar/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
-"qcE" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Civilian - Restroom North"
-	},
-/turf/open/floor/iron/freezer,
-/area/station/commons/toilet)
 "qcG" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/iron/smooth,
@@ -69242,12 +69236,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"xut" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Civilian - Restroom South"
-	},
-/turf/open/floor/iron/freezer,
-/area/station/commons/toilet)
 "xuA" = (
 /obj/structure/closet/secure_closet/medical2,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -85024,12 +85012,12 @@ apC
 apC
 veV
 veV
-qcE
+hAD
 hAD
 veV
 pdr
 kMD
-xut
+hAD
 veV
 veV
 apC
