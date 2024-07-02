@@ -9,7 +9,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("meat" = 2, "cheese" = 1, "bread" = 2, "lettuce" = 1)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
