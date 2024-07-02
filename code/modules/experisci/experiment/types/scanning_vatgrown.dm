@@ -1,10 +1,9 @@
 /datum/experiment/scanning/cytology/slime
 	name = "Cytology Scanning Experiment"
 	description = "Seen the slimes in the xenobiology pens? They spawned when our researchers donked a moldy bread slice into the vat. Cultivate another one and report the results."
-	performance_hint = "Swab the slime cell lines from a moldy bread or take a biopsy sample of existing slime."
+	performance_hint = "Swab the slime cell lines from a moldy bread or take a biopsy sample of existing slime. And grow it in the vat."
 	exp_tag = "Cytology Scan"
-	total_requirement = 1
-	possible_types = list(/mob/living/basic/slime)
+	required_atoms = list(/mob/living/basic/slime = 1)
 
 /datum/experiment/scanning/cytology/slime/final_contributing_index_checks(datum/component/experiment_handler/experiment_handler, atom/target, typepath)
 	return ..() && HAS_TRAIT(target, TRAIT_VATGROWN)
