@@ -43,6 +43,12 @@ reading = False
 lines = []
 total = 0
 
+# MASSMETA EDIT ADDITION START (check modular code folder)
+# need just for better logs look
+if (scannable_directory == "massmeta/features/") or (scannable_directory == "massmeta/~meta_defines/"):
+    print(blue(f"Scanning Modular Code...")
+# MASSMETA EDIT ADDITION END
+
 with open(file_reference, 'r') as file:
     for line in file:
         total += 1
@@ -58,21 +64,32 @@ with open(file_reference, 'r') as file:
 
         # MASSMETA EDIT ADDITION START (check modular code folder)
         # need to make full path
-        if scannable_directory == "massmeta/features/":
+        if (scannable_directory == "massmeta/features/") or (scannable_directory == "massmeta/~meta_defines/"):
             line =  line[:10] + "massmeta\\" + line[10:]
+        
+        # checks defines folder
+        fail_no_include_modular = False
+        if scannable_directory == "massmeta/~meta_defines/"):
+            print(blue(f"   Checking files in [{scannable_directory}]"))
+            module_file_path = line.replace('\\', '/')
+            module_file_path_clean = module_file_path[10:-1]
+            if (module_file_path_clean[:13] != "~meta_defines"):
+                        red(f"    File [{module_file_path_clean}] must be in \"~meta_defines/\" folder")
+                        fail_no_include_modular = True
         # MASSMETA EDIT ADDITION END
+
         lines.append(line)
 
         # MASSMETA EDIT ADDITION START (check modular code folder)
+        # checks main module folder
         if scannable_directory == "massmeta/features/":
-            fail_no_include_modular = False
-            print(blue(f"Scanning Modular Code... Checking files in [{scannable_directory}]"))
+            print(blue(f"   Checking files in [{scannable_directory}]"))
 
             module_file_path = line.replace('\\', '/')
             module_file_path_clean = module_file_path[10:-1]
-            print(f"    [{module_file_path_clean}] with in it:")
+            print(f"        [{module_file_path_clean}] with in it:")
             if module_file_path_clean[-11:] != "includes.dm":
-                red(f"      File [{module_file_path_clean}] must be named \"includes.dm\", skipping the file.")
+                red(f"        File [{module_file_path_clean}] must be named \"includes.dm\", skipping the file.")
                 fail_no_include_modular = True
                 continue
 
@@ -81,18 +98,18 @@ with open(file_reference, 'r') as file:
                     total += 1
                     extra_line = extra_line.strip()
                     if (extra_line[10:14] != "code"):
-                        red(f"       File [{extra_line}] must be in \"code/\" folder")
+                        red(f"            File [{extra_line}] must be in \"code/\" folder")
                         fail_no_include_modular = True
 
                     # make full path
                     extra_line = line[:-12] + extra_line[10:]
                     lines.append(extra_line)
                     extra_line.replace('\\', '/')
-                    print(f"        [{extra_line[10:-1]}]")
+                    print(f"            [{extra_line[10:-1]}]")
 
-            if fail_no_include_modular:
-                post_error(f"Modular Ticked File Enforcement has failed!")
-                sys.exit(1)
+        if fail_no_include_modular:
+            post_error(f"Modular Ticked File Enforcement has failed!")
+            sys.exit(1)
         # MASSMETA EDIT ADDITION END
 
 offset = total - len(lines)
