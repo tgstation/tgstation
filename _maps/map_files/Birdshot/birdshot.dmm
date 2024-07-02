@@ -701,7 +701,6 @@
 /turf/open/floor/engine/helium,
 /area/station/ai_monitored/turret_protected/ai)
 "aqf" = (
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -10465,14 +10464,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
-"dWC" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/station/maintenance/central/greater)
 "dWF" = (
 /obj/structure/disposalpipe/junction/flip{
 	dir = 8
@@ -99851,7 +99842,7 @@ mTT
 jVM
 waw
 keb
-dWC
+keb
 oIn
 dFo
 oSf
