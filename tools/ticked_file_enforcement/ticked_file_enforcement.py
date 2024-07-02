@@ -69,7 +69,7 @@ with open(file_reference, 'r') as file:
         
         # checks defines folder
         fail_no_include_modular = False
-        if scannable_directory == "massmeta/~meta_defines/"):
+        if scannable_directory == "massmeta/~meta_defines/":
             print(blue(f"   Checking files in [{scannable_directory}]"))
             module_file_path = line.replace('\\', '/')
             module_file_path_clean = module_file_path[10:-1]
