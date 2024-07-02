@@ -57,7 +57,7 @@
 	UnregisterSignal(parent, list(COMSIG_ITEM_INTERACTING_WITH_ATOM, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET))
 
 /*
- * Signal proc for [COMSIG_ITEM_ATTACK_EFFECT].
+ * Signal proc for [COMSIG_ITEM_INTERACTING_WITH_ATOM].
  */
 
 /datum/component/effect_remover/proc/try_remove_effect(datum/source, mob/living/user, atom/target, params)
