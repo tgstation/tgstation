@@ -508,7 +508,7 @@
 	if(HAS_TRAIT(user, TRAIT_HEAD_INJURY_BLOCKED))
 		oopsie_mod -= 6
 
-	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = sacker.get_organ_slot(ORGAN_SLOT_SPINE) // Can't snap that spine if it's made of metal.
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE) // Can't snap that spine if it's made of metal.
 	if(istype(potential_spine))
 		oopsie_mod -= potential_spine.strength_bonus
 
