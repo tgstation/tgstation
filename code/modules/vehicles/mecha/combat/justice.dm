@@ -5,9 +5,9 @@
 #define MOVEDELAY_SAFETY 2.5
 
 /obj/vehicle/sealed/mecha/justice
+	name = "\improper Justice"
 	desc = "Black and red syndicate mech designed for execution orders. \
 		For safety reasons, the syndicate advises against standing too close."
-	name = "\improper Justice"
 	icon_state = "justice"
 	base_icon_state = "justice"
 	movedelay = MOVEDELAY_SAFETY // fast
@@ -83,9 +83,9 @@
 /obj/vehicle/sealed/mecha/justice/proc/justice_fatality(datum/source, mob/living/pilot, atom/target, on_cooldown, is_adjacent)
 	SIGNAL_HANDLER
 
-	if(!isliving(target))
+	if(!ishuman(target))
 		return FALSE
-	var/mob/living/live_or_dead = target
+	var/mob/living/carbon/human/live_or_dead = target
 	if(live_or_dead.stat < UNCONSCIOUS && live_or_dead.getStaminaLoss() < 100)
 		return FALSE
 	var/obj/item/bodypart/check_head = live_or_dead.get_bodypart(BODY_ZONE_HEAD)
@@ -156,8 +156,10 @@
 	var/on = FALSE
 	/// Recharge check.
 	var/charge = TRUE
-	/// varset for invisibility timer
+	/// Varset for invisibility timer
 	var/invisibility_timer
+	/// Energy cost to become invisibile
+	var/energy_cost = 200
 	/// Aoe pre attack sound.
 	var/stealth_pre_attack_sound = 'sound/mecha/mech_stealth_pre_attack.ogg'
 	/// Aoe attack sound.
@@ -186,7 +188,11 @@
 /datum/action/vehicle/sealed/mecha/invisibility/IsAvailable(feedback)
 	. = ..()
 	if(!.)
-		return
+		return FALSE
+	if(!chassis.has_charge(energy_cost))
+		if(feedback)
+			owner.balloon_alert(owner, "not enough energy!")
+		return FALSE
 	if(chassis.weapons_safety)
 		if(feedback)
 			owner.balloon_alert(owner, "safety is on!")
@@ -210,6 +216,7 @@
 	RegisterSignal(chassis, COMSIG_MOVABLE_BUMP, PROC_REF(bumb_on))
 	RegisterSignal(chassis, COMSIG_ATOM_BUMPED, PROC_REF(bumbed_on))
 	RegisterSignal(chassis, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(take_damage))
+	chassis.use_energy(energy_cost)
 	build_all_button_icons()
 
 ///Called when invisibility deactivated.
@@ -356,17 +363,12 @@
 	var/on = FALSE
 	/// Recharge check.
 	var/charge = TRUE
+	/// Energy cost to perform charge attack
+	var/energy_cost = 400
 	/// Maximum range of charge attack.
 	var/max_charge_range = 7
 	/// Sound when mech do charge attack.
 	var/charge_attack_sound = 'sound/mecha/mech_charge_attack.ogg'
-	/// What charge attack can't break
-	var/list/discraction_blacklist = list(
-		/obj/machinery/gravity_generator,
-		/obj/machinery/atmospherics/pipe,
-		/obj/structure/disposalpipe,
-		/obj/structure/cable
-	)
 
 /datum/action/vehicle/sealed/mecha/charge_attack/set_chassis(passed_chassis)
 	. = ..()
@@ -391,6 +393,10 @@
 /datum/action/vehicle/sealed/mecha/charge_attack/IsAvailable(feedback)
 	. = ..()
 	if(!.)
+		return FALSE
+	if(!chassis.has_charge(energy_cost))
+		if(feedback)
+			owner.balloon_alert(owner, "not enough energy!")
 		return FALSE
 	if(chassis.weapons_safety)
 		if(feedback)
@@ -447,7 +453,7 @@
  * ## charge_attack
  *
  * Deal everyone in line for mech location to mouse location 35 damage and 25 chanse to cut off limb.
- * Break walls and teleport mech to the end of line.
+ * Teleport mech to the end of line.
  * Arguments:
  * * charger - occupant inside mech.
  * * target - occupant inside mech.
@@ -461,30 +467,22 @@
 		if(get_turf(charger) == get_turf(line_turf))
 			continue
 		if(isclosedturf(line_turf))
-			if(isindestructiblewall(line_turf))
-				break
-			if(istype(line_turf, /turf/closed/wall))
-				line_turf.atom_destruction(MELEE)
-		for(var/obj/break_in as anything in line_turf.contents)
-			if(istype(break_in, /obj/machinery/power/supermatter_crystal))
-				var/obj/machinery/power/supermatter_crystal/funny_crystal = break_in
-				funny_crystal.Bumped(chassis)
-				break
-			if(is_type_in_list(break_in, discraction_blacklist))
-				continue
-			if(istype(break_in, /obj/machinery) || istype(break_in, /obj/structure))
-				break_in.atom_destruction(MELEE)
-				continue
+			break
+		var/obj/machinery/power/supermatter_crystal/funny_crystal = locate() in line_turf
+		if(funny_crystal)
+			funny_crystal.Bumped(chassis)
+			break
+		var/obj/machinery/door/airlock/like_a_wall = locate() in line_turf
+		if(like_a_wall?.density)
+			break
+		if(locate(/obj/structure/window) in line_turf)
+			break
 		for(var/mob/living/something_living in line_turf.contents)
-			if(something_living.stat >= UNCONSCIOUS)
-				continue
-			if(something_living.getStaminaLoss() >= 100)
-				continue
-			if(something_living == charger)
+			if(something_living.stat >= UNCONSCIOUS || something_living.getStaminaLoss() >= 100 || something_living == charger)
 				continue
 			if(prob(DISMEMBER_CHANCE_LOW))
 				var/obj/item/bodypart/cut_bodypart = something_living.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_HEAD))
-				cut_bodypart.dismember(BRUTE)
+				cut_bodypart?.dismember(BRUTE)
 			something_living.apply_damage(35, BRUTE)
 		here_we_go = line_turf
 
@@ -496,6 +494,7 @@
 	start_charge_here.Beam(chassis, icon_state = "mech_charge", time = 8)
 	playsound(chassis, charge_attack_sound, 75, FALSE)
 	on = !on
+	chassis.use_energy(energy_cost)
 	UnregisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK)
 	charge = FALSE
 	button_icon_state = "mech_charge_cooldown"

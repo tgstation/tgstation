@@ -65,28 +65,33 @@
 	if(mecha_attacker.damtype == BRUTE)
 		step_away(src, mecha_attacker, 15)
 	var/obj/item/bodypart/selected_zone = get_bodypart(pick(BODY_ZONE_CHEST, BODY_ZONE_CHEST, BODY_ZONE_CHEST, BODY_ZONE_HEAD))
-	if(selected_zone)
-		var/dmg = rand(mecha_attacker.force * 0.5, mecha_attacker.force)
-		switch(mecha_attacker.damtype)
-			if(BRUTE)
-				if(mecha_attacker.force > 35) // durand and other heavy mechas
-					mecha_attacker.melee_attack_effect(src, heavy = TRUE)
-				else if(mecha_attacker.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
-					mecha_attacker.melee_attack_effect(src, heavy = FALSE)
+	var/dmg = rand(mecha_attacker.force * 0.5, mecha_attacker.force)
+	switch(mecha_attacker.damtype)
+		if(BRUTE)
+			if(mecha_attacker.force > 35) // durand and other heavy mechas
+				mecha_attacker.melee_attack_effect(src, heavy = TRUE)
+			else if(mecha_attacker.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
+				mecha_attacker.melee_attack_effect(src, heavy = FALSE)
+			if(selected_zone)
 				selected_zone.receive_damage(dmg, 0, updating_health = TRUE)
-				playsound(src, mecha_attacker.brute_attack_sound, 50, TRUE)
-			if(FIRE)
-				selected_zone.receive_damage(0, dmg, updating_health = TRUE)
-				playsound(src, mecha_attacker.burn_attack_sound, 50, TRUE)
-			if(TOX)
-				playsound(src, mecha_attacker.tox_attack_sound, 50, TRUE)
-				if((reagents.get_reagent_amount(/datum/reagent/cryptobiolin) + mecha_attacker.force) < mecha_attacker.force*2)
-					reagents.add_reagent(/datum/reagent/cryptobiolin, mecha_attacker.force/2)
-				if((reagents.get_reagent_amount(/datum/reagent/toxin) + mecha_attacker.force) < mecha_attacker.force*2)
-					reagents.add_reagent(/datum/reagent/toxin, mecha_attacker.force/2.5)
 			else
-				return 0
-		. = dmg
+				apply_damage(dmg, BRUTE)
+			playsound(src, mecha_attacker.brute_attack_sound, 50, TRUE)
+		if(FIRE)
+			if(selected_zone)
+				selected_zone.receive_damage(0, dmg, updating_health = TRUE)
+			else
+				apply_damage(dmg, BURN)
+			playsound(src, mecha_attacker.burn_attack_sound, 50, TRUE)
+		if(TOX)
+			playsound(src, mecha_attacker.tox_attack_sound, 50, TRUE)
+			if((reagents.get_reagent_amount(/datum/reagent/cryptobiolin) + mecha_attacker.force) < mecha_attacker.force*2)
+				reagents.add_reagent(/datum/reagent/cryptobiolin, mecha_attacker.force/2)
+			if((reagents.get_reagent_amount(/datum/reagent/toxin) + mecha_attacker.force) < mecha_attacker.force*2)
+				reagents.add_reagent(/datum/reagent/toxin, mecha_attacker.force/2.5)
+		else
+			return 0
+	. = dmg
 	visible_message(span_danger("[mecha_attacker.name] [mecha_attacker.attack_verbs[1]] [src]!"), \
 		span_userdanger("[mecha_attacker.name] [mecha_attacker.attack_verbs[2]] you!"), span_hear("You hear a sickening sound of flesh [mecha_attacker.attack_verbs[3]] flesh!"), COMBAT_MESSAGE_RANGE, list(mecha_attacker))
 	to_chat(mecha_attacker, span_danger("You [mecha_attacker.attack_verbs[1]] [src]!"))
