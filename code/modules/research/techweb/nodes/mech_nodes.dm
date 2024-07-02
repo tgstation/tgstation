@@ -112,7 +112,6 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	required_experiments = list(/datum/experiment/scanning/random/mecha_equipped_scan)
-	discount_experiments = list(/datum/experiment/scanning/random/mecha_damage_scan = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/mech_assault
 	id = TECHWEB_NODE_MECH_ASSAULT
@@ -206,6 +205,7 @@
 		"mech_tesla",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/random/mecha_damage_scan = TECHWEB_TIER_4_POINTS)
 
 /datum/techweb_node/mech_firearms
 	id = TECHWEB_NODE_MECH_FIREARMS
