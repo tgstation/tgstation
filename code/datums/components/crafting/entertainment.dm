@@ -249,3 +249,18 @@
 		/obj/item/stack/cable_coil = 2,
 	)
 	category = CAT_EQUIPMENT
+
+/datum/crafting_recipe/violin
+	name = "Violin"
+	result = /obj/item/instrument/violin
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 4,
+		/obj/item/stack/sheet/cloth = 2,
+		/obj/item/stack/sheet/iron = 1,
+	)
+	tool_paths = list(
+		/obj/item/hatchet,
+	)
+	time = 30 SECONDS
+	category = CAT_ENTERTAINMENT
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED

@@ -303,3 +303,17 @@
 	contains = list(/obj/item/wallframe/barsign/all_access)
 	crate_name = "bar sign crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
+
+/datum/supply_pack/service/bowmaking
+	name = "Fletching and Bow-Making Starter Kit"
+	desc = "A fairly outdated copy of 'Whittle Me This: Fletching for the Modern Spacer', along with some useful materials. \
+		For those looking to get into bow-making, or give their LARPing a little more edge, you can't go wrong. Also has \
+		instructions for making violins."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(
+		/obj/item/book/granter/crafting_recipe/fletching = 1,
+		/obj/item/stack/sheet/mineral/wood = 10,
+		/obj/item/stack/sheet/cloth = 10,
+	)
+	crate_name = "bowmaking starter kit crate"
+	crate_type = /obj/structure/closet/crate/wooden
