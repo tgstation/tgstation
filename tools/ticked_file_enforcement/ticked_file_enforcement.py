@@ -46,7 +46,7 @@ total = 0
 # MASSMETA EDIT ADDITION START (check modular code folder)
 # need just for better logs look
 if (scannable_directory == "massmeta/features/") or (scannable_directory == "massmeta/~meta_defines/"):
-    print(blue(f"Scanning Modular Code...")
+    print(blue(f"Scanning Modular Code..."))
 # MASSMETA EDIT ADDITION END
 
 with open(file_reference, 'r') as file:
