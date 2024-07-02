@@ -142,8 +142,8 @@
 	// If you crunch the numbers it sounds crazy good,
 	// but I think that's a fair reward for combining the efforts of Genetics, Medbay, and Mining to reach a hidden mechanic.
 	if(HAS_TRAIT_FROM(mendicant, TRAIT_HIPPOCRATIC_OATH, HIPPOCRATIC_OATH_TRAIT))
-		heal_multiplier *= 2
-		pain_multiplier *= 0.5
+		heal_multiplier = 2
+		pain_multiplier = 0.5
 		to_chat(mendicant, span_green("You can feel the magic of the Rod of Aesculapius aiding your efforts!"))
 		beam_icon = "sendbeam"
 		var/obj/item/rod_of_asclepius/rod = locate() in mendicant.contents
@@ -154,8 +154,8 @@
 
 	// If a normal pacifist, heal and hurt more!
 	else if(HAS_TRAIT(mendicant, TRAIT_PACIFISM))
-		heal_multiplier *= 1.75
-		pain_multiplier *= 1.75
+		heal_multiplier = 1.75
+		pain_multiplier = 1.75
 		to_chat(mendicant, span_green("Your peaceful nature helps you guide all the pain to yourself."))
 
 	var/success
@@ -165,7 +165,7 @@
 		success = do_simple_heal(mendicant, hurtguy, heal_multiplier, pain_multiplier)
 
 	// Both types can be ignited (technically at least), so we can just do this here.
-	if(hurtguy.has_status_effect(/datum/status_effect/fire_handler/fire_stacks))
+	if(hurtguy.fire_stacks > 0)
 		mendicant.set_fire_stacks(hurtguy.fire_stacks * pain_multiplier, remove_wet_stacks = TRUE)
 		if(hurtguy.on_fire)
 			mendicant.ignite_mob()
@@ -201,7 +201,7 @@
 		if(IS_ORGANIC_LIMB(possible_limb))
 			mendicant_organic_limbs += possible_limb
 	// None? Gtfo
-	if(isnull(mendicant_organic_limbs))
+	if(!length(mendicant_organic_limbs))
 		return .
 
 	// Try to use our active hand, otherwise pick at random
