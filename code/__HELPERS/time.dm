@@ -17,6 +17,16 @@
 /proc/station_time_timestamp(format = "hh:mm:ss", wtime)
 	return time2text(station_time(TRUE, wtime), format)
 
+/proc/station_date_timestamp(format = "YYYY-MM-DD", wtime)
+	if(findtext(format, "yyyy"))
+		var/list/layout = splittext(format, "yyyy")
+		format = layout.Join("[CURRENT_STATION_YEAR]")
+	if(findtext(format, "yy"))
+		var/list/layout = splittext(format, "yy")
+		format = layout.Join("[copytext(num2text(CURRENT_STATION_YEAR), 3, 5)]")
+
+	return time2text(station_time(TRUE, wtime), uppertext(format))
+
 /proc/station_time_debug(force_set)
 	if(isnum(force_set))
 		SSticker.gametime_offset = force_set

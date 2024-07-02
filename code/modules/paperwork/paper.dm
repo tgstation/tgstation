@@ -210,13 +210,19 @@
 
 	var/field_text = text
 	if(is_signature)
-		field_text = signature_name
+		var/signature = usr?.client?.prefs.read_preference(/datum/preference/text/custom_signature)
+		if(!signature)
+			signature = signature_name
+		field_text = signature
 	else if(is_date)
-		field_text = "[time2text(world.timeofday, "DD/MM")]/[CURRENT_STATION_YEAR]"
+		var/date_format = usr?.client?.prefs.read_preference(/datum/preference/text/custom_date)
+		if(!date_format)
+			date_format = "DD/MM/YYYY"
+		field_text = station_date_timestamp(date_format)
 	else if(is_time)
 		field_text = time2text(world.timeofday, "hh:mm")
 
-	var/field_font = is_signature ? SIGNATURE_FONT : font
+	var/field_font = (is_signature || is_date || is_time) ? SIGNATURE_FONT : font
 
 	for(var/datum/paper_field/field_input in raw_field_input_data)
 		if(field_input.field_index == field_id)
