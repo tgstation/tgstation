@@ -1,9 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Fixed a number of shuttles having parts (such as lattices) completely disappearing."
-  - bugfix: "Fixed the ceilings above shuttles on station maps being full-bright."
-  - bugfix: "Fixed lattices sometimes appearing at random locations in space on station maps."
-  - bugfix: "Cleaned up a number of accidentally placed objects in space across all station maps."
-  - bugfix: "Fixed a false positive with the mapload_space_verification unit test failing on turfs that weren't actually part of shuttles."
-  - code_imp: "Added a unit test that automatically finds all base space turfs with objects on them, as well as non-space turfs that are set to space areas (meaning that these squares weren't lit properly.)"

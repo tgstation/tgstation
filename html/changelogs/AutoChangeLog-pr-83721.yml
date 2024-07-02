@@ -1,6 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - balance: "Facehuggers dont make people go to sleep but muffles speech"
-  - code_imp: "Very very minor xenomorph code cleanup"
-  - refactor: "Muzzles are now an element"

@@ -1,8 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - code_imp: "Moved bedsheet bin interactions to the item interaction code. Please report any issues."
-  - qol: "Made bedsheet bin tool interactions right click, such that left click is consistently for putting in items."
-  - qol: "Added usage screentips to bedsheet bins."
-  - qol: "Added more feedback to failing to hide items in bedsheet bins."
-  - sound: "Made putting items in bedsheet bins not silent (If the items have associated pickup/drop sounds)."
