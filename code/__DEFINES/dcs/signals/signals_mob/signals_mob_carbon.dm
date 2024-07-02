@@ -109,6 +109,8 @@
 #define COMSIG_CARBON_ATTEMPT_EAT "carbon_attempt_eat"
 	// Prevents the breath
 	#define COMSIG_CARBON_BLOCK_EAT (1 << 0)
+///Called when a carbon finish eat (/datum/component/edible/proc/On_Consume)
+#define COMSIG_CARBON_FINISH_EAT "carbon_finish_eat"
 ///Called when a carbon vomits : (distance, force)
 #define COMSIG_CARBON_VOMITED "carbon_vomited"
 ///Called from apply_overlay(cache_index, overlay)

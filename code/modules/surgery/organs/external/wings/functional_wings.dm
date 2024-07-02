@@ -25,6 +25,8 @@
 
 	///Are our wings open or closed?
 	var/wings_open = FALSE
+	///We cant hide this wings in suit
+	var/cant_hide = FALSE
 
 	// grind_results = list(/datum/reagent/flightpotion = 5)
 	food_reagents = list(/datum/reagent/flightpotion = 5)
@@ -66,7 +68,7 @@
 	if(human.stat || human.body_position == LYING_DOWN)
 		return FALSE
 	//Jumpsuits have tail holes, so it makes sense they have wing holes too
-	if(human.wear_suit && ((human.wear_suit.flags_inv & HIDEJUMPSUIT) && (!human.wear_suit.species_exception || !is_type_in_list(src, human.wear_suit.species_exception))))
+	if(!cant_hide && human.wear_suit && ((human.wear_suit.flags_inv & HIDEJUMPSUIT) && (!human.wear_suit.species_exception || !is_type_in_list(src, human.wear_suit.species_exception))))
 		to_chat(human, span_warning("Your suit blocks your wings from extending!"))
 		return FALSE
 	var/turf/location = get_turf(human)
@@ -218,3 +220,48 @@
 	name = "slime wings"
 	desc = "How does something so squishy even fly?"
 	sprite_accessory_override = /datum/sprite_accessory/wings/slime
+
+/obj/item/organ/external/wings/functional/zombie_wings
+	name = "angel wings"
+	desc = "You wanted to be immortal?"
+	cant_hide = TRUE
+	sprite_accessory_override = /datum/sprite_accessory/wings_open/angel
+	bodypart_overlay = /datum/bodypart_overlay/mutant/wings/functional/zombie
+	var/list/mob/living/carbon/human/my_zombie_collection = list()
+
+/obj/item/organ/external/wings/functional/zombie_wings/Insert(mob/living/carbon/receiver, special, movement_flags)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/organ/external/wings/functional/zombie_wings/proc/massive_zombie_cure()
+	for(var/mob/living/carbon/human/cure_me in my_zombie_collection)
+		if(!cure_me.get_organ_slot(ORGAN_SLOT_ZOMBIE))
+			continue
+		var/obj/item/organ/internal/zombie_infection/remove_infection = cure_me.get_organ_by_type(/obj/item/organ/internal/zombie_infection)
+		remove_infection?.Remove(cure_me)
+		cure_me.revive(HEAL_ALL)
+
+/obj/item/organ/external/wings/functional/zombie_wings/process(seconds_per_tick, times_fired)
+	. = ..()
+	var/mob/living/living_angel = owner
+	if(!owner || owner?.stat >= DEAD)
+		STOP_PROCESSING(SSobj, src)
+		massive_zombie_cure()
+		return
+	if(get_area(living_angel) == GLOB.areas_by_type[/area/centcom/wizard_station])
+		return
+	for(var/mob/living/carbon/human/we_need_dead in view(5, living_angel))
+		if(we_need_dead == living_angel)
+			continue
+		if((we_need_dead.stat == DEAD) && !we_need_dead.get_organ_slot(ORGAN_SLOT_ZOMBIE))
+			var/obj/item/organ/internal/zombie_infection/nodamage/angel_cure = new()
+			angel_cure.Insert(we_need_dead)
+			we_need_dead.do_jitter_animation()
+			my_zombie_collection += we_need_dead
+			playsound(we_need_dead, 'sound/hallucinations/veryfar_noise.ogg', 50, TRUE)
+			living_angel.Beam(we_need_dead, icon_state="lichbeam", time = 12)
+	var/obj/item/organ/internal/zombie_infection/remove_infection = living_angel.get_organ_by_type(/obj/item/organ/internal/zombie_infection)
+	remove_infection?.Remove(living_angel)
+
+/datum/bodypart_overlay/mutant/wings/functional/zombie/can_draw_on_bodypart(mob/living/carbon/human/human)
+	return TRUE
