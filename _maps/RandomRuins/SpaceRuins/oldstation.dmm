@@ -5767,7 +5767,9 @@
 	dir = 1
 	},
 /obj/machinery/light/small/directional/south,
-/obj/machinery/atmospherics/components/binary/tank_compressor,
+/obj/machinery/atmospherics/components/binary/tank_compressor{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
 "GH" = (
