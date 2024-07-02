@@ -158,6 +158,10 @@
 	if(!up)
 		. += visor_state
 
+/obj/item/clothing/head/utility/hardhat/welding/up/Initialize(mapload)
+	. = ..()
+	visor_toggling()
+
 /obj/item/clothing/head/utility/hardhat/welding/orange
 	icon_state = "hardhat0_orange"
 	inhand_icon_state = null
@@ -174,6 +178,11 @@
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+
+/obj/item/clothing/head/utility/hardhat/welding/white/up/Initialize(mapload)
+	. = ..()
+	visor_toggling()
+
 
 /obj/item/clothing/head/utility/hardhat/welding/dblue
 	icon_state = "hardhat0_dblue"
