@@ -156,8 +156,6 @@
 			if(glasses)
 				return
 			glasses = equipping
-			if(glasses.glass_colour_type)
-				update_glasses_color(glasses, 1)
 			if(glasses.vision_flags || glasses.invis_override || glasses.invis_view || !isnull(glasses.lighting_cutoff))
 				update_sight()
 			update_worn_glasses()
@@ -250,10 +248,8 @@
 			update_worn_gloves()
 	else if(I == glasses)
 		glasses = null
-		var/obj/item/clothing/glasses/G = I
-		if(G.glass_colour_type)
-			update_glasses_color(G, 0)
-		if(G.vision_flags || G.invis_override || G.invis_view || !isnull(G.lighting_cutoff))
+		var/obj/item/clothing/glasses/old_glasses = I
+		if(old_glasses.vision_flags || old_glasses.invis_override || old_glasses.invis_view || !isnull(old_glasses.lighting_cutoff))
 			update_sight()
 		if(!QDELETED(src))
 			update_worn_glasses()
