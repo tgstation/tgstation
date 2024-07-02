@@ -79,7 +79,7 @@ SUBSYSTEM_DEF(blackmarket)
 				to_chat(buyer, span_notice("[purchase.uplink] flashes a message noting that the order is being teleported to [get_area(targetturf)] in 60 seconds."))
 
 				// do_teleport does not want to teleport items from nullspace, so it just forceMoves and does sparks.
-				addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/controller/subsystem/blackmarket,fake_teleport), purchase, targetturf), 60 SECONDS)
+				addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/controller/subsystem/blackmarket, fake_teleport), purchase, targetturf), 60 SECONDS)
 
 			// Get the current location of the uplink if it exists, then throws the item from space at the station from a random direction.
 			if(SHIPPING_METHOD_LAUNCH)
@@ -88,6 +88,7 @@ SUBSYSTEM_DEF(blackmarket)
 				var/pickedloc = spaceDebrisStartLoc(startSide, T.z)
 
 				var/atom/movable/item = purchase.entry.spawn_item(pickedloc, purchase)
+				purchase.post_purchase_effects(item)
 				item.throw_at(purchase.uplink, 3, 3, spin = FALSE)
 
 				to_chat(buyer, span_notice("[purchase.uplink] flashes a message noting the order is being launched at the station from [dir2text(startSide)]."))
@@ -110,6 +111,7 @@ SUBSYSTEM_DEF(blackmarket)
 	if(QDELETED(purchase))
 		return
 	var/atom/movable/thing = purchase.entry.spawn_item(target, purchase)
+	purchase.post_purchase_effects(thing)
 	var/datum/effect_system/spark_spread/sparks = new
 	sparks.set_up(5, 1, target)
 	sparks.attach(thing)

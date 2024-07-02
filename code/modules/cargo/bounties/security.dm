@@ -1,8 +1,8 @@
 /datum/bounty/item/security/recharger
-	name = "Rechargers"
-	description = "Nanotrasen military academy is conducting marksmanship exercises. They request that rechargers be shipped."
+	name = "Weapon Recharger"
+	description = "Nanotrasen military academy is conducting marksmanship exercises. They request that a recharger be shipped."
 	reward = CARGO_CRATE_VALUE * 4
-	required_count = 3
+	required_count = 1
 	wanted_types = list(/obj/machinery/recharger = TRUE)
 
 /datum/bounty/item/security/pepperspray
@@ -81,3 +81,13 @@
 	if(istype(slip.scanned_area, demanded_area))
 		return TRUE
 	return FALSE
+
+/datum/bounty/item/security/contraband
+	name = "Confiscated Contraband"
+	description = "The syndicate are constantly acting to subvert crewmates of Nanotrasen afilliated stations. Ship us your latest batch of confiscated contraband."
+	reward = CARGO_CRATE_VALUE * 4
+	required_count = 5
+	wanted_types = list(/obj/item = TRUE)
+
+/datum/bounty/item/security/contraband/applies_to(obj/O)
+	return HAS_TRAIT(O, TRAIT_CONTRABAND)

@@ -35,7 +35,7 @@
 	cost = 1 //much cheaper for clown ops than for clowns
 	item = /obj/item/firing_pin/clown/ultra
 	purchasable_from = UPLINK_CLOWN_OPS
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/weapon_kits/clownopsuperpin
 	name = "Super Ultra Hilarious Firing Pin"
@@ -43,7 +43,7 @@
 	cost = 4 //much cheaper for clown ops than for clowns
 	item = /obj/item/firing_pin/clown/ultra/selfdestruct
 	purchasable_from = UPLINK_CLOWN_OPS
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/weapon_kits/foamsmg
 	name = "Toy Submachine Gun"
@@ -157,4 +157,4 @@
 	item = /obj/item/dnainjector/clumsymut
 	cost = 1
 	purchasable_from = UPLINK_CLOWN_OPS
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND

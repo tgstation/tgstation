@@ -151,7 +151,8 @@
 
 ///Attempts to make a new item and put it in a potential inventory slot in the provided mob.
 /datum/antagonist/cult/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
-	var/item = new item_path(mob)
+	var/obj/item = new item_path(mob)
+	ADD_TRAIT(item, TRAIT_CONTRABAND, INNATE_TRAIT)
 	var/where = mob.equip_conspicuous_item(item)
 	if(!where)
 		to_chat(mob, span_userdanger("Unfortunately, you weren't able to get [item]. This is very bad and you should adminhelp immediately (press F1)."))

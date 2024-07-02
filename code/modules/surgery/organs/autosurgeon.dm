@@ -149,6 +149,10 @@
 	surgery_speed = 0.75
 	loaded_overlay = "autosurgeon_syndicate_loaded_overlay"
 
+/obj/item/autosurgeon/syndicate/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
+
 /obj/item/autosurgeon/syndicate/laser_arm
 	desc = "A single use autosurgeon that contains a combat arms-up laser augment. A screwdriver can be used to remove it, but implants can't be placed back in."
 	uses = 1
