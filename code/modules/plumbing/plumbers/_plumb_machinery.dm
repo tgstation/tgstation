@@ -12,6 +12,7 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.75
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_OFFLINE
+	reagents = /datum/reagents/plumbing
 
 	///Plumbing machinery is always gonna need reagents, so we might aswell put it here
 	var/buffer = 50
@@ -24,6 +25,12 @@
 	create_reagents(buffer, reagent_flags)
 	AddComponent(/datum/component/simple_rotation)
 	register_context()
+
+/obj/machinery/plumbing/create_reagents(max_vol, flags)
+	if(!ispath(reagents))
+		qdel(reagents)
+	reagents = new reagents(max_vol, flags)
+	reagents.my_atom = src
 
 /obj/machinery/plumbing/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
@@ -96,58 +103,94 @@
 		reagents.expose(get_turf(src), TOUCH) //splash on the floor
 		reagents.clear_reagents()
 
-///We can empty beakers in here and everything
-/obj/machinery/plumbing/input
-	name = "input gate"
-	desc = "Can be manually filled with reagents from containers."
-	icon_state = "pipe_input"
-	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
-	reagent_flags = TRANSPARENT | REFILLABLE
+/**
+ * Specialized reagent container for plumbing. Uses the round robin approach of transferring reagents
+ * so transfer 5 from 15 water, 15 sugar and 15 plasma becomes 10, 15, 15 instead of 13.3333, 13.3333 13.3333. Good if you hate floating point errors
+ */
+/datum/reagents/plumbing
 
+/datum/reagents/plumbing/trans_to(
+	atom/target,
+	amount = 1,
+	multiplier = 1, //unused for plumbing
+	datum/reagent/target_id,
+	preserve_data = TRUE, //unused for plumbing
+	no_react = FALSE, //unused for plumbing we always want reactions
+	mob/transferred_by, //unused for plumbing logging is not important inside plumbing machines
+	remove_blacklisted = FALSE, //unused for plumbing, we don't care what reagents are inside us
+	methods = NONE, //unused for plumbing
+	show_message = TRUE, //unused for plumbing, used for logging only
+	ignore_stomach = FALSE //unused for plumbing, reagents flow only between machines & is not injected to mobs at any point in time
+)
+	if(QDELETED(target) || !total_volume)
+		return FALSE
 
-/obj/machinery/plumbing/input/Initialize(mapload, bolt, layer)
-	. = ..()
-	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
+	if(!IS_FINITE(amount))
+		stack_trace("non finite amount passed to trans_to [amount] amount of reagents")
+		return FALSE
 
-///We can fill beakers in here and everything. we dont inheret from input because it has nothing that we need
-/obj/machinery/plumbing/output
-	name = "output gate"
-	desc = "A manual output for plumbing systems, for taking reagents directly into containers."
-	icon_state = "pipe_output"
-	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
-	reagent_flags = TRANSPARENT | DRAINABLE
+	if(!isnull(target_id) && !ispath(target_id))
+		stack_trace("invalid target reagent id [target_id] passed to trans_to")
+		return FALSE
 
-/obj/machinery/plumbing/output/Initialize(mapload, bolt, layer)
-	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
+	var/datum/reagents/target_holder
+	if(istype(target, /datum/reagents))
+		target_holder = target
+	else
+		target_holder = target.reagents
 
-/obj/machinery/plumbing/output/tap
-	name = "drinking tap"
-	desc = "A manual output for plumbing systems, for taking drinks directly into glasses."
-	icon_state = "tap_output"
+	var/cached_amount = amount
 
-/obj/machinery/plumbing/tank
-	name = "chemical tank"
-	desc = "A massive chemical holding tank."
-	icon_state = "tank"
-	buffer = 400
+	// Prevents small amount problems, as well as zero and below zero amounts.
+	amount = round(min(amount, total_volume, target_holder.maximum_volume - target_holder.total_volume), CHEMICAL_QUANTISATION_LEVEL)
+	if(amount <= 0)
+		return FALSE
 
-/obj/machinery/plumbing/tank/Initialize(mapload, bolt, layer)
-	. = ..()
-	AddComponent(/datum/component/plumbing/tank, bolt, layer)
+	//Set up new reagents to inherit the old ongoing reactions
+	transfer_reactions(target_holder)
 
-///Layer manifold machine that connects a bunch of layers
-/obj/machinery/plumbing/layer_manifold
-	name = "layer manifold"
-	desc = "A plumbing manifold for layers."
-	icon_state = "manifold"
-	density = FALSE
+	var/list/cached_reagents = reagent_list
+	var/list/reagents_to_remove = list()
+	var/transfer_amount
+	var/transfered_amount
+	var/to_transfer = amount
+	var/total_transfered_amount = 0
 
-/obj/machinery/plumbing/layer_manifold/Initialize(mapload, bolt, layer)
-	. = ..()
+	//first add reagents to target
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		if(!to_transfer)
+			break
 
-	AddComponent(/datum/component/plumbing/manifold, bolt, FIRST_DUCT_LAYER)
-	AddComponent(/datum/component/plumbing/manifold, bolt, SECOND_DUCT_LAYER)
-	AddComponent(/datum/component/plumbing/manifold, bolt, THIRD_DUCT_LAYER)
-	AddComponent(/datum/component/plumbing/manifold, bolt, FOURTH_DUCT_LAYER)
-	AddComponent(/datum/component/plumbing/manifold, bolt, FIFTH_DUCT_LAYER)
+		if(!isnull(target_id))
+			if(reagent.type == target_id)
+				force_stop_reagent_reacting(reagent)
+				transfer_amount = min(to_transfer, reagent.volume)
+			else
+				continue
+		else
+			transfer_amount = min(to_transfer, reagent.volume)
+
+		if(reagent.intercept_reagents_transfer(target_holder, cached_amount))
+			continue
+
+		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount * multiplier, copy_data(reagent), chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT) //we only handle reaction after every reagent has been transferred.
+		if(!transfered_amount)
+			continue
+		reagents_to_remove += list(list("R" = reagent, "T" = transfer_amount))
+		total_transfered_amount += transfered_amount
+		to_transfer -= transfered_amount
+
+		if(!isnull(target_id))
+			break
+
+	//remove chemicals that were added above
+	for(var/list/data as anything in reagents_to_remove)
+		var/datum/reagent/reagent = data["R"]
+		transfer_amount = data["T"]
+		remove_reagent(reagent.type, transfer_amount)
+
+	//handle reactions
+	target_holder.handle_reactions()
+	src.handle_reactions()
+
+	return round(total_transfered_amount, CHEMICAL_VOLUME_ROUNDING)
