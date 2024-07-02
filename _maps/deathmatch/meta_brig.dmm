@@ -449,15 +449,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/deathmatch)
-"hS" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/security/telescreen/prison/directional/north,
-/obj/item/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/turf/open/floor/carpet,
-/area/deathmatch)
 "hY" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -1606,6 +1597,16 @@
 	},
 /turf/open/indestructible/hotelwood,
 /area/deathmatch)
+"xT" = (
+/obj/structure/chair/stool/directional/east,
+/obj/effect/turf_decal/trimline/red/warning{
+	dir = 4
+	},
+/obj/machinery/flasher/directional/north{
+	id = "visitorflash"
+	},
+/turf/open/floor/iron,
+/area/deathmatch)
 "yy" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
@@ -1624,9 +1625,6 @@
 	},
 /turf/open/indestructible/dark,
 /area/deathmatch)
-"yN" = (
-/turf/cordon,
-/area/template_noop)
 "yO" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -2108,6 +2106,14 @@
 /obj/machinery/light/directional/east,
 /turf/open/indestructible,
 /area/deathmatch)
+"Ff" = (
+/obj/machinery/computer/security/telescreen/prison/directional/south,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/deathmatch)
 "Fi" = (
 /turf/template_noop,
 /area/space)
@@ -2319,6 +2325,14 @@
 	pixel_y = 6
 	},
 /turf/open/indestructible/dark,
+/area/deathmatch)
+"Ic" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/stool/directional/east,
+/obj/effect/turf_decal/trimline/red/warning{
+	dir = 4
+	},
+/turf/open/floor/iron,
 /area/deathmatch)
 "Ik" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
@@ -2542,6 +2556,15 @@
 	dir = 4
 	},
 /turf/open/indestructible,
+/area/deathmatch)
+"KE" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/security/telescreen/prison/directional/north,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/turf/open/floor/carpet,
 /area/deathmatch)
 "KO" = (
 /obj/effect/turf_decal/stripes/line{
@@ -2872,14 +2895,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/indestructible,
-/area/deathmatch)
-"PV" = (
-/obj/machinery/computer/security/telescreen/prison/directional/south,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
 /turf/open/indestructible,
 /area/deathmatch)
 "Qd" = (
@@ -3618,9 +3633,9 @@ IJ
 Yh
 Yh
 Yh
-yN
-yN
-yN
+xT
+YW
+Ic
 IJ
 IJ
 IJ
@@ -4381,7 +4396,7 @@ vt
 CS
 bA
 GU
-PV
+Ff
 XK
 XK
 XI
@@ -4500,7 +4515,7 @@ Ik
 Os
 mE
 Yh
-hS
+KE
 FY
 dp
 Pt

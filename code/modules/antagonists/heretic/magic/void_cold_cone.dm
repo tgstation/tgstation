@@ -11,7 +11,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
 
-	invocation = "FR'ZE!"
+	invocation = "Sunya'kop!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
