@@ -18874,6 +18874,10 @@
 	},
 /obj/item/stock_parts/matter_bin,
 /obj/item/stock_parts/micro_laser,
+/obj/item/flatpack{
+	board = /obj/item/circuitboard/machine/flatpacker
+	},
+/obj/item/multitool,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "gLY" = (

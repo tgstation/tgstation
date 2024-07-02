@@ -11442,6 +11442,10 @@
 	pixel_y = 9
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/item/flatpack{
+	board = /obj/item/circuitboard/machine/flatpacker
+	},
+/obj/item/multitool,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "cSc" = (

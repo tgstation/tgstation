@@ -76006,6 +76006,10 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
+/obj/item/flatpack{
+	board = /obj/item/circuitboard/machine/flatpacker
+	},
+/obj/item/multitool,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "sYf" = (
