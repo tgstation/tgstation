@@ -58,7 +58,7 @@
 		"mod_plating_medical",
 		"mod_quick_carry",
 		"mod_injector",
-		"mod_organ_thrower",
+		"mod_organizer",
 		"mod_patienttransport",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
