@@ -27,17 +27,27 @@
 	/// The current charge.
 	var/charge = 0
 
-	var/input_attempt = TRUE // TRUE = attempting to charge, FALSE = not attempting to charge
-	var/inputting = TRUE // TRUE = actually inputting, FALSE = not inputting
-	var/input_level = 50 KILO WATTS // amount of power the SMES attempts to charge by
-	var/input_level_max = 200 KILO WATTS // cap on input_level
-	var/input_available = 0 // amount of charge available from input last tick
+	// TRUE = attempting to charge, FALSE = not attempting to charge
+	var/input_attempt = TRUE
+	// TRUE = actually inputting, FALSE = not inputting
+	var/inputting = TRUE
+	// amount of power the SMES attempts to charge by
+	var/input_level = 50 KILO WATTS
+	// cap on input_level
+	var/input_level_max = 200 KILO WATTS
+	// amount of charge available from input last tick
+	var/input_available = 0
 
-	var/output_attempt = TRUE // TRUE = attempting to output, FALSE = not attempting to output
-	var/outputting = TRUE // TRUE = actually outputting, FALSE = not outputting
-	var/output_level = 50 KILO WATTS // amount of power the SMES attempts to output
-	var/output_level_max = 200 KILO WATTS // cap on output_level
-	var/output_used = 0 // amount of power actually outputted. may be less than output_level if the powernet returns excess power
+	// TRUE = attempting to output, FALSE = not attempting to output
+	var/output_attempt = TRUE
+	// TRUE = actually outputting, FALSE = not outputting
+	var/outputting = TRUE
+	// amount of power the SMES attempts to output
+	var/output_level = 50 KILO WATTS
+	// cap on output_level
+	var/output_level_max = 200 KILO WATTS
+	// amount of power actually outputted. may be less than output_level if the powernet returns excess power
+	var/output_used = 0
 
 	var/obj/machinery/power/terminal/terminal = null
 
