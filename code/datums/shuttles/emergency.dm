@@ -265,6 +265,13 @@
 	description = "We pulled this one out of Mothball just for you!"
 	occupancy_limit = "40"
 
+/datum/map_template/shuttle/emergency/birdshot
+	suffix = "catwalk"
+	name = "Catwalk Station Emergency Shuttle"
+	credit_cost = CARGO_CRATE_VALUE * 5
+	description = "A standard sized shuttle, featuring a medbay and brig, along with an elevated bridge."
+	occupancy_limit = "40"
+
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
 	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
