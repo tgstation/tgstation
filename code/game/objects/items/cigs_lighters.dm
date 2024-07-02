@@ -493,7 +493,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/cigarette/proc/make_cig_smoke()
 	cig_smoke = new(src, /particles/smoke/cig)
-	cig_smoke.particles.scale *= 1.5
+	cig_smoke.particles?.scale *= 1.5
 	return cig_smoke
 
 // Cigarette brands.
