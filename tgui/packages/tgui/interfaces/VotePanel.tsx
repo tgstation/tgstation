@@ -43,6 +43,7 @@ type ActiveVote = {
 
 type UserData = {
   ckey: string;
+  isGhost: BooleanLike;
   isLowerAdmin: BooleanLike;
   isUpperAdmin: BooleanLike;
   singleSelection: string | null;
@@ -242,7 +243,12 @@ const ChoicesPanel = (props) => {
                   textAlign="right"
                   buttons={
                     <Button
-                      disabled={user.singleSelection === choice.name}
+                      tooltip={
+                        user.isGhost && 'Ghost voting was disabled by an admin.'
+                      }
+                      disabled={
+                        user.singleSelection === choice.name || user.isGhost
+                      }
                       onClick={() => {
                         act('voteSingle', { voteOption: choice.name });
                       }}
@@ -283,6 +289,10 @@ const ChoicesPanel = (props) => {
                   textAlign="right"
                   buttons={
                     <Button
+                      tooltip={
+                        user.isGhost && 'Ghost voting was disabled by an admin.'
+                      }
+                      disabled={user.isGhost}
                       onClick={() => {
                         act('voteMulti', { voteOption: choice.name });
                       }}
