@@ -77,3 +77,77 @@
   - bugfix: Game not refocusing after closing a TGUI
   xXPawnStarrXx:
   - rscdel: Removed cordons on deathmatch maps, since they're autoadded now.
+2024-07-02:
+  00-Steven:
+  - code_imp: Moved bedsheet bin interactions to the item interaction code. Please
+      report any issues.
+  - qol: Made bedsheet bin tool interactions right click, such that left click is
+      consistently for putting in items.
+  - qol: Added usage screentips to bedsheet bins.
+  - qol: Added more feedback to failing to hide items in bedsheet bins.
+  - sound: Made putting items in bedsheet bins not silent (If the items have associated
+      pickup/drop sounds).
+  - code_imp: Deconstructing light switches now uses the proper tool action and tool
+      usage code, please report any issues.
+  - bugfix: Attempting to deconstruct a light switch by unscrewing it no longer makes
+      you hit it even on a success.
+  - sound: Deconstructing a light switch actually plays tool usage and deconstruction
+      sounds.
+  - qol: Deconstructing light switches is now a left click with a screwdriver parallel
+      to other unscrewing actions.
+  - bugfix: Screentips for deconstructing a light switch no longer show up on every
+      item EXCEPT screwdrivers.
+  - qol: Added an examine hint denoting light switches are screwed to the wall.
+  - qol: Added visible messages for someone deconstructing a light switch parallel
+      to deconstructing intercoms.
+  Bisar:
+  - qol: Loot panels should update more predictably and informatively now.
+  - code_imp: Lootpanels have more consistent logic on when they automatically update.
+  Jolly:
+  - code_imp: Behind the scenes, maps had a little bit of tweaking. If you see things
+      rendering in weird ways, or they don't look like how they used to/supposed to,
+      please report them on GitHub!
+  Kapu (ported by StrangeWeirdKitten):
+  - bugfix: Ambience buzz will now respect ship ambience prefrences for observers.
+  - sound: Ambience buzz requires APC enviorment power to function
+  Kocma-san:
+  - qol: you can now swap pens in pdas
+  LemonInTheDark:
+  - bugfix: Some varieties of snow now visually melt properly again when burned
+  ShizCalev:
+  - bugfix: Fixed a number of shuttles having parts (such as lattices) completely
+      disappearing.
+  - bugfix: Fixed the ceilings above shuttles on station maps being full-bright.
+  - bugfix: Fixed lattices sometimes appearing at random locations in space on station
+      maps.
+  - bugfix: Cleaned up a number of accidentally placed objects in space across all
+      station maps.
+  - bugfix: Fixed a false positive with the mapload_space_verification unit test failing
+      on turfs that weren't actually part of shuttles.
+  - code_imp: Added a unit test that automatically finds all base space turfs with
+      objects on them, as well as non-space turfs that are set to space areas (meaning
+      that these squares weren't lit properly.)
+  SmArtKar:
+  - bugfix: You no longer get dusted upon trying to store your supermatter sliver.
+  - bugfix: Fulton animation is no longer sideways.
+  - bugfix: Hand of Midas now works point-blank.
+  TheBoondock:
+  - sound: added pickup and drop sound for beakers
+  carlarctg:
+  - bugfix: Fix /datum/weakref appearing when linking airlock heretic portals
+  hyperjll:
+  - bugfix: 'Hostile plant monsters (EX: Killer Tomatoes) no longer act hostile toward
+      Seedlings.'
+  jlsnow301:
+  - bugfix: Fixed some UI bugs in the power monitor screen.
+  lorwp:
+  - bugfix: extinguishers now can be filled with subtypes of water again (Namely,
+      holy water)
+  mc-oofert:
+  - balance: Facehuggers dont make people go to sleep but muffles speech
+  - code_imp: Very very minor xenomorph code cleanup
+  - refactor: Muzzles are now an element
+  - balance: portable air scrubbers scrub in a 3x3 square + hold as much gas as a
+      canister
+  nikothedude:
+  - rscadd: Being cursed now enables disembowlements/cranial fissures outside of hardcrit

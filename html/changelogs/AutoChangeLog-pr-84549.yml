@@ -1,0 +1,4 @@
+author: "OrbisAnima"
+delete-after: True
+changes:
+  - bugfix: "Brought the fishing rewards experiments to normal values."
