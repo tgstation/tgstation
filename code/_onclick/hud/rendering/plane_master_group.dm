@@ -89,7 +89,7 @@
 /datum/plane_master_group/proc/build_plane_masters(starting_offset, ending_offset)
 	for(var/atom/movable/screen/plane_master/mytype as anything in get_plane_types())
 		for(var/plane_offset in starting_offset to ending_offset)
-			if(plane_offset != 0 && !initial(mytype.allows_offsetting))
+			if(plane_offset != 0 && (initial(mytype.offsetting_flags) & BLOCKS_PLANE_OFFSETTING))
 				continue
 			var/atom/movable/screen/plane_master/instance = new mytype(null, null, src, plane_offset)
 			plane_masters["[instance.plane]"] = instance
@@ -150,7 +150,11 @@
 
 	for(var/plane_key in plane_masters)
 		var/atom/movable/screen/plane_master/plane = plane_masters[plane_key]
-		if(!plane.allows_offsetting)
+		if(plane.offsetting_flags & BLOCKS_PLANE_OFFSETTING)
+			if(plane.offsetting_flags & OFFSET_RELAYS_MATCH_HIGHEST)
+				// Don't offset the plane, do offset where the relays point
+				// Required for making things like the blind fullscreen not render over runechat
+				plane.offset_relays_in_place(new_offset)
 			continue
 
 		var/visual_offset = plane.offset - new_offset
