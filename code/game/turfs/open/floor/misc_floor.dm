@@ -1,5 +1,3 @@
-// Usage for a bar light is 160, let's do a bit less then that since these tend to be used a lot in one place
-#define CIRCUIT_FLOOR_POWERUSE 120
 //Circuit flooring, glows a little
 /turf/open/floor/circuit
 	icon = 'icons/turf/floors.dmi'
@@ -13,12 +11,33 @@
 	/// If this floor is powered or not
 	/// We don't consume any power, but we do require it
 	var/on = -1
+	///The carpet counterpart to this floor type when the Human AI trait rolls (only for on-station circuit floors).
+	var/carpet_counterpart = /turf/open/floor/carpet/luminous
 
 /turf/open/floor/circuit/Initialize(mapload)
+	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI) && is_station_level(z))
+		..()
+		return INITIALIZE_HINT_LATELOAD
 	SSmapping.nuke_tiles += src
 	RegisterSignal(loc, COMSIG_AREA_POWER_CHANGE, PROC_REF(handle_powerchange))
 	handle_powerchange(loc)
-	. = ..()
+	return ..()
+
+/turf/open/floor/circuit/LateInitialize()
+	// Extra-safety check, since to-be-replaced tiles aren't added to the nuke_tiles list:
+	// if this somehow passes in the future, then it means something's changed
+	// and all floors are lateinitializing. Better safe than sorry.
+	if(src in SSmapping.nuke_tiles)
+		return
+	if(!SSticker.HasRoundStarted()) //It would be unwise to mess with turfs while subsystems are still loading (especially air)
+		RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(on_pregame))
+		return
+	replace_floor(carpet_counterpart, flags = CHANGETURF_INHERIT_AIR)
+
+/turf/open/floor/circuit/proc/on_pregame(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME)
+	replace_floor(carpet_counterpart, flags = CHANGETURF_INHERIT_AIR)
 
 /turf/open/floor/circuit/Destroy()
 	SSmapping.nuke_tiles -= src
@@ -63,11 +82,10 @@
 		source.removeStaticPower(CIRCUIT_FLOOR_POWERUSE, AREA_USAGE_STATIC_LIGHT)
 	update_appearance()
 
-#undef CIRCUIT_FLOOR_POWERUSE
-
 /turf/open/floor/circuit/off
 	icon_state = "bcircuitoff"
 	always_off = TRUE
+	carpet_counterpart = /turf/open/floor/carpet/blue
 
 /turf/open/floor/circuit/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -86,10 +104,12 @@
 	icon_normal = "gcircuit"
 	light_color = LIGHT_COLOR_VIVID_GREEN
 	floor_tile = /obj/item/stack/tile/circuit/green
+	carpet_counterpart = /turf/open/floor/carpet/luminous/green
 
 /turf/open/floor/circuit/green/off
 	icon_state = "gcircuitoff"
 	always_off = TRUE
+	carpet_counterpart = /turf/open/floor/carpet/green
 
 /turf/open/floor/circuit/green/anim
 	icon_state = "gcircuitanim"
@@ -110,10 +130,12 @@
 	icon_normal = "rcircuit"
 	light_color = LIGHT_COLOR_INTENSE_RED
 	floor_tile = /obj/item/stack/tile/circuit/red
+	carpet_counterpart = /turf/open/floor/carpet/luminous/red
 
 /turf/open/floor/circuit/red/off
 	icon_state = "rcircuitoff"
 	always_off = TRUE
+	carpet_counterpart = /turf/open/floor/carpet/red
 
 /turf/open/floor/circuit/red/anim
 	icon_state = "rcircuitanim"

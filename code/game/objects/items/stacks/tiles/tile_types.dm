@@ -351,6 +351,29 @@
 	merge_type = /obj/item/stack/tile/carpet/donk
 	tile_reskin_types = null
 
+/obj/item/stack/tile/carpet/luminous
+	name = "blue circuit carpet"
+	icon_state = "tile-carpet-blue"
+	inhand_icon_state = "tile-carpet-blue"
+	turf_type = /turf/open/floor/carpet/luminous
+	tableVariant = null
+	merge_type = /obj/item/stack/tile/carpet/luminous
+	tile_reskin_types = null
+
+/obj/item/stack/tile/carpet/luminous/green
+	name = "green circuit carpet"
+	icon_state = "tile-carpet-green"
+	inhand_icon_state = "tile-carpet-green"
+	turf_type = /turf/open/floor/carpet/luminous/green
+	merge_type = /obj/item/stack/tile/carpet/luminous/green
+
+/obj/item/stack/tile/carpet/luminous/red
+	name = "red circuit carpet"
+	icon_state = "tile-carpet-red"
+	inhand_icon_state = "tile-carpet-red"
+	turf_type = /turf/open/floor/carpet/luminous/red
+	merge_type = /obj/item/stack/tile/carpet/luminous/red
+
 /obj/item/stack/tile/carpet/fifty
 	amount = 50
 

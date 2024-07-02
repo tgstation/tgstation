@@ -838,6 +838,71 @@
 /turf/open/floor/carpet/blue/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
+///Snowflake carpet(s) used in place of circuit floors on the station when the Human AI station trait rolls.
+/turf/open/floor/carpet/luminous
+	name = "circuit carpet"
+	icon = 'icons/turf/floors/carpet_blue.dmi'
+	icon_state = "carpet_blue-255"
+	base_icon_state = "carpet_blue"
+	floor_tile = /obj/item/stack/tile/carpet/luminous
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_BLUE
+	canSmoothWith = SMOOTH_GROUP_CARPET_BLUE
+	light_color = LIGHT_COLOR_BABY_BLUE
+	/// If this floor is powered or not
+	/// We don't consume any power, but we do require it
+	var/on = 0
+
+/turf/open/floor/carpet/luminous/Initialize(mapload)
+	RegisterSignal(loc, COMSIG_AREA_POWER_CHANGE, PROC_REF(handle_powerchange))
+	handle_powerchange(loc)
+	return ..()
+
+/turf/open/floor/carpet/luminous/Destroy()
+	UnregisterSignal(loc, COMSIG_AREA_POWER_CHANGE)
+	return ..()
+
+/turf/open/floor/carpet/luminous/on_change_area(area/old_area, area/new_area)
+	. = ..()
+	UnregisterSignal(old_area, COMSIG_AREA_POWER_CHANGE)
+	RegisterSignal(new_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(handle_powerchange))
+	if(on)
+		old_area.removeStaticPower(CIRCUIT_FLOOR_POWERUSE, AREA_USAGE_STATIC_LIGHT)
+	handle_powerchange(new_area)
+
+/// Enables/disables our lighting based off our source area
+/turf/open/floor/carpet/luminous/proc/handle_powerchange(area/source)
+	SIGNAL_HANDLER
+	var/old_on = on
+	on = source.powered(AREA_USAGE_LIGHT)
+	if(on == old_on)
+		return
+
+	if(on)
+		source.addStaticPower(CIRCUIT_FLOOR_POWERUSE, AREA_USAGE_STATIC_LIGHT)
+		set_light_color(initial(light_color))
+		set_light(2, 1.5)
+	else
+		source.removeStaticPower(CIRCUIT_FLOOR_POWERUSE, AREA_USAGE_STATIC_LIGHT)
+		set_light(0)
+
+/turf/open/floor/carpet/luminous/green
+	icon = 'icons/turf/floors/carpet_green.dmi'
+	icon_state = "carpet_green-255"
+	base_icon_state = "carpet_green"
+	floor_tile = /obj/item/stack/tile/carpet/luminous/green
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_GREEN
+	canSmoothWith = SMOOTH_GROUP_CARPET_GREEN
+	light_color = LIGHT_COLOR_VIVID_GREEN
+
+/turf/open/floor/carpet/luminous/red
+	icon = 'icons/turf/floors/carpet_red.dmi'
+	icon_state = "carpet_red-255"
+	base_icon_state = "carpet_red"
+	floor_tile = /obj/item/stack/tile/carpet/luminous/red
+	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_RED
+	canSmoothWith = SMOOTH_GROUP_CARPET_RED
+	light_color = LIGHT_COLOR_INTENSE_RED
+
 /turf/open/floor/fakepit
 	desc = "A clever illusion designed to look like a bottomless pit."
 	icon = 'icons/turf/floors/chasms.dmi'

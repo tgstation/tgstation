@@ -116,3 +116,6 @@
 #define LARGE_TURF_SMOOTHING_X_OFFSET -9
 /// Defines the y offset to apply to larger smoothing turfs (such as grass).
 #define LARGE_TURF_SMOOTHING_Y_OFFSET -9
+
+// Usage for a bar light is 160, let's do a bit less then that since these tend to be used a lot in one place
+#define CIRCUIT_FLOOR_POWERUSE 120
