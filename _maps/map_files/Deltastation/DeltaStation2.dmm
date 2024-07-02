@@ -17559,9 +17559,8 @@
 	network = list("ss13","xeno","rd")
 	},
 /obj/machinery/status_display/ai/directional/west,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/cold/directional/west,
-/turf/open/floor/iron/dark,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "eqU" = (
 /turf/open/space,
@@ -26784,7 +26783,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "gCt" = (
-/turf/open/floor/circuit/green,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "gCB" = (
 /obj/structure/cable,
@@ -35079,8 +35078,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "iJw" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "iJE" = (
 /obj/structure/table/wood/fancy,
@@ -57870,7 +57868,7 @@
 "ozA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/circuit/green,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "ozE" = (
 /obj/effect/turf_decal/stripes/line,
@@ -62595,7 +62593,7 @@
 /area/station/science/lab)
 "pJz" = (
 /obj/effect/decal/remains/xeno,
-/turf/open/floor/circuit/green,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "pJM" = (
 /obj/effect/turf_decal/stripes/line{
@@ -72596,7 +72594,7 @@
 /area/station/maintenance/port/aft)
 "sfE" = (
 /obj/effect/decal/cleanable/xenoblood,
-/turf/open/floor/circuit/green,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "sfH" = (
 /obj/effect/landmark/start/hangover,
@@ -84109,15 +84107,14 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "uXU" = (
-/obj/structure/disposaloutlet{
-	dir = 8
-	},
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/machinery/disposal/delivery_chute{
+	dir = 8
+	},
 /obj/effect/turf_decal/box/red,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "uYg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -92319,9 +92316,14 @@
 /turf/open/floor/iron/textured,
 /area/station/medical/medbay)
 "xcR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
 /obj/effect/spawner/random/engineering/tracking_beacon,
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/circuit/green,
+/turf/open/floor/iron,
 /area/station/science/xenobiology)
 "xcU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -92345,8 +92347,8 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/obj/structure/sign/warning/gas_mask/directional/north,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "xdA" = (
 /obj/effect/spawner/random/decoration/carpet,
@@ -115394,11 +115396,11 @@ fqm
 djS
 nCi
 nCi
-sfN
-sfN
+gCt
+gCt
 eqP
-sfN
-sfN
+gCt
+gCt
 nCi
 nCi
 cJd
@@ -115650,13 +115652,13 @@ chp
 fqm
 vPU
 nCi
-sfN
-sfN
-sfN
+gCt
+gCt
+gCt
 iJw
-sfN
-sfN
-sfN
+gCt
+gCt
+gCt
 nCi
 vPU
 fqm
@@ -115907,13 +115909,13 @@ rXu
 nCi
 eVp
 nCi
-sfN
+gCt
 ozA
 pJz
-xcR
+gCt
 sfE
 gCt
-sfN
+gCt
 nCi
 mFq
 nCi
@@ -116164,13 +116166,13 @@ gbe
 nCi
 vPU
 nCi
-sfN
-sfN
-sfN
-sfN
-sfN
-sfN
-sfN
+gCt
+gCt
+gCt
+gCt
+gCt
+gCt
+gCt
 nCi
 vPU
 cfb
@@ -116424,7 +116426,7 @@ nCi
 rIb
 rIb
 xdn
-sfN
+gCt
 uXU
 uhb
 uhb
@@ -116679,7 +116681,7 @@ pyZ
 vBO
 uhb
 ebW
-kNG
+imx
 imx
 xsH
 umb
@@ -117195,7 +117197,7 @@ mKn
 fPl
 jqr
 vxQ
-vxQ
+xcR
 vxQ
 lzc
 plQ

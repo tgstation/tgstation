@@ -1142,7 +1142,7 @@
 /obj/machinery/sparker/directional/north{
 	id = "Xenobio"
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "axX" = (
 /obj/effect/turf_decal/siding/yellow,
@@ -14195,6 +14195,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/atmospherics/components/binary/pump,
 /obj/machinery/button/door/directional/north{
 	id = "Xenolab";
 	name = "Test Chamber Blast Doors";
@@ -14202,7 +14203,6 @@
 	pixel_y = -2;
 	req_access = list("xenobiology")
 	},
-/obj/machinery/atmospherics/components/binary/pump,
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
@@ -14580,10 +14580,8 @@
 /area/station/command/heads_quarters/hos)
 "fvH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/electropack,
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "fvL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -16068,7 +16066,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible{
 	dir = 4
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "fSx" = (
 /obj/structure/cable,
@@ -17359,10 +17357,7 @@
 /area/station/maintenance/department/medical/central)
 "gpy" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/toy/plush/slimeplushie{
-	name = "Nanners"
-	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "gpA" = (
 /obj/effect/turf_decal/siding/thinplating/terracotta,
@@ -19347,7 +19342,7 @@
 "gWf" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "gWk" = (
 /obj/effect/turf_decal/siding/wood,
@@ -28479,7 +28474,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "jML" = (
 /obj/structure/cable,
@@ -37225,12 +37220,9 @@
 /area/station/hallway/primary/aft)
 "mwJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/stack/cable_coil,
-/obj/item/multitool,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "mwN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -38899,24 +38891,12 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "mYT" = (
-/obj/structure/table,
-/obj/item/assembly/igniter{
-	pixel_x = -5;
-	pixel_y = 3
+/obj/machinery/door/poddoor/preopen{
+	id = "Xenolab";
+	name = "Test Chamber Blast Door"
 	},
-/obj/item/assembly/igniter{
-	pixel_x = 5;
-	pixel_y = -4
-	},
-/obj/item/assembly/igniter{
-	pixel_x = 2;
-	pixel_y = 6
-	},
-/obj/item/assembly/igniter{
-	pixel_x = 2;
-	pixel_y = -1
-	},
-/turf/open/floor/engine,
+/obj/structure/sign/warning/gas_mask/directional/north,
+/turf/open/floor/catwalk_floor/iron,
 /area/station/science/xenobiology)
 "mYW" = (
 /obj/machinery/camera{
@@ -46276,14 +46256,6 @@
 	dir = 1
 	},
 /area/station/security/prison/safe)
-"pxW" = (
-/obj/structure/table,
-/obj/machinery/cell_charger{
-	pixel_y = 5
-	},
-/obj/item/stock_parts/power_store/cell/high,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "pxZ" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance,
@@ -52373,6 +52345,9 @@
 /turf/open/floor/iron/small,
 /area/station/ai_monitored/command/storage/eva)
 "rtI" = (
+/obj/item/toy/plush/slimeplushie{
+	name = "Nanners"
+	},
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},
@@ -53695,7 +53670,7 @@
 /area/station/engineering/atmos/space_catwalk)
 "rQw" = (
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "rQA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -59444,7 +59419,7 @@
 /area/station/medical/chemistry)
 "tGp" = (
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "tGq" = (
 /turf/closed/wall,
@@ -71596,7 +71571,7 @@
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "xlP" = (
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "xlU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -74806,11 +74781,10 @@
 	},
 /area/station/hallway/secondary/entry)
 "ybF" = (
-/obj/machinery/atmospherics/pipe/smart/simple/general/visible{
+/obj/effect/spawner/random/engineering/tracking_beacon,
+/turf/open/floor/iron/white/side{
 	dir = 4
 	},
-/obj/effect/spawner/random/engineering/tracking_beacon,
-/turf/open/floor/engine,
 /area/station/science/xenobiology)
 "ybJ" = (
 /obj/structure/cable,
@@ -75148,7 +75122,7 @@
 	c_tag = "Xenobiology Lab - Test Chamber";
 	network = list("ss13","rd","xeno")
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "ygu" = (
 /turf/open/floor/iron/white,
@@ -118091,7 +118065,7 @@ gYH
 sYa
 yfs
 hPU
-xKX
+ybF
 fKN
 xMc
 xKX
@@ -118606,7 +118580,7 @@ sYa
 rtI
 dXU
 aSy
-deQ
+mYT
 tst
 deQ
 aSy
@@ -119378,7 +119352,7 @@ cVz
 sYa
 rQw
 xlP
-ybF
+fSg
 xlP
 tGp
 eWI
@@ -120147,11 +120121,11 @@ pXQ
 kwA
 xaR
 sYa
-pxW
+xlP
 xlP
 gpy
 xlP
-mYT
+xlP
 eWI
 eWI
 eWI
