@@ -235,10 +235,10 @@
 
 	if(brute_to_heal || burn_to_heal)
 		if(brute_to_heal)
-			hurtguy.adjustBruteLoss(brute_to_heal)
+			hurtguy.adjustBruteLoss(-brute_to_heal)
 			. = TRUE
 		if(burn_to_heal)
-			hurtguy.adjustFireLoss(burn_to_heal)
+			hurtguy.adjustFireLoss(-burn_to_heal)
 			. = TRUE
 	else
 		hurtguy.balloon_alert(mendicant, "unhurt!")
