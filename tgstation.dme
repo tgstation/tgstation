@@ -784,6 +784,7 @@
 #include "code\datums\hotkeys_help.dm"
 #include "code\datums\http.dm"
 #include "code\datums\hud.dm"
+#include "code\datums\instability_meltdown.dm"
 #include "code\datums\json_database.dm"
 #include "code\datums\json_savefile.dm"
 #include "code\datums\lazy_template.dm"
