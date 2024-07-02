@@ -162,9 +162,6 @@
 /obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is tightening \the [src]'s straps around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
-med 15 15 45
-sec 40 15 10
-sci
 
 /obj/item/clothing/glasses/science/night
 	name = "night vision science goggles"
