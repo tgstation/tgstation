@@ -22,7 +22,7 @@
 	var/holidayID = "" //string which should be in the SSeventss.holidays list if you wish this event to be holiday-specific
 									//anything with a (non-null) holidayID which does not match holiday, cannot run.
 	var/wizardevent = FALSE
-	var/alert_observers = TRUE //should we let the ghosts and admins know this event is firing
+	var/alert_observers = TRUE //should we let the ghosts know this event is firing
 									//should be disabled on events that fire a lot
 
 	/// Minimum wizard rituals at which to trigger this event, inclusive
