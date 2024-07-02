@@ -328,7 +328,7 @@
 				. = TRUE
 				// Because we do our own spin on it!
 				if(mendicant.get_blood_compatibility(hurtguy) == FALSE)
-					mendicant.adjustToxLoss((blood_to_hurtguy * 0.1) * pain_multiplier) // 1 dmg per 10 blood
+					mendicant.adjustToxLoss((blood_to_mendicant * 0.1) * pain_multiplier) // 1 dmg per 10 blood
 					to_chat(mendicant, span_notice("Your veins swell and itch!"))
 				else
 					to_chat(mendicant, span_notice("Your veins swell!"))
