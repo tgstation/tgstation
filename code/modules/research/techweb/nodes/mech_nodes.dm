@@ -246,6 +246,5 @@
 		"mech_gravcatapult",
 		"mech_teleporter",
 		"mech_wormhole_gen",
-		"mech_rcd",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
