@@ -11442,6 +11442,10 @@
 	pixel_y = 9
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/item/flatpack{
+	board = /obj/item/circuitboard/machine/flatpacker
+	},
+/obj/item/multitool,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "cSc" = (
@@ -28247,7 +28251,6 @@
 /area/station/maintenance/floor2/starboard/aft)
 "hsA" = (
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/toilet)
 "hsG" = (
@@ -67021,7 +67024,6 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor1/aft)
 "rjB" = (
-/obj/structure/sign/warning/biohazard/directional/east,
 /obj/machinery/light/cold/no_nightlight/directional/east,
 /turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
@@ -69851,6 +69853,7 @@
 /area/station/maintenance/floor1/port)
 "sav" = (
 /obj/effect/turf_decal/box/corners,
+/obj/structure/sign/warning/biohazard/directional/east,
 /turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "saA" = (
@@ -84899,6 +84902,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
+/obj/structure/sign/warning/gas_mask/directional/east,
 /turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "vTY" = (

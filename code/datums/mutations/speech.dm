@@ -40,24 +40,13 @@
 
 	speech_args[SPEECH_SPANS] |= SPAN_SANS
 
-// Lower rust floor probability
-// Make it only happen on open turf
-// Add early return to wall hitting
-// Fix throw at on cult sac
-// Reduce tochat prob on rust floor
-// add trait rusty to windows
-// aim assist on rc doesnt work
-// also in general
-// give master seek to rusted harvester
-
 /datum/mutation/human/heckacious
 	name = "heckacious larincks"
 	desc = "duge what is WISH your words man..........."
 	quality = MINOR_NEGATIVE
-	text_gain_indication = span_sans(span_red("aw SHIT man. your throat feels like FUCKASS."))
+	text_gain_indication = span_sans("aw SHIT man. your throat feels like FUCKASS.")
 	text_lose_indication = span_notice("The demonic entity possessing your larynx has finally released its grasp.")
 	locked = TRUE
-	conflicts = list(/datum/mutation/human/trichromatic) // they both modify with the same spans. also would be way too annoying
 
 /datum/mutation/human/heckacious/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -111,11 +100,15 @@
 
 		// Random caps
 		if(prob(10))
-			editing_word = uppertext(editing_word)
+			editing_word = prob(85) ? uppertext(editing_word) : LOWER_TEXT(editing_word)
 		// some times....... we add DOTS...
 		if(prob(10))
 			for(var/dotnum in 1 to rand(2, 8))
 				editing_word += "."
+		// change for bold/italics/underline as well!
+		if(prob(10))
+			var/extra_emphasis = pick("+", "_", "|")
+			editing_word = extra_emphasis + editing_word + extra_emphasis
 
 		// If no replacement we do it manually
 		if(!word_edited)
@@ -133,9 +126,6 @@
 				patchword += replacetext(editing_word[letter], "", editing_word[letter] + editing_word[letter])
 			editing_word = patchword
 
-		// Some words are randomly recolored and resized so they get a few of these
-		editing_word = span_class_handler(editing_word)
-
 		LAZYADD(edited_message_words, editing_word)
 
 	var/edited_message = jointext(edited_message_words, " ")
@@ -143,74 +133,6 @@
 	message = trim(edited_message)
 
 	speech_args[SPEECH_MESSAGE] = message
-
-/datum/mutation/human/heckacious/proc/span_class_handler(message, looped = FALSE)
-	// Sadly combining span colors will not combine the colors of the message
-	if(prob(15))
-		switch(rand(1,3))
-			if(1)
-				message = span_red(message)
-			if(2)
-				message = span_blue(message)
-			if(3)
-				message = span_green(message)
-	if(prob(15))
-		switch(rand(1,2))
-			if(1)
-				message = span_big(message)
-			if(2)
-				message = span_small(message)
-	// do it AGAIN
-	if(prob(40))
-		span_class_handler(message, looped = TRUE)
-	return message
-
-/datum/mutation/human/trichromatic
-	name = "Trichromatic Larynx"
-	desc = "A strange mutation originating from Clown Planet which alters the color of the patient's vocal chords."
-	quality = MINOR_NEGATIVE
-	text_gain_indication = span_red("You") + span_blue(" feel ") + span_green("Weird.")
-	text_lose_indication = span_notice("Your colors feel normal again.")
-	conflicts = list(/datum/mutation/human/heckacious)
-
-/datum/mutation/human/trichromatic/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-
-/datum/mutation/human/trichromatic/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
-
-/datum/mutation/human/trichromatic/proc/handle_speech(datum/source, list/speech_args)
-	SIGNAL_HANDLER
-
-	var/message = speech_args[SPEECH_MESSAGE]
-
-	var/list/message_words = splittext(message, " ")
-	var/list/static/span_combo_list = list("green", "red", "blue")
-	var/words_key = 1
-	for(var/i in message_words)
-		message_words[words_key] = span_class_handler(message_words[words_key])
-		words_key++
-
-	var/edited_message = jointext(message_words, " ")
-
-	message = trim(edited_message)
-
-	speech_args[SPEECH_MESSAGE] = message
-
-/datum/mutation/human/trichromatic/proc/span_class_handler(message)
-	// Sadly combining span colors will not combine the colors of the message
-	switch(rand(1,3))
-		if(1)
-			message = span_red(message)
-		if(2)
-			message = span_blue(message)
-		if(3)
-			message = span_green(message)
-	return message
 
 /datum/mutation/human/mute
 	name = "Mute"
@@ -369,7 +291,6 @@
 	name = "Stoner"
 	desc = "A common mutation that severely decreases intelligence."
 	quality = NEGATIVE
-	locked = TRUE
 	text_gain_indication = span_notice("You feel...totally chill, man!")
 	text_lose_indication = span_notice("You feel like you have a better sense of time.")
 
