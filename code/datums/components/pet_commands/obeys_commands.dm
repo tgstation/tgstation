@@ -66,7 +66,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/living_parent = parent
-	if (IS_DEAD_OR_INCAP(living_parent))
+	if (IS_DEAD_OR_INCAP(living_parent) || !clicker.can_perform_action(living_parent))
 		return
 	if (!(clicker in living_parent.ai_controller?.blackboard[BB_FRIENDS_LIST]))
 		return // Not our friend, can't boss us around

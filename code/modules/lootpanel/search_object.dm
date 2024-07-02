@@ -25,12 +25,12 @@
 
 	if(isturf(item))
 		RegisterSignal(item, COMSIG_TURF_CHANGE, PROC_REF(on_turf_change))
-	else
 		RegisterSignals(item, list(
-			COMSIG_ITEM_PICKUP,
-			COMSIG_MOVABLE_MOVED,
-			COMSIG_QDELETING,
+			COMSIG_ATOM_ENTERED,
+			COMSIG_ATOM_EXITED,
 			), PROC_REF(on_item_moved))
+	else
+		RegisterSignal(item, COMSIG_QDELETING, PROC_REF(on_item_moved))
 
 	// Icon generation conditions //////////////
 	// Condition 1: Icon is complex

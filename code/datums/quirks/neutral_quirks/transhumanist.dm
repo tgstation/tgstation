@@ -23,7 +23,7 @@
 	lose_text = span_danger("Robots don't seem all that great anymore.")
 	medical_record_text = "Patient reports hating pathetic creatures of meat and bone."
 	mail_goodies = list(
-		/obj/item/stock_parts/cell/potato,
+		/obj/item/stock_parts/power_store/cell/potato,
 		/obj/item/stack/cable_coil,
 		/obj/item/toy/talking/ai,
 		/obj/item/toy/figure/borg,

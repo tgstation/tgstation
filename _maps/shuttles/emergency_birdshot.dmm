@@ -99,7 +99,7 @@
 	pixel_x = 3;
 	pixel_y = 2
 	},
-/obj/item/clothing/mask/cigarette/dromedary{
+/obj/item/cigarette/dromedary{
 	pixel_x = 8;
 	pixel_y = 15
 	},
@@ -287,7 +287,7 @@
 "mU" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/shuttle/escape)
 "no" = (
 /obj/item/trash/popcorn/caramel,
 /turf/open/floor/mineral/titanium,
@@ -552,7 +552,7 @@
 /obj/structure/lattice,
 /obj/item/stack/rods/two,
 /turf/template_noop,
-/area/template_noop)
+/area/shuttle/escape)
 "Ay" = (
 /obj/item/shard{
 	pixel_y = 19
@@ -697,7 +697,7 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell,
+/obj/item/stock_parts/power_store/cell,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "Id" = (

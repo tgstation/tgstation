@@ -4,7 +4,7 @@
 #define DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION "space dragon interaction"
 
 /**
- * Advanced stage of the space carp life cycle, spawned as a midround antagonist or via traitor transformation.
+ * Advanced stage of the space carp life cycle, spawned as a midround antagonist
  * Can eat corpses to heal, blow people back with its wings, and obviously as a dragon it breathes fire. It can even tear through walls.
  * The midround even version also creates rifts which summon carp, and heals when near them.
  */
@@ -47,6 +47,9 @@
 	death_message = "screeches in agony as it collapses to the floor, its life extinguished."
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	can_buckle_to = FALSE
+	lighting_cutoff_red = 12
+	lighting_cutoff_green = 15
+	lighting_cutoff_blue = 34
 
 	/// The colour of the space dragon
 	var/chosen_colour
