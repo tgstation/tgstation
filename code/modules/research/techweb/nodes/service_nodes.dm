@@ -92,6 +92,31 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/physical/arcade_winner = TECHWEB_TIER_2_POINTS)
 
+/datum/techweb_node/bitrunning
+	id = TECHWEB_NODE_BITRUNNING
+	display_name = "Bitrunning Technology"
+	description = "Bluespace technology has led to the development of quantum-scale computing, which unlocks the means to materialize atomic structures while executing advanced programs."
+	prereq_ids = list(TECHWEB_NODE_GAMING, TECHWEB_NODE_APPLIED_BLUESPACE)
+	design_ids = list(
+		"byteforge",
+		"quantum_console",
+		"netpod",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+
+/datum/techweb_node/exodrone
+	id = TECHWEB_NODE_EXODRONE
+	display_name = "Exploration Drones"
+	description = "Adapted arcade machines to covertly harness gamers' skills in controlling real drones for practical purposes."
+	prereq_ids = list(TECHWEB_NODE_GAMING, TECHWEB_NODE_PROGRAMMED_ROBOT)
+	design_ids = list(
+		"exoscanner_console",
+		"exoscanner",
+		"exodrone_console",
+		"exodrone_launcher",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+
 // Kitchen root node
 /datum/techweb_node/cafeteria_equip
 	id = TECHWEB_NODE_CAFETERIA_EQUIP

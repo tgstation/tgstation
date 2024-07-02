@@ -9,19 +9,6 @@
 		"paicard",
 	)
 
-/datum/techweb_node/exodrone
-	id = TECHWEB_NODE_EXODRONE
-	display_name = "Exploration Drones"
-	description = "Adapted arcade machines to covertly harness gamers' skills in controlling real drones for practical purposes."
-	prereq_ids = list(TECHWEB_NODE_ROBOTICS)
-	design_ids = list(
-		"exoscanner_console",
-		"exoscanner",
-		"exodrone_console",
-		"exodrone_launcher",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
-
 // AI root node
 /datum/techweb_node/ai
 	id = TECHWEB_NODE_AI
