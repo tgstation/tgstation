@@ -36,6 +36,7 @@
 	var/instance_name
 	var/originmastercommit
 	var/commit
+	var/revision_date
 	var/list/cached_custom_tgs_chat_commands
 	var/warned_revison = FALSE
 	var/warned_custom_commands = FALSE
@@ -66,8 +67,14 @@
 	var/list/logs = TGS_FILE2LIST(".git/logs/HEAD")
 	if(logs.len)
 		logs = splittext(logs[logs.len], " ")
-		if (logs.len >= 2)
+		if (logs.len >= 5)
 			commit = logs[2]
+			var/unix_timestamp = text2num(logs[5])
+			if(isnum(unix_timestamp))
+				unix_timestamp += world.timezone * 3600
+				unix_timestamp -= 946684800
+				unix_timestamp *= 10
+				revision_date = "[time2text(unix_timestamp, "YYYY-MM-DDThh:mm:ss", 0)]+00:00"
 		else
 			TGS_ERROR_LOG("Error parsing commit logs")
 
@@ -184,6 +191,7 @@
 	var/datum/tgs_revision_information/ri = new
 	ri.commit = commit
 	ri.origin_commit = originmastercommit
+	ri.timestamp = revision_date
 	return ri
 
 /datum/tgs_api/v3210/EndProcess()
