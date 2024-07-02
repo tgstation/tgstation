@@ -4,7 +4,7 @@
 	flags_1 = null //doesn't protect eyes because it's a monocle, duh
 	var/hud_type = null
 
-	// NOTE: Just because you have a HUD display doesn't mean you should be able to interact with stuff on examine, that's where the associated trait (TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD, etc) is necessary. 
+	// NOTE: Just because you have a HUD display doesn't mean you should be able to interact with stuff on examine, that's where the associated trait (TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD, etc) is necessary.
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()
@@ -69,6 +69,7 @@
 	// Blue green, dark
 	color_cutoffs = list(5, 15, 30)
 	glass_colour_type = /datum/client_colour/glass_colour/green
+	forced_glass_color = TRUE
 
 /obj/item/clothing/glasses/hud/health/night/meson
 	name = "night vision meson health scanner HUD"
@@ -79,7 +80,8 @@
 	name = "night vision medical science scanner HUD"
 	desc = "An clandestine medical science heads-up display that allows operatives to find \
 		dying captains and the perfect poison to finish them off in complete darkness."
-	clothing_traits = list(TRAIT_REAGENT_SCANNER)
+	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_MEDICAL_HUD)
+	forced_glass_color = FALSE
 
 /obj/item/clothing/glasses/hud/health/sunglasses
 	name = "medical HUDSunglasses"
@@ -117,6 +119,7 @@
 	// Pale yellow
 	color_cutoffs = list(30, 20, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/green
+	forced_glass_color = TRUE
 
 /obj/item/clothing/glasses/hud/diagnostic/sunglasses
 	name = "diagnostic sunglasses"
@@ -189,6 +192,7 @@
 	// Red with a tint of green
 	color_cutoffs = list(35, 5, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/green
+	forced_glass_color = TRUE
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars
 	name = "\improper HUD gar glasses"

@@ -105,6 +105,7 @@
 	// Mesons get to be lightly green
 	color_cutoffs = list(5, 15, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
+	forced_glass_color = TRUE
 
 /obj/item/clothing/glasses/meson/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is putting \the [src] to [user.p_their()] eyes and overloading the brightness! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -119,6 +120,7 @@
 	// Night vision mesons get the same but more intense
 	color_cutoffs = list(10, 30, 10)
 	glass_colour_type = /datum/client_colour/glass_colour/green
+	forced_glass_color = TRUE
 
 /obj/item/clothing/glasses/meson/gar
 	name = "gar mesons"
@@ -165,6 +167,7 @@
 	// Real vivid purple
 	color_cutoffs = list(50, 10, 30)
 	glass_colour_type = /datum/client_colour/glass_colour/green
+	forced_glass_color = TRUE
 
 /obj/item/clothing/glasses/night
 	name = "night vision goggles"
@@ -176,6 +179,11 @@
 	// Dark green
 	color_cutoffs = list(10, 30, 10)
 	glass_colour_type = /datum/client_colour/glass_colour/green
+	forced_glass_color = TRUE
+
+/obj/item/clothing/glasses/night/colorless
+	desc = "You can totally see in the dark now! Now with 50% less green!"
+	forced_glass_color = FALSE
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
