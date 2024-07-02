@@ -1027,9 +1027,7 @@
 /obj/structure/railing{
 	dir = 10
 	},
-/obj/machinery/shower/directional/south{
-	layer = 4
-	},
+/obj/machinery/shower/directional/south,
 /obj/effect/turf_decal/box,
 /obj/structure/fluff/shower_drain,
 /turf/open/floor/iron/dark,
@@ -1420,7 +1418,11 @@
 	},
 /area/shuttle/pirate)
 "LV" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate,
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
+	y_offset = 11;
+	x_offset = -4;
+	view_range = 10
+	},
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 5
 	},

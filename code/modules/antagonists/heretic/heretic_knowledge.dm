@@ -38,6 +38,14 @@
 	var/priority = 0
 	/// What path is this on. If set to "null", assumed to be unreachable (or abstract).
 	var/route
+	/// In case we want to override the default UI icon getter and plug in our own icon instead.
+	/// if research_tree_icon_path is not null, research_tree_icon_state must also be specified or things may break
+	var/research_tree_icon_path
+	var/research_tree_icon_state
+	var/research_tree_icon_frame = 1
+	var/research_tree_icon_dir = SOUTH
+	/// Level of knowledge tree where this knowledge should be in the UI
+	var/depth = 1
 	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
 	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
 
@@ -263,6 +271,7 @@
 	limit = 2
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 5
+	depth = 2
 
 /datum/heretic_knowledge/limited_amount/starting/New()
 	. = ..()
@@ -287,6 +296,7 @@
 	abstract_parent_type = /datum/heretic_knowledge/mark
 	mutually_exclusive = TRUE
 	cost = 2
+	depth = 5
 	/// The status effect typepath we apply on people on mansus grasp.
 	var/datum/status_effect/eldritch/mark_type
 
@@ -352,6 +362,7 @@
 	abstract_parent_type = /datum/heretic_knowledge/blade_upgrade
 	mutually_exclusive = TRUE
 	cost = 2
+	depth = 9
 
 /datum/heretic_knowledge/blade_upgrade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
@@ -592,6 +603,9 @@
 	mutually_exclusive = TRUE
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 10 // A pretty important midgame ritual.
+	depth = 6
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "book_open"
 	/// Whether we've done the ritual. Only doable once.
 	var/was_completed = FALSE
 
@@ -685,6 +699,9 @@
 	cost = 2
 	priority = MAX_KNOWLEDGE_PRIORITY + 1 // Yes, the final ritual should be ABOVE the max priority.
 	required_atoms = list(/mob/living/carbon/human = 3)
+	depth = 11
+	//use this to store the achievement typepath
+	var/datum/award/achievement/misc/ascension_achievement
 
 /datum/heretic_knowledge/ultimate/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -745,6 +762,8 @@
 		source = user,
 		header = "A Heretic is Ascending!",
 	)
+	if(!isnull(ascension_achievement))
+		user.client?.give_award(ascension_achievement, user)
 	heretic_datum.increase_rust_strength()
 	return TRUE
 

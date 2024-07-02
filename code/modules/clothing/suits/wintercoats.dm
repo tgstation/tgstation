@@ -502,6 +502,10 @@
 	inhand_icon_state = null
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science/genetics
 
+/obj/item/clothing/suit/hooded/wintercoat/science/genetics/Initialize(mapload)
+	. = ..()
+	allowed += /obj/item/sequence_scanner
+
 /obj/item/clothing/head/hooded/winterhood/science/genetics
 	desc = "A white winter coat hood. It's warm."
 	icon_state = "hood_genetics"

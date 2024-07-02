@@ -1273,13 +1273,11 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/button/door/directional/east{
 	id = "cargounload";
-	layer = 4;
 	name = "Loading Doors";
 	pixel_y = 8
 	},
 /obj/machinery/button/door/directional/east{
 	id = "cargoload";
-	layer = 4;
 	name = "Loading Doors";
 	pixel_y = -8
 	},

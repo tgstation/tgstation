@@ -79,10 +79,6 @@
 /obj/effect/turf_decal/trimline/yellow/warning,
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
-"eK" = (
-/obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/floor/plating/airless,
-/area/shuttle/pirate)
 "eU" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/carpet/royalblack,
@@ -337,7 +333,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/shuttle/pirate)
 "xj" = (
 /obj/structure/table/glass,
 /obj/item/storage/medkit/brute,
@@ -355,8 +351,7 @@
 /area/shuttle/pirate)
 "xR" = (
 /obj/structure/rack{
-	dir = 8;
-	layer = 2.9
+	dir = 8
 	},
 /obj/item/melee/energy/sword/saber/purple{
 	pixel_y = 12
@@ -462,7 +457,7 @@
 	width = 26
 	},
 /obj/docking_port/mobile/pirate{
-	dir = 4;
+	dir = 8;
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "Silverscale Cruiser";
@@ -652,8 +647,9 @@
 "Mo" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
 	dir = 8;
-	x_offset = 10;
-	y_offset = 5
+	x_offset = 12;
+	y_offset = 5;
+	view_range = 10
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 8
@@ -695,12 +691,10 @@
 	pixel_y = 10
 	},
 /obj/item/reagent_containers/cup/glass/bottle/hcider{
-	layer = 3.1;
 	pixel_x = -6;
 	pixel_y = 8
 	},
 /obj/item/reagent_containers/cup/glass/bottle/rum{
-	layer = 3.2;
 	pixel_x = -15;
 	pixel_y = 4
 	},
@@ -713,7 +707,6 @@
 	pixel_y = 15
 	},
 /obj/item/reagent_containers/cup/glass/bottle/wine{
-	layer = 3.1;
 	pixel_x = 3;
 	pixel_y = 5
 	},
@@ -784,8 +777,7 @@
 /area/shuttle/pirate)
 "RO" = (
 /obj/structure/rack{
-	dir = 8;
-	layer = 2.9
+	dir = 8
 	},
 /obj/item/ammo_box/strilka310,
 /obj/item/ammo_box/strilka310{
@@ -942,8 +934,7 @@
 /area/shuttle/pirate)
 "Yj" = (
 /obj/structure/rack{
-	dir = 8;
-	layer = 2.9
+	dir = 8
 	},
 /obj/item/storage/box/lethalshot,
 /obj/item/storage/box/lethalshot,
@@ -1022,7 +1013,7 @@ rB
 Ww
 Ww
 Ww
-eK
+Ww
 Ww
 Ww
 Ww

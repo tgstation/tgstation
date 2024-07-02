@@ -205,3 +205,6 @@
 	. = ..()
 	if(active_apc)
 		disconnect_apc()
+
+/obj/machinery/computer/apc_control/away
+	req_access = list(ACCESS_AWAY_ENGINEERING)

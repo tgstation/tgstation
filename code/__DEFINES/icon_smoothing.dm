@@ -3,34 +3,33 @@
 #define SMOOTH_CORNERS (1<<0)
 /// Smoothing system in where adjacencies are calculated and used to select a pre-baked icon_state, encoded by bitmasking.
 #define SMOOTH_BITMASK (1<<1)
+/// Limits SMOOTH_BITMASK to only cardinal directions, for use with cardinal smoothing
+#define SMOOTH_BITMASK_CARDINALS (1<<2)
 /// Atom has diagonal corners, with underlays under them.
-#define SMOOTH_DIAGONAL_CORNERS (1<<2)
+#define SMOOTH_DIAGONAL_CORNERS (1<<3)
 /// Atom will smooth with the borders of the map.
-#define SMOOTH_BORDER (1<<3)
+#define SMOOTH_BORDER (1<<4)
 /// Atom is currently queued to smooth.
-#define SMOOTH_QUEUED (1<<4)
+#define SMOOTH_QUEUED (1<<5)
 /// Smooths with objects, and will thus need to scan turfs for contents.
-#define SMOOTH_OBJ (1<<5)
+#define SMOOTH_OBJ (1<<6)
 /// Uses directional object smoothing, so we care not only about something being on the right turf, but also its direction
 /// Changes the meaning of smoothing_junction, instead of representing the directions we are smoothing in
 /// it represents the sides of our directional border object that have a neighbor
 /// Is incompatible with SMOOTH_CORNERS because border objects don't have corners
-#define SMOOTH_BORDER_OBJECT (1<<6)
-/// Has a smooth broken sprite, used to decide whether to apply an offset to the broken overlay or not. For /turf/open only.
-#define SMOOTH_BROKEN_TURF (1<<7)
-/// Has a smooth burnt sprite, used to decide whether to apply an offset to the burnt overlay or not. For /turf/open only.
-#define SMOOTH_BURNT_TURF (1<<8)
+#define SMOOTH_BORDER_OBJECT (1<<7)
+
+#define USES_SMOOTHING (SMOOTH_CORNERS|SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS)
 
 DEFINE_BITFIELD(smoothing_flags, list(
 	"SMOOTH_CORNERS" = SMOOTH_CORNERS,
 	"SMOOTH_BITMASK" = SMOOTH_BITMASK,
+	"SMOOTH_BITMASK_CARDINALS" = SMOOTH_BITMASK_CARDINALS,
 	"SMOOTH_DIAGONAL_CORNERS" = SMOOTH_DIAGONAL_CORNERS,
 	"SMOOTH_BORDER" = SMOOTH_BORDER,
 	"SMOOTH_QUEUED" = SMOOTH_QUEUED,
 	"SMOOTH_OBJ" = SMOOTH_OBJ,
 	"SMOOTH_BORDER_OBJECT" = SMOOTH_BORDER_OBJECT,
-	"SMOOTH_BROKEN_TURF" = SMOOTH_BROKEN_TURF,
-	"SMOOTH_BURNT_TURF" = SMOOTH_BURNT_TURF,
 ))
 
 /// Components of a smoothing junction
@@ -43,6 +42,9 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SOUTHEAST_JUNCTION (1<<5)
 #define SOUTHWEST_JUNCTION (1<<6)
 #define NORTHWEST_JUNCTION (1<<7)
+
+#define CARDINAL_SMOOTHING_JUNCTIONS (NORTH_JUNCTION|SOUTH_JUNCTION|EAST_JUNCTION|WEST_JUNCTION)
+#define ALL_SMOOTHING_JUNCTIONS (NORTH_JUNCTION|SOUTH_JUNCTION|EAST_JUNCTION|WEST_JUNCTION|NORTHEAST_JUNCTION|SOUTHEAST_JUNCTION|SOUTHWEST_JUNCTION|NORTHWEST_JUNCTION)
 
 DEFINE_BITFIELD(smoothing_junction, list(
 	"NORTH_JUNCTION" = NORTH_JUNCTION,
@@ -57,7 +59,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 
 /*smoothing macros*/
 
-#define QUEUE_SMOOTH(thing_to_queue) if(thing_to_queue.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)) {SSicon_smooth.add_to_queue(thing_to_queue)}
+#define QUEUE_SMOOTH(thing_to_queue) if(thing_to_queue.smoothing_flags & USES_SMOOTHING) {SSicon_smooth.add_to_queue(thing_to_queue)}
 
 #define QUEUE_SMOOTH_NEIGHBORS(thing_to_queue) for(var/atom/atom_neighbor as anything in orange(1, thing_to_queue)) {QUEUE_SMOOTH(atom_neighbor)}
 

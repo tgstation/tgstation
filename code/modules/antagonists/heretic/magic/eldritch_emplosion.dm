@@ -8,7 +8,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
 
-	invocation = "E'P"
+	invocation = "Pulsus Energiae"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 

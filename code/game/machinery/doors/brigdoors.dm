@@ -173,21 +173,21 @@
  * * seconds - Return the time in seconds if TRUE, else deciseconds.
  */
 /obj/machinery/status_display/door_timer/proc/time_left(seconds = FALSE)
-	. = max(0, timer_duration + activation_time - world.time)
+	. = max(0, timer_duration + (activation_time ? activation_time - world.time : 0))
 	if(seconds)
 		. /= (1 SECONDS)
 
 /**
  * Set the timer. Does NOT automatically start counting down, but does update the display.
  *
- * returns TRUE if no change occurred
+ * returns FALSE if no change occurred
  *
  * Arguments:
  * value - time in deciseconds to set the timer for.
  */
 /obj/machinery/status_display/door_timer/proc/set_timer(value)
-	var/new_time = clamp(value, 0, MAX_TIMER + world.time - activation_time)
-	. = new_time == timer_duration //return 1 on no change
+	var/new_time = clamp(value, 0, MAX_TIMER)
+	. = new_time != timer_duration //return 1 on change
 	timer_duration = new_time
 	update_content()
 

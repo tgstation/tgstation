@@ -29,7 +29,7 @@ type Props = {
   /** Frame number. Default is 1 */
   frame: number;
   /** Movement state. Default is false */
-  movement: boolean;
+  movement: any;
 }> &
   BoxProps;
 
@@ -49,7 +49,7 @@ export function DmIcon(props: Props) {
 
   const [iconRef, setIconRef] = useState('');
 
-  const query = `${iconRef}?state=${icon_state}&dir=${direction}&movement=${movement}&frame=${frame}`;
+  const query = `${iconRef}?state=${icon_state}&dir=${direction}&movement=${!!movement}&frame=${frame}`;
 
   useEffect(() => {
     async function fetchRefMap() {

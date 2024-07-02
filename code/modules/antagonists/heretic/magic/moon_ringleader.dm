@@ -12,7 +12,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 1 MINUTES
 
-	invocation = "R''S 'E"
+	invocation = "Manahel-qomem!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 

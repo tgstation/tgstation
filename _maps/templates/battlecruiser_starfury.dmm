@@ -21,8 +21,7 @@
 /area/shuttle/sbc_starfury)
 "ad" = (
 /obj/machinery/door/poddoor/preopen{
-	id = "syndie_battlecruier_bridge_blast";
-	layer = 3
+	id = "syndie_battlecruier_bridge_blast"
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
@@ -409,8 +408,7 @@
 /area/shuttle/sbc_starfury)
 "bx" = (
 /obj/machinery/door/poddoor/preopen{
-	id = "syndie_battlecruier_bridge_blast";
-	layer = 3
+	id = "syndie_battlecruier_bridge_blast"
 	},
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/structure/cable,
@@ -989,7 +987,6 @@
 /obj/structure/sign/warning/secure_area/directional/east{
 	desc = "A warning sign which reads 'KEEP CLEAR: SHUTTLE BAY'";
 	icon_state = "space";
-	layer = 4;
 	name = "KEEP CLEAR: SHUTTLE BAY"
 	},
 /obj/effect/turf_decal/stripes/red/line,
@@ -999,7 +996,6 @@
 /obj/structure/sign/warning/secure_area/directional/west{
 	desc = "A warning sign which reads 'KEEP CLEAR: SHUTTLE BAY'";
 	icon_state = "space";
-	layer = 4;
 	name = "KEEP CLEAR: SHUTTLE BAY"
 	},
 /obj/effect/turf_decal/stripes/red/line,
@@ -1650,7 +1646,6 @@
 /obj/structure/sign/warning/secure_area/directional/east{
 	desc = "A warning sign which reads 'KEEP CLEAR: SHUTTLE BAY'";
 	icon_state = "space";
-	layer = 4;
 	name = "KEEP CLEAR: SHUTTLE BAY"
 	},
 /obj/effect/turf_decal/stripes/red/line{
@@ -1691,7 +1686,6 @@
 /obj/structure/sign/warning/secure_area/directional/west{
 	desc = "A warning sign which reads 'KEEP CLEAR: SHUTTLE BAY'";
 	icon_state = "space";
-	layer = 4;
 	name = "KEEP CLEAR: SHUTTLE BAY"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -2192,8 +2186,7 @@
 /area/shuttle/sbc_starfury)
 "hZ" = (
 /obj/structure/rack{
-	dir = 8;
-	layer = 2.9
+	dir = 8
 	},
 /obj/item/gun/ballistic/automatic/m90{
 	pixel_x = -3;
@@ -2208,8 +2201,7 @@
 /area/shuttle/sbc_starfury)
 "ia" = (
 /obj/structure/rack{
-	dir = 8;
-	layer = 2.9
+	dir = 8
 	},
 /obj/item/gun/ballistic/shotgun/bulldog{
 	pixel_x = -3;
@@ -2370,8 +2362,7 @@
 /area/shuttle/sbc_starfury)
 "io" = (
 /obj/structure/rack{
-	dir = 8;
-	layer = 2.9
+	dir = 8
 	},
 /obj/item/gun/ballistic/revolver/syndicate{
 	pixel_x = 2;
@@ -2451,8 +2442,7 @@
 /area/shuttle/sbc_starfury)
 "ix" = (
 /obj/structure/rack{
-	dir = 8;
-	layer = 2.9
+	dir = 8
 	},
 /obj/item/storage/belt/military,
 /obj/item/ammo_box/magazine/m7mm,
@@ -2559,8 +2549,7 @@
 /area/shuttle/sbc_starfury)
 "iN" = (
 /obj/structure/rack{
-	dir = 8;
-	layer = 2.9
+	dir = 8
 	},
 /obj/item/mod/control/pre_equipped/elite{
 	pixel_x = 1;
@@ -3176,7 +3165,6 @@
 /obj/structure/sign/warning/secure_area/directional/north{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
-	layer = 4;
 	name = "EXTERNAL AIRLOCK"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -3248,7 +3236,6 @@
 /obj/structure/sign/warning/secure_area/directional/north{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
-	layer = 4;
 	name = "EXTERNAL AIRLOCK"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -4887,8 +4874,7 @@
 /area/shuttle/sbc_starfury)
 "Jl" = (
 /obj/structure/rack{
-	dir = 8;
-	layer = 2.9
+	dir = 8
 	},
 /obj/machinery/airalarm/directional/east,
 /obj/item/storage/belt/military,
@@ -4928,8 +4914,7 @@
 /area/shuttle/sbc_starfury)
 "JL" = (
 /obj/structure/rack{
-	dir = 8;
-	layer = 2.9
+	dir = 8
 	},
 /obj/item/card/emag{
 	pixel_x = -2;

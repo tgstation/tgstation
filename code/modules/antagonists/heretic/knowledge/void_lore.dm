@@ -1,5 +1,7 @@
 /**
  * # The path of VOID.
+ * Spell names are in this language: PALI
+ * Both are related: Pali-Buddhism-Nothingness-Void
  *
  * Goes as follows:
  *
@@ -37,6 +39,8 @@
 	required_atoms = list(/obj/item/knife = 1)
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
 	route = PATH_VOID
+	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_state = "void_blade"
 
 /datum/heretic_knowledge/limited_amount/starting/base_void/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(!isopenturf(loc))
@@ -58,6 +62,9 @@
 	next_knowledge = list(/datum/heretic_knowledge/cold_snap)
 	cost = 1
 	route = PATH_VOID
+	depth = 3
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "grasp_void"
 
 /datum/heretic_knowledge/void_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -88,6 +95,9 @@
 	)
 	cost = 1
 	route = PATH_VOID
+	research_tree_icon_path = 'icons/effects/effects.dmi'
+	research_tree_icon_state = "the_freezer"
+	depth = 4
 
 /datum/heretic_knowledge/cold_snap/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	user.add_traits(list(TRAIT_NOBREATH, TRAIT_RESISTCOLD), type)
@@ -119,6 +129,7 @@
 	spell_to_add = /datum/action/cooldown/spell/cone/staggered/cone_of_cold/void
 	cost = 1
 	route = PATH_VOID
+	depth = 7
 
 /datum/heretic_knowledge/spell/void_phase
 	name = "Void Phase"
@@ -135,6 +146,8 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/void_phase
 	cost = 1
 	route = PATH_VOID
+	depth = 8
+	research_tree_icon_frame = 7
 
 /datum/heretic_knowledge/blade_upgrade/void
 	name = "Seeking Blade"
@@ -142,6 +155,8 @@
 	gain_text = "Fleeting memories, fleeting feet. I mark my way with frozen blood upon the snow. Covered and forgotten."
 	next_knowledge = list(/datum/heretic_knowledge/spell/void_pull)
 	route = PATH_VOID
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "blade_upgrade_void"
 
 /datum/heretic_knowledge/blade_upgrade/void/do_ranged_effects(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(!target.has_status_effect(/datum/status_effect/eldritch))
@@ -168,6 +183,8 @@
 	spell_to_add = /datum/action/cooldown/spell/aoe/void_pull
 	cost = 1
 	route = PATH_VOID
+	depth = 10
+	research_tree_icon_frame = 6
 
 /datum/heretic_knowledge/ultimate/void_final
 	name = "Waltz at the End of Time"
@@ -180,6 +197,7 @@
 		The Aristocrat stands before me, beckoning. We will play a waltz to the whispers of dying reality, \
 		as the world is destroyed before our eyes. The void will return all to nothing, WITNESS MY ASCENSION!"
 	route = PATH_VOID
+	ascension_achievement = /datum/award/achievement/misc/void_ascension
 	///soundloop for the void theme
 	var/datum/looping_sound/void_loop/sound_loop
 	///Reference to the ongoing voidstrom that surrounds the heretic
@@ -203,9 +221,8 @@
 		text = "[generate_heretic_text()] The nobleman of void [user.real_name] has arrived, stepping along the Waltz that ends worlds! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
 		sound = 'sound/ambience/antag/heretic/ascend_void.ogg',
-		color_override = "pink",
+		color_override = "blue",
 	)
-	user.client?.give_award(/datum/award/achievement/misc/void_ascension, user)
 	ADD_TRAIT(user, TRAIT_RESISTLOWPRESSURE, MAGIC_TRAIT)
 
 	// Let's get this show on the road!

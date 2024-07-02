@@ -1,0 +1,7 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - qol: "It is easier to do some required techweb experiments on Charlie station now"
+  - bugfix: "Fixed experimental dissection surgeries giving too many points"
+  - balance: "Techweb: Moved NTNet relay back to tcomms node"
+  - balance: "Techweb: Moved blood pack and chem pack to the starting node"

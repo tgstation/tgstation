@@ -111,7 +111,7 @@
 /obj/structure/lattice,
 /obj/structure/marker_beacon/burgundy,
 /turf/template_noop,
-/area/template_noop)
+/area/shuttle/escape)
 "au" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -210,8 +210,7 @@
 	},
 /obj/structure/fans/tiny/shield{
 	max_integrity = 400;
-	name = "recycling shield";
-	layer = 2.61
+	name = "recycling shield"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -573,8 +572,7 @@
 	},
 /obj/structure/fans/tiny/shield{
 	max_integrity = 400;
-	name = "recycling shield";
-	layer = 2.61
+	name = "recycling shield"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -728,7 +726,7 @@
 "Pw" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/shuttle/escape)
 "QP" = (
 /obj/machinery/conveyor/auto/inverted{
 	dir = 1

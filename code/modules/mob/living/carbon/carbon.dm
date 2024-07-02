@@ -228,13 +228,6 @@
 	. = ..()
 	loc.handle_fall(src)//it's loc so it doesn't call the mob's handle_fall which does nothing
 
-/mob/living/carbon/is_muzzled()
-	for (var/obj/item/clothing/clothing in get_equipped_items())
-		if(clothing.clothing_flags & BLOCKS_SPEECH)
-			return TRUE
-	return FALSE
-
-
 /mob/living/carbon/resist_buckle()
 	if(!HAS_TRAIT(src, TRAIT_RESTRAINED))
 		buckled.user_unbuckle_mob(src, src)

@@ -10,7 +10,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 45 SECONDS
 
-	invocation = "CL'VE!"
+	invocation = "Fer're!"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 

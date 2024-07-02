@@ -16,6 +16,9 @@
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY // Should be at the top
 	route = PATH_START
+	research_tree_icon_path = 'icons/effects/eldritch.dmi'
+	research_tree_icon_state = "eye_close"
+	research_tree_icon_frame = 1
 	/// How many targets do we generate?
 	var/num_targets_to_generate = 5
 	/// Whether we've generated a heretic sacrifice z-level yet, from any heretic.

@@ -1,3 +1,33 @@
+/mob/living/carbon/proc/check_obscured_slots(transparent_protection)
+	var/obscured = NONE
+	var/hidden_slots = NONE
+
+	for(var/obj/item/equipped_item in get_equipped_items())
+		hidden_slots |= equipped_item.flags_inv
+		if(transparent_protection)
+			hidden_slots |= equipped_item.transparent_protection
+
+	if(hidden_slots & HIDENECK)
+		obscured |= ITEM_SLOT_NECK
+	if(hidden_slots & HIDEMASK)
+		obscured |= ITEM_SLOT_MASK
+	if(hidden_slots & HIDEEYES)
+		obscured |= ITEM_SLOT_EYES
+	if(hidden_slots & HIDEEARS)
+		obscured |= ITEM_SLOT_EARS
+	if(hidden_slots & HIDEGLOVES)
+		obscured |= ITEM_SLOT_GLOVES
+	if(hidden_slots & HIDEJUMPSUIT)
+		obscured |= ITEM_SLOT_ICLOTHING
+	if(hidden_slots & HIDESHOES)
+		obscured |= ITEM_SLOT_FEET
+	if(hidden_slots & HIDESUITSTORAGE)
+		obscured |= ITEM_SLOT_SUITSTORE
+	if(hidden_slots & HIDEHEADGEAR)
+		obscured |= ITEM_SLOT_HEAD
+
+	return obscured
+
 /mob/living/carbon/get_item_by_slot(slot_id)
 	switch(slot_id)
 		if(ITEM_SLOT_BACK)

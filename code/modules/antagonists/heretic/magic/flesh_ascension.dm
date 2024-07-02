@@ -9,7 +9,7 @@
 
 	school = SCHOOL_FORBIDDEN
 
-	invocation = "REALITY UNCOIL!"
+	invocation = "REALITAS EXSERPAT!!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 

@@ -11,7 +11,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 15 SECONDS
 
-	invocation = "FL'MS O'ET'RN'ITY."
+	invocation = "Sanguis suctio!"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 

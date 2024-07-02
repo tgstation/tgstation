@@ -12,10 +12,16 @@
 	viable_zones = list(BODY_ZONE_HEAD)
 
 /datum/wound_pregen_data/cranial_fissure/get_weight(obj/item/bodypart/limb, woundtype, damage, attack_direction, damage_source)
-	if (limb.owner?.stat < HARD_CRIT)
-		return 0
+	if (isnull(limb.owner))
+		return ..()
 
-	return ..()
+	if (HAS_TRAIT(limb.owner, TRAIT_CURSED) && (limb.get_mangled_state() & BODYPART_MANGLED_INTERIOR))
+		return ..()
+
+	if (limb.owner.stat >= HARD_CRIT)
+		return ..()
+
+	return 0
 
 /// A wound applied when receiving significant enough damage to the head.
 /// Will allow other players to take your eyes out of your head, and slipping

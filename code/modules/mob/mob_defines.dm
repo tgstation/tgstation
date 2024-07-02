@@ -191,3 +191,6 @@
 	var/active_typing_indicator
 	///the icon currently used for the thinking indicator's bubble
 	var/active_thinking_indicator
+
+	/// A ref of the area we're taking our ambient loop from.
+	var/area/ambience_tracked_area

@@ -48,7 +48,7 @@
 	old_owner.gib(DROP_ALL_REMAINS)
 
 /obj/item/bodypart/chest/can_dismember(obj/item/item)
-	if(owner.stat < HARD_CRIT || !contents.len)
+	if((!HAS_TRAIT(owner, TRAIT_CURSED) && owner.stat < HARD_CRIT) || !contents.len)
 		return FALSE
 	return ..()
 

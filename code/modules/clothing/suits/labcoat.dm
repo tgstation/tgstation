@@ -69,6 +69,10 @@
 	greyscale_config_worn = /datum/greyscale_config/labcoat/worn
 	greyscale_colors = "#EEEEEE#4A77A1#4A77A1#7095C2"
 
+/obj/item/clothing/suit/toggle/labcoat/genetics/Initialize(mapload)
+	. = ..()
+	allowed += /obj/item/sequence_scanner
+
 /obj/item/clothing/suit/toggle/labcoat/chemist
 	name = "chemist labcoat"
 	desc = "A suit that protects against minor chemical spills. Has an orange stripe on the shoulder."

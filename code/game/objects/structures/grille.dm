@@ -42,7 +42,7 @@
 		return
 
 	. = ..()
-	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
+	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & USES_SMOOTHING))
 		QUEUE_SMOOTH(src)
 
 /obj/structure/grille/update_icon_state()

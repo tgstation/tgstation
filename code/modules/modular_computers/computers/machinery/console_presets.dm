@@ -33,6 +33,17 @@
 		/datum/computer_file/program/scipaper_program,
 	)
 
+/obj/machinery/modular_computer/preset/research/away
+	name = "old research console"
+	desc = "An old computer used for writing research papers."
+	starting_programs = list(
+		/datum/computer_file/program/scipaper_program,
+	)
+
+/obj/machinery/modular_computer/preset/research/away/Initialize(mapload)
+	. = ..()
+	cpu.device_theme = PDA_THEME_RETRO
+
 // ===== COMMAND CONSOLE =====
 /obj/machinery/modular_computer/preset/command
 	name = "command console"

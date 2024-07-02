@@ -1,0 +1,4 @@
+author: "GremlinSeeker"
+delete-after: True
+changes:
+  - bugfix: "fixed Birdshot bar and surrounding areas not properly connected to the power grid."

@@ -180,6 +180,7 @@
 #include "map_landmarks.dm"
 #include "mapload_space_verification.dm"
 #include "mapping.dm"
+#include "mapping_nearstation_test.dm"
 #include "mecha_damage.dm"
 #include "medical_wounds.dm"
 #include "merge_type.dm"

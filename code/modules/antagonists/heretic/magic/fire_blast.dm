@@ -12,7 +12,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 45 SECONDS
 
-	invocation = "V'LC'N!"
+	invocation = "Eld'fjall!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 	channel_time = 5 SECONDS

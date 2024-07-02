@@ -459,8 +459,8 @@
 /obj/effect/meteor/pumpkin
 	name = "PUMPKING"
 	desc = "THE PUMPKING'S COMING!"
-	icon = 'icons/obj/meteor_spooky.dmi'
-	icon_state = "pumpkin"
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "spooky"
 	hits = 10
 	heavy = TRUE
 	dropamt = 1
