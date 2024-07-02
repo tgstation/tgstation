@@ -34,3 +34,7 @@
 /datum/map_template/shuttle/cargo/northstar
 	suffix = "northstar"
 	name = "cargo ferry (North Star)"
+
+/datum/map_template/shuttle/cargo/catwalk
+	suffix = "catwalk"
+	name = "cargo ferry (Catwalk)"

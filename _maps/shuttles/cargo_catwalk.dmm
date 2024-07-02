@@ -2,6 +2,10 @@
 "a" = (
 /turf/closed/wall/mineral/titanium/survival,
 /area/shuttle/supply)
+"c" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/supply)
 "f" = (
 /turf/template_noop,
 /area/template_noop)
@@ -43,6 +47,9 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/supply)
+"p" = (
+/turf/closed/wall/mineral/titanium/survival/nodiagonal,
+/area/shuttle/supply)
 "r" = (
 /obj/structure/railing,
 /obj/machinery/conveyor{
@@ -50,6 +57,11 @@
 	id = "cargoload"
 	},
 /turf/open/floor/iron/smooth,
+/area/shuttle/supply)
+"t" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/smooth_large,
 /area/shuttle/supply)
 "u" = (
 /obj/machinery/conveyor{
@@ -67,6 +79,14 @@
 "x" = (
 /obj/effect/spawner/structure/window/survival_pod,
 /turf/open/floor/plating,
+/area/shuttle/supply)
+"y" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "cargounload"
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/smooth,
 /area/shuttle/supply)
 "C" = (
 /turf/open/floor/iron/stairs/medium,
@@ -191,13 +211,13 @@
 
 (1,1,1) = {"
 f
-a
+p
 h
 Y
-a
+p
 S
 G
-a
+p
 a
 a
 a
@@ -214,7 +234,7 @@ F
 u
 M
 Z
-o
+t
 o
 a
 a
@@ -236,7 +256,7 @@ N
 "}
 (4,1,1) = {"
 a
-g
+y
 W
 E
 E
@@ -289,7 +309,7 @@ J
 F
 F
 C
-K
+c
 K
 a
 a

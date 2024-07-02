@@ -6,10 +6,6 @@
 	suffix = "box"
 	name = "arrival shuttle (Box)"
 
-/datum/map_template/shuttle/arrival/catwalk
-	suffix = "catwalk"
-	name = "arrival shuttle (Catwalk)"
-
 /datum/map_template/shuttle/arrival/donut
 	suffix = "donut"
 	name = "arrival shuttle (Donut)"
@@ -37,3 +33,7 @@
 /datum/map_template/shuttle/arrival/northstar
 	suffix = "northstar"
 	name = "arrival shuttle (North Star)"
+
+/datum/map_template/shuttle/arrival/catwalk
+	suffix = "catwalk"
+	name = "arrival shuttle (Catwalk)"

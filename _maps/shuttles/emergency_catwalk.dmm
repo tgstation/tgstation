@@ -67,11 +67,6 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/poster/official/moth_hardhat/directional/north,
 /obj/structure/closet/crate/medical,
-/mob/living/basic/bot/medbot{
-	name = "\improper emergency medibot";
-	pixel_x = -3;
-	pixel_y = 2
-	},
 /obj/item/lazarus_injector,
 /obj/item/storage/medkit/emergency,
 /obj/item/storage/medkit/o2,
@@ -156,7 +151,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/shuttle)
+/area/shuttle/escape/brig)
 "kj" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
@@ -304,7 +299,7 @@
 /obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/machinery/light/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
-/area/shuttle)
+/area/shuttle/escape/brig)
 "va" = (
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle)
@@ -458,7 +453,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/shuttle)
+/area/shuttle/escape/brig)
 "Cq" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -557,7 +552,7 @@
 	pixel_y = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/shuttle)
+/area/shuttle/escape/brig)
 "Gv" = (
 /obj/machinery/jukebox,
 /obj/effect/turf_decal/siding/thinplating_new,
@@ -581,7 +576,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/shuttle)
+/area/shuttle/escape/brig)
 "Hf" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/bot,
@@ -596,14 +591,14 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/shuttle)
+/area/shuttle/escape/brig)
 "Il" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Escape Shuttle Brig"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark/textured,
-/area/shuttle)
+/area/shuttle/escape/brig)
 "IV" = (
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 1
@@ -620,14 +615,14 @@
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/textured,
-/area/shuttle)
+/area/shuttle/escape/brig)
 "Kb" = (
 /obj/machinery/status_display/evac/directional/north,
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/shuttle)
+/area/shuttle/escape/brig)
 "KA" = (
 /obj/item/clothing/suit/hazardvest{
 	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
@@ -870,7 +865,7 @@
 /area/shuttle)
 "Rj" = (
 /turf/open/floor/mineral/plastitanium/red,
-/area/shuttle)
+/area/shuttle/escape/brig)
 "RC" = (
 /obj/machinery/light/floor,
 /obj/effect/turf_decal/siding/thinplating_new{
