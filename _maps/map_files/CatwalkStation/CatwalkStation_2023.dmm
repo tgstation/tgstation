@@ -7383,7 +7383,7 @@
 	dwidth = 9;
 	height = 25;
 	shuttle_id = "emergency_home";
-	name = "MetaStation emergency evac bay";
+	name = "Catwalk Station emergency evac bay";
 	width = 29
 	},
 /turf/open/space/basic,
@@ -11455,11 +11455,11 @@
 "emj" = (
 /obj/docking_port/stationary{
 	dir = 4;
-	dwidth = 4;
-	height = 7;
+	dwidth = 3;
+	height = 8;
 	name = "Cargo Bay";
 	shuttle_id = "cargo_home";
-	width = 12
+	width = 13
 	},
 /turf/open/floor/engine/hull,
 /area/space/nearstation)
@@ -18477,12 +18477,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/medbay/central)
-"gTz" = (
-/obj/effect/turf_decal/caution/stand_clear{
-	dir = 8
-	},
-/turf/open/floor/engine/hull,
-/area/space/nearstation)
 "gTL" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Circle Center"
@@ -20258,6 +20252,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/entry)
+"hBz" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/turf/open/floor/engine/hull,
+/area/space/nearstation)
 "hBM" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -27486,7 +27486,8 @@
 /area/station/maintenance/solars/port/aft)
 "kfX" = (
 /obj/vehicle/sealed/mecha/ripley/cargo{
-	name = "\improper APLU \";\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tCargostormer 3\""=None
+	name = "\improper APLU \";
+	\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tCargostormer 3\""=None
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -50642,6 +50643,12 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"sWg" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/turf/open/floor/engine/hull,
+/area/space/nearstation)
 "sWr" = (
 /obj/machinery/door/airlock/mining{
 	name = "inner maintenance"
@@ -55248,6 +55255,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
+/obj/effect/turf_decal/box/corners,
 /turf/open/floor/engine/hull,
 /area/space/nearstation)
 "uHH" = (
@@ -56956,6 +56964,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/lesser)
+"vot" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/turf/open/floor/engine/hull,
+/area/space/nearstation)
 "voF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -175396,7 +175410,7 @@ hRj
 hRj
 hRj
 hRj
-hRj
+hBz
 hRj
 hRj
 emj
@@ -175408,7 +175422,7 @@ hRj
 hRj
 hRj
 hRj
-hRj
+sWg
 aCL
 rJB
 oOm
@@ -175657,7 +175671,7 @@ hRj
 hRj
 hRj
 hRj
-gTz
+hRj
 hRj
 hRj
 hRj
@@ -177195,7 +177209,7 @@ hRj
 hRj
 hRj
 hRj
-hRj
+vot
 hRj
 hRj
 hRj
