@@ -12,6 +12,11 @@
 	name = "Bitrunning hololadder spawn"
 	icon_state = "hololadder"
 
+/// A permanent exit for the domain
+/obj/effect/landmark/bitrunning/permanent_exit
+	name = "Bitrunning permanent exit"
+	icon_state = "perm_exit"
+
 /// Where the crates need to be taken
 /obj/effect/landmark/bitrunning/cache_goal_turf
 	name = "Bitrunning goal turf"

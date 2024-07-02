@@ -1,0 +1,12262 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"al" = (
+/obj/structure/flora/coconuts{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"as" = (
+/obj/structure/flora/tree/palm/style_2{
+	pixel_y = 6
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"aw" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"aA" = (
+/obj/structure/chair/stool/bamboo{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"aD" = (
+/obj/item/storage/medkit/regular{
+	pixel_y = 15;
+	pixel_x = -2
+	},
+/obj/structure/table/glass,
+/obj/item/emergency_bed{
+	pixel_y = 6
+	},
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"aE" = (
+/obj/structure/chair/stool/directional/south,
+/turf/open/floor/iron/freezer,
+/area/virtual_domain)
+"aQ" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/under/costume/sailor,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"aY" = (
+/obj/structure/table/wood,
+/obj/item/tape{
+	pixel_y = 7;
+	pixel_x = 11
+	},
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_x = -7;
+	pixel_y = 12
+	},
+/obj/effect/spawner/random/bureaucracy/pen{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"aZ" = (
+/obj/structure/table/wood,
+/obj/item/food/grown/watermelon{
+	pixel_y = 8;
+	pixel_x = 6
+	},
+/obj/item/food/watermelonslice,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"ba" = (
+/obj/effect/landmark/bitrunning/curiosity_spawn,
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain)
+"bb" = (
+/obj/item/circular_saw{
+	pixel_y = 4
+	},
+/obj/item/scalpel{
+	pixel_y = 15
+	},
+/obj/structure/table/glass,
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"bp" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	pixel_y = -1;
+	pixel_x = 5;
+	dir = 8
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"bx" = (
+/obj/machinery/defibrillator_mount/directional/west,
+/obj/structure/bed/pod{
+	desc = "An old medical bed, just waiting for replacement with something up to date.";
+	dir = 4;
+	name = "medical bed"
+	},
+/obj/machinery/iv_drip{
+	pixel_y = 21;
+	pixel_x = -4
+	},
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"bD" = (
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/obj/item/reagent_containers/cup/soda_cans/melon_soda{
+	pixel_y = 13;
+	pixel_x = -9
+	},
+/obj/item/fishing_rod{
+	pixel_x = 8;
+	pixel_y = -6
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"bE" = (
+/turf/open/floor/wood,
+/area/virtual_domain)
+"bK" = (
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"bT" = (
+/obj/item/cigbutt{
+	pixel_y = -4;
+	pixel_x = 2
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"bX" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"bY" = (
+/turf/open/misc/beach/coast{
+	dir = 4
+	},
+/area/virtual_domain/fullbright)
+"cc" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/machinery/vending/cigarette/beach,
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"ce" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"cg" = (
+/obj/machinery/medical_kiosk,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"ch" = (
+/obj/machinery/recharge_station,
+/obj/machinery/light/directional/east,
+/turf/open/floor/carpet/cyan,
+/area/virtual_domain)
+"cp" = (
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_x = -8;
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind{
+	pixel_x = 15
+	},
+/obj/structure/fluff/beach_umbrella/science,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"cr" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/machinery/button/door/directional/north{
+	id = "beach_room_9";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/item/claymore/cutlass{
+	desc = "A piratey, foam sword used by kids to train themselves in the business of \"negotiating\" the transfer of treasure.";
+	force = 0;
+	name = "foam cutlass";
+	throwforce = 0
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"ct" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"cB" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/under/costume/pirate,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"cC" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"cE" = (
+/turf/open/misc/beach/coast,
+/area/virtual_domain/fullbright)
+"cH" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/door/airlock/wood{
+	name = "Room 7";
+	id_tag = "beach_room_7"
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"cK" = (
+/obj/item/reagent_containers/cup/glass/bottle/wine{
+	pixel_y = 16;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_y = 3;
+	pixel_x = -8
+	},
+/obj/structure/table/bronze,
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_y = 10;
+	pixel_x = 6
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"cO" = (
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"cW" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/carpet/cyan,
+/area/virtual_domain)
+"db" = (
+/obj/machinery/door/airlock/wood{
+	name = "Room 11";
+	id_tag = "beach_room_11"
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"de" = (
+/obj/effect/turf_decal/sand,
+/mob/living/basic/crab,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"dj" = (
+/obj/machinery/door/airlock/wood/glass{
+	name = "Hotel's Facilities"
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"dl" = (
+/obj/structure/table/bronze,
+/obj/item/reagent_containers/condiment/bbqsauce{
+	pixel_y = 13;
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/condiment/hotsauce{
+	pixel_y = 9;
+	pixel_x = -3
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"dp" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"du" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	pixel_y = -1;
+	pixel_x = 5;
+	dir = 8
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"dv" = (
+/obj/structure/table,
+/obj/item/wrench{
+	pixel_y = 4
+	},
+/obj/item/storage/toolbox/emergency,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/iron/dark/herringbone,
+/area/virtual_domain)
+"dA" = (
+/obj/structure/table/bronze,
+/obj/item/paper_bin/carbon{
+	pixel_y = 8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"dB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/eighties,
+/area/virtual_domain)
+"dD" = (
+/obj/item/trash/can{
+	pixel_y = -9;
+	pixel_x = 10
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"dG" = (
+/obj/effect/turf_decal/siding/blue,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"dH" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"dS" = (
+/obj/structure/table/bronze,
+/obj/structure/sign/poster/random/directional/east,
+/obj/item/table_clock{
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"dW" = (
+/obj/structure/railing/corner/end/flip{
+	dir = 1
+	},
+/obj/machinery/door/airlock/wood{
+	name = "Balcony";
+	id_tag = "beach_room_x"
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"dX" = (
+/obj/item/toy/seashell{
+	pixel_y = -5
+	},
+/turf/open/misc/beach/coast,
+/area/virtual_domain/fullbright)
+"dY" = (
+/obj/structure/table/wood/poker,
+/obj/item/stack/spacecash/c100{
+	pixel_y = 5
+	},
+/obj/item/toy/cards/deck{
+	pixel_y = 13;
+	pixel_x = -5
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"ee" = (
+/obj/structure/table/reinforced,
+/obj/item/defibrillator/loaded{
+	pixel_y = 7
+	},
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"ef" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"eh" = (
+/obj/structure/table/wood/fancy,
+/obj/effect/turf_decal/tile/dark_red/full,
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_x = -13;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/turf/open/floor/iron/smooth_large,
+/area/virtual_domain/fullbright)
+"en" = (
+/turf/open/floor/eighties,
+/area/virtual_domain)
+"ev" = (
+/obj/structure/mineral_door/sandstone{
+	name = "Sandcastle"
+	},
+/obj/effect/turf_decal/sand/plating,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"ew" = (
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/landmark/bitrunning/loot_signal,
+/turf/open/indestructible/binary,
+/area/virtual_domain/protected_space/fullbright)
+"eH" = (
+/turf/open/misc/beach/coast{
+	dir = 9
+	},
+/area/virtual_domain/fullbright)
+"eJ" = (
+/obj/structure/table/bronze,
+/obj/item/camera{
+	pixel_y = 5
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"eK" = (
+/turf/closed/wall/mineral/wood,
+/area/virtual_domain/fullbright)
+"eM" = (
+/obj/item/trash/can{
+	pixel_y = -5;
+	pixel_x = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"eO" = (
+/obj/structure/table/bronze,
+/obj/item/camera{
+	pixel_y = 8;
+	pixel_x = -3
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"eP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/food_cart,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"fe" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	pixel_y = -2;
+	pixel_x = 5;
+	dir = 8
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"fg" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/wall/mineral/wood,
+/area/virtual_domain)
+"fv" = (
+/obj/item/toy/seashell{
+	pixel_x = 12;
+	pixel_y = -9
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"fH" = (
+/obj/structure/table/bronze,
+/obj/item/camera{
+	pixel_y = 8;
+	pixel_x = 6
+	},
+/obj/item/pen/blue{
+	pixel_x = -11;
+	pixel_y = 2
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"fI" = (
+/turf/open/misc/beach/sand,
+/area/virtual_domain/protected_space/fullbright)
+"fJ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/water/beach,
+/area/virtual_domain)
+"fL" = (
+/obj/machinery/computer/order_console/cook,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"fY" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/item/binoculars{
+	pixel_y = 20
+	},
+/obj/item/megaphone{
+	pixel_y = 2;
+	pixel_x = 1
+	},
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"gc" = (
+/obj/structure/table/bronze,
+/obj/item/pai_card{
+	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
+	name = "\improper Nanotrasen-brand personal AI device exhibit";
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"gf" = (
+/obj/machinery/button/door/directional/south{
+	id = "beach_room_5";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"gi" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/item/stack/arcadeticket{
+	pixel_y = 12;
+	pixel_x = -16
+	},
+/turf/open/floor/eighties,
+/area/virtual_domain)
+"gs" = (
+/obj/structure/closet/crate,
+/obj/item/clothing/suit/hooded/carp_costume,
+/obj/item/clothing/head/hooded/carp_hood,
+/obj/item/toy/plush/carpplushie,
+/obj/item/toy/plush/shark,
+/turf/open/floor/eighties,
+/area/virtual_domain)
+"gw" = (
+/turf/open/floor/carpet/cyan,
+/area/virtual_domain)
+"gA" = (
+/obj/effect/turf_decal/sand{
+	density = 1
+	},
+/obj/effect/decal/fakelattice,
+/turf/open/floor/pod/light{
+	density = 1
+	},
+/area/virtual_domain/fullbright)
+"gB" = (
+/obj/effect/landmark/bitrunning/curiosity_spawn,
+/turf/open/floor/plastic,
+/area/virtual_domain)
+"gC" = (
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/structure/fluff/beach_umbrella/syndi,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"gH" = (
+/obj/structure/tank_holder/extinguisher,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"gI" = (
+/obj/item/storage/toolbox/fishing{
+	pixel_x = 2;
+	pixel_y = -13
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"gK" = (
+/obj/structure/bed/double,
+/obj/item/bedsheet/hos/double{
+	name = "bedsheet";
+	desc = "A bedsheet from the beach hotel."
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"gL" = (
+/turf/open/misc/beach/coast/corner,
+/area/virtual_domain/fullbright)
+"gN" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"gP" = (
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"gV" = (
+/obj/structure/flora/tree/palm{
+	pixel_y = 25
+	},
+/obj/structure/flora/coconuts{
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"hh" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/shovel{
+	pixel_y = 15;
+	pixel_x = -8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"ho" = (
+/obj/structure/chair/stool/bar/directional/west,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"hu" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/protected_space/fullbright)
+"hA" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/fullupgrade{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"hB" = (
+/obj/item/reagent_containers/cup/soda_cans/lemon_lime{
+	pixel_x = -12
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"hD" = (
+/obj/effect/decal/cleanable/oil,
+/obj/machinery/button/door/directional/south{
+	id = "BeachGarage"
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/virtual_domain)
+"hM" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/button/door/directional/south{
+	id = "BeachBoats"
+	},
+/obj/effect/landmark/bitrunning/curiosity_spawn,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"hT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/cobweb,
+/obj/machinery/power/smes/full,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"hZ" = (
+/obj/structure/table/bronze,
+/obj/item/storage/bag/tray,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"ii" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"ij" = (
+/turf/open/misc/beach/coast{
+	dir = 10
+	},
+/area/virtual_domain/fullbright)
+"ik" = (
+/obj/structure/dresser,
+/obj/machinery/digital_clock/directional/north,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"il" = (
+/obj/structure/chair/plastic,
+/obj/item/fishing_rod{
+	pixel_x = 11;
+	pixel_y = -8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"io" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/item/kirbyplants/organic/plant8{
+	pixel_y = 9;
+	pixel_x = 6
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"iy" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north{
+	layer = 2.9
+	},
+/obj/structure/chair/stool/directional/south,
+/obj/item/clothing/glasses/sunglasses{
+	pixel_y = -2;
+	pixel_x = 2
+	},
+/obj/item/bikehorn/airhorn{
+	pixel_y = -15;
+	pixel_x = -13
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"iF" = (
+/obj/structure/table/bronze,
+/obj/structure/desk_bell{
+	pixel_x = -11;
+	pixel_y = 9
+	},
+/obj/item/phone{
+	pixel_y = 9;
+	pixel_x = 8
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"iP" = (
+/obj/structure/chair/plastic,
+/obj/item/clothing/head/collectable/paper{
+	desc = "What looks like an ordinary paper hat is actually a rare and valuable collector's edition paper hat. Keep away from fire, Curators, and ocean waves.";
+	pixel_y = -4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"iQ" = (
+/obj/machinery/button/door/directional/north{
+	id = "beach_room_3";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"iU" = (
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"iY" = (
+/obj/item/storage/bag/tray,
+/obj/item/food/grown/watermelon{
+	pixel_y = 4;
+	pixel_x = -1
+	},
+/obj/effect/turf_decal/stripes/red/box,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"jb" = (
+/obj/structure/tank_holder/extinguisher{
+	pixel_y = 11
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"jm" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
+/obj/effect/landmark/bitrunning/curiosity_spawn,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"jn" = (
+/obj/item/cigbutt{
+	pixel_y = -6;
+	pixel_x = -12
+	},
+/obj/structure/railing/corner/end/flip{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"jp" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/neck/necklace/dope,
+/obj/item/clothing/suit/jacket/letterman,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"jq" = (
+/obj/structure/musician/piano,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"jr" = (
+/obj/structure/flora/tree/palm{
+	pixel_y = 10;
+	pixel_x = 7
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"jw" = (
+/obj/machinery/space_heater,
+/obj/structure/sign/clock/directional/north,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"jK" = (
+/obj/machinery/reagentgrinder{
+	pixel_y = 15;
+	pixel_x = -1
+	},
+/obj/structure/table/bronze,
+/obj/structure/desk_bell{
+	pixel_x = 12;
+	pixel_y = 3
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"jL" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"jP" = (
+/turf/open/indestructible/binary,
+/area/virtual_domain/protected_space/fullbright)
+"jV" = (
+/turf/open/floor/iron/dark/herringbone,
+/area/virtual_domain)
+"jW" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"ka" = (
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"ke" = (
+/obj/vehicle/ridden/atv{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/virtual_domain)
+"ky" = (
+/obj/machinery/vending/snack,
+/obj/effect/turf_decal/sand,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"kD" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"kI" = (
+/obj/effect/turf_decal/sand,
+/turf/closed/wall/mineral/wood,
+/area/virtual_domain)
+"kJ" = (
+/obj/machinery/shower/directional/south,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"kL" = (
+/obj/structure/billboard/space_cola,
+/obj/effect/turf_decal/siding/dark_red,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"kN" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"lc" = (
+/obj/machinery/space_heater,
+/obj/machinery/button/door/directional/north{
+	id = "beach_room_2";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"lh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/toolbox/mechanical/old,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"lk" = (
+/obj/effect/turf_decal/siding/dark_red/corner,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"lx" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/virtual_domain/fullbright)
+"lz" = (
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 1
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"lA" = (
+/obj/machinery/shower/directional/west,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"lF" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/o2{
+	pixel_y = 17;
+	pixel_x = -1
+	},
+/obj/item/storage/medkit/brute{
+	pixel_y = 23;
+	pixel_x = -1
+	},
+/obj/item/food/lollipop{
+	pixel_y = 8;
+	pixel_x = 12
+	},
+/obj/item/food/lollipop{
+	pixel_y = 5;
+	pixel_x = 12
+	},
+/obj/item/reagent_containers/cup/bottle/multiver{
+	pixel_x = -9;
+	pixel_y = 9
+	},
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"lG" = (
+/obj/item/toy/seashell{
+	pixel_y = 11;
+	pixel_x = -7
+	},
+/turf/open/misc/beach/coast,
+/area/virtual_domain/fullbright)
+"lI" = (
+/obj/structure/table/wood/poker,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"lJ" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_y = 7
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"lP" = (
+/obj/structure/chair,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"lS" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"lU" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Temporary Holding Cell"
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain)
+"lW" = (
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"mi" = (
+/obj/structure/flora/tree/palm{
+	pixel_y = 24
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"mv" = (
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 1
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"mx" = (
+/obj/machinery/door/airlock/wood{
+	name = "Arcade"
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"mJ" = (
+/obj/structure/flora/tree/palm/style_2{
+	pixel_y = 25
+	},
+/obj/item/stack/sheet/mineral/sandstone/thirty{
+	pixel_y = -10;
+	pixel_x = -5
+	},
+/obj/item/stack/sheet/mineral/sandstone/thirty{
+	pixel_y = -2;
+	pixel_x = 9
+	},
+/obj/item/stack/sheet/mineral/sandstone/thirty{
+	pixel_y = -4;
+	pixel_x = 1
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"mL" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/door/airlock/wood{
+	name = "Tropical Kitchen"
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"mP" = (
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/obj/item/reagent_containers/cup/soda_cans/starkist{
+	pixel_y = 10;
+	pixel_x = -17
+	},
+/obj/item/fishing_rod{
+	pixel_x = -13;
+	pixel_y = 2
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"mV" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"mW" = (
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"nc" = (
+/turf/open/misc/beach/coast/corner{
+	dir = 1
+	},
+/area/virtual_domain/fullbright)
+"nk" = (
+/obj/machinery/door/airlock/wood{
+	name = "Balcony";
+	id_tag = "beach_room_x"
+	},
+/obj/structure/railing/corner/end/flip{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"nR" = (
+/obj/structure/flora/tree/palm{
+	pixel_y = 6
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"nX" = (
+/obj/structure/table/wood,
+/obj/item/melee/baseball_bat{
+	pixel_y = 3;
+	pixel_x = 6
+	},
+/obj/item/clothing/glasses/blindfold/white{
+	pixel_y = 7;
+	pixel_x = -5
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"oa" = (
+/turf/open/misc/beach/coast{
+	dir = 1
+	},
+/area/virtual_domain/fullbright)
+"ob" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"og" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/water/beach,
+/area/virtual_domain)
+"oq" = (
+/obj/structure/table/wood,
+/obj/item/food/grown/watermelon{
+	pixel_y = 13;
+	pixel_x = 6
+	},
+/obj/item/food/grown/watermelon{
+	pixel_y = 8;
+	pixel_x = -4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"os" = (
+/obj/structure/flora/tree/palm/style_2{
+	pixel_y = 12;
+	pixel_x = -7
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"ot" = (
+/turf/template_noop,
+/area/template_noop)
+"ow" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"oC" = (
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_x = -8;
+	pixel_y = 13
+	},
+/turf/open/floor/carpet/blue,
+/area/virtual_domain/fullbright)
+"oE" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/glasses/heat,
+/obj/item/clothing/head/cowboy/brown,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"oJ" = (
+/obj/item/flashlight/flare/torch{
+	pixel_x = -11;
+	pixel_y = -6
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"oQ" = (
+/obj/structure/table/bronze,
+/obj/item/pai_card{
+	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
+	name = "\improper Nanotrasen-brand personal AI device exhibit";
+	pixel_y = 2
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"oX" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"oZ" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"pj" = (
+/obj/structure/table/bronze,
+/obj/item/camera{
+	pixel_y = 12;
+	pixel_x = -10
+	},
+/obj/item/camera{
+	pixel_y = 4;
+	pixel_x = 1
+	},
+/obj/item/camera_film{
+	pixel_y = -11;
+	pixel_x = -10
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"pq" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/suit/jacket/letterman_syndie,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"pv" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"py" = (
+/turf/open/floor/iron/stairs,
+/area/virtual_domain/fullbright)
+"pz" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/under/costume/lobster,
+/obj/item/clothing/head/costume/lobsterhat,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"pC" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"pE" = (
+/obj/machinery/door/airlock/wood/glass{
+	name = "Rooms"
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"pJ" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/suit/jacket/letterman_red,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"pV" = (
+/obj/item/stack/arcadeticket{
+	pixel_y = 5;
+	pixel_x = 13
+	},
+/turf/open/floor/eighties,
+/area/virtual_domain)
+"pX" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"qa" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"qb" = (
+/obj/machinery/button/door/directional/west{
+	id = "beach_room_1";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"qc" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/vending/clothing,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"qB" = (
+/obj/item/toy/seashell{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"qH" = (
+/obj/structure/bed/medical/emergency,
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"qR" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/item/cigbutt{
+	pixel_y = -6;
+	pixel_x = -12
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"qZ" = (
+/obj/effect/turf_decal/siding/dark_red/corner{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"ra" = (
+/obj/item/stack/sheet/mineral/sandstone{
+	pixel_x = 11
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"rj" = (
+/obj/machinery/grill,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"rl" = (
+/obj/structure/rack,
+/obj/item/melee/skateboard/hoverboard{
+	pixel_x = -7
+	},
+/obj/item/melee/skateboard/hoverboard,
+/obj/item/melee/skateboard/hoverboard{
+	pixel_x = 7
+	},
+/turf/open/misc/beach/coast/corner{
+	dir = 4
+	},
+/area/virtual_domain/fullbright)
+"rn" = (
+/obj/machinery/computer/operating{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"ro" = (
+/obj/structure/closet/secure_closet/personal,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"rw" = (
+/obj/structure/table/bronze,
+/obj/machinery/button/door/directional/south{
+	id = "beach_room_4";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/item/storage/toolbox/fishing{
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"rz" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"rB" = (
+/obj/item/toy/seashell{
+	pixel_x = -10;
+	pixel_y = -4
+	},
+/obj/structure/fluff/beach_umbrella,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"rD" = (
+/obj/structure/flora/coconuts,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"rE" = (
+/obj/structure/table/bronze,
+/obj/machinery/button/door/directional/south{
+	id = "beach_room_11";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/item/storage/toolbox/fishing{
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"rG" = (
+/obj/machinery/telecomms/allinone,
+/obj/item/wirecutters{
+	pixel_y = 9
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"rI" = (
+/obj/machinery/door/airlock/wood{
+	name = "Room 12";
+	id_tag = "beach_room_12"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"rK" = (
+/obj/machinery/vending/cigarette/beach,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"rQ" = (
+/obj/structure/flora/tree/palm{
+	pixel_y = 7;
+	pixel_x = 9
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"rR" = (
+/obj/structure/table/bronze,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"rW" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"sa" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/door/airlock/wood{
+	name = "Bathroom";
+	id_tag = "toilet3beach"
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain)
+"sh" = (
+/obj/structure/statue/sandstone/venus{
+	pixel_y = 9;
+	dir = 1;
+	anchored = 1
+	},
+/obj/structure/flora/bush/flowers_br/style_random,
+/turf/open/floor/grass,
+/area/virtual_domain)
+"si" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/condiment/enzyme{
+	layer = 5;
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/obj/item/food/seaweedsheet{
+	pixel_y = 6;
+	pixel_x = -4
+	},
+/obj/item/food/seaweedsheet{
+	pixel_x = -15;
+	pixel_y = 2
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"sl" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_y = 17;
+	pixel_x = -6
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"st" = (
+/obj/structure/table/bronze,
+/obj/structure/sign/poster/random/directional/east,
+/obj/machinery/button/door/directional/south{
+	id = "beach_room_8";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/item/camera{
+	pixel_y = 5
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"sz" = (
+/obj/item/toy/seashell,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"sC" = (
+/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"sI" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/suit/costume/hawaiian{
+	pixel_y = 2;
+	pixel_x = 5
+	},
+/obj/item/clothing/suit/costume/hawaiian{
+	pixel_y = 6;
+	pixel_x = -4
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"sO" = (
+/obj/structure/fluff/beach_umbrella/syndi,
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_x = -8;
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/cup/soda_cans/thirteenloko{
+	pixel_x = 15;
+	pixel_y = -11
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"sR" = (
+/obj/structure/flora/tree/palm/style_2{
+	pixel_y = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"sV" = (
+/obj/structure/table,
+/obj/item/storage/belt/utility,
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_y = 14;
+	pixel_x = -8
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"sW" = (
+/obj/machinery/door/airlock/wood{
+	name = "Room 5";
+	id_tag = "beach_room_5"
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"ta" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"tf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/box/lights/mixed{
+	pixel_x = -4;
+	pixel_y = 18
+	},
+/obj/item/storage/box/lights/mixed{
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/obj/item/grenade/chem_grenade/cleaner{
+	pixel_x = -7;
+	pixel_y = 12
+	},
+/obj/structure/table,
+/obj/item/reagent_containers/cup/bucket{
+	pixel_x = 10;
+	pixel_y = 4
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"th" = (
+/obj/structure/flora/tree/palm,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"tk" = (
+/turf/open/misc/beach/coast/corner{
+	dir = 4
+	},
+/area/virtual_domain/fullbright)
+"tw" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"ty" = (
+/obj/item/trash/boritos/purple{
+	pixel_y = -16;
+	pixel_x = -5
+	},
+/turf/open/floor/eighties,
+/area/virtual_domain)
+"tI" = (
+/obj/structure/sign/departments/custodian/directional/north{
+	pixel_x = -32
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"tM" = (
+/obj/structure/table/wood,
+/obj/item/book/manual/chef_recipes{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"tQ" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"tW" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"tX" = (
+/obj/structure/table/bronze,
+/obj/item/reagent_containers/condiment/ketchup{
+	pixel_y = 14;
+	pixel_x = 1
+	},
+/obj/item/reagent_containers/condiment/mayonnaise{
+	pixel_y = 8;
+	pixel_x = 8
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"up" = (
+/obj/item/storage/box/syringes{
+	pixel_y = 14;
+	pixel_x = -5
+	},
+/obj/item/clothing/neck/stethoscope{
+	pixel_y = 3;
+	pixel_x = 4
+	},
+/obj/structure/table/glass,
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"ut" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"uu" = (
+/turf/open/floor/iron/freezer,
+/area/virtual_domain)
+"uz" = (
+/obj/effect/turf_decal/siding/dark_red/corner{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"uC" = (
+/obj/structure/flora/tree/palm{
+	pixel_y = 14
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"uD" = (
+/obj/structure/table/wood,
+/obj/item/food/seaweedsheet,
+/obj/item/kitchen/rollingpin{
+	pixel_x = -12;
+	pixel_y = 3
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"uH" = (
+/obj/structure/bonfire,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"uI" = (
+/obj/structure/bed,
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain)
+"uX" = (
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 4
+	},
+/obj/item/trash/can{
+	pixel_y = -9;
+	pixel_x = 10
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"uY" = (
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"vx" = (
+/obj/structure/table/glass,
+/obj/item/storage/box/coffeepack{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_y = 10;
+	pixel_x = 11
+	},
+/obj/item/storage/fancy/donut_box{
+	pixel_y = 18;
+	pixel_x = -11
+	},
+/obj/item/food/donut/berry{
+	pixel_y = 5;
+	pixel_x = -6
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"vF" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"vM" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"vU" = (
+/obj/machinery/chem_master/condimaster{
+	name = "CondiMaster Neo"
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"wb" = (
+/turf/open/misc/beach/coast{
+	dir = 5
+	},
+/area/virtual_domain/fullbright)
+"wf" = (
+/obj/structure/flora/tree/palm{
+	pixel_y = 10
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"ww" = (
+/obj/structure/chair/stool/directional/south{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"wx" = (
+/obj/structure/closet/crate/bin,
+/obj/structure/sign/clock/directional/north,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"wz" = (
+/obj/structure/rack,
+/obj/item/mop,
+/obj/item/extinguisher,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"wC" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/reagent_dispensers/fueltank/large,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"wH" = (
+/obj/structure/table/wood/fancy,
+/obj/effect/turf_decal/tile/dark_red/full,
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_x = -5;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_y = 13;
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_y = 6;
+	pixel_x = 11
+	},
+/turf/open/floor/iron/smooth_large,
+/area/virtual_domain/fullbright)
+"wI" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/machinery/shower/directional/south,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"wN" = (
+/obj/item/cigbutt{
+	pixel_y = 21;
+	pixel_x = -13
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"wO" = (
+/obj/structure/dresser,
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"wT" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 8
+	},
+/turf/open/floor/eighties,
+/area/virtual_domain)
+"wZ" = (
+/obj/item/clothing/head/soft/green,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"xe" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/door/airlock/wood{
+	name = "Bathroom";
+	id_tag = "toiletfarbeach"
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain)
+"xg" = (
+/turf/open/misc/beach/sand,
+/area/virtual_domain)
+"xj" = (
+/obj/item/toy/seashell{
+	pixel_x = -8;
+	pixel_y = 9
+	},
+/turf/open/misc/beach/coast/corner{
+	dir = 1
+	},
+/area/virtual_domain/fullbright)
+"xk" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/food/meat/slab/rawcrab,
+/obj/item/food/meat/slab/rawcrab,
+/obj/item/food/meat/slab/rawcrab,
+/obj/item/food/meat/slab/chicken,
+/obj/item/food/meat/slab/chicken,
+/obj/item/food/meat/slab/chicken,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/stack/sheet/mineral/coal/ten,
+/obj/item/stack/sheet/mineral/coal/ten,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"xw" = (
+/obj/item/kirbyplants/organic/applebush{
+	pixel_x = 7
+	},
+/obj/item/kirbyplants/organic/plant17{
+	pixel_y = 2;
+	pixel_x = -8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"xx" = (
+/obj/item/stack/arcadeticket{
+	pixel_y = 6;
+	pixel_x = -7
+	},
+/obj/effect/landmark/bitrunning/curiosity_spawn,
+/turf/open/floor/eighties,
+/area/virtual_domain)
+"xJ" = (
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"xO" = (
+/obj/structure/chair/stool/directional/south,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/freezer,
+/area/virtual_domain)
+"xP" = (
+/obj/structure/chair/plastic{
+	dir = 1
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"xR" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/obj/item/kirbyplants/organic/plant8{
+	pixel_y = 3;
+	pixel_x = -2
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"xT" = (
+/obj/machinery/oven/range,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"yc" = (
+/obj/structure/closet/gmcloset,
+/turf/open/floor/plastic,
+/area/virtual_domain)
+"yg" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"yy" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/carpet/red,
+/area/virtual_domain/fullbright)
+"yz" = (
+/obj/structure/table/bronze,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"yB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	pixel_y = -1;
+	pixel_x = 5;
+	dir = 8
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"yG" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"yI" = (
+/obj/structure/dresser,
+/obj/structure/sign/calendar/directional/north,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"yJ" = (
+/obj/structure/closet/crate/hydroponics,
+/obj/item/popsicle_stick,
+/obj/item/popsicle_stick,
+/obj/item/popsicle_stick,
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/rice,
+/obj/item/reagent_containers/condiment/rice,
+/obj/item/food/grown/banana/bunch,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"yN" = (
+/obj/structure/chair/stool/bamboo{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"yQ" = (
+/obj/structure/table/bronze,
+/obj/structure/sign/poster/random/directional/east,
+/obj/machinery/button/door/directional/south{
+	id = "beach_room_10";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/item/table_clock{
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"ze" = (
+/obj/effect/turf_decal/tile/dark_red/full,
+/turf/open/floor/iron/smooth_large,
+/area/virtual_domain/fullbright)
+"zg" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/suit/costume/hawaiian{
+	pixel_y = 6;
+	pixel_x = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"zm" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/medical/mesh{
+	pixel_y = 1;
+	pixel_x = 1
+	},
+/obj/item/clothing/suit/toggle/labcoat{
+	pixel_y = 9;
+	pixel_x = -8
+	},
+/obj/item/storage/box/bodybags{
+	pixel_y = 17;
+	pixel_x = 8
+	},
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"zn" = (
+/obj/structure/table/optable,
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"zp" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain)
+"zq" = (
+/obj/item/stack/sheet/mineral/sandstone{
+	pixel_x = -11;
+	pixel_y = -2
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"zH" = (
+/obj/item/reagent_containers/cup/soda_cans/lemon_lime{
+	pixel_x = -12;
+	pixel_y = 14
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"zK" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"zL" = (
+/obj/structure/table/bronze,
+/obj/item/paper/paperslip{
+	pixel_y = 6;
+	pixel_x = 10
+	},
+/obj/item/pen/fourcolor{
+	pixel_y = 7;
+	pixel_x = 1
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"zO" = (
+/obj/item/retractor{
+	pixel_y = 8;
+	pixel_x = -2
+	},
+/obj/item/cautery{
+	pixel_y = 10
+	},
+/obj/item/hemostat{
+	pixel_y = -11
+	},
+/obj/item/bonesetter{
+	pixel_y = -12
+	},
+/obj/structure/table/glass,
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"zS" = (
+/obj/item/kirbyplants/organic/plant8{
+	pixel_y = 18;
+	pixel_x = -8
+	},
+/obj/item/cigbutt{
+	pixel_y = -4;
+	pixel_x = 2
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"Ac" = (
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Ae" = (
+/obj/machinery/space_heater,
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Ag" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/item/kirbyplants/organic/plant8{
+	pixel_y = 6
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/eighties,
+/area/virtual_domain)
+"Ai" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/eighties,
+/area/virtual_domain)
+"Aj" = (
+/obj/structure/railing/corner/end{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/water/beach,
+/area/virtual_domain)
+"Al" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Aq" = (
+/obj/structure/table/wood/poker,
+/obj/item/storage/dice{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Ay" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/brute{
+	pixel_y = 9;
+	pixel_x = 2
+	},
+/obj/item/storage/medkit/o2{
+	pixel_y = 15;
+	pixel_x = 2
+	},
+/obj/item/reagent_containers/cup/bottle/multiver{
+	pixel_x = -9;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"AG" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark/half{
+	pixel_x = 5;
+	dir = 8
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"AK" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/plastic,
+/area/virtual_domain)
+"AX" = (
+/obj/vehicle/ridden/atv{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"AZ" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/virtual_domain/fullbright)
+"Bc" = (
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_y = -5;
+	pixel_x = -11
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Bf" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"Bk" = (
+/obj/machinery/door/airlock/wood{
+	name = "Room 2";
+	id_tag = "beach_room_2"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/sign/poster/random/directional/east,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Bq" = (
+/turf/closed/wall/mineral/wood,
+/area/virtual_domain)
+"Bx" = (
+/obj/item/reagent_containers/cup/soda_cans/starkist{
+	pixel_x = -12;
+	pixel_y = -6
+	},
+/obj/structure/fluff/beach_umbrella/cap,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Bz" = (
+/obj/structure/closet,
+/obj/item/key/atv{
+	pixel_x = -4
+	},
+/obj/item/key/atv{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/key/atv{
+	pixel_x = 1;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/soft/black,
+/obj/item/clothing/head/soft/black,
+/obj/item/clothing/head/soft/black,
+/obj/effect/decal/cleanable/oil,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/glasses/heat,
+/turf/open/floor/iron/dark/herringbone,
+/area/virtual_domain)
+"BB" = (
+/obj/item/toy/plush/moth{
+	pixel_y = 5
+	},
+/turf/open/floor/carpet/red,
+/area/virtual_domain/fullbright)
+"BD" = (
+/obj/structure/flora/tree/palm{
+	pixel_y = 19;
+	pixel_x = 8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"BI" = (
+/obj/structure/flora/tree/palm{
+	pixel_y = 5
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"BM" = (
+/obj/structure/closet/crate/bin,
+/obj/item/flashlight/glowstick/yellow,
+/obj/item/trash/candy,
+/turf/open/floor/eighties,
+/area/virtual_domain)
+"BU" = (
+/obj/item/storage/toolbox/fishing{
+	pixel_x = 10
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"BV" = (
+/obj/structure/sign/directions/dorms/directional/north{
+	pixel_y = 35
+	},
+/obj/structure/sign/directions/medical/directional/north{
+	pixel_y = 29
+	},
+/obj/machinery/computer/slot_machine,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"BW" = (
+/obj/structure/dresser,
+/obj/structure/sign/clock/directional/east,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Co" = (
+/obj/machinery/processor,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Cw" = (
+/obj/structure/sign/poster/official/fruit_bowl/directional/north,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"CA" = (
+/obj/item/reagent_containers/cup/soda_cans/sol_dry{
+	pixel_y = 18;
+	pixel_x = 9
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"CH" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"CP" = (
+/obj/structure/table/reinforced,
+/obj/item/toy/plush/slimeplushie{
+	pixel_y = 8;
+	pixel_x = 4
+	},
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"CQ" = (
+/obj/structure/closet/crate/trashcart/laundry,
+/turf/open/floor/plastic,
+/area/virtual_domain)
+"CR" = (
+/obj/structure/fluff/beach_umbrella/syndi,
+/turf/open/misc/beach/coast/corner{
+	dir = 8
+	},
+/area/virtual_domain/fullbright)
+"CS" = (
+/obj/machinery/door/airlock/wood{
+	name = "Room 1";
+	id_tag = "beach_room_1"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"CU" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/machinery/button/door/directional/west{
+	id = "beach_room_6";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/item/clothing/suit/jacket/leather/biker,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"CV" = (
+/obj/item/toy/seashell{
+	pixel_x = 8;
+	pixel_y = 14
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Dg" = (
+/obj/item/toy/beach_ball,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Do" = (
+/obj/effect/landmark/bitrunning/curiosity_spawn,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Dq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/water/beach,
+/area/virtual_domain)
+"Dt" = (
+/obj/machinery/icecream_vat,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Dx" = (
+/obj/structure/chair/stool/bar/directional/east,
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"DA" = (
+/obj/item/cigbutt{
+	pixel_y = -7;
+	pixel_x = 14
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"DG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"DL" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 12;
+	pixel_x = 3
+	},
+/obj/item/stock_parts/power_store/cell/emproof{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/clothing/head/soft/mime{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"DP" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"DR" = (
+/turf/open/floor/carpet/blue,
+/area/virtual_domain/fullbright)
+"DS" = (
+/obj/machinery/door/airlock/wood{
+	name = "Changing Room"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/iron/freezer,
+/area/virtual_domain)
+"DT" = (
+/obj/structure/table/wood,
+/obj/item/knife/kitchen{
+	pixel_y = 12;
+	pixel_x = -13
+	},
+/obj/item/clothing/head/utility/chefhat,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"DU" = (
+/obj/machinery/door/airlock/wood{
+	name = "Room 10";
+	id_tag = "beach_room_10"
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Eb" = (
+/obj/item/reagent_containers/cup/soda_cans/cola{
+	pixel_x = -8;
+	pixel_y = -4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Ej" = (
+/obj/structure/flora/tree/palm{
+	pixel_y = 19;
+	pixel_x = 7
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Er" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/bedsheetbin{
+	pixel_y = 3;
+	pixel_x = -1
+	},
+/obj/structure/table,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Et" = (
+/obj/item/toy/seashell,
+/turf/open/misc/beach/coast/corner{
+	dir = 8
+	},
+/area/virtual_domain/fullbright)
+"EA" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/button/door/directional/east{
+	id = "toiletfarbeach";
+	name = "restroom lock";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/structure/sink/directional/west,
+/obj/machinery/light/small/directional/west,
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/open/floor/iron/white,
+/area/virtual_domain)
+"EI" = (
+/turf/open/misc/beach/coast{
+	dir = 8
+	},
+/area/virtual_domain/fullbright)
+"EP" = (
+/obj/machinery/door/airlock/wood{
+	name = "Room 3";
+	id_tag = "beach_room_3"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"EQ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/water/beach,
+/area/virtual_domain)
+"ET" = (
+/obj/item/reagent_containers/cup/glass/bottle/beer/light{
+	pixel_x = -14;
+	pixel_y = 15
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"EY" = (
+/obj/structure/statue/sandstone/venus{
+	dir = 4;
+	pixel_y = 9;
+	anchored = 1
+	},
+/obj/structure/flora/bush/flowers_br/style_random,
+/turf/open/floor/grass,
+/area/virtual_domain)
+"Fk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/box/mousetraps{
+	pixel_x = -5;
+	pixel_y = 14
+	},
+/obj/structure/table,
+/obj/item/storage/box/mousetraps{
+	pixel_x = 12;
+	pixel_y = 15
+	},
+/obj/item/grenade/chem_grenade/cleaner{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/grenade/chem_grenade/cleaner{
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Fp" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Fx" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"FB" = (
+/obj/machinery/medical_kiosk,
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"FE" = (
+/obj/machinery/washing_machine,
+/obj/machinery/light/directional/north,
+/turf/open/floor/plastic,
+/area/virtual_domain)
+"FO" = (
+/obj/structure/chair/plastic,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"FX" = (
+/turf/open/floor/carpet/green,
+/area/virtual_domain/fullbright)
+"Ga" = (
+/obj/item/stack/arcadeticket{
+	pixel_y = -1;
+	pixel_x = -6
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Gm" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/closed/wall/mineral/wood,
+/area/virtual_domain)
+"Go" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/suit/jacket/letterman_nanotrasen,
+/obj/item/clothing/glasses/salesman,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Gp" = (
+/obj/structure/no_effect_signpost{
+	pixel_y = 6;
+	desc = "Northwest: Hotel. South: Seaside Bar. East: Dressing Rooms."
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Gq" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/closed/wall/mineral/wood,
+/area/virtual_domain)
+"Gw" = (
+/turf/open/indestructible/binary,
+/area/virtual_domain/fullbright)
+"Gx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/structure/closet_empty/crate,
+/obj/effect/spawner/random/maintenance/two,
+/obj/item/storage/toolbox/fishing{
+	pixel_y = 2
+	},
+/turf/open/floor/plating,
+/area/virtual_domain)
+"GD" = (
+/obj/effect/landmark/bitrunning/permanent_exit,
+/turf/open/floor/bitrunning_transport,
+/area/virtual_domain/protected_space/fullbright)
+"GI" = (
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain)
+"GK" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"GQ" = (
+/obj/item/toy/seashell{
+	pixel_y = 3;
+	pixel_x = -6
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"GX" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"GY" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/shower/directional/south,
+/obj/structure/sink/directional/east,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"Hd" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/railing/corner/end{
+	dir = 8
+	},
+/turf/open/water/beach,
+/area/virtual_domain)
+"Ho" = (
+/obj/structure/table/wood,
+/obj/item/modular_computer/laptop{
+	pixel_y = 5
+	},
+/obj/item/multitool{
+	pixel_x = -8;
+	pixel_y = -8
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"Hp" = (
+/obj/structure/table/wood,
+/obj/item/clothing/suit/apron/chef{
+	pixel_y = 5;
+	pixel_x = 2
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"HE" = (
+/obj/machinery/griddle,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"HH" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"HI" = (
+/obj/structure/statue/sandstone/venus{
+	dir = 4;
+	pixel_y = 9
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"HK" = (
+/obj/structure/closet/crate/bin,
+/obj/effect/spawner/random/trash/cigbutt,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"HO" = (
+/obj/machinery/door/airlock/wood{
+	name = "Room 9";
+	id_tag = "beach_room_9"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"HP" = (
+/turf/open/water/beach,
+/area/virtual_domain)
+"HR" = (
+/obj/structure/sign/poster/official/tactical_game_cards/directional/west,
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/eighties,
+/area/virtual_domain)
+"HT" = (
+/obj/structure/bed/pod{
+	desc = "An old medical bed, just waiting for replacement with something up to date.";
+	dir = 4;
+	name = "medical bed"
+	},
+/obj/machinery/defibrillator_mount/directional/east,
+/obj/machinery/iv_drip{
+	pixel_y = 21;
+	pixel_x = -4
+	},
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"HV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Ib" = (
+/obj/structure/tank_holder/extinguisher{
+	pixel_y = 11
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"If" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"In" = (
+/obj/item/kirbyplants/organic/plant8{
+	pixel_y = 4;
+	pixel_x = 8
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"It" = (
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Iw" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "BeachBoats"
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"IA" = (
+/obj/machinery/shower/directional/west,
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"IF" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"IG" = (
+/obj/machinery/door/poddoor/shutters{
+	dir = 4;
+	id = "BeachGarage"
+	},
+/turf/open/floor/plating,
+/area/virtual_domain/fullbright)
+"II" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"IJ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/item/blood_filter{
+	pixel_y = 8;
+	pixel_x = -6
+	},
+/obj/item/surgical_drapes{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/item/surgical_drapes{
+	pixel_x = 13;
+	pixel_y = 2
+	},
+/obj/structure/table/glass,
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"IL" = (
+/obj/effect/turf_decal/siding/dark_red,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"IS" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"IX" = (
+/obj/item/kirbyplants/organic/plant8{
+	pixel_y = 18;
+	pixel_x = -8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Jb" = (
+/obj/structure/table/glass,
+/obj/machinery/coffeemaker/impressa{
+	pixel_y = 13;
+	pixel_x = -1
+	},
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = 11;
+	pixel_y = -1
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"Jc" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"Jd" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"Je" = (
+/obj/structure/table/bronze,
+/obj/item/table_clock{
+	pixel_y = 13
+	},
+/obj/structure/sign/poster/random/directional/east,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Jp" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"Jv" = (
+/obj/item/reagent_containers/cup/soda_cans/starkist{
+	pixel_x = -6
+	},
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Jw" = (
+/obj/item/toy/seashell{
+	pixel_x = 12;
+	pixel_y = 5
+	},
+/turf/open/misc/beach/coast{
+	dir = 4
+	},
+/area/virtual_domain/fullbright)
+"JF" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"JG" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"JH" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"JJ" = (
+/obj/machinery/door/airlock/wood{
+	name = "Room 8";
+	id_tag = "beach_room_8"
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"JN" = (
+/obj/effect/turf_decal/sand,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"JU" = (
+/obj/item/instrument/guitar{
+	pixel_y = 4;
+	pixel_x = -1
+	},
+/turf/open/misc/beach/coast,
+/area/virtual_domain/fullbright)
+"Ka" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/machinery/button/door/directional/west{
+	id = "beach_room_7";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/item/clothing/suit/apron/overalls,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Ko" = (
+/obj/item/toy/beach_ball,
+/turf/open/misc/beach/coast/corner{
+	dir = 4
+	},
+/area/virtual_domain/fullbright)
+"Ks" = (
+/obj/structure/table/glass,
+/obj/machinery/microwave{
+	pixel_y = 15
+	},
+/obj/item/cigbutt{
+	pixel_y = 2;
+	pixel_x = -12
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"KH" = (
+/obj/structure/closet/athletic_mixed,
+/turf/open/floor/iron/freezer,
+/area/virtual_domain)
+"KI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/random/structure/crate,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"KJ" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"KL" = (
+/obj/structure/closet/secure_closet/freezer/empty,
+/obj/item/food/popsicle/creamsicle_berry,
+/obj/item/food/popsicle/creamsicle_berry,
+/obj/item/food/popsicle/creamsicle_orange,
+/obj/item/food/popsicle/creamsicle_orange,
+/obj/item/food/popsicle/jumbo,
+/obj/item/food/popsicle/pineapple_pop,
+/obj/item/food/popsicle/pineapple_pop,
+/obj/item/food/fishmeat,
+/obj/item/food/fishmeat,
+/obj/item/food/fishmeat,
+/obj/item/food/fishmeat,
+/obj/item/food/fishmeat,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"KP" = (
+/obj/item/clothing/head/soft/black{
+	pixel_x = -1;
+	pixel_y = -3
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"KS" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"KT" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"KZ" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/landmark/bitrunning/curiosity_spawn,
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"La" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Ld" = (
+/obj/structure/table/wood,
+/obj/item/cigarette/cigar{
+	pixel_y = 16;
+	pixel_x = -2
+	},
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/obj/machinery/cell_charger,
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"Lm" = (
+/obj/machinery/door/airlock/wood{
+	name = "Balcony";
+	id_tag = "beach_room_x"
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"LD" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/door/airlock/wood{
+	name = "Bathroom";
+	id_tag = "toilet1beach"
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain)
+"LN" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/carpet/blue,
+/area/virtual_domain/fullbright)
+"LR" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"LV" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"LY" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Ma" = (
+/obj/machinery/vending/games,
+/turf/open/floor/eighties,
+/area/virtual_domain)
+"Mb" = (
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Md" = (
+/obj/structure/fluff/beach_umbrella/syndi,
+/obj/item/reagent_containers/cup/soda_cans/wellcheers{
+	pixel_y = -10;
+	pixel_x = -6
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Mj" = (
+/obj/structure/table,
+/obj/item/weldingtool{
+	pixel_y = -7;
+	pixel_x = 4
+	},
+/obj/item/trash/can{
+	pixel_y = 10;
+	pixel_x = -5
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"Ml" = (
+/obj/machinery/washing_machine,
+/turf/open/floor/plastic,
+/area/virtual_domain)
+"Mo" = (
+/obj/machinery/door/airlock/wood{
+	name = "Docks"
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"Mr" = (
+/obj/structure/table/wood,
+/obj/item/stack/arcadeticket{
+	pixel_y = 6;
+	pixel_x = -7
+	},
+/obj/item/pen{
+	pixel_y = 5;
+	pixel_x = 8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Mx" = (
+/obj/structure/table/reinforced,
+/obj/machinery/cell_charger{
+	pixel_y = 13;
+	pixel_x = 21
+	},
+/obj/item/clothing/glasses/hud/health{
+	pixel_y = 1;
+	pixel_x = 18
+	},
+/obj/item/stack/medical/gauze{
+	pixel_x = -15;
+	pixel_y = 10
+	},
+/obj/item/storage/belt/medical{
+	pixel_y = 3;
+	pixel_x = -3
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"MA" = (
+/obj/effect/turf_decal/siding/dark_red/corner{
+	dir = 1
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"MH" = (
+/obj/item/toy/seashell{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"MO" = (
+/obj/structure/table/wood,
+/obj/machinery/recharger,
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = -12;
+	pixel_y = 9
+	},
+/obj/effect/spawner/random/bureaucracy/stamp{
+	pixel_y = 14;
+	pixel_x = 8
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"MR" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"MT" = (
+/turf/open/misc/beach/coast/corner{
+	dir = 8
+	},
+/area/virtual_domain/fullbright)
+"MV" = (
+/obj/item/radio/off{
+	pixel_y = 16;
+	pixel_x = -5
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_y = 10;
+	pixel_x = 4
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 2
+	},
+/obj/structure/table/glass,
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"MX" = (
+/obj/effect/turf_decal/stripes/red/box,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"MZ" = (
+/obj/machinery/button/door/directional/north{
+	id = "beach_room_12";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Nc" = (
+/obj/item/tank/internals/anesthetic{
+	pixel_y = 4
+	},
+/obj/item/stack/medical/bone_gel{
+	pixel_y = 16;
+	pixel_x = -7
+	},
+/obj/item/clothing/mask/breath/medical{
+	pixel_y = 3;
+	pixel_x = 3
+	},
+/obj/structure/table/bronze,
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"Ne" = (
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Nj" = (
+/obj/structure/fluff/beach_umbrella/cap,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Np" = (
+/obj/structure/chair/stool/bamboo{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"Nt" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/eighties,
+/area/virtual_domain)
+"NB" = (
+/obj/item/storage/box/fishing_hooks{
+	pixel_y = 14
+	},
+/obj/item/storage/box/fishing_lines{
+	pixel_y = 12;
+	pixel_x = 18
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"NC" = (
+/mob/living/basic/crab,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"NH" = (
+/obj/structure/closet/crate/bin,
+/obj/item/trash/candy,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"NT" = (
+/obj/item/toy/seashell,
+/turf/open/misc/beach/coast,
+/area/virtual_domain/fullbright)
+"NU" = (
+/obj/machinery/vending/medical{
+	req_access = "201"
+	},
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"NZ" = (
+/obj/effect/turf_decal/sand,
+/turf/closed/wall/mineral/wood,
+/area/virtual_domain/fullbright)
+"Of" = (
+/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind{
+	pixel_x = -17;
+	pixel_y = 17
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Og" = (
+/obj/structure/table/bronze,
+/obj/item/reagent_containers/condiment/peppermill{
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/condiment/saltshaker{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Ol" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/power/port_gen/pacman,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Om" = (
+/obj/structure/bed/double,
+/obj/item/bedsheet/hop/double{
+	desc = "A blue bedsheet. Likely from the beach hotel.";
+	name = "blue bedsheet"
+	},
+/turf/open/floor/carpet/cyan,
+/area/virtual_domain)
+"Or" = (
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Oy" = (
+/mob/living/basic/crab,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"OA" = (
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"OK" = (
+/obj/item/storage/box/gloves{
+	pixel_y = 14;
+	pixel_x = 7
+	},
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"OM" = (
+/turf/open/floor/iron/stairs/old,
+/area/virtual_domain/fullbright)
+"OO" = (
+/obj/structure/flora/tree/palm{
+	pixel_y = 16;
+	pixel_x = 12
+	},
+/obj/structure/flora/coconuts,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"OV" = (
+/mob/living/basic/crab/kreb,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Po" = (
+/obj/structure/sink/kitchen/directional/east,
+/turf/open/floor/plastic,
+/area/virtual_domain)
+"Pq" = (
+/obj/structure/table/bronze,
+/obj/item/reagent_containers/cup/rag{
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/condiment/coconut_milk{
+	pixel_y = 14;
+	pixel_x = 5
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"PD" = (
+/obj/item/kirbyplants/organic/plant8{
+	pixel_y = 9;
+	pixel_x = 6
+	},
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"PE" = (
+/obj/machinery/space_heater,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"PG" = (
+/obj/structure/table/bronze,
+/obj/item/food/grown/banana/bunch{
+	pixel_y = 10;
+	offset_at_init = 0
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"PH" = (
+/obj/item/toy/seashell{
+	pixel_x = 12;
+	pixel_y = 5
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"PJ" = (
+/obj/item/cigbutt{
+	pixel_y = -11;
+	pixel_x = -15
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"PR" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"PZ" = (
+/obj/structure/table/bronze,
+/obj/item/camera{
+	pixel_y = 12;
+	pixel_x = 6
+	},
+/obj/item/camera_film{
+	pixel_y = 4;
+	pixel_x = -2
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Qc" = (
+/obj/item/kirbyplants/organic/plant8{
+	pixel_y = 5
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Qj" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/iron/freezer,
+/area/virtual_domain)
+"Qk" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/button/door/directional/east{
+	id = "toilet2beach";
+	name = "restroom lock";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/structure/sink/directional/west,
+/obj/machinery/light/small/directional/west,
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/iron/white,
+/area/virtual_domain)
+"Qm" = (
+/obj/structure/sink/kitchen/directional/south,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Qq" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Qu" = (
+/obj/structure/tank_holder/extinguisher,
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"Qv" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Admin"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock_note_placer{
+	note_info = "Dear IT: Please fix the fax machine"
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"Qx" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 4
+	},
+/turf/open/floor/eighties,
+/area/virtual_domain)
+"QG" = (
+/obj/structure/railing/corner/end/flip{
+	dir = 4
+	},
+/obj/item/wrench{
+	pixel_y = -1;
+	pixel_x = 6
+	},
+/obj/item/storage/toolbox/fishing{
+	pixel_y = -8;
+	pixel_x = -3
+	},
+/obj/structure/railing/corner/end/flip{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"QH" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/door/airlock/wood{
+	name = "Room 6";
+	id_tag = "beach_room_6"
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"QI" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"QN" = (
+/obj/item/cigbutt{
+	pixel_y = -6;
+	pixel_x = -12
+	},
+/obj/item/clothing/head/soft/black,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"QX" = (
+/obj/machinery/vending/boozeomat/all_access{
+	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one. May not work for bartenders that don't have Nanotrasen bank accounts."
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"QY" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/table/wood,
+/obj/item/storage/medkit/o2{
+	pixel_y = 4;
+	pixel_x = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"Rc" = (
+/obj/structure/flora/tree/palm{
+	pixel_y = 31
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Rd" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"Re" = (
+/obj/structure/table/wood,
+/obj/item/stack/arcadeticket{
+	pixel_y = 3;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/cup/soda_cans/pwr_game{
+	pixel_y = 12;
+	pixel_x = -8
+	},
+/obj/item/paper_bin/carbon{
+	pixel_y = 6;
+	pixel_x = 4
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Rf" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Rk" = (
+/obj/structure/table/glass,
+/obj/machinery/fax{
+	fax_name = "Beach Hotel Fax";
+	name = "Beach Hotel's Fax Machine";
+	pixel_y = 8;
+	visible_to_network = 0
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"Rs" = (
+/obj/machinery/door/airlock/wood{
+	name = "Garage"
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/virtual_domain)
+"Rw" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/door/airlock/wood{
+	name = "Room 1"
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Ry" = (
+/obj/structure/closet{
+	name = "Holding Cell Storage"
+	},
+/obj/item/taperecorder,
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"Rz" = (
+/obj/item/kirbyplants/organic/plant21{
+	pixel_y = 3;
+	pixel_x = -6
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"RB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"RF" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/closed/wall/mineral/wood,
+/area/virtual_domain/fullbright)
+"RJ" = (
+/obj/item/reagent_containers/cup/soda_cans/starkist{
+	pixel_y = 16;
+	pixel_x = 10
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"RM" = (
+/obj/effect/baseturf_helper/beach/water,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"RO" = (
+/obj/item/reagent_containers/cup/soda_cans/lemon_lime{
+	pixel_x = -12;
+	pixel_y = -7
+	},
+/obj/item/reagent_containers/cup/soda_cans/dr_gibb{
+	pixel_x = 13;
+	pixel_y = -7
+	},
+/obj/structure/fluff/beach_umbrella,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"RP" = (
+/obj/structure/table,
+/obj/item/book/manual/wiki/engineering_guide{
+	pixel_y = 7;
+	pixel_x = -6
+	},
+/obj/item/pen{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/clothing/head/utility/welding{
+	pixel_x = -10;
+	pixel_y = -8
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"RS" = (
+/obj/structure/table/wood,
+/obj/item/food/donut/plain{
+	pixel_y = -2;
+	pixel_x = 14
+	},
+/obj/item/assembly/signaler{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/effect/spawner/random/bureaucracy/folder{
+	pixel_y = 11;
+	pixel_x = 4
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"Sb" = (
+/obj/structure/flora/tree/palm{
+	pixel_y = 19;
+	pixel_x = 10
+	},
+/obj/machinery/hydroponics/constructable,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Sc" = (
+/obj/structure/table/wood,
+/obj/item/storage/box/drinkingglasses{
+	pixel_y = 18;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/cup/glass/shaker{
+	pixel_y = 12;
+	pixel_x = -7
+	},
+/obj/item/clothing/head/hats/tophat{
+	pixel_y = 2;
+	pixel_x = 3
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Se" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/entertainment/lighter,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Sf" = (
+/obj/structure/flora/tree/palm{
+	pixel_y = 8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"So" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Sr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/wheelchair,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"Su" = (
+/obj/machinery/door/airlock/wood{
+	name = "Room 4";
+	id_tag = "beach_room_4"
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Sx" = (
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"Sz" = (
+/obj/structure/chair/stool/bamboo{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"SJ" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/sand,
+/obj/item/clothing/shoes/sandal{
+	pixel_y = 4;
+	pixel_x = 8
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_x = 4
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -4
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = -7;
+	pixel_x = -3
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"SL" = (
+/obj/machinery/door/airlock/wood{
+	name = "Trash Disposal"
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"SM" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"SO" = (
+/obj/structure/table/bronze,
+/obj/structure/desk_bell{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"SR" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"Ta" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"Tb" = (
+/obj/effect/landmark/bitrunning/curiosity_spawn,
+/turf/open/floor/iron/dark/herringbone,
+/area/virtual_domain)
+"Tq" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/dark/herringbone,
+/area/virtual_domain)
+"Tr" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Tt" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Tw" = (
+/obj/effect/turf_decal/stripes/white/full,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Ty" = (
+/turf/open/floor/carpet,
+/area/virtual_domain/fullbright)
+"TB" = (
+/obj/effect/turf_decal/tile/dark_red/full,
+/obj/machinery/vending/cola/red,
+/turf/open/floor/iron/smooth_large,
+/area/virtual_domain/fullbright)
+"TC" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"TK" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/suit/costume/hawaiian{
+	pixel_y = 1;
+	pixel_x = 7
+	},
+/obj/item/clothing/suit/costume/hawaiian{
+	pixel_x = -14
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"TM" = (
+/obj/effect/turf_decal/siding/blue/corner,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"TO" = (
+/obj/structure/closet/crate/bin,
+/obj/item/reagent_containers/syringe{
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"TR" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/virtual_domain)
+"TS" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/item/clothing/mask/breath/medical{
+	pixel_y = 7;
+	pixel_x = -9
+	},
+/obj/item/clothing/mask/breath/medical{
+	pixel_y = 4;
+	pixel_x = 3
+	},
+/obj/item/clothing/gloves/latex,
+/obj/structure/table/glass,
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"TW" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/suit/costume/hawaiian{
+	pixel_y = 7;
+	pixel_x = -3
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"TY" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay Clinic"
+	},
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"TZ" = (
+/obj/structure/fluff/beach_umbrella/science,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Ub" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"Ud" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/item/cigbutt{
+	pixel_y = -9;
+	pixel_x = 13
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"Uf" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/door/airlock/wood{
+	name = "Bathroom";
+	id_tag = "toilet2beach"
+	},
+/turf/open/floor/iron/white,
+/area/virtual_domain)
+"Ug" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"Uk" = (
+/obj/machinery/vending/autodrobe/all_access,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Um" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/suit/jacket/miljacket,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Uy" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay Clinic"
+	},
+/obj/effect/turf_decal/siding/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"UE" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"UI" = (
+/obj/machinery/door/airlock/wood{
+	name = "Janitorial"
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"UJ" = (
+/obj/vehicle/ridden/atv{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/iron/dark/herringbone,
+/area/virtual_domain)
+"UO" = (
+/obj/machinery/vending/cola/pwr_game,
+/turf/open/floor/eighties,
+/area/virtual_domain)
+"US" = (
+/obj/machinery/shower/directional/west,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"UW" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"UZ" = (
+/obj/item/stack/sheet/mineral/sandstone{
+	pixel_x = -8
+	},
+/obj/item/stack/sheet/mineral/sandstone{
+	pixel_x = 5
+	},
+/obj/item/stack/sheet/mineral/sandstone{
+	pixel_x = 1;
+	pixel_y = 7
+	},
+/obj/item/stack/sheet/mineral/sandstone{
+	pixel_x = -12;
+	pixel_y = 6
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Va" = (
+/obj/machinery/door/airlock/wood{
+	name = "Employees' Only"
+	},
+/turf/open/floor/plastic,
+/area/virtual_domain)
+"Vs" = (
+/obj/structure/table/wood,
+/obj/item/pai_card{
+	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
+	name = "\improper Nanotrasen-brand personal AI device exhibit";
+	pixel_y = 3;
+	pixel_x = 10
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"VD" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"VI" = (
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"VK" = (
+/obj/machinery/door/airlock/wood/glass{
+	name = "Cabin"
+	},
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"VL" = (
+/turf/open/misc/beach/coast{
+	dir = 6
+	},
+/area/virtual_domain/fullbright)
+"We" = (
+/obj/structure/table/bronze,
+/obj/item/book/manual/wiki/barman_recipes{
+	pixel_x = 9;
+	pixel_y = 7;
+	name = "Tropical Mixing for Tropical Bartenders"
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_y = 10;
+	pixel_x = -12
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Wg" = (
+/obj/structure/closet/crate/trashcart/filled,
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"Wm" = (
+/obj/effect/landmark/bitrunning/curiosity_spawn,
+/turf/open/floor/iron/white/textured_large,
+/area/virtual_domain)
+"Ws" = (
+/obj/machinery/vending/cigarette/beach,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"WG" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"WX" = (
+/obj/structure/marker_beacon/teal,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"Xe" = (
+/obj/structure/table/bronze,
+/obj/structure/sign/poster/random/directional/east,
+/obj/item/camera{
+	pixel_y = 5
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Xl" = (
+/obj/structure/flora/tree/palm/style_2{
+	pixel_y = 25
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Xt" = (
+/turf/open/floor/plastic,
+/area/virtual_domain)
+"Xu" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 8
+	},
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Xx" = (
+/obj/machinery/door/airlock/wood/glass{
+	name = "Beach Access"
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"XJ" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Locker Room"
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"XO" = (
+/obj/structure/flora/tree/palm/style_2{
+	pixel_y = 25
+	},
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"XP" = (
+/obj/structure/mop_bucket/janitorialcart{
+	dir = 8
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"XT" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/carpet/cyan,
+/area/virtual_domain)
+"XW" = (
+/obj/structure/fluff/beach_umbrella/syndi,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Yb" = (
+/obj/structure/sign/poster/contraband/pwr_game/directional/west,
+/turf/open/floor/eighties,
+/area/virtual_domain)
+"Yd" = (
+/obj/structure/flora/tree/palm/style_2{
+	pixel_y = 3;
+	pixel_x = -4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Yo" = (
+/turf/closed/wall/mineral/sandstone,
+/area/virtual_domain/fullbright)
+"Yr" = (
+/obj/item/reagent_containers/cup/watering_can{
+	pixel_y = 19;
+	pixel_x = -6
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Yz" = (
+/obj/item/trash/candy{
+	pixel_y = 9;
+	pixel_x = -9
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"YD" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"YI" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/button/door/directional/east{
+	id = "toilet1beach";
+	name = "restroom lock";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/structure/sink/directional/west,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/white,
+/area/virtual_domain)
+"YM" = (
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"YN" = (
+/obj/item/toy/seashell{
+	pixel_x = 12;
+	pixel_y = -5
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"YP" = (
+/obj/structure/table/glass,
+/obj/item/paper{
+	pixel_y = 7;
+	pixel_x = 2
+	},
+/obj/item/screwdriver{
+	pixel_y = 13;
+	pixel_x = 3
+	},
+/obj/item/paper_bin/carbon{
+	pixel_y = 4;
+	pixel_x = -6
+	},
+/obj/effect/spawner/random/bureaucracy/pen{
+	pixel_x = 7
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/virtual_domain)
+"YR" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/machinery/vending/cola/red,
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"YW" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain)
+"YZ" = (
+/obj/structure/railing/corner/end/flip{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain)
+"Zd" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/virtual_domain/fullbright)
+"Zj" = (
+/obj/structure/flora/tree/palm{
+	pixel_y = 16
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Zn" = (
+/obj/item/reagent_containers/cup/soda_cans/dr_gibb{
+	pixel_x = -9;
+	pixel_y = -9
+	},
+/obj/structure/fluff/beach_umbrella/engine,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"Zp" = (
+/obj/structure/dresser,
+/turf/open/floor/wood,
+/area/virtual_domain)
+"Zs" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "BeachBoats"
+	},
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"Zy" = (
+/obj/structure/sign/chalkboard_menu{
+	pixel_y = 32
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Zz" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"ZB" = (
+/obj/effect/turf_decal/sand,
+/obj/machinery/button/door/directional/east{
+	id = "toilet3beach";
+	name = "restroom lock";
+	normaldoorcontrol = 1;
+	specialfunctions = 4
+	},
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/structure/sink/directional/west,
+/obj/item/cigbutt{
+	pixel_y = -7;
+	pixel_x = -13
+	},
+/obj/machinery/light/small/directional/west,
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/open/floor/iron/white,
+/area/virtual_domain)
+"ZE" = (
+/obj/structure/table/bronze,
+/turf/open/floor/carpet,
+/area/virtual_domain)
+"ZH" = (
+/obj/item/kirbyplants/organic/plant24{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/cup/watering_can{
+	pixel_x = -3;
+	pixel_y = 15
+	},
+/obj/structure/table,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"ZI" = (
+/obj/effect/baseturf_helper/beach/sand,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"ZV" = (
+/obj/structure/chair/plastic,
+/obj/item/pai_card{
+	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
+	name = "\improper Nanotrasen-brand personal AI device exhibit";
+	pixel_y = 3;
+	pixel_x = -1
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+"ZX" = (
+/obj/structure/table/bronze,
+/obj/item/storage/toolbox/fishing{
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
+/area/virtual_domain)
+"ZY" = (
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 4
+	},
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
+
+(1,1,1) = {"
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(2,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(3,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(4,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(5,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(6,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(7,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(8,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+LR
+Bf
+Bf
+Bf
+qa
+cO
+LR
+Bf
+Bf
+Bf
+HH
+Bf
+Bf
+Bf
+qa
+cO
+LR
+Bf
+Bf
+Bf
+qa
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+SR
+SR
+SR
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(9,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+Jd
+vF
+Zd
+io
+tw
+cO
+Jd
+vF
+Zd
+io
+Jp
+vF
+Zd
+io
+tw
+cO
+Jd
+vF
+Zd
+PD
+tw
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(10,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+Lm
+AZ
+AZ
+eK
+cO
+eK
+Lm
+AZ
+AZ
+eK
+Lm
+AZ
+AZ
+eK
+cO
+eK
+Lm
+AZ
+AZ
+eK
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(11,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+CH
+uY
+PE
+Bq
+eK
+Bq
+MZ
+gw
+PE
+Bq
+bE
+uY
+oE
+Bq
+eK
+Bq
+iQ
+gw
+jp
+eK
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(12,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+cB
+Rd
+bE
+db
+Mb
+rI
+bE
+cW
+aQ
+Bq
+jw
+Rd
+bE
+Su
+Mb
+EP
+bE
+cW
+La
+eK
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(13,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+yI
+gK
+rE
+Bq
+Mb
+Bq
+yI
+ch
+Xe
+Bq
+wO
+gK
+rw
+Bq
+Mb
+Bq
+Je
+Om
+Zp
+eK
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(14,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+Bq
+Bq
+Bq
+Bq
+pv
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
+Mb
+Bq
+Bq
+Bq
+Bq
+eK
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(15,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+vF
+nk
+bE
+XT
+PE
+Bq
+Mb
+Mb
+yg
+Mb
+Mb
+Mb
+Mb
+yg
+Mb
+Mb
+Mb
+Mb
+yg
+gH
+Bq
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(16,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+aw
+AZ
+Go
+cW
+bE
+DU
+Mb
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
+Mb
+Bq
+Bq
+Bq
+Bq
+eK
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(17,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+xR
+AZ
+Zp
+Om
+yQ
+Bq
+Mb
+Bq
+cr
+uY
+dH
+Bq
+Um
+gw
+gf
+Bq
+pv
+Bq
+lc
+uY
+pq
+eK
+cO
+eH
+EI
+EI
+EI
+ij
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(18,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+Bq
+Gm
+Bq
+Bq
+Mb
+HO
+bE
+Rd
+La
+Bq
+Ae
+cW
+bE
+sW
+Mb
+Bk
+bE
+Rd
+La
+eK
+eH
+tk
+qB
+ka
+MH
+nc
+ij
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+oX
+"}
+(19,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+vF
+dW
+bE
+GX
+dH
+Bq
+Mb
+Bq
+ik
+gK
+ZX
+Bq
+yI
+Om
+dS
+Bq
+Mb
+Bq
+ik
+gK
+ZX
+eK
+tk
+CV
+wZ
+QI
+gI
+ka
+nc
+ij
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(20,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+KZ
+AZ
+pz
+Rd
+bE
+JJ
+Mb
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
+Mb
+Bq
+Bq
+Bq
+Bq
+eK
+BI
+ka
+mP
+rB
+bD
+ka
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(21,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+xR
+AZ
+BW
+gK
+st
+Bq
+Mb
+Mb
+yg
+Mb
+Bq
+xg
+Bq
+Mb
+Mb
+Mb
+Mb
+yg
+Mb
+Mb
+Xx
+TC
+JN
+ka
+ka
+ka
+ka
+ka
+rD
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(22,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+Bq
+Bq
+Bq
+Bq
+Mb
+Bq
+Bq
+cH
+Bq
+Bq
+Bq
+QH
+Bq
+Bq
+Mb
+Bq
+Bq
+Bq
+Bq
+eK
+NB
+rD
+ka
+ka
+ka
+BI
+ka
+nc
+ij
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(23,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+eK
+Bq
+Fk
+Yr
+wz
+Bq
+Mb
+Bq
+Ka
+gw
+PE
+Bq
+CU
+uY
+bE
+Bq
+Mb
+CS
+qb
+gw
+pJ
+eK
+ka
+ka
+eK
+Rw
+eK
+eK
+eK
+Ej
+nc
+EI
+EI
+EI
+ij
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(24,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+tf
+GK
+XP
+Bq
+pv
+Bq
+bE
+cW
+La
+Bq
+PE
+Rd
+La
+Bq
+Mb
+Bq
+wx
+cW
+La
+eK
+Sf
+eK
+Bq
+Mb
+Dx
+Mb
+Bq
+eK
+Ej
+ka
+ka
+ka
+nc
+EI
+ij
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(25,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+IX
+Mb
+Mb
+Bq
+pE
+Bq
+ik
+Om
+gc
+Bq
+yI
+gK
+ZX
+Bq
+pE
+Bq
+Zp
+Om
+eJ
+Bq
+eK
+Bq
+jb
+dY
+lI
+Aq
+MR
+Bq
+eK
+th
+ka
+ka
+ka
+ka
+nc
+EI
+EI
+EI
+EI
+ij
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(26,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+ow
+Bq
+UI
+Bq
+Mb
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
+Mb
+Bq
+Bq
+Bq
+Bq
+Bq
+BV
+Mb
+Mb
+ho
+ho
+ho
+Mb
+Rz
+AZ
+ka
+sz
+ka
+ka
+yy
+ka
+ka
+ka
+ka
+ka
+nc
+EI
+ij
+cO
+cO
+cO
+cO
+eH
+EI
+EI
+EI
+EI
+EI
+ij
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(27,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+LR
+Bf
+eK
+Bq
+Bq
+tI
+Mb
+Mb
+Mb
+Mb
+Mb
+Mb
+JG
+Mb
+Mb
+Mb
+Mb
+Mb
+Mb
+JG
+Mb
+dj
+Mb
+Mb
+IS
+gN
+Al
+Mb
+Mb
+Mb
+xw
+AZ
+ka
+ka
+ka
+Md
+BB
+ka
+ka
+ka
+rD
+ka
+ka
+ka
+nc
+ij
+cO
+cO
+cO
+oa
+sz
+th
+ka
+ka
+ka
+nc
+ij
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(28,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+LR
+lS
+wN
+xJ
+SL
+Mb
+Mb
+Mb
+Mb
+Mb
+Mb
+Mb
+Mb
+Mb
+Mb
+Mb
+Mb
+Mb
+Mb
+Mb
+Mb
+Mb
+dj
+Mb
+Mb
+So
+EY
+UW
+Mb
+Mb
+ZH
+AZ
+AZ
+JN
+ka
+ka
+ka
+ka
+ka
+ka
+DR
+ka
+ka
+BD
+ka
+sz
+nc
+EI
+EI
+EI
+tk
+ka
+ka
+ka
+ka
+ka
+sz
+nc
+ij
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(29,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+Jd
+Yz
+xJ
+eK
+Bq
+Bq
+yG
+yG
+Bq
+Qv
+Bq
+Bq
+Bq
+Bq
+Bq
+DP
+TY
+DP
+Bq
+Bq
+Bq
+Bq
+Bq
+Bq
+pv
+LV
+II
+Qq
+Mb
+Mb
+AZ
+AZ
+JN
+JN
+ka
+ka
+ka
+ka
+ka
+TZ
+oC
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+Oy
+ka
+Dg
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(30,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+Jd
+mV
+xJ
+eK
+Jb
+zS
+lW
+lW
+PJ
+lW
+Qu
+Bq
+lF
+bx
+jL
+qH
+gP
+FB
+NU
+Bq
+CQ
+CQ
+Bq
+cK
+Mb
+dA
+Mb
+Mb
+Mb
+Mb
+eK
+sR
+JN
+de
+JN
+ka
+ka
+ka
+rD
+ka
+ka
+ka
+ka
+eK
+AZ
+AZ
+eK
+ka
+eK
+AZ
+AZ
+eK
+uC
+ka
+ka
+Nj
+ka
+ka
+nc
+ij
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(31,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+Ud
+bT
+Wg
+eK
+vx
+lW
+Ug
+aY
+Ug
+lW
+YP
+Gq
+zm
+Wm
+gP
+gP
+gP
+gP
+gP
+Va
+Xt
+Xt
+Bq
+Cw
+uY
+zL
+uY
+uY
+uY
+uY
+VK
+Ty
+JN
+JN
+JN
+ka
+ka
+th
+ka
+ka
+ka
+ka
+eK
+Bq
+Qx
+Qx
+Bq
+AZ
+Bq
+BM
+gs
+Bq
+eK
+rD
+ka
+DR
+LN
+ka
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(32,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+Jc
+If
+Wg
+eK
+Ks
+lW
+Ho
+RS
+Ld
+lW
+Rk
+Bq
+Mx
+gP
+gP
+up
+gP
+gP
+TO
+Bq
+Ml
+Xt
+Bq
+uY
+Rd
+ZE
+uY
+uY
+uY
+Ta
+eK
+Ty
+Ty
+JN
+JN
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+eK
+UO
+en
+ty
+Yb
+en
+HR
+gi
+Ai
+Ga
+eK
+ka
+ka
+ka
+nR
+ka
+gL
+VL
+JH
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(33,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+Jc
+IF
+eK
+HK
+lW
+qR
+MO
+pX
+PJ
+rG
+Bq
+CP
+HT
+gP
+aD
+OK
+gP
+Ay
+Bq
+Ml
+Xt
+Bq
+Cw
+uY
+iF
+uY
+uY
+uY
+uY
+VK
+Ty
+Ty
+Ty
+JN
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+eK
+Bq
+Ma
+xx
+en
+pV
+Nt
+dB
+Mr
+Mb
+AZ
+ka
+ka
+ka
+rD
+ka
+cE
+cO
+cO
+cO
+cO
+WX
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(34,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+Bq
+lW
+lW
+KT
+DA
+In
+Bq
+eK
+AZ
+Bq
+gP
+gP
+gP
+Bq
+Bq
+Bq
+FE
+Xt
+Bq
+PG
+Mb
+oQ
+Mb
+Mb
+Mb
+eK
+eK
+wf
+Ty
+Ty
+Ty
+ka
+ka
+ka
+rD
+ka
+ka
+sz
+ka
+eK
+AZ
+Bq
+wT
+wT
+Ag
+Mb
+Vs
+Mb
+eK
+ka
+ka
+ka
+ka
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(35,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+lW
+rW
+Ry
+MV
+Bq
+eK
+zO
+bb
+eK
+Uy
+Bq
+ee
+Bq
+Ml
+Po
+gB
+Xt
+Bq
+Bq
+Mb
+IS
+gN
+Al
+Mb
+AZ
+wf
+SJ
+JN
+Ty
+Ty
+Ty
+ka
+ka
+ka
+ka
+ka
+ka
+th
+ka
+JN
+eK
+AZ
+AZ
+Bq
+Mb
+Re
+fg
+eK
+as
+ka
+ka
+ka
+ka
+nc
+ij
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+JH
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(36,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+lU
+yG
+yG
+Bq
+eK
+IJ
+xJ
+xJ
+xJ
+xJ
+eK
+AZ
+Bq
+Ml
+AK
+Xt
+Xt
+Xt
+Va
+Mb
+So
+sh
+UW
+Mb
+AZ
+AZ
+SJ
+JN
+JN
+Ty
+Ty
+Ty
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+JN
+eK
+mx
+AZ
+eK
+Ib
+JN
+ka
+ka
+ka
+Oy
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(37,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+GI
+GI
+YW
+eK
+cO
+TS
+mV
+xJ
+xJ
+xJ
+tw
+cO
+eK
+Bq
+yc
+yc
+yc
+Bq
+Bq
+Bq
+LV
+Ne
+Qq
+Mb
+Qc
+AZ
+SJ
+JN
+JN
+ka
+Ty
+Ty
+Ty
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+JN
+ka
+ka
+ta
+YD
+dp
+ct
+ka
+ka
+ka
+JN
+ka
+ka
+ka
+NT
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+WX
+cO
+cO
+cO
+SR
+"}
+(38,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+lx
+uI
+ba
+YW
+lx
+cO
+bp
+rn
+zn
+Nc
+yB
+pC
+cO
+cO
+eK
+Bq
+Bq
+Bq
+Bq
+Sr
+Bq
+kD
+Bq
+Mb
+Mb
+Tt
+AZ
+Er
+JN
+rD
+ka
+ka
+Ty
+Ty
+Ty
+ka
+ka
+ka
+rD
+ka
+JN
+JN
+JN
+ka
+JN
+ka
+JN
+ka
+JN
+ka
+ka
+ka
+ka
+ka
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(39,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+Bq
+zp
+Bq
+eK
+cO
+Jc
+fe
+du
+AG
+pC
+cO
+cO
+cO
+eK
+hT
+lh
+TR
+jm
+TR
+TR
+TR
+Bq
+Ws
+KJ
+fg
+eK
+JN
+ka
+ka
+ka
+ka
+ka
+Ty
+Ty
+Ty
+ka
+ka
+ka
+JN
+JN
+JN
+ka
+JN
+ka
+JN
+JN
+ka
+ka
+ka
+JN
+ka
+ka
+FO
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+JH
+cO
+SR
+"}
+(40,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+eK
+eK
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+TR
+TR
+HV
+TR
+TR
+eP
+KI
+Bq
+eK
+eK
+eK
+ka
+ka
+Xl
+ka
+sz
+ka
+ka
+Gp
+Ty
+Ty
+JN
+JN
+JN
+JN
+JN
+ka
+ka
+JN
+JN
+ka
+ka
+JN
+ka
+ka
+ka
+ka
+ka
+RO
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(41,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+Ol
+TR
+TR
+DG
+Gx
+Bq
+eK
+eK
+rD
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+th
+ka
+JN
+JN
+JN
+JN
+JN
+JN
+ka
+NH
+eK
+eK
+AZ
+AZ
+eK
+eK
+ky
+ka
+JN
+ka
+ka
+FO
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(42,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+eK
+Bq
+ce
+cC
+Bq
+eK
+mJ
+ka
+ka
+ka
+Yo
+Yo
+Yo
+ka
+ka
+ka
+ka
+ka
+rD
+JN
+JN
+JN
+ka
+ka
+JN
+JN
+yJ
+eK
+QX
+hA
+Ac
+Sc
+eK
+YR
+ka
+ka
+ka
+ka
+ka
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+WX
+SR
+"}
+(43,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eK
+eK
+eK
+eK
+bY
+Et
+ka
+ra
+Yo
+Yo
+bX
+Yo
+Yo
+sz
+ka
+ka
+ka
+ka
+JN
+JN
+jr
+ka
+ka
+ka
+JN
+eK
+Bq
+Qm
+Mb
+Mb
+Mb
+jK
+aA
+JF
+ka
+ka
+FO
+ka
+gL
+VL
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(44,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+wb
+MT
+UZ
+Yo
+bX
+hh
+bX
+Yo
+sz
+ka
+lA
+US
+IA
+JN
+JN
+ka
+ka
+ka
+ka
+JN
+mL
+Mb
+GK
+Se
+vU
+Mb
+rR
+yN
+UE
+ka
+ka
+Bx
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(45,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+zq
+Yo
+bX
+kN
+bX
+ev
+ka
+ka
+NZ
+NZ
+eK
+JN
+JN
+ka
+ka
+ka
+ka
+Sb
+eK
+Zy
+lJ
+tM
+Hp
+Mb
+rR
+yN
+UE
+ka
+ka
+FO
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+JH
+SR
+"}
+(46,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+Bc
+Yo
+sl
+bX
+bX
+Yo
+sz
+ka
+NZ
+YI
+LD
+JN
+JN
+rD
+ka
+ka
+ka
+eK
+eK
+pv
+uD
+DT
+Mb
+Mb
+We
+yN
+UE
+ka
+ka
+Eb
+ka
+nc
+ij
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(47,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+ka
+Yo
+Yo
+bX
+Yo
+Yo
+sz
+ka
+NZ
+kI
+eK
+JN
+JN
+ka
+ka
+ka
+GQ
+eK
+VI
+Mb
+si
+Co
+Mb
+Fp
+Pq
+Sz
+Fx
+ka
+ka
+ka
+FO
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(48,1,1) = {"
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+ka
+ka
+Yo
+Yo
+Yo
+ka
+ka
+ka
+NZ
+Qk
+Uf
+JN
+JN
+ka
+ka
+ka
+ka
+AZ
+HE
+Mb
+jW
+Mb
+Mb
+dl
+eK
+Fx
+ka
+ka
+ka
+th
+Zn
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(49,1,1) = {"
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+ka
+sz
+ka
+ka
+ka
+th
+ka
+eK
+kI
+kI
+eK
+JN
+JN
+ka
+ka
+ka
+ka
+AZ
+fL
+Mb
+Mb
+Mb
+hZ
+rR
+UE
+ka
+ka
+ka
+ka
+ka
+FO
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(50,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+ka
+ka
+rD
+ka
+ka
+ka
+ka
+ka
+NZ
+ZB
+sa
+JN
+JN
+ka
+th
+ka
+ka
+AZ
+xT
+Mb
+Mb
+Og
+SO
+Np
+Fx
+ka
+as
+ka
+ka
+ka
+sC
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+WX
+SR
+"}
+(51,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+wb
+MT
+th
+ka
+ka
+ka
+ka
+ka
+ka
+eK
+eK
+eK
+JN
+JN
+ka
+ka
+rD
+ka
+eK
+xT
+Do
+KL
+tX
+Np
+Fx
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+gL
+VL
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(52,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+ka
+ka
+ka
+RM
+ka
+ka
+ka
+eK
+rK
+JN
+JN
+JN
+ka
+ka
+ka
+ka
+eK
+eK
+AZ
+AZ
+eK
+cc
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(53,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+ka
+ka
+ka
+ZI
+ka
+ka
+as
+ka
+cg
+JN
+JN
+ka
+ka
+ka
+ka
+ka
+ka
+os
+ka
+eM
+ka
+rD
+ka
+ka
+ka
+ka
+ka
+rj
+ka
+gL
+VL
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(54,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+tW
+ka
+ka
+th
+ka
+ka
+ka
+ka
+ka
+JN
+JN
+ka
+ka
+ka
+ka
+th
+ka
+BI
+ka
+ka
+as
+ka
+ka
+ka
+ka
+ka
+ka
+xk
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+JH
+SR
+"}
+(55,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+Rc
+Of
+ka
+ka
+rD
+ka
+ka
+ka
+ka
+JN
+JN
+ka
+ka
+ka
+ka
+ka
+ka
+sz
+ka
+ka
+ka
+ka
+ka
+QY
+fY
+gA
+ka
+ka
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(56,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+wb
+MT
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+JN
+JN
+JN
+lk
+Or
+uX
+qZ
+ka
+ka
+ka
+rD
+ka
+ka
+ka
+iy
+ut
+OM
+ka
+ka
+ka
+nc
+ij
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(57,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+XO
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+as
+JN
+JN
+kL
+TB
+ze
+mv
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+th
+ka
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(58,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+ka
+ET
+tW
+ka
+XW
+CA
+ka
+ka
+ka
+JN
+JN
+IL
+wH
+ze
+mv
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+rD
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+WX
+cO
+SR
+"}
+(59,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+wb
+bY
+CR
+ka
+zH
+LN
+DR
+ka
+ka
+ka
+JN
+JN
+IL
+eh
+ze
+mv
+ka
+rD
+ka
+ka
+th
+ka
+ka
+th
+ka
+ka
+Oy
+ka
+ka
+BU
+nc
+ij
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(60,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+JH
+cO
+cO
+cO
+wb
+bY
+MT
+ka
+ka
+ka
+ka
+ka
+JN
+JN
+uz
+It
+It
+MA
+ka
+ka
+ka
+ka
+ka
+ka
+tW
+tW
+tW
+tW
+ka
+ka
+ka
+il
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(61,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+ka
+TZ
+RJ
+ka
+JN
+JN
+JN
+Yd
+ka
+ka
+ka
+ka
+dD
+ka
+ka
+ka
+TM
+SM
+SM
+SM
+SM
+LY
+ZY
+ka
+cp
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+JH
+cO
+cO
+cO
+SR
+"}
+(62,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+WX
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+ka
+FX
+FX
+ka
+JN
+JN
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+sz
+ZV
+FO
+dG
+ka
+ka
+ka
+ka
+ka
+PR
+ka
+FO
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(63,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+wb
+MT
+ka
+ka
+ka
+JN
+JN
+ka
+ka
+ka
+ka
+ka
+ka
+OO
+ka
+FO
+FO
+dG
+ka
+ka
+ka
+ka
+ka
+PR
+ka
+ka
+gL
+VL
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(64,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+ka
+ka
+ka
+JN
+JN
+ka
+mi
+ka
+ka
+ka
+ka
+ka
+ka
+FO
+FO
+dG
+ka
+ka
+ka
+ka
+ka
+PR
+th
+gL
+VL
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+WX
+cO
+cO
+cO
+cO
+SR
+"}
+(65,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+JH
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+rD
+ka
+ka
+JN
+JN
+ka
+ka
+ka
+ka
+rD
+ka
+JN
+ka
+ka
+ka
+dG
+ka
+Dg
+ka
+ka
+ka
+PR
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(66,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+ka
+ka
+ka
+JN
+JN
+JN
+JN
+JN
+ka
+ka
+ka
+fI
+jP
+fI
+lP
+dG
+ka
+ka
+ka
+ka
+ka
+PR
+Oy
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(67,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+th
+ka
+ka
+JN
+JN
+JN
+ka
+JN
+JN
+ka
+JN
+GD
+ew
+fI
+sO
+dG
+Tw
+Tw
+Tw
+Tw
+Tw
+PR
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+JH
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(68,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+WX
+cO
+cO
+cO
+cO
+cO
+cO
+eH
+Ko
+ka
+ka
+rD
+JN
+JN
+ka
+yz
+ka
+ka
+ka
+Gw
+fI
+jP
+hu
+lP
+dG
+ka
+ka
+ka
+ka
+ka
+PR
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(69,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eH
+tk
+ka
+ka
+Dt
+ka
+JN
+JN
+ka
+ka
+ka
+ka
+JN
+ka
+ka
+th
+ka
+ka
+dG
+ka
+ka
+ka
+ka
+ka
+PR
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+WX
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(70,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+JH
+cO
+cO
+eH
+EI
+rl
+ka
+ka
+ka
+ka
+ka
+JN
+JN
+JN
+ka
+ka
+ka
+ka
+ka
+ka
+rD
+FO
+FO
+dG
+ka
+ka
+ka
+ka
+ka
+PR
+al
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(71,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eH
+tk
+th
+ka
+ka
+eK
+eK
+eK
+eK
+qc
+JN
+JN
+ka
+ka
+ka
+ka
+ka
+JN
+ka
+FO
+FO
+dG
+ka
+ka
+ka
+ka
+ka
+PR
+ka
+xj
+ij
+cO
+cO
+JH
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(72,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+ka
+Oy
+eK
+eK
+Bq
+ro
+ro
+fg
+eK
+oZ
+tQ
+ka
+ka
+eO
+PZ
+ka
+ka
+ka
+FO
+FO
+dG
+ka
+ka
+ka
+ka
+ka
+PR
+ka
+ka
+nc
+ij
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(73,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eH
+tk
+ka
+eK
+Bq
+ro
+Ub
+Sx
+Sx
+Sx
+XJ
+bK
+ii
+tQ
+ka
+pj
+fH
+ka
+ka
+ka
+ka
+ka
+mW
+Xu
+Xu
+Xu
+Xu
+WG
+lz
+ka
+iP
+ka
+lG
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(74,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eH
+tk
+ka
+ka
+eK
+ro
+Sx
+Sx
+Sx
+Sx
+Sx
+XJ
+bK
+bK
+TC
+ka
+ka
+ka
+rD
+ka
+ka
+ka
+ka
+th
+iU
+iU
+iU
+iU
+ka
+ka
+ka
+hB
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(75,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+sz
+ka
+ka
+eK
+Bq
+DS
+Bq
+Bq
+ro
+Sx
+eK
+bK
+bK
+TC
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+rD
+ka
+ka
+ka
+ka
+ka
+rD
+ka
+FO
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(76,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+eH
+tk
+ka
+sz
+JN
+eK
+KH
+uu
+KH
+Bq
+ro
+Sx
+TW
+bK
+bK
+TC
+ka
+ka
+th
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+th
+ka
+ka
+ka
+gC
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(77,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+ka
+ka
+eK
+Rs
+Bq
+Bq
+uu
+uu
+Bq
+Bq
+Sx
+TK
+bK
+bK
+TC
+ka
+ka
+ka
+tW
+tW
+tW
+ka
+tW
+tW
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+FO
+ka
+dX
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(78,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+ka
+ka
+eK
+jV
+dv
+Bq
+KH
+uu
+Qj
+Bq
+Sx
+sI
+bK
+bK
+TC
+ka
+ka
+ka
+tW
+tW
+tW
+ka
+tW
+tW
+ka
+ka
+ka
+ka
+ka
+sR
+ka
+Jv
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(79,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+th
+ka
+eK
+Tq
+hD
+Bq
+Bq
+xO
+uu
+Bq
+Bq
+zg
+bK
+vM
+VD
+ka
+ka
+rD
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+tW
+ka
+ka
+ka
+Oy
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(80,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+ka
+ka
+eK
+Bz
+Tb
+UJ
+Bq
+aE
+uu
+KH
+Bq
+RF
+YD
+VD
+ka
+ka
+ka
+ka
+ka
+Rf
+Tr
+Tr
+Tr
+Zz
+ka
+ka
+FO
+uH
+xP
+ka
+ka
+ka
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+"}
+(81,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+wb
+MT
+ka
+eK
+eK
+jV
+ke
+Bq
+aE
+uu
+KH
+eK
+GY
+ka
+ka
+ka
+ka
+th
+ka
+Rf
+zK
+OA
+OA
+OA
+RB
+Zz
+Oy
+oJ
+iU
+ka
+ka
+ka
+YN
+gL
+VL
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+"}
+(82,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+sz
+AX
+eK
+IG
+IG
+eK
+Bq
+KH
+Bq
+eK
+wI
+ka
+ka
+ka
+ka
+ka
+ka
+rz
+jq
+OA
+OA
+OA
+OA
+ob
+ka
+ka
+ka
+ka
+Zj
+rD
+gL
+VL
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(83,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+wb
+MT
+ka
+ka
+ka
+ka
+ka
+eK
+eK
+eK
+kJ
+ka
+OV
+ka
+ka
+ka
+ka
+ka
+rQ
+ww
+OA
+OA
+OA
+OA
+py
+ka
+Dg
+ka
+ka
+ka
+ka
+cE
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(84,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+wb
+MT
+ka
+ka
+ka
+ka
+ka
+ka
+sR
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+KP
+eK
+eK
+eK
+eK
+eK
+eK
+eK
+Uk
+ka
+ka
+ka
+ka
+gL
+VL
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(85,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+wb
+MT
+Oy
+ka
+ka
+ka
+ka
+ka
+ka
+tW
+tW
+ka
+tW
+tW
+Rf
+eK
+Bq
+RP
+YM
+Ub
+Mj
+sV
+fg
+eK
+ka
+ka
+gL
+bY
+VL
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(86,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+th
+ka
+NZ
+NZ
+eK
+ka
+ka
+ka
+ka
+ka
+ka
+ka
+rz
+Mo
+Sx
+jn
+YZ
+YZ
+jn
+YZ
+QG
+Bq
+eK
+bY
+VL
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+SR
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(87,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+wb
+MT
+ka
+NZ
+EA
+xe
+ka
+ka
+ef
+ef
+ef
+ef
+NC
+ta
+eK
+DL
+Dq
+Dq
+Dq
+Dq
+Dq
+KS
+QN
+eK
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(88,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+wb
+MT
+eK
+eK
+eK
+ka
+oq
+ka
+ka
+ka
+ka
+ka
+ka
+eK
+Bq
+Aj
+Aj
+Aj
+Aj
+Aj
+Hd
+hM
+eK
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(89,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+wb
+MT
+PH
+ka
+ka
+aZ
+iY
+ka
+ka
+ka
+MX
+ka
+JU
+eK
+fJ
+og
+HP
+HP
+HP
+HP
+wC
+eK
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+SR
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(90,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+oa
+ka
+ka
+Oy
+ka
+ka
+ka
+ka
+nX
+gL
+Jw
+VL
+eK
+HI
+EQ
+HP
+HP
+HP
+HP
+Bq
+eK
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(91,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+wb
+MT
+gV
+ka
+ka
+fv
+gL
+bY
+bY
+VL
+cO
+cO
+eK
+eK
+Zs
+Iw
+Iw
+Iw
+eK
+eK
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(92,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+wb
+bY
+bY
+bY
+bY
+VL
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+SR
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(93,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(94,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(95,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+SR
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(96,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(97,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+cO
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}
+(98,1,1) = {"
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+SR
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+ot
+"}

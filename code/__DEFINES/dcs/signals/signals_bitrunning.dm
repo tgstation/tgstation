@@ -42,8 +42,14 @@
 #define COMSIG_BITRUNNER_STATION_SPAWN "bitrunner_station_spawn"
 
 // Ladder
+
 /// from /obj/structure/hololadder/disconnect()
 #define COMSIG_BITRUNNER_LADDER_SEVER "bitrunner_ladder_sever"
 
 /// Sent when a server console is emagged
 #define COMSIG_BITRUNNER_SERVER_EMAGGED "bitrunner_server_emagged"
+
+// Spawners
+
+/// from /obj/effect/mob_spawn/ghost_role/human/virtual_domain/proc/artificial_spawn() : (mob/living/runner)
+#define COMSIG_BITRUNNER_SPAWNED "bitrunner_spawned"
