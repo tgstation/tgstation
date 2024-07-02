@@ -235,6 +235,7 @@
 	var/total_removed_amount = 0
 	var/remove_amount = 0
 	var/list/cached_reagents = reagent_list
+	var/list/removed_reagents = list()
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
 		//check for specific type or subtypes
 		if(!include_subtypes)
@@ -243,19 +244,26 @@
 		else if(!istype(cached_reagent, reagent_type))
 			continue
 
+		//reduce the volume
 		remove_amount = min(cached_reagent.volume, amount)
 		cached_reagent.volume -= remove_amount
 
-		update_total()
-		if(!safety)//So it does not handle reactions when it need not to
-			handle_reactions()
-		SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, QDELING(cached_reagent) ? reagent_type : cached_reagent, amount)
-
+		//record the changes
+		removed_reagents += cached_reagent
 		total_removed_amount += remove_amount
 
 		//if we reached here means we have found our specific reagent type so break
 		if(!include_subtypes)
-			return total_removed_amount
+			break
+
+	//inform others about our reagents being removed
+	for(var/datum/reagent/removed_reagent as anything in cached_reagents)
+		SEND_SIGNAL(src, COMSIG_REAGENTS_REM_REAGENT, removed_reagent, amount)
+
+	//update the holder & handle reactions
+	update_total()
+	if(!safety)
+		handle_reactions()
 
 	return round(total_removed_amount, CHEMICAL_VOLUME_ROUNDING)
 
@@ -504,8 +512,6 @@
 		log_target.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
 		log_combat(transferred_by, log_target, "transferred reagents to", my_atom, "which had [get_external_reagent_log_string(transfer_log)]")
 
-	update_total()
-	target_holder.update_total()
 	if(!no_react)
 		target_holder.handle_reactions()
 		src.handle_reactions()
