@@ -226,6 +226,19 @@
 // Cleanup functions
 
 /**
+ * Run garbage collection on the state.
+ *
+ * This may be necessary to prevent hanging references, as some
+ * hard references may persist in unreachable luau objects that
+ * would be collected after a garbage collection cycle or two.
+ *
+ * @param state the handle to the state
+ *
+ * @return null on success
+ */
+#define DREAMLUAU_COLLECT_GARBAGE(state) DREAMLUAU_CALL(collect_garbage)((state))
+
+/**
  * Remove a sleeping thread from the sleep queue, without executing it.
  *
  * @param state the handle to the state

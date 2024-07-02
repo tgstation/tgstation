@@ -9,7 +9,7 @@ GLOBAL_PROTECT(lua_state_stack)
 /datum/lua_state
 	var/display_name
 
-	/// The internal ID of the lua state stored in auxlua's global map
+	/// The internal ID of the lua state stored in dreamluau's state list
 	var/internal_id
 
 	/// A log of every return, yield, and error for each chunk execution and function call
@@ -86,6 +86,7 @@ GLOBAL_PROTECT(lua_state_stack)
 	DREAMLUAU_SET_USR
 	GLOB.lua_state_stack += WEAKREF(src)
 	var/result = DREAMLUAU_LOAD(internal_id, script, "input")
+	SSlua.needs_gc_cycle |= src
 	pop(GLOB.lua_state_stack)
 	GLOB.lua_usr = tmp_usr
 
@@ -124,13 +125,15 @@ GLOBAL_PROTECT(lua_state_stack)
 			else
 				new_function_path += path_element
 		function = new_function_path
-	log_lua("[key_name(usr)] called the lua function \"[jointext(function, ".")]\" with arguments: [english_list(call_args)]")
+	else
+		function = list(function)
 
 	var/tmp_usr = GLOB.lua_usr
 	GLOB.lua_usr = usr
 	DREAMLUAU_SET_USR
 	GLOB.lua_state_stack += WEAKREF(src)
 	var/result = DREAMLUAU_CALL_FUNCTION(internal_id, function, call_args)
+	SSlua.needs_gc_cycle |= src
 	pop(GLOB.lua_state_stack)
 	GLOB.lua_usr = tmp_usr
 
@@ -157,6 +160,7 @@ GLOBAL_PROTECT(lua_state_stack)
 	DREAMLUAU_SET_USR
 	GLOB.lua_state_stack += WEAKREF(src)
 	var/result = DREAMLUAU_AWAKEN(internal_id)
+	SSlua.needs_gc_cycle |= src
 	pop(GLOB.lua_state_stack)
 
 	if(isnull(result))
@@ -169,12 +173,11 @@ GLOBAL_PROTECT(lua_state_stack)
 /// Prefer calling SSlua.queue_resume over directly calling this
 /datum/lua_state/proc/resume(index, ...)
 	var/call_args = length(args) > 1 ? args.Copy(2) : list()
-	var/msg = "[key_name(usr)] resumed a lua coroutine with arguments: [english_list(call_args)]"
-	log_lua(msg)
 
 	DREAMLUAU_SET_USR
 	GLOB.lua_state_stack += WEAKREF(src)
 	var/result = DREAMLUAU_RESUME(internal_id, index, call_args)
+	SSlua.needs_gc_cycle |= src
 	pop(GLOB.lua_state_stack)
 
 	if(isnull(result))
@@ -205,7 +208,14 @@ GLOBAL_PROTECT(lua_state_stack)
 	return result
 
 /datum/lua_state/proc/kill_task(is_sleep, index)
-	return is_sleep ? DREAMLUAU_KILL_SLEEPING_THREAD(internal_id, index) : DREAMLUAU_KILL_YIELDED_THREAD(internal_id, index)
+	var/result = is_sleep ? DREAMLUAU_KILL_SLEEPING_THREAD(internal_id, index) : DREAMLUAU_KILL_YIELDED_THREAD(internal_id, index)
+	SSlua.needs_gc_cycle |= src
+	return result
+
+/datum/lua_state/proc/collect_garbage()
+	var/result = DREAMLUAU_COLLECT_GARBAGE(internal_id)
+	if(!isnull(result))
+		CRASH(result)
 
 /datum/lua_state/proc/update_editors()
 	var/list/editor_list = LAZYACCESS(SSlua.editors, text_ref(src))

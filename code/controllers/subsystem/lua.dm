@@ -17,6 +17,8 @@ SUBSYSTEM_DEF(lua)
 	var/list/current_run = list()
 	var/list/current_states_run = list()
 
+	var/list/needs_gc_cycle = list()
+
 /datum/controller/subsystem/lua/Initialize()
 	DREAMLUAU_SET_EXECUTION_LIMIT_SECS(5)
 	// Set wrappers to ensure that lua scripts are subject to the same safety restrictions as other admin tooling
@@ -121,6 +123,11 @@ SUBSYSTEM_DEF(lua)
 		state.process(wait)
 		if(MC_TICK_CHECK)
 			break
+
+	while(length(needs_gc_cycle))
+		var/datum/lua_state/state = needs_gc_cycle[needs_gc_cycle.len]
+		needs_gc_cycle.len--
+		state.collect_garbage()
 
 	// Update every lua editor TGUI open for each state that had a task awakened or resumed
 	for(var/datum/lua_state/state in affected_states)

@@ -43,14 +43,9 @@
 /datum/lua_editor/ui_state(mob/user)
 	return GLOB.debug_state
 
-/datum/lua_editor/ui_static_data(mob/user)
-	var/list/data = list()
-	data["documentation"] = file2text('code/modules/admin/verbs/lua/README.md')
-	data["ss_lua_init"] = SSlua.initialized
-	return data
-
 /datum/lua_editor/ui_data(mob/user)
 	var/list/data = list()
+	data["ss_lua_init"] = SSlua.initialized
 	if(!SSlua.initialized)
 		return data
 
@@ -247,14 +242,14 @@
 		if("vvReturnValue")
 			var/log_entry_index = params["entryIndex"]
 			var/list/log_entry = current_state.log[log_entry_index]
-			var/thing_to_debug = traverse_list(params["tableIndices"], log_entry["return_values"])
+			var/thing_to_debug = traverse_list(params["indices"], log_entry["return_values"])
 			if(isweakref(thing_to_debug))
 				var/datum/weakref/ref = thing_to_debug
 				thing_to_debug = ref.resolve()
 			INVOKE_ASYNC(usr.client, TYPE_PROC_REF(/client, debug_variables), thing_to_debug)
 			return FALSE
 		if("vvGlobal")
-			var/thing_to_debug = traverse_list(params["indices"], current_state.globals)
+			var/thing_to_debug = traverse_list(params["indices"], current_state.globals["values"])
 			if(isweakref(thing_to_debug))
 				var/datum/weakref/ref = thing_to_debug
 				thing_to_debug = ref.resolve()

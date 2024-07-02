@@ -98,7 +98,7 @@ export const Log = (props) => {
                 vvAct={(path) =>
                   act('vvReturnValue', {
                     entryIndex: i + 1,
-                    tableIndices: path,
+                    indices: path,
                   })
                 }
               />
@@ -153,7 +153,13 @@ export const Log = (props) => {
         output = (
           <>
             Runtime at {file}:{line}: {message}
-            <ListMapper list={stack} name="Stack Trace" collapsible />
+            <ListMapper
+              list={stack.map((frame) => {
+                return { key: null, value: frame };
+              })}
+              name="Stack Trace"
+              collapsible
+            />
           </>
         );
         messageColor = 'red';

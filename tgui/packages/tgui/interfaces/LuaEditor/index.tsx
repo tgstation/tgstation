@@ -15,7 +15,6 @@ import {
   TextArea,
 } from '../../components';
 import { Window } from '../../layouts';
-import { logger } from '../../logging';
 import { CallModal } from './CallModal';
 import { ChunkViewModal } from './ChunkViewModal';
 import { ListMapper } from './ListMapper';
@@ -98,11 +97,6 @@ export class LuaEditor extends Component<unknown, LuaEditorState> {
     this.handleSectionScroll = () => {
       const { showJumpToBottomButton } = this.state;
       const scrollableCurrent = this.sectionRef.current;
-      logger.log(
-        scrollableCurrent?.scrollHeight,
-        scrollableCurrent?.scrollTop,
-        scrollableCurrent?.clientHeight,
-      );
       if (scrollableCurrent) {
         if (
           !showJumpToBottomButton &&
@@ -389,7 +383,7 @@ export class LuaEditor extends Component<unknown, LuaEditorState> {
                   </Stack>
                   <Stack fill vertical>
                     <Stack.Item grow>
-                      <Box width="100%" height="100%">
+                      <Box position="relative" width="100%" height="100%">
                         <Section
                           ref={this.sectionRef}
                           fill
@@ -414,23 +408,28 @@ export class LuaEditor extends Component<unknown, LuaEditorState> {
                           {tabContent}
                         </Section>
                         {activeTab === 'log' && showJumpToBottomButton && (
-                          <Button
-                            position="absolute"
-                            icon="arrow-down"
-                            onClick={() => {
-                              const sectionCurrent = this.sectionRef.current;
-                              if (sectionCurrent) {
-                                sectionCurrent.scrollTop =
-                                  sectionCurrent.scrollHeight;
-                              }
-                            }}
-                          >
-                            Jump to Bottom
-                          </Button>
+                          <Stack fill justify="space-around" bottom="2rem">
+                            <Stack.Item>
+                              <Button
+                                position="absolute"
+                                icon="arrow-down"
+                                onClick={() => {
+                                  const sectionCurrent =
+                                    this.sectionRef.current;
+                                  if (sectionCurrent) {
+                                    sectionCurrent.scrollTop =
+                                      sectionCurrent.scrollHeight;
+                                  }
+                                }}
+                              >
+                                Jump to Bottom
+                              </Button>
+                            </Stack.Item>
+                          </Stack>
                         )}
                       </Box>
                     </Stack.Item>
-                    {activeTab === 'log' && (
+                    {activeTab === 'log' && pageCount > 1 && (
                       <Stack.Item>
                         <Stack justify="space-between">
                           <Stack.Item width="25%">
@@ -444,18 +443,16 @@ export class LuaEditor extends Component<unknown, LuaEditorState> {
                               }}
                             />
                           </Stack.Item>
-                          {!!pageCount && (
-                            <Stack.Item width="50%">
-                              <ProgressBar
-                                width="100%"
-                                value={page / (pageCount - 1)}
-                              >
-                                <Box width="100%" align="center">
-                                  {`Page ${page + 1}/${pageCount}`}
-                                </Box>
-                              </ProgressBar>
-                            </Stack.Item>
-                          )}
+                          <Stack.Item width="50%">
+                            <ProgressBar
+                              width="100%"
+                              value={page / (pageCount - 1)}
+                            >
+                              <Box width="100%" align="center">
+                                {`Page ${page + 1}/${pageCount}`}
+                              </Box>
+                            </ProgressBar>
+                          </Stack.Item>
                           <Stack.Item width="25%">
                             <Button
                               width="100%"

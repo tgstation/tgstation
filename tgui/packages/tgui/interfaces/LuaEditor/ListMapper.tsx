@@ -1,3 +1,4 @@
+import { BooleanLike } from 'common/react';
 import React from 'react';
 
 import { useBackend, useLocalState } from '../../backend';
@@ -94,15 +95,17 @@ const mapListVariants = (list: any[], variants: VariantList) => {
 
 type ListPath = { index: number; type: 'key' | 'value' | 'entry' }[];
 
+type ListElement = { key: any; value: any };
+
 type ListMapperProps = BoxProps & {
-  list: any[];
+  list: ListElement[];
 } & Partial<{
     variants: VariantList;
-    editable: boolean;
+    editable: BooleanLike;
     name: string;
     vvAct: (path: ListPath) => void;
-    skipNulls: boolean;
-    collapsible: boolean;
+    skipNulls: BooleanLike;
+    collapsible: BooleanLike;
     callType: 'callFunction' | 'resumeTask';
     path: ListPath;
   }>;
@@ -132,7 +135,7 @@ export const ListMapper = (props: ListMapperProps) => {
   const ThingNode = (
     thing: any,
     path: ListPath,
-    canCall: boolean,
+    canCall: BooleanLike,
     overrideProps?: ListMapperProps,
   ) => {
     if (Array.isArray(thing)) {
@@ -187,7 +190,7 @@ export const ListMapper = (props: ListMapperProps) => {
     }
   };
 
-  const ListMapperInner = (element, i: number) => {
+  const ListMapperInner = (element: ListElement, i: number) => {
     const { key, value } = element;
     const basePath: ListPath = path ? path : [];
     let keyPath: ListPath = [...basePath, { index: i + 1, type: 'key' }];
@@ -219,35 +222,40 @@ export const ListMapper = (props: ListMapperProps) => {
       uniquelyIndexable,
     );
     return (
-      <LabeledList.Item
-        label={keyNode}
-        buttons={
-          editable && (
-            <>
-              <Button
-                icon="arrow-up"
-                disabled={i === 0}
-                tooltip="Move Up"
-                onClick={() => act('moveArgUp', { path: entryPath })}
-              />
-              <Button
-                icon="arrow-down"
-                disabled={i === list.length - 1}
-                tooltip="Move Down"
-                onClick={() => act('moveArgDown', { path: entryPath })}
-              />
-              <Button
-                icon="window-close"
-                color="red"
-                tooltip="Remove"
-                onClick={() => act('removeArg', { path: entryPath })}
-              />
-            </>
-          )
-        }
-      >
-        {valueNode}
-      </LabeledList.Item>
+      <>
+        {i > 0 && (key === null || key === undefined) && (
+          <LabeledList.Divider />
+        )}
+        <LabeledList.Item
+          label={keyNode}
+          buttons={
+            editable && (
+              <>
+                <Button
+                  icon="arrow-up"
+                  disabled={i === 0}
+                  tooltip="Move Up"
+                  onClick={() => act('moveArgUp', { path: entryPath })}
+                />
+                <Button
+                  icon="arrow-down"
+                  disabled={i === list.length - 1}
+                  tooltip="Move Down"
+                  onClick={() => act('moveArgDown', { path: entryPath })}
+                />
+                <Button
+                  icon="window-close"
+                  color="red"
+                  tooltip="Remove"
+                  onClick={() => act('removeArg', { path: entryPath })}
+                />
+              </>
+            )
+          }
+        >
+          {valueNode}
+        </LabeledList.Item>
+      </>
     );
   };
 
