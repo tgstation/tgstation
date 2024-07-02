@@ -207,6 +207,15 @@
 	worn_icon_state = "horn_air"
 	sound_file = 'sound/items/airhorn2.ogg'
 
+/datum/crafting_recipe/airhorn
+	name = "Air Horn"
+	result = /obj/item/bikehorn/airhorn
+	reqs = list(
+		/obj/item/bikehorn = 1,
+		/obj/item/toy/crayon/spraycan = 1,
+	)
+	category = CAT_ENTERTAINMENT
+
 //golden bikehorn
 /obj/item/bikehorn/golden
 	name = "golden bike horn"

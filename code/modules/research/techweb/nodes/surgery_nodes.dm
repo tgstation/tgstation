@@ -56,7 +56,7 @@
 		"surgery_viral_bond",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
-	required_experiments = list(/datum/experiment/autopsy/nonhuman)
+	discount_experiments = list(/datum/experiment/autopsy/nonhuman = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/surgery_tools
 	id = TECHWEB_NODE_SURGERY_TOOLS
