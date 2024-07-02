@@ -13,6 +13,7 @@
 		"destructive_analyzer",
 		"destructive_scanner",
 		"experi_scanner",
+		"ntnet_relay",
 		"laptop",
 		"portadrive_basic",
 		"portadrive_advanced",

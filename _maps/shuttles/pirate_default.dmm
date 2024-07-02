@@ -837,7 +837,8 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack{
-	dir = 8
+	dir = 8;
+	layer = 2.9
 	},
 /obj/item/storage/box/lethalshot,
 /obj/item/gun/ballistic/shotgun/automatic/combat{

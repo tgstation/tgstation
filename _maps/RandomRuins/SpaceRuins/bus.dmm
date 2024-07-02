@@ -29,6 +29,7 @@
 "ao" = (
 /obj/machinery/telecomms/server{
 	pixel_z = 12;
+	layer = 2.91;
 	name = "tgsv3";
 	desc = "It's, uh... pending an upgrade."
 	},
@@ -239,7 +240,8 @@
 /area/ruin/space)
 "ud" = (
 /obj/structure/fluff/bus/passable{
-	icon_state = "bottomdoor"
+	icon_state = "bottomdoor";
+	layer = 3
 	},
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
@@ -306,6 +308,7 @@
 	},
 /obj/machinery/telecomms/server{
 	pixel_z = 12;
+	layer = 2.91;
 	name = "tgsv3";
 	desc = "It's, uh... pending an upgrade."
 	},

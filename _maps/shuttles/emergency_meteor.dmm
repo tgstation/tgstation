@@ -6,7 +6,9 @@
 /turf/closed/mineral/asteroid/porous,
 /area/shuttle/escape/meteor)
 "c" = (
-/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/north{
+	layer = 2.9
+	},
 /turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)
 "d" = (

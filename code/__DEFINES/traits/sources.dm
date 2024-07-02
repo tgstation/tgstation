@@ -190,8 +190,6 @@
 #define MOD_TRAIT "mod"
 /// Trait applied to tram passengers
 #define TRAM_PASSENGER_TRAIT "tram-passenger"
-/// Trait given by a fulton extraction pack
-#define FULTON_PACK_TRAIT "fulton-pack"
 
 /// Trait granted by the berserker hood.
 #define BERSERK_TRAIT "berserk_trait"

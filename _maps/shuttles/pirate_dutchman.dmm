@@ -487,9 +487,8 @@
 "xA" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
 	dir = 1;
-	x_offset = 7;
-	y_offset = -3;
-	view_range = 10
+	x_offset = -4;
+	y_offset = -8
 	},
 /turf/open/floor/carpet/royalblack/airless,
 /area/shuttle/pirate/flying_dutchman)

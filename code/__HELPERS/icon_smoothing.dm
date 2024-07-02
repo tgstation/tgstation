@@ -177,7 +177,7 @@ xxx xxx xxx
 			corners_diagonal_smooth(calculate_adjacencies())
 		else
 			corners_cardinal_smooth(calculate_adjacencies())
-	else if(smoothing_flags & (SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS))
+	else if(smoothing_flags & SMOOTH_BITMASK)
 		bitmask_smooth()
 	else
 		CRASH("smooth_icon called for [src] with smoothing_flags == [smoothing_flags]")
@@ -430,7 +430,7 @@ xxx xxx xxx
 	SET_ADJ_IN_DIR(WEST, WEST)
 
 	// If there's nothing going on already
-	if(smoothing_flags & SMOOTH_BITMASK_CARDINALS || !(new_junction & (NORTH|SOUTH)) || !(new_junction & (EAST|WEST)))
+	if(!(new_junction & (NORTH|SOUTH)) || !(new_junction & (EAST|WEST)))
 		set_smoothed_icon_state(new_junction)
 		return
 
@@ -518,13 +518,13 @@ xxx xxx xxx
 /proc/smooth_zlevel(zlevel, now = FALSE)
 	var/list/away_turfs = Z_TURFS(zlevel)
 	for(var/turf/turf_to_smooth as anything in away_turfs)
-		if(turf_to_smooth.smoothing_flags & USES_SMOOTHING)
+		if(turf_to_smooth.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 			if(now)
 				turf_to_smooth.smooth_icon()
 			else
 				QUEUE_SMOOTH(turf_to_smooth)
 		for(var/atom/movable/movable_to_smooth as anything in turf_to_smooth)
-			if(movable_to_smooth.smoothing_flags & USES_SMOOTHING)
+			if(movable_to_smooth.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 				if(now)
 					movable_to_smooth.smooth_icon()
 				else
@@ -654,6 +654,15 @@ xxx xxx xxx
 	smoothing_flags = SMOOTH_CORNERS|SMOOTH_DIAGONAL_CORNERS|SMOOTH_BORDER
 	smoothing_groups = null
 	canSmoothWith = null
+
+#undef NORTH_JUNCTION
+#undef SOUTH_JUNCTION
+#undef EAST_JUNCTION
+#undef WEST_JUNCTION
+#undef NORTHEAST_JUNCTION
+#undef NORTHWEST_JUNCTION
+#undef SOUTHEAST_JUNCTION
+#undef SOUTHWEST_JUNCTION
 
 #undef NO_ADJ_FOUND
 #undef ADJ_FOUND

@@ -21,6 +21,7 @@
 	description = "All the essentials to subdue a mime."
 	prereq_ids = list(TECHWEB_NODE_BASIC_ARMS)
 	design_ids = list(
+		"camera_assembly",
 		"secdata",
 		"mining",
 		"prisonmanage",
@@ -29,6 +30,7 @@
 		"security_photobooth",
 		"photobooth",
 		"scanner_gate",
+		"turret_control",
 		"pepperspray",
 		"dragnet_beacon",
 		"inspector",

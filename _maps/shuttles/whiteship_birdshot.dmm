@@ -361,7 +361,9 @@
 /area/shuttle/abandoned/crew)
 "nz" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
-/obj/item/reagent_containers/condiment/enzyme,
+/obj/item/reagent_containers/condiment/enzyme{
+	layer = 5
+	},
 /obj/item/food/meat/slab/synthmeat{
 	pixel_x = -3;
 	pixel_y = 3

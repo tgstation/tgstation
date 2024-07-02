@@ -328,8 +328,11 @@
 /turf/open/floor/iron,
 /area/centcom/wizard_station)
 "qg" = (
-/obj/structure/railing,
 /obj/structure/railing{
+	layer = 3.1
+	},
+/obj/structure/railing{
+	layer = 3.1;
 	dir = 1
 	},
 /turf/open/floor/engine/cult,
@@ -508,7 +511,9 @@
 /turf/open/floor/plastic,
 /area/centcom/wizard_station)
 "yX" = (
-/obj/structure/railing,
+/obj/structure/railing{
+	layer = 3.1
+	},
 /obj/structure/railing/corner{
 	dir = 4
 	},

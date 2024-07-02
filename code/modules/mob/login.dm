@@ -99,8 +99,7 @@
 
 	update_client_colour()
 	update_mouse_pointer()
-	update_ambience_area(get_area(src))
-
+	refresh_looping_ambience()
 	if(!can_hear())
 		stop_sound_channel(CHANNEL_AMBIENCE)
 

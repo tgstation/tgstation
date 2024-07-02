@@ -491,7 +491,9 @@
 /area/virtual_domain/fullbright)
 "xR" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/north{
+	layer = 2.9
+	},
 /obj/structure/chair/stool/directional/south,
 /obj/item/storage/backpack/duffelbag,
 /obj/item/clothing/under/shorts/red,
@@ -683,7 +685,9 @@
 /turf/closed/wall/mineral/sandstone,
 /area/virtual_domain/fullbright)
 "Em" = (
-/obj/item/reagent_containers/condiment/enzyme,
+/obj/item/reagent_containers/condiment/enzyme{
+	layer = 5
+	},
 /obj/item/reagent_containers/cup/beaker{
 	pixel_x = 5
 	},

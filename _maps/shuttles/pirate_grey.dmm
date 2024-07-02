@@ -353,9 +353,8 @@
 /obj/machinery/light/small/directional/west,
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
 	dir = 4;
-	x_offset = -5;
-	y_offset = 12;
-	view_range = 10
+	x_offset = -3;
+	y_offset = 7
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/south,
@@ -855,7 +854,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/docking_port/mobile/pirate{
-	dir = 8
+	dir = 4
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/pod/light,
@@ -1232,7 +1231,7 @@
 /area/shuttle/pirate)
 "Pn" = (
 /turf/closed/wall,
-/area/shuttle/pirate)
+/area/template_noop)
 "PM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/grille_or_waste,

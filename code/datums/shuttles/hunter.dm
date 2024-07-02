@@ -17,7 +17,3 @@
 /datum/map_template/shuttle/hunter/psyker
 	suffix = "psyker"
 	name = "Psyker Fortune-Telling Ship"
-
-/datum/map_template/shuttle/hunter/mi13_foodtruck
-	suffix = "mi13_foodtruck"
-	name = "Perfectly Ordinary Food Truck"

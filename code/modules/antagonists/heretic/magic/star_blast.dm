@@ -10,7 +10,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 20 SECONDS
 
-	invocation = "Pi-rig is'zara!"
+	invocation = "R'T'T' ST'R!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 

@@ -14,8 +14,8 @@
 	cooldown_reduction_per_rank = -6 SECONDS // we're not a wizard spell but we use the levelling mechanic
 	spell_max_level = 10 // we can get up to / over a minute duration cd time
 
-	invocation = "Rasut"
-	invocation_type = INVOCATION_WHISPER
+	invocation = "R'S'T."
+	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
 /datum/action/cooldown/spell/realignment/is_valid_target(atom/cast_on)

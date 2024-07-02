@@ -138,7 +138,9 @@
 	name = "Escape Shuttle Cell"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/obj/machinery/scanner_gate/luxury_shuttle,
+/obj/machinery/scanner_gate/luxury_shuttle{
+	layer = 2.6
+	},
 /turf/open/indestructible/white,
 /area/shuttle/escape/brig)
 "gY" = (
@@ -338,7 +340,9 @@
 /obj/structure/closet/crate/large,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/east{
+	layer = 2.9
+	},
 /obj/item/toy/plush/rouny{
 	name = "rouny plushie"
 	},
@@ -440,7 +444,9 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/east{
+	layer = 2.9
+	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "sH" = (
@@ -624,7 +630,9 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
 "Bj" = (
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/east{
+	layer = 2.9
+	},
 /obj/effect/spawner/random/structure/closet_private,
 /turf/open/floor/iron/white/herringbone,
 /area/shuttle/escape/luxury)
@@ -645,7 +653,9 @@
 /area/shuttle/escape)
 "BK" = (
 /obj/structure/girder,
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/east{
+	layer = 2.9
+	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -657,7 +667,9 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Ck" = (
-/obj/machinery/scanner_gate/luxury_shuttle,
+/obj/machinery/scanner_gate/luxury_shuttle{
+	layer = 2.6
+	},
 /obj/machinery/door/airlock/silver{
 	name = "First Class"
 	},
@@ -683,14 +695,18 @@
 	dir = 2;
 	name = "Luxurious Emergency Shuttle"
 	},
-/obj/machinery/scanner_gate/luxury_shuttle,
+/obj/machinery/scanner_gate/luxury_shuttle{
+	layer = 2.6
+	},
 /obj/machinery/door/airlock/silver{
 	name = "First Class"
 	},
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
 "Dj" = (
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/east{
+	layer = 2.9
+	},
 /obj/structure/rack,
 /obj/effect/spawner/random/trash/soap,
 /turf/open/floor/iron/white/herringbone,
@@ -776,7 +792,9 @@
 /obj/structure/girder,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/east{
+	layer = 2.9
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "EZ" = (
@@ -1062,7 +1080,9 @@
 /turf/open/floor/carpet/green,
 /area/shuttle/escape/luxury)
 "Rk" = (
-/obj/machinery/scanner_gate/luxury_shuttle,
+/obj/machinery/scanner_gate/luxury_shuttle{
+	layer = 2.6
+	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/machinery/door/airlock/security/glass{
 	name = "Escape Shuttle Cell"

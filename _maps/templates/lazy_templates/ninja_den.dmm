@@ -1691,6 +1691,7 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/condiment/enzyme{
+	layer = 5;
 	pixel_x = 10;
 	pixel_y = 2
 	},
@@ -2039,7 +2040,9 @@
 /obj/item/food/grown/cabbage,
 /obj/item/food/grown/cherries,
 /obj/item/food/grown/cherries,
-/obj/item/reagent_containers/condiment/enzyme,
+/obj/item/reagent_containers/condiment/enzyme{
+	layer = 5
+	},
 /obj/item/food/grown/redbeet,
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/holding)

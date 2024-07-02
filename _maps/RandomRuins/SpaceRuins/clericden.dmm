@@ -108,7 +108,9 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "A" = (
-/obj/structure/table/wood,
+/obj/structure/table/wood{
+	layer = 3.3
+	},
 /turf/open/floor/carpet/royalblack/airless,
 /area/ruin/space)
 "B" = (

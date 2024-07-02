@@ -287,7 +287,7 @@
 "mU" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/shuttle/escape)
+/area/template_noop)
 "no" = (
 /obj/item/trash/popcorn/caramel,
 /turf/open/floor/mineral/titanium,
@@ -552,7 +552,7 @@
 /obj/structure/lattice,
 /obj/item/stack/rods/two,
 /turf/template_noop,
-/area/shuttle/escape)
+/area/template_noop)
 "Ay" = (
 /obj/item/shard{
 	pixel_y = 19

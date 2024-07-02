@@ -102,7 +102,9 @@
 "jj" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/cooking_to_serve_man,
-/obj/item/reagent_containers/condiment/enzyme,
+/obj/item/reagent_containers/condiment/enzyme{
+	layer = 5
+	},
 /obj/item/food/bun,
 /obj/item/food/bun,
 /obj/item/food/bun,

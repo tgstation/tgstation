@@ -1,8 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - rscdel: "Removed Trichromatic Larynx per @mothblocks decision that it looks uggo."
-  - rscdel: "Replaced heckacious laryncks' color and size changes with random bolding, italics, and underlining."
-  - rscadd: "Stoner has been un-locked and replaces TL in the above's recipe."
-  - bugfix: "Fixed elastic arms users being unable to use abstract items like mending touch or shock touch."
-  - bugfix: "Fixed mending touch being bad"

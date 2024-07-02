@@ -141,7 +141,7 @@
 	if (!can_dismember)
 		return FALSE
 
-	if(!HAS_TRAIT(owner, TRAIT_CURSED) && owner.stat < HARD_CRIT)
+	if(owner.stat < HARD_CRIT)
 		return FALSE
 
 	return ..()

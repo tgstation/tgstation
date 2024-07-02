@@ -164,6 +164,7 @@
 	QDEL_NULL(signaler)
 	QDEL_NULL(leash)
 	card = null
+	GLOB.pai_list.Remove(src)
 	return ..()
 
 // Need to override parent here because the message we dispatch is turf-based, not based on the location of the object because that could be fuckin anywhere
@@ -220,6 +221,7 @@
 	if(istype(loc, /obj/item/modular_computer))
 		give_messenger_ability()
 	START_PROCESSING(SSfastprocess, src)
+	GLOB.pai_list += src
 	make_laws()
 	for(var/law in laws.inherent)
 		lawcheck += law

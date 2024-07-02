@@ -1,5 +1,0 @@
-author: "MrDas"
-delete-after: True
-changes:
-  - bugfix: "Bolas now slowdown properly."
-  - bugfix: "Cult bolas no longer leave in-hand sprite when they ensnare to non-cult user."

@@ -23,8 +23,6 @@
 		"stethoscope",
 		"beaker",
 		"large_beaker",
-		"chem_pack",
-		"blood_pack",
 		"syringe",
 		"dropper",
 		"pillbottle",
@@ -42,6 +40,8 @@
 	prereq_ids = list(TECHWEB_NODE_MEDBAY_EQUIP)
 	design_ids = list(
 		"xlarge_beaker",
+		"blood_pack",
+		"chem_pack",
 		"med_spray_bottle",
 		"medigel",
 		"medipen_refiller",
