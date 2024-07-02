@@ -2957,7 +2957,6 @@
 /area/station/security/checkpoint/engineering)
 "aoN" = (
 /obj/machinery/elevator_control_panel{
-	layer = 3.1;
 	pixel_y = 2;
 	linked_elevator_id = "tram_xeno_lift";
 	preset_destination_names = list("2"="Lower                                                                Deck", "3"="Upper                                                                Deck")
@@ -6450,12 +6449,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/atmospherics_engine)
-"bhf" = (
-/obj/effect/spawner/random/engineering/tracking_beacon,
-/obj/effect/landmark/event_spawn,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "bhr" = (
 /turf/closed/wall/rock/porous,
 /area/station/security/prison/workout)
@@ -9187,14 +9180,14 @@
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "cdM" = (
-/obj/structure/table,
-/obj/machinery/cell_charger{
-	pixel_y = 5
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	name = "Test Chamber Blast Door";
+	id = "Xenolab"
 	},
-/obj/item/stack/cable_coil,
-/obj/item/multitool,
-/obj/item/stock_parts/power_store/cell/high,
-/turf/open/floor/engine,
+/obj/structure/sign/warning/gas_mask/directional/north,
+/turf/open/floor/plating,
 /area/station/science/xenobiology)
 "cdN" = (
 /obj/machinery/button/ignition/incinerator/atmos,
@@ -10511,7 +10504,7 @@
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/machinery/light/directional/north,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "cBo" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -32120,6 +32113,7 @@
 	},
 /obj/effect/turf_decal/siding/thinplating,
 /obj/effect/landmark/event_spawn,
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "ksm" = (
@@ -32868,7 +32862,7 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "kGA" = (
 /obj/structure/railing,
@@ -38741,7 +38735,7 @@
 /obj/machinery/sparker/directional/west{
 	id = "Xenobio"
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "mFo" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -41457,6 +41451,10 @@
 	},
 /obj/item/stock_parts/matter_bin,
 /obj/item/stock_parts/micro_laser,
+/obj/item/multitool,
+/obj/item/flatpack{
+	board = /obj/item/circuitboard/machine/flatpacker
+	},
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "nDX" = (
@@ -48254,12 +48252,6 @@
 /obj/structure/sign/calendar/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
-"qcE" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Civilian - Restroom North"
-	},
-/turf/open/floor/iron/freezer,
-/area/station/commons/toilet)
 "qcG" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/iron/smooth,
@@ -50752,26 +50744,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
-"qVL" = (
-/obj/structure/table,
-/obj/item/assembly/igniter{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/assembly/igniter{
-	pixel_x = 5;
-	pixel_y = -4
-	},
-/obj/item/assembly/igniter{
-	pixel_x = 2;
-	pixel_y = 6
-	},
-/obj/item/assembly/igniter{
-	pixel_x = 2;
-	pixel_y = -1
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "qVN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -57751,7 +57723,7 @@
 /area/station/command/heads_quarters/captain/private)
 "ttj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "tto" = (
 /obj/machinery/hydroponics/constructable,
@@ -58213,12 +58185,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "tBo" = (
-/obj/structure/table,
-/obj/item/stack/sheet/iron{
-	amount = 10
-	},
-/obj/item/electropack,
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "tBu" = (
 /obj/effect/decal/cleanable/dirt,
@@ -58383,7 +58350,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "tED" = (
 /obj/effect/turf_decal/tile/neutral/tram,
@@ -66505,8 +66472,7 @@
 /area/station/science/explab)
 "wrJ" = (
 /obj/structure/railing{
-	dir = 4;
-	layer = 3.1
+	dir = 4
 	},
 /obj/machinery/netpod,
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -69270,12 +69236,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"xut" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Civilian - Restroom South"
-	},
-/turf/open/floor/iron/freezer,
-/area/station/commons/toilet)
 "xuA" = (
 /obj/structure/closet/secure_closet/medical2,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -69603,7 +69563,6 @@
 /area/station/cargo/storage)
 "xAM" = (
 /obj/machinery/elevator_control_panel{
-	layer = 3.1;
 	pixel_y = 2;
 	linked_elevator_id = "tram_xeno_lift";
 	preset_destination_names = list("2"="Lower                                                                Deck", "3"="Upper                                                                Deck")
@@ -85053,12 +85012,12 @@ apC
 apC
 veV
 veV
-qcE
+hAD
 hAD
 veV
 pdr
 kMD
-xut
+hAD
 veV
 veV
 apC
@@ -181959,8 +181918,8 @@ umu
 qVr
 qVr
 mFh
-bfH
-bfH
+tBo
+tBo
 qVr
 gYw
 cHY
@@ -182215,11 +182174,11 @@ mAL
 nKU
 qVr
 tEx
-bfH
-bfH
-bfH
+tBo
+tBo
+tBo
 qVr
-pNa
+cdM
 eiy
 itq
 qyQ
@@ -182472,10 +182431,10 @@ bmz
 pIx
 qVr
 ttj
-bfH
-bfH
-bfH
-bfH
+tBo
+tBo
+tBo
+tBo
 pNa
 qNk
 xmY
@@ -182730,7 +182689,7 @@ pHX
 qVr
 cAK
 ttj
-bhf
+ttj
 ttj
 ttj
 nzg
@@ -182985,10 +182944,10 @@ pbH
 kBo
 kJA
 qVr
-bfH
-bfH
-bfH
-bfH
+tBo
+tBo
+tBo
+tBo
 kGv
 qSS
 cFQ
@@ -183242,10 +183201,10 @@ pbH
 mAL
 nKU
 qVr
-bfH
-bfH
-bfH
-bfH
+tBo
+tBo
+tBo
+tBo
 qVr
 jqK
 ijR
@@ -183500,8 +183459,8 @@ vSa
 cJR
 qVr
 qVr
-cdM
-qVL
+tBo
+tBo
 tBo
 qVr
 gYw
