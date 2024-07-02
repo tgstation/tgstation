@@ -3,11 +3,11 @@
  * @copyright 2021 bobbahbrown (https://github.com/bobbahbrown)
  * @license MIT
  */
-import { decodeHtmlEntities, createSearch } from 'common/string';
+import { createSearch, decodeHtmlEntities } from 'common/string';
 import { useState } from 'react';
 
-import { useBackend, useLocalState } from '../backend';
-import { Button, Input, Popper, Section, Table, Stack } from '../components';
+import { useBackend } from '../backend';
+import { Button, Input, Popper, Section, Stack, Table } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -198,7 +198,7 @@ const FilterPanel = (props) => {
             </Table>
           </div>
         }
-      ></Popper>
+       />
     </div>
   );
 };
