@@ -2,7 +2,7 @@
 	name = "Deathmatch Arena"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	area_flags = UNIQUE_AREA | NOTELEPORT | EVENT_PROTECTED | QUIET_LOGS
+	area_flags = UNIQUE_AREA | NOTELEPORT | EVENT_PROTECTED | QUIET_LOGS | NO_DEATH_MESSAGE | BINARY_JAMMING
 
 /area/deathmatch/fullbright
 	static_lighting = FALSE
@@ -12,7 +12,7 @@
 	name = "Deathmatch Player Spawner"
 
 /area/deathmatch/teleport //Prevent access to cross-z teleportation in the map itself (no wands of safety/teleportation scrolls). Cordons should prevent same-z teleportations outside of the arena.
-	area_flags = UNIQUE_AREA | EVENT_PROTECTED | QUIET_LOGS
+	area_flags = /area/deathmatch::area_flags & ~NOTELEPORT
 
 // for the illusion of a moving train
 /turf/open/chasm/true/no_smooth/fake_motion_sand

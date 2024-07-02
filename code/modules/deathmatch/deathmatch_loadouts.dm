@@ -673,7 +673,7 @@
 
 /datum/outfit/deathmatch_loadout/battler/clown/upgraded
 	name = "Deathmatch: Clown (Syndicate Gear)"
-	display_name = "Clown"
+	display_name = "Clown Commando"
 	desc = "They were bound to show up sooner or later."
 
 	shoes = /obj/item/clothing/shoes/clown_shoes/combat
@@ -727,7 +727,7 @@
 
 /datum/outfit/deathmatch_loadout/chef/upgraded
 	name = "Deathmatch: Master Chef"
-	display_name = "Chef"
+	display_name = "Master Chef"
 	desc = "Let him cook."
 
 	belt = /obj/item/gun/magic/hook
