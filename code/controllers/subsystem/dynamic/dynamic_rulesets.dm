@@ -83,6 +83,8 @@
 
 	/// A list, or null, of templates that the ruleset depends on to function correctly
 	var/list/ruleset_lazy_templates
+	/// In what categories is this ruleset allowed to run? Used by station traits
+	var/ruleset_category = RULESET_CATEGORY_DEFAULT
 
 /datum/dynamic_ruleset/New()
 	// Rulesets can be instantiated more than once, such as when an admin clicks

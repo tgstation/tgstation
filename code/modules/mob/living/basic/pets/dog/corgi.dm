@@ -472,7 +472,7 @@
 	unique_pet = TRUE
 	held_state = "narsian"
 	/// Mobs we will consume in the name of Nar'Sie
-	var/static/list/edible_types = list(/mob/living/simple_animal/pet, /mob/living/basic/pet)
+	var/static/list/edible_types = list(/mob/living/basic/pet)
 
 /mob/living/basic/pet/dog/corgi/narsie/Initialize(mapload)
 	. = ..()

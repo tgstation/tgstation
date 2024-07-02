@@ -14,11 +14,12 @@
 	if(!ispath(configuration, /datum/fish_source) || configuration == /datum/fish_source)
 		CRASH("Lazy fishing spot has incorrect configuration passed in: [configuration].")
 	src.configuration = configuration
-
+	ADD_TRAIT(target, TRAIT_FISHING_SPOT, REF(src))
 	RegisterSignal(target, COMSIG_PRE_FISHING, PROC_REF(create_fishing_spot))
 
 /datum/element/lazy_fishing_spot/Detach(datum/target)
 	UnregisterSignal(target, COMSIG_PRE_FISHING)
+	REMOVE_TRAIT(target, TRAIT_FISHING_SPOT, REF(src))
 	return ..()
 
 /datum/element/lazy_fishing_spot/proc/create_fishing_spot(datum/source)

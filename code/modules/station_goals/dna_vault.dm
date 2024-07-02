@@ -19,10 +19,10 @@
 
 /datum/station_goal/dna_vault/New()
 	..()
-	animal_count = rand(15,20) //might be too few given ~15 roundstart stationside ones
+	animal_count = rand(10,15) //might be too few given ~15 roundstart stationside ones
 	human_count = rand(round(0.75 * SSticker.totalPlayersReady) , SSticker.totalPlayersReady) // 75%+ roundstart population.
 	var/non_standard_plants = non_standard_plants_count()
-	plant_count = rand(round(0.5 * non_standard_plants),round(0.7 * non_standard_plants))
+	plant_count = rand(round(0.2 * non_standard_plants),round(0.4 * non_standard_plants))
 
 /datum/station_goal/dna_vault/proc/non_standard_plants_count()
 	. = 0
@@ -113,32 +113,6 @@
 	for(var/obj/structure/filler/filler as anything in fillers)
 		filler.parent = null
 		qdel(filler)
-	return ..()
-
-/obj/machinery/dna_vault/attackby(obj/item/our_item, mob/user, params)
-	if(istype(our_item, /obj/item/dna_probe))
-		var/obj/item/dna_probe/our_probe = our_item
-		var/uploaded = 0
-		var/plant_dna_length = length(our_probe.stored_dna_plants)
-		var/human_dna_length = length(our_probe.stored_dna_human)
-		var/animal_dna_length = length(our_probe.stored_dna_animal)
-		if(plant_dna_length)
-			uploaded += plant_dna_length
-			plant_dna += our_probe.stored_dna_plants
-			our_probe.stored_dna_plants.Cut()
-		if(human_dna_length)
-			uploaded += human_dna_length
-			human_dna += our_probe.stored_dna_human
-			our_probe.stored_dna_human.Cut()
-		if(animal_dna_length)
-			uploaded += animal_dna_length
-			animal_dna += our_probe.stored_dna_animal
-			our_probe.stored_dna_animal.Cut()
-		check_goal()
-		playsound(src, 'sound/misc/compiler-stage1.ogg', 50)
-		to_chat(user, span_notice("[uploaded] new datapoints uploaded."))
-		return
-
 	return ..()
 
 /obj/machinery/dna_vault/ui_interact(mob/user, datum/tgui/ui)

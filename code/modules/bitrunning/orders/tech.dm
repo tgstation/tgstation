@@ -34,3 +34,23 @@
 /datum/orderable_item/bitrunning_tech/flip_skillchip
 	item_path = /obj/item/skillchip/matrix_flip
 	cost_per_order = 2000
+
+/datum/orderable_item/bitrunning_tech/pka_mod
+	item_path = /obj/item/bitrunning_disk/item/pka_mods
+	cost_per_order = 750
+	desc = "This disk contains a program that lets you equip modkits for the proto-kinetic accelerator. Proto-kinetic accelerator not included."
+
+/datum/orderable_item/bitrunning_tech/pka_mod/premium
+	item_path = /obj/item/bitrunning_disk/item/pka_mods/premium
+	cost_per_order = 1800
+	desc = "This disk contains a program that lets you equip stronger modkits for the proto-kinetic accelerator. Proto-kinetic accelerator not included."
+
+/datum/orderable_item/bitrunning_tech/pkc_mod
+	item_path = /obj/item/bitrunning_disk/item/pkc_mods
+	cost_per_order = 750
+	desc = "This disk contains a program that lets you equip trophies for the proto-kinetic crusher. Proto-kinetic crusher no included."
+
+/datum/orderable_item/bitrunning_tech/pkc_mod/premium
+	item_path = /obj/item/bitrunning_disk/item/pkc_mods/premium
+	cost_per_order = 1800
+	desc = "This disk contains a program that lets you equip stronger trophies for the proto-kinetic crusher. Proto-kinetic crusher not included."

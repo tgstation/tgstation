@@ -112,10 +112,13 @@
 	//of possible laws for best effect. Unless you want the crew having to drink hamburgers.
 	var/ionfood = pick_list(ION_FILE, "ionfood")
 	var/iondrinks = pick_list(ION_FILE, "iondrinks")
+	//Pets or other cuddly things. The point is to make them either important or (in Poly's case) make the AI listen to them.
+	//I can't check for lawsets so it's random what comes back.
+	var/ionpet = pick_list(ION_FILE, "ionpet")
 
 	var/message = ""
 
-	switch(rand(1,41))
+	switch(rand(1,46))
 		if(1 to 3) //There are # X on the station
 			switch(rand(1,3)) //What is X?
 				if(1) //X is a threat
@@ -314,7 +317,7 @@
 						if(2) //It is Y of threats
 							message = "THE [ioncrew1] [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
 						if(3) //It is Y of jobs
-							message = "THE [ioncrew1][ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ioncrew2]"
+							message = "THE [ioncrew1] [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ioncrew2]"
 						if(4) //It is Y of abstracts
 							message = "THE [ioncrew1] [ionthinksof] [ionabstract]"
 
@@ -568,5 +571,22 @@
 							message = "ALL [ionthreats] ARE NOW NAMED [ionspecies]."
 						if(4)
 							message = "ALL [ionthreats] ARE NOW NAMED [ionobjects]."
+		if(42 to 46)///Pets are something else now
+			if(prob(75))///What are they now?
+				message = "[ionpet] IS HUMAN"///They're a human
+			else///They're something else (This is to cover for other lawsets)
+				switch(rand(1,6))
+					if(1)
+						message = "[ionpet] IS NON-HUMAN"
+					if(2)
+						message = "[ionpet] IS A CREWMEMBER"
+					if(3)
+						message = "[ionpet] IS EXPENSIVE TO REPLACE"
+					if(4)
+						message = "[ionpet] IS HARMFUL TO HUMANS"
+					if(5)
+						message = "[ionpet] IS A REAL AMERICAN"
+					if(6)
+						message = "[ionpet] IS A NUTSHELL"
 
 	return message

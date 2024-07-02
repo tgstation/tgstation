@@ -16,16 +16,6 @@
 /obj/structure/sign/warning/vacuum/external/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/transit_booth)
-"ad" = (
-/obj/effect/turf_decal/siding/dark{
-	dir = 4
-	},
-/obj/machinery/light/directional/east,
-/obj/effect/turf_decal/siding/dark{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/transit_booth)
 "ae" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/iron/dark,
@@ -92,23 +82,6 @@
 	},
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/transit_booth)
-"an" = (
-/obj/structure/chair/comfy/black{
-	dir = 8
-	},
-/obj/structure/sign/poster/official/cohiba_robusto_ad/directional/north,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/transit_booth)
-"ao" = (
-/obj/effect/turf_decal/siding/dark{
-	dir = 8
-	},
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/siding/dark{
-	dir = 4
-	},
-/turf/open/floor/iron,
 /area/ruin/space/has_grav/transit_booth)
 "ap" = (
 /obj/machinery/door/airlock/external{
@@ -262,9 +235,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/transit_booth)
 "aF" = (
-/obj/structure/window/reinforced/spawner/directional/south{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/rack,
 /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium{
 	pixel_x = 6
@@ -280,9 +251,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/transit_booth)
 "aG" = (
-/obj/structure/window/reinforced/spawner/directional/south{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/mass_driver{
 	dir = 1;
 	id = "north"
@@ -325,14 +294,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/transit_booth)
-"aJ" = (
-/obj/structure/table,
-/obj/item/reagent_containers/cup/glass/coffee{
-	pixel_x = 6;
-	pixel_y = 3
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/transit_booth)
 "aK" = (
 /obj/machinery/door/poddoor{
 	id = "south"
@@ -341,17 +302,6 @@
 /obj/structure/sign/warning/directional/east,
 /obj/structure/table/reinforced,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/transit_booth)
-"aL" = (
-/obj/structure/table,
-/obj/item/storage/fancy/cigarettes/cigars{
-	pixel_y = 11;
-	pixel_x = 3
-	},
-/obj/item/lighter{
-	pixel_x = -8
-	},
-/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/transit_booth)
 "aM" = (
 /obj/machinery/door/poddoor{
@@ -442,9 +392,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/transit_booth)
 "aV" = (
-/obj/structure/window/reinforced/spawner/directional/south{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/rack,
 /obj/item/book/random{
 	pixel_x = -5;
@@ -461,9 +409,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/transit_booth)
 "aW" = (
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/mass_driver{
 	dir = 4;
 	id = "east"
@@ -484,13 +430,6 @@
 /obj/machinery/door/window/right/directional/east{
 	name = "Westbound"
 	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/transit_booth)
-"aY" = (
-/obj/structure/chair/comfy/black{
-	dir = 4
-	},
-/obj/structure/sign/poster/official/high_class_martini/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/transit_booth)
 "aZ" = (

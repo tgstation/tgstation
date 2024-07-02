@@ -63,9 +63,10 @@
 
 	return initial(selected.key)
 
+
 /// Removes all blacklisted items from a mob and returns them to base state
 /obj/machinery/quantum_server/proc/reset_equipment(mob/living/carbon/human/person)
-	for(var/item in person.get_contents())
+	for(var/obj/item in person.get_equipped_items(INCLUDE_POCKETS | INCLUDE_ACCESSORIES))
 		qdel(item)
 
 	var/datum/antagonist/bitrunning_glitch/antag_datum = locate() in person.mind?.antag_datums
@@ -73,6 +74,9 @@
 		return
 
 	person.equipOutfit(antag_datum.preview_outfit)
+
+	antag_datum.fix_agent_id()
+
 
 /// Severs any connected users
 /obj/machinery/quantum_server/proc/sever_connections()

@@ -14,9 +14,9 @@
 		for(var/path in clothing_path::allowed) //find all usable suit storage stuff.
 			wearable_item_paths |= path
 
-	for(var/obj/item/mod/control/mod_path in subtypesof(/obj/item/mod/control))
-		for(var/path in mod_path::chestplate::allowed)
-			wearable_item_paths |= path
+	for(var/datum/mod_theme/mod_theme as anything in GLOB.mod_themes)
+		mod_theme = GLOB.mod_themes[mod_theme]
+		wearable_item_paths |= mod_theme.allowed_suit_storage
 
 	var/list/already_warned_icons = list()
 	var/count = 1 //to be removed once the test goes live / into CI failure mode.

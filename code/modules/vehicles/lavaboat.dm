@@ -20,7 +20,7 @@
 /obj/item/oar
 	name = "oar"
 	desc = "Not to be confused with the kind Research hassles you for."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "oar"
 	inhand_icon_state = "oar"
 	lefthand_file = 'icons/mob/inhands/items/lavaland_lefthand.dmi'

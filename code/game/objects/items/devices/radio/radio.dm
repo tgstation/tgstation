@@ -76,7 +76,7 @@
 
 	/// overlay when speaker is on
 	var/overlay_speaker_idle = "s_idle"
-	/// overlay when recieving a message
+	/// overlay when receiving a message
 	var/overlay_speaker_active = "s_active"
 
 	/// overlay when mic is on

@@ -1,7 +1,7 @@
 // Keep the identifiers here below 32 characters, you can put the full display name in the actual achievement datum
 
 /// Achievements icon set
-#define ACHIEVEMENTS_SET 'icons/ui_icons/achievements/achievements.dmi'
+#define ACHIEVEMENTS_SET 'icons/ui/achievements/achievements.dmi'
 
 #define ACHIEVEMENT_DEFAULT "default"
 #define ACHIEVEMENT_SCORE "score"

@@ -45,6 +45,7 @@
 	id = "lobster_rush"
 	duration = 3 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/lobster_rush
+	show_duration = TRUE
 	var/spawned_last_move = FALSE
 
 /atom/movable/screen/alert/status_effect/lobster_rush

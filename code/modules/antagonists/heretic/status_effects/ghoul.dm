@@ -67,6 +67,7 @@
 	if(human_target.mind)
 		var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 		heretic_monster.set_owner(master_mind)
+		human_target.mind.remove_antag_datum(/datum/antagonist/cult)
 
 	return TRUE
 

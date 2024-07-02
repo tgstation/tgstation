@@ -10,6 +10,7 @@
 	icon_state = "amerifat"
 	icon_living = "amerifat"
 
+	max_grab = GRAB_AGGRESSIVE
 	basic_mob_flags = DEL_ON_DEATH
 	mob_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	sentience_type = SENTIENCE_ARTIFICIAL

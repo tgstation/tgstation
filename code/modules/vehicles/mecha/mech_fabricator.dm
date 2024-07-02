@@ -49,10 +49,18 @@
 	/// All designs in the techweb that can be fabricated by this machine, since the last update.
 	var/list/datum/design/cached_designs
 
+	//looping sound for printing items
+	var/datum/looping_sound/lathe_print/print_sound
+
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
+	print_sound = new(src,  FALSE)
 	rmat = AddComponent(/datum/component/remote_materials, mapload && link_on_init)
 	cached_designs = list()
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
+	return ..()
+
+/obj/machinery/mecha_part_fabricator/Destroy()
+	QDEL_NULL(print_sound)
 	return ..()
 
 /obj/machinery/mecha_part_fabricator/post_machine_initialize()
@@ -163,7 +171,7 @@
 /obj/machinery/mecha_part_fabricator/proc/on_start_printing()
 	add_overlay("fab-active")
 	update_use_power(ACTIVE_POWER_USE)
-
+	print_sound.start()
 /**
  * Intended to be called when the exofab has stopped working and is no longer printing items.
  *
@@ -174,6 +182,7 @@
 	update_use_power(IDLE_POWER_USE)
 	desc = initial(desc)
 	process_queue = FALSE
+	print_sound.stop()
 
 /**
  * Attempts to build the next item in the build queue.
@@ -260,22 +269,23 @@
  *
  * Returns FALSE is the machine cannot dispense the part on the appropriate turf.
  * Return TRUE if the part was successfully dispensed.
- * * D - Design datum to attempt to dispense.
+ * * dispensed_design - Design datum to attempt to dispense.
  */
-/obj/machinery/mecha_part_fabricator/proc/dispense_built_part(datum/design/D)
-	var/obj/item/I = new D.build_path(src)
+/obj/machinery/mecha_part_fabricator/proc/dispense_built_part(datum/design/dispensed_design)
+	var/obj/item/built_part = new dispensed_design.build_path(src)
+	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[built_part.type]"))
 
 	being_built = null
 
 	var/turf/exit = get_step(src,(dir))
 	if(exit.density)
 		say("Error! The part outlet is obstructed.")
-		desc = "It's trying to dispense the fabricated [D.name], but the part outlet is obstructed."
-		stored_part = I
+		desc = "It's trying to dispense the fabricated [dispensed_design.name], but the part outlet is obstructed."
+		stored_part = built_part
 		return FALSE
 
-	say("The fabrication of [I] is now complete.")
-	I.forceMove(exit)
+	say("The fabrication of [built_part] is now complete.")
+	built_part.forceMove(exit)
 
 	top_job_id += 1
 

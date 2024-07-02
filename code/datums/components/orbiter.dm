@@ -120,6 +120,10 @@
 		orbiter_mob.updating_glide_size = TRUE
 		orbiter_mob.glide_size = 8
 
+		if(isobserver(orbiter))
+			var/mob/dead/observer/ghostie = orbiter
+			ghostie.orbiting_ref = null
+
 	REMOVE_TRAIT(orbiter, TRAIT_NO_FLOATING_ANIM, ORBITING_TRAIT)
 
 	if(!refreshing && !length(orbiter_list) && !QDELING(src))

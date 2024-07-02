@@ -24,6 +24,7 @@
 		/obj/item/hatchet = 35,
 		/obj/item/knife/butcher = 25)
 	time = 64
+	surgery_effects_mood = TRUE
 	preop_sound = list(
 		/obj/item/circular_saw = 'sound/surgery/saw.ogg',
 		/obj/item = 'sound/surgery/scalpel1.ogg',

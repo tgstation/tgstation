@@ -6,6 +6,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 15 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/crucible_soul
+	show_duration = TRUE
 	var/turf/location
 
 /datum/status_effect/crucible_soul/on_apply()
@@ -30,6 +31,7 @@
 	id = "Blessing of Dusk and Dawn"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 60 SECONDS
+	show_duration = TRUE
 	alert_type =/atom/movable/screen/alert/status_effect/duskndawn
 
 /datum/status_effect/duskndawn/on_apply()
@@ -47,6 +49,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 60 SECONDS
 	tick_interval = 1 SECONDS
+	show_duration = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/marshal
 
 /datum/status_effect/marshal/on_apply()
@@ -115,6 +118,8 @@
 	var/time_between_initial_blades = 0.25 SECONDS
 	/// If TRUE, we self-delete our status effect after all the blades are deleted.
 	var/delete_on_blades_gone = TRUE
+	/// What blade type to create
+	var/blade_type = /obj/effect/floating_blade
 	/// A list of blade effects orbiting / protecting our owner
 	var/list/obj/effect/floating_blade/blades = list()
 
@@ -124,12 +129,14 @@
 	max_num_blades = 4,
 	blade_orbit_radius = 20,
 	time_between_initial_blades = 0.25 SECONDS,
+	blade_type = /obj/effect/floating_blade,
 )
 
 	src.duration = new_duration
 	src.max_num_blades = max_num_blades
 	src.blade_orbit_radius = blade_orbit_radius
 	src.time_between_initial_blades = time_between_initial_blades
+	src.blade_type = blade_type
 	return ..()
 
 /datum/status_effect/protective_blades/on_apply()
@@ -154,7 +161,7 @@
 	if(QDELETED(src) || QDELETED(owner))
 		return
 
-	var/obj/effect/floating_blade/blade = new(get_turf(owner))
+	var/obj/effect/floating_blade/blade = new blade_type(get_turf(owner))
 	blades += blade
 	blade.orbit(owner, blade_orbit_radius)
 	RegisterSignal(blade, COMSIG_QDELETING, PROC_REF(remove_blade))
@@ -299,6 +306,7 @@
 	id = "Moon Grasp Hide Identity"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 15 SECONDS
+	show_duration = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/moon_grasp_hide
 
 /datum/status_effect/moon_grasp_hide/on_apply()

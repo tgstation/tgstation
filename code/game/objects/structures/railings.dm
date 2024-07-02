@@ -8,14 +8,13 @@
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
-	layer = ABOVE_MOB_LAYER
+	layer = ABOVE_TREE_LAYER
+	plane = ABOVE_GAME_PLANE
 	/// armor is a little bit less than a grille. max_integrity about half that of a grille.
 	armor_type = /datum/armor/structure_railing
 	max_integrity = 25
 
 	var/climbable = TRUE
-	///Initial direction of the railing.
-	var/ini_dir
 	///item released when deconstructed
 	var/item_deconstruct = /obj/item/stack/rods
 
@@ -39,7 +38,6 @@
 
 /obj/structure/railing/Initialize(mapload)
 	. = ..()
-	ini_dir = dir
 	if(climbable)
 		AddElement(/datum/element/climbable)
 
@@ -168,8 +166,8 @@
 	adjust_dir_layer(new_dir)
 
 /obj/structure/railing/wooden_fence/proc/adjust_dir_layer(direction)
-	var/new_layer = (direction & NORTH) ? MOB_LAYER : ABOVE_MOB_LAYER
-	layer = new_layer
+	layer = (direction & NORTH) ? MOB_LAYER : initial(layer)
+	plane = (direction & NORTH) ? GAME_PLANE : initial(plane)
 
 
 /obj/structure/railing/corner/end/wooden_fence

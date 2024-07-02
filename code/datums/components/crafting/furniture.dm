@@ -47,3 +47,27 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	category = CAT_FURNITURE
 	time = 5 SECONDS
+
+/datum/crafting_recipe/defib_mobile
+	name = "Mobile Defibrillator Mount"
+	reqs = list(
+		/obj/item/stack/sheet/mineral/silver = 1,
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/cable_coil = 15,
+	)
+	result = /obj/machinery/defibrillator_mount/mobile
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	category = CAT_FURNITURE
+	time = 7 SECONDS
+
+/datum/crafting_recipe/flatpack_cart
+	name = "Flatpack Cart"
+	reqs = list(
+		/obj/item/stack/sheet/iron = 4,
+		/obj/item/stack/sheet/plasteel = 1,
+		/obj/item/stack/rods = 8
+	)
+	result = /obj/structure/flatpack_cart
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	category = CAT_FURNITURE
+	time = 10 SECONDS

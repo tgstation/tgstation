@@ -109,7 +109,7 @@
 						var/datum/record/crew/target = find_record(user_mob.real_name)
 						target?.wanted_status = WANTED_PAROLE
 
-						security_radio.talk_into(src, "/p [user_mob.name] returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY)
+						security_radio.talk_into(src, "[user_mob.name] returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY)
 					user_mob.log_message("has completed their labor points goal and is now sending the gulag shuttle back to the station.", LOG_GAME)
 					to_chat(user_mob, span_notice("Shuttle received message and will be sent shortly."))
 					return TRUE

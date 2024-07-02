@@ -43,13 +43,14 @@
 	name = "armory loot spawner"
 	icon_state = "pistol"
 	loot = list(
-		/obj/item/gun/ballistic/automatic/pistol = 8,
-		/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
-		/obj/item/storage/box/syndie_kit/throwing_weapons = 3,
-		/obj/item/grenade/clusterbuster/teargas = 2,
-		/obj/item/grenade/clusterbuster = 2,
-		/obj/item/gun/ballistic/automatic/pistol/deagle,
-		/obj/item/gun/ballistic/revolver/mateba,
+		/obj/item/gun/ballistic/automatic/pistol/contraband = 80,
+		/obj/item/gun/ballistic/shotgun/automatic/combat = 50,
+		/obj/item/storage/box/syndie_kit/throwing_weapons = 30,
+		/obj/item/grenade/clusterbuster/teargas = 20,
+		/obj/item/grenade/clusterbuster = 20,
+		/obj/item/gun/ballistic/automatic/pistol/deagle/contraband,
+		/obj/item/gun/ballistic/revolver/mateba = 9,
+		/obj/item/gun/ballistic/revolver/reverse/mateba = 1,
 	)
 
 /obj/effect/spawner/random/contraband/narcotics
@@ -138,6 +139,13 @@
 		/obj/effect/mine/explosive = 2,
 		/obj/item/restraints/legcuffs/beartrap/prearmed = 5, //not really a landmine, but still a good threat
 		/obj/effect/mine/shrapnel = 5,
+	)
+
+/obj/effect/spawner/random/contraband/qm_rocket
+	name = "QMs dud rocket spawner"
+	loot = list(
+		/obj/item/ammo_casing/rocket/reverse = 85,
+		/obj/item/ammo_casing/rocket = 15,
 	)
 
 /obj/effect/spawner/random/contraband/grenades

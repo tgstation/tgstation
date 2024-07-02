@@ -176,7 +176,7 @@
 			return TRUE
 
 		if("set_note")
-			var/note = trim(params["note"], MAX_MESSAGE_LEN)
+			var/note = strip_html_full(params["note"], MAX_MESSAGE_LEN)
 			investigate_log("[user] has changed the security note of record: \"[target]\" from \"[target.security_note]\" to \"[note]\".")
 			target.security_note = note
 			return TRUE
@@ -199,7 +199,7 @@
 
 /// Handles adding a crime to a particular record.
 /obj/machinery/computer/records/security/proc/add_crime(mob/user, datum/record/crew/target, list/params)
-	var/input_name = trim(params["name"], MAX_CRIME_NAME_LEN)
+	var/input_name = strip_html_full(params["name"], MAX_CRIME_NAME_LEN)
 	if(!input_name)
 		to_chat(usr, span_warning("You must enter a name for the crime."))
 		playsound(src, 'sound/machines/terminal_error.ogg', 75, TRUE)
@@ -213,7 +213,7 @@
 
 	var/input_details
 	if(params["details"])
-		input_details = trim(params["details"], MAX_MESSAGE_LEN)
+		input_details = strip_html_full(params["details"], MAX_MESSAGE_LEN)
 
 	if(params["fine"] == 0)
 		var/datum/crime/new_crime = new(name = input_name, details = input_details, author = usr)
@@ -245,13 +245,13 @@
 		return FALSE
 
 	if(params["name"] && length(params["name"]) > 2 && params["name"] != editing_crime.name)
-		var/new_name = trim(params["name"], MAX_CRIME_NAME_LEN)
+		var/new_name = strip_html_full(params["name"], MAX_CRIME_NAME_LEN)
 		investigate_log("[user] edited crime: \"[editing_crime.name]\" for target: \"[target.name]\", changing the name to: \"[new_name]\".", INVESTIGATE_RECORDS)
 		editing_crime.name = new_name
 		return TRUE
 
 	if(params["details"] && length(params["description"]) > 2 && params["name"] != editing_crime.name)
-		var/new_details = trim(params["details"], MAX_MESSAGE_LEN)
+		var/new_details = strip_html_full(params["details"], MAX_MESSAGE_LEN)
 		investigate_log("[user] edited crime \"[editing_crime.name]\" for target: \"[target.name]\", changing the details to: \"[new_details]\" from: \"[editing_crime.details]\".", INVESTIGATE_RECORDS)
 		editing_crime.details = new_details
 		return TRUE
@@ -327,9 +327,9 @@
 	playsound(src, 'sound/machines/printer.ogg', 100, TRUE)
 
 	var/obj/item/printable
-	var/input_alias = trim(params["alias"], MAX_NAME_LEN) || target.name
-	var/input_description = trim(params["desc"], MAX_BROADCAST_LEN) || "No further details."
-	var/input_header = trim(params["head"], 8) || capitalize(params["type"])
+	var/input_alias = strip_html_full(params["alias"], MAX_NAME_LEN) || target.name
+	var/input_description = strip_html_full(params["desc"], MAX_BROADCAST_LEN) || "No further details."
+	var/input_header = strip_html_full(params["head"], 8) || capitalize(params["type"])
 
 	switch(params["type"])
 		if("missing")

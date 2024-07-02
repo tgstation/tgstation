@@ -150,7 +150,7 @@
  * Admin spawned meteors will not grant the user an achievement.
  *
  * Arguments:
- * * user - the person who will be recieving the examine award.
+ * * user - the person who will be receiving the examine award.
  */
 
 /obj/effect/meteor/proc/check_examine_award(mob/user)
@@ -459,8 +459,8 @@
 /obj/effect/meteor/pumpkin
 	name = "PUMPKING"
 	desc = "THE PUMPKING'S COMING!"
-	icon = 'icons/obj/meteor_spooky.dmi'
-	icon_state = "pumpkin"
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "spooky"
 	hits = 10
 	heavy = TRUE
 	dropamt = 1

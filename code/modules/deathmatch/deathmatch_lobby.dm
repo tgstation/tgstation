@@ -363,8 +363,8 @@
 	data["map"]["min_players"] = map.min_players
 	data["map"]["max_players"] = map.max_players
 
-	data["mod_menu_open"] = FALSE
-	data["modifiers"] = has_auth ? list() : get_modifier_list(is_host, mod_menu_open)
+	data["mod_menu_open"] = mod_menu_open
+	data["modifiers"] = has_auth ? get_modifier_list(is_host, mod_menu_open) : list()
 	data["observers"] = get_observer_list()
 	data["players"] = get_player_list()
 	data["playing"] = playing
@@ -491,12 +491,10 @@
 				return TRUE
 			var/datum/deathmatch_modifier/chosen_modifier = GLOB.deathmatch_game.modifiers[modpath]
 			if(modpath in modifiers)
-				chosen_modifier.unselect(src)
-				modifiers -= modpath
+				unselect_modifier(chosen_modifier)
 				return TRUE
 			if(chosen_modifier.selectable(src))
-				chosen_modifier.on_select(src)
-				modifiers += modpath
+				select_modifier(chosen_modifier)
 				return TRUE
 
 		if ("admin") // Admin functions
@@ -511,6 +509,15 @@
 
 	return FALSE
 
+/// Selects the passed modifier.
+/datum/deathmatch_lobby/proc/select_modifier(datum/deathmatch_modifier/modifier)
+	modifier.on_select(src)
+	modifiers += modifier.type
+
+/// Deselects the passed modifier.
+/datum/deathmatch_lobby/proc/unselect_modifier(datum/deathmatch_modifier/modifier)
+	modifier.unselect(src)
+	modifiers -= modifier.type
 
 /datum/deathmatch_lobby/ui_close(mob/user)
 	. = ..()

@@ -11,8 +11,8 @@
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 20 SECONDS
-	invocation = "CL'M M'N!" // "CLAIM MINE", but also almost "KALI MA"
-	invocation_type = INVOCATION_SHOUT
+	invocation = "Carnis chirurgia"
+	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
 	hand_path = /obj/item/melee/touch_attack/flesh_surgery
@@ -135,7 +135,7 @@
 
 	// Round u pto the nearest generic zone (body, chest, arm)
 	var/zone_to_check = check_zone(caster.zone_selected)
-	var/parsed_zone = parse_zone(zone_to_check)
+	var/parsed_zone = victim.parse_zone_with_bodypart(zone_to_check)
 
 	var/list/organs_we_can_remove = list()
 	for(var/obj/item/organ/organ as anything in carbon_victim.organs)

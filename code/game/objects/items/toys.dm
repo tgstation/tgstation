@@ -51,21 +51,21 @@
 /obj/item/toy/waterballoon/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/toy/waterballoon/afterattack(atom/A as mob|obj, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if (istype(A, /obj/structure/reagent_dispensers))
-		var/obj/structure/reagent_dispensers/RD = A
-		if(RD.reagents.total_volume <= 0)
-			to_chat(user, span_warning("[RD] is empty."))
-		else if(reagents.total_volume >= 10)
-			to_chat(user, span_warning("[src] is full."))
-		else
-			A.reagents.trans_to(src, 10, transferred_by = user)
-			to_chat(user, span_notice("You fill the balloon with the contents of [A]."))
-			desc = "A translucent balloon with some form of liquid sloshing around in it."
-			update_appearance()
+/obj/item/toy/waterballoon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!istype(interacting_with, /obj/structure/reagent_dispensers))
+		return NONE
+	var/obj/structure/reagent_dispensers/RD = interacting_with
+	if(RD.reagents.total_volume <= 0)
+		to_chat(user, span_warning("[RD] is empty."))
+	else if(reagents.total_volume >= 10)
+		to_chat(user, span_warning("[src] is full."))
+	else
+		interacting_with.reagents.trans_to(src, 10, transferred_by = user)
+		to_chat(user, span_notice("You fill the balloon with the contents of [interacting_with]."))
+		desc = "A translucent balloon with some form of liquid sloshing around in it."
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/toy/waterballoon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/cup))
@@ -127,10 +127,6 @@
 	throw_range = 7
 	force = 0
 	var/random_color = TRUE
-	/// the string of the dmi state the balloon has while on the floor.
-	var/world_state
-	/// the string of the dmi state the balloon has while in your inventory.
-	var/storage_state
 	/// the string describing the name of balloon's current colour.
 	var/current_color
 
@@ -159,13 +155,6 @@
 		list("orange", "purple") = /obj/item/toy/balloon_animal/plasmaman,
 	)
 
-/obj/item/toy/balloon/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
-	. = ..()
-	if(isturf(loc))
-		icon_state = "[world_state]"
-	else
-		icon_state = "[storage_state]"
-	update_appearance()
 
 /obj/item/toy/balloon/long/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(!istype(attacking_item, /obj/item/toy/balloon/long) || !HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
@@ -217,14 +206,30 @@
 
 /obj/item/toy/balloon/Initialize(mapload)
 	. = ..()
-	if(random_color)
-		var/chosen_balloon_color = pick(BALLOON_COLORS)
-		current_color = "[chosen_balloon_color]"
-		name = "[chosen_balloon_color] [name]"
-		icon_state = "[icon_state]_[chosen_balloon_color]"
-		inhand_icon_state = icon_state
-		world_state = "[icon_state]"
-		storage_state = "[icon_state]_storage"
+	AddElement(/datum/element/update_icon_updates_onmob)
+	if(!random_color)
+		return
+	current_color = pick(BALLOON_COLORS)
+	update_appearance()
+
+/obj/item/toy/balloon/update_name(updates)
+	. = ..()
+	name = "[current_color ? "[current_color] ":null][initial(name)]"
+
+/obj/item/toy/balloon/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, current_color))
+		update_appearance()
+
+/obj/item/toy/balloon/update_icon_state()
+	. = ..()
+	var/new_icon = "[initial(icon_state)][current_color ? "_[current_color]":null]"
+	inhand_icon_state = new_icon
+	icon_state = "[new_icon][isturf(loc) ? null : "_storage"]"
+
+/obj/item/toy/balloon/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	update_appearance()
 
 /obj/item/toy/balloon/corgi
 	name = "corgi balloon"
@@ -280,7 +285,9 @@
 	name = "balloon animal"
 	desc = "You shouldn't have this."
 	icon = 'icons/obj/toys/balloons.dmi'
-	icon_state = "balloon_guy"
+	inhand_icon_state = "balloon"
+	lefthand_file = 'icons/mob/inhands/items/balloons_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/balloons_righthand.dmi'
 	throwforce = 0
 	throw_speed = 2
 	throw_range = 5
@@ -517,23 +524,21 @@
 	else
 		return ..()
 
-/obj/item/toy/gun/afterattack(atom/target as mob|obj|turf|area, mob/user, flag)
-	. = ..()
-	if (flag)
-		return
-	if (!ISADVANCEDTOOLUSER(user))
+/obj/item/toy/gun/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ISADVANCEDTOOLUSER(user))
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
 		user.show_message(span_warning("*click*"), MSG_AUDIBLE)
 		playsound(src, 'sound/weapons/gun/revolver/dry_fire.ogg', 30, TRUE)
-		return
+		return ITEM_INTERACT_SUCCESS
 	playsound(user, 'sound/weapons/gun/revolver/shot.ogg', 100, TRUE)
 	src.bullets--
-	user.visible_message(span_danger("[user] fires [src] at [target]!"), \
-		span_danger("You fire [src] at [target]!"), \
+	user.visible_message(span_danger("[user] fires [src] at [interacting_with]!"), \
+		span_danger("You fire [src] at [interacting_with]!"), \
 		span_hear("You hear a gunshot!"))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
@@ -1048,11 +1053,9 @@
 	throwforce = 20 //the same damage as a disabler shot
 	damtype = STAMINA //maybe someday we can add stuffing rocks (or perhaps ore?) into snowballs to make them deal brute damage
 
-/obj/item/toy/snowball/afterattack(atom/target as mob|obj|turf|area, mob/user)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(user.dropItemToGround(src))
-		throw_at(target, throw_range, throw_speed)
+/obj/item/toy/snowball/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	user.throw_item(interacting_with)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/snowball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
@@ -1064,7 +1067,7 @@
  */
 /obj/item/toy/beach_ball
 	name = "beach ball"
-	icon = 'icons/misc/beach.dmi'
+	icon = 'icons/obj/fluff/beach.dmi'
 	icon_state = "ball"
 	inhand_icon_state = "beachball"
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
@@ -1203,6 +1206,11 @@
 	name = "\improper Bartender action figure"
 	icon_state = "bartender"
 	toysay = "Where is Pun Pun?"
+
+/obj/item/toy/figure/bitrunner
+	name = "\improper Bitrunner action figure"
+	icon_state = "bitrunner"
+	toysay = "I'm in..."
 
 /obj/item/toy/figure/borg
 	name = "\improper Cyborg action figure"
@@ -1414,7 +1422,7 @@
 /obj/item/toy/seashell
 	name = "seashell"
 	desc = "May you always have a shell in your pocket and sand in your shoes. Whatever that's supposed to mean."
-	icon = 'icons/misc/beach.dmi'
+	icon = 'icons/obj/fluff/beach.dmi'
 	icon_state = "shell1"
 	var/static/list/possible_colors = list("" = 2, COLOR_PURPLE_GRAY = 1, COLOR_OLIVE = 1, COLOR_PALE_BLUE_GRAY = 1, COLOR_RED_GRAY = 1)
 

@@ -11,8 +11,10 @@
 	var/thrower_easy_catch_enabled = FALSE
 	///This cooldown prevents our 2 throwing signals from firing too often based on how we implement those signals within thrown impacts.
 	COOLDOWN_DECLARE(last_boomerang_throw)
+	///Adds an extra big of flavor text on examine.
+	var/examine_message
 
-/datum/component/boomerang/Initialize(boomerang_throw_range, thrower_easy_catch_enabled)
+/datum/component/boomerang/Initialize(boomerang_throw_range, thrower_easy_catch_enabled, examine_message)
 	. = ..()
 	if(!isitem(parent)) //Only items support being thrown around like a boomerang, feel free to make this apply to humans later on.
 		return COMPONENT_INCOMPATIBLE
@@ -22,14 +24,18 @@
 		src.boomerang_throw_range = boomerang_throw_range
 	if(thrower_easy_catch_enabled)
 		src.thrower_easy_catch_enabled = thrower_easy_catch_enabled
+	if(examine_message)
+		src.examine_message = examine_message
 
 /datum/component/boomerang/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, PROC_REF(prepare_throw)) //Collect data on current thrower and the throwing datum
 	RegisterSignal(parent, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(return_missed_throw))
 	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, PROC_REF(return_hit_throw))
+	if(examine_message)
+		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/boomerang/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_POST_THROW, COMSIG_MOVABLE_THROW_LANDED, COMSIG_MOVABLE_IMPACT))
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_POST_THROW, COMSIG_MOVABLE_THROW_LANDED, COMSIG_MOVABLE_IMPACT, COMSIG_ATOM_EXAMINE))
 
 /**
  * Proc'd before the first thrown is performed in order to gather information regarding each throw as well as handle throw_mode as necessary.
@@ -40,11 +46,13 @@
 /datum/component/boomerang/proc/prepare_throw(datum/source, datum/thrownthing/throwingdatum, spin)
 	SIGNAL_HANDLER
 	var/mob/thrower = throwingdatum?.get_thrower()
-	if(thrower_easy_catch_enabled && thrower)
-		if(iscarbon(thrower))
-			var/mob/living/carbon/carbon_mob = thrower
-			carbon_mob.throw_mode_on(THROW_MODE_TOGGLE)
-	return
+	if(thrower_easy_catch_enabled && iscarbon(thrower))
+		var/mob/living/carbon/carbon_mob = thrower
+		carbon_mob.throw_mode_on(THROW_MODE_TOGGLE)
+
+/datum/component/boomerang/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+	examine_list += examine_message
 
 /**
  * Proc that triggers when the thrown boomerang hits an object.

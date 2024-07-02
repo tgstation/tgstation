@@ -13,6 +13,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 	rcd_proof = TRUE
+	rust_resistance = RUST_RESISTANCE_REINFORCED
 
 
 /turf/open/floor/engine/examine(mob/user)

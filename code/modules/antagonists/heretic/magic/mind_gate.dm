@@ -11,7 +11,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 20 SECONDS
 
-	invocation = "Op' 'oY 'Mi'd"
+	invocation = "Sha'ar ha-da'at"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 	cast_range = 6
