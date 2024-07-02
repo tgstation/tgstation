@@ -143,11 +143,11 @@
 	if(!.)
 		return .
 	var/obj/item/bodypart/transfer_limb = cast_on.get_active_hand()
-	if(IS_ORGANIC_LIMB(transfer_limb))
-		return .
+	if(IS_ROBOTIC_LIMB(transfer_limb))
+		to_chat(cast_on, span_notice("You fail to channel your mending powers through your inorganic hand."))
+		return FALSE
 
-	to_chat(cast_on, span_notice("You fail to channel your mending powers through your inorganic hand."))
-
+	return TRUE
 
 /datum/action/cooldown/spell/touch/lay_on_hands/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/mendicant)
 
@@ -300,8 +300,8 @@
 			iter_wound.remove_wound()
 			iter_wound.apply_wound(mendicant_transfer_limb)
 
-	// 15% to 22%
-	var/max_blood_transfer = (BLOOD_VOLUME_NORMAL * 0.15) * heal_multiplier
+	// 10% base
+	var/max_blood_transfer = (BLOOD_VOLUME_NORMAL * 0.10) * heal_multiplier
 	if(!HAS_TRAIT(mendicant, TRAIT_NOBLOOD))
 		if(hurtguy.blood_volume < BLOOD_VOLUME_NORMAL)
 			var/max_blood_to_hurtguy = min(mendicant.blood_volume, BLOOD_VOLUME_NORMAL - hurtguy.blood_volume)
