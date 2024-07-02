@@ -20,7 +20,7 @@
 	if (ismineralturf(loc))
 		var/turf/closed/mineral/floor = loc
 		floor.gets_drilled()
-	if (!isopenturf(loc) || isspaceturf(loc) || isopenspaceturf(loc))
+	if (!isopenturf(loc) || is_space_or_openspace(loc))
 		return INITIALIZE_HINT_QDEL
 	for (var/obj/effect/goliath_tentacle/tentacle in loc)
 		if (tentacle != src)

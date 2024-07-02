@@ -161,7 +161,7 @@
 	if(!istype(stepturf))
 		return
 
-	if(isspaceturf(stepturf) || isopenspaceturf(stepturf) || !stepturf.Enter(src))
+	if(is_space_or_openspace(stepturf) || !stepturf.Enter(src))
 		return
 	if(ischasm(stepturf) && !HAS_TRAIT(stepturf, TRAIT_CHASM_STOPPED))
 		return

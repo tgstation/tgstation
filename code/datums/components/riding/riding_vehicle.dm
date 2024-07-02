@@ -242,12 +242,12 @@
 ///Makes sure that the hoverboard can move in zero-g in (open) space but only there's a ground turf on the z-level below.
 /datum/component/riding/vehicle/scooter/skateboard/hover/proc/hover_check(is_moving = FALSE)
 	var/atom/movable/movable = parent
-	if(!isopenspaceturf(movable.loc))
+	if(!is_space_or_openspace(movable.loc))
 		override_allow_spacemove = TRUE
 		return
 	var/turf/open/our_turf = movable.loc
 	var/turf/turf_below = GET_TURF_BELOW(our_turf)
-	if(our_turf.zPassOut(DOWN) && (isnull(turf_below) || (isopenspaceturf(turf_below) && turf_below.zPassIn(DOWN) && turf_below.zPassOut(DOWN))))
+	if(our_turf.zPassOut(DOWN) && (isnull(turf_below) || (is_space_or_openspace(turf_below) && turf_below.zPassIn(DOWN) && turf_below.zPassOut(DOWN))))
 		override_allow_spacemove = FALSE
 		if(turf_below)
 			our_turf.zFall(movable, falling_from_move = is_moving)
