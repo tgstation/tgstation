@@ -40,13 +40,6 @@
 /obj/structure/grille/broken,
 /turf/open/space/basic,
 /area/shuttle/escape)
-"aN" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
-/turf/open/space/basic,
-/area/shuttle/escape)
 "aO" = (
 /obj/structure/sign/plaques/kiddie{
 	desc = "It reads: PRIVATE EXHIBIT -  Please inquire with library staff for guided tours.";
@@ -65,16 +58,8 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall,
 /area/shuttle/escape)
-"aT" = (
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
-/turf/open/space/basic,
-/area/shuttle/escape)
 "aW" = (
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/shuttle/escape)
@@ -103,9 +88,7 @@
 /area/shuttle/escape)
 "bl" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/space/basic,
 /area/shuttle/escape)
 "bn" = (
@@ -145,13 +128,6 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"bx" = (
-/obj/machinery/power/shuttle_engine/propulsion,
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "by" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/painting/library_private{
@@ -162,13 +138,9 @@
 /area/shuttle/escape)
 "bC" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bI" = (
@@ -428,13 +400,6 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/space/basic,
 /area/shuttle/escape)
-"hC" = (
-/obj/machinery/power/shuttle_engine/propulsion,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "hI" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
@@ -467,9 +432,7 @@
 /obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 1
 	},
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/space/basic,
 /area/shuttle/escape)
 "hW" = (
@@ -495,7 +458,6 @@
 "hZ" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
-	layer = 2.9;
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -633,9 +595,7 @@
 "jt" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "jx" = (
@@ -910,12 +870,6 @@
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"nQ" = (
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
-/turf/open/space/basic,
-/area/shuttle/escape)
 "oa" = (
 /obj/structure/chair/wood,
 /turf/open/floor/carpet,
@@ -931,12 +885,6 @@
 "od" = (
 /obj/machinery/vending/wardrobe/curator_wardrobe,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"om" = (
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
-/turf/open/space,
 /area/shuttle/escape)
 "ov" = (
 /obj/machinery/light/small/directional/east,
@@ -1078,7 +1026,6 @@
 "qi" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
-	layer = 2.9;
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -1632,7 +1579,6 @@
 "yP" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/condiment/saltshaker{
-	layer = 3.1;
 	pixel_x = -2;
 	pixel_y = 2
 	},
@@ -1662,12 +1608,9 @@
 /area/shuttle/escape)
 "zh" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/item/stack/sheet/glass/fifty{
-	layer = 4
-	},
+/obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/iron{
-	amount = 20;
-	layer = 3.1
+	amount = 20
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 10
@@ -2162,9 +2105,7 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/condiment/peppermill,
-/obj/item/storage/box/ingredients/wildcard{
-	layer = 3.1
-	},
+/obj/item/storage/box/ingredients/wildcard,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "FA" = (
@@ -2664,12 +2605,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"Ms" = (
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
-/turf/open/space,
-/area/shuttle/escape)
 "Mt" = (
 /obj/structure/lattice,
 /turf/open/space,
@@ -2712,12 +2647,8 @@
 /area/shuttle/escape)
 "Nb" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Nf" = (
@@ -2886,9 +2817,7 @@
 "Pb" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Pe" = (
@@ -2974,7 +2903,6 @@
 "Qj" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
-	layer = 2.9;
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -3254,9 +3182,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "SU" = (
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "SV" = (
@@ -3498,9 +3424,7 @@
 /area/shuttle/escape)
 "VF" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
 	name = "Outlet Injector"
 	},
@@ -3508,9 +3432,7 @@
 /area/shuttle/escape)
 "VM" = (
 /obj/machinery/mass_driver/chapelgun,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -3632,9 +3554,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Xx" = (
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -3750,9 +3670,7 @@
 /obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 1
 	},
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/space/basic,
 /area/shuttle/escape)
 "YZ" = (
@@ -3797,9 +3715,7 @@
 /area/shuttle/escape)
 "Zn" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Zr" = (
@@ -4380,8 +4296,8 @@ nr
 nr
 nr
 nr
-om
-nQ
+af
+hq
 JG
 JG
 JG
@@ -5118,8 +5034,8 @@ nr
 nr
 nr
 nr
-aT
-aT
+IM
+IM
 JG
 JG
 JG
@@ -5483,9 +5399,9 @@ JG
 (21,1,1) = {"
 af
 af
-nQ
+hq
 aW
-nQ
+hq
 bl
 zE
 jc
@@ -6056,7 +5972,7 @@ JG
 "}
 (28,1,1) = {"
 JG
-aN
+jS
 zE
 wt
 Mf
@@ -6216,7 +6132,7 @@ Ho
 Ho
 Ho
 jt
-bx
+bv
 "}
 (30,1,1) = {"
 JG
@@ -6380,17 +6296,17 @@ Ho
 Ho
 Ho
 Pb
-hC
+Ye
 "}
 (32,1,1) = {"
 JG
 JG
-aT
-aT
-Ms
-Ms
-Ms
-aT
+IM
+IM
+Jl
+Jl
+Jl
+IM
 JG
 JG
 JG

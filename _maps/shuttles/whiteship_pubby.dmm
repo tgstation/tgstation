@@ -271,7 +271,7 @@
 "lV" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
 	y_offset = 2;
-	x_offset = -7
+	x_offset = -8
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
@@ -550,7 +550,7 @@
 	shuttle_id = "whiteship";
 	launch_status = 0;
 	name = "White Ship";
-	port_direction = 2
+	port_direction = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
@@ -595,9 +595,7 @@
 /area/shuttle/abandoned)
 "zw" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "zY" = (
