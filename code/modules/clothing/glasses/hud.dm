@@ -67,9 +67,13 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	flags_cover = GLASSESCOVERSEYES
 	// Blue green, dark
-	color_cutoffs = list(5, 15, 30)
-	glass_colour_type = /datum/client_colour/glass_colour/green
+	color_cutoffs = list(15, 15, 45)
+	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
+	actions_types = list(/datum/action/item_action/toggle_nv)
 	forced_glass_color = TRUE
+
+/obj/item/clothing/glasses/hud/health/night/update_icon_state()
+	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
 
 /obj/item/clothing/glasses/hud/health/night/meson
 	name = "night vision meson health scanner HUD"
@@ -118,8 +122,12 @@
 	flags_cover = GLASSESCOVERSEYES
 	// Pale yellow
 	color_cutoffs = list(30, 20, 5)
-	glass_colour_type = /datum/client_colour/glass_colour/green
+	glass_colour_type = /datum/client_colour/glass_colour/lightyellow
+	actions_types = list(/datum/action/item_action/toggle_nv)
 	forced_glass_color = TRUE
+
+/obj/item/clothing/glasses/hud/diagnostic/night/update_icon_state()
+	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
 
 /obj/item/clothing/glasses/hud/diagnostic/sunglasses
 	name = "diagnostic sunglasses"
@@ -190,9 +198,13 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	flags_cover = GLASSESCOVERSEYES
 	// Red with a tint of green
-	color_cutoffs = list(35, 5, 5)
-	glass_colour_type = /datum/client_colour/glass_colour/green
+	color_cutoffs = list(40, 15, 10)
+	glass_colour_type = /datum/client_colour/glass_colour/lightred
+	actions_types = list(/datum/action/item_action/toggle_nv)
 	forced_glass_color = TRUE
+
+/obj/item/clothing/glasses/hud/security/night/update_icon_state()
+	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars
 	name = "\improper HUD gar glasses"

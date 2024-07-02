@@ -192,7 +192,6 @@
 
 /datum/client_colour/glass_colour/green
 	colour = "#aaffaa"
-	mining_level_colour = "#ccffcc"
 
 /datum/client_colour/glass_colour/lightgreen
 	colour = "#ccffcc"
@@ -203,12 +202,21 @@
 
 /datum/client_colour/glass_colour/lightblue
 	colour = "#ccccff"
+	mining_level_colour = "#eaeaff"
 
 /datum/client_colour/glass_colour/yellow
 	colour = "#ffff66"
 
+/datum/client_colour/glass_colour/lightyellow
+	colour = "#ffffaa"
+	mining_level_colour = "#ffffcc"
+
 /datum/client_colour/glass_colour/red
 	colour = "#ffaaaa"
+
+/datum/client_colour/glass_colour/lightred
+	colour = "#ffcccc"
+	mining_level_colour = "#ffeaea"
 
 /datum/client_colour/glass_colour/darkred
 	colour = "#bb5555"
@@ -221,6 +229,10 @@
 
 /datum/client_colour/glass_colour/purple
 	colour = "#ff99ff"
+	mining_level_colour = "#ffeaff"
+
+/datum/client_colour/glass_colour/lightpurple
+	colour = "#ffccff"
 
 /datum/client_colour/glass_colour/gray
 	colour = "#cccccc"
