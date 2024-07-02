@@ -21,7 +21,6 @@
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
 	armor_type = /datum/armor/item_knife
-	var/bayonet = FALSE //Can this be attached to a gun?
 	wound_bonus = 5
 	bare_wound_bonus = 15
 	tool_behaviour = TOOL_KNIFE
@@ -130,7 +129,6 @@
 	throwforce = 20
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "cuts")
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "cut")
-	bayonet = TRUE
 	slot_flags = ITEM_SLOT_MASK
 
 /obj/item/knife/combat/Initialize(mapload)
@@ -161,7 +159,6 @@
 	desc = "A hunting grade survival knife."
 	force = 15
 	throwforce = 15
-	bayonet = TRUE
 
 /obj/item/knife/combat/bone
 	name = "bone dagger"
