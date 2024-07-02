@@ -659,7 +659,7 @@
 		playsound(target, 'sound/effects/glassbash.ogg', 50, TRUE, -1)
 	else
 		do_attack_animation(target, ATTACK_EFFECT_DISARM)
-		playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+		playsound(target, 'sound/weapons/shove.ogg', 50, TRUE, -1)
 	if (ishuman(target) && isnull(weapon))
 		var/mob/living/carbon/human/human_target = target
 		human_target.w_uniform?.add_fingerprint(src)
