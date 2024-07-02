@@ -582,6 +582,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
+/datum/design/board/vatgrower
+	name = "Growing Vat Board"
+	desc = "The circuit board for a growing vat."
+	id = "vatgrower"
+	build_path = /obj/item/circuitboard/machine/vatgrower
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/monkey_recycler
 	name = "Monkey Recycler Board"
 	desc = "The circuit board for a monkey recycler."

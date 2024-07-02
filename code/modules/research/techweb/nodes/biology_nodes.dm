@@ -23,6 +23,7 @@
 	design_ids = list(
 		"limbgrower",
 		"pandemic",
+		"vatgrower",
 		"petri_dish",
 		"swab",
 		"biopsy_tool",

@@ -140,6 +140,7 @@
 	brute_heal = 0.8 //Rewards the player for eating a balanced diet.
 	nutriment_factor = 9 //45% as calorie dense as oil.
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/protein
 
 /datum/reagent/consumable/nutriment/fat
 	name = "Fat"
