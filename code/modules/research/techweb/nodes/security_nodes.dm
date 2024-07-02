@@ -66,7 +66,6 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	required_experiments = list(/datum/experiment/ordnance/explosive/lowyieldbomb)
-	discount_experiments = list(/datum/experiment/ordnance/explosive/highyieldbomb = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/exotic_ammo
 	id = TECHWEB_NODE_EXOTIC_AMMO
@@ -79,6 +78,7 @@
 		"techshotshell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	discount_experiments = list(/datum/experiment/ordnance/explosive/highyieldbomb = TECHWEB_TIER_4_POINTS)
 
 /datum/techweb_node/electric_weapons
 	id = TECHWEB_NODE_ELECTRIC_WEAPONS
