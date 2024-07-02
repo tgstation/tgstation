@@ -461,9 +461,9 @@
 	if(exp == SCANTYPE_DISCOVER)
 		visible_message(span_notice("[src] scans the [exp_on], revealing its true nature!"))
 		playsound(src, 'sound/effects/supermatter.ogg', 50, 3, -1)
-		var/obj/item/relic/R = loaded_item
-		R.reveal()
-		investigate_log("Experimentor has revealed a relic with [span_danger("[R.realProc]")] effect.", INVESTIGATE_EXPERIMENTOR)
+		var/obj/item/relic/loaded_artifact = loaded_item
+		loaded_artifact.reveal()
+		investigate_log("Experimentor has revealed a relic with [span_danger("[loaded_artifact.hidden_power]")] effect.", INVESTIGATE_EXPERIMENTOR)
 		ejectItem()
 
 	//Global reactions
@@ -553,34 +553,74 @@
 #undef FAIL
 
 
-//////////////////////////////////SPECIAL ITEMS////////////////////////////////////////
+// Relic \\
 
 /obj/item/relic
 	name = "strange object"
 	desc = "What mysteries could this hold? Maybe Research & Development could find out."
-	icon = 'icons/obj/devices/artifacts.dmi'
-	var/realName = "defined object"
-	var/revealed = FALSE
-	var/realProc
-	var/reset_timer = 60
+	icon = 'icons/obj/devices/artefacts.dmi'
+	icon_state = "debug_artefact"
+	//The name this artefact will have when it's activated.
+	var/real_name = "artefact"
+	//Has this artefact been activated?
+	var/activated = FALSE
+	//What effect this artefact has when used. Randomly determined when activated.
+	var/hidden_power
+	//Minimum possible cooldown.
+	var/min_cooldown = 6 SECONDS
+	//Max possible cooldown.
+	var/max_cooldown = 30 SECONDS
+	//Cooldown length. Randomly determined at activation if it isn't determined here.
+	var/cooldown_timer
 	COOLDOWN_DECLARE(cooldown)
+	//What visual theme this artefact has. Current possible choices: "prototype", "necrotech"
+	var/artifact_theme = "prototype"
 
 /obj/item/relic/Initialize(mapload)
 	. = ..()
-	icon_state = pick("prototype1","prototype2","prototype3","prototype4","prototype5","prototype6","prototype7","prototype8","prototype9")
-	realName = "[pick("broken","twisted","spun","improved","silly","regular","badly made")] [pick("device","object","toy","illegal tech","weapon")]"
+	random_themed_appearance()
 
+/obj/item/relic/proc/random_themed_appearance()
+	var/themed_name_prefix
+	var/themed_name_suffix
+	if(artifact_theme == "prototype")
+		icon_state = pick("prototype1", "prototype2", "prototype3", "prototype4", "prototype5", "prototype6", "prototype7", "prototype8","prototype9")
+		themed_name_prefix = pick("experimental","prototype","artificial","handcrafted","ramshackle","odd")
+		themed_name_suffix = pick("device","assembly","gadget","gizmo","contraption","machine","widget","object")
+		real_name = "[pick(themed_name_prefix)] [pick(themed_name_suffix)]"
+		name = "strange [pick(themed_name_suffix)]"
+	if(artifact_theme == "necrotech")
+		icon_state = pick("necrotech1", "necrotech2", "necrotech3", "necrotech4", "necrotech5", "necrotech6")
+		themed_name_prefix = pick("dark","bloodied","unholy","archeotechnological","dismal","ruined","thrumming")
+		themed_name_suffix = pick("instrument","shard","fetish","bibelot","trinket","offering","relic")
+		real_name = "[pick(themed_name_prefix)] [pick(themed_name_suffix)]"
+		name = "strange relic"
+	update_appearance()
+
+/obj/item/relic/lavaland
+	name = "strange relic"
+	artifact_theme = "necrotech"
 
 /obj/item/relic/proc/reveal()
-	if(revealed) //Re-rolling your relics seems a bit overpowered, yes?
+	if(activated) //no rerolling
 		return
-	revealed = TRUE
-	name = realName
-	reset_timer = rand(reset_timer, reset_timer * 5)
-	realProc = pick(PROC_REF(teleport), PROC_REF(explode), PROC_REF(rapidDupe), PROC_REF(petSpray), PROC_REF(flash), PROC_REF(clean), PROC_REF(corgicannon))
+	activated = TRUE
+	name = real_name
+	if(!cooldown_timer)
+		cooldown_timer = rand(min_cooldown, max_cooldown)
+	if(!hidden_power)
+		hidden_power = pick(
+			PROC_REF(corgi_cannon),
+			PROC_REF(cleaning_foam),
+			PROC_REF(flashbanger),
+			PROC_REF(summon_animals),
+			PROC_REF(uncontrolled_teleport),
+			PROC_REF(heat_and_explode),
+			PROC_REF(rapid_self_dupe),
+			)
 
 /obj/item/relic/attack_self(mob/user)
-	if(!revealed)
+	if(!activated)
 		to_chat(user, span_notice("You aren't quite sure what this is. Maybe R&D knows what to do with it?"))
 		return
 	if(!COOLDOWN_FINISHED(src, cooldown))
@@ -588,40 +628,39 @@
 		return
 	if(loc != user)
 		return
-	COOLDOWN_START(src, cooldown, reset_timer)
-	call(src,realProc)(user)
+	COOLDOWN_START(src, cooldown, cooldown_timer)
+	call(src, hidden_power)(user)
 
-//////////////// RELIC PROCS /////////////////////////////
-
-/obj/item/relic/proc/throwSmoke(turf/where)
+/obj/item/relic/proc/throw_smoke(turf/where)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(0, holder = src, location = get_turf(where))
 	smoke.start()
 
-/obj/item/relic/proc/corgicannon(mob/user)
+// Artefact Powers \\
+
+/obj/item/relic/proc/corgi_cannon(mob/user)
 	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/mob/living/basic/pet/dog/corgi/sad_corgi = new(get_turf(user))
-	sad_corgi.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, PROC_REF(throwSmoke), sad_corgi))
+	sad_corgi.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, PROC_REF(throw_smoke), sad_corgi))
 	warn_admins(user, "Corgi Cannon", 0)
 
-/obj/item/relic/proc/clean(mob/user)
+/obj/item/relic/proc/cleaning_foam(mob/user)
 	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	var/obj/item/grenade/chem_grenade/cleaner/CL = new/obj/item/grenade/chem_grenade/cleaner(get_turf(user))
-	CL.detonate()
-	qdel(CL)
+	var/obj/item/grenade/chem_grenade/cleaner/spawned_foamer = new/obj/item/grenade/chem_grenade/cleaner(get_turf(user))
+	spawned_foamer.detonate()
+	qdel(spawned_foamer)
 	warn_admins(user, "Foam", 0)
 
-/obj/item/relic/proc/flash(mob/user)
+/obj/item/relic/proc/flashbanger(mob/user)
 	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	var/obj/item/grenade/flashbang/CB = new/obj/item/grenade/flashbang(user.loc)
-	CB.detonate()
+	var/obj/item/grenade/flashbang/spawned_flashbang = new/obj/item/grenade/flashbang(user.loc)
+	spawned_flashbang.detonate()
 	warn_admins(user, "Flash")
 
-/obj/item/relic/proc/petSpray(mob/user)
+/obj/item/relic/proc/summon_animals(mob/user)
 	var/message = span_danger("[src] begins to shake, and in the distance the sound of rampaging animals arises!")
 	visible_message(message)
 	to_chat(user, message)
-
 	var/static/list/valid_animals = list(
 		/mob/living/basic/bear,
 		/mob/living/basic/bee,
@@ -637,42 +676,40 @@
 		/mob/living/basic/pet/fox,
 	)
 	for(var/counter in 1 to rand(1, 25))
-		var/mobType = pick(valid_animals)
-		new mobType(get_turf(src))
-
+		var/animal_spawn = pick(valid_animals)
+		new animal_spawn(get_turf(src))
 	warn_admins(user, "Mass Mob Spawn")
 	if(prob(60))
 		to_chat(user, span_warning("[src] falls apart!"))
 		qdel(src)
 
-/obj/item/relic/proc/rapidDupe(mob/user)
+/obj/item/relic/proc/rapid_self_dupe(mob/user)
 	audible_message("[src] emits a loud pop!")
-	var/list/dupes = list()
+	var/list/dummy_artifacts = list()
 	for(var/counter in 1 to rand(5,10))
-		var/obj/item/relic/R = new type(get_turf(src))
-		R.name = name
-		R.desc = desc
-		R.realName = realName
-		R.realProc = realProc
-		R.revealed = TRUE
-		dupes += R
-		R.throw_at(pick(oview(7,get_turf(src))),10,1)
-
-	QDEL_LIST_IN(dupes, rand(10, 100))
+		var/obj/item/relic/duped = new type(get_turf(src))
+		duped.name = name
+		duped.desc = desc
+		duped.real_name = real_name
+		duped.hidden_power = hidden_power
+		duped.activated = TRUE
+		dummy_artifacts += duped
+		duped.throw_at(pick(oview(7,get_turf(src))),10,1)
+	QDEL_LIST_IN(dummy_artifacts, rand(1 SECONDS, 10 SECONDS))
 	warn_admins(user, "Rapid duplicator", 0)
 
-/obj/item/relic/proc/explode(mob/user)
+/obj/item/relic/proc/heat_and_explode(mob/user)
 	to_chat(user, span_danger("[src] begins to heat up!"))
-	addtimer(CALLBACK(src, PROC_REF(do_explode), user), rand(3.5 SECONDS, 10 SECONDS))
+	addtimer(CALLBACK(src, PROC_REF(blow_up), user), rand(3.5 SECONDS, 10 SECONDS))
 
-/obj/item/relic/proc/do_explode(mob/user)
+/obj/item/relic/proc/blow_up(mob/user)
 	if(loc == user)
 		visible_message(span_notice("\The [src]'s top opens, releasing a powerful blast!"))
 		explosion(src, heavy_impact_range = rand(1,5), light_impact_range = rand(1,5), flame_range = 2, flash_range = rand(1,5), adminlog = TRUE)
 		warn_admins(user, "Explosion")
 		qdel(src) //Comment this line to produce a light grenade (the bomb that keeps on exploding when used)!!
 
-/obj/item/relic/proc/teleport(mob/user)
+/obj/item/relic/proc/uncontrolled_teleport(mob/user)
 	to_chat(user, span_notice("[src] begins to vibrate!"))
 	addtimer(CALLBACK(src, PROC_REF(do_the_teleport), user), rand(1 SECONDS, 3 SECONDS))
 
@@ -680,16 +717,16 @@
 	var/turf/userturf = get_turf(user)
 	if(loc == user && !is_centcom_level(userturf.z)) //Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
 		visible_message(span_notice("[src] twists and bends, relocating itself!"))
-		throwSmoke(userturf)
+		throw_smoke(userturf)
 		do_teleport(user, userturf, 8, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
-		throwSmoke(get_turf(user))
+		throw_smoke(get_turf(user))
 		warn_admins(user, "Teleport", 0)
 
 //Admin Warning proc for relics
-/obj/item/relic/proc/warn_admins(mob/user, RelicType, priority = 1)
-	var/turf/T = get_turf(src)
-	var/log_msg = "[RelicType] relic used by [key_name(user)] in [AREACOORD(T)]"
+/obj/item/relic/proc/warn_admins(mob/user, relic_type, priority = 1)
+	var/turf/location = get_turf(src)
+	var/log_msg = "[relic_type] relic used by [key_name(user)] in [AREACOORD(location)]"
 	if(priority) //For truly dangerous relics that may need an admin's attention. BWOINK!
-		message_admins("[RelicType] relic activated by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
+		message_admins("[relic_type] relic activated by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(location)]")
 	log_game(log_msg)
 	investigate_log(log_msg, "experimentor")
