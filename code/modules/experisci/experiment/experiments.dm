@@ -337,6 +337,21 @@
 	possible_types = list(/obj/vehicle/sealed/mecha)
 	total_requirement = 1
 
+/// Scan a person with any mutation
+/datum/experiment/scanning/people/mutant
+	name = "Human Field Research: Genetic Mutations"
+	description = "Our new research assistants have been drinking random chemicals for science, when one of them mastered telekinesis and another started shooting lasers from the eyes. This could be useful for our studies. Repeat the experiment by making assistants drink unstable mutagen, scan them and report the results."
+	performance_hint = "Scan a person with a random mutation."
+	required_traits_desc = "random mutation"
+
+/datum/experiment/scanning/people/mutant/is_valid_scan_target(mob/living/carbon/human/check, datum/component/experiment_handler/experiment_handler)
+	. = ..()
+	if (!.)
+		return
+	if(!check.dna.mutations.len)
+		return FALSE
+	return TRUE
+
 /// Scan for organs you didn't start the round with
 /datum/experiment/scanning/people/novel_organs
 	name = "Human Field Research: Divergent Biology"
