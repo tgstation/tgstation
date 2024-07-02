@@ -58,8 +58,8 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/spear, /datum/crafting_recipe/stunprod, /datum/crafting_recipe/teleprod) // snatcher prod isn't here as a spoopy secret
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 

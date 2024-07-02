@@ -763,8 +763,8 @@
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/improvised_coolant)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 	register_context()

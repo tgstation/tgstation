@@ -116,7 +116,7 @@
 	// No subtypes
 	if(type != /obj/item/radio)
 		return
-	AddComponent(/datum/component/slapcrafting,\
+	AddElement(/datum/element/slapcrafting,\
 		slapcraft_recipes = list(/datum/crafting_recipe/improv_explosive)\
 	)
 

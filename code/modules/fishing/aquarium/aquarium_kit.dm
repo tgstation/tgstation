@@ -100,7 +100,7 @@
 
 /obj/item/aquarium_kit/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/slapcrafting, /datum/crafting_recipe/aquarium)
+	AddElement(/datum/element/slapcrafting, /datum/crafting_recipe/aquarium)
 
 /obj/item/aquarium_prop
 	name = "generic aquarium prop"

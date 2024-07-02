@@ -412,8 +412,8 @@
 		/datum/crafting_recipe/sturdy_shako,\
 		)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 

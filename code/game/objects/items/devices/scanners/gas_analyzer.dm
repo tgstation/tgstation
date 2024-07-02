@@ -37,8 +37,8 @@
 		return
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/material_sniffer)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 

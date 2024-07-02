@@ -18,8 +18,8 @@
 /obj/item/weaponcrafting/receiver/create_slapcraft_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/pipegun)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -34,8 +34,8 @@
 /obj/item/weaponcrafting/stock/create_slapcraft_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/smoothbore_disabler, /datum/crafting_recipe/laser_musket)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -48,8 +48,8 @@
 /obj/item/weaponcrafting/giant_wrench/create_slapcraft_component() // slappycraft
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/giant_wrench)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 

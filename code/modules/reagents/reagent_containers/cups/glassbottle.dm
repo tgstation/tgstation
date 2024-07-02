@@ -42,7 +42,7 @@
 
 /obj/item/reagent_containers/cup/glass/bottle/Initialize(mapload, vol)
 	. = ..()
-	AddComponent(/datum/component/slapcrafting,\
+	AddElement(/datum/element/slapcrafting,\
 		slapcraft_recipes = list(/datum/crafting_recipe/molotov)\
 	)
 
