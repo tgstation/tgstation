@@ -21,12 +21,12 @@
 
 	// Internal vars
 	/// Currently attached bayonet
-	var/obj/item/knife/bayonet
+	var/obj/item/bayonet
 	/// Static typecache of all knives that can become bayonets
 	var/static/list/valid_bayonets = typecacheof(list(/obj/item/knife/combat))
 
 /datum/component/bayonet_attachable/Initialize(
-	obj/item/knife/starting_bayonet,
+	obj/item/starting_bayonet,
 	offset_x = 0,
 	offset_y = 0,
 	removable = TRUE,
@@ -86,7 +86,7 @@
 /datum/component/bayonet_attachable/proc/on_examine(obj/item/source, mob/examiner, list/examine_list)
 	SIGNAL_HANDLER
 
-	if(!bayonet)
+	if(isnull(bayonet))
 		examine_list += "It has a <b>bayonet</b> lug on it."
 		return
 
@@ -97,7 +97,7 @@
 /datum/component/bayonet_attachable/proc/on_pre_attack(obj/item/source, atom/target, mob/living/user, params)
 	SIGNAL_HANDLER
 
-	if (!bayonet || !user.combat_mode)
+	if (isnull(bayonet) || !user.combat_mode)
 		return NONE
 
 	INVOKE_ASYNC(bayonet, TYPE_PROC_REF(/obj/item, melee_attack_chain), user, target, params)
@@ -117,10 +117,10 @@
 		return
 
 	add_bayonet(attacking_item, attacker)
-	source.balloon_alert(attacker, "attached [attacking_item]")
+	source.balloon_alert(attacker, "attached")
 	return COMPONENT_NO_AFTERATTACK
 
-/datum/component/bayonet_attachable/proc/add_bayonet(obj/item/knife/new_bayonet, mob/attacher)
+/datum/component/bayonet_attachable/proc/add_bayonet(obj/item/new_bayonet, mob/attacher)
 	if(bayonet)
 		CRASH("[type] tried to add a new bayonet when it already had one.")
 
@@ -163,7 +163,7 @@
 	tool?.play_tool_sound(source)
 	source.balloon_alert(user, "unscrewed [bayonet]")
 
-	var/obj/item/knife/to_remove = bayonet
+	var/obj/item/to_remove = bayonet
 	to_remove.forceMove(source.drop_location())
 	if(source.Adjacent(user) && !issilicon(user))
 		user.put_in_hands(to_remove)
@@ -203,7 +203,7 @@
 
 	if (!bayonet || allow_sawnoff)
 		return
-	source.balloon_alert(user, "[bayonet.name] must be removed!")
+	source.balloon_alert(user, "bayonet must be removed!")
 	return COMPONENT_CANCEL_SAWING_OFF
 
 /datum/component/bayonet_attachable/proc/on_sawn_off(obj/item/source, mob/user)
