@@ -108,9 +108,9 @@
 		return
 
 	// Transfers more damage if strengthened. (1.5 with power chromosome)
-	to_modify.mut_power = GET_MUTATION_POWER(src)
+	to_modify.power_coefficient = GET_MUTATION_POWER(src)
 	// Halves transferred damage if synchronized. (0.5 with synchronizer chromosome)
-	to_modify.mut_synch = GET_MUTATION_SYNCHRONIZER(src)
+	to_modify.synchronizer_coefficient = GET_MUTATION_SYNCHRONIZER(src)
 
 /datum/action/cooldown/spell/touch/lay_on_hands
 	name = "Mending Touch"
@@ -134,9 +134,9 @@
 	/// Icon used for beaming effect
 	var/beam_icon = "blood"
 	/// The mutation's power coefficient.
-	var/mut_power = 1
+	var/power_coefficient = 1
 	/// The mutation's synchronizer coefficient.
-	var/mut_synch = 1
+	var/synchronizer_coefficient = 1
 
 /datum/action/cooldown/spell/touch/lay_on_hands/create_hand(mob/living/carbon/cast_on)
 	. = ..()
@@ -153,8 +153,8 @@
 
 	var/mob/living/hurtguy = victim
 
-	heal_multiplier = initial(heal_multiplier) * mut_power
-	pain_multiplier = initial(pain_multiplier) * mut_synch
+	heal_multiplier = initial(heal_multiplier) * power_coefficient
+	pain_multiplier = initial(pain_multiplier) * synchronizer_coefficient
 
 	// Message to show on a succesful heal if the healer has a special pacifism interaction with the mutation.
 	var/peaceful_message = null
