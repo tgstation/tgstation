@@ -1,0 +1,7 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "omni crowbar tool interaction for replacing tiles has been fixed"
+  - bugfix: "techfab screentip does not runtime when you hover over it with an omnitool multitool"
+  - bugfix: "medi borgs can do brain surgery again"
+  - code_imp: "improved multitool & general tool code for some machines"
