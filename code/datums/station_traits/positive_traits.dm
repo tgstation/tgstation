@@ -63,6 +63,37 @@
 /datum/station_trait/bountiful_bounties/on_round_start()
 	SSeconomy.bounty_modifier *= 1.2
 
+/datum/station_trait/tiled_maintenance
+	name = "Maintenance tilework and illumination"
+	weight = 2
+	cost = STATION_TRAIT_COST_HIGH
+	show_in_report = TRUE
+	report_message = "We've allocated extra budget to improve the tiling and illumination of maintenance areas."
+
+/datum/station_trait/tiled_maintenance/New()
+	..()
+	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(begin_tilework))
+
+/datum/station_trait/tiled_maintenance/proc/begin_tilework(datum/source)
+	SIGNAL_HANDLER
+	var/list/floortype_choices = list(
+		/turf/open/floor/iron/dark = 50,
+		/turf/open/floor/iron/dark/small = 15,
+		/turf/open/floor/iron/dark/textured = 15,
+		/turf/open/floor/iron/dark/diagonal = 10,
+		/turf/open/floor/iron/dark/herringbone = 10,
+	)
+	var/floortype = pick_weight(floortype_choices)
+	for(var/area/station/maintenance/maint in GLOB.areas)
+		var/list/turfs = get_area_turfs(maint)
+		for(var/turf/open/floor/plating/plating in turfs)
+			if(!plating.allow_replacement)
+				continue
+			plating.place_on_top(floortype, flags = CHANGETURF_INHERIT_AIR)
+			if(prob(17) && !(locate(/obj/machinery/light/floor) in range(2, plating)))
+				new /obj/machinery/light/floor(plating)
+			CHECK_TICK
+
 /datum/station_trait/strong_supply_lines
 	name = "Strong supply lines"
 	trait_type = STATION_TRAIT_POSITIVE
