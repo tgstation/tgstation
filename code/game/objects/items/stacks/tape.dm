@@ -48,7 +48,7 @@
 	if(!isitem(target))
 		return NONE
 
-	if(target.get_embed() && target.get_embed().type == conferred_embed)
+	if(target.get_embed()?.type == conferred_embed)
 		to_chat(user, span_warning("[target] is already coated in [src]!"))
 		return ITEM_INTERACT_BLOCKING
 
