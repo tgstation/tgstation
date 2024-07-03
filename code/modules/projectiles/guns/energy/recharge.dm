@@ -4,7 +4,7 @@
 	base_icon_state = "kineticgun"
 	desc = "A self recharging gun. Holds one shot at a time."
 	automatic_charge_overlays = FALSE
-	cell_type = /obj/item/stock_parts/cell/emproof
+	cell_type = /obj/item/stock_parts/power_store/cell/emproof
 	/// If set to something, instead of an overlay, sets the icon_state directly.
 	var/no_charge_state
 	/// Does it hold charge when not put away?
@@ -111,9 +111,9 @@
 	recharge_time = 2 SECONDS
 	holds_charge = TRUE
 	unique_frequency = TRUE
-	can_bayonet = TRUE
-	knife_x_offset = 20
-	knife_y_offset = 12
+
+/obj/item/gun/energy/recharge/ebow/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 20, offset_y = 12)
 
 /obj/item/gun/energy/recharge/ebow/halloween
 	name = "candy corn crossbow"

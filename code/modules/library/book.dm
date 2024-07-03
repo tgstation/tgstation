@@ -101,7 +101,7 @@
 	if(burn_paper_product_attackby_check(attacking_item, user))
 		return
 
-	if(istype(attacking_item, /obj/item/pen))
+	if(IS_WRITING_UTENSIL(attacking_item))
 		if(!user.can_perform_action(src) || !user.can_write(attacking_item))
 			return
 		if(user.is_blind())

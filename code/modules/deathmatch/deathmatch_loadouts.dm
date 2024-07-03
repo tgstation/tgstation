@@ -371,7 +371,7 @@
 	display_name = "Cowboy"
 	desc = "Yeehaw partner"
 
-	r_hand  = /obj/item/clothing/mask/cigarette/cigar
+	r_hand  = /obj/item/cigarette/cigar
 	l_hand = /obj/item/melee/curator_whip
 	l_pocket = /obj/item/lighter
 	accessory = /obj/item/clothing/accessory/vest_sheriff
@@ -405,7 +405,7 @@
 
 	suit = /obj/item/clothing/suit/wizrobe/red
 	head = /obj/item/clothing/head/wizard/red
-	mask = /obj/item/clothing/mask/cigarette
+	mask = /obj/item/cigarette
 	granted_spells = list(
 		/datum/action/cooldown/spell/pointed/projectile/fireball,
 		/datum/action/cooldown/spell/smoke,
@@ -653,7 +653,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	gloves = /obj/item/clothing/gloves/cut
 	l_pocket = /obj/item/reagent_containers/hypospray/medipen/methamphetamine
-	r_pocket = /obj/item/stock_parts/cell/high
+	r_pocket = /obj/item/stock_parts/power_store/cell/high
 	belt = /obj/item/storage/belt/utility/full
 
 /datum/outfit/deathmatch_loadout/abductor
