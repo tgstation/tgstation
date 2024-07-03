@@ -88,7 +88,7 @@
 	)
 	for(var/area/station/maintenance/maint in GLOB.areas)
 		var/list/turfs = get_area_turfs(maint)
-		for(var/i in 1 to length(turfs) * 0.11)
+		for(var/i in 1 to round(length(turfs) * 0.11))
 			CHECK_TICK
 			var/turf/open/chosen = pick_n_take(turfs)
 			if(!istype(chosen))
