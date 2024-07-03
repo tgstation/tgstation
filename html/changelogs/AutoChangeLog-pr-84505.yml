@@ -1,0 +1,7 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - code_imp: "Moved bedsheet interactions to the item interaction code. Please report any issues."
+  - bugfix: "Bedsheets adjust their offset to match that of the living they're tucking in."
+  - sound: "Bedsheets use the cloth drop/pickup sounds instead of being silent."
+  - qol: "You can tuck someone in telekinetically."
