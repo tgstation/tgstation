@@ -47,7 +47,6 @@ total = 0
 # need just for better logs look
 if (scannable_directory == "massmeta/features/") or (scannable_directory == "massmeta/~meta_defines/"):
     print(blue(f"Scanning Modular Code..."))
-if scannable_directory == "massmeta/~meta_defines/":
     print(blue(f"   Checking files in [{scannable_directory}]"))
 # MASSMETA EDIT ADDITION END
 
@@ -85,8 +84,6 @@ with open(file_reference, 'r') as file:
         # MASSMETA EDIT ADDITION START (check modular code folder)
         # checks main module folder
         if scannable_directory == "massmeta/features/":
-            print(blue(f"   Checking files in [{scannable_directory}]"))
-
             module_file_path = line.replace('\\', '/')
             module_file_path_clean = module_file_path[10:-1]
             print(f"        [{module_file_path_clean}] with in it:")
