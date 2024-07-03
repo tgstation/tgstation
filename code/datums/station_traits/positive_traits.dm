@@ -73,10 +73,13 @@
 
 /datum/station_trait/glowsticks/New()
 	..()
-	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(light_the_night))
+	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(on_pregame))
 
-/datum/station_trait/glowsticks/proc/light_the_night(datum/source)
+/datum/station_trait/glowsticks/proc/on_pregame(datum/source)
 	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(light_up_the_night))
+
+/datum/station_trait/glowsticks/proc/light_up_the_night()
 	var/list/glowsticks = list(
 		/obj/item/flashlight/glowstick,
 		/obj/item/flashlight/glowstick/red,
@@ -100,7 +103,7 @@
 					break
 			if(skip_this)
 				continue
-			if(prob(3.3)) ///Rare, but this is something that can survive past the lifespawn of glowsticks.
+			if(prob(3.4)) ///Rare, but this is something that can survive past the lifespawn of glowsticks.
 				new /obj/machinery/light/floor(chosen)
 				continue
 			var/stick_type = pick(glowsticks)
