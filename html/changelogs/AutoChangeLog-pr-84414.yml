@@ -1,0 +1,5 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - balance: "removed tasers, the unfirable turret gun, death wand, polymorph wands and the enchanted modsuit from lootbox loot tables"
+  - bugfix: "lootbox guns should now mostly not have syndicate firing pins so you can actually use them"

@@ -6977,10 +6977,6 @@
 	name = "AI Core Chamber Access";
 	req_access = list("ai_upload")
 	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "AI Core shutters";
-	name = "AI Core Shutter"
-	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
 "cED" = (
@@ -7093,10 +7089,6 @@
 	atom_integrity = 300;
 	name = "AI Core Chamber Access";
 	req_access = list("ai_upload")
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "AI Core shutters";
-	name = "AI Core Shutter"
 	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
@@ -7291,10 +7283,11 @@
 /area/station/science/lab)
 "cKc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/flasher/directional/west{
-	id = "ai"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "AI Core shutters";
+	name = "AI Core Shutter"
+	},
 /turf/open/floor/iron/stairs,
 /area/station/ai_monitored/turret_protected/ai)
 "cKk" = (
@@ -11804,8 +11797,9 @@
 "etD" = (
 /obj/structure/cable/layer3,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/flasher/directional/east{
-	id = "ai"
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "AI Core shutters";
+	name = "AI Core Shutter"
 	},
 /turf/open/floor/iron/stairs,
 /area/station/ai_monitored/turret_protected/ai)
@@ -12188,7 +12182,9 @@
 /obj/machinery/door/window/right/directional/south{
 	name = "AI Security Door"
 	},
-/obj/machinery/status_display/evac/directional/west,
+/obj/machinery/flasher/directional/west{
+	id = "ai"
+	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
 "eAY" = (
@@ -12298,7 +12294,9 @@
 /obj/machinery/door/window/left/directional/south{
 	name = "AI Security Door"
 	},
-/obj/machinery/status_display/evac/directional/east,
+/obj/machinery/flasher/directional/east{
+	id = "ai"
+	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
 "eDo" = (
@@ -49890,6 +49888,7 @@
 	},
 /obj/item/pen,
 /obj/machinery/airalarm/directional/south,
+/obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
 "qEm" = (
@@ -75094,6 +75093,7 @@
 /obj/machinery/modular_computer/preset/civilian{
 	dir = 4
 	},
+/obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai)
 "yfQ" = (
