@@ -150,6 +150,10 @@
 	update_appearance(UPDATE_ICON)
 	update_health_hud()
 
+/mob/living/basic/revenant/AltClickOn(atom/target)
+	if(CAN_I_SEE(target))
+		client.loot_panel.open(get_turf(target))
+
 /mob/living/basic/revenant/get_status_tab_items()
 	. = ..()
 	. += "Current Essence: [essence >= max_essence ? essence : "[essence] / [max_essence]"] E"

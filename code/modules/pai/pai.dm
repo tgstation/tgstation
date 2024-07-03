@@ -470,7 +470,7 @@
 
 	for(var/mob/living/cultist as anything in invokers)
 		to_chat(cultist, span_cult_italic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
-	return STOP_SACRIFICE
+	return STOP_SACRIFICE|SILENCE_SACRIFICE_MESSAGE
 
 /// Updates the distance we can be from our pai card
 /mob/living/silicon/pai/proc/increment_range(increment_amount)
