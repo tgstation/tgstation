@@ -69,7 +69,7 @@
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 2
 	show_in_report = TRUE
-	report_message = "We've got glowsticks upon glowsticks to spare, so we scattered some around maintenance (plus a couple floor lights)."
+	report_message = "We've glowsticks upon glowsticks to spare, so we scattered some around maintenance (plus a couple floor lights)."
 
 /datum/station_trait/glowsticks/New()
 	..()
@@ -88,15 +88,19 @@
 	)
 	for(var/area/station/maintenance/maint in GLOB.areas)
 		var/list/turfs = get_area_turfs(maint)
-		for(var/i in 1 to length(turfs) * 0.12)
+		for(var/i in 1 to length(turfs) * 0.11)
 			CHECK_TICK
 			var/turf/open/chosen = pick_n_take(turfs)
 			if(!istype(chosen))
 				continue
+			var/skip_this = FALSE
 			for(var/atom/movable/mov as anything in chosen) //stop glowing sticks from spawning on windows
 				if(mov.density && !(mov.pass_flags_self & LETPASSTHROW))
-					continue
-			if(prob(3.4)) ///Rare, but this is something that can survive past the lifespawn of glowsticks.
+					skip_this = TRUE
+					break
+			if(skip_this)
+				continue
+			if(prob(3.3)) ///Rare, but this is something that can survive past the lifespawn of glowsticks.
 				new /obj/machinery/light/floor(chosen)
 				continue
 			var/stick_type = pick(glowsticks)
