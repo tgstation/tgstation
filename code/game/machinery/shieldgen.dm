@@ -487,6 +487,7 @@
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	light_outer_range = 3
+	pass_flags_self = parent_type::pass_flags_self & ~LETPASSCLICKS // monkestation edit: no you can't reach around the impenetrable shield
 	var/needs_power = FALSE
 	var/obj/machinery/power/shieldwallgen/gen_primary
 	var/obj/machinery/power/shieldwallgen/gen_secondary

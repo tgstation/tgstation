@@ -14,6 +14,7 @@
 	can_atmos_pass = ATMOS_PASS_NO
 	light_outer_range = 4
 	layer = ABOVE_OBJ_LAYER
+	pass_flags_self = parent_type::pass_flags_self & ~LETPASSCLICKS // monkestation edit: no you can't reach around the impenetrable shield
 	///First of the generators producing the containment field
 	var/obj/machinery/field/generator/field_gen_1 = null
 	///Second of the generators producing the containment field
