@@ -2,6 +2,14 @@
 	name = "structure spawner"
 	desc = "Now you see me, now you don't..."
 
+/obj/effect/spawner/random/structure/eight_percent_spirit_board
+	name = "10% spirit board"
+	icon_state = "spirit_board"
+	loot = list(
+		/obj/structure/spirit_board = 1,
+		/obj/item/kirbyplants/random = 9,
+	)
+
 /obj/effect/spawner/random/structure/crate
 	name = "crate spawner"
 	icon_state = "crate_secure"
