@@ -104,7 +104,7 @@ LINEN BINS
 	add_fingerprint(user)
 
 /obj/item/bedsheet/click_alt(mob/living/user)
-	dir = REVERSE_DIR(dir)
+	setDir(REVERSE_DIR(dir))
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/bedsheet/proc/coverup(mob/living/sleeper)
