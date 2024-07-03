@@ -436,10 +436,10 @@ world
 		}
 
 	var/static/icon/flat_template = icon('icons/blanks/32x32.dmi', "nothing")
-	var/icon/flat_template = icon(flat_template)
+	var/icon/flat = icon(flat_template)
 
 	if(!appearance || appearance.alpha <= 0)
-		return icon(flat_template)
+		return flat
 
 	if(start)
 		if(!defdir)
@@ -484,12 +484,11 @@ world
 	if(render_icon)
 		var/icon/active_icon = icon(curicon)
 		if(active_icon.Width() != 32 || active_icon.Height() != 32)
-			flat_template.Scale(active_icon.Width(), active_icon.Height())
+			flat.Scale(active_icon.Width(), active_icon.Height())
 
 	var/curblend = appearance.blend_mode || defblend
 
 	if(appearance.overlays.len || appearance.underlays.len)
-		var/icon/flat = icon(flat_template)
 		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
 		var/list/layers = list()
 		var/image/copy
