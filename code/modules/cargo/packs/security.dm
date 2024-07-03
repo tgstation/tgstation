@@ -116,7 +116,7 @@
 /datum/supply_pack/security/firingpins
 	name = "Standard Firing Pins Crate"
 	desc = "Upgrade your arsenal with 10 standard firing pins."
-	cost = CARGO_CRATE_VALUE * 4
+	cost = 5000 //MONKESTATION EDIT: Guncargo nerf
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/storage/box/firingpins = 2)
 	crate_name = "firing pins crate"
@@ -124,7 +124,7 @@
 /datum/supply_pack/security/firingpins/paywall
 	name = "Paywall Firing Pins Crate"
 	desc = "Specialized firing pins with a built-in configurable paywall."
-	cost = CARGO_CRATE_VALUE * 2
+	cost = 4000 //MONKESTATION EDIT: Guncargo nerf
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/storage/box/firingpins/paywall = 2)
 	crate_name = "paywall firing pins crate"
