@@ -1,0 +1,5 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - rscadd: "Added a bitrunning deathmatch map: Island Brawl. Both ghosts and runners get many more spawns than normal."
+  - bugfix: "Lowered the static vision time in domain load in."
