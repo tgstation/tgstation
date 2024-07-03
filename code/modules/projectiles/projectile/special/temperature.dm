@@ -36,9 +36,16 @@
 
 /obj/projectile/temp/cryoon_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(!isliving(target))
-		return
-	target.apply_status_effect(/datum/status_effect/freezing_blast)
+
+	if(isobj(target))
+		var/obj/objectification = target
+
+		if(objectification.reagents)
+			var/datum/reagents/reagents = objectification.reagents
+			reagents?.expose_temperature(temperature)
+
+	if(isliving(target))
+		target.apply_status_effect(/datum/status_effect/freezing_blast)
 
 /obj/projectile/temp/cryo/on_range()
 	var/turf/T = get_turf(src)
@@ -50,7 +57,6 @@
 /obj/projectile/temp/pyro
 	name = "hot beam"
 	icon_state = "firebeam" // sets on fire, diff sprite!
-	damage = 1 //Mostly so that we set off objects like wleding tanks
 	range = 9
 	temperature = 350
 
@@ -58,11 +64,29 @@
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/living_target = target
-	if(!istype(living_target))
+
+	if(isobj(target))
+		var/obj/objectification = target
+
+		if(objectification.resistance_flags & FLAMMABLE && !(objectification.resistance_flags & ON_FIRE))
+			objectification.fire_act(temperature)
+
+		if(objectification.reagents)
+			var/datum/reagents/reagents = objectification.reagents
+			reagents?.expose_temperature(temperature)
+
+		if(objectification.custom_materials && (GET_MATERIAL_REF(/datum/material/plasma) in objectification.custom_materials))
+			objectification.fire_act(temperature)
+
+		if(istype(objectification, /obj/structure/reagent_dispensers/fueltank))
+			objectification.fire_act(temperature)
+
 		return
-	living_target.adjust_fire_stacks(2)
-	living_target.ignite_mob()
+
+	var/mob/living/living_target = target
+	if(istype(living_target))
+		living_target.adjust_fire_stacks(2)
+		living_target.ignite_mob()
 
 /obj/projectile/temp/pyro/on_range()
 	var/turf/location = get_turf(src)
