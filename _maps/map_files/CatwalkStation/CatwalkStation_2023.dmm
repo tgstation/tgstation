@@ -356,7 +356,7 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
 /turf/open/floor/iron/dark,
 /area/station/science/cytology)
 "aia" = (
@@ -1742,7 +1742,7 @@
 /obj/machinery/duct,
 /obj/effect/turf_decal/tile/dark_green/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
 /turf/open/floor/plating,
 /area/station/science/cytology)
 "aKV" = (
@@ -3414,6 +3414,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
 "btC" = (
@@ -6222,6 +6223,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/science/rd,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "crs" = (
@@ -7005,6 +7007,7 @@
 /obj/machinery/door/airlock/research/glass/incinerator/ordmix_exterior{
 	name = "Burn Chamber Exterior Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/science/ordnance,
 /turf/open/floor/engine,
 /area/station/science/ordnance/burnchamber)
 "cFc" = (
@@ -7246,6 +7249,7 @@
 "cIx" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research,
+/obj/effect/mapping_helpers/airlock/access/any/science/robotics,
 /turf/open/floor/iron,
 /area/station/science/robotics)
 "cIy" = (
@@ -7647,6 +7651,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "cQu" = (
@@ -7896,10 +7901,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/all/science/genetics,
 /obj/machinery/door/airlock/virology{
 	name = "Genetics Lab"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/science/genetics,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/genetics)
 "cUw" = (
@@ -9117,7 +9122,7 @@
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -12024,7 +12029,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/purple/fourcorners,
-/obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
 /turf/open/floor/iron,
 /area/station/science/xenobiology/hallway)
 "evj" = (
@@ -15993,6 +15998,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/research/glass,
+/obj/effect/mapping_helpers/airlock/access/any/science/robotics,
 /turf/open/floor/iron,
 /area/station/science/robotics)
 "fXO" = (
@@ -17852,6 +17858,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "gHH" = (
@@ -18404,7 +18411,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/purple/fourcorners,
-/obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
 /turf/open/floor/iron,
 /area/station/science/breakroom)
 "gRC" = (
@@ -21117,6 +21124,7 @@
 "hPP" = (
 /obj/machinery/door/airlock/research/glass,
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
 /turf/open/floor/iron/white/textured,
 /area/station/science/research)
 "hPQ" = (
@@ -23248,6 +23256,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "iEv" = (
@@ -24011,10 +24021,10 @@
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "iUl" = (
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/science/genetics,
 /obj/machinery/door/airlock/virology{
 	name = "Genetics Lab"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/science/genetics,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/genetics)
 "iUr" = (
@@ -25503,6 +25513,8 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Ordnance Gas Storage Maintenance"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/access/all/science/ordnance_storage,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "jvU" = (
@@ -25634,6 +25646,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/research,
+/obj/effect/mapping_helpers/airlock/access/any/science/robotics,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "jxU" = (
@@ -30062,6 +30075,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
 /turf/open/floor/plating,
 /area/station/science/research)
 "lfx" = (
@@ -35042,8 +35056,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/all/science/general,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -36360,6 +36374,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/starboard/lesser)
+"nwg" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Research Maintenance"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/central)
 "nwC" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -38790,10 +38814,10 @@
 /turf/closed/wall/r_wall,
 /area/station/medical/cryo)
 "oti" = (
-/obj/effect/mapping_helpers/airlock/access/all/science/genetics,
 /obj/machinery/door/airlock/virology{
 	name = "Genetics Lab"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/science/genetics,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/genetics)
 "otq" = (
@@ -43574,6 +43598,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
 /turf/open/floor/iron,
 /area/station/science/xenobiology/hallway)
 "qih" = (
@@ -46238,6 +46264,7 @@
 /obj/machinery/door/airlock/research/glass/incinerator/ordmix_interior{
 	name = "Burn Chamber Interior Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/science/ordnance,
 /turf/open/floor/engine,
 /area/station/science/ordnance/burnchamber)
 "rjb" = (
@@ -49127,6 +49154,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "slL" = (
@@ -53848,6 +53877,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/science/rd,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
 "ued" = (
@@ -54003,6 +54033,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/science/ordnance_storage,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
 "ugL" = (
@@ -57263,10 +57294,10 @@
 /area/station/command/heads_quarters/cmo)
 "vtc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/all/science/genetics,
 /obj/machinery/door/airlock/virology{
 	name = "Genetics Lab"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/science/genetics,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/genetics)
 "vtk" = (
@@ -57560,6 +57591,7 @@
 /obj/machinery/door/airlock/command/glass{
 	name = "Server Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/science/rd,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "vzx" = (
@@ -58427,6 +58459,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/any/science/ordnance,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "vQM" = (
@@ -61109,6 +61142,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/any/science/general,
 /turf/open/floor/iron,
 /area/station/science/lab)
 "wPf" = (
@@ -99944,7 +99978,7 @@ aZs
 fLr
 tDY
 qTl
-quJ
+ghV
 qju
 qju
 guk
@@ -166012,7 +166046,7 @@ baN
 tPB
 esP
 uTi
-dLU
+nwg
 hBO
 oEW
 aIA
