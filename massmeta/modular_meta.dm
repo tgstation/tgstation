@@ -112,3 +112,6 @@
 
 //smites
 #include "features\smites\testicular_torsion.dm"
+
+//sunglasses
+#include "features\sunglasses.dm"
