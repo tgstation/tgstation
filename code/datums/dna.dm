@@ -877,7 +877,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 	var/nonfatal = prob(max(70-instability, 0))
 
-	if(!LAZYLEN(dna.nonfatal_meltdowns))
+	if(!dna.nonfatal_meltdowns.len)
 		for(var/datum/instability_meltdown/meltdown_type as anything in typecacheof(/datum/instability_meltdown, ignore_root_path = TRUE))
 			if(initial(meltdown_type.abstract_type) == meltdown_type)
 				continue
