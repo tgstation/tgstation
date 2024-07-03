@@ -17,6 +17,7 @@
 	upperinfo = "cmd.nt";
 	content = list("fatal error, could not read sys/locale/galcommon.pak")
 	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/catwalk_floor/iron,
 /area/shuttle/escape)
 "bi" = (
@@ -180,13 +181,6 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"lw" = (
-/obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/plating/airless,
-/area/shuttle/escape)
 "mq" = (
 /turf/template_noop,
 /area/template_noop)
@@ -210,6 +204,14 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/corner,
 /obj/structure/sign/warning/vacuum/external/directional/east,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"nM" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "po" = (
@@ -289,10 +291,6 @@
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"ur" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/plating/airless,
-/area/shuttle/escape)
 "us" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
@@ -305,15 +303,11 @@
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/escape)
 "vf" = (
-/obj/machinery/door/airlock/glass/incinerator,
+/obj/machinery/door/airlock/glass,
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/escape)
 "vq" = (
 /turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/escape)
-"vv" = (
-/obj/machinery/vending/wallmed/directional/west,
-/turf/open/floor/iron,
 /area/shuttle/escape)
 "wC" = (
 /obj/structure/extinguisher_cabinet/directional/south,
@@ -426,6 +420,8 @@
 "Bg" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
+/obj/effect/spawner/random/maintenance/no_decals/two,
+/obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "BM" = (
@@ -566,6 +562,8 @@
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/bot,
 /obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "HG" = (
@@ -706,6 +704,14 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"LV" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/vending/wallmed/directional/west,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "Mj" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -756,7 +762,6 @@
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 1
 	},
-/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "OE" = (
@@ -953,7 +958,7 @@
 	dir = 8;
 	name = "engine computer";
 	upperinfo = "cmd.nt";
-	content = list("fatal error, could not read sys/locale/galcommon.pak")
+	content = list("fatal error, could not read sys/locale/galcommon.lang")
 	},
 /turf/open/floor/catwalk_floor/iron,
 /area/shuttle/escape)
@@ -969,7 +974,6 @@
 	id_tag = "MedbayFoyer";
 	name = "Medbay"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/medical/general,
 /turf/open/floor/iron/white/textured,
 /area/shuttle/escape)
 "TT" = (
@@ -1111,8 +1115,8 @@ Il
 Rj
 Rj
 jV
-lw
-ur
+Mj
+YV
 YV
 "}
 (4,1,1) = {"
@@ -1171,16 +1175,16 @@ hK
 wU
 OE
 Ri
+HG
 ni
 ni
 ni
 ni
-ni
-ni
+HG
 qb
 OE
-vv
-Aq
+Ri
+LV
 HG
 ZI
 Ri
@@ -1267,7 +1271,7 @@ hK
 wU
 OE
 Ri
-ni
+HG
 ni
 HG
 ni
@@ -1300,7 +1304,7 @@ Rd
 HG
 ej
 SL
-Aq
+nM
 HG
 KA
 SL
