@@ -1,0 +1,4 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - bugfix: "Dastardly clowns will no longer be able to get counted for three times the steps by moving diagonally."

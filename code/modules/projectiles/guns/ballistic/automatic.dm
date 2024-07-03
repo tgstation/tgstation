@@ -41,12 +41,12 @@
 	fire_delay = 2
 	burst_size = 3
 	pin = /obj/item/firing_pin/implant/pindicate
-	can_bayonet = TRUE
-	knife_x_offset = 26
-	knife_y_offset = 12
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	empty_indicator = TRUE
+
+/obj/item/gun/ballistic/automatic/c20r/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 26, offset_y = 12)
 
 /obj/item/gun/ballistic/automatic/c20r/update_overlays()
 	. = ..()
@@ -75,9 +75,6 @@
 	can_suppress = FALSE
 	burst_size = 1
 	actions_types = list()
-	can_bayonet = TRUE
-	knife_x_offset = 25
-	knife_y_offset = 12
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	empty_indicator = TRUE
@@ -85,6 +82,9 @@
 /obj/item/gun/ballistic/automatic/wt550/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)
+
+/obj/item/gun/ballistic/automatic/wt550/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 25, offset_y = 12)
 
 /obj/item/gun/ballistic/automatic/plastikov
 	name = "\improper PP-95 SMG"
