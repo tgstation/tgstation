@@ -63,6 +63,7 @@
 /datum/station_trait/bountiful_bounties/on_round_start()
 	SSeconomy.bounty_modifier *= 1.2
 
+///A station trait that places tiles on top of platings in maint and sprinkles them with floor lights.
 /datum/station_trait/tiled_maintenance
 	name = "Maintenance tilework and illumination"
 	weight = 2
@@ -72,7 +73,8 @@
 
 /datum/station_trait/tiled_maintenance/New()
 	..()
-	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(begin_tilework))
+	//we need to wait SSair before we change turfs, so that they can inherit atmos.
+	RegisterSignal(SSair, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(begin_tilework))
 
 /datum/station_trait/tiled_maintenance/proc/begin_tilework(datum/source)
 	SIGNAL_HANDLER
