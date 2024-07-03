@@ -171,7 +171,7 @@
 	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
 
 /obj/item/clothing/glasses/night/colorless
-	desc = "You can totally see in the dark now! Now with 50% less green!"
+	desc = parent_type::desc + " Now with 50% less green!"
 	forced_glass_color = FALSE
 
 /obj/item/clothing/glasses/eyepatch

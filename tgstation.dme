@@ -839,7 +839,6 @@
 #include "code\datums\actions\items\set_internals.dm"
 #include "code\datums\actions\items\stealth_box.dm"
 #include "code\datums\actions\items\summon_stickmen.dm"
-#include "code\datums\actions\items\toggle_nv.dm"
 #include "code\datums\actions\items\toggles.dm"
 #include "code\datums\actions\items\unzip.dm"
 #include "code\datums\actions\items\vortex_recall.dm"
