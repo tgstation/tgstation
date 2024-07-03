@@ -58,14 +58,19 @@ SUBSYSTEM_DEF(tts)
 	var/datum/http_request/request = new()
 	var/list/headers = list()
 	headers["Authorization"] = CONFIG_GET(string/tts_http_token)
-	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts-voices", "", headers)
+	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/speakers", "", headers) //MASSMETA EDIT CHANGE (/n/tts) - ORIGINAL: "[CONFIG_GET(string/tts_http_url)]/tts-voices"
 	request.begin_async()
 	UNTIL(request.is_complete())
 	var/datum/http_response/response = request.into_response()
 	if(response.errored || response.status_code != 200)
 		stack_trace(response.error)
 		return FALSE
-	available_speakers = json_decode(response.body)
+	//available_speakers = json_decode(response.body) //MASSMETA EDIT REMOVAL (/n/tts)
+	//MASSMETA EDIT ADDITION START (/n/tts)
+	var/list/temp_speakers = json_decode(response.body)?["voices"]
+	for(var/speaker in temp_speakers)
+		available_speakers.Add(speaker["speakers"][1])
+	//MASSMETA EDIT ADDITION END
 	tts_enabled = TRUE
 	if(CONFIG_GET(str_list/tts_voice_blacklist))
 		var/list/blacklisted_voices = CONFIG_GET(str_list/tts_voice_blacklist)
@@ -269,13 +274,15 @@ SUBSYSTEM_DEF(tts)
 	if(!fexists("tmp/tts/init.txt"))
 		rustg_file_write("rustg HTTP requests can't write to folders that don't exist, so we need to make it exist.", "tmp/tts/init.txt")
 
-	var/static/regex/contains_alphanumeric = regex("\[a-zA-Z0-9]")
+	//var/static/regex/contains_alphanumeric = regex("\[a-zA-Z0-9]") MASSMETA EDIT REMOVAL (/n/tts)
 	// If there is no alphanumeric char, the output will usually be static, so
 	// don't bother sending
-	if(contains_alphanumeric.Find(message) == 0)
-		return
+	//MASSMETA EDIT REMOVAL BEGIN (/n/tts)
+	//if(contains_alphanumeric.Find(message) == 0)
+		//return
+	//MASSMETA EDIT REMOVAL END
 
-	var/shell_scrubbed_input = tts_speech_filter(message)
+	var/shell_scrubbed_input = message //MASSMETA EDIT CHANGE (/n/tts) - ORIGINAL: = tts_speech_filter(message)
 	shell_scrubbed_input = copytext(shell_scrubbed_input, 1, 300)
 	var/identifier = "[sha1(speaker + filter + num2text(pitch) + special_filters + shell_scrubbed_input)].[world.time]"
 	if(!(speaker in available_speakers))
@@ -288,8 +295,10 @@ SUBSYSTEM_DEF(tts)
 	var/datum/http_request/request_blips = new()
 	var/file_name = "tmp/tts/[identifier].ogg"
 	var/file_name_blips = "tmp/tts/[identifier]_blips.ogg"
-	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]&pitch=[pitch]&special_filters=[url_encode(special_filters)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name)
-	request_blips.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts-blips?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]&pitch=[pitch]&special_filters=[url_encode(special_filters)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name_blips)
+	//MASSMETA EDIT CHANGE START (/n/tts)
+	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/?speaker=[speaker]&effect=[url_encode(special_filters)]&ext=ogg&text=[shell_scrubbed_input]", null, headers, file_name)
+	request_blips.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/?speaker=[speaker]&effect=[url_encode(special_filters)]&ext=ogg&text=[shell_scrubbed_input]", null, headers, file_name_blips)
+	//MASSMETA EDIT CHANGE END
 	var/datum/tts_request/current_request = new /datum/tts_request(identifier, request, request_blips, shell_scrubbed_input, target, local, language, message_range, volume_offset, listeners, pitch)
 	var/list/player_queued_tts_messages = queued_tts_messages[target]
 	if(!player_queued_tts_messages)
