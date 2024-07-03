@@ -39,7 +39,7 @@
 
 	passwindow_on(human_who_gained_species, SPECIES_TRAIT) //if this is here when its PRd im dumb please remind me to move it somewhere else
 	RegisterSignal(human_who_gained_species, COMSIG_MOVABLE_CAN_PASS_THROUGH, PROC_REF(can_pass_through))
-	generic_canpass = FALSE
+	human_who_gained_species.generic_canpass = FALSE
 
 	RegisterSignal(human_who_gained_species, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_temporary_shatter))
 
@@ -54,7 +54,7 @@
 
 	if(istype(blocker, /obj/structure/grille))
 		var/obj/structure/grille/grille = blocker
-		if(grille.shock())
+		if(grille.shock(human, 100))
 			return COMSIG_COMPONENT_REFUSE_PASSAGE
 
 	return null
@@ -65,7 +65,7 @@
 	if(istype(target, /obj/structure/window))
 		var/obj/structure/window/window = target
 		window.temporary_shatter()
-	else if(istype(src, /obj/strucutre/grille))
+	else if(istype(src, /obj/structure/grille))
 		var/obj/structure/grille/grille = target
 		grille.temporary_shatter()
 
@@ -96,7 +96,7 @@
 /obj/item/organ/internal/brain/voidling/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
-	RegisterSignal(organ_owner, COMSIG_ATOM_ENTERED, PROC_REF(on_atom_entered))
+	RegisterSignal(organ_owner, COMSIG_ATOM_ENTERING, PROC_REF(on_atom_entering))
 	organ_owner.remove_from_all_data_huds()
 	space_phase = new space_phase ()
 	space_phase.Grant(organ_owner)
@@ -110,13 +110,13 @@
 	space_phase.Remove(organ_owner)
 	space_phase = initial(space_phase)
 
-/obj/item/organ/internal/brain/voidling/proc/on_atom_entered(mob/living/carbon/organ_owner, atom/entered)
+/obj/item/organ/internal/brain/voidling/proc/on_atom_entering(mob/living/carbon/organ_owner, atom/entering)
 	SIGNAL_HANDLER
 
-	if(!isturf(entered))
+	if(!isturf(entering))
 		return
 
-	var/turf/new_turf = entered
+	var/turf/new_turf = entering
 
 	//apply debufs for being in gravity
 	if(new_turf.has_gravity())
@@ -155,3 +155,60 @@
 /// Regenerate health whenever this status effect is applied or reapplied
 /datum/status_effect/space_regeneration/proc/heal_owner()
 	owner.heal_overall_damage(brute = 1, burn = 1, required_bodytype = BODYTYPE_ORGANIC)
+
+/datum/brain_trauma/voided
+	name = "Voided"
+	desc = "They've seen the secrets of the cosmis, in exchange for a curse that keeps them chained."
+	scan_desc = "cosmic neural pattern"
+	gain_text = ""
+	lose_text = ""
+	resilience = TRAUMA_RESILIENCE_LOBOTOMY
+	random_gain = FALSE
+	/// Type for the bodypart texture we add
+	var/bodypart_overlay_type = /datum/bodypart_overlay/texture/spacey
+
+/datum/brain_trauma/voided/on_gain()
+	. = ..()
+
+	ADD_TRAIT(owner, list(TRAIT_MUTE, TRAIT_PACIFISM), TRAUMA_TRAIT)
+	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(texture_limb))
+	RegisterSignal(owner, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(untexture_limb))
+
+	for(var/obj/item/bodypart as anything in owner.bodyparts)
+		texture_limb(owner, bodypart)
+
+	//your underwear is belong to us
+	owner.underwear = "Nude"
+	owner.undershirt = "Nude"
+	owner.socks = "Nude"
+
+	owner.update_body()
+
+/datum/brain_trauma/voided/on_lose()
+	. = ..()
+
+	REMOVE_TRAIT(owner, list(TRAIT_MUTE, TRAIT_PACIFISM), TRAUMA_TRAIT)
+	UnregisterSignal(owner, list(COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB))
+
+	for(var/obj/item/bodypart/bodypart as anything in owner.bodyparts)
+		untexture_limb(owner, bodypart)
+
+/datum/brain_trauma/voided/proc/texture_limb(atom/source, obj/item/bodypart/limb)
+	SIGNAL_HANDLER
+
+	limb.add_bodypart_overlay(new bodypart_overlay_type)
+	if(istype(limb, /obj/item/bodypart/head))
+		var/obj/item/bodypart/head/head = limb
+		head.head_flags &= ~HEAD_EYESPRITES
+
+/datum/brain_trauma/voided/proc/untexture_limb(atom/source, obj/item/bodypart/limb)
+	SIGNAL_HANDLER
+
+	var/overlay = locate(bodypart_overlay_type) in limb.bodypart_overlays
+	if(overlay)
+		limb.remove_bodypart_overlay(overlay)
+
+	if(istype(limb, /obj/item/bodypart/head))
+		var/obj/item/bodypart/head/head = limb
+		head.head_flags = initial()
+

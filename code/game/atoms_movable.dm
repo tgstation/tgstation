@@ -1414,7 +1414,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_BE_PURE(TRUE)
 
-	var/blocking_signal = SEND_SIGNAL(src, COMSIG_CAN_PASS_THROUGH, blocked, movement_dir)
+	var/blocking_signal = SEND_SIGNAL(src, COMSIG_MOVABLE_CAN_PASS_THROUGH, blocker, movement_dir)
 	if(!blocking_signal)
 		return blocker_opinion
 

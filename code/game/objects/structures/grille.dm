@@ -367,23 +367,23 @@
 /obj/structure/grille/get_dumping_location()
 	return null
 
-/obj/structure/grille/temporary_shatter(time_to_go = 1 SECONDS, time_to_return = 4 SECONDSS)
+/obj/structure/grille/proc/temporary_shatter(time_to_go = 1 SECONDS, time_to_return = 4 SECONDS)
 	if(dramatically_disappearing)
 		return
 
 	// do a cute breaking animation
 	var/static/time_interval = 2 DECISECONDS //per how many steps should we do damage?
-	for(var/damage_step in 0 to (floor(time_to_go / time_interval) - 1)) //10 ds / 2 ds = 5 damage steps, minus 1 so we dont actually break it
+	for(var/damage_step in 0 to (floor(time_to_go / time_interval) - 2)) //10 ds / 2 ds = 5 damage steps, minus 1 so we dont actually break it and minus another 1 cause we start at 0
 		// slowly drain our total health for the illusion of shattering
-		addtimer(CALLBACK(src, PROC_REF(take_damage), atom_integrity / (time_to_go / time_interval)), time_to_go)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, take_damage), floor(atom_integrity / (time_to_go / time_interval))), time_interval * damage_step)
 
 	//dissapear in 1 second
 	dramatically_disappearing = TRUE
-	addtimer(CALLBACK(src, PROC_REF(moveToNullspace)), time_to_go) //woosh
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, moveToNullspace)), time_to_go) //woosh
 
 	// come back in 1 + 4 seconds
 	addtimer(VARSET_CALLBACK(src, atom_integrity, atom_integrity), time_to_go + time_to_return) //set the health back (icon is updated on move)
-	addtimer(CALLBACK(src, PROC_REF(forceMove), loc), time_to_go + time_to_return) //we back boys
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, forceMove), loc), time_to_go + time_to_return) //we back boys
 	addtimer(VARSET_CALLBACK(src, dramatically_disappearing, FALSE), time_to_go + time_to_return) //also set the var back
 
 /obj/structure/grille/broken // Pre-broken grilles for map placement
