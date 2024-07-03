@@ -24,6 +24,7 @@
 
 	reset()
 
+
 /// Links all the loading processes together - does validation for booting a map
 /obj/machinery/quantum_server/proc/cold_boot_map(map_key)
 	if(!is_ready)
@@ -69,7 +70,14 @@
 	if(broadcasting)
 		start_broadcasting_network(BITRUNNER_CAMERA_NET)
 
+	if(generated_domain.announce_to_ghosts)
+		notify_ghosts("Bitrunners have loaded a domain that offers ghost interactions. Check the spawners menu for more information.",
+			src,
+			"Matrix Glitch",
+		)
+
 	return TRUE
+
 
 /// Initializes a new domain if the given key is valid and the user has enough points
 /obj/machinery/quantum_server/proc/load_domain(map_key)
@@ -81,6 +89,7 @@
 			return TRUE
 
 	return FALSE
+
 
 /// Loads in necessary map items like hololadder spawns, caches, etc
 /obj/machinery/quantum_server/proc/load_map_items()
@@ -116,6 +125,15 @@
 			var/turf/signaler_turf = get_turf(thing)
 			signaler_turf.AddComponent(/datum/component/bitrunning_points, generated_domain)
 			qdel(thing)
+			continue
+
+		if(istype(thing, /obj/effect/landmark/bitrunning/permanent_exit))
+			var/turf/tile = get_turf(thing)
+			exit_turfs += tile
+			qdel(thing)
+
+			new /obj/structure/hololadder(tile)
+
 
 	if(!length(exit_turfs))
 		CRASH("Failed to find exit turfs on generated domain.")
@@ -133,6 +151,7 @@
 		curiosity_turfs -= picked_turf
 
 	return TRUE
+
 
 /// Stops the current virtual domain and disconnects all users
 /obj/machinery/quantum_server/proc/reset(fast = FALSE)
@@ -154,6 +173,7 @@
 	retries_spent = 0
 
 	stop_broadcasting_network(BITRUNNER_CAMERA_NET)
+
 
 /// Tries to clean up everything in the domain
 /obj/machinery/quantum_server/proc/scrub_vdom()
