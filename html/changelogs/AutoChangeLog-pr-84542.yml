@@ -1,0 +1,7 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed toggleable screen colors for glasses."
+  - code_imp: "De-hardcoded, refactored the above, now-fixed feature."
+  - rscadd: "Pumpkin hardhats and the hood of the flash suit now affect the color of your screen."
+  - rscadd: "Prism glasses, obtainable through xenobiology crossbreeding, now also affect the color of your screen."
