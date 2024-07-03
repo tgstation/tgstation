@@ -4,7 +4,7 @@
 	flags_1 = null //doesn't protect eyes because it's a monocle, duh
 	var/hud_type = null
 
-	// NOTE: Just because you have a HUD display doesn't mean you should be able to interact with stuff on examine, that's where the associated trait (TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD, etc) is necessary. 
+	// NOTE: Just because you have a HUD display doesn't mean you should be able to interact with stuff on examine, that's where the associated trait (TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD, etc) is necessary.
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()
@@ -257,15 +257,15 @@
 		if (DATA_HUD_MEDICAL_ADVANCED)
 			icon_state = "meson"
 			color_cutoffs = list(5, 15, 5)
-			change_glass_color(user, /datum/client_colour/glass_colour/green)
+			change_glass_color(/datum/client_colour/glass_colour/green)
 		if (DATA_HUD_SECURITY_ADVANCED)
 			icon_state = "thermal"
 			color_cutoffs = list(25, 8, 5)
-			change_glass_color(user, /datum/client_colour/glass_colour/red)
+			change_glass_color(/datum/client_colour/glass_colour/red)
 		else
 			icon_state = "purple"
 			color_cutoffs = list(15, 0, 25)
-			change_glass_color(user, /datum/client_colour/glass_colour/purple)
+			change_glass_color(/datum/client_colour/glass_colour/purple)
 	user.update_sight()
 	user.update_worn_glasses()
 
