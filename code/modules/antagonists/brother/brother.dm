@@ -54,62 +54,16 @@
 	var/mob/living/carbon/carbon_owner = owner.current
 	if (!istype(carbon_owner))
 		return
-	carbon_owner.AddComponentFrom(REF(src), /datum/component/can_flash_from_behind)
-	RegisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, PROC_REF(on_mob_successful_flashed_carbon))
+	var/datum/action/_ability = new /datum/action/cooldown/bloodbrother_dap_up(carbon_owner)
+	_ability.Grant(carbon_owner)
 
 /// Take away the ability to add more brothers
 /datum/antagonist/brother/proc/remove_conversion_skills()
 	if (isnull(owner.current))
 		return
 	var/mob/living/carbon/carbon_owner = owner.current
-	carbon_owner.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
-	UnregisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON)
-
-/datum/antagonist/brother/proc/on_mob_successful_flashed_carbon(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash)
-	SIGNAL_HANDLER
-
-	if (flashed.stat == DEAD)
-		return
-
-	if (flashed.stat != CONSCIOUS)
-		flashed.balloon_alert(source, "unconscious!")
-		return
-
-	if (isnull(flashed.mind) || !GET_CLIENT(flashed))
-		flashed.balloon_alert(source, "[flashed.p_their()] mind is vacant!")
-		return
-
-	for(var/datum/objective/brother_objective as anything in source.mind.get_all_objectives())
-		// If the objective has a target, are we flashing them?
-		if(flashed == brother_objective.target?.current)
-			flashed.balloon_alert(source, "that's your target!")
-			return
-
-	if (flashed.mind.has_antag_datum(/datum/antagonist/brother))
-		flashed.balloon_alert(source, "[flashed.p_theyre()] loyal to someone else!")
-		return
-
-	if (HAS_TRAIT(flashed, TRAIT_MINDSHIELD) || flashed.mind.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
-		flashed.balloon_alert(source, "[flashed.p_they()] resist!")
-		return
-
-	if (!team.add_brother(flashed, key_name(source))) // Shouldn't happen given the former, more specific checks but just in case
-		flashed.balloon_alert(source, "failed!")
-		return
-
-	source.log_message("converted [key_name(flashed)] to blood brother", LOG_ATTACK)
-	flashed.log_message("was converted by [key_name(source)] to blood brother", LOG_ATTACK)
-	log_game("[key_name(flashed)] was made into a blood brother by [key_name(source)]", list(
-		"converted" = flashed,
-		"converted by" = source,
-	))
-	flash.burn_out()
-	flashed.mind.add_memory( \
-		/datum/memory/recruited_by_blood_brother, \
-		protagonist = flashed, \
-		antagonist = owner.current, \
-	)
-	flashed.balloon_alert(source, "converted")
+	var/datum/action/cooldown/bloodbrother_dap_up/dap_up = locate() in carbon_owner.actions
+	qdel(dap_up)
 
 /datum/antagonist/brother/antag_panel_data()
 	return "Conspirators : [get_brother_names()] | Remaining: [team.brothers_left]"
@@ -289,9 +243,91 @@
 
 /datum/objective/convert_brother
 	name = "convert brother"
-	explanation_text = "Convert a brainwashable person using your flash on them directly. Any handheld flash will work if you lose or break your starting flash."
+	explanation_text = "Convert a brainwashable person by dapping them up via the action button in the top left of your screen."
 	admin_grantable = FALSE
 	martyr_compatible = TRUE
 
 /datum/objective/convert_brother/check_completion()
 	return length(team?.members) > 1
+
+/datum/action/cooldown/bloodbrother_dap_up
+	name = "Convert"
+	desc = "Dap up an adjacent target to convert them to your cause."
+	click_to_activate = TRUE
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon_state = "brobump"
+	ranged_mousepointer = 'icons/effects/mouse_pointers/dap_target.dmi'
+	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
+
+/datum/action/cooldown/bloodbrother_dap_up/Activate(mob/living/carbon/target)
+	. = FALSE
+	if(target == owner)
+		return
+	var/mob/living/carbon/owner_carbon = owner
+	var/datum/antagonist/brother/brother = owner_carbon.mind.has_antag_datum(/datum/antagonist/brother)
+	var/datum/team/brother_team/team = brother.get_team()
+	if(isnull(brother))
+		qdel(src)
+		return
+
+	if (!istype(target))
+		return
+
+	if(!owner_carbon.Adjacent(target))
+		target.balloon_alert(owner_carbon, "get close!")
+		return
+
+	if (target.stat != CONSCIOUS)
+		target.balloon_alert(owner_carbon, "not conscious!")
+		return
+
+	if (isnull(target.mind) || !GET_CLIENT(target))
+		target.balloon_alert(owner_carbon, "[target.p_their()] mind is vacant!")
+		return
+
+	for(var/datum/objective/brother_objective as anything in owner_carbon.mind.get_all_objectives())
+		// If the objective has a target, are we flashing them?
+		if(target == brother_objective.target?.current)
+			target.balloon_alert(owner_carbon, "that's your target!")
+			return
+
+	if (target.mind.has_antag_datum(/datum/antagonist/brother))
+		target.balloon_alert(owner_carbon, "[target.p_theyre()] loyal to someone else!")
+		return
+
+	if (HAS_TRAIT(target, TRAIT_MINDSHIELD) || target.mind.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
+		target.balloon_alert(owner_carbon, "[target.p_they()] resist!")
+		return
+
+	if (!team.add_brother(target, key_name(owner_carbon))) // Shouldn't happen given the former, more specific checks but just in case
+		target.balloon_alert(owner_carbon, "failed!")
+		return
+
+	owner_carbon.log_message("converted [key_name(target)] to blood brother", LOG_ATTACK)
+	target.log_message("was converted by [key_name(owner_carbon)] to blood brother", LOG_ATTACK)
+	log_game("[key_name(target)] was made into a blood brother by [key_name(owner_carbon)]", list(
+		"converted" = target,
+		"converted by" = owner_carbon,
+	))
+	target.mind.add_memory( \
+		/datum/memory/recruited_by_blood_brother, \
+		protagonist = target, \
+		antagonist = owner_carbon, \
+	)
+	owner_carbon.face_atom(target)
+	target.face_atom(owner_carbon)
+	playsound(owner_carbon, 'sound/weapons/slap.ogg', 30, TRUE, -1)
+	var/list/additional_moves = list(
+		"hugs them and pounds on their back",
+		"performs the dap",
+		"performs the chest bump",
+		"[prob(60) ? "shakes their hand" : "strongly shakes their hand which becomes an arm wrestling match"]",
+	)
+	var/list/moves = list()
+	for(var/i = 1 to rand(1,3))
+		var/text = pick(additional_moves)
+		additional_moves -= text
+		moves += text
+	owner_carbon.visible_message(span_notice("[owner_carbon] does a really cool fist-bump with [target], [english_list(moves, and_text = " and lastly ")]!"))
+	target.balloon_alert(owner_carbon, "converted")
+	return TRUE

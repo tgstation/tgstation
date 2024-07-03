@@ -923,7 +923,7 @@
 
 /datum/memory/recruited_by_blood_brother/get_starts()
 	return list(
-		"[antagonist_name] acts just a bit too friendly with [protagonist_name], moments away from converting them into a blood brother.",
+		"[antagonist_name] acts really friendly to [protagonist_name], bringing them into a life of crime and espionage.",
 		"[protagonist_name] is brought into [antagonist_name]'s life of crime and espionage.",
 	)
 
