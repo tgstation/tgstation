@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - image: "Updated diamond stacks to fit its \"unstacked\" version."
