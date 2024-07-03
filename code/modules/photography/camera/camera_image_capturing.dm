@@ -10,6 +10,8 @@
 			step_y = AM.step_y
 	. = ..()
 
+#define PHYSICAL_POSITION(atom) ((atom.y * world.icon_size) + (atom.pixel_y))
+
 /obj/item/camera/proc/camera_get_icon(list/turfs, turf/center, psize_x = 96, psize_y = 96, datum/turf_reservation/clone_area, size_x, size_y, total_x, total_y)
 	var/list/atoms = list()
 	var/list/lighting = list()
@@ -69,7 +71,6 @@
 	res.Scale(psize_x, psize_y)
 	atoms += lighting
 
-#define PHYSICAL_POSITION(atom) ((atom.y * world.icon_size) + (atom.pixel_y))
 	var/list/sorted = list()
 	var/j
 	for(var/i in 1 to atoms.len)
@@ -155,3 +156,5 @@
 		QDEL_LIST(lighting)
 
 	return res
+
+#undef PHYSICAL_POSITION
