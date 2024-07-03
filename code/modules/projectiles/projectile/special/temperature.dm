@@ -32,7 +32,13 @@
 /obj/projectile/temp/cryo
 	name = "cryo beam"
 	range = 9
-	temperature = -240 // Single slow shot reduces temp greatly
+	temperature = -350 // Single slow shot reduces temp greatly
+
+/obj/projectile/temp/cryoon_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	if(!isliving(target))
+		return
+	target.apply_status_effect(/datum/status_effect/freezing_blast)
 
 /obj/projectile/temp/cryo/on_range()
 	var/turf/T = get_turf(src)
@@ -44,8 +50,9 @@
 /obj/projectile/temp/pyro
 	name = "hot beam"
 	icon_state = "firebeam" // sets on fire, diff sprite!
+	damage = 1 //Mostly so that we set off objects like wleding tanks
 	range = 9
-	temperature = 240
+	temperature = 350
 
 /obj/projectile/temp/pyro/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
