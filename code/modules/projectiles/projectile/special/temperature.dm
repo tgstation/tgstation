@@ -68,18 +68,14 @@
 	if(isobj(target))
 		var/obj/objectification = target
 
-		if(objectification.resistance_flags & FLAMMABLE && !(objectification.resistance_flags & ON_FIRE))
-			objectification.fire_act(temperature)
+		if(objectification.resistance_flags & ON_FIRE) //Don't burn something already on fire
+			return
 
 		if(objectification.reagents)
 			var/datum/reagents/reagents = objectification.reagents
 			reagents?.expose_temperature(temperature)
 
-		if(objectification.custom_materials && (GET_MATERIAL_REF(/datum/material/plasma) in objectification.custom_materials))
-			objectification.fire_act(temperature)
-
-		if(istype(objectification, /obj/structure/reagent_dispensers/fueltank))
-			objectification.fire_act(temperature)
+		objectification.fire_act(temperature)
 
 		return
 
