@@ -190,7 +190,7 @@
 			balloon_alert(user, "already full!")
 			return TRUE
 		// Make sure we're refilling with the proper chem.
-		if(!(target.reagents.has_reagent(chem)))
+		if(!(target.reagents.has_reagent(chem, check_subtypes = TRUE)))
 			balloon_alert(user, "can't refill with this liquid!")
 			return TRUE
 		var/obj/structure/reagent_dispensers/W = target //will it work?

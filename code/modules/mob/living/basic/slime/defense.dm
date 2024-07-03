@@ -19,7 +19,7 @@
 		return
 
 	attacker.visible_message(span_warning("[attacker] manages to wrestle \the [defender_slime.name] off!"), span_notice("You manage to wrestle \the [defender_slime.name] off!"))
-	playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	playsound(loc, 'sound/weapons/shove.ogg', 50, TRUE, -1)
 
 	defender_slime.discipline_slime()
 

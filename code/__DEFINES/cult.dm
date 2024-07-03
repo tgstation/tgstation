@@ -9,6 +9,8 @@
 #define RUNE_COLOR_SUMMON COLOR_VIBRANT_LIME
 
 //blood magic
+/// The maximum number of cult spell slots each cultist is allowed to scribe at once.
+#define ENHANCED_BLOODCHARGE 5
 #define MAX_BLOODCHARGE 4
 #define RUNELESS_MAX_BLOODCHARGE 1
 /// percent before rise
@@ -28,6 +30,8 @@
 #define THEME_CULT "cult"
 #define THEME_WIZARD "wizard"
 #define THEME_HOLY "holy"
+/// Only used for heretic Harvesters, obtained from sacrificing cultists
+#define THEME_HERETIC "heretic"
 
 /// Defines for cult item_dispensers.
 #define PREVIEW_IMAGE "preview"
@@ -51,3 +55,8 @@ GLOBAL_LIST(sacrificed)
 #define CULT_VICTORY 1
 #define CULT_LOSS 0
 #define CULT_NARSIE_KILLED -1
+
+// Used to keep track of items rewarded after a heretic is sacked.
+#define CURSED_BLADE_UNLOCKED "Cursed Blade"
+#define CRIMSON_FOCUS_UNLOCKED "Crimson Focus"
+#define PROTEON_ORB_UNLOCKED "Proteon Orb"
