@@ -15,6 +15,9 @@
 /datum/bodypart_overlay/texture/modify_bodypart_appearance(datum/appearance)
 	appearance.add_filter("bodypart_texture_[texture_icon_state]", 1, layering_filter(icon = cached_texture_icon,blend_mode = BLEND_INSET_OVERLAY))
 
+/datum/bodypart_overlay/texture/generate_icon_cache()
+	return "[type]"
+
 /datum/bodypart_overlay/texture/spacey
 	texture_icon_state = "spacey"
 	texture_icon = 'icons/mob/human/textures.dmi'

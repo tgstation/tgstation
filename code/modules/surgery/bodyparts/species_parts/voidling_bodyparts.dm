@@ -3,6 +3,8 @@
 	icon_greyscale = 'icons/mob/human/species/voidling.dmi'
 	limb_id = SPECIES_VOIDLING
 	is_dimorphic = FALSE
+	bodypart_traits = list(TRAIT_MUTE)
+	head_flags = NONE
 
 /obj/item/bodypart/chest/voidling
 	texture_bodypart_overlay = /datum/bodypart_overlay/texture/spacey

@@ -4,6 +4,7 @@
 	sexes = FALSE
 	inherent_traits = list(
 		TRAIT_NOBREATH,
+		TRAIT_NO_UNDERWEAR,
 		TRAIT_RADIMMUNE,
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_NOBLOOD,
@@ -31,16 +32,42 @@
 	mutanteyes = /obj/item/organ/internal/eyes/voidling
 	mutantheart = null
 	mutantlungs = null
+	mutanttongue = null
 
 /datum/species/voidling/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
 
-	human_who_gained_species.pass_flags |= PASSWINDOW
+	passwindow_on(human_who_gained_species, SPECIES_TRAIT) //if this is here when its PRd im dumb please remind me to move it somewhere else
+	RegisterSignal(human_who_gained_species, COMSIG_MOVABLE_CAN_PASS_THROUGH, PROC_REF(can_pass_through))
+	generic_canpass = FALSE
+
+	RegisterSignal(human_who_gained_species, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_temporary_shatter))
 
 /datum/species/voidling/on_species_loss(mob/living/carbon/human/human, datum/species/new_species, pref_load)
 	. = ..()
 
-	human.pass_flags &= ~PASSWINDOW
+	passwindow_off(human, SPECIES_TRAIT)
+	UnregisterSignal(human, COMSIG_MOVABLE_CAN_PASS_THROUGH)
+
+/datum/species/voidling/proc/can_pass_through(mob/living/carbon/human/human, atom/blocker, direction)
+	SIGNAL_HANDLER
+
+	if(istype(blocker, /obj/structure/grille))
+		var/obj/structure/grille/grille = blocker
+		if(grille.shock())
+			return COMSIG_COMPONENT_REFUSE_PASSAGE
+
+	return null
+
+/datum/species/voidling/proc/try_temporary_shatter(mob/living/carbon/human/human, atom/target)
+	SIGNAL_HANDLER
+
+	if(istype(target, /obj/structure/window))
+		var/obj/structure/window/window = target
+		window.temporary_shatter()
+	else if(istype(src, /obj/strucutre/grille))
+		var/obj/structure/grille/grille = target
+		grille.temporary_shatter()
 
 /obj/item/organ/internal/eyes/voidling
 	name = "black orbs"
@@ -49,6 +76,7 @@
 	pepperspray_protect = TRUE
 	flash_protect = FLASH_PROTECTION_WELDER
 	color_cutoffs = list(20, 10, 40)
+	sight_flags = SEE_MOBS
 
 /obj/item/organ/internal/brain/voidling
 	name = "..."
@@ -62,11 +90,13 @@
 	var/non_space_alpha = 200
 	/// We space in phase
 	var/datum/action/space_phase = /datum/action/cooldown/spell/jaunt/space_crawl
+	/// Regen effect we have in space
+	var/datum/status_effect/regen = /datum/status_effect/shadow_regeneration
 
 /obj/item/organ/internal/brain/voidling/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
-	RegisterSignal(organ_owner, COMSIG_ENTER_AREA, PROC_REF(on_area_entered))
+	RegisterSignal(organ_owner, COMSIG_ATOM_ENTERED, PROC_REF(on_atom_entered))
 	organ_owner.remove_from_all_data_huds()
 	space_phase = new space_phase ()
 	space_phase.Grant(organ_owner)
@@ -77,18 +107,51 @@
 	UnregisterSignal(organ_owner, COMSIG_ENTER_AREA)
 	alpha = 255
 	organ_owner.add_to_all_human_data_huds()
-	space_phase.Remove()
+	space_phase.Remove(organ_owner)
 	space_phase = initial(space_phase)
 
-/obj/item/organ/internal/brain/voidling/proc/on_area_entered(mob/living/carbon/organ_owner, area/new_area)
+/obj/item/organ/internal/brain/voidling/proc/on_atom_entered(mob/living/carbon/organ_owner, atom/entered)
 	SIGNAL_HANDLER
 
-	if(istype(new_area, /area/space))
-		animate(organ_owner, alpha = space_alpha, time = 0.5 SECONDS)
-		organ_owner.remove_movespeed_modifier(/datum/movespeed_modifier/grounded_voidling)
-	else
+	if(!isturf(entered))
+		return
+
+	var/turf/new_turf = entered
+
+	//apply debufs for being in gravity
+	if(new_turf.has_gravity())
 		animate(organ_owner, alpha = non_space_alpha, time = 0.5 SECONDS)
 		organ_owner.add_movespeed_modifier(/datum/movespeed_modifier/grounded_voidling)
+	//remove debufs for not being in gravity
+	else
+		animate(organ_owner, alpha = space_alpha, time = 0.5 SECONDS)
+		organ_owner.remove_movespeed_modifier(/datum/movespeed_modifier/grounded_voidling)
+		organ_owner.apply_status_effect(/datum/status_effect/space_regeneration)
+
+	//only get the actual regen when we're in space, not no-grav
+	if(isspaceturf(new_turf))
+		organ_owner.apply_status_effect(/datum/status_effect/space_regeneration)
+	else
+		organ_owner.remove_status_effect(/datum/status_effect/space_regeneration)
 
 /datum/movespeed_modifier/grounded_voidling
 	multiplicative_slowdown = 1.3
+
+/datum/status_effect/space_regeneration
+	id = "space_regeneration"
+	duration = INFINITE
+
+/datum/status_effect/space_regeneration/on_apply()
+	. = ..()
+	if (!.)
+		return FALSE
+	heal_owner()
+	return TRUE
+
+/datum/status_effect/space_regeneration/refresh(effect)
+	. = ..()
+	heal_owner()
+
+/// Regenerate health whenever this status effect is applied or reapplied
+/datum/status_effect/space_regeneration/proc/heal_owner()
+	owner.heal_overall_damage(brute = 1, burn = 1, required_bodytype = BODYTYPE_ORGANIC)

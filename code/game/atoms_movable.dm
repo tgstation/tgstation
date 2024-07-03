@@ -1413,7 +1413,15 @@
 /atom/movable/proc/CanPassThrough(atom/blocker, movement_dir, blocker_opinion)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_BE_PURE(TRUE)
-	return blocker_opinion
+
+	var/blocking_signal = SEND_SIGNAL(src, COMSIG_CAN_PASS_THROUGH, blocked, movement_dir)
+	if(!blocking_signal)
+		return blocker_opinion
+
+	if(blocking_signal & COMSIG_COMPONENT_PERMIT_PASSAGE)
+		return TRUE
+	else //we have a COMSIG_COMPONENT_REFUSE_PASSAGE but like its either this or that, unlike someone wanna adds half-passing through but fuck you
+		return FALSE
 
 /// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /atom/movable/proc/on_exit_storage(datum/storage/master_storage)

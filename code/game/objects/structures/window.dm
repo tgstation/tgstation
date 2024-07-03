@@ -35,6 +35,8 @@
 	var/bloodied = FALSE
 	///Datum that the shard and debris type is pulled from for when the glass is broken.
 	var/datum/material/glass_material_datum = /datum/material/glass
+	/// Whether or not we're disappearing but dramatically
+	var/dramatically_disappearing = FALSE
 
 /datum/armor/structure_window
 	melee = 50
@@ -427,6 +429,30 @@
 		return FALSE
 
 	return TRUE
+
+/obj/structure/window/proc/temporary_shatter(time_to_go = 1 SECONDS, time_to_return = 4 SECONDSS, take_grill)
+	if(dramatically_disappearing)
+		return
+
+	// do a cute breaking animation
+	var/static/time_interval = 2 DECISECONDS //per how many steps should we do damage?
+	for(var/damage_step in 0 to (floor(time_to_go / time_interval) - 1)) //10 ds / 2 ds = 5 damage steps, minus 1 so we dont actually break it
+		// slowly drain our total health for the illusion of shattering
+		addtimer(CALLBACK(src, PROC_REF(take_damage), atom_integrity / (time_to_go / time_interval)), time_to_go)
+
+	//dissapear in 1 second
+	dramatically_disappearing = TRUE
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, break_sound, 70, TRUE), time_to_go) //SHATTER SOUND
+	addtimer(CALLBACK(src, PROC_REF(moveToNullspace)), time_to_go) //woosh
+
+	// come back in 1 + 4 seconds
+	addtimer(VARSET_CALLBACK(src, atom_integrity, atom_integrity), time_to_go + time_to_return) //set the health back (icon is updated on move)
+	addtimer(CALLBACK(src, PROC_REF(forceMove), loc), time_to_go + time_to_return) //we back boys
+	addtimer(VARSET_CALLBACK(src, dramatically_disappearing, FALSE), time_to_go + time_to_return) //also set the var back
+
+	var/obj/structure/grille/grill = take_grill ? (locate(/obj/structure/grille) in loc) | null
+	if(grill)
+		grill.dramatically_disappear(time_to_go, time_to_return)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/spawner, 0)
 
