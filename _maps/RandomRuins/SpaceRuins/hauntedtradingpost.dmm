@@ -50,7 +50,6 @@
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "aD" = (
 /obj/effect/decal/cleanable/robot_debris/old,
-/obj/effect/decal/cleanable/fuel_pool,
 /obj/item/assembly/igniter{
 	pixel_x = -7;
 	pixel_y = -11
@@ -530,7 +529,6 @@
 /obj/machinery/vending/cigarette/syndicate{
 	onstation_override = 1
 	},
-/obj/effect/decal/cleanable/fuel_pool,
 /obj/machinery/duct,
 /obj/effect/mapping_helpers/broken_machine,
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -848,13 +846,11 @@
 /area/ruin/space/has_grav/hauntedtradingpost/public)
 "hx" = (
 /obj/structure/cable/layer1,
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/power_store/cell/lead;
-	start_charge = 20000;
-	pixel_x = 25;
-	dir = 4
-	},
 /obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/machinery/power/apc/auto_name/directional/east{
+	cable_layer = 1
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
 "hF" = (
@@ -1190,6 +1186,7 @@
 /obj/item/paper/fluff/ruins/hauntedtradingpost/oldnote,
 /obj/item/paper/fluff/ruins/hauntedtradingpost/officememo,
 /obj/structure/chair/sofa/right/maroon,
+/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "ka" = (
@@ -1356,6 +1353,10 @@
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
+"lG" = (
+/obj/effect/decal/cleanable/fuel_pool,
+/turf/open/floor/carpet/donk,
+/area/ruin/space/has_grav/hauntedtradingpost/employees)
 "lI" = (
 /obj/machinery/photocopier/gratis,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -1595,16 +1596,13 @@
 /area/ruin/space/has_grav/hauntedtradingpost/public)
 "nJ" = (
 /obj/structure/cable/layer1,
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/power_store/cell/lead;
-	start_charge = 20000;
-	pixel_x = -25;
-	dir = 8;
-	full_charge = 1
-	},
 /obj/structure/rack,
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/item/language_manual/roundstart_species/unlimited,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/machinery/power/apc/auto_name/directional/west{
+	cable_layer = 1
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
 "nZ" = (
@@ -1907,6 +1905,7 @@
 /obj/effect/decal/cleanable/glass/plastitanium/screws{
 	desc = "These screws are pretty loose."
 	},
+/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "qK" = (
@@ -2108,14 +2107,12 @@
 /obj/structure/cable/layer1,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/spawner/random/exotic/technology,
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/power_store/cell/lead;
-	locked = 0;
-	pixel_y = -25;
-	start_charge = 20000
-	},
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/item/gun/energy/laser/carbine/cybersun,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/machinery/power/apc/auto_name/directional/south{
+	cable_layer = 1
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "su" = (
@@ -2190,12 +2187,11 @@
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "sM" = (
 /obj/structure/cable/layer1,
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/power_store/cell/lead;
-	pixel_y = -25;
-	start_charge = 20000
-	},
 /obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/machinery/power/apc/auto_name/directional/south{
+	cable_layer = 1
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/maint/toolstorage)
 "sN" = (
@@ -2984,17 +2980,15 @@
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
 "zO" = (
 /obj/structure/cable/layer1,
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/power_store/cell/lead;
-	pixel_y = -25;
-	start_charge = 20000;
-	full_charge = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	pipe_color = "#FF7B00";
 	color = "#FF7B00"
+	},
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/machinery/power/apc/auto_name/directional/south{
+	cable_layer = 1
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
@@ -3239,14 +3233,13 @@
 /area/ruin/space/has_grav/hauntedtradingpost/maint/disposals)
 "Ct" = (
 /obj/structure/cable/layer1,
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/power_store/cell/lead;
-	pixel_y = -25;
-	start_charge = 20000
-	},
 /obj/item/cigbutt,
 /obj/machinery/light_switch/directional/east,
 /obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/machinery/power/apc/auto_name/directional/south{
+	cable_layer = 1
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "Cz" = (
@@ -3467,6 +3460,7 @@
 "Eu" = (
 /obj/structure/cable/layer1,
 /obj/machinery/light/warm/directional/south,
+/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "EC" = (
@@ -3562,6 +3556,7 @@
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/universal_scanner,
 /obj/item/laser_pointer/red,
+/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "Fx" = (
@@ -3825,15 +3820,12 @@
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
 "Ht" = (
 /obj/structure/cable/layer1,
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/power_store/cell/lead;
-	start_charge = 20000;
-	pixel_y = 25;
-	dir = 1;
-	full_charge = 1
-	},
 /obj/machinery/duct,
 /obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/machinery/power/apc/auto_name/directional/north{
+	cable_layer = 1
+	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/public)
 "Hu" = (
@@ -4489,7 +4481,10 @@
 	codes_txt = "patrol;next_patrol=hall2"
 	},
 /mob/living/basic/bot/firebot{
-	additional_access = /datum/id_trim/away/hauntedtradingpost
+	additional_access = /datum/id_trim/away/hauntedtradingpost;
+	bot_mode_flags = 3;
+	req_one_access = list("syndicate");
+	faction = list("Syndicate")
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
@@ -4502,12 +4497,6 @@
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "MN" = (
 /obj/structure/cable/layer1,
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/power_store/cell/lead;
-	start_charge = 20000;
-	pixel_x = -25;
-	dir = 8
-	},
 /obj/structure/table/wood,
 /obj/item/wirecutters{
 	pixel_y = -6
@@ -4526,6 +4515,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	pipe_color = "#FF7B00";
 	color = "#FF7B00"
+	},
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/machinery/power/apc/auto_name/directional/west{
+	cable_layer = 1
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
@@ -4884,13 +4877,11 @@
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "Qy" = (
 /obj/structure/cable/layer1,
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/power_store/cell/lead;
-	start_charge = 20000;
-	pixel_y = 25;
-	dir = 1
-	},
 /obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/machinery/power/apc/auto_name/directional/north{
+	cable_layer = 1
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/maint)
 "QA" = (
@@ -4966,12 +4957,6 @@
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "Ri" = (
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/power_store/cell/lead;
-	start_charge = 20000;
-	pixel_x = 25;
-	dir = 4
-	},
 /obj/structure/cable/layer1,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/duct,
@@ -4979,6 +4964,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	pipe_color = "#FF7B00";
 	color = "#FF7B00"
+	},
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/machinery/power/apc/auto_name/directional/east{
+	cable_layer = 1
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/maint/disposals)
@@ -5028,13 +5017,6 @@
 /area/ruin/space/has_grav/hauntedtradingpost/maint/toolstorage)
 "RC" = (
 /obj/structure/cable/layer1,
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/power_store/cell/lead;
-	start_charge = 20000;
-	pixel_y = 25;
-	dir = 1;
-	full_charge = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/firealarm/directional/east,
 /obj/effect/mapping_helpers/apc/syndicate_access,
@@ -5043,6 +5025,10 @@
 	color = "#FF7B00"
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/machinery/power/apc/auto_name/directional/north{
+	cable_layer = 1
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
 "RH" = (
@@ -5141,14 +5127,11 @@
 /area/ruin/space/has_grav/hauntedtradingpost/maint/toystorage)
 "Sx" = (
 /obj/structure/cable/layer1,
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/power_store/cell/lead;
-	start_charge = 20000;
-	pixel_x = -25;
-	dir = 8;
-	full_charge = 1
-	},
 /obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/machinery/power/apc/auto_name/directional/west{
+	cable_layer = 1
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/maint/toystorage)
 "Sy" = (
@@ -5222,7 +5205,6 @@
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "Ti" = (
 /obj/structure/sign/poster/ripped/directional/north,
-/obj/machinery/light/small/broken/directional/east,
 /obj/structure/reagent_dispensers/fueltank/large,
 /obj/structure/cable/layer1,
 /obj/effect/decal/cleanable/fuel_pool,
@@ -5326,6 +5308,7 @@
 	pixel_y = -3;
 	pixel_x = -6
 	},
+/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "TT" = (
@@ -5430,6 +5413,10 @@
 /obj/item/lighter{
 	pixel_y = 8;
 	pixel_x = 14
+	},
+/obj/effect/decal/cleanable/oil/slippery{
+	pixel_y = 6;
+	pixel_x = 6
 	},
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
@@ -5546,14 +5533,11 @@
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "VJ" = (
 /obj/structure/cable/layer1,
-/obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/power_store/cell/lead;
-	start_charge = 20000;
-	pixel_x = -25;
-	dir = 8;
-	full_charge = 1
-	},
 /obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/machinery/power/apc/auto_name/directional/west{
+	cable_layer = 1
+	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "VP" = (
@@ -5589,7 +5573,10 @@
 	codes_txt = "patrol;next_patrol=lounge"
 	},
 /mob/living/basic/bot/firebot{
-	additional_access = /datum/id_trim/away/hauntedtradingpost
+	additional_access = /datum/id_trim/away/hauntedtradingpost;
+	bot_mode_flags = 3;
+	req_one_access = list("syndicate");
+	faction = list("Syndicate")
 	},
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
@@ -5699,7 +5686,9 @@
 /obj/structure/cable/layer1,
 /obj/machinery/power/smes/magical/cybersun{
 	cable_layer = 1;
-	donk_ai_slave = 1
+	donk_ai_slave = 1;
+	input_level = 180000;
+	output_level = 200000
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
@@ -5758,11 +5747,6 @@
 	pixel_y = 14;
 	dir = 4
 	},
-/obj/effect/decal/cleanable/oil/slippery{
-	pixel_y = 6;
-	pixel_x = 6
-	},
-/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "Xy" = (
@@ -6691,7 +6675,7 @@ MR
 tl
 tl
 jY
-VQ
+lG
 Ft
 tl
 uq

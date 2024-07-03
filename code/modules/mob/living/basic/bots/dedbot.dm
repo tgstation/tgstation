@@ -49,9 +49,10 @@
 	grant_actions_by_list(innate_actions)
 
 /datum/ai_controller/basic_controller/bot/dedbot
-	max_target_distance = 1
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGET_MINIMUM_STAT = DEAD,
+		BB_AGGRO_RANGE = 2,
 	)
 	ai_movement = /datum/ai_movement/jps/bot
 	planning_subtrees = list(
@@ -106,9 +107,9 @@
 	slash_em(caster)
 	StartCooldown(cooldown_time)
 
-/datum/action/cooldown/mob_cooldown/exenterate/proc/slash_em(atom/caster, mob/living/victim)
-	for(victim in range(ability_range, caster))
-		if(faction_check(victim.faction, immune_factions))
+/datum/action/cooldown/mob_cooldown/exenterate/proc/slash_em(atom/caster)
+	for(var/mob/living/victim in range(ability_range, caster))
+		if(faction_check(victim.faction, immune_factions) && owner.CanReach(victim))
 			continue
 		to_chat(caster, span_warning("You slice [victim]!"))
 		to_chat(victim, span_warning("You are cut by [caster]'s blades!"))

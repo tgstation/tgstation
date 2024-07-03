@@ -76,6 +76,7 @@
 	new /obj/item/aquarium_prop/seaweed(src)
 	new /obj/item/fish/donkfish(src)
 	new /obj/item/fish/donkfish(src)
+	create_reagents(20, SEALED_CONTAINER)
 	reagents.add_reagent(/datum/reagent/consumable/nutriment, 20)
 
 //gimmick ketchup bottle for healing minor injuries
@@ -118,11 +119,11 @@
 
 /obj/machinery/power/smes/magical/cybersun/Initialize(mapload)
 	. = ..()
-	if(donk_ai_slave == TRUE)
+	if(donk_ai_slave)
 		GLOB.selfdestructs_when_boss_dies += src
 
 /obj/machinery/power/smes/magical/cybersun/Destroy()
-	if(donk_ai_slave == TRUE)
+	if(donk_ai_slave)
 		GLOB.selfdestructs_when_boss_dies -= src
 	return ..()
 
@@ -175,7 +176,7 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	interact(victim)
 	if(multiuse && uses_remaining != 1)
 		return
-	if(suicide_pact == TRUE && suicide_pact_id != null)
+	if(suicide_pact&& suicide_pact_id)
 		for (var/obj/machinery/button/door/invisible_tripwire/pact_member in GLOB.tripwire_suicide_pact)
 			if(src.suicide_pact_id == pact_member.suicide_pact_id)
 				qdel(pact_member)
@@ -183,9 +184,9 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 
 
 /obj/machinery/button/door/invisible_tripwire/Destroy()
-	if(donk_ai_slave == TRUE)
+	if(donk_ai_slave)
 		GLOB.selfdestructs_when_boss_dies -= src
-	if(suicide_pact == TRUE && suicide_pact_id != null)
+	if(suicide_pact && suicide_pact_id)
 		GLOB.tripwire_suicide_pact -= src
 	return ..()
 

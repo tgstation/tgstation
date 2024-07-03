@@ -28,7 +28,7 @@
 /mob/living/basic/snake/banded/Initialize(mapload, special_reagent)
 	special_reagent = src.poison_reagent
 	AddComponent(/datum/component/swarming)
-	. = ..()
+	return ..()
 
 /mob/living/basic/snake/banded/examine_more(mob/user)
 	. = ..()

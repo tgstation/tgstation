@@ -63,23 +63,20 @@
 	faction = list(FACTION_HOSTILE)
 	ai_controller = /datum/ai_controller/basic_controller/guarddog
 
-/mob/living/basic/guarddog/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/ai_retaliate)
-
 /datum/ai_controller/basic_controller/guarddog
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_AGGRO_RANGE = 7,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/target_retaliate,
 	)
 
 /mob/living/basic/pet/dog/breaddog //Most of the code originates from Cak

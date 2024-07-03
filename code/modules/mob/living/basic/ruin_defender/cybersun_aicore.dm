@@ -50,16 +50,16 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 	if(donk_ai_master == TRUE)
 		//disable all the tripwire traps
 		for (var/obj/item/pressure_plate/puzzle/invisible_tripwire as anything in GLOB.selfdestructs_when_boss_dies)
-			addtimer(CALLBACK(invisible_tripwire, TYPE_PROC_REF(/atom/, take_damage), invisible_tripwire.max_integrity), 0.1 SECONDS)
+			qdel(invisible_tripwire)
 		//and the electric overload traps
 		for (var/obj/effect/overloader_trap as anything in GLOB.selfdestructs_when_boss_dies)
-			addtimer(CALLBACK(overloader_trap, TYPE_PROC_REF(/atom/, take_damage), overloader_trap.max_integrity), 0.2 SECONDS)
+			qdel(overloader_trap)
 		//then disable the AI defence holograms
 		for (var/obj/structure/holosign/barrier/cyborg/cybersun_ai_shield as anything in GLOB.selfdestructs_when_boss_dies)
-			addtimer(CALLBACK(cybersun_ai_shield, TYPE_PROC_REF(/atom/, take_damage), cybersun_ai_shield.max_integrity), rand(0.2 SECONDS, 2 SECONDS))
+			qdel(cybersun_ai_shield)
 		//then the power generator
 		for (var/obj/machinery/power/smes/magical/cybersun as anything in GLOB.selfdestructs_when_boss_dies)
-			addtimer(CALLBACK(cybersun, TYPE_PROC_REF(/atom/, take_damage), cybersun.max_integrity), 2 SECONDS)
+			qdel(cybersun)
 	do_sparks(number = 5, source = src)
 	return ..()
 
@@ -205,12 +205,12 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 	my_turf.Beam(lockon_zone, icon_state = "1-full", beam_color = COLOR_MEDIUM_DARK_RED, time = barrage_delay)
 	playsound(lockon_zone, 'sound/machines/terminal_prompt_deny.ogg', vol = 60, vary = TRUE)
 	StartCooldown(cooldown_time)
-	. = ..()
+	return ..()
 
 /datum/action/cooldown/spell/pointed/projectile/cybersun_barrage/fire_projectile(atom/target)
 	target = lockon_zone
 	if(do_after(owner, barrage_delay))
-		. = ..()
+		return ..()
 
 /obj/projectile/beam/laser/cybersun/weaker
 	damage = 11
