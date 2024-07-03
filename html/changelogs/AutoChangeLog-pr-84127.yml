@@ -1,5 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - rscadd: "Ashwalkers now start out allied to lavaland fauna (except for raptors). Attacking the fauna will break this alliance with the attacked beast and any who witness it."
-  - bugfix: "Ashwalkers are now actually in the ashwalker faction, instead of the neutral one."

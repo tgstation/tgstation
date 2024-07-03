@@ -68,6 +68,7 @@
 		"HFR_interface",
 		"HFR_moderator_input",
 		"HFR_waste_output",
+		"adv_fire_extinguisher",
 		"bolter_wrench",
 		"rpd_loaded",
 		"engine_goggles",
@@ -92,14 +93,13 @@
 		"rcd_ammo",
 		"weldingmask",
 		"magboots",
-		"adv_fire_extinguisher",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	discount_experiments = list(/datum/experiment/ordnance/gaseous/noblium = TECHWEB_TIER_4_POINTS)
 
 /datum/techweb_node/rcd_upgrade
 	id = TECHWEB_NODE_RCD_UPGRADE
-	display_name = "Rapid Device Upgrade Designs"
+	display_name = "Rapid Construction Device Upgrades"
 	description = "New designs and enhancements for RCD and RPD."
 	prereq_ids = list(TECHWEB_NODE_EXP_TOOLS, TECHWEB_NODE_PARTS_BLUESPACE)
 	design_ids = list(
