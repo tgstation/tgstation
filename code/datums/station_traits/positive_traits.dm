@@ -63,7 +63,6 @@
 /datum/station_trait/bountiful_bounties/on_round_start()
 	SSeconomy.bounty_modifier *= 1.2
 
-///A station trait that places tiles on top of platings in maint and sprinkles them with floor lights.
 /datum/station_trait/tiled_maintenance
 	name = "Maintenance tilework and illumination"
 	weight = 2
@@ -92,7 +91,7 @@
 			if(!plating.allow_replacement)
 				continue
 			plating.place_on_top(floortype, flags = CHANGETURF_INHERIT_AIR)
-			if(prob(17) && !(locate(/obj/machinery/light/floor) in range(2, plating)))
+			if(prob(14) && !(locate(/obj/machinery/light/floor) in range(2, plating)))
 				new /obj/machinery/light/floor(plating)
 			CHECK_TICK
 
