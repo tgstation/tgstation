@@ -9,7 +9,7 @@
 	///Is the machine on?
 	var/on = FALSE
 	///the rate the machine will scrub air
-	var/volume_rate = 650
+	var/volume_rate = 1000
 	///Multiplier with ONE_ATMOSPHERE, if the enviroment pressure is higher than that, the scrubber won't work
 	var/overpressure_m = 100
 	///Should the machine use overlay in update_overlays() when open/close?
