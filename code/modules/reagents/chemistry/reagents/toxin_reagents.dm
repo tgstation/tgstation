@@ -1360,9 +1360,8 @@
 /datum/reagent/toxin/tetrodotoxin/proc/paralyze_limb(mob/living/affected_mob)
 	if(!length(traits_not_applied))
 		return
-	var/added_trait = pick(traits_not_applied)
+	var/added_trait = pick_n_take(traits_not_applied)
 	ADD_TRAIT(affected_mob, added_trait, REF(src))
-	traits_not_applied -= added_trait
 
 /datum/reagent/toxin/tetrodotoxin/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
