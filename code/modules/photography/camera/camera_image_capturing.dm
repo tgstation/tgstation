@@ -93,10 +93,6 @@
 				break
 		sorted.Insert(j+1, c)
 		CHECK_TICK
-	var/list/print = list()
-	for(var/atom/entry in sorted)
-		print += "[entry.plane] [PHYSICAL_POSITION(entry)] [entry.layer] ([entry.x], [entry.y])"
-	log_world(print.Join("\n"))
 
 	var/xcomp = FLOOR(psize_x / 2, 1) - 15
 	var/ycomp = FLOOR(psize_y / 2, 1) - 15
@@ -116,32 +112,34 @@
 		for(var/X in sorted) //these are clones
 			var/obj/effect/appearance_clone/clone = X
 			var/icon/img = getFlatIcon(clone, no_anim = TRUE)
-			if(img)
-				// Center of the image in X
-				var/xo = (clone.x - center.x) * world.icon_size + clone.pixel_x + xcomp + clone.step_x
-				// Center of the image in Y
-				var/yo = (clone.y - center.y) * world.icon_size + clone.pixel_y + ycomp + clone.step_y
+			if(!img)
+				CHECK_TICK
+				continue
+			// Center of the image in X
+			var/xo = (clone.x - center.x) * world.icon_size + clone.pixel_x + xcomp + clone.step_x
+			// Center of the image in Y
+			var/yo = (clone.y - center.y) * world.icon_size + clone.pixel_y + ycomp + clone.step_y
 
-				if(clone.transform) // getFlatIcon doesn't give a snot about transforms.
-					var/datum/decompose_matrix/decompose = clone.transform.decompose()
-					// Scale in X, Y
-					if(decompose.scale_x != 1 || decompose.scale_y != 1)
-						var/base_w = img.Width()
-						var/base_h = img.Height()
-						// scale_x can be negative
-						img.Scale(base_w * abs(decompose.scale_x), base_h * decompose.scale_y)
-						if(decompose.scale_x < 0)
-							img.Flip(EAST)
-						xo -= base_w * (decompose.scale_x - SIGN(decompose.scale_x)) / 2 * SIGN(decompose.scale_x)
-						yo -= base_h * (decompose.scale_y - 1) / 2
-					// Rotation
-					if(decompose.rotation != 0)
-						img.Turn(decompose.rotation)
-					// Shift
-					xo += decompose.shift_x
-					yo += decompose.shift_y
+			if(clone.transform) // getFlatIcon doesn't give a snot about transforms.
+				var/datum/decompose_matrix/decompose = clone.transform.decompose()
+				// Scale in X, Y
+				if(decompose.scale_x != 1 || decompose.scale_y != 1)
+					var/base_w = img.Width()
+					var/base_h = img.Height()
+					// scale_x can be negative
+					img.Scale(base_w * abs(decompose.scale_x), base_h * decompose.scale_y)
+					if(decompose.scale_x < 0)
+						img.Flip(EAST)
+					xo -= base_w * (decompose.scale_x - SIGN(decompose.scale_x)) / 2 * SIGN(decompose.scale_x)
+					yo -= base_h * (decompose.scale_y - 1) / 2
+				// Rotation
+				if(decompose.rotation != 0)
+					img.Turn(decompose.rotation)
+				// Shift
+				xo += decompose.shift_x
+				yo += decompose.shift_y
 
-				res.Blend(img, blendMode2iconMode(clone.blend_mode), xo, yo)
+			res.Blend(img, blendMode2iconMode(clone.blend_mode), xo, yo)
 			CHECK_TICK
 
 	if(!silent)
