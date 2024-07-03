@@ -1727,3 +1727,4 @@
 	if(!(embed_data?.type in GLOB.embed_by_type))
 		qdel(embed_data)
 	embed_data = ispath(embed) ? get_embed_by_type(armor) : embed
+	SEND_SIGNAL(src, COMSIG_ITEM_EMBEDDING_UPDATE)

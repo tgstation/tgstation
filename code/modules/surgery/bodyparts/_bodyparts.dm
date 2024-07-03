@@ -1097,12 +1097,19 @@
 		return
 	// We don't need to do anything with projectile embedding, because it will never reach this point
 	embedded_objects += embed
+	RegisterSignal(embed, COMSIG_ITEM_EMBEDDING_UPDATE, PROC_REF(embedded_object_changed))
 	refresh_bleed_rate()
 
 /// INTERNAL PROC, DO NOT USE
 /// Cleans up any attachment we have to the embedded object, removes it from our list
 /obj/item/bodypart/proc/_unembed_object(obj/item/unembed)
 	embedded_objects -= unembed
+	UnregisterSignal(unembed, COMSIG_ITEM_EMBEDDING_UPDATE)
+	refresh_bleed_rate()
+
+/obj/item/bodypart/proc/embedded_object_changed(obj/item/embedded_source)
+	SIGNAL_HANDLER
+	/// Embedded objects effect bleed rate, gotta refresh lads
 	refresh_bleed_rate()
 
 /// Sets our generic bleedstacks
