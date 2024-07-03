@@ -86,7 +86,7 @@ with open(file_reference, 'r') as file:
         if scannable_directory == "massmeta/features/":
             module_file_path = line.replace('\\', '/')
             module_file_path_clean = module_file_path[10:-1]
-            print(f"        [{module_file_path_clean}]" blue("with in it:"))
+            print(f"        [{module_file_path_clean}] with in it:")
             if module_file_path_clean[-11:] != "includes.dm":
                 print(red(f"        File [{module_file_path_clean}] must be named \"includes.dm\", skipping the file."))
                 fail_no_include_modular = True
