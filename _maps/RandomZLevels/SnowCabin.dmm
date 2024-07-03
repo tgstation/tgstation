@@ -2051,10 +2051,6 @@
 /obj/structure/chair/wood,
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
-"jV" = (
-/mob/living/basic/bot/firebot,
-/turf/open/floor/wood/freezing,
-/area/awaymission/cabin/lumbermill)
 "jW" = (
 /obj/structure/table/wood,
 /obj/item/gun/energy/floragun,
@@ -2758,36 +2754,6 @@
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
-"px" = (
-/obj/structure/statue/snow/snowman{
-	anchored = 1;
-	name = "Who"
-	},
-/obj/item/clothing/head/helmet/knight/yellow{
-	desc = "A classic metal helmet. The cold has made it unreliable though.";
-	name = "old medieval helmet";
-	pixel_y = 7
-	},
-/obj/item/claymore/weak/ceremonial{
-	desc = "Brought to you by the guys in charge of making replica katana toys!";
-	force = 1;
-	layer = 3.01;
-	name = "replica claymore";
-	pixel_x = 5;
-	pixel_y = 8;
-	throwforce = 2
-	},
-/obj/item/shield/roman/fake{
-	layer = 3.01;
-	pixel_x = -7
-	},
-/obj/effect/light_emitter{
-	set_cap = 3;
-	set_luminosity = 6;
-	light_color = "#9bbbff"
-	},
-/turf/open/misc/asteroid/snow/snow_cabin,
-/area/awaymission/cabin/snowforest)
 "pB" = (
 /obj/structure/fluff/fokoff_sign,
 /obj/effect/light_emitter{
@@ -3365,29 +3331,6 @@
 	name = "icy wind"
 	},
 /obj/effect/decal/cleanable/plasma,
-/turf/open/misc/asteroid/snow/snow_cabin,
-/area/awaymission/cabin/caves)
-"wf" = (
-/obj/structure/statue/snow/snowman{
-	anchored = 1;
-	name = "I Don't Know"
-	},
-/obj/item/clothing/head/chaplain/bishopmitre{
-	pixel_x = -1;
-	pixel_y = 16
-	},
-/obj/item/gun/magic/wand{
-	desc = "It's just a fancy staff so that holy clerics and priests look cool. What? You didn't think someone would leave a REAL magic artifact with a snowman out in the cold, did you?";
-	icon_state = "revivewand";
-	layer = 3.01;
-	name = "holy staff";
-	pixel_y = -2
-	},
-/obj/effect/light_emitter{
-	set_cap = 3;
-	set_luminosity = 6;
-	light_color = "#9bbbff"
-	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "wq" = (
@@ -4140,6 +4083,28 @@
 /obj/structure/light_construct/directional/south,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"FY" = (
+/obj/structure/statue/snow/snowman{
+	anchored = 1;
+	name = "I Don't Know"
+	},
+/obj/item/clothing/head/chaplain/bishopmitre{
+	pixel_x = -1;
+	pixel_y = 16
+	},
+/obj/item/gun/magic/wand{
+	desc = "It's just a fancy staff so that holy clerics and priests look cool. What? You didn't think someone would leave a REAL magic artifact with a snowman out in the cold, did you?";
+	icon_state = "revivewand";
+	name = "holy staff";
+	pixel_y = -2
+	},
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 6;
+	light_color = "#9bbbff"
+	},
+/turf/open/misc/asteroid/snow/snow_cabin,
+/area/awaymission/cabin/caves)
 "Gb" = (
 /obj/effect/light_emitter{
 	name = "outdoor light";
@@ -4408,25 +4373,6 @@
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
-"JZ" = (
-/obj/structure/statue/snow/snowman{
-	anchored = 1;
-	name = "What"
-	},
-/obj/item/clothing/head/wizard/fake{
-	pixel_x = -1;
-	pixel_y = 13
-	},
-/obj/item/staff{
-	layer = 3.01
-	},
-/obj/effect/light_emitter{
-	set_cap = 3;
-	set_luminosity = 6;
-	light_color = "#9bbbff"
-	},
-/turf/open/misc/asteroid/snow/snow_cabin,
-/area/awaymission/cabin/caves)
 "Kf" = (
 /obj/effect/light_emitter{
 	set_cap = 3;
@@ -4684,6 +4630,10 @@
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/snowforest)
+"NU" = (
+/mob/living/basic/bot/firebot,
+/turf/open/floor/wood/freezing,
+/area/awaymission/cabin/lumbermill)
 "Oe" = (
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
@@ -5268,6 +5218,34 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
+"Vr" = (
+/obj/structure/statue/snow/snowman{
+	anchored = 1;
+	name = "Who"
+	},
+/obj/item/clothing/head/helmet/knight/yellow{
+	desc = "A classic metal helmet. The cold has made it unreliable though.";
+	name = "old medieval helmet";
+	pixel_y = 7
+	},
+/obj/item/claymore/weak/ceremonial{
+	desc = "Brought to you by the guys in charge of making replica katana toys!";
+	force = 1;
+	name = "replica claymore";
+	pixel_x = 5;
+	pixel_y = 8;
+	throwforce = 2
+	},
+/obj/item/shield/roman/fake{
+	pixel_x = -7
+	},
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 6;
+	light_color = "#9bbbff"
+	},
+/turf/open/misc/asteroid/snow/snow_cabin,
+/area/awaymission/cabin/snowforest)
 "VA" = (
 /obj/effect/light_emitter{
 	set_cap = 3;
@@ -5549,6 +5527,23 @@
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
+"Zh" = (
+/obj/structure/statue/snow/snowman{
+	anchored = 1;
+	name = "What"
+	},
+/obj/item/clothing/head/wizard/fake{
+	pixel_x = -1;
+	pixel_y = 13
+	},
+/obj/item/staff,
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 6;
+	light_color = "#9bbbff"
+	},
+/turf/open/misc/asteroid/snow/snow_cabin,
+/area/awaymission/cabin/caves)
 "Zw" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4
@@ -28559,7 +28554,7 @@ ab
 ab
 ab
 ue
-JZ
+Zh
 vh
 vh
 vh
@@ -28817,7 +28812,7 @@ ab
 ue
 IX
 vh
-px
+Vr
 vh
 Qi
 vh
@@ -29073,7 +29068,7 @@ ab
 ab
 ab
 ue
-wf
+FY
 vh
 vh
 vh
@@ -37570,7 +37565,7 @@ pH
 af
 af
 af
-jV
+NU
 af
 af
 af

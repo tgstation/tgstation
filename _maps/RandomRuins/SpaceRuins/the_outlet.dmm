@@ -10,6 +10,18 @@
 	},
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/the_outlet/storefront)
+"ao" = (
+/obj/structure/rack,
+/obj/item/clothing/head/cowboy/brown,
+/obj/item/clothing/shoes/cowboy,
+/obj/item/clothing/under/costume/dutch,
+/obj/item/clothing/suit/costume/poncho,
+/obj/item/cigarette/cigar,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/eighties,
+/area/ruin/space/has_grav/the_outlet/storefront)
 "ar" = (
 /obj/effect/decal/cleanable/dirt{
 	icon_state = "dirt-46"
@@ -85,16 +97,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
-"cL" = (
-/obj/effect/rune/apocalypse{
-	req_cultists = 999;
-	layer = 2
-	},
-/obj/structure/destructible/cult/pants_altar{
-	layer = 3
-	},
-/turf/open/floor/cult,
-/area/ruin/space/has_grav/the_outlet/cultinfluence)
 "cZ" = (
 /obj/structure/kitchenspike,
 /obj/effect/decal/cleanable/blood/gibs{
@@ -558,18 +560,6 @@
 /obj/item/clothing/suit/jacket/straight_jacket,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
-"oI" = (
-/obj/structure/rack,
-/obj/item/clothing/head/cowboy/brown,
-/obj/item/clothing/shoes/cowboy,
-/obj/item/clothing/under/costume/dutch,
-/obj/item/clothing/suit/costume/poncho,
-/obj/item/cigarette/cigar,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/eighties,
-/area/ruin/space/has_grav/the_outlet/storefront)
 "ps" = (
 /obj/structure/rack,
 /obj/item/clothing/under/misc/bouncer,
@@ -1025,6 +1015,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/the_outlet/researchrooms)
+"yX" = (
+/obj/effect/rune/apocalypse{
+	req_cultists = 999
+	},
+/obj/structure/destructible/cult/pants_altar,
+/turf/open/floor/cult,
+/area/ruin/space/has_grav/the_outlet/cultinfluence)
 "zc" = (
 /obj/effect/decal/cleanable/crayon,
 /obj/effect/decal/cleanable/blood/gibs/old,
@@ -3433,7 +3430,7 @@ HV
 xI
 TM
 nq
-oI
+ao
 HH
 HH
 Kp
@@ -3638,7 +3635,7 @@ qy
 wl
 RO
 PE
-cL
+yX
 ML
 RO
 zc
