@@ -8742,10 +8742,12 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "Lf" = (
-/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north{
+	areastring = "/area/awaymission/snowdin/post/research"
+	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/awaymission/snowdin/post/research)
+/area/awaymission/snowdin/post)
 "Lg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/spider/stickyweb,
@@ -10397,11 +10399,13 @@
 	},
 /area/awaymission/snowdin/outside)
 "TR" = (
-/obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/power/apc/auto_name/directional/east{
+	areastring = "/area/awaymission/snowdin/post/messhall"
+	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/awaymission/snowdin/post/messhall)
+/area/awaymission/snowdin/post)
 "TT" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/mob_spawn/corpse/human/skeleton,
@@ -11312,11 +11316,13 @@
 	},
 /area/awaymission/snowdin/outside)
 "Zd" = (
-/obj/machinery/power/apc/auto_name/directional/south,
+/obj/machinery/power/apc/auto_name/directional/south{
+	area = "/area/awaymission/snowdin/post/gateway"
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/awaymission/snowdin/post/gateway)
+/area/awaymission/snowdin/post)
 "Zj" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/airalarm/directional/north,
@@ -22270,7 +22276,7 @@ bH
 bX
 cB
 bE
-az
+dK
 Lf
 fh
 fG
