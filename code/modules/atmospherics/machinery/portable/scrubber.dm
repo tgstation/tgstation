@@ -65,7 +65,9 @@
 		return ..()
 
 	var/turf/epicentre = get_turf(src)
-	for(var/turf/open/openturf in epicentre.get_atmos_adjacent_turfs(alldir = TRUE))
+	if(isopenturf(epicentre))
+		scrub(epicentre.return_air())
+	for(var/turf/open/openturf as anything in epicentre.get_atmos_adjacent_turfs(alldir = TRUE))
 		scrub(openturf.return_air())
 	return ..()
 
