@@ -47,6 +47,8 @@ total = 0
 # need just for better logs look
 if (scannable_directory == "massmeta/features/") or (scannable_directory == "massmeta/~meta_defines/"):
     print(blue(f"Scanning Modular Code..."))
+if scannable_directory == "massmeta/~meta_defines/":
+    print(blue(f"   Checking files in [{scannable_directory}]"))
 # MASSMETA EDIT ADDITION END
 
 with open(file_reference, 'r') as file:
@@ -70,11 +72,11 @@ with open(file_reference, 'r') as file:
         # checks defines folder
         fail_no_include_modular = False
         if scannable_directory == "massmeta/~meta_defines/":
-            print(blue(f"   Checking files in [{scannable_directory}]"))
+            print(blue(f"        [{module_file_path_clean}]"))
             module_file_path = line.replace('\\', '/')
             module_file_path_clean = module_file_path[10:-1]
             if (module_file_path_clean[9:22] != "~meta_defines"):
-                print(red(f"    File [{module_file_path_clean}] must be in \"~meta_defines/\" folder"))
+                print(red(f"        File [{module_file_path_clean}] must be in \"~meta_defines/\" folder"))
                 fail_no_include_modular = True
         # MASSMETA EDIT ADDITION END
 
