@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - qol: "Crew monitor defaults to sort by vitals"
