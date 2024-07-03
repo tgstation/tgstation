@@ -5351,6 +5351,7 @@
 #include "code\modules\plumbing\plumbers\plumbing_buffer.dm"
 #include "code\modules\plumbing\plumbers\pumps.dm"
 #include "code\modules\plumbing\plumbers\reaction_chamber.dm"
+#include "code\modules\plumbing\plumbers\simple_machines.dm"
 #include "code\modules\plumbing\plumbers\splitters.dm"
 #include "code\modules\plumbing\plumbers\synthesizer.dm"
 #include "code\modules\plumbing\plumbers\teleporter.dm"
