@@ -81,6 +81,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/scrambled = FALSE
 	/// List of potential genetic meltdowns
 	var/static/list/meltdown_cache = typecacheof(/datum/instability_meltdown, ignore_root_path = TRUE)
+	/// Weighted list of nonlethal meltdowns
+	var/static/list/nonfatal_meltdowns = list()
+	/// Weighted list of lethal meltdowns
+	var/static/list/fatal_meltdowns = list()
 
 /datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
@@ -873,14 +877,20 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	dna.remove_all_mutations()
 	dna.stability = 100
 
-	var/list/valid_meltdowns = list()
-	var/nonfatal = prob(max(70-instability,0))
+	var/nonfatal = prob(max(70-instability, 0))
 
-	for (var/datum/instability_meltdown/meltdown_type as anything in dna.meltdown_cache)
-		if (initial(meltdown_type.fatal) != nonfatal && initial(meltdown_type.abstract_type) != meltdown_type)
-			valid_meltdowns[meltdown_type] = initial(meltdown_type.meltdown_weight)
+	if(!LAZYLEN(dna.nonfatal_meltdowns))
+		for(var/datum/instability_meltdown/meltdown_type as anything in dna.meltdown_cache)
+			if(initial(meltdown_type.abstract_type) == meltdown_type)
+				continue
 
-	var/picked_type = pick_weight(valid_meltdowns)
+			if (initial(meltdown_type.fatal))
+				dna.fatal_meltdowns[meltdown_type] = initial(meltdown_type.meltdown_weight)
+				continue
+
+			dna.nonfatal_meltdowns[meltdown_type] = initial(meltdown_type.meltdown_weight)
+
+	var/picked_type = pick_weight(nonfatal ? dna.nonfatal_meltdowns : dna.fatal_meltdowns)
 	var/datum/instability_meltdown/meltdown = new picked_type
 	meltdown.meltdown(src)
 

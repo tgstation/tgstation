@@ -1,3 +1,4 @@
+/// A possible genetic meltdown that occurs when someone exceeds 100 genetic instability
 /datum/instability_meltdown
 	/// How likely a meltdown is to be picked
 	var/meltdown_weight = 1
@@ -44,6 +45,7 @@
 /datum/instability_meltdown/not_alright/meltdown(mob/living/carbon/human/victim)
 	to_chat(victim, span_notice("Oh, I actually feel quite alright!"))
 	victim.physiology.damage_resistance -= 20000 //you thought
+	victim.log_message("has received x200 damage multiplier from [type] genetic meltdown")
 
 /// Turns you into a slime
 /datum/instability_meltdown/slime
@@ -130,9 +132,9 @@
 /datum/instability_meltdown/fatal/dismember
 
 /datum/instability_meltdown/fatal/dismember/meltdown(mob/living/carbon/human/victim)
-	var/obj/item/bodypart/BP = victim.get_bodypart(pick(BODY_ZONE_CHEST,BODY_ZONE_HEAD))
-	if(BP)
-		BP.dismember()
+	var/obj/item/bodypart/part = victim.get_bodypart(pick(BODY_ZONE_CHEST,BODY_ZONE_HEAD))
+	if(part)
+		part.dismember()
 		return
 	victim.investigate_log("has been gibbed by DNA instability.", INVESTIGATE_DEATHS)
 	victim.gib(DROP_ALL_REMAINS)
