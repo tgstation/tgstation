@@ -67,9 +67,7 @@
 		var/target_siphon_amt = (T.liquids.liquid_group.total_reagent_volume * pump_speed_percentage) + pump_speed_flat
 		if(target_siphon_amt > free_space)
 			target_siphon_amt = free_space
-		var/datum/reagents/tempr = T.liquids.take_reagents_flat(target_siphon_amt)
-		tempr.trans_to(reagents, tempr.total_volume)
-		qdel(tempr)
+		T.liquids.liquid_group.transfer_to_atom(src, target_siphon_amt)
 	return
 
 /obj/structure/liquid_pump/update_icon()

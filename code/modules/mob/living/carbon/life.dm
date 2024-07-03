@@ -123,14 +123,11 @@
 					adjustOxyLoss(3)
 					failed_last_breath = TRUE
 					if(oxyloss <= OXYGEN_DAMAGE_CHOKING_THRESHOLD && stat == CONSCIOUS)
-						to_chat(src, "<span class='userdanger'>You hold in your breath!</span>")
+						to_chat(src, span_userdanger("You hold in your breath!"))
 					else
 						//Try and drink water
-						var/datum/reagents/tempr = our_turf.liquids.take_reagents_flat(CHOKE_REAGENTS_INGEST_ON_BREATH_AMOUNT)
-						tempr.trans_to(src, tempr.total_volume, methods = INGEST)
-						qdel(tempr)
-						visible_message("<span class='warning'>[src] chokes on water!</span>", \
-									"<span class='userdanger'>You're choking on water!</span>")
+						our_turf.liquids.liquid_group.transfer_to_atom(src, CHOKE_REAGENTS_INGEST_ON_BREATH_AMOUNT)
+						visible_message(span_warning("[src] chokes on water!"), span_userdanger("You're choking on water!"))
 					return FALSE
 				if(isopenturf(our_turf))
 					var/turf/open/open_turf = our_turf
@@ -142,7 +139,7 @@
 
 				var/breath_moles = 0
 				if(environment)
-					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+					breath_moles = environment.total_moles() * BREATH_PERCENTAGE
 
 				breath = loc.remove_air(breath_moles)
 		else //Breathe from loc as obj again
