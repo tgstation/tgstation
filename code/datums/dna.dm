@@ -79,8 +79,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/stability = 100
 	///Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
 	var/scrambled = FALSE
-	/// List of potential genetic meltdowns
-	var/static/list/meltdown_cache = typecacheof(/datum/instability_meltdown, ignore_root_path = TRUE)
 	/// Weighted list of nonlethal meltdowns
 	var/static/list/nonfatal_meltdowns = list()
 	/// Weighted list of lethal meltdowns
@@ -880,7 +878,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/nonfatal = prob(max(70-instability, 0))
 
 	if(!LAZYLEN(dna.nonfatal_meltdowns))
-		for(var/datum/instability_meltdown/meltdown_type as anything in dna.meltdown_cache)
+		for(var/datum/instability_meltdown/meltdown_type as anything in typecacheof(/datum/instability_meltdown, ignore_root_path = TRUE))
 			if(initial(meltdown_type.abstract_type) == meltdown_type)
 				continue
 
