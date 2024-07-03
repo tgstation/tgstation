@@ -44,8 +44,8 @@
 			var/datum/reagents/reagents = objectification.reagents
 			reagents?.expose_temperature(temperature)
 
-	var/mob/living/living_target = target
-	if(isliving(living_target))
+	if(isliving(target))
+		var/mob/living/living_target = target
 		living_target.apply_status_effect(/datum/status_effect/freezing_blast)
 
 /obj/projectile/temp/cryo/on_range()
@@ -80,8 +80,8 @@
 
 		return
 
-	var/mob/living/living_target = target
-	if(istype(living_target))
+	if(isliving(target))
+		var/mob/living/living_target = target
 		living_target.adjust_fire_stacks(2)
 		living_target.ignite_mob()
 
