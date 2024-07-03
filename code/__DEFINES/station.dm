@@ -8,8 +8,6 @@
 #define STATION_TRAIT_COST_LOW 0.5
 ///Cost for very little, and mainly neutral traits that hardly amount to anything really that interesting.
 #define STATION_TRAIT_COST_MINIMAL 0.3
-///Cost for station traits that can have a modest impact to the round frankly
-#define STATION_TRAIT_COST_HIGH 1.5
 
 /// Only run on planet stations
 #define STATION_TRAIT_PLANETARY (1<<0)

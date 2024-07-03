@@ -63,37 +63,47 @@
 /datum/station_trait/bountiful_bounties/on_round_start()
 	SSeconomy.bounty_modifier *= 1.2
 
-/datum/station_trait/tiled_maintenance
-	name = "Maintenance tilework and illumination"
+///A positive station trait that scatters a bunch of lit glowsticks throughout maintenance
+/datum/station_trait/glowsticks
+	name = "Glowsticks party"
+	trait_type = STATION_TRAIT_POSITIVE
 	weight = 2
-	cost = STATION_TRAIT_COST_HIGH
 	show_in_report = TRUE
-	report_message = "We've allocated extra budget to improve the tiling and illumination of maintenance areas."
+	report_message = "We've got glowsticks upon glowsticks to spare, so we scattered some around maintenance (plus a couple floor lights)."
 
-/datum/station_trait/tiled_maintenance/New()
+/datum/station_trait/glowsticks/New()
 	..()
-	//we need to wait SSair before we change turfs, so that they can inherit atmos.
-	RegisterSignal(SSair, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(begin_tilework))
+	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(light_the_night))
 
-/datum/station_trait/tiled_maintenance/proc/begin_tilework(datum/source)
+/datum/station_trait/glowsticks/proc/light_the_night(datum/source)
 	SIGNAL_HANDLER
-	var/list/floortype_choices = list(
-		/turf/open/floor/iron/dark = 50,
-		/turf/open/floor/iron/dark/small = 15,
-		/turf/open/floor/iron/dark/textured = 15,
-		/turf/open/floor/iron/dark/diagonal = 10,
-		/turf/open/floor/iron/dark/herringbone = 10,
+	var/list/glowsticks = list(
+		/obj/item/flashlight/glowstick,
+		/obj/item/flashlight/glowstick/red,
+		/obj/item/flashlight/glowstick/blue,
+		/obj/item/flashlight/glowstick/cyan,
+		/obj/item/flashlight/glowstick/orange,
+		/obj/item/flashlight/glowstick/yellow,
+		/obj/item/flashlight/glowstick/pink,
 	)
-	var/floortype = pick_weight(floortype_choices)
 	for(var/area/station/maintenance/maint in GLOB.areas)
 		var/list/turfs = get_area_turfs(maint)
-		for(var/turf/open/floor/plating/plating in turfs)
-			if(!plating.allow_replacement)
-				continue
-			plating.place_on_top(floortype, flags = CHANGETURF_INHERIT_AIR)
-			if(prob(14) && !(locate(/obj/machinery/light/floor) in range(2, plating)))
-				new /obj/machinery/light/floor(plating)
+		for(var/i in 1 to length(turfs) * 0.12)
 			CHECK_TICK
+			var/turf/open/chosen = pick_n_take(turfs)
+			if(!istype(chosen))
+				continue
+			for(var/atom/movable/mov as anything in chosen) //stop glowing sticks from spawning on windows
+				if(mov.density && !(mov.pass_flags_self & LETPASSTHROW))
+					continue
+			if(prob(3.4)) ///Rare, but this is something that can survive past the lifespawn of glowsticks.
+				new /obj/machinery/light/floor(chosen)
+				continue
+			var/stick_type = pick(glowsticks)
+			var/obj/item/flashlight/glowstick/stick = new stick_type(chosen)
+			///we want a wider range, otherwise they'd all burn out in about 20 minutes.
+			stick.max_fuel = stick.fuel = rand(10 MINUTES, 45 MINUTES)
+			stick.turn_on()
 
 /datum/station_trait/strong_supply_lines
 	name = "Strong supply lines"
