@@ -396,6 +396,7 @@ world
 		((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48),
 		((hi4 >= 65 ? hi4-55 : hi4-48)<<4) | (lo4 >= 65 ? lo4-55 : lo4-48))
 
+#warn something about how blend mode works for these is FUCKED I wish I had a working debugger
 /// Create a single [/icon] from a given [/atom] or [/image].
 ///
 /// Very low-performance. Should usually only be used for HTML, where BYOND's
@@ -435,6 +436,7 @@ world
 		}
 
 	var/static/icon/flat_template = icon('icons/blanks/32x32.dmi', "nothing")
+	var/icon/flat_template = icon(flat_template)
 
 	if(!appearance || appearance.alpha <= 0)
 		return icon(flat_template)
@@ -477,6 +479,12 @@ world
 
 	if(!base_icon_dir)
 		base_icon_dir = curdir
+
+	// Expand our canvas to fit if we're too big
+	if(render_icon)
+		var/icon/active_icon = icon(curicon)
+		if(active_icon.Width() != 32 || active_icon.Height() != 32)
+			flat_template.Scale(active_icon.Width(), active_icon.Height())
 
 	var/curblend = appearance.blend_mode || defblend
 
