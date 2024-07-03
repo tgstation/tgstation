@@ -1,3 +1,6 @@
+///Used to allow reaching the maximum offset range without exiting the boundaries of the game screen.
+#define MOUSE_POINTER_OFFSET_MULT 1.1
+
 ///A component that allows players to use the item to zoom out. Mainly intended for firearms, but now works with other items too.
 /datum/component/scope
 	/// How far we can extend, with modifier of 1, up to our vision edge, higher numbers multiply.
@@ -249,6 +252,12 @@
 		icon_y = text2num(LAZYACCESS(modifiers, ICON_Y))
 		if(isnull(icon_y))
 			icon_y = view_list[2]*world.icon_size/2
-	given_x = round(range_modifier * (icon_x - view_list[1]*world.icon_size/2))
-	given_y = round(range_modifier * (icon_y - view_list[2]*world.icon_size/2))
+	var/x_cap = range_modifier * view_list[1]*world.icon_size / 2
+	var/y_cap = range_modifier * view_list[2]*world.icon_size / 2
+	var/uncapped_x = round(range_modifier * (icon_x - view_list[1]*world.icon_size/2) * MOUSE_POINTER_OFFSET_MULT)
+	var/uncapped_y = round(range_modifier * (icon_y - view_list[2]*world.icon_size/2) * MOUSE_POINTER_OFFSET_MULT)
+	given_x = clamp(uncapped_x, -x_cap, x_cap)
+	given_y = clamp(uncapped_y, -y_cap, y_cap)
 	given_turf = locate(owner.x+round(given_x/world.icon_size, 1),owner.y+round(given_y/world.icon_size, 1),owner.z)
+
+#undef MOUSE_POINTER_OFFSET_MULT
