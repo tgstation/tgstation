@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Reverts the fully interactive lootpanel, please just refresh it if you want to see new contents"
