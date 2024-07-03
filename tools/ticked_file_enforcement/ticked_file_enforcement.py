@@ -72,9 +72,9 @@ with open(file_reference, 'r') as file:
         # checks defines folder
         fail_no_include_modular = False
         if scannable_directory == "massmeta/~meta_defines/":
-            print(blue(f"        [{module_file_path_clean}]"))
             module_file_path = line.replace('\\', '/')
             module_file_path_clean = module_file_path[10:-1]
+            print(blue(f"        [{module_file_path_clean}]"))
             if (module_file_path_clean[9:22] != "~meta_defines"):
                 print(red(f"        File [{module_file_path_clean}] must be in \"~meta_defines/\" folder"))
                 fail_no_include_modular = True
