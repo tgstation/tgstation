@@ -1,0 +1,5 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - qol: "Transhumanist and prosthetic limb no longer conflict. If you pick the same limb for both it uses the weaker prosthetic (dumbass)"
+  - code_imp: "Made the name for prosthetic limb global list more intelligible"
