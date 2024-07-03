@@ -74,7 +74,7 @@ with open(file_reference, 'r') as file:
             module_file_path = line.replace('\\', '/')
             module_file_path_clean = module_file_path[10:-1]
             if (module_file_path_clean[:13] != "~meta_defines"):
-                red(f"    File [{module_file_path_clean}] must be in \"~meta_defines/\" folder")
+                print(red(f"    File [{module_file_path_clean}] must be in \"~meta_defines/\" folder"))
                 fail_no_include_modular = True
         # MASSMETA EDIT ADDITION END
 
@@ -89,7 +89,7 @@ with open(file_reference, 'r') as file:
             module_file_path_clean = module_file_path[10:-1]
             print(f"        [{module_file_path_clean}] with in it:")
             if module_file_path_clean[-11:] != "includes.dm":
-                red(f"        File [{module_file_path_clean}] must be named \"includes.dm\", skipping the file.")
+                print(red(f"        File [{module_file_path_clean}] must be named \"includes.dm\", skipping the file."))
                 fail_no_include_modular = True
                 continue
 
@@ -98,7 +98,7 @@ with open(file_reference, 'r') as file:
                     total += 1
                     extra_line = extra_line.strip()
                     if (extra_line[10:14] != "code"):
-                        red(f"            File [{extra_line}] must be in \"code/\" folder")
+                        print(red(f"            File [{extra_line}] must be in \"code/\" folder"))
                         fail_no_include_modular = True
 
                     # make full path
