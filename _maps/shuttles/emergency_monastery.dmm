@@ -8,10 +8,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"af" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/space,
-/area/shuttle/escape)
 "ap" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
@@ -25,10 +21,6 @@
 	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
-"as" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/space,
-/area/shuttle/escape)
 "aF" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -38,7 +30,7 @@
 /area/shuttle/escape)
 "aH" = (
 /obj/structure/grille/broken,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/escape)
 "aO" = (
 /obj/structure/sign/plaques/kiddie{
@@ -58,11 +50,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall,
 /area/shuttle/escape)
-"aW" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/shuttle/escape)
 "bb" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -77,7 +64,7 @@
 "bd" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
-/turf/open/space,
+/turf/template_noop,
 /area/shuttle/escape)
 "be" = (
 /obj/machinery/light/small/directional/west,
@@ -89,7 +76,7 @@
 "bl" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/escape)
 "bn" = (
 /obj/machinery/light/small/directional/east,
@@ -159,7 +146,7 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/lattice,
-/turf/open/space,
+/turf/template_noop,
 /area/shuttle/escape)
 "cu" = (
 /obj/structure/table/wood,
@@ -215,7 +202,7 @@
 "dp" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/lattice,
-/turf/open/space,
+/turf/template_noop,
 /area/shuttle/escape)
 "du" = (
 /obj/machinery/door/airlock/external/ruin,
@@ -243,7 +230,7 @@
 "dX" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/space,
+/turf/template_noop,
 /area/shuttle/escape)
 "dY" = (
 /obj/structure/table/wood,
@@ -315,7 +302,7 @@
 "fm" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/space,
+/turf/template_noop,
 /area/shuttle/escape)
 "fn" = (
 /obj/effect/spawner/xmastree,
@@ -350,16 +337,11 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"fA" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/space,
-/area/shuttle/escape)
 "fL" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/lattice,
 /obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/space,
+/turf/template_noop,
 /area/shuttle/escape)
 "fT" = (
 /obj/structure/table/wood,
@@ -379,7 +361,7 @@
 "gl" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/escape)
 "gp" = (
 /obj/machinery/door/airlock{
@@ -398,7 +380,7 @@
 /area/shuttle/escape)
 "hq" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/escape)
 "hI" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
@@ -433,7 +415,7 @@
 	pixel_y = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/escape)
 "hW" = (
 /obj/structure/flora/bush/leavy/style_random,
@@ -614,7 +596,7 @@
 "jS" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/escape)
 "jU" = (
 /obj/item/shovel/spade,
@@ -693,7 +675,7 @@
 "kJ" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/space,
+/turf/template_noop,
 /area/shuttle/escape)
 "kM" = (
 /obj/structure/table/wood/fancy,
@@ -714,10 +696,6 @@
 	},
 /obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
-/area/shuttle/escape)
-"lj" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
 /area/shuttle/escape)
 "lm" = (
 /obj/machinery/meter,
@@ -752,7 +730,7 @@
 /area/shuttle/escape)
 "mm" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space,
+/turf/template_noop,
 /area/shuttle/escape)
 "mn" = (
 /obj/structure/chair/wood,
@@ -1064,7 +1042,7 @@
 /area/shuttle/escape)
 "qA" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/escape)
 "qC" = (
 /obj/machinery/airalarm/directional/north,
@@ -1906,6 +1884,11 @@
 /obj/structure/table/wood,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"CW" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/template_noop,
+/area/shuttle/escape)
 "Dc" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/light/small/directional/west,
@@ -2324,7 +2307,7 @@
 /area/shuttle/escape)
 "IM" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/escape)
 "IR" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
@@ -2352,10 +2335,6 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"Jl" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/space,
 /area/shuttle/escape)
 "Jp" = (
 /obj/structure/table,
@@ -2447,8 +2426,7 @@
 "JZ" = (
 /obj/docking_port/mobile/emergency{
 	movement_force = list("KNOCKDOWN"=3,"THROW"=6);
-	name = "\proper a monastery with engines strapped to it";
-	port_direction = 1
+	name = "\proper a monastery with engines strapped to it"
 	},
 /turf/closed/mineral,
 /area/shuttle/escape)
@@ -2604,10 +2582,6 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"Mt" = (
-/obj/structure/lattice,
-/turf/open/space,
 /area/shuttle/escape)
 "MC" = (
 /obj/structure/cable,
@@ -2858,7 +2832,7 @@
 /area/shuttle/escape)
 "PB" = (
 /obj/structure/lattice,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/escape)
 "PC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -3645,7 +3619,7 @@
 /obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 1
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/escape)
 "YC" = (
 /obj/machinery/light/small/directional/west,
@@ -3671,7 +3645,7 @@
 	pixel_y = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/escape)
 "YZ" = (
 /obj/structure/table/wood,
@@ -4296,7 +4270,7 @@ nr
 nr
 nr
 nr
-af
+hq
 hq
 JG
 JG
@@ -4833,11 +4807,11 @@ JG
 JG
 JG
 PB
-lj
-iw
-iw
-iw
-iw
+mm
+CW
+CW
+CW
+CW
 gl
 zE
 SU
@@ -4915,7 +4889,7 @@ JG
 JG
 JG
 PB
-lj
+mm
 iw
 JG
 JG
@@ -4997,10 +4971,10 @@ JG
 JG
 JG
 PB
-lj
-Mt
-af
-fA
+mm
+PB
+hq
+gl
 zE
 zE
 AJ
@@ -5073,11 +5047,11 @@ JG
 JG
 JG
 JG
-iw
-Mt
-iw
-iw
-iw
+CW
+PB
+CW
+CW
+CW
 zE
 DS
 zE
@@ -5159,7 +5133,7 @@ iw
 JG
 JG
 dp
-af
+hq
 zE
 Zf
 zE
@@ -5238,7 +5212,7 @@ JG
 JG
 JG
 bd
-Mt
+PB
 bT
 zE
 zE
@@ -5317,10 +5291,10 @@ JG
 (20,1,1) = {"
 JG
 aH
-iw
-iw
-iw
-as
+CW
+CW
+CW
+qA
 zE
 zE
 jc
@@ -5397,10 +5371,10 @@ JG
 JG
 "}
 (21,1,1) = {"
-af
-af
 hq
-aW
+hq
+hq
+dp
 hq
 bl
 zE
@@ -5807,7 +5781,7 @@ JG
 JG
 "}
 (26,1,1) = {"
-as
+qA
 zE
 ox
 bb
@@ -6226,7 +6200,7 @@ LK
 zE
 LK
 dX
-Jl
+IM
 fm
 zE
 zE
@@ -6303,9 +6277,9 @@ JG
 JG
 IM
 IM
-Jl
-Jl
-Jl
+IM
+IM
+IM
 IM
 JG
 JG
@@ -6393,7 +6367,7 @@ JG
 JG
 JG
 JG
-Jl
+IM
 fm
 zE
 zE
@@ -6644,8 +6618,8 @@ JG
 JG
 JG
 JG
-Jl
-Jl
+IM
+IM
 jS
 zE
 ko
@@ -6893,7 +6867,7 @@ JG
 JG
 JG
 JG
-Mt
+PB
 mm
 kJ
 IM
