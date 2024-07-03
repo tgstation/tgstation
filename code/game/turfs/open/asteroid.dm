@@ -223,7 +223,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 		return TRUE
 	return FALSE
 
-/turf/open/misc/grass/burnt_states()
+/turf/open/misc/asteroid/snow/burnt_states()
 	return list("snow_dug")
 
 /turf/open/misc/asteroid/snow/icemoon

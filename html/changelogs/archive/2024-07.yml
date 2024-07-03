@@ -1,0 +1,211 @@
+2024-07-01:
+  Ben10Omintrix:
+  - balance: raptors will now knock off their rider and disable them if hit by any
+      energy projectiles or if they recieve any stamina damage
+  Chestlet:
+  - bugfix: Nanotrasen sent us a batch of faulty canisters. They've been recalled
+      and replaced with less faulty canisters.
+  - bugfix: Zauker SM interaction works correctly now.
+  DaCoolBoss:
+  - image: Relics ("strange objects") now have unique sprites.
+  Iajret:
+  - bugfix: fixed blood loss knocking you down at somewhat safe (~80%) blood levels
+  LemonInTheDark:
+  - rscadd: Shield generators and shield gen walls now glow a light blue. Pretty!
+  MTandi:
+  - qol: Made light tiles available in the crafting menu
+  - qol: Circuit tile variants can be cycled in-hand
+  - rscadd: Moved loose tiles and wall frames from lathe designs to other tiles and
+      frames in the crafting menu
+  Melbert:
+  - rscadd: Humanizing a monkey removes undergarments such as socks
+  - qol: Handheld Genetic Scanners fit in Geneticist equipment suit storage
+  Pickle-Coding:
+  - code_imp: Supermatter zap power generation takes perspective of the machines subsystem.
+  Rhials:
+  - rscadd: Bounty Hunter teams now have personalized announcements for when they
+      are spawned in.
+  ShizCalev:
+  - bugfix: The power for all science burn chambers across all maps now works properly.
+  SmArtKar:
+  - image: Captain's spare safe received a new texture
+  - bugfix: Vent-born wendigos no longer create one-way portals
+  - image: Decluttered card textures
+  - bugfix: You can grind slime extracts in reagent grinders once more.
+  - bugfix: Pyrokinesis bolts no longer have infinite range and create trails of fiery
+      doom.
+  - qol: RD's labcoat is now classified as an actual labcoat instead of a glorified
+      jacket, allowing them to put science-related stuffs into it
+  - image: You can now toggle RD's labcoat
+  ViktorKoL:
+  - rscadd: Added a new UI for heretic research.
+  Wallem:
+  - rscadd: The detective now starts with the DET.ekt Skillchip, which allows them
+      to identify chemicals and bloodtypes by taste.
+  YesterdaysPromise:
+  - image: updated halloween metoer sprites.
+  aaaa1023:
+  - qol: 'Increased the viewrange in the navigation camera console on the following
+      shuttles: Silverscale pirate shuttle, the Flying Dutchman pirate shuttle, the
+      IRS pirate shuttle, and the Greytide pirate shuttle.'
+  - bugfix: Fixed the Battlecruiser corvette, Silverscale pirate shuttle, and the
+      Greytide pirate shuttle flying in incorrect directions in hyperspace.
+  - bugfix: Fixed the Navigation console camera eye on various pirate ships being
+      off centre.
+  carlarctg:
+  - spellcheck: Heretic spell invocations now use one dead language per path. Altered
+      a few invocation types.
+  grungussuss:
+  - qol: Windoors now stay open for 8 seconds instead of 5
+  - qol: Secure windoors now stay open for 5 seconds instead of 2
+  mc-oofert:
+  - bugfix: brig cell timer ui works properly now
+  - bugfix: wawastation arrivals has firealarms so you may now leave
+  necromanceranne:
+  - bugfix: Mecha weaponry is capable, for the first time ever, of experiencing recoil.
+      This was an intended mechanic, I promise. The code just literally never worked.
+  - bugfix: Mecha bump melee attacks and click melee attacks are now on the same cooldown,
+      but have varying cooldown timers. You will always bump attack faster than you
+      will click.
+  - bugfix: You must be in combat mode to punch objects and to bumpsmash into objects.
+  - bugfix: Stops mecha being able to punch literally any object and damage them.
+  - code_imp: Tidies up some of the autodoc comments for mech weapons.
+  spockye:
+  - bugfix: fixed Wawastation areas
+  - bugfix: fixed wawastation disposals
+  thegrb93:
+  - bugfix: Game not refocusing after closing a TGUI
+  xXPawnStarrXx:
+  - rscdel: Removed cordons on deathmatch maps, since they're autoadded now.
+2024-07-02:
+  00-Steven:
+  - code_imp: Moved bedsheet bin interactions to the item interaction code. Please
+      report any issues.
+  - qol: Made bedsheet bin tool interactions right click, such that left click is
+      consistently for putting in items.
+  - qol: Added usage screentips to bedsheet bins.
+  - qol: Added more feedback to failing to hide items in bedsheet bins.
+  - sound: Made putting items in bedsheet bins not silent (If the items have associated
+      pickup/drop sounds).
+  - code_imp: Deconstructing light switches now uses the proper tool action and tool
+      usage code, please report any issues.
+  - bugfix: Attempting to deconstruct a light switch by unscrewing it no longer makes
+      you hit it even on a success.
+  - sound: Deconstructing a light switch actually plays tool usage and deconstruction
+      sounds.
+  - qol: Deconstructing light switches is now a left click with a screwdriver parallel
+      to other unscrewing actions.
+  - bugfix: Screentips for deconstructing a light switch no longer show up on every
+      item EXCEPT screwdrivers.
+  - qol: Added an examine hint denoting light switches are screwed to the wall.
+  - qol: Added visible messages for someone deconstructing a light switch parallel
+      to deconstructing intercoms.
+  Bisar:
+  - qol: Loot panels should update more predictably and informatively now.
+  - code_imp: Lootpanels have more consistent logic on when they automatically update.
+  Jolly:
+  - code_imp: Behind the scenes, maps had a little bit of tweaking. If you see things
+      rendering in weird ways, or they don't look like how they used to/supposed to,
+      please report them on GitHub!
+  Kapu (ported by StrangeWeirdKitten):
+  - bugfix: Ambience buzz will now respect ship ambience prefrences for observers.
+  - sound: Ambience buzz requires APC enviorment power to function
+  Kocma-san:
+  - qol: you can now swap pens in pdas
+  LemonInTheDark:
+  - bugfix: Some varieties of snow now visually melt properly again when burned
+  ShizCalev:
+  - bugfix: Fixed a number of shuttles having parts (such as lattices) completely
+      disappearing.
+  - bugfix: Fixed the ceilings above shuttles on station maps being full-bright.
+  - bugfix: Fixed lattices sometimes appearing at random locations in space on station
+      maps.
+  - bugfix: Cleaned up a number of accidentally placed objects in space across all
+      station maps.
+  - bugfix: Fixed a false positive with the mapload_space_verification unit test failing
+      on turfs that weren't actually part of shuttles.
+  - code_imp: Added a unit test that automatically finds all base space turfs with
+      objects on them, as well as non-space turfs that are set to space areas (meaning
+      that these squares weren't lit properly.)
+  SmArtKar:
+  - bugfix: You no longer get dusted upon trying to store your supermatter sliver.
+  - bugfix: Fulton animation is no longer sideways.
+  - bugfix: Hand of Midas now works point-blank.
+  TheBoondock:
+  - sound: added pickup and drop sound for beakers
+  carlarctg:
+  - bugfix: Fix /datum/weakref appearing when linking airlock heretic portals
+  hyperjll:
+  - bugfix: 'Hostile plant monsters (EX: Killer Tomatoes) no longer act hostile toward
+      Seedlings.'
+  jlsnow301:
+  - bugfix: Fixed some UI bugs in the power monitor screen.
+  lorwp:
+  - bugfix: extinguishers now can be filled with subtypes of water again (Namely,
+      holy water)
+  mc-oofert:
+  - balance: Facehuggers dont make people go to sleep but muffles speech
+  - code_imp: Very very minor xenomorph code cleanup
+  - refactor: Muzzles are now an element
+  - balance: portable air scrubbers scrub in a 3x3 square + hold as much gas as a
+      canister
+  nikothedude:
+  - rscadd: Being cursed now enables disembowlements/cranial fissures outside of hardcrit
+2024-07-03:
+  00-Steven:
+  - bugfix: Fixed telekinesis letting you grab people at a distance, and teleport
+      them to you by strangling them.
+  DaCoolBoss:
+  - bugfix: Removed three traitor posters from Cargo Warehouse's walls. (Metastation)
+  - balance: Added one traitor poster each to the QM's Office, Vault and Evidence
+      Storage to compensate. (Metastation)
+  - rscadd: Ghost role food truck merchants may occasionally turn up at the station.
+  - rscadd: Adds a new fugitive hunter type, MI13 secret agents.
+  DrDiasyl aka DrTuxedo:
+  - sound: Shoves now produce more meaty sound!
+  GremlinSeeker:
+  - bugfix: fixed Birdshot bar and surrounding areas not properly connected to the
+      power grid.
+  LT3:
+  - qol: Crew monitor defaults to sort by vitals
+  MTandi:
+  - image: New linen bin / basket sprites
+  - qol: It is easier to do some required techweb experiments on Charlie station now
+  - bugfix: Fixed experimental dissection surgeries giving too many points
+  - balance: 'Techweb: Moved NTNet relay back to tcomms node'
+  - balance: 'Techweb: Moved blood pack and chem pack to the starting node'
+  MrDas:
+  - bugfix: Bolas now slowdown properly.
+  - bugfix: Cult bolas no longer leave in-hand sprite when they ensnare to non-cult
+      user.
+  OrbisAnima:
+  - bugfix: Fixed the basic Sandwich recipe and tags, now it matches the description
+      and original intent.
+  - bugfix: Brought the fishing rewards experiments to normal values.
+  - bugfix: Bio Emergency crates now bring Bio Suits and Hoods compatible with the
+      Security Hoods and Suits Schematics.
+  Rhials:
+  - balance: All cameras in bathrooms and showers have been removed.
+  SmArtKar:
+  - bugfix: Dark matteors no longer claim that they  have missed when they actually
+      impacted the station
+  - image: Fixed shading on some metal ingots.
+  Sosmaster9000:
+  - balance: 'Xenobiologists now have a BZ-filled containment pen. Don''t breathe
+      that!
+
+      balance:Some items which either cannot be printed elsewhere or are part of game
+      progression (e.g. teleporter endpoints and, of course, Nanners) have been moved.
+      Alien Spawnpoints are in the same spot.'
+  bob-b-b:
+  - rscadd: Added flatpacker & multitool to all R&D labs
+  carlarctg:
+  - rscdel: Removed Trichromatic Larynx per @mothblocks decision that it looks uggo.
+  - rscdel: Replaced heckacious laryncks' color and size changes with random bolding,
+      italics, and underlining.
+  - rscadd: Stoner has been un-locked and replaces TL in the above's recipe.
+  - bugfix: Fixed elastic arms users being unable to use abstract items like mending
+      touch or shock touch.
+  - bugfix: Fixed mending touch being bad
+  mc-oofert:
+  - bugfix: portascrubbers also scrub the tile theyre on
