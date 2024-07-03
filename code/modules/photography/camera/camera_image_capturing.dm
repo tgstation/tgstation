@@ -16,18 +16,12 @@
 	var/skip_normal = FALSE
 	var/wipe_atoms = FALSE
 
+	var/mutable_appearance/backdrop = mutable_appearance('icons/hud/screen_gen.dmi', "flash")
+	backdrop.blend_mode = BLEND_OVERLAY
+	backdrop.color = "#292319"
+
 	if(istype(clone_area) && total_x == clone_area.width && total_y == clone_area.height && size_x >= 0 && size_y > 0)
 		var/turf/bottom_left = clone_area.bottom_left_turfs[1]
-		var/obj/effect/appearance_clone/lighting_sheet = new(bottom_left)
-		lighting_sheet.transform = lighting_sheet.transform.Scale(total_x , total_y)
-		lighting_sheet.transform = lighting_sheet.transform.Translate((total_x - 1) / 2 * world.icon_size, (total_y - 1) / 2 * world.icon_size)
-		lighting_sheet.blend_mode = BLEND_MULTIPLY
-		lighting_sheet.layer = 0.001
-		var/atom/movable/screen/fullscreen/lighting_backdrop/lit/backdrop = new(bottom_left)
-		backdrop.layer = 0.005
-		lighting_sheet.plane = backdrop.plane
-		lighting_sheet.overlays += backdrop
-		QDEL_NULL(backdrop)
 		var/cloned_center_x = round(bottom_left.x + ((total_x - 1) / 2))
 		var/cloned_center_y = round(bottom_left.y + ((total_y - 1) / 2))
 		for(var/t in turfs)
@@ -41,50 +35,35 @@
 			if(T.loc.icon_state)
 				atoms += new /obj/effect/appearance_clone(newT, T.loc)
 			if(T.lighting_object)
-				var/mutable_appearance/lighting_overlay = new(T.lighting_object.current_underlay)
-				lighting_overlay.pixel_w = (newT.x - bottom_left.x) * 32
-				lighting_overlay.pixel_z = (newT.y - bottom_left.y) * 32
-				lighting_overlay.blend_mode = BLEND_OVERLAY
-				lighting_sheet.overlays += lighting_overlay
+				var/obj/effect/appearance_clone/lighting_overlay = new(newT)
+				lighting_overlay.appearance = T.lighting_object.current_underlay
+				lighting_overlay.underlays += backdrop
+				lighting_overlay.blend_mode = BLEND_MULTIPLY
+				lighting += lighting_overlay
 			for(var/i in T.contents)
 				var/atom/A = i
 				if(!A.invisibility || (see_ghosts && isobserver(A)))
 					atoms += new /obj/effect/appearance_clone(newT, A)
-		lighting += lighting_sheet
-		var/obj/effect/appearance_clone/hell = new(get_turf(src), lighting_sheet)
 		skip_normal = TRUE
 		wipe_atoms = TRUE
 		center = locate(cloned_center_x, cloned_center_y, bottom_left.z)
 
 	if(!skip_normal)
-		var/turf/bottom_left = locate(center.x - (total_x - 1) / 2, center.y - (total_y - 1) / 2, center.z)
-		var/obj/effect/appearance_clone/lighting_sheet = new(bottom_left)
-		lighting_sheet.transform = lighting_sheet.transform.Scale(total_x , total_y)
-		lighting_sheet.transform = lighting_sheet.transform.Translate((total_x - 1) / 2 * world.icon_size, (total_y - 1) / 2 * world.icon_size)
-		lighting_sheet.blend_mode = BLEND_MULTIPLY
-		lighting_sheet.layer = 0.001
-		var/atom/movable/screen/fullscreen/lighting_backdrop/lit/backdrop = new(bottom_left)
-		backdrop.layer = 0.005
-		lighting_sheet.plane = backdrop.plane
-		lighting_sheet.overlays += backdrop
-		QDEL_NULL(backdrop)
 		for(var/i in turfs)
 			var/turf/T = i
 			atoms += T
 			if(T.lighting_object)
-				var/mutable_appearance/lighting_overlay = new(T.lighting_object.current_underlay)
-				lighting_overlay.pixel_w = (T.x - bottom_left.x) * 32
-				lighting_overlay.pixel_z = (T.y - bottom_left.y) * 32
-				lighting_overlay.blend_mode = BLEND_OVERLAY
-				lighting_sheet.overlays += lighting_overlay
+				var/obj/effect/appearance_clone/lighting_overlay = new(T)
+				lighting_overlay.appearance = T.lighting_object.current_underlay
+				lighting_overlay.underlays += backdrop
+				lighting_overlay.blend_mode = BLEND_MULTIPLY
+				lighting += lighting_overlay
 			for(var/atom/movable/A in T)
 				if(A.invisibility)
 					if(!(see_ghosts && isobserver(A)))
 						continue
 				atoms += A
 			CHECK_TICK
-		lighting += lighting_sheet
-		var/obj/effect/appearance_clone/hell = new(get_turf(src), lighting_sheet)
 
 	var/icon/res = icon('icons/blanks/96x96.dmi', "nothing")
 	res.Scale(psize_x, psize_y)
