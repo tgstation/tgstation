@@ -44,6 +44,7 @@
 			var/datum/reagents/reagents = objectification.reagents
 			reagents?.expose_temperature(temperature)
 
+	var/mob/living/living_target = target
 	if(isliving(target))
 		target.apply_status_effect(/datum/status_effect/freezing_blast)
 
