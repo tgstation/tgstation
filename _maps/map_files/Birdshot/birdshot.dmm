@@ -35787,6 +35787,14 @@
 /obj/item/banner/cargo,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/qm)
+"lYa" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/departments/exodrone/directional/west,
+/turf/open/floor/plating,
+/area/station/maintenance/port/greater)
 "lYf" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -87186,7 +87194,7 @@ fLF
 ahr
 nFX
 nFX
-ozn
+lYa
 pSP
 mhk
 mhk

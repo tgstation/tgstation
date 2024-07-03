@@ -67956,6 +67956,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
+/obj/structure/sign/departments/exodrone/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "unO" = (
