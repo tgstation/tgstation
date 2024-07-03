@@ -132,7 +132,6 @@
 	var/mob/holder = goggles.loc
 	if(!istype(holder) || holder.get_slot_by_item(goggles) != ITEM_SLOT_EYES)
 		holder = null
-	var/obj/item/clothing/glasses/goggles = target
 	if(stored_cutoffs)
 		goggles.color_cutoffs = stored_cutoffs
 		goggles.flash_protect = FLASH_PROTECTION_SENSITIVE
