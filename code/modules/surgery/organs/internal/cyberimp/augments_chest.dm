@@ -284,7 +284,6 @@
 		return
 	to_chat(owner, span_warning("You feel sheering pain as your body is crushed like a soda can!"))
 	owner.apply_damage(20/severity, BRUTE, def_zone = BODY_ZONE_CHEST)
-	owner.apply_effect(6 SECONDS/severity, EFFECT_STUN)
 
 /obj/item/organ/internal/cyberimp/chest/spine/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
