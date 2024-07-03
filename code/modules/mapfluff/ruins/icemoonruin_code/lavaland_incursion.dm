@@ -1,7 +1,3 @@
-/mob/living/simple_animal/hostile/megafauna/dragon/last_drake
-	name = "\proper the last ash drake"
-	desc = "The sole survivor of its species, hunted to the verge of extinction. This frozen hell is the final resting place for the last of the dragons."
-
 /mob/living/basic/mining/legion/cult_skeleton
 	corpse_type = /obj/effect/mob_spawn/corpse/human/skeleton/cultist
 

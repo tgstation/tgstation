@@ -4,7 +4,9 @@
 	dir = 10
 	},
 /obj/structure/stone_tile/center/burnt,
-/turf/open/floor/cult,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/lavaland/surface/outdoors)
 "an" = (
 /turf/open/misc/asteroid{
@@ -36,7 +38,9 @@
 /area/icemoon/underground/explored)
 "fF" = (
 /obj/effect/mob_spawn/corpse/human/skeleton/cultist,
-/turf/open/floor/cult,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/lavaland/surface/outdoors)
 "gd" = (
 /obj/structure/stone_tile/slab,
@@ -61,15 +65,22 @@
 /obj/structure/stone_tile{
 	dir = 8
 	},
-/turf/open/floor/cult,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/lavaland/surface/outdoors)
 "gF" = (
 /obj/effect/mob_spawn/corpse/human/skeleton/cultist,
 /turf/open/floor/cult,
 /area/lavaland/surface)
 "jY" = (
-/turf/open/floor/cult,
-/area/lavaland/surface/outdoors)
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/misc/asteroid{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored)
 "mL" = (
 /obj/structure/stone_tile/cracked{
 	dir = 4
@@ -89,7 +100,9 @@
 /area/lavaland/surface)
 "oK" = (
 /obj/structure/stone_tile/slab,
-/turf/open/floor/cult,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/lavaland/surface/outdoors)
 "oV" = (
 /obj/structure/stone_tile/cracked{
@@ -121,7 +134,9 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/turf/open/floor/cult,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/lavaland/surface/outdoors)
 "qV" = (
 /turf/open/floor/cult,
@@ -129,7 +144,9 @@
 "rn" = (
 /obj/item/melee/cultblade/dagger,
 /obj/item/paper/crumpled/bloody/ruins/lavaland_incursion/last,
-/turf/open/floor/cult,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/lavaland/surface/outdoors)
 "ry" = (
 /obj/structure/stone_tile,
@@ -142,7 +159,9 @@
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 1
 	},
-/turf/open/floor/cult,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/lavaland/surface/outdoors)
 "tI" = (
 /turf/template_noop,
@@ -155,7 +174,9 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/turf/open/floor/cult,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/lavaland/surface/outdoors)
 "uX" = (
 /mob/living/basic/mining/legion/cult_skeleton,
@@ -181,14 +202,18 @@
 /area/icemoon/underground/explored)
 "wP" = (
 /obj/structure/stone_tile/slab/burnt,
-/turf/open/floor/cult,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/lavaland/surface/outdoors)
 "xo" = (
 /obj/structure/stone_tile/slab,
 /obj/structure/stone_tile/surrounding/cracked,
 /obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/center,
-/turf/open/floor/cult,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/lavaland/surface/outdoors)
 "xw" = (
 /obj/structure/stone_tile/slab/cracked{
@@ -232,14 +257,22 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface)
 "Dq" = (
-/obj/structure/stone_tile/slab,
-/turf/open/misc/asteroid/basalt/lava_land_surface{
-	initial_gas_mix = "ICEMOON_ATMOS"
+/obj/structure/stone_tile/block/burnt{
+	dir = 4
 	},
+/obj/structure/stone_tile/burnt{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
 "GN" = (
 /obj/structure/stone_tile/slab/cracked,
-/turf/open/floor/cult,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/lavaland/surface/outdoors)
 "If" = (
 /turf/closed/indestructible/riveted/boss,
@@ -286,6 +319,13 @@
 /obj/structure/stone_tile/slab/cracked,
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
+"QL" = (
+/obj/structure/stone_tile/slab/burnt,
+/obj/structure/stone_tile/surrounding_tile,
+/turf/open/misc/asteroid/basalt/lava_land_surface{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored)
 "Sw" = (
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "LAVALAND_ATMOS"
@@ -309,7 +349,9 @@
 /obj/structure/stone_tile/surrounding/cracked{
 	dir = 5
 	},
-/turf/open/floor/cult,
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
 /area/lavaland/surface/outdoors)
 "Uj" = (
 /obj/structure/stone_tile/slab,
@@ -336,6 +378,20 @@
 "UF" = (
 /turf/open/indestructible/necropolis/air,
 /area/lavaland/surface)
+"UO" = (
+/obj/structure/stone_tile/burnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 9
+	},
+/turf/open/misc/asteroid{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/icemoon/underground/explored)
 "UX" = (
 /mob/living/basic/mining/legion/cult_skeleton,
 /turf/open/indestructible/necropolis/air,
@@ -351,9 +407,11 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "VX" = (
-/turf/open/misc/asteroid/snow/icemoon{
-	initial_gas_mix = s
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
 	},
+/turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
 "Wm" = (
 /turf/open/misc/asteroid/snow/icemoon,
@@ -393,7 +451,10 @@
 	dir = 4
 	},
 /obj/structure/stone_tile/surrounding_tile,
-/mob/living/simple_animal/hostile/megafauna/dragon/last_drake,
+/mob/living/simple_animal/hostile/megafauna/dragon{
+	name = "\proper the last ash drake";
+	desc = "The sole survivor of its species, hunted to the verge of extinction. This frozen hell is the final resting place for the last of the dragons."
+	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface)
 
@@ -1736,7 +1797,7 @@ UY
 vu
 zz
 GN
-jY
+Sw
 zz
 vu
 zz
@@ -1942,7 +2003,7 @@ tI
 tI
 Nn
 Wm
-VX
+Wm
 XQ
 Ky
 If
@@ -1959,7 +2020,7 @@ UY
 UY
 UY
 UY
-jY
+Sw
 oK
 Cb
 PT
@@ -1967,7 +2028,7 @@ dX
 Uj
 PT
 Cb
-jY
+Sw
 ry
 UY
 UY
@@ -1987,7 +2048,7 @@ If
 eP
 Xm
 xw
-Zs
+jY
 XQ
 XQ
 Zs
@@ -2006,7 +2067,7 @@ Ce
 Cp
 Vw
 oK
-jY
+Sw
 UY
 UY
 UY
@@ -2016,8 +2077,8 @@ UY
 UY
 UY
 UY
-jY
-jY
+Sw
+Sw
 Cb
 PT
 Uj
@@ -2025,7 +2086,7 @@ ZR
 PT
 Cb
 gE
-jY
+Sw
 UY
 UY
 UY
@@ -2044,8 +2105,8 @@ gi
 eP
 qv
 UE
-Ja
-Zs
+VX
+UO
 XQ
 Zs
 QC
@@ -2100,8 +2161,8 @@ Vh
 If
 eP
 NB
-Xm
-Ja
+QL
+Dq
 QC
 Ja
 Ja
@@ -2156,8 +2217,8 @@ Qp
 Qp
 If
 If
-Dq
 gd
+XQ
 XQ
 XQ
 Ja
@@ -2191,7 +2252,7 @@ UY
 zz
 Sw
 vu
-jY
+Sw
 uP
 vu
 fF
@@ -2213,7 +2274,7 @@ UY
 Qp
 If
 If
-gd
+XQ
 Zs
 Zs
 XQ
@@ -2248,7 +2309,7 @@ UY
 UY
 zz
 zz
-jY
+Sw
 qN
 zz
 WK
