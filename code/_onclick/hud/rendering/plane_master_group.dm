@@ -34,7 +34,7 @@
 		stack_trace("Hey brother, our key [key] is already in use by a plane master group on the passed in hud, belonging to [viewing_hud.mymob]. Ya fucked up, why are there dupes")
 		return
 
-#if MIN_COMPILER_VERSION > 515
+#if MIN_COMPILER_VERSION > 516
 	#warn Fully change default relay_loc to "1,1", rather than changing it based on client version
 #endif
 

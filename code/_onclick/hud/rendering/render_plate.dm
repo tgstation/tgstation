@@ -392,7 +392,7 @@
  * Other vars such as alpha will automatically be applied with the render source
  */
 /atom/movable/screen/plane_master/proc/generate_render_relays()
-#if MIN_COMPILER_VERSION > 515
+#if MIN_COMPILER_VERSION > 516
 	#warn Fully change default relay_loc to "1,1"
 #endif
 	var/relay_loc = home?.relay_loc || "CENTER"
