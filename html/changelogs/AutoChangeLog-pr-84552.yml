@@ -1,4 +1,0 @@
-author: "OrbisAnima"
-delete-after: True
-changes:
-  - bugfix: "Fixed the basic Sandwich recipe and tags, now it matches the description and original intent."
