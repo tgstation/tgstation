@@ -38,26 +38,14 @@
 /datum/species/voidling/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
 
-	passwindow_on(human_who_gained_species, SPECIES_TRAIT) //if this is here when its PRd im dumb please remind me to move it somewhere else
-	RegisterSignal(human_who_gained_species, COMSIG_MOVABLE_CAN_PASS_THROUGH, PROC_REF(can_pass_through))
 	RegisterSignal(human_who_gained_species, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_temporary_shatter))
-	human_who_gained_species.generic_canpass = FALSE
+	human_who_gained_species.apply_status_effect(/datum/status_effect/glass_passer)
 
 /datum/species/voidling/on_species_loss(mob/living/carbon/human/human, datum/species/new_species, pref_load)
 	. = ..()
 
-	passwindow_off(human, SPECIES_TRAIT)
 	UnregisterSignal(human, COMSIG_MOVABLE_CAN_PASS_THROUGH)
-
-/datum/species/voidling/proc/can_pass_through(mob/living/carbon/human/human, atom/blocker, direction)
-	SIGNAL_HANDLER
-
-	if(istype(blocker, /obj/structure/grille))
-		var/obj/structure/grille/grille = blocker
-		if(grille.shock(human, 100))
-			return COMSIG_COMPONENT_REFUSE_PASSAGE
-
-	return null
+	human.remove_status_effect(/datum/status_effect/glass_passer)
 
 /datum/species/voidling/proc/try_temporary_shatter(mob/living/carbon/human/human, atom/target)
 	SIGNAL_HANDLER
@@ -71,6 +59,52 @@
 	else
 		return
 	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/datum/status_effect/glass_passer
+	id = "glass_passer"
+	duration = INFINITE
+	/// How long does it take us to move into glass?
+	var/pass_time = 0 SECONDS
+
+/datum/status_effect/glass_passer/on_apply()
+	if(!pass_time)
+		passwindow_on(owner, type)
+	else
+		RegisterSignal(owner, COMSIG_MOVABLE_BUMP, PROC_REF(bumped))
+	owner.generic_canpass = FALSE
+	RegisterSignal(owner, COMSIG_MOVABLE_CAN_PASS_THROUGH, PROC_REF(can_pass_through))
+	return TRUE
+
+/datum/status_effect/glass_passer/on_remove()
+	passwindow_off(owner, type)
+
+/datum/status_effect/glass_passer/proc/can_pass_through(mob/living/carbon/human/human, atom/blocker, direction)
+	SIGNAL_HANDLER
+
+	if(istype(blocker, /obj/structure/grille))
+		var/obj/structure/grille/grille = blocker
+		if(grille.shock(human, 100))
+			return COMSIG_COMPONENT_REFUSE_PASSAGE
+
+	return null
+
+/datum/status_effect/glass_passer/proc/bumped(mob/living/owner, atom/bumpee)
+	SIGNAL_HANDLER
+
+	if(!istype(bumpee, /obj/structure/window))
+		return FALSE
+
+	INVOKE_ASYNC(src, PROC_REF(phase_through_glass), owner, bumpee)
+
+/datum/status_effect/glass_passer/proc/phase_through_glass(mob/living/owner, atom/bumpee)
+	if(!do_after(owner, pass_time, bumpee))
+		return
+	passwindow_on(owner, type)
+	try_move_adjacent(owner, get_dir(owner, bumpee))
+	passwindow_off(owner, type)
+
+/datum/status_effect/glass_passer/delayed
+	pass_time = 2 SECONDS
 
 /obj/item/organ/internal/eyes/voidling
 	name = "black orbs"
@@ -90,9 +124,11 @@
 	/// Alpha we have in space
 	var/space_alpha = 50
 	/// Alpha we have elsewhere
-	var/non_space_alpha = 200
+	var/non_space_alpha = 250
 	/// We space in phase
 	var/datum/action/space_phase = /datum/action/cooldown/spell/jaunt/space_crawl
+	/// We settle the un
+	var/datum/action/unsettle = /datum/action/cooldown/spell/pointed/unsettle
 	/// Regen effect we have in space
 	var/datum/status_effect/regen = /datum/status_effect/shadow_regeneration
 
@@ -101,8 +137,12 @@
 
 	RegisterSignal(organ_owner, COMSIG_ATOM_ENTERING, PROC_REF(on_atom_entering))
 	organ_owner.remove_from_all_data_huds()
+
 	space_phase = new space_phase ()
 	space_phase.Grant(organ_owner)
+
+	unsettle = new unsettle ()
+	unsettle.Grant(organ_owner)
 
 /obj/item/organ/internal/brain/voidling/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
@@ -110,8 +150,12 @@
 	UnregisterSignal(organ_owner, COMSIG_ENTER_AREA)
 	alpha = 255
 	organ_owner.add_to_all_human_data_huds()
+
 	space_phase.Remove(organ_owner)
 	space_phase = initial(space_phase)
+
+	unsettle.Remove()
+	unsettle = initial(unsettle)
 
 /obj/item/organ/internal/brain/voidling/proc/on_atom_entering(mob/living/carbon/organ_owner, atom/entering)
 	SIGNAL_HANDLER
@@ -169,12 +213,17 @@
 	random_gain = FALSE
 	/// Type for the bodypart texture we add
 	var/bodypart_overlay_type = /datum/bodypart_overlay/texture/spacey
+	///traits we give on gain
+	var/list/traits_to_apply = list(TRAIT_MUTE, TRAIT_PACIFISM)
+	/// Do we ban the person from entering space?
+	var/ban_from_space = TRUE
 
 /datum/brain_trauma/voided/on_gain()
 	. = ..()
 
-	owner.add_traits(list(TRAIT_MUTE, TRAIT_PACIFISM), TRAUMA_TRAIT)
-	owner.AddComponent(/datum/component/banned_from_space)
+	owner.add_traits(traits_to_apply, TRAUMA_TRAIT)
+	if(ban_from_space)
+		owner.AddComponent(/datum/component/banned_from_space)
 	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(texture_limb))
 	RegisterSignal(owner, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(untexture_limb))
 
@@ -193,9 +242,10 @@
 /datum/brain_trauma/voided/on_lose()
 	. = ..()
 
-	owner.remove_traits(list(TRAIT_MUTE, TRAIT_PACIFISM), TRAUMA_TRAIT)
+	owner.remove_traits(traits_to_apply, TRAUMA_TRAIT)
 	UnregisterSignal(owner, list(COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB))
-	qdel(owner.GetComponent(/datum/component/banned_from_space))
+	if(ban_from_space)
+		qdel(owner.GetComponent(/datum/component/banned_from_space))
 
 	for(var/obj/item/bodypart/bodypart as anything in owner.bodyparts)
 		untexture_limb(owner, bodypart)
@@ -218,6 +268,21 @@
 	if(istype(limb, /obj/item/bodypart/head))
 		var/obj/item/bodypart/head/head = limb
 		head.head_flags = initial(head.head_flags)
+
+/datum/brain_trauma/voided/stable
+	scan_desc = "stable cosmic neural pattern"
+	traits_to_apply = list(TRAIT_MUTE)
+	ban_from_space = FALSE
+
+/datum/brain_trauma/voided/stable/on_gain()
+	. = ..()
+
+	owner.apply_status_effect(/datum/status_effect/glass_passer/delayed)
+
+/datum/brain_trauma/voided/stable/on_lose()
+	. = ..()
+
+	owner.remove_status_effect(/datum/status_effect/glass_passer/delayed)
 
 /datum/component/banned_from_space
 	/// List of recent tiles we walked on that aren't space
@@ -243,16 +308,74 @@
 	else
 		tiles.Add(new_location)
 		if(tiles.len > max_tile_list_size)
-			tiles.Cut(1, 1)
+			tiles.Cut(1, 2)
 
 /datum/component/banned_from_space/proc/send_back(atom/movable/parent)
 	var/new_turf
 
 	if(tiles.len)
-		new_turf = tiles[tiles.len]
-		new /obj/effect/temp_visual/portal_animation(new_turf, new_turf, parent)
+		new_turf = tiles[1]
+		new /obj/effect/temp_visual/portal_animation(parent.loc, new_turf, parent)
 	else
 		new_turf = get_random_station_turf()
 
 	parent.forceMove(new_turf)
 
+/datum/action/cooldown/spell/pointed/unsettle
+	name = "Unsettle"
+	desc = "Stare directly into someone who doesn't see you. Remain in their view for a bit to stun them for 2 seconds and announce your presence to them. "
+	button_icon_state = "terrify"
+	background_icon_state = "bg_alien"
+	overlay_icon_state = "bg_alien_border"
+	panel = null
+	spell_requirements = NONE
+	cooldown_time = 25 SECONDS
+	cast_range = 9
+	active_msg = "You prepare to stare down a target..."
+	deactive_msg = "You refocus your eyes..."
+	/// how long we need to stare at someone to unsettle them (woooooh)
+	var/stare_time = 8 SECONDS
+	/// how long we stun someone on succesful cast
+	var/stun_time = 2 SECONDS
+	/// stamina damage we doooo
+	var/stamina_damage = 80
+
+/datum/action/cooldown/spell/pointed/unsettle/is_valid_target(atom/cast_on)
+	. = ..()
+
+	if(!ishuman(cast_on))
+		cast_on.balloon_alert(owner, "cannot be targeted!")
+		return FALSE
+
+	if(!check_if_in_view(cast_on))
+		owner.balloon_alert(owner, "cannot see you!")
+		return FALSE
+
+	return TRUE
+
+/datum/action/cooldown/spell/pointed/unsettle/cast(mob/living/carbon/human/cast_on)
+	. = ..()
+
+	if(do_after(owner, stare_time, cast_on, IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(check_if_in_view), cast_on), hidden = TRUE))
+		spookify(cast_on)
+		return
+	owner.balloon_alert(owner, "line of sight broken!")
+	return SPELL_CANCEL_CAST
+
+/datum/action/cooldown/spell/pointed/unsettle/proc/check_if_in_view(mob/living/carbon/human/target)
+	SIGNAL_HANDLER
+
+	if(target.is_blind() || !(owner in oview(9, target)))
+		return FALSE
+	return TRUE
+
+/datum/action/cooldown/spell/pointed/unsettle/proc/spookify(mob/living/carbon/human/target)
+	target.flash_act(10, override_blindness_check = TRUE, visual = TRUE, type = /atom/movable/screen/fullscreen/flash/black, length = stun_time)
+	target.Stun(stun_time)
+	target.adjustStaminaLoss(stamina_damage)
+	target.emote("scream")
+
+	new /obj/effect/temp_visual/circle_wave/bioscrambler_wave/unsettle(get_turf(target))
+
+/obj/effect/temp_visual/circle_wave/unsettle
+	color = COLOR_PURPLE
