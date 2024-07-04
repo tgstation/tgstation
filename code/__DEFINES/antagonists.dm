@@ -409,10 +409,10 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define BATTLE_ROYALE_CAMERA_NET "battle_royale_camera_net"
 
 /// If this flag is present, the cult has reached the halo stage
-#define CULTSTATE_HALO (1 << 1)
+#define CULT_STATE_HALO (1 << 1)
 /// If this flag is present, the cult has reached the glowing eyes stage
-#define CULTSTATE_EYES (1 << 2)
+#define CULT_STATE_EYES (1 << 2)
 /// If this flag is present, the cult has summoned NarNar
-#define CULTSTATE_NARSIE (1 << 3)
+#define CULT_STATE_NARSIE (1 << 3)
 
-#define CULTSTATE_ALL (CULTSTATE_HALO | CULTSTATE_EYES | CULTSTATE_NARSIE)
+#define CULT_STATE_ALL (CULT_STATE_HALO | CULT_STATE_EYES | CULT_STATE_NARSIE)

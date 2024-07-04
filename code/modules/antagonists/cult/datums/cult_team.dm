@@ -14,7 +14,7 @@
 	var/datum/antagonist/cult/cult_leader_datum
 	///Has the mass teleport been used yet?
 	var/reckoning_complete = FALSE
-	///Cult progression flags (check CULTSTATE_ALL)
+	///Cult progression flags (check CULT_STATE_ALL)
 	var/cult_state_flags = NONE
 
 	/// List that keeps track of which items have been unlocked after a heretic was sacked.
@@ -32,7 +32,7 @@
 	var/list/true_cultists = list()
 
 /datum/team/cult/proc/check_size()
-	if(cult_state_flags & CULTSTATE_HALO)
+	if(cult_state_flags & CULT_STATE_HALO)
 		return
 
 	// This proc is unnecessary clutter whilst running cult related unit tests
@@ -50,34 +50,34 @@
 
 	ASSERT(cultplayers) //we shouldn't be here.
 	var/ratio = alive ? cultplayers/alive : 1
-	if(ratio > CULT_RISEN && !(cult_state_flags & CULTSTATE_EYES))
+	if(ratio > CULT_RISEN && !(cult_state_flags & CULT_STATE_EYES))
 		rise_cult(cultplayers)
 
-	if(ratio > CULT_ASCENDENT && !(cult_state_flags & CULTSTATE_HALO))
+	if(ratio > CULT_ASCENDENT && !(cult_state_flags & CULT_STATE_HALO))
 		ascend_cult(cultplayers)
 #endif
 
 /datum/team/cult/proc/rise_cult(cultplayers=1)
-	if(cult_state_flags & CULTSTATE_EYES)
+	if(cult_state_flags & CULT_STATE_EYES)
 		return
 	for(var/datum/mind/mind as anything in members)
 		if(mind.current)
 			SEND_SOUND(mind.current, 'sound/ambience/antag/bloodcult/bloodcult_eyes.ogg')
 			to_chat(mind.current, span_cult_large(span_warning("The veil weakens as your cult grows, your eyes begin to glow...")))
 			mind.current.AddElement(/datum/element/cult_eyes)
-	cult_state_flags |= CULTSTATE_EYES
+	cult_state_flags |= CULT_STATE_EYES
 	log_game("The blood cult has risen with [cultplayers] players.")
 	SEND_SIGNAL(src, COMSIG_CULTTEAM_STATE_CHANGED, cult_state_flags)
 
 /datum/team/cult/proc/ascend_cult(cultplayers=1)
-	if(cult_state_flags & CULTSTATE_HALO)
+	if(cult_state_flags & CULT_STATE_HALO)
 		return
 	for(var/datum/mind/mind as anything in members)
 		if(mind.current)
 			SEND_SOUND(mind.current, 'sound/ambience/antag/bloodcult/bloodcult_halos.ogg')
 			to_chat(mind.current, span_cult_large(span_warning("Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")))
 			mind.current.AddElement(/datum/element/cult_halo)
-	cult_state_flags |= CULTSTATE_HALO
+	cult_state_flags |= CULT_STATE_HALO
 	log_game("The blood cult has ascended with [cultplayers] players.")
 	SEND_SIGNAL(src, COMSIG_CULTTEAM_STATE_CHANGED, cult_state_flags)
 

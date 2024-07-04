@@ -125,7 +125,7 @@
 	/// If false, the spell will not delete after running out of charges
 	var/deletes_on_empty = TRUE
 	/// This spell may only be used with these cultstate flags present
-	var/cult_state_flags = CULTSTATE_ALL
+	var/cult_state_flags = CULT_STATE_ALL
 
 /datum/action/innate/cult/blood_spell/Grant(mob/living/owner, datum/action/innate/cult/blood_magic/BM)
 	if(health_cost)
@@ -181,7 +181,7 @@
 	button_icon_state = "hand"
 	magic_path = "/obj/item/melee/blood_magic/stun"
 	health_cost = 10
-	cult_state_flags = parent_type::cult_state_flags & ~CULTSTATE_HALO
+	cult_state_flags = parent_type::cult_state_flags & ~CULT_STATE_HALO
 
 /datum/action/innate/cult/blood_spell/teleport
 	name = "Teleport"
@@ -454,7 +454,7 @@
 	var/datum/antagonist/cult/cultist = IS_CULTIST(user)
 	var/datum/team/cult/cult_team = cultist.get_team()
 	var/effect_coef = 1
-	if(cult_team.cult_state_flags & CULTSTATE_EYES)
+	if(cult_team.cult_state_flags & CULT_STATE_EYES)
 		effect_coef = 0.4
 	user.visible_message(
 		span_warning("[user] holds up [user.p_their()] hand, which explodes in a flash of red light!"),

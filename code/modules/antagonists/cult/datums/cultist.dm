@@ -68,9 +68,9 @@
 	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
 		current.client.images += cult_team.blood_target_image
 
-	if(cult_team.cult_state_flags & CULTSTATE_EYES)
+	if(cult_team.cult_state_flags & CULT_STATE_EYES)
 		current.AddElement(/datum/element/cult_eyes, initial_delay = 0 SECONDS)
-	if(cult_team.cult_state_flags & CULTSTATE_HALO)
+	if(cult_team.cult_state_flags & CULT_STATE_HALO)
 		current.AddElement(/datum/element/cult_halo, initial_delay = 0 SECONDS)
 
 	ADD_TRAIT(current, TRAIT_HEALS_FROM_CULT_PYLONS, CULT_TRAIT)
