@@ -1,0 +1,13 @@
+template = "bitmask/cardinal_32x32.toml"
+
+[icon_size]
+x = 32
+y = 56
+
+[output_icon_size]
+x = 32
+y = 56
+
+[cut_pos]
+x = 16
+y = 28

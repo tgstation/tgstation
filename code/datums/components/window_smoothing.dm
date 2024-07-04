@@ -45,7 +45,7 @@ GLOBAL_LIST_EMPTY(window_appearances)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/atom/parent_atom = parent
-	if(!(parent_atom.smoothing_flags & SMOOTH_BITMASK))
+	if(!(parent_atom.smoothing_flags & (SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS)))
 		stack_trace("We tried to splitvis something without bitmask smoothing. What?")
 		return COMPONENT_INCOMPATIBLE
 

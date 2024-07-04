@@ -176,7 +176,7 @@ xxx xxx xxx
 			corners_diagonal_smooth(calculate_adjacencies())
 		else
 			corners_cardinal_smooth(calculate_adjacencies())
-	else if(smoothing_flags & SMOOTH_BITMASK)
+	else if(smoothing_flags & (SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS))
 		bitmask_smooth()
 	else
 		CRASH("smooth_icon called for [src] with smoothing_flags == [smoothing_flags]")
@@ -458,7 +458,7 @@ xxx xxx xxx
 	SET_ADJ_IN_DIR(WEST, WEST)
 
 	// If there's nothing going on already
-	if(!(new_junction & (NORTH|SOUTH)) || !(new_junction & (EAST|WEST)))
+	if(smoothing_flags & SMOOTH_BITMASK_CARDINALS || !(new_junction & (NORTH|SOUTH)) || !(new_junction & (EAST|WEST)))
 		set_smoothed_icon_state(new_junction)
 		return
 
@@ -486,6 +486,40 @@ xxx xxx xxx
 	#undef BITMASK_ON_BORDER_CHECK
 	#undef BITMASK_FOUND
 	#undef SEARCH_ADJ_IN_DIR
+
+GLOBAL_LIST_INIT(possible_smoothing_junctions, all_smoothing_junctions())
+
+/proc/all_smoothing_junctions()
+	var/list/junctions = list()
+	for(var/base in 0 to NORTH_JUNCTION|SOUTH_JUNCTION|EAST_JUNCTION|WEST_JUNCTION) // all the cardinals
+		junctions += base
+		if(base == 0)
+			continue
+		// Now we check for matching diagonals
+		if(base & NORTH_JUNCTION)
+			if(base & WEST_JUNCTION)
+				junctions += base | NORTHWEST_JUNCTION
+			if(base & EAST_JUNCTION)
+				junctions += base | NORTHEAST_JUNCTION
+		if(base & SOUTH_JUNCTION)
+			if(base & WEST_JUNCTION)
+				junctions += base | SOUTHWEST_JUNCTION
+			if(base & EAST_JUNCTION)
+				junctions += base | SOUTHEAST_JUNCTION
+	return junctions
+
+/// Takes an input smoothing junction, filters out the components of it that are invalid according to how dmis are built
+/proc/make_smoothing_junction_valid(input_junction)
+	// You need both cardinal junctions to allow a corresponding diagonal junction
+	if(input_junction & NORTHWEST_JUNCTION && (input_junction & (NORTH_JUNCTION|WEST_JUNCTION)) != (NORTH_JUNCTION|WEST_JUNCTION))
+		input_junction &= ~NORTHWEST_JUNCTION
+	if(input_junction & NORTHEAST_JUNCTION && (input_junction & (NORTH_JUNCTION|EAST_JUNCTION)) != (NORTH_JUNCTION|EAST_JUNCTION))
+		input_junction &= ~NORTHEAST_JUNCTION
+	if(input_junction & SOUTHWEST_JUNCTION && (input_junction & (SOUTH_JUNCTION|WEST_JUNCTION)) != (SOUTH_JUNCTION|WEST_JUNCTION))
+		input_junction &= ~SOUTHWEST_JUNCTION
+	if(input_junction & SOUTHEAST_JUNCTION && (input_junction & (SOUTH_JUNCTION|EAST_JUNCTION)) != (SOUTH_JUNCTION|EAST_JUNCTION))
+		input_junction &= ~SOUTHEAST_JUNCTION
+	return input_junction
 
 ///Changes the icon state based on the new junction bitmask
 /atom/proc/set_smoothed_icon_state(new_junction)
@@ -548,13 +582,13 @@ xxx xxx xxx
 /proc/smooth_zlevel(zlevel, now = FALSE)
 	var/list/away_turfs = Z_TURFS(zlevel)
 	for(var/turf/turf_to_smooth as anything in away_turfs)
-		if(turf_to_smooth.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		if(turf_to_smooth.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS))
 			if(now)
 				turf_to_smooth.smooth_icon()
 			else
 				QUEUE_SMOOTH(turf_to_smooth)
 		for(var/atom/movable/movable_to_smooth as anything in turf_to_smooth)
-			if(movable_to_smooth.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+			if(movable_to_smooth.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS))
 				if(now)
 					movable_to_smooth.smooth_icon()
 				else
