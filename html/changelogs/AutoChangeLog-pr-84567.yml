@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - admin: "Quiet-announce random events still announce to admins and can therefore be rerolled."
