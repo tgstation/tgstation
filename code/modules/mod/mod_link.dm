@@ -77,29 +77,34 @@
 	)
 
 /obj/item/mod/control/multitool_act_secondary(mob/living/user, obj/item/multitool/tool)
-	if(!multitool_check_buffer(user, tool))
-		return
+	. = NONE
+
 	var/tool_frequency = null
 	if(istype(tool.buffer, /datum/mod_link))
 		var/datum/mod_link/buffer_link = tool.buffer
 		tool_frequency = buffer_link.frequency
 		balloon_alert(user, "frequency set")
+		. = ITEM_INTERACT_SUCCESS
 	if(!tool_frequency && mod_link.frequency)
 		tool.set_buffer(mod_link)
 		balloon_alert(user, "frequency copied")
+		. = ITEM_INTERACT_SUCCESS
 	else if(tool_frequency && !mod_link.frequency)
 		mod_link.frequency = tool_frequency
+		. = ITEM_INTERACT_SUCCESS
 	else if(tool_frequency && mod_link.frequency)
 		var/response = tgui_alert(user, "Would you like to copy or imprint the frequency?", "MODlink Frequency", list("Copy", "Imprint"))
 		if(!user.is_holding(tool))
-			return
+			return ITEM_INTERACT_BLOCKING
 		switch(response)
 			if("Copy")
 				tool.set_buffer(mod_link)
 				balloon_alert(user, "frequency copied")
+				. = ITEM_INTERACT_SUCCESS
 			if("Imprint")
 				mod_link.frequency = tool_frequency
 				balloon_alert(user, "frequency set")
+				. = ITEM_INTERACT_SUCCESS
 
 /obj/item/mod/control/proc/can_call()
 	return get_charge() && wearer && wearer.stat < DEAD
@@ -227,29 +232,34 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/neck/link_scryer/multitool_act_secondary(mob/living/user, obj/item/multitool/tool)
-	if(!multitool_check_buffer(user, tool))
-		return
+	. = NONE
+
 	var/tool_frequency = null
 	if(istype(tool.buffer, /datum/mod_link))
 		var/datum/mod_link/buffer_link = tool.buffer
 		tool_frequency = buffer_link.frequency
 		balloon_alert(user, "frequency set")
+		. = ITEM_INTERACT_SUCCESS
 	if(!tool_frequency && mod_link.frequency)
 		tool.set_buffer(mod_link)
 		balloon_alert(user, "frequency copied")
+		. = ITEM_INTERACT_SUCCESS
 	else if(tool_frequency && !mod_link.frequency)
 		mod_link.frequency = tool_frequency
+		. = ITEM_INTERACT_SUCCESS
 	else if(tool_frequency && mod_link.frequency)
 		var/response = tgui_alert(user, "Would you like to copy or imprint the frequency?", "MODlink Frequency", list("Copy", "Imprint"))
 		if(!user.is_holding(tool))
-			return
+			return ITEM_INTERACT_BLOCKING
 		switch(response)
 			if("Copy")
 				tool.set_buffer(mod_link)
 				balloon_alert(user, "frequency copied")
+				. = ITEM_INTERACT_SUCCESS
 			if("Imprint")
 				mod_link.frequency = tool_frequency
 				balloon_alert(user, "frequency set")
+				. = ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/neck/link_scryer/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()

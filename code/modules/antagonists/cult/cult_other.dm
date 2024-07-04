@@ -16,8 +16,15 @@
 /proc/is_convertable_to_cult(mob/living/target, datum/team/cult/specific_cult)
 	if(!istype(target))
 		return FALSE
-	if(isnull(target.mind) || !GET_CLIENT(target))
+	if(isnull(target.mind))
 		return FALSE
+
+// disables client checks if testing for easier debugging
+#ifndef TESTING
+	if(!GET_CLIENT(target))
+		return FALSE
+#endif
+
 	if(target.mind.unconvertable)
 		return FALSE
 	if(ishuman(target) && target.mind.holy_role)

@@ -197,7 +197,7 @@
  * A backwards depth-limited breadth-first-search to see if the target is
  * logically "in" anything adjacent to us.
  */
-/atom/movable/proc/CanReach(atom/ultimate_target, obj/item/tool, view_only = FALSE)
+/atom/proc/CanReach(atom/ultimate_target, obj/item/tool, view_only = FALSE)
 	var/list/direct_access = DirectAccess()
 	var/depth = 1 + (view_only ? STORAGE_VIEW_DEPTH : INVENTORY_DEPTH)
 
@@ -225,9 +225,13 @@
 				next += target.loc
 
 		checking = next
+
+	if(SEND_SIGNAL(src, COMSIG_ATOM_CANREACH, ultimate_target) & COMPONENT_ALLOW_REACH)
+		return TRUE
+
 	return FALSE
 
-/atom/movable/proc/DirectAccess()
+/atom/proc/DirectAccess()
 	return list(src, loc)
 
 /mob/DirectAccess(atom/target)
