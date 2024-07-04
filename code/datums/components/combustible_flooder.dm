@@ -11,10 +11,10 @@
 	src.gas_amount = initialize_gas_amount
 	src.temp_amount = initialize_temp_amount
 
-	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(attackby_react))
 // Any item made of plasma is going to have this component, making it extremely difficult to blacklist fire hazards during create_and_destroy.
 // So let's just completely neuter them during unit tests so we don't burn down the testing area and cause spurious runtimes.
 #ifndef UNIT_TESTS
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(attackby_react))
 	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, PROC_REF(flame_react))
 	RegisterSignal(parent, COMSIG_ATOM_TOUCHED_SPARKS, PROC_REF(sparks_react))
 	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, PROC_REF(projectile_react))
