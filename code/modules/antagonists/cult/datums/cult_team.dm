@@ -14,10 +14,8 @@
 	var/datum/antagonist/cult/cult_leader_datum
 	///Has the mass teleport been used yet?
 	var/reckoning_complete = FALSE
-	///Has the cult risen, and gotten red eyes?
-	var/cult_risen = FALSE
-	///Has the cult ascended, and gotten halos?
-	var/cult_ascendent = FALSE
+	///Cult progression flags (check CULTSTATE_ALL)
+	var/cult_state_flags = NONE
 
 	/// List that keeps track of which items have been unlocked after a heretic was sacked.
 	var/list/unlocked_heretic_items = list(
@@ -34,7 +32,7 @@
 	var/list/true_cultists = list()
 
 /datum/team/cult/proc/check_size()
-	if(cult_ascendent)
+	if(cult_state_flags & CULTSTATE_HALO)
 		return
 
 	// This proc is unnecessary clutter whilst running cult related unit tests
@@ -52,24 +50,36 @@
 
 	ASSERT(cultplayers) //we shouldn't be here.
 	var/ratio = alive ? cultplayers/alive : 1
-	if(ratio > CULT_RISEN && !cult_risen)
-		for(var/datum/mind/mind as anything in members)
-			if(mind.current)
-				SEND_SOUND(mind.current, 'sound/ambience/antag/bloodcult/bloodcult_eyes.ogg')
-				to_chat(mind.current, span_cult_large(span_warning("The veil weakens as your cult grows, your eyes begin to glow...")))
-				mind.current.AddElement(/datum/element/cult_eyes)
-		cult_risen = TRUE
-		log_game("The blood cult has risen with [cultplayers] players.")
+	if(ratio > CULT_RISEN && !(cult_state_flags & CULTSTATE_EYES))
+		rise_cult(cultplayers)
 
-	if(ratio > CULT_ASCENDENT && !cult_ascendent)
-		for(var/datum/mind/mind as anything in members)
-			if(mind.current)
-				SEND_SOUND(mind.current, 'sound/ambience/antag/bloodcult/bloodcult_halos.ogg')
-				to_chat(mind.current, span_cult_large(span_warning("Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")))
-				mind.current.AddElement(/datum/element/cult_halo)
-		cult_ascendent = TRUE
-		log_game("The blood cult has ascended with [cultplayers] players.")
+	if(ratio > CULT_ASCENDENT && !(cult_state_flags & CULTSTATE_HALO))
+		ascend_cult(cultplayers)
 #endif
+
+/datum/team/cult/proc/rise_cult(cultplayers=1)
+	if(cult_state_flags & CULTSTATE_EYES)
+		return
+	for(var/datum/mind/mind as anything in members)
+		if(mind.current)
+			SEND_SOUND(mind.current, 'sound/ambience/antag/bloodcult/bloodcult_eyes.ogg')
+			to_chat(mind.current, span_cult_large(span_warning("The veil weakens as your cult grows, your eyes begin to glow...")))
+			mind.current.AddElement(/datum/element/cult_eyes)
+	cult_state_flags |= CULTSTATE_EYES
+	log_game("The blood cult has risen with [cultplayers] players.")
+	SEND_SIGNAL(src, COMSIG_CULTTEAM_STATE_CHANGED, cult_state_flags)
+
+/datum/team/cult/proc/ascend_cult(cultplayers=1)
+	if(cult_state_flags & CULTSTATE_HALO)
+		return
+	for(var/datum/mind/mind as anything in members)
+		if(mind.current)
+			SEND_SOUND(mind.current, 'sound/ambience/antag/bloodcult/bloodcult_halos.ogg')
+			to_chat(mind.current, span_cult_large(span_warning("Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")))
+			mind.current.AddElement(/datum/element/cult_halo)
+	cult_state_flags |= CULTSTATE_HALO
+	log_game("The blood cult has ascended with [cultplayers] players.")
+	SEND_SIGNAL(src, COMSIG_CULTTEAM_STATE_CHANGED, cult_state_flags)
 
 /datum/team/cult/add_member(datum/mind/new_member)
 	. = ..()

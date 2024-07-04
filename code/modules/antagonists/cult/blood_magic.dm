@@ -48,6 +48,8 @@
 /datum/action/innate/cult/blood_magic/Activate()
 	var/rune = FALSE
 	var/limit = RUNELESS_MAX_BLOODCHARGE
+	var/datum/antagonist/cult/cultist = IS_CULTIST(owner)
+	var/datum/team/cult/the_cult = cultist.get_team()
 	for(var/obj/effect/rune/empower/R in range(1, owner))
 		rune = TRUE
 		break
@@ -65,10 +67,12 @@
 	var/entered_spell_name
 	var/datum/action/innate/cult/blood_spell/BS
 	var/list/possible_spells = list()
-	for(var/I in subtypesof(/datum/action/innate/cult/blood_spell))
-		var/datum/action/innate/cult/blood_spell/J = I
-		var/cult_name = initial(J.name)
-		possible_spells[cult_name] = J
+	for(var/datum/action/innate/cult/blood_spell/spellpath as anything in subtypesof(/datum/action/innate/cult/blood_spell))
+		var/stateflags = initial(spellpath.cult_state_flags)
+		if(the_cult.cult_state_flags & ~stateflags)
+			continue
+		var/cult_name = initial(spellpath.name)
+		possible_spells[cult_name] = spellpath
 	possible_spells += "(REMOVE SPELL)"
 	entered_spell_name = tgui_input_list(owner, "Blood spell to prepare", "Spell Choices", possible_spells)
 	if(isnull(entered_spell_name))
@@ -108,6 +112,7 @@
 	name = "Blood Magic"
 	button_icon_state = "telerune"
 	desc = "Fear the Old Blood."
+	/// Charges
 	var/charges = 1
 	var/magic_path = null
 	var/obj/item/melee/blood_magic/hand_magic
@@ -119,6 +124,8 @@
 	var/positioned = FALSE
 	/// If false, the spell will not delete after running out of charges
 	var/deletes_on_empty = TRUE
+	/// This spell may only be used with these cultstate flags present
+	var/cult_state_flags = CULTSTATE_ALL
 
 /datum/action/innate/cult/blood_spell/Grant(mob/living/owner, datum/action/innate/cult/blood_magic/BM)
 	if(health_cost)
@@ -126,7 +133,17 @@
 	base_desc = desc
 	desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
 	all_magic = BM
+	var/datum/antagonist/cult/our_cultist = IS_CULTIST(owner)
+	if(!isnull(our_cultist))
+		RegisterSignal(our_cultist.get_team(), COMSIG_CULTTEAM_STATE_CHANGED, PROC_REF(cult_progressed))
 	return ..()
+
+/datum/action/innate/cult/blood_spell/proc/cult_progressed(datum/team/cult/source, new_flags)
+	SIGNAL_HANDLER
+	if(!(~cult_state_flags & new_flags))
+		return
+	to_chat(owner, span_boldwarning("As the harvest draws near, your carved [name] loses power..."))
+	qdel(src)
 
 /datum/action/innate/cult/blood_spell/Remove()
 	if(all_magic)
@@ -160,10 +177,11 @@
 //Cult Blood Spells
 /datum/action/innate/cult/blood_spell/stun
 	name = "Stun"
-	desc = "Empowers your hand to stun and mute a victim on contact. Gets weaker depending on how many have joined the Cult."
+	desc = "Empowers your hand to stun and mute a victim on contact. Gets weaker once the veil weakens further."
 	button_icon_state = "hand"
 	magic_path = "/obj/item/melee/blood_magic/stun"
 	health_cost = 10
+	cult_state_flags = parent_type::cult_state_flags & ~CULTSTATE_HALO
 
 /datum/action/innate/cult/blood_spell/teleport
 	name = "Teleport"
@@ -436,9 +454,7 @@
 	var/datum/antagonist/cult/cultist = IS_CULTIST(user)
 	var/datum/team/cult/cult_team = cultist.get_team()
 	var/effect_coef = 1
-	if(cult_team.cult_ascendent)
-		effect_coef = 0.1
-	else if(cult_team.cult_risen)
+	if(cult_team.cult_state_flags & CULTSTATE_EYES)
 		effect_coef = 0.4
 	user.visible_message(
 		span_warning("[user] holds up [user.p_their()] hand, which explodes in a flash of red light!"),

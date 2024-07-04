@@ -45,3 +45,6 @@
 
 ///from /datum/bank_account/pay_debt(), after a portion or all the debt has been paid.
 #define COMSIG_BANK_ACCOUNT_DEBT_PAID "bank_account_debt_paid"
+
+///from /datum/team/cult/proc/rise_cult() or ascend_cult(), called when this proc causes the cult state flags to change
+#define COMSIG_CULTTEAM_STATE_CHANGED "bloodcult_team_state_change"
