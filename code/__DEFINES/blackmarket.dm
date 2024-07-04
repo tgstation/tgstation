@@ -10,7 +10,3 @@
 // Sends a supply pod to the buyer's location, showy.
 #define SHIPPING_METHOD_SUPPLYPOD "Supply Pod"
 
-// Items bought from this market are not considered in violation of space law.
-#define MARKET_PRODUCTS_LEGAL "legal"
-// Items bought from this market are considered in violation of space law, stolen, or the sort of thing that could get a contraband trait.
-#define MARKET_PRODUCTS_ILLEGAL "illegal"

@@ -1740,7 +1740,7 @@
 /obj/item/proc/is_contraband()
 	if(HAS_TRAIT(src, TRAIT_CONTRABAND))
 		return TRUE
-	for(var/datum/uplink_item/traitor_item as anything in subtypesof(/datum/uplink_item))
+	for(var/datum/uplink_item/traitor_item as anything in SStraitor.uplink_items)
 		istype(src, traitor_item.item)
 			if(!(traitor_item.uplink_item_flags & SYNDIE_TRIPS_CONTRABAND))
 				return FALSE

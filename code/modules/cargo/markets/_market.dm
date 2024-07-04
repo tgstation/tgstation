@@ -11,7 +11,7 @@
 	/// Item categories available from this market, only items which are in these categories can be gotten from this market. Automatically assigned, so don't manually adjust.
 	var/list/categories = list()
 	/// Are the items from this market legal or illegal? If illegal, apply a contrband trait to the bought object.
-	var/legal_status = MARKET_PRODUCTS_LEGAL
+	var/legal_status = TRUE
 
 /// Adds item to the available items and add it's category if it is not in categories yet.
 /datum/market/proc/add_item(datum/market_item/item)
@@ -80,4 +80,4 @@
 		SHIPPING_METHOD_LAUNCH = 10,
 		SHIPPING_METHOD_TELEPORT= 75,
 	)
-	legal_status = MARKET_PRODUCTS_ILLEGAL
+	legal_status = FALSE

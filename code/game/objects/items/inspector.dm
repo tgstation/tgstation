@@ -99,28 +99,28 @@
 
 /obj/item/inspector/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	if(!interacting_with.can_interact(user, TRUE))
-		return
+	if(!Adjacent(interacting_with))
+		return ITEM_INTERACT_BLOCKING
 	if(cell_cover_open)
-		balloon_alert(user, "close cover first")
-		return
+		balloon_alert(user, "close cover first!")
+		return ITEM_INTERACT_BLOCKING
 	if(!cell || !cell.use(INSPECTOR_ENERGY_USAGE_LOW))
-		balloon_alert(user, "check cell")
-		return
+		balloon_alert(user, "check cell!")
+		return ITEM_INTERACT_BLOCKING
 	if(!isitem(interacting_with))
-		return
+		return ITEM_INTERACT_BLOCKING
 	var/obj/item/contraband_item = interacting_with
 	var/contraband_status = contraband_item.is_contraband()
 	if((!contraband_status && scans_correctly) || (contraband_status && !scans_correctly))
 		playsound(src, 'sound/machines/ping.ogg', 20)
 		balloon_alert(user, "clear")
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	playsound(src, 'sound/machines/uplinkerror.ogg', 40)
 	balloon_alert(user, "contraband detected")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/inspector/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
 	if(cell_cover_open && cell)
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove cell"
 
@@ -132,7 +132,6 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/inspector/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
-	. = ..()
 	if(cell_cover_open || !cell)
 		return NONE
 	if(isitem(target))
@@ -225,11 +224,11 @@
  * Can be crafted into a bananium HONK-spect scanner
  */
 /obj/item/inspector/clown
+	scans_correctly = FALSE
 	///will only cycle through modes with numbers lower than this
 	var/max_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST
 	///names of modes, ordered first to last
 	var/list/mode_names = list("normal", "classic", "honk", "fafafoggy")
-	scans_correctly = FALSE
 
 /obj/item/inspector/clown/attack(mob/living/M, mob/living/user)
 	. = ..()

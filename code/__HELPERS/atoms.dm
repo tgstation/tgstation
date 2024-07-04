@@ -37,7 +37,7 @@
 /atom/proc/get_all_contents_skipping_traits(skipped_trait)
 	. = list(src)
 	if(!skipped_trait)
-		return
+		CRASH("get_all_contents_skipping_traits called without a skipped_trait")
 	var/i = 0
 	while(i < length(.))
 		var/atom/checked_atom = .[++i]

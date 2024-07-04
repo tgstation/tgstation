@@ -156,5 +156,5 @@
  * @param legal_status - Is this item considered legal? If illegal, will apply the contraband trait to the spawned item.
  */
 /datum/market_purchase/proc/post_purchase_effects(atom/spawned_item)
-	if(legallity == MARKET_PRODUCTS_ILLEGAL)
+	if(!legallity)
 		ADD_TRAIT(spawned_item, TRAIT_CONTRABAND, INNATE_TRAIT)

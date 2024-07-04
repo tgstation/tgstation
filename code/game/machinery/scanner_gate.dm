@@ -106,15 +106,17 @@
 		scanline_timer = addtimer(CALLBACK(src, PROC_REF(set_scanline), "passive"), duration, TIMER_STOPPABLE)
 
 /obj/machinery/scanner_gate/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
 	if(istype(tool, /obj/item/inspector))
 		if(n_spect)
 			to_chat(user, span_warning("The scanner is already equipped with an N-Spect scanner."))
-			return
+			return ITEM_INTERACT_BLOCKING
 		else
 			to_chat(user, span_notice("You install an N-Spect scanner on [src]."))
 			n_spect = tool
-			n_spect.forceMove(src)
+			if(!user.transferItemToLoc(tool, src))
+    			return ITEM_INTERACT_BLOCKING
+			return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/machinery/scanner_gate/attackby(obj/item/W, mob/user, params)
 	var/obj/item/card/id/card = W.GetID()
@@ -142,7 +144,6 @@
 	. = ..()
 	if(n_spect)
 		to_chat(user, span_notice("You uninstall [n_spect] from [src]."))
-		balloon_alert(user, "scanner uninstalled")
 		n_spect.forceMove(drop_location())
 		return ITEM_INTERACT_SUCCESS
 
