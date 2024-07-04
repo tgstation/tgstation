@@ -1,0 +1,6 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - bugfix: "Grass turfs will render properly now. Reworked how floors render, please report any bugs!"
+  - bugfix: "Cameras now properly capture lighting"
+  - bugfix: "The layering seen in photos should better match the actual game"

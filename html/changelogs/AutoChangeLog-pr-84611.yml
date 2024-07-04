@@ -1,0 +1,6 @@
+author: "aaaa1023"
+delete-after: True
+changes:
+  - qol: "Increased view_range on the Psyker Bounty Hunters' Shuttle navigation console."
+  - bugfix: "Fixed the shuttle navigation console camera eye being incorrectly offset on: the SpacePol van, the Russian bounty hunters, the default bounty hunters, the Psyker bounty hunters, and the MI13 Foodtruck."
+  - bugfix: "Fixed the SpacePol van, Russian bounty hunters, default bounty hunters, and Psyker bounty hunters' shuttles all flying in incorrect directions."
