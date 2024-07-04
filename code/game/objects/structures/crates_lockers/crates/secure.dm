@@ -140,7 +140,8 @@
 		new /obj/effect/spawner/random/trash/deluxe_garbage(src)
 		if(prob(35))
 			new /obj/effect/spawner/random/trash/garbage(src)
-		if(prob(15))
+	for(var/i in 1 to rand(4,6))
+		if(prob(30))
 			new /obj/item/storage/bag/trash/filled(src)
 
 /obj/structure/closet/crate/secure/owned

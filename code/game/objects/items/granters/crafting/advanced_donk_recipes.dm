@@ -17,5 +17,5 @@
 		"Got to get the steps in order...",
 		"The six basic food groups...",
 		"The secret formula!",
-		"Three different varients...",
+		"Three different variants...",
 	)
