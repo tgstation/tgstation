@@ -24,6 +24,8 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.2
 
+	/// The animation we're currently playing, if any
+	var/animation
 	var/visible = TRUE
 	var/operating = FALSE
 	var/glass = FALSE
@@ -252,7 +254,7 @@
 		if(requiresID() && check_access(I))
 			open()
 		else
-			do_animate("deny")
+			run_animation("deny")
 		return
 
 /obj/machinery/door/Move()
@@ -282,7 +284,7 @@
 	else if(requiresID() && allowed(user))
 		open()
 	else
-		do_animate("deny")
+		run_animation("deny")
 
 /obj/machinery/door/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -310,7 +312,7 @@
 			close()
 		return TRUE
 	if(density)
-		do_animate("deny")
+		run_animation("deny")
 
 /obj/machinery/door/allowed(mob/M)
 	if(emergency)
@@ -405,24 +407,67 @@
 		INVOKE_ASYNC(src, PROC_REF(open))
 
 /obj/machinery/door/update_icon_state()
-	icon_state = "[base_icon_state][density]"
-	return ..()
-
-/obj/machinery/door/proc/do_animate(animation)
+	. = ..()
 	switch(animation)
 		if("opening")
 			if(panel_open)
-				flick("o_doorc0", src)
+				icon_state = "o_door_opening"
 			else
-				flick("doorc0", src)
+				icon_state = "door_opening"
 		if("closing")
 			if(panel_open)
-				flick("o_doorc1", src)
+				icon_state = "o_door_closing"
 			else
-				flick("doorc1", src)
+				icon_state = "door_closing"
 		if("deny")
 			if(!machine_stat)
-				flick("door_deny", src)
+				icon_state = "door_deny"
+		else
+			icon_state = "[base_icon_state]_[density ? "closed" : "open"]"
+
+/obj/machinery/door/update_overlays()
+	. = ..()
+	if(panel_open)
+		. += mutable_appearance(icon, "panel_open")
+
+/// Returns the delay to use for the passed in animation
+/// We'll do our cleanup once the delay runs out
+/obj/machinery/door/proc/animation_length(animation)
+	switch(animation)
+		if("opening")
+			return 0.6 SECONDS
+		if("closing")
+			return 0.6 SECONDS
+		if("deny")
+			return 0.3 SECONDS
+
+/// Returns the time required to hit particular points in an animation
+/// Used to manage delays for opening/closing and such
+/obj/machinery/door/proc/animation_segment_delay(animation)
+	switch(animation)
+		if("opening_passable")
+			return 0.5 SECONDS
+		if("opening_done")
+			return 0.6 SECONDS
+		if("closing_unpassable")
+			return 0.2 SECONDS
+		if("closing_done")
+			return 0.6 SECONDS
+
+/// Override this to do misc tasks on animation start
+/obj/machinery/door/proc/animation_effects(animation)
+	return
+
+/// Used to start a new animation
+/// Accepts the animation to start as an arg
+/obj/machinery/door/proc/run_animation(animation)
+	set_animation(animation)
+	addtimer(CALLBACK(src, PROC_REF(set_animation), null), animation_length(animation), TIMER_UNIQUE|TIMER_OVERRIDE)
+
+// React to our animation changing
+/obj/machinery/door/proc/set_animation(animation)
+	src.animation = animation
+	update_appearance()
 
 /// Public proc that simply handles opening the door. Returns TRUE if the door was opened, FALSE otherwise.
 /// Use argument "forced" in conjunction with try_to_force_door_open if you want/need additional checks depending on how sorely you need the door opened.
@@ -433,12 +478,14 @@
 		return FALSE
 	operating = TRUE
 	use_energy(active_power_usage)
-	do_animate("opening")
+	run_animation("opening")
 	set_opacity(0)
-	SLEEP_NOT_DEL(0.5 SECONDS)
+	var/passable_delay = animation_segment_delay("opening_passable")
+	SLEEP_NOT_DEL(passable_delay)
 	set_density(FALSE)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
-	SLEEP_NOT_DEL(0.5 SECONDS)
+	var/open_delay = animation_segment_delay("opening_done") - passable_delay
+	SLEEP_NOT_DEL(open_delay)
 	layer = initial(layer)
 	update_appearance()
 	set_opacity(0)
@@ -470,12 +517,14 @@
 
 	operating = TRUE
 
-	do_animate("closing")
+	run_animation("closing")
 	layer = closingLayer
-	SLEEP_NOT_DEL(0.5 SECONDS)
+	var/unpassable_delay = animation_segment_delay("closing_unpassable")
+	SLEEP_NOT_DEL(unpassable_delay)
 	set_density(TRUE)
 	flags_1 |= PREVENT_CLICK_UNDER_1
-	SLEEP_NOT_DEL(0.5 SECONDS)
+	var/close_delay = animation_segment_delay("closing_done") - unpassable_delay
+	SLEEP_NOT_DEL(close_delay)
 	update_appearance()
 	if(visible && !glass)
 		set_opacity(1)
@@ -555,6 +604,26 @@
 
 /obj/machinery/door/get_dumping_location()
 	return null
+
+/obj/machinery/door/morgue/animation_length(animation)
+	switch(animation)
+		if("opening")
+			return 1.5 SECONDS
+		if("closing")
+			return 1.5 SECONDS
+		if("deny")
+			return 0.1 SECONDS
+
+/obj/machinery/door/morgue/animation_segment_delay(animation)
+	switch(animation)
+		if("opening_passable")
+			return 1.4 SECONDS
+		if("opening_done")
+			return 1.5 SECONDS
+		if("closing_unpassable")
+			return 0.2 SECONDS
+		if("closing_done")
+			return 1.5 SECONDS
 
 /obj/machinery/door/proc/lock()
 	return

@@ -195,18 +195,37 @@
 		return FALSE
 	return ..()
 
-/obj/machinery/door/poddoor/do_animate(animation)
-	switch(animation)
-		if("opening")
-			flick("opening", src)
-			playsound(src, animation_sound, 50, TRUE)
-		if("closing")
-			flick("closing", src)
-			playsound(src, animation_sound, 50, TRUE)
-
 /obj/machinery/door/poddoor/update_icon_state()
 	. = ..()
-	icon_state = density ? "closed" : "open"
+	if(animation)
+		icon_state = animation
+	else
+		icon_state = density ? "closed" : "open"
+
+/obj/machinery/door/poddoor/animation_length(animation)
+	switch(animation)
+		if("opening")
+			return 1.1 SECONDS
+		if("closing")
+			return 1.1 SECONDS
+
+/obj/machinery/door/poddoor/animation_segment_delay(animation)
+	switch(animation)
+		if("opening_passable")
+			return 0.5 SECONDS
+		if("opening_done")
+			return 1.1 SECONDS
+		if("closing_unpassable")
+			return 0.2 SECONDS
+		if("closing_done")
+			return 1.1 SECONDS
+
+/obj/machinery/door/poddoor/animation_effects(animation)
+	switch(animation)
+		if("opening")
+			playsound(src, animation_sound, 50, TRUE)
+		if("closing")
+			playsound(src, animation_sound, 50, TRUE)
 
 /obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(density & !(resistance_flags & INDESTRUCTIBLE))

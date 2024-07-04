@@ -72,13 +72,34 @@
 
 /obj/machinery/door/window/update_icon_state()
 	. = ..()
-	icon_state = "[base_state][density ? null : "open"]"
+	if(animation)
+		icon_state = "[base_state][animation]"
+	else
+		icon_state = "[base_state][density ? null : "open"]"
 
 	if(hasPower() && unres_sides)
 		set_light(l_range = 2, l_power = 1)
 		return
 
 	set_light(l_range = 0)
+
+/obj/machinery/door/window/animation_length(animation)
+	switch(animation)
+		if("opening")
+			return 0.9 SECONDS
+		if("closing")
+			return 0.9 SECONDS
+
+/obj/machinery/door/window/animation_segment_delay(animation)
+	switch(animation)
+		if("opening_passable")
+			return 0.7 SECONDS
+		if("opening_done")
+			return 0.9 SECONDS
+		if("closing_unpassable")
+			return 0.2 SECONDS
+		if("closing_done")
+			return 0.9 SECONDS
 
 /obj/machinery/door/window/update_overlays()
 	. = ..()
@@ -131,7 +152,7 @@
 				if(allowed(occupant))
 					open_and_close()
 					return
-			do_animate("deny")
+			run_animation("deny")
 		return
 	if(!SSticker)
 		return
@@ -155,7 +176,7 @@
 		open_and_close()
 
 	else
-		do_animate("deny")
+		run_animation("deny")
 
 	return
 
@@ -214,11 +235,13 @@
 	if(!operating) //in case of emag
 		operating = TRUE
 
-	do_animate("opening")
+	run_animation("opening")
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
-	icon_state ="[base_state]open"
-	sleep(1 SECONDS)
+	var/passable_delay = animation_segment_delay("opening_passable")
+	sleep(passable_delay)
 	set_density(FALSE)
+	var/open_delay = animation_segment_delay("opening_done") - passable_delay
+	sleep(open_delay)
 	air_update_turf(TRUE, FALSE)
 	update_freelook_sight()
 
@@ -257,14 +280,15 @@
 		return FALSE
 
 	operating = TRUE
-	do_animate("closing")
+	run_animation("closing")
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
-	icon_state = base_state
-
+	var/unpassable_delay = animation_segment_delay("closing_unpassable")
+	sleep(unpassable_delay)
 	set_density(TRUE)
 	air_update_turf(TRUE, TRUE)
 	update_freelook_sight()
-	sleep(1 SECONDS)
+	var/close_delay = animation_segment_delay("closing_done") - unpassable_delay
+	sleep(close_delay)
 
 	operating = FALSE
 	return TRUE
@@ -423,15 +447,6 @@
 			close(BYPASS_DOOR_CHECKS)
 	else
 		to_chat(user, span_warning("The door's motors resist your efforts to force it!"))
-
-/obj/machinery/door/window/do_animate(animation)
-	switch(animation)
-		if("opening")
-			flick("[base_state]opening", src)
-		if("closing")
-			flick("[base_state]closing", src)
-		if("deny")
-			flick("[base_state]deny", src)
 
 /obj/machinery/door/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)

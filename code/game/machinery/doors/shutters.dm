@@ -11,6 +11,24 @@
 	recipe_type = /datum/crafting_recipe/shutters
 	animation_sound = 'sound/machines/shutter.ogg'
 
+/obj/machinery/door/poddoor/shutters/animation_length(animation)
+	switch(animation)
+		if("opening")
+			return 1.388 SECONDS
+		if("closing")
+			return 1.388 SECONDS
+
+/obj/machinery/door/poddoor/shutters/animation_segment_delay(animation)
+	switch(animation)
+		if("opening_passable")
+			return 0.76 SECONDS
+		if("opening_done")
+			return 1.388 SECONDS
+		if("closing_unpassable")
+			return 0.152 SECONDS
+		if("closing_done")
+			return 1.388 SECONDS
+
 /obj/machinery/door/poddoor/shutters/preopen
 	icon_state = "open"
 	density = FALSE
