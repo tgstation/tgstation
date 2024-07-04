@@ -98,7 +98,6 @@
 		. += "\The [cell] is firmly in place. [span_info("Ctrl-click with an empty hand to remove it.")]"
 
 /obj/item/inspector/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	. = ..()
 	if(!Adjacent(interacting_with))
 		return ITEM_INTERACT_BLOCKING
 	if(cell_cover_open)
@@ -117,7 +116,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 	playsound(src, 'sound/machines/uplinkerror.ogg', 40)
-	balloon_alert(user, "contraband detected")
+	balloon_alert(user, "contraband detected!")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/inspector/add_context(atom/source, list/context, obj/item/held_item, mob/user)

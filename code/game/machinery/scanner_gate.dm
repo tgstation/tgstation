@@ -114,7 +114,7 @@
 			to_chat(user, span_notice("You install an N-Spect scanner on [src]."))
 			n_spect = tool
 			if(!user.transferItemToLoc(tool, src))
-    			return ITEM_INTERACT_BLOCKING
+				return ITEM_INTERACT_BLOCKING
 			return ITEM_INTERACT_SUCCESS
 	return NONE
 

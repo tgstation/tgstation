@@ -111,7 +111,7 @@
 	item = /obj/item/disk/nuclear/fake
 	cost = 1
 	surplus = 1
-	uplink_item_flags = null
+	uplink_item_flags = NONE
 
 /datum/uplink_item/device_tools/frame
 	name = "F.R.A.M.E. disk"

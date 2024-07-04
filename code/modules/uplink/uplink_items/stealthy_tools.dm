@@ -91,7 +91,7 @@
 	item = /obj/item/storage/backpack/satchel/flat/with_tools
 	cost = 1
 	surplus = 30
-	uplink_item_flags = null
+	uplink_item_flags = NONE
 
 /datum/uplink_item/stealthy_tools/mail_counterfeit
 	name = "GLA Brand Mail Counterfeit Device"

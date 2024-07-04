@@ -78,7 +78,7 @@
 	var/purchase_log_vis = TRUE // Visible in the purchase log?
 	/// Whether this purchase is restricted or not (VR/Events related)
 	var/restricted = FALSE
-	/// Can this item be deconstructed to unlock certain techweb research nodes?
+	/// Flags related to if an item will provide illegal tech, or trips contraband detectors once spawned in as an item.
 	var/uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
 	/// String to be shown instead of the price, e.g for the Random item.
 	var/cost_override_string = ""
@@ -143,12 +143,11 @@
 	if(refundable)
 		spawned_item.AddElement(/datum/element/uplink_reimburse, (refund_amount ? refund_amount : cost))
 
-	
+
 	if(uplink_item_flags & SYNDIE_TRIPS_CONTRABAND) // Ignore things that shouldn't be detectable as contraband on the station.
 		ADD_TRAIT(spawned_item, TRAIT_CONTRABAND, INNATE_TRAIT)
-		if(spawned_item.contents)
-			for(var/obj/contained as anything in spawned_item.get_all_contents())
-				ADD_TRAIT(contained, TRAIT_CONTRABAND, INNATE_TRAIT)
+		for(var/obj/contained as anything in spawned_item.get_all_contents())
+			ADD_TRAIT(contained, TRAIT_CONTRABAND, INNATE_TRAIT)
 	var/mob/living/carbon/human/human_user = user
 	if(istype(human_user) && isitem(spawned_item) && human_user.put_in_hands(spawned_item))
 		to_chat(human_user, span_boldnotice("[spawned_item] materializes into your hands!"))
@@ -163,10 +162,8 @@
 	var/atom/movable/created = new item(user.loc)
 	if(uplink_item_flags & SYNDIE_TRIPS_CONTRABAND) // Things that shouldn't be detectable as contraband on the station.
 		ADD_TRAIT(created, TRAIT_CONTRABAND, INNATE_TRAIT)
-		if(created.contents)
-			for(var/obj/contained as anything in created.contents)
-				ADD_TRAIT(contained, TRAIT_CONTRABAND, INNATE_TRAIT)
-	if(isgun(created))
+		for(var/obj/contained as anything in created.get_all_contents())
+			ADD_TRAIT(contained, TRAIT_CONTRABAND, INNATE_TRAIT)
 		replace_pin(created)
 	else if(istype(created, /obj/item/storage/toolbox/guncase))
 		for(var/obj/item/gun/gun in created)
