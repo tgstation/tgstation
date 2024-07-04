@@ -1,0 +1,8 @@
+author: "Jacquerel, IndieanaJones"
+delete-after: True
+changes:
+  - rscadd: "Adds a box of liveleak stickers for 1 TC to the badass category"
+  - balance: "The kindle scripture now has reduced effects on people with mindshields"
+  - balance: "Observation consoles can now only warp to a random list of areas, vitality can be spent to add more"
+  - balance: "Vitality sigils now reduce max health instead of dealing clone damage"
+  - bugfix: "Anchoring crystals are now actually needed to open the ark"
