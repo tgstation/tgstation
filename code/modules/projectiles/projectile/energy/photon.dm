@@ -7,7 +7,7 @@
 	armor_flag = ENERGY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	damage = 5 //It's literally a weaker tesla bolt, which is already weak. Don't worry, we'll fix that.
-	range = 14
+	range = 20
 	speed = 1
 	pixel_speed_multiplier = 1
 	projectile_piercing = PASSMOB
@@ -32,6 +32,7 @@
 	if(isliving(flashed))
 		var/mob/living/flashed_creature = flashed
 		flashed_creature.flash_act(intensity = 3, affect_silicon = TRUE, length = 6)
+		flashed_creature.adjust_confusion(1.5 SECONDS)
 	if(issilicon(flashed))
 		do_sparks(rand(1, 4), FALSE, src)
 
