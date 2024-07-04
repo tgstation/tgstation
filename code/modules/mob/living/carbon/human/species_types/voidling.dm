@@ -14,6 +14,7 @@
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_NOHUNGER,
 	)
 	changesource_flags = MIRROR_BADMIN
 
@@ -39,9 +40,8 @@
 
 	passwindow_on(human_who_gained_species, SPECIES_TRAIT) //if this is here when its PRd im dumb please remind me to move it somewhere else
 	RegisterSignal(human_who_gained_species, COMSIG_MOVABLE_CAN_PASS_THROUGH, PROC_REF(can_pass_through))
-	human_who_gained_species.generic_canpass = FALSE
-
 	RegisterSignal(human_who_gained_species, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_temporary_shatter))
+	human_who_gained_species.generic_canpass = FALSE
 
 /datum/species/voidling/on_species_loss(mob/living/carbon/human/human, datum/species/new_species, pref_load)
 	. = ..()
@@ -68,6 +68,9 @@
 	else if(istype(src, /obj/structure/grille))
 		var/obj/structure/grille/grille = target
 		grille.temporary_shatter()
+	else
+		return
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/item/organ/internal/eyes/voidling
 	name = "black orbs"
@@ -148,7 +151,7 @@
 	heal_owner()
 	return TRUE
 
-/datum/status_effect/space_regeneration/refresh(effect)
+/datum/status_effect/space_regeneration/tick(effect)
 	. = ..()
 	heal_owner()
 
@@ -170,7 +173,8 @@
 /datum/brain_trauma/voided/on_gain()
 	. = ..()
 
-	ADD_TRAIT(owner, list(TRAIT_MUTE, TRAIT_PACIFISM), TRAUMA_TRAIT)
+	owner.add_traits(list(TRAIT_MUTE, TRAIT_PACIFISM), TRAUMA_TRAIT)
+	owner.AddComponent(/datum/component/banned_from_space)
 	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(texture_limb))
 	RegisterSignal(owner, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(untexture_limb))
 
@@ -178,17 +182,20 @@
 		texture_limb(owner, bodypart)
 
 	//your underwear is belong to us
-	owner.underwear = "Nude"
-	owner.undershirt = "Nude"
-	owner.socks = "Nude"
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human = owner //CARBON WILL NEVER BE REAL!!!!!
+		human.underwear = "Nude"
+		human.undershirt = "Nude"
+		human.socks = "Nude"
 
 	owner.update_body()
 
 /datum/brain_trauma/voided/on_lose()
 	. = ..()
 
-	REMOVE_TRAIT(owner, list(TRAIT_MUTE, TRAIT_PACIFISM), TRAUMA_TRAIT)
+	owner.remove_traits(list(TRAIT_MUTE, TRAIT_PACIFISM), TRAUMA_TRAIT)
 	UnregisterSignal(owner, list(COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB))
+	qdel(owner.GetComponent(/datum/component/banned_from_space))
 
 	for(var/obj/item/bodypart/bodypart as anything in owner.bodyparts)
 		untexture_limb(owner, bodypart)
@@ -210,5 +217,42 @@
 
 	if(istype(limb, /obj/item/bodypart/head))
 		var/obj/item/bodypart/head/head = limb
-		head.head_flags = initial()
+		head.head_flags = initial(head.head_flags)
+
+/datum/component/banned_from_space
+	/// List of recent tiles we walked on that aren't space
+	var/list/tiles = list()
+	/// The max amount of tiles we store
+	var/max_tile_list_size = 4
+
+/datum/component/banned_from_space/Initialize(...)
+	if(!ismovable(parent))
+		return COMPONENT_INCOMPATIBLE
+
+	RegisterSignal(parent, COMSIG_ATOM_ENTERING, PROC_REF(check_if_space))
+
+/datum/component/banned_from_space/proc/check_if_space(atom/source, atom/new_location)
+	SIGNAL_HANDLER
+
+	if(!isturf(new_location))
+		return
+
+	if(isspaceturf(new_location))
+		send_back(parent)
+
+	else
+		tiles.Add(new_location)
+		if(tiles.len > max_tile_list_size)
+			tiles.Cut(1, 1)
+
+/datum/component/banned_from_space/proc/send_back(atom/movable/parent)
+	var/new_turf
+
+	if(tiles.len)
+		new_turf = tiles[tiles.len]
+		new /obj/effect/temp_visual/portal_animation(new_turf, new_turf, parent)
+	else
+		new_turf = get_random_station_turf()
+
+	parent.forceMove(new_turf)
 

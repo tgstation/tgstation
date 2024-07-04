@@ -367,15 +367,9 @@
 /obj/structure/grille/get_dumping_location()
 	return null
 
-/obj/structure/grille/proc/temporary_shatter(time_to_go = 1 SECONDS, time_to_return = 4 SECONDS)
+/obj/structure/grille/proc/temporary_shatter(time_to_go = 0 SECONDS, time_to_return = 4 SECONDS)
 	if(dramatically_disappearing)
 		return
-
-	// do a cute breaking animation
-	var/static/time_interval = 2 DECISECONDS //per how many steps should we do damage?
-	for(var/damage_step in 0 to (floor(time_to_go / time_interval) - 2)) //10 ds / 2 ds = 5 damage steps, minus 1 so we dont actually break it and minus another 1 cause we start at 0
-		// slowly drain our total health for the illusion of shattering
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, take_damage), floor(atom_integrity / (time_to_go / time_interval))), time_interval * damage_step)
 
 	//dissapear in 1 second
 	dramatically_disappearing = TRUE
