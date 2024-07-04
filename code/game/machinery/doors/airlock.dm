@@ -607,9 +607,14 @@
 	if(airlock_state == AIRLOCK_DENY)
 		update_icon(ALL, AIRLOCK_CLOSED)
 
-/// Returns the time required to hit particular points in an animation
-/// Used to manage delays for opening/closing and such
-/obj/machinery/door/proc/animation_segment_delay(animation)
+/obj/machinery/door/airlock/animation_length(animation)
+	switch(animation)
+		if("opening")
+			return 0.6 SECONDS
+		if("closing")
+			return 0.6 SECONDS
+
+/obj/machinery/door/airlock/animation_segment_delay(animation)
 	switch(animation)
 		if("opening_transparent")
 			return 0.1 SECONDS
