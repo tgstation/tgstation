@@ -32,7 +32,7 @@
 	///How much heat/cold we can deliver
 	var/heating_energy = 40 KILO JOULES
 	///How efficiently we can deliver that heat/cold (higher indicates less cell consumption)
-	var/efficiency = 20
+	var/efficiency = 2e4
 	///The amount of degrees above and below the target temperature for us to change mode to heater or cooler
 	var/temperature_tolerance = 1
 	///What's the middle point of our settable temperature (30 °C)
@@ -179,7 +179,7 @@
 	heating_energy = laser * BASE_HEATING_ENERGY
 
 	settable_temperature_range = cap * 30
-	efficiency = (cap + 1) * 10
+	efficiency = (cap + 1) * 1e4
 
 	target_temperature = clamp(target_temperature,
 		max(settable_temperature_median - settable_temperature_range, TCMB),
