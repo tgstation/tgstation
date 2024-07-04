@@ -30,7 +30,7 @@
 	return TRUE
 
 //If the meteor misses the station and deletes itself, we make absolutely sure the changeling reaches the station.
-/obj/effect/meteor/meaty/changeling/handle_stopping()
+/obj/effect/meteor/meaty/changeling/moved_off_z()
 	if(!landing_target)
 		//If our destination turf is gone for some reason, we chuck them at the observer_start landmark (usually at the center of the station) as a last resort.
 		landing_target = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
