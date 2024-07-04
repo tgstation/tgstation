@@ -8,6 +8,7 @@
 		"atmosalerts",
 		"thermomachine",
 		"space_heater",
+		"scrubber",
 		"generic_tank",
 		"oxygen_tank",
 		"plasma_tank",
@@ -27,6 +28,7 @@
 	prereq_ids = list(TECHWEB_NODE_ATMOS)
 	design_ids = list(
 		"tank_compressor",
+		"pump",
 		"emergency_oxygen",
 		"emergency_oxygen_engi",
 		"power_turbine_console",
@@ -49,6 +51,7 @@
 	design_ids = list(
 		"crystallizer",
 		"electrolyzer",
+		"pipe_scrubber",
 		"pacman",
 		"mech_generator",
 		"plasmacutter",
