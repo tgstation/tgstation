@@ -49,6 +49,11 @@ export const ATM = (props) => {
                 Purchase Lottery Tickets
               </Button>
             </Stack.Item>
+            <Stack.Item>
+              <Button onClick={() => act('buy_lootbox')}>
+                Purchase Lootbox
+              </Button>
+            </Stack.Item>
           </Section>
           {flash_sale_present ? (
             <Section>

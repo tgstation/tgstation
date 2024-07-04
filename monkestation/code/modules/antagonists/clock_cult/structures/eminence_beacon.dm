@@ -35,7 +35,7 @@
 		return
 	vote_active = TRUE
 
-/obj/structure/destructible/clockwork/eminence_beacon/proc/vote_succeed(mob/eminence)
+/obj/structure/destructible/clockwork/eminence_beacon/proc/vote_succeed(mob/living/eminence) //if we select a ghost then we dont call any living procs so this is fine
 	vote_active = FALSE
 	if(GLOB.current_eminence)
 		message_admins("[type] calling vote_succeed() with a set GLOB.current_eminence, this should not be happening.")
@@ -50,22 +50,22 @@
 			pic_source = /mob/living/eminence,
 			role_name_text = "eminence"
 		)
-		if(LAZYLEN(candidates))
+		if(length(candidates))
 			eminence = pick(candidates)
 
-	if(!(eminence?.client) || !(eminence?.mind))
+	if(!(eminence?.client))
 		send_clock_message(null, "The Eminence remains in slumber, for now, try waking it again soon.")
 		return
 
 	var/mob/living/eminence/new_mob = new /mob/living/eminence(get_turf(src))
-	var/datum/antagonist/clock_cultist/servant_datum = eminence.mind.has_antag_datum(/datum/antagonist/clock_cultist)
-	if(servant_datum)
-		servant_datum.silent = TRUE
-		servant_datum.on_removal()
-	eminence.mind.transfer_to(new_mob, TRUE)
+	if(isobserver(eminence))
+		new_mob.key = eminence.key
+	else
+		var/datum/antagonist/clock_cultist/servant_datum = eminence.mind.has_antag_datum(/datum/antagonist/clock_cultist)
+		if(servant_datum)
+			servant_datum.silent = TRUE
+			servant_datum.on_removal()
+		eminence.mind.transfer_to(new_mob, TRUE)
+		eminence.dust(TRUE, TRUE)
 	new_mob.mind.add_antag_datum(/datum/antagonist/clock_cultist/eminence)
 	send_clock_message(null, span_bigbrass("The Eminence has risen!"))
-
-	if(isliving(eminence))
-		var/mob/living/living_eminence = eminence
-		living_eminence.dust(TRUE, TRUE)

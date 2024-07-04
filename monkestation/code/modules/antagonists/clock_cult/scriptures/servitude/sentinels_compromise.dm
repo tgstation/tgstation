@@ -13,6 +13,13 @@
 	recital_sound = 'sound/magic/magic_missile.ogg'
 	fast_invoke_mult = 0.8
 
+/datum/scripture/slab/sentinels_compromise/check_special_requirements(mob/user)
+	if(issilicon(user))
+		invocation_time = 10 * initial(invocation_time)
+	else
+		invocation_time = initial(invocation_time) //might be worth making a silicon_invoke() proc or something
+	return ..()
+
 /datum/scripture/slab/sentinels_compromise/apply_effects(mob/living/healed_mob)
 	if(!istype(healed_mob) || !IS_CLOCK(invoker) || !IS_CLOCK(healed_mob))
 		return FALSE

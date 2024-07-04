@@ -16,6 +16,8 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 	var/list/non_human_servants = list()
 	/// what warning stage are we at
 	var/warning_stage = CONVERSION_WARNING_NONE
+	/// have we used our recall
+	var/member_recalled = FALSE
 
 /datum/team/clock_cult/add_member(datum/mind/new_member)
 	. = ..()
@@ -67,10 +69,11 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 ///check how many human members we have and anything that goes with that
 /datum/team/clock_cult/proc/check_member_count()
 	check_member_distribution()
-	max_human_servants = round(max((get_active_player_count() / 8) + 6, max_human_servants))
+	max_human_servants = round(max((get_active_player_count() / 8), max_human_servants))
 	var/human_servant_count = length(human_servants)
 	var/main_message = "The Ark will be torn open if [max_human_servants - human_servant_count] more minds are converted to the faith of Rat'var\
-						[get_charged_anchor_crystals() >= 2 ? "." : "and two Anchoring Crystals are summoned and protected on the station."]"
+						[get_charged_anchor_crystals() >= ANCHORING_CRYSTALS_TO_SUMMON ? "." : " and \
+						[ANCHORING_CRYSTALS_TO_SUMMON] Anchoring Crystal[ANCHORING_CRYSTALS_TO_SUMMON > 1 ? "s are" : " is"] summoned and protected on the station."]"
 
 	if((human_servant_count * 2) > max_human_servants && warning_stage < CONVERSION_WARNING_HALFWAY)
 		send_clock_message(null, span_bigbrass("Rat'var's influence is growing. [main_message]"), sent_sound = 'sound/magic/clockwork/scripture_tier_up.ogg')
@@ -87,7 +90,7 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 						   sent_sound = 'sound/magic/clockwork/scripture_tier_up.ogg')
 		warning_stage = CONVERSION_WARNING_CRITIAL
 
-	else if((human_servant_count >= max_human_servants) && get_charged_anchor_crystals() >= 2)
+	else if((human_servant_count >= max_human_servants) && get_charged_anchor_crystals() >= ANCHORING_CRYSTALS_TO_SUMMON)
 		GLOB.clock_ark?.prepare_ark()
 
 ///check that our human_servants and non_human_servants lists are correct and if not then set them to be correct
@@ -142,11 +145,13 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 	update_explanation_text()
 
 /datum/objective/anchoring_crystals/update_explanation_text()
-	explanation_text = "Summon two anchorings crystals on the station and protect them for 5 minutes to allow the ark to open. \
-						Up to 2 crystals can be created for extra power, however, the crew will be alerted and they must be summoned in [english_list(valid_areas)]."
+	var/plural = ANCHORING_CRYSTALS_TO_SUMMON > 1
+	explanation_text = "Summon [ANCHORING_CRYSTALS_TO_SUMMON] anchoring crystal[plural ? "s" : ""] on the station and protect [plural ? "them" : "it"] for 5 \
+						minutes to allow the ark to open. Crystals after the first one must be summoned in [english_list(valid_areas)]. \
+						Up to 2 additional crystals can be created for extra power."
 
 /datum/objective/anchoring_crystals/check_completion()
-	return get_charged_anchor_crystals() >= 2 || completed
+	return get_charged_anchor_crystals() >= ANCHORING_CRYSTALS_TO_SUMMON || completed
 
 /datum/objective/ratvar
 	explanation_text = "Protect The Ark so that Rat'var may enlighten this world!"

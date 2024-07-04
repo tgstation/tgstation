@@ -1,5 +1,7 @@
-///how damage damage do we heal when reviving someone before costing vitality
+///how much damage do we heal when reviving someone before costing vitality
 #define FREE_DAMAGE_HEALED 20
+///how much do we reduce drained mobs health health by each siphon
+#define HEALTH_DRAINED 20
 /obj/structure/destructible/clockwork/sigil/vitality
 	name = "vitality matrix"
 	desc = "A twisting, confusing artifact that drains the unenlightended on contact."
@@ -36,13 +38,13 @@
 		active_timer = null
 		var/revived = FALSE
 		if(affected_mob.stat == DEAD)
-			var/damage_healed = FREE_DAMAGE_HEALED + ((affected_mob.maxHealth - affected_mob.health) * 0.6)
+			var/damage_healed = FREE_DAMAGE_HEALED + ((affected_mob.getMaxHealth() - affected_mob.health) * 0.6)
 			if(GLOB.clock_vitality >= damage_healed)
 				GLOB.clock_vitality -= damage_healed
 				affected_mob.revive(ADMIN_HEAL_ALL)
 				revived = TRUE
 
-		if(!affected_mob.client || affected_mob.client.is_afk())
+		if(affected_mob.stat != DEAD && (!affected_mob.client || affected_mob.client.is_afk()))
 			set waitfor = FALSE
 			var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(
 				"Do you want to play as a [affected_mob.real_name], an inactive clock cultist?",
@@ -71,45 +73,42 @@
 		return
 
 	affected_mob.Paralyze(1 SECONDS)
+	var/before_drain = affected_mob.getMaxHealth()
+	affected_mob.setMaxHealth(before_drain - HEALTH_DRAINED)
+	var/after_drain = affected_mob.getMaxHealth()
 
-	var/before_cloneloss = affected_mob.getCloneLoss()
-	affected_mob.adjustCloneLoss(19, TRUE, TRUE)
-	var/after_cloneloss = affected_mob.getCloneLoss()
-
-	if(before_cloneloss == after_cloneloss)
+	if(before_drain == after_drain)
 		visible_message(span_clockred("[src] fails to siphon [affected_mob]'s spirit!"))
 		return
 
 	playsound(loc, 'sound/magic/clockwork/ratvar_attack.ogg', 40)
-	if((affected_mob.stat == DEAD) || (affected_mob.getCloneLoss() >= affected_mob.maxHealth))
-		affected_mob.do_jitter_animation()
-		affected_mob.become_husk(src)
-		affected_mob.death()
+	if((affected_mob.stat == DEAD) || affected_mob.getMaxHealth() <= 0)
 		playsound(loc, 'sound/magic/exit_blood.ogg', 60)
 		to_chat(affected_mob, span_clockred("The last of your life is drained away..."))
 		check_special_role(affected_mob)
-		GLOB.clock_vitality = min(GLOB.clock_vitality + 40, GLOB.max_clock_vitality) // 100 (for clients) total in the ideal situation, since it'll take 6 pulses to go from full to crit
-		ADD_TRAIT(affected_mob, TRAIT_NO_SOUL, CULT_TRAIT)
+		GLOB.clock_vitality = min(GLOB.clock_vitality + 40, MAX_CLOCK_VITALITY) // 100 (for clients) total in the ideal situation, since it'll take 6 pulses to go from full to crit
 		if(affected_mob.client)
 			new /obj/item/robot_suit/prebuilt/clockwork(get_turf(src))
 			var/obj/item/mmi/posibrain/soul_vessel/new_vessel = new(get_turf(src))
 			if(!is_banned_from(affected_mob.ckey, list(JOB_CYBORG, ROLE_CLOCK_CULTIST)))
 				new_vessel.transfer_personality(affected_mob)
+		affected_mob.dust(TRUE, TRUE)
 		return
 
 	affected_mob.visible_message(span_clockred("[affected_mob] looks weak as the color fades from their body."), span_clockred("You feel your soul faltering..."))
-	GLOB.clock_vitality = min(GLOB.clock_vitality + (affected_mob.client ? 10 : 1), GLOB.max_clock_vitality) // Monkey or whatever? You get jackshit
+	GLOB.clock_vitality = min(GLOB.clock_vitality + (affected_mob.client ? 10 : 1), MAX_CLOCK_VITALITY) // Monkey or whatever? You get jackshit
 
 
 /// Checks the role of whoever was killed by the vitality sigil, and does any special code if needed.
 /obj/structure/destructible/clockwork/sigil/vitality/proc/check_special_role(mob/living/affected_mob)
 	if(IS_CULTIST(affected_mob)) //for now these just give extra vitality, but at some point I need to make them give something unique, maybe the gun?
 		send_clock_message(null, span_clockred("The dog of Nar'sie, [affected_mob] has had their vitality drained, rejoice!"))
-		GLOB.clock_vitality = min(GLOB.clock_vitality + 20, GLOB.max_clock_vitality)
+		GLOB.clock_vitality = min(GLOB.clock_vitality + 20, MAX_CLOCK_VITALITY)
 	else if(IS_HERETIC(affected_mob))
 		send_clock_message(null, span_clockred("The heretic, [affected_mob] has had their vitality drained, rejoice!"))
-		GLOB.clock_vitality = min(GLOB.clock_vitality + 30, GLOB.max_clock_vitality)
+		GLOB.clock_vitality = min(GLOB.clock_vitality + 30, MAX_CLOCK_VITALITY)
 	else
 		send_clock_message(null, span_clockred("[affected_mob] has had their vitality drained by [src], rejoice!"))
 
 #undef FREE_DAMAGE_HEALED
+#undef HEALTH_DRAINED

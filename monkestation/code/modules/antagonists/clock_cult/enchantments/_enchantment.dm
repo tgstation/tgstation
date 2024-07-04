@@ -9,6 +9,9 @@
 /datum/component/enchantment/Initialize()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
+
+	if(on_reebe(parent)) //currently this is only added by stargazers so this should work fine
+		max_level = 1
 	//Get random level
 	level = rand(1, max_level)
 	//Apply effect

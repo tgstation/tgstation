@@ -63,7 +63,6 @@
 
 	var/turf/creation_turf = get_turf(target)
 	var/atom/movable/possible_replaced
-
 	if(locate(selected_output.to_create_path) in creation_turf)
 		to_chat(user, span_clockyellow("There is already one of these on this tile!"))
 		return
@@ -87,10 +86,11 @@
 		calculated_creation_delay = selected_output.reebe_mult
 		if(!get_charged_anchor_crystals())
 			calculated_creation_delay += SLOWDOWN_FROM_NO_ANCHOR_CRYSTAL
+		else if(GLOB.clock_ark?.current_state >= ARK_STATE_ACTIVE)
+			calculated_creation_delay += (iscogscarab(user) ? 2.5 : 5)
 	calculated_creation_delay = selected_output.creation_delay * calculated_creation_delay
 
 	var/obj/effect/temp_visual/ratvar/constructing_effect/effect = new(creation_turf, calculated_creation_delay)
-
 	if(!do_after(user, calculated_creation_delay, target))
 		qdel(effect)
 		return
@@ -99,9 +99,7 @@
 		return
 
 	GLOB.clock_power -= selected_output.cost
-
 	var/atom/created
-
 	if(!istype(selected_output, /datum/replica_fabricator_output/turf_output))
 		if(possible_replaced)
 			qdel(possible_replaced)
@@ -248,28 +246,22 @@
 	cost = BRASS_POWER_COST * 0.25 // 1/4th the cost, since one sheet = 4 floor tiles
 	to_create_path = /turf/open/floor/bronze
 
-
 /datum/replica_fabricator_output/turf_output/brass_floor/on_create(obj/created_object, turf/creation_turf, mob/creator)
 	. = ..()
 
 	new /obj/effect/temp_visual/ratvar/floor(creation_turf)
 	new /obj/effect/temp_visual/ratvar/beam(creation_turf)
-
 /datum/replica_fabricator_output/turf_output/brass_wall
 	name = "wall"
 	cost = BRASS_POWER_COST * 4
 	to_create_path = /turf/closed/wall/clockwork
-	creation_delay = 7 SECONDS
+	creation_delay = 14 SECONDS
 	replace_types_of = list(/turf/closed/wall)
-	reebe_mult = 1.5
-
 
 /datum/replica_fabricator_output/turf_output/brass_wall/on_create(obj/created_object, turf/creation_turf, mob/creator)
 	. = ..()
-
 	new /obj/effect/temp_visual/ratvar/wall(creation_turf)
 	new /obj/effect/temp_visual/ratvar/beam(creation_turf)
-
 /datum/replica_fabricator_output/wall_gear
 	name = "wall gear"
 	cost = BRASS_POWER_COST * 2
@@ -277,45 +269,38 @@
 	creation_delay = 5 SECONDS
 	replace_types_of = list(/obj/structure/girder)
 
-
 /datum/replica_fabricator_output/wall_gear/on_create(obj/created_object, turf/creation_turf, mob/creator)
 	new /obj/effect/temp_visual/ratvar/gear(creation_turf)
 	new /obj/effect/temp_visual/ratvar/beam(creation_turf)
 	return ..()
 
-
 /datum/replica_fabricator_output/brass_window
 	name = "window"
 	cost = BRASS_POWER_COST * 2
 	to_create_path = /obj/structure/window/reinforced/clockwork/fulltile
-	creation_delay = 6 SECONDS
+	creation_delay = 10 SECONDS
 	replace_types_of = list(/obj/structure/window)
 	reebe_mult = 1.2
-
 
 /datum/replica_fabricator_output/brass_window/on_create(obj/created_object, turf/creation_turf, mob/creator)
 	new /obj/effect/temp_visual/ratvar/window(creation_turf)
 	new /obj/effect/temp_visual/ratvar/beam(creation_turf)
 	return ..()
 
-
 /datum/replica_fabricator_output/pinion_airlock
 	name = "airlock"
 	cost = BRASS_POWER_COST * 5 // Breaking it only gets 2 but this is the exception to the rule of equivalent exchange, due to all the small parts inside
 	to_create_path = /obj/machinery/door/airlock/bronze/clock
-	creation_delay = 6 SECONDS
-
+	creation_delay = 10 SECONDS
 
 /datum/replica_fabricator_output/pinion_airlock/on_create(obj/created_object, turf/creation_turf, mob/creator)
 	new /obj/effect/temp_visual/ratvar/door(creation_turf)
 	new /obj/effect/temp_visual/ratvar/beam(creation_turf)
 	return ..()
 
-
 /datum/replica_fabricator_output/pinion_airlock/glass
 	name = "glass airlock"
 	to_create_path = /obj/machinery/door/airlock/bronze/clock/glass
-
 
 #undef BRASS_POWER_COST
 #undef REGULAR_POWER_COST

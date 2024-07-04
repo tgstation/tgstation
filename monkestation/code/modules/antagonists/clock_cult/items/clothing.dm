@@ -1,3 +1,4 @@
+#define CLOAK_DODGE_CHANCE 20
 /obj/item/clothing/suit/clockwork
 	name = "bronze armor"
 	desc = "A strong, bronze suit worn by the soldiers of the Ratvarian armies."
@@ -5,6 +6,7 @@
 	worn_icon = 'monkestation/icons/mob/clock_cult/clockwork_garb_worn.dmi'
 	icon_state = "clockwork_cuirass"
 	armor_type = /datum/armor/suit_clockwork
+	slowdown = 0.2
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	w_class = WEIGHT_CLASS_BULKY
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -13,35 +15,68 @@
 		/obj/item/stack/tile/bronze,
 		/obj/item/gun/ballistic/bow/clockwork,
 	)
+	///what is the value of our slowdown while empowered
+	var/empowered_slowdown = 0
+	///what armor type do we use while empowered
+	var/datum/armor/empowered_armor = /datum/armor/suit_clockwork_empowered
 
 /datum/armor/suit_clockwork
+	melee = 25
+	bullet = 30
+	laser = 15
+	energy = 30
+	bomb = 80
+	bio = 100
+	fire = 100
+	acid = 100
+
+/datum/armor/suit_clockwork_empowered
 	melee = 50
-	bullet = 60
-	laser = 30
+	bullet = 50
+	laser = 40
 	energy = 60
 	bomb = 80
 	bio = 100
 	fire = 100
 	acid = 100
 
-
 /obj/item/clothing/suit/clockwork/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/clockwork_pickup, ~(ITEM_SLOT_HANDS))
+	AddComponent(/datum/component/turf_checker, GLOB.clock_turf_types, null, TRUE, PROC_REF(set_empowered_state))
 
+/obj/item/clothing/suit/clockwork/proc/set_empowered_state(datum/component/turf_checker/checker, empowered)
+	if(empowered)
+		set_armor(empowered_armor)
+		slowdown = empowered_slowdown
+		return
+
+	set_armor(initial(armor_type))
+	slowdown = initial(slowdown)
 
 /obj/item/clothing/suit/clockwork/speed
 	name = "robes of divinity"
 	desc = "A shiny suit, glowing with a vibrant energy. The wearer will be able to move quickly across battlefields, but will be able to withstand less damage before falling."
 	icon_state = "clockwork_cuirass_speed"
-	slowdown = -0.5
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	slowdown = -0.2
 	armor_type = /datum/armor/clockwork_speed
+	empowered_armor = /datum/armor/clockwork_speed_empowered
+	empowered_slowdown = -0.6
 
 /datum/armor/clockwork_speed
-	melee = 40
+	melee = 20
+	bullet = 0
+	laser = 0
+	energy = 0
+	bomb = 60
+	bio = 100
+	fire = 100
+	acid = 100
+
+/datum/armor/clockwork_speed_empowered
+	melee = 30
 	bullet = 40
-	laser = 20
+	laser = -20
 	energy = -20
 	bomb = 60
 	bio = 100
@@ -50,43 +85,53 @@
 
 /obj/item/clothing/suit/clockwork/cloak
 	name = "shrouding cloak"
-	desc = "A faltering cloak that bends light around it, distorting the user's appearance, making it hard to see them with the naked eye. However, it provides very little protection."
+	desc = "A faltering cloak that bends light around it, distorting the user's appearance, making it hard to see them with the naked eye and be harder to hit. \
+			However, it provides very little physical protection."
 	icon_state = "clockwork_cloak"
 	armor_type = /datum/armor/clockwork_cloak
 	actions_types = list(/datum/action/item_action/toggle/clock)
-	slowdown = -0.1
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	w_class = WEIGHT_CLASS_NORMAL
+	empowered_armor = /datum/armor/clockwork_cloak
+	empowered_slowdown = -0.1
 	/// Is the shroud itself active or not
 	var/shroud_active = FALSE
 	/// Previous alpha value of the user when removing/disabling the jacket
 	var/previous_alpha = 255
 	/// Ref to who is wearing this
 	var/mob/living/wearer
+	/// Are we currently empowered
+	var/is_empowered = FALSE
 
 /datum/armor/clockwork_cloak
-	melee = 30
-	bullet = 60
-	laser = 40
-	energy = 30
-	bomb = 40
+	melee = 15
+	bullet = 30
+	laser = 20
+	energy = 15
+	bomb = 50
 	bio = 100
 	fire = 100
 	acid = 100
 
+/obj/item/clothing/suit/clockwork/cloak/set_empowered_state(datum/component/turf_checker/checker, empowered)
+	. = ..()
+	is_empowered = empowered
+	if(shroud_active && !empowered)
+		disable()
+
 /obj/item/clothing/suit/clockwork/cloak/Destroy()
+	if(shroud_active)
+		disable()
 	wearer = null
-
 	return ..()
-
 
 /obj/item/clothing/suit/clockwork/cloak/attack_self(mob/user, modifiers)
 	. = ..()
 	if(shroud_active)
 		disable()
-
-	else
+	else if(is_empowered)
 		enable()
-
+	else
+		balloon_alert(user, "Must be standing on brass!")
 
 /obj/item/clothing/suit/clockwork/cloak/equipped(mob/user, slot)
 	. = ..()
@@ -94,18 +139,30 @@
 		return
 
 	wearer = user
-
-	if(shroud_active)
+	if(shroud_active && is_empowered)
 		enable()
-
 
 /obj/item/clothing/suit/clockwork/cloak/dropped(mob/user)
 	. = ..()
 	if(shroud_active)
 		disable()
-
 	wearer = null
 
+/obj/item/clothing/suit/clockwork/cloak/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type)
+	if(is_empowered && shroud_active && prob(CLOAK_DODGE_CHANCE)) //we handle this just a biiiiit too different from parent to make simply using the vars be viable
+		owner.visible_message(span_danger("[owner]'s [src] makes them phase out of the way of [attack_text]!"))
+		owner.add_filter("clock_cloak", 3, motion_blur_filter(0, 0))
+		addtimer(CALLBACK(src, PROC_REF(remove_phase_filter), owner), (0.6 SECONDS) + 1)
+		ASYNC
+			animate(owner.get_filter("clock_cloak"), 0.3 SECONDS, x = prob(50) ? rand(4, 5) : rand(-4, -5), y = prob(50) ? rand(4, 5) : rand(-4, -5), flags = ANIMATION_PARALLEL)
+			animate(time = 0.3 SECONDS, x = 0, y = 0)
+		playsound(src, 'sound/weapons/etherealmiss.ogg', BLOCK_SOUND_VOLUME, vary = TRUE, mixer_channel = CHANNEL_SOUND_EFFECTS)
+		return TRUE
+
+/obj/item/clothing/suit/clockwork/cloak/proc/remove_phase_filter(mob/living/remove_from)
+	if(QDELETED(remove_from))
+		return
+	remove_from.remove_filter("clock_cloak")
 
 /// Apply the effects to the wearer, making them pretty hard to see
 /obj/item/clothing/suit/clockwork/cloak/proc/enable()
@@ -118,7 +175,6 @@
 	apply_wibbly_filters(wearer)
 	ADD_TRAIT(wearer, TRAIT_UNKNOWN, CLOTHING_TRAIT)
 
-
 /// Un-apply the effects of the cloak, returning the wearer to normal
 /obj/item/clothing/suit/clockwork/cloak/proc/disable()
 	shroud_active = FALSE
@@ -129,7 +185,6 @@
 	remove_wibbly_filters(wearer)
 	animate(wearer, alpha = previous_alpha, time = 3 SECONDS)
 	REMOVE_TRAIT(wearer, TRAIT_UNKNOWN, CLOTHING_TRAIT)
-
 
 /obj/item/clothing/glasses/clockwork
 	name = "base clock glasses"
@@ -143,7 +198,6 @@
 	. = ..()
 	AddElement(/datum/element/clockwork_description, clock_desc)
 	AddElement(/datum/element/clockwork_pickup, ~(ITEM_SLOT_HANDS))
-
 
 #define SECONDS_FOR_EYE_HEAL 60
 // Thermal goggles, no protection from eye stuff
@@ -346,8 +400,6 @@
 //THIS IS MOST LIKELY BREAKING
 /// Applies the actual effects to the wearer, giving them flash protection and a variety of sight/info bonuses
 /obj/item/clothing/glasses/clockwork/judicial_visor/proc/apply_to_wearer()
-	ADD_TRAIT(wearer, TRAIT_NOFLASH, CLOTHING_TRAIT)
-
 	ADD_TRAIT(wearer, TRAIT_MEDICAL_HUD, CLOTHING_TRAIT)
 	var/datum/atom_hud/med_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	med_hud.show_to(wearer)
@@ -356,16 +408,12 @@
 	var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	sec_hud.show_to(wearer)
 
-	ADD_TRAIT(wearer, TRAIT_MADNESS_IMMUNE, CLOTHING_TRAIT)
-	ADD_TRAIT(wearer, TRAIT_MESON_VISION, CLOTHING_TRAIT)
-	ADD_TRAIT(wearer, TRAIT_KNOW_CYBORG_WIRES, CLOTHING_TRAIT)
+	add_traits(list(TRAIT_KNOW_ENGI_WIRES, TRAIT_MADNESS_IMMUNE, TRAIT_MESON_VISION, TRAIT_KNOW_CYBORG_WIRES, TRAIT_NOFLASH), CLOTHING_TRAIT)
 	color_cutoffs = list(50, 10, 30)
 	wearer.update_sight()
 
 /// Removes the effects to the wearer, removing the flash protection and similar
 /obj/item/clothing/glasses/clockwork/judicial_visor/proc/unapply_to_wearer()
-	REMOVE_TRAIT(wearer, TRAIT_NOFLASH, CLOTHING_TRAIT)
-
 	REMOVE_TRAIT(wearer, TRAIT_MEDICAL_HUD, CLOTHING_TRAIT)
 	var/datum/atom_hud/med_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	med_hud.hide_from(wearer)
@@ -374,12 +422,9 @@
 	var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	sec_hud.hide_from(wearer)
 
-	REMOVE_TRAIT(wearer, TRAIT_MADNESS_IMMUNE, CLOTHING_TRAIT)
-	REMOVE_TRAIT(wearer, TRAIT_MESON_VISION, CLOTHING_TRAIT)
-	REMOVE_TRAIT(wearer, TRAIT_KNOW_CYBORG_WIRES, CLOTHING_TRAIT)
+	remove_traits(list(TRAIT_KNOW_ENGI_WIRES, TRAIT_MADNESS_IMMUNE, TRAIT_MESON_VISION, TRAIT_KNOW_CYBORG_WIRES, TRAIT_NOFLASH), CLOTHING_TRAIT)
 	color_cutoffs = null
 	wearer.update_sight()
-
 
 /obj/item/clothing/glasses/clockwork/judicial_visor/equipped(mob/living/user, slot)
 	. = ..()
@@ -399,7 +444,8 @@
 
 /obj/item/clothing/head/helmet/clockwork
 	name = "brass helmet"
-	desc = "A strong, brass helmet worn by the soldiers of the Ratvarian armies. Includes an integrated light-dimmer for flash protection, as well as occult-grade muffling for factory based environments."
+	desc = "A strong, brass helmet worn by the soldiers of the Ratvarian armies. Includes an integrated light-dimmer for flash protection, \
+			as well as occult-grade muffling for factory based environments."
 	icon = 'monkestation/icons/obj/clock_cult/clockwork_garb.dmi'
 	worn_icon = 'monkestation/icons/mob/clock_cult/clockwork_garb_worn.dmi'
 	icon_state = "clockwork_helmet"
@@ -409,10 +455,20 @@
 	flash_protect = FLASH_PROTECTION_FLASH
 
 /datum/armor/helmet_clockwork
+	melee = 25
+	bullet = 30
+	laser = 15
+	energy = 40
+	bomb = 80
+	bio = 100
+	fire = 100
+	acid = 100
+
+/datum/armor/helmet_clockwork_empowered
 	melee = 50
-	bullet = 65
+	bullet = 55
 	laser = 35
-	energy = 75
+	energy = 70
 	bomb = 80
 	bio = 100
 	fire = 100
@@ -422,7 +478,10 @@
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_HEAD))
 	AddElement(/datum/element/clockwork_pickup, ~(ITEM_SLOT_HANDS))
+	AddComponent(/datum/component/turf_checker, GLOB.clock_turf_types, null, TRUE, PROC_REF(set_empowered_state))
 
+/obj/item/clothing/head/helmet/clockwork/proc/set_empowered_state(datum/component/turf_checker/checker, empowered)
+	empowered ? set_armor(/datum/armor/helmet_clockwork_empowered) : initial(armor_type)
 
 /obj/item/clothing/shoes/clockwork
 	name = "brass treads"
@@ -439,8 +498,8 @@
 	energy = 0
 	bomb = 0
 	bio = 100
-	fire = 0
-	acid = 0
+	fire = 80
+	acid = 100
 
 /obj/item/clothing/shoes/clockwork/Initialize(mapload)
 	. = ..()
@@ -470,8 +529,10 @@
 	bomb = 10
 	bio = 80
 	fire = 80
-	acid = 50
+	acid = 100
 
 /obj/item/clothing/gloves/clockwork/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/clockwork_pickup, ~(ITEM_SLOT_HANDS))
+
+#undef CLOAK_DODGE_CHANCE

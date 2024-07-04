@@ -29,7 +29,7 @@
 		to_chat(invoker, span_warning("You can't summon anymore cogscarabs."))
 		return FALSE
 
-	if(GLOB.clock_ark?.current_state >= 2) //active state
+	if(GLOB.clock_ark?.current_state >= ARK_STATE_ACTIVE)
 		to_chat(invoker, span_warning("It is too late to summon cogscarabs now, Rat'var is coming!"))
 		return FALSE
 	return TRUE

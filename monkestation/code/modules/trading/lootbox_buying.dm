@@ -14,7 +14,7 @@
 	if(!prefs)
 		lootbox_prompt = FALSE
 		return
-	if(!prefs.has_coins(5000))
+	if(!prefs.has_coins(LOOTBOX_COST))
 		to_chat(src, span_warning("You do not have enough Monkecoins to buy a lootbox"))
 		lootbox_prompt = FALSE
 		return
@@ -27,11 +27,11 @@
 			return
 
 /client/proc/attempt_lootbox_buy()
-	if(!prefs.has_coins(5000))
+	if(!prefs.has_coins(LOOTBOX_COST))
 		to_chat(src, span_warning("You do not have enough Monkecoins to buy a lootbox"))
 		lootbox_prompt = FALSE
 		return
-	if(!prefs.adjust_metacoins(ckey, -5000, donator_multipler = FALSE))
+	if(!prefs.adjust_metacoins(ckey, -LOOTBOX_COST, donator_multipler = FALSE))
 		return
 	prefs.lootboxes_owned++
 	prefs.save_preferences()

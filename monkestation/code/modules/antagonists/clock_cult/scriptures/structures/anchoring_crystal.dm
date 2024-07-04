@@ -1,4 +1,3 @@
-#define TIME_BETWEEN_INVOKES 660 //7 minutes
 /datum/scripture/create_structure/anchoring_crystal
 	name = "Anchoring Crystal"
 	desc = "Summon an anchoring crystal to the station."
@@ -19,7 +18,7 @@
 	. = ..()
 
 /datum/scripture/create_structure/anchoring_crystal/process(seconds_per_tick)
-	time_until_invokable = time_until_invokable - seconds_per_tick
+	time_until_invokable = time_until_invokable - (seconds_per_tick SECONDS)
 	if(time_until_invokable <= 0)
 		var/datum/scripture/create_structure/anchoring_crystal/global_datum = GLOB.clock_scriptures_by_type[/datum/scripture/create_structure/anchoring_crystal]
 		STOP_PROCESSING(SSprocessing, global_datum)
@@ -35,7 +34,7 @@
 		return FALSE
 
 	var/datum/objective/anchoring_crystals/crystals_objective = locate() in GLOB.main_clock_cult?.objectives
-	if(!crystals_objective || !crystals_objective?.valid_areas.len)
+	if(!length(crystals_objective?.valid_areas))
 		return FALSE
 
 	if(get_charged_anchor_crystals() && !(get_area(invoker) in crystals_objective.valid_areas))
@@ -61,7 +60,7 @@
 
 /datum/scripture/create_structure/anchoring_crystal/invoke_success()
 	. = ..()
-	time_until_invokable = TIME_BETWEEN_INVOKES
+	time_until_invokable = ANCHORING_CRYSTAL_COOLDOWN
 	var/datum/scripture/create_structure/anchoring_crystal/scripture = GLOB.clock_scriptures_by_type[/datum/scripture/create_structure/anchoring_crystal]
 	START_PROCESSING(SSprocessing, scripture)
 
@@ -73,5 +72,3 @@
 			area_list += added_area.get_original_area_name()
 		desc = "Summon an anchoring crystal to the station, it can be summoned in [english_list(area_list)]."
 	tip = "With this crystal [anchoring_crystal_charge_message()]"
-
-#undef TIME_BETWEEN_INVOKES

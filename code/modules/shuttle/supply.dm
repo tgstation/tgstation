@@ -27,6 +27,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/machinery/teleport/station,
 		/obj/narsie,
 		/obj/projectile/beam/wormhole,
+		/obj/ratvar, //monkestation edit
 		/obj/structure/blob,
 		/obj/structure/checkoutmachine,
 		/obj/structure/disposalpipe,

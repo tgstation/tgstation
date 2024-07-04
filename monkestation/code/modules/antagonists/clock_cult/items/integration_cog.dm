@@ -45,7 +45,7 @@
 		GLOB.clock_installed_cogs++
 		GLOB.max_clock_power += MAX_POWER_PER_COG
 		cogger_apc.clock_cog_rewarded = TRUE
-		send_clock_message(null, span_brass(span_bold("[user] has installed an integration cog into [cogger_apc].")), msg_ghosts = TRUE)
+		send_clock_message(null, span_brass(span_bold("[user.real_name] has installed an integration cog into [cogger_apc].")), msg_ghosts = TRUE)
 		//Update the cog counts
 		for(var/obj/item/clockwork/clockwork_slab/slab as anything in GLOB.clockwork_slabs)
 			slab.cogs++

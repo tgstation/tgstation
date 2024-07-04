@@ -162,7 +162,7 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 
 	data["cogs"] = cogs
 	data["vitality"] = GLOB.clock_vitality
-	data["max_vitality"] = GLOB.max_clock_vitality
+	data["max_vitality"] = MAX_CLOCK_VITALITY
 	data["power"] = GLOB.clock_power
 	data["max_power"] = GLOB.max_clock_power
 	data["scriptures"] = list()

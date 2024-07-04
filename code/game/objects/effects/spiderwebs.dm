@@ -178,7 +178,7 @@
 		return TRUE
 	if(!isliving(mover))
 		return
-	if(isspider(mover.pulledby))
+	if(!isnull(mover.pulledby) && isspider(mover.pulledby))
 		return TRUE
 	balloon_alert(mover, "stuck in web!")
 	return FALSE

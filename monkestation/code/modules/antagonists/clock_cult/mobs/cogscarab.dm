@@ -1,6 +1,6 @@
-//#define CLOCKDRONE	"drone_clock"
-
 GLOBAL_LIST_EMPTY(cogscarabs)
+
+#define CLOCK_DRONE_MAX_ITEM_FORCE 15
 
 //====Cogscarab====
 
@@ -42,7 +42,7 @@ GLOBAL_LIST_EMPTY(cogscarabs)
 
 /mob/living/basic/drone/cogscarab/death(gibbed)
 	GLOB.cogscarabs -= src
-	. = ..()
+	return ..()
 
 /mob/living/basic/drone/cogscarab/Life(seconds, times_fired)
 	if(!on_reebe(src) && !GLOB.ratvar_risen && length(GLOB.abscond_markers) && stay_on_reebe)
@@ -52,6 +52,9 @@ GLOBAL_LIST_EMPTY(cogscarabs)
 /mob/living/basic/drone/cogscarab/Destroy()
 	GLOB.cogscarabs -= src
 	return ..()
+
+/mob/living/basic/drone/cogscarab/transferItemToLoc(obj/item/item, newloc, force, silent) //ideally I would handle this on attacking instead
+	return (item.force <= CLOCK_DRONE_MAX_ITEM_FORCE) && ..()
 
 //====Shell====
 
@@ -79,3 +82,5 @@ GLOBAL_LIST_EMPTY(cogscarabs)
 		to_chat(user, span_notice("The cult currently has its maximum amount of cogscarabs."))
 		return FALSE
 	return TRUE
+
+#undef CLOCK_DRONE_MAX_ITEM_FORCE

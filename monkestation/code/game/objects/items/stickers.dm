@@ -75,10 +75,18 @@
 /obj/item/storage/box/monkestation_stickers
 	name = "Box of Ook Certified Stickers"
 	desc = "Signed off on by the duke himself!"
-
+	///How many stickers do we fill this box with
 	var/sticker_count = 30
+	///List of sticker types we are restricted to picking from, if any
+	var/list/allowed_sticker_types
 
 /obj/item/storage/box/monkestation_stickers/PopulateContents()
+	var/list/subtypes_list = subtypesof(/obj/item/sticker/monkestation)
 	for(var/i = 1 to sticker_count)
-		var/obj/item/sticker/sticker_type = pick(subtypesof(/obj/item/sticker/monkestation))
+		var/obj/item/sticker/sticker_type = pick(allowed_sticker_types || subtypes_list)
 		new sticker_type(src)
+
+/obj/item/storage/box/monkestation_stickers/bad_time
+	name = "Box of Uncertified Leak Stickers"
+	desc = "NOT signed off on by NT."
+	allowed_sticker_types = list(/obj/item/sticker/monkestation/bad_times)

@@ -20,14 +20,18 @@
 	var/datum/mind/owner = null
 	///Shown to servants when they examine
 	var/clockwork_desc = ""
+	///Shown to servants when they examine and are on reebe
+	var/reebe_desc = ""
 	///can this structure be rotated with a crowbar
 	var/can_rotate = TRUE
 	///if set, then the maximum amount of damage this structure can take from take_damage()
 	var/damage_cap
+	///a basic cooldown declare for anything that will use it
+	COOLDOWN_DECLARE(use_cooldown)
 
 /obj/structure/destructible/clockwork/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/clockwork_description, clockwork_desc)
+	AddElement(/datum/element/clockwork_description, clockwork_desc, reebe_desc)
 
 /obj/structure/destructible/clockwork/Destroy()
 	owner = null

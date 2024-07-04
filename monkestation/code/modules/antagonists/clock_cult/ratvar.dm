@@ -106,12 +106,16 @@ GLOBAL_DATUM(cult_ratvar, /obj/ratvar)
 	forceMove(the_turf)
 
 /obj/ratvar/attack_ghost(mob/user)
-	if(!user.mind) //this should not happen but just to be safe
-		return
 	. = ..()
 	var/mob/living/basic/drone/created_drone = new /mob/living/basic/drone/cogscarab(get_turf(src))
 	created_drone.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
-	user.mind.transfer_to(created_drone, TRUE)
+	if(user.mind)
+		user.mind.transfer_to(created_drone, TRUE)
+	else if(isobserver(user))
+		created_drone.key = user.key
+	else
+		return
+	created_drone.mind.add_antag_datum(/datum/antagonist/clock_cultist)
 
 /obj/ratvar/proc/consume(atom/consumed)
 	consumed.ratvar_act()

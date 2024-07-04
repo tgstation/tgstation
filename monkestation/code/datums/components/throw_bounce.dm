@@ -22,7 +22,6 @@
 
 
 /datum/component/throw_bounce/Initialize(bounce_cooldown, bounce_charge_max, bounce_recharge_rate, targeting_range)
-	. = ..()
 	if(!isitem(parent)) //cant throw non-items
 		return COMPONENT_INCOMPATIBLE
 

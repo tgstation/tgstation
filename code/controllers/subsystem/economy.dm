@@ -67,8 +67,6 @@ SUBSYSTEM_DEF(economy)
 	/// Tracks a temporary sum of all money in the system
 	/// We need this on the subsystem because of yielding and such
 	var/temporary_total = 0
-	///the mail crate we last generated
-	var/obj/structure/closet/crate/mail/economy/mail_crate
 
 /datum/controller/subsystem/economy/Initialize()
 	//removes cargo from the split

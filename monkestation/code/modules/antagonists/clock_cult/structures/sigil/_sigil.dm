@@ -7,6 +7,9 @@
 	name = "sigil"
 	desc = "It's a sigil that does something."
 	max_integrity = 10
+	break_sound = null
+	debris = null
+	break_message = "The sigil is dispelled."
 	icon = 'monkestation/icons/obj/clock_cult/clockwork_effects.dmi'
 	icon_state = "sigilvitality"
 	density = FALSE

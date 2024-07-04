@@ -4,21 +4,21 @@
 	icon_state = "tinkerers_cache"
 	base_icon_state = "tinkerers_cache"
 	clockwork_desc = "Can be used to forge powerful Ratvarian items and traps at the cost of power and time."
+	reebe_desc = "It's connection to the physical realm is weakened from being on reebe, restricting its ability to make certain items."
 	anchored = TRUE
 	break_message = span_warning("The tinkerer's cache melts into a pile of brass.")
 	has_on_icon = FALSE
 	has_off_icon = FALSE
 	has_power_toggle = FALSE
-	COOLDOWN_DECLARE(use_cooldown)
 	/// Assoc list of the names of all the craftable items to their path
-	var/static/list/craft_possibilities
-
+	var/static/list/station_craftable
+	/// Assoc list of items craftable on reebe
+	var/static/list/reebe_craftable
 
 /obj/structure/destructible/clockwork/gear_base/powered/tinkerers_cache/Initialize(mapload)
 	. = ..()
-	if(!length(craft_possibilities))
+	if(!length(station_craftable) || !length(reebe_craftable))
 		assemble_datum_list()
-
 
 /obj/structure/destructible/clockwork/gear_base/powered/tinkerers_cache/attack_hand(mob/living/user)
 	. = ..()
@@ -41,46 +41,45 @@
 		to_chat(user, span_brass("[src] is still warming up, it will be ready in [DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown))]."))
 		return
 
-	var/selection = tgui_input_list(user, "Select an item to create at the forge.", "Forging", craft_possibilities)
-
-	if(!selection)
+	var/datum/tinker_cache_item/chosen_item = tgui_input_list(user, "Select an item to create at the forge.", "Forging", \
+															(on_reebe(src) ? reebe_craftable : reebe_craftable + station_craftable))
+	if(!chosen_item)
 		return
 
-	var/datum/tinker_cache_item/chosen_item = craft_possibilities[selection]
-
+	chosen_item = station_craftable[chosen_item]
 	if(!can_interact(user) || !anchored || depowered || !chosen_item || !COOLDOWN_FINISHED(src, use_cooldown))
 		return
 
-	if(!LAZYLEN(transmission_sigils))
+	if(!length(transmission_sigils))
 		to_chat(user, span_brass("This needs to be connected to a transmission sigil!"))
 		return
 
 	var/amount_to_create = 1
-	if(!initial(chosen_item.time_delay_mult))
+	if(!chosen_item.time_delay_mult)
 		amount_to_create = tgui_input_number(user, "How many would you like to create?", "Tinkerers Cache", max_value = 10, min_value = 1)
 
-	if(!use_power(initial(chosen_item.power_use) * amount_to_create))
+	if(!use_power(chosen_item.power_use * amount_to_create))
 		to_chat(user, span_brass("You need more power to forge this item."))
 		return
 
-	COOLDOWN_START(src, use_cooldown, 4 MINUTES * initial(chosen_item.time_delay_mult))
+	if(chosen_item.time_delay_mult)
+		COOLDOWN_START(src, use_cooldown, 4 MINUTES * chosen_item.time_delay_mult)
 
-	var/crafting_item = initial(chosen_item.item_path)
+	var/crafting_item = chosen_item.item_path
 	for(var/i in 1 to amount_to_create)
 		new crafting_item(get_turf(src))
 	playsound(src, 'sound/machines/clockcult/steam_whoosh.ogg', 50)
 
-	to_chat(user, span_brass("You craft [initial(chosen_item.name)] to near perfection, \the [src] cooling down. \
-			[initial(chosen_item.time_delay_mult) ? "It will be available in [DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown))]." : "It is ready to use again."]"))
-
+	to_chat(user, span_brass("You craft [chosen_item.name] to near perfection, \the [src] cooling down. \
+			[chosen_item.time_delay_mult ? "It will be available in [DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown))]." : "It is ready to use again."]"))
 
 // Assemble a list of subtype tinker cache datums
 /obj/structure/destructible/clockwork/gear_base/powered/tinkerers_cache/proc/assemble_datum_list()
-	craft_possibilities = list()
-	for(var/type in subtypesof(/datum/tinker_cache_item))
-		var/datum/tinker_cache_item/initial_item = type
-		craft_possibilities["[initial(initial_item.name)] ([initial(initial_item.power_use)] W)"] = type
-
+	station_craftable = list()
+	reebe_craftable = list()
+	for(var/datum/tinker_cache_item/initial_item as anything in subtypesof(/datum/tinker_cache_item))
+		initial_item = new initial_item
+		(!initial_item.allowed_on_reebe ? station_craftable : reebe_craftable)["[initial_item.name] ([initial_item.power_use] W)"] = initial_item
 
 // This used to be a hardcoded list
 /datum/tinker_cache_item
@@ -92,26 +91,32 @@
 	var/power_use = 0
 	/// Multiplier for time delay (default 4m) after producing this item
 	var/time_delay_mult = 1
+	/// Is this item able to be fabricated on reebe
+	var/allowed_on_reebe = TRUE
 
 /datum/tinker_cache_item/speed_robes
 	name = "Robes Of Divinity"
 	item_path = /obj/item/clothing/suit/clockwork/speed
 	power_use = 200
+	allowed_on_reebe = FALSE
 
 /datum/tinker_cache_item/invis_cloak
 	name = "Shrouding Cloak"
 	item_path = /obj/item/clothing/suit/clockwork/cloak
 	power_use = 200
+	allowed_on_reebe = FALSE
 
 /datum/tinker_cache_item/sight_goggles
 	name = "Wraith Spectacles"
 	item_path = /obj/item/clothing/glasses/clockwork/wraith_spectacles
 	power_use = 500
+	allowed_on_reebe = FALSE
 
 /datum/tinker_cache_item/hud_visor
 	name = "Judicial Visor"
 	item_path = /obj/item/clothing/glasses/clockwork/judicial_visor
 	power_use = 400
+	allowed_on_reebe = FALSE
 
 /datum/tinker_cache_item/replica_fabricator
 	name = "Replica Fabricator"

@@ -28,7 +28,7 @@
 	return
 
 //reactive talisman
-#define REACTION_COOLDOWN_DURATION 15 SECONDS
+#define REACTION_COOLDOWN_DURATION 10 SECONDS
 /obj/item/clothing/neck/neckless/wizard_reactive //reactive armor for wizards that casts a spell when it reacts
 	name = "reactive talisman"
 	desc = "A reactive talisman for the reactive mage."

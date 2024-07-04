@@ -15,3 +15,11 @@
 	purchasable_from = ALL
 	limited_stock = 1
 	cant_discount = TRUE
+
+/datum/uplink_item/badass/bad_time_stickers
+	name = "Leaked Sticker Pack"
+	desc = "A box of leaked stickers from the NT production line."
+	item = /obj/item/storage/box/monkestation_stickers/bad_time
+	cost = 1
+	purchasable_from = ALL
+	cant_discount = TRUE

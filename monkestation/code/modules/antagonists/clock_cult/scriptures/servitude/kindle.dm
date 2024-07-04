@@ -8,7 +8,7 @@
 	tip = "Best paired with hateful manacels for conversion, they are stunned for 6.5 seconds and muted for 13."
 	button_icon_state = "Kindle"
 	power_cost = 125
-	invocation_time = 1 SECONDS
+	invocation_time = 2 SECONDS
 	invocation_text = list("Divinity, show them your light!")
 	after_use_text = "Let the power flow through you!"
 	slab_overlay = "volt"
@@ -76,11 +76,11 @@
 
 	if(issilicon(hit_mob))
 		var/mob/living/silicon/borgo = hit_mob
-
 		borgo.emp_act(EMP_HEAVY)
 
 	else if(iscarbon(hit_mob))
 		var/mob/living/carbon/carbon_hit = hit_mob
+		var/has_mindshield = HAS_TRAIT(hit_mob, TRAIT_MINDSHIELD)
 
 		carbon_hit.adjust_stutter(15 SECONDS)
 		carbon_hit.adjust_jitter(15 SECONDS)
@@ -88,9 +88,9 @@
 		carbon_hit.adjust_timed_status_effect(26 SECONDS, /datum/status_effect/speech/slurring/cult)
 
 		carbon_hit.adjust_silence(EFFECT_TIME * 2) //enough time to cuff and remove their radio, or just go back to reebe where their comms wont work
-		carbon_hit.AdjustKnockdown(EFFECT_TIME * 1.5)
-
-		carbon_hit.Stun(EFFECT_TIME * ((on_reebe(carbon_hit) && GLOB.clock_ark?.current_state) ? 0.1 : 1)) //pretty much 0 stun if your on reebe, still good for knockdown though
+		carbon_hit.AdjustKnockdown(EFFECT_TIME * (has_mindshield ? 1 : 1.5))
+		//pretty much 0 stun if your on reebe, still good for knockdown though, also only a 1 second stun on mindshielded people
+		carbon_hit.Stun((has_mindshield ? 1 SECONDS : EFFECT_TIME) * ((on_reebe(carbon_hit) && GLOB.clock_ark?.current_state) ? 0.1 : 1))
 
 	if(hit_mob.client)
 		var/client_color = hit_mob.client.color

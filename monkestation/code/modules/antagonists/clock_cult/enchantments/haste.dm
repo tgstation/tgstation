@@ -3,4 +3,4 @@
 	max_level = 1
 
 /datum/component/enchantment/haste/apply_effect(obj/item/target)
-	target.attack_speed = min(CLICK_CD_FAST_MELEE, target.attack_speed)
+	target.attack_speed = max(1, target.attack_speed - 2)

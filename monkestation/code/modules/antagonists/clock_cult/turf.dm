@@ -196,7 +196,7 @@
 //do the deconstruction stuff, this really should be a proc on Rwalls as well
 /turf/closed/wall/clockwork/proc/next_decon_state(obj/item/used_tool, mob/user, current_state, set_state, sent_message, use_time = 4 SECONDS)
 	if(on_reebe(src))
-		use_time = round(use_time / 2, 0.1) //each stage takes half as long on reebe
+		use_time = round(use_time * 0.2, 0.1) //it takes much less time to deconstruct walls on reebe
 
 	if(used_tool.use_tool(src, user, use_time, volume=100))
 		if(!istype(src, /turf/closed/wall/clockwork) || d_state != current_state)

@@ -16,7 +16,7 @@
 	component_datum = /datum/component/clockwork_trap/skewer
 	unwrench_path = /obj/item/clockwork/trap_placer/skewer
 	buckle_lying = FALSE
-	max_integrity = 40
+	max_integrity = 20
 	clockwork_desc = "A skewer that can pierce through a target, activated by a linked trigger."
 	COOLDOWN_DECLARE(stab_cooldown)
 	/// If the spear is currently extended
@@ -24,6 +24,11 @@
 	/// Mutable appearance stab overlay
 	var/mutable_appearance/stab_overlay
 
+/datum/armor/raised_clock_skewer
+	laser = 30
+	melee = 50
+	bullet = 40
+	energy = 30
 
 /// Stab any non-clock mobs who stood on the tile
 /obj/structure/destructible/clockwork/trap/skewer/proc/stab()
@@ -35,11 +40,11 @@
 		return
 
 	COOLDOWN_START(src, stab_cooldown, 10 SECONDS)
-
 	extended = TRUE
 	icon_state = "[initial(icon_state)]_extended"
 	var/target_stabbed = FALSE
 	density = TRUE
+	set_armor(/datum/armor/raised_clock_skewer)
 
 	for(var/mob/living/stabbed_mob in get_turf(src))
 		if(stabbed_mob.incorporeal_move || (stabbed_mob.movement_type & (FLOATING|FLYING)))
@@ -95,6 +100,7 @@
 	icon_state = initial(icon_state)
 	density = FALSE
 	cut_overlay(stab_overlay)
+	set_armor(null)
 	for(var/mob/living/stabbed_mob as anything in buckled_mobs)
 		unbuckle_mob(stabbed_mob, TRUE)
 
