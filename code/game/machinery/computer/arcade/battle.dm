@@ -505,7 +505,7 @@
 					return TRUE
 				if(BATTLE_ARCADE_PLAYER_HEAVY_ATTACK)
 					if(player_current_mp < SPELL_MP_COST)
-						say("You don't have enough MP to counterattack!")
+						say("You don't have enough MP to heavy attack!")
 						player_turn = TRUE
 						return TRUE
 					player_current_mp -= SPELL_MP_COST

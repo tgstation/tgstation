@@ -228,6 +228,8 @@
 	worn_icon_state = "beaker"
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*5)
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
+	pickup_sound = 'sound/items/handling/beaker_pickup.ogg'
+	drop_sound = 'sound/items/handling/beaker_place.ogg'
 
 /obj/item/reagent_containers/cup/beaker/Initialize(mapload)
 	. = ..()

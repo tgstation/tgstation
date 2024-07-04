@@ -99,7 +99,10 @@
 
 	update_client_colour()
 	update_mouse_pointer()
-	refresh_looping_ambience()
+	update_ambience_area(get_area(src))
+
+	if(!can_hear())
+		stop_sound_channel(CHANNEL_AMBIENCE)
 
 	if(client)
 		if(client.view_size)

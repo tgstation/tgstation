@@ -142,7 +142,7 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "ih" = (
 /obj/item/bedsheet/purple,
-/obj/item/clothing/mask/cigarette/space_cigarette,
+/obj/item/cigarette/space_cigarette,
 /obj/structure/bed/maint,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/fuel_pool,
@@ -373,7 +373,7 @@
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "tu" = (
-/obj/item/clothing/mask/cigarette/robust,
+/obj/item/cigarette/robust,
 /obj/structure/closet/emcloset,
 /obj/item/clothing/suit/utility/fire/heavy,
 /obj/item/clothing/head/utility/hardhat/welding/atmos,
@@ -758,7 +758,7 @@
 	pixel_x = -4;
 	pixel_y = 10
 	},
-/obj/item/clothing/mask/cigarette/space_cigarette{
+/obj/item/cigarette/space_cigarette{
 	pixel_x = -5;
 	pixel_y = 7
 	},
@@ -905,7 +905,7 @@
 "Xv" = (
 /obj/item/food/deadmouse,
 /obj/item/clothing/shoes/sneakers/red,
-/obj/item/clothing/mask/cigarette/carp,
+/obj/item/cigarette/carp,
 /obj/item/extinguisher/mini,
 /obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/plating/dumpsterair,

@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - rscadd: "The Illumination Applications technode now includes a gunkit for a new gun, the Photon Cannon."
