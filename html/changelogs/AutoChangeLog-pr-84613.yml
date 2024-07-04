@@ -1,0 +1,4 @@
+author: "aaaa1023"
+delete-after: True
+changes:
+  - bugfix: "Fixed the following shuttles flying in unexpected directions: Pubby escape pod,  Humpback emergency shuttle, Pubby monastery shuttle, Birdboat emergency shuttle, Birdshot emergency shuttle"
