@@ -411,6 +411,7 @@
 			switch(area_to_beautify.beauty)
 				if(BEAUTY_LEVEL_DECENT to BEAUTY_LEVEL_GOOD)
 					add_mood_event(MOOD_CATEGORY_AREA_BEAUTY, /datum/mood_event/ehroom)
+					return
 				if(BEAUTY_LEVEL_GOOD to BEAUTY_LEVEL_GREAT)
 					add_mood_event(MOOD_CATEGORY_AREA_BEAUTY, /datum/mood_event/badroom)
 					return
