@@ -92,6 +92,7 @@
 		"jawsoflife",
 		"rangedanalyzer",
 		"rtd_loaded",
+		"mech_rcd",
 		"rcd_loaded",
 		"rcd_ammo",
 		"weldingmask",

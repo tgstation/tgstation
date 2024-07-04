@@ -90,6 +90,7 @@
 	description = "State-of-the-art medical gear for keeping the crew in one piece — mostly."
 	prereq_ids = list(TECHWEB_NODE_CRYOSTASIS)
 	design_ids = list(
+		"smoke_machine",
 		"chem_mass_spec",
 		"healthanalyzer_advanced",
 		"mod_health_analyzer",

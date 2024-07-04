@@ -44,7 +44,7 @@
 		"limbdesign_plasmaman",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
-	required_experiments = list(/datum/experiment/scanning/random/cytology)
+	required_experiments = list(/datum/experiment/scanning/cytology/slime)
 
 /datum/techweb_node/gene_engineering
 	id = TECHWEB_NODE_GENE_ENGINEERING
@@ -59,7 +59,45 @@
 		"mod_dna_lock",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
-	discount_experiments = list(
-		/datum/experiment/scanning/random/plants/traits = TECHWEB_TIER_2_POINTS,
-		/datum/experiment/scanning/points/slime/hard = TECHWEB_TIER_2_POINTS,
-		)
+	discount_experiments = list(/datum/experiment/scanning/people/mutant = TECHWEB_TIER_4_POINTS)
+
+// Botany root node
+/datum/techweb_node/botany_equip
+	id = TECHWEB_NODE_BOTANY_EQUIP
+	starting_node = TRUE
+	display_name = "Botany Equipment"
+	description = "Essential tools for maintaining onboard gardens, supporting plant growth in the unique environment of the space station."
+	design_ids = list(
+		"seed_extractor",
+		"plant_analyzer",
+		"watering_can",
+		"spade",
+		"cultivator",
+		"secateurs",
+		"hatchet",
+	)
+
+/datum/techweb_node/hydroponics
+	id = TECHWEB_NODE_HYDROPONICS
+	display_name = "Hydroponics"
+	description = "Research into advanced hydroponic systems for efficient and sustainable plant cultivation."
+	prereq_ids = list(TECHWEB_NODE_BOTANY_EQUIP, TECHWEB_NODE_CHEM_SYNTHESIS)
+	design_ids = list(
+		"biogenerator",
+		"hydro_tray",
+		"portaseeder",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+
+/datum/techweb_node/selection
+	id = TECHWEB_NODE_SELECTION
+	display_name = "Artificial Selection"
+	description = "Advancement in plant cultivation techniques through artificial selection, enabling precise manipulation of plant DNA."
+	prereq_ids = list(TECHWEB_NODE_HYDROPONICS)
+	design_ids = list(
+		"flora_gun",
+		"gene_shears",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	required_experiments = list(/datum/experiment/scanning/random/plants/wild)
+	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = TECHWEB_TIER_3_POINTS)

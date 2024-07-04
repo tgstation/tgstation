@@ -327,7 +327,6 @@
 	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to more traditional means."
 	exp_tag = "Scan"
 	possible_types = list(/obj/vehicle/sealed/mecha)
-	total_requirement = 1
 	///Damage percent that each mech needs to be at for a scan to work.
 	var/damage_percent
 
@@ -336,6 +335,21 @@
 	description = "Exosuit equipment places unique strain upon the structure of the vehicle. Scan exosuits you have assembled from your exosuit fabricator and fully equipped to accelerate our structural stress simulations."
 	possible_types = list(/obj/vehicle/sealed/mecha)
 	total_requirement = 1
+
+/// Scan a person with any mutation
+/datum/experiment/scanning/people/mutant
+	name = "Human Field Research: Genetic Mutations"
+	description = "Our new research assistants have been drinking random chemicals for science, when one of them mastered telekinesis and another started shooting lasers from the eyes. This could be useful for our studies. Repeat the experiment by making assistants drink unstable mutagen, scan them and report the results."
+	performance_hint = "Scan a person with a random mutation."
+	required_traits_desc = "random mutation"
+
+/datum/experiment/scanning/people/mutant/is_valid_scan_target(mob/living/carbon/human/check, datum/component/experiment_handler/experiment_handler)
+	. = ..()
+	if (!.)
+		return
+	if(!check.dna.mutations.len)
+		return FALSE
+	return TRUE
 
 /// Scan for organs you didn't start the round with
 /datum/experiment/scanning/people/novel_organs
@@ -474,10 +488,16 @@
 		/obj/item/stack/sheet/bluespace_crystal = 1
 	)
 
+/datum/experiment/scanning/points/anomalies
+	name = "Neutralized Anomaly Analysis"
+	description = "We have the power to deal with the anomalies now. Neutralize them with an anomaly neutralizer or refine the raw cores in the refinery and scan the results."
+	required_points = 4
+	required_atoms = list(/obj/item/assembly/signaler/anomaly = 1)
+
 /datum/experiment/scanning/points/machinery_tiered_scan/tier2_any
 	name = "Upgraded Stock Parts Benchmark"
 	description = "Our newly-designed machinery components require practical application tests for hints at possible further advancements, as well as a general confirmation that we didn't actually design worse parts somehow. Scan any machinery with Upgraded Parts and report the results."
-	required_points = 4
+	required_points = 6
 	required_atoms = list(
 		/obj/machinery = 1
 	)
@@ -486,7 +506,7 @@
 /datum/experiment/scanning/points/machinery_tiered_scan/tier3_any
 	name = "Advanced Stock Parts Benchmark"
 	description = "Our newly-designed machinery components require practical application tests for hints at possible further advancements, as well as a general confirmation that we didn't actually design worse parts somehow. Scan any machinery with Advanced Parts and report the results."
-	required_points = 4
+	required_points = 6
 	required_atoms = list(
 		/obj/machinery = 1
 	)
