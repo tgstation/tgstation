@@ -1655,3 +1655,12 @@
 	req_components = list(
 		/obj/item/pipe/directional/vent = 1,
 	)
+
+/obj/item/circuitboard/machine/pipe_scrubber
+	name = "Portable Pipe Scrubber"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/pipe_scrubber
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/pipe/trinary/flippable/filter = 1,
+	)

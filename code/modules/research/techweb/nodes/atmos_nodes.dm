@@ -51,6 +51,7 @@
 	design_ids = list(
 		"crystallizer",
 		"electrolyzer",
+		"pipe_scrubber",
 		"pacman",
 		"mech_generator",
 		"plasmacutter",
