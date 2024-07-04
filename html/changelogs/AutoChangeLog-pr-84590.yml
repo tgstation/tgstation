@@ -1,4 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes:
-  - bugfix: "Birdshot's AI core no longer has windoors concealed under open shutters."

@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Mending touch no longer damages non-humans"
