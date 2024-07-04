@@ -323,3 +323,5 @@ SUBSYSTEM_DEF(persistent_paintings)
 	fdel(json_file)
 	WRITE_FILE(json_file, payload)
 	cache_paintings()
+
+#undef PAINTINGS_DATA_FORMAT_VERSION
