@@ -4223,9 +4223,6 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
 "qw" = (
-/obj/machinery/atmospherics/pipe/smart/simple/supply/visible{
-	dir = 5
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer2{
@@ -8972,7 +8969,7 @@
 /area/awaymission/snowdin/post/messhall)
 "Ml" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/visible{
-	dir = 4
+	dir = 5
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer2{
@@ -10653,6 +10650,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/post/engineering)
 "Vo" = (
@@ -11317,7 +11315,7 @@
 /area/awaymission/snowdin/outside)
 "Zd" = (
 /obj/machinery/power/apc/auto_name/directional/south{
-	area = "/area/awaymission/snowdin/post/gateway"
+	areastring = "/area/awaymission/snowdin/post/gateway"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -25636,7 +25634,7 @@ nV
 or
 oR
 nt
-pX
+pY
 qw
 qX
 rs
@@ -25893,7 +25891,7 @@ nV
 iJ
 iJ
 nt
-pY
+pX
 Ml
 Wc
 nN
