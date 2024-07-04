@@ -1,0 +1,9 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - refactor: "Vat grower is a normal machine now that doesn't need plumbing"
+  - qol: "Cytology petri dish smartfridge starts with 3 random samples"
+  - rscadd: "Added protein powder condiment bottle, available in the cytology supplies locker and the cargo pack"
+  - rscdel: "Removed science variant of plumbing RCD"
+  - bugfix: "Fixed a bug when machines without stock parts didn't spawn frames on deconstruction"
+  - bugfix: "Fixed vat grower not growing"
