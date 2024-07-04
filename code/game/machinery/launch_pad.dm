@@ -66,6 +66,15 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Maximum range: <b>[range]</b> units.")
 
+/obj/machinery/launchpad/multitool_act(mob/living/user, obj/item/multitool/multi)
+	. = NONE
+	if(!panel_open)
+		return
+
+	multi.set_buffer(src)
+	balloon_alert(user, "saved to buffer")
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/launchpad/attackby(obj/item/weapon, mob/user, params)
 	if(!stationary)
 		return ..()
@@ -73,14 +82,6 @@
 	if(default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle", weapon))
 		update_indicator()
 		return
-
-	if(panel_open && weapon.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, weapon))
-			return
-		var/obj/item/multitool/multi = weapon
-		multi.set_buffer(src)
-		balloon_alert(user, "saved to buffer")
-		return TRUE
 
 	if(default_deconstruction_crowbar(weapon))
 		return
