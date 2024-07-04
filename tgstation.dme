@@ -6101,6 +6101,7 @@
 #include "code\modules\vehicles\mecha\combat\durand.dm"
 #include "code\modules\vehicles\mecha\combat\gygax.dm"
 #include "code\modules\vehicles\mecha\combat\honker.dm"
+#include "code\modules\vehicles\mecha\combat\justice.dm"
 #include "code\modules\vehicles\mecha\combat\marauder.dm"
 #include "code\modules\vehicles\mecha\combat\phazon.dm"
 #include "code\modules\vehicles\mecha\combat\reticence.dm"
