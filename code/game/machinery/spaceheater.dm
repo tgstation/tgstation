@@ -3,6 +3,7 @@
 #define HEATER_MODE_COOL "cool"
 #define HEATER_MODE_AUTO "auto"
 #define BASE_HEATING_ENERGY (40 KILO JOULES)
+#define SPACE_HEATING_COEFFICIENT 1e4
 
 /obj/machinery/space_heater
 	anchored = FALSE
@@ -32,7 +33,7 @@
 	///How much heat/cold we can deliver
 	var/heating_energy = 40 KILO JOULES
 	///How efficiently we can deliver that heat/cold (higher indicates less cell consumption)
-	var/efficiency = 2e4
+	var/efficiency = 2 * SPACE_HEATING_COEFFICIENT
 	///The amount of degrees above and below the target temperature for us to change mode to heater or cooler
 	var/temperature_tolerance = 1
 	///What's the middle point of our settable temperature (30 °C)
@@ -105,7 +106,7 @@
 	var/target_temp = round(target_temperature - T0C, 1)
 	var/min_temp = max(settable_temperature_median - settable_temperature_range, TCMB) - T0C
 	var/max_temp = settable_temperature_median + settable_temperature_range - T0C
-	return span_notice("The status display reads:<br>Heating power: <b>[display_power(heating_energy, convert = TRUE, scheduler = SSair)] at [(efficiency / 2e4) * 100]% efficiency.</b><br>Target temperature: <b>[target_temp]°C [min_temp]°C - [max_temp]°C]</b>\n")
+	return span_notice("The status display reads:<br>Heating power: <b>[display_power(heating_energy, convert = TRUE, scheduler = SSair)] at [(efficiency / efficiency) * 100]% efficiency.</b><br>Target temperature: <b>[target_temp]°C [min_temp]°C - [max_temp]°C]</b>\n")
 
 /obj/machinery/space_heater/update_icon_state()
 	. = ..()
@@ -179,7 +180,7 @@
 	heating_energy = laser * BASE_HEATING_ENERGY
 
 	settable_temperature_range = cap * 30
-	efficiency = (cap + 1) * 1e4
+	efficiency = (cap + 1) * SPACE_HEATING_COEFFICIENT
 
 	target_temperature = clamp(target_temperature,
 		max(settable_temperature_median - settable_temperature_range, TCMB),
