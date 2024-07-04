@@ -34,7 +34,7 @@
 	range = 9
 	temperature = -350 // Single slow shot reduces temp greatly
 
-/obj/projectile/temp/cryoon_hit(atom/target, blocked = 0, pierce_hit)
+/obj/projectile/temp/cryo/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 
 	if(isobj(target))
