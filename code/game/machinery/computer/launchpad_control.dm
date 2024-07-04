@@ -58,20 +58,16 @@
 	to_chat(user, span_warning("You are too primitive to use this computer!"))
 	return
 
-/obj/machinery/computer/launchpad/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, W))
-			return
-		var/obj/item/multitool/M = W
-		if(M.buffer && istype(M.buffer, /obj/machinery/launchpad))
-			if(LAZYLEN(launchpads) < maximum_pads)
-				launchpads |= M.buffer
-				M.set_buffer(null)
-				to_chat(user, span_notice("You upload the data from the [W.name]'s buffer."))
-			else
-				to_chat(user, span_warning("[src] cannot handle any more connections!"))
-	else
-		return ..()
+/obj/machinery/computer/launchpad/multitool_act(mob/living/user, obj/item/multitool/tool)
+	. = NONE
+	if(!istype(tool.buffer, /obj/machinery/launchpad))
+		return
+
+	if(LAZYLEN(launchpads) < maximum_pads)
+		launchpads |= tool.buffer
+		tool.set_buffer(null)
+		to_chat(user, span_notice("You upload the data from the [tool] buffer."))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/launchpad/proc/pad_exists(number)
 	var/obj/machinery/launchpad/pad = launchpads[number]
@@ -137,10 +133,16 @@
 		if("move_pos")
 			var/plus_x = text2num(params["x"])
 			var/plus_y = text2num(params["y"])
-			current_pad.set_offset(
-				x = current_pad.x_offset + plus_x,
-				y = current_pad.y_offset + plus_y
-			)
+			if(plus_x || plus_y)
+				current_pad.set_offset(
+					x = current_pad.x_offset + plus_x,
+					y = current_pad.y_offset + plus_y,
+				)
+			else
+				current_pad.set_offset(
+					x = 0,
+					y = 0,
+				)
 			. = TRUE
 		if("rename")
 			. = TRUE

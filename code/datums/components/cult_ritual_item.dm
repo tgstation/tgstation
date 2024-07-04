@@ -128,6 +128,7 @@
 		INVOKE_ASYNC(src, PROC_REF(do_destroy_girder), target, cultist)
 		return COMPONENT_NO_AFTERATTACK
 
+
 	if(istype(target, /obj/structure/destructible/cult))
 		INVOKE_ASYNC(src, PROC_REF(do_unanchor_structure), target, cultist)
 		return COMPONENT_NO_AFTERATTACK

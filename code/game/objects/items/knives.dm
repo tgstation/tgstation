@@ -21,7 +21,6 @@
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
 	armor_type = /datum/armor/item_knife
-	var/bayonet = FALSE //Can this be attached to a gun?
 	wound_bonus = 5
 	bare_wound_bonus = 15
 	tool_behaviour = TOOL_KNIFE
@@ -77,9 +76,8 @@
 	/// Bleed stacks applied when an organic mob target is hit
 	var/bleed_stacks_per_hit = 3
 
-/obj/item/knife/bloodletter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!isliving(target) || !proximity_flag)
+/obj/item/knife/bloodletter/afterattack(atom/target, mob/user, click_parameters)
+	if(!isliving(target))
 		return
 	var/mob/living/M = target
 	if(!(M.mob_biotypes & MOB_ORGANIC))
@@ -131,7 +129,6 @@
 	throwforce = 20
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "cuts")
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "cut")
-	bayonet = TRUE
 	slot_flags = ITEM_SLOT_MASK
 
 /obj/item/knife/combat/Initialize(mapload)
@@ -162,7 +159,6 @@
 	desc = "A hunting grade survival knife."
 	force = 15
 	throwforce = 15
-	bayonet = TRUE
 
 /obj/item/knife/combat/bone
 	name = "bone dagger"

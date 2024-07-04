@@ -53,24 +53,9 @@
 	mood_change = -8
 	timeout = 5 MINUTES
 
-/datum/mood_event/depression_minimal
-	description = "I feel a bit down."
-	mood_change = -10
-	timeout = 2 MINUTES
-
-/datum/mood_event/depression_mild
+/datum/mood_event/depression
 	description = "I feel sad for no particular reason."
 	mood_change = -12
-	timeout = 2 MINUTES
-
-/datum/mood_event/depression_moderate
-	description = "I feel miserable."
-	mood_change = -14
-	timeout = 2 MINUTES
-
-/datum/mood_event/depression_severe
-	description = "I've lost all hope."
-	mood_change = -16
 	timeout = 2 MINUTES
 
 /datum/mood_event/shameful_suicide //suicide_acts that return SHAME, like sord
@@ -217,11 +202,6 @@
 	mood_change = -4
 	timeout = 4 MINUTES
 
-/datum/mood_event/loud_gong
-	description = "That loud gong noise really hurt my ears!"
-	mood_change = -3
-	timeout = 2 MINUTES
-
 /datum/mood_event/notcreeping
 	description = "The voices are not happy, and they painfully contort my thoughts into getting back on task."
 	mood_change = -6
@@ -301,20 +281,10 @@
 	mood_change = -25
 	timeout = 4 MINUTES
 
-/datum/mood_event/high_five_alone
-	description = "I tried getting a high-five with no one around, how embarassing!"
-	mood_change = -2
-	timeout = 60 SECONDS
-
 /datum/mood_event/high_five_full_hand
 	description = "Oh god, I don't even know how to high-five correctly..."
 	mood_change = -1
 	timeout = 45 SECONDS
-
-/datum/mood_event/left_hanging
-	description = "But everyone loves high fives! Maybe people just... hate me?"
-	mood_change = -2
-	timeout = 90 SECONDS
 
 /datum/mood_event/too_slow
 	description = "NO! HOW COULD I BE... TOO SLOW???"
@@ -335,12 +305,17 @@
 /datum/mood_event/surgery
 	description = "THEY'RE CUTTING ME OPEN!!"
 	mood_change = -8
+	var/surgery_completed = FALSE
 
 /datum/mood_event/surgery/success
+	description = "That surgery really hurt... Glad it worked, I guess..."
 	timeout = 3 MINUTES
+	surgery_completed = TRUE
 
 /datum/mood_event/surgery/failure
+	description = "AHHHHHGH! THEY FILLETED ME ALIVE!"
 	timeout = 10 MINUTES
+	surgery_completed = TRUE
 
 /datum/mood_event/bald
 	description = "I need something to cover my head..."
@@ -385,14 +360,19 @@
 	description = "I feel off-balance without my tail."
 	mood_change = -2
 
-/datum/mood_event/tail_regained_right
-	description = "My tail is back, but that was traumatic..."
-	mood_change = -2
-	timeout = 5 MINUTES
-
 /datum/mood_event/tail_regained_wrong
 	description = "Is this some kind of sick joke?! This is NOT the right tail."
 	mood_change = -12 // -8 for tail still missing + -4 bonus for being frakenstein's monster
+	timeout = 5 MINUTES
+
+/datum/mood_event/tail_regained_species
+	description = "This tail is not mine, but at least it balances me out..."
+	mood_change = -5
+	timeout = 5 MINUTES
+
+/datum/mood_event/tail_regained_right
+	description = "My tail is back, but that was traumatic..."
+	mood_change = -2
 	timeout = 5 MINUTES
 
 /datum/mood_event/burnt_wings

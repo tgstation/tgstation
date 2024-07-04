@@ -5,7 +5,7 @@
  * as much as possible to the components/elements system
  */
 /atom
-	layer = TURF_LAYER
+	layer = ABOVE_NORMAL_TURF_LAYER
 	plane = GAME_PLANE
 	appearance_flags = TILE_BOUND|LONG_GLIDE
 
@@ -136,8 +136,10 @@
 	///whether ghosts can see screentips on it
 	var/ghost_screentips = FALSE
 
-	/// Flags to check for in can_perform_action. Used in alt-click checks
+	/// Flags to check for in can_perform_action. Used in alt-click & ctrl-click checks
 	var/interaction_flags_click = NONE
+	/// Flags to check for in can_perform_action for mouse drag & drop checks. To bypass checks see interaction_flags_atom mouse drop flags
+	var/interaction_flags_mouse_drop = NONE
 
 /**
  * Top level of the destroy chain for most atoms

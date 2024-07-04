@@ -69,6 +69,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Antagonizes the above.
 #define TRAIT_DISCOORDINATED_TOOL_USER "discoordinated_tool_user"
 #define TRAIT_PACIFISM "pacifism"
+// Trait added to the user of a hippocratic oath status effect
+#define TRAIT_HIPPOCRATIC_OATH "hippocratic_oath"
 #define TRAIT_IGNORESLOWDOWN "ignoreslow"
 #define TRAIT_IGNOREDAMAGESLOWDOWN "ignoredamageslowdown"
 /// Makes it so the mob can use guns regardless of tool user status
@@ -96,6 +98,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_IWASBATONED "iwasbatoned"
 #define TRAIT_SLEEPIMMUNE "sleep_immunity"
 #define TRAIT_PUSHIMMUNE "push_immunity"
+/// can't be kicked to the side
+#define TRAIT_NO_SIDE_KICK "no_side_kick"
 /// Are we immune to shocks?
 #define TRAIT_SHOCKIMMUNE "shock_immunity"
 /// Are we immune to specifically tesla / SM shocks?
@@ -138,8 +142,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_AGENDER "agender"
 /// Species with this trait have a blood clan mechanic
 #define TRAIT_BLOOD_CLANS "blood_clans"
-/// Species with this trait have markings (this SUCKS, remove this later in favor of bodypart overlays)
-#define TRAIT_HAS_MARKINGS "has_markings"
 /// Species with this trait use skin tones for coloration
 #define TRAIT_USES_SKINTONES "uses_skintones"
 /// Species with this trait use mutant colors for coloration
@@ -366,6 +368,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GAMERGOD "gamer-god"
 #define TRAIT_GIANT "giant"
 #define TRAIT_DWARF "dwarf"
+/// Makes you way too tall. Like just too much, dude, it's kind of creepy. Humanoid only.
+#define TRAIT_TOO_TALL "too_tall"
 /// makes your footsteps completely silent
 #define TRAIT_SILENT_FOOTSTEPS "silent_footsteps"
 /// hnnnnnnnggggg..... you're pretty good....
@@ -553,8 +557,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Given by /obj/item/virgin_mary, mobs that used this can no longer use it again ever
 #define TRAIT_MAFIAINITIATE "mafiainitiate"
 
+/// Our mob has the mind reading genetic mutation.
+#define TRAIT_MIND_READER "mind reader"
+
 ///Makes the player appear as their respective job in Binary Talk rather than being a 'Default Cyborg'.
-#define DISPLAYS_JOB_IN_BINARY "display_job_in_binary"
+#define TRAIT_DISPLAY_JOB_IN_BINARY "display job in binary"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
@@ -610,6 +617,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CHEF_KISS "chefs_kiss"
 /// Allows clowns to bend balloons into animals
 #define TRAIT_BALLOON_SUTRA "balloon_sutra"
+/// Allows detectives to identify chemicals by taste
+#define TRAIT_DETECTIVES_TASTE "detectives_taste"
 
 ///Movement type traits for movables. See elements/movetype_handler.dm
 #define TRAIT_MOVE_GROUND "move_ground"
@@ -1007,8 +1016,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// things with this trait are treated as having no access in /atom/movable/proc/check_access(obj/item)
 #define TRAIT_ALWAYS_NO_ACCESS "alwaysnoaccess"
 
-/// This human wants to see the color of their glasses, for some reason
-#define TRAIT_SEE_GLASS_COLORS "see_glass_colors"
+///Used by wearable_client_colour to determine whether the mob wants to have the colours of the screen affected by worn items (some still do regardless).
+#define TRAIT_SEE_WORN_COLOURS "see_worn_colour"
 
 // Radiation defines
 
@@ -1084,6 +1093,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Note this doesn't mean all spells are guaranteed to work or the mob is guaranteed to cast
 #define TRAIT_CASTABLE_LOC "castable_loc"
 
+/// Needs above trait to work.
+/// This trait makes it so that any cast spells will attempt to transfer to the location's location.
+/// For example, a heretic inside the haunted blade's spells would emanate from the mob wielding the sword.
+#define TRAIT_SPELLS_TRANSFER_TO_LOC "spells_transfer_to_loc"
+
 ///Trait given by /datum/element/relay_attacker
 #define TRAIT_RELAYING_ATTACKER "relaying_attacker"
 
@@ -1146,9 +1160,27 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
 #define TRAIT_BOULDER_BREAKER "boulder_breaker"
 
+/// Trait given to anything linked to, not necessarily allied to, the mansus
+#define TRAIT_MANSUS_TOUCHED "mansus_touched"
+
 /// Trait given to mobs wearing the clown mask
 #define TRAIT_PERCEIVED_AS_CLOWN "perceived_as_clown"
 /// Does this item bypass ranged armor checks?
 #define TRAIT_BYPASS_RANGED_ARMOR "bypass_ranged_armor"
 
+/// Traits given by settler, each with their own specific effects for cases where someone would have that trait, but not the other settler effects
+
+#define TRAIT_EXPERT_FISHER "expert_fisher" // fishing is easier
+#define TRAIT_ROUGHRIDER "roughrider" // you can improve speed on mounted animals with a good mood
+#define TRAIT_STUBBY_BODY "stubby_body" // you have a stubby body that lessens your agility
+#define TRAIT_BEAST_EMPATHY "beast_empathy" // you're good with animals, such as with taming them
+#define TRAIT_STURDY_FRAME "sturdy_frame" // you suffer much lesser effects from equipment that slows you down
+
+/// This item cannot be selected for or used by a theft objective (Spies, Traitors, etc.)
+#define TRAIT_ITEM_OBJECTIVE_BLOCKED "item_objective_blocked"
+/// This trait lets you attach limbs to any player without surgery.
+#define TRAIT_EASY_ATTACH "easy_attach"
+
+///Trait given to the birthday boy
+#define TRAIT_BIRTHDAY_BOY "birthday_boy"
 // END TRAIT DEFINES
