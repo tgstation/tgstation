@@ -211,11 +211,11 @@
 		mendicant_transfer_limb.receive_damage(brute_to_heal * pain_multiplier, burn_to_heal * pain_multiplier, forced = TRUE, wound_bonus = CANT_WOUND)
 
 	if(brute_to_heal)
-		hurtguy.adjustBruteLoss(brute_to_heal)
+		hurtguy.adjustBruteLoss(-brute_to_heal)
 		. = TRUE
 
 	if(burn_to_heal)
-		hurtguy.adjustFireLoss(burn_to_heal)
+		hurtguy.adjustFireLoss(-burn_to_heal)
 		. = TRUE
 
 	return .
