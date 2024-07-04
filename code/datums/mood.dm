@@ -55,7 +55,7 @@
 
 	var/area/our_area = get_area(mob_to_make_moody)
 	if(our_area)
-		check_area_mood(null, our_area)
+		check_area_mood(mob_to_make_moody, our_area)
 
 	mob_to_make_moody.become_area_sensitive(MOOD_DATUM_TRAIT)
 	if(mob_to_make_moody.hud_used)
