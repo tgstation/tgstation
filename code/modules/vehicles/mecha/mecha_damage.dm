@@ -108,3 +108,4 @@
 				to_chat(occupants, "[icon2html(src, occupants)][span_boldnotice("Internal capacitor has been reset successfully.")]")
 	internal_damage &= ~int_dam_flag
 	diag_hud_set_mechstat()
+	update_appearance()

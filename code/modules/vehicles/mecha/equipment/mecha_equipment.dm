@@ -77,6 +77,7 @@
 				balloon_alert(usr, "repair complete")
 			. = FALSE
 	var/result = handle_ui_act(action,params,ui,state)
+	update_appearance()
 	if(result) //if handle_ui_act returned anything at all lets just return that instead
 		. = result
 

@@ -30,7 +30,7 @@
 	var/damage_to_deal = min(component_health - 1, damage)
 	if(damage_to_deal <= 0)
 		return
-
+	update_appearance()
 	gear.take_damage(damage_to_deal)
 	if(gear.get_integrity() <= 1)
 		to_chat(occupants, "[icon2html(src, occupants)][span_danger("[gear] is critically damaged!")]")
@@ -40,7 +40,7 @@
 	var/damage_taken = ..()
 	if(damage_taken <= 0 || atom_integrity < 0)
 		return damage_taken
-
+	update_appearance()
 	diag_hud_set_mechhealth()
 	spark_system?.start()
 	try_deal_internal_damage(damage_taken)
@@ -423,9 +423,10 @@
 		diag_hud_set_mechhealth()
 	else
 		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
-
+	update_appearance()
 
 /obj/vehicle/sealed/mecha/proc/full_repair(charge_cell)
+	update_appearance()
 	atom_integrity = max_integrity
 	if(cell && charge_cell)
 		cell.charge = cell.maxcharge
@@ -441,6 +442,7 @@
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		clear_internal_damage(MECHA_INT_CONTROL_LOST)
 	diag_hud_set_mechhealth()
+	update_appearance()
 
 /obj/vehicle/sealed/mecha/narsie_act()
 	emp_act(EMP_HEAVY)
