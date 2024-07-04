@@ -1,13 +1,3 @@
-/* Windoor (window door) assembly -Nodrak
- * Step 1: Create a windoor out of rglass
- * Step 2: Add r-glass to the assembly to make a secure windoor (Optional)
- * Step 3: Rotate or Flip the assembly to face and open the way you want
- * Step 4: Wrench the assembly in place
- * Step 5: Add cables to the assembly
- * Step 6: Set access for the door.
- * Step 7: Crowbar the door to complete
- */
-
 
 /obj/structure/windoor_assembly
 	icon = 'icons/obj/doors/windoor.dmi'
@@ -32,7 +22,16 @@
 	var/facing = "l"
 	///Whether or not this creates a secure windoor
 	var/secure = FALSE
-	///How far the door assembly has progressed. See above comment for what each step is.
+	/**
+	  * Windoor (window door) assembly -Nodrak
+	  * Step 1: Create a windoor out of rglass
+	  * Step 2: Add r-glass to the assembly to make a secure windoor (Optional)
+	  * Step 3: Rotate or Flip the assembly to face and open the way you want
+	  * Step 4: Wrench the assembly in place
+	  * Step 5: Add cables to the assembly
+	  * Step 6: Set access for the door.
+	  * Step 7: Crowbar the door to complete
+	 */
 	var/state = "01"
 
 
