@@ -1,3 +1,6 @@
+/// Staggered and Shoved Over
+/// Status effects related to shoving effects and collisions due to shoving
+
 /datum/status_effect/staggered
 	id = "staggered"
 	tick_interval = 0.5 SECONDS
@@ -43,3 +46,13 @@
 /mob/living/proc/do_stagger_animation()
 	animate(src, pixel_x = 4, time = 0.2 SECONDS, loop = 6, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 	animate(pixel_x = -4, time = 0.2 SECONDS, flags = ANIMATION_RELATIVE)
+
+/// Status effect specifically for instances where shoving someone has resulted in them falling over/onto an object
+
+/datum/status_effect/shoved_over
+	id = "tumbled over"
+	duration = 3 SECONDS
+	status_type = STATUS_EFFECT_UNIQUE
+	tick_interval = 0.5 SECONDS
+	alert_type = null
+	remove_on_fullheal = TRUE
