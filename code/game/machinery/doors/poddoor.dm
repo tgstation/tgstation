@@ -277,14 +277,6 @@
 	name = "combustion chamber vent"
 	id = INCINERATOR_SYNDICATELAVA_AUXVENT
 
-/obj/machinery/door/poddoor/incinerator_snowdin_main
-	name = "turbine vent"
-	id = INCINERATOR_SNOWDIN_MAINVENT
-
-/obj/machinery/door/poddoor/incinerator_snowdin_aux
-	name = "combustion chamber vent"
-	id = INCINERATOR_SNOWDIN_AUXVENT
-
 /obj/machinery/door/poddoor/massdriver_ordnance
 	name = "Ordnance Launcher Bay Door"
 	id = MASSDRIVER_ORDNANCE

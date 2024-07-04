@@ -444,3 +444,59 @@
 
 /obj/effect/turf_decal/snowdin_station_sign/up/seven
 	icon_state = "AOPU7"
+
+//incinerator parts//--
+#define INCINERATOR_SNOWDIN_IGNITER "snowdin_igniter"
+#define INCINERATOR_SNOWDIN_MAINVENT "snowdin_mainvent"
+#define INCINERATOR_SNOWDIN_AUXVENT "snowdin_auxvent"
+#define INCINERATOR_SNOWDIN_DP_VENTPUMP "snowdin_airlock_pump"
+#define INCINERATOR_SNOWDIN_AIRLOCK_SENSOR "snowdin_airlock_sensor"
+#define INCINERATOR_SNOWDIN_AIRLOCK_CONTROLLER "snowdin_airlock_controller"
+#define INCINERATOR_SNOWDIN_AIRLOCK_INTERIOR "snowdin_airlock_interior"
+#define INCINERATOR_SNOWDIN_AIRLOCK_EXTERIOR "snowdin_airlock_exterior"
+
+/obj/machinery/airlock_sensor/incinerator_snowdin
+	id_tag = INCINERATOR_SNOWDIN_AIRLOCK_SENSOR
+	master_tag = INCINERATOR_SNOWDIN_AIRLOCK_CONTROLLER
+
+/obj/machinery/button/door/incinerator_vent_snowdin_main
+	name = "turbine vent control"
+	id = INCINERATOR_SNOWDIN_MAINVENT
+
+/obj/machinery/button/door/incinerator_vent_snowdin_aux
+	name = "combustion chamber vent control"
+	id = INCINERATOR_SNOWDIN_AUXVENT
+
+/obj/machinery/button/ignition/incinerator/snowdin
+	id = INCINERATOR_SNOWDIN_IGNITER
+
+/obj/machinery/door/airlock/engineering/glass/incinerator/snowdin_interior
+	name = "Turbine Interior Airlock"
+	id_tag = INCINERATOR_SNOWDIN_AIRLOCK_INTERIOR
+
+/obj/machinery/door/airlock/engineering/glass/incinerator/snowdin_exterior
+	name = "Turbine Exterior Airlock"
+	id_tag = INCINERATOR_SNOWDIN_AIRLOCK_EXTERIOR
+
+/obj/machinery/airlock_controller/incinerator_snowdin
+	name = "Incinerator Access Console"
+	airpump_tag = INCINERATOR_SNOWDIN_DP_VENTPUMP
+	exterior_door_tag = INCINERATOR_SNOWDIN_AIRLOCK_EXTERIOR
+	id_tag = INCINERATOR_SNOWDIN_AIRLOCK_CONTROLLER
+	interior_door_tag = INCINERATOR_SNOWDIN_AIRLOCK_INTERIOR
+	sanitize_external = TRUE
+	sensor_tag = INCINERATOR_SNOWDIN_AIRLOCK_SENSOR
+
+/obj/machinery/igniter/incinerator_snowdin
+	id = INCINERATOR_SNOWDIN_IGNITER
+
+/obj/machinery/door/poddoor/incinerator_snowdin_main
+	name = "turbine vent"
+	id = INCINERATOR_SNOWDIN_MAINVENT
+
+/obj/machinery/door/poddoor/incinerator_snowdin_aux
+	name = "combustion chamber vent"
+	id = INCINERATOR_SNOWDIN_AUXVENT
+
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_snowdin
+	id_tag = INCINERATOR_SNOWDIN_DP_VENTPUMP

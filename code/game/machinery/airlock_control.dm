@@ -57,10 +57,6 @@
 	id_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR
 	master_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_CONTROLLER
 
-/obj/machinery/airlock_sensor/incinerator_snowdin
-	id_tag = INCINERATOR_SNOWDIN_AIRLOCK_SENSOR
-	master_tag = INCINERATOR_SNOWDIN_AIRLOCK_CONTROLLER
-
 /obj/machinery/airlock_sensor/update_icon_state()
 	if(!on)
 		icon_state = "[base_icon_state]_off"

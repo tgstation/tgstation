@@ -92,12 +92,3 @@
 #define INCINERATOR_SYNDICATELAVA_AIRLOCK_INTERIOR "syndicatelava_airlock_interior"
 #define INCINERATOR_SYNDICATELAVA_AIRLOCK_EXTERIOR "syndicatelava_airlock_exterior"
 
-//Snowdin gateway map incinerator
-#define INCINERATOR_SNOWDIN_IGNITER "snowdin_igniter"
-#define INCINERATOR_SNOWDIN_MAINVENT "snowdin_mainvent"
-#define INCINERATOR_SNOWDIN_AUXVENT "snowdin_auxvent"
-#define INCINERATOR_SNOWDIN_DP_VENTPUMP "snowdin_airlock_pump"
-#define INCINERATOR_SNOWDIN_AIRLOCK_SENSOR "snowdin_airlock_sensor"
-#define INCINERATOR_SNOWDIN_AIRLOCK_CONTROLLER "snowdin_airlock_controller"
-#define INCINERATOR_SNOWDIN_AIRLOCK_INTERIOR "snowdin_airlock_interior"
-#define INCINERATOR_SNOWDIN_AIRLOCK_EXTERIOR "snowdin_airlock_exterior"

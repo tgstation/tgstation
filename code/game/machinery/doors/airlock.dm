@@ -1900,14 +1900,6 @@
 	autoclose = FALSE
 	heat_proof = TRUE
 
-/obj/machinery/door/airlock/engineering/glass/incinerator/snowdin_interior
-	name = "Turbine Interior Airlock"
-	id_tag = INCINERATOR_SNOWDIN_AIRLOCK_INTERIOR
-
-/obj/machinery/door/airlock/engineering/glass/incinerator/snowdin_exterior
-	name = "Turbine Exterior Airlock"
-	id_tag = INCINERATOR_SNOWDIN_AIRLOCK_EXTERIOR
-
 /obj/machinery/door/airlock/engineering/glass/critical
 	critical_machine = TRUE //stops greytide virus from opening & bolting doors in critical positions, such as the SM chamber.
 
