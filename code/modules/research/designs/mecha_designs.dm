@@ -474,7 +474,7 @@
 /datum/design/mech_hammer
 	name = "Mecha Hammer"
 	desc = "A melee weapon that can be attatched into mechas."
-	id = "mechahammer"
+	id = "mech_hammer"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/hammer
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/gold=SHEET_MATERIAL_AMOUNT*5)
@@ -492,7 +492,7 @@
 /datum/design/mech_sword
 	name = "Mecha Sword"
 	desc = "A melee weapon that can be attatched into mechas."
-	id = "mechasword"
+	id = "mech_sword"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/sword
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,/datum/material/gold=SHEET_MATERIAL_AMOUNT*5)

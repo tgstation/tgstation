@@ -250,6 +250,8 @@
 		"mech_grenade_launcher_ammo",
 		"mech_missile_rack",
 		"mech_missile_rack_ammo",
+		"mech_hammer",
+		"mech_sword"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 
