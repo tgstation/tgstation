@@ -14,3 +14,15 @@
   ancient-engineer:
   - qol: Gets rid of the fov effect of the swat mask
   - qol: Gets rid of the vignette around your vision while wearing the spacepol mask
+2024-07-04:
+  Absolucy:
+  - bugfix: You can no longer somehow reach *around* a shield wall.
+  - bugfix: Fixed some runtime errors related to drowning/choking in liquids.
+  - bugfix: Fixed newly built slime pens allowing ooze to leak.
+  KnigTheThrasher:
+  - rscadd: Added hard soles to ashwalkers (they no longer get paralyzed when stepping
+      on their cati)
+  - rscadd: Added hard soles as a quirk (2 points)
+  - balance: Changed light step cost to 2 points to be on pair with hard soles
+  - sound: Changed lizard footsteps to claws
+  - balance: Increased prices of firing pins

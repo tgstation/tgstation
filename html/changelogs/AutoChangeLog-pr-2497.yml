@@ -1,7 +1,0 @@
-author: "KnigTheThrasher"
-delete-after: True
-changes:
-  - rscadd: "Added hard soles to ashwalkers (they no longer get paralyzed when stepping on their cati)"
-  - rscadd: "Added hard soles as a quirk (2 points)"
-  - balance: "Changed light step cost to 2 points to be on pair with hard soles"
-  - sound: "Changed lizard footsteps to claws"
