@@ -81,18 +81,20 @@
 	return
 
 /// Visual effect spawned when the bioscrambler scrambles your bio
-/obj/effect/temp_visual/circle_wave/bioscrambler_wave
+/obj/effect/temp_visual/circle_wave
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "circle_wave"
 	pixel_x = -16
 	pixel_y = -16
 	duration = 0.5 SECONDS
-	color = COLOR_LIME
 
-/obj/effect/temp_visual/circle_wave/bioscrambler_wave/Initialize(mapload)
+/obj/effect/temp_visual/circle_wave/Initialize(mapload)
 	transform = matrix().Scale(0.1)
 	animate(src, transform = matrix().Scale(2), time = duration, flags = ANIMATION_PARALLEL)
 	animate(src, alpha = 255, time = duration * 0.6, flags = ANIMATION_PARALLEL)
 	animate(alpha = 0, time = duration * 0.4)
 	apply_wibbly_filters(src)
 	return ..()
+
+/obj/effect/temp_visual/circle_wave/bioscrambler
+	color = COLOR_LIME

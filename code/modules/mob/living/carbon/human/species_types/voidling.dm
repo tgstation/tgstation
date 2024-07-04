@@ -154,7 +154,7 @@
 	space_phase.Remove(organ_owner)
 	space_phase = initial(space_phase)
 
-	unsettle.Remove()
+	unsettle.Remove(organ_owner)
 	unsettle = initial(unsettle)
 
 /obj/item/organ/internal/brain/voidling/proc/on_atom_entering(mob/living/carbon/organ_owner, atom/entering)
@@ -180,6 +180,48 @@
 		organ_owner.apply_status_effect(/datum/status_effect/space_regeneration)
 	else
 		organ_owner.remove_status_effect(/datum/status_effect/space_regeneration)
+
+/obj/item/organ/internal/brain/voidling/on_death()
+	. = ..()
+	var/static/list/shards = list(/obj/item/shard = 2, /obj/item/shard/plasma = 1, /obj/item/shard/titanium = 1, /obj/item/shard/plastitanium = 1)
+	for(var/i in 1 to rand(4, 6))
+		var/shard_type = pick_weight(shards)
+		var/obj/shard = new shard_type (get_turf(owner))
+		shard.pixel_x = rand(-16, 16)
+		shard.pixel_y = rand(-16, 16)
+
+	new /obj/item/cosmic_skull (get_turf(owner))
+	playsound(get_turf(owner), SFX_SHATTER, 100)
+
+	qdel(owner)
+
+/obj/item/cosmic_skull
+	name = "cosmic skull"
+	desc = "You can see and feel the surrounding space pulsing through it..."
+
+	icon = /obj/item/clothing/head/helmet/skull::icon
+	icon_state = /obj/item/clothing/head/helmet/skull::icon_state
+
+/obj/item/cosmic_skull/Initialize(mapload)
+	. = ..()
+
+	var/image/texture = icon(/datum/bodypart_overlay/texture/spacey::texture_icon, /datum/bodypart_overlay/texture/spacey::texture_icon_state)
+
+	add_filter("SPACE_FILTER", 1, layering_filter(icon = texture,blend_mode = BLEND_INSET_OVERLAY))
+
+/obj/item/cosmic_skull/attack_self(mob/user, modifiers)
+	. = ..()
+
+	to_chat(user, span_purple("You begin staring into the [name]..."))
+
+	if(!ishuman(user) || !do_after(user, 10 SECONDS, src))
+		return
+
+	var/mob/living/carbon/human/starer = user
+	starer.gain_trauma(/datum/brain_trauma/voided/stable)
+	to_chat(user, span_purple("And a whole world opened up to you."))
+	playsound(get_turf(user), 'sound/effects/curse5.ogg', 60)
+	qdel(src)
 
 /datum/movespeed_modifier/grounded_voidling
 	multiplicative_slowdown = 1.3
@@ -271,7 +313,7 @@
 
 /datum/brain_trauma/voided/stable
 	scan_desc = "stable cosmic neural pattern"
-	traits_to_apply = list(TRAIT_MUTE)
+	traits_to_apply = list(TRAIT_MUTE, TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD)
 	ban_from_space = FALSE
 
 /datum/brain_trauma/voided/stable/on_gain()
@@ -373,9 +415,10 @@
 	target.flash_act(10, override_blindness_check = TRUE, visual = TRUE, type = /atom/movable/screen/fullscreen/flash/black, length = stun_time)
 	target.Stun(stun_time)
 	target.adjustStaminaLoss(stamina_damage)
+	target.apply_status_effect(/datum/status_effect/speech/slurring/generic)
 	target.emote("scream")
 
-	new /obj/effect/temp_visual/circle_wave/bioscrambler_wave/unsettle(get_turf(target))
+	new /obj/effect/temp_visual/circle_wave/unsettle(get_turf(owner))
 
 /obj/effect/temp_visual/circle_wave/unsettle
 	color = COLOR_PURPLE
