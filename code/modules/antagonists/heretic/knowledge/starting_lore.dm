@@ -1,4 +1,5 @@
 // Heretic starting knowledge.
+// Default heretic language is Ancient Greek, because, uh, they're like ancient and shit.
 
 /// Global list of all heretic knowledge that have route = PATH_START. List of PATHS.
 GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
@@ -314,16 +315,23 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	return !invoker.feast_of_owls
 
 /datum/heretic_knowledge/feast_of_owls/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	//amount of research points granted
+	var/reward = 5
 	var/alert = tgui_alert(user,"Do you really want to forsake your ascension? This action cannot be reverted.", "Feast of Owls", list("Yes I'm sure", "No"), 30 SECONDS)
 	if( alert != "Yes I'm sure")
 		return FALSE
-	user.set_temp_blindness(5 SECONDS)
-	user.AdjustParalyzed(5 SECONDS)
+	user.set_temp_blindness(reward SECONDS)
+	user.AdjustParalyzed(reward SECONDS)
+	user.playsound_local(get_turf(user), 'sound/ambience/antag/heretic/heretic_gain_intense.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	for(var/i in 0 to 4)
+	for(var/i in 1 to reward)
 		user.emote("scream")
 		playsound(loc, 'sound/items/eatfood.ogg', 100, TRUE)
 		heretic_datum.knowledge_points++
+		to_chat(user, span_danger("You feel something invisible tearing away at your very essence!"))
+		user.do_jitter_animation()
 		sleep(1 SECONDS)
-	to_chat(user,span_danger("You feel different..."))
 	heretic_datum.feast_of_owls = TRUE
+	to_chat(user, span_danger(span_big("Your ambition is ravaged, but something powerful remains in its wake...")))
+	var/drain_message = pick(strings(HERETIC_INFLUENCE_FILE, "drain_message"))
+	to_chat(user, span_hypnophrase(span_big("[drain_message]")))

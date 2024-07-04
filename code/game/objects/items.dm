@@ -1741,8 +1741,21 @@
 	if(HAS_TRAIT(src, TRAIT_CONTRABAND))
 		return TRUE
 	for(var/datum/uplink_item/traitor_item as anything in subtypesof(/datum/uplink_item))
-		if(ispath(src.type, traitor_item.item))
+		istype(src, traitor_item.item)
 			if(!(traitor_item.uplink_item_flags & SYNDIE_TRIPS_CONTRABAND))
 				return FALSE
 			return TRUE
 	return FALSE
+
+/**
+ * Returns the atom(either itself or an internal module) that will interact/attack the target on behalf of us
+ * For example an object can have different `tool_behaviours` (e.g borg omni tool) but will return an internal reference of that tool to attack for us
+ * You can use it for general purpose polymorphism if you need a proxy atom to interact in a specific way
+ * with a target on behalf on this atom
+ *
+ * Currently used only in the object melee attack chain but can be used anywhere else or even moved up to the atom level if required
+ */
+/obj/item/proc/get_proxy_attacker_for(atom/target, mob/user)
+	RETURN_TYPE(/obj/item)
+
+	return src
