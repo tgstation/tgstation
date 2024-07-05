@@ -37,7 +37,9 @@
 /datum/progressbar/New(mob/User, goal_number, atom/target, border_look = "border", border_look_accessory, bar_look = "prog_bar", old_format = FALSE, active_color = "#6699FF", finish_color = "#FFEE8C", fail_color = "#FF0033" , mutable_appearance/additional_image)
 	. = ..()
 	if (!istype(target))
-		EXCEPTION("Invalid target given")
+		stack_trace("Invalid target [target] passed in")
+		qdel(src)
+		return
 	if(QDELETED(User) || !istype(User))
 		stack_trace("/datum/progressbar created with [isnull(User) ? "null" : "invalid"] user")
 		qdel(src)

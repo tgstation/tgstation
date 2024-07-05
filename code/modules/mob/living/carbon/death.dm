@@ -11,7 +11,7 @@
 
 	. = ..()
 
-	if(!gibbed)
+	if(!gibbed && !QDELING(src)) //double check they didn't start getting deleted in ..()
 		attach_rot()
 
 	for(var/T in get_traumas())
@@ -35,7 +35,7 @@
 	for(var/mob/M in src)
 		M.forceMove(Tsec)
 		visible_message(span_danger("[M] bursts out of [src]!"))
-	. = ..()
+	return ..()
 
 /mob/living/carbon/spill_organs(no_brain, no_organs, no_bodyparts)
 	var/atom/Tsec = drop_location()

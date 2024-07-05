@@ -43,9 +43,9 @@
 		return
 	if(!HAS_TRAIT(user,TRAIT_WEB_WEAVER))
 		return
-	user.balloon_alert_to_viewers("weaving...")
+	loc.balloon_alert_to_viewers("weaving...")
 	if(!do_after(user, 2 SECONDS))
-		user.balloon_alert(user, "interrupted!")
+		loc.balloon_alert(user, "interrupted!")
 		return
 	qdel(src)
 	var/obj/item/stack/sheet/cloth/woven_cloth = new /obj/item/stack/sheet/cloth
@@ -68,7 +68,7 @@
 		if(mover.pulledby && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
 			return TRUE
 		if(prob(50))
-			balloon_alert(mover, "stuck in web!")
+			loc.balloon_alert(mover, "stuck in web!")
 			return FALSE
 	else if(isprojectile(mover))
 		return prob(30)
@@ -100,7 +100,7 @@
 		if(mover.pulledby == allowed_mob)
 			return TRUE
 		if(prob(50))
-			balloon_alert(mover, "stuck in web!")
+			loc.balloon_alert(mover, "stuck in web!")
 			return FALSE
 	else if(isprojectile(mover))
 		return prob(30)
@@ -180,7 +180,7 @@
 		return
 	if(!isnull(mover.pulledby) && isspider(mover.pulledby))
 		return TRUE
-	balloon_alert(mover, "stuck in web!")
+	loc.balloon_alert(mover, "stuck in web!")
 	return FALSE
 
 /obj/structure/spider/spikes

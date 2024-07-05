@@ -33,8 +33,10 @@
 	..()
 
 /datum/brain_trauma/severe/aphasia/on_lose()
-	owner.remove_blocked_language(subtypesof(/datum/language/), LANGUAGE_APHASIA)
-	owner.remove_language(/datum/language/aphasia, TRUE, TRUE, LANGUAGE_APHASIA)
+	if(!QDELING(owner))
+		owner.remove_blocked_language(subtypesof(/datum/language/), LANGUAGE_APHASIA)
+		owner.remove_language(/datum/language/aphasia, TRUE, TRUE, LANGUAGE_APHASIA)
+
 	..()
 
 /datum/brain_trauma/severe/blindness
