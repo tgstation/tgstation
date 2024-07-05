@@ -1886,10 +1886,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/gateway)
 "ho" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
-	dir = 4;
-	piping_layer = 4
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/closed/wall/ice,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "hp" = (
@@ -5704,7 +5701,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/dorm)
 "vt" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern1)
 "vu" = (
@@ -5732,7 +5729,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/snowdin/post/dorm)
 "vA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/closed/wall/ice,
 /area/awaymission/snowdin/post/cavern1)
 "vB" = (
@@ -5760,7 +5757,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/snowdin/post/cavern1)
 "vG" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector{
+/obj/machinery/atmospherics/components/unary/outlet_injector/layer4{
 	dir = 1
 	},
 /turf/open/floor/plating/snowed/cavern,
@@ -6620,7 +6617,7 @@
 /turf/closed/wall/mineral/wood,
 /area/awaymission/snowdin/igloo)
 "zv" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/plating/snowed/cavern,
@@ -6672,9 +6669,8 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "zH" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4;
-	piping_layer = 4
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 4
 	},
 /obj/machinery/space_heater,
 /obj/structure/sign/warning/xeno_mining/directional/east,
@@ -6682,14 +6678,11 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "zI" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
-	dir = 4;
-	piping_layer = 4
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/closed/wall/ice,
 /area/awaymission/snowdin/post/mining_dock)
 "zJ" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer4{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -9461,11 +9454,8 @@
 /turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "NA" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4;
-	piping_layer = 4;
-	pixel_x = 5;
-	pixel_y = 5
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 4
 	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
@@ -9981,9 +9971,8 @@
 	},
 /area/awaymission/snowdin/cave)
 "Qn" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4;
-	piping_layer = 4
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 4
 	},
 /obj/structure/sign/warning/xeno_mining/directional/east,
 /turf/open/floor/plating,
