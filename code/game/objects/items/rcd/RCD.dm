@@ -434,6 +434,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	airlock_electronics.name = "Access Control"
 	airlock_electronics.holder = src
 	GLOB.rcd_list += src
+	AddElement(/datum/element/openspace_item_click_handler)
 
 /obj/item/construction/rcd/Destroy()
 	QDEL_NULL(airlock_electronics)
@@ -610,6 +611,11 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	rcd_create(target, user)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/construction/rcd/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
+	if((!proximity_flag && !ranged) || (ranged && !range_check(target, user)))
+		return
+	afterattack(target, user, TRUE, click_parameters)
 
 /obj/item/construction/rcd/proc/detonate_pulse()
 	audible_message("<span class='danger'><b>[src] begins to vibrate and \
