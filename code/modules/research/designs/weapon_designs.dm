@@ -47,6 +47,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
+/datum/design/c38_ancr
+	name = "Speed Loader (.38 ANCR) (Less Lethal)"
+	desc = "Designed to quickly reload revolvers. ANCR bullets embed a bluespace grounding implant within the target's body."
+	id = "c38_ancr"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT * 2.5)
+	build_path = /obj/item/ammo_box/c38/ancr
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
 /datum/design/c38_rubber
 	name = "Speed Loader (.38 Rubber) (Less Lethal)"
 	desc = "Designed to quickly reload revolvers. Rubber bullets are bouncy and less-than-lethal."

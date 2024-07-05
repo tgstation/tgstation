@@ -78,6 +78,12 @@
 	ammo_type = /obj/item/ammo_casing/c38/iceblox
 	ammo_band_color = "#658e94"
 
+/obj/item/ammo_box/c38/ancr
+	name = "speed loader (.38 ANCR)"
+	desc = "Designed to quickly reload revolvers. ANCR bullets embed a bluespace grounding implant within the target's body."
+	ammo_type = /obj/item/ammo_casing/c38/ancr
+	ammo_band_color = "#00008b"
+
 /obj/item/ammo_box/c9mm
 	name = "ammo box (9mm)"
 	icon_state = "9mmbox"
