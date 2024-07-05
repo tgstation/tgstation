@@ -26,3 +26,13 @@
   - balance: Changed light step cost to 2 points to be on pair with hard soles
   - sound: Changed lizard footsteps to claws
   - balance: Increased prices of firing pins
+2024-07-05:
+  Jacquerel, IndieanaJones:
+  - rscadd: Adds a box of liveleak stickers for 1 TC to the badass category
+  - balance: The kindle scripture now has reduced effects on people with mindshields
+  - balance: Observation consoles can now only warp to a random list of areas, vitality
+      can be spent to add more
+  - balance: Vitality sigils now reduce max health instead of dealing clone damage
+  - bugfix: Anchoring crystals are now actually needed to open the ark
+  ViktorKoL:
+  - bugfix: heretics no longer lose their spells when returning from a shapeshift.
