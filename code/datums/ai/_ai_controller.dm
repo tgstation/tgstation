@@ -184,7 +184,7 @@ multiple modular subtrees with behaviors
 		var/atom/exited_atom = exited
 		distance = get_dist(pawn, exited_atom)
 
-	if(distance <= interesting_dist)) //is our target in between interesting cells?
+	if(distance <= interesting_dist) //is our target in between interesting cells?
 		return
 
 	if(should_idle())
