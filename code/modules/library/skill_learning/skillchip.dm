@@ -510,9 +510,11 @@
 
 /obj/item/skillchip/matrix_flip/on_activate(mob/living/carbon/user, silent = FALSE)
 	. = ..()
+	ADD_TRAIT(user, TRAIT_SLOW_FLIP, SKILLCHIP_TRAIT)
 	RegisterSignal(user, COMSIG_MOB_EMOTED("flip"), PROC_REF(on_flip))
 
 /obj/item/skillchip/matrix_flip/on_deactivate(mob/living/carbon/user, silent=FALSE)
+	REMOVE_TRAIT(user, TRAIT_SLOW_FLIP, SKILLCHIP_TRAIT)
 	UnregisterSignal(user, COMSIG_MOB_EMOTED("flip"))
 	return ..()
 
@@ -520,7 +522,7 @@
 	SIGNAL_HANDLER
 	if(HAS_TRAIT_FROM(source, TRAIT_UNHITTABLE_BY_PROJECTILES, SKILLCHIP_TRAIT))
 		return
-	playsound(source, 'sound/weapons/fwoosh.ogg', 90, FALSE)
+	playsound(source, 'sound/weapons/fwoosh.ogg', 90, FALSE, frequency = 0.7)
 	ADD_TRAIT(source, TRAIT_UNHITTABLE_BY_PROJECTILES, SKILLCHIP_TRAIT)
 	source.adjustStaminaLoss(20)
-	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_UNHITTABLE_BY_PROJECTILES, SKILLCHIP_TRAIT), FLIP_EMOTE_DURATION + 0.1 SECONDS)
+	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_UNHITTABLE_BY_PROJECTILES, SKILLCHIP_TRAIT), FLIP_EMOTE_DURATION * 2)
