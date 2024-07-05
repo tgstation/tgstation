@@ -1,17 +1,30 @@
-Описание Модуля:
+## Module ID: TESTICULAR_TORSION
+
+### Description:
 
 Добавляет админский Смайт "Testicular torsion".
 
-Новые файлы модуля:
-[code/]:
-	[testicular_torsion.dm]
-[sound/]:
-	[testicular_torsion.ogg]
-[string/]:
-	[balls_phrases.txt]
 
-Файлы в Мастер папке:
-[Отсуствуют]
+### TG Proc/File Changes:
 
-Не модульные добавления:
-[Отсуствуют]
+- N/A
+
+
+### Modular Overrides:
+
+- N/A
+
+
+### Defines:
+
+- N/A
+
+
+### Included files that are not contained in this module:
+
+- N/A
+
+
+### Credits:
+
+- N/A

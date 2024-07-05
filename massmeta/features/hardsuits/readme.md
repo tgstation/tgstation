@@ -1,22 +1,30 @@
-Описание Модуля:
+## Module ID: HARDSUITS
+
+### Description:
 
 Добавляет Космические костюмы (hardsuit). Делает их досупным для выдора игроку помимо Мод-костюма (mod-suit).
 
-Новые файлы модуля:
-[code/]:
-	[_jetpack.dm]
-	[armor.dm]
-	[hardsuit.dm]
-	[helmet.dm]
-	[space_suit_beacon.dm]
-[icons/]:
-	?
 
-Новые Дефайны:
-[~meta_defines/inventory.dm]
+### TG Proc/File Changes:
 
-Файлы в Мастер папке:
-TODO: требуется перенести в мастер и модуль папку
+TODO:
 
-Не модульные добавления:
-TODO: дописать
+
+### Modular Overrides:
+
+TODO:
+
+
+### Defines:
+
+- ~meta_defines/inventory.dm
+
+
+### Included files that are not contained in this module:
+
+- N/A
+
+
+### Credits:
+
+- N/A

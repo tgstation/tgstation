@@ -1,17 +1,30 @@
-Описание Модуля:
+## Module ID: ADDITIONAL_CIRCUITS
 
-Добавляет микросхемы.
+### Description:
 
-Новые файлы модуля:
-[code/]:
-	[_designs.dm]
-	[cell_reader.dm]
-	[interact_item.dm]
-	[mining_circuit.dm]
-	[target_scanner.dm]
+Добавляет микросхемы для "Циркуитов".
 
-Файлы в Мастер папке:
-[Отсуствуют]
 
-Не модульные добавления:
-[Отсуствуют]
+### TG Proc/File Changes:
+
+- N/A
+
+
+### Modular Overrides:
+
+- N/A
+
+
+### Defines:
+
+- N/A
+
+
+### Included files that are not contained in this module:
+
+- N/A
+
+
+### Credits:
+
+- N/A
