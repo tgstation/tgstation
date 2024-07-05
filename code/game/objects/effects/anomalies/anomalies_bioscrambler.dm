@@ -24,7 +24,7 @@
 	if(!COOLDOWN_FINISHED(src, pulse_cooldown))
 		return
 
-	new /obj/effect/temp_visual/circle_wave/bioscrambler_wave(get_turf(src))
+	new /obj/effect/temp_visual/circle_wave/bioscrambler(get_turf(src))
 	playsound(src, 'sound/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
 	COOLDOWN_START(src, pulse_cooldown, pulse_delay)
 	for(var/mob/living/carbon/nearby in hearers(range, src))
