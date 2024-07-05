@@ -530,14 +530,11 @@
 "ahJ" = (
 /obj/machinery/light/directional/north,
 /obj/structure/table,
-/obj/item/pen{
-	pixel_x = 9;
-	pixel_y = 4
-	},
 /obj/item/hand_labeler{
 	pixel_y = 10;
 	pixel_x = -13
 	},
+/obj/item/folder,
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
 "ahV" = (
@@ -32533,13 +32530,12 @@
 /area/station/medical/medbay/lobby)
 "lwM" = (
 /obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 6
+/obj/item/storage/box/syringes{
+	pixel_x = -8;
+	pixel_y = 11
 	},
-/obj/item/pen{
-	pixel_x = -2;
-	pixel_y = 5
+/obj/item/storage/box/beakers{
+	pixel_x = 4
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
@@ -59807,6 +59803,10 @@
 /obj/item/paper_bin{
 	pixel_x = -5;
 	pixel_y = 6
+	},
+/obj/item/pen{
+	pixel_x = 9;
+	pixel_y = 4
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
