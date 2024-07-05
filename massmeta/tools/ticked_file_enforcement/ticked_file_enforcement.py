@@ -43,6 +43,11 @@ reading = False
 lines = []
 total = 0
 
+# need just for better logs look
+if (scannable_directory == "massmeta/features/") or (scannable_directory == "massmeta/~meta_defines/"):
+    print(blue(f"Scanning Modular Code..."))
+    print(blue(f"   Checking files in [{scannable_directory}]"))
+
 with open(file_reference, 'r') as file:
     for line in file:
         total += 1
@@ -56,7 +61,49 @@ with open(file_reference, 'r') as file:
         elif not reading:
             continue
 
+        # need to make full path
+        if (scannable_directory == "massmeta/features/") or (scannable_directory == "massmeta/~meta_defines/"):
+            line =  line[:10] + "massmeta\\" + line[10:]
+        
+        # checks defines folder
+        fail_no_include_modular = False
+        if scannable_directory == "massmeta/~meta_defines/":
+            module_file_path = line.replace('\\', '/')
+            module_file_path_clean = module_file_path[10:-1]
+            print(f"        [{module_file_path_clean}]")
+            if (module_file_path_clean[9:22] != "~meta_defines"):
+                print(red(f"        File [{module_file_path_clean}] must be in \"~meta_defines/\" folder"))
+                fail_no_include_modular = True
+
         lines.append(line)
+
+        # checks main module folder
+        if scannable_directory == "massmeta/features/":
+            module_file_path = line.replace('\\', '/')
+            module_file_path_clean = module_file_path[10:-1]
+            print(f"        [{module_file_path_clean}] with in it:")
+            if module_file_path_clean[-11:] != "includes.dm":
+                print(red(f"        File [{module_file_path_clean}] must be named \"includes.dm\", skipping the file."))
+                fail_no_include_modular = True
+                continue
+
+            with open(module_file_path_clean, 'r') as extra_file:
+                for extra_line in extra_file:
+                    total += 1
+                    extra_line = extra_line.strip()
+                    if (extra_line[10:14] != "code"):
+                        print(red(f"            File [{extra_line}] must be in \"code/\" folder"))
+                        fail_no_include_modular = True
+
+                    # make full path
+                    extra_line = line[:-12] + extra_line[10:]
+                    lines.append(extra_line)
+                    extra_line.replace('\\', '/')
+                    print(f"            [{extra_line[10:-1]}]")
+
+        if fail_no_include_modular:
+            post_error(f"Modular Ticked File Enforcement has failed!")
+            sys.exit(1)
 
 offset = total - len(lines)
 print(blue(f"Ticked File Enforcement: {offset} lines were ignored in output for [{file_reference}]."))
