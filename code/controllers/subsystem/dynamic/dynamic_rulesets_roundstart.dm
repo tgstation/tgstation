@@ -336,6 +336,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	requirements = list(100,90,80,60,40,30,10,10,10,10)
 	flags = HIGH_IMPACT_RULESET
 	antag_cap = list("denominator" = 20, "offset" = 1)
+	minimum_players = 45
 	var/datum/team/cult/main_cult
 
 /datum/dynamic_ruleset/roundstart/bloodcult/ready(population, forced = FALSE)
