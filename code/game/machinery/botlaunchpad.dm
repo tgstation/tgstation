@@ -21,16 +21,13 @@
 /obj/machinery/botpad/crowbar_act(mob/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool)
 
-/obj/machinery/botpad/multitool_act(mob/living/user, obj/item/tool)
+/obj/machinery/botpad/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!panel_open)
-		return
-	if(!multitool_check_buffer(user, tool))
-		return
+		return NONE
 	var/obj/item/multitool/multitool = tool
 	multitool.set_buffer(src)
 	balloon_alert(user, "saved to multitool buffer")
 	return ITEM_INTERACT_SUCCESS
-
 
 // Checks the turf for a bot and launches it if it's the only mob on the pad.
 /obj/machinery/botpad/proc/launch(mob/living/user)

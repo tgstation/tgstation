@@ -61,6 +61,7 @@
 		HUNTER_PACK_RUSSIAN,
 		HUNTER_PACK_BOUNTY,
 		HUNTER_PACK_PSYKER,
+		HUNTER_PACK_MI13,
 	)
 	addtimer(CALLBACK(src, PROC_REF(check_spawn_hunters), hunter_backstory, 10 MINUTES), 1 MINUTES)
 	role_name = "fugitive hunter"
@@ -124,6 +125,8 @@
 			ship = new /datum/map_template/shuttle/hunter/bounty
 		if(HUNTER_PACK_PSYKER)
 			ship = new /datum/map_template/shuttle/hunter/psyker
+		if(HUNTER_PACK_MI13)
+			ship = new/datum/map_template/shuttle/hunter/mi13_foodtruck
 
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
@@ -172,7 +175,10 @@
 			announcement_text_list += "HEY, CAN YOU HEAR US? We're coming to your station. There's a bad guy down there, really bad guy. We need to arrest them."
 			announcement_text_list += "We're also offering fortune telling services out of the front door if you have paying customers."
 			announcement_title += "Fortune-Telling Entertainment Shuttle"
-
+		if(HUNTER_PACK_MI13)
+			announcement_text_list += "Illegal intrusion detected in the crew monitoring network. Central Command has been informed."
+			announcement_text_list += "Please report any suspicious individuals or behaviour to your local security team."
+			announcement_title += "Nanotrasen Intrusion Countermeasures Electronics"
 	if(!length(announcement_text_list))
 		announcement_text_list += "Unidentified ship detected near the station."
 		stack_trace("Fugitive hunter announcement was unable to generate an announcement text based on backstory: [backstory]")

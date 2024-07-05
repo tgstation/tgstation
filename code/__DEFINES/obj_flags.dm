@@ -75,20 +75,18 @@
 #define DANGEROUS_OBJECT (1<<10)
 /// Clothes that use large icons, for applying the proper overlays like blood
 #define LARGE_WORN_ICON (1<<11)
-/// Clothes that block speech (i.e the muzzle). Can be applied to any clothing piece.
-#define BLOCKS_SPEECH (1<<12)
 /// prevents from placing on plasmaman helmet or modsuit hat holder
-#define STACKABLE_HELMET_EXEMPT (1<<13)
+#define STACKABLE_HELMET_EXEMPT (1<<12)
 /// Prevents plasmamen from igniting when wearing this
-#define PLASMAMAN_PREVENT_IGNITION (1<<14)
+#define PLASMAMAN_PREVENT_IGNITION (1<<13)
 /// Usable as casting clothes by wizards (matters for suits, glasses and headwear)
-#define CASTING_CLOTHES (1<<15)
+#define CASTING_CLOTHES (1<<14)
 ///Moths can't eat the clothing that has this flag.
-#define INEDIBLE_CLOTHING (1<<16)
+#define INEDIBLE_CLOTHING (1<<15)
 /// Headgear/helmet allows internals
-#define HEADINTERNALS (1<<17)
+#define HEADINTERNALS (1<<16)
 /// Prevents masks from getting adjusted from enabling internals
-#define INTERNALS_ADJUST_EXEMPT (1<<18)
+#define INTERNALS_ADJUST_EXEMPT (1<<17)
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing

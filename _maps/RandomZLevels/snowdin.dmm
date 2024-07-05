@@ -11586,7 +11586,6 @@
 /obj/machinery/door_buttons/access_button{
 	idDoor = "snowdin_turbine_interior";
 	idSelf = "snowdin_turbine_access";
-	layer = 3.1;
 	name = "Turbine Airlock Control";
 	pixel_x = 8;
 	pixel_y = -24

@@ -192,8 +192,7 @@
 "bb" = (
 /obj/machinery/conveyor{
 	dir = 1;
-	id = "garbage";
-	layer = 2.5
+	id = "garbage"
 	},
 /turf/open/floor/wood,
 /area/shuttle/transport)
