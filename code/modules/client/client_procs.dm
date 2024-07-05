@@ -213,7 +213,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return TRUE
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
 			//"auto-ban" sends the message that the cold and uncaring gamecode has been designed to quiash you like a bug in short measure should you continue, and it's quite intentional that the user isn't told exactly what that entails.
-			to_chat(src, span_danger("You are nearing the auto-ban limit for identical messages."))
+			to_chat(src, span_userdanger("You are nearing the auto-ban limit for identical messages."))
+			mob.balloon_alert(mob, "stop spamming!")
 			return FALSE
 	else
 		last_message = message
@@ -535,7 +536,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
 		to_chat(src, span_warning("Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you."))
 
-	update_ambience_pref()
+	update_ambience_pref(prefs.read_preference(/datum/preference/toggle/sound_ambience))
 	check_ip_intel()
 
 	//This is down here because of the browse() calls in tooltip/New()
@@ -1127,8 +1128,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		winset(src, "default.Shift", "is-disabled=true")
 		winset(src, "default.ShiftUp", "is-disabled=true")
 
-/client/proc/update_ambience_pref()
-	if(prefs.read_preference(/datum/preference/toggle/sound_ambience))
+/client/proc/update_ambience_pref(value)
+	if(value)
 		if(SSambience.ambience_listening_clients[src] > world.time)
 			return // If already properly set we don't want to reset the timer.
 		SSambience.ambience_listening_clients[src] = world.time + 10 SECONDS //Just wait 10 seconds before the next one aight mate? cheers.

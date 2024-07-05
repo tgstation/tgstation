@@ -5,11 +5,11 @@
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	item_flags = NOBLUDGEON
 
-/obj/item/mine_bot_upgrade/afterattack(mob/living/basic/mining_drone/minebot, mob/user, proximity)
-	. = ..()
-	if(!istype(minebot) || !proximity)
-		return
-	upgrade_bot(minebot, user)
+/obj/item/mine_bot_upgrade/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /mob/living/basic/mining_drone))
+		return NONE
+	upgrade_bot(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/mine_bot_upgrade/proc/upgrade_bot(mob/living/basic/mining_drone/minebot, mob/user)
 	if(minebot.melee_damage_upper != initial(minebot.melee_damage_upper))
@@ -90,4 +90,3 @@
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "minebot_shield_bottom_layer"
 	layer = BELOW_MOB_LAYER
-

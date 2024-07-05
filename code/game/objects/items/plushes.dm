@@ -312,6 +312,7 @@
 	young = TRUE
 	name = "[Mama] Jr" //Icelandic naming convention pending
 	normal_desc = "[src] is a little baby of [maternal_parent] and [paternal_parent]!" //original desc won't be used so the child can have moods
+	transform *= 0.75
 	update_desc()
 
 	Mama.mood_message = pick(Mama.parent_message)
@@ -531,6 +532,11 @@
 	desc = "An adorable stuffed toy that resembles a green lizardperson. This one fills you with nostalgia and soul."
 	greyscale_colors = "#66ff33#000000"
 
+/obj/item/toy/plush/lizard_plushie/greyscale
+	desc = "An adorable stuffed toy that resembles a lizardperson. This one has been custom made."
+	greyscale_colors = "#d3d3d3#000000"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
 /obj/item/toy/plush/lizard_plushie/space
 	name = "space lizard plushie"
 	desc = "An adorable stuffed toy that resembles a very determined spacefaring lizardperson. To infinity and beyond, little guy."
@@ -670,7 +676,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/item/toy/plush/goatplushie/attackby(obj/item/clothing/mask/cigarette/rollie/fat_dart, mob/user, params)
+/obj/item/toy/plush/goatplushie/attackby(obj/item/cigarette/rollie/fat_dart, mob/user, params)
 	if(!istype(fat_dart))
 		return ..()
 	if(splat)

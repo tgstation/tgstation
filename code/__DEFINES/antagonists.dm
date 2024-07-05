@@ -113,6 +113,7 @@
 #define CONSTRUCT_JUGGERNAUT "Juggernaut"
 #define CONSTRUCT_WRAITH "Wraith"
 #define CONSTRUCT_ARTIFICER "Artificer"
+#define CONSTRUCT_HARVESTER "Harvester"
 
 /// The Classic Wizard wizard loadout.
 #define WIZARD_LOADOUT_CLASSIC "loadout_classic"
@@ -364,6 +365,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define HUNTER_PACK_RUSSIAN "Russian Fugitive Hunters"
 #define HUNTER_PACK_BOUNTY "Bounty Fugitive Hunters"
 #define HUNTER_PACK_PSYKER "Psyker Fugitive Hunters"
+#define HUNTER_PACK_MI13 "MI13 Fugitive Hunters"
 
 /// Changeling abilities with DNA cost = this are innately given to all changelings
 #define CHANGELING_POWER_INNATE -1

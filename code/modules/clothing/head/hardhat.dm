@@ -158,6 +158,10 @@
 	if(!up)
 		. += visor_state
 
+/obj/item/clothing/head/utility/hardhat/welding/up/Initialize(mapload)
+	. = ..()
+	visor_toggling()
+
 /obj/item/clothing/head/utility/hardhat/welding/orange
 	icon_state = "hardhat0_orange"
 	inhand_icon_state = null
@@ -174,6 +178,11 @@
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+
+/obj/item/clothing/head/utility/hardhat/welding/white/up/Initialize(mapload)
+	. = ..()
+	visor_toggling()
+
 
 /obj/item/clothing/head/utility/hardhat/welding/dblue
 	icon_state = "hardhat0_dblue"
@@ -226,6 +235,10 @@
 	. = ..()
 	if(isnull(.))
 		return
+	if(new_value)
+		AddElement(/datum/element/wearable_client_colour, /datum/client_colour/halloween_helmet, ITEM_SLOT_HEAD, forced = TRUE)
+	else
+		RemoveElement(/datum/element/wearable_client_colour, /datum/client_colour/halloween_helmet, ITEM_SLOT_HEAD, forced = TRUE)
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/update_overlays()

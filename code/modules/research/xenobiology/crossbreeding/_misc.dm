@@ -52,11 +52,10 @@ Slimecrossing Items
 		ret[part.body_zone] = saved_part
 	return ret
 
-/obj/item/camera/rewind/afterattack(atom/target, mob/user, flag)
-	. |= AFTERATTACK_PROCESSED_ITEM
-
-	if(!on || !pictures_left || !isturf(target.loc))
-		return .
+/obj/item/camera/rewind/photo_taken(atom/target, mob/user)
+	. = ..()
+	if(!.)
+		return
 
 	if(user == target)
 		to_chat(user, span_notice("You take a selfie!"))
@@ -66,9 +65,6 @@ Slimecrossing Items
 	to_chat(target, span_boldnotice("You'll remember this moment forever!"))
 
 	target.AddComponent(/datum/component/dejavu, 2)
-	return . | ..()
-
-
 
 //Timefreeze camera - Old Burning Sepia result. Kept in case admins want to spawn it
 /obj/item/camera/timefreeze
@@ -77,20 +73,18 @@ Slimecrossing Items
 	pictures_left = 1
 	pictures_max = 1
 
-/obj/item/camera/timefreeze/afterattack(atom/target, mob/user, flag)
-	. |= AFTERATTACK_PROCESSED_ITEM
-
-	if(!on || !pictures_left || !isturf(target.loc))
-		return .
+/obj/item/camera/timefreeze/photo_taken(atom/target, mob/user)
+	. = ..()
+	if(!.)
+		return
 	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
-	return . | ..()
 
 //Hypercharged slime cell - Charged Yellow
-/obj/item/stock_parts/cell/high/slime_hypercharged
+/obj/item/stock_parts/power_store/cell/high/slime_hypercharged
 	name = "hypercharged slime core"
 	desc = "A charged yellow slime extract, infused with plasma. It almost hurts to touch."
 	icon = 'icons/mob/simple/slimes.dmi'
-	icon_state = "yellow slime extract"
+	icon_state = "yellow-core"
 	rating = 7
 	custom_materials = null
 	maxcharge = 50 * STANDARD_CELL_CHARGE

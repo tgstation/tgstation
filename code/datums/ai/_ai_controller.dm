@@ -625,7 +625,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/post_blackboard_key_set(key)
 	if (isnull(pawn))
 		return
-	SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_SET(key))
+	SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_SET(key), key)
 
 /**
  * Adds the passed "thing" to the associated key
@@ -715,6 +715,8 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/clear_blackboard_key(key)
 	if(isnull(blackboard[key]))
 		return
+	if(pawn && (SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_PRECLEAR(key))))
+		return
 	CLEAR_AI_DATUM_TARGET(blackboard[key], key)
 	blackboard[key] = null
 	if(isnull(pawn))
@@ -754,6 +756,19 @@ multiple modular subtrees with behaviors
 
 	CRASH("remove_thing_from_blackboard_key called with an invalid \"thing\" argument ([thing]). \
 		(The passed value is not tracked in the passed list.)")
+
+///removes a tracked object from a lazylist
+/datum/ai_controller/proc/remove_from_blackboard_lazylist_key(key, thing)
+	var/lazylist = blackboard[key]
+	if(isnull(lazylist))
+		return
+	for(var/key_index in lazylist)
+		if(thing == key_index || lazylist[key_index] == thing)
+			CLEAR_AI_DATUM_TARGET(thing, key)
+			lazylist -= key_index
+			break
+	if(!LAZYLEN(lazylist))
+		clear_blackboard_key(key)
 
 /// Signal proc to go through every key and remove the datum from all keys it finds
 /datum/ai_controller/proc/sig_remove_from_blackboard(datum/source)

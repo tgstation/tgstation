@@ -208,8 +208,12 @@ ADMIN_VERB(create_mapping_job_icons, R_DEBUG, "Generate job landmarks icons", "G
 			else
 				for(var/obj/item/I in D)
 					qdel(I)
-				randomize_human(D)
-				D.dress_up_as_job(JB, TRUE)
+				randomize_human_normie(D)
+				D.dress_up_as_job(
+					equipping = JB,
+					visual_only = TRUE,
+					consistent = TRUE,
+				)
 				var/icon/I = icon(getFlatIcon(D), frame = 1)
 				final.Insert(I, JB.title)
 	qdel(D)

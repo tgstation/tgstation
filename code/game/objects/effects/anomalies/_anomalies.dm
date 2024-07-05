@@ -8,7 +8,7 @@
 	anchored = TRUE
 	light_range = 3
 
-	var/obj/item/assembly/signaler/anomaly/aSignal = /obj/item/assembly/signaler/anomaly
+	var/obj/item/assembly/signaler/anomaly/anomaly_core = /obj/item/assembly/signaler/anomaly
 	var/area/impact_area
 
 	var/lifespan = ANOMALY_COUNTDOWN_TIMER
@@ -37,12 +37,12 @@
 		return INITIALIZE_HINT_QDEL
 
 	src.drops_core = drops_core
-	if(aSignal)
-		aSignal = new aSignal(src)
-		aSignal.code = rand(1,100)
-		aSignal.anomaly_type = type
+	if(anomaly_core)
+		anomaly_core = new anomaly_core(src)
+		anomaly_core.code = rand(1,100)
+		anomaly_core.anomaly_type = type
 
-		aSignal.set_frequency(sanitize_frequency(rand(MIN_FREE_FREQ, MAX_FREE_FREQ), free = TRUE))
+		anomaly_core.set_frequency(sanitize_frequency(rand(MIN_FREE_FREQ, MAX_FREE_FREQ), free = TRUE))
 
 	if(new_lifespan)
 		lifespan = new_lifespan
@@ -72,7 +72,7 @@
 /obj/effect/anomaly/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(countdown)
-	QDEL_NULL(aSignal)
+	QDEL_NULL(anomaly_core)
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect(seconds_per_tick)
@@ -97,21 +97,29 @@
 	new /obj/effect/particle_effect/fluid/smoke/bad(loc)
 
 	if(drops_core)
-		if(isnull(aSignal))
+		if(isnull(anomaly_core))
 			stack_trace("An anomaly ([src]) exists that drops a core, yet has no core!")
 		else
-			aSignal.forceMove(drop_location())
-			aSignal = null
+			var/anomaly_type = anomaly_core.type
+			if (SSresearch.is_core_available(anomaly_type))
+				SSresearch.increment_existing_anomaly_cores(anomaly_type)
+				anomaly_core.forceMove(drop_location())
+				anomaly_core = null
+			else // You exceeded the cap sorry
+				visible_message(span_warning("[anomaly_core] loses its lustre as it falls to the ground, there is too little ambient energy to support another core of this type."))
+				new /obj/item/inert_anomaly(drop_location())
+
 	// else, anomaly core gets deleted by qdel(src).
 
 	qdel(src)
 
-/obj/effect/anomaly/attackby(obj/item/weapon, mob/user, params)
-	if(weapon.tool_behaviour == TOOL_ANALYZER && aSignal)
-		to_chat(user, span_notice("Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code]."))
-		return TRUE
+/obj/effect/anomaly/analyzer_act(mob/living/user, obj/item/analyzer/tool)
+	if(!isnull(anomaly_core))
+		to_chat(user, span_notice("Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(anomaly_core.frequency)], code [anomaly_core.code]."))
+		return ITEM_INTERACT_SUCCESS
+	to_chat(user, span_notice("Analyzing... [src]'s unstable field is not fluctuating along a stable frequency."))
+	return ITEM_INTERACT_BLOCKING
 
-	return ..()
 
 ///Stabilize an anomaly, letting it stay around forever or untill destabilizes by a player. An anomaly without a core can't be signalled, but can be destabilized
 /obj/effect/anomaly/proc/stabilize(anchor = FALSE, has_core = TRUE)
@@ -119,6 +127,6 @@
 	name = (has_core ? "stable " : "hollow ") + name
 	if(!has_core)
 		drops_core = FALSE
-		QDEL_NULL(aSignal)
+		QDEL_NULL(anomaly_core)
 	if (anchor)
 		move_chance = 0

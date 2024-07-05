@@ -255,10 +255,19 @@
 /datum/crafting_recipe/drakecloak
 	name = "Ash Drake Armour"
 	result = /obj/item/clothing/suit/hooded/cloak/drake
-	time = 6 SECONDS
+	time = 4 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/sinew = 2,
+		/obj/item/drake_remains = 1,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/drakeremains
+	name = "Drake Remains"
+	result = /obj/item/drake_remains
+	time = 1 SECONDS
 	reqs = list(
 		/obj/item/stack/sheet/bone = 10,
-		/obj/item/stack/sheet/sinew = 2,
 		/obj/item/stack/sheet/animalhide/ashdrake = 5,
 	)
 	category = CAT_CLOTHING

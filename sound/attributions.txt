@@ -178,3 +178,34 @@ https://freesound.org/people/shw489/sounds/234389/
 
 soup_boil1.ogg through soup_boil5.ogg and soup_boil_end.ogg are taken from Boiling Soup from Freesoung.org (CC4) and converted to OGG / split apart (but is otherwise unchanged):
 https://freesound.org/people/jorickhoofd/sounds/632783/
+
+compressed_air1.ogg is taken from Freesound and converted to ogg:
+https://freesound.org/people/Geoff-Bremner-Audio/sounds/682952/
+compressed_air2.ogg is taken from Freesound and converted to ogg:
+https://freesound.org/people/Geoff-Bremner-Audio/sounds/682816/
+tank_insert_clunky.ogg was created by mixing compressed_air1 and clunk sound from Freesound:
+https://freesound.org/people/BinaryMonkFlint/sounds/333296/
+tank_remove_thunk.ogg was made by mixing two sound tracks from Freesound:
+https://freesound.org/people/lowdjinn/sounds/533885/ and;
+https://freesound.org/people/BMacZero/sounds/96137/
+
+valve_opening.ogg was made by mixing water flowing samples from:
+https://freesound.org/people/scriotxstudios/sounds/349111/?attribution=1 and squeaky scrape sound from:
+https://freesound.org/people/Department64/sounds/669028/ which was modified with lower pitch
+
+liquid_pour2.ogg and liquid_pour3.ogg were cut from
+https://freesound.org/people/MattRuthSound/sounds/561896/
+https://freesound.org/people/MattRuthSound/sounds/561895/
+
+ayylien.ogg was made by remixing:
+SCIRetro_Energy Swells Synth_Funky Audio_Sonics Spices by Funky_Audio under CC0 -- https://freesound.org/people/realtheremin/sounds/119011/
+scifi_scare_a.aiff by realtheremin under CC0 -- https://freesound.org/people/Funky_Audio/sounds/729392/
+
+solarflare.ogg was made by ArcaneMusic, using the following sources from Freesound.org.
+"Flashbang Explosion Designed 14m" by modusmogulus https://freesound.org/people/modusmogulus/sounds/734095/ under CC 0
+"Hammer and anvil" by Duasun -- https://freesound.org/people/Duasun/sounds/321889/ under CC 0
+
+beaker_pickup.ogg was made by lowering pitch:
+Bottle Tap.wav by alex_alexalex -- https://freesound.org/s/395492/ -- License: Attribution NonCommercial 3.0
+beaker_place.ogg was made by cutting and lowering pitch:
+place glass object.wav by milpower -- https://freesound.org/s/353105/ -- License: Creative Commons 0

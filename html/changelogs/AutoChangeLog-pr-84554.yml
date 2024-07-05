@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - qol: "CE and Engineer start with their hardhat as the respective welding hard hat variant"

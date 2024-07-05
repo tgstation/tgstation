@@ -3,6 +3,7 @@
 	desc = "Makes researched and prototype items with materials and energy."
 	/// Energy cost per full stack of materials spent. Material insertion is 40% of this.
 	active_power_usage = 0.05 * STANDARD_CELL_RATE
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 
 	/// The efficiency coefficient. Material costs and print times are multiplied by this number;
 	var/efficiency_coeff = 1
@@ -20,8 +21,11 @@
 	var/stripe_color = null
 	///direction we output onto (if 0, on top of us)
 	var/drop_direction = 0
+	//looping sound for printing items
+	var/datum/looping_sound/lathe_print/print_sound
 
 /obj/machinery/rnd/production/Initialize(mapload)
+	print_sound = new(src,  FALSE)
 	materials = AddComponent(
 		/datum/component/remote_materials, \
 		mapload, \
@@ -47,6 +51,7 @@
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/machinery/rnd/production/Destroy()
+	QDEL_NULL(print_sound)
 	materials = null
 	cached_designs = null
 	return ..()
@@ -73,6 +78,7 @@
 		return
 
 	. += span_notice("Material usage cost at <b>[efficiency_coeff * 100]%</b>")
+	. += span_notice("Build time at <b>[efficiency_coeff * 100]%</b>")
 	if(drop_direction)
 		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
 		. += span_notice("[EXAMINE_HINT("Alt-click")] to reset.")
@@ -340,11 +346,12 @@
 			for(var/material in design.materials)
 				charge_per_item += design.materials[material]
 			charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * coefficient * active_power_usage)
-			var/build_time_per_item = (design.construction_time * design.lathe_time_factor) ** 0.8
+			var/build_time_per_item = (design.construction_time * design.lathe_time_factor * efficiency_coeff) ** 0.8
 
 			//start production
 			busy = TRUE
 			SStgui.update_uis(src)
+			print_sound.start()
 			if(production_animation)
 				icon_state = production_animation
 			var/turf/target_location
@@ -384,11 +391,14 @@
 	if(!directly_use_energy(charge_per_item)) // provide the wait time until lathe is ready
 		var/area/my_area = get_area(src)
 		var/obj/machinery/power/apc/my_apc = my_area.apc
-		var/charging_wait = my_apc.time_to_charge(charge_per_item)
-		if(!isnull(charging_wait))
-			say("Unable to continue production, APC overload. Wait [DisplayTimeText(charging_wait, round_seconds_to = 1)] and try again.")
+		if(!QDELETED(my_apc))
+			var/charging_wait = my_apc.time_to_charge(charge_per_item)
+			if(!isnull(charging_wait))
+				say("Unable to continue production, APC overload. Wait [DisplayTimeText(charging_wait, round_seconds_to = 1)] and try again.")
+			else
+				say("Unable to continue production, power grid overload.")
 		else
-			say("Unable to continue production, power grid overload.")
+			say("Unable to continue production, no APC in area.")
 		finalize_build()
 		return
 
@@ -407,14 +417,27 @@
 
 	var/atom/movable/created
 	if(is_stack)
-		created = new design.build_path(target, items_remaining)
+		var/obj/item/stack/stack_item = initial(design.build_path)
+		var/max_stack_amount = initial(stack_item.max_amount)
+		var/number_to_make = (initial(stack_item.amount) * items_remaining)
+		while(number_to_make > max_stack_amount)
+			created = new stack_item(null, max_stack_amount) //it's imporant to spawn things in nullspace, since obj's like stacks qdel when they enter a tile/merge with other stacks of the same type, resulting in runtimes.
+			if(isitem(created))
+				created.pixel_x = created.base_pixel_x + rand(-6, 6)
+				created.pixel_y = created.base_pixel_y + rand(-6, 6)
+			created.forceMove(target)
+			number_to_make -= max_stack_amount
+
+		created = new stack_item(null, number_to_make)
 	else
-		created = new design.build_path(target)
+		created = new design.build_path(null)
 		split_materials_uniformly(design_materials, material_cost_coefficient, created)
 
-	created.pixel_x = created.base_pixel_x + rand(-6, 6)
-	created.pixel_y = created.base_pixel_y + rand(-6, 6)
+	if(isitem(created))
+		created.pixel_x = created.base_pixel_x + rand(-6, 6)
+		created.pixel_y = created.base_pixel_y + rand(-6, 6)
 	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[created.type]"))
+	created.forceMove(target)
 
 	if(is_stack)
 		items_remaining = 0
@@ -430,23 +453,22 @@
 /// Called at the end of do_make_item's timer loop
 /obj/machinery/rnd/production/proc/finalize_build()
 	PROTECTED_PROC(TRUE)
-
+	print_sound.stop()
 	busy = FALSE
 	SStgui.update_uis(src)
 	icon_state = initial(icon_state)
 
-/obj/machinery/rnd/production/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
-	. = ..()
-	if(!can_interact(usr) || (!issilicon(usr) && !isAdminGhostAI(usr)) && !Adjacent(usr))
+/obj/machinery/rnd/production/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
 		return
 	if(busy)
-		balloon_alert(usr, "busy printing!")
+		balloon_alert(user, "busy printing!")
 		return
 	var/direction = get_dir(src, over_location)
 	if(!direction)
 		return
 	drop_direction = direction
-	balloon_alert(usr, "dropping [dir2text(drop_direction)]")
+	balloon_alert(user, "dropping [dir2text(drop_direction)]")
 
 /obj/machinery/rnd/production/click_alt(mob/user)
 	if(drop_direction == 0)

@@ -91,7 +91,7 @@
 
 /obj/machinery/power/supermatter_crystal/proc/handle_high_power()
 	if(internal_energy <= POWER_PENALTY_THRESHOLD && damage <= danger_point) //If the power is above 5000 or if the damage is above 550
-		last_high_energy_zap = world.time //Prevent oddly high initial zap due to high energy zaps not getting triggered via too low energy.
+		last_high_energy_zap_perspective_machines = SSmachines.times_fired //Prevent oddly high initial zap due to high energy zaps not getting triggered via too low energy.
 		return
 	var/range = 4
 	zap_cutoff = 1500
@@ -129,10 +129,10 @@
 
 	if(zap_count >= 1)
 		playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
-		var/delta_time = min((world.time - last_high_energy_zap) * 0.1, 16)
+		var/delta_time = (SSmachines.times_fired - last_high_energy_zap_perspective_machines) * SSmachines.wait / (1 SECONDS)
 		for(var/i in 1 to zap_count)
 			supermatter_zap(src, range, clamp(internal_energy * 3200, 6.4e6, 3.2e7) * delta_time, flags, zap_cutoff = src.zap_cutoff * delta_time, power_level = internal_energy, zap_icon = src.zap_icon)
-		last_high_energy_zap = world.time
+		last_high_energy_zap_perspective_machines = SSmachines.times_fired
 	if(prob(5))
 		supermatter_anomaly_gen(src, FLUX_ANOMALY, rand(5, 10))
 	if(prob(5))

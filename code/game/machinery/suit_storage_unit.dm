@@ -9,6 +9,7 @@
 	power_channel = AREA_USAGE_EQUIP
 	density = TRUE
 	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the unit is open
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 	max_integrity = 250
 	req_access = list()
 	state_open = FALSE
@@ -446,13 +447,9 @@
 	image.color = COLOR_RED
 	return image
 
-/obj/machinery/suit_storage_unit/MouseDrop_T(atom/A, mob/living/user)
-	if(!istype(user) || user.stat || !Adjacent(user) || !Adjacent(A) || !isliving(A))
+/obj/machinery/suit_storage_unit/mouse_drop_receive(atom/A, mob/living/user, params)
+	if(!isliving(A))
 		return
-	if(isliving(user))
-		var/mob/living/L = user
-		if(L.body_position == LYING_DOWN)
-			return
 	var/mob/living/target = A
 	if(!state_open)
 		to_chat(user, span_warning("The unit's doors are shut!"))
@@ -556,7 +553,7 @@
 /obj/machinery/suit_storage_unit/process(seconds_per_tick)
 	var/list/cells_to_charge = list()
 	for(var/obj/item/charging in list(mod, suit, helmet, mask, storage))
-		var/obj/item/stock_parts/cell/cell_charging = charging.get_cell()
+		var/obj/item/stock_parts/power_store/cell_charging = charging.get_cell()
 		if(!istype(cell_charging) || cell_charging.charge == cell_charging.maxcharge)
 			continue
 
@@ -567,7 +564,7 @@
 		return
 
 	var/charge_per_item = (final_charge_rate * seconds_per_tick) / cell_count
-	for(var/obj/item/stock_parts/cell/cell as anything in cells_to_charge)
+	for(var/obj/item/stock_parts/power_store/cell as anything in cells_to_charge)
 		charge_cell(charge_per_item, cell, grid_only = TRUE)
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
@@ -702,7 +699,7 @@
 		else
 			balloon_alert(user, "set to [choice]")
 
-	else if(!state_open && istype(weapon, /obj/item/pen))
+	else if(!state_open && IS_WRITING_UTENSIL(weapon))
 		if(locked)
 			balloon_alert(user, "unlock first!")
 			return

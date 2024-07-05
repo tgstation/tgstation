@@ -44,6 +44,7 @@
 	preop_sound = 'sound/surgery/scalpel1.ogg'
 	success_sound = 'sound/surgery/retractor2.ogg'
 	failure_sound = 'sound/surgery/organ1.ogg'
+	surgery_effects_mood = TRUE
 	/// How much sanitization is added per step
 	var/sanitization_added = 0.5
 	/// How much infestation is removed per step (positive number)

@@ -26,31 +26,38 @@
 	possible_transfer_amounts = list(5,10)
 	var/spray_sound = 'sound/effects/spray2.ogg'
 
-/obj/item/reagent_containers/spray/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(istype(target, /obj/structure/sink) || istype(target, /obj/structure/mop_bucket/janitorialcart) || istype(target, /obj/machinery/hydroponics))
-		return
+/obj/item/reagent_containers/spray/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return try_spray(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/reagent_containers/spray/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	// This is a hack to make spray bottles fillable from / transferable to these sources
+	// However it can be completely removed when these objects are updated to use the new interaction system
+	// (because the desired effect will just work out of the box)
+	if(istype(interacting_with, /obj/structure/sink) || istype(interacting_with, /obj/structure/mop_bucket/janitorialcart) || istype(interacting_with, /obj/machinery/hydroponics))
+		return NONE
 
-	if((target.is_drainable() && !target.is_refillable()) && (get_dist(src, target) <= 1) && can_fill_from_container)
+	return try_spray(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+
+/obj/item/reagent_containers/spray/proc/try_spray(atom/target, mob/user)
+	var/adjacent = user.Adjacent(target)
+	if((target.is_drainable() && !target.is_refillable()) && adjacent && can_fill_from_container)
 		if(!target.reagents.total_volume)
 			to_chat(user, span_warning("[target] is empty."))
-			return
+			return FALSE
 
 		if(reagents.holder_full())
 			to_chat(user, span_warning("[src] is full."))
-			return
+			return FALSE
 
 		var/trans = target.reagents.trans_to(src, 50, transferred_by = user) //transfer 50u , using the spray's transfer amount would take too long to refill
 		to_chat(user, span_notice("You fill \the [src] with [trans] units of the contents of \the [target]."))
-		return
+		return FALSE
 
 	if(reagents.total_volume < amount_per_transfer_from_this)
 		to_chat(user, span_warning("Not enough left!"))
-		return
+		return FALSE
 
-	if(proximity_flag && (target.density || ismob(target)))
+	if(adjacent && (target.density || ismob(target)))
 		// If we're spraying an adjacent mob or a dense object, we start the spray on ITS tile rather than OURs
 		// This is so we can use a spray bottle to clean stuff like windows without getting blocked by passflags
 		spray(target, user, get_turf(target))
@@ -58,9 +65,9 @@
 		spray(target, user)
 
 	playsound(src, spray_sound, 50, TRUE, -6)
-	user.changeNext_move(CLICK_CD_RANGE*2)
+	user.changeNext_move(CLICK_CD_RANGE * 2)
 	user.newtonian_move(get_dir(target, user))
-	return
+	return TRUE
 
 /// Handles creating a chem puff that travels towards the target atom, exposing reagents to everything it hits on the way.
 /obj/item/reagent_containers/spray/proc/spray(atom/target, mob/user, turf/start_turf = get_turf(src))
@@ -89,7 +96,6 @@
 /obj/item/reagent_containers/spray/proc/do_spray(atom/target, wait_step, obj/effect/decal/chempuff/reagent_puff, range, puff_reagent_left, mob/user)
 	reagent_puff.user = user
 	reagent_puff.sprayer = src
-	reagent_puff.lifetime = puff_reagent_left
 	reagent_puff.stream = stream_mode
 
 	var/turf/target_turf = get_turf(target)
@@ -232,10 +238,10 @@
 	return OXYLOSS
 
 // Fix pepperspraying yourself
-/obj/item/reagent_containers/spray/pepper/afterattack(atom/A as mob|obj, mob/user)
-	if (A.loc == user)
-		return
-	return ..() | AFTERATTACK_PROCESSED_ITEM
+/obj/item/reagent_containers/spray/pepper/try_spray(atom/target, mob/user)
+	if (target.loc == user)
+		return FALSE
+	return ..()
 
 //water flower
 /obj/item/reagent_containers/spray/waterflower
@@ -320,11 +326,10 @@
 	amount_per_transfer_from_this = 10
 	volume = 600
 
-/obj/item/reagent_containers/spray/chemsprayer/afterattack(atom/A as mob|obj, mob/user)
-	// Make it so the bioterror spray doesn't spray yourself when you click your inventory items
-	if (A.loc == user)
-		return
-	return ..() | AFTERATTACK_PROCESSED_ITEM
+/obj/item/reagent_containers/spray/chemsprayer/try_spray(atom/target, mob/user)
+	if (target.loc == user)
+		return FALSE
+	return ..()
 
 /obj/item/reagent_containers/spray/chemsprayer/spray(atom/A, mob/user)
 	var/direction = get_dir(src, A)
