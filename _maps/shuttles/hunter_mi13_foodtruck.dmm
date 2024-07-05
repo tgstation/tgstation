@@ -1,0 +1,998 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters{
+	id = "foodtruck_backroom_shutters";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter/mi13_foodtruck)
+"ab" = (
+/obj/machinery/computer/operating{
+	dir = 1
+	},
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"af" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/surgery_tray/full,
+/obj/structure/sign/poster/contraband/hacking_guide/directional/south,
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"ag" = (
+/obj/structure/tank_dispenser/oxygen,
+/obj/structure/cable/layer1,
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"ah" = (
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate/general,
+/obj/machinery/door/airlock/vault{
+	normalspeed = 0;
+	name = "Secure Door";
+	desc = "An imposing looking door. It looks reinforced."
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"aj" = (
+/obj/machinery/power/shuttle_engine/heater,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"al" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"ao" = (
+/obj/structure/sign/poster/contraband/bountyhunters/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"bY" = (
+/turf/open/floor/iron/kitchen/small,
+/area/shuttle/hunter/mi13_foodtruck)
+"cm" = (
+/obj/structure/lattice,
+/obj/structure/marker_beacon/burgundy,
+/turf/template_noop,
+/area/shuttle/hunter/mi13_foodtruck)
+"dg" = (
+/obj/structure/closet/secure_closet/freezer/empty,
+/obj/machinery/light/dim/directional/east,
+/obj/item/food/fries{
+	pixel_x = -2;
+	pixel_y = -8
+	},
+/obj/item/food/fries{
+	pixel_y = -11
+	},
+/obj/item/food/fries{
+	pixel_x = 3;
+	pixel_y = -7
+	},
+/obj/item/food/fries{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/food/fries{
+	pixel_x = -3
+	},
+/obj/item/food/fries{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/food/burger/cheese{
+	pixel_y = 7;
+	pixel_x = -5
+	},
+/obj/item/food/burger/cheese{
+	pixel_y = 7;
+	pixel_x = 5
+	},
+/obj/item/food/fishandchips{
+	pixel_y = -8
+	},
+/turf/open/floor/iron/kitchen/small,
+/area/shuttle/hunter/mi13_foodtruck)
+"dB" = (
+/obj/machinery/vending/clothing,
+/obj/structure/sign/poster/official/high_class_martini/directional/north,
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"dC" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/binoculars{
+	pixel_y = 10
+	},
+/obj/item/traitor_bug{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/traitor_bug{
+	pixel_y = 3;
+	pixel_x = -5
+	},
+/obj/item/storage/box/zipties{
+	pixel_y = -4;
+	pixel_x = 4
+	},
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"dJ" = (
+/obj/machinery/computer/records/security/syndie,
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"eA" = (
+/obj/machinery/vending/medical/syndicate_access/cybersun,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"eP" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/light/dim/directional/north,
+/obj/structure/cable/layer1,
+/obj/machinery/button/door{
+	id = "foodtruck_right_window";
+	pixel_x = 6;
+	name = "SHUTTERS - R"
+	},
+/obj/machinery/button/door{
+	id = "foodtruck_left_window";
+	pixel_x = -6;
+	name = "SHUTTERS - L"
+	},
+/obj/item/reagent_containers/cup/glass/mug/tea{
+	pixel_x = 8;
+	pixel_y = -9
+	},
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"fo" = (
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"gc" = (
+/obj/structure/closet/crate/cardboard/mothic,
+/obj/item/storage/box/mothic_rations{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/storage/box/mothic_rations{
+	pixel_x = 8;
+	pixel_y = 7
+	},
+/obj/item/storage/box/mothic_rations{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/storage/box/mothic_rations{
+	pixel_x = 8;
+	pixel_y = -1
+	},
+/obj/item/poster/random_contraband{
+	poster_type = /obj/structure/sign/poster/contraband/mothic_rations;
+	name = "mothic ration poster";
+	desc = "A rolled up poster.";
+	pixel_y = 7
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"gs" = (
+/obj/structure/cable/layer1,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"gv" = (
+/obj/structure/closet/crate/freezer,
+/obj/machinery/button/door/directional/west{
+	name = "External Shutter Switch";
+	id = "foodtruck_backroom_shutters"
+	},
+/obj/item/pizzabox/margherita{
+	pixel_y = 5
+	},
+/obj/item/food/burrito{
+	pixel_x = -9;
+	pixel_y = 2
+	},
+/obj/item/food/burrito{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/item/food/burrito{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"hB" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/template_noop,
+/area/shuttle/hunter/mi13_foodtruck)
+"iO" = (
+/obj/structure/noticeboard/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"jb" = (
+/obj/machinery/light/dim/directional/south,
+/obj/structure/cable/layer1,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 1
+	},
+/obj/machinery/power/terminal{
+	dir = 1;
+	cable_layer = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"jc" = (
+/obj/machinery/light/floor,
+/obj/structure/table/reinforced,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"jw" = (
+/obj/structure/closet/cardboard,
+/obj/structure/cable/layer1,
+/obj/item/cardboard_cutout,
+/obj/item/cardboard_cutout,
+/obj/item/cardboard_cutout,
+/obj/item/cardboard_cutout,
+/obj/item/storage/crayons,
+/obj/item/soap/syndie{
+	pixel_y = -7
+	},
+/obj/item/mop{
+	pixel_y = 2;
+	pixel_x = 4
+	},
+/obj/effect/spawner/random/trash/bucket,
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"jA" = (
+/obj/effect/turf_decal/siding/dark_red/corner,
+/obj/item/storage/toolbox/syndicate,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"kf" = (
+/obj/effect/turf_decal/box,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/hunter/mi13_foodtruck)
+"kj" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ammo_box/c9mm{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/item/ammo_box/magazine/m9mm/ap{
+	pixel_x = -7
+	},
+/obj/item/ammo_box/magazine/m9mm/ap,
+/obj/item/ammo_box/magazine/m9mm/ap{
+	pixel_x = 7
+	},
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 1
+	},
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"ku" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/hunter/mi13_foodtruck)
+"kv" = (
+/obj/machinery/door/window/brigdoor/right/directional/east{
+	req_access = list("syndicate")
+	},
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"lp" = (
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"lX" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/structure/sign/poster/contraband/kss13/directional/north,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"mT" = (
+/obj/machinery/power/smes/magical{
+	cable_layer = 1;
+	name = "cybersun power storage unit";
+	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Produces power via a top-secret method."
+	},
+/obj/structure/cable/layer1,
+/turf/open/floor/circuit/red,
+/area/shuttle/hunter/mi13_foodtruck)
+"nh" = (
+/obj/structure/sign/poster/ripped/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"oA" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/arrows{
+	pixel_y = 16
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"pQ" = (
+/obj/structure/cable/layer1,
+/obj/machinery/computer/shuttle/hunter{
+	req_access = list("syndicate")
+	},
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"pU" = (
+/obj/structure/chair/comfy/shuttle/tactical{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark_red/end{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"pZ" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"sN" = (
+/obj/structure/table/reinforced,
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/item/reagent_containers/condiment/vinegar{
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/condiment/mayonnaise{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/condiment/ketchup{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/condiment/saltshaker{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/condiment/peppermill{
+	pixel_y = -4;
+	pixel_x = 4
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"te" = (
+/obj/structure/fans/tiny,
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 7;
+	height = 15;
+	name = "Deep Space";
+	shuttle_id = "huntership_home";
+	width = 13
+	},
+/obj/docking_port/mobile{
+	name = "food truck";
+	rechargeTime = 1800;
+	dir = 4;
+	shuttle_id = "huntership";
+	port_direction = 8
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "foodtruck_shutters";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter/mi13_foodtruck)
+"tW" = (
+/obj/structure/table/optable,
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"ua" = (
+/obj/structure/sign/poster/contraband/donk_co/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"ui" = (
+/obj/structure/table/reinforced,
+/obj/item/food/classic_hard_shell_taco{
+	pixel_x = 2;
+	pixel_y = 10
+	},
+/obj/item/food/classic_hard_shell_taco{
+	pixel_y = 8
+	},
+/obj/item/food/classic_hard_shell_taco{
+	pixel_y = 6;
+	pixel_x = -2
+	},
+/obj/item/food/classic_hard_shell_taco{
+	pixel_y = 4;
+	pixel_x = -4
+	},
+/obj/item/food/classic_hard_shell_taco{
+	pixel_y = 2;
+	pixel_x = -6
+	},
+/obj/item/food/classic_hard_shell_taco{
+	pixel_x = -8
+	},
+/obj/structure/sign/poster/contraband/eat/directional/east,
+/turf/open/floor/iron/kitchen/small,
+/area/shuttle/hunter/mi13_foodtruck)
+"uq" = (
+/obj/effect/mob_spawn/ghost_role/human/fugitive/mi13/chef{
+	dir = 4
+	},
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"we" = (
+/obj/machinery/power/apc/auto_name/directional/south{
+	cable_layer = 1
+	},
+/obj/structure/cable/layer1,
+/obj/effect/turf_decal/siding/dark_red/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark_red/corner{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/apc/syndicate_access,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"wA" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/shuttle/hunter/mi13_foodtruck)
+"xg" = (
+/obj/structure/chair/comfy/shuttle/tactical{
+	dir = 1
+	},
+/obj/structure/cable/layer1,
+/obj/effect/turf_decal/siding/dark_red/end{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"xG" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"zJ" = (
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"Ak" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
+	x_offset = 6;
+	y_offset = 1
+	},
+/obj/structure/cable/layer1,
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"Am" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/hunter/mi13_foodtruck)
+"An" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/structure/cable/layer1,
+/obj/machinery/door/poddoor{
+	id = "foodtruck_right_window"
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter/mi13_foodtruck)
+"Ay" = (
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark_red,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"AF" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor/shutters{
+	id = "foodtruck_shutters";
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter/mi13_foodtruck)
+"AP" = (
+/obj/effect/turf_decal/arrows,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"Bn" = (
+/obj/machinery/computer/crew/syndie,
+/turf/open/floor/circuit/red,
+/area/shuttle/hunter/mi13_foodtruck)
+"CF" = (
+/obj/structure/fans/tiny,
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "foodtruck_shutters";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter/mi13_foodtruck)
+"CY" = (
+/obj/machinery/deepfryer,
+/obj/structure/noticeboard/directional/north,
+/turf/open/floor/iron/kitchen/small,
+/area/shuttle/hunter/mi13_foodtruck)
+"Dp" = (
+/obj/effect/turf_decal/arrows{
+	dir = 8;
+	pixel_x = 16
+	},
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"Ev" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/structure/cable/layer1,
+/obj/machinery/door/poddoor{
+	id = "foodtruck_left_window"
+	},
+/turf/open/floor/plating,
+/area/shuttle/hunter/mi13_foodtruck)
+"Ff" = (
+/obj/effect/turf_decal/siding/dark_red,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"Fv" = (
+/obj/machinery/light/dim/directional/west,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"IG" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/shuttle/hunter/mi13_foodtruck)
+"Jv" = (
+/obj/structure/cable/layer1,
+/obj/effect/turf_decal/siding/dark_red/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark_red/corner{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/south,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"KV" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/reagent_containers/cup/glass/mug/tea{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/cup/beaker{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/cup/beaker{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/pill/cyanide{
+	pixel_y = -9;
+	pixel_x = -2
+	},
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"Lm" = (
+/obj/machinery/vending/dinnerware,
+/obj/machinery/airalarm/directional/east,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/turf/open/floor/iron/kitchen/small,
+/area/shuttle/hunter/mi13_foodtruck)
+"Ml" = (
+/obj/machinery/computer/camera_advanced/syndie{
+	dir = 1
+	},
+/turf/open/floor/circuit/red,
+/area/shuttle/hunter/mi13_foodtruck)
+"MZ" = (
+/obj/effect/mob_spawn/ghost_role/human/fugitive/mi13{
+	dir = 4
+	},
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"NJ" = (
+/obj/effect/turf_decal/siding/dark_red,
+/obj/effect/turf_decal/siding/dark_red/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark_red/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"OU" = (
+/obj/machinery/fugitive_locator,
+/turf/open/floor/circuit/red,
+/area/shuttle/hunter/mi13_foodtruck)
+"Pq" = (
+/turf/template_noop,
+/area/template_noop)
+"PE" = (
+/obj/machinery/fugitive_capture,
+/turf/open/floor/circuit/red,
+/area/shuttle/hunter/mi13_foodtruck)
+"QV" = (
+/obj/effect/turf_decal/siding/dark_red/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark_red,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"RO" = (
+/obj/machinery/button/door/directional/east{
+	id = "foodtruck_shutters";
+	name = "External Shutter Switch"
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/cans/sixsoda,
+/turf/open/floor/iron/kitchen/small,
+/area/shuttle/hunter/mi13_foodtruck)
+"Sw" = (
+/obj/machinery/door/airlock/vault{
+	normalspeed = 0;
+	name = "Secure Door";
+	desc = "An imposing looking door. It looks reinforced."
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate/general,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"SP" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/pinpointer/shuttle,
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"UF" = (
+/obj/machinery/door/airlock/external{
+	name = "Fire Escape";
+	desc = "If you really need to escape in a hurry, try this door.";
+	id_tag = "foodtruck_firescape"
+	},
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/access/any/syndicate/general,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"Xc" = (
+/obj/effect/turf_decal/arrows{
+	dir = 4
+	},
+/obj/structure/railing/corner,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/hunter/mi13_foodtruck)
+"XE" = (
+/obj/machinery/suit_storage_unit/syndicate{
+	mod_type = null;
+	suit_type = /obj/item/clothing/suit/space/syndicate/black;
+	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black
+	},
+/obj/machinery/button/door/directional/east{
+	id = "foodtruck_firescape";
+	normaldoorcontrol = 1;
+	specialfunctions = 4;
+	pixel_y = -10;
+	name = "Fire Escape Bolt Switch"
+	},
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"Yi" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/reagent_containers/syringe{
+	pixel_y = -3;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_y = 6;
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_y = 6;
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/pill/cyanide{
+	pixel_y = -6;
+	pixel_x = 10
+	},
+/turf/open/floor/circuit/red/off,
+/area/shuttle/hunter/mi13_foodtruck)
+"YW" = (
+/obj/structure/table/reinforced,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/hunter/mi13_foodtruck)
+
+(1,1,1) = {"
+Pq
+Pq
+Pq
+Pq
+Pq
+ku
+AF
+CF
+te
+CF
+CF
+CF
+ku
+Pq
+Pq
+"}
+(2,1,1) = {"
+Pq
+Pq
+Pq
+cm
+Am
+ku
+ao
+Xc
+al
+al
+Dp
+ua
+ku
+IG
+Pq
+"}
+(3,1,1) = {"
+Pq
+Pq
+Pq
+Pq
+wA
+ku
+iO
+xG
+oA
+AP
+pZ
+nh
+ku
+aj
+hB
+"}
+(4,1,1) = {"
+cm
+Ev
+Ev
+ku
+ku
+ku
+sN
+jc
+YW
+YW
+jc
+kv
+ku
+aj
+hB
+"}
+(5,1,1) = {"
+Ev
+Ev
+jw
+MZ
+zJ
+Sw
+bY
+bY
+bY
+bY
+bY
+bY
+ku
+cm
+Pq
+"}
+(6,1,1) = {"
+Ev
+Ak
+xg
+gs
+Jv
+ku
+CY
+ui
+dg
+Lm
+bY
+RO
+ku
+Pq
+Pq
+"}
+(7,1,1) = {"
+ku
+eP
+SP
+mT
+jb
+ku
+ku
+ku
+ku
+ku
+ah
+kf
+ku
+Pq
+Pq
+"}
+(8,1,1) = {"
+An
+pQ
+xg
+gs
+we
+ku
+eA
+jA
+Fv
+fo
+QV
+gv
+ku
+Pq
+Pq
+"}
+(9,1,1) = {"
+An
+An
+ag
+XE
+zJ
+ah
+lp
+NJ
+PE
+OU
+Ay
+gc
+ku
+cm
+Pq
+"}
+(10,1,1) = {"
+cm
+An
+An
+ku
+UF
+ku
+dB
+Ff
+MZ
+uq
+Ay
+tW
+ku
+aj
+hB
+"}
+(11,1,1) = {"
+Pq
+Pq
+Pq
+Pq
+wA
+ku
+dJ
+pU
+Ml
+Bn
+pU
+ab
+ku
+aj
+hB
+"}
+(12,1,1) = {"
+Pq
+Pq
+Pq
+cm
+Am
+ku
+lX
+KV
+Yi
+dC
+kj
+af
+ku
+IG
+Pq
+"}
+(13,1,1) = {"
+Pq
+Pq
+Pq
+Pq
+Pq
+ku
+aa
+aa
+aa
+aa
+aa
+aa
+ku
+Pq
+Pq
+"}

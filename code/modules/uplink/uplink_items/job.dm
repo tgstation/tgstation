@@ -390,3 +390,4 @@
 	restricted = TRUE
 	refundable = FALSE
 	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
+

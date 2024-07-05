@@ -38,7 +38,6 @@
 			/obj/machinery/plumbing/synthesizer = 15,
 			/obj/machinery/plumbing/reaction_chamber/chem = 15,
 			/obj/machinery/plumbing/grinder_chemical = 30,
-			/obj/machinery/plumbing/growing_vat = 20,
 			/obj/machinery/plumbing/fermenter = 30,
 			/obj/machinery/plumbing/liquid_pump = 35, //extracting chemicals from ground is one way of creation
 			/obj/machinery/plumbing/disposer = 10,
@@ -302,44 +301,6 @@
 			current_loc = GLOB.plumbing_layers.len
 		current_layer = GLOB.plumbing_layers[current_loc]
 	to_chat(source, span_notice("You set the layer to [current_layer]."))
-
-/obj/item/construction/plumbing/research
-	name = "research plumbing constructor"
-	desc = "A type of plumbing constructor designed to rapidly deploy the machines needed to conduct cytological research."
-	icon_state = "plumberer_sci"
-	inhand_icon_state = "plumberer_sci"
-	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	///Design types for research plumbing constructor
-	var/list/static/research_design_types = list(
-		//Category 1 Synthesizers
-		"Synthesizers" = list(
-			/obj/machinery/plumbing/reaction_chamber = 15,
-			/obj/machinery/plumbing/grinder_chemical = 30,
-			/obj/machinery/plumbing/disposer = 10,
-			/obj/machinery/plumbing/growing_vat = 20,
-		),
-
-		//Category 2 Distributors
-		"Distributors" = list(
-			/obj/machinery/duct = 1,
-			/obj/machinery/plumbing/input = 5,
-			/obj/machinery/plumbing/filter = 5,
-			/obj/machinery/plumbing/splitter = 5,
-			/obj/machinery/plumbing/output = 5,
-		),
-
-		//Category 3 storage
-		"Storage" = list(
-			/obj/machinery/plumbing/tank = 20,
-			/obj/machinery/plumbing/acclimator = 10,
-		),
-	)
-
-/obj/item/construction/plumbing/research/Initialize(mapload)
-	plumbing_design_types = research_design_types
-
-	. = ..()
 
 /obj/item/construction/plumbing/service
 	name = "service plumbing constructor"

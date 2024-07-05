@@ -76,6 +76,8 @@ Striking a noncultist, however, will tear their flesh."}
 	block_sound = 'sound/weapons/parry.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
+	/// If TRUE, it can be used at will by anyone, non-cultists included
+	var/free_use = FALSE
 
 /obj/item/melee/cultblade/Initialize(mapload)
 	. = ..()
@@ -93,7 +95,7 @@ Striking a noncultist, however, will tear their flesh."}
 		return FALSE
 
 /obj/item/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
-	if(!IS_CULTIST(user))
+	if(!IS_CULTIST(user) && !free_use)
 		user.Paralyze(100)
 		user.dropItemToGround(src, TRUE)
 		user.visible_message(span_warning("A powerful force shoves [user] away from [target]!"), \
@@ -105,6 +107,174 @@ Striking a noncultist, however, will tear their flesh."}
 			user.adjustBruteLoss(rand(force/2,force))
 		return
 	..()
+
+#define WIELDER_SPELLS "wielder_spell"
+#define SWORD_SPELLS "sword_spell"
+#define SWORD_PREFIX "sword_prefix"
+
+/obj/item/melee/cultblade/haunted
+	name = "haunted longsword"
+	desc = "An eerie sword with a blade that is less 'black' than it is 'absolute nothingness'. It glows with furious, restrained green energy."
+	icon_state = "hauntedblade"
+	inhand_icon_state = "hauntedblade"
+	worn_icon_state = "hauntedblade"
+	force = 35
+	throwforce = 35
+	block_chance = 55
+	wound_bonus = -25
+	bare_wound_bonus = 30
+	free_use = TRUE
+	light_color = COLOR_HERETIC_GREEN
+	light_range = 4
+	/// holder for the actual action when created.
+	var/datum/action/cooldown/spell/path_wielder_action
+	var/mob/living/trapped_entity
+	/// The heretic path that the variable below uses to index abilities. Assigned when the heretic is ensouled.
+	var/heretic_path
+	/// Nested static list used to index abilities and names.
+	var/static/list/heretic_paths_to_haunted_sword_abilities = list(
+		// Ash
+		PATH_ASH = list(
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/ash_beams),
+			SWORD_PREFIX = "ashen",
+		),
+		// Flesh
+		PATH_FLESH = list(
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/blood_siphon),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/cleave),
+			SWORD_PREFIX = "sanguine",
+		),
+		// Void
+		PATH_VOID = list(
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/void_phase),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/cone/staggered/cone_of_cold/void),
+			SWORD_PREFIX = "tenebrous",
+		),
+		// Blade
+		PATH_BLADE = list(
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/projectile/furious_steel/haunted),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/projectile/furious_steel/solo),
+			SWORD_PREFIX = "keen",
+		),
+		// Rust
+		PATH_RUST = list(
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/cone/staggered/entropic_plume),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/aoe/rust_conversion, /datum/action/cooldown/spell/pointed/rust_construction),
+			SWORD_PREFIX = "rusted",
+		),
+		// Cosmic
+		PATH_COSMIC = list(
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/conjure/cosmic_expansion),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/projectile/star_blast),
+			SWORD_PREFIX = "astral",
+		),
+		// Lock
+		PATH_LOCK = list(
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/burglar_finesse),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/apetra_vulnera),
+			SWORD_PREFIX = "incisive",
+		),
+		// Moon
+		PATH_MOON = list(
+			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/projectile/moon_parade),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/moon_smile),
+			SWORD_PREFIX = "shimmering",
+		),
+		// Starter
+		PATH_START = list(
+			WIELDER_SPELLS = null,
+			SWORD_SPELLS = null,
+			SWORD_PREFIX = "stillborn", // lol loser
+		) ,
+	)
+
+/obj/item/melee/cultblade/haunted/Initialize(mapload, mob/soul_to_bind, mob/awakener, do_bind = TRUE)
+	. = ..()
+
+	AddElement(/datum/element/heretic_focus)
+	add_traits(list(TRAIT_CASTABLE_LOC, TRAIT_SPELLS_TRANSFER_TO_LOC), INNATE_TRAIT)
+	if(do_bind && !mapload)
+		bind_soul(soul_to_bind, awakener)
+
+/obj/item/melee/cultblade/haunted/proc/bind_soul(mob/soul_to_bind, mob/awakener)
+
+	var/datum/mind/trapped_mind = soul_to_bind?.mind
+
+	if(!trapped_mind)
+		return // Can't do anything further down the list
+
+	if(trapped_mind)
+		AddComponent(/datum/component/spirit_holding,\
+			soul_to_bind = trapped_mind,\
+			awakener = awakener,\
+			allow_renaming = FALSE,\
+			allow_channeling = FALSE,\
+		)
+
+	// Get the heretic's new body and antag datum.
+	trapped_entity = trapped_mind?.current
+	trapped_entity.key = trapped_mind?.key
+	var/datum/antagonist/heretic/heretic_holder = IS_HERETIC(trapped_entity)
+	if(!heretic_holder)
+		stack_trace("[soul_to_bind] in but not a heretic on the heretic soul blade.")
+
+	// Give the spirit a spell that lets them try to fly around.
+	var/datum/action/cooldown/spell/pointed/sword_fling/fling_act = \
+	new /datum/action/cooldown/spell/pointed/sword_fling(trapped_mind, to_fling = src)
+	fling_act.Grant(trapped_entity)
+
+	// Set the sword's path for spell selection.
+	heretic_path = heretic_holder.heretic_path
+
+	// Copy the objectives to keep for roundend, remove the datum as neither us nor the heretic need it anymore
+	var/list/copied_objectives = heretic_holder.objectives.Copy()
+	trapped_entity.mind.remove_antag_datum(/datum/antagonist/heretic)
+
+	// Add the fallen antag datum, give them a heads-up of what's happening.
+	var/datum/antagonist/soultrapped_heretic/bozo = new()
+	bozo.objectives |= copied_objectives
+	trapped_entity.mind.add_antag_datum(bozo)
+	to_chat(trapped_entity, span_userdanger("You've been sacrificed to the Enemy, and trapped inside a haunted blade! While you cannot escape, you may help the Cult, your current wielder, or even pester everyone with what few abilities you kept."))
+
+	// Assigning the spells to give to the wielder and spirit.
+	// Let them cast the given spell.
+	ADD_TRAIT(trapped_entity, TRAIT_ALLOW_HERETIC_CASTING, INNATE_TRAIT)
+
+	var/list/path_spells = heretic_paths_to_haunted_sword_abilities[heretic_path]
+
+	var/list/wielder_spells = path_spells[WIELDER_SPELLS]
+	var/list/sword_spells = path_spells[SWORD_SPELLS]
+
+	name = "[path_spells[SWORD_PREFIX]] [name]"
+
+
+	// Granting the path spells. The sword spirit gains it outright, while it's just instanced for wielders to be added on pickup.
+
+	if(sword_spells)
+		for(var/datum/action/cooldown/spell/sword_spell as anything in sword_spells)
+			sword_spell = new sword_spell(trapped_entity)
+			sword_spell?.Grant(trapped_entity)
+			sword_spell?.overlay_icon_state = "bg_cult_border" // for flavor, and also helps distinguish
+
+
+	if(wielder_spells)
+		for(var/datum/action/cooldown/spell/wielder_spell as anything in wielder_spells)
+			path_wielder_action = new wielder_spell(src)
+			wielder_spell?.overlay_icon_state = "bg_cult_border"
+
+/obj/item/melee/cultblade/haunted/equipped(mob/user, slot, initial)
+	. = ..()
+	if(slot & ITEM_SLOT_HANDS)
+		path_wielder_action?.Grant(user)
+
+/obj/item/melee/cultblade/haunted/dropped(mob/user, silent)
+	. = ..()
+	path_wielder_action?.Remove(user)
+
+#undef WIELDER_SPELLS
+#undef SWORD_SPELLS
+#undef SWORD_PREFIX
 
 /obj/item/melee/cultblade/ghost
 	name = "eldritch sword"
@@ -120,7 +290,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/melee/cultblade/pickup(mob/living/user)
 	..()
-	if(!IS_CULTIST(user))
+	if(!IS_CULTIST(user) && !free_use)
 		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
 
 /datum/action/innate/dash/cult
@@ -162,6 +332,7 @@ Striking a noncultist, however, will tear their flesh."}
 	else
 		to_chat(user, span_warning("The bola seems to take on a life of its own!"))
 		ensnare(user)
+		user.update_held_items()
 #undef CULT_BOLA_PICKUP_STUN
 
 
@@ -562,6 +733,78 @@ Striking a noncultist, however, will tear their flesh."}
 		qdel(src)
 
 #undef MAX_SHUTTLE_CURSES
+
+#define GATEWAY_TURF_SCAN_RANGE 40
+
+/obj/item/proteon_orb
+	name = "summoning orb"
+	desc = "An eerie translucent orb that feels impossibly light. Legends say summoning orbs are created from corrupted scrying orbs. If you hold it close to your ears, you can hear the screams of the damned."
+	icon = 'icons/obj/antags/cult/items.dmi'
+	icon_state = "summoning_orb"
+	light_range = 3
+	light_color = COLOR_CULT_RED
+
+/obj/item/proteon_orb/examine(mob/user)
+	. = ..()
+	if(!IS_CULTIST(user) && isliving(user))
+		var/mob/living/living_user = user
+		living_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+		. += span_danger("It hurts just to look at it. Better keep away.")
+	else
+		. += span_cult("It can be used to create a gateway to Nar'Sie's domain, which will summon weak, sentient constructs over time.")
+
+/obj/item/proteon_orb/attack_self(mob/living/user)
+
+	var/list/turfs_to_scan = detect_room(get_turf(user), max_size = GATEWAY_TURF_SCAN_RANGE)
+
+	if(!IS_CULTIST(user))
+		to_chat(user, span_cult_large("\"You want to enter my domain? Go ahead.\""))
+		turfs_to_scan = null // narsie wants to have some fun and the veil wont stop her
+
+	for(var/turf/hole_candidate as anything in turfs_to_scan)
+		if(locate(/obj/structure/spawner/sentient/proteon_spawner) in hole_candidate)
+			to_chat(user, span_cult_bold("There's a gateway too close nearby. The veil is not yet weak enough to allow such close rips in its fabric."))
+			return
+	to_chat(user, span_cult_bold_italic("You focus on [src] and direct it into the ground. It rumbles..."))
+
+	var/turf/open/hole_spot = get_turf(user)
+	if(!istype(hole_spot) || isgroundlessturf(hole_spot))
+		to_chat(user, span_notice("This is not a suitable spot."))
+		return
+
+	INVOKE_ASYNC(hole_spot, TYPE_PROC_REF(/turf/open, quake_gateway), user)
+	qdel(src)
+
+/**
+ * Bespoke proc that happens when a proteon orb is activated, creating a gateway.
+ * If activated by a non-cultist, they get an unusual game over.
+*/
+/turf/open/proc/quake_gateway(mob/living/user)
+	Shake(2, 2, 5 SECONDS)
+	narsie_act(TRUE, TRUE, 100)
+	var/fucked = FALSE
+	if(!IS_CULTIST(user))
+		fucked = TRUE
+		ADD_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src)) // keep em in place
+		user.add_atom_colour(COLOR_CULT_RED, TEMPORARY_COLOUR_PRIORITY)
+		user.visible_message(span_cult_bold("Dark tendrils appear from the ground and root [user] in place!"))
+	sleep(5 SECONDS) // can we still use these or. i mean its async
+	new /obj/structure/spawner/sentient/proteon_spawner(src)
+	visible_message(span_cult_bold("A mysterious hole appears out of nowhere!"))
+	if(!fucked || QDELETED(user))
+		return
+	if(get_turf(user) != src) // they get away. for now
+		REMOVE_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
+		return
+	user.visible_message(span_cult_bold("[user] is pulled into the portal through an infinitesmally minuscule hole, shredding [user.p_their()] body!"))
+	sleep(5 SECONDS)
+	user.visible_message(span_cult_italic("An unusually large construct appears through the portal!"))
+	user.gib() // total destruction
+	var/mob/living/basic/construct/proteon/hostile/remnant = new(get_step_rand(src))
+	remnant.name = "[user]" // no, they do not become it
+	remnant.transform *= 1.5
+
+#undef GATEWAY_TURF_SCAN_RANGE
 
 /obj/item/cult_shift
 	name = "veil shifter"

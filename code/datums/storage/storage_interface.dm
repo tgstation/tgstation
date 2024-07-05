@@ -50,18 +50,19 @@
 	var/end_pixel_y = start_pixel_y + (rows - 1) * 32
 
 	cells.screen_loc = spanning_screen_loc(start_pixel_x, start_pixel_y, end_pixel_x, end_pixel_y)
-	var/left_edge_loc = spanning_screen_loc(start_pixel_x + 32, start_pixel_y, end_pixel_x, end_pixel_y)
-	var/right_edge_loc = spanning_screen_loc(start_pixel_x, start_pixel_y, end_pixel_x + max(0, (columns - 2)) * 32, end_pixel_y)
+	var/left_edge_loc = spanning_screen_loc(min(start_pixel_x + 32, end_pixel_x), start_pixel_y, end_pixel_x, end_pixel_y)
+	var/right_edge_loc = spanning_screen_loc(start_pixel_x, start_pixel_y, max(start_pixel_x, end_pixel_x - 32), end_pixel_y)
 	corner_top_left.screen_loc = left_edge_loc
-	corner_top_right.screen_loc = right_edge_loc
 	corner_bottom_left.screen_loc = left_edge_loc
+	corner_top_right.screen_loc = right_edge_loc
 	corner_bottom_right.screen_loc = right_edge_loc
 
-	var/row_loc = spanning_screen_loc(start_pixel_x, start_pixel_y + 27, end_pixel_x, end_pixel_y + 27 + max(0, rows - 2) * 32)
-	rowjoin_left.screen_loc = row_loc
+	var/row_left_loc = spanning_screen_loc(start_pixel_x, start_pixel_y + 27, start_pixel_x, start_pixel_y + 27 + max(0, rows - 2) * 32)
+	rowjoin_left.screen_loc = row_left_loc
 	rowjoin_left.alpha = (rows > 1) * 255
 
-	rowjoin_right.screen_loc = row_loc
+	var/row_right_loc = spanning_screen_loc(end_pixel_x, start_pixel_y + 27, end_pixel_x, start_pixel_y + 27 + max(0, rows - 2) * 32)
+	rowjoin_right.screen_loc = row_right_loc
 	rowjoin_right.alpha = (rows > 1) * 255
 
 	closer.screen_loc = "[screen_start_x + columns]:[screen_pixel_x - 5],[screen_start_y]:[screen_pixel_y]"
