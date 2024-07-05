@@ -1,4 +1,4 @@
-import { filter, sortBy } from 'tgui-core/collections';
+import { filter, sortBy } from 'common/collections';
 import {
   Button,
   NumberInput,

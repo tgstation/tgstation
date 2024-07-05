@@ -1,5 +1,5 @@
+import { filter, sort } from 'common/collections';
 import { useState } from 'react';
-import { filter, sort } from 'tgui-core/collections';
 import {
   Button,
   ByondUi,

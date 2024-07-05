@@ -1,4 +1,3 @@
-import { BooleanLike } from 'tgui-core/react';
 import {
   Box,
   Button,
@@ -7,6 +6,7 @@ import {
   LabeledList,
   Section,
 } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
