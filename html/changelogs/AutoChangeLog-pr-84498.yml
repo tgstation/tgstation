@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - qol: "Examining a windoor will now provide the construction steps, like other standard buildable objects."

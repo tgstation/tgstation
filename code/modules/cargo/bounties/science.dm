@@ -9,7 +9,7 @@
 	if(!..())
 		return FALSE
 	var/obj/item/relic/experiment = O
-	if(experiment.revealed)
+	if(experiment.activated)
 		return TRUE
 	return
 
