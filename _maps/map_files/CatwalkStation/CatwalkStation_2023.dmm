@@ -203,6 +203,13 @@
 /obj/effect/mapping_helpers/mail_sorting/service/janitor_closet,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
+"aew" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/fake_stairs/directional/north,
+/turf/open/floor/iron,
+/area/station/science/breakroom)
 "afg" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3359,11 +3366,10 @@
 /turf/open/floor/wood/large,
 /area/station/hallway/secondary/service)
 "blF" = (
-/obj/structure/stairs/west{
-	dir = 4
-	},
 /obj/machinery/status_display/evac/directional/north,
-/turf/open/floor/iron/dark/textured_large,
+/turf/open/floor/iron/stairs/medium{
+	dir = 8
+	},
 /area/station/medical/morgue)
 "blI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5974,8 +5980,9 @@
 /area/space)
 "ccL" = (
 /obj/structure/railing,
-/obj/structure/fake_stairs/directional/west,
-/turf/open/floor/plating,
+/turf/open/floor/iron/stairs/medium{
+	dir = 4
+	},
 /area/station/security/brig)
 "ccM" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7758,9 +7765,10 @@
 /turf/open/floor/wood,
 /area/station/maintenance/hallway/abandoned_recreation)
 "cFO" = (
-/obj/structure/stairs/west,
 /obj/machinery/light/directional/south,
-/turf/open/floor/plating,
+/turf/open/floor/iron/stairs/medium{
+	dir = 4
+	},
 /area/station/security/courtroom)
 "cFY" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -13247,6 +13255,15 @@
 /obj/structure/fluff/paper/stack,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/lesser)
+"eys" = (
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/iron/stairs/medium{
+	dir = 4
+	},
+/area/station/maintenance/port)
 "eyD" = (
 /obj/structure/toilet/greyscale{
 	pixel_y = 17
@@ -15012,6 +15029,15 @@
 /obj/item/stack/sheet/plasteel,
 /turf/open/floor/engine,
 /area/station/engineering/main)
+"fjL" = (
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/iron/stairs/medium{
+	dir = 4
+	},
+/area/station/science/robotics)
 "fjP" = (
 /obj/structure/lattice/catwalk,
 /obj/item/clothing/accessory/clown_enjoyer_pin{
@@ -28865,11 +28891,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/turret_protected/ai)
-"jRO" = (
-/turf/open/floor/iron/stairs/medium{
-	dir = 1
-	},
-/area/station/science/lab)
 "jRZ" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/bureaucracy/paper,
@@ -35875,6 +35896,11 @@
 /obj/machinery/vending/cigarette,
 /turf/open/floor/wood,
 /area/station/commons/fitness/recreation)
+"mmh" = (
+/turf/open/floor/iron/stairs/medium{
+	dir = 4
+	},
+/area/station/hallway/primary/port)
 "mmi" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Holodeck - Fore";
@@ -38686,6 +38712,9 @@
 /obj/structure/sign/plaques/kiddie/library{
 	pixel_x = -32
 	},
+/obj/structure/railing{
+	dir = 4
+	},
 /turf/open/floor/iron/stairs/right,
 /area/station/service/library)
 "nkh" = (
@@ -38760,8 +38789,9 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/structure/fake_stairs/directional/east,
-/turf/open/floor/plating,
+/turf/open/floor/iron/stairs/medium{
+	dir = 8
+	},
 /area/space)
 "nli" = (
 /obj/structure/railing/corner,
@@ -41230,6 +41260,9 @@
 /area/station/science/xenobiology)
 "obl" = (
 /obj/machinery/light/directional/west,
+/obj/structure/railing/corner/end{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "obn" = (
@@ -48866,8 +48899,9 @@
 /turf/open/openspace,
 /area/station/service/library)
 "qLG" = (
-/obj/structure/fake_stairs/directional/west,
-/turf/open/floor/plating,
+/turf/open/floor/iron/stairs/medium{
+	dir = 4
+	},
 /area/station/security/brig)
 "qMf" = (
 /obj/effect/turf_decal/tile/green/full,
@@ -54429,6 +54463,10 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/janitor)
+"sIk" = (
+/obj/structure/stairs/north,
+/turf/open/floor/iron/stairs/medium,
+/area/station/medical/medbay/central)
 "sIl" = (
 /obj/structure/railing{
 	dir = 1
@@ -58652,6 +58690,12 @@
 /obj/structure/cable,
 /turf/open/openspace,
 /area/station/hallway/primary/central)
+"uhg" = (
+/obj/structure/railing,
+/turf/open/floor/iron/stairs/medium{
+	dir = 4
+	},
+/area/station/hallway/primary/port)
 "uho" = (
 /obj/item/toy/plush/moth{
 	name = "Stockpile Sammy";
@@ -60523,6 +60567,10 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
 "uON" = (
+/obj/structure/stairs/north,
+/obj/structure/railing{
+	dir = 4
+	},
 /turf/open/floor/iron/stairs/right,
 /area/station/service/library)
 "uOR" = (
@@ -60709,6 +60757,13 @@
 "uSs" = (
 /turf/open/floor/plating/airless,
 /area/station/maintenance/port/aft)
+"uSt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stairs/west,
+/turf/open/floor/iron/stairs/medium{
+	dir = 4
+	},
+/area/station/medical/abandoned)
 "uSE" = (
 /obj/effect/turf_decal/trimline/white/corner{
 	dir = 4
@@ -64671,7 +64726,9 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/stairs/medium{
+	dir = 4
+	},
 /area/station/science/robotics)
 "wlU" = (
 /obj/structure/cable,
@@ -91991,7 +92048,7 @@ sXq
 hzC
 nFL
 wTk
-cCx
+eys
 wTk
 riD
 riD
@@ -95314,8 +95371,8 @@ sRY
 tXg
 xOW
 aCL
-iCe
-qWk
+mmh
+uhg
 jUt
 riD
 dJs
@@ -97154,9 +97211,9 @@ nyb
 wTk
 wTk
 riD
-ieD
-ieD
-ieD
+uSt
+uSt
+uSt
 lIr
 dfL
 bIF
@@ -98422,7 +98479,7 @@ aDm
 ceV
 nSu
 fbC
-mYe
+sIk
 mYe
 lIC
 xrX
@@ -98679,7 +98736,7 @@ qfh
 eeA
 gFt
 fbC
-mYe
+sIk
 mYe
 aUx
 kjm
@@ -105375,7 +105432,7 @@ opA
 uTY
 hMC
 qRs
-wlP
+fjL
 gXG
 gXG
 gXG
@@ -105634,7 +105691,7 @@ rKN
 stL
 iFn
 bzB
-jRO
+jFH
 cZa
 tNP
 jov
@@ -106393,7 +106450,7 @@ flb
 eRv
 rTk
 roP
-roP
+aew
 fUM
 qSk
 qSk
