@@ -426,6 +426,7 @@
 
 	if(created)
 		created.setDir(builder.dir)
+		SEND_SIGNAL(created, COMSIG_ATOM_CONSTRUCTED, builder)
 		on_item_crafted(builder, created)
 
 	// Use up the material

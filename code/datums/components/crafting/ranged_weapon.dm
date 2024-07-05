@@ -389,3 +389,13 @@
 	time = 30 SECONDS
 	category = CAT_WEAPON_RANGED
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
+
+/datum/crafting_recipe/photoncannon
+	name = "Photon Cannon"
+	result = /obj/item/gun/energy/photon
+	reqs = list(
+		/obj/item/assembly/signaler/anomaly/flux = 1,
+		/obj/item/weaponcrafting/gunkit/photon = 1,
+	)
+	time = 10 SECONDS
+	category = CAT_WEAPON_RANGED

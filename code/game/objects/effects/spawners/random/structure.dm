@@ -123,7 +123,7 @@
 
 /obj/effect/spawner/random/structure/closet_empty/crate/with_loot/make_item(spawn_loc, type_path_to_make)
 	var/obj/structure/closet/closet_to_fill = ..()
-	closet_to_fill.RegisterSignal(closet_to_fill, COMSIG_CLOSET_POPULATE_CONTENTS, TYPE_PROC_REF(/obj/structure/closet/, populate_with_random_maint_loot))
+	closet_to_fill.RegisterSignal(closet_to_fill, COMSIG_CLOSET_CONTENTS_INITIALIZED, TYPE_PROC_REF(/obj/structure/closet/, populate_with_random_maint_loot))
 
 	return closet_to_fill
 
