@@ -7137,9 +7137,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 1
 	},
-/obj/machinery/plumbing/growing_vat{
-	dir = 4
-	},
+/obj/machinery/vatgrower,
 /turf/open/floor/engine,
 /area/station/science/cytology)
 "cHO" = (
