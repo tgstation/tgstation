@@ -25,6 +25,8 @@
 	var/datum/action/unsettle = /datum/action/cooldown/spell/pointed/unsettle
 	/// Regen effect we have in space
 	var/datum/status_effect/regen = /datum/status_effect/shadow_regeneration
+	/// The void eater armblade
+	var/obj/item/glass_breaker = /obj/item/void_eater
 
 /obj/item/organ/internal/brain/voidwalker/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
@@ -38,6 +40,9 @@
 	unsettle = new unsettle ()
 	unsettle.Grant(organ_owner)
 
+	glass_breaker = new/obj/item/void_eater
+	organ_owner.put_in_hands(glass_breaker)
+
 /obj/item/organ/internal/brain/voidwalker/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 
@@ -50,6 +55,9 @@
 
 	unsettle.Remove(organ_owner)
 	unsettle = initial(unsettle)
+
+	if(glass_breaker)
+		qdel(glass_breaker)
 
 /obj/item/organ/internal/brain/voidwalker/proc/on_atom_entering(mob/living/carbon/organ_owner, atom/entering)
 	SIGNAL_HANDLER

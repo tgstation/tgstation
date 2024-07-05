@@ -51,9 +51,6 @@
 	icon_greyscale = 'icons/mob/human/species/voidwalker.dmi'
 	limb_id = SPECIES_VOIDWALKER
 	is_dimorphic = FALSE
-	attack_type = STAMINA
-	unarmed_damage_low = 20
-	unarmed_damage_high = 20
 
 	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color
 
@@ -75,9 +72,6 @@
 	icon_greyscale = 'icons/mob/human/species/voidwalker.dmi'
 	limb_id = SPECIES_VOIDWALKER
 	is_dimorphic = FALSE
-	attack_type = STAMINA
-	unarmed_damage_low = 20
-	unarmed_damage_high = 20
 
 	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color
 

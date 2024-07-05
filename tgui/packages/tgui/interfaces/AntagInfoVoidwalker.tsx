@@ -36,7 +36,7 @@ export const AntagInfoVoidwalker = (props) => {
                   <br />
                   <span style={tipstyle}>Hunt:&ensp;</span>
                   Pick unfair fights. Look for inattentive targets and strike
-                  at them when they don't expect you.
+                  at them when they don&apos;t expect you.
                   <br />
                   <span style={tipstyle}>Abduct:&ensp;</span>
                   Your Unsettle ability stuns and drains your targets. Finish

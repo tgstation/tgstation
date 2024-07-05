@@ -106,6 +106,8 @@
 		var/mob/living/carbon/human/hewmon = victim
 		hewmon.gain_trauma(/datum/brain_trauma/voided)
 
+	victim.heal_overall_damage(brute = 50, burn = 20)
+	victim.adjustOxyLoss(80)
 	victim.flash_act(INFINITY, override_blindness_check = TRUE, visual = TRUE, type = /atom/movable/screen/fullscreen/flash/black)
 	victim.forceMove(get_random_station_turf())
 

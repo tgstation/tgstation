@@ -2962,6 +2962,7 @@
 #include "code\modules\antagonists\voidwalker.dm\voidwalker_species.dm"
 #include "code\modules\antagonists\voidwalker.dm\voidwalker_status_effects.dm"
 #include "code\modules\antagonists\voidwalker.dm\voidwalker_traumas.dm"
+#include "code\modules\antagonists\voidwalker.dm\voidwalker_void_eater.dm"
 #include "code\modules\antagonists\_common\antag_datum.dm"
 #include "code\modules\antagonists\_common\antag_helpers.dm"
 #include "code\modules\antagonists\_common\antag_hud.dm"

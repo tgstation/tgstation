@@ -17,7 +17,6 @@
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_NOHUNGER,
 		TRAIT_FREE_HYPERSPACE_MOVEMENT,
-		TRAIT_PERFECT_ATTACKER,
 		TRAIT_ADVANCEDTOOLUSER
 	)
 	changesource_flags = MIRROR_BADMIN
@@ -42,7 +41,6 @@
 /datum/species/voidwalker/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
 
-	RegisterSignal(human_who_gained_species, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_temporary_shatter))
 	human_who_gained_species.apply_status_effect(/datum/status_effect/glass_passer)
 
 	var/obj/item/implant/radio = new /obj/item/implant/radio/voidwalker (human_who_gained_species)
@@ -53,7 +51,6 @@
 /datum/species/voidwalker/on_species_loss(mob/living/carbon/human/human, datum/species/new_species, pref_load)
 	. = ..()
 
-	UnregisterSignal(human, COMSIG_MOVABLE_CAN_PASS_THROUGH)
 	human.remove_status_effect(/datum/status_effect/glass_passer)
 
 	var/obj/item/implant/radio = locate(/obj/item/implant/radio/voidwalker) in human
@@ -61,20 +58,6 @@
 		qdel(radio)
 
 	qdel(human.GetComponent(/datum/component/planet_allergy))
-
-/// Attempt to shatter a window or grille we touched, but temporarily
-/datum/species/voidwalker/proc/try_temporary_shatter(mob/living/carbon/human/human, atom/target)
-	SIGNAL_HANDLER
-
-	if(istype(target, /obj/structure/window))
-		var/obj/structure/window/window = target
-		window.temporary_shatter()
-	else if(istype(src, /obj/structure/grille))
-		var/obj/structure/grille/grille = target
-		grille.temporary_shatter()
-	else
-		return
-	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/planet_allergy/Initialize(...)
 	if(!isliving(parent))
