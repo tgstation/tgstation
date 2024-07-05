@@ -16,6 +16,7 @@
 #include "features\hardsuits\includes.dm"
 #include "features\kvass\includes.dm"
 #include "features\smites\includes.dm"
+#include "features\soviet_crate\includes.dm"
 // END_INCLUDE
 
 
@@ -88,7 +89,6 @@
 //cheburek Car
 #include "code\modules\vehicles\cars\cheburek.dm"
 #include "code\modules\vehicles\vehicle_actions.dm"
-#include "code\game\objects\structures\crates_lockers\crates\large.dm"
 #include "code\modules\cargo\packs\imports.dm"
 
 //buts
