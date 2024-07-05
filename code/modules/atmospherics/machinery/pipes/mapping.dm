@@ -97,3 +97,4 @@ HELPER_NAMED(supply, "air supply pipe", COLOR_BLUE)
 #undef HELPER
 #undef HELPER_PARTIAL_NAMED
 #undef HELPER_PARTIAL
+#undef HELPER_PIPING_LAYER
