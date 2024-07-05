@@ -51,6 +51,7 @@
 
 		playsound(get_turf(hewmon), SFX_SHATTER, 100)
 		qdel(hewmon)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(hewmon.stat == HARD_CRIT)
 		target_mob.balloon_alert(user, "is in crit!")
