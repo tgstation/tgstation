@@ -1,5 +1,5 @@
 /// The percentage of blood we lose on each step
-#define BLOOD_PERCENT_LOSS_ON_STEP 0.25
+#define BLOOD_PERCENT_LOSS_ON_STEP 0.33
 
 /**
  * Component for clothing items that can pick up blood from decals and spread it around everywhere when walking, such as shoes or suits with integrated shoes.
