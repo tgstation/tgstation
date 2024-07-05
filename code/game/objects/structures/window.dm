@@ -451,7 +451,6 @@
 	addtimer(VARSET_CALLBACK(src, dramatically_disappearing, FALSE), time_to_go + time_to_return) //also set the var back
 	addtimer(CALLBACK(src, PROC_REF(update_nearby_icons)), time_to_go + time_to_return)
 
-
 	var/obj/structure/grille/grill = take_grill ? (locate(/obj/structure/grille) in loc) : null
 	if(grill)
 		grill.temporary_shatter(time_to_go, time_to_return)

@@ -10,8 +10,8 @@
 
 /// Voidwalker brain stacked with a lot of the abilities
 /obj/item/organ/internal/brain/voidwalker
-	name = "..."
-	desc = "...."
+	name = "cosmic brain"
+	desc = "A mind fully integrated into the cosmic thread."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
 
 	organ_traits = list(TRAIT_ALLOW_HERETIC_CASTING) //allows use of space phase and also just cool I think
@@ -77,6 +77,8 @@
 
 /obj/item/organ/internal/brain/voidwalker/on_death()
 	. = ..()
+
+	// explode into glass wooooohhoooo
 	var/static/list/shards = list(/obj/item/shard = 2, /obj/item/shard/plasma = 1, /obj/item/shard/titanium = 1, /obj/item/shard/plastitanium = 1)
 	for(var/i in 1 to rand(4, 6))
 		var/shard_type = pick_weight(shards)

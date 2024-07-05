@@ -62,6 +62,7 @@
 
 	qdel(human.GetComponent(/datum/component/planet_allergy))
 
+/// Attempt to shatter a window or grille we touched, but temporarily
 /datum/species/voidwalker/proc/try_temporary_shatter(mob/living/carbon/human/human, atom/target)
 	SIGNAL_HANDLER
 
@@ -85,7 +86,6 @@
 	SIGNAL_HANDLER
 
 	if(is_on_a_planet(parent) && parent.has_gravity())
-		parent.apply_status_effect(/datum/status_effect/planet_allergy)
-
+		parent.apply_status_effect(/datum/status_effect/planet_allergy) //your gamer body cant stand real gravity
 	else
 		parent.remove_status_effect(/datum/status_effect/planet_allergy)

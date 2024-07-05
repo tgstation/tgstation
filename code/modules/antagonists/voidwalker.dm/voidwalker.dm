@@ -1,3 +1,4 @@
+/// Space antagonist that harasses people near space and cursed them if they get the chance
 /datum/antagonist/voidwalker
 	name = "\improper Voidwalker"
 	antagpanel_category = ANTAG_GROUP_ABOMINATIONS
@@ -44,5 +45,3 @@
 
 /datum/objective/voidwalker_fluff/check_completion()
 	return owner.current.stat != DEAD
-
-
