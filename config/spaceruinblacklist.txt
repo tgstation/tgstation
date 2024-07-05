@@ -35,7 +35,7 @@
 #_maps/RandomRuins/SpaceRuins/derelict7.dmm
 #_maps/RandomRuins/SpaceRuins/derelict8.dmm
 #_maps/RandomRuins/SpaceRuins/derelict9.dmm
-#_#maps/RandomRuins/SpaceRuins/dj_station.dmm
+#_maps/RandomRuins/SpaceRuins/dj_station.dmm
 #_maps/RandomRuins/SpaceRuins/emptyshell.dmm
 #_maps/RandomRuins/SpaceRuins/fasttravel.dmm
 #_maps/RandomRuins/SpaceRuins/forgottenship.dmm
@@ -53,7 +53,7 @@
 #_maps/RandomRuins/SpaceRuins/listeningstation.dmm
 #_maps/RandomRuins/SpaceRuins/meatderelict.dmm
 #_maps/RandomRuins/SpaceRuins/meateor.dmm
-#_#maps/RandomRuins/SpaceRuins/mechtransport.dmm
+#_maps/RandomRuins/SpaceRuins/mechtransport.dmm
 #_maps/RandomRuins/SpaceRuins/mimesvsclowns.dmm
 #_maps/RandomRuins/SpaceRuins/mrow_thats_right.dmm
 #_maps/RandomRuins/SpaceRuins/old_infiltrator.dmm
