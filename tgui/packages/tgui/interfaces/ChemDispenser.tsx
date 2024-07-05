@@ -1,5 +1,5 @@
-import { BooleanLike } from 'common/react';
-import { toTitleCase } from 'common/string';
+import { BooleanLike } from 'tgui-core/react';
+import { toTitleCase } from 'tgui-core/string';
 import { useState } from 'react';
 import {
   Box,
