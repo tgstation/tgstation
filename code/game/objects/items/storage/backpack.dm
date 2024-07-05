@@ -51,9 +51,8 @@
 
 /obj/item/bag_of_holding_inert/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/slapcrafting,\
-		slapcraft_recipes = list(/datum/crafting_recipe/boh)\
-	)
+	var/static/list/recipes = list(/datum/crafting_recipe/boh)
+	AddElement(/datum/element/slapcrafting, recipes)
 
 /obj/item/storage/backpack/holding
 	name = "bag of holding"

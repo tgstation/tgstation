@@ -23,9 +23,8 @@
 
 /obj/item/reagent_containers/cup/soda_cans/Initialize(mapload, vol)
 	. = ..()
-	AddElement(/datum/element/slapcrafting,\
-		slapcraft_recipes = list(/datum/crafting_recipe/improv_explosive)\
-	)
+	var/static/list/recipes =  list(/datum/crafting_recipe/improv_explosive)
+	AddElement(/datum/element/slapcrafting, recipes)
 
 /obj/item/reagent_containers/cup/soda_cans/random/Initialize(mapload)
 	..()

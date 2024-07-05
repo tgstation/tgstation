@@ -23,15 +23,14 @@
 	var/obj/item/target_item = target
 
 	if((target_item.item_flags & ABSTRACT) || (target_item.item_flags & DROPDEL))
-		return ELEMENT_NOTRANSFER
+		return ELEMENT_INCOMPATIBLE
 
 	RegisterSignal(target, COMSIG_ATOM_ATTACKBY, PROC_REF(attempt_slapcraft))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(get_examine_info))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(get_examine_more_info))
 	RegisterSignal(target, COMSIG_TOPIC, PROC_REF(topic_handler))
 
-	// You need to turn lists into string lists on attach() for bespoke elements or they'll all be still separate instances
-	src.slapcraft_recipes = string_list(slapcraft_recipes)
+	src.slapcraft_recipes = slapcraft_recipes
 
 /datum/element/slapcrafting/Detach(datum/source, ...)
 	. = ..()

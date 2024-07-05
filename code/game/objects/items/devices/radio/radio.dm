@@ -116,9 +116,8 @@
 	// No subtypes
 	if(type != /obj/item/radio)
 		return
-	AddElement(/datum/element/slapcrafting,\
-		slapcraft_recipes = list(/datum/crafting_recipe/improv_explosive)\
-	)
+	var/static/list/recipes =  list(/datum/crafting_recipe/improv_explosive)
+	AddElement(/datum/element/slapcrafting, recipes)
 
 	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
