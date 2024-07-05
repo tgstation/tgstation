@@ -3,12 +3,12 @@
 Добавляет админский Смайт "Testicular torsion".
 
 Новые файлы модуля:
-code:
-	[code/testicular_torsion.dm]
-sound:
-	[sound/testicular_torsion.ogg]
-string:
-	[string/balls_phrases.txt]
+[code/]:
+	[testicular_torsion.dm]
+[sound/]:
+	[testicular_torsion.ogg]
+[string/]:
+	[balls_phrases.txt]
 
 Файлы в Мастер папке:
 [Отсуствуют]
