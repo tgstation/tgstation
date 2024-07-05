@@ -8783,10 +8783,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/rack,
 /obj/item/wrench,
-/obj/item/knife/kitchen{
-	pixel_x = 6;
-	pixel_y = 2
-	},
 /obj/item/soap{
 	pixel_y = -2
 	},

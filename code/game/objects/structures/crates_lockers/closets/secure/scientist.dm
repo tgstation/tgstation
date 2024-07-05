@@ -40,3 +40,4 @@
 		new /obj/item/biopsy_tool(src)
 		new /obj/item/storage/box/swab(src)
 	new /obj/item/reagent_containers/condiment/protein(src)
+	new /obj/item/knife/kitchen(src)

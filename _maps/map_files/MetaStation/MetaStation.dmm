@@ -54911,7 +54911,6 @@
 	pixel_y = 4
 	},
 /obj/item/wrench,
-/obj/item/knife/kitchen,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
 "tsT" = (
