@@ -79,7 +79,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.75
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 1.5
-	flags_1 = PREVENT_CLICK_UNDER_1
+	flags_1 = PREVENT_CLICK_UNDER_1 | IGNORE_TURF_PIXEL_OFFSET_1
 	interaction_flags_mouse_drop = NEED_DEXTERITY
 
 	///If TRUE will eject the mob once healing is complete
@@ -670,14 +670,6 @@
 
 /obj/machinery/cryo_cell/get_remote_view_fullscreens(mob/user)
 	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
-
-/obj/machinery/cryo_cell/IsObscured()
-	. = FALSE
-	if(!isturf(loc)) //This only makes sense for things directly on turfs for now
-		return
-	for(var/atom/movable/movable in loc)
-		if(movable.flags_1 & PREVENT_CLICK_UNDER_1 && movable.density && movable.layer > layer)
-			return TRUE
 
 #undef MAX_TEMPERATURE
 #undef CRYO_MULTIPLY_FACTOR
