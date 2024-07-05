@@ -313,6 +313,11 @@
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
 	var/hijack_status = NOT_BEGUN
 
+/obj/docking_port/mobile/emergency/Initialize(mapload)
+	. = ..()
+
+	setup_shuttle_events()
+
 /obj/docking_port/mobile/emergency/canDock(obj/docking_port/stationary/S)
 	return SHUTTLE_CAN_DOCK //If the emergency shuttle can't move, the whole game breaks, so it will force itself to land even if it has to crush a few departments in the process
 
@@ -480,6 +485,7 @@
 					color_override = "orange",
 				)
 				ShuttleDBStuff()
+				addtimer(CALLBACK(src, PROC_REF(announce_shuttle_events)), 20 SECONDS)
 
 
 		if(SHUTTLE_DOCKED)
@@ -536,6 +542,10 @@
 					color_override = "orange",
 				)
 				INVOKE_ASYNC(SSticker, TYPE_PROC_REF(/datum/controller/subsystem/ticker, poll_hearts))
+				//Tell the events we're starting, so they can time their spawns or do some other stuff
+				for(var/datum/shuttle_event/event as anything in event_list)
+					event.start_up_event(SSshuttle.emergency_escape_time * engine_coeff)
+
 				SSmapping.mapvote() //If no map vote has been run yet, start one.
 
 		if(SHUTTLE_STRANDED, SHUTTLE_DISABLED)
@@ -562,6 +572,8 @@
 						if(M.launch_status == ENDGAME_LAUNCHED)
 							if(istype(M, /obj/docking_port/mobile/pod))
 								M.parallax_slowdown()
+
+			process_events()
 
 			if(time_left <= 0)
 				//move each escape pod to its corresponding escape dock
@@ -595,6 +607,16 @@
 		sender_override = "Emergency Shuttle Uplink Alert",
 		color_override = "orange",
 	)
+
+///Generate a list of events to run during the departure
+/obj/docking_port/mobile/emergency/proc/setup_shuttle_events()
+	var/list/names = list()
+	for(var/datum/shuttle_event/event as anything in subtypesof(/datum/shuttle_event))
+		if(prob(initial(event.event_probability)))
+			event_list.Add(new event(src))
+			names += initial(event.name)
+	if(LAZYLEN(names))
+		log_game("[capitalize(name)] has selected the following shuttle events: [english_list(names)].")
 
 /obj/docking_port/mobile/monastery
 	name = "monastery pod"
