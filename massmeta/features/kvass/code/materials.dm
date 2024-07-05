@@ -1,5 +1,3 @@
-// Kvaaaaaaaaass TANK
-
 /datum/supply_pack/materials/kvasstank
 	name = "Kvass Tank Crate"
 	desc = "Contains a yellow barrel full of kvass."

@@ -1,5 +1,3 @@
-// Квас - это очень полезный напиток.
-
 /datum/reagent/consumable/kvass
 	name = "Kvass"
 	description = "Kvaaaaaaass."
@@ -27,4 +25,5 @@
 	. = ..()
 	affected_mob.set_jitter_if_lower(5 SECONDS * REM * seconds_per_tick)
 	if(SPT_PROB(7.5, seconds_per_tick))
-		affected_mob.say(pick_list_replacements(KVASS_PHRASES_FILE, "kvass_phrases"), forced = /datum/reagent/consumable/kvass)
+		var/list/phrase = world.file2list("massmeta/features/kvass/string/kvass.txt")
+		affected_mob.say(pick(phrase), forced = /datum/reagent/consumable/kvass)
