@@ -17,6 +17,9 @@
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
 
+	/// Do we show a flash when moving in or out of crawl?
+	var/invisible = FALSE
+
 /datum/action/cooldown/spell/jaunt/space_crawl/Grant(mob/grant_to)
 	. = ..()
 	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
@@ -84,9 +87,10 @@
 
 	RegisterSignal(jaunter, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 	RegisterSignal(jaunter, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
-	our_turf.visible_message(span_warning("[jaunter] sinks into [our_turf]!"))
 	playsound(our_turf, 'sound/magic/cosmic_energy.ogg', 50, TRUE, -1)
-	new /obj/effect/temp_visual/space_explosion(our_turf)
+	if(!invisible)
+		our_turf.visible_message(span_warning("[jaunter] sinks into [our_turf]!"))
+		new /obj/effect/temp_visual/space_explosion(our_turf)
 	jaunter.extinguish_mob()
 
 	REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, REF(src))
@@ -102,15 +106,16 @@
 
 	if(!exit_jaunt(jaunter, our_turf))
 		return FALSE
-
-	our_turf.visible_message(span_boldwarning("[jaunter] rises out of [our_turf]!"))
+	if(!invisible)
+		our_turf.visible_message(span_boldwarning("[jaunter] rises out of [our_turf]!"))
 	return TRUE
 
 /datum/action/cooldown/spell/jaunt/space_crawl/on_jaunt_exited(obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
 	UnregisterSignal(jaunt, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(unjaunter, list(SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), COMSIG_MOB_STATCHANGE))
 	playsound(get_turf(unjaunter), 'sound/magic/cosmic_energy.ogg', 50, TRUE, -1)
-	new /obj/effect/temp_visual/space_explosion(get_turf(unjaunter))
+	if(!invisible)
+		new /obj/effect/temp_visual/space_explosion(get_turf(unjaunter))
 	if(iscarbon(unjaunter))
 		for(var/obj/item/space_crawl/space_hand in unjaunter.held_items)
 			unjaunter.temporarilyRemoveItemFromInventory(space_hand, force = TRUE)

@@ -1,13 +1,15 @@
-/obj/item/organ/internal/eyes/voidling
+/// Voidwalker eyes with nightvision and thermals
+/obj/item/organ/internal/eyes/voidwalker
 	name = "black orbs"
-	desc = "Dark, blackened orbs, invisible against the rest of the voidlings body."
+	desc = "Able to withstand the light of the sun but still see within the darkest voids."
 	eye_icon_state = null
 	pepperspray_protect = TRUE
 	flash_protect = FLASH_PROTECTION_WELDER
 	color_cutoffs = list(20, 10, 40)
 	sight_flags = SEE_MOBS
 
-/obj/item/organ/internal/brain/voidling
+/// Voidwalker brain stacked with a lot of the abilities
+/obj/item/organ/internal/brain/voidwalker
 	name = "..."
 	desc = "...."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
@@ -16,15 +18,15 @@
 	/// Alpha we have in space
 	var/space_alpha = 50
 	/// Alpha we have elsewhere
-	var/non_space_alpha = 250
+	var/non_space_alpha = 220
 	/// We space in phase
-	var/datum/action/space_phase = /datum/action/cooldown/spell/jaunt/space_crawl
+	var/datum/action/space_phase = /datum/action/cooldown/spell/jaunt/space_crawl/voidwalker
 	/// We settle the un
 	var/datum/action/unsettle = /datum/action/cooldown/spell/pointed/unsettle
 	/// Regen effect we have in space
 	var/datum/status_effect/regen = /datum/status_effect/shadow_regeneration
 
-/obj/item/organ/internal/brain/voidling/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/internal/brain/voidwalker/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
 	RegisterSignal(organ_owner, COMSIG_ATOM_ENTERING, PROC_REF(on_atom_entering))
@@ -36,7 +38,7 @@
 	unsettle = new unsettle ()
 	unsettle.Grant(organ_owner)
 
-/obj/item/organ/internal/brain/voidling/on_mob_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/brain/voidwalker/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 
 	UnregisterSignal(organ_owner, COMSIG_ENTER_AREA)
@@ -49,7 +51,7 @@
 	unsettle.Remove(organ_owner)
 	unsettle = initial(unsettle)
 
-/obj/item/organ/internal/brain/voidling/proc/on_atom_entering(mob/living/carbon/organ_owner, atom/entering)
+/obj/item/organ/internal/brain/voidwalker/proc/on_atom_entering(mob/living/carbon/organ_owner, atom/entering)
 	SIGNAL_HANDLER
 
 	if(!isturf(entering))
@@ -60,11 +62,11 @@
 	//apply debufs for being in gravity
 	if(new_turf.has_gravity())
 		animate(organ_owner, alpha = non_space_alpha, time = 0.5 SECONDS)
-		organ_owner.add_movespeed_modifier(/datum/movespeed_modifier/grounded_voidling)
+		organ_owner.add_movespeed_modifier(/datum/movespeed_modifier/grounded_voidwalker)
 	//remove debufs for not being in gravity
 	else
 		animate(organ_owner, alpha = space_alpha, time = 0.5 SECONDS)
-		organ_owner.remove_movespeed_modifier(/datum/movespeed_modifier/grounded_voidling)
+		organ_owner.remove_movespeed_modifier(/datum/movespeed_modifier/grounded_voidwalker)
 		organ_owner.apply_status_effect(/datum/status_effect/space_regeneration)
 
 	//only get the actual regen when we're in space, not no-grav
@@ -73,7 +75,7 @@
 	else
 		organ_owner.remove_status_effect(/datum/status_effect/space_regeneration)
 
-/obj/item/organ/internal/brain/voidling/on_death()
+/obj/item/organ/internal/brain/voidwalker/on_death()
 	. = ..()
 	var/static/list/shards = list(/obj/item/shard = 2, /obj/item/shard/plasma = 1, /obj/item/shard/titanium = 1, /obj/item/shard/plastitanium = 1)
 	for(var/i in 1 to rand(4, 6))
@@ -86,3 +88,6 @@
 	playsound(get_turf(owner), SFX_SHATTER, 100)
 
 	qdel(owner)
+
+/obj/item/implant/radio/voidwalker
+	radio_key = /obj/item/encryptionkey/heads/captain

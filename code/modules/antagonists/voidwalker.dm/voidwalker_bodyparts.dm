@@ -1,7 +1,7 @@
-/obj/item/bodypart/head/voidling
+/obj/item/bodypart/head/voidwalker
 	texture_bodypart_overlay = /datum/bodypart_overlay/texture/spacey
-	icon_greyscale = 'icons/mob/human/species/voidling.dmi'
-	limb_id = SPECIES_VOIDLING
+	icon_greyscale = 'icons/mob/human/species/voidwalker.dmi'
+	limb_id = SPECIES_VOIDWALKER
 	is_dimorphic = FALSE
 	bodypart_traits = list(TRAIT_MUTE)
 	head_flags = NONE
@@ -25,13 +25,13 @@
 		BURN = GLASSY_BURN_EXAMINE_TEXT,
 	)
 
-/obj/item/bodypart/chest/voidling
+/obj/item/bodypart/chest/voidwalker
 	texture_bodypart_overlay = /datum/bodypart_overlay/texture/spacey
-	icon_greyscale = 'icons/mob/human/species/voidling.dmi'
-	limb_id = SPECIES_VOIDLING
+	icon_greyscale = 'icons/mob/human/species/voidwalker.dmi'
+	limb_id = SPECIES_VOIDWALKER
 	is_dimorphic = FALSE
 
-	damage_overlay_color = /obj/item/bodypart/head/voidling::damage_overlay_color //im not copypasting the huge ass matrix everywheredd
+	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color //im not copypasting the huge ass matrix everywhere
 
 	light_brute_msg = "splintered"
 	medium_brute_msg = "cracked"
@@ -46,16 +46,16 @@
 		BURN = GLASSY_BURN_EXAMINE_TEXT,
 	)
 
-/obj/item/bodypart/arm/left/voidling
+/obj/item/bodypart/arm/left/voidwalker
 	texture_bodypart_overlay = /datum/bodypart_overlay/texture/spacey
-	icon_greyscale = 'icons/mob/human/species/voidling.dmi'
-	limb_id = SPECIES_VOIDLING
+	icon_greyscale = 'icons/mob/human/species/voidwalker.dmi'
+	limb_id = SPECIES_VOIDWALKER
 	is_dimorphic = FALSE
 	attack_type = STAMINA
 	unarmed_damage_low = 20
 	unarmed_damage_high = 20
 
-	damage_overlay_color = /obj/item/bodypart/head/voidling::damage_overlay_color
+	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color
 
 	light_brute_msg = "splintered"
 	medium_brute_msg = "cracked"
@@ -70,16 +70,16 @@
 		BURN = GLASSY_BURN_EXAMINE_TEXT,
 	)
 
-/obj/item/bodypart/arm/right/voidling
+/obj/item/bodypart/arm/right/voidwalker
 	texture_bodypart_overlay = /datum/bodypart_overlay/texture/spacey
-	icon_greyscale = 'icons/mob/human/species/voidling.dmi'
-	limb_id = SPECIES_VOIDLING
+	icon_greyscale = 'icons/mob/human/species/voidwalker.dmi'
+	limb_id = SPECIES_VOIDWALKER
 	is_dimorphic = FALSE
 	attack_type = STAMINA
 	unarmed_damage_low = 20
 	unarmed_damage_high = 20
 
-	damage_overlay_color = /obj/item/bodypart/head/voidling::damage_overlay_color
+	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color
 
 	light_brute_msg = "splintered"
 	medium_brute_msg = "cracked"
@@ -94,13 +94,13 @@
 		BURN = GLASSY_BURN_EXAMINE_TEXT,
 	)
 
-/obj/item/bodypart/leg/left/voidling
+/obj/item/bodypart/leg/left/voidwalker
 	texture_bodypart_overlay = /datum/bodypart_overlay/texture/spacey
-	icon_greyscale = 'icons/mob/human/species/voidling.dmi'
-	limb_id = SPECIES_VOIDLING
+	icon_greyscale = 'icons/mob/human/species/voidwalker.dmi'
+	limb_id = SPECIES_VOIDWALKER
 	is_dimorphic = FALSE
 
-	damage_overlay_color = /obj/item/bodypart/head/voidling::damage_overlay_color
+	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color
 
 	light_brute_msg = "splintered"
 	medium_brute_msg = "cracked"
@@ -115,13 +115,13 @@
 		BURN = GLASSY_BURN_EXAMINE_TEXT,
 	)
 
-/obj/item/bodypart/leg/right/voidling
+/obj/item/bodypart/leg/right/voidwalker
 	texture_bodypart_overlay = /datum/bodypart_overlay/texture/spacey
-	icon_greyscale = 'icons/mob/human/species/voidling.dmi'
-	limb_id = SPECIES_VOIDLING
+	icon_greyscale = 'icons/mob/human/species/voidwalker.dmi'
+	limb_id = SPECIES_VOIDWALKER
 	is_dimorphic = FALSE
 
-	damage_overlay_color = /obj/item/bodypart/head/voidling::damage_overlay_color
+	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color
 
 	light_brute_msg = "splintered"
 	medium_brute_msg = "cracked"

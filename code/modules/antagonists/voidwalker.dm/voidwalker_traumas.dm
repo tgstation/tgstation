@@ -1,3 +1,4 @@
+/// Curse brain trauma that makes someone space textured, mute, pacifist and forbids them from entering space
 /datum/brain_trauma/voided
 	name = "Voided"
 	desc = "They've seen the secrets of the cosmis, in exchange for a curse that keeps them chained."
@@ -12,6 +13,8 @@
 	var/list/traits_to_apply = list(TRAIT_MUTE, TRAIT_PACIFISM)
 	/// Do we ban the person from entering space?
 	var/ban_from_space = TRUE
+	/// What color we color the damage overlay?
+	var/damage_overlay_color_to_give = /obj/item/bodypart/head/voidwalker::damage_overlay_color
 
 /datum/brain_trauma/voided/on_gain()
 	. = ..()
@@ -19,8 +22,9 @@
 	owner.add_traits(traits_to_apply, TRAUMA_TRAIT)
 	if(ban_from_space)
 		owner.AddComponent(/datum/component/banned_from_space)
-	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(texture_limb))
-	RegisterSignal(owner, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(untexture_limb))
+	owner.AddComponent(/datum/component/planet_allergy)
+	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(texture_limb)) //also catch new limbs being attached
+	RegisterSignal(owner, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(untexture_limb)) //and remove it from limbs if they go away
 
 	for(var/obj/item/bodypart as anything in owner.bodyparts)
 		texture_limb(owner, bodypart)
@@ -41,14 +45,17 @@
 	UnregisterSignal(owner, list(COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB))
 	if(ban_from_space)
 		qdel(owner.GetComponent(/datum/component/banned_from_space))
+	qdel(owner.GetComponent(/datum/component/planet_allergy))
 
 	for(var/obj/item/bodypart/bodypart as anything in owner.bodyparts)
 		untexture_limb(owner, bodypart)
 
+/// Apply the space texture
 /datum/brain_trauma/voided/proc/texture_limb(atom/source, obj/item/bodypart/limb)
 	SIGNAL_HANDLER
 
 	limb.add_bodypart_overlay(new bodypart_overlay_type)
+	limb.damage_overlay_color = damage_overlay_color_to_give
 	if(istype(limb, /obj/item/bodypart/head))
 		var/obj/item/bodypart/head/head = limb
 		head.head_flags &= ~HEAD_EYESPRITES
@@ -60,10 +67,14 @@
 	if(overlay)
 		limb.remove_bodypart_overlay(overlay)
 
+	if(limb.damage_overlay_color == damage_overlay_color_to_give)
+		limb.damage_overlay_color = initial(limb.damage_overlay_color)
+
 	if(istype(limb, /obj/item/bodypart/head))
 		var/obj/item/bodypart/head/head = limb
 		head.head_flags = initial(head.head_flags)
 
+/// Positive version of the previous. Get space immunity and the ability to slowly move through glass (but you still get muted)
 /datum/brain_trauma/voided/stable
 	scan_desc = "stable cosmic neural pattern"
 	traits_to_apply = list(TRAIT_MUTE, TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTCOLD)
@@ -79,6 +90,7 @@
 
 	owner.remove_status_effect(/datum/status_effect/glass_passer/delayed)
 
+/// Following recent tomfoolery, we've decided to ban you from space.
 /datum/component/banned_from_space
 	/// List of recent tiles we walked on that aren't space
 	var/list/tiles = list()

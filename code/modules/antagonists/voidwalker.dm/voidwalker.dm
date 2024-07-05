@@ -15,9 +15,10 @@
 
 /datum/antagonist/voidwalker/on_gain()
 	forge_objectives()
+	owner.AddComponent(/datum/component/space_kidnap)
 	. = ..()
 
-/datum/antagonist/nightmare/forge_objectives()
+/datum/antagonist/voidwalker/forge_objectives()
 	var/datum/objective/voidwalker_fluff/objective = new
 	objective.owner = owner
 	objectives += objective
@@ -26,7 +27,7 @@
 	name = "Voidwalker (Preview only)"
 
 /datum/outfit/voidwalker/post_equip(mob/living/carbon/human/human, visualsOnly)
-	human.set_species(/datum/species/voidling)
+	human.set_species(/datum/species/voidwalker)
 
 /datum/objective/voidwalker_fluff
 

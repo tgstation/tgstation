@@ -1,3 +1,4 @@
+/// Gives someone the stable voided trauma and then self destructs
 /obj/item/cosmic_skull
 	name = "cosmic skull"
 	desc = "You can see and feel the surrounding space pulsing through it..."

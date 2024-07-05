@@ -950,11 +950,11 @@
 #undef MALF_ION_PROB
 #undef REPLACE_LAW_WITH_ION_PROB
 
-/// Midround Nightmare Ruleset (From Ghosts)
+/// Midround Voidwalker Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker
 	name = "Voidwalker"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
-	antag_datum = /datum/antagonist/nightmare
+	antag_datum = /datum/antagonist/voidwalker
 	antag_flag = ROLE_VOIDWALKER
 	antag_flag_override = ROLE_VOIDWALKER
 	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
@@ -979,8 +979,8 @@
 	player_mind.transfer_to(voidwalker)
 	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/voidwalker))
 	player_mind.special_role = antag_flag
-	player_mind.add_antag_datum(/datum/antagonist/nightmare)
-	voidwalker.set_species(/datum/species/voidling)
+	player_mind.add_antag_datum(antag_datum)
+	voidwalker.set_species(/datum/species/voidwalker)
 
 	playsound(voidwalker, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(voidwalker)] has been made into a Voidwalker by the midround ruleset.")
