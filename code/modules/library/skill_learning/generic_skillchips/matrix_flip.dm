@@ -24,7 +24,7 @@
 	SIGNAL_HANDLER
 	if(key != "flip" || !intentional)
 		return
-	if((maxHealth - (source.getStaminaLoss() + FLIP_STAMINA_COST))) <= crit_threshold)
+	if((source.maxHealth - (source.getStaminaLoss() + FLIP_STAMINA_COST)) <= source.crit_threshold)
 		source.balloon_alert(source, "too tired!")
 		return COMPONENT_CANT_EMOTE
 
