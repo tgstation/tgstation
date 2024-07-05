@@ -1337,7 +1337,7 @@
 			filler.density = TRUE
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
-	var/unpassable_delay = animation_segment_delay("AIRLOCK_CLOSING_UNPASSABLE")
+	var/unpassable_delay = animation_segment_delay(AIRLOCK_CLOSING_UNPASSABLE)
 	sleep(unpassable_delay)
 	if(!air_tight)
 		set_density(TRUE)
@@ -1345,7 +1345,7 @@
 			filler.density = TRUE
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
-	var/opaque_delay = animation_segment_delay("AIRLOCK_CLOSING_OPAQUE") - unpassable_delay
+	var/opaque_delay = animation_segment_delay(AIRLOCK_CLOSING_OPAQUE) - unpassable_delay
 	sleep(opaque_delay)
 	if(dangerous_close)
 		crush()
@@ -1354,7 +1354,7 @@
 		if(multi_tile)
 			filler.set_opacity(TRUE)
 	update_freelook_sight()
-	var/close_delay = animation_segment_delay("AIRLOCK_CLOSING_FINISHED") - unpassable_delay - opaque_delay
+	var/close_delay = animation_segment_delay(AIRLOCK_CLOSING_FINISHED) - unpassable_delay - opaque_delay
 	sleep(close_delay)
 	update_icon(ALL, AIRLOCK_CLOSED, 1)
 	operating = FALSE
