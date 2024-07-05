@@ -6207,13 +6207,6 @@
 	slowdown = 1
 	},
 /area/awaymission/snowdin/cave)
-"xV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
-	dir = 4;
-	piping_layer = 4
-	},
-/turf/closed/mineral/snowmountain/cavern,
-/area/awaymission/snowdin/cave/cavern)
 "xW" = (
 /turf/closed/wall/ice,
 /area/awaymission/snowdin/post/mining_dock)
@@ -61104,7 +61097,7 @@ eJ
 eJ
 eJ
 eL
-xV
+eJ
 fr
 fr
 fr
