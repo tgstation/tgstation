@@ -276,7 +276,7 @@
 	var/initial_type_mode = initial(c_type.dupe_mode)
 	if(initial_type_mode == COMPONENT_DUPE_ALLOWED || initial_type_mode == COMPONENT_DUPE_SELECTIVE)
 		stack_trace("GetComponent was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
-	var/list/all_components = datum_components
+	var/list/all_components = _datum_components
 	if(!all_components)
 		return null
 	var/datum/component/C
