@@ -162,24 +162,25 @@
 		teleporter_console = null
 	return ..()
 
+/obj/machinery/teleport/station/multitool_act(mob/living/user, obj/item/multitool/tool)
+	. = NONE
+
+	if(panel_open)
+		tool.set_buffer(src)
+		balloon_alert(user, "saved to multitool buffer")
+		return ITEM_INTERACT_SUCCESS
+
+	if(!istype(tool.buffer, /obj/machinery/teleport/station) || tool.buffer == src)
+		return ITEM_INTERACT_BLOCKING
+
+	if(linked_stations.len < efficiency)
+		linked_stations.Add(tool.buffer)
+		tool.set_buffer(null)
+		balloon_alert(user, "data uploaded from buffer")
+		return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/teleport/station/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, W))
-			return
-		var/obj/item/multitool/M = W
-		if(panel_open)
-			M.set_buffer(src)
-			balloon_alert(user, "saved to multitool buffer")
-		else
-			if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
-				if(linked_stations.len < efficiency)
-					linked_stations.Add(M.buffer)
-					M.set_buffer(null)
-					balloon_alert(user, "data uploaded from buffer")
-				else
-					to_chat(user, span_alert("This station can't hold more information, try to use better parts."))
-		return
-	else if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
+	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_appearance()
 		return
 

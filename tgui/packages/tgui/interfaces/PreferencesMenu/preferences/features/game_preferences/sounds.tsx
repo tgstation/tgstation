@@ -14,6 +14,13 @@ export const sound_ambience: FeatureToggle = {
   component: CheckboxInput,
 };
 
+export const sound_breathing: FeatureToggle = {
+  name: 'Enable breathing sounds',
+  category: 'SOUND',
+  description: 'When enabled, hear breathing sounds when using internals.',
+  component: CheckboxInput,
+};
+
 export const sound_announcements: FeatureToggle = {
   name: 'Enable announcement sounds',
   category: 'SOUND',

@@ -335,6 +335,7 @@
 //This specific mutation only covers floors instead of structures, items, mobs and cant tangle mobs
 /datum/spacevine_mutation/timid/on_birth(obj/structure/spacevine/holder)
 	SET_PLANE_IMPLICIT(holder, FLOOR_PLANE)
+	holder.layer = ABOVE_OPEN_TURF_LAYER
 	holder.light_state = PASS_LIGHT
 	holder.can_tangle = FALSE
 	return ..()
