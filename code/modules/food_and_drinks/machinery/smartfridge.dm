@@ -647,7 +647,7 @@
 	return istype(weapon, /obj/item/petri_dish)
 
 /obj/machinery/smartfridge/petri/preloaded
-	initial_contents = list(/obj/item/petri_dish = 5)
+	initial_contents = list(/obj/item/petri_dish/random = 3)
 
 // -------------------------
 // Organ Surgery Smartfridge
