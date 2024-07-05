@@ -25532,8 +25532,7 @@
 /obj/item/survivalcapsule,
 /obj/item/pickaxe/mini,
 /obj/structure/closet/crate/secure/cargo/mining,
-/obj/item/borg/upgrade/modkit/damage,
-/obj/item/borg/upgrade/modkit/aoe/turfs/andmobs,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
 /turf/open/floor/plating,
 /area/space)
 "iPT" = (
