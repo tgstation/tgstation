@@ -108,6 +108,3 @@
 #include "code\modules\reagents\chemistry\reagents\drinks\glass_styles\sodas.dm"
 #include "code\modules\reagents\reagent_containers\cups\soda.dm"
 #include "code\modules\reagents\reagent_dispenser.dm"
-
-//sunglasses
-#include "features\sunglasses.dm"

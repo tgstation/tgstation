@@ -6290,4 +6290,5 @@
 #include "interface\fonts\tiny_unicode.dm"
 #include "interface\fonts\vcr_osd_mono.dm"
 #include "massmeta\modular_meta.dm"
+#include "massmeta\modular_meta_master.dm"
 // END_INCLUDE
