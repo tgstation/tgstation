@@ -1,4 +1,0 @@
-author: "Vekter"
-delete-after: True
-changes:
-  - bugfix: "Fixed the visibility of a pipe in Northstar's ordnance lab"

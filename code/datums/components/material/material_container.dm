@@ -207,8 +207,9 @@
  * - [weapon][obj/item]: the item you are trying to insert
  * - multiplier: The multiplier for the materials being inserted
  * - context: the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_ITEM_CONSUMED and is used mostly for silo logging
+ * * - delete_item: should we delete the item after its materials are consumed. does not apply to stacks if they were split due to lack of space
  */
-/datum/component/material_container/proc/insert_item(obj/item/weapon, multiplier = 1, atom/context = parent)
+/datum/component/material_container/proc/insert_item(obj/item/weapon, multiplier = 1, atom/context = parent, delete_item = TRUE)
 	if(QDELETED(weapon))
 		return MATERIAL_INSERT_ITEM_NO_MATS
 	multiplier = CEILING(multiplier, 0.01)
@@ -232,14 +233,11 @@
 		material_amount = get_item_material_amount(target) * multiplier
 	material_amount = OPTIMAL_COST(material_amount)
 
-	//not enough space, time to bail
-	if(!has_space(material_amount))
-		return MATERIAL_INSERT_ITEM_NO_SPACE
-
 	//do the insert
 	var/last_inserted_id = insert_item_materials(target, multiplier, context)
 	if(!isnull(last_inserted_id))
-		qdel(target) //item gone
+		if(delete_item || target != weapon) //we could have split the stack ourself
+			qdel(target) //item gone
 		return material_amount
 	else if(!isnull(item_stack) && item_stack != target) //insertion failed, merge the split stack back into the original
 		var/obj/item/stack/inserting_stack = target
@@ -266,188 +264,178 @@
 	. = 0
 
 	//All items that do not have any contents
-	var/list/obj/item/child_items = list()
-	//All items that do have contents but they were already processed by the above list
-	var/list/obj/item/parent_items = list(held_item)
+	var/list/obj/item/items = list(held_item)
 	//is this the first item we are ever processing
 	var/first_checks = TRUE
+	//list of items to delete
+	var/list/obj/item/to_delete = list()
 	//The status of the last insert attempt
 	var/inserted = 0
 	//All messages to be displayed to chat
 	var/list/chat_msgs = list()
 	//differs from held_item when using TK
 	var/active_held = user.get_active_held_item()
-	//storage items to retrive items from
-	var/static/list/storage_items
-	if(isnull(storage_items))
-		storage_items = list(
-			/obj/item/storage/backpack,
-			/obj/item/storage/bag,
-			/obj/item/storage/box,
-		)
 
-	//1st iteration consumes all items that do not have contents inside
-	//2nd iteration consumes items who do have contents inside(but they were consumed in the 1st iteration so its empty now)
-	for(var/i in 1 to 2)
+	while(items.len)
 		//no point inserting more items
 		if(inserted == MATERIAL_INSERT_ITEM_NO_SPACE)
 			break
 
-		//transfer all items for processing
-		if(!parent_items.len)
-			break
-		child_items += parent_items
-		parent_items.Cut()
+		//Pop the 1st item out from the list
+		var/obj/item/target_item = items[1]
+		items -= target_item
 
-		while(child_items.len)
-			//Pop the 1st item out from the list
-			var/obj/item/target_item = child_items[1]
-			child_items -= target_item
+		//e.g. projectiles inside bullets are not objects
+		if(!istype(target_item))
+			continue
+		//can't allow abstract, hologram items
+		if((target_item.item_flags & ABSTRACT) || (target_item.flags_1 & HOLOGRAM_1))
+			continue
+		//user defined conditions
+		if(SEND_SIGNAL(src, COMSIG_MATCONTAINER_PRE_USER_INSERT, target_item, user) & MATCONTAINER_BLOCK_INSERT)
+			continue
+		//item is either indestructible, not allowed for redemption or not in the allowed types
+		if((target_item.resistance_flags & INDESTRUCTIBLE) || (target_item.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target_item, allowed_item_typecache)))
+			if(!(mat_container_flags & MATCONTAINER_SILENT))
+				var/list/status_data = chat_msgs["[MATERIAL_INSERT_ITEM_FAILURE]"] || list()
+				var/list/item_data = status_data[target_item.name] || list()
+				item_data["count"] += 1
+				status_data[target_item.name] = item_data
+				chat_msgs["[MATERIAL_INSERT_ITEM_FAILURE]"] = status_data
 
-			//e.g. projectiles inside bullets are not objects
-			if(!istype(target_item))
-				continue
-			//can't allow abstract, hologram items
-			if((target_item.item_flags & ABSTRACT) || (target_item.flags_1 & HOLOGRAM_1))
-				continue
-			//user defined conditions
-			if(SEND_SIGNAL(src, COMSIG_MATCONTAINER_PRE_USER_INSERT, target_item, user) & MATCONTAINER_BLOCK_INSERT)
-				continue
-			//item is either indestructible, not allowed for redemption or not in the allowed types
-			if((target_item.resistance_flags & INDESTRUCTIBLE) || (target_item.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target_item, allowed_item_typecache)))
-				if(!(mat_container_flags & MATCONTAINER_SILENT) && i == 1) //count only child items the 1st time around
-					var/list/status_data = chat_msgs["[MATERIAL_INSERT_ITEM_FAILURE]"] || list()
-					var/list/item_data = status_data[target_item.name] || list()
-					item_data["count"] += 1
-					status_data[target_item.name] = item_data
-					chat_msgs["[MATERIAL_INSERT_ITEM_FAILURE]"] = status_data
-
-				if(target_item.resistance_flags & INDESTRUCTIBLE)
-					if(i == 1 && target_item != active_held) //move it out of any storage medium its in so it doesn't get consumed with its parent, but only if that storage medium is not our hand
-						target_item.forceMove(get_turf(context))
-					continue
-				//storage items usually come here but we make the exception only on the 1st iteration
-				//this is so players can insert items from their bags into machines for convinience
-				if(!is_type_in_list(target_item, storage_items))
-					continue
-				else if(!target_item.contents.len || i == 2)
-					continue
-			//at this point we can check if we have enough for all items & other stuff
-			if(first_checks)
-				//duffle bags needs to be unzipped
-				if(target_item.atom_storage?.locked)
-					if(!(mat_container_flags & MATCONTAINER_SILENT))
-						to_chat(user, span_warning("[target_item] has its storage locked"))
-					return
-
-				//anything that isn't a stack cannot be split so find out if we have enough space, we don't want to consume half the contents of an object & leave it in a broken state
-				//for duffle bags and other storage items we can check for space 1 item at a time
-				if(!isstack(target_item) && !is_type_in_list(target_item, storage_items))
-					var/total_amount = 0
-					for(var/obj/item/weapon as anything in target_item.get_all_contents_type(/obj/item))
-						total_amount += get_item_material_amount(weapon)
-					if(!has_space(total_amount))
-						if(!(mat_container_flags & MATCONTAINER_SILENT))
-							to_chat(user, span_warning("[parent] does not have enough space for [target_item]!"))
-						return
-
-				first_checks = FALSE
-
-			//All hard checks have passed, at this point we can consume the item
-			//If it has children then we will process them first and then the item in the 2nd round
-			//This is done so we don't delete the children when the parent is consumed
-			//We only do this on the 1st iteration so we don't re-iterate through its children again
-			if(target_item.contents.len && i == 1)
-				if(target_item.atom_storage?.locked) //can't access contents of locked storage(like duffle bags)
-					continue
-				//process children
-				child_items += target_item.contents
-				//in the 2nd round only after its children are consumed do we consume this next, FIFO order
-				parent_items.Insert(1, target_item)
-				//leave it here till we get to its children
+			if(target_item.resistance_flags & INDESTRUCTIBLE)
+				if(target_item != active_held) //move it out of any storage medium its in so it doesn't get consumed with its parent, but only if that storage medium is not our hand
+					target_item.forceMove(get_turf(context))
 				continue
 
-			//if stack, check if we want to read precise amount of sheets to insert
-			var/obj/item/stack/item_stack = null
-			if(isstack(target_item) && precise_insertion)
-				var/atom/current_parent = parent
-				item_stack = target_item
-				var/requested_amount = tgui_input_number(user, "How much do you want to insert?", "Inserting [item_stack.singular_name]s", item_stack.amount, item_stack.amount)
-				if(!requested_amount || QDELETED(target_item) || QDELETED(user) || QDELETED(src))
-					continue
-				if(parent != current_parent || user.get_active_held_item() != active_held)
-					continue
-				if(requested_amount != item_stack.amount) //only split if its not the whole amount
-					target_item = fast_split_stack(item_stack, requested_amount) //split off the requested amount
-				requested_amount = 0
-
-			//is this item a stack and was it split by the player?
-			var/was_stack_split = !isnull(item_stack) && item_stack != target_item
-			//if it was split then item_stack has the reference to the original stack/item
-			var/original_item = was_stack_split ? item_stack : target_item
-			//if this item is not the one the player is holding then don't remove it from their hand
-			if(original_item != active_held)
-				original_item = null
-			if(!isnull(original_item) && !user.temporarilyRemoveItemFromInventory(original_item)) //remove from hand(if split remove the original stack else the target)
+			//storage items usually come here
+			//this is so players can insert items from their bags into machines for convinience
+			if(!target_item.atom_storage || !target_item.contents.len)
+				continue
+		//at this point we can check if we have enough for all items & other stuff
+		if(first_checks)
+			//duffle bags needs to be unzipped
+			if(target_item.atom_storage?.locked)
+				if(!(mat_container_flags & MATCONTAINER_SILENT))
+					to_chat(user, span_warning("[target_item] has its storage locked"))
 				return
 
-			//insert the item
-			var/item_name = target_item.name
-			var/item_count = 1
-			var/is_stack = FALSE
-			if(isstack(target_item))
-				var/obj/item/stack/the_stack = target_item
-				item_name = the_stack.singular_name
-				item_count = the_stack.amount
-				is_stack = TRUE
-			inserted = insert_item(target_item, 1, context)
-			if(inserted > 0)
-				. += inserted
-				inserted /= SHEET_MATERIAL_AMOUNT // display units inserted as sheets for improved readability
+			//anything that isn't a stack cannot be split so find out if we have enough space, we don't want to consume half the contents of an object & leave it in a broken state
+			//for duffle bags and other storage items we can check for space 1 item at a time
+			if(!isstack(target_item) && !target_item.atom_storage)
+				var/total_amount = 0
+				for(var/obj/item/weapon as anything in target_item.get_all_contents_type(/obj/item))
+					total_amount += get_item_material_amount(weapon)
+				if(!has_space(total_amount))
+					if(!(mat_container_flags & MATCONTAINER_SILENT))
+						to_chat(user, span_warning("[parent] does not have enough space for [target_item]!"))
+					return
 
-				//stack was either split by the container(!QDELETED(target_item) means the container only consumed a part of it) or by the player, put whats left back of the original stack back in players hand
-				if((!QDELETED(target_item) || was_stack_split))
+			first_checks = FALSE
 
-					//stack was split by player and that portion was not fully consumed, merge whats left back with the original stack
-					if(!QDELETED(target_item) && was_stack_split)
-						var/obj/item/stack/inserting_stack = target_item
-						item_stack.add(inserting_stack.amount)
-						qdel(inserting_stack)
+		//if stack, check if we want to read precise amount of sheets to insert
+		var/obj/item/stack/item_stack = null
+		if(isstack(target_item) && precise_insertion)
+			var/atom/current_parent = parent
+			item_stack = target_item
+			var/requested_amount = tgui_input_number(user, "How much do you want to insert?", "Inserting [item_stack.singular_name]s", item_stack.amount, item_stack.amount)
+			if(!requested_amount || QDELETED(target_item) || QDELETED(user) || QDELETED(src))
+				continue
+			if(parent != current_parent || user.get_active_held_item() != active_held)
+				continue
+			if(requested_amount != item_stack.amount) //only split if its not the whole amount
+				target_item = fast_split_stack(item_stack, requested_amount) //split off the requested amount
+			requested_amount = 0
 
-					//was this the original item in the players hand? put what's left back in the player's hand
-					if(!isnull(original_item))
-						user.put_in_active_hand(original_item)
+		//is this item a stack and was it split by the player?
+		var/was_stack_split = !isnull(item_stack) && item_stack != target_item
+		//if it was split then item_stack has the reference to the original stack/item
+		var/obj/item/original_item = was_stack_split ? item_stack : target_item
+		//if this item is not the one the player is holding then don't remove it from their hand
+		if(original_item != active_held)
+			original_item = null
+		if(!isnull(original_item) && !user.temporarilyRemoveItemFromInventory(original_item)) //remove from hand(if split remove the original stack else the target)
+			return
 
-				//collect all messages to print later
-				var/list/status_data = chat_msgs["[MATERIAL_INSERT_ITEM_SUCCESS]"] || list()
-				var/list/item_data = status_data[item_name] || list()
-				item_data["count"] += item_count
-				item_data["amount"] += inserted
-				item_data["stack"] = is_stack
-				status_data[item_name] = item_data
-				chat_msgs["[MATERIAL_INSERT_ITEM_SUCCESS]"] = status_data
+		//insert the item
+		var/item_name = target_item.name
+		var/item_count = 1
+		var/is_stack = FALSE
+		var/obj/item/stack/the_stack
+		if(isstack(target_item))
+			the_stack = target_item
+			item_name = the_stack.singular_name
+			item_count = the_stack.amount
+			is_stack = TRUE
 
-			else
-				//collect all messages to print later
-				var/list/status_data = chat_msgs["[inserted]"] || list()
-				var/list/item_data = status_data[item_name] || list()
-				item_data["count"] += item_count
-				status_data[item_name] = item_data
-				chat_msgs["[inserted]"] = status_data
+		//we typically don't want to consume bags, boxes but only their contents. so we skip processing
+		inserted = !target_item.atom_storage ? insert_item(target_item, 1, context, is_stack) : 0
+		if(inserted > 0)
+			. += inserted
+			inserted /= SHEET_MATERIAL_AMOUNT // display units inserted as sheets for improved readability
 
-				//player split the stack by the requested amount but even that split amount could not be salvaged. merge it back with the original
-				if(!isnull(item_stack) && was_stack_split)
+			//collect all messages to print later
+			var/list/status_data = chat_msgs["[MATERIAL_INSERT_ITEM_SUCCESS]"] || list()
+			var/list/item_data = status_data[item_name] || list()
+			item_data["count"] += item_count
+			item_data["amount"] += inserted
+			item_data["stack"] = is_stack
+			status_data[item_name] = item_data
+			chat_msgs["[MATERIAL_INSERT_ITEM_SUCCESS]"] = status_data
+
+			//delete the item or merge stacks if any left over
+			if(is_stack)
+				//player split it & machine further split that due to lack of space? merge with remaining stack
+				if(!QDELETED(target_item) && was_stack_split)
 					var/obj/item/stack/inserting_stack = target_item
 					item_stack.add(inserting_stack.amount)
 					qdel(inserting_stack)
 
-				//was this the original item in the players hand? put it back because we coudn't salvage it
-				if(!isnull(original_item))
+				//was this the original item in the players hand? put what's left back in the player's hand
+				if(!QDELETED(original_item))
 					user.put_in_active_hand(original_item)
 
-				//we can stop here as remaining items will fail to insert as well
-				if(inserted == MATERIAL_INSERT_ITEM_NO_SPACE)
-					break
+				//skip processing children & other stuff. irrelevant for stacks
+				continue
+
+			//queue the object for deletion
+			to_delete += target_item
+		else
+			//collect all messages to print later
+			var/list/status_data = chat_msgs["[inserted]"] || list()
+			var/list/item_data = status_data[item_name] || list()
+			item_data["count"] += item_count
+			status_data[item_name] = item_data
+			chat_msgs["[inserted]"] = status_data
+
+			//player split the stack by the requested amount but even that split amount could not be salvaged. merge it back with the original
+			if(was_stack_split)
+				var/obj/item/stack/inserting_stack = target_item
+				item_stack.add(inserting_stack.amount)
+				qdel(inserting_stack)
+
+			//was this the original item in the players hand? put it back because we coudn't salvage it
+			if(!QDELETED(original_item))
+				user.put_in_active_hand(original_item)
+
+			//we can stop here as remaining items will fail to insert as well
+			if(inserted == MATERIAL_INSERT_ITEM_NO_SPACE)
+				break
+
+			//we failed to process the item so don't bother going into its contents
+			//but if we are dealing with storage items like bags, boxes etc then we make a exception
+			if(!target_item.atom_storage)
+				continue
+
+		//If any mats were consumed we can proceed to delete the parent
+		//If it has children then we will process them first in the 2nd round
+		//This is done so we don't delete the children when the parent is consumed
+		//We only do this on the 1st iteration so we don't re-iterate through its children again
+		if(target_item.contents.len)
+			if(target_item.atom_storage?.locked) //can't access contents of locked storage(like duffle bags)
+				continue
+			//process children
+			items += target_item.contents
 
 	//we now summarize the chat msgs collected
 	if(!(mat_container_flags & MATCONTAINER_SILENT))
@@ -474,6 +462,11 @@
 						to_chat(user, span_warning("[item_name][count > 1 ? "s have" : " has"] no materials that can be accepted by [parent]!"))
 					if(MATERIAL_INSERT_ITEM_FAILURE) //could be because the material type was not accepted or other stuff
 						to_chat(user, span_warning("[item_name][count > 1 ? "s were" : " was"] rejected by [parent]!"))
+
+	//finally delete the items
+	for(var/obj/item/deleting as anything in to_delete)
+		if(!QDELETED(deleting)) //deleting parents also delete their children so we check
+			qdel(deleting)
 
 /// Proc that allows players to fill the parent with mats
 /datum/component/material_container/proc/on_attackby(datum/source, obj/item/weapon, mob/living/user)

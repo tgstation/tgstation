@@ -21,8 +21,11 @@
 	var/stripe_color = null
 	///direction we output onto (if 0, on top of us)
 	var/drop_direction = 0
+	//looping sound for printing items
+	var/datum/looping_sound/lathe_print/print_sound
 
 /obj/machinery/rnd/production/Initialize(mapload)
+	print_sound = new(src,  FALSE)
 	materials = AddComponent(
 		/datum/component/remote_materials, \
 		mapload, \
@@ -48,6 +51,7 @@
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/machinery/rnd/production/Destroy()
+	QDEL_NULL(print_sound)
 	materials = null
 	cached_designs = null
 	return ..()
@@ -347,6 +351,7 @@
 			//start production
 			busy = TRUE
 			SStgui.update_uis(src)
+			print_sound.start()
 			if(production_animation)
 				icon_state = production_animation
 			var/turf/target_location
@@ -448,7 +453,7 @@
 /// Called at the end of do_make_item's timer loop
 /obj/machinery/rnd/production/proc/finalize_build()
 	PROTECTED_PROC(TRUE)
-
+	print_sound.stop()
 	busy = FALSE
 	SStgui.update_uis(src)
 	icon_state = initial(icon_state)

@@ -1,5 +1,0 @@
-author: "Vekter"
-delete-after: True
-changes:
-  - rscadd: "Bitrunners can now access specific bounties asking for the item rewards from specific bitrunning domains."
-  - bugfix: "Fixed bitrunner pulling from a pool of literally every bounty available."
