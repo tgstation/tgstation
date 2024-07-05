@@ -23565,10 +23565,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
-"isk" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/maintenance/department/science)
 "ism" = (
 /obj/machinery/button/door/directional/east{
 	normaldoorcontrol = 1;
@@ -113041,7 +113037,7 @@ aku
 vfR
 vfJ
 uLB
-isk
+vfJ
 moe
 jxe
 aaR
@@ -113296,7 +113292,7 @@ lJq
 tsz
 lJq
 obA
-isk
+vfJ
 rKI
 mpB
 moe
