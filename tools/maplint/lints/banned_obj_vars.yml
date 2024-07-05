@@ -2,3 +2,4 @@ help: "This var is obsolete/no longer in use. Please remove it."
 /obj:
   banned_variables:
     layer:
+    piping_layer:
