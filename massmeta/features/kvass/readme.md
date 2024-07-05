@@ -1,13 +1,13 @@
-## Module ID: ADDITIONAL_CIRCUITS
+## Module ID: KVASS
 
 ### Description:
 
-Добавляет микросхемы для "Циркуитов".
+Добавляет Квасс, мммм квасс!
 
 
 ### TG Proc/File Changes:
 
-- N/A
+- code/modules/reagents/reagent_containers/cups/soda.dm
 
 
 ### Modular Overrides:

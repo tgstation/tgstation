@@ -20,7 +20,7 @@ TODO:
 - ~meta_defines/inventory.dm
 
 
-### Included files that are not contained in this module:
+### TGUI Files:
 
 - N/A
 

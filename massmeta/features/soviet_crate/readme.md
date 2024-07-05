@@ -1,8 +1,8 @@
-## Module ID: ADDITIONAL_CIRCUITS
+## Module ID: SOVIET_CRATE
 
 ### Description:
 
-Добавляет микросхемы для "Циркуитов".
+Добавляет старый, советский, зелёный, деревянный... Ящик!
 
 
 ### TG Proc/File Changes:

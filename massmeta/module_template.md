@@ -30,11 +30,12 @@ E.g:
 - N/A
 <!-- If you needed to add any defines, mention the files you added those defines in, along with the name of the defines. -->
 
-### Included files that are not contained in this module:
+### TGUI Files:
 
 - N/A
-<!-- Likewise, be it a non-modular file or a modular one that's not contained within the folder belonging to this specific module, it should be mentioned here. Good examples are icons or sounds that are used between multiple modules, or other such edge-cases. -->
+<!-- TGUI file new or modified for our module. Note that TGUI can't me modular like .dm code! -->
 
 ### Credits:
 
+- N/A
 <!-- Here go the credits to you, dear coder, and in case of collaborative work or ports, credits to the original source of the code. -->
