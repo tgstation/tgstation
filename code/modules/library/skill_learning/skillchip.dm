@@ -499,30 +499,3 @@
 	skill_icon = FA_ICON_DRUMSTICK_BITE
 	activate_message = span_notice("You think of your favourite food and realise that you can rotate its flavour in your mind.")
 	deactivate_message = span_notice("You feel your food-based mind palace crumbling...")
-
-/obj/item/skillchip/matrix_flip
-	name = "BULLET_DODGER skillchip"
-	skill_name = "Flip 2 Dodge"
-	skill_description = "At the cost of stamina, your flips can also be used to dodge incoming projectiles."
-	skill_icon = FA_ICON_SPINNER
-	activate_message = span_notice("You feel the urge to flip scenically as if you are the 'Chosen One'.")
-	deactivate_message = span_notice("The urge to flip goes away.")
-
-/obj/item/skillchip/matrix_flip/on_activate(mob/living/carbon/user, silent = FALSE)
-	. = ..()
-	ADD_TRAIT(user, TRAIT_SLOW_FLIP, SKILLCHIP_TRAIT)
-	RegisterSignal(user, COMSIG_MOB_EMOTED("flip"), PROC_REF(on_flip))
-
-/obj/item/skillchip/matrix_flip/on_deactivate(mob/living/carbon/user, silent=FALSE)
-	REMOVE_TRAIT(user, TRAIT_SLOW_FLIP, SKILLCHIP_TRAIT)
-	UnregisterSignal(user, COMSIG_MOB_EMOTED("flip"))
-	return ..()
-
-/obj/item/skillchip/matrix_flip/proc/on_flip(mob/living/source)
-	SIGNAL_HANDLER
-	if(HAS_TRAIT_FROM(source, TRAIT_UNHITTABLE_BY_PROJECTILES, SKILLCHIP_TRAIT))
-		return
-	playsound(source, 'sound/weapons/fwoosh.ogg', 90, FALSE, frequency = 0.7)
-	ADD_TRAIT(source, TRAIT_UNHITTABLE_BY_PROJECTILES, SKILLCHIP_TRAIT)
-	source.adjustStaminaLoss(20)
-	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_UNHITTABLE_BY_PROJECTILES, SKILLCHIP_TRAIT), FLIP_EMOTE_DURATION * 2)
