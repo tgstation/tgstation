@@ -31179,7 +31179,7 @@
 	},
 /obj/structure/sign/departments/chemistry/directional/west,
 /turf/open/floor/iron/white,
-/area/station/maintenance/department/medical)
+/area/station/medical/chemistry)
 "kVF" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -43559,13 +43559,11 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/airlock/maintenance_hatch,
-/obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/trimline/yellow/filled/corner,
+/turf/open/floor/iron/white,
 /area/station/maintenance/department/medical)
 "pxY" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -49875,8 +49873,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
-/area/station/maintenance/department/medical)
+/area/station/medical/chemistry)
 "rFb" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
@@ -52046,7 +52047,7 @@
 	name = "Chemistry Minisat"
 	},
 /turf/open/floor/iron/white,
-/area/station/maintenance/department/medical)
+/area/station/medical/chemistry)
 "sqb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -52248,11 +52249,13 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/trimline/yellow/filled/corner{
-	dir = 4
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
 	},
-/obj/effect/turf_decal/trimline/yellow/filled/corner,
-/turf/open/floor/iron/white,
+/turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "stp" = (
 /obj/structure/railing{
@@ -146805,7 +146808,7 @@ yew
 jSE
 hgS
 jHQ
-pxU
+stk
 jHQ
 bhV
 jHQ
@@ -147316,7 +147319,7 @@ ibx
 vxX
 unk
 siU
-stk
+pxU
 kYT
 bUZ
 vzG
@@ -147571,10 +147574,10 @@ wOU
 vxX
 ibx
 vxX
-kxB
-kYT
+bGk
+bGk
 spU
-kYT
+bGk
 rRy
 cOb
 ycI
@@ -147831,7 +147834,7 @@ vxX
 bGk
 kVh
 rEV
-kYT
+bGk
 bGk
 ncR
 ncR
