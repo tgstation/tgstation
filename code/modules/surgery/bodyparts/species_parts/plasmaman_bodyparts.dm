@@ -27,7 +27,7 @@
 	wing_types = NONE
 
 /obj/item/bodypart/chest/plasmaman/get_butt_sprite()
-	return BUTT_SPRITE_PLASMA
+	return icon('icons/mob/butts.dmi', BUTT_SPRITE_PLASMA)
 
 /obj/item/bodypart/arm/left/plasmaman
 	icon = 'icons/mob/human/species/plasmaman/bodyparts.dmi'

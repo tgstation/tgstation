@@ -81,7 +81,7 @@ ADMIN_VERB(borg_panel, R_ADMIN, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPTION, AD
 			message_admins("[key_name_admin(user)] deleted the cell of [ADMIN_LOOKUPFLW(borg)].")
 			log_silicon("[key_name(user)] deleted the cell of [key_name(borg)].")
 		if ("change_cell")
-			var/chosen = pick_closest_path(null, make_types_fancy(typesof(/obj/item/stock_parts/cell)))
+			var/chosen = pick_closest_path(null, make_types_fancy(typesof(/obj/item/stock_parts/power_store/cell)))
 			if (!ispath(chosen))
 				chosen = text2path(chosen)
 			if (chosen)
@@ -134,17 +134,19 @@ ADMIN_VERB(borg_panel, R_ADMIN, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPTION, AD
 			borg.fully_replace_character_name(borg.real_name,new_name)
 		if ("toggle_upgrade")
 			var/upgradepath = text2path(params["upgrade"])
-			var/obj/item/borg/upgrade/installedupgrade = locate(upgradepath) in borg
+			var/obj/item/borg/upgrade/installedupgrade = locate(upgradepath) in borg.upgrades
 			if (installedupgrade)
 				message_admins("[key_name_admin(user)] removed the [installedupgrade] upgrade from [ADMIN_LOOKUPFLW(borg)].")
 				log_silicon("[key_name(user)] removed the [installedupgrade] upgrade from [key_name(borg)].")
 				qdel(installedupgrade) // see [mob/living/silicon/robot/on_upgrade_deleted()].
 			else
 				var/obj/item/borg/upgrade/upgrade = new upgradepath(borg)
-				upgrade.action(borg, user)
-				borg.upgrades += upgrade
 				message_admins("[key_name_admin(user)] added the [upgrade] borg upgrade to [ADMIN_LOOKUPFLW(borg)].")
 				log_silicon("[key_name(user)] added the [upgrade] borg upgrade to [key_name(borg)].")
+				if(upgrade.action(borg, user))
+					borg.add_to_upgrades(upgrade)
+				else
+					qdel(upgrade)
 		if ("toggle_radio")
 			var/channel = params["channel"]
 			if (channel in borg.radio.channels) // We're removing a channel

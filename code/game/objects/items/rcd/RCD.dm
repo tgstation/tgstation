@@ -70,6 +70,7 @@
 	construction_mode = mode
 
 	GLOB.rcd_list += src
+	AddElement(/datum/element/openspace_item_click_handler)
 
 /obj/item/construction/rcd/Destroy()
 	QDEL_NULL(airlock_electronics)
@@ -254,7 +255,7 @@
 	if(ranged)
 		var/atom/beam_source = owner ? owner : user
 		beam = beam_source.Beam(target, icon_state = "rped_upgrade", time = delay)
-	if(delay && !do_after(user, delay, target = target)) // no need for do_after with no delay
+	if(!build_delay(user, delay, target = target)) // no need for do_after with no delay
 		qdel(rcd_effect)
 		if(!isnull(beam))
 			qdel(beam)
@@ -379,6 +380,7 @@
 			construction_mode = mode
 			rcd_design_path = design["[RCD_DESIGN_PATH]"]
 			design_title = initial(rcd_design_path.name)
+			blueprint_changed = TRUE
 
 		else
 			airlock_electronics.do_action(action, params)
@@ -389,29 +391,38 @@
 	. = ..()
 	ui_interact(user)
 
-/obj/item/construction/rcd/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/construction/rcd/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
-	//proximity check for normal rcd & range check for arcd
-	if((!proximity_flag && !ranged) || (ranged && !range_check(target, user)))
-		return FALSE
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
 
-	//do the work
 	mode = construction_mode
-	rcd_create(target, user)
+	rcd_create(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
-	return . | AFTERATTACK_PROCESSED_ITEM
+/obj/item/construction/rcd/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ranged || !range_check(interacting_with, user))
+		return ITEM_INTERACT_BLOCKING
 
-/obj/item/construction/rcd/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	//proximity check for normal rcd & range check for arcd
-	if((!proximity_flag && !ranged) || (ranged && !range_check(target, user)))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	mode = construction_mode
+	rcd_create(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
-	//do the work
+/obj/item/construction/rcd/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	mode = RCD_DECONSTRUCT
-	rcd_create(target, user)
+	rcd_create(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/construction/rcd/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!ranged || !range_check(interacting_with, user))
+		return ITEM_INTERACT_BLOCKING
+
+	mode = RCD_DECONSTRUCT
+	rcd_create(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/construction/rcd/handle_openspace_click(turf/target, mob/user, list/modifiers)
+	interact_with_atom(target, user, modifiers)
 
 /obj/item/construction/rcd/proc/detonate_pulse()
 	audible_message("<span class='danger'><b>[src] begins to vibrate and \

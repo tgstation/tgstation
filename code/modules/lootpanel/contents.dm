@@ -18,6 +18,9 @@
 
 	for(var/atom/thing as anything in source_turf.contents)
 		// validate
+		if(!istype(thing))
+			stack_trace("Non-atom in the contents of [source_turf]!")
+			continue
 		if(thing.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
 			continue
 		if(thing.IsObscured())

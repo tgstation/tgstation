@@ -171,9 +171,9 @@
 				if(SANITY_LEVEL_UNSTABLE)
 					recovery_prob += 0
 				if(SANITY_LEVEL_CRAZY)
-					recovery_prob += -0.1
-				if(SANITY_LEVEL_INSANE)
 					recovery_prob += -0.2
+				if(SANITY_LEVEL_INSANE)
+					recovery_prob += -0.4
 
 		if((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) || !(affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING)) && HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT)) //resting starved won't help, but resting helps
 			var/turf/rest_turf = get_turf(affected_mob)
@@ -287,7 +287,6 @@
 		if(!TURFS_CAN_SHARE(end, Temp)) //Don't go through a wall
 			return FALSE
 		end = Temp
-
 
 /datum/disease/proc/cure(add_resistance = TRUE)
 	if(severity == DISEASE_SEVERITY_UNCURABLE) //aw man :(

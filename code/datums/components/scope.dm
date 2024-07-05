@@ -1,3 +1,6 @@
+///Used to allow reaching the maximum offset range without exiting the boundaries of the game screen.
+#define MOUSE_POINTER_OFFSET_MULT 1.1
+
 ///A component that allows players to use the item to zoom out. Mainly intended for firearms, but now works with other items too.
 /datum/component/scope
 	/// How far we can extend, with modifier of 1, up to our vision edge, higher numbers multiply.
@@ -27,7 +30,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	switch(zoom_method)
 		if(ZOOM_METHOD_RIGHT_CLICK)
-			RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK_SECONDARY, PROC_REF(on_secondary_afterattack))
+			RegisterSignal(parent, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY, PROC_REF(do_secondary_zoom))
 		if(ZOOM_METHOD_WIELD)
 			RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_WIELDED), PROC_REF(on_wielded))
 			RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_WIELDED), PROC_REF(on_unwielded))
@@ -46,7 +49,7 @@
 		parent_item.remove_item_action(scope)
 	UnregisterSignal(parent, list(
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_ITEM_AFTERATTACK_SECONDARY,
+		COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY,
 		SIGNAL_ADDTRAIT(TRAIT_WIELDED),
 		SIGNAL_REMOVETRAIT(TRAIT_WIELDED),
 		COMSIG_GUN_TRY_FIRE,
@@ -71,14 +74,14 @@
 		return
 	stop_zooming(tracker.owner)
 
-/datum/component/scope/proc/on_secondary_afterattack(datum/source, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/component/scope/proc/do_secondary_zoom(datum/source, mob/user, atom/target, click_parameters)
 	SIGNAL_HANDLER
 
 	if(tracker)
 		stop_zooming(user)
 	else
 		zoom(user)
-	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_BLOCKING
 
 /datum/component/scope/proc/on_action_trigger(datum/action/source)
 	SIGNAL_HANDLER
@@ -249,6 +252,12 @@
 		icon_y = text2num(LAZYACCESS(modifiers, ICON_Y))
 		if(isnull(icon_y))
 			icon_y = view_list[2]*world.icon_size/2
-	given_x = round(range_modifier * (icon_x - view_list[1]*world.icon_size/2))
-	given_y = round(range_modifier * (icon_y - view_list[2]*world.icon_size/2))
+	var/x_cap = range_modifier * view_list[1]*world.icon_size / 2
+	var/y_cap = range_modifier * view_list[2]*world.icon_size / 2
+	var/uncapped_x = round(range_modifier * (icon_x - view_list[1]*world.icon_size/2) * MOUSE_POINTER_OFFSET_MULT)
+	var/uncapped_y = round(range_modifier * (icon_y - view_list[2]*world.icon_size/2) * MOUSE_POINTER_OFFSET_MULT)
+	given_x = clamp(uncapped_x, -x_cap, x_cap)
+	given_y = clamp(uncapped_y, -y_cap, y_cap)
 	given_turf = locate(owner.x+round(given_x/world.icon_size, 1),owner.y+round(given_y/world.icon_size, 1),owner.z)
+
+#undef MOUSE_POINTER_OFFSET_MULT

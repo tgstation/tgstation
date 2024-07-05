@@ -50,7 +50,6 @@
 		to_chat(AM, span_warning("You can't use this here!"))
 		return
 	if(is_ready())
-		playsound(loc, "sound/effects/portal_travel.ogg", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		teleport(AM)
 
 /obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, params)
@@ -79,6 +78,7 @@
 	var/turf/start_turf = get_turf(M)
 	if(!do_teleport(M, target, channel = TELEPORT_CHANNEL_BLUESPACE))
 		return
+	playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	use_energy(active_power_usage)
 	new /obj/effect/temp_visual/portal_animation(start_turf, src, M)
 	if(!calibrated && ishuman(M) && prob(30 - ((accuracy) * 10))) //oh dear a problem
@@ -162,24 +162,25 @@
 		teleporter_console = null
 	return ..()
 
+/obj/machinery/teleport/station/multitool_act(mob/living/user, obj/item/multitool/tool)
+	. = NONE
+
+	if(panel_open)
+		tool.set_buffer(src)
+		balloon_alert(user, "saved to multitool buffer")
+		return ITEM_INTERACT_SUCCESS
+
+	if(!istype(tool.buffer, /obj/machinery/teleport/station) || tool.buffer == src)
+		return ITEM_INTERACT_BLOCKING
+
+	if(linked_stations.len < efficiency)
+		linked_stations.Add(tool.buffer)
+		tool.set_buffer(null)
+		balloon_alert(user, "data uploaded from buffer")
+		return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/teleport/station/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, W))
-			return
-		var/obj/item/multitool/M = W
-		if(panel_open)
-			M.set_buffer(src)
-			balloon_alert(user, "saved to multitool buffer")
-		else
-			if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
-				if(linked_stations.len < efficiency)
-					linked_stations.Add(M.buffer)
-					M.set_buffer(null)
-					balloon_alert(user, "data uploaded from buffer")
-				else
-					to_chat(user, span_alert("This station can't hold more information, try to use better parts."))
-		return
-	else if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
+	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_appearance()
 		return
 

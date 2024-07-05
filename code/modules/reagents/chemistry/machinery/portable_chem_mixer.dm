@@ -10,6 +10,7 @@
 	custom_price = PAYCHECK_CREW * 10
 	custom_premium_price = PAYCHECK_CREW * 14
 	interaction_flags_click = FORBID_TELEKINESIS_REACH
+	interaction_flags_mouse_drop = FORBID_TELEKINESIS_REACH
 
 	///Creating an empty slot for a beaker that can be added to dispense into
 	var/obj/item/reagent_containers/beaker
@@ -243,11 +244,10 @@
 			update_appearance()
 			return TRUE
 
-/obj/item/storage/portable_chem_mixer/MouseDrop(obj/over_object)
-	. = ..()
+/obj/item/storage/portable_chem_mixer/mouse_drop_dragged(atom/over_object)
 	if(ismob(loc))
 		var/mob/M = loc
-		if(!M.incapacitated() && istype(over_object, /atom/movable/screen/inventory/hand))
+		if(istype(over_object, /atom/movable/screen/inventory/hand))
 			var/atom/movable/screen/inventory/hand/H = over_object
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
@@ -260,7 +260,7 @@
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/storage/portable_chem_mixer/CtrlClick(mob/living/user)
+/obj/item/storage/portable_chem_mixer/item_ctrl_click(mob/user)
 	if(atom_storage.locked == STORAGE_FULLY_LOCKED)
 		atom_storage.locked = STORAGE_NOT_LOCKED
 		replace_beaker(user)
@@ -270,3 +270,4 @@
 		atom_storage.hide_contents(usr)
 
 	update_appearance()
+	return CLICK_ACTION_SUCCESS

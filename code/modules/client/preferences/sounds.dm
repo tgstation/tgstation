@@ -4,6 +4,14 @@
 	savefile_key = "sound_ambience"
 	savefile_identifier = PREFERENCE_PLAYER
 
+/datum/preference/toggle/sound_ambience/apply_to_client(client/client, value)
+	client.update_ambience_pref(value)
+
+/datum/preference/toggle/sound_breathing
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_breathing"
+	savefile_identifier = PREFERENCE_PLAYER
+
 /// Controls hearing announcement sounds
 /datum/preference/toggle/sound_announcements
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
@@ -99,6 +107,9 @@
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_ship_ambience"
 	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/toggle/sound_ship_ambience/apply_to_client_updated(client/client, value)
+	client.mob.refresh_looping_ambience()
 
 /// Controls hearing elevator music
 /datum/preference/toggle/sound_elevator

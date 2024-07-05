@@ -25,32 +25,31 @@
 	if(isgun(newloc))
 		gun = newloc
 
-/obj/item/firing_pin/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(proximity_flag)
-		if(isgun(target))
-			. |= AFTERATTACK_PROCESSED_ITEM
-			var/obj/item/gun/targeted_gun = target
-			var/obj/item/firing_pin/old_pin = targeted_gun.pin
-			if(old_pin?.pin_removable && (force_replace || old_pin.pin_hot_swappable))
-				if(Adjacent(user))
-					user.put_in_hands(old_pin)
-				else
-					old_pin.forceMove(targeted_gun.drop_location())
-				old_pin.gun_remove(user)
+/obj/item/firing_pin/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isgun(interacting_with))
+		return NONE
 
-			if(!targeted_gun.pin)
-				if(!user.temporarilyRemoveItemFromInventory(src))
-					return .
-				if(gun_insert(user, targeted_gun))
-					if(old_pin)
-						balloon_alert(user, "swapped firing pin")
-					else
-						balloon_alert(user, "inserted firing pin")
-			else
-				to_chat(user, span_notice("This firearm already has a firing pin installed."))
+	var/obj/item/gun/targeted_gun = interacting_with
+	var/obj/item/firing_pin/old_pin = targeted_gun.pin
+	if(old_pin?.pin_removable && (force_replace || old_pin.pin_hot_swappable))
+		if(Adjacent(user))
+			user.put_in_hands(old_pin)
+		else
+			old_pin.forceMove(targeted_gun.drop_location())
+		old_pin.gun_remove(user)
 
+	if(!targeted_gun.pin)
+		if(!user.temporarilyRemoveItemFromInventory(src))
 			return .
+		if(gun_insert(user, targeted_gun))
+			if(old_pin)
+				balloon_alert(user, "swapped firing pin")
+			else
+				balloon_alert(user, "inserted firing pin")
+	else
+		to_chat(user, span_notice("This firearm already has a firing pin installed."))
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/firing_pin/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -190,13 +189,15 @@
 	fail_message = "dna check failed!"
 	var/unique_enzymes = null
 
-/obj/item/firing_pin/dna/afterattack(atom/target, mob/user, proximity_flag)
-	. = ..()
-	if(proximity_flag && iscarbon(target))
-		var/mob/living/carbon/M = target
+/obj/item/firing_pin/dna/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(iscarbon(interacting_with))
+		var/mob/living/carbon/M = interacting_with
 		if(M.dna && M.dna.unique_enzymes)
 			unique_enzymes = M.dna.unique_enzymes
 			balloon_alert(user, "dna lock set")
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 /obj/item/firing_pin/dna/pin_auth(mob/living/carbon/user)
 	if(user && user.dna && user.dna.unique_enzymes)
@@ -380,7 +381,7 @@
 
 /obj/item/firing_pin/monkey/pin_auth(mob/living/user)
 	if(!is_simian(user))
-		playsound(get_turf(src), "sound/creatures/monkey/monkey_screech_[rand(1,7)].ogg", 75, TRUE)
+		playsound(src, SFX_SCREECH, 75, TRUE)
 		return FALSE
 	return TRUE
 

@@ -411,7 +411,7 @@
 
 	if(!user.get_bodypart(BODY_ZONE_HEAD))
 		return FALSE
-	if(user.is_muzzled() || user.is_mouth_covered(ITEM_SLOT_MASK))
+	if(user.is_mouth_covered(ITEM_SLOT_MASK))
 		to_chat(user, span_warning("You can't bite with your mouth covered!"))
 		return FALSE
 
@@ -659,7 +659,7 @@
 		playsound(target, 'sound/effects/glassbash.ogg', 50, TRUE, -1)
 	else
 		do_attack_animation(target, ATTACK_EFFECT_DISARM)
-		playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+		playsound(target, 'sound/weapons/shove.ogg', 50, TRUE, -1)
 	if (ishuman(target) && isnull(weapon))
 		var/mob/living/carbon/human/human_target = target
 		human_target.w_uniform?.add_fingerprint(src)

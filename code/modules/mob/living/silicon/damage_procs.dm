@@ -13,6 +13,9 @@
 /mob/living/silicon/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE, required_biotype)
 	return FALSE
 
+/mob/living/silicon/received_stamina_damage(current_level, amount_actual, amount)
+	return
+
 /mob/living/silicon/adjustOrganLoss(slot, amount, maximum = 500, required_organ_flag) //immune to organ damage (no organs, duh)
 	return FALSE
 

@@ -32,4 +32,3 @@
 	TEST_ASSERT_EQUAL(length(panel.contents), 2, "Panel shouldnt dupe searchables if reopened")
 
 	mock_client.mob = null
-

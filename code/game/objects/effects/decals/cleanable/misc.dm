@@ -81,11 +81,11 @@
 	if(T.tiled_dirt)
 		smoothing_flags = SMOOTH_BITMASK
 		QUEUE_SMOOTH(src)
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/effect/decal/cleanable/dirt/Destroy()
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
@@ -444,6 +444,7 @@
 	beauty = -50
 	clean_type = CLEAN_TYPE_BLOOD
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	resistance_flags = UNACIDABLE | ACID_PROOF | FIRE_PROOF | FLAMMABLE //gross way of doing this but would need to disassemble fire_act call stack otherwise
 	/// Maximum amount of hotspots this pool can create before deleting itself
 	var/burn_amount = 3
 	/// Is this fuel pool currently burning?
@@ -453,6 +454,10 @@
 
 /obj/effect/decal/cleanable/fuel_pool/Initialize(mapload, burn_stacks)
 	. = ..()
+	var/static/list/ignition_trigger_connections = list(
+		COMSIG_TURF_MOVABLE_THROW_LANDED = PROC_REF(ignition_trigger),
+	)
+	AddElement(/datum/element/connect_loc, ignition_trigger_connections)
 	for(var/obj/effect/decal/cleanable/fuel_pool/pool in get_turf(src)) //Can't use locate because we also belong to that turf
 		if(pool == src)
 			continue
@@ -461,6 +466,15 @@
 
 	if(burn_stacks)
 		burn_amount = max(min(burn_stacks, 10), 1)
+
+	return INITIALIZE_HINT_LATELOAD
+
+// Just in case of fires, do this after mapload.
+/obj/effect/decal/cleanable/fuel_pool/LateInitialize()
+// We don't want to burn down the create_and_destroy test area
+#ifndef UNIT_TESTS
+	RegisterSignal(src, COMSIG_ATOM_TOUCHED_SPARKS, PROC_REF(ignition_trigger))
+#endif
 
 /obj/effect/decal/cleanable/fuel_pool/fire_act(exposed_temperature, exposed_volume)
 	. = ..()
@@ -508,6 +522,28 @@
 	if(item.ignition_effect(src, user))
 		ignite()
 	return ..()
+
+/obj/effect/decal/cleanable/fuel_pool/on_entered(datum/source, atom/movable/entered_atom)
+	. = ..()
+	if(entered_atom.throwing) // don't light from things being thrown over us, we handle that somewhere else
+		return
+	ignition_trigger(source = src, enflammable_atom = entered_atom)
+
+/obj/effect/decal/cleanable/fuel_pool/proc/ignition_trigger(datum/source, atom/movable/enflammable_atom)
+	SIGNAL_HANDLER
+
+	if(isitem(enflammable_atom))
+		var/obj/item/enflamed_item = enflammable_atom
+		if(enflamed_item.get_temperature() > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			ignite()
+		return
+	else if(isliving(enflammable_atom))
+		var/mob/living/enflamed_liver = enflammable_atom
+		if(enflamed_liver.on_fire)
+			ignite()
+	else if(istype(enflammable_atom, /obj/effect/particle_effect/sparks))
+		ignite()
+
 
 /obj/effect/decal/cleanable/fuel_pool/hivis
 	icon_state = "fuel_pool_hivis"
