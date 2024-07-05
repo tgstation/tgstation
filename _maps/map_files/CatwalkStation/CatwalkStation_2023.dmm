@@ -1369,7 +1369,7 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
-/obj/structure/railing/corner/end/flip{
+/obj/structure/railing/corner/end{
 	dir = 4
 	},
 /turf/open/openspace,
@@ -2428,11 +2428,11 @@
 /turf/open/floor/engine,
 /area/station/engineering/main)
 "aUx" = (
-/obj/structure/railing/corner/end/flip{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 10
+	},
+/obj/structure/railing/corner/end{
+	dir = 4
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
@@ -7360,6 +7360,9 @@
 /obj/structure/railing{
 	dir = 10
 	},
+/obj/machinery/status_display/supply{
+	pixel_y = 32
+	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "cAk" = (
@@ -8114,6 +8117,9 @@
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
+	},
+/obj/machinery/status_display/supply{
+	pixel_x = 32
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -12696,9 +12702,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/structure/railing/corner/end/flip{
-	dir = 4
-	},
+/obj/structure/railing/corner,
 /turf/open/openspace,
 /area/station/command/bridge)
 "eoI" = (
@@ -14176,10 +14180,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/cable,
-/obj/structure/railing/corner/end/flip{
+/obj/effect/landmark/start/hangover,
+/obj/structure/railing/corner/end{
 	dir = 4
 	},
-/obj/effect/landmark/start/hangover,
 /turf/open/floor/wood,
 /area/station/security/detectives_office)
 "eRz" = (
@@ -16056,7 +16060,7 @@
 /obj/structure/railing/corner/end/flip{
 	dir = 8
 	},
-/obj/structure/railing/corner/end/flip{
+/obj/structure/railing/corner/end{
 	dir = 4
 	},
 /turf/open/openspace,
@@ -16326,8 +16330,7 @@
 	dir = 1
 	},
 /obj/machinery/conveyor_switch/oneway{
-	dir = 8;
-	id = "QMLoad";
+	id = "cargoload";
 	name = "Loading Conveyor";
 	pixel_x = -13;
 	pixel_y = -5
@@ -17694,7 +17697,7 @@
 /obj/structure/railing/corner/end/flip{
 	dir = 8
 	},
-/obj/structure/railing/corner/end/flip{
+/obj/structure/railing/corner/end{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -21129,6 +21132,9 @@
 	output_dir = 8
 	},
 /obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/machinery/status_display/supply{
+	pixel_y = -32
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "hnk" = (
@@ -22626,7 +22632,7 @@
 /obj/item/pushbroom,
 /obj/structure/rack,
 /obj/machinery/conveyor_switch/oneway{
-	id = "QMLoad2";
+	id = "cargounload";
 	name = "Unloading Conveyor";
 	pixel_x = -13;
 	pixel_y = -4
@@ -23172,7 +23178,7 @@
 /obj/effect/turf_decal/tile/green/opposingcorners{
 	dir = 1
 	},
-/obj/structure/railing/corner/end/flip{
+/obj/structure/railing/corner/end{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -23502,7 +23508,7 @@
 "ibK" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/railing/corner/end/flip{
+/obj/structure/railing/corner/end{
 	dir = 4
 	},
 /turf/open/openspace,
@@ -26061,7 +26067,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/holopad,
-/obj/structure/railing/corner/end/flip{
+/obj/structure/railing/corner/end{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured_large,
@@ -29892,10 +29898,10 @@
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "kjm" = (
-/obj/structure/railing/corner/end/flip{
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing/corner/end{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "kjF" = (
@@ -31619,10 +31625,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/directional/south,
-/obj/structure/railing/corner/end/flip{
+/obj/structure/disposalpipe/segment,
+/obj/structure/railing/corner/end{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/science/robotics)
 "kPZ" = (
@@ -33717,7 +33723,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "lCa" = (
-/obj/structure/railing/corner/end/flip{
+/obj/structure/railing/corner/end{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -36762,10 +36768,10 @@
 /area/station/engineering/gravity_generator)
 "mDl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/railing/corner/end/flip{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/railing/corner/end{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "mDq" = (
@@ -48361,7 +48367,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/brown/filled/warning,
-/obj/structure/railing/corner/end/flip{
+/obj/structure/railing/corner/end{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -48602,6 +48608,9 @@
 "qIf" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/item/kirbyplants/random,
+/obj/machinery/status_display/supply{
+	pixel_y = -32
+	},
 /turf/open/floor/iron/textured,
 /area/station/cargo/storage)
 "qIp" = (
@@ -54581,7 +54590,7 @@
 /area/station/hallway/primary/aft)
 "sLO" = (
 /obj/machinery/door/airlock/maintenance,
-/obj/structure/railing/corner/end/flip{
+/obj/structure/railing/corner/end{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -59042,7 +59051,7 @@
 /area/station/command/heads_quarters/captain/private)
 "uoG" = (
 /obj/structure/transport/linear,
-/obj/structure/railing/corner/end/flip{
+/obj/structure/railing/corner/end{
 	dir = 4
 	},
 /turf/open/openspace,
