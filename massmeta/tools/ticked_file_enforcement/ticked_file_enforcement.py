@@ -44,7 +44,7 @@ lines = []
 total = 0
 
 # need just for better logs look
-if (scannable_directory == "massmeta/features/") or (scannable_directory == "massmeta/~meta_defines/"):
+if (scannable_directory == "massmeta/features/") or (scannable_directory == "massmeta/~meta_defines/") or (scannable_directory == "massmeta/master_files/"):
     print(blue(f"Scanning Modular Code..."))
     print(blue(f"   Checking files in [{scannable_directory}]"))
 
@@ -62,7 +62,7 @@ with open(file_reference, 'r') as file:
             continue
 
         # need to make full path
-        if (scannable_directory == "massmeta/features/") or (scannable_directory == "massmeta/~meta_defines/"):
+        if (scannable_directory == "massmeta/features/") or (scannable_directory == "massmeta/~meta_defines/") or (scannable_directory == "massmeta/master_files/"):
             line =  line[:10] + "massmeta\\" + line[10:]
         
         # checks defines folder
@@ -74,7 +74,16 @@ with open(file_reference, 'r') as file:
             if (module_file_path_clean[9:22] != "~meta_defines"):
                 print(red(f"        File [{module_file_path_clean}] must be in \"~meta_defines/\" folder"))
                 fail_no_include_modular = True
-
+        
+        # checks master folder
+        if scannable_directory == "massmeta/master_files/":
+            module_file_path = line.replace('\\', '/')
+            module_file_path_clean = module_file_path[10:-1]
+            print(f"        [{module_file_path_clean}]")
+            if (module_file_path_clean[9:21] != "master_files"):
+                print(red(f"        File [{module_file_path_clean}] must be in \"master_files/\" folder"))
+                fail_no_include_modular = True
+        
         lines.append(line)
 
         # checks main module folder
