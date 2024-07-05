@@ -62424,9 +62424,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/locker)
 "vZu" = (
-/obj/machinery/atmospherics/components/tank/air{
-	piping_layer = 4
-	},
+/obj/machinery/atmospherics/components/tank/air/layer4,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
