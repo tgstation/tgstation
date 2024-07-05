@@ -32584,12 +32584,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"lxz" = (
-/obj/machinery/vatgrower{
-	dir = 4
-	},
-/turf/open/misc/asteroid,
-/area/station/asteroid)
 "lxI" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood/parquet,
@@ -42532,14 +42526,6 @@
 /obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/treatment_center)
-"pfN" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/simple/purple/visible/layer1,
-/obj/machinery/portable_atmospherics/pipe_scrubber,
-/turf/open/floor/iron/textured,
-/area/station/engineering/atmos)
 "pfV" = (
 /obj/machinery/holopad,
 /turf/open/floor/iron,
@@ -43678,13 +43664,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/portable_atmospherics/scrubber,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/window/spawner/directional/east,
-/obj/machinery/portable_atmospherics/pipe_scrubber,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -58423,23 +58402,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/portable_atmospherics/pump,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/table,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = 8
-	},
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = 3;
-	pixel_y = -2
-	},
 /obj/structure/cable,
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/ordnance)
 "uBI" = (
@@ -58614,23 +58578,11 @@
 /area/station/service/chapel)
 "uEI" = (
 /obj/structure/window/spawner/directional/east,
-/obj/machinery/portable_atmospherics/pump,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/table,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/pipe_dispenser{
-	pixel_x = 3;
-	pixel_y = 7
-	},
-/obj/item/pipe_dispenser,
 /obj/machinery/power/apc/auto_name/directional/south{
 	areastring = "/area/station/science/ordnance/burnchamber"
 	},
 /obj/structure/cable,
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/ordnance)
 "uES" = (
@@ -63435,7 +63387,6 @@
 	dir = 8
 	},
 /obj/effect/spawner/random/entertainment/cigarette_pack,
-/obj/item/cigarette/rollie/mindbreaker,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
@@ -108986,7 +108937,7 @@ oRf
 sYU
 hLj
 syl
-pfN
+nDN
 nDN
 nDN
 pPv
@@ -168588,7 +168539,7 @@ vxX
 vxX
 uet
 gMk
-lxz
+gMk
 gMk
 gMk
 gMk
