@@ -48,7 +48,7 @@
 	desc = "A smaller bluespace grounding implant that supplies power for only a few minutes."
 	implant_flags = NONE
 	///How long before this implant self-deletes?
-	var/lifespan = 5 MINUTES
+	var/lifespan = 1 MINUTES
 	///The id of the timer that's qdeleting us
 	var/timerid
 
