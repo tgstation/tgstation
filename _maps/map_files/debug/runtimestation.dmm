@@ -1555,11 +1555,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
-"yi" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/power/smes/full,
-/turf/open/floor/plating,
-/area/station/engineering/gravity_generator)
 "yA" = (
 /obj/docking_port/stationary/laborcamp_home{
 	dir = 8
@@ -7784,7 +7779,7 @@ gW
 aI
 aX
 aI
-yi
+aI
 ak
 Ly
 EX
