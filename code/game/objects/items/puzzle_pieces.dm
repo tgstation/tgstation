@@ -93,9 +93,9 @@
 
 /obj/machinery/door/puzzle/animation_segment_delay(animation)
 	switch(animation)
-		if("opening_passable")
+		if(DOOR_OPENING_PASSABLE)
 			return 0.8 SECONDS
-		if("opening_done")
+		if(DOOR_OPENING_FINISHED)
 			return 1.0 SECONDS
 
 /obj/machinery/door/puzzle/Bumped(atom/movable/AM)
