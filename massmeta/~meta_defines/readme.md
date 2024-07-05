@@ -1,1 +1,3 @@
-На этот файл идёт переадресация из code/__DEFINES/~meta_defines_include.dm
+## Тут лежат все наши Новые Defines, что мы определили в нашем модуле, они все добавлены в файле:
+
+**massmeta/modular_meta_defines.dm**

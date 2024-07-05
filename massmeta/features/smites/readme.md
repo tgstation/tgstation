@@ -1,8 +1,8 @@
-## Module ID: ADDITIONAL_CIRCUITS
+## Module ID: TESTICULAR_TORSION
 
 ### Description:
 
-Добавляет микросхемы для "Циркуитов".
+Добавляет админский Смайт "Testicular torsion".
 
 
 ### TG Proc/File Changes:

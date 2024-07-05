@@ -1,10 +1,8 @@
 <!-- This should be copy-pasted into the root of your module folder as readme.md -->
 
-https://github.com/Huz2e/massmeta/pull/<!--PR Number-->
+## Module ID: <!--Title of your addition.-->
 
-## \<Title Here> <!--Title of your addition.-->
-
-Module ID: <!-- Uppercase, UNDERSCORE_CONNECTED name of your module, that you use to mark files. This is so people can case-sensitive search for your edits, if any. -->
+<!-- Uppercase, UNDERSCORE_CONNECTED name of your module, that you use to mark files. This is so people can case-sensitive search for your edits, if any. -->
 
 ### Description:
 

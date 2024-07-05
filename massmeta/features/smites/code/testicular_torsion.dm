@@ -16,11 +16,11 @@
 	carbon_target.apply_damage(rand(20, 40), BRUTE, BODY_ZONE_L_LEG, wound_bonus = rand(35,60), forced = TRUE)
 	carbon_target.apply_damage(rand(20, 40), BRUTE, BODY_ZONE_R_LEG, wound_bonus = rand(35,60), forced = TRUE)
 	carbon_target.emote("scream")
-	var/list/phrase = world.file2list("massmeta/strings/balls_phrases.txt")
+	var/list/phrase = world.file2list("massmeta/features/smites/string/balls_phrases.txt")
 	carbon_target.say(pick(phrase))
 	carbon_target.Paralyze(15 SECONDS)
 
-	playsound(target, 'massmeta/sounds/smites/testicular_torsion.ogg', 60)
+	playsound(target, 'massmeta/features/smites/sound/testicular_torsion.ogg', 60)
 	carbon_target.visible_message(
 		span_danger("You can see [carbon_target]'s balls being crushed by an unknown force! You can feel the pain just by looking at it."),
 		span_userdanger("You can feel like your balls are being crushed!"),

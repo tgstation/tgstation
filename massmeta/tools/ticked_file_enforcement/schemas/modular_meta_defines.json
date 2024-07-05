@@ -1,0 +1,7 @@
+{
+	"file": "massmeta/modular_meta_defines.dm",
+	"scannable_directory": "massmeta/~meta_defines/",
+	"subdirectories": true,
+	"excluded_files": [],
+	"forbidden_includes": []
+}
