@@ -373,21 +373,21 @@
 	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
-	for(var/datum/design/design in cached_designs)
+	for(var/datum/design/blueprint as anything in cached_designs)
 		var/cost = list()
-		var/list/materials = design["materials"]
-		for(var/datum/material/mat in materials)
+		var/list/materials = blueprint.materials
+		for(var/datum/material/mat as anything in materials)
 			cost[mat.name] = OPTIMAL_COST(materials[mat] * component_coeff)
 
-		var/icon_size = spritesheet.icon_size_id(design.id)
-		designs[design.id] = list(
-			"name" = design.name,
-			"desc" = design.get_description(),
+		var/icon_size = spritesheet.icon_size_id(blueprint.id)
+		designs[blueprint.id] = list(
+			"name" = blueprint.name,
+			"desc" = blueprint.get_description(),
 			"cost" = cost,
-			"id" = design.id,
-			"categories" = design.category,
-			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]",
-			"constructionTime" = get_construction_time_w_coeff(design.construction_time)
+			"id" = blueprint.id,
+			"categories" = blueprint.category,
+			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][blueprint.id]",
+			"constructionTime" = get_construction_time_w_coeff(blueprint.construction_time)
 		)
 
 	data["designs"] = designs
