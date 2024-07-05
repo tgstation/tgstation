@@ -8,6 +8,9 @@
 
 /// Returns whether or not our opt in levels/variables are correct for the target. If true, they can be picked as a target.
 /datum/objective/proc/opt_in_valid(datum/mind/target_mind)
+	if(ismob(target_mind))
+		var/mob/target_mob = target_mind
+		target_mind = target_mob.mind
 	return (get_opt_in_level(target_mind) <= target_mind.get_effective_opt_in_level())
 
 // ROUND REMOVE
