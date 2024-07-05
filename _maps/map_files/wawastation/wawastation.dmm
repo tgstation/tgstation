@@ -530,11 +530,14 @@
 "ahJ" = (
 /obj/machinery/light/directional/north,
 /obj/structure/table,
+/obj/item/pen{
+	pixel_x = 9;
+	pixel_y = 4
+	},
 /obj/item/hand_labeler{
 	pixel_y = 10;
 	pixel_x = -13
 	},
-/obj/item/folder,
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
 "ahV" = (
@@ -32530,12 +32533,13 @@
 /area/station/medical/medbay/lobby)
 "lwM" = (
 /obj/structure/table,
-/obj/item/storage/box/syringes{
-	pixel_x = -8;
-	pixel_y = 11
+/obj/item/paper_bin{
+	pixel_x = -2;
+	pixel_y = 6
 	},
-/obj/item/storage/box/beakers{
-	pixel_x = 4
+/obj/item/pen{
+	pixel_x = -2;
+	pixel_y = 5
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
@@ -32923,6 +32927,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/department/bridge)
+"lDs" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/purple/visible/layer1,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
+/turf/open/floor/iron/textured,
+/area/station/engineering/atmos)
 "lDK" = (
 /obj/structure/railing{
 	dir = 1
@@ -45282,6 +45294,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/security)
+"qcg" = (
+/obj/machinery/vatgrower{
+	dir = 4
+	},
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 "qcQ" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -59790,10 +59808,6 @@
 	pixel_x = -5;
 	pixel_y = 6
 	},
-/obj/item/pen{
-	pixel_x = 9;
-	pixel_y = 4
-	},
 /turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
 "uZg" = (
@@ -63383,6 +63397,7 @@
 	dir = 8
 	},
 /obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/item/cigarette/rollie/mindbreaker,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
@@ -108933,7 +108948,7 @@ oRf
 sYU
 hLj
 syl
-nDN
+lDs
 nDN
 nDN
 pPv
@@ -168535,7 +168550,7 @@ vxX
 vxX
 uet
 gMk
-gMk
+qcg
 gMk
 gMk
 gMk
