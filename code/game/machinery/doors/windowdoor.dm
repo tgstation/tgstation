@@ -72,10 +72,15 @@
 
 /obj/machinery/door/window/update_icon_state()
 	. = ..()
-	if(animation)
-		icon_state = "[base_state][animation]"
-	else
-		icon_state = "[base_state][density ? null : "open"]"
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			icon_state = "[base_state]opening"
+		if(DOOR_CLOSING_ANIMATION)
+			icon_state = "[base_state]closing"
+		if(DOOR_DENY_ANIMATION)
+			icon_state = "[base_state]deny"
+		else
+			icon_state = "[base_state][density ? null : "open"]"
 
 	if(hasPower() && unres_sides)
 		set_light(l_range = 2, l_power = 1)
@@ -85,20 +90,20 @@
 
 /obj/machinery/door/window/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 0.9 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 0.9 SECONDS
 
 /obj/machinery/door/window/animation_segment_delay(animation)
 	switch(animation)
-		if("opening_passable")
+		if(DOOR_OPENING_PASSABLE)
 			return 0.7 SECONDS
-		if("opening_done")
+		if(DOOR_OPENING_FINISHED)
 			return 0.9 SECONDS
-		if("closing_unpassable")
+		if(DOOR_CLOSING_UNPASSABLE)
 			return 0.2 SECONDS
-		if("closing_done")
+		if(DOOR_CLOSING_FINISHED)
 			return 0.9 SECONDS
 
 /obj/machinery/door/window/update_overlays()
@@ -152,7 +157,7 @@
 				if(allowed(occupant))
 					open_and_close()
 					return
-			run_animation("deny")
+			run_animation(DOOR_DENY_ANIMATION)
 		return
 	if(!SSticker)
 		return
@@ -176,7 +181,7 @@
 		open_and_close()
 
 	else
-		run_animation("deny")
+		run_animation(DOOR_DENY_ANIMATION)
 
 	return
 
@@ -235,12 +240,12 @@
 	if(!operating) //in case of emag
 		operating = TRUE
 
-	run_animation("opening")
+	run_animation(DOOR_OPENING_ANIMATION)
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
-	var/passable_delay = animation_segment_delay("opening_passable")
+	var/passable_delay = animation_segment_delay(DOOR_OPENING_PASSABLE)
 	sleep(passable_delay)
 	set_density(FALSE)
-	var/open_delay = animation_segment_delay("opening_done") - passable_delay
+	var/open_delay = animation_segment_delay(DOOR_OPENING_FINISHED) - passable_delay
 	sleep(open_delay)
 	air_update_turf(TRUE, FALSE)
 	update_freelook_sight()
@@ -280,14 +285,14 @@
 		return FALSE
 
 	operating = TRUE
-	run_animation("closing")
+	run_animation(DOOR_CLOSING_ANIMATION)
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
-	var/unpassable_delay = animation_segment_delay("closing_unpassable")
+	var/unpassable_delay = animation_segment_delay(DOOR_CLOSING_UNPASSABLE)
 	sleep(unpassable_delay)
 	set_density(TRUE)
 	air_update_turf(TRUE, TRUE)
 	update_freelook_sight()
-	var/close_delay = animation_segment_delay("closing_done") - unpassable_delay
+	var/close_delay = animation_segment_delay(DOOR_CLOSING_FINISHED) - unpassable_delay
 	sleep(close_delay)
 
 	operating = FALSE

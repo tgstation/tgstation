@@ -197,34 +197,39 @@
 
 /obj/machinery/door/poddoor/update_icon_state()
 	. = ..()
-	if(animation)
-		icon_state = animation
-	else
-		icon_state = density ? "closed" : "open"
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			icon_state = "opening"
+		if(DOOR_CLOSING_ANIMATION)
+			icon_state = "closing"
+		if(DOOR_DENY_ANIMATION)
+			icon_state = "deny"
+		else
+			icon_state = density ? "closed" : "open"
 
 /obj/machinery/door/poddoor/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 1.1 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 1.1 SECONDS
 
 /obj/machinery/door/poddoor/animation_segment_delay(animation)
 	switch(animation)
-		if("opening_passable")
+		if(DOOR_OPENING_PASSABLE)
 			return 0.5 SECONDS
-		if("opening_done")
+		if(DOOR_OPENING_FINISHED)
 			return 1.1 SECONDS
-		if("closing_unpassable")
+		if(DOOR_CLOSING_UNPASSABLE)
 			return 0.2 SECONDS
-		if("closing_done")
+		if(DOOR_CLOSING_FINISHED)
 			return 1.1 SECONDS
 
 /obj/machinery/door/poddoor/animation_effects(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			playsound(src, animation_sound, 50, TRUE)
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			playsound(src, animation_sound, 50, TRUE)
 
 /obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)

@@ -88,7 +88,7 @@
 
 /obj/machinery/door/puzzle/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 1.0 SECONDS
 
 /obj/machinery/door/puzzle/animation_segment_delay(animation)

@@ -7,7 +7,7 @@
 
 /obj/machinery/door/puzzle/keycard/library/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 1.2 SECONDS
 
 /obj/machinery/door/puzzle/keycard/library/animation_segment_delay(animation)

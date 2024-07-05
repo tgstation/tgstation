@@ -62,41 +62,44 @@
 		if(access_bypass || ask_for_pass(user))
 			open()
 		else
-			run_animation("deny")
+			run_animation(DOOR_DENY_ANIMATION)
 
 /obj/machinery/door/password/update_icon_state()
 	. = ..()
 	//Deny animation would be nice to have.
-	if(animation && animation != "deny")
-		icon_state = animation
-	else
-		icon_state = density ? "closed" : "open"
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			icon_state = "opening"
+		if(DOOR_CLOSING_ANIMATION)
+			icon_state = "closing"
+		else
+			icon_state = density ? "closed" : "open"
 
 /obj/machinery/door/password/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 1.1 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 1.1 SECONDS
 
 /obj/machinery/door/password/animation_segment_delay(animation)
 	switch(animation)
-		if("opening_passable")
+		if(DOOR_OPENING_PASSABLE)
 			return 0.5 SECONDS
-		if("opening_done")
+		if(DOOR_OPENING_FINISHED)
 			return 1.1 SECONDS
-		if("closing_unpassable")
+		if(DOOR_CLOSING_UNPASSABLE)
 			return 0.2 SECONDS
-		if("closing_done")
+		if(DOOR_CLOSING_FINISHED)
 			return 1.1 SECONDS
 
 /obj/machinery/door/password/animation_effects(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			playsound(src, door_open, 50, TRUE)
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			playsound(src, door_close, 50, TRUE)
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			playsound(src, door_deny, 30, TRUE)
 
 /obj/machinery/door/password/proc/ask_for_pass(mob/user)

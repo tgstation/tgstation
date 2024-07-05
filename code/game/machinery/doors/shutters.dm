@@ -13,20 +13,20 @@
 
 /obj/machinery/door/poddoor/shutters/animation_length(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			return 1.388 SECONDS
-		if("closing")
+		if(DOOR_CLOSING_ANIMATION)
 			return 1.388 SECONDS
 
 /obj/machinery/door/poddoor/shutters/animation_segment_delay(animation)
 	switch(animation)
-		if("opening_passable")
+		if(DOOR_OPENING_PASSABLE)
 			return 0.76 SECONDS
-		if("opening_done")
+		if(DOOR_OPENING_FINISHED)
 			return 1.388 SECONDS
-		if("closing_unpassable")
+		if(DOOR_CLOSING_UNPASSABLE)
 			return 0.152 SECONDS
-		if("closing_done")
+		if(DOOR_CLOSING_FINISHED)
 			return 1.388 SECONDS
 
 /obj/machinery/door/poddoor/shutters/preopen
