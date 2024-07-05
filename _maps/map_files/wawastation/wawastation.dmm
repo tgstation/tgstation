@@ -2294,6 +2294,15 @@
 	},
 /turf/open/floor/glass,
 /area/station/command/meeting_room)
+"aLM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
+	dir = 8
+	},
+/obj/machinery/meter,
+/turf/open/floor/iron/dark,
+/area/station/science/ordnance)
 "aLN" = (
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
@@ -5771,14 +5780,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/station/service/chapel)
-"cbH" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/station/science/ordnance)
 "cbJ" = (
 /turf/closed/wall,
 /area/station/engineering/atmos/pumproom)
@@ -8860,7 +8861,9 @@
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/atmos)
 "diV" = (
-/obj/machinery/atmospherics/pipe/smart/simple/purple/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
+	dir = 5
+	},
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/storage)
 "diZ" = (
@@ -11516,8 +11519,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "ebZ" = (
-/obj/machinery/atmospherics/pipe/smart/simple/purple/visible/layer2{
-	dir = 10
+/obj/machinery/atmospherics/pipe/smart/manifold/purple/visible{
+	dir = 1
 	},
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/storage)
@@ -22463,12 +22466,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
-"hVx" = (
-/obj/machinery/atmospherics/pipe/smart/simple/purple/visible/layer2{
-	dir = 5
-	},
-/turf/closed/wall/r_wall,
-/area/station/science/ordnance)
 "hVB" = (
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
@@ -31945,6 +31942,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
+"lkx" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/rd)
 "lkQ" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/bot,
@@ -35921,8 +35928,13 @@
 /turf/open/floor/engine,
 /area/station/command/heads_quarters/captain/private)
 "mHc" = (
-/obj/machinery/airalarm/directional/west,
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/turf_decal/box,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8;
+	name = "Oxygen Chamber Injection Port"
+	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/ordnance/storage)
 "mHf" = (
@@ -39405,7 +39417,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 8
 	},
@@ -41081,8 +41092,6 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
 "oFu" = (
@@ -47548,12 +47557,6 @@
 	dir = 1
 	},
 /area/station/engineering/atmos)
-"qVo" = (
-/obj/machinery/atmospherics/pipe/smart/simple/purple/visible/layer2{
-	dir = 10
-	},
-/turf/closed/wall/r_wall,
-/area/station/science/ordnance)
 "qVB" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -48154,10 +48157,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2{
-	dir = 1
-	},
-/obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "reD" = (
@@ -58156,8 +58155,7 @@
 "uxl" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/oxygen_input{
 	dir = 4;
-	chamber_id = "o2ordance";
-	piping_layer = 2
+	chamber_id = "o2ordance"
 	},
 /turf/open/floor/engine/o2,
 /area/station/science/ordnance)
@@ -60346,6 +60344,11 @@
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
+"vkC" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/rd)
 "vkM" = (
 /obj/machinery/light_switch/directional/north,
 /obj/structure/easel,
@@ -63157,9 +63160,14 @@
 	},
 /area/station/science/xenobiology)
 "wnH" = (
-/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/turf_decal/box,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8;
+	name = "Oxygen Chamber Injection Port"
+	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "wnL" = (
@@ -65310,6 +65318,7 @@
 /obj/structure/disposalpipe/trunk/multiz{
 	dir = 1
 	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "xay" = (
@@ -109177,7 +109186,7 @@ ilp
 jTB
 ebZ
 diV
-hVx
+gOY
 gDZ
 eMX
 nTZ
@@ -109434,7 +109443,7 @@ jTB
 jTB
 mHc
 wnH
-qVo
+gOY
 reA
 bwj
 mSG
@@ -109692,7 +109701,7 @@ jGd
 eBH
 cQX
 enX
-cbH
+smN
 lCw
 vlz
 fDz
@@ -109949,7 +109958,7 @@ dkr
 hbH
 naU
 gsw
-smN
+aLM
 aMG
 vlz
 xTs
@@ -177033,8 +177042,8 @@ ttr
 ttr
 ttr
 ttr
-ttr
-ttr
+vkC
+vkC
 tcx
 qJN
 uHQ
@@ -177290,7 +177299,7 @@ wFI
 mmU
 ibE
 wts
-oFp
+lkx
 oFp
 iFN
 kHf
