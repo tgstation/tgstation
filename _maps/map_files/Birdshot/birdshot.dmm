@@ -62359,9 +62359,8 @@
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer4{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped{
-	dir = 4;
-	piping_layer = 2
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/layer2{
+	dir = 4
 	},
 /turf/open/space/basic,
 /area/station/engineering/atmos/space_catwalk)
@@ -65582,9 +65581,8 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/art)
 "vxR" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 4;
-	piping_layer = 2
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer2{
+	dir = 4
 	},
 /obj/machinery/light/cold/directional/west,
 /turf/open/floor/iron/dark,
@@ -67004,12 +67002,10 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "vUh" = (
-/obj/machinery/atmospherics/components/binary/pump/off/general/visible/layer1{
-	dir = 4;
+/obj/machinery/atmospherics/components/binary/pump/off/general/visible{
 	name = "Plasma to Pure";
 	color = "#BF40BF";
-	piping_layer = 3;
-	icon_state = "pump_map-3"
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
