@@ -101,3 +101,18 @@
 //oguzok in kitchen, huh?
 #include "code\modules\clothing\under\undersuit.dm"
 #include "code\modules\clothing\masks\moustache_ru.dm"
+
+//kvass
+#include "code\modules\cargo\exports\large_objects.dm"
+#include "code\modules\cargo\packs\materials.dm"
+#include "code\modules\reagents\chemistry\reagents\drinks\drink_reagents.dm"
+#include "code\modules\reagents\chemistry\reagents\drinks\glass_styles\sodas.dm"
+#include "code\modules\reagents\reagent_containers\cups\soda.dm"
+#include "code\modules\reagents\reagent_dispenser.dm"
+
+//Testicular_torsion wizard
+#include "code\modules\spells\spell_types\touch\testicular_torsion.dm"
+#include "code\modules\antags\wizard\equipment\spellbook_entries\offensive.dm"
+
+//smites
+#include "features\smites\testicular_torsion.dm"
