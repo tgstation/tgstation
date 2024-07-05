@@ -40,6 +40,8 @@
 	var/list/experiments_to_unlock = list()
 	/// Whether or not this node should show on the wiki
 	var/show_on_wiki = TRUE
+	/// Hidden Mech nodes unlocked when mech fabricator emaged.
+	var/illegal_mech_node = FALSE
 
 /datum/techweb_node/error_node
 	id = "ERROR"

@@ -1,5 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - bugfix: "Techweb: Moved upgraded cyber organs to tier 3 from tier 4"
-  - qol: "Techweb: Added fully augmented android scan discount experiment for Advanced Cybernetic Organs techweb node"
