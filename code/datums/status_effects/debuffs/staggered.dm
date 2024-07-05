@@ -63,7 +63,12 @@
 	//Let's just clear this if they're dead or we can't stun them on a shove
 	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_NO_SIDE_KICK) || HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
 		return FALSE
-	RegisterSignals(owner, list(COMSIG_LIVING_STATUS_PARALYZE, COMSIG_LIVING_STATUS_STUN), PROC_REF(clear_stun_vulnverability))
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(clear_stun_vulnverability_on_death))
+	RegisterSignals(owner, list(
+		COMSIG_LIVING_STATUS_PARALYZE,
+		COMSIG_LIVING_STATUS_STUN,
+		COMSIG_LIVING_STATUS_IMMOBILIZE), PROC_REF(clear_stun_vulnverability)
+	)
 	ADD_TRAIT(owner, TRAIT_STUN_ON_NEXT_SHOVE, STATUS_EFFECT_TRAIT)
 	vulnverability_overlay = mutable_appearance(icon = 'icons/effects/effects.dmi', icon_state = "dazed")
 	owner.add_overlay(vulnverability_overlay)
@@ -71,8 +76,10 @@
 
 /datum/status_effect/next_shove_stuns/on_remove()
 	UnregisterSignal(owner, list(
-			COMSIG_LIVING_STATUS_PARALYZE,
-			COMSIG_LIVING_STATUS_STUN,
+		COMSIG_LIVING_STATUS_PARALYZE,
+		COMSIG_LIVING_STATUS_STUN,
+		COMSIG_LIVING_STATUS_IMMOBILIZE,
+		COMSIG_LIVING_DEATH,
 	))
 	REMOVE_TRAIT(owner, TRAIT_STUN_ON_NEXT_SHOVE, STATUS_EFFECT_TRAIT)
 	if(vulnverability_overlay)
@@ -85,8 +92,8 @@
 		qdel(src)
 		return
 
-/// If our owner is either stunned or killed, we remove the status effect.
-/// This is both an anti-chainstun measure and a sanity check. No point stunning a corpse.
+/// If our owner is either stunned, paralzyed or immobilized, we remove the status effect.
+/// This is both an anti-chainstun measure and a sanity check.
 /datum/status_effect/next_shove_stuns/proc/clear_stun_vulnverability(mob/living/source, amount = 0, ignore_canstun = FALSE)
 	SIGNAL_HANDLER
 
@@ -94,6 +101,13 @@
 		// Making absolutely sure we're removing this overlay
 		clear_stun_vulnverability_overlay()
 		qdel(src)
+
+/datum/status_effect/next_shove_stuns/proc/clear_stun_vulnverability_on_death(mob/living/source)
+	SIGNAL_HANDLER
+
+	// Making absolutely sure we're removing this overlay
+	clear_stun_vulnverability_overlay()
+	qdel(src)
 
 /// Clears our overlay where needed.
 /datum/status_effect/next_shove_stuns/proc/clear_stun_vulnverability_overlay()
