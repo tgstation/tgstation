@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "RPLD UI now actually shows the sprites for new xenobio stuff, rather than a generic sprite."
