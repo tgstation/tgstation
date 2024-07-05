@@ -1,17 +1,14 @@
-Описание:
+Описание Модуля:
 
 Возвращает солнцезащитным очкам и всем худам на основе этих очков защиту от сварки.
 Было спровоцированно PR'ом: ...?
 
 Новые файлы модуля:
-
 [Отсуствуют]
 
 Файлы в Мастер папке:
-
-[massmeta/code/modules/clothing/glasses/hud.dm]
 [massmeta/code/modules/clothing/glasses/_glasses.dm]
+[massmeta/code/modules/clothing/glasses/hud.dm]
 
 Не модульные добавления:
-
 [Отсуствуют]

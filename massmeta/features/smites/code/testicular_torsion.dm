@@ -16,7 +16,7 @@
 	carbon_target.apply_damage(rand(20, 40), BRUTE, BODY_ZONE_L_LEG, wound_bonus = rand(35,60), forced = TRUE)
 	carbon_target.apply_damage(rand(20, 40), BRUTE, BODY_ZONE_R_LEG, wound_bonus = rand(35,60), forced = TRUE)
 	carbon_target.emote("scream")
-	var/list/phrase = world.file2list("massmeta/strings/balls_phrases.txt")
+	var/list/phrase = world.file2list("massmeta/features/smites/string/balls_phrases.txt")
 	carbon_target.say(pick(phrase))
 	carbon_target.Paralyze(15 SECONDS)
 
