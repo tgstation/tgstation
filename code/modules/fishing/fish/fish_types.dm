@@ -19,7 +19,8 @@
 	desc = "A great rubber duck tool for Lawyers who can't get a grasp over their case."
 	stable_population = 1
 	random_case_rarity = FISH_RARITY_NOPE
-	beauty = 500
+	show_in_catalog = FALSE
+	beauty = FISH_BEAUTY_GOOD
 
 /obj/item/fish/angelfish
 	name = "angelfish"
@@ -78,7 +79,7 @@
 	)
 	required_temperature_min = MIN_AQUARIUM_TEMP+12
 	required_temperature_max = MIN_AQUARIUM_TEMP+30
-	beauty = 400
+	beauty = FISH_BEAUTY_GOOD
 
 // Saltwater fish below
 
@@ -109,7 +110,7 @@
 	evolution_types = null
 	compatible_types = list(/obj/item/fish/clownfish)
 	food = /datum/reagent/lube
-	beauty = 600
+	beauty = FISH_BEAUTY_GREAT
 
 /obj/item/fish/cardinal
 	name = "cardinalfish"
@@ -167,7 +168,7 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+23
 	required_temperature_max = MIN_AQUARIUM_TEMP+28
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/toxic)
-	beauty = 400
+	beauty = FISH_BEAUTY_GOOD
 
 
 /obj/item/fish/lanternfish
@@ -186,7 +187,7 @@
 	fish_traits = list(/datum/fish_trait/nocturnal)
 	required_temperature_min = MIN_AQUARIUM_TEMP+2 //My source is that the water at a depth 6600 feet is pretty darn cold.
 	required_temperature_max = MIN_AQUARIUM_TEMP+18
-	beauty = 200
+	beauty = FISH_BEAUTY_NULL
 
 //Tiziran Fish
 /obj/item/fish/dwarf_moonfish
@@ -200,7 +201,7 @@
 	average_weight = 2000
 	required_temperature_min = MIN_AQUARIUM_TEMP+20
 	required_temperature_max = MIN_AQUARIUM_TEMP+30
-	beauty = 500
+	beauty = FISH_BEAUTY_GOOD
 
 /obj/item/fish/gunner_jellyfish
 	name = "gunner jellyfish"
@@ -211,7 +212,7 @@
 	fillet_type = /obj/item/food/fishmeat/gunner_jellyfish
 	required_temperature_min = MIN_AQUARIUM_TEMP+24
 	required_temperature_max = MIN_AQUARIUM_TEMP+32
-	beauty = 500
+	beauty = FISH_BEAUTY_GOOD
 
 /obj/item/fish/needlefish
 	name = "needlefish"
@@ -268,7 +269,7 @@
 	)
 	evolution_types = list(/datum/fish_evolution/ice_chrab)
 	compatible_types = list(/obj/item/fish/chasm_crab/ice)
-	beauty = 500
+	beauty = FISH_BEAUTY_GOOD
 
 /obj/item/fish/chasm_crab/ice
 	name = "arctic chrab"
@@ -279,7 +280,7 @@
 	required_temperature_max = MIN_AQUARIUM_TEMP+15
 	evolution_types = list(/datum/fish_evolution/chasm_chrab)
 	compatible_types = list(/obj/item/fish/chasm_crab)
-	beauty = 500
+	beauty = FISH_BEAUTY_GREAT
 
 /obj/item/fish/donkfish
 	name = "donk co. company patent donkfish"
@@ -292,7 +293,7 @@
 	fish_traits = list(/datum/fish_trait/yucky)
 	required_temperature_min = MIN_AQUARIUM_TEMP+15
 	required_temperature_max = MIN_AQUARIUM_TEMP+28
-	beauty = 700
+	beauty = FISH_BEAUTY_EXCELLENT
 
 /obj/item/fish/emulsijack
 	name = "toxic emulsijack"
@@ -304,7 +305,7 @@
 	fish_traits = list(/datum/fish_trait/emulsijack)
 	required_temperature_min = MIN_AQUARIUM_TEMP+5
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
-	beauty = -200
+	beauty = FISH_BEAUTY_BAD
 
 /obj/item/fish/jumpercable
 	name = "monocloning jumpercable"
@@ -326,7 +327,7 @@
 		/datum/fish_trait/mixotroph,
 		/datum/fish_trait/electrogenesis,
 	)
-	beauty = -300
+	beauty = FISH_BEAUTY_UGLY
 
 /obj/item/fish/ratfish
 	name = "ratfish"
@@ -346,7 +347,7 @@
 			"Value" = DAIRY
 		)
 	)
-	beauty = -500
+	beauty = FISH_BEAUTY_DISGUSTING
 
 /obj/item/fish/ratfish/Initialize(mapload)
 	. = ..()
@@ -370,7 +371,7 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+10
 	required_temperature_max = MIN_AQUARIUM_TEMP+40
 	evolution_types = list(/datum/fish_evolution/purple_sludgefish)
-	beauty = 0
+	beauty = FISH_BEAUTY_NULL
 
 /obj/item/fish/sludgefish/purple
 	name = "purple sludgefish"
@@ -379,7 +380,6 @@
 	dedicated_in_aquarium_icon_state = "sludgefish_purple_small"
 	random_case_rarity = FISH_RARITY_NOPE
 	fish_traits = list(/datum/fish_trait/parthenogenesis)
-	beauty = 0
 
 /obj/item/fish/slimefish
 	name = "acquatic slime"
@@ -409,7 +409,7 @@
 		),
 	)
 	required_temperature_min = MIN_AQUARIUM_TEMP+20
-	beauty = 150
+	beauty = FISH_BEAUTY_GREAT
 
 /obj/item/fish/boned
 	name = "unmarine bonemass"
@@ -432,7 +432,7 @@
 	average_weight = 2000
 	death_text = "%SRC stops moving." //It's dead... or is it?
 	evolution_types = list(/datum/fish_evolution/mastodon)
-	beauty = -300
+	beauty = FISH_BEAUTY_UGLY
 
 /obj/item/fish/mastodon
 	name = "unmarine mastodon"
@@ -461,7 +461,7 @@
 	average_weight = 5000
 	death_text = "%SRC stops moving."
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/revival, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
-	beauty = -400
+	beauty = FISH_BEAUTY_BAD
 
 /obj/item/fish/holo
 	name = "holographic goldfish"
@@ -512,7 +512,7 @@
 	sprite_height = 8
 	average_size = 60
 	average_weight = 1000
-	beauty = 400
+	beauty = FISH_BEAUTY_GOOD
 
 /obj/item/fish/holo/angel
 	name = "holographic angelfish"
@@ -536,7 +536,7 @@
 	icon_state = "checkered" //it's a meta joke, buddy.
 	dedicated_in_aquarium_icon_state = "checkered_small"
 	sprite_width = 4
-	beauty = 0
+	beauty = FISH_BEAUTY_NULL
 
 /obj/item/fish/holo/halffish
 	name = "holographic half-fish"
@@ -546,7 +546,7 @@
 	sprite_height = 4
 	sprite_width = 10
 	average_size = 50
-	beauty = -300
+	beauty = FISH_BEAUTY_UGLY
 
 /obj/item/fish/starfish
 	name = "cosmostarfish"
@@ -568,7 +568,7 @@
 	grind_results = list(/datum/reagent/bluespace = 10, /datum/reagent/consumable/liquidgibs = 5)
 	fillet_type = null
 	fish_traits = list(/datum/fish_trait/antigrav, /datum/fish_trait/mixotroph)
-	beauty = 600
+	beauty = FISH_BEAUTY_GREAT
 
 /obj/item/fish/starfish/Initialize(mapload)
 	. = ..()
@@ -604,7 +604,7 @@
 	)
 	hitsound = null
 	throwforce = 5
-	beauty = 500
+	beauty = FISH_BEAUTY_GOOD
 	///maximum bonus damage when winded up
 	var/maximum_bonus = 25
 
@@ -678,4 +678,4 @@
 	)
 	//anxiety naturally limits the amount of zipzaps per tank, so they are stronger alone
 	electrogenesis_power = 20 MEGA JOULES
-	beauty = 400
+	beauty = FISH_BEAUTY_GOOD

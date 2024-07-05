@@ -144,7 +144,7 @@
 	var/electrogenesis_power = 10 MEGA JOULES
 
 	/// The beauty this fish provides to the aquarium it's inserted in.
-	var/beauty = 300
+	var/beauty = FISH_BEAUTY_GENERIC
 
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
