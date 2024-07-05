@@ -137,6 +137,7 @@
 		beauty = clamp(beauty + DEAD_FISH_BEAUTY, MIN_DEAD_FISH_BEAUTY, MAX_DEAD_FISH_BEAUTY)
 	if(current_aquarium)
 		change_aquarium_beauty(beauty - old_beauty)
+	generate_animation()
 
 /// Sets visuals properties for fish
 /datum/component/aquarium_content/proc/InitializeFromProp()
