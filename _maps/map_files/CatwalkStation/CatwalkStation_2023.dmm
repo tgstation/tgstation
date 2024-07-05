@@ -171,9 +171,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/railing/corner{
-	dir = 1
-	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/textured,
 /area/station/cargo/storage)
@@ -223,6 +220,7 @@
 	dir = 8;
 	id = "HoPsToy"
 	},
+/obj/structure/musician/piano/unanchored,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "afk" = (
@@ -4272,6 +4270,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/effect/baseturf_helper/reinforced_plating/ceiling,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "bBp" = (
@@ -10072,12 +10071,10 @@
 /turf/open/openspace,
 /area/station/maintenance/starboard/aft)
 "dxn" = (
-/obj/structure/railing{
-	dir = 8
-	},
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/qm)
 "dxx" = (
@@ -24301,11 +24298,6 @@
 /area/station/engineering/storage/tech)
 "iwr" = (
 /obj/structure/table,
-/obj/item/clothing/head/collectable/hos{
-	name = "novelty HoS hat";
-	pixel_x = 11;
-	pixel_y = 8
-	},
 /obj/item/toy/gun{
 	pixel_x = 1;
 	pixel_y = 1
@@ -29332,7 +29324,7 @@
 "kfX" = (
 /obj/vehicle/sealed/mecha/ripley/cargo{
 	name = "\improper APLU \";
-	\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tCargostormer 3\""=None
+	\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tCargostormer 3\""=None
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -34548,6 +34540,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/effect/baseturf_helper/reinforced_plating/ceiling,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "lXD" = (
@@ -38557,17 +38550,9 @@
 /area/station/maintenance/port)
 "npQ" = (
 /obj/structure/table,
-/obj/item/reagent_containers/cup/bucket/wooden{
-	pixel_y = 12;
-	pixel_x = -1
-	},
 /obj/item/reagent_containers/cup/rag{
 	pixel_y = 5;
 	pixel_x = 6
-	},
-/obj/item/reagent_containers/cup/bucket/wooden{
-	pixel_y = 9;
-	pixel_x = -6
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
@@ -54405,6 +54390,14 @@
 "sXq" = (
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/execution/transfer)
+"sXF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/item/mod/module/stamp,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "sXI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/public/glass{
@@ -60653,12 +60646,10 @@
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
 "vhM" = (
-/obj/structure/railing{
-	dir = 8
-	},
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/qm)
 "vhU" = (
@@ -61280,12 +61271,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/science/genetics,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/genetics)
-"vtk" = (
-/obj/machinery/door/airlock{
-	name = "Emergency Storage"
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/central)
 "vtl" = (
 /obj/structure/sign/poster/contraband/self_ai_liberation,
 /turf/open/openspace/airless,
@@ -64457,16 +64442,6 @@
 	},
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/item/clothing/head/collectable/hos{
-	name = "novelty HoS hat";
-	pixel_x = -2;
-	pixel_y = -10
-	},
-/obj/item/stamp/head/hos{
-	name = "HoS Display Rubber Stamp";
-	pixel_x = 10;
-	pixel_y = -7
-	},
 /turf/open/floor/iron/dark,
 /area/station/command/corporate_showroom)
 "wxd" = (
@@ -68571,9 +68546,6 @@
 /obj/item/storage/box/lights/mixed{
 	pixel_x = 4;
 	pixel_y = 11
-	},
-/obj/item/stamp/head/qm{
-	pixel_x = -1
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -98501,7 +98473,7 @@ vYe
 nhj
 yai
 vYe
-vYe
+sXF
 fcn
 fcn
 sXj
@@ -164536,7 +164508,7 @@ fOb
 vuO
 qQd
 dHL
-vtk
+dHL
 dHL
 qQd
 eLU
