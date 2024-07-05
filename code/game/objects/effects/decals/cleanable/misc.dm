@@ -81,11 +81,11 @@
 	if(T.tiled_dirt)
 		smoothing_flags = SMOOTH_BITMASK
 		QUEUE_SMOOTH(src)
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/effect/decal/cleanable/dirt/Destroy()
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
 
@@ -467,6 +467,15 @@
 	if(burn_stacks)
 		burn_amount = max(min(burn_stacks, 10), 1)
 
+	return INITIALIZE_HINT_LATELOAD
+
+// Just in case of fires, do this after mapload.
+/obj/effect/decal/cleanable/fuel_pool/LateInitialize()
+// We don't want to burn down the create_and_destroy test area
+#ifndef UNIT_TESTS
+	RegisterSignal(src, COMSIG_ATOM_TOUCHED_SPARKS, PROC_REF(ignition_trigger))
+#endif
+
 /obj/effect/decal/cleanable/fuel_pool/fire_act(exposed_temperature, exposed_volume)
 	. = ..()
 	ignite()
@@ -532,6 +541,8 @@
 		var/mob/living/enflamed_liver = enflammable_atom
 		if(enflamed_liver.on_fire)
 			ignite()
+	else if(istype(enflammable_atom, /obj/effect/particle_effect/sparks))
+		ignite()
 
 
 /obj/effect/decal/cleanable/fuel_pool/hivis

@@ -555,8 +555,8 @@
 		item_to_drop = drop_item
 		item_to_drop.forceMove(dropzone)
 
-	if(istype(item_to_drop, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/dropped_cell = item_to_drop
+	if(istype(item_to_drop, /obj/item/stock_parts/power_store/cell))
+		var/obj/item/stock_parts/power_store/cell/dropped_cell = item_to_drop
 		dropped_cell.charge = 0
 		dropped_cell.update_appearance()
 
@@ -1215,3 +1215,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/spawn_gibs(drop_bitflags = NONE)
 	new /obj/effect/gibspawner/robot(drop_location(), src)
+
+/mob/living/simple_animal/bot/get_hit_area_message(input_area)
+	// we just get hit, there's no complexity for hitting an arm (if it exists) or anything.
+	// we also need to return an empty string as otherwise it would falsely say that we get hit in the chest or something strange like that (bots don't have "chests")
+	return ""
