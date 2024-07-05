@@ -1,0 +1,5 @@
+author: "DaCoolBoss"
+delete-after: True
+changes:
+  - code_imp: "Cleaned up relic code."
+  - image: "Added necrotech themed relics."
