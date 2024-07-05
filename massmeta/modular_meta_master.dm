@@ -7,6 +7,6 @@
  */
 
 // BEGIN_INCLUDE
-#include "code\modules\clothing\glasses\_glasses.dm"
-#include "code\modules\clothing\glasses\hud.dm"
+#include "master_files\code\modules\clothing\glasses\_glasses.dm"
+#include "master_files\code\modules\clothing\glasses\hud.dm"
 // END_INCLUDE
