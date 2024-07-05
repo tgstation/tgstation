@@ -6703,6 +6703,7 @@
 /area/station/maintenance/disposal/incinerator)
 "cuA" = (
 /obj/machinery/portable_atmospherics/canister,
+/obj/structure/cable,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/ordnance/storage)
 "cuE" = (
@@ -7817,7 +7818,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "cRa" = (
@@ -12075,7 +12075,6 @@
 /obj/machinery/door/poddoor/shutters/window/preopen{
 	id = "ordstorage"
 	},
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -15141,6 +15140,7 @@
 	},
 /obj/effect/turf_decal/caution/stand_clear/red,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "fvd" = (
@@ -17929,7 +17929,6 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/caution/stand_clear/red,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
@@ -30783,8 +30782,9 @@
 /area/station/engineering/lobby)
 "kQB" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/structure/sign/poster/official/wtf_is_co2/directional/north,
 /obj/machinery/light_switch/directional/east,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/ordnance/storage)
 "kQF" = (
@@ -39090,6 +39090,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "nNo" = (
@@ -52870,6 +52871,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white/smooth_half,
 /area/station/medical/pharmacy)
+"sFp" = (
+/obj/machinery/portable_atmospherics/canister,
+/obj/structure/sign/poster/official/wtf_is_co2/directional/north,
+/turf/open/floor/iron/white/smooth_large,
+/area/station/science/ordnance/storage)
 "sFq" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/opposingcorners,
@@ -58142,6 +58148,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "uwW" = (
@@ -63156,10 +63163,8 @@
 	},
 /area/station/science/xenobiology)
 "wnH" = (
-/obj/structure/cable,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/box,
-/obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8;
 	name = "Oxygen Chamber Injection Port"
@@ -110978,7 +110983,7 @@ aku
 ieo
 ilp
 jTB
-cuA
+sFp
 cuA
 nNl
 uwV
