@@ -88,22 +88,10 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
-"eY" = (
-/obj/machinery/light/small/directional/south,
-/obj/structure/table,
-/obj/item/reagent_containers/cup/glass/bottle/vodka{
-	pixel_x = -6;
-	pixel_y = 14
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/clothing/mask/cigarette/dromedary{
-	pixel_x = 8;
-	pixel_y = 15
-	},
-/turf/open/floor/mineral/titanium/white,
+"eS" = (
+/obj/structure/lattice,
+/obj/item/stack/rods/two,
+/turf/template_noop,
 /area/shuttle/escape)
 "fd" = (
 /obj/effect/decal/cleanable/plastic,
@@ -284,10 +272,6 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
-"mU" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/template_noop)
 "no" = (
 /obj/item/trash/popcorn/caramel,
 /turf/open/floor/mineral/titanium,
@@ -408,6 +392,10 @@
 "rZ" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
+/area/shuttle/escape)
+"sw" = (
+/obj/structure/lattice,
+/turf/template_noop,
 /area/shuttle/escape)
 "sS" = (
 /obj/structure/chair/comfy/shuttle{
@@ -536,6 +524,23 @@
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
+"yx" = (
+/obj/machinery/light/small/directional/south,
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/bottle/vodka{
+	pixel_x = -6;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/cigarette/dromedary{
+	pixel_x = 8;
+	pixel_y = 15
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
 "zq" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/power/shuttle_engine/heater,
@@ -548,11 +553,6 @@
 /obj/item/trash/can/food/beans,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"Aw" = (
-/obj/structure/lattice,
-/obj/item/stack/rods/two,
-/turf/template_noop,
-/area/template_noop)
 "Ay" = (
 /obj/item/shard{
 	pixel_y = 19
@@ -1035,7 +1035,7 @@ LX
 LX
 ON
 Ko
-eY
+yx
 LX
 rZ
 LX
@@ -1183,7 +1183,7 @@ WH
 De
 ye
 LX
-mU
+sw
 nQ
 ax
 LX
@@ -1194,7 +1194,7 @@ LX
 ax
 nQ
 nQ
-mU
+sw
 Sm
 hF
 LX
@@ -1214,23 +1214,23 @@ yj
 MW
 rZ
 rZ
-mU
-mU
-mU
-mU
+sw
+sw
+sw
+sw
 IN
 pl
 ry
-mU
-mU
-mU
-mU
-mU
+sw
+sw
+sw
+sw
+sw
 mp
 ig
 Kh
 Uh
-mU
+sw
 nQ
 nQ
 nQ
@@ -1248,11 +1248,11 @@ nQ
 nQ
 nQ
 nQ
-mU
+sw
 IN
 cr
 oC
-mU
+sw
 nQ
 nQ
 nQ
@@ -1261,7 +1261,7 @@ HS
 ig
 fd
 AK
-mU
+sw
 nQ
 nQ
 nQ
@@ -1276,23 +1276,23 @@ nO
 MW
 rZ
 rZ
-mU
-mU
-mU
-mU
+sw
+sw
+sw
+sw
 bx
 ig
 ry
-mU
-mU
-mU
-mU
-mU
+sw
+sw
+sw
+sw
+sw
 Vo
 jt
 oN
 IK
-mU
+sw
 nQ
 nQ
 nQ
@@ -1307,7 +1307,7 @@ xg
 De
 eR
 LX
-mU
+sw
 nQ
 ax
 LX
@@ -1318,7 +1318,7 @@ LX
 ax
 nQ
 nQ
-mU
+sw
 Sm
 hF
 LX
@@ -1327,7 +1327,7 @@ LX
 ax
 nQ
 bo
-mU
+sw
 nQ
 nQ
 "}
@@ -1359,7 +1359,7 @@ ho
 LX
 LX
 RW
-mU
+sw
 nQ
 "}
 (13,1,1) = {"
@@ -1389,7 +1389,7 @@ Ly
 Oq
 tb
 MC
-mU
+sw
 LX
 ST
 "}
@@ -1422,7 +1422,7 @@ LX
 VA
 Em
 Ay
-mU
+sw
 "}
 (15,1,1) = {"
 nQ
@@ -1451,7 +1451,7 @@ tu
 xC
 tj
 Iv
-mU
+sw
 fv
 ce
 "}
@@ -1481,7 +1481,7 @@ eH
 oL
 ho
 kH
-Aw
+eS
 sU
 LX
 bo

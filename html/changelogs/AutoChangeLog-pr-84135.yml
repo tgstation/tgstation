@@ -1,4 +1,0 @@
-author: "Guestify"
-delete-after: True
-changes:
-  - bugfix: "The visor of the welding mask no longer goes down when you enable internals"

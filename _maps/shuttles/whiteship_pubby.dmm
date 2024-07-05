@@ -268,15 +268,6 @@
 /obj/machinery/recharger,
 /turf/open/floor/pod/light,
 /area/shuttle/abandoned)
-"lV" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
-	y_offset = 2;
-	x_offset = -7
-	},
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
-/area/shuttle/abandoned)
 "mh" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 8
@@ -402,6 +393,11 @@
 /obj/effect/decal/cleanable/ants,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
+/area/shuttle/abandoned)
+"qy" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "qS" = (
 /obj/structure/table,
@@ -536,24 +532,6 @@
 /obj/machinery/light/small/built/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
-"vB" = (
-/obj/machinery/door/airlock/external/ruin,
-/obj/effect/turf_decal/loading_area/white{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/docking_port/mobile{
-	dir = 8;
-	shuttle_id = "whiteship";
-	launch_status = 0;
-	name = "White Ship";
-	port_direction = 2
-	},
-/turf/open/floor/plating,
-/area/shuttle/abandoned)
 "vJ" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/decal/cleanable/dirt,
@@ -592,13 +570,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
-/area/shuttle/abandoned)
-"zw" = (
-/obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
-/turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "zY" = (
 /turf/template_noop,
@@ -993,6 +964,24 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
+"Oe" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/turf_decal/loading_area/white{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/docking_port/mobile{
+	dir = 8;
+	shuttle_id = "whiteship";
+	launch_status = 0;
+	name = "White Ship";
+	port_direction = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned)
 "Pu" = (
 /obj/machinery/light/small/built/directional/west,
 /obj/effect/turf_decal/siding/purple{
@@ -1001,6 +990,15 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/rack_parts,
 /turf/open/floor/iron/white/diagonal,
+/area/shuttle/abandoned)
+"QZ" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	y_offset = 2;
+	x_offset = -8
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/pod/dark,
 /area/shuttle/abandoned)
 "Ra" = (
 /obj/effect/turf_decal/trimline/purple/filled/end{
@@ -1346,7 +1344,7 @@ Sc
 Sc
 ED
 xl
-zw
+qy
 UX
 "}
 (7,1,1) = {"
@@ -1366,7 +1364,7 @@ cE
 Sc
 ot
 cx
-zw
+qy
 UX
 "}
 (8,1,1) = {"
@@ -1411,7 +1409,7 @@ Sc
 "}
 (10,1,1) = {"
 Fw
-lV
+QZ
 Np
 nQ
 jT
@@ -1446,7 +1444,7 @@ Ky
 Sc
 Rr
 vJ
-zw
+qy
 UX
 "}
 (12,1,1) = {"
@@ -1466,7 +1464,7 @@ Sc
 Sc
 UC
 AA
-zw
+qy
 UX
 "}
 (13,1,1) = {"
@@ -1560,7 +1558,7 @@ zY
 zY
 Sc
 jT
-vB
+Oe
 jT
 Sc
 zY

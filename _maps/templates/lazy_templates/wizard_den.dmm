@@ -44,18 +44,6 @@
 /obj/structure/showcase/machinery/rng,
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
-"dr" = (
-/obj/structure/table/wood,
-/obj/item/clothing/mask/cigarette/cigar{
-	pixel_y = -9;
-	pixel_x = -5
-	},
-/obj/item/camera/spooky{
-	pixel_y = 7;
-	pixel_x = 2
-	},
-/turf/open/floor/engine/cult,
-/area/centcom/wizard_station)
 "dB" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/cult,
@@ -184,6 +172,13 @@
 /obj/machinery/computer/shuttle,
 /turf/open/floor/carpet/red,
 /area/centcom/wizard_station)
+"kG" = (
+/obj/structure/railing,
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/open/floor/engine/cult,
+/area/centcom/wizard_station)
 "kZ" = (
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
@@ -213,6 +208,13 @@
 	name = "wand of emergency engine ignition"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/engine/cult,
+/area/centcom/wizard_station)
+"mJ" = (
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 1
+	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "nc" = (
@@ -326,16 +328,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/griddle,
 /turf/open/floor/iron,
-/area/centcom/wizard_station)
-"qg" = (
-/obj/structure/railing{
-	layer = 3.1
-	},
-/obj/structure/railing{
-	layer = 3.1;
-	dir = 1
-	},
-/turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "ql" = (
 /obj/structure/table/wood,
@@ -510,15 +502,6 @@
 	},
 /turf/open/floor/plastic,
 /area/centcom/wizard_station)
-"yX" = (
-/obj/structure/railing{
-	layer = 3.1
-	},
-/obj/structure/railing/corner{
-	dir = 4
-	},
-/turf/open/floor/engine/cult,
-/area/centcom/wizard_station)
 "zB" = (
 /turf/open/floor/iron,
 /area/centcom/wizard_station)
@@ -664,6 +647,18 @@
 	pixel_x = 9
 	},
 /turf/open/floor/iron,
+/area/centcom/wizard_station)
+"JU" = (
+/obj/structure/table/wood,
+/obj/item/cigarette/cigar{
+	pixel_y = -9;
+	pixel_x = -5
+	},
+/obj/item/camera/spooky{
+	pixel_y = 7;
+	pixel_x = 2
+	},
+/turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "JW" = (
 /obj/machinery/door/window/left/directional/east,
@@ -1556,7 +1551,7 @@ kZ
 uy
 VB
 TX
-yX
+kG
 VB
 VB
 op
@@ -1602,7 +1597,7 @@ kZ
 uy
 VB
 fX
-qg
+mJ
 fX
 VB
 VB
@@ -1648,7 +1643,7 @@ LU
 cy
 VB
 eI
-qg
+mJ
 fX
 fX
 dk
@@ -1740,7 +1735,7 @@ LU
 cy
 VB
 fX
-qg
+mJ
 fX
 fX
 dk
@@ -1786,7 +1781,7 @@ kZ
 uy
 VB
 fX
-qg
+mJ
 fX
 VB
 VB
@@ -1832,7 +1827,7 @@ kZ
 uy
 VB
 fX
-qg
+mJ
 VB
 VB
 op
@@ -1857,7 +1852,7 @@ op
 op
 TG
 TG
-dr
+JU
 HD
 VB
 Dq
