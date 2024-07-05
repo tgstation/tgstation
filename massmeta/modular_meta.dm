@@ -14,7 +14,7 @@
 // BEGIN_INCLUDE
 #include "features\additional_circuit\includes.dm"
 #include "features\hardsuits\includes.dm"
-#include "features\features\kvass\includes.dm"
+#include "features\kvass\includes.dm"
 #include "features\smites\includes.dm"
 // END_INCLUDE
 
