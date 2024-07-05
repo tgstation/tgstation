@@ -1,0 +1,4 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - bugfix: "Binary devices no longer ignore the volume of the output pipe network"
