@@ -1,5 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "Linked speech now prevents messages from highlighting if its a message you sent, or if you are the owner of said link.."
-  - qol: "Linked speech messages are now marked as radio messages, for chat tab purposes."
