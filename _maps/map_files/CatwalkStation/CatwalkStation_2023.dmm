@@ -17620,8 +17620,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/light/small/dim/directional/north,
-/obj/effect/mob_spawn/corpse/human/cargo_tech,
 /obj/effect/decal/cleanable/vomit/old,
+/obj/effect/decal/remains/human,
+/obj/item/clothing/under/rank/cargo/tech{
+	pixel_x = -7;
+	pixel_y = -5
+	},
 /turf/open/floor/plating,
 /area/space)
 "gfz" = (
