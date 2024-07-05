@@ -109,3 +109,4 @@
 	internal_damage &= ~int_dam_flag
 	diag_hud_set_mechstat()
 	update_appearance()
+
