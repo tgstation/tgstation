@@ -98,7 +98,7 @@
 		. += "\The [cell] is firmly in place. [span_info("Ctrl-click with an empty hand to remove it.")]"
 
 /obj/item/inspector/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!Adjacent(interacting_with))
+	if(!user.Adjacent(interacting_with))
 		return ITEM_INTERACT_BLOCKING
 	if(cell_cover_open)
 		balloon_alert(user, "close cover first!")
@@ -120,15 +120,22 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/inspector/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	var/update_context = FALSE
 	if(cell_cover_open && cell)
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove cell"
+		update_context = TRUE
 
 	if(cell_cover_open && !cell && istype(held_item, /obj/item/stock_parts/power_store/cell))
 		context[SCREENTIP_CONTEXT_LMB] = "Install cell"
+		update_context = TRUE
 
 	if(held_item?.tool_behaviour == TOOL_CROWBAR)
 		context[SCREENTIP_CONTEXT_LMB] = "[cell_cover_open ? "close" : "open"] battery panel"
-	return CONTEXTUAL_SCREENTIP_SET
+		update_context = TRUE
+
+	if(update_context)
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
 
 /obj/item/inspector/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	if(cell_cover_open || !cell)
