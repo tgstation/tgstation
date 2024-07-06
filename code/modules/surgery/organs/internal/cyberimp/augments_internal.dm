@@ -119,12 +119,12 @@
 /obj/item/organ/internal/cyberimp/brain/anti_stun/on_mob_remove(mob/living/carbon/implant_owner)
 	. = ..()
 	UnregisterSignal(implant_owner, signalCache)
-	UnregisterSignal(implant_owner, list(COMSIG_CARBON_ENTER_STAMCRIT, COMSIG_LIVING_ENTER_STAMCRIT))
+	UnregisterSignal(implant_owner, COMSIG_LIVING_ENTER_STAMCRIT)
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()
 	RegisterSignals(receiver, signalCache, PROC_REF(on_signal))
-	RegisterSignals(receiver, list(COMSIG_CARBON_ENTER_STAMCRIT, COMSIG_LIVING_ENTER_STAMCRIT), PROC_REF(on_stamcrit))
+	RegisterSignal(receiver, COMSIG_LIVING_ENTER_STAMCRIT, PROC_REF(on_stamcrit))
 
 /obj/item/organ/internal/cyberimp/brain/anti_stun/proc/on_signal(datum/source, amount)
 	SIGNAL_HANDLER
