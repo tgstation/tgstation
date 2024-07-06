@@ -56,6 +56,9 @@
 	if(deconstruction == BLASTDOOR_NEEDS_ELECTRONICS && istype(held_item, /obj/item/electronics/airlock))
 		context[SCREENTIP_CONTEXT_LMB] = "Add electronics"
 		return CONTEXTUAL_SCREENTIP_SET
+	if(deconstruction == BLASTDOOR_FINISHED && istype(held_item, /obj/item/assembly/control))
+		context[SCREENTIP_CONTEXT_LMB] = "Calibrate ID"
+		return CONTEXTUAL_SCREENTIP_SET
 	//we do not check for special effects like if they can actually perform the action because they will be told they can't do it when they try,
 	//with feedback on what they have to do in order to do so.
 	switch(held_item.tool_behaviour)
