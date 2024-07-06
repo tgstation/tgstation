@@ -1,6 +1,7 @@
 /atom/movable/screen/movable/pic_in_pic
 	name = "Picture-in-picture"
 	screen_loc = "CENTER"
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 	var/atom/center
 	var/width = 0

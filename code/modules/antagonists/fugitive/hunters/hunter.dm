@@ -42,6 +42,10 @@
 			to_chat(owner, span_danger("GOOD EVENING, WE ARE PSYKER HUNTE- NO, PSYKER SHIKARIS!"))
 			to_chat(owner, span_danger("A brainling hit us up on the holopad with an offer we could NOT pass up. We kidnap some fools for them, and in exchange we get a LIFETIME SUPPLY OF GORE."))
 			to_chat(owner, span_danger("Our gore supply has been running thin as of late -- How could we say no? The binge MUST go on!"))
+		if(HUNTER_PACK_MI13)
+			to_chat(owner, span_danger("Agents, we have detected a wanted fugitive in Nanotrasen controlled space."))
+			to_chat(owner, span_danger("Your mission is simple. Infiltrate the facility and extract the target, dead or alive."))
+			to_chat(owner, span_danger("This is a stealth infiltration mission in hostile enemy territory. Be wary, and avoid being caught if possible."))
 
 	to_chat(owner, span_boldannounce("You are not an antagonist in that you may kill whomever you please, but you can do anything to ensure the capture of the fugitives, even if that means going through the station."))
 	owner.announce_objectives()
