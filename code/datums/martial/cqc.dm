@@ -30,10 +30,14 @@
 		return
 	if(!can_use(cqc_user))
 		return
+	// monkestation edit: improved messaging
 	cqc_user.visible_message(
 		span_danger("[cqc_user] twists [attacker]'s arm, sending their [attack_weapon] back towards them!"),
 		span_userdanger("Making sure to avoid [attacker]'s [attack_weapon], you twist their arm to send it right back at them!"),
+		ignored_mobs = list(attacker),
 	)
+	to_chat(attacker, span_userdanger("[cqc_user] swiftly grabs and twists your arm, hitting you with your own [attack_weapon]!"), type = MESSAGE_TYPE_COMBAT)
+	// monkestation end
 	var/obj/item/melee/touch_attack/touch_weapon = attack_weapon
 	var/datum/action/cooldown/spell/touch/touch_spell = touch_weapon.spell_which_made_us?.resolve()
 	if(!touch_spell)

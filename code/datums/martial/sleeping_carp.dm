@@ -197,10 +197,16 @@
 	if(!istype(attack_weapon, /obj/item/melee/touch_attack) || !can_deflect(carp_user))
 		return
 	var/obj/item/melee/touch_attack/touch_weapon = attack_weapon
+	// monkestation edit: flavor tweaks
 	carp_user.visible_message(
 		span_danger("[carp_user] carefully dodges [attacker]'s [touch_weapon]!"),
 		span_userdanger("You take great care to remain untouched by [attacker]'s [touch_weapon]!"),
+		ignored_mobs = list(attacker),
 	)
+	to_chat(attacker, span_userdanger("[carp_user] carefully dodges your [touch_weapon], remaining completely untouched!"), type = MESSAGE_TYPE_COMBAT)
+	carp_user.balloon_alert(attacker, "miss!")
+	playsound(carp_user, 'monkestation/sound/effects/miss.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	// monkestation end
 	return COMPONENT_NO_AFTERATTACK
 
 /// Verb added to humans who learn the art of the sleeping carp.
