@@ -1,3 +1,30 @@
-# Credits
+## Module ID: ADDITIONAL_CIRCUITS
 
-Jake Park
+### Description:
+
+Добавляет микросхемы для "Циркуитов".
+
+
+### TG Proc/File Changes:
+
+- N/A
+
+
+### Modular Overrides:
+
+- N/A
+
+
+### Defines:
+
+- N/A
+
+
+### TGUI Files:
+
+- N/A
+
+
+### Credits:
+
+- N/A

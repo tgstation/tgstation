@@ -1,0 +1,5 @@
+#include "code\_jetpack.dm"
+#include "code\armor.dm"
+#include "code\hardsuit.dm"
+#include "code\helmet.dm"
+#include "code\space_suit_beacon.dm"

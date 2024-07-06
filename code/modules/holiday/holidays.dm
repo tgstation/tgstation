@@ -93,7 +93,7 @@
 	switch(pattern)
 		if(PATTERN_RANDOM)
 			return "#[random_short_color()]"
-		//MASSMETA EDIT REMOVAL BEGIN - gay removal
+		//MASSMETA EDIT REMOVAL BEGIN (gay removal)
 		/*
 		if(PATTERN_RAINBOW)
 			var/datum/holiday/pride_week/rainbow_datum = new()
@@ -384,7 +384,7 @@
 	begin_month = JUNE
 	holiday_hat = /obj/item/clothing/head/costume/garland
 
-//MASSMETA EDIT REMOVAL BEGIN - gay removal
+//MASSMETA EDIT REMOVAL BEGIN (gay removal)
 /*
 /datum/holiday/pride_week
 	name = PRIDE_WEEK

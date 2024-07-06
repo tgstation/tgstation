@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(minor_mapping)
 	return SS_INIT_NO_NEED
 #else
 	trigger_migration(CONFIG_GET(number/mice_roundstart))
-	place_satchels(satchel_amount = 10) // MASSMETA EDIT 2 -> 10
+	place_satchels(satchel_amount = 10) //MASSMETA EDIT CHANGE - ORIGINAL: = 2
 	return SS_INIT_SUCCESS
 #endif
 

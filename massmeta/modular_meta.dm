@@ -1,18 +1,27 @@
 /*
-*
-* Это основной файл куда будут складываться все наши модульные добавления.
-* Добавлять только:
-*	Модули (.dm файлами)
-* Сам этот файл добавлен в tgstation.dme
-*
-*Все Defines файлы лежат в папке "~meta_defines\", однако там идет переопределение пути для того чтобы не ругались тесты.
-*
-*/
+ * Это основной файл куда будут складываться все наши модульные добавления.
+ * Добавлять только:
+ *	Модули (.dm файлами)
+ * Сам этот файл добавлен в tgstation.dme
+ *
+ * Все Defines файлы лежат в папке "~meta_defines\"
+ *
+ * Все файлы должны быть в алфавитном порядке
+ */
 
-//modular files
+// Modular files (covered with tests)
+
+// BEGIN_INCLUDE
+#include "features\additional_circuit\includes.dm"
+#include "features\hardsuits\includes.dm"
+#include "features\kvass\includes.dm"
+#include "features\smites\includes.dm"
+#include "features\soviet_crate\includes.dm"
+// END_INCLUDE
 
 
 //master files (unsorted, TODO: need modularization)
+
 #include "code\_globalvars\lists\names.dm"
 #include "code\__HELPERS\names.dm"
 #include "interface\interface.dm"
@@ -80,16 +89,7 @@
 //cheburek Car
 #include "code\modules\vehicles\cars\cheburek.dm"
 #include "code\modules\vehicles\vehicle_actions.dm"
-#include "code\game\objects\structures\crates_lockers\crates\large.dm"
 #include "code\modules\cargo\packs\imports.dm"
-
-//features
-#include "features\additional_circuit\includes.dm"
-#include "features\hardsuits\code\_jetpack.dm"
-#include "features\hardsuits\code\armor.dm"
-#include "features\hardsuits\code\hardsuit.dm"
-#include "features\hardsuits\code\helmet.dm"
-#include "features\hardsuits\code\space_suit_beacon.dm"
 
 //buts
 #include "code\modules\surgery\organs\internal\butts\butts.dm"
@@ -102,10 +102,6 @@
 #include "code\modules\clothing\under\undersuit.dm"
 #include "code\modules\clothing\masks\moustache_ru.dm"
 
-//kvass
-#include "code\modules\cargo\exports\large_objects.dm"
-#include "code\modules\cargo\packs\materials.dm"
-#include "code\modules\reagents\chemistry\reagents\drinks\drink_reagents.dm"
-#include "code\modules\reagents\chemistry\reagents\drinks\glass_styles\sodas.dm"
-#include "code\modules\reagents\reagent_containers\cups\soda.dm"
-#include "code\modules\reagents\reagent_dispenser.dm"
+//Testicular_torsion wizard
+#include "code\modules\spells\spell_types\touch\testicular_torsion.dm"
+#include "code\modules\antags\wizard\equipment\spellbook_entries\offensive.dm"

@@ -102,7 +102,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Replaces default appendix with a different organ.
 	var/obj/item/organ/internal/appendix/mutantappendix = /obj/item/organ/internal/appendix
 	///Replaces default butt with a different organ
-	var/obj/item/organ/internal/butt/mutantbutt = /obj/item/organ/internal/butt // massmeta edit
+	var/obj/item/organ/internal/butt/mutantbutt = /obj/item/organ/internal/butt //MASSMETA EDIT ADDITION (butts)
 
 	/// Store body marking defines. See mobs.dm for bitflags
 	var/list/body_markings = list()
@@ -284,8 +284,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			return mutantliver
 		if(ORGAN_SLOT_STOMACH)
 			return mutantstomach
-		if(ORGAN_SLOT_BUTT) //massmeta edit
+		//MASSMETA EDIT ADDITION BEGIN (butts)
+		if(ORGAN_SLOT_BUTT)
 			return mutantbutt
+		//MASSMETA EDIT ADDITION END (butts)
 		else
 			CRASH("Invalid organ slot [slot]")
 
@@ -314,7 +316,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		ORGAN_SLOT_TONGUE,
 		ORGAN_SLOT_LIVER,
 		ORGAN_SLOT_STOMACH,
-		ORGAN_SLOT_BUTT, //massmeta edit
+		ORGAN_SLOT_BUTT, //MASSMETA EDIT ADDITION (butts)
 	)
 
 	for(var/slot in organ_slots)
@@ -1546,7 +1548,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	to_store += mutantliver
 	to_store += mutantstomach
 	to_store += mutantappendix
-	to_store += mutantbutt //massmeta edit
+	to_store += mutantbutt //MASSMETA EDIT ADDITION (butts)
 	//We don't cache mutant hands because it's not constrained enough, too high a potential for failure
 	return to_store
 

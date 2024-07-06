@@ -8,7 +8,9 @@
 
 /obj/item/clothing/suit/toggle/labcoat/research_director
 	icon = 'massmeta/icons/obj/clothing/suits/labcoat.dmi'
+	icon_state = "labcoat"
 	worn_icon = 'massmeta/icons/mob/clothing/suits/labcoat.dmi'
+	worn_icon_state = "labcoat"
 
 /obj/item/clothing/suit/toggle/labcoat/genetics
 	icon = 'massmeta/icons/obj/clothing/suits/labcoat.dmi'

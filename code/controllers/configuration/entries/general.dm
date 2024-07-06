@@ -447,6 +447,12 @@
 
 /datum/config_entry/flag/irc_first_connection_alert // do we notify the irc channel when somebody is connecting for the first time?
 
+//MASSMETA EDIT ADDITION BEGIN (discord verification) - FORCED DISCORD VERIFICATION
+/datum/config_entry/number/force_verification
+	default = null
+	min_val = 0
+//MASSMETA EDIT ADDITION END
+
 /datum/config_entry/string/ipintel_base
 	default = "check.getipintel.net"
 

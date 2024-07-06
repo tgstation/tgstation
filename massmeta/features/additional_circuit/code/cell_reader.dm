@@ -19,7 +19,7 @@
 	current_charge = add_output_port("Current Charge", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/cell_charge/input_received(datum/port/input/port)
-	var/obj/item/stock_parts/cell/read_cell = parent.cell
+	var/obj/item/stock_parts/power_store/cell/read_cell = parent.cell
 	if(!read_cell || !istype(read_cell))
 		return
 	max_charge.set_output(read_cell.maxcharge)

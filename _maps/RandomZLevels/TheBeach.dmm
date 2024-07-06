@@ -327,6 +327,23 @@
 	},
 /turf/open/floor/wood/large,
 /area/awaymission/beach)
+"eu" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/chair/stool/directional/south,
+/obj/item/clothing/glasses/sunglasses{
+	pixel_y = -2;
+	pixel_x = 2
+	},
+/obj/item/bikehorn/airhorn{
+	pixel_y = -15;
+	pixel_x = -13
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood,
+/area/awaymission/beach)
 "eE" = (
 /obj/structure/table/glass,
 /obj/machinery/microwave{
@@ -344,18 +361,21 @@
 	},
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
-"eT" = (
+"eL" = (
 /obj/structure/table/wood,
-/obj/item/clothing/mask/cigarette/cigar{
-	pixel_y = 16;
-	pixel_x = -2
+/obj/item/reagent_containers/condiment/enzyme{
+	pixel_x = 9;
+	pixel_y = 5
 	},
-/obj/item/reagent_containers/cup/glass/coffee{
-	pixel_x = 8;
-	pixel_y = 9
+/obj/item/food/seaweedsheet{
+	pixel_y = 6;
+	pixel_x = -4
 	},
-/obj/machinery/cell_charger,
-/turf/open/floor/iron/dark/diagonal,
+/obj/item/food/seaweedsheet{
+	pixel_x = -15;
+	pixel_y = 2
+	},
+/turf/open/floor/wood/large,
 /area/awaymission/beach)
 "fa" = (
 /obj/structure/table/reinforced,
@@ -691,6 +711,19 @@
 	pixel_x = -5
 	},
 /turf/open/floor/wood/large,
+/area/awaymission/beach)
+"iO" = (
+/obj/structure/table/wood,
+/obj/item/cigarette/cigar{
+	pixel_y = 16;
+	pixel_x = -2
+	},
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/obj/machinery/cell_charger,
+/turf/open/floor/iron/dark/diagonal,
 /area/awaymission/beach)
 "iU" = (
 /obj/structure/table/wood,
@@ -1919,7 +1952,7 @@
 	pixel_y = 12;
 	pixel_x = 3
 	},
-/obj/item/stock_parts/cell/emproof{
+/obj/item/stock_parts/power_store/cell/emproof{
 	pixel_x = -4;
 	pixel_y = 6
 	},
@@ -2019,23 +2052,6 @@
 	pixel_x = 10
 	},
 /turf/open/misc/beach/sand,
-/area/awaymission/beach)
-"Aa" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/condiment/enzyme{
-	layer = 5;
-	pixel_x = 9;
-	pixel_y = 5
-	},
-/obj/item/food/seaweedsheet{
-	pixel_y = 6;
-	pixel_x = -4
-	},
-/obj/item/food/seaweedsheet{
-	pixel_x = -15;
-	pixel_y = 2
-	},
-/turf/open/floor/wood/large,
 /area/awaymission/beach)
 "Ar" = (
 /turf/open/floor/carpet/blue,
@@ -2507,25 +2523,6 @@
 "Fk" = (
 /obj/item/toy/seashell,
 /turf/open/misc/beach/coast,
-/area/awaymission/beach)
-"Ft" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
-/obj/structure/chair/stool/directional/south,
-/obj/item/clothing/glasses/sunglasses{
-	pixel_y = -2;
-	pixel_x = 2
-	},
-/obj/item/bikehorn/airhorn{
-	pixel_y = -15;
-	pixel_x = -13
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 5
-	},
-/turf/open/floor/wood,
 /area/awaymission/beach)
 "Fu" = (
 /obj/structure/flora/tree/palm{
@@ -14739,7 +14736,7 @@ eE
 un
 Cb
 uJ
-eT
+iO
 un
 Pk
 xv
@@ -18633,7 +18630,7 @@ DF
 xv
 Cl
 Zp
-Aa
+eL
 pN
 Zp
 kB
@@ -20950,7 +20947,7 @@ ls
 VY
 VY
 VY
-Ft
+eu
 wC
 St
 VY
