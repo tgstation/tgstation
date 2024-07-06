@@ -45,6 +45,9 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	required_experiments = list(/datum/experiment/scanning/cytology/slime)
+	experiments_to_unlock = list(
+		/datum/experiment/scanning/points/xeno_eggs,
+	)
 
 /datum/techweb_node/gene_engineering
 	id = TECHWEB_NODE_GENE_ENGINEERING
