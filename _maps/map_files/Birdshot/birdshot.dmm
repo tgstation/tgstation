@@ -1872,7 +1872,7 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	name = "O2 to Airmix"
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
+/obj/machinery/atmospherics/pipe/bridge_pipe/green{
 	dir = 4
 	},
 /obj/machinery/light/no_nightlight/directional/north,
@@ -16932,7 +16932,7 @@
 	dir = 1;
 	name = "Plasma to Pure"
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
+/obj/machinery/atmospherics/pipe/bridge_pipe/green{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -21418,7 +21418,7 @@
 /obj/machinery/atmospherics/components/binary/pump/off{
 	name = "O2 To Pure"
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
+/obj/machinery/atmospherics/pipe/bridge_pipe/green{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -28809,7 +28809,7 @@
 	dir = 1;
 	name = "CO2 to Pure"
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
+/obj/machinery/atmospherics/pipe/bridge_pipe/green{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -29904,21 +29904,9 @@
 /area/station/service/chapel)
 "kzY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/purple/visible,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible,
 /obj/structure/table,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/item/radio/intercom/directional/south,
-/obj/item/c_tube{
-	pixel_x = 20
-	},
 /obj/item/clothing/head/cone{
 	pixel_y = 5;
 	pixel_x = -6
@@ -34187,34 +34175,10 @@
 /turf/open/floor/iron/small,
 /area/station/maintenance/port/aft)
 "lQn" = (
-/obj/structure/closet/firecloset,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/effect/turf_decal/bot{
-	dir = 1
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/shieldgen,
-/obj/item/clothing/gloves/color/black{
-	pixel_y = -3;
-	pixel_x = -2
-	},
-/obj/item/cigarette{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/item/clothing/mask/gas{
-	pixel_y = 5
-	},
-/obj/item/clothing/head/cone{
-	pixel_x = 1;
-	pixel_y = 15
-	},
+/obj/structure/closet/firecloset,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "lQq" = (
@@ -35168,7 +35132,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible,
+/obj/machinery/atmospherics/pipe/bridge_pipe/green,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "mfP" = (
@@ -43487,7 +43451,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "N2 to Pure"
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+/obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -51586,7 +51550,7 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible,
+/obj/machinery/atmospherics/pipe/bridge_pipe/green,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "rPL" = (
@@ -68807,7 +68771,7 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	name = "N2 to Airmix"
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+/obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -69362,6 +69326,19 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/security/processing)
+"xsI" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/structure/closet/firecloset,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "xsJ" = (
 /obj/effect/turf_decal/siding{
 	dir = 4
@@ -92384,7 +92361,7 @@ dou
 wlJ
 cHw
 eZc
-ica
+xsI
 vaW
 ica
 lQn
