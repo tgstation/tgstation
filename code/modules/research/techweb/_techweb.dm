@@ -332,13 +332,25 @@
 	return techweb_point_display_generic(research_points)
 
 /datum/techweb/proc/enqueue_node(id, mob/user)
+	var/mob/living/carbon/human/human_user = user
+	var/is_rd = FALSE
+	if(human_user.wear_id)
+		var/list/access = human_user.wear_id.GetAccess()
+		if(ACCESS_RD in access)
+			is_rd = TRUE
+
 	if(id in research_queue_nodes)
-		return FALSE
+		if(is_rd)
+			research_queue_nodes.Remove(id)
+		else
+			return FALSE
 
 	for(var/node_id in research_queue_nodes)
 		if(research_queue_nodes[node_id] == user)
 			research_queue_nodes.Remove(node_id)
 
+	if (is_rd)
+		research_queue_nodes.Insert(1, id)
 	research_queue_nodes[id] = user
 
 	return TRUE
