@@ -191,12 +191,12 @@
 	crate_name = "\improper MOD core crate"
 	crate_type = /obj/structure/closet/crate/secure/science/robo
 
-/datum/supply_pack/science/mod_core
+/datum/supply_pack/science/xenomorph
 	name = "Genetically Modified Xenomorph Crate"
 	desc = "A genetically modified xenomorph. Once this specimen grows to maturity, \
 		its offspring will be infertile."
 	dangerous = TRUE
-	cost = CARGO_CRATE_VALUE * 20
+	cost = CARGO_CRATE_VALUE * 25
 	access = ACCESS_RD
 	access_view = ACCESS_RD
 	contains = list(/obj/item/clothing/mask/facehugger/genetically_modified)
