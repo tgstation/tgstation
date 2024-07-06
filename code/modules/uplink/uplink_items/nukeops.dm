@@ -481,7 +481,7 @@
 		If you're a meathead who's just here to kill people and don't care about strategising or intel, you'll still have someone to bear witness to your murder-spree!"
 	item = /obj/item/antag_spawner/nuke_ops/overwatch
 	cost = 12
-	not_for_loneops = TRUE
+	purchasable_from = UPLINK_FIREBASE_OPS
 
 // ~~ Disposable Sentry Gun ~~
 // Technically not a spawn but it is a kind of reinforcement...I guess.
@@ -675,7 +675,7 @@
 	surplus = 0
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 	restricted = TRUE
-	not_for_loneops = TRUE
+	purchasable_from = UPLINK_FIREBASE_OPS
 
 /datum/uplink_item/device_tools/syndie_jaws_of_life
 	name = "Syndicate Jaws of Life"
@@ -797,7 +797,6 @@
 	purchasable_from = UPLINK_NUKE_OPS
 	cost = 15
 	cant_discount = TRUE
-	not_for_loneops = TRUE
 
 /datum/uplink_item/base_keys/bomb_key
 	name = "Syndicate Ordnance Laboratory Access Card"
