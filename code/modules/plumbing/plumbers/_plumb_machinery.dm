@@ -110,11 +110,11 @@
 /datum/reagents/plumbing
 
 /**
- * Same as the trans_to except only a few arguments have impact here & the rest of the arguments are discarded.
+ * Same as the parent trans_to except only a few arguments have impact here & the rest of the arguments are discarded.
  * Arguments
  *
  * * atom/target - the target we are transfering to
- * * amount - amount tot ransfer
+ * * amount - amount to transfer
  * * datum/reagent/target_id - the reagent id we want to transfer. if null everything gets transfered
  * * methods - this is key for deciding between round-robin or proportional transfer. It does not mean the same as the
  * parent proc. LINEAR for round robin(in this technique reagents are missing/lost/not preserved when there isn't enough space to hold them)
@@ -125,7 +125,7 @@
 	amount = 1,
 	multiplier = 1, //unused for plumbing
 	datum/reagent/target_id,
-	preserve_data = FALSE, //unused for plumbing
+	preserve_data = TRUE, //unused for plumbing
 	no_react = FALSE, //unused for plumbing we always want reactions
 	mob/transferred_by, //unused for plumbing logging is not important inside plumbing machines
 	remove_blacklisted = FALSE, //unused for plumbing, we don't care what reagents are inside us
