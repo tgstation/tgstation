@@ -130,6 +130,9 @@ Des: Removes all infected images from the alien.
 	new_xeno.setDir(dir)
 	new_xeno.change_name(name, real_name, numba)
 
+	if (infertile == TRUE)
+		new_xeno.infertile = TRUE
+
 	if(mind)
 		mind.name = new_xeno.real_name
 		mind.transfer_to(new_xeno)

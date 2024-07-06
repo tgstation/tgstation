@@ -45,7 +45,5 @@
 /datum/action/cooldown/alien/evolve_to_praetorian/Activate(atom/target)
 	var/mob/living/carbon/alien/adult/evolver = owner
 	var/mob/living/carbon/alien/adult/royal/praetorian/new_xeno = new(owner.loc)
-	if (evolver.infertile == TRUE)
-		new_xeno.infertile = TRUE
 	evolver.alien_evolve(new_xeno)
 	return TRUE
