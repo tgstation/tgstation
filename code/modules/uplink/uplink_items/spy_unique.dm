@@ -10,13 +10,14 @@
 	// Cost doesn't really matter since it's free, but it determines which loot pool it falls into.
 	// By default, these fall into easy-medium spy bounty loot pool
 	cost = SPY_LOWER_COST_THRESHOLD
-	uplink_item_flags = SYNDIE_ILLEGAL_TECH
+	uplink_item_flags = NONE
 
 /datum/uplink_item/spy_unique/syndie_bowman
 	name = "Syndicate Bowman"
 	desc = "A bowman headset for members of the Syndicate. Not very conspicuous."
 	item = /obj/item/radio/headset/syndicate/alt
 	cost = 1
+	uplink_item_flags = SYNDIE_ILLEGAL_TECH
 
 /datum/uplink_item/spy_unique/megaphone
 	name = "Megaphone"
@@ -44,6 +45,7 @@
 	name = "Kudzu"
 	desc = "A packet of Kudzu - plant and forget, a great distraction."
 	item = /obj/item/seeds/kudzu
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/spy_unique/big_knife
 	name = "Combat Knife"
@@ -54,6 +56,7 @@
 	name = "Switchblade"
 	desc = "A switchblade. Switches between not sharp and sharp."
 	item = /obj/item/switchblade
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/spy_unique/sechud_implant
 	name = "SecHUD Implant"
@@ -86,6 +89,7 @@
 	desc = "A pistol that's really good at making people sleep."
 	item = /obj/item/gun/ballistic/automatic/pistol/clandestine
 	cost = SPY_UPPER_COST_THRESHOLD
+	uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/spy_unique/rocket_launcher
 	name = "Rocket Launcher"
@@ -115,6 +119,7 @@
 	desc = "A stealth belt that lets you sneak behind enemy lines."
 	item = /obj/item/shadowcloak/weaker
 	cost = SPY_UPPER_COST_THRESHOLD
+	uplink_item_flags = SYNDIE_ILLEGAL_TECH
 
 /datum/uplink_item/spy_unique/katana
 	name = "Katana"
@@ -127,6 +132,7 @@
 	name = "Syndicate First Medic Kit"
 	desc = "A syndicate tactical combat medkit, but only stocked enough to do basic first aid."
 	item = /obj/item/storage/medkit/tactical_lite
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/spy_unique/antistun
 	name = /datum/uplink_item/implants/nuclear/antistun::name
