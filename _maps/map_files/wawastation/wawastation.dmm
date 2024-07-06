@@ -59990,6 +59990,7 @@
 "veF" = (
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /obj/structure/railing,
+/obj/machinery/door/firedoor/border_only,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "veW" = (
