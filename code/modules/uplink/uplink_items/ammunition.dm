@@ -13,7 +13,7 @@
 	cost = 2
 	surplus = 0
 	illegal_tech = FALSE
-	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
+	purchasable_from = ~UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/ammo/pistol
 	name = "9mm Handgun Magazine"
