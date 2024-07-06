@@ -12739,10 +12739,6 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/space/basic,
 /area/space/nearstation)
-"aYF" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/space/basic,
-/area/space)
 "aYI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -46573,10 +46569,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"sut" = (
-/obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/space/basic,
-/area/space)
 "suz" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -99182,7 +99174,7 @@ aha
 tko
 bGI
 rng
-sut
+cxg
 aaa
 aaa
 rax
@@ -99439,7 +99431,7 @@ tko
 tko
 bGI
 rng
-sut
+cxg
 aaa
 bGI
 oCX
@@ -100975,7 +100967,7 @@ aaa
 aaa
 aaa
 aaa
-aYF
+bGI
 sZh
 cxg
 crO
@@ -101232,7 +101224,7 @@ aaa
 aaa
 aaa
 aaa
-aYF
+bGI
 sZh
 kKz
 aht
@@ -101489,7 +101481,7 @@ aaa
 aaa
 aaa
 aaa
-aYF
+bGI
 sZh
 cxg
 aaa
