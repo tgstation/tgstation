@@ -8,6 +8,11 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, "Subtle Message",
 		message_admins("[key_name_admin(user)] decided not to answer [ADMIN_LOOKUPFLW(target)]'s prayer")
 		return
 
+	if(tgui_alert(user, "Set a custom text format?", "Make it snazzy!", list("Yes", "No")) == "Yes")
+		var/text_span = tgui_input_list(user, "Select a span!", "Immersion! Yeah!", GLOB.spanname_to_formatting)
+		text_span = GLOB.spanname_to_formatting[text_span]
+		msg = "<span class='[text_span]'>" + msg + "</span>"
+
 	target.balloon_alert(target, "you hear a voice")
 	to_chat(target, "<i>You hear a voice in your head... <b>[msg]</i></b>", confidential = TRUE)
 
@@ -53,6 +58,11 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, "Headset Message
 		message_admins("[key_name_admin(src)] decided not to answer [key_name_admin(target)]'s [sender] request.")
 		return
 
+	if(tgui_alert(mob, "Set a custom text format?", "Make it snazzy!", list("Yes", "No")) == "Yes")
+		var/text_span = tgui_input_list(mob, "Select a span!", "Immersion! Yeah!", GLOB.spanname_to_formatting)
+		text_span = GLOB.spanname_to_formatting[text_span]
+		input = "<span class='[text_span]'>" + input + "</span>"
+
 	log_directed_talk(mob, target, input, LOG_ADMIN, "reply")
 	message_admins("[key_name_admin(src)] replied to [key_name_admin(target)]'s [sender] message with: \"[input]\"")
 	target.balloon_alert(target, "you hear a voice")
@@ -64,6 +74,10 @@ ADMIN_VERB(cmd_admin_world_narrate, R_ADMIN, "Global Narrate", "Send a direct na
 	var/msg = input(user, "Message:", "Enter the text you wish to appear to everyone:") as text|null
 	if (!msg)
 		return
+	if(tgui_alert(user, "Set a custom text format?", "Make it snazzy!", list("Yes", "No")) == "Yes")
+		var/text_span = tgui_input_list(user, "Select a span!", "Immersion! Yeah!", GLOB.spanname_to_formatting)
+		text_span = GLOB.spanname_to_formatting[text_span]
+		msg = "<span class='[text_span]'>" + msg + "</span>"
 	to_chat(world, "[msg]", confidential = TRUE)
 	log_admin("GlobalNarrate: [key_name(user)] : [msg]")
 	message_admins(span_adminnotice("[key_name_admin(user)] Sent a global narrate"))
@@ -76,6 +90,10 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_local_narrate, R_ADMIN, "Local Narrate", A
 	var/msg = input(user, "Message:", "Enter the text you wish to appear to everyone within view:") as text|null
 	if (!msg)
 		return
+	if(tgui_alert(user, "Set a custom text format?", "Make it snazzy!", list("Yes", "No")) == "Yes")
+		var/text_span = tgui_input_list(user, "Select a span!", "Immersion! Yeah!", GLOB.spanname_to_formatting)
+		text_span = GLOB.spanname_to_formatting[text_span]
+		msg = "<span class='[text_span]'>" + msg + "</span>"
 	for(var/mob/M in view(range, locale))
 		to_chat(M, msg, confidential = TRUE)
 
