@@ -1189,7 +1189,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	if(response.errored || response.status_code != 200)
 		query_in_progress = FALSE
 		CRASH("Failed to fetch mapped custom json from url [json_url], code: [response.status_code], error: [response.error]")
-	var/json_data = response["body"]
+	var/json_data = response.body
 	json_cache[json_url] = json_data
 	query_in_progress = FALSE
 	return json_data

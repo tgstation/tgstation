@@ -413,7 +413,7 @@
 	)
 
 	for (var/obj/item/organ/organ as anything in check.organs)
-		if (organ.slot in vital_organ_slots && IS_ROBOTIC_ORGAN(organ))
+		if ((organ.slot in vital_organ_slots) && IS_ROBOTIC_ORGAN(organ))
 			return TRUE
 	return FALSE
 
