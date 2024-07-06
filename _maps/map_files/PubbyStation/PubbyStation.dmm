@@ -47580,10 +47580,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"tgH" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "tgT" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron,
@@ -101226,7 +101222,7 @@ aaa
 pAl
 qcR
 aJw
-tgH
+aht
 cdm
 cdm
 cdm
@@ -101483,10 +101479,10 @@ aaa
 aJw
 dpD
 aJw
-tgH
-tgH
-tgH
-tgH
+aht
+aht
+aht
+aht
 aht
 cdm
 aaa

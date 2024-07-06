@@ -14034,12 +14034,9 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "eJy" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/burgundy{
-	name = "landing marker"
-	},
-/turf/open/space/basic,
-/area/space)
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/cargo/warehouse/upper)
 "eJE" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -14285,10 +14282,6 @@
 /obj/item/flashlight/lamp/green,
 /turf/open/floor/wood/tile,
 /area/station/service/library)
-"eOs" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/cargo/warehouse/upper)
 "eOt" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
@@ -24885,11 +24878,6 @@
 /obj/structure/sign/warning/secure_area,
 /turf/closed/wall/rust,
 /area/space/nearstation)
-"icG" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space/basic,
-/area/space)
 "icJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -72380,11 +72368,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
-"xwY" = (
-/obj/structure/lattice,
-/obj/structure/grille/broken,
-/turf/open/space/basic,
-/area/space)
 "xxk" = (
 /turf/closed/wall/r_wall,
 /area/station/command/heads_quarters/cmo)
@@ -116387,7 +116370,7 @@ aLI
 dVB
 kyj
 qAR
-vNT
+acm
 aaa
 aaa
 hOc
@@ -116644,7 +116627,7 @@ izu
 dVB
 pmk
 oUz
-vNT
+acm
 aaa
 aaa
 bBV
@@ -116901,7 +116884,7 @@ gmb
 fxY
 tHu
 oUz
-vNT
+acm
 aaa
 aaa
 aaa
@@ -117158,7 +117141,7 @@ twd
 dVB
 gPO
 oUz
-vNT
+acm
 aaa
 aaa
 aaa
@@ -117415,7 +117398,7 @@ wCe
 fxY
 gKI
 fae
-eJy
+qJs
 aaa
 aaa
 aaa
@@ -117672,7 +117655,7 @@ rcp
 fxY
 umw
 oUz
-vNT
+acm
 aaa
 aaa
 aaa
@@ -117852,9 +117835,9 @@ aeu
 aeu
 aeu
 ccz
-eOs
-eOs
-eOs
+eJy
+eJy
+eJy
 ccz
 aaa
 aaa
@@ -117929,7 +117912,7 @@ bBK
 eIQ
 jJp
 oUz
-vNT
+acm
 aaa
 aaa
 aaa
@@ -118186,7 +118169,7 @@ aLI
 fxY
 umw
 oUz
-vNT
+acm
 aaa
 aaa
 aaa
@@ -118371,7 +118354,7 @@ nuf
 vAr
 sfx
 mDD
-eOs
+eJy
 iEB
 aaa
 aaa
@@ -118443,7 +118426,7 @@ kzr
 oCu
 rwa
 qAR
-vNT
+acm
 aaa
 aaa
 aaa
@@ -118700,7 +118683,7 @@ xPT
 vld
 jgC
 mjW
-vNT
+acm
 aaa
 aaa
 aaa
@@ -118878,7 +118861,7 @@ ccz
 wlO
 wAv
 qgV
-eOs
+eJy
 qUZ
 fSD
 ibm
@@ -118957,7 +118940,7 @@ tRg
 nuS
 hpH
 mjW
-vNT
+acm
 aaa
 aaa
 aaa
@@ -119214,7 +119197,7 @@ vSM
 gAF
 miW
 jgC
-vNT
+acm
 aaa
 aaa
 aaa
@@ -119399,7 +119382,7 @@ oNI
 hOs
 lXP
 ccz
-eOs
+eJy
 dgw
 aaa
 aaa
@@ -119471,13 +119454,13 @@ pra
 rEu
 gEs
 xPT
-icG
-vNT
-xwY
-icG
-icG
-icG
-eJy
+aeo
+acm
+aaQ
+aeo
+aeo
+aeo
+qJs
 aaa
 aaa
 aaa
@@ -119646,16 +119629,16 @@ aeu
 aeu
 aeu
 ccz
-eOs
+eJy
 mDD
-eOs
+eJy
 ccz
 gIw
 wSz
 eNb
 sTy
 ulJ
-eOs
+eJy
 acm
 qJs
 aaa
@@ -119728,13 +119711,13 @@ pIb
 mVu
 kPI
 mjW
-vNT
+acm
 aaa
-vNT
+acm
 aaa
 aaa
 aaa
-vNT
+acm
 aaa
 aaa
 aaa
@@ -119912,7 +119895,7 @@ ngl
 lhf
 sTy
 uQt
-eOs
+eJy
 aaa
 aaa
 aaa
@@ -119985,13 +119968,13 @@ kYE
 gjv
 oiE
 mjW
-vNT
+acm
 aaa
-vNT
+acm
 aaa
 aaa
 aaa
-vNT
+acm
 aaa
 aaa
 aaa
@@ -120243,13 +120226,13 @@ iVn
 xPT
 jgC
 ohR
-vNT
-oRy
-vNT
-oRy
-oRy
-vNT
-vNT
+acm
+acK
+acm
+acK
+acK
+acm
+acm
 aaa
 aaa
 aaa
@@ -120425,7 +120408,7 @@ heD
 wGs
 ccz
 uZS
-eOs
+eJy
 mDD
 ccz
 qJs
@@ -120501,11 +120484,11 @@ vFL
 xPT
 acm
 aaa
-vNT
+acm
 aaa
 aaa
 aaa
-vNT
+acm
 aaa
 aaa
 aaa
@@ -120680,7 +120663,7 @@ xvP
 bhR
 lFr
 jGU
-eOs
+eJy
 nuf
 iQK
 jSF
@@ -120758,11 +120741,11 @@ dFj
 xPT
 aaQ
 aaa
-vNT
+acm
 aaa
 aaa
 aaa
-vNT
+acm
 aaa
 aaa
 aaa
@@ -120932,7 +120915,7 @@ aeu
 ccz
 mDD
 rRD
-eOs
+eJy
 pCF
 ccz
 mob
@@ -120941,7 +120924,7 @@ vfL
 ocg
 fdA
 wxF
-eOs
+eJy
 acm
 aaa
 aaa
@@ -121014,8 +120997,8 @@ ilI
 xPT
 ohR
 qJs
-vNT
-vNT
+acm
+acm
 aaa
 aaa
 aaa
@@ -121198,7 +121181,7 @@ mDD
 mWZ
 jSF
 lds
-eOs
+eJy
 acm
 aaa
 aaa
