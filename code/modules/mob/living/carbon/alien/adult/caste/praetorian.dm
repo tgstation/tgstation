@@ -38,8 +38,8 @@
 
 	if(!isturf(owner.loc))
 		return FALSE
-	var/mob/living/carbon/alien/alien = get_alien_type(/mob/living/carbon/alien/adult/royal/queen)
-	if(alien && alien.infertile == FALSE) //The crew can get infertile aliens, we dont want those going towards the queen cap
+	//The crew can get infertile aliens, we dont want those going towards the queen cap
+	if(get_alien_type(/mob/living/carbon/alien/adult/royal/queen, skip_infertile = TRUE))
 		return FALSE
 
 	var/mob/living/carbon/alien/adult/royal/evolver = owner
