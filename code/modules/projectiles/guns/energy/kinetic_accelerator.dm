@@ -644,8 +644,8 @@
 	bolt_color = new_color || bolt_color
 
 /obj/item/borg/upgrade/modkit/crystal
-	name = "crystal gun"
-	desc = "Shoot pretty crystals to cause colorful explosions!"
+	name = "crystal modkit"
+	desc = "A kit designed to harness the power of plasma, shooting powerful crystals to release miniature bursts of plasma energy."
 	cost = 0
 	denied_type = /obj/item/borg/upgrade/modkit/crystal
 

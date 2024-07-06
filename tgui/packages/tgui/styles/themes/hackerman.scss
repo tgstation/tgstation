@@ -23,7 +23,7 @@
     $with: (
       'color-default': colors.$primary,
       'tab-color-selected': #de9b3e,
-      'text-color': #642600
+      'text-color': #ffffff
     )
   );
   @include meta.load-css(

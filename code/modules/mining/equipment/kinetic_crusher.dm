@@ -503,18 +503,18 @@
 /obj/item/crusher_trophy/wolf_ear/on_mark_detonation(mob/living/target, mob/living/user)
 	user.apply_status_effect(/datum/status_effect/speed_boost, 1 SECONDS)
 
-/obj/item/crusher_trophy/celestial_flame
-	name = "celestial flame"
-	desc = "You can almost see the stars staring back at you."
+/obj/item/crusher_trophy/plasma_flame
+	name = "plasma flame"
+	desc = "A flame so concentrated in plasma, it's almost blinding. Imbue it with a crusher to harness its power"
 	icon_state = "celestial_flame"
-	denied_type = /obj/item/crusher_trophy/celestial_flame
+	denied_type = /obj/item/crusher_trophy/plasma_flame
 	///cooldown to summon demons upon the target
 	COOLDOWN_DECLARE(effect_apply)
 
-/obj/item/crusher_trophy/celestial_flame/effect_desc()
-	return "mark detonation to unleash a celestial explosion upon the target"
+/obj/item/crusher_trophy/plasma_flame/effect_desc()
+	return "mark detonation to unleash a celestial explosion upon the target."
 
-/obj/item/crusher_trophy/celestial_flame/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/plasma_flame/on_mark_detonation(mob/living/target, mob/living/user)
 	if(isnull(target) || !COOLDOWN_FINISHED(src, effect_apply))
 		return
 	var/obj/effect/overlay/celestial_overhead/overhead = new
@@ -524,11 +524,11 @@
 	addtimer(CALLBACK(src, PROC_REF(remove_effect), target, overhead), 4 SECONDS)
 	COOLDOWN_START(src, effect_apply, 30 SECONDS)
 
-/obj/item/crusher_trophy/celestial_flame/proc/remove_effect(mob/living/target, atom/movable/overhead)
+/obj/item/crusher_trophy/plasma_flame/proc/remove_effect(mob/living/target, atom/movable/overhead)
 	animate(overhead, alpha = 0, 1 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(apply_explosion), target, overhead), 1 SECONDS)
 
-/obj/item/crusher_trophy/celestial_flame/proc/apply_explosion(mob/living/target, atom/movable/overhead)
+/obj/item/crusher_trophy/plasma_flame/proc/apply_explosion(mob/living/target, atom/movable/overhead)
 	if(isnull(target))
 		return
 	target.vis_contents -= overhead

@@ -122,3 +122,39 @@
 	)
 	AddElement(/datum/element/temporary_atom, life_time = 15 SECONDS, fade_time = 1.5 SECONDS)
 	grant_actions_by_list(other_innate_actions)
+
+
+/mob/living/basic/mining/spirit_deacon
+	name = "spirit deacon"
+	desc = "Seems to lacks both mind and conscious..."
+	icon = 'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi'
+	icon_state = "deep_sea_deacon"
+	icon_living = "deep_sea_deacon"
+	pixel_x = -32
+	base_pixel_x = -32
+	speed = 5
+	alpha = 155
+	light_range = 6
+	light_color = COLOR_PINK
+	basic_mob_flags = IMMUNE_TO_FISTS
+	maxHealth = INFINITE
+	health = INFINITE
+	faction = list(FACTION_HOSTILE)
+	speak_emote = list("preaches")
+	melee_damage_lower = 10
+	melee_damage_upper = 15
+	sentience_type = SENTIENCE_BOSS
+	attack_sound = 'sound/magic/magic_block_holy.ogg'
+	attack_verb_continuous = "exorcizes"
+	attack_verb_simple = "exorcize"
+	density = FALSE
+	ai_controller = /datum/ai_controller/basic_controller/spirit_deacon
+
+/mob/living/basic/mining/spirit_deacon/proc/respond_to_sword(datum/source, atom/target, atom/user, list/modifiers)
+	SIGNAL_HANDLER
+	if(!isliving(target))
+		return
+	var/mob/living/living_target = target
+	if(living_target.mob_size < MOB_SIZE_LARGE) //we only work on mining mobs
+		return
+	ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
