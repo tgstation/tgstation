@@ -102,6 +102,9 @@ SUBSYSTEM_DEF(research)
 
 		techweb_list.last_income = world.time
 
+		if(techweb_list.research_queue_nodes.len)
+			techweb_list.research_node_id(techweb_list.research_queue_nodes[1]) // Attempt to research if possible
+
 /datum/controller/subsystem/research/proc/autosort_categories()
 	for(var/i in techweb_nodes)
 		var/datum/techweb_node/I = techweb_nodes[i]
