@@ -25,8 +25,6 @@
 	var/uplink_flag = UPLINK_TRAITORS
 	/// If the uplink is lockable, which defaults to false which most subtypes of this item are for debug reasons
 	var/lockable_uplink = FALSE
-	/// Do we have special considerations for lone operatives and what they can purchase?
-	var/restrict_loneops = FALSE
 
 /obj/item/uplink/Initialize(mapload, owner, tc_amount = 20, datum/uplink_handler/uplink_handler_override = null)
 	. = ..()
@@ -38,7 +36,6 @@
 		uplink_flag = uplink_flag, \
 		starting_tc = tc_amount, \
 		uplink_handler_override = uplink_handler_override, \
-		loneop_restricted = restrict_loneops, \
 	)
 
 /obj/item/uplink/debug
@@ -64,7 +61,7 @@
 	hidden_uplink.uplink_handler.debug_mode = TRUE
 
 /obj/item/uplink/nuclear_restricted
-	uplink_flag = UPLINK_NUKE_OPS
+	uplink_flag = UPLINK_LONE_OP
 
 /obj/item/uplink/nuclear_restricted/Initialize(mapload)
 	. = ..()
@@ -73,8 +70,7 @@
 
 ///A subtype used for lone ops, with some of the stuff they shouldn't/can't access removed from purchase.
 /obj/item/uplink/loneop
-	uplink_flag = UPLINK_NUKE_OPS
-	restrict_loneops = TRUE
+	uplink_flag = UPLINK_LONE_OP
 
 /obj/item/uplink/clownop
 	uplink_flag = UPLINK_CLOWN_OPS

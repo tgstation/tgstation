@@ -54,8 +54,6 @@
 	var/datum/callback/replace_objectives
 	///Reference to a contractor hub that the infiltrator can run, if they purchase it.
 	var/datum/contractor_hub/contractor_hub
-	/// Do we have extra considerations for whether or not non-loneop items can be bought.
-	var/loneop_restricted = FALSE
 
 /datum/uplink_handler/New()
 	. = ..()
@@ -78,8 +76,6 @@
 /// Checks for uplink flags as well as items restricted to roles and species
 /datum/uplink_handler/proc/check_if_restricted(datum/uplink_item/to_purchase)
 	if(!to_purchase.can_be_bought(src))
-		return FALSE
-	if(loneop_restricted && to_purchase.not_for_loneops)
 		return FALSE
 	if((to_purchase in extra_purchasable))
 		return TRUE
