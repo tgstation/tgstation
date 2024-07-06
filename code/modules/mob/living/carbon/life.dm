@@ -115,7 +115,7 @@
 				var/obj/loc_as_obj = loc
 				loc_as_obj.handle_internal_lifeform(src,0)
 
-	if(check_breath() && is_on_internals)
+	if(check_breath(breath) && is_on_internals)
 		try_breathing_sound(breath)
 
 	if(breath)
