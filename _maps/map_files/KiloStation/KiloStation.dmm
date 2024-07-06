@@ -72950,8 +72950,6 @@
 /area/station/hallway/primary/central)
 "xEZ" = (
 /obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
 /obj/machinery/camera/directional/west{
 	c_tag = "Teleporter Access";
 	name = "command camera"
@@ -72959,6 +72957,8 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/item/stock_parts/cell/high,
+/obj/machinery/cell_charger,
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "xFt" = (

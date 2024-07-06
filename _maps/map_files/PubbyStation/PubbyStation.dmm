@@ -10163,18 +10163,11 @@
 "aNq" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/table,
-/obj/item/stock_parts/cell/high{
-	charge = 100;
-	maxcharge = 15000
-	},
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high{
-	charge = 100;
-	maxcharge = 15000
-	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
 "aNt" = (
@@ -35328,7 +35321,6 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 30
 	},
-/obj/item/gps/engineering,
 /turf/open/floor/plating,
 /area/station/engineering/storage_shared)
 "iJb" = (
