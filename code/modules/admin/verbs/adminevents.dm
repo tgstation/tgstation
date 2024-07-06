@@ -89,6 +89,8 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, "Direct Narrate",
 	if( !msg )
 		return
 
+
+
 	to_chat(target, msg, confidential = TRUE)
 	log_admin("DirectNarrate: [key_name(user)] to ([key_name(target)]): [msg]")
 	msg = span_adminnotice("<b> DirectNarrate: [key_name_admin(user)] to ([key_name_admin(target)]):</b> [msg]<BR>")
