@@ -12,5 +12,4 @@
 	target.dna.features["tail_monkey"] = value
 
 /datum/preference/choiced/monkey_tail/create_default_value()
-	var/datum/sprite_accessory/tails/monkey/default/tail = /datum/sprite_accessory/tails/monkey/default
-	return initial(tail.name)
+	return /datum/sprite_accessory/tails/monkey/default::name

@@ -123,17 +123,17 @@
 /datum/preference/choiced/facial_hair_gradient/create_default_value()
 	return "None"
 
-/datum/preference/color/facial_hair_gradient_color
+/datum/preference/color/facial_hair_gradient
 	priority = PREFERENCE_PRORITY_LATE_BODY_TYPE
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "facial_hair_gradient_color"
 	relevant_head_flag = HEAD_FACIAL_HAIR
 
-/datum/preference/color/facial_hair_gradient_color/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/color/facial_hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_facial_hair_gradient_color(new_color = value, update = FALSE)
 
-/datum/preference/color/facial_hair_gradient_color/is_accessible(datum/preferences/preferences)
+/datum/preference/color/facial_hair_gradient/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
 		return FALSE
 	return preferences.read_preference(/datum/preference/choiced/facial_hair_gradient) != "None"
