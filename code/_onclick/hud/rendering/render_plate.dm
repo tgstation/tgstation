@@ -483,7 +483,7 @@
  * Offsets our relays in place using the given parameter by adjusting their plane and
  * layer values, avoiding changing the layer for relays with custom-set layers.
  *
- * Used in [proc/transform_lower_turfs] to make the relays for non-offsetting planes
+ * Used in [proc/build_planes_offset] to make the relays for non-offsetting planes
  * match the highest rendering plane that matches the target, to avoid them rendering
  * on the highest level above things that should be visible.
  *

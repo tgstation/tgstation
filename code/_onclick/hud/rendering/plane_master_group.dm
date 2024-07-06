@@ -37,7 +37,7 @@
 	our_hud = viewing_hud
 	our_hud.master_groups[key] = src
 	show_hud()
-	transform_lower_turfs(our_hud, active_offset)
+	build_planes_offset(our_hud, active_offset)
 
 /// Hide the plane master from its current hud, fully clear it out
 /datum/plane_master_group/proc/orphan_hud()
@@ -56,7 +56,7 @@
 	hide_hud()
 	rebuild_plane_masters()
 	show_hud()
-	transform_lower_turfs(our_hud, active_offset)
+	build_planes_offset(our_hud, active_offset)
 
 /// Regenerate our plane masters, this is useful if we don't have a mob but still want to rebuild. Such in the case of changing the screen_loc of relays
 /datum/plane_master_group/proc/rebuild_plane_masters()
@@ -102,7 +102,7 @@
 // It would be nice to setup parallaxing for stairs and things when doing this
 // So they look nicer. if you can't it's all good, if you think you can sanely look at monster's work
 // It's hard, and potentially expensive. be careful
-/datum/plane_master_group/proc/transform_lower_turfs(datum/hud/source, new_offset, use_scale = TRUE)
+/datum/plane_master_group/proc/build_planes_offset(datum/hud/source, new_offset, use_scale = TRUE)
 	// Check if this feature is disabled for the client, in which case don't use scale.
 	var/mob/our_mob = our_hud?.mymob
 	if(!our_mob?.client?.prefs?.read_preference(/datum/preference/toggle/multiz_parallax))
@@ -195,13 +195,13 @@
 
 #undef MAX_CLIENT_BUILD_WITH_WORKING_SECONDARY_MAPS
 
-/datum/plane_master_group/popup/transform_lower_turfs(datum/hud/source, new_offset, use_scale = TRUE)
+/datum/plane_master_group/popup/build_planes_offset(datum/hud/source, new_offset, use_scale = TRUE)
 	return ..(source, new_offset, FALSE)
 
 /// Holds the main plane master
 /datum/plane_master_group/main
 
-/datum/plane_master_group/main/transform_lower_turfs(datum/hud/source, new_offset, use_scale = TRUE)
+/datum/plane_master_group/main/build_planes_offset(datum/hud/source, new_offset, use_scale = TRUE)
 	if(use_scale)
 		return ..(source, new_offset, source.should_use_scale())
 	return ..()
