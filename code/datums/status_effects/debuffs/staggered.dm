@@ -85,13 +85,6 @@
 	if(vulnverability_overlay)
 		clear_stun_vulnverability_overlay()
 
-/datum/status_effect/next_shove_stuns/tick(seconds_between_ticks)
-	// If dead or we can't stun them with a shove, remove this status effect
-	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_NO_SIDE_KICK) || HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
-		clear_stun_vulnverability_overlay()
-		qdel(src)
-		return
-
 /// If our owner is either stunned, paralzyed or immobilized, we remove the status effect.
 /// This is both an anti-chainstun measure and a sanity check.
 /datum/status_effect/next_shove_stuns/proc/clear_stun_vulnverability(mob/living/source, amount = 0, ignore_canstun = FALSE)
@@ -105,7 +98,6 @@
 /datum/status_effect/next_shove_stuns/proc/clear_stun_vulnverability_on_death(mob/living/source)
 	SIGNAL_HANDLER
 
-	// Making absolutely sure we're removing this overlay
 	clear_stun_vulnverability_overlay()
 	qdel(src)
 
@@ -128,15 +120,15 @@
 	// Once again, clear if dead
 	if(owner.stat == DEAD)
 		return FALSE
-
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(clear_on_death))
 	ADD_TRAIT(owner, TRAIT_NO_SIDE_KICK, STATUS_EFFECT_TRAIT)
 	return TRUE
 
 /datum/status_effect/no_side_kick/on_remove()
+	UnregisterSignal(owner, list(COMSIG_LIVING_DEATH))
 	REMOVE_TRAIT(owner, TRAIT_NO_SIDE_KICK, STATUS_EFFECT_TRAIT)
 
-/datum/status_effect/no_side_kick/tick(seconds_between_ticks)
-	// Once again, if dead, no kick
-	if(owner.stat == DEAD)
-		qdel(src)
-		return
+/datum/status_effect/no_side_kick/proc/clear_on_death(mob/living/source)
+	SIGNAL_HANDLER
+
+	qdel(src)
