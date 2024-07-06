@@ -1,7 +1,7 @@
 /// Voidwalker eyes with nightvision and thermals
 /obj/item/organ/internal/eyes/voidwalker
-	name = "black orbs"
-	desc = "Able to withstand the light of the sun but still see within the darkest voids."
+	name = "blackened orbs"
+	desc = "These orbs will withstand the light of the sun, yet still see within the darkest voids."
 	eye_icon_state = null
 	pepperspray_protect = TRUE
 	flash_protect = FLASH_PROTECTION_WELDER

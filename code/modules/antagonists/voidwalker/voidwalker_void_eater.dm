@@ -22,9 +22,10 @@
 /obj/item/void_eater/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-	AddComponent(/datum/component/butchering, \
-	speed = 8 SECONDS, \
-	effectiveness = 70, \
+	AddComponent( \
+		/datum/component/butchering, \
+		speed = 8 SECONDS, \
+		effectiveness = 70, \
 	)
 
 	AddComponent(/datum/component/temporary_glass_shatterer)
@@ -49,7 +50,7 @@
 			brain.Remove(hewmon)
 			brain.forceMove(get_turf(hewmon))
 
-		playsound(get_turf(hewmon), SFX_SHATTER, 100)
+		playsound(hewmon, SFX_SHATTER, 100)
 		qdel(hewmon)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
