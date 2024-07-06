@@ -8,10 +8,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, "Subtle Message",
 		message_admins("[key_name_admin(user)] decided not to answer [ADMIN_LOOKUPFLW(target)]'s prayer")
 		return
 
-	if(tgui_alert(user, "Set a custom text format?", "Make it snazzy!", list("Yes", "No")) == "Yes")
-		var/text_span = tgui_input_list(user, "Select a span!", "Immersion! Yeah!", GLOB.spanname_to_formatting)
-		text_span = GLOB.spanname_to_formatting[text_span]
-		msg = "<span class='[text_span]'>" + msg + "</span>"
+	msg = user.reformat_narration(msg)
 
 	target.balloon_alert(target, "you hear a voice")
 	to_chat(target, "<i>You hear a voice in your head... <b>[msg]</i></b>", confidential = TRUE)
@@ -58,11 +55,6 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, "Headset Message
 		message_admins("[key_name_admin(src)] decided not to answer [key_name_admin(target)]'s [sender] request.")
 		return
 
-	if(tgui_alert(mob, "Set a custom text format?", "Make it snazzy!", list("Yes", "No")) == "Yes")
-		var/text_span = tgui_input_list(mob, "Select a span!", "Immersion! Yeah!", GLOB.spanname_to_formatting)
-		text_span = GLOB.spanname_to_formatting[text_span]
-		input = "<span class='[text_span]'>" + input + "</span>"
-
 	log_directed_talk(mob, target, input, LOG_ADMIN, "reply")
 	message_admins("[key_name_admin(src)] replied to [key_name_admin(target)]'s [sender] message with: \"[input]\"")
 	target.balloon_alert(target, "you hear a voice")
@@ -74,10 +66,7 @@ ADMIN_VERB(cmd_admin_world_narrate, R_ADMIN, "Global Narrate", "Send a direct na
 	var/msg = input(user, "Message:", "Enter the text you wish to appear to everyone:") as text|null
 	if (!msg)
 		return
-	if(tgui_alert(user, "Set a custom text format?", "Make it snazzy!", list("Yes", "No")) == "Yes")
-		var/text_span = tgui_input_list(user, "Select a span!", "Immersion! Yeah!", GLOB.spanname_to_formatting)
-		text_span = GLOB.spanname_to_formatting[text_span]
-		msg = "<span class='[text_span]'>" + msg + "</span>"
+	msg = user.reformat_narration(msg)
 	to_chat(world, "[msg]", confidential = TRUE)
 	log_admin("GlobalNarrate: [key_name(user)] : [msg]")
 	message_admins(span_adminnotice("[key_name_admin(user)] Sent a global narrate"))
@@ -90,10 +79,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_local_narrate, R_ADMIN, "Local Narrate", A
 	var/msg = input(user, "Message:", "Enter the text you wish to appear to everyone within view:") as text|null
 	if (!msg)
 		return
-	if(tgui_alert(user, "Set a custom text format?", "Make it snazzy!", list("Yes", "No")) == "Yes")
-		var/text_span = tgui_input_list(user, "Select a span!", "Immersion! Yeah!", GLOB.spanname_to_formatting)
-		text_span = GLOB.spanname_to_formatting[text_span]
-		msg = "<span class='[text_span]'>" + msg + "</span>"
+	msg = user.reformat_narration(msg)
 	for(var/mob/M in view(range, locale))
 		to_chat(M, msg, confidential = TRUE)
 
@@ -107,10 +93,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, "Direct Narrate",
 	if( !msg )
 		return
 
-	if(tgui_alert(user, "Set a custom text format?", "Make it snazzy!", list("Yes", "No")) == "Yes")
-		var/text_span = tgui_input_list(user, "Select a span!", "Immersion! Yeah!", GLOB.spanname_to_formatting)
-		text_span = GLOB.spanname_to_formatting[text_span]
-		msg = "<span class='[text_span]'>" + msg + "</span>"
+	msg = user.reformat_narration(msg)
 
 	to_chat(target, msg, confidential = TRUE)
 	log_admin("DirectNarrate: [key_name(user)] to ([key_name(target)]): [msg]")
@@ -301,3 +284,11 @@ ADMIN_VERB(command_report_footnote, R_ADMIN, "Command Report Footnote", "Adds a 
 ADMIN_VERB(delay_command_report, R_FUN, "Delay Command Report", "Prevents the roundstart command report from being sent; or forces it to send it delayed.", ADMIN_CATEGORY_EVENTS)
 	GLOB.communications_controller.block_command_report = !GLOB.communications_controller.block_command_report
 	message_admins("[key_name_admin(user)] has [(GLOB.communications_controller.block_command_report ? "delayed" : "sent")] the roundstart command report.")
+
+/client/proc/reformat_narration(input)
+	if(tgui_alert(mob, "Set a custom text format?", "Make it snazzy!", list("Yes", "No")) == "Yes")
+		var/text_span = tgui_input_list(mob, "Select a span!", "Immersion! Yeah!", GLOB.spanname_to_formatting)
+		text_span = GLOB.spanname_to_formatting[text_span]
+		input = "<span class='[text_span]'>" + input + "</span>"
+
+	return input
