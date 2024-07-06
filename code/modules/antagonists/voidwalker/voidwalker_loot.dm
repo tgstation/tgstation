@@ -6,8 +6,16 @@
 	icon = 'icons/obj/weapons/voidwalker_items.dmi'
 	icon_state = "cosmic_skull_charged"
 
+	/// Icon state for when drained
+	var/drained_icon_state = "cosmic_skull_drained"
+	/// How many uses does it have left?
+	var/uses = 1
+
 /obj/item/cosmic_skull/attack_self(mob/user, modifiers)
 	. = ..()
+
+	if(!uses)
+		return
 
 	to_chat(user, span_purple("You begin staring into the [name]..."))
 
@@ -20,4 +28,9 @@
 	starer.gain_trauma(/datum/brain_trauma/voided/stable)
 	to_chat(user, span_purple("And a whole world opened up to you."))
 	playsound(get_turf(user), 'sound/effects/curse5.ogg', 60)
+
+	uses--
+	if(uses <= 0 )
+		icon_state = drained_icon_state
+
 	qdel(src)
