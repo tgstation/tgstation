@@ -138,3 +138,65 @@ GLOBAL_LIST_INIT(store_shoes, generate_store_items(/datum/store_item/shoes))
 	name = "aerostatic boots"
 	item_path = /obj/item/clothing/shoes/kimshoes
 	item_cost = 2500
+
+/datum/store_item/shoes/timbs
+	name = "Fashionable Boots"
+	item_path = /obj/item/clothing/shoes/jackboots/timbs
+	item_cost = 2500
+
+/*
+*	COWBOY
+*/
+
+/datum/store_item/shoes/cowboyboots
+	name = "Cowboy Boots (Brown)"
+	item_path = /obj/item/clothing/shoes/cowboyboots
+	item_cost = 4000
+
+/datum/store_item/shoes/cowboyboots_black
+	name = "Cowboy Boots (Black)"
+	item_path = /obj/item/clothing/shoes/cowboyboots/black
+	item_cost = 4000
+
+/*
+*	MISC
+*/
+
+/datum/store_item/shoes/high_heels
+	name = "High Heels"
+	item_path = /obj/item/clothing/shoes/high_heels
+	item_cost = 3000
+
+/datum/store_item/shoes/black_heels
+	name = "Fancy Heels"
+	item_path = /obj/item/clothing/shoes/fancy_heels
+	item_cost = 3000
+
+/datum/store_item/shoes/sportshoes
+	name = "Sport Shoes"
+	item_path = /obj/item/clothing/shoes/sports
+	item_cost = 1500
+
+/datum/store_item/shoes/rollerskates
+	name = "Roller Skates"
+	item_path = /obj/item/clothing/shoes/wheelys/rollerskates
+	item_cost = 2500
+
+/datum/store_item/shoes/wheelys
+	name = "Wheely-Heels"
+	item_path = /obj/item/clothing/shoes/wheelys
+	item_cost = 2500
+
+/*
+*	SEASONAL
+*/
+
+/datum/store_item/shoes/christmas
+	name = "Red Christmas Boots"
+	item_path = /obj/item/clothing/shoes/winterboots/christmas
+	item_cost = 10000
+
+/datum/store_item/shoes/christmas/green
+	name = "Green Christmas Boots"
+	item_path = /obj/item/clothing/shoes/winterboots/christmas/green
+	item_cost = 10000

@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 //NOTES
 //Glass will fuck you up if you're wearing wraps
 
-//Not adding everything as we already got simillar stuff - Knight
+//I changed my mind lol, I'm adding it all - Knight
 
 /datum/loadout_item/shoes/nova/jackboots/recolorable
 	name = "Recolorable Jackboots"
@@ -201,3 +201,96 @@ GLOBAL_LIST_INIT(loadout_shoes, generate_loadout_items(/datum/loadout_item/shoes
 /datum/loadout_item/shoes/nova/kimshoes
 	name = "aerostatic boots"
 	item_path = /obj/item/clothing/shoes/kimshoes
+
+
+//Stuff I didn't add earlier
+
+
+/datum/loadout_item/shoes/kneeboot
+	name = "Knee Boots"
+	item_path = /obj/item/clothing/shoes/jackboots/knee
+
+/datum/loadout_item/shoes/jackboots/frontier
+	name = "Heavy Frontier Boots"
+	item_path = /obj/item/clothing/shoes/jackboots/frontier_colonist
+
+/*
+*	MISC BOOTS
+*/
+
+/datum/loadout_item/shoes/timbs
+	name = "Fashionable Boots"
+	item_path = /obj/item/clothing/shoes/jackboots/timbs
+
+/*
+*	COWBOY
+*/
+
+/datum/loadout_item/shoes/cowboyboots
+	name = "Cowboy Boots (Brown)"
+	item_path = /obj/item/clothing/shoes/cowboyboots
+
+/datum/loadout_item/shoes/cowboyboots_black
+	name = "Cowboy Boots (Black)"
+	item_path = /obj/item/clothing/shoes/cowboyboots/black
+
+/*
+*	LEG WRAPS PART II (no protection = free)
+*/
+
+/datum/loadout_item/shoes/redcuffs
+	name = "Red Leg Wraps"
+	item_path = /obj/item/clothing/shoes/wraps/red
+	requires_purchase = FALSE
+
+/datum/loadout_item/shoes/bluecuffs
+	name = "Blue Leg Wraps"
+	item_path = /obj/item/clothing/shoes/wraps/blue
+	requires_purchase = FALSE
+
+/*
+*	MISC
+*/
+
+/datum/loadout_item/shoes/high_heels
+	name = "High Heels"
+	item_path = /obj/item/clothing/shoes/high_heels
+
+/datum/loadout_item/shoes/black_heels
+	name = "Fancy Heels"
+	item_path = /obj/item/clothing/shoes/fancy_heels
+
+/datum/loadout_item/shoes/sportshoes
+	name = "Sport Shoes"
+	item_path = /obj/item/clothing/shoes/sports
+
+/datum/loadout_item/shoes/rollerskates
+	name = "Roller Skates"
+	item_path = /obj/item/clothing/shoes/wheelys/rollerskates
+
+/datum/loadout_item/shoes/wheelys
+	name = "Wheely-Heels"
+	item_path = /obj/item/clothing/shoes/wheelys
+
+/*
+*	SEASONAL
+*/
+
+/datum/loadout_item/shoes/christmas
+	name = "Red Christmas Boots"
+	item_path = /obj/item/clothing/shoes/winterboots/christmas
+
+/datum/loadout_item/shoes/christmas/green
+	name = "Green Christmas Boots"
+	item_path = /obj/item/clothing/shoes/winterboots/christmas/green
+
+
+/*
+*	JOB-RESTRICTED
+*/
+
+/datum/loadout_item/shoes/clown_shoes/pink
+	name = "Pink Clown Shoes"
+	item_path = /obj/item/clothing/shoes/clown_shoes/pink
+	restricted_roles = list(JOB_CLOWN)
+	requires_purchase = FALSE

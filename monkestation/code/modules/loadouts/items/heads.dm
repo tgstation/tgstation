@@ -396,3 +396,282 @@ GLOBAL_LIST_INIT(loadout_helmets, generate_loadout_items(/datum/loadout_item/hea
 	name = "Rainbow Bunch"
 	item_path = /obj/item/food/grown/rainbow_flower
 	additional_tooltip_contents = list(TOOLTIP_RANDOM_COLOR)
+
+/datum/loadout_item/head/constable
+	name = "Constable Helmet"
+	item_path = /obj/item/clothing/head/costume/constable
+	restricted_roles = list(JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	requires_purchase = FALSE
+
+/// EVERYTHING NOVA RELATED
+
+
+/*
+*	BERETS
+*/
+
+/datum/loadout_item/head/greyscale_beret/badge //BUYABLE
+	name = "Greyscale Beret with Badge"
+	item_path = /obj/item/clothing/head/beret/badge
+
+/*
+*	CAPS
+*/
+
+/datum/loadout_item/head/pflatcap //BUYABLE
+	name = "Poly Flat Cap"
+	item_path = /obj/item/clothing/head/colourable_flatcap
+
+/datum/loadout_item/head/mothcap //BUYABLE
+	name = "Mothic Softcap"
+	item_path = /obj/item/clothing/head/mothcap
+
+/datum/loadout_item/head/frontiercap //BUYABLE
+	name = "Frontier Cap"
+	item_path = /obj/item/clothing/head/soft/frontier_colonist
+
+/datum/loadout_item/head/frontiercap/medic //BUYABLE
+	name = "Frontier Medical Cap"
+	item_path = /obj/item/clothing/head/soft/frontier_colonist/medic
+
+/*
+*	FEDORAS
+*/
+
+/datum/loadout_item/head/black_fedora //BUYABLE
+	name = "Black Fedora"
+	item_path = /obj/item/clothing/head/fedora
+
+
+/datum/loadout_item/head/brown_fedora //BUYABLE
+	name = "Brown Fedora"
+	item_path = /obj/item/clothing/head/fedora/brown
+
+/*
+*	MISC
+*/
+
+/datum/loadout_item/head/hair_tie //BUYABLE
+	name = "Hair Tie"
+	item_path = /obj/item/clothing/head/hair_tie
+
+/datum/loadout_item/head/hair_tie_scrunchie //BUYABLE
+	name = "Scrunchie"
+	item_path = /obj/item/clothing/head/hair_tie/scrunchie
+
+/datum/loadout_item/head/hair_tie_plastic_beads //BUYABLE
+	name = "Colorful Hair tie"
+	item_path = /obj/item/clothing/head/hair_tie/plastic_beads
+
+/datum/loadout_item/head/standalone_hood //BUYABLE
+	name = "Recolorable Standalone Hood"
+	item_path = /obj/item/clothing/head/standalone_hood
+
+/datum/loadout_item/head/top_hat //BUYABLE
+	name = "Top Hat"
+	item_path = /obj/item/clothing/head/hats/tophat
+
+/datum/loadout_item/head/large_bow //BUYABLE
+	name = "Colourable Large Bow"
+	item_path = /obj/item/clothing/head/large_bow
+
+/datum/loadout_item/head/back_bow //BUYABLE
+	name = "Colourable Back Bow"
+	item_path = /obj/item/clothing/head/back_bow
+
+/datum/loadout_item/head/small_bow //BUYABLE
+	name = "Colourable Small Bow"
+	item_path = /obj/item/clothing/head/small_bow
+
+/datum/loadout_item/head/sweet_bow //BUYABLE
+	name = "Colourable Sweet bow"
+	item_path = /obj/item/clothing/head/sweet_bow
+
+/*
+*	MISC
+*/
+
+/datum/loadout_item/head/floral_garland //BUYABLE
+	name = "Floral Garland"
+	item_path = /obj/item/clothing/head/costume/garland
+
+/datum/loadout_item/head/sombrero //BUYABLE
+	name = "Sombrero"
+	item_path = /obj/item/clothing/head/costume/sombrero
+
+/datum/loadout_item/head/flakhelm //BUYABLE
+	name = "Flak Helmet"
+	item_path = /obj/item/clothing/head/hats/flakhelm
+
+/datum/loadout_item/head/fashionable_cap //BUYABLE
+	name = "Fashionable Baseball Cap"
+	item_path = /obj/item/clothing/head/soft/yankee
+
+/datum/loadout_item/head/plague_hat //BUYABLE
+	name = "Plague Doctor's Hat"
+	item_path = /obj/item/clothing/head/bio_hood/plague
+
+/datum/loadout_item/head/chap_nunh //BUYABLE
+	name = "Nun's Hood"
+	item_path = /obj/item/clothing/head/chaplain/nun_hood
+
+/datum/loadout_item/head/chap_kippah //BUYABLE
+	name = "Jewish Kippah"
+	item_path = /obj/item/clothing/head/chaplain/kippah
+
+/*
+*	COWBOY
+*/
+
+/datum/loadout_item/head/cowboyhat //BUYABLE
+	name = "Recolorable Cattleman Hat"
+	item_path = /obj/item/clothing/head/cowboy/nova/cattleman
+
+/datum/loadout_item/head/cowboyhat_black //BUYABLE
+	name = "Recolorable Wide-Brimmed Cattleman Hat"
+	item_path = /obj/item/clothing/head/cowboy/nova/cattleman/wide
+
+/datum/loadout_item/head/cowboyhat_wide //BUYABLE
+	name = "Wide-Brimmed Hat"
+	item_path = /obj/item/clothing/head/cowboy/nova/wide
+
+/datum/loadout_item/head/cowboyhat_wide_feather //BUYABLE
+	name = "Wide-Brimmed Feathered Hat"
+	item_path = /obj/item/clothing/head/cowboy/nova/wide/feathered
+
+/datum/loadout_item/head/cowboyhat_flat //BUYABLE
+	name = "Flat-Brimmed Hat"
+	item_path = /obj/item/clothing/head/cowboy/nova/flat
+
+/datum/loadout_item/head/cowboyhat_flat_cowl //BUYABLE
+	name = "Flat-Brimmed Hat with Cowl"
+	item_path = /obj/item/clothing/head/cowboy/nova/flat/cowl
+
+/datum/loadout_item/head/cowboyhat_sheriff //BUYABLE
+	name = "Sheriff Hat"
+	item_path = /obj/item/clothing/head/cowboy/nova/flat/sheriff
+
+/datum/loadout_item/head/cowboyhat_deputy //BUYABLE
+	name = "Deputy Hat"
+	item_path = /obj/item/clothing/head/cowboy/nova/flat/deputy
+
+/datum/loadout_item/head/cowboyhat_winter //BUYABLE
+	name = "Winter Cowboy Hat"
+	item_path = /obj/item/clothing/head/cowboy/nova/flat/cowl/sheriff
+
+/*
+*	JOB-LOCKED
+*/
+
+/datum/loadout_item/head/imperial_cap
+	name = "Captain's Naval Cap"
+	item_path = /obj/item/clothing/head/hats/imperial/cap
+	restricted_roles = list(JOB_CAPTAIN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/imperial_hop
+	name = "Head of Personnel's Naval Cap"
+	item_path = /obj/item/clothing/head/hats/imperial/hop
+	restricted_roles = list(JOB_HEAD_OF_PERSONNEL)
+	requires_purchase = FALSE
+
+
+/datum/loadout_item/head/imperial_cmo
+	name = "Chief Medical Officer's Naval Cap"
+	item_path = /obj/item/clothing/head/hats/imperial/cmo
+	restricted_roles = list(JOB_CHIEF_MEDICAL_OFFICER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/imperial_ce
+	name = "Chief Engineer's blast helmet."
+	item_path = /obj/item/clothing/head/hats/imperial/ce
+	restricted_roles = list(JOB_CHIEF_ENGINEER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/cowboyhat_sec
+	name = "Cattleman Hat, Security"
+	item_path = /obj/item/clothing/head/cowboy/nova/cattleman/sec
+	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT ,JOB_HEAD_OF_SECURITY)
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/cowboyhat_secwide
+	name = "Wide-Brimmed Cattleman Hat, Security"
+	item_path = /obj/item/clothing/head/cowboy/nova/cattleman/wide/sec
+	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT ,JOB_HEAD_OF_SECURITY)
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/blasthelmet //BUYABLE
+	name = "Blast Helmet"
+	item_path = /obj/item/clothing/head/hats/imperial/helmet
+
+/datum/loadout_item/head/navybluehoscap
+	name = "Head of Security's Naval Cap"
+	item_path = /obj/item/clothing/head/hats/imperial/hos
+	restricted_roles = list(JOB_HEAD_OF_SECURITY)
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/cybergoggles_civ //BUYABLE
+	name = "Type-34C Forensics Headwear"
+	item_path = /obj/item/clothing/head/fedora/det_hat/cybergoggles/civilian
+
+/datum/loadout_item/head/cybergoggles	//Cyberpunk-P.I. Outfit
+	name = "Type-34P Forensics Headwear"
+	item_path = /obj/item/clothing/head/fedora/det_hat/cybergoggles
+	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_BRIG_PHYSICIAN, JOB_SECURITY_ASSISTANT ,JOB_HEAD_OF_SECURITY)
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/imperial_generic //BUYABLE
+	name = "Grey Naval Officer Cap"
+	item_path = /obj/item/clothing/head/hats/imperial
+
+/datum/loadout_item/head/imperial_grey //BUYABLE
+	name = "Dark Grey Naval Officer Cap"
+	item_path = /obj/item/clothing/head/hats/imperial/grey
+
+/datum/loadout_item/head/imperial_red //BUYABLE
+	name = "Red Naval Officer Cap"
+	item_path = /obj/item/clothing/head/hats/imperial/red
+
+/datum/loadout_item/head/imperial_white //BUYABLE
+	name = "White Naval Officer Cap"
+	item_path = /obj/item/clothing/head/hats/imperial/white
+
+/datum/loadout_item/head/jester
+	name = "Jester hat"
+	item_path = /obj/item/clothing/head/costume/jester
+	restricted_roles = list(JOB_CLOWN)
+	requires_purchase = FALSE
+
+/*
+*	JOB BERETS
+*/
+
+/datum/loadout_item/head/atmos_beret
+	name = "Atmospherics Beret"
+	item_path = /obj/item/clothing/head/beret/atmos
+	restricted_roles = list(JOB_ATMOSPHERIC_TECHNICIAN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/beret_viro
+	name = "Virologist Beret"
+	item_path = /obj/item/clothing/head/beret/medical/virologist
+	restricted_roles = list(JOB_VIROLOGIST)
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/beret_chem
+	name = "Chemist Beret"
+	item_path = /obj/item/clothing/head/beret/medical/chemist
+	restricted_roles = list(JOB_CHEMIST)
+	requires_purchase = FALSE
+
+/datum/loadout_item/head/beret_robo
+	name = "Roboticist Beret"
+	item_path = /obj/item/clothing/head/beret/science/fancy/robo
+	restricted_roles = list(JOB_ROBOTICIST)
+	requires_purchase = FALSE
+
+
+// Legacy unpaintable cowboy hat because it fits a character better
+/datum/loadout_item/head/cowboyhat_legacy  //BUYABLE
+	name = "Cowboy Hat (Legacy)"
+	item_path = /obj/item/clothing/head/costume/cowboyhat_old

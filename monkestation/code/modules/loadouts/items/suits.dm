@@ -352,3 +352,425 @@ GLOBAL_LIST_INIT(loadout_exosuits, generate_loadout_items(/datum/loadout_item/su
 /datum/loadout_item/suit/donator
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+
+/// EVERYTHING NOVA RELATED
+
+
+/*
+*	WINTER COATS
+*/
+
+/datum/loadout_item/suit/aformal
+	name = "Assistant's Formal Winter Coat"
+	item_path = /obj/item/clothing/suit/hooded/wintercoat/nova
+	restricted_roles = list(JOB_ASSISTANT, JOB_SECURITY_ASSISTANT) //funny
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/korea
+	name = "Eastern Winter Coat"
+	item_path = /obj/item/clothing/suit/koreacoat
+
+/datum/loadout_item/suit/czech
+	name = "Czech Winter Coat"
+	item_path = /obj/item/clothing/suit/modernwintercoatthing
+
+/datum/loadout_item/suit/mantella
+	name = "Mothic Mantella"
+	item_path = /obj/item/clothing/suit/mothcoat/winter
+
+/*
+*	SUITS / SUIT JACKETS
+*/
+
+/datum/loadout_item/suit/white_suit_jacket
+	name = "White Formal Suit Jacket"
+	item_path = /obj/item/clothing/suit/toggle/lawyer/white
+
+/datum/loadout_item/suit/suitblackbetter
+	name = "Light Black Formal Suit Jacket"
+	item_path = /obj/item/clothing/suit/toggle/lawyer/black/better
+
+/datum/loadout_item/suit/suitwhite
+	name = "Texan Suit Jacket"
+	item_path = /obj/item/clothing/suit/texas
+
+/*
+*	JACKETS
+*/
+
+/datum/loadout_item/suit/leather_jacket/hooded
+	name = "Leather Jacket with a Hoodie"
+	item_path = /obj/item/clothing/suit/hooded/leather
+
+/datum/loadout_item/suit/tailored_jacket
+	name = "Recolorable Tailored Jacket"
+	item_path = /obj/item/clothing/suit/tailored_jacket
+
+/datum/loadout_item/suit/tailored_short_jacket
+	name = "Recolorable Tailored Short Jacket"
+	item_path = /obj/item/clothing/suit/tailored_jacket/short
+
+/datum/loadout_item/suit/mothcoat
+	name = "Mothic Flightsuit"
+	item_path = /obj/item/clothing/suit/mothcoat
+
+/*
+*	VARSITY JACKET
+*/
+
+/datum/loadout_item/suit/varsity
+	name = "Varsity Jacket"
+	item_path = /obj/item/clothing/suit/varsity
+
+/*
+*	COSTUMES
+*/
+
+/datum/loadout_item/suit/shark_costume
+	name = "Shark Costume"
+	item_path = /obj/item/clothing/suit/hooded/shark_costume
+
+/*
+*	MISC
+*/
+
+/datum/loadout_item/suit/recolorable_apron
+	name = "Recolorable Apron"
+	item_path = /obj/item/clothing/suit/apron/chef/colorable_apron
+
+/datum/loadout_item/suit/redhood
+	name = "Red cloak"
+	item_path = /obj/item/clothing/suit/hooded/cloak/david
+
+/datum/loadout_item/suit/wornshirt
+	name = "Worn Shirt"
+	item_path = /obj/item/clothing/suit/wornshirt
+
+/datum/loadout_item/suit/duster
+	name = "Colorable Duster"
+	item_path = /obj/item/clothing/suit/duster
+
+/datum/loadout_item/suit/peacoat
+	name = "Colorable Peacoat"
+	item_path = /obj/item/clothing/suit/toggle/peacoat
+
+/datum/loadout_item/suit/trackjacket
+	name = "Track Jacket"
+	item_path = /obj/item/clothing/suit/toggle/trackjacket
+
+/datum/loadout_item/suit/croptop
+	name = "Crop Top Turtleneck"
+	item_path = /obj/item/clothing/suit/jacket/croptop
+
+/*
+*	FLANNELS
+*/
+
+/datum/loadout_item/suit/flannel_gags
+	name = "Flannel Shirt"
+	item_path = /obj/item/clothing/suit/toggle/jacket/flannel/gags
+
+/datum/loadout_item/suit/flannel_black
+	name = "Black Flannel"
+	item_path = /obj/item/clothing/suit/toggle/jacket/flannel
+
+/datum/loadout_item/suit/flannel_red
+	name = "Red Flannel"
+	item_path = /obj/item/clothing/suit/toggle/jacket/flannel/red
+
+/datum/loadout_item/suit/flannel_aqua
+	name = "Aqua Flannel"
+	item_path = /obj/item/clothing/suit/toggle/jacket/flannel/aqua
+
+/datum/loadout_item/suit/flannel_brown
+	name = "Brown Flannel"
+	item_path = /obj/item/clothing/suit/toggle/jacket/flannel/brown
+
+/*
+*	MISC
+*/
+
+/datum/loadout_item/suit/frenchtrench
+	name = "Blue Trenchcoat"
+	item_path = /obj/item/clothing/suit/frenchtrench
+
+/datum/loadout_item/suit/frontiertrench
+	name = "Frontier Trenchcoat"
+	item_path = /obj/item/clothing/suit/jacket/frontier_colonist
+
+/datum/loadout_item/suit/cossak
+	name = "Ukrainian Coat"
+	item_path = /obj/item/clothing/suit/cossack
+
+/datum/loadout_item/suit/parka
+	name = "Falls Parka"
+	item_path = /obj/item/clothing/suit/fallsparka
+
+/datum/loadout_item/suit/urban
+	name = "Urban Coat"
+	item_path = /obj/item/clothing/suit/urban
+
+/datum/loadout_item/suit/maxson
+	name = "Fancy Brown Coat"
+	item_path = /obj/item/clothing/suit/brownbattlecoat
+
+/datum/loadout_item/suit/bossu
+	name = "Fancy Black Coat"
+	item_path = /obj/item/clothing/suit/blackfurrich
+
+/datum/loadout_item/suit/dutchjacket
+	name = "Western Jacket"
+	item_path = /obj/item/clothing/suit/dutchjacketsr
+
+/datum/loadout_item/suit/caretaker
+	name = "Caretaker Jacket"
+	item_path = /obj/item/clothing/suit/victoriantailcoatbutler
+
+/datum/loadout_item/suit/colourable_leather_jacket
+	name = "Colourable Leather Jacket"
+	item_path = /obj/item/clothing/suit/jacket/leather/colourable
+
+/datum/loadout_item/suit/frontierjacket/short
+	name = "Frontier Jacket (Short)"
+	item_path = /obj/item/clothing/suit/jacket/frontier_colonist/short
+
+/datum/loadout_item/suit/frontierjacket/short/medical
+	name = "Frontier Medical Jacket (Short)"
+	item_path = /obj/item/clothing/suit/jacket/frontier_colonist/medical
+
+/datum/loadout_item/suit/woolcoat
+	name = "Leather Overcoat"
+	item_path = /obj/item/clothing/suit/woolcoat
+
+/datum/loadout_item/suit/flakjack
+	name = "Flak Jacket"
+	item_path = /obj/item/clothing/suit/flakjack
+
+/datum/loadout_item/suit/deckard
+	name = "Runner Coat"
+	item_path = /obj/item/clothing/suit/toggle/deckard
+	restricted_roles = list(JOB_DETECTIVE)
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/bltrench
+	name = "Black Trenchcoat"
+	item_path = /obj/item/clothing/suit/trenchblack
+
+/datum/loadout_item/suit/brtrench
+	name = "Brown Trenchcoat"
+	item_path = /obj/item/clothing/suit/trenchbrown
+
+/datum/loadout_item/suit/discojacket
+	name = "Disco Ass Blazer"
+	item_path = /obj/item/clothing/suit/discoblazer
+
+/datum/loadout_item/suit/kimjacket
+	name = "Aerostatic Bomber Jacket"
+	item_path = /obj/item/clothing/suit/kimjacket
+
+/datum/loadout_item/suit/cardigan
+	name = "Cardigan"
+	item_path = /obj/item/clothing/suit/toggle/jacket/cardigan
+
+/*
+*	HOODIES
+*/
+
+/datum/loadout_item/suit/hoodie/greyscale
+	name = "Greyscale Hoodie"
+	item_path = /obj/item/clothing/suit/toggle/jacket/hoodie
+
+/datum/loadout_item/suit/hoodie/greyscale_trim
+	name = "Greyscale Trimmed Hoodie"
+	item_path = /obj/item/clothing/suit/toggle/jacket/hoodie/trim
+
+/datum/loadout_item/suit/hoodie/greyscale_trim_alt
+	name = "Greyscale Trimmed Hoodie (Alt)"
+	item_path = /obj/item/clothing/suit/toggle/jacket/hoodie/trim/alt
+
+/datum/loadout_item/suit/hoodie/black
+	name = "Black Hoodie"
+	item_path = /obj/item/clothing/suit/toggle/jacket/hoodie/black
+
+/datum/loadout_item/suit/hoodie/red
+	name = "Red Hoodie"
+	item_path = /obj/item/clothing/suit/toggle/jacket/hoodie/red
+
+/datum/loadout_item/suit/hoodie/blue
+	name = "Blue Hoodie"
+	item_path = /obj/item/clothing/suit/toggle/jacket/hoodie/blue
+
+/datum/loadout_item/suit/hoodie/green
+	name = "Green Hoodie"
+	item_path = /obj/item/clothing/suit/toggle/jacket/hoodie/green
+
+/datum/loadout_item/suit/hoodie/orange
+	name = "Orange Hoodie"
+	item_path = /obj/item/clothing/suit/toggle/jacket/hoodie/orange
+
+/datum/loadout_item/suit/hoodie/yellow
+	name = "Yellow Hoodie"
+	item_path = /obj/item/clothing/suit/toggle/jacket/hoodie/yellow
+
+/datum/loadout_item/suit/hoodie/grey
+	name = "Grey Hoodie"
+	item_path = /obj/item/clothing/suit/toggle/jacket/hoodie/grey
+
+/datum/loadout_item/suit/hoodie/nt
+	name = "NT Hoodie"
+	item_path = /obj/item/clothing/suit/toggle/jacket/hoodie/branded
+
+/datum/loadout_item/suit/hoodie/smw
+	name = "SMW Hoodie"
+	item_path = /obj/item/clothing/suit/toggle/jacket/hoodie/branded/smw
+
+/datum/loadout_item/suit/hoodie/nrti
+	name = "NRTI Hoodie"
+	item_path = /obj/item/clothing/suit/toggle/jacket/hoodie/branded/nrti
+
+/datum/loadout_item/suit/hoodie/cti
+	name = "CTI Hoodie"
+	item_path = /obj/item/clothing/suit/toggle/jacket/hoodie/branded/cti
+
+/datum/loadout_item/suit/hoodie/mu
+	name = "Mojave University Hoodie"
+	item_path = /obj/item/clothing/suit/toggle/jacket/hoodie/branded/mu
+
+/*
+*	JOB-LOCKED
+*/
+
+// JACKETS
+/datum/loadout_item/suit/navybluejacketofficer
+	name = "Security Officer's Navy Blue Formal Jacket"
+	item_path = /obj/item/clothing/suit/jacket/officer/blue
+	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY, JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/navybluejacketwarden
+	name = "Warden's Navy Blue Formal Jacket"
+	item_path = /obj/item/clothing/suit/jacket/warden/blue
+	restricted_roles = list(JOB_WARDEN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/navybluejackethos
+	name = "Head of Security's Navy Blue Formal Jacket"
+	item_path = /obj/item/clothing/suit/jacket/hos/blue
+	restricted_roles = list(JOB_HEAD_OF_SECURITY)
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/security_jacket
+	name = "Security Jacket"
+	item_path = /obj/item/clothing/suit/toggle/jacket/sec
+	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY, JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/brit
+	name = "High Vis Armored Vest"
+	item_path = /obj/item/clothing/suit/armor/vest/peacekeeper/brit
+	restricted_roles = list(JOB_HEAD_OF_SECURITY, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_DETECTIVE,  JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/british_jacket
+	name = "Peacekeeper Officer Coat"
+	item_path = /obj/item/clothing/suit/british_officer
+	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY,  JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/peacekeeper_jacket
+	name = "Peacekeeper Jacket"
+	item_path = /obj/item/clothing/suit/armor/vest/peacekeeper/jacket
+	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY,  JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/peacekeeper_jacket/badge
+	name = "Badged Peacekeeper Jacket"
+	item_path = /obj/item/clothing/suit/armor/vest/peacekeeper/jacket/badge
+
+/datum/loadout_item/suit/offdep_jacket
+	name = "Off-Department Jacket"
+	item_path = /obj/item/clothing/suit/toggle/jacket/assistant
+
+/datum/loadout_item/suit/engi_jacket
+	name = "Engineering Jacket"
+	item_path = /obj/item/clothing/suit/toggle/jacket/engi
+	restricted_roles = list(JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN, JOB_CHIEF_ENGINEER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/sci_jacket
+	name = "Science Jacket"
+	item_path = /obj/item/clothing/suit/toggle/jacket/sci
+	restricted_roles = list(JOB_SCIENTIST, JOB_GENETICIST, JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/med_jacket
+	name = "Medbay Jacket"
+	item_path = /obj/item/clothing/suit/toggle/jacket/med
+	restricted_roles = list(JOB_PARAMEDIC, JOB_MEDICAL_DOCTOR, JOB_CHEMIST, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/supply_jacket
+	name = "Supply Jacket"
+	item_path = /obj/item/clothing/suit/toggle/jacket/supply
+	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_SHAFT_MINER, JOB_QUARTERMASTER)
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/digicoat_glitched //Public donator reward for Razurath.
+	name = "Glitched Digicoat"
+	item_path = /obj/item/clothing/suit/toggle/digicoat/glitched
+
+/datum/loadout_item/suit/warm_coat
+	name = "Colourable Warm Coat"
+	item_path = /obj/item/clothing/suit/warm_coat
+
+/datum/loadout_item/suit/warm_sweater
+	name = "Colourable Warm Sweater"
+	item_path = /obj/item/clothing/suit/warm_sweater
+
+/datum/loadout_item/suit/heart_sweater
+	name = "Colourable Heart Sweater"
+	item_path = /obj/item/clothing/suit/heart_sweater
+
+/datum/loadout_item/suit/crop_jacket
+	name = "Colourable Crop-Top Jacket"
+	item_path = /obj/item/clothing/suit/crop_jacket
+
+/datum/loadout_item/suit/sleeveless_crop_jacket
+	name = "Colourable Sleeveless Crop-Top Jacket"
+	item_path = /obj/item/clothing/suit/crop_jacket/sleeveless
+
+/*
+*	CHAPLAIN
+*/
+
+/datum/loadout_item/suit/chap_nun
+	name = "Nun's Habit"
+	item_path = /obj/item/clothing/suit/chaplainsuit/nun
+	restricted_roles = list(JOB_CHAPLAIN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/chap_holiday
+	name = "Chaplain's Holiday Robe"
+	item_path = /obj/item/clothing/suit/chaplainsuit/holidaypriest
+	restricted_roles = list(JOB_CHAPLAIN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/chap_brownmonk
+	name = "Monk's Brown Habit"
+	item_path = /obj/item/clothing/suit/hooded/chaplainsuit/monkhabit
+	restricted_roles = list(JOB_CHAPLAIN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/chap_eastmonk
+	name = "Eastern Monk's Robe"
+	item_path = /obj/item/clothing/suit/chaplainsuit/monkrobeeast
+	restricted_roles = list(JOB_CHAPLAIN)
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/chap_shrinehand
+	name = "Shrinehand Robe"
+	item_path = /obj/item/clothing/suit/chaplainsuit/shrinehand
+	restricted_roles = list(JOB_CHAPLAIN)
+	requires_purchase = FALSE
+

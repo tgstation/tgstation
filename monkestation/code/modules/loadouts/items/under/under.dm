@@ -486,6 +486,14 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 	name = "Shrine Priestess Kimono"
 	item_path = /obj/item/clothing/under/dress/shrine_priestess
 
+
+/datum/loadout_item/under/formal/constable // added it in cuz someone really wanted it
+	name = "Constable Jumpsuit"
+	item_path = /obj/item/clothing/under/rank/security/constable
+	restricted_roles = list(JOB_SECURITY_ASSISTANT, JOB_BRIG_PHYSICIAN, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY)
+	requires_purchase = FALSE
+
+
 /// EVERYTHING NOVA RELATED
 //NOTES
 //Jumpskirt prefs overrides jumpsuits (ex.qm's formal jumpsuit becomes a skirt)
