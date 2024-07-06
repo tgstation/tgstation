@@ -5,7 +5,8 @@
 		NO_DNA_COPY,
 		NOTRANSSTING,
 		NO_UNDERWEAR,
-		NOHUSK
+		NOHUSK,
+		HAIR, // monke edit: allow them to have hair (it's the future, why not)
 	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
@@ -15,7 +16,7 @@
 		TRAIT_NOCLONELOSS,
 		TRAIT_NOFIRE,
 		TRAIT_NOHUNGER,
-		TRAIT_NOMETABOLISM,
+		/* TRAIT_NOMETABOLISM, */ // monkestation edit: making androids closer to IPCs
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
@@ -25,6 +26,7 @@
 		TRAIT_TOXIMMUNE,
 		TRAIT_NOBLOOD,
 		TRAIT_VIRUSIMMUNE,
+		TRAIT_REVIVES_BY_HEALING, // monkestation edit: making androids closer to IPCs
 	)
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
@@ -47,8 +49,8 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	reagent_tag = PROCESS_SYNTHETIC // They don't HAVE a liver, but if they did, they'd have synthetic chem processing.
 	special_step_sounds = list('sound/effects/servostep.ogg')
-	
-	
+
+
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/robot/android,
@@ -69,7 +71,7 @@
 /// Taken from TGstation.
 /datum/species/android/create_pref_traits_perks()
 	var/list/to_add = list()
-	
+
 	to_add += list(
 	list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
