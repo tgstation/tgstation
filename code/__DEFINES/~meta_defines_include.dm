@@ -1,1 +1,1 @@
-#include "..\..\massmeta\~meta_defines\meta_defines_all.dm"
+#include "..\..\massmeta\modular_meta_defines.dm"

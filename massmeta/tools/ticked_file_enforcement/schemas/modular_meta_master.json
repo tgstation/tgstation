@@ -1,0 +1,7 @@
+{
+	"file": "massmeta/modular_meta_master.dm",
+	"scannable_directory": "massmeta/master_files/",
+	"subdirectories": true,
+	"excluded_files": [],
+	"forbidden_includes": []
+}

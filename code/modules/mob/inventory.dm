@@ -406,22 +406,6 @@
 	return items
 
 /**
- * Used to return a list of equipped items on a human mob; does not by default include held items, see include_flags
- *
- * Argument(s):
- * * Optional - include_flags, (see obj.flags.dm) describes which optional things to include or not (pockets, accessories, held items)
- */
-
-/mob/living/carbon/human/get_equipped_items(include_flags = NONE)
-	var/list/items = ..()
-	if(!(include_flags & INCLUDE_POCKETS))
-		items -= list(l_store, r_store, s_store)
-	if((include_flags & INCLUDE_ACCESSORIES) && w_uniform)
-		var/obj/item/clothing/under/worn_under = w_uniform
-		items += worn_under.attached_accessories
-	return items
-
-/**
  * Returns the items that were succesfully unequipped.
  */
 /mob/living/proc/unequip_everything()
@@ -439,36 +423,88 @@
 		dropped_items |= return_val
 	return dropped_items
 
-/mob/living/carbon/proc/check_obscured_slots(transparent_protection)
-	var/obscured = NONE
-	var/hidden_slots = NONE
+/**
+ * Try to equip an item to a slot on the mob
+ *
+ * This is a SAFE proc. Use this instead of equip_to_slot()!
+ *
+ * set qdel_on_fail to have it delete W if it fails to equip
+ *
+ * set disable_warning to disable the 'you are unable to equip that' warning.
+ *
+ * unset redraw_mob to prevent the mob icons from being redrawn at the end.
+ *
+ * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+ *
+ * set indirect_action to allow insertions into "soft" locked objects, things that are easily opened by the owning mob
+ */
+/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE, initial = FALSE, indirect_action = FALSE)
+	if(!istype(W) || QDELETED(W)) //This qdeleted is to prevent stupid behavior with things that qdel during init, like say stacks
+		return FALSE
+	if(!W.mob_can_equip(src, slot, disable_warning, bypass_equip_delay_self, indirect_action = indirect_action))
+		if(qdel_on_fail)
+			qdel(W)
+		else if(!disable_warning)
+			to_chat(src, span_warning("You are unable to equip that!"))
+		return FALSE
+	equip_to_slot(W, slot, initial, redraw_mob, indirect_action = indirect_action) //This proc should not ever fail.
+	return TRUE
 
-	for(var/obj/item/equipped_item in get_equipped_items())
-		hidden_slots |= equipped_item.flags_inv
-		if(transparent_protection)
-			hidden_slots |= equipped_item.transparent_protection
+/**
+ * Actually equips an item to a slot (UNSAFE)
+ *
+ * This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on
+ * whether you can or can't equip need to be done before! Use mob_can_equip() for that task.
+ *
+ *In most cases you will want to use equip_to_slot_if_possible()
+ */
+/mob/proc/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
+	return
 
-	if(hidden_slots & HIDENECK)
-		obscured |= ITEM_SLOT_NECK
-	if(hidden_slots & HIDEMASK)
-		obscured |= ITEM_SLOT_MASK
-	if(hidden_slots & HIDEEYES)
-		obscured |= ITEM_SLOT_EYES
-	if(hidden_slots & HIDEEARS)
-		obscured |= ITEM_SLOT_EARS
-	if(hidden_slots & HIDEGLOVES)
-		obscured |= ITEM_SLOT_GLOVES
-	if(hidden_slots & HIDEJUMPSUIT)
-		obscured |= ITEM_SLOT_ICLOTHING
-	if(hidden_slots & HIDESHOES)
-		obscured |= ITEM_SLOT_FEET
-	if(hidden_slots & HIDESUITSTORAGE)
-		obscured |= ITEM_SLOT_SUITSTORE
-	if(hidden_slots & HIDEHEADGEAR)
-		obscured |= ITEM_SLOT_HEAD
+/**
+ * Equip an item to the slot or delete
+ *
+ * This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to
+ * equip people when the round starts and when events happen and such.
+ *
+ * Also bypasses equip delay checks, since the mob isn't actually putting it on.
+ * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+ * set indirect_action to allow insertions into "soft" locked objects, things that are easily opened by the owning mob
+ */
+/mob/proc/equip_to_slot_or_del(obj/item/W, slot, initial = FALSE, indirect_action = FALSE)
+	return equip_to_slot_if_possible(W, slot, TRUE, TRUE, FALSE, TRUE, initial, indirect_action)
 
-	return obscured
+/**
+ * Auto equip the passed in item the appropriate slot based on equipment priority
+ *
+ * puts the item "W" into an appropriate slot in a human's inventory
+ *
+ * returns 0 if it cannot, 1 if successful
+ */
+/mob/proc/equip_to_appropriate_slot(obj/item/W, qdel_on_fail = FALSE, indirect_action = FALSE)
+	if(!istype(W))
+		return FALSE
+	var/slot_priority = W.slot_equipment_priority
 
+	if(!slot_priority)
+		slot_priority = list( \
+			ITEM_SLOT_BACK, ITEM_SLOT_ID,\
+			ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING,\
+			ITEM_SLOT_MASK, ITEM_SLOT_HEAD, ITEM_SLOT_NECK,\
+			ITEM_SLOT_FEET, ITEM_SLOT_GLOVES,\
+			ITEM_SLOT_EARS, ITEM_SLOT_EYES,\
+			ITEM_SLOT_BELT, ITEM_SLOT_SUITSTORE,\
+			ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET,\
+			ITEM_SLOT_DEX_STORAGE\
+		)
+
+	for(var/slot in slot_priority)
+		if(equip_to_slot_if_possible(W, slot, disable_warning = TRUE, redraw_mob = TRUE, indirect_action = indirect_action))
+			return TRUE
+
+	if(qdel_on_fail)
+		qdel(W)
+	return FALSE
 
 /// Tries to equip an item, store it in open storage, or in next best storage
 /obj/item/proc/equip_to_best_slot(mob/user)
@@ -548,27 +584,6 @@
 
 	if(hud_used)
 		hud_used.build_hand_slots()
-
-/mob/living/carbon/human/change_number_of_hands(amt)
-	var/old_limbs = held_items.len
-	if(amt < old_limbs)
-		for(var/i in hand_bodyparts.len to amt step -1)
-			var/obj/item/bodypart/BP = hand_bodyparts[i]
-			BP.dismember()
-			hand_bodyparts[i] = null
-		hand_bodyparts.len = amt
-	else if(amt > old_limbs)
-		hand_bodyparts.len = amt
-		for(var/i in old_limbs+1 to amt)
-			var/path = /obj/item/bodypart/arm/left
-			if(!(i % 2))
-				path = /obj/item/bodypart/arm/right
-
-			var/obj/item/bodypart/BP = new path ()
-			BP.held_index = i
-			BP.try_attach_limb(src, TRUE)
-			hand_bodyparts[i] = BP
-	..() //Don't redraw hands until we have organs for them
 
 //GetAllContents that is reasonable and not stupid
 /mob/living/proc/get_all_gear()

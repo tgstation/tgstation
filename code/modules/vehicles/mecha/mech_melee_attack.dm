@@ -2,7 +2,7 @@
  * ## Mech melee attack
  * Called when a mech melees a target with fists
  * Handles damaging the target & associated effects
- * return value is number of damage dealt
+ * return value is number of damage dealt. returning a value puts our mech onto attack cooldown.
  * Arguments:
  * * mecha_attacker: Mech attacking this target
  * * user: mob that initiated the attack from inside the mech as a controller
@@ -14,6 +14,9 @@
 	return 0
 
 /turf/closed/wall/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
+	if(!user.combat_mode)
+		return 0
+
 	mecha_attacker.do_attack_animation(src)
 	switch(mecha_attacker.damtype)
 		if(BRUTE)
@@ -31,7 +34,26 @@
 	..()
 	return 100 //this is an arbitrary "damage" number since the actual damage is rng dismantle
 
-/obj/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
+/obj/structure/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
+	if(!user.combat_mode)
+		return 0
+
+	mecha_attacker.do_attack_animation(src)
+	switch(mecha_attacker.damtype)
+		if(BRUTE)
+			playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
+		if(BURN)
+			playsound(src, 'sound/items/welder.ogg', 50, TRUE)
+		else
+			return 0
+	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
+	..()
+	return take_damage(mecha_attacker.force * 3, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
+
+/obj/machinery/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
+	if(!user.combat_mode)
+		return 0
+
 	mecha_attacker.do_attack_animation(src)
 	switch(mecha_attacker.damtype)
 		if(BRUTE)
