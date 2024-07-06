@@ -431,9 +431,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security)
-"akZ" = (
-/turf/closed/mineral/random/stationside,
-/area/space)
 "alb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -10644,12 +10641,6 @@
 /obj/structure/broken_flooring/singular/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
-"eeq" = (
-/obj/structure/railing/corner{
-	dir = 8
-	},
-/turf/open/space/basic,
-/area/space)
 "eeB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -14709,11 +14700,6 @@
 	},
 /turf/open/floor/carpet,
 /area/station/service/library)
-"fFc" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/fuchsia,
-/turf/open/space/basic,
-/area/space)
 "fFt" = (
 /obj/structure/chair/wood{
 	dir = 8
@@ -22570,6 +22556,12 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/textured_half,
 /area/station/security/execution/transfer)
+"imu" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/indigo,
+/obj/machinery/atmospherics/pipe/smart/simple/orange,
+/turf/open/space/basic,
+/area/space/nearstation)
 "imC" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/landmark/start/security_officer,
@@ -22604,10 +22596,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
-"inE" = (
-/obj/structure/railing/corner,
-/turf/open/space/basic,
-/area/space)
 "inF" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/o2{
 	dir = 8
@@ -39787,12 +39775,6 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/secondary/command)
-"nKJ" = (
-/obj/structure/railing/corner{
-	dir = 4
-	},
-/turf/open/space/basic,
-/area/space)
 "nKO" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -41047,10 +41029,6 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/white,
 /area/station/science/cytology)
-"ohW" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "oig" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/effect/turf_decal/stripes/corner{
@@ -65907,12 +65885,6 @@
 /obj/machinery/light/small/red/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
-"wtO" = (
-/obj/structure/railing/corner{
-	dir = 1
-	},
-/turf/open/space/basic,
-/area/space)
 "wtS" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -76388,9 +76360,9 @@ dDB
 dDB
 vdg
 wdB
-nKJ
+sxv
 dDB
-inE
+vdg
 wdB
 sxv
 dDB
@@ -76902,9 +76874,9 @@ dDB
 dDB
 rMm
 uPX
-wtO
+pSs
 rpi
-eeq
+rMm
 uPX
 pSs
 dDB
@@ -80225,7 +80197,7 @@ wQI
 gKs
 eLX
 gKs
-akZ
+aJq
 vGW
 cdE
 bjX
@@ -80482,7 +80454,7 @@ ycc
 gKs
 jdL
 gKs
-akZ
+aJq
 eTa
 mGA
 cTk
@@ -84065,12 +84037,12 @@ dDB
 dDB
 dDB
 aCJ
-blb
-blb
-wCc
-wCc
-cLg
-kSI
+huo
+kIq
+kIq
+kIq
+imu
+nFT
 blb
 blb
 tGK
@@ -84322,12 +84294,12 @@ dDB
 dDB
 dDB
 dDB
-wCc
+kSI
 dDB
 dDB
 dDB
 dDB
-apK
+dDB
 dDB
 dDB
 dDB
@@ -84579,12 +84551,12 @@ dDB
 dDB
 dDB
 dDB
-wCc
+kSI
 dDB
 dDB
 dDB
 wNL
-apK
+dDB
 dDB
 dDB
 qin
@@ -84836,12 +84808,12 @@ dDB
 dDB
 dDB
 dDB
-blb
+kSI
 dDB
 dDB
 dDB
 dDB
-apK
+dDB
 dDB
 dDB
 dDB
@@ -85093,12 +85065,12 @@ dDB
 dDB
 dDB
 aCJ
-blb
-blb
-blb
-wCc
-cLg
-kSI
+kah
+kIq
+kIq
+kIq
+imu
+rpK
 blb
 blb
 pWm
@@ -89206,8 +89178,8 @@ dDB
 dDB
 dDB
 blb
-ohW
-ohW
+blb
+blb
 blb
 uqe
 uLW
@@ -89977,8 +89949,8 @@ dDB
 aan
 dDB
 blb
-ohW
-ohW
+blb
+blb
 bWl
 sQm
 sQm
@@ -90748,8 +90720,8 @@ dDB
 dDB
 dDB
 wCc
-ohW
-ohW
+blb
+blb
 bSv
 sQm
 sQm
@@ -91519,8 +91491,8 @@ dDB
 dDB
 dDB
 wCc
-ohW
-ohW
+blb
+blb
 wCc
 lBp
 sYg
@@ -92032,7 +92004,7 @@ dDB
 dDB
 dDB
 dDB
-ohW
+blb
 dDB
 dDB
 wCc
@@ -92288,10 +92260,10 @@ dDB
 dDB
 dDB
 dDB
-fFc
-ohW
-ohW
-ohW
+aGa
+blb
+blb
+blb
 blb
 rpi
 rpi
