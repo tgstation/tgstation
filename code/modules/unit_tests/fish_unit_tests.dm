@@ -136,5 +136,79 @@
 	. = ..()
 	probability = 0 //works around the global list initialization skipping abstract/impossible evolutions.
 
+// we want no default spawns in this unit test
+/datum/chasm_detritus/restricted/bodies/no_defaults
+	default_contents_chance = 0
+
+/// Checks that we are able to fish people out of chasms with priority and that they end up in the right location
+/datum/unit_test/fish_rescue_hook
+	priority = TEST_LONGER
+	var/original_turf_type
+	var/original_turf_baseturfs
+	var/list/mobs_spawned
+
+/datum/unit_test/fish_rescue_hook/Run()
+	// create our human dummies to be dropped into the chasm
+	var/mob/living/carbon/human/consistent/get_in_the_hole = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/basic/mining/lobstrosity/you_too = allocate(/mob/living/basic/mining/lobstrosity)
+	var/mob/living/carbon/human/consistent/mindless = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/consistent/no_brain = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/consistent/empty = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/consistent/dummy = allocate(/mob/living/carbon/human/consistent)
+
+	mobs_spawned = list(
+		get_in_the_hole,
+		you_too,
+		mindless,
+		no_brain,
+		empty,
+		dummy,
+	)
+
+	// create our chasm and remember the previous turf so we can change it back once we're done
+	original_turf_type = run_loc_floor_bottom_left.type
+	original_turf_baseturfs = islist(run_loc_floor_bottom_left.baseturfs) ? run_loc_floor_bottom_left.baseturfs.Copy() : run_loc_floor_bottom_left.baseturfs
+	run_loc_floor_bottom_left.ChangeTurf(/turf/open/chasm)
+	var/turf/open/chasm/the_hole = run_loc_floor_bottom_left
+
+	// into the hole they go
+	for(var/mob/mob_spawned in mobs_spawned)
+		the_hole.drop(mob_spawned)
+		sleep(0.2 SECONDS) // we have to WAIT because the drop() proc sleeps.
+
+	// our 'fisherman' where we expect the item to be moved to after fishing it up
+	var/mob/living/carbon/human/consistent/a_fisherman = allocate(/mob/living/carbon/human/consistent, run_loc_floor_top_right)
+
+	// pretend like this mob has a mind. they should be fished up first
+	no_brain.mind_initialize()
+
+	SEND_SIGNAL(the_hole, COMSIG_PRE_FISHING) // we need to do this for the fishing spot component to be attached
+	var/datum/component/fishing_spot/the_hole_fishing_spot = the_hole.GetComponent(/datum/component/fishing_spot)
+	var/datum/fish_source/fishing_source = the_hole_fishing_spot.fish_source
+	var/obj/item/fishing_hook/rescue/the_hook = allocate(/obj/item/fishing_hook/rescue, run_loc_floor_top_right)
+	the_hook.chasm_detritus_type = /datum/chasm_detritus/restricted/bodies/no_defaults
+
+	// try to fish up our minded victim
+	var/atom/movable/reward = fishing_source.dispense_reward(the_hook.chasm_detritus_type, a_fisherman, the_hole)
+
+	// mobs with minds (aka players) should have precedence over any other mobs that are in the chasm
+	TEST_ASSERT_EQUAL(reward, no_brain, "Fished up [reward] ([REF(reward)]) with a rescue hook; expected to fish up [no_brain]([REF(no_brain)])")
+	// it should end up on the same turf as the fisherman
+	TEST_ASSERT_EQUAL(get_turf(reward), get_turf(a_fisherman), "[reward] was fished up with the rescue hook and ended up at [get_turf(reward)]; expected to be at [get_turf(a_fisherman)]")
+
+	// let's further test that by giving a second mob a mind. they should be fished up immediately..
+	empty.mind_initialize()
+
+	reward = fishing_source.dispense_reward(the_hook.chasm_detritus_type, a_fisherman, the_hole)
+
+	TEST_ASSERT_EQUAL(reward, empty, "Fished up [reward]([REF(reward)]) with a rescue hook; expected to fish up [empty]([REF(empty)])")
+	TEST_ASSERT_EQUAL(get_turf(reward), get_turf(a_fisherman), "[reward] was fished up with the rescue hook and ended up at [get_turf(reward)]; expected to be at [get_turf(a_fisherman)]")
+
+// clean up so we don't mess up subsequent tests
+/datum/unit_test/fish_rescue_hook/Destroy()
+	QDEL_LIST(mobs_spawned)
+	run_loc_floor_bottom_left.ChangeTurf(original_turf_type, original_turf_baseturfs)
+	return ..()
+
 #undef TRAIT_FISH_TESTING
 
