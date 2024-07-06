@@ -61,7 +61,7 @@
 	hidden_uplink.uplink_handler.debug_mode = TRUE
 
 /obj/item/uplink/nuclear_restricted
-	uplink_flag = UPLINK_LONE_OP
+	uplink_flag = UPLINK_NUKE_OPS
 
 /obj/item/uplink/nuclear_restricted/Initialize(mapload)
 	. = ..()
