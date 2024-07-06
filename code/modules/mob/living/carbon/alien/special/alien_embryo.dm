@@ -11,6 +11,8 @@
 	var/bursting = FALSE
 	/// How long does it take to advance one stage? Growth time * 5 = how long till we make a Larva!
 	var/growth_time = 60 SECONDS
+	/// If true, future generations will be unable to reproduce
+	var/genetically_modified = FALSE
 
 /obj/item/organ/internal/body_egg/alien_embryo/Initialize(mapload)
 	. = ..()
@@ -123,6 +125,9 @@
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100)) //To get the player's attention
 	new_xeno.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type) //so we don't move during the bursting animation
 	new_xeno.SetInvisibility(INVISIBILITY_MAXIMUM, id=type)
+	// If we are genetically modified, future xenos of this lineage will only be able to create sterile huggers
+	if (genetically_modified == TRUE)
+		new_xeno.infertile = TRUE
 
 	sleep(0.6 SECONDS)
 

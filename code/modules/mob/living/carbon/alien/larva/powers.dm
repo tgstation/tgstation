@@ -99,5 +99,7 @@
 		else
 			CRASH("Alien evolve was given an invalid / incorrect alien cast type. Got: [alien_caste]")
 
+	if (larva.infertile == TRUE)
+		new_xeno.infertile = TRUE
 	larva.alien_evolve(new_xeno)
 	return TRUE

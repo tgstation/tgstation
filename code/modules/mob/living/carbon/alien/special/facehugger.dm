@@ -33,6 +33,9 @@
 
 	var/attached = 0
 
+	/// If true, any generation after this one will be sterile
+	var/genetically_modified = FALSE
+
 /obj/item/clothing/mask/facehugger/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
@@ -215,7 +218,10 @@
 
 		var/obj/item/bodypart/chest/LC = target.get_bodypart(BODY_ZONE_CHEST)
 		if((!LC || IS_ORGANIC_LIMB(LC)) && !target.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo))
-			new /obj/item/organ/internal/body_egg/alien_embryo(target)
+			var/obj/item/organ/internal/body_egg/alien_embryo/embryo = new(target)
+			if (genetically_modified == TRUE)
+				embryo.genetically_modified = TRUE
+
 			target.log_message("was impregnated by a facehugger", LOG_GAME)
 			target.log_message("was impregnated by a facehugger", LOG_VICTIM, log_globally = FALSE)
 			if(target.stat != DEAD && istype(target.buckled, /obj/structure/bed/nest)) //Handles toggling the nest sustenance status effect if the user was already buckled to a nest.
@@ -317,6 +323,11 @@
 	sterile = TRUE
 	tint = 3 //Makes it feel more authentic when it latches on
 	slowdown = 0
+
+// Facehugger that can implant a larva, but future generations after that will not be able too
+/obj/item/clothing/mask/facehugger/genetically_modified
+	name = "genetically modified alien"
+	genetically_modified = TRUE
 
 /obj/item/clothing/mask/facehugger/toy/Die()
 	return

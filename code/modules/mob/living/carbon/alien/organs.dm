@@ -176,6 +176,12 @@
 	w_class = WEIGHT_CLASS_BULKY
 	actions_types = list(/datum/action/cooldown/alien/make_structure/lay_egg)
 
+/// Eggs laid with this will contain sterile facehuggers
+/obj/item/organ/internal/alien/eggsac/sterile
+	name = "sterile egg sac"
+	actions_types = list(/datum/action/cooldown/alien/make_structure/lay_egg/sterile)
+
+
 /// The stomach that lets aliens eat people/things
 /obj/item/organ/internal/stomach/alien
 	name = "alien stomach"
