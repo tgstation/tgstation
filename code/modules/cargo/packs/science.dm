@@ -196,6 +196,7 @@
 	desc = "A genetically modified xenomorph. Once this specimen grows to maturity, \
 		its offspring will be infertile."
 	dangerous = TRUE
+	special = TRUE //Enables when science researches the xenobiology node
 	cost = CARGO_CRATE_VALUE * 25
 	access = ACCESS_RD
 	access_view = ACCESS_RD

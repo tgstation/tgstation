@@ -87,7 +87,7 @@
 	SIGNAL_HANDLER
 	items += "Plasma Stored: [stored_plasma]/[max_plasma]"
 
-#define QUEEN_DEATH_DEBUFF_DURATION 2400
+#define QUEEN_DEATH_DEBUFF_DURATION 3 MINUTES
 
 /obj/item/organ/internal/alien/hivenode
 	name = "hive node"
