@@ -234,7 +234,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	. = list()
 
 	//technically THIS list only contains lists, but inside those lists are grid cell datums and we can go without a SINGLE var init if we do this
-	var/list/datum/spatial_grid_cell/grid_level = grids_by_z_level[center_turf.z]
+	var/list/list/datum/spatial_grid_cell/grid_level = grids_by_z_level[center_turf.z]
 
 	switch(type)
 		if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
