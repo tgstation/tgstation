@@ -3,15 +3,8 @@
 	name = "cosmic skull"
 	desc = "You can see and feel the surrounding space pulsing through it..."
 
-	icon = /obj/item/clothing/head/helmet/skull::icon
-	icon_state = /obj/item/clothing/head/helmet/skull::icon_state
-
-/obj/item/cosmic_skull/Initialize(mapload)
-	. = ..()
-
-	var/image/texture = icon(/datum/bodypart_overlay/texture/spacey::texture_icon, /datum/bodypart_overlay/texture/spacey::texture_icon_state)
-
-	add_filter("SPACE_FILTER", 1, layering_filter(icon = texture,blend_mode = BLEND_INSET_OVERLAY))
+	icon = 'icons/obj/weapons/voidwalker_items.dmi'
+	icon_state = "cosmic_skull_charged"
 
 /obj/item/cosmic_skull/attack_self(mob/user, modifiers)
 	. = ..()
@@ -22,6 +15,8 @@
 		return
 
 	var/mob/living/carbon/human/starer = user
+	starer.cure_trauma_type(/datum/brain_trauma/voided) //this wouldn't make much sense to have anymore
+
 	starer.gain_trauma(/datum/brain_trauma/voided/stable)
 	to_chat(user, span_purple("And a whole world opened up to you."))
 	playsound(get_turf(user), 'sound/effects/curse5.ogg', 60)

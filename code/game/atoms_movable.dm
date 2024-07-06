@@ -879,9 +879,8 @@
 // Make sure you know what you're doing if you call this
 // You probably want CanPass()
 /atom/movable/Cross(atom/movable/crossed_atom)
-	. = TRUE
-	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSS, crossed_atom)
-	SEND_SIGNAL(crossed_atom, COMSIG_MOVABLE_CROSS_OVER, src)
+	if((SEND_SIGNAL(src, COMSIG_MOVABLE_CROSS, crossed_atom) | SEND_SIGNAL(crossed_atom, COMSIG_MOVABLE_CROSS_OVER, src)) & COMPONENT_BLOCK_CROSS)
+		return FALSE
 	return CanPass(crossed_atom, get_dir(src, crossed_atom))
 
 ///default byond proc that is deprecated for us in lieu of signals. do not call

@@ -187,8 +187,6 @@
 	var/list/bodypart_traits = list()
 	/// The name of the trait source that the organ gives. Should not be altered during the events of gameplay, and will cause problems if it is.
 	var/bodypart_trait_source = BODYPART_TRAIT
-	/// Traits added to the bodypart itself
-	var/inherent_traits = list()
 	/// List of the above datums which have actually been instantiated, managed automatically
 	var/list/feature_offsets = list()
 
@@ -233,8 +231,6 @@
 	if(texture_bodypart_overlay)
 		texture_bodypart_overlay = new texture_bodypart_overlay()
 		add_bodypart_overlay(texture_bodypart_overlay)
-
-	add_traits(inherent_traits, TRAIT_GENERIC)
 
 	if(!IS_ORGANIC_LIMB(src))
 		grind_results = null

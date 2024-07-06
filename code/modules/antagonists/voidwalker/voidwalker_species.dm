@@ -41,7 +41,7 @@
 /datum/species/voidwalker/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
 
-	human_who_gained_species.apply_status_effect(/datum/status_effect/glass_passer)
+	human_who_gained_species.AddComponent(/datum/component/glass_passer)
 
 	var/obj/item/implant/radio = new /obj/item/implant/radio/voidwalker (human_who_gained_species)
 	radio.implant(human_who_gained_species, null, TRUE, TRUE)
@@ -51,7 +51,7 @@
 /datum/species/voidwalker/on_species_loss(mob/living/carbon/human/human, datum/species/new_species, pref_load)
 	. = ..()
 
-	human.remove_status_effect(/datum/status_effect/glass_passer)
+	qdel(human.GetComponent(/datum/component/glass_passer))
 
 	var/obj/item/implant/radio = locate(/obj/item/implant/radio/voidwalker) in human
 	if(radio)

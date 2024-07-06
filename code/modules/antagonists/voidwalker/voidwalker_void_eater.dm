@@ -4,8 +4,8 @@
 /obj/item/void_eater
 	name = "void eater" //as opposed to full eater
 	icon = 'icons/obj/weapons/voidwalker_items.dmi'
-	icon_state = "arm_blade"
-	inhand_icon_state = "arm_blade"
+	icon_state = "tentacle"
+	inhand_icon_state = "tentacle"
 	force = 25
 	armour_penetration = 35
 	lefthand_file = 'icons/mob/inhands/antag/voidwalker_lefthand.dmi'
@@ -72,7 +72,7 @@
 	if(istype(target, /obj/structure/window))
 		var/obj/structure/window/window = target
 		window.temporary_shatter()
-	else if(istype(src, /obj/structure/grille))
+	else if(istype(target, /obj/structure/grille))
 		var/obj/structure/grille/grille = target
 		grille.temporary_shatter()
 	else

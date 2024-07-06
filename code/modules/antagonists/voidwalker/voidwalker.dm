@@ -35,11 +35,13 @@
 /datum/objective/voidwalker_fluff/New()
 	var/list/explanation_texts = list(
 		"Show them the beauty of the void.",
-		"Hunt the gravlings.",
-		"Be somewhat unsettling.",
-		"Man I fucking love glass.",
-		"Wooohhhhhh be spooky!"
+		"They must see what you have seen. They must walk where you have walked.",
+		"Recover what you have lost.",
+		"Obliterate the tyranny of matter.",
+		"Make them all just like you."
 	)
+	if(prob(20))
+		explanation_text += "Man I fucking love glass."
 	explanation_text = pick(explanation_texts)
 	..()
 

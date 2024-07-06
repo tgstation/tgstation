@@ -1,7 +1,7 @@
 /// Curse brain trauma that makes someone space textured, mute, pacifist and forbids them from entering space
 /datum/brain_trauma/voided
 	name = "Voided"
-	desc = "They've seen the secrets of the cosmis, in exchange for a curse that keeps them chained."
+	desc = "They've seen the secrets of the cosmos, in exchange for a curse that keeps them chained."
 	scan_desc = "cosmic neural pattern"
 	gain_text = ""
 	lose_text = ""
@@ -19,7 +19,7 @@
 /datum/brain_trauma/voided/on_gain()
 	. = ..()
 
-	owner.add_traits(traits_to_apply, TRAUMA_TRAIT)
+	owner.add_traits(traits_to_apply, src)
 	if(ban_from_space)
 		owner.AddComponent(/datum/component/banned_from_space)
 	owner.AddComponent(/datum/component/planet_allergy)
@@ -41,7 +41,7 @@
 /datum/brain_trauma/voided/on_lose()
 	. = ..()
 
-	owner.remove_traits(traits_to_apply, TRAUMA_TRAIT)
+	owner.remove_traits(traits_to_apply, src)
 	UnregisterSignal(owner, list(COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB))
 	if(ban_from_space)
 		qdel(owner.GetComponent(/datum/component/banned_from_space))
@@ -83,12 +83,12 @@
 /datum/brain_trauma/voided/stable/on_gain()
 	. = ..()
 
-	owner.apply_status_effect(/datum/status_effect/glass_passer/delayed)
+	owner.AddComponent(/datum/component/glass_passer, 2 SECONDS)
 
 /datum/brain_trauma/voided/stable/on_lose()
 	. = ..()
 
-	owner.remove_status_effect(/datum/status_effect/glass_passer/delayed)
+	qdel(owner.GetComponent(/datum/component/glass_passer))
 
 /// Following recent tomfoolery, we've decided to ban you from space.
 /datum/component/banned_from_space
