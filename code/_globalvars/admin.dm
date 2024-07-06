@@ -29,7 +29,7 @@ GLOBAL_LIST_INIT(vv_special_lists, init_special_list_names())
 			output += varname
 	return output
 
-///A giant associative list of span names, and the associated key to create the text span.
+///A giant associative list of span names, and the associated key to create the text span. Used for narrate verbs.
 GLOBAL_LIST_INIT(spanname_to_formatting, list(
 	"Abductor" = "abductor",
 	"Admin" = "admin",

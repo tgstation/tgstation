@@ -89,7 +89,10 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, "Direct Narrate",
 	if( !msg )
 		return
 
-
+	if(tgui_alert(user, "Set a custom text format?", "Make it snazzy!", list("Yes", "No")) == "Yes")
+		var/text_span = tgui_input_list(user, "Select a span!", "Immersion! Yeah!", GLOB.spanname_to_formatting)
+		text_span = GLOB.spanname_to_formatting[text_span]
+		msg = "<span class='[text_span]'>" + msg + "</span>"
 
 	to_chat(target, msg, confidential = TRUE)
 	log_admin("DirectNarrate: [key_name(user)] to ([key_name(target)]): [msg]")
