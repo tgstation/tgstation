@@ -72959,6 +72959,7 @@
 	},
 /obj/item/stock_parts/cell/high,
 /obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "xFt" = (
