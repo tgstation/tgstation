@@ -49226,10 +49226,6 @@
 	pixel_y = 10;
 	pixel_x = 1
 	},
-/obj/item/knife/butcher{
-	pixel_y = 4;
-	pixel_x = 9
-	},
 /obj/item/storage/box/monkeycubes{
 	pixel_y = 3;
 	pixel_x = -13
