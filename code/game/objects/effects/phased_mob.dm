@@ -84,6 +84,10 @@
 		return
 	var/area/destination_area = newloc.loc
 	movedelay = world.time + movespeed
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_PHASED_CHECK, user, newloc) & COMPONENT_BLOCK_PHASED_MOVE)
+		return null
+
 	if(newloc.turf_flags & NOJAUNT)
 		to_chat(user, span_warning("Some strange aura is blocking the way."))
 		return

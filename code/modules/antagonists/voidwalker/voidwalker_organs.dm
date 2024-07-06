@@ -16,11 +16,9 @@
 
 	organ_traits = list(TRAIT_ALLOW_HERETIC_CASTING) //allows use of space phase and also just cool I think
 	/// Alpha we have in space
-	var/space_alpha = 50
+	var/space_alpha = 30
 	/// Alpha we have elsewhere
 	var/non_space_alpha = 220
-	/// We space in phase
-	var/datum/action/space_phase = /datum/action/cooldown/spell/jaunt/space_crawl/voidwalker
 	/// We settle the un
 	var/datum/action/unsettle = /datum/action/cooldown/spell/pointed/unsettle
 	/// Regen effect we have in space
@@ -34,9 +32,6 @@
 	RegisterSignal(organ_owner, COMSIG_ATOM_ENTERING, PROC_REF(on_atom_entering))
 	organ_owner.remove_from_all_data_huds()
 
-	space_phase = new space_phase ()
-	space_phase.Grant(organ_owner)
-
 	unsettle = new unsettle ()
 	unsettle.Grant(organ_owner)
 
@@ -49,9 +44,6 @@
 	UnregisterSignal(organ_owner, COMSIG_ENTER_AREA)
 	alpha = 255
 	organ_owner.add_to_all_human_data_huds()
-
-	space_phase.Remove(organ_owner)
-	space_phase = initial(space_phase)
 
 	unsettle.Remove(organ_owner)
 	unsettle = initial(unsettle)
@@ -101,3 +93,4 @@
 
 /obj/item/implant/radio/voidwalker
 	radio_key = /obj/item/encryptionkey/heads/captain
+	actions_types = null

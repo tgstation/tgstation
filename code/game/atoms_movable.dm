@@ -879,7 +879,9 @@
 // Make sure you know what you're doing if you call this
 // You probably want CanPass()
 /atom/movable/Cross(atom/movable/crossed_atom)
-	if((SEND_SIGNAL(src, COMSIG_MOVABLE_CROSS, crossed_atom) | SEND_SIGNAL(crossed_atom, COMSIG_MOVABLE_CROSS_OVER, src)) & COMPONENT_BLOCK_CROSS)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_CROSS, crossed_atom) & COMPONENT_BLOCK_CROSS)
+		return FALSE
+	if(SEND_SIGNAL(crossed_atom, COMSIG_MOVABLE_CROSS_OVER, src) & COMPONENT_BLOCK_CROSS)
 		return FALSE
 	return CanPass(crossed_atom, get_dir(src, crossed_atom))
 

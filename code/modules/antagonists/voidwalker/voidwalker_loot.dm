@@ -32,5 +32,3 @@
 	uses--
 	if(uses <= 0 )
 		icon_state = drained_icon_state
-
-	qdel(src)
