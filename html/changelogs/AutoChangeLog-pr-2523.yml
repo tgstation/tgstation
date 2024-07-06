@@ -1,6 +1,0 @@
-author: "cnleth, Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Symbols display correctly when sending messages via mind link"
-  - qol: "Linked speech now prevents messages from highlighting if its a message you sent, or if you are the owner of said link.."
-  - qol: "Linked speech messages are now marked as radio messages, for chat tab purposes."

@@ -36,3 +36,36 @@
   - bugfix: Anchoring crystals are now actually needed to open the ark
   ViktorKoL:
   - bugfix: heretics no longer lose their spells when returning from a shapeshift.
+2024-07-06:
+  00-Steven:
+  - bugfix: Ethereal heart revive doesn't delete organs alien to your species, like
+      prosthetics, cybernetics, and possibly itself.
+  - bugfix: Nightmare heart revive doesn't delete organs alien to your species, like
+      itself, upon which it would stop the conversion to shadowperson.
+  - bugfix: Bloodsucker torpor, doesn't delete organs alien to your species, which
+      would result in things such as wings being lost (therefore preventing ultrakill
+      jokes from lasting more than 10 minutes)
+  Absolucy:
+  - rscadd: (Time-Green) Adds shuttle events! If shuttle escapes weren't exciting
+      before (doubtful), they definitely are now! I'm joking it's mostly an atmosphere
+      thing.
+  - admin: '(Time-Green) Adds an admin panel to interact with shuttle events, under
+      the Events tab: Change Shuttle Events.'
+  - bugfix: (Time-Green) Objects spawned in hyperspace will properly catch hyperspace
+      drift.
+  - rscadd: (timothymtorres) Add admin blackhole shuttle event with a normal version
+      and suicidal version.
+  - rscadd: (Jacquerel) Adds a new shuttle event, where space shuttles can experience
+      minor turbulance. Keep your belt on while the appropriate cabin light is lit.
+  - bugfix: Fixed some errors with some objectives, i.e cult sacrifice, trying to
+      find a target.
+  - bugfix: RPLD UI now actually shows the sprites for new xenobio stuff, rather than
+      a generic sprite.
+  FlufflesTheDog:
+  - bugfix: Multi-z hole repair works better, especially when the turf below is blocked
+      by items
+  cnleth, Absolucy:
+  - bugfix: Symbols display correctly when sending messages via mind link
+  - qol: Linked speech now prevents messages from highlighting if its a message you
+      sent, or if you are the owner of said link..
+  - qol: Linked speech messages are now marked as radio messages, for chat tab purposes.

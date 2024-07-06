@@ -1,8 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - rscadd: "(Time-Green) Adds shuttle events! If shuttle escapes weren't exciting before (doubtful), they definitely are now! I'm joking it's mostly an atmosphere thing."
-  - admin: "(Time-Green) Adds an admin panel to interact with shuttle events, under the Events tab: Change Shuttle Events."
-  - bugfix: "(Time-Green) Objects spawned in hyperspace will properly catch hyperspace drift."
-  - rscadd: "(timothymtorres) Add admin blackhole shuttle event with a normal version and suicidal version."
-  - rscadd: "(Jacquerel) Adds a new shuttle event, where space shuttles can experience minor turbulance. Keep your belt on while the appropriate cabin light is lit."
