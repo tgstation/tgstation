@@ -17381,7 +17381,6 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 30
 	},
-/obj/item/gps,
 /obj/effect/turf_decal/bot,
 /obj/item/stack/cable_coil,
 /turf/open/floor/iron/dark,
@@ -67193,9 +67192,6 @@
 	pixel_x = -6;
 	pixel_y = 5
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "vOH" = (
@@ -72953,9 +72949,6 @@
 /obj/machinery/camera/directional/west{
 	c_tag = "Teleporter Access";
 	name = "command camera"
-	},
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
 	},
 /obj/item/stock_parts/cell/high,
 /obj/machinery/cell_charger,
