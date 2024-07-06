@@ -4464,7 +4464,7 @@
 	width = 5
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "aqZ" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
@@ -5788,7 +5788,7 @@
 	width = 9
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "avq" = (
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock"
@@ -11485,7 +11485,7 @@
 	width = 20
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "aTK" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
 /obj/structure/flora/bush/lavendergrass/style_random,
@@ -14497,7 +14497,7 @@
 	width = 6
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "bgV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -17230,7 +17230,7 @@
 	width = 5
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "btL" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -19936,7 +19936,7 @@
 	width = 5
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "bFF" = (
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 1
@@ -25848,7 +25848,7 @@
 	width = 35
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "cjC" = (
 /obj/structure/sign/warning/vacuum/external/directional/north,
 /obj/machinery/light/small/directional/north,
@@ -49535,7 +49535,7 @@
 	width = 12
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "uDS" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
