@@ -48,11 +48,11 @@
 	hidden_uplink.uplink_handler.debug_mode = TRUE
 
 /obj/item/uplink/nuclear
-	uplink_flag = UPLINK_NUKE_OPS
+	uplink_flag = UPLINK_ALL_SYNDIE_OPS
 
 /obj/item/uplink/nuclear/debug
 	name = "debug nuclear uplink"
-	uplink_flag = UPLINK_NUKE_OPS
+	uplink_flag = UPLINK_ALL_SYNDIE_OPS
 
 /obj/item/uplink/nuclear/debug/Initialize(mapload, owner, tc_amount = 9000, datum/uplink_handler/uplink_handler_override = null)
 	. = ..()
