@@ -99,6 +99,20 @@
 		balloon_alert(user, "electronics added")
 		deconstruction = BLASTDOOR_FINISHED
 		return ITEM_INTERACT_SUCCESS
+
+	if(deconstruction == BLASTDOOR_FINISHED && istype(tool, /obj/item/assembly/control))
+		if(density)
+			balloon_alert(user, "open the door first!")
+			return ITEM_INTERACT_BLOCKING
+		if(!panel_open)
+			balloon_alert(user, "open the panel first!")
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/assembly/control/controller_item = tool
+		id = controller_item.id
+		to_chat(user, span_notice("You change the ID to [id]."))
+		balloon_alert(user, "id changed")
+		return ITEM_INTERACT_SUCCESS
+
 	return NONE
 
 /obj/machinery/door/poddoor/screwdriver_act(mob/living/user, obj/item/tool)
