@@ -8367,7 +8367,7 @@
 /turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
 "ddF" = (
-/mob/living/basic/goat/pete,
+/mob/living/basic/goat/peta,
 /obj/effect/turf_decal/weather/snow,
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/structure/disposalpipe/segment{
