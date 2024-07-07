@@ -19,6 +19,7 @@
 	to_chat(owner, span_warning("<b>Your mind snaps!</b>"))
 	to_chat(owner, "<big>[span_warning("<b>You can't remember how you got here...</b>")]</big>")
 	owner.announce_objectives()
+	play_stinger()
 
 /datum/antagonist/abductee/proc/give_objective()
 	var/objtype = (prob(75) ? /datum/objective/abductee/random : pick(subtypesof(/datum/objective/abductee/) - /datum/objective/abductee/random))
