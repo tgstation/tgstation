@@ -54,7 +54,7 @@
 	if(hairstyle && hairstyle.natural_spawn && !hairstyle.locked)
 		human.set_hairstyle(hairstyle.name, update = FALSE)
 	var/datum/sprite_accessory/facial_hair = SSaccessories.facial_hairstyles_list[random_facial_hairstyle(human.gender)]
-	if(facial_hair && facial_hair.natural_spawn && !hairstyle.locked)
+	if(facial_hair && facial_hair.natural_spawn && !facial_hair.locked)
 		human.set_facial_hairstyle(facial_hair.name, update = FALSE)
 	// Normal DNA init stuff, these can generally be wacky but we care less, they're aliens after all
 	human.dna.initialize_dna(newblood_type = random_blood_type(), create_mutation_blocks = randomize_mutations, randomize_features = TRUE)
