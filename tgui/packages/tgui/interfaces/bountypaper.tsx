@@ -119,7 +119,7 @@ export const bountypaper = (props) => {
                   }}
                 >
                   <Icon color={'#642600'} name={'hand-point-right'} />
-                  LOBSTROSITY
+                  {bounty_name}
                   <Icon color={'#642600'} name={'hand-point-left'} />
                 </Stack.Item>
                 <Stack.Item

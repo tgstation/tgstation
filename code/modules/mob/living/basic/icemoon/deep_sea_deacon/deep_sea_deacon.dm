@@ -28,9 +28,16 @@
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
 	ai_controller = /datum/ai_controller/basic_controller/deep_sea_deacon
+	///how many bounties are completed
+	var/bounty_counter = 0
+	///how many bounties need to be completed for us to be active
+	var/bounty_threshold = 3
 
 /mob/living/basic/mining/deacon/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_AI_PAUSED, INNATE_TRAIT)
+	status_flags |= GODMODE //invulnerable until enough contracts are complete
+	RegisterSignal(SSdcs, COMSIG_BOUNTY_COMPLETE, PROC_REF(on_completed_bounty))
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/ai_target_timer)
 	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.6 SECONDS,)
@@ -89,6 +96,14 @@
 	ai_controller.set_blackboard_key(BB_DEACON_DOMAIN_ATTACKS, domain_attacks)
 	ai_controller.set_blackboard_key(BB_DEACON_CYCLE_TIMERS, cycle_timers)
 	ai_controller.set_blackboard_key(BB_DEACON_CYCLE_RESETERS, cycle_count_reseters)
+
+/mob/living/basic/mining/deacon/proc/on_completed_bounty()
+	SIGNAL_HANDLER
+	bounty_counter++
+	if(bounty_counter < bounty_threshold)
+		return
+	status_flags &= ~GODMODE
+	REMOVE_TRAIT(src, TRAIT_AI_PAUSED, INNATE_TRAIT)
 
 /mob/living/basic/mining/deacon_phantom
 	name = "deep sea phantom"

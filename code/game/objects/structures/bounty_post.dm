@@ -1,4 +1,5 @@
 #define BOUNTY_COOLDOWN 10 MINUTES
+#define BOUNTY_MARKER "bounty marker"
 #define EASY_BOUNTY_MULTIPLIER 1.25
 #define MEDIUM_BOUNTY_MULTIPLIER 1.5
 #define HARD_BOUNTY_MULTIPLIER 2
@@ -86,6 +87,10 @@ GLOBAL_LIST_INIT(possible_monsters, list(
 	GLOB.assigned_bounties[REF(user)] = world.time + BOUNTY_COOLDOWN
 	assignee = WEAKREF(user)
 	assign_difficulty(bounty_target)
+	bounty_target.add_filter(BOUNTY_MARKER, 2, list("type" = "outline", "color" = COLOR_MEDIUM_DARK_RED, "alpha" = 0, "size" = 1))
+	var/filter = bounty_target.get_filter(BOUNTY_MARKER)
+	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
+	animate(alpha = 0, time = 0.5 SECONDS)
 	return TRUE
 
 /datum/holy_bounty/proc/assign_difficulty(mob/living/basic/bounty_target)
@@ -104,10 +109,11 @@ GLOBAL_LIST_INIT(possible_monsters, list(
 	if(isnull(hunter))
 		return
 	GLOB.bounty_points_tracker[REF(hunter)] += reward_points
+	SEND_SIGNAL(SSdcs, COMSIG_BOUNTY_COMPLETE)
 	qdel(src)
 
 /datum/holy_bounty/proc/create_bounty()
-	var/list/possible_turfs = get_area_turfs(/area/icemoon/underground/unexplored/rivers/deep)
+	var/list/possible_turfs = get_area_turfs(/area/icemoon/underground/unexplored/rivers)
 	var/turf/chosen_turf
 	shuffle_inplace(possible_turfs)
 
@@ -150,13 +156,6 @@ GLOBAL_LIST_INIT(possible_monsters, list(
 	if(!ui)
 		ui = new(user, src, "bountypaper")
 		ui.open()
-
-/obj/item/bounty_contract/attack_self(mob/user)
-	. = ..()
-	if(.)
-		return TRUE
-	our_bounty.assign_bounty(user)
-	return TRUE
 
 /obj/item/bounty_contract/ui_static_data(mob/user)
 	var/list/data = list()
@@ -265,5 +264,5 @@ GLOBAL_LIST_INIT(possible_monsters, list(
 				return TRUE
 			var/item_path =  reward_path::item_path
 			var/obj/item/reward_item = new item_path()
-			GLOB.bounty_points_tracker[REF(user)] = min(GLOB.bounty_points_tracker[REF(user)] - reward_path::item_price, 0)
+			GLOB.bounty_points_tracker[REF(user)] = max(GLOB.bounty_points_tracker[REF(user)] - reward_path::item_price, 0)
 			user.put_in_hands(reward_item)

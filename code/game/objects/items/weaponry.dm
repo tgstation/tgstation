@@ -1222,7 +1222,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(!COOLDOWN_FINISHED(src, summon_cooldown))
 		user.balloon_alert(user, "still on cooldown!")
 		return
-	if(isnull(resident_spirit))
+	if(isnull(resident_spirit) || resident_spirit.loc != src)
 		return
 	var/list/possible_turfs = RANGE_TURFS(3, user)
 	shuffle_inplace(possible_turfs)

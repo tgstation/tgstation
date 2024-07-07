@@ -26,31 +26,6 @@
 "ds" = (
 /turf/closed/wall/mineral/wood,
 /area/icemoon/surface/outdoors)
-"dK" = (
-/obj/structure/railing/wooden_fence{
-	dir = 9
-	},
-/turf/open/misc/grass/icemoon,
-/area/icemoon/surface/outdoors)
-"eb" = (
-/obj/structure/flora/grass/brown/style_random,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
-"ei" = (
-/obj/structure/statue/bone/rib{
-	dir = 1
-	},
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 1
-	},
-/turf/open/floor/delapitated_church,
-/area/icemoon/surface/outdoors)
-"eu" = (
-/obj/structure/railing/wooden_fence{
-	dir = 4
-	},
-/turf/open/misc/grass/icemoon,
-/area/icemoon/surface/outdoors)
 "eB" = (
 /obj/item/flashlight/lantern{
 	light_on = 1
@@ -67,12 +42,6 @@
 	},
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/delapitated_church,
-/area/icemoon/surface/outdoors)
-"hL" = (
-/obj/structure/chair/wood{
-	dir = 4
-	},
-/turf/open/misc/ice/icemoon,
 /area/icemoon/surface/outdoors)
 "hM" = (
 /obj/structure/statue/bone/rib{
@@ -106,15 +75,9 @@
 /obj/item/book/bible,
 /turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
-"kW" = (
-/obj/item/chair/wood,
-/turf/open/misc/ice/icemoon,
-/area/icemoon/surface/outdoors)
 "la" = (
-/obj/structure/railing/wooden_fence{
-	dir = 6
-	},
-/turf/open/misc/grass/icemoon,
+/obj/structure/bounty_post,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "lH" = (
 /mob/living/basic/mining/deacon,
@@ -138,16 +101,13 @@
 /turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "nT" = (
-/obj/structure/railing/wooden_fence{
-	dir = 8
-	},
-/turf/open/misc/grass/icemoon,
+/obj/structure/table/wood,
+/obj/item/paper,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "qS" = (
-/obj/structure/railing/wooden_fence{
-	dir = 5
-	},
-/turf/open/misc/grass/icemoon,
+/obj/item/chair/wood,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "tW" = (
 /obj/structure/statue/bone/rib{
@@ -165,10 +125,10 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "xS" = (
-/obj/structure/railing/wooden_fence{
-	dir = 10
+/obj/structure/chair/wood{
+	dir = 1
 	},
-/turf/open/misc/grass/icemoon,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "yy" = (
 /obj/item/flashlight/lantern{
@@ -187,39 +147,13 @@
 /obj/structure/fluff/divine/convertaltar,
 /turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
-"AB" = (
-/obj/structure/statue/bone/rib{
-	dir = 4
-	},
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 1
-	},
-/turf/open/floor/delapitated_church,
-/area/icemoon/surface/outdoors)
-"Dd" = (
-/obj/structure/railing/wooden_fence{
-	dir = 1
-	},
-/turf/open/misc/grass/icemoon,
-/area/icemoon/surface/outdoors)
 "DG" = (
 /obj/effect/turf_decal/weather/snow,
 /obj/structure/flora/grass/brown/style_random,
 /turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
-"Ep" = (
-/turf/open/misc/ice/icemoon,
-/area/icemoon/surface/outdoors)
 "EH" = (
 /obj/effect/turf_decal/weather/snow,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
-"Ff" = (
-/obj/structure/railing/wooden_fence,
-/turf/open/misc/grass/icemoon,
-/area/icemoon/surface/outdoors)
-"Fn" = (
-/obj/structure/closet/crate/coffin,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "GV" = (
@@ -236,17 +170,7 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
-"Ia" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 1
-	},
 /turf/open/floor/delapitated_church,
-/area/icemoon/surface/outdoors)
-"IC" = (
-/obj/structure/flora/tree/jungle,
-/turf/open/misc/grass/icemoon,
 /area/icemoon/surface/outdoors)
 "KQ" = (
 /obj/effect/turf_decal/weather/snow/corner,
@@ -276,20 +200,14 @@
 /area/icemoon/surface/outdoors)
 "PS" = (
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
-"Qi" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "Sc" = (
 /turf/open/floor/carpet/delapitated_church,
 /area/icemoon/surface/outdoors)
 "SX" = (
-/turf/open/misc/grass/icemoon,
+/obj/structure/table/wood,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
 "TE" = (
 /obj/structure/statue/bone/rib{
@@ -303,15 +221,6 @@
 	},
 /turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors)
-"TZ" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 1
-	},
-/obj/item/flashlight/lantern{
-	light_on = 1
-	},
-/turf/open/floor/delapitated_church,
-/area/icemoon/surface/outdoors)
 "Vg" = (
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/delapitated_church,
@@ -319,12 +228,6 @@
 "Wr" = (
 /obj/effect/turf_decal/weather/snow,
 /turf/open/floor/delapitated_church,
-/area/icemoon/surface/outdoors)
-"XV" = (
-/obj/item/flashlight/lantern{
-	light_on = 1
-	},
-/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 
 (1,1,1) = {"
@@ -478,12 +381,12 @@ hS
 hS
 "}
 (6,1,1) = {"
-ds
-ds
-ds
-ds
-ds
-ds
+hS
+hS
+hS
+hS
+hS
+hS
 ds
 ds
 ds
@@ -508,11 +411,11 @@ hS
 hS
 "}
 (7,1,1) = {"
-ds
 hS
-Ep
-Ep
-Ep
+hS
+hS
+hS
+hS
 hS
 ds
 ds
@@ -539,20 +442,20 @@ hS
 "}
 (8,1,1) = {"
 ds
-hS
-kW
-hL
-PS
-hS
 ds
 ds
 ds
+ds
+ds
+ds
+ds
+ds
 KT
 KT
 KT
 KT
 KT
-TZ
+eB
 KT
 KT
 mP
@@ -569,10 +472,10 @@ hS
 "}
 (9,1,1) = {"
 ds
-hS
-hS
-hS
-XV
+Vg
+Vg
+qS
+eB
 HU
 ds
 ds
@@ -599,14 +502,14 @@ ds
 "}
 (10,1,1) = {"
 ds
-hS
-dK
+KT
+KT
 nT
 xS
 HU
-wg
-hS
-ei
+hM
+KT
+hM
 KT
 eB
 KT
@@ -629,13 +532,13 @@ wg
 "}
 (11,1,1) = {"
 ds
-hS
-Dd
+KT
+KT
 SX
-Ff
-hS
+xS
+KT
 PS
-Qi
+PS
 KT
 KT
 At
@@ -659,13 +562,13 @@ hS
 "}
 (12,1,1) = {"
 ds
-hS
-Dd
-IC
-Ff
-hS
-hS
-Ia
+la
+KT
+Sc
+Sc
+Sc
+Sc
+KT
 KT
 KT
 kq
@@ -689,13 +592,13 @@ hS
 "}
 (13,1,1) = {"
 ds
-hS
-Dd
+KT
+KT
 SX
-Ff
-hS
-hS
-Ia
+xS
+KT
+KT
+KT
 KT
 KT
 At
@@ -719,14 +622,14 @@ hS
 "}
 (14,1,1) = {"
 ds
-hS
-qS
-eu
-la
-hS
-TE
-hS
-AB
+KT
+KT
+GY
+xS
+KT
+TH
+KT
+TH
 KT
 eB
 KT
@@ -749,11 +652,11 @@ TE
 "}
 (15,1,1) = {"
 ds
-hS
-hS
-hS
-XV
-hS
+Vg
+Vg
+KT
+eB
+KT
 ds
 ds
 ds
@@ -779,11 +682,11 @@ ds
 "}
 (16,1,1) = {"
 ds
-hS
-hS
-hS
-eb
-hS
+ds
+ds
+ds
+ds
+ds
 ds
 ds
 ds
@@ -808,12 +711,12 @@ hS
 hS
 "}
 (17,1,1) = {"
-ds
 hS
 hS
-Fn
-Fn
-Fn
+hS
+hS
+hS
+hS
 ds
 ds
 ds
@@ -838,12 +741,12 @@ hS
 hS
 "}
 (18,1,1) = {"
-ds
-ds
-ds
-ds
-ds
-ds
+hS
+hS
+hS
+hS
+hS
+hS
 ds
 ds
 ds
