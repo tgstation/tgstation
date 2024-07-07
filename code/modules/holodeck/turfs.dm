@@ -127,6 +127,7 @@
 	desc = "Space-looking floor. Thankfully, the deadly aspects of space are not emulated here."
 	icon = 'icons/turf/space.dmi'
 	icon_state = "space"
+	layer = SPACE_LAYER
 	plane = PLANE_SPACE
 
 /turf/open/floor/holofloor/hyperspace
@@ -164,7 +165,7 @@
 
 /turf/open/floor/holofloor/carpet/update_icon(updates=ALL)
 	. = ..()
-	if((updates & UPDATE_SMOOTHING) && overfloor_placed && smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if((updates & UPDATE_SMOOTHING) && overfloor_placed && smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH(src)
 
 /turf/open/floor/holofloor/wood
