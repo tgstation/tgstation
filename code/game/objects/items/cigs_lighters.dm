@@ -917,14 +917,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			user.visible_message(
 				span_notice("You hear a quiet click, as [user] shuts off [src] without even looking at what [user.p_theyre()] doing. Wow."),
 				span_notice("You quietly shut off [src] without even looking at what you're doing. Wow.")
-				playsound(src.loc, 'sound/items/zippo_off.ogg', 100, 1)
 			)
+			playsound(src.loc , 'sound/items/zippo_off.ogg', 100, 1)
 		else
 			user.visible_message(
 				span_notice("[user] quietly shuts off [src]."),
 				span_notice("You quietly shut off [src].")
-				playsound(src.loc, 'sound/items/lighter_off.ogg', 100, 1)
 			)
+			playsound(src.loc , 'sound/items/lighter_off.ogg', 100, 1)
 		return
 
 	set_lit(TRUE)
@@ -932,8 +932,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		user.visible_message(
 			span_notice("Without even breaking stride, [user] flips open and lights [src] in one smooth movement."),
 			span_notice("Without even breaking stride, you flip open and light [src] in one smooth movement.")
-			playsound(src.loc, 'sound/items/zippo_on.ogg', 100, 1)
 		)
+		playsound(src.loc , 'sound/items/zippo_on.ogg', 100, 1)
 		return
 	else
 		playsound(src.loc, 'sound/items/lighter_on.ogg', 100, 1)
