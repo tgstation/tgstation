@@ -241,7 +241,8 @@
 		hurtguy.adjustFireLoss(-burn_to_heal)
 		. = TRUE
 
-	return .
+	if(!.)
+		hurtguy.balloon_alert(mendicant, "unhurt!")
 
 /datum/action/cooldown/spell/touch/lay_on_hands/proc/do_complicated_heal(mob/living/carbon/mendicant, mob/living/carbon/hurtguy, heal_multiplier, pain_multiplier)
 
