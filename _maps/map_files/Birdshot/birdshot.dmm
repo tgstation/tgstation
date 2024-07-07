@@ -73290,8 +73290,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "xEl" = (
-/obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/twelve_percent_spirit_board,
 /turf/open/floor/wood,
 /area/station/service/chapel/office)
 "xEm" = (
