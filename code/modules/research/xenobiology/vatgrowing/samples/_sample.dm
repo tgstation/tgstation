@@ -31,7 +31,7 @@
 	return TRUE
 
 ///Call handle_growth on all our microorganisms.
-/datum/biological_sample/proc/handle_growth(obj/machinery/plumbing/growing_vat/vat)
+/datum/biological_sample/proc/handle_growth(obj/machinery/vatgrower/vat)
 	for(var/datum/micro_organism/cell_line/organism in micro_organisms) //Types because we don't grow viruses.
 		organism.handle_growth(vat)
 

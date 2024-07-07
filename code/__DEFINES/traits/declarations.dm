@@ -563,6 +563,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Makes the player appear as their respective job in Binary Talk rather than being a 'Default Cyborg'.
 #define TRAIT_DISPLAY_JOB_IN_BINARY "display job in binary"
 
+/// Trait that determines vulnerability to being stunned from a shove
+#define TRAIT_STUN_ON_NEXT_SHOVE "stun on next shove"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
@@ -1016,8 +1019,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// things with this trait are treated as having no access in /atom/movable/proc/check_access(obj/item)
 #define TRAIT_ALWAYS_NO_ACCESS "alwaysnoaccess"
 
-/// This human wants to see the color of their glasses, for some reason
-#define TRAIT_SEE_GLASS_COLORS "see_glass_colors"
+///Used by wearable_client_colour to determine whether the mob wants to have the colours of the screen affected by worn items (some still do regardless).
+#define TRAIT_SEE_WORN_COLOURS "see_worn_colour"
 
 // Radiation defines
 

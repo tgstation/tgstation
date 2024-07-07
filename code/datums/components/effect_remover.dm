@@ -46,7 +46,7 @@
 	return ..()
 
 /datum/component/effect_remover/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_EFFECT, PROC_REF(try_remove_effect))
+	RegisterSignal(parent, COMSIG_ITEM_INTERACTING_WITH_ATOM, PROC_REF(try_remove_effect))
 
 	if(tip_text)
 		var/obj/item/item_parent = parent
@@ -54,20 +54,21 @@
 		RegisterSignal(parent, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, PROC_REF(add_item_context))
 
 /datum/component/effect_remover/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_EFFECT, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET))
+	UnregisterSignal(parent, list(COMSIG_ITEM_INTERACTING_WITH_ATOM, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET))
 
 /*
- * Signal proc for [COMSIG_ITEM_ATTACK_EFFECT].
+ * Signal proc for [COMSIG_ITEM_INTERACTING_WITH_ATOM].
  */
-/datum/component/effect_remover/proc/try_remove_effect(datum/source, obj/effect/target, mob/living/user, params)
+
+/datum/component/effect_remover/proc/try_remove_effect(datum/source, mob/living/user, atom/target, params)
 	SIGNAL_HANDLER
 
 	if(!isliving(user))
-		return
+		return NONE
 
-	if(effects_we_clear[target.type]) // Make sure we get all subtypes and everything
+	if(is_type_in_typecache(target, effects_we_clear)) // Make sure we get all subtypes and everything
 		INVOKE_ASYNC(src, PROC_REF(do_remove_effect), target, user)
-		return COMPONENT_NO_AFTERATTACK
+		return ITEM_INTERACT_SUCCESS
 
 /*
  * Actually removes the effect, invoking our on_clear_callback before it's deleted.

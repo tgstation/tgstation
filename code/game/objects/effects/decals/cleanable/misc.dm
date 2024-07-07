@@ -458,7 +458,6 @@
 		COMSIG_TURF_MOVABLE_THROW_LANDED = PROC_REF(ignition_trigger),
 	)
 	AddElement(/datum/element/connect_loc, ignition_trigger_connections)
-	RegisterSignal(src, COMSIG_ATOM_TOUCHED_SPARKS, PROC_REF(ignition_trigger))
 	for(var/obj/effect/decal/cleanable/fuel_pool/pool in get_turf(src)) //Can't use locate because we also belong to that turf
 		if(pool == src)
 			continue
@@ -467,6 +466,15 @@
 
 	if(burn_stacks)
 		burn_amount = max(min(burn_stacks, 10), 1)
+
+	return INITIALIZE_HINT_LATELOAD
+
+// Just in case of fires, do this after mapload.
+/obj/effect/decal/cleanable/fuel_pool/LateInitialize()
+// We don't want to burn down the create_and_destroy test area
+#ifndef UNIT_TESTS
+	RegisterSignal(src, COMSIG_ATOM_TOUCHED_SPARKS, PROC_REF(ignition_trigger))
+#endif
 
 /obj/effect/decal/cleanable/fuel_pool/fire_act(exposed_temperature, exposed_volume)
 	. = ..()

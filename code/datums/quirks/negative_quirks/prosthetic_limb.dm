@@ -16,9 +16,9 @@
 	customization_options = list(/datum/preference/choiced/prosthetic)
 
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
-	var/limb_type = GLOB.limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic)]
+	var/limb_type = GLOB.prosthetic_limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic)]
 	if(isnull(limb_type))  //Client gone or they chose a random prosthetic
-		limb_type = GLOB.limb_choice[pick(GLOB.limb_choice)]
+		limb_type = GLOB.prosthetic_limb_choice[pick(GLOB.prosthetic_limb_choice)]
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/bodypart/surplus = new limb_type()
