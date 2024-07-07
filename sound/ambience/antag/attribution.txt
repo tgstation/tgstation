@@ -1,0 +1,5 @@
+{
+abductee.ogg
+hypnotized.ogg
+brainwashed.ogg
+} - from https://github.com/BeeStation/BeeStation-Hornet/pull/9759
