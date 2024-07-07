@@ -799,6 +799,12 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/machinery/button/door/directional/north{
+	pixel_y = 37;
+	name = "Armory Shutters";
+	id = "armory";
+	req_access = list("armory")
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "aqj" = (
@@ -832,6 +838,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port)
+"arf" = (
+/obj/structure/cable,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/ai_monitored/security/armory)
 "arv" = (
 /obj/structure/table,
 /obj/item/clothing/mask/breath/medical{
@@ -11480,7 +11491,8 @@
 "dUN" = (
 /obj/machinery/door/poddoor/shutters/window{
 	id = "armory";
-	name = "armory shutters"
+	name = "Armory";
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/red/fourcorners,
@@ -12929,9 +12941,8 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/floor/iron/stairs/medium{
-	dir = 8
-	},
+/obj/structure/fake_stairs/directional/east,
+/turf/open/space/basic,
 /area/space)
 "erK" = (
 /obj/structure/closet/crate{
@@ -13114,7 +13125,9 @@
 /area/station/maintenance/starboard/lesser)
 "ewb" = (
 /obj/structure/cable,
-/turf/closed/wall/r_wall,
+/obj/machinery/airalarm/directional/east,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/security/armory)
 "ewf" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -15687,7 +15700,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
-	name = "Weapon Distribution"
+	name = "Weapon Distribution";
+	req_access = list("armory")
 	},
 /obj/item/paper_bin{
 	pixel_x = -2;
@@ -15696,6 +15710,9 @@
 /obj/item/pen,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/machinery/door/window/right/directional/east{
+	name = "Warden's Place"
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "fsO" = (
@@ -15707,6 +15724,13 @@
 /obj/effect/spawner/random/bureaucracy/crayon,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/maintenance/port)
+"fsP" = (
+/obj/machinery/camera/motion{
+	dir = 4;
+	c_tag = "Armory - Space"
+	},
+/turf/open/openspace/airless,
+/area/space)
 "fsQ" = (
 /obj/structure/reflector/single{
 	dir = 9
@@ -18079,6 +18103,10 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
+/obj/machinery/door/poddoor/shutters/window{
+	id = "armory";
+	name = "Armory"
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "gih" = (
@@ -22383,10 +22411,6 @@
 /obj/effect/spawner/random/structure/chair_maintenance,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/maintenance/port)
-"hEz" = (
-/obj/structure/fake_stairs/directional/south,
-/turf/open/floor/iron/terracotta/diagonal,
-/area/station/maintenance/port/aft)
 "hEE" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -23118,7 +23142,7 @@
 	pixel_x = -7;
 	pixel_y = -5
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark/textured_large,
 /area/space)
 "hPV" = (
 /obj/effect/landmark/event_spawn,
@@ -25812,8 +25836,6 @@
 /area/space)
 "iKO" = (
 /obj/effect/turf_decal/box/corners,
-/obj/machinery/airalarm/directional/east,
-/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/security/armory)
 "iLi" = (
@@ -27566,7 +27588,6 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
-/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/security/armory)
 "jqd" = (
@@ -30924,6 +30945,19 @@
 /obj/effect/landmark/start/scientist,
 /turf/open/floor/iron,
 /area/station/science/breakroom)
+"kto" = (
+/obj/machinery/door/airlock/security{
+	name = "Armory"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/security/armory,
+/obj/machinery/door/poddoor/shutters/window{
+	id = "armory";
+	name = "Armory";
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/security/armory)
 "ktp" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -33245,6 +33279,13 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/door/window/brigdoor/left/directional/west{
+	req_access = list("armory");
+	name = "Warden's Place"
+	},
+/obj/machinery/door/window/right/directional/east{
+	name = "Warden's Place"
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
@@ -37018,8 +37059,9 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/gravity_generator)
 "mwO" = (
-/obj/structure/railing{
-	dir = 4
+/obj/structure/sign/clock/directional/west,
+/obj/structure/chair/stool/bar/directional/east{
+	dir = 2
 	},
 /turf/open/floor/iron/terracotta/small,
 /area/station/maintenance/port/aft)
@@ -37191,6 +37233,11 @@
 	pixel_y = 4;
 	pixel_x = -1
 	},
+/obj/item/reagent_containers/cup/glass/waterbottle/empty,
+/obj/item/reagent_containers/cup/glass/waterbottle/empty,
+/obj/item/reagent_containers/cup/glass/waterbottle/empty,
+/obj/item/reagent_containers/cup/glass/waterbottle/empty,
+/obj/item/reagent_containers/cup/glass/waterbottle/empty,
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
 "mAz" = (
@@ -45873,6 +45920,7 @@
 	pixel_y = 14
 	},
 /obj/structure/table,
+/obj/item/reagent_containers/cup/glass/waterbottle/large,
 /turf/open/floor/plating,
 /area/station/service/kitchen/abandoned)
 "pAf" = (
@@ -48996,7 +49044,7 @@
 /area/station/security/brig)
 "qCN" = (
 /obj/structure/railing{
-	dir = 9
+	dir = 1
 	},
 /turf/open/floor/iron/terracotta/small,
 /area/station/maintenance/port/aft)
@@ -49167,6 +49215,13 @@
 /obj/machinery/door/firedoor,
 /obj/item/pen,
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/machinery/door/window/brigdoor/left/directional/north{
+	req_access = list("armory");
+	name = "Warden's Place"
+	},
+/obj/machinery/door/window/right/directional/south{
+	name = "Warden's Place"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "qFH" = (
@@ -60236,6 +60291,11 @@
 /obj/item/kirbyplants/random/fullysynthetic,
 /turf/open/floor/eighties,
 /area/station/maintenance/hallway/abandoned_recreation)
+"usO" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/ai_monitored/security/armory)
 "usP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -97007,8 +97067,8 @@ ygD
 ygD
 dWi
 ygD
-vfp
-hEz
+hCk
+hCk
 hCk
 hCk
 pfN
@@ -154017,12 +154077,12 @@ nlm
 nlm
 nlm
 nlm
-nlm
+fsP
 nlm
 nlm
 nlm
 yap
-ewb
+arf
 tzC
 ewb
 yap
@@ -154277,7 +154337,7 @@ gRG
 gRG
 gRG
 gRG
-nlm
+gRG
 gRG
 gRG
 tMB
@@ -155297,7 +155357,7 @@ bbF
 bSs
 jTO
 fdd
-gif
+kto
 stm
 aqk
 stm
@@ -155814,9 +155874,9 @@ kkZ
 gRG
 gRG
 qZX
-yap
+usO
 fsM
-yap
+usO
 dUN
 gRG
 gRG
