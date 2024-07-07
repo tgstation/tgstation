@@ -1514,6 +1514,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/get_cry_sound(mob/living/carbon/human/human)
 	return
 
+/// Returns the species' sigh sound.
+/datum/species/proc/get_sigh_sound(mob/living/carbon/human/human)
+	return
+
+/// Returns the species' sniff sound.
+/datum/species/proc/get_sniff_sound(mob/living/carbon/human/human)
+	return
+
 /// Returns the species' cough sound.
 /datum/species/proc/get_cough_sound(mob/living/carbon/human/human)
 	return
