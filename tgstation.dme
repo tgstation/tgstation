@@ -3284,6 +3284,7 @@
 #include "code\modules\antagonists\voidwalker\voidwalker_bodyparts.dm"
 #include "code\modules\antagonists\voidwalker\voidwalker_loot.dm"
 #include "code\modules\antagonists\voidwalker\voidwalker_organs.dm"
+#include "code\modules\antagonists\voidwalker\voidwalker_particles.dm"
 #include "code\modules\antagonists\voidwalker\voidwalker_species.dm"
 #include "code\modules\antagonists\voidwalker\voidwalker_status_effects.dm"
 #include "code\modules\antagonists\voidwalker\voidwalker_traumas.dm"

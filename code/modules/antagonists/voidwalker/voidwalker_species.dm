@@ -61,16 +61,10 @@
 
 	qdel(human.GetComponent(/datum/component/planet_allergy))
 
-/datum/component/planet_allergy/Initialize(...)
-	if(!isliving(parent))
-		return COMPONENT_INCOMPATIBLE
+/datum/species/voidwalker/on_species_gain(mob/living/carbon/nameless, datum/species/old_species)
+	. = ..()
 
-	RegisterSignal(parent, COMSIG_ENTER_AREA, PROC_REF(entered_area))
+	nameless.fully_replace_character_name(null, pick(GLOB.voidwalker_names)) // nightmare names as placeholder, need to think of something :/
 
-/datum/component/planet_allergy/proc/entered_area(mob/living/parent, area/new_area)
-	SIGNAL_HANDLER
-
-	if(is_on_a_planet(parent) && parent.has_gravity())
-		parent.apply_status_effect(/datum/status_effect/planet_allergy) //your gamer body cant stand real gravity
-	else
-		parent.remove_status_effect(/datum/status_effect/planet_allergy)
+/datum/species/voidwalker/check_roundstart_eligible()
+	return FALSE

@@ -140,3 +140,6 @@
 /// From /obj/effect/particle_effect/sparks/proc/sparks_touched(datum/source, atom/movable/singed)
 #define COMSIG_ATOM_TOUCHED_SPARKS "atom_touched_sparks"
 #define COMSIG_ATOM_TOUCHED_HAZARDOUS_SPARKS "atom_touched_hazardous_sparks"
+
+/// From whoever has been revealed (atom/revealed)
+#define COMSIG_ATOM_REVEAL "atom_reveal"

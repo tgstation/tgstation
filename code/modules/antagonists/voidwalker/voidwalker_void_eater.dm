@@ -10,6 +10,7 @@
 	armour_penetration = 35
 	lefthand_file = 'icons/mob/inhands/antag/voidwalker_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/voidwalker_righthand.dmi'
+	blocks_emissive = EMISSIVE_BLOCK_NONE
 	item_flags = ABSTRACT | DROPDEL
 	resistance_flags = INDESTRUCTIBLE | ACID_PROOF | FIRE_PROOF | LAVA_PROOF | UNACIDABLE
 	w_class = WEIGHT_CLASS_HUGE

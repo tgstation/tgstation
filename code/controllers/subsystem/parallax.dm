@@ -15,8 +15,8 @@ SUBSYSTEM_DEF(parallax)
 	/// Weighted list with the parallax layers we could spawn
 	var/random_parallax_weights = list(
 		/atom/movable/screen/parallax_layer/random/space_gas = 35,
-		/atom/movable/screen/parallax_layer/random/asteroids = 35,
-		PARALLAX_NONE = 30,
+		/atom/movable/screen/parallax_layer/random/asteroids = 0,
+		PARALLAX_NONE = 0,
 	)
 
 //These are cached per client so needs to be done asap so people joining at roundstart do not miss these.
@@ -96,5 +96,13 @@ SUBSYSTEM_DEF(parallax)
 /// Called at the end of SSstation setup, in-case we want to run some code that would otherwise be too early to run (like GLOB. stuff)
 /datum/controller/subsystem/parallax/proc/post_station_setup()
 	random_layer?.apply_global_effects()
+
+/// Return the most dominant color, if we have a colored background (mostly nebula gas)
+/datum/controller/subsystem/parallax/proc/get_parallax_color()
+	var/atom/movable/screen/parallax_layer/random/space_gas/gas = random_layer
+	if(!istype(gas))
+		return
+
+	return gas.parallax_color
 
 #undef PARALLAX_NONE

@@ -19,7 +19,7 @@
 /datum/brain_trauma/voided/on_gain()
 	. = ..()
 
-	owner.add_traits(traits_to_apply, src)
+	owner.add_traits(traits_to_apply, REF(src))
 	if(ban_from_space)
 		owner.AddComponent(/datum/component/banned_from_space)
 	owner.AddComponent(/datum/component/planet_allergy)
@@ -41,7 +41,7 @@
 /datum/brain_trauma/voided/on_lose()
 	. = ..()
 
-	owner.remove_traits(traits_to_apply, src)
+	owner.remove_traits(traits_to_apply, REF(src))
 	UnregisterSignal(owner, list(COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB))
 	if(ban_from_space)
 		qdel(owner.GetComponent(/datum/component/banned_from_space))
@@ -79,6 +79,20 @@
 
 	if(is_on_a_planet(owner))
 		qdel(src)
+
+/datum/component/planet_allergy/Initialize(...)
+	if(!isliving(parent))
+		return COMPONENT_INCOMPATIBLE
+
+	RegisterSignal(parent, COMSIG_ENTER_AREA, PROC_REF(entered_area))
+
+/datum/component/planet_allergy/proc/entered_area(mob/living/parent, area/new_area)
+	SIGNAL_HANDLER
+
+	if(is_on_a_planet(parent) && parent.has_gravity())
+		parent.apply_status_effect(/datum/status_effect/planet_allergy) //your gamer body cant stand real gravity
+	else
+		parent.remove_status_effect(/datum/status_effect/planet_allergy)
 
 /// Positive version of the previous. Get space immunity and the ability to slowly move through glass (but you still get muted)
 /datum/brain_trauma/voided/stable

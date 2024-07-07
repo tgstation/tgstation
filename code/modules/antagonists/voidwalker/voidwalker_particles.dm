@@ -1,0 +1,15 @@
+/particles/void_kidnap
+	icon = 'icons/effects/particles/voidwalker.dmi'
+	icon_state = list("kidnap_1" = 1, "kidnap_2" = 1, "kidnap_3" = 2)
+	width = 100
+	height = 100
+	count = 1000
+	spawning = 20
+	lifespan = 1.5 SECONDS
+	fade = 1 SECONDS
+	velocity = list(0, 0.4, 0)
+	position = list(GEN_SPHERE(12, 12))
+	drift = generator(GEN_SPHERE, 0, 1, NORMAL_RAND)
+	friction = 0.2
+	gravity = list(0, 0.95)
+	grow = 0.05

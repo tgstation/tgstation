@@ -5,10 +5,11 @@
 	is_dimorphic = FALSE
 	bodypart_traits = list(TRAIT_MUTE)
 	head_flags = NONE
+	blocks_emissive = EMISSIVE_BLOCK_NONE
 
-	damage_overlay_color = list(0, 0, 2, 0,
-								0, 5, 0, 0,
-								0, 0, 5, 0,
+	damage_overlay_color = list(1, 2, 2, 0,
+								0, 1, 0, 0,
+								0, 0, 1, 0,
 								0, 0, 0, 1,
 								0, 0, 0, 0) //turn the damage overlays glassy
 
@@ -30,6 +31,7 @@
 	icon_greyscale = 'icons/mob/human/species/voidwalker.dmi'
 	limb_id = SPECIES_VOIDWALKER
 	is_dimorphic = FALSE
+	blocks_emissive = EMISSIVE_BLOCK_NONE
 
 	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color //im not copypasting the huge ass matrix everywhere
 
@@ -51,6 +53,9 @@
 	icon_greyscale = 'icons/mob/human/species/voidwalker.dmi'
 	limb_id = SPECIES_VOIDWALKER
 	is_dimorphic = FALSE
+	blocks_emissive = EMISSIVE_BLOCK_NONE
+
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 
 	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color
 
@@ -72,6 +77,9 @@
 	icon_greyscale = 'icons/mob/human/species/voidwalker.dmi'
 	limb_id = SPECIES_VOIDWALKER
 	is_dimorphic = FALSE
+	blocks_emissive = EMISSIVE_BLOCK_NONE
+
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 
 	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color
 
@@ -93,6 +101,7 @@
 	icon_greyscale = 'icons/mob/human/species/voidwalker.dmi'
 	limb_id = SPECIES_VOIDWALKER
 	is_dimorphic = FALSE
+	blocks_emissive = EMISSIVE_BLOCK_NONE
 
 	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color
 
@@ -114,6 +123,7 @@
 	icon_greyscale = 'icons/mob/human/species/voidwalker.dmi'
 	limb_id = SPECIES_VOIDWALKER
 	is_dimorphic = FALSE
+	blocks_emissive = EMISSIVE_BLOCK_NONE
 
 	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color
 

@@ -14,11 +14,10 @@
 	desc = "A mind fully integrated into the cosmic thread."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
 
-	organ_traits = list(TRAIT_ALLOW_HERETIC_CASTING) //allows use of space phase and also just cool I think
 	/// Alpha we have in space
 	var/space_alpha = 30
 	/// Alpha we have elsewhere
-	var/non_space_alpha = 220
+	var/non_space_alpha = 255
 	/// We settle the un
 	var/datum/action/unsettle = /datum/action/cooldown/spell/pointed/unsettle
 	/// Regen effect we have in space
@@ -32,6 +31,8 @@
 	RegisterSignal(organ_owner, COMSIG_ATOM_ENTERING, PROC_REF(on_atom_entering))
 	organ_owner.remove_from_all_data_huds()
 
+	organ_owner.AddComponent(/datum/component/space_camo, space_alpha, non_space_alpha, 2 SECONDS)
+
 	unsettle = new unsettle ()
 	unsettle.Grant(organ_owner)
 
@@ -44,6 +45,8 @@
 	UnregisterSignal(organ_owner, COMSIG_ENTER_AREA)
 	alpha = 255
 	organ_owner.add_to_all_human_data_huds()
+
+	qdel(organ_owner.GetComponent(/datum/component/space_camo))
 
 	unsettle.Remove(organ_owner)
 	unsettle = initial(unsettle)
@@ -61,11 +64,9 @@
 
 	//apply debufs for being in gravity
 	if(new_turf.has_gravity())
-		animate(organ_owner, alpha = non_space_alpha, time = 0.5 SECONDS)
 		organ_owner.add_movespeed_modifier(/datum/movespeed_modifier/grounded_voidwalker)
 	//remove debufs for not being in gravity
 	else
-		animate(organ_owner, alpha = space_alpha, time = 0.5 SECONDS)
 		organ_owner.remove_movespeed_modifier(/datum/movespeed_modifier/grounded_voidwalker)
 		organ_owner.apply_status_effect(/datum/status_effect/space_regeneration)
 
@@ -94,3 +95,55 @@
 /obj/item/implant/radio/voidwalker
 	radio_key = /obj/item/encryptionkey/heads/captain
 	actions_types = null
+
+/// Camouflage us when we enter space by increasing alpha and or changing color
+/datum/component/space_camo
+	/// Alpha we have in space
+	var/space_alpha
+	/// Alpha we have elsewhere
+	var/non_space_alpha
+	/// How long we can't enter camo after hitting or being hit
+	var/reveal_after_combat
+	/// The world time after we can camo again
+	VAR_PRIVATE/next_camo
+
+/datum/component/space_camo/Initialize(space_alpha, non_space_alpha, reveal_after_combat)
+	if(!ismovable(parent))
+		return COMPONENT_INCOMPATIBLE
+
+	src.space_alpha = space_alpha
+	src.non_space_alpha = non_space_alpha
+	src.reveal_after_combat = reveal_after_combat
+
+	RegisterSignal(parent, COMSIG_ATOM_ENTERING, PROC_REF(on_atom_entering))
+
+	if(isliving(parent))
+		RegisterSignals(parent, list(COMSIG_ATOM_WAS_ATTACKED, COMSIG_MOB_ITEM_ATTACK, COMSIG_LIVING_UNARMED_ATTACK, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_REVEAL), PROC_REF(force_exit_camo))
+
+/datum/component/space_camo/proc/on_atom_entering(atom/movable/entering, atom/entering)
+	SIGNAL_HANDLER
+
+	if(!attempt_enter_camo())
+		exit_camo(parent)
+
+/datum/component/space_camo/proc/attempt_enter_camo()
+	if(!isspaceturf(get_turf(parent)) || next_camo > world.time)
+		return FALSE
+
+	enter_camo(parent)
+	return TRUE
+
+/datum/component/space_camo/proc/force_exit_camo()
+	SIGNAL_HANDLER
+
+	exit_camo(parent)
+	next_camo = world.time + reveal_after_combat
+	addtimer(CALLBACK(src, PROC_REF(attempt_enter_camo)), reveal_after_combat, TIMER_OVERRIDE | TIMER_UNIQUE)
+
+/datum/component/space_camo/proc/enter_camo(atom/movable/parent)
+	animate(parent, alpha = space_alpha, time = 0.5 SECONDS)
+	parent.add_atom_colour(SSparallax.get_parallax_color(), TEMPORARY_COLOUR_PRIORITY)
+
+/datum/component/space_camo/proc/exit_camo(atom/movable/parent)
+	animate(parent, alpha = non_space_alpha, time = 0.5 SECONDS)
+	parent.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)

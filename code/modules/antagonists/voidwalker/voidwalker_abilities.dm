@@ -43,17 +43,19 @@
 /datum/action/cooldown/spell/pointed/unsettle/proc/check_if_in_view(mob/living/carbon/human/target)
 	SIGNAL_HANDLER
 
-	if(target.is_blind() || !(owner in viewers(target)))
+	if(target.is_blind() || !(owner in viewers(target, world.view)))
 		return FALSE
 	return TRUE
 
 /datum/action/cooldown/spell/pointed/unsettle/proc/spookify(mob/living/carbon/human/target)
-	target.Stun(stun_time)
+	target.Paralyze(stun_time)
 	target.adjustStaminaLoss(stamina_damage)
 	target.apply_status_effect(/datum/status_effect/speech/slurring/generic)
 	target.emote("scream")
 
 	new /obj/effect/temp_visual/circle_wave/unsettle(get_turf(owner))
+	new /obj/effect/temp_visual/circle_wave/unsettle(get_turf(target))
+	SEND_SIGNAL(owner, COMSIG_ATOM_REVEAL)
 
 /obj/effect/temp_visual/circle_wave/unsettle
 	color = COLOR_PURPLE
@@ -169,8 +171,8 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/space_kidnap/proc/kidnap(mob/living/parent, mob/living/victim)
-	victim.Stun(kidnap_time) //so they don't get up if we already got em
-	var/obj/particles = new /obj/effect/abstract/particle_holder (victim, /particles/smoke)
+	victim.Paralyze(kidnap_time) //so they don't get up if we already got em
+	var/obj/particles = new /obj/effect/abstract/particle_holder (victim, /particles/void_kidnap)
 	kidnapping = TRUE
 
 	if(do_after(parent, kidnap_time, victim, extra_checks = CALLBACK(victim, TYPE_PROC_REF(/mob, incapacitated))))
