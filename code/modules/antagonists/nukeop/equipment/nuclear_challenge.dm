@@ -99,6 +99,12 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	for(var/obj/machinery/computer/camera_advanced/shuttle_docker/dock as anything in GLOB.jam_on_wardec)
 		dock.jammed = TRUE
 
+	var/datum/techweb/station_techweb = locate(/datum/techweb/science) in SSresearch.techwebs
+	if(station_techweb)
+		stoplag(10 SECONDS)
+		priority_announce("Uploading additional research data to the station server following the emergency protocol.", null, sender_override = "Nanotrasen R&D Division")
+		station_techweb.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS * 3))
+
 	qdel(src)
 
 /obj/item/nuclear_challenge/proc/distribute_tc()
