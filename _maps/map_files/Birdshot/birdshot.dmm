@@ -29874,7 +29874,7 @@
 	},
 /area/station/hallway/secondary/dock)
 "kjx" = (
-/mob/living/basic/goat/pete,
+/mob/living/basic/goat/peta,
 /obj/effect/turf_decal/weather/snow,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4

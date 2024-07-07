@@ -18609,7 +18609,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
-/mob/living/basic/goat/pete,
+/mob/living/basic/goat/peta,
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen/coldroom)
 "eFj" = (

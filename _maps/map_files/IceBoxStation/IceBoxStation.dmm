@@ -46198,11 +46198,11 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms/laundry)
 "nRy" = (
-/mob/living/basic/goat/pete{
+/mob/living/basic/goat/peta{
 	desc = "Not known for their pleasant disposition. This one seems a bit more hardy to the cold.";
 	habitable_atmos = list("min_oxy"=1,"max_oxy"=0,"min_plas"=0,"max_plas"=1,"min_co2"=0,"max_co2"=5,"min_n2"=0,"max_n2"=0);
 	minimum_survivable_temperature = 150;
-	name = "Snowy Pete"
+	name = "Snowy Peta"
 	},
 /turf/open/misc/ice/coldroom,
 /area/station/service/kitchen/coldroom)

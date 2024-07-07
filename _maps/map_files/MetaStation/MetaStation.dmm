@@ -49596,7 +49596,7 @@
 /area/station/commons/lounge)
 "rzk" = (
 /obj/structure/sink/kitchen/directional/west,
-/mob/living/basic/goat/pete,
+/mob/living/basic/goat/peta,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "rzo" = (

@@ -84419,7 +84419,7 @@
 "vNR" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
-/mob/living/basic/goat/pete,
+/mob/living/basic/goat/peta,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "vNS" = (

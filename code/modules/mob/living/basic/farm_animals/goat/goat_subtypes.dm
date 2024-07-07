@@ -1,10 +1,10 @@
-/mob/living/basic/goat/pete // Pete!
-	name = "Pete"
-	gender = MALE
+/mob/living/basic/goat/peta // Peta!
+	name = "Peta"
+	gender = FEMALE
 
-/mob/living/basic/goat/pete/examine()
+/mob/living/basic/goat/peta/examine()
 	. = ..()
 	var/area/goat_area = get_area(src)
 	if((bodytemperature < T20C) || istype(goat_area, /area/station/service/kitchen/coldroom))
-		. += span_notice("[p_They()] [p_do()]n't seem to be too bothered about the cold.") // special for pete
+		. += span_notice("[p_They()] [p_do()]n't seem to be too bothered about the cold.") // special for peta
 

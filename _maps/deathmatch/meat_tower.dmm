@@ -25,7 +25,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/mob/living/basic/goat/pete,
+/mob/living/basic/goat/peta,
 /turf/open/indestructible/necropolis/air,
 /area/deathmatch)
 "eH" = (

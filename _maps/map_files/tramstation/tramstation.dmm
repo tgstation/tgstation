@@ -8965,7 +8965,7 @@
 /turf/open/floor/engine/cult,
 /area/station/service/library)
 "cay" = (
-/mob/living/basic/goat/pete,
+/mob/living/basic/goat/peta,
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
