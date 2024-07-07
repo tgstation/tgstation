@@ -1719,7 +1719,7 @@
 /// Fetches embedding data
 /obj/item/proc/get_embed()
 	RETURN_TYPE(/datum/embed_data)
-	return embed_type ? (embed_data ||= get_embed_by_type(embed_type)) : null
+	return embed_type ? (embed_data ||= get_embed_by_type(embed_type)) : embed_data
 
 /obj/item/proc/set_embed(datum/embed_data/embed)
 	if(embed_data == embed)

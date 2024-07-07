@@ -38,8 +38,8 @@ GLOBAL_LIST_INIT(embed_by_type, generate_embed_type_cache())
 	/// This percentage of all pain will be dealt as stam damage rather than brute (0-1)
 	var/pain_stam_pct = 0
 
-/datum/embed_data/proc/generate_with_values(embed_chance, fall_chance, pain_chance, pain_mult, impact_pain_mult, remove_pain_mult, rip_time, ignore_throwspeed_threshold, jostle_chance, jostle_pain_mult, pain_stam_pct)
-	var/datum/embed_data/data = isnull(GLOB.embed_by_type[type]) ? src : new()
+/datum/embed_data/proc/generate_with_values(embed_chance, fall_chance, pain_chance, pain_mult, impact_pain_mult, remove_pain_mult, rip_time, ignore_throwspeed_threshold, jostle_chance, jostle_pain_mult, pain_stam_pct, force_new = FALSE)
+	var/datum/embed_data/data = isnull(GLOB.embed_by_type[type]) && !force_new ? src : new()
 
 	data.embed_chance = !isnull(embed_chance) ? embed_chance : src.embed_chance
 	data.fall_chance = !isnull(fall_chance) ? fall_chance : src.fall_chance
