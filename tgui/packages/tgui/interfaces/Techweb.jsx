@@ -176,7 +176,7 @@ export const TechwebContent = (props) => {
                 </LabeledList.Item>
               ))}
               <LabeledList.Item label="Queue">
-                {queue_nodes
+                {queue_nodes.length !== 0
                   ? Object.keys(queue_nodes).map((node_id) => (
                       <Button
                         key={node_id}
@@ -185,7 +185,7 @@ export const TechwebContent = (props) => {
                         {node_cache[node_id].name}
                       </Button>
                     ))
-                  : ' None'}
+                  : 'Empty'}
               </LabeledList.Item>
             </LabeledList>
           </Flex.Item>
