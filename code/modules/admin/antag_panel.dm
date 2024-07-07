@@ -80,7 +80,7 @@ GLOBAL_VAR(antag_prototypes)
 		result += "<span class='bad'>No body!</span>"
 	if(current && HAS_TRAIT(current, TRAIT_MINDSHIELD))
 		result += "<span class='good'>Mindshielded</span>"
-	if(current && HAS_TRAIT(current, TRAIT_UNCONVERTABLE))
+	if(current && HAS_MIND_TRAIT(current, TRAIT_UNCONVERTABLE))
 		result += "<span class='good'>Unconvertable</span>"
 	//Move these to mob
 	if(iscyborg(current))
