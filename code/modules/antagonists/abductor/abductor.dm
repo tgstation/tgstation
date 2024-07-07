@@ -80,7 +80,8 @@
 /datum/antagonist/abductor/on_removal()
 	owner.special_role = null
 	REMOVE_TRAIT(owner, TRAIT_ABDUCTOR_TRAINING, ABDUCTOR_ANTAGONIST)
-	REMOVE_TRAIT(owner.current, TRAIT_UNCONVERTABLE, ABDUCTOR_ANTAGONIST)
+	if(!isnull(owner.current))
+		REMOVE_TRAIT(owner.current, TRAIT_UNCONVERTABLE, ABDUCTOR_ANTAGONIST)
 	return ..()
 
 /datum/antagonist/abductor/greet()
