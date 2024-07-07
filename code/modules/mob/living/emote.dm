@@ -399,6 +399,7 @@
 	message = "sighs."
 	message_mime = "acts out an exaggerated silent sigh."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
 
 /datum/emote/living/sigh/run_emote(mob/living/user, params, type_override, intentional)
 	. = ..()
@@ -433,6 +434,7 @@
 	message = "sniffs."
 	message_mime = "sniffs silently."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
 
 /datum/emote/living/sniff/get_sound(mob/living/carbon/human/user)
 	if(!istype(user))
