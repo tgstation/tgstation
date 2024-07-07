@@ -109,6 +109,7 @@ GLOBAL_LIST_INIT(possible_monsters, list(
 	if(isnull(hunter))
 		return
 	GLOB.bounty_points_tracker[REF(hunter)] += reward_points
+	GLOB.assigned_bounties -= REF(hunter)
 	SEND_SIGNAL(SSdcs, COMSIG_BOUNTY_COMPLETE)
 	qdel(src)
 
@@ -144,9 +145,8 @@ GLOBAL_LIST_INIT(possible_monsters, list(
 	///our bounty
 	var/datum/holy_bounty/our_bounty
 
-/obj/item/bounty_contract/Initialize(mapload)
-	. = ..()
-	our_bounty = new()
+/obj/item/bounty_contract/proc/set_bounty(datum/bounty)
+	our_bounty = bounty
 	RegisterSignal(our_bounty, COMSIG_QDELETING, PROC_REF(solve_contract))
 
 /obj/item/bounty_contract/ui_interact(mob/user, datum/tgui/ui)
@@ -250,7 +250,7 @@ GLOBAL_LIST_INIT(possible_monsters, list(
 			if(!selected_bounty.assign_bounty(user))
 				return TRUE
 			var/obj/item/bounty_contract/contract = new()
-			contract.our_bounty = selected_bounty
+			contract.set_bounty(selected_bounty)
 			user.put_in_hands(contract)
 			return TRUE
 		if("purchase")
