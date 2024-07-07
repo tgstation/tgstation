@@ -209,3 +209,10 @@ beaker_pickup.ogg was made by lowering pitch:
 Bottle Tap.wav by alex_alexalex -- https://freesound.org/s/395492/ -- License: Attribution NonCommercial 3.0
 beaker_place.ogg was made by cutting and lowering pitch:
 place glass object.wav by milpower -- https://freesound.org/s/353105/ -- License: Creative Commons 0
+
+{
+female_sigh.ogg
+female_sniff.ogg
+male_sigh.ogg
+male_sniff.ogg
+} - from https://github.com/BeeStation/BeeStation-Hornet/pull/9759
