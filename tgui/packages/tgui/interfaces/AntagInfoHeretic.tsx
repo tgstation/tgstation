@@ -1,16 +1,9 @@
 import { useState } from 'react';
-import {
-  Box,
-  Button,
-  DmIcon,
-  Flex,
-  Section,
-  Stack,
-  Tabs,
-} from 'tgui-core/components';
+import { Box, Button, Flex, Section, Stack, Tabs } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
+import { DmIcon } from '../components';
 import { Window } from '../layouts';
 import {
   Objective,
