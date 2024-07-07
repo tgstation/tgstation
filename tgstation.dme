@@ -3282,6 +3282,7 @@
 #include "code\modules\antagonists\voidwalker\voidwalker.dm"
 #include "code\modules\antagonists\voidwalker\voidwalker_abilities.dm"
 #include "code\modules\antagonists\voidwalker\voidwalker_bodyparts.dm"
+#include "code\modules\antagonists\voidwalker\voidwalker_kidnap.dm"
 #include "code\modules\antagonists\voidwalker\voidwalker_loot.dm"
 #include "code\modules\antagonists\voidwalker\voidwalker_organs.dm"
 #include "code\modules\antagonists\voidwalker\voidwalker_particles.dm"

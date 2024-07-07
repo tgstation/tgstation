@@ -13,8 +13,6 @@
 	var/list/traits_to_apply = list(TRAIT_MUTE, TRAIT_PACIFISM)
 	/// Do we ban the person from entering space?
 	var/ban_from_space = TRUE
-	/// What color we color the damage overlay?
-	var/damage_overlay_color_to_give = /obj/item/bodypart/head/voidwalker::damage_overlay_color
 
 /datum/brain_trauma/voided/on_gain()
 	. = ..()
@@ -55,7 +53,6 @@
 	SIGNAL_HANDLER
 
 	limb.add_bodypart_overlay(new bodypart_overlay_type)
-	limb.damage_overlay_color = damage_overlay_color_to_give
 	if(istype(limb, /obj/item/bodypart/head))
 		var/obj/item/bodypart/head/head = limb
 		head.head_flags &= ~HEAD_EYESPRITES
@@ -66,9 +63,6 @@
 	var/overlay = locate(bodypart_overlay_type) in limb.bodypart_overlays
 	if(overlay)
 		limb.remove_bodypart_overlay(overlay)
-
-	if(limb.damage_overlay_color == damage_overlay_color_to_give)
-		limb.damage_overlay_color = initial(limb.damage_overlay_color)
 
 	if(istype(limb, /obj/item/bodypart/head))
 		var/obj/item/bodypart/head/head = limb

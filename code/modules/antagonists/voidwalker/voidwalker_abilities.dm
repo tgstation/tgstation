@@ -143,54 +143,6 @@
 /obj/effect/dummy/phased_mob/space_dive
 	movespeed = 1
 
-/datum/component/space_kidnap
-	/// How long does it take to kidnap them?
-	var/kidnap_time = 6 SECONDS
-	/// Are we kidnapping right now?
-	var/kidnapping = FALSE
-
-/datum/component/space_kidnap/Initialize(...)
-	if(!ishuman(parent))
-		return COMPONENT_INCOMPATIBLE
-
-	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_kidnap))
-
-/datum/component/space_kidnap/proc/try_kidnap(mob/living/parent, atom/target)
-	SIGNAL_HANDLER
-
-	if(!isliving(target))
-		return
-
-	var/mob/living/victim = target
-
-	if(!victim.incapacitated() || !isspaceturf(get_turf(target)))
-		return
-
-	if(!kidnapping)
-		INVOKE_ASYNC(src, PROC_REF(kidnap), parent, target)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-/datum/component/space_kidnap/proc/kidnap(mob/living/parent, mob/living/victim)
-	victim.Paralyze(kidnap_time) //so they don't get up if we already got em
-	var/obj/particles = new /obj/effect/abstract/particle_holder (victim, /particles/void_kidnap)
-	kidnapping = TRUE
-
-	if(do_after(parent, kidnap_time, victim, extra_checks = CALLBACK(victim, TYPE_PROC_REF(/mob, incapacitated))))
-		take_them(victim)
-
-	qdel(particles)
-	kidnapping = FALSE
-
-/datum/component/space_kidnap/proc/take_them(mob/living/victim)
-	if(ishuman(victim))
-		var/mob/living/carbon/human/hewmon = victim
-		hewmon.gain_trauma(/datum/brain_trauma/voided)
-
-	victim.heal_overall_damage(brute = 50, burn = 20)
-	victim.adjustOxyLoss(80)
-	victim.flash_act(INFINITY, override_blindness_check = TRUE, visual = TRUE, type = /atom/movable/screen/fullscreen/flash/black)
-	victim.forceMove(get_random_station_turf())
-
 /// Allows us to move through glass but not electrified glass. Can also do a little slowdown before passing through
 /datum/component/glass_passer
 	/// How long does it take us to move into glass?

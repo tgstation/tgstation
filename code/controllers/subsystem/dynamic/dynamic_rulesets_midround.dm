@@ -964,6 +964,7 @@
 	cost = 5
 	minimum_players = 40
 	repeatable = TRUE
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_VOIDWALKER_VOID)
 
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker/acceptable(population = 0, threat_level = 0)
 	var/turf/spawn_loc = find_space_spawn()

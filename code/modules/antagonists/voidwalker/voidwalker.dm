@@ -15,9 +15,10 @@
 	owner.announce_objectives()
 
 /datum/antagonist/voidwalker/on_gain()
-	forge_objectives()
-	owner.AddComponent(/datum/component/space_kidnap)
 	. = ..()
+
+	forge_objectives()
+	owner.current.AddComponent(/datum/component/space_kidnap)
 
 /datum/antagonist/voidwalker/forge_objectives()
 	var/datum/objective/voidwalker_fluff/objective = new
