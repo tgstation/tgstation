@@ -178,8 +178,8 @@
 
 	heating_energy = laser * BASE_HEATING_ENERGY
 
-	settable_temperature_range = cap * 30
-	efficiency = (cap + 1) * 100
+	settable_temperature_range = cap * initial(settable_temperature_range)
+	efficiency = (cap + 1) * initial(efficiency) * 0.5
 
 	target_temperature = clamp(target_temperature,
 		max(settable_temperature_median - settable_temperature_range, TCMB),
