@@ -464,30 +464,44 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		locked = TRUE
 		update_appearance()
 
-		for(var/mob/living/M in conts)
-			if(M.incorporeal_move) //can't cook revenants!
-				continue
-			if (M.stat != DEAD)
-				M.emote("scream")
-			if(user)
-				log_combat(user, M, "cremated")
-			else
-				M.log_message("was cremated", LOG_ATTACK)
+		if(check_holidays(APRIL_FOOLS) && !prob(80)) //Crematorium optimization
+			for(var/mob/living/M in conts)
+				if(M.incorporeal_move) //can't prank revenants!
+					continue
+				if (M.stat != DEAD)
+					M.emote("scream")
+				if(user)
+					log_combat(user, M, "creamed")
+				else
+					M.log_message("was creamed", LOG_ATTACK)
+				var/obj/item/food/pie/cream/magic_pie = new(src.loc)
+				magic_pie.splat(M)
+		else
 
-			if(user.stat != DEAD)
-				user.investigate_log("has died from being cremated.", INVESTIGATE_DEATHS)
-			M.death(TRUE)
-			if(M) //some animals get automatically deleted on death.
-				M.ghostize()
-				qdel(M)
-
-		for(var/obj/O in conts) //conts defined above, ignores crematorium and tray
-			if(istype(O, /obj/effect/dummy/phased_mob)) //they're not physical, don't burn em.
-				continue
-			qdel(O)
-
-		if(!locate(/obj/effect/decal/cleanable/ash) in get_step(src, dir))//prevent pile-up
-			new/obj/effect/decal/cleanable/ash(src)
+			for(var/mob/living/M in conts)
+				if(M.incorporeal_move) //can't cook revenants!
+					continue
+				if (M.stat != DEAD)
+					M.emote("scream")
+				if(user)
+					log_combat(user, M, "cremated")
+				else
+					M.log_message("was cremated", LOG_ATTACK)
+	
+				if(user.stat != DEAD)
+					user.investigate_log("has died from being cremated.", INVESTIGATE_DEATHS)
+				M.death(TRUE)
+				if(M) //some animals get automatically deleted on death.
+					M.ghostize()
+					qdel(M)
+	
+			for(var/obj/O in conts) //conts defined above, ignores crematorium and tray
+				if(istype(O, /obj/effect/dummy/phased_mob)) //they're not physical, don't burn em.
+					continue
+				qdel(O)
+	
+			if(!locate(/obj/effect/decal/cleanable/ash) in get_step(src, dir))//prevent pile-up
+				new/obj/effect/decal/cleanable/ash(src)
 
 		sleep(3 SECONDS)
 
