@@ -30,3 +30,15 @@
 	armor_type = /datum/armor/space_pirate
 	strip_delay = 40
 	equip_delay_other = 20
+
+/obj/item/clothing/head/helmet/space/pirate/tophat
+	name = "designer pirate helmet"
+	desc = "A modified EVA helmet with a five-thousand credit Lizzy Vuitton hat affixed to the top, proving that working in deep space is no excuse for being poor."
+	icon_state = "spacetophat"
+
+/obj/item/clothing/suit/space/pirate/silverscale
+	name = "designer pirate suit"
+	desc = "A specially-made Cybersun branded space suit; the fine plastisilk exterior is woven from the coccons of black-market Lümlan mothroaches \
+		and the trim is lined with the ivory of the critically endagered Zanzibarian dwarf elephant. Baby seal leather boots sold seperately."
+	inhand_icon_state = "syndicate-black"
+	icon_state = "syndicate-black-white"
