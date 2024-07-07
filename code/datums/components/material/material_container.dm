@@ -274,7 +274,9 @@
 	//All messages to be displayed to chat
 	var/list/chat_msgs = list()
 	//differs from held_item when using TK
-	var/active_held = user.get_active_held_item()
+	var/obj/item/active_held = user.get_active_held_item()
+	//omni tools can act as any tool so get its real behaviour
+	active_held = active_held.get_proxy_attacker_for(held_item)
 
 	while(items.len)
 		//no point inserting more items
