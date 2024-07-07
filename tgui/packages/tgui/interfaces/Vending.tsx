@@ -113,7 +113,7 @@ export const Vending = (props) => {
   inventory = inventory.filter((item) => !!item);
 
   if (stockSearch.length >= 2) {
-    inventory = inventory.filter((item) => stockSearchFn(item));
+    inventory = inventory.filter(stockSearchFn);
   }
 
   const filteredCategories = Object.fromEntries(
