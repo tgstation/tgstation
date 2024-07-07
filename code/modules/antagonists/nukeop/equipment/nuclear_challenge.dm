@@ -102,9 +102,8 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	var/datum/techweb/station_techweb = locate(/datum/techweb/science) in SSresearch.techwebs
 	if(station_techweb)
 		var/obj/machinery/announcement_system/announcement_system = pick(GLOB.announcement_systems)
-		if (isnull(announcement_system))
-			return
-		announcement_system.broadcast("Nanotrasen R&D Division: Uploading additional research data to the station server following the emergency protocol", list(RADIO_CHANNEL_SCIENCE))
+		if (!isnull(announcement_system))
+			announcement_system.broadcast("Nanotrasen R&D Division: Uploading additional research data to the station server following the emergency protocol", list(RADIO_CHANNEL_SCIENCE))
 		station_techweb.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS * 3))
 
 	qdel(src)
