@@ -24,6 +24,13 @@
 		// the new body temperature is adjusted by the bullet's effect temperature
 		L.adjust_bodytemperature((1 - blocked) * temperature)
 
+	if(isobj(target))
+		var/obj/objectification = target
+
+		if(objectification.reagents)
+			var/datum/reagents/reagents = objectification.reagents
+			reagents?.expose_temperature(temperature)
+
 /obj/projectile/temp/hot
 	name = "heat beam"
 	icon_state = "lava"
@@ -36,13 +43,6 @@
 
 /obj/projectile/temp/cryo/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-
-	if(isobj(target))
-		var/obj/objectification = target
-
-		if(objectification.reagents)
-			var/datum/reagents/reagents = objectification.reagents
-			reagents?.expose_temperature(temperature)
 
 	if(isliving(target))
 		var/mob/living/living_target = target
@@ -71,10 +71,6 @@
 
 		if(objectification.resistance_flags & ON_FIRE) //Don't burn something already on fire
 			return
-
-		if(objectification.reagents)
-			var/datum/reagents/reagents = objectification.reagents
-			reagents?.expose_temperature(temperature)
 
 		objectification.fire_act(temperature)
 
