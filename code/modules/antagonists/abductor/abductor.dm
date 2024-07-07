@@ -140,7 +140,7 @@
 	if(!ishuman(owner.current))
 		to_chat(admin, span_warning("This only works on humans!"))
 		return
-	var/mob/living/carbon/human/Hnew_abductor = owner.current
+	var/mob/living/carbon/human/new_abductor = owner.current
 	var/gear = tgui_alert(admin,"Agent or Scientist Gear", "Gear", list("Agent", "Scientist"))
 	if(gear)
 		if(gear == "Agent")
