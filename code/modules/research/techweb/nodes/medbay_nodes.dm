@@ -85,12 +85,13 @@
 		"medicalbed_emergency",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	required_experiments = list(/datum/experiment/scanning/reagent/haloperidol)
 
 /datum/techweb_node/cryostasis
 	id = TECHWEB_NODE_CRYOSTASIS
 	display_name = "Cryostasis"
 	description = "The result of clown accidentally drinking a chemical, now repurposed for safely preserving crew members in suspended animation."
-	prereq_ids = list(TECHWEB_NODE_MEDBAY_EQUIP_ADV, TECHWEB_NODE_PLASMA_CONTROL)
+	prereq_ids = list(TECHWEB_NODE_FUSION)
 	design_ids = list(
 		"cryotube",
 		"mech_sleeper",
@@ -99,4 +100,4 @@
 		"splitbeaker",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
-	required_experiments = list(/datum/experiment/scanning/reagent/cryostylane)
+	discount_experiments = list(/datum/experiment/scanning/reagent/cryostylane = TECHWEB_TIER_4_POINTS)
