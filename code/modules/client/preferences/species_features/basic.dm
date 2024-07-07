@@ -70,7 +70,7 @@
 	target.set_facial_hairstyle(value, update = FALSE)
 
 /datum/preference/choiced/facial_hairstyle/create_default_value()
-	return "Shaved"
+	return /datum/sprite_accessory/facial_hair/shaved::name
 
 /datum/preference/choiced/facial_hairstyle/create_informed_default_value(datum/preferences/preferences)
 	var/gender = preferences.read_preference(/datum/preference/choiced/gender)
@@ -89,7 +89,7 @@
 /datum/preference/choiced/facial_hairstyle/compile_constant_data()
 	var/list/data = ..()
 
-	data[SUPPLEMENTAL_FEATURE_KEY] = "facial_hair_color"
+	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/color/facial_hair_color::savefile_key
 
 	return data
 
@@ -121,7 +121,7 @@
 	target.set_facial_hair_gradient_style(new_style = value, update = FALSE)
 
 /datum/preference/choiced/facial_hair_gradient/create_default_value()
-	return "None"
+	return /datum/sprite_accessory/gradient/none::name
 
 /datum/preference/color/facial_hair_gradient
 	priority = PREFERENCE_PRORITY_LATE_BODY_TYPE
@@ -136,7 +136,7 @@
 /datum/preference/color/facial_hair_gradient/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
 		return FALSE
-	return preferences.read_preference(/datum/preference/choiced/facial_hair_gradient) != "None"
+	return preferences.read_preference(/datum/preference/choiced/facial_hair_gradient) != /datum/sprite_accessory/gradient/none::name
 
 /datum/preference/color/hair_color
 	priority = PREFERENCE_PRIORITY_BODY_TYPE
@@ -171,7 +171,7 @@
 	target.set_hairstyle(value, update = FALSE)
 
 /datum/preference/choiced/hairstyle/create_default_value()
-	return "Bald"
+	return /datum/sprite_accessory/hair/bald::name
 
 /datum/preference/choiced/hairstyle/create_informed_default_value(datum/preferences/preferences)
 	var/gender = preferences.read_preference(/datum/preference/choiced/gender)
@@ -190,7 +190,7 @@
 /datum/preference/choiced/hairstyle/compile_constant_data()
 	var/list/data = ..()
 
-	data[SUPPLEMENTAL_FEATURE_KEY] = "hair_color"
+	data[SUPPLEMENTAL_FEATURE_KEY] = /datum/preference/color/hair_color::savefile_key
 
 	return data
 
@@ -209,7 +209,7 @@
 	target.set_hair_gradient_style(new_style = value, update = FALSE)
 
 /datum/preference/choiced/hair_gradient/create_default_value()
-	return "None"
+	return /datum/sprite_accessory/gradient/none::name
 
 /datum/preference/color/hair_gradient
 	priority = PREFERENCE_PRIORITY_BODY_TYPE
@@ -224,4 +224,4 @@
 /datum/preference/color/hair_gradient/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
 		return FALSE
-	return preferences.read_preference(/datum/preference/choiced/hair_gradient) != "None"
+	return preferences.read_preference(/datum/preference/choiced/hair_gradient) != /datum/sprite_accessory/gradient/none::name
