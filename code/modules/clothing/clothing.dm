@@ -9,6 +9,7 @@
 	var/flash_protect = FLASH_PROTECTION_NONE
 	var/tint = 0 //Sets the item's level of visual impairment tint, normally set to the same as flash_protect
 	var/up = FALSE //but separated to allow items to protect but not impair vision, like space helmets
+	var/pepper_protect = FALSE //Toggles pepper protection when an item is ajusted up/down
 	var/visor_flags = NONE //flags that are added/removed when an item is adjusted up/down
 	var/visor_flags_inv = NONE //same as visor_flags, but for flags_inv
 	var/visor_flags_cover = NONE //same as above, but for flags_cover
@@ -387,7 +388,7 @@
 			var/list/things_blocked = list()
 			if(flags_cover & HEADCOVERSMOUTH)
 				things_blocked += span_tooltip("Because this item is worn on the head and is covering the mouth, it will block facehugger proboscides, killing facehuggers.", "facehuggers")
-			if(flags_cover & PEPPERPROOF)
+			if(flags_cover & PEPPERPROOF || visor_vars_to_toggle & PEPPERPROOF)
 				things_blocked += "pepperspray"
 			if(length(things_blocked))
 				readout += "<b><u>COVERAGE</u></b>"
@@ -482,6 +483,8 @@ BLIND     // can't see anything
 
 	visor_toggling()
 
+	pepper_protect = !pepper_protect
+
 	to_chat(user, span_notice("You push [src] [up ? "out of the way" : "back into place"]."))
 
 	update_item_action_buttons()
@@ -511,6 +514,10 @@ BLIND     // can't see anything
 		flash_protect ^= initial(flash_protect)
 	if(visor_vars_to_toggle & VISOR_TINT)
 		tint ^= initial(tint)
+	if(pepper_protect & (visor_vars_to_toggle & PEPPERPROOF))
+		visor_flags_cover &= ~PEPPERPROOF
+	else
+		visor_flags_cover |= PEPPERPROOF
 	update_appearance() //most of the time the sprite changes
 
 /obj/item/clothing/proc/can_use(mob/user)
