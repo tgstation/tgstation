@@ -383,8 +383,6 @@
 #define SHOCK_SUPPRESS_MESSAGE (1 << 4)
 /// No skeleton animation if a human was shocked
 #define SHOCK_NO_HUMAN_ANIM (1 << 5)
-/// Ignores TRAIT_STUNIMMUNE
-#define SHOCK_IGNORE_IMMUNITY (1 << 6)
 /// Prevents the immediate stun, instead only gives the delay
 #define SHOCK_DELAY_STUN (1 << 7)
 /// Makes the paralyze into a knockdown
