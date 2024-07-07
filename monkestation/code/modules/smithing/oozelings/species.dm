@@ -21,7 +21,7 @@
 	mutantbrain = /obj/item/organ/internal/brain/slime
 	mutantears = /obj/item/organ/internal/ears/jelly
 	mutantlungs = /obj/item/organ/internal/lungs/slime
-	//mutanttongue = /obj/item/organ/interal/tongue/oozeling
+	mutanttongue = /obj/item/organ/internal/tongue/jelly
 
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,

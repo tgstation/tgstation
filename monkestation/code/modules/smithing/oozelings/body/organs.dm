@@ -17,6 +17,9 @@
 	zone = BODY_ZONE_CHEST
 	organ_flags = ORGAN_UNREMOVABLE
 
+/obj/item/organ/internal/tongue/jelly/get_possible_languages()
+	return ..() + /datum/language/slime
+
 /obj/item/organ/internal/lungs/slime
 	zone = BODY_ZONE_CHEST
 	organ_flags = ORGAN_UNREMOVABLE
