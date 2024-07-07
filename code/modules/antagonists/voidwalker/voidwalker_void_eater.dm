@@ -72,10 +72,17 @@
 	SIGNAL_HANDLER
 
 	if(istype(target, /obj/structure/window))
+		var/obj/structure/grille/gille = locate(/obj/structure/grille) in get_turf(target)
+		if(grille.shock(tapper, 100))
+			return
+
 		var/obj/structure/window/window = target
 		window.temporary_shatter()
 	else if(istype(target, /obj/structure/grille))
 		var/obj/structure/grille/grille = target
+		if(grille.shock(tapper, 100))
+			return
+
 		grille.temporary_shatter()
 	else
 		return

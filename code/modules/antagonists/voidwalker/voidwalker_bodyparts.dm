@@ -7,6 +7,9 @@
 	head_flags = NONE
 	blocks_emissive = EMISSIVE_BLOCK_NONE
 
+	brute_modifier = 0.9
+	burn_modifier = 0.8
+
 	damage_overlay_color = list(1, 2, 2, 0,
 								0, 1, 0, 0,
 								0, 0, 1, 0,
@@ -33,6 +36,9 @@
 	is_dimorphic = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_NONE
 
+	brute_modifier = 0.9
+	burn_modifier = 0.8
+
 	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color //im not copypasting the huge ass matrix everywhere
 
 	light_brute_msg = "splintered"
@@ -54,6 +60,9 @@
 	limb_id = SPECIES_VOIDWALKER
 	is_dimorphic = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_NONE
+
+	brute_modifier = 0.9
+	burn_modifier = 0.8
 
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 
@@ -79,6 +88,9 @@
 	is_dimorphic = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_NONE
 
+	brute_modifier = 0.9
+	burn_modifier = 0.8
+
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 
 	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color
@@ -103,6 +115,9 @@
 	is_dimorphic = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_NONE
 
+	brute_modifier = 0.9
+	burn_modifier = 0.8
+
 	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color
 
 	light_brute_msg = "splintered"
@@ -124,6 +139,9 @@
 	limb_id = SPECIES_VOIDWALKER
 	is_dimorphic = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_NONE
+
+	brute_modifier = 0.9
+	burn_modifier = 0.8
 
 	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color
 

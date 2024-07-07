@@ -141,7 +141,8 @@
 	addtimer(CALLBACK(src, PROC_REF(attempt_enter_camo)), reveal_after_combat, TIMER_OVERRIDE | TIMER_UNIQUE)
 
 /datum/component/space_camo/proc/enter_camo(atom/movable/parent)
-	animate(parent, alpha = space_alpha, time = 0.5 SECONDS)
+	if(parent.alpha != space_alpha)
+		animate(parent, alpha = space_alpha, time = 0.5 SECONDS)
 	parent.add_atom_colour(SSparallax.get_parallax_color(), TEMPORARY_COLOUR_PRIORITY)
 
 /datum/component/space_camo/proc/exit_camo(atom/movable/parent)
