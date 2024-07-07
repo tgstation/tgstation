@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "You can only stun someone with a shove if they have been shoved into objects or people, or have been hit by telescopic batons, contractor batons or the Mansus Grasp."
+  - balance: "If someone is knocked to the floor, however, you can still disarm them of any object with a shove."

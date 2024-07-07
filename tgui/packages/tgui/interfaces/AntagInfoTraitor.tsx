@@ -1,7 +1,13 @@
-import { BooleanLike } from 'common/react';
+import {
+  BlockQuote,
+  Button,
+  Dimmer,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { BlockQuote, Button, Dimmer, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { Objective, ObjectivePrintout } from './common/Objectives';
 

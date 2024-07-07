@@ -370,7 +370,7 @@ GLOBAL_LIST_INIT(can_pass_info_vars, GLOBAL_PROC_REF(can_pass_check_vars))
 
 /datum/can_pass_info/proc/compare_against(datum/can_pass_info/check_against)
 	for(var/comparable_var in GLOB.can_pass_info_vars)
-		if(!(vars[comparable_var] ~= check_against[comparable_var]))
+		if(!(vars[comparable_var] ~= check_against.vars[comparable_var]))
 			return FALSE
 	if(!pulling_info != !check_against.pulling_info)
 		return FALSE
