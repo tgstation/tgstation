@@ -33,6 +33,8 @@
 		/datum/experiment/autopsy/human,
 		/datum/experiment/autopsy/nonhuman,
 		/datum/experiment/autopsy/xenomorph,
+		/datum/experiment/scanning/reagent/haloperidol,
+		/datum/experiment/scanning/reagent/cryostylane,
 	)
 
 /datum/techweb_node/chem_synthesis
