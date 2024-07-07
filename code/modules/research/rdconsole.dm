@@ -220,6 +220,7 @@ Nothing else in the console has ID requirements.
 
 		data["nodes"] += list(list(
 			"id" = n.id,
+			"is_free" = n.is_free(stored_research),
 			"can_unlock" = stored_research.can_unlock_node(n),
 			"have_experiments_done" = stored_research.have_experiments_for_node(n),
 			"tier" = stored_research.tiers[n.id],

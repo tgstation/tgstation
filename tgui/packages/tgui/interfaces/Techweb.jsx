@@ -507,8 +507,14 @@ const TechNode = (props) => {
     queue_nodes = [],
   } = data;
   const { node, nodetails, nocontrols } = props;
-  const { id, can_unlock, have_experiments_done, tier, enqueued_by_user } =
-    node;
+  const {
+    id,
+    can_unlock,
+    have_experiments_done,
+    tier,
+    enqueued_by_user,
+    is_free,
+  } = node;
   const {
     name,
     description,
@@ -569,7 +575,7 @@ const TechNode = (props) => {
         !nocontrols && (
           <>
             {tier > 0 &&
-              (!!can_unlock && queue_nodes.length === 0 ? (
+              (!!can_unlock && (is_free || queue_nodes.length === 0) ? (
                 <Button
                   icon="lightbulb"
                   disabled={!can_unlock || tier > 1 || queue_nodes.length > 0}

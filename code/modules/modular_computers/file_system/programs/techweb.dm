@@ -76,6 +76,7 @@
 
 		data["nodes"] += list(list(
 			"id" = node.id,
+			"is_free" = node.is_free(stored_research),
 			"can_unlock" = stored_research.can_unlock_node(node),
 			"have_experiments_done" = stored_research.have_experiments_for_node(node),
 			"tier" = stored_research.tiers[node.id],
