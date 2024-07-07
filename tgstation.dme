@@ -5886,6 +5886,7 @@
 #include "code\modules\tgchat\message.dm"
 #include "code\modules\tgchat\to_chat.dm"
 #include "code\modules\tgs\includes.dm"
+#include "code\modules\tgs_override\revision_date_hijack_v3210.dm"
 #include "code\modules\tgui\external.dm"
 #include "code\modules\tgui\states.dm"
 #include "code\modules\tgui\status_composers.dm"
