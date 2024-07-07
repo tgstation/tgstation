@@ -558,6 +558,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 	desc = "A board filled with colored dots. What could this mean?"
 	icon = 'icons/obj/fluff/puzzle_small.dmi'
 	icon_state = "puzzle_dots"
+	layer = ABOVE_NORMAL_TURF_LAYER
 	plane = GAME_PLANE //visible over walls
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | UNACIDABLE | LAVA_PROOF
 	flags_1 = UNPAINTABLE_1
