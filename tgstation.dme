@@ -776,6 +776,7 @@
 #include "code\datums\dog_fashion.dm"
 #include "code\datums\ductnet.dm"
 #include "code\datums\eigenstate.dm"
+#include "code\datums\embed_data.dm"
 #include "code\datums\emotes.dm"
 #include "code\datums\ert.dm"
 #include "code\datums\hailer_phrase.dm"
