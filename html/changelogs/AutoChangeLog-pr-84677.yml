@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "Aquariums now influence the beauty score of an area based on their contents."
+  - rscadd: "Morbid people now get a positive moodlet when admiring an aquarium full of dead fish, and a negative one when fish are alive."
