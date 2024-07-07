@@ -15724,6 +15724,13 @@
 /obj/effect/spawner/random/bureaucracy/crayon,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/maintenance/port)
+"fsP" = (
+/obj/machinery/camera/motion{
+	dir = 4;
+	c_tag = "Armory - Space"
+	},
+/turf/open/openspace/airless,
+/area/space)
 "fsQ" = (
 /obj/structure/reflector/single{
 	dir = 9
@@ -154065,15 +154072,15 @@ nlm
 nlm
 nlm
 nlm
-gRG
-gRG
-gRG
-gRG
-gRG
-gRG
-gRG
-gRG
-gRG
+nlm
+nlm
+nlm
+nlm
+nlm
+fsP
+nlm
+nlm
+nlm
 yap
 arf
 tzC
@@ -154321,8 +154328,8 @@ nlm
 nlm
 nlm
 nlm
-gRG
-gRG
+nlm
+nlm
 gRG
 gRG
 gRG
@@ -154578,7 +154585,7 @@ nlm
 nlm
 nlm
 nlm
-gRG
+nlm
 gRG
 gRG
 hix
