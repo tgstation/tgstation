@@ -1,6 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - spellcheck: "Fixed a minor typo with the CQC/cult stun interaction."
-  - sound: "Added a sound effect when a Sleeping Carp user dodges a touch attack."
-  - qol: "Added messages to make it more immediately clear to the attacker when a martial arts user dodges/reflects their attack."

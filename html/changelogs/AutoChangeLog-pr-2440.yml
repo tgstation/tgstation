@@ -1,8 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "(Ghommie) Fixed fishing skeleton mob spawners that immediately crumble back into the void of whatever chasm you fished them from."
-  - bugfix: "(vinylspiders) Rescue hooks will once again drop the mob next to the fisherman instead of just displaying a balloon alert and doing nothing."
-  - balance: "(Tattle) You can no longer teleport into chasms."
-  - bugfix: "(lizardqueenlexi) Basic mobs will no longer randomly walk into terrain that harms or kills them."
-  - qol: "(carlarctg) Adds a chat message for fishing in a chasm with a normal and rescue hook, to clarify that only rescue hooks can drag up corpses."

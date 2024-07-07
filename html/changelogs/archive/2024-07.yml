@@ -69,3 +69,25 @@
   - qol: Linked speech now prevents messages from highlighting if its a message you
       sent, or if you are the owner of said link..
   - qol: Linked speech messages are now marked as radio messages, for chat tab purposes.
+2024-07-07:
+  Absolucy:
+  - spellcheck: Fixed a minor typo with the CQC/cult stun interaction.
+  - sound: Added a sound effect when a Sleeping Carp user dodges a touch attack.
+  - qol: Added messages to make it more immediately clear to the attacker when a martial
+      arts user dodges/reflects their attack.
+  - bugfix: (Ghommie) Fixed fishing skeleton mob spawners that immediately crumble
+      back into the void of whatever chasm you fished them from.
+  - bugfix: (vinylspiders) Rescue hooks will once again drop the mob next to the fisherman
+      instead of just displaying a balloon alert and doing nothing.
+  - balance: (Tattle) You can no longer teleport into chasms.
+  - bugfix: (lizardqueenlexi) Basic mobs will no longer randomly walk into terrain
+      that harms or kills them.
+  - qol: (carlarctg) Adds a chat message for fishing in a chasm with a normal and
+      rescue hook, to clarify that only rescue hooks can drag up corpses.
+  - qol: Androids, skeletons, zombies, and jellypeople can all have hair now. Again,
+      it's the future, don't question it.
+  - balance: Androids now have proper synthetic organs, including flash-proofing and
+      having an actual metabolism, and can also be revived by healing them, like IPCs.
+  KnigTheThrasher:
+  - rscadd: Added rest of nova clothes to the store
+  - balance: Deleted quirk restriction from hard soles and light step
