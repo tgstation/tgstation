@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "Night vision goggles now subtly tint your screen."
+  - rscadd: "You can turn your night vision goggles off. Doing so removes the tint and the eye protection malus."
