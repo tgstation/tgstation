@@ -166,18 +166,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
-/datum/design/air_horn
-	name = "Air Horn"
-	desc = "Damn son, where'd you find this?"
-	id = "air_horn"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/bananium =HALF_SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/bikehorn/airhorn
-	category = list(
-		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
-
 /datum/design/clown_firing_pin
 	name = "Hilarious Firing Pin"
 	id = "clown_firing_pin"
@@ -813,6 +801,19 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/evidencebag
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+
+/datum/design/dragnet_beacon
+	name = "DRAGnet Beacon"
+	desc = "A beacon that can be used as a teleport destination for DRAGnet snare rounds. Remember to sync it with your DRAGnet first!"
+	id = "dragnet_beacon"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
+	build_path = /obj/item/dragnet_beacon
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
 	)

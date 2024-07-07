@@ -55,13 +55,13 @@
 
 /mob/living/basic/gorilla/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP), ROUNDSTART_TRAIT)
+	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_CHUNKYFINGERS), ROUNDSTART_TRAIT)
 	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	AddElement(/datum/element/dextrous)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_BAREFOOT)
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = gorilla_food)
-	AddElement(
-		/datum/element/amputating_limbs, \
+	AddComponent(
+		/datum/component/amputating_limbs, \
 		surgery_time = 0 SECONDS, \
 		surgery_verb = "punches",\
 	)

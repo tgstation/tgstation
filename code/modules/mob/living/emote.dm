@@ -176,7 +176,7 @@
 	stat_allowed = HARD_CRIT
 
 /datum/emote/living/gasp/get_sound(mob/living/user)
-	if(!HAS_MIND_TRAIT(user, TRAIT_MIMING))
+	if(HAS_MIND_TRAIT(user, TRAIT_MIMING))
 		return
 	if(!ishuman(user))
 		return
@@ -679,7 +679,7 @@
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
 
-	if(is_banned_from(user.ckey, "Emote"))
+	if(!isnull(user.ckey) && is_banned_from(user.ckey, "Emote"))
 		to_chat(user, span_boldwarning("You cannot send custom emotes (banned)."))
 		return FALSE
 

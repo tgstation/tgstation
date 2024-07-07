@@ -762,6 +762,40 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "hoverboard_nt"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
 
+/obj/item/melee/skateboard/holyboard
+	name = "holy skateboard"
+	desc = "A board blessed by the gods with the power to grind for our sins. Has the initials 'J.C.' on the underside."
+	icon_state = "hoverboard_holy_held"
+	inhand_icon_state = "hoverboard_holy"
+	force = 18
+	throwforce = 6
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb_continuous = list("bashes", "crashes", "grinds", "skates")
+	attack_verb_simple = list("bash", "crash", "grind", "skate")
+	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded
+
+/obj/item/melee/skateboard/holyboard/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
+	AddComponent(/datum/component/effect_remover, \
+	success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
+	success_forcesay = "BEGONE FOUL MAGICKS!!", \
+	tip_text = "Clear rune", \
+	on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
+	effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune) \
+	)
+	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
+
+/obj/item/melee/skateboard/holyboard/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
+	SIGNAL_HANDLER
+	if(!istype(target, /obj/effect/rune))
+		return
+
+	var/obj/effect/rune/target_rune = target
+	if(target_rune.log_when_erased)
+		user.log_message("erased [target_rune.cultist_name] rune using [src]", LOG_GAME)
+	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
+
 /obj/item/melee/baseball_bat
 	name = "baseball bat"
 	desc = "There ain't a skull in the league that can withstand a swatter."

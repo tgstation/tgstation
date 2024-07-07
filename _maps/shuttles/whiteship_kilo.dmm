@@ -207,7 +207,7 @@
 /obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "jM" = (
 /obj/structure/table,
@@ -249,8 +249,8 @@
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "Mining Shuttle";
-	port_direction = 4;
-	preferred_direction = 8
+	port_direction = 8;
+	preferred_direction = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
@@ -327,7 +327,7 @@
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "nt" = (
 /obj/effect/turf_decal/stripes/line{
@@ -355,7 +355,7 @@
 /obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned/bar)
 "pI" = (
 /obj/effect/turf_decal/delivery,
@@ -416,7 +416,7 @@
 /obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "rX" = (
 /obj/effect/decal/cleanable/dirt,
@@ -570,7 +570,7 @@
 /obj/machinery/cell_charger,
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/cell/emproof/empty{
+/obj/item/stock_parts/power_store/cell/emproof/empty{
 	pixel_y = 7;
 	pixel_x = 5
 	},
@@ -868,7 +868,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "Nh" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -909,7 +909,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned/bar)
 "Pe" = (
 /obj/machinery/button/door/directional/north{
@@ -931,7 +931,7 @@
 /obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned/bar)
 "PR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1031,7 +1031,9 @@
 	},
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
 	dir = 4;
-	view_range = 14
+	view_range = 14;
+	y_offset = 5;
+	x_offset = 0
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8

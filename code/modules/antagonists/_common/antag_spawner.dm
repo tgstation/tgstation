@@ -443,7 +443,7 @@
 	name = "Syndicate Monkey Agent Kit"
 
 	head = /obj/item/clothing/head/fedora
-	mask = /obj/item/clothing/mask/cigarette/syndicate
+	mask = /obj/item/cigarette/syndicate
 	uniform = /obj/item/clothing/under/syndicate
 	l_pocket = /obj/item/reagent_containers/cup/soda_cans/monkey_energy
 	r_pocket = /obj/item/storage/fancy/cigarettes/cigpack_syndicate

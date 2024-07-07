@@ -59,9 +59,11 @@ Passive gate is similar to the regular pump except:
 	if(!on)
 		return
 
-	var/datum/gas_mixture/air1 = airs[1]
-	var/datum/gas_mixture/air2 = airs[2]
-	if(air1.release_gas_to(air2, target_pressure))
+	var/datum/gas_mixture/input_air = airs[1]
+	var/datum/gas_mixture/output_air = airs[2]
+	var/datum/gas_mixture/output_pipenet_air = parents[2].air
+
+	if(input_air.release_gas_to(output_air, target_pressure, output_pipenet_air = output_pipenet_air))
 		update_parents()
 
 /obj/machinery/atmospherics/components/binary/passive_gate/relaymove(mob/living/user, direction)

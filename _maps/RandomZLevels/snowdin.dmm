@@ -445,7 +445,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/storage/toolbox/electrical{
 	pixel_x = 4;
 	pixel_y = 8
@@ -11586,7 +11586,6 @@
 /obj/machinery/door_buttons/access_button{
 	idDoor = "snowdin_turbine_interior";
 	idSelf = "snowdin_turbine_access";
-	layer = 3.1;
 	name = "Turbine Airlock Control";
 	pixel_x = 8;
 	pixel_y = -24

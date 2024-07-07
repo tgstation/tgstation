@@ -140,7 +140,10 @@
 			select_sect(usr, params["path"])
 			return TRUE //they picked a sect lets update so some weird spammy shit doesn't happen
 		if("perform_rite")
-			perform_rite(usr, params["path"])
+			if(!ispath(text2path(params["path"]), /datum/religion_rites))
+				message_admins("[ADMIN_LOOKUPFLW(usr)] has tried to spawn an item when performing a rite.")
+				return
+			perform_rite(usr, text2path(params["path"]))
 
 /// Select the sect, called from [/datum/component/religious_tool/proc/AttemptActions]
 /datum/component/religious_tool/proc/select_sect(mob/living/user, path)
@@ -154,9 +157,6 @@
 
 /// Perform the rite, called from [/datum/component/religious_tool/proc/AttemptActions]
 /datum/component/religious_tool/proc/perform_rite(mob/living/user, path)
-	if(!ispath(text2path(path), /datum/religion_rites))
-		message_admins("[ADMIN_LOOKUPFLW(usr)] has tried to spawn an item when performing a rite.")
-		return
 	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
 		if(user.mind.holy_role == HOLY_ROLE_DEACON)
 			to_chat(user, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")

@@ -18,8 +18,8 @@
 /obj/item/weaponcrafting/receiver/create_slapcraft_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/pipegun)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -34,8 +34,8 @@
 /obj/item/weaponcrafting/stock/create_slapcraft_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/smoothbore_disabler, /datum/crafting_recipe/laser_musket)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -48,8 +48,8 @@
 /obj/item/weaponcrafting/giant_wrench/create_slapcraft_component() // slappycraft
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/giant_wrench)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -84,8 +84,8 @@
 	desc = "A suitcase containing the necessary gun parts to tranform a standard energy gun into a temperature gun. Fantastic at birthday parties and killing indigenious populations of lizardpeople."
 
 /obj/item/weaponcrafting/gunkit/beam_rifle
-	name = "particle acceleration rifle part kit (lethal)"
-	desc = "The coup de grace of guncrafting. This suitcase contains the highly experimental rig for a particle acceleration rifle. Requires an energy gun, a stabilized flux anomaly and a stabilized gravity anomaly."
+	name = "\improper Event Horizon anti-existential beam rifle part kit (DOOMSDAY DEVICE, DO NOT CONSTRUCT)"
+	desc = "What fevered minds wrought this terrible construction kit? To create a frame to harness the strange energies that flow through the Spinward Sector towards such horrible acts of violence?"
 
 /obj/item/weaponcrafting/gunkit/ebow
 	name = "energy crossbow part kit (less lethal)"
@@ -94,3 +94,7 @@
 /obj/item/weaponcrafting/gunkit/hellgun
 	name = "hellfire laser gun degradation kit (warcrime lethal)"
 	desc = "Take a perfectly functioning laser gun. Butcher the inside of the gun so it runs hot and mean. You now have a hellfire laser. You monster."
+
+/obj/item/weaponcrafting/gunkit/photon
+	name = "photon cannon parts kit (nonlethal)"
+	desc = "A suitcase containing the necessary gun parts to construct a photon cannon around a stabilized flux anomaly. Harness the power of the sun, in the palms of your hands."

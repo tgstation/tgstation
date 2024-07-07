@@ -34,9 +34,9 @@
 /turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
 		return
-	var/obj/item/tool = user.is_holding_item_of_type(/obj/item/screwdriver)
+	var/obj/item/tool = user.is_holding_tool_quality(TOOL_SCREWDRIVER)
 	if(!tool)
-		tool = user.is_holding_item_of_type(/obj/item/crowbar)
+		tool = user.is_holding_tool_quality(TOOL_CROWBAR)
 	if(!tool)
 		return
 	var/turf/open/floor/plating/P = pry_tile(tool, user, TRUE)
@@ -160,6 +160,9 @@
 	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass, 2, worm_chance = 50, \
 		action_text = "uproot", action_text_third_person = "uproots")
 
+/turf/open/floor/grass/Airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/grass/proc/spawniconchange()
 	icon_state = "grass[rand(0,3)]"
 
@@ -273,11 +276,11 @@
 	if(!. || !(updates & UPDATE_SMOOTHING))
 		return
 	if(!broken && !burnt)
-		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		if(smoothing_flags & USES_SMOOTHING)
 			QUEUE_SMOOTH(src)
 	else
 		make_plating()
-		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		if(smoothing_flags & USES_SMOOTHING)
 			QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/open/floor/carpet/lone
@@ -868,6 +871,7 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = "space"
 	floor_tile = /obj/item/stack/tile/fakespace
+	layer = SPACE_LAYER
 	plane = PLANE_SPACE
 	tiled_dirt = FALSE
 	damaged_dmi = 'icons/turf/space.dmi'

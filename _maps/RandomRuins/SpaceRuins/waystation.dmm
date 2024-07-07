@@ -1105,13 +1105,11 @@
 "rF" = (
 /obj/machinery/button/door/directional/east{
 	id = "Blastdoor_load";
-	layer = 4;
 	name = "Loading Doors";
 	pixel_y = -6
 	},
 /obj/machinery/button/door/directional/east{
 	id = "Blastdoor_unload";
-	layer = 4;
 	name = "Loading Doors";
 	pixel_y = 6
 	},
@@ -1505,7 +1503,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "zd" = (
 /obj/structure/table,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/cell_charger,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/power)
@@ -2241,9 +2239,7 @@
 /area/ruin/space/has_grav/waystation/securestorage)
 "NK" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/components/tank/air{
-	piping_layer = 4
-	},
+/obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation)
 "NT" = (

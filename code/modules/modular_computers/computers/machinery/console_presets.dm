@@ -33,6 +33,17 @@
 		/datum/computer_file/program/scipaper_program,
 	)
 
+/obj/machinery/modular_computer/preset/research/away
+	name = "old research console"
+	desc = "An old computer used for writing research papers."
+	starting_programs = list(
+		/datum/computer_file/program/scipaper_program,
+	)
+
+/obj/machinery/modular_computer/preset/research/away/Initialize(mapload)
+	. = ..()
+	cpu.device_theme = PDA_THEME_RETRO
+
 // ===== COMMAND CONSOLE =====
 /obj/machinery/modular_computer/preset/command
 	name = "command console"
@@ -137,6 +148,7 @@
 	starting_programs += /datum/computer_file/program/bounty_board
 	starting_programs += /datum/computer_file/program/budgetorders
 	starting_programs += /datum/computer_file/program/shipping
+	starting_programs += /datum/computer_file/program/restock_tracker
 
 /obj/machinery/modular_computer/preset/cargochat/cargo/setup_starting_software()
 	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name("ntnrc_client")
