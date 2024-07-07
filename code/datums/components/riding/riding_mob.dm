@@ -554,7 +554,7 @@
 
 /datum/component/riding/creature/raptor/proc/freak_out()
 	var/mob/living/living_parent = parent
-	if(!length(living_parent.buckled_mobs))
+	if(lavaland_equipment_pressure_check(get_turf(living_parent)) || !length(living_parent.buckled_mobs))
 		return
 	living_parent.balloon_alert_to_viewers("freaks out!")
 	living_parent.spin(spintime = 2 SECONDS, speed = 1)

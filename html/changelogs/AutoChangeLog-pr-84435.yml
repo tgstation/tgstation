@@ -1,0 +1,6 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - rscadd: "Fletching starter kit! Make your own bow, shoot your friends in an unfortunate workplace accident. Replace all those holy arrows you lost."
+  - bugfix: "Bows now properly undraw once they have fired an arrow."
+  - code_imp: "Bows now utilize overlays in order to display loaded arrows. Unique overlays per arrow."

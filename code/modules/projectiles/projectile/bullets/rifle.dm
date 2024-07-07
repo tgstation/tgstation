@@ -35,6 +35,10 @@
 	damage = 20
 	stamina = 80
 
+/obj/projectile/bullet/strilka310/phasic
+	name = "phasic .310 bullet"
+	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
+
 // Harpoons (Harpoon Gun)
 
 /obj/projectile/bullet/harpoon

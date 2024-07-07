@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - qol: "Mood more promptly reacts to the beauty of an area as it changes, and not just when changing areas."
+  - rscadd: "Coroners (and potentially other mobs with the morbid trait), now like degradated-looking rooms."
