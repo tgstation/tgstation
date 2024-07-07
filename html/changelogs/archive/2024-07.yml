@@ -406,3 +406,9 @@
       variant
   necromanceranne:
   - balance: Settlers are a bit slower on their steeds.
+2024-07-07:
+  Holoo-1:
+  - bugfix: fixed ninja's adrenaline boost module not being rechargable
+  SyncIt21:
+  - bugfix: you can craft the singulo hammer with either a supermatter engine/shard
+      again
