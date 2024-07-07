@@ -80,6 +80,7 @@
 /datum/antagonist/abductor/on_removal()
 	owner.special_role = null
 	REMOVE_TRAIT(owner, TRAIT_ABDUCTOR_TRAINING, ABDUCTOR_ANTAGONIST)
+	REMOVE_TRAIT(owner.current, TRAIT_UNCONVERTABLE, ABDUCTOR_ANTAGONIST)
 	return ..()
 
 /datum/antagonist/abductor/greet()
@@ -90,20 +91,22 @@
 
 /datum/antagonist/abductor/proc/finalize_abductor()
 	//Equip
-	var/mob/living/carbon/human/H = owner.current
-	H.set_species(/datum/species/abductor)
-	var/obj/item/organ/internal/tongue/abductor/T = H.get_organ_slot(ORGAN_SLOT_TONGUE)
-	T.mothership = "[team.name]"
+	var/mob/living/carbon/human/new_abductor = owner.current
+	new_abductor.set_species(/datum/species/abductor)
+	var/obj/item/organ/internal/tongue/abductor/abductor_tongue = new_abductor.get_organ_slot(ORGAN_SLOT_TONGUE)
+	abductor_tongue.mothership = "[team.name]"
 
-	H.real_name = "[team.name] [sub_role]"
-	H.equipOutfit(outfit)
+	new_abductor.real_name = "[team.name] [sub_role]"
+	new_abductor.equipOutfit(outfit)
+	// We don't want abductors to be converted by other antagonists
+	ADD_TRAIT(new_abductor, TRAIT_UNCONVERTABLE, ABDUCTOR_ANTAGONIST)
 
 	// We require that the template be loaded here, so call it in a blocking manner, if its already done loading, this won't block
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
 	//Teleport to ship
 	for(var/obj/effect/landmark/abductor/LM in GLOB.landmarks_list)
 		if(istype(LM, landmark_type) && LM.team_number == team.team_number)
-			H.forceMove(LM.loc)
+			new_abductor.forceMove(LM.loc)
 			break
 
 /datum/antagonist/abductor/scientist/on_gain()
@@ -137,13 +140,13 @@
 	if(!ishuman(owner.current))
 		to_chat(admin, span_warning("This only works on humans!"))
 		return
-	var/mob/living/carbon/human/H = owner.current
+	var/mob/living/carbon/human/Hnew_abductor = owner.current
 	var/gear = tgui_alert(admin,"Agent or Scientist Gear", "Gear", list("Agent", "Scientist"))
 	if(gear)
 		if(gear == "Agent")
-			H.equipOutfit(/datum/outfit/abductor/agent)
+			new_abductor.equipOutfit(/datum/outfit/abductor/agent)
 		else
-			H.equipOutfit(/datum/outfit/abductor/scientist)
+			new_abductor.equipOutfit(/datum/outfit/abductor/scientist)
 
 /datum/team/abductor_team
 	member_name = "\improper Abductor"
