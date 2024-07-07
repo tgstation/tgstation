@@ -107,10 +107,10 @@
 	if(!istype(to_modify)) // null or invalid
 		return
 
-	// More healing if powered up.
-	to_modify.heal_multiplier = GET_MUTATION_POWER(src)
-	// Less pain if synchronized.
-	to_modify.pain_multiplier = GET_MUTATION_SYNCHRONIZER(src)
+	// Transfers more damage if strengthened. (1.5 with power chromosome)
+	to_modify.power_coefficient = GET_MUTATION_POWER(src)
+	// Halves transferred damage if synchronized. (0.5 with synchronizer chromosome)
+	to_modify.synchronizer_coefficient = GET_MUTATION_SYNCHRONIZER(src)
 
 /datum/action/cooldown/spell/touch/lay_on_hands
 	name = "Mending Touch"
@@ -127,42 +127,68 @@
 	hand_path = /obj/item/melee/touch_attack/lay_on_hands
 	draw_message = span_notice("You ready your hand to transfer injuries to yourself.")
 	drop_message = span_notice("You lower your hand.")
-	/// Multiplies the amount healed, without increasing the received damage.
+	/// Multiplies the amount healed.
 	var/heal_multiplier = 1
-	/// Multiplies the incoming pain from healing.
+	/// Multiplies the incoming pain from healing. (Halved with synchronizer chromosome)
 	var/pain_multiplier = 1
 	/// Icon used for beaming effect
 	var/beam_icon = "blood"
+	/// The mutation's power coefficient.
+	var/power_coefficient = 1
+	/// The mutation's synchronizer coefficient.
+	var/synchronizer_coefficient = 1
+
+/datum/action/cooldown/spell/touch/lay_on_hands/create_hand(mob/living/carbon/cast_on)
+	. = ..()
+	if(!.)
+		return .
+	var/obj/item/bodypart/transfer_limb = cast_on.get_active_hand()
+	if(IS_ROBOTIC_LIMB(transfer_limb))
+		to_chat(cast_on, span_notice("You fail to channel your mending powers through your inorganic hand."))
+		return FALSE
+
+	return TRUE
 
 /datum/action/cooldown/spell/touch/lay_on_hands/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/mendicant)
 
 	var/mob/living/hurtguy = victim
 
+	heal_multiplier = initial(heal_multiplier) * power_coefficient
+	pain_multiplier = initial(pain_multiplier) * synchronizer_coefficient
+
+	// Message to show on a succesful heal if the healer has a special pacifism interaction with the mutation.
+	var/peaceful_message = null
+
 	// Heal more, hurt a bit more.
 	// If you crunch the numbers it sounds crazy good,
 	// but I think that's a fair reward for combining the efforts of Genetics, Medbay, and Mining to reach a hidden mechanic.
 	if(HAS_TRAIT_FROM(mendicant, TRAIT_HIPPOCRATIC_OATH, HIPPOCRATIC_OATH_TRAIT))
-		heal_multiplier = 2
-		pain_multiplier = 0.5
-		to_chat(mendicant, span_green("You can feel the magic of the Rod of Aesculapius aiding your efforts!"))
+		heal_multiplier *= 2
+		pain_multiplier *= 0.5
+		peaceful_message = span_boldnotice("You can feel the magic of the Rod of Aesculapius aiding your efforts!")
 		beam_icon = "sendbeam"
 		var/obj/item/rod_of_asclepius/rod = locate() in mendicant.contents
 		if(rod)
 			rod.add_filter("cool_glow", 2, list("type" = "outline", "color" = COLOR_VERY_PALE_LIME_GREEN, "size" = 1.25))
 			addtimer(CALLBACK(rod, TYPE_PROC_REF(/datum, remove_filter), "cool_glow"), 6 SECONDS)
 
-
-	// If a normal pacifist, heal and hurt more!
+	// If a normal pacifist, transfer more.
 	else if(HAS_TRAIT(mendicant, TRAIT_PACIFISM))
-		heal_multiplier = 1.75
-		pain_multiplier = 1.75
-		to_chat(mendicant, span_green("Your peaceful nature helps you guide all the pain to yourself."))
+		heal_multiplier *= 1.75
+		peaceful_message = span_boldnotice("Your peaceful nature helps you guide all the pain to yourself.")
 
 	var/success
 	if(iscarbon(hurtguy))
 		success = do_complicated_heal(mendicant, hurtguy, heal_multiplier, pain_multiplier)
 	else
 		success = do_simple_heal(mendicant, hurtguy, heal_multiplier, pain_multiplier)
+
+	// No healies in the end, cancel
+	if(!success)
+		return FALSE
+
+	if(peaceful_message)
+		to_chat(mendicant, peaceful_message)
 
 	// Both types can be ignited (technically at least), so we can just do this here.
 	if(hurtguy.fire_stacks > 0)
@@ -171,10 +197,6 @@
 			mendicant.ignite_mob()
 			hurtguy.extinguish_mob()
 
-	// No healies in the end, cancel
-	if(!success)
-		return FALSE
-
 	mendicant.Beam(hurtguy, icon_state = beam_icon, time = 0.5 SECONDS)
 	beam_icon = initial(beam_icon)
 
@@ -182,7 +204,7 @@
 	mendicant.update_damage_overlays()
 
 	hurtguy.visible_message(span_notice("[mendicant] lays hands on [hurtguy]!"))
-	to_chat(target, span_boldnotice("[mendicant] lays hands on you, healing you!"))
+	to_chat(hurtguy, span_boldnotice("[mendicant] lays hands on you, healing you!"))
 	new /obj/effect/temp_visual/heal(get_turf(hurtguy), COLOR_VERY_PALE_LIME_GREEN)
 	return success
 
@@ -202,6 +224,7 @@
 			mendicant_organic_limbs += possible_limb
 	// None? Gtfo
 	if(!length(mendicant_organic_limbs))
+		mendicant.balloon_alert(mendicant, "no organic limbs!")
 		return .
 
 	// Try to use our active hand, otherwise pick at random
@@ -218,7 +241,8 @@
 		hurtguy.adjustFireLoss(-burn_to_heal)
 		. = TRUE
 
-	return .
+	if(!.)
+		hurtguy.balloon_alert(mendicant, "unhurt!")
 
 /datum/action/cooldown/spell/touch/lay_on_hands/proc/do_complicated_heal(mob/living/carbon/mendicant, mob/living/carbon/hurtguy, heal_multiplier, pain_multiplier)
 
@@ -232,8 +256,12 @@
 			mendicant_organic_limbs += possible_limb
 
 	// If we have no organic available limbs just give up.
-	if(!length(mendicant_organic_limbs) || !length(hurt_limbs))
-		return
+	if(!length(mendicant_organic_limbs))
+		mendicant.balloon_alert(mendicant, "no organic limbs!")
+		return .
+	if(!length(hurt_limbs))
+		hurtguy.balloon_alert(mendicant, "no damaged organic limbs!")
+		return .
 
 	// Counter to make sure we don't take too much from separate limbs
 	var/total_damage_healed = 0
@@ -244,28 +272,71 @@
 		if(!(mendicant_transfer_limb in mendicant_organic_limbs))
 			mendicant_transfer_limb = pick(mendicant_organic_limbs)
 
-		// Transfer at most 35 damage by default.
+		// Transfer at most 35 damage, by default.
 		var/brute_damage = min(affected_limb.brute_dam, 35 * heal_multiplier)
 		// no double dipping
 		var/burn_damage = min(affected_limb.burn_dam, (35 * heal_multiplier) - brute_damage)
 		if((brute_damage || burn_damage) && total_damage_healed < (35 * heal_multiplier))
-			total_damage_healed = brute_damage + burn_damage
+			total_damage_healed += brute_damage + burn_damage
 			. = TRUE
+			var/brute_taken = brute_damage * pain_multiplier
+			var/burn_taken = burn_damage * pain_multiplier
 			// Heal!
-			affected_limb.heal_damage(brute_damage * heal_multiplier, burn_damage * heal_multiplier, required_bodytype = BODYTYPE_ORGANIC)
+			affected_limb.heal_damage(brute_damage, burn_damage, required_bodytype = BODYTYPE_ORGANIC)
 			// Hurt!
-			mendicant_transfer_limb.receive_damage(brute_damage * pain_multiplier, burn_damage * pain_multiplier, forced = TRUE, wound_bonus = CANT_WOUND)
+			mendicant_transfer_limb.receive_damage(brute_taken, burn_taken, forced = TRUE, wound_bonus = CANT_WOUND)
 
 		// Force light wounds onto you.
 		for(var/datum/wound/iter_wound as anything in affected_limb.wounds)
-			if(iter_wound.severity > WOUND_SEVERITY_MODERATE)
-				continue
+			switch(iter_wound.severity)
+				if(WOUND_SEVERITY_SEVERE) // half and half
+					if(prob(50 * heal_multiplier))
+						continue
+				if(WOUND_SEVERITY_CRITICAL)
+					if(heal_multiplier < 1.5) // need buffs to transfer crit wounds
+						continue
 			. = TRUE
 			iter_wound.remove_wound()
 			iter_wound.apply_wound(mendicant_transfer_limb)
 
+	if(HAS_TRAIT(mendicant, TRAIT_NOBLOOD))
+		return .
 
-	return .
+	// 10% base
+	var/max_blood_transfer = (BLOOD_VOLUME_NORMAL * 0.10) * heal_multiplier
+	// Too little blood
+	if(hurtguy.blood_volume < BLOOD_VOLUME_NORMAL)
+		var/max_blood_to_hurtguy = min(mendicant.blood_volume, BLOOD_VOLUME_NORMAL - hurtguy.blood_volume)
+		var/blood_to_hurtguy = min(max_blood_transfer, max_blood_to_hurtguy)
+		if(!blood_to_hurtguy)
+			return .
+		// We ignore incompatibility here.
+		mendicant.transfer_blood_to(hurtguy, blood_to_hurtguy, forced = TRUE, ignore_incompatibility = TRUE)
+		to_chat(mendicant, span_notice("Your veins (and brain) feel a bit lighter."))
+		. = TRUE
+		// Because we do our own spin on it!
+		if(hurtguy.get_blood_compatibility(mendicant) == FALSE)
+			hurtguy.adjustToxLoss((blood_to_hurtguy * 0.1) * pain_multiplier) // 1 dmg per 10 blood
+			to_chat(hurtguy, span_notice("Your veins feel thicker, but they itch a bit."))
+		else
+			to_chat(hurtguy, span_notice("Your veins feel thicker!"))
+
+	// Too MUCH blood
+	if(hurtguy.blood_volume > BLOOD_VOLUME_MAXIMUM)
+		var/max_blood_to_mendicant = BLOOD_VOLUME_EXCESS - hurtguy.blood_volume
+		var/blood_to_mendicant = min(max_blood_transfer, max_blood_to_mendicant)
+		// mender always gonna have blood
+
+		// We ignore incompatibility here.
+		hurtguy.transfer_blood_to(mendicant, hurtguy.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE, ignore_incompatibility = TRUE)
+		to_chat(hurtguy, span_notice("Your veins don't feel quite so swollen anymore."))
+		. = TRUE
+		// Because we do our own spin on it!
+		if(mendicant.get_blood_compatibility(hurtguy) == FALSE)
+			mendicant.adjustToxLoss((blood_to_mendicant * 0.1) * pain_multiplier) // 1 dmg per 10 blood
+			to_chat(mendicant, span_notice("Your veins swell and itch!"))
+		else
+			to_chat(mendicant, span_notice("Your veins swell!"))
 
 /obj/item/melee/touch_attack/lay_on_hands
 	name = "mending touch"

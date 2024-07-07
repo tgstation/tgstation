@@ -272,8 +272,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(mychild))
 			H.color = COLOR_RED
 
-/obj/structure/elite_tumor/attackby(obj/item/attacking_item, mob/user, params)
-	. = ..()
+/obj/structure/elite_tumor/item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
+	. = NONE
 	if(istype(attacking_item, /obj/item/organ/internal/monster_core/regenerative_core) && activity == TUMOR_INACTIVE && !boosted)
 		var/obj/item/organ/internal/monster_core/regenerative_core/core = attacking_item
 		visible_message(span_boldwarning("As [user] drops the core into [src], [src] appears to swell."))
@@ -282,7 +282,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		set_light_range(6)
 		desc = "[desc]  This one seems to glow with a strong intensity."
 		qdel(core)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/elite_tumor/proc/arena_checks()
 	if(activity != TUMOR_ACTIVE || QDELETED(src))

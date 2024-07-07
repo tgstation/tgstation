@@ -1,0 +1,5 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - spellcheck: "Renamed the organ thrower module to the 'organizer'"
+  - spellcheck: "Made its description more accurate. Did you know it instantly replaces up to 5 organs in active surgery?"
