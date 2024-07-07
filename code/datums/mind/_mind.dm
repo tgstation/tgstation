@@ -64,7 +64,6 @@
 	///If this mind's master is another mob (i.e. adamantine golems). Weakref of a /living.
 	var/datum/weakref/enslaved_to
 
-	var/unconvertable = FALSE
 	var/late_joiner = FALSE
 	/// has this mind ever been an AI
 	var/has_ever_been_ai = FALSE
