@@ -128,7 +128,7 @@
 			part_type = /obj/item/bodypart/leg/right/flesh
 
 	if (!isnull(target_part))
-		target.visible_message(span_danger("[src] tears off [target]'s [target_part.name] and attaches itself in [target_part.p_their()] place!"), span_userdanger("[src] tears off your [target_part.name] and attaches itself in [target_part.p_their()] place!"))
+		target.visible_message(span_danger("[src] tears off [target]'s [target_part.plaintext_zone] and attaches itself in [target_part.p_their()] place!"), span_userdanger("[src] tears off your [target_part.plaintext_zone] and attaches itself in [target_part.p_their()] place!"))
 	else
 		target.visible_message(span_danger("[src] attaches itself to where [target]'s [target.parse_zone_with_bodypart(target_zone)] used to be!"), span_userdanger("[src] attaches itself to where your [target.parse_zone_with_bodypart(target_zone)] used to be!"))
 
