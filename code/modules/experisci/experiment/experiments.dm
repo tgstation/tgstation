@@ -481,10 +481,10 @@
 
 	/datum/experiment/scanning/reagent/haloperidol
 	name = "Pure Haloperidol Scan"
-	description = "We require testing related to the long-term treatment of chronic psychiatric disorders. Produce Haloperidol with at least 99% purity and scan the beaker."
+	description = "We require testing related to the long-term treatment of chronic psychiatric disorders. Produce Haloperidol with at least 98% purity and scan the beaker."
 	performance_hint = "Exothermic and consumes hydrogen during reaction."
 	required_reagent = /datum/reagent/medicine/haloperidol
-	min_purity = 0.99
+	min_purity = 0.98
 
 /datum/experiment/scanning/points/bluespace_crystal
 	name = "Bluespace Crystal Sampling"
