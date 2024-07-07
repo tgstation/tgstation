@@ -229,9 +229,8 @@
 		return FALSE
 
 	to_buy.times++
-	if(HAS_TRAIT(user, TRAIT_SPELL_FOR_SALE))
+	if(HAS_TRAIT(user, TRAIT_SPELLS_LOTTERY))
 		if(prob(50 / to_buy.cost))
-``
 			to_chat(user, span_notice("this spell was given to you for free."))
 			return TRUE
 	uses -= to_buy.cost

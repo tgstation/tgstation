@@ -143,7 +143,7 @@
  * Return TRUE if it can refunded, FALSE otherwise
  */
 /datum/spellbook_entry/proc/can_refund(mob/living/carbon/human/user, obj/item/spellbook/book)
-	if(HAS_TRAIT(user, TRAIT_SPELL_FOR_SALE))
+	if(HAS_TRAIT(user, TRAIT_SPELLS_LOTTERY))
 		to_chat(user, span_notice("No refund."))
 		return FALSE
 	if(!refundable)

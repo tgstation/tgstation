@@ -68,13 +68,15 @@
 
 /datum/spellbook_entry/perks/dejavu/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	. = ..()
-	check_safe_location(user)
+	RegisterSignal(user, COMSIG_ENTER_AREA, PROC_REF(give_dejavu))
 
-/datum/spellbook_entry/perks/dejavu/proc/check_safe_location(mob/living/carbon/human/user)
-	if(get_area(user) == GLOB.areas_by_type[/area/centcom/wizard_station])
-		addtimer(CALLBACK(src, PROC_REF(check_safe_location), user), 10 SECONDS)
+/datum/spellbook_entry/perks/dejavu/proc/give_dejavu(mob/living/carbon/human/wizard, area/new_area)
+	SIGNAL_HANDLER
+
+	if(new_area == GLOB.areas_by_type[/area/centcom/wizard_station])
 		return
-	user.AddComponent(/datum/component/dejavu/timeline, -1, 60 SECONDS)
+	wizard.AddComponent(/datum/component/dejavu/timeline, -1, 60 SECONDS)
+	UnregisterSignal(wizard, COMSIG_ENTER_AREA)
 
 /datum/spellbook_entry/perks/ecologist
 	name = "Ecologist"
@@ -95,13 +97,13 @@
 	var/obj/item/organ/external/wings/functional/zombie_wings/angel_wing = new(get_turf(user))
 	angel_wing.Insert(user)
 
-/datum/spellbook_entry/perks/sale_off
-	name = "Sale Off"
-	desc = "Spell sale gives you the chance to get something from the book absolutely free, but you can no longer refund any purchases."
+/datum/spellbook_entry/perks/spell_lottery
+	name = "Spells Lottery"
+	desc = "Spells Lottery gives you the chance to get something from the book absolutely free, but you can no longer refund any purchases."
 
-/datum/spellbook_entry/perks/sale_off/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
+/datum/spellbook_entry/perks/spell_lottery/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	. = ..()
-	ADD_TRAIT(user, TRAIT_SPELL_FOR_SALE, REF(src))
+	ADD_TRAIT(user, TRAIT_SPELLS_LOTTERY, REF(src))
 
 /datum/spellbook_entry/perks/gamble
 	name = "Gamble"
@@ -111,21 +113,22 @@
 	. = ..()
 	var/datum/antagonist/wizard/check_perks = user.mind.has_antag_datum(/datum/antagonist/wizard)
 	var/perks_allocated = 0
-	for(var/datum/spellbook_entry/perks/generate_perk as anything in book.entries)
-		if(!istype(generate_perk))
-			continue
+	var/list/taking_perks = list()
+	for(var/datum/spellbook_entry/perks/generate_perk in book.entries)
 		if(istype(generate_perk, src))
 			continue
 		if(check_perks && is_type_in_list(generate_perk, check_perks.perks))
 			continue
-		if(!generate_perk.buy_spell(user, book, log_buy))
-			continue
-		only_two++
-		if(only_two >= 2)
+		taking_perks += generate_perk
+		perks_allocated++
+		if(perks_allocated >= 2)
 			break
-	if(only_two < 2)
+	if(taking_perks.len < 1)
 		to_chat(user, span_warning("Gamble cannot give 2 perks, so points are returned"))
 		return FALSE
+	taking_perks = shuffle(taking_perks)
+	for(var/datum/spellbook_entry/perks/perks_ready in taking_perks)
+		perks_ready.buy_spell(user, book, log_buy)
 
 /datum/spellbook_entry/perks/heart_eater
 	name = "Heart Eater"
@@ -152,17 +155,18 @@
 
 /datum/spellbook_entry/perks/transparence/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	. = ..()
-	if(user.alpha > 125)
-		user.alpha = 125
 	user.maxHealth *= 0.75
-	try_to_make_stalker(user)
+	user.alpha = 125
 	ADD_TRAIT(user, TRAIT_UNHITTABLE_BY_PROJECTILES, REF(src))
+	RegisterSignal(user, COMSIG_ENTER_AREA, PROC_REF(make_stalker))
 
-/datum/spellbook_entry/perks/transparence/proc/try_to_make_stalker(mob/living/carbon/human/user)
-	if(get_area(user) == GLOB.areas_by_type[/area/centcom/wizard_station])
-		addtimer(CALLBACK(src, PROC_REF(try_to_make_stalker), user), 10 SECONDS)
+/datum/spellbook_entry/perks/transparence/proc/make_stalker(mob/living/carbon/human/wizard, area/new_area)
+	SIGNAL_HANDLER
+
+	if(new_area == GLOB.areas_by_type[/area/centcom/wizard_station])
 		return
-	user.gain_trauma(/datum/brain_trauma/magic/stalker)
+	wizard.gain_trauma(/datum/brain_trauma/magic/stalker)
+	UnregisterSignal(wizard, COMSIG_ENTER_AREA)
 
 /datum/spellbook_entry/perks/magnetism
 	name = "Magnetism"
@@ -171,70 +175,56 @@
 
 /datum/spellbook_entry/perks/magnetism/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	. = ..()
-	var/atom/movable/magnitizm = new /obj/effect/magnitizm(get_turf(user))
+	var/atom/movable/magnitizm = new /obj/effect/wizard_magnetism(get_turf(user))
 	magnitizm.orbit(user, 20)
 
 /obj/effect/wizard_magnetism
 	name = "magnetic anomaly"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield2"
-	var/mob/living/owner
-	var/timer
+	/// We need to orbit around someone.
+	var/datum/weakref/owner
 
-/obj/effect/magnitizm/New(loc, ...)
+/obj/effect/wizard_magnetism/New(loc, ...)
 	. = ..()
 	transform *= 0.4
 
-/obj/effect/magnitizm/orbit(atom/A, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
+/obj/effect/wizard_magnetism/orbit(atom/new_owner, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 	. = ..()
-	if(!isliving(A))
+	if(!isliving(new_owner))
 		return
-	owner = A
-	timer = addtimer(CALLBACK(src, PROC_REF(magnetik)), 1 SECONDS)
-	RegisterSignal(CALLBACK(owner, COMSIG_LIVING_LIFE, PROC_REF(magnetik_check)))
+	owner = WEAKREF(new_owner)
+	RegisterSignal(new_owner, COMSIG_ENTER_AREA, PROC_REF(check_area))
 
-/obj/effect/magnitizm/proc/perform_throw(obj/throw_it, atom/throw_there)
-	throw_it.throw_at(throw_there, 5, 2)
-
-/obj/effect/magnitizm/stop_orbit()
-	if(!isnull(owner))
-		UnregisterSignal(owner, COMSIG_LIVING_LIFE)
-	owner = null
-	timer = null
-	qdel(src)
-
-/obj/effect/magnitizm/proc/magnetik_check()
+/obj/effect/wizard_magnetism/proc/check_area(mob/living/wizard, area/new_area)
 	SIGNAL_HANDLER
 
-	if(isnull(timer))
-		timer = addtimer(CALLBACK(src, PROC_REF(magnetik)), 1 SECONDS)
+	if(new_area == GLOB.areas_by_type[/area/centcom/wizard_station])
+		return
+	START_PROCESSING(SSprocessing, src)
+	UnregisterSignal(wizard, COMSIG_ENTER_AREA)
 
-/obj/effect/magnitizm/proc/magnetise()
-	if(!timer)
-		return
+/obj/effect/wizard_magnetism/process(seconds_per_tick)
 	if(isnull(owner))
-		qdel(src)
+		stop_orbit()
 		return
-	if(owner.stat != DEAD)
-		timer = null
+	var/mob/living/wizard = owner?.resolve()
+	if(wizard.stat == DEAD)
+		stop_orbit()
 		return
-	if(get_area(owner) == GLOB.areas_by_type[/area/centcom/wizard_station])
-		timer = addtimer(CALLBACK(src, PROC_REF(magnetik)), 1 SECONDS)
-		return
-	for(var/obj/take_object in orange(5, owner))
-		if(take_object in orange(1, owner))
-			continue
+	var/list/things_in_range = orange(5, wizard) - orange(1, wizard)
+	for(var/obj/take_object in things_in_range)
 		if(!take_object.anchored)
-			step_towards(take_object,owner)
-	for(var/mob/living/living_mov in orange(5, owner))
-		if(living_mov in orange(1, owner))
-			continue
-		if(owner)
-			if(living_mov == owner)
+			step_towards(take_object, wizard)
+	for(var/mob/living/living_mov in things_in_range)
+		if(wizard)
+			if(living_mov == wizard)
 				continue
 		if(!living_mov.mob_negates_gravity())
-			step_towards(living_mov, owner)
+			step_towards(living_mov, wizard)
 
-	timer = addtimer(CALLBACK(src, PROC_REF(magnetik)), 1 SECONDS)
+/obj/effect/wizard_magnetism/stop_orbit()
+	STOP_PROCESSING(SSprocessing, src)
+	qdel(src)
 
 #undef SPELLBOOK_CATEGORY_PERKS

@@ -1161,10 +1161,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to anything linked to, not necessarily allied to, the mansus
 #define TRAIT_MANSUS_TOUCHED "mansus_touched"
 
-/// Appiled when wizard buy (/datum/spellbook_entry/perks/sale_off) perk.
+/// Appiled when wizard buy (/datum/spellbook_entry/perks/spalls_lottery) perk.
 /// Give 50/25% chance not spend a spellbook charge on 1/2 cost spell.
 /// Appiled it wizard can't refund any spells.
-#define TRAIT_SPELL_FOR_SALE "spell_for_sale"
+#define TRAIT_SPELLS_LOTTERY "spell_for_sale"
 
 /// Trait given to mobs wearing the clown mask
 #define TRAIT_PERCEIVED_AS_CLOWN "perceived_as_clown"

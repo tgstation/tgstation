@@ -182,7 +182,7 @@
 		return
 
 	var/atom/movable/screen/inventory/hand/hand = new_owner.hud_used.hand_slots["[held_index]"]
-	hand.update_appearance()
+	hand?.update_appearance()
 
 /obj/item/bodypart/arm/left
 	name = "left arm"
