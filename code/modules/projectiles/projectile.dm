@@ -1202,6 +1202,8 @@
 /obj/projectile/proc/set_embed(datum/embed_data/embed)
 	if(embed_data == embed)
 		return
-	if(!GLOB.embed_by_type[embed_data?.type])
+	// GLOB.embed_by_type stores shared "default" embedding values of datums
+	// Dynamically generated embeds use the base class and thus are not present in there, and should be qdeleted upon being discarded
+	if(!isnull(embed_data) && !GLOB.embed_by_type[embed_data.type])
 		qdel(embed_data)
 	embed_data = ispath(embed) ? get_embed_by_type(armor) : embed
