@@ -986,3 +986,30 @@
 	var/datum/effect_system/lightning_spread/sparks = new /datum/effect_system/lightning_spread
 	sparks.set_up(number = 5, cardinals_only = TRUE, location = mod.wearer.loc)
 	sparks.start()
+
+/obj/item/mod/module/antislow
+	name = "MOD civilian conversion kit"
+	desc = "A conversion kit that removes much of the spaceproofing of the suit. This makes the suit much easier to \
+		move around in, but also makes it incapable of protecting the wearer from the vacuum of space."
+	icon_state = "armor_booster"
+	complexity = 2
+	module_type = MODULE_PASSIVE
+	incompatible_modules = list(/obj/item/mod/module/antislow, /obj/item/mod/module/armor_booster)
+	/// The original slowdown from the modsuit, so we can put it back when the module is removed.
+	var/old_slowdown
+	/// Keep a list of the parts that were made non-spaceproof, so we can undo it when the module is removed.
+	var/list/altered_parts = list()
+
+/obj/item/mod/module/antislow/on_install()
+	old_slowdown = mod.slowdown_active
+	mod.slowdown_active = 0
+	for(var/obj/item/clothing/clothing_part in mod.get_parts())
+		if(clothing_part.clothing_flags & STOPSPRESSUREDAMAGE)
+			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
+			altered_parts += clothing_part
+
+/obj/item/mod/module/antislow/on_uninstall(deleting)
+	mod.slowdown_active = old_slowdown
+	for(var/obj/item/clothing/clothing_part in altered_parts)
+		clothing_part.clothing_flags |= STOPSPRESSUREDAMAGE
+	altered_parts.Cut()
