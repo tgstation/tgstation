@@ -146,5 +146,5 @@ GLOBAL_LIST_INIT(spanname_to_formatting, list(
 	"User Danger" = "userdanger",
 	"Warning" = "warning",
 	"Yelling" = "yell",
-	"Yellow Team Radio" = "yellowteamradio"
+	"Yellow Team Radio" = "yellowteamradio",
 	))

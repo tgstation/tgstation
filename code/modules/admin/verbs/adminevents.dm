@@ -291,6 +291,8 @@ ADMIN_VERB(delay_command_report, R_FUN, "Delay Command Report", "Prevents the ro
 /client/proc/reformat_narration(input)
 	if(tgui_alert(mob, "Set a custom text format?", "Make it snazzy!", list("Yes", "No")) == "Yes")
 		var/text_span = tgui_input_list(mob, "Select a span!", "Immersion! Yeah!", GLOB.spanname_to_formatting)
+		if(isnull(text_span)) //In case the user just quit the prompt.
+			return text_span
 		text_span = GLOB.spanname_to_formatting[text_span]
 		input = "<span class='[text_span]'>" + input + "</span>"
 
