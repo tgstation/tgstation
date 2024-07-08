@@ -87,11 +87,10 @@
 		/datum/action/cooldown/mob_cooldown/crystal_mayhem,
 	)
 	var/static/list/cycle_timers = list(
-		/datum/action/cooldown/mob_cooldown/lightning_fissure = 15 SECONDS,
+		/datum/action/cooldown/mob_cooldown/lightning_fissure = 16 SECONDS,
 		/datum/action/cooldown/mob_cooldown/crystal_barrage = 18 SECONDS,
 		/datum/action/cooldown/mob_cooldown/beam_crystal = 15 SECONDS,
 	)
-
 	ai_controller.set_blackboard_key(BB_DEACON_IDLE_ATTACKS, idle_attacks)
 	ai_controller.set_blackboard_key(BB_DEACON_NORMAL_ATTACKS, normal_attacks)
 	ai_controller.set_blackboard_key(BB_DEACON_SPECIAL_ATTACKS, special_attacks)

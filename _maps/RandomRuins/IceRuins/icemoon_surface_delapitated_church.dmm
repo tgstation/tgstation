@@ -2,7 +2,7 @@
 "ak" = (
 /obj/effect/landmark/deacon_surface_boss,
 /turf/open/floor/delapitated_church,
-/area/icemoon/surface/outdoors/nospawn)
+/area/ruin/unpowered)
 "dU" = (
 /obj/item/flashlight/lantern{
 	light_on = 1
@@ -12,14 +12,14 @@
 	projectiles_direction = "north"
 	},
 /turf/open/floor/delapitated_church,
-/area/icemoon/surface/outdoors/nospawn)
+/area/ruin/unpowered)
 "fl" = (
 /turf/open/floor/delapitated_church,
-/area/icemoon/surface/outdoors/nospawn)
+/area/ruin/unpowered)
 "kd" = (
 /obj/structure/flora/grass/brown/style_random,
 /turf/open/floor/delapitated_church,
-/area/icemoon/surface/outdoors/nospawn)
+/area/ruin/unpowered)
 "qp" = (
 /obj/item/flashlight/lantern{
 	light_on = 1
@@ -29,7 +29,7 @@
 	projectiles_direction = "south"
 	},
 /turf/open/floor/delapitated_church,
-/area/icemoon/surface/outdoors/nospawn)
+/area/ruin/unpowered)
 "uH" = (
 /obj/item/flashlight/lantern{
 	light_on = 1
@@ -39,7 +39,7 @@
 	projectiles_direction = "west"
 	},
 /turf/open/floor/delapitated_church,
-/area/icemoon/surface/outdoors/nospawn)
+/area/ruin/unpowered)
 "uW" = (
 /obj/item/flashlight/lantern{
 	light_on = 1
@@ -49,24 +49,24 @@
 	projectiles_direction = "east"
 	},
 /turf/open/floor/delapitated_church,
-/area/icemoon/surface/outdoors/nospawn)
+/area/ruin/unpowered)
 "Bp" = (
 /obj/effect/landmark/deacon_surface_plasma,
 /turf/open/floor/delapitated_church,
-/area/icemoon/surface/outdoors/nospawn)
+/area/ruin/unpowered)
 "KT" = (
 /turf/closed/indestructible/rock/snow/ice/ore,
-/area/icemoon/surface/outdoors/nospawn)
+/area/ruin/unpowered)
 "Te" = (
 /obj/item/flashlight/lantern{
 	light_on = 1
 	},
 /turf/open/floor/delapitated_church,
-/area/icemoon/surface/outdoors/nospawn)
+/area/ruin/unpowered)
 "Za" = (
 /obj/effect/landmark/deacon_surface_player,
 /turf/open/floor/delapitated_church,
-/area/icemoon/surface/outdoors/nospawn)
+/area/ruin/unpowered)
 
 (1,1,1) = {"
 KT
@@ -116,7 +116,7 @@ fl
 fl
 fl
 fl
-Bp
+fl
 fl
 fl
 fl
@@ -145,8 +145,8 @@ fl
 ak
 fl
 Te
+Bp
 fl
-Za
 fl
 fl
 fl
@@ -186,8 +186,8 @@ fl
 fl
 fl
 fl
-Bp
 fl
+Za
 fl
 fl
 fl

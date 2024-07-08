@@ -119,6 +119,9 @@
 /datum/ai_planning_subtree/targeted_mob_ability/deacon/deacon_domain_attack
 	ability_list = BB_DEACON_DOMAIN_ATTACKS
 
+/datum/ai_planning_subtree/targeted_mob_ability/deacon/deacon_domain_attack/check_conditions(datum/ai_controller/controller)
+	return controller.blackboard[BB_DEACON_NEXT_CYCLE_READY]
+
 /datum/ai_planning_subtree/targeted_mob_ability/deacon/deacon_domain_attack/check_availability(datum/ai_controller/controller, ability_key)
 	. = ..()
 	if(!.)

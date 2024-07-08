@@ -19,14 +19,24 @@
 	var/turf_range = 7
 	///ranges we have already selected
 	var/list/ranges_to_select = list()
+	///how many times we repeat this attack
+	var/attack_repeat = 2
 
 /datum/action/cooldown/mob_cooldown/lightning_fissure/Activate(atom/target)
 	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, REF(src))
-	for(var/count in 2 to turf_range)
-		ranges_to_select += count
-	INVOKE_ASYNC(src, PROC_REF(commence_attack))
+	INVOKE_ASYNC(src, PROC_REF(attack_sequence))
 	StartCooldown()
 	return TRUE
+
+/datum/action/cooldown/mob_cooldown/lightning_fissure/proc/attack_sequence()
+	for(var/count in 1 to attack_repeat)
+		fill_turf_ranges()
+		commence_attack()
+	end_attack()
+
+/datum/action/cooldown/mob_cooldown/lightning_fissure/proc/fill_turf_ranges()
+	for(var/count in 2 to turf_range)
+		ranges_to_select += count
 
 /datum/action/cooldown/mob_cooldown/lightning_fissure/proc/commence_attack()
 	while(length(ranges_to_select))
@@ -35,7 +45,10 @@
 		ranges_to_select -= inner_box
 		prepare_thunder(outter_box, inner_box)
 		SLEEP_CHECK_DEATH(fire_interval, owner)
-	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, REF(src))
+
+/datum/action/cooldown/mob_cooldown/lightning_fissure/proc/end_attack()
+	if(!isnull(owner))
+		REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, REF(src))
 
 /datum/action/cooldown/mob_cooldown/lightning_fissure/proc/prepare_thunder(outter_box, inner_box)
 	var/turf/my_turf = get_turf(owner)

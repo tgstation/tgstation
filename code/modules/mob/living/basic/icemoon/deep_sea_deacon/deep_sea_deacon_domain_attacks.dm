@@ -240,14 +240,10 @@
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_AI_PAUSED, REF(src))
 	owner.status_flags |= GODMODE
-	var/static/list/dirs_to_shoot = list(NORTH, NORTHWEST, WEST, SOUTHWEST, SOUTH)
-	var/static/list/opposite_dirs_to_shoot = reverseList(dirs_to_shoot)
-	var/should_alternate = FALSE
+	var/static/list/dirs_to_shoot = list(NORTH, NORTHWEST, WEST, SOUTHWEST)
 	for(var/obj/effect/landmark/deacon_surface_plasma/plasma_loc in GLOB.landmarks_list)
 		var/obj/effect/temp_visual/plasma_blob/plasma = new get_turf(plasma_loc)
-		var/list/final_list = should_alternate ? opposite_dirs_to_shoot : dirs_to_shoot
-		INVOKE_ASYNC(plasma, TYPE_PROC_REF(/obj/effect/temp_visual/plasma_blob, assign_shooting_directions), final_list)
-		should_alternate = !should_alternate
+		INVOKE_ASYNC(plasma, TYPE_PROC_REF(/obj/effect/temp_visual/plasma_blob, assign_shooting_directions), dirs_to_shoot)
 	addtimer(CALLBACK(src, PROC_REF(teleport_around)), 10 SECONDS)
 
 /datum/action/cooldown/mob_cooldown/domain_teleport/surface/proc/teleport_around()

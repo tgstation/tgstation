@@ -15,7 +15,7 @@
 /area/icemoon/underground/explored)
 "oi" = (
 /obj/item/stack/ore/iron,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/lava/smooth,
 /area/icemoon/underground/explored)
 "DP" = (
 /obj/effect/landmark/deacon_heaven_player,
@@ -159,7 +159,7 @@ bw
 DP
 Zd
 Ya
-Ya
+lL
 lL
 Zd
 "}
@@ -174,9 +174,9 @@ bw
 bw
 bw
 Zd
+Ya
 lL
-lL
-lL
+Ya
 Zd
 "}
 (10,1,1) = {"
@@ -206,7 +206,7 @@ bw
 bw
 bw
 Zd
-Ya
+lL
 lL
 lL
 Zd

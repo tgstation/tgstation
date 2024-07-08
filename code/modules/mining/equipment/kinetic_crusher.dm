@@ -525,8 +525,9 @@
 	COOLDOWN_START(src, effect_apply, 30 SECONDS)
 
 /obj/item/crusher_trophy/plasma_flame/proc/remove_effect(mob/living/target, atom/movable/overhead)
-	animate(overhead, alpha = 0, 1 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(apply_explosion), target, overhead), 1 SECONDS)
+	animate(overhead, alpha = 0, 0.5 SECONDS)
+	playsound(src, 'sound/magic/magic_missile.ogg', 60, TRUE, pressure_affected = FALSE)
+	addtimer(CALLBACK(src, PROC_REF(apply_explosion), target, overhead), 0.5 SECONDS)
 
 /obj/item/crusher_trophy/plasma_flame/proc/apply_explosion(mob/living/target, atom/movable/overhead)
 	if(isnull(target))
