@@ -6,9 +6,6 @@
 // Part of the food code. Also is where all the food
 // condiments, additives, and such go.
 
-/// Starting purity of consumable reagents
-#define CONSUMABLE_STANDARD_PURITY 0.5 // 50% pure by default. Below - synthetic food. Above - natural food.
-
 /datum/reagent/consumable
 	name = "Consumable"
 	taste_description = "generic food"
