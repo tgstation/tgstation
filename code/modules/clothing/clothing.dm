@@ -393,6 +393,17 @@
 				readout += "<b><u>COVERAGE</u></b>"
 				readout += "It will block [english_list(things_blocked)]."
 
+		if(clothing_flags & STOPSPRESSUREDAMAGE || visor_flags & STOPSPRESSUREDAMAGE)
+			var/list/parts_covered = list()
+			var/output_string = "It"
+			if(!(clothing_flags & STOPSPRESSUREDAMAGE))
+				output_string = "When sealed, it"
+			if(body_parts_covered & HEAD)
+				parts_covered += "head"
+			if(body_parts_covered & CHEST)
+				parts_covered += "torso"
+			if(length(parts_covered)) // Just in case someone makes spaceproof gloves or something
+				readout += "[output_string] will protect your [english_list(parts_covered)] from [span_tooltip("The extremely low pressure is the biggest danger posed by the vacuum of space.", "low pressure")]."
 
 		if(!length(readout))
 			readout += "No armor or durability information available."
