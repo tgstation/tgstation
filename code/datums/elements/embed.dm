@@ -10,64 +10,33 @@
 */
 
 /datum/element/embed
-	element_flags = ELEMENT_BESPOKE
-	argument_hash_start_idx = 2
-	var/initialized = FALSE /// whether we can skip assigning all the vars (since these are bespoke elements, we don't have to reset the vars every time we attach to something, we already know what we are!)
 
-	// all of this stuff is explained in _DEFINES/combat.dm
-	var/embed_chance
-	var/fall_chance
-	var/pain_chance
-	var/pain_mult
-	var/remove_pain_mult
-	var/impact_pain_mult
-	var/rip_time
-	var/ignore_throwspeed_threshold
-	var/jostle_chance
-	var/jostle_pain_mult
-	var/pain_stam_pct
-	var/payload_type
-
-/datum/element/embed/Attach(datum/target, embed_chance, fall_chance, pain_chance, pain_mult, remove_pain_mult, impact_pain_mult, rip_time, ignore_throwspeed_threshold, jostle_chance, jostle_pain_mult, pain_stam_pct, projectile_payload=/obj/item/shard)
+/datum/element/embed/Attach(datum/target)
 	. = ..()
 
 	if(!isitem(target) && !isprojectile(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_ELEMENT_ATTACH, PROC_REF(severancePackage))
-	if(isitem(target))
-		RegisterSignal(target, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(checkEmbed))
-		RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(examined))
-		RegisterSignal(target, COMSIG_EMBED_TRY_FORCE, PROC_REF(tryForceEmbed))
-		RegisterSignal(target, COMSIG_ITEM_DISABLE_EMBED, PROC_REF(detachFromWeapon))
-	else
-		payload_type = projectile_payload
-		RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(checkEmbedProjectile))
+	RegisterSignal(target, COMSIG_ELEMENT_ATTACH, PROC_REF(sever_element))
+	if(isprojectile(target))
+		RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(check_embed_projectile))
+		return
 
-	if(!initialized)
-		src.embed_chance = embed_chance
-		src.fall_chance = fall_chance
-		src.pain_chance = pain_chance
-		src.pain_mult = pain_mult
-		src.remove_pain_mult = remove_pain_mult
-		src.rip_time = rip_time
-		src.impact_pain_mult = impact_pain_mult
-		src.ignore_throwspeed_threshold = ignore_throwspeed_threshold
-		src.jostle_chance = jostle_chance
-		src.jostle_pain_mult = jostle_pain_mult
-		src.pain_stam_pct = pain_stam_pct
-		initialized = TRUE
+	RegisterSignal(target, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(check_embed))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(examined))
+	RegisterSignal(target, COMSIG_EMBED_TRY_FORCE, PROC_REF(try_force_embed))
+	RegisterSignal(target, COMSIG_ITEM_DISABLE_EMBED, PROC_REF(detach_from_weapon))
 
 /datum/element/embed/Detach(obj/target)
 	. = ..()
-	if(isitem(target))
-		UnregisterSignal(target, list(COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ELEMENT_ATTACH, COMSIG_MOVABLE_IMPACT, COMSIG_ATOM_EXAMINE, COMSIG_EMBED_TRY_FORCE, COMSIG_ITEM_DISABLE_EMBED))
-	else
+	if(isprojectile(target))
 		UnregisterSignal(target, list(COMSIG_PROJECTILE_SELF_ON_HIT, COMSIG_ELEMENT_ATTACH))
+		return
 
+	UnregisterSignal(target, list(COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ELEMENT_ATTACH, COMSIG_MOVABLE_IMPACT, COMSIG_ATOM_EXAMINE, COMSIG_EMBED_TRY_FORCE, COMSIG_ITEM_DISABLE_EMBED))
 
 /// Checking to see if we're gonna embed into a human
-/datum/element/embed/proc/checkEmbed(obj/item/weapon, mob/living/carbon/victim, hit_zone, blocked, datum/thrownthing/throwingdatum, forced=FALSE)
+/datum/element/embed/proc/check_embed(obj/item/weapon, mob/living/carbon/victim, hit_zone, blocked, datum/thrownthing/throwingdatum, forced=FALSE)
 	SIGNAL_HANDLER
 
 	if(forced)
@@ -82,7 +51,7 @@
 
 	var/flying_speed = throwingdatum?.speed || weapon.throw_speed
 
-	if(flying_speed < EMBED_THROWSPEED_THRESHOLD && !ignore_throwspeed_threshold)
+	if(flying_speed < EMBED_THROWSPEED_THRESHOLD && !weapon.get_embed().ignore_throwspeed_threshold)
 		return FALSE
 
 	if(!roll_embed_chance(weapon, victim, hit_zone, throwingdatum))
@@ -97,27 +66,17 @@
 	victim.AddComponent(/datum/component/embedded,\
 		weapon,\
 		throwingdatum,\
-		part = limb,\
-		embed_chance = embed_chance,\
-		fall_chance = fall_chance,\
-		pain_chance = pain_chance,\
-		pain_mult = pain_mult,\
-		remove_pain_mult = remove_pain_mult,\
-		rip_time = rip_time,\
-		ignore_throwspeed_threshold = ignore_throwspeed_threshold,\
-		jostle_chance = jostle_chance,\
-		jostle_pain_mult = jostle_pain_mult,\
-		pain_stam_pct = pain_stam_pct)
+		part = limb)
 
 ///A different embed element has been attached, so we'll detach and let them handle things
-/datum/element/embed/proc/severancePackage(obj/weapon, datum/element/E)
+/datum/element/embed/proc/sever_element(obj/weapon, datum/element/E)
 	SIGNAL_HANDLER
 
 	if(istype(E, /datum/element/embed))
 		Detach(weapon)
 
 ///If we don't want to be embeddable anymore (deactivating an e-dagger for instance)
-/datum/element/embed/proc/detachFromWeapon(obj/weapon)
+/datum/element/embed/proc/detach_from_weapon(obj/weapon)
 	SIGNAL_HANDLER
 
 	Detach(weapon)
@@ -126,26 +85,26 @@
 /datum/element/embed/proc/examined(obj/item/I, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if(I.isEmbedHarmless())
+	if(I.is_embed_harmless())
 		examine_list += "[I] feels sticky, and could probably get stuck to someone if thrown properly!"
 	else
 		examine_list += "[I] has a fine point, and could probably embed in someone if thrown properly!"
 
 /**
- * checkEmbedProjectile() is what we get when a projectile with a defined shrapnel_type impacts a target.
+ * check_embed_projectile() is what we get when a projectile with a defined shrapnel_type impacts a target.
  *
  * If we hit a valid target, we create the shrapnel_type object and then forcefully try to embed it on its
  * behalf. DO NOT EVER add an embed element to the payload and let it do the rest.
  * That's awful, and it'll limit us to drop-deletable shrapnels in the worry of stuff like
  * arrows and harpoons being embeddable even when not let loose by their weapons.
  */
-/datum/element/embed/proc/checkEmbedProjectile(obj/projectile/source, atom/movable/firer, atom/hit, angle, hit_zone)
+/datum/element/embed/proc/check_embed_projectile(obj/projectile/source, atom/movable/firer, atom/hit, angle, hit_zone, blocked)
 	SIGNAL_HANDLER
 
-	if(!source.can_embed_into(hit))
+	if(!source.can_embed_into(hit) || blocked)
 		Detach(source)
 		return // we don't care
-
+	var/payload_type = source.shrapnel_type
 	var/obj/item/payload = new payload_type(get_turf(hit))
 	if(istype(payload, /obj/item/shrapnel/bullet))
 		payload.name = source.name
@@ -155,12 +114,12 @@
 	if(!limb)
 		limb = C.get_bodypart()
 
-	if(!tryForceEmbed(payload, limb))
+	if(!try_force_embed(payload, limb))
 		payload.failedEmbed()
 	Detach(source)
 
 /**
- * tryForceEmbed() is called here when we fire COMSIG_EMBED_TRY_FORCE from [/obj/item/proc/tryEmbed]. Mostly, this means we're a piece of shrapnel from a projectile that just impacted something, and we're trying to embed in it.
+ * try_force_embed() is called here when we fire COMSIG_EMBED_TRY_FORCE from [/obj/item/proc/tryEmbed]. Mostly, this means we're a piece of shrapnel from a projectile that just impacted something, and we're trying to embed in it.
  *
  * The reason for this extra mucking about is avoiding having to do an extra hitby(), and annoying the target by impacting them once with the projectile, then again with the shrapnel, and possibly
  * AGAIN if we actually embed. This way, we save on at least one message.
@@ -171,7 +130,7 @@
  * * hit_zone- if our target is a carbon, try to hit them in this zone, if we don't have one, pick a random one. If our target is a bodypart, we already know where we're hitting.
  * * forced- if we want this to succeed 100%
  */
-/datum/element/embed/proc/tryForceEmbed(obj/item/embedding_item, atom/target, hit_zone, forced=FALSE)
+/datum/element/embed/proc/try_force_embed(obj/item/embedding_item, atom/target, hit_zone, forced=FALSE)
 	SIGNAL_HANDLER
 
 	var/obj/item/bodypart/limb
@@ -190,16 +149,16 @@
 	if(!forced && !roll_embed_chance(embedding_item, victim, hit_zone))
 		return
 
-	return checkEmbed(embedding_item, victim, hit_zone, forced=TRUE) // Don't repeat the embed roll, we already did it
+	return check_embed(embedding_item, victim, hit_zone, forced=TRUE) // Don't repeat the embed roll, we already did it
 
 /// Calculates the actual chance to embed based on armour penetration and throwing speed, then returns true if we pass that probability check
 /datum/element/embed/proc/roll_embed_chance(obj/item/embedding_item, mob/living/victim, hit_zone, datum/thrownthing/throwingdatum)
-	var/actual_chance = embed_chance
+	var/actual_chance = embedding_item.get_embed().embed_chance
 
 	if(throwingdatum?.speed > embedding_item.throw_speed)
 		actual_chance += (throwingdatum.speed - embedding_item.throw_speed) * EMBED_CHANCE_SPEED_BONUS
 
-	if(embedding_item.isEmbedHarmless()) // all the armor in the world won't save you from a kick me sign
+	if(embedding_item.is_embed_harmless()) // all the armor in the world won't save you from a kick me sign
 		return prob(actual_chance)
 
 	var/armor = max(victim.run_armor_check(hit_zone, BULLET, silent=TRUE), victim.run_armor_check(hit_zone, BOMB, silent=TRUE)) * 0.5 // we'll be nice and take the better of bullet and bomb armor, halved

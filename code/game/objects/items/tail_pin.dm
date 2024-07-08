@@ -7,7 +7,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	throw_speed = 1
-	embedding = EMBED_HARMLESS
 	custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("pokes", "jabs", "pins the tail on")
@@ -15,6 +14,12 @@
 	sharpness = SHARP_POINTY
 	max_integrity = 200
 	layer = CORGI_ASS_PIN_LAYER
+	embed_type = /datum/embed_data/corgi_pin
+
+/datum/embed_data/corgi_pin
+	pain_chance = 0
+	jostle_pain_mult = 0
+	ignore_throwspeed_threshold = TRUE
 
 /obj/item/poster/tail_board
 	name = "party game poster"

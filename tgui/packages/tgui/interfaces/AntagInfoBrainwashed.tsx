@@ -1,5 +1,6 @@
+import { Box, Icon, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { Objective, ObjectivePrintout } from './common/Objectives';
 

@@ -87544,7 +87544,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/holding_cell)
 "wzt" = (
-/obj/item/kirbyplants/random,
+/obj/effect/spawner/random/structure/twelve_percent_spirit_board,
 /turf/open/floor/iron/white/textured_large,
 /area/station/service/chapel/office)
 "wzB" = (
