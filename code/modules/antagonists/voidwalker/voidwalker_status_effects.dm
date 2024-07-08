@@ -1,6 +1,6 @@
 /// THE GRAVITY!!! IT WEIGHS!!!
 /datum/movespeed_modifier/grounded_voidwalker
-	multiplicative_slowdown = 1.2
+	multiplicative_slowdown = 1.1
 
 /// Regenerate in space
 /datum/status_effect/space_regeneration

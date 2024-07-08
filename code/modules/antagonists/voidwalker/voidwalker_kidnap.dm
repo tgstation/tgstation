@@ -19,8 +19,16 @@
 
 	var/mob/living/victim = target
 
-	if(!victim.incapacitated() || !isspaceturf(get_turf(target)))
-		return
+	if(victim.stat == DEAD)
+		target.balloon_alert(parent, "is dead!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(!victim.incapacitated())
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(!isspaceturf(get_turf(target)))
+		target.balloon_alert(parent, "not in space!")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(!kidnapping)
 		INVOKE_ASYNC(src, PROC_REF(kidnap), parent, target)
@@ -43,13 +51,18 @@
 		hewmon.gain_trauma(/datum/brain_trauma/voided)
 
 	victim.flash_act(INFINITY, override_blindness_check = TRUE, visual = TRUE, type = /atom/movable/screen/fullscreen/flash/black)
+	new /obj/effect/temp_visual/circle_wave/unsettle(get_turf(victim))
 
 	if(!SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_VOIDWALKER_VOID) || !GLOB.voidwalker_void.len)
 		dump(victim)
 		victim.heal_overall_damage(brute = 80, burn = 20)
 		CRASH("[victim] was instantly dumped after being voidwalker kidnapped due to a missing landmark!")
 	else
-		new /obj/effect/wisp_mobile (pick(GLOB.voidwalker_void), victim)
+		victim.heal_and_revive(90)
+
+		victim.adjustOxyLoss(-100, FALSE)
+
+		new /obj/effect/wisp_mobile (get_turf(pick(GLOB.voidwalker_void)), victim)
 		addtimer(CALLBACK(src, PROC_REF(dump), victim), 60 SECONDS)
 
 /datum/component/space_kidnap/proc/dump(mob/living/trash)
@@ -96,7 +109,7 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 	/// what do we eatt?
 	var/food_type = /obj/effect/wisp_food
 	/// how much do we heal per food?
-	var/heal_per_food = 10
+	var/heal_per_food = 15
 
 /obj/effect/wisp_mobile/Initialize(mapload, mob/living/driver)
 	. = ..()
@@ -104,6 +117,7 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 	if(isliving(driver))
 		driver.forceMove(src)
 		driver.add_traits(list(TRAIT_STASIS, TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), REF(src))
+		driver.set_stat(driver)
 		add_atom_colour(random_color(), FIXED_COLOUR_PRIORITY)
 
 /obj/effect/wisp_mobile/relaymove(mob/living/user, direction)
@@ -115,13 +129,14 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 		can_move = world.time + move_delay
 		try_step_multiz(direction)
 
-/obj/effect/wisp_mobile/Cross(atom/movable/crossed_atom)
+/obj/effect/wisp_mobile/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 
-	if(!istype(crossed_atom, food_type))
+	var/obj/food = locate(food_type) in loc
+	if(!food)
 		return
 
-	qdel(crossed_atom)
+	qdel(food)
 
 	// make new food
 	var/area/our_area = get_area(src)

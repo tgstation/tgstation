@@ -11,7 +11,7 @@ const noticestyle = {
 
 export const AntagInfoVoidwalker = (props) => {
   return (
-    <Window width={620} height={380}>
+    <Window width={620} height={410}>
       <Window.Content backgroundColor="#0d0d0d">
         <Stack fill>
           <Stack.Item width="46.2%">
@@ -51,17 +51,14 @@ export const AntagInfoVoidwalker = (props) => {
                   You can pass through windows and grills as if they&apos;re not
                   even there, as long as they&apos;re not electrified.
                 </LabeledList.Item>
-                <LabeledList.Item label="Void Fisticuffs">
-                  Beat the energy out of them, and drag them into space to curse
-                  them. Also you can explode windows with your hands.
-                </LabeledList.Item>
-                <LabeledList.Item label="Zero-Gravity Adaptation">
-                  You are adapted to zero-gravity, giving you free movement in
-                  space, but a slowdown in gravity.
+                <LabeledList.Item label="Void Eater">
+                  Your divine appendage; it allows you to incapacitate the loud
+                  ones and instantly break windows.
                 </LabeledList.Item>
                 <LabeledList.Item label="Cosmic Physiology">
                   Your natural camouflage makes you nearly invisible in space,
                   as well as mending any wounds your body might have sustained.
+                  You move slower in gravity, however.
                 </LabeledList.Item>
                 <LabeledList.Item label="Unsettle">
                   Target a stationeer while remaining only partially in their
