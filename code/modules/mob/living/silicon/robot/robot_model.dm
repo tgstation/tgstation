@@ -65,6 +65,9 @@
 		emag_modules += new_module
 		emag_modules -= path
 
+	if(check_holidays(ICE_CREAM_DAY) && !(locate(/obj/item/borg/lollipop) in basic_modules))
+		basic_modules += new /obj/item/borg/lollipop/ice_cream(src)
+
 /obj/item/robot_model/Destroy()
 	basic_modules.Cut()
 	emag_modules.Cut()

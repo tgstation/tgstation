@@ -425,6 +425,10 @@ GLOBAL_LIST_EMPTY(crematoriums)
 
 /obj/structure/bodycontainer/crematorium/Initialize(mapload)
 	. = ..()
+	if(mapload && check_holidays(ICE_CREAM_DAY) && !istype(src, /obj/structure/bodycontainer/crematorium/creamatorium))
+		var/obj/structure/bodycontainer/crematorium/creamatorium/creamy = new(loc)
+		creamy.id = id
+		return INITIALIZE_HINT_QDEL
 	GLOB.crematoriums += src
 
 /obj/structure/bodycontainer/crematorium/Destroy()
