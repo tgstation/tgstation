@@ -1,0 +1,4 @@
+author: "rageguy505"
+delete-after: True
+changes:
+  - bugfix: "no more xenobio active turfs"
