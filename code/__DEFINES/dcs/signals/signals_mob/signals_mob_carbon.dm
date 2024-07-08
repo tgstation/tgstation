@@ -57,8 +57,6 @@
 /// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, special, dismembered)
 #define COMSIG_BODYPART_REMOVED "bodypart_removed"
 
-/// from /mob/living/carbon/enter_stamcrit()
-#define COMSIG_CARBON_ENTER_STAMCRIT "carbon_enter_stamcrit"
 ///from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"
 ///from /item/organ/proc/Insert() (/obj/item/organ/)
