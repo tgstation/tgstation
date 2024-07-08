@@ -84,6 +84,7 @@
 #include "code\__DEFINES\DNA.dm"
 #include "code\__DEFINES\dna_infuser_defines.dm"
 #include "code\__DEFINES\do_afters.dm"
+#include "code\__DEFINES\door.dm"
 #include "code\__DEFINES\drone.dm"
 #include "code\__DEFINES\dye_keys.dm"
 #include "code\__DEFINES\dynamic.dm"
