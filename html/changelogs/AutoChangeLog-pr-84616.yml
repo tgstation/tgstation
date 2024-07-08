@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - admin: "Added a config that regulares random spawners weights."

@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed glass shards generated from falling vending machines or tackling windows not being able to embed into anyone."
-  - refactor: "Refactored embedding code to use datums instead of bespoke elements and ugly associated lists."

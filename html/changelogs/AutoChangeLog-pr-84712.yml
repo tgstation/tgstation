@@ -1,5 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - balance: "All jetpacks are now modsuit jetpack speed"
-  - rscdel: "Adv. Ion Jetpack module has been removed"

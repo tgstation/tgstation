@@ -1,4 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - bugfix: "raptors don't easily stress out in lavaland environments"
