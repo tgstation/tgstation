@@ -88,6 +88,7 @@
 /datum/holiday/nth_week/ice_cream
 	name = ICE_CREAM_DAY
 	begin_week = 3
+	begin_month = JULY
 	begin_weekday = SUNDAY
 
 /datum/holiday/nth_week/ice_cream/getStationPrefix()
