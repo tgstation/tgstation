@@ -185,7 +185,7 @@
 	for (var/obj/item/organ/internal/organ as anything in owner.organs)
 		if (organ == src)
 			continue
-		if (isbrain(organ))
+		if (istype(organ, /obj/item/organ/internal/brain))
 			continue
 		organ.Remove(owner)
 		qdel(organ)
