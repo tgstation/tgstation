@@ -4,10 +4,20 @@
 	name = "junk bullet"
 	icon_state = "trashball"
 	damage = 30
-	embedding = list(embed_chance=15, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
+	embed_type = /datum/embed_data/bullet_junk
 	var/bane_mob_biotypes = MOB_ROBOTIC
 	var/bane_multiplier = 1.5
 	var/bane_added_damage = 0
+
+/datum/embed_data/bullet_junk
+	embed_chance=15
+	fall_chance=3
+	jostle_chance=4
+	ignore_throwspeed_threshold=TRUE
+	pain_stam_pct=0.4
+	pain_mult=5
+	jostle_pain_mult=6
+	rip_time=10
 
 /obj/projectile/bullet/junk/Initialize(mapload)
 	. = ..()
@@ -28,7 +38,7 @@
 	name = "bundle of live electrical parts"
 	icon_state = "tesla_projectile"
 	damage = 15
-	embedding = null
+	embed_type = null
 	shrapnel_type = null
 	bane_multiplier = 3
 
@@ -49,9 +59,19 @@
 	name = "junk ripper bullet"
 	icon_state = "redtrac"
 	damage = 10
-	embedding = list(embed_chance=100, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
+	embed_type = /datum/embed_data/bullet_junk_ripper
 	wound_bonus = 10
 	bare_wound_bonus = 30
+
+/datum/embed_data/bullet_junk_ripper
+	embed_chance=100
+	fall_chance=3
+	jostle_chance=4
+	ignore_throwspeed_threshold=TRUE
+	pain_stam_pct=0.4
+	pain_mult=5
+	jostle_pain_mult=6
+	rip_time=10
 
 /obj/projectile/bullet/junk/reaper
 	name = "junk reaper bullet"

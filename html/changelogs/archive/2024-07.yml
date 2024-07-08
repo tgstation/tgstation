@@ -412,3 +412,83 @@
   SyncIt21:
   - bugfix: you can craft the singulo hammer with either a supermatter engine/shard
       again
+2024-07-08:
+  00-Steven:
+  - bugfix: Fixes hacker alias name preference not working.
+  Ben10Omintrix:
+  - bugfix: raptors don't easily stress out in lavaland environments
+  Ghommie:
+  - rscadd: Night vision goggles now subtly tint your screen.
+  - rscadd: You can turn your night vision goggles off. Doing so removes the tint
+      and the eye protection malus.
+  - bugfix: Hoverboards properly dysfunction in space without any kind of support
+      underneath them.
+  - qol: Mood more promptly reacts to the beauty of an area as it changes, and not
+      just when changing areas.
+  - rscadd: Coroners (and potentially other mobs with the morbid trait), now like
+      degradated-looking rooms.
+  - rscadd: Aquariums now influence the beauty score of an area based on their contents.
+  - rscadd: Morbid people now get a positive moodlet when admiring an aquarium full
+      of dead fish, and a negative one when fish are alive.
+  - admin: Added a config that regulares random spawners weights.
+  - rscadd: 12% chance of a ouija board spawning in the chaplain office. Wawastation
+      always has one.
+  GremlinSeeker:
+  - bugfix: ' Birdshot botany is resized. bar is also smaller.'
+  - bugfix: Birdshot public shrine now uses the correct dirt. (Goodbye chasms)
+  LT3:
+  - balance: Advanced Medbay Equipment research node lowered to tier 3
+  - balance: Advanced Medbay Equipment now requires haloperidol scan experiment
+  - balance: Haloperidol and cryostylane experiments can be performed roundstart
+  - balance: Cryostasis research node raised to tier 4
+  - balance: Cryostasis now has Fusion instead of Controlled Plasma as a prerequisite
+  - balance: Cryostasis cryostylane scan is now a discount experiment
+  - balance: Crystallizer moved from Controlled Plasma to Fusion
+  Loafin34:
+  - rscadd: There's a previously undiscovered variant of a nullrod, recently revealed
+      from the depths of the skating rink..
+  Melbert:
+  - qol: Vending Machines have a search bar
+  - qol: Random player characters now look less like rainbow vomit and more like some
+      of the most average people you know.
+  SmArtKar:
+  - bugfix: Added a forgotten firelock on second floor of wawa
+  - bugfix: Fixed glass shards generated from falling vending machines or tackling
+      windows not being able to embed into anyone.
+  - refactor: Refactored embedding code to use datums instead of bespoke elements
+      and ugly associated lists.
+  - bugfix: You require breathing once more.
+  Toastgoats:
+  - rscadd: Added the designer EVA suit, a unique pirate hardsuit for Silverscales.
+  - balance: Increased the equipment available to Silverscales
+  - image: Sprites for the designer EVA suit
+  carlarctg:
+  - spellcheck: Renamed the organ thrower module to the 'organizer'
+  - spellcheck: Made its description more accurate. Did you know it instantly replaces
+      up to 5 organs in active surgery?
+  homexp13:
+  - bugfix: ' Examining a fishing spot twice with sufficiently high fishing skill
+      (or the skillchip) will get you a list of fishes that can ACTUALLY be caught'
+  jlsnow301:
+  - bugfix: Fixed the bluescreen while setting a custom font in tgui panel
+  - bugfix: Fixed the orbit icons scrolling sometimes
+  lorwp:
+  - rscadd: using 'skibidi' as a chaplain deity now gives you brain damage
+  mc-oofert:
+  - bugfix: defibrillator no longer has an abstract cell
+  - code_imp: defibrillator attackby replaced with item_interaction
+  - balance: All jetpacks are now modsuit jetpack speed
+  - rscdel: Adv. Ion Jetpack module has been removed
+  - bugfix: you may now use a legion core on an elite tumor
+  necromanceranne:
+  - balance: You can only stun someone with a shove if they have been shoved into
+      objects or people, or have been hit by telescopic batons, contractor batons
+      or the Mansus Grasp.
+  - balance: If someone is knocked to the floor, however, you can still disarm them
+      of any object with a shove.
+  - bugfix: Knight helmets no longer burn as though made of cloth.
+  - rscadd: Fletching starter kit! Make your own bow, shoot your friends in an unfortunate
+      workplace accident. Replace all those holy arrows you lost.
+  - bugfix: Bows now properly undraw once they have fired an arrow.
+  - code_imp: Bows now utilize overlays in order to display loaded arrows. Unique
+      overlays per arrow.

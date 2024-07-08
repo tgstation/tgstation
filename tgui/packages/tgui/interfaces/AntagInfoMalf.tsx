@@ -1,8 +1,8 @@
-import { BooleanLike } from 'common/react';
 import { useState } from 'react';
+import { BlockQuote, Button, Section, Stack, Tabs } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { BlockQuote, Button, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 import {
   Objective,

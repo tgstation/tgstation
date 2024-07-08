@@ -265,7 +265,7 @@
 		return
 	var/sniped_amount = painting_metadata.credit_value
 	var/offer_amount = tgui_input_number(user, "How much do you want to offer?", "Patronage Amount", (painting_metadata.credit_value + 1), account.account_balance, painting_metadata.credit_value)
-	if(!offer_amount || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+	if(!offer_amount || QDELETED(user) || QDELETED(src) || !istype(loc, /obj/structure/sign/painting) || !user.can_perform_action(loc, FORBID_TELEKINESIS_REACH))
 		return
 	if(sniped_amount != painting_metadata.credit_value)
 		return

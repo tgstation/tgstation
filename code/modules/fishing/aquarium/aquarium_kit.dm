@@ -110,10 +110,11 @@
 
 	w_class = WEIGHT_CLASS_TINY
 	var/layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
+	var/beauty = 150
 
 /obj/item/aquarium_prop/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/aquarium_content, icon)
+	AddComponent(/datum/component/aquarium_content, icon, beauty = beauty)
 
 /obj/item/aquarium_prop/rocks
 	name = "rocks"

@@ -13429,7 +13429,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "dmU" = (
-/obj/item/kirbyplants/random,
+/obj/effect/spawner/random/structure/twelve_percent_spirit_board,
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel/office)
 "dnd" = (

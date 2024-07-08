@@ -5735,6 +5735,7 @@
 /area/station/medical/virology)
 "aQL" = (
 /obj/machinery/airalarm/directional/south,
+/obj/effect/spawner/random/structure/twelve_percent_spirit_board,
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel/office)
 "aQM" = (
