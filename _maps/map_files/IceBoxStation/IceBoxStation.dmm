@@ -75451,9 +75451,6 @@
 	pixel_x = -6;
 	pixel_y = 3
 	},
-/mob/living/basic/pet/dog/corgi{
-	dir = 4
-	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/station/science/cytology)
 "wAq" = (
