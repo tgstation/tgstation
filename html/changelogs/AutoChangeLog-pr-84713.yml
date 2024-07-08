@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - qol: "You can now copy blast door controller IDs directly onto shutters/blast doors, avoiding the need to open a menu for each one. Additionally, this lets you fix sets of roundstart shutters without needing to change the IDs on all of the ones in that set."

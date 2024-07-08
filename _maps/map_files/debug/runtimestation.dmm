@@ -924,7 +924,7 @@
 /turf/open/floor/iron,
 /area/station/construction)
 "dN" = (
-/obj/structure/table,
+/obj/machinery/vending/subtype_vendor,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "dO" = (
@@ -932,6 +932,7 @@
 /obj/machinery/light/directional/south,
 /obj/item/storage/medkit/regular,
 /obj/item/healthanalyzer/advanced,
+/obj/item/debug/omnitool/item_spawner,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "dP" = (
@@ -1775,6 +1776,7 @@
 /area/station/construction)
 "is" = (
 /obj/structure/sign/warning/vacuum/external/directional/east,
+/obj/machinery/vending/subtype_vendor,
 /turf/open/floor/iron,
 /area/station/medical/medbay)
 "jb" = (
@@ -1862,6 +1864,7 @@
 "ny" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/syndicate,
+/obj/item/debug/omnitool,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "nI" = (
@@ -2217,6 +2220,24 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"IB" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/debug/omnitool{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/debug/omnitool/item_spawner{
+	pixel_x = 4;
+	pixel_y = -6
+	},
+/turf/open/floor/iron/white/corner{
+	dir = 1
+	},
+/area/station/medical/medbay)
 "IF" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -7989,7 +8010,7 @@ av
 by
 Ot
 cl
-cl
+IB
 cl
 cH
 cu

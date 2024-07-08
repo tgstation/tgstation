@@ -2,7 +2,7 @@
 #define HEATER_MODE_HEAT "heat"
 #define HEATER_MODE_COOL "cool"
 #define HEATER_MODE_AUTO "auto"
-#define BASE_HEATING_ENERGY (STANDARD_CELL_RATE * 0.1)
+#define BASE_HEATING_ENERGY (STANDARD_CELL_RATE * 4)
 
 /obj/machinery/space_heater
 	anchored = FALSE
@@ -32,7 +32,7 @@
 	///How much heat/cold we can deliver
 	var/heating_energy = BASE_HEATING_ENERGY
 	///How efficiently we can deliver that heat/cold (higher indicates less cell consumption)
-	var/efficiency = 20
+	var/efficiency = 200
 	///The amount of degrees above and below the target temperature for us to change mode to heater or cooler
 	var/temperature_tolerance = 1
 	///What's the middle point of our settable temperature (30 °C)
@@ -178,8 +178,8 @@
 
 	heating_energy = laser * BASE_HEATING_ENERGY
 
-	settable_temperature_range = cap * 30
-	efficiency = (cap + 1) * 10
+	settable_temperature_range = cap * initial(settable_temperature_range)
+	efficiency = (cap + 1) * initial(efficiency) * 0.5
 
 	target_temperature = clamp(target_temperature,
 		max(settable_temperature_median - settable_temperature_range, TCMB),

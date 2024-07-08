@@ -16325,9 +16325,6 @@
 /turf/open/floor/iron/dark,
 /area/station/security/range)
 "fOB" = (
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
-	},
 /obj/effect/mapping_helpers/airlock/access/any/security/maintenance,
 /obj/machinery/door/airlock/maintenance{
 	name = "Brig Maintenance"
@@ -16337,6 +16334,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "fOS" = (
@@ -33315,6 +33315,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/spawner/random/structure/twelve_percent_spirit_board,
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel/office)
 "lPC" = (
@@ -58322,9 +58323,8 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/storage)
 "uBG" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 4;
-	piping_layer = 2
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer2{
+	dir = 4
 	},
 /obj/effect/turf_decal/siding/purple{
 	dir = 9

@@ -42,7 +42,7 @@
 		return
 
 	var/has_known_fishes = FALSE
-	for(var/reward in fish_source.fish_counts)
+	for(var/reward in fish_source.fish_table)
 		if(!ispath(reward, /obj/item/fish))
 			continue
 		var/obj/item/fish/prototype = reward
@@ -60,7 +60,7 @@
 		return
 
 	var/list/known_fishes = list()
-	for(var/reward in fish_source.fish_counts)
+	for(var/reward in fish_source.fish_table)
 		if(!ispath(reward, /obj/item/fish))
 			continue
 		var/obj/item/fish/prototype = reward

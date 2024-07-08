@@ -176,7 +176,15 @@ multiple modular subtrees with behaviors
 	if(ai_status == AI_STATUS_OFF)
 		return
 
-	if(exited && (get_dist(pawn, (islist(exited) ? exited[1] : exited)) <= interesting_dist)) //is our target in between interesting cells?
+	var/distance = INFINITY
+	if(islist(exited))
+		var/list/exited_list = exited
+		distance = get_dist(pawn, exited_list[1])
+	else if(isatom(exited))
+		var/atom/exited_atom = exited
+		distance = get_dist(pawn, exited_atom)
+
+	if(distance <= interesting_dist) //is our target in between interesting cells?
 		return
 
 	if(should_idle())

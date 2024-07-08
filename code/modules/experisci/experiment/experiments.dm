@@ -413,7 +413,7 @@
 	)
 
 	for (var/obj/item/organ/organ as anything in check.organs)
-		if (organ.slot in vital_organ_slots && IS_ROBOTIC_ORGAN(organ))
+		if ((organ.slot in vital_organ_slots) && IS_ROBOTIC_ORGAN(organ))
 			return TRUE
 	return FALSE
 
@@ -478,6 +478,13 @@
 	performance_hint = "Keep the temperature as high as possible during the reaction."
 	required_reagent = /datum/reagent/cryostylane
 	min_purity = 0.99
+
+/datum/experiment/scanning/reagent/haloperidol
+	name = "Pure Haloperidol Scan"
+	description = "We require testing related to the long-term treatment of chronic psychiatric disorders. Produce Haloperidol with at least 98% purity and scan the beaker."
+	performance_hint = "Exothermic and consumes hydrogen during reaction."
+	required_reagent = /datum/reagent/medicine/haloperidol
+	min_purity = 0.98
 
 /datum/experiment/scanning/points/bluespace_crystal
 	name = "Bluespace Crystal Sampling"
