@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "You can now use a spoon or ladle on an ice cream vat to spill a reagent, ridding the machine of all reagent of that type."
