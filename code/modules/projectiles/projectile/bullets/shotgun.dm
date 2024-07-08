@@ -22,7 +22,7 @@
 	stamina = 55
 	wound_bonus = 20
 	sharpness = NONE
-	embedding = null
+	embed_type = null
 
 /obj/projectile/bullet/shotgun_beanbag/a40mm
 	name = "rubber slug"
@@ -55,7 +55,7 @@
 	range = 7
 	icon_state = "spark"
 	color = COLOR_YELLOW
-	embedding = null
+	embed_type = null
 
 /obj/projectile/bullet/shotgun_frag12
 	name ="frag12 slug"
@@ -84,7 +84,7 @@
 	damage = 3
 	stamina = 11
 	sharpness = NONE
-	embedding = null
+	embed_type = null
 	speed = 1.2
 	stamina_falloff_tile = -0.25
 	ricochets_max = 4
@@ -106,7 +106,7 @@
 	name = "incapacitating pellet"
 	damage = 1
 	stamina = 6
-	embedding = null
+	embed_type = null
 
 // Mech Scattershot
 

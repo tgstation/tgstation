@@ -10,7 +10,6 @@
 	actions_types = list(/datum/action/item_action/set_internals, /datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
 	var/gas_type = /datum/gas/oxygen
 	var/on = FALSE
-	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
 	var/stabilize = FALSE
 	var/thrust_callback
 
@@ -98,16 +97,12 @@
 		return FALSE
 	on = TRUE
 	update_icon(UPDATE_ICON_STATE)
-	if(full_speed)
-		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 	return TRUE
 
 /obj/item/tank/jetpack/proc/turn_off(mob/user)
 	SEND_SIGNAL(src, COMSIG_JETPACK_DEACTIVATED, user)
 	on = FALSE
 	update_icon(UPDATE_ICON_STATE)
-	if(user)
-		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, use_fuel = TRUE)
 	if(!ismob(loc))
@@ -148,7 +143,6 @@
 	worn_icon_state = "jetpack-improvised"
 	volume = 20 //normal jetpacks have 70 volume
 	gas_type = null //it starts empty
-	full_speed = FALSE //moves at modsuit jetpack speeds
 
 /obj/item/tank/jetpack/improvised/allow_thrust(num)
 	if(!ismob(loc))

@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - image: "Goody case locked/unlocked sprites have been swapped again, having a gap for unlocked and no gap for locked."
