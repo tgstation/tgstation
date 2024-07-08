@@ -122,7 +122,8 @@
 	if(!(M.mecha_flags & PANEL_OPEN))
 		balloon_alert(user, "panel is closed!")
 		return
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	M.trackers += src
 	M.diag_hud_set_mechtracking()
