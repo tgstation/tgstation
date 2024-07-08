@@ -91,3 +91,8 @@
   KnigTheThrasher:
   - rscadd: Added rest of nova clothes to the store
   - balance: Deleted quirk restriction from hard soles and light step
+2024-07-08:
+  Absolucy:
+  - bugfix: Oozelings and slimepeople can now actually speak slime.
+  MTandi:
+  - image: New sprite for syringes
