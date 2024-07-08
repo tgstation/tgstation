@@ -32,6 +32,7 @@
 		"mod_mouthhole",
 		"mod_longfall",
 		"mod_thermal_regulator",
+		"mod_antislow",
 		"mod_sign_radio",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)

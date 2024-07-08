@@ -2358,6 +2358,15 @@
 	)
 	build_path = /obj/item/mod/module/thermal_regulator
 
+/datum/design/module/antislow
+	name = "Civilian Conversion Kit"
+	id = "mod_antislow"
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/mod/module/antislow
+
 /datum/design/module/mod_injector
 	name = "Injector Module"
 	id = "mod_injector"
