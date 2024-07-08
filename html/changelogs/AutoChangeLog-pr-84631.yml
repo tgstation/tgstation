@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - rscadd: "Most door animations now better line up with when they are/are not passable."
