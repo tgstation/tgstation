@@ -464,3 +464,12 @@
 /datum/config_entry/number/max_positive_quirks
 	default = 6
 	min_val = -1
+
+/**
+ * A config that skews with the random spawners weights
+ * If the value is lower than 1, it'll tend to even out the odds
+ * If higher than 1, it'll lean toward common spawns even more.
+ */
+/datum/config_entry/number/random_loot_weight_modifier
+	default = 1
+	min_val = 0.05

@@ -12,6 +12,8 @@ LINEN BINS
 	righthand_file = 'icons/mob/inhands/items/bedsheet_righthand.dmi'
 	icon_state = "sheetwhite"
 	inhand_icon_state = "sheetwhite"
+	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	slot_flags = ITEM_SLOT_NECK
 	layer = BELOW_MOB_LAYER
 	throwforce = 0
@@ -57,20 +59,38 @@ LINEN BINS
 
 	return NONE
 
-/obj/item/bedsheet/attack_secondary(mob/living/target, mob/living/user, params)
-	if(!user.CanReach(target))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(target.body_position != LYING_DOWN)
-		return ..()
+/obj/item/bedsheet/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
+		return NONE
+	var/mob/living/to_cover = interacting_with
+	if(to_cover.body_position != LYING_DOWN)
+		return ITEM_INTERACT_BLOCKING
 	if(!user.dropItemToGround(src))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
-	forceMove(get_turf(target))
+	forceMove(get_turf(to_cover))
 	balloon_alert(user, "covered")
-	coverup(target)
+	coverup(to_cover)
 	add_fingerprint(user)
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/bedsheet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	// Handle wirecutters here so we still tear it up in combat mode
+	if(tool.tool_behaviour != TOOL_WIRECUTTER && !tool.get_sharpness())
+		return NONE
+
+	// We cannot get free cloth from holograms
+	if(flags_1 & HOLOGRAM_1)
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/shreds = new stack_type(get_turf(src), stack_amount)
+	if(!QDELETED(shreds)) // Stacks merged
+		transfer_fingerprints_to(shreds)
+		shreds.add_fingerprint(user)
+	to_chat(user, span_notice("You tear [src] up."))
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/bedsheet/attack_self(mob/living/user)
 	if(!user.CanReach(src)) //No telekinetic grabbing.
@@ -83,10 +103,15 @@ LINEN BINS
 	coverup(user)
 	add_fingerprint(user)
 
+/obj/item/bedsheet/click_alt(mob/living/user)
+	setDir(REVERSE_DIR(dir))
+	return CLICK_ACTION_SUCCESS
+
 /obj/item/bedsheet/proc/coverup(mob/living/sleeper)
 	layer = ABOVE_MOB_LAYER
 	pixel_x = 0
 	pixel_y = 0
+	pixel_z = sleeper.pixel_z // Account for possible mob elevation
 	balloon_alert(sleeper, "covered")
 	var/angle = sleeper.lying_prev
 	dir = angle2dir(angle + 180) // 180 flips it to be the same direction as the mob
@@ -107,6 +132,7 @@ LINEN BINS
 	balloon_alert(sleeper, "smoothed sheets")
 	layer = initial(layer)
 	SET_PLANE_IMPLICIT(src, initial(plane))
+	pixel_z = 0
 	signal_sleeper = null
 
 // We need to do this in case someone picks up a bedsheet while a mob is covered up
@@ -120,23 +146,8 @@ LINEN BINS
 	UnregisterSignal(sleeper, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION)
 	UnregisterSignal(sleeper, COMSIG_QDELETING)
+	pixel_z = 0
 	signal_sleeper = null
-
-/obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
-		if (!(flags_1 & HOLOGRAM_1))
-			var/obj/item/stack/shreds = new stack_type(get_turf(src), stack_amount)
-			if(!QDELETED(shreds)) //stacks merged
-				transfer_fingerprints_to(shreds)
-				shreds.add_fingerprint(user)
-		qdel(src)
-		to_chat(user, span_notice("You tear [src] up."))
-	else
-		return ..()
-
-/obj/item/bedsheet/click_alt(mob/living/user)
-	dir = REVERSE_DIR(dir)
-	return CLICK_ACTION_SUCCESS
 
 /obj/item/bedsheet/blue
 	icon_state = "sheetblue"
@@ -565,9 +576,12 @@ LINEN BINS
 	desc = "It looks rather cosy."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
+	base_icon_state = "linenbin"
 	anchored = TRUE
+	pass_flags = PASSTABLE
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
+	anchored_tabletop_offset = 6
 	/// The number of bedsheets in the bin
 	var/amount = 10
 	/// A list of actual sheets within the bin
@@ -620,11 +634,11 @@ LINEN BINS
 /obj/structure/bedsheetbin/update_icon_state()
 	switch(amount)
 		if(0)
-			icon_state = "linenbin-empty"
+			icon_state = "[base_icon_state]-empty"
 		if(1 to 5)
-			icon_state = "linenbin-half"
+			icon_state = "[base_icon_state]-half"
 		else
-			icon_state = "linenbin-full"
+			icon_state = "[base_icon_state]-full"
 	return ..()
 
 /obj/structure/bedsheetbin/fire_act(exposed_temperature, exposed_volume)
@@ -740,3 +754,13 @@ LINEN BINS
 
 	add_fingerprint(user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/obj/structure/bedsheetbin/basket
+	name = "linen basket"
+	icon_state = "linenbasket-full"
+	base_icon_state = "linenbasket"
+
+/obj/structure/bedsheetbin/empty/basket
+	name = "linen basket"
+	icon_state = "linenbasket-empty"
+	base_icon_state = "linenbasket"
