@@ -661,6 +661,10 @@
 	name = "Short Bangs"
 	icon_state = "hair_shortbangs"
 
+/datum/sprite_accessory/hair/shortbangs2
+	name = "Short Bangs 2"
+	icon_state = "hair_shortbangs2"
+
 /datum/sprite_accessory/hair/short
 	name = "Short Hair"
 	icon_state = "hair_a"
