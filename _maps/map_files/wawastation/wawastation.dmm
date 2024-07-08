@@ -32701,6 +32701,15 @@
 "lAj" = (
 /turf/closed/wall,
 /area/station/construction/mining/aux_base)
+"lAl" = (
+/obj/structure/window/spawner/directional/east,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/science/ordnance)
 "lAm" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
@@ -35977,15 +35986,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/cargo/boutique)
-"mIG" = (
-/obj/structure/window/spawner/directional/east,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/portable_atmospherics/scrubber,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/science/ordnance)
 "mIH" = (
 /obj/structure/lattice,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -43279,10 +43279,6 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
-"pti" = (
-/obj/machinery/plumbing/growing_vat,
-/turf/open/misc/asteroid,
-/area/station/asteroid)
 "ptq" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -55035,6 +55031,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/command/gateway)
+"tui" = (
+/obj/machinery/vatgrower{
+	dir = 4
+	},
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 "tus" = (
 /obj/machinery/plumbing/sender{
 	dir = 4
@@ -59988,6 +59990,7 @@
 "veF" = (
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /obj/structure/railing,
+/obj/machinery/door/firedoor/border_only,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "veW" = (
@@ -61411,6 +61414,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
+"vGG" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/purple/visible/layer1,
+/obj/machinery/portable_atmospherics/pipe_scrubber,
+/turf/open/floor/iron/textured,
+/area/station/engineering/atmos)
 "vGJ" = (
 /obj/effect/spawner/random/structure/grille,
 /obj/effect/spawner/random/structure/girder,
@@ -108943,7 +108954,7 @@ oRf
 sYU
 hLj
 syl
-nDN
+vGG
 nDN
 nDN
 pPv
@@ -111232,7 +111243,7 @@ gOY
 gOY
 tTK
 rFA
-mIG
+lAl
 xfQ
 cAG
 xXF
@@ -168545,7 +168556,7 @@ vxX
 vxX
 uet
 gMk
-pti
+tui
 gMk
 gMk
 gMk

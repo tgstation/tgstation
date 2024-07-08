@@ -201,6 +201,9 @@ ayylien.ogg was made by remixing:
 SCIRetro_Energy Swells Synth_Funky Audio_Sonics Spices by Funky_Audio under CC0 -- https://freesound.org/people/realtheremin/sounds/119011/
 scifi_scare_a.aiff by realtheremin under CC0 -- https://freesound.org/people/Funky_Audio/sounds/729392/
 
+solarflare.ogg was made by ArcaneMusic, using the following sources from Freesound.org.
+"Flashbang Explosion Designed 14m" by modusmogulus https://freesound.org/people/modusmogulus/sounds/734095/ under CC 0
+"Hammer and anvil" by Duasun -- https://freesound.org/people/Duasun/sounds/321889/ under CC 0
 
 beaker_pickup.ogg was made by lowering pitch:
 Bottle Tap.wav by alex_alexalex -- https://freesound.org/s/395492/ -- License: Attribution NonCommercial 3.0

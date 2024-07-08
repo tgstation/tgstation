@@ -46,8 +46,8 @@
 
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/flashlight_eyes)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -928,6 +928,7 @@
 	light_range = 4
 	light_power = 2
 	alpha = 0
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF

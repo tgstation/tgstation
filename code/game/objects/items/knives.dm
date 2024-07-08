@@ -124,12 +124,18 @@
 	icon_state = "buckknife"
 	worn_icon_state = "buckknife"
 	desc = "A military combat utility survival knife."
-	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
+	embed_type = /datum/embed_data/combat_knife
 	force = 20
 	throwforce = 20
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "cuts")
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "cut")
 	slot_flags = ITEM_SLOT_MASK
+
+/datum/embed_data/combat_knife
+	pain_mult = 4
+	embed_chance = 65
+	fall_chance = 10
+	ignore_throwspeed_threshold = TRUE
 
 /obj/item/knife/combat/Initialize(mapload)
 	. = ..()
@@ -155,7 +161,7 @@
 	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "survivalknife"
 	worn_icon_state = "survivalknife"
-	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
+	embed_type = /datum/embed_data/combat_knife/weak
 	desc = "A hunting grade survival knife."
 	force = 15
 	throwforce = 15
@@ -169,12 +175,15 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharpened bone. The bare minimum in survival."
-	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
+	embed_type = /datum/embed_data/combat_knife/weak
 	obj_flags = parent_type::obj_flags & ~CONDUCTS_ELECTRICITY
 	slot_flags = NONE
 	force = 15
 	throwforce = 15
 	custom_materials = null
+
+/datum/embed_data/combat_knife/weak
+	embed_chance = 35
 
 /obj/item/knife/combat/cyborg
 	name = "cyborg knife"

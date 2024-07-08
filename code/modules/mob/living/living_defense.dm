@@ -700,6 +700,7 @@
 			return
 		if((shove_flags & SHOVE_BLOCKED) && !(shove_flags & (SHOVE_KNOCKDOWN_BLOCKED|SHOVE_CAN_KICK_SIDE)))
 			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+			target.apply_status_effect(/datum/status_effect/next_shove_stuns)
 			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
 				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, span_danger("You shove [target.name], knocking [target.p_them()] down!"))
@@ -708,6 +709,7 @@
 
 	if(shove_flags & SHOVE_CAN_KICK_SIDE) //KICK HIM IN THE NUTS
 		target.Paralyze(SHOVE_CHAIN_PARALYZE)
+		target.apply_status_effect(/datum/status_effect/no_side_kick)
 		target.visible_message(span_danger("[name] kicks [target.name] onto [target.p_their()] side!"),
 						span_userdanger("You're kicked onto your side by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 		to_chat(src, span_danger("You kick [target.name] onto [target.p_their()] side!"))
@@ -720,10 +722,8 @@
 	//Take their lunch money
 	var/target_held_item = target.get_active_held_item()
 	var/append_message = weapon ? " with [weapon]" : ""
-	if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types)) //It's too expensive we'll get caught
-		target_held_item = null
-
-	if(target_held_item && target.get_timed_status_effect_duration(/datum/status_effect/staggered))
+	// If it's in our typecache, they're staggered and it exists, disarm. If they're knocked down, disarm too.
+	if(target_held_item && target.get_timed_status_effect_duration(/datum/status_effect/staggered) && is_type_in_typecache(target_held_item, GLOB.shove_disarming_types) || target_held_item && target.body_position == LYING_DOWN)
 		target.dropItemToGround(target_held_item)
 		append_message = "causing [target.p_them()] to drop [target_held_item]"
 		target.visible_message(span_danger("[target.name] drops \the [target_held_item]!"),

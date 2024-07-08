@@ -110,6 +110,14 @@
 	if(isnull(part_type))  //Client gone or they chose a random part
 		part_type = GLOB.part_choice_transhuman[pick(GLOB.part_choice_transhuman)]
 
+	if(quirk_holder.has_quirk(/datum/quirk/prosthetic_limb))
+		var/obj/item/bodypart/shit_limb = GLOB.prosthetic_limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic)]
+		var/obj/item/bodypart/part_part = part_type
+		if(ispath(shit_limb, /obj/item/bodypart) && ispath(part_part, /obj/item/bodypart))
+			// dumbass already has a part in the same spot so let's just let the shoddy trait do its thing instead
+			if(initial(shit_limb.body_zone) == initial(part_part.body_zone))
+				return
+
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/new_part = new part_type()
 	if(isbodypart(new_part))
