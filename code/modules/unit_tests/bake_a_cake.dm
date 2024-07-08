@@ -28,24 +28,24 @@
 	sugar_bag.melee_attack_chain(human, beaker)
 	for(var/i in 1 to 3)
 		flour_bag.melee_attack_chain(human, beaker)
-	TEST_ASSERT_EQUAL(beaker.reagents.total_volume, 20, "Failed to pour sugar & flour for the cake bater!")
+	TEST_ASSERT_EQUAL(beaker.reagents.total_volume, 20, "Failed to pour sugar & flour for the cake batter!")
 
 	for(var/i in 1 to 3)
 		var/obj/item/egg = egg_box.contents[1]
 		egg.melee_attack_chain(human, beaker, RIGHT_CLICK)
-	var/obj/item/food/cake_bater = locate(/obj/item/food/cakebatter) in table_loc
-	TEST_ASSERT_NOTNULL(cake_bater, "Failed making cake bater!")
-	TEST_ASSERT_EQUAL(beaker.reagents.total_volume, 0, "Cake bater did not consume all beaker reagents!")
+	var/obj/item/food/cake_batter = locate(/obj/item/food/cakebatter) in table_loc
+	TEST_ASSERT_NOTNULL(cake_batter, "Failed making cake batter!")
+	TEST_ASSERT_EQUAL(beaker.reagents.total_volume, 0, "Cake batter did not consume all beaker reagents!")
 
-	var/bater_purity = cake_bater.reagents.get_average_purity()
-	var/bater_purity_expected = (5 * sugar_purity + 15 * flour_purity + 18 * egg_purity) / 38
-	TEST_ASSERT_EQUAL(bater_purity, bater_purity_expected, "Expected starting purity of cake bater reagents to be [bater_purity_expected], but got [bater_purity]!")
+	var/batter_purity = cake_batter.reagents.get_average_purity()
+	var/batter_purity_expected = (5 * sugar_purity + 15 * flour_purity + 18 * egg_purity) / 38
+	TEST_ASSERT_EQUAL(batter_purity, batter_purity_expected, "Expected starting purity of cake batter reagents to be [batter_purity_expected], but got [batter_purity]!")
 
 	the_oven.add_tray_to_oven(new /obj/item/plate/oven_tray(the_oven)) // Doesn't have one unless maploaded
 	the_oven.attack_hand(human)
 	var/obj/item/plate/oven_tray/oven_tray = locate(/obj/item/plate/oven_tray) in the_oven.contents
 	TEST_ASSERT_NOTNULL(oven_tray, "The oven doesn't have a tray!")
-	cake_bater.melee_attack_chain(human, oven_tray, list2params(list(ICON_X = 0, ICON_Y = 0)))
+	cake_batter.melee_attack_chain(human, oven_tray, list2params(list(ICON_X = 0, ICON_Y = 0)))
 	the_oven.attack_hand(human)
 	the_oven.process(90 SECONDS) // Bake it
 	the_oven.attack_hand(human)
@@ -58,7 +58,7 @@
 	TEST_ASSERT_NOTNULL(cake_slice, "Didn't manage to cut the cake!")
 
 	var/cake_slice_purity = cake_slice.reagents.get_average_purity()
-	TEST_ASSERT_EQUAL(cake_slice_purity, bater_purity_expected, "Expected purity of cake slice reagents to be [bater_purity_expected], but got [cake_slice_purity]!")
+	TEST_ASSERT_EQUAL(cake_slice_purity, batter_purity_expected, "Expected purity of cake slice reagents to be [batter_purity_expected], but got [cake_slice_purity]!")
 
 	cake_slice.attack_hand(human) // Pick it up
 	var/datum/component/edible/edible_comp = cake_slice.GetComponent(/datum/component/edible)
