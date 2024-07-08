@@ -1,0 +1,4 @@
+author: "Jolly"
+delete-after: True
+changes:
+  - code_imp: "Behind the scenes, atmos machines (freezers/mixers) in maps were tweaked a bit. If you see them no longer connected to specific pipenets, please make an issue report, this is not intended behavior!!"
