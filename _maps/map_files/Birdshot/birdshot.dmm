@@ -456,6 +456,7 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen,
+/obj/structure/cable,
 /turf/open/floor/carpet/lone,
 /area/station/service/chapel/office)
 "all" = (
@@ -5284,6 +5285,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/service/chapel/office)
 "caI" = (
@@ -7543,6 +7545,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "cQN" = (
@@ -18654,6 +18657,12 @@
 	},
 /turf/open/floor/iron/small,
 /area/station/service/barber)
+"gKR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/hallway/primary/port)
 "gKT" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/plating,
@@ -26041,6 +26050,7 @@
 /obj/structure/disposalpipe/junction/flip{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "iYh" = (
@@ -33369,6 +33379,12 @@
 	},
 /turf/open/floor/wood/tile,
 /area/station/maintenance/central/lesser)
+"llZ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/stool/bamboo,
+/obj/structure/cable,
+/turf/open/floor/carpet/lone,
+/area/station/service/chapel/office)
 "lmb" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock{
@@ -43955,6 +43971,7 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/sign/departments/holy/directional/south,
 /obj/machinery/light/cold/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "oMI" = (
@@ -49313,6 +49330,7 @@
 /turf/open/floor/iron,
 /area/station/security)
 "qwK" = (
+/obj/structure/cable,
 /turf/open/floor/carpet/lone,
 /area/station/service/chapel/office)
 "qwU" = (
@@ -52221,6 +52239,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "rpV" = (
@@ -59252,6 +59271,7 @@
 /obj/machinery/disposal/bin,
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/carpet/lone,
 /area/station/service/chapel/office)
 "tAw" = (
@@ -59295,6 +59315,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/service/chapel_office,
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable,
 /turf/open/floor/iron/textured_half,
 /area/station/service/chapel/office)
 "tAH" = (
@@ -65018,6 +65039,7 @@
 /area/station/security/medical)
 "vnr" = (
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/service/chapel/office)
 "vnu" = (
@@ -65148,6 +65170,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "vpk" = (
@@ -71761,6 +71784,7 @@
 /obj/machinery/vending/wardrobe/chap_wardrobe,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/autoname/directional/south,
+/obj/structure/cable,
 /turf/open/floor/carpet/lone,
 /area/station/service/chapel/office)
 "xjX" = (
@@ -89824,7 +89848,7 @@ rpE
 tAF
 vnr
 caD
-buc
+llZ
 alg
 qwK
 xjU
@@ -90077,7 +90101,7 @@ iSD
 wBm
 wXk
 pEO
-xOS
+gKR
 rQC
 von
 pvC
