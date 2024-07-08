@@ -94,7 +94,7 @@
 		flashed.balloon_alert(source, "[flashed.p_theyre()] loyal to someone else!")
 		return
 
-	if (HAS_TRAIT(flashed, TRAIT_MINDSHIELD) || flashed.mind.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
+	if (HAS_TRAIT(flashed, TRAIT_MINDSHIELD))
 		flashed.balloon_alert(source, "[flashed.p_they()] resist!")
 		return
 
