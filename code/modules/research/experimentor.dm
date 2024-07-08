@@ -810,8 +810,8 @@
 
 // Converts a 3x3 area into a random dimensional theme.
 /obj/item/relic/proc/dimensional_shift(mob/user)
-	var/datum/dimension_theme/shifter = pick(subtypesof(/datum/dimension_theme))
-	shifter = new shifter(src)
+	var/new_theme_path = pick(subtypesof(/datum/dimension_theme))
+	var/datum/dimension_theme/shifter = SSmaterials.dimensional_themes[new_theme_path]
 	for(var/turf/shiftee in range(1, user))
 		shifter.apply_theme(shiftee, show_effect = TRUE)
 	qdel(shifter)
@@ -830,8 +830,8 @@
 		ADD_TRAIT(user, TRAIT_NO_JUMPSUIT, REF(src)) // prevent dropping pockets & belt
 
 	// magic trick!
-	playsound(get_turf(user), SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	throw_smoke(get_turf(user))
+	playsound(user, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	throw_smoke(user)
 
 	// carbons always get a hat at least
 	var/mob/living/carbon/carbonius = user
