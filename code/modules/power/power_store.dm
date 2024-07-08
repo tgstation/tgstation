@@ -261,7 +261,7 @@
 		return SHAME
 	playsound(user, 'sound/effects/sparks1.ogg', charge / maxcharge)
 	var/damage = charge / (1 KILO JOULES)
-	user.electrocute_act(damage, src, 1, SHOCK_DELAY_STUN|SHOCK_NOGLOVES)
+	user.electrocute_act(damage, src, 1, SHOCK_IGNORE_IMMUNITY|SHOCK_DELAY_STUN|SHOCK_NOGLOVES)
 	charge = 0
 	update_appearance()
 	if(user.stat != DEAD)
