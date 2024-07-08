@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - admin: "Narrate verbs will now allow you to pick what text formatting span you want to use before you send them, if any."
