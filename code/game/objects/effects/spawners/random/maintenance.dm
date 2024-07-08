@@ -9,9 +9,6 @@
 /// decals such as ashes will cause NeverShouldHaveComeHere() to fail on such turfs, which creates annoying rng based CI failures
 /obj/effect/spawner/random/maintenance/no_decals
 
-/obj/effect/spawner/random/maintenance/no_decals/make_item(spawn_loc, type_path_to_make)
-	if(ispath(loot, /obj/effect/decal))
-
 /obj/effect/spawner/random/maintenance/examine(mob/user)
 	. = ..()
 	. += span_info("This spawner has an effective loot count of [get_effective_lootcount()].")
