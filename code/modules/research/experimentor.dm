@@ -731,12 +731,12 @@
 // Creates a glass and fills it up with a drink.
 /obj/item/relic/proc/drink_dispenser(mob/user)
 	var/obj/item/reagent_containers/cup/glass/drinkingglass/freebie = new(get_step_rand(user))
-	playsound(get_turf(freebie), 'sound/effects/phasein.ogg', rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(freebie, 'sound/effects/phasein.ogg', rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	addtimer(CALLBACK(src, PROC_REF(dispense_drink), freebie), 0.5 SECONDS)
 
 /obj/item/relic/proc/dispense_drink(obj/item/reagent_containers/cup/glass/glasser)
 	glasser.reagents.add_reagent(get_random_drink_id(), rand(glasser.volume * 0.3, glasser.volume))
-	playsound(get_turf(glasser), SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(glasser, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	throw_smoke(get_turf(glasser))
 
 // Scrambles your organs. 33% chance to delete after use.
@@ -750,7 +750,7 @@
 	playsound(src, 'sound/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
 	for(var/mob/living/carbon/nearby in hearers(2, src))
 		nearby.bioscramble(name)
-		playsound(get_turf(nearby), SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(nearby, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		throw_smoke(get_turf(nearby))
 		to_chat(nearby, span_notice("You feel weird."))
 	if(prob(33))
@@ -765,7 +765,7 @@
 		carboner.electrocute_act(15, src, flags = SHOCK_NOGLOVES, stun_duration = stunner)
 	else
 		user.electrocute_act(15, src, flags = SHOCK_NOGLOVES)
-	playsound(get_turf(user), SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(user, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 	var/list/chargeable_batteries = list()
 	for(var/obj/item/stock_parts/power_store/C in user.get_all_contents())
@@ -876,8 +876,7 @@
 /obj/item/relic/proc/roll_costume(type, flagcheck)
 	var/list/candidates = list()
 	for(var/obj/item/thingy as anything in subtypesof(type))
-		if(flagcheck && \
-		!(initial(thingy.flags_inv) & flagcheck))
+		if(flagcheck && !(initial(thingy.flags_inv) & flagcheck))
 			continue
 		if(isnull(initial(thingy.icon_state)))
 			continue
