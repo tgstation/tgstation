@@ -1,0 +1,4 @@
+author: "JackEnoff"
+delete-after: True
+changes:
+  - bugfix: "Welding helmet and hardhat will now properly protect against pepperspray while its down"
