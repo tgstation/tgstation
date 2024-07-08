@@ -119,11 +119,13 @@
 /datum/ai_planning_subtree/targeted_mob_ability/deacon/deacon_domain_attack
 	ability_list = BB_DEACON_DOMAIN_ATTACKS
 
-/datum/ai_planning_subtree/targeted_mob_ability/deacon/deacon_domain_attack/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/targeted_mob_ability/deacon/deacon_domain_attack/check_availability(datum/ai_controller/controller, ability_key)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/health_threshold = controller.blackboard[BB_DEACON_DOMAIN_ATTACKS][ability_key]
 	var/mob/living/living_pawn = controller.pawn
-	if(living_pawn.health / living_pawn.maxHealth > DOMAIN_HEALTH_THRESHOLD || !controller.blackboard[BB_DEACON_NEXT_CYCLE_READY])
-		return
-	return ..()
+	return ((living_pawn.health/living_pawn.maxHealth) <= health_threshold)
 
 /datum/ai_planning_subtree/targeted_mob_ability/deacon_bounce
 	ability_key = BB_DEACON_BOUNCE

@@ -7,7 +7,7 @@
 	background_icon_state = "bg_revenant"
 	overlay_icon_state = "bg_revenant_border"
 	desc = "Its your playground now..."
-	cooldown_time = 3 MINUTES
+	cooldown_time = 10 MINUTES
 	shared_cooldown = NONE
 	melee_cooldown_time = 0 SECONDS
 	///the boss landmark of our domain
@@ -18,6 +18,8 @@
 	var/list/victim_list = list()
 	///our turf
 	var/turf/previous_turf
+	///how long we stay in the domain
+	var/stay_timer = DOMAIN_STAY_TIMER
 
 /datum/action/cooldown/mob_cooldown/domain_teleport/IsAvailable(feedback = FALSE)
 	if(!(locate(boss_landmark) in GLOB.landmarks_list))
@@ -34,7 +36,7 @@
 	previous_turf = get_turf(owner)
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	teleport_victims()
-	addtimer(CALLBACK(src, PROC_REF(end_attack)), DOMAIN_STAY_TIMER)
+	addtimer(CALLBACK(src, PROC_REF(end_attack)), stay_timer)
 	StartCooldown()
 	return TRUE
 
@@ -227,3 +229,119 @@
 	pixel_x = -32
 	base_pixel_x = -32
 	duration = 10 SECONDS
+
+/datum/action/cooldown/mob_cooldown/domain_teleport/surface
+	name = "surface domain"
+	boss_landmark = /obj/effect/landmark/deacon_surface_boss
+	victim_landmark = /obj/effect/landmark/deacon_surface_player
+	stay_timer = 40 SECONDS
+
+/datum/action/cooldown/mob_cooldown/domain_teleport/surface/teleport_victims()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_AI_PAUSED, REF(src))
+	owner.status_flags |= GODMODE
+	var/static/list/dirs_to_shoot = list(NORTH, NORTHWEST, WEST, SOUTHWEST, SOUTH)
+	var/static/list/opposite_dirs_to_shoot = reverseList(dirs_to_shoot)
+	var/should_alternate = FALSE
+	for(var/obj/effect/landmark/deacon_surface_plasma/plasma_loc in GLOB.landmarks_list)
+		var/obj/effect/temp_visual/plasma_blob/plasma = new get_turf(plasma_loc)
+		var/list/final_list = should_alternate ? opposite_dirs_to_shoot : dirs_to_shoot
+		INVOKE_ASYNC(plasma, TYPE_PROC_REF(/obj/effect/temp_visual/plasma_blob, assign_shooting_directions), final_list)
+		should_alternate = !should_alternate
+	addtimer(CALLBACK(src, PROC_REF(teleport_around)), 10 SECONDS)
+
+/datum/action/cooldown/mob_cooldown/domain_teleport/surface/proc/teleport_around()
+	var/counter = 0
+	for(var/obj/effect/landmark/deacon_surface_projectile_turfs_marker/teleport_point in GLOB.landmarks_list)
+		addtimer(CALLBACK(src, PROC_REF(teleport_attack_sequence), teleport_point), counter * (8 SECONDS))
+		counter++
+
+/datum/action/cooldown/mob_cooldown/domain_teleport/surface/proc/teleport_attack_sequence(obj/effect/landmark/deacon_surface_projectile_turfs_marker/teleport_point)
+	var/direction = text2dir(teleport_point.turfs_direction)
+	var/turf/teleport_turf = get_ranged_target_turf(teleport_point, direction, 4)
+	do_teleport(owner, teleport_turf)
+	for(var/counter in 0 to 3)
+		addtimer(CALLBACK(src, PROC_REF(launch_projectiles), teleport_point), counter * (1.75 SECONDS))
+
+/datum/action/cooldown/mob_cooldown/domain_teleport/surface/proc/launch_projectiles(obj/effect/landmark/deacon_surface_projectile_turfs_marker/teleport_point)
+	var/direction = text2dir(teleport_point.turfs_direction)
+	var/projectile_direction = text2dir(teleport_point.projectiles_direction)
+	var/atom/target = get_ranged_target_turf(teleport_point, direction, 9)
+	var/list/turfs_list = get_line(teleport_point, target)
+	var/turf/final_turf = turfs_list[length(turfs_list)]
+	shuffle_inplace(turfs_list)
+
+	for(var/turf/excluded_turf as anything in turfs_list) //first, exclude 2 random turfs
+		if(excluded_turf == final_turf)
+			continue
+		turfs_list -= get_step(excluded_turf, direction)
+		turfs_list -= excluded_turf
+		break
+
+	for(var/turf/turf_to_shoot as anything in turfs_list) //second, fire our projectiles
+		new /obj/effect/temp_visual/celestial_explosion/directional(turf_to_shoot, projectile_direction)
+
+/datum/action/cooldown/mob_cooldown/domain_teleport/surface/end_attack()
+	. = ..()
+	if(isnull(owner))
+		return
+	REMOVE_TRAIT(owner, TRAIT_AI_PAUSED, REF(src))
+	owner.status_flags &= ~GODMODE
+
+
+/obj/effect/temp_visual/plasma_blob
+	light_color = COLOR_WHITE
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "celestial_crossing"
+	plane = ABOVE_GAME_PLANE
+	duration = 10 SECONDS
+
+/obj/effect/temp_visual/plasma_blob/proc/assign_shooting_directions(list/directions)
+	if(isnull(src))
+		return
+	var/turf/my_turf = get_turf(src)
+	for(var/direction in directions)
+		if(isnull(src))
+			return
+		var/opposite_direction = REVERSE_DIR(direction)
+		var/turf/target_turf = get_beam_target_turf(direction)
+		var/turf/opposite_target_turf = get_beam_target_turf(opposite_direction)
+		if(isnull(target_turf) || isnull(opposite_target_turf))
+			return
+		for(var/turf/turf_to_beam as anything in list(target_turf, opposite_target_turf))
+			my_turf.Beam(
+				BeamTarget = turf_to_beam,
+				beam_type = /obj/effect/ebeam/reacting/judgement,
+				icon = 'icons/effects/beam.dmi',
+				icon_state = "celestial_beam",
+				beam_color = COLOR_WHITE,
+				time = 0.3 SECONDS,
+				emissive = TRUE,
+			)
+			playsound(src, 'sound/magic/magic_missile.ogg', 30, TRUE, pressure_affected = FALSE)
+		sleep(0.4 SECONDS)
+	assign_shooting_directions(directions) //recursive call until we get deleted
+
+/obj/effect/temp_visual/plasma_blob/proc/get_beam_target_turf(direction)
+	var/turf/target_turf = get_ranged_target_turf(src, direction, 10)
+	if(isnull(target_turf))
+		return null
+	for(var/turf/projection_turf as anything in get_line(src, target_turf))
+		if(isclosedturf(projection_turf))
+			return projection_turf
+	return target_turf
+
+/obj/effect/temp_visual/celestial_explosion/directional
+	target_mob_size = MOB_SIZE_TINY
+	damage_to_apply = 10
+
+/obj/effect/temp_visual/celestial_explosion/directional/Initialize(mapload, direction)
+	. = ..()
+	playsound(src, 'sound/magic/magic_missile.ogg', 5, TRUE, pressure_affected = FALSE)
+	addtimer(CALLBACK(src, PROC_REF(create_wave), direction), 0.25 SECONDS)
+
+/obj/effect/temp_visual/celestial_explosion/directional/proc/create_wave(direction)
+	var/turf/next_turf = get_step(src, direction)
+	if(isclosedturf(next_turf))
+		return
+	new /obj/effect/temp_visual/celestial_explosion/directional(next_turf, direction)

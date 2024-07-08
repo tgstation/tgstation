@@ -52,6 +52,7 @@
 		/datum/action/cooldown/mob_cooldown/beam_trial = BB_DEACON_ENTRAPPMENT,
 		/datum/action/cooldown/mob_cooldown/domain_teleport/hell = BB_DEACON_HELL_DOMAIN,
 		/datum/action/cooldown/mob_cooldown/domain_teleport/heaven = BB_DEACON_HEAVEN_DOMAIN,
+		/datum/action/cooldown/mob_cooldown/domain_teleport/surface = BB_DEACON_SURFACE_DOMAIN,
 		/datum/action/cooldown/mob_cooldown/bounce = BB_DEACON_BOUNCE,
 		/datum/action/cooldown/mob_cooldown/cast_phantom = BB_DEACON_PHANTOM,
 		/datum/action/cooldown/mob_cooldown/crystal_mayhem = BB_DEACON_CRYSTAL_MAYHEM,
@@ -74,8 +75,9 @@
 		BB_DEACON_CRYSTAL_MAYHEM,
 	)
 	var/static/list/domain_attacks = list(
-		BB_DEACON_HELL_DOMAIN,
-		BB_DEACON_HEAVEN_DOMAIN,
+		BB_DEACON_HELL_DOMAIN = 0.75,
+		BB_DEACON_HEAVEN_DOMAIN = 0.5,
+		BB_DEACON_SURFACE_DOMAIN = 0.25,
 	)
 
 	var/static/list/cycle_count_reseters = list(

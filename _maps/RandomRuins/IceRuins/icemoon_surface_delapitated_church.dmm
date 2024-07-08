@@ -1,115 +1,238 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"eB" = (
-/obj/structure/railing/corner,
-/obj/structure/flora/grass/brown/style_random,
-/obj/structure/statue/bone/rib,
-/turf/open/misc/asteroid/snow/icemoon,
+"ak" = (
+/obj/effect/landmark/deacon_surface_boss,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors/nospawn)
+"dU" = (
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/obj/effect/landmark/deacon_surface_projectile_turfs_marker{
+	turfs_direction = "west";
+	projectiles_direction = "north"
+	},
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors/nospawn)
 "fl" = (
-/obj/structure/closet/crate/grave,
-/obj/item/book/bible,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"gv" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 4
-	},
-/obj/structure/closet/crate/grave,
-/obj/item/reagent_containers/cup/glass/bottle/holywater,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors/nospawn)
 "kd" = (
 /obj/structure/flora/grass/brown/style_random,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors/nospawn)
-"lH" = (
-/turf/open/misc/asteroid/snow/icemoon,
+"qp" = (
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/obj/effect/landmark/deacon_surface_projectile_turfs_marker{
+	turfs_direction = "east";
+	projectiles_direction = "south"
+	},
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors/nospawn)
-"mP" = (
-/obj/structure/statue/bone/rib,
-/turf/open/misc/asteroid/snow/icemoon,
+"uH" = (
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/obj/effect/landmark/deacon_surface_projectile_turfs_marker{
+	turfs_direction = "south";
+	projectiles_direction = "west"
+	},
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors/nospawn)
-"Fn" = (
-/obj/effect/turf_decal/weather/snow/corner,
-/turf/open/misc/asteroid/snow/icemoon,
+"uW" = (
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/obj/effect/landmark/deacon_surface_projectile_turfs_marker{
+	turfs_direction = "north";
+	projectiles_direction = "east"
+	},
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors/nospawn)
+"Bp" = (
+/obj/effect/landmark/deacon_surface_plasma,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors/nospawn)
 "KT" = (
-/obj/structure/flora/grass/brown/style_random,
-/obj/structure/statue/bone/rib,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/closed/indestructible/rock/snow/ice/ore,
 /area/icemoon/surface/outdoors/nospawn)
-"Oe" = (
-/obj/structure/fluff/divine/convertaltar,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"Wr" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 8
+"Te" = (
+/obj/item/flashlight/lantern{
+	light_on = 1
 	},
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/delapitated_church,
+/area/icemoon/surface/outdoors/nospawn)
+"Za" = (
+/obj/effect/landmark/deacon_surface_player,
+/turf/open/floor/delapitated_church,
 /area/icemoon/surface/outdoors/nospawn)
 
 (1,1,1) = {"
-lH
-mP
 KT
 KT
-mP
-lH
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
 "}
 (2,1,1) = {"
-lH
-lH
+KT
+qp
+fl
+fl
+fl
+fl
+fl
+fl
 kd
-lH
-lH
-lH
+fl
+uW
+KT
 "}
 (3,1,1) = {"
-lH
-lH
-lH
-lH
-lH
-lH
+KT
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+KT
 "}
 (4,1,1) = {"
-lH
-lH
-Oe
-lH
+KT
 fl
-lH
+fl
+fl
+fl
+Bp
+fl
+fl
+fl
+fl
+fl
+KT
 "}
 (5,1,1) = {"
-lH
-lH
-Oe
-lH
-gv
-lH
+KT
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+KT
 "}
 (6,1,1) = {"
-lH
-kd
-lH
-Fn
-lH
-lH
+KT
+fl
+fl
+ak
+fl
+Te
+fl
+Za
+fl
+fl
+fl
+KT
 "}
 (7,1,1) = {"
-lH
-lH
-lH
-lH
-Wr
-lH
+KT
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+KT
 "}
 (8,1,1) = {"
-lH
-mP
-mP
 KT
-eB
-lH
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+KT
+"}
+(9,1,1) = {"
+KT
+fl
+fl
+fl
+fl
+Bp
+fl
+fl
+fl
+fl
+fl
+KT
+"}
+(10,1,1) = {"
+KT
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+KT
+"}
+(11,1,1) = {"
+KT
+uH
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+fl
+dU
+KT
+"}
+(12,1,1) = {"
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
+KT
 "}

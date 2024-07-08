@@ -555,10 +555,14 @@
 	icon_state = "celestial_explosion"
 	duration = 0.5 SECONDS
 	alpha = 175
+	///damage we should apply
+	var/damage_to_apply = 50
+	///mob sizes we target
+	var/target_mob_size = MOB_SIZE_LARGE
 
 /obj/effect/temp_visual/celestial_explosion/Initialize(mapload)
 	. = ..()
 	for(var/mob/living/living_victim in loc)
-		if(living_victim.mob_size != MOB_SIZE_LARGE)
+		if(living_victim.mob_size < target_mob_size)
 			continue
 		living_victim.apply_damage(50)

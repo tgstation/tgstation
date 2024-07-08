@@ -17,9 +17,6 @@
 /obj/item/stack/ore/iron,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/icemoon/underground/explored)
-"tq" = (
-/turf/open/space/basic,
-/area/space)
 "DP" = (
 /obj/effect/landmark/deacon_heaven_player,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -263,15 +260,15 @@ lL
 Zd
 "}
 (15,1,1) = {"
-tq
-tq
-tq
-tq
-tq
-tq
-tq
-tq
-tq
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
+Zd
 Zd
 Zd
 Zd

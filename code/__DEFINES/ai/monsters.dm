@@ -300,3 +300,4 @@
 #define BB_DEACON_USED_SPECIAL_ATTACKS "used_special_attacks"
 #define BB_DEACON_CRYSTAL_MAYHEM "crystal_mayhem"
 #define BB_DEACON_PHANTOM "deacon_phantom"
+#define BB_DEACON_SURFACE_DOMAIN "surface_domain"
