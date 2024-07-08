@@ -634,6 +634,10 @@ Striking a noncultist, however, will tear their flesh."}
 	icon_state = "blindfold"
 	inhand_icon_state = "blindfold"
 	flash_protect = FLASH_PROTECTION_WELDER
+	actions_types = null
+	color_cutoffs = list(40, 0, 0) //red
+	glass_colour_type = null
+	forced_glass_color = FALSE
 
 /obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
 	..()

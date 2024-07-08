@@ -180,8 +180,14 @@
 /datum/client_colour/glass_colour/yellow
 	colour = "#ffff66"
 
+/datum/client_colour/glass_colour/lightyellow
+	colour = "#ffffaa"
+
 /datum/client_colour/glass_colour/red
 	colour = "#ffaaaa"
+
+/datum/client_colour/glass_colour/lightred
+	colour = "#ffcccc"
 
 /datum/client_colour/glass_colour/darkred
 	colour = "#bb5555"
@@ -194,6 +200,9 @@
 
 /datum/client_colour/glass_colour/purple
 	colour = "#ff99ff"
+
+/datum/client_colour/glass_colour/lightpurple
+	colour = "#ffccff"
 
 /datum/client_colour/glass_colour/gray
 	colour = "#cccccc"

@@ -40,7 +40,7 @@
 	if(panel_open)
 		if(deconstruction == BLASTDOOR_FINISHED)
 			. += span_notice("The maintenance panel is opened and the electronics could be <b>pried</b> out.")
-			. += span_notice("\The [src] could be calibrated to a blast door controller ID with a <b>multitool</b>.")
+			. += span_notice("\The [src] could be calibrated to a blast door controller ID with a <b>multitool</b> or a <b>blast door controller</b>.")
 		else if(deconstruction == BLASTDOOR_NEEDS_ELECTRONICS)
 			. += span_notice("The <i>electronics</i> are missing and there are some <b>wires</b> sticking out.")
 		else if(deconstruction == BLASTDOOR_NEEDS_WIRES)
@@ -55,6 +55,9 @@
 		return CONTEXTUAL_SCREENTIP_SET
 	if(deconstruction == BLASTDOOR_NEEDS_ELECTRONICS && istype(held_item, /obj/item/electronics/airlock))
 		context[SCREENTIP_CONTEXT_LMB] = "Add electronics"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(deconstruction == BLASTDOOR_FINISHED && istype(held_item, /obj/item/assembly/control))
+		context[SCREENTIP_CONTEXT_LMB] = "Calibrate ID"
 		return CONTEXTUAL_SCREENTIP_SET
 	//we do not check for special effects like if they can actually perform the action because they will be told they can't do it when they try,
 	//with feedback on what they have to do in order to do so.
@@ -99,6 +102,19 @@
 		balloon_alert(user, "electronics added")
 		deconstruction = BLASTDOOR_FINISHED
 		return ITEM_INTERACT_SUCCESS
+
+	if(deconstruction == BLASTDOOR_FINISHED && istype(tool, /obj/item/assembly/control))
+		if(density)
+			balloon_alert(user, "open the door first!")
+			return ITEM_INTERACT_BLOCKING
+		if(!panel_open)
+			balloon_alert(user, "open the panel first!")
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/assembly/control/controller_item = tool
+		id = controller_item.id
+		balloon_alert(user, "id changed")
+		return ITEM_INTERACT_SUCCESS
+
 	return NONE
 
 /obj/machinery/door/poddoor/screwdriver_act(mob/living/user, obj/item/tool)

@@ -33,6 +33,8 @@
 		/datum/experiment/autopsy/human,
 		/datum/experiment/autopsy/nonhuman,
 		/datum/experiment/autopsy/xenomorph,
+		/datum/experiment/scanning/reagent/haloperidol,
+		/datum/experiment/scanning/reagent/cryostylane,
 	)
 
 /datum/techweb_node/chem_synthesis
@@ -69,26 +71,11 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
-/datum/techweb_node/cryostasis
-	id = TECHWEB_NODE_CRYOSTASIS
-	display_name = "Cryostasis"
-	description = "The result of clown accidentally drinking a chemical, now repurposed for safely preserving crew members in suspended animation."
-	prereq_ids = list(TECHWEB_NODE_PLUMBING, TECHWEB_NODE_PLASMA_CONTROL)
-	design_ids = list(
-		"cryotube",
-		"mech_sleeper",
-		"stasis",
-		"cryo_grenade",
-		"splitbeaker",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
-	required_experiments = list(/datum/experiment/scanning/reagent/cryostylane)
-
 /datum/techweb_node/medbay_equip_adv
 	id = TECHWEB_NODE_MEDBAY_EQUIP_ADV
 	display_name = "Advanced Medbay Equipment"
 	description = "State-of-the-art medical gear for keeping the crew in one piece — mostly."
-	prereq_ids = list(TECHWEB_NODE_CRYOSTASIS)
+	prereq_ids = list(TECHWEB_NODE_PLUMBING)
 	design_ids = list(
 		"smoke_machine",
 		"chem_mass_spec",
@@ -99,4 +86,20 @@
 		"defibmount",
 		"medicalbed_emergency",
 	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	required_experiments = list(/datum/experiment/scanning/reagent/haloperidol)
+
+/datum/techweb_node/cryostasis
+	id = TECHWEB_NODE_CRYOSTASIS
+	display_name = "Cryostasis"
+	description = "The result of clown accidentally drinking a chemical, now repurposed for safely preserving crew members in suspended animation."
+	prereq_ids = list(TECHWEB_NODE_FUSION)
+	design_ids = list(
+		"cryotube",
+		"mech_sleeper",
+		"stasis",
+		"cryo_grenade",
+		"splitbeaker",
+	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/reagent/cryostylane = TECHWEB_TIER_4_POINTS)

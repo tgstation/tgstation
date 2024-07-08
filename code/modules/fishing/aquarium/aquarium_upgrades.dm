@@ -24,6 +24,8 @@
 	icon_state = "bioelec_map"
 	icon_prefix = "bioelec"
 
+	current_beauty = 0
+
 /obj/structure/aquarium/bioelec_gen/zap_act(power, zap_flags)
 	var/explosive = zap_flags & ZAP_MACHINE_EXPLOSIVE
 	if(!explosive)
