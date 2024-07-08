@@ -80,6 +80,10 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 	. = ..()
 	GLOB.voidwalker_void += src
 
+/obj/effect/landmark/voidwalker_void/Destroy()
+	GLOB.voidwalker_void -= src
+	return ..()
+
 /// Voidwalker void where the people go
 /area/centcom/voidwalker_void
 	name = "Voidwalker void"

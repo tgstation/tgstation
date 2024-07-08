@@ -44,7 +44,6 @@
 
 	UnregisterSignal(organ_owner, COMSIG_ENTER_AREA)
 	alpha = 255
-	organ_owner.add_to_all_human_data_huds()
 
 	qdel(organ_owner.GetComponent(/datum/component/space_camo))
 
@@ -68,7 +67,6 @@
 	//remove debufs for not being in gravity
 	else
 		organ_owner.remove_movespeed_modifier(/datum/movespeed_modifier/grounded_voidwalker)
-		organ_owner.apply_status_effect(/datum/status_effect/space_regeneration)
 
 	//only get the actual regen when we're in space, not no-grav
 	if(isspaceturf(new_turf))
@@ -120,7 +118,7 @@
 	if(isliving(parent))
 		RegisterSignals(parent, list(COMSIG_ATOM_WAS_ATTACKED, COMSIG_MOB_ITEM_ATTACK, COMSIG_LIVING_UNARMED_ATTACK, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_REVEAL), PROC_REF(force_exit_camo))
 
-/datum/component/space_camo/proc/on_atom_entering(atom/movable/entering, atom/entering)
+/datum/component/space_camo/proc/on_atom_entering(atom/movable/entering, atom/entered)
 	SIGNAL_HANDLER
 
 	if(!attempt_enter_camo())
