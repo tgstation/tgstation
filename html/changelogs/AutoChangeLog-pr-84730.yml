@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "Ore vents that are caught in the cross-fire of a lavaland tendril collapsing will now spare the ore vent and it's associated turf."
