@@ -77,6 +77,9 @@
 	var/on_fire = FALSE
 	var/fire_stacks = 0
 
+	///Acts like fire, but cold instead of heat
+	var/freeze_stacks = 0
+
 	/**
 	  * Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
 	  *

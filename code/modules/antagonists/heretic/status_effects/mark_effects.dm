@@ -105,7 +105,11 @@
 	effect_icon_state = "emark4"
 
 /datum/status_effect/eldritch/void/on_effect()
-	owner.apply_status_effect(/datum/status_effect/void_chill/major)
+	var/datum/status_effect/void_chill/void_effect = owner.has_status_effect(/datum/movespeed_modifier/void_chill)
+	if(void_effect)
+		void_effect.adjust_stacks(3)
+	else
+		owner.apply_status_effect(/datum/status_effect/void_chill, 3)
 	owner.adjust_silence(10 SECONDS)
 	return ..()
 

@@ -665,6 +665,9 @@
  * * capped (optional) default True used to cap step mode
  */
 /mob/living/carbon/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY, use_insulation=FALSE, use_steps=FALSE, capped=TRUE)
+	var/datum/status_effect/void_chill/freeze_effect = has_status_effect(/datum/status_effect/void_chill)
+	if(freeze_effect?.stacks >= 5 && amount > 0)
+		return
 	// apply insulation to the amount of change
 	if(use_insulation)
 		amount *= (1 - get_insulation_protection(bodytemperature + amount))

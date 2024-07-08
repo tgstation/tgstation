@@ -80,7 +80,7 @@
 
 	var/mob/living/carbon/carbon_target = target
 	carbon_target.adjust_silence(10 SECONDS)
-	carbon_target.apply_status_effect(/datum/status_effect/void_chill)
+	carbon_target.apply_status_effect(/datum/status_effect/void_chill, 2)
 
 /datum/heretic_knowledge/cold_snap
 	name = "Aristocrat's Way"
@@ -98,12 +98,29 @@
 	research_tree_icon_path = 'icons/effects/effects.dmi'
 	research_tree_icon_state = "the_freezer"
 	depth = 4
+	/// Traits we apply to become immune to the environment
+	var/static/list/gain_traits = list(TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE)
 
 /datum/heretic_knowledge/cold_snap/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	user.add_traits(list(TRAIT_NOBREATH, TRAIT_RESISTCOLD), type)
+	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(check_environment))
 
 /datum/heretic_knowledge/cold_snap/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	user.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_NOBREATH), type)
+	UnregisterSignal(user, COMSIG_LIVING_LIFE)
+
+///Checks if our traits should be active
+/datum/heretic_knowledge/cold_snap/proc/check_environment(mob/living/user)
+	SIGNAL_HANDLER
+
+	var/datum/gas_mixture/environment = user.loc.return_air()
+	if(!isnull(environment))
+		var/affected_temperature = environment.return_temperature()
+		var/affected_pressure = environment.return_pressure()
+		if(affected_temperature <= T0C || affected_pressure < ONE_ATMOSPHERE)
+			user.add_traits(gain_traits, type)
+		else
+			user.remove_traits(gain_traits, type)
 
 /datum/heretic_knowledge/mark/void_mark
 	name = "Mark of Void"
@@ -118,6 +135,16 @@
 /datum/heretic_knowledge/knowledge_ritual/void
 	next_knowledge = list(/datum/heretic_knowledge/spell/void_cone)
 	route = PATH_VOID
+
+/datum/heretic_knowledge/spell/void_conduit
+	name = "Void Conduit"
+	desc = "Grants you Void Conduit, a spell which summons a rift in space, which freezes the area and destroys airlocks and windows."
+	gain_text = ":) :) :) :) :) :) :) :) :) :) :) :)"
+	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase)
+	spell_to_add = /datum/action/cooldown/spell/conjure/void_conduit
+	cost = 1
+	route = PATH_VOID
+	depth = 7
 
 /datum/heretic_knowledge/spell/void_cone
 	name = "Void Blast"
