@@ -267,6 +267,16 @@
 	else
 		airlock.autoname = TRUE
 
+/obj/effect/mapping_helpers/airlock/inaccessible
+	name = "airlock inaccessible helper"
+	icon_state = "airlock_inaccessible"
+
+/obj/effect/mapping_helpers/airlock/inaccessible/payload(obj/machinery/door/airlock/airlock)
+	if(airlock.req_one_access != null)
+		log_mapping("[src] at [AREACOORD(src)] tried to set req_access, but req__one_access was already set!")
+	else
+		airlock.req_access += list(ACCESS_INACCESSIBLE)
+
 //air alarm helpers
 /obj/effect/mapping_helpers/airalarm
 	desc = "You shouldn't see this. Report it please."
