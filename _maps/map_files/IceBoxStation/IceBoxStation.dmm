@@ -67823,9 +67823,8 @@
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
 "ulE" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 1;
-	piping_layer = 2
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer2{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance)
