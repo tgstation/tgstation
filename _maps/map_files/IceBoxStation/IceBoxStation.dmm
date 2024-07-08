@@ -40216,9 +40216,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
-"maK" = (
-/turf/open/genturf,
-/area/space)
 "maM" = (
 /obj/item/paper/fluff/jobs/security/beepsky_mom,
 /obj/machinery/light/small/dim/directional/east,
@@ -78382,9 +78379,6 @@
 /obj/machinery/light/small/dim/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
-"xsD" = (
-/turf/open/genturf,
-/area/icemoon/underground/explored)
 "xsP" = (
 /obj/structure/table,
 /obj/item/folder/white,
@@ -127724,7 +127718,7 @@ xMq
 xMq
 xMq
 oSU
-xsD
+oSU
 oSU
 oSU
 oSU
@@ -127981,7 +127975,7 @@ iDt
 iDt
 xMq
 xMq
-xsD
+oSU
 oSU
 oSU
 oSU
@@ -128238,7 +128232,7 @@ iDt
 iDt
 iDt
 fIt
-xsD
+oSU
 oSU
 oSU
 oSU
@@ -128495,7 +128489,7 @@ iDt
 iDt
 iLP
 fIt
-xsD
+oSU
 oSU
 oSU
 oSU
@@ -128752,7 +128746,7 @@ iDt
 iDt
 ekN
 fIt
-xsD
+oSU
 oSU
 oSU
 oSU
@@ -129009,7 +129003,7 @@ iDt
 iDt
 nce
 fIt
-xsD
+oSU
 oSU
 oSU
 oSU
@@ -129266,7 +129260,7 @@ iDt
 iDt
 fIt
 fIt
-xsD
+oSU
 oSU
 oSU
 oSU
@@ -130549,8 +130543,8 @@ oSU
 oSU
 oSU
 oSU
-maK
-maK
+oSU
+oSU
 oSU
 oSU
 oSU
