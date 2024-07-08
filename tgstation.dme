@@ -6147,6 +6147,7 @@
 #include "code\modules\vending\security.dm"
 #include "code\modules\vending\snack.dm"
 #include "code\modules\vending\sovietsoda.dm"
+#include "code\modules\vending\subtype.dm"
 #include "code\modules\vending\sustenance.dm"
 #include "code\modules\vending\toys.dm"
 #include "code\modules\vending\wardrobes.dm"
