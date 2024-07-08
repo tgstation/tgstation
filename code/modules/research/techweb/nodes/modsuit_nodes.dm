@@ -12,6 +12,7 @@
 		"mod_gauntlets",
 		"mod_boots",
 		"mod_plating_standard",
+		"mod_plating_civilian",
 		"mod_paint_kit",
 		"mod_storage",
 		"mod_plasma",
