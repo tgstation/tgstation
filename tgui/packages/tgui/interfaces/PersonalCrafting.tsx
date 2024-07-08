@@ -105,10 +105,15 @@ enum TABS {
 type AtomData = {
   name: string;
   is_reagent: BooleanLike;
+  icon: string;
 };
 
 type Atoms = {
   [key: number]: number;
+};
+
+type Icons = {
+  [key: number]: string;
 };
 
 type Material = {
@@ -118,7 +123,7 @@ type Material = {
 
 type Recipe = {
   ref: string;
-  icon: string;
+  id: number;
   name: string;
   desc: string;
   category: string;
@@ -151,11 +156,20 @@ type Data = {
   // Static
   diet: Diet;
   atom_data: AtomData[];
+  icon_data: Icons;
   recipes: Recipe[];
   categories: string[];
   material_occurences: Material[];
   foodtypes: string[];
   complexity: number;
+};
+
+const findIcon = (atom_id: number, data: Data): string => {
+  let icon: string = data.icon_data[atom_id];
+  if (!icon) {
+    icon = (data.mode ? 'cooking32x32' : 'crafting32x32') + ' a' + atom_id;
+  }
+  return icon;
 };
 
 export const PersonalCrafting = (props) => {
@@ -552,10 +566,12 @@ export const PersonalCrafting = (props) => {
 };
 
 const MaterialContent = (props) => {
-  const { atom_id, occurences } = props;
   const { data } = useBackend<Data>();
+
+  const { atom_id, occurences } = props;
   const name = data.atom_data[atom_id - 1].name;
-  const mode = data.mode;
+  const icon = findIcon(atom_id, data);
+
   return (
     <Stack>
       <Stack.Item>
@@ -564,10 +580,7 @@ const MaterialContent = (props) => {
           inline
           ml={-1.5}
           mr={-0.5}
-          className={classes([
-            mode ? 'cooking32x32' : 'crafting32x32',
-            'a' + atom_id,
-          ])}
+          className={icon}
         />
       </Stack.Item>
       <Stack.Item
@@ -632,7 +645,7 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
     <Section>
       <Stack my={-0.75}>
         <Stack.Item>
-          <Box className={item.icon} />
+          <Box className={findIcon(item.id, data)} />
         </Stack.Item>
         <Stack.Item grow>
           <Stack>
@@ -761,7 +774,7 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
 };
 
 const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
-  const { act } = useBackend<Data>();
+  const { act, data } = useBackend<Data>();
   return (
     <Section>
       <Stack>
@@ -772,7 +785,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
                 transform: 'scale(1.5)',
               }}
               m={'16px'}
-              className={item.icon}
+              className={findIcon(item.id, data)}
             />
           </Box>
         </Stack.Item>
@@ -934,9 +947,8 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
 
 const AtomContent = ({ atom_id, amount }) => {
   const { data } = useBackend<Data>();
-  const name = data.atom_data[atom_id - 1]?.name;
-  const is_reagent = data.atom_data[atom_id - 1]?.is_reagent;
-  const mode = data.mode;
+  const atom: AtomData = data.atom_data[atom_id - 1];
+
   return (
     <Box my={1}>
       <Box
@@ -944,14 +956,11 @@ const AtomContent = ({ atom_id, amount }) => {
         inline
         my={-1}
         mr={0.5}
-        className={classes([
-          mode ? 'cooking32x32' : 'crafting32x32',
-          'a' + atom_id,
-        ])}
+        className={findIcon(atom_id, data)}
       />
       <Box inline verticalAlign="middle">
-        {name}
-        {is_reagent ? `\xa0${amount}u` : amount > 1 && `\xa0${amount}x`}
+        {atom.name}
+        {atom.is_reagent ? `\xa0${amount}u` : amount > 1 && `\xa0${amount}x`}
       </Box>
     </Box>
   ) as any;
