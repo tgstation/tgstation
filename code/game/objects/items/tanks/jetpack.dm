@@ -12,8 +12,6 @@
 	var/gas_type = /datum/gas/oxygen
 	/// If the jetpack is currently active
 	var/on = FALSE
-	/// If the jetpack will have a speedboost in space/nograv or not
-	var/full_speed = TRUE
 	/// If the jetpack will stop when you stop moving
 	var/stabilize = FALSE
 	/// If our jetpack is disabled, from getting EMPd
