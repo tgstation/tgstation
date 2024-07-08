@@ -1197,7 +1197,8 @@
 
 /// Fetches embedding data
 /obj/projectile/proc/get_embed()
-	return embed_type ? (embed_data ||= get_embed_by_type(embed_type)) : null
+	RETURN_TYPE(/datum/embed_data)
+	return embed_type ? (embed_data ||= get_embed_by_type(embed_type)) : embed_data
 
 /obj/projectile/proc/set_embed(datum/embed_data/embed)
 	if(embed_data == embed)
