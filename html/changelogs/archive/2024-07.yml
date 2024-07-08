@@ -372,3 +372,37 @@
   - bugfix: 'Fixed the following shuttles flying in unexpected directions: Pubby escape
       pod,  Humpback emergency shuttle, Pubby monastery shuttle, Birdboat emergency
       shuttle, Birdshot emergency shuttle'
+2024-07-06:
+  00-Steven:
+  - image: Goody case locked/unlocked sprites have been swapped again, having a gap
+      for unlocked and no gap for locked.
+  ArcaneMusic:
+  - qol: Examining a windoor will now provide the construction steps, like other standard
+      buildable objects.
+  DaCoolBoss:
+  - code_imp: Cleaned up relic code.
+  - image: Added necrotech themed relics.
+  GoblinBackwards:
+  - bugfix: Firefighting backpack tank nozzle can be used to hit objects and destroy
+      atmos resin again.
+  MTandi:
+  - bugfix: Binary devices no longer ignore the volume of the output pipe network
+  - bugfix: Fixed the augmented organs experiment
+  OrionTheFox:
+  - image: fixed and touched up the icons for the Doorjack and Cryptographic Sequencer
+      (EMAG)
+  Seven:
+  - balance: Bloody footprint trails go a longer distance now.
+  SyncIt21:
+  - bugfix: Autolathe won't eat the borg omni tool
+  carlarctg:
+  - bugfix: Fixed temp n space adaptations not conflicting
+  - rscadd: Projectile Dampener field now reduces stuns and stamina damage from incoming
+      projectiles
+  hyperjll:
+  - bugfix: Reagent containers are no longer mysteriously fireproof.
+  mc-oofert:
+  - qol: CE and Engineer start with their hardhat as the respective welding hard hat
+      variant
+  necromanceranne:
+  - balance: Settlers are a bit slower on their steeds.
