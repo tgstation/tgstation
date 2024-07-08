@@ -449,11 +449,16 @@
 	addtimer(VARSET_CALLBACK(src, atom_integrity, atom_integrity), time_to_go + time_to_return) //set the health back (icon is updated on move)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, forceMove), loc), time_to_go + time_to_return) //we back boys
 	addtimer(VARSET_CALLBACK(src, dramatically_disappearing, FALSE), time_to_go + time_to_return) //also set the var back
-	addtimer(CALLBACK(src, PROC_REF(update_nearby_icons)), time_to_go + time_to_return)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), time_to_go + time_to_return)
 
 	var/obj/structure/grille/grill = take_grill ? (locate(/obj/structure/grille) in loc) : null
 	if(grill)
 		grill.temporary_shatter(time_to_go, time_to_return)
+
+/obj/structure/window/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(loc)
+		update_nearby_icons()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/spawner, 0)
 
