@@ -116,6 +116,9 @@
 	if(HAS_TRAIT(target, TRAIT_ANALGESIA))
 		speed_mod *= SURGERY_SPEED_TRAIT_ANALGESIA
 
+	if(HAS_TRAIT (target, TRAIT_STASIS))
+		to_chat(user, span_warning("[target] seems to be in stasis, it is impossible to work with [target] tissue!"))
+		speed_mod *= 5
 	var/implement_speed_mod = 1
 	if(implement_type) //this means it isn't a require hand or any item step.
 		implement_speed_mod = implements[implement_type] / 100.0
