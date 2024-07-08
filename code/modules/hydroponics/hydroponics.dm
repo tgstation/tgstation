@@ -249,7 +249,7 @@
 		// So we'll let it leak in, and move the water over.
 		set_recipient_reagents_holder(nutri_reagents)
 		reagents = nutri_reagents
-		process_request(dir = dir)
+		process_request(dir = dir, round_robin = FALSE)
 
 		// Move the leaked water from nutrients to... water
 		var/leaking_water_amount = nutri_reagents.get_reagent_amount(/datum/reagent/water)
@@ -267,7 +267,7 @@
 		process_request(
 			amount = extra_water_to_gather,
 			reagent = /datum/reagent/water,
-			dir = dir,
+			dir = dir
 		)
 
 	// Now transfer all remaining water in that buffer and clear it out.

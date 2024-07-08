@@ -123,7 +123,7 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = 2
 	flags_inv = HIDEEYES | HIDEFACE | HIDESNOUT
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	visor_flags_inv = HIDEEYES | HIDEFACE | HIDESNOUT
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
@@ -158,8 +158,12 @@
 	if(!up)
 		. += visor_state
 
+/obj/item/clothing/head/utility/hardhat/welding/up
+	up = TRUE // for calls to worn_overlays before init (prefs)
+
 /obj/item/clothing/head/utility/hardhat/welding/up/Initialize(mapload)
 	. = ..()
+	up = FALSE
 	visor_toggling()
 
 /obj/item/clothing/head/utility/hardhat/welding/orange
@@ -179,8 +183,12 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
+/obj/item/clothing/head/utility/hardhat/welding/white/up
+	up = TRUE // for calls to worn_overlays before init (prefs)
+
 /obj/item/clothing/head/utility/hardhat/welding/white/up/Initialize(mapload)
 	. = ..()
+	up = FALSE
 	visor_toggling()
 
 

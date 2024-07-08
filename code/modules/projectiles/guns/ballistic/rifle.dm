@@ -159,6 +159,7 @@
 		You are now probably one of the few people in the universe to ever hold an \"Obrez Moderna\". \
 		All you had to do was take an allen wrench to the stock to take it off. But no, you just had to \
 		go for the saw."
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/phasic
 
 /obj/item/gun/ballistic/rifle/boltaction/prime/Initialize(mapload)
 	. = ..()

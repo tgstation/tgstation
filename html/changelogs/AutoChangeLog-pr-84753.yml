@@ -1,0 +1,4 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - bugfix: "fixed an unrestricted airlock in metastation brig maints"

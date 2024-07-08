@@ -1,5 +1,6 @@
+import { Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { Objective, ObjectivePrintout } from './common/Objectives';
 
