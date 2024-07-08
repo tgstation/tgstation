@@ -31351,7 +31351,6 @@
 /obj/structure/fireaxecabinet/mechremoval/directional/east,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/robotics/lab)
 "kZg" = (
