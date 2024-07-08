@@ -294,7 +294,7 @@
 	max_integrity = 300
 	var/active = FALSE
 	var/locked = TRUE
-	var/shield_range = 8
+	var/shield_range = 12 //monke edit
 	var/obj/structure/cable/attached // the attached cable
 
 /obj/machinery/power/shieldwallgen/xenobiologyaccess //use in xenobiology containment
