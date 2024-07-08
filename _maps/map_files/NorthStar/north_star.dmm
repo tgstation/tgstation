@@ -26868,6 +26868,7 @@
 /obj/item/circuitboard/machine/exoscanner,
 /obj/item/circuitboard/machine/exoscanner,
 /obj/item/circuitboard/machine/exoscanner,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/corner,
 /area/station/cargo/drone_bay)
 "haj" = (
@@ -38757,6 +38758,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/structure/sign/departments/exodrone/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "kcZ" = (
@@ -69918,7 +69920,6 @@
 	pixel_y = 2
 	},
 /obj/structure/rack,
-/obj/machinery/firealarm/directional/east,
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/corner{
 	dir = 1
