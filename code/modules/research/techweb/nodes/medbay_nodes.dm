@@ -28,6 +28,7 @@
 		"syringe",
 		"dropper",
 		"pillbottle",
+		"xlarge_beaker",
 	)
 	experiments_to_unlock = list(
 		/datum/experiment/autopsy/human,
@@ -43,7 +44,6 @@
 	description = "Synthesizing complex chemicals from electricity and thin air... Don't ask how..."
 	prereq_ids = list(TECHWEB_NODE_MEDBAY_EQUIP)
 	design_ids = list(
-		"xlarge_beaker",
 		"med_spray_bottle",
 		"medigel",
 		"medipen_refiller",
@@ -53,6 +53,7 @@
 		"portable_chem_mixer",
 		"chem_heater",
 		"w-recycler",
+		"meta_beaker",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
@@ -66,7 +67,6 @@
 		"plumbing_rcd_service",
 		"plunger",
 		"fluid_ducts",
-		"meta_beaker",
 		"piercesyringe",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
