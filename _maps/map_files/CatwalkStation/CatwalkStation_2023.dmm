@@ -366,7 +366,6 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
 "ahV" = (
-/obj/machinery/door/airlock/virology,
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 4
 	},
@@ -375,6 +374,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/machinery/door/airlock/virology{
+	name = "Cytology Lab"
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/cytology)
 "aia" = (
@@ -3778,9 +3780,6 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/library)
 "btw" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Security Office"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
@@ -3789,6 +3788,9 @@
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/machinery/door/airlock/security/glass{
+	name = "Security Post - Science"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
 "btC" = (
@@ -6331,10 +6333,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/obj/machinery/door/airlock/security/glass{
-	name = "Engineering Security Post"
-	},
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/machinery/door/airlock/security/glass{
+	name = "Security Post - Engineering"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/engineering)
 "cik" = (
@@ -9980,12 +9982,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/virology,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/machinery/door/airlock/virology/glass{
+	name = "Cytology Lab"
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -13733,9 +13737,6 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
 "eJb" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Medbay Security Post"
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -13743,6 +13744,10 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/door/airlock/security/glass{
+	name = "Security Post - Medbay"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "eJL" = (
@@ -14814,12 +14819,10 @@
 /turf/open/floor/glass,
 /area/station/science/zoo)
 "fei" = (
-/obj/machinery/door/airlock/research{
-	glass = 1;
-	name = "Slime Euthanization Chamber";
-	opacity = 0
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/machinery/door/airlock/research/glass{
+	name = "Slime Euthanization Chamber"
+	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "feA" = (
@@ -17436,9 +17439,11 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/research/glass,
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/science/robotics,
+/obj/machinery/door/airlock/research/glass{
+	name = "Robotics Workshop"
+	},
 /turf/open/floor/iron,
 /area/station/science/robotics)
 "fXO" = (
@@ -23121,9 +23126,11 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "hPP" = (
-/obj/machinery/door/airlock/research/glass,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/machinery/door/airlock/research/glass{
+	name = "Science Console Access"
+	},
 /turf/open/floor/iron/white/textured,
 /area/station/science/research)
 "hPQ" = (
@@ -25448,14 +25455,14 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "iEq" = (
-/obj/machinery/door/airlock/research{
-	name = "Cytology Access"
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/science/general,
+/obj/machinery/door/airlock/research/glass{
+	name = "Xenobiology Access"
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "iEv" = (
@@ -26361,10 +26368,10 @@
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "iUl" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/virology{
+/obj/effect/mapping_helpers/airlock/access/all/science/genetics,
+/obj/machinery/door/airlock/virology/glass{
 	name = "Genetics Lab"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/science/genetics,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/genetics)
 "iUs" = (
@@ -28131,8 +28138,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/airlock/research,
 /obj/effect/mapping_helpers/airlock/access/all/science/robotics,
+/obj/machinery/door/airlock/research/glass{
+	name = "Robotics Workshop"
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "jxU" = (
@@ -38541,7 +38550,9 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "mWV" = (
-/obj/machinery/door/airlock/virology,
+/obj/machinery/door/airlock/virology{
+	name = "Cytology Lab"
+	},
 /obj/machinery/duct,
 /obj/effect/turf_decal/tile/dark_green/half/contrasted{
 	dir = 8
@@ -48373,6 +48384,18 @@
 /obj/machinery/light/blacklight/directional/south,
 /turf/open/floor/eighties,
 /area/station/maintenance/hallway/abandoned_recreation)
+"qqv" = (
+/obj/machinery/door/window/brigdoor/left/directional/north{
+	name = "Creature Pen";
+	req_access = list("xenobiology");
+	dir = 4
+	},
+/obj/machinery/door/window/brigdoor/right/directional/west{
+	name = "Creature Pen";
+	req_access = list("xenobiology")
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "qqz" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -54989,6 +55012,15 @@
 /obj/structure/disposalpipe/trunk/multiz{
 	dir = 4
 	},
+/obj/machinery/door/window/brigdoor/left/directional/north{
+	name = "Creature Pen";
+	req_access = list("xenobiology");
+	dir = 4
+	},
+/obj/machinery/door/window/brigdoor/right/directional/west{
+	name = "Creature Pen";
+	req_access = list("xenobiology")
+	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "sEt" = (
@@ -60643,10 +60675,12 @@
 /area/space)
 "uyc" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/research,
 /obj/effect/mapping_helpers/airlock/access/all/science/robotics,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/door/airlock/research/glass{
+	name = "Robotics Workshop"
 	},
 /turf/open/floor/iron,
 /area/station/science/robotics)
@@ -65022,7 +65056,7 @@
 /area/station/commons/storage/primary)
 "vZd" = (
 /obj/effect/turf_decal/tile/dark_green/fourcorners,
-/obj/structure/railing/corner/end{
+/obj/structure/railing/corner/end/flip{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -65172,6 +65206,15 @@
 "wbR" = (
 /obj/structure/disposalpipe/trunk/multiz{
 	dir = 8
+	},
+/obj/machinery/door/window/brigdoor/left/directional/north{
+	name = "Creature Pen";
+	req_access = list("xenobiology");
+	dir = 4
+	},
+/obj/machinery/door/window/brigdoor/right/directional/west{
+	name = "Creature Pen";
+	req_access = list("xenobiology")
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -69346,11 +69389,11 @@
 /turf/open/floor/iron/freezer,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "xAs" = (
-/obj/machinery/door/window/left/directional/south{
-	dir = 1;
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/door/window/brigdoor/left/directional/north{
+	req_access = list("xenobiology");
 	name = "Maximum Security Test Chamber"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "xAu" = (
@@ -109379,7 +109422,7 @@ pzl
 arT
 nsI
 arT
-wps
+qqv
 lqK
 wbR
 lqK
@@ -110150,7 +110193,7 @@ aBF
 arT
 kcM
 arT
-wps
+qqv
 lqK
 sEn
 lqK
