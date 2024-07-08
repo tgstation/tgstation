@@ -112,7 +112,6 @@
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/assembly/control/controller_item = tool
 		id = controller_item.id
-		to_chat(user, span_notice("You change the ID to [id]."))
 		balloon_alert(user, "id changed")
 		return ITEM_INTERACT_SUCCESS
 
