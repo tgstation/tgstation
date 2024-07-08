@@ -76,6 +76,9 @@
 			targeted = null
 		return
 
+	if (targeted == user)
+		return
+
 	targeted = user
 	RegisterSignal(targeted, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
@@ -90,6 +93,9 @@
 /datum/component/speechmod/proc/on_implanted(datum/source, mob/living/carbon/receiver)
 	SIGNAL_HANDLER
 
+	if (targeted == receiver)
+		return
+
 	targeted = receiver
 	RegisterSignal(targeted, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
@@ -103,6 +109,9 @@
 
 /datum/component/speechmod/proc/on_mutation_gained(datum/source, mob/living/carbon/human/owner)
 	SIGNAL_HANDLER
+
+	if (targeted == owner)
+		return
 
 	targeted = owner
 	RegisterSignal(targeted, COMSIG_MOB_SAY, PROC_REF(handle_speech))
