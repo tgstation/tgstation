@@ -389,11 +389,11 @@
 	 * The number of links to perform. the chance of a closet being linked are about 1 in 10
 	 * There are more than 220 roundstart closets on meta, so, about 22 closets will be affected on average.
 	 */
-	var/number_of_links = round(length(roundstart_non_secure_closets) * (rand(390, 430)*0.0001), 1)
+	var/number_of_links = round(length(roundstart_closets) * (rand(300, 430)*0.0001), 1)
 	for(var/repetition in 1 to number_of_links)
 		var/list/targets = list()
-		for(var/how_many in 1 to min(closets_left, rand(2,3)))
-			targets += pick_n_take(roundstart_non_secure_closets)
+		for(var/how_many in 1 to rand(2,3))
+			targets += pick_n_take(roundstart_closets)
 		GLOB.eigenstate_manager.create_new_link(targets)
 
 /datum/station_trait/triple_ai
