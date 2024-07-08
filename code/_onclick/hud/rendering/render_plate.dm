@@ -504,9 +504,11 @@
  */
 /atom/movable/screen/plane_master/proc/offset_relay(atom/movable/render_plane_relay/rpr, new_offset)
 	var/base_relay_plane = PLANE_TO_TRUE(rpr.plane)
+	var/old_offset = PLANE_TO_OFFSET(rpr.plane)
 	rpr.plane = GET_NEW_PLANE(base_relay_plane, new_offset)
 
-	var/old_layer = (plane + abs(LOWEST_EVER_PLANE * 30))
+	var/old_offset_plane = real_plane - (PLANE_RANGE * old_offset)
+	var/old_layer = (old_offset_plane + abs(LOWEST_EVER_PLANE * 30))
 	if(rpr.layer != old_layer) // Avoid overriding custom-set layers
 		return
 
