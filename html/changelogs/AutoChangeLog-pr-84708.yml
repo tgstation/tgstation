@@ -1,0 +1,4 @@
+author: "FernandoJ8"
+delete-after: True
+changes:
+  - bugfix: "humanoid species featured are randomized correctly once again"

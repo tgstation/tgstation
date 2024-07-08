@@ -106,6 +106,7 @@
 		return // we don't care
 	var/payload_type = source.shrapnel_type
 	var/obj/item/payload = new payload_type(get_turf(hit))
+	payload.set_embed(source.get_embed())
 	if(istype(payload, /obj/item/shrapnel/bullet))
 		payload.name = source.name
 	SEND_SIGNAL(source, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED, payload)

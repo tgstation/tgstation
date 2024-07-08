@@ -67135,6 +67135,9 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
+"ubh" = (
+/turf/open/openspace/xenobio,
+/area/station/science/xenobiology)
 "ubi" = (
 /turf/open/misc/asteroid/snow/coldroom,
 /area/icemoon/underground/explored)
@@ -67823,9 +67826,8 @@
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
 "ulE" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 1;
-	piping_layer = 2
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer2{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance)
@@ -67939,6 +67941,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
+/obj/structure/sign/departments/exodrone/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "unO" = (
@@ -254508,12 +254511,12 @@ wHc
 aEA
 dng
 dAB
-ily
-ily
-ily
-ily
-ily
-ily
+ubh
+ubh
+ubh
+ubh
+ubh
+ubh
 qLY
 pnA
 qFp
@@ -254765,12 +254768,12 @@ wHc
 fPO
 pTU
 itt
-ily
-ily
-ily
-ily
-ily
-ily
+ubh
+ubh
+ubh
+ubh
+ubh
+ubh
 qLY
 baF
 fvk
@@ -255022,12 +255025,12 @@ wHc
 oMT
 emK
 uvU
-ily
-ily
-ily
-ily
-ily
-ily
+ubh
+ubh
+ubh
+ubh
+ubh
+ubh
 qLY
 oCA
 fvk
