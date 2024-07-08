@@ -243,14 +243,39 @@
 /datum/component/riding/vehicle/scooter/skateboard/hover/proc/hover_check(is_moving = FALSE)
 	var/atom/movable/movable = parent
 	if(!is_space_or_openspace(movable.loc))
-		override_allow_spacemove = TRUE
+		on_hover_enabled()
 		return
 	var/turf/open/our_turf = movable.loc
 	var/turf/turf_below = GET_TURF_BELOW(our_turf)
 	if(our_turf.zPassOut(DOWN) && (isnull(turf_below) || (is_space_or_openspace(turf_below) && turf_below.zPassIn(DOWN) && turf_below.zPassOut(DOWN))))
-		override_allow_spacemove = FALSE
-		if(turf_below)
-			our_turf.zFall(movable, falling_from_move = is_moving)
+		on_hover_fail(our_turf, turf_below, is_moving)
+	else
+		on_hover_enabled()
+
+///Called by hover_check() when the hoverboard is on a valid turf.
+/datum/component/riding/vehicle/scooter/skateboard/hover/proc/on_hover_enabled()
+	override_allow_spacemove = TRUE
+
+///Called by hover_check() when the hoverboard is on space or open space turf without a support underneath it.
+/datum/component/riding/vehicle/scooter/skateboard/hover/proc/on_hover_fail(turf/open/our_turf, turf/turf_below, is_moving)
+	override_allow_spacemove = FALSE
+	if(turf_below)
+		our_turf.zFall(parent, falling_from_move = is_moving)
+
+/datum/component/riding/vehicle/scooter/skateboard/hover/holy
+	var/is_slown_down = FALSE
+
+/datum/component/riding/vehicle/scooter/skateboard/hover/holy/on_hover_enabled()
+	if(!is_slown_down)
+		return
+	is_slown_down = FALSE
+	vehicle_move_delay -= 1
+
+/datum/component/riding/vehicle/scooter/skateboard/hover/holy/on_hover_fail(turf/open/our_turf, turf/turf_below, is_moving)
+	if(is_slown_down)
+		return
+	is_slown_down = TRUE
+	vehicle_move_delay += 1
 
 /datum/component/riding/vehicle/scooter/skateboard/wheelys
 	vehicle_move_delay = 0
