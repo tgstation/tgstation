@@ -1,0 +1,5 @@
+author: "Syndie Kate"
+delete-after: True
+changes:
+  - bugfix: "Metastation xenobiology fields work now"
+  - balance: "Shield generators range is now 12, from 8."
