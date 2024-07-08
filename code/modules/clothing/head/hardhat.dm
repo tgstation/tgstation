@@ -123,10 +123,10 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = 2
 	flags_inv = HIDEEYES | HIDEFACE | HIDESNOUT
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | PEPPERPROOF
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	visor_flags_inv = HIDEEYES | HIDEFACE | HIDESNOUT
-	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	///Icon state of the welding visor.
 	var/visor_state = "weldvisor"
 
