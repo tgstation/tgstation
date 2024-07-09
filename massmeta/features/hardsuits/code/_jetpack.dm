@@ -9,7 +9,6 @@
 	volume = 1
 	slot_flags = null
 	gas_type = null
-	full_speed = FALSE
 	var/datum/gas_mixture/tempair_contents
 	var/obj/item/tank/internals/tank = null
 	var/mob/living/carbon/human/active_user = null
