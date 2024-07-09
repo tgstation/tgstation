@@ -27,7 +27,7 @@
 	///determines the sound that plays when printing a report
 	var/print_sound_mode = INSPECTOR_PRINT_SOUND_MODE_NORMAL
 	///Power cell used to power the scanner. Paths g
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/crap
+	var/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/crap
 	///Cell cover status
 	var/cell_cover_open = FALSE
 	///Energy used per print.
@@ -62,7 +62,7 @@
 	return TRUE
 
 /obj/item/inspector/attackby(obj/item/I, mob/user, params)
-	if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
+	if(cell_cover_open && istype(I, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell installed."))
 			return

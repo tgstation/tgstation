@@ -354,7 +354,7 @@
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/pipe = 1,
 		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stock_parts/cell = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 		/obj/item/assembly/mousetrap = 1,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH)
@@ -367,10 +367,35 @@
 	reqs = list(
 		/obj/item/gun/energy/disabler/smoothbore = 1,
 		/obj/item/stack/sheet/mineral/gold = 5,
-		/obj/item/stock_parts/cell/hyper = 1,
+		/obj/item/stock_parts/power_store/cell/hyper = 1,
 		/datum/reagent/reaction_agent/speed_agent = 10,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 20 SECONDS
 	category = CAT_WEAPON_RANGED
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
+
+/datum/crafting_recipe/shortbow
+	name = "Shortbow"
+	result = /obj/item/gun/ballistic/bow/shortbow
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 4,
+		/obj/item/stack/sheet/cloth = 2,
+		/obj/item/stack/sheet/iron = 1,
+	)
+	tool_paths = list(
+		/obj/item/hatchet,
+	)
+	time = 30 SECONDS
+	category = CAT_WEAPON_RANGED
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
+
+/datum/crafting_recipe/photoncannon
+	name = "Photon Cannon"
+	result = /obj/item/gun/energy/photon
+	reqs = list(
+		/obj/item/assembly/signaler/anomaly/flux = 1,
+		/obj/item/weaponcrafting/gunkit/photon = 1,
+	)
+	time = 10 SECONDS
+	category = CAT_WEAPON_RANGED

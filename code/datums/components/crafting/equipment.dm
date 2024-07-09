@@ -58,12 +58,12 @@
 		/obj/item/stack/rods = 8,
 		/obj/item/stock_parts/servo = 2,
 		/obj/item/stock_parts/capacitor = 1,
-		/obj/item/stock_parts/cell = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 	)
 	parts = list(
 		/obj/item/stock_parts/servo = 2,
 		/obj/item/stock_parts/capacitor = 1,
-		/obj/item/stock_parts/cell = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 	)
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
 	time = 20 SECONDS
@@ -257,6 +257,17 @@
 	reqs = list(
 		/obj/item/tank/internals/oxygen = 1,
 		/obj/item/stack/cable_coil = 15,
+	)
+	category = CAT_EQUIPMENT
+	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER)
+
+/datum/crafting_recipe/arrow_quiver
+	name = "Archery Quiver"
+	result = /obj/item/storage/bag/quiver/lesser
+	time = 10
+	reqs = list(
+		/obj/item/stack/sheet/leather = 4,
+		/obj/item/stack/sheet/cardboard = 4
 	)
 	category = CAT_EQUIPMENT
 	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER)

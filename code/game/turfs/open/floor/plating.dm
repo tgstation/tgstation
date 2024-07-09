@@ -176,8 +176,8 @@
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
 
-/turf/open/floor/plating/foam/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	return user.combat_mode ? ITEM_INTERACT_SKIP_TO_ATTACK : ITEM_INTERACT_BLOCKING // Fuck you
+/turf/open/floor/plating/foam/welder_act(mob/living/user, obj/item/I)
+	return NONE // Fuck you
 
 //reinforced plating deconstruction states
 #define PLATE_INTACT 0

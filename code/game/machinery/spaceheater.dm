@@ -2,7 +2,7 @@
 #define HEATER_MODE_HEAT "heat"
 #define HEATER_MODE_COOL "cool"
 #define HEATER_MODE_AUTO "auto"
-#define BASE_HEATING_ENERGY (40 KILO JOULES)
+#define BASE_HEATING_ENERGY (STANDARD_CELL_RATE * 4)
 
 /obj/machinery/space_heater
 	anchored = FALSE
@@ -20,7 +20,7 @@
 	//We don't use area power, we always use the cell
 	use_power = NO_POWER_USE
 	///The cell we spawn with
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell
+	var/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/high
 	///Is the machine on?
 	var/on = FALSE
 	///What is the mode we are in now?
@@ -30,9 +30,9 @@
 	///The temperature we trying to get to
 	var/target_temperature = T20C
 	///How much heat/cold we can deliver
-	var/heating_energy = 40 KILO JOULES
+	var/heating_energy = BASE_HEATING_ENERGY
 	///How efficiently we can deliver that heat/cold (higher indicates less cell consumption)
-	var/efficiency = 20
+	var/efficiency = 200
 	///The amount of degrees above and below the target temperature for us to change mode to heater or cooler
 	var/temperature_tolerance = 1
 	///What's the middle point of our settable temperature (30 °C)
@@ -178,8 +178,8 @@
 
 	heating_energy = laser * BASE_HEATING_ENERGY
 
-	settable_temperature_range = cap * 30
-	efficiency = (cap + 1) * 10
+	settable_temperature_range = cap * initial(settable_temperature_range)
+	efficiency = (cap + 1) * initial(efficiency) * 0.5
 
 	target_temperature = clamp(target_temperature,
 		max(settable_temperature_median - settable_temperature_range, TCMB),
@@ -208,7 +208,7 @@
 	if(default_deconstruction_crowbar(I))
 		return TRUE
 
-	if(istype(I, /obj/item/stock_parts/cell))
+	if(istype(I, /obj/item/stock_parts/power_store/cell))
 		if(!panel_open)
 			to_chat(user, span_warning("The hatch must be open to insert a power cell!"))
 			return
@@ -389,7 +389,7 @@
 	add_fingerprint(user)
 	if(default_deconstruction_crowbar(item))
 		return
-	if(istype(item, /obj/item/stock_parts/cell))
+	if(istype(item, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			to_chat(user, span_warning("There is already a power cell inside!"))
 			return
@@ -468,7 +468,7 @@
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		capacitors_rating += capacitor.tier
 
-	heating_energy = lasers_rating * 20000
+	heating_energy = lasers_rating * BASE_HEATING_ENERGY
 
 	settable_temperature_range = capacitors_rating * 50 //-20 - 80 at base
 	efficiency = (capacitors_rating + 1) * 10

@@ -186,7 +186,7 @@
 /obj/item/melee/energy/sword/pirate{
 	pixel_y = 10
 	},
-/obj/item/clothing/mask/cigarette/cigar{
+/obj/item/cigarette/cigar{
 	pixel_x = 4
 	},
 /obj/item/lighter{

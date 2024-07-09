@@ -1,5 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Drone fabricator subtypes that spawn pre-loaded now actually start with materials inside."
-  - bugfix: "The binocular fabriactor on the MediSim shuttle works again."
