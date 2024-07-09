@@ -173,7 +173,6 @@
 /obj/item/borg/lollipop/ice_cream
 	name = "ice cream fabricator"
 	desc = "Reward humans with vanilla ice cream. Can't go wrong with it."
-	icon_state = "lollipop"
 	candy = 4
 	candymax = 4
 	charge_delay = 15 SECONDS
