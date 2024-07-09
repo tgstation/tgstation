@@ -1688,10 +1688,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/science/robotics/lab)
-"aAf" = (
-/obj/machinery/incident_display/delam,
-/turf/closed/wall/r_wall,
-/area/station/command/bridge)
 "aAi" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/table/wood/fancy/red,
@@ -41645,6 +41641,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/incident_display/bridge/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "mDw" = (
@@ -48144,6 +48141,7 @@
 "oxe" = (
 /obj/machinery/computer/cargo/request,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
+/obj/machinery/incident_display/bridge/directional/north,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "oxh" = (
@@ -242658,7 +242656,7 @@ xwC
 utR
 pAZ
 bln
-aAf
+qWZ
 oxe
 vmj
 aqB

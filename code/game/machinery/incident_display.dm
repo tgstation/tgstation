@@ -73,6 +73,8 @@ DEFINE_BITFIELD(sign_features, list(
 	/// Cooldown until next advert
 	COOLDOWN_DECLARE(advert_cooldown)
 
+/obj/machinery/incident_display/bridge
+
 /obj/machinery/incident_display/delam
 	name = NAME_DELAM
 	desc = DESC_DELAM
@@ -85,6 +87,7 @@ DEFINE_BITFIELD(sign_features, list(
 	desc = DESC_TRAM
 	sign_features = DISPLAY_TRAM
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/bridge, 32)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/delam, 32)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 

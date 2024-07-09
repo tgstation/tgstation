@@ -41568,8 +41568,8 @@
 /area/station/command/bridge)
 "oOP" = (
 /obj/structure/cable,
-/obj/structure/fireaxecabinet/directional/south,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/machinery/incident_display/bridge/directional/south,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "oOR" = (
@@ -62043,6 +62043,7 @@
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 4
 	},
+/obj/structure/fireaxecabinet/directional/east,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "vQT" = (

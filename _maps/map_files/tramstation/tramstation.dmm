@@ -29028,7 +29028,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Command - Bridge North"
 	},
-/obj/machinery/incident_display/delam/directional/north,
+/obj/machinery/incident_display/bridge/directional/north,
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "jsW" = (
