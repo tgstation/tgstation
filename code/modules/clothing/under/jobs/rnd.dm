@@ -57,19 +57,25 @@
 /obj/item/clothing/under/rank/rnd/research_director/turtleneck
 	desc = "A Nanotrasen-purple turtleneck and black jeans, for a director with a superior sense of style."
 	name = "research director's turtleneck"
-	icon_state = "rdturtle"
+	icon_state = "rd_turtleneck"
 	inhand_icon_state = "p_suit"
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
+	greyscale_config = /datum/greyscale_config/rd_turtleneck
+	greyscale_config_worn = /datum/greyscale_config/rd_turtleneck/worn
+	greyscale_colors = "#7e1980#39393f#0f1117#d4d7df"
 
 /obj/item/clothing/under/rank/rnd/research_director/turtleneck/skirt
 	name = "research director's turtleneck skirt"
 	desc = "A Nanotrasen-purple turtleneck and a black skirt, for a director with a superior sense of style."
-	icon_state = "rdturtle_skirt"
+	icon_state = "rd_turtleneck_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	greyscale_config = /datum/greyscale_config/rd_turtleneck_skirt
+	greyscale_config_worn = /datum/greyscale_config/rd_turtleneck_skirt/worn
+	greyscale_colors = "#7e1980#39393f#0f1117#d4d7df"
 
 /obj/item/clothing/under/rank/rnd/scientist
 	name = "scientist's jumpsuit"
