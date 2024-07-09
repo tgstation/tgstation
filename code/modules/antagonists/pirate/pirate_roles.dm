@@ -208,7 +208,7 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval/special(mob/living/carbon/spawned_mob)
 	. = ..()
 	if(rank == "Footsoldier")
-		ADD_TRAIT(spawned_mob, TRAIT_NOGUNS, INNATE_TRAIT)
+		spawned_mob.add_traits(list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD), INNATE_TRAIT)
 		spawned_mob.AddComponent(/datum/component/unbreakable)
 		var/datum/action/cooldown/mob_cooldown/dash/dodge = new(spawned_mob)
 		dodge.Grant(spawned_mob)

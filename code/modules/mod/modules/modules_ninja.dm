@@ -177,10 +177,10 @@
 	var/accepted_type = /obj/item/energy_katana
 
 /obj/item/mod/module/weapon_recall/on_suit_activation()
-	ADD_TRAIT(mod.wearer, TRAIT_NOGUNS, MOD_TRAIT)
+	mod.wearer.add_traits(list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD), MOD_TRAIT)
 
 /obj/item/mod/module/weapon_recall/on_suit_deactivation(deleting = FALSE)
-	REMOVE_TRAIT(mod.wearer, TRAIT_NOGUNS, MOD_TRAIT)
+	mod.wearer.remove_traits(list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD), MOD_TRAIT)
 
 /obj/item/mod/module/weapon_recall/on_use()
 	if(!linked_weapon)

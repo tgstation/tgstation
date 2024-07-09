@@ -174,7 +174,7 @@
 		power_throw++
 	if(neckgrab_throw)
 		power_throw++
-	if(HAS_TRAIT(src, TRAIT_NOGUNS) && isgun(thrown_thing))
+	if(HAS_TRAIT(src, TRAIT_TOSS_GUN_HARD) && isgun(thrown_thing))
 		power_throw++
 	if(isitem(thrown_thing))
 		var/obj/item/thrown_item = thrown_thing

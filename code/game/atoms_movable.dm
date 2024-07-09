@@ -1291,11 +1291,6 @@
 /atom/movable/hitby(atom/movable/hitting_atom, skipcatch, hitpush = TRUE, blocked, datum/thrownthing/throwingdatum)
 	if(HAS_TRAIT(src, TRAIT_NO_THROW_HITPUSH))
 		hitpush = FALSE
-	var/mob/living/carbon/thrower = throwingdatum?.get_thrower()
-	if(HAS_TRAIT(thrower, TRAIT_NOGUNS) && isgun(hitting_atom)) //throw a gun at them when they don't expect it
-		var/mob/living/living_target = src
-		living_target.Knockdown(0.5 SECONDS)
-		living_target.apply_damage(10, BRUTE, thrower.zone_selected, wound_bonus = CANT_WOUND, attacking_item = hitting_atom)
 	if(!anchored && hitpush && (!throwingdatum || (throwingdatum.force >= (move_resist * MOVE_FORCE_PUSH_RATIO))))
 		step(src, hitting_atom.dir)
 	return ..()

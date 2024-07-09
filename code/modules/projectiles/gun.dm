@@ -126,6 +126,30 @@
 	suppressed = null
 	update_appearance()
 
+/obj/item/gun/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum) //throw a gun at them. They don't expect it.
+	. = ..()
+
+	var/mob/living/carbon/thrower = throwingdatum?.get_thrower()
+	if(!HAS_TRAIT(thrower, TRAIT_TOSS_GUN_HARD))
+		return
+	if(!isliving(hit_atom))
+		return
+	var/mob/living/living_target = hit_atom
+	living_target.Knockdown(0.5 SECONDS)
+	living_target.apply_damage(src.w_class > WEIGHT_CLASS_NORMAL ? 15 : 10, BRUTE, thrower.zone_selected, wound_bonus = CANT_WOUND, attacking_item = src)
+	if(!istype(src, /obj/item/gun/ballistic))
+		return
+	var/obj/item/gun/ballistic/ballistic_gun = src
+	if(ballistic_gun.internal_magazine)
+		ballistic_gun.attack_self()
+		return
+	if(!ballistic_gun.internal_magazine && ballistic_gun.magazine)
+		ballistic_gun.magazine.forceMove(drop_location())
+		ballistic_gun.magazine.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), 1, 1)
+		ballistic_gun.magazine = null
+		if(!ballistic_gun.bolt_locked)
+			ballistic_gun.rack()
+
 /obj/item/gun/examine(mob/user)
 	. = ..()
 	if(!pinless)
