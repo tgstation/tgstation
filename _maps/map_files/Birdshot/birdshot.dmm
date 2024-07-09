@@ -34466,11 +34466,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "lBJ" = (
-/obj/machinery/atmospherics/components/binary/pump/off/general/visible/layer1{
+/obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
-	name = "Plasma to Pure";
-	color = "#BF40BF";
-	icon_state = "pump_map-3"
+	name = "Plasma to Pure"
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
@@ -54448,9 +54446,6 @@
 /area/station/hallway/primary/port)
 "rZB" = (
 /obj/machinery/light/cold/directional/west,
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer2{
-	dir = 4
-	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "rZG" = (
