@@ -405,7 +405,8 @@
 	cyborg_base_icon = "engineer"
 	model_select_icon = "engineer"
 	model_traits = list(TRAIT_NEGATES_GRAVITY)
-	hat_offset = -4
+	hat_offset_x = list("north" = 0, "south" = 0, "east" = 4, "west" = -4, "northeast" = 4, "northwest" = -4, "southeast" = 4, "southwest" = -4)
+	hat_offset_y = list("north" = -4, "south" = -4, "east" = -4, "west" = -4, "northeast" = -4, "northwest" = -4, "southeast" = -4, "southwest" = -4)
 
 /obj/item/robot_model/janitor
 	name = "Janitor"
