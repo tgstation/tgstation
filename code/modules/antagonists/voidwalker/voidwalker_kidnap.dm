@@ -45,7 +45,7 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 	/// how much do we heal per food?
 	var/heal_per_food = 15
 	/// Traits given to the wisp driver
-	var/wisp_driver_traits = list(TRAIT_STASIS, TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT)
+	var/wisp_driver_traits = list(TRAIT_STASIS, TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_HANDS_BLOCKED)
 
 /obj/effect/wisp_mobile/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
@@ -57,11 +57,6 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 	driver.forceMove(src)
 	driver.add_traits(wisp_driver_traits, REF(src))
 	add_atom_colour(random_color(), FIXED_COLOUR_PRIORITY)
-
-	if(ishuman(driver))
-		var/mob/living/carbon/human/human_driver = driver
-		human_driver.set_handcuffed(new /obj/item/restraints/handcuffs/energy/void(human_driver))
-		human_driver.update_handcuffed()
 
 	addtimer(CALLBACK(driver, TYPE_PROC_REF(/atom/movable, forceMove), get_random_station_turf()), 60 SECONDS)
 
@@ -96,12 +91,6 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 	. = ..()
 
 	gone.remove_traits(wisp_driver_traits, REF(src))
-
-	if(ishuman(gone))
-		var/mob/living/carbon/human/freedom = gone
-		if(freedom.handcuffed)
-			qdel(freedom.handcuffed)
-
 	qdel(src)
 
 /// we only exist to be eaten by wisps for food 😔👊
