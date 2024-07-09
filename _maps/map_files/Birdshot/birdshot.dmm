@@ -35491,12 +35491,6 @@
 /obj/structure/broken_flooring/singular/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"lRc" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "lRh" = (
 /obj/effect/landmark/start/scientist,
 /obj/machinery/light/small/directional/north,
@@ -87912,7 +87906,7 @@ ylH
 nEl
 ejq
 tvN
-lRc
+moz
 moz
 nny
 nua
