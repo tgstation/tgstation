@@ -252,7 +252,7 @@
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 3
 	wound_bonus = -10
-	embedding = null
+	embed_type = null
 
 /obj/projectile/bullet/c38/holy/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()

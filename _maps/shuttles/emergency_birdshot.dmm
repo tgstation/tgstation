@@ -9,9 +9,6 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"ax" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/escape)
 "aQ" = (
 /obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/mineral/plastitanium/red,
@@ -88,10 +85,22 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
-"eS" = (
-/obj/structure/lattice,
-/obj/item/stack/rods/two,
-/turf/template_noop,
+"eY" = (
+/obj/machinery/light/small/directional/south,
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/bottle/vodka{
+	pixel_x = -6;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/cigarette/dromedary{
+	pixel_x = 8;
+	pixel_y = 15
+	},
+/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "fd" = (
 /obj/effect/decal/cleanable/plastic,
@@ -217,16 +226,6 @@
 /obj/item/trash/cheesie,
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/escape)
-"ll" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Emergency Shuttle Airlock"
-	},
-/obj/docking_port/mobile/emergency{
-	dir = 8;
-	name = "birdshot emergency shuttle"
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "lp" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
@@ -271,6 +270,10 @@
 	pixel_x = -5
 	},
 /turf/open/floor/glass/reinforced,
+/area/shuttle/escape)
+"mU" = (
+/obj/structure/lattice,
+/turf/template_noop,
 /area/shuttle/escape)
 "no" = (
 /obj/item/trash/popcorn/caramel,
@@ -392,10 +395,6 @@
 "rZ" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/shuttle/escape)
-"sw" = (
-/obj/structure/lattice,
-/turf/template_noop,
 /area/shuttle/escape)
 "sS" = (
 /obj/structure/chair/comfy/shuttle{
@@ -524,23 +523,6 @@
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"yx" = (
-/obj/machinery/light/small/directional/south,
-/obj/structure/table,
-/obj/item/reagent_containers/cup/glass/bottle/vodka{
-	pixel_x = -6;
-	pixel_y = 14
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/cigarette/dromedary{
-	pixel_x = 8;
-	pixel_y = 15
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
 "zq" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/power/shuttle_engine/heater,
@@ -552,6 +534,11 @@
 	},
 /obj/item/trash/can/food/beans,
 /turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Aw" = (
+/obj/structure/lattice,
+/obj/item/stack/rods/two,
+/turf/template_noop,
 /area/shuttle/escape)
 "Ay" = (
 /obj/item/shard{
@@ -802,6 +789,17 @@
 "MW" = (
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
+"NE" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	dir = 8;
+	name = "birdshot emergency shuttle";
+	port_direction = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "Oq" = (
 /obj/structure/chair{
 	dir = 1;
@@ -1001,24 +999,24 @@ nQ
 nQ
 nQ
 nQ
-ax
-LX
-rZ
-LX
-ax
-nQ
-nQ
-nQ
-ax
-rZ
 LX
 LX
 rZ
 LX
 LX
+nQ
+nQ
+nQ
+LX
+rZ
 LX
 LX
-ax
+rZ
+LX
+LX
+LX
+LX
+LX
 nQ
 "}
 (2,1,1) = {"
@@ -1030,12 +1028,12 @@ nQ
 nQ
 nQ
 nQ
-ax
+LX
 LX
 LX
 ON
 Ko
-yx
+eY
 LX
 rZ
 LX
@@ -1058,7 +1056,7 @@ nQ
 nQ
 nQ
 nQ
-ax
+LX
 rZ
 rZ
 LX
@@ -1086,7 +1084,7 @@ vk
 (4,1,1) = {"
 nQ
 nQ
-ax
+LX
 LX
 LX
 LX
@@ -1183,26 +1181,26 @@ WH
 De
 ye
 LX
-sw
+mU
 nQ
-ax
+LX
 LX
 LX
 hF
 LX
 LX
-ax
+LX
 nQ
 nQ
-sw
+mU
 Sm
 hF
 LX
 rZ
 LX
-ax
+LX
 nQ
-ax
+LX
 LX
 nQ
 nQ
@@ -1214,23 +1212,23 @@ yj
 MW
 rZ
 rZ
-sw
-sw
-sw
-sw
+mU
+mU
+mU
+mU
 IN
 pl
 ry
-sw
-sw
-sw
-sw
-sw
+mU
+mU
+mU
+mU
+mU
 mp
 ig
 Kh
 Uh
-sw
+mU
 nQ
 nQ
 nQ
@@ -1248,11 +1246,11 @@ nQ
 nQ
 nQ
 nQ
-sw
+mU
 IN
 cr
 oC
-sw
+mU
 nQ
 nQ
 nQ
@@ -1261,7 +1259,7 @@ HS
 ig
 fd
 AK
-sw
+mU
 nQ
 nQ
 nQ
@@ -1276,23 +1274,23 @@ nO
 MW
 rZ
 rZ
-sw
-sw
-sw
-sw
+mU
+mU
+mU
+mU
 bx
 ig
 ry
-sw
-sw
-sw
-sw
-sw
+mU
+mU
+mU
+mU
+mU
 Vo
 jt
 oN
 IK
-sw
+mU
 nQ
 nQ
 nQ
@@ -1307,27 +1305,27 @@ xg
 De
 eR
 LX
-sw
+mU
 nQ
-ax
+LX
 LX
 LX
 hF
 LX
 LX
-ax
+LX
 nQ
 nQ
-sw
+mU
 Sm
 hF
 LX
 rZ
 LX
-ax
+LX
 nQ
 bo
-sw
+mU
 nQ
 nQ
 "}
@@ -1359,7 +1357,7 @@ ho
 LX
 LX
 RW
-sw
+mU
 nQ
 "}
 (13,1,1) = {"
@@ -1389,14 +1387,14 @@ Ly
 Oq
 tb
 MC
-sw
+mU
 LX
 ST
 "}
 (14,1,1) = {"
 nQ
 nQ
-ax
+LX
 LX
 LX
 LX
@@ -1422,7 +1420,7 @@ LX
 VA
 Em
 Ay
-sw
+mU
 "}
 (15,1,1) = {"
 nQ
@@ -1430,7 +1428,7 @@ nQ
 nQ
 nQ
 nQ
-ax
+LX
 rZ
 rZ
 LX
@@ -1451,7 +1449,7 @@ tu
 xC
 tj
 Iv
-sw
+mU
 fv
 ce
 "}
@@ -1464,7 +1462,7 @@ nQ
 nQ
 nQ
 nQ
-ax
+LX
 LX
 LX
 dv
@@ -1481,7 +1479,7 @@ eH
 oL
 ho
 kH
-eS
+Aw
 sU
 LX
 bo
@@ -1497,16 +1495,16 @@ nQ
 nQ
 nQ
 nQ
-ax
+LX
 Xy
 rZ
 Xy
-ax
+LX
 nQ
 nQ
 nQ
-ax
-ll
+LX
+NE
 LX
 lp
 rZ
@@ -1514,6 +1512,6 @@ LX
 rZ
 rZ
 rZ
-ax
+LX
 nQ
 "}

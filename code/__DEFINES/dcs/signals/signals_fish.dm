@@ -1,6 +1,12 @@
 // Aquarium related signals
 #define COMSIG_AQUARIUM_SURFACE_CHANGED "aquarium_surface_changed"
 #define COMSIG_AQUARIUM_FLUID_CHANGED "aquarium_fluid_changed"
+///Called on aquarium/attackby: (aquarium)
+#define COMSIG_TRY_INSERTING_IN_AQUARIUM "item_try_inserting_in_aquarium"
+	///The item will be inserted into the aquarium
+	#define COMSIG_CAN_INSERT_IN_AQUARIUM (1<<0)
+	///The item won't be inserted into the aquarium, but will early return attackby anyway.
+	#define COMSIG_CANNOT_INSERT_IN_AQUARIUM (1<<1)
 
 // Fish signals
 #define COMSIG_FISH_STATUS_CHANGED "fish_status_changed"
