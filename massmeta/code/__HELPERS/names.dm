@@ -37,7 +37,7 @@
 							. += generate_random_name()
 
 					if(2)
-						. += pick(GLOB.jobs)//Returns a job.
+						. += LOWER_TEXT(pick(GLOB.jobs))//Returns a job.
 				safety -= 1
 			if(2)
 				switch(rand(1,2))//Food, drinks, or places. Only selectable once.
