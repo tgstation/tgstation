@@ -38,18 +38,13 @@
 	var/mob/living/carbon/human/hewmon = target_mob
 
 	if(hewmon.has_trauma_type(/datum/brain_trauma/voided))
-		// explode into glass wooooohhoooo
-		var/static/list/shards = list(/obj/item/shard = 2, /obj/item/shard/plasma = 1, /obj/item/shard/titanium = 1, /obj/item/shard/plastitanium = 1)
-		for(var/i in 1 to rand(4, 6))
-			var/shard_type = pick_weight(shards)
-			var/obj/shard = new shard_type (get_turf(hewmon))
-			shard.pixel_x = rand(-16, 16)
-			shard.pixel_y = rand(-16, 16)
+		var/turf/spawnloc = get_turf(hewmon)
+		new /obj/effect/spawner/glass_shards (spawnloc)
 
 		var/obj/item/organ/brain = hewmon.get_organ_by_type(/obj/item/organ/internal/brain)
 		if(brain)
 			brain.Remove(hewmon)
-			brain.forceMove(get_turf(hewmon))
+			brain.forceMove(spawnloc)
 
 		playsound(hewmon, SFX_SHATTER, 100)
 		qdel(hewmon)
@@ -59,31 +54,3 @@
 		target_mob.balloon_alert(user, "is in crit!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	return ..()
-
-/datum/component/temporary_glass_shatterer/Initialize(...)
-	. = ..()
-
-	if(!isitem(parent))
-		return COMPONENT_INCOMPATIBLE
-
-	RegisterSignal(parent, COMSIG_ITEM_INTERACTING_WITH_ATOM, PROC_REF(on_tap))
-
-/datum/component/temporary_glass_shatterer/proc/on_tap(obj/item/parent, mob/tapper, atom/target)
-	SIGNAL_HANDLER
-
-	if(istype(target, /obj/structure/window))
-		var/obj/structure/grille/grille = locate(/obj/structure/grille) in get_turf(target)
-		if(grille.shock(tapper, 100))
-			return
-
-		var/obj/structure/window/window = target
-		window.temporary_shatter()
-	else if(istype(target, /obj/structure/grille))
-		var/obj/structure/grille/grille = target
-		if(grille.shock(tapper, 100))
-			return
-
-		grille.temporary_shatter()
-	else
-		return
-	return COMPONENT_CANCEL_ATTACK_CHAIN

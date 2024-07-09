@@ -1,3 +1,11 @@
+///Turn the damage overlays glassy
+#define GLASSY_OVERLAY_MATRIX list(\
+		1, 2, 2, 0, \
+		0, 1, 0, 0, \
+		0, 0, 1, 0, \
+		0, 0, 0, 1, \
+		0, 0, 0, 0)
+
 /obj/item/bodypart/head/voidwalker
 	texture_bodypart_overlay = /datum/bodypart_overlay/texture/spacey
 	icon_greyscale = 'icons/mob/human/species/voidwalker.dmi'
@@ -7,14 +15,10 @@
 	head_flags = NONE
 	blocks_emissive = EMISSIVE_BLOCK_NONE
 
+	damage_overlay_color = GLASSY_OVERLAY_MATRIX
+
 	brute_modifier = 0.9
 	burn_modifier = 0.8
-
-	damage_overlay_color = list(1, 2, 2, 0,
-								0, 1, 0, 0,
-								0, 0, 1, 0,
-								0, 0, 0, 1,
-								0, 0, 0, 0) //turn the damage overlays glassy
 
 	light_brute_msg = "splintered"
 	medium_brute_msg = "cracked"
@@ -39,7 +43,7 @@
 	brute_modifier = 0.9
 	burn_modifier = 0.8
 
-	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color //im not copypasting the huge ass matrix everywhere
+	damage_overlay_color = GLASSY_OVERLAY_MATRIX
 
 	light_brute_msg = "splintered"
 	medium_brute_msg = "cracked"
@@ -66,7 +70,7 @@
 
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 
-	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color
+	damage_overlay_color = GLASSY_OVERLAY_MATRIX
 
 	light_brute_msg = "splintered"
 	medium_brute_msg = "cracked"
@@ -93,7 +97,7 @@
 
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 
-	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color
+	damage_overlay_color = GLASSY_OVERLAY_MATRIX
 
 	light_brute_msg = "splintered"
 	medium_brute_msg = "cracked"
@@ -118,7 +122,7 @@
 	brute_modifier = 0.9
 	burn_modifier = 0.8
 
-	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color
+	damage_overlay_color = GLASSY_OVERLAY_MATRIX
 
 	light_brute_msg = "splintered"
 	medium_brute_msg = "cracked"
@@ -143,7 +147,7 @@
 	brute_modifier = 0.9
 	burn_modifier = 0.8
 
-	damage_overlay_color = /obj/item/bodypart/head/voidwalker::damage_overlay_color
+	damage_overlay_color = GLASSY_OVERLAY_MATRIX
 
 	light_brute_msg = "splintered"
 	medium_brute_msg = "cracked"
@@ -157,3 +161,5 @@
 		BRUTE = GLASSY_BRUTE_EXAMINE_TEXT,
 		BURN = GLASSY_BURN_EXAMINE_TEXT,
 	)
+
+#undef GLASSY_OVERLAY_MATRIX

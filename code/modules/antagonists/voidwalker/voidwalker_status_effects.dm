@@ -10,16 +10,13 @@
 	// How much do we heal per tick?
 	var/healing = 1.5
 
-/datum/status_effect/space_regeneration/on_apply()
-	heal_owner()
-	return TRUE
-
 /datum/status_effect/space_regeneration/tick(effect)
 	heal_owner()
 
 /// Regenerate health whenever this status effect is applied or reapplied
 /datum/status_effect/space_regeneration/proc/heal_owner()
-	owner.heal_ordered_damage(healing, list(BRUTE, BURN, OXY, STAMINA, BRAIN))
+	if(isspaceturf(get_turf(owner)))
+		owner.heal_ordered_damage(healing, list(BRUTE, BURN, OXY, STAMINA, TOX, BRAIN))
 
 /datum/status_effect/planet_allergy
 	id = "planet_allergy"

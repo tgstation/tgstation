@@ -1,73 +1,3 @@
-/// Component that lets us space kidnap people as the voidwalker with our HAAAADS
-/datum/component/space_kidnap
-	/// How long does it take to kidnap them?
-	var/kidnap_time = 6 SECONDS
-	/// Are we kidnapping right now?
-	var/kidnapping = FALSE
-
-/datum/component/space_kidnap/Initialize(...)
-	if(!ishuman(parent))
-		return COMPONENT_INCOMPATIBLE
-
-	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_kidnap))
-
-/datum/component/space_kidnap/proc/try_kidnap(mob/living/parent, atom/target)
-	SIGNAL_HANDLER
-
-	if(!isliving(target))
-		return
-
-	var/mob/living/victim = target
-
-	if(victim.stat == DEAD)
-		target.balloon_alert(parent, "is dead!")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	if(!victim.incapacitated())
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	if(!isspaceturf(get_turf(target)))
-		target.balloon_alert(parent, "not in space!")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	if(!kidnapping)
-		INVOKE_ASYNC(src, PROC_REF(kidnap), parent, target)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-/datum/component/space_kidnap/proc/kidnap(mob/living/parent, mob/living/victim)
-	victim.Paralyze(kidnap_time) //so they don't get up if we already got em
-	var/obj/particles = new /obj/effect/abstract/particle_holder (victim, /particles/void_kidnap)
-	kidnapping = TRUE
-
-	if(do_after(parent, kidnap_time, victim, extra_checks = CALLBACK(victim, TYPE_PROC_REF(/mob, incapacitated))))
-		take_them(victim)
-
-	qdel(particles)
-	kidnapping = FALSE
-
-/datum/component/space_kidnap/proc/take_them(mob/living/victim)
-	if(ishuman(victim))
-		var/mob/living/carbon/human/hewmon = victim
-		hewmon.gain_trauma(/datum/brain_trauma/voided)
-
-	victim.flash_act(INFINITY, override_blindness_check = TRUE, visual = TRUE, type = /atom/movable/screen/fullscreen/flash/black)
-	new /obj/effect/temp_visual/circle_wave/unsettle(get_turf(victim))
-
-	if(!SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_VOIDWALKER_VOID) || !GLOB.voidwalker_void.len)
-		dump(victim)
-		victim.heal_overall_damage(brute = 80, burn = 20)
-		CRASH("[victim] was instantly dumped after being voidwalker kidnapped due to a missing landmark!")
-	else
-		victim.heal_and_revive(90)
-
-		victim.adjustOxyLoss(-100, FALSE)
-
-		new /obj/effect/wisp_mobile (get_turf(pick(GLOB.voidwalker_void)), victim)
-		addtimer(CALLBACK(src, PROC_REF(dump), victim), 60 SECONDS)
-
-/datum/component/space_kidnap/proc/dump(mob/living/trash)
-	trash.forceMove(get_random_station_turf())
-
 /// A global assoc list for the drop of point
 GLOBAL_LIST_EMPTY(voidwalker_void)
 
@@ -114,15 +44,21 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 	var/food_type = /obj/effect/wisp_food
 	/// how much do we heal per food?
 	var/heal_per_food = 15
+	/// Traits given to the wisp driver
+	var/wisp_driver_traits = list(TRAIT_STASIS, TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT)
 
-/obj/effect/wisp_mobile/Initialize(mapload, mob/living/driver)
+/obj/effect/wisp_mobile/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 
-	if(isliving(driver))
-		driver.forceMove(src)
-		driver.add_traits(list(TRAIT_STASIS, TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), REF(src))
-		driver.set_stat(driver)
-		add_atom_colour(random_color(), FIXED_COLOUR_PRIORITY)
+	if(!isliving(arrived))
+		return
+
+	var/mob/living/driver = arrived
+	driver.forceMove(src)
+	driver.add_traits(wisp_driver_traits, REF(src))
+	driver.set_stat(driver)
+	add_atom_colour(random_color(), FIXED_COLOUR_PRIORITY)
+	addtimer(CALLBACK(driver, TYPE_PROC_REF(/atom/movable, forceMove), get_random_station_turf()), 60 SECONDS)
 
 /obj/effect/wisp_mobile/relaymove(mob/living/user, direction)
 	if(can_move >= world.time)
@@ -154,7 +90,7 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 /obj/effect/wisp_mobile/Exited(atom/movable/gone, direction)
 	. = ..()
 
-	gone.remove_traits(list(TRAIT_STASIS, TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), REF(src))
+	gone.remove_traits(wisp_driver_traits, REF(src))
 	qdel(src)
 
 /// we only exist to be eaten by wisps for food 😔👊
@@ -170,4 +106,3 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 	light_range = 4
 	light_power = 1
 	light_on = TRUE
-

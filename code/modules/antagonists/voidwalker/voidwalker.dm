@@ -17,6 +17,10 @@
 /datum/antagonist/voidwalker/on_gain()
 	. = ..()
 
+	var/mob/living/carbon/human/body = owner.current
+	if(ishuman(body))
+		body.set_species(/datum/species/voidwalker)
+
 	forge_objectives()
 	owner.current.AddComponent(/datum/component/space_kidnap)
 

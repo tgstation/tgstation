@@ -965,10 +965,12 @@
 	minimum_players = 40
 	repeatable = TRUE
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_VOIDWALKER_VOID)
+	/// The space turf we find in acceptable(), cached for ease
+	var/space_turf
 
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker/acceptable(population = 0, threat_level = 0)
-	var/turf/spawn_loc = find_space_spawn()
-	if(!spawn_loc)
+	space_turf = find_space_spawn()
+	if(!space_turf)
 		return FALSE
 	return ..()
 
@@ -976,7 +978,7 @@
 	var/datum/mind/player_mind = new /datum/mind(applicant.key)
 	player_mind.active = TRUE
 
-	var/mob/living/carbon/human/voidwalker = new (find_space_spawn())
+	var/mob/living/carbon/human/voidwalker = new (space_turf)
 	player_mind.transfer_to(voidwalker)
 	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/voidwalker))
 	player_mind.special_role = antag_flag
