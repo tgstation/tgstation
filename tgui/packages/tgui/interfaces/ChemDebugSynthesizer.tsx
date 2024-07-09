@@ -1,5 +1,6 @@
+import { Button, NumberInput, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
 

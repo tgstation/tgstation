@@ -210,12 +210,12 @@
 	..()
 
 /obj/item/bodypart/arm/left/clear_ownership(mob/living/carbon/old_owner)
+	. = ..()
 	if(HAS_TRAIT(old_owner, TRAIT_PARALYSIS_L_ARM))
 		UnregisterSignal(old_owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_L_ARM))
 		REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_L_ARM)
 	else
 		UnregisterSignal(old_owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_L_ARM))
-	..()
 
 ///Proc to react to the owner gaining the TRAIT_PARALYSIS_L_ARM trait.
 /obj/item/bodypart/arm/left/proc/on_owner_paralysis_gain(mob/living/carbon/source)
@@ -308,12 +308,12 @@
 	..()
 
 /obj/item/bodypart/arm/right/clear_ownership(mob/living/carbon/old_owner)
+	. = ..()
 	if(HAS_TRAIT(old_owner, TRAIT_PARALYSIS_R_ARM))
 		UnregisterSignal(old_owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_R_ARM))
 		REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_R_ARM)
 	else
 		UnregisterSignal(old_owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_R_ARM))
-	..()
 
 ///Proc to react to the owner gaining the TRAIT_PARALYSIS_R_ARM trait.
 /obj/item/bodypart/arm/right/proc/on_owner_paralysis_gain(mob/living/carbon/source)
@@ -429,12 +429,12 @@
 	..()
 
 /obj/item/bodypart/leg/left/clear_ownership(mob/living/carbon/old_owner)
+	. = ..()
 	if(HAS_TRAIT(old_owner, TRAIT_PARALYSIS_L_LEG))
 		UnregisterSignal(old_owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_L_LEG))
 		REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_L_LEG)
 	else
 		UnregisterSignal(old_owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_L_LEG))
-	..()
 
 ///Proc to react to the owner gaining the TRAIT_PARALYSIS_L_ARM trait.
 /obj/item/bodypart/leg/left/proc/on_owner_paralysis_gain(mob/living/carbon/source)
@@ -518,12 +518,12 @@
 	..()
 
 /obj/item/bodypart/leg/right/clear_ownership(mob/living/carbon/old_owner)
+	. = ..()
 	if(HAS_TRAIT(old_owner, TRAIT_PARALYSIS_R_LEG))
 		UnregisterSignal(old_owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_R_LEG))
 		REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_R_LEG)
 	else
 		UnregisterSignal(old_owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_R_LEG))
-	..()
 
 ///Proc to react to the owner gaining the TRAIT_PARALYSIS_R_LEG trait.
 /obj/item/bodypart/leg/right/proc/on_owner_paralysis_gain(mob/living/carbon/source)

@@ -1,0 +1,6 @@
+author: "aaaa1023"
+delete-after: True
+changes:
+  - rscdel: "Removed the shuttle manipulator entries for the following shuttles: Northstar ferry, Omegastation arrivals shuttle, and Donutstation cargo ferry. (These shuttles didn't actually exist but they still had entries in the manipulator.)"
+  - bugfix: "Fixed the following shuttles flying in unexpected directions: Basic CC Ferry, Meat Ferry, Lighthouse Ferry, ERT bounty shuttle, Kilo cargo shuttle, Pubby cargo shuttle, and Delta cargo shuttle."
+  - bugfix: "Fixed the ERT bounty shuttle having incorrect offsets in the shuttle navigation console."

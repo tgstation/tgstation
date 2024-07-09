@@ -582,6 +582,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
+/datum/design/board/vatgrower
+	name = "Growing Vat Board"
+	desc = "The circuit board for a growing vat."
+	id = "vatgrower"
+	build_path = /obj/item/circuitboard/machine/vatgrower
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/monkey_recycler
 	name = "Monkey Recycler Board"
 	desc = "The circuit board for a monkey recycler."
@@ -1175,6 +1185,36 @@
 	build_path = /obj/item/circuitboard/machine/flatpacker
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/scrubber
+	name = "Portable Air Scrubber Board"
+	desc = "The circuit board for a portable air scrubber."
+	id = "scrubber"
+	build_path = /obj/item/circuitboard/machine/scrubber
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ATMOS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/pump
+	name = "Portable Air Pump Board"
+	desc = "The circuit board for a portable air pump."
+	id = "pump"
+	build_path = /obj/item/circuitboard/machine/pump
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ATMOS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/pipe_scrubber
+	name = "Portable Pipe Scrubber Board"
+	desc = "The circuit board for a portable pipe scrubber."
+	id = "pipe_scrubber"
+	build_path = /obj/item/circuitboard/machine/pipe_scrubber
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ATMOS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
