@@ -96,3 +96,7 @@
   - bugfix: Oozelings and slimepeople can now actually speak slime.
   MTandi:
   - image: New sprite for syringes
+2024-07-09:
+  Syndie Kate:
+  - bugfix: Metastation xenobiology fields work now
+  - balance: Shield generators range is now 12, from 8.
