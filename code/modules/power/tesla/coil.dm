@@ -127,6 +127,8 @@
 	density = TRUE
 	wants_powernet = FALSE
 
+	circuit = /obj/item/circuitboard/machine/grounding_rod
+
 	can_buckle = TRUE
 	buckle_lying = 0
 	buckle_requires_restraints = TRUE
