@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Blood filters should filter out reagents completely now instead of leaving a small amount no matter what."

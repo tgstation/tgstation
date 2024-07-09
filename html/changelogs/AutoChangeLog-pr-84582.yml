@@ -1,6 +1,0 @@
-author: "EnterTheJake"
-delete-after: True
-changes:
-  - balance: "Jetpacks are now briefly disabled by EMP."
-  - balance: "Mirage module has been removed from Sec modsuits."
-  - balance: "Security modsuits now spawn with a better cell and the jetpack module preinstalled."

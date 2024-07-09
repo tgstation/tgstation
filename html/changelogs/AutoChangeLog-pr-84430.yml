@@ -1,5 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Certain items can no longer be purchased or be offered with a discount on a loneop uplink. This is stuff like base cards (functionally useless) or Overwatch Intel Agents (which break the role)."
-  - balance: "Loneops may now purchase chameleon noslips, station blackout triggers, and station comms failure triggers."

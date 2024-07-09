@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - balance: "Bait quality now influences the probabilities of getting a rarer fish compared to the most common one(s)"

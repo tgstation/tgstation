@@ -492,3 +492,90 @@
   - bugfix: Bows now properly undraw once they have fired an arrow.
   - code_imp: Bows now utilize overlays in order to display loaded arrows. Unique
       overlays per arrow.
+2024-07-09:
+  00-Steven:
+  - qol: You can now copy blast door controller IDs directly onto shutters/blast doors,
+      avoiding the need to open a menu for each one. Additionally, this lets you fix
+      sets of roundstart shutters without needing to change the IDs on all of the
+      ones in that set.
+  ArcaneMusic:
+  - bugfix: Ore vents that are caught in the cross-fire of a lavaland tendril collapsing
+      will now spare the ore vent and it's associated turf.
+  Astrogem2:
+  - sound: Added audible zipping to winter coats.
+  DGamerL:
+  - refactor: refactored `GetExactComponent` to be 1641 compatible
+  Derpguy3:
+  - bugfix: Missing janitor access restrictions have been added to Birdshot's custodial
+      closet doors.
+  EnterTheJake:
+  - balance: Jetpacks are now briefly disabled by EMP.
+  - balance: Mirage module has been removed from Sec modsuits.
+  - balance: Security modsuits now spawn with a better cell and the jetpack module
+      preinstalled.
+  FernandoJ8:
+  - bugfix: humanoid species featured are randomized correctly once again
+  Ghommie:
+  - balance: Bait quality now influences the probabilities of getting a rarer fish
+      compared to the most common one(s)
+  GoblinBackwards:
+  - bugfix: Fixed missing wires leading to the port hallway APC on Birdshot.
+  Inari-Whitebear:
+  - bugfix: Fixed space heater heating power and power consumption
+  JackEnoff:
+  - bugfix: Welding helmet and hardhat will now properly protect against pepperspray
+      while its down
+  JohnFulpWillard:
+  - qol: You can now use a spoon or ladle on an ice cream vat to spill a reagent,
+      ridding the machine of all reagent of that type.
+  Jolly:
+  - code_imp: Behind the scenes, atmos machines (freezers/mixers) in maps were tweaked
+      a bit. If you see them no longer connected to specific pipenets, please make
+      an issue report, this is not intended behavior!!
+  Kocma-san:
+  - qol: the disposal unit has been added to the cargo bay and miner's office.
+  - bugfix: missed disposal pipe returned at QM's office
+  LemonInTheDark:
+  - rscadd: Most door animations now better line up with when they are/are not passable.
+  Rhials:
+  - admin: Narrate verbs will now allow you to pick what text formatting span you
+      want to use before you send them, if any.
+  - bugfix: Certain items can no longer be purchased or be offered with a discount
+      on a loneop uplink. This is stuff like base cards (functionally useless) or
+      Overwatch Intel Agents (which break the role).
+  - balance: Loneops may now purchase chameleon noslips, station blackout triggers,
+      and station comms failure triggers.
+  SmArtKar:
+  - bugfix: Blood filters should filter out reagents completely now instead of leaving
+      a small amount no matter what.
+  - image: You can now flip your security helmet's visor up with alt-click! However,
+      doing so will (obviously) expose your eyes.
+  - bugfix: Embedding now properly changes its values.
+  - bugfix: Bloody footprints no longer bloody your shoes even more when walked over.
+  SyncIt21:
+  - bugfix: paintings can be sponsored again
+  - bugfix: hydroponic trays take in all reagents "proportionally" from plumbing ducts
+      without leaving any behind
+  - bugfix: plumbing bottler pumps out all reagents "proportionally" into output beakers
+  Xackii:
+  - balance: 'Demon: bloodcrawl now deal damage when you using it.'
+  - balance: 'Demon: demon can eat only carbon human beings.'
+  Xander3359:
+  - bugfix: fixed CNS rebooter/Changeling adrenaline not preventing/fixing stamina
+      crit
+  carlarctg:
+  - qol: Using a multitool inhand tells you where the area APC is
+  - code_imp: Added the subtype vendor which lets admins and coders vend subtypes
+      of a path
+  - code_imp: Added the vendor and both varieties of omnitool to runtime station
+  grungussuss:
+  - sound: pen click now has a proper sound
+  - sound: scalpel cutting sound now has a clean sound.
+  - bugfix: fixed an unrestricted airlock in metastation brig maints
+  grungussuss, ported from Beestation:
+  - sound: abductee, hypnotized and brainwashed now have sound when becoming one.
+  mc-oofert:
+  - qol: blood bros get a hud to see eachother
+  - code_imp: teambased antagonists may not see the HUDs of other teams
+  rageguy505:
+  - bugfix: no more xenobio active turfs

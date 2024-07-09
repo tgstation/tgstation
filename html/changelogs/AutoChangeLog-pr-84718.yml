@@ -1,5 +1,0 @@
-author: "Kocma-san"
-delete-after: True
-changes:
-  - qol: "the disposal unit has been added to the cargo bay and miner's office."
-  - bugfix: "missed disposal pipe returned at QM's office"

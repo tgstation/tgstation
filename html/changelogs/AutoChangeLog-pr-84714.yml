@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "hydroponic trays take in all reagents \"proportionally\" from plumbing ducts without leaving any behind"
-  - bugfix: "plumbing bottler pumps out all reagents \"proportionally\" into output beakers"
