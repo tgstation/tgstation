@@ -16,10 +16,10 @@
 "aP" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
 /obj/effect/turf_decal/siding/thinplating_new/dark/end{
 	dir = 1
 	},
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/iron/dark/herringbone,
 /area/shuttle/escape)
 "bb" = (
@@ -490,7 +490,6 @@
 "lR" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)
@@ -889,7 +888,8 @@
 	},
 /obj/docking_port/mobile/emergency{
 	dir = 8;
-	name = "Nebula emergency shuttle"
+	name = "Nebula emergency shuttle";
+	port_direction = 4
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
