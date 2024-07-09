@@ -67,7 +67,7 @@
 	TEST_ASSERT_NOTNULL(cake_slice, "Didn't manage to cut the cake!")
 
 	var/cake_slice_purity = cake_slice.reagents.get_average_purity()
-	TEST_ASSERT_EQUAL(cake_slice_purity, batter_purity_expected, "Expected purity of cake slice reagents to be [batter_purity_expected], but got [cake_slice_purity]!")
+	TEST_ASSERT_EQUAL(cake_slice_purity, batter_purity_expected, "Incorrect average purity of the cake slice reagents!")
 
 	cake_slice.attack_hand(human) // Pick it up
 	var/datum/component/edible/edible_comp = cake_slice.GetComponent(/datum/component/edible)
