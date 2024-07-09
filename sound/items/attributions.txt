@@ -1,4 +1,13 @@
 
+{
+cig_light.ogg
+cig_snuff.ogg
+lighter_on.ogg
+lighter_off.ogg
+zippo_onn.ogg
+zippo_off.ogg 
+} - Taken from https://github.com/BeeStation/BeeStation-Hornet/pull/29
+
 pen_click.ogg from https://freesound.org/people/LexzachGames/sounds/431492/ , license: CC0
 
 night_vision_on.ogg by Syna-Max -- https://freesound.org/s/60345/ -- License: Attribution NonCommercial 4.0
