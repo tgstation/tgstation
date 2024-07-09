@@ -226,8 +226,8 @@
 
 /obj/structure/table/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/construction/rcd))
-		. = NONE
-	else if(istype(tool, /obj/item/toy/cards/deck))
+		return NONE
+	if(istype(tool, /obj/item/toy/cards/deck))
 		. = deck_act(user, tool, modifiers, TRUE)
 
 	// Continue to placing if we don't do anything else
