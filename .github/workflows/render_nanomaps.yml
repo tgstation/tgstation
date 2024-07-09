@@ -43,4 +43,7 @@ jobs:
         git pull origin master
         git commit -m "NanoMap Auto-Update (`date`)" -a || true
         git push -f -u origin nanomap-render
-        gh pr create -t "Automatic NanoMap Update" -b "This pull request updates the server NanoMaps. Please review the diff images before merging." -l "NanoMaps" -H "nanomap-render" -B "master"
+        result=$(gh pr create -t "Automatic NanoMap Update" -b "This pull request updates the server NanoMaps. Please review the diff images before merging." -l "NanoMaps" -H "nanomap-render" -B "master")
+        if echo "$result" | grep -q "No commits between master and nanomap-render"
+          echo "No NanoMaps update required, skipping."
+          exit 78
