@@ -11,5 +11,7 @@ echo -e "${BLUE}Re-running grep checks, but looking in modular_meta...${NC}"
 # Run the linters again, but modular massmeta code.
 sed "s|code/\*\*/\*\.dm|massmeta/\*\*/\*\.dm|g" <tools/ci/check_grep.sh | bash
 
+echo -e "${BLUE}Re-running grep checks, but looking in modular_meta... AGAIN&!?...${NC}"
+
 # Run the linters again, but NOW IT MUST CHECK modular massmeta code.
-sed "s|~meta_defines/\*\*/\*\.dm|features/\*\*/\*\.dm|master_files/\*\*/\*\.dm|g" <tools/ci/check_grep.sh | bash
+sed "s|code/\*\*/\*\.dm|massmeta/features/\*\*/\*\.dm|massmeta/master_files/\*\*/\*\.dm|g" <tools/ci/check_grep.sh | bash
