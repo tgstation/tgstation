@@ -183,10 +183,10 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/turf/open/floor/catwalk_floor/flat_white,
+/turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/escape)
 "qf" = (
-/turf/open/floor/catwalk_floor/flat_white,
+/turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/escape)
 "qK" = (
 /obj/machinery/stasis,
@@ -347,7 +347,7 @@
 /obj/machinery/door/airlock/survival_pod/glass{
 	name = "Emergency Shuttle Treatment"
 	},
-/turf/open/floor/catwalk_floor/flat_white,
+/turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/escape)
 "Eh" = (
 /obj/machinery/power/shuttle_engine/propulsion/left,

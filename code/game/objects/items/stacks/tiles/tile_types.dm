@@ -1265,7 +1265,6 @@
 		/obj/item/stack/tile/catwalk_tile/iron,
 		/obj/item/stack/tile/catwalk_tile/iron_white,
 		/obj/item/stack/tile/catwalk_tile/iron_dark,
-		/obj/item/stack/tile/catwalk_tile/flat_white,
 		/obj/item/stack/tile/catwalk_tile/titanium,
 		/obj/item/stack/tile/catwalk_tile/iron_smooth //this is the original greenish one
 	)
@@ -1290,12 +1289,6 @@
 	singular_name = "dark catwalk floor tile"
 	icon_state = "darkiron_catwalk"
 	turf_type = /turf/open/floor/catwalk_floor/iron_dark
-
-/obj/item/stack/tile/catwalk_tile/flat_white
-	name = "flat white catwalk floor"
-	singular_name = "flat white catwalk floor tile"
-	icon_state = "flatwhite_catwalk"
-	turf_type = /turf/open/floor/catwalk_floor/flat_white
 
 /obj/item/stack/tile/catwalk_tile/titanium
 	name = "titanium catwalk floor"
