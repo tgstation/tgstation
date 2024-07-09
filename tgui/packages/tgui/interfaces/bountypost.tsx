@@ -38,7 +38,7 @@ export const bountypost = (props) => {
   const [tab, setTab] = useState(Tab.Bounties);
 
   return (
-    <Window title="Bounty Post" width={470} height={455} theme="hackerman">
+    <Window title="Bounty Post" width={470} height={455} theme="oldpaper">
       <Window.Content>
         <Stack fill vertical fontFamily="playbill">
           <Stack.Item

@@ -22,7 +22,7 @@ export const bountypaper = (props) => {
   const { act, data } = useBackend<Data>();
   const { bounty_name, bounty_icon, bounty_reward, bounty_gps } = data;
   return (
-    <Window title="Bounty Contract" width={300} height={440} theme="hackerman">
+    <Window title="Bounty Contract" width={300} height={440} theme="oldpaper">
       <Window.Content>
         <Stack vertical textAlign="center" fontFamily="playbill">
           <Stack.Item>
