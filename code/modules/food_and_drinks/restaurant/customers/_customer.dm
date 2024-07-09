@@ -49,7 +49,7 @@
 	name_prefixes = world.file2list(prefix_file)
 	if(check_holidays(ICE_CREAM_DAY)) ///customers are more likely to order ice cream on this holiday
 		var/list/orderable_restaurant = orderable_objects[VENUE_RESTAURANT]
-		if(orderable_restaurant[/datum/custom_order/icecream])
+		if(orderable_restaurant?[/datum/custom_order/icecream])
 			orderable_restaurant[/datum/custom_order/icecream] *= 3
 
 /// Can this customer be chosen for this venue?
