@@ -111,11 +111,12 @@
 	SEND_SIGNAL(src, COMSIG_JETPACK_DEACTIVATED, user)
 	on = FALSE
 	update_icon(UPDATE_ICON_STATE)
+	if(user)
+		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
 
-/obj/item/tank/jetpack/proc/allow_thrust(num, use_fuel = TRUE)
+/obj/item/tank/jetpack/proc/allow_thrust(num, use_fuel = TRUE, mob/user)
 	if(!ismob(loc))
 		return FALSE
-	var/mob/user = loc
 
 	if((num < 0.005 || air_contents.total_moles() < num))
 		turn_off(user)
@@ -131,6 +132,10 @@
 		return FALSE
 
 	var/turf/T = get_turf(src)
+	if(isspaceturf(T) || ismiscturf(T))
+		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
+	else
+		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
 	T.assume_air(removed)
 	return TRUE
 

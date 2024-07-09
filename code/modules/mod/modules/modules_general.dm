@@ -155,7 +155,13 @@
 		return check_power(use_energy_cost)
 	if(!drain_power(use_energy_cost))
 		return FALSE
+	var/turf/T = get_turf(src)
+	if(isspaceturf(T) || ismiscturf(T))
+		usr.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
+	else
+		usr.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
 	return TRUE
+
 
 /// Cooldown to use if we didn't actually launch a jump jet
 #define FAILED_ACTIVATION_COOLDOWN 3 SECONDS
