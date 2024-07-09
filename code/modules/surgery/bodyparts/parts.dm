@@ -210,7 +210,7 @@
 	..()
 
 /obj/item/bodypart/arm/left/clear_ownership(mob/living/carbon/old_owner)
-	..()
+	. = ..()
 	if(HAS_TRAIT(old_owner, TRAIT_PARALYSIS_L_ARM))
 		UnregisterSignal(old_owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_L_ARM))
 		REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_L_ARM)
@@ -308,7 +308,7 @@
 	..()
 
 /obj/item/bodypart/arm/right/clear_ownership(mob/living/carbon/old_owner)
-	..()
+	. = ..()
 	if(HAS_TRAIT(old_owner, TRAIT_PARALYSIS_R_ARM))
 		UnregisterSignal(old_owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_R_ARM))
 		REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_R_ARM)
@@ -429,7 +429,7 @@
 	..()
 
 /obj/item/bodypart/leg/left/clear_ownership(mob/living/carbon/old_owner)
-	..()
+	. = ..()
 	if(HAS_TRAIT(old_owner, TRAIT_PARALYSIS_L_LEG))
 		UnregisterSignal(old_owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_L_LEG))
 		REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_L_LEG)
@@ -518,7 +518,7 @@
 	..()
 
 /obj/item/bodypart/leg/right/clear_ownership(mob/living/carbon/old_owner)
-	..()
+	. = ..()
 	if(HAS_TRAIT(old_owner, TRAIT_PARALYSIS_R_LEG))
 		UnregisterSignal(old_owner, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS_R_LEG))
 		REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_R_LEG)
