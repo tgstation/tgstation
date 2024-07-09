@@ -274,6 +274,15 @@ SUBSYSTEM_DEF(vote)
 		return FALSE
 
 	return TRUE
+
+/datum/controller/subsystem/vote/proc/toggle_dead_voting(mob/toggle_initiator)
+	var/switch_deadvote_config = !CONFIG_GET(flag/no_dead_vote)
+	CONFIG_SET(flag/no_dead_vote, switch_deadvote_config)
+	var/text_verb = !switch_deadvote_config ? "enabled" : "disabled"
+	log_admin("[key_name(toggle_initiator)] [text_verb] Dead Vote.")
+	message_admins("[key_name_admin(toggle_initiator)] [text_verb] Dead Vote.")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Dead Vote", text_verb))
+
 /datum/controller/subsystem/vote/ui_state()
 	return GLOB.always_state
 
@@ -376,6 +385,15 @@ SUBSYSTEM_DEF(vote)
 			voter.log_message("ended the current vote early", LOG_ADMIN)
 			message_admins("[key_name_admin(voter)] has ended the current vote.")
 			end_vote()
+			return TRUE
+
+		if("toggleDeadVote")
+			if(!check_rights_for(voter.client, R_ADMIN))
+				message_admins("[key_name(voter)] tried to toggle vote abillity for ghosts while having improper rights, \
+					this is potentially a malicious exploit and worth noting.")
+				return
+
+			toggle_dead_voting(voter)
 			return TRUE
 
 		if("toggleVote")

@@ -89,12 +89,24 @@ export const VotePanel = (props) => {
             title="Create Vote"
             buttons={
               !!user.isLowerAdmin && (
-                <Button
-                  icon="refresh"
-                  content="Reset Cooldown"
-                  disabled={LastVoteTime + VoteCD <= 0}
-                  onClick={() => act('resetCooldown')}
-                />
+                <Stack>
+                  <Stack.Item>
+                    <Button
+                      icon="refresh"
+                      content="Reset Cooldown"
+                      disabled={LastVoteTime + VoteCD <= 0}
+                      onClick={() => act('resetCooldown')}
+                    />
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Button
+                      icon="skull"
+                      content="Toggle dead vote"
+                      disabled={!user.isUpperAdmin}
+                      onClick={() => act('toggleDeadVote')}
+                    />
+                  </Stack.Item>
+                </Stack>
               )
             }
           >
