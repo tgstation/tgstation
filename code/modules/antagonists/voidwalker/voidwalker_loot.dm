@@ -14,12 +14,17 @@
 /obj/item/cosmic_skull/attack_self(mob/user, modifiers)
 	. = ..()
 
-	if(!uses)
+	if(!uses || !ishuman(user))
+		return
+
+	var/mob/living/carbon/human/hewmon = user
+	if(is_species(hewmon, /datum/species/voidwalker))
+		to_chat(user, span_bolddanger("OH GOD NOO!!!! WHYYYYYYYYY!!!!! WHO WOULD DO THIS?!!"))
 		return
 
 	to_chat(user, span_purple("You begin staring into the [name]..."))
 
-	if(!ishuman(user) || !do_after(user, 10 SECONDS, src))
+	if(!do_after(user, 10 SECONDS, src))
 		return
 
 	var/mob/living/carbon/human/starer = user

@@ -22,7 +22,6 @@
 		body.set_species(/datum/species/voidwalker)
 
 	forge_objectives()
-	owner.current.AddComponent(/datum/component/space_kidnap)
 
 /datum/antagonist/voidwalker/forge_objectives()
 	var/datum/objective/voidwalker_fluff/objective = new

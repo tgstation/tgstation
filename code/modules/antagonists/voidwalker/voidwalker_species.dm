@@ -43,6 +43,7 @@
 
 	human_who_gained_species.AddComponent(/datum/component/glass_passer)
 	human_who_gained_species.AddComponent(/datum/component/space_dive)
+	human_who_gained_species.AddComponent(/datum/component/space_kidnap)
 
 	var/obj/item/implant/radio = new /obj/item/implant/radio/voidwalker (human_who_gained_species)
 	radio.implant(human_who_gained_species, null, TRUE, TRUE)
@@ -54,6 +55,7 @@
 
 	qdel(human.GetComponent(/datum/component/glass_passer))
 	qdel(human.GetComponent(/datum/component/space_dive))
+	qdel(human.GetComponent(/datum/component/space_kidnap))
 
 	var/obj/item/implant/radio = locate(/obj/item/implant/radio/voidwalker) in human
 	if(radio)

@@ -983,7 +983,6 @@
 	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/voidwalker))
 	player_mind.special_role = antag_flag
 	player_mind.add_antag_datum(antag_datum)
-	voidwalker.set_species(/datum/species/voidwalker)
 
 	playsound(voidwalker, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(voidwalker)] has been made into a Voidwalker by the midround ruleset.")

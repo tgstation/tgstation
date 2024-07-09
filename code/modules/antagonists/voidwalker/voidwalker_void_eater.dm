@@ -14,7 +14,6 @@
 	item_flags = ABSTRACT | DROPDEL
 	resistance_flags = INDESTRUCTIBLE | ACID_PROOF | FIRE_PROOF | LAVA_PROOF | UNACIDABLE
 	w_class = WEIGHT_CLASS_HUGE
-	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_MINING
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	wound_bonus = -30
@@ -23,11 +22,6 @@
 /obj/item/void_eater/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-	AddComponent( \
-		/datum/component/butchering, \
-		speed = 8 SECONDS, \
-		effectiveness = 70, \
-	)
 
 	AddComponent(/datum/component/temporary_glass_shatterer)
 
