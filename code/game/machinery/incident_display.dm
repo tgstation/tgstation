@@ -62,6 +62,10 @@ DEFINE_BITFIELD(sign_features, list(
 	var/delam_record = 0
 	/// If the display is currently running live updated content
 	var/live_display = FALSE
+	/// The default advert to show on this display
+	var/configured_advert
+	/// Duration of the advert set on this display
+	var/configured_advert_duration
 	/// How often to show an advert
 	var/advert_frequency = 30 SECONDS
 	/// Timer for sign currently showing an advert
@@ -73,6 +77,8 @@ DEFINE_BITFIELD(sign_features, list(
 	name = NAME_DELAM
 	desc = DESC_DELAM
 	sign_features = DISPLAY_DELAM
+	configured_advert = "advert_meson"
+	configured_advert_duration = 7 SECONDS
 
 /obj/machinery/incident_display/tram
 	name = NAME_TRAM
@@ -99,6 +105,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	return ..()
 
 /obj/machinery/incident_display/process()
+	if(!isnull(configured_advert) && COOLDOWN_FINISHED(src, advert_cooldown))// time to show an advert
+		show_advert(advert = configured_advert, duration = configured_advert_duration)
+		COOLDOWN_START(src, advert_cooldown, rand(advert_frequency - 5 SECONDS, advert_frequency + 5 SECONDS))
+		return
+
 	if(!live_display) // displaying static content, no processing required
 		return
 
@@ -110,14 +121,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		live_display = FALSE
 		update_appearance()
 
-/obj/machinery/incident_display/delam/process()
-	if(COOLDOWN_FINISHED(src, advert_cooldown)) // time to show an advert
-		show_advert(advert = "advert_meson", duration = 7 SECONDS)
-		COOLDOWN_START(src, advert_cooldown, rand(advert_frequency - 5 SECONDS, advert_frequency + 5 SECONDS))
-		return
-
-	return ..()
-
 /obj/machinery/incident_display/welder_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
 		return FALSE
@@ -127,7 +130,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		return TRUE
 
 	balloon_alert(user, "repairing display...")
-	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume=50))
+	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume = 50))
 		return TRUE
 
 	balloon_alert(user, "repaired")
