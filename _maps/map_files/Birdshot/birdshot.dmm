@@ -52579,7 +52579,7 @@
 /area/station/security/checkpoint/engineering)
 "ruB" = (
 /obj/machinery/conveyor{
-	id = s
+	id = "mining"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
