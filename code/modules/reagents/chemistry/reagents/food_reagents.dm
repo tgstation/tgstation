@@ -6,14 +6,13 @@
 // Part of the food code. Also is where all the food
 // condiments, additives, and such go.
 
-
 /datum/reagent/consumable
 	name = "Consumable"
 	taste_description = "generic food"
 	taste_mult = 4
 	inverse_chem_val = 0.1
 	inverse_chem = null
-	creation_purity = 0.5 // 50% pure by default. Below - synthetic food. Above - natural food.
+	creation_purity = CONSUMABLE_STANDARD_PURITY
 	/// How much nutrition this reagent supplies
 	var/nutriment_factor = 1
 	/// affects mood, typically higher for mixed drinks with more complex recipes'
