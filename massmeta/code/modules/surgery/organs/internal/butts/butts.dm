@@ -8,7 +8,7 @@
 	slot = ORGAN_SLOT_BUTT
 	throw_speed = 1
 	force = 4
-	embed_type = list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE, "embed_chance" = 20)
+	embed_type = /datum/embed_data/butt
 	hitsound = 'massmeta/sounds/fartts/fart1.ogg'
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_HEAD
@@ -16,6 +16,13 @@
 	var/atmos_gas = "miasma=0.25;TEMP=310.15" //310.15 is body temperature
 	var/fart_instability = 1 //Percent chance to lose your rear each fart.
 	var/cooling_down = FALSE
+
+
+/datum/embed_data/butt
+	pain_mult = 0
+	jostle_pain_mult = 0
+	ignore_throwspeed_threshold = TRUE
+	embed_chance = 20
 
 //ADMIN ONLY ATOMIC ASS
 /obj/item/organ/internal/butt/atomic
