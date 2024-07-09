@@ -12,10 +12,9 @@
   $bg-map-keys: ()
 );
 @use '../base.scss' with (
-  $color-bg: #ffc877,
+  $color-bg: #ffc877
 );
-
-.theme-oldpaper {
+.theme-hackerman {
   // Atomic classes
   @include meta.load-css('../atomic/color.scss');
 
@@ -24,7 +23,7 @@
     $with: (
       'color-default': colors.$primary,
       'tab-color-selected': #de9b3e,
-      'text-color': #642600
+      'text-color': #ffffff
     )
   );
   @include meta.load-css(
