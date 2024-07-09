@@ -15,22 +15,31 @@
 	var/obj/item/storage/fancy/egg_box/egg_box = allocate(/obj/item/storage/fancy/egg_box, table_loc)
 	var/obj/item/food/egg/sample_egg = egg_box.contents[1]
 
+	var/datum/chemical_reaction/recipe = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cakebatter]
+	var/sugar_required = recipe.required_reagents[/datum/reagent/consumable/sugar]
+	var/flour_required = recipe.required_reagents[/datum/reagent/consumable/flour]
+	var/eggyolk_required = recipe.required_reagents[/datum/reagent/consumable/eggyolk]
+	var/eggwhite_required = recipe.required_reagents[/datum/reagent/consumable/eggwhite]
+	var/total_volume = sugar_required + flour_required + eggyolk_required + eggwhite_required
+
 	var/sugar_purity = sugar_bag.reagents.get_average_purity()
-	TEST_ASSERT_EQUAL(sugar_purity, 1, "Expected starting purity of a default sugar to be [1], but got [sugar_purity]!")
+	TEST_ASSERT_EQUAL(sugar_purity, 1, "Incorrect sugar purity!")
 	var/flour_purity = flour_bag.reagents.get_average_purity()
-	TEST_ASSERT_EQUAL(flour_purity, CONSUMABLE_STANDARD_PURITY, "Expected starting purity of a default flour to be [CONSUMABLE_STANDARD_PURITY], but got [flour_purity]!")
+	TEST_ASSERT_EQUAL(flour_purity, CONSUMABLE_STANDARD_PURITY, "Incorrect flour purity!")
 	var/egg_purity = sample_egg.reagents.get_average_purity()
-	TEST_ASSERT_EQUAL(egg_purity, CONSUMABLE_STANDARD_PURITY, "Expected starting purity of egg reagents to be [CONSUMABLE_STANDARD_PURITY], but got [egg_purity]!")
+	TEST_ASSERT_EQUAL(egg_purity, CONSUMABLE_STANDARD_PURITY, "Incorrect egg reagents purity!")
 
 	human.mind = new /datum/mind(null) // Add brain for the food buff
 
 	// It's a piece of cake to bake a pretty cake
-	sugar_bag.melee_attack_chain(human, beaker)
-	for(var/i in 1 to 3)
+	while(beaker.reagents.get_reagent_amount(/datum/reagent/consumable/sugar) < sugar_required && beaker.reagents.total_volume < total_volume)
+		sugar_bag.melee_attack_chain(human, beaker)
+	while(beaker.reagents.get_reagent_amount(/datum/reagent/consumable/flour) < flour_required && beaker.reagents.total_volume < total_volume)
 		flour_bag.melee_attack_chain(human, beaker)
-	TEST_ASSERT_EQUAL(beaker.reagents.total_volume, 20, "Failed to pour sugar & flour for the cake batter!")
-
-	for(var/i in 1 to 3)
+	while((beaker.reagents.get_reagent_amount(/datum/reagent/consumable/eggyolk) < eggyolk_required \
+	|| beaker.reagents.get_reagent_amount(/datum/reagent/consumable/eggwhite) < eggwhite_required) \
+	&& beaker.reagents.total_volume < total_volume \
+	&& beaker.reagents.total_volume >= (sugar_required + flour_required)) // Make sure that we won't miss the reaction
 		var/obj/item/egg = egg_box.contents[1]
 		egg.melee_attack_chain(human, beaker, RIGHT_CLICK)
 	var/obj/item/food/cake_batter = locate(/obj/item/food/cakebatter) in table_loc
@@ -38,8 +47,8 @@
 	TEST_ASSERT_EQUAL(beaker.reagents.total_volume, 0, "Cake batter did not consume all beaker reagents!")
 
 	var/batter_purity = cake_batter.reagents.get_average_purity()
-	var/batter_purity_expected = (5 * sugar_purity + 15 * flour_purity + 18 * egg_purity) / 38
-	TEST_ASSERT_EQUAL(batter_purity, batter_purity_expected, "Expected starting purity of cake batter reagents to be [batter_purity_expected], but got [batter_purity]!")
+	var/batter_purity_expected = (sugar_required * sugar_purity + flour_required * flour_purity + (eggyolk_required + eggwhite_required) * egg_purity) / total_volume
+	TEST_ASSERT_EQUAL(batter_purity, batter_purity_expected, "Incorrect average purity of the cake batter reagents!")
 
 	the_oven.add_tray_to_oven(new /obj/item/plate/oven_tray(the_oven)) // Doesn't have one unless maploaded
 	the_oven.attack_hand(human)
