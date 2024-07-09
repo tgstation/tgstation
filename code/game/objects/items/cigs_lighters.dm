@@ -1162,13 +1162,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		to_chat(user, span_notice("You open the cap on [src]."))
 		reagents.flags |= OPENCONTAINER
 		if(obj_flags & EMAGGED)
-			icon_state = "vape_open_high"
+			icon_state = "vapeopen_high"
 			set_greyscale(new_config = /datum/greyscale_config/vape/open_high)
 		else if(super)
-			icon_state = "vape_open_med"
+			icon_state = "vapeopen_med"
 			set_greyscale(new_config = /datum/greyscale_config/vape/open_med)
 		else
-			icon_state = "vape_open_low"
+			icon_state = "vapeopen_low"
 			set_greyscale(new_config = /datum/greyscale_config/vape/open_low)
 	else
 		screw = FALSE
@@ -1183,12 +1183,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(!super)
 			super = TRUE
 			to_chat(user, span_notice("You increase the voltage of [src]."))
-			icon_state = "vape_open_med"
+			icon_state = "vapeopen_med"
 			set_greyscale(new_config = /datum/greyscale_config/vape/open_med)
 		else
 			super = FALSE
 			to_chat(user, span_notice("You decrease the voltage of [src]."))
-			icon_state = "vape_open_low"
+			icon_state = "vapeopen_low"
 			set_greyscale(new_config = /datum/greyscale_config/vape/open_low)
 
 	if(screw && (obj_flags & EMAGGED))
@@ -1207,7 +1207,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	obj_flags |= EMAGGED
 	super = FALSE
 	balloon_alert(user, "voltage maximized")
-	icon_state = "vape_open_high"
+	icon_state = "vapeopen_high"
 	set_greyscale(new_config = /datum/greyscale_config/vape/open_high)
 	var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread //for effect
 	sp.set_up(5, 1, src)

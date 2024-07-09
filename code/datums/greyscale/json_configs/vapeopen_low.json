@@ -1,5 +1,5 @@
 {
-    "vape_open_med": [
+    "vapeopen_low": [
         {
             "type": "icon_state",
             "icon_state": "vapeOutlet",
@@ -13,7 +13,7 @@
         },
 		{
             "type": "icon_state",
-            "icon_state": "vapeopen_med",
+            "icon_state": "vapeopen_low",
             "blend_mode": "overlay"
         }
     ]
