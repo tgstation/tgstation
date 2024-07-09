@@ -17905,7 +17905,6 @@
 /area/station/science/circuits)
 "gql" = (
 /obj/structure/filingcabinet/chestdrawer,
-/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/smooth,
 /area/station/cargo/lobby)
 "gqs" = (
@@ -34606,6 +34605,7 @@
 	dir = 1
 	},
 /obj/machinery/light/cold/dim/directional/south,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark/side,
 /area/station/cargo/lobby)
 "lEa" = (
