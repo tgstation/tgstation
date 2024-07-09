@@ -16,7 +16,7 @@
 	var/obj/item/food/egg/sample_egg = egg_box.contents[1]
 
 	var/sugar_purity = sugar_bag.reagents.get_average_purity()
-	TEST_ASSERT_EQUAL(sugar_purity, 1, "Expected starting purity of a default sugar to be [1], but got [sugar_purity]!")
+	TEST_ASSERT_EQUAL(sugar_purity, 1, "Expected starting purity of a default sugar to be 1, but got [sugar_purity]!")
 	var/flour_purity = flour_bag.reagents.get_average_purity()
 	TEST_ASSERT_EQUAL(flour_purity, CONSUMABLE_STANDARD_PURITY, "Expected starting purity of a default flour to be [CONSUMABLE_STANDARD_PURITY], but got [flour_purity]!")
 	var/egg_purity = sample_egg.reagents.get_average_purity()
