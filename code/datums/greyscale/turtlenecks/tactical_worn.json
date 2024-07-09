@@ -1,0 +1,30 @@
+{
+	"tactical_turtleneck": [
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_tacticalpants",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"tactical_turtleneck_d": [
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_d",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_tacticalpants",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

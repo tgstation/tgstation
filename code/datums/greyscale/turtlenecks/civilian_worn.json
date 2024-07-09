@@ -1,0 +1,30 @@
+{
+	"civilian_turtleneck": [
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_pants_alt",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"civilian_turtleneck_d": [
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_d",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_pants_alt",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

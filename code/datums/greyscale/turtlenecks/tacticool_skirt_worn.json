@@ -1,0 +1,30 @@
+{
+	"tacticool_turtleneck_skirt": [
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_tactical",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_skirt",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	],
+	"tacticool_turtleneck_skirt_d": [
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_tactical_d",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_skirt",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

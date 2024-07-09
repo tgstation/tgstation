@@ -1,0 +1,16 @@
+{
+	"tacticool_turtleneck_skirt": [
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_tactical",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_obj_skirt",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}

@@ -1,0 +1,66 @@
+{
+	"ce_turtleneck": [
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_pants",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_belt",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_buckle",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_armbands",
+			"blend_mode": "overlay",
+			"color_ids": [ 5 ]
+		}
+	],
+	"ce_turtleneck_d": [
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_d",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_pants",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_belt",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_buckle",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_armbands",
+			"blend_mode": "overlay",
+			"color_ids": [ 5 ]
+		}
+	]
+}

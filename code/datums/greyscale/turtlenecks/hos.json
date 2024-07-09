@@ -1,0 +1,40 @@
+{
+	"hos_turtleneck": [
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_obj_pants",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_obj_epaulettes",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_obj_belt",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "turtleneck_obj_buckle",
+			"blend_mode": "overlay",
+			"color_ids": [ 5 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "padding",
+			"blend_mode": "overlay",
+			"color_ids": [ 6 ]
+		}
+	]
+}
