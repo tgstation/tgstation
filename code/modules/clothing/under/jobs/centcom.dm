@@ -24,9 +24,12 @@
 /obj/item/clothing/under/rank/centcom/officer
 	name = "\improper CentCom turtleneck suit"
 	desc = "A casual, yet refined green turtleneck, used by CentCom Officers. It has a fragrance of aloe."
-	icon_state = "officer"
+	icon_state = "civilian_turtleneck"
 	inhand_icon_state = "dg_suit"
 	alt_covers_chest = TRUE
+	greyscale_config = /datum/greyscale_config/civilian_turtleneck
+	greyscale_config_worn = /datum/greyscale_config/civilian_turtleneck/worn
+	greyscale_colors = "#46b946#39393f"
 
 /obj/item/clothing/under/rank/centcom/officer/replica
 	name = "\improper CentCom turtleneck replica"
@@ -35,12 +38,15 @@
 /obj/item/clothing/under/rank/centcom/officer_skirt
 	name = "\improper CentCom turtleneck skirt"
 	desc = "A skirt version of the CentCom turtleneck, rarer and more sought after than the original."
-	icon_state = "officer_skirt"
+	icon_state = "civilian_turtleneck_skirt"
 	inhand_icon_state = "dg_suit"
 	alt_covers_chest = TRUE
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	body_parts_covered = CHEST|GROIN|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	greyscale_config = /datum/greyscale_config/civilian_turtleneck_skirt
+	greyscale_config_worn = /datum/greyscale_config/civilian_turtleneck_skirt/worn
+	greyscale_colors = "#46b946#39393f"
 
 /obj/item/clothing/under/rank/centcom/officer_skirt/replica
 	name = "\improper CentCom turtleneck skirt replica"
