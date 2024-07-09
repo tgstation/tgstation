@@ -9,9 +9,9 @@ NC="\033[0m" # No Color
 echo -e "${BLUE}Re-running grep checks, but looking in modular_meta/features/...${NC}"
 
 # Run the linters again, but modular massmeta code.
-sed 's/code/\*\*/\*\*.dm/massmeta/features/\*\*/\*\*.dm/g' tools/ci/check_grep.sh | bash
+sed 's/code\/\*\*\/\*\*.dm/massmeta\/features\/\*\*\/\*\*.dm/g' <tools/ci/check_grep.sh | bash
 
 echo -e "${BLUE}Re-running grep checks, but looking in modular_meta/master_files/...${NC}"
 
 # Run the linters again, but NOW IT MUST CHECK modular massmeta code.
-sed 's/code/\*\*/\*\*.dm/massmeta/master_files/\*\*/\*\*.dm/g' tools/ci/check_grep.sh | bash
+sed 's/code\/\*\*\/\*\*.dm/massmeta\/master_files\/\*\*\/\*\*.dm/g' <tools/ci/check_grep.sh | bash
