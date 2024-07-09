@@ -59,7 +59,7 @@
 		post_status(picture)
 	else
 		if(picture == "currentalert") // You cannot set Code Blue display during Code Red and similiar
-			post_status("alert", SSsecurity_level?.current_security_level?.status_display_bottom_text || "greenalert")
+			post_status("alert", SSsecurity_level?.current_security_level?.status_display_icon_state || "greenalert")
 		else
 			post_status("alert", picture)
 
