@@ -591,13 +591,13 @@
 					floorlight.pixel_y = 0
 			. += floorlight
 
-/obj/machinery/door/airlock/do_animate(animation)
+/obj/machinery/door/airlock/run_animation(animation)
 	switch(animation)
-		if("opening")
+		if(DOOR_OPENING_ANIMATION)
 			update_icon(ALL, AIRLOCK_OPENING)
-		if("closing")
+		if(DOOR_OPENING_ANIMATION)
 			update_icon(ALL, AIRLOCK_CLOSING)
-		if("deny")
+		if(DOOR_DENY_ANIMATION)
 			if(!machine_stat)
 				update_icon(ALL, AIRLOCK_DENY)
 				playsound(src,doorDeni,50,FALSE,3)
@@ -606,6 +606,28 @@
 /obj/machinery/door/airlock/proc/handle_deny_end()
 	if(airlock_state == AIRLOCK_DENY)
 		update_icon(ALL, AIRLOCK_CLOSED)
+
+/obj/machinery/door/airlock/animation_length(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			return 0.6 SECONDS
+		if(DOOR_CLOSING_ANIMATION)
+			return 0.6 SECONDS
+
+/obj/machinery/door/airlock/animation_segment_delay(animation)
+	switch(animation)
+		if(AIRLOCK_OPENING_TRANSPARENT)
+			return 0.1 SECONDS
+		if(AIRLOCK_OPENING_PASSABLE)
+			return 0.5 SECONDS
+		if(AIRLOCK_OPENING_FINISHED)
+			return 0.6 SECONDS
+		if(AIRLOCK_CLOSING_UNPASSABLE)
+			return 0.2 SECONDS
+		if(AIRLOCK_CLOSING_OPAQUE)
+			return 0.5 SECONDS
+		if(AIRLOCK_CLOSING_FINISHED)
+			return 0.6 SECONDS
 
 /obj/machinery/door/airlock/examine(mob/user)
 	. = ..()
@@ -1234,18 +1256,21 @@
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
 	update_icon(ALL, AIRLOCK_OPENING, TRUE)
-	sleep(0.1 SECONDS)
+	var/transparent_delay = animation_segment_delay(AIRLOCK_OPENING_TRANSPARENT)
+	sleep(transparent_delay)
 	set_opacity(0)
 	if(multi_tile)
 		filler.set_opacity(FALSE)
 	update_freelook_sight()
-	sleep(0.4 SECONDS)
+	var/passable_delay = animation_segment_delay(AIRLOCK_OPENING_PASSABLE) - transparent_delay
+	sleep(passable_delay)
 	set_density(FALSE)
 	if(multi_tile)
 		filler.set_density(FALSE)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, FALSE)
-	sleep(0.1 SECONDS)
+	var/open_delay = animation_segment_delay(AIRLOCK_OPENING_FINISHED) - transparent_delay - passable_delay
+	sleep(open_delay)
 	layer = OPEN_DOOR_LAYER
 	update_icon(ALL, AIRLOCK_OPEN, TRUE)
 	operating = FALSE
@@ -1314,14 +1339,16 @@
 			filler.density = TRUE
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
-	sleep(0.1 SECONDS)
+	var/unpassable_delay = animation_segment_delay(AIRLOCK_CLOSING_UNPASSABLE)
+	sleep(unpassable_delay)
 	if(!air_tight)
 		set_density(TRUE)
 		if(multi_tile)
 			filler.density = TRUE
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
-	sleep(0.4 SECONDS)
+	var/opaque_delay = animation_segment_delay(AIRLOCK_CLOSING_OPAQUE) - unpassable_delay
+	sleep(opaque_delay)
 	if(dangerous_close)
 		crush()
 	if(visible && !glass)
@@ -1329,7 +1356,8 @@
 		if(multi_tile)
 			filler.set_opacity(TRUE)
 	update_freelook_sight()
-	sleep(0.1 SECONDS)
+	var/close_delay = animation_segment_delay(AIRLOCK_CLOSING_FINISHED) - unpassable_delay - opaque_delay
+	sleep(close_delay)
 	update_icon(ALL, AIRLOCK_CLOSED, 1)
 	operating = FALSE
 	delayed_close_requested = FALSE

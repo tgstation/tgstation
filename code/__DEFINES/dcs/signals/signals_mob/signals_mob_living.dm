@@ -21,6 +21,8 @@
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
 
+/// from /datum/status_effect/incapacitating/stamcrit/on_apply()
+#define COMSIG_LIVING_ENTER_STAMCRIT "living_enter_stamcrit"
 ///from /obj/structure/door/crush(): (mob/living/crushed, /obj/machinery/door/crushing_door)
 #define COMSIG_LIVING_DOORCRUSHED "living_doorcrush"
 ///from base of mob/living/resist() (/mob/living)

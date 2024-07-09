@@ -242,7 +242,7 @@
 		/obj/item/storage/box/lights/mixed = 1,
 	)
 	belt = /obj/item/storage/belt/janitor/full
-	glasses = /obj/item/clothing/glasses/night
+	glasses = /obj/item/clothing/glasses/night/colorless
 	l_pocket = /obj/item/grenade/chem_grenade/cleaner
 	r_pocket = /obj/item/grenade/chem_grenade/cleaner
 	l_hand = /obj/item/storage/bag/trash/bluespace

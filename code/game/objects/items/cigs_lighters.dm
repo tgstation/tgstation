@@ -321,6 +321,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 
 	lit = TRUE
+	playsound(src.loc, 'sound/items/cig_light.ogg', 100, 1)
 	make_cig_smoke()
 	if(!(flags_1 & INITIALIZED_1))
 		update_appearance(UPDATE_ICON)
@@ -369,6 +370,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	STOP_PROCESSING(SSobj, src)
 	reagents.flags |= NO_REACT
 	lit = FALSE
+	playsound(src.loc, 'sound/items/cig_snuff.ogg', 100, 1)
 	update_appearance(UPDATE_ICON)
 	if(ismob(loc))
 		to_chat(loc, span_notice("Your [name] goes out."))
@@ -493,7 +495,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/cigarette/proc/make_cig_smoke()
 	cig_smoke = new(src, /particles/smoke/cig)
-	cig_smoke.particles.scale *= 1.5
+	cig_smoke.particles?.scale *= 1.5
 	return cig_smoke
 
 // Cigarette brands.
@@ -916,11 +918,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				span_notice("You hear a quiet click, as [user] shuts off [src] without even looking at what [user.p_theyre()] doing. Wow."),
 				span_notice("You quietly shut off [src] without even looking at what you're doing. Wow.")
 			)
+			playsound(src.loc , 'sound/items/zippo_off.ogg', 100, 1)
 		else
 			user.visible_message(
 				span_notice("[user] quietly shuts off [src]."),
 				span_notice("You quietly shut off [src].")
 			)
+			playsound(src.loc , 'sound/items/lighter_off.ogg', 100, 1)
 		return
 
 	set_lit(TRUE)
@@ -929,7 +933,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			span_notice("Without even breaking stride, [user] flips open and lights [src] in one smooth movement."),
 			span_notice("Without even breaking stride, you flip open and light [src] in one smooth movement.")
 		)
+		playsound(src.loc , 'sound/items/zippo_on.ogg', 100, 1)
 		return
+	else
+		playsound(src.loc, 'sound/items/lighter_on.ogg', 100, 1)
 
 	var/hand_protected = FALSE
 	var/mob/living/carbon/human/human_user = user

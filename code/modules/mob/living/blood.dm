@@ -103,15 +103,15 @@
 				investigate_log("has died of bloodloss.", INVESTIGATE_DEATHS)
 				death()
 
-	// Blood ratio! if you have 230 blood, this equals 0.5 as that's half of the current value, 560.
-	var/effective_blood_ratio = blood_volume/BLOOD_VOLUME_NORMAL
+	// Blood ratio! if you have 280 blood, this equals 0.5 as that's half of the current value, 560.
+	var/effective_blood_ratio = blood_volume / BLOOD_VOLUME_NORMAL
 
-	// If your ratio is less than one (you're missing any blood) and your oxyloss is under that ratio %, start getting oxy damage.
+	// If your ratio is less than one (you're missing any blood) and your oxyloss is under missing blood %, start getting oxy damage.
 	// This damage accrues faster the less blood you have.
 	// If KO or in hardcrit, the damage accrues even then to prevent being perma-KO.
-	if(((effective_blood_ratio < 1) && (getOxyLoss() < (effective_blood_ratio * 100))) || (stat in list(UNCONSCIOUS, HARD_CRIT)))
+	if(((effective_blood_ratio < 1) && (getOxyLoss() < ((1 - effective_blood_ratio) * 100))) || (stat in list(UNCONSCIOUS, HARD_CRIT)))
 		// At roughly half blood this equals to 3 oxyloss per tick. At 90% blood it's close to 0.5
-		var/rounded_oxyloss = round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume) * seconds_per_tick, 0.25)
+		var/rounded_oxyloss = round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume), 0.25) * seconds_per_tick
 		adjustOxyLoss(rounded_oxyloss, updating_health = TRUE)
 
 /// Has each bodypart update its bleed/wound overlay icon states
@@ -227,7 +227,7 @@
 ****************************************************/
 
 //Gets blood from mob to a container or other mob, preserving all data in it.
-/mob/living/proc/transfer_blood_to(atom/movable/AM, amount, forced)
+/mob/living/proc/transfer_blood_to(atom/movable/AM, amount, forced, ignore_incompatibility)
 	if(!blood_volume || !AM.reagents)
 		return FALSE
 	if(blood_volume < BLOOD_VOLUME_BAD && !forced)
@@ -254,7 +254,7 @@
 						if((D.spread_flags & DISEASE_SPREAD_SPECIAL) || (D.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
 							continue
 						C.ForceContractDisease(D)
-				if(!(blood_data["blood_type"] in get_safe_blood(C.dna.blood_type)))
+				if(!(blood_data["blood_type"] in get_safe_blood(C.dna.blood_type)) && !(ignore_incompatibility))
 					C.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
 					return TRUE
 
@@ -348,6 +348,15 @@
 	var/safe = bloodtypes_safe[bloodtype]
 	if(safe)
 		. = safe
+
+/**
+ * Returns TRUE if src is compatible with donor's blood, otherwise FALSE.
+ * * donor: Carbon mob, the one that is donating blood.
+ */
+/mob/living/carbon/proc/get_blood_compatibility(mob/living/carbon/donor)
+	var/patient_blood_data = get_blood_data(get_blood_id())
+	var/donor_blood_data = donor.get_blood_data(donor.get_blood_id())
+	return donor_blood_data["blood_type"] in get_safe_blood(patient_blood_data["blood_type"])
 
 //to add a splatter of blood or other mob liquid.
 /mob/living/proc/add_splatter_floor(turf/T, small_drip)

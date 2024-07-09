@@ -48,6 +48,7 @@
 									Allows you to behead targets for empowered strikes. \
 									Harms you if you dismiss the scythe without first causing harm to a creature. \
 									The shard also causes you to become Morbid, shifting your interests towards the macabre."
+		rods[/obj/item/melee/skateboard/holyboard] = "A skateboard that grants you flight and anti-magic abilities while ridden. Fits in your bag."
 		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, PROC_REF(on_holy_weapon_picked)))
 
 /obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/holy_weapon_type)

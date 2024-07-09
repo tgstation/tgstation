@@ -296,7 +296,7 @@
 
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
 	. = ..()
-	alpha = min(BLOODY_FOOTPRINT_BASE_ALPHA + (255 - BLOODY_FOOTPRINT_BASE_ALPHA) * bloodiness / (BLOOD_ITEM_MAX / 2), 255)
+	alpha = max(BLOODY_FOOTPRINT_BASE_ALPHA, min(255 * (bloodiness / 15), 255))
 
 //Cache of bloody footprint images
 //Key:

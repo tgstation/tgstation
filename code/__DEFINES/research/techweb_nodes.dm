@@ -117,6 +117,5 @@
 #define TECHWEB_NODE_SYNDICATE_BASIC "syndicate_basic"
 #define TECHWEB_NODE_TACKLE_ADVANCED "tackle_advanced"
 #define TECHWEB_NODE_TELECOMS "telecoms"
-#define TECHWEB_NODE_TOYS "toys"
 #define TECHWEB_NODE_UNREGULATED_BLUESPACE "unregulated_bluespace"
 #define TECHWEB_NODE_XENOBIOLOGY "xenobiology"

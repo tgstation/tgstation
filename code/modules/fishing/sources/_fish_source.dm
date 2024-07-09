@@ -239,6 +239,21 @@ GLOBAL_LIST(fishing_property_cache)
 /// Builds a fish weights table modified by bait/rod/user properties
 /datum/fish_source/proc/get_modified_fish_table(obj/item/fishing_rod/rod, mob/fisherman)
 	var/obj/item/bait = rod.bait
+	///An exponent used to level out the difference in probabilities between fishes/mobs on the table depending on bait quality.
+	var/leveling_exponent = 0
+	///Multiplier used to make fishes more common compared to everything else.
+	var/result_multiplier = 1
+
+	if(bait)
+		if(HAS_TRAIT(bait, TRAIT_GREAT_QUALITY_BAIT))
+			result_multiplier = 9
+			leveling_exponent = 0.5
+		else if(HAS_TRAIT(bait, TRAIT_GOOD_QUALITY_BAIT))
+			result_multiplier = 3.5
+			leveling_exponent = 0.25
+		else if(HAS_TRAIT(bait, TRAIT_BASIC_QUALITY_BAIT))
+			result_multiplier = 2
+			leveling_exponent = 0.1
 
 	var/list/fish_list_properties = collect_fish_properties()
 
@@ -246,17 +261,13 @@ GLOBAL_LIST(fishing_property_cache)
 	for(var/result in final_table)
 		final_table[result] *= rod.hook?.get_hook_bonus_multiplicative(result)
 		final_table[result] += rod.hook?.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative
+
 		if(ispath(result, /obj/item/fish))
 			//Modify fish roll chance
 			var/obj/item/fish/caught_fish = result
 
 			if(bait)
-				if(HAS_TRAIT(bait, TRAIT_GREAT_QUALITY_BAIT))
-					final_table[result] *= 10
-				else if(HAS_TRAIT(bait, TRAIT_GOOD_QUALITY_BAIT))
-					final_table[result] = round(final_table[result] * 3.5, 1)
-				else if(HAS_TRAIT(bait, TRAIT_BASIC_QUALITY_BAIT))
-					final_table[result] *= 2
+				final_table[result] = round(final_table[result] * result_multiplier, 1)
 				if(!HAS_TRAIT(bait, TRAIT_OMNI_BAIT))
 					//Bait matching likes doubles the chance
 					var/list/fav_bait = fish_list_properties[result][NAMEOF(caught_fish, favorite_bait)]
@@ -286,4 +297,22 @@ GLOBAL_LIST(fishing_property_cache)
 
 		if(final_table[result] <= 0)
 			final_table -= result
+
+	///here we even out the chances of fishie based on bait quality: better baits lead rarer fishes being more common.
+	if(leveling_exponent)
+		var/highest_fish_weight
+		var/list/collected_fish_weights = list()
+		for(var/fishable in final_table)
+			if(ispath(fishable, /obj/item/fish))
+				var/fish_weight = fish_table[fishable]
+				collected_fish_weights[fishable] = fish_weight
+				if(fish_weight > highest_fish_weight)
+					highest_fish_weight = fish_weight
+
+		for(var/fish in collected_fish_weights)
+			var/difference = collected_fish_weights[fish] - highest_fish_weight
+			if(!difference)
+				continue
+			final_table[fish] += round(difference**leveling_exponent, 1)
+
 	return final_table
