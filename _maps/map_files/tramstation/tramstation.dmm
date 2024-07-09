@@ -27242,7 +27242,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/incident_display/delam/directional/south,
+/obj/machinery/incident_display/tram/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "iOC" = (
@@ -31626,6 +31626,7 @@
 /obj/effect/spawner/random/vending/snackvend{
 	pixel_x = -5
 	},
+/obj/machinery/incident_display/delam/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "kkg" = (
