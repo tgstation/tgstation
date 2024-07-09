@@ -21,7 +21,7 @@ DEFINE_BITFIELD(sign_features, list(
 #define NAME_TRAM "tram incident display"
 
 #define DESC_DELAM "A signs describe how long it's been since the last delamination incident. Features an advert for SAFETY MOTH."
-#define DESC_TRAM "A display that provides the number of tram related safety incidents this shift. Features an advert for SAFETY MOTH."
+#define DESC_TRAM "A display that provides the number of tram related safety incidents this shift."
 
 #define DISPLAY_PIXEL_1_W 21
 #define DISPLAY_PIXEL_1_Z -2
@@ -360,7 +360,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 
 /obj/machinery/incident_display/examine(mob/user)
 	. = ..()
+	if(atom_integrity < max_integrity)
+		. += span_notice("It can be repaired with a [EXAMINE_HINT("welder")].")
+
 	if(sign_features & DISPLAY_DELAM)
+		. += span_notice("It can be changed to display tram hits with a [EXAMINE_HINT("multitool")].")
 		if(last_delam >= 0)
 			. += span_info("It has been [last_delam] shift\s since the last delamination event at this Nanotrasen facility.")
 			switch(last_delam)
@@ -378,6 +382,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 			. += span_info("The supermatter crystal has delaminated, in case you didn't notice.")
 
 	if(sign_features & DISPLAY_TRAM)
+		. += span_notice("It can be changed to display delam-free shifts with a [EXAMINE_HINT("multitool")].")
 		. += span_info("The station has had [hit_count] tram incident\s this shift.")
 		switch(hit_count)
 			if(0)
