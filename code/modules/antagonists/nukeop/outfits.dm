@@ -67,7 +67,7 @@
 /datum/outfit/syndicate/full
 	name = "Syndicate Operative - Full Kit"
 
-	glasses = /obj/item/clothing/glasses/night
+	glasses = /obj/item/clothing/glasses/night/colorless
 	mask = /obj/item/clothing/mask/gas/syndicate
 	back = /obj/item/mod/control/pre_equipped/nuclear
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
@@ -80,6 +80,10 @@
 		/obj/item/ammo_box/magazine/m12g = 3,
 	)
 
+/datum/outfit/syndicate/full/loneop
+	name = "Syndicate Operative - Full Kit (Loneop)"
+	uplink_type = /obj/item/uplink/loneop
+
 /datum/outfit/syndicate/full/plasmaman
 	name = "Syndicate Operative - Full Kit (Plasmaman)"
 	back = /obj/item/mod/control/pre_equipped/nuclear/plasmaman
@@ -90,6 +94,10 @@
 /datum/outfit/syndicate/full/plasmaman/New()
 	backpack_contents += /obj/item/clothing/head/helmet/space/plasmaman/syndie
 	return ..()
+
+/datum/outfit/syndicate/full/plasmaman/loneop
+	name = "Syndicate Operative - Full Kit (Loneop Plasmaman)"
+	uplink_type = /obj/item/uplink/loneop
 
 /datum/outfit/syndicate/reinforcement
 	name = "Syndicate Operative - Reinforcement"

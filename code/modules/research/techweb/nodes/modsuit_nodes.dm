@@ -58,7 +58,7 @@
 		"mod_plating_medical",
 		"mod_quick_carry",
 		"mod_injector",
-		"mod_organ_thrower",
+		"mod_organizer",
 		"mod_patienttransport",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
@@ -83,6 +83,7 @@
 	description = "Security suits for space crime handling."
 	prereq_ids = list(TECHWEB_NODE_MOD_EQUIP)
 	design_ids = list(
+		"mod_mirage_grenade",
 		"mod_plating_security",
 		"mod_stealth",
 		"mod_mag_harness",

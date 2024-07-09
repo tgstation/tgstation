@@ -7,9 +7,9 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket)
 	slot_flags = ITEM_SLOT_BACK
 	obj_flags = UNIQUE_RENAME
-	can_bayonet = TRUE
-	knife_x_offset = 22
-	knife_y_offset = 11
+
+/obj/item/gun/energy/laser/musket/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 22, offset_y = 11)
 
 /obj/item/gun/energy/laser/musket/Initialize(mapload)
 	. = ..()
@@ -84,11 +84,11 @@
 	shaded_charge = TRUE
 	ammo_x_offset = 1
 	obj_flags = UNIQUE_RENAME
-	can_bayonet = TRUE
-	knife_x_offset = 19
-	knife_y_offset = 13
 	w_class = WEIGHT_CLASS_NORMAL
 	dual_wield_spread = 5 //as intended by the coders
+
+/obj/item/gun/energy/laser/thermal/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 19, offset_y = 13)
 
 /obj/item/gun/energy/laser/thermal/Initialize(mapload)
 	. = ..()
