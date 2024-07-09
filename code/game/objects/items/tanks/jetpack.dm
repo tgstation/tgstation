@@ -117,6 +117,7 @@
 /obj/item/tank/jetpack/proc/allow_thrust(num, use_fuel = TRUE, mob/user)
 	if(!ismob(loc))
 		return FALSE
+	user = loc
 
 	if((num < 0.005 || air_contents.total_moles() < num))
 		turn_off(user)
