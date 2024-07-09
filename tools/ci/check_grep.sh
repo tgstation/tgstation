@@ -160,6 +160,9 @@ if $grep -i '(add_traits|remove_traits)\(.+,\s*src\)' $code_files; then
 fi;
 
 part "ensure proper lowertext usage"
+
+echo -e $"looking..." $code_files
+
 # lowertext() is a BYOND-level proc, so it can be used in any sort of code... including the TGS DMAPI which we don't manage in this repository.
 # basically, we filter out any results with "tgs" in it to account for this edgecase without having to enforce this rule in that separate codebase.
 # grepping the grep results is a bit of a sad solution to this but it's pretty much the only option in our existing linter framework
