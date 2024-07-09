@@ -172,20 +172,26 @@
 /obj/item/clothing/under/rank/security/head_of_security/alt
 	name = "head of security's turtleneck"
 	desc = "A stylish alternative to the normal head of security jumpsuit, complete with tactical pants."
-	icon_state = "hosalt"
+	icon_state = "hos_turtleneck"
 	inhand_icon_state = "bl_suit"
 	alt_covers_chest = TRUE
+	greyscale_config = /datum/greyscale_config/hos_turtleneck
+	greyscale_config_worn = /datum/greyscale_config/hos_turtleneck/worn
+	greyscale_colors = "#39393f#39393f#a52f29#1f2026#eeeeee#a52f29"
 
 /obj/item/clothing/under/rank/security/head_of_security/alt/skirt
 	name = "head of security's turtleneck skirt"
 	desc = "A stylish alternative to the normal head of security jumpsuit, complete with a tactical skirt."
-	icon_state = "hosalt_skirt"
+	icon_state = "hos_turtleneck_skirt"
 	inhand_icon_state = "bl_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	alt_covers_chest = TRUE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	greyscale_config = /datum/greyscale_config/hos_turtleneck_skirt
+	greyscale_config_worn = /datum/greyscale_config/hos_turtleneck_skirt/worn
+	greyscale_colors = "#39393f#39393f#a52f29#a52f29#1f2026#eeeeee#a52f29"
 
 /obj/item/clothing/under/rank/security/head_of_security/parade
 	name = "head of security's parade uniform"
