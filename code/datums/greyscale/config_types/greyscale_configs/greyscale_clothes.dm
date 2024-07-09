@@ -824,3 +824,127 @@
 /datum/greyscale_config/jester_hat/worn
 	name = "Jester Hat (Worn)"
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
+
+//
+// TURTLENECKS
+//
+
+/datum/greyscale_config/tacticool_turtleneck
+	name = "Tacticool Turtleneck"
+	icon_file = 'icons/obj/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/tacticool.json'
+
+/datum/greyscale_config/tacticool_turtleneck/worn
+	name = "Tacticool Turtleneck (Worn)"
+	icon_file = 'icons/mob/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/tacticool_worn.json'
+
+/datum/greyscale_config/tacticool_turtleneck_skirt
+	name = "Tacticool Skirtleneck"
+	icon_file = 'icons/obj/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/tacticool_skirt.json'
+
+/datum/greyscale_config/tacticool_turtleneck_skirt/worn
+	name = "Tacticool Skirtleneck (Worn)"
+	icon_file = 'icons/mob/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/tacticool_skirt_worn.json'
+
+/datum/greyscale_config/tactical_turtleneck
+	name = "Tactical Turtleneck"
+	icon_file = 'icons/obj/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/tactical.json'
+
+/datum/greyscale_config/tactical_turtleneck/worn
+	name = "Tactical Turtleneck (Worn)"
+	icon_file = 'icons/mob/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/tactical_worn.json'
+
+/datum/greyscale_config/tactical_turtleneck_skirt
+	name = "Tactical Skirtleneck"
+	icon_file = 'icons/obj/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/tactical_skirt.json'
+
+/datum/greyscale_config/tactical_turtleneck_skirt/worn
+	name = "Tactical Skirtleneck (Worn)"
+	icon_file = 'icons/mob/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/tactical_skirt_worn.json'
+
+/datum/greyscale_config/civilian_turtleneck
+	name = "Civilian Turtleneck"
+	icon_file = 'icons/obj/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/civilian.json'
+
+/datum/greyscale_config/civilian_turtleneck/worn
+	name = "Civilian Turtleneck (Worn)"
+	icon_file = 'icons/mob/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/civilian_worn.json'
+
+/datum/greyscale_config/civilian_turtleneck_skirt
+	name = "Civilian Skirtleneck"
+	icon_file = 'icons/obj/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/civilian_skirt.json'
+
+/datum/greyscale_config/civilian_turtleneck_skirt/worn
+	name = "Civilian Skirtleneck (Worn)"
+	icon_file = 'icons/mob/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/civilian_skirt_worn.json'
+
+/datum/greyscale_config/ce_turtleneck
+	name = "Chief Engineer's Turtleneck"
+	icon_file = 'icons/obj/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/ce.json'
+
+/datum/greyscale_config/ce_turtleneck/worn
+	name = "Chief Engineer's Turtleneck (Worn)"
+	icon_file = 'icons/mob/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/ce_worn.json'
+
+/datum/greyscale_config/ce_turtleneck_skirt
+	name = "Chief Engineer's Skirtleneck"
+	icon_file = 'icons/obj/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/ce_skirt.json'
+
+/datum/greyscale_config/ce_turtleneck_skirt/worn
+	name = "Chief Engineer's Skirtleneck (Worn)"
+	icon_file = 'icons/mob/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/ce_skirt_worn.json'
+
+/datum/greyscale_config/rd_turtleneck
+	name = "Research Director's Turtleneck"
+	icon_file = 'icons/obj/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/rd.json'
+
+/datum/greyscale_config/rd_turtleneck/worn
+	name = "Research Director's Turtleneck (Worn)"
+	icon_file = 'icons/mob/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/rd_worn.json'
+
+/datum/greyscale_config/rd_turtleneck_skirt
+	name = "Research Director's Skirtleneck"
+	icon_file = 'icons/obj/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/rd_skirt.json'
+
+/datum/greyscale_config/rd_turtleneck_skirt/worn
+	name = "Research Director's Skirtleneck (Worn)"
+	icon_file = 'icons/mob/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/rd_skirt_worn.json'
+
+/datum/greyscale_config/hos_turtleneck
+	name = "Head of Security's Turtleneck"
+	icon_file = 'icons/obj/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/hos.json'
+
+/datum/greyscale_config/hos_turtleneck/worn
+	name = "Head of Security's Turtleneck (Worn)"
+	icon_file = 'icons/mob/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/hos_worn.json'
+
+/datum/greyscale_config/hos_turtleneck_skirt
+	name = "Head of Security's Skirtleneck"
+	icon_file = 'icons/obj/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/hos_skirt.json'
+
+/datum/greyscale_config/hos_turtleneck_skirt/worn
+	name = "Head of Security's Skirtleneck (Worn)"
+	icon_file = 'icons/mob/clothing/under/turtlenecks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/turtlenecks/hos_skirt_worn.json'
