@@ -28,7 +28,7 @@
 			current = null
 			return
 		M.install(current.laws, user)
-		imprint_gps(gps_tag = "Weak Upload Signal")
+		imprint_gps("Weak Upload Signal")
 	else
 		return ..()
 

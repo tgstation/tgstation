@@ -93,7 +93,7 @@
 		return
 	for(var/obj/item/circuitboard/computer/board in src.contents)
 		if(!contents || board.GetComponent(/datum/component/gps))
-			return
+			CRASH("[src] Called imprint_gps without setting gps_tag")
 		board.AddComponent(/datum/component/gps, "[tracker]")
 		balloon_alert_to_viewers("board tracker enabled", vision_distance = 1)
 
