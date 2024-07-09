@@ -310,7 +310,7 @@
 
 /obj/structure/mineral_door/paperframe/Initialize(mapload)
 	. = ..()
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS))
 		QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/structure/mineral_door/paperframe/examine(mob/user)
@@ -343,6 +343,6 @@
 	return ..()
 
 /obj/structure/mineral_door/paperframe/Destroy()
-	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS))
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()

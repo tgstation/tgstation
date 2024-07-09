@@ -151,7 +151,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	SETUP_SMOOTHING()
 
-	if (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+	if (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS))
 		QUEUE_SMOOTH(src)
 
 	for(var/atom/movable/content as anything in src)

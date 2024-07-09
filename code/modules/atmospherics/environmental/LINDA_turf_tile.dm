@@ -25,6 +25,9 @@
 	**/
 	var/initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
+	///gas IDs of current active gas overlays -> the overlay they are currently generating
+	var/list/atmos_overlay_types
+
 /turf/open
 	//used for spacewind
 	///Pressure difference between two turfs
@@ -47,8 +50,6 @@
 	/// exists so things like space can ask to take 100% of a tile's gas
 	var/run_later = FALSE
 
-	///gas IDs of current active gas overlays
-	var/list/atmos_overlay_types
 	var/significant_share_ticker = 0
 	#ifdef TRACK_MAX_SHARE
 	var/max_share = 0
@@ -160,7 +161,6 @@
 
 /////////////////////////GAS OVERLAYS//////////////////////////////
 
-
 /turf/open/proc/update_visuals()
 	var/list/atmos_overlay_types = src.atmos_overlay_types // Cache for free performance
 
@@ -171,23 +171,82 @@
 			src.atmos_overlay_types = null
 		return
 
+	var/offset = GET_Z_PLANE_OFFSET(z) + 1
+	var/list/new_overlay_types = list()
 	var/list/gases = air.gases
+	for(var/_ID in gases)
+		if(GLOB.nonoverlaying_gases[_ID])
+			continue
+		var/_GAS = gases[_ID]
+		var/_GAS_META = _GAS[GAS_META]
+		if(_GAS[MOLES] <= _GAS_META[META_GAS_MOLES_VISIBLE])
+			continue
+		var/_GAS_OVERLAY = _GAS_META[META_GAS_OVERLAY][offset]
+		var/gas_junction = NONE
+		var/obj/effect/overlay/gas/existing_overlay = atmos_overlay_types?[_ID]
+		if(existing_overlay)
+			vis_contents -= existing_overlay
+			gas_junction = existing_overlay.smoothing_junction
+		else
+			// Alright if we're just being added, we need to poll our neighbors to update them
+			for(var/direction_to in GLOB.cardinals)
+				var/turf/neighbor = get_step(src, direction_to)
+				var/obj/effect/overlay/gas/their_overlay = neighbor.atmos_overlay_types?[_ID]
+				if(!their_overlay)
+					continue
+				gas_junction |= dir_to_junction(direction_to)
+				var/updated_junction = their_overlay.smoothing_junction | dir_to_junction(REVERSE_DIR(direction_to))
+				var/obj/effect/overlay/gas/new_overlay = their_overlay.get_smoothed_overlay(updated_junction)
+				neighbor.atmos_overlay_types[_ID] = new_overlay
+				neighbor.vis_contents -= their_overlay
+				neighbor.vis_contents += new_overlay
 
-	var/list/new_overlay_types
-	GAS_OVERLAYS(gases, new_overlay_types, src)
+		var/obj/effect/overlay/gas/new_overlay = _GAS_OVERLAY[min(TOTAL_VISIBLE_STATES, CEILING(_GAS[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))][gas_junction + 1]
+		vis_contents += new_overlay
+		new_overlay_types[_ID] = new_overlay
 
 	if (atmos_overlay_types)
-		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
-			vis_contents -= overlay
-
-	if (length(new_overlay_types))
-		if (atmos_overlay_types)
-			vis_contents += new_overlay_types - atmos_overlay_types //don't add overlays that already exist
-		else
-			vis_contents += new_overlay_types
+		// If we don't have an id anymore, remove it from our vis_contents and
+		// yell to our neighbors so they stop smoothing with us
+		for(var/old_gas_id in atmos_overlay_types - new_overlay_types)
+			var/obj/effect/overlay/gas/old_overlay = atmos_overlay_types[old_gas_id]
+			vis_contents -= old_overlay
+			for(var/direction_to in GLOB.cardinals)
+				var/turf/neighbor = get_step(src, direction_to)
+				var/obj/effect/overlay/gas/their_overlay = neighbor.atmos_overlay_types?[old_gas_id]
+				if(!their_overlay)
+					continue
+				var/updated_junction = their_overlay.smoothing_junction & ~dir_to_junction(REVERSE_DIR(direction_to))
+				var/obj/effect/overlay/gas/new_overlay = their_overlay.get_smoothed_overlay(updated_junction)
+				neighbor.atmos_overlay_types[old_gas_id] = new_overlay
+				neighbor.vis_contents -= their_overlay
+				neighbor.vis_contents += new_overlay
 
 	UNSETEMPTY(new_overlay_types)
 	src.atmos_overlay_types = new_overlay_types
+
+/turf/proc/rebuild_visuals()
+	var/list/atmos_overlay_types = src.atmos_overlay_types
+	for(var/direction in GLOB.cardinals)
+		var/turf/paired_turf = get_step(src, direction)
+		if(!paired_turf)
+			continue
+		var/list/paired_atmos_overlay_types = paired_turf.atmos_overlay_types
+		if(!paired_atmos_overlay_types)
+			continue
+		var/dir_to_us = REVERSE_DIR(direction)
+
+		for(var/gas_id as anything in paired_atmos_overlay_types - atmos_overlay_types)
+			var/obj/effect/overlay/gas/their_overlay = paired_atmos_overlay_types[gas_id]
+			if(!their_overlay)
+				continue
+			if(!(their_overlay.smoothing_junction & dir_to_us))
+				continue
+			var/updated_junction = their_overlay.smoothing_junction & ~dir_to_junction(dir_to_us)
+			var/obj/effect/overlay/gas/new_overlay = their_overlay.get_smoothed_overlay(updated_junction)
+			paired_atmos_overlay_types[gas_id] = new_overlay
+			paired_turf.vis_contents -= their_overlay
+			paired_turf.vis_contents += new_overlay
 
 /proc/typecache_of_gases_with_no_overlays()
 	. = list()
