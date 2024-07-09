@@ -11,15 +11,21 @@
 	recipe_type = /datum/crafting_recipe/shutters
 	animation_sound = 'sound/machines/shutter.ogg'
 
+/obj/machinery/door/poddoor/shutters/proc/get_working_state()
+	if(animation)
+		return "[animation]"
+	return density ? "closed" : "open"
+
 /obj/machinery/door/poddoor/shutters/update_icon_state()
 	. = ..()
-	if(animation)
-		icon_state = animation
-	else
-		icon_state = density ? "closed" : "open"
+	icon_state = "[get_working_state()]_top"
+
+/obj/machinery/door/poddoor/shutters/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "emissives", src, alpha = 100)
 
 /obj/machinery/door/poddoor/shutters/get_lower_overlay()
-	return mutable_appearance(icon, "[icon_state]_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+	return mutable_appearance(icon, "[get_working_state()]_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
 
 /obj/machinery/door/poddoor/shutters/animation_delay(animation)
 	switch(animation)
@@ -59,6 +65,13 @@
 	icon_state = "closed"
 	rad_insulation = RAD_EXTREME_INSULATION
 
+/obj/machinery/door/poddoor/shutters/radiation/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 0.91 SECONDS
+		if("closing")
+			return 0.66 SECONDS
+
 /obj/machinery/door/poddoor/shutters/radiation/preopen
 	icon_state = "open_map"
 	density = FALSE
@@ -89,6 +102,13 @@
 	icon_state = "closed"
 	opacity = FALSE
 	glass = TRUE
+
+/obj/machinery/door/poddoor/shutters/window/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 0.91 SECONDS
+		if("closing")
+			return 0.91 SECONDS
 
 /obj/machinery/door/poddoor/shutters/window/preopen
 	icon_state = "open_map"

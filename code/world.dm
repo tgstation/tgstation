@@ -18,7 +18,6 @@
 	name = "/tg/ Station 13"
 	fps = 20
 	map_format = SIDE_MAP
-	loop_checks = FALSE
 #ifdef FIND_REF_NO_CHECK_TICK
 	loop_checks = FALSE
 #endif

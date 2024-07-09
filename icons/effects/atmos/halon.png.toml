@@ -2,4 +2,4 @@ output_name = ""
 template = "bitmask/gas.toml"
 
 [animation]
-delays = [1, 1, 1, 1]
+delays = [1, 1, 1, 1, 1, 1]

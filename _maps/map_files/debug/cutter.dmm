@@ -320,10 +320,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
 /area/misc/testroom)
-"dn" = (
-/obj/machinery/door/airlock/greyscale,
-/turf/open/floor/iron,
-/area/misc/testroom)
 "dr" = (
 /obj/structure/window/spawner/directional/west,
 /turf/open/floor/iron,
@@ -911,10 +907,6 @@
 /area/misc/testroom)
 "kp" = (
 /obj/structure/window_frame/bamboo,
-/turf/open/floor/iron,
-/area/misc/testroom)
-"ks" = (
-/obj/machinery/door/airlock/greyscale/green,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "kt" = (
@@ -2604,10 +2596,6 @@
 	},
 /turf/open/floor/iron,
 /area/misc/testroom)
-"CJ" = (
-/obj/machinery/door/airlock/greyscale/red,
-/turf/open/floor/iron,
-/area/misc/testroom)
 "CN" = (
 /obj/machinery/door/airlock/hydroponics,
 /turf/open/floor/iron,
@@ -3193,6 +3181,10 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron,
 /area/misc/testroom)
+"Iv" = (
+/obj/machinery/turretid/directional/south,
+/turf/closed/wall,
+/area/misc/testroom)
 "Iw" = (
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/security_space_law,
@@ -3767,6 +3759,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
 /area/misc/testroom)
+"NW" = (
+/obj/machinery/turretid/directional/south,
+/turf/open/floor/iron,
+/area/misc/testroom)
 "NX" = (
 /obj/machinery/door/window/elevator/right/directional/south,
 /turf/open/floor/iron,
@@ -4042,10 +4038,6 @@
 	dir = 1
 	},
 /turf/open/indestructible/paper,
-/area/misc/testroom)
-"Rj" = (
-/obj/machinery/turretid/directional/south,
-/turf/closed/wall,
 /area/misc/testroom)
 "Rk" = (
 /obj/structure/fluff/paper{
@@ -4399,10 +4391,6 @@
 /area/misc/testroom)
 "UG" = (
 /obj/machinery/door/airlock/centcom,
-/turf/open/floor/iron,
-/area/misc/testroom)
-"UI" = (
-/obj/machinery/turretid/directional/south,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "UM" = (
@@ -6401,7 +6389,7 @@ at
 "}
 (7,1,1) = {"
 at
-Rj
+Iv
 Ft
 Ft
 oL
@@ -11467,7 +11455,7 @@ co
 EX
 oL
 Hk
-UI
+NW
 co
 nN
 co
@@ -11715,7 +11703,7 @@ at
 at
 oL
 co
-Rj
+Iv
 co
 co
 co
@@ -11723,9 +11711,9 @@ co
 co
 hS
 uP
-UI
+NW
 oL
-UI
+NW
 oL
 nN
 Jy
@@ -11981,7 +11969,7 @@ Oj
 oL
 Yh
 co
-UI
+NW
 co
 co
 co
@@ -29710,7 +29698,7 @@ Wc
 oL
 co
 oL
-ks
+co
 oL
 co
 oL
@@ -29966,9 +29954,9 @@ Wc
 co
 Wc
 co
-ks
 co
-ks
+co
+co
 co
 fA
 co
@@ -30224,7 +30212,7 @@ Wc
 oL
 co
 oL
-ks
+co
 oL
 co
 oL
@@ -30738,7 +30726,7 @@ Fj
 oL
 co
 oL
-CJ
+co
 oL
 co
 oL
@@ -30994,9 +30982,9 @@ Fj
 co
 Fj
 co
-CJ
 co
-CJ
+co
+co
 co
 re
 co
@@ -31252,7 +31240,7 @@ Fj
 oL
 co
 oL
-CJ
+co
 oL
 co
 oL
@@ -31762,7 +31750,7 @@ at
 oL
 co
 oL
-dn
+co
 oL
 co
 oL
@@ -32018,9 +32006,9 @@ oL
 at
 oL
 co
-dn
 co
-dn
+co
+co
 co
 pW
 co
@@ -32276,7 +32264,7 @@ at
 oL
 co
 oL
-dn
+co
 oL
 co
 oL

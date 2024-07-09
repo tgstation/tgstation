@@ -462,10 +462,11 @@
 	use_energy(active_power_usage)
 	run_animation("opening")
 	set_opacity(0)
-	SLEEP_NOT_DEL(0.5 SECONDS)
+	var/delay = animation_delay("opening")
+	SLEEP_NOT_DEL(delay)
 	set_density(FALSE)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
-	SLEEP_NOT_DEL(0.5 SECONDS)
+	SLEEP_NOT_DEL(0.2 SECONDS)
 	layer = initial(layer)
 	update_appearance()
 	set_opacity(0)
@@ -499,10 +500,11 @@
 
 	run_animation("closing")
 	layer = closingLayer
-	SLEEP_NOT_DEL(0.5 SECONDS)
+	var/delay = animation_delay("closing")
+	SLEEP_NOT_DEL(0.2 SECONDS)
 	set_density(TRUE)
 	flags_1 |= PREVENT_CLICK_UNDER_1
-	SLEEP_NOT_DEL(0.5 SECONDS)
+	SLEEP_NOT_DEL(delay - 0.2 SECONDS)
 	update_appearance()
 	if(visible && !glass)
 		set_opacity(1)
@@ -579,6 +581,26 @@
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
+
+/obj/machinery/door/morgue/update_icon_state()
+	. = ..()
+	if(animation && animation != "deny")
+		icon_state = animation
+	else
+		icon_state = density ? "closed" : "open_top"
+
+/obj/machinery/door/morgue/update_overlays()
+	. = ..()
+	if(!density)
+		// If we're open we layer the bit below us "above" any mobs so they can walk through
+		. += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+
+/obj/machinery/door/morgue/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 1.64 SECONDS
+		if("closing")
+			return 1.64 SECONDS
 
 /obj/machinery/door/get_dumping_location()
 	return null

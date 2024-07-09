@@ -158,20 +158,20 @@
 	rad_insulation = RAD_MEDIUM_INSULATION
 
 /obj/machinery/door/airlock/Initialize(mapload)
+	// Here we check the style of greyscale_config, then cut down the number of colors passed along to 6 colors for window airlocks, or 5 for solids.
+	// This way we only need to pass along the full 7 color set when making a new airlock pattern.
+	if(!ispath(greyscale_config, /datum/greyscale_config/airlocks/custom))
+		if(glass)
+			airlock_material = "glass"
+			greyscale_config = /datum/greyscale_config/airlocks/window
+			greyscale_colors = (copytext(greyscale_colors, 1, 43))
+		else if(ispath(greyscale_config, /datum/greyscale_config/airlocks))
+			greyscale_colors = (copytext(greyscale_colors, 1, 36))
+
 	. = ..()
 
 	set_wires(get_wires())
 
-	// Here we check the style of greyscale_config, then cut down the number of colors passed along to 6 colors for window airlocks, or 5 for solids.
-	// This way we only need to pass along the full 7 color set when making a new airlock pattern.
-	if(glass && !istype(greyscale_config, /datum/greyscale_config/airlocks/custom))
-		airlock_material = "glass"
-		greyscale_config = /datum/greyscale_config/airlocks/window
-		greyscale_colors = (copytext(greyscale_colors, 1, 43))
-		update_greyscale()
-	else if(istype(greyscale_config, /datum/greyscale_config/airlocks))
-		greyscale_colors = (copytext(greyscale_colors, 1, 36))
-		update_greyscale()
 	if(security_level > AIRLOCK_SECURITY_IRON)
 		atom_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
 		max_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
@@ -1273,12 +1273,13 @@
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
 	update_icon(ALL, AIRLOCK_OPENING, TRUE)
+	var/delay = animation_delay("opening")
 	sleep(0.1 SECONDS)
 	set_opacity(0)
 	if(multi_tile)
 		filler.set_opacity(FALSE)
 	update_freelook_sight()
-	sleep(0.4 SECONDS)
+	sleep(delay - 0.1 SECONDS)
 	set_density(FALSE)
 	if(multi_tile)
 		filler.set_density(FALSE)
@@ -1353,6 +1354,7 @@
 			filler.density = TRUE
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
+	var/delay = animation_delay("closing")
 	sleep(0.1 SECONDS)
 	if(!air_tight)
 		set_density(TRUE)
@@ -1360,7 +1362,7 @@
 			filler.density = TRUE
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
-	sleep(0.4 SECONDS)
+	sleep(delay - 0.1 SECONDS)
 	if(dangerous_close)
 		crush()
 	if(visible && !glass)
@@ -1571,7 +1573,9 @@
 /obj/machinery/door/airlock/proc/prepare_deconstruction_assembly(obj/structure/door_assembly/assembly)
 	assembly.heat_proof_finished = heat_proof //tracks whether there's rglass in
 	assembly.set_anchored(TRUE)
+	assembly.setDir(dir)
 	assembly.glass = glass
+	assembly.set_greyscale(greyscale_colors, greyscale_config)
 	assembly.state = AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS
 	assembly.created_name = name
 	assembly.previous_assembly = previous_airlock
@@ -2287,6 +2291,15 @@
 
 	return ..()
 
+/obj/machinery/door/airlock/external/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 0.6 SECONDS
+		if("closing")
+			return 0.6 SECONDS
+		if("deny")
+			return 0.3 SECONDS
+
 // Access free external airlocks
 /obj/machinery/door/airlock/external/ruin
 
@@ -2328,25 +2341,52 @@
 	greyscale_config = null
 	greyscale_colors = null
 
+/obj/machinery/door/airlock/vault/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 1.9 SECONDS
+		if("closing")
+			return 1.9 SECONDS
+		if("deny")
+			return 0.3 SECONDS
+
 // Hatch Airlocks
 
 /obj/machinery/door/airlock/hatch
 	name = "airtight hatch"
-	icon = 'icons/obj/doors/airlocks/hatch/centcom.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
-	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/hatch/centcom.dmi'
+	//overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
+	//note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_hatch
 	greyscale_config = null
 	greyscale_colors = null
 
+/obj/machinery/door/airlock/hatch/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 0.95 SECONDS
+		if("closing")
+			return 0.95 SECONDS
+		if("deny")
+			return 0.3 SECONDS
+
 /obj/machinery/door/airlock/maintenance_hatch //Please dear fucking LORD make this a subtype of the above, they're the SAME GOD DAMN THING
 	name = "maintenance hatch"
-	icon = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
-	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/hatch/maintenance.dmi'
+	//overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
+	//note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mhatch
 	greyscale_config = null
 	greyscale_colors = null
+
+/obj/machinery/door/airlock/maintenance_hatch/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 0.9 SECONDS
+		if("closing")
+			return 0.9 SECONDS
+		if("deny")
+			return 0.3 SECONDS
 
 // High Security Airlocks
 
@@ -2361,6 +2401,15 @@
 	damage_deflection = 30
 	greyscale_config = null
 	greyscale_colors = null
+
+/obj/machinery/door/airlock/highsecurity/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 1.7 SECONDS
+		if("closing")
+			return 1.7 SECONDS
+		if("deny")
+			return 0.3 SECONDS
 
 // Shuttle Airlocks
 
@@ -2443,6 +2492,15 @@
 			L.throw_at(throwtarget, 5, 1)
 		return FALSE
 
+/obj/machinery/door/airlock/cult/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 1.6 SECONDS
+		if("closing")
+			return 1.6 SECONDS
+		if("deny")
+			return 0.3 SECONDS
+
 /obj/machinery/door/airlock/cult/proc/conceal()
 	icon = 'icons/obj/doors/airlocks/tall/maintenance.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
@@ -2499,9 +2557,36 @@
 /obj/machinery/door/airlock/material
 	name = "Airlock"
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS
-	greyscale_config = /datum/greyscale_config/material_airlock
+	greyscale_config = /datum/greyscale_config/airlocks
 	greyscale_colors = "#a5a7ac"
 	assemblytype = /obj/structure/door_assembly/door_assembly_material
+
+/obj/machinery/door/airlock/material/Initialize(mapload)
+	greyscale_colors = extend_colors(greyscale_colors)
+	return ..()
+
+/obj/machinery/door/airlock/material/set_greyscale(list/colors, new_config)
+	colors = extend_colors(colors)
+	return ..()
+
+/// Takes our greyscale colors, if we don't have enough add copies on till we do
+/obj/machinery/door/airlock/material/proc/extend_colors(grey_colors)
+	var/target = 7 // Colors required for custom, the longest config
+	if(!ispath(greyscale_config, /datum/greyscale_config/airlocks/custom))
+		if(glass)
+			target = 6
+		else if(ispath(greyscale_config, /datum/greyscale_config/airlocks))
+			target = 5
+
+	if(islist(grey_colors))
+		var/list/grey_list = grey_colors
+		grey_colors = grey_list.Join("")
+	var/list/split_greyscale = splittext(grey_colors, "#")
+	// 6 comes from the required length for /datum/greyscale_config/airlocks/window, our worst case scenario
+	// - 1 because the first # sections between nothing and the first color
+	for(var/i in 1 to (target - (length(split_greyscale) - 1)))
+		split_greyscale += split_greyscale[2] // backfill with the first color
+	return split_greyscale.Join("#")
 
 /obj/machinery/door/airlock/material/close(forced, force_crush)
 	. = ..()
@@ -2536,24 +2621,6 @@
 
 /obj/machinery/door/airlock/multi_tile/narsie_act()
 	return
-
-//////////////////////////////////
-/*
-	Greyscale Config Airlocks
-*/
-
-/obj/machinery/door/airlock/greyscale
-	name = "fancy ungodlike airlock"
-	desc = "I can only imagine the amount of hate this will get if this isn't like... actually perfect."
-	icon = 'icons/obj/doors/airlocks/greyscale_template.dmi'
-	greyscale_config = /datum/greyscale_config/airlocks
-	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#ffffff"
-
-/obj/machinery/door/airlock/greyscale/red
-	greyscale_colors = "#d40808#d40808#d40808#d40808#808080"
-
-/obj/machinery/door/airlock/greyscale/green
-	greyscale_colors = "#00c41a#00c41a#00c41a#00c41a#808080"
 
 /*
  * Subtype used in unit tests to ensure instant airlock opening/closing.

@@ -195,6 +195,8 @@
 	controller.id = null
 	balloon_alert(user, "linked to [tool.buffer]")
 
+BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/photobooth)
+
 /obj/item/assembly/control/photobooth_control
 	name = "photobooth controller"
 	desc = "A remote controller for the HoP's photobooth."

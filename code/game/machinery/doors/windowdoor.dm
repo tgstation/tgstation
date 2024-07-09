@@ -264,9 +264,10 @@
 		operating = TRUE
 
 	run_animation("opening")
+	var/delay = animation_delay("opening")
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
+	sleep(delay)
 	icon_state ="[base_state]_open"
-	sleep(1 SECONDS)
 	set_density(FALSE)
 	air_update_turf(TRUE, FALSE)
 	update_freelook_sight()
@@ -314,7 +315,8 @@
 	refresh_hitbox_rendering()
 	air_update_turf(TRUE, TRUE)
 	update_freelook_sight()
-	sleep(1 SECONDS)
+	var/delay = animation_delay("closing")
+	sleep(delay)
 
 	operating = FALSE
 	return TRUE
