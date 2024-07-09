@@ -45,6 +45,7 @@
 		"blutrash",
 		"light_replacer_blue",
 		"bluespacebodybag",
+		"gigabeacon",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	required_experiments = list(/datum/experiment/scanning/points/bluespace_crystal)

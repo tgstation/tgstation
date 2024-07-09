@@ -104,7 +104,6 @@
 		"s_filter",
 		"s_transmitter",
 		"s_treatment",
-		"gigabeacon",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 
