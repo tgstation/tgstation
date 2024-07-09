@@ -1,5 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "defibrillator no longer has an abstract cell"
-  - code_imp: "defibrillator attackby replaced with item_interaction"
