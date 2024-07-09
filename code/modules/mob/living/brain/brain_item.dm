@@ -113,10 +113,10 @@
 	if(!QDELETED(organ_owner) && length(skillchips))
 		if(!special)
 			to_chat(organ_owner, span_notice("You feel your skillchips enable emergency power saving mode, deactivating as your brain leaves your body..."))
-		for(var/chip in skillchips)
-			var/obj/item/skillchip/skillchip = chip
-			// Run the try_ proc with force = TRUE.
-			skillchip.try_deactivate_skillchip(silent = special, force = TRUE)
+			for(var/chip in skillchips)
+				var/obj/item/skillchip/skillchip = chip
+				// Run the try_ proc with force = TRUE.
+				skillchip.try_deactivate_skillchip(silent = special, force = TRUE)
 
 	. = ..()
 

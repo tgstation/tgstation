@@ -583,9 +583,9 @@
 
 	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
-		brain.Remove(owner, special = TRUE)
+		brain.Remove(owner, special = TRUE, movement_flags = NO_ID_TRANSFER)
 		brain.zone = BODY_ZONE_CHEST
-		brain.Insert(owner, special = TRUE)
+		brain.Insert(owner, special = TRUE, movement_flags = NO_ID_TRANSFER)
 
 	var/obj/item/bodypart/head/head = owner.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
@@ -608,9 +608,9 @@
 		return TRUE
 	var/obj/item/organ/internal/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
-		brain.Remove(owner, special = TRUE)
+		brain.Remove(owner, special = TRUE, movement_flags = NO_ID_TRANSFER)
 		brain.zone = initial(brain.zone)
-		brain.Insert(owner, special = TRUE)
+		brain.Insert(owner, special = TRUE, movement_flags = NO_ID_TRANSFER)
 
 	owner.dna.species.regenerate_organs(owner, replace_current = FALSE, excluded_zones = list(BODY_ZONE_CHEST)) //replace_current needs to be FALSE to prevent weird adding and removing mutation healing
 	owner.apply_damage(damage = 50, damagetype = BRUTE, def_zone = BODY_ZONE_HEAD) //and this to DISCOURAGE organ farming, or at least not make it free.
