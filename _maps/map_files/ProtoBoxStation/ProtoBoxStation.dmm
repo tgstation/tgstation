@@ -5605,6 +5605,10 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = -3;
+	pixel_y = 4
+	},
 /turf/open/floor/carpet/blue,
 /area/station/service/lawoffice)
 "arh" = (
@@ -13790,6 +13794,12 @@
 "aRF" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /obj/machinery/light/directional/north,
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/sugar,
+/obj/item/reagent_containers/condiment/sugar,
+/obj/item/reagent_containers/condiment/sugar,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
 "aRG" = (
@@ -18219,11 +18229,19 @@
 /area/station/hallway/primary/central)
 "bgZ" = (
 /obj/structure/table,
-/obj/item/hand_labeler,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
+/obj/item/construction/plumbing{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/construction/plumbing{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/hand_labeler,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "bhb" = (
