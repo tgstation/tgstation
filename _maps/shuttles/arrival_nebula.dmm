@@ -29,11 +29,11 @@
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "f" = (
-/obj/machinery/digital_clock/directional/north,
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
 /obj/structure/chair/comfy/black,
+/obj/machinery/digital_clock/directional/north,
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "g" = (
@@ -97,8 +97,8 @@
 /obj/item/reagent_containers/cup/soda_cans/pwr_game{
 	pixel_y = 3
 	},
-/obj/machinery/digital_clock/directional/north,
 /obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/noticeboard/directional/north,
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "r" = (
@@ -107,6 +107,7 @@
 	dir = 4
 	},
 /obj/structure/closet/wardrobe/grey,
+/obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "t" = (
@@ -117,10 +118,10 @@
 /obj/item/toy/plush/moth{
 	pixel_y = 4
 	},
-/obj/item/radio/intercom/chapel/directional/south,
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
+/obj/machinery/digital_clock/directional/south,
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "u" = (
@@ -229,10 +230,10 @@
 /area/template_noop)
 "R" = (
 /obj/structure/closet/emcloset,
-/obj/structure/sign/poster/official/random/directional/north,
 /obj/machinery/light/warm/directional/north,
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/item/storage/medkit/regular,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "S" = (
@@ -264,6 +265,7 @@
 	dir = 1
 	},
 /obj/structure/closet/wardrobe/mixed,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "W" = (

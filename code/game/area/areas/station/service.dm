@@ -66,10 +66,10 @@
 	icon_state = "theatre_dressing"
 	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
 
-/area/station/service/theater_green_room
-	name = "\improper Theater Green Room"
+/area/station/service/greenroom
+	name = "\improper Greenroom"
 	icon_state = "theatre_green"
-	sound_environment = SOUND_AREA_WOODFLOOR
+	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
 
 /area/station/service/library
 	name = "\improper Library"

@@ -13,7 +13,7 @@
 /area/shuttle/mining/large)
 "b" = (
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/mineral/titanium/tiled,
+/turf/open/floor/iron/textured_large,
 /area/shuttle/mining/large)
 "d" = (
 /obj/structure/table,
@@ -30,7 +30,7 @@
 /area/shuttle/mining/large)
 "e" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/floor/plating/lavaland_atmos,
+/turf/open/floor/plating,
 /area/shuttle/mining/large)
 "i" = (
 /obj/structure/sign/warning/vacuum/external/directional/east,
@@ -50,12 +50,12 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
 	},
-/turf/open/floor/plating/lavaland_atmos,
+/turf/open/floor/plating,
 /area/shuttle/mining/large)
 "j" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/floor/plating/lavaland_atmos,
+/turf/open/floor/plating,
 /area/shuttle/mining/large)
 "l" = (
 /obj/effect/turf_decal/stripes/line{
@@ -91,7 +91,8 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/machinery/light/small/directional/north,
 /obj/structure/cable,
-/turf/open/floor/mineral/titanium/tiled,
+/obj/structure/railing,
+/turf/open/floor/iron/textured_large,
 /area/shuttle/mining/large)
 "r" = (
 /obj/effect/turf_decal/stripes/line{
@@ -129,7 +130,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/plating/lavaland_atmos,
+/turf/open/floor/plating,
 /area/shuttle/mining/large)
 "x" = (
 /obj/machinery/door/airlock/external/ruin{
@@ -145,7 +146,7 @@
 	name = "mining shuttle";
 	port_direction = 2
 	},
-/turf/open/floor/plating/lavaland_atmos,
+/turf/open/floor/plating,
 /area/shuttle/mining/large)
 "y" = (
 /obj/structure/chair/comfy/shuttle{
@@ -195,7 +196,7 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/plating/lavaland_atmos,
+/turf/open/floor/plating,
 /area/shuttle/mining/large)
 "I" = (
 /turf/closed/wall/mineral/titanium,
@@ -211,11 +212,11 @@
 	},
 /obj/item/radio,
 /obj/machinery/airalarm/directional/east,
-/turf/open/floor/mineral/titanium/tiled,
+/turf/open/floor/iron/textured_large,
 /area/shuttle/mining/large)
 "M" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/turf/open/floor/plating/lavaland_atmos,
+/turf/open/floor/plating,
 /area/shuttle/mining/large)
 "N" = (
 /obj/item/clothing/suit/hazardvest{
@@ -252,14 +253,15 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/mineral/titanium/tiled,
+/obj/structure/railing,
+/turf/open/floor/iron/textured_large,
 /area/shuttle/mining/large)
 "O" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/plating/lavaland_atmos,
+/turf/open/floor/plating,
 /area/shuttle/mining/large)
 "P" = (
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -320,7 +322,7 @@
 /obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 4
 	},
-/turf/open/floor/mineral/titanium/tiled,
+/turf/open/floor/iron/textured_large,
 /area/shuttle/mining/large)
 "V" = (
 /obj/structure/cable,

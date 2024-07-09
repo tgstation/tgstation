@@ -7,7 +7,7 @@
 		"cargo": "cargo_nebula",
 		"ferry": "ferry_nebula",
 		"whiteship": "whiteship_tram",
-		"emergency": "emergency_delta"
+		"emergency": "emergency_nebula"
 	},
 	"traits": [
 		{
