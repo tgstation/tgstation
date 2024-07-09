@@ -90,6 +90,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 
 /obj/machinery/incident_display/Initialize(mapload)
 	..()
+	register_context()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/incident_display/post_machine_initialize()
@@ -120,6 +121,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		COOLDOWN_RESET(src, active_advert)
 		live_display = FALSE
 		update_appearance()
+
+/obj/machinery/incident_display/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!isliving(user))
+		return
+
+	var/mob/living/living_user = user
+
+	if(held_item?.tool_behaviour == TOOL_WELDER && !living_user.combat_mode && atom_integrity < max_integrity)
+		context[SCREENTIP_CONTEXT_LMB] = "repair display"
+
+	if(held_item?.tool_behaviour == TOOL_MULTITOOL && !living_user.combat_mode)
+		if(sign_features == DISPLAY_TRAM)
+			context[SCREENTIP_CONTEXT_LMB] = "change to delam mode"
+		else
+			context[SCREENTIP_CONTEXT_LMB] = "change to tram mode"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/incident_display/welder_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
