@@ -146,8 +146,10 @@
 		return
 	if(!(shove_flags & SHOVE_KNOCKDOWN_BLOCKED))
 		target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
+		target.apply_status_effect(/datum/status_effect/next_shove_stuns)
 	if(!HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
 		Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
+		apply_status_effect(/datum/status_effect/next_shove_stuns)
 	target.visible_message(span_danger("[shover] shoves [target.name] into [name]!"),
 		span_userdanger("You're shoved into [name] by [shover]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(src, span_danger("You shove [target.name] into [name]!"))

@@ -1,4 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - rscadd: "Projectile Dampener field now reduces stuns and stamina damage from incoming projectiles"

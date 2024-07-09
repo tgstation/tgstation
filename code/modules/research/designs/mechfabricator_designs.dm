@@ -2436,14 +2436,14 @@
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY
 	)
 
-/datum/design/module/mod_organ_thrower
-	name = "Organ Thrower Module"
-	id = "mod_organ_thrower"
+/datum/design/module/mod_organizer
+	name = "Organizer Module"
+	id = "mod_organizer"
 	materials = list(
 		/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT,
 	)
-	build_path = /obj/item/mod/module/organ_thrower
+	build_path = /obj/item/mod/module/organizer
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)
@@ -2606,6 +2606,18 @@
 		/datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT,
 	)
 	build_path = /obj/item/mod/module/criminalcapture
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
+	)
+
+/datum/design/module/mirage
+	name = "Mirage Grenade Dispenser Module"
+	id = "mod_mirage_grenade"
+	materials = list(
+		/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/mod/module/dispenser/mirage
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
 	)

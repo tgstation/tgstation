@@ -15,15 +15,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	actions_types = list(/datum/action/item_action/rune_shatter)
-	embedding = list(
-		ignore_throwspeed_threshold = TRUE,
-		embed_chance = 75,
-		jostle_chance = 2,
-		jostle_pain_mult = 5,
-		pain_stam_pct = 0.4,
-		pain_mult = 3,
-		rip_time = 15,
-	)
+	embed_type = /datum/embed_data/rune_carver
 
 	/// Whether we're currently drawing a rune
 	var/drawing = FALSE
@@ -33,6 +25,15 @@
 	var/list/datum/weakref/current_runes = list()
 	/// Turfs that you cannot draw carvings on
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava))
+
+/datum/embed_data/rune_carver
+	ignore_throwspeed_threshold = TRUE
+	embed_chance = 75
+	jostle_chance = 2
+	jostle_pain_mult = 5
+	pain_stam_pct = 0.4
+	pain_mult = 3
+	rip_time = 15
 
 /obj/item/melee/rune_carver/examine(mob/user)
 	. = ..()
