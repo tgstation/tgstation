@@ -12,8 +12,6 @@ NC="\033[0m" # No Color
 
 st=0
 
-echo -e "Input were:  $1 and count of it  $#"
-
 # check for ripgrep
 if command -v rg >/dev/null 2>&1; then
 	grep=rg
@@ -35,6 +33,8 @@ else
 fi
 
 echo -e "${BLUE}Using grep provider at $(which $grep)${NC}"
+
+echo -e "Checking folder: $code_files[1]" 
 
 part=0
 section() {
