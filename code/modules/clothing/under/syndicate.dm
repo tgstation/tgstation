@@ -1,13 +1,16 @@
 /obj/item/clothing/under/syndicate
 	name = "tactical turtleneck"
 	desc = "A non-descript and slightly suspicious looking turtleneck with digital camouflage cargo pants."
-	icon_state = "syndicate"
+	icon_state = "tactical_turtleneck"
 	inhand_icon_state = "bl_suit"
 	has_sensor = NO_SENSORS
 	armor_type = /datum/armor/clothing_under/syndicate
 	alt_covers_chest = TRUE
 	icon = 'icons/obj/clothing/under/syndicate.dmi'
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
+	greyscale_config = /datum/greyscale_config/tactical_turtleneck
+	greyscale_config_worn = /datum/greyscale_config/tactical_turtleneck/worn
+	greyscale_colors = "#37373e#493027"
 
 /datum/armor/clothing_under/syndicate
 	melee = 10
@@ -18,11 +21,14 @@
 /obj/item/clothing/under/syndicate/skirt
 	name = "tactical skirtleneck"
 	desc = "A non-descript and slightly suspicious looking skirtleneck."
-	icon_state = "syndicate_skirt"
+	icon_state = "tactical_turtleneck_skirt"
 	inhand_icon_state = "bl_suit"
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	greyscale_config = /datum/greyscale_config/tactical_turtleneck_skirt
+	greyscale_config_worn = /datum/greyscale_config/tactical_turtleneck_skirt/worn
+	greyscale_colors = "#37373e#493027"
 
 /obj/item/clothing/under/syndicate/bloodred
 	name = "blood-red sneaksuit"
@@ -57,11 +63,14 @@
 /obj/item/clothing/under/syndicate/tacticool
 	name = "tacticool turtleneck"
 	desc = "Just looking at it makes you want to buy an SKS, go into the woods, and -operate-."
-	icon_state = "tactifool"
+	icon_state = "tacticool_turtleneck"
 	inhand_icon_state = "bl_suit"
 	has_sensor = HAS_SENSORS
 	armor_type = /datum/armor/clothing_under/syndicate_tacticool
 	stubborn_stains = TRUE
+	greyscale_config = /datum/greyscale_config/tacticool_turtleneck
+	greyscale_config_worn = /datum/greyscale_config/tacticool_turtleneck/worn
+	greyscale_colors = "#37373e#736245"
 
 /datum/armor/clothing_under/syndicate_tacticool
 	fire = 50
@@ -88,11 +97,14 @@
 /obj/item/clothing/under/syndicate/tacticool/skirt
 	name = "tacticool skirtleneck"
 	desc = "Just looking at it makes you want to buy an SKS, go into the woods, and -operate-."
-	icon_state = "tactifool_skirt"
+	icon_state = "tacticool_turtleneck_skirt"
 	inhand_icon_state = "bl_suit"
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	greyscale_config = /datum/greyscale_config/tacticool_turtleneck_skirt
+	greyscale_config_worn = /datum/greyscale_config/tacticool_turtleneck_skirt/worn
+	greyscale_colors = "#37373e#736245"
 
 /obj/item/clothing/under/syndicate/sniper
 	name = "tactical turtleneck suit"
