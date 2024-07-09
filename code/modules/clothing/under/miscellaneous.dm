@@ -43,10 +43,8 @@
 
 /obj/item/clothing/under/misc/adminsuit
 	name = "administrative cybernetic jumpsuit"
-	icon = 'icons/obj/clothing/under/syndicate.dmi'
-	icon_state = "syndicate"
+	icon_state = "tactical_turtleneck"
 	inhand_icon_state = "bl_suit"
-	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
 	desc = "A cybernetically enhanced jumpsuit used for administrative duties."
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/clothing_under/adminsuit
@@ -56,6 +54,9 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	can_adjust = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	greyscale_config = /datum/greyscale_config/tactical_turtleneck
+	greyscale_config_worn = /datum/greyscale_config/tactical_turtleneck/worn
+	greyscale_colors = "#37373e#493027"
 
 /datum/armor/clothing_under/adminsuit
 	melee = 100
