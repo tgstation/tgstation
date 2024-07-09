@@ -329,13 +329,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 
 		if(hit_count > SSpersistence.tram_hits_last_round)
 			var/mutable_appearance/tram_trend_overlay = mutable_appearance(icon, TREND_RISING)
-			var/mutable_appearance/tram_trend_emissive = emissive_appearance(icon, "[TREND_RISING]_e", src, alpha = DISPLAY_PIXEL_ALPHA)
+			var/mutable_appearance/tram_trend_emissive = emissive_appearance(icon, "[TREND_RISING]", src, alpha = DISPLAY_PIXEL_ALPHA)
 			tram_trend_overlay.color = COLOR_DISPLAY_RED
 			. += tram_trend_overlay
 			. += tram_trend_emissive
 		else
 			var/mutable_appearance/tram_trend_overlay = mutable_appearance(icon, TREND_FALLING)
-			var/mutable_appearance/tram_trend_emissive = emissive_appearance(icon, "[TREND_FALLING]_e", src, alpha = DISPLAY_PIXEL_ALPHA)
+			var/mutable_appearance/tram_trend_emissive = emissive_appearance(icon, "[TREND_FALLING]", src, alpha = DISPLAY_PIXEL_ALPHA)
 			tram_trend_overlay.color = COLOR_DISPLAY_GREEN
 			. += tram_trend_overlay
 			. += tram_trend_emissive
