@@ -1156,7 +1156,8 @@
 /obj/structure/railing/corner/end{
 	dir = 4
 	},
-/turf/open/floor/iron/smooth_large,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace,
 /area/icemoon/underground/explored)
 "asM" = (
 /obj/machinery/light/directional/east,
@@ -14251,7 +14252,8 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth_large,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace,
 /area/icemoon/underground/explored)
 "egj" = (
 /obj/structure/rack,
@@ -14570,7 +14572,8 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/floor/iron/smooth_large,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace,
 /area/icemoon/underground/explored)
 "ekW" = (
 /obj/structure/cable,
@@ -29171,7 +29174,7 @@
 /obj/structure/railing{
 	dir = 9
 	},
-/turf/open/floor/iron/smooth_large,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "iLY" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -29369,7 +29372,8 @@
 /obj/item/flashlight{
 	pixel_y = 2
 	},
-/turf/open/floor/iron/smooth_large,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace,
 /area/station/science/cytology)
 "iPP" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
@@ -40955,7 +40959,8 @@
 /obj/structure/railing{
 	dir = 5
 	},
-/turf/open/floor/iron/smooth_large,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace,
 /area/icemoon/underground/explored)
 "mnC" = (
 /obj/structure/grille,
@@ -42531,7 +42536,8 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
-/turf/open/floor/iron/smooth_large,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace,
 /area/icemoon/underground/explored)
 "mRr" = (
 /obj/structure/cable,
@@ -43350,7 +43356,8 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "nce" = (
-/turf/open/floor/iron/smooth_large,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace,
 /area/icemoon/underground/explored)
 "nci" = (
 /obj/structure/cable,
@@ -46173,7 +46180,8 @@
 /obj/structure/railing{
 	dir = 9
 	},
-/turf/open/floor/iron/smooth_large,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace,
 /area/icemoon/underground/explored)
 "nOb" = (
 /obj/machinery/door/airlock/external{
@@ -53782,7 +53790,8 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/floor/iron/smooth_large,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace,
 /area/station/science/cytology)
 "qbA" = (
 /obj/structure/cable,
@@ -66987,7 +66996,8 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
-/turf/open/floor/iron/smooth_large,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace,
 /area/icemoon/underground/explored)
 "tTL" = (
 /obj/structure/chair,
@@ -128744,7 +128754,7 @@ iDt
 iDt
 iDt
 iDt
-ekN
+mrI
 fIt
 oSU
 oSU
@@ -129001,7 +129011,7 @@ iDt
 iDt
 iDt
 iDt
-nce
+scw
 fIt
 oSU
 oSU
