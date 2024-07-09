@@ -71,7 +71,7 @@
 				continue
 			if(movable == victim)
 				continue
-			if(!victim.CanReach(movable))
+			if(!victim.CanReach(movable) || victim.invisibility)
 				continue
 			candidates += movable
 		if(!length(candidates))
@@ -80,7 +80,7 @@
 		if(isnull(candidate))
 			return
 		victim.start_pulling(candidate, supress_message = TRUE)
-		victim.visible_message(span_warning("[victim][victim.p_s()] [current_bodypart] instinctually starts feeling [candidate]!"))
+		victim.visible_message(span_warning("[victim]'s [current_bodypart.name] instinctively starts feeling [candidate]!"))
 		return
 
 	if(HAS_TRAIT(victim, TRAIT_IMMOBILIZED))
@@ -127,7 +127,11 @@
 		if(BODY_ZONE_R_LEG)
 			part_type = /obj/item/bodypart/leg/right/flesh
 
-	target.visible_message(span_danger("[src] [target_part ? "tears off and attaches itself" : "attaches itself"] to where [target][target.p_s()] limb used to be!"))
+	if (!isnull(target_part))
+		target.visible_message(span_danger("[src] tears off [target]'s [target_part.plaintext_zone] and attaches itself in [target_part.p_their()] place!"), span_userdanger("[src] tears off your [target_part.plaintext_zone] and attaches itself in [target_part.p_their()] place!"))
+	else
+		target.visible_message(span_danger("[src] attaches itself to where [target]'s [target.parse_zone_with_bodypart(target_zone)] used to be!"), span_userdanger("[src] attaches itself to where your [target.parse_zone_with_bodypart(target_zone)] used to be!"))
+
 	var/obj/item/bodypart/new_bodypart = new part_type()
 	forceMove(new_bodypart)
 	new_bodypart.replace_limb(target, TRUE)
