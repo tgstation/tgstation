@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Living flesh arms have a chance to actually touch the thing they're targeting instead of pulling it. Careful with supermatter!"
