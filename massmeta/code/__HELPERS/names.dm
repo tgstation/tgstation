@@ -31,34 +31,29 @@
 			if(1)//1 and 2 can only be selected once each to prevent more than two specific names/places/etc.
 				switch(rand(1,2))//Mainly to add more options later.
 					if(1)
-						if(names.len && prob(70))
+						if(length(names) && prob(70))
 							. += pick(names)
 						else
-							if(prob(10))
-								. += pick(GLOB.lizard_names_male,GLOB.lizard_names_female)
-							else
-								var/new_name = pick(pick(GLOB.first_names_male,GLOB.first_names_female))
-								new_name += " "
-								new_name += pick(GLOB.last_names)
-								. += new_name
+							. += generate_random_name()
+
 					if(2)
-						. += pick(GLOB.jobs)//Returns a job.
+						. += LOWER_TEXT(pick(GLOB.jobs))//Returns a job.
 				safety -= 1
 			if(2)
 				switch(rand(1,2))//Food, drinks, or places. Only selectable once.
 					if(1)
-						. += pick(GLOB.cocktails)
+						. += LOWER_TEXT(pick(GLOB.cocktails))
 					if(2)
-						. += pick(GLOB.locations)
+						. += LOWER_TEXT(pick(GLOB.locations))
 				safety -= 2
 			if(3)
 				switch(rand(1,3))//Abstract nouns, adjectives, verbs. Can be selected more than once.
 					if(1)
-						. += pick(GLOB.ru_nouns)
+						. += LOWER_TEXT(pick(GLOB.ru_nouns))
 					if(2)
-						. += pick(GLOB.ru_adjectives)
+						. += LOWER_TEXT(pick(GLOB.ru_adjectives))
 					if(3)
-						. += pick(GLOB.ru_verbs)
+						. += LOWER_TEXT(pick(GLOB.ru_verbs))
 		if(!return_list)
 			if(words == 1)
 				. += "."
