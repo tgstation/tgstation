@@ -246,11 +246,25 @@
 		on_hover_enabled()
 		return
 	var/turf/open/our_turf = movable.loc
-	var/turf/turf_below = GET_TURF_BELOW(our_turf)
-	if(our_turf.zPassOut(DOWN) && (isnull(turf_below) || (is_space_or_openspace(turf_below) && turf_below.zPassIn(DOWN) && turf_below.zPassOut(DOWN))))
-		on_hover_fail(our_turf, turf_below, is_moving)
-	else
-		on_hover_enabled()
+	var/turf/below = GET_TURF_BELOW(our_turf)
+
+	if(!check_space_turf(our_turf))
+		on_hover_fail()
+		return
+	//it's open space without support and the turf below is null or space without lattice, or if it'd fall several z-levels.
+	if(isopenspaceturf(our_turf) && our_turf.zPassOut(DOWN) && (isnull(below) || !check_space_turf(below) || (below.zPassOut(DOWN) && below.zPassIn(DOWN))))
+		on_hover_fail(our_turf, below, is_moving)
+		return
+	on_hover_enabled()
+
+///Part of the hover_check proc that returns false if it's a space turf without lattice or such.
+/datum/component/riding/vehicle/scooter/skateboard/hover/proc/check_space_turf(turf/turf)
+	if(!isspaceturf(turf))
+		return TRUE
+	for(var/obj/object in turf.contents)
+		if(object.obj_flags & BLOCK_Z_OUT_DOWN)
+			return TRUE
+	return FALSE
 
 ///Called by hover_check() when the hoverboard is on a valid turf.
 /datum/component/riding/vehicle/scooter/skateboard/hover/proc/on_hover_enabled()
