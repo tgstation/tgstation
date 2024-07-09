@@ -1,3 +1,6 @@
+#define LIVING_FLESH_TOUCH_CHANCE 30
+#define LIVING_FLESH_COMBAT_TOUCH_CHANCE 70
+
 /datum/ai_controller/basic_controller/living_limb_flesh
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
@@ -67,8 +70,6 @@
 	if(istype(current_bodypart, /obj/item/bodypart/arm))
 		var/list/candidates = list()
 		for(var/atom/movable/movable in orange(victim, 1))
-			if(movable.anchored)
-				continue
 			if(movable == victim)
 				continue
 			if(!victim.CanReach(movable) || victim.invisibility)
@@ -79,8 +80,19 @@
 		var/atom/movable/candidate = pick(candidates)
 		if(isnull(candidate))
 			return
-		victim.start_pulling(candidate, supress_message = TRUE)
+
 		victim.visible_message(span_warning("[victim]'s [current_bodypart.name] instinctively starts feeling [candidate]!"))
+		if (!victim.anchored && !prob(victim.combat_mode ? LIVING_FLESH_COMBAT_TOUCH_CHANCE : LIVING_FLESH_TOUCH_CHANCE))
+			victim.start_pulling(candidate, supress_message = TRUE)
+			return
+
+		var/active_hand = victim.active_hand_index
+		var/new_index = (current_bodypart.body_zone == BODY_ZONE_L_ARM) ? LEFT_HANDS : RIGHT_HANDS
+		if (active_hand != new_index)
+			victim.swap_hand(new_index, TRUE)
+		victim.resolve_unarmed_attack(candidate)
+		if (active_hand != victim.active_hand_index) // Different check in case we failed to swap hands previously due to holding a bulky item
+			victim.swap_hand(active_hand, TRUE)
 		return
 
 	if(HAS_TRAIT(victim, TRAIT_IMMOBILIZED))
@@ -185,3 +197,6 @@
 	ai_controller.set_ai_status(AI_STATUS_ON)
 	forceMove(limb.drop_location())
 	qdel(limb)
+
+#undef LIVING_FLESH_TOUCH_CHANCE
+#undef LIVING_FLESH_COMBAT_TOUCH_CHANCE
