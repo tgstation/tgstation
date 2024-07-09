@@ -13173,6 +13173,7 @@
 /obj/item/kirbyplants/organic/applebush{
 	pixel_y = 5
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/wood,
 /area/station/cargo/miningfoundry)
 "eOh" = (
@@ -54446,6 +54447,9 @@
 /area/station/hallway/primary/port)
 "rZB" = (
 /obj/machinery/light/cold/directional/west,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer2{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "rZG" = (
@@ -68212,9 +68216,6 @@
 /area/station/security/execution/transfer)
 "whk" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/item/kirbyplants/organic/applebush{
-	pixel_y = 5
-	},
 /turf/open/floor/wood,
 /area/station/cargo/miningfoundry)
 "whl" = (
