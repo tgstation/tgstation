@@ -71,7 +71,7 @@
 	belt = /obj/item/storage/belt/utility/chief/full
 	ears = /obj/item/radio/headset/heads/ce
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/utility/hardhat/white
+	head = /obj/item/clothing/head/utility/hardhat/welding/white/up
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	l_pocket = /obj/item/modular_computer/pda/heads/ce
 

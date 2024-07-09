@@ -186,7 +186,7 @@
 	icon_state = "gumball"
 	damage = 0
 	speed = 0.5
-	embedding = null
+	embed_type = null
 
 /obj/projectile/bullet/gumball/Initialize(mapload)
 	. = ..()
@@ -219,29 +219,30 @@
 	icon_state = "lollipop_1"
 	damage = 0
 	speed = 0.5
-	embedding = null
+	embed_type = null
 	var/head_color
 
 /obj/projectile/bullet/lollipop/harmful
-	embedding = list(
-		embed_chance = 35,
-		fall_chance = 2,
-		jostle_chance = 0,
-		ignore_throwspeed_threshold = TRUE,
-		pain_stam_pct = 0.5,
-		pain_mult = 3,
-		rip_time = 10,
-	)
+	embed_type = /datum/embed_data/lollipop
 	damage = 10
 	shrapnel_type = /obj/item/food/lollipop/cyborg
 	embed_falloff_tile = 0
+
+/datum/embed_data/lollipop
+	embed_chance = 35
+	fall_chance = 2
+	jostle_chance = 0
+	ignore_throwspeed_threshold = TRUE
+	pain_stam_pct = 0.5
+	pain_mult = 3
+	rip_time = 10
 
 /obj/projectile/bullet/lollipop/Initialize(mapload)
 	. = ..()
 	var/mutable_appearance/head = mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', "lollipop_2")
 	head.color = head_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	add_overlay(head)
-	if(!embedding)
+	if(!embed_type)
 		AddElement(/datum/element/projectile_drop, /obj/item/food/lollipop/cyborg)
 	RegisterSignals(src, list(COMSIG_PROJECTILE_ON_SPAWN_DROP, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED), PROC_REF(handle_drop))
 

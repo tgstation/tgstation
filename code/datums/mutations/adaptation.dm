@@ -13,7 +13,7 @@
 
 /datum/mutation/human/adaptation/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
-	conflicts = typesof(src)
+	conflicts = typesof(/datum/mutation/human/adaptation)
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', adapt_icon, -MUTATIONS_LAYER))
 

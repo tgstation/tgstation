@@ -75,7 +75,6 @@
     "seeing": "scoping",
     "great": "choice",
     "look": "lonk",
-    "shit": "balls warmed oveur",
     "battery": "babbery",
     "retard": "dicktard",
     "gay": "homo",
@@ -93,6 +92,7 @@
     "dude": [ "duge", "bro", "brah" ],
     "'": [ "'", "" ],
     "i'm": [ "im", "i am" ],
+    "shit": [ "balls warmed oveur", "shit" ],
     "he's": [ "hes", "he is", "he'ss" ]
   }
 }

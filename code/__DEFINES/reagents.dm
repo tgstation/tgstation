@@ -33,6 +33,8 @@
 #define PATCH (1<<3)
 /// Used for direct injection of reagents.
 #define INJECT (1<<4)
+/// Exclusive to just plumbing. if set we use the round robin technique else we use proportional
+#define LINEAR (1<<5)
 
 /// When returned by on_mob_life(), on_mob_dead(), overdose_start() or overdose_processed(), will cause the mob to updatehealth() afterwards
 #define UPDATE_MOB_HEALTH 1

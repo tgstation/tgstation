@@ -40,8 +40,8 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/flamethrower)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 

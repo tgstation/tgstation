@@ -32,6 +32,8 @@
 		var/area/turf_area = get_area(iterated_turf)
 		if(!isspaceturf(iterated_turf) || is_type_in_typecache(turf_area, excluded_area_typecache))
 			continue // Alright, so let's assume we have intended behavior. If something yorks, we'll get a bare `/area` (maploader?) or a mapper is doing something they shouldn't be doing.
+		if(HAS_TRAIT(iterated_turf, TRAIT_HYPERSPACE_STOPPED))
+			continue // This means that a shuttle with a noop template turf is just temporarily parked ontop of us and that we're not actually a part of it. We don't have to care about it as it will leave us alone when it flies away.
 		// We need turf_area.type for the error message because we have fifteen million ruin areas named "Unexplored Location" and it's completely unhelpful here.
 		TEST_FAIL("Space turf [iterated_turf.type] found in non-allowed area ([turf_area.type]) at [AREACOORD(iterated_turf)]! Please ensure that all space turfs are in an /area/space!")
 

@@ -42,17 +42,11 @@
 	toxic_foodtypes = NONE // these fucks eat vomit, i am sure they can handle drinking bleach or whatever too
 	modifies_speech = TRUE
 	languages_native = list(/datum/language/buzzwords)
+	var/static/list/speech_replacements = list(new /regex("z+", "g") = "zzz", new /regex("Z+", "g") = "ZZZ", "s" = "z", "S" = "Z")
 
-/obj/item/organ/internal/tongue/fly/modify_speech(datum/source, list/speech_args)
-	var/static/regex/fly_buzz = new("z+", "g")
-	var/static/regex/fly_buZZ = new("Z+", "g")
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message[1] != "*")
-		message = fly_buzz.Replace(message, "zzz")
-		message = fly_buZZ.Replace(message, "ZZZ")
-		message = replacetext(message, "s", "z")
-		message = replacetext(message, "S", "Z")
-	speech_args[SPEECH_MESSAGE] = message
+/obj/item/organ/internal/tongue/fly/New(class, timer, datum/mutation/human/copymut)
+	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = speech_replacements)
 
 /obj/item/organ/internal/tongue/fly/Initialize(mapload)
 	. = ..()

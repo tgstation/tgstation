@@ -332,6 +332,7 @@ Striking a noncultist, however, will tear their flesh."}
 	else
 		to_chat(user, span_warning("The bola seems to take on a life of its own!"))
 		ensnare(user)
+		user.update_held_items()
 #undef CULT_BOLA_PICKUP_STUN
 
 
@@ -633,6 +634,10 @@ Striking a noncultist, however, will tear their flesh."}
 	icon_state = "blindfold"
 	inhand_icon_state = "blindfold"
 	flash_protect = FLASH_PROTECTION_WELDER
+	actions_types = null
+	color_cutoffs = list(40, 0, 0) //red
+	glass_colour_type = null
+	forced_glass_color = FALSE
 
 /obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
 	..()

@@ -362,8 +362,7 @@
 /obj/structure/door_assembly/door_assembly_hatch{
 	anchored = 1;
 	name = "crew quarters";
-	desc = "People lived in this place.";
-	layer = 2.8
+	desc = "People lived in this place."
 	},
 /turf/template_noop,
 /area/ruin/space/has_grav/infested_frigate)
@@ -380,9 +379,7 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/phone{
-	layer = 3.1
-	},
+/obj/item/phone,
 /obj/item/paper/crumpled/muddy/fluff/elephant_graveyard/rnd_notes{
 	default_raw_text = "<b>STERILIZATION ORDERS</b> <BR><BR><i>Detailed findings:</i><BR><BR>A biological research lab within the HD-10180 system has suffered from a complete containment failure. The SYN-C Brutus is to deliver a nuclear payload via strike team. Everything inside and outside the facility is to be killed on sight, including any research staff. Nuclear authentication codes have been sent via red phone, as have other detailed orders.<BR><BR><b>The rest of the documents are maps and mundane information regarding the crew's destination.</b>";
 	name = "STERILIZATION ORDERS";
@@ -638,9 +635,7 @@
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space/has_grav/infested_frigate)
 "jx" = (
-/obj/effect/decal/cleanable/glass{
-	layer = 3.1
-	},
+/obj/effect/decal/cleanable/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/infested_frigate)
@@ -653,9 +648,7 @@
 	desc = "It would have been locked anyway.";
 	name = "syndicate navigation console"
 	},
-/obj/effect/decal/cleanable/glass{
-	layer = 3.1
-	},
+/obj/effect/decal/cleanable/glass,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
 "kc" = (
@@ -862,9 +855,7 @@
 /obj/effect/decal/cleanable/blood{
 	icon_state = "floor5-old"
 	},
-/obj/item/ammo_casing/spent{
-	layer = 3.1
-	},
+/obj/item/ammo_casing/spent,
 /obj/item/gun/ballistic/automatic/plastikov,
 /obj/effect/mob_spawn/corpse/human/syndicatepilot,
 /turf/open/floor/mineral/plastitanium/red,
@@ -981,8 +972,7 @@
 /obj/effect/decal/cleanable/glass,
 /obj/machinery/button/door/directional/north{
 	name = "prisoner isolation shutter";
-	id = "captivity";
-	layer = 3.4
+	id = "captivity"
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/infested_frigate)
@@ -1238,12 +1228,9 @@
 /area/ruin/space/has_grav/infested_frigate)
 "vj" = (
 /obj/machinery/door/poddoor{
-	id = "Brutusexterior";
-	closingLayer = 2.65
+	id = "Brutusexterior"
 	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
-	layer = 2.9
-	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "vm" = (
@@ -1626,9 +1613,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
 "yZ" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium{
-	layer = 2.9
-	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
 "zg" = (
@@ -1926,9 +1911,7 @@
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "gib1-old"
 	},
-/obj/machinery/door/window/left/directional/east{
-	layer = 3.2
-	},
+/obj/machinery/door/window/left/directional/east,
 /obj/machinery/door/poddoor/shutters/window/preopen{
 	id = "captivity"
 	},

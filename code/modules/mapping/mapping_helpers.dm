@@ -107,6 +107,12 @@
 		return
 	return ..(ceiling)
 
+///Used for marking mapping errors. These should only be created by cases explicitly caught by unit tests, and should NEVER actually appear in production.
+/obj/effect/mapping_error
+	name = "I AM ERROR"
+	desc = "IF YOU SEE ME, YELL AT A MAPPER!!!"
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = "mapping_error"
 
 /obj/effect/mapping_helpers
 	icon = 'icons/effects/mapping_helpers.dmi'
@@ -1183,7 +1189,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	if(response.errored || response.status_code != 200)
 		query_in_progress = FALSE
 		CRASH("Failed to fetch mapped custom json from url [json_url], code: [response.status_code], error: [response.error]")
-	var/json_data = response["body"]
+	var/json_data = response.body
 	json_cache[json_url] = json_data
 	query_in_progress = FALSE
 	return json_data
