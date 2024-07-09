@@ -12,7 +12,7 @@ NC="\033[0m" # No Color
 
 st=0
 
-echo -e "Input were: " $1 "and count of it " $#
+echo -e "Input were:  $1 and count of it  $#"
 
 # check for ripgrep
 if command -v rg >/dev/null 2>&1; then
