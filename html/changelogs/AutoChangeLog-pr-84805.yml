@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - bugfix: "Amputating a paraplegic's leg no longer miraculously allows them to walk."
