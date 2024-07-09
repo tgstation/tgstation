@@ -128,6 +128,7 @@
 	QDEL_NULL(wires)
 	QDEL_NULL(model)
 	QDEL_NULL(eye_lights)
+	QDEL_NULL(hat_overlay)
 	QDEL_NULL(inv1)
 	QDEL_NULL(inv2)
 	QDEL_NULL(inv3)
@@ -312,11 +313,31 @@
 			add_overlay("ov-opencover +c")
 		else
 			add_overlay("ov-opencover -c")
+
 	if(hat)
-		var/mutable_appearance/head_overlay = hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head/default.dmi')
-		head_overlay.pixel_z += hat_offset
-		add_overlay(head_overlay)
+		hat_overlay = hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+		update_worn_icons()
+	else if(hat_overlay)
+		QDEL_NULL(hat_overlay)
+
 	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/silicon/robot/proc/update_worn_icons()
+	if(!hat_overlay)
+		return
+	cut_overlay(hat_overlay)
+	if(length(hat_offset_x) || length(hat_offset_y))
+		var/current_dir = dir2text(dir)
+		hat_overlay.pixel_w = hat_offset_x[current_dir] || 0
+		hat_overlay.pixel_z = hat_offset_y[current_dir] || 0
+	else
+		hat_overlay.pixel_z = hat_offset
+	add_overlay(hat_overlay)
+
+/mob/living/silicon/robot/proc/on_dir_change(mob/living/silicon/robot/owner, olddir, newdir)
+	SIGNAL_HANDLER
+	if(olddir != newdir)
+		update_worn_icons()
 
 /mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer || QDELING(src))
@@ -719,6 +740,12 @@
 		add_traits(model.model_traits, MODEL_TRAIT)
 
 	hat_offset = model.hat_offset
+	hat_offset_x = model.hat_offset_x
+	hat_offset_y = model.hat_offset_y
+	if(length(hat_offset_x) || length(hat_offset_y))
+		RegisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(on_dir_change))
+	else
+		UnregisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE)
 
 	INVOKE_ASYNC(src, PROC_REF(updatename))
 
