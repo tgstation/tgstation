@@ -34,7 +34,7 @@ fi
 
 echo -e "${BLUE}Using grep provider at $(which $grep)${NC}"
 
-echo -e "Checking folder: $code_files[1]" 
+echo -e "Checking folder: $code_files" 
 
 part=0
 section() {
