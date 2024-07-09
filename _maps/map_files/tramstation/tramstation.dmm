@@ -59029,7 +59029,7 @@
 	c_tag = "Civilian - Recreational Area North-West"
 	},
 /obj/item/toy/plush/lizard_plushie/space/green,
-/obj/machinery/incident_display/delam/directional/north,
+/obj/machinery/incident_display/tram/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "tRo" = (
