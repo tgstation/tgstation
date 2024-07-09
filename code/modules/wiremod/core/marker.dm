@@ -3,6 +3,7 @@
 	desc = "A circuit multitool. Used to mark entities which can then be uploaded to components by pressing the upload button on a port. \
 	Acts as a normal multitool otherwise. Use in hand to clear marked entity so that you can mark another entity."
 	icon_state = "multitool_circuit"
+	apc_scanner = FALSE // would conflict with mark clearing
 
 	/// The marked atom of this multitool
 	var/atom/marked_atom

@@ -49,6 +49,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/click_alt(mob/user)
 	zipped = !zipped
+	playsound(src, 'sound/items/zip_up.ogg', 30, TRUE, -3)
 	worn_icon_state = "[initial(icon_state)][zipped ? "_t" : ""]"
 	balloon_alert(user, "[zipped ? "" : "un"]zipped")
 

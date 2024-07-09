@@ -200,6 +200,10 @@
 /turf/open/openspace/icemoon/keep_below
 	drill_below = FALSE
 
+/turf/open/openspace/xenobio
+	name = "xenobio bz air"
+	initial_gas_mix = XENOBIO_BZ
+
 /turf/open/openspace/icemoon/ruins
 	protect_ruin = FALSE
 	drill_below = FALSE

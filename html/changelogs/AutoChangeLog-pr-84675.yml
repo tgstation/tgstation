@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - refactor: "Refactored a lot of speech modifiers to use a component instead of copied over code."

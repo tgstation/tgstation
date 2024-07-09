@@ -326,6 +326,7 @@
 	name = "Exosuit Materials: Stress Failure Test"
 	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to more traditional means."
 	exp_tag = "Scan"
+	total_requirement = 2
 	possible_types = list(/obj/vehicle/sealed/mecha)
 	///Damage percent that each mech needs to be at for a scan to work.
 	var/damage_percent
@@ -478,6 +479,13 @@
 	performance_hint = "Keep the temperature as high as possible during the reaction."
 	required_reagent = /datum/reagent/cryostylane
 	min_purity = 0.99
+
+/datum/experiment/scanning/reagent/haloperidol
+	name = "Pure Haloperidol Scan"
+	description = "We require testing related to the long-term treatment of chronic psychiatric disorders. Produce Haloperidol with at least 98% purity and scan the beaker."
+	performance_hint = "Exothermic and consumes hydrogen during reaction."
+	required_reagent = /datum/reagent/medicine/haloperidol
+	min_purity = 0.98
 
 /datum/experiment/scanning/points/bluespace_crystal
 	name = "Bluespace Crystal Sampling"

@@ -2610,6 +2610,18 @@
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
 	)
 
+/datum/design/module/mirage
+	name = "Mirage Grenade Dispenser Module"
+	id = "mod_mirage_grenade"
+	materials = list(
+		/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT,
+	)
+	build_path = /obj/item/mod/module/dispenser/mirage
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
+	)
+
 //MODsuit bepis modules
 /datum/design/module/disposal
 	name = "Disposal Connector Module"
