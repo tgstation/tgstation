@@ -46,9 +46,9 @@ jobs:
       - name: Install rust-g
         run: |
           bash tools/ci/install_rust_g.sh
-      - name: Install auxlua
+      - name: Install dreamluau
         run: |
-          bash tools/ci/install_auxlua.sh
+          bash tools/ci/install_dreamluau.sh
       - name: Configure version
         run: |
           echo "BYOND_MAJOR=${{ inputs.major }}" >> $GITHUB_ENV
