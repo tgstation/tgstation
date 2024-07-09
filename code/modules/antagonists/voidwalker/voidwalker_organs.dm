@@ -24,7 +24,7 @@
 	var/datum/status_effect/regen = /datum/status_effect/space_regeneration
 	/// Speed modifier given when in gravity
 	var/datum/movespeed_modifier/speed_modifier = /datum/movespeed_modifier/grounded_voidwalker
-	/// The void eater armblade
+	/// The void eater weapon
 	var/obj/item/glass_breaker = /obj/item/void_eater
 
 /obj/item/organ/internal/brain/voidwalker/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
@@ -36,7 +36,7 @@
 	organ_owner.AddComponent(/datum/component/space_camo, space_alpha, non_space_alpha, 2 SECONDS)
 	organ_owner.apply_status_effect(regen)
 
-	unsettle = new unsettle ()
+	unsettle = new unsettle(organ_owner)
 	unsettle.Grant(organ_owner)
 
 	glass_breaker = new/obj/item/void_eater
