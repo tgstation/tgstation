@@ -191,7 +191,9 @@
 	///If defined, on hit we create an item of this type then call hitby() on the hit target with this, mainly used for embedding items (bullets) in targets
 	var/shrapnel_type
 	///If we have a shrapnel_type defined, these embedding stats will be passed to the spawned shrapnel type, which will roll for embedding on the target
-	var/list/embedding
+	var/embed_type
+	///Saves embedding data
+	var/datum/embed_data/embed_data
 	///If TRUE, hit mobs, even if they are lying on the floor and are not our target within MAX_RANGE_HIT_PRONE_TARGETS tiles
 	var/hit_prone_targets = FALSE
 	///if TRUE, ignores the range of MAX_RANGE_HIT_PRONE_TARGETS tiles of hit_prone_targets
@@ -218,8 +220,8 @@
 /obj/projectile/Initialize(mapload)
 	. = ..()
 	decayedRange = range
-	if(embedding)
-		updateEmbedding()
+	if(get_embed())
+		AddElement(/datum/element/embed)
 	AddElement(/datum/element/connect_loc, projectile_connections)
 
 /obj/projectile/proc/Range()
@@ -227,8 +229,8 @@
 	if(wound_bonus != CANT_WOUND)
 		wound_bonus += wound_falloff_tile
 		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
-	if(embedding)
-		embedding["embed_chance"] += embed_falloff_tile
+	if(get_embed())
+		set_embed(embed_data.generate_with_values(embed_data.embed_chance + embed_falloff_tile)) // Should be rewritten in projecitle refactor
 	if(damage_falloff_tile && damage >= 0)
 		damage += damage_falloff_tile
 	if(stamina_falloff_tile && stamina >= 0)
@@ -930,6 +932,8 @@
 		trajectory.increment(trajectory_multiplier)
 		var/turf/T = trajectory.return_turf()
 		if(!istype(T))
+			// step back to the last valid turf before we Destroy
+			trajectory.increment(-trajectory_multiplier)
 			qdel(src)
 			return
 		if(T.z != loc.z)
@@ -1128,26 +1132,6 @@
 /obj/projectile/experience_pressure_difference()
 	return
 
-///Like [/obj/item/proc/updateEmbedding] but for projectiles instead, call this when you want to add embedding or update the stats on the embedding element
-/obj/projectile/proc/updateEmbedding()
-	if(!shrapnel_type || !LAZYLEN(embedding))
-		return
-
-	AddElement(/datum/element/embed,\
-		embed_chance = (!isnull(embedding["embed_chance"]) ? embedding["embed_chance"] : EMBED_CHANCE),\
-		fall_chance = (!isnull(embedding["fall_chance"]) ? embedding["fall_chance"] : EMBEDDED_ITEM_FALLOUT),\
-		pain_chance = (!isnull(embedding["pain_chance"]) ? embedding["pain_chance"] : EMBEDDED_PAIN_CHANCE),\
-		pain_mult = (!isnull(embedding["pain_mult"]) ? embedding["pain_mult"] : EMBEDDED_PAIN_MULTIPLIER),\
-		remove_pain_mult = (!isnull(embedding["remove_pain_mult"]) ? embedding["remove_pain_mult"] : EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER),\
-		rip_time = (!isnull(embedding["rip_time"]) ? embedding["rip_time"] : EMBEDDED_UNSAFE_REMOVAL_TIME),\
-		ignore_throwspeed_threshold = (!isnull(embedding["ignore_throwspeed_threshold"]) ? embedding["ignore_throwspeed_threshold"] : FALSE),\
-		impact_pain_mult = (!isnull(embedding["impact_pain_mult"]) ? embedding["impact_pain_mult"] : EMBEDDED_IMPACT_PAIN_MULTIPLIER),\
-		jostle_chance = (!isnull(embedding["jostle_chance"]) ? embedding["jostle_chance"] : EMBEDDED_JOSTLE_CHANCE),\
-		jostle_pain_mult = (!isnull(embedding["jostle_pain_mult"]) ? embedding["jostle_pain_mult"] : EMBEDDED_JOSTLE_PAIN_MULTIPLIER),\
-		pain_stam_pct = (!isnull(embedding["pain_stam_pct"]) ? embedding["pain_stam_pct"] : EMBEDDED_PAIN_STAM_PCT),\
-		projectile_payload = shrapnel_type)
-	return TRUE
-
 /**
  * Is this projectile considered "hostile"?
  *
@@ -1167,7 +1151,7 @@
 
 ///Checks if the projectile can embed into someone
 /obj/projectile/proc/can_embed_into(atom/hit)
-	return embedding && shrapnel_type && iscarbon(hit) && !HAS_TRAIT(hit, TRAIT_PIERCEIMMUNE)
+	return get_embed() && shrapnel_type && iscarbon(hit) && !HAS_TRAIT(hit, TRAIT_PIERCEIMMUNE)
 
 /// Reflects the projectile off of something
 /obj/projectile/proc/reflect(atom/hit_atom)
@@ -1210,3 +1194,17 @@
 	bullet.preparePixelProjectile(target, src)
 	bullet.fire()
 	return bullet
+
+/// Fetches embedding data
+/obj/projectile/proc/get_embed()
+	RETURN_TYPE(/datum/embed_data)
+	return embed_type ? (embed_data ||= get_embed_by_type(embed_type)) : embed_data
+
+/obj/projectile/proc/set_embed(datum/embed_data/embed)
+	if(embed_data == embed)
+		return
+	// GLOB.embed_by_type stores shared "default" embedding values of datums
+	// Dynamically generated embeds use the base class and thus are not present in there, and should be qdeleted upon being discarded
+	if(!isnull(embed_data) && !GLOB.embed_by_type[embed_data.type])
+		qdel(embed_data)
+	embed_data = ispath(embed) ? get_embed_by_type(armor) : embed

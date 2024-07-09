@@ -21,6 +21,8 @@
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
 
+/// from /datum/status_effect/incapacitating/stamcrit/on_apply()
+#define COMSIG_LIVING_ENTER_STAMCRIT "living_enter_stamcrit"
 ///from /obj/structure/door/crush(): (mob/living/crushed, /obj/machinery/door/crushing_door)
 #define COMSIG_LIVING_DOORCRUSHED "living_doorcrush"
 ///from base of mob/living/resist() (/mob/living)
@@ -178,6 +180,7 @@
 	#define TREAT_MESSAGE_ARG 1
 	#define TREAT_TTS_MESSAGE_ARG 2
 	#define TREAT_TTS_FILTER_ARG 3
+	#define TREAT_CAPITALIZE_MESSAGE 4
 
 ///From obj/item/toy/crayon/spraycan
 #define COMSIG_LIVING_MOB_PAINTED "living_mob_painted"
@@ -203,6 +206,10 @@
 	#define STOP_SACRIFICE (1<<0)
 	/// Don't send a message for sacrificing this thing, we have our own
 	#define SILENCE_SACRIFICE_MESSAGE (1<<1)
+	/// Don't send a message for sacrificing this thing UNLESS it's the cult target
+	#define SILENCE_NONTARGET_SACRIFICE_MESSAGE (1<<2)
+	/// Dusts the target instead of gibbing them (no soulstone)
+	#define DUST_SACRIFICE (1<<3)
 
 /// From /mob/living/befriend() : (mob/living/new_friend)
 #define COMSIG_LIVING_BEFRIENDED "living_befriended"

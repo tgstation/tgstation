@@ -49,6 +49,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isspaceturf(A) (istype(A, /turf/open/space))
 
+#define is_space_or_openspace(A) (isopenspaceturf(A) || isspaceturf(A))
+
 #define isfloorturf(A) (istype(A, /turf/open/floor))
 
 #define ismiscturf(A) (istype(A, /turf/open/misc))
@@ -230,6 +232,8 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define isgrenade(A) (istype(A, /obj/item/grenade))
 
 #define islandmine(A) (istype(A, /obj/effect/mine))
+
+#define iscloset(A) (istype(A, /obj/structure/closet))
 
 #define issupplypod(A) (istype(A, /obj/structure/closet/supplypod))
 

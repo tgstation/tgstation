@@ -64,7 +64,7 @@
 	suit = /obj/item/clothing/suit/jacket/det_suit
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/fedora/det_hat
-	mask = /obj/item/clothing/mask/cigarette
+	mask = /obj/item/cigarette
 
 /datum/outfit/mafia/psychologist
 	name = "Mafia Psychologist"

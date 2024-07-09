@@ -1,9 +1,13 @@
+#define MARK_TOOTH 1
+
 /datum/surgery/dental_implant
 	name = "Dental implant"
 	possible_locs = list(BODY_ZONE_PRECISE_MOUTH)
 	steps = list(
 		/datum/surgery_step/drill/pill,
 		/datum/surgery_step/insert_pill,
+		/datum/surgery_step/search_teeth,
+		/datum/surgery_step/close,
 	)
 
 /datum/surgery_step/drill/pill/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -84,3 +88,32 @@
 		item_target.reagents.trans_to(owner, item_target.reagents.total_volume, transferred_by = owner, methods = INGEST)
 	qdel(target)
 	return TRUE
+
+/datum/surgery_step/search_teeth
+	name = "search teeth (hand)"
+	accept_hand = TRUE
+	time = 2 SECONDS
+	repeatable = TRUE
+
+/datum/surgery_step/search_teeth/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	display_results(
+		user,
+		target,
+		span_notice("You begin looking in [target]'s mouth for implantable teeth..."),
+		span_notice("[user] begins to look in [target]'s mouth."),
+		span_notice("[user] begins to examine [target]'s teeth."),
+	)
+	display_pain(target, "You feel fingers poke around at your teeth.")
+
+/datum/surgery_step/search_teeth/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	display_results(
+		user,
+		target,
+		span_notice("[user] marks a tooth in [target]'s mouth."),
+		span_notice("[user] marks a tooth in [target]'s mouth."),
+		span_notice("[user] prods a tooth in [target]'s mouth."),
+	)
+	surgery.status = MARK_TOOTH
+	return ..()
+
+#undef MARK_TOOTH

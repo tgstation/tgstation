@@ -120,7 +120,7 @@
 	hitsound = 'sound/weapons/batonextend.ogg'
 	hitsound_wall = 'sound/weapons/batonextend.ogg'
 	suppressed = SUPPRESSED_VERY
-	hit_threshhold = LATTICE_LAYER
+	hit_threshhold = ABOVE_NORMAL_TURF_LAYER
 	/// Reference to the beam following the projectile.
 	var/line
 
@@ -218,10 +218,10 @@
 	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/infiltrator)
 	required_slots = list(ITEM_SLOT_HEAD)
 
-/obj/item/mod/module/constructor/on_suit_activation()
+/obj/item/mod/module/headprotector/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, MOD_TRAIT)
 
-/obj/item/mod/module/constructor/on_suit_deactivation(deleting = FALSE)
+/obj/item/mod/module/headprotector/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, MOD_TRAIT)
 
 ///Mister - Sprays water over an area.

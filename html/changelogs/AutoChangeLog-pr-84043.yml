@@ -1,5 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "durand shield doesnt immediately depower the mech when taking stamina damage"
-  - balance: "durand shield is a bit stronger"

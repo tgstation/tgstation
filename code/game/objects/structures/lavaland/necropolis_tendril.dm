@@ -6,7 +6,7 @@
 	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	icon_state = "tendril"
 
-	faction = list(FACTION_MINING)
+	faction = list(FACTION_MINING, FACTION_ASHWALKER)
 	max_mobs = 3
 	max_integrity = 250
 	mob_types = list(/mob/living/basic/mining/watcher)
@@ -134,6 +134,8 @@ GLOBAL_LIST_INIT(tendrils, list())
 	playsound(get_turf(src),'sound/effects/explosionfar.ogg', 200, TRUE)
 	visible_message(span_boldannounce("The tendril falls inward, the ground around it widening into a yawning chasm!"))
 	for(var/turf/T in RANGE_TURFS(2,src))
+		if(HAS_TRAIT(T, TRAIT_NO_TERRAFORM))
+			continue
 		if(!T.density)
 			T.TerraformTurf(/turf/open/chasm/lavaland, /turf/open/chasm/lavaland, flags = CHANGETURF_INHERIT_AIR)
 	qdel(src)
