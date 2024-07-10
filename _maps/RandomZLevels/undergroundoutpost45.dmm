@@ -2731,7 +2731,8 @@
 "ld" = (
 /obj/structure/alien/weeds,
 /mob/living/basic/alien/drone{
-	pressure_resistance = 5000
+	pressure_resistance = 5000;
+	maximum_survivable_temperature = 365
 	},
 /turf/open/misc/asteroid{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -6557,16 +6558,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
-"Af" = (
-/mob/living/basic/alien/drone{
-	pressure_resistance = 5000
-	},
-/turf/open/misc/asteroid{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/caves)
 "Ai" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -6929,7 +6920,8 @@
 "Fy" = (
 /obj/structure/alien/weeds,
 /mob/living/basic/alien/sentinel{
-	pressure_resistance = 5000
+	pressure_resistance = 5000;
+	maximum_survivable_temperature = 365
 	},
 /turf/open/misc/asteroid{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -7024,7 +7016,8 @@
 /area/awaymission/undergroundoutpost45/caves)
 "GM" = (
 /mob/living/basic/alien{
-	pressure_resistance = 5000
+	pressure_resistance = 5000;
+	maximum_survivable_temperature = 365
 	},
 /turf/open/misc/asteroid{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -8032,7 +8025,8 @@
 "WX" = (
 /obj/structure/alien/weeds,
 /mob/living/basic/alien/queen{
-	pressure_resistance = 5000
+	pressure_resistance = 5000;
+	maximum_survivable_temperature = 365
 	},
 /turf/open/misc/asteroid{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -27152,7 +27146,7 @@ ad
 ad
 HW
 Gn
-Af
+zq
 Tr
 ad
 ad
@@ -28690,14 +28684,14 @@ ad
 ad
 ad
 Cd
-Af
+zq
 BQ
 ZD
 ad
 ad
 Tr
 zq
-Af
+zq
 Tr
 ad
 ad
@@ -29464,7 +29458,7 @@ ad
 ad
 ad
 ad
-ld
+Gn
 zq
 Sr
 zq
@@ -29730,7 +29724,7 @@ zq
 zq
 zq
 zq
-Af
+zq
 zb
 Wd
 ad
@@ -31786,7 +31780,7 @@ Gn
 Gn
 ld
 GL
-Fy
+Gn
 IT
 ad
 ad
@@ -32296,7 +32290,7 @@ ad
 ad
 ad
 IT
-Fy
+Gn
 HQ
 Gn
 HW
@@ -32811,7 +32805,7 @@ ad
 ad
 IT
 eE
-ld
+Gn
 Gn
 nI
 IT
