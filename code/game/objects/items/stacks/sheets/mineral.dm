@@ -103,6 +103,7 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/diamond
 	material_type = /datum/material/diamond
 	walltype = /turf/closed/wall/mineral/diamond
+	pickup_sound = 'sound/items/crystal_pick_up.ogg'
 
 GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	new/datum/stack_recipe("diamond door", /obj/structure/mineral_door/transparent/diamond, 10, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_DOORS), \
