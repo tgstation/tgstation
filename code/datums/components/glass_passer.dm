@@ -27,8 +27,9 @@
 	SIGNAL_HANDLER
 
 	if(istype(crosser, /obj/structure/grille))
-		var/obj/structure/grille/grille = crosser
-		if(grille.shock(passer, 100))
+		var/obj/structure/grille/grillefriend = crosser
+		if(grillefriend.is_shocked()) //prevent passage of shocked
+			crosser.balloon_alert(passer, "is shocked!")
 			return COMPONENT_BLOCK_CROSS
 
 	return null

@@ -47,9 +47,9 @@ export const AntagInfoVoidwalker = (props) => {
           <Stack.Item width="53%">
             <Section fill title="Powers">
               <LabeledList>
-                <LabeledList.Item label="Glassy Movement">
-                  You can pass through windows and grills as if they&apos;re not
-                  even there, as long as they&apos;re not electrified.
+                <LabeledList.Item label="Space Dive">
+                  You can move under the station from space, use this to hunt
+                  and get to isolated sections of space.
                 </LabeledList.Item>
                 <LabeledList.Item label="Void Eater">
                   Your divine appendage; it allows you to incapacitate the loud
@@ -58,10 +58,11 @@ export const AntagInfoVoidwalker = (props) => {
                 <LabeledList.Item label="Cosmic Physiology">
                   Your natural camouflage makes you nearly invisible in space,
                   as well as mending any wounds your body might have sustained.
-                  You move slower in gravity, however.
+                  You can move through glass freely, but are slowed in
+                  gravity.
                 </LabeledList.Item>
                 <LabeledList.Item label="Unsettle">
-                  Target a stationeer while remaining only partially in their
+                  Target a victim while remaining only partially in their
                   view to stun and weaken them, but also announce them your
                   presence.
                 </LabeledList.Item>

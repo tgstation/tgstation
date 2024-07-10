@@ -39,6 +39,8 @@
 	mutantlungs = null
 	mutanttongue = null
 
+	siemens_coeff = 0
+
 /datum/species/voidwalker/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
 	. = ..()
 

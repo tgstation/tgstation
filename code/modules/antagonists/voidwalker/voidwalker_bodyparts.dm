@@ -68,8 +68,6 @@
 	brute_modifier = 0.9
 	burn_modifier = 0.8
 
-	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
-
 	damage_overlay_color = GLASSY_OVERLAY_MATRIX
 
 	light_brute_msg = "splintered"
@@ -94,8 +92,6 @@
 
 	brute_modifier = 0.9
 	burn_modifier = 0.8
-
-	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 
 	damage_overlay_color = GLASSY_OVERLAY_MATRIX
 

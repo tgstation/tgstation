@@ -380,6 +380,19 @@
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, forceMove), loc), time_to_go + time_to_return) //we back boys
 	addtimer(VARSET_CALLBACK(src, dramatically_disappearing, FALSE), time_to_go + time_to_return) //also set the var back
 
+/// Do some very specific checks to see if we *would* get shocked. Returns TRUE if it's shocked
+/obj/structure/grille/proc/is_shocked()
+	SHOULD_BE_PURE(TRUE)
+	var/turf/turf = get_turf(src)
+	var/obj/structure/cable/cable = turf.get_cable_node()
+	var/list/powernet_info = get_powernet_info_from_source(cable)
+
+	if(!powernet_info)
+		return FALSE
+
+	var/datum/powernet/powernet = powernet_info["powernet"]
+	return !!powernet.get_electrocute_damage()
+
 /obj/structure/grille/broken // Pre-broken grilles for map placement
 	icon_state = "brokengrille"
 	density = FALSE
