@@ -3,7 +3,8 @@
 	name = "\improper Voidwalker"
 	antagpanel_category = ANTAG_GROUP_ABOMINATIONS
 	job_rank = ROLE_VOIDWALKER
-	show_in_antagpanel = FALSE
+	show_in_antagpanel = TRUE
+	antagpanel_category = "Voidwalker"
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
 	ui_name = "AntagInfoVoidwalker"
@@ -22,6 +23,13 @@
 		body.set_species(/datum/species/voidwalker)
 
 	forge_objectives()
+
+/datum/antagonist/voidwalker/on_removal()
+	var/mob/living/carbon/human/body = owner.current
+	if(ishuman(body))
+		body.set_species(/datum/species/human)
+
+	. = ..()
 
 /datum/antagonist/voidwalker/forge_objectives()
 	var/datum/objective/voidwalker_fluff/objective = new
