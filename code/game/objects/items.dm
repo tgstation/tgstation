@@ -79,6 +79,8 @@
 	var/pickup_sound
 	///Sound uses when dropping the item, or when its thrown.
 	var/drop_sound
+	///Do the drop and pickup sounds vary?
+	var/sound_vary = FALSE
 	///Whether or not we use stealthy audio levels for this item's attack sounds
 	var/stealthy_audio = FALSE
 	///Sound which is produced when blocking an attack
@@ -677,7 +679,10 @@
 	item_flags &= ~IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	if(!silent)
-		playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE)
+		if(sound_vary)
+			playsound(src, drop_sound, DROP_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+		else
+			playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE)
 	user?.update_equipment_speed_mods()
 
 /// called just as an item is picked up (loc is not yet changed)

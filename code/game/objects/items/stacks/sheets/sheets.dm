@@ -24,6 +24,8 @@
 	var/walltype
 	/// whether this sheet can be sniffed by the material sniffer
 	var/sniffable = FALSE
+	/// this makes pickup and drop sounds vary
+	sound_vary = TRUE
 
 /obj/item/stack/sheet/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
