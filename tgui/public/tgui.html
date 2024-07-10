@@ -292,7 +292,7 @@
     if (type === 'js') {
       var node = document.createElement('script');
       node.type = 'text/javascript';
-      node.crossOrigin = 'anonymous';      
+      node.crossOrigin = 'anonymous';
       node.src = url;
       if (sync) {
         node.defer = true;
@@ -313,7 +313,7 @@
     if (type === 'css') {
       var node = document.createElement('link');
       node.type = 'text/css';
-      node.rel = 'stylesheet';      
+      node.rel = 'stylesheet';
       node.href = url;
       // Temporarily set media to something inapplicable
       // to ensure it'll fetch without blocking render
@@ -344,6 +344,9 @@
   Byond.loadCss = function (url, sync) {
     loadAsset({ url: url, sync: sync, type: 'css' });
   };
+
+  // Icon cache
+  Byond.iconRefMap = {};
 })();
 
 // Error handling
