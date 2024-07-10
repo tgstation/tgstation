@@ -268,6 +268,9 @@
 	if(buckled)
 		return TRUE
 
+	if(movement_type & FLYING || HAS_TRAIT(src, TRAIT_FREE_FLOAT_MOVEMENT))
+		return TRUE
+
 	var/atom/movable/backup = get_spacemove_backup(movement_dir, continuous_move)
 	if(!backup)
 		return FALSE
@@ -291,6 +294,8 @@
  * Takes the intended movement direction as input, alongside if the context is checking if we're allowed to continue drifting
  */
 /mob/get_spacemove_backup(moving_direction, continuous_move)
+	var/atom/secondary_backup
+	var/list/priority_dirs = (moving_direction in GLOB.cardinals) ? GLOB.cardinals : GLOB.diagonals
 	for(var/atom/pushover as anything in range(1, get_turf(src)))
 		if(pushover == src)
 			continue
@@ -302,7 +307,10 @@
 				continue
 			if(!turf.density && !mob_negates_gravity())
 				continue
-			return pushover
+			if (get_dir(src, pushover) in priority_dirs)
+				return pushover
+			secondary_backup = pushover
+			continue
 
 		var/atom/movable/rebound = pushover
 		if(rebound == buckled)
@@ -327,10 +335,16 @@
 			if(moving_direction == get_dir(src, pushover)) // Can't push "off" of something that you're walking into
 				continue
 		if(rebound.anchored)
-			return rebound
+			if (get_dir(src, rebound) in priority_dirs)
+				return rebound
+			secondary_backup = rebound
+			continue
 		if(pulling == rebound)
 			continue
-		return rebound
+		if (get_dir(src, rebound) in priority_dirs)
+			return rebound
+		secondary_backup = rebound
+	return secondary_backup
 
 /mob/has_gravity(turf/gravity_turf)
 	return mob_negates_gravity() || ..()

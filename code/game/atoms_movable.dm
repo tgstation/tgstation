@@ -1431,6 +1431,7 @@
 	return
 
 /atom/movable/proc/get_spacemove_backup()
+	var/atom/secondary_backup
 	for(var/checked_range in orange(1, get_turf(src)))
 		if(isarea(checked_range))
 			continue
@@ -1438,12 +1439,18 @@
 			var/turf/turf = checked_range
 			if(!turf.density)
 				continue
-			return turf
+			if (get_dir(src, turf) in GLOB.cardinals)
+				return turf
+			secondary_backup = turf
+			continue
 		var/atom/movable/checked_atom = checked_range
 		if(checked_atom.density || !checked_atom.CanPass(src, get_dir(src, checked_atom)))
 			if(checked_atom.last_pushoff == world.time)
 				continue
-			return checked_atom
+			if (get_dir(src, checked_atom) in GLOB.cardinals)
+				return checked_atom
+			secondary_backup = checked_atom
+	return secondary_backup
 
 ///called when a mob resists while inside a container that is itself inside something.
 /atom/movable/proc/relay_container_resist_act(mob/living/user, obj/container)

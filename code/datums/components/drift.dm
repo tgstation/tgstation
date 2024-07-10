@@ -218,7 +218,7 @@
 
 /datum/component/drift/proc/attempt_halt(atom/movable/source, movement_dir, continuous_move, atom/backup)
 	SIGNAL_HANDLER
-	if (get_dir(source, backup) & movement_dir)
+	if (get_dir(source, backup) == movement_dir)
 		if (drift_force >= INERTIA_FORCE_PER_THROW_FORCE)
 			source.throw_at(backup, 1, round(drift_force / INERTIA_FORCE_PER_THROW_FORCE), spin = FALSE)
 		drift_force = 0

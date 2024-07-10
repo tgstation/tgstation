@@ -48,7 +48,7 @@
 	caliber = CALIBER_40MM
 	icon_state = "40mmHE"
 	projectile_type = /obj/projectile/bullet/a40mm
-	newtonian_force = 1.5
+	newtonian_force = 1.25
 
 /obj/item/ammo_casing/a40mm/rubber
 	name = "40mm rubber shell"
