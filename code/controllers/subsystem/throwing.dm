@@ -203,7 +203,7 @@ SUBSYSTEM_DEF(throwing)
 		return
 	thrownthing.throwing = null
 	var/drift_force = speed
-	if (isitem(throwthing))
+	if (isitem(thrownthing))
 		var/obj/item/thrownitem = thrownthing
 		drift_force *= 0.2 + thrownitem.w_class * 0.4
 

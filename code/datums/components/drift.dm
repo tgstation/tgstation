@@ -89,7 +89,8 @@
 	SIGNAL_HANDLER
 	var/atom/movable/movable_parent = parent
 	inertia_last_loc = movable_parent.loc
-	if(!drifting_loop)
+	if(!drifting_loop || !drift_force)
+		qdel(src)
 		return COMPONENT_MOVABLE_NEWTONIAN_BLOCK
 
 	var/force_x = sin(drifting_loop.angle) * drift_force + sin(inertia_angle) * additional_force
