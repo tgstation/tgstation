@@ -11716,7 +11716,6 @@
 /area/station/medical/medbay/lobby)
 "elN" = (
 /obj/effect/landmark/start/hangover,
-/obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -34149,6 +34148,7 @@
 	},
 /obj/effect/landmark/navigate_destination/bar,
 /obj/machinery/camera/autoname/directional/west,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "lvv" = (
@@ -44230,6 +44230,7 @@
 	dir = 4
 	},
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
 "oNX" = (
