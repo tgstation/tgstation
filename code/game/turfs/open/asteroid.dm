@@ -311,3 +311,18 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	floor_variance = 0
 	base_icon_state = "moon_dug"
 	icon_state = "moon_dug"
+
+	//used in outpost45
+
+/turf/open/misc/asteroid/plasma //floor piece
+	gender = PLURAL
+	name = "asteroid gravel"
+	desc = "It's coarse and rough and gets everywhere."
+	baseturfs = /turf/open/misc/asteroid
+	icon = 'icons/turf/floors.dmi'
+	damaged_dmi = 'icons/turf/floors.dmi'
+	icon_state = "asteroid"
+	base_icon_state = "asteroid"
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9"
+	planetary_atmos = TRUE
+
