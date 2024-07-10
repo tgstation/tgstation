@@ -31895,6 +31895,7 @@
 "kJy" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/wood,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/smooth,
 /area/station/command/heads_quarters/qm)
 "kJJ" = (
