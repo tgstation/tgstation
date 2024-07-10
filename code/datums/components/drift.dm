@@ -1,7 +1,7 @@
 #define DEFAULT_INERTIA_SPEED 5
 
 #define INERTIA_FORCE_CAP 15
-#define INERTIA_FORCE_REDUCTION_PER_OBJECT 2
+#define INERTIA_FORCE_REDUCTION_PER_OBJECT 0.75
 #define INERTIA_FORCE_PER_THROW_FORCE 5
 
 ///Component that handles drifting
@@ -219,12 +219,11 @@
 /datum/component/drift/proc/attempt_halt(atom/movable/source, movement_dir, continuous_move, atom/backup)
 	SIGNAL_HANDLER
 	if (get_dir(source, backup) & movement_dir)
-		if (drift_force < INERTIA_FORCE_PER_THROW_FORCE)
-			return
-
-		source.throw_at(backup, 1, round(drift_force / INERTIA_FORCE_PER_THROW_FORCE), spin = FALSE)
+		if (drift_force >= INERTIA_FORCE_PER_THROW_FORCE)
+			source.throw_at(backup, 1, round(drift_force / INERTIA_FORCE_PER_THROW_FORCE), spin = FALSE)
 		drift_force = 0
 		return
+
 	drift_force -= INERTIA_FORCE_REDUCTION_PER_OBJECT
 
 	if (drift_force <= 1)
