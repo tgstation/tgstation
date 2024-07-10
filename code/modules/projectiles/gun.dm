@@ -126,29 +126,20 @@
 	suppressed = null
 	update_appearance()
 
-/obj/item/gun/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum) //throw a gun at them. They don't expect it.
+/obj/item/gun/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
+	if(isliving(hit_atom))
+		var/mob/living/thrower = throwingdatum?.get_thrower()
+		toss_gun_hard(thrower, hit_atom, tossed_gun = src)
 
-	var/mob/living/carbon/thrower = throwingdatum?.get_thrower()
+/obj/item/gun/proc/toss_gun_hard(mob/living/thrower, mob/living/target, obj/item/gun/tossed_gun) //throw a gun at them. They don't expect it.
+	if(isnull(thrower))
+		return FALSE
 	if(!HAS_TRAIT(thrower, TRAIT_TOSS_GUN_HARD))
-		return
-	if(!isliving(hit_atom))
-		return
-	var/mob/living/living_target = hit_atom
-	living_target.Knockdown(0.5 SECONDS)
-	living_target.apply_damage(src.w_class > WEIGHT_CLASS_NORMAL ? 15 : 10, BRUTE, thrower.zone_selected, wound_bonus = CANT_WOUND, attacking_item = src)
-	if(!istype(src, /obj/item/gun/ballistic))
-		return
-	var/obj/item/gun/ballistic/ballistic_gun = src
-	if(ballistic_gun.internal_magazine)
-		ballistic_gun.attack_self()
-		return
-	if(!ballistic_gun.internal_magazine && ballistic_gun.magazine)
-		ballistic_gun.magazine.forceMove(drop_location())
-		ballistic_gun.magazine.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), 1, 1)
-		ballistic_gun.magazine = null
-		if(!ballistic_gun.bolt_locked)
-			ballistic_gun.rack()
+		return FALSE
+	target.Knockdown(0.5 SECONDS)
+	target.apply_damage(tossed_gun.w_class > WEIGHT_CLASS_NORMAL ? 15 : 10, BRUTE, thrower.zone_selected, wound_bonus = CANT_WOUND, attacking_item = tossed_gun)
+	return TRUE
 
 /obj/item/gun/examine(mob/user)
 	. = ..()
