@@ -254,16 +254,16 @@
 			visible_message(span_notice("[exp_on] is gripped in just the right way, enhancing its focus."))
 			malfunction_probability_coeff_modifier++
 			RefreshParts() //recalculate malfunction_probability_coeff
-		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_VERYLOW * (100 - malfunction_probability_coeff)))
 			visible_message(span_danger("[src] malfunctions and destroys [exp_on], lashing its arms out at nearby people!"))
 			for(var/mob/living/m in oview(1, src))
 				m.apply_damage(15, BRUTE, pick(BODY_ZONE_HEAD,BODY_ZONE_CHEST,BODY_ZONE_CHEST))
 				investigate_log("Experimentor dealt minor brute to [m].", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_LOW * (100 - malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_LOW * (100 - malfunction_probability_coeff)))
 			visible_message(span_warning("[src] malfunctions!"))
 			exp = SCANTYPE_OBLITERATE
-		else if(prob(EFFECT_PROB_MEDIUM * (100 - malfunction_probability_coeff))
+		else if(prob(EFFECT_PROB_MEDIUM * (100 - malfunction_probability_coeff)))
 			visible_message(span_danger("[src] malfunctions, throwing the [exp_on]!"))
 			var/mob/living/target = locate(/mob/living) in oview(7,src)
 			if(target)
