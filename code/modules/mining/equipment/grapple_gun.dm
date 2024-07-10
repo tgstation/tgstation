@@ -79,6 +79,7 @@
 		return FALSE
 	balloon_alert(user, "pressure settings overloaded")
 	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/item/grapple_gun/proc/on_grapple_hit(datum/source, atom/movable/firer, atom/target, Angle)
 	SIGNAL_HANDLER
