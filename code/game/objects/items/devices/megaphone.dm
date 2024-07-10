@@ -44,7 +44,7 @@
 		return
 	if(obj_flags & EMAGGED)
 		///somewhat compressed and ear-grating, crusty and noisy with a bit of echo.
-		message_args[TREAT_TTS_FILTER_ARG] += "acrusher=samples=12:level_out=5,aecho=0.8:1:100:0.4,aemphasis=type=emi,crystalizer=i=9,acontrast=100,rubberband=pitch=0.9"
+		message_args[TREAT_TTS_FILTER_ARG] += "acrusher=samples=9:level_out=6,aecho=delays=100:decays=0.4,aemphasis=type=emi,crystalizer=i=6,acontrast=60,rubberband=pitch=0.9"
 	else
 		///A sharper and louder sound with a bit of echo
 		message_args[TREAT_TTS_FILTER_ARG] += "acrusher=samples=2:level_out=6,aecho=delays=90:decays=0.3,aemphasis=type=cd,acontrast=30,crystalizer=i=5"
