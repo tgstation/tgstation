@@ -13,6 +13,8 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "smash")
 	novariants = FALSE
 	material_flags = MATERIAL_EFFECTS
+	pickup_sound = ''
+	drop_sound = ''
 	var/sheettype = null //this is used for girders in the creation of walls/false walls
 	///If true, this is worth points in the gulag labour stacker
 	var/gulag_valid = FALSE
