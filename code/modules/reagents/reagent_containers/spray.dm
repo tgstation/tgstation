@@ -66,7 +66,7 @@
 
 	playsound(src, spray_sound, 50, TRUE, -6)
 	user.changeNext_move(CLICK_CD_RANGE * 2)
-	user.newtonian_move(get_dir(target, user))
+	user.newtonian_move(get_angle(target, user))
 	return TRUE
 
 /// Handles creating a chem puff that travels towards the target atom, exposing reagents to everything it hits on the way.

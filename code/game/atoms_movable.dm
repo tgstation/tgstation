@@ -33,8 +33,8 @@
 	var/speech_span
 	///Are we moving with inertia? Mostly used as an optimization
 	var/inertia_moving = FALSE
-	///Delay in deciseconds between inertia based movement
-	var/inertia_move_delay = 5
+	///Multiplier for inertia based movement in space
+	var/inertia_move_multiplier = 1
 	///The last time we pushed off something
 	///This is a hack to get around dumb him him me scenarios
 	var/last_pushoff
@@ -764,7 +764,7 @@
 				if(!. && set_dir_on_move && update_dir)
 					setDir(first_step_dir)
 				else if(!inertia_moving)
-					newtonian_move(direct)
+					newtonian_move(dir2angle(direct))
 				if(client_mobs_in_contents)
 					update_parallax_contents()
 			moving_diagonally = 0
@@ -839,7 +839,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if (!inertia_moving && momentum_change)
-		newtonian_move(movement_dir)
+		newtonian_move(dir2angle(movement_dir))
 	// If we ain't moving diagonally right now, update our parallax
 	// We don't do this all the time because diag movements should trigger one call to this, not two
 	// Waste of cpu time, and it fucks the animate
@@ -1256,14 +1256,14 @@
 
 /// Only moves the object if it's under no gravity
 /// Accepts the direction to move, if the push should be instant, and an optional parameter to fine tune the start delay
-/atom/movable/proc/newtonian_move(direction, instant = FALSE, start_delay = 0)
-	if(!isturf(loc) || Process_Spacemove(direction, continuous_move = TRUE))
+/atom/movable/proc/newtonian_move(inertia_angle, instant = FALSE, start_delay = 0, drift_force = 1)
+	if(!isturf(loc) || Process_Spacemove(angle2dir(inertia_angle), continuous_move = TRUE))
 		return FALSE
 
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_NEWTONIAN_MOVE, direction, start_delay) & COMPONENT_MOVABLE_NEWTONIAN_BLOCK)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_NEWTONIAN_MOVE, inertia_angle, start_delay, drift_force) & COMPONENT_MOVABLE_NEWTONIAN_BLOCK)
 		return TRUE
 
-	AddComponent(/datum/component/drift, direction, instant, start_delay)
+	AddComponent(/datum/component/drift, inertia_angle, instant, start_delay, drift_force)
 
 	return TRUE
 

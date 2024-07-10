@@ -13,7 +13,7 @@
 #define COMSIG_MOVABLE_CROSS_OVER "movable_cross_am"
 ///from base of atom/movable/Bump(): (/atom)
 #define COMSIG_MOVABLE_BUMP "movable_bump"
-///from base of atom/movable/newtonian_move(): (inertia_direction, start_delay)
+///from base of atom/movable/newtonian_move(): (inertia_angle, start_delay, additional_force)
 #define COMSIG_MOVABLE_NEWTONIAN_MOVE "movable_newtonian_move"
 	#define COMPONENT_MOVABLE_NEWTONIAN_BLOCK (1<<0)
 ///from datum/component/drift/apply_initial_visuals(): ()

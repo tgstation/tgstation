@@ -157,6 +157,12 @@
 		return FALSE
 	return TRUE
 
+/obj/item/mod/module/jetpack/on_activation()
+	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
+
+/obj/item/mod/module/jetpack/on_deactivation(display_message = TRUE, deleting = FALSE)
+	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
+
 /// Cooldown to use if we didn't actually launch a jump jet
 #define FAILED_ACTIVATION_COOLDOWN 3 SECONDS
 

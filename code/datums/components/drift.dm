@@ -1,10 +1,16 @@
+#define DEFAULT_INERTIA_SPEED 5
+
+#define INERTIA_FORCE_CAP 15
+#define INERTIA_FORCE_REDUCTION_PER_OBJECT 2
+#define INERTIA_FORCE_PER_THROW_FORCE 5
+
 ///Component that handles drifting
 ///Manages a movement loop that actually does the legwork of moving someone
 ///Alongside dealing with the post movement input blocking required to make things look nice
 /datum/component/drift
 	var/atom/inertia_last_loc
 	var/old_dir
-	var/datum/move_loop/move/drifting_loop
+	var/datum/move_loop/smooth_move/drifting_loop
 	///Should we ignore the next glide rate input we get?
 	///This is to some extent a hack around the order of operations
 	///Around COMSIG_MOVELOOP_POSTPROCESS. I'm sorry lad
@@ -12,9 +18,11 @@
 	///Have we been delayed? IE: active, but not working right this second?
 	var/delayed = FALSE
 	var/block_inputs_until
+	/// How much force is behind this drift.
+	var/drift_force = 1
 
 /// Accepts three args. The direction to drift in, if the drift is instant or not, and if it's not instant, the delay on the start
-/datum/component/drift/Initialize(direction, instant = FALSE, start_delay = 0)
+/datum/component/drift/Initialize(inertia_angle, instant = FALSE, start_delay = 0, drift_force = 1)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	. = ..()
@@ -22,11 +30,14 @@
 	var/flags = MOVEMENT_LOOP_OUTSIDE_CONTROL
 	if(instant)
 		flags |= MOVEMENT_LOOP_START_FAST
+	src.drift_force = drift_force
 	var/atom/movable/movable_parent = parent
-	drifting_loop = GLOB.move_manager.move(moving = parent, direction = direction, delay = movable_parent.inertia_move_delay, subsystem = SSspacedrift, priority = MOVEMENT_SPACE_PRIORITY, flags = flags)
+	drifting_loop = GLOB.move_manager.smooth_move(moving = parent, angle = inertia_angle, delay = 1, subsystem = SSspacedrift, priority = MOVEMENT_SPACE_PRIORITY, flags = flags)
 
 	if(!drifting_loop) //Really want to qdel here but can't
 		return COMPONENT_INCOMPATIBLE
+
+	drifting_loop.set_speed(get_loop_delay(movable_parent))
 
 	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_START, PROC_REF(drifting_start))
 	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_STOP, PROC_REF(drifting_stop))
@@ -34,10 +45,11 @@
 	RegisterSignal(drifting_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(after_move))
 	RegisterSignal(drifting_loop, COMSIG_QDELETING, PROC_REF(loop_death))
 	RegisterSignal(movable_parent, COMSIG_MOVABLE_NEWTONIAN_MOVE, PROC_REF(newtonian_impulse))
+	RegisterSignal(movable_parent, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, PROC_REF(attempt_halt))
 	if(drifting_loop.status & MOVELOOP_STATUS_RUNNING)
 		drifting_start(drifting_loop) // There's a good chance it'll autostart, gotta catch that
 
-	var/visual_delay = movable_parent.inertia_move_delay
+	var/visual_delay = movable_parent.inertia_move_multiplier
 
 	// Start delay is essentially a more granular version of instant
 	// Isn't used in the standard case, just for things that have odd wants
@@ -73,14 +85,24 @@
 		//It's ok if it's not, it's just important if it is.
 		mob_parent.client?.visual_delay = MOVEMENT_ADJUSTED_GLIDE_SIZE(visual_delay, SSspacedrift.visual_delay)
 
-/datum/component/drift/proc/newtonian_impulse(datum/source, inertia_direction)
+/datum/component/drift/proc/newtonian_impulse(atom/movable/source, inertia_angle, start_delay, additional_force)
 	SIGNAL_HANDLER
 	var/atom/movable/movable_parent = parent
 	inertia_last_loc = movable_parent.loc
-	if(drifting_loop)
-		drifting_loop.direction = inertia_direction
-	if(!inertia_direction)
+	if(!drifting_loop)
+		return COMPONENT_MOVABLE_NEWTONIAN_BLOCK
+
+	var/force_x = sin(drifting_loop.angle) * drift_force + sin(inertia_angle) * additional_force
+	var/force_y = cos(drifting_loop.angle) * drift_force + cos(inertia_angle) * additional_force
+
+	drift_force = clamp(sqrt(force_x * force_x + force_y * force_y), 0, INERTIA_FORCE_CAP)
+	if(!drift_force)
 		qdel(src)
+		return COMPONENT_MOVABLE_NEWTONIAN_BLOCK
+
+	drifting_loop.set_angle(arctan(force_x / force_y) + (force_y < 0 ? 180 : 0))
+	drifting_loop.set_speed(get_loop_delay(source))
+
 	return COMPONENT_MOVABLE_NEWTONIAN_BLOCK
 
 /datum/component/drift/proc/drifting_start()
@@ -117,7 +139,7 @@
 	var/atom/movable/movable_parent = parent
 	movable_parent.setDir(old_dir)
 	movable_parent.inertia_moving = FALSE
-	if(movable_parent.Process_Spacemove(drifting_loop.direction, continuous_move = TRUE))
+	if(movable_parent.Process_Spacemove(angle2dir(drifting_loop.angle), continuous_move = TRUE))
 		glide_to_halt(visual_delay)
 		return
 
@@ -140,7 +162,7 @@
 		return
 	if(movable_parent.inertia_moving)
 		return
-	if(!movable_parent.Process_Spacemove(drifting_loop.direction, continuous_move = TRUE))
+	if(!movable_parent.Process_Spacemove(angle2dir(drifting_loop.angle), continuous_move = TRUE))
 		return
 	qdel(src)
 
@@ -167,7 +189,7 @@
 	SIGNAL_HANDLER
 	// This does mean it falls very slightly behind, but otherwise they'll potentially run into us
 	var/next_move_in = drifting_loop.timer - world.time + world.tick_lag
-	was_pulling.newtonian_move(drifting_loop.direction, start_delay = next_move_in)
+	was_pulling.newtonian_move(angle2dir(drifting_loop.angle), start_delay = next_move_in)
 
 /datum/component/drift/proc/glide_to_halt(glide_for)
 	if(!ismob(parent))
@@ -192,3 +214,33 @@
 		return
 	if(world.time < block_inputs_until)
 		return COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE
+
+/datum/component/drift/proc/attempt_halt(atom/movable/source, movement_dir, continuous_move, atom/backup)
+	SIGNAL_HANDLER
+	if (get_dir(source, backup) & movement_dir)
+		if (drift_force < INERTIA_FORCE_PER_THROW_FORCE)
+			return
+
+		source.throw_at(backup, 1, round(drift_force / INERTIA_FORCE_PER_THROW_FORCE), spin = FALSE)
+		drift_force = 0
+		return
+	drift_force -= INERTIA_FORCE_REDUCTION_PER_OBJECT
+
+	if (drift_force <= 1)
+		drift_force = 0
+		return
+
+	drifting_loop.set_speed(get_loop_delay(source))
+	return COMPONENT_PREVENT_SPACEMOVE_HALT
+
+#define INERTIA_SPEED_COEF 0.3
+
+/datum/component/drift/proc/get_loop_delay(atom/movable/movable)
+	return (DEFAULT_INERTIA_SPEED / ((1 - INERTIA_SPEED_COEF) + drift_force * INERTIA_SPEED_COEF)) * movable.inertia_move_multiplier
+
+#undef INERTIA_SPEED_COEF
+
+#undef DEFAULT_INERTIA_SPEED
+#undef INERTIA_FORCE_CAP
+#undef INERTIA_FORCE_REDUCTION_PER_OBJECT
+#undef INERTIA_FORCE_PER_THROW_FORCE

@@ -132,7 +132,7 @@
 	// Check if we have the fuel to stop this. Do NOT cosume any fuel, just check
 	// This is done because things other then us can use our fuel
 	if(stabilize && check_on_move.Invoke(FALSE))
-		return COMSIG_MOVABLE_STOP_SPACEMOVE
+		user.newtonian_move(get_angle(REVERSE_DIR(movement_dir)), drift_force = 0.5)
 
 /// Returns true if the thrust went well, false otherwise
 /datum/component/jetpack/proc/thrust()

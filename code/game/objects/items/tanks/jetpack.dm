@@ -14,6 +14,8 @@
 	var/on = FALSE
 	/// If the jetpack will stop when you stop moving
 	var/stabilize = FALSE
+	/// If the jetpack will have a speedboost in space/nograv or not
+	var/full_speed = TRUE
 	/// If our jetpack is disabled, from getting EMPd
 	var/disabled = FALSE
 	/// Callback for the jetpack component
@@ -105,12 +107,16 @@
 		return FALSE
 	on = TRUE
 	update_icon(UPDATE_ICON_STATE)
+	if(full_speed)
+		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
 	return TRUE
 
 /obj/item/tank/jetpack/proc/turn_off(mob/user)
 	SEND_SIGNAL(src, COMSIG_JETPACK_DEACTIVATED, user)
 	on = FALSE
 	update_icon(UPDATE_ICON_STATE)
+	if(user)
+		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, use_fuel = TRUE)
 	if(!ismob(loc))
@@ -168,6 +174,7 @@
 	worn_icon_state = "jetpack-improvised"
 	volume = 20 //normal jetpacks have 70 volume
 	gas_type = null //it starts empty
+	full_speed = FALSE
 
 /obj/item/tank/jetpack/improvised/allow_thrust(num)
 	if(!ismob(loc))
