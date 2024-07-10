@@ -1,8 +1,8 @@
 {
 	"version": 1,
 	"map_name": "NebulaStation",
-	"map_path": "map_files/Nebulastation",
-	"map_file": "Nebulastation.dmm",
+	"map_path": "map_files/NebulaStation",
+	"map_file": "NebulaStation.dmm",
 	"shuttles": {
 		"cargo": "cargo_nebula",
 		"ferry": "ferry_nebula",

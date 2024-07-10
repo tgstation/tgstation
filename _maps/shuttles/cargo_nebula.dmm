@@ -18,7 +18,6 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/supply)
 "d" = (
-/obj/effect/turf_decal/delivery,
 /obj/machinery/light/directional/east,
 /obj/machinery/button/door/directional/east{
 	id = "QMLoaddoor";
@@ -30,11 +29,12 @@
 	name = "Loading Doors";
 	pixel_y = 8
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/supply)
 "e" = (
 /obj/machinery/light/directional/west,
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/supply)
 "f" = (
@@ -66,43 +66,10 @@
 	dir = 1
 	},
 /area/shuttle/supply)
-"k" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/trimline/yellow,
-/turf/open/floor/iron/dark/textured,
-/area/shuttle/supply)
-"l" = (
-/obj/machinery/conveyor{
-	dir = 9;
-	id = "QMLoad"
-	},
-/obj/structure/railing/corner{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/textured_large,
-/area/shuttle/supply)
-"m" = (
-/obj/machinery/conveyor{
-	dir = 5;
-	id = "QMLoad2"
-	},
-/obj/structure/railing/corner,
-/turf/open/floor/iron/dark/textured_large,
-/area/shuttle/supply)
 "n" = (
 /obj/machinery/conveyor{
 	dir = 5;
 	id = "QMLoad2"
-	},
-/turf/open/floor/iron/dark/textured_large,
-/area/shuttle/supply)
-"o" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "QMLoad2"
-	},
-/obj/structure/railing{
-	dir = 4
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/supply)
@@ -117,24 +84,9 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
-"r" = (
-/obj/machinery/conveyor{
-	dir = 6;
-	id = "QMLoad2"
-	},
-/obj/structure/railing/corner{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/textured_large,
-/area/shuttle/supply)
 "s" = (
-/obj/effect/turf_decal/box,
-/turf/open/floor/iron/dark/textured_large,
-/area/shuttle/supply)
-"u" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/trimline/dark_blue,
-/turf/open/floor/iron/dark/textured,
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/supply)
 "v" = (
 /obj/machinery/conveyor{
@@ -143,25 +95,10 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/supply)
-"x" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/trimline/red,
-/turf/open/floor/iron/dark/textured,
-/area/shuttle/supply)
 "y" = (
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "QMLoad"
-	},
-/turf/open/floor/iron/dark/textured_large,
-/area/shuttle/supply)
-"z" = (
-/obj/machinery/conveyor{
-	dir = 10;
-	id = "QMLoad"
-	},
-/obj/structure/railing/corner{
-	dir = 1
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/supply)
@@ -170,13 +107,10 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/supply)
-"B" = (
-/obj/machinery/conveyor{
-	dir = 1;
+"C" = (
+/obj/machinery/conveyor/inverted{
+	dir = 5;
 	id = "QMLoad"
-	},
-/obj/structure/railing{
-	dir = 4
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/supply)
@@ -204,11 +138,6 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/supply)
-"H" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/trimline/dark_green,
-/turf/open/floor/iron/dark/textured,
-/area/shuttle/supply)
 "I" = (
 /obj/machinery/conveyor{
 	dir = 6;
@@ -219,10 +148,12 @@
 "J" = (
 /turf/template_noop,
 /area/template_noop)
-"K" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/trimline/purple,
-/turf/open/floor/iron/dark/textured,
+"L" = (
+/obj/machinery/conveyor/inverted{
+	dir = 9;
+	id = "QMLoad2"
+	},
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/supply)
 "M" = (
 /obj/machinery/conveyor{
@@ -252,9 +183,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "T" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/trimline/blue,
-/turf/open/floor/iron/dark/textured,
+/turf/open/floor/glass/reinforced,
 /area/shuttle/supply)
 "U" = (
 /obj/machinery/door/poddoor{
@@ -273,6 +202,9 @@
 	},
 /obj/effect/turf_decal/trimline/dark/warning{
 	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 8
@@ -316,13 +248,13 @@ J
 (2,1,1) = {"
 Q
 Q
-m
-o
+n
+v
 v
 X
 G
-B
-l
+G
+M
 Q
 A
 a
@@ -332,7 +264,7 @@ Q
 n
 P
 s
-x
+T
 e
 T
 s
@@ -345,11 +277,11 @@ Z
 Q
 h
 i
-s
-K
 c
-H
-s
+T
+c
+T
+c
 j
 y
 A
@@ -360,9 +292,9 @@ Q
 I
 E
 s
-u
+T
 d
-k
+T
 s
 b
 O
@@ -372,13 +304,13 @@ Z
 (6,1,1) = {"
 Q
 Q
-r
-E
+I
+L
 V
 X
 V
-b
-z
+C
+O
 Q
 A
 a
