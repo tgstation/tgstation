@@ -78,7 +78,7 @@
 	head = /obj/item/clothing/head/utility/chefhat
 	mask = /obj/item/clothing/mask/fakemoustache/italian
 
-	skillchips = list(/obj/item/skillchip/job/chef)
+	skillchips = list(/obj/item/skillchip/job/chef, /obj/item/skillchip/chefs_kiss)
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
