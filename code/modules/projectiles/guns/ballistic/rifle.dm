@@ -279,7 +279,7 @@
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/add_bayonet_point()
 	AddComponent(/datum/component/bayonet_attachable, offset_x = 35, offset_y = 10)
 
-/obj/item/gun/ballistic/rifle/boltaction/pipegun/handle_chamber()
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	. = ..()
 	do_sparks(1, TRUE, src)
 

@@ -745,7 +745,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 			tossed_ballistic.attack_self()
 			return
 		if(BOLT_TYPE_OPEN) //emptying the chamber of an automatic weapon, because rack() doesn't do this to it
-			tossed_ballistic.chambered?.forceMove(drop_location())
+			tossed_ballistic.handle_chamber(chamber_next_round = FALSE)
 	if(!tossed_ballistic.internal_magazine && tossed_ballistic.magazine) //if a magazine is attached to the weapon, we remove it and throw it aside
 		tossed_ballistic.magazine.forceMove(drop_location())
 		tossed_ballistic.magazine.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), 1, 1)
