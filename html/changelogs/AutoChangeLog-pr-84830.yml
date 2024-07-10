@@ -1,0 +1,4 @@
+author: "Gaxeer"
+delete-after: True
+changes:
+  - refactor: "move `status_display_bottom_text` and `fire_alarm_light_color` to security level prototypes"
