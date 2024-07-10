@@ -361,18 +361,25 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		"uncommon" = 60)
 	var/drop_all_cards = FALSE
 
-/obj/item/cardpack/series_one
-	name = "Trading Card Pack: Series 1"
-	desc = "Contains six cards of varying rarity from the 2560 Core Set. Collect them all!"
-	icon_state = "cardpack_series1"
-	series = "coreset2020"
+/obj/item/cardpack/coreset_2560
+	name = "/TG/C Booster Pack: 2560 Core Set"
+	desc = "Contains six cards of varying rarity from the 2560 Core Set. Get a boost with a selection of basic cards that'll fit any deck!"
+	icon_state = "cardpack_coreset2560"
+	series = "coreset_2560"
+	contains_coin = 10
+
+/obj/item/cardpack/coreset_2564
+	name = "/TG/C Booster Pack: 2564 Core Set"
+	desc = "Contains six cards of varying rarity from the 2564 Core Set. Get a boost with a selection of basic cards that'll fit any deck!"
+	icon_state = "cardpack_coreset2564"
+	series = "coreset_2564"
 	contains_coin = 10
 
 /obj/item/cardpack/resin
-	name = "Trading Card Pack: Resin Frontier Booster Pack"
-	desc = "Contains six cards of varying rarity from the Resin Frontier set. Collect them all!"
-	icon_state = "cardpack_resin"
-	series = "resinfront"
+	name = "/TG/C Booster Pack: Resin Frontier"
+	desc = "Contains six cards of varying rarity from the Resin Frontier set. Fight for humanity with the TGJMC or join the xeno menace!"
+	icon_state = "cardpack_resinfrontier"
+	series = "resin_frontier"
 	contains_coin = 0
 	rarity_table = list(
 		"common" = 900,
@@ -380,6 +387,20 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		"rare" = 100,
 		"epic" = 30,
 		"legendary" = 5)
+
+/obj/item/cardpack/blood_and_stone
+	name = "/TG/C Booster Pack: Blood & Stone"
+	desc = "Contains six cards of varying rarity from the Blood & Stone set. Unlock the secrets of the Necropolis or delve into forbidden magicks with the Blood Geometer!"
+	icon_state = "cardpack_blood_and_stone"
+	series = "blood_and_stone"
+	contains_coin = 10
+
+/obj/item/cardpack/techno_shock
+	name = "/TG/C Booster Pack: TechnoShock"
+	desc = "Contains six cards of varying rarity from the TechnoShock set. Seek humanity's end under the Rogue AI, or harness endless tech combinations with Nakamura Engineering!"
+	icon_state = "cardpack_technoshock"
+	series = "techno_shock"
+	contains_coin = 10
 
 /obj/item/cardpack/Initialize(mapload)
 	. = ..()
