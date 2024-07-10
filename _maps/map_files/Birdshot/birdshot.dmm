@@ -2817,6 +2817,7 @@
 	pixel_y = 10
 	},
 /obj/structure/sign/poster/official/the_owl/directional/west,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/wood,
 /area/station/command/meeting_room/council)
 "bbF" = (
@@ -4315,6 +4316,7 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
+/obj/structure/sign/poster/official/tactical_game_cards/directional/north,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room/council)
 "bEW" = (
@@ -5642,6 +5644,7 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
+/obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/carpet,
 /area/station/command/meeting_room/council)
 "cdz" = (
@@ -40270,7 +40273,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/chair/stool/directional/east,
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/sign/poster/official/tactical_game_cards/directional/north,
+/obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/wood,
 /area/station/command/meeting_room/council)
 "ntK" = (
@@ -48851,6 +48854,7 @@
 "qjn" = (
 /obj/structure/chair/stool/directional/west,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/sign/poster/official/random/directional/north,
 /turf/open/floor/wood,
 /area/station/command/meeting_room/council)
 "qjp" = (
