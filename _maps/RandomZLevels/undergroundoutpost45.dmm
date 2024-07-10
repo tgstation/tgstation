@@ -357,6 +357,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/freezer,
 /area/awaymission/undergroundoutpost45/central)
+"bt" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/effect/mob_spawn/corpse/human/engineer,
+/turf/open/misc/asteroid{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "bu" = (
 /turf/open/floor/iron/freezer,
 /area/awaymission/undergroundoutpost45/central)
@@ -1038,6 +1048,18 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/central)
+"eE" = (
+/obj/structure/alien/weeds,
+/obj/item/clothing/head/helmet/marine/sulaco,
+/obj/structure/alien/egg/burst,
+/obj/structure/glowshroom/single,
+/obj/item/clothing/mask/facehugger/dead,
+/turf/open/misc/asteroid{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "eH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -2706,6 +2728,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/crew_quarters)
+"ld" = (
+/obj/structure/alien/weeds,
+/mob/living/basic/alien/drone,
+/turf/open/misc/asteroid{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "le" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -3523,6 +3554,19 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/crew_quarters)
+"nI" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/storage/belt/military,
+/obj/item/clothing/suit/armor/vest/marine/security,
+/obj/item/minigunpack,
+/obj/effect/mob_spawn/corpse/human,
+/turf/open/misc/asteroid{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "nJ" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/cable,
@@ -6470,6 +6514,7 @@
 "zK" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
 /turf/open/misc/asteroid{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
@@ -6510,6 +6555,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
+"Af" = (
+/mob/living/basic/alien/drone,
+/turf/open/misc/asteroid{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "Ai" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -6602,8 +6655,8 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "BL" = (
 /obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/blood/gibs/down,
-/obj/effect/mob_spawn/corpse/human,
+/obj/structure/bed/nest,
+/obj/effect/mob_spawn/corpse/human/skeleton/museum_chef,
 /turf/open/misc/asteroid{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
@@ -6869,6 +6922,15 @@
 /obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/carpet,
 /area/awaymission/undergroundoutpost45/crew_quarters)
+"Fy" = (
+/obj/structure/alien/weeds,
+/mob/living/basic/alien/sentinel,
+/turf/open/misc/asteroid{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "FA" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/all_access,
@@ -6880,6 +6942,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/crew_quarters)
+"FF" = (
+/obj/effect/gibspawner/xeno,
+/turf/open/misc/asteroid{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "FS" = (
 /obj/machinery/biogenerator,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -6933,6 +7003,27 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
+"GL" = (
+/obj/structure/alien/weeds,
+/obj/item/clothing/suit/armor/vest/marine/sulaco,
+/obj/item/ammo_box/magazine/wt550m9,
+/obj/structure/alien/egg/burst,
+/obj/structure/glowshroom/single,
+/obj/item/clothing/mask/facehugger/dead,
+/turf/open/misc/asteroid{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
+"GM" = (
+/mob/living/basic/alien,
+/turf/open/misc/asteroid{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "Hp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -6951,6 +7042,19 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/undergroundoutpost45/crew_quarters)
+"HQ" = (
+/obj/structure/alien/weeds,
+/obj/item/clothing/head/helmet/marine/security,
+/obj/item/ammo_box/magazine/wt550m9,
+/obj/structure/alien/egg/burst,
+/obj/structure/glowshroom/single,
+/obj/item/clothing/mask/facehugger/dead,
+/turf/open/misc/asteroid{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "HR" = (
 /obj/machinery/light/blacklight/directional/east,
 /obj/machinery/airalarm/directional/east,
@@ -7017,12 +7121,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "IT" = (
 /obj/structure/alien/weeds,
-/obj/effect/mob_spawn/corpse/human,
-/turf/open/misc/asteroid{
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	name = "Cave Floor";
-	temperature = 363.9
-	},
+/turf/closed/indestructible/resin,
 /area/awaymission/undergroundoutpost45/caves)
 "IV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7106,6 +7205,14 @@
 	dir = 1
 	},
 /area/awaymission/undergroundoutpost45/research)
+"Ko" = (
+/obj/structure/closet/supplypod,
+/turf/open/misc/asteroid{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "KE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -7164,9 +7271,7 @@
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
 "Lb" = (
-/obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/mob_spawn/corpse/human,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
@@ -7174,8 +7279,9 @@
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "Lk" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/mob_spawn/corpse/human,
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/misc/asteroid{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
@@ -7267,6 +7373,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/central)
+"MO" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/storage/belt/military/assault,
+/obj/effect/mob_spawn/corpse/human,
+/obj/item/clothing/neck/large_scarf/blue,
+/turf/open/misc/asteroid{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "Nd" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/airalarm/directional/west,
@@ -7596,6 +7714,16 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/engineering)
+"RZ" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/effect/mob_spawn/corpse/human/bartender,
+/turf/open/misc/asteroid{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "Sa" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general,
@@ -7616,6 +7744,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/gateway)
+"Sr" = (
+/obj/structure/glowshroom/single,
+/obj/item/clothing/mask/facehugger/dead,
+/turf/open/misc/asteroid{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "Su" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -7672,6 +7809,18 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/undergroundoutpost45/central)
+"TD" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/clothing/under/rank/centcom/military,
+/obj/item/gun/ballistic/automatic/wt550,
+/obj/effect/mob_spawn/corpse/human,
+/turf/open/misc/asteroid{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "TE" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7872,6 +8021,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/awaymission/undergroundoutpost45/central)
+"WX" = (
+/obj/structure/alien/weeds,
+/mob/living/basic/alien/queen,
+/turf/open/misc/asteroid{
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	name = "Cave Floor";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "Xd" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
@@ -7924,7 +8082,7 @@
 "Yb" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
-/obj/effect/mob_spawn/corpse/human,
+/obj/effect/mob_spawn/corpse/human/scientist,
 /turf/open/misc/asteroid{
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
@@ -26725,7 +26883,7 @@ ad
 ad
 ad
 ad
-zK
+Yb
 KN
 Gn
 ad
@@ -26984,7 +27142,7 @@ ad
 ad
 HW
 Gn
-zq
+Af
 Tr
 ad
 ad
@@ -27756,11 +27914,11 @@ ad
 ad
 ad
 ad
-Lk
+BQ
 zq
 KN
 ZD
-BL
+UH
 ad
 ad
 ad
@@ -28007,7 +28165,7 @@ ad
 ad
 ad
 ad
-Yb
+BL
 ZD
 zb
 Wd
@@ -28263,10 +28421,10 @@ ad
 ad
 ad
 ad
-Yb
+RZ
 zK
 Gn
-IT
+Gn
 zb
 ad
 ad
@@ -28522,14 +28680,14 @@ ad
 ad
 ad
 Cd
-zq
+Af
 BQ
 ZD
 ad
 ad
 Tr
 zq
-zq
+Af
 Tr
 ad
 ad
@@ -28784,7 +28942,7 @@ zq
 zq
 Gn
 ad
-Lb
+KN
 zq
 zq
 ad
@@ -28792,7 +28950,7 @@ ad
 ad
 ad
 ad
-Yb
+Lk
 Gn
 ad
 ad
@@ -29042,13 +29200,13 @@ Gn
 Gn
 Gn
 Gn
+XQ
 zq
-zq
 ad
 ad
 ad
 ad
-IT
+Gn
 ZD
 UH
 ad
@@ -29296,12 +29454,12 @@ ad
 ad
 ad
 ad
-Gn
+ld
+zq
+Sr
 zq
 zq
-zq
-zq
-Lk
+BQ
 Tr
 zO
 XQ
@@ -29562,7 +29720,7 @@ zq
 zq
 zq
 zq
-zq
+Af
 zb
 Wd
 ad
@@ -29810,13 +29968,13 @@ ad
 ad
 ad
 ad
-IT
+Gn
 BQ
-zq
+XQ
 Gn
 Gn
 ZD
-zq
+XQ
 Gn
 Gn
 ad
@@ -30071,11 +30229,11 @@ UH
 Gn
 zq
 Gn
-ad
-ad
+zq
+zq
 KN
-Yb
-zK
+bt
+bt
 ad
 ad
 ad
@@ -30325,12 +30483,12 @@ ad
 ad
 ad
 ad
-Gn
+Fy
 zq
 ad
-ad
-ad
-ad
+zq
+zq
+zq
 ad
 ad
 ad
@@ -30585,8 +30743,8 @@ ad
 ad
 Tr
 ad
-ad
-ad
+zq
+zq
 ad
 ad
 ad
@@ -30843,9 +31001,9 @@ ad
 zq
 ad
 ad
+zq
 ad
-ad
-ad
+IT
 ad
 ad
 ad
@@ -31100,10 +31258,10 @@ zq
 zq
 ad
 ad
-ad
-ad
-ad
-ad
+Gn
+IT
+TD
+IT
 ad
 ad
 ad
@@ -31357,11 +31515,11 @@ zq
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
+HW
+Gn
+HW
+Gn
+IT
 ad
 ad
 ad
@@ -31613,13 +31771,13 @@ ad
 zq
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+IT
+Gn
+Gn
+ld
+GL
+Fy
+IT
 ad
 ad
 ad
@@ -31870,13 +32028,13 @@ zq
 zq
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+IT
+Gn
+HW
+Gn
+Gn
+HW
+IT
 ad
 ad
 ad
@@ -32127,13 +32285,13 @@ zq
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+IT
+Fy
+HQ
+Gn
+HW
+Gn
+IT
 ad
 ad
 ad
@@ -32384,12 +32542,12 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
+IT
+Gn
+Gn
+HW
+WX
+IT
 ad
 ad
 ad
@@ -32641,12 +32799,12 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
+IT
+eE
+ld
+Gn
+nI
+IT
 ad
 ad
 ad
@@ -32898,11 +33056,11 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
+IT
+MO
+Gn
+Gn
+IT
 ad
 ad
 ad
@@ -33156,9 +33314,9 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
+IT
+IT
+IT
 ad
 ad
 ad
@@ -37996,7 +38154,7 @@ zq
 zq
 zq
 zq
-zq
+Lb
 zq
 XQ
 zq
@@ -38250,9 +38408,9 @@ zq
 zq
 zq
 zq
-zq
-zq
-zq
+Lb
+Lb
+Lb
 zq
 zq
 zq
@@ -38504,13 +38662,13 @@ gr
 zq
 XQ
 zq
-zq
-zq
+Lb
+Lb
 XQ
 zq
 zq
 zq
-zq
+Lb
 zq
 XQ
 ad
@@ -38761,12 +38919,12 @@ gr
 zq
 zq
 zq
+Lb
 zq
 zq
 zq
 zq
-zq
-zq
+Ko
 ad
 ad
 zq
@@ -39018,15 +39176,15 @@ gr
 zq
 zq
 zq
+Lb
 zq
+Ko
 zq
-zq
-zq
-zq
+FF
 zq
 ad
 ad
-zq
+GM
 ad
 ad
 ad
@@ -39279,10 +39437,10 @@ zq
 zq
 zq
 zq
+Lb
 zq
 zq
-zq
-zq
+Lb
 zq
 ad
 ad
@@ -39533,12 +39691,12 @@ gg
 gg
 zq
 zq
-zq
+Lb
 zq
 XQ
 zq
 zq
-zq
+Lb
 zq
 zq
 ad
@@ -39789,10 +39947,10 @@ qs
 qY
 gg
 zq
+Lb
 zq
 zq
-zq
-zq
+Ko
 ad
 ad
 zq
@@ -40052,7 +40210,7 @@ zq
 ad
 ad
 ad
-zq
+Lb
 zq
 zq
 zq
@@ -40305,7 +40463,7 @@ gg
 ad
 zq
 zq
-zq
+Lb
 zq
 ad
 zq
@@ -40563,7 +40721,7 @@ ad
 zq
 zq
 zq
-zq
+Lb
 XQ
 zq
 zq
@@ -43157,7 +43315,7 @@ zq
 zq
 zq
 zq
-zq
+FF
 zq
 zq
 zq
@@ -43440,7 +43598,7 @@ zq
 zq
 zq
 zq
-zq
+GM
 zq
 zq
 ad
@@ -44185,7 +44343,7 @@ zq
 zq
 zq
 zq
-zq
+GM
 ad
 ad
 ad
@@ -45195,7 +45353,7 @@ zq
 zq
 zq
 zq
-zq
+GM
 zq
 zq
 zq
