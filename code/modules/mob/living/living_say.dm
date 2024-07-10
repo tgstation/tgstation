@@ -421,12 +421,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 /mob/living/proc/get_tts_voice(list/filter, list/special_filter)
 	. = voice
 	var/obj/item/clothing/mask/mask = get_item_by_slot(ITEM_SLOT_MASK)
-	if(!istype(mask) || mask_up)
+	if(!istype(mask) || mask.up)
 		return
 	if(mask.voice_override)
 		. = mask.voice_override
 	if(mask.voice_filter)
-		filter += worn_mask.voice_filter
+		filter += mask.voice_filter
 	if(mask.use_radio_beeps_tts)
 		special_filter |= TTS_FILTER_RADIO
 
