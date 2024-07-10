@@ -85,7 +85,7 @@
 		//It's ok if it's not, it's just important if it is.
 		mob_parent.client?.visual_delay = MOVEMENT_ADJUSTED_GLIDE_SIZE(visual_delay, SSspacedrift.visual_delay)
 
-/datum/component/drift/proc/newtonian_impulse(atom/movable/source, inertia_angle, start_delay, additional_force)
+/datum/component/drift/proc/newtonian_impulse(atom/movable/source, inertia_angle, start_delay, additional_force, controlled_cap)
 	SIGNAL_HANDLER
 	var/atom/movable/movable_parent = parent
 	inertia_last_loc = movable_parent.loc
@@ -96,14 +96,13 @@
 	var/force_x = sin(drifting_loop.angle) * drift_force + sin(inertia_angle) * additional_force
 	var/force_y = cos(drifting_loop.angle) * drift_force + cos(inertia_angle) * additional_force
 
-	drift_force = clamp(sqrt(force_x * force_x + force_y * force_y), 0, INERTIA_FORCE_CAP)
+	drift_force = clamp(sqrt(force_x * force_x + force_y * force_y), 0, (!isnull(controlled_cap) && drift_force < controlled_cap) ? controlled_cap : INERTIA_FORCE_CAP)
 	if(!drift_force)
 		qdel(src)
 		return COMPONENT_MOVABLE_NEWTONIAN_BLOCK
 
 	drifting_loop.set_angle((force_y != 0 ? arctan(force_x / force_y) + (force_y < 0 ? 180 : 0) : (force_x > 0 ? 90 : 270)))
 	drifting_loop.set_speed(get_loop_delay(source))
-
 	return COMPONENT_MOVABLE_NEWTONIAN_BLOCK
 
 /datum/component/drift/proc/drifting_start()
