@@ -1,4 +1,0 @@
-author: "GoblinBackwards"
-delete-after: True
-changes:
-  - qol: "Docked emergency shuttles will always reset their departure timer when a hostile environment is stopped, regardless of if the timer displays ETD or ERR."

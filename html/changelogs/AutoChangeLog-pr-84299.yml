@@ -1,4 +1,0 @@
-author: "Kocma-san"
-delete-after: True
-changes:
-  - bugfix: "Fixed lights stopping emitting light in some situations"

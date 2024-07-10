@@ -579,3 +579,37 @@
   - code_imp: teambased antagonists may not see the HUDs of other teams
   rageguy505:
   - bugfix: no more xenobio active turfs
+2024-07-10:
+  Ghommie:
+  - bugfix: Fixed a whoopsie with bait-related calculations for fishing.
+  GoblinBackwards:
+  - qol: Docked emergency shuttles will always reset their departure timer when a
+      hostile environment is stopped, regardless of if the timer displays ETD or ERR.
+  Kocma-san:
+  - bugfix: Fixed lights stopping emitting light in some situations
+  SmArtKar:
+  - refactor: Refactored a lot of speech modifiers to use a component instead of copied
+      over code.
+  - bugfix: Living limbs can no longer make you touch ghosts or abstract concepts
+      of start, landmark, influence or job
+  - spellcheck: Fixed improper word usage and improved grammar for living limbs
+  - rscadd: Living flesh arms have a chance to actually touch the thing they're targeting
+      instead of pulling it. Careful with supermatter!
+  - bugfix: Exosuit Stress Failure experiment now works
+  SyncIt21:
+  - bugfix: stacking machines can be linked with its console via multitool
+  aaaa1023:
+  - rscdel: 'Removed the shuttle manipulator entries for the following shuttles: Northstar
+      ferry, Omegastation arrivals shuttle, and Donutstation cargo ferry. (These shuttles
+      didn''t actually exist but they still had entries in the manipulator.)'
+  - bugfix: 'Fixed the following shuttles flying in unexpected directions: Basic CC
+      Ferry, Meat Ferry, Lighthouse Ferry, ERT bounty shuttle, Kilo cargo shuttle,
+      Pubby cargo shuttle, and Delta cargo shuttle.'
+  - bugfix: Fixed the ERT bounty shuttle having incorrect offsets in the shuttle navigation
+      console.
+  grungussuss:
+  - sound: Zippos, Lighters and cigarettes now have sound
+  lizardqueenlexi:
+  - bugfix: Amputating a paraplegic's leg no longer miraculously allows them to walk.
+  zoomachina:
+  - bugfix: fixed dubious chem dispenser feedback when the beaker is full
