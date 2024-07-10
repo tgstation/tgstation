@@ -918,7 +918,7 @@
 
 /datum/move_loop/smooth_move/proc/set_speed(new_speed)
 	speed = new_speed
-	delay = max(1, round(new_speed))
+	delay = max(1, round(new_speed, 0.1))
 
 /datum/move_loop/smooth_move/move()
 	var/atom/old_loc = moving.loc

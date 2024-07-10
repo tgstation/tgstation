@@ -1,6 +1,6 @@
 #define DEFAULT_INERTIA_SPEED 5
 
-#define INERTIA_FORCE_CAP 15
+#define INERTIA_FORCE_CAP 25
 #define INERTIA_FORCE_REDUCTION_PER_OBJECT 0.75
 #define INERTIA_FORCE_PER_THROW_FORCE 5
 
@@ -89,7 +89,7 @@
 	SIGNAL_HANDLER
 	var/atom/movable/movable_parent = parent
 	inertia_last_loc = movable_parent.loc
-	if(!drifting_loop || !drift_force)
+	if(!drifting_loop)
 		qdel(src)
 		return COMPONENT_MOVABLE_NEWTONIAN_BLOCK
 
@@ -218,7 +218,7 @@
 
 /datum/component/drift/proc/attempt_halt(atom/movable/source, movement_dir, continuous_move, atom/backup)
 	SIGNAL_HANDLER
-	if (get_dir(source, backup) == movement_dir)
+	if (get_dir(source, backup) == movement_dir || source.loc == backup.loc)
 		if (drift_force >= INERTIA_FORCE_PER_THROW_FORCE)
 			source.throw_at(backup, 1, round(drift_force / INERTIA_FORCE_PER_THROW_FORCE), spin = FALSE)
 		drift_force = 0
@@ -233,7 +233,8 @@
 	drifting_loop.set_speed(get_loop_delay(source))
 	return COMPONENT_PREVENT_SPACEMOVE_HALT
 
-#define INERTIA_SPEED_COEF 0.3
+// Results in maximum speed of 2 tiles per tick
+#define INERTIA_SPEED_COEF 0.375
 
 /datum/component/drift/proc/get_loop_delay(atom/movable/movable)
 	return (DEFAULT_INERTIA_SPEED / ((1 - INERTIA_SPEED_COEF) + drift_force * INERTIA_SPEED_COEF)) * movable.inertia_move_multiplier

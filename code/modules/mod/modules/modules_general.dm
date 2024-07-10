@@ -112,6 +112,8 @@
 	var/stabilize = TRUE
 	/// Callback to see if we can thrust the user.
 	var/thrust_callback
+	/// How much force this module's stabilizier can put out
+	var/stabilizer_force = 0.5
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
 	. = ..()
@@ -162,6 +164,15 @@
 
 /obj/item/mod/module/jetpack/on_deactivation(display_message = TRUE, deleting = FALSE)
 	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/full_speed)
+
+/obj/item/mod/module/jetpack/advanced
+	name = "MOD advanced ion jetpack module"
+	desc = "An improvement on the previous model of electric thrusters. This one achieves higher precision \
+		and spartial stability through mounting of more jets and application of red paint."
+	icon_state = "jetpack_advanced"
+	overlay_state_inactive = "module_jetpackadv"
+	overlay_state_active = "module_jetpackadv_on"
+	stabilizer_force = 1
 
 /// Cooldown to use if we didn't actually launch a jump jet
 #define FAILED_ACTIVATION_COOLDOWN 3 SECONDS

@@ -264,7 +264,6 @@
 	if(. || HAS_TRAIT(src, TRAIT_SPACEWALK))
 		return TRUE
 
-	// FUCK OFF
 	if(buckled)
 		return TRUE
 
@@ -280,6 +279,7 @@
 
 	if(continuous_move || !istype(backup) || !movement_dir || backup.anchored)
 		return TRUE
+
 	// last pushoff exists for one reason
 	// to ensure pushing a mob doesn't just lead to it considering us as backup, and failing
 	last_pushoff = world.time
