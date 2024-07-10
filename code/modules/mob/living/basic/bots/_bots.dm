@@ -142,9 +142,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 		var/datum/atom_hud/datahud = GLOB.huds[data_hud_type]
 		datahud.show_to(src)
 
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
-		randomize_language_if_on_station()
-
 	if(mapload && is_station_level(z) && (bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT) && (bot_mode_flags & BOT_MODE_ROUNDSTART_POSSESSION))
 		enable_possession(mapload = mapload)
 
