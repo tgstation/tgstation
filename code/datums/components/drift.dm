@@ -101,7 +101,7 @@
 		qdel(src)
 		return COMPONENT_MOVABLE_NEWTONIAN_BLOCK
 
-	drifting_loop.set_angle((force_y != 0 ? arctan(force_x / force_y) : 90) + (force_y < 0 ? 180 : 0))
+	drifting_loop.set_angle((force_y != 0 ? arctan(force_x / force_y) + (force_y < 0 ? 180 : 0) : (force_x > 0 ? 90 : 270)))
 	drifting_loop.set_speed(get_loop_delay(source))
 
 	return COMPONENT_MOVABLE_NEWTONIAN_BLOCK
