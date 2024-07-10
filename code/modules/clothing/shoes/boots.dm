@@ -44,7 +44,6 @@
 	desc = "Cheap, poor quality replicas of the iconic security jackboots. They even have laces, for some reason.."
 	icon_state = "jackboots"
 	inhand_icon_state = "jackboots"
-	armor_type = null
 	armor_type = /datum/armor/shoes_jockboots
 	can_be_tied = TRUE
 

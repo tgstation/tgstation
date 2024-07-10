@@ -32,15 +32,15 @@
 	item_path = /obj/item/clothing/shoes/kindle_kicks
 
 /datum/loadout_item/shoes/cowboy_brown
-	name = "Shoes (Cowboy, Brown)"
+	name = "Boots (Cowboy, Brown)"
 	item_path = /obj/item/clothing/shoes/cowboy/laced
 
 /datum/loadout_item/shoes/cowboy_white
-	name = "Shoes (Cowboy, White)"
+	name = "Boots (Cowboy, White)"
 	item_path = /obj/item/clothing/shoes/cowboy/white/laced
 
 /datum/loadout_item/shoes/cowboy_black
-	name = "Shoes (Cowboy, Black)"
+	name = "Boots (Cowboy, Black)"
 	item_path = /obj/item/clothing/shoes/cowboy/black/laced
 
 /datum/loadout_item/shoes/swag
@@ -56,7 +56,7 @@
 	item_path = /obj/item/clothing/shoes/saints
 
 /datum/loadout_item/shoes/jockboots
-	name = "Shoes (Jock)"
+	name = "Boots (Jock)"
 	item_path = /obj/item/clothing/shoes/jockboots
 
 /datum/loadout_item/shoes/jackboots

@@ -30,6 +30,10 @@
 	name = "Jamjar Glasses"
 	item_path = /obj/item/clothing/glasses/regular/jamjar
 
+/datum/loadout_item/glasses/prescription_glasses/kim
+	name = "Thin Glasses"
+	item_path = /obj/item/clothing/glasses/regular/kim
+
 /datum/loadout_item/glasses/black_blindfold
 	name = "Black Blindfold"
 	item_path = /obj/item/clothing/glasses/blindfold
@@ -62,9 +66,6 @@
 	name = "Psych Glasses"
 	item_path = /obj/item/clothing/glasses/psych
 
-/datum/loadout_item/glasses/kim
-	name = "Thin Glasses"
-	item_path = /obj/item/clothing/glasses/regular/kim
 
 /datum/loadout_item/glasses/monocle
 	name = "Monocle"
