@@ -3,7 +3,7 @@
 	category_name = "Other"
 	category_ui_icon = FA_ICON_QUESTION
 	type_to_generate = /datum/loadout_item/pocket_items
-	tab_order = /datum/loadout_category/head::tab_order + 5
+	tab_order = /datum/loadout_category/head::tab_order + 6
 	/// How many pocket items are allowed
 	VAR_PRIVATE/max_allowed = 2
 

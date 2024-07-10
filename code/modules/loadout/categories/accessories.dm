@@ -3,7 +3,7 @@
 	category_name = "Accessory"
 	category_ui_icon = FA_ICON_VEST
 	type_to_generate = /datum/loadout_item/accessory
-	tab_order = /datum/loadout_category/head::tab_order + 3
+	tab_order = /datum/loadout_category/head::tab_order + 4
 
 /datum/loadout_item/accessory
 	abstract_type = /datum/loadout_item/accessory
@@ -73,6 +73,10 @@
 	name = "Maid Apron"
 	item_path = /obj/item/clothing/accessory/maidapron
 
+/datum/loadout_item/accessory/maid_corset
+	name = "Maid Corset"
+	item_path = /obj/item/clothing/accessory/maidcorset
+
 /datum/loadout_item/accessory/waistcoat
 	name = "Waistcoat"
 	item_path = /obj/item/clothing/accessory/waistcoat
@@ -85,6 +89,15 @@
 	name = "Pocket Protector (Filled)"
 	item_path = /obj/item/clothing/accessory/pocketprotector/full
 	additional_displayed_text = list("Contains pens")
+
+/datum/loadout_item/accessory/full_pocket_protector_lipstick
+	name = "Pocket Protector (Lipstick)"
+	item_path = /obj/item/clothing/accessory/pocketprotector/cosmetology
+	additional_displayed_text = list("Contains lipstick")
+
+/datum/loadout_item/accessory/armband
+	name = "Red Armband"
+	item_path = /obj/item/clothing/accessory/armband
 
 /datum/loadout_item/accessory/pride
 	name = "Pride Pin"

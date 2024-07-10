@@ -39,6 +39,18 @@
 	fire = 90
 	acid = 50
 
+/obj/item/clothing/shoes/jockboots
+	name = "jockboots"
+	desc = "Cheap, poor quality replicas of the iconic security jackboots. They even have laces, for some reason.."
+	icon_state = "jackboots"
+	inhand_icon_state = "jackboots"
+	armor_type = null
+	armor_type = /datum/armor/shoes_jockboots
+	can_be_tied = TRUE
+
+/datum/armor/shoes_jockboots
+	bio = 35
+
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."

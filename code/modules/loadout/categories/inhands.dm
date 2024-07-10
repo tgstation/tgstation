@@ -3,7 +3,7 @@
 	category_name = "Inhand"
 	category_ui_icon = FA_ICON_BRIEFCASE
 	type_to_generate = /datum/loadout_item/inhand
-	tab_order = /datum/loadout_category/head::tab_order + 4
+	tab_order = /datum/loadout_category/head::tab_order + 5
 
 /datum/loadout_item/inhand
 	abstract_type = /datum/loadout_item/inhand
@@ -31,3 +31,11 @@
 /datum/loadout_item/inhand/briefcase_secure
 	name = "Briefcase (Secure)"
 	item_path = /obj/item/storage/briefcase/secure
+
+/datum/loadout_item/inhand/gohei
+	name = "Gohei"
+	item_path = /obj/item/gohei
+
+/datum/loadout_item/inhand/skub
+	name = "Skub"
+	item_path = /obj/item/skub

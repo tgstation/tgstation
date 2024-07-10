@@ -13,6 +13,10 @@
 	/// The jingle jangle jingle of our spurs
 	var/list/spur_sound = list('sound/effects/footstep/spurs1.ogg'=1,'sound/effects/footstep/spurs2.ogg'=1,'sound/effects/footstep/spurs3.ogg'=1)
 
+// For loadout
+/obj/item/clothing/shoes/cowboy/laced
+	can_be_tied = TRUE
+
 /datum/armor/shoes_cowboy
 	bio = 90
 
@@ -74,10 +78,18 @@
 	name = "white cowboy boots"
 	icon_state = "cowboy_white"
 
+// For loadout
+/obj/item/clothing/shoes/cowboy/white/laced
+	can_be_tied = TRUE
+
 /obj/item/clothing/shoes/cowboy/black
 	name = "black cowboy boots"
 	desc = "You get the feeling someone might have been hanged in these boots."
 	icon_state = "cowboy_black"
+
+// For loadout
+/obj/item/clothing/shoes/cowboy/black/laced
+	can_be_tied = TRUE
 
 /obj/item/clothing/shoes/cowboy/fancy
 	name = "bilton wrangler boots"

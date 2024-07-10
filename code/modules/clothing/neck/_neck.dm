@@ -33,7 +33,7 @@
 
 /obj/item/clothing/neck/bowtie/rainbow
 	name = "rainbow bow tie"
-	desc = "An extremely large neosilk rainbow-colored bowtie."
+	desc = "A comically large neosilk rainbow-colored bowtie."
 	icon_state = "bowtie_rainbow"
 	greyscale_config = null
 	greyscale_config_worn = null

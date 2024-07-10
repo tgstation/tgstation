@@ -54,6 +54,11 @@
 	can_be_tied = FALSE
 	species_exception = list(/datum/species/golem)
 
+// For loadouts
+/obj/item/clothing/shoes/cookflops/laced
+	name = "laced grilling sandals"
+	can_be_tied = TRUE
+
 /obj/item/clothing/shoes/jackbros
 	name = "frosty boots"
 	desc = "For when you're stepping on up to the plate."

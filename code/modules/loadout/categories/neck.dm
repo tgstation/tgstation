@@ -3,7 +3,7 @@
 	category_name = "Neck"
 	category_ui_icon = FA_ICON_USER_TIE
 	type_to_generate = /datum/loadout_item/neck
-	tab_order = /datum/loadout_category/head::tab_order + 2
+	tab_order = /datum/loadout_category/head::tab_order + 3
 
 /datum/loadout_item/neck
 	abstract_type = /datum/loadout_item/neck
@@ -34,3 +34,11 @@
 /datum/loadout_item/neck/necktie_loose
 	name = "Necktie (Loose)"
 	item_path = /obj/item/clothing/neck/tie/detective
+
+/datum/loadout_item/neck/bowtie
+	name = "Bowtie"
+	item_path = /obj/item/clothing/neck/bowtie
+
+/datum/loadout_item/neck/maid_neckpiece
+	name = "Maid Neckpiece"
+	item_path = /obj/item/clothing/neck/maid

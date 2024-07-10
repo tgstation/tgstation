@@ -187,6 +187,7 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	var/enabled_waddle = TRUE
 	var/active = FALSE
+	var/mood_event = /datum/mood_event/prophat
 
 /obj/item/clothing/head/soft/propeller_hat/update_icon_state()
 	. = ..()
@@ -202,12 +203,18 @@
 /obj/item/clothing/head/soft/propeller_hat/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_HEAD)
-		user.add_mood_event(PROPHAT_MOOD, /datum/mood_event/prophat)
+		user.add_mood_event(PROPHAT_MOOD, mood_event)
 
 /obj/item/clothing/head/soft/propeller_hat/dropped(mob/living/user)
 	. = ..()
 	user.clear_mood_event(PROPHAT_MOOD)
 	active = FALSE
 	update_icon()
+
+/obj/item/clothing/head/soft/propeller_hat/sad
+	name = "worn propeller hat"
+	desc = "A not-so-colorful hat with a spinning propeller sat on top. It's clearly worn with age."
+	color = COLOR_SILVER
+	mood_event = /datum/mood_event/propsad
 
 #undef PROPHAT_MOOD

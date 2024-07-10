@@ -380,3 +380,7 @@
 /datum/mood_event/prophat
 	description = "This hat fills me with whimsical joy!"
 	mood_change = 2
+
+/datum/mood_event/propsad
+	description = "This hat is nice, but it doesn't make me feel much of anything."
+	mood_change = 0

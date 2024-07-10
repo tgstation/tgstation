@@ -11,6 +11,11 @@
 	can_be_tied = FALSE
 	species_exception = list(/datum/species/golem)
 
+/obj/item/clothing/shoes/sandal/laced
+	name = "laced sandals"
+	desc = "A pair of wooden sandals that have laces up to the shins, for some reason. Conveniently, they're so thin they're barely noticeable."
+	can_be_tied = TRUE
+
 /datum/armor/shoes_sandal
 	bio = 10
 
