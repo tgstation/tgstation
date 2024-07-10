@@ -59,7 +59,7 @@
 		//Body temperature is too hot.
 		throw_alert(ALERT_XENO_FIRE, /atom/movable/screen/alert/alien_fire)
 		switch(bodytemperature)
-			if(360 to 400)
+			if(370 to 400)
 				apply_damage(HEAT_DAMAGE_LEVEL_1 * seconds_per_tick, BURN)
 			if(400 to 460)
 				apply_damage(HEAT_DAMAGE_LEVEL_2 * seconds_per_tick, BURN)

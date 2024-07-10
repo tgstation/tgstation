@@ -9,7 +9,7 @@
 	///Min body temp
 	var/min_body_temp = 250
 	///Max body temp
-	var/max_body_temp = 350
+	var/max_body_temp = 365
 	////Damage when below min temp
 	var/cold_damage = 1
 	///Damage when above max temp
