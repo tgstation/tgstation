@@ -58,13 +58,11 @@ export const AntagInfoVoidwalker = (props) => {
                 <LabeledList.Item label="Cosmic Physiology">
                   Your natural camouflage makes you nearly invisible in space,
                   as well as mending any wounds your body might have sustained.
-                  You can move through glass freely, but are slowed in
-                  gravity.
+                  You can move through glass freely, but are slowed in gravity.
                 </LabeledList.Item>
                 <LabeledList.Item label="Unsettle">
-                  Target a victim while remaining only partially in their
-                  view to stun and weaken them, but also announce them your
-                  presence.
+                  Target a victim while remaining only partially in their view
+                  to stun and weaken them, but also announce them your presence.
                 </LabeledList.Item>
               </LabeledList>
             </Section>
