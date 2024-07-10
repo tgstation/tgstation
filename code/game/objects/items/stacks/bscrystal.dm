@@ -78,7 +78,6 @@
 	merge_type = /obj/item/stack/sheet/bluespace_crystal
 	material_type = /datum/material/bluespace
 	var/crystal_type = /obj/item/stack/ore/bluespace_crystal/refined
-	pickup_sound = 'sound/items/crystal_pick_up.ogg'
 
 /obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user)// to prevent the construction menu from ever happening
 	to_chat(user, span_warning("You cannot crush the polycrystal in-hand, try breaking one off."))

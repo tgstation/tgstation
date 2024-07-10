@@ -855,8 +855,8 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	throwforce = 7
 	material_type = /datum/material/plastic
 	merge_type = /obj/item/stack/sheet/plastic
-	pickup_sound = 'sound/items/crystal_pick_up.ogg'
-
+	pickup_sound = 'sound/items/plastic_pick_up.ogg'
+	drop_sound = 'sound/items/plastic_drop.ogg'
 /obj/item/stack/sheet/plastic/fifty
 	amount = 50
 
