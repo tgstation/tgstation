@@ -69,3 +69,10 @@
 
 	box = /obj/item/storage/box/survival/security
 	implants = list(/obj/item/implant/mindshield)
+
+/datum/outfit/job/warden/bluesec
+	name = "Warden (Bluesec)"
+	head = /obj/item/clothing/head/beret/sec/navywarden
+	suit = /obj/item/clothing/suit/armor/vest/warden
+	uniform = /obj/item/clothing/under/rank/security/warden/formal
+	shoes = /obj/item/clothing/shoes/jackboots

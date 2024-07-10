@@ -248,6 +248,13 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	mask = /obj/item/clothing/mask/gas/sechailer
 	internals_slot = ITEM_SLOT_SUITSTORE
 
+/datum/outfit/job/security/bluesec
+	name = "Security Officer (Bluesec)"
+	uniform = /obj/item/clothing/under/rank/security/officer/blueshirt
+	suit = /obj/item/clothing/suit/armor/vest/blueshirt
+	head = /obj/item/clothing/head/helmet/blueshirt
+	shoes = /obj/item/clothing/shoes/jackboots
+
 /obj/item/radio/headset/headset_sec/alt/department/Initialize(mapload)
 	. = ..()
 	set_wires(new/datum/wires/radio(src))

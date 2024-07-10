@@ -584,3 +584,31 @@
 	dynamic_category = RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
 	threat_reduction = 15
 	dynamic_threat_id = "Background Checks"
+
+/// Black mesa security
+/datum/station_trait/blue_sec
+	name = "Backup Security Equipment"
+	report_message =  "Due to problems to our logistical network in your sector, we have been forced to equip your security department with uniforms from our subsidiary scientific company. "
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 200000
+	show_in_report = TRUE
+
+/datum/station_trait/blue_sec/New()
+	. = ..()
+	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP, PROC_REF(on_occupations_setup))
+
+/datum/station_trait/blue_sec/revert()
+	UnregisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP)
+	return ..()
+
+/datum/station_trait/blue_sec/get_decal_color(atom/thing_to_color, pattern)
+	if(istype(get_area(thing_to_color), /area/station/security)) //color the brig blue
+		return COLOR_TRUE_BLUE
+
+/datum/station_trait/blue_sec/proc/on_occupations_setup(datum/controller/subsystem/job/source)
+	for(var/datum/job/security_officer/seccoff in SSjob.all_occupations)
+		seccoff.outfit = /datum/outfit/job/security/bluesec
+	for(var/datum/job/warden/seccoff in SSjob.all_occupations)
+		seccoff.outfit = /datum/outfit/job/warden/bluesec
+	for(var/datum/job/head_of_security/seccoff in SSjob.all_occupations)
+		seccoff.outfit = /datum/outfit/job/hos/bluesec

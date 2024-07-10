@@ -86,3 +86,10 @@
 	head = null
 	mask = /obj/item/clothing/mask/gas/sechailer
 	internals_slot = ITEM_SLOT_SUITSTORE
+
+/datum/outfit/job/hos/bluesec
+	name = "Head of Security (Bluesec)"
+	suit = /obj/item/clothing/suit/armor/hos/trenchcoat/winter
+	uniform = /obj/item/clothing/under/rank/security/head_of_security/alt
+	head = /obj/item/clothing/head/hats/hos/beret
+	shoes = /obj/item/clothing/shoes/jackboots
