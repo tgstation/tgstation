@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Bot Language station trait split into two: One that affects bots (retains the old weight and cost) and one that affects machine (half weight, double the cost)"
+  - rscdel: "Bot Language station trait and (new) Machine Language station trait no longer affect newly created machines or bots, just those present at game start"
+  - rscdel: "Machine Language station trait cannot affect the Automated Announcer in telecomms"
