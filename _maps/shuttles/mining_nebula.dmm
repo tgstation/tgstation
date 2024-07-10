@@ -281,14 +281,14 @@
 /area/shuttle/mining/large)
 "R" = (
 /obj/structure/rack,
-/obj/item/screwdriver,
-/obj/item/stock_parts/cell/high,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/screwdriver,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
 "S" = (
