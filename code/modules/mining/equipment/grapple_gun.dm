@@ -41,7 +41,7 @@
 	if(target == user || !hooked)
 		return NONE
 
-	if(!(lavaland_equipment_pressure_check(get_turf(user)) || (obj_flags & EMAGGED)))
+	if(!lavaland_equipment_pressure_check(get_turf(user)) && !(obj_flags & EMAGGED))
 		user.balloon_alert(user, "gun mechanism won't work here!")
 		return ITEM_INTERACT_BLOCKING
 	if(get_dist(user, target) > 9)
