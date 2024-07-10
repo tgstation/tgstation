@@ -96,7 +96,7 @@
 		/obj/item/construction/rcd,
 		/obj/item/grenade,
 		/obj/item/aicard,
-		/obj/item/storage/backpack/holding,
+		/obj/item/bag_of_holding_inert,
 		/obj/item/slime_extract,
 		/obj/item/transfer_valve))
 
