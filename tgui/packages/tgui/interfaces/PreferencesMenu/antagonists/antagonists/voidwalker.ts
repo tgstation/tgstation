@@ -6,7 +6,7 @@ const Voidwalker: Antagonist = {
   description: [
     `
       Move through space and pull people into the void.
-      Declare solars an independant nation.
+      Declare solars an independent nation.
     `,
   ],
   category: Category.Midround,
