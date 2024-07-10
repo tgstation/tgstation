@@ -2816,6 +2816,7 @@
 	pixel_x = -2;
 	pixel_y = 10
 	},
+/obj/structure/sign/poster/official/the_owl/directional/west,
 /turf/open/floor/wood,
 /area/station/command/meeting_room/council)
 "bbF" = (
@@ -21237,6 +21238,7 @@
 	pixel_x = -5;
 	pixel_y = 7
 	},
+/obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "hpW" = (
@@ -24089,6 +24091,10 @@
 /obj/item/kirbyplants/organic/plant17,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/calendar{
+	pixel_x = 0;
+	pixel_y = -26
+	},
 /turf/open/floor/wood,
 /area/station/command/meeting_room/council)
 "ind" = (
@@ -40264,6 +40270,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/chair/stool/directional/east,
 /obj/effect/decal/cleanable/cobweb,
+/obj/structure/sign/poster/official/tactical_game_cards/directional/north,
 /turf/open/floor/wood,
 /area/station/command/meeting_room/council)
 "ntK" = (
@@ -69948,6 +69955,7 @@
 /area/station/engineering/hallway)
 "wGp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sign/poster/official/no_erp/directional/south,
 /turf/open/floor/wood,
 /area/station/command/meeting_room/council)
 "wGq" = (
