@@ -45,8 +45,10 @@
 /datum/component/space_camo/proc/enter_camo(atom/movable/parent)
 	if(parent.alpha != space_alpha)
 		animate(parent, alpha = space_alpha, time = 0.5 SECONDS)
+	parent.remove_from_all_data_huds()
 	parent.add_atom_colour(SSparallax.get_parallax_color(), TEMPORARY_COLOUR_PRIORITY)
 
 /datum/component/space_camo/proc/exit_camo(atom/movable/parent)
 	animate(parent, alpha = non_space_alpha, time = 0.5 SECONDS)
+	parent.add_to_all_human_data_huds()
 	parent.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)

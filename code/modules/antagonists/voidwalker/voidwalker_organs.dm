@@ -31,7 +31,6 @@
 	. = ..()
 
 	RegisterSignal(organ_owner, COMSIG_ATOM_ENTERING, PROC_REF(on_atom_entering))
-	organ_owner.remove_from_all_data_huds()
 
 	organ_owner.AddComponent(/datum/component/space_camo, space_alpha, non_space_alpha, 2 SECONDS)
 	organ_owner.apply_status_effect(regen)
