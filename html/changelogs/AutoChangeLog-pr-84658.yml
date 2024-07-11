@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - balance: "Buffed the matrix flip skillchip duration. Lowered the stamina cost very, very slightly."
-  - qol: "You can now longer matrix-flip yourself into exhaustion, unless the emote is unintentional."
