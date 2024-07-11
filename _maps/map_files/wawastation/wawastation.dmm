@@ -4446,7 +4446,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/openspace/xenobio,
+/turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
 "bBX" = (
 /obj/structure/window/spawner/directional/north,
@@ -4946,7 +4946,7 @@
 /area/station/science/xenobiology)
 "bLJ" = (
 /obj/structure/cable,
-/turf/open/openspace/xenobio,
+/turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
 "bLS" = (
 /obj/effect/turf_decal/stripes/box,
@@ -8439,12 +8439,6 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/station/medical/treatment_center)
-"dck" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/turf/open/openspace/xenobio,
-/area/station/science/xenobiology)
 "dcl" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/item/pickaxe,
@@ -23418,7 +23412,7 @@
 	dir = 1
 	},
 /obj/item/storage/box/monkeycubes,
-/turf/open/openspace/xenobio,
+/turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
 "ioL" = (
 /obj/item/radio/intercom/directional/east,
@@ -27971,7 +27965,7 @@
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
-/turf/open/openspace/xenobio,
+/turf/open/floor/glass/reinforced,
 /area/station/science/xenobiology)
 "jTB" = (
 /turf/closed/wall/r_wall,
@@ -34922,10 +34916,6 @@
 "mog" = (
 /turf/open/openspace,
 /area/station/engineering/main)
-"mol" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/openspace/xenobio,
-/area/station/science/xenobiology)
 "mor" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -41250,7 +41240,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/openspace/xenobio,
+/turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
 "oID" = (
 /obj/structure/lattice,
@@ -186128,7 +186118,7 @@ tIs
 tPE
 lKY
 bBJ
-mol
+wmO
 ybO
 ybO
 ybO
@@ -186385,7 +186375,7 @@ uVe
 tPE
 avA
 iox
-mol
+wmO
 ybO
 ybO
 ybO
@@ -186642,7 +186632,7 @@ qZX
 tPE
 lKY
 oIu
-mol
+wmO
 ybO
 ybO
 ybO
@@ -186898,9 +186888,9 @@ jQS
 iXn
 ieU
 cWL
-mol
-orY
-mol
+tMz
+jQS
+wmO
 jTw
 jgA
 jQS
@@ -187155,10 +187145,10 @@ pjL
 jEt
 gdM
 rdn
-dck
-orY
-orY
-orY
+gCP
+lKY
+lKY
+lKY
 wnA
 viT
 bUl
