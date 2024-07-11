@@ -29,8 +29,6 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	var/hurl_contents = FALSE
 	/// If true you can fax things which strictly speaking are not paper.
 	var/allow_exotic_faxes = FALSE
-	/// True for the fax machine on CentCom
-	var/centcom_fax = FALSE
 	/// This is where the dispatch and reception history for each fax is stored.
 	var/list/fax_history = list()
 	/// List of types which should always be allowed to be faxed
@@ -235,7 +233,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	var/list/data = list()
 	//Record a list of all existing faxes.
 	for(var/obj/machinery/fax/FAX as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax))
-		if(FAX.fax_id == fax_id || FAX.centcom_fax) //skip yourself and the centcom fax machine.
+		if(FAX.fax_id == fax_id || is_centcom_level(FAX.z)) //skip yourself and the centcom fax machine.
 			continue
 		var/list/fax_data = list()
 		fax_data["fax_name"] = FAX.fax_name

@@ -1728,7 +1728,7 @@
 			return
 
 		for(var/obj/machinery/fax/FAX as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax))
-			if(!FAX.centcom_fax)
+			if(!is_centcom_level(FAX.z))
 				continue
 
 			FAX.receive(locate(href_list["print_fax"]), href_list["fax_name"])
