@@ -58784,12 +58784,6 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/white,
 /area/station/hallway/secondary/entry)
-"uHz" = (
-/obj/structure/lattice/catwalk,
-/turf/open/openspace{
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
-/area/station/science/xenobiology)
 "uHA" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
@@ -186135,9 +186129,9 @@ tPE
 lKY
 bBJ
 mol
-bqs
-bqs
-uHz
+ybO
+ybO
+ybO
 wmO
 rmi
 lKY
@@ -186392,9 +186386,9 @@ tPE
 avA
 iox
 mol
-bqs
-bqs
-uHz
+ybO
+ybO
+ybO
 wmO
 xGG
 uBm
@@ -186649,9 +186643,9 @@ tPE
 lKY
 oIu
 mol
-bqs
-bqs
-uHz
+ybO
+ybO
+ybO
 wmO
 bLI
 lKY
