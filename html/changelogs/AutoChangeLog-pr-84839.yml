@@ -1,0 +1,4 @@
+author: "GPeckman"
+delete-after: True
+changes:
+  - bugfix: "Mapped in grounding rods can be upgraded again (not that upgraded parts do anything for it) and don't disappear when deconstructed anymore."

@@ -1,0 +1,4 @@
+author: "Ical92"
+delete-after: True
+changes:
+  - bugfix: "gave tram's primary tool storage functional disposals"

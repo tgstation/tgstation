@@ -1,0 +1,5 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - qol: "TV helmet no longer has gas mask FOV, nor does it give you flash sensitivity."
+  - qol: "Since those are gone, removed pepper proof from it as well."

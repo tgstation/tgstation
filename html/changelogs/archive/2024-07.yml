@@ -613,3 +613,31 @@
   - bugfix: Amputating a paraplegic's leg no longer miraculously allows them to walk.
   zoomachina:
   - bugfix: fixed dubious chem dispenser feedback when the beaker is full
+2024-07-11:
+  00-Steven:
+  - bugfix: Using a dual wielded deck to add another card to a single card bases the
+      position of the resulting hand of cards on the position of the card.
+  Gaxeer:
+  - refactor: move `status_display_bottom_text` and `fire_alarm_light_color` to security
+      level prototypes
+  Ghommie:
+  - balance: Buffed the matrix flip skillchip duration. Lowered the stamina cost very,
+      very slightly.
+  - qol: You can now longer matrix-flip yourself into exhaustion, unless the emote
+      is unintentional.
+  Melbert:
+  - rscadd: 'Bot Language station trait split into two: One that affects bots (retains
+      the old weight and cost) and one that affects machine (half weight, double the
+      cost)'
+  - rscdel: Bot Language station trait and (new) Machine Language station trait no
+      longer affect newly created machines or bots, just those present at game start
+  - rscdel: Machine Language station trait cannot affect the Automated Announcer in
+      telecomms
+  SmArtKar:
+  - bugfix: Vapes use correct fill level overlays
+  - bugfix: You no longer try to pull out someones eyes in combat mode if they have
+      cranial fissure
+  Xackii:
+  - rscadd: You can emag grapple gun to use it on station.
+  carlarctg:
+  - bugfix: Fixed an oversight that caused knockdown vomits to stun instead.
