@@ -28,6 +28,8 @@
 		return FALSE
 	if(owner.check_stun_immunity(CANKNOCKDOWN))
 		return FALSE
+	if(SEND_SIGNAL(owner, COMSIG_LIVING_ENTER_STAMCRIT) & STAMCRIT_CANCELLED)
+		return FALSE
 
 	. = ..()
 	if(!.)

@@ -190,6 +190,16 @@
 	var/picked_reagent = pick(random_reagents)
 	return picked_reagent
 
+///Returns a random reagent consumable ethanol object minus blacklisted reagents
+/proc/get_random_drink_id()
+	var/static/list/random_drinks = list()
+	if(!random_drinks.len)
+		for(var/datum/reagent/drink_path as anything in subtypesof(/datum/reagent/consumable/ethanol))
+			if(initial(drink_path.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
+				random_drinks += drink_path
+	var/picked_drink = pick(random_drinks)
+	return picked_drink
+
 ///Returns reagent datum from reagent name string
 /proc/get_chem_id(chem_name)
 	for(var/X in GLOB.chemical_reagents_list)

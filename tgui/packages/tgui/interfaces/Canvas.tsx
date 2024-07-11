@@ -1,9 +1,9 @@
-import { Color } from 'common/color';
-import { decodeHtmlEntities } from 'common/string';
 import { Component, createRef, RefObject } from 'react';
+import { Color } from 'tgui-core/color';
+import { Box, Button, Flex, Icon, Tooltip } from 'tgui-core/components';
+import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Icon, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 const LEFT_CLICK = 0;

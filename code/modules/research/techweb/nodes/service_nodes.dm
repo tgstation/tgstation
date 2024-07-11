@@ -52,19 +52,6 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/random/janitor_trash = TECHWEB_TIER_2_POINTS)
 
-/datum/techweb_node/toys
-	id = TECHWEB_NODE_TOYS
-	display_name = "New Toys"
-	description = "For new pranks."
-	prereq_ids = list(TECHWEB_NODE_OFFICE_EQUIP)
-	design_ids = list(
-		"smoke_machine",
-		"toy_armblade",
-		"air_horn",
-		"clown_firing_pin",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
-
 /datum/techweb_node/consoles
 	id = TECHWEB_NODE_CONSOLES
 	display_name = "Civilian Consoles"
@@ -96,7 +83,7 @@
 	id = TECHWEB_NODE_GAMING
 	display_name = "Gaming"
 	description = "For the slackers on the station."
-	prereq_ids = list(TECHWEB_NODE_TOYS, TECHWEB_NODE_CONSOLES)
+	prereq_ids = list(TECHWEB_NODE_CONSOLES)
 	design_ids = list(
 		"arcade_battle",
 		"arcade_orion",
@@ -195,44 +182,3 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	// only available if you've done the first fishing experiment (thus unlocking fishing tech), but not a strict requirement to get the tech
 	discount_experiments = list(/datum/experiment/scanning/fish/second = TECHWEB_TIER_3_POINTS)
-
-// Botany root node
-/datum/techweb_node/botany_equip
-	id = TECHWEB_NODE_BOTANY_EQUIP
-	starting_node = TRUE
-	display_name = "Botany Equipment"
-	description = "Essential tools for maintaining onboard gardens, supporting plant growth in the unique environment of the space station."
-	design_ids = list(
-		"seed_extractor",
-		"plant_analyzer",
-		"watering_can",
-		"spade",
-		"cultivator",
-		"secateurs",
-		"hatchet",
-	)
-
-/datum/techweb_node/hydroponics
-	id = TECHWEB_NODE_HYDROPONICS
-	display_name = "Hydroponics"
-	description = "Research into advanced hydroponic systems for efficient and sustainable plant cultivation."
-	prereq_ids = list(TECHWEB_NODE_BOTANY_EQUIP, TECHWEB_NODE_CHEM_SYNTHESIS)
-	design_ids = list(
-		"biogenerator",
-		"hydro_tray",
-		"portaseeder",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
-
-/datum/techweb_node/selection
-	id = TECHWEB_NODE_SELECTION
-	display_name = "Artificial Selection"
-	description = "Advancement in plant cultivation techniques through artificial selection, enabling precise manipulation of plant DNA."
-	prereq_ids = list(TECHWEB_NODE_HYDROPONICS)
-	design_ids = list(
-		"flora_gun",
-		"gene_shears",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
-	required_experiments = list(/datum/experiment/scanning/random/plants/wild)
-	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = TECHWEB_TIER_3_POINTS)

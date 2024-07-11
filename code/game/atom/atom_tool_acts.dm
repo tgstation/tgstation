@@ -276,14 +276,6 @@
 /atom/proc/multitool_act_secondary(mob/living/user, obj/item/tool)
 	return
 
-///Check if an item supports a data buffer (is a multitool)
-/atom/proc/multitool_check_buffer(user, obj/item/multitool, silent = FALSE)
-	if(!istype(multitool, /obj/item/multitool))
-		if(user && !silent)
-			to_chat(user, span_warning("[multitool] has no data buffer!"))
-		return FALSE
-	return TRUE
-
 /// Called on an object when a tool with screwdriver capabilities is used to left click an object
 /atom/proc/screwdriver_act(mob/living/user, obj/item/tool)
 	return

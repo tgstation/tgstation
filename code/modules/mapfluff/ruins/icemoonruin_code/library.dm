@@ -5,6 +5,18 @@
 	puzzle_id = "library"
 	open_message = "The door opens with a loud creak."
 
+/obj/machinery/door/puzzle/keycard/library/animation_length(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			return 1.2 SECONDS
+
+/obj/machinery/door/puzzle/keycard/library/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 1.0 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 1.2 SECONDS
+
 /obj/item/keycard/library
 	name = "golden key"
 	desc = "A dull, golden key."

@@ -8,6 +8,7 @@
 		"atmosalerts",
 		"thermomachine",
 		"space_heater",
+		"scrubber",
 		"generic_tank",
 		"oxygen_tank",
 		"plasma_tank",
@@ -27,6 +28,7 @@
 	prereq_ids = list(TECHWEB_NODE_ATMOS)
 	design_ids = list(
 		"tank_compressor",
+		"pump",
 		"emergency_oxygen",
 		"emergency_oxygen_engi",
 		"power_turbine_console",
@@ -47,8 +49,8 @@
 	description = "Experiments with high-pressure gases and electricity resulting in crystallization and controlled plasma reactions."
 	prereq_ids = list(TECHWEB_NODE_GAS_COMPRESSION, TECHWEB_NODE_ENERGY_MANIPULATION)
 	design_ids = list(
-		"crystallizer",
 		"electrolyzer",
+		"pipe_scrubber",
 		"pacman",
 		"mech_generator",
 		"plasmacutter",
@@ -68,9 +70,11 @@
 		"HFR_interface",
 		"HFR_moderator_input",
 		"HFR_waste_output",
+		"adv_fire_extinguisher",
 		"bolter_wrench",
 		"rpd_loaded",
 		"engine_goggles",
+		"crystallizer",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	required_experiments = list(/datum/experiment/ordnance/gaseous/bz)
@@ -88,18 +92,18 @@
 		"jawsoflife",
 		"rangedanalyzer",
 		"rtd_loaded",
+		"mech_rcd",
 		"rcd_loaded",
 		"rcd_ammo",
 		"weldingmask",
 		"magboots",
-		"adv_fire_extinguisher",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	discount_experiments = list(/datum/experiment/ordnance/gaseous/noblium = TECHWEB_TIER_4_POINTS)
 
 /datum/techweb_node/rcd_upgrade
 	id = TECHWEB_NODE_RCD_UPGRADE
-	display_name = "Rapid Device Upgrade Designs"
+	display_name = "Rapid Construction Device Upgrades"
 	description = "New designs and enhancements for RCD and RPD."
 	prereq_ids = list(TECHWEB_NODE_EXP_TOOLS, TECHWEB_NODE_PARTS_BLUESPACE)
 	design_ids = list(

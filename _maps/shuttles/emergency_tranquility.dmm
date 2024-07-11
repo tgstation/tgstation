@@ -37,8 +37,7 @@
 	dir = 4
 	},
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
@@ -354,8 +353,7 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/railing{
 	color = "#A47449";
-	dir = 2;
-	layer = 3.1
+	dir = 2
 	},
 /obj/structure/table/wood,
 /obj/machinery/reagentgrinder{
@@ -461,8 +459,7 @@
 "jl" = (
 /obj/structure/railing{
 	color = "#A47449";
-	dir = 10;
-	layer = 3.1
+	dir = 10
 	},
 /obj/structure/flora/bush/fullgrass/style_2,
 /obj/effect/turf_decal/siding/wood{
@@ -511,8 +508,7 @@
 "jM" = (
 /obj/structure/railing{
 	color = "#A47449";
-	dir = 6;
-	layer = 3.1
+	dir = 6
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -537,8 +533,7 @@
 	},
 /obj/structure/railing{
 	color = "#A47449";
-	dir = 10;
-	layer = 3.1
+	dir = 10
 	},
 /obj/structure/flora/bush/fullgrass,
 /obj/effect/turf_decal/siding/wood{
@@ -695,8 +690,7 @@
 "nA" = (
 /obj/structure/railing/corner{
 	dir = 8;
-	color = "#A47449";
-	layer = 3.1
+	color = "#A47449"
 	},
 /obj/structure/flora/rock/pile/jungle/style_3{
 	pixel_x = -4
@@ -739,8 +733,7 @@
 "oj" = (
 /obj/structure/railing{
 	color = "#A47449";
-	dir = 10;
-	layer = 3.1
+	dir = 10
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -767,8 +760,7 @@
 	},
 /obj/structure/railing{
 	color = "#A47449";
-	dir = 10;
-	layer = 3.1
+	dir = 10
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -819,8 +811,7 @@
 "pf" = (
 /obj/structure/railing{
 	color = "#A47449";
-	dir = 6;
-	layer = 3.1
+	dir = 6
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -1013,8 +1004,7 @@
 	},
 /obj/structure/railing{
 	color = "#A47449";
-	dir = 6;
-	layer = 3.1
+	dir = 6
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -1058,9 +1048,7 @@
 /area/shuttle/escape)
 "uR" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/railing{
-	layer = 3.1
-	},
+/obj/structure/railing,
 /turf/open/floor/wood/large,
 /area/shuttle/escape)
 "uT" = (
@@ -1211,16 +1199,14 @@
 	dir = 4
 	},
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "ya" = (
 /obj/structure/railing/corner{
 	dir = 8;
-	color = "#A47449";
-	layer = 3.1
+	color = "#A47449"
 	},
 /obj/structure/flora/bush/large/style_2{
 	pixel_x = -6;
@@ -1283,8 +1269,7 @@
 	},
 /obj/structure/railing{
 	color = "#A47449";
-	dir = 6;
-	layer = 3.1
+	dir = 6
 	},
 /obj/effect/turf_decal/weather/dirt{
 	dir = 5
@@ -1315,8 +1300,7 @@
 	dir = 4
 	},
 /obj/structure/railing{
-	dir = 4;
-	layer = 4.1
+	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
@@ -1515,8 +1499,7 @@
 "Ci" = (
 /obj/structure/railing{
 	color = "#A47449";
-	dir = 6;
-	layer = 3.1
+	dir = 6
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -1563,8 +1546,7 @@
 	},
 /obj/structure/railing{
 	color = "#A47449";
-	dir = 2;
-	layer = 3.1
+	dir = 2
 	},
 /obj/machinery/chem_master/condimaster{
 	desc = "Used to separate out liquids - useful for purifying botanical extracts. Also dispenses condiments.";
@@ -1796,9 +1778,7 @@
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "Hq" = (
-/obj/structure/railing{
-	layer = 3.1
-	},
+/obj/structure/railing,
 /obj/effect/turf_decal/siding/dark,
 /obj/effect/turf_decal/trimline/blue/line,
 /turf/open/floor/iron/dark/small,
@@ -1944,9 +1924,7 @@
 /turf/open/water,
 /area/shuttle/escape)
 "Kk" = (
-/obj/structure/railing{
-	layer = 3.1
-	},
+/obj/structure/railing,
 /obj/effect/turf_decal/siding/dark,
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/machinery/light/floor,
@@ -2011,8 +1989,7 @@
 	},
 /obj/structure/railing{
 	color = "#A47449";
-	dir = 4;
-	layer = 3.2
+	dir = 4
 	},
 /obj/structure/flora/bush/flowers_pp,
 /obj/structure/flora/bush/flowers_pp/style_2,
@@ -2122,8 +2099,7 @@
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/railing{
 	color = "#A47449";
-	dir = 8;
-	layer = 3.2
+	dir = 8
 	},
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -2176,8 +2152,7 @@
 "Oj" = (
 /obj/structure/railing{
 	color = "#A47449";
-	dir = 10;
-	layer = 3.1
+	dir = 10
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -2357,8 +2332,7 @@
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
 	pixel_x = 7;
-	pixel_y = 14;
-	layer = 3.1
+	pixel_y = 14
 	},
 /obj/item/paper_bin{
 	pixel_x = -5;
@@ -2377,15 +2351,11 @@
 /area/shuttle/escape)
 "Sl" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/railing{
-	layer = 3.1
-	},
+/obj/structure/railing,
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "St" = (
-/obj/structure/railing{
-	layer = 3.1
-	},
+/obj/structure/railing,
 /obj/machinery/computer/communications{
 	dir = 8
 	},
@@ -2454,7 +2424,6 @@
 /area/shuttle/escape)
 "Tw" = (
 /obj/structure/statue/sandstone/venus{
-	layer = 4;
 	anchored = 1
 	},
 /turf/open/floor/wood,
@@ -2540,8 +2509,7 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/railing{
 	color = "#A47449";
-	dir = 2;
-	layer = 3.1
+	dir = 2
 	},
 /obj/machinery/microwave,
 /obj/structure/table/wood,
