@@ -138,7 +138,7 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define DEFAULT_INERTIA_SPEED 5
 
 #define INERTIA_FORCE_CAP 25
-#define INERTIA_FORCE_REDUCTION_PER_OBJECT 0.75
+#define INERTIA_FORCE_REDUCTION_PER_OBJECT 1.25
 #define INERTIA_FORCE_PER_THROW_FORCE 5
 // Results in maximum speed of 2 tiles per tick
 #define INERTIA_SPEED_COEF 0.375
