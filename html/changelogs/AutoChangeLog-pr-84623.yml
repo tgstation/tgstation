@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - balance: "Tetrodotoxin can now be synthesized (bees, the odysseus mech, strange seeds...)"
+  - balance: "Upped the amount of tetrodotoxin you can harvest from pufferfishes (or any fish with the trait)."
+  - spellcheck: "Fixed some typos with the toxin."
