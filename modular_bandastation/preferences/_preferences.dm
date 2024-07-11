@@ -1,4 +1,4 @@
 /datum/modpack/preferences
-	name = "Преференс220"
+	name = "Preferences overrides"
 	desc = "Изменяет preferences.dm под нужды проекта."
-	author = "hardexz"
+	author = "hardexz, gaxeer"
