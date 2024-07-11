@@ -375,7 +375,7 @@
 
 	for(var/datum/design/design in cached_designs)
 		var/cost = list()
-		var/list/materials = design["materials"]
+		var/list/materials = design.materials
 		for(var/datum/material/mat in materials)
 			cost[mat.name] = OPTIMAL_COST(materials[mat] * component_coeff)
 

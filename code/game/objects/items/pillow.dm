@@ -37,8 +37,8 @@
 		/datum/crafting_recipe/pillow_suit, /datum/crafting_recipe/pillow_hood,\
 		)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 

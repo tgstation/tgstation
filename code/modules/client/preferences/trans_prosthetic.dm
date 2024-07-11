@@ -3,6 +3,9 @@
 	savefile_key = "trans_prosthetic"
 	savefile_identifier = PREFERENCE_CHARACTER
 
+/datum/preference/choiced/trans_prosthetic/create_default_value()
+	return "Random"
+
 /datum/preference/choiced/trans_prosthetic/init_possible_values()
 	return list("Random") + GLOB.part_choice_transhuman
 

@@ -1,7 +1,7 @@
 /datum/outfit/ninja
 	name = "Space Ninja"
 	uniform = /obj/item/clothing/under/syndicate/ninja
-	glasses = /obj/item/clothing/glasses/night
+	glasses = /obj/item/clothing/glasses/night/colorless
 	mask = /obj/item/clothing/mask/gas/ninja
 	ears = /obj/item/radio/headset
 	shoes = /obj/item/clothing/shoes/jackboots

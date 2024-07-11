@@ -1495,9 +1495,6 @@
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"ZU" = (
-/turf/closed/wall,
-/area/shuttle/pirate)
 
 (1,1,1) = {"
 je
@@ -1671,7 +1668,7 @@ qm
 Ti
 "}
 (10,1,1) = {"
-ZU
+Pn
 Ut
 kw
 CH
@@ -1686,7 +1683,7 @@ Yj
 rV
 Tq
 uE
-ZU
+Pn
 HD
 "}
 (11,1,1) = {"
@@ -1705,7 +1702,7 @@ wX
 Oa
 Tq
 Lo
-ZU
+Pn
 ei
 "}
 (12,1,1) = {"
@@ -1714,7 +1711,7 @@ sB
 GE
 Yj
 Nu
-ZU
+Pn
 am
 Eq
 yN
@@ -1731,7 +1728,7 @@ HD
 HD
 XX
 vJ
-ZU
+Pn
 SB
 Nm
 Vw
@@ -1743,14 +1740,14 @@ Sh
 gQ
 dd
 xy
-ZU
+Pn
 HD
 "}
 (14,1,1) = {"
 pk
 pS
 pU
-ZU
+Pn
 QO
 Ac
 Wc
@@ -1766,10 +1763,10 @@ Sh
 zB
 "}
 (15,1,1) = {"
-ZU
+Pn
 dI
 Sv
-ZU
+Pn
 Bu
 xO
 yf
@@ -1788,7 +1785,7 @@ zB
 zB
 vM
 lO
-ZU
+Pn
 tJ
 xO
 ax
@@ -1852,17 +1849,17 @@ sm
 CY
 fj
 DG
-ZU
+Pn
 Ci
 Sh
 Gb
 xm
-ZU
+Pn
 je
 "}
 (20,1,1) = {"
 je
-ZU
+Pn
 ia
 NI
 yU
@@ -1871,18 +1868,18 @@ bv
 aD
 cJ
 tU
-ZU
+Pn
 xl
 Sh
 AR
 lO
-ZU
+Pn
 je
 "}
 (21,1,1) = {"
 je
-ZU
-ZU
+Pn
+Pn
 xm
 yU
 OG
@@ -1890,30 +1887,30 @@ qo
 pT
 De
 sh
-ZU
+Pn
 Zc
-ZU
+Pn
 pB
-ZU
-ZU
+Pn
+Pn
 je
 "}
 (22,1,1) = {"
 je
 je
-ZU
+Pn
 EA
 ll
 FI
 Hh
-ZU
-ZU
+Pn
+Pn
 Hh
-ZU
+Pn
 gz
-ZU
+Pn
 RX
-ZU
+Pn
 je
 je
 "}
@@ -1930,8 +1927,8 @@ ti
 Yf
 FI
 aV
-ZU
-ZU
+Pn
+Pn
 je
 je
 je
@@ -1949,7 +1946,7 @@ Am
 FT
 pk
 pk
-ZU
+Pn
 je
 je
 je
@@ -1962,8 +1959,8 @@ je
 je
 pk
 zB
-ZU
-ZU
+Pn
+Pn
 zB
 pk
 pk

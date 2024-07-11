@@ -1413,7 +1413,7 @@
 			if(response.body == "[]")
 				dat += "<center><b>0 bans detected for [ckey]</b></center>"
 			else
-				bans = json_decode(response["body"])
+				bans = json_decode(response.body)
 
 				//Ignore bans from non-whitelisted sources, if a whitelist exists
 				var/list/valid_sources
