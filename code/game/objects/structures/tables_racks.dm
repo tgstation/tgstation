@@ -297,9 +297,10 @@
 		skills_space = " quickly"
 	carried_mob.visible_message(span_notice("[user] begins to[skills_space] place [carried_mob] onto [src]..."),
 		span_userdanger("[user] begins to[skills_space] place [carried_mob] onto [src]..."))
-	if(do_after(user, tableplace_delay, target = carried_mob))
-		user.unbuckle_mob(carried_mob)
-		tableplace(user, carried_mob)
+	if(!do_after(user, tableplace_delay, target = carried_mob))
+		return ITEM_INTERACT_BLOCKING
+	user.unbuckle_mob(carried_mob)
+	tableplace(user, carried_mob)
 	return ITEM_INTERACT_SUCCESS
 
 // Where putting things on tables is handled.
