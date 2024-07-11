@@ -240,6 +240,7 @@
 	return NONE
 
 /obj/structure/table/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = NONE
 	if(istype(tool, /obj/item/storage/bag/tray))
 		. = tray_act(user, tool)
 	else if(istype(tool, /obj/item/toy/cards/deck))
