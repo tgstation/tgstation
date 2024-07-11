@@ -8007,7 +8007,6 @@
 	},
 /obj/structure/chair/stool/directional/east,
 /obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/light/small/directional/west,
 /obj/machinery/newscaster/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
@@ -19580,7 +19579,10 @@
 /area/station/medical/chemistry)
 "gQi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/sign/poster/official/no_erp/directional/south,
+/obj/structure/sign/poster/official/no_erp/directional/south{
+	pixel_x = 0;
+	pixel_y = -26
+	},
 /turf/open/floor/wood,
 /area/station/maintenance/hallway/abandoned_recreation)
 "gQG" = (
@@ -24197,6 +24199,7 @@
 "ind" = (
 /obj/machinery/light/floor,
 /obj/structure/flora/bush/flowers_br,
+/obj/structure/flora/bush/flowers_br/style_3,
 /turf/open/floor/grass,
 /area/station/hallway/primary/central/fore)
 "inh" = (
@@ -34520,7 +34523,6 @@
 /obj/structure/flora/bush/flowers_pp,
 /obj/structure/flora/bush/flowers_yw,
 /obj/structure/flora/bush/fullgrass,
-/obj/machinery/light/floor,
 /turf/open/floor/grass,
 /area/station/hallway/primary/central/fore)
 "lxI" = (
@@ -34559,6 +34561,7 @@
 	pixel_x = 0;
 	pixel_y = -26
 	},
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/wood,
 /area/station/maintenance/hallway/abandoned_recreation)
 "lxZ" = (
@@ -35250,6 +35253,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
+"lIi" = (
+/obj/machinery/light/floor,
+/obj/structure/flora/bush/flowers_br/style_3,
+/obj/structure/flora/bush/flowers_yw,
+/obj/structure/flora/bush/flowers_pp,
+/turf/open/floor/grass,
+/area/station/hallway/primary/central/fore)
 "lIt" = (
 /obj/effect/turf_decal/siding/thinplating_new/terracotta{
 	dir = 6
@@ -42679,6 +42689,7 @@
 /obj/structure/chair/stool/directional/east,
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/sign/poster/official/random/directional/north,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/wood,
 /area/station/maintenance/hallway/abandoned_recreation)
 "olI" = (
@@ -101016,8 +101027,8 @@ dCu
 eXR
 wQB
 rHl
-xRV
-xRV
+vGi
+lIi
 jVM
 jTn
 xXe
@@ -101273,7 +101284,7 @@ dCu
 rJZ
 wQB
 hWT
-vGi
+txW
 lxr
 jVM
 tUj
