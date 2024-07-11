@@ -255,9 +255,9 @@
 		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
 		our_hud.hide_from(user)
 
-	if (hud_type == DATA_HUD_MEDICAL_ADVANCED)
+	if (DATA_HUD_MEDICAL_ADVANCED in hud_types)
 		hud_types = null
-	else if (hud_type == DATA_HUD_SECURITY_ADVANCED)
+	else if (DATA_HUD_SECURITY_ADVANCED in hud_types)
 		hud_types = list(DATA_HUD_MEDICAL_ADVANCED)
 	else
 		hud_types = list(DATA_HUD_SECURITY_ADVANCED)
@@ -280,6 +280,7 @@
 
 /obj/item/clothing/glasses/hud/toggle/thermal/attack_self(mob/user)
 	..()
+	var/hud_type = hud_types[1]
 	switch (hud_type)
 		if (DATA_HUD_MEDICAL_ADVANCED)
 			icon_state = "meson"
