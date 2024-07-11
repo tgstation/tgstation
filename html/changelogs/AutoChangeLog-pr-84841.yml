@@ -1,0 +1,4 @@
+author: "GPeckman"
+delete-after: True
+changes:
+  - bugfix: "H.A.R.S. will no longer disable your skillchips or show you text reserved for total brain removal."
