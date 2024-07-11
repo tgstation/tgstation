@@ -26,6 +26,8 @@
 		"botanist": "green feeder",
 		"botany": "green feed",
 		"felinid": "talking kitty",
+		"robotics": "kanna maka",
+		"roboticist": "kanna boy"
 		"cat": "kitty",
 		"moth": "bug",
 		"mothperson": "bugperson",
@@ -79,6 +81,7 @@
 		"you ": "ya ",
 		"you've": "yoos",
 		"you have": "yoos",
-		" in a ": " ina "
+		" in a ": " ina ",
+		"more": "moar"
 	}
 }
