@@ -617,6 +617,12 @@
 			PROC_REF(uncontrolled_teleport),
 			PROC_REF(heat_and_explode),
 			PROC_REF(rapid_self_dupe),
+			PROC_REF(drink_dispenser),
+			PROC_REF(tummy_ache),
+			PROC_REF(charger),
+			PROC_REF(hugger),
+			PROC_REF(dimensional_shift),
+			PROC_REF(disguiser),
 			)
 
 /obj/item/relic/attack_self(mob/user)
@@ -721,6 +727,164 @@
 		do_teleport(user, userturf, 8, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 		throw_smoke(get_turf(user))
 		warn_admins(user, "Teleport", 0)
+
+// Creates a glass and fills it up with a drink.
+/obj/item/relic/proc/drink_dispenser(mob/user)
+	var/obj/item/reagent_containers/cup/glass/drinkingglass/freebie = new(get_step_rand(user))
+	playsound(freebie, 'sound/effects/phasein.ogg', rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	addtimer(CALLBACK(src, PROC_REF(dispense_drink), freebie), 0.5 SECONDS)
+
+/obj/item/relic/proc/dispense_drink(obj/item/reagent_containers/cup/glass/glasser)
+	glasser.reagents.add_reagent(get_random_drink_id(), rand(glasser.volume * 0.3, glasser.volume))
+	playsound(glasser, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	throw_smoke(get_turf(glasser))
+
+// Scrambles your organs. 33% chance to delete after use.
+/obj/item/relic/proc/tummy_ache(mob/user)
+	new /obj/effect/temp_visual/bioscrambler_wave/light(get_turf(src))
+	to_chat(user, span_notice("Your stomach starts growling..."))
+	addtimer(CALLBACK(src, PROC_REF(scrambliticus), user), rand(1 SECONDS, 3 SECONDS)) // throw it away!
+
+/obj/item/relic/proc/scrambliticus(mob/user)
+	new /obj/effect/temp_visual/bioscrambler_wave(get_turf(src))
+	playsound(src, 'sound/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
+	for(var/mob/living/carbon/nearby in hearers(2, src))
+		nearby.bioscramble(name)
+		playsound(nearby, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		throw_smoke(get_turf(nearby))
+		to_chat(nearby, span_notice("You feel weird."))
+	if(prob(33))
+		qdel(src)
+
+// Charges an item or two in your inventory. Also yourself.
+/obj/item/relic/proc/charger(mob/living/user)
+	to_chat(user, span_danger("You're recharged!"))
+	var/stunner = 1.25 SECONDS
+	if(iscarbon(user))
+		var/mob/living/carbon/carboner = user
+		carboner.electrocute_act(15, src, flags = SHOCK_NOGLOVES, stun_duration = stunner)
+	else
+		user.electrocute_act(15, src, flags = SHOCK_NOGLOVES)
+	playsound(user, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+
+	var/list/chargeable_batteries = list()
+	for(var/obj/item/stock_parts/power_store/C in user.get_all_contents())
+		if(C.charge < (C.maxcharge * 0.95)) // otherwise the PDA always gets recharged
+			chargeable_batteries |= C
+
+	lightning_fx(user, stunner)
+	var/recharges = rand(1, 2)
+	if(!length(chargeable_batteries))
+		to_chat(user, span_notice("You have a strange feeling for a moment, but then it passes."))
+		return
+	for(var/obj/item/stock_parts/power_store/to_charge as anything in recharges)
+		to_charge = pick(chargeable_batteries)
+		to_charge.charge = to_charge.maxcharge
+		// The device powered by the cell is assumed to be its location.
+		var/obj/device = to_charge.loc
+		// If it's not an object, or the loc's assigned power_store isn't the cell, undo.
+		if(!istype(device) || (device.get_cell() != to_charge))
+			device = to_charge
+		device.update_appearance(UPDATE_ICON|UPDATE_OVERLAYS)
+		to_chat(user, span_notice("[device] feels energized!"))
+		lightning_fx(device, 0.8 SECONDS)
+
+/obj/item/relic/proc/lightning_fx(atom/shocker, time)
+	var/lightning = mutable_appearance('icons/effects/effects.dmi', "electricity3", layer = ABOVE_MOB_LAYER)
+	shocker.add_overlay(lightning)
+	addtimer(CALLBACK(src, PROC_REF(cut_the_overlay), shocker, lightning), time)
+
+/obj/item/relic/proc/cut_the_overlay(atom/shocker, lightning)
+	shocker.cut_overlay(lightning)
+
+// Hugs/shakes everyone in range!
+/obj/item/relic/proc/hugger(mob/user)
+	var/list/mob/living/carbon/huggeds = oviewers(3, user)
+	for(var/mob/living/carbon/victim in huggeds)
+		victim.help_shake_act(user, force_friendly = TRUE)
+		new /obj/effect/temp_visual/heart(victim.loc)
+	if(length(huggeds))
+		to_chat(user, span_nicegreen("You feel friendly!"))
+	else
+		to_chat(user, pick(span_notice("You hug yourself, for some reason."), span_notice("You have a strange feeling for a moment, but then it passes.")))
+
+// Converts a 3x3 area into a random dimensional theme.
+/obj/item/relic/proc/dimensional_shift(mob/user)
+	var/new_theme_path = pick(subtypesof(/datum/dimension_theme))
+	var/datum/dimension_theme/shifter = SSmaterials.dimensional_themes[new_theme_path]
+	for(var/turf/shiftee in range(1, user))
+		shifter.apply_theme(shiftee, show_effect = TRUE)
+	qdel(shifter)
+	// prevent *total* spam conversion
+	min_cooldown += 2 SECONDS
+	max_cooldown += 2 SECONDS
+
+// Replaces your clothing with a random costume, and your ID with a cardboard one.
+// TODO: make them part of the same kit (lobster hat, lobster suit)
+/obj/item/relic/proc/disguiser(mob/user)
+	if(!iscarbon(user))
+		to_chat(user, span_notice("You have a strange feeling for a moment, but then it passes."))
+		return
+
+	if(prob(80)) // >:)
+		ADD_TRAIT(user, TRAIT_NO_JUMPSUIT, REF(src)) // prevent dropping pockets & belt
+
+	// magic trick!
+	playsound(user, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	throw_smoke(user)
+
+	// carbons always get a hat at least
+	var/mob/living/carbon/carbonius = user
+	//hat
+	var/obj/item/clothing/head/costume/disguise_hat = roll_costume(/obj/item/clothing/head/costume, HIDEMASK)
+	carbonius.dropItemToGround(carbonius.head)
+	carbonius.equip_to_slot_or_del(disguise_hat, ITEM_SLOT_HEAD)
+	if(!ishuman(carbonius))
+		to_chat(user, span_notice("You have a peculiar feeling for a moment, but then it passes."))
+		return
+
+	var/mob/living/carbon/human/humerus = carbonius
+	// uniform
+	var/obj/item/clothing/under/costume/disguise_uniform = roll_costume(/obj/item/clothing/under/costume)
+	humerus.dropItemToGround(humerus.w_uniform)
+	humerus.equip_to_slot_or_del(disguise_uniform, ITEM_SLOT_ICLOTHING)
+	// suit
+	var/obj/item/clothing/suit/costume/disguise_suit = roll_costume(/obj/item/clothing/suit/costume)
+	humerus.dropItemToGround(humerus.wear_suit)
+	humerus.equip_to_slot_or_del(disguise_suit, ITEM_SLOT_OCLOTHING)
+	// id
+	var/obj/item/card/cardboard/card_id = new()
+	humerus.dropItemToGround(humerus.wear_id)
+	humerus.equip_to_slot_or_del(card_id, ITEM_SLOT_ID)
+
+	// edit the card to a random job & name
+	if(!card_id)
+		return
+	card_id.scribbled_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
+	card_id.update_name()
+	card_id.details_colors = list(ready_random_color(), ready_random_color(), ready_random_color())
+	card_id.item_flags |= DROPDEL
+
+	var/datum/id_trim/random_trim = pick(subtypesof(/datum/id_trim)) // this can pick silly things
+	random_trim = new random_trim()
+	if(random_trim.trim_state && random_trim.assignment)
+		card_id.scribbled_trim = replacetext(random_trim.trim_state, "trim_", "cardboard_")
+	card_id.scribbled_assignment = random_trim.assignment
+	card_id.update_overlays()
+	REMOVE_TRAIT(user, TRAIT_NO_JUMPSUIT, REF(src))
+
+/obj/item/relic/proc/roll_costume(type, flagcheck)
+	var/list/candidates = list()
+	for(var/obj/item/thingy as anything in subtypesof(type))
+		if(flagcheck && !(initial(thingy.flags_inv) & flagcheck))
+			continue
+		if(isnull(initial(thingy.icon_state)))
+			continue
+		candidates |= thingy
+	var/obj/item/new_costume = pick(candidates)
+	new_costume = new new_costume()
+	new_costume.item_flags |= DROPDEL
+	return new_costume
 
 //Admin Warning proc for relics
 /obj/item/relic/proc/warn_admins(mob/user, relic_type, priority = 1)

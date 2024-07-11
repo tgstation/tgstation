@@ -12,7 +12,7 @@
 	item = /obj/item/soap/syndie
 	cost = 1
 	surplus = 50
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/device_tools/surgerybag
 	name = "Syndicate Surgery Duffel Bag"
@@ -111,7 +111,7 @@
 	item = /obj/item/disk/nuclear/fake
 	cost = 1
 	surplus = 1
-	illegal_tech = FALSE
+	uplink_item_flags = NONE
 
 /datum/uplink_item/device_tools/frame
 	name = "F.R.A.M.E. disk"
@@ -163,7 +163,7 @@
 			multitool and combat gloves that are resistant to shocks and heat."
 	item = /obj/item/storage/toolbox/syndicate
 	cost = 1
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/device_tools/rad_laser
 	name = "Radioactive Microlaser"
