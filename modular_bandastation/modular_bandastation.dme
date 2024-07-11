@@ -20,6 +20,7 @@
 #include "gunhud/_gunhud.dme"
 #include "keybinding/_keybinding.dme"
 #include "pixel_shift/_pixel_shift.dme"
+#include "ru_jobs/_ru_jobs.dme"
 #include "translations/_translations.dme"
 #include "tts/_tts.dme"
 #include "whitelist220/_whitelist220.dme"

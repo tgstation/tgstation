@@ -1,6 +1,7 @@
 import { map } from 'common/collections';
 
 import { useBackend } from '../backend';
+import { DEPARTMENTS_RU } from '../bandastation/ru_jobs'; // BANDASTATION EDIT
 import { Button, Section, Table } from '../components';
 import { NtosWindow } from '../layouts';
 
@@ -21,7 +22,15 @@ export const NtosCrewManifest = (props) => {
           }
         >
           {map(manifest, (entries, department) => (
-            <Section key={department} level={2} title={department}>
+            <Section
+              key={department}
+              level={2}
+              title={
+                DEPARTMENTS_RU[department]
+                  ? DEPARTMENTS_RU[department]
+                  : department
+              }
+            >
               <Table>
                 {entries.map((entry) => (
                   <Table.Row key={entry.name} className="candystripe">

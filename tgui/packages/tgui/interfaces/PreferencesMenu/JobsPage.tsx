@@ -3,6 +3,7 @@ import { classes } from 'common/react';
 import { PropsWithChildren, ReactNode } from 'react';
 
 import { useBackend } from '../../backend';
+import { JOBS_RU } from '../../bandastation/ru_jobs'; // BANDASTATION EDIT
 import { Box, Button, Dropdown, Stack, Tooltip } from '../../components';
 import {
   createSetPreference,
@@ -237,7 +238,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
               paddingLeft: '0.3em',
             }}
           >
-            {name}
+            {JOBS_RU[name] ? JOBS_RU[name] : name}
           </Stack.Item>
         </Tooltip>
 
@@ -317,7 +318,7 @@ const JoblessRoleDropdown = (props) => {
 
   const options = [
     {
-      displayText: `Join as ${data.overflow_role} if unavailable`,
+      displayText: `Присоединиться за ${JOBS_RU[data.overflow_role] ? JOBS_RU[data.overflow_role] : data.overflow_role} если не удалось войти`,
       value: JoblessRole.BeOverflow,
     },
     {
