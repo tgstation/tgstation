@@ -6979,9 +6979,7 @@
 "Ga" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/fax{
-	centcom_fax = 1
-	},
+/obj/machinery/fax,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/ferry)
 "Gb" = (
