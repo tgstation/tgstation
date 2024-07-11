@@ -281,23 +281,25 @@
 	var/mob/living/carried_mob = riding_item.rider
 	if(carried_mob == user) //Piggyback user.
 		return NONE
+
 	if(user.combat_mode)
 		user.unbuckle_mob(carried_mob)
 		tablelimbsmash(user, carried_mob)
-	else
-		var/tableplace_delay = 3.5 SECONDS
-		var/skills_space = ""
-		if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
-			tableplace_delay = 2 SECONDS
-			skills_space = " expertly"
-		else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
-			tableplace_delay = 2.75 SECONDS
-			skills_space = " quickly"
-		carried_mob.visible_message(span_notice("[user] begins to[skills_space] place [carried_mob] onto [src]..."),
-			span_userdanger("[user] begins to[skills_space] place [carried_mob] onto [src]..."))
-		if(do_after(user, tableplace_delay, target = carried_mob))
-			user.unbuckle_mob(carried_mob)
-			tableplace(user, carried_mob)
+		return ITEM_INTERACT_SUCCESS
+
+	var/tableplace_delay = 3.5 SECONDS
+	var/skills_space = ""
+	if(HAS_TRAIT(user, TRAIT_QUICKER_CARRY))
+		tableplace_delay = 2 SECONDS
+		skills_space = " expertly"
+	else if(HAS_TRAIT(user, TRAIT_QUICK_CARRY))
+		tableplace_delay = 2.75 SECONDS
+		skills_space = " quickly"
+	carried_mob.visible_message(span_notice("[user] begins to[skills_space] place [carried_mob] onto [src]..."),
+		span_userdanger("[user] begins to[skills_space] place [carried_mob] onto [src]..."))
+	if(do_after(user, tableplace_delay, target = carried_mob))
+		user.unbuckle_mob(carried_mob)
+		tableplace(user, carried_mob)
 	return ITEM_INTERACT_SUCCESS
 
 // Where putting things on tables is handled.
