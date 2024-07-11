@@ -115,7 +115,7 @@
 	/// How much force this module can apply per tick
 	var/drift_force = 1.5
 	/// How much force this module's stabilizier can put out
-	var/stabilizer_force = 1.25
+	var/stabilizer_force = 1
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
 	. = ..()
@@ -176,7 +176,7 @@
 	icon_state = "jetpack_advanced"
 	overlay_state_inactive = "module_jetpackadv"
 	overlay_state_active = "module_jetpackadv_on"
-	drift_force = 2.25
+	drift_force = 2
 	stabilizer_force = 2
 
 /// Cooldown to use if we didn't actually launch a jump jet

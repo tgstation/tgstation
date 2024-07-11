@@ -23,7 +23,7 @@
 	/// How much force out jetpack can output per tick
 	var/drift_force = 1.5
 	/// How efficient this jetpack's stabilizer is
-	var/stabilizer_force = 1.5
+	var/stabilizer_force = 1
 
 /obj/item/tank/jetpack/Initialize(mapload)
 	. = ..()
@@ -182,7 +182,7 @@
 	gas_type = null //it starts empty
 	full_speed = FALSE
 	drift_force = 1
-	stabilizer_force = 0.75
+	stabilizer_force = 0.5
 
 /obj/item/tank/jetpack/improvised/allow_thrust(num)
 	if(!ismob(loc))
@@ -225,6 +225,8 @@
 	volume = 90
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //steal objective items are hard to destroy.
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE
+	drift_force = 2
+	stabilizer_force = 2
 
 /obj/item/tank/jetpack/oxygen/security
 	name = "security jetpack (oxygen)"
