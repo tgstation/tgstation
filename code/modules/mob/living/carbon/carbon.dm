@@ -201,7 +201,7 @@
 		var/obj/item/thrown_item = thrown_thing
 		drift_force *= 0.2 + thrown_item.w_class * 0.4
 
-	newtonian_move(get_angle(src, target), drift_force = drift_force)
+	newtonian_move(get_angle(target, src), drift_force = drift_force)
 	thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force)
 
 /mob/living/carbon/proc/canBeHandcuffed()

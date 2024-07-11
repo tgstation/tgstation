@@ -20,6 +20,10 @@
 	var/disabled = FALSE
 	/// Callback for the jetpack component
 	var/thrust_callback
+	/// How much force out jetpack can output per tick
+	var/drift_force = 1.5
+	/// How efficient this jetpack's stabilizer is
+	var/stabilizer_force = 1.5
 
 /obj/item/tank/jetpack/Initialize(mapload)
 	. = ..()
@@ -47,7 +51,9 @@
 		COMSIG_JETPACK_DEACTIVATED, \
 		JETPACK_ACTIVATION_FAILED, \
 		thrust_callback, \
-		/datum/effect_system/trail_follow/ion \
+		/datum/effect_system/trail_follow/ion, \
+		drift_force, \
+		stabilizer_force, \
 	)
 
 /obj/item/tank/jetpack/item_action_slot_check(slot)
@@ -175,6 +181,8 @@
 	volume = 20 //normal jetpacks have 70 volume
 	gas_type = null //it starts empty
 	full_speed = FALSE
+	drift_force = 1
+	stabilizer_force = 0.75
 
 /obj/item/tank/jetpack/improvised/allow_thrust(num)
 	if(!ismob(loc))

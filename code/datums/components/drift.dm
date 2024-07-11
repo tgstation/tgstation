@@ -1,9 +1,3 @@
-#define DEFAULT_INERTIA_SPEED 5
-
-#define INERTIA_FORCE_CAP 25
-#define INERTIA_FORCE_REDUCTION_PER_OBJECT 0.75
-#define INERTIA_FORCE_PER_THROW_FORCE 5
-
 ///Component that handles drifting
 ///Manages a movement loop that actually does the legwork of moving someone
 ///Alongside dealing with the post movement input blocking required to make things look nice
@@ -46,6 +40,7 @@
 	RegisterSignal(drifting_loop, COMSIG_QDELETING, PROC_REF(loop_death))
 	RegisterSignal(movable_parent, COMSIG_MOVABLE_NEWTONIAN_MOVE, PROC_REF(newtonian_impulse))
 	RegisterSignal(movable_parent, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, PROC_REF(attempt_halt))
+	RegisterSignal(movable_parent, COMSIG_MOB_STABILIZE_DRIFT, PROC_REF(stabilize_drift))
 	if(drifting_loop.status & MOVELOOP_STATUS_RUNNING)
 		drifting_start(drifting_loop) // There's a good chance it'll autostart, gotta catch that
 
@@ -96,12 +91,12 @@
 	var/force_x = sin(drifting_loop.angle) * drift_force + sin(inertia_angle) * additional_force
 	var/force_y = cos(drifting_loop.angle) * drift_force + cos(inertia_angle) * additional_force
 
-	drift_force = clamp(sqrt(force_x * force_x + force_y * force_y), 0, (!isnull(controlled_cap) && drift_force < controlled_cap) ? controlled_cap : INERTIA_FORCE_CAP)
-	if(!drift_force)
+	drift_force = clamp(sqrt(force_x * force_x + force_y * force_y), 0, (!isnull(controlled_cap) && drift_force <= controlled_cap) ? controlled_cap : INERTIA_FORCE_CAP)
+	if(drift_force < 0.1) // Rounding issues
 		qdel(src)
 		return COMPONENT_MOVABLE_NEWTONIAN_BLOCK
 
-	drifting_loop.set_angle((force_y != 0 ? arctan(force_x / force_y) + (force_y < 0 ? 180 : 0) : (force_x > 0 ? 90 : 270)))
+	drifting_loop.set_angle(delta_to_angle(force_x, force_y))
 	drifting_loop.set_speed(get_loop_delay(source))
 	return COMPONENT_MOVABLE_NEWTONIAN_BLOCK
 
@@ -232,15 +227,25 @@
 	drifting_loop.set_speed(get_loop_delay(source))
 	return COMPONENT_PREVENT_SPACEMOVE_HALT
 
-// Results in maximum speed of 2 tiles per tick
-#define INERTIA_SPEED_COEF 0.375
-
 /datum/component/drift/proc/get_loop_delay(atom/movable/movable)
 	return (DEFAULT_INERTIA_SPEED / ((1 - INERTIA_SPEED_COEF) + drift_force * INERTIA_SPEED_COEF)) * movable.inertia_move_multiplier
 
-#undef INERTIA_SPEED_COEF
+/datum/component/drift/proc/stabilize_drift(atom/movable/source, target_angle, target_force, stabilization_force)
+	SIGNAL_HANDLER
 
-#undef DEFAULT_INERTIA_SPEED
-#undef INERTIA_FORCE_CAP
-#undef INERTIA_FORCE_REDUCTION_PER_OBJECT
-#undef INERTIA_FORCE_PER_THROW_FORCE
+	/// We aren't drifting
+	if (isnull(drifting_loop))
+		return
+
+	/// Lack of angle means that we are trying to halt movement
+	if (isnull(target_angle))
+		// Going through newtonian_move ensures that all Process_Spacemove code runs properly, instead of directly adjusting forces
+		source.newtonian_move((drifting_loop.angle + 180) % 360, drift_force = min(drift_force, stabilization_force))
+		return
+
+	// Force required to be applied in order to get to the desired movement vector
+	var/force_x = sin(target_angle) * target_force - sin(drifting_loop.angle) * drift_force
+	var/force_y = cos(target_angle) * target_force - cos(drifting_loop.angle) * drift_force
+	var/force_angle = delta_to_angle(force_x, force_y)
+	var/applied_force = min(sqrt(force_x * force_x + force_y * force_y), stabilization_force)
+	source.newtonian_move(force_angle, drift_force = applied_force)

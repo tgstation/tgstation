@@ -179,7 +179,9 @@
 		COMSIG_THRUSTER_DEACTIVATED, \
 		THRUSTER_ACTIVATION_FAILED, \
 		CALLBACK(src, PROC_REF(allow_thrust), 0.01), \
-		/datum/effect_system/trail_follow/ion \
+		/datum/effect_system/trail_follow/ion, \
+		1.5, \
+		1.25, \
 	)
 
 /obj/item/organ/internal/cyberimp/chest/thrusters/Remove(mob/living/carbon/thruster_owner, special, movement_flags)

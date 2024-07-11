@@ -112,8 +112,10 @@
 	var/stabilize = TRUE
 	/// Callback to see if we can thrust the user.
 	var/thrust_callback
+	/// How much force this module can apply per tick
+	var/drift_force = 1.5
 	/// How much force this module's stabilizier can put out
-	var/stabilizer_force = 0.5
+	var/stabilizer_force = 1.25
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
 	. = ..()
@@ -140,7 +142,9 @@
 		COMSIG_MODULE_DEACTIVATED, \
 		MOD_ABORT_USE, \
 		thrust_callback, \
-		/datum/effect_system/trail_follow/ion/grav_allowed \
+		/datum/effect_system/trail_follow/ion/grav_allowed, \
+		drift_force, \
+		stabilizer_force, \
 	)
 
 /obj/item/mod/module/jetpack/get_configuration()
@@ -172,7 +176,8 @@
 	icon_state = "jetpack_advanced"
 	overlay_state_inactive = "module_jetpackadv"
 	overlay_state_active = "module_jetpackadv_on"
-	stabilizer_force = 1
+	drift_force = 2.25
+	stabilizer_force = 2
 
 /// Cooldown to use if we didn't actually launch a jump jet
 #define FAILED_ACTIVATION_COOLDOWN 3 SECONDS
