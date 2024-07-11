@@ -1,0 +1,4 @@
+author: "Odairu"
+delete-after: True
+changes:
+  - balance: "changed zauker decomp gas and damage"
