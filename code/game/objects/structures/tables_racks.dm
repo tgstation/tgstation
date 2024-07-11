@@ -227,13 +227,13 @@
 /obj/structure/table/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/construction/rcd))
 		return NONE
+
+	var/deck_act_value = NONE
 	if(istype(tool, /obj/item/toy/cards/deck))
-		. = deck_act(user, tool, modifiers, TRUE)
-
+		deck_act_value = deck_act(user, tool, modifiers, TRUE)
 	// Continue to placing if we don't do anything else
-	if(.)
-		return .
-
+	if(deck_act_value)
+		return deck_act_value
 	if(!user.combat_mode)
 		return table_place_act(user, tool, modifiers)
 
