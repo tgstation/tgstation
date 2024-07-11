@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	if (sm.is_main_engine)
 		SSpersistence.delam_highscore = SSpersistence.rounds_since_engine_exploded
 		SSpersistence.rounds_since_engine_exploded = ROUNDCOUNT_ENGINE_JUST_EXPLODED
-		for (var/obj/machinery/incident_display/sign as anything in GLOB.map_delamination_counters)
+		for (var/obj/machinery/incident_display/sign as anything in GLOB.map_incident_displays)
 			sign.update_delam_count(ROUNDCOUNT_ENGINE_JUST_EXPLODED)
 	qdel(sm)
 

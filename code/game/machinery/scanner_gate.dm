@@ -5,6 +5,7 @@
 #define SCANGATE_WANTED "Wanted"
 #define SCANGATE_SPECIES "Species"
 #define SCANGATE_NUTRITION "Nutrition"
+#define SCANGATE_CONTRABAND "Contraband"
 
 #define SCANGATE_HUMAN "human"
 #define SCANGATE_LIZARD "lizard"
@@ -29,7 +30,7 @@
 	var/next_beep = 0
 	///Bool to check if the scanner's controls are locked by an ID.
 	var/locked = FALSE
-	///Which setting is the scanner checking for? See defines in scan_gate.dm for the list.
+	///Which setting is the scanner checking for? See defines in scanner_gate.dm for the list.
 	var/scangate_mode = SCANGATE_NONE
 	///Is searching for a disease, what severity is enough to trigger the gate?
 	var/disease_threshold = DISEASE_SEVERITY_MINOR
@@ -45,6 +46,8 @@
 	var/light_fail = FALSE
 	///Does the scanner ignore light_pass and light_fail for sending signals?
 	var/ignore_signals = FALSE
+	///Is an n-spect scanner attached to the gate? Enables contraband scanning.
+	var/obj/item/inspector/n_spect = null
 
 
 /obj/machinery/scanner_gate/Initialize(mapload)
@@ -55,11 +58,18 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	register_context()
 
 /obj/machinery/scanner_gate/Destroy()
 	qdel(wires)
 	set_wires(null)
 	. = ..()
+
+/obj/machinery/scanner_gate/atom_deconstruct(disassembled)
+	. = ..()
+	if(n_spect)
+		n_spect.forceMove(drop_location())
+		n_spect = null
 
 /obj/machinery/scanner_gate/examine(mob/user)
 	. = ..()
@@ -67,6 +77,18 @@
 		. += span_notice("The control panel is ID-locked. Swipe a valid ID to unlock it.")
 	else
 		. += span_notice("The control panel is unlocked. Swipe an ID to lock it.")
+	if(n_spect)
+		. += span_notice("The scanner is equipped with an N-Spect scanner. Use a [span_boldnotice("crowbar")] to uninstall.")
+
+/obj/machinery/scanner_gate/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(n_spect && held_item?.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "Remove N-Spect scanner"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(!n_spect && istype(held_item, /obj/item/inspector))
+		context[SCREENTIP_CONTEXT_LMB] = "Install N-Spect scanner"
+		return CONTEXTUAL_SCREENTIP_SET
+
 
 /obj/machinery/scanner_gate/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -82,6 +104,19 @@
 	add_overlay(type)
 	if(duration)
 		scanline_timer = addtimer(CALLBACK(src, PROC_REF(set_scanline), "passive"), duration, TIMER_STOPPABLE)
+
+/obj/machinery/scanner_gate/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/inspector))
+		if(n_spect)
+			to_chat(user, span_warning("The scanner is already equipped with an N-Spect scanner."))
+			return ITEM_INTERACT_BLOCKING
+		else
+			to_chat(user, span_notice("You install an N-Spect scanner on [src]."))
+			n_spect = tool
+			if(!user.transferItemToLoc(tool, src))
+				return ITEM_INTERACT_BLOCKING
+			return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/machinery/scanner_gate/attackby(obj/item/W, mob/user, params)
 	var/obj/item/card/id/card = W.GetID()
@@ -104,6 +139,20 @@
 		if(panel_open && is_wire_tool(W))
 			wires.interact(user)
 	return ..()
+
+/obj/machinery/scanner_gate/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(n_spect)
+		to_chat(user, span_notice("You uninstall [n_spect] from [src]."))
+		n_spect.forceMove(drop_location())
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/scanner_gate/Exited(atom/gone)
+	. = ..()
+	if(gone == n_spect)
+		n_spect = null
+		if(scangate_mode == SCANGATE_CONTRABAND)
+			scangate_mode = SCANGATE_NONE
 
 /obj/machinery/scanner_gate/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -175,6 +224,13 @@
 					beep = TRUE
 				if(H.nutrition >= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_FAT)
 					beep = TRUE
+		if(SCANGATE_CONTRABAND)
+			for(var/obj/item/content in M.get_all_contents_skipping_traits(TRAIT_CONTRABAND_BLOCKER))
+				if(content.is_contraband())
+					beep = TRUE
+					break
+			if(!n_spect.scans_correctly)
+				beep = !beep //We do a little trolling
 
 	if(reverse)
 		beep = !beep
@@ -222,6 +278,7 @@
 	data["disease_threshold"] = disease_threshold
 	data["target_species"] = detect_species
 	data["target_nutrition"] = detect_nutrition
+	data["contraband_enabled"] = !!n_spect
 	return data
 
 /obj/machinery/scanner_gate/ui_act(action, params)
@@ -271,6 +328,7 @@
 #undef SCANGATE_WANTED
 #undef SCANGATE_SPECIES
 #undef SCANGATE_NUTRITION
+#undef SCANGATE_CONTRABAND
 
 #undef SCANGATE_HUMAN
 #undef SCANGATE_LIZARD

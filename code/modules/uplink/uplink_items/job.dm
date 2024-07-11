@@ -21,7 +21,7 @@
 	desc = "A box of five (5) counterfeit devices. Each single-use device can hold one normal sized object, and impersonate an ordinary postal envelope addressed to whoever you choose. Optionally, can be rigged to activate held items - great for if you want to surprise someone with a primed grenade!"
 	item = /obj/item/storage/box/syndie_kit/mail_counterfeit
 	cost = 2
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 	restricted_roles = list(JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
 	surplus = 5
 
@@ -45,7 +45,7 @@
 	item = /obj/item/dnainjector/clumsymut
 	cost = 1
 	restricted_roles = list(JOB_CLOWN)
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 	surplus = 25
 
 /datum/uplink_item/role_restricted/ancient_jumpsuit
@@ -70,7 +70,7 @@
 	cost = 4
 	item = /obj/item/firing_pin/clown/ultra
 	restricted_roles = list(JOB_CLOWN)
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 	surplus = 25
 
 /datum/uplink_item/role_restricted/clownsuperpin
@@ -79,7 +79,7 @@
 	cost = 7
 	item = /obj/item/firing_pin/clown/ultra/selfdestruct
 	restricted_roles = list(JOB_CLOWN)
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 	surplus = 25
 
 /datum/uplink_item/role_restricted/syndimmi

@@ -579,3 +579,65 @@
   - code_imp: teambased antagonists may not see the HUDs of other teams
   rageguy505:
   - bugfix: no more xenobio active turfs
+2024-07-10:
+  Ghommie:
+  - bugfix: Fixed a whoopsie with bait-related calculations for fishing.
+  GoblinBackwards:
+  - qol: Docked emergency shuttles will always reset their departure timer when a
+      hostile environment is stopped, regardless of if the timer displays ETD or ERR.
+  Kocma-san:
+  - bugfix: Fixed lights stopping emitting light in some situations
+  SmArtKar:
+  - refactor: Refactored a lot of speech modifiers to use a component instead of copied
+      over code.
+  - bugfix: Living limbs can no longer make you touch ghosts or abstract concepts
+      of start, landmark, influence or job
+  - spellcheck: Fixed improper word usage and improved grammar for living limbs
+  - rscadd: Living flesh arms have a chance to actually touch the thing they're targeting
+      instead of pulling it. Careful with supermatter!
+  - bugfix: Exosuit Stress Failure experiment now works
+  SyncIt21:
+  - bugfix: stacking machines can be linked with its console via multitool
+  aaaa1023:
+  - rscdel: 'Removed the shuttle manipulator entries for the following shuttles: Northstar
+      ferry, Omegastation arrivals shuttle, and Donutstation cargo ferry. (These shuttles
+      didn''t actually exist but they still had entries in the manipulator.)'
+  - bugfix: 'Fixed the following shuttles flying in unexpected directions: Basic CC
+      Ferry, Meat Ferry, Lighthouse Ferry, ERT bounty shuttle, Kilo cargo shuttle,
+      Pubby cargo shuttle, and Delta cargo shuttle.'
+  - bugfix: Fixed the ERT bounty shuttle having incorrect offsets in the shuttle navigation
+      console.
+  grungussuss:
+  - sound: Zippos, Lighters and cigarettes now have sound
+  lizardqueenlexi:
+  - bugfix: Amputating a paraplegic's leg no longer miraculously allows them to walk.
+  zoomachina:
+  - bugfix: fixed dubious chem dispenser feedback when the beaker is full
+2024-07-11:
+  00-Steven:
+  - bugfix: Using a dual wielded deck to add another card to a single card bases the
+      position of the resulting hand of cards on the position of the card.
+  Gaxeer:
+  - refactor: move `status_display_bottom_text` and `fire_alarm_light_color` to security
+      level prototypes
+  Ghommie:
+  - balance: Buffed the matrix flip skillchip duration. Lowered the stamina cost very,
+      very slightly.
+  - qol: You can now longer matrix-flip yourself into exhaustion, unless the emote
+      is unintentional.
+  Melbert:
+  - rscadd: 'Bot Language station trait split into two: One that affects bots (retains
+      the old weight and cost) and one that affects machine (half weight, double the
+      cost)'
+  - rscdel: Bot Language station trait and (new) Machine Language station trait no
+      longer affect newly created machines or bots, just those present at game start
+  - rscdel: Machine Language station trait cannot affect the Automated Announcer in
+      telecomms
+  SmArtKar:
+  - bugfix: Vapes use correct fill level overlays
+  - bugfix: You no longer try to pull out someones eyes in combat mode if they have
+      cranial fissure
+  Xackii:
+  - rscadd: You can emag grapple gun to use it on station.
+  carlarctg:
+  - bugfix: Fixed an oversight that caused knockdown vomits to stun instead.
