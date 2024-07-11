@@ -1,0 +1,7 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Cryokinesis and pyrokinesis more severely adjust temperature."
+  - balance: "Cryokinesis forces a target to slow down on hit for a few seconds."
+  - balance: "Pyrokinesis can ignite objects."
+  - balance: "Temperature projectiles change the temperature of the target's contained reagents."
