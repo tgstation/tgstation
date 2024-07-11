@@ -54,9 +54,7 @@
 
 		// immediately disconnect from atmos
 		reserved_turf.blocks_air = TRUE
-		for(var/turf/atmos_neighbor as anything in reserved_turf.atmos_adjacent_turfs)
-			atmos_neighbor.atmos_adjacent_turfs -= reserved_turf
-		reserved_turf.atmos_adjacent_turfs.Cut()
+		reserved_turf.immediate_calculate_adjacent_turfs()
 
 	// Makes the linter happy, even tho we don't await this
 	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, reserve_turfs), release_turfs)
