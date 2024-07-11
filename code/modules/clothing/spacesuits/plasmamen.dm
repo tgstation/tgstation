@@ -207,6 +207,10 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/head_helmet/plasmaman
 
+/obj/item/clothing/head/helmet/space/plasmaman/security/bluesec
+	desc = "A standardized plasmaman containment helmet designed for the security department of a particular research facility, protecting them from burning alive, alongside other undesirables."
+	icon_state = "security_blueshift_envirohelm"
+
 /datum/armor/head_helmet/plasmaman
 	bio = 100
 	fire = 100

@@ -588,7 +588,7 @@
 /// Black mesa security
 /datum/station_trait/blue_sec
 	name = "Backup Security Equipment"
-	report_message =  "Due to problems to our logistical network in your sector, we have been forced to equip your security department with uniforms from our subsidiary scientific company. "
+	report_message =  "Due to problems in our logistical network of your sector, we have been forced to equip your security department with uniforms from our subsidiary scientific research company."
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 200000
 	show_in_report = TRUE
@@ -602,13 +602,16 @@
 	return ..()
 
 /datum/station_trait/blue_sec/get_decal_color(atom/thing_to_color, pattern)
-	if(istype(get_area(thing_to_color), /area/station/security)) //color the brig blue
+	if(istype(get_area(thing_to_color), /area/station/security || /area/station/ai_monitored/security)) //color the brig blue, doesn't color the decals leading to brig blue but whatever
 		return COLOR_TRUE_BLUE
 
 /datum/station_trait/blue_sec/proc/on_occupations_setup(datum/controller/subsystem/job/source)
 	for(var/datum/job/security_officer/seccoff in SSjob.all_occupations)
 		seccoff.outfit = /datum/outfit/job/security/bluesec
+		seccoff.plasmaman_outfit = /datum/outfit/plasmaman/bluesec //outfit is standardized to reduce icon bloat (real reason though? i'm too fucking lazy to add 6~ clothing sprites for them)
 	for(var/datum/job/warden/seccoff in SSjob.all_occupations)
 		seccoff.outfit = /datum/outfit/job/warden/bluesec
+		seccoff.plasmaman_outfit = /datum/outfit/plasmaman/bluesec
 	for(var/datum/job/head_of_security/seccoff in SSjob.all_occupations)
 		seccoff.outfit = /datum/outfit/job/hos/bluesec
+		seccoff.plasmaman_outfit = /datum/outfit/plasmaman/bluesec

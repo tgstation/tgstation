@@ -15,6 +15,14 @@
 	head = /obj/item/clothing/head/helmet/space/plasmaman/security
 	mask = /obj/item/clothing/mask/gas/sechailer/plasmaman
 
+/datum/outfit/plasmaman/bluesec
+	name = "Security Plasmaman (Bluesec)"
+
+	uniform = /obj/item/clothing/under/plasmaman/security/bluesec
+	gloves = /obj/item/clothing/gloves/color/plasmaman/black
+	head = /obj/item/clothing/head/helmet/space/plasmaman/security/bluesec
+	mask = /obj/item/clothing/mask/gas/sechailer/plasmaman
+
 /datum/outfit/plasmaman/detective
 	name = "Detective Plasmaman"
 
