@@ -57,7 +57,6 @@
 
 		active_hotspot = new /obj/effect/hotspot(src, exposed_volume*25, exposed_temperature)
 		our_hot_group = new
-		our_hot_group.add_to_group(src)
 		if(COOLDOWN_FINISHED(src, fire_puff_cooldown))
 			playsound(src, 'sound/effects/fire_puff.ogg', 50)
 			COOLDOWN_START(src, fire_puff_cooldown, 5 SECONDS)
@@ -372,6 +371,10 @@
 	target.our_hot_group = src
 	x_coord += target.x
 	y_coord += target.y
+
+/datum/hot_group/proc/scan_add(turf/open/center)
+	for(var/turf/open/checking in center.atmos_adjacent_turfs)
+		if(checking.active_hotspot)
 
 /datum/hot_group/proc/merge_hot_groups(datum/hot_group/enemy_group)
 	var/random_group
