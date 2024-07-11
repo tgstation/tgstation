@@ -184,7 +184,14 @@
 	liked_foodtypes = GORE | MEAT | SEAFOOD | NUTS | BUGS
 	disliked_foodtypes = GRAIN | DAIRY | CLOTH | GROSS
 	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.9,aresample=%SAMPLE_RATE%,atempo=1/0.9,aformat=channel_layouts=mono,volume=0.2 [p0]; [out2] asetrate=%SAMPLE_RATE%*1.1,aresample=%SAMPLE_RATE%,atempo=1/1.1,aformat=channel_layouts=mono,volume=0.2[p2]; [p0][0][p2] amix=inputs=3"}
-	var/static/list/speech_replacements = list(new /regex("s+", "g") = "sss", new /regex("S+", "g") = "SSS", new /regex(@"(\w)x", "g") = "$1kss", new /regex(@"(\w)X", "g") = "$1KSSS", new /regex(@"\bx([\-|r|R]|\b)", "g") = "ecks$1", new /regex(@"\bX([\-|r|R]|\b)", "g") = "ECKS$1")
+	var/static/list/speech_replacements = list(
+		new /regex("s+", "g") = "sss",
+		new /regex("S+", "g") = "SSS",
+		new /regex(@"(\w)x", "g") = "$1kss",
+		new /regex(@"(\w)X", "g") = "$1KSSS",
+		new /regex(@"\bx([\-|r|R]|\b)", "g") = "ecks$1",
+		new /regex(@"\bX([\-|r|R]|\b)", "g") = "ECKS$1",
+	)
 
 /obj/item/organ/internal/tongue/lizard/New(class, timer, datum/mutation/human/copymut)
 	. = ..()
