@@ -21,7 +21,6 @@
 
 	price_min = CARGO_CRATE_VALUE * 1.375
 	price_max = CARGO_CRATE_VALUE * 2.875
-	stock_min = 2
 	stock_max = 4
 	availability_prob = 40
 

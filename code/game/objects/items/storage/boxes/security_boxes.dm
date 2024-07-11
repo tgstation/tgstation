@@ -205,7 +205,7 @@
 		new /obj/item/ammo_casing/shotgun/breacher(src)
 
 /obj/item/storage/box/large_dart
-	name = "box of XL shotgun darts
+	name = "box of XL shotgun darts"
 	name = "A box full of shotgun darts with increased chemical storage capacity."
 	icon_state = "shotdart_box"
 	illustration = null
