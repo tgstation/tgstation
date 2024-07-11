@@ -1,10 +1,11 @@
 /// Slapcrafting component!
-/datum/component/slapcrafting
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+/datum/element/slapcrafting
+	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 	var/list/slapcraft_recipes = list()
 
 /**
- * Slapcraft component
+ * Slapcraft element
  *
  * Slap it onto a item to be able to slapcraft with it
  *
@@ -14,35 +15,28 @@
  * It will check the area near the user for the rest of the ingredients and tools.
  * *
 **/
-/datum/component/slapcrafting/Initialize(
-		slapcraft_recipes = null,
-	)
+/datum/element/slapcrafting/Attach(datum/target, slapcraft_recipes = null)
+	..()
+	if(!isitem(target))
+		return ELEMENT_INCOMPATIBLE
 
-	if(!isitem(parent))
-		return COMPONENT_INCOMPATIBLE
+	var/obj/item/target_item = target
 
-	var/obj/item/parent_item = parent
+	if((target_item.item_flags & ABSTRACT) || (target_item.item_flags & DROPDEL))
+		return //Don't do anything, it just shouldn't be used in crafting.
 
-	if((parent_item.item_flags & ABSTRACT) || (parent_item.item_flags & DROPDEL))
-		return COMPONENT_NOTRANSFER
+	RegisterSignal(target, COMSIG_ATOM_ATTACKBY, PROC_REF(attempt_slapcraft))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(get_examine_info))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(get_examine_more_info))
+	RegisterSignal(target, COMSIG_TOPIC, PROC_REF(topic_handler))
 
-	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(attempt_slapcraft))
-	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(get_examine_info))
-	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(get_examine_more_info))
-	RegisterSignal(parent, COMSIG_TOPIC, PROC_REF(topic_handler))
+	src.slapcraft_recipes = slapcraft_recipes
 
-	src.slapcraft_recipes += slapcraft_recipes
+/datum/element/slapcrafting/Detach(datum/source, ...)
+	. = ..()
+	UnregisterSignal(source, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_EXAMINE, COMSIG_ATOM_EXAMINE_MORE))
 
-/datum/component/slapcrafting/InheritComponent(datum/component/slapcrafting/new_comp, original, slapcraft_recipes)
-	if(!original)
-		return
-	src.slapcraft_recipes += slapcraft_recipes
-
-/datum/component/slapcrafting/Destroy(force)
-	UnregisterSignal(parent, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_EXAMINE, COMSIG_ATOM_EXAMINE_MORE))
-	return ..()
-
-/datum/component/slapcrafting/proc/attempt_slapcraft(obj/item/parent_item, obj/item/slapper, mob/user)
+/datum/element/slapcrafting/proc/attempt_slapcraft(obj/item/parent_item, obj/item/slapper, mob/user)
 
 	if(isnull(slapcraft_recipes))
 		CRASH("NULL SLAPCRAFT RECIPES?")
@@ -71,9 +65,9 @@
 		return
 
 	// We might use radials so we need to split the proc chain
-	INVOKE_ASYNC(src, PROC_REF(slapcraft_async), valid_recipes, user, craft_sheet)
+	INVOKE_ASYNC(src, PROC_REF(slapcraft_async), parent_item, valid_recipes, user, craft_sheet)
 
-/datum/component/slapcrafting/proc/slapcraft_async(list/valid_recipes, mob/user, datum/component/personal_crafting/craft_sheet)
+/datum/element/slapcrafting/proc/slapcraft_async(obj/parent_item, list/valid_recipes, mob/user, datum/component/personal_crafting/craft_sheet)
 
 	var/list/recipe_choices = list()
 
@@ -90,7 +84,7 @@
 		if(!recipe_choices)
 			CRASH("No recipe choices despite validating in earlier proc")
 
-		string_chosen_recipe = show_radial_menu(user, parent, recipe_choices, require_near = TRUE)
+		string_chosen_recipe = show_radial_menu(user, parent_item, recipe_choices, require_near = TRUE)
 		if(isnull(string_chosen_recipe))
 			return // they closed the thing
 
@@ -118,7 +112,7 @@
 		to_chat(user, span_warning("crafting failed" + error_string))
 
 /// Alerts any examiners to the recipe, if they wish to know more.
-/datum/component/slapcrafting/proc/get_examine_info(atom/source, mob/user, list/examine_list)
+/datum/element/slapcrafting/proc/get_examine_info(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	var/list/string_results = list()
@@ -132,17 +126,17 @@
 		already_used_names += initial(result.name)
 		string_results += list("\a [initial(result.name)]")
 
-	examine_list += span_notice("You think [parent] could be used to make [english_list(string_results)]! Examine again to look at the details...")
+	examine_list += span_notice("You think [source] could be used to make [english_list(string_results)]! Examine again to look at the details...")
 
 /// Alerts any examiners to the details of the recipe.
-/datum/component/slapcrafting/proc/get_examine_more_info(atom/source, mob/user, list/examine_list)
+/datum/element/slapcrafting/proc/get_examine_more_info(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	for(var/datum/crafting_recipe/recipe as anything in slapcraft_recipes)
 		var/atom/result = initial(recipe.result)
 		examine_list += "<a href='?src=[REF(source)];check_recipe=[REF(recipe)]'>See Recipe For [initial(result.name)]</a>"
 
-/datum/component/slapcrafting/proc/topic_handler(atom/source, user, href_list)
+/datum/element/slapcrafting/proc/topic_handler(atom/source, user, href_list)
 	SIGNAL_HANDLER
 
 	if(!href_list["check_recipe"])
@@ -176,7 +170,7 @@
 		var/amount = initial(cur_recipe.reqs[ingredient])
 
 		// If we're about to describe the ingredient that the component is based on, lower the described amount by 1 or remove it outright.
-		if(parent.type == valid_type)
+		if(source.type == valid_type)
 			if(amount > 1)
 				amount--
 			else

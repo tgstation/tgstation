@@ -213,6 +213,10 @@
 	icon_state = "cyborg_upgrade3"
 	require_model = TRUE
 
+/obj/item/borg/upgrade/syndicate/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
+
 /obj/item/borg/upgrade/syndicate/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)

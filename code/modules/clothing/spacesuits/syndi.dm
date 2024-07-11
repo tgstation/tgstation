@@ -28,6 +28,7 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 	/obj/item/clothing/suit/space/syndicate/black/blue = /obj/item/clothing/head/helmet/space/syndicate/black/blue,
 	/obj/item/clothing/suit/space/syndicate/black/orange = /obj/item/clothing/head/helmet/space/syndicate/black/orange,
 	/obj/item/clothing/suit/space/syndicate/black/red = /obj/item/clothing/head/helmet/space/syndicate/black/red,
+	/obj/item/clothing/suit/space/syndicate/black/white = /obj/item/clothing/head/helmet/space/syndicate/black,
 	/obj/item/clothing/suit/space/syndicate/black/med = /obj/item/clothing/head/helmet/space/syndicate/black/med,
 	/obj/item/clothing/suit/space/syndicate/black/engie = /obj/item/clothing/head/helmet/space/syndicate/black/engie,
 ))
@@ -131,6 +132,13 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 	icon_state = "syndicate-black-blue"
 	inhand_icon_state = "syndicate-black-blue"
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black/blue
+
+//Black and white syndicate space suit without the medical iconography
+/obj/item/clothing/suit/space/syndicate/black/white
+	name = "black and white space suit"
+	icon_state = "syndicate-black-white"
+	inhand_icon_state = "syndicate-black"
+	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black
 
 
 //Black medical syndicate space suit

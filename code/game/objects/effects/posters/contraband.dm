@@ -4,6 +4,10 @@
 	poster_type = /obj/structure/sign/poster/contraband/random
 	icon_state = "rolled_poster"
 
+/obj/item/poster/random_contraband/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
+
 /obj/structure/sign/poster/contraband
 	poster_item_name = "contraband poster"
 	poster_item_desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as contraband aboard Nanotrasen space facilities."

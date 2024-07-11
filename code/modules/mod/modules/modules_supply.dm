@@ -559,7 +559,7 @@
 	light_range = 1
 	light_power = 1
 	light_color = COLOR_LIGHT_ORANGE
-	embedding = null
+	embed_type = null
 
 /obj/projectile/bullet/mining_bomb/Initialize(mapload)
 	. = ..()
