@@ -1,0 +1,5 @@
+author: "Singul0"
+delete-after: True
+changes:
+  - qol: "adds an oxygen chamber for wawastation ordnance"
+  - qol: "adds some missing critical items needed to do ordnance and xenobiology"
