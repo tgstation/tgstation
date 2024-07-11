@@ -587,8 +587,8 @@
 
 /// Black mesa security
 /datum/station_trait/blue_sec
-	name = "Backup Security Equipment"
-	report_message =  "Due to problems in our logistical network of your sector, we have been forced to equip your security department with uniforms from our subsidiary scientific research company."
+	name = "Backup Security Uniforms"
+	report_message =  "Due to problems in our logistical network of your sector, we have been forced to equip your security department with uniforms from our subsidiary scientific research company. Brig has been recolored accordingly"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 200000
 	show_in_report = TRUE
