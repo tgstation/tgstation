@@ -12,15 +12,17 @@
 
 	if(istype(target, /obj/structure/window))
 		var/obj/structure/grille/grille = locate(/obj/structure/grille) in get_turf(target)
-		if(grille?.shock(tapper, 100))
-			return
+		if(grille?.is_shocked())
+			target.balloon_alert(tapper, "is shocked!")
+			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 		var/obj/structure/window/window = target
 		window.temporary_shatter()
 	else if(istype(target, /obj/structure/grille))
 		var/obj/structure/grille/grille = target
-		if(grille.shock(tapper, 100))
-			return
+		if(grille.is_shocked())
+			target.balloon_alert(tapper, "is shocked!")
+			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 		grille.temporary_shatter()
 	else
