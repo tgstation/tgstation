@@ -69977,7 +69977,7 @@
 /obj/effect/turf_decal/siding/brown{
 	dir = 1
 	},
-/obj/machinery/incident_display/dual/directional/north,
+/obj/machinery/incident_display/bridge/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/command/bridge)
 "wLd" = (
