@@ -88,8 +88,8 @@
 		qdel(src)
 		return COMPONENT_MOVABLE_NEWTONIAN_BLOCK
 
-	var/force_x = sin(drifting_loop.angle) * drift_force + sin(inertia_angle) * additional_force
-	var/force_y = cos(drifting_loop.angle) * drift_force + cos(inertia_angle) * additional_force
+	var/force_x = sin(drifting_loop.angle) * drift_force + sin(inertia_angle) * additional_force / source.inertia_force_weight
+	var/force_y = cos(drifting_loop.angle) * drift_force + cos(inertia_angle) * additional_force / source.inertia_force_weight
 
 	drift_force = clamp(sqrt(force_x * force_x + force_y * force_y), 0, (!isnull(controlled_cap) && drift_force <= controlled_cap) ? controlled_cap : INERTIA_FORCE_CAP)
 	if(drift_force < 0.1) // Rounding issues
@@ -240,12 +240,12 @@
 	/// Lack of angle means that we are trying to halt movement
 	if (isnull(target_angle))
 		// Going through newtonian_move ensures that all Process_Spacemove code runs properly, instead of directly adjusting forces
-		source.newtonian_move((drifting_loop.angle + 180) % 360, drift_force = min(drift_force, stabilization_force))
+		source.newtonian_move((drifting_loop.angle + 180) % 360, drift_force = min(drift_force, stabilization_force / source.inertia_force_weight))
 		return
 
 	// Force required to be applied in order to get to the desired movement vector
 	var/force_x = sin(target_angle) * target_force - sin(drifting_loop.angle) * drift_force
 	var/force_y = cos(target_angle) * target_force - cos(drifting_loop.angle) * drift_force
 	var/force_angle = delta_to_angle(force_x, force_y)
-	var/applied_force = min(sqrt(force_x * force_x + force_y * force_y), stabilization_force)
+	var/applied_force = min(sqrt(force_x * force_x + force_y * force_y), stabilization_force / source.inertia_force_weight)
 	source.newtonian_move(force_angle, drift_force = applied_force)

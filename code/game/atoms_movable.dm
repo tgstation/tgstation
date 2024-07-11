@@ -35,6 +35,8 @@
 	var/inertia_moving = FALSE
 	///Multiplier for inertia based movement in space
 	var/inertia_move_multiplier = 1
+	///Object "weight", higher weight reduces acceleration applied to the object
+	var/inertia_force_weight = 1
 	///The last time we pushed off something
 	///This is a hack to get around dumb him him me scenarios
 	var/last_pushoff
