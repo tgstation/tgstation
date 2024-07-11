@@ -164,7 +164,7 @@
 /datum/gas_reaction/zauker_decomp/init_factors() //Fixed reaction rate
 	factor = list(
 		/datum/gas/zauker = "Zauker is consumed at 1 reaction rate",
-		/datum/gas/nitrogen = "At least [MINIMUM_MOLE_COUNT] moles of Nitrogen needs to be present for this reaction to occur. Nitrogen is produced at 0.7 reaction rate",
+		/datum/gas/water_vapor = "At least [MINIMUM_MOLE_COUNT] moles of H2O needs to be present for this reaction to occur. H2O is produced at 0.7 reaction rate", //monke edit, changes nitrogen to water_vapor
 		/datum/gas/oxygen = "Oxygen is produced at 0.3 reaction rate",
 		"Energy" = "[ZAUKER_DECOMPOSITION_ENERGY] joules of energy is released per reaction rate",
 	)
