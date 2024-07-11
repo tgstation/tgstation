@@ -324,10 +324,10 @@
 		return ITEM_INTERACT_SUCCESS
 	if(istype(tool, /obj/item/mod/paint))
 		var/obj/item/mod/paint/paint_kit = tool
+		if(active || activating)
+			balloon_alert(user, "suit is active!")
+			return ITEM_INTERACT_BLOCKING
 		if(LAZYACCESS(modifiers, RIGHT_CLICK)) // Right click
-			if(active || activating)
-				balloon_alert(user, "suit is active!")
-				return ITEM_INTERACT_BLOCKING
 			if(paint_kit.editing_mod == src)
 				return ITEM_INTERACT_BLOCKING
 			paint_kit.editing_mod = src
@@ -340,9 +340,6 @@
 			paint_kit.ui_interact(user)
 			return ITEM_INTERACT_SUCCESS
 		else // Left click
-			if(active || activating)
-				balloon_alert(user, "suit is active!")
-				return ITEM_INTERACT_BLOCKING
 			paint_kit.paint_skin(src, user)
 			return ITEM_INTERACT_SUCCESS
 	if(istype(tool, /obj/item/mod/module))
