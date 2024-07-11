@@ -1,0 +1,4 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - balance: "War declaration gives 600 research points to the station"
