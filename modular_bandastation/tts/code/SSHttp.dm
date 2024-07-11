@@ -69,7 +69,7 @@ SUBSYSTEM_DEF(http)
 		log_data += "END ASYNC REQUEST (ID: [req.id])"
 
 		// Write the log data
-		
+
 		logger.Log(LOG_CATEGORY_DEBUG, log_data.Join("\n"))
 
 /**
@@ -84,3 +84,7 @@ SUBSYSTEM_DEF(http)
 /datum/http_request
 	/// Callback for executing after async requests. Will be called with an argument of [/datum/http_response] as first argument
 	var/datum/callback/cb
+
+/world/Del()
+	rustgss220_close_async_http_client()
+	. = ..()
