@@ -33,7 +33,7 @@
 		to_chat(owner, span_notice("You will now summon shoes if your target has none."))
 
 	if(spell_level == 4)
-		invocation = null
+		invocation_type_type = INVOCATION_NONE
 		to_chat(owner, span_boldnotice("Your invocations are now silent!"))
 
 /datum/action/cooldown/spell/pointed/untie_shoes/is_valid_target(atom/cast_on)
@@ -53,7 +53,10 @@
 		cast_on.add_movespeed_modifier(/datum/movespeed_modifier/magic_ties)
 		addtimer(CALLBACK(cast_on, TYPE_PROC_REF(/mob/living, remove_movespeed_modifier), /datum/movespeed_modifier/magic_ties), 3 SECONDS * spell_level, TIMER_UNIQUE|TIMER_OVERRIDE)
 		to_chat(owner, span_warning("You tie [cast_on] with weak, magic laces!"))
-		cast_on.balloon_alert_to_viewers("magically tied!")
+		if(invocation_type != INVOCATION_NONE) // extra feedback since it's weird for them
+			cast_on.balloon_alert_to_viewers("magically tied!")
+		else
+			cast_on.balloon_alert(owner, "magically tied!")
 		playsound(cast_on, 'sound/magic/summonitems_generic.ogg', 50, TRUE)
 		return TRUE
 
@@ -92,11 +95,11 @@
 					return FALSE
 
 			to_chat(owner, span_warning("You untie [cast_on]'s shoes!"))
-			cast_on.balloon_alert_to_viewers("untied!")
+			cast_on.balloon_alert(owner, "untied!")
 			shoes_to_tie.adjust_laces(SHOES_UNTIED, force_lacing = TRUE)
 		if(SHOES_UNTIED)
 			to_chat(owner, span_warning("You knot [cast_on]'s laces!"))
-			cast_on.balloon_alert_to_viewers("knotted!")
+			cast_on.balloon_alert(owner, "knotted!")
 			shoes_to_tie.adjust_laces(SHOES_KNOTTED, force_lacing = TRUE)
 		if(SHOES_KNOTTED)
 			to_chat(owner, span_warning("[cast_on]'s laces are already knotted!"))
