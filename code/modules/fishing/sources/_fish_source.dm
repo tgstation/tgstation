@@ -310,7 +310,7 @@ GLOBAL_LIST(fishing_property_cache)
 					highest_fish_weight = fish_weight
 
 		for(var/fish in collected_fish_weights)
-			var/difference = collected_fish_weights[fish] - highest_fish_weight
+			var/difference = highest_fish_weight - collected_fish_weights[fish]
 			if(!difference)
 				continue
 			final_table[fish] += round(difference**leveling_exponent, 1)

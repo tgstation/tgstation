@@ -83,6 +83,7 @@
 	description = "Security suits for space crime handling."
 	prereq_ids = list(TECHWEB_NODE_MOD_EQUIP)
 	design_ids = list(
+		"mod_mirage_grenade",
 		"mod_plating_security",
 		"mod_stealth",
 		"mod_mag_harness",

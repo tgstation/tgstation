@@ -8,9 +8,15 @@
 	w_class = WEIGHT_CLASS_BULKY
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
 	actions_types = list(/datum/action/item_action/set_internals, /datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
+	/// What gas our jetpack is filled with on initialize
 	var/gas_type = /datum/gas/oxygen
+	/// If the jetpack is currently active
 	var/on = FALSE
+	/// If the jetpack will stop when you stop moving
 	var/stabilize = FALSE
+	/// If our jetpack is disabled, from getting EMPd
+	var/disabled = FALSE
+	/// Callback for the jetpack component
 	var/thrust_callback
 
 /obj/item/tank/jetpack/Initialize(mapload)
@@ -93,6 +99,8 @@
 	icon_state = "[initial(icon_state)][on ? "-on" : ""]"
 
 /obj/item/tank/jetpack/proc/turn_on(mob/user)
+	if(disabled)
+		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_JETPACK_ACTIVATED, user) & JETPACK_ACTIVATION_FAILED)
 		return FALSE
 	on = TRUE
@@ -133,6 +141,23 @@
 	suffocater.say("WHAT THE FUCK IS CARBON DIOXIDE?")
 	suffocater.visible_message(span_suicide("[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_they()] didn't read what that jetpack says!"))
 	return OXYLOSS
+
+/obj/item/tank/jetpack/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_CONTENTS)
+		return
+	if(ismob(loc) && (item_flags & IN_INVENTORY))
+		var/mob/wearer = loc
+		turn_off(wearer)
+	else
+		turn_off()
+	update_item_action_buttons()
+	disabled = TRUE
+	addtimer(CALLBACK(src, PROC_REF(remove_emp)), 4 SECONDS)
+
+///Removes the disabled flag after getting EMPd
+/obj/item/tank/jetpack/proc/remove_emp()
+	disabled = FALSE
 
 /obj/item/tank/jetpack/improvised
 	name = "improvised jetpack"

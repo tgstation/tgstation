@@ -95,6 +95,8 @@
 			context[SCREENTIP_CONTEXT_RMB] = "Transfer beaker reagents"
 		else if(istype(held_item, /obj/item/food/icecream))
 			context[SCREENTIP_CONTEXT_LMB] = "Take scoop of [selected_flavour] ice cream"
+		else if(istype(held_item, /obj/item/kitchen/spoon) || istype(held_item, /obj/item/kitchen/spoon/soup_ladle))
+			context[SCREENTIP_CONTEXT_RMB] = "Spill reagent"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	switch(vat_mode)
@@ -106,10 +108,20 @@
 			context[SCREENTIP_CONTEXT_RMB] = "Change mode to flavors"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/icecream_vat/attackby(obj/item/reagent_containers/beaker, mob/user, params)
+/obj/machinery/icecream_vat/examine(mob/user)
+	. = ..()
+	. += "You can use a [EXAMINE_HINT("spoon")] or [EXAMINE_HINT("soup ladle")] to spill reagents."
+
+/obj/machinery/icecream_vat/attackby(obj/item/weapon, mob/user, params)
 	. = ..()
 	if(.)
 		return
+
+	if(istype(weapon, /obj/item/kitchen/spoon) || istype(weapon, /obj/item/kitchen/spoon/soup_ladle))
+		spill_reagents(user)
+		return TRUE
+
+	var/obj/item/reagent_containers/beaker = weapon
 	if(!istype(beaker) || !beaker.reagents || (beaker.item_flags & ABSTRACT) || !beaker.is_open_container())
 		return
 
@@ -203,6 +215,14 @@
 	var/obj/item/food/icecream/cone = cone_prototypes[choice]
 	if(cone)
 		make_cone(user, choice, cone.ingredients)
+
+///Lets the user select a reagent in the vat to spill out.
+/obj/machinery/icecream_vat/proc/spill_reagents(mob/living/user)
+	var/datum/reagent/reagent_to_remove = tgui_input_list(user, "Select a reagent to purge from the vat.", "Remove reagent", reagents.reagent_list, ui_state = GLOB.conscious_state)
+	if(isnull(reagent_to_remove) || !user.can_perform_action(src, action_bitflags = ALLOW_RESTING))
+		return
+	balloon_alert(user, "spilled [reagent_to_remove.name]")
+	reagents.remove_reagent(reagent_to_remove.type, reagent_to_remove.volume)
 
 /obj/machinery/icecream_vat/proc/make_ice_cream_color(datum/ice_cream_flavour/flavor)
 	if(!flavor.color)

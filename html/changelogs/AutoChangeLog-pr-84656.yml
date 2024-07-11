@@ -1,4 +1,0 @@
-author: "DGamerL"
-delete-after: True
-changes:
-  - refactor: "refactored `GetExactComponent` to be 1641 compatible"

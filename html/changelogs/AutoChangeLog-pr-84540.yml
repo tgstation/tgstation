@@ -1,5 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes:
-  - code_imp: "Added the subtype vendor which lets admins and coders vend subtypes of a path"
-  - code_imp: "Added the vendor and both varieties of omnitool to runtime station"

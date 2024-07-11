@@ -33,8 +33,3 @@
 	suffix = "kilo"
 	name = "kilo transport ferry"
 	description = "Standard issue CentCom Ferry for Kilo pattern stations. Includes additional equipment and rechargers."
-
-/datum/map_template/shuttle/ferry/northstar
-	suffix = "northstar"
-	name = "north star transport ferry"
-	description = "In the very depths of the frontier, you'll need a rugged shuttle capable of delivering crew, this is that."
