@@ -1731,7 +1731,7 @@
 			if(!FAX.centcom_fax)
 				continue
 
-			FAX.receive(locate(href_lift["fax_paper"]), href_list["fax_name"])
+			FAX.receive(locate(href_list["print_fax"]), href_list["fax_name"])
 	else if(href_list["play_internet"])
 		if(!check_rights(R_SOUND))
 			return
