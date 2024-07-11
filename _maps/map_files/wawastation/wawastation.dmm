@@ -4944,10 +4944,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/white/textured_large,
 /area/station/science/xenobiology)
-"bLJ" = (
-/obj/structure/cable,
-/turf/open/floor/iron/white/textured_large,
-/area/station/science/xenobiology)
 "bLS" = (
 /obj/effect/turf_decal/stripes/box,
 /obj/structure/cable/multilayer/multiz,
@@ -16281,6 +16277,14 @@
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
+"fNI" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/white/smooth_half{
+	dir = 8
+	},
+/area/station/science/xenobiology)
 "fNW" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/space/openspace,
@@ -187145,10 +187149,10 @@ pjL
 jEt
 gdM
 rdn
-gCP
-lKY
-lKY
-lKY
+fNI
+wnA
+wnA
+wnA
 wnA
 viT
 bUl
@@ -187402,10 +187406,10 @@ fSi
 fXW
 jej
 krO
-bLJ
-bLJ
-bLJ
-bLJ
+krO
+krO
+krO
+krO
 krO
 krO
 krO
