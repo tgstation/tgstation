@@ -59684,7 +59684,7 @@
 /area/station/engineering/storage_shared)
 "tHi" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/human/species/monkey/punpun,
+/obj/effect/landmark/start/pun_pun,
 /turf/open/floor/stone,
 /area/station/service/abandoned_gambling_den)
 "tHp" = (

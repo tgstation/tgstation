@@ -18,7 +18,7 @@
 
 	expected_types += /mob/living/basic/parrot/poly
 	expected_types += /mob/living/basic/pet/dog/corgi/ian
-	expected_types += /mob/living/carbon/human/species/monkey/punpun
+	expected_types += /obj/effect/landmark/start/pun_pun
 	expected_types += /obj/machinery/computer/communications
 	expected_types += /obj/machinery/drone_dispenser
 	expected_types += /obj/item/piggy_bank/vault

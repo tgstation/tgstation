@@ -41789,7 +41789,7 @@
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/mob/living/carbon/human/species/monkey/punpun,
+/obj/effect/landmark/start/pun_pun,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "oSk" = (

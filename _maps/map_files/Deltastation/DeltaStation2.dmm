@@ -51715,7 +51715,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/event_spawn,
-/mob/living/carbon/human/species/monkey/punpun,
+/obj/effect/landmark/start/pun_pun,
 /turf/open/floor/carpet/green,
 /area/station/commons/lounge)
 "mSD" = (

@@ -70259,7 +70259,7 @@
 	dir = 1
 	},
 /obj/structure/chair/sofa/middle/brown,
-/mob/living/carbon/human/species/monkey/punpun,
+/obj/effect/landmark/start/pun_pun,
 /turf/open/floor/carpet/green,
 /area/station/service/bar/atrium)
 "sgc" = (

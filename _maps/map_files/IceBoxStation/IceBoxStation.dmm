@@ -5079,7 +5079,7 @@
 /obj/effect/turf_decal/siding/wood/end{
 	dir = 1
 	},
-/mob/living/carbon/human/species/monkey/punpun,
+/obj/effect/landmark/start/pun_pun,
 /obj/item/kirbyplants/organic/plant11,
 /turf/open/floor/stone,
 /area/station/service/bar/atrium)

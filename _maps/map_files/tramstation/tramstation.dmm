@@ -30352,7 +30352,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/processing)
 "jPK" = (
-/mob/living/carbon/human/species/monkey/punpun,
+/obj/effect/landmark/start/pun_pun,
 /obj/structure/cable,
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark,

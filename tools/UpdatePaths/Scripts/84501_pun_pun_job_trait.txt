@@ -1,0 +1,1 @@
+/mob/living/carbon/human/species/monkey/punpun : /obj/effect/landmark/start/pun_pun{@OLD}
