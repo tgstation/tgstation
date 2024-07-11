@@ -11,3 +11,7 @@
 	foodtypes = FRUIT
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/badrecipe/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_TRASH_ITEM, INNATE_TRAIT)

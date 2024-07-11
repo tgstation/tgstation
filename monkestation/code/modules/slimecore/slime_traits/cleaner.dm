@@ -7,8 +7,8 @@
 	///decals we can clean
 	var/static/list/cleanable_decals = typecacheof(list(
 		/obj/effect/decal/cleanable/ants,
-		/obj/effect/decal/cleanable/ash,
 		/obj/effect/decal/cleanable/confetti,
+		/obj/effect/decal/cleanable/ash,
 		/obj/effect/decal/cleanable/dirt,
 		/obj/effect/decal/cleanable/fuel_pool,
 		/obj/effect/decal/cleanable/generic,
@@ -45,6 +45,9 @@
 		/obj/item/food/candy_trash,
 		/obj/item/cigbutt,
 		/obj/item/food/breadslice/moldy,
+		/obj/item/food/pizzaslice/moldy,
+		/obj/item/food/badrecipe,
+		/obj/item/food/egg/rotten,
 		/obj/item/light/tube/broken,
 		/obj/item/light/bulb/broken,
 		/obj/item/popsicle_stick,

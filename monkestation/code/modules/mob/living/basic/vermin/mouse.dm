@@ -1,3 +1,7 @@
+/obj/item/food/deadmouse/Initialize(mapload, mob/living/basic/mouse/dead_critter)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_TRASH_ITEM, INNATE_TRAIT)
+
 /obj/item/food/deadmouse/extrapolator_act(mob/user, obj/item/extrapolator/E, scan = TRUE)
 	if(!ratdisease.len)
 		return FALSE

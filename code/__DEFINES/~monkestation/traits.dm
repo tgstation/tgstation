@@ -33,6 +33,8 @@
 // /obj/item
 /// Whether a storage item can be compressed by the bluespace compression kit, without the usual storage limitation.
 #define TRAIT_BYPASS_COMPRESS_CHECK "can_compress_anyways"
+/// This item is considered "trash" (and will be eaten by cleaner slimes)
+#define TRAIT_TRASH_ITEM "trash_item"
 
 #define ABDUCTOR_GLAND_VENTCRAWLING_TRAIT "abductor_gland_ventcrawling"
 #define TRAIT_BETTER_CYBERCONNECTOR "better_cyberconnector_hacking"

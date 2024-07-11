@@ -38,6 +38,8 @@
 	user.balloon_alert_to_viewers("injected mutator")
 	to_chat(user, span_notice("You inject [target] with [src]."))
 	on_inject(slime)
+	if(uses <= 0)
+		ADD_TRAIT(src, TRAIT_TRASH_ITEM, INNATE_TRAIT)
 
 /obj/item/slime_mutation_syringe/proc/on_inject(mob/living/basic/slime/target)
 

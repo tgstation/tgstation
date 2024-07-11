@@ -57,7 +57,7 @@
 	///our list of slime traits
 	var/list/slime_traits = list()
 	///used to help our name changes so we don't rename named slimes
-	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime \\(\\d+\\)")
+	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) (cleaner )?(cat)?slime \\(\\d+\\)")
 	///our number
 	var/number
 
@@ -308,6 +308,7 @@
 	var/datum/slime_trait/new_trait = new added_trait
 	new_trait.on_add(src)
 	slime_traits += new_trait
+	update_name()
 	return TRUE
 
 ///unlike add trait this uses a type and is checked against the list don't pass the created one pass the type
@@ -317,6 +318,7 @@
 			continue
 		slime_traits -= trait
 		qdel(trait)
+		update_name()
 		return
 
 ///unlike add trait this uses a type and is checked against the list don't pass the created one pass the type
@@ -331,10 +333,16 @@
 	if(slime_name_regex.Find(name))
 		if(!number)
 			number = rand(1, 1000)
+		var/slime_variant = "slime"
+		if(has_slime_trait(/datum/slime_trait/visual/cat))
+			slime_variant = "catslime"
+		if(slime_flags & CLEANER_SLIME)
+			slime_variant = "cleaner [slime_variant]"
+
 		if(overriding_name_prefix)
-			name = "[overriding_name_prefix] [current_color.name] [(slime_flags & ADULT_SLIME) ? "adult" : "baby"] slime ([number])"
+			name = "[overriding_name_prefix] [current_color.name] [(slime_flags & ADULT_SLIME) ? "adult" : "baby"] [slime_variant] ([number])"
 		else
-			name = "[current_color.name] [(slime_flags & ADULT_SLIME) ? "adult" : "baby"] slime ([number])"
+			name = "[current_color.name] [(slime_flags & ADULT_SLIME) ? "adult" : "baby"] [slime_variant] ([number])"
 		real_name = name
 	update_name_tag()
 	return ..()

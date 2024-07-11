@@ -29,4 +29,5 @@
 			if(uses == 0)
 				icon_state = "glue_used"
 				name = "empty bottle of super glue"
+				ADD_TRAIT(src, TRAIT_TRASH_ITEM, INNATE_TRAIT)
 			return

@@ -12,6 +12,10 @@
 	///What kind of condiment pack should we give the package
 	var/condiment_pack = /obj/item/reagent_containers/condiment/pack/ketchup
 
+/obj/item/storage/box/foodpack/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/trash_if_empty)
+
 /obj/item/storage/box/foodpack/PopulateContents()
 	. = ..()
 	new main_course(src)

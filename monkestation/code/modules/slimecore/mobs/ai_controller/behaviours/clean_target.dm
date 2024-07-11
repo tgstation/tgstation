@@ -17,7 +17,8 @@
 		finish_action(controller, FALSE, target_key)
 		return
 
-	living_pawn.visible_message(span_notice("[living_pawn] dissolves the [target]."))
+	living_pawn.balloon_alert_to_viewers("cleaned")
+	living_pawn.visible_message(span_notice("[living_pawn] dissolves \the [target]."))
 	SEND_SIGNAL(living_pawn, COMSIG_MOB_FEED, target, 20)
 	qdel(target) // Sent to the shadow realm to never be seen again
 	finish_action(controller, TRUE, target_key)
@@ -33,10 +34,30 @@
 	controller.clear_blackboard_key(target_key)
 
 /datum/ai_behavior/find_and_set/in_list/clean_targets_slime
-	action_cooldown = 2 SECONDS
+	action_cooldown = 1.2 SECONDS
 
 /datum/ai_behavior/find_and_set/in_list/clean_targets_slime/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
-	var/list/found = typecache_filter_list(oview(search_range, controller.pawn), locate_paths)
-	if(length(found))
-		return pick(found)
-
+	var/obj/closest
+	var/closest_dist
+	var/closest_path
+	for(var/obj/trash as anything in view(search_range, controller.pawn))
+		if(QDELETED(trash))
+			continue
+		if(!is_type_in_typecache(trash, locate_paths) && !HAS_TRAIT(trash, TRAIT_TRASH_ITEM))
+			continue
+		if(trash.loc == controller.pawn.loc)
+			return trash
+		var/dist = get_dist(get_turf(controller.pawn), get_turf(trash))
+		var/path_length
+		if(!QDELETED(closest))
+			if(dist > (closest_dist + 2)) // leeway to try to avoid "shorter dist but longer path" targets
+				continue
+			path_length = length(get_path_to(controller.pawn, trash))
+			if(closest_path <= path_length)
+				continue
+		else
+			path_length = length(get_path_to(controller.pawn, trash))
+		closest = trash
+		closest_dist = dist
+		closest_path = path_length
+	return closest

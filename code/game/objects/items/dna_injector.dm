@@ -96,6 +96,7 @@
 		to_chat(user, span_notice("It appears that [target] does not have compatible DNA."))
 
 	used = TRUE
+	ADD_TRAIT(src, TRAIT_TRASH_ITEM, INNATE_TRAIT) // monkestation edit: trash item trait
 	update_appearance()
 
 /obj/item/dnainjector/timed
