@@ -1,0 +1,9 @@
+author: "SirNightKnight"
+delete-after: True
+changes:
+  - rscadd: "Seclite mount for the NT SWAT Helmet"
+  - qol: "SWAT Helmets now hides  hair"
+  - rscdel: "SWAT Helmet mouth coverage"
+  - balance: "SWAT gear now has more bullet resistance"
+  - balance: "SWAT suit now has less slowdown (0.7 to 0.5)"
+  - bugfix: "Realigned the East direction of the NT SWAT helmet so it doesn't look out of place. Was shifted over one pixel by accident."
