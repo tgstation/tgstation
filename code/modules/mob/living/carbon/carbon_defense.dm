@@ -283,7 +283,7 @@
 	else
 		Knockdown(stun_duration)
 
-/mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper)
+/mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper, force_friendly)
 	if(on_fire)
 		to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
 		return
@@ -374,7 +374,7 @@
 		else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			to_chat(helper, span_warning("It feels like [src] is freezing as you hug [p_them()]."))
 
-		if(HAS_TRAIT(helper, TRAIT_FRIENDLY))
+		if(HAS_TRAIT(helper, TRAIT_FRIENDLY) || force_friendly)
 			if (helper.mob_mood.sanity >= SANITY_GREAT)
 				new /obj/effect/temp_visual/heart(loc)
 				add_mood_event("friendly_hug", /datum/mood_event/besthug, helper)
@@ -415,7 +415,7 @@
 				// this way, we only visibly try to examine ourselves if we have something embedded, otherwise we'll still hug ourselves :)
 				visible_message(span_notice("[src] examines [p_them()]self."), \
 					span_notice("You check yourself for shrapnel."))
-			if(I.isEmbedHarmless())
+			if(I.is_embed_harmless())
 				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck to your [LB.name]!</a>")
 			else
 				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
@@ -696,7 +696,7 @@
 /mob/living/carbon/get_shove_flags(mob/living/shover, obj/item/weapon)
 	. = ..()
 	. |= SHOVE_CAN_STAGGER
-	if(IsKnockdown() && !IsParalyzed())
+	if(IsKnockdown() && !IsParalyzed() && HAS_TRAIT(src, TRAIT_STUN_ON_NEXT_SHOVE))
 		. |= SHOVE_CAN_KICK_SIDE
 	if(HAS_TRAIT(src, TRAIT_NO_SIDE_KICK)) // added as an extra check, just in case
 		. &= ~SHOVE_CAN_KICK_SIDE

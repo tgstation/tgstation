@@ -19,6 +19,9 @@
 		"cybernetic_liver",
 		"cybernetic_heart",
 	)
+	experiments_to_unlock = list(
+		/datum/experiment/scanning/people/android,
+	)
 
 /datum/techweb_node/cybernetics
 	id = TECHWEB_NODE_CYBERNETICS
@@ -213,7 +216,7 @@
 		"cybernetic_liver_tier3",
 		"cybernetic_heart_tier3",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	required_experiments = list(/datum/experiment/scanning/people/augmented_organs)
 
 /datum/techweb_node/cyber/cyber_organs_adv
@@ -229,3 +232,4 @@
 		"ci-xray-moth",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/people/android = TECHWEB_TIER_5_POINTS)

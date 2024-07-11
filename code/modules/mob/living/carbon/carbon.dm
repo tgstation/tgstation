@@ -6,6 +6,7 @@
 
 	GLOB.carbon_list += src
 	ADD_TRAIT(src, TRAIT_CAN_HOLD_ITEMS, INNATE_TRAIT) // Carbons are assumed to be innately capable of having arms, we check their arms count instead
+	breathing_loop = new(src)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -21,6 +22,7 @@
 		qdel(scar)
 	remove_from_all_data_huds()
 	QDEL_NULL(dna)
+	QDEL_NULL(breathing_loop)
 	GLOB.carbon_list -= src
 
 /mob/living/carbon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -227,13 +229,6 @@
 /mob/living/carbon/on_fall()
 	. = ..()
 	loc.handle_fall(src)//it's loc so it doesn't call the mob's handle_fall which does nothing
-
-/mob/living/carbon/is_muzzled()
-	for (var/obj/item/clothing/clothing in get_equipped_items())
-		if(clothing.clothing_flags & BLOCKS_SPEECH)
-			return TRUE
-	return FALSE
-
 
 /mob/living/carbon/resist_buckle()
 	if(!HAS_TRAIT(src, TRAIT_RESTRAINED))

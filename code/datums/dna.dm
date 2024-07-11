@@ -79,7 +79,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/stability = 100
 	///Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
 	var/scrambled = FALSE
-
+	/// Weighted list of nonlethal meltdowns
+	var/static/list/nonfatal_meltdowns = list()
+	/// Weighted list of lethal meltdowns
+	var/static/list/fatal_meltdowns = list()
 
 /datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
@@ -466,7 +469,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		generate_dna_blocks()
 	if(randomize_features)
 		for(var/species_type in GLOB.species_prototypes)
-			features |= GLOB.species_prototypes[species_type].randomize_features()
+			var/list/new_features = GLOB.species_prototypes[species_type].randomize_features()
+			for(var/feature in new_features)
+				features[feature] = new_features[feature]
 
 		features["mcolor"] = "#[random_color()]"
 
@@ -871,81 +876,23 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/instability = -dna.stability
 	dna.remove_all_mutations()
 	dna.stability = 100
-	if(prob(max(70-instability,0)))
-		switch(rand(0,11)) //not complete and utter death
-			if(0)
-				monkeyize()
-			if(1)
-				gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
-				new/obj/vehicle/ridden/wheelchair(get_turf(src)) //don't buckle, because I can't imagine to plethora of things to go through that could otherwise break
-				to_chat(src, span_warning("My flesh turned into a wheelchair and I can't feel my legs."))
-			if(2)
-				corgize()
-			if(3)
-				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
-			if(4)
-				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
-				physiology.damage_resistance -= 20000 //you thought
-			if(5)
-				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
-				reagents.add_reagent(/datum/reagent/aslimetoxin, 10)
-			if(6)
-				apply_status_effect(/datum/status_effect/go_away)
-			if(7)
-				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
-				ForceContractDisease(new /datum/disease/decloning) // slow acting, non-viral GBS
-			if(8)
-				var/list/elligible_organs = list()
-				for(var/obj/item/organ/internal/internal_organ in organs) //make sure we dont get an implant or cavity item
-					elligible_organs += internal_organ
-				vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 10)
-				if(elligible_organs.len)
-					var/obj/item/organ/O = pick(elligible_organs)
-					O.Remove(src)
-					visible_message(span_danger("[src] vomits up [p_their()] [O.name]!"), span_danger("You vomit up your [O.name]")) //no "vomit up your heart"
-					O.forceMove(drop_location())
-					if(prob(20))
-						O.animate_atom_living()
-			if(9 to 10)
-				ForceContractDisease(new/datum/disease/gastrolosis())
-				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
-			if(11)
-				to_chat(src, span_notice("Your DNA mutates into the ultimate biological form!"))
-				crabize()
-	else
-		switch(rand(0,6))
-			if(0)
-				investigate_log("has been gibbed by DNA instability.", INVESTIGATE_DEATHS)
-				gib(DROP_ALL_REMAINS)
-			if(1)
-				investigate_log("has been dusted by DNA instability.", INVESTIGATE_DEATHS)
-				dust()
-			if(2)
-				investigate_log("has been transformed into a statue by DNA instability.", INVESTIGATE_DEATHS)
-				death()
-				petrify(statue_timer = INFINITY, save_brain = FALSE)
-				ghostize(FALSE)
-			if(3)
-				if(prob(95))
-					var/obj/item/bodypart/BP = get_bodypart(pick(BODY_ZONE_CHEST,BODY_ZONE_HEAD))
-					if(BP)
-						BP.dismember()
-					else
-						investigate_log("has been gibbed by DNA instability.", INVESTIGATE_DEATHS)
-						gib(DROP_ALL_REMAINS)
-				else
-					set_species(/datum/species/dullahan)
-			if(4)
-				visible_message(span_warning("[src]'s skin melts off!"), span_boldwarning("Your skin melts off!"))
-				spawn_gibs()
-				set_species(/datum/species/skeleton)
-				if(prob(90))
-					addtimer(CALLBACK(src, PROC_REF(death)), 3 SECONDS)
-			if(5)
-				to_chat(src, span_phobia("LOOK UP!"))
-				addtimer(CALLBACK(src, PROC_REF(something_horrible_mindmelt)), 3 SECONDS)
-			if(6)
-				slow_psykerize()
+
+	var/nonfatal = prob(max(70-instability, 0))
+
+	if(!dna.nonfatal_meltdowns.len)
+		for(var/datum/instability_meltdown/meltdown_type as anything in typecacheof(/datum/instability_meltdown, ignore_root_path = TRUE))
+			if(initial(meltdown_type.abstract_type) == meltdown_type)
+				continue
+
+			if (initial(meltdown_type.fatal))
+				dna.fatal_meltdowns[meltdown_type] = initial(meltdown_type.meltdown_weight)
+				continue
+
+			dna.nonfatal_meltdowns[meltdown_type] = initial(meltdown_type.meltdown_weight)
+
+	var/picked_type = pick_weight(nonfatal ? dna.nonfatal_meltdowns : dna.fatal_meltdowns)
+	var/datum/instability_meltdown/meltdown = new picked_type
+	meltdown.meltdown(src)
 
 /mob/living/carbon/human/proc/something_horrible_mindmelt()
 	if(!is_blind())

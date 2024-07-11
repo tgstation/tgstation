@@ -10,7 +10,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 70 SECONDS
 
-	invocation = "FL'MS"
+	invocation = "EID'R-ELDR!!!"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
@@ -72,8 +72,8 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
 
-	invocation = "C'SC'DE"
-	invocation_type = INVOCATION_WHISPER
+	invocation = "ILLA-LASARA'FOSS!!!"
+	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
 	/// The radius the flames will go around the caster.
@@ -112,7 +112,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 300
 
-	invocation = "F'RE"
+	invocation = "Eld'sky!"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 

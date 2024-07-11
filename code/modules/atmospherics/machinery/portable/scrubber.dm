@@ -1,16 +1,17 @@
 /obj/machinery/portable_atmospherics/scrubber
 	name = "portable air scrubber"
+	desc = "A portable variant of the station scrubbers, capable of filtering gas from the air around it or inserted tank. May also be wrenched into a port."
 	icon_state = "scrubber"
 	density = TRUE
 	max_integrity = 250
-	volume = 1000
+	volume = 2000
 
 	///Is the machine on?
 	var/on = FALSE
 	///the rate the machine will scrub air
-	var/volume_rate = 1000
+	var/volume_rate = 650
 	///Multiplier with ONE_ATMOSPHERE, if the enviroment pressure is higher than that, the scrubber won't work
-	var/overpressure_m = 80
+	var/overpressure_m = 100
 	///Should the machine use overlay in update_overlays() when open/close?
 	var/use_overlays = TRUE
 	///List of gases that can be scrubbed
@@ -59,8 +60,15 @@
 
 	excited = TRUE
 
-	var/atom/target = holding || get_turf(src)
-	scrub(target.return_air())
+	if(!isnull(holding))
+		scrub(holding.return_air())
+		return ..()
+
+	var/turf/epicentre = get_turf(src)
+	if(isopenturf(epicentre))
+		scrub(epicentre.return_air())
+	for(var/turf/open/openturf as anything in epicentre.get_atmos_adjacent_turfs(alldir = TRUE))
+		scrub(openturf.return_air())
 	return ..()
 
 /**
@@ -68,28 +76,39 @@
  * Arguments:
  * * mixture: the gas mixture to be scrubbed
  */
-/obj/machinery/portable_atmospherics/scrubber/proc/scrub(datum/gas_mixture/mixture)
+/obj/machinery/portable_atmospherics/scrubber/proc/scrub(datum/gas_mixture/environment)
 	if(air_contents.return_pressure() >= overpressure_m * ONE_ATMOSPHERE)
 		return
 
-	var/transfer_moles = min(1, volume_rate / mixture.volume) * mixture.total_moles()
+	var/list/env_gases = environment.gases
 
-	var/datum/gas_mixture/filtering = mixture.remove(transfer_moles) // Remove part of the mixture to filter.
-	var/datum/gas_mixture/filtered = new
-	if(!filtering)
-		return
+	//contains all of the gas we're sucking out of the tile, gets put into our parent pipenet
+	var/datum/gas_mixture/filtered_out = new
+	var/list/filtered_gases = filtered_out.gases
+	filtered_out.temperature = environment.temperature
 
-	filtered.temperature = filtering.temperature
-	for(var/gas in filtering.gases & scrubbing)
-		filtered.add_gas(gas)
-		filtered.gases[gas][MOLES] = filtering.gases[gas][MOLES] // Shuffle the "bad" gasses to the filtered mixture.
-		filtering.gases[gas][MOLES] = 0
-	filtering.garbage_collect() // Now that the gasses are set to 0, clean up the mixture.
+	//maximum percentage of the turfs gas we can filter
+	var/removal_ratio =  min(1, volume_rate / environment.volume)
 
-	air_contents.merge(filtered) // Store filtered out gasses.
-	mixture.merge(filtering) // Returned the cleaned gas.
-	if(!holding)
-		air_update_turf(FALSE, FALSE)
+	var/total_moles_to_remove = 0
+	for(var/gas in scrubbing & env_gases)
+		total_moles_to_remove += env_gases[gas][MOLES]
+
+	if(total_moles_to_remove == 0)//sometimes this gets non gc'd values
+		environment.garbage_collect()
+		return FALSE
+
+	for(var/gas in scrubbing & env_gases)
+		filtered_out.add_gas(gas)
+		var/transferred_moles = max(QUANTIZE(env_gases[gas][MOLES] * removal_ratio * (env_gases[gas][MOLES] / total_moles_to_remove)), min(MOLAR_ACCURACY*1000, env_gases[gas][MOLES]))
+
+		filtered_gases[gas][MOLES] = transferred_moles
+		env_gases[gas][MOLES] -= transferred_moles
+
+	environment.garbage_collect()
+
+	//Remix the resulting gases
+	air_contents.merge(filtered_out)
 
 /obj/machinery/portable_atmospherics/scrubber/emp_act(severity)
 	. = ..()

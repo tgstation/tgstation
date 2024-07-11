@@ -5,6 +5,8 @@
 
 /**
  * # The path of Flesh.
+ * Spell names are in this language: LATIN
+ * Both are related: Latin-Rome-Hedonism-Flesh
  *
  * Goes as follows:
  *
@@ -44,6 +46,8 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/flesh)
 	limit = 3 // Bumped up so they can arm up their ghouls too.
 	route = PATH_FLESH
+	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_state = "flesh_blade"
 
 /datum/heretic_knowledge/limited_amount/starting/base_flesh/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -64,6 +68,9 @@
 	limit = 1
 	cost = 1
 	route = PATH_FLESH
+	depth = 3
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "grasp_flesh"
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -137,6 +144,10 @@
 	limit = 2
 	cost = 1
 	route = PATH_FLESH
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "ghoul_voiceless"
+
+	depth = 4
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
@@ -227,6 +238,7 @@
 	spell_to_add = /datum/action/cooldown/spell/touch/flesh_surgery
 	cost = 1
 	route = PATH_FLESH
+	depth = 7
 
 /datum/heretic_knowledge/summon/raw_prophet
 	name = "Raw Ritual"
@@ -250,6 +262,7 @@
 	cost = 1
 	route = PATH_FLESH
 	poll_ignore_define = POLL_IGNORE_RAW_PROPHET
+	depth = 8
 
 /datum/heretic_knowledge/blade_upgrade/flesh
 	name = "Bleeding Steel"
@@ -258,6 +271,8 @@
 		I finally began to understand. And then, blood rained from the heavens."
 	next_knowledge = list(/datum/heretic_knowledge/summon/stalker)
 	route = PATH_FLESH
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "blade_upgrade_flesh"
 	///What type of wound do we apply on hit
 	var/wound_type = /datum/wound/slash/flesh/severe
 
@@ -292,6 +307,7 @@
 	cost = 1
 	route = PATH_FLESH
 	poll_ignore_define = POLL_IGNORE_STALKER
+	depth = 10
 
 /datum/heretic_knowledge/ultimate/flesh_final
 	name = "Priest's Final Hymn"
@@ -308,6 +324,7 @@
 		Reality will bend to THE LORD OF THE NIGHT or be unraveled! WITNESS MY ASCENSION!"
 	required_atoms = list(/mob/living/carbon/human = 4)
 	route = PATH_FLESH
+	ascension_achievement = /datum/award/achievement/misc/flesh_ascension
 
 /datum/heretic_knowledge/ultimate/flesh_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
@@ -315,13 +332,12 @@
 		text = "[generate_heretic_text()] Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, [user.real_name] has ascended! Fear the ever twisting hand! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
 		sound = 'sound/ambience/antag/heretic/ascend_flesh.ogg',
-		color_override = "pink",
+		color_override = "red",
 	)
 
 	var/datum/action/cooldown/spell/shapeshift/shed_human_form/worm_spell = new(user.mind)
 	worm_spell.Grant(user)
 
-	user.client?.give_award(/datum/award/achievement/misc/flesh_ascension, user)
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	var/datum/heretic_knowledge/limited_amount/flesh_grasp/grasp_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/flesh_grasp)

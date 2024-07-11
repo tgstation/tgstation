@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(research)
 	//TECHWEB STATIC
 	var/list/techweb_nodes = list() //associative id = node datum
 	var/list/techweb_designs = list() //associative id = node datum
-	var/list/datum/design/item_to_design = list() //typepath = list of design datums
+	var/list/list/datum/design/item_to_design = list() //typepath = list of design datums
 
 	///List of all techwebs, generating points or not.
 	///Autolathes, Mechfabs, and others all have shared techwebs, for example.
