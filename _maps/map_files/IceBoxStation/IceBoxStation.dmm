@@ -16147,7 +16147,7 @@
 /area/mine/mechbay)
 "eLU" = (
 /obj/structure/statue/snow/snowman,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/standard_air,
 /area/station/science/cytology)
 "eMa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -23521,7 +23521,7 @@
 /area/station/service/bar/atrium)
 "gYO" = (
 /obj/item/food/grown/carrot,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/standard_air,
 /area/station/science/cytology)
 "gZa" = (
 /obj/structure/sign/nanotrasen{
@@ -30560,7 +30560,7 @@
 	pixel_x = -9;
 	pixel_y = 17
 	},
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/standard_air,
 /area/station/science/cytology)
 "jik" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -38881,11 +38881,9 @@
 	},
 /area/station/hallway/secondary/service)
 "lEc" = (
-/obj/structure/chair/office{
-	dir = 4
-	},
-/turf/open/genturf,
-/area/icemoon/underground/unexplored/rivers/deep)
+/obj/structure/stairs/east,
+/turf/open/misc/asteroid/snow,
+/area/station/science/ordnance)
 "lEg" = (
 /obj/machinery/door/window/left/directional/north{
 	name = "AI Core Door";
@@ -39632,7 +39630,7 @@
 	pixel_x = -6;
 	pixel_y = -3
 	},
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/standard_air,
 /area/station/science/cytology)
 "lPC" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
@@ -49737,7 +49735,7 @@
 "oQV" = (
 /mob/living/basic/pet/penguin/baby/permanent,
 /obj/structure/flora/grass/brown/style_random,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/standard_air,
 /area/station/science/cytology)
 "oQY" = (
 /turf/open/floor/iron/white,
@@ -59976,7 +59974,7 @@
 /area/station/engineering/supermatter/room)
 "rOz" = (
 /obj/structure/flora/grass/brown/style_random,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/standard_air,
 /area/station/science/cytology)
 "rOA" = (
 /obj/effect/turf_decal/stripes/line{
@@ -65058,7 +65056,7 @@
 	pixel_y = -7
 	},
 /obj/structure/flora/grass/brown/style_random,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/standard_air,
 /area/station/science/cytology)
 "toT" = (
 /obj/machinery/door/firedoor,
@@ -66567,7 +66565,7 @@
 /obj/machinery/vatgrower{
 	dir = 4
 	},
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/standard_air,
 /area/station/science/cytology)
 "tLB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/pink/visible,
@@ -75458,7 +75456,7 @@
 	pixel_x = -6;
 	pixel_y = 3
 	},
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/standard_air,
 /area/station/science/cytology)
 "wAq" = (
 /obj/structure/disposalpipe/segment{
@@ -78581,7 +78579,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
 "xvx" = (
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/standard_air,
 /area/station/science/cytology)
 "xvy" = (
 /obj/structure/closet/firecloset,
@@ -131339,7 +131337,7 @@ oSU
 oSU
 oSU
 oSU
-lEc
+oSU
 oSU
 oSU
 oSU
@@ -195585,7 +195583,7 @@ wnp
 uIf
 odm
 odm
-odm
+lEc
 odm
 nqy
 jGR
