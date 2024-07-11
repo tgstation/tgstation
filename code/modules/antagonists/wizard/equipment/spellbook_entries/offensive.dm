@@ -42,7 +42,7 @@
 /datum/spellbook_entry/tie_shoes
 	name = "Tie Shoes"
 	desc = "This unassuming spell first unties, then knots the target's shoes. While weak at first glance, each upgrade quietens the spell, allowing it to untie laceless footwear and even summon shoes to knot!"
-	spell_type = /datum/action/cooldown/spell/pointed/tie_shoes
+	spell_type = /datum/action/cooldown/spell/pointed/untie_shoes
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
 	cost = 1
 

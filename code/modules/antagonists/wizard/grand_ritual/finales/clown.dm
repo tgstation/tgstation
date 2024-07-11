@@ -10,9 +10,9 @@
 	for(var/mob/living/carbon/human/victim as anything in GLOB.human_list)
 		victim.Unconscious(3 SECONDS)
 		if (victim == invoker)
-			if(locate(/datum/action/cooldown/spell/pointed/tie_shoes in invoker.actions))
+			if(locate(/datum/action/cooldown/spell/pointed/untie_shoes in invoker.actions))
 				continue
-			var/datum/action/cooldown/spell/pointed/tie_shoes/newer_spell = new(invoker)
+			var/datum/action/cooldown/spell/pointed/untie_shoes/newer_spell = new(invoker)
 			newer_spell.Grant(invoker)
 			for(var/i in 1 to newer_spell.spell_max_level)
 				newer_spell.level_spell()
@@ -32,7 +32,7 @@
 		if (is_clown_job(victim.mind.assigned_role))
 			var/datum/action/cooldown/spell/conjure_item/clown_pockets/new_spell = new(victim)
 			new_spell.Grant(victim)
-			var/datum/action/cooldown/spell/pointed/tie_shoes/newer_spell = new(victim)
+			var/datum/action/cooldown/spell/pointed/untie_shoes/newer_spell = new(victim)
 			newer_spell.Grant(victim)
 			continue
 		dress_as_magic_clown(victim)

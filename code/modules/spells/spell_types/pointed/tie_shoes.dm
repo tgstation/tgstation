@@ -22,7 +22,7 @@
 	var/bypass_tie_status = FALSE
 	var/summons_shoes = FALSE
 
-/datum/action/cooldown/spell/pointed/tie_shoes/level_spell(bypass_cap)
+/datum/action/cooldown/spell/pointed/untie_shoes/level_spell(bypass_cap)
 	. = ..()
 	if(spell_level == 2)
 		bypass_tie_status = TRUE
@@ -36,14 +36,14 @@
 		invocation = null
 		to_chat(owner, span_boldnotice("Your invocations are now silent!"))
 
-/datum/action/cooldown/spell/pointed/tie_shoes/is_valid_target(atom/cast_on)
+/datum/action/cooldown/spell/pointed/untie_shoes/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
 // We need to override this, as trying to change next_use_time in cast() will just result in it being overridden.
 /datum/action/cooldown/spell/touch/before_cast(atom/cast_on)
 	return ..() | SPELL_NO_IMMEDIATE_COOLDOWN
 
-/datum/action/cooldown/spell/pointed/tie_shoes/cast(mob/living/carbon/cast_on)
+/datum/action/cooldown/spell/pointed/untie_shoes/cast(mob/living/carbon/cast_on)
 	. = ..()
 	if(cast_on.can_block_magic(antimagic_flags))
 		to_chat(owner, span_warning("The spell had no effect!"))
@@ -73,7 +73,7 @@
 				return FALSE
 			else if(invocation_type != INVOCATION_NONE)
 				playsound(cast_on, 'sound/magic/summonitems_generic.ogg', 50, TRUE)
-		else
+			else
 			to_chat(owner, span_warning("[cast_on] isn't wearing any shoes!"))
 			return FALSE
 
@@ -103,7 +103,7 @@
 			return FALSE
 
 // We need to override this, as trying to change next_use_time in cast() will just result in it being overridden.
-/datum/action/cooldown/spell/pointed/tie_shoes/after_cast(atom/cast_on)
+/datum/action/cooldown/spell/pointed/untie_shoes/after_cast(atom/cast_on)
 	. = ..()
 	var/extra_time = 0 SECONDS
 	if((cast_on.z != owner.z) || get_dist(cast_on, owner) > 7)
@@ -111,7 +111,7 @@
 
 	StartCooldown(cooldown_time + extra_time)
 
-/datum/action/cooldown/spell/pointed/tie_shoes/get_spell_title()
+/datum/action/cooldown/spell/pointed/untie_shoes/get_spell_title()
 	switch(spell_level)
 		if(2)
 			return "Laceless "
