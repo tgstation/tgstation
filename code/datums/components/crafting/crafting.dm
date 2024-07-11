@@ -508,7 +508,7 @@
 
 		var/icon_size = sheet.icon_size_id("a[atom_id]")
 		if(!endswith(icon_size, "32x32"))
-			data["icon_data"]["[atom_id]"] = "[sheet.icon_size_id("a[atom_id]")] a[atom_id]"
+			data["icon_data"]["[atom_id]"] = "[icon_size] a[atom_id]"
 
 	// Prepare materials data
 	for(var/atom/atom as anything in material_occurences)
