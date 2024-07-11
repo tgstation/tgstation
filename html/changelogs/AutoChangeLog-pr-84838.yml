@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Using a dual wielded deck to add another card to a single card bases the position of the resulting hand of cards on the position of the card."
