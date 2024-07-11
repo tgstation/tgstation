@@ -100,7 +100,7 @@
 
 /obj/effect/temp_visual/circle_wave/bioscrambler
 	color = COLOR_LIME
-  
+
 /obj/effect/temp_visual/circle_wave/bioscrambler/light
 	max_alpha = 128
 
