@@ -1,0 +1,4 @@
+author: "aaaa1023"
+delete-after: True
+changes:
+  - bugfix: "Added a Mechbay power console to the Metastation cargo warehouse so that the cargo ripley is able to be charged."
