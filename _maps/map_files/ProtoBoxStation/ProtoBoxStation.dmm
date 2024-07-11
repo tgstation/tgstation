@@ -21686,10 +21686,17 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+<<<<<<< Updated upstream
 /obj/effect/turf_decal/trimline/purple/filled/end,
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 1
 	},
+=======
+/obj/effect/turf_decal/trimline/purple/filled/end{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/purple/line,
+>>>>>>> Stashed changes
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard)
 "btc" = (
@@ -37461,7 +37468,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/structure/table/wood,
+<<<<<<< Updated upstream
 /obj/effect/spawner/random/food_or_drink/snack,
+=======
+/obj/item/toy/plush/explosive{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+>>>>>>> Stashed changes
 /turf/open/floor/iron/checker,
 /area/station/science/breakroom)
 "dQL" = (
@@ -40929,6 +40943,20 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
+"gTC" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/engineering/transit_tube)
 "gTD" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
@@ -41399,6 +41427,12 @@
 "hox" = (
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
+"hoM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/engineering/transit_tube)
 "hoO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/blobstart,
@@ -44088,6 +44122,9 @@
 /obj/effect/turf_decal/siding,
 /turf/open/floor/iron/white/small,
 /area/station/medical/storage)
+"jQr" = (
+/turf/closed/wall/r_wall,
+/area/station/engineering/transit_tube)
 "jQC" = (
 /obj/structure/broken_flooring/side/directional/north,
 /turf/open/floor/plating,
@@ -44922,6 +44959,14 @@
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/wood/large,
 /area/station/command/meeting_room)
+"kxU" = (
+/obj/machinery/door/airlock/external{
+	name = "MiniSat Space Access Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/access/any/command/minisat,
+/turf/open/floor/iron/dark,
+/area/station/engineering/transit_tube)
 "kxV" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/iron/fifty,
@@ -44953,6 +44998,14 @@
 "kyG" = (
 /turf/open/floor/iron/freezer,
 /area/station/science/xenobiology)
+"kzm" = (
+/obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/dark,
+/area/station/engineering/transit_tube)
 "kzL" = (
 /turf/open/floor/wood,
 /area/station/service/bar)
@@ -45834,6 +45887,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
+"lmv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/turf/closed/wall,
+/area/station/engineering/transit_tube)
 "lmB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -48335,6 +48392,9 @@
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
+"nzM" = (
+/turf/closed/wall,
+/area/station/engineering/transit_tube)
 "nzO" = (
 /turf/closed/wall/r_wall,
 /area/station/medical/treatment_center)
@@ -49053,6 +49113,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
+"ocq" = (
+/turf/open/floor/iron/dark/textured_large,
+/area/station/science/ordnance/testlab)
 "ocY" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/table/reinforced,
@@ -50320,6 +50383,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
+"pkP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/turf/closed/wall/r_wall,
+/area/station/engineering/transit_tube)
 "pkS" = (
 /obj/machinery/newscaster/directional/east,
 /obj/structure/bed/medical/anchored{
@@ -52636,6 +52703,17 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
+"rgZ" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/trimline/purple/filled/end,
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/maintenance/starboard)
 "rhO" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/dna_scannernew,
@@ -53885,9 +53963,12 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "spk" = (
+<<<<<<< Updated upstream
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/ordnance/testlab)
 "sql" = (
+=======
+>>>>>>> Stashed changes
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -55387,6 +55468,10 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/carpet,
 /area/station/service/theater)
+"tGn" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
 "tGz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -56051,6 +56136,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"uql" = (
+/obj/machinery/door/airlock/external{
+	name = "MiniSat Space Access Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/access/any/command/minisat,
+/turf/open/floor/iron/dark,
+/area/station/engineering/transit_tube)
 "uqH" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -92971,6 +93066,7 @@ ccw
 cpa
 cjc
 cqo
+<<<<<<< Updated upstream
 gTT
 niO
 cOn
@@ -92978,6 +93074,15 @@ niO
 niO
 niO
 niO
+=======
+pkP
+jQr
+cOn
+jQr
+jQr
+jQr
+jQr
+>>>>>>> Stashed changes
 aaa
 aaa
 fFa
@@ -93228,6 +93333,7 @@ ccw
 ccw
 cpI
 ccw
+<<<<<<< Updated upstream
 gTT
 mqt
 lqO
@@ -93235,6 +93341,15 @@ nZi
 bej
 wlT
 pNY
+=======
+pkP
+mqt
+lqO
+nZi
+kxU
+kzm
+uql
+>>>>>>> Stashed changes
 nXv
 nXv
 fFa
@@ -93485,6 +93600,7 @@ cig
 cpb
 ciZ
 cqp
+<<<<<<< Updated upstream
 iQg
 bfN
 eCX
@@ -93492,6 +93608,15 @@ fnw
 niO
 niO
 niO
+=======
+lmv
+bfN
+hoM
+gTC
+jQr
+jQr
+jQr
+>>>>>>> Stashed changes
 aaa
 gXs
 fFa
@@ -93742,13 +93867,21 @@ cig
 cig
 czg
 cig
+<<<<<<< Updated upstream
 iQg
+=======
+lmv
+>>>>>>> Stashed changes
 iAF
 qHB
 xIq
 vrB
 sRw
+<<<<<<< Updated upstream
 wnU
+=======
+tGn
+>>>>>>> Stashed changes
 aaa
 gXs
 fFa
@@ -93999,11 +94132,19 @@ cig
 aaa
 afp
 aaa
+<<<<<<< Updated upstream
 iQg
 kEC
 kEC
 kEC
 sRG
+=======
+lmv
+kEC
+kEC
+kEC
+nzM
+>>>>>>> Stashed changes
 aaa
 mnU
 aaa
@@ -110408,7 +110549,7 @@ diV
 bry
 bEE
 bFY
-bta
+rgZ
 bGG
 xuS
 cNX
@@ -111438,7 +111579,7 @@ bky
 bky
 cBA
 bIU
-spk
+ocq
 kVu
 rAv
 bLj
