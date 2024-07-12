@@ -339,6 +339,7 @@
 	)
 	tastes = list("cake" = 3, "caramel" = 2, "zap" = 1)
 	crafting_complexity = FOOD_COMPLEXITY_3
+	crafted_food_buff = /datum/status_effect/food/trait/shockimmune
 
 /obj/item/food/honeybun
 	name = "honey bun"
