@@ -1,8 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "deathmatch OSHA Violator map has actually functioning field gens now"
-  - bugfix: "being polymorphed in deathmatch does not count you dead"
-  - bugfix: "deathmatch cyborgs may not talk in binary"
-  - qol: "deathmatch map names are sorted alphabetically"
-  - spellcheck: "deathmatch final destination clown and chef loadouts have been renamed to avoid confusion"

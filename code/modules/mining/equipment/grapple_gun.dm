@@ -41,8 +41,8 @@
 	if(target == user || !hooked)
 		return NONE
 
-	if(!lavaland_equipment_pressure_check(get_turf(user)))
-		user.balloon_alert(user, "gun mechanism wont work here!")
+	if(!lavaland_equipment_pressure_check(get_turf(user)) && !(obj_flags & EMAGGED))
+		user.balloon_alert(user, "gun mechanism won't work here!")
 		return ITEM_INTERACT_BLOCKING
 	if(get_dist(user, target) > 9)
 		user.balloon_alert(user, "too far away!")
@@ -72,6 +72,14 @@
 	zipliner = WEAKREF(user)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/grapple_gun/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+	if(obj_flags & EMAGGED)
+		return FALSE
+	balloon_alert(user, "pressure settings overloaded")
+	obj_flags |= EMAGGED
+	return TRUE
 
 /obj/item/grapple_gun/proc/on_grapple_hit(datum/source, atom/movable/firer, atom/target, Angle)
 	SIGNAL_HANDLER

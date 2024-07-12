@@ -1,4 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - image: "Fixed the cargo crate having wrong stripe width in open state"

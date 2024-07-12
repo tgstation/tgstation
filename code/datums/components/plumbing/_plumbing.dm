@@ -94,7 +94,7 @@
 	process_request(dir = dir)
 
 ///check who can give us what we want, and how many each of them will give us
-/datum/component/plumbing/proc/process_request(amount = MACHINE_REAGENT_TRANSFER, reagent, dir)
+/datum/component/plumbing/proc/process_request(amount = MACHINE_REAGENT_TRANSFER, reagent, dir, round_robin = TRUE)
 	//find the duct to take from
 	var/datum/ductnet/net
 	if(!ducts.Find(num2text(dir)))
@@ -115,7 +115,7 @@
 	var/target_volume = reagents.total_volume + amount
 	for(var/datum/component/plumbing/give as anything in valid_suppliers)
 		currentRequest = (target_volume - reagents.total_volume) / suppliersLeft
-		give.transfer_to(src, currentRequest, reagent, net)
+		give.transfer_to(src, currentRequest, reagent, net, round_robin)
 		suppliersLeft--
 	return TRUE
 
@@ -134,11 +134,11 @@
 	return FALSE
 
 ///this is where the reagent is actually transferred and is thus the finish point of our process()
-/datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net)
+/datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net, round_robin = TRUE)
 	if(!reagents || !target || !target.reagents)
 		return FALSE
 
-	reagents.trans_to(target.recipient_reagents_holder, amount, target_id = reagent)
+	reagents.trans_to(target.recipient_reagents_holder, amount, target_id = reagent, methods = round_robin ? LINEAR : NONE)
 
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
 /datum/component/plumbing/proc/create_overlays(atom/movable/parent_movable, list/overlays)
@@ -376,50 +376,3 @@
 
 	// Defer to later frame because pixel_* is actually updated after all callbacks
 	addtimer(CALLBACK(parent_obj, TYPE_PROC_REF(/atom/, update_appearance)), 0.1 SECONDS)
-
-///has one pipe input that only takes, example is manual output pipe
-/datum/component/plumbing/simple_demand
-	demand_connects = SOUTH
-
-///has one pipe output that only supplies. example is liquid pump and manual input pipe
-/datum/component/plumbing/simple_supply
-	supply_connects = SOUTH
-
-///input and output, like a holding tank
-/datum/component/plumbing/tank
-	demand_connects = WEST
-	supply_connects = EAST
-
-/datum/component/plumbing/manifold
-	demand_connects = NORTH
-	supply_connects = SOUTH
-
-/datum/component/plumbing/iv_drip
-	demand_connects = SOUTH
-	supply_connects = NORTH
-
-/datum/component/plumbing/manifold/change_ducting_layer(obj/caller, obj/changer, new_layer)
-	return
-
-#define READY 2
-///Baby component for the buffer plumbing machine
-/datum/component/plumbing/buffer
-	demand_connects = WEST
-	supply_connects = EAST
-
-/datum/component/plumbing/buffer/Initialize(start=TRUE, _turn_connects=TRUE, _ducting_layer, datum/reagents/custom_receiver)
-	if(!istype(parent, /obj/machinery/plumbing/buffer))
-		return COMPONENT_INCOMPATIBLE
-
-	return ..()
-
-/datum/component/plumbing/buffer/can_give(amount, reagent, datum/ductnet/net)
-	var/obj/machinery/plumbing/buffer/buffer = parent
-	return (buffer.mode == READY) ? ..() : FALSE
-
-#undef READY
-
-///Lazily demand from any direction. Overlays won't look good, and the aquarium sprite occupies about the entire 32x32 area anyway.
-/datum/component/plumbing/aquarium
-	demand_connects = SOUTH|NORTH|EAST|WEST
-	use_overlays = FALSE
