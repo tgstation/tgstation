@@ -1,7 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "Cleaner slimes will now target the closest trash, rather than a random piece within their range."
-  - qol: "Cleaner slimes are now more intelligent, and will consider more items as trash, such as spent ammo casings, empty cigarette packets, empty condiment packs, beer bottles, food packs, used slime mutators, etc."
-  - balance: "Cleaner slimes are now slightly faster at searching for trash."
-  - rscadd: "Certain slime traits will now result in them having slightly different names, i.e catslime or cleaner slime."

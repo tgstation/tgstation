@@ -100,3 +100,24 @@
   Syndie Kate:
   - bugfix: Metastation xenobiology fields work now
   - balance: Shield generators range is now 12, from 8.
+2024-07-12:
+  Absolucy:
+  - qol: Cleaner slimes will now target the closest trash, rather than a random piece
+      within their range.
+  - qol: Cleaner slimes are now more intelligent, and will consider more items as
+      trash, such as spent ammo casings, empty cigarette packets, empty condiment
+      packs, beer bottles, food packs, used slime mutators, etc.
+  - balance: Cleaner slimes are now slightly faster at searching for trash.
+  - rscadd: Certain slime traits will now result in them having slightly different
+      names, i.e catslime or cleaner slime.
+  Odairu:
+  - balance: changed zauker decomp gas and damage
+  - balance: Overclocked volume pumps have no limits
+  SirNightKnight:
+  - rscadd: Seclite mount for the NT SWAT Helmet
+  - qol: SWAT Helmets now hides  hair
+  - rscdel: SWAT Helmet mouth coverage
+  - balance: SWAT gear now has more bullet resistance
+  - balance: SWAT suit now has less slowdown (0.7 to 0.5)
+  - bugfix: Realigned the East direction of the NT SWAT helmet so it doesn't look
+      out of place. Was shifted over one pixel by accident.
