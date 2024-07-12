@@ -566,6 +566,39 @@
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_4
 
+/obj/item/food/cake/jupitercup
+	name = "jupitercup cake"
+	desc = "A jupitercup cake."
+	icon_state = "jupitercupcake"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 20,
+		/datum/reagent/consumable/nutriment/vitamin = 5,
+		/datum/reagent/consumable/cream = 5,
+		/datum/reagent/consumable/nutriment/vitamin = 5,
+		/datum/reagent/consumable/berryjuice = 5,
+	)
+	tastes = list("cake" = 4, "violets" = 2, "jam" = 2)
+	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
+	slice_type = /obj/item/food/cakeslice/jupitercup
+	crafting_complexity = FOOD_COMPLEXITY_4
+	crafted_food_buff = /datum/status_effect/food/trait/shockimmune
+
+/obj/item/food/cakeslice/jupitercup
+	name = "jupitercup cake slice"
+	desc = "A jupitercup cake slice."
+	icon_state = "jupitercupslice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/consumable/cream = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
+		/datum/reagent/consumable/berryjuice = 1,
+	)
+	tastes = list("cake" = 4, "violets" = 2, "jam" = 2)
+	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
+	crafting_complexity = FOOD_COMPLEXITY_4
+	crafted_food_buff = /datum/status_effect/food/trait/shockimmune
+
 /obj/item/food/cake/brioche
 	name = "brioche cake"
 	desc = "A ring of sweet, glazed buns."
