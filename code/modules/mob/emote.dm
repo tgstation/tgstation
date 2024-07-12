@@ -31,15 +31,15 @@
 		if(!emote.check_cooldown(src, intentional))
 			silenced = TRUE
 			continue
-		if(!emote.can_run_emote(src, TRUE, intentional))
+		if(!emote.can_run_emote(src, TRUE, intentional, param))
 			continue
-		if(SEND_SIGNAL(src, COMSIG_MOB_PRE_EMOTED, emote.key, param, emote.type_override, intentional, emote) & COMPONENT_CANT_EMOTE)
+		if(SEND_SIGNAL(src, COMSIG_MOB_PRE_EMOTED, emote.key, param, m_type, intentional, emote) & COMPONENT_CANT_EMOTE)
 			silenced = TRUE
 			continue
-		if(emote.run_emote(src, param, m_type, intentional))
-			SEND_SIGNAL(src, COMSIG_MOB_EMOTE, emote, act, m_type, message, intentional)
-			SEND_SIGNAL(src, COMSIG_MOB_EMOTED(emote.key))
-			return TRUE
+		emote.run_emote(src, param, m_type, intentional)
+		SEND_SIGNAL(src, COMSIG_MOB_EMOTE, emote, act, m_type, message, intentional)
+		SEND_SIGNAL(src, COMSIG_MOB_EMOTED(emote.key))
+		return TRUE
 	if(intentional && !silenced && !force_silence)
 		to_chat(src, span_notice("Unusable emote '[act]'. Say *help for a list."))
 	return FALSE
@@ -83,8 +83,7 @@
 
 /datum/emote/flip/run_emote(mob/user, params , type_override, intentional)
 	. = ..()
-	if(.)
-		user.SpinAnimation(HAS_TRAIT(user, TRAIT_SLOW_FLIP) ? FLIP_EMOTE_DURATION * 2 : FLIP_EMOTE_DURATION, 1)
+	user.SpinAnimation(HAS_TRAIT(user, TRAIT_SLOW_FLIP) ? FLIP_EMOTE_DURATION * 2 : FLIP_EMOTE_DURATION, 1)
 
 /datum/emote/flip/check_cooldown(mob/user, intentional)
 	var/slow_flipper = HAS_TRAIT(user, TRAIT_SLOW_FLIP)
@@ -122,8 +121,7 @@
 
 /datum/emote/spin/run_emote(mob/user, params,  type_override, intentional)
 	. = ..()
-	if(.)
-		user.spin(20, 1)
+	user.spin(20, 1)
 
 /datum/emote/spin/check_cooldown(mob/living/carbon/user, intentional)
 	. = ..()
