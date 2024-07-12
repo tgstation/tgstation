@@ -80,7 +80,7 @@
 		PREF_SKIRT,
 	)
 
-/datum/preference/choiced/backpack/create_default_value()
+/datum/preference/choiced/jumpsuit/create_default_value()
 	return PREF_SUIT
 
 /datum/preference/choiced/jumpsuit/icon_for(value)
