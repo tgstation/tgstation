@@ -35,7 +35,7 @@
 	examine_texts += span_notice("[source] looks climbable.")
 
 /datum/element/climbable/proc/can_climb(atom/source, mob/user)
-	if (!user.Adjacent(source))
+	if (!user.CanReach(source))
 		return FALSE
 	var/dir_step = get_dir(user, source.loc)
 	//To jump over a railing you have to be standing next to it, not far behind it.
