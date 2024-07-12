@@ -1,6 +1,6 @@
 /// Buffs given by eating hand-crafted food. The duration scales with consumable reagents purity.
 /datum/status_effect/food
-	id = "food_buff"
+	id = "food_effect"
 	duration = 5 MINUTES // Same as food mood buffs
 	status_type = STATUS_EFFECT_REPLACE // Only one food buff allowed
 	alert_type = /atom/movable/screen/alert/status_effect/food
