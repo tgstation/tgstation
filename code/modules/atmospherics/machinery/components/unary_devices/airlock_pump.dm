@@ -308,7 +308,7 @@
 	on = FALSE
 
 	var/list/obj/machinery/door/airlock/unlocked_airlocks = pump_direction == ATMOS_DIRECTION_RELEASING ? internal_airlocks : external_airlocks
-	for(var/obj/machinery/door/airlock/airlock in unlocked_airlocks)
+	for(var/obj/machinery/door/airlock/airlock as anything in unlocked_airlocks)
 		airlock.unbolt()
 		if(open_airlock_on_cycle && !unbolt_only)
 			INVOKE_ASYNC(airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, secure_open)) //Can unbolt, but without audio
