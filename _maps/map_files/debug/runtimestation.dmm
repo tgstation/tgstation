@@ -1270,10 +1270,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/construction)
-"oE" = (
-/obj/structure/sign/warning/vacuum/external/directional/east,
-/turf/open/floor/iron,
-/area/station/medical/medbay)
 "oK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -8271,7 +8267,7 @@ av
 by
 jZ
 cm
-oE
+cm
 cm
 cm
 WL
