@@ -679,10 +679,7 @@
 	item_flags &= ~IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	if(!silent)
-		if(sound_vary)
-			playsound(src, drop_sound, DROP_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
-		else
-			playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE)
+		playsound(src, drop_sound, DROP_SOUND_VOLUME, vary = sound_vary, ignore_walls = FALSE))
 	user?.update_equipment_speed_mods()
 
 /// called just as an item is picked up (loc is not yet changed)
