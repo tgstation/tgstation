@@ -101,10 +101,11 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	if(ismovable(target))
 		RegisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, PROC_REF(on_movable_junction_change))
 		RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-		var/turf/our_turf = get_turf(target_atom)
-		var/ref = REF(target)
-		ADD_TRAIT(our_turf, TRAIT_CONTAINS_SPLITVIS, ref)
-		add_split_vis_objects(our_turf, target_atom.smoothing_junction)
+		if(isturf(target_atom.loc))
+			var/ref = REF(target)
+			ADD_TRAIT(target_atom.loc, TRAIT_CONTAINS_SPLITVIS, ref)
+			RegisterSignal(target_atom.loc, COMSIG_TURF_CHANGE, PROC_REF(on_movable_turf_change))
+			add_split_vis_objects(target_atom.loc, target_atom.smoothing_junction)
 	else
 		ADD_TRAIT(target, TRAIT_CONTAINS_SPLITVIS, src) // We use src here because this code is hot, and we assert that bespoke elements cannot self delete. Not a good pattern but fast
 		RegisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, PROC_REF(on_turf_junction_change))
@@ -113,9 +114,11 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 
 /datum/element/split_visibility/proc/add_split_vis_objects(turf/target_turf, junction)
 	apply_splitvis_objs(target_turf, junction)
+	target_turf.set_lighting_state("[junction]")
 
 /datum/element/split_visibility/proc/remove_split_vis_objects(turf/target_turf, junction)
 	apply_splitvis_objs(target_turf, junction, add_to_turfs = FALSE)
+	target_turf.set_lighting_state("lighting")
 
 /datum/element/split_visibility/proc/apply_splitvis_objs(turf/target_turf, junction, add_to_turfs = TRUE)
 	// cache for sonic speed
@@ -195,21 +198,20 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	target.cut_overlay(mutable_appearance('wall_blackness.dmi', "wall_background", UNDER_WALL_LAYER, target, WALL_PLANE))
 	// Ensures when you try to click on a turf, you actually click on the turf, and not the adjacent things holding it
 	target.cut_overlay(mutable_appearance('wall_blackness.dmi', "wall_clickcatcher", WALL_CLICKCATCH_LAYER, target, GAME_PLANE))
-	remove_split_vis_objects(target, target.smoothing_junction)
 	UnregisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE)
 	if(ismovable(target))
-		UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
-		var/ref = REF(target)
-		var/turf/our_turf = get_turf(target)
-		REMOVE_TRAIT(our_turf, TRAIT_CONTAINS_SPLITVIS, ref)
+		UnregisterSignal(target, list(COMSIG_MOVABLE_MOVED, COMSIG_TURF_CHANGE))
+		if(isturf(target.loc))
+			remove_split_vis_objects(target.loc, target.smoothing_junction)
+			var/ref = REF(target)
+			REMOVE_TRAIT(target.loc, TRAIT_CONTAINS_SPLITVIS, ref)
 	else
+		remove_split_vis_objects(target, target.smoothing_junction)
 		REMOVE_TRAIT(target, TRAIT_CONTAINS_SPLITVIS, src) // We use src here because this code is hot, and we assert that bespoke elements cannot self delete. Not a good pattern but fast
 	return ..()
 
 /datum/element/split_visibility/proc/on_turf_junction_change(turf/source, new_junction)
 	SIGNAL_HANDLER
-	// splitwalls use WEIRD lighting. I'm sorry
-	source.set_lighting_state("[new_junction]")
 	remove_split_vis_objects(source, source.smoothing_junction)
 	add_split_vis_objects(source, new_junction)
 
@@ -219,16 +221,29 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 		remove_split_vis_objects(source.loc, source.smoothing_junction)
 		add_split_vis_objects(source.loc, new_junction)
 
+/datum/element/split_visibility/proc/on_movable_turf_change(turf/source, list/new_baseturfs, flags, list/post_change_callbacks)
+	SIGNAL_HANDLER
+	// I am EVEN MORE SORRY FUCKKKKK
+	// This is a wacko case, traits as lists AHHHHH
+	for(var/ref in GET_TRAIT_SOURCES(source, TRAIT_CONTAINS_SPLITVIS))
+		var/atom/thing = locate(ref)
+		if(thing.loc != source)
+			continue
+		post_change_callbacks += CALLBACK(src, PROC_REF(movable_post_turf_change), thing)
+
+/datum/element/split_visibility/proc/movable_post_turf_change(atom/movable/parent, turf/changed)
+	changed.set_lighting_state("[parent.smoothing_junction]")
+
 /datum/element/split_visibility/proc/on_move(atom/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
+	var/ref = REF(source)
 	if(isturf(old_loc))
 		remove_split_vis_objects(old_loc, source.smoothing_junction) // We trust that junction changing will create the new visuals. just gotta cover the old
 		QUEUE_SMOOTH_NEIGHBORS(old_loc)
-	var/turf/old_turf = get_turf(old_loc)
-	var/ref = REF(source)
-	REMOVE_TRAIT(old_turf, TRAIT_CONTAINS_SPLITVIS, ref)
+		REMOVE_TRAIT(old_loc, TRAIT_CONTAINS_SPLITVIS, ref)
+		UnregisterSignal(old_loc, COMSIG_TURF_CHANGE)
 	QUEUE_SMOOTH(source)
 	QUEUE_SMOOTH_NEIGHBORS(source)
-	var/turf/our_turf = get_turf(source)
-	if(our_turf)
-		ADD_TRAIT(our_turf, TRAIT_CONTAINS_SPLITVIS, ref)
+	if(isturf(source.loc))
+		ADD_TRAIT(source.loc, TRAIT_CONTAINS_SPLITVIS, ref)
+		RegisterSignal(source.loc, COMSIG_TURF_CHANGE, PROC_REF(on_movable_turf_change))
