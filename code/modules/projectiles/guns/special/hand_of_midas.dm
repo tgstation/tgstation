@@ -37,20 +37,26 @@
 	balloon_alert(user, "not enough gold")
 
 // Siphon gold from a victim, recharging our gun & removing their Midas Blight debuff in the process.
+/obj/item/gun/magic/midas_hand/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
+		return ITEM_INTERACT_BLOCKING
+	return suck_gold(interacting_with, user)
+
 /obj/item/gun/magic/midas_hand/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with) || !IN_GIVEN_RANGE(user, interacting_with, gold_suck_range))
 		return ITEM_INTERACT_BLOCKING
-	if(interacting_with == user)
+	return suck_gold(interacting_with, user)
+
+/obj/item/gun/magic/midas_hand/proc/suck_gold(mob/living/victim, mob/living/user)
+	if(victim == user)
 		balloon_alert(user, "can't siphon from self!")
 		return ITEM_INTERACT_BLOCKING
-	if(!interacting_with.reagents)
+	if(!victim.reagents)
 		return ITEM_INTERACT_BLOCKING
-
-	var/gold_amount = interacting_with.reagents.get_reagent_amount(/datum/reagent/gold, type_check = REAGENT_SUB_TYPE)
+	var/gold_amount = victim.reagents.get_reagent_amount(/datum/reagent/gold, type_check = REAGENT_SUB_TYPE)
 	if(!gold_amount)
 		balloon_alert(user, "no gold in bloodstream!")
 		return ITEM_INTERACT_BLOCKING
-	var/mob/living/victim = interacting_with
 	var/gold_beam = user.Beam(victim, icon_state = "drain_gold")
 	if(!do_after(
 		user = user,

@@ -213,6 +213,10 @@
 	icon_state = "cyborg_upgrade3"
 	require_model = TRUE
 
+/obj/item/borg/upgrade/syndicate/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
+
 /obj/item/borg/upgrade/syndicate/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	. = ..()
 	if(!.)
@@ -428,18 +432,21 @@
 	. = ..()
 	if(!.)
 		return .
-	if(cyborg.model.toolbox.currently_upgraded)
-		to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
-		return FALSE
-	cyborg.model.toolbox.set_upgrade(TRUE)
 	ADD_TRAIT(cyborg, TRAIT_FASTMED, REF(src))
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool_upgrade in cyborg.model.modules)
+		if(omnitool_upgrade.upgraded)
+			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
+			return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/medical/omnitool in cyborg.model.modules)
+		omnitool.set_upgraded(TRUE)
 
 /obj/item/borg/upgrade/surgery_omnitool/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
-	cyborg.model.toolbox.set_upgrade(FALSE)
 	REMOVE_TRAIT(cyborg, TRAIT_FASTMED, REF(src))
+	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
+		omnitool.set_upgraded(FALSE)
 
 /obj/item/borg/upgrade/engineering_omnitool
 	name = "cyborg engineering omni-tool upgrade"
@@ -454,16 +461,19 @@
 	. = ..()
 	if(!.)
 		return .
-	if(cyborg.model.toolbox.currently_upgraded)
-		to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
-		return FALSE
-	cyborg.model.toolbox.set_upgrade(TRUE)
+	for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool_upgrade in cyborg.model.modules)
+		if(omnitool_upgrade.upgraded)
+			to_chat(user, span_warning("This unit is already equipped with an omnitool upgrade!"))
+			return FALSE
+	for(var/obj/item/borg/cyborg_omnitool/engineering/omnitool in cyborg.model.modules)
+		omnitool.set_upgraded(TRUE)
 
 /obj/item/borg/upgrade/engineering_omnitool/deactivate(mob/living/silicon/robot/cyborg, mob/living/user = usr)
 	. = ..()
 	if(!.)
 		return .
-	cyborg.model.toolbox.set_upgrade(FALSE)
+	for(var/obj/item/borg/cyborg_omnitool/omnitool in cyborg.model.modules)
+		omnitool.set_upgraded(FALSE)
 
 /obj/item/borg/upgrade/defib
 	name = "medical cyborg defibrillator"

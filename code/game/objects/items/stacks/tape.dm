@@ -14,11 +14,16 @@
 	grind_results = list(/datum/reagent/cellulose = 5)
 	splint_factor = 0.65
 	merge_type = /obj/item/stack/sticky_tape
-	var/list/conferred_embed = EMBED_HARMLESS
+	var/conferred_embed = /datum/embed_data/sticky_tape
 	///The tape type you get when ripping off a piece of tape.
 	var/obj/tape_gag = /obj/item/clothing/mask/muzzle/tape
 	greyscale_config = /datum/greyscale_config/tape
 	greyscale_colors = "#B2B2B2#BD6A62"
+
+/datum/embed_data/sticky_tape
+	pain_mult = 0
+	jostle_pain_mult = 0
+	ignore_throwspeed_threshold = 0
 
 /obj/item/stack/sticky_tape/attack_hand(mob/user, list/modifiers)
 	if(user.get_inactive_held_item() == src)
@@ -43,7 +48,7 @@
 	if(!isitem(target))
 		return NONE
 
-	if(target.embedding && target.embedding == conferred_embed)
+	if(target.get_embed()?.type == conferred_embed)
 		to_chat(user, span_warning("[target] is already coated in [src]!"))
 		return ITEM_INTERACT_BLOCKING
 
@@ -60,12 +65,11 @@
 			user.put_in_hands(O)
 			return ITEM_INTERACT_SUCCESS
 
-		if(target.embedding && target.embedding == conferred_embed)
+		if(target.get_embed() && target.get_embed().type == conferred_embed)
 			to_chat(user, span_warning("[target] is already coated in [src]!"))
 			return ITEM_INTERACT_BLOCKING
 
-		target.embedding = conferred_embed
-		target.updateEmbedding()
+		target.set_embed(conferred_embed)
 		to_chat(user, span_notice("You finish wrapping [target] with [src]."))
 		target.name = "[prefix] [target.name]"
 
@@ -80,11 +84,15 @@
 	singular_name = "super sticky tape"
 	desc = "Quite possibly the most mischevious substance in the galaxy. Use with extreme lack of caution."
 	prefix = "super sticky"
-	conferred_embed = EMBED_HARMLESS_SUPERIOR
+	conferred_embed = /datum/embed_data/sticky_tape/super
 	splint_factor = 0.4
 	merge_type = /obj/item/stack/sticky_tape/super
 	greyscale_colors = "#4D4D4D#75433F"
 	tape_gag = /obj/item/clothing/mask/muzzle/tape/super
+
+/datum/embed_data/sticky_tape/super
+	embed_chance = 100
+	fall_chance = 0.1
 
 /obj/item/stack/sticky_tape/pointy
 	name = "pointy tape"
@@ -92,21 +100,27 @@
 	desc = "Used for sticking to things for sticking said things inside people."
 	icon_state = "tape_spikes"
 	prefix = "pointy"
-	conferred_embed = EMBED_POINTY
+	conferred_embed = /datum/embed_data/pointy_tape
 	merge_type = /obj/item/stack/sticky_tape/pointy
 	greyscale_config = /datum/greyscale_config/tape/spikes
 	greyscale_colors = "#E64539#808080#AD2F45"
 	tape_gag = /obj/item/clothing/mask/muzzle/tape/pointy
+
+/datum/embed_data/pointy_tape
+	ignore_throwspeed_threshold = TRUE
 
 /obj/item/stack/sticky_tape/pointy/super
 	name = "super pointy tape"
 	singular_name = "super pointy tape"
 	desc = "You didn't know tape could look so sinister. Welcome to Space Station 13."
 	prefix = "super pointy"
-	conferred_embed = EMBED_POINTY_SUPERIOR
+	conferred_embed = /datum/embed_data/pointy_tape/super
 	merge_type = /obj/item/stack/sticky_tape/pointy/super
 	greyscale_colors = "#8C0A00#4F4F4F#300008"
 	tape_gag = /obj/item/clothing/mask/muzzle/tape/pointy/super
+
+/datum/embed_data/pointy_tape/super
+	embed_chance = 100
 
 /obj/item/stack/sticky_tape/surgical
 	name = "surgical tape"

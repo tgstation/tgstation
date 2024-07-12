@@ -5,7 +5,7 @@
 	overlay_icon_state = "bg_heretic_border"
 
 	school = SCHOOL_FORBIDDEN
-	invocation = "E'E'S"
+	invocation = "Caecus"
 	spell_requirements = NONE
 
 	cast_range = 10

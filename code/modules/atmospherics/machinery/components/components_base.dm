@@ -62,6 +62,7 @@
 
 	color = null
 	SET_PLANE_IMPLICIT(src, showpipe ? GAME_PLANE : FLOOR_PLANE)
+	// Layer is handled in update_layer()
 
 	if(!showpipe)
 		return ..()
@@ -327,7 +328,7 @@
 	connect_nodes()
 
 /obj/machinery/atmospherics/components/update_layer()
-	layer = initial(layer) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.001)
+	layer = (showpipe ? initial(layer) : ABOVE_OPEN_TURF_LAYER) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.001)
 
 /**
  * Handles air relocation to the pipenet/environment
