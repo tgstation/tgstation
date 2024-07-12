@@ -6,21 +6,6 @@
 	refundable = FALSE // no refund
 	requires_wizard_garb = FALSE
 
-/datum/spellbook_entry/perks/can_buy(mob/living/carbon/human/user, obj/item/spellbook/book)
-	if(book.uses < cost)
-		return FALSE
-	var/datum/antagonist/wizard/wizard_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
-	if(!wizard_datum)
-		stack_trace("Someone as not a wizard trying to get perks.")
-		return TRUE
-	for(var/spell in user.actions)
-		if(is_type_in_typecache(spell, no_coexistance_typecache))
-			return FALSE
-	if(is_type_in_list(src, wizard_datum.perks))
-		to_chat(user, span_warning("This perk already learned!"))
-		return FALSE
-	return TRUE
-
 /datum/spellbook_entry/perks/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
 	var/datum/antagonist/wizard/wizard_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
 	if(wizard_datum)
@@ -77,25 +62,6 @@
 		return
 	wizard.AddComponent(/datum/component/dejavu/timeline, -1, 60 SECONDS)
 	UnregisterSignal(wizard, COMSIG_ENTER_AREA)
-
-/datum/spellbook_entry/perks/ecologist
-	name = "Ecologist"
-	desc = "your body becomes a vessel for rapidly growing vines. \
-	as soon as the vessel receives damage, the vines will be released from and surround the vessel and then begin to grow rapidly"
-
-/datum/spellbook_entry/perks/ecologist/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
-	. = ..()
-	user.AddComponent(/datum/component/ecologist)
-
-/datum/spellbook_entry/perks/angel_doll
-	name = "Angel Doll"
-	desc = "You grow angel wings. The corpses near you become infected with the zombie infection and will soon be reborn to take over the entire station. \
-	You become immune to virus... but zombies will still attack you."
-
-/datum/spellbook_entry/perks/angel_doll/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
-	. = ..()
-	var/obj/item/organ/external/wings/functional/zombie_wings/angel_wing = new(get_turf(user))
-	angel_wing.Insert(user)
 
 /datum/spellbook_entry/perks/spell_lottery
 	name = "Spells Lottery"

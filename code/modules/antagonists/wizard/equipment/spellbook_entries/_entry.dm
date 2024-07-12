@@ -76,6 +76,9 @@
 	for(var/perks in wizard_datum.perks)
 		if(is_type_in_typecache(perks, no_coexistance_typecache))
 			return FALSE
+	if(is_type_in_list(src, wizard_datum.perks))
+		to_chat(user, span_warning("This perk already learned!"))
+		return FALSE
 	return TRUE
 
 /**
