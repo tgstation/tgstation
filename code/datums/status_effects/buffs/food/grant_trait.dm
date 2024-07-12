@@ -22,3 +22,12 @@
 	name = "Grounded"
 	desc = "That meal made me feel like a superconductor..."
 	icon_state = "shock_immune"
+
+/datum/status_effect/food/trait/mute
+	alert_type = /atom/movable/screen/alert/status_effect/mute
+	trait = TRAIT_MUTE
+
+/atom/movable/screen/alert/status_effect/mute
+	name = "..."
+	desc = "..."
+	icon_state = "mute"
