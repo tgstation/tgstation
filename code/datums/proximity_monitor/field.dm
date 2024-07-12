@@ -168,6 +168,7 @@
 /obj/item/multitool/field_debug
 	name = "strange multitool"
 	desc = "Seems to project a colored field!"
+	apc_scanner = FALSE
 	var/operating = FALSE
 	var/range_to_use = 5
 	var/datum/proximity_monitor/advanced/debug/current = null

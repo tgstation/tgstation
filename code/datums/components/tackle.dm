@@ -596,11 +596,9 @@
 	if(W.type in list(/obj/structure/window, /obj/structure/window/fulltile, /obj/structure/window/unanchored, /obj/structure/window/fulltile/unanchored)) // boring unreinforced windows
 		for(var/i in 1 to speed)
 			var/obj/item/shard/shard = new /obj/item/shard(get_turf(user))
-			shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=3, pain_chance=5)
-			shard.updateEmbedding()
+			shard.set_embed(/datum/embed_data/glass_candy)
 			user.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-			shard.embedding = null
-			shard.updateEmbedding()
+			shard.set_embed(initial(shard.embed_type))
 		W.atom_destruction()
 		user.adjustStaminaLoss(10 * speed)
 		user.Paralyze(3 SECONDS)

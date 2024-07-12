@@ -96,6 +96,7 @@
 #include "armor_verification.dm"
 #include "atmospherics_sanity.dm"
 #include "autowiki.dm"
+#include "bake_a_cake.dm"
 #include "barsigns.dm"
 #include "baseturfs.dm"
 #include "bespoke_id.dm"

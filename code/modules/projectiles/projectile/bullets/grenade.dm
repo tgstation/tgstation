@@ -5,7 +5,7 @@
 	desc = "USE A WEEL GUN"
 	icon_state= "bolter"
 	damage = 60
-	embedding = null
+	embed_type = null
 	shrapnel_type = null
 
 /obj/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0, pierce_hit)

@@ -132,6 +132,7 @@
 	owner = acquirer
 	dna = acquirer.dna
 	dna.mutations += src
+	SEND_SIGNAL(src, COMSIG_MUTATION_GAINED, acquirer)
 	if(text_gain_indication)
 		to_chat(owner, text_gain_indication)
 	if(visual_indicators.len)
@@ -158,6 +159,7 @@
 	if(!istype(owner) || !(owner.dna.mutations.Remove(src)))
 		return TRUE
 	. = FALSE
+	SEND_SIGNAL(src, COMSIG_MUTATION_LOST, owner)
 	if(text_lose_indication && owner.stat != DEAD)
 		to_chat(owner, text_lose_indication)
 	if(visual_indicators.len)
