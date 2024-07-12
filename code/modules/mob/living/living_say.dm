@@ -142,8 +142,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			say_dead(original_message)
 			return
 
-	if(HAS_TRAIT(src, TRAIT_SOFTSPOKEN) && !HAS_TRAIT(src, TRAIT_SIGN_LANG)) // softspoken trait only applies to spoken languages
-		message_mods[WHISPER_MODE] = MODE_WHISPER
+	/*if(HAS_TRAIT(src, TRAIT_SOFTSPOKEN) && !HAS_TRAIT(src, TRAIT_SIGN_LANG)) MONKESTATION EDIT: Moved to be after radios.
+		message_mods[WHISPER_MODE] = MODE_WHISPER*/
 
 	if(client && SSlag_switch.measures[SLOWMODE_SAY] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES) && !forced && src == usr)
 		if(!COOLDOWN_FINISHED(client, say_slowmode))
@@ -230,6 +230,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			message_mods[WHISPER_MODE] = MODE_WHISPER
 	if(radio_return & NOPASS)
 		return TRUE
+
+	if(HAS_TRAIT(src, TRAIT_SOFTSPOKEN) && !HAS_TRAIT(src, TRAIT_SIGN_LANG)) // MONKESTATION EDIT: Moved TRAIT_SOFTSPOKEN check to be after radios.
+		message_mods[WHISPER_MODE] = MODE_WHISPER
 
 	//No screams in space, unless you're next to someone.
 	var/turf/T = get_turf(src)
