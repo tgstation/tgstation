@@ -269,8 +269,6 @@
 			melee_damage_upper += 10
 			wound_bonus = -90
 
-			cores *= 2
-
 	ai_controller.set_blackboard_key(BB_SLIME_LIFE_STAGE, life_stage)
 	update_mob_action_buttons()
 

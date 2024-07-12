@@ -37,18 +37,15 @@
 
 /datum/surgery_step/extract_core/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/mob/living/basic/slime/target_slime = target
-	if(target_slime.try_extract_cores(count = 1))
+	var/core_count = target_slime.cores
+	if(core_count && target_slime.try_extract_cores(count = core_count))
 		display_results(
 			user,
 			target,
-			span_notice("You successfully extract a core from [target]. [target_slime.cores] core\s remaining."),
-			span_notice("[user] successfully extracts a core from [target]!"),
-			span_notice("[user] successfully extracts a core from [target]!"),
+			span_notice("You successfully extract [core_count] core\s from [target]."),
+			span_notice("[user] successfully extracts [core_count] core\s from [target]!"),
+			span_notice("[user] successfully extracts [core_count] core\s from [target]!"),
 		)
-		if(target_slime.cores > 0)
-			return FALSE // Continue extracting
-		else
-			return TRUE
-	else
-		to_chat(user, span_warning("There aren't any cores left in [target]!"))
+		return TRUE
+	to_chat(user, span_warning("There aren't any cores left in [target]!"))
 	return ..()
