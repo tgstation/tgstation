@@ -77,7 +77,7 @@
 			else if(invocation_type != INVOCATION_NONE)
 				playsound(cast_on, 'sound/magic/summonitems_generic.ogg', 50, TRUE)
 			else
-			to_chat(owner, span_warning("[cast_on] isn't wearing any shoes!"))
+				to_chat(owner, span_warning("[cast_on] isn't wearing any shoes!"))
 			return FALSE
 
 	switch(shoes_to_tie.tied)
