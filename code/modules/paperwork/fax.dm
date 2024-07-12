@@ -66,6 +66,27 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	fax_name = "[current_area.name]"
 	return ..()
 
+/obj/machinery/fax/admin/syndicate
+	name = "Syndicate Fax Machine"
+
+/obj/machinery/fax/admin/syndicate/Initialize(mapload)
+	fax_name = "[special_networks["syndicate"]["fax_name"]]"
+	fax_id = special_networks["syndicate"]["fax_id"]
+	syndicate_network = TRUE
+	return ..()
+
+/obj/machinery/fax/admin
+	name = "CentCom Fax Machine"
+
+/obj/machinery/fax/admin/Initialize(mapload)
+	if (!fax_name)
+		fax_name = "[GLOB.nt_fax_department]"
+	if(!fax_id)
+		fax_id = special_networks["nanotrasen"]["fax_id"]
+	name = "[fax_name] Fax Machine"
+	visible_to_network = FALSE
+	return ..()
+
 /obj/machinery/fax/Initialize(mapload)
 	. = ..()
 	if (!fax_id)
@@ -254,6 +275,8 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	data["fax_history"] = fax_history
 	var/list/special_networks_data = list()
 	for(var/key in special_networks)
+		if(special_networks[key]["fax_id"] == fax_id)
+			continue
 		special_networks_data += list(special_networks[key])
 	data["special_faxes"] = special_networks_data
 	return data
@@ -298,10 +321,14 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 			INVOKE_ASYNC(src, PROC_REF(animate_object_travel), fax_paper, "fax_receive", find_overlay_state(fax_paper, "send"))
 			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, vary = FALSE)
 
-			history_add("Send", params["name"])
+			if(params["name"] == GLOB.nt_fax_department)
+				send(fax_paper, special_networks["nanotrasen"]["fax_id"])
+			else
+				send(fax_paper, special_networks["syndicate"]["fax_id"])
 
 			GLOB.requests.fax_request(usr.client, "sent a fax message from [fax_name]/[fax_id] to [params["name"]]", fax_paper)
 			to_chat(GLOB.admins, span_adminnotice("[icon2html(src.icon, GLOB.admins)]<b><font color=green>FAX REQUEST: </font>[ADMIN_FULLMONTY(usr)]:</b> [span_linkify("sent a fax message from [fax_name]/[fax_id][ADMIN_FLW(src)] to [html_encode(params["name"])]")] [ADMIN_SHOW_PAPER(fax_paper)]"), confidential = TRUE)
+
 			for(var/client/staff as anything in GLOB.admins)
 				if(staff?.prefs.read_preference(/datum/preference/toggle/comms_notification))
 					SEND_SOUND(staff, sound('sound/misc/server-ready.ogg'))

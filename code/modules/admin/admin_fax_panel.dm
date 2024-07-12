@@ -68,7 +68,7 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 
 	for(var/datum/weakref/weakrefed_fax as anything in available_faxes)
 		var/obj/machinery/fax/another_fax = weakrefed_fax.resolve()
-		if(another_fax && istype(another_fax))
+		if(another_fax && istype(another_fax) && (another_fax.fax_id != another_fax.special_networks["nanotrasen"]["fax_id"]) && (another_fax.fax_id != another_fax.special_networks["syndicate"]["fax_id"]))
 			data["faxes"] += list(another_fax.fax_name)
 
 	return data

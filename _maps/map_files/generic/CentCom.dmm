@@ -198,9 +198,9 @@
 /area/centcom/central_command_areas/courtroom)
 "aV" = (
 /obj/structure/table/wood,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/clipboard,
 /obj/item/radio/headset/headset_cent,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
 "aW" = (
@@ -7528,11 +7528,15 @@
 /obj/item/clipboard,
 /obj/item/folder/red,
 /obj/item/stamp/denied{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/stamp{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/stamp,
 /obj/structure/table/reinforced,
+/obj/item/stamp/centcom,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/briefing)
 "Kf" = (
@@ -8791,15 +8795,7 @@
 /area/centcom/central_command_areas/supplypod/loading/three)
 "PX" = (
 /obj/structure/table/reinforced,
-/obj/item/folder/red{
-	pixel_x = -2;
-	pixel_y = -2
-	},
-/obj/item/folder/blue{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/lighter,
+/obj/machinery/fax/admin,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/briefing)
 "PY" = (
@@ -10509,10 +10505,14 @@
 /obj/item/clipboard,
 /obj/item/folder/red,
 /obj/item/stamp/denied{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/stamp{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/stamp,
+/obj/item/stamp/centcom,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
 "Ya" = (
