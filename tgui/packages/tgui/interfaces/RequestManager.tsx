@@ -56,10 +56,9 @@ export const RequestManager = (props) => {
     (request) => filteredTypes[request.req_type],
   );
   const search = createSearch(
-    searchText.toLowerCase(),
+    searchText,
     (requests: Request) =>
-      requests.owner_name.toLowerCase() +
-      decodeHtmlEntities(requests.message).toLowerCase(),
+      requests.owner_name + decodeHtmlEntities(requests.message),
   );
   if (searchText.length > 0) {
     displayedRequests = displayedRequests.filter((request) => search(request));
