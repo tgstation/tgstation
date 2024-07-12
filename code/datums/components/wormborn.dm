@@ -46,7 +46,7 @@
 	mob_size = MOB_SIZE_HUGE
 	sentience_type = SENTIENCE_BOSS
 	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
-	var/mob/living/basic/wizard_worm/back = /mob/living/basic/wizard_worm
+	var/mob/living/basic/wizard_worm/back
 
 /mob/living/basic/wizard_worm/has_gravity(turf/gravity_turf)
 	return TRUE
