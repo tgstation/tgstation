@@ -281,7 +281,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	machine_name = "SciDrobe"
 
 /obj/machinery/vending/wardrobe/hydro_wardrobe
-	name = "Hydrobe"
+	name = "HyDrobe"
 	desc = "A machine with a catchy name. It dispenses botany related clothing and gear."
 	icon_state = "hydrobe"
 	product_ads = "Do you love soil? Then buy our clothes!;Get outfits to match your green thumb here!"
