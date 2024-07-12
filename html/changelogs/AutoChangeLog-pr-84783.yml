@@ -1,6 +1,0 @@
-author: "Deadgebert"
-delete-after: True
-changes:
-  - balance: "Moves XL beaker from Chemical Synthesis to Medbay Equipment"
-  - balance: "Removes Plumbing node and moves most items to Chemical synthesis node"
-  - balance: "Moves piercing syringe from Plumbing node to Advanced Medbay Equipment"
