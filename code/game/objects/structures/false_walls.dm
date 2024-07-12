@@ -110,8 +110,6 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	var/obj/effect/falsewall_floating/visuals
 	/// Our usual smoothing groups
 	var/list/usual_groups
-	/// Our usual opacity
-	var/usual_opacity
 	/// The icon this falsewall is faking being. we'll switch out our icon with this when we're in fake mode
 	var/fake_icon = 'icons/turf/walls/metal_wall.dmi'
 	var/mineral = /obj/item/stack/sheet/iron
@@ -128,6 +126,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	var/obj/item/stack/initialized_mineral = new mineral // Okay this kinda sucks.
 	set_custom_materials(initialized_mineral.mats_per_unit, mineral_amount)
 	qdel(initialized_mineral)
+	set_opacity(TRUE) // walls cannot be transparent fuck u materials
 	air_update_turf(TRUE, TRUE)
 
 /obj/structure/falsewall/set_smoothed_icon_state(new_junction)
@@ -164,7 +163,6 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	smoothing_groups = list()
 	QUEUE_SMOOTH_NEIGHBORS(src) // Update any walls around us
 	sleep(0.2 SECONDS)
-	usual_opacity = opacity
 	set_opacity(FALSE)
 	sleep(0.8 SECONDS)
 	visuals.set_darkness_opacity(FALSE)
@@ -178,7 +176,7 @@ GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
 	animate(src, pixel_z = 0, time = 1 SECONDS)
 	visuals.set_darkness_opacity(TRUE)
 	sleep(0.3 SECONDS)
-	set_opacity(usual_opacity)
+	set_opacity(TRUE)
 	smoothing_groups = usual_groups
 	usual_groups = null
 	QUEUE_SMOOTH_NEIGHBORS(src)
