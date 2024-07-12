@@ -1,36 +1,46 @@
 'TGUI':
-  - 'tgui/**'
+  - changed-files:
+    - any-glob-to-any-file: 'tgui/**'
 
 'Звук':
-  - '**/*.ogg'
+  - changed-files:
+    - any-glob-to-any-file: '**/*.ogg'
 
 'Спрайты':
-  - '**/*.dmi'
-  - '**/*.png'
+  - changed-files:
+    - any-glob-to-any-file: ['**/*.dmi', '**/*.png']
 
 'Изменение Карты':
-  - '**/*.dmm'
+  - changed-files:
+    - any-glob-to-any-file: '**/*.dmm'
 
 'НЕ МОДУЛЬНО':
-  - all: ['code/**']
-  - base-branch: 'master'
+  - all:
+    - changed-files:
+      - any-glob-to-any-file: 'code/**'
+    - base-branch: 'master'
 
 'Частичная модульность':
-  - all: ['code/**', modular_bandastation/**]
-  - base-branch: 'master'
+  - all:
+    - chandged-files:
+      - all-globs-to-any-file: ['code/**', modular_bandastation/**]
+    - base-branch: 'master'
 
 'Перевод':
   - base-branch: 'translate'
 
 'Инструменты':
-  - '.gihub/workflows/**'
-  - 'tools/**'
+  - changed-files:
+    - any-glob-to-any-file: ['.gihub/workflows/**', 'tools/**']
 
 'Изменение конфига':
-  - 'config/**'
+  - changed-files:
+    - any-glob-to-any-file: 'config/**'
 
 'Документация':
-  - '**/*.md'
+  - changed-files:
+    - any-glob-to-any-file: '**/*.md'
 
 'SQL':
-  - 'SQL/**'
+  - changed-files:
+    - any-glob-to-any-file: 'SQL/**'
