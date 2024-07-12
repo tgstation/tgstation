@@ -133,8 +133,7 @@
 	var/hasExpanded = FALSE
 	var/obj/item/hat
 	var/hat_offset = -3
-	var/hat_offset_x = list()
-	var/hat_offset_y = list()
+	var/hat_dir_offsets = list()
 
 	///What types of mobs are allowed to ride/buckle to this mob
 	var/static/list/can_ride_typecache = typecacheof(/mob/living/carbon/human)
