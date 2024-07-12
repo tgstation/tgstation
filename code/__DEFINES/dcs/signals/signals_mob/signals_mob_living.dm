@@ -289,3 +289,6 @@
 #define COMSIG_MOB_HAPPINESS_CHANGE "happiness_change"
 /// From /obj/item/melee/baton/baton_effect(): (datum/source, mob/living/user, /obj/item/melee/baton)
 #define COMSIG_MOB_BATONED "mob_batoned"
+
+/// Sent to the mob when their mind is slaved
+#define COMSIG_MOB_ENSLAVED_TO "mob_enslaved_to"
