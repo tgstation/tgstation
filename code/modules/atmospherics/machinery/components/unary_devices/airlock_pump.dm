@@ -193,7 +193,7 @@
 			return //External target pressure reached
 
 		siphon_tile(loc)
-		for(var/turf/tile in adjacent_turfs)
+		for(var/turf/tile as anything in adjacent_turfs)
 			siphon_tile(tile)
 
 
