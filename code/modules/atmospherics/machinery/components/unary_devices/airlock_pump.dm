@@ -185,7 +185,7 @@
 		var/split_moles = QUANTIZE(available_moles / total_tiles)
 
 		fill_tile(loc, split_moles, pressure_delta)
-		for(var/turf/tile in adjacent_turfs)
+		for(var/turf/tile as anything in adjacent_turfs)
 			fill_tile(tile, split_moles, pressure_delta)
 	else //tile -> waste node
 		var/pressure_delta = tile_air_pressure - cycle_pressure_target
