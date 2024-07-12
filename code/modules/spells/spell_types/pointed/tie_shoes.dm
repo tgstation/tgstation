@@ -33,7 +33,7 @@
 		to_chat(owner, span_notice("You will now summon shoes if your target has none."))
 
 	if(spell_level == 4)
-		invocation_type_type = INVOCATION_NONE
+		invocation_type = INVOCATION_NONE
 		to_chat(owner, span_boldnotice("Your invocations are now silent!"))
 
 /datum/action/cooldown/spell/pointed/untie_shoes/is_valid_target(atom/cast_on)

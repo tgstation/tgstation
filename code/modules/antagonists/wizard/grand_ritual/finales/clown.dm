@@ -10,7 +10,7 @@
 	for(var/mob/living/carbon/human/victim as anything in GLOB.human_list)
 		victim.Unconscious(3 SECONDS)
 		if (victim == invoker)
-			if(locate(/datum/action/cooldown/spell/pointed/untie_shoes in invoker.actions))
+			if(locate(/datum/action/cooldown/spell/pointed/untie_shoes) in invoker.actions)
 				continue
 			var/datum/action/cooldown/spell/pointed/untie_shoes/newer_spell = new(invoker)
 			newer_spell.Grant(invoker)
