@@ -94,6 +94,47 @@
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	vary = FALSE
 
+/datum/emote/living/clap1
+	key = "clap1"
+	key_third_person = "claps once"
+	message = "claps once."
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = TRUE
+	hands_use_check = TRUE
+	vary = TRUE
+	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
+
+/datum/emote/living/clap1/get_sound(mob/living/user)
+	return pick('monkestation/code/modules/emotes/sound/claponce1.ogg',
+				'monkestation/code/modules/emotes/sound/claponce2.ogg')
+
+/datum/emote/living/clap1/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional)
+	if(user.usable_hands < 2)
+		return FALSE
+	return ..()
+
+/datum/emote/living/snap2
+	key = "snap2"
+	key_third_person = "snaps twice"
+	message = "snaps twice."
+	message_param = "snaps twice at %t."
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = TRUE
+	hands_use_check = TRUE
+	vary = TRUE
+	sound = 'monkestation/code/modules/emotes/sound/snap2.ogg'
+
+/datum/emote/living/snap3
+	key = "snap3"
+	key_third_person = "snaps thrice"
+	message = "snaps thrice."
+	message_param = "snaps thrice at %t."
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = TRUE
+	hands_use_check = TRUE
+	vary = TRUE
+	sound = 'monkestation/code/modules/emotes/sound/snap3.ogg'
+
 /datum/emote/living/scream/run_emote(mob/user, params, type_override, intentional = FALSE)
 	if(!intentional && HAS_TRAIT(user, TRAIT_ANALGESIA))
 		return
