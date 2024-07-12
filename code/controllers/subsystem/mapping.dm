@@ -192,10 +192,8 @@ SUBSYSTEM_DEF(mapping)
 			LISTASSERTLEN(old_area.turfs_to_uncontain_by_zlevel, reserving_turf.z, list())
 			old_area.turfs_to_uncontain_by_zlevel[reserving_turf.z] += reserving_turf
 			reserving_turf.turf_flags = UNUSED_RESERVATION_TURF
-
 			// reservation turfs are not allowed to interact with atmos at all
 			reserving_turf.blocks_air = TRUE
-			reserving_turf.immediate_calculate_adjacent_turfs()
 
 			world_contents += reserving_turf
 			LISTASSERTLEN(world_turf_contents_by_z, reserving_turf.z, list())
