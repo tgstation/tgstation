@@ -88,16 +88,13 @@
 	var/mob/living/carbon/human/live_or_dead = target
 	if(live_or_dead.stat < UNCONSCIOUS && live_or_dead.getStaminaLoss() < 100)
 		return FALSE
-	var/obj/item/bodypart/check_head = live_or_dead.get_bodypart(BODY_ZONE_HEAD)
-	if(!check_head)
-		return FALSE
 	INVOKE_ASYNC(src, PROC_REF(finish_him), src, pilot, live_or_dead)
 	return TRUE
 
 /**
  * ## finish_him
  *
- * Target's head is cut off (if it has one)
+ * Guarentees a dismember.
  * Attack from invisibility and charged attack have higher priority.
  * Arguments:
  * * finisher - Mech pilot who makes an attack.
@@ -118,8 +115,8 @@
 		return
 	var/turf/finish_turf = get_step(him, get_dir(my_mech, him))
 	var/turf/for_line_turf = get_turf(my_mech)
-	var/obj/item/bodypart/in_your_head = him.get_bodypart(BODY_ZONE_HEAD)
-	in_your_head?.dismember(BRUTE)
+	var/obj/item/bodypart/cut_bodypart = him.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG))
+	cut_bodypart?.dismember(BRUTE)
 	playsound(src, brute_attack_sound, 75, FALSE)
 	for_line_turf.Beam(src, icon_state = "mech_charge", time = 8)
 	forceMove(finish_turf)
@@ -481,7 +478,7 @@
 			if(something_living.stat >= UNCONSCIOUS || something_living.getStaminaLoss() >= 100 || something_living == charger)
 				continue
 			if(prob(DISMEMBER_CHANCE_LOW))
-				var/obj/item/bodypart/cut_bodypart = something_living.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_HEAD))
+				var/obj/item/bodypart/cut_bodypart = something_living.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG))
 				cut_bodypart?.dismember(BRUTE)
 			something_living.apply_damage(35, BRUTE)
 		here_we_go = line_turf
