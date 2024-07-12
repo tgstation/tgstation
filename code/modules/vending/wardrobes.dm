@@ -62,6 +62,8 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	)
 	premium = list(
 		/obj/item/clothing/under/rank/security/officer/formal = 3,
+		/obj/item/clothing/under/plasmaman/security/bluesec = 3,
+		/obj/item/clothing/head/helmet/space/plasmaman/security/bluesec = 3,
 		/obj/item/clothing/suit/jacket/officer/blue = 3,
 		/obj/item/clothing/head/beret/sec/navyofficer = 3,
 	)
