@@ -1,0 +1,37 @@
+'TGUI':
+  - 'tgui/**'
+
+'Звук':
+  - '**/*.ogg'
+
+'Спрайты':
+  - '**/*.dmi'
+  - '**/*.png'
+
+'Изменение Карты':
+  - '**/*.dmm'
+
+'НЕ МОДУЛЬНО':
+  - all: ['code/**']
+  - branches-ignore:
+    - 'translate'
+
+'Частичная модульность':
+  - all: ['code/**', modular_bandastation/**]
+
+'Перевод':
+  branches:
+    - 'translate'
+
+'Инструменты':
+  - '.gihub/workflows/**'
+  - 'tools/**'
+
+'Изменение конфига':
+  - 'config/**'
+
+'Документация':
+  - '**/*.md'
+
+'SQL':
+  - 'SQL/**'
