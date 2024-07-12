@@ -40,21 +40,9 @@
 	name = "Cap (Delinquent)"
 	item_path = /obj/item/clothing/head/costume/delinquent
 
-/datum/loadout_item/head/green_cap
-	name = "Cap (Green)"
-	item_path = /obj/item/clothing/head/soft/green
-
 /datum/loadout_item/head/grey_cap
 	name = "Cap (Grey)"
 	item_path = /obj/item/clothing/head/soft/grey
-
-/datum/loadout_item/head/orange_cap
-	name = "Cap (Orange)"
-	item_path = /obj/item/clothing/head/soft/orange
-
-/datum/loadout_item/head/purple_cap
-	name = "Cap (Purple)"
-	item_path = /obj/item/clothing/head/soft/purple
 
 /datum/loadout_item/head/rainbow_cap
 	name = "Cap (Rainbow)"
@@ -67,10 +55,6 @@
 /datum/loadout_item/head/white_cap
 	name = "Cap (White)"
 	item_path = /obj/item/clothing/head/soft
-
-/datum/loadout_item/head/yellow_cap
-	name = "Cap (Yellow)"
-	item_path = /obj/item/clothing/head/soft/yellow
 
 /datum/loadout_item/head/flatcap
 	name = "Cap (Flat)"
