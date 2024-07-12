@@ -198,7 +198,7 @@ const FilterPanel = (props) => {
             </Table>
           </div>
         }
-       />
+      />
     </div>
   );
 };
