@@ -233,7 +233,7 @@
 /// Proc for triggering cycle by clicking on a bolted airlock that has a pump assigned
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/airlock_act(obj/machinery/door/airlock/airlock)
 	if(on)
-		airlock.do_animate("deny") // Already cycling
+		airlock.run_animation(DOOR_DENY_ANIMATION) // Already cycling
 		return
 	if(!cycling_set_up)
 		airlock.say("Airlock pair not found.")
