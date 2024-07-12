@@ -31,3 +31,12 @@
 	name = "..."
 	desc = "..."
 	icon_state = "mute"
+
+/datum/status_effect/food/trait/ashstorm_immune
+	alert_type = /atom/movable/screen/alert/status_effect/ashstorm_immune
+	trait = TRAIT_ASHSTORM_IMMUNE
+
+/atom/movable/screen/alert/status_effect/ashstorm_immune
+	name = "Ashstorm-proof"
+	desc = "That meal makes me feel born on Lavaland."
+	icon_state = "ashstorm_immune"
