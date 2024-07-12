@@ -66,9 +66,9 @@
 	only_forced_audio = TRUE
 	vary = TRUE
 
-/datum/emote/carbon/human/scream/can_run_emote(mob/user, params, type_override, intentional = FALSE, params)
+/datum/emote/carbon/human/scream/can_run_emote(mob/user, status_check = TRUE , intentional, params)
 	if(!intentional && HAS_TRAIT(user, TRAIT_ANALGESIA))
-		return
+		return FALSE
 	return ..()
 
 /datum/emote/living/carbon/human/scream/get_sound(mob/living/carbon/human/user)
