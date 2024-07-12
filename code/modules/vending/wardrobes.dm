@@ -86,6 +86,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/head/utility/surgerycap/purple = 4,
 		/obj/item/clothing/head/utility/surgerycap/green = 4,
 		/obj/item/clothing/head/beret/medical/paramedic = 4,
+		/obj/item/clothing/head/soft/blue = 4,
 		/obj/item/clothing/head/soft/paramedic = 4,
 		/obj/item/clothing/head/utility/head_mirror = 4,
 		/obj/item/clothing/mask/bandana/striped/medical = 4,
@@ -129,6 +130,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/head/utility/hardhat = 3,
 		/obj/item/clothing/head/utility/hardhat/welding = 3,
 		/obj/item/clothing/head/beret/engi = 3,
+		/obj/item/clothing/head/soft/yellow = 3,
 		/obj/item/clothing/mask/bandana/striped/engineering = 3,
 		/obj/item/clothing/under/rank/engineering/engineer = 3,
 		/obj/item/clothing/under/rank/engineering/engineer/skirt = 3,
@@ -156,6 +158,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	vend_reply = "Thank you for using the AtmosDrobe!"
 	products = list(
 		/obj/item/clothing/accessory/pocketprotector = 3,
+		/obj/item/clothing/head/soft/yellow = 3,
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician = 3,
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician/skirt = 3,
 		/obj/item/clothing/suit/atmos_overalls = 3,
@@ -222,6 +225,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	products = list(
 		/obj/item/clothing/glasses/hud/diagnostic = 2,
 		/obj/item/clothing/head/soft/black = 2,
+		/obj/item/clothing/head/soft/blue = 2,
 		/obj/item/clothing/mask/bandana/skull/black = 2,
 		/obj/item/clothing/under/rank/rnd/roboticist = 2,
 		/obj/item/clothing/under/rank/rnd/roboticist/skirt = 2,
@@ -256,6 +260,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	products = list(
 		/obj/item/clothing/accessory/pocketprotector = 3,
 		/obj/item/clothing/head/beret/science = 3,
+		/obj/item/clothing/head/soft/purple = 3,
 		/obj/item/clothing/mask/gas = 3,
 		/obj/item/clothing/mask/bandana/striped/science = 3,
 		/obj/item/clothing/under/rank/rnd/scientist = 3,
@@ -283,6 +288,8 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	vend_reply = "Thank you for using the Hydrobe!"
 	products = list(
 		/obj/item/clothing/accessory/armband/hydro = 3,
+		/obj/item/clothing/head/soft/green = 3,
+		/obj/item/clothing/head/soft/blue = 3,
 		/obj/item/clothing/mask/bandana/striped/botany = 3,
 		/obj/item/clothing/under/rank/civilian/hydroponics = 3,
 		/obj/item/clothing/under/rank/civilian/hydroponics/skirt = 3,
@@ -346,6 +353,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/cautery/cruel = 1,
 		/obj/item/clothing/gloves/latex/coroner = 1,
 		/obj/item/clothing/head/utility/surgerycap/black = 1,
+		/obj/item/clothing/head/soft/black = 1,
 		/obj/item/clothing/mask/surgical = 1,
 		/obj/item/clothing/shoes/sneakers/black = 1,
 		/obj/item/clothing/suit/apron/surgical = 1,
@@ -542,6 +550,8 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/shoes/sneakers/black = 1,
 		/obj/item/clothing/suit/chaplainsuit/nun = 1,
 		/obj/item/clothing/head/chaplain/nun_hood = 1,
+		/obj/item/clothing/head/soft/black = 3,
+		/obj/item/clothing/head/soft/mime = 2,
 		/obj/item/clothing/suit/chaplainsuit/holidaypriest = 1,
 		/obj/item/clothing/suit/hooded/chaplainsuit/monkhabit = 1,
 		/obj/item/clothing/head/chaplain/kippah = 3,
@@ -582,6 +592,8 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	vend_reply = "Thank you for using the ChemDrobe!"
 	products = list(
 		/obj/item/clothing/head/beret/medical = 2,
+		/obj/item/clothing/head/soft/blue = 2,
+		/obj/item/clothing/head/soft/orange = 2,
 		/obj/item/clothing/under/rank/medical/chemist = 2,
 		/obj/item/clothing/under/rank/medical/chemist/skirt = 2,
 		/obj/item/clothing/suit/toggle/labcoat/chemist = 2,
@@ -612,6 +624,8 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	product_ads = "Perfect for the mad scientist in you!"
 	vend_reply = "Thank you for using the GeneDrobe!"
 	products = list(
+		/obj/item/clothing/head/soft/purple = 2,
+		/obj/item/clothing/head/soft/blue = 2,
 		/obj/item/clothing/under/rank/rnd/geneticist = 2,
 		/obj/item/clothing/under/rank/rnd/geneticist/skirt = 2,
 		/obj/item/clothing/suit/toggle/labcoat/genetics = 2,
@@ -638,6 +652,8 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	vend_reply = "Thank you for using the ViroDrobe"
 	products = list(
 		/obj/item/clothing/mask/surgical = 2,
+		/obj/item/clothing/head/soft/blue = 2,
+		/obj/item/clothing/head/soft/green = 2,
 		/obj/item/clothing/under/rank/medical/virologist = 2,
 		/obj/item/clothing/under/rank/medical/virologist/skirt = 2,
 		/obj/item/clothing/head/beret/medical = 2,
