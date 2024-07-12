@@ -426,7 +426,7 @@
 
 ///Break the cycling setup
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/break_all_links()
-	for(var/obj/machinery/door/airlock/airlock in (internal_airlocks + external_airlocks))
+	for(var/obj/machinery/door/airlock/airlock as anything in (internal_airlocks + external_airlocks))
 		UnregisterSignal(airlock, COMSIG_QDELETING)
 
 	external_airlocks = list()
