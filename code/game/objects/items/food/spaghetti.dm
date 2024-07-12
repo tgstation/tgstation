@@ -249,3 +249,9 @@
 	tastes = list("noodles" = 5, "fried tofu" = 4, "lime" = 2, "peanut" = 3, "onion" = 2)
 	foodtypes = GRAIN | VEGETABLES | NUTS | FRUIT
 	crafting_complexity = FOOD_COMPLEXITY_4
+
+/obj/item/food/spaghetti/carbonara
+	name = "pasta carbonara"
+	desc = ""
+	icon_state = "carbonara"
+	crafted_food_buff = /datum/status_effect/food/speech/italian

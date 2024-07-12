@@ -15,7 +15,7 @@
 	var/uppercase = FALSE
 
 /datum/component/speechmod/Initialize(replacements = list(), end_string = "", end_string_chance = 100, slots, uppercase = FALSE)
-	if (!ismob(parent) && !isitem(parent) && !istype(parent, /datum/mutation/human))
+	if (!ismob(parent) && !isitem(parent) && !istype(parent, /datum/mutation/human) && !istype(parent, /datum/status_effect))
 		return COMPONENT_INCOMPATIBLE
 
 	src.replacements = replacements
@@ -30,6 +30,12 @@
 		return
 
 	var/atom/owner = parent
+
+	if (istype(parent, /datum/status_effect))
+		var/datum/status_effect/effect = parent
+		targeted = effect.owner
+		RegisterSignal(targeted, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+		return
 
 	if (ismob(parent))
 		targeted = parent
