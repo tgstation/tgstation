@@ -1,4 +1,0 @@
-author: "hyperjll"
-delete-after: True
-changes:
-  - bugfix: "Reagent containers are no longer mysteriously fireproof."

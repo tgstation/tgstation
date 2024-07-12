@@ -1,3 +1,14 @@
+///Malus to the beauty value if the fish content is dead
+#define DEAD_FISH_BEAUTY -500
+///Prevents more impressive fishes from providing a positive beauty even when dead.
+#define MAX_DEAD_FISH_BEAUTY -200
+///Some fish are already so ugly, they can't get much worse when dead
+#define MIN_DEAD_FISH_BEAUTY -600
+
+///Defines that clamp the beauty of the aquarium, to prevent it from making most areas great or horrid all by itself.
+#define MIN_AQUARIUM_BEAUTY -3500
+#define MAX_AQUARIUM_BEAUTY 6000
+
 /// Allows movables to be inserted/displayed in aquariums.
 /datum/component/aquarium_content
 	/// Keeps track of our current aquarium.
@@ -60,13 +71,19 @@
 	/// Signals of the parent that will trigger animation update
 	var/animation_update_signals
 
+	/// The current beauty this component gives to the aquarium it's in
+	var/beauty
 
-/datum/component/aquarium_content/Initialize(icon, animation_getter, animation_update_signals)
+	/// The original value of the beauty this component had when initialized
+	var/original_beauty
+
+/datum/component/aquarium_content/Initialize(icon, animation_getter, animation_update_signals, beauty)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.animation_getter = animation_getter
 	src.animation_update_signals = animation_update_signals
+	src.beauty = original_beauty = beauty
 	if(animation_update_signals)
 		RegisterSignals(parent, animation_update_signals, PROC_REF(generate_animation))
 
@@ -78,6 +95,7 @@
 		InitializeOther()
 
 	ADD_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, REF(src))
+	RegisterSignal(parent, COMSIG_TRY_INSERTING_IN_AQUARIUM, PROC_REF(is_ready_to_insert))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(enter_aquarium))
 
 	//If component is added to something already in aquarium at the time initialize it properly.
@@ -108,6 +126,18 @@
 		base_transform = matrix
 
 	randomize_position = TRUE
+
+	RegisterSignal(fish, COMSIG_FISH_STATUS_CHANGED, PROC_REF(on_fish_status_changed))
+
+/datum/component/aquarium_content/proc/on_fish_status_changed(obj/item/fish/source)
+	SIGNAL_HANDLER
+	var/old_beauty = beauty
+	beauty = original_beauty
+	if(source.status == FISH_DEAD)
+		beauty = clamp(beauty + DEAD_FISH_BEAUTY, MIN_DEAD_FISH_BEAUTY, MAX_DEAD_FISH_BEAUTY)
+	if(current_aquarium)
+		change_aquarium_beauty(beauty - old_beauty)
+	generate_animation()
 
 /// Sets visuals properties for fish
 /datum/component/aquarium_content/proc/InitializeFromProp()
@@ -150,15 +180,16 @@
 	if(istype(movable_parent.loc, /obj/structure/aquarium))
 		on_inserted(movable_parent.loc)
 
-/datum/component/aquarium_content/proc/is_ready_to_insert(obj/structure/aquarium/aquarium)
+/datum/component/aquarium_content/proc/is_ready_to_insert(datum/source, obj/structure/aquarium/aquarium)
+	SIGNAL_HANDLER
 	//This is kinda awful but we're unaware of other fish
 	if(unique)
 		for(var/atom/movable/fish_or_prop in aquarium)
 			if(fish_or_prop == parent)
 				continue
 			if(fish_or_prop.type == parent.type)
-				return FALSE
-	return TRUE
+				return COMSIG_CANNOT_INSERT_IN_AQUARIUM
+	return COMSIG_CAN_INSERT_IN_AQUARIUM
 
 /datum/component/aquarium_content/proc/on_inserted(atom/aquarium)
 	current_aquarium = aquarium
@@ -179,6 +210,22 @@
 
 	//Finally add it to to objects vis_contents
 	current_aquarium.vis_contents |= vc_obj
+
+	change_aquarium_beauty(beauty)
+
+///Modifies the beauty of the aquarium when content is added or removed, or when fishes die or live again somehow.
+/datum/component/aquarium_content/proc/change_aquarium_beauty(change)
+	if(QDELETED(current_aquarium) || !change)
+		return
+	var/old_clamped_beauty = clamp(current_aquarium.current_beauty, MIN_AQUARIUM_BEAUTY, MAX_AQUARIUM_BEAUTY)
+	current_aquarium.current_beauty += change
+	var/new_clamped_beauty = clamp(current_aquarium.current_beauty, MIN_AQUARIUM_BEAUTY, MAX_AQUARIUM_BEAUTY)
+	if(new_clamped_beauty == old_clamped_beauty)
+		return
+	if(current_aquarium.current_beauty)
+		current_aquarium.RemoveElement(/datum/element/beauty, current_aquarium.current_beauty)
+	if(current_aquarium.current_beauty)
+		current_aquarium.AddElement(/datum/element/beauty, current_aquarium.current_beauty)
 
 /// Aquarium surface changed in some way, we need to recalculate base position and aninmation
 /datum/component/aquarium_content/proc/on_surface_changed()
@@ -293,13 +340,20 @@
 	vc_obj.pixel_x = base_px
 	vc_obj.pixel_y = base_py
 
-/datum/component/aquarium_content/proc/on_removed(datum/source, atom/movable/gone, direction)
+/datum/component/aquarium_content/proc/on_removed(obj/structure/aquarium/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 	if(parent != gone)
 		return
 	remove_from_aquarium()
 
 /datum/component/aquarium_content/proc/remove_from_aquarium()
+	change_aquarium_beauty(-beauty)
 	UnregisterSignal(current_aquarium, list(COMSIG_AQUARIUM_SURFACE_CHANGED, COMSIG_AQUARIUM_FLUID_CHANGED, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_EXITED))
 	remove_visual_from_aquarium()
 	current_aquarium = null
+
+#undef DEAD_FISH_BEAUTY
+#undef MIN_DEAD_FISH_BEAUTY
+#undef MAX_DEAD_FISH_BEAUTY
+#undef MIN_AQUARIUM_BEAUTY
+#undef MAX_AQUARIUM_BEAUTY
