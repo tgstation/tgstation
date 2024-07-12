@@ -70,34 +70,33 @@
 	AddComponent(/datum/component/two_handed, force_unwielded = 12, force_wielded = 22, attacksound = active_hitsound)
 	RegisterSignals(src, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_PRE_THROW, COMSIG_ITEM_ATTACK_SELF), PROC_REF(reset_charges))
 
-/obj/item/house_edge/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
+/obj/item/house_edge/afterattack(atom/target, mob/user, click_parameters)
 	if(!ismob(target))
 		return
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		//Add a fire charge to a max of 3, updates icon_state.
 		fire_charges = clamp((fire_charges + 1), HOUSE_EDGE_ICONS_MIN, HOUSE_EDGE_ICONS_MAX)
-		icon_state = "house_edge[fire_charges]"
 		COOLDOWN_RESET(src, fire_charge_cooldown)
 	else
 		//Lose a fire charge to a min of 0, updates icon_state.
 		fire_charges = clamp((fire_charges - 1), HOUSE_EDGE_ICONS_MIN, HOUSE_EDGE_ICONS_MAX)
-		icon_state = "house_edge[fire_charges]"
 		do_sparks(number = 0, cardinal_only = TRUE, source = src)
+	update_appearance(UPDATE_ICON_STATE)
 
-/obj/item/house_edge/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/house_edge/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, fire_charge_cooldown))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 	if(fire_charges <= 0)
 		balloon_alert(user, "no fire charges!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	user.throw_at(target = get_turf(target), range = 2 * fire_charges, speed = 5, thrower = user, spin = FALSE, gentle = FALSE, quickstart = TRUE)
+		return ITEM_INTERACT_BLOCKING
+	user.throw_at(target = get_turf(interacting_with), range = 2 * fire_charges, speed = 5, thrower = user, spin = FALSE, gentle = FALSE, quickstart = TRUE)
 	COOLDOWN_START(src, fire_charge_cooldown, DASH_COOLDOWN)
 	reset_charges(on_dash = TRUE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/house_edge/update_icon_state()
 	inhand_icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "house_edge1" : "house_edge0"
+	icon_state = "house_edge[fire_charges]"
 	return ..()
 
 /obj/item/house_edge/proc/reset_charges(on_dash = FALSE)

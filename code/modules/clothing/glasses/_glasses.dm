@@ -27,14 +27,14 @@
 	/// Whether or not vision coloring is forcing
 	var/forced_glass_color = FALSE
 
+/obj/item/clothing/glasses/Initialize(mapload)
+	. = ..()
+	if(glass_colour_type)
+		AddElement(/datum/element/wearable_client_colour, glass_colour_type, ITEM_SLOT_EYES, forced = forced_glass_color)
+
 /obj/item/clothing/glasses/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is stabbing \the [src] into [user.p_their()] eyes! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
-
-/obj/item/clothing/glasses/examine(mob/user)
-	. = ..()
-	if(glass_colour_type && !forced_glass_color && ishuman(user))
-		. += span_notice("Alt-click to toggle [p_their()] colors.")
 
 /obj/item/clothing/glasses/visor_toggling()
 	. = ..()
@@ -62,37 +62,12 @@
 				H.set_eye_blur_if_lower(10 SECONDS)
 				eyes.apply_organ_damage(5)
 
-/obj/item/clothing/glasses/click_alt(mob/user)
-	if(isnull(glass_colour_type) || forced_glass_color || !ishuman(user))
-		return NONE
-	var/mob/living/carbon/human/human_user = user
-
-	if (HAS_TRAIT_FROM(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT))
-		REMOVE_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
-		to_chat(human_user, span_notice("You will no longer see glasses colors."))
-	else
-		ADD_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
-		to_chat(human_user, span_notice("You will now see glasses colors."))
-	human_user.update_glasses_color(src, TRUE)
-	return CLICK_ACTION_SUCCESS
-
-/obj/item/clothing/glasses/proc/change_glass_color(mob/living/carbon/human/H, datum/client_colour/glass_colour/new_color_type)
-	var/old_colour_type = glass_colour_type
-	if(!new_color_type || ispath(new_color_type)) //the new glass colour type must be null or a path.
-		glass_colour_type = new_color_type
-		if(H && H.glasses == src)
-			if(old_colour_type)
-				H.remove_client_colour(old_colour_type)
-			if(glass_colour_type)
-				H.update_glasses_color(src, 1)
-
-
-/mob/living/carbon/human/proc/update_glasses_color(obj/item/clothing/glasses/G, glasses_equipped)
-	if((HAS_TRAIT(src, TRAIT_SEE_GLASS_COLORS) || G.forced_glass_color) && glasses_equipped)
-		add_client_colour(G.glass_colour_type)
-	else
-		remove_client_colour(G.glass_colour_type)
-
+/obj/item/clothing/glasses/proc/change_glass_color(new_color_type)
+	if(glass_colour_type)
+		RemoveElement(/datum/element/wearable_client_colour, glass_colour_type, ITEM_SLOT_EYES, forced = forced_glass_color)
+	glass_colour_type = new_color_type
+	if(glass_colour_type)
+		AddElement(/datum/element/wearable_client_colour, glass_colour_type, ITEM_SLOT_EYES, forced = forced_glass_color)
 
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"
@@ -117,8 +92,14 @@
 	inhand_icon_state = "nvgmeson"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	// Night vision mesons get the same but more intense
-	color_cutoffs = list(10, 30, 10)
-	glass_colour_type = /datum/client_colour/glass_colour/green
+	color_cutoffs = list(10, 35, 10)
+	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
+	actions_types = list(/datum/action/item_action/toggle_nv)
+	forced_glass_color = TRUE
+
+/obj/item/clothing/glasses/meson/night/update_icon_state()
+	. = ..()
+	icon_state = length(color_cutoffs) ? initial(icon_state) : "nvgmeson_off"
 
 /obj/item/clothing/glasses/meson/gar
 	name = "gar mesons"
@@ -163,8 +144,14 @@
 	icon_state = "scihudnight"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	// Real vivid purple
-	color_cutoffs = list(50, 10, 30)
-	glass_colour_type = /datum/client_colour/glass_colour/green
+	color_cutoffs = list(30, 5, 15)
+	glass_colour_type = /datum/client_colour/glass_colour/lightpurple
+	actions_types = list(/datum/action/item_action/toggle_nv)
+	forced_glass_color = TRUE
+
+/obj/item/clothing/glasses/science/night/update_icon_state()
+	. = ..()
+	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
 
 /obj/item/clothing/glasses/night
 	name = "night vision goggles"
@@ -174,8 +161,18 @@
 	flags_cover = GLASSESCOVERSEYES
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	// Dark green
-	color_cutoffs = list(10, 30, 10)
-	glass_colour_type = /datum/client_colour/glass_colour/green
+	color_cutoffs = list(10, 25, 10)
+	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
+	actions_types = list(/datum/action/item_action/toggle_nv)
+	forced_glass_color = TRUE
+
+/obj/item/clothing/glasses/night/update_icon_state()
+	. = ..()
+	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
+
+/obj/item/clothing/glasses/night/colorless
+	desc = parent_type::desc + " Now with 50% less green!"
+	forced_glass_color = FALSE
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
@@ -351,8 +348,8 @@
 /obj/item/clothing/glasses/sunglasses/proc/add_glasses_slapcraft_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/hudsunsec, /datum/crafting_recipe/hudsunmed, /datum/crafting_recipe/hudsundiag, /datum/crafting_recipe/scienceglasses)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -371,8 +368,8 @@
 /obj/item/clothing/glasses/sunglasses/chemical/add_glasses_slapcraft_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/scienceglassesremoval)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 

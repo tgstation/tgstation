@@ -17,7 +17,7 @@
 	///Reference for light object
 	var/obj/machinery/light/new_light = null
 	///Reference for the internal cell
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 	///Can we support a cell?
 	var/cell_connectors = TRUE
 
@@ -71,14 +71,14 @@
 	if(!cell)
 		return
 	to_chat(user, span_notice("You telekinetically remove [cell]."))
-	var/obj/item/stock_parts/cell/cell_reference = cell
+	var/obj/item/stock_parts/power_store/cell_reference = cell
 	cell = null
 	cell_reference.forceMove(drop_location())
 	return cell_reference.attack_tk(user)
 
 /obj/structure/light_construct/attackby(obj/item/tool, mob/user, params)
 	add_fingerprint(user)
-	if(istype(tool, /obj/item/stock_parts/cell))
+	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(!cell_connectors)
 			to_chat(user, span_warning("This [name] can't support a power cell!"))
 			return

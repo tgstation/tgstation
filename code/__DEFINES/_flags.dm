@@ -54,6 +54,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Flag as an optimization, don't make this a trait without profiling
 /// Yes I know this is a stupid flag, no you can't take him from me
 #define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<17)
+/// This atom always returns its turf in get_turf_pixel instead of the turf from its offsets
+#define IGNORE_TURF_PIXEL_OFFSET_1 (1<<18)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
@@ -120,20 +122,20 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define BLOCK_SUICIDE (1<<9)
 /// If set, this area will be innately traversable by Xenobiology camera consoles.
 #define XENOBIOLOGY_COMPATIBLE (1<<10)
-/// If Abductors are unable to teleport in with their observation console
-#define ABDUCTOR_PROOF (1<<11)
 /// If blood cultists can draw runes or build structures on this AREA.
-#define CULT_PERMITTED (1<<12)
+#define CULT_PERMITTED (1<<11)
 /// If engravings are persistent in this area
-#define PERSISTENT_ENGRAVINGS (1<<13)
+#define PERSISTENT_ENGRAVINGS (1<<12)
 /// Mobs that die in this area don't produce a dead chat message
-#define NO_DEATH_MESSAGE (1<<14)
+#define NO_DEATH_MESSAGE (1<<13)
 /// This area should have extra shielding from certain event effects
-#define EVENT_PROTECTED (1<<15)
+#define EVENT_PROTECTED (1<<14)
 /// This Area Doesn't have Flood or Bomb Admin Messages, but will still log
-#define QUIET_LOGS (1<<16)
+#define QUIET_LOGS (1<<15)
 /// This area does not allow virtual entities to enter.
-#define VIRTUAL_SAFE_AREA (1<<17)
+#define VIRTUAL_SAFE_AREA (1<<16)
+/// This area does not allow the Binary channel
+#define BINARY_JAMMING (1<<17)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

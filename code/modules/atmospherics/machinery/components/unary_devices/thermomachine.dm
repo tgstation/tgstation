@@ -313,24 +313,37 @@
 
 	update_appearance()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/CtrlClick(mob/living/user)
+/obj/machinery/atmospherics/components/unary/thermomachine/click_ctrl(mob/user)
 	if(!anchored)
-		return ..()
+		return NONE
 	if(panel_open)
 		balloon_alert(user, "close panel!")
-		return
-	if(!can_interact(user))
-		return
+		return CLICK_ACTION_BLOCKING
+	if(!is_operational)
+		return CLICK_ACTION_BLOCKING
 
 	on = !on
 	balloon_alert(user, "turned [on ? "on" : "off"]")
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_layer()
 	return
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer1
+	piping_layer = 1
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer2
+	piping_layer = 2
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer4
+	piping_layer = 4
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer5
+	piping_layer = 5
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
 	on = TRUE
@@ -350,6 +363,18 @@
 	target_temperature = COLD_ROOM_TEMP
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater
+
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/layer1
+	piping_layer = 1
+
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/layer2
+	piping_layer = 2
+
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/layer4
+	piping_layer = 4
+
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/layer5
+	piping_layer = 5
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on
 	on = TRUE

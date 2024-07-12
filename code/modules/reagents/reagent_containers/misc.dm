@@ -8,13 +8,13 @@
 	reagent_flags = OPENCONTAINER
 	fill_icon_state = "maunafilling"
 	fill_icon_thresholds = list(25)
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 	var/open = FALSE
 	var/on = FALSE
 
 /obj/item/reagent_containers/cup/maunamug/Initialize(mapload, vol)
 	. = ..()
-	cell = new /obj/item/stock_parts/cell(src)
+	cell = new /obj/item/stock_parts/power_store/cell(src)
 
 /obj/item/reagent_containers/cup/maunamug/get_cell()
 	return cell
@@ -50,13 +50,14 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/reagent_containers/cup/maunamug/CtrlClick(mob/living/user)
+/obj/item/reagent_containers/cup/maunamug/item_ctrl_click(mob/user)
 	if(on)
 		change_power_status(FALSE)
 	else
 		if(!cell || cell.charge <= 0)
 			return FALSE //No power, so don't turn on
 		change_power_status(TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/cup/maunamug/proc/change_power_status(status)
 	on = status
@@ -74,7 +75,7 @@
 
 /obj/item/reagent_containers/cup/maunamug/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if(!istype(I, /obj/item/stock_parts/cell))
+	if(!istype(I, /obj/item/stock_parts/power_store/cell))
 		return ..()
 	if(!open)
 		to_chat(user, span_warning("The battery case must be open to insert a power cell!"))
@@ -137,15 +138,13 @@
 	user.visible_message(span_suicide("[user] is smothering [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
-/obj/item/reagent_containers/cup/rag/afterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
-	if(!proximity_flag)
-		return
-	if(!iscarbon(target) || !reagents?.total_volume)
+/obj/item/reagent_containers/cup/rag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!iscarbon(interacting_with) || !reagents?.total_volume)
 		return ..()
-	var/mob/living/carbon/carbon_target = target
+	var/mob/living/carbon/carbon_target = interacting_with
 	var/reagentlist = pretty_string_from_reagent_list(reagents.reagent_list)
 	var/log_object = "containing [reagentlist]"
-	if(user.combat_mode && !carbon_target.is_mouth_covered())
+	if(!carbon_target.is_mouth_covered())
 		reagents.trans_to(carbon_target, reagents.total_volume, transferred_by = user, methods = INGEST)
 		carbon_target.visible_message(span_danger("[user] smothers \the [carbon_target] with \the [src]!"), span_userdanger("[user] smothers you with \the [src]!"), span_hear("You hear some struggling and muffled cries of surprise."))
 		log_combat(user, carbon_target, "smothered", src, log_object)
@@ -154,7 +153,12 @@
 		reagents.clear_reagents()
 		carbon_target.visible_message(span_notice("[user] touches \the [carbon_target] with \the [src]."))
 		log_combat(user, carbon_target, "touched", src, log_object)
+	return ITEM_INTERACT_SUCCESS
 
 ///Checks whether or not we should clean.
 /obj/item/reagent_containers/cup/rag/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
-	return (src in cleaner)
+	if(cleaner.combat_mode && ismob(atom_to_clean))
+		return CLEAN_BLOCKED|CLEAN_DONT_BLOCK_INTERACTION
+	if(loc == cleaner)
+		return CLEAN_ALLOWED
+	return CLEAN_ALLOWED|CLEAN_NO_XP

@@ -1,5 +1,6 @@
 /**
  * # The path of Rust.
+ * Spell names are in this language: OLD SLAVIC
  *
  * Goes as follows:
  *
@@ -42,6 +43,8 @@
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
 	route = PATH_RUST
+	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_state = "rust_blade"
 
 /datum/heretic_knowledge/rust_fist
 	name = "Grasp of Rust"
@@ -52,6 +55,9 @@
 	next_knowledge = list(/datum/heretic_knowledge/rust_regen)
 	cost = 1
 	route = PATH_RUST
+	depth = 3
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "grasp_rust"
 
 /datum/heretic_knowledge/rust_fist/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -73,7 +79,7 @@
 	SIGNAL_HANDLER
 
 	// Rusting an airlock causes it to lose power, mostly to prevent the airlock from shocking you.
-	// This is a bit of a hack, but fixing this would require the enture wire cut/pulse system to be reworked.
+	// This is a bit of a hack, but fixing this would require the entire wire cut/pulse system to be reworked.
 	if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/airlock = target
 		airlock.loseMainPower()
@@ -93,58 +99,15 @@
 	)
 	cost = 1
 	route = PATH_RUST
+	research_tree_icon_path = 'icons/effects/eldritch.dmi'
+	research_tree_icon_state = "cloud_swirl"
+	depth = 4
 
 /datum/heretic_knowledge/rust_regen/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+	user.AddElement(/datum/element/leeching_walk)
 
 /datum/heretic_knowledge/rust_regen/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_LIFE))
-
-/*
- * Signal proc for [COMSIG_MOVABLE_MOVED].
- *
- * Checks if we should have baton resistance on the new turf.
- */
-/datum/heretic_knowledge/rust_regen/proc/on_move(mob/source, atom/old_loc, dir, forced, list/old_locs)
-	SIGNAL_HANDLER
-
-	var/turf/mover_turf = get_turf(source)
-	if(HAS_TRAIT(mover_turf, TRAIT_RUSTY))
-		ADD_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
-		return
-
-	REMOVE_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
-
-/**
- * Signal proc for [COMSIG_LIVING_LIFE].
- *
- * Gradually heals the heretic ([source]) on rust,
- * including baton knockdown and stamina damage.
- */
-/datum/heretic_knowledge/rust_regen/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
-	SIGNAL_HANDLER
-
-	var/turf/our_turf = get_turf(source)
-	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
-		return
-
-	// Heals all damage + Stamina
-	var/need_mob_update = FALSE
-	need_mob_update += source.adjustBruteLoss(-3, updating_health = FALSE)
-	need_mob_update += source.adjustFireLoss(-3, updating_health = FALSE)
-	need_mob_update += source.adjustToxLoss(-3, updating_health = FALSE, forced = TRUE) // Slimes are people too
-	need_mob_update += source.adjustOxyLoss(-1.5, updating_health = FALSE)
-	need_mob_update += source.adjustStaminaLoss(-10, updating_stamina = FALSE)
-	if(need_mob_update)
-		source.updatehealth()
-	// Reduces duration of stuns/etc
-	source.AdjustAllImmobility(-0.5 SECONDS)
-	// Heals blood loss
-	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
-		source.blood_volume += 2.5 * seconds_per_tick
-	// Slowly regulates your body temp
-	source.adjust_bodytemperature((source.get_body_temp_normal() - source.bodytemperature)/5)
+	user.RemoveElement(/datum/element/leeching_walk)
 
 /datum/heretic_knowledge/mark/rust_mark
 	name = "Mark of Rust"
@@ -174,6 +137,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/rust_construction
 	cost = 1
 	route = PATH_RUST
+	depth = 7
 
 /datum/heretic_knowledge/spell/area_conversion
 	name = "Aggressive Spread"
@@ -191,6 +155,8 @@
 	spell_to_add = /datum/action/cooldown/spell/aoe/rust_conversion
 	cost = 1
 	route = PATH_RUST
+	depth = 8
+	research_tree_icon_frame = 5
 
 /datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -203,6 +169,8 @@
 		The heavy rust weights it down. You stare deeply into it. The Rusted Hills call for you, now."
 	next_knowledge = list(/datum/heretic_knowledge/spell/entropic_plume)
 	route = PATH_RUST
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "blade_upgrade_rust"
 
 /datum/heretic_knowledge/blade_upgrade/rust/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -227,6 +195,7 @@
 	spell_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
 	cost = 1
 	route = PATH_RUST
+	depth = 10
 
 /datum/heretic_knowledge/spell/entropic_plume/on_gain(mob/user)
 	. = ..()
@@ -243,6 +212,7 @@
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark, for the RUSTBRINGER has come! \
 		The Blacksmith forges ahead! Rusted Hills, CALL MY NAME! WITNESS MY ASCENSION!"
 	route = PATH_RUST
+	ascension_achievement = /datum/award/achievement/misc/rust_ascension
 	/// If TRUE, then immunities are currently active.
 	var/immunities_active = FALSE
 	/// A typepath to an area that we must finish the ritual in.
@@ -288,7 +258,7 @@
 		text = "[generate_heretic_text()] Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
 		sound = 'sound/ambience/antag/heretic/ascend_rust.ogg',
-		color_override = "pink",
+		color_override = "brown",
 	)
 	trigger(loc)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))

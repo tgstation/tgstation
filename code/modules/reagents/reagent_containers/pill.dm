@@ -59,24 +59,20 @@
 	return TRUE
 
 
-/obj/item/reagent_containers/pill/afterattack(obj/target, mob/user , proximity)
-	. = ..()
-	if(!proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/reagent_containers/pill/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(!dissolvable || !target.is_refillable())
-		return
+		return NONE
 	if(target.is_drainable() && !target.reagents.total_volume)
 		to_chat(user, span_warning("[target] is empty! There's nothing to dissolve [src] in."))
-		return
-
+		return ITEM_INTERACT_BLOCKING
 	if(target.reagents.holder_full())
 		to_chat(user, span_warning("[target] is full."))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(span_warning("[user] slips something into [target]!"), span_notice("You dissolve [src] in [target]."), null, 2)
 	reagents.trans_to(target, reagents.total_volume, transferred_by = user)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /*
  * On accidental consumption, consume the pill
@@ -144,7 +140,7 @@
 	name = "mannitol pill"
 	desc = "Used to treat brain damage."
 	icon_state = "pill17"
-	list_reagents = list(/datum/reagent/medicine/mannitol = 14)
+	list_reagents = list(/datum/reagent/medicine/mannitol = 15)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/sansufentanyl

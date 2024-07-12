@@ -153,7 +153,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	///Stores the time of when the last zap occurred
 	var/last_power_zap = 0
-	var/last_high_energy_zap = 0
+	///Stores the tick of the machines subsystem of when the last zap occurred. Gives a passage of time in the perspective of SSmachines.
+	var/last_power_zap_perspective_machines = 0
+	///Same as [last_power_zap_perspective_machines], but based around the high energy zaps found in handle_high_power().
+	var/last_high_energy_zap_perspective_machines = 0
 	///Do we show this crystal in the CIMS modular program
 	var/include_in_cims = TRUE
 
@@ -294,13 +297,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	// PART 3: POWER PROCESSING
 	internal_energy_factors = calculate_internal_energy()
 	zap_factors = calculate_zap_transmission_rate()
-	if(internal_energy && (last_power_zap + (4 - internal_energy * 0.001) SECONDS) < world.time)
+	var/delta_time = (SSmachines.times_fired - last_power_zap_perspective_machines) * SSmachines.wait / (1 SECONDS)
+	if(delta_time && internal_energy && (last_power_zap + (4 - internal_energy * 0.001) SECONDS) < world.time)
 		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
 		hue_angle_shift = clamp(903 * log(10, (internal_energy + 8000)) - 3590, -50, 240)
 		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
-		//Scale the strength of the zap with the world's time elapsed between zaps in seconds.
-		//Capped at 16 seconds to prevent a crazy burst of energy if atmos was halted for a long time.
-		var/delta_time = min((world.time - last_power_zap) * 0.1, 16)
 		supermatter_zap(
 			zapstart = src,
 			range = 3,
@@ -311,6 +312,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			color = zap_color,
 		)
 		last_power_zap = world.time
+		last_power_zap_perspective_machines = SSmachines.times_fired
 
 	// PART 4: DAMAGE PROCESSING
 	temp_limit_factors = calculate_temp_limit()
@@ -714,6 +716,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		activation_logged = TRUE // so we dont spam the log.
 	else if(!internal_energy)
 		last_power_zap = world.time
+		last_power_zap_perspective_machines = SSmachines.times_fired
 	return additive_power
 
 /** Log when the supermatter is activated for the first time.

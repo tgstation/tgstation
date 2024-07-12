@@ -361,6 +361,7 @@
  * Tram comes to an in-station degraded stop, throwing the players. Caused by power loss or tram malfunction event.
  */
 /datum/transport_controller/linear/tram/proc/degraded_stop()
+	crash_fx()
 	log_transport("TC: [specific_transport_id] trip completed with a degraded status. Info: [TC_TS_STATUS] nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
 	if(controller_status & SYSTEM_FAULT)
@@ -398,6 +399,7 @@
 
 	if(travel_remaining)
 		travel_remaining = 0
+		crash_fx()
 		var/throw_direction = travel_direction
 		for(var/obj/structure/transport/linear/tram/module in transport_modules)
 			module.estop_throw(throw_direction)
@@ -459,6 +461,17 @@
 	paired_cabinet.say("Emergency stop activated!")
 	set_status_code(EMERGENCY_STOP, TRUE)
 	log_transport("TC: [specific_transport_id] requested emergency stop.")
+
+/**
+ * Tram crash sound and visuals
+ */
+/datum/transport_controller/linear/tram/proc/crash_fx()
+	playsound(source = nav_beacon, soundin = 'sound/vehicles/car_crash.ogg', vol = 100, vary = FALSE, falloff_distance = DEFAULT_TRAM_LENGTH)
+	nav_beacon.audible_message(span_userdanger("You hear metal grinding as the tram comes to a sudden, complete stop!"))
+	for(var/mob/living/tram_passenger in range(DEFAULT_TRAM_LENGTH - 2, nav_beacon))
+		if(tram_passenger.stat != CONSCIOUS)
+			continue
+		shake_camera(M = tram_passenger, duration = 0.2 SECONDS, strength = 3)
 
 /**
  * Handles unlocking the tram controls for use after moving

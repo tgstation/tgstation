@@ -9,7 +9,7 @@
 	if(!..())
 		return FALSE
 	var/obj/item/relic/experiment = O
-	if(experiment.revealed)
+	if(experiment.activated)
 		return TRUE
 	return
 
@@ -97,7 +97,7 @@
 //******Anomaly Cores******
 /datum/bounty/item/science/ref_anomaly
 	name = "Refined Bluespace Core"
-	description = "We need a bluespace core to fit in a Phazon. Ship us one, please."
+	description = "We need a bluespace core to assemble a bag of holding. Ship us one, please."
 	reward = CARGO_CRATE_VALUE * 20
 	wanted_types = list(/obj/item/assembly/signaler/anomaly/bluespace = TRUE)
 

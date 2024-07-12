@@ -113,10 +113,10 @@
 	if(!QDELETED(organ_owner) && length(skillchips))
 		if(!special)
 			to_chat(organ_owner, span_notice("You feel your skillchips enable emergency power saving mode, deactivating as your brain leaves your body..."))
-		for(var/chip in skillchips)
-			var/obj/item/skillchip/skillchip = chip
-			// Run the try_ proc with force = TRUE.
-			skillchip.try_deactivate_skillchip(silent = special, force = TRUE)
+			for(var/chip in skillchips)
+				var/obj/item/skillchip/skillchip = chip
+				// Run the try_ proc with force = TRUE.
+				skillchip.try_deactivate_skillchip(silent = special, force = TRUE)
 
 	. = ..()
 
@@ -394,7 +394,15 @@
 /obj/item/organ/internal/brain/primitive //No like books and stompy metal men
 	name = "primitive brain"
 	desc = "This juicy piece of meat has a clearly underdeveloped frontal lobe."
-	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_PRIMITIVE) // No literacy
+	organ_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
+		TRAIT_PRIMITIVE, // No literacy
+		TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION,
+		TRAIT_EXPERT_FISHER, // live off land, fish from river
+		TRAIT_ROUGHRIDER, // ride beast, chase down prey, flee from danger
+		TRAIT_BEAST_EMPATHY, // know the way of beast, calm with food
+	)
 
 /obj/item/organ/internal/brain/golem
 	name = "crystalline matrix"

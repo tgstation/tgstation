@@ -9,6 +9,7 @@
 	circuit = /obj/item/circuitboard/machine/autolathe
 	layer = BELOW_OBJ_LAYER
 	processing_flags = NONE
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 
 	///Is the autolathe hacked via wiring
 	var/hacked = FALSE
@@ -28,8 +29,11 @@
 	var/datum/component/material_container/materials
 	///direction we output onto (if 0, on top of us)
 	var/drop_direction = 0
+	//looping sound for printing items
+	var/datum/looping_sound/lathe_print/print_sound
 
 /obj/machinery/autolathe/Initialize(mapload)
+	print_sound = new(src,  FALSE)
 	materials = AddComponent( \
 		/datum/component/material_container, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
@@ -47,6 +51,7 @@
 	register_context()
 
 /obj/machinery/autolathe/Destroy()
+	QDEL_NULL(print_sound)
 	materials = null
 	QDEL_NULL(wires)
 	return ..()
@@ -124,7 +129,6 @@
 		ui = new(user, src, "Autolathe")
 		ui.open()
 
-
 /**
  * Converts all the designs supported by this autolathe into UI data
  * Arguments
@@ -185,7 +189,6 @@
 		data["designs"] += handle_designs(stored_research.hacked_designs)
 
 	return data
-
 
 /obj/machinery/autolathe/ui_assets(mob/user)
 	return list(
@@ -291,6 +294,8 @@
 	busy = TRUE
 	icon_state = "autolathe_n"
 	SStgui.update_uis(src)
+	// play this after all checks passed individually for each item.
+	print_sound.start()
 	var/turf/target_location
 	if(drop_direction)
 		target_location = get_step(src, drop_direction)
@@ -349,15 +354,28 @@
 
 	var/atom/movable/created
 	if(is_stack)
-		created = new design.build_path(target, items_remaining)
+		var/obj/item/stack/stack_item = initial(design.build_path)
+		var/max_stack_amount = initial(stack_item.max_amount)
+		var/number_to_make = (initial(stack_item.amount) * items_remaining)
+		while(number_to_make > max_stack_amount)
+			created = new stack_item(null, max_stack_amount) //it's imporant to spawn things in nullspace, since obj's like stacks qdel when they enter a tile/merge with other stacks of the same type, resulting in runtimes.
+			if(isitem(created))
+				created.pixel_x = created.base_pixel_x + rand(-6, 6)
+				created.pixel_y = created.base_pixel_y + rand(-6, 6)
+			created.forceMove(target)
+			number_to_make -= max_stack_amount
+
+		created = new stack_item(null, number_to_make)
+
 	else
-		created = new design.build_path(target)
+		created = new design.build_path(null)
 		split_materials_uniformly(materials_needed, material_cost_coefficient, created)
 
-	created.pixel_x = created.base_pixel_x + rand(-6, 6)
-	created.pixel_y = created.base_pixel_y + rand(-6, 6)
-	created.forceMove(target)
+	if(isitem(created))
+		created.pixel_x = created.base_pixel_x + rand(-6, 6)
+		created.pixel_y = created.base_pixel_y + rand(-6, 6)
 	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[created.type]"))
+	created.forceMove(target)
 
 	if(is_stack)
 		items_remaining = 0
@@ -375,23 +393,22 @@
 */
 /obj/machinery/autolathe/proc/finalize_build()
 	PROTECTED_PROC(TRUE)
-
+	print_sound.stop()
 	icon_state = initial(icon_state)
 	busy = FALSE
 	SStgui.update_uis(src)
 
-/obj/machinery/autolathe/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
-	. = ..()
-	if(!can_interact(usr) || (!HAS_SILICON_ACCESS(usr) && !isAdminGhostAI(usr)) && !Adjacent(usr))
+/obj/machinery/autolathe/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
 		return
 	if(busy)
-		balloon_alert(usr, "printing started!")
+		balloon_alert(user, "printing started!")
 		return
 	var/direction = get_dir(src, over_location)
 	if(!direction)
 		return
 	drop_direction = direction
-	balloon_alert(usr, "dropping [dir2text(drop_direction)]")
+	balloon_alert(user, "dropping [dir2text(drop_direction)]")
 
 /obj/machinery/autolathe/click_alt(mob/user)
 	if(!drop_direction)

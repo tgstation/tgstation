@@ -25,6 +25,18 @@
 	required = "/datum/mutation/human/insulated; /datum/mutation/human/radioactive"
 	result = /datum/mutation/human/shock
 
+/datum/generecipe/cindikinesis
+	required = "/datum/mutation/human/geladikinesis; /datum/mutation/human/fire_breath"
+	result = /datum/mutation/human/geladikinesis/ash
+
+/datum/generecipe/pyrokinesis
+	required = "/datum/mutation/human/cryokinesis; /datum/mutation/human/fire_breath"
+	result = /datum/mutation/human/cryokinesis/pyrokinesis
+
+/datum/generecipe/thermal_adaptation
+	required = "/datum/mutation/human/adaptation/cold; /datum/mutation/human/adaptation/heat"
+	result = /datum/mutation/human/adaptation/thermal
+
 /datum/generecipe/antiglow
 	required = "/datum/mutation/human/glow; /datum/mutation/human/void"
 	result = /datum/mutation/human/glow/anti
@@ -36,3 +48,7 @@
 /datum/generecipe/martyrdom
 	required = "/datum/mutation/human/strong; /datum/mutation/human/stimmed"
 	result = /datum/mutation/human/martyrdom
+
+/datum/generecipe/heckacious
+	required = "/datum/mutation/human/wacky; /datum/mutation/human/stoner"
+	result = /datum/mutation/human/heckacious

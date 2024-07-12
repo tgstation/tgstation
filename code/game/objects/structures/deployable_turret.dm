@@ -259,11 +259,11 @@
 	M.attacked_by(src, user)
 	add_fingerprint(user)
 
-/obj/item/gun_control/afterattack(atom/targeted_atom, mob/user, flag, params)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
-	var/modifiers = params2list(params)
+/obj/item/gun_control/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/obj/machinery/deployable_turret/E = user.buckled
-	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, targeted_atom, modifiers)
-	E.direction_track(user, targeted_atom)
-	E.checkfire(targeted_atom, user)
+	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, interacting_with, modifiers)
+	E.direction_track(user, interacting_with)
+	E.checkfire(interacting_with, user)
+
+/obj/item/gun_control/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)

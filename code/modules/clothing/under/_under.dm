@@ -339,15 +339,13 @@
 		if(H.w_uniform == src)
 			H.update_suit_sensors()
 
-/obj/item/clothing/under/CtrlClick(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/clothing/under/item_ctrl_click(mob/user)
 	if(!can_toggle_sensors(user))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	sensor_mode = SENSOR_COORDS
 	balloon_alert(user, "set to tracking")
+	return CLICK_ACTION_SUCCESS
 
 /// Checks if the toggler is allowed to toggle suit sensors currently
 /obj/item/clothing/under/proc/can_toggle_sensors(mob/toggler)

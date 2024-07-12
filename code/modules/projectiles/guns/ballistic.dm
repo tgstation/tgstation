@@ -638,8 +638,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	if(sawn_off)
 		balloon_alert(user, "it's already shortened!")
 		return
-	if(bayonet)
-		balloon_alert(user, "[bayonet.name] must be removed!")
+	if (SEND_SIGNAL(src, COMSIG_GUN_BEING_SAWNOFF, user) & COMPONENT_CANCEL_SAWING_OFF)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_notice("[user] begins to shorten [src]."), span_notice("You begin to shorten [src]..."))
@@ -649,27 +648,30 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		user.visible_message(span_danger("[src] goes off!"), span_danger("[src] goes off in your face!"))
 		return
 
-	if(do_after(user, 3 SECONDS, target = src))
-		if(sawn_off)
-			return
-		user.visible_message(span_notice("[user] shortens [src]!"), span_notice("You shorten [src]."))
-		sawn_off = TRUE
-		if(handle_modifications)
-			name = "sawn-off [src.name]"
-			desc = sawn_desc
-			update_weight_class(WEIGHT_CLASS_NORMAL)
-			//The file might not have a "gun" icon, let's prepare for this
-			lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-			righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-			inhand_x_dimension = 32
-			inhand_y_dimension = 32
-			inhand_icon_state = "gun"
-			worn_icon_state = "gun"
-			slot_flags &= ~ITEM_SLOT_BACK //you can't sling it on your back
-			slot_flags |= ITEM_SLOT_BELT //but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
-			recoil = SAWN_OFF_RECOIL
-			update_appearance()
+	if(!do_after(user, 3 SECONDS, target = src))
+		return
+	if(sawn_off)
+		return
+	user.visible_message(span_notice("[user] shortens [src]!"), span_notice("You shorten [src]."))
+	sawn_off = TRUE
+	SEND_SIGNAL(src, COMSIG_GUN_SAWN_OFF)
+	if(!handle_modifications)
 		return TRUE
+	name = "sawn-off [src.name]"
+	desc = sawn_desc
+	update_weight_class(WEIGHT_CLASS_NORMAL)
+	//The file might not have a "gun" icon, let's prepare for this
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
+	inhand_icon_state = "gun"
+	worn_icon_state = "gun"
+	slot_flags &= ~ITEM_SLOT_BACK //you can't sling it on your back
+	slot_flags |= ITEM_SLOT_BELT //but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+	recoil = SAWN_OFF_RECOIL
+	update_appearance()
+	return TRUE
 
 /obj/item/gun/ballistic/proc/guncleaning(mob/user, obj/item/A)
 	if(misfire_probability == initial(misfire_probability))

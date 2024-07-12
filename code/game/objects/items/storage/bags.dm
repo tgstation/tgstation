@@ -155,11 +155,13 @@
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 		listeningTo = null
 
-/obj/item/storage/bag/ore/attackby(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/boulder))
-		to_chat(user, span_warning("You can't fit \the [attacking_item] into \the [src]. Perhaps you should break it down first, or find an ore box."))
-		return TRUE
-	return ..()
+/obj/item/storage/bag/ore/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
+	if(istype(inserted, /obj/item/boulder))
+		to_chat(user, span_warning("You can't fit [inserted] into [src]. \
+			Perhaps you should break it down first, or find an ore box."))
+		return FALSE
+
+	return TRUE
 
 /obj/item/storage/bag/ore/proc/pickup_ores(mob/living/user)
 	SIGNAL_HANDLER
@@ -271,11 +273,10 @@
 	. = ..()
 	. += span_notice("Ctrl-click to activate seed extraction.")
 
-/obj/item/storage/bag/plants/portaseeder/CtrlClick(mob/user)
-	if(user.incapacitated())
-		return
+/obj/item/storage/bag/plants/portaseeder/item_ctrl_click(mob/user)
 	for(var/obj/item/plant in contents)
 		seedify(plant, 1)
+	return CLICK_ACTION_SUCCESS
 
 // -----------------------------
 //        Sheet Snatcher
@@ -362,7 +363,7 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY //Plates are required bulky to keep them out of backpacks
 	atom_storage.set_holdable(
 		can_hold_list = list(
-			/obj/item/clothing/mask/cigarette,
+			/obj/item/cigarette,
 			/obj/item/food,
 			/obj/item/kitchen,
 			/obj/item/lighter,

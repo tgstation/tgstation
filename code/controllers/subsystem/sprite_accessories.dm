@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 	var/list/socks_list //! stores /datum/sprite_accessory/socks indexed by name
 
 	//Lizard Bits (all datum lists indexed by name)
-	var/list/body_markings_list
+	var/list/lizard_markings_list
 	var/list/snouts_list
 	var/list/horns_list
 	var/list/frills_list
@@ -87,7 +87,7 @@ SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 
 	socks_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/socks)[DEFAULT_SPRITE_LIST]
 
-	body_markings_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings)[DEFAULT_SPRITE_LIST]
+	lizard_markings_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/lizard_markings)[DEFAULT_SPRITE_LIST]
 	tails_list_human = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
 	tails_list_lizard = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
 	tails_list_monkey = init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, add_blank = TRUE)[DEFAULT_SPRITE_LIST]

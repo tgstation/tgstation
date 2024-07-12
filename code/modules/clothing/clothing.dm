@@ -63,17 +63,16 @@
 	if(!icon_state)
 		item_flags |= ABSTRACT
 
-/obj/item/clothing/MouseDrop(atom/over_object)
-	. = ..()
-	var/mob/M = usr
+/obj/item/clothing/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
+	var/mob/M = user
 
 	if(ismecha(M.loc)) // stops inventory actions in a mech
 		return
 
-	if(!M.incapacitated() && loc == M && istype(over_object, /atom/movable/screen/inventory/hand))
+	if(loc == M && istype(over_object, /atom/movable/screen/inventory/hand))
 		var/atom/movable/screen/inventory/hand/H = over_object
 		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
-			add_fingerprint(usr)
+			add_fingerprint(user)
 
 /obj/item/food/clothing
 	name = "temporary moth clothing snack item"
@@ -354,14 +353,14 @@
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
 
-	if(get_armor().has_any_armor() || (flags_cover & (HEADCOVERSMOUTH|PEPPERPROOF)))
+	if(get_armor().has_any_armor() || (flags_cover & (HEADCOVERSMOUTH|PEPPERPROOF)) || (clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
 		. += span_notice("It has a <a href='?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
 
 /obj/item/clothing/Topic(href, href_list)
 	. = ..()
 
 	if(href_list["list_armor"])
-		var/list/readout = list("<span class='notice'><u><b>PROTECTION CLASSES</u></b>")
+		var/list/readout = list()
 
 		var/datum/armor/armor = get_armor()
 		var/added_damage_header = FALSE
@@ -370,9 +369,9 @@
 			if(!rating)
 				continue
 			if(!added_damage_header)
-				readout += "\n<b>ARMOR (I-X)</b>"
+				readout += "<b><u>ARMOR (I-X)</u></b>"
 				added_damage_header = TRUE
-			readout += "\n[armor_to_protection_name(damage_key)] [armor_to_protection_class(rating)]"
+			readout += "[armor_to_protection_name(damage_key)] [armor_to_protection_class(rating)]"
 
 		var/added_durability_header = FALSE
 		for(var/durability_key in ARMOR_LIST_DURABILITY())
@@ -380,9 +379,9 @@
 			if(!rating)
 				continue
 			if(!added_durability_header)
-				readout += "\n<b>DURABILITY (I-X)</b>"
+				readout += "<b><u>DURABILITY (I-X)</u></b>"
 				added_damage_header = TRUE
-			readout += "\n[armor_to_protection_name(durability_key)] [armor_to_protection_class(rating)]"
+			readout += "[armor_to_protection_name(durability_key)] [armor_to_protection_class(rating)]"
 
 		if(flags_cover & HEADCOVERSMOUTH || flags_cover & PEPPERPROOF)
 			var/list/things_blocked = list()
@@ -391,12 +390,29 @@
 			if(flags_cover & PEPPERPROOF)
 				things_blocked += "pepperspray"
 			if(length(things_blocked))
-				readout += "\n<b>COVERAGE</b>"
-				readout += "\nIt will block [english_list(things_blocked)]."
+				readout += "<b><u>COVERAGE</u></b>"
+				readout += "It will block [english_list(things_blocked)]."
 
-		readout += "</span>"
+		if(clothing_flags & STOPSPRESSUREDAMAGE || visor_flags & STOPSPRESSUREDAMAGE)
+			var/list/parts_covered = list()
+			var/output_string = "It"
+			if(!(clothing_flags & STOPSPRESSUREDAMAGE))
+				output_string = "When sealed, it"
+			if(body_parts_covered & HEAD)
+				parts_covered += "head"
+			if(body_parts_covered & CHEST)
+				parts_covered += "torso"
+			if(length(parts_covered)) // Just in case someone makes spaceproof gloves or something
+				readout += "[output_string] will protect the wearer's [english_list(parts_covered)] from [span_tooltip("The extremely low pressure is the biggest danger posed by the vacuum of space.", "low pressure")]."
 
-		to_chat(usr, "[readout.Join()]")
+		if(min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT)
+			readout += "It will insulate the wearer from [span_tooltip("While not as dangerous as the lack of pressure, the extremely low temperature of space is also a hazard.", "the cold of space")]."
+
+		if(!length(readout))
+			readout += "No armor or durability information available."
+
+		var/formatted_readout = span_notice("<b>PROTECTION CLASSES</b><hr>[jointext(readout, "\n")]")
+		to_chat(usr, examine_block(formatted_readout))
 
 /**
  * Rounds armor_value down to the nearest 10, divides it by 10 and then converts it to Roman numerals.

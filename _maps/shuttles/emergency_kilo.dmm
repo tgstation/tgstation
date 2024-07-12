@@ -630,11 +630,8 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/computer/security/telescreen{
-	dir = 8;
-	name = "Shuttle Camera Monitor";
-	network = list("ss13");
-	pixel_x = 26
+/obj/machinery/computer/security/telescreen/normal/directional/east{
+	name = "Shuttle Camera Monitor"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)

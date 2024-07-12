@@ -7,16 +7,15 @@
 	icon_state = "bluespace-prison"
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //ha ha no getting out!!
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 
 /obj/machinery/fugitive_capture/examine(mob/user)
 	. = ..()
 	. += span_notice("Add a prisoner by dragging them into the machine.")
 
-/obj/machinery/fugitive_capture/MouseDrop_T(mob/target, mob/user)
+/obj/machinery/fugitive_capture/mouse_drop_receive(mob/target, mob/user, params)
 	var/mob/living/fugitive_hunter = user
-	if(!isliving(fugitive_hunter))
-		return
-	if(HAS_TRAIT(fugitive_hunter, TRAIT_UI_BLOCKED) || !Adjacent(fugitive_hunter) || !target.Adjacent(fugitive_hunter) || !ishuman(target))
+	if(!isliving(fugitive_hunter) || !ishuman(target))
 		return
 	var/mob/living/carbon/human/fugitive = target
 	var/datum/antagonist/fugitive/fug_antag = fugitive.mind.has_antag_datum(/datum/antagonist/fugitive)

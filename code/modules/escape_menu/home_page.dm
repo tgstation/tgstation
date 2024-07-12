@@ -15,9 +15,20 @@
 			null,
 			/* hud_owner = */ null,
 			src,
-			"Settings",
+			"Character",
 			/* offset = */ 2,
-			CALLBACK(src, PROC_REF(home_open_settings)),
+			CALLBACK(src, PROC_REF(home_open_character_settings)),
+		)
+	)
+
+	page_holder.give_screen_object(
+		new /atom/movable/screen/escape_menu/home_button(
+			null,
+			/* hud_owner = */ null,
+			src,
+			"Settings",
+			/* offset = */ 3,
+			CALLBACK(src, PROC_REF(home_open_game_settings)),
 		)
 	)
 
@@ -27,7 +38,7 @@
 			/* hud_owner = */ src,
 			src,
 			"Admin Help",
-			/* offset = */ 3,
+			/* offset = */ 4,
 		)
 	)
 
@@ -37,7 +48,7 @@
 			/* hud_owner = */ src,
 			src,
 			"Leave Body",
-			/* offset = */ 4,
+			/* offset = */ 5,
 			CALLBACK(src, PROC_REF(open_leave_body)),
 		)
 	)
@@ -45,7 +56,15 @@
 /datum/escape_menu/proc/home_resume()
 	qdel(src)
 
-/datum/escape_menu/proc/home_open_settings()
+/datum/escape_menu/proc/home_open_character_settings()
+	client?.prefs.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
+	client?.prefs.update_static_data(client?.mob)
+	client?.prefs.ui_interact(client?.mob)
+	qdel(src)
+
+/datum/escape_menu/proc/home_open_game_settings()
+	client?.prefs.current_window = PREFERENCE_TAB_GAME_PREFERENCES
+	client?.prefs.update_static_data(client?.mob)
 	client?.prefs.ui_interact(client?.mob)
 	qdel(src)
 

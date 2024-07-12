@@ -60,6 +60,7 @@
 		/obj/item/knife = 50,
 		TOOL_WIRECUTTER = 35)
 	time = 64
+	surgery_effects_mood = TRUE
 
 /datum/surgery_step/reshape_face/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message(span_notice("[user] begins to alter [target]'s appearance."), span_notice("You begin to alter [target]'s appearance..."))
@@ -70,7 +71,7 @@
 		span_notice("[user] begins to alter [target]'s appearance."),
 		span_notice("[user] begins to make an incision in [target]'s face."),
 	)
-	display_pain(target, "You feel slicing pain across your face!", mood_event_type = /datum/mood_event/surgery)
+	display_pain(target, "You feel slicing pain across your face!")
 
 /datum/surgery_step/reshape_face/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(HAS_TRAIT_FROM(target, TRAIT_DISFIGURED, TRAIT_GENERIC))
@@ -82,7 +83,7 @@
 			span_notice("[user] successfully restores [target]'s appearance!"),
 			span_notice("[user] finishes the operation on [target]'s face."),
 		)
-		display_pain(target, "The pain fades, your face feels normal again!", mood_event_type = /datum/mood_event/surgery/success)
+		display_pain(target, "The pain fades, your face feels normal again!")
 	else
 		var/list/names = list()
 		if(!isabductor(user))
@@ -112,7 +113,7 @@
 			span_notice("[user] alters [oldname]'s appearance completely, [target.p_they()] is now [newname]!"),
 			span_notice("[user] finishes the operation on [target]'s face."),
 		)
-		display_pain(target, "The pain fades, your face feels new and unfamiliar!", mood_event_type = /datum/mood_event/surgery/failure)
+		display_pain(target, "The pain fades, your face feels new and unfamiliar!")
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		human_target.sec_hud_set_ID()

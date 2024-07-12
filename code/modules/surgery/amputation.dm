@@ -38,6 +38,7 @@
 	time = 64
 	preop_sound = 'sound/surgery/scalpel1.ogg'
 	success_sound = 'sound/surgery/organ2.ogg'
+	surgery_effects_mood = TRUE
 
 /datum/surgery_step/sever_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -47,7 +48,7 @@
 		span_notice("[user] begins to sever [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 		span_notice("[user] begins to sever [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 	)
-	display_pain(target, "You feel a gruesome pain in your [parse_zone(target_zone)]'s joint!", mood_event_type = /datum/mood_event/surgery)
+	display_pain(target, "You feel a gruesome pain in your [parse_zone(target_zone)]'s joint!")
 
 
 /datum/surgery_step/sever_limb/success(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
@@ -58,7 +59,7 @@
 		span_notice("[user] severs [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 		span_notice("[user] severs [target]'s [target.parse_zone_with_bodypart(target_zone)]!"),
 	)
-	display_pain(target, "You can no longer feel your severed [target.parse_zone_with_bodypart(target_zone)]!", mood_event_type = /datum/mood_event/surgery/success)
+	display_pain(target, "You can no longer feel your severed [target.parse_zone_with_bodypart(target_zone)]!")
 
 	if(HAS_MIND_TRAIT(user, TRAIT_MORBID) && ishuman(user))
 		var/mob/living/carbon/human/morbid_weirdo = user
@@ -67,8 +68,4 @@
 	if(surgery.operated_bodypart)
 		var/obj/item/bodypart/target_limb = surgery.operated_bodypart
 		target_limb.drop_limb()
-	return ..()
-
-/datum/surgery_step/sever_limb/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, fail_prob)
-	display_pain(target, mood_event_type = /datum/mood_event/surgery/failure)
 	return ..()

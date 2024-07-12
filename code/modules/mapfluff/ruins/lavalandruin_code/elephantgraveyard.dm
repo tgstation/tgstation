@@ -209,7 +209,7 @@
 			new /obj/item/clothing/glasses/science(src)
 		if(7)
 			new /obj/item/clothing/glasses/sunglasses/big(src)
-			new /obj/item/clothing/mask/cigarette/rollie(src)
+			new /obj/item/cigarette/rollie(src)
 		else
 			//empty grave
 			return
@@ -289,7 +289,7 @@
 		deconstruct(TRUE)
 		return TRUE
 
-/obj/structure/closet/crate/grave/container_resist_act(mob/living/user)
+/obj/structure/closet/crate/grave/container_resist_act(mob/living/user, loc_required = TRUE)
 	if(opened)
 		return
 	// The player is trying to dig themselves out of an early grave

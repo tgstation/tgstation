@@ -351,7 +351,7 @@
 				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [LOWER_TEXT(wound.name)]!!!")]"
 
 	for(var/obj/item/embedded_thing in embedded_objects)
-		var/stuck_word = embedded_thing.isEmbedHarmless() ? "stuck" : "embedded"
+		var/stuck_word = embedded_thing.is_embed_harmless() ? "stuck" : "embedded"
 		check_list += "\t <a href='?src=[REF(examiner)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(src)]' class='warning'>There is \a [embedded_thing] [stuck_word] in your [name]!</a>"
 
 /obj/item/bodypart/blob_act()
@@ -362,7 +362,7 @@
 
 	if(ishuman(victim))
 		var/mob/living/carbon/human/human_victim = victim
-		if(HAS_TRAIT(victim, TRAIT_LIMBATTACHMENT))
+		if(HAS_TRAIT(victim, TRAIT_LIMBATTACHMENT) || HAS_TRAIT(src, TRAIT_EASY_ATTACH))
 			if(!human_victim.get_bodypart(body_zone))
 				user.temporarilyRemoveItemFromInventory(src, TRUE)
 				if(!try_attach_limb(victim))
@@ -1096,15 +1096,15 @@
 	if(embed in embedded_objects) // go away
 		return
 	// We don't need to do anything with projectile embedding, because it will never reach this point
-	RegisterSignal(embed, COMSIG_ITEM_EMBEDDING_UPDATE, PROC_REF(embedded_object_changed))
 	embedded_objects += embed
+	RegisterSignal(embed, COMSIG_ITEM_EMBEDDING_UPDATE, PROC_REF(embedded_object_changed))
 	refresh_bleed_rate()
 
 /// INTERNAL PROC, DO NOT USE
 /// Cleans up any attachment we have to the embedded object, removes it from our list
 /obj/item/bodypart/proc/_unembed_object(obj/item/unembed)
-	UnregisterSignal(unembed, COMSIG_ITEM_EMBEDDING_UPDATE)
 	embedded_objects -= unembed
+	UnregisterSignal(unembed, COMSIG_ITEM_EMBEDDING_UPDATE)
 	refresh_bleed_rate()
 
 /obj/item/bodypart/proc/embedded_object_changed(obj/item/embedded_source)
@@ -1157,7 +1157,7 @@
 		cached_bleed_rate += 0.5
 
 	for(var/obj/item/embeddies in embedded_objects)
-		if(!embeddies.isEmbedHarmless())
+		if(!embeddies.is_embed_harmless())
 			cached_bleed_rate += 0.25
 
 	for(var/datum/wound/iter_wound as anything in wounds)
@@ -1310,12 +1310,24 @@
 	else
 		update_icon_dropped()
 
-// Note: Does NOT return EMP protection value from parent call or pass it on to subtypes
+// Note: For effects on subtypes, use the emp_effect() proc instead
 /obj/item/bodypart/emp_act(severity)
 	var/protection = ..()
-	if((protection & EMP_PROTECT_WIRES) || !IS_ROBOTIC_LIMB(src))
-		return FALSE
+	// If the limb doesn't protect contents, strike them first
+	if(!(protection & EMP_PROTECT_CONTENTS))
+		for(var/atom/content as anything in contents)
+			content.emp_act(severity)
 
+	if((protection & (EMP_PROTECT_WIRES | EMP_PROTECT_SELF)))
+		return protection
+
+	emp_effect(severity, protection)
+	return protection
+
+/// The actual effect of EMPs on the limb. Allows children to override it however they want
+/obj/item/bodypart/proc/emp_effect(severity, protection)
+	if(!IS_ROBOTIC_LIMB(src))
+		return FALSE
 	// with defines at the time of writing, this is 2 brute and 1.5 burn
 	// 2 + 1.5 = 3,5, with 6 limbs thats 21, on a heavy 42
 	// 42 * 0.8 = 33.6

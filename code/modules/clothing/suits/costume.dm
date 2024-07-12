@@ -21,6 +21,10 @@
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR|HIDEFACE|HIDEMASK|HIDESNOUT
 
+/obj/item/clothing/head/hooded/flashsuit/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/flash_hood, ITEM_SLOT_HEAD, forced = TRUE)
+
 /obj/item/clothing/suit/costume/pirate
 	name = "pirate coat"
 	desc = "Yarr."

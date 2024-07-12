@@ -502,7 +502,7 @@
 /obj/structure/table/reinforced/titaniumglass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/abandoned/cargo)
 "wN" = (
@@ -685,7 +685,9 @@
 "Hw" = (
 /obj/machinery/light/small/directional/east,
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
-	dir = 1
+	dir = 1;
+	x_offset = 0;
+	y_offset = 10
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,

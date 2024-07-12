@@ -28,7 +28,7 @@
 	/// If the cell can be removed via screwdriver
 	var/cell_removable = TRUE
 	var/obj/item/shockpaddles/paddles
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell/cell
 	/// If true, revive through space suits, allow for combat shocking
 	var/combat = FALSE
 	/// How long does it take to recharge
@@ -111,7 +111,7 @@
 
 /obj/item/defibrillator/CheckParts(list/parts_list)
 	..()
-	cell = locate(/obj/item/stock_parts/cell) in contents
+	cell = locate(/obj/item/stock_parts/power_store) in contents
 	update_power()
 
 /obj/item/defibrillator/ui_action_click()
@@ -136,11 +136,10 @@
 		ui_action_click() //checks for this are handled in defibrillator.mount.dm
 	return ..()
 
-/obj/item/defibrillator/MouseDrop(obj/over_object)
-	. = ..()
+/obj/item/defibrillator/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
 	if(ismob(loc))
 		var/mob/M = loc
-		if(!M.incapacitated() && istype(over_object, /atom/movable/screen/inventory/hand))
+		if(istype(over_object, /atom/movable/screen/inventory/hand))
 			var/atom/movable/screen/inventory/hand/H = over_object
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
@@ -156,24 +155,27 @@
 	update_power()
 	return TRUE
 
-/obj/item/defibrillator/attackby(obj/item/W, mob/user, params)
-	if(W == paddles)
+/obj/item/defibrillator/item_interaction(mob/living/user, obj/item/item, list/modifiers)
+	if(item == paddles)
 		toggle_paddles()
-	else if(istype(W, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/C = W
-		if(cell)
-			to_chat(user, span_warning("[src] already has a cell!"))
-		else
-			if(C.maxcharge < paddles.revivecost)
-				to_chat(user, span_notice("[src] requires a higher capacity cell."))
-				return
-			if(!user.transferItemToLoc(W, src))
-				return
-			cell = W
-			to_chat(user, span_notice("You install a cell in [src]."))
-			update_power()
-	else
-		return ..()
+		return NONE
+	if(!istype(item, /obj/item/stock_parts/power_store/cell))
+		return NONE
+
+	var/obj/item/stock_parts/power_store/cell/new_cell = item
+	if(!isnull(cell))
+		to_chat(user, span_warning("[src] already has a cell!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(new_cell.maxcharge < paddles.revivecost)
+		to_chat(user, span_notice("[src] requires a higher capacity cell."))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(new_cell, src))
+		return NONE
+	cell = new_cell
+	to_chat(user, span_notice("You install a cell in [src]."))
+	update_power()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/defibrillator/emag_act(mob/user, obj/item/card/emag/emag_card)
 
@@ -312,13 +314,8 @@
 
 /obj/item/defibrillator/compact/combat/loaded/Initialize(mapload)
 	. = ..()
-	cell = new /obj/item/stock_parts/cell/infinite(src)
+	cell = new /obj/item/stock_parts/power_store/cell/infinite(src)
 	update_power()
-
-/obj/item/defibrillator/compact/combat/loaded/attackby(obj/item/W, mob/user, params)
-	if(W == paddles)
-		toggle_paddles()
-		return
 
 /obj/item/defibrillator/compact/combat/loaded/nanotrasen
 	name = "elite Nanotrasen defibrillator"

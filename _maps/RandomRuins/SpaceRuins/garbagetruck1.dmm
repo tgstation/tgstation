@@ -477,7 +477,7 @@
 /obj/structure/closet/cardboard,
 /obj/item/toy/plush/snakeplushie,
 /obj/item/clothing/glasses/eyepatch,
-/obj/item/clothing/mask/cigarette/cigar/havana,
+/obj/item/cigarette/cigar/havana,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "wR" = (
@@ -754,7 +754,7 @@
 "Fz" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/lead,
+/obj/item/stock_parts/power_store/cell/lead,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "FL" = (
@@ -1070,7 +1070,6 @@
 	},
 /obj/machinery/light/warm,
 /obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
 	locked = 0;
 	pixel_y = -25;
 	start_charge = 0

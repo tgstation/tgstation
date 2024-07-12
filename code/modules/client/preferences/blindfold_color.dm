@@ -4,6 +4,9 @@
 	savefile_key = "blindfold_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 
+/datum/preference/color/blindfold_color/create_default_value()
+	return COLOR_WHITE
+
 /datum/preference/color/blindfold_color/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
 		return FALSE

@@ -9,7 +9,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 40 SECONDS
 
-	invocation = "Y'O'K!"
+	invocation = "Khenem"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
@@ -26,7 +26,7 @@
 		return FALSE
 
 	var/obj/storage_item = locate(/obj/item/storage/backpack) in cast_on.contents
-	
+
 	if(isnull(storage_item))
 		return FALSE
 

@@ -197,6 +197,7 @@
 		if(length(birthday_options))
 			birthday_person = pick(birthday_options)
 			birthday_person_name = birthday_person.real_name
+			ADD_TRAIT(birthday_person, TRAIT_BIRTHDAY_BOY, REF(src))
 	addtimer(CALLBACK(src, PROC_REF(announce_birthday)), 10 SECONDS)
 
 /datum/station_trait/birthday/proc/check_valid_override()

@@ -1,4 +1,5 @@
 // Heretic starting knowledge.
+// Default heretic language is Ancient Greek, because, uh, they're like ancient and shit.
 
 /// Global list of all heretic knowledge that have route = PATH_START. List of PATHS.
 GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
@@ -48,6 +49,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY - 1 // Knowing how to remake your heart is important
 	route = PATH_START
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "living_heart"
+	research_tree_icon_frame = 1
 	/// The typepath of the organ type required for our heart.
 	var/required_organ_type = /obj/item/organ/internal/heart
 
@@ -204,6 +208,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY - 2 // Not as important as making a heart or sacrificing, but important enough.
 	route = PATH_START
+	research_tree_icon_path = 'icons/obj/clothing/neck.dmi'
+	research_tree_icon_state = "eldritch_necklace"
 
 /datum/heretic_knowledge/spell/cloak_of_shadows
 	name = "Cloak of Shadow"
@@ -238,6 +244,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	route = PATH_START
 	priority = MAX_KNOWLEDGE_PRIORITY - 3 // Least priority out of the starting knowledges, as it's an optional boon.
 	var/static/list/non_mob_bindings = typecacheof(list(/obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide))
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "book"
 
 /datum/heretic_knowledge/codex_cicatrix/parse_required_item(atom/item_path, number_of_things)
 	if(item_path == /obj/item/pen)
@@ -293,3 +301,37 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	body.do_jitter_animation()
 	body.visible_message(span_danger("An awful ripping sound is heard as [ripped_thing]'s [exterior_text] is ripped straight out, wrapping around [le_book || "the book"], turning into an eldritch shade of blue!"))
 	return ..()
+
+/datum/heretic_knowledge/feast_of_owls
+	name = "Feast of Owls"
+	desc = "Allows you to undergo a ritual that gives you 5 knowledge points but locks you out of ascension. This can only be done once and cannot be reverted."
+	gain_text = "Under the soft glow of unreason there is a beast that stalks the night. I shall bring it forth and let it enter my presence. It will feast upon my amibitions and leave knowledge in its wake."
+	route = PATH_START
+	required_atoms = list()
+	research_tree_icon_path = 'icons/mob/actions/actions_animal.dmi'
+	research_tree_icon_state = "god_transmit"
+
+/datum/heretic_knowledge/feast_of_owls/can_be_invoked(datum/antagonist/heretic/invoker)
+	return !invoker.feast_of_owls
+
+/datum/heretic_knowledge/feast_of_owls/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	//amount of research points granted
+	var/reward = 5
+	var/alert = tgui_alert(user,"Do you really want to forsake your ascension? This action cannot be reverted.", "Feast of Owls", list("Yes I'm sure", "No"), 30 SECONDS)
+	if( alert != "Yes I'm sure")
+		return FALSE
+	user.set_temp_blindness(reward SECONDS)
+	user.AdjustParalyzed(reward SECONDS)
+	user.playsound_local(get_turf(user), 'sound/ambience/antag/heretic/heretic_gain_intense.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	for(var/i in 1 to reward)
+		user.emote("scream")
+		playsound(loc, 'sound/items/eatfood.ogg', 100, TRUE)
+		heretic_datum.knowledge_points++
+		to_chat(user, span_danger("You feel something invisible tearing away at your very essence!"))
+		user.do_jitter_animation()
+		sleep(1 SECONDS)
+	heretic_datum.feast_of_owls = TRUE
+	to_chat(user, span_danger(span_big("Your ambition is ravaged, but something powerful remains in its wake...")))
+	var/drain_message = pick(strings(HERETIC_INFLUENCE_FILE, "drain_message"))
+	to_chat(user, span_hypnophrase(span_big("[drain_message]")))

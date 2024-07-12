@@ -302,6 +302,10 @@
 				to_chat(user, span_warning("There is nothing in [weapon] to put in [src]!"))
 				return FALSE
 
+	if(!powered())
+		to_chat(user, span_warning("\The [src]'s magnetic door won't open without power!"))
+		return FALSE
+
 	if(!user.combat_mode)
 		to_chat(user, span_warning("\The [src] smartly refuses [weapon]."))
 		return FALSE
@@ -643,7 +647,7 @@
 	return istype(weapon, /obj/item/petri_dish)
 
 /obj/machinery/smartfridge/petri/preloaded
-	initial_contents = list(/obj/item/petri_dish = 5)
+	initial_contents = list(/obj/item/petri_dish/random = 3)
 
 // -------------------------
 // Organ Surgery Smartfridge

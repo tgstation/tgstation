@@ -47,7 +47,6 @@
 	name = "\improper AI Chamber"
 	icon_state = "ai_chamber"
 	ai_will_not_hear_this = null
-	area_flags = parent_type::area_flags | ABDUCTOR_PROOF
 
 /area/station/ai_monitored/turret_protected/aisat
 	name = "\improper AI Satellite"

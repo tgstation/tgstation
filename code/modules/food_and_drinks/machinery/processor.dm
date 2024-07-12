@@ -4,7 +4,8 @@
 	name = "food processor"
 	desc = "An industrial grinder used to process meat and other foods. Keep hands clear of intake area while operating."
 	icon = 'icons/obj/machines/kitchen.dmi'
-	icon_state = "processor1"
+	base_icon_state = "processor"
+	icon_state = "processor"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	pass_flags = PASSTABLE
@@ -91,7 +92,7 @@
 	if(processing)
 		to_chat(user, span_warning("[src] is in the process of processing!"))
 		return TRUE
-	if(default_deconstruction_screwdriver(user, "processor", "processor1", attacking_item) || default_pry_open(attacking_item, close_after_pry = TRUE) || default_deconstruction_crowbar(attacking_item))
+	if(default_deconstruction_screwdriver(user, base_icon_state + "_open", base_icon_state, attacking_item) || default_pry_open(attacking_item, close_after_pry = TRUE) || default_deconstruction_crowbar(attacking_item))
 		return
 
 	if(istype(attacking_item, /obj/item/storage/bag/tray))
@@ -157,7 +158,7 @@
 		total_time += recipe.time
 
 	var/duration = (total_time / rating_speed)
-	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, Shake), 2, 2, duration, max(duration*0.02, 0.01)) //initial values work out to duration 4 seconds, interval 0.8
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, Shake), 1, 0, duration)
 	sleep(duration)
 	for(var/atom/movable/content_item in processor_contents)
 		var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(content_item)
@@ -189,6 +190,8 @@
 
 /obj/machinery/processor/slime
 	name = "slime processor"
+	base_icon_state = "processor_slime"
+	icon_state = "processor_slime"
 	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
 	circuit = /obj/item/circuitboard/machine/processor/slime
 
@@ -235,8 +238,10 @@
 		processed_slime.forceMove(drop_location())
 		processed_slime.balloon_alert_to_viewers("crawls free")
 		return
+
 	var/core_count = processed_slime.cores
-	for(var/i in 1 to (core_count+rating_amount-1))
+	var/extra_cores = rating_amount - 1 // 0-3 bonus cores above what slime already has with upgraded parts
+	for(var/i in 1 to (core_count + extra_cores))
 		var/atom/movable/item = new processed_slime.slime_type.core_type(drop_location())
 		adjust_item_drop_location(item)
 		SSblackbox.record_feedback("tally", "slime_core_harvested", 1, processed_slime.slime_type.colour)

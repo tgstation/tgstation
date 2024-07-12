@@ -64,6 +64,11 @@
 	find_and_hang_on_wall()
 	register_context()
 
+/obj/machinery/button/Destroy()
+	QDEL_NULL(device)
+	QDEL_NULL(board)
+	return ..()
+
 /obj/machinery/button/proc/setup_device()
 	if(id && istype(device, /obj/item/assembly/control))
 		var/obj/item/assembly/control/control_device = device

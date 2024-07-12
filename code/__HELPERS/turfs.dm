@@ -213,6 +213,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/turf/atom_turf = get_turf(checked_atom) //use checked_atom's turfs, as it's coords are the same as checked_atom's AND checked_atom's coords are lost if it is inside another atom
 	if(!atom_turf)
 		return null
+	if(checked_atom.flags_1 & IGNORE_TURF_PIXEL_OFFSET_1)
+		return atom_turf
 
 	var/list/offsets = get_visual_offset(checked_atom)
 	return pixel_offset_turf(atom_turf, offsets)
@@ -400,8 +402,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 /**
  * Checks whether or not a particular typepath or subtype of it is present on a turf
  *
- * Returns TRUE if an instance of the desired type or a subtype of it is found
- * Returns FALSE if the type is not found, or if no turf is supplied
+ * Returns the first instance located if an instance of the desired type or a subtype of it is found
+ * Returns null if the type is not found, or if no turf is supplied
  *
  * Arguments:
  * * location - The turf to be checked for the desired type
@@ -409,10 +411,9 @@ Turf and target are separate in case you want to teleport some distance from a t
  */
 /proc/is_type_on_turf(turf/location, type_to_find)
 	if(!location)
-		return FALSE
-	if(locate(type_to_find) in location)
-		return TRUE
-	return FALSE
+		return
+	var/found_type = locate(type_to_find) in location
+	return found_type
 
 /**
  * get_blueprint_data

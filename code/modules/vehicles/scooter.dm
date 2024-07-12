@@ -161,9 +161,8 @@
 			victim.visible_message(span_danger("[victim] straight up gets grinded into the ground by [skater]'s [src]! Radical!"))
 	addtimer(CALLBACK(src, PROC_REF(grind)), 0.1 SECONDS)
 
-/obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
-	. = ..()
-	var/mob/living/carbon/skater = usr
+/obj/vehicle/ridden/scooter/skateboard/mouse_drop_dragged(atom/over_object, mob/user)
+	var/mob/living/carbon/skater = user
 	if(!istype(skater))
 		return
 	if (over_object == skater)
@@ -206,6 +205,21 @@
 		if(z_move_flags & ZMOVE_FEEDBACK)
 			to_chat(rider, span_warning("[src] [p_are()] not powerful enough to fly upwards."))
 		return FALSE
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded
+	name = "holy skateboard"
+	desc = "A board blessed by the gods with the power to grind for our sins. Has the initials 'J.C.' on the underside."
+	board_item_type = /obj/item/melee/skateboard/holyboard
+	instability = 3
+	icon_state = "hoverboard_holy"
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded/post_buckle_mob(mob/living/M)
+	M.AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
+	return ..()
+
+/obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded/post_unbuckle_mob(mob/living/M)
+	if(!has_buckled_mobs())
+		qdel (M.GetComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY))
+		return ..()
 
 /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
 	name = "\improper Board Of Directors"

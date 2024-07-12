@@ -2,7 +2,7 @@
 /obj/effect/anomaly/bioscrambler
 	name = "bioscrambler anomaly"
 	icon_state = "bioscrambler"
-	aSignal = /obj/item/assembly/signaler/anomaly/bioscrambler
+	anomaly_core = /obj/item/assembly/signaler/anomaly/bioscrambler
 	immortal = TRUE
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 	layer = ABOVE_MOB_LAYER
@@ -88,11 +88,15 @@
 	pixel_y = -16
 	duration = 0.5 SECONDS
 	color = COLOR_LIME
+	var/max_alpha = 255
 
 /obj/effect/temp_visual/bioscrambler_wave/Initialize(mapload)
 	transform = matrix().Scale(0.1)
 	animate(src, transform = matrix().Scale(2), time = duration, flags = ANIMATION_PARALLEL)
-	animate(src, alpha = 255, time = duration * 0.6, flags = ANIMATION_PARALLEL)
+	animate(src, alpha = max_alpha, time = duration * 0.6, flags = ANIMATION_PARALLEL)
 	animate(alpha = 0, time = duration * 0.4)
 	apply_wibbly_filters(src)
 	return ..()
+
+/obj/effect/temp_visual/bioscrambler_wave/light
+	max_alpha = 128

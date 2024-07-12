@@ -75,7 +75,7 @@
 	acid = 100
 
 /obj/vehicle/sealed/mecha/honker/dark/loaded/populate_parts()
-	cell = new /obj/item/stock_parts/cell/hyper(src)
+	cell = new /obj/item/stock_parts/power_store/cell/hyper(src)
 	scanmod = new /obj/item/stock_parts/scanning_module/phasic(src)
 	capacitor = new /obj/item/stock_parts/capacitor/super(src)
 	servo = new /obj/item/stock_parts/servo/pico(src)

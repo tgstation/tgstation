@@ -30,6 +30,7 @@
 	preop_sound = 'sound/surgery/scalpel1.ogg'
 	success_sound = 'sound/surgery/organ1.ogg'
 	failure_sound = 'sound/surgery/organ2.ogg'
+	surgery_effects_mood = TRUE
 
 /datum/surgery_step/lobectomy/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
@@ -39,7 +40,7 @@
 		span_notice("[user] begins to make an incision in [target]."),
 		span_notice("[user] begins to make an incision in [target]."),
 	)
-	display_pain(target, "You feel a stabbing pain in your chest!", mood_event_type = /datum/mood_event/surgery)
+	display_pain(target, "You feel a stabbing pain in your chest!")
 
 /datum/surgery_step/lobectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(ishuman(target))
@@ -54,7 +55,7 @@
 			span_notice("Successfully removes a piece of [human_target]'s lungs."),
 			"",
 		)
-		display_pain(target, "Your chest hurts like hell, but breathing becomes slightly easier.", mood_event_type = /datum/mood_event/surgery/success)
+		display_pain(target, "Your chest hurts like hell, but breathing becomes slightly easier.")
 	return ..()
 
 /datum/surgery_step/lobectomy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -67,7 +68,7 @@
 			span_warning("[user] screws up!"),
 			span_warning("[user] screws up!"),
 		)
-		display_pain(target, "You feel a sharp stab in your chest; the wind is knocked out of you and it hurts to catch your breath!", mood_event_type = /datum/mood_event/surgery/failure)
+		display_pain(target, "You feel a sharp stab in your chest; the wind is knocked out of you and it hurts to catch your breath!")
 		human_target.losebreath += 4
 		human_target.adjustOrganLoss(ORGAN_SLOT_LUNGS, 10)
 	return FALSE

@@ -7,10 +7,8 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	item_flags = NONE
 	obj_flags = UNIQUE_RENAME
+	resistance_flags = FIRE_PROOF
 	weapon_weight = WEAPON_LIGHT
-	can_bayonet = TRUE
-	knife_x_offset = 20
-	knife_y_offset = 12
 	gun_flags = NOT_A_REAL_GUN
 	///List of all mobs that projectiles fired from this gun will ignore.
 	var/list/ignored_mob_types
@@ -19,6 +17,9 @@
 	///The max capacity of modkits the PKA can have installed at once.
 	var/max_mod_capacity = 100
 
+/obj/item/gun/energy/recharge/kinetic_accelerator/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 20, offset_y = 12)
+
 /obj/item/gun/energy/recharge/kinetic_accelerator/Initialize(mapload)
 	. = ..()
 	// Only actual KAs can be converted
@@ -26,8 +27,8 @@
 		return
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ebow)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -253,6 +254,8 @@
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
+	//Most modkits are supposed to allow duplicates. The ones that don't should be blocked by PKA code anyways.
+	allow_duplicates = TRUE
 	var/denied_type = null
 	var/maximum_of_type = 1
 	var/cost = 30

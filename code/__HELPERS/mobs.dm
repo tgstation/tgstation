@@ -28,6 +28,20 @@
 		else
 			return COLOR_BLACK
 
+/proc/random_hair_color()
+	var/static/list/natural_hair_colors = list(
+		"#111111", "#362925", "#3B3831", "#41250C", "#412922",
+		"#544C49", "#583322", "#593029", "#703b30", "#714721",
+		"#744729", "#74482a", "#7b746e", "#855832", "#863019",
+		"#8c4734", "#9F550E", "#A29A96", "#A4381C", "#B17B41",
+		"#C0BAB7", "#EFE5E4", "#F7F3F1", "#FFF2D6", "#a15537",
+		"#a17e61", "#b38b67", "#ba673c", "#c89f73", "#d9b380",
+		"#dbc9b8", "#e1621d", "#e17d17", "#e1af93", "#f1cc8f",
+		"#fbe7a1",
+	)
+
+	return pick(natural_hair_colors)
+
 /proc/random_underwear(gender)
 	if(length(SSaccessories.underwear_list) == 0)
 		CRASH("No underwear to choose from!")
@@ -331,6 +345,9 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 /proc/deadchat_broadcast(message, source=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR, admin_only=FALSE)
 	message = span_deadsay("[source][span_linkify(message)]")
 
+	if(admin_only)
+		message += span_deadsay(" (This is viewable to admins only).")
+
 	for(var/mob/M in GLOB.player_list)
 		var/chat_toggles = TOGGLES_DEFAULT_CHAT
 		var/toggles = TOGGLES_DEFAULT
@@ -341,10 +358,8 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 			toggles = prefs.toggles
 			ignoring = prefs.ignoring
 		if(admin_only)
-			if (!M.client?.holder)
-				return
-			else
-				message += span_deadsay(" (This is viewable to admins only).")
+			if(!M.client?.holder)
+				continue
 		var/override = FALSE
 		if(M.client?.holder && (chat_toggles & CHAT_DEAD))
 			override = TRUE

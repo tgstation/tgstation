@@ -38,8 +38,9 @@
 
 	if (user == source)
 		return
-
 	if (over != user)
+		return
+	if(!user.can_perform_action(source, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
 		return
 
 	// Cyborgs buckle people by dragging them onto them, unless in combat mode.
@@ -51,6 +52,11 @@
 	if (!isnull(should_strip_proc_path) && !call(source, should_strip_proc_path)(user))
 		return
 
+	if (isliving(source))
+		var/mob/living/mob = source
+		if (mob.can_be_held && (user.grab_state == GRAB_AGGRESSIVE) && (user.pulling == source))
+			return
+
 	var/datum/strip_menu/strip_menu = LAZYACCESS(strip_menus, source)
 
 	if (isnull(strip_menu))
@@ -58,6 +64,7 @@
 		LAZYSET(strip_menus, source, strip_menu)
 
 	INVOKE_ASYNC(strip_menu, TYPE_PROC_REF(/datum/, ui_interact), user)
+	return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
 /// A representation of an item that can be stripped down
 /datum/strippable_item

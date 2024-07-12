@@ -5,8 +5,8 @@
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/reactive_armor_shell/attackby(obj/item/weapon, mob/user, params)
-	..()
+/obj/item/reactive_armor_shell/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
 	var/static/list/anomaly_armour_types = list(
 		/obj/effect/anomaly/grav = /obj/item/clothing/suit/armor/reactive/repulse,
 		/obj/effect/anomaly/flux = /obj/item/clothing/suit/armor/reactive/tesla,
@@ -17,15 +17,16 @@
 		/obj/effect/anomaly/ectoplasm = /obj/item/clothing/suit/armor/reactive/ectoplasm,
 		)
 
-	if(istype(weapon, /obj/item/assembly/signaler/anomaly))
-		var/obj/item/assembly/signaler/anomaly/anomaly = weapon
-		var/armour_path = anomaly_armour_types[anomaly.anomaly_type]
+	if(istype(tool, /obj/item/assembly/signaler/anomaly))
+		var/obj/item/assembly/signaler/anomaly/anomaly = tool
+		var/armour_path = is_path_in_list(anomaly.anomaly_type, anomaly_armour_types, TRUE)
 		if(!armour_path)
 			armour_path = /obj/item/clothing/suit/armor/reactive/stealth //Lets not cheat the player if an anomaly type doesnt have its own armour coded
 		to_chat(user, span_notice("You insert [anomaly] into the chest plate, and the armour gently hums to life."))
 		new armour_path(get_turf(src))
 		qdel(src)
 		qdel(anomaly)
+		return ITEM_INTERACT_SUCCESS
 
 //Reactive armor
 /obj/item/clothing/suit/armor/reactive

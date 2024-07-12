@@ -62,11 +62,23 @@
 	. = ..()
 	. += status_string()
 
-/obj/item/lightreplacer/pre_attack(atom/target, mob/living/user, params)
-	. = ..()
-	if(.)
-		return
-	return do_action(target, user) //if we are attacking a valid target[light, floodlight or turf] stop here
+/obj/item/lightreplacer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return do_action(interacting_with, user) ? ITEM_INTERACT_SUCCESS : NONE
+
+/obj/item/lightreplacer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	// has no bluespace capabilities
+	if(!bluespace_toggle)
+		return NONE
+	// target not in range
+	if(interacting_with.z != user.z)
+		return NONE
+	// target not in view
+	if(!(interacting_with in view(7, get_turf(user))))
+		user.balloon_alert(user, "out of range!")
+		return ITEM_INTERACT_BLOCKING
+
+	//replace lights & stuff
+	return do_action(interacting_with, user) ? ITEM_INTERACT_SUCCESS : NONE
 
 /obj/item/lightreplacer/attackby(obj/item/insert, mob/user, params)
 	. = ..()
@@ -238,23 +250,6 @@
 		return TRUE
 
 	return FALSE
-
-/obj/item/lightreplacer/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-
-	// has no bluespace capabilities
-	if(!bluespace_toggle)
-		return
-	// target not in range
-	if(target.z != user.z)
-		return
-	// target not in view
-	if(!(target in view(7, get_turf(user))))
-		user.balloon_alert(user, "out of range!")
-		return
-
-	//replace lights & stuff
-	do_action(target, user)
 
 /obj/item/lightreplacer/proc/status_string()
 	return "It has [uses] light\s remaining (plus [bulb_shards]/[BULB_SHARDS_REQUIRED] fragment\s)."

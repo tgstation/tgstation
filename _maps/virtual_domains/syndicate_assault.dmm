@@ -65,6 +65,7 @@
 	req_access = list("syndicate");
 	secure = 1
 	},
+/obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "cw" = (
@@ -295,16 +296,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
-"ki" = (
-/obj/structure/table/reinforced,
-/obj/machinery/computer/security/telescreen/interrogation{
-	name = "Cameras monitor";
-	network = list("fsci");
-	req_access = list("syndicate");
-	screen_loc = ""
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/virtual_domain)
 "kI" = (
 /obj/machinery/computer/atmos_alert{
 	dir = 8
@@ -387,6 +378,11 @@
 "nU" = (
 /obj/structure/sign/poster/contraband/syndicate_pistol,
 /turf/closed/wall/r_wall/syndicate,
+/area/ruin/space/has_grav/powered/virtual_domain)
+"og" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/cup/glass/trophy/silver_cup,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "oM" = (
 /obj/structure/cable,
@@ -498,10 +494,16 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "sH" = (
-/obj/structure/displaycase{
+/obj/structure/closet/syndicate{
+	anchored = 1;
+	desc = "A basic closet for all your villainous needs.";
+	locked = 1;
+	name = "Closet";
 	req_access = list("syndicate");
-	start_showpiece_type = /obj/item/gun/ballistic/automatic/pistol/deagle/camo
+	secure = 1
 	},
+/obj/item/ammo_box/c9mm,
+/obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "sK" = (
@@ -600,6 +602,9 @@
 /obj/item/ammo_box/c9mm,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
+"xS" = (
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/area/ruin/space/has_grav/powered/virtual_domain)
 "yl" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Captain's Room"
@@ -688,6 +693,7 @@
 /obj/item/crowbar/red,
 /obj/item/ammo_box/magazine/m9mm_aps,
 /obj/item/ammo_box/magazine/m9mm_aps,
+/obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Cn" = (
@@ -848,6 +854,7 @@
 /obj/structure/table/reinforced,
 /obj/item/paper,
 /obj/item/pen,
+/obj/machinery/computer/security/telescreen/forgotten_ship/sci/directional/south,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "IH" = (
@@ -927,6 +934,7 @@
 /obj/item/crowbar/red,
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/m9mm,
+/obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Mm" = (
@@ -1076,6 +1084,7 @@
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/m9mm,
 /obj/machinery/light/small/directional/north,
+/obj/item/gun/ballistic/automatic/pistol,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "Sq" = (
@@ -2206,7 +2215,7 @@ qx
 qx
 qx
 ru
-vp
+og
 Jg
 ru
 bh
@@ -2264,7 +2273,7 @@ qx
 qx
 qx
 ru
-sH
+Kz
 Kz
 yl
 bh
@@ -2442,7 +2451,7 @@ ru
 Lo
 ru
 tv
-ki
+hD
 nU
 wb
 EB
@@ -2743,7 +2752,7 @@ ru
 ru
 ru
 ru
-Vk
+ru
 qx
 qx
 qx
@@ -3091,7 +3100,7 @@ uP
 ru
 hD
 ru
-Ig
+xS
 qx
 qx
 qx
@@ -3203,7 +3212,7 @@ tI
 Kz
 Kz
 ct
-xJ
+sH
 ru
 qx
 qx

@@ -185,6 +185,22 @@
 	for(var/mob/living/found_bot as anything in GLOB.bots_list)
 		found_bot.randomize_language_if_on_station()
 
+/datum/station_trait/machine_languages
+	name = "Machine Language Matrix Malfunction"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 2
+	cost = STATION_TRAIT_COST_FULL
+	show_in_report = TRUE
+	report_message = "Your station's machines have had their language matrix fried due to an event, \
+		resulting in some strange and unfamiliar speech patterns."
+	trait_to_give = STATION_TRAIT_MACHINES_GLITCHED
+
+/datum/station_trait/machine_languages/New()
+	. = ..()
+	// What "caused" our machines to go haywire (fluff)
+	var/event_source = pick("an ion storm", "a malfunction", "a software update", "a power surge", "a computer virus", "a subdued machine uprising", "a clown's prank")
+	report_message = "Your station's machinery have had their language matrix fried due to [event_source], resulting in some strange and unfamiliar speech patterns."
+
 /datum/station_trait/revenge_of_pun_pun
 	name = "Revenge of Pun Pun"
 	trait_type = STATION_TRAIT_NEGATIVE
@@ -285,7 +301,7 @@
 	weight = 0
 
 	/// The path to the round_event_control that we modify.
-	var/event_control_path
+	var/datum/round_event_control/event_control_path
 	/// Multiplier applied to the weight of the event.
 	var/weight_multiplier = 1
 	/// Flat modifier added to the amount of max occurances the random event can have.

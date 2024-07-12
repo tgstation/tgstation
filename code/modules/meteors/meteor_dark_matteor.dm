@@ -60,7 +60,7 @@
 	qdel(defender)
 	return FALSE
 
-/obj/effect/meteor/dark_matteor/handle_stopping()
+/obj/effect/meteor/dark_matteor/moved_off_z()
 	. = ..()
 	if(previous_security_level && SSsecurity_level.get_current_level_as_number() != SEC_LEVEL_DELTA)
 		SSsecurity_level.set_level(previous_security_level)

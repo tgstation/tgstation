@@ -71,7 +71,7 @@
 
 /obj/item/attack_self_tk(mob/user)
 	if(attack_self(user))
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
 /atom/proc/attack_self_secondary_tk(mob/user)
 	return
@@ -79,7 +79,7 @@
 
 /obj/item/attack_self_secondary_tk(mob/user)
 	if(attack_self_secondary(user))
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
 
 /*
@@ -146,80 +146,44 @@
 	if(QDELING(focus))
 		qdel(src)
 		return
-	if(focus.attack_self_tk(user) & COMPONENT_CANCEL_ATTACK_CHAIN)
+	if(focus.attack_self_tk(user) & ITEM_INTERACT_ANY_BLOCKER)
 		. = TRUE
 	update_appearance()
 
+/obj/item/tk_grab/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
-/obj/item/tk_grab/afterattack(atom/target, mob/living/carbon/user, proximity, params)//TODO: go over this
-	. = ..()
-	if(.)
-		return
-
-	if(!target || !user)
-		return
-
+/obj/item/tk_grab/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!focus)
-		focus_object(target)
-		return TRUE
+		focus_object(interacting_with)
+		return ITEM_INTERACT_BLOCKING
 
 	if(!check_if_focusable(focus))
-		return
+		return NONE
 
-	if(target == focus)
-		if(target.attack_self_tk(user) & COMPONENT_CANCEL_ATTACK_CHAIN)
-			. = TRUE
-		update_appearance()
-		return
+	if(interacting_with == focus)
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+			. = focus.attack_self_secondary_tk(user) || NONE
+		else
+			. = interacting_with.attack_self_tk(user) || NONE
 
-	if(isitem(focus))
-		var/obj/item/I = focus
+	else if(isitem(focus))
+		var/obj/item/focused_item = focus
 		apply_focus_overlay()
-		if(target.Adjacent(focus))
-			. = I.melee_attack_chain(tk_user, target, params) //isn't copying the attack chain fun. we should do it more often.
+		if(interacting_with.Adjacent(focus))
+			. = focused_item.melee_attack_chain(user, interacting_with, list2params(modifiers)) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 			if(check_if_focusable(focus))
-				focus.do_attack_animation(target, null, focus)
-		else if(isgun(I)) //I've only tested this with guns, and it took some doing to make it work
-			. = I.afterattack(target, tk_user, 0, params)
-		. |= AFTERATTACK_PROCESSED_ITEM
+				focus.do_attack_animation(interacting_with, null, focus)
+
+		// isgun check lets us shoot guns at range
+		// quoting the old comment: "I've only tested this with guns, and it took some doing to make it work"
+		// reader beware if trying to add other snowflake cases
+		else if(isgun(focused_item))
+			. = interacting_with.base_ranged_item_interaction(user, focus, modifiers)
 
 	user.changeNext_move(CLICK_CD_MELEE)
 	update_appearance()
 	return .
-
-/obj/item/tk_grab/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-
-	if(!target || !user)
-		return
-
-	if(!focus)
-		focus_object(target)
-		return TRUE
-
-	if(!check_if_focusable(focus))
-		return
-
-	if(target == focus)
-		if(target.attack_self_secondary_tk(user) & COMPONENT_CANCEL_ATTACK_CHAIN)
-			. = TRUE
-		update_appearance()
-		return
-
-	if(isitem(focus))
-		var/obj/item/I = focus
-		apply_focus_overlay()
-		if(target.Adjacent(focus))
-			. = I.melee_attack_chain(tk_user, target, click_parameters) //isn't copying the attack chain fun. we should do it more often.
-			if(check_if_focusable(focus))
-				focus.do_attack_animation(target, null, focus)
-		else if(isgun(I)) //I've only tested this with guns, and it took some doing to make it work
-			. = I.afterattack_secondary(target, tk_user, 0, click_parameters)
-
-	user.changeNext_move(CLICK_CD_MELEE)
-	update_appearance()
 
 /obj/item/tk_grab/on_thrown(mob/living/carbon/user, atom/target)
 	if(!target || !user)
@@ -232,7 +196,7 @@
 		return
 
 	if(target == focus)
-		if(target.attack_self_tk(user) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		if(target.attack_self_tk(user) & ITEM_INTERACT_ANY_BLOCKER)
 			return
 		update_appearance()
 		return

@@ -238,7 +238,7 @@
  * Deletes the holopay thereafter.
  */
 /obj/structure/holopay/proc/dissipate()
-	playsound(loc, "sound/effects/empulse.ogg", 40, TRUE)
+	playsound(loc, 'sound/effects/empulse.ogg', 40, TRUE)
 	visible_message(span_notice("The pay stand vanishes."))
 	qdel(src)
 
