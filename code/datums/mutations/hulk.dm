@@ -9,6 +9,7 @@
 	species_allowed = list(SPECIES_HUMAN) //no skeleton/lizard hulk
 	health_req = 25
 	instability = POSITIVE_INSTABILITY_MAJOR
+	conflicts = list(/datum/mutation/human/hulk/ork)
 	var/scream_delay = 50
 	var/last_scream = 0
 	var/bodypart_color = COLOR_DARK_LIME
@@ -291,6 +292,7 @@
 	desc = "A mutation caused by a mixup of hulk genes which severely impacts speech centers in owners' brains."
 	text_gain_indication = span_notice("You feel significantly dumber!")
 	bodypart_color = COLOR_ASSISTANT_OLIVE
+	conflicts = list(/datum/mutation/human/hulk)
 
 /datum/mutation/human/hulk/ork/add_speechmod()
 	AddComponent(/datum/component/speechmod, replacements = strings("ork_replacement.json", "ork"), end_string = "!!", uppercase = TRUE)
