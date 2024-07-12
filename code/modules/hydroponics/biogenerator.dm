@@ -2,8 +2,6 @@
 #define MAX_ITEMS_PER_RATING 10
 /// How many items are converted per cycle, per rating point of the manipulator used.
 #define PROCESSED_ITEMS_PER_RATING 5
-/// Starting purity of reagents made in biogenerator
-#define BIOGEN_REAGENT_PURITY 0.3
 
 /obj/machinery/biogenerator
 	name = "biogenerator"
@@ -571,4 +569,3 @@
 
 #undef MAX_ITEMS_PER_RATING
 #undef PROCESSED_ITEMS_PER_RATING
-#undef BIOGEN_REAGENT_PURITY

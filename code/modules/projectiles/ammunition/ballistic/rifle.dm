@@ -20,6 +20,10 @@
 /obj/item/ammo_casing/strilka310/enchanted
 	projectile_type = /obj/projectile/bullet/strilka310/enchanted
 
+/obj/item/ammo_casing/strilka310/phasic
+	name = ".310 Strilka phasic bullet casing"
+	desc = "A phasic .310 Strika bullet casing. "
+	projectile_type = /obj/projectile/bullet/strilka310/phasic
 // .223 (M-90gl Carbine)
 
 /obj/item/ammo_casing/a223

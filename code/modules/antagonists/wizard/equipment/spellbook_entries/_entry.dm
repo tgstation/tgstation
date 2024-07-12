@@ -215,6 +215,11 @@
 		log_spellbook("[key_name(user)] bought [src] for [cost] points")
 		SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 		log_purchase(user.key)
+
+	ADD_TRAIT(spawned_path, TRAIT_CONTRABAND, INNATE_TRAIT)
+	for(var/obj/contained as anything in spawned_path.contents)
+		ADD_TRAIT(contained, TRAIT_CONTRABAND, INNATE_TRAIT)
+
 	try_equip_item(user, spawned_path)
 	return spawned_path
 

@@ -126,7 +126,7 @@
 			A.update_appearance()
 		if(WIRE_IDSCAN) // Pulse to disable emergency access and flash the red lights.
 			if(A.hasPower() && A.density)
-				A.do_animate("deny")
+				A.run_animation(DOOR_DENY_ANIMATION)
 				if(A.emergency)
 					A.emergency = FALSE
 					A.update_appearance()
