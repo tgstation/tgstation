@@ -602,7 +602,7 @@
 	return ..()
 
 /datum/station_trait/blue_sec/get_decal_color(atom/thing_to_color, pattern)
-	if(istype(get_area(thing_to_color), /area/station/security || /area/station/ai_monitored/security)) //color the brig blue, doesn't color the decals leading to brig blue but whatever
+	if(istype(get_area(thing_to_color), /area/station/security || /area/station/ai_monitored/security)) //color the brig blue, doesn't color the decals leading to brig blue. but it is what it is
 		return COLOR_TRUE_BLUE
 
 /datum/station_trait/blue_sec/proc/on_occupations_setup(datum/controller/subsystem/job/source)
