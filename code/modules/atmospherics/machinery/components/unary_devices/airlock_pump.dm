@@ -251,7 +251,7 @@
 
 	pump_direction = cycle_direction
 
-	for(var/obj/machinery/door/airlock/airlock in (internal_airlocks + external_airlocks))
+	for(var/obj/machinery/door/airlock/airlock as anything in (internal_airlocks + external_airlocks))
 		INVOKE_ASYNC(airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, secure_close))
 
 	airlocks_animating = TRUE
