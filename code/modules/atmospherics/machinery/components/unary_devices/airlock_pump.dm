@@ -347,7 +347,7 @@
 		say("Cycling setup failed. No opposite airlocks found.")
 		return
 
-	for(var/obj/machinery/door/airlock/airlock in (internal_airlocks + external_airlocks))
+	for(var/obj/machinery/door/airlock/airlock as anything in (internal_airlocks + external_airlocks))
 		airlock.set_cycle_pump(src)
 		RegisterSignal(airlock, COMSIG_QDELETING, PROC_REF(unlink_airlock))
 		if (airlock in external_airlocks)
