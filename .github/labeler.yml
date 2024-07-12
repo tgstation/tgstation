@@ -13,15 +13,14 @@
 
 'НЕ МОДУЛЬНО':
   - all: ['code/**']
-  - branches-ignore:
-    - 'translate'
+  - base-branch: 'master'
 
 'Частичная модульность':
   - all: ['code/**', modular_bandastation/**]
+  - base-branch: 'master'
 
 'Перевод':
-  branches:
-    - 'translate'
+  - base-branch: 'translate'
 
 'Инструменты':
   - '.gihub/workflows/**'
