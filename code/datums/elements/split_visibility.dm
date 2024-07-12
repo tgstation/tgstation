@@ -24,10 +24,10 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 
 // Thinking on it, we really only need to generate a copy for each direction accounting for frill, and then just set the overlay based off that
 // Except that doesn't work with frills, but frills don't vary by direction, and frills could inherit icon/state from the parent with appearance flags
-/proc/get_splitvis_object(z_offset, icon_path, junction, dir, pixel_x = 0, pixel_y = 0, plane = GAME_PLANE, layer = WALL_LAYER)
+/proc/get_splitvis_object(z_offset, icon_path, junction, dir, pixel_x = 0, pixel_y = 0, plane = GAME_PLANE, layer = WALL_LAYER, cache = TRUE)
 	var/key = "[icon_path]-[junction]-[dir]-[pixel_x]-[pixel_y]-[plane]-[layer]-[z_offset]"
 	var/mutable_appearance/split_vis/vis = GLOB.split_visibility_objects[key]
-	if(vis)
+	if(vis && cache)
 		return vis
 
 	vis = new /mutable_appearance/split_vis()
@@ -39,15 +39,17 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	SET_PLANE_W_SCALAR(vis, plane, z_offset)
 	vis.layer = layer
 
-	GLOB.split_visibility_objects[key] = vis
+	if(cache)
+		GLOB.split_visibility_objects[key] = vis
 	return vis
 
 /// Generates a mutable appearance of the passed in junction
 /// Needs to be kept in parity with the non offsetting bits of [/datum/element/split_vis/proc/apply_splitvis_objs]
 /// I'm sorry bros
-/proc/generate_joined_wall(icon_path, junction)
+/proc/generate_joined_wall(icon_path, junction, draw_darkness = TRUE)
 	var/list/overlays = list()
-	overlays += mutable_appearance('wall_blackness.dmi', "wall_background")
+	if(draw_darkness)
+		overlays += mutable_appearance('wall_blackness.dmi', "wall_background", layer = FLOAT_LAYER - 1, appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM)
 
 	// This lets us do O(1) logic down later, and ensure logic works as we'd like
 	var/list/diagonal_to_junction = GLOB.diagonal_junctions
@@ -55,7 +57,7 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 		// If we're connected in this direction, please don't draw a wall side
 		if((junction & direction) == direction)
 			continue
-		overlays += get_splitvis_object(0, icon_path, junction, direction, plane = FLOAT_PLANE, layer = FLOAT_LAYER)
+		overlays += get_splitvis_object(0, icon_path, junction, direction, plane = FLOAT_PLANE, layer = FLOAT_LAYER, cache = FALSE)
 
 	for(var/direction in GLOB.diagonals)
 		// If we're connected in the two components of this direction
@@ -66,7 +68,7 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 		if((junction & diagonal_junction) == diagonal_junction)
 			continue
 
-		overlays += get_splitvis_object(0, icon_path, "innercorner", direction, plane = FLOAT_PLANE, layer = FLOAT_LAYER)
+		overlays += get_splitvis_object(0, icon_path, "innercorner", direction, plane = FLOAT_PLANE, layer = FLOAT_LAYER, cache = FALSE)
 
 	var/mutable_appearance/holder = mutable_appearance(appearance_flags = KEEP_TOGETHER)
 	holder.overlays += overlays
@@ -188,6 +190,11 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 			operating_turf.overlays -= vis
 
 /datum/element/split_visibility/Detach(atom/target)
+	target.cut_overlay(mutable_appearance('wall_blackness.dmi', "wall_background", UNDER_WALL_LAYER, target, GAME_PLANE))
+	// We draw a copy to the wall plane so we can use it to mask byond darkness, that's all
+	target.cut_overlay(mutable_appearance('wall_blackness.dmi', "wall_background", UNDER_WALL_LAYER, target, WALL_PLANE))
+	// Ensures when you try to click on a turf, you actually click on the turf, and not the adjacent things holding it
+	target.cut_overlay(mutable_appearance('wall_blackness.dmi', "wall_clickcatcher", WALL_CLICKCATCH_LAYER, target, GAME_PLANE))
 	remove_split_vis_objects(target, target.smoothing_junction)
 	UnregisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE)
 	if(ismovable(target))
