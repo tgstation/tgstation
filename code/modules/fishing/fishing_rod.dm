@@ -214,7 +214,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/fishing_rod/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom_secondary(interacting_with, user, modifiers)
+	return ranged_interact_with_atom_secondary(interacting_with, user, modifiers)
 
 /obj/item/fishing_rod/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	//Stop reeling, delete the fishing line
