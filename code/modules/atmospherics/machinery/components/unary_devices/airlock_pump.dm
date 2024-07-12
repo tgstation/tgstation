@@ -287,7 +287,7 @@
 			stop_cycle("Pressure nominal, cycle skipped.")
 			return TRUE
 
-		for(var/obj/machinery/door/airlock/airlock in external_airlocks)
+		for(var/obj/machinery/door/airlock/airlock as anything in external_airlocks)
 			if(airlock.shuttledocked)
 				stop_cycle("Shuttle docked, cycle skipped.")
 				return TRUE
