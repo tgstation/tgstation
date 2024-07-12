@@ -57,9 +57,6 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/corner{
 	dir = 1
 	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
 /turf/open/floor/iron/dark/corner{
 	dir = 8
 	},
@@ -1006,8 +1003,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "uj" = (
-/obj/structure/closet/emcloset,
 /obj/effect/turf_decal/bot,
+/obj/structure/rack,
+/obj/item/storage/toolbox/emergency,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "uk" = (
@@ -1159,9 +1157,6 @@
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
 	},
 /turf/open/floor/iron/dark/side,
 /area/shuttle/escape)
@@ -1700,6 +1695,97 @@
 	dir = 1
 	},
 /area/shuttle/escape)
+"GE" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
+	},
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
+"GM" = (
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/structure/closet/crate/internals,
+/obj/effect/turf_decal/bot,
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
+	},
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
 "GS" = (
 /obj/effect/turf_decal/trimline/dark/corner{
 	dir = 1
@@ -1729,9 +1815,6 @@
 /obj/effect/turf_decal/trimline/dark/corner,
 /obj/effect/turf_decal/trimline/dark_blue/filled/corner{
 	dir = 4
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
 	},
 /turf/open/floor/iron/dark/corner,
 /area/shuttle/escape)
@@ -2308,6 +2391,9 @@
 /area/shuttle/escape)
 "SH" = (
 /obj/structure/hedge,
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
+	},
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "Tc" = (
@@ -2365,6 +2451,14 @@
 	dir = 4
 	},
 /area/shuttle/escape)
+"UK" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
+	},
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/iron/dark/small,
+/area/shuttle/escape)
 "UQ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -2395,9 +2489,6 @@
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
 	},
 /turf/open/floor/iron/dark/side,
 /area/shuttle/escape)
@@ -2816,7 +2907,7 @@ om
 bb
 Ra
 kZ
-OI
+GM
 rL
 Jy
 wP
@@ -2851,7 +2942,7 @@ fN
 Sq
 pe
 UU
-uj
+OI
 Xo
 fm
 wP
@@ -2886,7 +2977,7 @@ xV
 Tc
 Ra
 kZ
-OI
+GM
 tK
 kj
 wP
@@ -3271,7 +3362,7 @@ Zh
 YV
 Fh
 kZ
-OI
+GE
 tK
 kj
 wP
@@ -3341,7 +3432,7 @@ WT
 jY
 cN
 kZ
-OI
+UK
 Xo
 fm
 wP

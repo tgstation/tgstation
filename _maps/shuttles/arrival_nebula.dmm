@@ -75,7 +75,10 @@
 /turf/open/floor/wood/parquet,
 /area/shuttle/arrival)
 "p" = (
-/obj/machinery/requests_console/directional/south,
+/obj/machinery/requests_console/directional/south{
+	department = "Arrival shuttle";
+	name = "Arrival Shuttle Requests Console"
+	},
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},

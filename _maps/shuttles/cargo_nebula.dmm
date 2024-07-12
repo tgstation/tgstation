@@ -22,12 +22,14 @@
 /obj/machinery/button/door/directional/east{
 	id = "QMLoaddoor";
 	name = "Loading Doors";
-	pixel_y = -8
+	pixel_y = -8;
+	req_access = list("cargo")
 	},
 /obj/machinery/button/door/directional/east{
 	id = "QMLoaddoor2";
 	name = "Loading Doors";
-	pixel_y = 8
+	pixel_y = 8;
+	req_access = list("cargo")
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured_large,
