@@ -31,6 +31,11 @@
 		if(!P.check_cooldown(src, intentional))
 			silenced = TRUE
 			continue
+		if(!P.can_run_emote(src, TRUE, intentional))
+			continue
+		if(SEND_SIGNAL(src, COMSIG_MOB_PRE_EMOTED, key, params, type_override, intentional, src) & COMPONENT_CANT_EMOTE)
+			silenced = TRUE
+			continue
 		if(P.run_emote(src, param, m_type, intentional))
 			SEND_SIGNAL(src, COMSIG_MOB_EMOTE, P, act, m_type, message, intentional)
 			SEND_SIGNAL(src, COMSIG_MOB_EMOTED(P.key))
@@ -86,7 +91,8 @@
 	if(slow_flipper)
 		cooldown *= 2
 	. = ..()
-	cooldown *= 0.5
+	if(slow_flipper)
+		cooldown *= 0.5
 	if(.)
 		return
 	if(!can_run_emote(user, intentional=intentional))

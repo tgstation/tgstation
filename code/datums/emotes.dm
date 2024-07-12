@@ -86,10 +86,6 @@
  * Returns TRUE if it was able to run the emote, FALSE otherwise.
  */
 /datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE)
-	if(!can_run_emote(user, TRUE, intentional))
-		return FALSE
-	if(SEND_SIGNAL(user, COMSIG_MOB_PRE_EMOTED, key, params, type_override, intentional, src) & COMPONENT_CANT_EMOTE)
-		return TRUE // We don't return FALSE because the error output would be incorrect, provide your own if necessary.
 	var/msg = select_message_type(user, message, intentional)
 	if(params && message_param)
 		msg = select_param(user, params)
