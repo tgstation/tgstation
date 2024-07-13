@@ -121,3 +121,12 @@
   - balance: SWAT suit now has less slowdown (0.7 to 0.5)
   - bugfix: Realigned the East direction of the NT SWAT helmet so it doesn't look
       out of place. Was shifted over one pixel by accident.
+2024-07-13:
+  Marabout2:
+  - bugfix: 'fixed the kimono''s layer issue
+
+      :cl:'
+  Odairu:
+  - rscadd: adds emotes :)
+  RikuTheKiller:
+  - balance: Soft-spoken no longer affects radio messages.
