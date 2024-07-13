@@ -77,7 +77,7 @@
 	switch (action)
 		if ("host")
 			if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
-				to_chat(usr, span_warning("Deathmatch has been temporarily disabled by admins."))
+				tgui_alert(usr, "Deathmatch has been temporarily disabled by admins.")
 				return
 			if (lobbies[usr.ckey])
 				return
@@ -88,7 +88,7 @@
 			create_new_lobby(usr)
 		if ("join")
 			if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
-				to_chat(usr, span_warning("Deathmatch has been temporarily disabled by admins."))
+				tgui_alert(usr, "Deathmatch has been temporarily disabled by admins.")
 				return
 			if (!lobbies[params["id"]])
 				return
