@@ -90,3 +90,8 @@
 	name = "Orangutan"
 	default_name = "Orangutan"
 	donator_pet = 	/mob/living/basic/pet/orangutan
+
+/obj/item/choice_beacon/pet/donator/fluffykobold
+	name = "fluffy kobold"
+	default_name = "fluffy kobold"
+	donator_pet = 	/mob/living/basic/pet/fluffykobold

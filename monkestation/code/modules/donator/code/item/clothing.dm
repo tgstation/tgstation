@@ -426,3 +426,17 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+
+/obj/item/clothing/mask/gas/bluedragon66_trenchbiomask
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "bluedragon66_trenchbiomask"
+	name = "plague doctor bio-mask"
+	desc = "A respiratory mask and hood combo used to keep the wearer from breathing in viral biohazards. Comes with an insulated gas tube. Unlike normal gas masks, it has a long and unnerving beak-shape, resembling the medieval plague doctors of old."
+
+/obj/item/clothing/suit/bio_suit/bluedragon66_biocoat
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "bluedragon66_biocoat"
+	name = "plague doctor bio-suit"
+	desc = "A sterile biosuit under a thick coat, offering two layers of protection against potential biohazards. Although it's meant to be paired together with it's counterpart, it's sleek and functional- making it quite appealing."

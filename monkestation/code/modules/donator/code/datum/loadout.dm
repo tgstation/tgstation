@@ -515,3 +515,28 @@
 	item_path = /obj/item/clothing/head/sheep_plush_av4l0n
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+//Bluedragon66
+/datum/loadout_item/mask/bluedragon66_trenchbiomask
+	name = "Plague Doctor's BioMask"
+	item_path = /obj/item/clothing/mask/gas/bluedragon66_trenchbiomask
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/bluedragon66_biocoat
+	name = "Plague Doctor's BioSuit"
+	item_path = /obj/item/clothing/suit/bio_suit/bluedragon66_biocoat
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/toys/bluedragon66plush
+	name = "Sees Plushie"
+	item_path = /obj/item/toy/plush/bluedragon66
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/effects/fluffykobold
+    ckeywhitelist = list("Bluedragon66")
+    name = "Fluffy Kobold Transformation"
+    item_path = /obj/item/effect_granter/donator/fluffykobold
+    requires_purchase = FALSE

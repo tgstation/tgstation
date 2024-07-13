@@ -133,3 +133,9 @@
 	inhand_icon_state = "av4l0n_sheep"
 	lefthand_file = 'monkestation/code/modules/donator/icons/mob/inhands/plushes_inhand_left.dmi'
 	righthand_file = 'monkestation/code/modules/donator/icons/mob/inhands/plushes_inhand_right.dmi'
+
+/obj/item/toy/plush/bluedragon66
+	name = "sees plushie"
+	desc = "A plushie meant to resemble one of Nanotransen's Tizirian employees. If you put your ear up to it, you swear you could hear a cacophony of terrified rats screaming for their lives. Smells like space cleaner."
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "bluedragon66"
