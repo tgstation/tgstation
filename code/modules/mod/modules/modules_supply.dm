@@ -378,11 +378,11 @@
 	var/static/list/keep_turfs
 
 /datum/armor/mod_ash_accretion
-	melee = 4
-	bullet = 1
-	laser = 2
-	energy = 2
-	bomb = 4
+	melee = 40
+	bullet = 10
+	laser = 20
+	energy = 20
+	bomb = 40
 
 /obj/item/mod/module/ash_accretion/Initialize(mapload)
 	. = ..()
