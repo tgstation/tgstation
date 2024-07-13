@@ -4,6 +4,7 @@
 	icon = 'massmeta/features/hardsuits/icons/device.dmi'
 	icon_state = "gangtool-suit"
 	w_class = WEIGHT_CLASS_BULKY
+	var/needs_magboots = FALSE
 
 /obj/item/choice_beacon/space_suit/captain
 
@@ -19,7 +20,19 @@
 			captain_suits[initial(suit.name)] = suit
 	return captain_suits
 
+/obj/item/choice_beacon/space_suit/spawn_option(obj/choice_path, mob/living/user)
+	if(ispath(choice_path, /obj/item/clothing/suit/space/hardsuit) && needs_magboots)
+		podspawn(list(
+			"target" = get_turf(src),
+			"style" = STYLE_BLUESPACE,
+			"spawn" = list(choice_path, /obj/item/clothing/shoes/magboots)
+		))
+		return
+	. = ..()
+
+
 /obj/item/choice_beacon/space_suit/engineering
+	needs_magboots = TRUE
 
 /obj/item/choice_beacon/space_suit/engineering/generate_display_names()
 	var/static/list/engineering_suits
@@ -34,6 +47,7 @@
 	return engineering_suits
 
 /obj/item/choice_beacon/space_suit/atmos
+	needs_magboots = TRUE
 
 /obj/item/choice_beacon/space_suit/atmos/generate_display_names()
 	var/static/list/atmos_suits
