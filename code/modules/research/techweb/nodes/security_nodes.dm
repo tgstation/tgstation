@@ -41,8 +41,8 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/riot_suppression
-	id = TECHWEB_NODE_RIOT_SUPRESSION
-	display_name = "Riot Supression"
+	id = TECHWEB_NODE_RIOT_SUPPRESSION
+	display_name = "Riot Suppression"
 	description = "When you are on the opposing side of a revolutionary movement."
 	prereq_ids = list(TECHWEB_NODE_SEC_EQUIP)
 	design_ids = list(
@@ -60,7 +60,7 @@
 	id = TECHWEB_NODE_EXPLOSIVES
 	display_name = "Explosives"
 	description = "For once, intentional explosions."
-	prereq_ids = list(TECHWEB_NODE_RIOT_SUPRESSION)
+	prereq_ids = list(TECHWEB_NODE_RIOT_SUPPRESSION)
 	design_ids = list(
 		"large_grenade",
 		"adv_grenade",
@@ -86,7 +86,7 @@
 	id = TECHWEB_NODE_ELECTRIC_WEAPONS
 	display_name = "Electric Weaponry"
 	description = "Energy-based weaponry designed for both lethal and non-lethal applications."
-	prereq_ids = list(TECHWEB_NODE_RIOT_SUPRESSION)
+	prereq_ids = list(TECHWEB_NODE_RIOT_SUPPRESSION)
 	design_ids = list(
 		"stunrevolver",
 		"ioncarbine",
