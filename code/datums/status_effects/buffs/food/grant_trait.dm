@@ -3,7 +3,8 @@
 	var/trait = TRAIT_DUMB // You need to override this
 
 /datum/status_effect/food/trait/on_apply()
-	ADD_TRAIT(owner, trait, type)
+	if(!HAS_TRAIT_FROM(owner, trait, type)) // Check if trait was already applied
+		ADD_TRAIT(owner, trait, type)
 	return ..()
 
 /datum/status_effect/food/trait/be_replaced()
@@ -40,3 +41,16 @@
 	name = "Ashstorm-proof"
 	desc = "That meal makes me feel born on Lavaland."
 	icon_state = "ashstorm_immune"
+
+/datum/status_effect/food/trait/waddle
+	alert_type = /atom/movable/screen/alert/status_effect/waddle
+	trait = TRAIT_WADDLING
+
+/datum/status_effect/food/trait/waddle/on_apply()
+	owner.AddElementTrait(trait, type, /datum/element/waddling)
+	return ..()
+
+/atom/movable/screen/alert/status_effect/waddle
+	name = "Waddling"
+	desc = "That meal makes me want to joke around."
+	icon_state = "waddle"
