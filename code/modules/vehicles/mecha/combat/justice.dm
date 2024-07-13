@@ -117,6 +117,7 @@
 	var/turf/for_line_turf = get_turf(my_mech)
 	var/obj/item/bodypart/cut_bodypart = him.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG))
 	cut_bodypart?.dismember(BRUTE)
+	him.apply_damage(200, BRUTE) // deal a pretty hefty amount of damage. This is enough to kill and prevent infinite 'finish him' attacks.
 	playsound(src, brute_attack_sound, 75, FALSE)
 	for_line_turf.Beam(src, icon_state = "mech_charge", time = 8)
 	forceMove(finish_turf)
