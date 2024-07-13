@@ -8,7 +8,7 @@
  */
 /obj/item/inspector
 	name = "\improper N-spect scanner"
-	desc = "Central Command-issued inspection device. Performs inspections according to Nanotrasen protocols when activated, then prints an encrypted report regarding the maintenance of the station. Definitely not giving you cancer."
+	desc = "Central Command standard issue inspection device. Can perform either wide area scans that central command can use to verify the security of the station, or detailed scans to determine if an item is contraband."
 	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "inspector"
 	worn_icon_state = "salestagger"
@@ -32,11 +32,15 @@
 	var/cell_cover_open = FALSE
 	///Energy used per print.
 	var/energy_per_print = INSPECTOR_ENERGY_USAGE_NORMAL
+	///Does this item scan for contraband correctly? If not, will provide a flipped response.
+	var/scans_correctly = TRUE
 
 /obj/item/inspector/Initialize(mapload)
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)
+	register_context()
+	register_item_context()
 
 // Clean up the cell on destroy
 /obj/item/inspector/Exited(atom/movable/gone, direction)
@@ -92,6 +96,54 @@
 		. += "The slot for a cell is empty."
 	else
 		. += "\The [cell] is firmly in place. [span_info("Ctrl-click with an empty hand to remove it.")]"
+
+/obj/item/inspector/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!user.Adjacent(interacting_with))
+		return ITEM_INTERACT_BLOCKING
+	if(cell_cover_open)
+		balloon_alert(user, "close cover first!")
+		return ITEM_INTERACT_BLOCKING
+	if(!cell || !cell.use(INSPECTOR_ENERGY_USAGE_LOW))
+		balloon_alert(user, "check cell!")
+		return ITEM_INTERACT_BLOCKING
+	if(!isitem(interacting_with))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/contraband_item = interacting_with
+	var/contraband_status = contraband_item.is_contraband()
+	if((!contraband_status && scans_correctly) || (contraband_status && !scans_correctly))
+		playsound(src, 'sound/machines/ping.ogg', 20)
+		balloon_alert(user, "clear")
+		return ITEM_INTERACT_SUCCESS
+
+	playsound(src, 'sound/machines/uplinkerror.ogg', 40)
+	balloon_alert(user, "contraband detected!")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/inspector/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	var/update_context = FALSE
+	if(cell_cover_open && cell)
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove cell"
+		update_context = TRUE
+
+	if(cell_cover_open && !cell && istype(held_item, /obj/item/stock_parts/power_store/cell))
+		context[SCREENTIP_CONTEXT_LMB] = "Install cell"
+		update_context = TRUE
+
+	if(held_item?.tool_behaviour == TOOL_CROWBAR)
+		context[SCREENTIP_CONTEXT_LMB] = "[cell_cover_open ? "close" : "open"] battery panel"
+		update_context = TRUE
+
+	if(update_context)
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
+
+/obj/item/inspector/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	if(cell_cover_open || !cell)
+		return NONE
+	if(isitem(target))
+		context[SCREENTIP_CONTEXT_LMB] = "Contraband Scan"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
 
 /**
  * Create our report
@@ -178,6 +230,7 @@
  * Can be crafted into a bananium HONK-spect scanner
  */
 /obj/item/inspector/clown
+	scans_correctly = FALSE
 	///will only cycle through modes with numbers lower than this
 	var/max_mode = CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST
 	///names of modes, ordered first to last
