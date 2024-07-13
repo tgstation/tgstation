@@ -1,0 +1,4 @@
+author: "carlarctg"
+delete-after: True
+changes:
+  - bugfix: "Fixed new charger power not working fior strange objects"

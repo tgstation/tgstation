@@ -641,3 +641,148 @@
   - rscadd: You can emag grapple gun to use it on station.
   carlarctg:
   - bugfix: Fixed an oversight that caused knockdown vomits to stun instead.
+2024-07-12:
+  00-Steven:
+  - bugfix: You can see runechat above fullscreen overlays on lower multi-z levels
+      again. Rejoice, blind players. Please report any weird rendering layering issues.
+  ArcaneMusic:
+  - rscadd: Items spawned via traitor uplinks or are known illegal contraband on the
+      station can now be scanned and identified as such by the N-spect scanners in
+      security. These only applies to overt traitor or antagonist items, and "stealth"
+      items will not be seen as such.
+  - rscadd: Scanner gates can now be upgraded by using an N-spect scanner on it to
+      unlock "contraband scanning" mode.
+  - rscadd: Security officers can now be offered a bounty to turn in pieces of contraband.
+  - rscadd: Some stealthy storage items like storage implants, smuggler's satchels,
+      void cloaks, the infiltrator modsuit, and the chameleon backpack will block
+      the presence of contraband on your person when placed inside.
+  - qol: N-spect scanner contextual screentips.
+  - balance: Recharger security bounties ask for a quantity of 1, down from 3.
+  - qol: security, cargo, and medbay have access to scanner gate boards.
+  Deadgebert:
+  - balance: Moves XL beaker from Chemical Synthesis to Medbay Equipment
+  - balance: Removes Plumbing node and moves most items to Chemical synthesis node
+  - balance: Moves piercing syringe from Plumbing node to Advanced Medbay Equipment
+  GPeckman:
+  - spellcheck: The techweb no longer erroneously refers to MODsuits as exosuits.
+  - bugfix: The modsuit paint kit is no longer broken.
+  - bugfix: Mapped in grounding rods can be upgraded again (not that upgraded parts
+      do anything for it) and don't disappear when deconstructed anymore.
+  - bugfix: H.A.R.S. will no longer disable your skillchips or show you text reserved
+      for total brain removal.
+  - balance: If you remove a security officer's mindshield, then you can flash them
+      to make them your blood brother.
+  - qol: Clothing now tells you if it is pressure-proof and insulated enough for spacewalking
+      when examining it.
+  Ghommie:
+  - rscadd: Add the National Ice Cream Day holiday, which falls on the third Sunday
+      of July.
+  - balance: Tetrodotoxin can now be synthesized (bees, the odysseus mech, strange
+      seeds...)
+  - balance: Upped the amount of tetrodotoxin you can harvest from pufferfishes (or
+      any fish with the trait).
+  - spellcheck: Fixed some typos with the toxin.
+  GoblinBackwards:
+  - bugfix: Fixed being unable to cauterise wounds with improvised cautery tools such
+      as welders.
+  Hardly3D:
+  - rscadd: 'Added new hairstyle: Short Bangs 2'
+  Ical92:
+  - bugfix: gave tram's primary tool storage functional disposals
+  JackEnoff:
+  - balance: Experimentor will no longer duplicate Bags of Holding
+  Jolly:
+  - bugfix: '[Birdshot] The Ordnance freezer chamber is now linked to an APC, much
+      like the burn chamber.'
+  - bugfix: '[Birdshot] The Janitors quarters no longer uses `/area/station/commons`,
+      instead, it uses the janitors regular area.'
+  - bugfix: '[Birdshot] The entertainment center now has an APC.'
+  - bugfix: '[Birdshot] A handful of smaller areas have received air alarms.'
+  LT3:
+  - image: Incident displays got a makeover
+  MTandi:
+  - balance: War declaration gives 600 research points to the station
+  Melbert:
+  - qol: Roundstart Mannitol pills are 15u (up from 14u)
+  OrionTheFox:
+  - image: re-sprited Catwalk Floor Tiles to fit with TG floor tiles
+  Singul0:
+  - qol: adds an oxygen chamber for wawastation ordnance
+  - qol: adds some missing critical items needed to do ordnance and xenobiology
+  SmArtKar:
+  - bugfix: Steaks and meatpacks no longer have an absurd amount of blood stored inside
+      of them.
+  SyncIt21:
+  - bugfix: all icons in the crafting menu (some that you missed) are now fixed permanently
+  Yobrocharlie:
+  - bugfix: makes outpost45 cause less lag
+  aaaa1023:
+  - bugfix: Added a Mechbay power console to the Metastation cargo warehouse so that
+      the cargo ripley is able to be charged.
+  carlarctg:
+  - rscadd: Adds six new strange object powers! Drink dispenser, bioscrambler, recharger,
+      hugger, dimensional, disguiser.
+  - code_imp: 'Removed some unused code and items, and added a proc that returns a
+      random #colorstring.'
+  - qol: TV helmet no longer has gas mask FOV, nor does it give you flash sensitivity.
+  - qol: Since those are gone, removed pepper proof from it as well.
+  imedial:
+  - code_imp: added a crash report and removes an arg
+  jlsnow301:
+  - bugfix: Fixed a bluescreen in the heretic research ui
+  mc-oofert:
+  - bugfix: fixes the rightmost wawastation cryo cell
+  necromanceranne:
+  - balance: Cryokinesis and pyrokinesis more severely adjust temperature.
+  - balance: Cryokinesis forces a target to slow down on hit for a few seconds.
+  - balance: Pyrokinesis can ignite objects.
+  - balance: Temperature projectiles change the temperature of the target's contained
+      reagents.
+  r3dj4ck0424:
+  - qol: Our glorious corporate overlords have provided the funding for iron sheets
+      in Wawastation's robotics and science rooms at roundstart.
+  vinylspiders:
+  - bugfix: french berets will no longer force the user to speak spanish
+  zoomachina:
+  - balance: bluespace navigation gigabeacons are now unlocked with Applied Bluespace
+      Research
+2024-07-13:
+  Ben10Omintrix:
+  - refactor: request managers have been refactored to typescript
+  - bugfix: request manager type filter now works
+  MTandi:
+  - bugfix: Fixed dead slime icon not showing when cores are extracted
+  - qol: Slime core removal surgery extracts all cores on completion
+  NewyearnewmeUwu:
+  - image: the smoking pipe's directional looks have been altered to make it less
+      ugly
+  Sadboysuss:
+  - rscadd: Changed the layout of birdshot engineering atmos and SM, added a proper
+      engineering storage area.
+  Singul0:
+  - bugfix: Fixes Icemoon syndie listening station APC's from being affected by station-side
+      events
+  SmArtKar:
+  - qol: Using ctrl + your quick MOD button now opens module selector on your mouse
+      position
+  - rscadd: A new ork mutation which can be acquired by mixing hulk and clumsy.
+  - bugfix: Other mobs no longer hear your breathing
+  - image: MOD hyposprays no longer use syringe fill sprites
+  - bugfix: Fixed tables and racks being climbable from half a mile away
+  - balance: Experimentor's reduction chance is multiplicative, and chance to copy
+      an object has been slightly lowered.
+  - qol: Heads of staff PDAs start with twice as much disk space
+  Vishenka0704:
+  - qol: With voting turned off for the dead, you can now understand why you can't
+      vote (being dead).
+  - admin: Voting switch for the dead players
+  necromanceranne:
+  - rscadd: Adds the Herculean Gravitronic Spinal Implant; an implant that makes you
+      better at athletics. You can upgrade it into an Atlas implant using a gravity
+      anomaly core.
+  - balance: Gravity anomaly cores have had their max number of cores reduces from
+      8 to 6.
+  - balance: Your athletic ability allows you to climb faster.
+  vinylspiders:
+  - bugfix: password doors and shutters will now play their sound effects again instead
+      of just silently opening/closing

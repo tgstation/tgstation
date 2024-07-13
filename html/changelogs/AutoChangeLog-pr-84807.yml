@@ -1,4 +1,0 @@
-author: "GPeckman"
-delete-after: True
-changes:
-  - qol: "Clothing now tells you if it is pressure-proof and insulated enough for spacewalking when examining it."

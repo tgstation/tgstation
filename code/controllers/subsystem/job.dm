@@ -389,6 +389,7 @@ SUBSYSTEM_DEF(job)
 	//Setup new player list and get the jobs list
 	JobDebug("Running DO, allow_all = [allow_all], pure = [pure]")
 	run_divide_occupation_pure = pure
+	SEND_SIGNAL(src, COMSIG_OCCUPATIONS_DIVIDED, pure, allow_all)
 
 	//Get the players who are ready
 	for(var/i in GLOB.new_player_list)
@@ -621,6 +622,7 @@ SUBSYSTEM_DEF(job)
 		var/never = 0 //never
 		var/banned = 0 //banned
 		var/young = 0 //account too young
+		var/newbie = 0 //exp too low
 		for(var/i in GLOB.new_player_list)
 			var/mob/dead/new_player/player = i
 			if(!(player.ready == PLAYER_READY_TO_PLAY && player.mind && is_unassigned_job(player.mind.assigned_role)))
@@ -632,7 +634,7 @@ SUBSYSTEM_DEF(job)
 				young++
 				continue
 			if(job.required_playtime_remaining(player.client))
-				young++
+				newbie++
 				continue
 			switch(player.client.prefs.job_preferences[job.title])
 				if(JP_HIGH)
@@ -649,6 +651,7 @@ SUBSYSTEM_DEF(job)
 		SSblackbox.record_feedback("nested tally", "job_preferences", never, list("[job.title]", "never"))
 		SSblackbox.record_feedback("nested tally", "job_preferences", banned, list("[job.title]", "banned"))
 		SSblackbox.record_feedback("nested tally", "job_preferences", young, list("[job.title]", "young"))
+		SSblackbox.record_feedback("nested tally", "job_preferences", newbie, list("[job.title]", "newbie"))
 
 /datum/controller/subsystem/job/proc/PopcapReached()
 	var/hpc = CONFIG_GET(number/hard_popcap)
