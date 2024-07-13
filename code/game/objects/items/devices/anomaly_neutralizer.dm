@@ -41,3 +41,40 @@
 /obj/item/anomaly_neutralizer/proc/on_use(obj/effect/target, mob/living/user)
 	do_sparks(3, FALSE, user)
 	qdel(src)
+
+/**
+ * Ghetto neutralizer, can neutralize an anomaly without getting a core.
+ */
+/obj/item/anomaly_destroyer
+	name = "anomaly destroyer"
+	desc = "A one-use handcrafted device capable of instantly destroying an anomaly."
+	icon = 'icons/obj/devices/tool.dmi'
+	icon_state = "ghetto_neutrazyler"
+	inhand_icon_state = "electronic"
+	worn_icon_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+	slot_flags = ITEM_SLOT_BELT
+	item_flags = NOBLUDGEON
+
+/obj/item/anomaly_destroyer/Initialize(mapload)
+	. = ..()
+
+	// Primarily used to delete anomalies
+	AddComponent(/datum/component/effect_remover, \
+		success_feedback = "You destroy %THEEFFECT with %THEWEAPON, frying its circuitry in the process.", \
+		tip_text = "Destroy anomaly", \
+		on_clear_callback = CALLBACK(src, PROC_REF(on_anomaly_destroyed)), \
+		effects_we_clear = list(/obj/effect/anomaly))
+
+/obj/item/anomaly_destroyer/proc/on_anomaly_destroyed(obj/effect/anomaly/target, mob/living/user)
+	target.anomalyDestroy()
+	on_use(target, user)\
+
+/**
+ * Use up the anomaly destroyer. Cause some sparks and delete it.
+ */
+/obj/item/anomaly_destroyer/proc/on_use(obj/effect/target, mob/living/user)
+	do_sparks(3, FALSE, user)
+	qdel(src)
