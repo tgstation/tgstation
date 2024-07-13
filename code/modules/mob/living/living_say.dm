@@ -254,6 +254,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
 		spans |= SPAN_ITALICS
 
+	if(!(SPAN_COMMAND in spans))
+		var/obj/structure/closet/crate/soapbox = locate(/obj/structure/closet/crate) in T
+		if(soapbox)
+			if(!soapbox.opened && !ismovable(loc))
+				spans |= SPAN_COMMAND
+				message_mods[SAY_FAKE_COMMAND] = TRUE
+
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mods, tts_message = tts_message, tts_filter = tts_filter)//roughly 58% of living/say()'s total cost
 	if(succumbed)
 		succumb(TRUE)
