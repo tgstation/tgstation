@@ -1,0 +1,6 @@
+author: "EuSouAFazer"
+delete-after: True
+changes:
+  - rscadd: "Cytology Lab has been added to Icebox"
+  - rscadd: "Delta now has soy seeds on the Cytology Lab"
+  - bugfix: "Cytology is playable again on Icebox"
