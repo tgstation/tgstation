@@ -16,6 +16,8 @@
 		return FALSE
 	if(suicider)
 		manual_suicide(suicider)
+	for(var/obj/effect/anomaly/A in get_turf(src))
+		A.anomalyNeutralize()
 	return TRUE
 
 /obj/item/assembly/signaler/anomaly/manual_suicide(mob/living/carbon/user)
