@@ -1,6 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - rscadd: "Adds the Herculean Gravitronic Spinal Implant; an implant that makes you better at athletics. You can upgrade it into an Atlas implant using a gravity anomaly core."
-  - balance: "Gravity anomaly cores have had their max number of cores reduces from 8 to 6."
-  - balance: "Your athletic ability allows you to climb faster."

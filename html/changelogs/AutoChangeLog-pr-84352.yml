@@ -1,5 +1,0 @@
-author: "Vishenka0704"
-delete-after: True
-changes:
-  - qol: "With voting turned off for the dead, you can now understand why you can't vote (being dead)."
-  - admin: "Voting switch for the dead players"
