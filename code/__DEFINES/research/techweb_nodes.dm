@@ -102,7 +102,7 @@
 #define TECHWEB_NODE_PROGRAMMED_SERVER "programmed_server"
 #define TECHWEB_NODE_PROGRAMMING "programming"
 #define TECHWEB_NODE_RCD_UPGRADE "rcd_upgrade"
-#define TECHWEB_NODE_RIOT_SUPRESSION "riot_supression"
+#define TECHWEB_NODE_RIOT_SUPPRESSION "riot_suppression"
 #define TECHWEB_NODE_ROBOTICS "robotics"
 #define TECHWEB_NODE_SANITATION "sanitation"
 #define TECHWEB_NODE_SEC_EQUIP "sec_equip"

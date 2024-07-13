@@ -49,7 +49,7 @@
 /obj/vehicle/sealed/mecha/proc/get_int_repair_fluff_start(flag)
 	switch(flag)
 		if(MECHA_INT_FIRE)
-			return "activating internal fire supression..."
+			return "activating internal fire suppression..."
 		if(MECHA_INT_TEMP_CONTROL)
 			return "resetting temperature module..."
 		if(MECHA_CABIN_AIR_BREACH)
@@ -77,7 +77,7 @@
 /obj/vehicle/sealed/mecha/proc/get_int_repair_fluff_fail(flag)
 	switch(flag)
 		if(MECHA_INT_FIRE)
-			return "fire supression canceled"
+			return "fire suppression canceled"
 		if(MECHA_INT_TEMP_CONTROL)
 			return "reset aborted"
 		if(MECHA_CABIN_AIR_BREACH)

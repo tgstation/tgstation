@@ -562,7 +562,7 @@
  * Setter function for the light's range
  *
  * Sets the light range of the attached flashlight object
- * Includes some 'unique' logic to accomodate for some quirks of the lighting system
+ * Includes some 'unique' logic to accommodate for some quirks of the lighting system
  * Arguments:
  * * new_range - the new range to set
  */

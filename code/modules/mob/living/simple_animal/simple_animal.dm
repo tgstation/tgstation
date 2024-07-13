@@ -549,7 +549,7 @@
 	stop_automated_movement = FALSE
 	if(!isturf(src.loc)) // Are we on a proper turf?
 		return
-	if(stat || resting || buckled) // Are we concious, upright, and not buckled?
+	if(stat || resting || buckled) // Are we conscious, upright, and not buckled?
 		return
 	if(!COOLDOWN_FINISHED(src, emote_cooldown)) // Has the cooldown on this ended?
 		return

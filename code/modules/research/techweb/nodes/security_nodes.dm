@@ -40,7 +40,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
-/datum/techweb_node/riot_supression
+/datum/techweb_node/riot_suppression
 	id = TECHWEB_NODE_RIOT_SUPRESSION
 	display_name = "Riot Supression"
 	description = "When you are on the opposing side of a revolutionary movement."
