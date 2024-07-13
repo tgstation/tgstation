@@ -1,6 +1,6 @@
 #define FAKE_GREENSHIFT_FORM_CHANCE 15
 #define FAKE_REPORT_CHANCE 8
-#define PULSAR_REPORT_CHANCE 8
+#define PULSAR_REPORT_CHANCE 100 // BANDASTATION EDIT - you don't know threat level. Original: 8
 #define REPORT_NEG_DIVERGENCE -15
 #define REPORT_POS_DIVERGENCE 15
 
@@ -366,9 +366,13 @@ SUBSYSTEM_DEF(dynamic)
 	if(greenshift)
 		priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", SSstation.announcer.get_rand_report_sound(), color_override = "green")
 	else
+		/* BANDASTATION EDIT START - No Blue roundstart
 		if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_BLUE)
 			SSsecurity_level.set_level(SEC_LEVEL_BLUE, announce = FALSE)
 		priority_announce("[SSsecurity_level.current_security_level.elevating_to_announcement]\n\nA summary has been copied and printed to all communications consoles.", "Security level elevated.", ANNOUNCER_INTERCEPT, color_override = SSsecurity_level.current_security_level.announcement_color)
+		*/
+		priority_announce("Отчет был скопирован и распечатан на всех консолях связи.", "Отчет о безопасности", SSstation.announcer.get_rand_report_sound())
+		// BANDASTATION EDIT END - No Blue roundstart
 #endif
 
 	return .
