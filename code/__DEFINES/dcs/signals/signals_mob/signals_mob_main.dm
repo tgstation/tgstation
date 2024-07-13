@@ -250,4 +250,4 @@
 #define COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE "mob_attempt_halt_spacemove"
 	#define COMPONENT_PREVENT_SPACEMOVE_HALT (1<<0)
 
-#define COMSIG_MOB_STABILIZE_DRIFT "mob_stabilize_drift"
+#define COMSIG_ATOM_STABILIZE_DRIFT "atom_stabilize_drift"

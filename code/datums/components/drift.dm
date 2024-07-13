@@ -40,7 +40,7 @@
 	RegisterSignal(drifting_loop, COMSIG_QDELETING, PROC_REF(loop_death))
 	RegisterSignal(movable_parent, COMSIG_MOVABLE_NEWTONIAN_MOVE, PROC_REF(newtonian_impulse))
 	RegisterSignal(movable_parent, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, PROC_REF(attempt_halt))
-	RegisterSignal(movable_parent, COMSIG_MOB_STABILIZE_DRIFT, PROC_REF(stabilize_drift))
+	RegisterSignal(movable_parent, COMSIG_ATOM_STABILIZE_DRIFT, PROC_REF(stabilize_drift))
 	if(drifting_loop.status & MOVELOOP_STATUS_RUNNING)
 		drifting_start(drifting_loop) // There's a good chance it'll autostart, gotta catch that
 

@@ -144,7 +144,7 @@
 		return
 
 	var/max_drift_force = (DEFAULT_INERTIA_SPEED / user.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1
-	SEND_SIGNAL(user, COMSIG_MOB_STABILIZE_DRIFT, user.client.intended_direction ? dir2angle(user.client.intended_direction) : null, user.client.intended_direction ? max_drift_force : 0, stabilization_force)
+	SEND_SIGNAL(user, COMSIG_ATOM_STABILIZE_DRIFT, user.client.intended_direction ? dir2angle(user.client.intended_direction) : null, user.client.intended_direction ? max_drift_force : 0, stabilization_force)
 
 /datum/component/jetpack/proc/on_client_move(mob/source, list/move_args)
 	SIGNAL_HANDLER
