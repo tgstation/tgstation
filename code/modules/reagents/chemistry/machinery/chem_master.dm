@@ -365,32 +365,18 @@
  * Transfers a single reagent between buffer & beaker
  * Arguments
  *
- * * mob/user - the player who is attempting the transfer
  * * datum/reagents/source - the holder we are transferring from
  * * datum/reagents/target - the holder we are transferring to
  * * datum/reagent/path - the reagent typepath we are transfering
- * * amount - volume to transfer -1 means custom amount
+ * * amount - volume to transfer
  * * do_transfer - transfer the reagents else destroy them
  */
-/obj/machinery/chem_master/proc/transfer_reagent(mob/user, datum/reagents/source, datum/reagents/target, datum/reagent/path, amount, do_transfer)
+/obj/machinery/chem_master/proc/transfer_reagent(datum/reagents/source, datum/reagents/target, datum/reagent/path, amount, do_transfer)
 	PRIVATE_PROC(TRUE)
 
 	//sanity checks for transfer amount
-	if(isnull(amount))
+	if(isnull(amount) || amount <= 0)
 		return FALSE
-	amount = text2num(amount)
-	if(isnull(amount))
-		return FALSE
-	if(amount == -1)
-		var/target_amount = tgui_input_number(user, "Enter amount to transfer", "Transfer amount")
-		if(!target_amount)
-			return FALSE
-		amount = text2num(target_amount)
-		if(isnull(amount))
-			return FALSE
-	if(amount <= 0)
-		return FALSE
-
 	//sanity checks for reagent path
 	var/datum/reagent/reagent = text2path(path)
 	if (!reagent)
@@ -431,15 +417,29 @@
 			var/reagent_ref = params["reagentRef"]
 			var/amount = params["amount"]
 			var/target = params["target"]
+
+			if(amount == -1) // Set custom amount
+				var/amount_input = tgui_input_number(ui.user, "Enter amount to transfer", "Transfer amount")
+				if(isnull(amount_input))
+					balloon_alert(ui.user, "invalid amount!")
+					return FALSE
+				amount = amount_input
+
 			var/should_transfer = transfer_mode || (target == "buffer") // we should always transfer if target is the buffer
 			if(should_transfer && isnull(beaker)) // if there's no beaker, we cannot transfer
 				say("No reagent container is inserted.")
 				return FALSE
+
+			var/reagents_from
+			var/reagents_to = null
 			if(target == "buffer")
-				return transfer_reagent(ui.user, beaker?.reagents, reagents, reagent_ref, amount, should_transfer)
+				reagents_from = beaker.reagents
+				reagents_to = reagents // buffer
 			else if(target == "beaker")
-				return transfer_reagent(ui.user, reagents, beaker?.reagents, reagent_ref, amount, should_transfer)
-			return FALSE
+				reagents_from = reagents // buffer
+				if(should_transfer)
+					reagents_to = beaker.reagents
+			return transfer_reagent(reagents_from, reagents_to, reagent_ref, amount, should_transfer)
 
 		if("toggleTransferMode")
 			transfer_mode = !transfer_mode
