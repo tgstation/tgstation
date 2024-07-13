@@ -91,6 +91,7 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 	. = ..()
 
 	gone.remove_traits(wisp_driver_traits, REF(src))
+	to_chat(gone, span_boldwarning("You feel it would be very bad to get caught again."))
 	qdel(src)
 
 /// we only exist to be eaten by wisps for food 😔👊

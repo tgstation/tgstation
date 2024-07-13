@@ -33,18 +33,26 @@
 
 	if(hewmon.has_trauma_type(/datum/brain_trauma/voided))
 		var/turf/spawnloc = get_turf(hewmon)
-		new /obj/effect/spawner/glass_shards (spawnloc)
 
-		var/obj/item/organ/brain = hewmon.get_organ_by_type(/obj/item/organ/internal/brain)
-		if(brain)
-			brain.Remove(hewmon)
-			brain.forceMove(spawnloc)
+		if(hewmon.stat != DEAD)
+			hewmon.balloon_alert(user, "already voided!")
+			playsound(hewmon, SFX_SHATTER, 60)
+			new /obj/effect/spawner/glass_shards/mini (spawnloc)
+			hewmon.adjustBruteLoss(10) // BONUS DAMAGE
+		else
+			hewmon.balloon_alert(user, "shattering...")
+			if(do_after(user, 4 SECONDS, hewmon))
+				new /obj/effect/spawner/glass_shards (spawnloc)
+				var/obj/item/organ/brain = hewmon.get_organ_by_type(/obj/item/organ/internal/brain)
+				if(brain)
+					brain.Remove(hewmon)
+					brain.forceMove(spawnloc)
+					brain.balloon_alert(user, "shattered!")
+				playsound(hewmon, SFX_SHATTER, 100)
+				qdel(hewmon)
+			return COMPONENT_CANCEL_ATTACK_CHAIN
 
-		playsound(hewmon, SFX_SHATTER, 100)
-		qdel(hewmon)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	if(hewmon.stat == HARD_CRIT)
+	if(hewmon.stat == HARD_CRIT && !hewmon.has_trauma_type(/datum/brain_trauma/voided))
 		target_mob.balloon_alert(user, "is in crit!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	return ..()

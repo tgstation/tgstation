@@ -15,7 +15,7 @@
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
 
 	/// Alpha we have in space
-	var/space_alpha = 30
+	var/space_alpha = 15
 	/// Alpha we have elsewhere
 	var/non_space_alpha = 255
 	/// We settle the un
@@ -103,3 +103,7 @@
 		var/obj/shard = new shard_type (loc)
 		shard.pixel_x = rand(-pixel_offset, pixel_offset)
 		shard.pixel_y = rand(-pixel_offset, pixel_offset)
+
+/obj/effect/spawner/glass_shards/mini
+	min_spawn = 1
+	max_spawn = 2
