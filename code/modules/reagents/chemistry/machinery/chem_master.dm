@@ -425,7 +425,7 @@
 
 		if("transfer")
 			if(is_printing)
-				say("buffer locked while printing!")
+				say("The buffer is locked while printing.")
 				return
 
 			var/reagent_ref = params["reagentRef"]
@@ -433,7 +433,7 @@
 			var/target = params["target"]
 			var/should_transfer = transfer_mode || (target == "buffer") // we should always transfer if target is the buffer
 			if(should_transfer && isnull(beaker)) // if there's no beaker, we cannot transfer
-				say("no reagent container inserted!")
+				say("No reagent container is inserted.")
 				return FALSE
 			if(target == "buffer")
 				return transfer_reagent(ui.user, beaker?.reagents, reagents, reagent_ref, amount, should_transfer)
