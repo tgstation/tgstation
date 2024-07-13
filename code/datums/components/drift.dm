@@ -217,20 +217,24 @@
 	if(world.time < block_inputs_until)
 		return COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE
 
-/datum/component/drift/proc/attempt_halt(atom/movable/source, movement_dir, continuous_move, atom/backup)
+/datum/component/drift/proc/attempt_halt(mob/source, movement_dir, continuous_move, atom/backup)
 	SIGNAL_HANDLER
+
 	if (get_dir(source, backup) == movement_dir || source.loc == backup.loc)
-		if (drift_force >= INERTIA_FORCE_PER_THROW_FORCE)
-			source.throw_at(backup, 1, round(drift_force / INERTIA_FORCE_PER_THROW_FORCE), spin = FALSE)
-		drift_force = 0
+		if (drift_force >= INERTIA_FORCE_THROW_FLOOR)
+			source.throw_at(backup, 1, round(1 + (drift_force - INERTIA_FORCE_THROW_FLOOR) / INERTIA_FORCE_PER_THROW_FORCE), spin = FALSE)
+		qdel(src)
 		return
 
-	drift_force -= INERTIA_FORCE_REDUCTION_PER_OBJECT
-
-	if (drift_force <= 1)
-		drift_force = 0
+	if (drift_force < INERTIA_FORCE_SPACEMOVE_GRAB)
+		qdel(src)
 		return
 
+	if (drift_force <= INERTIA_FORCE_SPACEMOVE_REDUCTION / source.inertia_force_weight)
+		glide_to_halt(round(20 / get_loop_delay(source)))
+		return COMPONENT_PREVENT_SPACEMOVE_HALT
+
+	drift_force -= INERTIA_FORCE_SPACEMOVE_REDUCTION / source.inertia_force_weight
 	drifting_loop.set_speed(get_loop_delay(source))
 	return COMPONENT_PREVENT_SPACEMOVE_HALT
 
@@ -247,12 +251,17 @@
 	/// Lack of angle means that we are trying to halt movement
 	if (isnull(target_angle))
 		// Going through newtonian_move ensures that all Process_Spacemove code runs properly, instead of directly adjusting forces
-		source.newtonian_move((drifting_loop.angle + 180) % 360, drift_force = min(drift_force, stabilization_force / source.inertia_force_weight))
+		source.newtonian_move((drifting_loop.angle + 180) % 360, drift_force = min(drift_force, stabilization_force))
 		return
 
-	// Force required to be applied in order to get to the desired movement vector
+	// Force required to be applied in order to get to the desired movement vector, with projection of current movement onto desired vector to ensure that we only compensate for excess
+	var/drift_projection = max(0, cos(target_angle - drifting_loop.angle))  * drift_force
 	var/force_x = sin(target_angle) * target_force - sin(drifting_loop.angle) * drift_force
 	var/force_y = cos(target_angle) * target_force - cos(drifting_loop.angle) * drift_force
 	var/force_angle = delta_to_angle(force_x, force_y)
-	var/applied_force = min(sqrt(force_x * force_x + force_y * force_y), stabilization_force / source.inertia_force_weight)
+	var/applied_force = sqrt(force_x * force_x + force_y * force_y)
+	var/force_projection = max(0, cos(target_angle - force_angle)) * applied_force
+	force_x -= min(force_projection, drift_projection) * sin(target_angle)
+	force_x -= min(force_projection, drift_projection) * cos(target_angle)
+	applied_force = min(sqrt(force_x * force_x + force_y * force_y), stabilization_force)
 	source.newtonian_move(force_angle, drift_force = applied_force)

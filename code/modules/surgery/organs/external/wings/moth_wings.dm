@@ -53,7 +53,7 @@
 	return FALSE
 
 /obj/item/organ/external/wings/moth/process()
-	if (!allow_flight())
+	if (!owner || !allow_flight())
 		return
 
 	var/max_drift_force = (DEFAULT_INERTIA_SPEED / owner.cached_multiplicative_slowdown - 1) / INERTIA_SPEED_COEF + 1

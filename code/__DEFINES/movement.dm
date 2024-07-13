@@ -137,8 +137,17 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 
 #define DEFAULT_INERTIA_SPEED 5
 
+/// Maximum inertia that an object can hold. Used to prevent objects from getting to stupid speeds.
 #define INERTIA_FORCE_CAP 25
-#define INERTIA_FORCE_REDUCTION_PER_OBJECT 1.25
-#define INERTIA_FORCE_PER_THROW_FORCE 5
+/// How much inertia is applied when we have newtonian spacemove capabilities and try to move
+#define INERTIA_FORCE_SPACEMOVE_APPLIED 1
+/// How much inertia is deducted when a mob has newtonian spacemove capabilities and is not moving in the same direction
+#define INERTIA_FORCE_SPACEMOVE_REDUCTION 0.75
+/// How much inertia we must have to not be able to instantly stop after having something to grab
+#define INERTIA_FORCE_SPACEMOVE_GRAB 1.5
+/// How much inertia is required for the impacted object to be thrown at the wall
+#define INERTIA_FORCE_THROW_FLOOR 7
+/// How much inertia is required past the floor to add 1 strength
+#define INERTIA_FORCE_PER_THROW_FORCE 4.5
 // Results in maximum speed of 2 tiles per tick
 #define INERTIA_SPEED_COEF 0.375
