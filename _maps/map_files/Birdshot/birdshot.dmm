@@ -11046,7 +11046,7 @@
 	},
 /obj/item/pickaxe,
 /obj/machinery/newscaster/directional/west,
-/turf/open/floor/iron,
+/turf/open/floor/iron/smooth,
 /area/station/cargo/miningfoundry)
 "ehf" = (
 /obj/machinery/firealarm/directional/north,
@@ -23224,7 +23224,7 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/small,
 /area/station/cargo/sorting)
 "inh" = (
 /obj/structure/disposalpipe/segment,
