@@ -376,6 +376,7 @@
 
 	//sanity checks for transfer amount
 	if(isnull(amount) || amount <= 0)
+		balloon_alert("invalid amount!")
 		return FALSE
 	//sanity checks for reagent path
 	var/datum/reagent/reagent = text2path(path)
@@ -419,11 +420,7 @@
 			var/target = params["target"]
 
 			if(amount == -1) // Set custom amount
-				var/amount_input = tgui_input_number(ui.user, "Enter amount to transfer", "Transfer amount")
-				if(isnull(amount_input))
-					balloon_alert(ui.user, "invalid amount!")
-					return FALSE
-				amount = amount_input
+				amount = tgui_input_number(ui.user, "Enter amount to transfer", "Transfer amount")
 
 			var/should_transfer = transfer_mode || (target == "buffer") // we should always transfer if target is the buffer
 			if(should_transfer && isnull(beaker)) // if there's no beaker, we cannot transfer
