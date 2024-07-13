@@ -101,7 +101,7 @@
 	desc = "Ratty looking fingerless gloves wrapped with sticky tape. Beware anyone wearing these, for they clearly have no shame and nothing to lose."
 	icon_state = "fingerless"
 	inhand_icon_state = null
-
+	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 	tackle_stam_cost = 30
 	base_knockdown = 1.75 SECONDS
 	min_distance = 2
