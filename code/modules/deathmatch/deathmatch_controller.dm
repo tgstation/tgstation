@@ -87,6 +87,9 @@
 			ui.close()
 			create_new_lobby(usr)
 		if ("join")
+			if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
+				to_chat(usr, span_warning("Deathmatch has been temporarily disabled by admins."))
+				return
 			if (!lobbies[params["id"]])
 				return
 			var/datum/deathmatch_lobby/playing_lobby = find_lobby_by_user(usr.ckey)
