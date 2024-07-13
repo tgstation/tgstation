@@ -40,9 +40,13 @@
 #define DEFAULT_PLANE 0 //Marks out the default plane, even if we don't use it
 
 #define AREA_PLANE 2
-#define MASSIVE_OBJ_PLANE 3
-#define GHOST_PLANE 4
-#define POINT_PLANE 5
+#define WEATHER_MASK_PLANE 3
+#define WEATHER_MASK_RENDER_TARGET "*WEATHER_MASK_PLANE"
+#define WEATHER_FRILL_PLANE 4
+
+#define MASSIVE_OBJ_PLANE 5
+#define GHOST_PLANE 6
+#define POINT_PLANE 7
 
 
 //---------- LIGHTING -------------
@@ -75,6 +79,7 @@
 
 ///Things that should render ignoring lighting
 #define ABOVE_LIGHTING_PLANE 17
+#define WEATHER_FRILL_FULLBRIGHT_PLANE 18
 
 ///---------------- MISC -----------------------
 
