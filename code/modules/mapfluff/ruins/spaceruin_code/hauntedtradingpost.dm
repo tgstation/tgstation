@@ -6,47 +6,62 @@
 /obj/item/paper/fluff/ruins/hauntedtradingpost/warning
 	name = "Last Warning"
 	default_raw_text = "Next person who breaks a vending machine fucking around with those fucking toy guns gets fired on the spot. Try me. I am SICK of this shit.<BR><BR>Signed, Your Fucking Boss (Who Can Fucking Fire Your Ass)"
+
 /obj/item/paper/fluff/ruins/hauntedtradingpost/warning/turrets
 	name = "Warning! Important! Read this!"
 	default_raw_text = "Foam darts do not go in the defence turrets! Live ammo only!"
+
 /obj/item/paper/fluff/ruins/hauntedtradingpost/brainstorming
 	name = "Notes"
 	default_raw_text = "Branding: Pizza In Your Pocket (check focus groups)<BR><BR>Tomato Mozzerella Basil<BR>etc<BR><BR>Spider 17-02667 Store 31-00314<BR><BR>18,000 approx BSD<BR><BR>common allergens - ?<BR><BR><BR>6127"
+
 /obj/item/paper/fluff/ruins/hauntedtradingpost/brainstorming/eureka
 	default_raw_text = "Got some ingredients from the moth trading fleet and used some of our discretionary budget to hire some factory space. Prototypes are going down well with both public and employees. If we can get central to fund mass production we'll be seeing a 18% permanant increase in regional profit according to AI. This fits the local brunch market *perfectly*."
+
 /obj/item/paper/fluff/ruins/hauntedtradingpost/brainstorming/eureka2
 	default_raw_text = "Early experiments with a fully carb-free recipe going well. Taste tests are all positive, just need a way to reduce costs."
+
 /obj/item/paper/fluff/ruins/hauntedtradingpost/brainstorming/eureka3
 	default_raw_text = "PROJECT BIG DONK<BR>RnD has a few prototypes prepared.<BR>Testing will be complete by the end of the week."
+
 /obj/item/paper/fluff/ruins/hauntedtradingpost/rpgclub
 	name = "RPG Club"
 	default_raw_text = "RPG Club is every Thursday from 20:00 to 01:00 AM. Entry to the break room is strictly by invitation only during that period of time. <BR> <BR> We apologise for any inconvenience."
+
 /obj/item/paper/fluff/ruins/hauntedtradingpost/rpgrules
 	name = "GM Notes"
 	default_raw_text = "Session 4 NPCS <BR> Shadow Warriors <BR> S  A  T  C  H <BR> 40 65 40 15 10 <BR><BR>Shadow Clan Underlord <BR> S  A  T  C  H <BR> 40 65 40 15 10 <BR>Note: Gets shadow magic.<BR><BR><BR>Dire Corgi <BR> S  A  T  C  H <BR> 60 25 65 25 12 <BR><BR>If they beat this let them roll on loot table 4 twice but if it's 65-70 or 15-30 make it magic boots instead."
+
 /obj/item/paper/fluff/ruins/hauntedtradingpost/curatorsnote
 	name = "For Adventurers"
 	default_raw_text = "The food court and the stalls are safe, everywhere else isn't. There's safes in the stalls and I didn't have a way to open them so if you can get whatever's inside, good for you. The employees area can be entered by tailing the bots, but security systems are active back there. I got shot by a turret taking a look, and when I stitched myself up and tried the other door I walked into a booby trap and nearly lost an arm.<BR><BR>If you're investigating this signal - BEWARE.<BR>For the record, I decided nothing in there's worth the risk. If you're braver than me, good luck.<BR>Signed, Curator P."
+
 /obj/item/paper/fluff/ruins/hauntedtradingpost/officememo
 	name = "Memo"
 	default_raw_text = "The AI-Guided Defense System Will Stay Active Indefinitely To Protect Company Property. Please Ensure All Personal Items Are Removed From The Premises, As They Will Be Impossible To Recover If Forgotten. <BR><BR> Donk Co. Takes No Responsibility For Lost Personal Property Or Affects."
+
 /obj/item/paper/fluff/ruins/hauntedtradingpost/receipt
 	name = "Old Receipt"
 	desc = "A ratty old sales receipt printed on cheap thermal paper."
 	default_raw_text = "DONK CO OUTLET 6013<BR>YOUR SERVER TODAY WAS: COLM<BR><BR>2x DONKPOCKETPIZBOX    400<BR>1x CRYPTOGRAPHICSEQ    800<BR>2x CRYPTOGRAPHICTOY    200<BR>1x DONKPOCKETPLUSHY    120<BR><BR>TOTAL VALUE            1520<BR><BR>PAYMENT: CASH"
 	icon_state = "paperslip"
+
 /obj/item/paper/fluff/ruins/hauntedtradingpost/receipt/alternate
 	default_raw_text = "DONK CO OUTLET 6013<BR>YOUR SERVER TODAY WAS: VLAD<BR><BR>1x DONKPOCKETBERBOX    200<BR>1x GORLEXMODSUITRED    1400<BR>1x MODSUITMICROWAVE    200<BR><BR>TOTAL VALUE            1800<BR><BR>PAYMENT: CASH"
+
 /obj/item/paper/fluff/ruins/hauntedtradingpost/receipt/alternate_alt
 	default_raw_text = "DONK CO OUTLET 6013<BR>YOUR SERVER TODAY WAS: COLM<BR><BR>10xDONKPOCKETORGBOX   2000<BR>4x GORLEXMODSUITRED    9600<BR>4x MODSUITMICROWAVE    800<BR><BR>TOTAL VALUE           13400<BR><BR>PAYMENT: CARD"
+
 /obj/item/paper/fluff/ruins/hauntedtradingpost/nomodsuits
 	name = "Notice"
 	desc = "A bunch of words have been written on this slip of paper. Truly, this is the future."
 	default_raw_text = "We are SOLD OUT of modsuits."
 	icon_state = "paperslip"
+
 /obj/item/paper/fluff/ruins/hauntedtradingpost/oldnote
 	name = "Old Note"
 	default_raw_text = "Remember to check all the ammo before it's fed into the turrets. If the wrong caliber is loaded, the turrets will malfunction.<BR>We use 9mm ammunition ONLY."
+
 /obj/item/paper/fluff/ruins/hauntedtradingpost/oldnote/aiclue
 	name = "Old Handwritten Note"
 	default_raw_text = "All the appliances are now hooked up to the AI. If there's any problems, report it to the Cybersun rep (Mr Satung)."
@@ -58,6 +73,7 @@
 	desc = "A plastic card that identifies its bearer as an employee of Donk Co. There are electronic chips embedded to communicate with airlocks and other machines. It does not have a name attached."
 	icon_state = "card_donk"
 	trim = /datum/id_trim/away/hauntedtradingpost
+
 /obj/item/card/id/away/donk/boss
 	desc = "A plastic card that identifies its bearer as a senior employee of Donk Co. There are electronic chips embedded to communicate with airlocks and other machines. It does not have a name attached."
 	icon_state = "card_donkboss"
@@ -163,14 +179,15 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/button/door/invisible_tripwire/proc/on_entered(atom/victim)
+	if(!isliving(victim))
+		return
 	var/mob/living/target = victim
-	for(target in loc)
-		if(target.stat != DEAD && target.mob_size == MOB_SIZE_HUMAN && target.mob_biotypes != MOB_ROBOTIC)
-			tripwire_triggered(target)
-			if(multiuse && uses_remaining < 1)
-				uses_remaining--
-			if(resets_self)
-				addtimer(CALLBACK(src, PROC_REF(tripwire_triggered), victim), reset_timer)
+	if(target.stat != DEAD && target.mob_size == MOB_SIZE_HUMAN && target.mob_biotypes != MOB_ROBOTIC)
+		tripwire_triggered(target)
+		if(multiuse && uses_remaining < 1)
+			uses_remaining--
+		if(resets_self)
+			addtimer(CALLBACK(src, PROC_REF(tripwire_triggered), victim), reset_timer)
 
 /obj/machinery/button/door/invisible_tripwire/proc/tripwire_triggered(atom/victim)
 	interact(victim)
@@ -202,7 +219,7 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	qdel(src)
 
 //trap that gloms onto the first machine it finds on its tile, and lives inside it
-//then it zaps everyone who wants to get close. disarm by dissassembling the machine, or running out its charges
+//then it zaps everyone who gets close. disarm by dissassembling the machine, or running out its charges
 /obj/effect/overloader_trap
 	name = "overloader trap"
 	desc = "A trap that overloads machines to electrify people who walk nearby."
@@ -325,6 +342,7 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	armor_type = /datum/armor/donk_turret
 	scan_range = 6
 	shot_delay = 10
+
 /datum/armor/donk_turret
 	melee = 20
 	bullet = 20
@@ -333,6 +351,7 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	bomb = 20
 	fire = 50
 	acid = 100
+
 /obj/projectile/bullet/c9mm/blunttip
 	wound_bonus = -40 //this will still cause bleeding wounds, but less often.
 
@@ -352,6 +371,7 @@ GLOBAL_LIST_EMPTY(tripwire_suicide_pact)
 	shot_delay = 50
 	always_up = FALSE
 	has_cover = TRUE
+
 /obj/projectile/beam/laser/cybersun
 	name = "plasma beam"
 	desc = "A big red plasma beam, currently in flight."

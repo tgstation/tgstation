@@ -29,9 +29,9 @@
 	var/datum/action/cooldown/mob_cooldown/lightning_strike
 	/// Ability which fires da big laser
 	var/datum/action/cooldown/mob_cooldown/targeted_mob_ability/donk_laser
-	//is this being used as part of the haunted trading post ruin? if true, will self destruct when boss dies
+	//is this being used as part of the haunted trading post ruin? if true, stuff there will self destruct when this mob dies
 	var/donk_ai_master = FALSE
-// list of stuff tagged to self destruct when this boss dies
+// list of stuff tagged to self destruct when this mob dies
 GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 
 /mob/living/basic/cybersun_ai_core/Initialize(mapload)
@@ -76,19 +76,13 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 
 /obj/effect/temp_visual/cybersun_ai_core_death/proc/gib()
 ///dramatic death animations
-	playsound(loc, 'sound/effects/explosion2.ogg', vol = 75, vary = TRUE, pressure_affected = FALSE)
 	var/turf/my_turf = get_turf(src)
 	new /obj/effect/gibspawner/robot(my_turf)
-	for (var/mob/murderer in range(10, src))
-		if (!murderer.client || !isliving(murderer))
+	playsound(loc, 'sound/effects/explosion2.ogg', vol = 75, vary = TRUE, pressure_affected = FALSE)
+	for (var/mob/witness in range(10, src))
+		if (!witness.client || !isliving(witness))
 			continue
-		playsound(loc, 'sound/effects/explosion2.ogg', vol = 75, vary = TRUE, pressure_affected = FALSE)
-		shake_camera(murderer, duration = 1.7 SECONDS, strength = 1)
-	for (var/mob/living in viewers(src, null))
-		if (!living.client || !isliving(living))
-			continue
-		playsound(loc, 'sound/effects/explosion2.ogg', vol = 55, vary = TRUE, pressure_affected = FALSE)
-		shake_camera(living, duration = 1 SECONDS, strength = 1)
+		shake_camera(witness, duration = 1.5 SECONDS - (0.7 * get_dist(src, witness)), strength = 1)
 
 /// how the ai core thinks
 /datum/ai_controller/basic_controller/cybersun_ai_core
@@ -125,12 +119,7 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 /datum/action/cooldown/spell/pointed/lightning_strike/cast(atom/target)
 	. = ..()
 	//this is where the spell will hit. it will not move even if the target does, allowing the spell to be dodged.
-	var/turf/lightning_danger_zone
-	if (isturf(target))
-		lightning_danger_zone = target
-	else
-		lightning_danger_zone = target.loc
-	new/obj/effect/temp_visual/lightning_strike(lightning_danger_zone)
+	new/obj/effect/temp_visual/lightning_strike(get_turf(target))
 	playsound(owner, 'sound/effects/sparks1.ogg', vol = 120, vary = TRUE)
 
 /obj/effect/temp_visual/lightning_strike
@@ -201,6 +190,7 @@ GLOBAL_LIST_EMPTY(selfdestructs_when_boss_dies)
 	else
 		lockon_zone = target.loc
 	if(lockon_zone == my_turf)
+	if(get_turf(owner) == get_turf(owner))
 		return
 	my_turf.Beam(lockon_zone, icon_state = "1-full", beam_color = COLOR_MEDIUM_DARK_RED, time = barrage_delay)
 	playsound(lockon_zone, 'sound/machines/terminal_prompt_deny.ogg', vol = 60, vary = TRUE)
