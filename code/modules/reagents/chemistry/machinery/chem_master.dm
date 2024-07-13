@@ -376,7 +376,6 @@
 
 	//sanity checks for transfer amount
 	if(isnull(amount) || amount <= 0)
-		balloon_alert("invalid amount!")
 		return FALSE
 	//sanity checks for reagent path
 	var/datum/reagent/reagent = text2path(path)
