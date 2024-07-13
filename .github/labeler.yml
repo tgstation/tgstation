@@ -20,12 +20,6 @@
       - any-glob-to-any-file: 'code/**'
     - base-branch: 'master'
 
-'Частичная модульность':
-  - all:
-    - chandged-files:
-      - all-globs-to-any-file: ['code/**', modular_bandastation/**]
-    - base-branch: 'master'
-
 'Перевод':
   - base-branch: 'translate'
 
