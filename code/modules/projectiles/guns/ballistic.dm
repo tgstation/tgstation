@@ -735,24 +735,23 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	chamber_round()
 	update_appearance()
 
-/obj/item/gun/ballistic/toss_gun_hard(mob/living/carbon/thrower, mob/living/target, obj/item/gun/tossed_gun)
+/obj/item/gun/ballistic/toss_gun_hard(mob/living/carbon/thrower, mob/living/target)
 	. = ..()
 	if(!.)
 		return
-	var/obj/item/gun/ballistic/tossed_ballistic = tossed_gun
-	switch(tossed_ballistic.bolt_type)
+	switch(bolt_type)
 		if(BOLT_TYPE_NO_BOLT) //emptying the revolver cylinder
-			tossed_ballistic.attack_self()
+			attack_self()
 			return
 		if(BOLT_TYPE_OPEN) //emptying the chamber of an automatic weapon, because rack() doesn't do this to it
-			tossed_ballistic.handle_chamber(chamber_next_round = FALSE)
-	if(!tossed_ballistic.internal_magazine && tossed_ballistic.magazine) //if a magazine is attached to the weapon, we remove it and throw it aside
-		tossed_ballistic.magazine.forceMove(drop_location())
-		tossed_ballistic.magazine.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), 1, 1)
-		tossed_ballistic.magazine = null
-		tossed_ballistic.update_icon() //updating the sprite of weapons without a magazine
-	if(!isnull(tossed_ballistic.chambered)) //if there is a cartridge in the chamber, we remove it
-		tossed_ballistic.rack()
+			handle_chamber(chamber_next_round = FALSE)
+	if(!internal_magazine && magazine) //if a magazine is attached to the weapon, we remove it and throw it aside
+		magazine.forceMove(drop_location())
+		magazine.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), 1, 1)
+		magazine = null
+		update_icon() //updating the sprite of weapons without a magazine
+	if(!isnull(chambered)) //if there is a cartridge in the chamber, we remove it
+		rack()
 
 /obj/item/suppressor
 	name = "suppressor"

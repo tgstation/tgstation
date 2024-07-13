@@ -130,15 +130,15 @@
 	. = ..()
 	if(isliving(hit_atom))
 		var/mob/living/thrower = throwingdatum?.get_thrower()
-		toss_gun_hard(thrower, hit_atom, tossed_gun = src)
+		toss_gun_hard(thrower, hit_atom)
 
-/obj/item/gun/proc/toss_gun_hard(mob/living/thrower, mob/living/target, obj/item/gun/tossed_gun) //throw a gun at them. They don't expect it.
+/obj/item/gun/proc/toss_gun_hard(mob/living/thrower, mob/living/target) //throw a gun at them. They don't expect it.
 	if(isnull(thrower))
 		return FALSE
 	if(!HAS_TRAIT(thrower, TRAIT_TOSS_GUN_HARD))
 		return FALSE
 	target.Knockdown(0.5 SECONDS)
-	target.apply_damage(tossed_gun.w_class > WEIGHT_CLASS_NORMAL ? 15 : 10, BRUTE, thrower.zone_selected, wound_bonus = CANT_WOUND, attacking_item = tossed_gun)
+	target.apply_damage(damage = max(w_class * 5 - throwforce, 10), damagetype = BRUTE, def_zone = thrower.zone_selected, wound_bonus = CANT_WOUND, attacking_item = src)
 	return TRUE
 
 /obj/item/gun/examine(mob/user)
