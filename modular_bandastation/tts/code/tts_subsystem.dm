@@ -412,7 +412,7 @@ SUBSYSTEM_DEF(tts220)
 /datum/controller/subsystem/tts220/proc/get_local_channel_by_owner(owner)
 	var/channel = tts_local_channels_by_owner[owner]
 	if(isnull(channel))
-		channel = SSsounds.reserve_sound_channel()
+		channel = SSsounds.reserve_sound_channel(owner)
 		tts_local_channels_by_owner[owner] = channel
 		RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(clear_channel))
 	return channel
