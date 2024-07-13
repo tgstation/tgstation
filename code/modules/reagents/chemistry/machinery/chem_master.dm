@@ -431,11 +431,14 @@
 			var/reagent_ref = params["reagentRef"]
 			var/amount = params["amount"]
 			var/target = params["target"]
-
+			var/should_transfer = is_transfering || (target == "buffer") // we should always transfer if target is the buffer
+			if(should_transfer && isnull(beaker)) // if there's no beaker, we cannot transfer
+				say("no reagent container inserted!")
+				return FALSE
 			if(target == "buffer")
-				return transfer_reagent(ui.user, beaker.reagents, reagents, reagent_ref, amount, TRUE)
+				return transfer_reagent(ui.user, beaker?.reagents, reagents, reagent_ref, amount, should_transfer)
 			else if(target == "beaker")
-				return transfer_reagent(ui.user, reagents, beaker.reagents, reagent_ref, amount, is_transfering)
+				return transfer_reagent(ui.user, reagents, beaker?.reagents, reagent_ref, amount, should_transfer)
 			return FALSE
 
 		if("toggleTransferMode")
