@@ -776,7 +776,10 @@
 	if(!length(chargeable_batteries))
 		to_chat(user, span_notice("You have a strange feeling for a moment, but then it passes."))
 		return
-	for(var/obj/item/stock_parts/power_store/to_charge as anything in recharges)
+	for(var/obj/item/stock_parts/power_store/to_charge as anything in chargeable_batteries)
+		if(!recharges)
+			return
+		recharges--
 		to_charge = pick(chargeable_batteries)
 		to_charge.charge = to_charge.maxcharge
 		// The device powered by the cell is assumed to be its location.
