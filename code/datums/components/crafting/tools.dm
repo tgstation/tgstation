@@ -17,6 +17,8 @@
 		/obj/item/analyzer = 1,
 		/obj/item/assembly/signaler = 1,
 		/obj/item/stack/cable_coil = 5,
+		/obj/item/restraints/handcuffs/cable = 1,
+		/obj/item/stack/rods = 1,
 	)
 	category = CAT_TOOLS
 
