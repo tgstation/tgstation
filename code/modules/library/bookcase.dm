@@ -107,6 +107,7 @@
 				balloon_alert(user, "pried apart")
 				deconstruct(TRUE)
 			return
+		return ..()
 
 	if(state == BOOKCASE_ANCHORED)
 		if(istype(I, /obj/item/stack/sheet/mineral/wood))
@@ -125,6 +126,7 @@
 			balloon_alert(user, "unwrenched the frame")
 			set_anchored(FALSE)
 			return
+		return ..()
 
 	if(isbook(I))
 		if(!user.transferItemToLoc(I, src))
@@ -140,7 +142,7 @@
 				found_anything = TRUE
 
 		if (found_anything)
-			balloon_alert("emptied into [src]")
+			balloon_alert(user, "emptied into [src]")
 			update_appearance()
 			return
 
