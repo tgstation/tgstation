@@ -172,7 +172,7 @@
 	target.visible_message(span_danger("[chassis] is drilling [target] with [src]!"), \
 						span_userdanger("[chassis] is drilling you with [src]!"))
 	log_combat(user, target, "drilled", "[name]", "Combat mode: [user.combat_mode ? "On" : "Off"])(DAMTYPE: [uppertext(damtype)])")
-	if(target.stat == DEAD && target.getBruteLoss() >= (target.maxHealth * 2) && !(target.mind))
+	if(target.stat == DEAD && target.getBruteLoss() >= (target.maxHealth * 2))
 		log_combat(user, target, "gibbed", name)
 		if(LAZYLEN(target.butcher_results) || LAZYLEN(target.guaranteed_butcher_results))
 			SEND_SIGNAL(src, COMSIG_MECHA_DRILL_MOB, chassis, target)
@@ -181,7 +181,7 @@
 			target.gib(DROP_ALL_REMAINS)
 	else
 		//drill makes a hole
-		var/obj/item/bodypart/target_part = target.get_bodypart(pick(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG))
+		var/obj/item/bodypart/target_part = target.get_bodypart(target.get_random_valid_zone(BODY_ZONE_CHEST))
 		target.apply_damage(10, BRUTE, BODY_ZONE_CHEST, target.run_armor_check(target_part, MELEE))
 
 		//blood splatters
