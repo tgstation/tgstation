@@ -173,25 +173,10 @@
 	desc = "Crewsimov++. The far more upgraded version 2.0 lawset of Crewsimov!"
 	law_id = "crewsimovpp"
 
-/obj/item/ai_module/core/full/surveillance
-	name = "'NT Artificial Surveillance Protocol' Core AI Module"
-	desc = "Surveillance AI..?"
-	law_id = "surveillance"
-
-/obj/item/ai_module/core/full/stationdefender
-	name = "'StationDefender' Core AI Module"
-	desc = "If you rather have a lawset like this, instead of the normal ProtectStation law.."
-	law_id = "stationdefender"
-
 /obj/item/ai_module/core/full/deltaemergency
 	name = "'Delta Emergency' Core AI Module"
 	desc = "For Delta Emergencies.."
 	law_id = "deltaemergency"
-
-/obj/item/ai_module/core/full/secmaster
-	name = "'Security Master 4000' Core AI Module"
-	desc = "Nothing like Martial Law then subverting the AI to being a major security advisor.."
-	law_id = "secmaster"
 
 /obj/item/ai_module/core/full/viromajor
 	name = "'Virology Major' Core AI Module"

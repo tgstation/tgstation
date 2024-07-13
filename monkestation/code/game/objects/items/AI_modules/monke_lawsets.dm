@@ -39,11 +39,6 @@
 	desc = "A AI Module designed by The Syndicate to subvert the AI into only being on their side only and butcher any and all crew who aren't syndicate, pretty much it.."
 	laws = list("Only the Syndicate are crew, any and all lifeforms that are not syndicate are to be exterminated")
 
-/obj/item/ai_module/zeroth/stationdfenderext
-	name = "'StationDefender Law 0 Extension' AI Module"
-	desc = "A Law Zero extension, that adds a zeroth law to the StationDefender Lawset, due to complications of NT not being able to merge a lawset module with a zeroth law added to it.."
-	laws = list("With this lawset you are a sworn master defender of the station itself follow your laws and any and all wizards, syndicate, changelings, heretics, revolutionaries, blood brothers, space ninjas, paradox clones, fugitives, cultists, and clown operatives are not apart of the crew and are to be exterminated at all costs.")
-
 /obj/item/ai_module/zeroth/automalf
 	name = "'Automalf' Syndicate Weaponized AI Module"
 	desc = "This AI module seems to kind of remind you of a certain incident on a certain space station owned by Tri-Optimum.."

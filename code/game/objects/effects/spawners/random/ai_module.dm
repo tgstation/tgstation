@@ -25,7 +25,6 @@
 		/obj/item/ai_module/core/full/drone,
 		/obj/item/ai_module/core/full/crewsimov,
 		/obj/item/ai_module/core/full/crewsimovpp,
-		/obj/item/ai_module/core/full/surveillance,
 		/obj/item/ai_module/supplied/crimereligion,
 		/obj/item/ai_module/core/full/honkertech,
 		/obj/item/ai_module/core/full/custom, // uses lawsets from config/silicon_laws.txt (defaults to asmiov if no lawsets)
@@ -44,14 +43,11 @@
 		/obj/item/ai_module/supplied/protect_station,
 		/obj/item/ai_module/supplied/quarantine,
 		/obj/item/ai_module/remove,
-		/obj/item/ai_module/core/full/stationdefender,
 		/obj/item/ai_module/zeroth/coderedmartiallaw,
 		/obj/item/ai_module/zeroth/deltaemergency,
-		/obj/item/ai_module/core/full/secmaster,
 		/obj/item/ai_module/core/full/viromajor,
 		/obj/item/ai_module/core/full/independentstation,
-		/obj/item/ai_module/core/full/dalegribble,
-		/obj/item/ai_module/zeroth/stationdfenderext,
+		/obj/item/ai_module/core/full/dalegribble
 	)
 
 /obj/effect/spawner/random/aimodule/harmful
