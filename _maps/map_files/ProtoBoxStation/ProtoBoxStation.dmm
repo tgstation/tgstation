@@ -37469,10 +37469,19 @@
 /obj/structure/cable,
 /obj/structure/table/wood,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 /obj/effect/spawner/random/food_or_drink/snack,
 =======
 /obj/item/toy/plush/explosive{
 	pixel_x = 0;
+	pixel_y = 0
+	},
+>>>>>>> Stashed changes
+=======
+/obj/effect/spawner/random/food_or_drink/snack{
+	pixel_x = 7;
+	spawn_loot_count = 2;
+	spawn_random_offset = 1;
 	pixel_y = 0
 	},
 >>>>>>> Stashed changes
