@@ -208,36 +208,36 @@
 	/// List of all job types with the cybernetics they should receive.
 	var/static/list/job_to_cybernetic = list(
 		/datum/job/assistant = /obj/item/organ/internal/heart/cybernetic, //real cardiac
-		/datum/job/atmospheric_technician = /obj/item/organ/internal/cyberimp/mouth/breathing_tube,
+		/datum/job/atmospheric_technician = /obj/item/organ/internal/cyberimp/arm/item_set/atmospherics, // monkestation edit: cybernetics overhaul (useful job stuff)
 		/datum/job/bartender = /obj/item/organ/internal/liver/cybernetic/tier3,
 		/datum/job/bitrunner = /obj/item/organ/internal/eyes/robotic/thermals,
-		/datum/job/botanist = /obj/item/organ/internal/cyberimp/chest/nutriment,
+		/datum/job/botanist = /obj/item/organ/internal/cyberimp/arm/item_set/botany, // monkestation edit: cybernetics overhaul (useful job stuff)
 		/datum/job/captain = /obj/item/organ/internal/heart/cybernetic/tier3,
 		/datum/job/cargo_technician = /obj/item/organ/internal/stomach/cybernetic/tier2,
 		/datum/job/chaplain = /obj/item/organ/internal/cyberimp/brain/anti_drop,
-		/datum/job/chemist = /obj/item/organ/internal/liver/cybernetic/tier2,
+		/datum/job/chemist = /obj/item/organ/internal/cyberimp/arm/item_set/chemical, // monkestation edit: cybernetics overhaul (useful job stuff)
 		/datum/job/chief_engineer = /obj/item/organ/internal/cyberimp/chest/thrusters,
-		/datum/job/chief_medical_officer = /obj/item/organ/internal/cyberimp/chest/reviver,
-		/datum/job/clown = /obj/item/organ/internal/cyberimp/brain/anti_stun, //HONK!
+		/datum/job/chief_medical_officer = /obj/item/organ/internal/cyberimp/brain/linked_surgery/perfect/nt, // monkestation edit: cybernetics overhaul (couldn't think of anything else that was good for cmo)
+		/datum/job/clown = /obj/item/organ/internal/cyberimp/chest/knockout, // monkestation edit: cybernetics overhaul (honk!!! it's the clown mech fist shrunken down after all)
 		/datum/job/cook = /obj/item/organ/internal/cyberimp/chest/nutriment/plus,
 		/datum/job/curator = /obj/item/organ/internal/eyes/robotic/glow,
 		/datum/job/detective = /obj/item/organ/internal/lungs/cybernetic/tier3,
 		/datum/job/doctor = /obj/item/organ/internal/cyberimp/arm/item_set/surgery,
 		/datum/job/geneticist = /obj/item/organ/internal/fly, //we don't care about implants, we have cancer.
 		/datum/job/head_of_personnel = /obj/item/organ/internal/eyes/robotic,
-		/datum/job/head_of_security = /obj/item/organ/internal/eyes/robotic/thermals,
-		/datum/job/janitor = /obj/item/organ/internal/eyes/robotic/xray,
+		/datum/job/head_of_security = /obj/item/organ/internal/cyberimp/arm/item_set/combat, // monkestation edit: cybernetics overhaul (no more validhunt eyes, instead you get a shoddy stunprod in your arm)
+		/datum/job/janitor = /obj/item/organ/internal/cyberimp/arm/item_set/janitor, // monkestation edit: cybernetics overhaul (useful job stuff)
 		/datum/job/lawyer = /obj/item/organ/internal/heart/cybernetic/tier2,
 		/datum/job/mime = /obj/item/organ/internal/tongue/robot, //...
-		/datum/job/paramedic = /obj/item/organ/internal/cyberimp/eyes/hud/medical,
+		/datum/job/paramedic = /obj/item/organ/internal/cyberimp/arm/item_set/medibeam, // monkestation edit: cybernetics overhaul (on-site healing / assistance)
 		/datum/job/prisoner = /obj/item/organ/internal/eyes/robotic/shield,
 		/datum/job/psychologist = /obj/item/organ/internal/ears/cybernetic/upgraded,
 		/datum/job/quartermaster = /obj/item/organ/internal/stomach/cybernetic/tier3,
 		/datum/job/research_director = /obj/item/organ/internal/cyberimp/bci,
-		/datum/job/roboticist = /obj/item/organ/internal/cyberimp/eyes/hud/diagnostic,
+		/datum/job/roboticist = /obj/item/organ/internal/cyberimp/arm/item_set/connector, // monkestation edit: cybernetics overhaul (useful job stuff)
 		/datum/job/scientist = /obj/item/organ/internal/ears/cybernetic,
 		/datum/job/security_officer = /obj/item/organ/internal/cyberimp/arm/item_set/flash,
-		/datum/job/shaft_miner = /obj/item/organ/internal/monster_core/rush_gland,
+		/datum/job/shaft_miner = /obj/item/organ/internal/cyberimp/arm/item_set/mining_drill/diamond, // monkestation edit: cybernetics overhaul (useful job stuff)
 		/datum/job/station_engineer = /obj/item/organ/internal/cyberimp/arm/item_set/toolset,
 		/datum/job/virologist = /obj/item/organ/internal/lungs/cybernetic/tier2,
 		/datum/job/warden = /obj/item/organ/internal/cyberimp/eyes/hud/security,
@@ -247,6 +247,7 @@
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
+/* monkestation edit: replaced in [monkestation\code\datums\station_traits\positive_traits.dm]
 /datum/station_trait/cybernetic_revolution/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
 	SIGNAL_HANDLER
 
@@ -261,6 +262,7 @@
 		return
 	var/obj/item/organ/internal/cybernetic = new cybernetic_type()
 	cybernetic.Insert(spawned, special = TRUE, drop_if_replaced = FALSE)
+monkestation end */
 
 /datum/station_trait/luxury_escape_pods
 	name = "Luxury Escape Pods"
