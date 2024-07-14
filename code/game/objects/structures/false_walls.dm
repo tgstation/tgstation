@@ -1,6 +1,91 @@
 /*
  * False Walls
  */
+
+/// Stores a list of icon -> icon but with all fullblack pixels fully transparent
+/// I would LOVE to do this with colormatrix bullshit but alpha does NOT cap at 1 on some GPUs for some stupid reason
+GLOBAL_LIST_INIT(falsewall_alpha_icons, generate_transparent_falsewalls())
+
+/proc/generate_transparent_falsewalls()
+	var/list/icon_alphas = list()
+	for(var/obj/structure/falsewall/false_type as anything in typesof(/obj/structure/falsewall))
+		var/icon/make_transparent = initial(false_type.fake_icon)
+		if(icon_alphas[make_transparent])
+			continue
+		var/icon/alpha_icon = icon(make_transparent)
+		// I am SO sorry (makes any full black pixels transparent)
+		alpha_icon.SwapColor("#000000FF", rgb(0, 0, 0, 0))
+		icon_alphas[make_transparent] = alpha_icon
+	return icon_alphas
+
+/// Static mask we use to hide the bits of falsewalls that would be "below" the floor when opening/closing
+/obj/effect/falsewall_mask
+	icon = 'icons/effects/32x48.dmi'
+	icon_state = "white"
+	vis_flags = VIS_INHERIT_ID
+	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER | RESET_TRANSFORM
+
+/obj/effect/falsewall_mask/New()
+	. = ..()
+	render_target = "*falsewall_mask"
+
+/// Duplicates our parent falsewall's rendering behavior
+/// But renders walls as overlays instead of with splitvis
+/// In viscontents to make separation of concerns easier
+/obj/effect/falsewall_floating
+	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID
+	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER | RESET_ALPHA
+	/// The icon to fake ourselves as
+	var/icon/fake_icon
+	/// If darkness in our sprite is visible or not
+	/// Exists so we can make falsewalls fall "into" the floor
+	/// Potentially breaks art but the usecase is so minimal I will accept it
+	var/opaque_darkness = TRUE
+	var/static/obj/effect/falsewall_mask/trim
+
+/obj/effect/falsewall_floating/proc/set_fake_icon(icon/fake_icon)
+	if(src.fake_icon == fake_icon)
+		return
+	src.fake_icon = fake_icon
+	update_appearance()
+
+/obj/effect/falsewall_floating/proc/set_darkness_opacity(opaque_darkness)
+	if(src.opaque_darkness == opaque_darkness)
+		return
+	src.opaque_darkness = opaque_darkness
+	update_appearance()
+
+/obj/effect/falsewall_floating/set_smoothed_icon_state(new_junction)
+	. = ..()
+	update_appearance()
+
+/// Runs an animation that masks off the bottom of our sprite
+/obj/effect/falsewall_floating/proc/trim_base(delay)
+	if(!trim)
+		trim = new(src)
+	vis_contents += trim
+	add_filter("trim_mask", 1, alpha_mask_filter(y = -40, render_source = trim.render_target, flags = MASK_INVERSE))
+	transition_filter("trim_mask", alpha_mask_filter(y = -16, render_source = trim.render_target, flags = MASK_INVERSE), time = delay)
+
+/// Runs an animation that slowly reveals the bottom of our sprite
+/obj/effect/falsewall_floating/proc/untrim_base(delay)
+	if(!trim)
+		trim = new(src)
+	vis_contents += trim
+	add_filter("trim_mask", 1, alpha_mask_filter(y = -16, render_source = trim.render_target, flags = MASK_INVERSE))
+	transition_filter("trim_mask", alpha_mask_filter(y = -40, render_source = trim.render_target, flags = MASK_INVERSE), time = delay)
+
+/obj/effect/falsewall_floating/update_overlays()
+	. = ..()
+	// If we smooth north then as we open there's gonna be a weird hole left by the lack of blackness from above. this should help? compensate for that.
+	if(smoothing_junction & NORTH_JUNCTION && opaque_darkness)
+		var/mutable_appearance/black_backdrop = mutable_appearance('wall_blackness.dmi', "wall_background")
+		black_backdrop.pixel_z = 16
+		. += black_backdrop
+
+	var/icon/working_fake_icon = opaque_darkness ? fake_icon : GLOB.falsewall_alpha_icons[fake_icon]
+	. += generate_joined_wall(working_fake_icon, smoothing_junction, draw_darkness = opaque_darkness)
+
 /obj/structure/falsewall
 	name = "wall"
 	desc = "A huge chunk of metal used to separate rooms."
@@ -19,6 +104,12 @@
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	rad_insulation = RAD_MEDIUM_INSULATION
 	material_flags = MATERIAL_EFFECTS
+	// Complex appearance gotta use render targets
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	/// The object we are using to fake being a wall
+	var/obj/effect/falsewall_floating/visuals
+	/// Our usual smoothing groups
+	var/list/usual_groups
 	/// The icon this falsewall is faking being. we'll switch out our icon with this when we're in fake mode
 	var/fake_icon = 'icons/turf/walls/metal_wall.dmi'
 	var/mineral = /obj/item/stack/sheet/iron
@@ -27,13 +118,20 @@
 	var/girder_type = /obj/structure/girder/displaced
 	var/opening = FALSE
 
-
 /obj/structure/falsewall/Initialize(mapload)
 	. = ..()
+	visuals = new(src)
+	visuals.set_fake_icon(fake_icon)
+	AddElement(/datum/element/split_visibility, fake_icon)
 	var/obj/item/stack/initialized_mineral = new mineral // Okay this kinda sucks.
 	set_custom_materials(initialized_mineral.mats_per_unit, mineral_amount)
 	qdel(initialized_mineral)
+	set_opacity(TRUE) // walls cannot be transparent fuck u materials
 	air_update_turf(TRUE, TRUE)
+
+/obj/structure/falsewall/set_smoothed_icon_state(new_junction)
+	. = ..()
+	visuals.set_smoothed_icon_state(new_junction)
 
 /obj/structure/falsewall/attack_hand(mob/user, list/modifiers)
 	if(opening)
@@ -42,47 +140,55 @@
 	if(.)
 		return
 
-	opening = TRUE
 	if(!density)
 		var/srcturf = get_turf(src)
 		for(var/mob/living/obstacle in srcturf) //Stop people from using this as a shield
-			opening = FALSE
 			return
-	update_appearance()
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/structure/falsewall, toggle_open)), 0.5 SECONDS)
+	INVOKE_ASYNC(src, PROC_REF(toggle_open))
 
 /obj/structure/falsewall/proc/toggle_open()
-	if(!QDELETED(src))
-		set_density(!density)
-		set_opacity(density)
-		opening = FALSE
-		update_appearance()
-		air_update_turf(TRUE, !density)
-
-/obj/structure/falsewall/update_icon(updates=ALL)//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
-	. = ..()
-	if(!density || !(updates & UPDATE_SMOOTHING))
-		return
-
-	if(opening)
-		smoothing_flags = NONE
-		clear_smooth_overlays()
-	else
-		smoothing_flags = SMOOTH_BITMASK
-		QUEUE_SMOOTH(src)
-
-/obj/structure/falsewall/update_icon_state()
-	if(opening)
-		icon = initial(icon)
-		icon_state = "[base_icon_state]-[density ? "opening" : "closing"]"
-		return ..()
+	opening = TRUE
 	if(density)
-		icon = fake_icon
-		icon_state = "[base_icon_state]-[smoothing_junction]"
+		open()
 	else
-		icon = initial(icon)
-		icon_state = "[base_icon_state]-open"
-	return ..()
+		close()
+	opening = FALSE
+
+/obj/structure/falsewall/proc/open()
+	vis_contents += visuals
+	RemoveElement(/datum/element/split_visibility, fake_icon)
+	visuals.trim_base(1 SECONDS)
+	animate(src, pixel_z = -24, time = 1 SECONDS)
+	usual_groups = smoothing_groups
+	smoothing_groups = list()
+	QUEUE_SMOOTH_NEIGHBORS(src) // Update any walls around us
+	sleep(0.2 SECONDS)
+	set_opacity(FALSE)
+	sleep(0.8 SECONDS)
+	visuals.set_darkness_opacity(FALSE)
+	set_density(FALSE)
+	air_update_turf(TRUE, TRUE)
+
+/obj/structure/falsewall/proc/close()
+	set_density(TRUE)
+	air_update_turf(TRUE, FALSE)
+	visuals.untrim_base(1 SECONDS)
+	animate(src, pixel_z = 0, time = 1 SECONDS)
+	visuals.set_darkness_opacity(TRUE)
+	sleep(0.3 SECONDS)
+	set_opacity(TRUE)
+	smoothing_groups = usual_groups
+	usual_groups = null
+	QUEUE_SMOOTH_NEIGHBORS(src)
+	sleep(0.7 SECONDS)
+	vis_contents -= visuals
+	AddElement(/datum/element/split_visibility, fake_icon)
+
+/obj/structure/falsewall/update_icon(updates=ALL)
+	. = ..()
+	if(!(updates & UPDATE_SMOOTHING))
+		return
+	QUEUE_SMOOTH(src)
 
 /obj/structure/falsewall/proc/ChangeToWall(delete = 1)
 	var/turf/T = get_turf(src)
@@ -407,19 +513,6 @@
 
 /obj/structure/falsewall/material/mat_update_desc(mat)
 	desc = "A huge chunk of [mat] used to separate rooms."
-
-/obj/structure/falsewall/material/toggle_open()
-	if(!QDELETED(src))
-		set_density(!density)
-		var/mat_opacity = TRUE
-		for(var/datum/material/mat in custom_materials)
-			if(mat.alpha < 255)
-				mat_opacity = FALSE
-				break
-		set_opacity(density && mat_opacity)
-		opening = FALSE
-		update_appearance()
-		air_update_turf(TRUE, !density)
 
 // wallening todo: does this work??
 /obj/structure/falsewall/material/ChangeToWall(delete = 1)
