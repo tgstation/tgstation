@@ -31,7 +31,17 @@ export function getDisplayName(full_name: string, nickname?: string): string {
   if (!nickname) {
     return full_name;
   }
-  return nickname;
+
+  if (
+    !full_name?.includes('[') ||
+    full_name.match(/\(as /) ||
+    full_name.match(/^Unknown/)
+  ) {
+    return nickname;
+  }
+
+  // return only the name before the first ' [' or ' ('
+  return `"${full_name.split(/ \[| \(/)[0]}"`;
 }
 
 /** Returns the department the player is in */
