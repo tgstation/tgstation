@@ -63,6 +63,12 @@
 	if(paint_jobs)
 		paint_jobs = crate_paint_jobs
 
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_EXITED = PROC_REF(on_exited)
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 /obj/structure/closet/crate/Destroy()
 	QDEL_NULL(manifest)
 	return ..()
@@ -132,6 +138,21 @@
 			RemoveElement(/datum/element/elevation, pixel_shift = elevation_open)
 		if(elevation)
 			AddElement(/datum/element/elevation, pixel_shift = elevation)
+
+///Applies a proc when movable enters the turf of our crate
+/obj/structure/closet/crate/proc/on_entered(datum/source, atom/movable/soapbox_arrive)
+	SIGNAL_HANDLER
+	if(!opened)
+		RegisterSignal(soapbox_arrive, COMSIG_MOB_SAY, PROC_REF(soapbox_speech))
+
+/obj/structure/closet/crate/proc/on_exited(datum/source, atom/movable/soapbox_leave)
+	SIGNAL_HANDLER
+	UnregisterSignal(soapbox_leave, COMSIG_MOB_SAY)
+
+///Gives a mob a unique say span
+/obj/structure/closet/crate/proc/soapbox_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+	speech_args[SPEECH_SPANS] |= SPAN_SOAPBOX
 
 ///Spawns two to six maintenance spawners inside the closet
 /obj/structure/closet/proc/populate_with_random_maint_loot()
