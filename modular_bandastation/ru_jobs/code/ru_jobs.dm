@@ -32,6 +32,7 @@
 	alternate_titles = list(
 		JOB_CHEF,
 		JOB_COOK_RU,
+		JOB_CHEF_RU,
 	)
 
 /datum/job/coroner
@@ -109,3 +110,6 @@
 
 /datum/job/warden
 	alternate_titles = list(JOB_WARDEN_RU,)
+
+/datum/job/chaplain
+	alternate_titles = list(JOB_CHAPLAIN_RU,)
