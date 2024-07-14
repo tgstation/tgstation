@@ -130,5 +130,5 @@
 	targeted = null
 
 /datum/component/speechmod/Destroy()
-	QDEL_NULL(should_modify_speech)
+	should_modify_speech = null
 	return ..()
