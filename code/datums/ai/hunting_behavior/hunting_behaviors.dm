@@ -170,3 +170,13 @@
 		return FALSE
 	hunted.visible_message(span_notice("[hunted] has been latched onto by [hunter]!"))
 	return TRUE
+
+///A subtype that checks if hunter and hunter have the right traits, so we don't end smashing something instead of fishing.
+/datum/ai_behavior/hunt_target/unarmed_attack_target/fishing
+	always_reset_target = TRUE
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/fishing/perform(seconds_per_tick, datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
+	var/atom/hunted = controller.blackboard[hunting_target_key]
+	if((!QDELETED(hunted) && !HAS_TRAIT(hunted, TRAIT_FISHING_SPOT)) || !HAS_TRAIT(controller.pawn, TRAIT_PROFOUND_FISHER))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	return ..()

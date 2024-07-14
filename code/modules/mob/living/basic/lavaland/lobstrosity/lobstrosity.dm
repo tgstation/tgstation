@@ -28,6 +28,10 @@
 	ai_controller = /datum/ai_controller/basic_controller/lobstrosity
 	/// Charging ability
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/charge
+	/// The type of charging ability we give this mob
+	var/charge_type = /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster
+	/// At which speed do we amputate limbs
+	var/snip_speed = 5 SECONDS
 	/// Things we will eat if we see them (arms, chiefly)
 	var/static/list/target_foods = list(/obj/item/bodypart/arm, /obj/item/fish/lavaloop)
 
@@ -45,10 +49,11 @@
 	AddElement(/datum/element/basic_eating, food_types = target_foods)
 	AddComponent(\
 		/datum/component/amputating_limbs,\
+		surgery_time = snip_speed, \
 		surgery_verb = "begins snipping",\
 		target_zones = GLOB.arm_zones,\
 	)
-	charge = new(src)
+	charge = new charge_type(src)
 	charge.Grant(src)
 	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, charge)
 
@@ -58,6 +63,25 @@
 
 /mob/living/basic/mining/lobstrosity/ranged_secondary_attack(atom/atom_target, modifiers)
 	charge.Trigger(target = atom_target)
+
+/mob/living/basic/mining/lobstrosity/tamed(mob/living/tamer, obj/item/food)
+	new /obj/effect/temp_visual/heart(loc)
+	/// Pet commands for this mob, however you'll have to tame juvenile lobstrosities to a trained adult one.
+	var/static/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/point_targeting/attack,
+		/datum/pet_command/follow,
+		/datum/pet_command/point_targeting/fish,
+	)
+
+	AddComponent(/datum/component/obeys_commands, pet_commands)
+	ai_controller.ai_traits = STOP_MOVING_WHEN_PULLED
+
+/mob/living/basic/mining/lobstrosity/befriend(mob/living/new_friend)
+	. = ..()
+	faction |= new_friend.faction
+	faction -= FACTION_MINING
 
 /// Lavaland lobster variant, it basically just looks different
 /mob/living/basic/mining/lobstrosity/lava
@@ -87,5 +111,93 @@
 	. = ..()
 	if(!isliving(charger))
 		return
-	var/mob/living/living_charger = charger
-	living_charger.apply_status_effect(/datum/status_effect/tired_post_charge)
+	apply_post_charge(charger)
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/proc/apply_post_charge(mob/living/charger)
+	charger.apply_status_effect(/datum/status_effect/tired_post_charge)
+
+///A weaker, yet somewhat faster lobstrosity. Sources include aquarium chasm chrabs, chasms, plasma rivers and perhaps xenobio.
+/mob/living/basic/mining/lobstrosity/juvenile
+	name = "juvenile arctic lobstrosity"
+	desc = "A youngling of the behemothic arctic lobstrosity. They usually stay put in the underground lakes they reside in until they're fully grown."
+	icon_state = "arctic_juveline_lobstrosity"
+	icon_living = "arctic_juveline_lobstrosity"
+	icon_dead = "arctic_juveline_lobstrosity_dead"
+	maxHealth = 65
+	health = 65
+	obj_damage = 6
+	melee_damage_lower = 6
+	melee_damage_upper = 9
+	melee_attack_cooldown = 0.9 SECONDS
+	mob_size = MOB_SIZE_HUMAN
+	butcher_results = list(
+		/obj/item/food/meat/slab/rawcrab = 1,
+		/obj/item/stack/sheet/bone = 1,
+		/obj/item/organ/internal/monster_core/rush_gland = 1,
+	)
+	crusher_loot = null
+	snip_speed = 6.5 SECONDS
+	charge_type = /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/shrimp
+	/// What do we become when we grow up?
+	var/mob/living/basic/mining/lobstrosity/grow_type = /mob/living/basic/mining/lobstrosity
+	/// Were we tamed? If yes, tame the mob we become when we grow up too.
+	var/was_tamed = FALSE
+
+/mob/living/basic/mining/lobstrosity/juvenile/Initialize(mapload)
+	. = ..()
+	AddComponent(\
+		/datum/component/growth_and_differentiation,\
+		growth_time = rand(12 MINUTES, 15 MINUTES),\
+		growth_path = grow_type,\
+		optional_checks = CALLBACK(src, PROC_REF(ready_to_grow)),\
+		optional_grow_behavior = CALLBACK(src, PROC_REF(grow_up))\
+	)
+	AddComponent(/datum/component/tameable, target_foods, tame_chance = 35, bonus_tame_chance = 25)
+
+/mob/living/basic/mining/lobstrosity/juvenile/add_ranged_armour(list/vulnerable_projectiles)
+	AddElement(\
+		/datum/element/ranged_armour,\
+		minimum_projectile_force = 30,\
+		below_projectile_multiplier = 0.6,\
+		vulnerable_projectile_types = vulnerable_projectiles,\
+		minimum_thrown_force = 13,\
+		throw_blocked_message = throw_blocked_message,\
+	)
+
+/mob/living/basic/mining/lobstrosity/juvenile/tamed(mob/living/tamer, obj/item/food)
+	. = ..()
+	was_tamed = TRUE
+
+/mob/living/basic/mining/lobstrosity/juvenile/proc/ready_to_grow()
+	return isturf(loc)
+
+/mob/living/basic/mining/lobstrosity/juvenile/proc/grow_up()
+	var/name_to_use = name == initial(name) ? grow_type::name : name
+	var/mob/living/basic/mining/lobstrosity/grown = change_mob_type(grow_type, get_turf(src), name_to_use)
+	for(var/friend in ai_controller?.blackboard?[BB_FRIENDS_LIST])
+		grown.befriend(friend)
+	if(was_tamed)
+		grown.tamed()
+	grown.setBruteLoss(getBruteLoss())
+	grown.setFireLoss(getFireLoss())
+
+/mob/living/basic/mining/lobstrosity/juvenile/lava
+	name = "juvenile chasm lobstrosity"
+	desc = "A youngling of the behemothic lobstrosity. They usually don't crawl out of the vents they reside in until they're fully grown."
+	icon_state = "juveline_lobstrosity"
+	icon_living = "juveline_lobstrosity"
+	icon_dead = "juveline_lobstrosity_dead"
+	grow_type = /mob/living/basic/mining/lobstrosity/lava
+
+/// Shorter, weaker version of the Lobster Rush, but faster
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/shrimp
+	name = "Shrimp Rush"
+	charge_distance = 4
+	knockdown_duration = 1.5 SECONDS
+	cooldown_time = 1.4 SECONDS
+	charge_delay = 0.2 SECONDS
+	charge_speed = 0.3
+	charge_damage = 13
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/apply_post_charge(mob/living/charger)
+	charger.apply_status_effect(/datum/status_effect/tired_post_charge/easy)

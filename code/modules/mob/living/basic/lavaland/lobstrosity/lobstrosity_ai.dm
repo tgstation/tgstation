@@ -25,7 +25,7 @@
 /datum/ai_planning_subtree/find_and_hunt_target/lobster_fishing
 	target_key = BB_FISHING_TARGET
 	hunt_targets = list(/turf/open/lava)
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/fishing
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/lobster
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/lobster

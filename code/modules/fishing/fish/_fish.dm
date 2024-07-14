@@ -253,18 +253,21 @@
 
 	var/list/same_traits = x_traits & y_traits
 	var/list/all_traits = (x_traits|y_traits)-removed_traits
-	/**
-	 * Traits that the fish is guaranteed to inherit will be inherited,
-	 * with the assertion that they're compatible anyway.
-	 */
-	for(var/trait_type in all_traits)
-		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
-		if(type in trait.guaranteed_inheritance_types)
-			fish_traits |= trait_type
-			all_traits -= trait_type
 
-	///Build a list of incompatible traits. Don't let any such trait pass onto the fish.
+	/// a list of incompatible traits that'll be filled as it goes on. Don't let any such trait pass onto the fish.
 	var/list/incompatible_traits = list()
+
+	///some traits can spontaneously manifest for some fishes. These have higher priorities than other traits
+	var/list/potential_spontaneous_traits = GLOB.spontaneous_fish_traits[type]
+	for(var/trait_type in potential_spontaneous_traits)
+		if(!prob(potential_spontaneous_traits[trait_type]))
+			continue
+		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
+		if(length(fish_traits & trait.incompatible_traits))
+			continue
+		fish_traits |= trait_type
+		incompatible_traits |= trait.incompatible_traits
+
 	for(var/trait_type in fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
 		incompatible_traits |= trait.incompatible_traits
@@ -278,6 +281,8 @@
 		if(trait_type in incompatible_traits)
 			continue
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
+		if(!isnull(trait.fish_whitelist) && !(type in trait.fish_whitelist))
+			continue
 		if(length(fish_traits & trait.incompatible_traits))
 			continue
 		if((trait_type in same_traits) ? prob(trait.inheritability) : prob(trait.diff_traits_inheritability))
@@ -447,10 +452,6 @@
 	if(health <= 0)
 		set_status(FISH_DEAD)
 
-
-//Fish breeding stops if fish count exceeds this.
-#define AQUARIUM_MAX_BREEDING_POPULATION 20
-
 /obj/item/fish/proc/ready_to_reproduce(being_targeted = FALSE)
 	var/obj/structure/aquarium/aquarium = loc
 	if(!istype(aquarium))
@@ -460,8 +461,6 @@
 	if(!being_targeted && length(aquarium.get_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
 		return FALSE
 	return aquarium.allow_breeding && health >= initial(health) * 0.8 && stable_population > 1 && world.time >= breeding_wait
-
-#undef AQUARIUM_MAX_BREEDING_POPULATION
 
 /obj/item/fish/proc/try_to_reproduce()
 	var/obj/structure/aquarium/aquarium = loc

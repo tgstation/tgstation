@@ -56,7 +56,7 @@
 	if(islist(signals_to_kill_on))
 		src.signals_to_kill_on = signals_to_kill_on
 		RegisterSignals(parent, src.signals_to_kill_on, PROC_REF(stop_component_processing_entirely))
-	
+
 	if(scale_with_happiness)
 		if(!HAS_TRAIT(parent, TRAIT_MOB_RELAY_HAPPINESS))
 			AddComponent(/datum/component/happiness)

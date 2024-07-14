@@ -157,6 +157,14 @@
 	controller.queue_behavior(attack_behaviour, BB_CURRENT_PET_TARGET, targeting_strategy_key)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
+/datum/ai_planning_subtree/find_and_hunt_target/fishing
+	target_key = BB_FISHING_TARGET
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target
+
+/datum/pet_command/point_targeting/attack/execute_action(datum/ai_controller/controller)
+	controller.queue_behavior(/datum/ai_behavior/hunt_target/unarmed_attack_target/fishing, BB_CURRENT_PET_TARGET, targeting_strategy_key)
+	return SUBTREE_RETURN_FINISH_PLANNING
+
 /**
  * # Breed command. breed with a partner!
  */
@@ -266,3 +274,25 @@
 		return
 	if(isliving(attacker) && can_see(owner, attacker, protect_range))
 		set_command_active(owner, attacker)
+
+/**
+ * # Fish command: command the mob to fish at the next fishing spot you point at. Requires the profound fisher component
+ */
+/datum/pet_command/point_targeting/fish
+	command_name = "Fish"
+	command_desc = "Command your pet to try fishing at a nearby fishing spot."
+	radial_icon = 'icons/obj/aquarium/fish.dmi'
+	radial_icon_state = "goldfish"
+	speech_commands = list("fish")
+
+// Refuse to target things we can't target, chiefly other friends
+/datum/pet_command/point_targeting/fish/attack/set_command_target(mob/living/parent, atom/target)
+	if (!target)
+		return
+	var/mob/living/living_parent = parent
+	if (!living_parent.ai_controller || !HAS_TRAIT(parent, TRAIT_PROFOUND_FISHER))
+		return
+	if (!HAS_TRAIT(target, TRAIT_FISHING_SPOT))
+		living_parent.balloon_alert_to_viewers("shakes head")
+		return
+	return ..()
