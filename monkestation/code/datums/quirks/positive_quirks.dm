@@ -126,3 +126,84 @@
 /datum/quirk/voracious/remove()
 	var/mob/living/carbon/human/holder = quirk_holder
 	holder.max_food_buffs --
+
+
+/datum/quirk/bright_eyes
+	name = "Bright Eyes"
+	desc = "You've got bright, cybernetic eyes!"
+	icon = FA_ICON_SUN
+	value = 3
+	medical_record_text = "Patient has acquired and been installed with high luminosity eyes."
+	// hardcore_value = 0
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
+	gain_text = span_notice("Your eyes feel extra shiny.")
+	lose_text = span_danger("You can't feel your eyes anymore.")
+
+/datum/quirk/bright_eyes/add()
+	var/obj/item/organ/internal/eyes/old_eyes = quirk_holder.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/robotic/glow/new_eyes = new
+
+	qdel(old_eyes)
+	new_eyes.Insert(quirk_holder)
+
+/datum/quirk/bright_eyes/remove()
+	var/obj/item/organ/internal/eyes/old_eyes = quirk_holder.get_organ_slot(ORGAN_SLOT_EYES)
+	var/mob/living/carbon/human/quirk_mob = quirk_holder
+
+	if(!old_eyes || /obj/item/organ/internal/eyes/robotic/glow)
+		return
+
+	var/species_eyes = /obj/item/organ/internal/eyes
+	if(quirk_mob.dna.species && quirk_mob.dna.species.mutanteyes)
+		species_eyes = quirk_mob.dna.species.mutanteyes
+	var/obj/item/organ/internal/eyes/new_eyes = new species_eyes()
+
+	qdel(old_eyes)
+	new_eyes.Insert(quirk_holder)
+
+/datum/quirk/neuralink
+	name = "Neuralinked"
+	desc = "You've been installed with an NT 1.0 cyberlink!"
+	icon = FA_ICON_PLUG
+	value = 3
+	medical_record_text = "Patient has acquired and been installed with a NT 1.0 Cyberlink."
+	// hardcore_value = 0
+	gain_text = span_notice("You feel robotic.")
+	lose_text = span_danger("You feel fleshy again.")
+
+/datum/quirk/neuralink/add()
+	var/obj/item/organ/internal/cyberimp/cyberlink/nt_low/neuralink = new
+
+	neuralink.Insert(quirk_holder)
+
+/datum/quirk/neuralink/remove()
+	var/obj/item/organ/internal/cyberimp/cyberlink/nt_low/neuralink = new
+	var/obj/item/organ/internal/cyberimp/cyberlink/current_link = quirk_holder.get_organ_slot(ORGAN_SLOT_LINK)
+
+	if(!neuralink)
+		return
+	qdel(current_link)
+
+/datum/quirk/hosed
+	name = "Hosed"
+	desc = "You've got a cybernetic breathing tube implant!"
+	icon = FA_ICON_LUNGS
+	value = 3
+	medical_record_text = "Patient has been installed with a breathing tube implant."
+	// hardcore_value = 0
+	gain_text = span_notice("You can breathe easier!")
+	lose_text = span_notice("Breathing feels normal again.")
+
+/datum/quirk/hosed/add()
+	var/obj/item/organ/internal/cyberimp/mouth/breathing_tube/hose = new
+
+	hose.Insert(quirk_holder)
+
+/datum/quirk/hosed/remove()
+	var/obj/item/organ/internal/cyberimp/mouth/breathing_tube/hose = new
+	var/obj/item/organ/internal/cyberimp/cyberlink/current_hose = quirk_holder.get_organ_slot(ORGAN_SLOT_BREATHING_TUBE)
+
+	//should work even if we get more implants of this type in the future. maybe. might have issues mentioned in previous comment
+	if(!hose)
+		return
+	qdel(current_hose)
