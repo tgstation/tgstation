@@ -699,7 +699,7 @@ GLOBAL_LIST_INIT(store_miscunders, generate_store_items(/datum/store_item/under/
 
 /datum/store_item/under/miscellaneous/kimono //BUYABLE
 	name = "Fancy Kimono"
-	item_path =  /obj/item/clothing/under/costume/nova/kimono
+	item_path =  /obj/item/clothing/under/costume/skyrat/kimono
 	item_cost = 2500
 
 /datum/store_item/under/miscellaneous/chaps //BUYABLE

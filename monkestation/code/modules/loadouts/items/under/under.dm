@@ -878,7 +878,7 @@ GLOBAL_LIST_INIT(loadout_miscunders, generate_loadout_items(/datum/loadout_item/
 
 /datum/loadout_item/under/miscellaneous/kimono //BUYABLE
 	name = "Fancy Kimono"
-	item_path =  /obj/item/clothing/under/costume/nova/kimono
+	item_path =  /obj/item/clothing/under/costume/skyrat/kimono
 
 /datum/loadout_item/under/miscellaneous/chaps //BUYABLE
 	name = "Black Chaps"
