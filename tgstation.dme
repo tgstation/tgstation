@@ -1105,7 +1105,6 @@
 #include "code\datums\components\health_scaling_effects.dm"
 #include "code\datums\components\heirloom.dm"
 #include "code\datums\components\hide_weather_planes.dm"
-#include "code\datums\components\hide_weather_planes.dm"
 #include "code\datums\components\hide_highest_offset.dm"
 #include "code\datums\components\holderloving.dm"
 #include "code\datums\components\igniter.dm"
