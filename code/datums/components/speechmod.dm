@@ -54,7 +54,7 @@
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] == "*")
 		return
-	if(!should_modify_speech?.Invoke(source, speech_args))
+	if(!isnull(should_modify_speech) && !should_modify_speech?.Invoke(source, speech_args))
 		return
 
 	for (var/to_replace in replacements)
@@ -128,3 +128,6 @@
 		return
 	UnregisterSignal(targeted, COMSIG_MOB_SAY)
 	targeted = null
+
+/datum/component/speechmod/Destroy()
+	QDEL_NULL(should_modify_speech)
