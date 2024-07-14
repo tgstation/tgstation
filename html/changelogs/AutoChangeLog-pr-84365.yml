@@ -1,4 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - rscadd: "Added airlock pump atmos device to create cycling airlocks"
