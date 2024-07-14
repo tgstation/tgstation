@@ -20,6 +20,8 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 /datum/fax_panel_interface/New()
 	//Get all faxes, and save them to our list.
 	for(var/obj/machinery/fax/fax as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax))
+		if(istype(fax, /obj/machinery/fax/admin))
+			continue
 		available_faxes += WEAKREF(fax)
 
 	//Get all stamps
@@ -68,7 +70,7 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 
 	for(var/datum/weakref/weakrefed_fax as anything in available_faxes)
 		var/obj/machinery/fax/another_fax = weakrefed_fax.resolve()
-		if(another_fax && istype(another_fax) && !another_fax.special_fax)
+		if(another_fax && istype(another_fax))
 			data["faxes"] += list(another_fax.fax_name)
 
 	return data
