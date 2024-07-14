@@ -25,7 +25,7 @@ map deltastation
 endmap
 
 map kilostation
-	maxplayers 40
+	minplayers 5
 	votable
 endmap
 
