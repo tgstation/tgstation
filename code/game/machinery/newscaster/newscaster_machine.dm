@@ -264,7 +264,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	return data
 
 
-/obj/machinery/newscaster/ui_act(action, params)
+/obj/machinery/newscaster/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -372,7 +372,7 @@
 	.["selected_color"] = GLOB.pipe_color_name[paint_color] || paint_color
 	.["paint_colors"] = GLOB.pipe_paint_colors
 
-/obj/item/toy/crayon/ui_act(action, list/params)
+/obj/item/toy/crayon/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

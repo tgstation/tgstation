@@ -298,7 +298,7 @@
 	.["current_dir"] = stored_dir
 	.["current_custom_color"] = stored_custom_color
 
-/obj/item/airlock_painter/decal/ui_act(action, list/params)
+/obj/item/airlock_painter/decal/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

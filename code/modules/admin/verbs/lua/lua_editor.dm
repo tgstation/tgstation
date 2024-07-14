@@ -99,7 +99,7 @@
 	else
 		return root
 
-/datum/lua_editor/ui_act(action, list/params)
+/datum/lua_editor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

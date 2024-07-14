@@ -357,7 +357,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	data["init_directions"] = init_directions
 	return data
 
-/obj/item/pipe_dispenser/ui_act(action, params)
+/obj/item/pipe_dispenser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

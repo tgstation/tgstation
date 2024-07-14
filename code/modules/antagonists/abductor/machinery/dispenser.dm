@@ -48,7 +48,7 @@
 		data["glands"] += list(gland_information)
 	return data
 
-/obj/machinery/abductor/gland_dispenser/ui_act(action, list/params)
+/obj/machinery/abductor/gland_dispenser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

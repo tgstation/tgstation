@@ -300,7 +300,7 @@
 	data["gas_input"] = gas_input
 	return data
 
-/obj/machinery/atmospherics/components/binary/crystallizer/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/crystallizer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

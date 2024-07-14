@@ -1,6 +1,5 @@
 /mob/living/silicon
 	gender = NEUTER
-	has_unlimited_silicon_privilege = TRUE
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
@@ -77,6 +76,9 @@
 		TRAIT_NOFIRE_SPREAD,
 		TRAIT_BRAWLING_KNOCKDOWN_BLOCKED,
 		TRAIT_FENCE_CLIMBER,
+		SILICON_ACCESS_TRAIT,
+		TRAIT_REAGENT_SCANNER,
+		TRAIT_UNOBSERVANT,
 	)
 
 	add_traits(traits_to_apply, ROUNDSTART_TRAIT)

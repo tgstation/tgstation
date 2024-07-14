@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY_TYPED(tracked_implants, /obj/item/implant)
 /obj/machinery/computer/prisoner/management/ui_data(mob/user)
 	var/list/data = list()
 
-	data["authorized"] = (authenticated && isliving(user)) || isAdminGhostAI(user) || issilicon(user)
+	data["authorized"] = (authenticated && isliving(user)) || HAS_SILICON_ACCESS(user)
 	data["inserted_id"] = null
 	if(!isnull(contained_id))
 		data["inserted_id"] = list(
@@ -43,7 +43,7 @@ GLOBAL_LIST_EMPTY_TYPED(tracked_implants, /obj/item/implant)
 
 	return data
 
-/obj/machinery/computer/prisoner/management/ui_act(action, list/params)
+/obj/machinery/computer/prisoner/management/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

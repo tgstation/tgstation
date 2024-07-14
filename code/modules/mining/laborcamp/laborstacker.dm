@@ -68,7 +68,7 @@
 	data["can_go_home"] = can_go_home
 	return data
 
-/obj/machinery/mineral/labor_claim_console/ui_act(action, params)
+/obj/machinery/mineral/labor_claim_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

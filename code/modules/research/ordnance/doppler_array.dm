@@ -290,7 +290,7 @@
 		data["records"] += list(record_data)
 	return data
 
-/obj/machinery/doppler_array/ui_act(action, list/params)
+/obj/machinery/doppler_array/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

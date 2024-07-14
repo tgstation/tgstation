@@ -309,7 +309,7 @@
 	return data
 
 /** User clicks a button on the tagger */
-/obj/item/dest_tagger/ui_act(action, params)
+/obj/item/dest_tagger/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -128,6 +128,7 @@
 	if(.)
 		return
 
+	var/mob/user = ui.user
 	switch(action)
 		if("LZCargo")
 			usingBeacon = FALSE
@@ -143,7 +144,7 @@
 				if(D.adjust_money(-BEACON_COST))
 					cooldown = 10//a ~ten second cooldown for printing beacons to prevent spam
 					var/obj/item/supplypod_beacon/C = new /obj/item/supplypod_beacon(drop_location())
-					C.link_console(src, usr)//rather than in beacon's Initialize(), we can assign the computer to the beacon by reusing this proc)
+					C.link_console(src, user)//rather than in beacon's Initialize(), we can assign the computer to the beacon by reusing this proc)
 					printed_beacons++//printed_beacons starts at 0, so the first one out will be called beacon # 1
 					beacon.name = "Supply Pod Beacon #[printed_beacons]"
 
@@ -159,13 +160,13 @@
 				CRASH("Unknown supply pack id given by express order console ui. ID: [params["id"]]")
 			var/name = "*None Provided*"
 			var/rank = "*None Provided*"
-			var/ckey = usr.ckey
-			if(ishuman(usr))
-				var/mob/living/carbon/human/H = usr
+			var/ckey = user.ckey
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
 				name = H.get_authentification_name()
 				rank = H.get_assignment(hand_first = TRUE)
-			else if(HAS_SILICON_ACCESS(usr))
-				name = usr.real_name
+			else if(HAS_SILICON_ACCESS(user))
+				name = user.real_name
 				rank = "Silicon"
 			var/reason = ""
 			var/list/empty_turfs

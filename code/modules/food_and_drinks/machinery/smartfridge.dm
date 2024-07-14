@@ -507,7 +507,7 @@
 	.["isdryer"] = TRUE
 	.["drying"] = drying
 
-/obj/machinery/smartfridge/drying_rack/ui_act(action, params)
+/obj/machinery/smartfridge/drying_rack/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		update_appearance() // This is to handle a case where the last item is taken out manually instead of through drying pop-out

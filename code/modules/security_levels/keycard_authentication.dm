@@ -62,7 +62,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 		return UI_CLOSE
 	return ..()
 
-/obj/machinery/keycard_auth/ui_act(action, params)
+/obj/machinery/keycard_auth/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(. || waiting || !allowed(usr))
 		return

@@ -299,7 +299,7 @@
 
 	return data
 
-/obj/machinery/elevator_control_panel/ui_act(action, list/params)
+/obj/machinery/elevator_control_panel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

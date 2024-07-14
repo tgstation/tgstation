@@ -411,7 +411,7 @@
 		data["showpiece_icon"] = icon2base64(getFlatIcon(showpiece, no_anim=TRUE))
 	return data
 
-/obj/structure/displaycase/trophy/ui_act(action, params)
+/obj/structure/displaycase/trophy/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -526,7 +526,7 @@
 	data["product_icon"] = showpiece ? icon2base64(getFlatIcon(showpiece, no_anim=TRUE)) : null
 	return data
 
-/obj/structure/displaycase/forsale/ui_act(action, params)
+/obj/structure/displaycase/forsale/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

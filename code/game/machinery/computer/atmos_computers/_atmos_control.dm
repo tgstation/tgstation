@@ -152,7 +152,7 @@
 		data["chambers"] += list(chamber_info)
 	return data
 
-/obj/machinery/computer/atmos_control/ui_act(action, params)
+/obj/machinery/computer/atmos_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(. || !(control || reconnecting))
 		return

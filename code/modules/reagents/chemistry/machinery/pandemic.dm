@@ -153,7 +153,7 @@
 	data["resistances"] = get_resistance_data(blood)
 	return data
 
-/obj/machinery/computer/pandemic/ui_act(action, params)
+/obj/machinery/computer/pandemic/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -264,7 +264,7 @@ DEFINE_BITFIELD(turret_flags, list(
 				data["allow_manual_control"] = TRUE
 	return data
 
-/obj/machinery/porta_turret/ui_act(action, list/params)
+/obj/machinery/porta_turret/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -1025,34 +1025,36 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/turretid/ui_data(mob/user)
 	var/list/data = list()
 	data["locked"] = locked
-	data["siliconUser"] = user.has_unlimited_silicon_privilege
+	data["siliconUser"] = HAS_SILICON_ACCESS(user)
 	data["enabled"] = enabled
 	data["lethal"] = lethal
 	data["shootCyborgs"] = shoot_cyborgs
 	return data
 
-/obj/machinery/turretid/ui_act(action, list/params)
+/obj/machinery/turretid/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 
+	var/mob/user = ui.user
+
 	switch(action)
 		if("lock")
-			if(!usr.has_unlimited_silicon_privilege)
+			if(!HAS_SILICON_ACCESS(user))
 				return
 			if((obj_flags & EMAGGED) || (machine_stat & BROKEN))
-				to_chat(usr, span_warning("The turret control is unresponsive!"))
+				to_chat(user, span_warning("The turret control is unresponsive!"))
 				return
 			locked = !locked
 			return TRUE
 		if("power")
-			toggle_on(usr)
+			toggle_on(user)
 			return TRUE
 		if("mode")
-			toggle_lethal(usr)
+			toggle_lethal(user)
 			return TRUE
 		if("shoot_silicons")
-			shoot_silicons(usr)
+			shoot_silicons(user)
 			return TRUE
 
 /obj/machinery/turretid/proc/toggle_lethal(mob/user)

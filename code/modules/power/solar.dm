@@ -486,7 +486,7 @@
 	data["history"] = history
 	return data
 
-/obj/machinery/power/solar_control/ui_act(action, params)
+/obj/machinery/power/solar_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
