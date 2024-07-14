@@ -11,6 +11,7 @@
 	custom_premium_price = PAYCHECK_CREW * 14
 	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	interaction_flags_mouse_drop = FORBID_TELEKINESIS_REACH
+	storage_type = /datum/storage/portable_chem_mixer
 
 	///Creating an empty slot for a beaker that can be added to dispense into
 	var/obj/item/reagent_containers/beaker
@@ -21,15 +22,7 @@
 
 /obj/item/storage/portable_chem_mixer/Initialize(mapload)
 	. = ..()
-	atom_storage.max_total_storage = 200
-	atom_storage.max_slots = 50
-	atom_storage.set_holdable(list(
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/cup/glass/waterbottle,
-		/obj/item/reagent_containers/condiment,
-	))
+
 	register_context()
 
 /obj/item/storage/portable_chem_mixer/Destroy()
@@ -107,18 +100,18 @@
 /obj/item/storage/portable_chem_mixer/ex_act(severity, target)
 	return severity > EXPLODE_LIGHT ? ..() : FALSE
 
-/obj/item/storage/portable_chem_mixer/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
+/obj/item/storage/portable_chem_mixer/storage_insert_on_interacted_with(datum/storage, obj/item/weapon, mob/living/user)
 	if (!atom_storage.locked || \
 		(weapon.item_flags & ABSTRACT) || \
 		(weapon.flags_1 & HOLOGRAM_1) || \
 		!is_reagent_container(weapon) || \
 		!weapon.is_open_container() \
 	)
-		return NONE
+		return TRUE //continue with regular insertion
 
 	replace_beaker(user, weapon)
 	update_appearance()
-	return ITEM_INTERACT_SUCCESS
+	return FALSE //block insertion cause we handled it ourselves
 
 /**
  * Replaces the beaker of the portable chemical mixer with another beaker, or simply adds the new beaker if none is in currently
@@ -267,7 +260,7 @@
 		SStgui.close_uis(src)
 	else
 		atom_storage.locked = STORAGE_FULLY_LOCKED
-		atom_storage.hide_contents(usr)
+		atom_storage.hide_contents(user)
 
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
