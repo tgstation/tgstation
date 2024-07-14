@@ -53,7 +53,7 @@
 
 /obj/item/clothing/head/bio_hood/plague
 	name = "plague doctor's hat"
-	desc = "These were once used by plague doctors. This hat is only for show, and cannot protect you from exposure to the Pestilence."
+	desc = "These were once used by plague doctors. This hat will only slightly protect you from exposure to the Pestilence."
 	icon_state = "plaguedoctor"
 	armor_type = /datum/armor/bio_hood_plague
 	flags_inv = NONE
