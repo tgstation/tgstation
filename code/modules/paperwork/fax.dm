@@ -56,7 +56,6 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		nanotrasen = list(fax_name = "NT HR Department", fax_id = "central_command", color = "teal", emag_needed = FALSE),
 		syndicate = list(fax_name = "Sabotage Department", fax_id = "syndicate", color = "red", emag_needed = TRUE),
 	)
-	var/special_fax = FALSE
 
 /obj/machinery/fax/auto_name
 	name = "Auto-naming Fax Machine"
@@ -86,7 +85,6 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		fax_id = special_networks["nanotrasen"]["fax_id"]
 	name = "[fax_name] Fax Machine"
 	visible_to_network = FALSE
-	special_fax = TRUE
 	return ..()
 
 /obj/machinery/fax/Initialize(mapload)
