@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "KiloStation and Blueshift's Xenobio now start with a fully charged 10k cell in their APCs, consistent with other maps."
