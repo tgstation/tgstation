@@ -7,4 +7,6 @@ GLOBAL_LIST_INIT(mentor_verbs, list(
 	/client/proc/cmd_mentor_say,
 	/client/proc/mentor_requests,
 	/client/proc/toggle_mentor_states,
+	/client/proc/imaginary_friend,
+	/client/proc/end_imaginary_friendship
 ))

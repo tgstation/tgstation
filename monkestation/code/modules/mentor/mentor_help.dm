@@ -75,7 +75,10 @@
 		return
 
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-	var/mentor_msg = "<font color='purple'><span class='mentornotice'><b>MENTORHELP:</b> <b>[key_name_mentor(src, TRUE, FALSE)]</b>: </span><span class='message linkify'>[msg]</span></font>"
+	var/mentor_msg = "<font color='purple'><span class='mentornotice'><b>MENTORHELP:</b> <b>[key_name_mentor(src, TRUE, FALSE)]</b> : </span><span class='message linkify'>[msg]</span></font>"
+	//Monkestation Edit Begin
+	var/mentor_msg_observing = "<span class='mentornotice'><b><span class='mentorhelp'>MENTORHELP:</b> <b>[key_name_mentor(src, TRUE, FALSE)]</b> (<a href='?_src_=mentor;[MentorHrefToken(TRUE)];mentor_friend=[REF(src.mob)]'>IF</a>) : [msg]</span></span>"
+	//Monkestation Edit End
 	log_mentor("MENTORHELP: [key_name_mentor(src, null, FALSE, FALSE)]: [msg]")
 
 	/// Send the Mhelp to all Mentors/Admins
@@ -83,10 +86,16 @@
 		if(QDELETED(honked_clients?.mentor_datum) || honked_clients?.mentor_datum?.not_active)
 			continue
 		SEND_SOUND(honked_clients, sound('sound/items/bikehorn.ogg'))
-		to_chat(honked_clients,
-			type = MESSAGE_TYPE_MODCHAT,
-			html = mentor_msg,
-			confidential = TRUE)
+		if(!isobserver(honked_clients.mob))
+			to_chat(honked_clients,
+					type = MESSAGE_TYPE_MODCHAT,
+					html = mentor_msg,
+					confidential = TRUE)
+		else
+			to_chat(honked_clients,
+					type = MESSAGE_TYPE_MODCHAT,
+					html = mentor_msg_observing,
+					confidential = TRUE)
 
 	/// Also show it to person Mhelping
 	to_chat(usr,

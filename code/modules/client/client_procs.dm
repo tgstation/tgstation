@@ -115,6 +115,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		no_tgui_adminhelp(input(src, "Enter your ahelp", "Ahelp") as null|message)
 		return
 
+	//Monkestation Edit Begin
+	if(mentor_friend(href_list))
+		return
+	//Monkestation Edit End
+
 	switch(href_list["_src_"])
 		if("holder")
 			hsrc = holder
