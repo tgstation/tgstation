@@ -29,7 +29,7 @@
 	if(ishuman(body))
 		body.set_species(/datum/species/human)
 
-	. = ..()
+	return ..()
 
 /datum/antagonist/voidwalker/forge_objectives()
 	var/datum/objective/voidwalker_fluff/objective = new
