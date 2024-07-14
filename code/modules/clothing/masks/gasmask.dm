@@ -256,7 +256,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	inhand_icon_state = "gas_mask"
 	has_fov = FALSE
 	flags_cover = MASKCOVERSEYES
-	clothing_flags =  BLOCK_GAS_SMOKE_EFFECT
+	clothing_flags =  BLOCK_GAS_SMOKE_EFFECT | SNUG_FIT
 
 /obj/item/clothing/mask/gas/syndicate
 	name = "syndicate mask"
