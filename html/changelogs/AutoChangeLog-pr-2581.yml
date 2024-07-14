@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Everyone can now actually use their implants at roundstart during Cybernetic Revolution as they could before, as they get a compatible cyberlink alongside it if needed."
+  - balance: "Changed up the implants some jobs get for cybernetic revolution."
