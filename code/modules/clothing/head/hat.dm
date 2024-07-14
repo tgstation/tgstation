@@ -57,6 +57,7 @@
 	icon_state = "plaguedoctor"
 	armor_type = /datum/armor/bio_hood_plague
 	flags_inv = NONE
+	clothing_flags = SNUG_FIT
 
 /datum/armor/bio_hood_plague
 	bio = 100
