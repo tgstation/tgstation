@@ -131,3 +131,4 @@
 
 /datum/component/speechmod/Destroy()
 	QDEL_NULL(should_modify_speech)
+	return ..()
