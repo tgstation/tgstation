@@ -130,3 +130,7 @@
   - rscadd: adds emotes :)
   RikuTheKiller:
   - balance: Soft-spoken no longer affects radio messages.
+2024-07-14:
+  Absolucy:
+  - rscdel: Removed the "NT Artificial Surveillance Protocol", "StationDefender",
+      and "Security Master 4000" AI law sets and boards.
