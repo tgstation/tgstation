@@ -58,6 +58,10 @@
 	if (is_heavy_gravity)
 		stamina_exhaustion *= 1.5
 
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		stamina_exhaustion *= potential_spine.athletics_boost_multiplier
+
 	if(HAS_TRAIT(user, TRAIT_STRENGTH)) //The strong get reductions to stamina damage taken while exercising
 		stamina_exhaustion *= 0.5
 
