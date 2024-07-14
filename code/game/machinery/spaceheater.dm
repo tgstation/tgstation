@@ -483,7 +483,7 @@
 		settable_temperature_median + settable_temperature_range)
 
 	// No time integration is used, so we should clamp this to prevent being able to overshoot if there was a subtype with a high initial value.
-	beaker_conduction_power = min((capacitors_rating + 1) * 0.5, * initial(beaker_conduction_power), 1)
+	beaker_conduction_power = min((capacitors_rating + 1) * 0.5 * initial(beaker_conduction_power), 1)
 
 #undef HEATER_MODE_STANDBY
 #undef HEATER_MODE_HEAT
