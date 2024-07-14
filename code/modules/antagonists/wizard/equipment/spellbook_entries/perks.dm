@@ -174,7 +174,7 @@
 	if(isnull(owner))
 		stop_orbit()
 		return
-	var/mob/living/wizard = owner?.resolve()
+	var/mob/living/wizard = owner.resolve()
 	if(wizard.stat == DEAD)
 		stop_orbit()
 		return
