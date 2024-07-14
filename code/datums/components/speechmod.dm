@@ -14,7 +14,7 @@
 	/// If set to true, turns all text to uppercase
 	var/uppercase = FALSE
 	/// Any additional checks that we should do before applying the speech modification
-	var/datum/callback/should_modify_speech
+	var/datum/callback/should_modify_speech = null
 
 /datum/component/speechmod/Initialize(replacements = list(), end_string = "", end_string_chance = 100, slots, uppercase = FALSE, should_modify_speech)
 	if (!ismob(parent) && !isitem(parent) && !istype(parent, /datum/mutation/human))
