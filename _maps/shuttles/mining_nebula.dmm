@@ -69,10 +69,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
-"n" = (
-/obj/effect/turf_decal/sand/plating/volcanic,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/mining/large)
 "o" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -92,6 +88,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/structure/cable,
 /obj/structure/railing,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/iron/textured_large,
 /area/shuttle/mining/large)
 "r" = (
@@ -438,7 +435,7 @@ e
 G
 M
 M
-n
+I
 I
 I
 M
