@@ -29366,6 +29366,10 @@
 	pixel_y = 2
 	},
 /obj/structure/lattice/catwalk,
+/obj/machinery/camera/directional/south{
+	c_tag = "Ordnance Lower Mix Lab";
+	network = list("ss13","rd")
+	},
 /turf/open/openspace/icemoon,
 /area/icemoon/underground/explored)
 "iPP" = (
@@ -54339,6 +54343,13 @@
 /obj/structure/girder,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
+"qjs" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Ordnance Lower Mix Lab";
+	network = list("ss13","rd")
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "qjx" = (
 /obj/structure/cable,
 /obj/machinery/holopad/secure,
@@ -80707,6 +80718,10 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/machinery/camera/directional/south{
+	c_tag = "Ordnance Lower Mix Lab";
+	network = list("ss13","rd")
+	},
 /turf/open/floor/iron/smooth_large,
 /area/station/science/cytology)
 "ybf" = (
@@ -129259,7 +129274,7 @@ iDt
 iDt
 iDt
 iDt
-iDt
+qjs
 fIt
 fIt
 oSU
