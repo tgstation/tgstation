@@ -1,0 +1,7 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - balance: "Reworked the regenerative slime extracts from xenobiology."
+  - balance: "Regenerative extracts now apply a status effect that lasts around 15 seconds, where it rapidly heals damage."
+  - balance: "Regenerative extracts have a cooldown after being applied, where any further of them results in diminishing returns."
+  - balance: "Rainbow regenerative extracts have a similar effect to old regenerative extracts, although they do not work if the regen cooldown is active, and they no longer refresh your organs or regrows limbs (unless you're an oozeling)."
