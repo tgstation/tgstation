@@ -50632,6 +50632,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/apc/cell_10k,
+/obj/effect/mapping_helpers/apc/full_charge,
 /turf/open/floor/carpet/neon/simple/green,
 /area/station/science/xenobiology)
 "qkf" = (

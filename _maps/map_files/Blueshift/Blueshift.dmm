@@ -86716,6 +86716,8 @@
 	dir = 5
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/mapping_helpers/apc/cell_10k,
+/obj/effect/mapping_helpers/apc/full_charge,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "qRz" = (
@@ -96563,6 +96565,8 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
 	dir = 9
 	},
+/obj/effect/mapping_helpers/apc/cell_10k,
+/obj/effect/mapping_helpers/apc/full_charge,
 /turf/open/floor/iron,
 /area/station/science/xenobiology/control)
 "sMl" = (
