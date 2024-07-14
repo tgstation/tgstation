@@ -162,7 +162,7 @@
 
 /mob/living/simple_animal/bot/Initialize(mapload)
 	. = ..()
-	add_traits(list(SILICON_ACCESS_TRAIT, TRAIT_REAGENT_SCANNER, TRAIT_UNOBSERVANT), INNATE_TRAIT)
+	add_traits(list(TRAIT_SILICON_ACCESS, TRAIT_REAGENT_SCANNER, TRAIT_UNOBSERVANT), INNATE_TRAIT)
 	GLOB.bots_list += src
 
 	path_hud = new /datum/atom_hud/data/bot_path()

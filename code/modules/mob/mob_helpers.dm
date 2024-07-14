@@ -351,7 +351,7 @@
 /proc/isAdminGhostAI(mob/user)
 	if(!isAdminObserver(user))
 		return FALSE
-	if(!HAS_TRAIT_FROM(user.client, AI_ACCESS_TRAIT, ADMIN_TRAIT)) // Do they have it enabled?
+	if(!HAS_TRAIT_FROM(user.client, TRAIT_AI_ACCESS, ADMIN_TRAIT)) // Do they have it enabled?
 		return FALSE
 	return TRUE
 
