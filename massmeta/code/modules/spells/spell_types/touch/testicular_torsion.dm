@@ -5,7 +5,7 @@
 	causing them to feel immense pain, may also break their legs."
 	button_icon = 'massmeta/icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "torsion"
-	sound =  "massmeta/sounds/smites/testicular_torsion.ogg"
+	sound =  'massmeta/features/smites/sound/testicular_torsion.ogg'
 
 	school = SCHOOL_SANGUINE
 	invocation_type = INVOCATION_SHOUT
@@ -26,11 +26,14 @@
 
 /datum/action/cooldown/spell/touch/testicular_torsion/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
 	if(!ishuman(victim))
-		return
+		to_chat(caster, span_warning("Must be a human!"))
+		return FALSE
 	var/mob/living/carbon/human/human_victim = victim
-	human_victim.apply_damage(rand(40, 55), BRUTE, BODY_ZONE_L_LEG, wound_bonus = rand(45, 75), forced = TRUE)
-	human_victim.apply_damage(rand(40, 55), BRUTE, BODY_ZONE_R_LEG, wound_bonus = rand(45, 75), forced = TRUE)
-	var/list/phrase = world.file2list("massmeta/strings/balls_phrases.txt")
+	human_victim.apply_damage(rand(20, 30), BRUTE, BODY_ZONE_L_LEG, wound_bonus = CANT_WOUND)
+	human_victim.apply_damage(rand(20, 30), BRUTE, BODY_ZONE_R_LEG, wound_bonus = CANT_WOUND)
+	human_victim.cause_wound_of_type_and_severity(WOUND_BLUNT, human_victim.get_bodypart(BODY_ZONE_L_LEG), WOUND_SEVERITY_TRIVIAL, WOUND_SEVERITY_MODERATE)
+	human_victim.cause_wound_of_type_and_severity(WOUND_BLUNT, human_victim.get_bodypart(BODY_ZONE_R_LEG), WOUND_SEVERITY_TRIVIAL, WOUND_SEVERITY_MODERATE)
+	var/list/phrase = world.file2list("massmeta/features/smites/string/balls_phrases.txt")
 	human_victim.say(pick(phrase))
 	human_victim.emote("screech")
 	return TRUE
