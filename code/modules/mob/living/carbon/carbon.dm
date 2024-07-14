@@ -6,7 +6,7 @@
 
 	GLOB.carbon_list += src
 	ADD_TRAIT(src, TRAIT_CAN_HOLD_ITEMS, INNATE_TRAIT) // Carbons are assumed to be innately capable of having arms, we check their arms count instead
-	breathing_loop = new(src)
+	breathing_loop = new(src, _direct = TRUE)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -195,6 +195,11 @@
 					span_danger("You [verb_text] [thrown_thing][power_throw_text]"))
 	log_message("has thrown [thrown_thing] [power_throw_text]", LOG_ATTACK)
 	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		extra_throw_range += potential_spine.added_throw_range
+
 	newtonian_move(get_dir(target, src))
 	thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force)
 

@@ -463,6 +463,7 @@
 /obj/machinery/door/proc/run_animation(animation)
 	set_animation(animation)
 	addtimer(CALLBACK(src, PROC_REF(set_animation), null), animation_length(animation), TIMER_UNIQUE|TIMER_OVERRIDE)
+	animation_effects(animation)
 
 // React to our animation changing
 /obj/machinery/door/proc/set_animation(animation)

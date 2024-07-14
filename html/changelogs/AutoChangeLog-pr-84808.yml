@@ -1,7 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes:
-  - bugfix: "[Birdshot] The Ordnance freezer chamber is now linked to an APC, much like the burn chamber."
-  - bugfix: "[Birdshot] The Janitors quarters no longer uses `/area/station/commons`, instead, it uses the janitors regular area."
-  - bugfix: "[Birdshot] The entertainment center now has an APC."
-  - bugfix: "[Birdshot] A handful of smaller areas have received air alarms."

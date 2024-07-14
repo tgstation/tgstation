@@ -385,7 +385,7 @@
 	item = /obj/item/ammo_box/magazine/plastikov9mm
 	cost = 1
 	purchasable_from = UPLINK_SERIOUS_OPS
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 // Explosives and Grenades
 // ~~ Grenades ~~

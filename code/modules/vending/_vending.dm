@@ -1445,6 +1445,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	var/obj/item/vended_item
 	if(!LAZYLEN(item_record.returned_products)) //always give out free returned stuff first, e.g. to avoid walling a traitor objective in a bag behind paid items
 		vended_item = new item_record.product_path(get_turf(src))
+		if(vended_item.type in contraband)
+			ADD_TRAIT(vended_item, TRAIT_CONTRABAND, INNATE_TRAIT)
 		on_dispense(vended_item)
 	else
 		vended_item = LAZYACCESS(item_record.returned_products, LAZYLEN(item_record.returned_products)) //first in, last out

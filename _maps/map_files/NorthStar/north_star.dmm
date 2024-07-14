@@ -42273,7 +42273,7 @@
 	pixel_x = -22
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/incident_display/delam/directional/north,
+/obj/machinery/incident_display/bridge/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "kWJ" = (
