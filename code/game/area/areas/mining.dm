@@ -19,7 +19,7 @@
 	icon_state = "mining_storage"
 
 /area/mine/lobby/raptor
-	name = "Nanotransen Raptor Farm"
+	name = "Nanotrasen Raptor Farm"
 	icon_state = "mining_storage"
 
 /area/mine/production
