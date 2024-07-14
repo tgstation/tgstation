@@ -1,0 +1,4 @@
+author: "KnigTheThrasher"
+delete-after: True
+changes:
+  - bugfix: "fixed cargo express being unlockable by entire cargo all the time"
