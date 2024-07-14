@@ -10,10 +10,10 @@
 	inhand_icon_state = "razorwire"
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
-	force = 18
+	force = 15
 	demolition_mod = 0.25 // This thing sucks at destroying stuff
-	wound_bonus = 10
-	bare_wound_bonus = 20
+	wound_bonus = -10 // Very weak against armor.
+	bare_wound_bonus = 25
 	weak_against_armour = TRUE
 	reach = 2
 	hitsound = 'sound/weapons/whip.ogg'
