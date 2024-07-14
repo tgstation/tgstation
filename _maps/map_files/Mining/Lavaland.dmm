@@ -692,7 +692,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/misc/hay,
+/turf/open/misc/hay/lavaland,
 /area/lavaland/surface/outdoors)
 "eo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2080,7 +2080,7 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lt" = (
-/turf/open/misc/hay,
+/turf/open/misc/hay/lavaland,
 /area/lavaland/surface/outdoors)
 "lv" = (
 /obj/structure/stone_tile/block/cracked{
@@ -2925,7 +2925,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/lavaland_atmos,
-/area/lavaland/surface)
+/area/mine/lobby/raptor)
 "oS" = (
 /obj/machinery/door/airlock/external/glass{
 	name = "Mining External Airlock"
@@ -3198,11 +3198,6 @@
 	dir = 4
 	},
 /area/mine/laborcamp/quarters)
-"qi" = (
-/turf/open/floor/iron/stairs{
-	dir = 8
-	},
-/area/lavaland/surface/outdoors)
 "qo" = (
 /obj/machinery/door/airlock/glass{
 	name = "Equipment Storage"
@@ -3826,7 +3821,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/misc/hay,
+/turf/open/misc/hay/lavaland,
 /area/lavaland/surface/outdoors)
 "uq" = (
 /obj/effect/spawner/structure/window,
@@ -4857,7 +4852,7 @@
 /area/lavaland/surface/outdoors)
 "Az" = (
 /obj/item/flashlight/lantern/on,
-/turf/open/misc/hay,
+/turf/open/misc/hay/lavaland,
 /area/lavaland/surface/outdoors)
 "AA" = (
 /obj/structure/lattice/catwalk,
@@ -5076,8 +5071,11 @@
 /turf/open/floor/wood/large,
 /area/mine/lobby/raptor)
 "Cv" = (
-/turf/closed/wall/mineral/iron,
-/area/lavaland/surface)
+/obj/effect/turf_decal/sand/plating/volcanic,
+/obj/structure/marker_beacon/purple,
+/obj/effect/turf_decal/sand/plating/volcanic,
+/turf/open/floor/plating/lavaland_atmos,
+/area/lavaland/surface/outdoors)
 "Cz" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Infirmary"
@@ -6970,7 +6968,7 @@
 /area/mine/laborcamp/production)
 "Ns" = (
 /obj/structure/flora/ash/fireblossom,
-/turf/open/misc/hay,
+/turf/open/misc/hay/lavaland,
 /area/lavaland/surface/outdoors)
 "Nt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7154,7 +7152,7 @@
 	dir = 5
 	},
 /obj/item/reagent_containers/cup/bucket/wooden,
-/turf/open/misc/hay,
+/turf/open/misc/hay/lavaland,
 /area/lavaland/surface/outdoors)
 "Op" = (
 /obj/structure/stone_tile/slab,
@@ -7255,7 +7253,7 @@
 /area/mine/mechbay)
 "Pb" = (
 /obj/structure/water_source/puddle,
-/turf/open/misc/hay,
+/turf/open/misc/hay/lavaland,
 /area/lavaland/surface/outdoors)
 "Pc" = (
 /obj/structure/closet/crate/grave,
@@ -7626,7 +7624,7 @@
 "Ri" = (
 /obj/item/canvas/twentythree_nineteen,
 /obj/structure/easel,
-/turf/open/misc/hay,
+/turf/open/misc/hay/lavaland,
 /area/lavaland/surface/outdoors)
 "Rj" = (
 /obj/machinery/suit_storage_unit/mining,
@@ -8692,7 +8690,7 @@
 /area/mine/production)
 "Xk" = (
 /obj/effect/spawner/random/lavaland_mob/raptor,
-/turf/open/misc/hay,
+/turf/open/misc/hay/lavaland,
 /area/lavaland/surface/outdoors)
 "Xp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -9101,9 +9099,9 @@
 /turf/open/floor/wood/large,
 /area/mine/lobby/raptor)
 "ZF" = (
-/turf/open/floor/iron/stairs{
-	dir = 4
-	},
+/obj/effect/turf_decal/sand/plating/volcanic,
+/obj/effect/turf_decal/sand/plating/volcanic,
+/turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "ZH" = (
 /obj/structure/closet/secure_closet/labor_camp_security,
@@ -43340,7 +43338,7 @@ aj
 pU
 pU
 DB
-qi
+BP
 DB
 aj
 aj
@@ -44111,7 +44109,7 @@ aj
 aj
 pU
 DB
-ZF
+BP
 DB
 aj
 aj
@@ -46168,7 +46166,7 @@ aj
 aj
 aj
 DB
-qi
+BP
 DB
 aj
 aj
@@ -46939,7 +46937,7 @@ aj
 pU
 pU
 DB
-ZF
+BP
 DB
 aj
 aj
@@ -48459,7 +48457,7 @@ mT
 pK
 pU
 BP
-BP
+ZF
 BP
 JD
 BP
@@ -48715,9 +48713,9 @@ Yg
 li
 dK
 pU
-ct
-qi
-ct
+Cv
+BP
+Cv
 zk
 mc
 mc
@@ -48736,7 +48734,7 @@ aj
 aj
 pU
 DB
-qi
+BP
 DB
 pU
 aj
@@ -49764,7 +49762,7 @@ pU
 aj
 aj
 DB
-ZF
+BP
 DB
 pU
 pU
@@ -50772,7 +50770,7 @@ aj
 aj
 aj
 ct
-ZF
+BP
 ct
 pU
 aj
@@ -52824,7 +52822,7 @@ ai
 ai
 pU
 CV
-wa
+GG
 Tt
 fa
 eL
@@ -53081,14 +53079,14 @@ ai
 ai
 ai
 CV
-GG
+wa
 rB
 fa
 eL
 Lv
 CV
 CV
-Cv
+CV
 ct
 pU
 pU
@@ -53602,7 +53600,7 @@ Sj
 ZB
 CV
 CV
-Cv
+CV
 ct
 pU
 pU
