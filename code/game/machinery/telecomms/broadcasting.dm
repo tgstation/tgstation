@@ -15,7 +15,7 @@
 	var/list/levels
 	/// Blacklisted spans we don't want being put into comms by anything, ever - a place to put any new spans we want to make without letting them annoy people on comms
 	var/list/blacklisted_spans = list(
-		SPAN_SOAPBOX
+		SPAN_SOAPBOX,
 	)
 
 /datum/signal/subspace/New(data)
