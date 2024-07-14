@@ -1,6 +1,9 @@
 /obj/machinery/add_tts_component()
 	AddComponent(/datum/component/tts_component, /datum/tts_seed/silero/glados)
 
+/obj/machinery/airalarm/add_tts_component()
+	return
+
 /obj/machinery/computer/add_tts_component()
 	return
 
