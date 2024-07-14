@@ -75,7 +75,8 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		var/number_of_orbiters = length(mob_poi.get_all_orbiters())
 
 		serialized["ref"] = REF(mob_poi)
-		serialized["full_name"] = name
+		serialized["name"] = mob_poi.get_visible_name(force_real_name = TRUE)
+		serialized["real_name"] = mob_poi.real_name
 		if(number_of_orbiters)
 			serialized["orbiters"] = number_of_orbiters
 
@@ -99,7 +100,6 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			continue
 
 		serialized["client"] = !!mob_poi.client
-		serialized["name"] = mob_poi.real_name
 
 		if(isliving(mob_poi))
 			serialized += get_living_data(mob_poi)
@@ -211,13 +211,25 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 	if(issilicon(player))
 		serialized["job"] = player.job
 		serialized["icon"] = "borg"
-	else
-		var/obj/item/card/id/id_card = player.get_idcard(hand_first = FALSE)
-		serialized["job"] = id_card?.get_trim_assignment()
-		serialized["icon"] = id_card?.get_trim_sechud_icon_state()
+		return serialized
 
+	var/obj/item/card/id/id_card = player.get_idcard(hand_first = FALSE)
+	serialized["job"] = id_card?.get_trim_assignment()
+	serialized["icon"] = id_card?.get_trim_sechud_icon_state()
+
+	var/datum/job/job = player.mind?.assigned_role
+	if (isnull(job))
+		return serialized
+
+	serialized["job"] = job.title
+	var/datum/outfit/outfit = job.get_outfit()
+	if (isnull(outfit))
+		return serialized
+
+	var/datum/id_trim/trim = outfit.id_trim
+	if (!isnull(trim))
+		serialized["icon"] = trim::sechud_icon_state
 	return serialized
-
 
 /// Gets a list: Misc data and whether it's critical. Handles all snowflakey type cases
 /datum/orbit_menu/proc/get_misc_data(atom/movable/atom_poi) as /list

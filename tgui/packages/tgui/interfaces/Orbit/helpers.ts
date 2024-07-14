@@ -31,17 +31,7 @@ export function getDisplayName(full_name: string, nickname?: string): string {
   if (!nickname) {
     return full_name;
   }
-
-  if (
-    !full_name?.includes('[') ||
-    full_name.match(/\(as /) ||
-    full_name.match(/^Unknown/)
-  ) {
-    return nickname;
-  }
-
-  // return only the name before the first ' [' or ' ('
-  return `"${full_name.split(/ \[| \(/)[0]}"`;
+  return nickname;
 }
 
 /** Returns the department the player is in */
@@ -126,10 +116,11 @@ export function isJobOrNameMatch(
 ): boolean {
   if (!searchQuery) return true;
 
-  const { full_name, job } = observable;
+  const { full_name, job, name } = observable;
 
   return (
     full_name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+    name?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
     job?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
     false
   );

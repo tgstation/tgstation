@@ -12,7 +12,7 @@ import {
 } from '../../components';
 import { OrbitContext } from '.';
 import { HEALTH, VIEWMODE } from './constants';
-import { getDepartmentByJob, getDisplayName } from './helpers';
+import { getDepartmentByJob } from './helpers';
 import { JobIcon } from './JobIcon';
 import { OrbitData } from './types';
 
@@ -103,7 +103,7 @@ function OrbitInfo(props) {
     <Section title="Orbiting">
       <Stack fill vertical>
         <Stack.Item>
-          {toTitleCase(getDisplayName(full_name, name))}
+          {toTitleCase(name || full_name)}
           {showAFK && (
             <Tooltip content="Away from keyboard" position="bottom-start">
               <Icon ml={1} color="grey" name="bed" />

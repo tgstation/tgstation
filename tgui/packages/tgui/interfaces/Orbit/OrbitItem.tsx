@@ -2,7 +2,7 @@ import { capitalizeFirst } from 'common/string';
 
 import { useBackend } from '../../backend';
 import { Button, Flex, Icon, Stack } from '../../components';
-import { getDisplayColor, getDisplayName } from './helpers';
+import { getDisplayColor } from './helpers';
 import { JobIcon } from './JobIcon';
 import { Antagonist, Observable, OrbitData, ViewMode } from './types';
 
@@ -40,9 +40,7 @@ export function OrbitItem(props: Props) {
         pl={validIcon && 0.5}
       >
         <Stack>
-          <Stack.Item>
-            {capitalizeFirst(getDisplayName(full_name, name))}
-          </Stack.Item>
+          <Stack.Item>{capitalizeFirst(name || full_name)}</Stack.Item>
           {!!orbiters && (
             <Stack.Item>
               <Icon name="ghost" />
