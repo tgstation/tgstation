@@ -507,7 +507,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		update_mutations_overlay()// no lizard with human hulk overlay please.
 
 
-/mob/proc/has_dna()
+/mob/proc/has_dna() as /datum/dna
+	RETURN_TYPE(/datum/dna)
 	return
 
 /mob/living/carbon/has_dna()
