@@ -8,10 +8,6 @@
 		"autopsyscanner",
 		"genescanner",
 		"medical_kiosk",
-		"chem_master",
-		"ph_meter",
-		"scigoggles",
-		"mod_reagent_scanner",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
@@ -49,7 +45,6 @@
 	id = TECHWEB_NODE_GENE_ENGINEERING
 	display_name = "Gene Engineering"
 	description = "Research into sophisticated DNA manipulation techniques, enabling the modification of human genetic traits to unlock specific abilities and enhancements."
-	prereq_ids = list(TECHWEB_NODE_SELECTION, TECHWEB_NODE_XENOBIOLOGY)
 	design_ids = list(
 		"dnascanner",
 		"scan_console",
@@ -57,8 +52,7 @@
 		"dnainfuser",
 		"mod_dna_lock",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	discount_experiments = list(
-		/datum/experiment/scanning/random/plants/traits = TECHWEB_TIER_2_POINTS,
-		/datum/experiment/scanning/points/slime/hard = TECHWEB_TIER_2_POINTS,
+		/datum/experiment/scanning/people/active_dna = TECHWEB_TIER_3_POINTS,
 		)

@@ -33,6 +33,19 @@
 		/datum/experiment/autopsy/xenomorph,
 	)
 
+/datum/techweb_node/plumbing
+	id = TECHWEB_NODE_PLUMBING
+	starting_node = TRUE
+	display_name = "Plumbing"
+	description = "Essential infrastructure for building chemical factories. To scale up the production of happy pills to an industrial level."
+	design_ids = list(
+		"plumbing_rcd",
+		"plumbing_rcd_service",
+		"plumbing_rcd_sci",
+		"plunger",
+		"fluid_ducts",
+	)
+
 /datum/techweb_node/chem_synthesis
 	id = TECHWEB_NODE_CHEM_SYNTHESIS
 	display_name = "Chemical Synthesis"
@@ -54,27 +67,26 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
-/datum/techweb_node/plumbing
-	id = TECHWEB_NODE_PLUMBING
-	display_name = "Plumbing"
-	description = "Essential infrastructure for building chemical factories. To scale up the production of happy pills to an industrial level."
-	prereq_ids = list(TECHWEB_NODE_CHEM_SYNTHESIS)
+/datum/techweb_node/advanced_chemical_synthesis
+	id = TECHWEB_NODE_ADVANCED_SYNTHESIS
+	display_name = "Advanced Chemical Synthesis"
+	description = "Research into the cutting edge of chemical analysis, storage, injection, and synthesis."
+	prereq_ids = list(TECHWEB_NODE_CHEM_SYNTHESIS, TECHWEB_NODE_BIO_SCAN)
 	design_ids = list(
-		"plumbing_rcd",
-		"plumbing_rcd_service",
-		"plumbing_rcd_sci",
-		"plunger",
-		"fluid_ducts",
+		"chem_master",
+		"ph_meter",
+		"scigoggles",
+		"mod_reagent_scanner",
 		"meta_beaker",
 		"piercesyringe",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/cryostasis
 	id = TECHWEB_NODE_CRYOSTASIS
 	display_name = "Cryostasis"
 	description = "The result of clown accidentally drinking a chemical, now repurposed for safely preserving crew members in suspended animation."
-	prereq_ids = list(TECHWEB_NODE_PLUMBING, TECHWEB_NODE_PLASMA_CONTROL)
+	prereq_ids = list(TECHWEB_NODE_ADVANCED_SYNTHESIS, TECHWEB_NODE_PLASMA_CONTROL)
 	design_ids = list(
 		"cryotube",
 		"mech_sleeper",
