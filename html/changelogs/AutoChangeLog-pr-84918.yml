@@ -1,0 +1,4 @@
+author: "MrDas"
+delete-after: True
+changes:
+  - bugfix: "Clown operative reinforcements' uplink no longer break the syndicates' economy by creating TC from nothingness."

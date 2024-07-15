@@ -351,6 +351,9 @@
 		/obj/item/mod/module/quick_cuff,
 	)
 
+/obj/item/mod/control/pre_equipped/infiltrator/Initialize(mapload, new_theme, new_skin, new_core)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND_BLOCKER, INNATE_TRAIT)
 
 /obj/item/mod/control/pre_equipped/interdyne
 	theme = /datum/mod_theme/interdyne

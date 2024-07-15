@@ -84,8 +84,8 @@
 
 	RegisterSignal(jaunter, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 	RegisterSignal(jaunter, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
-	our_turf.visible_message(span_warning("[jaunter] sinks into [our_turf]!"))
 	playsound(our_turf, 'sound/magic/cosmic_energy.ogg', 50, TRUE, -1)
+	our_turf.visible_message(span_warning("[jaunter] sinks into [our_turf]!"))
 	new /obj/effect/temp_visual/space_explosion(our_turf)
 	jaunter.extinguish_mob()
 
@@ -102,7 +102,6 @@
 
 	if(!exit_jaunt(jaunter, our_turf))
 		return FALSE
-
 	our_turf.visible_message(span_boldwarning("[jaunter] rises out of [our_turf]!"))
 	return TRUE
 
