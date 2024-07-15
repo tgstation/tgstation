@@ -1,4 +1,0 @@
-author: "GoblinBackwards"
-delete-after: True
-changes:
-  - bugfix: "Fixed gas canister shields turning themselves off in unpowered areas when they weren't drawing any cell power."

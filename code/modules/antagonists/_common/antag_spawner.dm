@@ -187,7 +187,7 @@
 	desc = "A single-use beacon designed to quickly launch reinforcement clown operatives into the field."
 	special_role_name = ROLE_CLOWN_OPERATIVE
 	outfit = /datum/outfit/syndicate/clownop/no_crystals
-	antag_datum = /datum/antagonist/nukeop/clownop
+	antag_datum = /datum/antagonist/nukeop/reinforcement/clownop
 	pod_style = STYLE_HONK
 	use_subtypes = FALSE
 

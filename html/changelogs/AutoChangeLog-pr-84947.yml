@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - spellcheck: "Firelocks no longer output their full name in their balloon alert."
+  - spellcheck: "Failure message when a xenomorph tries to force open a welded firelock is now a balloon alert."

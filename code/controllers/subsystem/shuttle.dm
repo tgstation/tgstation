@@ -527,7 +527,7 @@ SUBSYSTEM_DEF(shuttle)
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "grey",
 		)
-	if(!emergency_no_escape && (emergency.mode == SHUTTLE_STRANDED))
+	if(!emergency_no_escape && (emergency.mode == SHUTTLE_STRANDED || emergency.mode == SHUTTLE_DOCKED))
 		emergency.mode = SHUTTLE_DOCKED
 		emergency.setTimer(emergency_dock_time)
 		priority_announce(

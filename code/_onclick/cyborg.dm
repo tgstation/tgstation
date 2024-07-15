@@ -31,7 +31,10 @@
 		MiddleClickOn(A, params)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
-		A.borg_click_alt(src)
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+			AltClickSecondaryOn(A)
+		else
+			A.borg_click_alt(src)
 		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)

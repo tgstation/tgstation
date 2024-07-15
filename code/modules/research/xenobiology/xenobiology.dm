@@ -10,7 +10,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6
-	grind_results = list()
+	grind_results = list(/datum/reagent/toxin/slimejelly = 20)
 	///uses before it goes inert
 	var/extract_uses = 1
 	///deletion timer, for delayed reactions
@@ -43,11 +43,6 @@
 /obj/item/slime_extract/Initialize(mapload)
 	. = ..()
 	create_reagents(100, INJECTABLE | DRAWABLE)
-
-/obj/item/slime_extract/on_grind()
-	. = ..()
-	if(extract_uses)
-		grind_results[/datum/reagent/toxin/slimejelly] = 20
 
 /**
 * Effect when activated by a Luminescent.

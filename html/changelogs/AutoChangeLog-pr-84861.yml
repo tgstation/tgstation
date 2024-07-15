@@ -1,0 +1,4 @@
+author: "Hardly3D"
+delete-after: True
+changes:
+  - bugfix: "Added a preview assistant outfit, allowing assistant jumpskirts to be previewed again on character preferences."

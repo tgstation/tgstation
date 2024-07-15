@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - admin: "Outfit manager UI no longer harddels after closing and thus is usable more than once"

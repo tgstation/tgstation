@@ -123,7 +123,7 @@
 	suffix = "icemoon_underground_hermit.dmm"
 
 /datum/map_template/ruin/icemoon/underground/lavaland
-	name = "Ice-Ruin Lavaland Site"
+	name = "Ice-Ruin Lavaland Incursion"
 	id = "lavalandsite"
 	description = "I guess we never really left you huh?"
 	suffix = "icemoon_underground_lavaland.dmm"

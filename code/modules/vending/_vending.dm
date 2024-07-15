@@ -1074,11 +1074,9 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 			var/mob/living/carbon/carbon_target = atom_target
 			for(var/i in 1 to num_shards)
 				var/obj/item/shard/shard = new /obj/item/shard(get_turf(carbon_target))
-				shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult = 1, pain_chance = 5)
-				shard.updateEmbedding()
+				shard.set_embed(/datum/embed_data/glass_candy)
 				carbon_target.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-				shard.embedding = list()
-				shard.updateEmbedding()
+				shard.set_embed(initial(shard.embed_type))
 			return TRUE
 		if (VENDOR_CRUSH_CRIT_PIN) // pin them beneath the machine until someone untilts it
 			if (!isliving(atom_target))
@@ -1447,6 +1445,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	var/obj/item/vended_item
 	if(!LAZYLEN(item_record.returned_products)) //always give out free returned stuff first, e.g. to avoid walling a traitor objective in a bag behind paid items
 		vended_item = new item_record.product_path(get_turf(src))
+		if(vended_item.type in contraband)
+			ADD_TRAIT(vended_item, TRAIT_CONTRABAND, INNATE_TRAIT)
 		on_dispense(vended_item)
 	else
 		vended_item = LAZYACCESS(item_record.returned_products, LAZYLEN(item_record.returned_products)) //first in, last out

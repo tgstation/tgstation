@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Guns no longer can be overfilled by 1 bullet"
-  - bugfix: "Russian revolvers now spawn with only 1 live round as originally intended, and click when firing a blank."

@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "You can no longer fit an infinite amount of drivers into a clown car - making spy-acquired clown cars usable!"

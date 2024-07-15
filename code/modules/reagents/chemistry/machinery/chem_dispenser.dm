@@ -278,6 +278,9 @@
 
 					var/datum/reagents/holder = beaker.reagents
 					var/to_dispense = max(0, min(amount, holder.maximum_volume - holder.total_volume))
+					if(!to_dispense)
+						say("The container is full!")
+						return
 					if(!cell.use(to_dispense * power_cost))
 						say("Not enough energy to complete operation!")
 						return

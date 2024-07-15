@@ -1,5 +1,7 @@
 /**
  * # The path of Moon.
+ * Spell names are in this language: ANCIENT HEBREW
+ * Both are related: Ancient Hebrew-Moon Mysticism-Moon
  *
  * Goes as follows:
  *
@@ -39,6 +41,8 @@
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/moon)
 	route = PATH_MOON
+	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_state = "moon_blade"
 
 /datum/heretic_knowledge/base_moon/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	add_traits(user ,TRAIT_EMPATH, REF(src))
@@ -51,6 +55,9 @@
 	next_knowledge = list(/datum/heretic_knowledge/spell/moon_smile)
 	cost = 1
 	route = PATH_MOON
+	depth = 3
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "grasp_moon"
 
 /datum/heretic_knowledge/moon_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
@@ -82,6 +89,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/moon_smile
 	cost = 1
 	route = PATH_MOON
+	depth = 4
 
 /datum/heretic_knowledge/mark/moon_mark
 	name = "Mark of Moon"
@@ -107,6 +115,7 @@
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
 	cost = 1
 	route = PATH_MOON
+	depth = 7
 
 
 /datum/heretic_knowledge/moon_amulet
@@ -130,6 +139,10 @@
 	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulet)
 	cost = 1
 	route = PATH_MOON
+	depth = 8
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "moon_amulette"
+	research_tree_icon_frame = 9
 
 /datum/heretic_knowledge/blade_upgrade/moon
 	name = "Moonlight Blade"
@@ -137,6 +150,8 @@
 	gain_text = "His wit was sharp as a blade, cutting through the lie to bring us joy."
 	next_knowledge = list(/datum/heretic_knowledge/spell/moon_ringleader)
 	route = PATH_MOON
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "blade_upgrade_moon"
 
 /datum/heretic_knowledge/blade_upgrade/moon/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(source == target)
@@ -164,6 +179,8 @@
 	spell_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
 	cost = 1
 	route = PATH_MOON
+	depth = 10
+	research_tree_icon_frame = 5
 
 /datum/heretic_knowledge/ultimate/moon_final
 	name = "The Last Act"
@@ -176,6 +193,7 @@
 		for where the Ringleader had started the parade, I shall continue it unto the suns demise \
 		WITNESS MY ASCENSION, THE MOON SMILES ONCE MORE AND FOREVER MORE IT SHALL!"
 	route = PATH_MOON
+	ascension_achievement = /datum/award/achievement/misc/moon_ascension
 
 /datum/heretic_knowledge/ultimate/moon_final/is_valid_sacrifice(mob/living/sacrifice)
 
@@ -193,10 +211,9 @@
 				The truth shall finally devour the lie! [generate_heretic_text()]",
 		title = "[generate_heretic_text()]",
 		sound = 'sound/ambience/antag/heretic/ascend_moon.ogg',
-		color_override = "pink",
+		color_override = "blue",
 	)
 
-	user.client?.give_award(/datum/award/achievement/misc/moon_ascension, user)
 	ADD_TRAIT(user, TRAIT_MADNESS_IMMUNE, REF(src))
 	user.mind.add_antag_datum(/datum/antagonist/lunatic/master)
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))

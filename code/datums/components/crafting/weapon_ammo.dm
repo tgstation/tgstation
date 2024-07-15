@@ -111,3 +111,46 @@
 	)
 	category = CAT_WEAPON_AMMO
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
+
+/datum/crafting_recipe/arrow
+	name = "Arrow"
+	result = /obj/item/ammo_casing/arrow
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 1,
+		/obj/item/stack/sheet/cloth = 1,
+		/obj/item/stack/sheet/iron = 1,
+	)
+	tool_paths = list(
+		/obj/item/hatchet,
+	)
+	time = 5 SECONDS
+	category = CAT_WEAPON_AMMO
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
+
+/datum/crafting_recipe/plastic_arrow
+	name = "Plastic Arrow"
+	result = /obj/item/ammo_casing/arrow/plastic
+	reqs = list(
+		/obj/item/stack/sheet/plastic = 1,
+	)
+	tool_paths = list(
+		/obj/item/hatchet,
+	)
+	time = 5 SECONDS
+	category = CAT_WEAPON_AMMO
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
+
+
+/datum/crafting_recipe/holy_arrow
+	name = "Holy Arrow"
+	result = /obj/item/ammo_casing/arrow/holy
+	reqs = list(
+		/obj/item/ammo_casing/arrow = 1,
+		/datum/reagent/water/holywater = 10,
+	)
+	tool_paths = list(
+		/obj/item/gun/ballistic/bow/divine,
+	)
+	time = 5 SECONDS
+	category = CAT_WEAPON_AMMO
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED

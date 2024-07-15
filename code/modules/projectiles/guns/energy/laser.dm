@@ -16,8 +16,8 @@
 		return
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/xraylaser, /datum/crafting_recipe/hellgun, /datum/crafting_recipe/ioncarbine)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -139,12 +139,14 @@
 	icon_state = "scatterlaser"
 	range = 255
 	damage = 6
+	var/size_per_tile = 0.1
+	var/max_scale = 4
 
 /obj/projectile/beam/laser/accelerator/Range()
 	..()
 	damage += 7
 	transform = 0
-	transform *= 1 + (((damage - 6)/7) * 0.2)//20% larger per tile
+	transform *= min(1 + (decayedRange - range) * size_per_tile, max_scale)
 
 ///X-ray gun
 
