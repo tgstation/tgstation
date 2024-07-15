@@ -1,0 +1,5 @@
+author: "Sadboysuss"
+delete-after: True
+changes:
+  - sound: "all materials now have a sound for picking up and dropping"
+  - code_imp: "items now have pitch vary sound support for dropping and picking up items"

@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - rscadd: "Love is now stored in the heart."
+  - balance: "Characters with the Friendly quirk now have physically bigger hearts."

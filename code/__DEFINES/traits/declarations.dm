@@ -138,6 +138,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Prevents plasmamen from self-igniting if only their helmet is missing
 #define TRAIT_NOSELFIGNITION_HEAD_ONLY "no_selfignition_head_only"
 #define TRAIT_NOGUNS "no_guns"
+///Can toss a guns like a badass, causing additional damage/effect to their enemies
+#define TRAIT_TOSS_GUN_HARD "toss_gun_hard"
 /// Species with this trait are genderless
 #define TRAIT_AGENDER "agender"
 /// Species with this trait have a blood clan mechanic
@@ -1170,6 +1172,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait given to anything linked to, not necessarily allied to, the mansus
 #define TRAIT_MANSUS_TOUCHED "mansus_touched"
+
+/// Appiled when wizard buy (/datum/spellbook_entry/perks/spalls_lottery) perk.
+/// Give 50/25% chance not spend a spellbook charge on 1/2 cost spell.
+/// Appiled it wizard can't refund any spells.
+#define TRAIT_SPELLS_LOTTERY "spell_for_sale"
 
 /// Trait given to mobs wearing the clown mask
 #define TRAIT_PERCEIVED_AS_CLOWN "perceived_as_clown"

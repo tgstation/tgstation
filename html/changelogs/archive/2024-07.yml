@@ -795,3 +795,6 @@
   - rscadd: Added airlock pump atmos device to create cycling airlocks
   carlarctg:
   - bugfix: Fixed new charger power not working fior strange objects
+2024-07-15:
+  Thedragmeme:
+  - bugfix: Fixes the Plague hat having what the Plague mask should have

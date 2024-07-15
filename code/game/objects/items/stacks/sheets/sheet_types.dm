@@ -385,6 +385,8 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	grind_results = list(/datum/reagent/cellulose = 20) //no lignocellulose or lignin reagents yet,
 	walltype = /turf/closed/wall/mineral/wood
 	stairs_type = /obj/structure/stairs/wood
+	pickup_sound = 'sound/items/wood_pick_up.ogg'
+	drop_sound = 'sound/items/wood_drop.ogg'
 
 /datum/armor/mineral_wood
 	fire = 50
@@ -853,6 +855,8 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	throwforce = 7
 	material_type = /datum/material/plastic
 	merge_type = /obj/item/stack/sheet/plastic
+	pickup_sound = 'sound/items/plastic_pick_up.ogg'
+	drop_sound = 'sound/items/plastic_drop.ogg'
 
 /obj/item/stack/sheet/plastic/fifty
 	amount = 50
