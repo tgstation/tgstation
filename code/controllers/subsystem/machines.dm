@@ -85,7 +85,7 @@ SUBSYSTEM_DEF(machines)
 		current_part = SSMACHINES_MACHINES
 		src.currentrun = processing.Copy()
 
-	//Processing machines, directly wired to the network.
+	//Processing all machines
 	if(current_part == SSMACHINES_MACHINES)
 		//cache for sanic speed (lists are references anyways)
 		var/list/currentrun = src.currentrun
