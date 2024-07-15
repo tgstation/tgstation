@@ -12,6 +12,10 @@
 	var/parry_speed_mult
 	/// How much this projectile's damage is increased when parried
 	var/parry_damage_mult
+	/// How much this projectile is sped up when boosted (parried by owner)
+	var/boost_speed_mult
+	/// How much this projectile's damage is increased when boosted (parried by owner)
+	var/boost_damage_mult
 	/// Trait required to be able to parry this projectile
 	var/parry_trait
 	/// For how long do valid tiles persist? Acts as clientside lag compensation
@@ -19,11 +23,13 @@
 	/// Callback for special effects upon parrying
 	var/datum/callback/parry_callback
 
-/datum/component/parriable_projectile/Initialize(parry_speed_mult = 0.8, parry_damage_mult = 1.15, parry_trait = TRAIT_MINING_PARRYING, grace_period = 0.25 SECONDS, datum/callback/parry_callback = null)
+/datum/component/parriable_projectile/Initialize(parry_speed_mult = 0.8, parry_damage_mult = 1.15, boost_speed_mult = 0.6, boost_damage_mult = 1.5, parry_trait = TRAIT_MINING_PARRYING, grace_period = 0.25 SECONDS, datum/callback/parry_callback = null)
 	if(!isprojectile(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.parry_speed_mult = parry_speed_mult
 	src.parry_damage_mult = parry_damage_mult
+	src.boost_speed_mult = boost_speed_mult
+	src.boost_damage_mult = boost_damage_mult
 	src.parry_trait = parry_trait
 	src.grace_period = grace_period
 	src.parry_callback = parry_callback
@@ -103,8 +109,8 @@
 	else
 		user.visible_message(span_warning("[user] boosts [source] with [user.p_their()] bare hand!"), span_warning("You boosts [source] with your hand!"))
 	source.firer = user
-	source.speed *= parry_speed_mult
-	source.damage *= parry_damage_mult
+	source.speed *= (source.firer == user) ? boost_speed_mult : parry_speed_mult
+	source.damage *= (source.firer == user) ? boost_damage_mult : parry_damage_mult
 	source.add_atom_colour(COLOR_RED_LIGHT, TEMPORARY_COLOUR_PRIORITY)
 	if (!isnull(parry_callback))
 		parry_callback.Invoke(user)

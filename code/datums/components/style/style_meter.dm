@@ -98,7 +98,7 @@
 
 	clean_up(loc)
 	forceMove(get_turf(src))
-	user.put_in_hands(src)
+	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), src)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/style_meter/multitool_act(mob/living/user, obj/item/tool)
