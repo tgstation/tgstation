@@ -295,7 +295,7 @@
 	on = !on
 	mode = HEATER_MODE_STANDBY
 	if(!isnull(user))
-		if(!cell || QDELETED(cell))
+		if(QDELETED(cell))
 			balloon_alert(user, "no cell!")
 		else if(!cell.charge())
 			balloon_alert(user, "no charge!")
