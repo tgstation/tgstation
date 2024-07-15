@@ -94,24 +94,24 @@
 			I.forceMove(Tsec)
 	update_appearance()
 
-/obj/structure/bookcase/attackby(obj/item/I, mob/user, params)
+/obj/structure/bookcase/attackby(obj/item/attacking_item, mob/user, params)
 	if(state == BOOKCASE_UNANCHORED)
-		if(I.tool_behaviour == TOOL_WRENCH)
-			if(I.use_tool(src, user, 20, volume=50))
+		if(attacking_item.tool_behaviour == TOOL_WRENCH)
+			if(attacking_item.use_tool(src, user, 20, volume=50))
 				balloon_alert(user, "wrenched in place")
 				set_anchored(TRUE)
 			return
 
-		if(I.tool_behaviour == TOOL_CROWBAR)
-			if(I.use_tool(src, user, 20, volume=50))
+		if(attacking_item.tool_behaviour == TOOL_CROWBAR)
+			if(attacking_item.use_tool(src, user, 20, volume=50))
 				balloon_alert(user, "pried apart")
 				deconstruct(TRUE)
 			return
 		return ..()
 
 	if(state == BOOKCASE_ANCHORED)
-		if(istype(I, /obj/item/stack/sheet/mineral/wood))
-			var/obj/item/stack/sheet/mineral/wood/W = I
+		if(istype(attacking_item, /obj/item/stack/sheet/mineral/wood))
+			var/obj/item/stack/sheet/mineral/wood/W = attacking_item
 			if(W.get_amount() < 2)
 				balloon_alert(user, "not enough wood")
 				return
@@ -121,22 +121,22 @@
 			update_appearance()
 			return
 
-		if(I.tool_behaviour == TOOL_WRENCH)
-			I.play_tool_sound(src, 100)
+		if(attacking_item.tool_behaviour == TOOL_WRENCH)
+			attacking_item.play_tool_sound(src, 100)
 			balloon_alert(user, "unwrenched the frame")
 			set_anchored(FALSE)
 			return
 		return ..()
 
-	if(isbook(I))
-		if(!user.transferItemToLoc(I, src))
+	if(isbook(attacking_item))
+		if(!user.transferItemToLoc(attacking_item, src))
 			return ..()
 		update_appearance()
 		return
 
 	if(atom_storage)
 		var/found_anything = FALSE
-		for(var/obj/item/T in I.contents)
+		for(var/obj/item/T in attacking_item.contents)
 			if(istype(T, /obj/item/book) || istype(T, /obj/item/spellbook))
 				atom_storage.attempt_remove(T, src)
 				found_anything = TRUE
@@ -146,22 +146,22 @@
 			update_appearance()
 			return
 
-	if(IS_WRITING_UTENSIL(I))
-		if(!user.can_perform_action(src) || !user.can_write(I))
+	if(IS_WRITING_UTENSIL(attacking_item))
+		if(!user.can_perform_action(src) || !user.can_write(attacking_item))
 			return ..()
 		var/newname = tgui_input_text(user, "What would you like to title this bookshelf?", "Bookshelf Renaming", max_length = MAX_NAME_LEN)
-		if(!user.can_perform_action(src) || !user.can_write(I))
+		if(!user.can_perform_action(src) || !user.can_write(attacking_item))
 			return ..()
 		if(!newname)
 			return
 		name = "bookcase ([sanitize(newname)])"
 		return
 
-	if(I.tool_behaviour == TOOL_CROWBAR)
+	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 		if(length(contents))
 			balloon_alert(user, "remove the books first")
 			return
-		I.play_tool_sound(src, 100)
+		attacking_item.play_tool_sound(src, 100)
 		balloon_alert(user, "pried the shelf out")
 		new /obj/item/stack/sheet/mineral/wood(drop_location(), 2)
 		state = BOOKCASE_ANCHORED
