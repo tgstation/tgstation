@@ -786,3 +786,15 @@
   vinylspiders:
   - bugfix: password doors and shutters will now play their sound effects again instead
       of just silently opening/closing
+2024-07-14:
+  EuSouAFazer:
+  - rscadd: Cytology Lab has been added to Icebox
+  - rscadd: Delta now has soy seeds on the Cytology Lab
+  - bugfix: Cytology is playable again on Icebox
+  MTandi:
+  - rscadd: Added airlock pump atmos device to create cycling airlocks
+  carlarctg:
+  - bugfix: Fixed new charger power not working fior strange objects
+2024-07-15:
+  Thedragmeme:
+  - bugfix: Fixes the Plague hat having what the Plague mask should have
