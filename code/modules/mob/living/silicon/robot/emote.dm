@@ -20,7 +20,6 @@
 	emote_type = EMOTE_AUDIBLE
 	sound = 'sound/machines/buzz-sigh.ogg'
 
-
 /datum/emote/silicon/buzz2
 	key = "buzz2"
 	message = "buzzes twice."
