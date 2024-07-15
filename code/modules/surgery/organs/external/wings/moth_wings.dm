@@ -20,12 +20,12 @@
 	. = ..()
 	RegisterSignal(receiver, COMSIG_HUMAN_BURNING, PROC_REF(try_burn_wings))
 	RegisterSignal(receiver, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(heal_wings))
-	RegisterSignal(receiver, COMSIG_MOB_CLIENT_PRE_MOVE, PROC_REF(on_client_move))
+	RegisterSignal(receiver, COMSIG_MOB_CLIENT_MOVE_NOGRAV, PROC_REF(on_client_move))
 	START_PROCESSING(SSnewtonian_movement, src)
 
 /obj/item/organ/external/wings/moth/on_mob_remove(mob/living/carbon/organ_owner)
 	. = ..()
-	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOB_CLIENT_PRE_MOVE))
+	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOB_CLIENT_MOVE_NOGRAV))
 	STOP_PROCESSING(SSnewtonian_movement, src)
 
 /obj/item/organ/external/wings/moth/make_flap_sound(mob/living/carbon/wing_owner)

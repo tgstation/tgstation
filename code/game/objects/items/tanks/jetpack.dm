@@ -47,13 +47,13 @@
 	AddComponent( \
 		/datum/component/jetpack, \
 		src.stabilize, \
+		drift_force, \
+		stabilizer_force, \
 		COMSIG_JETPACK_ACTIVATED, \
 		COMSIG_JETPACK_DEACTIVATED, \
 		JETPACK_ACTIVATION_FAILED, \
 		thrust_callback, \
 		/datum/effect_system/trail_follow/ion, \
-		drift_force, \
-		stabilizer_force, \
 	)
 
 /obj/item/tank/jetpack/item_action_slot_check(slot)

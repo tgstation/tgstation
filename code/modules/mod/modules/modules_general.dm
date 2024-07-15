@@ -138,13 +138,13 @@
 	AddComponent( \
 		/datum/component/jetpack, \
 		src.stabilize, \
+		drift_force, \
+		stabilizer_force, \
 		COMSIG_MODULE_TRIGGERED, \
 		COMSIG_MODULE_DEACTIVATED, \
 		MOD_ABORT_USE, \
 		thrust_callback, \
 		/datum/effect_system/trail_follow/ion/grav_allowed, \
-		drift_force, \
-		stabilizer_force, \
 	)
 
 /obj/item/mod/module/jetpack/get_configuration()

@@ -27,13 +27,15 @@
 /**
  * Arguments:
  * * stabilize - If we should drift when we finish moving, or sit stable in space]
+ * * drift_force - How much force is applied whenever the user tries to move
+ * * stabilization_force - How much force is applied per tick when we try to stabilize the user
  * * activation_signal - Signal we activate on
  * * deactivation_signal - Signal we deactivate on
  * * return_flag - Flag to return if activation fails
  * * check_on_move - Callback we call each time we attempt a move, we expect it to retun true if the move is ok, false otherwise. It expects an arg, TRUE if fuel should be consumed, FALSE othewise
  * * effect_type - Type of trail_follow to spawn
  */
-/datum/component/jetpack/Initialize(stabilize, activation_signal, deactivation_signal, return_flag, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type, drift_force = 1, stabilization_force = 1)
+/datum/component/jetpack/Initialize(stabilize, drift_force = 1 NEWTONS, stabilization_force = 1 NEWTONS, activation_signal, deactivation_signal, return_flag, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type)
 	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -96,7 +98,7 @@
 	user = new_user
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(move_react))
 	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(pre_move_react))
-	RegisterSignal(user, COMSIG_MOB_CLIENT_PRE_MOVE, PROC_REF(on_client_move))
+	RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE_NOGRAV, PROC_REF(on_client_move))
 	START_PROCESSING(SSnewtonian_movement, src)
 	setup_trail(user)
 
@@ -105,7 +107,7 @@
 
 	UnregisterSignal(old_user, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(old_user, COMSIG_MOVABLE_PRE_MOVE)
-	UnregisterSignal(old_user, COMSIG_MOB_CLIENT_PRE_MOVE)
+	UnregisterSignal(old_user, COMSIG_MOB_CLIENT_MOVE_NOGRAV)
 	STOP_PROCESSING(SSnewtonian_movement, src)
 	user = null
 

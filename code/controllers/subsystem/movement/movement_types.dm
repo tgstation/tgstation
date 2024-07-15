@@ -917,36 +917,29 @@
 	return FALSE
 
 /datum/move_loop/smooth_move/proc/set_speed(new_speed)
-	speed = new_speed
 	delay = max(1, round(new_speed, 0.1))
 
 /datum/move_loop/smooth_move/move()
 	var/atom/old_loc = moving.loc
-	var/times_to_loop = 1
-	if (speed < 1)
-		times_to_loop = 1 / speed
+	// Defaulting to 2 because if one rate is 0 the other is guaranteed to be 1, so maxing out at 1 to_move
+	var/x_to_move = x_rate > 0 ? (1 - x_ticker) / x_rate : 2
+	var/y_to_move = y_rate > 0 ? (1 - y_ticker) / y_rate : 2
+	var/move_dist = min(x_to_move, y_to_move)
+	x_ticker += x_rate * move_dist
+	y_ticker += y_rate * move_dist
 
-	for (var/i in 1 to times_to_loop)
-		// Defaulting to 2 because if one rate is 0 the other is guaranteed to be 1, so maxing out at 1 to_move
-		var/x_to_move = x_rate > 0 ? (1 - x_ticker) / x_rate : 2
-		var/y_to_move = y_rate > 0 ? (1 - y_ticker) / y_rate : 2
-		var/move_dist = min(x_to_move, y_to_move)
-		x_ticker += x_rate * move_dist
-		y_ticker += y_rate * move_dist
+	// Per Bresenham's, if we are closer to the next tile's center move diagonally. Checked by seeing if we pass into the next tile after moving another half a tile
+	var/move_x = (x_ticker + x_rate * 0.5) > 1
+	var/move_y = (y_ticker + y_rate * 0.5) > 1
+	if (move_x)
+		x_ticker = 0
+	if (move_y)
+		y_ticker = 0
 
-		// Per Bresenham's, if we are closer to the next tile's center move diagonally. Checked by seeing if we pass into the next tile after moving another half a tile
-		var/move_x = (x_ticker + x_rate * 0.5) > 1
-		var/move_y = (y_ticker + y_rate * 0.5) > 1
-		if (move_x)
-			x_ticker = 0
-		if (move_y)
-			y_ticker = 0
-
-		var/turf/next_turf = locate(moving.x + (move_x ? x_sign : 0), moving.y + (move_y ? y_sign : 0), moving.z)
-		moving.Move(next_turf, get_dir(moving, next_turf), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
-		if (old_loc == moving?.loc)
-			return MOVELOOP_FAILURE
-
+	var/turf/next_turf = locate(moving.x + (move_x ? x_sign : 0), moving.y + (move_y ? y_sign : 0), moving.z)
+	moving.Move(next_turf, get_dir(moving, next_turf), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
+	if (old_loc == moving?.loc)
+		return MOVELOOP_FAILURE
 	return MOVELOOP_SUCCESS
 
 /datum/move_loop/smooth_move/proc/set_angle(new_angle)
