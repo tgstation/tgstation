@@ -241,3 +241,7 @@
 /// Useful for providing an additive modifier to a value that is used as a divisor, such as `/obj/projectile/var/speed`
 /proc/reciprocal_add(x, y)
 	return 1/((1/x)+y)
+
+/// 180s an angle
+/proc/reverse_angle(angle)
+	return (angle + 180) % 360

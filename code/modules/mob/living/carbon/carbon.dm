@@ -200,10 +200,10 @@
 	if(istype(potential_spine))
 		extra_throw_range += potential_spine.added_throw_range
 
-	var/drift_force = max(0.5, 1 + power_throw)
+	var/drift_force = max(0.5 NEWTONS, 1 NEWTONS + power_throw)
 	if (isitem(thrown_thing))
 		var/obj/item/thrown_item = thrown_thing
-		drift_force *= 0.2 + thrown_item.w_class * 0.4
+		drift_force *= WEIGHT_TO_NEWTONS(thrown_item.w_class)
 
 	newtonian_move(get_angle(target, src), drift_force = drift_force)
 	thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force)

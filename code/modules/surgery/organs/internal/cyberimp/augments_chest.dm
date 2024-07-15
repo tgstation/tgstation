@@ -180,8 +180,8 @@
 		THRUSTER_ACTIVATION_FAILED, \
 		CALLBACK(src, PROC_REF(allow_thrust), 0.01), \
 		/datum/effect_system/trail_follow/ion, \
-		1.5, \
-		1, \
+		1.5 NEWTONS, \
+		1 NEWTONS, \
 	)
 
 /obj/item/organ/internal/cyberimp/chest/thrusters/Remove(mob/living/carbon/thruster_owner, special, movement_flags)

@@ -16,7 +16,6 @@
 #define COMSIG_MOVABLE_BUMP "movable_bump"
 	#define COMPONENT_INTERCEPT_BUMPED (1<<0)
 ///from base of atom/movable/newtonian_move(): (inertia_angle, start_delay, additional_force)
->>>>>>> 7745b38b51386401d7b59fa444ddc2ad24c8ff84
 #define COMSIG_MOVABLE_NEWTONIAN_MOVE "movable_newtonian_move"
 	#define COMPONENT_MOVABLE_NEWTONIAN_BLOCK (1<<0)
 ///from datum/component/drift/apply_initial_visuals(): ()

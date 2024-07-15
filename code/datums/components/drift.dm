@@ -222,7 +222,7 @@
 
 	if (get_dir(source, backup) == movement_dir || source.loc == backup.loc)
 		if (drift_force >= INERTIA_FORCE_THROW_FLOOR)
-			source.throw_at(backup, 1, round(1 + (drift_force - INERTIA_FORCE_THROW_FLOOR) / INERTIA_FORCE_PER_THROW_FORCE), spin = FALSE)
+			source.throw_at(backup, 1, floor(1 + (drift_force - INERTIA_FORCE_THROW_FLOOR) / INERTIA_FORCE_PER_THROW_FORCE), spin = FALSE)
 		qdel(src)
 		return
 
@@ -251,7 +251,7 @@
 	/// Lack of angle means that we are trying to halt movement
 	if (isnull(target_angle))
 		// Going through newtonian_move ensures that all Process_Spacemove code runs properly, instead of directly adjusting forces
-		source.newtonian_move((drifting_loop.angle + 180) % 360, drift_force = min(drift_force, stabilization_force))
+		source.newtonian_move(reverse_angle(drifting_loop.angle), drift_force = min(drift_force, stabilization_force))
 		return
 
 	// Force required to be applied in order to get to the desired movement vector, with projection of current movement onto desired vector to ensure that we only compensate for excess

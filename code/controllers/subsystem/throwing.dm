@@ -205,7 +205,7 @@ SUBSYSTEM_DEF(throwing)
 	var/drift_force = speed
 	if (isitem(thrownthing))
 		var/obj/item/thrownitem = thrownthing
-		drift_force *= 0.2 + thrownitem.w_class * 0.4
+		drift_force *= WEIGHT_TO_NEWTONS(thrownitem.w_class)
 
 	if (!hit)
 		for (var/atom/movable/obstacle as anything in get_turf(thrownthing)) //looking for our target on the turf we land on.

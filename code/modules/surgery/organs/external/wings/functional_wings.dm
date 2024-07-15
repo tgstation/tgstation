@@ -1,5 +1,5 @@
-#define FUNCTIONAL_WING_FORCE 2
-#define FUNCTIONAL_WING_STABILIZATION 0.5
+#define FUNCTIONAL_WING_FORCE 2 NEWTONS
+#define FUNCTIONAL_WING_STABILIZATION 0.5 NEWTONS
 
 ///hud action for starting and stopping flight
 /datum/action/innate/flight
