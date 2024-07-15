@@ -155,6 +155,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	catalog_description = "This fish tends to stay near the waterbed."
 
 /datum/fish_trait/heavy/apply_to_mob(mob/living/basic/mob)
+	. = ..()
 	mob.add_movespeed_modifier(/datum/movespeed_modifier/heavy_fish)
 	mob.maxHealth *= 1.5
 	mob.health *= 1.5
@@ -469,6 +470,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	fish.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 
 /datum/fish_trait/antigrav/apply_to_mob(mob/living/basic/mob)
+	. = ..()
 	mob.add_traits(list(TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_SPACEWALK), FISH_TRAIT_DATUM)
 	mob.AddElement(/datum/element/simple_flying)
 
