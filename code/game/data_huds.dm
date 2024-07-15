@@ -282,7 +282,7 @@ Security HUDs! Basic mode shows only the job.
 
 /mob/living/proc/sec_hud_set_implants()
 	var/image/holder
-	for(var/i in list(IMPSEC_FIRST_HUD, IMPLOYAL_HUD, IMPSEC_SECOND_HUD))
+	for(var/i in (list(IMPSEC_FIRST_HUD, IMPLOYAL_HUD, IMPSEC_SECOND_HUD) & hud_list))
 		holder = hud_list[i]
 		holder.icon_state = null
 		set_hud_image_inactive(i)

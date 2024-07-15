@@ -147,7 +147,7 @@ handles linking back and forth.
 /datum/component/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/multitool/M)
 	SIGNAL_HANDLER
 
-	. = ITEM_INTERACT_BLOCKING
+	. = NONE
 	if (!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
 		if (silo == M.buffer)
 			to_chat(user, span_warning("[parent] is already connected to [silo]!"))

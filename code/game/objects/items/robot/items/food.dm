@@ -152,6 +152,10 @@
 	return NONE
 
 /obj/item/borg/lollipop/attack_self(mob/living/user)
+	switch_mode(user)
+	return ..()
+
+/obj/item/borg/lollipop/proc/switch_mode(mob/living/user)
 	switch(mode)
 		if(DISPENSE_LOLLIPOP_MODE)
 			mode = THROW_LOLLIPOP_MODE
@@ -165,7 +169,17 @@
 		if(DISPENSE_ICECREAM_MODE)
 			mode = DISPENSE_LOLLIPOP_MODE
 			to_chat(user, span_notice("Module is now dispensing lollipops."))
-	..()
+
+/obj/item/borg/lollipop/ice_cream
+	name = "ice cream fabricator"
+	desc = "Reward humans with vanilla ice cream. Can't go wrong with it."
+	candy = 4
+	candymax = 4
+	charge_delay = 15 SECONDS
+	mode = DISPENSE_ICECREAM_MODE
+
+/obj/item/borg/lollipop/ice_cream/switch_mode(mob/living/user)
+	return
 
 /obj/item/ammo_casing/gumball
 	name = "Gumball"
