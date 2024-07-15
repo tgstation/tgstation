@@ -68,7 +68,7 @@ export function OrbitCollapsible(props: Props) {
 
           return (
             <Tooltip
-              content={<OrbitTooltip item={item} />}
+              content={<OrbitTooltip item={item} realNameDisplay={false} />}
               key={item.ref}
               position="bottom-start"
             >

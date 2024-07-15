@@ -115,7 +115,7 @@ function OrbitInfo(props) {
           <Stack.Item>
             <Stack>
               <Stack.Item>
-                <JobIcon item={orbiting} />
+                <JobIcon item={orbiting} realNameDisplay={false} />
               </Stack.Item>
               <Stack.Item color="label" grow>
                 {job}
