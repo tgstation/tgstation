@@ -11,6 +11,23 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
+/datum/techweb_node/gene_engineering
+	id = TECHWEB_NODE_GENE_ENGINEERING
+	display_name = "Gene Engineering"
+	description = "Research into sophisticated DNA manipulation techniques, enabling the modification of human genetic traits to unlock specific abilities and enhancements."
+	prereq_ids = list(TECHWEB_NODE_BIO_SCAN)
+	design_ids = list(
+		"dnascanner",
+		"scan_console",
+		"dna_disk",
+		"dnainfuser",
+		"mod_dna_lock",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	discount_experiments = list(
+		/datum/experiment/scanning/people/active_dna = TECHWEB_TIER_3_POINTS,
+		)
+
 /datum/techweb_node/cytology
 	id = TECHWEB_NODE_CYTOLOGY
 	display_name = "Cytology"
@@ -40,19 +57,3 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	required_experiments = list(/datum/experiment/scanning/random/cytology)
-
-/datum/techweb_node/gene_engineering
-	id = TECHWEB_NODE_GENE_ENGINEERING
-	display_name = "Gene Engineering"
-	description = "Research into sophisticated DNA manipulation techniques, enabling the modification of human genetic traits to unlock specific abilities and enhancements."
-	design_ids = list(
-		"dnascanner",
-		"scan_console",
-		"dna_disk",
-		"dnainfuser",
-		"mod_dna_lock",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
-	discount_experiments = list(
-		/datum/experiment/scanning/people/active_dna = TECHWEB_TIER_3_POINTS,
-		)

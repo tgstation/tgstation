@@ -1,5 +1,6 @@
 #define TECHWEB_NODE_AI "ai"
 #define TECHWEB_NODE_AI_LAWS "ai_laws"
+#define TECHWEB_NODE_ADVANCED_CHEM_SYNTHESIS "adv_chem_synthesis"
 #define TECHWEB_NODE_ALIEN_ENGI "alien_engi"
 #define TECHWEB_NODE_ALIEN_SURGERY "alien_surgery"
 #define TECHWEB_NODE_ALIENTECH "alientech"

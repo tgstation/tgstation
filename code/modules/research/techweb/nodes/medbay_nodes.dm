@@ -68,7 +68,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
 /datum/techweb_node/advanced_chemical_synthesis
-	id = TECHWEB_NODE_ADVANCED_SYNTHESIS
+	id = TECHWEB_NODE_ADVANCED_CHEM_SYNTHESIS
 	display_name = "Advanced Chemical Synthesis"
 	description = "Research into the cutting edge of chemical analysis, storage, injection, and synthesis."
 	prereq_ids = list(TECHWEB_NODE_CHEM_SYNTHESIS, TECHWEB_NODE_BIO_SCAN)
@@ -86,7 +86,7 @@
 	id = TECHWEB_NODE_CRYOSTASIS
 	display_name = "Cryostasis"
 	description = "The result of clown accidentally drinking a chemical, now repurposed for safely preserving crew members in suspended animation."
-	prereq_ids = list(TECHWEB_NODE_ADVANCED_SYNTHESIS, TECHWEB_NODE_PLASMA_CONTROL)
+	prereq_ids = list(TECHWEB_NODE_ADVANCED_CHEM_SYNTHESIS, TECHWEB_NODE_PLASMA_CONTROL, TECHWEB_NODE_PLUMBING)
 	design_ids = list(
 		"cryotube",
 		"mech_sleeper",
