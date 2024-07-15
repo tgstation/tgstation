@@ -81,7 +81,7 @@
 	if (!HAS_TRAIT(user, parry_trait))
 		return
 	var/obj/projectile/proj_parent = parent
-	if (proj_parent.firer == user && (fire_time + grace_period > world.time))
+	if (proj_parent.firer == user && (fire_time + grace_period > world.time) && !parried)
 		attempt_parry(proj_parent, user)
 		return
 	parriers[user] = world.time + grace_period
@@ -107,7 +107,7 @@
 			source.set_angle(dir2angle(user) + rand(-3, 3))
 		user.visible_message(span_warning("[user] expertly parries [source] with [user.p_their()] bare hand!"), span_warning("You parry [source] with your hand!"))
 	else
-		user.visible_message(span_warning("[user] boosts [source] with [user.p_their()] bare hand!"), span_warning("You boosts [source] with your hand!"))
+		user.visible_message(span_warning("[user] boosts [source] with [user.p_their()] bare hand!"), span_warning("You boost [source] with your hand!"))
 	source.firer = user
 	source.speed *= (source.firer == user) ? boost_speed_mult : parry_speed_mult
 	source.damage *= (source.firer == user) ? boost_damage_mult : parry_damage_mult
