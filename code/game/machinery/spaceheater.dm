@@ -331,7 +331,8 @@
 
 /obj/machinery/space_heater/improvised_chem_heater/heating_examine()
 	. = ..()
-	. += span_notice("Reagent conduction power: <b>[display_power(beaker_conduction_power * set_mode == HEATER_MODE_AUTO ? 0.5 : 1)]/J</b>")
+	var/conduction_power = beaker_conduction_power * (set_mode == HEATER_MODE_AUTO ? 0.5 : 1)
+	. += span_notice("Reagent conduction power: <b>[conduction_power <= 1 ? display_power(-log(1 - conduction_power), convert = FALSE) : "∞W"]/J</b>")
 
 /obj/machinery/space_heater/improvised_chem_heater/toggle_power(user)
 	. = ..()
