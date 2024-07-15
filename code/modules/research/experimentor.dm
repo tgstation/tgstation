@@ -574,9 +574,13 @@
 	COOLDOWN_DECLARE(cooldown)
 	//What visual theme this artefact has. Current possible choices: "prototype", "necrotech"
 	var/artifact_theme = "prototype"
+	var/datum/effect_system/spark_spread/sparks
 
 /obj/item/relic/Initialize(mapload)
 	. = ..()
+	sparks = new()
+	sparks.set_up(5, 1, src)
+	sparks.attach(src)
 	random_themed_appearance()
 
 /obj/item/relic/proc/random_themed_appearance()
@@ -720,22 +724,26 @@
 
 /obj/item/relic/proc/do_the_teleport(mob/user)
 	var/turf/userturf = get_turf(user)
-	if(loc == user && !is_centcom_level(userturf.z)) //Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
-		visible_message(span_notice("[src] twists and bends, relocating itself!"))
-		throw_smoke(userturf)
-		do_teleport(user, userturf, 8, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
-		throw_smoke(get_turf(user))
-		warn_admins(user, "Teleport", 0)
+	//Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
+	if(is_centcom_level(userturf.z))
+		return
+	var/to_teleport = ismovable(loc) ? loc : src
+	visible_message(span_notice("[to_teleport] twists and bends, relocating itself!"))
+	throw_smoke(get_turf(to_teleport))
+	do_teleport(to_teleport, userturf, 8, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+	throw_smoke(get_turf(to_teleport))
+	warn_admins(user, "Teleport", 0)
 
 // Creates a glass and fills it up with a drink.
 /obj/item/relic/proc/drink_dispenser(mob/user)
 	var/obj/item/reagent_containers/cup/glass/drinkingglass/freebie = new(get_step_rand(user))
-	playsound(freebie, 'sound/effects/phasein.ogg', rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(freebie, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	sparks.start()
 	addtimer(CALLBACK(src, PROC_REF(dispense_drink), freebie), 0.5 SECONDS)
 
 /obj/item/relic/proc/dispense_drink(obj/item/reagent_containers/cup/glass/glasser)
+	playsound(glasser, 'sound/effects/phasein.ogg', rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	glasser.reagents.add_reagent(get_random_drink_id(), rand(glasser.volume * 0.3, glasser.volume))
-	playsound(glasser, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	throw_smoke(get_turf(glasser))
 
 // Scrambles your organs. 33% chance to delete after use.
@@ -747,7 +755,7 @@
 /obj/item/relic/proc/scrambliticus(mob/user)
 	new /obj/effect/temp_visual/bioscrambler_wave(get_turf(src))
 	playsound(src, 'sound/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
-	for(var/mob/living/carbon/nearby in hearers(2, src))
+	for(var/mob/living/carbon/nearby in range(2, get_turf(src))) //needs get_turf() to work
 		nearby.bioscramble(name)
 		playsound(nearby, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		throw_smoke(get_turf(nearby))
@@ -863,7 +871,6 @@
 	if(!card_id)
 		return
 	card_id.scribbled_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
-	card_id.update_name()
 	card_id.details_colors = list(ready_random_color(), ready_random_color(), ready_random_color())
 	card_id.item_flags |= DROPDEL
 
@@ -872,7 +879,8 @@
 	if(random_trim.trim_state && random_trim.assignment)
 		card_id.scribbled_trim = replacetext(random_trim.trim_state, "trim_", "cardboard_")
 	card_id.scribbled_assignment = random_trim.assignment
-	card_id.update_overlays()
+	card_id.update_name()
+	card_id.update_appearance()
 	REMOVE_TRAIT(user, TRAIT_NO_JUMPSUIT, REF(src))
 
 /obj/item/relic/proc/roll_costume(type, flagcheck)
