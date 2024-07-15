@@ -44,6 +44,9 @@
 	var/animated = TRUE
 	/// Determines whether we play a rustle sound when inserting/removing items.
 	var/rustle_sound = TRUE
+	/// The sound to play when we open/access the storage
+	var/open_sound
+	var/open_sound_vary = TRUE
 
 	/// The maximum amount of items that can be inserted into this storage.
 	var/max_slots = 7
@@ -920,7 +923,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		animate_parent()
 
 	if(rustle_sound)
-		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+		playsound(parent, (open_sound ? open_sound : SFX_RUSTLE), 50, open_sound_vary, -5)
 
 	return TRUE
 
