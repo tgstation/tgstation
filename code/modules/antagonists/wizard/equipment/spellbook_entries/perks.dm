@@ -166,9 +166,6 @@
 		stop_orbit()
 		return
 	var/mob/living/wizard = owner.resolve()
-	if(wizard.stat == DEAD)
-		stop_orbit()
-		return
 	var/list/things_in_range = orange(5, wizard) - orange(1, wizard)
 	for(var/obj/take_object in things_in_range)
 		if(!take_object.anchored)
