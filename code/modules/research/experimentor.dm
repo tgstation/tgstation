@@ -583,6 +583,10 @@
 	sparks.attach(src)
 	random_themed_appearance()
 
+/obj/item/relic/Destroy(force)
+	QDEL_NULL(sparks)
+	..()
+
 /obj/item/relic/proc/random_themed_appearance()
 	var/themed_name_prefix
 	var/themed_name_suffix
