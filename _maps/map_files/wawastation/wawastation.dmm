@@ -55250,6 +55250,7 @@
 "tvQ" = (
 /obj/structure/chair/sofa/bench,
 /obj/effect/landmark/start/prisoner,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "twf" = (
